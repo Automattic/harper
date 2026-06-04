@@ -5,9 +5,11 @@
 //! - Common Portuguese words and articles
 //! - Low English word match rate
 
+use crate::dialects::portuguese::PortugueseDialect;
 use crate::language_detection::LanguageDetector;
-use harper_core::spell::{Dictionary, FstDictionary};
-use harper_core::{Dialect, Token, TokenKind};
+use crate::languages::Language;
+use crate::spell::{Dictionary, FstDictionary};
+use crate::{Token, TokenKind};
 
 /// Portuguese language detector with high confidence due to unique characters.
 #[derive(Debug)]
@@ -23,8 +25,8 @@ impl LanguageDetector for PortugueseDetector {
         toks: &[Token],
         source: &[char],
         dict: &FstDictionary,
-        _default_dialect: Dialect,
-    ) -> Option<Dialect> {
+        _default_language: Language,
+    ) -> Option<Language> {
         let mut total_words = 0;
         let mut portuguese_char_count = 0;
         let mut common_portuguese_words = 0;
@@ -163,7 +165,7 @@ impl LanguageDetector for PortugueseDetector {
 
         // High confidence if we find Portuguese special characters
         if portuguese_char_count > 0 && (portuguese_char_count as f64 / total_words as f64) > 0.3 {
-            return Some(Dialect::Portuguese);
+            return Some(Language::Portuguese(PortugueseDialect::Brazilian));
         }
 
         // Medium confidence if we find multiple common Portuguese words
@@ -172,7 +174,7 @@ impl LanguageDetector for PortugueseDetector {
         let english_match_ratio = english_matches as f64 / total_words as f64;
 
         if common_word_ratio > 0.4 && english_match_ratio < 0.5 {
-            return Some(Dialect::Portuguese);
+            return Some(Language::Portuguese(PortugueseDialect::Brazilian));
         }
 
         None
@@ -187,21 +189,27 @@ impl LanguageDetector for PortugueseDetector {
 #[cfg(test)]
 mod tests {
     use super::PortugueseDetector;
+    use crate::Document;
+    use crate::dialects::english::EnglishDialect;
+    use crate::dialects::portuguese::PortugueseDialect;
     use crate::language_detection::LanguageDetector;
-    use harper_core::Dialect;
-    use harper_core::Document;
-    use harper_core::parsers::PlainEnglish;
-    use harper_core::spell::FstDictionary;
+    use crate::languages::Language;
+    use crate::parsers::PlainEnglish;
+    use crate::spell::FstDictionary;
 
     fn test_detection(text: &str, expected_portuguese: bool) {
         let dict = FstDictionary::curated();
         let doc = Document::new(text, &PlainEnglish, &dict);
         let detector = PortugueseDetector;
 
-        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, Dialect::American);
+        let default_lang = Language::English(EnglishDialect::American);
+        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, default_lang);
         assert_eq!(result.is_some(), expected_portuguese);
         if expected_portuguese {
-            assert_eq!(result.unwrap(), Dialect::Portuguese);
+            assert_eq!(
+                result.unwrap(),
+                Language::Portuguese(PortugueseDialect::Brazilian)
+            );
         }
     }
 

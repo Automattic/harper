@@ -76,7 +76,12 @@ mod tests {
 
     #[test]
     fn dont_flag_list_of_all_times() {
-        assert_lint_count("Provides a formatted list of all times that SDO was non-nominal", BestOfAllTime::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Provides a formatted list of all times that SDO was non-nominal",
+            BestOfAllTime::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -121,12 +126,22 @@ mod tests {
 
     #[test]
     fn dont_flag_sum_of_all_times() {
-        assert_lint_count("The original TotalTime seems not be the sum of all times", BestOfAllTime::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The original TotalTime seems not be the sum of all times",
+            BestOfAllTime::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_history_stacks_of_all_times() {
-        assert_lint_count("Didn't this imply all history stacks of all times, which itself implied all those saved.", BestOfAllTime::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Didn't this imply all history stacks of all times, which itself implied all those saved.",
+            BestOfAllTime::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -151,16 +166,31 @@ mod tests {
 
     #[test]
     fn fix_top_out_of_vocabulary() {
-        assert_suggestion_result("Can I Play the Top 10 Basslines of All Times?", BestOfAllTime::default(), "Can I Play the Top 10 Basslines of All Time?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Can I Play the Top 10 Basslines of All Times?",
+            BestOfAllTime::default(),
+            "Can I Play the Top 10 Basslines of All Time?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_compound_noun() {
-        assert_suggestion_result("Is he the best bass guitarist of all times?", BestOfAllTime::default(), "Is he the best bass guitarist of all time?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Is he the best bass guitarist of all times?",
+            BestOfAllTime::default(),
+            "Is he the best bass guitarist of all time?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_containing_commas() {
-        assert_suggestion_result("I am the biggest, best, and most humble of all times", BestOfAllTime::default(), "I am the biggest, best, and most humble of all time", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I am the biggest, best, and most humble of all times",
+            BestOfAllTime::default(),
+            "I am the biggest, best, and most humble of all time",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

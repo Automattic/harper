@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use harper_core::{
-    DictWordMetadata, DialectFlags,
+    DialectFlags, DictWordMetadata,
     spell::{Dictionary, MutableDictionary},
 };
 use itertools::Itertools;
@@ -50,9 +50,7 @@ pub async fn load_dict(path: impl AsRef<Path>) -> Result<MutableDictionary> {
 /// Load a dictionary from a list of words.
 /// It could definitely be optimized to use less memory.
 /// Right now it isn't an issue.
-async fn dict_from_word_list(
-    mut r: impl AsyncRead + Unpin,
-) -> Result<MutableDictionary> {
+async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDictionary> {
     let mut str = String::new();
 
     r.read_to_string(&mut str).await?;

@@ -70,6 +70,10 @@ mod tests {
     #[test]
     fn allows_here_by_noun() {
         use crate::linting::tests::assert_no_lints;
-        assert_no_lints("I got here by skill.", Hereby::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I got here by skill.",
+            Hereby::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

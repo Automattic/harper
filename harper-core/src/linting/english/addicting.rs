@@ -79,12 +79,22 @@ mod tests {
 
     #[test]
     fn dont_flag_addicting_object_pronoun() {
-        assert_lint_count("It is addicting me.", Addicting::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is addicting me.",
+            Addicting::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_addicting_reflexive_pronoun() {
-        assert_lint_count("He is addicting himself.", Addicting::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He is addicting himself.",
+            Addicting::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

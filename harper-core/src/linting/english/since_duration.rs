@@ -93,22 +93,40 @@ mod tests {
 
     #[test]
     fn catches_spelled() {
-        assert_lint_count("I have been waiting since two hours.", SinceDuration::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I have been waiting since two hours.",
+            SinceDuration::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn permits_spelled_with_ago() {
-        assert_no_lints("I have been waiting since two hours ago.", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I have been waiting since two hours ago.",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_numerals() {
-        assert_lint_count("I have been waiting since 2 hours.", SinceDuration::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I have been waiting since 2 hours.",
+            SinceDuration::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn permits_numerals_with_ago() {
-        assert_no_lints("I have been waiting since 2 hours ago.", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I have been waiting since 2 hours ago.",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -276,11 +294,20 @@ mod tests {
     #[test]
     #[ignore = "We can't yet handle indefinite numbers."]
     fn not_yet_handled_3() {
-        assert_suggestion_result("I use a Wacom Cintiq 27QHDT since several years on Linux", SinceDuration::default(), "I use a Wacom Cintiq 27QHDT for several years on Linux", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I use a Wacom Cintiq 27QHDT since several years on Linux",
+            SinceDuration::default(),
+            "I use a Wacom Cintiq 27QHDT for several years on Linux",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_since_years_old() {
-        assert_no_lints("I've been coding since 11 years old and I'm now 57", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I've been coding since 11 years old and I'm now 57",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

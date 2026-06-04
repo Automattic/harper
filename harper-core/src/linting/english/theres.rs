@@ -123,16 +123,31 @@ mod tests {
 
     #[test]
     fn allows_possessive_pronoun_form() {
-        assert_lint_count("Theirs is the final draft.", Theres::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Theirs is the final draft.",
+            Theres::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_without_determiner_afterward() {
-        assert_lint_count("I think their's better already.", Theres::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I think their's better already.",
+            Theres::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_correct_contraction() {
-        assert_lint_count("There's a bright sign ahead.", Theres::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "There's a bright sign ahead.",
+            Theres::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

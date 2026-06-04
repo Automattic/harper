@@ -2196,7 +2196,6 @@ pub mod tests {
 
 // From implementations for new dialect enums
 
-
 // Conversions from new dialect enums to the legacy Dialect enum
 // These are needed for compatibility during the transition to modular language support
 impl From<crate::dialects::english::EnglishDialect> for Dialect {
@@ -2280,13 +2279,49 @@ impl From<Dialect> for crate::languages::Language {
         match dialect {
             Dialect::American => Self::English(crate::dialects::english::EnglishDialect::American),
             Dialect::Canadian => Self::English(crate::dialects::english::EnglishDialect::Canadian),
-            Dialect::Australian => Self::English(crate::dialects::english::EnglishDialect::Australian),
+            Dialect::Australian => {
+                Self::English(crate::dialects::english::EnglishDialect::Australian)
+            }
             Dialect::British => Self::English(crate::dialects::english::EnglishDialect::British),
             Dialect::Indian => Self::English(crate::dialects::english::EnglishDialect::Indian),
-            Dialect::German => Self::German(crate::language::german::dialects::GermanDialect::Standard),
-            Dialect::GermanAustrian => Self::German(crate::language::german::dialects::GermanDialect::Austrian),
-            Dialect::GermanSwiss => Self::German(crate::language::german::dialects::GermanDialect::Swiss),
-            Dialect::Portuguese => Self::Portuguese(crate::dialects::portuguese::PortugueseDialect::Brazilian),
+            Dialect::German => {
+                Self::German(crate::language::german::dialects::GermanDialect::Standard)
+            }
+            Dialect::GermanAustrian => {
+                Self::German(crate::language::german::dialects::GermanDialect::Austrian)
+            }
+            Dialect::GermanSwiss => {
+                Self::German(crate::language::german::dialects::GermanDialect::Swiss)
+            }
+            Dialect::Portuguese => {
+                Self::Portuguese(crate::dialects::portuguese::PortugueseDialect::Brazilian)
+            }
+        }
+    }
+}
+
+// Conversion from new Language enum to legacy Dialect
+// This is needed for backwards compatibility with existing curated configurations
+impl From<crate::languages::Language> for Dialect {
+    fn from(language: crate::languages::Language) -> Self {
+        match language {
+            crate::languages::Language::English(d) => match d {
+                crate::dialects::english::EnglishDialect::American => Self::American,
+                crate::dialects::english::EnglishDialect::Canadian => Self::Canadian,
+                crate::dialects::english::EnglishDialect::Australian => Self::Australian,
+                crate::dialects::english::EnglishDialect::British => Self::British,
+                crate::dialects::english::EnglishDialect::Indian => Self::Indian,
+            },
+            crate::languages::Language::German(d) => match d {
+                crate::language::german::dialects::GermanDialect::Standard => Self::German,
+                crate::language::german::dialects::GermanDialect::Austrian => Self::GermanAustrian,
+                crate::language::german::dialects::GermanDialect::Swiss => Self::GermanSwiss,
+            },
+            crate::languages::Language::Portuguese(d) => match d {
+                crate::dialects::portuguese::PortugueseDialect::Brazilian => Self::Portuguese,
+                crate::dialects::portuguese::PortugueseDialect::European => Self::Portuguese,
+                crate::dialects::portuguese::PortugueseDialect::African => Self::Portuguese,
+            },
         }
     }
 }

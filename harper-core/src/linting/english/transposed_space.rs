@@ -150,7 +150,9 @@ mod tests {
     fn space_too_early() {
         assert_suggestion_result(
             "Th ecat sat on the mat.",
-            TransposedSpace::sensitive(FstDictionary::curated_for_language(LanguageFamily::English)),
+            TransposedSpace::sensitive(FstDictionary::curated_for_language(
+                LanguageFamily::English,
+            )),
             "The cat sat on the mat.",
             crate::languages::LanguageFamily::English,
         );
@@ -160,7 +162,9 @@ mod tests {
     fn space_too_late() {
         assert_suggestion_result(
             "Thec at sat on the mat.",
-            TransposedSpace::sensitive(FstDictionary::curated_for_language(LanguageFamily::English)),
+            TransposedSpace::sensitive(FstDictionary::curated_for_language(
+                LanguageFamily::English,
+            )),
             "The cat sat on the mat.",
             crate::languages::LanguageFamily::English,
         );

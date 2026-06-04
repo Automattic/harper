@@ -105,23 +105,43 @@ mod tests {
 
     #[test]
     fn does_not_flag_exception_own() {
-        assert_lint_count("Its own design is unique.", ItIs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Its own design is unique.",
+            ItIs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_exception_team() {
-        assert_lint_count("Its team lead is excellent.", ItIs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Its team lead is excellent.",
+            ItIs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "This case fails, but I think that's acceptable"]
     fn does_not_flag_non_adjective() {
-        assert_lint_count("The cat chased its tail around the room.", ItIs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The cat chased its tail around the room.",
+            ItIs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_already_correct() {
-        assert_lint_count("It's important to note.", ItIs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It's important to note.",
+            ItIs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -217,7 +237,12 @@ mod tests {
     // Negative guard: correct possessive use
     #[test]
     fn does_not_flag_its_team_lead() {
-        assert_lint_count("Its team lead is excellent.", ItIs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Its team lead is excellent.",
+            ItIs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Imagined edge cases based on real usage:

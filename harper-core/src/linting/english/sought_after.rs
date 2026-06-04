@@ -78,7 +78,12 @@ mod tests {
 
     #[test]
     fn dont_flag_always_sort_after() {
-        assert_lint_count("Always sort after converting your set into list objects", SoughtAfter::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Always sort after converting your set into list objects",
+            SoughtAfter::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -174,7 +179,12 @@ mod tests {
 
     #[test]
     fn dont_flag_is_sort_after() {
-        assert_lint_count("What I would do is sort after the union or join.", SoughtAfter::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "What I would do is sort after the union or join.",
+            SoughtAfter::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -189,7 +199,12 @@ mod tests {
 
     #[test]
     fn dont_flag_maybe_sort_after() {
-        assert_lint_count("Or maybe sort after adding the index?", SoughtAfter::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Or maybe sort after adding the index?",
+            SoughtAfter::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -224,7 +239,12 @@ mod tests {
 
     #[test]
     fn dont_flag_not_sort_after() {
-        assert_lint_count("My issue is that it does not sort after the startyear", SoughtAfter::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "My issue is that it does not sort after the startyear",
+            SoughtAfter::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // This part is occasionally sort after and if they were easily available I reckon you'd sell a few easily enough.
@@ -271,7 +291,12 @@ mod tests {
 
     #[test]
     fn dont_flat_perhaps_sort_after() {
-        assert_lint_count("min_Vround: perhaps sort after min_breadth.", SoughtAfter::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "min_Vround: perhaps sort after min_breadth.",
+            SoughtAfter::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

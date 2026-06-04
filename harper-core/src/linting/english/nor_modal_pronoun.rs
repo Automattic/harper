@@ -102,73 +102,141 @@ mod tests {
 
     #[test]
     fn fix_nor_i_can() {
-        assert_suggestion_result("i can't see the menu nor i can see the features of your app or how it looks !", NorModalPronoun::default(), "i can't see the menu nor can i see the features of your app or how it looks !", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "i can't see the menu nor i can see the features of your app or how it looks !",
+            NorModalPronoun::default(),
+            "i can't see the menu nor can i see the features of your app or how it looks !",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_i_could() {
-        assert_suggestion_result("but never saw any warnings nor I could read messages until I debugged", NorModalPronoun::default(), "but never saw any warnings nor could I read messages until I debugged", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "but never saw any warnings nor I could read messages until I debugged",
+            NorModalPronoun::default(),
+            "but never saw any warnings nor could I read messages until I debugged",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_i_will() {
-        assert_suggestion_result("I am not the author of the plugins nor I will be updating bugged/unavailable plugins.", NorModalPronoun::default(), "I am not the author of the plugins nor will I be updating bugged/unavailable plugins.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I am not the author of the plugins nor I will be updating bugged/unavailable plugins.",
+            NorModalPronoun::default(),
+            "I am not the author of the plugins nor will I be updating bugged/unavailable plugins.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_i_would() {
-        assert_suggestion_result("I would not like to own a Pollock, nor I would hang one of his paintings on a wall inside my home", NorModalPronoun::default(), "I would not like to own a Pollock, nor would I hang one of his paintings on a wall inside my home", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I would not like to own a Pollock, nor I would hang one of his paintings on a wall inside my home",
+            NorModalPronoun::default(),
+            "I would not like to own a Pollock, nor would I hang one of his paintings on a wall inside my home",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_it_can() {
-        assert_suggestion_result("However, since several days ago FreeTube simply doesn't open ANY videos nor it can search.", NorModalPronoun::default(), "However, since several days ago FreeTube simply doesn't open ANY videos nor can it search.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "However, since several days ago FreeTube simply doesn't open ANY videos nor it can search.",
+            NorModalPronoun::default(),
+            "However, since several days ago FreeTube simply doesn't open ANY videos nor can it search.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_it_should() {
-        assert_suggestion_result("Since the code doesn't guard against it (nor it should), internalModule.stripBOM is called with an undefined", NorModalPronoun::default(), "Since the code doesn't guard against it (nor should it), internalModule.stripBOM is called with an undefined", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Since the code doesn't guard against it (nor it should), internalModule.stripBOM is called with an undefined",
+            NorModalPronoun::default(),
+            "Since the code doesn't guard against it (nor should it), internalModule.stripBOM is called with an undefined",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_it_will() {
-        assert_suggestion_result("It will never \"create a table\", nor it will issue any query - it will only create the entity instance.", NorModalPronoun::default(), "It will never \"create a table\", nor will it issue any query - it will only create the entity instance.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It will never \"create a table\", nor it will issue any query - it will only create the entity instance.",
+            NorModalPronoun::default(),
+            "It will never \"create a table\", nor will it issue any query - it will only create the entity instance.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_it_would() {
-        assert_suggestion_result("Neither whitespace (excepting NL and CR) is special char in this sense, nor it would destroy something, if it gets \"escaped\" as variable", NorModalPronoun::default(), "Neither whitespace (excepting NL and CR) is special char in this sense, nor would it destroy something, if it gets \"escaped\" as variable", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Neither whitespace (excepting NL and CR) is special char in this sense, nor it would destroy something, if it gets \"escaped\" as variable",
+            NorModalPronoun::default(),
+            "Neither whitespace (excepting NL and CR) is special char in this sense, nor would it destroy something, if it gets \"escaped\" as variable",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_they_can() {
-        assert_suggestion_result("Currently these assets don't include the code provided by the submodules nor they can be disabled", NorModalPronoun::default(), "Currently these assets don't include the code provided by the submodules nor can they be disabled", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Currently these assets don't include the code provided by the submodules nor they can be disabled",
+            NorModalPronoun::default(),
+            "Currently these assets don't include the code provided by the submodules nor can they be disabled",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_we_can() {
-        assert_suggestion_result("The NSLayoutConstraint errors are really Apple bugs, not our fault, nor we can fix them, but they are harmless.", NorModalPronoun::default(), "The NSLayoutConstraint errors are really Apple bugs, not our fault, nor can we fix them, but they are harmless.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The NSLayoutConstraint errors are really Apple bugs, not our fault, nor we can fix them, but they are harmless.",
+            NorModalPronoun::default(),
+            "The NSLayoutConstraint errors are really Apple bugs, not our fault, nor can we fix them, but they are harmless.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_you_can() {
-        assert_suggestion_result("You cannot create a view to do it, nor you can have a function to do it", NorModalPronoun::default(), "You cannot create a view to do it, nor can you have a function to do it", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You cannot create a view to do it, nor you can have a function to do it",
+            NorModalPronoun::default(),
+            "You cannot create a view to do it, nor can you have a function to do it",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_nor_you_should() {
-        assert_suggestion_result("I believe you cannot create two sessions through one signin, and maybe nor you should.", NorModalPronoun::default(), "I believe you cannot create two sessions through one signin, and maybe nor should you.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I believe you cannot create two sessions through one signin, and maybe nor you should.",
+            NorModalPronoun::default(),
+            "I believe you cannot create two sessions through one signin, and maybe nor should you.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Potential false positives
 
     #[test]
     fn ignore_neither_they_nor_i_could() {
-        assert_no_lints("One of my users was unable to install tools via mise, but neither they nor I could initially figure out why.", NorModalPronoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "One of my users was unable to install tools via mise, but neither they nor I could initially figure out why.",
+            NorModalPronoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_neither_my_tool_nor_i_shall() {
-        assert_no_lints("but neither my tool nor I shall feel disrespected", NorModalPronoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "but neither my tool nor I shall feel disrespected",
+            NorModalPronoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

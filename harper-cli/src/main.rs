@@ -1,6 +1,7 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::language::registry::dictionary_for_dialect;
+use harper_core::language::registry::dictionary;
+use harper_core::languages::Language;
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -263,7 +264,7 @@ fn main() -> anyhow::Result<()> {
             let dict: Arc<dyn Dictionary> = if dialect.is_english() {
                 curated_dictionary.clone()
             } else {
-                dictionary_for_dialect(dialect)
+                dictionary(Language::from(dialect))
             };
 
             lint(

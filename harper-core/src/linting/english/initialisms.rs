@@ -154,42 +154,82 @@ mod tests {
 
     #[test]
     fn corrects_eli5() {
-        assert_suggestion_result("Can you eli5 how this works?", lint_group(), "Can you explain like i'm five how this works?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Can you eli5 how this works?",
+            lint_group(),
+            "Can you explain like i'm five how this works?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_fwiw() {
-        assert_suggestion_result("Fwiw, I think it's a good idea.", lint_group(), "For what it's worth, I think it's a good idea.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Fwiw, I think it's a good idea.",
+            lint_group(),
+            "For what it's worth, I think it's a good idea.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_idk() {
-        assert_suggestion_result("Idk if I'll make it to the party.", lint_group(), "I don't know if I'll make it to the party.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Idk if I'll make it to the party.",
+            lint_group(),
+            "I don't know if I'll make it to the party.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_iirc() {
-        assert_suggestion_result("Iirc, the event starts at 6 PM.", lint_group(), "If i recall correctly, the event starts at 6 PM.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Iirc, the event starts at 6 PM.",
+            lint_group(),
+            "If i recall correctly, the event starts at 6 PM.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_iykyk() {
-        assert_suggestion_result("Iykyk, this place is amazing.", lint_group(), "If you know, you know, this place is amazing.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Iykyk, this place is amazing.",
+            lint_group(),
+            "If you know, you know, this place is amazing.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_icymi() {
-        assert_suggestion_result("Icymi, the deadline is tomorrow.", lint_group(), "In case you missed it, the deadline is tomorrow.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Icymi, the deadline is tomorrow.",
+            lint_group(),
+            "In case you missed it, the deadline is tomorrow.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_irl() {
-        assert_suggestion_result("We should meet irl sometime.", lint_group(), "We should meet in real life sometime.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We should meet irl sometime.",
+            lint_group(),
+            "We should meet in real life sometime.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_ptal() {
-        assert_suggestion_result("Ptal at the document I sent.", lint_group(), "Please take a look at the document I sent.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ptal at the document I sent.",
+            lint_group(),
+            "Please take a look at the document I sent.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -207,7 +247,12 @@ mod tests {
 
     #[test]
     fn corrects_iiuc() {
-        assert_suggestion_result("iiuc build caching in hol4 works at the file level", lint_group(), "if i understand correctly build caching in hol4 works at the file level", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "iiuc build caching in hol4 works at the file level",
+            lint_group(),
+            "if i understand correctly build caching in hol4 works at the file level",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

@@ -6,39 +6,16 @@ use crate::{
     token_string_ext::TokenStringExt,
 };
 
-enum Flag {
-    /// Some acronyms should only be matched when all caps, like "PIN"
-    AllCapsOnly,
-    /// Some acronyms should not be pluralized, like "USD"
-    DontPluralizeAcronym,
-    /// No special flags
-    None,
-}
-use Flag::*;
-
 // (acronym, first_words, last_word)
-const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
-    (
-        "ATM",
-        &["automated teller", "automatic teller"],
-        "machine",
-        None,
-    ),
-    ("GOP", &["Grand Old"], "Party", None),
-    ("GUI", &["graphical user"], "interface", None),
-    ("LCD", &["liquid crystal"], "display", None),
-    ("LLM", &["large language"], "model", None),
+const ACRONYMS: &[(&str, &[&str], &str)] = &[
+    ("ATM", &["automated teller", "automatic teller"], "machine"),
+    ("GUI", &["graphical user"], "interface"),
+    ("LCD", &["liquid crystal"], "display"),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
-    ("PIN", &["personal identification"], "number", AllCapsOnly),
-    (
-        "TUI",
-        &["text-based user", "terminal user"],
-        "interface",
-        None,
-    ),
-    ("UI", &["user"], "interface", None),
-    ("USD", &["US"], "dollars", DontPluralizeAcronym),
-    ("VIN", &["vehicle identification"], "number", None),
+    ("PIN", &["personal identification"], "number"),
+    ("TUI", &["text-based user", "terminal user"], "interface"),
+    ("UI", &["user"], "interface"),
+    ("VIN", &["vehicle identification"], "number"),
 ];
 
 pub struct RedundantAcronyms {
@@ -49,7 +26,7 @@ impl Default for RedundantAcronyms {
     fn default() -> Self {
         let exprs: Vec<Box<dyn Expr>> = ACRONYMS
             .iter()
-            .map(|&(acronym, _, last_str, _)| {
+            .map(|&(acronym, _, last_str)| {
                 let last_string = last_str.to_string();
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
                     Box::new(Word::new(last_str)),
@@ -78,40 +55,36 @@ impl ExprLinter for RedundantAcronyms {
         let last_word_chars = last_word_span.get_content(src);
         let acronym_str = toks.first()?.get_str(src);
 
-        let (_, middle_words, last_word, flag) = ACRONYMS
-            .iter()
-            .find(|(a, _, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
-
-        // Skip if AllCapsOnly flag is set and acronym is not all caps
-        if matches!(flag, AllCapsOnly) && !acronym_str.chars().all(|c| c.is_ascii_uppercase()) {
-            return Option::None;
+        // "pin number" (lowercase) is used to refer to the pins on microchips, etc.
+        if acronym_str.eq_ignore_ascii_case("PIN") && acronym_str != "PIN" {
+            return None;
         }
+
+        let (_, middle_words, _) = ACRONYMS
+            .iter()
+            .find(|(a, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
 
         let is_all_caps = last_word_chars
             .iter()
             .all(|c| c.is_ascii_alphabetic() && c.is_ascii_uppercase());
 
-        let plural_ending = if matches!(flag, DontPluralizeAcronym) {
-            String::new()
-        } else {
-            last_word_chars
-                .last()
-                .filter(|&&c| c.eq_ignore_ascii_case(&'s'))
-                .map(|c| c.to_string())
-                .unwrap_or_default()
-        };
+        let plural_ending = last_word_chars
+            .last()
+            .filter(|&&c| c.eq_ignore_ascii_case(&'s'))
+            .map(|c| c.to_string())
+            .unwrap_or_default();
 
         let suggestions: Vec<Suggestion> = std::iter::once(Suggestion::ReplaceWith(
             format!("{acronym_str}{plural_ending}").chars().collect(),
         ))
         .chain(middle_words.iter().map(|mw| {
-            let (middle_words, last_word) = if is_all_caps {
-                (mw.to_ascii_uppercase(), last_word.to_ascii_uppercase())
+            let middle_words = if is_all_caps {
+                mw.to_ascii_uppercase()
             } else {
-                (mw.to_string(), last_word.to_string())
+                mw.to_string()
             };
             Suggestion::ReplaceWith(
-                format!("{middle_words} {}{plural_ending}", last_word)
+                format!("{middle_words} {}", last_word_span.get_content_string(src))
                     .chars()
                     .collect(),
             )
@@ -313,6 +286,7 @@ mod tests {
         assert_no_lints(
             "GPIO 26 (pin 37) on the Pi4 is mapped to pin nummer GPIO 425 on the pi5",
             RedundantAcronyms::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -321,6 +295,7 @@ mod tests {
         assert_no_lints(
             "Pin Number Match Project in Javascript.",
             RedundantAcronyms::default(),
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -372,58 +347,6 @@ mod tests {
             &[
                 "we have implemented verification algorithms, which ensure that VIN received is correct",
                 "we have implemented verification algorithms, which ensure that vehicle identification number received is correct",
-            ],
-            &[],
-        );
-    }
-
-    #[test]
-    fn correct_gop_party() {
-        assert_good_and_bad_suggestions(
-            "If it wasnt for bribery and blackmail there wouldnt be  a GOP party",
-            RedundantAcronyms::default(),
-            &[
-                "If it wasnt for bribery and blackmail there wouldnt be  a Grand Old Party",
-                "If it wasnt for bribery and blackmail there wouldnt be  a GOP",
-            ],
-            &[],
-        );
-    }
-
-    #[test]
-    fn correct_llm_model() {
-        assert_good_and_bad_suggestions(
-            "They end up attributing a lot of what they're doing to the capabilities of the LLM model.",
-            RedundantAcronyms::default(),
-            &[
-                "They end up attributing a lot of what they're doing to the capabilities of the LLM.",
-                "They end up attributing a lot of what they're doing to the capabilities of the large language model.",
-            ],
-            &[],
-        );
-    }
-
-    #[test]
-    fn correct_llm_models() {
-        assert_good_and_bad_suggestions(
-            "Ollama is an open-source tool for running LLM models locally.",
-            RedundantAcronyms::default(),
-            &[
-                "Ollama is an open-source tool for running LLMs locally.",
-                "Ollama is an open-source tool for running large language models locally.",
-            ],
-            &[],
-        );
-    }
-
-    #[test]
-    fn correct_usd() {
-        assert_good_and_bad_suggestions(
-            "And because I didn't have USD dollars, I used zip ties [music] instead of a proper microonal bass.",
-            RedundantAcronyms::default(),
-            &[
-                "And because I didn't have US dollars, I used zip ties [music] instead of a proper microonal bass.",
-                "And because I didn't have USD, I used zip ties [music] instead of a proper microonal bass.",
             ],
             &[],
         );

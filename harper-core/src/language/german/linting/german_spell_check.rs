@@ -206,14 +206,17 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 #[cfg(test)]
 mod tests {
     use super::GermanSpellCheck;
+    use crate::Document;
+    use crate::language::german::dialects::GermanDialect;
     use crate::language::german::parsers::PlainGerman;
     use crate::language::german::spell::curated_german_dictionary;
+    use crate::languages::Language;
     use crate::linting::{LintGroup, Linter};
-    use crate::{Dialect, Document};
 
     fn lint_text(text: &str) -> Vec<String> {
         let dict = curated_german_dictionary();
-        let mut linter = LintGroup::new_curated(dict.clone(), Dialect::German);
+        let language = Language::German(GermanDialect::Standard);
+        let mut linter = LintGroup::new_curated(dict.clone(), language);
         let document = Document::new(text, &PlainGerman, &dict);
 
         linter

@@ -144,7 +144,9 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             LanguageFamily::Portuguese => DialectFlagsEnum::Portuguese(
                 PortugueseDialectFlags::get_most_used_dialects_from_document(document),
             ),
-            LanguageFamily::German => panic!("get_most_used_dialects_from_document_language not implemented for German"),
+            LanguageFamily::German => {
+                panic!("get_most_used_dialects_from_document_language not implemented for German")
+            }
         }
     }
 }

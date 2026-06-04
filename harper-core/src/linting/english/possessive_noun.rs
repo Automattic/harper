@@ -158,12 +158,22 @@ mod tests {
 
     #[test]
     fn no_lint_for_already_possessive() {
-        assert_lint_count("The duck's cousin visited.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The duck's cousin visited.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_for_alrreaady_possessive() {
-        assert_lint_count("The duck's cousin visited.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The duck's cousin visited.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -238,12 +248,22 @@ mod tests {
 
     #[test]
     fn no_lint_for_plural_noun() {
-        assert_lint_count("The ducks are swimming.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The ducks are swimming.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_for_proper_noun() {
-        assert_lint_count("John's car is red.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "John's car is red.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -268,7 +288,12 @@ mod tests {
 
     #[test]
     fn allows_the_city_lights() {
-        assert_lint_count("The city lights twinkled in the distance.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The city lights twinkled in the distance.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -343,12 +368,22 @@ mod tests {
 
     #[test]
     fn no_lint_for_already_possessive_2() {
-        assert_lint_count("John's car is red.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "John's car is red.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_for_proper_noun_2() {
-        assert_lint_count("Mary went to the store.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Mary went to the store.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -413,30 +448,55 @@ mod tests {
 
     #[test]
     fn allows_birds_hurried() {
-        assert_lint_count("The birds hurried off.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The birds hurried off.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "false positive issue 1582"]
     fn allows_1582_harms_readability() {
-        assert_lint_count("This harms readability and maintainability.", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This harms readability and maintainability.",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "false positive issue 1582"]
     fn allows_1582_imports_couples() {
-        assert_lint_count("Since using Webpack syntax in the imports couples the code to a module bundler", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Since using Webpack syntax in the imports couples the code to a module bundler",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "false positive issue 1582"]
     fn allows_1582_graphics_programmer() {
-        assert_lint_count("Are you a graphics programmer or Rust developer?", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Are you a graphics programmer or Rust developer?",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "false positive issue 1582"]
     fn allows_1582_data_sources() {
-        assert_lint_count("these data sources can be queried using a full SQL dialect", test_linter(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "these data sources can be queried using a full SQL dialect",
+            test_linter(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

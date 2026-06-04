@@ -83,14 +83,17 @@ impl<T: Dictionary> Linter for PortugueseSpellCheck<T> {
 #[cfg(test)]
 mod tests {
     use super::PortugueseSpellCheck;
+    use crate::Document;
+    use crate::dialects::portuguese::PortugueseDialect;
     use crate::language::portuguese::parsers::PlainPortuguese;
     use crate::language::portuguese::spell::curated_portuguese_dictionary;
+    use crate::languages::Language;
     use crate::linting::{LintGroup, Linter};
-    use crate::{Dialect, Document};
 
     fn lint_text(text: &str) -> Vec<String> {
         let dict = curated_portuguese_dictionary();
-        let mut linter = LintGroup::new_curated(dict.clone(), Dialect::Portuguese);
+        let language = Language::Portuguese(PortugueseDialect::Brazilian);
+        let mut linter = LintGroup::new_curated(dict.clone(), language);
         // Add Portuguese spell check linter explicitly
         linter.add(
             "PortugueseSpellCheck",

@@ -96,6 +96,12 @@ impl FlatConfig {
         self.merge_from(temp);
     }
 
+    /// Fill the group with the language-aware curated values for the given language.
+    pub fn fill_with_curated_for_language(&mut self, language: crate::languages::Language) {
+        let dialect: Dialect = language.into();
+        self.fill_with_curated_for(dialect);
+    }
+
     pub fn new_curated() -> Self {
         Self::new_curated_for(Dialect::American)
     }

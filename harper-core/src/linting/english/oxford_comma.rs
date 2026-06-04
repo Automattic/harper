@@ -98,7 +98,12 @@ mod tests {
 
     #[test]
     fn fruits() {
-        assert_lint_count("An apple, a banana and a pear walk into a bar.", OxfordComma::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "An apple, a banana and a pear walk into a bar.",
+            OxfordComma::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -133,12 +138,22 @@ mod tests {
 
     #[test]
     fn allows_clean_music() {
-        assert_lint_count("I enjoy listening to pop music, rock, hip-hop, electronic dance, and classical music.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I enjoy listening to pop music, rock, hip-hop, electronic dance, and classical music.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_clean_nations() {
-        assert_lint_count("The team consists of players from different countries: France, Germany, Italy, and Spain.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The team consists of players from different countries: France, Germany, Italy, and Spain.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -173,21 +188,41 @@ mod tests {
 
     #[test]
     fn allow_non_list_transportation() {
-        assert_lint_count("In transportation, autonomous vehicles and smart traffic management systems promise to reduce accidents and optimize travel routes.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "In transportation, autonomous vehicles and smart traffic management systems promise to reduce accidents and optimize travel routes.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_pill() {
-        assert_lint_count("Develop a pill that causes partial amnesia, affecting relationships and identity.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Develop a pill that causes partial amnesia, affecting relationships and identity.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_at_first() {
-        assert_lint_count("In the heart of a bustling city, Sarah finds herself trapped in an endless cycle of the same day. Each morning, she awakens to find the date unchanged, her life on repeat. At first, confusion and frustration cloud her thoughts, but soon she notices something peculiar—each day has tiny differences, subtle changes that hint at a larger pattern.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "In the heart of a bustling city, Sarah finds herself trapped in an endless cycle of the same day. Each morning, she awakens to find the date unchanged, her life on repeat. At first, confusion and frustration cloud her thoughts, but soon she notices something peculiar—each day has tiny differences, subtle changes that hint at a larger pattern.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_standoff() {
-        assert_lint_count("In a tense standoff, Alex and his reflection engage in a battle of wills.", OxfordComma::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "In a tense standoff, Alex and his reflection engage in a battle of wills.",
+            OxfordComma::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

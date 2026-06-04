@@ -177,6 +177,11 @@ mod tests {
 
     #[test]
     fn flags_single_three_period_ellipsis_once() {
-        assert_lint_count("Wait... now", UseEllipsisCharacter, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Wait... now",
+            UseEllipsisCharacter,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

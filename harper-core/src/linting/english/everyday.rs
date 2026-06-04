@@ -194,12 +194,22 @@ mod tests {
 
     #[test]
     fn dont_flag_lone_adjective() {
-        assert_lint_count("everyday", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "everyday",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_lone_adverb() {
-        assert_lint_count("every day", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "every day",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -235,17 +245,32 @@ mod tests {
 
     #[test]
     fn dont_flag_everyday_adjective_before_dev() {
-        assert_lint_count("At everyday dev, engineering isn't just a job - it's our passion.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "At everyday dev, engineering isn't just a job - it's our passion.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_everyday_adjective_before_present_participle() {
-        assert_lint_count("Everyday coding projects.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Everyday coding projects.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_everyday_adjective_before_plural_noun() {
-        assert_lint_count("Exploring Everyday Things with R and Ruby", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Exploring Everyday Things with R and Ruby",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -260,22 +285,42 @@ mod tests {
 
     #[test]
     fn dont_flag_every_day_at_start_of_sentence_before_comma() {
-        assert_lint_count("Every day, a new concept or improvement will be shared", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Every day, a new concept or improvement will be shared",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_at_start_of_sentence_before_copula() {
-        assert_lint_count("Every day is worth remembering...", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Every day is worth remembering...",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_at_end_of_sentence_after_noun() {
-        assert_lint_count("You learn new stuff every day.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You learn new stuff every day.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_after_noun_before_conjunction() {
-        assert_lint_count("Pick a different test item every day and confirm it is present.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Pick a different test item every day and confirm it is present.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -291,32 +336,62 @@ mod tests {
 
     #[test]
     fn dont_flag_everyday_before_unknown_word() {
-        assert_lint_count("It's just a normal everyday splorg.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It's just a normal everyday splorg.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_at_end_of_chunk_after_adverb() {
-        assert_lint_count("I use the same amount of energy basically every day", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I use the same amount of energy basically every day",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_after_verb_before_if() {
-        assert_lint_count("This would happen every day if left alone.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This would happen every day if left alone.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_after_noun_before_preposition() {
-        assert_lint_count("An animal can do training and inference every day of its existence until the day of its death.", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "An animal can do training and inference every day of its existence until the day of its death.",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_after_time() {
-        assert_lint_count("Can I take a picture at 12:00 every day?", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Can I take a picture at 12:00 every day?",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_every_day_at_start_of_chunk_before_np() {
-        assert_lint_count("Every day the application crashes several times on macOS Sequoia version 15.3", Everyday::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Every day the application crashes several times on macOS Sequoia version 15.3",
+            Everyday::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -462,6 +537,10 @@ mod tests {
 
     #[test]
     fn dont_flag_every_day_singular_noun_2020() {
-        assert_no_lints("50 requests per day, every day free.", Everyday::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "50 requests per day, every day free.",
+            Everyday::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

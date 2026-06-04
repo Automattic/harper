@@ -77,51 +77,99 @@ mod tests {
 
     #[test]
     fn dont_flag_and_the_like() {
-        assert_no_lints("The color of brackets and the like appears to be incorrect ...", AndTheLike::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The color of brackets and the like appears to be incorrect ...",
+            AndTheLike::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_or_the_like() {
-        assert_no_lints("Does WCAG apply only to English (or the like), or does it aim to cover all languages?", AndTheLike::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Does WCAG apply only to English (or the like), or does it aim to cover all languages?",
+            AndTheLike::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_an_the_likes() {
-        assert_suggestion_result("Allow jsSourceDir (an the likes) to refer to the project root. #5", AndTheLike::default(), "Allow jsSourceDir (and the like) to refer to the project root. #5", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Allow jsSourceDir (an the likes) to refer to the project root. #5",
+            AndTheLike::default(),
+            "Allow jsSourceDir (and the like) to refer to the project root. #5",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_and_alike() {
-        assert_suggestion_result("Latest release breaks FilePicker and alike", AndTheLike::default(), "Latest release breaks FilePicker and the like", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Latest release breaks FilePicker and alike",
+            AndTheLike::default(),
+            "Latest release breaks FilePicker and the like",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_and_alikes() {
-        assert_suggestion_result("Compiled functions (and alikes) need to keep references for their module objects", AndTheLike::default(), "Compiled functions (and the like) need to keep references for their module objects", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Compiled functions (and alikes) need to keep references for their module objects",
+            AndTheLike::default(),
+            "Compiled functions (and the like) need to keep references for their module objects",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_and_the_alike() {
-        assert_suggestion_result("Suggestions, comments and the alike are welcome on http://waa.ai/4xtC", AndTheLike::default(), "Suggestions, comments and the like are welcome on http://waa.ai/4xtC", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Suggestions, comments and the alike are welcome on http://waa.ai/4xtC",
+            AndTheLike::default(),
+            "Suggestions, comments and the like are welcome on http://waa.ai/4xtC",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_and_the_likes() {
-        assert_suggestion_result("Don't report \"expected semicolon or line break\", \"expected comma\" and the likes at every token boundary", AndTheLike::default(), "Don't report \"expected semicolon or line break\", \"expected comma\" and the like at every token boundary", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Don't report \"expected semicolon or line break\", \"expected comma\" and the likes at every token boundary",
+            AndTheLike::default(),
+            "Don't report \"expected semicolon or line break\", \"expected comma\" and the like at every token boundary",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_or_alike() {
-        assert_suggestion_result("enable biome extension to \"monitor or alike\" the workspace.", AndTheLike::default(), "enable biome extension to \"monitor or the like\" the workspace.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "enable biome extension to \"monitor or alike\" the workspace.",
+            AndTheLike::default(),
+            "enable biome extension to \"monitor or the like\" the workspace.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_or_alikes() {
-        assert_suggestion_result("Persistent Compiler Caching with ccache or alikes", AndTheLike::default(), "Persistent Compiler Caching with ccache or the like", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Persistent Compiler Caching with ccache or alikes",
+            AndTheLike::default(),
+            "Persistent Compiler Caching with ccache or the like",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_or_the_likes() {
-        assert_suggestion_result("Description of the problem: Implement aria2c or the likes to resume partial downloads.", AndTheLike::default(), "Description of the problem: Implement aria2c or the like to resume partial downloads.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Description of the problem: Implement aria2c or the likes to resume partial downloads.",
+            AndTheLike::default(),
+            "Description of the problem: Implement aria2c or the like to resume partial downloads.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

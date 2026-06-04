@@ -3,6 +3,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
+use harper_core::languages::Language;
 use harper_core::{Dialect, linting::FlatConfig, parsers::MarkdownOptions};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
@@ -74,7 +75,7 @@ pub struct Config {
     pub code_action_config: CodeActionConfig,
     pub isolate_english: bool,
     pub markdown_options: MarkdownOptions,
-    pub dialect: Dialect,
+    pub language: Language,
     /// Maximum length (in bytes) a file can have before it's skipped.
     /// Above this limit, the file will not be linted.
     pub max_file_length: usize,
@@ -161,8 +162,12 @@ impl Config {
             base.diagnostic_severity = serde_json::from_value(v.clone())?;
         }
 
-        if let Some(v) = value.get("dialect") {
-            base.dialect = serde_json::from_value(v.clone())?;
+        if let Some(v) = value.get("language") {
+            base.language = serde_json::from_value(v.clone())?;
+        } else if let Some(v) = value.get("dialect") {
+            // Legacy support for old "dialect" config key
+            let dialect: Dialect = serde_json::from_value(v.clone())?;
+            base.language = dialect.into();
         }
 
         if let Some(v) = value.get("codeActions") {
@@ -223,7 +228,7 @@ impl Default for Config {
             code_action_config: CodeActionConfig::default(),
             isolate_english: false,
             markdown_options: MarkdownOptions::default(),
-            dialect: Dialect::American,
+            language: Language::default(),
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
         }

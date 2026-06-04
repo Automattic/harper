@@ -4,10 +4,11 @@ use crate::language::german::parsers::PlainGerman;
 use crate::language::german::spell::german_dictionary;
 use crate::language::portuguese::parsers::PlainPortuguese;
 use crate::language::portuguese::spell::portuguese_dictionary;
+use crate::languages::Language;
+use crate::languages::LanguageFamily;
 use crate::linting::LintGroup;
 use crate::parsers::{Markdown, MarkdownOptions, OrgMode, Parser, PlainEnglish};
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{Dialect, languages::LanguageFamily};
 
 const LANGUAGE_NEUTRAL_RULES: &[&str] = &[
     "CommaFixes",
@@ -46,13 +47,11 @@ pub enum ProseLanguage {
     Portuguese,
 }
 
-pub fn prose_language_for_dialect(dialect: Dialect) -> ProseLanguage {
-    if dialect.is_german() {
-        ProseLanguage::German
-    } else if dialect.is_portuguese() {
-        ProseLanguage::Portuguese
-    } else {
-        ProseLanguage::English
+pub fn prose_language(language: &Language) -> ProseLanguage {
+    match language {
+        Language::English(_) => ProseLanguage::English,
+        Language::German(_) => ProseLanguage::German,
+        Language::Portuguese(_) => ProseLanguage::Portuguese,
     }
 }
 
@@ -64,16 +63,16 @@ pub fn dictionary_for_language(language: LanguageFamily) -> Arc<FstDictionary> {
     }
 }
 
-pub fn dictionary_for_dialect(dialect: Dialect) -> Arc<FstDictionary> {
-    dictionary_for_language(dialect.language_family())
+pub fn dictionary(language: Language) -> Arc<FstDictionary> {
+    dictionary_for_language(language.family())
 }
 
 pub fn parser_for_prose(
     language_id: &str,
-    dialect: Dialect,
+    language: Language,
     markdown_options: MarkdownOptions,
 ) -> Option<Box<dyn Parser>> {
-    match (language_id, prose_language_for_dialect(dialect)) {
+    match (language_id, prose_language(&language)) {
         ("mail", ProseLanguage::German) => Some(Box::new(PlainGerman)),
         ("mail", ProseLanguage::Portuguese) => Some(Box::new(PlainPortuguese)),
         ("mail", ProseLanguage::English) => Some(Box::new(PlainEnglish)),
@@ -95,64 +94,44 @@ pub fn parser_for_prose(
 
 pub fn add_language_specific_linters(
     out: &mut LintGroup,
-    dialect: Dialect,
+    language: Language,
     dictionary: Arc<impl Dictionary + 'static>,
 ) {
-    if dialect.is_german() {
-        use crate::language::german::linting::german_noun_capitalization::GermanNounCapitalization;
-        use crate::language::german::linting::german_sentence_capitalization::GermanSentenceCapitalization;
-        use crate::language::german::linting::german_spell_check::GermanSpellCheck;
+    match language {
+        Language::German(_) => {
+            use crate::language::german::linting::german_noun_capitalization::GermanNounCapitalization;
+            use crate::language::german::linting::german_sentence_capitalization::GermanSentenceCapitalization;
+            use crate::language::german::linting::german_spell_check::GermanSpellCheck;
 
-        out.add(
-            "GermanSpellCheck",
-            GermanSpellCheck::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("GermanSpellCheck", true);
-        out.add(
-            "GermanNounCapitalization",
-            GermanNounCapitalization::new(dictionary.clone()),
-        );
-        out.config
-            .set_rule_enabled("GermanNounCapitalization", true);
-        out.add(
-            "GermanSentenceCapitalization",
-            GermanSentenceCapitalization::new(dictionary.clone()),
-        );
-        out.config
-            .set_rule_enabled("GermanSentenceCapitalization", true);
+            out.add(
+                "GermanSpellCheck",
+                GermanSpellCheck::new(dictionary.clone()),
+            );
+            out.config.set_rule_enabled("GermanSpellCheck", true);
+            out.add(
+                "GermanNounCapitalization",
+                GermanNounCapitalization::new(dictionary.clone()),
+            );
+            out.config
+                .set_rule_enabled("GermanNounCapitalization", true);
+            out.add(
+                "GermanSentenceCapitalization",
+                GermanSentenceCapitalization::new(dictionary.clone()),
+            );
+            out.config
+                .set_rule_enabled("GermanSentenceCapitalization", true);
+        }
+        Language::Portuguese(_) => {
+            use crate::language::portuguese::linting::portuguese_spell_check::PortugueseSpellCheck;
+
+            out.add(
+                "PortugueseSpellCheck",
+                PortugueseSpellCheck::new(dictionary.clone()),
+            );
+            out.config.set_rule_enabled("PortugueseSpellCheck", true);
+        }
+        Language::English(_) => {
+            // English is the default, no additional linters needed
+        }
     }
-
-    if dialect.is_portuguese() {
-        use crate::language::portuguese::linting::portuguese_spell_check::PortugueseSpellCheck;
-
-        out.add(
-            "PortugueseSpellCheck",
-            PortugueseSpellCheck::new(dictionary.clone()),
-        );
-        out.config.set_rule_enabled("PortugueseSpellCheck", true);
-    }
-}
-
-pub fn rule_default_enabled(rule_name: &str, dialect: Dialect, default: bool) -> bool {
-    if !default {
-        return false;
-    }
-
-    if dialect.is_english() {
-        return true;
-    }
-
-    if LANGUAGE_NEUTRAL_RULES.contains(&rule_name) {
-        return true;
-    }
-
-    if dialect.is_german() {
-        return GERMAN_RULES.contains(&rule_name);
-    }
-
-    if dialect.is_portuguese() {
-        return PORTUGUESE_RULES.contains(&rule_name);
-    }
-
-    false
 }

@@ -135,41 +135,81 @@ mod tests {
 
     #[test]
     fn ignores_kind_of_curse() {
-        assert_lint_count("This kind of curse is dangerous.", OfCourse::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This kind of curse is dangerous.",
+            OfCourse::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_sort_of_curse() {
-        assert_lint_count("It's a sort of curse that lingers.", OfCourse::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It's a sort of curse that lingers.",
+            OfCourse::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_curse_of_title() {
-        assert_lint_count("The Curse of Strahd is a famous module.", OfCourse::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The Curse of Strahd is a famous module.",
+            OfCourse::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_off_course() {
-        assert_suggestion_result("Yes, off course we should do that.", OfCourse::default(), "Yes, of course we should do that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Yes, off course we should do that.",
+            OfCourse::default(),
+            "Yes, of course we should do that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_o_course() {
-        assert_suggestion_result("Yes, o course we should do that.", OfCourse::default(), "Yes, of course we should do that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Yes, o course we should do that.",
+            OfCourse::default(),
+            "Yes, of course we should do that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_ofcourse() {
-        assert_suggestion_result("Ofcourse, I like other languages.", OfCourse::default(), "Of course, I like other languages.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Ofcourse, I like other languages.",
+            OfCourse::default(),
+            "Of course, I like other languages.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_off_coarse() {
-        assert_suggestion_result("Off coarse, the web service will still be operational.", OfCourse::default(), "Of course, the web service will still be operational.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Off coarse, the web service will still be operational.",
+            OfCourse::default(),
+            "Of course, the web service will still be operational.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_literal_off_course() {
-        assert_lint_count("Her sailboat had been driven off course by the storm.", OfCourse::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Her sailboat had been driven off course by the storm.",
+            OfCourse::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

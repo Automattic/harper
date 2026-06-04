@@ -238,11 +238,21 @@ mod tests {
 
     #[test]
     fn changes_their_tact() {
-        assert_suggestion_result("As we become inoculated to attention grifts, the grifter changes their tact.", ChangeTack::default(), "As we become inoculated to attention grifts, the grifter changes their tack.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "As we become inoculated to attention grifts, the grifter changes their tact.",
+            ChangeTack::default(),
+            "As we become inoculated to attention grifts, the grifter changes their tack.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn different_tact() {
-        assert_suggestion_result("So, I recently took a different tact: I put all my models etc. in a single folder.", ChangeTack::default(), "So, I recently took a different tack: I put all my models etc. in a single folder.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "So, I recently took a different tact: I put all my models etc. in a single folder.",
+            ChangeTack::default(),
+            "So, I recently took a different tack: I put all my models etc. in a single folder.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

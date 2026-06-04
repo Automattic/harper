@@ -188,12 +188,22 @@ mod tests {
 
     #[test]
     fn dont_flag_quiet_light() {
-        assert_lint_count("The quiet lights in the houses", QuiteQuiet::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The quiet lights in the houses",
+            QuiteQuiet::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_till() {
-        assert_lint_count("You’d better try and sit quiet till morning.", QuiteQuiet::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You’d better try and sit quiet till morning.",
+            QuiteQuiet::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -228,110 +238,192 @@ mod tests {
 
     #[test]
     fn fix_but_its_not_quite_clear_1956() {
-        assert_no_lints("But it's not quite clear", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "But it's not quite clear",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_adv_quite_1971() {
-        assert_no_lints("It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "It’s actually quite smart. It’s really quite smart. The proof is actually quite neat. Actually really quite simple. It’s actually quite strong. The Sneetches got really quite smart on that day.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_2003() {
-        assert_no_lints("The namespaces are generally quite short", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The namespaces are generally quite short",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // --- Predicate adjective: change-of-state verbs + prepositions ---
 
     #[test]
     fn dont_flag_go_quiet_for() {
-        assert_no_lints("If I go quiet for a week… yeah I'm dead.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "If I go quiet for a week… yeah I'm dead.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_went_quiet_about() {
-        assert_no_lints("He went quiet about the whole thing.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "He went quiet about the whole thing.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_keep_quiet_about() {
-        assert_no_lints("She kept quiet about what happened.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "She kept quiet about what happened.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_stay_quiet_during() {
-        assert_no_lints("Please stay quiet during the presentation.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Please stay quiet during the presentation.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_fell_quiet_after() {
-        assert_no_lints("The room fell quiet after the announcement.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The room fell quiet after the announcement.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_remained_quiet_in() {
-        assert_no_lints("She remained quiet in meetings.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "She remained quiet in meetings.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_grew_quiet_on() {
-        assert_no_lints("He grew quiet on the matter.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "He grew quiet on the matter.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_be_quiet_for() {
-        assert_no_lints("Be quiet for a moment.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Be quiet for a moment.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // --- Predicate adjective: conjunctions ---
 
     #[test]
     fn dont_flag_quiet_and() {
-        assert_no_lints("Stay quiet and listen.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Stay quiet and listen.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_but() {
-        assert_no_lints("She was quiet but firm.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "She was quiet but firm.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // --- Predicate adjective: temporal/locative adverbs ---
 
     #[test]
     fn dont_flag_quiet_now() {
-        assert_no_lints("Be quiet now.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Be quiet now.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_there() {
-        assert_no_lints("It's quiet there.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "It's quiet there.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_down() {
-        assert_no_lints("Quiet down, everyone.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Quiet down, everyone.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_enough() {
-        assert_no_lints("The room was quiet enough.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The room was quiet enough.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_quiet_lately() {
-        assert_no_lints("It's been quiet lately.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "It's been quiet lately.",
+            QuiteQuiet::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // --- Still catches genuine typos ---
 
     #[test]
     fn still_catches_quiet_remarkable() {
-        assert_suggestion_result("That was quiet remarkable.", QuiteQuiet::default(), "That was quite remarkable.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That was quiet remarkable.",
+            QuiteQuiet::default(),
+            "That was quite remarkable.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn still_catches_quiet_impressive() {
-        assert_suggestion_result("That was quiet impressive.", QuiteQuiet::default(), "That was quite impressive.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "That was quiet impressive.",
+            QuiteQuiet::default(),
+            "That was quite impressive.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // --- Issue #3560: "probably quite" should not be flagged ---

@@ -3,9 +3,10 @@
 //! This serves as the default/fallback detector and has lower confidence
 //! than language-specific detectors. It uses Harper's built-in English detection.
 
+use crate::Token;
 use crate::language_detection::LanguageDetector;
-use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Token};
+use crate::languages::Language;
+use crate::spell::FstDictionary;
 
 /// English language detector with lower confidence (fallback).
 #[derive(Debug)]
@@ -21,14 +22,14 @@ impl LanguageDetector for EnglishDetector {
         toks: &[Token],
         source: &[char],
         dict: &FstDictionary,
-        default_dialect: Dialect,
-    ) -> Option<Dialect> {
+        default_language: Language,
+    ) -> Option<Language> {
         // Use Harper's built-in English detection
-        let is_english = harper_core::language_detection::is_likely_english(toks, source, dict);
+        let is_english = crate::language_detection::is_likely_english(toks, source, dict);
 
         if is_english {
-            // Return the default dialect for English text, so that configured dialect is respected
-            Some(default_dialect)
+            // Return the default language for English text, so that configured language is respected
+            Some(default_language)
         } else {
             None
         }
@@ -43,8 +44,10 @@ impl LanguageDetector for EnglishDetector {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::Document;
-    use harper_core::spell::FstDictionary;
+    use crate::Document;
+    use crate::dialects::english::EnglishDialect;
+    use crate::languages::Language;
+    use crate::spell::FstDictionary;
 
     #[test]
     fn detects_english() {
@@ -53,8 +56,9 @@ mod tests {
         let doc = Document::new_plain_english_curated(text);
         let detector = EnglishDetector;
 
-        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, Dialect::American);
-        assert_eq!(result, Some(Dialect::American));
+        let default_lang = Language::English(EnglishDialect::American);
+        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, default_lang);
+        assert_eq!(result, Some(default_lang));
     }
 
     #[test]
@@ -64,7 +68,8 @@ mod tests {
         let doc = Document::new_plain_english_curated(text);
         let detector = EnglishDetector;
 
-        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, Dialect::American);
+        let default_lang = Language::English(EnglishDialect::American);
+        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, default_lang);
         assert_eq!(result, None);
     }
 
@@ -75,7 +80,8 @@ mod tests {
         let doc = Document::new_plain_english_curated(text);
         let detector = EnglishDetector;
 
-        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, Dialect::American);
+        let default_lang = Language::English(EnglishDialect::American);
+        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, default_lang);
         assert_eq!(result, None);
     }
 }

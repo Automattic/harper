@@ -1,7 +1,4 @@
-use std::{
-    env, fs,
-    path::Path,
-};
+use std::{env, fs, path::Path};
 
 #[derive(Debug)]
 struct StandaloneRule {

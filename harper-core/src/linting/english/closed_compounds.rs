@@ -170,7 +170,12 @@ mod tests {
     fn mean_while() {
         let test_sentence = "Mean while, the team kept working.";
         let expected = "Meanwhile, the team kept working.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -345,82 +350,141 @@ mod tests {
     fn by_pass() {
         let test_sentence = "Please by pass this check for now.";
         let expected = "Please bypass this check for now.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dead_lift() {
         let test_sentence = "I can dead lift 200 kg.";
         let expected = "I can deadlift 200 kg.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn chalk_board() {
         let test_sentence = "The teacher wrote the equation on the chalk board.";
         let expected = "The teacher wrote the equation on the chalkboard.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn key_stoke() {
         let test_sentence = "Use this key stoke to open search.";
         let expected = "Use this keystroke to open search.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn in_tact() {
         let test_sentence = "The code remains in tact after the merge.";
         let expected = "The code remains intact after the merge.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn intact_is_allowed() {
-        assert_no_lints("The data set remains intact.", lint_group(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The data set remains intact.",
+            lint_group(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn key_stokes() {
         let test_sentence = "These key stokes are hard to memorize.";
         let expected = "These keystrokes are hard to memorize.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn key_strokes() {
         let test_sentence = "There may have been a missing key stroke.";
         let expected = "There may have been a missing keystroke.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn with_out() {
         let test_sentence = "We left with out a map.";
         let expected = "We left without a map.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn the_re() {
         let test_sentence = "The re are too many popups on this page.";
         let expected = "There are too many popups on this page.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn short_coming() {
         let test_sentence = "That bug is a short coming in the current release.";
         let expected = "That bug is a shortcoming in the current release.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn short_comings() {
         let test_sentence = "We listed three short comings in the postmortem.";
         let expected = "We listed three shortcomings in the postmortem.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -429,13 +493,23 @@ mod tests {
             "It's worth while documenting all the clientside events that the eventsService emits?";
         let expected =
             "It's worthwhile documenting all the clientside events that the eventsService emits?";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn worth_hyphen_while() {
         let test_sentence = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worth-while.";
         let expected = "I feel that the special case of looping over sequences that follow a standard iterator protocol (i.e. optionals) is important enough to be worthwhile.";
-        assert_suggestion_result(test_sentence, lint_group(), expected, crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            test_sentence,
+            lint_group(),
+            expected,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

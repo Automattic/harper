@@ -132,7 +132,8 @@ impl Linter {
     pub fn new(dialect: Dialect) -> Self {
         let dictionary = Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())]);
         let core_dialect: harper_core::Dialect = dialect.into();
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), core_dialect.into());
+        let lint_group =
+            LintGroup::new_curated_empty_config(dictionary.clone(), core_dialect.into());
 
         Self {
             lint_group,

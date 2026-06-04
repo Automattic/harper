@@ -64,87 +64,172 @@ mod tests {
 
     #[test]
     fn fix_can_i_every() {
-        assert_suggestion_result("Odd, how can i every become negative in that case?", EverEvery::default(), "Odd, how can i ever become negative in that case?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Odd, how can i every become negative in that case?",
+            EverEvery::default(),
+            "Odd, how can i ever become negative in that case?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_can_they_every() {
-        assert_suggestion_result("if each component has its own instance of NameService, how can they every share state?", EverEvery::default(), "if each component has its own instance of NameService, how can they ever share state?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "if each component has its own instance of NameService, how can they every share state?",
+            EverEvery::default(),
+            "if each component has its own instance of NameService, how can they ever share state?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_can_we_every() {
-        assert_suggestion_result("can we every have a good dev UX?", EverEvery::default(), "can we ever have a good dev UX?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "can we every have a good dev UX?",
+            EverEvery::default(),
+            "can we ever have a good dev UX?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_did_we_every() {
-        assert_suggestion_result("Did we every fix that?", EverEvery::default(), "Did we ever fix that?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Did we every fix that?",
+            EverEvery::default(),
+            "Did we ever fix that?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_did_you_every() {
-        assert_suggestion_result("Did you every get vtsls working properly?", EverEvery::default(), "Did you ever get vtsls working properly?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Did you every get vtsls working properly?",
+            EverEvery::default(),
+            "Did you ever get vtsls working properly?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_do_i_every() {
-        assert_suggestion_result("Rarely do I every look forward to the new ui.", EverEvery::default(), "Rarely do I ever look forward to the new ui.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Rarely do I every look forward to the new ui.",
+            EverEvery::default(),
+            "Rarely do I ever look forward to the new ui.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_do_we_every() {
-        assert_suggestion_result("do we every stop learning new things?", EverEvery::default(), "do we ever stop learning new things?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "do we every stop learning new things?",
+            EverEvery::default(),
+            "do we ever stop learning new things?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_do_you_every() {
-        assert_suggestion_result("Do you every faced the issue or have any idea why this could happen?", EverEvery::default(), "Do you ever faced the issue or have any idea why this could happen?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Do you every faced the issue or have any idea why this could happen?",
+            EverEvery::default(),
+            "Do you ever faced the issue or have any idea why this could happen?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_dont_i_every() {
-        assert_suggestion_result("WHY DONT I EVERY SEE OR HEAR ABOUT THINGS HAPPENING IN SOUTHPORT?", EverEvery::default(), "WHY DONT I EVER SEE OR HEAR ABOUT THINGS HAPPENING IN SOUTHPORT?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "WHY DONT I EVERY SEE OR HEAR ABOUT THINGS HAPPENING IN SOUTHPORT?",
+            EverEvery::default(),
+            "WHY DONT I EVER SEE OR HEAR ABOUT THINGS HAPPENING IN SOUTHPORT?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_dont_they_every() {
-        assert_suggestion_result("And why dont they every smile first?", EverEvery::default(), "And why dont they ever smile first?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "And why dont they every smile first?",
+            EverEvery::default(),
+            "And why dont they ever smile first?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_dont_you_every() {
-        assert_suggestion_result("Dont you every forget this and believe nothing else.", EverEvery::default(), "Dont you ever forget this and believe nothing else.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Dont you every forget this and believe nothing else.",
+            EverEvery::default(),
+            "Dont you ever forget this and believe nothing else.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_have_you_every() {
-        assert_suggestion_result("Have you every wanted to generate geometric structures from data.frames", EverEvery::default(), "Have you ever wanted to generate geometric structures from data.frames", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Have you every wanted to generate geometric structures from data.frames",
+            EverEvery::default(),
+            "Have you ever wanted to generate geometric structures from data.frames",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_should_i_every() {
-        assert_suggestion_result("I.e. why would I every use deepcopy ?", EverEvery::default(), "I.e. why would I ever use deepcopy ?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "I.e. why would I every use deepcopy ?",
+            EverEvery::default(),
+            "I.e. why would I ever use deepcopy ?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_should_we_every() {
-        assert_suggestion_result("Should we every meet, I'll get you a beverage of your choosing!", EverEvery::default(), "Should we ever meet, I'll get you a beverage of your choosing!", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Should we every meet, I'll get you a beverage of your choosing!",
+            EverEvery::default(),
+            "Should we ever meet, I'll get you a beverage of your choosing!",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_should_you_every() {
-        assert_suggestion_result("but you will always have a place in his home should you every truly desire it", EverEvery::default(), "but you will always have a place in his home should you ever truly desire it", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "but you will always have a place in his home should you every truly desire it",
+            EverEvery::default(),
+            "but you will always have a place in his home should you ever truly desire it",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_would_i_every() {
-        assert_suggestion_result("Why would I every do that?", EverEvery::default(), "Why would I ever do that?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Why would I every do that?",
+            EverEvery::default(),
+            "Why would I ever do that?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn fix_would_they_every() {
-        assert_suggestion_result("Would they every be installed together?", EverEvery::default(), "Would they ever be installed together?", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Would they every be installed together?",
+            EverEvery::default(),
+            "Would they ever be installed together?",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     // known false positive - future contributors: please feel free to tackle this!
@@ -152,6 +237,10 @@ mod tests {
     #[test]
     #[ignore = "unusual but not wrong position of time phrase, maybe should have commas?"]
     fn dont_flag_should_we_every() {
-        assert_no_lints("MM: should we every month or two have a roundup of what's been happening in WGSL", EverEvery::default(), crate::languages::LanguageFamily::English)
+        assert_no_lints(
+            "MM: should we every month or two have a roundup of what's been happening in WGSL",
+            EverEvery::default(),
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

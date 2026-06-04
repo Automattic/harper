@@ -54,51 +54,101 @@ mod tests {
 
     #[test]
     fn corrects_simple_cure_against() {
-        assert_suggestion_result("Researchers sought a cure against the stubborn illness.", CureFor::default(), "Researchers sought a cure for the stubborn illness.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Researchers sought a cure against the stubborn illness.",
+            CureFor::default(),
+            "Researchers sought a cure for the stubborn illness.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_plural_cures_against() {
-        assert_suggestion_result("Doctors insist this serum cures against the new variant.", CureFor::default(), "Doctors insist this serum cures for the new variant.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Doctors insist this serum cures against the new variant.",
+            CureFor::default(),
+            "Doctors insist this serum cures for the new variant.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_past_participle_cured_against() {
-        assert_suggestion_result("The remedy was cured against the infection last spring.", CureFor::default(), "The remedy was cured for the infection last spring.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The remedy was cured against the infection last spring.",
+            CureFor::default(),
+            "The remedy was cured for the infection last spring.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_uppercase_against() {
-        assert_suggestion_result("We still trust the cure AGAINST the dreaded plague.", CureFor::default(), "We still trust the cure FOR the dreaded plague.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We still trust the cure AGAINST the dreaded plague.",
+            CureFor::default(),
+            "We still trust the cure FOR the dreaded plague.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn corrects_at_sentence_start() {
-        assert_suggestion_result("Cure against that condition became the rallying cry.", CureFor::default(), "Cure for that condition became the rallying cry.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Cure against that condition became the rallying cry.",
+            CureFor::default(),
+            "Cure for that condition became the rallying cry.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_cure_for() {
-        assert_lint_count("They finally found a cure for the fever.", CureFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They finally found a cure for the fever.",
+            CureFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_cure_from() {
-        assert_lint_count("A cure from this rare herb is on the horizon.", CureFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "A cure from this rare herb is on the horizon.",
+            CureFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_with_comma() {
-        assert_lint_count("A cure, against all odds, appeared in the files.", CureFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "A cure, against all odds, appeared in the files.",
+            CureFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_unrelated_against() {
-        assert_lint_count("Travelers stand against the roaring wind on the cliffs.", CureFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Travelers stand against the roaring wind on the cliffs.",
+            CureFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_secure_against() {
-        assert_lint_count("The fortress stayed secure against the invaders.", CureFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The fortress stayed secure against the invaders.",
+            CureFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -92,6 +92,10 @@ mod tests {
 
     #[test]
     fn ignores_french_spacing() {
-        assert_no_lints("This is a short sentence.  This is another short sentence.", Spaces, crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "This is a short sentence.  This is another short sentence.",
+            Spaces,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -336,11 +336,19 @@ mod tests {
 
     #[test]
     fn rust_module() {
-        assert_no_lints("I want to call them as if they were just another Rust module", CallThem::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I want to call them as if they were just another Rust module",
+            CallThem::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn want_to_do() {
-        assert_no_lints("however its a design choice to not call it as it does things I don't want to do.", CallThem::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "however its a design choice to not call it as it does things I don't want to do.",
+            CallThem::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

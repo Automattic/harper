@@ -116,7 +116,12 @@ mod tests {
 
     #[test]
     fn allows_back_then() {
-        assert_lint_count("I was a gross kid back then.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I was a gross kid back then.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -191,7 +196,12 @@ mod tests {
 
     #[test]
     fn then_everyone_clapped_should_be_allowed() {
-        assert_lint_count("and then everyone clapped", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "and then everyone clapped",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -226,52 +236,157 @@ mod tests {
 
     #[test]
     fn allows_and_then() {
-        assert_lint_count("And then we left.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "And then we left.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_this_then() {
-        assert_lint_count("Do this then that.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Do this then that.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_720() {
-        assert_lint_count("And if just one of those is set incorrectly or it has the tiniest bit of dirt inside then that will wreak havoc with the engine's running ability.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("So let's check it out then.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("And if just the tiniest bit of dirt gets inside then that will wreak havoc.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "And if just one of those is set incorrectly or it has the tiniest bit of dirt inside then that will wreak havoc with the engine's running ability.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "So let's check it out then.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "And if just the tiniest bit of dirt gets inside then that will wreak havoc.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
 
-        assert_lint_count("He was always a top student in school but then his argument is that grades don't define intelligence.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He was always a top student in school but then his argument is that grades don't define intelligence.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_744() {
-        assert_lint_count("So then after talking about how he would, he didn't.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "So then after talking about how he would, he didn't.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_720_school_but_then_his() {
-        assert_lint_count("She loved the atmosphere of the school but then his argument is that it lacks proper resources for students.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("The teacher praised the efforts of the school but then his argument is that the curriculum needs to be updated.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("They were excited about the new program at school but then his argument is that it won't be effective without proper training.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("The community supported the school but then his argument is that funding is still a major issue.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "She loved the atmosphere of the school but then his argument is that it lacks proper resources for students.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "The teacher praised the efforts of the school but then his argument is that the curriculum needs to be updated.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "They were excited about the new program at school but then his argument is that it won't be effective without proper training.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "The community supported the school but then his argument is that funding is still a major issue.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_720_so_then_these_resistors() {
-        assert_lint_count("So then these resistors are connected up in parallel to reduce the overall resistance.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("So then these resistors are connected up to ensure the current flows properly.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("So then these resistors are connected up to achieve the desired voltage drop.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("So then these resistors are connected up to demonstrate the principles of series and parallel circuits.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("So then these resistors are connected up to optimize the circuit's performance.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "So then these resistors are connected up in parallel to reduce the overall resistance.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to ensure the current flows properly.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to achieve the desired voltage drop.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to demonstrate the principles of series and parallel circuits.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "So then these resistors are connected up to optimize the circuit's performance.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_720_yes_so_then_sorry() {
-        assert_lint_count("Yes so then sorry you didn't receive the memo about the meeting changes.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("Yes so then sorry you had to wait so long for a response from our team.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("Yes so then sorry you felt left out during the discussion; we value your input.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("Yes so then sorry you missed the deadline; we can discuss an extension.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("Yes so then sorry you encountered issues with the software; let me help you troubleshoot.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Yes so then sorry you didn't receive the memo about the meeting changes.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Yes so then sorry you had to wait so long for a response from our team.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Yes so then sorry you felt left out during the discussion; we value your input.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Yes so then sorry you missed the deadline; we can discuss an extension.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Yes so then sorry you encountered issues with the software; let me help you troubleshoot.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -326,17 +441,32 @@ mod tests {
 
     #[test]
     fn allows_well_then() {
-        assert_lint_count("Well then we're just going to raise all of these taxes", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Well then we're just going to raise all of these taxes",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_nervous_then() {
-        assert_lint_count("I think both of us were getting nervous then because the system would have automatically aborted.", ThenThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I think both of us were getting nervous then because the system would have automatically aborted.",
+            ThenThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_stupider_then_and_more_and_less_stupid_then() {
-        assert_lint_count("He was stupider then her but she was more stupid then some. Then again he was less stupid then some too.", ThenThan::default(), 3, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He was stupider then her but she was more stupid then some. Then again he was less stupid then some too.",
+            ThenThan::default(),
+            3,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

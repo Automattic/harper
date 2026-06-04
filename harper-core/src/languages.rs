@@ -72,6 +72,18 @@ impl From<Language> for LanguageFamily {
     }
 }
 
+impl LanguageFamily {
+    /// Returns a suffix to append to dictionary file paths for this language family.
+    /// English returns `""` (default). German returns `"-de"`. Portuguese returns `"-pt"`.
+    pub fn dict_suffix(&self) -> &'static str {
+        match self {
+            Self::German => "-de",
+            Self::Portuguese => "-pt",
+            Self::English => "",
+        }
+    }
+}
+
 impl Language {
     /// Returns the language family for this language.
     pub fn family(&self) -> LanguageFamily {

@@ -251,7 +251,11 @@ mod tests {
 
     #[test]
     fn ignore_despite_they_shouldnt() {
-        assert_no_lints("Some tools and gears have attack damage values despite they shouldn't", DespiteItIs::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Some tools and gears have attack damage values despite they shouldn't",
+            DespiteItIs::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

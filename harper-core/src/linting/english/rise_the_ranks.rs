@@ -74,47 +74,88 @@ mod tests {
 
     #[test]
     fn fix_rise_the_ranks() {
-        assert_suggestion_result("Rise the ranks from Division 8 to the Champion!", RiseTheRanks::default(), "Rise through the ranks from Division 8 to the Champion!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Rise the ranks from Division 8 to the Champion!",
+            RiseTheRanks::default(),
+            "Rise through the ranks from Division 8 to the Champion!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_rised_the_ranks() {
-        assert_suggestion_result("while there I've rised the ranks from L1 Tech > L2 Tech > Team lead and now Manager", RiseTheRanks::default(), "while there I've rised through the ranks from L1 Tech > L2 Tech > Team lead and now Manager", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "while there I've rised the ranks from L1 Tech > L2 Tech > Team lead and now Manager",
+            RiseTheRanks::default(),
+            "while there I've rised through the ranks from L1 Tech > L2 Tech > Team lead and now Manager",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_risen_the_ranks() {
-        assert_suggestion_result("AngularJS has risen the ranks of popularity a lot over the last couple of years.", RiseTheRanks::default(), "AngularJS has risen through the ranks of popularity a lot over the last couple of years.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "AngularJS has risen the ranks of popularity a lot over the last couple of years.",
+            RiseTheRanks::default(),
+            "AngularJS has risen through the ranks of popularity a lot over the last couple of years.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_rising_the_ranks() {
-        assert_suggestion_result("Rust is new coding language rising the ranks, aiming at safe concurrency, data safe programming at zero abstraction cost.", RiseTheRanks::default(), "Rust is new coding language rising through the ranks, aiming at safe concurrency, data safe programming at zero abstraction cost.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Rust is new coding language rising the ranks, aiming at safe concurrency, data safe programming at zero abstraction cost.",
+            RiseTheRanks::default(),
+            "Rust is new coding language rising through the ranks, aiming at safe concurrency, data safe programming at zero abstraction cost.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_rose_the_ranks() {
-        assert_suggestion_result("we follow these women as they quickly rose the ranks of NASA alongside many of history's greatest minds", RiseTheRanks::default(), "we follow these women as they quickly rose through the ranks of NASA alongside many of history's greatest minds", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "we follow these women as they quickly rose the ranks of NASA alongside many of history's greatest minds",
+            RiseTheRanks::default(),
+            "we follow these women as they quickly rose through the ranks of NASA alongside many of history's greatest minds",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_rise_through_the_ranks() {
-        assert_no_lints("I hadn't noticed any particular suspicious behavior during my slow but steady rise through the ranks.", RiseTheRanks::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I hadn't noticed any particular suspicious behavior during my slow but steady rise through the ranks.",
+            RiseTheRanks::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_rises_through_the_ranks() {
-        assert_no_lints("Vito Scaletta rises through the ranks of the mafia, becoming a powerful don.", RiseTheRanks::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Vito Scaletta rises through the ranks of the mafia, becoming a powerful don.",
+            RiseTheRanks::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_rising_from_the_ranks() {
-        assert_no_lints("Rising from the ranks of a sailor, he seems to have embodied the American Dream among a navy full of elites.", RiseTheRanks::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Rising from the ranks of a sailor, he seems to have embodied the American Dream among a navy full of elites.",
+            RiseTheRanks::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_rising_through_the_ranks() {
-        assert_no_lints("From a tranquil town, he discovered his passion in online gaming tournaments, rising through the ranks with unwavering dedication.", RiseTheRanks::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "From a tranquil town, he discovered his passion in online gaming tournaments, rising through the ranks with unwavering dedication.",
+            RiseTheRanks::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // #[test]

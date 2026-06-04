@@ -33,9 +33,7 @@ merge_linters!(CompoundNouns => CompoundNounAfterDetAdj, CompoundNounBeforeAuxVe
 #[cfg(test)]
 mod tests {
     use super::CompoundNouns;
-    use crate::linting::tests::{
-        assert_lint_count, assert_no_lints, assert_suggestion_result,
-    };
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn web_cam() {
@@ -424,86 +422,167 @@ mod tests {
 
     #[test]
     fn got_is_not_possessive() {
-        assert_lint_count("I got here by car...", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I got here by car...",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_662() {
-        assert_lint_count("They are as old as *modern* computers ", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They are as old as *modern* computers ",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_661() {
-        assert_lint_count("I may be wrong.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I may be wrong.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_704() {
-        assert_lint_count("Here are some ways to do that:", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Here are some ways to do that:",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_721() {
-        assert_lint_count("So if you adjust any one of these adjusters that can have a negative or a positive effect.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "So if you adjust any one of these adjusters that can have a negative or a positive effect.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_678() {
-        assert_lint_count("they can't catch all the bugs.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "they can't catch all the bugs.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ina_not_suggested() {
-        assert_lint_count("past mistakes or a character in a looping reality facing personal challenges.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "past mistakes or a character in a looping reality facing personal challenges.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_suppress_or() {
-        assert_lint_count("He must decide whether to suppress or coexist with his doppelgänger.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He must decide whether to suppress or coexist with his doppelgänger.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_an_arm_and_a_leg() {
-        assert_lint_count("I have to pay an arm and a leg get a worker to come and be my assistant baker.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I have to pay an arm and a leg get a worker to come and be my assistant baker.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_well_and_723() {
-        assert_lint_count("I understood very well and decided to go.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I understood very well and decided to go.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_can_not() {
-        assert_lint_count("Size can not be determined.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Size can not be determined.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_lot_to() {
-        assert_lint_count("but you'd have to raise taxes a lot to do it.", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "but you'd have to raise taxes a lot to do it.",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_to_me() {
-        assert_lint_count("There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off", CompoundNouns::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off",
+            CompoundNouns::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_1553() {
-        assert_no_lints("I'm not sure if there's anyone else that may be interested in more fine-grained control, but as it stands, having the domain level toggle is sufficient for me.", CompoundNouns::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I'm not sure if there's anyone else that may be interested in more fine-grained control, but as it stands, having the domain level toggle is sufficient for me.",
+            CompoundNouns::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_1496() {
-        assert_no_lints("I am not able to respond to messages.", CompoundNouns::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I am not able to respond to messages.",
+            CompoundNouns::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_1298() {
-        assert_no_lints("A series of tests that cover all possible cases.", CompoundNouns::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "A series of tests that cover all possible cases.",
+            CompoundNouns::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_project_or() {
-        assert_no_lints("You can star or watch this project or follow author to get release notifications in time.", CompoundNouns::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "You can star or watch this project or follow author to get release notifications in time.",
+            CompoundNouns::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

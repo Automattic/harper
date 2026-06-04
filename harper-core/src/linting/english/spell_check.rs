@@ -1,9 +1,7 @@
 use super::{Lint, LintKind, Linter, Suggestion};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{
-    CharString, CharStringExt, DialectsEnum, EnglishDialect, TokenStringExt,
-};
+use crate::{CharString, CharStringExt, DialectsEnum, EnglishDialect, TokenStringExt};
 use lru::LruCache;
 use smallvec::ToSmallVec;
 use std::num::NonZero;
@@ -586,7 +584,10 @@ mod tests {
             dbg!(dialect);
             assert_no_lints(
                 "Matt is a great name.",
-                SpellCheck::new(FstDictionary::curated_for_language(LanguageFamily::English), dialect),
+                SpellCheck::new(
+                    FstDictionary::curated_for_language(LanguageFamily::English),
+                    dialect,
+                ),
                 LanguageFamily::English,
             );
         }

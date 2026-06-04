@@ -202,103 +202,197 @@ mod tests {
 
     #[test]
     fn vicious_singular() {
-        assert_suggestion_result("vicious cycle", ViciousCircle::default(), "vicious circle", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "vicious cycle",
+            ViciousCircle::default(),
+            "vicious circle",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn vicious_plural() {
-        assert_suggestion_result("vicious cycles", ViciousCircle::default(), "vicious circles", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "vicious cycles",
+            ViciousCircle::default(),
+            "vicious circles",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn viscous_singular() {
-        assert_suggestion_result("viscous cycle", ViciousCircle::default(), "vicious circle", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "viscous cycle",
+            ViciousCircle::default(),
+            "vicious circle",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn viscous_plural() {
-        assert_suggestion_result("viscous cycles", ViciousCircle::default(), "vicious circles", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "viscous cycles",
+            ViciousCircle::default(),
+            "vicious circles",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_vicious_singular() {
-        assert_no_lints("vicious circle", ViciousCircle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "vicious circle",
+            ViciousCircle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn ignore_virtuous_plural() {
-        assert_no_lints("virtuous circles", ViciousCircle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "virtuous circles",
+            ViciousCircle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Prefer "circle" -  Real-world examples
 
     #[test]
     fn fix_singular_and_plural_nouns() {
-        assert_suggestion_result("The file Vicious Cycle Dataset.ods contains 33 vicious cycles from 13 open source systems studied in our paper.", ViciousCircle::default(), "The file Vicious Circle Dataset.ods contains 33 vicious circles from 13 open source systems studied in our paper.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The file Vicious Cycle Dataset.ods contains 33 vicious cycles from 13 open source systems studied in our paper.",
+            ViciousCircle::default(),
+            "The file Vicious Circle Dataset.ods contains 33 vicious circles from 13 open source systems studied in our paper.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_virtuous() {
-        assert_suggestion_result("FlashInfer-Bench is a benchmark suite and production workflow designed to build a virtuous cycle of self-improving AI systems.", ViciousCircle::default(), "FlashInfer-Bench is a benchmark suite and production workflow designed to build a virtuous circle of self-improving AI systems.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "FlashInfer-Bench is a benchmark suite and production workflow designed to build a virtuous cycle of self-improving AI systems.",
+            ViciousCircle::default(),
+            "FlashInfer-Bench is a benchmark suite and production workflow designed to build a virtuous circle of self-improving AI systems.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Prefer "cycle" - Made up, simple examples
 
     #[test]
     fn fix_singular() {
-        assert_suggestion_result("vicious circle", ViciousCycle::default(), "vicious cycle", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "vicious circle",
+            ViciousCycle::default(),
+            "vicious cycle",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn fix_plural() {
-        assert_suggestion_result("virtuous circles", ViciousCycle::default(), "virtuous cycles", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "virtuous circles",
+            ViciousCycle::default(),
+            "virtuous cycles",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn fix_viscous_singular() {
-        assert_suggestion_result("viscous circle", ViciousCycle::default(), "vicious cycle", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "viscous circle",
+            ViciousCycle::default(),
+            "vicious cycle",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn fix_viscous_plural() {
-        assert_suggestion_result("viscous circles", ViciousCycle::default(), "vicious cycles", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "viscous circles",
+            ViciousCycle::default(),
+            "vicious cycles",
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn dont_flag_singular() {
-        assert_no_lints("viscious cycle", ViciousCycle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "viscious cycle",
+            ViciousCycle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
     #[test]
     fn dont_flag_plural() {
-        assert_no_lints("virtuous cycles", ViciousCycle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "virtuous cycles",
+            ViciousCycle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Prefer "cycle" -  Real-world examples
 
     #[test]
     fn fix_its_a_virtuous() {
-        assert_suggestion_result("It's a virtuous circle: if it's interesting to do a project, a person spends a lot of time on it", ViciousCycle::default(), "It's a virtuous cycle: if it's interesting to do a project, a person spends a lot of time on it", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "It's a virtuous circle: if it's interesting to do a project, a person spends a lot of time on it",
+            ViciousCycle::default(),
+            "It's a virtuous cycle: if it's interesting to do a project, a person spends a lot of time on it",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "Harper currently misinterprets the words around the ellipses as a hostname"]
     fn fix_viscous() {
-        assert_suggestion_result("However, adding it to $connectionsToTransact causes the tests to stop running...viscous circle.", ViciousCycle::default(), "However, adding it to $connectionsToTransact causes the tests to stop running...vicious cycle.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "However, adding it to $connectionsToTransact causes the tests to stop running...viscous circle.",
+            ViciousCycle::default(),
+            "However, adding it to $connectionsToTransact causes the tests to stop running...vicious cycle.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // No preference - both "circle" and "cycle" are fine.
 
     #[test]
     fn dont_flag_either() {
-        assert_no_lints("vicious circle, virtuous cycle, vicious cycles, virtuous circles", ViciousCircleOrCycle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "vicious circle, virtuous cycle, vicious cycles, virtuous circles",
+            ViciousCircleOrCycle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_both_viscous() {
-        assert_suggestion_result("viscous circle, viscous cycles", ViciousCircleOrCycle::default(), "vicious circle, vicious cycles", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "viscous circle, viscous cycles",
+            ViciousCircleOrCycle::default(),
+            "vicious circle, vicious cycles",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // No preference - Real-world examples
 
     #[test]
     fn dont_flag_combo() {
-        assert_no_lints("Instead of a vicious cycle, popularity creates a virtuous circle.", ViciousCircleOrCycle::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Instead of a vicious cycle, popularity creates a virtuous circle.",
+            ViciousCircleOrCycle::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_its_a_viscous_cycle() {
-        assert_suggestion_result("Its a viscous cycle that started back in 1.13 for a few plugins but is now hurting every single world generation plugin", ViciousCircleOrCycle::default(), "Its a vicious cycle that started back in 1.13 for a few plugins but is now hurting every single world generation plugin", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Its a viscous cycle that started back in 1.13 for a few plugins but is now hurting every single world generation plugin",
+            ViciousCircleOrCycle::default(),
+            "Its a vicious cycle that started back in 1.13 for a few plugins but is now hurting every single world generation plugin",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

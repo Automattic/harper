@@ -137,61 +137,118 @@ mod tests {
 
     #[test]
     fn hyphenates_possessive_phrase() {
-        assert_suggestion_result("We met his soon to be boss at lunch.", SoonToBe::default(), "We met his soon-to-be boss at lunch.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We met his soon to be boss at lunch.",
+            SoonToBe::default(),
+            "We met his soon-to-be boss at lunch.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_article_phrase() {
-        assert_suggestion_result("They toasted the soon to be couple.", SoonToBe::default(), "They toasted the soon-to-be couple.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They toasted the soon to be couple.",
+            SoonToBe::default(),
+            "They toasted the soon-to-be couple.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_sentence_start() {
-        assert_suggestion_result("Soon to be parents filled the classroom.", SoonToBe::default(), "Soon-to-be parents filled the classroom.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Soon to be parents filled the classroom.",
+            SoonToBe::default(),
+            "Soon-to-be parents filled the classroom.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_existing_hyphens() {
-        assert_no_lints("We met his soon-to-be boss yesterday.", SoonToBe::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "We met his soon-to-be boss yesterday.",
+            SoonToBe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn keeps_non_adjectival_use() {
-        assert_no_lints("The concert is soon to be over.", SoonToBe::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The concert is soon to be over.",
+            SoonToBe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_with_adverb() {
-        assert_suggestion_result("Our soon to be newly married friends visited.", SoonToBe::default(), "Our soon-to-be newly married friends visited.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Our soon to be newly married friends visited.",
+            SoonToBe::default(),
+            "Our soon-to-be newly married friends visited.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_hyphenated_number_phrase() {
-        assert_suggestion_result("Our soon to be 5-year-old son starts school.", SoonToBe::default(), "Our soon-to-be 5-year-old son starts school.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Our soon to be 5-year-old son starts school.",
+            SoonToBe::default(),
+            "Our soon-to-be 5-year-old son starts school.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_in_law_phrase() {
-        assert_suggestion_result("She thanked her soon to be in-laws for hosting.", SoonToBe::default(), "She thanked her soon-to-be in-laws for hosting.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She thanked her soon to be in-laws for hosting.",
+            SoonToBe::default(),
+            "She thanked her soon-to-be in-laws for hosting.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_future_event() {
-        assert_suggestion_result("We reserved space for our soon to be celebration.", SoonToBe::default(), "We reserved space for our soon-to-be celebration.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We reserved space for our soon to be celebration.",
+            SoonToBe::default(),
+            "We reserved space for our soon-to-be celebration.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_misaligned_verb_chain() {
-        assert_lint_count("They will soon to be moving overseas.", SoonToBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They will soon to be moving overseas.",
+            SoonToBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn hyphenates_guest_example() {
-        assert_suggestion_result("I cooked for my soon to be guests.", SoonToBe::default(), "I cooked for my soon-to-be guests.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I cooked for my soon to be guests.",
+            SoonToBe::default(),
+            "I cooked for my soon-to-be guests.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_rearranged_phrase() {
-        assert_no_lints("We hope to soon be home.", SoonToBe::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "We hope to soon be home.",
+            SoonToBe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

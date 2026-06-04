@@ -66,13 +66,22 @@ mod tests {
 
     fn assert_each_lints(cases: &[&str]) {
         for case in cases {
-            assert_lint_count(case, VerbToAdjective::default(), 1, crate::languages::LanguageFamily::English);
+            assert_lint_count(
+                case,
+                VerbToAdjective::default(),
+                1,
+                crate::languages::LanguageFamily::English,
+            );
         }
     }
 
     fn assert_each_no_lints(cases: &[&str]) {
         for case in cases {
-            assert_no_lints(case, VerbToAdjective::default(), crate::languages::LanguageFamily::English);
+            assert_no_lints(
+                case,
+                VerbToAdjective::default(),
+                crate::languages::LanguageFamily::English,
+            );
         }
     }
 

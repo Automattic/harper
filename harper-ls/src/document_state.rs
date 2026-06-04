@@ -1,9 +1,10 @@
 use crate::config::{CodeActionConfig, DiagnosticSeverity};
 use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
 use crate::pos_conv::range_to_span;
+use harper_core::languages::Language;
 use harper_core::linting::{Lint, LintGroup, Linter};
 use harper_core::spell::{MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, Document, IgnoredLints, TokenKind, remove_overlaps_map};
+use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps_map};
 use harper_core::{Lrc, Token};
 use tower_lsp_server::lsp_types::{CodeActionOrCommand, Command, Diagnostic, Range, Uri};
 
@@ -15,7 +16,7 @@ pub struct DocumentState {
     pub language_id: Option<String>,
     pub ignored_lints: IgnoredLints,
     pub uri: Uri,
-    pub cached_dialect: Option<Dialect>,
+    pub cached_language: Option<Language>,
 }
 
 impl DocumentState {
@@ -27,7 +28,7 @@ impl DocumentState {
         let temp = self.linter.config.clone();
         self.linter
             .config
-            .fill_with_curated_for(self.cached_dialect.unwrap_or(Dialect::American));
+            .fill_with_curated_for_language(self.cached_language.unwrap_or(Language::default()));
 
         let mut lints = self.linter.organized_lints(&self.document);
 
@@ -54,10 +55,10 @@ impl DocumentState {
         range: Range,
         code_action_config: &CodeActionConfig,
     ) -> Vec<CodeActionOrCommand> {
+        use harper_core::Dialect;
         let temp = self.linter.config.clone();
-        self.linter
-            .config
-            .fill_with_curated_for(self.cached_dialect.unwrap_or(Dialect::American));
+        let dialect: Dialect = self.cached_language.unwrap_or(Language::default()).into();
+        self.linter.config.fill_with_curated_for(dialect);
 
         let mut lints = self.linter.lint(&self.document);
 
@@ -108,7 +109,7 @@ impl Default for DocumentState {
             language_id: Default::default(),
             ignored_lints: Default::default(),
             uri: "https://example.net".parse().unwrap(),
-            cached_dialect: None,
+            cached_language: None,
         }
     }
 }

@@ -255,7 +255,12 @@ mod tests {
 
     #[test]
     fn detects_shit() {
-        assert_lint_count("He ate shit when he fell off the bike.", AvoidCurses::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He ate shit when he fell off the bike.",
+            AvoidCurses::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

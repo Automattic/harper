@@ -205,7 +205,12 @@ mod tests {
 
     #[test]
     fn allows_they_are() {
-        assert_lint_count("They are my best friend.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They are my best friend.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -260,37 +265,72 @@ mod tests {
 
     #[test]
     fn allows_he_is() {
-        assert_lint_count("He is my best friend.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He is my best friend.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_she_is_lowercase() {
-        assert_lint_count("she is excited to go.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "she is excited to go.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_it_is() {
-        assert_lint_count("It is what it is.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is what it is.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_they_are_negation() {
-        assert_lint_count("They are not interested.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They are not interested.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_they_were() {
-        assert_lint_count("They were already here.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They were already here.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_asdf_is() {
-        assert_lint_count("asdf is not a word", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "asdf is not a word",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_subject() {
-        assert_lint_count("is set", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "is set",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -325,7 +365,12 @@ mod tests {
 
     #[test]
     fn allows_you_were() {
-        assert_lint_count("You were my best friend.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You were my best friend.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -350,12 +395,22 @@ mod tests {
 
     #[test]
     fn allows_he_was() {
-        assert_lint_count("He was here.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He was here.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_we_were() {
-        assert_lint_count("We were excited.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We were excited.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -380,12 +435,22 @@ mod tests {
 
     #[test]
     fn allows_he_isnt() {
-        assert_lint_count("He isn't ready.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He isn't ready.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_they_arent() {
-        assert_lint_count("They aren't coming.", PronounInflectionBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They aren't coming.",
+            PronounInflectionBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -420,11 +485,19 @@ mod tests {
 
     #[test]
     fn allow_behind_him() {
-        assert_no_lints("Behind him are new shadows.", PronounInflectionBe::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Behind him are new shadows.",
+            PronounInflectionBe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_1682() {
-        assert_no_lints("Understanding them is significant", PronounInflectionBe::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Understanding them is significant",
+            PronounInflectionBe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

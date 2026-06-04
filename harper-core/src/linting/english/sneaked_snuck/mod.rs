@@ -111,53 +111,101 @@ mod tests {
 
     #[test]
     fn correct_sneaked_to_snuck() {
-        assert_suggestion_result("He sneaked in around the back.", PreferSnuck::default(), "He snuck in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He sneaked in around the back.",
+            PreferSnuck::default(),
+            "He snuck in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_sneaked_uppercase() {
-        assert_suggestion_result("He Sneaked in around the back.", PreferSnuck::default(), "He Snuck in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He Sneaked in around the back.",
+            PreferSnuck::default(),
+            "He Snuck in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_sneaked_allcaps() {
-        assert_suggestion_result("He SNEAKED in around the back.", PreferSnuck::default(), "He SNUCK in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He SNEAKED in around the back.",
+            PreferSnuck::default(),
+            "He SNUCK in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_to_snuck_from_github() {
-        assert_suggestion_result("recycled transitions, lingering inflation, copula swaps that sneaked through", PreferSnuck::default(), "recycled transitions, lingering inflation, copula swaps that snuck through", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "recycled transitions, lingering inflation, copula swaps that sneaked through",
+            PreferSnuck::default(),
+            "recycled transitions, lingering inflation, copula swaps that snuck through",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_snuck_when_it_is_preferred() {
-        assert_no_lints("I'm not sure exactly when this fix snuck in", PreferSnuck::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I'm not sure exactly when this fix snuck in",
+            PreferSnuck::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Prefer "sneaked"
 
     #[test]
     fn correct_snuck_to_sneaked() {
-        assert_suggestion_result("He snuck in around the back.", PreferSneaked::default(), "He sneaked in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He snuck in around the back.",
+            PreferSneaked::default(),
+            "He sneaked in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_snuck_uppercase() {
-        assert_suggestion_result("He Snuck in around the back.", PreferSneaked::default(), "He Sneaked in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He Snuck in around the back.",
+            PreferSneaked::default(),
+            "He Sneaked in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_snuck_allcaps() {
-        assert_suggestion_result("He SNUCK in around the back.", PreferSneaked::default(), "He SNEAKED in around the back.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He SNUCK in around the back.",
+            PreferSneaked::default(),
+            "He SNEAKED in around the back.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn correct_to_sneaked_from_github() {
-        assert_suggestion_result("A few unhandled Errors snuck their way into the code base over time f.ex. here:", PreferSneaked::default(), "A few unhandled Errors sneaked their way into the code base over time f.ex. here:", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "A few unhandled Errors snuck their way into the code base over time f.ex. here:",
+            PreferSneaked::default(),
+            "A few unhandled Errors sneaked their way into the code base over time f.ex. here:",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_sneaked_when_it_is_preferred() {
-        assert_no_lints("Something related to recent experiments of WASM support sneaked into the main branch.", PreferSneaked::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Something related to recent experiments of WASM support sneaked into the main branch.",
+            PreferSneaked::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

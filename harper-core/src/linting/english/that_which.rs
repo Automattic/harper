@@ -70,16 +70,31 @@ mod tests {
 
     #[test]
     fn catches_lowercase() {
-        assert_lint_count("To reiterate, that that is cool is not uncool.", ThatWhich::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "To reiterate, that that is cool is not uncool.",
+            ThatWhich::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_different_cases() {
-        assert_lint_count("That that is cool is not uncool.", ThatWhich::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "That that is cool is not uncool.",
+            ThatWhich::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn likes_correction() {
-        assert_lint_count("To reiterate, that which is cool is not uncool.", ThatWhich::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "To reiterate, that which is cool is not uncool.",
+            ThatWhich::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

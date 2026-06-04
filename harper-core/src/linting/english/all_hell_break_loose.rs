@@ -55,26 +55,51 @@ mod tests {
 
     #[test]
     fn fix_break() {
-        assert_suggestion_result("Just run around planting satchels charges while you're alive and let all hell break out when you die.", AllHellBreakLoose::default(), "Just run around planting satchels charges while you're alive and let all hell break loose when you die.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Just run around planting satchels charges while you're alive and let all hell break out when you die.",
+            AllHellBreakLoose::default(),
+            "Just run around planting satchels charges while you're alive and let all hell break loose when you die.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_breaks() {
-        assert_suggestion_result("we upgraded 2 months ago, and now we upgrade prod and all hell breaks out", AllHellBreakLoose::default(), "we upgraded 2 months ago, and now we upgrade prod and all hell breaks loose", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "we upgraded 2 months ago, and now we upgrade prod and all hell breaks out",
+            AllHellBreakLoose::default(),
+            "we upgraded 2 months ago, and now we upgrade prod and all hell breaks loose",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_breaking() {
-        assert_suggestion_result("Next scene, all hell breaking out!", AllHellBreakLoose::default(), "Next scene, all hell breaking loose!", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Next scene, all hell breaking out!",
+            AllHellBreakLoose::default(),
+            "Next scene, all hell breaking loose!",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_broke() {
-        assert_suggestion_result("this time going from 1.3.4 to 1.4.2 and all hell broke out", AllHellBreakLoose::default(), "this time going from 1.3.4 to 1.4.2 and all hell broke loose", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "this time going from 1.3.4 to 1.4.2 and all hell broke out",
+            AllHellBreakLoose::default(),
+            "this time going from 1.3.4 to 1.4.2 and all hell broke loose",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_broken() {
-        assert_suggestion_result("I’m using silenced weapons but as soon as I fire it’s all hell broken out.", AllHellBreakLoose::default(), "I’m using silenced weapons but as soon as I fire it’s all hell broken loose.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I’m using silenced weapons but as soon as I fire it’s all hell broken out.",
+            AllHellBreakLoose::default(),
+            "I’m using silenced weapons but as soon as I fire it’s all hell broken loose.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

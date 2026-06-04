@@ -106,32 +106,62 @@ mod tests {
 
     #[test]
     fn fix_obsess_on() {
-        assert_suggestion_result("Obsess on collecting good answers and you might be precise but irrelevant.", ObsessPreposition::default(), "Obsess over collecting good answers and you might be precise but irrelevant.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Obsess on collecting good answers and you might be precise but irrelevant.",
+            ObsessPreposition::default(),
+            "Obsess over collecting good answers and you might be precise but irrelevant.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_obsessing_on() {
-        assert_suggestion_result("Obsessing on finding new solutions to old problems with AI.", ObsessPreposition::default(), "Obsessing over finding new solutions to old problems with AI.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Obsessing on finding new solutions to old problems with AI.",
+            ObsessPreposition::default(),
+            "Obsessing over finding new solutions to old problems with AI.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_obsessing_with() {
-        assert_suggestion_result("I spent too long checking my code over and over, obsessing with just what might cause this", ObsessPreposition::default(), "I spent too long checking my code over and over, obsessing over just what might cause this", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I spent too long checking my code over and over, obsessing with just what might cause this",
+            ObsessPreposition::default(),
+            "I spent too long checking my code over and over, obsessing over just what might cause this",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_obsess_with() {
-        assert_suggestion_result("And as a programmer I've been taught to obsess with that.", ObsessPreposition::default(), "And as a programmer I've been taught to obsess over that.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "And as a programmer I've been taught to obsess with that.",
+            ObsessPreposition::default(),
+            "And as a programmer I've been taught to obsess over that.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_obsesses_with() {
-        assert_suggestion_result("Every developer obsesses with micro-optimizations must be made to read it over and over again.", ObsessPreposition::default(), "Every developer obsesses over micro-optimizations must be made to read it over and over again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Every developer obsesses with micro-optimizations must be made to read it over and over again.",
+            ObsessPreposition::default(),
+            "Every developer obsesses over micro-optimizations must be made to read it over and over again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_obsessed_on() {
-        assert_suggestion_result("Secondly, if you get obsessed on any idea, then delve in it and don't worry about anything others until you get there.", ObsessPreposition::default(), "Secondly, if you get obsessed with any idea, then delve in it and don't worry about anything others until you get there.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Secondly, if you get obsessed on any idea, then delve in it and don't worry about anything others until you get there.",
+            ObsessPreposition::default(),
+            "Secondly, if you get obsessed with any idea, then delve in it and don't worry about anything others until you get there.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

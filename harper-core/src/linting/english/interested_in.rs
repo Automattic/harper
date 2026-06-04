@@ -72,7 +72,12 @@ mod tests {
 
     #[test]
     fn dont_flag_around() {
-        assert_lint_count("We want to figure out why this is, and how to keep those interested around for longer.", InterestedIn::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We want to figure out why this is, and how to keep those interested around for longer.",
+            InterestedIn::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -98,7 +103,12 @@ mod tests {
 
     #[test]
     fn dont_flag_for_sure() {
-        assert_lint_count("I am interested for sure!", InterestedIn::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I am interested for sure!",
+            InterestedIn::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -133,12 +143,22 @@ mod tests {
 
     #[test]
     fn dont_flag_through() {
-        assert_lint_count("I'm happy to help walk anyone interested through doing this", InterestedIn::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I'm happy to help walk anyone interested through doing this",
+            InterestedIn::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_to() {
-        assert_lint_count("Hi, As title suggest i am interested to know if we can run a custom model trained on yolov9 inference running on two GPU-s.", InterestedIn::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Hi, As title suggest i am interested to know if we can run a custom model trained on yolov9 inference running on two GPU-s.",
+            InterestedIn::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -153,6 +173,11 @@ mod tests {
 
     #[test]
     fn dont_flag_within() {
-        assert_lint_count("But with no one being interested within 8 months, what help would it be.", InterestedIn::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "But with no one being interested within 8 months, what help would it be.",
+            InterestedIn::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

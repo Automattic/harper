@@ -124,11 +124,21 @@ mod tests {
 
     #[test]
     fn ignores_correct_it() {
-        assert_lint_count("I think it would be a shame if this happened.", ItWouldBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I think it would be a shame if this happened.",
+            ItWouldBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_first_person_statement() {
-        assert_lint_count("I would be a good fit for the role.", ItWouldBe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I would be a good fit for the role.",
+            ItWouldBe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

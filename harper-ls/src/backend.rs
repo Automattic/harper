@@ -10,15 +10,16 @@ use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
-use crate::language_detection::LanguageDetectionRegistry;
 use anyhow::{Context, Result, anyhow};
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
 use harper_core::language::registry;
+use harper_core::language_detection::LanguageDetectionRegistry;
+use harper_core::languages::Language;
 use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Parser};
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::{DictWordMetadata, Document, IgnoredLints};
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
@@ -129,7 +130,7 @@ impl Backend {
     async fn load_file_dictionary(
         &self,
         uri: &Uri,
-        dialect: Dialect,
+        language: Language,
     ) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
         if uri
@@ -140,7 +141,7 @@ impl Backend {
         }
 
         let path = self
-            .get_file_dict_path(uri, dialect)
+            .get_file_dict_path(uri, language)
             .await
             .context("Unable to get the file path.")?;
 
@@ -188,11 +189,11 @@ impl Backend {
     }
 
     /// Compute the location of the file's specific dictionary.
-    /// For non-English dialects, files are stored in a dialect-suffixed directory
+    /// For non-English languages, files are stored in a language-suffixed directory
     /// (e.g. `file_dictionaries-de/`).
-    async fn get_file_dict_path(&self, uri: &Uri, dialect: Dialect) -> anyhow::Result<PathBuf> {
+    async fn get_file_dict_path(&self, uri: &Uri, language: Language) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
-        let suffix = dialect.dict_suffix();
+        let suffix = language.family().dict_suffix();
 
         if suffix.is_empty() {
             Ok(config.file_dict_path.join(fileify_path(uri)?))
@@ -214,10 +215,10 @@ impl Backend {
         &self,
         uri: &Uri,
         dict: impl Dictionary,
-        dialect: Dialect,
+        language: Language,
     ) -> Result<()> {
         save_dict(
-            self.get_file_dict_path(uri, dialect)
+            self.get_file_dict_path(uri, language)
                 .await
                 .context("Unable to get the file path.")?,
             dict,
@@ -226,9 +227,9 @@ impl Backend {
         .context("Unable to save the dictionary to path.")
     }
 
-    async fn load_user_dictionary(&self, dialect: Dialect) -> MutableDictionary {
+    async fn load_user_dictionary(&self, language: Language) -> MutableDictionary {
         let config = self.config.read().await;
-        let path = Self::dialect_path(&config.user_dict_path, dialect);
+        let path = Self::dialect_path(&config.user_dict_path, language);
 
         load_dict(path)
             .await
@@ -236,18 +237,18 @@ impl Backend {
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: impl Dictionary, dialect: Dialect) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: impl Dictionary, language: Language) -> Result<()> {
         let config = self.config.read().await;
-        let path = Self::dialect_path(&config.user_dict_path, dialect);
+        let path = Self::dialect_path(&config.user_dict_path, language);
 
         save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
-    async fn load_workspace_dictionary(&self, dialect: Dialect) -> MutableDictionary {
+    async fn load_workspace_dictionary(&self, language: Language) -> MutableDictionary {
         let config = self.config.read().await;
-        let path = Self::dialect_path(&config.workspace_dict_path, dialect);
+        let path = Self::dialect_path(&config.workspace_dict_path, language);
 
         load_dict(path)
             .await
@@ -258,23 +259,23 @@ impl Backend {
     async fn save_workspace_dictionary(
         &self,
         dict: impl Dictionary,
-        dialect: Dialect,
+        language: Language,
     ) -> Result<()> {
         let config = self.config.read().await;
-        let path = Self::dialect_path(&config.workspace_dict_path, dialect);
+        let path = Self::dialect_path(&config.workspace_dict_path, language);
 
         save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
-    /// Computes a dialect-aware path from a base path.
+    /// Computes a language-aware path from a base path.
     /// For English (default), returns the path unchanged.
     /// For German, inserts a suffix before the extension (or appends it for dirs).
     /// E.g. `dictionary.txt` -> `dictionary-de.txt`,
     ///      `.harper-dictionary.txt` -> `.harper-dictionary-de.txt`.
-    fn dialect_path(base: &Path, dialect: Dialect) -> PathBuf {
-        let suffix = dialect.dict_suffix();
+    fn dialect_path(base: &Path, language: Language) -> PathBuf {
+        let suffix = language.family().dict_suffix();
         if suffix.is_empty() {
             return base.to_path_buf();
         }
@@ -333,19 +334,19 @@ impl Backend {
         }
     }
 
-    async fn generate_global_dictionary(&self, dialect: Dialect) -> Result<MergedDictionary> {
+    async fn generate_global_dictionary(&self, language: Language) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
 
-        dict.add_dictionary(registry::dictionary_for_dialect(dialect));
+        dict.add_dictionary(registry::dictionary(language));
         info!(
-            "Loaded {:?} dictionary for dialect: {:?}",
-            dialect.language_family(),
-            dialect
+            "Loaded {:?} dictionary for language: {:?}",
+            language.family(),
+            language
         );
 
-        let user_dict = self.load_user_dictionary(dialect).await;
+        let user_dict = self.load_user_dictionary(language).await;
         dict.add_dictionary(Arc::new(user_dict));
-        let ws_dict = self.load_workspace_dictionary(dialect).await;
+        let ws_dict = self.load_workspace_dictionary(language).await;
         dict.add_dictionary(Arc::new(ws_dict));
         Ok(dict)
     }
@@ -353,11 +354,11 @@ impl Backend {
     async fn generate_file_dictionary(
         &self,
         uri: &Uri,
-        dialect: Dialect,
+        language: Language,
     ) -> Result<MergedDictionary> {
         let (global_dictionary, file_dictionary) = tokio::join!(
-            self.generate_global_dictionary(dialect),
-            self.load_file_dictionary(uri, dialect)
+            self.generate_global_dictionary(language),
+            self.load_file_dictionary(uri, language)
         );
 
         let mut global_dictionary =
@@ -443,13 +444,13 @@ impl Backend {
         );
 
         let config = self.config.read().await;
-        let detected_dialect: Dialect = if is_prose {
+        let detected_language: Language = if is_prose {
             let word_count = text.split_whitespace().count();
             info!("Word count: {}", word_count);
 
-            let cached_dialect = {
+            let cached_language = {
                 let doc_lock = self.doc_state.lock().await;
-                doc_lock.get(uri).and_then(|state| state.cached_dialect)
+                doc_lock.get(uri).and_then(|state| state.cached_language)
             };
 
             if word_count >= MIN_WORDS_FOR_LANGUAGE_DETECTION {
@@ -458,18 +459,18 @@ impl Backend {
                 let dict = FstDictionary::curated();
                 let detected = self
                     .lang_detect
-                    .detect_language(text, &dict, config.dialect);
+                    .detect_language(text, &dict, config.language);
                 debug!(
-                    "harper-ls dialect detect: {:?} for {:?} ({} words)",
+                    "harper-ls language detect: {:?} for {:?} ({} words)",
                     detected, uri, word_count
                 );
 
-                // If the dialect changed for an existing document, force the linter
+                // If the language changed for an existing document, force the linter
                 // to be rebuilt by clearing the cached dict.
-                if cached_dialect != Some(detected) {
+                if cached_language != Some(detected) {
                     info!(
-                        "Dialect changed from {:?} to {:?}, will rebuild linter",
-                        cached_dialect, detected
+                        "Language changed from {:?} to {:?}, will rebuild linter",
+                        cached_language, detected
                     );
                     let mut doc_lock = self.doc_state.lock().await;
                     if let Some(state) = doc_lock.get_mut(uri) {
@@ -479,20 +480,20 @@ impl Backend {
                 }
 
                 detected
-            } else if let Some(cached) = cached_dialect {
+            } else if let Some(cached) = cached_language {
                 // Not enough words yet — keep previous detection.
-                info!("Using cached dialect: {:?} ({} words)", cached, word_count);
+                info!("Using cached language: {:?} ({} words)", cached, word_count);
                 cached
             } else {
                 info!(
-                    "Insufficient content for detection ({} words), using configured dialect",
+                    "Insufficient content for detection ({} words), using configured language",
                     word_count
                 );
-                config.dialect
+                config.language
             }
         } else {
-            // For non-prose files (code, etc.) use the configured dialect.
-            config.dialect
+            // For non-prose files (code, etc.) use the configured language.
+            config.language
         };
 
         // Copy necessary configuration to avoid holding lock.
@@ -500,14 +501,14 @@ impl Backend {
             lint_config,
             markdown_options,
             isolate_english,
-            dialect, // Configured dialect (used as fallback)
+            language, // Configured language (used as fallback)
             max_file_length,
             exclude_patterns,
         ) = (
             config.lint_config.clone(),
             config.markdown_options,
             config.isolate_english,
-            config.dialect,
+            config.language,
             config.max_file_length,
             config.exclude_patterns.clone(),
         );
@@ -526,7 +527,7 @@ impl Backend {
         let ignored_lints = self.load_ignored_lints(uri).await.unwrap_or_default();
 
         let dict = Arc::new(
-            self.generate_file_dictionary(uri, detected_dialect)
+            self.generate_file_dictionary(uri, detected_language)
                 .await
                 .context("Unable to generate the file dictionary.")?,
         );
@@ -539,7 +540,7 @@ impl Backend {
             DocumentState {
                 ignored_lints,
                 linter: {
-                    let mut l = LintGroup::new_curated(dict.clone(), detected_dialect.into());
+                    let mut l = LintGroup::new_curated(dict.clone(), detected_language);
                     l.config.merge_from(lint_config.clone());
                     l
                 },
@@ -548,20 +549,20 @@ impl Backend {
                 language_id: effective_language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
                 uri: uri.clone(),
-                // Store the active dialect for both prose and non-prose documents so later
-                // diagnostics and dictionary code actions stay dialect-aware.
-                cached_dialect: Some(detected_dialect),
+                // Store the active language for both prose and non-prose documents so later
+                // diagnostics and dictionary code actions stay language-aware.
+                cached_language: Some(detected_language),
                 ..Default::default()
             }
         });
 
-        // On subsequent updates, also keep the active dialect in sync.
-        doc_state.cached_dialect = Some(detected_dialect);
+        // On subsequent updates, also keep the active language in sync.
+        doc_state.cached_language = Some(detected_language);
 
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            let mut l = LintGroup::new_curated(dict.clone(), detected_dialect.into());
+            let mut l = LintGroup::new_curated(dict.clone(), detected_language);
             l.config.merge_from(lint_config.clone());
             doc_state.linter = l;
         }
@@ -578,18 +579,18 @@ impl Backend {
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
             lint_config: &FlatConfig,
-            dialect: Dialect,
+            language: Language,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
                 info!("Constructing new linter because of modified ident dictionary.");
                 doc_state.ident_dict = new_dict.clone();
 
-                let mut merged = backend.generate_file_dictionary(uri, dialect).await?;
+                let mut merged = backend.generate_file_dictionary(uri, language).await?;
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
                 doc_state.linter = {
-                    let mut l = LintGroup::new_curated(merged.clone(), dialect.into());
+                    let mut l = LintGroup::new_curated(merged.clone(), language);
                     l.config.merge_from(lint_config.clone());
                     l
                 };
@@ -617,7 +618,7 @@ impl Backend {
                             uri,
                             doc_state,
                             &lint_config,
-                            detected_dialect,
+                            detected_language,
                         )
                         .await?,
                     )
@@ -648,7 +649,7 @@ impl Backend {
                             uri,
                             doc_state,
                             &lint_config,
-                            dialect,
+                            language,
                         )
                         .await?,
                     )
@@ -657,7 +658,7 @@ impl Backend {
                 }
             }
             "mail" | "markdown" | "quarto" | "org" | "plaintext" | "text" => {
-                registry::parser_for_prose(language_id, detected_dialect, markdown_options)
+                registry::parser_for_prose(language_id, detected_language, markdown_options)
             }
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
@@ -689,13 +690,13 @@ impl Backend {
         Ok(())
     }
 
-    /// Returns the detected dialect for a document, falling back to configured default.
-    async fn get_document_dialect(&self, uri: &Uri) -> Dialect {
+    /// Returns the detected language for a document, falling back to configured default.
+    async fn get_document_language(&self, uri: &Uri) -> Language {
         let doc_lock = self.doc_state.lock().await;
-        if let Some(d) = doc_lock.get(uri).and_then(|state| state.cached_dialect) {
-            return d;
+        if let Some(lang) = doc_lock.get(uri).and_then(|state| state.cached_language) {
+            return lang;
         }
-        self.config.read().await.dialect
+        self.config.read().await.language
     }
 
     async fn generate_code_actions(
@@ -976,11 +977,11 @@ impl LanguageServer for Backend {
                 };
 
                 let file_uri: Uri = second.parse().unwrap();
-                let dialect = self.get_document_dialect(&file_uri).await;
+                let language = self.get_document_language(&file_uri).await;
 
-                let mut dict = self.load_user_dictionary(dialect).await;
+                let mut dict = self.load_user_dictionary(language).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict, dialect)
+                self.save_user_dictionary(dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -998,11 +999,11 @@ impl LanguageServer for Backend {
                 };
 
                 let file_uri: Uri = second.parse().unwrap();
-                let dialect = self.get_document_dialect(&file_uri).await;
+                let language = self.get_document_language(&file_uri).await;
 
-                let mut dict = self.load_workspace_dictionary(dialect).await;
+                let mut dict = self.load_workspace_dictionary(language).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict, dialect)
+                self.save_workspace_dictionary(dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -1020,10 +1021,10 @@ impl LanguageServer for Backend {
                 };
 
                 let file_uri: Uri = second.parse().unwrap();
-                let dialect = self.get_document_dialect(&file_uri).await;
+                let language = self.get_document_language(&file_uri).await;
 
                 let mut dict = match self
-                    .load_file_dictionary(&file_uri, dialect)
+                    .load_file_dictionary(&file_uri, language)
                     .await
                     .map_err(|err| error!("{err}"))
                 {
@@ -1034,7 +1035,7 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, DictWordMetadata::default());
 
-                self.save_file_dictionary(&file_uri, dict, dialect)
+                self.save_file_dictionary(&file_uri, dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -1103,9 +1104,9 @@ impl LanguageServer for Backend {
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         self.update_config_from_obj(params.settings).await;
 
-        let (lint_config, default_dialect) = {
+        let (lint_config, default_language) = {
             let config_lock = self.config.read().await;
-            (config_lock.lint_config.clone(), config_lock.dialect)
+            (config_lock.lint_config.clone(), config_lock.language)
         };
 
         let uris: Vec<Uri> = {
@@ -1113,8 +1114,8 @@ impl LanguageServer for Backend {
 
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                let doc_dialect = doc.cached_dialect.unwrap_or(default_dialect);
-                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_dialect.into());
+                let doc_language = doc.cached_language.unwrap_or(default_language);
+                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_language);
                 l.config.merge_from(lint_config.clone());
                 doc.linter = l;
             }
@@ -1346,8 +1347,8 @@ mod tests {
             .await;
 
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::German
+            harness.backend().get_document_language(&uri).await,
+            Language::German(harper_core::language::german::dialects::GermanDialect::Standard)
         );
 
         let diagnostics = harness.backend().generate_diagnostics(&uri).await;
@@ -1369,8 +1370,8 @@ mod tests {
 
         harness.open_document(&uri, "markdown", "").await;
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::American
+            harness.backend().get_document_language(&uri).await,
+            Language::default()
         );
 
         harness
@@ -1378,8 +1379,8 @@ mod tests {
             .await;
 
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::German
+            harness.backend().get_document_language(&uri).await,
+            Language::German(harper_core::language::german::dialects::GermanDialect::Standard)
         );
 
         let diagnostics = harness.backend().generate_diagnostics(&uri).await;
@@ -1403,16 +1404,19 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
-    async fn german_dictionary_commands_write_to_dialect_specific_paths() {
+    async fn german_dictionary_commands_write_to_language_specific_paths() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("german-dicts.md");
+
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
 
         harness
             .open_document(&uri, "markdown", german_text_without_errors())
             .await;
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::German
+            harness.backend().get_document_language(&uri).await,
+            german_lang
         );
         harness.install_temp_config().await;
 
@@ -1427,12 +1431,12 @@ mod tests {
             .await;
 
         let german_user_dict =
-            Backend::dialect_path(&harness.test_config.user_dict_path, Dialect::German);
+            Backend::dialect_path(&harness.test_config.user_dict_path, german_lang);
         let german_workspace_dict =
-            Backend::dialect_path(&harness.test_config.workspace_dict_path, Dialect::German);
+            Backend::dialect_path(&harness.test_config.workspace_dict_path, german_lang);
         let german_file_dict = harness
             .backend()
-            .get_file_dict_path(&uri, Dialect::German)
+            .get_file_dict_path(&uri, german_lang)
             .await
             .unwrap();
 
@@ -1478,12 +1482,15 @@ mod tests {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("german-unsaved-buffer.md");
 
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
+
         harness
             .open_document(&uri, "markdown", german_text_with_workspace_word())
             .await;
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::German
+            harness.backend().get_document_language(&uri).await,
+            german_lang
         );
         harness.install_temp_config().await;
 
@@ -1544,8 +1551,8 @@ mod tests {
             .open_document(&uri, "markdown", english_text_with_error())
             .await;
         assert_eq!(
-            harness.backend().get_document_dialect(&uri).await,
-            Dialect::American
+            harness.backend().get_document_language(&uri).await,
+            Language::default()
         );
         harness.install_temp_config().await;
 
@@ -1558,8 +1565,10 @@ mod tests {
             .unwrap();
         assert!(english_user_dict.contains("HarperWord"));
 
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
         let german_user_dict =
-            Backend::dialect_path(&harness.test_config.user_dict_path, Dialect::German);
+            Backend::dialect_path(&harness.test_config.user_dict_path, german_lang);
         if german_user_dict.exists() {
             assert!(
                 !tokio::fs::read_to_string(&german_user_dict)

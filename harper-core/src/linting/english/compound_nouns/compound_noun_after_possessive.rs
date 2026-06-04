@@ -95,16 +95,31 @@ mod tests {
 
     #[test]
     fn lets_is_not_possessive() {
-        assert_lint_count("Let's check out this article.", CompoundNounAfterPossessive::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let's check out this article.",
+            CompoundNounAfterPossessive::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lets_is_not_possessive_typographic_apostrophe() {
-        assert_lint_count("“Let’s go on with the game,” the Queen said to Alice;", CompoundNounAfterPossessive::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "“Let’s go on with the game,” the Queen said to Alice;",
+            CompoundNounAfterPossessive::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn thats_is_not_possessive() {
-        assert_lint_count("And you might not be thinking that that's a very big issue, but ...", CompoundNounAfterPossessive::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "And you might not be thinking that that's a very big issue, but ...",
+            CompoundNounAfterPossessive::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

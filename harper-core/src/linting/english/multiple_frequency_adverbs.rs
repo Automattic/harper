@@ -72,21 +72,41 @@ mod tests {
 
     #[test]
     fn often_never_with_comma() {
-        assert_lint_count("often, never", MultipleFrequencyAdverbs::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "often, never",
+            MultipleFrequencyAdverbs::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn sometimes_never() {
-        assert_lint_count("Using @ directive in comments renders modal/portal that is sometimes never destroyed until app is closed.", MultipleFrequencyAdverbs::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Using @ directive in comments renders modal/portal that is sometimes never destroyed until app is closed.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn usually_always() {
-        assert_lint_count("Unfortunately, I can't switch to Pip with Mamba (to avoid conda), which I usually always do.", MultipleFrequencyAdverbs::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Unfortunately, I can't switch to Pip with Mamba (to avoid conda), which I usually always do.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn sometimes_usually() {
-        assert_lint_count("I do my best to fix stuff when some issues pop up, but it sometimes usually doesn't work out.", MultipleFrequencyAdverbs::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I do my best to fix stuff when some issues pop up, but it sometimes usually doesn't work out.",
+            MultipleFrequencyAdverbs::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -54,24 +54,59 @@ mod tests {
 
     #[test]
     fn corrects_smart_apostrophe_possessive() {
-        assert_suggestion_result("I think they’re house is the blue one.", TypographicTheyreToTheir::default(), "I think their house is the blue one.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I think they’re house is the blue one.",
+            TypographicTheyreToTheir::default(),
+            "I think their house is the blue one.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_ascii_form_for_existing_rule() {
-        assert_lint_count("I think they're house is the blue one.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I think they're house is the blue one.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_non_possessive_usage() {
-        assert_lint_count("I think they’re coming tonight.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I think they’re coming tonight.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_contraction_examples_from_books() {
-        assert_lint_count("No, they’re not.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("I don’t know what they’re like.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("They’re all over crumbs.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("They’re done with blacking, I believe.", TypographicTheyreToTheir::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "No, they’re not.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "I don’t know what they’re like.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "They’re all over crumbs.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "They’re done with blacking, I believe.",
+            TypographicTheyreToTheir::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

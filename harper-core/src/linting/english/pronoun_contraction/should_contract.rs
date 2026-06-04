@@ -139,28 +139,60 @@ mod tests {
 
     #[test]
     fn no_match_without_the() {
-        assert_lint_count("your best", ShouldContract::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("were best", ShouldContract::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "your best",
+            ShouldContract::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "were best",
+            ShouldContract::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_match_with_punctuation() {
-        assert_lint_count("your, the best", ShouldContract::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "your, the best",
+            ShouldContract::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_norm() {
-        assert_lint_count("Let's start this story by going back to the dark ages before internet applications were the norm.", ShouldContract::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let's start this story by going back to the dark ages before internet applications were the norm.",
+            ShouldContract::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_issue_1508() {
-        assert_no_lints("Were any other toys fun?", ShouldContract::default(), crate::languages::LanguageFamily::English);
-        assert_no_lints("You were his closest friend.", ShouldContract::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Were any other toys fun?",
+            ShouldContract::default(),
+            crate::languages::LanguageFamily::English,
+        );
+        assert_no_lints(
+            "You were his closest friend.",
+            ShouldContract::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_1673() {
-        assert_no_lints("What were the action items?", ShouldContract::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "What were the action items?",
+            ShouldContract::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

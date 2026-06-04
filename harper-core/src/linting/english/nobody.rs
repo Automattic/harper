@@ -108,11 +108,21 @@ mod tests {
 
     #[test]
     fn ignores_no_body_was_found() {
-        assert_lint_count("No body was found after the search.", Nobody::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "No body was found after the search.",
+            Nobody::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_no_body_comma() {
-        assert_lint_count("No body, no signs of a struggle, no answers.", Nobody::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "No body, no signs of a struggle, no answers.",
+            Nobody::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

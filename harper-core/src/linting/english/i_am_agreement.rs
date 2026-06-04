@@ -82,22 +82,42 @@ mod tests {
 
     #[test]
     fn dont_flag_you_and_i_are() {
-        assert_lint_count("You know, you and I are sitting on the Titanic and the iceberg is over there.", IAmAgreement::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You know, you and I are sitting on the Titanic and the iceberg is over there.",
+            IAmAgreement::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_mention_and_i_are() {
-        assert_lint_count("Hello, @another-rex and I are attempting to package packageurl-go for Debian as we need it for a build dependency.", IAmAgreement::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Hello, @another-rex and I are attempting to package packageurl-go for Debian as we need it for a build dependency.",
+            IAmAgreement::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_z_and_i_are() {
-        assert_lint_count("The url is copied from a manual search, and Z and I are modified.", IAmAgreement::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "The url is copied from a manual search, and Z and I are modified.",
+            IAmAgreement::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_name_and_i_are() {
-        assert_lint_count("Paper that Lena Baunaz and I are working on as part of my SNSF-funded 'Focus in diachrony'", IAmAgreement::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Paper that Lena Baunaz and I are working on as part of my SNSF-funded 'Focus in diachrony'",
+            IAmAgreement::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

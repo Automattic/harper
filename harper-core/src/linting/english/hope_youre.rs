@@ -148,21 +148,41 @@ mod tests {
 
     #[test]
     fn no_lint_with_contraction() {
-        assert_lint_count("I hope you're excited here.", HopeYoure::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I hope you're excited here.",
+            HopeYoure::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_without_adjective() {
-        assert_lint_count("I hope your trip went well.", HopeYoure::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I hope your trip went well.",
+            HopeYoure::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_with_following_clause() {
-        assert_lint_count("I hope your friends are well there.", HopeYoure::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I hope your friends are well there.",
+            HopeYoure::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_lint_when_possessive_context() {
-        assert_lint_count("I hope your advice on punctuation is helpful.", HopeYoure::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I hope your advice on punctuation is helpful.",
+            HopeYoure::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

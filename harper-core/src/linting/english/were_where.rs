@@ -296,7 +296,12 @@ mod tests {
 
     #[test]
     fn fix_where_you_able() {
-        assert_suggestion_result("Where you able to make forward progress here?", WereWhere::default(), "Were you able to make forward progress here?", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Where you able to make forward progress here?",
+            WereWhere::default(),
+            "Were you able to make forward progress here?",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // ── were → where: more verbs and pronouns ────────────────────────────────
@@ -451,17 +456,29 @@ mod tests {
 
     #[test]
     fn no_flag_where_you_go() {
-        assert_no_lints("I wonder where you go from here.", WereWhere::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I wonder where you go from here.",
+            WereWhere::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_flag_where_you_can_customize() {
-        assert_no_lints("Click the menu item where you can customize the settings.", WereWhere::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Click the menu item where you can customize the settings.",
+            WereWhere::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_flag_where_you_allocate() {
-        assert_no_lints("Use the panel where you allocate resources for the task.", WereWhere::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Use the panel where you allocate resources for the task.",
+            WereWhere::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // ── known limitations (documented but not yet handled) ───────────────────

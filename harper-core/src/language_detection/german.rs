@@ -5,9 +5,11 @@
 //! - Common German words and articles
 //! - Low English word match rate
 
+use crate::language::german::dialects::GermanDialect;
 use crate::language_detection::LanguageDetector;
-use harper_core::spell::{Dictionary, FstDictionary};
-use harper_core::{Dialect, Token, TokenKind};
+use crate::languages::Language;
+use crate::spell::{Dictionary, FstDictionary};
+use crate::{Token, TokenKind};
 
 /// German language detector with high confidence due to unique characters.
 #[derive(Debug)]
@@ -23,8 +25,8 @@ impl LanguageDetector for GermanDetector {
         toks: &[Token],
         source: &[char],
         dict: &FstDictionary,
-        _default_dialect: Dialect,
-    ) -> Option<Dialect> {
+        _default_language: Language,
+    ) -> Option<Language> {
         let mut total_words = 0;
         let mut german_char_count = 0;
         let mut common_german_words = 0;
@@ -176,7 +178,7 @@ impl LanguageDetector for GermanDetector {
         // High confidence: German special characters present
         if german_char_ratio >= 0.01 {
             // 1%+ words have ä, ö, ü, or ß
-            return Some(Dialect::German);
+            return Some(Language::German(GermanDialect::Standard));
         }
 
         // Check if English is clearly dominant (more than 65% English words)
@@ -187,12 +189,12 @@ impl LanguageDetector for GermanDetector {
         // Strong indicator: Many common German words
         if german_word_ratio >= 0.20 {
             // 20%+ words are common German words
-            return Some(Dialect::German);
+            return Some(Language::German(GermanDialect::Standard));
         }
 
         // Medium confidence: Low English match but some German words
         if english_match_ratio < 0.4 && german_word_ratio >= 0.08 {
-            return Some(Dialect::German);
+            return Some(Language::German(GermanDialect::Standard));
         }
 
         None
@@ -207,18 +209,21 @@ impl LanguageDetector for GermanDetector {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::Document;
-    use harper_core::spell::FstDictionary;
+    use crate::Document;
+    use crate::dialects::english::EnglishDialect;
+    use crate::languages::Language;
+    use crate::spell::FstDictionary;
 
     fn test_detection(text: &str, expected_german: bool) {
         let dict = FstDictionary::curated();
         let doc = Document::new_plain_english_curated(text);
         let detector = GermanDetector;
 
-        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, Dialect::American);
+        let default_lang = Language::English(EnglishDialect::American);
+        let result = detector.detect(doc.get_tokens(), doc.get_source(), &dict, default_lang);
         assert_eq!(result.is_some(), expected_german, "Failed for: {}", text);
         if expected_german {
-            assert_eq!(result.unwrap(), Dialect::German);
+            assert_eq!(result.unwrap(), Language::German(GermanDialect::Standard));
         }
     }
 

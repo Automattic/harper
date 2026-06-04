@@ -94,7 +94,12 @@ mod tests {
 
     #[test]
     fn doesnt_flag_after_other_words_atomic() {
-        assert_lint_count("... and another one in the same place ...", OneAndTheSame::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "... and another one in the same place ...",
+            OneAndTheSame::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -160,7 +165,12 @@ mod tests {
 
     #[test]
     fn avoids_false_positive() {
-        assert_lint_count("If there is no postgresql.pg_hba either there is one in the same section of patroni.yaml or pg_hba.conf is not managed by Patroni.", OneAndTheSame::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "If there is no postgresql.pg_hba either there is one in the same section of patroni.yaml or pg_hba.conf is not managed by Patroni.",
+            OneAndTheSame::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -176,6 +186,11 @@ mod tests {
 
     #[test]
     fn doesnt_flag_ambiguous_before_noun() {
-        assert_lint_count("I'm guessing this is one in the same request.", OneAndTheSame::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I'm guessing this is one in the same request.",
+            OneAndTheSame::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }
