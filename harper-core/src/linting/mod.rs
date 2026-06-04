@@ -48,6 +48,7 @@ mod comma_fixes;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
+mod convenient_store;
 mod correct_number_suffix;
 mod crave_for;
 mod criteria_phenomena;
