@@ -144,7 +144,7 @@ impl Backend {
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path, dialect)
+        load_dict(path)
             .await
             .map_err(|err| info!("{err}"))
             .or(Ok(MutableDictionary::new()))
@@ -230,7 +230,7 @@ impl Backend {
         let config = self.config.read().await;
         let path = Self::dialect_path(&config.user_dict_path, dialect);
 
-        load_dict(path, dialect)
+        load_dict(path)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
@@ -249,7 +249,7 @@ impl Backend {
         let config = self.config.read().await;
         let path = Self::dialect_path(&config.workspace_dict_path, dialect);
 
-        load_dict(path, dialect)
+        load_dict(path)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
@@ -539,7 +539,7 @@ impl Backend {
             DocumentState {
                 ignored_lints,
                 linter: {
-                    let mut l = LintGroup::new_curated(dict.clone(), detected_dialect);
+                    let mut l = LintGroup::new_curated(dict.clone(), detected_dialect.into());
                     l.config.merge_from(lint_config.clone());
                     l
                 },
@@ -561,7 +561,7 @@ impl Backend {
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            let mut l = LintGroup::new_curated(dict.clone(), detected_dialect);
+            let mut l = LintGroup::new_curated(dict.clone(), detected_dialect.into());
             l.config.merge_from(lint_config.clone());
             doc_state.linter = l;
         }
@@ -589,7 +589,7 @@ impl Backend {
                 let merged = Arc::new(merged);
 
                 doc_state.linter = {
-                    let mut l = LintGroup::new_curated(merged.clone(), dialect);
+                    let mut l = LintGroup::new_curated(merged.clone(), dialect.into());
                     l.config.merge_from(lint_config.clone());
                     l
                 };
@@ -1114,7 +1114,7 @@ impl LanguageServer for Backend {
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
                 let doc_dialect = doc.cached_dialect.unwrap_or(default_dialect);
-                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_dialect);
+                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_dialect.into());
                 l.config.merge_from(lint_config.clone());
                 doc.linter = l;
             }

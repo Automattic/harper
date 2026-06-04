@@ -260,7 +260,7 @@ mod lints {
     fn issue_233_1() {
         assert_suggestion_result(
             "I likes this place.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I like this place.",
             crate::languages::LanguageFamily::English,
         );
@@ -270,7 +270,7 @@ mod lints {
     fn issue_233_2() {
         assert_suggestion_result(
             "I sits under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I sit under the AC.",
             crate::languages::LanguageFamily::English,
         );
@@ -281,7 +281,7 @@ mod lints {
     fn issue_233_1_reverse() {
         assert_suggestion_result(
             "He like this place.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He likes this place.",
             crate::languages::LanguageFamily::English,
         );
@@ -291,7 +291,7 @@ mod lints {
     fn why_we_cant_flag_like_yet() {
         assert_no_lints(
             "What is he like?",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -300,7 +300,7 @@ mod lints {
     fn issue_233_2_reverse() {
         assert_suggestion_result(
             "She sit under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "She sits under the AC.",
             crate::languages::LanguageFamily::English,
         );
@@ -310,7 +310,7 @@ mod lints {
     fn dont_flag_correct_agreement() {
         assert_no_lints(
             "He likes this place. I sit under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -323,7 +323,7 @@ mod lints {
     fn fixes_i() {
         assert_suggestion_result(
             "I wakes up.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I wake up.",
             crate::languages::LanguageFamily::English,
         );
@@ -333,7 +333,7 @@ mod lints {
     fn fixes_we() {
         assert_suggestion_result(
             "We gets dressed.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "We get dressed.",
             crate::languages::LanguageFamily::English,
         );
@@ -343,7 +343,7 @@ mod lints {
     fn fixes_you() {
         assert_suggestion_result(
             "You drops off the kids.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You drop off the kids.",
             crate::languages::LanguageFamily::English,
         );
@@ -353,7 +353,7 @@ mod lints {
     fn fixes_he() {
         assert_suggestion_result(
             "He work hard.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He works hard.",
             crate::languages::LanguageFamily::English,
         );
@@ -363,7 +363,7 @@ mod lints {
     fn fixes_she() {
         assert_suggestion_result(
             "She study hard.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "She studies hard.",
             crate::languages::LanguageFamily::English,
         );
@@ -374,7 +374,7 @@ mod lints {
     fn we_cant_fix_it_yet() {
         assert_suggestion_result(
             "It break down.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "It breaks down.",
             crate::languages::LanguageFamily::English,
         );
@@ -384,7 +384,7 @@ mod lints {
     fn why_we_cant_fix_it_yet() {
         assert_no_lints(
             "I heard it break down.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -393,7 +393,7 @@ mod lints {
     fn fixes_they() {
         assert_suggestion_result(
             "They repairs it.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "They repair it.",
             crate::languages::LanguageFamily::English,
         )
@@ -405,7 +405,7 @@ mod lints {
     fn dont_flag_i() {
         assert_no_lints(
             "I eat",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -414,7 +414,7 @@ mod lints {
     fn dont_flag_we() {
         assert_no_lints(
             "We drink",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -423,7 +423,7 @@ mod lints {
     fn dont_flag_you() {
         assert_no_lints(
             "You walk",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -432,7 +432,7 @@ mod lints {
     fn dont_flag_he() {
         assert_no_lints(
             "He runs",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -441,7 +441,7 @@ mod lints {
     fn dont_flag_she() {
         assert_no_lints(
             "She swims",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -450,7 +450,7 @@ mod lints {
     fn dont_flag_it() {
         assert_no_lints(
             "It works!",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -459,7 +459,7 @@ mod lints {
     fn dont_flag_they() {
         assert_no_lints(
             "They finish",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -471,7 +471,7 @@ mod lints {
     fn fix_flies() {
         assert_suggestion_result(
             "I flies",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I fly",
             crate::languages::LanguageFamily::English,
         );
@@ -480,7 +480,7 @@ mod lints {
     fn fix_cry() {
         assert_suggestion_result(
             "He cry",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He cries",
             crate::languages::LanguageFamily::English,
         );
@@ -491,7 +491,7 @@ mod lints {
     fn fix_go() {
         assert_suggestion_result(
             "She go",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "She goes",
             crate::languages::LanguageFamily::English,
         );
@@ -500,7 +500,7 @@ mod lints {
     fn fix_goes() {
         assert_suggestion_result(
             "They goes",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "They go",
             crate::languages::LanguageFamily::English,
         );
@@ -513,7 +513,7 @@ mod lints {
     fn fix_has() {
         assert_suggestion_result(
             "You has",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You have",
             crate::languages::LanguageFamily::English,
         );
@@ -522,7 +522,7 @@ mod lints {
     fn fix_have() {
         assert_suggestion_result(
             "She have",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "She has",
             crate::languages::LanguageFamily::English,
         );
@@ -533,7 +533,7 @@ mod lints {
     fn fix_hasnt() {
         assert_suggestion_result(
             "You hasn't",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You haven't",
             crate::languages::LanguageFamily::English,
         );
@@ -542,7 +542,7 @@ mod lints {
     fn fix_havent() {
         assert_suggestion_result(
             "He haven't",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He hasn't",
             crate::languages::LanguageFamily::English,
         );
@@ -553,7 +553,7 @@ mod lints {
     fn fix_box() {
         assert_suggestion_result(
             "He box",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He boxes",
             crate::languages::LanguageFamily::English,
         );
@@ -562,7 +562,7 @@ mod lints {
     fn fix_boxes() {
         assert_suggestion_result(
             "You boxes",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You box",
             crate::languages::LanguageFamily::English,
         );
@@ -578,7 +578,7 @@ mod lints {
     fn fix_doesnt() {
         assert_suggestion_result(
             "We doesn't",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "We don't",
             crate::languages::LanguageFamily::English,
         );
@@ -588,7 +588,7 @@ mod lints {
     fn fix_dont() {
         assert_suggestion_result(
             "It don't",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "It doesn't",
             crate::languages::LanguageFamily::English,
         );
@@ -599,7 +599,7 @@ mod lints {
     fn fix_do() {
         assert_suggestion_result(
             "He do",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "He does",
             crate::languages::LanguageFamily::English,
         );
@@ -608,7 +608,7 @@ mod lints {
     fn fix_does() {
         assert_suggestion_result(
             "You does",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You do",
             crate::languages::LanguageFamily::English,
         );
@@ -620,7 +620,7 @@ mod lints {
     fn false_positive_she_consider() {
         assert_no_lints(
             "On April 10th, I suggested she consider a smaller, more intimate gathering.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -629,7 +629,7 @@ mod lints {
     fn false_positive_she_sell() {
         assert_no_lints(
             "I suggested she sell it and use the proceeds to help with her relocation expenses, or perhaps rent a similar camera while in Barcelona.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -638,7 +638,7 @@ mod lints {
     fn false_positive_she_rent() {
         assert_no_lints(
             "I suggested she sell it and use the proceeds to help with her relocation expenses, or perhaps rent a similar camera while in Barcelona.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -647,7 +647,7 @@ mod lints {
     fn false_positive_he_donned() {
         assert_no_lints(
             "He donned his heavy oilskins and descended the winding staircase, his boots echoing in the hollow tower.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -656,7 +656,7 @@ mod lints {
     fn false_positive_he_cannot() {
         assert_no_lints(
             "Surely, he cannot offer the same sum as the developers.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -665,7 +665,7 @@ mod lints {
     fn false_positive_insisting_she_return() {
         assert_no_lints(
             "Am I the asshole for insisting she return the dress?",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -674,7 +674,7 @@ mod lints {
     fn false_positive_pride_in_you_is() {
         assert_no_lints(
             "It’s also important to recognize that your family's pride in you is a genuine reflection of your value.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -683,7 +683,7 @@ mod lints {
     fn false_positive_she_sought() {
         assert_no_lints(
             "She sought out Mrs. Hawthorne, the village’s oldest resident, a woman known for her vast knowledge of local history and her unsettlingly accurate intuition.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -692,7 +692,7 @@ mod lints {
     fn false_positive_lose_you_points() {
         assert_no_lints(
             "I admire your dedication to consistently drafting players who are actively trying to lose you points.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -701,7 +701,7 @@ mod lints {
     fn false_positive_she_hung_up() {
         assert_no_lints(
             "When I reiterated the conditions I'd previously set, she hung up on me.",
-            PronounVerbAgreement::new(FstDictionary::curated(LanguageFamily::English)),
+            PronounVerbAgreement::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }

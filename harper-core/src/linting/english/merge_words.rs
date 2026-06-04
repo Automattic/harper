@@ -13,7 +13,7 @@ pub struct MergeWords {
 impl MergeWords {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(crate::languages::LanguageFamily::English),
+            dict: FstDictionary::curated_for_language(crate::languages::LanguageFamily::English),
         }
     }
 }

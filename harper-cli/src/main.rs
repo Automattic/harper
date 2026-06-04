@@ -513,7 +513,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American.into());
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();

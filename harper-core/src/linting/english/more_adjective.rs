@@ -203,7 +203,7 @@ mod tests {
     fn add_er() {
         assert_suggestion_result(
             "The red car is more fast.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "The red car is faster.",
             crate::languages::LanguageFamily::English,
         );
@@ -213,7 +213,7 @@ mod tests {
     fn add_r() {
         assert_suggestion_result(
             "The fluffy one is more cute.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "The fluffy one is cuter.",
             crate::languages::LanguageFamily::English,
         );
@@ -223,7 +223,7 @@ mod tests {
     fn double_final_consonant() {
         assert_suggestion_result(
             "You'll find out when you're more big.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "You'll find out when you're bigger.",
             crate::languages::LanguageFamily::English,
         )
@@ -233,7 +233,7 @@ mod tests {
     fn final_y() {
         assert_suggestion_result(
             "That one was even more smelly!",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "That one was even smellier!",
             crate::languages::LanguageFamily::English,
         );
@@ -243,7 +243,7 @@ mod tests {
     fn irregular_good() {
         assert_suggestion_result(
             "I bet you couldn't do more good.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I bet you couldn't do better.",
             crate::languages::LanguageFamily::English,
         );
@@ -253,7 +253,7 @@ mod tests {
     fn irregular_far() {
         assert_good_and_bad_suggestions(
             "Is it much more far?",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             &["Is it much further?", "Is it much farther?"],
             &[],
         );
@@ -263,7 +263,7 @@ mod tests {
     fn humane() {
         assert_suggestion_result(
             "That Klingon is more humane than the humans!",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "That Klingon is humaner than the humans!",
             crate::languages::LanguageFamily::English,
         );
@@ -275,7 +275,7 @@ mod tests {
     fn dont_flag_more_time() {
         assert_no_lints(
             "I need more time.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -284,7 +284,7 @@ mod tests {
     fn dont_flag_more_model() {
         assert_no_lints(
             "Expanded access to more model architectures",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -293,7 +293,7 @@ mod tests {
     fn dont_flag_more_human() {
         assert_no_lints(
             "I am more human than machine.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -302,7 +302,7 @@ mod tests {
     fn dont_flag_more_battle() {
         assert_no_lints(
             "and has more battle-tested defaults",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -311,7 +311,7 @@ mod tests {
     fn dont_flag_more_like() {
         assert_no_lints(
             "It's more like a suggestion than a mistake.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -320,7 +320,7 @@ mod tests {
     fn dont_flag_more_ground() {
         assert_no_lints(
             "This E2E security scan covers more ground",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -329,7 +329,7 @@ mod tests {
     fn dont_flag_more_foreign() {
         assert_no_lints(
             "There are more foreign visitors this year.",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -338,7 +338,7 @@ mod tests {
     fn dont_flag_more_subtle_than_direct_2925() {
         assert_no_lints(
             "more subtle than direct",
-            MoreAdjective::new(FstDictionary::curated(LanguageFamily::English)),
+            MoreAdjective::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             LanguageFamily::English,
         );
     }

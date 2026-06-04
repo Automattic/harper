@@ -3,11 +3,10 @@ use std::ops::{BitOr, BitOrAssign};
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, VariantArray};
 
-use crate::{
-    Dialect, DialectFlags, EnglishDialect, EnglishDialectFlags,
-    dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags},
-    languages::{Language, LanguageFamily},
-};
+use crate::dialects::dialect_trait::{Dialect, DialectFlags};
+use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
+use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
+use crate::languages::{Language, LanguageFamily};
 
 #[derive(
     Debug,
@@ -145,6 +144,7 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             LanguageFamily::Portuguese => DialectFlagsEnum::Portuguese(
                 PortugueseDialectFlags::get_most_used_dialects_from_document(document),
             ),
+            LanguageFamily::German => panic!("get_most_used_dialects_from_document_language not implemented for German"),
         }
     }
 }
@@ -158,6 +158,9 @@ impl From<Language> for DialectsEnum {
     fn from(language: Language) -> Self {
         match language {
             Language::English(english_dialect) => DialectsEnum::English(english_dialect),
+            Language::German(_german_dialect) => {
+                panic!("From<Language> for DialectsEnum not implemented for German")
+            }
             Language::Portuguese(portuguese_dialect) => {
                 DialectsEnum::Portuguese(portuguese_dialect)
             }

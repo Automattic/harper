@@ -524,8 +524,6 @@ use super::english::would_never_have::WouldNeverHave;
 use super::english::wrong_apostrophe::WrongApostrophe;
 use super::expr_linter::run_on_chunk;
 use super::{HtmlDescriptionLinter, Linter};
-use crate::EnglishDialect;
-use crate::PortugueseDialect;
 use crate::languages::Language;
 use crate::linting::english::dashes::Dashes;
 use crate::linting::english::open_compounds::OpenCompounds;
@@ -550,6 +548,8 @@ pub struct LintGroup {
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
     chunk_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
+    /// We use a binary map here so the ordering is stable.
+    sentence_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Sentence>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
@@ -570,6 +570,7 @@ impl LintGroup {
             config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
+            sentence_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
             clashing_linter_names: None,
@@ -580,6 +581,7 @@ impl LintGroup {
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
         self.linters.contains_key(name.as_ref())
             || self.chunk_expr_linters.contains_key(name.as_ref())
+            || self.sentence_expr_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
@@ -623,6 +625,27 @@ impl LintGroup {
         }
     }
 
+    /// Add a sentence-based [`ExprLinter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add_sentence_expr_linter(
+        &mut self,
+        name: impl AsRef<str>,
+        linter: impl ExprLinter<Unit = Sentence> + 'static,
+    ) -> bool {
+        if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(name.as_ref().to_string());
+            }
+            false
+        } else {
+            self.sentence_expr_linters
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+            true
+        }
+    }
+
     /// Merge the contents of another [`LintGroup`] into this one.
     pub fn merge_from(&mut self, other: LintGroup) {
         self.config.merge_from(other.config);
@@ -649,12 +672,27 @@ impl LintGroup {
             }
         }
         self.chunk_expr_linters.extend(other.chunk_expr_linters);
+
+        if let Some((conflicting_key, _)) = other
+            .sentence_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(conflicting_key.clone());
+            }
+        }
+        self.sentence_expr_linters
+            .extend(other.sentence_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
         self.linters
             .keys()
             .chain(self.chunk_expr_linters.keys())
+            .chain(self.sentence_expr_linters.keys())
             .map(|v| v.as_str())
     }
 
@@ -708,10 +746,90 @@ impl LintGroup {
             Language::English(english_dialect) => {
                 Self::new_curated_english(dictionary, english_dialect)
             }
+            Language::German(german_dialect) => {
+                Self::new_curated_german(dictionary, german_dialect)
+            }
             Language::Portuguese(portuguese_dialect) => {
                 Self::new_curated_portuguese(dictionary, portuguese_dialect)
             }
         }
+    }
+
+    /// Returns a LintGroup with language-neutral rules (rules that work for all languages)
+    fn language_neutral_rules() -> LintGroup {
+        use super::english::comma_fixes::CommaFixes;
+        use super::english::correct_number_suffix::CorrectNumberSuffix;
+        use super::english::currency_placement::CurrencyPlacement;
+        use super::english::dashes::Dashes;
+        use super::english::dot_initialisms::DotInitialisms;
+        use super::english::ellipsis_length::EllipsisLength;
+        use super::english::expand_memory_shorthands::ExpandMemoryShorthands;
+        use super::english::expand_time_shorthands::ExpandTimeShorthands;
+        use super::english::long_sentences::LongSentences;
+        use super::english::no_french_spaces::NoFrenchSpaces;
+        use super::english::number_suffix_capitalization::NumberSuffixCapitalization;
+        use super::english::numeric_range_en_dash::NumericRangeEnDash;
+        use super::english::quote_spacing::QuoteSpacing;
+        use super::english::repeated_words::RepeatedWords;
+        use super::english::spaces::Spaces;
+        use super::english::unclosed_quotes::UnclosedQuotes;
+        use super::english::use_ellipsis_character::UseEllipsisCharacter;
+
+        let mut out = Self::empty();
+
+        // Add language-neutral rules
+        out.add("CommaFixes", CommaFixes::default());
+        out.config.set_rule_enabled("CommaFixes", true);
+
+        out.add("CorrectNumberSuffix", CorrectNumberSuffix::default());
+        out.config.set_rule_enabled("CorrectNumberSuffix", true);
+
+        out.add("CurrencyPlacement", CurrencyPlacement::default());
+        out.config.set_rule_enabled("CurrencyPlacement", true);
+
+        out.add("Dashes", Dashes::default());
+        out.config.set_rule_enabled("Dashes", true);
+
+        out.add("DotInitialisms", DotInitialisms::default());
+        out.config.set_rule_enabled("DotInitialisms", true);
+
+        out.add("EllipsisLength", EllipsisLength::default());
+        out.config.set_rule_enabled("EllipsisLength", true);
+
+        out.add("ExpandMemoryShorthands", ExpandMemoryShorthands::default());
+        out.config.set_rule_enabled("ExpandMemoryShorthands", true);
+
+        out.add("ExpandTimeShorthands", ExpandTimeShorthands::default());
+        out.config.set_rule_enabled("ExpandTimeShorthands", true);
+
+        out.add("LongSentences", LongSentences::default());
+        out.config.set_rule_enabled("LongSentences", true);
+
+        out.add("NoFrenchSpaces", NoFrenchSpaces::default());
+        out.config.set_rule_enabled("NoFrenchSpaces", true);
+
+        out.add("NumberSuffixCapitalization", NumberSuffixCapitalization::default());
+        out.config.set_rule_enabled("NumberSuffixCapitalization", true);
+
+        out.add("NumericRangeEnDash", NumericRangeEnDash::default());
+        out.config.set_rule_enabled("NumericRangeEnDash", true);
+
+        out.add("QuoteSpacing", QuoteSpacing::default());
+        out.config.set_rule_enabled("QuoteSpacing", true);
+
+        out.add("RepeatedWords", RepeatedWords::default());
+        out.config.set_rule_enabled("RepeatedWords", true);
+
+        out.add("Spaces", Spaces::default());
+        out.config.set_rule_enabled("Spaces", true);
+
+        out.add("UnclosedQuotes", UnclosedQuotes::default());
+        out.config.set_rule_enabled("UnclosedQuotes", true);
+
+        out.add("UseEllipsisCharacter", UseEllipsisCharacter::default());
+        out.config.set_rule_enabled("UseEllipsisCharacter", true);
+
+        out
     }
 
     pub fn new_curated_english(
@@ -1068,40 +1186,70 @@ impl LintGroup {
 
         out
     }
-    fn new_curated_portuguese(
-        #[allow(unused_variables)] dictionary: Arc<impl Dictionary + 'static>,
-        #[allow(unused_variables)] dialect: PortugueseDialect,
+    pub fn new_curated_portuguese(
+        dictionary: Arc<impl Dictionary + 'static>,
+        _dialect: PortugueseDialect,
     ) -> Self {
-        todo!();
-        #[allow(unreachable_code)]
-        let out = Self::empty();
+        use crate::language::portuguese::linting::portuguese_spell_check::PortugueseSpellCheck;
 
-        // /// Add a `Linter` to the group, setting it to be enabled by default.
-        // macro_rules! insert_struct_rule {
-        //     ($rule:ident, $default_config:expr) => {
-        //         out.add(stringify!($rule), $rule::default());
-        //         out.config
-        //             .set_rule_enabled(stringify!($rule), $default_config);
-        //     };
-        // }
-        //
-        // /// Add an `ExprLinter` to the group, setting it to be enabled by default.
-        // /// While you _can_ pass an `ExprLinter` to `insert_struct_rule`, using this macro instead
-        // /// will allow it to use more aggressive caching strategies.
-        // macro_rules! insert_expr_rule {
-        //     ($rule:ident, $default_config:expr) => {
-        //         out.add_expr_linter(stringify!($rule), $rule::default());
-        //         out.config
-        //             .set_rule_enabled(stringify!($rule), $default_config);
-        //     };
-        // }
+        let mut out = Self::empty();
 
-        // out.merge_from(&mut phrase_set_corrections::lint_group());
-        // out.merge_from(&mut proper_noun_capitalization_linters::lint_group(
-        //     dictionary.clone(),
-        // ));
-        // out.merge_from(&mut closed_compounds::lint_group());
-        // out.merge_from(&mut initialisms::lint_group());
+        // Add Portuguese spell checker
+        out.add(
+            "PortugueseSpellCheck",
+            PortugueseSpellCheck::new(dictionary.clone()),
+        );
+        out.config
+            .set_rule_enabled("PortugueseSpellCheck", true);
+
+        // Add language-neutral rules
+        out.merge_from(Self::language_neutral_rules());
+
+        out
+    }
+
+    pub fn new_curated_german(
+        dictionary: Arc<impl Dictionary + 'static>,
+        _dialect: GermanDialect,
+    ) -> Self {
+        use crate::language::german::linting::german_spell_check::GermanSpellCheck;
+        use crate::language::german::linting::german_noun_capitalization::GermanNounCapitalization;
+        use crate::language::german::linting::german_sentence_capitalization::GermanSentenceCapitalization;
+
+        let mut out = Self::empty();
+
+        // Add German spell checker
+        out.add("GermanSpellCheck", GermanSpellCheck::new(dictionary.clone()));
+        out.config.set_rule_enabled("GermanSpellCheck", true);
+
+        // Add German-specific linters
+        out.add(
+            "GermanNounCapitalization",
+            GermanNounCapitalization::new(dictionary.clone()),
+        );
+        out.config
+            .set_rule_enabled("GermanNounCapitalization", true);
+
+        out.add(
+            "GermanSentenceCapitalization",
+            GermanSentenceCapitalization::new(dictionary.clone()),
+        );
+        out.config
+            .set_rule_enabled("GermanSentenceCapitalization", true);
+
+        // Add German Weir rules
+        out.merge_from(crate::language::german::linting::german_weir_rules::lint_group());
+
+        // Add filler words
+        out.add(
+            "GermanFillerWords",
+            crate::language::german::linting::german_filler_words::GermanFillerWords::default(),
+        );
+        out.config
+            .set_rule_enabled("GermanFillerWords", true);
+
+        // Add language-neutral rules
+        out.merge_from(Self::language_neutral_rules());
 
         out
     }
@@ -1172,8 +1320,54 @@ impl LintGroup {
             }
         }
 
+        // Sentence-level expr linters
+        for sentence in document.iter_sentences() {
+            let Some(sentence_span) = sentence.span() else {
+                continue;
+            };
+
+            // Get the tokens for this sentence
+            let sentence_tokens = sentence.tokens();
+
+            for (key, linter) in &mut self.sentence_expr_linters {
+                if self.config.is_rule_enabled(key) {
+                    let lints = run_on_sentence(linter, sentence_tokens, document.get_source())
+                        .map(|mut l| {
+                            l.span.pull_by(sentence_span.start);
+                            l
+                        });
+
+                    results
+                        .entry(key.to_owned())
+                        .or_default()
+                        .extend(lints.map(|mut lint| {
+                            // Bring the spans back into document-space
+                            lint.span.push_by(sentence_span.start);
+                            lint
+                        }));
+                }
+            }
+        }
+
         results
     }
+}
+
+fn run_on_sentence<'a>(
+    linter: &'a impl ExprLinter<Unit = Sentence>,
+    sentence: &'a [crate::Token],
+    source: &'a [char],
+) -> impl Iterator<Item = Lint> + 'a {
+    linter
+        .expr()
+        .iter_matches(sentence, source)
+        .filter_map(|match_span| {
+            linter.match_to_lint_with_context(
+                &sentence[match_span.start..match_span.end],
+                source,
+                Some((&sentence[..match_span.start], &sentence[match_span.end..])),
+            )
+        })
 }
 
 impl Default for LintGroup {

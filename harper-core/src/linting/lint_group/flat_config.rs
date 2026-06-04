@@ -101,7 +101,7 @@ impl FlatConfig {
     }
 
     pub fn new_curated_for(dialect: Dialect) -> Self {
-        let group = LintGroup::new_curated(MutableDictionary::new().into(), dialect);
+        let group = LintGroup::new_curated(MutableDictionary::new().into(), dialect.into());
         group.config
     }
 }

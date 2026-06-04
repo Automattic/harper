@@ -258,7 +258,7 @@ mod tests {
         fn fix_irregulars() {
             assert_suggestion_result(
                 "Womans and childs first",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "Women and children first",
                 crate::languages::LanguageFamily::English,
             );
@@ -268,7 +268,7 @@ mod tests {
         fn fix_ys_and_fs() {
             assert_suggestion_result(
                 "Kittys playing on the shelfs.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "Kitties playing on the shelves.",
                 crate::languages::LanguageFamily::English,
             );
@@ -278,7 +278,7 @@ mod tests {
         fn fix_os_and_oes() {
             assert_suggestion_result(
                 "The heros climb the volcanos",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "The heroes climb the volcanoes",
                 crate::languages::LanguageFamily::English,
             );
@@ -288,7 +288,7 @@ mod tests {
         fn fix_oxen_and_meatloaves() {
             assert_suggestion_result(
                 "These meatloafs are made out of oxes.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "These meatloaves are made out of oxen.",
                 crate::languages::LanguageFamily::English,
             );
@@ -305,7 +305,7 @@ mod tests {
         fn fix_irregular_past_verb() {
             assert_suggestion_result(
                 "I eated the banana.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "I ate the banana.",
                 crate::languages::LanguageFamily::English,
             );
@@ -315,7 +315,7 @@ mod tests {
         fn fix_readed() {
             assert_suggestion_result(
                 "He readed the newspaper",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "He read the newspaper",
                 crate::languages::LanguageFamily::English,
             );
@@ -325,7 +325,7 @@ mod tests {
         fn fix_writed() {
             assert_suggestion_result(
                 "She writed many lines of code.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "She wrote many lines of code.",
                 crate::languages::LanguageFamily::English,
             );
@@ -335,7 +335,7 @@ mod tests {
         fn fix_runned() {
             assert_suggestion_result(
                 "I runned faster than ever!",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "I ran faster than ever!",
                 crate::languages::LanguageFamily::English,
             );
@@ -345,7 +345,7 @@ mod tests {
         fn fix_resetted() {
             assert_suggestion_result(
                 "I resetted the phone to factory settings.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "I reset the phone to factory settings.",
                 crate::languages::LanguageFamily::English,
             );
@@ -355,7 +355,7 @@ mod tests {
         fn fix_eat_drink_sleep() {
             assert_suggestion_result(
                 "I eated and drinked too much but I sleeped good.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 "I ate and drank too much but I slept good.",
                 crate::languages::LanguageFamily::English,
             );
@@ -381,7 +381,7 @@ mod tests {
         fn fix_adjectives() {
             assert_good_and_bad_suggestions(
                 "This way is farer.",
-                RegularIrregulars::new(FstDictionary::curated(LanguageFamily::English)),
+                RegularIrregulars::new(FstDictionary::curated_for_language(LanguageFamily::English)),
                 &["This way is farther.", "This way is further."],
                 &[],
             );

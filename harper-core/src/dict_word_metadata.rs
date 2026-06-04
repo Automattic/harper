@@ -2193,3 +2193,100 @@ pub mod tests {
         }
     }
 }
+
+// From implementations for new dialect enums
+
+
+// Conversions from new dialect enums to the legacy Dialect enum
+// These are needed for compatibility during the transition to modular language support
+impl From<crate::dialects::english::EnglishDialect> for Dialect {
+    fn from(dialect: crate::dialects::english::EnglishDialect) -> Self {
+        match dialect {
+            crate::dialects::english::EnglishDialect::American => Self::American,
+            crate::dialects::english::EnglishDialect::Canadian => Self::Canadian,
+            crate::dialects::english::EnglishDialect::Australian => Self::Australian,
+            crate::dialects::english::EnglishDialect::British => Self::British,
+            crate::dialects::english::EnglishDialect::Indian => Self::Indian,
+        }
+    }
+}
+
+impl From<crate::language::german::dialects::GermanDialect> for Dialect {
+    fn from(dialect: crate::language::german::dialects::GermanDialect) -> Self {
+        match dialect {
+            crate::language::german::dialects::GermanDialect::Standard => Self::German,
+            crate::language::german::dialects::GermanDialect::Austrian => Self::GermanAustrian,
+            crate::language::german::dialects::GermanDialect::Swiss => Self::GermanSwiss,
+        }
+    }
+}
+
+impl From<crate::dialects::portuguese::PortugueseDialect> for Dialect {
+    fn from(_dialect: crate::dialects::portuguese::PortugueseDialect) -> Self {
+        Self::Portuguese
+    }
+}
+
+// From implementations for references
+impl From<&crate::dialects::english::EnglishDialect> for Dialect {
+    fn from(dialect: &crate::dialects::english::EnglishDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+impl From<&mut crate::dialects::english::EnglishDialect> for Dialect {
+    fn from(dialect: &mut crate::dialects::english::EnglishDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+impl From<&crate::language::german::dialects::GermanDialect> for Dialect {
+    fn from(dialect: &crate::language::german::dialects::GermanDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+impl From<&mut crate::language::german::dialects::GermanDialect> for Dialect {
+    fn from(dialect: &mut crate::language::german::dialects::GermanDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+impl From<&crate::dialects::portuguese::PortugueseDialect> for Dialect {
+    fn from(dialect: &crate::dialects::portuguese::PortugueseDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+impl From<&mut crate::dialects::portuguese::PortugueseDialect> for Dialect {
+    fn from(dialect: &mut crate::dialects::portuguese::PortugueseDialect) -> Self {
+        (*dialect).into()
+    }
+}
+
+// Conversion from DialectsEnum to the legacy Dialect enum
+impl From<crate::dialects::dialect_enum::DialectsEnum> for Dialect {
+    fn from(dialect: crate::dialects::dialect_enum::DialectsEnum) -> Self {
+        match dialect {
+            crate::dialects::dialect_enum::DialectsEnum::English(d) => d.into(),
+            crate::dialects::dialect_enum::DialectsEnum::Portuguese(_) => Self::Portuguese,
+        }
+    }
+}
+
+// Conversion from legacy Dialect to new Language enum
+impl From<Dialect> for crate::languages::Language {
+    fn from(dialect: Dialect) -> Self {
+        match dialect {
+            Dialect::American => Self::English(crate::dialects::english::EnglishDialect::American),
+            Dialect::Canadian => Self::English(crate::dialects::english::EnglishDialect::Canadian),
+            Dialect::Australian => Self::English(crate::dialects::english::EnglishDialect::Australian),
+            Dialect::British => Self::English(crate::dialects::english::EnglishDialect::British),
+            Dialect::Indian => Self::English(crate::dialects::english::EnglishDialect::Indian),
+            Dialect::German => Self::German(crate::language::german::dialects::GermanDialect::Standard),
+            Dialect::GermanAustrian => Self::German(crate::language::german::dialects::GermanDialect::Austrian),
+            Dialect::GermanSwiss => Self::German(crate::language::german::dialects::GermanDialect::Swiss),
+            Dialect::Portuguese => Self::Portuguese(crate::dialects::portuguese::PortugueseDialect::Brazilian),
+        }
+    }
+}

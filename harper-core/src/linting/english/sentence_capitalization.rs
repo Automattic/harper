@@ -280,7 +280,7 @@ mod tests {
     fn doesnt_flag_after_esp_issue_2753() {
         assert_lint_count(
             "I'll go, esp. if it's a free event.",
-            SentenceCapitalization::new(FstDictionary::curated(LanguageFamily::English)),
+            SentenceCapitalization::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             0,
             crate::languages::LanguageFamily::English,
         );

@@ -54,7 +54,7 @@ mod tests {
     fn simple_correction() {
         assert_markdown_suggestion_result(
             "# This is a title",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "# This Is a Title",
         );
     }
@@ -63,7 +63,7 @@ mod tests {
     fn double_correction() {
         assert_markdown_suggestion_result(
             "# This is a title\n\n## This is a subtitle",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "# This Is a Title\n\n## This Is a Subtitle",
         );
     }
@@ -72,7 +72,7 @@ mod tests {
     fn doesnt_lowercase_this_in_github_template_title() {
         assert_no_lints(
             "# How Has This Been Tested?",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -81,7 +81,7 @@ mod tests {
     fn shoud_uppercase_possessive_determiners() {
         assert_markdown_suggestion_result(
             "# my/our/your/his/her/its/their",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "# My/Our/Your/His/Her/Its/Their",
         );
     }
@@ -90,7 +90,7 @@ mod tests {
     fn ignores_leading_number_list_marker_in_heading() {
         assert_no_lints(
             "### 1. To Do a Thing",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -99,7 +99,7 @@ mod tests {
     fn still_fixes_non_first_small_words_after_leading_number() {
         assert_markdown_suggestion_result(
             "### 1. To do a thing",
-            UseTitleCase::new(FstDictionary::curated(LanguageFamily::English)),
+            UseTitleCase::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "### 1. To Do a Thing",
         );
     }

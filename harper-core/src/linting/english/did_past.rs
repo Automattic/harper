@@ -132,7 +132,7 @@ mod tests {
     fn ed_did_forked() {
         assert_suggestion_result(
             "Did they forked the repo?",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Did they fork the repo?",
             crate::languages::LanguageFamily::English,
         );
@@ -144,7 +144,7 @@ mod tests {
     fn d_did_used() {
         assert_suggestion_result(
             "It didn't used a macro.",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "It didn't use a macro.",
             crate::languages::LanguageFamily::English,
         );
@@ -156,7 +156,7 @@ mod tests {
     fn y_did_fried() {
         assert_suggestion_result(
             "I hope that didn't fried any chips!",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I hope that didn't fry any chips!",
             crate::languages::LanguageFamily::English,
         );
@@ -168,7 +168,7 @@ mod tests {
     fn doubed_consonant_logged() {
         assert_suggestion_result(
             "There was a segfault but it did logged the error.",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "There was a segfault but it did log the error.",
             crate::languages::LanguageFamily::English,
         );
@@ -180,7 +180,7 @@ mod tests {
     fn did_past() {
         assert_suggestion_result(
             "Did went",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Did go",
             crate::languages::LanguageFamily::English,
         );
@@ -190,7 +190,7 @@ mod tests {
     fn did_past_with_apostrophe() {
         assert_suggestion_result(
             "Didn't saw",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Didn't see",
             crate::languages::LanguageFamily::English,
         );
@@ -200,7 +200,7 @@ mod tests {
     fn didnt_past_no_apostrophe() {
         assert_suggestion_result(
             "Didnt had",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Didnt have",
             crate::languages::LanguageFamily::English,
         );
@@ -210,7 +210,7 @@ mod tests {
     fn did_i_heard() {
         assert_suggestion_result(
             "Did I heard",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Did I hear",
             crate::languages::LanguageFamily::English,
         );
@@ -220,7 +220,7 @@ mod tests {
     fn did_i_heard_with_apostrophe() {
         assert_suggestion_result(
             "Didn't we heard",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Didn't we hear",
             crate::languages::LanguageFamily::English,
         );
@@ -230,7 +230,7 @@ mod tests {
     fn didnt_i_forgot_no_apostrophe() {
         assert_suggestion_result(
             "Didnt he forgot",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Didnt he forget",
             crate::languages::LanguageFamily::English,
         );
@@ -242,7 +242,7 @@ mod tests {
     fn ignore_lemma_same_as_past_tense() {
         assert_no_lints(
             "Did read",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -253,7 +253,7 @@ mod tests {
     fn fix_did_you_cmae() {
         assert_suggestion_result(
             "How did you came to this",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "How did you come to this",
             crate::languages::LanguageFamily::English,
         );
@@ -263,7 +263,7 @@ mod tests {
     fn fix_did_you_wrote() {
         assert_suggestion_result(
             "I'm very interested in the script, if you did wrote it.",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I'm very interested in the script, if you did write it.",
             crate::languages::LanguageFamily::English,
         );
@@ -273,7 +273,7 @@ mod tests {
     fn fix_didnt_had() {
         assert_suggestion_result(
             "and i DO know that i didnt had any Terracota",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "and i DO know that i didnt have any Terracota",
             crate::languages::LanguageFamily::English,
         );
@@ -283,7 +283,7 @@ mod tests {
     fn did_you_went() {
         assert_suggestion_result(
             "Did you went out of memory maybe?",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Did you go out of memory maybe?",
             crate::languages::LanguageFamily::English,
         );
@@ -293,7 +293,7 @@ mod tests {
     fn fix_did_needed() {
         assert_suggestion_result(
             "since our CI was broken this did needed to be done",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "since our CI was broken this did need to be done",
             crate::languages::LanguageFamily::English,
         );
@@ -303,7 +303,7 @@ mod tests {
     fn fix_did_thought() {
         assert_suggestion_result(
             "I did thought of adding it as a tooltip on hover",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I did think of adding it as a tooltip on hover",
             crate::languages::LanguageFamily::English,
         );
@@ -313,7 +313,7 @@ mod tests {
     fn fix_did_wanted() {
         assert_suggestion_result(
             "I did wanted catch all errors in my previous example.",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I did want catch all errors in my previous example.",
             crate::languages::LanguageFamily::English,
         );
@@ -323,7 +323,7 @@ mod tests {
     fn fix_did_not_changed() {
         assert_suggestion_result(
             "freeing space and reboot frequently did not changed anything",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "freeing space and reboot frequently did not change anything",
             crate::languages::LanguageFamily::English,
         );
@@ -333,7 +333,7 @@ mod tests {
     fn ignore_did_you_read() {
         assert_no_lints(
             "Did You Read the Instructions?",
-            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            DidPast::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
         );
     }

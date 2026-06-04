@@ -62,7 +62,7 @@ mod tests {
     fn flag_advices_and_an_advice() {
         assert_lint_count(
             "I asked for an advice and he gave me two advices!",
-            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            MassNouns::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             2,
             crate::languages::LanguageFamily::English,
         );
@@ -72,7 +72,7 @@ mod tests {
     fn correct_a_luggage() {
         assert_suggestion_result(
             "I managed to pack all my clothing into one luggage.",
-            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            MassNouns::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I managed to pack all my clothing into one suitcase.",
             crate::languages::LanguageFamily::English,
         );
@@ -82,7 +82,7 @@ mod tests {
     fn correct_clothings() {
         assert_suggestion_result(
             "I managed to pack all my clothings into one suitcase.",
-            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            MassNouns::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "I managed to pack all my clothing into one suitcase.",
             crate::languages::LanguageFamily::English,
         );
@@ -92,7 +92,7 @@ mod tests {
     fn ignore_a_fun_and_fantastic() {
         assert_lint_count(
             "It was such a fun and fantastic adventure together that ...",
-            MassNouns::new(FstDictionary::curated(LanguageFamily::English)),
+            MassNouns::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             0,
             LanguageFamily::English,
         );

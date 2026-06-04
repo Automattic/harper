@@ -150,7 +150,7 @@ mod tests {
     fn space_too_early() {
         assert_suggestion_result(
             "Th ecat sat on the mat.",
-            TransposedSpace::sensitive(FstDictionary::curated(LanguageFamily::English)),
+            TransposedSpace::sensitive(FstDictionary::curated_for_language(LanguageFamily::English)),
             "The cat sat on the mat.",
             crate::languages::LanguageFamily::English,
         );
@@ -160,7 +160,7 @@ mod tests {
     fn space_too_late() {
         assert_suggestion_result(
             "Thec at sat on the mat.",
-            TransposedSpace::sensitive(FstDictionary::curated(LanguageFamily::English)),
+            TransposedSpace::sensitive(FstDictionary::curated_for_language(LanguageFamily::English)),
             "The cat sat on the mat.",
             crate::languages::LanguageFamily::English,
         );
@@ -170,7 +170,7 @@ mod tests {
     fn test_early() {
         assert_suggestion_result(
             "Sometimes the spac eis one character early.",
-            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
+            TransposedSpace::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "Sometimes the space is one character early.",
             crate::languages::LanguageFamily::English,
         );
@@ -179,7 +179,7 @@ mod tests {
     fn test_late() {
         assert_suggestion_result(
             "Ands ometimes the space is a character late.",
-            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
+            TransposedSpace::new(FstDictionary::curated_for_language(LanguageFamily::English)),
             "And sometimes the space is a character late.",
             crate::languages::LanguageFamily::English,
         );

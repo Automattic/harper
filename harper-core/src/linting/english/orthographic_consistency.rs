@@ -16,7 +16,7 @@ pub struct OrthographicConsistency {
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: FstDictionary::curated(LanguageFamily::English),
+            dict: FstDictionary::curated_for_language(LanguageFamily::English),
             expr: SequenceExpr::any_word(),
         }
     }

@@ -46,7 +46,13 @@ macro_rules! generate_boilerplate {
         /// Add a Weir rule using its declared chunk/sentence scope.
         fn add_weir_linter(group: &mut LintGroup, name: &str, weir_code: &str) {
             let linter = WeirLinter::new(weir_code).unwrap();
-            group.add_chunk_expr_linter(name, linter);
+            match linter.into_sentence_linter() {
+                Ok(linter) => group.add_sentence_expr_linter(name, linter),
+                Err(linter) => group.add_chunk_expr_linter(
+                    name,
+                    linter.into_chunk_linter().unwrap_or_else(|_| unreachable!()),
+                ),
+            };
         }
 
         #[cfg(test)]

@@ -99,9 +99,9 @@ pub fn add_language_specific_linters(
     dictionary: Arc<impl Dictionary + 'static>,
 ) {
     if dialect.is_german() {
-        use crate::linting::german_noun_capitalization::GermanNounCapitalization;
-        use crate::linting::german_sentence_capitalization::GermanSentenceCapitalization;
-        use crate::linting::german_spell_check::GermanSpellCheck;
+        use crate::language::german::linting::german_noun_capitalization::GermanNounCapitalization;
+        use crate::language::german::linting::german_sentence_capitalization::GermanSentenceCapitalization;
+        use crate::language::german::linting::german_spell_check::GermanSpellCheck;
 
         out.add(
             "GermanSpellCheck",

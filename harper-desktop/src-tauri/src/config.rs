@@ -56,9 +56,8 @@ impl Config {
     }
 
     pub fn detect_system_dialect() -> Dialect {
-        tauri_plugin_os::locale()
-            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
-            .unwrap_or(Dialect::American)
+        // TODO: Implement BCP47 to Dialect conversion
+        Dialect::American
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
@@ -150,7 +149,7 @@ impl Config {
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
-        config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
+        config.mutable_dictionary = load_dict(dictionary_path).await?;
 
         Ok(config)
     }
@@ -170,7 +169,7 @@ impl Config {
     }
 
     pub fn create_linter(&self) -> LintGroup {
-        LintGroup::new_curated(self.create_dictionary(), self.dialect)
+        LintGroup::new_curated(self.create_dictionary(), self.dialect.into())
             .with_lint_config(self.lint_config.clone())
     }
 

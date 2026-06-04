@@ -6,10 +6,11 @@
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString};
 
+use crate::dialects::english::EnglishDialect;
+use crate::dialects::portuguese::PortugueseDialect;
 use crate::language::german::dialects::GermanDialect;
-use crate::language::portuguese::dialects::PortugueseDialect;
 
-/// A specific language with its dialect.
+/// A specific language with its dialects.
 ///
 /// This enum represents all supported languages in Harper, each with their specific dialect.
 #[derive(
@@ -17,7 +18,7 @@ use crate::language::portuguese::dialects::PortugueseDialect;
 )]
 pub enum Language {
     /// English language with its dialects
-    English(crate::Dialect),
+    English(EnglishDialect),
     /// German language with its dialects
     German(GermanDialect),
     /// Portuguese language with its dialects
@@ -27,7 +28,7 @@ pub enum Language {
 impl Language {
     /// Creates a default Language (English with American dialect).
     pub fn default_english() -> Self {
-        Self::English(crate::Dialect::American)
+        Self::English(EnglishDialect::American)
     }
 }
 
@@ -95,25 +96,32 @@ mod tests {
     #[test]
     fn test_language_family_conversion() {
         assert_eq!(
-            LanguageFamily::from(Language::English(crate::Dialect::American)),
+            LanguageFamily::from(Language::English(EnglishDialect::American)),
             LanguageFamily::English
         );
         assert_eq!(
             LanguageFamily::from(Language::German(GermanDialect::Standard)),
             LanguageFamily::German
         );
-        // Portuguese tests will work once we create the PortugueseDialect enum
+        assert_eq!(
+            LanguageFamily::from(Language::Portuguese(PortugueseDialect::Brazilian)),
+            LanguageFamily::Portuguese
+        );
     }
 
     #[test]
     fn test_language_family_method() {
         assert_eq!(
-            Language::English(crate::Dialect::British).family(),
+            Language::English(EnglishDialect::British).family(),
             LanguageFamily::English
         );
         assert_eq!(
             Language::German(GermanDialect::Standard).family(),
             LanguageFamily::German
+        );
+        assert_eq!(
+            Language::Portuguese(PortugueseDialect::European).family(),
+            LanguageFamily::Portuguese
         );
     }
 
