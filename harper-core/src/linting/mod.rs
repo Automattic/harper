@@ -38,6 +38,7 @@ mod by_the_book;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
+mod catch_22;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
