@@ -71,6 +71,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/author-a-rule/+page.md`: Step-by-step workflow for implementing and testing new grammar rules.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
+- `packages/web/src/routes/docs/contributors/website/+page.md`: Local development, preview, and validation for writewithharper.com (SvelteKit/SveltePress).
 - `packages/web/src/routes/docs/contributors/wordpress/+page.md`: How to build and run the WordPress plugin locally.
 - `packages/web/src/routes/docs/contributors/obsidian/+page.md`: Obsidian-plugin contributor workflow and plugin-specific constraints.
 - `packages/web/src/routes/docs/contributors/review/+page.md`: PR reviewer playbook, including ways to fetch artifacts and test patches locally.
