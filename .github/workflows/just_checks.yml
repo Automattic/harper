@@ -27,14 +27,13 @@ jobs:
             test-firefox-plugin,
             test-obsidian,
             check-desktop,
-            build-desktop-linux,
           ]
     steps:
       - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v2
+      - uses: extractions/setup-just@dd310ad5a97d8e7b41793f8ef055398d51ad4de6 # v2.0.0
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+      - uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
         with:
           components: rustfmt,clippy
       - name: Install Node.js
@@ -53,8 +52,8 @@ jobs:
             libxdo-dev
           sudo apt-get install -y libappindicator3-dev || true
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.8
-      - uses: cargo-bins/cargo-binstall@main
+        uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
+      - uses: cargo-bins/cargo-binstall@f8810ffa11196f23afb38e6fb64716fbf814ad8f # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`

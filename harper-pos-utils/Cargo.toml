@@ -1,6 +1,6 @@
 [package]
 name = "harper-pos-utils"
-version = "2.1.0"
+version = "2.3.1"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -17,8 +17,8 @@ rand = { version = "0.10.1", optional = true }
 burn = { version = "0.19.1", default-features = false, features = ["std"] }
 burn-ndarray = { version = "0.19.0", default-features = false }
 serde_json = "1.0.149"
-lru = "0.16.3"
-rayon = { version = "1.11.0", optional = true }
+lru = "0.18.0"
+rayon = { version = "1.12.0", optional = true }
 
 [features]
 default = []
