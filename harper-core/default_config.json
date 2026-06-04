@@ -5004,6 +5004,13 @@
 								"state": true,
 								"label": "Pay For Price"
 							}
+						},
+						{
+							"Bool": {
+								"name": "IncidentReport",
+								"state": true,
+								"label": "Incident Report"
+							}
 						}
 					]
 				}
