@@ -23,7 +23,7 @@ impl Default for NoLonger {
                         TokenKind::is_adjective,
                     ][..],
                 ))
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()

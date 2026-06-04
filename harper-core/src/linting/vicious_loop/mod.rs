@@ -30,7 +30,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
 
     match flag {
         Prefer::Circle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
@@ -38,7 +38,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
             ),
         ),
         Prefer::Cycle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
@@ -46,7 +46,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
             ),
         ),
         Prefer::DontCare => {
-            Box::new(seq.and_not(SequenceExpr::default().then_word_except(&["viscous"])))
+            Box::new(seq.but_not(SequenceExpr::default().then_word_except(&["viscous"])))
         }
     }
 }
