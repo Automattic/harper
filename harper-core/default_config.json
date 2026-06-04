@@ -3734,6 +3734,13 @@
 								"state": true,
 								"label": "Naked Eye"
 							}
+						},
+						{
+							"Bool": {
+								"name": "APluralNoun",
+								"state": true,
+								"label": "A Plural Noun"
+							}
 						}
 					]
 				}
