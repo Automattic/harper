@@ -1,4 +1,4 @@
-use super::Expr;
+use super::{Expr, SequenceExpr};
 use crate::{Span, Token};
 
 /// A naive expr collection that naively iterates through a list of patterns,
@@ -13,6 +13,15 @@ pub struct FirstMatchOf {
 impl FirstMatchOf {
     pub fn new(exprs: Vec<Box<dyn Expr>>) -> Self {
         Self { exprs }
+    }
+
+    pub fn from_phrases(phrases: &'static [&'static [&'static str]]) -> Self {
+        Self {
+            exprs: phrases
+                .iter()
+                .map(|p| Box::new(SequenceExpr::from_words(p.to_vec())) as Box<dyn Expr>)
+                .collect(),
+        }
     }
 
     pub fn add(&mut self, expr: impl Expr + 'static) {

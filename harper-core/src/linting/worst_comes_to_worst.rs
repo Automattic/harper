@@ -1,7 +1,6 @@
 use crate::{
     Dialect, Lint, Token, TokenStringExt,
-    char_string::CharStringExt,
-    expr::{Expr, SequenceExpr},
+    expr::{All, Expr, LongestMatchOf, OwnedExprExt, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
@@ -13,7 +12,7 @@ static VALID_VARIANTS: &[&[&str]] = &[
 ];
 
 pub struct WorstComesToWorst {
-    expr: SequenceExpr,
+    expr: All,
     dialect: Dialect,
 }
 
@@ -28,7 +27,9 @@ impl WorstComesToWorst {
                 .t_set(&["to", "too"])
                 .t_ws()
                 .then_optional(SequenceExpr::aco("the").t_ws())
-                .t_set(&["worst", "worse"]),
+                .t_set(&["worst", "worse"])
+                .but_not(LongestMatchOf::from_phrases(&VALID_VARIANTS)),
+            // .but_not(SequenceExpr::from_words(vec!["the", "worst", "comes", "to", "the", "worst"])),
             dialect,
         }
     }
@@ -38,26 +39,6 @@ impl ExprLinter for WorstComesToWorst {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
-        // Return None if we matched any of the valid variants
-        let is_valid_variant = VALID_VARIANTS.iter().any(|variant| {
-            let mut matched_words_iter = toks
-                .iter()
-                .enumerate()
-                .filter(|(i, _)| *i % 2 == 0) // Even indices (words)
-                .map(|(_, token)| token.get_ch(source));
-
-            // All pairs must match and lengths must be equal (no extra matched words)
-            variant
-                .iter()
-                .zip(&mut matched_words_iter)
-                .all(|(expected, actual)| actual.eq_str(expected))
-                && matched_words_iter.next().is_none()
-        });
-
-        if is_valid_variant {
-            return None;
-        }
-
         let span = toks.span()?;
         let template = span.get_content(source);
 
