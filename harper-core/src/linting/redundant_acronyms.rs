@@ -6,18 +6,39 @@ use crate::{
     token_string_ext::TokenStringExt,
 };
 
+enum Flag {
+    /// Some acronyms should only be matched when all caps, like "PIN"
+    AllCapsOnly,
+    /// Some acronyms should not be pluralized, like "USD"
+    DontPluralizeAcronym,
+    /// No special flags
+    None,
+}
+use Flag::*;
+
 // (acronym, first_words, last_word)
-const ACRONYMS: &[(&str, &[&str], &str)] = &[
-    ("ATM", &["automated teller", "automatic teller"], "machine"),
-    ("GOP", &["Grand Old"], "Party"),
-    ("GUI", &["graphical user"], "interface"),
-    ("LCD", &["liquid crystal"], "display"),
-    ("LLM", &["large language"], "model"),
+const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
+    (
+        "ATM",
+        &["automated teller", "automatic teller"],
+        "machine",
+        None,
+    ),
+    ("GOP", &["Grand Old"], "Party", None),
+    ("GUI", &["graphical user"], "interface", None),
+    ("LCD", &["liquid crystal"], "display", None),
+    ("LLM", &["large language"], "model", None),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
-    ("PIN", &["personal identification"], "number"),
-    ("TUI", &["text-based user", "terminal user"], "interface"),
-    ("UI", &["user"], "interface"),
-    ("VIN", &["vehicle identification"], "number"),
+    ("PIN", &["personal identification"], "number", AllCapsOnly),
+    (
+        "TUI",
+        &["text-based user", "terminal user"],
+        "interface",
+        None,
+    ),
+    ("UI", &["user"], "interface", None),
+    ("USD", &["US"], "dollars", DontPluralizeAcronym),
+    ("VIN", &["vehicle identification"], "number", None),
 ];
 
 pub struct RedundantAcronyms {
@@ -28,8 +49,8 @@ impl Default for RedundantAcronyms {
     fn default() -> Self {
         let exprs: Vec<Box<dyn Expr>> = ACRONYMS
             .iter()
-            .map(|&(acronym, _, last_str)| {
-                let last_string = last_str.to_lowercase();
+            .map(|&(acronym, _, last_str, _)| {
+                let last_string = last_str.to_string();
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
                     Box::new(Word::new(last_str)),
                     Box::new(move |t: &Token, src: &[char]| {
@@ -57,24 +78,28 @@ impl ExprLinter for RedundantAcronyms {
         let last_word_chars = last_word_span.get_content(src);
         let acronym_str = toks.first()?.get_str(src);
 
-        // "pin number" (lowercase) is used to refer to the pins on microchips, etc.
-        if acronym_str.eq_ignore_ascii_case("PIN") && acronym_str != "PIN" {
-            return None;
-        }
-
-        let (_, middle_words, last_word) = ACRONYMS
+        let (_, middle_words, last_word, flag) = ACRONYMS
             .iter()
-            .find(|(a, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
+            .find(|(a, _, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
+
+        // Skip if AllCapsOnly flag is set and acronym is not all caps
+        if matches!(flag, AllCapsOnly) && !acronym_str.chars().all(|c| c.is_ascii_uppercase()) {
+            return Option::None;
+        }
 
         let is_all_caps = last_word_chars
             .iter()
             .all(|c| c.is_ascii_alphabetic() && c.is_ascii_uppercase());
 
-        let plural_ending = last_word_chars
-            .last()
-            .filter(|&&c| c.eq_ignore_ascii_case(&'s'))
-            .map(|c| c.to_string())
-            .unwrap_or_default();
+        let plural_ending = if matches!(flag, DontPluralizeAcronym) {
+            String::new()
+        } else {
+            last_word_chars
+                .last()
+                .filter(|&&c| c.eq_ignore_ascii_case(&'s'))
+                .map(|c| c.to_string())
+                .unwrap_or_default()
+        };
 
         let suggestions: Vec<Suggestion> = std::iter::once(Suggestion::ReplaceWith(
             format!("{acronym_str}{plural_ending}").chars().collect(),
@@ -386,6 +411,19 @@ mod tests {
             &[
                 "Ollama is an open-source tool for running LLMs locally.",
                 "Ollama is an open-source tool for running large language models locally.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_usd() {
+        assert_good_and_bad_suggestions(
+            "And because I didn't have USD dollars, I used zip ties [music] instead of a proper microonal bass.",
+            RedundantAcronyms::default(),
+            &[
+                "And because I didn't have US dollars, I used zip ties [music] instead of a proper microonal bass.",
+                "And because I didn't have USD, I used zip ties [music] instead of a proper microonal bass.",
             ],
             &[],
         );
