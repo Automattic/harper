@@ -11,7 +11,7 @@ pub struct MultipleFrequencyAdverbs {
 impl Default for MultipleFrequencyAdverbs {
     fn default() -> Self {
         let adverb_of_frequency = |t: &Token, s: &[char]| {
-            t.kind.is_frequency_adverb() && !t.get_ch(s).eq_ch(&['o', 'n', 'l', 'y'])
+            t.kind.is_frequency_adverb() && t.get(s) != ['o', 'n', 'l', 'y']
         };
 
         Self {

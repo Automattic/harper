@@ -45,10 +45,7 @@ impl ExprLinter for FleshOutVsFullFledged {
             .unwrap_or(false);
 
         // Is the last word is "out"?
-        let mut has_out = toks
-            .last()
-            .map(|t| t.get_ch(src).eq_str("out"))
-            .unwrap_or(false);
+        let mut has_out = toks.last().map(|t| t.get(src) == "out").unwrap_or(false);
 
         // Adjust tokens to exclude "out" when it's part of a hyphenated compound
         let toks = if has_out

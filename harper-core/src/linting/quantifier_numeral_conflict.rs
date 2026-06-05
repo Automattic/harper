@@ -3,7 +3,7 @@ use crate::linting::expr_linter::Chunk;
 use crate::linting::{ExprLinter, LintKind, Suggestion};
 use crate::patterns::{NominalPhrase, WordSet};
 use crate::token_string_ext::TokenStringExt;
-use crate::{CharStringExt, Lint, Token};
+use crate::{Lint, Token};
 
 pub struct QuantifierNumeralConflict {
     expr: All,
@@ -65,7 +65,7 @@ impl ExprLinter for QuantifierNumeralConflict {
                     && let [.., prev_word, prev_space] = previous
                     && prev_space.kind.is_whitespace()
                     && prev_word.kind.is_word()
-                    && prev_word.get_ch(src).eq_ch(&['a', 't'])
+                    && prev_word.get(src) == ['a', 't']
                 {
                     return None;
                 }

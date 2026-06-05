@@ -66,7 +66,7 @@ impl ExprLinter for DespiteItIs {
             return None;
         }
 
-        let subj_chars = subj.get_ch(src);
+        let subj_sl = subj.get(src);
         let be_chars = be.get_ch(src);
         let pron_be_toks = &toks[2..5];
 
@@ -89,10 +89,10 @@ impl ExprLinter for DespiteItIs {
             (Person::First, false, true) => ("us", "our"),
             (Person::Second, true, true) => ("you", "your"),
             (Person::Third, false, true) => ("them", "their"),
-            (Person::Third, true, false) => match subj_chars {
-                chs if chs.eq_ch(&['h', 'e']) => ("him", "his"),
-                chs if chs.eq_ch(&['s', 'h', 'e']) => ("her", "her"),
-                chs if chs.eq_ch(&['i', 't']) => ("it", "its"),
+            (Person::Third, true, false) => match &subj_sl {
+                sl if sl == ['h', 'e'] => ("him", "his"),
+                sl if sl == ['s', 'h', 'e'] => ("her", "her"),
+                sl if sl == ['i', 't'] => ("it", "its"),
                 _ => return None,
             },
             _ => return None,
@@ -101,7 +101,10 @@ impl ExprLinter for DespiteItIs {
         let mut suggestions = Vec::with_capacity(3);
 
         // Special case for "it" which can also be omitted
-        if subj_chars.eq_any_ignore_ascii_case_str(&["it", "they"]) {
+        if subj
+            .get_ch(src)
+            .eq_any_ignore_ascii_case_str(&["it", "they"])
+        {
             suggestions.push(Suggestion::replace_with_match_case_str("being", be_chars));
         }
 
