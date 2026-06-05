@@ -5014,6 +5014,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PayForPrice",
 								"state": true,
 								"label": "Pay For Price"
