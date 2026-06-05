@@ -56,6 +56,7 @@ enum Context {
     TheresNothingBeforeItAndAPrepositionAfterIt,
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
+    ItsFollowedByVerb,
 }
 
 impl PhrasalVerbAsCompoundNoun {
@@ -190,17 +191,15 @@ impl PhrasalVerbAsCompoundNoun {
             ));
         }
 
-        if let Some(next_tok) = maybe_next_tok {
-            // "That" or "which" can follow a noun as relative pronouns.
-            if next_tok.kind.is_pronoun()
-                && next_tok.get_ch(source).eq_any_ignore_ascii_case_chars(&[
-                    &['t', 'h', 'a', 't'][..],
-                    &['w', 'h', 'i', 'c', 'h'][..],
-                ])
-            {
-                // return Err(Why::ItsFollowedByThatOrWhich(Kind::Contextual));
-                return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
-            }
+        // "That" or "which" can follow a noun as relative pronouns.
+        if let Some(next_tok) = maybe_next_tok
+            && next_tok.kind.is_pronoun()
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_chars(&[
+                &['t', 'h', 'a', 't'][..],
+                &['w', 'h', 'i', 'c', 'h'][..],
+            ])
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
         }
 
         // If the compound noun is followed by another noun, check for larger compound nouns.
@@ -257,6 +256,16 @@ impl PhrasalVerbAsCompoundNoun {
             return Err(Why::Contextual(Context::ItsActuallyPartOfANounPhrase));
         }
 
+        // If the next word is a present or simple past verb form compatible with a 3rd person singular noun
+        if let Some(next_tok) = maybe_next_tok
+            && (next_tok.kind.is_verb_third_person_singular_present_form()
+                || next_tok.kind.is_verb_simple_past_form()
+                || next_tok.kind.is_verb_past_form())
+            && !next_tok.kind.is_plural_noun()
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByVerb));
+        }
+
         Ok((phrasal_verb, confidence))
     }
 }
@@ -267,42 +276,24 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             .iter_noun_indices()
             .filter_map(|i| {
                 let token = document.get_token(i).unwrap();
-                let source = document.get_source();
 
-                // Directly match on the Result returned by your heuristics
-                match self.analyse(document, i, token) {
-                    // Contextual failures are logged and explicitly skipped
-                    Err(Why::Contextual(why)) => {
-                        eprintln!("📛 '{}' 👉 {:?}", token.get_str(source), why);
-                        None
-                    }
-                    // Lexical failures or general default bypasses are silently skipped
-                    Err(_) => None,
-                    // If it is a confirmed error, print the soccerball and build the Lint
-                    Ok((phrasal_verb, confidence)) => {
-                        eprintln!(
-                            "⚽️ '{}' 👉 {}",
-                            token.get_str(source),
-                            phrasal_verb.iter().collect::<String>()
-                        );
-
-                        Some(Lint {
-                            span: token.span, // Span implements Copy, no need for Span::new(..)
-                            lint_kind: LintKind::WordChoice,
-                            suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
-                            message: match confidence {
-                                Confidence::DefinitelyVerb => {
-                                    "This word should be a phrasal verb, not a compound noun."
-                                }
-                                Confidence::PossiblyVerb => {
-                                    "This word might be a phrasal verb rather than a compound noun."
-                                }
+                self.analyse(document, i, token)
+                    .ok()
+                    .map(|(phrasal_verb, confidence)| Lint {
+                        span: token.span,
+                        lint_kind: LintKind::WordChoice,
+                        suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
+                        message: match confidence {
+                            Confidence::DefinitelyVerb => {
+                                "This word should be a phrasal verb, not a compound noun."
                             }
-                            .to_string(),
-                            priority: 63,
-                        })
-                    }
-                }
+                            Confidence::PossiblyVerb => {
+                                "This word might be a phrasal verb rather than a compound noun."
+                            }
+                        }
+                        .to_string(),
+                        priority: 63,
+                    })
             })
             .collect()
     }
