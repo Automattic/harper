@@ -2,7 +2,7 @@ use itertools::Itertools;
 
 use crate::{
     char_ext::CharExt,
-    expr::{Expr, SequenceExpr},
+    expr::{Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
     {CharStringExt, Lint, Token, TokenStringExt},
@@ -23,12 +23,16 @@ where
                 .t_ws()
                 .then_positive_adjective()
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
-                .then_optional(
-                    SequenceExpr::whitespace()
-                        .t_aco("than")
-                        .t_ws()
-                        .then_positive_adjective(),
-                ),
+                // Or a following hyphen which we'll use to identify a false positive #3568
+                .then_optional(FirstMatchOf::new(vec![
+                    Box::new(
+                        SequenceExpr::whitespace()
+                            .t_aco("than")
+                            .t_ws()
+                            .then_positive_adjective(),
+                    ),
+                    Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
+                ])),
             dict,
         }
     }
