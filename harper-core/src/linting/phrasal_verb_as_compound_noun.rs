@@ -3,7 +3,7 @@ use std::sync::Arc;
 use crate::{
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::{Dictionary, FstDictionary},
-    {CharStringExt, Document, Span, Token, TokenStringExt},
+    {CharStringExt, Document, Token, TokenStringExt},
 };
 
 /// Detect phrasal verbs written as compound nouns.
@@ -40,6 +40,12 @@ enum Why {
     ItsAKnownFalsePositive,
     ItDoesntEndWithOneOfTheParticles,
     NeitherTheWholeWordNorThePartBeforeTheParticleIsAVerb,
+    Contextual(Context),
+    TheresNothingWrongWithIt,
+}
+
+#[derive(Debug, PartialEq)]
+enum Context {
     ItsInIsolation,
     IHaveNoConfidenceThatItsAVerb,
     TheresAnAdjectiveOrDeterminerBeforeIt,
@@ -50,11 +56,10 @@ enum Why {
     TheresNothingBeforeItAndAPrepositionAfterIt,
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
-    TheresNothingWrongWithIt,
 }
 
 impl PhrasalVerbAsCompoundNoun {
-    fn logic_and_heuristics(
+    fn analyse(
         &self,
         document: &Document,
         i: usize,
@@ -133,20 +138,22 @@ impl PhrasalVerbAsCompoundNoun {
 
         // If it's in isolation, a compound noun is fine.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_none() {
-            return Err(Why::ItsInIsolation);
+            return Err(Why::Contextual(Context::ItsInIsolation));
         }
 
         let confidence = match (phrasal_verb_is_verb, verb_part_is_verb) {
             (true, _) => Confidence::DefinitelyVerb,
             (false, true) => Confidence::PossiblyVerb,
-            _ => return Err(Why::IHaveNoConfidenceThatItsAVerb),
+            _ => return Err(Why::Contextual(Context::IHaveNoConfidenceThatItsAVerb)),
         };
 
         let source = document.get_source();
 
         if let Some(prev_tok) = maybe_prev_tok {
             if prev_tok.kind.is_adjective() || prev_tok.kind.is_determiner() {
-                return Err(Why::TheresAnAdjectiveOrDeterminerBeforeIt);
+                return Err(Why::Contextual(
+                    Context::TheresAnAdjectiveOrDeterminerBeforeIt,
+                ));
             }
 
             // "dictionary lookup" is not a mistake but "couples breakup" is.
@@ -154,21 +161,21 @@ impl PhrasalVerbAsCompoundNoun {
             if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun()
                 || prev_tok.get_ch(source).eq_str("settings")
             {
-                return Err(Why::ItsPrecededByANonPluralNoun);
+                return Err(Why::Contextual(Context::ItsPrecededByANonPluralNoun));
             }
 
             if is_part_of_noun_list(document, i) {
-                return Err(Why::ItsAnItemInAListOfNouns);
+                return Err(Why::Contextual(Context::ItsAnItemInAListOfNouns));
             }
 
             // If the previous word is (only) a preposition, this word is surely a noun
             if prev_tok.kind.is_preposition() && !prev_tok.get_ch(source).eq_str("to") {
-                return Err(Why::ItsPrecededByAPreposition);
+                return Err(Why::Contextual(Context::ItsPrecededByAPreposition));
             }
 
             // If the previous word is OOV, those are most commonly nouns
             if prev_tok.kind.is_oov() {
-                return Err(Why::ItsPrecededByAnUnknownWord);
+                return Err(Why::Contextual(Context::ItsPrecededByAnUnknownWord));
             }
         }
 
@@ -178,7 +185,9 @@ impl PhrasalVerbAsCompoundNoun {
         // ✅ Plugin for text editors.
         // ✅ Plug in for faster performance.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_some_and(|t| t.kind.is_preposition()) {
-            return Err(Why::TheresNothingBeforeItAndAPrepositionAfterIt);
+            return Err(Why::Contextual(
+                Context::TheresNothingBeforeItAndAPrepositionAfterIt,
+            ));
         }
 
         if let Some(next_tok) = maybe_next_tok {
@@ -189,7 +198,8 @@ impl PhrasalVerbAsCompoundNoun {
                     &['w', 'h', 'i', 'c', 'h'][..],
                 ])
             {
-                return Err(Why::ItsFollowedByThatOrWhich);
+                // return Err(Why::ItsFollowedByThatOrWhich(Kind::Contextual));
+                return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
             }
         }
 
@@ -244,7 +254,7 @@ impl PhrasalVerbAsCompoundNoun {
                 .unwrap_or(&[]),
             )
         {
-            return Err(Why::ItsActuallyPartOfANounPhrase);
+            return Err(Why::Contextual(Context::ItsActuallyPartOfANounPhrase));
         }
 
         Ok((phrasal_verb, confidence))
@@ -257,24 +267,42 @@ impl Linter for PhrasalVerbAsCompoundNoun {
             .iter_noun_indices()
             .filter_map(|i| {
                 let token = document.get_token(i).unwrap();
-                let (phrasal_verb, confidence) =
-                    self.logic_and_heuristics(document, i, token).ok()?;
+                let source = document.get_source();
 
-                Some(Lint {
-                    span: Span::new(token.span.start, token.span.end),
-                    lint_kind: LintKind::WordChoice,
-                    suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
-                    message: match confidence {
-                        Confidence::DefinitelyVerb => {
-                            "This word should be a phrasal verb, not a compound noun."
-                        }
-                        Confidence::PossiblyVerb => {
-                            "This word might be a phrasal verb rather than a compound noun."
-                        }
+                // Directly match on the Result returned by your heuristics
+                match self.analyse(document, i, token) {
+                    // Contextual failures are logged and explicitly skipped
+                    Err(Why::Contextual(why)) => {
+                        eprintln!("📛 '{}' 👉 {:?}", token.get_str(source), why);
+                        None
                     }
-                    .to_string(),
-                    priority: 63,
-                })
+                    // Lexical failures or general default bypasses are silently skipped
+                    Err(_) => None,
+                    // If it is a confirmed error, print the soccerball and build the Lint
+                    Ok((phrasal_verb, confidence)) => {
+                        eprintln!(
+                            "⚽️ '{}' 👉 {}",
+                            token.get_str(source),
+                            phrasal_verb.iter().collect::<String>()
+                        );
+
+                        Some(Lint {
+                            span: token.span, // Span implements Copy, no need for Span::new(..)
+                            lint_kind: LintKind::WordChoice,
+                            suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
+                            message: match confidence {
+                                Confidence::DefinitelyVerb => {
+                                    "This word should be a phrasal verb, not a compound noun."
+                                }
+                                Confidence::PossiblyVerb => {
+                                    "This word might be a phrasal verb rather than a compound noun."
+                                }
+                            }
+                            .to_string(),
+                            priority: 63,
+                        })
+                    }
+                }
             })
             .collect()
     }
