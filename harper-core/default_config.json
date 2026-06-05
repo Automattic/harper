@@ -1323,6 +1323,13 @@
 								"state": true,
 								"label": "Nowadays"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
+							}
 						}
 					]
 				}
@@ -1524,6 +1531,13 @@
 								"name": "BluRayHyphen",
 								"state": true,
 								"label": "Blu Ray Hyphen"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
 							}
 						},
 						{
@@ -2010,6 +2024,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Theres",
 								"state": true,
 								"label": "There's"
@@ -2408,6 +2429,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoNotWant",
 								"state": true,
 								"label": "Do Not Want"
@@ -2706,6 +2734,13 @@
 								"state": true,
 								"label": "Close Tight Knit"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheTheToThatThe",
+								"state": true,
+								"label": "The The To That The"
+							}
 						}
 					]
 				}
@@ -2717,6 +2752,13 @@
 				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
 						{
 							"Bool": {
 								"name": "BoringWords",
@@ -3030,6 +3072,20 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForFreeOfCharge",
+								"state": true,
+								"label": "For Free of Charge"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
 							}
 						}
 					]
@@ -3677,6 +3733,20 @@
 								"name": "ASomeTime",
 								"state": true,
 								"label": "A Some Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsToInterrogative",
+								"state": true,
+								"label": "As To Interrogative"
 							}
 						}
 					]
@@ -4912,6 +4982,55 @@
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LongTimeAgo",
+								"state": true,
+								"label": "Long Time Ago"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncidentReport",
+								"state": true,
+								"label": "Incident Report"
 							}
 						}
 					]

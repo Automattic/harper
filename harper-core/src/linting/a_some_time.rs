@@ -106,7 +106,6 @@ mod tests {
         );
     }
 
-    // I guess support people is was cheaper than just a some hours of an engineer who can actually fix the platform
     #[test]
     fn a_some_hours() {
         assert_suggestion_result(
