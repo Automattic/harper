@@ -2723,6 +2723,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SpellCheckWithUsernames",
+								"state": false,
+								"label": "Spell Check With Usernames"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CloseTightKnit",
 								"state": true,
 								"label": "Close Tight Knit"
