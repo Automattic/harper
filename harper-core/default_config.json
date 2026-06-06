@@ -4447,6 +4447,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Brutality",
 								"state": true,
 								"label": "Brutality"
@@ -5010,6 +5017,13 @@
 								"name": "EverySingleOneOf",
 								"state": true,
 								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Impressed",
+								"state": true,
+								"label": "Impressed"
 							}
 						},
 						{
