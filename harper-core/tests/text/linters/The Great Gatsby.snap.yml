@@ -7071,6 +7071,16 @@ Suggest:
 
 
 
+Lint:    Redundancy (31 priority)
+Message: |
+    5314 | me I hardly can believe it that it is true at all. Such a mad act as that man
+    5315 | did should make us all think. I cannot come down now as I am tied up in some
+         | ^~~~ The auxiliary "did" is redundant before the modal "should".
+Suggest:
+  - Remove error
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     5322 | >
