@@ -9,10 +9,13 @@ import {
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
-import { liveVersions, loadLiveVersions } from '$lib/marketing/versions';
+import { isUpToDate, liveVersions, loadLiveVersions } from '$lib/marketing/versions';
 
 let activeCategory = 'all';
 let query = '';
+
+const VERSION_UPTODATE = 'Up-to-date';
+const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
 
 onMount(() => {
 	void loadLiveVersions();
@@ -77,6 +80,8 @@ function clearFilters() {
 				{#each ['desktop', 'chrome'] as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
 							href={integration.href}
@@ -86,13 +91,14 @@ function clearFilters() {
 								<div class="flex items-center gap-1.5">
 									<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
 									{#if $liveVersions[integration.id]}
-										<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+		                				{#if upToDate != null}
+										<span
+										    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+										    title={titleText}
+										>
 											{$liveVersions[integration.id]}
 										</span>
-									{:else if $liveVersions[integration.name]}
-										<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
-											{$liveVersions[integration.name]}
-										</span>
+										{/if}
 									{/if}
 								</div>
 								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
@@ -183,6 +189,8 @@ function clearFilters() {
 					</div>
 				{:else}
 					{#each filtered as integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
 							href={integration.href}
@@ -192,13 +200,14 @@ function clearFilters() {
 							<div class="flex items-center gap-1.5">
 								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
 								{#if $liveVersions[integration.id]}
-									<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
+									{#if upToDate != null}
+									<span
+									    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+									    title={titleText}
+									>
 										{$liveVersions[integration.id]}
 									</span>
-								{:else if $liveVersions[integration.name]}
-									<span class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none">
-										{$liveVersions[integration.name]}
-									</span>
+									{/if}
 								{/if}
 							</div>
 							<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
