@@ -168,7 +168,7 @@ dev-desktop: build-harperjs build-lint-framework build-components build-harper-e
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri dev
+  pnpm tauri dev
 
 # Start the Harper Desktop highlighter process directly.
 dev-desktop-highlighter:
@@ -196,7 +196,16 @@ build-desktop-linux: build-harperjs build-lint-framework build-components build-
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b deb,rpm,appimage
+  pnpm tauri build -b deb,rpm,appimage
+
+# Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
+build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b app,dmg --target aarch64-apple-darwin
 
 # Build Harper Desktop macOS bundles.
 build-desktop-macos: build-harperjs build-lint-framework build-components build-harper-editor
@@ -205,7 +214,7 @@ build-desktop-macos: build-harperjs build-lint-framework build-components build-
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b app,dmg --target universal-apple-darwin
+  pnpm tauri build -b app,dmg --target universal-apple-darwin
 
 # Build Harper Desktop macOS bundles without updater artifacts.
 build-desktop-macos-unsigned: build-harperjs build-lint-framework build-components build-harper-editor
@@ -214,7 +223,7 @@ build-desktop-macos-unsigned: build-harperjs build-lint-framework build-componen
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  cargo tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
+  pnpm tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
 
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
@@ -607,6 +616,16 @@ bump-versions: update-vscode-linters
 
   cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
   mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop"
+
+  cat package.json | jq ".version = \"$HARPER_VERSION\"" > package.json.edited
+  mv package.json.edited package.json
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
+  mv tauri.conf.json.edited tauri.conf.json
 
   just format
 
