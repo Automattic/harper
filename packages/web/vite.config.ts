@@ -196,6 +196,10 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/chrome-extension',
 										},
 										{
+											title: 'Harper Desktop',
+											to: '/docs/contributors/desktop',
+										},
+										{
 											title: 'Website',
 											to: '/docs/contributors/website',
 										},
