@@ -2,6 +2,7 @@
 import '../app.css';
 import { getCurrentWindow } from '@tauri-apps/api/window';
 import { onMount } from 'svelte';
+import { DesktopUpdater } from '$lib/DesktopUpdater';
 
 let isSettings = false;
 let isViewResolved = false;
@@ -14,6 +15,8 @@ function hasSettingsRoute() {
 }
 
 onMount(() => {
+	void DesktopUpdater.maybeAutoUpdate();
+
 	let currentWindowLabel = '';
 
 	try {
