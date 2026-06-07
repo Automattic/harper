@@ -597,7 +597,9 @@ impl Suggestion {
     /// string.
     pub fn get_replacement_text(&self) -> String {
         match &self.inner {
-            harper_core::linting::Suggestion::Remove => "".to_string(),
+            harper_core::linting::Suggestion::Remove
+            | harper_core::linting::Suggestion::RemovePrefix(_)
+            | harper_core::linting::Suggestion::RemoveSuffix(_) => "".to_string(),
             harper_core::linting::Suggestion::ReplaceWith(chars) => chars.iter().collect(),
             harper_core::linting::Suggestion::InsertAfter(chars) => chars.iter().collect(),
         }
@@ -605,7 +607,9 @@ impl Suggestion {
 
     pub fn kind(&self) -> SuggestionKind {
         match &self.inner {
-            harper_core::linting::Suggestion::Remove => SuggestionKind::Remove,
+            harper_core::linting::Suggestion::Remove
+            | harper_core::linting::Suggestion::RemovePrefix(_)
+            | harper_core::linting::Suggestion::RemoveSuffix(_) => SuggestionKind::Remove,
             harper_core::linting::Suggestion::ReplaceWith(_) => SuggestionKind::Replace,
             harper_core::linting::Suggestion::InsertAfter(_) => SuggestionKind::InsertAfter,
         }
