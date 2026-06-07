@@ -320,7 +320,10 @@ impl TokenKind {
             TokenKind::Punctuation(punct) => {
                 matches!(
                     punct,
-                    Punctuation::Comma | Punctuation::Quote { .. } | Punctuation::Colon
+                    Punctuation::Comma
+                        | Punctuation::Semicolon
+                        | Punctuation::Quote { .. }
+                        | Punctuation::Colon
                 )
             }
             _ => false,
