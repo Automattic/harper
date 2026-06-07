@@ -4,19 +4,6 @@ use crate::linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Senten
 use crate::token_string_ext::TokenStringExt;
 
 /// Detects `lifetime` used where `life` is meant.
-///
-/// After superlative adjectives (best, worst, biggest, etc.) or certain
-/// intensifiers, "in my/your/their/etc. lifetime" should typically be
-/// "in my/your/their/etc. life" because the sentence refers to lived
-/// experience up to now, not the entire span of years.
-///
-/// Also catches bare "lifetime" after a superlative where "life" is
-/// the conventional idiom, e.g. "best goal of my lifetime" → "best goal of my life".
-///
-/// Does NOT flag the well-established idioms:
-/// - "once in a lifetime" / "once-in-a-lifetime"
-/// - "lifetime achievement"
-/// - "lifetime warranty/guarantee/access"
 pub struct LifetimeLife {
     expr: SequenceExpr,
 }
@@ -48,13 +35,6 @@ fn noun_gap() -> SequenceExpr {
         )
 }
 
-/// Build one pattern variant: superlative + noun gap + " PREP POSS lifetime"
-fn build_variant(phrase: &'static str) -> SequenceExpr {
-    superlative_prefix()
-        .then(noun_gap())
-        .then_fixed_phrase(phrase)
-}
-
 /// All the fixed-phrase suffixes we want to match after the superlative + noun gap.
 const VARIANTS: &[&str] = &[
     " of my lifetime",
@@ -79,7 +59,13 @@ impl Default for LifetimeLife {
     fn default() -> Self {
         let patterns: Vec<Box<dyn Expr>> = VARIANTS
             .iter()
-            .map(|&phrase| Box::new(build_variant(phrase)) as Box<dyn Expr>)
+            .map(|&phrase| {
+                Box::new(
+                    superlative_prefix()
+                        .then(noun_gap())
+                        .then_fixed_phrase(phrase),
+                ) as Box<dyn Expr>
+            })
             .collect();
 
         let expr = SequenceExpr::any_of(patterns);
