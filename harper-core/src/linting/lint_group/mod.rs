@@ -28,6 +28,7 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
+use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
@@ -44,6 +45,7 @@ use super::by_the_book::ByTheBook;
 use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
@@ -171,6 +173,7 @@ use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::plural_decades::PluralDecades;
@@ -225,6 +228,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
+use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
 use super::there_own::ThereOwn;
@@ -586,6 +590,7 @@ impl LintGroup {
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
+        insert_expr_rule!(AsToInterrogative, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidContractions, false);
         insert_expr_rule!(AvoidCurses, true);
@@ -601,6 +606,7 @@ impl LintGroup {
         insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_expr_rule!(Catch22, true);
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
@@ -727,6 +733,7 @@ impl LintGroup {
         insert_expr_rule!(OutOfDate, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
+        insert_expr_rule!(PayForPrice, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
@@ -778,6 +785,7 @@ impl LintGroup {
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
+        insert_expr_rule!(TheTheToThatThe, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThereOwn, true);
         insert_expr_rule!(Theres, true);
@@ -817,7 +825,9 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
