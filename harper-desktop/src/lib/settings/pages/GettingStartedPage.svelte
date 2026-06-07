@@ -83,7 +83,10 @@ async function enableTextEditForSetup() {
 			);
 		} else {
 			await Client.addIntegration('com.apple.TextEdit');
-			integrations = [...integrations, { bundle_id: 'com.apple.TextEdit', enabled: true }];
+			integrations = [
+				...integrations,
+				{ bundle_id: 'com.apple.TextEdit', enabled: true, display_name: 'TextEdit' },
+			];
 		}
 
 		state = {
@@ -118,6 +121,10 @@ async function checkAccessibilityPermission() {
 
 	try {
 		accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to check Accessibility permission: ${error}`;
 	} finally {
@@ -137,6 +144,10 @@ async function requestAccessibilityPermission() {
 	try {
 		accessibilityStatus = await Client.requestAccessibilityPermission();
 		hasRequestedAccessibility = true;
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to request Accessibility permission: ${error}`;
 	} finally {

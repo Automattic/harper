@@ -46,6 +46,15 @@ fn corrects_there_is_an_argument_to_be_said() {
     );
 }
 
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
+    );
+}
+
 // Bollocks
 
 #[test]
@@ -2854,53 +2863,6 @@ fn correct_how_it_looks_like_with_apostrophe() {
         lint_group(),
         "In the picture we can see how It looks on worker desktop.",
     );
-}
-
-// InHindsight
-
-#[test]
-fn corrects_on_hindsight() {
-    assert_suggestion_result(
-        "On hindsight, the tip to \"try launching your terminal\" would've been useful",
-        lint_group(),
-        "In hindsight, the tip to \"try launching your terminal\" would've been useful",
-    );
-}
-
-#[test]
-fn corrects_in_hind_sight_hyphenated() {
-    assert_suggestion_result(
-        "It probably could have been better to fake an OSS project name in hind-sight, but anyway we can still fix this.",
-        lint_group(),
-        "It probably could have been better to fake an OSS project name in hindsight, but anyway we can still fix this.",
-    );
-}
-
-#[test]
-fn corrects_in_hind_sight() {
-    assert_suggestion_result(
-        "In hind sight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
-        lint_group(),
-        "In hindsight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
-    )
-}
-
-#[test]
-fn corrects_on_hind_sight() {
-    assert_suggestion_result(
-        "Yes, on hind sight I've used tasks that don't respond well to kills.",
-        lint_group(),
-        "Yes, in hindsight I've used tasks that don't respond well to kills.",
-    )
-}
-
-#[test]
-fn corrects_on_hind_sight_hyphenated() {
-    assert_suggestion_result(
-        "On hind-sight the likely root cause was not force cleaning helm config.",
-        lint_group(),
-        "In hindsight the likely root cause was not force cleaning helm config.",
-    )
 }
 
 // MakeItSeem

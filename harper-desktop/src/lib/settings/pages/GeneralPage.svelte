@@ -420,17 +420,4 @@ function settingsValueToDialect(value: string): Dialect {
             <p class="result-summary">Saving debounce delay...</p>
           {/if}
         </div>
-
-        <div class="divider"></div>
-
-        <div class="stanza">
-          <div class="eyebrow">Updates</div>
-          <div class="row top">
-            <div>
-              <strong>You're up to date</strong>
-              <p>Harper 1.4.2, released April 18, 2026.</p>
-            </div>
-            <button class="button" type="button" disabled title="Not wired yet">Check now</button>
-          </div>
-        </div>
       </section>
