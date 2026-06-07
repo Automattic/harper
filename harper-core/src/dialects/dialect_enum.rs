@@ -6,6 +6,7 @@ use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, 
 use crate::dialects::dialect_trait::{Dialect, DialectFlags};
 use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
 use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
+use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
 use crate::languages::{Language, LanguageFamily};
 
 #[derive(
@@ -28,6 +29,7 @@ use crate::languages::{Language, LanguageFamily};
 #[strum_discriminants(name(DialectsEnumKind))]
 pub enum DialectsEnum {
     English(EnglishDialect),
+    German(GermanDialect),
     Portuguese(PortugueseDialect),
 }
 
@@ -38,6 +40,9 @@ impl Dialect for DialectsEnum {
         if let Some(english) = EnglishDialect::try_guess_from_document(document) {
             return Some(DialectsEnum::English(english));
         }
+        if let Some(german) = GermanDialect::try_guess_from_document(document) {
+            return Some(DialectsEnum::German(german));
+        }
         if let Some(portuguese) = PortugueseDialect::try_guess_from_document(document) {
             return Some(DialectsEnum::Portuguese(portuguese));
         }
@@ -47,6 +52,9 @@ impl Dialect for DialectsEnum {
     fn try_from_abbr(abbr: &str) -> Option<Self> {
         if let Some(english) = EnglishDialect::try_from_abbr(abbr) {
             return Some(DialectsEnum::English(english));
+        }
+        if let Some(german) = GermanDialect::try_from_abbr(abbr) {
+            return Some(DialectsEnum::German(german));
         }
         if let Some(portuguese) = PortugueseDialect::try_from_abbr(abbr) {
             return Some(DialectsEnum::Portuguese(portuguese));
@@ -65,6 +73,7 @@ impl Default for DialectsEnum {
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
 pub enum DialectFlagsEnum {
     English(EnglishDialectFlags),
+    German(GermanDialectFlags),
     Portuguese(PortugueseDialectFlags),
 }
 
@@ -75,6 +84,10 @@ impl DialectFlagsEnum {
                 DialectFlagsEnum::English(english_dialect_flags),
                 DialectsEnum::English(english_dialect),
             ) => english_dialect_flags.is_dialect_enabled_strict(english_dialect),
+            (
+                DialectFlagsEnum::German(german_dialect_flags),
+                DialectsEnum::German(german_dialect),
+            ) => german_dialect_flags.is_dialect_enabled_strict(german_dialect),
             (
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
@@ -91,6 +104,10 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
                 DialectFlagsEnum::English(english_dialect_flags),
                 DialectsEnum::English(english_dialect),
             ) => english_dialect_flags.is_dialect_enabled(english_dialect),
+            (
+                DialectFlagsEnum::German(german_dialect_flags),
+                DialectsEnum::German(german_dialect),
+            ) => german_dialect_flags.is_dialect_enabled(german_dialect),
             (
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
@@ -110,6 +127,10 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
                 DialectsEnum::English(english_dialect),
             ) => english_dialect_flags.is_dialect_enabled_strict(english_dialect),
             (
+                DialectFlagsEnum::German(german_dialect_flags),
+                DialectsEnum::German(german_dialect),
+            ) => german_dialect_flags.is_dialect_enabled_strict(german_dialect),
+            (
                 DialectFlagsEnum::Portuguese(portuguese_dialect_flags),
                 DialectsEnum::Portuguese(portuguese_dialect),
             ) => portuguese_dialect_flags.is_dialect_enabled_strict(portuguese_dialect),
@@ -121,6 +142,9 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
         match dialect {
             DialectsEnum::English(english_dialect) => {
                 DialectFlagsEnum::English(EnglishDialectFlags::from_dialect(english_dialect))
+            }
+            DialectsEnum::German(german_dialect) => {
+                DialectFlagsEnum::German(GermanDialectFlags::from_dialect(german_dialect))
             }
             DialectsEnum::Portuguese(portuguese_dialect) => DialectFlagsEnum::Portuguese(
                 PortugueseDialectFlags::from_dialect(portuguese_dialect),
@@ -141,12 +165,12 @@ impl DialectFlags<DialectsEnum> for DialectFlagsEnum {
             LanguageFamily::English => DialectFlagsEnum::English(
                 EnglishDialectFlags::get_most_used_dialects_from_document(document),
             ),
+            LanguageFamily::German => DialectFlagsEnum::German(
+                GermanDialectFlags::get_most_used_dialects_from_document(document),
+            ),
             LanguageFamily::Portuguese => DialectFlagsEnum::Portuguese(
                 PortugueseDialectFlags::get_most_used_dialects_from_document(document),
             ),
-            LanguageFamily::German => {
-                panic!("get_most_used_dialects_from_document_language not implemented for German")
-            }
         }
     }
 }
@@ -160,9 +184,7 @@ impl From<Language> for DialectsEnum {
     fn from(language: Language) -> Self {
         match language {
             Language::English(english_dialect) => DialectsEnum::English(english_dialect),
-            Language::German(_german_dialect) => {
-                panic!("From<Language> for DialectsEnum not implemented for German")
-            }
+            Language::German(german_dialect) => DialectsEnum::German(german_dialect),
             Language::Portuguese(portuguese_dialect) => {
                 DialectsEnum::Portuguese(portuguese_dialect)
             }
@@ -178,7 +200,9 @@ impl TryFrom<DialectFlagsEnum> for DialectsEnum {
             DialectFlagsEnum::English(english_dialect_flags) => {
                 Ok(DialectsEnum::English(english_dialect_flags.try_into()?))
             }
-
+            DialectFlagsEnum::German(german_dialect_flags) => {
+                Ok(DialectsEnum::German(german_dialect_flags.try_into()?))
+            }
             DialectFlagsEnum::Portuguese(portuguese_dialect_flags) => Ok(DialectsEnum::Portuguese(
                 portuguese_dialect_flags.try_into()?,
             )),
@@ -194,6 +218,9 @@ impl BitOr for DialectFlagsEnum {
             (DialectFlagsEnum::English(self_flags), DialectFlagsEnum::English(rhs_flags)) => {
                 DialectFlagsEnum::English(self_flags | rhs_flags)
             }
+            (DialectFlagsEnum::German(self_flags), DialectFlagsEnum::German(rhs_flags)) => {
+                DialectFlagsEnum::German(self_flags | rhs_flags)
+            }
             (DialectFlagsEnum::Portuguese(self_flags), DialectFlagsEnum::Portuguese(rhs_flags)) => {
                 DialectFlagsEnum::Portuguese(self_flags | rhs_flags)
             }
@@ -206,6 +233,9 @@ impl BitOrAssign for DialectFlagsEnum {
     fn bitor_assign(&mut self, rhs: Self) {
         match (self, rhs) {
             (DialectFlagsEnum::English(self_flags), DialectFlagsEnum::English(rhs_flags)) => {
+                *self_flags |= rhs_flags;
+            }
+            (DialectFlagsEnum::German(self_flags), DialectFlagsEnum::German(rhs_flags)) => {
                 *self_flags |= rhs_flags;
             }
             (DialectFlagsEnum::Portuguese(self_flags), DialectFlagsEnum::Portuguese(rhs_flags)) => {
@@ -253,6 +283,7 @@ macro_rules! impl_from_x_for_dialect_enum {
 }
 
 impl_from_x_for_dialect_enum!(EnglishDialect, EnglishDialectFlags, English);
+impl_from_x_for_dialect_enum!(GermanDialect, GermanDialectFlags, German);
 impl_from_x_for_dialect_enum!(PortugueseDialect, PortugueseDialectFlags, Portuguese);
 
 #[cfg(test)]

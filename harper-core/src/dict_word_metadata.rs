@@ -2268,6 +2268,7 @@ impl From<crate::dialects::dialect_enum::DialectsEnum> for Dialect {
     fn from(dialect: crate::dialects::dialect_enum::DialectsEnum) -> Self {
         match dialect {
             crate::dialects::dialect_enum::DialectsEnum::English(d) => d.into(),
+            crate::dialects::dialect_enum::DialectsEnum::German(_) => Self::German,
             crate::dialects::dialect_enum::DialectsEnum::Portuguese(_) => Self::Portuguese,
         }
     }
