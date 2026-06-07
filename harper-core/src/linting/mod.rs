@@ -235,6 +235,7 @@ mod suggestion;
 mod take_a_look_to;
 mod take_medicine;
 mod take_serious;
+mod technical_debt;
 mod that_than;
 mod that_which;
 mod the_how_why;
