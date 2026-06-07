@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.2.1",
+	"version": "2.4.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -504,6 +504,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.AsToInterrogative": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `to` to `as to` between certain adjectives and `wh-words`."
+				},
 				"harper.linters.AskNoPreposition": {
 					"scope": "resource",
 					"type": "boolean",
@@ -526,7 +532,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `on face value` to the more usual `at face value`."
+					"description": "Corrects nonstandard variants of `at face value`."
 				},
 				"harper.linters.AtLeasToLeast": {
 					"scope": "resource",
@@ -798,6 +804,12 @@
 					"default": true,
 					"description": "Incorrect preposition: `by accident` is the idiomatic expression."
 				},
+				"harper.linters.ByTheBook": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `by the books` to `by the book`."
+				},
 				"harper.linters.ByTheWay": {
 					"scope": "resource",
 					"type": "boolean",
@@ -858,6 +870,12 @@
 					"default": true,
 					"description": "Ensures `case-sensitive` is correctly hyphenated."
 				},
+				"harper.linters.Catch22": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects mistakenly using similar-sounding words in the idiom `catch 22`."
+				},
 				"harper.linters.CauseItIsBecause": {
 					"scope": "resource",
 					"type": "boolean",
@@ -899,6 +917,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags common soundalikes of \"chock-full\" and makes sure they're hyphenated."
+				},
+				"harper.linters.ClicheAccent": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
 				},
 				"harper.linters.ClickThroughRate": {
 					"scope": "resource",
@@ -1344,6 +1368,12 @@
 					"default": true,
 					"description": "Corrects `every once and again` to `every once in a while` or `once again`."
 				},
+				"harper.linters.EverySingleOneOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects missing `one` in the phrase 'every single one of'."
+				},
 				"harper.linters.EveryTime": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1619,6 +1649,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects some expressions using `fell` where `feel` is correct."
+				},
+				"harper.linters.FellowCoRedundancy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects redundant use of `fellow` with `co-`."
 				},
 				"harper.linters.FetalPosition": {
 					"scope": "resource",
@@ -2165,6 +2201,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Checks for redundant use of `in` before [period of time] together with `from now` after it."
+				},
+				"harper.linters.IncidentReport": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
 				},
 				"harper.linters.IncludingButNotLimitedToPunctuation": {
 					"scope": "resource",
@@ -2802,6 +2844,12 @@
 					"default": true,
 					"description": "Replaces hat/had/hit/hid in the idiom `nail on the head` with `head`."
 				},
+				"harper.linters.NakedEye": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the wrong preposition used instead of `to`, `with`, or `by` the naked eye."
+				},
 				"harper.linters.NationalCapitals": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3185,6 +3233,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Keeps the compound adjective together before nouns like folders, files, or web pages so the dependency between them is clear."
+				},
+				"harper.linters.PayForPrice": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects extraneous `for` when used of charges, fees, prices, etc."
 				},
 				"harper.linters.Payed": {
 					"scope": "resource",
@@ -3935,6 +3989,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Checks for redundant `the` before possessive proper noun such as `The London's population`."
+				},
+				"harper.linters.TheTheToThatThe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `the the` to `that the` or to a single `the`."
 				},
 				"harper.linters.TheWhetherWeather": {
 					"scope": "resource",

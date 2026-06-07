@@ -3,7 +3,7 @@ import { GithubClient } from '$lib/GitHubClient';
 import type { RequestHandler } from './$types';
 
 const latestReleaseUrl = 'https://github.com/Automattic/harper/releases/latest';
-const desktopDmgPattern = /^harper-desktop_.*_universal\.dmg$/;
+const desktopDmgPattern = /^(?:Harper|harper-desktop)_.*_universal\.dmg$/;
 
 export const GET: RequestHandler = async () => {
 	let downloadUrl: string | null = null;
