@@ -6,7 +6,7 @@ Depending on what you're wanting to work on within the Harper repo, you may not 
 For example, if you only intend to work on the core grammar engine, `harper-ls`, or `harper-cli`, you only need `cargo` installed.
 In that case, Harper follows all of the standard conventions for Rust projects, so any existing Rust knowledge will apply.
 
-If you intend to work on the Chrome extension, Obsidian plugin, or certain other projects, you'll need the full environment set up.
+If you intend to work on the Chrome extension, Obsidian plugin, the [website](./website), or certain other projects, you'll need the full environment set up.
 
 To use _all_ the tooling we use to build and debug Harper, you'll need the following programs available in your `$PATH`.
 Please read the manuals for each tool for instructions on how to install it.
