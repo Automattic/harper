@@ -41,7 +41,7 @@ where
             .t_ws_h()
             .then_kind_either(TokenKind::is_verb, TokenKind::is_noun)
             .then_optional_hyphen()
-            .and_not(SequenceExpr::any_of(vec![
+            .but_not(SequenceExpr::any_of(vec![
                 // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
                 Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
                 // Don't merge "co op" whether separated by space or hyphen.
@@ -77,7 +77,10 @@ where
         let (pre, _) = ctx?;
 
         // Cloud Native Pub-Sub System at Pinterest -> subsystem
-        if pre.last().is_some_and(|p| p.kind.is_hyphen()) {
+        if pre
+            .last()
+            .is_some_and(|p| p.kind.is_hyphen() || p.kind.is_apostrophe())
+        {
             return None;
         }
 
@@ -166,6 +169,22 @@ mod tests {
             "Advanced Nginx configuration available for super users",
             DisjointPrefixes::new(FstDictionary::curated()),
             "Advanced Nginx configuration available for superusers",
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_ascii_apostrophe() {
+        assert_no_lints(
+            "you 're fresh so you don't neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_typographic_apostrophe() {
+        assert_no_lints(
+            "you ’re fresh so you don’t neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
         );
     }
 
