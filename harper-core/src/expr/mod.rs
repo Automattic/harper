@@ -165,7 +165,7 @@ where
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
     fn and(self, other: impl Expr + 'static) -> All;
-    fn and_not(self, other: impl Expr + 'static) -> All;
+    fn but_not(self, other: impl Expr + 'static) -> All;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
 }
 
@@ -184,7 +184,7 @@ where
     }
 
     /// Returns an expression that matches only if the current one matches and the expression contained in `other` does not.
-    fn and_not(self, other: impl Expr + 'static) -> All {
+    fn but_not(self, other: impl Expr + 'static) -> All {
         self.and(UnlessStep::new(other, |_tok: &Token, _src: &[char]| true))
     }
 
