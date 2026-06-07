@@ -1,6 +1,6 @@
 [package]
 name = "harper-brill"
-version = "2.2.1"
+version = "2.4.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"

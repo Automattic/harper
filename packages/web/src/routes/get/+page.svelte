@@ -61,10 +61,10 @@ function clearFilters() {
 
 	<section class="border-b-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] px-10 py-16 pb-[4.25rem] text-center dark:border-white/10 dark:bg-black max-[860px]:px-4">
 		<div class="mx-auto max-w-[58rem]">
-			<h1 class="!mt-[0.85rem] !mb-0 py-0 font-serif text-[clamp(3.2rem,7vw,3.5rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+			<h1 class="!mt-[0.85rem] !mb-0 py-0 !font-serif text-[clamp(3.2rem,7vw,3.5rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
 				Take Harper with you.
 			</h1>
-			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
+			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] !font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
 			<div class="mx-auto grid max-w-[47.5rem] grid-cols-2 gap-[0.85rem] text-left max-[640px]:grid-cols-1">
@@ -157,7 +157,7 @@ function clearFilters() {
 			<div class="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-3 max-[640px]:grid-cols-1">
 				{#if filtered.length === 0}
 					<div class="col-span-full rounded-[0.9rem] border-[0.5px] border-dashed border-[rgba(28,26,22,0.16)] bg-white px-6 py-[3.75rem] text-center dark:border-white/15 dark:bg-white/5">
-						<h2 class="!mt-0 !mb-1.5 py-0 font-serif text-[1.4rem]">No match for "{query}"</h2>
+						<h2 class="!mt-0 !mb-1.5 py-0 !font-serif text-[1.4rem]">No match for "{query}"</h2>
 						<p class="!m-0 text-[#807a6e] dark:text-white/55">
 							Don’t see your editor? <a class="font-extrabold !text-[#b06a1b] no-underline hover:no-underline dark:!text-primary-300" href={marketingLinks.github}>Help us build it →</a>
 						</p>

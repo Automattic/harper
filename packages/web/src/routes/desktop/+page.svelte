@@ -43,7 +43,7 @@ const faqs = [
 	<section class="relative overflow-hidden px-14 pt-3 pb-14 after:pointer-events-none after:absolute after:inset-[-20%_-10%] after:content-[''] after:bg-[radial-gradient(ellipse_at_70%_20%,#fbf3e6_0%,transparent_60%)] dark:after:opacity-10 max-[700px]:px-4">
 		<div class="relative z-[1] mx-auto grid max-w-[77.5rem] grid-cols-[minmax(0,1fr)_minmax(32rem,1.2fr)] items-center gap-8 pt-[1.9rem] max-[1040px]:grid-cols-1">
 			<div>
-				<h1 class="!mt-[0.85rem] !mb-0 py-0 font-serif text-[clamp(3.2rem,6vw,3.9rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+				<h1 class="!mt-[0.85rem] !mb-0 py-0 !font-serif text-[clamp(3.2rem,6vw,3.9rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
 					Works in every app.
 				</h1>
 				<p class="!mt-5 !mb-0 max-w-[28.75rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
@@ -71,7 +71,7 @@ const faqs = [
 	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.5rem] pb-20 dark:border-white/10 dark:bg-black">
 		<div class="mx-auto max-w-[68.75rem] px-14 max-[700px]:px-4">
 			<div class="mx-auto max-w-[40rem] text-center">
-				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
 					Every text field. Same Harper.
 				</h2>
 				<p class="!mt-6 !mb-0 text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
@@ -100,7 +100,7 @@ const faqs = [
 	<section class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.5rem] pb-20 dark:border-white/10 dark:bg-black">
 		<div class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(0,1fr)_minmax(22rem,1.1fr)] items-center gap-14 px-14 max-[1040px]:grid-cols-1 max-[700px]:px-4">
 			<div>
-				<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
 					Tune the rules. Build your own dictionary.
 				</h2>
 				<p class="!mt-6 !mb-0 text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
@@ -126,7 +126,7 @@ const faqs = [
 	<section class="relative overflow-hidden border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fbfaf6] py-[4.5rem] after:pointer-events-none after:absolute after:inset-[-20%_-10%] after:content-[''] after:bg-[radial-gradient(ellipse_at_70%_20%,#fbf3e6_0%,transparent_60%)] dark:border-white/10 dark:bg-black dark:after:opacity-10">
 		<div class="relative z-[1] mx-auto max-w-[45rem] px-14 text-center max-[700px]:px-4 [&_.harper-mark]:mx-auto">
 			<HarperMark size={64} />
-			<h2 class="!mt-3 !mb-0 py-0 font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
+			<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.1rem,5vw,2.45rem)] font-[650] leading-[1.1] tracking-normal text-inherit">
 				Free. Forever. Yours.
 			</h2>
 			<p class="!mt-6 !mb-[1.6rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
