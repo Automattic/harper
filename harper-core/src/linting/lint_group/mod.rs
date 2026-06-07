@@ -827,7 +827,9 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());

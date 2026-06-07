@@ -4440,6 +4440,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Brutality",
 								"state": true,
 								"label": "Brutality"
@@ -5010,6 +5017,13 @@
 								"name": "InBetterShape",
 								"state": true,
 								"label": "In Better Shape"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Impressed",
+								"state": true,
+								"label": "Impressed"
 							}
 						},
 						{
