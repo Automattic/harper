@@ -137,6 +137,8 @@ impl LanguageDetector for GermanDetector {
                     let word_content: String = token.get_ch(source).iter().collect();
 
                     // Check for German special characters (very high confidence)
+                    // NOTE: ä, ö, ü also appear in Swedish, Turkish, Hungarian, Spanish, and Chinese Pinyin,
+                    // but ß is unique to German
                     if word_content.contains('ä')
                         || word_content.contains('ö')
                         || word_content.contains('ü')

@@ -130,6 +130,8 @@ impl LanguageDetector for PortugueseDetector {
                     let word_content: String = token.get_ch(source).iter().collect();
 
                     // Check for Portuguese special characters (very high confidence)
+                    // NOTE: ã and ç are particularly distinctive to Portuguese. õ is also used in Estonian.
+                    // á, é, í, ó, ú appear in many languages but are less common in English.
                     if word_content.contains('ã')
                         || word_content.contains('õ')
                         || word_content.contains('ç')

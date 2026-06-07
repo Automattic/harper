@@ -55,19 +55,21 @@ impl Dialect for PortugueseDialect {
     /// use harper_core::PortugueseDialect;
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["PT", "BR", "AF"];
+    /// let abbrs = ["PT", "BR", "AO"];
     /// let mut dialects = abbrs.iter().map(|abbr| PortugueseDialect::try_from_abbr(abbr));
     ///
-    /// assert_eq!(Some(PortugueseDialect::European), dialects.next().unwrap()); // US
-    /// assert_eq!(Some(PortugueseDialect::Brazilian), dialects.next().unwrap()); // CA
-    /// assert_eq!(Some(PortugueseDialect::African), dialects.next().unwrap()); // AU
+    /// assert_eq!(Some(PortugueseDialect::European), dialects.next().unwrap()); // PT
+    /// assert_eq!(Some(PortugueseDialect::Brazilian), dialects.next().unwrap()); // BR
+    /// // AO is used as a representative ISO 3166 code for African Portuguese variants
+    /// assert_eq!(Some(PortugueseDialect::African), dialects.next().unwrap()); // AO
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
         match abbr {
             "PT" => Some(Self::European),
             "BR" => Some(Self::Brazilian),
-            "AF" => Some(Self::African),
+            // AO (Angola) is used as a representative ISO 3166 code for African Portuguese variants
+            "AO" => Some(Self::African),
             _ => None,
         }
     }

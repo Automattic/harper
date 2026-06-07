@@ -200,4 +200,24 @@ mod tests {
             crate::languages::LanguageFamily::English,
         );
     }
+
+    #[test]
+    fn smart_quotes_double_angle() {
+        assert_lint_count(
+            "While \u{00bb}these\u{00ab} these are good",
+            RepeatedWords::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn smart_quotes_german_style() {
+        assert_lint_count(
+            "\u{201e}those\u{201c} those are mine",
+            RepeatedWords::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
+    }
 }
