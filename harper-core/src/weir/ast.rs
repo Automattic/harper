@@ -3,7 +3,7 @@ use hashbrown::HashMap;
 use is_macro::Is;
 use itertools::Itertools;
 
-use crate::expr::{Expr, Filter, FirstMatchOf, SequenceExpr, UnlessStep};
+use crate::expr::{Expr, Filter, LongestMatchOf, SequenceExpr, UnlessStep};
 use crate::patterns::{AnyPattern, DerivedFrom, UPOSSet, WhitespacePattern, Word};
 use crate::{CharString, CharStringExt, Lrc, Punctuation, Token};
 
@@ -128,7 +128,7 @@ impl AstExprNode {
                 Ok(Box::new(expr))
             }
             AstExprNode::Arr(children) => {
-                let mut expr = FirstMatchOf::default();
+                let mut expr = LongestMatchOf::default();
 
                 for node in children {
                     expr.add_boxed(node.to_expr(ctx_exprs)?);

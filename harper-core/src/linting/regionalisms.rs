@@ -39,9 +39,11 @@ enum Concept {
     CaravanTrailer,
     CatsupKetchupTomatoSauce,
     CellPhoneMobilePhone,
-    CoolboxCoolerEsky,
+    CheckCheque,
+    CheckbookChequebook,
     ChipsCrisps,
     CilantroCoriander,
+    CoolboxCoolerEsky,
     Crore,
     Crores,
     DiaperNappy,
@@ -68,8 +70,9 @@ enum Concept {
     Prepone,
     SpannerWrench,
     StationWagonEstate,
-    UpdateUpdation,
+    TireTyre,
     UpdatesUpdations,
+    UpdateUpdation,
     WindscreenWindshield,
 }
 
@@ -192,6 +195,30 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: CellPhoneMobilePhone,
+    },
+    Term {
+        term: "check",
+        flag: UniversalTerm,
+        dialects: &[American],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "checkbook",
+        flag: Flag,
+        dialects: &[American],
+        concept: CheckbookChequebook,
+    },
+    Term {
+        term: "cheque",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "chequebook",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckbookChequebook,
     },
     Term {
         term: "chips",
@@ -523,6 +550,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: HasOtherMeanings,
         dialects: &[Australian, British],
         concept: FaucetTap,
+    },
+    Term {
+        term: "tire",
+        flag: HasOtherMeanings,
+        dialects: &[American, Canadian],
+        concept: TireTyre,
+    },
+    Term {
+        term: "tyre",
+        flag: Flag,
+        dialects: &[Australian, British, Indian],
+        concept: TireTyre,
     },
     Term {
         term: "tomato sauce",

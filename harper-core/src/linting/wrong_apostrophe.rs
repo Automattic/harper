@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Sentence},
 };
 
 const CONTRACTION_AND_POSSESSIVE_ENDINGS: [&str; 7] = ["d", "ll", "m", "re", "s", "t", "ve"];
@@ -27,7 +27,7 @@ impl Default for WrongApostrophe {
 }
 
 impl ExprLinter for WrongApostrophe {
-    type Unit = Chunk;
+    type Unit = Sentence;
 
     fn expr(&self) -> &dyn Expr {
         &self.expr
