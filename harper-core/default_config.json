@@ -3734,6 +3734,13 @@
 								"state": true,
 								"label": "Naked Eye"
 							}
+						},
+						{
+							"Bool": {
+								"name": "AsToInterrogative",
+								"state": true,
+								"label": "As To Interrogative"
+							}
 						}
 					]
 				}
@@ -4433,6 +4440,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Brutality",
 								"state": true,
 								"label": "Brutality"
@@ -5000,9 +5014,30 @@
 						},
 						{
 							"Bool": {
+								"name": "Impressed",
+								"state": true,
+								"label": "Impressed"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PayForPrice",
 								"state": true,
 								"label": "Pay For Price"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncidentReport",
+								"state": true,
+								"label": "Incident Report"
 							}
 						}
 					]
