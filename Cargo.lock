@@ -241,7 +241,7 @@ dependencies = [
  "objc2-foundation 0.3.2",
  "parking_lot",
  "percent-encoding",
- "windows-sys 0.60.2",
+ "windows-sys 0.52.0",
  "x11rb",
 ]
 
@@ -2523,7 +2523,7 @@ dependencies = [
  "libc",
  "option-ext",
  "redox_users 0.5.0",
- "windows-sys 0.61.1",
+ "windows-sys 0.59.0",
 ]
 
 [[package]]
@@ -3064,7 +3064,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "778e2ac28f6c47af28e4907f13ffd1e1ddbd400980a9abd7c8df189bf578a5ad"
 dependencies = [
  "libc",
- "windows-sys 0.60.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -4128,7 +4128,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4139,7 +4139,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -4177,7 +4177,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -4214,7 +4214,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -4253,7 +4253,7 @@ dependencies = [
 
 [[package]]
 name = "harper-desktop"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "accessibility",
  "accessibility-sys",
@@ -4276,6 +4276,7 @@ dependencies = [
  "tauri-build",
  "tauri-plugin-autostart",
  "tauri-plugin-opener",
+ "tauri-plugin-os",
  "tauri-plugin-updater",
  "thiserror 2.0.18",
  "tokio",
@@ -4284,7 +4285,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4293,7 +4294,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4304,7 +4305,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4315,7 +4316,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4326,7 +4327,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -4337,7 +4338,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -4368,7 +4369,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -4386,7 +4387,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4397,7 +4398,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -4408,7 +4409,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -4416,7 +4417,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.13.1",
@@ -4427,7 +4428,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -4446,7 +4447,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4518,6 +4519,17 @@ dependencies = [
  "foldhash 0.2.0",
  "serde",
  "serde_core",
+]
+
+[[package]]
+name = "hashbrown"
+version = "0.17.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
 ]
 
 [[package]]
@@ -5204,7 +5216,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "07033963ba89ebaf1584d767badaa2e8fcec21aedea6b8c0346d487d49c28667"
 dependencies = [
  "cfg-if",
- "windows-targets 0.53.3",
+ "windows-targets 0.52.6",
 ]
 
 [[package]]
@@ -5310,11 +5322,11 @@ dependencies = [
 
 [[package]]
 name = "lru"
-version = "0.16.3"
+version = "0.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1dc47f592c06f33f8e3aea9591776ec7c9f9e4124778ff8a3c3b87159f7e593"
+checksum = "8a860605968fce16869fd239cf4237a82f3ac470723415db603b0e8b6c8d4fb9"
 dependencies = [
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
 ]
 
 [[package]]
@@ -5683,6 +5695,18 @@ name = "new_debug_unreachable"
 version = "1.0.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "650eef8c711430f1a879fdd01d4745a7deea475becfb90269c06775983bbf086"
+
+[[package]]
+name = "nix"
+version = "0.31.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5d6d0705320c1e6ba1d912b5e37cf18071b6c2e9b7fa8215a1e8a7651966f5d3"
+dependencies = [
+ "bitflags 2.11.0",
+ "cfg-if",
+ "cfg_aliases",
+ "libc",
+]
 
 [[package]]
 name = "no-std-compat"
@@ -6359,6 +6383,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "os_info"
+version = "3.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "9cf20a545b305cf1da722b236b5155c9bb35f1d5ceb28c048bd96ca842f41b5b"
+dependencies = [
+ "android_system_properties",
+ "log",
+ "nix",
+ "objc2 0.6.4",
+ "objc2-foundation 0.3.2",
+ "objc2-ui-kit 0.3.2",
+ "serde",
+ "windows-sys 0.61.1",
+]
+
+[[package]]
 name = "osakit"
 version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -6982,7 +7022,7 @@ dependencies = [
  "once_cell",
  "socket2",
  "tracing",
- "windows-sys 0.60.2",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -7470,7 +7510,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.12.1",
- "windows-sys 0.61.1",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -7527,7 +7567,7 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "webpki-root-certs",
- "windows-sys 0.61.1",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]
@@ -8398,6 +8438,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "sys-locale"
+version = "0.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8eab9a99a024a169fe8a903cf9d4a3b3601109bcc13bd9e3c6fff259138626c4"
+dependencies = [
+ "libc",
+]
+
+[[package]]
 name = "sysctl"
 version = "0.5.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8519,9 +8568,9 @@ dependencies = [
 
 [[package]]
 name = "tar"
-version = "0.4.45"
+version = "0.4.46"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22692a6476a21fa75fdfc11d452fda482af402c008cdbaf3476414e122040973"
+checksum = "3f6221d9a6003c78398e3b239969f352578258df48c8eb051caadae0015bc840"
 dependencies = [
  "filetime",
  "libc",
@@ -8701,6 +8750,24 @@ dependencies = [
 ]
 
 [[package]]
+name = "tauri-plugin-os"
+version = "2.3.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d8f08346c8deb39e96f86973da0e2d76cbb933d7ac9b750f6dc4daf955a6f997"
+dependencies = [
+ "gethostname",
+ "log",
+ "os_info",
+ "serde",
+ "serde_json",
+ "serialize-to-javascript",
+ "sys-locale",
+ "tauri",
+ "tauri-plugin",
+ "thiserror 2.0.18",
+]
+
+[[package]]
 name = "tauri-plugin-updater"
 version = "2.10.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -8843,7 +8910,7 @@ dependencies = [
  "getrandom 0.4.1",
  "once_cell",
  "rustix 1.1.4",
- "windows-sys 0.61.1",
+ "windows-sys 0.52.0",
 ]
 
 [[package]]

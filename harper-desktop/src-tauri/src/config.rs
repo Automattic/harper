@@ -31,6 +31,7 @@ pub struct Config {
     pub debounce_ms: u64,
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
+    pub highlighter_service_enabled: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -43,14 +44,21 @@ impl Config {
     pub fn new() -> Self {
         Self {
             mutable_dictionary: MutableDictionary::new(),
-            dialect: Dialect::American,
+            dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Self::curated_integrations(),
             debounce_ms: 0,
             auto_update: true,
             last_update_check: None,
+            highlighter_service_enabled: true,
         }
+    }
+
+    pub fn detect_system_dialect() -> Dialect {
+        tauri_plugin_os::locale()
+            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
+            .unwrap_or(Dialect::American)
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
@@ -189,6 +197,7 @@ impl Config {
             "debounce_ms": self.debounce_ms,
             "auto_update": self.auto_update,
             "last_update_check": self.last_update_check,
+            "highlighter_service_enabled": self.highlighter_service_enabled,
         }))
     }
 
@@ -213,6 +222,11 @@ impl Config {
                 "last_update_check",
             )?
             .flatten(),
+            highlighter_service_enabled: deserialize_optional_field(
+                object,
+                "highlighter_service_enabled",
+            )?
+            .unwrap_or(true),
         })
     }
 }
@@ -276,6 +290,7 @@ mod tests {
         assert!(serialized.contains("debounce_ms"));
         assert!(serialized.contains("auto_update"));
         assert!(serialized.contains("last_update_check"));
+        assert!(serialized.contains("highlighter_service_enabled"));
     }
 
     #[test]
@@ -294,6 +309,10 @@ mod tests {
         assert_eq!(deserialized.debounce_ms, config.debounce_ms);
         assert_eq!(deserialized.auto_update, config.auto_update);
         assert_eq!(deserialized.last_update_check, config.last_update_check);
+        assert_eq!(
+            deserialized.highlighter_service_enabled,
+            config.highlighter_service_enabled
+        );
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -348,6 +367,21 @@ mod tests {
 
         assert!(deserialized.auto_update);
         assert_eq!(deserialized.last_update_check, None);
+    }
+
+    #[test]
+    fn deserialize_main_enables_highlighter_service_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("highlighter_service_enabled");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.highlighter_service_enabled);
     }
 
     #[test]
