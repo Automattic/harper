@@ -8,33 +8,6 @@ pub struct LifetimeLife {
     expr: SequenceExpr,
 }
 
-/// Helper: build the superlative-or-intensifier prefix.
-fn superlative_prefix() -> SequenceExpr {
-    SequenceExpr::any_of(vec![
-        Box::new(SequenceExpr::default().then_superlative_adjective()),
-        Box::new(
-            SequenceExpr::default()
-                .t_aco("most")
-                .t_ws()
-                .then_positive_adjective(),
-        ),
-        Box::new(SequenceExpr::word_set(&["favorite", "favourite", "top"])),
-    ])
-}
-
-/// Helper: noun gap — skip non-noun tokens, then match a noun (or OOV),
-/// then optional compound nouns.
-fn noun_gap() -> SequenceExpr {
-    SequenceExpr::default()
-        .then_zero_or_more(|tok: &Token, _: &[char]| !tok.kind.is_noun() && !tok.kind.is_oov())
-        .then_kind_where(|kind| (kind.is_noun() || kind.is_oov()) && !kind.is_preposition())
-        .then_zero_or_more(
-            SequenceExpr::default().t_ws().then_kind_where(|kind| {
-                (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
-            }),
-        )
-}
-
 /// All the fixed-phrase suffixes we want to match after the superlative + noun gap.
 const VARIANTS: &[&str] = &[
     " of my lifetime",
@@ -60,11 +33,30 @@ impl Default for LifetimeLife {
         let patterns: Vec<Box<dyn Expr>> = VARIANTS
             .iter()
             .map(|&phrase| {
-                Box::new(
-                    superlative_prefix()
-                        .then(noun_gap())
-                        .then_fixed_phrase(phrase),
-                ) as Box<dyn Expr>
+                let superlative_prefix = SequenceExpr::any_of(vec![
+                    Box::new(SequenceExpr::default().then_superlative_adjective()),
+                    Box::new(
+                        SequenceExpr::default()
+                            .t_aco("most")
+                            .t_ws()
+                            .then_positive_adjective(),
+                    ),
+                    Box::new(SequenceExpr::word_set(&["favorite", "favourite", "top"])),
+                ]);
+
+                let noun_gap = SequenceExpr::default()
+                    .then_zero_or_more(|tok: &Token, _: &[char]| {
+                        !tok.kind.is_noun() && !tok.kind.is_oov()
+                    })
+                    .then_kind_where(|kind| {
+                        (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
+                    })
+                    .then_zero_or_more(SequenceExpr::default().t_ws().then_kind_where(|kind| {
+                        (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
+                    }));
+
+                Box::new(superlative_prefix.then(noun_gap).then_fixed_phrase(phrase))
+                    as Box<dyn Expr>
             })
             .collect();
 
@@ -115,7 +107,9 @@ impl ExprLinter for LifetimeLife {
                 "life".chars().collect(),
                 lifetime_span.get_content(src),
             )],
-            message: "`lifetime` refers to a span of years, but after superlatives the idiom uses `life` (lived experience).".to_string(),
+            message:
+                "`lifetime` refers to a span of years; after superlatives the idiom uses `life`."
+                    .to_string(),
             priority: 45,
         })
     }
