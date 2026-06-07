@@ -1,14 +1,54 @@
 use std::borrow::Cow;
-use std::sync::LazyLock;
 
 use crate::Lrc;
 use crate::Token;
 use crate::TokenKind;
-use hashbrown::HashSet;
 
 use crate::Punctuation;
 use crate::spell::Dictionary;
 use crate::{CharStringExt, Document, TokenStringExt, parsers::Parser};
+
+/// Returns `true` if the word at `word_idx` is "am" or "pm" (case-insensitive)
+/// and is immediately preceded by a number, possibly with a colon between
+/// (e.g. "9:05am", "5pm").
+fn is_time_am_pm(word_idx: usize, toks: &[Token], source: &[char]) -> bool {
+    let word = &toks[word_idx];
+    let chars = word.get_ch(source);
+
+    if !chars.eq_any_ignore_ascii_case_chars(&[&['a', 'm'], &['p', 'm']]) {
+        return false;
+    }
+
+    // Walk backwards through non-word-like tokens to find a preceding number.
+    let mut i = word_idx;
+    while i > 0 {
+        i -= 1;
+        let prev = &toks[i];
+
+        if prev.kind.is_word() {
+            // If the preceding word-like token is a number word (unlikely for times),
+            // or a non-number word, stop searching.
+            return false;
+        }
+
+        if let TokenKind::Number(_) = &prev.kind {
+            return true;
+        }
+
+        // Allow colons (as in "9:05am") and spaces between the number and am/pm.
+        if matches!(
+            &prev.kind,
+            TokenKind::Punctuation(Punctuation::Colon) | TokenKind::Space(_)
+        ) {
+            continue;
+        }
+
+        // Any other token stops the search.
+        break;
+    }
+
+    false
+}
 
 /// A helper function for [`make_title_case`] that uses Strings instead of char buffers.
 pub fn make_title_case_str(source: &str, parser: &impl Parser, dict: &impl Dictionary) -> String {
@@ -63,6 +103,18 @@ pub fn try_make_title_case(
         let word = &toks[word_idx];
         let is_alphabetic_word = word.get_ch(source).iter().any(|c| c.is_alphabetic());
 
+        // Time expressions like "9:05am" or "5pm" should be left as-is.
+        // Both "AM"/"PM" and "am"/"pm" are valid, so we skip title-casing.
+        // This must be checked before the proper-noun dictionary lookup,
+        // which would lowercase "AM" to "am".
+        let is_time_suffix = is_time_am_pm(word_idx, toks, source);
+
+        if is_time_suffix {
+            // Leave the word untouched — "am"/"pm"/"AM"/"PM" are all valid after a number.
+            seen_alphabetic_word |= is_alphabetic_word;
+            continue;
+        }
+
         if let Some(Some(metadata)) = word.kind.as_word()
             && metadata.is_proper_noun()
         {
@@ -85,6 +137,7 @@ pub fn try_make_title_case(
             .any(|tok| matches!(tok.kind, TokenKind::Punctuation(Punctuation::Colon)));
 
         let is_first_alphabetic_word = is_alphabetic_word && !seen_alphabetic_word;
+
         let should_capitalize = is_after_colon
             || should_capitalize_token(word, source)
             || is_first_alphabetic_word
@@ -131,34 +184,19 @@ pub fn make_title_case(toks: &[Token], source: &[char], dict: &impl Dictionary) 
 fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
     match &tok.kind {
         TokenKind::Word(Some(metadata)) => {
-            // Only specific conjunctions are not capitalized.
-            static SPECIAL_CONJUNCTIONS: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
-                ["and", "but", "for", "or", "nor", "as"]
-                    .iter()
-                    .map(|v| v.chars().collect())
-                    .collect()
-            });
-            static SPECIAL_ARTICLES: LazyLock<HashSet<Vec<char>>> = LazyLock::new(|| {
-                ["a", "an", "the"]
-                    .iter()
-                    .map(|v| v.chars().collect())
-                    .collect()
-            });
-
             let chars = tok.get_ch(source);
-            let chars_lower = chars.to_lower();
 
             let metadata = Cow::Borrowed(metadata);
 
             let is_short_preposition = metadata.preposition && tok.span.len() <= 4;
 
-            if chars_lower.as_ref() == ['a', 'l', 'l'] {
+            if chars.eq_any_ignore_ascii_case_chars(&[&['a', 'l', 'l']]) {
                 return true;
             }
 
             !is_short_preposition
-                && !SPECIAL_CONJUNCTIONS.contains(chars_lower.as_ref())
-                && !SPECIAL_ARTICLES.contains(chars_lower.as_ref())
+                && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
+                && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
         }
         _ => true,
     }
@@ -529,6 +567,67 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "# How Has This Been Tested?",
+        );
+    }
+
+    #[test]
+    fn leaves_lowercase_am_after_time() {
+        assert_eq!(
+            make_title_case_str(
+                "meeting at 9:05am",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Meeting at 9:05am"
+        );
+    }
+
+    #[test]
+    fn leaves_uppercase_am_after_time() {
+        assert_eq!(
+            make_title_case_str(
+                "meeting at 9:05AM",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Meeting at 9:05AM"
+        );
+    }
+
+    #[test]
+    fn leaves_lowercase_pm_after_time() {
+        assert_eq!(
+            make_title_case_str("dinner at 7pm", &PlainEnglish, &FstDictionary::curated()),
+            "Dinner at 7pm"
+        );
+    }
+
+    #[test]
+    fn leaves_uppercase_pm_after_time() {
+        assert_eq!(
+            make_title_case_str("dinner at 7PM", &PlainEnglish, &FstDictionary::curated()),
+            "Dinner at 7PM"
+        );
+    }
+
+    #[test]
+    fn capitalizes_am_when_not_after_number() {
+        // "am" as a verb should still be capitalized in title case
+        assert_eq!(
+            make_title_case_str("i am here", &PlainEnglish, &FstDictionary::curated()),
+            "I Am Here"
+        );
+    }
+
+    #[test]
+    fn time_am_pm_in_heading() {
+        assert_eq!(
+            make_title_case_str(
+                "# meeting at 9:05am",
+                &Markdown::default(),
+                &FstDictionary::curated()
+            ),
+            "# Meeting at 9:05am"
         );
     }
 }

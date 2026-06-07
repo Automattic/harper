@@ -39,7 +39,7 @@ $: if (contentEl && active) {
 
   <main bind:this={contentEl} class="content" aria-label={title}>
     {#if active === "getting-started"}
-      <GettingStartedPage />
+      <GettingStartedPage navigateToSection={(section) => (active = section)} />
     {:else if active === "general"}
       <GeneralPage />
     {:else if active === "writing"}
