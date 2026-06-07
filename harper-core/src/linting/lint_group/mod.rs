@@ -222,6 +222,7 @@ use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
 use super::take_a_look_to::TakeALookTo;
 use super::take_medicine::TakeMedicine;
+use super::technical_debt::TechnicalDebt;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
@@ -779,6 +780,7 @@ impl LintGroup {
         insert_struct_rule!(SubjectPronoun, true);
         insert_expr_rule!(TakeALookTo, true);
         insert_expr_rule!(TakeMedicine, true);
+        insert_expr_rule!(TechnicalDebt, true);
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
