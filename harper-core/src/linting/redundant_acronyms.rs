@@ -24,6 +24,7 @@ const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
         "machine",
         None,
     ),
+    ("GOP", &["Grand Old"], "Party", None),
     ("GUI", &["graphical user"], "interface", None),
     ("LCD", &["liquid crystal"], "display", None),
     ("LLM", &["large language"], "model", None),
@@ -77,7 +78,7 @@ impl ExprLinter for RedundantAcronyms {
         let last_word_chars = last_word_span.get_content(src);
         let acronym_str = toks.first()?.get_str(src);
 
-        let (_, middle_words, _, flag) = ACRONYMS
+        let (_, middle_words, last_word, flag) = ACRONYMS
             .iter()
             .find(|(a, _, _, _)| (*a).eq_ignore_ascii_case(&acronym_str))?;
 
@@ -104,13 +105,13 @@ impl ExprLinter for RedundantAcronyms {
             format!("{acronym_str}{plural_ending}").chars().collect(),
         ))
         .chain(middle_words.iter().map(|mw| {
-            let middle_words = if is_all_caps {
-                mw.to_ascii_uppercase()
+            let (middle_words, last_word) = if is_all_caps {
+                (mw.to_ascii_uppercase(), last_word.to_ascii_uppercase())
             } else {
-                mw.to_string()
+                (mw.to_string(), last_word.to_string())
             };
             Suggestion::ReplaceWith(
-                format!("{middle_words} {}", last_word_span.get_content_string(src))
+                format!("{middle_words} {}{plural_ending}", last_word)
                     .chars()
                     .collect(),
             )
@@ -118,12 +119,12 @@ impl ExprLinter for RedundantAcronyms {
         .collect();
 
         Some(Lint {
-        span: toks.span()?,
-        lint_kind: LintKind::Redundancy,
-        suggestions,
-        message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_string(),
-        ..Default::default()
-    })
+            span: toks.span()?,
+            lint_kind: LintKind::Redundancy,
+            suggestions,
+            message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_string(),
+            ..Default::default()
+        })
     }
 
     fn description(&self) -> &str {
@@ -371,6 +372,19 @@ mod tests {
             &[
                 "we have implemented verification algorithms, which ensure that VIN received is correct",
                 "we have implemented verification algorithms, which ensure that vehicle identification number received is correct",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_gop_party() {
+        assert_good_and_bad_suggestions(
+            "If it wasnt for bribery and blackmail there wouldnt be  a GOP party",
+            RedundantAcronyms::default(),
+            &[
+                "If it wasnt for bribery and blackmail there wouldnt be  a Grand Old Party",
+                "If it wasnt for bribery and blackmail there wouldnt be  a GOP",
             ],
             &[],
         );
