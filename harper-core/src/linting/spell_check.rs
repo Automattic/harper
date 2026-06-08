@@ -7,7 +7,7 @@ use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt};
+use crate::{CharString, CharStringExt, EnglishDialect as Dialect, TokenStringExt};
 
 pub struct SpellCheck<T>
 where

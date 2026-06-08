@@ -2,15 +2,15 @@ use itertools::Itertools;
 
 use crate::indefinite_article::{InitialSound, starts_with_vowel};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dialect, Document, TokenStringExt};
+use crate::{Document, EnglishDialect, TokenStringExt};
 
 #[derive(Debug)]
 pub struct AnA {
-    dialect: Dialect,
+    dialect: EnglishDialect,
 }
 
 impl AnA {
-    pub fn new(dialect: Dialect) -> Self {
+    pub fn new(dialect: EnglishDialect) -> Self {
         Self { dialect }
     }
 }
@@ -94,12 +94,13 @@ impl Linter for AnA {
 #[cfg(test)]
 mod tests {
     use super::AnA;
-    use crate::Dialect;
+    use crate::EnglishDialect;
+    use crate::EnglishDialect as Dialect;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
 
     #[test]
     fn detects_html_as_vowel() {
-        assert_lint_count("Here is a HTML document.", AnA::new(Dialect::American), 1);
+        assert_lint_count("Here is a HTML document.", AnA::new(EnglishDialect::American), 1);
     }
 
     #[test]

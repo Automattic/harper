@@ -47,11 +47,11 @@ pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
-pub use dialects::english::EnglishDialect;
-pub use dialects::portuguese::PortugueseDialect;
+pub use dialects::english::{EnglishDialect, EnglishDialectFlags};
+pub use dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
-    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, Degree, DeterminerData, DialectFlags, DictWordMetadata, NounData,
+    PronounData, VerbData, VerbForm, VerbFormFlags,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -61,6 +61,7 @@ pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
 pub use language::german::dialects::GermanDialect;
+pub use language::german::dialects::GermanDialectFlags;
 pub use language::german::spell::{curated_german_dictionary, german_dictionary};
 pub use language::portuguese::spell::{curated_portuguese_dictionary, portuguese_dictionary};
 pub use languages::{Language, LanguageFamily};
@@ -182,7 +183,7 @@ mod tests {
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Document, EnglishDialect,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };
@@ -191,7 +192,10 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated(
+            FstDictionary::curated(),
+            crate::Language::English(EnglishDialect::American),
+        );
 
         let mut lints = linter.lint(&doc);
 
@@ -205,7 +209,10 @@ mod tests {
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated(
+            FstDictionary::curated(),
+            crate::Language::English(EnglishDialect::American),
+        );
 
         let mut lint_map = linter.organized_lints(&doc);
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();

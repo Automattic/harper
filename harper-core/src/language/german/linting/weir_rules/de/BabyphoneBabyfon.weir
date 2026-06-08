@@ -1,7 +1,7 @@
 expr main [(Babyphone Babyfon)]
 
-// TODO: We want to support English messages in parallel, but this is quite challenging, so it was kept
-// out of this PR for the moment. 
+# TODO: We want to support English messages in parallel, but this is quite
+# challenging, so it was kept out of this PR for the moment.
 let message "Die deutsche Schreibweise für dieses Gerät ist: ein »Babyfon«."
 let description "Removes redundant English loanword `Babyphone` from the German device name `Babyfon`."
 let kind "Spelling"

@@ -2,9 +2,16 @@
 // These cover detection + parsing + linting combinations, while backend-level
 // LSP open/change/command flows are tested in backend.rs.
 
+use harper_core::GermanDialect;
 use harper_core::spell::{FstDictionary, curated_german_dictionary};
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect, Language};
 use harper_ls::language_detection::LanguageDetectionRegistry;
+
+struct Dialect;
+impl Dialect {
+    const American: Language = Language::English(EnglishDialect::American);
+    const German: Language = Language::German(GermanDialect::Standard);
+}
 
 /// Test full workflow: open German file → auto-detect → lint → suggest corrections
 #[test]

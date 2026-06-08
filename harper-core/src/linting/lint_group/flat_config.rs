@@ -6,7 +6,7 @@ use hashbrown::HashMap;
 use serde::{Deserialize, Deserializer, Serialize, Serializer};
 
 use super::LintGroup;
-use crate::Dialect;
+use crate::languages::Language;
 use crate::spell::MutableDictionary;
 
 fn ser_ordered<S>(map: &HashMap<String, Option<bool>>, ser: S) -> Result<S::Ok, S::Error>
@@ -86,28 +86,22 @@ impl FlatConfig {
 
     /// Fill the group with the values for the curated lint group.
     pub fn fill_with_curated(&mut self) {
-        self.fill_with_curated_for(Dialect::American);
+        self.fill_with_curated_for_language(Language::default());
     }
 
-    /// Fill the group with the dialect-aware curated values for the given document dialect.
-    pub fn fill_with_curated_for(&mut self, dialect: Dialect) {
-        let mut temp = Self::new_curated_for(dialect);
+    /// Fill the group with the language-aware curated values for the given language.
+    pub fn fill_with_curated_for_language(&mut self, language: Language) {
+        let mut temp = Self::new_curated_for_language(language);
         mem::swap(self, &mut temp);
         self.merge_from(temp);
     }
 
-    /// Fill the group with the language-aware curated values for the given language.
-    pub fn fill_with_curated_for_language(&mut self, language: crate::languages::Language) {
-        let dialect: Dialect = language.into();
-        self.fill_with_curated_for(dialect);
-    }
-
     pub fn new_curated() -> Self {
-        Self::new_curated_for(Dialect::American)
+        Self::new_curated_for_language(Language::default())
     }
 
-    pub fn new_curated_for(dialect: Dialect) -> Self {
-        let group = LintGroup::new_curated(MutableDictionary::new().into(), dialect.into());
+    pub fn new_curated_for_language(language: Language) -> Self {
+        let group = LintGroup::new_curated(MutableDictionary::new().into(), language);
         group.config
     }
 }

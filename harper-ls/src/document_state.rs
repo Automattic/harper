@@ -28,7 +28,7 @@ impl DocumentState {
         let temp = self.linter.config.clone();
         self.linter
             .config
-            .fill_with_curated_for_language(self.cached_language.unwrap_or(Language::default()));
+            .fill_with_curated_for_language(self.cached_language.unwrap_or_default());
 
         let mut lints = self.linter.organized_lints(&self.document);
 
@@ -55,10 +55,10 @@ impl DocumentState {
         range: Range,
         code_action_config: &CodeActionConfig,
     ) -> Vec<CodeActionOrCommand> {
-        use harper_core::Dialect;
         let temp = self.linter.config.clone();
-        let dialect: Dialect = self.cached_language.unwrap_or(Language::default()).into();
-        self.linter.config.fill_with_curated_for(dialect);
+        self.linter
+            .config
+            .fill_with_curated_for_language(self.cached_language.unwrap_or_default());
 
         let mut lints = self.linter.lint(&self.document);
 

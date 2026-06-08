@@ -55,7 +55,7 @@ impl Linter for AnA {
                     continue;
                 };
 
-                let should_be_a_an = match starts_with_vowel(chars_second, self.dialect.into())
+                let should_be_a_an = match starts_with_vowel(chars_second, self.dialect)
                     .expect("No empty word tokens")
                 {
                     InitialSound::Vowel => false,

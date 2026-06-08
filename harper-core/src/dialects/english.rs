@@ -57,7 +57,6 @@ impl Dialect for EnglishDialect {
     ///
     /// ```
     /// use harper_core::EnglishDialect;
-    /// use harper_core::Dialect;
     ///
     /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
     /// let mut dialects = abbrs.iter().map(|abbr| EnglishDialect::try_from_abbr(abbr));
@@ -66,7 +65,7 @@ impl Dialect for EnglishDialect {
     /// assert_eq!(Some(EnglishDialect::Canadian), dialects.next().unwrap()); // CA
     /// assert_eq!(Some(EnglishDialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(EnglishDialect::British), dialects.next().unwrap()); // GB
-    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
+    /// assert_eq!(Some(EnglishDialect::Indian), dialects.next().unwrap()); // IN
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -183,7 +182,10 @@ impl DialectFlags<EnglishDialect> for EnglishDialectFlags {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.is_dialect_enabled(dialect.into()) {
+                    if lexeme_metadata
+                        .dialects
+                        .is_english_dialect_enabled(*dialect)
+                    {
                         *count += 1;
                     }
                 });

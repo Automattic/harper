@@ -1,10 +1,16 @@
 // Comprehensive German compound word edge case tests
 // Tests Fugen-s, Fugen-n, and complex compound word decomposition
 
+use harper_core::language::german::dialects::GermanDialect;
 use harper_core::linting::german_spell_check::GermanSpellCheck;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::curated_german_dictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, Language};
+
+struct Dialect;
+impl Dialect {
+    const German: Language = Language::German(GermanDialect::Standard);
+}
 
 fn create_german_lint_group() -> LintGroup {
     let dict = curated_german_dictionary();

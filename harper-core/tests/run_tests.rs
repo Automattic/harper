@@ -1,7 +1,13 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, EnglishDialect, Language};
+
+struct Dialect;
+impl Dialect {
+    const American: Language = Language::English(EnglishDialect::American);
+    const British: Language = Language::English(EnglishDialect::British);
+}
 
 /// Creates a unit test checking that the linting of a Markdown document (in
 /// `tests_sources`) produces the expected number of lints.

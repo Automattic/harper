@@ -3,9 +3,16 @@
 //! These tests verify that the language detection system works correctly
 //! for various real-world scenarios.
 
-use harper_core::Dialect;
+use harper_core::GermanDialect;
 use harper_core::spell::FstDictionary;
+use harper_core::{EnglishDialect, Language};
 use harper_ls::language_detection::LanguageDetectionRegistry;
+
+struct Dialect;
+impl Dialect {
+    const American: Language = Language::English(EnglishDialect::American);
+    const German: Language = Language::German(GermanDialect::Standard);
+}
 
 /// Test helper to run detection and assert result
 fn test_detection(text: &str, expected_dialect: Dialect) {

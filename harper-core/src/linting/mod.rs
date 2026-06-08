@@ -357,12 +357,8 @@ pub mod tests {
     /// Asserts both that the given text matches the expected good suggestions and that none of the
     /// suggestions are in the bad suggestions list.
     /// TODO: Reimplement similar to `search_suggestion_tree`
-    // TODO verify many suggestions including the one we want succeeds
-    // TODO verify many suggestions but not the one we want fails
-
-    /// Asserts both that the given text matches the expected good suggestions and that none of the
-    /// suggestions are in the bad suggestions list.
-    /// TODO: Reimplement similar to `search_suggestion_tree`
+    /// TODO verify many suggestions including the one we want succeeds
+    /// TODO verify many suggestions but not the one we want fails
     #[track_caller]
     pub fn assert_good_and_bad_suggestions(
         text: &str,
@@ -440,9 +436,8 @@ pub mod tests {
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter, language: LanguageFamily) {
-        match language {
-            LanguageFamily::English => assert_lint_count_plain_english(text, linter, 0),
-            _ => {}
+        if language == LanguageFamily::English {
+            assert_lint_count_plain_english(text, linter, 0)
         }
     }
 
@@ -487,29 +482,26 @@ pub mod tests {
         count: usize,
         language: LanguageFamily,
     ) {
-        match language {
-            LanguageFamily::English => {
-                let test = Document::new_plain_english_curated(text);
-                let lints = linter.lint(&test);
-                eprintln!(
-                    "{}",
-                    lints
+        if language == LanguageFamily::English {
+            let test = Document::new_plain_english_curated(text);
+            let lints = linter.lint(&test);
+            eprintln!(
+                "{}",
+                lints
+                    .iter()
+                    .map(|l| l
+                        .suggestions
                         .iter()
-                        .map(|l| l
-                            .suggestions
-                            .iter()
-                            .map(|s| s.to_string())
-                            .collect::<Vec<_>>()
-                            .join(", "))
+                        .map(|s| s.to_string())
                         .collect::<Vec<_>>()
-                        .join("\n")
-                );
-                assert_eq!(
-                    lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
-                    count
-                );
-            }
-            _ => {}
+                        .join(", "))
+                    .collect::<Vec<_>>()
+                    .join("\n")
+            );
+            assert_eq!(
+                lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
+                count
+            );
         }
     }
 

@@ -2,10 +2,16 @@
 // Tests the minimum viable product for German language support in Harper
 // Uses the public LintGroup API with German dialect.
 
+use harper_core::language::german::dialects::GermanDialect;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::{Parser, PlainGerman};
 use harper_core::spell::curated_german_dictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Document, Language};
+
+struct Dialect;
+impl Dialect {
+    const German: Language = Language::German(GermanDialect::Standard);
+}
 
 fn german_lint_group() -> LintGroup {
     let dict = curated_german_dictionary();

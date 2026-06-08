@@ -778,10 +778,10 @@ impl LintGroup {
         let mut out = Self::empty();
 
         // Add language-neutral rules
-        out.add("CommaFixes", CommaFixes::default());
+        out.add("CommaFixes", CommaFixes);
         out.config.set_rule_enabled("CommaFixes", true);
 
-        out.add("CorrectNumberSuffix", CorrectNumberSuffix::default());
+        out.add("CorrectNumberSuffix", CorrectNumberSuffix);
         out.config.set_rule_enabled("CorrectNumberSuffix", true);
 
         out.add("CurrencyPlacement", CurrencyPlacement::default());
@@ -793,7 +793,7 @@ impl LintGroup {
         out.add("DotInitialisms", DotInitialisms::default());
         out.config.set_rule_enabled("DotInitialisms", true);
 
-        out.add("EllipsisLength", EllipsisLength::default());
+        out.add("EllipsisLength", EllipsisLength);
         out.config.set_rule_enabled("EllipsisLength", true);
 
         out.add("ExpandMemoryShorthands", ExpandMemoryShorthands::default());
@@ -802,16 +802,13 @@ impl LintGroup {
         out.add("ExpandTimeShorthands", ExpandTimeShorthands::default());
         out.config.set_rule_enabled("ExpandTimeShorthands", true);
 
-        out.add("LongSentences", LongSentences::default());
+        out.add("LongSentences", LongSentences);
         out.config.set_rule_enabled("LongSentences", true);
 
-        out.add("NoFrenchSpaces", NoFrenchSpaces::default());
+        out.add("NoFrenchSpaces", NoFrenchSpaces);
         out.config.set_rule_enabled("NoFrenchSpaces", true);
 
-        out.add(
-            "NumberSuffixCapitalization",
-            NumberSuffixCapitalization::default(),
-        );
+        out.add("NumberSuffixCapitalization", NumberSuffixCapitalization);
         out.config
             .set_rule_enabled("NumberSuffixCapitalization", true);
 
@@ -824,13 +821,13 @@ impl LintGroup {
         out.add("RepeatedWords", RepeatedWords::default());
         out.config.set_rule_enabled("RepeatedWords", true);
 
-        out.add("Spaces", Spaces::default());
+        out.add("Spaces", Spaces);
         out.config.set_rule_enabled("Spaces", true);
 
-        out.add("UnclosedQuotes", UnclosedQuotes::default());
+        out.add("UnclosedQuotes", UnclosedQuotes);
         out.config.set_rule_enabled("UnclosedQuotes", true);
 
-        out.add("UseEllipsisCharacter", UseEllipsisCharacter::default());
+        out.add("UseEllipsisCharacter", UseEllipsisCharacter);
         out.config.set_rule_enabled("UseEllipsisCharacter", true);
 
         out

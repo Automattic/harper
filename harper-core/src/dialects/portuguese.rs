@@ -53,7 +53,6 @@ impl Dialect for PortugueseDialect {
     ///
     /// ```
     /// use harper_core::PortugueseDialect;
-    /// use harper_core::Dialect;
     ///
     /// let abbrs = ["PT", "BR", "AO"];
     /// let mut dialects = abbrs.iter().map(|abbr| PortugueseDialect::try_from_abbr(abbr));
@@ -169,7 +168,10 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.is_dialect_enabled(dialect.into()) {
+                    if lexeme_metadata
+                        .dialects
+                        .is_portuguese_dialect_enabled(*dialect)
+                    {
                         *count += 1;
                     }
                 });

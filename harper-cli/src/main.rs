@@ -20,7 +20,8 @@ use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
 use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    CharStringExt, DictWordMetadata, EnglishDialect, GermanDialect, OrthFlags, PortugueseDialect,
+    Span, TokenKind, TokenStringExt,
 };
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
@@ -261,10 +262,10 @@ fn main() -> anyhow::Result<()> {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
-            let dict: Arc<dyn Dictionary> = if dialect.is_english() {
+            let dict: Arc<dyn Dictionary> = if matches!(dialect, Language::English(_)) {
                 curated_dictionary.clone()
             } else {
-                dictionary(Language::from(dialect))
+                dictionary(dialect)
             };
 
             lint(
@@ -514,7 +515,10 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American.into());
+            let linter = LintGroup::new_curated(
+                curated_dictionary,
+                Language::English(EnglishDialect::American),
+            );
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -1012,20 +1016,36 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-/// Parse a dialect string into a Dialect enum value.
+/// Parse a dialect string into a Language value.
 /// Supports common synonyms, abbreviations, and codes.
-fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
+fn parse_dialect(dialect: &str) -> anyhow::Result<Language> {
     match dialect.to_lowercase().as_str() {
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
-        "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(Dialect::German),
-        "at" | "austria" | "austrian" | "de-at" | "de_at" => Ok(Dialect::GermanAustrian),
-        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Ok(Dialect::GermanSwiss),
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
+            Ok(Language::English(EnglishDialect::American))
+        }
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => {
+            Ok(Language::English(EnglishDialect::British))
+        }
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
+            Ok(Language::English(EnglishDialect::Australian))
+        }
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => {
+            Ok(Language::English(EnglishDialect::Indian))
+        }
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => {
+            Ok(Language::English(EnglishDialect::Canadian))
+        }
+        "de" | "german" | "deutsch" | "de-de" | "de_de" => {
+            Ok(Language::German(GermanDialect::Standard))
+        }
+        "at" | "austria" | "austrian" | "de-at" | "de_at" => {
+            Ok(Language::German(GermanDialect::Austrian))
+        }
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
+            Ok(Language::German(GermanDialect::Swiss))
+        }
         "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" | "br" | "brazil" | "pt-br"
-        | "pt_br" => Ok(Dialect::Portuguese),
+        | "pt_br" => Ok(Language::Portuguese(PortugueseDialect::Brazilian)),
         _ => Err(anyhow!("Unknown dialect: {}", dialect)),
     }
 }
