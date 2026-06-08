@@ -52,7 +52,7 @@ jobs:
             libxdo-dev
           sudo apt-get install -y libappindicator3-dev || true
       - name: Rust Cache
-        uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
       - uses: cargo-bins/cargo-binstall@f8810ffa11196f23afb38e6fb64716fbf814ad8f # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
