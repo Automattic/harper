@@ -151,6 +151,7 @@ use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_longer::NoLonger;
+use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
 use super::nobody::Nobody;
@@ -710,6 +711,7 @@ impl LintGroup {
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoLonger, true);
+        insert_expr_rule!(NoLongerPronoun, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
         insert_expr_rule!(Nobody, true);
