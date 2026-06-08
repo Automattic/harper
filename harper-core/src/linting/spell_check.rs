@@ -1103,4 +1103,14 @@ mod tests {
             );
         }
     }
+
+    /// Regression test for <https://github.com/Automattic/harper/issues/3362>
+    #[test]
+    fn athough_suggests_although() {
+        assert_suggestion_result(
+            "We kept going athough it was raining.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "We kept going although it was raining.",
+        );
+    }
 }

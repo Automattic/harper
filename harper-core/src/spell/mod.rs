@@ -590,4 +590,10 @@ mod tests {
     fn missing_apostrophe_childrens_suggests_childrens() {
         assert_suggests_correction("childrens", "children's");
     }
+
+    /// Regression test for <https://github.com/Automattic/harper/issues/3362>
+    #[test]
+    fn athough_suggests_although() {
+        assert_suggests_correction("athough", "although");
+    }
 }
