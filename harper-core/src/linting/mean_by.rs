@@ -17,7 +17,7 @@ impl Default for MeanBy {
                 .t_set(&["mean", "means", "meant", "meaning"])
                 .t_ws()
                 .t_aco("with")
-                .and_not(AnchorStart),
+                .but_not(AnchorStart),
         }
     }
 }
