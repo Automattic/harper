@@ -44,18 +44,26 @@ impl Default for LifetimeLife {
                     Box::new(SequenceExpr::word_set(&["favorite", "favourite", "top"])),
                 ]);
 
-                let noun_gap = SequenceExpr::default()
-                    .then_zero_or_more(|tok: &Token, _: &[char]| {
-                        !tok.kind.is_noun() && !tok.kind.is_oov()
-                    })
-                    .then_kind_where(|kind| {
-                        (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
-                    })
-                    .then_zero_or_more(SequenceExpr::default().t_ws().then_kind_where(|kind| {
-                        (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
-                    }));
-
-                Box::new(superlative_prefix.then(noun_gap).then_fixed_phrase(phrase))
+                Box::new(
+                    superlative_prefix
+                        .then(
+                            SequenceExpr::default()
+                                .then_zero_or_more(|tok: &Token, _: &[char]| {
+                                    !tok.kind.is_noun() && !tok.kind.is_oov()
+                                })
+                                .then_kind_where(|kind| {
+                                    (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
+                                })
+                                .then_zero_or_more(
+                                    SequenceExpr::default()
+                                        .t_ws()
+                                        .then_kind_where(|kind| {
+                                            (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
+                                        }),
+                                ),
+                        )
+                        .then_fixed_phrase(phrase),
+                )
                     as Box<dyn Expr>
             })
             .collect();
