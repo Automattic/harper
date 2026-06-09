@@ -13,6 +13,7 @@ use lru::LruCache;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_while::AWhile;
+use super::acclimize::Acclimize;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
@@ -575,6 +576,7 @@ impl LintGroup {
         insert_expr_rule!(APart, true);
         insert_expr_rule!(ASomeTime, true);
         insert_expr_rule!(AWhile, true);
+        insert_expr_rule!(Acclimize, true);
         insert_expr_rule!(Addicting, true);
         insert_expr_rule!(AdjectiveDoubleDegree, true);
         insert_struct_rule!(AdjectiveOfA, true);
