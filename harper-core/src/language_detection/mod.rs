@@ -1,8 +1,10 @@
-//! Extensible language detection system for Harper LSP.
+//! Language detection system for Harper.
+//!
+//! This module provides the `LanguageDetector` trait and the `LanguageDetectionRegistry`
+//! for detecting the language of text content. The actual detection logic is implemented
+//! in the language manifest (`crate::language::manifest`).
 
-use crate::Token;
 use crate::languages::Language;
-use crate::parsers::{Parser, PlainEnglish};
 use crate::spell::FstDictionary;
 use std::fmt::Debug;
 
@@ -11,7 +13,7 @@ pub trait LanguageDetector: Debug + Send + Sync {
     fn name(&self) -> &str;
     fn detect(
         &self,
-        toks: &[Token],
+        toks: &[crate::Token],
         source: &[char],
         dict: &FstDictionary,
         default_language: Language,
@@ -20,29 +22,14 @@ pub trait LanguageDetector: Debug + Send + Sync {
 }
 
 /// Registry of all available language detectors.
-pub struct LanguageDetectionRegistry {
-    detectors: Vec<Box<dyn LanguageDetector>>,
-}
+///
+/// This is a zero-sized type that delegates to the language manifest
+/// (`crate::language::manifest::detect_language`).
+pub struct LanguageDetectionRegistry;
 
 impl LanguageDetectionRegistry {
     pub fn new() -> Self {
-        let mut registry = Self {
-            detectors: Vec::new(),
-        };
-        registry.register_detector(Box::new(crate::language_detection::german::GermanDetector));
-        registry.register_detector(Box::new(
-            crate::language_detection::portuguese::PortugueseDetector,
-        ));
-        registry.register_detector(Box::new(
-            crate::language_detection::english::EnglishDetector,
-        ));
-        registry
-    }
-
-    pub fn register_detector(&mut self, detector: Box<dyn LanguageDetector>) {
-        self.detectors.push(detector);
-        self.detectors
-            .sort_by(|a, b| b.confidence().partial_cmp(&a.confidence()).unwrap());
+        Self
     }
 
     pub fn detect_language(
@@ -51,29 +38,13 @@ impl LanguageDetectionRegistry {
         dict: &FstDictionary,
         default_language: Language,
     ) -> Language {
-        let source_chars: Vec<char> = source.chars().collect();
-        // The current shared plain-text lexer is sufficient for the supported
-        // Latin-script languages. If a future language needs a different
-        // tokenizer for detection, this is the seam to extend.
-        let tokens = PlainEnglish.parse(&source_chars);
-
-        if tokens.is_empty() {
-            return default_language;
-        }
-
-        for detector in &self.detectors {
-            if let Some(language) = detector.detect(&tokens, &source_chars, dict, default_language)
-            {
-                return language;
-            }
-        }
-        default_language
+        crate::language::manifest::detect_language(source, dict, default_language)
     }
 }
 
 impl Default for LanguageDetectionRegistry {
     fn default() -> Self {
-        Self::new()
+        Self
     }
 }
 
