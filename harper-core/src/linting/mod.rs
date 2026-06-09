@@ -46,6 +46,7 @@ mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
 mod comma_fixes;
+mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
