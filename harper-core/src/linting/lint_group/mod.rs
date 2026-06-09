@@ -124,6 +124,7 @@ use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
+use super::lifetime_life::LifetimeLife;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
@@ -562,6 +563,15 @@ impl LintGroup {
             };
         }
 
+        /// Add a sentence-based `ExprLinter` to the group, setting it to be enabled or disabled.
+        macro_rules! insert_sentence_expr_rule {
+            ($rule:ident, $default_config:expr) => {
+                out.add_sentence_expr_linter(stringify!($rule), $rule::default());
+                out.config
+                    .set_rule_enabled(stringify!($rule), $default_config);
+            };
+        }
+
         out.merge_from(weir_rules::lint_group());
         out.merge_from(phrase_set_corrections::lint_group());
         out.merge_from(proper_noun_capitalization_linters::lint_group());
@@ -685,6 +695,7 @@ impl LintGroup {
         insert_expr_rule!(LetToDo, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
+        insert_sentence_expr_rule!(LifetimeLife, true);
         insert_struct_rule!(LongSentences, true);
         insert_expr_rule!(LongTimeAgo, true);
         insert_expr_rule!(LookDownOnesNose, true);
