@@ -820,8 +820,8 @@
 #
 > The Mouse   did  not     notice this    question , but     hurriedly went    on  , “ ‘          — found  it
 # D+  NSg/VB+ VXPt NSg/R/C NSg/VB I/Ddem+ NSg/VB+  . NSg/C/P R         NSg/VPt J/P . . Unlintable . NSg/VP NPr/ISg+
-> advisable to go       with Edgar Atheling to meet     William and  offer     him  the crown     .
-# J         P  NSg/VB/J P    NPr+  ?        P  NSg/VB/J NPr+    VB/C NSg/VB/JC ISg+ D   NSg/VB/J+ .
+> advisable to go       with Edgar Atheling to meet     William and  offer  him  the crown     .
+# J         P  NSg/VB/J P    NPr+  ?        P  NSg/VB/J NPr+    VB/C NSg/VB ISg+ D   NSg/VB/J+ .
 > William’s conduct at    first was  moderate . But     the insolence of his     Normans — ’ How
 # NPr$      NSg/VB  NSg/P NSg/J VLPt NSg/VB/J . NSg/C/P D   Nᴹ/VB     P  ISg/D$+ NPrPl   . . NSg/C
 > are you    getting on  now       , my  dear     ? ” it       continued , turning to Alice as    it       spoke   .
@@ -2746,8 +2746,8 @@
 # . R+    NSg/VX3 I/R/Dq . . VP/J D   NPr/VB+ NSg/VB/J+ .
 >
 #
-> “ Then      it       wasn’t very civil of you    to offer     it       , ” said Alice angrily .
-# . NSg/J/R/C NPr/ISg+ VPt    J/R  J     P  ISgPl+ P  NSg/VB/JC NPr/ISg+ . . VP/J NPr+  R       .
+> “ Then      it       wasn’t very civil of you    to offer  it       , ” said Alice angrily .
+# . NSg/J/R/C NPr/ISg+ VPt    J/R  J     P  ISgPl+ P  NSg/VB NPr/ISg+ . . VP/J NPr+  R       .
 >
 #
 > “ It       wasn’t very civil of you    to sit    down        without being        invited  , ” said the March

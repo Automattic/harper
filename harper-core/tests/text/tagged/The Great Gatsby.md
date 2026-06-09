@@ -5092,8 +5092,8 @@
 #
 > I       realize      now       that     under   different circumstances that      conversation might    have
 # ISg/#r+ VB/Comm/NoAm NSg/J/R/C I/C/Ddem NSg/J/P NSg/J+    NPl/V3+       I/C/Ddem+ N🅪Sg/VB+     Nᴹ/VXB/J NSg/VXB
-> been     one     of the crises of my  life     . But     , because the offer      was  obviously and
-# NSg/VLPp NSg/I/J P  D   NPl    P  D$+ N🅪Sg/VB+ . NSg/C/P . C/P     D+  NSg/VB/JC+ VLPt R         VB/C
+> been     one     of the crises of my  life     . But     , because the offer   was  obviously and
+# NSg/VLPp NSg/I/J P  D   NPl    P  D$+ N🅪Sg/VB+ . NSg/C/P . C/P     D+  NSg/VB+ VLPt R         VB/C
 > tactlessly for   a   service to be       rendered , I       had no       choice  except to cut       him  off
 # R          R/C/P D/P NSg/VB+ P  NSg/VLXB VP/J     . ISg/#r+ VP  NSg/Dq/P N🅪Sg/J+ VB/C/P P  NSg/VBP/J ISg+ NSg/VB/J/P
 > there .

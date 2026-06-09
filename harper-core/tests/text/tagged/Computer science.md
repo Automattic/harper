@@ -1038,8 +1038,8 @@
 # NPl          VB/C NSg/VB+ NSg/J+   Nᴹ+      NPrPl/V3+ .
 >
 #
-> Many        languages offer     support for   multiple  paradigms , making  the distinction more
-# NSg/I/J/Dq+ NPl+      NSg/VB/JC N🅪Sg/VB R/C/P NSg/J/Dq+ NPl+      . Nᴹ/Vg/J D+  N🅪Sg+       NPr/I/J/R/Dq
+> Many        languages offer  support for   multiple  paradigms , making  the distinction more
+# NSg/I/J/Dq+ NPl+      NSg/VB N🅪Sg/VB R/C/P NSg/J/Dq+ NPl+      . Nᴹ/Vg/J D+  N🅪Sg+       NPr/I/J/R/Dq
 > a   matter  of style   than of technical capabilities .
 # D/P N🅪Sg/VB P  NSg/VB+ C/P  P  NSg/J+    NPl+         .
 >
