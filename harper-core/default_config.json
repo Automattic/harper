@@ -5063,6 +5063,13 @@
 								"state": true,
 								"label": "Touristic"
 							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfTheWindow",
+								"state": true,
+								"label": "Out (of) the Window"
+							}
 						}
 					]
 				}
