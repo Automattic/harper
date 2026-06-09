@@ -34,7 +34,8 @@ impl ExprLinter for ComplainAsNoun {
         if matched_tokens[idx]
             .get_ch(source)
             .last()
-            .map(|c| c.to_ascii_lowercase()) != Some('s')
+            .map(|c| c.to_ascii_lowercase())
+            != Some('s')
         {
             noun = &noun[..noun.len() - 1];
         }
