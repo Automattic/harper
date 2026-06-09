@@ -54,17 +54,14 @@ impl Default for LifetimeLife {
                                 .then_kind_where(|kind| {
                                     (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
                                 })
-                                .then_zero_or_more(
-                                    SequenceExpr::default()
-                                        .t_ws()
-                                        .then_kind_where(|kind| {
-                                            (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
-                                        }),
-                                ),
+                                .then_zero_or_more(SequenceExpr::default().t_ws().then_kind_where(
+                                    |kind| {
+                                        (kind.is_noun() || kind.is_oov()) && !kind.is_preposition()
+                                    },
+                                )),
                         )
                         .then_fixed_phrase(phrase),
-                )
-                    as Box<dyn Expr>
+                ) as Box<dyn Expr>
             })
             .collect();
 
