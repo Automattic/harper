@@ -344,6 +344,13 @@
 								"state": true,
 								"label": "To Be Honest"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LetMeKnow",
+								"state": true,
+								"label": "Let Me Know"
+							}
 						}
 					]
 				}
