@@ -5007,6 +5007,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MeanBy",
+								"state": true,
+								"label": "Mean By"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByTheBook",
 								"state": true,
 								"label": "By The Book"
