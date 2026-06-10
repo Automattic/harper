@@ -3744,6 +3744,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CapitalizeOn",
+								"state": true,
+								"label": "Capitalize On"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NakedEye",
 								"state": true,
 								"label": "Naked Eye"
