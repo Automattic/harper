@@ -570,8 +570,6 @@ mod tests {
 
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
 
-        dbg!(&token_kinds);
-
         assert!(matches!(
             token_kinds.as_slice(),
             &[TokenKind::Punctuation(Punctuation::Pipe)]
@@ -586,8 +584,6 @@ mod tests {
 
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
 
-        dbg!(&token_kinds);
-
         assert!(matches!(token_kinds.as_slice(), &[]))
     }
 
@@ -598,8 +594,6 @@ mod tests {
         let tokens = Markdown::default().parse_str(source);
 
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
-
-        dbg!(&token_kinds);
 
         assert!(matches!(
             token_kinds.as_slice(),
@@ -629,8 +623,6 @@ mod tests {
         let tokens = Markdown::default().parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
 
-        dbg!(&token_kinds);
-
         assert!(matches!(token_kinds.as_slice(), &[TokenKind::Word(_)]))
     }
 
@@ -650,8 +642,6 @@ mod tests {
         let source = r"[elijah-potter/harper](https://github.com/elijah-potter/harper)";
         let tokens = parser.parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
-
-        dbg!(&token_kinds);
 
         assert!(matches!(token_kinds.as_slice(), &[TokenKind::Unlintable]))
     }
@@ -697,8 +687,6 @@ mod tests {
             .map(|t| t.kind.clone())
             .collect::<Vec<_>>();
 
-        dbg!(&token_kinds);
-
         assert!(matches!(
             token_kinds.as_slice(),
             &[
@@ -725,8 +713,6 @@ Paragraph.
         let parser = Markdown::new(MarkdownOptions::default());
         let tokens = parser.parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
-
-        dbg!(&token_kinds);
 
         assert!(matches!(
             token_kinds.as_slice(),
@@ -791,8 +777,6 @@ Paragraph.
         let tokens = mdx_parser().parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
 
-        dbg!(&token_kinds);
-
         assert!(matches!(
             token_kinds.as_slice(),
             &[
@@ -813,8 +797,6 @@ Paragraph.
         let source = "Hello <Em>beautiful</Em> world.";
         let tokens = mdx_parser().parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
-
-        dbg!(&token_kinds);
 
         assert!(matches!(
             token_kinds.as_slice(),
@@ -843,8 +825,6 @@ Paragraph.
         let source = "The answer is {6 * 7} indeed.";
         let tokens = mdx_parser().parse_str(source);
         let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
-
-        dbg!(&token_kinds);
 
         assert!(matches!(
             token_kinds.as_slice(),
