@@ -108,8 +108,8 @@
 # #   NSg/VB/J NPl/V3 P  N🅪Sg/VB R/C/P NPr🅪Sg/VB/J+ . N🅪Sg/VB J/P J          NPl/V3+ R/C/P NSg/Vg
 > Koine Greek    ( DeRose 1990 ) has used over    1 , 000 parts  of speech   and  found  that
 # ?     NPr/VB/J . ?      #    . V3  VP/J NSg/J/P # . #   NPl/V3 P  N🅪Sg/VB+ VB/C NSg/VP I/C/Ddem
-> about as    many       words   were     ambiguous in        that     language as    in        English      . A
-# J/P   R/C/P NSg/I/J/Dq NPl/V3+ NSg/VLPt J         NPr/J/R/P I/C/Ddem N🅪Sg+    R/C/P NPr/J/R/P NPr🅪Sg/VB/J+ . D/P
+> about as    many       words   were ambiguous in        that     language as    in        English      . A
+# J/P   R/C/P NSg/I/J/Dq NPl/V3+ VLPt J         NPr/J/R/P I/C/Ddem N🅪Sg+    R/C/P NPr/J/R/P NPr🅪Sg/VB/J+ . D/P
 > morphosyntactic descriptor in        the case      of morphologically rich     languages is
 # ?               NSg        NPr/J/R/P D   NPr🅪Sg/VB P  ?               NPr/VB/J NPl+      VL3
 > commonly expressed using   very short      mnemonics , such  as    Ncmsan for   Category = Noun    ,
@@ -188,8 +188,8 @@
 # I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I+ . VB    NSg/P
 > all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
-> cannot  . The program got about 70 % correct  . Its     results were     repeatedly reviewed
-# NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ NSg/VLPt R          VP/J
+> cannot  . The program got about 70 % correct  . Its     results were repeatedly reviewed
+# NSg/VXB . D+  NPr/VB+ VP  J/P   #  . NSg/VB/J . ISg/D$+ NPl/V3+ VLPt R          VP/J
 > and  corrected by    hand    , and  later users sent   in        errata so          that      by    the late  70 s
 # VB/C VP/J      NSg/P NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ NSg/P D   NSg/J #  ?
 > the tagging was  nearly perfect  ( allowing for   some     cases   on  which even       human
@@ -292,8 +292,8 @@
 # NPl/V3+ VP/J      D   NSg/VB P  VB  . VP/J  NSg/VB/J P  N🅪Sg/VB+ NSg/Vg  NSg/C/P VLPt R
 > expensive since it       enumerated all          possibilities . It       sometimes had to resort to
 # J         C/P   NPr/ISg+ VP/J       NSg/I/J/C/Dq NPl+          . NPr/ISg+ R         VP  P  NSg/VB P
-> backup methods when    there were     simply too many       options ( the Brown        Corpus
-# NSg/J  NPl/V3+ NSg/I/C R+    NSg/VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
+> backup methods when    there were simply too many       options ( the Brown        Corpus
+# NSg/J  NPl/V3+ NSg/I/C R+    VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
 > contains a   case       with 17 ambiguous words  in        a    row     , and  there are words   such  as
 # V3       D/P NPr🅪Sg/VB+ P    #  J         NPl/V3 NPr/J/R/P D/P+ NSg/VB+ . VB/C R+    VLB NPl/V3+ NSg/I R/C/P
 > " still      " that      can     represent as    many       as    7 distinct parts  of speech   .
@@ -316,12 +316,12 @@
 # NPr/J/R/P #    . NPr+   ?      VB/C NPr+    ?  NPr🅪Sg/VB+ R             VP/J      NSg/J
 > programming algorithms to solve  the same problem in        vastly less       time       . Their
 # Nᴹ/Vg/J+    NPl+       P  NSg/VB D   I/J  NSg/J+  NPr/J/R/P R      VB/J/R/C/P N🅪Sg/VB/J+ . D$+
-> methods were     similar to the Viterbi algorithm known for   some     time       in        other
-# NPl/V3+ NSg/VLPt NSg/J   P  D   ?       NSg       VPp/J R/C/P I/J/R/Dq N🅪Sg/VB/J+ NPr/J/R/P NSg/VB/J
+> methods were similar to the Viterbi algorithm known for   some     time       in        other
+# NPl/V3+ VLPt NSg/J   P  D   ?       NSg       VPp/J R/C/P I/J/R/Dq N🅪Sg/VB/J+ NPr/J/R/P NSg/VB/J
 > fields    . DeRose used a   table  of pairs   , while      Church     used a   table  of triples and  a
 # NPrPl/V3+ . ?      VP/J D/P NSg/VB P  NPl/V3+ . NSg/VB/C/P NPr🅪Sg/VB+ VP/J D/P NSg/VB P  NPl/V3  VB/C D/P
-> method of estimating the values  for   triples that      were     rare     or    nonexistent in        the
-# NSg/VB P  Nᴹ/Vg/J    D   NPl/V3+ R/C/P NPl/V3  I/C/Ddem+ NSg/VLPt NSg/VB/J NPr/C NSg/J       NPr/J/R/P D
+> method of estimating the values  for   triples that      were rare     or    nonexistent in        the
+# NSg/VB P  Nᴹ/Vg/J    D   NPl/V3+ R/C/P NPl/V3  I/C/Ddem+ VLPt NSg/VB/J NPr/C NSg/J       NPr/J/R/P D
 > Brown       Corpus ( an  actual measurement of triple   probabilities would require a   much
 # NPr🅪Sg/VB/J NSg+   . D/P NSg/J  N🅪Sg        P  NSg/VB/J NPl+          VXB   NSg/VB  D/P NSg/I/J/R/Dq
 > larger corpus ) . Both   methods achieved an  accuracy of over    95 % . DeRose's 1990
@@ -334,8 +334,8 @@
 # NPr/ISg+ VP/J   R         NSg/J     .
 >
 #
-> These   findings were     surprisingly disruptive to the field  of natural language
-# I/Ddem+ NSg+     NSg/VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
+> These   findings were surprisingly disruptive to the field  of natural language
+# I/Ddem+ NSg+     VLPt R            J          P  D   NSg/VB P  NSg/J+  N🅪Sg+
 > processing . The accuracy reported was  higher than the typical accuracy of very
 # Nᴹ/Vg/J+   . D+  N🅪Sg+    VP/J     VLPt NSg/JC C/P  D   NSg/J   N🅪Sg     P  J/R
 > sophisticated algorithms that      integrated part     of speech   choice  with many       higher

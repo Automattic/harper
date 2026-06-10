@@ -3741,6 +3741,13 @@
 								"state": true,
 								"label": "As To Interrogative"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ComplainAsNoun",
+								"state": true,
+								"label": "Complain As Noun"
+							}
 						}
 					]
 				}
