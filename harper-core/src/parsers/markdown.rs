@@ -1,5 +1,7 @@
 use std::collections::VecDeque;
 
+use markdown::mdast::Node;
+use markdown::{Constructs, MdxSignal, ParseOptions};
 use serde::{Deserialize, Serialize};
 
 use super::{Parser, PlainEnglish};
@@ -18,6 +20,17 @@ pub struct Markdown {
 #[non_exhaustive]
 pub struct MarkdownOptions {
     pub ignore_link_title: bool,
+    /// Whether to parse the input as [MDX](https://mdxjs.com).
+    #[serde(default)]
+    pub mdx: bool,
+}
+
+impl MarkdownOptions {
+    /// Returns a copy of these options with MDX parsing enabled or disabled.
+    pub fn with_mdx(mut self, mdx: bool) -> Self {
+        self.mdx = mdx;
+        self
+    }
 }
 
 // Clippy rule excepted because this can easily be expanded later
@@ -26,6 +39,306 @@ impl Default for MarkdownOptions {
     fn default() -> Self {
         Self {
             ignore_link_title: false,
+            mdx: false,
+        }
+    }
+}
+
+/// Build the [`ParseOptions`] used to parse ordinary (non-MDX) Markdown.
+fn markdown_parse_options() -> ParseOptions {
+    ParseOptions {
+        constructs: Constructs {
+            frontmatter: true,
+            math_flow: true,
+            math_text: true,
+            ..Constructs::gfm()
+        },
+        ..ParseOptions::default()
+    }
+}
+
+/// Build the [`ParseOptions`] used to parse MDX.
+fn mdx_parse_options() -> ParseOptions {
+    let gfm = Constructs::gfm();
+
+    ParseOptions {
+        constructs: Constructs {
+            frontmatter: true,
+            math_flow: true,
+            math_text: true,
+            gfm_autolink_literal: gfm.gfm_autolink_literal,
+            gfm_footnote_definition: gfm.gfm_footnote_definition,
+            gfm_label_start_footnote: gfm.gfm_label_start_footnote,
+            gfm_strikethrough: gfm.gfm_strikethrough,
+            gfm_table: gfm.gfm_table,
+            gfm_task_list_item: gfm.gfm_task_list_item,
+            ..Constructs::mdx()
+        },
+        // Accept any ESM block without validating the embedded JavaScript.
+        // We only need to know its extent so we can mark it unlintable.
+        mdx_esm_parse: Some(Box::new(|_value| MdxSignal::Ok)),
+        ..ParseOptions::default()
+    }
+}
+
+/// Determine whether the raw source of an inline math node looks like it was intended to be math.
+fn is_plausible_inline_math(raw: &[char]) -> bool {
+    // Only single-dollar delimiters are ambiguous with currency.
+    if raw.len() < 3 || raw.first() != Some(&'$') || raw.get(1) == Some(&'$') {
+        return true;
+    }
+
+    let inner = &raw[1..raw.len() - 1];
+
+    let Some((first, last)) = inner.first().zip(inner.last()) else {
+        return false;
+    };
+
+    if first.is_whitespace() || last.is_whitespace() {
+        return false;
+    }
+
+    // An odd number of trailing backslashes means the closing dollar sign
+    // was escaped.
+    inner.iter().rev().take_while(|c| **c == '\\').count() % 2 == 0
+}
+
+/// Converts a Markdown [`Node`] tree (mdast) into Harper [`Token`]s.
+struct MdastTokenizer<'a> {
+    source: &'a [char],
+    byte_to_char: Vec<usize>,
+    options: MarkdownOptions,
+    tokens: Vec<Token>,
+    /// How many inline contexts (paragraphs, headings, table cells) we are currently nested inside of.
+    inline_depth: usize,
+}
+
+impl MdastTokenizer<'_> {
+    /// Get the char-based span of a node, if it has position information.
+    fn span_of(&self, node: &Node) -> Option<Span<char>> {
+        let pos = node.position()?;
+        Some(Span::new(
+            self.byte_to_char[pos.start.offset],
+            self.byte_to_char[pos.end.offset],
+        ))
+    }
+
+    /// Append a `ParagraphBreak` anchored at the end of the previous token.
+    fn push_paragraph_break(&mut self) {
+        self.tokens.push(Token {
+            span: Span::empty(self.tokens.last().map_or(0, |last| last.span.end)),
+            kind: TokenKind::ParagraphBreak,
+        });
+    }
+
+    /// Append an `Unlintable` token covering the entire node.
+    fn push_unlintable(&mut self, node: &Node) {
+        if let Some(span) = self.span_of(node) {
+            self.tokens.push(Token {
+                span,
+                kind: TokenKind::Unlintable,
+            });
+        }
+    }
+
+    /// Run the [`PlainEnglish`] parser over a char range of the source.
+    fn parse_english(&mut self, start: usize, end: usize) {
+        if start >= end {
+            return;
+        }
+
+        let mut new_tokens = PlainEnglish.parse(&self.source[start..end]);
+
+        new_tokens
+            .iter_mut()
+            .for_each(|token| token.span.push_by(start));
+
+        self.tokens.append(&mut new_tokens);
+    }
+
+    /// Tokenize a raw source range as English prose, skipping Markdown syntax (escapes, brackets, and line prefixes).
+    fn parse_text_range(&mut self, span: Span<char>) {
+        let mut chunk_start = span.start;
+        let mut idx = span.start;
+
+        while idx < span.end {
+            match self.source[idx] {
+                '\\' if idx + 1 < span.end && self.source[idx + 1].is_ascii_punctuation() => {
+                    self.parse_english(chunk_start, idx);
+                    chunk_start = idx + 1;
+                    idx += 2;
+                }
+                '[' | ']' => {
+                    self.parse_english(chunk_start, idx);
+                    self.parse_english(idx, idx + 1);
+                    chunk_start = idx + 1;
+                    idx += 1;
+                }
+                '\r' | '\n' => {
+                    self.parse_english(chunk_start, idx);
+                    self.tokens.push(Token {
+                        span: Span::new_with_len(idx, 1),
+                        kind: TokenKind::Newline(1),
+                    });
+
+                    // Move past the line ending.
+                    if self.source[idx] == '\r'
+                        && self.source.get(idx + 1) == Some(&'\n')
+                        && idx + 1 < span.end
+                    {
+                        idx += 1;
+                    }
+                    idx += 1;
+
+                    // Skip the continuation line's block prefix: indentation
+                    // and any blockquote markers.
+                    while idx < span.end && matches!(self.source[idx], ' ' | '\t' | '>') {
+                        idx += 1;
+                    }
+
+                    chunk_start = idx;
+                }
+                _ => idx += 1,
+            }
+        }
+
+        self.parse_english(chunk_start, span.end);
+    }
+
+    /// Walk the children of a parent node.
+    fn walk_children(&mut self, node: &Node, tight_item: bool) {
+        if let Some(children) = node.children() {
+            for child in children {
+                self.walk(child, tight_item);
+            }
+        }
+    }
+
+    /// Recursively tokenize a node.
+    fn walk(&mut self, node: &Node, tight_item: bool) {
+        match node {
+            Node::Root(_) => self.walk_children(node, false),
+            Node::Paragraph(_) => {
+                self.inline_depth += 1;
+                self.walk_children(node, false);
+                self.inline_depth -= 1;
+
+                // Paragraphs implicitly wrapping the contents of a tight list
+                // item are invisible in the source, so they don't end with a
+                // break of their own.
+                if !tight_item {
+                    self.push_paragraph_break();
+                }
+            }
+            Node::Heading(_) => {
+                if let Some(span) = self.span_of(node) {
+                    self.tokens.push(Token {
+                        span: Span::empty(span.start),
+                        kind: TokenKind::HeadingStart,
+                    });
+                }
+
+                self.inline_depth += 1;
+                self.walk_children(node, false);
+                self.inline_depth -= 1;
+                self.push_paragraph_break();
+            }
+            Node::List(list) => {
+                if let Some(span) = self.span_of(node) {
+                    self.tokens.push(Token {
+                        span: Span::empty(span.start),
+                        kind: TokenKind::Newline(2),
+                    });
+                }
+
+                // List items are tight when neither the list nor the item
+                // itself is "spread" (separated by blank lines).
+                self.walk_children(node, !list.spread);
+            }
+            Node::ListItem(item) => {
+                self.walk_children(node, tight_item && !item.spread);
+                self.push_paragraph_break();
+            }
+            Node::TableCell(_) => {
+                self.inline_depth += 1;
+                self.walk_children(node, false);
+                self.inline_depth -= 1;
+                self.push_paragraph_break();
+            }
+            Node::Code(_) => {
+                self.push_unlintable(node);
+                self.push_paragraph_break();
+            }
+            Node::Math(_) | Node::InlineCode(_) => {
+                self.push_unlintable(node);
+            }
+            Node::Html(_) => {
+                self.push_unlintable(node);
+
+                // Block-level HTML ends the surrounding "paragraph", while
+                // inline HTML lives within one.
+                if self.inline_depth == 0 {
+                    self.push_paragraph_break();
+                }
+            }
+            Node::InlineMath(_) => {
+                if let Some(span) = self.span_of(node) {
+                    // The inner parser's single-dollar math detection is
+                    // aggressive enough to swallow ordinary currency (e.g.
+                    // `$25 $24`). Demote implausible math back to plain text.
+                    if is_plausible_inline_math(&self.source[span.start..span.end]) {
+                        self.push_unlintable(node);
+                    } else {
+                        self.parse_text_range(span);
+                    }
+                }
+            }
+            Node::MdxjsEsm(_) | Node::MdxFlowExpression(_) => {
+                self.push_unlintable(node);
+                self.push_paragraph_break();
+            }
+            Node::MdxTextExpression(_) => {
+                self.push_unlintable(node);
+            }
+            Node::Break(_) => {
+                if let Some(span) = self.span_of(node) {
+                    self.tokens.push(Token {
+                        span: Span::new_with_len(span.start, 1),
+                        kind: TokenKind::Newline(2),
+                    });
+                }
+            }
+            Node::Link(_) => {
+                if self.options.ignore_link_title {
+                    self.push_unlintable(node);
+                } else {
+                    self.walk_children(node, false);
+                }
+            }
+            Node::Text(_) => {
+                if let Some(span) = self.span_of(node) {
+                    self.parse_text_range(span);
+                }
+            }
+            // Containers whose prose should be linted.
+            Node::Blockquote(_)
+            | Node::FootnoteDefinition(_)
+            | Node::Emphasis(_)
+            | Node::Strong(_)
+            | Node::Delete(_)
+            | Node::LinkReference(_)
+            | Node::Table(_)
+            | Node::TableRow(_)
+            | Node::MdxJsxFlowElement(_)
+            | Node::MdxJsxTextElement(_) => self.walk_children(node, false),
+            // Nodes that produce no tokens at all.
+            Node::Image(_)
+            | Node::ImageReference(_)
+            | Node::FootnoteReference(_)
+            | Node::Definition(_)
+            | Node::ThematicBreak(_)
+            | Node::Yaml(_)
+            | Node::Toml(_) => (),
         }
     }
 }
@@ -135,144 +448,37 @@ impl Markdown {
 }
 
 impl Parser for Markdown {
-    /// This implementation is quite gross to look at, but it works.
-    /// If any issues arise, it would likely help to refactor this out first.
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let english_parser = PlainEnglish;
-
         let source_str: String = source.iter().collect();
-        let md_parser = pulldown_cmark::Parser::new_ext(
-            &source_str,
-            pulldown_cmark::Options::all()
-                .difference(pulldown_cmark::Options::ENABLE_SMART_PUNCTUATION),
-        );
 
-        let mut tokens = Vec::new();
+        // Attempt MDX first when requested, falling back to ordinary Markdown
+        // if the input is not valid MDX (e.g. malformed JSX).
+        let ast = if self.options.mdx {
+            markdown::to_mdast(&source_str, &mdx_parse_options())
+                .or_else(|_| markdown::to_mdast(&source_str, &markdown_parse_options()))
+        } else {
+            markdown::to_mdast(&source_str, &markdown_parse_options())
+        };
 
-        // Build a mapping from the inner parser's byte-based indexing to Harper's char-based
-        // indexing.
-        let byte_to_char = build_byte_to_char_map(&source_str);
+        let Ok(ast) = ast else {
+            // Parsing ordinary Markdown is infallible, so this is unreachable
+            // in practice. Fall back to plain English to be safe.
+            return PlainEnglish.parse(source);
+        };
 
-        let mut stack = Vec::new();
+        let mut tokenizer = MdastTokenizer {
+            source,
+            // Build a mapping from the inner parser's byte-based indexing to
+            // Harper's char-based indexing.
+            byte_to_char: build_byte_to_char_map(&source_str),
+            options: self.options,
+            tokens: Vec::new(),
+            inline_depth: 0,
+        };
 
-        // NOTE: the range spits out __byte__ indices, not char indices.
-        // This is why we keep track above.
-        for (event, range) in md_parser.into_offset_iter() {
-            let span_start = byte_to_char[range.start];
-            let span_end = byte_to_char[range.end];
+        tokenizer.walk(&ast, false);
 
-            match event {
-                pulldown_cmark::Event::SoftBreak => {
-                    tokens.push(Token {
-                        span: Span::new_with_len(span_start, 1),
-                        kind: TokenKind::Newline(1),
-                    });
-                }
-                pulldown_cmark::Event::HardBreak => {
-                    tokens.push(Token {
-                        span: Span::new_with_len(span_start, 1),
-                        kind: TokenKind::Newline(2),
-                    });
-                }
-                pulldown_cmark::Event::Start(pulldown_cmark::Tag::List(v)) => {
-                    tokens.push(Token {
-                        span: Span::empty(span_start),
-                        kind: TokenKind::Newline(2),
-                    });
-                    stack.push(pulldown_cmark::Tag::List(v));
-                }
-                pulldown_cmark::Event::Start(tag) => {
-                    if matches!(tag, pulldown_cmark::Tag::Heading { .. }) {
-                        tokens.push(Token {
-                            span: Span::empty(span_start),
-                            kind: TokenKind::HeadingStart,
-                        });
-                    }
-
-                    stack.push(tag)
-                }
-                pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Paragraph)
-                | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Item)
-                | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::Heading(_))
-                | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::CodeBlock)
-                | pulldown_cmark::Event::End(pulldown_cmark::TagEnd::TableCell) => {
-                    tokens.push(Token {
-                        // We cannot use `span_start` here, as it will still point to the
-                        // first character of the `Event` at this point. Instead, we use the
-                        // position of the previous token's last character. This ensures the
-                        // paragraph break is placed at the end of the content, not its beginning.
-                        // For more info, see: https://github.com/Automattic/harper/pull/1239.
-                        span: Span::empty(tokens.last().map_or(0, |last| last.span.end)),
-                        kind: TokenKind::ParagraphBreak,
-                    });
-                    stack.pop();
-                }
-                pulldown_cmark::Event::End(_) => {
-                    stack.pop();
-                }
-                pulldown_cmark::Event::InlineMath(_)
-                | pulldown_cmark::Event::DisplayMath(_)
-                | pulldown_cmark::Event::Code(_) => {
-                    let chunk_len = span_end - span_start;
-
-                    tokens.push(Token {
-                        span: Span::new_with_len(span_start, chunk_len),
-                        kind: TokenKind::Unlintable,
-                    });
-                }
-                pulldown_cmark::Event::Text(_text) => {
-                    let chunk_len = span_end - span_start;
-
-                    if let Some(tag) = stack.last() {
-                        use pulldown_cmark::Tag;
-
-                        if matches!(tag, Tag::CodeBlock(..)) {
-                            tokens.push(Token {
-                                span: Span::new_with_len(span_start, chunk_len),
-
-                                kind: TokenKind::Unlintable,
-                            });
-                            continue;
-                        }
-                        if matches!(tag, Tag::Link { .. }) && self.options.ignore_link_title {
-                            tokens.push(Token {
-                                span: Span::new_with_len(span_start, chunk_len),
-                                kind: TokenKind::Unlintable,
-                            });
-                            continue;
-                        }
-                        if !(matches!(tag, Tag::Paragraph)
-                            || (matches!(tag, Tag::Link { .. }) && !self.options.ignore_link_title)
-                            || matches!(tag, Tag::Heading { .. })
-                            || matches!(tag, Tag::Item)
-                            || matches!(tag, Tag::TableCell)
-                            || matches!(tag, Tag::Emphasis)
-                            || matches!(tag, Tag::Strong)
-                            || matches!(tag, Tag::Strikethrough))
-                        {
-                            continue;
-                        }
-                    }
-
-                    let mut new_tokens = english_parser.parse(&source[span_start..span_end]);
-
-                    new_tokens
-                        .iter_mut()
-                        .for_each(|token| token.span.push_by(span_start));
-
-                    tokens.append(&mut new_tokens);
-                }
-                // TO-DO: Support via `harper-html`
-                pulldown_cmark::Event::Html(_) | pulldown_cmark::Event::InlineHtml(_) => {
-                    let size = span_end - span_start;
-                    tokens.push(Token {
-                        span: Span::new_with_len(span_start, size),
-                        kind: TokenKind::Unlintable,
-                    });
-                }
-                _ => (),
-            }
-        }
+        let mut tokens = tokenizer.tokens;
 
         if matches!(
             tokens.last(),
@@ -570,6 +776,180 @@ Paragraph.
 
         assert_eq!(tokens.iter_heading_starts().count(), 1);
         assert_eq!(tokens.iter_headings().count(), 1);
+    }
+
+    fn mdx_parser() -> Markdown {
+        Markdown::new(MarkdownOptions {
+            mdx: true,
+            ..MarkdownOptions::default()
+        })
+    }
+
+    #[test]
+    fn mdx_esm_is_unlintable() {
+        let source = "import {Chart} from './chart.js'\n\nThis is prose.";
+        let tokens = mdx_parser().parse_str(source);
+        let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
+
+        dbg!(&token_kinds);
+
+        assert!(matches!(
+            token_kinds.as_slice(),
+            &[
+                TokenKind::Unlintable,
+                TokenKind::ParagraphBreak,
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Punctuation(Punctuation::Period),
+            ]
+        ));
+    }
+
+    #[test]
+    fn mdx_jsx_text_contents_are_linted() {
+        let source = "Hello <Em>beautiful</Em> world.";
+        let tokens = mdx_parser().parse_str(source);
+        let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
+
+        dbg!(&token_kinds);
+
+        assert!(matches!(
+            token_kinds.as_slice(),
+            &[
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Punctuation(Punctuation::Period),
+            ]
+        ));
+    }
+
+    #[test]
+    fn mdx_jsx_flow_contents_are_linted() {
+        let source = "<Note>\n  This is prose inside a component.\n</Note>";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert!(tokens.iter_words().count() >= 6);
+        assert_eq!(tokens.iter_unlintables().count(), 0);
+    }
+
+    #[test]
+    fn mdx_text_expression_is_unlintable() {
+        let source = "The answer is {6 * 7} indeed.";
+        let tokens = mdx_parser().parse_str(source);
+        let token_kinds = tokens.iter().map(|t| t.kind.clone()).collect::<Vec<_>>();
+
+        dbg!(&token_kinds);
+
+        assert!(matches!(
+            token_kinds.as_slice(),
+            &[
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Space(1),
+                TokenKind::Unlintable,
+                TokenKind::Space(1),
+                TokenKind::Word(_),
+                TokenKind::Punctuation(Punctuation::Period),
+            ]
+        ));
+    }
+
+    #[test]
+    fn mdx_flow_expression_is_unlintable() {
+        let source = "{/* a comment */}\n\nProse here.";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_unlintables().count(), 1);
+        assert_eq!(tokens.iter_words().count(), 2);
+    }
+
+    #[test]
+    fn mdx_jsx_attributes_are_not_linted() {
+        let source = "<Chart kind=\"scatter\" data={data} /> Words after.";
+        let tokens = mdx_parser().parse_str(source);
+
+        // Only the prose outside the element should produce words.
+        assert_eq!(tokens.iter_words().count(), 2);
+    }
+
+    #[test]
+    fn mdx_invalid_jsx_falls_back_to_markdown() {
+        // `<ctrl-g>` is not valid JSX, so MDX parsing fails and we fall back
+        // to ordinary Markdown, where it is raw HTML.
+        let source = "The range of inputs from <ctrl-g> to ctrl-z";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_unlintables().count(), 1);
+        assert!(tokens.iter_words().count() >= 5);
+    }
+
+    #[test]
+    fn mdx_disabled_by_default() {
+        // With MDX off, `{6 * 7}` is just text.
+        let source = "The answer is {6 * 7} indeed.";
+        let tokens = Markdown::default().parse_str(source);
+
+        assert_eq!(tokens.iter_unlintables().count(), 0);
+    }
+
+    #[test]
+    fn mdx_nested_jsx_and_emphasis() {
+        let source = "<Wrapper>\n  Some *emphasized* text.\n</Wrapper>";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_words().count(), 3);
+        assert_eq!(tokens.iter_unlintables().count(), 0);
+    }
+
+    #[test]
+    fn mdx_export_is_unlintable() {
+        let source = "export const x = 1\n\nReal prose.";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_unlintables().count(), 1);
+        assert_eq!(tokens.iter_words().count(), 2);
+    }
+
+    #[test]
+    fn mdx_gfm_table_still_works() {
+        let source = "| Head |\n| ---- |\n| Cell |";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_words().count(), 2);
+    }
+
+    #[test]
+    fn mdx_code_block_still_unlintable() {
+        let source = "```js\nconst x = 1;\n```\n\nProse.";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_unlintables().count(), 1);
+        assert_eq!(tokens.iter_words().count(), 1);
+    }
+
+    #[test]
+    fn mdx_heading_is_marked() {
+        let source = "# Heading\n\n<Component>body</Component>";
+        let tokens = mdx_parser().parse_str(source);
+
+        assert_eq!(tokens.iter_heading_starts().count(), 1);
+    }
+
+    #[test]
+    fn mdx_survives_pathological_input() {
+        // Should not panic or hang, even on invalid fragments.
+        for source in ["<", "{", "</>", "{{}", "<a b={>", "[[#|]]:A]"] {
+            let _ = mdx_parser().parse_str(source);
+        }
     }
 
     #[test]
