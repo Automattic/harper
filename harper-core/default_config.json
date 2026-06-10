@@ -5084,6 +5084,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NowKnownAs",
+								"state": true,
+								"label": "Now Known As"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsHow",
 								"state": true,
 								"label": "As How"
