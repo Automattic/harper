@@ -122,7 +122,7 @@ impl ExprLinter for RedundantAcronyms {
             span: toks.span()?,
             lint_kind: LintKind::Redundancy,
             suggestions,
-            message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_string(),
+            message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_owned(),
             ..Default::default()
         })
     }

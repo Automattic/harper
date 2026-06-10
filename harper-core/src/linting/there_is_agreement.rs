@@ -312,7 +312,7 @@ fn handle_statement<D: Dictionary>(
 
     Some(Lint {
         span: toks[2..=4].span()?,
-        message: "There is disagreement in number between the verb and the noun.".to_string(),
+        message: "There is disagreement in number between the verb and the noun.".to_owned(),
         suggestions: [vec![be_suggestion], noun_suggestions].concat(),
         lint_kind: LintKind::Agreement,
         ..Default::default()
@@ -382,7 +382,7 @@ fn handle_theres<D: Dictionary>(
         span: toks[0..=2].span()?,
         lint_kind: LintKind::Agreement,
         suggestions: [vec![there_be_suggestion], noun_suggestions].concat(),
-        message: "`There's` means `there is`, which requires a singular noun.".to_string(),
+        message: "`There's` means `there is`, which requires a singular noun.".to_owned(),
         ..Default::default()
     })
 }
@@ -479,7 +479,7 @@ fn handle_question<D: Dictionary>(
         span: toks[0..=4].span()?,
         lint_kind: LintKind::Agreement,
         suggestions: [vec![be_suggestion], noun_suggestions].concat(),
-        message: "There is disagreement in number between the verb and the noun.".to_string(),
+        message: "There is disagreement in number between the verb and the noun.".to_owned(),
         ..Default::default()
     })
 }

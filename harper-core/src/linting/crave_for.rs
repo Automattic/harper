@@ -46,7 +46,7 @@ impl ExprLinter for CraveFor {
             span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::Remove],
-            message: "The verb `crave` should not be followed by `for`.".to_string(),
+            message: "The verb `crave` should not be followed by `for`.".to_owned(),
             ..Default::default()
         })
     }
