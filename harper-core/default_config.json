@@ -1046,6 +1046,13 @@
 						},
 						{
 							"Bool": {
+								"name": "EnvironmentVariable",
+								"state": true,
+								"label": "Environment Variable"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PassersBy",
 								"state": true,
 								"label": "Passers By"
