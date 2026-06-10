@@ -134,7 +134,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             span: nounspan,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "The construction `one of the ...` should use a plural noun.".to_string(),
+            message: "The construction `one of the ...` should use a plural noun.".to_owned(),
             ..Default::default()
         })
     }

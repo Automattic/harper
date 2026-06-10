@@ -42,7 +42,7 @@ impl ExprLinter for TryOnesHandAt {
                 vec!['h', 'a', 'n', 'd'],
                 hands_chars,
             )],
-            message: "This idiom uses the singular `hand`.".to_string(),
+            message: "This idiom uses the singular `hand`.".to_owned(),
             ..Default::default()
         })
     }
