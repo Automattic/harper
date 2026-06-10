@@ -37,7 +37,7 @@
 > of repositories of data  . Human    – computer interaction investigates the interfaces
 # P  NPl          P  N🅪Pl+ . NSg/VB/J . NSg+     N🅪Sg+       V3           D+  NPl/V3+
 > through which humans and  computers interact , and  software engineering focuses on
-# NSg/J/P I/C+  NPl/V3 VB/C NPl+      NSg/VB   . VB/C Nᴹ+      Nᴹ/Vg/J+    NPl/V3  J/P
+# J/P     I/C+  NPl/V3 VB/C NPl+      NSg/VB   . VB/C Nᴹ+      Nᴹ/Vg/J+    NPl/V3  J/P
 > the design   and  principles behind  developing software . Areas such  as    operating
 # D   N🅪Sg/VB+ VB/C NPl/V3+    NSg/J/P Nᴹ/Vg/J    Nᴹ+      . NPl+  NSg/I R/C/P Nᴹ/Vg/J
 > systems , networks and  embedded systems investigate the principles and  design
@@ -214,8 +214,8 @@
 # N🅪Sg+      N🅪Sg/VB+ . D+  NSg/VB/J+ VL3 VP/J    VB/C J                 NPr/J/R/P N🅪Sg/VB+ .
 > while      having  the characteristics typical of an  academic discipline . His     efforts ,
 # NSg/VB/C/P Nᴹ/Vg/J D   NPl+            NSg/J   P  D/P NSg/J    NSg/VB+    . ISg/D$+ NPl/V3+ .
-> and  those  of others  such  as    numerical analyst George Forsythe , were     rewarded :
-# VB/C I/Ddem P  NPl/V3+ NSg/I R/C/P J+        NSg+    NPr+   ?        . NSg/VLPt VP/J     .
+> and  those  of others  such  as    numerical analyst George Forsythe , were rewarded :
+# VB/C I/Ddem P  NPl/V3+ NSg/I R/C/P J+        NSg+    NPr+   ?        . VLPt VP/J     .
 > universities went    on  to create such  departments , starting with Purdue in        1962 .
 # NPl+         NSg/VPt J/P P  VB/J   NSg/I NPl+        . Nᴹ/Vg/J  P    NPr    NPr/J/R/P #    .
 > Despite  its     name    , a   significant amount of computer science  does    not     involve the
@@ -246,8 +246,8 @@
 #
 > In        the early   days of computing , a   number     of terms   for   the practitioners of the
 # NPr/J/R/P D   NSg/J/R NPl  P  Nᴹ/Vg/J+  . D/P N🅪Sg/VB/JC P  NPl/V3+ R/C/P D   NPl           P  D
-> field  of computing were     suggested ( albeit facetiously ) in        the Communications of
-# NSg/VB P  Nᴹ/Vg/J+  NSg/VLPt VP/J      . C      R           . NPr/J/R/P D   NPl            P
+> field  of computing were suggested ( albeit facetiously ) in        the Communications of
+# NSg/VB P  Nᴹ/Vg/J+  VLPt VP/J      . C      R           . NPr/J/R/P D   NPl            P
 > the ACM — turingineer , turologist , flow    - charts  - man     , applied meta  - mathematician ,
 # D   NSg . ?           . ?          . NSg/VB+ . NPl/V3+ . NPr/VB+ . VP/J    NSg/J . NSg+          .
 > and  applied epistemologist . Three months later in        the same journal   , comptologist
@@ -407,7 +407,7 @@
 > that     computer programs  are physical realizations  of mathematical entities and
 # I/C/Ddem NSg+     NPrPl/V3+ VLB NSg/J    NPl/Comm/NoAm P  J            NPl      VB/C
 > programs  that      can     be       deductively reasoned through mathematical formal methods .
-# NPrPl/V3+ I/C/Ddem+ NPr/VXB NSg/VLXB R           VP/J     NSg/J/P J            NSg/J  NPl/V3+ .
+# NPrPl/V3+ I/C/Ddem+ NPr/VXB NSg/VLXB R           VP/J     J/P     J            NSg/J  NPl/V3+ .
 > Computer scientists Edsger W. Dijkstra and  Tony  Hoare regard  instructions for
 # NSg+     NPl+       ?      ?  NSg      VB/C NPr/J ?     NSg/VB+ NPl          R/C/P
 > computer programs  as    mathematical sentences and  interpret formal semantics for
@@ -857,7 +857,7 @@
 > easily . Digital databases are managed using   database management systems to
 # R      . NSg/J+  NPl/V3+   VLB VP/J    Nᴹ/Vg/J NSg/VB+  N🅪Sg+      NPl+    P
 > store  , create , maintain , and  search   data  , through database models and  query
-# NSg/VB . VB/J   . VB       . VB/C N🅪Sg/VB+ N🅪Pl+ . NSg/J/P NSg/VB+  NPl/V3 VB/C NSg/VB+
+# NSg/VB . VB/J   . VB       . VB/C N🅪Sg/VB+ N🅪Pl+ . J/P     NSg/VB+  NPl/V3 VB/C NSg/VB+
 > languages . Data  mining   is  a   process of discovering patterns in        large data  sets   .
 # NPl+      . N🅪Pl+ Nᴹ/Vg/J+ VL3 D/P NSg/VB  P  Nᴹ/Vg/J     NPl/V3+  NPr/J/R/P NSg/J N🅪Pl+ NPl/V3 .
 >

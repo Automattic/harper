@@ -76,7 +76,7 @@ impl ExprLinter for SinceDuration {
             span: since_duration_span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![for_suggestion, ago_suggestion],
-            message: "For a duration, use 'for' instead of 'since'. Or for a point in time, add 'ago' at the end.".to_string(),
+            message: "For a duration, use 'for' instead of 'since'. Or for a point in time, add 'ago' at the end.".to_owned(),
             priority: 50,
         })
     }

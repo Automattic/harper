@@ -145,7 +145,7 @@
 > His     date    of birth     was  wrong      by    ten  years .
 # ISg/D$+ N🅪Sg/VB P  NSg/VB/J+ VLPt NSg/VB/J/R NSg/P NSg+ NPl+  .
 > We   went    through the book    page    by    page    .
-# IPl+ NSg/VPt NSg/J/P D+  NSg/VB+ NPr/VB+ NSg/P NPr/VB+ .
+# IPl+ NSg/VPt J/P     D+  NSg/VB+ NPr/VB+ NSg/P NPr/VB+ .
 > We   crawled forward  by    inches  .
 # IPl+ VP/J    NSg/VB/J NSg/P NPl/V3+ .
 > sold   by    the yard    ; cheaper if    bought by    the gross
@@ -312,8 +312,8 @@
 # NPr/ISg+ R       VP/J    NSg/VB/J/P I/C/Ddem+ NSg/VB+ . NSg/J/R/C NPr$ R      R/C/P D   NSg/VB .
 > In        term     of base      hits   , Jones   was  three for   four on  the day
 # NPr/J/R/P NSg/VB/J P  NSg/VB/J+ NPl/V3 . NPr/VB+ VLPt NSg   R/C/P NSg  J/P D+  NPr🅪Sg+
-> At    close    of play    , England were     305 for   3 .
-# NSg/P NSg/VB/J P  N🅪Sg/VB . NPr+    NSg/VLPt #   R/C/P # .
+> At    close    of play    , England were 305 for   3 .
+# NSg/P NSg/VB/J P  N🅪Sg/VB . NPr+    VLPt #   R/C/P # .
 > He       took the swing   shift   for   he       could   get    more         overtime .
 # NPr/ISg+ VPt  D+  NSg/VB+ NSg/VB+ R/C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/J/R/Dq NSg/VB   .
 > to account for   one's whereabouts .
@@ -352,8 +352,8 @@
 # +    N🅪Sg/J/R P  NPr/VB P    J/R  .
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
-> The bomb      went     off        just 100 yards   from where   they were     standing .
-# D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ NSg/VLPt Nᴹ/Vg/J  .
+> The bomb      went     off        just 100 yards   from where   they were standing .
+# D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ VLPt Nᴹ/Vg/J  .
 > From the top      of the lighthouse you    can     just see    the mainland .
 # P    D   NSg/VB/J P  D+  NSg+       ISgPl+ NPr/VXB J/R  NSg/VB D+  NSg+     .
 > I’ve been     doing   this    from pickney .
@@ -376,8 +376,8 @@
 # NPr/I+ V3+   NPr/J/R/P D/P NSg       NSg/J/P D   NSg+ .
 > The dog       is  in        the kennel .
 # D+  NSg/VB/J+ VL3 NPr/J/R/P D   NSg/VB .
-> There were     three pickles in        a    jar     .
-# R+    NSg/VLPt NSg   NPl/V3  NPr/J/R/P D/P+ NSg/VB+ .
+> There were three pickles in        a    jar     .
+# R+    VLPt NSg   NPl/V3  NPr/J/R/P D/P+ NSg/VB+ .
 > I       like         living    in        the city .
 # ISg/#r+ NSg/VB/J/C/P N🅪Sg/Vg/J NPr/J/R/P D+  NSg+ .
 > There are lots   of trees   in        the park    .
@@ -880,8 +880,8 @@
 # D+  NSg/VB+ NSg/VB+ VLPt #  . # . P    NPr+ Nᴹ/Vg/J+ NSg+  NPl/V3+ .
 > With a   heavy    sigh   , she  looked around the empty     room       .
 # P    D/P NSg/VB/J NSg/VB . ISg+ VP/J   J/P    D+  NSg/VB/J+ N🅪Sg/VB/J+ .
-> Four people  were     injured , with one     of them     in        critical condition .
-# NSg+ NPl/VB+ NSg/VLPt VP/J    . P    NSg/I/J P  NSg/IPl+ NPr/J/R/P NSg/J+   N🅪Sg/VB+  .
+> Four people  were injured , with one     of them     in        critical condition .
+# NSg+ NPl/VB+ VLPt VP/J    . P    NSg/I/J P  NSg/IPl+ NPr/J/R/P NSg/J+   N🅪Sg/VB+  .
 > With their reputation on  the line    , they decided  to fire      their PR   team    .
 # P    D$+   NSg+       J/P D+  NSg/VB+ . IPl+ NSg/VP/J P  N🅪Sg/VB/J D$+   NSg+ NSg/VB+ .
 > We   are with you    all          the way    .
@@ -916,8 +916,8 @@
 # NSg/VB P    Nᴹ+        .
 > He       spoke   with sadness in        his     voice   .
 # NPr/ISg+ NSg/VPt P    Nᴹ+     NPr/J/R/P ISg/D$+ NSg/VB+ .
-> The sailors were     infected with malaria .
-# D+  NPl+    NSg/VLPt NSg/VP/J P    Nᴹ+     .
+> The sailors were infected with malaria .
+# D+  NPl+    VLPt NSg/VP/J P    Nᴹ+     .
 > overcome with happiness
 # VB       P    Nᴹ+
 > green       with envy   ; flushed with success

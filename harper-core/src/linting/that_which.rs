@@ -53,7 +53,7 @@ impl ExprLinter for ThatWhich {
             span: matched_tokens.span()?,
             lint_kind: LintKind::Repetition,
             suggestions: vec![Suggestion::ReplaceWith(suggestion)],
-            message: "“that that” sometimes means “that which”, which is clearer.".to_string(),
+            message: "“that that” sometimes means “that which”, which is clearer.".to_owned(),
             priority: 126,
         })
     }

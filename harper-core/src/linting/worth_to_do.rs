@@ -86,7 +86,7 @@ where
             span: tolemspan,
             lint_kind: LintKind::Grammar,
             suggestions,
-            message: "Use the `gerund` of the verb, the form that ends in `-ing`".to_string(),
+            message: "Use the `gerund` of the verb, the form that ends in `-ing`".to_owned(),
             ..Default::default()
         })
     }

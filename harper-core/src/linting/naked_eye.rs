@@ -82,7 +82,7 @@ impl ExprLinter for NakedEye {
             span: prep,
             lint_kind: LintKind::Miscellaneous,
             suggestions,
-            message: "This idiom usually requires a different preposition.".to_string(),
+            message: "This idiom usually requires a different preposition.".to_owned(),
             ..Default::default()
         })
     }
