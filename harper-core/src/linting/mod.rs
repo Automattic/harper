@@ -435,10 +435,8 @@ pub mod tests {
     }
 
     #[track_caller]
-    pub fn assert_no_lints(text: &str, linter: impl Linter, language: LanguageFamily) {
-        if language == LanguageFamily::English {
-            assert_lint_count_plain_english(text, linter, 0)
-        }
+    pub fn assert_no_lints(text: &str, linter: impl Linter) {
+        assert_lint_count_plain_english(text, linter, 0)
     }
 
     /// Asserts that the lint's message matches the expected message.

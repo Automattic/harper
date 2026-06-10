@@ -5,5 +5,5 @@
 
 pub use crate::language::manifest::{
     ProseLanguage, add_language_specific_linters, dictionary, dictionary_for_language,
-    parser_for_prose, prose_language,
+    parser_for_prose, prose_language, weir_rules_lint_group,
 };

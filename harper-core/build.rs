@@ -172,24 +172,47 @@ fn write_flat_weir_boilerplate(weir_rule_dir: &Path, dest: &Path) {
 
 fn main() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let weir_rule_dir = manifest_dir.join("./src/linting/weir_rules");
-    let german_weir_rule_dir = manifest_dir.join("./src/language/german/linting/weir_rules/de");
     let out_dir = Path::new(&env::var("OUT_DIR").unwrap()).to_path_buf();
-    let dest = out_dir.join("weir_rules_generated_list.rs");
-    let german_dest = out_dir.join("german_weir_rules_generated_list.rs");
 
-    write_grouped_weir_boilerplate(&weir_rule_dir, &dest);
-    write_flat_weir_boilerplate(&german_weir_rule_dir, &german_dest);
+    // Main English weir rules (in linting/weir_rules/)
+    let english_weir_rule_dir = manifest_dir.join("./src/linting/weir_rules");
+    let english_dest = out_dir.join("weir_rules_generated_list.rs");
+    write_grouped_weir_boilerplate(&english_weir_rule_dir, &english_dest);
+    println!(
+        "cargo:rustc-env=WEIR_RULE_DIR={}",
+        english_weir_rule_dir.display()
+    );
+    println!("cargo:rustc-env=WEIR_RULE_LIST={}", english_dest.display());
+
+    // Language-specific weir rules (in language/<name>/linting/weir_rules/)
+    // For German, the rules are in a subdirectory 'de/' for the locale
+    let language_weir_configs = vec![
+        (
+            "GERMAN",
+            "german",
+            "./src/language/german/linting/weir_rules/de",
+        ),
+        // Add new languages here with their weir rule directory path
+        // Example: ("FRENCH", "french", "./src/language/french/linting/weir_rules"),
+    ];
+
+    for (lang_upper, lang_name, weir_path) in language_weir_configs {
+        let weir_rule_dir = manifest_dir.join(weir_path);
+        let dest = out_dir.join(format!("{}_weir_rules_generated_list.rs", lang_name));
+
+        write_flat_weir_boilerplate(&weir_rule_dir, &dest);
+
+        println!(
+            "cargo:rustc-env={}_WEIR_RULE_DIR={}",
+            lang_upper,
+            weir_rule_dir.display()
+        );
+        println!(
+            "cargo:rustc-env={}_WEIR_RULE_LIST={}",
+            lang_upper,
+            dest.display()
+        );
+    }
 
     println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rustc-env=WEIR_RULE_DIR={}", weir_rule_dir.display());
-    println!(
-        "cargo:rustc-env=GERMAN_WEIR_RULE_DIR={}",
-        german_weir_rule_dir.display()
-    );
-    println!("cargo:rustc-env=WEIR_RULE_LIST={}", dest.display());
-    println!(
-        "cargo:rustc-env=GERMAN_WEIR_RULE_LIST={}",
-        german_dest.display()
-    );
 }

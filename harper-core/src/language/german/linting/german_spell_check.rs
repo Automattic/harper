@@ -321,7 +321,7 @@ mod tests {
     #[test]
     fn curated_german_uses_german_spellcheck_instead_of_generic_spellcheck() {
         let dict = curated_german_dictionary();
-        let linter = LintGroup::new_curated(dict, Dialect::German);
+        let linter = LintGroup::new_curated(dict, Language::German(GermanDialect::Standard));
 
         assert!(linter.config.is_rule_enabled("GermanSpellCheck"));
         assert!(!linter.config.is_rule_enabled("SpellCheck"));

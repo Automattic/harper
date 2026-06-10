@@ -5,8 +5,8 @@ use strum_macros::{Display, EnumCount, EnumDiscriminants, EnumIter, EnumString, 
 
 use crate::dialects::dialect_trait::{Dialect, DialectFlags};
 use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
+use crate::dialects::german::{GermanDialect, GermanDialectFlags};
 use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
-use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
 use crate::languages::{Language, LanguageFamily};
 
 #[derive(

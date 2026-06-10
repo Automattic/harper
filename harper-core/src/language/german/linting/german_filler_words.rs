@@ -51,7 +51,7 @@ impl ExprLinter for GermanFillerWords {
 #[cfg(test)]
 mod tests {
     use super::GermanFillerWords;
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::assert_suggestion_result;
 
     #[test]
     fn removes_aehm() {
@@ -73,9 +73,10 @@ mod tests {
 
     #[test]
     fn does_not_flag_um_preposition() {
-        assert_no_lints(
-            "Es ist nicht gut, dass ich mir immer die Nächste um die Ohren schlage.",
-            GermanFillerWords::default(),
-        );
+        use crate::{Document, language::german::parsers::PlainGerman, language::german::spell::german_dictionary};
+        let dict = german_dictionary();
+        let doc = Document::new("Es ist nicht gut, dass ich mir immer die Nächste um die Ohren schlage.", &PlainGerman, &*dict);
+        let lints = GermanFillerWords::default().lint(&doc);
+        assert_eq!(lints.len(), 0, "Should not flag 'um' as it's a valid preposition");
     }
 }

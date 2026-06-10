@@ -1212,43 +1212,20 @@ impl LintGroup {
         dictionary: Arc<impl Dictionary + 'static>,
         _dialect: GermanDialect,
     ) -> Self {
-        use crate::language::german::linting::german_noun_capitalization::GermanNounCapitalization;
-        use crate::language::german::linting::german_sentence_capitalization::GermanSentenceCapitalization;
-        use crate::language::german::linting::german_spell_check::GermanSpellCheck;
+        use crate::language::german::dialects::GermanDialect;
 
         let mut out = Self::empty();
 
-        // Add German spell checker
-        out.add(
-            "GermanSpellCheck",
-            GermanSpellCheck::new(dictionary.clone()),
+        // Add language-specific linters from manifest
+        let language = Language::German(GermanDialect::default());
+        crate::language::manifest::add_language_specific_linters(
+            &mut out,
+            language,
+            dictionary.clone(),
         );
-        out.config.set_rule_enabled("GermanSpellCheck", true);
 
-        // Add German-specific linters
-        out.add(
-            "GermanNounCapitalization",
-            GermanNounCapitalization::new(dictionary.clone()),
-        );
-        out.config
-            .set_rule_enabled("GermanNounCapitalization", true);
-
-        out.add(
-            "GermanSentenceCapitalization",
-            GermanSentenceCapitalization::new(dictionary.clone()),
-        );
-        out.config
-            .set_rule_enabled("GermanSentenceCapitalization", true);
-
-        // Add German Weir rules
-        out.merge_from(crate::language::german::linting::german_weir_rules::lint_group());
-
-        // Add filler words
-        out.add(
-            "GermanFillerWords",
-            crate::language::german::linting::german_filler_words::GermanFillerWords::default(),
-        );
-        out.config.set_rule_enabled("GermanFillerWords", true);
+        // Add language-specific Weir rules from manifest
+        out.merge_from(crate::language::manifest::weir_rules_lint_group(language));
 
         // Add language-neutral rules
         out.merge_from(Self::language_neutral_rules());
@@ -1414,7 +1391,7 @@ mod tests {
         assert_no_lints(
             "Although I only saw the need to interject once, I still saw it.",
             test_group(),
-            LanguageFamily::English,
+
         );
     }
 
@@ -1423,7 +1400,7 @@ mod tests {
         assert_no_lints(
             "But there is less consensus on this.",
             test_group(),
-            LanguageFamily::English,
+
         );
     }
 
@@ -1433,7 +1410,7 @@ mod tests {
             "ive never seen that before",
             test_group(),
             "I've never seen that before",
-            LanguageFamily::English,
+
         );
     }
 
@@ -1443,13 +1420,13 @@ mod tests {
             "It is worthchecking",
             test_group(),
             "It is worth checking",
-            LanguageFamily::English,
+
         );
     }
 
     #[test]
     fn its_not_perfect_keeps_apostrophe() {
-        assert_no_lints("It's not perfect", test_group(), LanguageFamily::English);
+        assert_no_lints("It's not perfect", test_group());
     }
 
     #[test]
@@ -1482,7 +1459,7 @@ mod tests {
             "This is ok.",
             test_group(),
             "This is okay.",
-            LanguageFamily::English,
+
         );
     }
 
@@ -1509,7 +1486,7 @@ mod tests {
         assert_no_lints(
             "The standard form is low-hanging fruit with a hyphen and singular form.",
             test_group(),
-            LanguageFamily::English,
+
         );
     }
 
@@ -1518,7 +1495,7 @@ mod tests {
         assert_no_lints(
             "Corrects nonstandard variants of low-hanging fruit.",
             test_group(),
-            LanguageFamily::English,
+
         );
     }
 
@@ -1538,13 +1515,13 @@ mod tests {
     #[test]
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(
-            FstDictionary::curated(LanguageFamily::English),
+            FstDictionary::curated(),
             Language::English(EnglishDialect::American),
         );
 
         let enforcer_config = FlatConfig::new_curated();
         let mut lints_to_enforce = LintGroup::new_curated(
-            FstDictionary::curated(LanguageFamily::English),
+            FstDictionary::curated(),
             Language::English(EnglishDialect::American),
         )
         .with_lint_config(enforcer_config);

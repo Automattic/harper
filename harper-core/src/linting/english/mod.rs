@@ -250,7 +250,7 @@ pub(super) mod vicious_loop;
 pub(super) mod was_aloud;
 pub(super) mod way_too_adjective;
 pub(super) mod web_scraping;
-pub(super) mod weir_rules;
+pub mod weir_rules;
 pub(super) mod well_educated;
 pub(super) mod were_where;
 pub(super) mod whereas;

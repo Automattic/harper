@@ -141,17 +141,21 @@ fn verify_build_script_exists() {
 
     let content = fs::read_to_string(build_rs).unwrap();
 
-    // Verify build.rs handles German Weir rules
+    // Verify build.rs handles language-specific Weir rules via config
     assert!(
-        content.contains("german_weir_rule_dir"),
-        "build.rs should reference german_weir_rule_dir"
+        content.contains("language_weir_configs"),
+        "build.rs should use language_weir_configs for extensibility"
     );
     assert!(
-        content.contains("german_weir_rules_generated_list"),
-        "build.rs should generate german_weir_rules_generated_list.rs"
+        content.contains("GERMAN"),
+        "build.rs should reference GERMAN in language_weir_configs"
     );
     assert!(
-        content.contains("GERMAN_WEIR_RULE_DIR"),
-        "build.rs should set GERMAN_WEIR_RULE_DIR environment variable"
+        content.contains("english_weir_rule_dir"),
+        "build.rs should reference english_weir_rule_dir"
+    );
+    assert!(
+        content.contains("WEIR_RULE_DIR"),
+        "build.rs should set WEIR_RULE_DIR environment variable for English"
     );
 }

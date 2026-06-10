@@ -1,6 +1,15 @@
 //! Language manifest - central integration point for all Harper languages.
 //!
 //! This module serves as the single integration point for all language-specific features.
+//! 
+//! ## Language Structure
+//! 
+//! - **English** (default): Core language files are in `src/linting/english/` for Rust-based rules
+//!   and `src/linting/weir_rules/` for Weir-based rules. English dialects are in `src/dialects/english.rs`.
+//! - **German**: Language-specific files are in `src/language/german/` (linting, spell checking, etc.)
+//!   with dialects in `src/language/german/dialects.rs`.
+//! - **Portuguese**: Language-specific files are in `src/language/portuguese/` with dialects in `src/dialects/portuguese.rs`.
+//!
 //! To add a new language:
 //! 1. Create the language module under `language/<name>/`
 //! 2. Add imports for the new language below
@@ -183,6 +192,27 @@ pub fn add_language_specific_linters(
         }
         Language::English(_) => {
             // English is the default, no additional linters needed
+        }
+    }
+}
+
+// ========== WIR RULES ==========
+
+/// Get the Weir rule lint group for a specific language.
+///
+/// This provides a centralized way to access language-specific Weir rules.
+/// To add Weir rules for a new language:
+/// 1. Create the Weir rule files under `language/<name>/linting/weir_rules/`
+/// 2. Create a `mod.rs` under `language/<name>/linting/weir_rules/` that exposes a `lint_group()` function
+/// 3. Add the language to this match statement
+/// 4. Add the appropriate env vars in build.rs
+pub fn weir_rules_lint_group(language: Language) -> LintGroup {
+    match language {
+        Language::German(_) => crate::language::german::linting::weir_rules::lint_group(),
+        Language::English(_) => crate::linting::english::weir_rules::lint_group(),
+        Language::Portuguese(_) => {
+            // Portuguese currently has no Weir rules
+            LintGroup::default()
         }
     }
 }
