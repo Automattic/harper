@@ -34,7 +34,7 @@ impl ExprLinter for AllHellBreakLoose {
             lint_kind: LintKind::Eggcorn,
             span: outspan,
             suggestions: vec![Suggestion::replace_with_match_case_str("loose", outchars)],
-            message: "The correct idiom is `all hell breaks loose`.".to_string(),
+            message: "The correct idiom is `all hell breaks loose`.".to_owned(),
             ..Default::default()
         })
     }
