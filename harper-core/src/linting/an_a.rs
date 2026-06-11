@@ -100,7 +100,11 @@ mod tests {
 
     #[test]
     fn detects_html_as_vowel() {
-        assert_lint_count("Here is a HTML document.", AnA::new(EnglishDialect::American), 1);
+        assert_lint_count(
+            "Here is a HTML document.",
+            AnA::new(EnglishDialect::American),
+            1,
+        );
     }
 
     #[test]

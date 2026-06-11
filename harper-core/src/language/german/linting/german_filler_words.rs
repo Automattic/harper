@@ -73,10 +73,21 @@ mod tests {
 
     #[test]
     fn does_not_flag_um_preposition() {
-        use crate::{Document, language::german::parsers::PlainGerman, language::german::spell::german_dictionary};
+        use crate::{
+            Document, language::german::parsers::PlainGerman,
+            language::german::spell::german_dictionary,
+        };
         let dict = german_dictionary();
-        let doc = Document::new("Es ist nicht gut, dass ich mir immer die Nächste um die Ohren schlage.", &PlainGerman, &*dict);
+        let doc = Document::new(
+            "Es ist nicht gut, dass ich mir immer die Nächste um die Ohren schlage.",
+            &PlainGerman,
+            &*dict,
+        );
         let lints = GermanFillerWords::default().lint(&doc);
-        assert_eq!(lints.len(), 0, "Should not flag 'um' as it's a valid preposition");
+        assert_eq!(
+            lints.len(),
+            0,
+            "Should not flag 'um' as it's a valid preposition"
+        );
     }
 }

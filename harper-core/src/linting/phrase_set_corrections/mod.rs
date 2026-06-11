@@ -1,6 +1,6 @@
 use crate::linting::LintKind;
 
-use super::{LintGroup, MapPhraseSetLinter};
+use super::{LintGroup, map_phrase_set_linter::MapPhraseSetLinter};
 
 #[cfg(test)]
 mod tests;

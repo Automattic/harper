@@ -1,9 +1,7 @@
 use super::{Lint, LintKind, Linter, Suggestion};
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{
-    CharString, CharStringExt, DialectFlags, DialectsEnum, PortugueseDialect, TokenStringExt,
-};
+use crate::{CharString, CharStringExt, DialectsEnum, PortugueseDialect, TokenStringExt};
 use lru::LruCache;
 use smallvec::ToSmallVec;
 use std::num::NonZero;

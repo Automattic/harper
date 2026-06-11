@@ -11,7 +11,6 @@ use hashbrown::HashMap;
 use lru::LruCache;
 
 use super::a_part::APart;
-use super::a_some_time::ASomeTime;
 use super::a_while::AWhile;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
@@ -32,7 +31,6 @@ use super::as_how::AsHow;
 use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
-use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
@@ -42,11 +40,8 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
-use super::by_the_book::ByTheBook;
-use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
-use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
@@ -58,7 +53,6 @@ use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
-use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
@@ -87,13 +81,11 @@ use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
 use super::feel_fell::FeelFell;
-use super::fellow_co_redundancy::FellowCoRedundancy;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
-use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
@@ -111,7 +103,6 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
-use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
@@ -129,7 +120,6 @@ use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
-use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
@@ -150,7 +140,6 @@ use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
-use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_longer::NoLonger;
@@ -177,7 +166,6 @@ use super::out_of_date::OutOfDate;
 use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
-use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::plural_decades::PluralDecades;
@@ -232,10 +220,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
-use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
-use super::there_is_agreement::ThereIsAgreement;
-use super::there_own::ThereOwn;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -277,263 +262,18 @@ use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
 
-use super::Lint;
-use super::a_part::APart;
-use super::a_while::AWhile;
-use super::addicting::Addicting;
-use super::adjective_double_degree::AdjectiveDoubleDegree;
-use super::adjective_of_a::AdjectiveOfA;
-use super::after_later::AfterLater;
-use super::all_hell_break_loose::AllHellBreakLoose;
-use super::all_intents_and_purposes::AllIntentsAndPurposes;
-use super::allow_to::AllowTo;
-use super::am_in_the_morning::AmInTheMorning;
-use super::amounts_for::AmountsFor;
-use super::an_a::AnA;
-use super::and_the_like::AndTheLike;
-use super::another_thing_coming::AnotherThingComing;
-use super::another_think_coming::AnotherThinkComing;
-use super::apart_from::ApartFrom;
-use super::arrive_to::ArriveTo;
-use super::ask_no_preposition::AskNoPreposition;
-use super::aspire_to::AspireTo;
-use super::avoid_curses::AvoidCurses;
-use super::back_in_the_day::BackInTheDay;
-use super::be_allowed::BeAllowed;
-use super::behind_the_scenes::BehindTheScenes;
-use super::best_of_all_time::BestOfAllTime;
-use super::boring_words::BoringWords;
-use super::bought::Bought;
-use super::brand_brandish::BrandBrandish;
-use super::by_accident::ByAccident;
-use super::cant::Cant;
-use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
-use super::cautionary_tale::CautionaryTale;
-use super::change_tack::ChangeTack;
-use super::chock_full::ChockFull;
-use super::close_tight_knit::CloseTightKnit;
-use super::code_in_write_in::CodeInWriteIn;
-use super::comma_fixes::CommaFixes;
-use super::compound_nouns::CompoundNouns;
-use super::compound_subject_i::CompoundSubjectI;
-use super::confident::Confident;
-use super::correct_number_suffix::CorrectNumberSuffix;
-use super::criteria_phenomena::CriteriaPhenomena;
-use super::cure_for::CureFor;
-use super::currency_placement::CurrencyPlacement;
-use super::damages::Damages;
-use super::day_and_age::DayAndAge;
-use super::despite_it_is::DespiteItIs;
-use super::despite_of::DespiteOf;
-use super::did_past::DidPast;
-use super::didnt::Didnt;
-use super::discourse_markers::DiscourseMarkers;
-use super::disjoint_prefixes::DisjointPrefixes;
-use super::do_mistake::DoMistake;
-use super::dot_initialisms::DotInitialisms;
-use super::double_click::DoubleClick;
-use super::double_modal::DoubleModal;
-use super::ellipsis_length::EllipsisLength;
-use super::else_possessive::ElsePossessive;
-use super::ever_every::EverEvery;
-use super::everyday::Everyday;
-use super::except_of::ExceptOf;
-use super::expand_memory_shorthands::ExpandMemoryShorthands;
-use super::expand_people::ExpandPeople;
-use super::expand_time_shorthands::ExpandTimeShorthands;
-use super::far_be_it::FarBeIt;
-use super::fascinated_by::FascinatedBy;
-use super::fed_up_with::FedUpWith;
-use super::feel_fell::FeelFell;
-use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
-use super::filler_words::FillerWords;
-use super::find_fine::FindFine;
-use super::first_aid_kit::FirstAidKit;
-use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
-use super::for_noun::ForNoun;
-use super::free_predicate::FreePredicate;
-use super::friend_of_me::FriendOfMe;
-use super::go_so_far_as_to::GoSoFarAsTo;
-use super::go_to_war::GoToWar;
-use super::good_at::GoodAt;
-use super::handful::Handful;
-use super::have_pronoun::HavePronoun;
-use super::have_take_a_look::HaveTakeALook;
-use super::hedging::Hedging;
-use super::hello_greeting::HelloGreeting;
-use super::hereby::Hereby;
-use super::hop_hope::HopHope;
-use super::how_to::HowTo;
-use super::hyphenate_number_day::HyphenateNumberDay;
-use super::i_am_agreement::IAmAgreement;
-use super::if_wouldve::IfWouldve;
-use super::in_on_the_cards::InOnTheCards;
-use super::in_time_from_now::InTimeFromNow;
-use super::inflected_verb_after_to::InflectedVerbAfterTo;
-use super::interested_in::InterestedIn;
-use super::it_looks_like_that::ItLooksLikeThat;
-use super::its_contraction::ItsContraction;
-use super::its_possessive::ItsPossessive;
-use super::jealous_of::JealousOf;
-use super::johns_hopkins::JohnsHopkins;
-use super::lead_rise_to::LeadRiseTo;
-use super::left_right_hand::LeftRightHand;
-use super::less_worse::LessWorse;
-use super::let_to_do::LetToDo;
-use super::lets_confusion::LetsConfusion;
-use super::likewise::Likewise;
-use super::long_sentences::LongSentences;
-use super::look_down_ones_nose::LookDownOnesNose;
-use super::looking_forward_to::LookingForwardTo;
-use super::mass_nouns::MassNouns;
-use super::means_a_lot_to::MeansALotTo;
-use super::merge_words::MergeWords;
-use super::missing_preposition::MissingPreposition;
-use super::missing_to::MissingTo;
-use super::misspell::Misspell;
-use super::mixed_bag::MixedBag;
-use super::modal_be_adjective::ModalBeAdjective;
-use super::modal_of::ModalOf;
-use super::modal_seem::ModalSeem;
-use super::months::Months;
-use super::more_adjective::MoreAdjective;
-use super::more_better::MoreBetter;
-use super::most_number::MostNumber;
-use super::most_of_the_times::MostOfTheTimes;
-use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
-use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
-use super::nail_on_the_head::NailOnTheHead;
-use super::need_to_noun::NeedToNoun;
-use super::no_french_spaces::NoFrenchSpaces;
-use super::no_longer::NoLonger;
-use super::no_match_for::NoMatchFor;
-use super::no_oxford_comma::NoOxfordComma;
-use super::nobody::Nobody;
-use super::nominal_wants::NominalWants;
-use super::nor_modal_pronoun::NorModalPronoun;
-use super::not_only_inversion::NotOnlyInversion;
-use super::noun_verb_confusion::NounVerbConfusion;
-use super::number_suffix_capitalization::NumberSuffixCapitalization;
-use super::numeric_range_en_dash::NumericRangeEnDash;
-use super::obsess_preposition::ObsessPreposition;
-use super::of_course::OfCourse;
-use super::oldest_in_the_book::OldestInTheBook;
-use super::on_floor::OnFloor;
-use super::once_or_twice::OnceOrTwice;
-use super::one_and_the_same::OneAndTheSame;
-use super::one_of_the_singular::OneOfTheSingular;
-use super::open_the_light::OpenTheLight;
-use super::orthographic_consistency::OrthographicConsistency;
-use super::ought_to_be::OughtToBe;
-use super::out_of_date::OutOfDate;
-use super::oxford_comma::OxfordComma;
-use super::oxymorons::Oxymorons;
-use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
-use super::pique_interest::PiqueInterest;
-use super::plural_decades::PluralDecades;
-use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
-use super::possessive_noun::PossessiveNoun;
-use super::possessive_your::PossessiveYour;
-use super::progressive_needs_be::ProgressiveNeedsBe;
-use super::pronoun_are::PronounAre;
-use super::pronoun_contraction::PronounContraction;
-use super::pronoun_inflection_be::PronounInflectionBe;
-use super::pronoun_knew::PronounKnew;
-use super::pronoun_verb_agreement::PronounVerbAgreement;
-use super::proper_noun_capitalization_linters;
-use super::quantifier_needs_of::QuantifierNeedsOf;
-use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
-use super::quite_quiet::QuiteQuiet;
-use super::quote_spacing::QuoteSpacing;
-use super::reason_for_doing::ReasonForDoing;
-use super::redundant_acronyms::RedundantAcronyms;
-use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
-use super::redundant_progressive_comparative::RedundantProgressiveComparative;
-use super::regionalisms::Regionalisms;
-use super::regular_irregulars::RegularIrregulars;
-use super::repeated_words::RepeatedWords;
-use super::respond::Respond;
-use super::right_click::RightClick;
-use super::rise_the_ranks::RiseTheRanks;
-use super::roller_skated::RollerSkated;
-use super::safe_to_save::SafeToSave;
-use super::save_to_safe::SaveToSafe;
-use super::sentence_capitalization::SentenceCapitalization;
-use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
-use super::simple_past_to_past_participle::SimplePastToPastParticiple;
-use super::since_duration::SinceDuration;
-use super::single_be::SingleBe;
-use super::sneaked_snuck::SneakedSnuck;
-use super::some_without_article::SomeWithoutArticle;
-use super::something_is::SomethingIs;
-use super::somewhat_something::SomewhatSomething;
-use super::soon_to_be::SoonToBe;
-use super::sought_after::SoughtAfter;
-use super::spaces::Spaces;
-use super::spell_check::SpellCheck;
-use super::spelled_numbers::SpelledNumbers;
-use super::split_words::SplitWords;
-use super::subject_pronoun::SubjectPronoun;
-use super::take_a_look_to::TakeALookTo;
-use super::take_medicine::TakeMedicine;
-use super::that_than::ThatThan;
-use super::that_which::ThatWhich;
-use super::the_how_why::TheHowWhy;
-use super::the_my::TheMy;
-use super::the_point_for::ThePointFor;
-use super::the_proper_noun_possessive::TheProperNounPossessive;
-use super::then_than::ThenThan;
-use super::theres::Theres;
-use super::theses_these::ThesesThese;
-use super::theyre_confusions::TheyreConfusions;
-use super::thing_think::ThingThink;
-use super::this_type_of_thing::ThisTypeOfThing;
-use super::though_thought::ThoughThought;
-use super::thrive_on::ThriveOn;
-use super::throw_away::ThrowAway;
-use super::throw_rubbish::ThrowRubbish;
-use super::to_adverb::ToAdverb;
-use super::to_two_too::ToTwoToo;
-use super::touristic::Touristic;
-use super::transposed_space::TransposedSpace;
-use super::try_ones_hand_at::TryOnesHandAt;
-use super::try_ones_luck::TryOnesLuck;
-use super::unclosed_quotes::UnclosedQuotes;
-use super::update_place_names::UpdatePlaceNames;
-use super::use_ellipsis_character::UseEllipsisCharacter;
-use super::use_title_case::UseTitleCase;
-use super::verb_to_adjective::VerbToAdjective;
-use super::very_unique::VeryUnique;
-use super::vice_versa::ViceVersa;
-use super::vicious_loop::ViciousCircle;
-use super::vicious_loop::ViciousCircleOrCycle;
-use super::vicious_loop::ViciousCycle;
-use super::was_aloud::WasAloud;
-use super::way_too_adjective::WayTooAdjective;
-use super::well_educated::WellEducated;
-use super::were_where::WereWhere;
-use super::whereas::Whereas;
-use super::whom_subject_of_verb::WhomSubjectOfVerb;
-use super::widely_accepted::WidelyAccepted;
-use super::will_non_lemma::WillNonLemma;
-use super::win_prize::WinPrize;
-use super::wish_could::WishCould;
-use super::wordpress_dotcom::WordPressDotcom;
-use super::worth_to_do::WorthToDo;
-use super::would_never_have::WouldNeverHave;
-use super::wrong_apostrophe::WrongApostrophe;
-use super::expr_linter::run_on_chunk;
+use super::dashes::Dashes;
+use super::open_compounds::OpenCompounds;
 use super::{HtmlDescriptionLinter, Linter};
+use crate::expr::ExprExt;
 use crate::languages::Language;
-use crate::linting::dashes::Dashes;
-use crate::linting::open_compounds::OpenCompounds;
-use crate::linting::web_scraping::WebScraping;
+use crate::linting::Lint;
+use crate::linting::expr_linter::{Chunk, ExprLinter, Sentence};
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
 };
-use crate::linting::expr_linter::Chunk;
 use crate::spell::Dictionary;
-use crate::{Document, Lrc, TokenStringExt};
+use crate::{Document, EnglishDialect, GermanDialect, Lrc, PortugueseDialect, TokenStringExt};
 
 pub use flat_config::FlatConfig;
 pub use structured_config::{
@@ -1391,17 +1131,12 @@ mod tests {
         assert_no_lints(
             "Although I only saw the need to interject once, I still saw it.",
             test_group(),
-
         );
     }
 
     #[test]
     fn clean_consensus() {
-        assert_no_lints(
-            "But there is less consensus on this.",
-            test_group(),
-
-        );
+        assert_no_lints("But there is less consensus on this.", test_group());
     }
 
     #[test]
@@ -1410,18 +1145,12 @@ mod tests {
             "ive never seen that before",
             test_group(),
             "I've never seen that before",
-
         );
     }
 
     #[test]
     fn worthchecking_is_split() {
-        assert_suggestion_result(
-            "It is worthchecking",
-            test_group(),
-            "It is worth checking",
-
-        );
+        assert_suggestion_result("It is worthchecking", test_group(), "It is worth checking");
     }
 
     #[test]
@@ -1455,12 +1184,7 @@ mod tests {
 
     #[test]
     fn ok_becomes_okay() {
-        assert_suggestion_result(
-            "This is ok.",
-            test_group(),
-            "This is okay.",
-
-        );
+        assert_suggestion_result("This is ok.", test_group(), "This is okay.");
     }
 
     #[test]
@@ -1486,7 +1210,6 @@ mod tests {
         assert_no_lints(
             "The standard form is low-hanging fruit with a hyphen and singular form.",
             test_group(),
-
         );
     }
 
@@ -1495,7 +1218,6 @@ mod tests {
         assert_no_lints(
             "Corrects nonstandard variants of low-hanging fruit.",
             test_group(),
-
         );
     }
 

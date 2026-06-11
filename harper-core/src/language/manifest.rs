@@ -1,9 +1,9 @@
 //! Language manifest - central integration point for all Harper languages.
 //!
 //! This module serves as the single integration point for all language-specific features.
-//! 
+//!
 //! ## Language Structure
-//! 
+//!
 //! - **English** (default): Core language files are in `src/linting/` for Rust-based rules
 //!   and `src/linting/weir_rules/` for Weir-based rules. English dialects are in `src/dialects/english.rs`.
 //! - **German**: Language-specific files are in `src/language/german/` (linting, spell checking, etc.)
