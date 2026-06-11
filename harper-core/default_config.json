@@ -892,9 +892,9 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandDeref",
+								"name": "ExpandDereference",
 								"state": true,
-								"label": "Expand Deref"
+								"label": "Expand Dereference"
 							}
 						},
 						{
@@ -1329,6 +1329,27 @@
 								"name": "ExpandVulnerability",
 								"state": true,
 								"label": "Expand Vulnerability"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandConfiguration",
+								"state": true,
+								"label": "Expand Configuration"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPerformance",
+								"state": true,
+								"label": "Expand Performance"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPreference",
+								"state": true,
+								"label": "Expand Preference"
 							}
 						},
 						{

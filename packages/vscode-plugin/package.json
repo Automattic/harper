@@ -1470,7 +1470,7 @@
 					"default": true,
 					"description": "Expands the abbreviation `deps` to the full word `dependencies` for clarity."
 				},
-				"harper.linters.ExpandDeref": {
+				"harper.linters.ExpandDereference": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
