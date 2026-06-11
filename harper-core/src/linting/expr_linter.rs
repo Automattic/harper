@@ -113,6 +113,10 @@ where
     fn description(&self) -> &str {
         self.description()
     }
+
+    fn merged_linter_child_names(&self) -> Vec<&'static str> {
+        vec![]
+    }
 }
 
 pub fn run_on_chunk<'a>(
