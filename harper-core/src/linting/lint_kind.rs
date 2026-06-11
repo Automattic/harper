@@ -28,6 +28,9 @@ pub enum LintKind {
     #[default]
     Miscellaneous,
     Nonstandard,
+    /// For issues with preposition usage, including wrong, missing, or superfluous prepositions
+    /// (e.g., 'obsess on' → 'obsess over', 'similar like' → 'similar to')
+    Preposition,
     /// For issues with punctuation, including hyphenation in compound adjectives
     /// (e.g., "face first" vs. "face-first" when used before a noun)
     Punctuation,
@@ -77,6 +80,7 @@ impl LintKind {
             "Style" => Some(LintKind::Style),
             "Typo" => Some(LintKind::Typo),
             "Usage" => Some(LintKind::Usage),
+            "Preposition" => Some(LintKind::Preposition),
             "WordChoice" => Some(LintKind::WordChoice),
             _ => None,
         }
@@ -104,6 +108,7 @@ impl LintKind {
             LintKind::Style => "Style",
             LintKind::Typo => "Typo",
             LintKind::Usage => "Usage",
+            LintKind::Preposition => "Preposition",
             LintKind::WordChoice => "WordChoice",
         }
         .to_owned()
@@ -132,6 +137,7 @@ impl Display for LintKind {
             LintKind::Style => "Style",
             LintKind::Typo => "Typo",
             LintKind::Usage => "Usage",
+            LintKind::Preposition => "Preposition",
             LintKind::WordChoice => "Word Choice",
         };
 

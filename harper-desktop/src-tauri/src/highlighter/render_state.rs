@@ -642,6 +642,7 @@ fn is_spelling_kind(lint_kind: LintKind) -> bool {
         | LintKind::Grammar
         | LintKind::Miscellaneous
         | LintKind::Nonstandard
+        | LintKind::Preposition
         | LintKind::Punctuation
         | LintKind::Readability
         | LintKind::Redundancy
@@ -667,6 +668,7 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
         LintKind::Agreement
         | LintKind::BoundaryError
         | LintKind::Grammar
+        | LintKind::Preposition
         | LintKind::Repetition => PopupStyle {
             color,
             background: hex(0xff, 0xf7, 0xed),
