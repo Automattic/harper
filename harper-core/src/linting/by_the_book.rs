@@ -54,7 +54,7 @@ impl ExprLinter for ByTheBook {
                 "book",
                 span.get_content(src),
             )],
-            message: "Did you mean the idiom `by the book`?".to_string(),
+            message: "Did you mean the idiom `by the book`?".to_owned(),
             ..Default::default()
         })
     }

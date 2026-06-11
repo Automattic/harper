@@ -20,6 +20,7 @@ mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
 mod arrive_to;
+mod as_how;
 mod as_to_interrogative;
 mod ask_no_preposition;
 mod aspire_to;
@@ -46,6 +47,7 @@ mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
 mod comma_fixes;
+mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
@@ -182,6 +184,7 @@ mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
+mod out_of_the_window;
 mod oxford_comma;
 mod oxymorons;
 mod pay_for_price;
@@ -444,7 +447,7 @@ pub mod tests {
                         span: *ws,
                         lint_kind: LintKind::Spelling,
                         suggestions,
-                        message: "Test linter for 'linting assertion' tests".to_string(),
+                        message: "Test linter for 'linting assertion' tests".to_owned(),
                         ..Default::default()
                     }
                 })
