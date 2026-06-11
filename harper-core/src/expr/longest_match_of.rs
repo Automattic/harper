@@ -1,4 +1,7 @@
-use crate::{Span, Token, expr::Expr};
+use crate::{
+    Span, Token,
+    expr::{Expr, SequenceExpr},
+};
 
 /// An [`Expr`] that returns the farthest offset of the longest match in a list of expressions.
 #[derive(Default)]
@@ -9,6 +12,15 @@ pub struct LongestMatchOf {
 impl LongestMatchOf {
     pub fn new(exprs: Vec<Box<dyn Expr>>) -> Self {
         Self { exprs }
+    }
+
+    pub fn from_phrases(phrases: &'static [&'static [&'static str]]) -> Self {
+        Self {
+            exprs: phrases
+                .iter()
+                .map(|p| Box::new(SequenceExpr::from_words(p.to_vec())) as Box<dyn Expr>)
+                .collect(),
+        }
     }
 
     pub fn add(&mut self, expr: impl Expr + 'static) {

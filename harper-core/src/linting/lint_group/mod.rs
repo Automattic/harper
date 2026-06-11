@@ -272,6 +272,7 @@ use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
 use super::wordpress_dotcom::WordPressDotcom;
+use super::worst_comes_to_worst::WorstComesToWorst;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
@@ -829,6 +830,7 @@ impl LintGroup {
         insert_expr_rule!(WinPrize, true);
         insert_expr_rule!(WishCould, true);
         insert_struct_rule!(WordPressDotcom, true);
+        insert_expr_rule_with_dialect!(WorstComesToWorst, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
 
