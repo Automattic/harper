@@ -174,6 +174,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::pay_for_price::PayForPrice;
@@ -737,6 +738,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency, true);
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
+        insert_expr_rule_with_dialect!(OutOfTheWindow, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_expr_rule!(PayForPrice, true);
@@ -831,9 +833,6 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        // Uses Sentence rather than Chunk
-        out.add("WrongApostrophe", WrongApostrophe::default());
-        out.config.set_rule_enabled("WrongApostrophe", true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
@@ -855,10 +854,6 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -873,6 +868,14 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         out
     }

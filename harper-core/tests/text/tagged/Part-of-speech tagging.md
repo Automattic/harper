@@ -105,7 +105,7 @@
 > In        part      - of - speech   tagging by    computer , it       is  typical to distinguish from 50 to
 # NPr/J/R/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/P NSg+     . NPr/ISg+ VL3 NSg/J   P  VB          P    #  P
 > 150 separate parts  of speech  for   English      . Work    on  stochastic methods for   tagging
-# #   NSg/VB/J NPl/V3 P  N🅪Sg/VB R/C/P NPr🅪Sg/VB/J+ . N🅪Sg/VB J/P J          NPl/V3+ R/C/P NSg/Vg
+# #   NSg/VB/J NPl/V3 P  N🅪Sg/VB R/C/P NPr🅪Sg/VB/J+ . N🅪Sg/VB J/P J          NPl+    R/C/P NSg/Vg
 > Koine Greek    ( DeRose 1990 ) has used over    1 , 000 parts  of speech   and  found  that
 # ?     NPr/VB/J . ?      #    . V3  VP/J NSg/J/P # . #   NPl/V3 P  N🅪Sg/VB+ VB/C NSg/VP I/C/Ddem
 > about as    many       words   were ambiguous in        that     language as    in        English      . A
@@ -246,8 +246,8 @@
 # NSg/VB+ #  . P  D   N🅪Sg/VB/J+ . D/P NSg/VB/J+ #  . . VB/C D/P N🅪Sg/VB/JC+ #  . . NSg/Vg/J/P I/Ddem+ . D/P+
 > program can     decide that      " can     " in        " the can     " is  far      more         likely to be       a   noun   than
 # NPr/VB+ NPr/VXB VB     I/C/Ddem+ . NPr/VXB . NPr/J/R/P . D+  NPr/VXB . VL3 NSg/VB/J NPr/I/J/R/Dq NSg/J  P  NSg/VLXB D/P NSg/VB C/P
-> a    verb    or    a   modal . The same method  can     , of course  , be       used to benefit from
-# D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg/VB+ NPr/VXB . P  NSg/VB+ . NSg/VLXB VP/J P  NSg/VB  P
+> a    verb    or    a   modal . The same method can     , of course  , be       used to benefit from
+# D/P+ NSg/VB+ NPr/C D/P NSg/J . D+  I/J+ NSg+   NPr/VXB . P  NSg/VB+ . NSg/VLXB VP/J P  NSg/VB  P
 > knowledge about the following   words   .
 # Nᴹ+       J/P   D+  N🅪Sg/Vg/J/P NPl/V3+ .
 >
@@ -293,7 +293,7 @@
 > expensive since it       enumerated all          possibilities . It       sometimes had to resort to
 # J         C/P   NPr/ISg+ VP/J       NSg/I/J/C/Dq NPl+          . NPr/ISg+ R         VP  P  NSg/VB P
 > backup methods when    there were simply too many       options ( the Brown        Corpus
-# NSg/J  NPl/V3+ NSg/I/C R+    VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
+# NSg/J  NPl+    NSg/I/C R+    VLPt R      R   NSg/I/J/Dq NPl/V3  . D+  NPr🅪Sg/VB/J+ NSg+
 > contains a   case       with 17 ambiguous words  in        a    row     , and  there are words   such  as
 # V3       D/P NPr🅪Sg/VB+ P    #  J         NPl/V3 NPr/J/R/P D/P+ NSg/VB+ . VB/C R+    VLB NPl/V3+ NSg/I R/C/P
 > " still      " that      can     represent as    many       as    7 distinct parts  of speech   .
@@ -309,7 +309,7 @@
 >
 #
 >              Dynamic programming methods
-# HeadingStart NSg/J+  Nᴹ/Vg/J+    NPl/V3+
+# HeadingStart NSg/J+  Nᴹ/Vg/J+    NPl+
 >
 #
 > In        1987 , Steven DeRose and  Kenneth W. Church     independently developed dynamic
@@ -317,15 +317,15 @@
 > programming algorithms to solve  the same problem in        vastly less       time       . Their
 # Nᴹ/Vg/J+    NPl+       P  NSg/VB D   I/J  NSg/J+  NPr/J/R/P R      VB/J/R/C/P N🅪Sg/VB/J+ . D$+
 > methods were similar to the Viterbi algorithm known for   some     time       in        other
-# NPl/V3+ VLPt NSg/J   P  D   ?       NSg       VPp/J R/C/P I/J/R/Dq N🅪Sg/VB/J+ NPr/J/R/P NSg/VB/J
+# NPl+    VLPt NSg/J   P  D   ?       NSg       VPp/J R/C/P I/J/R/Dq N🅪Sg/VB/J+ NPr/J/R/P NSg/VB/J
 > fields    . DeRose used a   table  of pairs   , while      Church     used a   table  of triples and  a
 # NPrPl/V3+ . ?      VP/J D/P NSg/VB P  NPl/V3+ . NSg/VB/C/P NPr🅪Sg/VB+ VP/J D/P NSg/VB P  NPl/V3  VB/C D/P
 > method of estimating the values  for   triples that      were rare     or    nonexistent in        the
-# NSg/VB P  Nᴹ/Vg/J    D   NPl/V3+ R/C/P NPl/V3  I/C/Ddem+ VLPt NSg/VB/J NPr/C NSg/J       NPr/J/R/P D
+# NSg    P  Nᴹ/Vg/J    D   NPl/V3+ R/C/P NPl/V3  I/C/Ddem+ VLPt NSg/VB/J NPr/C NSg/J       NPr/J/R/P D
 > Brown       Corpus ( an  actual measurement of triple   probabilities would require a   much
 # NPr🅪Sg/VB/J NSg+   . D/P NSg/J  N🅪Sg        P  NSg/VB/J NPl+          VXB   NSg/VB  D/P NSg/I/J/R/Dq
 > larger corpus ) . Both   methods achieved an  accuracy of over    95 % . DeRose's 1990
-# JC     NSg+   . . I/C/Dq NPl/V3+ VP/J     D/P N🅪Sg+    P  NSg/J/P #  . . ?        #
+# JC     NSg+   . . I/C/Dq NPl+    VP/J     D/P N🅪Sg+    P  NSg/J/P #  . . ?        #
 > dissertation at    Brown       University included analyses     of the specific error   types   ,
 # NSg+         NSg/P NPr🅪Sg/VB/J NSg+       VP/J     NPl/V3/Au/Br P  D   NSg/J    NSg/VB+ NPl/V3+ .
 > probabilities , and  other    related data  , and  replicated his     work     for   Greek    , where
@@ -343,7 +343,7 @@
 > levels of linguistic analysis : syntax , morphology , semantics , and  so          on  . CLAWS   ,
 # NPl/V3 P  J          N🅪Sg     . Nᴹ+    . Nᴹ+        . NPl+      . VB/C NSg/I/J/R/C J/P . NPl/V3+ .
 > DeRose's and  Church's methods did  fail     for   some     of the known cases   where
-# ?        VB/C NPr$     NPl/V3+ VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
+# ?        VB/C NPr$     NPl+    VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
 > semantics is  required , but     those  proved negligibly rare     . This   convinced many       in
 # NPl+      VL3 VP/J     . NSg/C/P I/Ddem VP/J   R          NSg/VB/J . I/Ddem VP/J      NSg/I/J/Dq NPr/J/R/P
 > the field   that      part      - of - speech   tagging could   usefully be       separated from the other
@@ -352,8 +352,8 @@
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/R/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
 # VP/J         N🅪Sg+    N🅪Sg+    VB/C VP/J       NPl+        P  NSg/VB NPl+ P
-> separate other    pieces  as    well       . Markov Models  became the standard method  for   the
-# NSg/VB/J NSg/VB/J NPl/V3+ R/C/P NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg/VB+ R/C/P D
+> separate other    pieces  as    well       . Markov Models  became the standard method for   the
+# NSg/VB/J NSg/VB/J NPl/V3+ R/C/P NSg/VB/J/R . NPr    NPl/V3+ VPt    D   NSg/J    NSg+   R/C/P D
 > part      - of - speech   assignment .
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg+       .
 >
@@ -363,7 +363,7 @@
 >
 #
 > The methods already discussed involve working from a    pre       - existing corpus to
-# D+  NPl/V3+ R       VP/J      VB      Nᴹ/Vg/J P    D/P+ NSg/VB/P+ . Nᴹ/Vg/J  NSg+   P
+# D+  NPl+    R       VP/J      VB      Nᴹ/Vg/J P    D/P+ NSg/VB/P+ . Nᴹ/Vg/J  NSg+   P
 > learn  tag     probabilities . It       is  , however , also possible to bootstrap using
 # NSg/VB NSg/VB+ NPl+          . NPr/ISg+ VL3 . C       . R/C  NSg/J    P  NSg/VB    Nᴹ/Vg/J
 > " unsupervised " tagging . Unsupervised tagging techniques use     an  untagged corpus
@@ -391,7 +391,7 @@
 >
 #
 >              Other    taggers and  methods
-# HeadingStart NSg/VB/J NPl     VB/C NPl/V3+
+# HeadingStart NSg/VB/J NPl     VB/C NPl+
 >
 #
 > Some     current major    algorithms for   part      - of - speech   tagging include the Viterbi
@@ -409,9 +409,9 @@
 >
 #
 > Many        machine learning methods have    also been     applied to the problem of POS
-# NSg/I/J/Dq+ NSg/VB+ Nᴹ/Vg/J+ NPl/V3+ NSg/VXB R/C  NSg/VLPp VP/J    P  D   NSg/J   P  NSg+
+# NSg/I/J/Dq+ NSg/VB+ Nᴹ/Vg/J+ NPl+    NSg/VXB R/C  NSg/VLPp VP/J    P  D   NSg/J   P  NSg+
 > tagging . Methods such  as    SVM , maximum entropy classifier , perceptron , and
-# NSg/Vg  . NPl/V3+ NSg/I R/C/P ?   . NSg/J   NSg     NSg        . NSg        . VB/C
+# NSg/Vg  . NPl+    NSg/I R/C/P ?   . NSg/J   NSg     NSg        . NSg        . VB/C
 > nearest - neighbor     have    all          been     tried , and  most         can     achieve accuracy above
 # JS      . NSg/VB/J/Am+ NSg/VXB NSg/I/J/C/Dq NSg/VLPp VP/J  . VB/C NSg/I/J/R/Dq NPr/VXB VB      N🅪Sg+    NSg/J/P
 > 95 % . [ citation needed ]
@@ -419,7 +419,7 @@
 >
 #
 > A   direct comparison of several methods is  reported ( with references ) at    the ACL
-# D/P VB/J   NSg        P  J/Dq+   NPl/V3+ VL3 VP/J     . P    NPl/V3+    . NSg/P D   NSg
+# D/P VB/J   NSg        P  J/Dq+   NPl+    VL3 VP/J     . P    NPl/V3+    . NSg/P D   NSg
 > Wiki    . This    comparison uses   the Penn tag     set       on  some     of the Penn Treebank data  ,
 # NSg/VB+ . I/Ddem+ NSg+       NPl/V3 D+  NPr+ NSg/VB+ NPr/VBP/J J/P I/J/R/Dq P  D   NPr+ ?        N🅪Pl+ .
 > so          the results are directly comparable . However , many       significant taggers are
@@ -435,6 +435,6 @@
 >
 #
 > In        2014 , a    paper      reporting using   the structure regularization method for
-# NPr/J/R/P #    . D/P+ N🅪Sg/VB/J+ Nᴹ/Vg/J   Nᴹ/Vg/J D   N🅪Sg/VB+  N🅪Sg           NSg/VB R/C/P
+# NPr/J/R/P #    . D/P+ N🅪Sg/VB/J+ Nᴹ/Vg/J   Nᴹ/Vg/J D   N🅪Sg/VB+  N🅪Sg           NSg    R/C/P
 > part      - of - speech   tagging , achieving 97.36 % on  a   standard benchmark dataset .
 # NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  . Nᴹ/Vg/J   #     . J/P D/P NSg/J    NSg/VB    NSg     .
