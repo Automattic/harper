@@ -5084,6 +5084,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Acclimize",
+								"state": true,
+								"label": "Acclimize"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NowKnownAs",
 								"state": true,
 								"label": "Now Known As"

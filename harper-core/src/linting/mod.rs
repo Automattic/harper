@@ -5,6 +5,7 @@
 mod a_part;
 mod a_some_time;
 mod a_while;
+mod acclimize;
 mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
