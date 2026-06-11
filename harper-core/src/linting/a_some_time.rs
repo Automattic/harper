@@ -41,7 +41,7 @@ impl ExprLinter for ASomeTime {
             span: a_some_span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "Remove the indefinite article `a` before `some`.".to_string(),
+            message: "Remove the indefinite article `a` before `some`.".to_owned(),
             ..Default::default()
         })
     }

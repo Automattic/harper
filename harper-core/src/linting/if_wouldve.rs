@@ -86,7 +86,7 @@ impl ExprLinter for IfWouldve {
                     vec!['h', 'a', 'd'],
                     span.get_content(src),
                 )],
-                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_string(),
+                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_owned(),
                 ..Default::default()
             })
         })

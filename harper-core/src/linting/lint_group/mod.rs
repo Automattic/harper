@@ -28,6 +28,7 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
+use super::as_how::AsHow;
 use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
@@ -52,6 +53,7 @@ use super::chock_full::ChockFull;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
+use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
@@ -171,6 +173,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::pay_for_price::PayForPrice;
@@ -590,6 +593,7 @@ impl LintGroup {
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
+        insert_expr_rule!(AsHow, true);
         insert_expr_rule!(AsToInterrogative, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidContractions, false);
@@ -613,6 +617,7 @@ impl LintGroup {
         insert_expr_rule!(CloseTightKnit, true);
         insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
+        insert_expr_rule!(ComplainAsNoun, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
@@ -731,6 +736,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency, true);
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
+        insert_expr_rule_with_dialect!(OutOfTheWindow, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_expr_rule!(PayForPrice, true);
@@ -825,9 +831,6 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        // Uses Sentence rather than Chunk
-        out.add("WrongApostrophe", WrongApostrophe::default());
-        out.config.set_rule_enabled("WrongApostrophe", true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
@@ -849,10 +852,6 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -867,6 +866,14 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         out
     }

@@ -60,7 +60,7 @@ impl ExprLinter for AndTheLike {
                 corrected.chars().collect(),
                 toks.span()?.get_content(src),
             )],
-            message: "If you intended the idiom meaning `similar things`, the correct form is with `the like`.".to_string(),
+            message: "If you intended the idiom meaning `similar things`, the correct form is with `the like`.".to_owned(),
             ..Default::default()
         })
     }
