@@ -1333,6 +1333,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Nowadays",
+								"state": true,
+								"label": "Nowadays"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ConstituteAs",
 								"state": true,
 								"label": "Constitute As"
