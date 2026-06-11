@@ -391,6 +391,7 @@ function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
 		case 'plaintext':
 		case 'markdown':
 		case 'typst':
+		case 'latex':
 			return language;
 		default:
 			return undefined;
