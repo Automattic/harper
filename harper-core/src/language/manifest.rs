@@ -4,7 +4,7 @@
 //! 
 //! ## Language Structure
 //! 
-//! - **English** (default): Core language files are in `src/linting/english/` for Rust-based rules
+//! - **English** (default): Core language files are in `src/linting/` for Rust-based rules
 //!   and `src/linting/weir_rules/` for Weir-based rules. English dialects are in `src/dialects/english.rs`.
 //! - **German**: Language-specific files are in `src/language/german/` (linting, spell checking, etc.)
 //!   with dialects in `src/language/german/dialects.rs`.
@@ -209,7 +209,7 @@ pub fn add_language_specific_linters(
 pub fn weir_rules_lint_group(language: Language) -> LintGroup {
     match language {
         Language::German(_) => crate::language::german::linting::weir_rules::lint_group(),
-        Language::English(_) => crate::linting::english::weir_rules::lint_group(),
+        Language::English(_) => crate::linting::weir_rules::lint_group(),
         Language::Portuguese(_) => {
             // Portuguese currently has no Weir rules
             LintGroup::default()

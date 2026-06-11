@@ -1,9 +1,0 @@
-expr main (impressed of)
-
-let message "The correct preposition after `impressed` is `by` or `with`."
-let description "Corrects `impressed of` to `impressed by` or `impressed with`."
-let kind "Usage"
-let becomes ["impressed by", "impressed with"]
-
-test "I am still impressed of so many features." "I am still impressed by so many features."
-test "I just discovered Unciv and I am impressed of the game." "I just discovered Unciv and I am impressed with the game."

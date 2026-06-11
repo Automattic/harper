@@ -1,8 +1,0 @@
-expr main (environmental var)
-
-let message "Did you mean `environment var`?"
-let description "Ensures `environment var` is used correctly instead of `environmental var`."
-let kind "Usage"
-let becomes "environment var"
-
-test "I'm loading dev with the following auto-reloading command and environmental var at the beginning for now." "I'm loading dev with the following auto-reloading command and environment var at the beginning for now."

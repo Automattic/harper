@@ -1,8 +1,0 @@
-expr main [(capitalizes off of), (capitalizes off)]
-
-let message "Did you mean `capitalizes on`?"
-let description "Corrects `capitalize off` to `capitalize on`."
-let kind "Usage"
-let becomes "capitalizes on"
-
-test "The browser capitalizes off of publishers/content providers" "The browser capitalizes on publishers/content providers"

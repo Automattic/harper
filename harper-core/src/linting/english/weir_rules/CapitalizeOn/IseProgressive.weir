@@ -1,9 +1,0 @@
-expr main [(capitalising off of), (capitalising off)]
-
-let message "Did you mean `capitalising on`?"
-let description "Corrects `capitalise off` to `capitalise on`."
-let kind "Usage"
-let becomes "capitalising on"
-
-test "curious if anybody is talking about it / capitalising off the new-found fame" "curious if anybody is talking about it / capitalising on the new-found fame"
-test "... start capitalising off of it" "... start capitalising on it"

@@ -2,7 +2,6 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
-pub mod english;
 pub mod expr_linter;
 pub mod lint;
 pub mod lint_group;

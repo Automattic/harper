@@ -1,7 +1,0 @@
-expr main (mu house)
-
-let message "Did you mean `my house`?"
-let description "Fixes the typo `mu house` to `my house`."
-let kind "Typo"
-let becomes "my house"
-

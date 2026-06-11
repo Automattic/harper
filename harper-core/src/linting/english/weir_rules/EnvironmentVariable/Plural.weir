@@ -1,8 +1,0 @@
-expr main (environmental variables)
-
-let message "Did you mean `environment variables`?"
-let description "Ensures `environment variables` is used correctly instead of `environmental variables`."
-let kind "Usage"
-let becomes "environment variables"
-
-test "If environmental variables are case sensitive, the case should be preserved, even in sub-tasks" "If environment variables are case sensitive, the case should be preserved, even in sub-tasks"
