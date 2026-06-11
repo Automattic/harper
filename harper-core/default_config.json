@@ -5084,6 +5084,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NoLongerPronoun",
+								"state": true,
+								"label": "No Longer Pronoun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NowKnownAs",
 								"state": true,
 								"label": "Now Known As"
