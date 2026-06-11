@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{FatToken, Span, TokenKind};
+use crate::{CharStringExt, FatToken, Span, TokenKind};
 
 /// Represents a semantic, parsed component of a [`Document`](crate::Document).
 #[derive(Debug, Clone, Serialize, Deserialize, PartialEq, Default)]
@@ -19,6 +19,16 @@ impl Token {
     /// Get the token's content as a slice of characters.
     pub fn get_ch<'a>(&self, source: &'a [char]) -> &'a [char] {
         self.span.get_content(source)
+    }
+
+    /// Check if the token's content equals the given character slice.
+    pub fn eq_ch(&self, source: &[char], other: &[char]) -> bool {
+        self.get_ch(source).eq_ch(other)
+    }
+
+    /// Check if the token's content equals the given string.
+    pub fn eq_str(&self, source: &[char], other: &str) -> bool {
+        self.get_ch(source).eq_str(other)
     }
 
     /// Get the token's content as a string.

@@ -74,7 +74,7 @@ impl ExprLinter for BeAdjectiveLinter {
         let wtok = toks.last()?;
 
         if followed_by_hyphen(ctx)
-            || preceded_by_word(ctx, |w| w.get_ch(src).eq_str("there"))
+            || preceded_by_word(ctx, |w| w.eq_str(src, "there"))
             || followed_by_word(ctx, |w| {
                 w.get_ch(src)
                     .eq_any_ignore_ascii_case_str(self.not_if_followed_by)
