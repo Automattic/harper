@@ -1011,6 +1011,17 @@ Message: |
 
 
 
+Lint:    Regionalism (127 priority)
+Message: |
+     610 | door, and the other arm curled round her head. Still she went on growing, and,
+     611 | as a last resource, she put one arm out of the window, and one foot up the
+         |                                        ^~~ If this is the idiom about abandoning a plan, it's more usual to leave out `of` in Australian English
+     612 | chimney, and said to herself “Now I can do no more, whatever happens. What will
+Suggest:
+  - Remove error
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      615 | Luckily for Alice, the little magic bottle had now had its full effect, and she
@@ -1065,6 +1076,16 @@ Message: |
          |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
 Suggest:
   - Replace with: “arr um”
+
+
+
+Lint:    Regionalism (127 priority)
+Message: |
+     681 | thought Alice. “I wonder what they’ll do next! As for pulling me out of the
+         |                                                                     ^~~ If this is the idiom about abandoning a plan, it's more usual to leave out `of` in Australian English
+     682 | window, I only wish they could! I’m sure I don’t want to stay in here any
+Suggest:
+  - Remove error
 
 
 

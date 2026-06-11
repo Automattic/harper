@@ -67,6 +67,7 @@ enum Concept {
     FootpathPavementSidewalk,
     GasolinePetrol,
     GasStationPetrolStationServiceStation,
+    GodownWarehouse,
     // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
     Lakh,
@@ -377,6 +378,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: GasolinePetrol,
     },
     Term {
+        term: "godown",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: GodownWarehouse,
+    },
+    Term {
         term: "India",
         flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian, Indian],
@@ -640,6 +647,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: PhotocopyXerox,
+    },
+    Term {
+        term: "warehouse",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: GodownWarehouse,
     },
     Term {
         term: "wrench",
@@ -919,5 +932,10 @@ mod tests {
     #[test]
     fn americans_dont_say_nought() {
         assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
+    }
+
+    #[test]
+    fn godown_isnt_used_outside_asia() {
+        assert_suggestion_result("godown", Regionalisms::new(Dialect::American), "warehouse");
     }
 }

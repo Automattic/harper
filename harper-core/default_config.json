@@ -344,6 +344,13 @@
 								"state": true,
 								"label": "To Be Honest"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LetMeKnow",
+								"state": true,
+								"label": "Let Me Know"
+							}
 						}
 					]
 				}
@@ -1035,6 +1042,13 @@
 								"name": "OperatingSystem",
 								"state": true,
 								"label": "Operating System"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EnvironmentVariable",
+								"state": true,
+								"label": "Environment Variable"
 							}
 						},
 						{
@@ -2727,6 +2741,13 @@
 								"state": true,
 								"label": "Close Tight Knit"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheTheToThatThe",
+								"state": true,
+								"label": "The The To That The"
+							}
 						}
 					]
 				}
@@ -3723,9 +3744,30 @@
 						},
 						{
 							"Bool": {
+								"name": "CapitalizeOn",
+								"state": true,
+								"label": "Capitalize On"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NakedEye",
 								"state": true,
 								"label": "Naked Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsToInterrogative",
+								"state": true,
+								"label": "As To Interrogative"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ComplainAsNoun",
+								"state": true,
+								"label": "Complain As Noun"
 							}
 						}
 					]
@@ -4356,6 +4398,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AtTheVeryLeast",
+								"state": true,
+								"label": "At The Very Least"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AwareOf",
 								"state": true,
 								"label": "Aware Of"
@@ -4422,6 +4471,13 @@
 								"name": "BlanketStatement",
 								"state": true,
 								"label": "Blanket Statement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
 							}
 						},
 						{
@@ -4979,6 +5035,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InspiredBy",
+								"state": true,
+								"label": "Inspired By"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByTheBook",
 								"state": true,
 								"label": "By The Book"
@@ -4989,6 +5052,48 @@
 								"name": "EverySingleOneOf",
 								"state": true,
 								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Impressed",
+								"state": true,
+								"label": "Impressed"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncidentReport",
+								"state": true,
+								"label": "Incident Report"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NowKnownAs",
+								"state": true,
+								"label": "Now Known As"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsHow",
+								"state": true,
+								"label": "As How"
 							}
 						}
 					]
@@ -5013,6 +5118,13 @@
 								"name": "Touristic",
 								"state": true,
 								"label": "Touristic"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfTheWindow",
+								"state": true,
+								"label": "Out (of) the Window"
 							}
 						}
 					]

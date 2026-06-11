@@ -89,6 +89,9 @@ enum Args {
         /// Output format for lint results.
         #[arg(long, value_enum, default_value_t = OutputFormat::Default)]
         format: OutputFormat,
+        /// Suppress informational status messages and only output actual lint errors.
+        #[arg(long)]
+        quiet: bool,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -251,6 +254,7 @@ fn main() -> anyhow::Result<()> {
             file_dict_path,
             weirpacks,
             format,
+            quiet,
         } => {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
@@ -268,6 +272,7 @@ fn main() -> anyhow::Result<()> {
                     weirpack_inputs: weirpacks,
                     color,
                     format,
+                    quiet,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?

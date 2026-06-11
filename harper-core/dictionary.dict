@@ -7117,7 +7117,7 @@ Moran/Og
 Moravia/Og
 Moravian/JNg
 Mordred/Og
-More/Og
+More/Og             # surname: Sir Thomas ~, Henry ~; language of Burkina Faso
 Moreno/Og
 Morgan/ONSg
 Morgantown/Og
@@ -16481,6 +16481,8 @@ camelhair/N
 camellia/NgS
 cameo/~NgSV
 camera/~NgS
+camera obscura/NgS
+camerae obscurae/N9
 cameraman/~N0g
 cameramen/N9
 camerapeople/N9
@@ -24982,7 +24984,7 @@ fibulae/N9
 fibular/J
 fiche/NSg
 fichu/NSg
-fickle/J^>pV
+fickle/JpV
 fickleness/Ng
 fiction/~NmgS
 fictional/~JY
@@ -27128,6 +27130,7 @@ godlike/J
 godliness/NmgU
 godly/J>^pU
 godmother/~NSgV
+godown/NSg₹
 godparent/NSg
 godsend/NSg
 godson/NSg
@@ -27916,6 +27919,7 @@ halftone/NgSV
 halfway/~J
 halfwit/NSg
 halibut/NSg
+halide/NSg
 halite/Ng
 halitosis/Ng
 hall/~NgS
@@ -34283,7 +34287,7 @@ methamphetamine/NgS
 methane/~Ng
 methanol/~Ng
 methinks/
-method/~NgSV
+method/~NgS
 methodical/~JYp
 methodicalness/Ng
 methodological/~JY
@@ -37019,7 +37023,7 @@ oestrus/NgS!_₹
 oeuvre/~NgS
 of/~P
 of course/R
-off/~J>PVGdSNZz
+off/~JPVGdSNZz
 off-grid/J
 off-limits/J
 off-ramp/NgS
@@ -49489,7 +49493,7 @@ throne's
 throng/NSgVGdJ
 throttle/~NSgVd>GZ
 throttler/Ng
-through/~PJN
+through/~PJ
 throughout/~P
 throughput/~Ng
 throughway/NgS!@_₹
@@ -49703,7 +49707,7 @@ tirade/NSgV
 tiramisu/NgS
 tire/~VGdSNr
 tire's
-tired/~V>JY^p
+tired/~VJYp
 tiredness/Nmg
 tireless/~JYp
 tirelessness/Ng
@@ -50900,7 +50904,7 @@ ugh/~
 uglification/NwgS
 ugliness/Nmg
 ugly/~J^>pNV
-uh/~N
+uh/~
 uh-huh
 uh-oh
 uhf/~
@@ -52868,7 +52872,7 @@ wench/NgSV
 wend/VdGSN
 went/~VtN
 wept/V
-were/~VltN
+were/~Vlt
 weren't/Vt
 werewolf/~N0g
 werewolves/N9
