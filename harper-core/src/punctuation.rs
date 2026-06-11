@@ -80,8 +80,6 @@ pub enum Punctuation {
     Underscore,
     /// `´`
     Acute,
-    /// `\``,
-    Backtick,
 }
 
 impl Punctuation {
@@ -124,7 +122,6 @@ impl Punctuation {
             '|' => Punctuation::Pipe,
             '_' => Punctuation::Underscore,
             '´' => Punctuation::Acute,
-            '`' => Punctuation::Backtick,
             _ => Punctuation::Currency(Currency::from_char(c)?),
         };
 

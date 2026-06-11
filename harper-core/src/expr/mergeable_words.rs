@@ -26,7 +26,7 @@ impl MergeableWords {
     ) -> Self {
         Self {
             inner: SequenceExpr::any_word().t_ws_h().then_any_word(),
-            dict: FstDictionary::curated(),
+            dict: FstDictionary::curated(crate::languages::LanguageFamily::English),
             predicate: Box::new(predicate),
         }
     }

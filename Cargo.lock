@@ -4357,6 +4357,7 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
+ "itertools 0.13.0",
  "open",
  "resolve-path",
  "serde",

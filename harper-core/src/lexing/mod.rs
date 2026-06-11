@@ -83,6 +83,27 @@ pub fn lex_english_token(source: &[char]) -> FoundToken {
     .unwrap_or_else(lex_catch)
 }
 
+pub fn lex_portuguese_token(source: &[char]) -> FoundToken {
+    [
+        lex_regexish,
+        lex_punctuation,
+        lex_tabs,
+        lex_spaces,
+        lex_newlines,
+        // lex_plural_digit, // The Portugese language doesn't have this feature
+        lex_hex_number, // Before lex_number, which would match the initial 0
+        // lex_long_decade,  // This works in other ways in Portuguese
+        lex_number,
+        lex_url,
+        lex_email_address,
+        lex_hostname_token,
+        lex_word,
+    ]
+    .into_iter()
+    .find_map(|lexer| lexer(source))
+    .unwrap_or_else(lex_catch)
+}
+
 fn lex_word(source: &[char]) -> Option<FoundToken> {
     let is_apostrophe = |c: char| lex_punctuation(&[c]).is_some_and(|t| t.token.is_apostrophe());
 

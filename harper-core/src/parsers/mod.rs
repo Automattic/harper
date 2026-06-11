@@ -7,6 +7,7 @@ mod mask;
 mod oops_all_headings;
 mod org_mode;
 mod plain_english;
+mod plain_portuguese;
 
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;
@@ -16,6 +17,7 @@ pub use mask::Mask;
 pub use oops_all_headings::OopsAllHeadings;
 pub use org_mode::OrgMode;
 pub use plain_english::PlainEnglish;
+pub use plain_portuguese::PlainPortuguese;
 
 use crate::{LSend, Token, TokenStringExt};
 

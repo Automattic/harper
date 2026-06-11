@@ -1,0 +1,435 @@
+use std::sync::Arc;
+
+use crate::{
+    OrthFlags, Token,
+    expr::{Expr, SequenceExpr},
+    languages::LanguageFamily,
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    spell::{Dictionary, FstDictionary},
+};
+
+pub struct OrthographicConsistency {
+    dict: Arc<FstDictionary>,
+    expr: SequenceExpr,
+}
+
+impl OrthographicConsistency {
+    pub fn new() -> Self {
+        Self {
+            dict: FstDictionary::curated(LanguageFamily::English),
+            expr: SequenceExpr::any_word(),
+        }
+    }
+}
+
+impl Default for OrthographicConsistency {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl ExprLinter for OrthographicConsistency {
+    type Unit = Chunk;
+
+    fn description(&self) -> &str {
+        "Ensures word casing matches the dictionary's canonical orthography."
+    }
+
+    fn expr(&self) -> &dyn Expr {
+        &self.expr
+    }
+
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        if let Some((pre, post)) = context {
+            if let Some(pre_tok) = pre.last()
+                && pre_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+
+            if let Some(post_tok) = post.first()
+                && post_tok.kind.is_hyphen()
+            {
+                return None;
+            }
+        }
+
+        let word = &matched_tokens[0];
+
+        let Some(Some(metadata)) = word.kind.as_word() else {
+            return None;
+        };
+
+        let chars = word.get_ch(source);
+
+        let cur_flags = OrthFlags::from_letters(chars);
+
+        if metadata.is_allcaps()
+            && !metadata.is_lowercase()
+            && !metadata.is_upper_camel()
+            && !cur_flags.contains(OrthFlags::ALLCAPS)
+        {
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                suggestions: vec![Suggestion::ReplaceWith(
+                    chars.iter().map(|c| c.to_ascii_uppercase()).collect(),
+                )],
+                message: "This word's canonical spelling is all-caps.".to_owned(),
+                priority: 127,
+            });
+        }
+
+        let canonical_flags = metadata.orth_info;
+        let flags_to_check = [
+            OrthFlags::LOWER_CAMEL,
+            OrthFlags::UPPER_CAMEL,
+            OrthFlags::APOSTROPHE,
+            OrthFlags::HYPHENATED,
+        ];
+
+        if flags_to_check
+            .into_iter()
+            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
+            .count()
+            == 1
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && alphabetic_differs(canonical, chars)
+        {
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                message: format!(
+                    "The canonical dictionary spelling is `{}`.",
+                    canonical.iter().collect::<String>()
+                ),
+                priority: 31,
+            });
+        }
+
+        if metadata.is_titlecase()
+            && cur_flags.contains(OrthFlags::LOWERCASE)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
+            && alphabetic_differs(canonical, chars)
+        {
+            return Some(Lint {
+                span: word.span,
+                lint_kind: LintKind::Capitalization,
+                suggestions: vec![Suggestion::ReplaceWith(canonical.to_vec())],
+                message: format!(
+                    "The canonical dictionary spelling is title case: `{}`.",
+                    canonical.iter().collect::<String>()
+                ),
+                priority: 127,
+            });
+        }
+
+        None
+    }
+}
+
+/// Check if the alphabetic characters in the string differ from one another.
+/// Ignores non-alphabetic characters.
+fn alphabetic_differs(a: &[char], b: &[char]) -> bool {
+    a.iter()
+        .zip(b.iter())
+        .any(|(a, b)| a.is_alphabetic() && b.is_alphabetic() && a != b)
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+
+    use super::OrthographicConsistency;
+
+    #[test]
+    fn nasa_should_be_all_caps() {
+        assert_suggestion_result(
+            "Nasa is a governmental institution.",
+            OrthographicConsistency::default(),
+            "NASA is a governmental institution.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn ikea_should_be_all_caps() {
+        assert_suggestion_result(
+            "Ikea operates a vast retail network.",
+            OrthographicConsistency::default(),
+            "IKEA operates a vast retail network.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn lego_should_be_all_caps() {
+        assert_suggestion_result(
+            "Lego bricks encourage creativity.",
+            OrthographicConsistency::default(),
+            "LEGO bricks encourage creativity.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn nato_should_be_all_caps() {
+        assert_suggestion_result(
+            "Nato is a military alliance.",
+            OrthographicConsistency::default(),
+            "NATO is a military alliance.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fbi_should_be_all_caps() {
+        assert_suggestion_result(
+            "Fbi investigates federal crimes.",
+            OrthographicConsistency::default(),
+            "FBI investigates federal crimes.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn cia_should_be_all_caps() {
+        assert_suggestion_result(
+            "Cia gathers intelligence.",
+            OrthographicConsistency::default(),
+            "CIA gathers intelligence.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn hiv_should_be_all_caps() {
+        assert_suggestion_result(
+            "Hiv is a virus.",
+            OrthographicConsistency::default(),
+            "HIV is a virus.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn dna_should_be_all_caps() {
+        assert_suggestion_result(
+            "Dna carries genetic information.",
+            OrthographicConsistency::default(),
+            "DNA carries genetic information.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn rna_should_be_all_caps() {
+        assert_suggestion_result(
+            "Rna participates in protein synthesis.",
+            OrthographicConsistency::default(),
+            "RNA participates in protein synthesis.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn cpu_should_be_all_caps() {
+        assert_suggestion_result(
+            "Cpu executes instructions.",
+            OrthographicConsistency::default(),
+            "CPU executes instructions.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn gpu_should_be_all_caps() {
+        assert_suggestion_result(
+            "Gpu accelerates graphics.",
+            OrthographicConsistency::default(),
+            "GPU accelerates graphics.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn html_should_be_all_caps() {
+        assert_suggestion_result(
+            "Html structures web documents.",
+            OrthographicConsistency::default(),
+            "HTML structures web documents.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn url_should_be_all_caps() {
+        assert_suggestion_result(
+            "Url identifies a resource.",
+            OrthographicConsistency::default(),
+            "URL identifies a resource.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn faq_should_be_all_caps() {
+        assert_suggestion_result(
+            "Faq answers common questions.",
+            OrthographicConsistency::default(),
+            "FAQ answers common questions.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn linkedin_should_use_canonical_case() {
+        assert_suggestion_result(
+            "I updated my linkedin profile yesterday.",
+            OrthographicConsistency::default(),
+            "I updated my LinkedIn profile yesterday.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn wordpress_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She writes daily on her wordpress blog.",
+            OrthographicConsistency::default(),
+            "She writes daily on her WordPress blog.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn pdf_should_be_all_caps() {
+        assert_suggestion_result(
+            "Pdf preserves formatting.",
+            OrthographicConsistency::default(),
+            "PDF preserves formatting.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn ceo_should_be_all_caps() {
+        assert_suggestion_result(
+            "Our Ceo approved the budget.",
+            OrthographicConsistency::default(),
+            "Our CEO approved the budget.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn cfo_should_be_all_caps() {
+        assert_suggestion_result(
+            "The Cfo presented the report.",
+            OrthographicConsistency::default(),
+            "The CFO presented the report.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn hr_should_be_all_caps() {
+        assert_suggestion_result(
+            "The Hr team scheduled interviews.",
+            OrthographicConsistency::default(),
+            "The HR team scheduled interviews.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn ai_should_be_all_caps() {
+        assert_suggestion_result(
+            "Ai enables new capabilities.",
+            OrthographicConsistency::default(),
+            "AI enables new capabilities.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn ufo_should_be_all_caps() {
+        assert_suggestion_result(
+            "Ufo sightings provoke debate.",
+            OrthographicConsistency::default(),
+            "UFO sightings provoke debate.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn markdown_should_be_caps() {
+        assert_suggestion_result(
+            "I adore markdown.",
+            OrthographicConsistency::default(),
+            "I adore Markdown.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn canonical_forms_should_not_be_flagged() {
+        let sentences = [
+            "NASA is a governmental institution.",
+            "IKEA operates a vast retail network.",
+            "LEGO bricks encourage creativity.",
+            "NATO is a military alliance.",
+            "FBI investigates federal crimes.",
+            "CIA gathers intelligence.",
+            "HIV is a virus.",
+            "DNA carries genetic information.",
+            "RNA participates in protein synthesis.",
+            "CPU executes instructions.",
+            "GPU accelerates graphics.",
+            "HTML structures web documents.",
+            "URL identifies a resource.",
+            "FAQ answers common questions.",
+            "I updated my LinkedIn profile yesterday.",
+            "She writes daily on her WordPress blog.",
+            "PDF preserves formatting.",
+            "Our CEO approved the budget.",
+            "The CFO presented the report.",
+            "The HR team scheduled interviews.",
+            "AI enables new capabilities.",
+            "UFO sightings provoke debate.",
+            "I adore Markdown.",
+        ];
+
+        for sentence in sentences {
+            assert_no_lints(
+                sentence,
+                OrthographicConsistency::default(),
+                crate::languages::LanguageFamily::English,
+            );
+        }
+    }
+
+    #[test]
+    fn allows_news() {
+        assert_no_lints(
+            "This is the best part of the news broadcast.",
+            OrthographicConsistency::default(),
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn allows_issue_2465() {
+        assert_no_lints(
+            "The post’s problem was not in its complexity.",
+            OrthographicConsistency::default(),
+            crate::languages::LanguageFamily::English,
+        );
+    }
+}

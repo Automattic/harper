@@ -3,7 +3,7 @@
 //! For example, if we want to look for the word "that" followed by an adjective, we could build an
 //! expression to do so.
 //!
-//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::ExprLinter)).
+//! The actual searching is done by another system (usually a part of the [lint framework](crate::linting::english::ExprLinter)).
 //! It iterates through a document, checking if each index matches the criteria.
 //!
 //! When supplied a specific position in a token stream, the technical job of an `Expr` is to determine the window of tokens (including the cursor itself) that fulfills whatever criteria the author desires.
@@ -165,7 +165,7 @@ where
 pub trait OwnedExprExt {
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf;
     fn and(self, other: impl Expr + 'static) -> All;
-    fn but_not(self, other: impl Expr + 'static) -> All;
+    fn and_not(self, other: impl Expr + 'static) -> All;
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf;
 }
 
@@ -184,7 +184,7 @@ where
     }
 
     /// Returns an expression that matches only if the current one matches and the expression contained in `other` does not.
-    fn but_not(self, other: impl Expr + 'static) -> All {
+    fn and_not(self, other: impl Expr + 'static) -> All {
         self.and(UnlessStep::new(other, |_tok: &Token, _src: &[char]| true))
     }
 

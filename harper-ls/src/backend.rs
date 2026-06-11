@@ -5,6 +5,7 @@ use std::path::PathBuf;
 use std::sync::Arc;
 
 use crate::config::Config;
+use crate::dictionary_io::{load_dict, save_dict};
 use crate::document_state::DocumentState;
 use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
@@ -13,13 +14,14 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
+use harper_core::languages::Language;
+use harper_core::languages::LanguageFamily;
 use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
-use harper_dictionary_wordlist::{load_dict, save_dict};
+use harper_core::{DialectsEnum, DictWordMetadata, Document, EnglishDialect, IgnoredLints};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
 use harper_jjdescription::JJDescriptionParser;
@@ -202,7 +204,7 @@ impl Backend {
 
     async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
-        dict.add_dictionary(FstDictionary::curated());
+        dict.add_dictionary(FstDictionary::curated(LanguageFamily::English));
         let user_dict = self.load_user_dictionary().await;
         dict.add_dictionary(Arc::new(user_dict));
         let ws_dict = self.load_workspace_dictionary().await;
@@ -264,6 +266,13 @@ impl Backend {
             )
         };
 
+        // TODO generalize the creation of the linter for all languages
+
+        let dialect = match dialect {
+            DialectsEnum::English(english_dialect) => english_dialect,
+            _ => EnglishDialect::default(),
+        };
+
         let mut doc_lock = self.doc_state.lock().await;
 
         if !exclude_patterns.is_empty()
@@ -289,7 +298,7 @@ impl Backend {
 
             DocumentState {
                 ignored_lints,
-                linter: LintGroup::new_curated(dict.clone(), dialect)
+                linter: LintGroup::new_curated(dict.clone(), Language::English(dialect))
                     .with_lint_config(lint_config.clone()),
                 language_id: language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
@@ -301,8 +310,8 @@ impl Backend {
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            doc_state.linter =
-                LintGroup::new_curated(dict.clone(), dialect).with_lint_config(lint_config.clone());
+            doc_state.linter = LintGroup::new_curated(dict.clone(), Language::English(dialect))
+                .with_lint_config(lint_config.clone());
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -317,7 +326,7 @@ impl Backend {
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
             lint_config: &FlatConfig,
-            dialect: Dialect,
+            dialect: EnglishDialect,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
                 info!("Constructing new linter because of modified ident dictionary.");
@@ -327,8 +336,9 @@ impl Backend {
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
-                doc_state.linter = LintGroup::new_curated(merged.clone(), dialect)
-                    .with_lint_config(lint_config.clone());
+                doc_state.linter =
+                    LintGroup::new_curated(merged.clone(), Language::English(dialect))
+                        .with_lint_config(lint_config.clone());
                 doc_state.dict = merged.clone();
             }
 
@@ -814,9 +824,14 @@ impl LanguageServer for Backend {
             let mut doc_lock = self.doc_state.lock().await;
             let config_lock = self.config.read().await;
 
+            // TODO: generalize for all languages, not only for English dialects
+            let dialect = match config_lock.dialect {
+                DialectsEnum::English(english_dialect) => english_dialect,
+                _ => EnglishDialect::default(),
+            };
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
+                doc.linter = LintGroup::new_curated(doc.dict.clone(), Language::English(dialect))
                     .with_lint_config(config_lock.lint_config.clone());
             }
 

@@ -1,7 +1,9 @@
+use harper_core::languages::{Language, LanguageFamily};
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+
+use harper_core::{Document, EnglishDialect};
 
 /// Creates a unit test checking that the linting of a Markdown document (in
 /// `tests_sources`) produces the expected number of lints.
@@ -17,10 +19,10 @@ macro_rules! create_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = FstDictionary::curated(LanguageFamily::English);
                 let document = Document::new_markdown_default(&source, &dict);
 
-                let mut linter = LintGroup::new_curated(dict, $dialect);
+                let mut linter = LintGroup::new_curated(dict, Language::English($dialect));
                 let lints = linter.lint(&document);
 
                 dbg!(&lints);
@@ -49,10 +51,10 @@ macro_rules! create_org_test {
                     )
                 );
 
-                let dict = FstDictionary::curated();
+                let dict = FstDictionary::curated(LanguageFamily::English);
                 let document = Document::new(&source, &OrgMode, &dict);
 
-                let mut linter = LintGroup::new_curated(dict, $dialect);
+                let mut linter = LintGroup::new_curated(dict, Language::English($dialect));
                 let lints = linter.lint(&document);
 
                 dbg!(&lints);
@@ -67,42 +69,41 @@ macro_rules! create_org_test {
     };
 }
 
-create_test!(whack_bullets.md, 1, Dialect::American);
-create_test!(issue_109.md, 0, Dialect::American);
-create_test!(issue_109_ext.md, 0, Dialect::American);
-create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
-create_test!(obsidian_links.md, 3, Dialect::American);
-create_test!(issue_267.md, 0, Dialect::American);
-create_test!(proper_noun_capitalization.md, 3, Dialect::American);
-create_test!(amazon_hostname.md, 0, Dialect::American);
-create_test!(issue_159.md, 1, Dialect::American);
-create_test!(issue_358.md, 0, Dialect::American);
-create_test!(issue_195.md, 0, Dialect::American);
-create_test!(issue_118.md, 0, Dialect::American);
-create_test!(lots_of_latin.md, 1, Dialect::American);
-create_test!(pr_504.md, 1, Dialect::American);
-create_test!(pr_452.md, 2, Dialect::American);
-create_test!(hex_basic_clean.md, 0, Dialect::American);
-create_test!(hex_basic_dirty.md, 1, Dialect::American);
-create_test!(misc_closed_compound_clean.md, 0, Dialect::American);
-create_test!(statist_localist.md, 0, Dialect::American);
-create_test!(yogurt_british_clean.md, 0, Dialect::British);
-create_test!(issue_1581.md, 0, Dialect::British);
-create_test!(issue_2054.md, 6, Dialect::British);
-create_test!(issue_1988.md, 0, Dialect::American);
-create_test!(issue_2054_clean.md, 0, Dialect::British);
-create_test!(issue_1873.md, 0, Dialect::British);
-create_test!(issue_2246.md, 0, Dialect::American);
-create_test!(title_case_errors.md, 2, Dialect::American);
-create_test!(title_case_clean.md, 0, Dialect::American);
-create_test!(issue_2233.md, 0, Dialect::American);
-create_test!(issue_2240.md, 0, Dialect::American);
-create_test!(allows_domain_extensions.md, 0, Dialect::American);
+create_test!(whack_bullets.md, 1, EnglishDialect::American);
+create_test!(issue_109.md, 0, EnglishDialect::American);
+create_test!(issue_109_ext.md, 0, EnglishDialect::American);
+create_test!(chinese_lorem_ipsum.md, 2, EnglishDialect::American);
+create_test!(obsidian_links.md, 2, EnglishDialect::American);
+create_test!(issue_267.md, 0, EnglishDialect::American);
+create_test!(proper_noun_capitalization.md, 2, EnglishDialect::American);
+create_test!(amazon_hostname.md, 0, EnglishDialect::American);
+create_test!(issue_159.md, 1, EnglishDialect::American);
+create_test!(issue_358.md, 0, EnglishDialect::American);
+create_test!(issue_195.md, 0, EnglishDialect::American);
+create_test!(issue_118.md, 0, EnglishDialect::American);
+create_test!(lots_of_latin.md, 1, EnglishDialect::American);
+create_test!(pr_504.md, 1, EnglishDialect::American);
+create_test!(pr_452.md, 2, EnglishDialect::American);
+create_test!(hex_basic_clean.md, 0, EnglishDialect::American);
+create_test!(hex_basic_dirty.md, 1, EnglishDialect::American);
+create_test!(misc_closed_compound_clean.md, 0, EnglishDialect::American);
+create_test!(statist_localist.md, 0, EnglishDialect::American);
+create_test!(yogurt_british_clean.md, 0, EnglishDialect::British);
+create_test!(issue_1581.md, 0, EnglishDialect::British);
+create_test!(issue_2054.md, 6, EnglishDialect::British);
+create_test!(issue_2054_clean.md, 0, EnglishDialect::British);
+create_test!(issue_1873.md, 0, EnglishDialect::British);
+create_test!(issue_2246.md, 0, EnglishDialect::American);
+create_test!(title_case_errors.md, 2, EnglishDialect::American);
+create_test!(title_case_clean.md, 0, EnglishDialect::American);
+create_test!(issue_2233.md, 0, EnglishDialect::American);
+create_test!(issue_2240.md, 0, EnglishDialect::American);
+create_test!(allows_domain_extensions.md, 0, EnglishDialect::American);
 // It just matters that it is > 1
-create_test!(issue_2151.md, 4, Dialect::British);
+create_test!(issue_2151.md, 4, EnglishDialect::British);
 
 // Make sure it doesn't panic
-create_test!(lukas_homework.md, 4, Dialect::American);
+create_test!(lukas_homework.md, 4, EnglishDialect::American);
 
 // Org mode tests
-create_org_test!(index.org, 49, Dialect::American);
+create_org_test!(index.org, 49, EnglishDialect::American);

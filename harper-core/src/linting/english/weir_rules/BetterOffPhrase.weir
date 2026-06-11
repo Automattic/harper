@@ -1,0 +1,34 @@
+expr main (better of)
+
+let message "This expression usually takes `off` instead of `of`."
+let description "Rewrites `better of` to `better off` in common comparative phrasing."
+let kind "Grammar"
+let becomes "better off"
+let strategy "MatchCase"
+
+# True positives
+
+test "People who are better of can donate more." "People who are better off can donate more."
+test "You will be better of waiting until tomorrow." "You will be better off waiting until tomorrow."
+test "I feel better of without that app." "I feel better off without that app."
+test "We are better of focusing on quality." "We are better off focusing on quality."
+test "They were better of before the update." "They were better off before the update."
+test "She is far better of now." "She is far better off now."
+test "He'd be better of at home." "He'd be better off at home."
+test "The team is BETTER OF with clear goals." "The team is BETTER OFF with clear goals."
+test "Are we better of if we delay launch?" "Are we better off if we delay launch?"
+
+# True negatives / false-positive checks
+
+test "People who are better off can donate more." "People who are better off can donate more."
+test "This is a matter of better options." "This is a matter of better options."
+test "Of course this is better overall." "Of course this is better overall."
+test "He offered better outcomes, not quick fixes." "He offered better outcomes, not quick fixes."
+test "They got off the train early." "They got off the train early."
+test "A better offer arrived yesterday." "A better offer arrived yesterday."
+
+# Boundary / accepted limits
+
+allows "She chose the better option from the list."
+allows "Pick the best design from these three mockups."
+allows "They discussed old and new methods in detail."

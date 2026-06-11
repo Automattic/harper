@@ -6,6 +6,7 @@ use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
 use itertools::Itertools;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
+use crate::languages::LanguageFamily;
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::punctuation::Punctuation;
 use crate::spell::{Dictionary, FstDictionary};
@@ -22,7 +23,11 @@ pub struct Document {
 
 impl Default for Document {
     fn default() -> Self {
-        Self::new("", &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            "",
+            &PlainEnglish,
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+        )
     }
 }
 
@@ -62,7 +67,11 @@ impl Document {
     pub fn new_curated(text: &str, parser: &impl Parser) -> Self {
         let source: Lrc<_> = text.chars().collect();
 
-        Self::new_from_chars(source, parser, &FstDictionary::curated())
+        Self::new_from_chars(
+            source,
+            parser,
+            &FstDictionary::curated(LanguageFamily::English),
+        )
     }
 
     /// Lexes and parses text to produce a document using a provided language
@@ -83,13 +92,21 @@ impl Document {
     /// Create a new document from character data using the built-in [`PlainEnglish`]
     /// parser and curated dictionary. This avoids string-to-char conversions.
     pub fn new_plain_english_curated_chars(source: &[char]) -> Self {
-        Self::new_from_chars(Lrc::from(source), &PlainEnglish, &FstDictionary::curated())
+        Self::new_from_chars(
+            Lrc::from(source),
+            &PlainEnglish,
+            &FstDictionary::curated(LanguageFamily::English),
+        )
     }
 
     /// Parse text to produce a document using the built-in [`PlainEnglish`]
     /// parser and curated dictionary.
     pub fn new_plain_english_curated(text: &str) -> Self {
-        Self::new(text, &PlainEnglish, &FstDictionary::curated())
+        Self::new(
+            text,
+            &PlainEnglish,
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
+        )
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
@@ -117,7 +134,7 @@ impl Document {
         Self::new(
             text,
             &Markdown::new(markdown_options),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
     }
 
@@ -127,7 +144,7 @@ impl Document {
         Self::new_from_chars(
             chars.to_vec().into(),
             &Markdown::default(),
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
     }
 

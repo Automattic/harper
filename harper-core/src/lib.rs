@@ -5,6 +5,7 @@ mod case;
 mod char_ext;
 mod char_string;
 mod currency;
+mod dialects;
 mod dict_word_metadata;
 mod dict_word_metadata_orthography;
 mod document;
@@ -14,8 +15,10 @@ mod fat_token;
 mod ignored_lints;
 mod indefinite_article;
 mod irregular_nouns;
+mod regular_nouns;
 mod irregular_verbs;
 pub mod language_detection;
+pub mod languages;
 mod lexing;
 pub mod linting;
 mod mask;
@@ -24,7 +27,6 @@ mod offsets;
 pub mod parsers;
 pub mod patterns;
 mod punctuation;
-mod regular_nouns;
 mod render_markdown;
 mod span;
 pub mod spell;
@@ -38,15 +40,17 @@ mod vec_ext;
 pub mod weir;
 pub mod weirpack;
 
-use render_markdown::render_markdown;
 use std::collections::{BTreeMap, VecDeque};
 
 pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
+pub use dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
+pub use dialects::dialect_trait::{Dialect, DialectFlags};
+pub use dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
-    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, EnglishDialect,
+    EnglishDialectFlags, NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -54,12 +58,12 @@ pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
+pub use regular_nouns::{get_plurals, get_singulars};
 pub use irregular_verbs::IrregularVerbs;
-use linting::Lint;
+pub use linting::{Lint, LintGroup, Linter};
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
-pub use regular_nouns::{get_plurals, get_singulars};
 pub use span::Span;
 pub use sync::{LSend, Lrc};
 pub use title_case::{make_title_case, make_title_case_str};
@@ -97,45 +101,6 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
     }
 
     lints.remove_indices(remove_indices);
-}
-
-/// Remove lints whose character spans overlap any nonempty match of an expression.
-///
-/// This is useful for letting higher-level token patterns mark text ranges where otherwise valid
-/// lower-level lints should be suppressed. Expression matches are checked from every token index,
-/// including overlapping matches, and zero-width expression matches are ignored.
-pub fn remove_lints_overlapping_expr<E: expr::Expr + ?Sized>(
-    expr: &E,
-    document: &Document,
-    lints: &mut Vec<Lint>,
-) {
-    if lints.is_empty() {
-        return;
-    }
-
-    let tokens = document.get_tokens();
-    let source = document.get_source();
-    let matched_spans: Vec<Span<char>> = (0..tokens.len())
-        .filter_map(|cursor| {
-            let token_span = expr.run(cursor, tokens, source)?;
-
-            if token_span.is_empty() {
-                None
-            } else {
-                Some(token_span.to_char_span(tokens))
-            }
-        })
-        .collect();
-
-    if matched_spans.is_empty() {
-        return;
-    }
-
-    lints.retain(|lint| {
-        !matched_spans
-            .iter()
-            .any(|matched_span| lint.span.overlaps_with(*matched_span))
-    });
 }
 
 /// Remove overlapping lints from a map keyed by rule name, similar to [`remove_overlaps`].
@@ -202,27 +167,29 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
+    use crate::languages::Language;
     use std::hash::DefaultHasher;
     use std::hash::{Hash, Hasher};
 
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
-    use crate::linting::Lint;
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, Span,
-        expr::{AnchorStart, SequenceExpr},
-        linting::{LintGroup, Linter},
-        remove_lints_overlapping_expr, remove_overlaps,
+        Document, EnglishDialect,
+        linting::{Lint, LintGroup, Linter},
+        remove_overlaps,
     };
 
     #[test]
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated(
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
+            Language::English(EnglishDialect::American),
+        );
 
         let mut lints = linter.lint(&doc);
 
@@ -233,49 +200,13 @@ mod tests {
         assert_eq!(lints.len(), 3);
     }
 
-    #[test]
-    fn remove_lints_overlapping_expr_removes_overlapping_lints() {
-        let doc = Document::new_plain_english_curated("keep bad keep");
-        let mut lints = vec![Lint {
-            span: Span::new(5, 8),
-            ..Default::default()
-        }];
-
-        remove_lints_overlapping_expr(&SequenceExpr::aco("bad"), &doc, &mut lints);
-
-        assert!(lints.is_empty());
-    }
-
-    #[test]
-    fn remove_lints_overlapping_expr_keeps_non_overlapping_lints() {
-        let doc = Document::new_plain_english_curated("keep bad keep");
-        let mut lints = vec![Lint {
-            span: Span::new(0, 4),
-            ..Default::default()
-        }];
-
-        remove_lints_overlapping_expr(&SequenceExpr::aco("bad"), &doc, &mut lints);
-
-        assert_eq!(lints.len(), 1);
-    }
-
-    #[test]
-    fn remove_lints_overlapping_expr_ignores_zero_width_matches() {
-        let doc = Document::new_plain_english_curated("bad");
-        let mut lints = vec![Lint {
-            span: Span::new(0, 3),
-            ..Default::default()
-        }];
-
-        remove_lints_overlapping_expr(&AnchorStart, &doc, &mut lints);
-
-        assert_eq!(lints.len(), 1);
-    }
-
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = LintGroup::new_curated_english(
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
+            EnglishDialect::American,
+        );
 
         let mut lint_map = linter.organized_lints(&doc);
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();

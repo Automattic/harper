@@ -445,7 +445,7 @@ mod tests {
             "punctation",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
 
         assert!(results.iter().all_unique())
@@ -477,7 +477,7 @@ mod tests {
             "Semantical",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
 
         assert!(results.iter().all_unique())
@@ -494,7 +494,7 @@ mod tests {
             "hvllo",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
 
         assert!(results.iter().take(3).contains(&"hello".to_string()));
@@ -508,7 +508,7 @@ mod tests {
             misspelled_word,
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
 
         dbg!(&results);
@@ -532,19 +532,19 @@ mod tests {
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
         let results2 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
         let results3 = suggest_correct_spelling_str(
             "hello",
             RESULT_LIMIT,
             MAX_EDIT_DIST,
-            &FstDictionary::curated(),
+            &FstDictionary::curated(crate::languages::LanguageFamily::English),
         );
 
         assert_eq!(results1, results2);

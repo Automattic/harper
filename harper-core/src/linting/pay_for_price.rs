@@ -1,6 +1,6 @@
 use crate::{
     Lint, Token, TokenStringExt,
-    expr::{Expr, OwnedExprExt, SequenceExpr},
+    expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
@@ -21,7 +21,7 @@ impl Default for PayForPrice {
                         "bill", "bills", "check", "checks", "cheque", "cheques", "charge",
                         "charges", "cost", "costs", "fee", "fees", "price", "prices",
                     ])
-                    .but_not(SequenceExpr::any_of(vec![
+                    .then_unless(SequenceExpr::any_of(vec![
                         Box::new(SequenceExpr::aco("check").t_ws_h().t_set(&["in", "out"])),
                         Box::new(SequenceExpr::aco("price").t_ws_h().t_aco("increase")),
                     ])),

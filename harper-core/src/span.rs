@@ -38,6 +38,9 @@ impl<T> Span<T> {
     ///
     /// This will panic if `start` is greater than `end`.
     pub fn new(start: usize, end: usize) -> Self {
+        // This check could possibly be changed to >=, because the function new should
+        // be reserved for creating non empty Spans, which should be responsability
+        // of the empty function.
         if start > end {
             panic!("{start} > {end}");
         }
