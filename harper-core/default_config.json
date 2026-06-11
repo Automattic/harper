@@ -5091,6 +5091,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheEntiretyOf",
+								"state": true,
+								"label": "The Entirety Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NowKnownAs",
 								"state": true,
 								"label": "Now Known As"
