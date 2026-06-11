@@ -49,7 +49,7 @@ impl ExprLinter for OverPlus {
             return None;
         }
 
-        let slices = vec![toks.get_rel_slice(0, -3)?, &toks[2..]];
+        let slices = [toks.get_rel_slice(0, -3)?, &toks[2..]];
 
         let span = toks.span()?;
 
