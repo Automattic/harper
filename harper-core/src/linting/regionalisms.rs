@@ -1,5 +1,12 @@
+//! Detects and suggests alternatives for regional terms in English text.
+//!
+//! This linter identifies words and phrases that are specific to particular English dialects
+//! (American, British, Australian, etc.) and suggests appropriate alternatives for the target dialect.
+//! It maintains a comprehensive database of regional terms grouped by concept, allowing it to
+//! provide contextually relevant suggestions.
+
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian, Indian},
+    Dialect::{self, American, Australian, British, Canadian, Indian, Malaysian, Singaporean},
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
@@ -25,12 +32,15 @@ use CanFlag::*;
 /// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
 #[derive(PartialEq)]
 enum Concept {
+    // ApartmentFlat
     AubergineBrinjalEggplant,
     AuberginesBrinjalsEggplants,
+    // BangsFringe
     BharatIndia,
     // BiscuitCookie - biscuit names different foods in UK/Aus vs US; cookie has other meanings
     // BiscuitCracker - cracker also has other meanings
     BloodNoseNosebleed,
+    // BootTrunk
     BritBritisher,
     BritsBritishers,
     BumBagFannyPack,
@@ -49,7 +59,9 @@ enum Concept {
     DiaperNappy,
     DoonaDuvet,
     DummyPacifier,
+    // ElevatorLift
     FaucetTap,
+    // FenderGuardWing
     FlashlightTorch,
     FootballSoccer,
     FootpathPavementSidewalk,
@@ -116,13 +128,13 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "brinjal",
         flag: Flag,
-        dialects: &[Indian],
+        dialects: &[Indian, Singaporean, Malaysian],
         concept: AubergineBrinjalEggplant,
     },
     Term {
         term: "brinjals",
         flag: Flag,
-        dialects: &[Indian],
+        dialects: &[Indian, Singaporean, Malaysian],
         concept: AuberginesBrinjalsEggplants,
     },
     Term {
@@ -338,13 +350,13 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "football",
         flag: HasOtherMeanings,
-        dialects: &[British],
+        dialects: &[British, Singaporean, Malaysian],
         concept: FootballSoccer,
     },
     Term {
         term: "footpath",
         flag: Flag,
-        dialects: &[Australian],
+        dialects: &[Australian, Singaporean, Malaysian],
         concept: FootpathPavementSidewalk,
     },
     Term {
@@ -416,7 +428,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "lorry",
         flag: Flag,
-        dialects: &[British],
+        dialects: &[British, Indian, Singaporean, Malaysian],
         concept: LorryTruck,
     },
     Term {
@@ -458,19 +470,19 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "pavement",
         flag: HasOtherMeanings,
-        dialects: &[British],
+        dialects: &[British, Singaporean, Malaysian],
         concept: FootpathPavementSidewalk,
     },
     Term {
         term: "petrol",
         flag: Flag,
-        dialects: &[Australian, British],
+        dialects: &[Australian, British, Singaporean, Malaysian],
         concept: GasolinePetrol,
     },
     Term {
         term: "petrol station",
         flag: Flag,
-        dialects: &[Australian, British],
+        dialects: &[Australian, British, Singaporean, Malaysian],
         concept: GasStationPetrolStationServiceStation,
     },
     Term {
@@ -555,7 +567,7 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
     Term {
         term: "tap",
         flag: HasOtherMeanings,
-        dialects: &[Australian, British],
+        dialects: &[Australian, British, Singaporean, Malaysian],
         concept: FaucetTap,
     },
     Term {

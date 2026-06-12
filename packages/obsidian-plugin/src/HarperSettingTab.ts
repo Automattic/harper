@@ -108,6 +108,8 @@ export class HarperSettingTab extends PluginSettingTab {
 				.addOption(Dialect.British.toString(), 'British')
 				.addOption(Dialect.Australian.toString(), 'Australian')
 				.addOption(Dialect.Indian.toString(), 'Indian')
+				.addOption(Dialect.Singaporean.toString(), 'Singaporean')
+				.addOption(Dialect.Malaysian.toString(), 'Singaporean')
 				.setValue((settings.dialect ?? Dialect.American).toString())
 				.onChange(async (value) => {
 					const dialect = Number.parseInt(value, 10);
