@@ -153,6 +153,14 @@ export class Client {
 		await invoke('set_integration_enabled', { bundleId, enabled });
 	}
 
+	static async getInstalledApplicationBundleIds(): Promise<string[]> {
+		return await invoke<string[]>('get_installed_application_bundle_ids');
+	}
+
+	static async getApplicationIconDataUrl(bundleId: string): Promise<string> {
+		return await invoke<string>('get_application_icon_data_url', { bundleId });
+	}
+
 	static async launchApp(bundleId: string): Promise<void> {
 		await invoke('launch_app', { bundleId });
 	}

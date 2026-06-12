@@ -43,6 +43,22 @@ pub trait OsBroker {
             .unwrap_or_else(|| fallback_integration_display_name(bundle_id))
     }
 
+    /// Returns the bundle identifiers for installed graphical applications.
+    ///
+    /// Implementations should return stable bundle ID strings, sorted and deduplicated where
+    /// possible. Platforms that do not support bundle IDs should return an error.
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        Err("Listing installed application bundle IDs is only supported on macOS.".to_string())
+    }
+
+    /// Returns the application icon for `bundle_id` encoded as PNG bytes.
+    ///
+    /// The broker returns raw bytes so callers can choose their own transport format, such as a
+    /// Tauri command converting them into a data URL.
+    fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String> {
+        Err("Reading application icons by bundle ID is only supported on macOS.".to_string())
+    }
+
     fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
         Err("Launching apps by bundle ID is only supported on macOS.".to_string())
     }
