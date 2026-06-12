@@ -21,7 +21,7 @@ In this main process, we try to follow their conventions whenever possible.
 
 When the "Harper Service" is started (which happens when the main process starts, unless the user has disabled it) the main process will kick off a second "highlighter" process by running the same binary with the `highlighter` argument.
 This second process is what actually reads and writes text from user applications (using a platform's Accessibility API), performs linting, and renders highlights and suggestion popups over the top of their screen.
-We need to separate this highlighter service process from the main process because it needs to maintain it's own custom event loop, which was not possible with Tauri.
+We need to separate this highlighter service process from the main process because it needs to maintain its own custom event loop, which was not possible with Tauri.
 It also needs to be able to place itself it special "modes" within the operating system, which allow it open windows without taskbar icons or frames.
 
 ## The Main Process
