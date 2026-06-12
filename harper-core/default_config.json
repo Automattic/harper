@@ -5070,6 +5070,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InBetterShape",
+								"state": true,
+								"label": "In Better Shape"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Impressed",
 								"state": true,
 								"label": "Impressed"
