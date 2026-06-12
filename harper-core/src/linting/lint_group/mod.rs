@@ -28,6 +28,8 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
+use super::as_how::AsHow;
+use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
@@ -44,12 +46,14 @@ use super::by_the_book::ByTheBook;
 use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
+use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
@@ -118,6 +122,7 @@ use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::lead_rise_to::LeadRiseTo;
+use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -169,8 +174,10 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::plural_decades::PluralDecades;
@@ -225,6 +232,7 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
+use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
 use super::there_own::ThereOwn;
@@ -586,6 +594,8 @@ impl LintGroup {
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
+        insert_expr_rule!(AsHow, true);
+        insert_expr_rule!(AsToInterrogative, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidContractions, false);
         insert_expr_rule!(AvoidCurses, true);
@@ -601,12 +611,14 @@ impl LintGroup {
         insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_expr_rule!(Catch22, true);
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
         insert_expr_rule!(CloseTightKnit, true);
         insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
+        insert_expr_rule!(ComplainAsNoun, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
@@ -674,6 +686,7 @@ impl LintGroup {
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(LeadRiseTo, true);
+        insert_expr_rule!(LeavingInDroves, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -725,8 +738,10 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency, true);
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
+        insert_expr_rule_with_dialect!(OutOfTheWindow, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
+        insert_expr_rule!(PayForPrice, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
@@ -778,6 +793,7 @@ impl LintGroup {
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
+        insert_expr_rule!(TheTheToThatThe, true);
         insert_expr_rule!(ThenThan, true);
         insert_expr_rule!(ThereOwn, true);
         insert_expr_rule!(Theres, true);
@@ -817,7 +833,6 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
@@ -839,10 +854,6 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -857,6 +868,14 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         out
     }

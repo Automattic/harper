@@ -20,6 +20,8 @@ mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
 mod arrive_to;
+mod as_how;
+mod as_to_interrogative;
 mod ask_no_preposition;
 mod aspire_to;
 mod avoid_contractions;
@@ -37,6 +39,7 @@ mod by_the_book;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
+mod catch_22;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
@@ -44,6 +47,7 @@ mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
 mod comma_fixes;
+mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
@@ -120,6 +124,7 @@ mod its_possessive;
 mod jealous_of;
 mod johns_hopkins;
 mod lead_rise_to;
+mod leaving_in_droves;
 mod left_right_hand;
 mod less_worse;
 mod let_to_do;
@@ -179,8 +184,10 @@ mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
+mod out_of_the_window;
 mod oxford_comma;
 mod oxymorons;
+mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
@@ -238,6 +245,7 @@ mod the_how_why;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
+mod the_the_to_that_the;
 mod then_than;
 mod there_is_agreement;
 mod there_own;
@@ -439,7 +447,7 @@ pub mod tests {
                         span: *ws,
                         lint_kind: LintKind::Spelling,
                         suggestions,
-                        message: "Test linter for 'linting assertion' tests".to_string(),
+                        message: "Test linter for 'linting assertion' tests".to_owned(),
                         ..Default::default()
                     }
                 })
