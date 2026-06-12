@@ -895,6 +895,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects `no only` to `not only` before forms of `to be`.",
             LintKind::Grammar
         ),
+        "Nowadays" => (
+            &[(
+                &[
+                    "now a days", "now-a-days", "now a day's",
+                    "nowaday", "now a day", "now-a-day",
+                    "now adays", "now-adays", "now aday's",
+                    "now aday",
+                    "nowa days",
+                ],
+                &["nowadays"]
+            )],
+            "Use `nowadays` instead of common misspellings.",
+            "Corrects common misspellings of `nowadays`.",
+            LintKind::Usage
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),
