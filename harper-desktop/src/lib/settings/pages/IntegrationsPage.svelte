@@ -17,7 +17,9 @@ let isIntegrationsSaving = false;
 let appPickerOpen = false;
 let newBundleId = '';
 
-$: integrationApps = integrations.map(toIntegrationRow);
+$: integrationApps = integrations.map((integration) =>
+	toIntegrationRow(integration, integrationIconDataUrls),
+);
 $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
 onMount(() => {
@@ -38,11 +40,14 @@ async function loadIntegrations() {
 	}
 }
 
-function toIntegrationRow(integration: Integration): IntegrationRow {
+function toIntegrationRow(
+	integration: Integration,
+	iconDataUrls: Map<string, string>,
+): IntegrationRow {
 	return {
 		...integration,
 		name: integration.display_name,
-		iconDataUrl: integrationIconDataUrls.get(integration.bundle_id),
+		iconDataUrl: iconDataUrls.get(integration.bundle_id),
 	};
 }
 
