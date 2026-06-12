@@ -213,8 +213,18 @@ mod tests {
     }
 
     #[test]
+    fn allow_an_lowercase_mp3() {
+        assert_lint_count("an mp3 file", AnA::new(Dialect::American), 0);
+    }
+
+    #[test]
     fn disallow_a_mp_and_a_mp3() {
         assert_lint_count("a MP and a MP3?", AnA::new(Dialect::American), 2);
+    }
+
+    #[test]
+    fn disallow_a_lowercase_mp3() {
+        assert_lint_count("a mp3 file", AnA::new(Dialect::American), 1);
     }
 
     #[test]
