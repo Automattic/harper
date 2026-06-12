@@ -1,44 +1,46 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
-use hashbrown::HashMap;
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{self, BufReader};
-use std::path::PathBuf;
-// use std::sync::Arc;
-use std::{fs, process};
+use std::{
+    collections::BTreeMap,
+    fs,
+    fs::File,
+    io::{self, BufReader},
+    path::PathBuf,
+    process,
+    // sync::Arc,
+};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
-use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
-use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    linting::LintGroup,
+    parsers::{IsolateEnglish, MarkdownOptions},
+    spell::{Dictionary, FstDictionary, MutableDictionary, WordId},
+    weir::WeirLinter,
 };
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-
 use harper_stats::Stats;
+use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+mod annotate;
 mod input;
+mod lint;
+mod prepositions;
+
+use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
-
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
-use crate::lint::{OutputFormat, lint};
-use lint::LintOptions;
+use lint::{LintOptions, OutputFormat, lint};
+use prepositions::prepositions;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
@@ -228,6 +230,24 @@ enum Args {
     Completion {
         /// Generate completions for this shell.
         shell: Shell,
+    },
+    /// Scan a document for collocations with prepositions.
+    Prepositions {
+        /// The text or file you wish to grammar check. If not provided, it will be read from
+        /// standard input.
+        #[arg(last = true)]
+        inputs: Vec<AnyInput>,
+        // 'before' preps
+        #[arg(short = 'b', value_delimiter = ',')]
+        before_preps: Vec<String>,
+        // The words to scan for which will be collocated with prepositions.
+        // Usually inflections of a verb before a preposition.
+        // But sometimes a set of nouns after a preposition.
+        #[arg(short = 'w', long, value_delimiter = ',')]
+        words: Vec<String>,
+        // 'after' preps
+        #[arg(short = 'a', value_delimiter = ',')]
+        after_preps: Vec<String>,
     },
 }
 
@@ -999,6 +1019,15 @@ fn main() -> anyhow::Result<()> {
                 env!("CARGO_BIN_NAME"),
                 &mut io::stdout(),
             );
+            Ok(())
+        }
+        Args::Prepositions {
+            inputs,
+            before_preps: preps_before,
+            words,
+            after_preps: preps_after,
+        } => {
+            prepositions(inputs, preps_before, words, preps_after)?;
             Ok(())
         }
     }
