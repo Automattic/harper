@@ -140,7 +140,10 @@ mod tests_portuguese {
     use super::SpellCheck;
     use crate::PortugueseDialect;
     use crate::languages::LanguageFamily;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_lint_count_with_language, assert_suggestion_result,
+        assert_suggestion_result_with_language,
+    };
     use crate::spell::FstDictionary;
 
     // Capitalization tests
@@ -148,10 +151,10 @@ mod tests_portuguese {
     #[test]
     #[ignore]
     fn brasil_capitalized() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "A palavra brasil deveria ser capitalizada.",
             SpellCheck::new(
-                FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+                FstDictionary::curated_for_language(LanguageFamily::Portuguese),
                 PortugueseDialect::Brazilian,
             ),
             "A palavra Brasil deveria ser capitalizada",
@@ -162,10 +165,10 @@ mod tests_portuguese {
     #[test]
     #[ignore]
     fn harper_automattic_capitalized() {
-        assert_lint_count(
+        assert_lint_count_with_language(
             "Tal qual harper e automattic.",
             SpellCheck::new(
-                FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+                FstDictionary::curated_for_language(LanguageFamily::Portuguese),
                 PortugueseDialect::Brazilian,
             ),
             2,

@@ -51,7 +51,7 @@ impl ExprLinter for GermanFillerWords {
 #[cfg(test)]
 mod tests {
     use super::GermanFillerWords;
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::linting::{Linter, tests::assert_suggestion_result};
 
     #[test]
     fn removes_aehm() {

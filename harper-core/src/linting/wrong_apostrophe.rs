@@ -69,11 +69,14 @@ impl ExprLinter for WrongApostrophe {
 #[cfg(test)]
 mod tests {
     use super::WrongApostrophe;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_lint_count, assert_lint_count_with_language, assert_suggestion_result,
+        assert_suggestion_result_with_language,
+    };
 
     #[test]
     fn fix_dont_with_semicolon_to_apostrophe() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "It's better if you don;t type like this.",
             WrongApostrophe::default(),
             "It's better if you don't type like this.",
@@ -83,7 +86,7 @@ mod tests {
 
     #[test]
     fn ignore_correct() {
-        assert_lint_count(
+        assert_lint_count_with_language(
             "I don't doubt it.",
             WrongApostrophe::default(),
             0,
@@ -93,7 +96,7 @@ mod tests {
 
     #[test]
     fn fix_title_case() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "Don;t type like this.",
             WrongApostrophe::default(),
             "Don't type like this.",
@@ -103,7 +106,7 @@ mod tests {
 
     #[test]
     fn fix_all_caps() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "DON;T TRY THIS AT HOME.",
             WrongApostrophe::default(),
             "DON'T TRY THIS AT HOME.",
@@ -114,7 +117,7 @@ mod tests {
     #[test]
     #[ignore = "replace_with_match_case has a bug turning `I'll` into `I'LL`"]
     fn fix_ill_and_monkeys() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "Well I;ll be a monkey;s uncle!",
             WrongApostrophe::default(),
             "Well I'll be a monkey's uncle!",
@@ -124,7 +127,7 @@ mod tests {
 
     #[test]
     fn fix_other_contractions_and_possessives() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "Let;s see if we;ve fixed patrakov;s bug. Fun wasn;t it?",
             WrongApostrophe::default(),
             "Let's see if we've fixed patrakov's bug. Fun wasn't it?",
@@ -134,7 +137,7 @@ mod tests {
 
     #[test]
     fn corrects_ive_with_correct_capitalization() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "I;ve",
             WrongApostrophe::default(),
             "I've",
@@ -144,7 +147,7 @@ mod tests {
 
     #[test]
     fn fix_acute_dont() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "To see the list of available bikes for a location, you don´t need any authentication.",
             WrongApostrophe::default(),
             "To see the list of available bikes for a location, you don't need any authentication.",
@@ -154,7 +157,7 @@ mod tests {
 
     #[test]
     fn fix_acute_im() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "In my research, I´m applying the latest generation of quantitative methods in epidemiology",
             WrongApostrophe::default(),
             "In my research, I'm applying the latest generation of quantitative methods in epidemiology",
@@ -164,7 +167,7 @@ mod tests {
 
     #[test]
     fn fix_acute_its() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "and it´s auto-updated if that project is hosted here on github",
             WrongApostrophe::default(),
             "and it's auto-updated if that project is hosted here on github",
@@ -174,7 +177,7 @@ mod tests {
 
     #[test]
     fn fix_acute_lets() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "Let´s now visit the main functionalities provided by GrimoireLab.",
             WrongApostrophe::default(),
             "Let's now visit the main functionalities provided by GrimoireLab.",
@@ -184,7 +187,7 @@ mod tests {
 
     #[test]
     fn fix_acute_microsofts() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "Windows 11 Upgrade tool that bypasses new Microsoft´s requirements",
             WrongApostrophe::default(),
             "Windows 11 Upgrade tool that bypasses new Microsoft's requirements",
@@ -194,7 +197,7 @@ mod tests {
 
     #[test]
     fn fix_acute_youre() {
-        assert_suggestion_result(
+        assert_suggestion_result_with_language(
             "You´re looking for clues, but you´re missing all the signs",
             WrongApostrophe::default(),
             "You're looking for clues, but you're missing all the signs",

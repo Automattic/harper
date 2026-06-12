@@ -5,9 +5,10 @@ use smallvec::ToSmallVec;
 
 use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
+use crate::dialects::english::EnglishDialect as Dialect;
 use crate::document::Document;
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, EnglishDialect as Dialect, TokenStringExt};
+use crate::{CharString, CharStringExt, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -144,14 +145,12 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
+    use crate::dialects::english::EnglishDialect as Dialect;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-    use crate::{
-        Dialect,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
     use crate::{DictWordMetadata, Document};
 
     // Capitalization tests

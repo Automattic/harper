@@ -459,38 +459,6 @@ pub mod tests {
         }
     }
 
-    // Before the asserts, let's test that the test linter itself has the behaviours we intend
-    mod linter_tests {
-
-        #[test]
-        fn test_1_to_1_error_to_fix() {
-            assert_suggestion_result("bad", TestLinter::new(&[(&["bad"], &["good"])]), "good");
-        }
-
-        #[test]
-        fn test_1_to_2_error_to_fixes() {
-            let linter = TestLinter::new(&[(&["bad"], &["good1", "good2"])]);
-            assert_suggestion_result("bad", linter.clone(), "good1");
-            assert_suggestion_result("bad", linter, "good2");
-        }
-
-        #[test]
-        fn test_2_to_1_errors_to_fix() {
-            let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good"])]);
-            assert_suggestion_result("bad1", linter.clone(), "good");
-            assert_suggestion_result("bad2", linter, "good");
-        }
-
-        #[test]
-        fn test_2_to_2_errors_to_fixes() {
-            let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good1", "good2"])]);
-            assert_suggestion_result("bad1", linter.clone(), "good1");
-            assert_suggestion_result("bad2", linter.clone(), "good2");
-            assert_suggestion_result("bad1", linter.clone(), "good2");
-            assert_suggestion_result("bad2", linter, "good1");
-        }
-    }
-
     #[track_caller]
     pub fn assert_lint_count_plain_english(text: &str, mut linter: impl Linter, count: usize) {
         let test = Document::new_plain_english_curated(text);
@@ -505,7 +473,12 @@ pub mod tests {
     }
 
     #[track_caller]
-    pub fn assert_lint_count(
+    pub fn assert_lint_count(text: &str, linter: impl Linter, count: usize) {
+        assert_lint_count_with_language(text, linter, count, LanguageFamily::English)
+    }
+
+    #[track_caller]
+    pub fn assert_lint_count_with_language(
         text: &str,
         mut linter: impl Linter,
         count: usize,
@@ -648,7 +621,12 @@ pub mod tests {
     /// Assert the total number of suggestions produced by a [`Linter`], spread across all produced
     /// [`Lint`]s.
     #[track_caller]
-    pub fn assert_suggestion_count(
+    pub fn assert_suggestion_count(text: &str, mut linter: impl Linter, count: usize) {
+        assert_suggestion_count_with_language(text, linter, count, LanguageFamily::English)
+    }
+
+    #[track_caller]
+    pub fn assert_suggestion_count_with_language(
         text: &str,
         mut linter: impl Linter,
         count: usize,
@@ -699,6 +677,21 @@ pub mod tests {
         );
     }
 
+    /// Use this when you want to verify that *some* suggestion sequence produces the
+    /// expected result, without caring which specific suggestions are used, with a language parameter.
+    ///
+    /// See issue #950: https://github.com/Automattic/harper/issues/950
+    #[track_caller]
+    pub fn assert_suggestion_result_with_language(
+        text: &str,
+        mut linter: impl Linter,
+        needle: &str,
+        _language: LanguageFamily,
+    ) {
+        // For now, just call the regular version since language-specific suggestion handling is not implemented
+        assert_suggestion_result(text, linter, needle)
+    }
+
     /// DFS implementation using markdown instead of plain English
     #[track_caller]
     pub fn assert_markdown_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
@@ -746,5 +739,38 @@ pub mod tests {
         }
 
         false
+    }
+
+    // Before the asserts, let's test that the test linter itself has the behaviours we intend
+    mod linter_tests {
+        use super::{TestLinter, assert_suggestion_result};
+
+        #[test]
+        fn test_1_to_1_error_to_fix() {
+            assert_suggestion_result("bad", TestLinter::new(&[(&["bad"], &["good"])]), "good");
+        }
+
+        #[test]
+        fn test_1_to_2_error_to_fixes() {
+            let linter = TestLinter::new(&[(&["bad"], &["good1", "good2"])]);
+            assert_suggestion_result("bad", linter.clone(), "good1");
+            assert_suggestion_result("bad", linter, "good2");
+        }
+
+        #[test]
+        fn test_2_to_1_errors_to_fix() {
+            let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good"])]);
+            assert_suggestion_result("bad1", linter.clone(), "good");
+            assert_suggestion_result("bad2", linter, "good");
+        }
+
+        #[test]
+        fn test_2_to_2_errors_to_fixes() {
+            let linter = TestLinter::new(&[(&["bad1", "bad2"], &["good1", "good2"])]);
+            assert_suggestion_result("bad1", linter.clone(), "good1");
+            assert_suggestion_result("bad2", linter.clone(), "good2");
+            assert_suggestion_result("bad1", linter.clone(), "good2");
+            assert_suggestion_result("bad2", linter, "good1");
+        }
     }
 }

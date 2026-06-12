@@ -2,7 +2,7 @@
 // Tests Fugen-s, Fugen-n, and complex compound word decomposition
 
 use harper_core::language::german::dialects::GermanDialect;
-use harper_core::linting::german_spell_check::GermanSpellCheck;
+use harper_core::language::german::linting::german_spell_check::GermanSpellCheck;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::curated_german_dictionary;
 use harper_core::{Document, Language};
