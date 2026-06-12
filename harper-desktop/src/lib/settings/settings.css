@@ -778,6 +778,13 @@ em,
 	flex: 0 0 28px;
 	border-radius: 7px;
 	background: var(--app-tint);
+	overflow: hidden;
+}
+
+.app-tile img {
+	width: 24px;
+	height: 24px;
+	object-fit: contain;
 }
 
 .pack-title {
