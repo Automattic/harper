@@ -176,6 +176,24 @@ mod tests {
     };
     use crate::{DictWordMetadata, Document};
 
+    #[test]
+    fn athough_suggests_although() {
+        assert_suggestion_result(
+            "athough it was late, we continued.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "although it was late, we continued.",
+        );
+    }
+
+    #[test]
+    fn athough_suggests_although_capitalized() {
+        assert_suggestion_result(
+            "Athough it was late, we continued.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            "Although it was late, we continued.",
+        );
+    }
+
     // Capitalization tests
 
     #[test]
