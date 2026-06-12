@@ -5089,6 +5089,12 @@
 								"label": "Pay For Price"
 							}
 						},
+            {
+							"Bool": {
+								"name": "NumericModifier",
+								"state": true,
+								"label": "Numeric Modifier"
+						},
 						{
 							"Bool": {
 								"name": "IncidentReport",

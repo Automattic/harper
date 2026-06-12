@@ -171,6 +171,7 @@ mod nor_modal_pronoun;
 mod not_only_inversion;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
+mod numeric_modifier;
 mod numeric_range_en_dash;
 mod obsess_preposition;
 mod of_course;
