@@ -121,6 +121,7 @@ use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
+use super::jump_the_gun::JumpTheGun;
 use super::lead_rise_to::LeadRiseTo;
 use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
@@ -685,6 +686,7 @@ impl LintGroup {
         insert_expr_rule!(ItsPossessive, true);
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
+        insert_expr_rule!(JumpTheGun, true);
         insert_expr_rule!(LeadRiseTo, true);
         insert_expr_rule!(LeavingInDroves, true);
         insert_expr_rule!(LeftRightHand, true);
