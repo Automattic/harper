@@ -169,6 +169,8 @@ use super::on_floor::OnFloor;
 use super::once_or_twice::OnceOrTwice;
 use super::one_and_the_same::OneAndTheSame;
 use super::one_of_the_singular::OneOfTheSingular;
+use super::ones_own_accord::OnesOwnAccord;
+use super::open_compounds::OpenCompounds;
 use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
@@ -280,7 +282,6 @@ use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::{Chunk, Sentence};
-use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
 };
@@ -731,6 +732,7 @@ impl LintGroup {
         insert_expr_rule!(OnceOrTwice, true);
         insert_expr_rule!(OneAndTheSame, true);
         insert_expr_rule_with_dict!(OneOfTheSingular, true);
+        insert_expr_rule!(OnesOwnAccord, true);
         insert_expr_rule!(OpenCompounds, true);
         insert_expr_rule!(OpenTheLight, true);
         insert_expr_rule!(OrthographicConsistency, true);
