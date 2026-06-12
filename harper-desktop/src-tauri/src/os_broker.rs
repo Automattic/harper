@@ -84,6 +84,7 @@ fn fallback_integration_display_name(bundle_id: &str) -> String {
 /// This lets the highlighter compile on non-macOS platforms while making it explicit that there is
 /// currently no accessibility or cursor integration there.
 #[cfg(not(target_os = "macos"))]
+#[derive(Default)]
 pub struct NoopBroker;
 
 #[cfg(not(target_os = "macos"))]

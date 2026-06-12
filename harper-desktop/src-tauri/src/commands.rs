@@ -4,14 +4,16 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
-use crate::{IntegrationView, accessibility_allows_highlighter_start, platform_broker};
+use crate::{
+    IntegrationView, PlatformBroker, accessibility_allows_highlighter_start, platform_broker,
+};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::Arc;
+use std::sync::{Arc, Mutex as StdMutex};
 use tauri::ipc::Invoke;
 use tauri::{Runtime, State};
 use tokio::sync::Mutex;
@@ -229,9 +231,12 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
+    broker: State<'_, StdMutex<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker();
+    let broker = broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?;
 
     Ok(integrations
         .into_iter()
@@ -290,13 +295,24 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-fn get_installed_application_bundle_ids() -> Result<Vec<String>, String> {
-    platform_broker().installed_application_bundle_ids()
+fn get_installed_application_bundle_ids(
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> Result<Vec<String>, String> {
+    broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .installed_application_bundle_ids()
 }
 
 #[tauri::command]
-fn get_application_icon_data_url(bundle_id: String) -> Result<String, String> {
-    let icon_png = platform_broker().application_icon_png(&bundle_id)?;
+fn get_application_icon_data_url(
+    bundle_id: String,
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> Result<String, String> {
+    let icon_png = broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .application_icon_png(&bundle_id)?;
     let encoded = general_purpose::STANDARD.encode(icon_png);
 
     Ok(format!("data:image/png;base64,{encoded}"))

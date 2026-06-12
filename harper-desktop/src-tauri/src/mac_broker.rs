@@ -28,13 +28,13 @@ use objc2_app_kit::{NSRunningApplication, NSWorkspace};
 use objc2_foundation::NSRect;
 use std::{
     cell::{Cell, RefCell},
-    collections::{BTreeMap, BTreeSet},
+    collections::{BTreeMap, BTreeSet, HashMap},
     error::Error as StdError,
     fs,
     path::{Path, PathBuf},
     process::Command,
     ptr,
-    rc::Rc,
+    sync::{Arc, Mutex},
     time::{Duration, Instant},
 };
 
@@ -58,7 +58,8 @@ type WindowInfo = CFDictionary<CFString, CFType>;
 /// targeting the app the user was reviewing.
 pub struct MacBroker {
     last_focused: Option<pid_t>,
-    integrations: Rc<RefCell<Vec<Integration>>>,
+    integrations: Arc<Mutex<Vec<Integration>>>,
+    application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -100,10 +101,11 @@ enum AccessibilityActivationVerification {
 }
 
 impl MacBroker {
-    pub fn new(integrations: Rc<RefCell<Vec<Integration>>>) -> Self {
+    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
         Self {
             last_focused: None,
             integrations,
+            application_icon_cache: Mutex::new(HashMap::new()),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -303,7 +305,7 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new(Rc::new(RefCell::new(Config::curated_integrations())))
+        Self::new(Arc::new(Mutex::new(Config::curated_integrations())))
     }
 }
 
@@ -347,7 +349,19 @@ impl OsBroker for MacBroker {
             }
         };
 
-        if !Config::is_integration_enabled_in(&self.integrations.borrow(), &bundle_identifier) {
+        let integration_enabled = match self.integrations.lock() {
+            Ok(integrations) => {
+                Config::is_integration_enabled_in(&integrations, &bundle_identifier)
+            }
+            Err(error) => {
+                self.window_movement = None;
+                self.reset_accessibility_activation();
+                eprintln!("Unable to read integrations: {error}");
+                return Vec::new();
+            }
+        };
+
+        if !integration_enabled {
             self.window_movement = None;
             self.reset_accessibility_activation();
             return Vec::new();
@@ -408,7 +422,29 @@ impl OsBroker for MacBroker {
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
-        application_icon_png(bundle_id)
+        let bundle_id = bundle_id.trim();
+
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+
+        if let Some(icon_png) = self
+            .application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to read application icon cache: {error}"))?
+            .get(bundle_id)
+            .cloned()
+        {
+            return Ok(icon_png);
+        }
+
+        let icon_png = application_icon_png(bundle_id)?;
+        self.application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to update application icon cache: {error}"))?
+            .insert(bundle_id.to_string(), icon_png.clone());
+
+        Ok(icon_png)
     }
 
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {

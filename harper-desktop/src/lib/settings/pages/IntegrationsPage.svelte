@@ -9,17 +9,13 @@ interface IntegrationRow extends Integration {
 }
 
 let integrations: Integration[] = [];
-let integrationIconDataUrls = new Map<string, string>();
-let integrationIconFailures = new Set<string>();
+let integrationApps: IntegrationRow[] = [];
 let integrationsError = '';
 let isIntegrationsLoading = true;
 let isIntegrationsSaving = false;
 let appPickerOpen = false;
 let newBundleId = '';
 
-$: integrationApps = integrations.map((integration) =>
-	toIntegrationRow(integration, integrationIconDataUrls),
-);
 $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
 onMount(() => {
@@ -32,6 +28,7 @@ async function loadIntegrations() {
 
 	try {
 		integrations = await Client.getIntegrations();
+		integrationApps = integrations.map(toIntegrationRow);
 		void loadIntegrationIcons(integrations);
 	} catch (error) {
 		integrationsError = `Unable to load integrations: ${error}`;
@@ -40,14 +37,10 @@ async function loadIntegrations() {
 	}
 }
 
-function toIntegrationRow(
-	integration: Integration,
-	iconDataUrls: Map<string, string>,
-): IntegrationRow {
+function toIntegrationRow(integration: Integration): IntegrationRow {
 	return {
 		...integration,
 		name: integration.display_name,
-		iconDataUrl: iconDataUrls.get(integration.bundle_id),
 	};
 }
 
@@ -56,15 +49,13 @@ async function loadIntegrationIcons(integrationsToLoad: Integration[]) {
 		integrationsToLoad.map(async (integration) => {
 			const bundleId = integration.bundle_id;
 
-			if (integrationIconDataUrls.has(bundleId) || integrationIconFailures.has(bundleId)) {
-				return;
-			}
-
 			try {
 				const iconDataUrl = await Client.getApplicationIconDataUrl(bundleId);
-				integrationIconDataUrls = new Map(integrationIconDataUrls).set(bundleId, iconDataUrl);
+				integrationApps = integrationApps.map((app) =>
+					app.bundle_id === bundleId ? { ...app, iconDataUrl } : app,
+				);
 			} catch {
-				integrationIconFailures = new Set(integrationIconFailures).add(bundleId);
+				// Keep the single-letter fallback when an app icon cannot be loaded.
 			}
 		}),
 	);
@@ -72,9 +63,13 @@ async function loadIntegrationIcons(integrationsToLoad: Integration[]) {
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = integrations.map((integration) =>
 		integration.bundle_id === bundleId ? { ...integration, enabled } : integration,
+	);
+	integrationApps = integrationApps.map((app) =>
+		app.bundle_id === bundleId ? { ...app, enabled } : app,
 	);
 	isIntegrationsSaving = true;
 	integrationsError = '';
@@ -83,6 +78,7 @@ async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 		await Client.setIntegrationEnabled(bundleId, enabled);
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to update integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
@@ -91,8 +87,10 @@ async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 
 async function removeIntegration(bundleId: string) {
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = integrations.filter((integration) => integration.bundle_id !== bundleId);
+	integrationApps = integrationApps.filter((app) => app.bundle_id !== bundleId);
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
@@ -100,6 +98,7 @@ async function removeIntegration(bundleId: string) {
 		await Client.removeIntegration(bundleId);
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to remove integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
@@ -117,11 +116,13 @@ async function addIntegration(bundleId: string) {
 	}
 
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = [
 		...integrations,
 		{ bundle_id: trimmedBundleId, enabled: true, display_name: trimmedBundleId },
 	];
+	integrationApps = integrations.map(toIntegrationRow);
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
@@ -131,6 +132,7 @@ async function addIntegration(bundleId: string) {
 		closeAppPicker();
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to add integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
