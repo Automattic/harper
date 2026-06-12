@@ -22,7 +22,7 @@ In this main process, we try to follow their conventions whenever possible.
 When the "Harper Service" is started (which happens when the main process starts, unless the user has disabled it) the main process will kick off a second "highlighter" process by running the same binary with the `highlighter` argument.
 This second process is what actually reads and writes text from user applications (using a platform's Accessibility API), performs linting, and renders highlights and suggestion popups over the top of their screen.
 We need to separate this highlighter service process from the main process because it needs to maintain its own custom event loop, which was not possible with Tauri.
-It also needs to be able to place itself it special "modes" within the operating system, which allow it open windows without taskbar icons or frames.
+It also needs to be able to place itself in special "modes" within the operating system, which allow it to open windows without taskbar icons or frames.
 
 ## The Main Process
 
@@ -49,7 +49,7 @@ There are three main components to this:
 - Its communication with the user via an invisible window which it renders on top of every other window on the user's desktop.
 
 It communicates with the main process using the protocol defined in the `communication` module.
-It does so to receive updates to it's internal lint configuration so that it matches the main process's state as closely as possible.
+It does so to receive updates to its internal lint configuration so that it matches the main process's state as closely as possible.
 When the user changes a setting via a Tauri window, that setting is propagated from the WebView to the main process, which is then shared to the highlighter.
 The latter step happens in the `communication` module.
 
