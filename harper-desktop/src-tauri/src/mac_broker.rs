@@ -354,10 +354,8 @@ impl OsBroker for MacBroker {
                 Config::is_integration_enabled_in(&integrations, &bundle_identifier)
             }
             Err(error) => {
-                self.window_movement = None;
-                self.reset_accessibility_activation();
                 eprintln!("Unable to read integrations: {error}");
-                return Vec::new();
+                false
             }
         };
 
