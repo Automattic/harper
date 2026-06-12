@@ -1333,6 +1333,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Nowadays",
+								"state": true,
+								"label": "Nowadays"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ConstituteAs",
 								"state": true,
 								"label": "Constitute As"
@@ -2974,6 +2981,13 @@
 								"name": "ExpandPrevious",
 								"state": true,
 								"label": "Expand Previous"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandThough",
+								"state": true,
+								"label": "Expand Though"
 							}
 						},
 						{
@@ -5091,6 +5105,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheEntiretyOf",
+								"state": true,
+								"label": "The Entirety Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NowKnownAs",
 								"state": true,
 								"label": "Now Known As"
@@ -5101,6 +5122,13 @@
 								"name": "AsHow",
 								"state": true,
 								"label": "As How"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LeavingInDroves",
+								"state": true,
+								"label": "Leaving In Droves"
 							}
 						}
 					]

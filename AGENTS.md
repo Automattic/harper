@@ -7,9 +7,10 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 - Route `/docs/...` maps to `packages/web/src/routes/docs/...`.
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
-If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
+If you are working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
 Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
 Whenever agents are done making changes, they should run `just format` before handing work back to the user.
+If `just format` fails, you can use `just setup` to prepare the relevant dependencies.
 
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
