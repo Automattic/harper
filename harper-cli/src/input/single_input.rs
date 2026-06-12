@@ -138,6 +138,7 @@ impl SingleInputTrait for FileInput {
             Some("md" | "markdown" | "mkd" | "mdwn" | "mdown" | "mdtxt" | "mdtext" | "qmd") => {
                 Box::new(Markdown::default())
             }
+            Some("mdx") => Box::new(Markdown::new(MarkdownOptions::default().with_mdx(true))),
             Some("ink") => Box::new(InkParser::default()),
             Some("lhs") => Box::new(LiterateHaskellParser::new_markdown(
                 MarkdownOptions::default(),
