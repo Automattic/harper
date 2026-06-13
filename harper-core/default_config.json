@@ -4237,6 +4237,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SolveFor",
+								"state": true,
+								"label": "Solve For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SomethingIs",
 								"state": true,
 								"label": "Something Is"
