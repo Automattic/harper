@@ -8,14 +8,58 @@ use serde_json::Value;
 use smallvec::SmallVec;
 use std::ops::{BitOr, BitOrAssign};
 
-use crate::dialects::dialect_enum::DialectsEnum;
+// Import dialect types from the central dialects module for modularity.
+use crate::dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
 use crate::dialects::dialect_trait::DialectFlags as _;
-use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
-use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
+use crate::languages::LanguageFamily;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
+
+// Import all dialect types from central re-exports
+use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
+use crate::dialects::german::{GermanDialect, GermanDialectFlags};
+use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
+
+// =============================================================================
+// DIALECT FLAGS CODE GENERATION
+// =============================================================================
+// This section uses macros to generate per-language code.
+// To add a new language, update the LANGUAGES! macro below.
+
+/// Define all languages with dialect support.
+/// Format: (RustName, snake_case, DialectType, FlagsType)
+/// This is the ONLY place that needs updating for new languages.
+macro_rules! LANGUAGES {
+    () => {
+        (English, english, EnglishDialect, EnglishDialectFlags),
+        (German, german, GermanDialect, GermanDialectFlags),
+        (Portuguese, portuguese, PortugueseDialect, PortugueseDialectFlags),
+    };
+}
+
+// =============================================================================
+// LANGUAGES MACRO
+// This is the central list of all languages with dialect support.
+// To add a new language, add an entry here.
+// 
+// Format: (RustName, snake_case, DialectType, FlagsType)
+// Example: (Spanish, spanish, SpanishDialect, SpanishDialectFlags)
+// 
+// IMPORTANT: After adding a language here, you must also update:
+// - The DialectFlags struct fields below
+// - The ScopedDialectFlagsSerde struct fields
+// - The LegacyDialect enum and LegacyDialectFlags bitflags
+// - The serialization/deserialization logic
+// - All methods that reference specific languages
+// =============================================================================
+macro_rules! LANGUAGES {
+    () => {
+        (English, english, EnglishDialect, EnglishDialectFlags),
+        (German, german, GermanDialect, GermanDialectFlags),
+        (Portuguese, portuguese, PortugueseDialect, PortugueseDialectFlags),
+    };
+}
 
 /// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
 /// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
@@ -1254,9 +1298,11 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
 
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]
 pub struct DialectFlags {
-    english: EnglishDialectFlags,
-    german: GermanDialectFlags,
-    portuguese: PortugueseDialectFlags,
+    // IMPORTANT: These fields must match the LANGUAGES! macro above.
+    // To add a new language, add a field here and update LANGUAGES!.
+    pub english: EnglishDialectFlags,
+    pub german: GermanDialectFlags,
+    pub portuguese: PortugueseDialectFlags,
 }
 
 impl Serialize for DialectFlags {
