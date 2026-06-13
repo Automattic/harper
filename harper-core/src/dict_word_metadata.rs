@@ -9,10 +9,9 @@ use smallvec::SmallVec;
 use std::ops::{BitOr, BitOrAssign};
 
 // Import dialect types from the central dialects module for modularity.
-use crate::dialects::dialect_enum::{DialectFlagsEnum, DialectsEnum};
+use crate::dialects::dialect_enum::DialectsEnum;
 use crate::dialects::dialect_trait::DialectFlags as _;
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::languages::LanguageFamily;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
 
@@ -42,10 +41,10 @@ macro_rules! LANGUAGES {
 // LANGUAGES MACRO
 // This is the central list of all languages with dialect support.
 // To add a new language, add an entry here.
-// 
+//
 // Format: (RustName, snake_case, DialectType, FlagsType)
 // Example: (Spanish, spanish, SpanishDialect, SpanishDialectFlags)
-// 
+//
 // IMPORTANT: After adding a language here, you must also update:
 // - The DialectFlags struct fields below
 // - The ScopedDialectFlagsSerde struct fields
@@ -1072,124 +1071,9 @@ impl AffixData {
     }
 }
 
-#[repr(u16)]
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
-enum LegacyDialect {
-    American = 1 << 0,
-    Canadian = 1 << 1,
-    Australian = 1 << 2,
-    British = 1 << 3,
-    Indian = 1 << 4,
-    German = 1 << 5,
-    GermanAustrian = 1 << 6,
-    GermanSwiss = 1 << 7,
-    Portuguese = 1 << 8,
-}
-
-// Custom Deserialize implementation for legacy flat dialect values.
-impl<'de> Deserialize<'de> for LegacyDialect {
-    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        use serde::de::Error;
-
-        // Try to deserialize as a string first
-        struct StringOrNumberVisitor;
-
-        impl serde::de::Visitor<'_> for StringOrNumberVisitor {
-            type Value = LegacyDialect;
-
-            fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-                formatter.write_str("a dialect string (e.g., 'German', 'American') or number")
-            }
-
-            fn visit_str<E>(self, value: &str) -> Result<Self::Value, E>
-            where
-                E: Error,
-            {
-                match value.to_lowercase().as_str() {
-                    "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
-                        Ok(LegacyDialect::American)
-                    }
-                    "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => {
-                        Ok(LegacyDialect::British)
-                    }
-                    "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
-                        Ok(LegacyDialect::Australian)
-                    }
-                    "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => {
-                        Ok(LegacyDialect::Indian)
-                    }
-                    "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(LegacyDialect::Canadian),
-                    "de" | "german" | "deutsch" | "de-de" | "de_de" => Ok(LegacyDialect::German),
-                    "at" | "austria" | "austrian" | "de-at" | "de_at" => {
-                        Ok(LegacyDialect::GermanAustrian)
-                    }
-                    "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
-                        Ok(LegacyDialect::GermanSwiss)
-                    }
-                    "pt"
-                    | "pt-pt"
-                    | "pt_pt"
-                    | "portuguese"
-                    | "português"
-                    | "br"
-                    | "brazil"
-                    | "portuguese-brazilian"
-                    | "portuguese_brazilian"
-                    | "pt-br"
-                    | "pt_br" => Ok(LegacyDialect::Portuguese),
-                    _ => Err(Error::custom(format!("Unknown dialect: {}", value))),
-                }
-            }
-
-            fn visit_u64<E>(self, value: u64) -> Result<Self::Value, E>
-            where
-                E: Error,
-            {
-                // Handle numeric values (existing behavior)
-                match value {
-                    1 => Ok(LegacyDialect::American),
-                    2 => Ok(LegacyDialect::Canadian),
-                    4 => Ok(LegacyDialect::Australian),
-                    8 => Ok(LegacyDialect::British),
-                    16 => Ok(LegacyDialect::Indian),
-                    32 => Ok(LegacyDialect::German),
-                    64 => Ok(LegacyDialect::GermanAustrian),
-                    128 => Ok(LegacyDialect::GermanSwiss),
-                    256 => Ok(LegacyDialect::Portuguese),
-                    _ => Err(Error::custom(format!("Unknown dialect value: {}", value))),
-                }
-            }
-        }
-
-        deserializer.deserialize_any(StringOrNumberVisitor)
-    }
-}
-
-// The underlying type used for legacy flat dialect flags.
-type LegacyDialectFlagsUnderlyingType = u16;
-
-bitflags::bitflags! {
-    /// Legacy, flat representation of dialect flags.
-    ///
-    /// This is only used for deserialization compatibility while migrating to language-scoped flags.
-    #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
-    #[serde(transparent)]
-    struct LegacyDialectFlags: LegacyDialectFlagsUnderlyingType {
-        const AMERICAN = LegacyDialect::American as LegacyDialectFlagsUnderlyingType;
-        const CANADIAN = LegacyDialect::Canadian as LegacyDialectFlagsUnderlyingType;
-        const AUSTRALIAN = LegacyDialect::Australian as LegacyDialectFlagsUnderlyingType;
-        const BRITISH = LegacyDialect::British as LegacyDialectFlagsUnderlyingType;
-        const INDIAN = LegacyDialect::Indian as LegacyDialectFlagsUnderlyingType;
-        const GERMAN = LegacyDialect::German as LegacyDialectFlagsUnderlyingType;
-        const GERMAN_AUSTRIAN = LegacyDialect::GermanAustrian as LegacyDialectFlagsUnderlyingType;
-        const GERMAN_SWISS = LegacyDialect::GermanSwiss as LegacyDialectFlagsUnderlyingType;
-        const PORTUGUESE = LegacyDialect::Portuguese as LegacyDialectFlagsUnderlyingType;
-    }
-}
-
+// Legacy flat dialect representation removed — the codebase now requires scoped, language-specific dialect flags.
+// Old legacy support (numeric bitmasks and flat strings) has been removed to simplify the data model.
+// Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
 struct ScopedDialectFlagsSerde {
     english: EnglishDialectFlags,
@@ -1288,9 +1172,30 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                     portuguese,
                 })
             }
+            Value::String(s) => {
+                // Backward compatibility: handle legacy flat dialect format
+                let english = match s.as_str() {
+                    "AMERICAN" => EnglishDialectFlags::AMERICAN,
+                    "CANADIAN" => EnglishDialectFlags::CANADIAN,
+                    "AUSTRALIAN" => EnglishDialectFlags::AUSTRALIAN,
+                    "BRITISH" => EnglishDialectFlags::BRITISH,
+                    "INDIAN" => EnglishDialectFlags::INDIAN,
+                    _ => {
+                        return Err(Error::custom(format!(
+                            "Unknown legacy English dialect: {s}"
+                        )));
+                    }
+                };
+
+                Ok(ScopedDialectFlagsSerde {
+                    english,
+                    german: GermanDialectFlags::default(),
+                    portuguese: PortugueseDialectFlags::default(),
+                })
+            }
             _ => Err(Error::invalid_type(
-                Unexpected::Other("non-object"),
-                &"an object",
+                Unexpected::Other("non-object, non-string"),
+                &"an object or string",
             )),
         }
     }
@@ -1323,17 +1228,9 @@ impl<'de> Deserialize<'de> for DialectFlags {
     where
         D: serde::Deserializer<'de>,
     {
-        #[derive(Deserialize)]
-        #[serde(untagged)]
-        enum SerdeCompatDialectFlags {
-            Scoped(ScopedDialectFlagsSerde),
-            Legacy(LegacyDialectFlags),
-        }
-
-        match SerdeCompatDialectFlags::deserialize(deserializer)? {
-            SerdeCompatDialectFlags::Scoped(scoped) => Ok(scoped.into()),
-            SerdeCompatDialectFlags::Legacy(legacy) => Ok(legacy.into()),
-        }
+        // Only accept the new scoped, language-specific dialect flags format.
+        let scoped = ScopedDialectFlagsSerde::deserialize(deserializer)?;
+        Ok(scoped.into())
     }
 }
 
@@ -1344,42 +1241,6 @@ impl From<ScopedDialectFlagsSerde> for DialectFlags {
             german: value.german,
             portuguese: value.portuguese,
         }
-    }
-}
-
-impl From<LegacyDialectFlags> for DialectFlags {
-    fn from(value: LegacyDialectFlags) -> Self {
-        let mut scoped = Self::empty();
-
-        if value.contains(LegacyDialectFlags::AMERICAN) {
-            scoped.english |= EnglishDialectFlags::AMERICAN;
-        }
-        if value.contains(LegacyDialectFlags::CANADIAN) {
-            scoped.english |= EnglishDialectFlags::CANADIAN;
-        }
-        if value.contains(LegacyDialectFlags::AUSTRALIAN) {
-            scoped.english |= EnglishDialectFlags::AUSTRALIAN;
-        }
-        if value.contains(LegacyDialectFlags::BRITISH) {
-            scoped.english |= EnglishDialectFlags::BRITISH;
-        }
-        if value.contains(LegacyDialectFlags::INDIAN) {
-            scoped.english |= EnglishDialectFlags::INDIAN;
-        }
-        if value.contains(LegacyDialectFlags::GERMAN) {
-            scoped.german |= GermanDialectFlags::STANDARD;
-        }
-        if value.contains(LegacyDialectFlags::GERMAN_AUSTRIAN) {
-            scoped.german |= GermanDialectFlags::AUSTRIAN;
-        }
-        if value.contains(LegacyDialectFlags::GERMAN_SWISS) {
-            scoped.german |= GermanDialectFlags::SWISS;
-        }
-        if value.contains(LegacyDialectFlags::PORTUGUESE) {
-            scoped.portuguese = PortugueseDialectFlags::all();
-        }
-
-        scoped
     }
 }
 
@@ -1680,17 +1541,19 @@ pub mod tests {
 
         #[test]
         fn deserializes_legacy_dialect_flags() {
-            let metadata: crate::DictWordMetadata =
-                serde_json::from_value(json!({ "dialects": "AMERICAN" })).unwrap();
+            // Legacy flat string dialect format should now be supported for backward compatibility
+            let res: Result<crate::DictWordMetadata, _> =
+                serde_json::from_value(json!({ "dialects": "AMERICAN" }));
+            assert!(
+                res.is_ok(),
+                "legacy flat dialect format should deserialize for backward compatibility"
+            );
+
+            let metadata = res.unwrap();
             assert!(
                 metadata
                     .dialects
                     .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American))
-            );
-            assert!(
-                !metadata
-                    .dialects
-                    .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British))
             );
         }
 

@@ -6,7 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language_detection::is_doc_likely_english;
-use harper_core::linting::lint_group::{HumanReadableStructuredConfig, StructuredConfig};
+use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;

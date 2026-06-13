@@ -2,12 +2,6 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
-pub mod expr_linter;
-pub mod lint;
-pub mod lint_group;
-pub mod lint_kind;
-pub mod suggestion;
-
 mod a_part;
 mod a_some_time;
 mod a_while;
@@ -84,6 +78,7 @@ mod except_of;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
+mod expr_linter;
 mod far_be_it;
 mod fascinated_by;
 mod fed_up_with;
@@ -135,6 +130,9 @@ mod less_worse;
 mod let_to_do;
 mod lets_confusion;
 mod likewise;
+mod lint;
+mod lint_group;
+mod lint_kind;
 mod long_sentences;
 mod long_time_ago;
 mod look_down_ones_nose;
@@ -142,7 +140,6 @@ mod looking_forward_to;
 mod map_phrase_linter;
 mod map_phrase_set_linter;
 mod mass_nouns;
-mod mass_plurals;
 mod means_a_lot_to;
 mod merge_linters;
 mod merge_words;
@@ -172,7 +169,6 @@ mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
 mod not_only_inversion;
-mod noun_countability;
 mod noun_verb_confusion;
 mod number_suffix_capitalization;
 mod numeric_range_en_dash;
@@ -197,7 +193,6 @@ mod phrase_set_corrections;
 mod pique_interest;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
-mod portuguese;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -240,6 +235,7 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod suggestion;
 mod take_a_look_to;
 mod take_medicine;
 mod take_serious;
@@ -279,7 +275,7 @@ mod vicious_loop;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
-pub mod weir_rules;
+pub(crate) mod weir_rules;
 mod well_educated;
 mod were_where;
 mod whereas;
@@ -296,9 +292,12 @@ mod wrong_apostrophe;
 pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
-pub use lint_group::FlatConfig;
-pub use lint_group::LintGroup;
+pub use lint_group::{
+    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
+};
 pub use lint_kind::LintKind;
+pub use map_phrase_linter::MapPhraseLinter;
+pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown::render_markdown};

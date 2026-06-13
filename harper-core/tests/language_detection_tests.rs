@@ -4,72 +4,69 @@
 //! for various real-world scenarios.
 
 use harper_core::GermanDialect;
+use harper_core::language_detection::LanguageDetectionRegistry;
 use harper_core::spell::FstDictionary;
 use harper_core::{EnglishDialect, Language};
-use harper_ls::language_detection::LanguageDetectionRegistry;
 
-struct Dialect;
-impl Dialect {
-    const American: Language = Language::English(EnglishDialect::American);
-    const German: Language = Language::German(GermanDialect::Standard);
-}
-
-/// Test helper to run detection and assert result
-fn test_detection(text: &str, expected_dialect: Dialect) {
+fn test_detection(text: &str, expected_language: Language) {
     let registry = LanguageDetectionRegistry::new();
     let dict = FstDictionary::curated();
-    let detected = registry.detect_language(text, &dict, Dialect::American);
-    assert_eq!(detected, expected_dialect, "Failed for text: {}", text);
+    let detected =
+        registry.detect_language(text, &dict, Language::English(EnglishDialect::American));
+    assert_eq!(detected, expected_language, "Failed for text: {}", text);
 }
 
 #[test]
 fn test_empty_file_defaults_to_english() {
     let registry = LanguageDetectionRegistry::new();
     let dict = FstDictionary::curated();
-    let detected = registry.detect_language("", &dict, Dialect::American);
-    assert_eq!(detected, Dialect::American);
+    let detected = registry.detect_language("", &dict, Language::English(EnglishDialect::American));
+    assert_eq!(detected, Language::English(EnglishDialect::American));
 }
 
 #[test]
 fn test_very_short_text_defaults_to_english() {
-    test_detection("Hi", Dialect::American);
-    test_detection("Hello", Dialect::American);
-    test_detection("Test", Dialect::American);
+    test_detection("Hi", Language::English(EnglishDialect::American));
+    test_detection("Hello", Language::English(EnglishDialect::American));
+    test_detection("Test", Language::English(EnglishDialect::American));
 }
 
 #[test]
 fn test_pure_german_with_special_chars() {
     test_detection(
         "Der Hund spielt im Garten mit Äpfeln und Ölkannen.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
-}
-
-#[test]
-fn test_german_sentence_capitalization() {
     test_detection(
         "Der Hund spielt im Garten. Die Katze schläft auf dem Sofa.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
-}
-
-#[test]
-fn test_german_paragraph() {
     test_detection(
         "Das ist eine Anleitung für den Gebrauch der Maschine. \
          Der Hund spielt im Garten und die Katze schläft auf dem Sofa. \
          Das Auto ist sehr schnell und der Vogel singt im Baum. \
          Wir gehen heute ins Kino und essen danach im Restaurant.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
-}
-
-#[test]
-fn test_german_with_common_verbs() {
     test_detection(
         "Der Mann geht zur Arbeit. Die Frau bleibt zu Hause. \
          Die Kinder spielen im Park. Wir essen jetzt zu Mittag.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
+    );
+    test_detection(
+        "Das Buch liegt auf dem Tisch. Der Vogel sitzt auf dem Baum. \
+         Wir gehen ins Kino und fahren in die Stadt.",
+        Language::German(GermanDialect::Standard),
+    );
+    test_detection(
+        "Ich kann das machen. Du musst gehen. Wir wollen lernen. \
+         Sie dürfen hier sein. Er soll das tun.",
+        Language::German(GermanDialect::Standard),
+    );
+    test_detection(
+        "Der Hund kommt an. Die Katze schläft ein. \
+         Wir stehen auf. Sie rufen an.",
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -78,26 +75,18 @@ fn test_pure_english() {
     test_detection(
         "The dog plays in the garden. The cat sleeps on the sofa. \
          The car is very fast and the bird sings in the tree.",
-        Dialect::American,
+        Language::English(EnglishDialect::American),
     );
-}
-
-#[test]
-fn test_english_sentence_structure() {
     test_detection(
         "This is a comprehensive guide to using the new machine. \
          We have been working on this project for several months. \
          The results have been excellent and we are very pleased.",
-        Dialect::American,
+        Language::English(EnglishDialect::American),
     );
-}
-
-#[test]
-fn test_english_with_common_words() {
     test_detection(
         "The man goes to work. The woman stays at home. \
          The children play in the park. We are eating lunch now.",
-        Dialect::American,
+        Language::English(EnglishDialect::American),
     );
 }
 
@@ -107,7 +96,7 @@ fn test_mixed_german_dominant() {
     test_detection(
         "Der Hund plays im Garten. die Katze sleeps auf dem Sofa. \
          Das Auto is very schnell.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -118,7 +107,7 @@ fn test_mixed_english_dominant() {
     test_detection(
         "The dog spielt im garden. The cat schläft on the sofa. \
          The car ist very fast.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -128,7 +117,7 @@ fn test_code_blocks_should_not_confuse_detection() {
     // This test shows the current behavior: English title + bash commands outweigh short German prose
     test_detection(
         "# German Guide\n\n```bash\ncd /home/user\nmkdir test\n```\n\nDer Hund spielt im Garten.",
-        Dialect::American,
+        Language::English(EnglishDialect::American),
     );
 }
 
@@ -139,7 +128,7 @@ fn test_german_with_umlauts_high_confidence() {
         "Äpfel und Ölkannen sind im Garten. \
          Die Schüler üben die Vokabeln. \
          Das Frühstück war großartig.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -148,7 +137,7 @@ fn test_german_pronouns_and_articles() {
     test_detection(
         "Ich gehe zur Schule. Du bist mein Freund. \
          Er ist zu Hause. Wir sind zusammen.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -157,7 +146,7 @@ fn test_english_pronouns_and_articles() {
     test_detection(
         "I go to school. You are my friend. \
          He is at home. We are together.",
-        Dialect::American,
+        Language::English(EnglishDialect::American),
     );
 }
 
@@ -181,7 +170,7 @@ Bitte folgen Sie diesen Schritten:
 Der Hund spielt im Garten. Die Katze schläft auf dem Sofa.
 "#;
 
-    test_detection(german_doc, Dialect::German);
+    test_detection(german_doc, Language::German(GermanDialect::Standard));
 }
 
 #[test]
@@ -204,7 +193,7 @@ Please follow these steps:
 The dog plays in the garden. The cat sleeps on the sofa.
 "#;
 
-    test_detection(english_doc, Dialect::American);
+    test_detection(english_doc, Language::English(EnglishDialect::American));
 }
 
 #[test]
@@ -231,7 +220,7 @@ Wenn das Programm nicht startet, überprüfen Sie bitte:
 3. Die Konfiguration
 "#;
 
-    test_detection(tech_german, Dialect::German);
+    test_detection(tech_german, Language::German(GermanDialect::Standard));
 }
 
 #[test]
@@ -258,7 +247,7 @@ If the program doesn't start, please check:
 3. Configuration
 "#;
 
-    test_detection(tech_english, Dialect::American);
+    test_detection(tech_english, Language::English(EnglishDialect::American));
 }
 
 #[test]
@@ -283,7 +272,7 @@ funktioniert gut. Vielen Dank für Ihre Aufmerksamkeit.
 "#;
 
     // Should detect as German due to German being predominant
-    test_detection(multilingual, Dialect::German);
+    test_detection(multilingual, Language::German(GermanDialect::Standard));
 }
 
 #[test]
@@ -294,10 +283,14 @@ fn test_performance_long_document() {
     let dict = FstDictionary::curated();
 
     let start = std::time::Instant::now();
-    let detected = registry.detect_language(&long_german, &dict, Dialect::American);
+    let detected = registry.detect_language(
+        &long_german,
+        &dict,
+        Language::English(EnglishDialect::American),
+    );
     let duration = start.elapsed();
 
-    assert_eq!(detected, Dialect::German);
+    assert_eq!(detected, Language::German(GermanDialect::Standard));
     assert!(
         duration.as_millis() < 100,
         "Detection took too long: {:?}",
@@ -307,21 +300,21 @@ fn test_performance_long_document() {
 
 #[test]
 fn test_edge_case_single_word() {
-    test_detection("Hund", Dialect::American); // Too short
-    test_detection("Dog", Dialect::American); // Too short
+    test_detection("Hund", Language::English(EnglishDialect::American)); // Too short
+    test_detection("Dog", Language::English(EnglishDialect::American)); // Too short
 }
 
 #[test]
 fn test_edge_case_numbers_and_punctuation() {
-    test_detection("123 456 789", Dialect::American); // Numbers only
-    test_detection("... --- !!!", Dialect::American); // Punctuation only
+    test_detection("123 456 789", Language::English(EnglishDialect::American)); // Numbers only
+    test_detection("... --- !!!", Language::English(EnglishDialect::American)); // Punctuation only
 }
 
 #[test]
 fn test_german_common_phrases() {
     test_detection(
         "Guten Tag! Wie geht es Ihnen? Danke, mir geht es gut.",
-        Dialect::German,
+        Language::German(GermanDialect::Standard),
     );
 }
 
@@ -329,33 +322,6 @@ fn test_german_common_phrases() {
 fn test_english_common_phrases() {
     test_detection(
         "Good morning! How are you? Thank you, I'm fine.",
-        Dialect::American,
-    );
-}
-
-#[test]
-fn test_german_prepositions() {
-    test_detection(
-        "Das Buch liegt auf dem Tisch. Der Vogel sitzt auf dem Baum. \
-         Wir gehen ins Kino und fahren in die Stadt.",
-        Dialect::German,
-    );
-}
-
-#[test]
-fn test_german_modal_verbs() {
-    test_detection(
-        "Ich kann das machen. Du musst gehen. Wir wollen lernen. \
-         Sie dürfen hier sein. Er soll das tun.",
-        Dialect::German,
-    );
-}
-
-#[test]
-fn test_german_separable_prefixes() {
-    test_detection(
-        "Der Hund kommt an. Die Katze schläft ein. \
-         Wir stehen auf. Sie rufen an.",
-        Dialect::German,
+        Language::English(EnglishDialect::American),
     );
 }
