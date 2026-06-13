@@ -134,13 +134,15 @@ pub fn parser_for_prose(
         ("mail", ProseLanguage::English) => Some(Box::new(PlainEnglish)),
 
         // Markdown/Quarto format
-        ("markdown" | "quarto", ProseLanguage::German) => {
-            Some(Box::new(Markdown::new_german(markdown_options)))
-        }
+        ("markdown" | "quarto", ProseLanguage::German) => Some(Box::new(
+            Markdown::with_inline_parser(markdown_options, |source| PlainGerman.parse(source)),
+        )),
         ("markdown" | "quarto", _) => Some(Box::new(Markdown::new(markdown_options))),
 
         // Org mode format
-        ("org", ProseLanguage::German) => Some(Box::new(OrgMode::new_german())),
+        ("org", ProseLanguage::German) => Some(Box::new(OrgMode::with_inline_parser(|source| {
+            PlainGerman.parse(source)
+        }))),
         ("org", _) => Some(Box::new(OrgMode::default())),
 
         // Plain text format

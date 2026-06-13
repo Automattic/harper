@@ -150,9 +150,7 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::tests::{
-            assert_lint_count, assert_suggestion_result_with_language,
-        },
+        linting::tests::{assert_lint_count, assert_suggestion_result_with_language},
         spell::FstDictionary,
     };
 

@@ -3,24 +3,25 @@ use std::collections::VecDeque;
 use serde::{Deserialize, Serialize};
 
 use super::{Parser, PlainEnglish};
-use crate::language::german::parsers::PlainGerman;
 use crate::{Span, Token, TokenKind, TokenStringExt, VecExt, offsets::build_byte_to_char_map};
-
-#[derive(Default, Clone, Debug, Copy)]
-enum InlineParser {
-    #[default]
-    English,
-    German,
-}
 
 /// A parser that wraps a plain-text parser and allows one to parse
 /// CommonMark files.
 ///
 /// Will ignore code blocks and tables.
-#[derive(Clone, Debug, Copy, Default)]
+#[derive(Clone, Debug, Copy)]
 pub struct Markdown {
     options: MarkdownOptions,
-    inline_parser: InlineParser,
+    inline_parser: fn(&[char]) -> Vec<Token>,
+}
+
+impl Default for Markdown {
+    fn default() -> Self {
+        Self {
+            options: MarkdownOptions::default(),
+            inline_parser: |source| PlainEnglish.parse(source),
+        }
+    }
 }
 
 #[derive(Copy, Clone, Debug, Serialize, Deserialize)]
@@ -43,14 +44,17 @@ impl Markdown {
     pub fn new(options: MarkdownOptions) -> Self {
         Self {
             options,
-            inline_parser: InlineParser::English,
+            inline_parser: |source| PlainEnglish.parse(source),
         }
     }
 
-    pub fn new_german(options: MarkdownOptions) -> Self {
+    pub fn with_inline_parser(
+        options: MarkdownOptions,
+        inline_parser: fn(&[char]) -> Vec<Token>,
+    ) -> Self {
         Self {
             options,
-            inline_parser: InlineParser::German,
+            inline_parser,
         }
     }
 
@@ -153,10 +157,7 @@ impl Markdown {
     }
 
     fn parse_inline_text(&self, source: &[char]) -> Vec<Token> {
-        match self.inline_parser {
-            InlineParser::English => PlainEnglish.parse(source),
-            InlineParser::German => PlainGerman.parse(source),
-        }
+        (self.inline_parser)(source)
     }
 }
 
