@@ -107,7 +107,7 @@ impl ExprLinter for DayAndAge {
                 replacement.chars().collect(),
                 span.get_content(src),
             )],
-            message: "The correct idiom is `in this day and age`.".to_string(),
+            message: "The correct idiom is `in this day and age`.".to_owned(),
             ..Default::default()
         })
     }

@@ -118,7 +118,7 @@ impl ExprLinter for ModalOf {
                 modal_have,
                 span_modal_of.get_content(source_chars),
             )],
-            message: "Use `have` rather than `of` here.".to_string(),
+            message: "Use `have` rather than `of` here.".to_owned(),
             priority: 126,
         })
     }

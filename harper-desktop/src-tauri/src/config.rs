@@ -67,6 +67,8 @@ impl Config {
             "com.apple.mail",
             "com.apple.MobileSMS",
             "com.apple.Notes",
+            "com.tinyspeck.slackmacgap",
+            "com.hnc.Discord",
         ]
         .into_iter()
         .map(|bundle_id| Integration {
@@ -329,6 +331,8 @@ mod tests {
         assert!(config.is_integration_enabled("com.apple.mail"));
         assert!(config.is_integration_enabled("com.apple.MobileSMS"));
         assert!(config.is_integration_enabled("com.apple.Notes"));
+        assert!(config.is_integration_enabled("com.tinyspeck.slackmacgap"));
+        assert!(config.is_integration_enabled("com.hnc.Discord"));
     }
 
     #[test]
@@ -341,6 +345,8 @@ mod tests {
         let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
 
         assert_eq!(deserialized.integrations, Config::curated_integrations());
+        assert!(deserialized.is_integration_enabled("com.tinyspeck.slackmacgap"));
+        assert!(deserialized.is_integration_enabled("com.hnc.Discord"));
     }
 
     #[test]
