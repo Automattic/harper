@@ -188,7 +188,7 @@ impl ExprLinter for NounCountability {
 mod tests {
     use super::NounCountability;
     use crate::linting::tests::{
-        assert_lint_count, assert_suggestion_result, assert_suggestion_result_with_language,
+        assert_lint_count, assert_suggestion_result_with_language,
     };
 
     #[test]

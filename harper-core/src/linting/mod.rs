@@ -375,6 +375,7 @@ pub mod debug {
     }
 }
 
+#[cfg(test)]
 pub mod tests {
     use hashbrown::HashSet;
 
@@ -684,7 +685,7 @@ pub mod tests {
     #[track_caller]
     pub fn assert_suggestion_result_with_language(
         text: &str,
-        mut linter: impl Linter,
+        linter: impl Linter,
         needle: &str,
         _language: LanguageFamily,
     ) {
@@ -739,6 +740,147 @@ pub mod tests {
         }
 
         false
+    }
+
+    #[test]
+    fn verify_no_lints() {
+        assert_no_lints("hello world", TestLinter::new(&[]));
+    }
+
+    #[test]
+    fn verify_1_lint() {
+        assert_lint_count(
+            "heloo world",
+            TestLinter::new(&[(&["heloo"], &["hello"])]),
+            1,
+        );
+    }
+
+    #[test]
+    fn verify_2_lints() {
+        assert_lint_count(
+            "heloo wolrd",
+            TestLinter::new(&[(&["heloo"], &["hello"]), (&["wolrd"], &["world"])]),
+            2,
+        );
+    }
+
+    #[test]
+    fn verify_no_suggestions() {
+        assert_suggestion_count("afjehwkf", TestLinter::new(&[]), 0);
+    }
+
+    #[test]
+    fn verify_1_suggestion() {
+        assert_suggestion_count(
+            "dictionery",
+            TestLinter::new(&[(&["dictionery"], &["dictionary"])]),
+            1,
+        );
+    }
+
+    /// Asserts that none of the suggestions from the linter match the given text.
+    #[track_caller]
+    pub fn assert_not_in_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        bad_suggestion: &str,
+    ) {
+        if !search_for_suggestion(
+            DocumentType::PlainEnglish,
+            text,
+            &mut linter,
+            bad_suggestion,
+            0,
+        ) {
+            return;
+        }
+
+        panic!(
+            "A suggestion sequence produced the undesired result.\n\
+            Undesired: \"{bad_suggestion}\""
+        );
+    }
+
+    #[test]
+    fn verify_sole_suggestion_is_the_one_we_wanted() {
+        assert_not_in_suggestion_result(
+            "Baby cats are called kitens",
+            TestLinter::new(&[]),
+            "Baby cats are called puppies",
+        );
+    }
+
+    // TODO verify sole suggestion is not the one we wanted fails
+
+    #[test]
+    #[should_panic]
+    fn verify_sole_suggestion_not_in_result_fails() {
+        assert_not_in_suggestion_result(
+            "heloo",
+            TestLinter::new(&[(&["heloo"], &["hello"])]),
+            "hello",
+        );
+    }
+
+    // TODO verify many suggestions including the one we want succeeds
+    // TODO verify many suggestions but not the one we want fails
+
+    #[test]
+    fn verify_fix_one_lint() {
+        assert_suggestion_result(
+            "find the misstake and fix it",
+            TestLinter::new(&[(&["misstake"], &["mistake"])]),
+            "find the mistake and fix it",
+        );
+    }
+
+    #[test]
+    #[should_panic]
+    fn verify_unable_to_fix_one_spanish_lint() {
+        assert_suggestion_result("Hay una orrrer", TestLinter::new(&[]), "Hay una error");
+    }
+
+    #[test]
+    fn verify_fix_two_lints() {
+        assert_suggestion_result(
+            "find two misstakes and fix theem",
+            TestLinter::new(&[(&["misstakes"], &["mistakes"]), (&["theem"], &["them"])]),
+            "find two mistakes and fix them",
+        );
+    }
+
+    // Stress test: multiple errors in one sentence, DFS must find correct suggestion path
+    // Note: This test is known to be brittle - it depends on SpellCheck dictionary and
+    // suggestion ranking. If it fails after a dictionary update, try different word combinations.
+    // Uses common misspellings that have unambiguous correct suggestions in the top 3.
+    #[test]
+    fn verify_fix_five_typos() {
+        assert_suggestion_result(
+            "Please recieve teh payment untill thier authorization occured",
+            TestLinter::new(&[
+                (&["recieve"], &["receive"]),
+                (&["teh"], &["the"]),
+                (&["untill"], &["until"]),
+                (&["thier"], &["their"]),
+                (&["occured"], &["occurred"]),
+            ]),
+            "Please receive the payment until their authorization occurred",
+        );
+    }
+
+    // TODO test that having all the good and none of the bad succeeds
+    // TODO test that missing one of the good fails
+    // TODO test that having one of the bads fails
+
+    #[test]
+    #[should_panic]
+    fn verify_mutal_corrections_cause_failure() {
+        assert_suggestion_result(
+            "gooder",
+            TestLinter::new(&[(&["gooder"], &["more good"])]),
+            "better",
+        );
     }
 
     // Before the asserts, let's test that the test linter itself has the behaviours we intend

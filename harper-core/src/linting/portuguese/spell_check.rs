@@ -141,8 +141,7 @@ mod tests_portuguese {
     use crate::PortugueseDialect;
     use crate::languages::LanguageFamily;
     use crate::linting::tests::{
-        assert_lint_count, assert_lint_count_with_language, assert_suggestion_result,
-        assert_suggestion_result_with_language,
+        assert_lint_count_with_language, assert_suggestion_result_with_language,
     };
     use crate::spell::FstDictionary;
 
