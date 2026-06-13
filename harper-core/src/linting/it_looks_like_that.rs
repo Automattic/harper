@@ -54,7 +54,7 @@ impl ExprLinter for ItLooksLikeThat {
             span: that_span,
             lint_kind: LintKind::Redundancy,
             suggestions: vec![Suggestion::Remove],
-            message: "`that` is redundant and ungrammatical here".to_string(),
+            message: "`that` is redundant and ungrammatical here".to_owned(),
             priority: 31,
         })
     }
