@@ -5049,6 +5049,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AnalogAcousticBike",
+								"state": true,
+								"label": "Analog/Acoustic Bike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InspiredBy",
 								"state": true,
 								"label": "Inspired By"
