@@ -1,5 +1,4 @@
 use super::{Parser, PlainEnglish};
-use crate::language::german::parsers::PlainGerman;
 use crate::{Span, Token, TokenKind};
 
 #[derive(Debug, PartialEq, Copy, Clone)]
@@ -119,35 +118,31 @@ fn find_line_start(chars: &[char], pos: usize) -> usize {
     start
 }
 
-#[derive(Default, Clone, Debug, Copy)]
-enum InlineParser {
-    #[default]
-    English,
-    German,
-}
-
 /// A parser that wraps a plain-text parser and allows one to parse
 /// Org-mode files.
 ///
 /// Will ignore code blocks, source blocks, and other org-mode specific elements
 /// that should not be linted for prose.
-#[derive(Clone, Debug, Copy, Default)]
+#[derive(Clone, Debug, Copy)]
 pub struct OrgMode {
-    inline_parser: InlineParser,
+    inline_parser: fn(&[char]) -> Vec<Token>,
+}
+
+impl Default for OrgMode {
+    fn default() -> Self {
+        Self {
+            inline_parser: |source| PlainEnglish.parse(source),
+        }
+    }
 }
 
 impl OrgMode {
-    pub fn new_german() -> Self {
-        Self {
-            inline_parser: InlineParser::German,
-        }
+    pub fn with_inline_parser(inline_parser: fn(&[char]) -> Vec<Token>) -> Self {
+        Self { inline_parser }
     }
 
     fn parse_inline_text(&self, source: &[char]) -> Vec<Token> {
-        match self.inline_parser {
-            InlineParser::English => PlainEnglish.parse(source),
-            InlineParser::German => PlainGerman.parse(source),
-        }
+        (self.inline_parser)(source)
     }
 }
 
