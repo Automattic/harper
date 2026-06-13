@@ -53,7 +53,7 @@ impl ExprLinter for NoLonger {
                 "no",
                 toks[0].get_ch(src),
             )],
-            message: "The correct expression is `no longer`.".to_string(),
+            message: "The correct expression is `no longer`.".to_owned(),
             ..Default::default()
         })
     }

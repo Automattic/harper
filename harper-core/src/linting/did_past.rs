@@ -106,7 +106,7 @@ where
                     .into_iter()
                     .map(|s| Suggestion::replace_with_match_case(s, vchars))
                     .collect(),
-                message: "Use the base form of the verb with \"did\".".to_string(),
+                message: "Use the base form of the verb with \"did\".".to_owned(),
                 ..Default::default()
             })
         } else {

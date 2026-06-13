@@ -213,7 +213,7 @@ mod tests_context {
         fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
             Some(Lint {
                 span: toks.span()?,
-                message: "simple".to_string(),
+                message: "simple".to_owned(),
                 suggestions: vec![Suggestion::ReplaceWith(vec!['2'])],
                 ..Default::default()
             })
@@ -257,21 +257,18 @@ mod tests_context {
                     && after.eq_ignore_ascii_case(" three")
                 {
                     (
-                        "ascending".to_string(),
+                        "ascending".to_owned(),
                         vec![Suggestion::ReplaceWith(vec!['>'])],
                     )
                 } else if before.eq_ignore_ascii_case("three ")
                     && after.eq_ignore_ascii_case(" one")
                 {
                     (
-                        "descending".to_string(),
+                        "descending".to_owned(),
                         vec![Suggestion::ReplaceWith(vec!['<'])],
                     )
                 } else {
-                    (
-                        "dunno".to_string(),
-                        vec![Suggestion::ReplaceWith(vec!['?'])],
-                    )
+                    ("dunno".to_owned(), vec![Suggestion::ReplaceWith(vec!['?'])])
                 };
 
                 return Some(Lint {
@@ -312,7 +309,7 @@ mod tests_context {
         fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
             Some(Lint {
                 span: toks.span()?,
-                message: "sentence".to_string(),
+                message: "sentence".to_owned(),
                 suggestions: vec![Suggestion::ReplaceWith(vec!['2', '&', '2'])],
                 ..Default::default()
             })

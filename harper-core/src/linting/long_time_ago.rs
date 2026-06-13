@@ -41,7 +41,7 @@ impl ExprLinter for LongTimeAgo {
                 "a long time ago",
                 span.get_content(source),
             )],
-            message: "The correct phrase is `a long time ago`.".to_string(),
+            message: "The correct phrase is `a long time ago`.".to_owned(),
             ..Default::default()
         })
     }

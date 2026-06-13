@@ -344,6 +344,13 @@
 								"state": true,
 								"label": "To Be Honest"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LetMeKnow",
+								"state": true,
+								"label": "Let Me Know"
+							}
 						}
 					]
 				}
@@ -1039,6 +1046,13 @@
 						},
 						{
 							"Bool": {
+								"name": "EnvironmentVariable",
+								"state": true,
+								"label": "Environment Variable"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PassersBy",
 								"state": true,
 								"label": "Passers By"
@@ -1322,6 +1336,13 @@
 								"name": "ExpandVulnerability",
 								"state": true,
 								"label": "Expand Vulnerability"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Nowadays",
+								"state": true,
+								"label": "Nowadays"
 							}
 						},
 						{
@@ -2971,6 +2992,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandThough",
+								"state": true,
+								"label": "Expand Though"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandThrough",
 								"state": true,
 								"label": "Expand Through"
@@ -3737,6 +3765,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CapitalizeOn",
+								"state": true,
+								"label": "Capitalize On"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NakedEye",
 								"state": true,
 								"label": "Naked Eye"
@@ -3747,6 +3782,13 @@
 								"name": "AsToInterrogative",
 								"state": true,
 								"label": "As To Interrogative"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ComplainAsNoun",
+								"state": true,
+								"label": "Complain As Noun"
 							}
 						}
 					]
@@ -4373,6 +4415,13 @@
 								"name": "AtTheExpenseOf",
 								"state": true,
 								"label": "At The Expense Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AtTheVeryLeast",
+								"state": true,
+								"label": "At The Very Least"
 							}
 						},
 						{
@@ -5007,6 +5056,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InspiredBy",
+								"state": true,
+								"label": "Inspired By"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByTheBook",
 								"state": true,
 								"label": "By The Book"
@@ -5046,6 +5102,34 @@
 								"state": true,
 								"label": "Incident Report"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheEntiretyOf",
+								"state": true,
+								"label": "The Entirety Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NowKnownAs",
+								"state": true,
+								"label": "Now Known As"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsHow",
+								"state": true,
+								"label": "As How"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LeavingInDroves",
+								"state": true,
+								"label": "Leaving In Droves"
+							}
 						}
 					]
 				}
@@ -5069,6 +5153,13 @@
 								"name": "Touristic",
 								"state": true,
 								"label": "Touristic"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfTheWindow",
+								"state": true,
+								"label": "Out (of) the Window"
 							}
 						}
 					]
