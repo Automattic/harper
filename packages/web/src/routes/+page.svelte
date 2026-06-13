@@ -19,11 +19,15 @@ import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
 import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
+import { isUpToDate, loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
 
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
+
+const VERSION_UPTODATE = 'Up-to-date';
+const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
 
 const testimonials = [
 	{
@@ -141,10 +145,17 @@ const faqs = [
 	},
 ];
 
+let liveFxVer = '';
+let liveJsVer = '';
+let liveRustVer = '';
+let liveVscodeVer = '';
+
 onMount(() => {
 	void (async () => {
 		linter = await createEditorLinter();
 	})();
+
+    void loadLiveVersions();
 });
 
 </script>
@@ -240,14 +251,30 @@ onMount(() => {
 				{#each featuredIntegrationIds as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
 							href={integration.href}
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
-								<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
+								<div class="flex items-center gap-1.5 overflow-hidden">
+									<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
+									{#if $liveVersions[integration.id]}
+		                				{#if upToDate != null}
+										<span
+										    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.65rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+										    title={titleText}
+										>
+											{$liveVersions[integration.id]}
+										</span>
+										{/if}
+									{/if}
+								</div>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">
+									{integration.desc}
+								</small>
 							</span>
 						</a>
 					{/if}
