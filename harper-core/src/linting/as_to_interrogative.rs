@@ -19,7 +19,7 @@ impl Default for AsToInterrogative {
                     "how", "what", "what's", "which", "when", "when's", "where", "whether", "who",
                     "who's", "whose", "whom", "why",
                 ])
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()

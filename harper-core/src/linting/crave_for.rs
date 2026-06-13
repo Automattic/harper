@@ -29,7 +29,7 @@ impl Default for CraveFor {
                     .t_aco("craving")
                     .t_ws()
                     .t_aco("for")
-                    .and_not(Word::new("being")),
+                    .but_not(Word::new("being")),
                 ),
             ]),
         }

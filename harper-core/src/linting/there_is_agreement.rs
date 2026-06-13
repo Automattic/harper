@@ -53,7 +53,7 @@ impl<D: Dictionary> ThereIsAgreement<D> {
         // reject singular nouns that are also: adjectives, "no", spelled numbers
         // TODO but this rejects "problem"
         // "two" etc. are sg. nouns even though they can also be plural quantifiers
-        let singular_noun = Lrc::new(SequenceExpr::default().then_singular_noun().and_not(
+        let singular_noun = Lrc::new(SequenceExpr::default().then_singular_noun().but_not(
             FirstMatchOf::new(vec![
                 Box::new(|t: &Token, s: &[char]| {
                     t.kind.is_adjective()

@@ -4,6 +4,7 @@ use itertools::Itertools;
 use paste::paste;
 use serde::ser::SerializeStruct;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use smallvec::SmallVec;
 use std::ops::{BitOr, BitOrAssign};
 
@@ -1145,15 +1146,110 @@ bitflags::bitflags! {
     }
 }
 
-#[derive(Debug, Clone, Copy, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
-#[serde(deny_unknown_fields)]
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
 struct ScopedDialectFlagsSerde {
-    #[serde(default)]
     english: EnglishDialectFlags,
-    #[serde(default)]
     german: GermanDialectFlags,
-    #[serde(default)]
     portuguese: PortugueseDialectFlags,
+}
+
+impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::{Error, Unexpected};
+
+        let value = Value::deserialize(deserializer)?;
+
+        match value {
+            Value::Object(map) => {
+                let mut english = EnglishDialectFlags::default();
+                let mut german = GermanDialectFlags::default();
+                let mut portuguese = PortugueseDialectFlags::default();
+
+                for (key, val) in map {
+                    match key.as_str() {
+                        "english" => match val {
+                            Value::String(s) => {
+                                english = match s.as_str() {
+                                    "AMERICAN" => EnglishDialectFlags::AMERICAN,
+                                    "CANADIAN" => EnglishDialectFlags::CANADIAN,
+                                    "AUSTRALIAN" => EnglishDialectFlags::AUSTRALIAN,
+                                    "BRITISH" => EnglishDialectFlags::BRITISH,
+                                    "INDIAN" => EnglishDialectFlags::INDIAN,
+                                    _ => {
+                                        return Err(Error::custom(format!(
+                                            "Unknown English dialect: {s}"
+                                        )));
+                                    }
+                                };
+                            }
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                english = EnglishDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-string, non-number"),
+                                    &"a string or number",
+                                ));
+                            }
+                        },
+                        "german" => match val {
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                german = GermanDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-number"),
+                                    &"a number",
+                                ));
+                            }
+                        },
+                        "portuguese" => match val {
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                portuguese = PortugueseDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-number"),
+                                    &"a number",
+                                ));
+                            }
+                        },
+                        _ => {
+                            return Err(Error::unknown_field(
+                                &key,
+                                &["english", "german", "portuguese"],
+                            ));
+                        }
+                    }
+                }
+
+                Ok(ScopedDialectFlagsSerde {
+                    english,
+                    german,
+                    portuguese,
+                })
+            }
+            _ => Err(Error::invalid_type(
+                Unexpected::Other("non-object"),
+                &"an object",
+            )),
+        }
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]

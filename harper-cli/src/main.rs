@@ -24,7 +24,7 @@ use harper_core::{
     Span, TokenKind, TokenStringExt,
 };
 #[cfg(feature = "training")]
-use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_pos_utils::{BrillChknker, BrillTagger, BurnChunkerCpu};
 
 use harper_stats::Stats;
 use serde::Serialize;
@@ -213,7 +213,7 @@ enum Args {
     /// As long as there's either an open or hyphenated spelling.
     Compounds,
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary
-    /// which occur in more than one lettercase variant.    
+    /// which occur in more than one lettercase variant.
     CaseVariants,
     /// Emit a list of each noun phrase contained within the input
     NominalPhrases {

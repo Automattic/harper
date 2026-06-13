@@ -39,7 +39,7 @@ impl ExprLinter for FedUpWith {
                 "with",
                 ofspan.get_content(src),
             )],
-            message: "`Fed up of` is not accepted outside of British English.".to_string(),
+            message: "`Fed up of` is not accepted outside of British English.".to_owned(),
             ..Default::default()
         })
     }

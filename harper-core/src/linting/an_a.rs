@@ -76,7 +76,7 @@ impl Linter for AnA {
                             replacement,
                             chars_first,
                         )],
-                        message: "Incorrect indefinite article.".to_string(),
+                        message: "Incorrect indefinite article.".to_owned(),
                         priority: 31,
                     })
                 }

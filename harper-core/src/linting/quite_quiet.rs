@@ -75,7 +75,7 @@ impl ExprLinter for QuiteQuiet {
                     "quiet".chars().collect(),
                     quite_span.get_content(src),
                 )],
-                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_string(),
+                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_owned(),
                 priority: 63,
             });
         } else if text.starts_with("quiet") {
@@ -88,7 +88,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });
         } else if text.ends_with("quiet") {
@@ -101,7 +101,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });
         }

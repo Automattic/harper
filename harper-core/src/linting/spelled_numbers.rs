@@ -28,7 +28,7 @@ impl Linter for SpelledNumbers {
                     suggestions: vec![Suggestion::ReplaceWith(
                         spell_out_number(value as u64).unwrap().chars().collect(),
                     )],
-                    message: "Try to spell out numbers less than ten.".to_string(),
+                    message: "Try to spell out numbers less than ten.".to_owned(),
                     priority: 63,
                 })
             }
@@ -53,34 +53,34 @@ fn spell_out_number(num: u64) -> Option<String> {
     }
 
     Some(match num {
-        0 => "zero".to_string(),
-        1 => "one".to_string(),
-        2 => "two".to_string(),
-        3 => "three".to_string(),
-        4 => "four".to_string(),
-        5 => "five".to_string(),
-        6 => "six".to_string(),
-        7 => "seven".to_string(),
-        8 => "eight".to_string(),
-        9 => "nine".to_string(),
-        10 => "ten".to_string(),
-        11 => "eleven".to_string(),
-        12 => "twelve".to_string(),
-        13 => "thirteen".to_string(),
-        14 => "fourteen".to_string(),
-        15 => "fifteen".to_string(),
-        16 => "sixteen".to_string(),
-        17 => "seventeen".to_string(),
-        18 => "eighteen".to_string(),
-        19 => "nineteen".to_string(),
-        20 => "twenty".to_string(),
-        30 => "thirty".to_string(),
-        40 => "forty".to_string(),
-        50 => "fifty".to_string(),
-        60 => "sixty".to_string(),
-        70 => "seventy".to_string(),
-        80 => "eighty".to_string(),
-        90 => "ninety".to_string(),
+        0 => "zero".to_owned(),
+        1 => "one".to_owned(),
+        2 => "two".to_owned(),
+        3 => "three".to_owned(),
+        4 => "four".to_owned(),
+        5 => "five".to_owned(),
+        6 => "six".to_owned(),
+        7 => "seven".to_owned(),
+        8 => "eight".to_owned(),
+        9 => "nine".to_owned(),
+        10 => "ten".to_owned(),
+        11 => "eleven".to_owned(),
+        12 => "twelve".to_owned(),
+        13 => "thirteen".to_owned(),
+        14 => "fourteen".to_owned(),
+        15 => "fifteen".to_owned(),
+        16 => "sixteen".to_owned(),
+        17 => "seventeen".to_owned(),
+        18 => "eighteen".to_owned(),
+        19 => "nineteen".to_owned(),
+        20 => "twenty".to_owned(),
+        30 => "thirty".to_owned(),
+        40 => "forty".to_owned(),
+        50 => "fifty".to_owned(),
+        60 => "sixty".to_owned(),
+        70 => "seventy".to_owned(),
+        80 => "eighty".to_owned(),
+        90 => "ninety".to_owned(),
         hundred if hundred % 100 == 0 => {
             format!("{} hundred", spell_out_number(hundred / 100).unwrap())
         }
@@ -107,19 +107,19 @@ mod tests {
 
     #[test]
     fn produces_zero() {
-        assert_eq!(spell_out_number(0), Some("zero".to_string()))
+        assert_eq!(spell_out_number(0), Some("zero".to_owned()))
     }
 
     #[test]
     fn produces_eighty_two() {
-        assert_eq!(spell_out_number(82), Some("eighty-two".to_string()))
+        assert_eq!(spell_out_number(82), Some("eighty-two".to_owned()))
     }
 
     #[test]
     fn produces_nine_hundred_ninety_nine() {
         assert_eq!(
             spell_out_number(999),
-            Some("nine hundred ninety-nine".to_string())
+            Some("nine hundred ninety-nine".to_owned())
         )
     }
 

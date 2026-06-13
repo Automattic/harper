@@ -808,6 +808,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArgumentToBeMade",
+								"state": true,
+								"label": "Argument To Be Made"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -1542,6 +1549,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CaseSensitive",
 								"state": true,
 								"label": "Case Sensitive"
@@ -1608,6 +1622,13 @@
 								"name": "IntroCueCommaBeforeThanks",
 								"state": true,
 								"label": "Intro Cue Comma Before Thanks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncludingButNotLimitedToPunctuation",
+								"state": true,
+								"label": "Including But Not Limited To Punctuation"
 							}
 						},
 						{
@@ -2017,6 +2038,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Theres",
 								"state": true,
 								"label": "There's"
@@ -2369,6 +2397,13 @@
 								"name": "AtLeasToLeast",
 								"state": true,
 								"label": "At Leas To Least"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AtLestToLeast",
+								"state": true,
+								"label": "At Lest To Least"
 							}
 						},
 						{
@@ -2731,6 +2766,13 @@
 				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
 						{
 							"Bool": {
 								"name": "BoringWords",
@@ -3820,6 +3862,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -5447,236 +5496,9 @@
 						},
 						{
 							"Bool": {
-								"name": "AtLestToLeast",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "AvoidContractions",
-								"state": false
-							}
-						},
-						{
-							"Bool": {
-								"name": "BabyphoneBabyfon",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "BeimBei",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "BenuetzenBenutzen",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "BerietenBereiten",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "CallThem",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "CantWay",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ChannelChannel",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "DanksDanke",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "DeinDein",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "EtwasDass",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
 								"name": "FondOn",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ForFreeOfCharge",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "FormativeYears",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "FuerFuer",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "GenantGenannt",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "GeschehenGeschehen",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "GilbtGilt",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "GluckGlueck",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "HerzlichenDank",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ImAm",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ImAnbetracht",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "InDemIm",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "InIn",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "IncludingButNotLimitedToPunctuation",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "LetztesEndes",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "MeinMein",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "OllesAlles",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "SeiheSiehe",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ThereOwn",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "VerleihenVerleihen",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "VielenDank",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "WirHaben",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ZuDemZum",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ZumAnbeissen",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ZurDer",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "ZurZum",
-								"state": true
-							}
-						},
-						{
-							"Bool": {
-								"name": "Zwingendermaassen",
-								"state": true
+								"state": true,
+								"label": "Fond On"
 							}
 						}
 					]

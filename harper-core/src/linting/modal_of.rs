@@ -20,7 +20,7 @@ impl Default for ModalOf {
             SequenceExpr::with(ModalVerb::default())
                 .then_whitespace()
                 .t_aco("of")
-                .and_not(FirstMatchOf::new(vec![
+                .but_not(FirstMatchOf::new(vec![
                     Box::new(Word::new("can")),
                     Box::new(Word::new_exact("May")),
                 ])),
@@ -118,7 +118,7 @@ impl ExprLinter for ModalOf {
                 modal_have,
                 span_modal_of.get_content(source_chars),
             )],
-            message: "Use `have` rather than `of` here.".to_string(),
+            message: "Use `have` rather than `of` here.".to_owned(),
             priority: 126,
         })
     }

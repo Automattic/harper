@@ -15,7 +15,7 @@ impl Default for ComplainAsNoun {
                 .then_determiner()
                 .t_ws()
                 .t_set(&["complain", "complains"])
-                .and_not(SequenceExpr::anything().t_any().t_any().t_ws().then_noun()),
+                .but_not(SequenceExpr::anything().t_any().t_any().t_ws().then_noun()),
         }
     }
 }
