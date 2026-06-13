@@ -499,14 +499,21 @@ fn bundle_id_from_app_path(path: &str) -> Option<String> {
 
     // Parse the output from mdls which looks like:
     // kMDItemCFBundleIdentifier = "com.example.app"
-    output
+    let bundle_id = output
         .lines()
         .find(|line| line.contains("kMDItemCFBundleIdentifier"))
         .and_then(|line| {
             line.split('=')
                 .nth(1)
                 .map(|s| s.trim().trim_matches('"').to_string())
-        })
+        })?;
+
+    // Filter out null or empty bundle IDs
+    if bundle_id.is_empty() || bundle_id == "(null)" || bundle_id == "null" {
+        return None;
+    }
+
+    Some(bundle_id)
 }
 
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {
