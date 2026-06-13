@@ -46,6 +46,16 @@ pub trait OsBroker {
     fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
         Err("Launching apps by bundle ID is only supported on macOS.".to_string())
     }
+
+    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> {
+        Err("App search is only supported on macOS.".to_string())
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct AppSearchResult {
+    pub name: String,
+    pub bundle_id: String,
 }
 
 fn fallback_integration_display_name(bundle_id: &str) -> String {
