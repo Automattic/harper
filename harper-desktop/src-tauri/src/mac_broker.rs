@@ -426,9 +426,12 @@ impl OsBroker for MacBroker {
         }
 
         // Search for apps by display name using mdfind
+        // Use case-insensitive search and ensure we only get .app bundles
         let escaped_query = query.replace('\\', "\\\\").replace('"', "\\\"");
         let output = Command::new("mdfind")
-            .arg(format!("kMDItemContentType == 'com.apple.application-bundle' && kMDItemDisplayName == '*{escaped_query}*'cd"))
+            .arg(format!(
+                "kMDItemContentType == 'com.apple.application-bundle' && kMDItemDisplayName == '*{escaped_query}*'cd"
+            ))
             .output()
             .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
 
@@ -440,11 +443,34 @@ impl OsBroker for MacBroker {
         }
 
         let mut results = Vec::new();
+        let mut seen_bundle_ids = std::collections::HashSet::new();
 
         for line in String::from_utf8_lossy(&output.stdout).lines() {
             let line = line.trim();
+
+            // Skip if not an .app bundle
+            if !line.ends_with(".app") {
+                continue;
+            }
+
             if let Some(display_name) = display_name_from_app_path(line) {
+                // Skip if display name looks like a bundle ID (contains dots)
+                if display_name.contains('.') {
+                    continue;
+                }
+
                 if let Some(bundle_id) = bundle_id_from_app_path(line) {
+                    // Skip if we've already seen this bundle ID (deduplication)
+                    if seen_bundle_ids.contains(&bundle_id) {
+                        continue;
+                    }
+
+                    // Skip if bundle ID looks like a path or is invalid
+                    if bundle_id.contains('/') || bundle_id.is_empty() {
+                        continue;
+                    }
+
+                    seen_bundle_ids.insert(bundle_id.clone());
                     results.push(AppSearchResult {
                         name: display_name,
                         bundle_id,
