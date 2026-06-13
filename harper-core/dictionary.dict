@@ -1691,6 +1691,7 @@ CPI/NOg
 CPO/N
 CPR/NOg             # cardiac pulmonary resuscitation
 CPU/NgS
+CRISPR/Nmg
 CRT/NSg             # cathode ray tube
 CSS/NOg
 CST/ONg
@@ -37684,6 +37685,7 @@ overemotional/J
 overemphasis/Ng
 overemphasise/V!_₹
 overemphasize/VGdS
+overengineer/VGdS
 overenthusiastic/J
 overestimate/VGdSNgn
 overestimation/Nmg
