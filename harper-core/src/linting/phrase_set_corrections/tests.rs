@@ -2856,6 +2856,26 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// InRetaliationTo
+
+#[test]
+fn corrects_in_retaliation_to_to_for() {
+    assert_suggestion_result(
+        "Damage caused in retaliation to another attack by the Thorns enchantment.",
+        lint_group(),
+        "Damage caused in retaliation for another attack by the Thorns enchantment.",
+    );
+}
+
+#[test]
+fn corrects_in_retaliation_to_to_in_response_to() {
+    assert_suggestion_result(
+        "In retaliation to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+        lint_group(),
+        "In response to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+    );
+}
+
 // MakeItSeem
 
 #[test]

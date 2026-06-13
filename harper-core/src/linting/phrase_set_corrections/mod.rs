@@ -856,6 +856,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "InRetaliationTo" => (
+            &[
+                (&["in retaliation to"], &["in retaliation for", "in response to"]),
+            ],
+            "Did you mean `in retaliation for` or `in response to`?",
+            "Corrects `in retaliation to` to `in retaliation for` or `in response to`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
