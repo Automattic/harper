@@ -47,7 +47,7 @@ impl ExprLinter for EverEvery {
                 content[..content.len() - 1].to_vec(),
                 content,
             )],
-            message: "Is this `every` a typo that should be `ever`?".to_string(),
+            message: "Is this `every` a typo that should be `ever`?".to_owned(),
             ..Default::default()
         })
     }

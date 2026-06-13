@@ -104,7 +104,7 @@ impl ExprLinter for WereWhere {
                     "were",
                     tok.span.get_content(src),
                 )],
-                message: "It looks like this is a typo, did you mean `were`?".to_string(),
+                message: "It looks like this is a typo, did you mean `were`?".to_owned(),
                 ..Default::default()
             })
         } else {
@@ -115,7 +115,7 @@ impl ExprLinter for WereWhere {
                     "where",
                     tok.span.get_content(src),
                 )],
-                message: "It looks like this is a typo, did you mean `where`?".to_string(),
+                message: "It looks like this is a typo, did you mean `where`?".to_owned(),
                 ..Default::default()
             })
         }

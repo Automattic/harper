@@ -241,7 +241,7 @@ dependencies = [
  "objc2-foundation 0.3.2",
  "parking_lot",
  "percent-encoding",
- "windows-sys 0.52.0",
+ "windows-sys 0.60.2",
  "x11rb",
 ]
 
@@ -2523,7 +2523,7 @@ dependencies = [
  "libc",
  "option-ext",
  "redox_users 0.5.0",
- "windows-sys 0.59.0",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
@@ -3064,7 +3064,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "778e2ac28f6c47af28e4907f13ffd1e1ddbd400980a9abd7c8df189bf578a5ad"
 dependencies = [
  "libc",
- "windows-sys 0.52.0",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -4128,7 +4128,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4139,7 +4139,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -4177,7 +4177,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -4214,7 +4214,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -4285,7 +4285,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4294,7 +4294,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4305,7 +4305,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4316,7 +4316,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4327,7 +4327,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -4338,7 +4338,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -4369,7 +4369,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -4387,7 +4387,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4398,7 +4398,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -4409,7 +4409,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -4417,7 +4417,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.13.1",
@@ -4428,7 +4428,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -4447,7 +4447,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.4.0"
+version = "2.5.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -5216,7 +5216,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "07033963ba89ebaf1584d767badaa2e8fcec21aedea6b8c0346d487d49c28667"
 dependencies = [
  "cfg-if",
- "windows-targets 0.52.6",
+ "windows-targets 0.53.3",
 ]
 
 [[package]]
@@ -7022,7 +7022,7 @@ dependencies = [
  "once_cell",
  "socket2",
  "tracing",
- "windows-sys 0.52.0",
+ "windows-sys 0.60.2",
 ]
 
 [[package]]
@@ -7510,7 +7510,7 @@ dependencies = [
  "errno",
  "libc",
  "linux-raw-sys 0.12.1",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
@@ -7567,7 +7567,7 @@ dependencies = [
  "security-framework",
  "security-framework-sys",
  "webpki-root-certs",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
@@ -7870,9 +7870,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.149"
+version = "1.0.150"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83fc039473c5595ace860d8c4fafa220ff474b3fc6bfdb4293327f1a37e94d86"
+checksum = "e8014e44b4736ed0538adeecded0fce2a272f22dc9578a7eb6b2d9993c74cfb9"
 dependencies = [
  "indexmap 2.13.1",
  "itoa",
@@ -8910,7 +8910,7 @@ dependencies = [
  "getrandom 0.4.1",
  "once_cell",
  "rustix 1.1.4",
- "windows-sys 0.52.0",
+ "windows-sys 0.61.1",
 ]
 
 [[package]]
