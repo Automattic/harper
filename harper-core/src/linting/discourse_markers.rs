@@ -13,32 +13,29 @@ pub struct DiscourseMarkers {
 impl DiscourseMarkers {
     pub fn new() -> Self {
         let phrases = &[
-            "accordingly",
-            "additionally",
-            "alternatively",
-            "consequently",
-            "conversely",
-            "for example",
-            "frankly",
-            "furthermore",
-            "hence",
-            "honestly",
             "however",
-            "incidentally",
-            "indeed",
-            "instead",
-            "meanwhile",
-            "moreover",
-            "nevertheless",
-            "notwithstanding",
-            "nowadays",
-            "now a days",
-            "now-a-days",
-            "on the other hand",
-            "otherwise",
-            "subsequently",
             "therefore",
+            "meanwhile",
+            "furthermore",
+            "nevertheless",
+            "consequently",
             "thus",
+            "instead",
+            "moreover",
+            "honestly",
+            "alternatively",
+            "frankly",
+            "additionally",
+            "subsequently",
+            "accordingly",
+            "otherwise",
+            "incidentally",
+            "conversely",
+            "notwithstanding",
+            "hence",
+            "indeed",
+            "for example",
+            "on the other hand",
         ];
 
         let phrases_expr = FirstMatchOf::new(
@@ -304,48 +301,6 @@ mod tests {
     fn check_2966_is_avoided() {
         assert_no_lints(
             "Honestly and graciously convince someone of something.",
-            DiscourseMarkers::default(),
-        );
-    }
-
-    #[test]
-    fn corrects_nowadays() {
-        assert_suggestion_result(
-            "Nowadays E-Commerce is one of the hot topics.",
-            DiscourseMarkers::default(),
-            "Nowadays, E-Commerce is one of the hot topics.",
-        );
-    }
-
-    #[test]
-    fn no_suggestion_if_nowadays_not_at_start() {
-        assert_no_lints(
-            "You are the reason the tech state is awful nowadays",
-            DiscourseMarkers::default(),
-        );
-    }
-
-    #[test]
-    fn corrects_now_a_days() {
-        assert_suggestion_result(
-            "Now a days Automation plays a crucial role in mankind.",
-            DiscourseMarkers::default(),
-            "Now a days, Automation plays a crucial role in mankind.",
-        );
-    }
-
-    #[test]
-    fn no_suggestion_if_comma_after_nowadays() {
-        assert_no_lints(
-            "Nowadays, data has become the most valuable part of any individual or organization.",
-            DiscourseMarkers::default(),
-        );
-    }
-
-    #[test]
-    fn no_suggestion_if_comma_after_now_a_days() {
-        assert_no_lints(
-            "Now a days, movie recommendation systems are well developed and are user focused.",
             DiscourseMarkers::default(),
         );
     }

@@ -77,10 +77,7 @@ where
         let (pre, _) = ctx?;
 
         // Cloud Native Pub-Sub System at Pinterest -> subsystem
-        if pre
-            .last()
-            .is_some_and(|p| p.kind.is_hyphen() || p.kind.is_apostrophe())
-        {
+        if pre.last().is_some_and(|p| p.kind.is_hyphen()) {
             return None;
         }
 
@@ -169,22 +166,6 @@ mod tests {
             "Advanced Nginx configuration available for super users",
             DisjointPrefixes::new(FstDictionary::curated()),
             "Advanced Nginx configuration available for superusers",
-        );
-    }
-
-    #[test]
-    fn dont_join_contraction_suffix_after_ascii_apostrophe() {
-        assert_no_lints(
-            "you 're fresh so you don't neglect them",
-            DisjointPrefixes::new(FstDictionary::curated()),
-        );
-    }
-
-    #[test]
-    fn dont_join_contraction_suffix_after_typographic_apostrophe() {
-        assert_no_lints(
-            "you ’re fresh so you don’t neglect them",
-            DisjointPrefixes::new(FstDictionary::curated()),
         );
     }
 

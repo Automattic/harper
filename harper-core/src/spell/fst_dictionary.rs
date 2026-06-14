@@ -54,6 +54,12 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
+    /// Create a dictionary from a language family.
+    /// Currently supports English, German, and Portuguese.
+    pub fn curated_for_language(language_family: crate::languages::LanguageFamily) -> Arc<Self> {
+        crate::language::registry::dictionary_for_language(language_family)
+    }
+
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {

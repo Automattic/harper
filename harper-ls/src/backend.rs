@@ -1,8 +1,9 @@
 use std::collections::HashMap;
 use std::fs::OpenOptions;
 use std::io::{BufWriter, Write};
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 use std::sync::Arc;
+use std::sync::atomic::{AtomicU64, Ordering};
 
 use crate::config::Config;
 use crate::document_state::DocumentState;
@@ -10,15 +11,15 @@ use crate::git_commit_parser::GitCommitParser;
 use crate::ignored_lints_io::{load_ignored_lints, save_ignored_lints};
 use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
-use futures::future::join;
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
+use harper_core::language::registry;
+use harper_core::language_detection::LanguageDetectionRegistry;
+use harper_core::languages::Language;
 use harper_core::linting::{FlatConfig, LintGroup};
-use harper_core::parsers::{
-    CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
-};
+use harper_core::parsers::{CollapseIdentifiers, IsolateEnglish, Parser};
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::{DictWordMetadata, Document, IgnoredLints};
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_html::HtmlParser;
 use harper_ink::InkParser;
@@ -31,19 +32,21 @@ use harper_typst::Typst;
 use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
-use tower_lsp_server::lsp_types::notification::PublishDiagnostics;
+use tower_lsp_server::lsp_types::notification::{Progress, PublishDiagnostics};
+use tower_lsp_server::lsp_types::request::WorkDoneProgressCreate;
 use tower_lsp_server::lsp_types::{
     CodeActionOrCommand, CodeActionParams, CodeActionProviderCapability, CodeActionResponse,
-    ConfigurationItem, Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
-    DidChangeWatchedFilesParams, DidChangeWatchedFilesRegistrationOptions,
-    DidCloseTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandOptions,
-    ExecuteCommandParams, FileChangeType, FileSystemWatcher, GlobPattern, InitializeParams,
-    InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams, Range,
-    Registration, ServerCapabilities, ServerInfo, TextDocumentSyncCapability, TextDocumentSyncKind,
-    TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri, WatchKind,
+    Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
+    DidChangeWatchedFilesParams, DidCloseTextDocumentParams, DidOpenTextDocumentParams,
+    DidSaveTextDocumentParams, ExecuteCommandOptions, ExecuteCommandParams, FileChangeType,
+    InitializeParams, InitializeResult, InitializedParams, MessageType, NumberOrString,
+    ProgressParams, ProgressParamsValue, PublishDiagnosticsParams, Range, ServerCapabilities,
+    ServerInfo, TextDocumentSyncCapability, TextDocumentSyncKind, TextDocumentSyncOptions,
+    TextDocumentSyncSaveOptions, Uri, WorkDoneProgress, WorkDoneProgressBegin,
+    WorkDoneProgressCreateParams, WorkDoneProgressEnd,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
-use tracing::{error, info, warn};
+use tracing::{debug, error, info, warn};
 
 /// Return harper-ls version
 pub fn ls_version() -> &'static str {
@@ -56,7 +59,11 @@ pub struct Backend {
     config: RwLock<Config>,
     stats: RwLock<Stats>,
     doc_state: Mutex<HashMap<Uri, DocumentState>>,
+    progress_counter: AtomicU64,
+    lang_detect: LanguageDetectionRegistry,
 }
+
+const MIN_WORDS_FOR_LANGUAGE_DETECTION: usize = 10;
 
 impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
@@ -66,11 +73,65 @@ impl Backend {
             stats: RwLock::new(Stats::new()),
             config: RwLock::new(config),
             doc_state: Mutex::new(HashMap::new()),
+            progress_counter: AtomicU64::new(1),
+            lang_detect: LanguageDetectionRegistry::new(),
         }
     }
 
-    /// Load a specific file's dictionary
-    async fn load_file_dictionary(&self, uri: &Uri) -> anyhow::Result<MutableDictionary> {
+    async fn begin_progress(&self, title: &str, message: &str) -> Option<NumberOrString> {
+        let token = NumberOrString::String(format!(
+            "harper-progress-{}",
+            self.progress_counter.fetch_add(1, Ordering::Relaxed)
+        ));
+
+        if self
+            .client
+            .send_request::<WorkDoneProgressCreate>(WorkDoneProgressCreateParams {
+                token: token.clone(),
+            })
+            .await
+            .is_err()
+        {
+            return None;
+        }
+
+        self.client
+            .send_notification::<Progress>(ProgressParams {
+                token: token.clone(),
+                value: ProgressParamsValue::WorkDone(WorkDoneProgress::Begin(
+                    WorkDoneProgressBegin {
+                        title: title.to_string(),
+                        cancellable: Some(false),
+                        message: Some(message.to_string()),
+                        percentage: None,
+                    },
+                )),
+            })
+            .await;
+
+        Some(token)
+    }
+
+    async fn end_progress(&self, token: Option<NumberOrString>, message: &str) {
+        let Some(token) = token else {
+            return;
+        };
+
+        self.client
+            .send_notification::<Progress>(ProgressParams {
+                token,
+                value: ProgressParamsValue::WorkDone(WorkDoneProgress::End(WorkDoneProgressEnd {
+                    message: Some(message.to_string()),
+                })),
+            })
+            .await;
+    }
+
+    async fn load_file_dictionary(
+        &self,
+        uri: &Uri,
+        language: Language,
+    ) -> anyhow::Result<MutableDictionary> {
         // VS Code's unsaved documents have "untitled" scheme
         if uri
             .scheme()
@@ -80,11 +141,11 @@ impl Backend {
         }
 
         let path = self
-            .get_file_dict_path(uri)
+            .get_file_dict_path(uri, language)
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path, self.config.read().await.dialect)
+        load_dict(path)
             .await
             .map_err(|err| info!("{err}"))
             .or(Ok(MutableDictionary::new()))
@@ -127,16 +188,37 @@ impl Backend {
         .unwrap_or(IgnoredLints::new()))
     }
 
-    /// Compute the location of the file's specific dictionary
-    async fn get_file_dict_path(&self, uri: &Uri) -> anyhow::Result<PathBuf> {
+    /// Compute the location of the file's specific dictionary.
+    /// For non-English languages, files are stored in a language-suffixed directory
+    /// (e.g. `file_dictionaries-de/`).
+    async fn get_file_dict_path(&self, uri: &Uri, language: Language) -> anyhow::Result<PathBuf> {
         let config = self.config.read().await;
+        let suffix = language.family().dict_suffix();
 
-        Ok(config.file_dict_path.join(fileify_path(uri)?))
+        if suffix.is_empty() {
+            Ok(config.file_dict_path.join(fileify_path(uri)?))
+        } else {
+            // Append suffix to the directory name, e.g. "file_dictionaries" -> "file_dictionaries-de"
+            let base = &config.file_dict_path;
+            let mut dir_name = base
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .to_string();
+            dir_name.push_str(suffix);
+            let suffixed = base.with_file_name(dir_name);
+            Ok(suffixed.join(fileify_path(uri)?))
+        }
     }
 
-    async fn save_file_dictionary(&self, uri: &Uri, dict: impl Dictionary) -> Result<()> {
+    async fn save_file_dictionary(
+        &self,
+        uri: &Uri,
+        dict: impl Dictionary,
+        language: Language,
+    ) -> Result<()> {
         save_dict(
-            self.get_file_dict_path(uri)
+            self.get_file_dict_path(uri, language)
                 .await
                 .context("Unable to get the file path.")?,
             dict,
@@ -145,46 +227,77 @@ impl Backend {
         .context("Unable to save the dictionary to path.")
     }
 
-    async fn load_user_dictionary(&self) -> MutableDictionary {
+    async fn load_user_dictionary(&self, language: Language) -> MutableDictionary {
         let config = self.config.read().await;
+        let path = Self::dialect_path(&config.user_dict_path, language);
 
-        load_dict(&config.user_dict_path, self.config.read().await.dialect)
+        load_dict(path)
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_user_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_user_dictionary(&self, dict: impl Dictionary, language: Language) -> Result<()> {
         let config = self.config.read().await;
+        let path = Self::dialect_path(&config.user_dict_path, language);
 
-        save_dict(&config.user_dict_path, dict)
+        save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
-    async fn load_workspace_dictionary(&self) -> MutableDictionary {
+    async fn load_workspace_dictionary(&self, language: Language) -> MutableDictionary {
         let config = self.config.read().await;
-        load_dict(
-            &config.workspace_dict_path,
-            self.config.read().await.dialect,
-        )
-        .await
-        .map_err(|err| info!("{err}"))
-        .unwrap_or(MutableDictionary::new())
+        let path = Self::dialect_path(&config.workspace_dict_path, language);
+
+        load_dict(path)
+            .await
+            .map_err(|err| info!("{err}"))
+            .unwrap_or(MutableDictionary::new())
     }
 
-    async fn save_workspace_dictionary(&self, dict: impl Dictionary) -> Result<()> {
+    async fn save_workspace_dictionary(
+        &self,
+        dict: impl Dictionary,
+        language: Language,
+    ) -> Result<()> {
         let config = self.config.read().await;
-        save_dict(&config.workspace_dict_path, dict)
+        let path = Self::dialect_path(&config.workspace_dict_path, language);
+
+        save_dict(path, dict)
             .await
             .map_err(|err| anyhow!("Unable to save the dictionary to file: {err}"))
     }
 
-    async fn save_stats(&self) -> Result<()> {
-        let (config, stats) = join(self.config.read(), self.stats.read()).await;
+    /// Computes a language-aware path from a base path.
+    /// For English (default), returns the path unchanged.
+    /// For German, inserts a suffix before the extension (or appends it for dirs).
+    /// E.g. `dictionary.txt` -> `dictionary-de.txt`,
+    ///      `.harper-dictionary.txt` -> `.harper-dictionary-de.txt`.
+    fn dialect_path(base: &Path, language: Language) -> PathBuf {
+        let suffix = language.family().dict_suffix();
+        if suffix.is_empty() {
+            return base.to_path_buf();
+        }
 
-        if let Some(parent) = config.stats_path.parent() {
-            tokio::fs::create_dir_all(parent).await?;
+        if let Some(ext) = base.extension() {
+            let stem = base.file_stem().unwrap_or_default().to_string_lossy();
+            let new_name = format!("{}{}.{}", stem, suffix, ext.to_string_lossy());
+            base.with_file_name(new_name)
+        } else {
+            // No extension (directory-like path): just append suffix
+            let name = base
+                .file_name()
+                .unwrap_or_default()
+                .to_string_lossy()
+                .to_string();
+            base.with_file_name(format!("{}{}", name, suffix))
+        }
+    }
+
+    fn save_stats_snapshot(stats_path: PathBuf, stats: Stats) -> Result<()> {
+        if let Some(parent) = stats_path.parent() {
+            std::fs::create_dir_all(parent)?;
         }
 
         let mut writer = BufWriter::new(
@@ -192,7 +305,7 @@ impl Backend {
                 .read(true)
                 .append(true)
                 .create(true)
-                .open(&config.stats_path)?,
+                .open(&stats_path)?,
         );
         stats.write(&mut writer)?;
         writer.flush()?;
@@ -200,20 +313,52 @@ impl Backend {
         Ok(())
     }
 
-    async fn generate_global_dictionary(&self) -> Result<MergedDictionary> {
+    fn queue_stats_save_for_shutdown(&self) {
+        let (stats_path, stats_snapshot) = match (self.config.try_read(), self.stats.try_read()) {
+            (Ok(config), Ok(stats)) => (config.stats_path.clone(), stats.clone()),
+            _ => {
+                warn!("Skipping stats save during shutdown because state is busy");
+                return;
+            }
+        };
+
+        if let Err(err) = std::thread::Builder::new()
+            .name("harper-ls-shutdown-stats".to_owned())
+            .spawn(move || {
+                if let Err(err) = Self::save_stats_snapshot(stats_path, stats_snapshot) {
+                    error!("Unable to save stats during shutdown: {err}");
+                }
+            })
+        {
+            error!("Unable to spawn shutdown stats save thread: {err}");
+        }
+    }
+
+    async fn generate_global_dictionary(&self, language: Language) -> Result<MergedDictionary> {
         let mut dict = MergedDictionary::new();
-        dict.add_dictionary(FstDictionary::curated());
-        let user_dict = self.load_user_dictionary().await;
+
+        dict.add_dictionary(registry::dictionary(language));
+        info!(
+            "Loaded {:?} dictionary for language: {:?}",
+            language.family(),
+            language
+        );
+
+        let user_dict = self.load_user_dictionary(language).await;
         dict.add_dictionary(Arc::new(user_dict));
-        let ws_dict = self.load_workspace_dictionary().await;
+        let ws_dict = self.load_workspace_dictionary(language).await;
         dict.add_dictionary(Arc::new(ws_dict));
         Ok(dict)
     }
 
-    async fn generate_file_dictionary(&self, uri: &Uri) -> Result<MergedDictionary> {
+    async fn generate_file_dictionary(
+        &self,
+        uri: &Uri,
+        language: Language,
+    ) -> Result<MergedDictionary> {
         let (global_dictionary, file_dictionary) = tokio::join!(
-            self.generate_global_dictionary(),
-            self.load_file_dictionary(uri)
+            self.generate_global_dictionary(language),
+            self.load_file_dictionary(uri, language)
         );
 
         let mut global_dictionary =
@@ -236,35 +381,137 @@ impl Backend {
         self.update_document(uri, &content, language_id).await
     }
 
+    async fn refresh_open_document(&self, uri: &Uri) -> Result<()> {
+        let text = {
+            let doc_lock = self.doc_state.lock().await;
+            doc_lock
+                .get(uri)
+                .map(|state| state.document.get_full_content().iter().collect::<String>())
+        };
+
+        if let Some(text) = text {
+            self.update_document(uri, &text, None).await
+        } else {
+            self.update_document_from_file(uri, None).await
+        }
+    }
+
     async fn update_document(
         &self,
         uri: &Uri,
         text: &str,
         language_id: Option<&str>,
     ) -> Result<()> {
-        self.pull_config().await;
+        info!(
+            "Opening document: {:?} with language_id: {:?}",
+            uri, language_id
+        );
+
+        // When language_id is None (e.g. on did_change), look up the stored language_id.
+        let stored_language_id: Option<String> = if language_id.is_none() {
+            let doc_lock = self.doc_state.lock().await;
+            doc_lock
+                .get(uri)
+                .and_then(|state| state.language_id.clone())
+        } else {
+            None
+        };
+        let effective_language_id: Option<&str> = language_id.or(stored_language_id.as_deref());
+
+        // Auto-detect language for prose-oriented documents.
+        // Covers markdown, plaintext, org, tex, mail, and similar formats.
+        let is_prose = effective_language_id
+            .map(|s| {
+                s.contains("markdown")
+                    || s.contains("md")
+                    || s == "source.md"
+                    || s == "plaintext"
+                    || s == "text"
+                    || s == "org"
+                    || s == "tex"
+                    || s == "latex"
+                    || s == "plaintex"
+                    || s == "mail"
+                    || s == "quarto"
+                    || s == "asciidoc"
+                    || s == "typst"
+            })
+            .unwrap_or(false);
+
+        info!(
+            "Is prose: {} for effective_language_id: {:?}",
+            is_prose, effective_language_id
+        );
+
+        let config = self.config.read().await;
+        let detected_language: Language = if is_prose {
+            let word_count = text.split_whitespace().count();
+            info!("Word count: {}", word_count);
+
+            let cached_language = {
+                let doc_lock = self.doc_state.lock().await;
+                doc_lock.get(uri).and_then(|state| state.cached_language)
+            };
+
+            if word_count >= MIN_WORDS_FOR_LANGUAGE_DETECTION {
+                // Re-run detection when we have enough content so that e.g. an
+                // empty-then-typed document can switch from English to German.
+                let dict = FstDictionary::curated();
+                let detected = self
+                    .lang_detect
+                    .detect_language(text, &dict, config.language);
+                debug!(
+                    "harper-ls language detect: {:?} for {:?} ({} words)",
+                    detected, uri, word_count
+                );
+
+                // If the language changed for an existing document, force the linter
+                // to be rebuilt by clearing the cached dict.
+                if cached_language != Some(detected) {
+                    info!(
+                        "Language changed from {:?} to {:?}, will rebuild linter",
+                        cached_language, detected
+                    );
+                    let mut doc_lock = self.doc_state.lock().await;
+                    if let Some(state) = doc_lock.get_mut(uri) {
+                        // Force a dict mismatch so the linter rebuild is triggered.
+                        state.dict = Arc::new(MergedDictionary::new());
+                    }
+                }
+
+                detected
+            } else if let Some(cached) = cached_language {
+                // Not enough words yet — keep previous detection.
+                info!("Using cached language: {:?} ({} words)", cached, word_count);
+                cached
+            } else {
+                info!(
+                    "Insufficient content for detection ({} words), using configured language",
+                    word_count
+                );
+                config.language
+            }
+        } else {
+            // For non-prose files (code, etc.) use the configured language.
+            config.language
+        };
 
         // Copy necessary configuration to avoid holding lock.
         let (
             lint_config,
             markdown_options,
             isolate_english,
-            dialect,
+            language, // Configured language (used as fallback)
             max_file_length,
             exclude_patterns,
-        ) = {
-            let config = self.config.read().await;
-            (
-                config.lint_config.clone(),
-                config.markdown_options,
-                config.isolate_english,
-                config.dialect,
-                config.max_file_length,
-                config.exclude_patterns.clone(),
-            )
-        };
-
-        let mut doc_lock = self.doc_state.lock().await;
+        ) = (
+            config.lint_config.clone(),
+            config.markdown_options,
+            config.isolate_english,
+            config.language,
+            config.max_file_length,
+            config.exclude_patterns.clone(),
+        );
 
         if !exclude_patterns.is_empty()
             && exclude_patterns.is_match(
@@ -272,6 +519,7 @@ impl Backend {
                     .ok_or_else(|| anyhow!("Unable to convert URI to file path."))?,
             )
         {
+            let mut doc_lock = self.doc_state.lock().await;
             doc_lock.remove(uri);
             return Ok(());
         }
@@ -279,30 +527,44 @@ impl Backend {
         let ignored_lints = self.load_ignored_lints(uri).await.unwrap_or_default();
 
         let dict = Arc::new(
-            self.generate_file_dictionary(uri)
+            self.generate_file_dictionary(uri, detected_language)
                 .await
                 .context("Unable to generate the file dictionary.")?,
         );
+
+        let mut doc_lock = self.doc_state.lock().await;
 
         let doc_state = doc_lock.entry(uri.clone()).or_insert_with(|| {
             info!("Constructing new LintGroup for new document.");
 
             DocumentState {
                 ignored_lints,
-                linter: LintGroup::new_curated(dict.clone(), dialect)
-                    .with_lint_config(lint_config.clone()),
-                language_id: language_id.map(|v| v.to_string()),
+                linter: {
+                    let mut l = LintGroup::new_curated(dict.clone(), detected_language);
+                    l.config.merge_from(lint_config.clone());
+                    l
+                },
+                // Prefer the provided language_id; fall back to what was already stored
+                // (effective_language_id already resolved both but we need an owned String).
+                language_id: effective_language_id.map(|v| v.to_string()),
                 dict: dict.clone(),
                 uri: uri.clone(),
+                // Store the active language for both prose and non-prose documents so later
+                // diagnostics and dictionary code actions stay language-aware.
+                cached_language: Some(detected_language),
                 ..Default::default()
             }
         });
 
+        // On subsequent updates, also keep the active language in sync.
+        doc_state.cached_language = Some(detected_language);
+
         if doc_state.dict != dict {
             doc_state.dict = dict.clone();
             info!("Constructing new linter because of modified dictionary.");
-            doc_state.linter =
-                LintGroup::new_curated(dict.clone(), dialect).with_lint_config(lint_config.clone());
+            let mut l = LintGroup::new_curated(dict.clone(), detected_language);
+            l.config.merge_from(lint_config.clone());
+            doc_state.linter = l;
         }
 
         let Some(language_id) = &doc_state.language_id else {
@@ -317,18 +579,21 @@ impl Backend {
             uri: &'a Uri,
             doc_state: &'a mut DocumentState,
             lint_config: &FlatConfig,
-            dialect: Dialect,
+            language: Language,
         ) -> Result<Box<dyn Parser>> {
             if doc_state.ident_dict != new_dict {
                 info!("Constructing new linter because of modified ident dictionary.");
                 doc_state.ident_dict = new_dict.clone();
 
-                let mut merged = backend.generate_file_dictionary(uri).await?;
+                let mut merged = backend.generate_file_dictionary(uri, language).await?;
                 merged.add_dictionary(new_dict);
                 let merged = Arc::new(merged);
 
-                doc_state.linter = LintGroup::new_curated(merged.clone(), dialect)
-                    .with_lint_config(lint_config.clone());
+                doc_state.linter = {
+                    let mut l = LintGroup::new_curated(merged.clone(), language);
+                    l.config.merge_from(lint_config.clone());
+                    l
+                };
                 doc_state.dict = merged.clone();
             }
 
@@ -353,7 +618,7 @@ impl Backend {
                             uri,
                             doc_state,
                             &lint_config,
-                            dialect,
+                            detected_language,
                         )
                         .await?,
                     )
@@ -384,7 +649,7 @@ impl Backend {
                             uri,
                             doc_state,
                             &lint_config,
-                            dialect,
+                            language,
                         )
                         .await?,
                     )
@@ -392,10 +657,9 @@ impl Backend {
                     Some(Box::new(parser))
                 }
             }
-            "mail" => Some(Box::new(PlainEnglish)),
-            "markdown" | "quarto" => Some(Box::new(Markdown::new(markdown_options))),
-            "org" => Some(Box::new(OrgMode)),
-            "plaintext" | "text" => Some(Box::new(PlainEnglish)),
+            "mail" | "markdown" | "quarto" | "org" | "plaintext" | "text" => {
+                registry::parser_for_prose(language_id, detected_language, markdown_options)
+            }
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
             "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
@@ -424,6 +688,15 @@ impl Backend {
         }
 
         Ok(())
+    }
+
+    /// Returns the detected language for a document, falling back to configured default.
+    async fn get_document_language(&self, uri: &Uri) -> Language {
+        let doc_lock = self.doc_state.lock().await;
+        if let Some(lang) = doc_lock.get(uri).and_then(|state| state.cached_language) {
+            return lang;
+        }
+        self.config.read().await.language
     }
 
     async fn generate_code_actions(
@@ -457,6 +730,12 @@ impl Backend {
     async fn publish_diagnostics(&self, uri: &Uri) {
         let diagnostics = self.generate_diagnostics(uri).await;
 
+        debug!(
+            "harper-ls publish_diagnostics: {} lints for {:?}",
+            diagnostics.len(),
+            uri
+        );
+
         let result = PublishDiagnosticsParams {
             uri: uri.clone(),
             diagnostics,
@@ -468,29 +747,52 @@ impl Backend {
             .await;
     }
 
+    fn shutdown_uris(&self) -> Vec<Uri> {
+        match self.doc_state.try_lock() {
+            Ok(doc_state) => doc_state.keys().cloned().collect(),
+            Err(_) => {
+                warn!(
+                    "Skipping diagnostic clearing during shutdown because document state is busy"
+                );
+                Vec::new()
+            }
+        }
+    }
+
     /// Update the configuration of the server and publish document updates that
     /// match it.
     async fn update_config_from_obj(&self, json_obj: Value) {
-        if let Ok(new_config) = Config::from_lsp_config(&self.root.read().await, json_obj)
+        // Handle different configuration formats from different editors
+        let processed_json = match json_obj {
+            Value::Object(mut obj) => {
+                // If the object doesn't have a "harper-ls" key, add one
+                if !obj.contains_key("harper-ls") {
+                    obj.insert(
+                        "harper-ls".to_string(),
+                        Value::Object(serde_json::Map::new()),
+                    );
+                }
+                Value::Object(obj)
+            }
+            Value::Null => {
+                // Handle null configuration by using default empty object
+                json!({ "harper-ls": {} })
+            }
+            Value::String(_) | Value::Bool(_) | Value::Number(_) => {
+                // Some editors send configuration as primitives, convert to proper format
+                json!({ "harper-ls": {} })
+            }
+            Value::Array(_) => {
+                // Arrays are not valid configuration format
+                json!({ "harper-ls": {} })
+            }
+        };
+
+        if let Ok(new_config) = Config::from_lsp_config(&self.root.read().await, processed_json)
             .map_err(|err| error!("{err}"))
         {
             let mut config = self.config.write().await;
             *config = new_config;
-        }
-    }
-
-    async fn pull_config(&self) {
-        let mut new_config = self
-            .client
-            .configuration(vec![ConfigurationItem {
-                scope_uri: None,
-                section: None,
-            }])
-            .await
-            .unwrap_or(vec![json!({ "harper-ls": {} })]);
-
-        if let Some(first) = new_config.pop() {
-            self.update_config_from_obj(first).await;
         }
     }
 }
@@ -555,48 +857,36 @@ impl LanguageServer for Backend {
         self.client
             .log_message(MessageType::INFO, "Server initialized!")
             .await;
-
-        self.pull_config().await;
-
-        let did_change_watched_files = Registration {
-            id: "workspace/didChangeWatchedFiles".to_owned(),
-            method: "workspace/didChangeWatchedFiles".to_owned(),
-            register_options: Some(
-                serde_json::to_value(DidChangeWatchedFilesRegistrationOptions {
-                    watchers: vec![FileSystemWatcher {
-                        glob_pattern: GlobPattern::String("**/*".to_owned()),
-                        kind: Some(WatchKind::Delete),
-                    }],
-                })
-                .unwrap(),
-            ),
-        };
-        if let Err(err) = self
-            .client
-            .register_capability(vec![did_change_watched_files])
-            .await
-        {
-            warn!("Unable to register watch file capability: {}", err);
-        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
-        self.update_document(
-            &params.text_document.uri,
-            &params.text_document.text,
-            Some(&params.text_document.language_id),
-        )
-        .await
-        .map_err(|err| error!("{err}"))
-        .err();
+        let progress = self
+            .begin_progress("Harper diagnostics", "Analyzing document")
+            .await;
+
+        if let Err(err) = self
+            .update_document(
+                &params.text_document.uri,
+                &params.text_document.text,
+                Some(&params.text_document.language_id),
+            )
+            .await
+        {
+            error!("{err}");
+        }
 
         self.publish_diagnostics(&params.text_document.uri).await;
+        self.end_progress(progress, "Analysis complete").await;
     }
 
     async fn did_change(&self, params: DidChangeTextDocumentParams) {
         let Some(last) = params.content_changes.last() else {
             return;
         };
+
+        let progress = self
+            .begin_progress("Harper diagnostics", "Updating diagnostics")
+            .await;
 
         if let Err(err) = self
             .update_document(&params.text_document.uri, &last.text, None)
@@ -606,6 +896,7 @@ impl LanguageServer for Backend {
         }
 
         self.publish_diagnostics(&params.text_document.uri).await;
+        self.end_progress(progress, "Diagnostics updated").await;
     }
 
     async fn did_close(&self, _params: DidCloseTextDocumentParams) {
@@ -685,15 +976,16 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let language = self.get_document_language(&file_uri).await;
 
-                let mut dict = self.load_user_dictionary().await;
+                let mut dict = self.load_user_dictionary(language).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict)
+                self.save_user_dictionary(dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.update_document_from_file(&file_uri, None)
+                self.refresh_open_document(&file_uri)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -706,15 +998,16 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let language = self.get_document_language(&file_uri).await;
 
-                let mut dict = self.load_workspace_dictionary().await;
+                let mut dict = self.load_workspace_dictionary(language).await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict)
+                self.save_workspace_dictionary(dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.update_document_from_file(&file_uri, None)
+                self.refresh_open_document(&file_uri)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -727,10 +1020,11 @@ impl LanguageServer for Backend {
                     return Ok(None);
                 };
 
-                let file_uri = second.parse().unwrap();
+                let file_uri: Uri = second.parse().unwrap();
+                let language = self.get_document_language(&file_uri).await;
 
                 let mut dict = match self
-                    .load_file_dictionary(&file_uri)
+                    .load_file_dictionary(&file_uri, language)
                     .await
                     .map_err(|err| error!("{err}"))
                 {
@@ -741,11 +1035,11 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, DictWordMetadata::default());
 
-                self.save_file_dictionary(&file_uri, dict)
+                self.save_file_dictionary(&file_uri, dict, language)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
-                self.update_document_from_file(&file_uri, None)
+                self.refresh_open_document(&file_uri)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -810,14 +1104,20 @@ impl LanguageServer for Backend {
     async fn did_change_configuration(&self, params: DidChangeConfigurationParams) {
         self.update_config_from_obj(params.settings).await;
 
+        let (lint_config, default_language) = {
+            let config_lock = self.config.read().await;
+            (config_lock.lint_config.clone(), config_lock.language)
+        };
+
         let uris: Vec<Uri> = {
             let mut doc_lock = self.doc_state.lock().await;
-            let config_lock = self.config.read().await;
 
             for doc in doc_lock.values_mut() {
                 info!("Constructing new LintGroup for updated configuration.");
-                doc.linter = LintGroup::new_curated(doc.dict.clone(), config_lock.dialect)
-                    .with_lint_config(config_lock.lint_config.clone());
+                let doc_language = doc.cached_language.unwrap_or(default_language);
+                let mut l = LintGroup::new_curated(doc.dict.clone(), doc_language);
+                l.config.merge_from(lint_config.clone());
+                doc.linter = l;
             }
 
             doc_lock.keys().cloned().collect()
@@ -832,6 +1132,11 @@ impl LanguageServer for Backend {
         }
     }
 
+    async fn did_save(&self, _params: DidSaveTextDocumentParams) {
+        // Explicitly implemented so clients like Helix don't log
+        // "textDocument/didSave notification not implemented".
+    }
+
     async fn code_action(
         &self,
         params: CodeActionParams,
@@ -844,10 +1149,12 @@ impl LanguageServer for Backend {
     }
 
     async fn shutdown(&self) -> JsonResult<()> {
-        let doc_states = self.doc_state.lock().await;
+        // Avoid blocking shutdown on long-running document updates.
+        // If the lock is contended, skip diagnostic clearing and continue shutdown.
+        let uris = self.shutdown_uris();
 
-        // Clears the diagnostics for open buffers.
-        for uri in doc_states.keys() {
+        // Clears the diagnostics for open buffers (without holding lock)
+        for uri in &uris {
             let result = PublishDiagnosticsParams {
                 uri: uri.clone(),
                 diagnostics: vec![],
@@ -859,10 +1166,445 @@ impl LanguageServer for Backend {
                 .await;
         }
 
-        if self.save_stats().await.is_err() {
-            error!("Unable to save stats.")
-        }
+        self.queue_stats_save_for_shutdown();
 
         Ok(())
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    use futures::{SinkExt, StreamExt};
+    use serde_json::json;
+    use tempfile::TempDir;
+    use tokio::task::JoinHandle;
+    use tower_lsp_server::LspService;
+    use tower_lsp_server::jsonrpc::Response;
+    use tower_lsp_server::lsp_types::{
+        DidChangeTextDocumentParams, DidOpenTextDocumentParams, ExecuteCommandParams,
+        TextDocumentContentChangeEvent, TextDocumentItem, VersionedTextDocumentIdentifier,
+    };
+
+    struct TestHarness {
+        _service: LspService<Backend>,
+        tempdir: TempDir,
+        test_config: Config,
+        responder: JoinHandle<()>,
+    }
+
+    impl TestHarness {
+        async fn new() -> Self {
+            let tempdir = TempDir::new().unwrap();
+            let root = tempdir.path();
+            let user_dict_path = root.join("dictionary.txt");
+            let file_dict_path = root.join("file_dictionaries");
+            let workspace_dict_path = root.join(".harper-dictionary.txt");
+            let ignored_lints_path = root.join("ignored_lints");
+            let stats_path = root.join("stats.txt");
+
+            let config = Config {
+                user_dict_path: user_dict_path.clone(),
+                file_dict_path: file_dict_path.clone(),
+                workspace_dict_path: workspace_dict_path.clone(),
+                ignored_lints_path: ignored_lints_path.clone(),
+                stats_path: stats_path.clone(),
+                ..Config::default()
+            };
+
+            let lsp_config = json!({
+                "harper-ls": {
+                    "userDictPath": user_dict_path.to_string_lossy(),
+                    "fileDictPath": file_dict_path.to_string_lossy(),
+                    "workspaceDictPath": workspace_dict_path.to_string_lossy(),
+                    "ignoredLintsPath": ignored_lints_path.to_string_lossy(),
+                    "statsPath": stats_path.to_string_lossy(),
+                }
+            });
+
+            let (service, socket) = LspService::new(|client| Backend::new(client, config.clone()));
+            let backend = service.inner();
+            *backend.root.write().await = root.to_path_buf();
+
+            let (mut request_stream, mut response_sink) = socket.split();
+            let responder_config = lsp_config.clone();
+            let responder = tokio::spawn(async move {
+                while let Some(request) = request_stream.next().await {
+                    if request.method() == "workspace/configuration" {
+                        let response = Response::from_ok(
+                            request.id().unwrap().clone(),
+                            json!([responder_config.clone()]),
+                        );
+                        response_sink.send(response).await.unwrap();
+                    }
+                }
+            });
+
+            Self {
+                _service: service,
+                tempdir,
+                test_config: config,
+                responder,
+            }
+        }
+
+        fn backend(&self) -> &Backend {
+            self._service.inner()
+        }
+
+        fn file_uri(&self, relative: &str) -> Uri {
+            let path = self.tempdir.path().join(relative);
+            Uri::from_file_path(path).unwrap()
+        }
+
+        async fn write_document(&self, uri: &Uri, text: &str) {
+            tokio::fs::write(uri.to_file_path().unwrap(), text)
+                .await
+                .unwrap();
+        }
+
+        async fn open_document(&self, uri: &Uri, language_id: &str, text: &str) {
+            self.write_document(uri, text).await;
+            self.backend()
+                .did_open(DidOpenTextDocumentParams {
+                    text_document: TextDocumentItem {
+                        uri: uri.clone(),
+                        language_id: language_id.to_string(),
+                        version: 1,
+                        text: text.to_string(),
+                    },
+                })
+                .await;
+        }
+
+        async fn change_document(&self, uri: &Uri, version: i32, text: &str) {
+            self.write_document(uri, text).await;
+            self.backend()
+                .did_change(DidChangeTextDocumentParams {
+                    text_document: VersionedTextDocumentIdentifier {
+                        uri: uri.clone(),
+                        version,
+                    },
+                    content_changes: vec![TextDocumentContentChangeEvent {
+                        range: None,
+                        range_length: None,
+                        text: text.to_string(),
+                    }],
+                })
+                .await;
+        }
+
+        async fn execute_command(&self, command: &str, word: &str, uri: &Uri) {
+            self.backend()
+                .execute_command(ExecuteCommandParams {
+                    command: command.to_string(),
+                    arguments: vec![json!(word), json!(uri.to_string())],
+                    work_done_progress_params: Default::default(),
+                })
+                .await
+                .unwrap();
+        }
+
+        async fn install_temp_config(&self) {
+            *self.backend().config.write().await = self.test_config.clone();
+        }
+    }
+
+    impl Drop for TestHarness {
+        fn drop(&mut self) {
+            self.responder.abort();
+        }
+    }
+
+    fn german_text_with_errors() -> &'static str {
+        "Das ist ein deutscher Beispielsatz mit ausreichend vielen Woertern, damit die Sprache erkannt wird. dieser Satz enthaelt Worrt und flasch geschriebene Begriffe."
+    }
+
+    fn german_text_without_errors() -> &'static str {
+        "Das ist ein deutscher Beispielsatz mit ausreichend vielen Wörtern, damit die Sprache erkannt wird. Dieser Satz enthält ansonsten nur normale deutsche Formulierungen."
+    }
+
+    fn english_text_with_error() -> &'static str {
+        "This is an English sample sentence with enough words for detection to stay on the default dialect. this sentence starts with a lowercase word."
+    }
+
+    fn german_text_with_workspace_word() -> &'static str {
+        "Das ist ein deutscher Beispielsatz mit ausreichend vielen Wörtern, damit die Sprache erkannt wird. Dieses Zqxjwort steht nur im Editorpuffer."
+    }
+
+    fn german_text_on_disk_after_unsaved_edit() -> &'static str {
+        "Das ist weiterhin ein deutscher Beispielsatz mit ausreichend vielen Wörtern, aber ohne das neue Token im gespeicherten Zustand."
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn german_markdown_open_uses_german_dialect_and_emits_diagnostics() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("german.md");
+
+        harness
+            .open_document(&uri, "markdown", german_text_with_errors())
+            .await;
+
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            Language::German(harper_core::language::german::dialects::GermanDialect::Standard)
+        );
+
+        let diagnostics = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            !diagnostics.is_empty(),
+            "expected German diagnostics for intentionally broken German text"
+        );
+        assert!(
+            diagnostics.len() < 12,
+            "German text should not be flooded with English-oriented diagnostics: {:?}",
+            diagnostics
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn empty_markdown_document_switches_to_german_after_edit() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("empty-then-german.md");
+
+        harness.open_document(&uri, "markdown", "").await;
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            Language::default()
+        );
+
+        harness
+            .change_document(&uri, 2, german_text_with_errors())
+            .await;
+
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            Language::German(harper_core::language::german::dialects::GermanDialect::Standard)
+        );
+
+        let diagnostics = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            !diagnostics.is_empty(),
+            "expected diagnostics after switching to German text"
+        );
+        assert!(
+            diagnostics.iter().any(|d| {
+                d.code.as_ref().is_some_and(|code| {
+                    matches!(
+                        code,
+                        tower_lsp_server::lsp_types::NumberOrString::String(tag)
+                            if tag.contains("GermanSpellCheck")
+                    )
+                })
+            }),
+            "expected German spellcheck diagnostics after language switch: {:?}",
+            diagnostics
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn german_dictionary_commands_write_to_language_specific_paths() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("german-dicts.md");
+
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
+
+        harness
+            .open_document(&uri, "markdown", german_text_without_errors())
+            .await;
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            german_lang
+        );
+        harness.install_temp_config().await;
+
+        harness
+            .execute_command("HarperAddToUserDict", "Ölkannen", &uri)
+            .await;
+        harness
+            .execute_command("HarperAddToWSDict", "Werkstattwort", &uri)
+            .await;
+        harness
+            .execute_command("HarperAddToFileDict", "Dateiwort", &uri)
+            .await;
+
+        let german_user_dict =
+            Backend::dialect_path(&harness.test_config.user_dict_path, german_lang);
+        let german_workspace_dict =
+            Backend::dialect_path(&harness.test_config.workspace_dict_path, german_lang);
+        let german_file_dict = harness
+            .backend()
+            .get_file_dict_path(&uri, german_lang)
+            .await
+            .unwrap();
+
+        assert!(
+            tokio::fs::read_to_string(&german_user_dict)
+                .await
+                .unwrap()
+                .contains("Ölkannen")
+        );
+        assert!(
+            tokio::fs::read_to_string(&german_workspace_dict)
+                .await
+                .unwrap()
+                .contains("Werkstattwort")
+        );
+        assert!(
+            tokio::fs::read_to_string(&german_file_dict)
+                .await
+                .unwrap()
+                .contains("Dateiwort")
+        );
+
+        if harness.test_config.user_dict_path.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&harness.test_config.user_dict_path)
+                    .await
+                    .unwrap()
+                    .contains("Ölkannen")
+            );
+        }
+        if harness.test_config.workspace_dict_path.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&harness.test_config.workspace_dict_path)
+                    .await
+                    .unwrap()
+                    .contains("Werkstattwort")
+            );
+        }
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn workspace_dictionary_command_uses_open_buffer_text_for_refresh() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("german-unsaved-buffer.md");
+
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
+
+        harness
+            .open_document(&uri, "markdown", german_text_with_workspace_word())
+            .await;
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            german_lang
+        );
+        harness.install_temp_config().await;
+
+        let before = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            before
+                .iter()
+                .any(|diagnostic| diagnostic.message.contains("Zqxjwort")),
+            "expected an initial spelling diagnostic for the unsaved buffer word: {before:?}"
+        );
+
+        harness
+            .write_document(&uri, german_text_on_disk_after_unsaved_edit())
+            .await;
+
+        harness
+            .execute_command("HarperAddToWSDict", "Zqxjwort", &uri)
+            .await;
+
+        let current_text = {
+            let doc_lock = harness.backend().doc_state.lock().await;
+            let state = doc_lock.get(&uri).expect("document should stay open");
+            state.document.get_full_content().iter().collect::<String>()
+        };
+        assert!(
+            current_text.contains("Zqxjwort"),
+            "refresh should preserve the in-memory editor buffer, got: {current_text}"
+        );
+
+        let after = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            after
+                .iter()
+                .all(|diagnostic| !diagnostic.message.contains("Zqxjwort")),
+            "workspace dictionary addition should clear the buffer spelling lint: {after:?}"
+        );
+
+        harness
+            .backend()
+            .update_document(&uri, german_text_with_workspace_word(), None)
+            .await
+            .unwrap();
+        let reopened = harness.backend().generate_diagnostics(&uri).await;
+        assert!(
+            reopened
+                .iter()
+                .all(|diagnostic| !diagnostic.message.contains("Zqxjwort")),
+            "workspace dictionary addition should persist across a reopen-like update: {reopened:?}"
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn english_user_dictionary_command_keeps_default_path() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("english.md");
+
+        harness
+            .open_document(&uri, "markdown", english_text_with_error())
+            .await;
+        assert_eq!(
+            harness.backend().get_document_language(&uri).await,
+            Language::default()
+        );
+        harness.install_temp_config().await;
+
+        harness
+            .execute_command("HarperAddToUserDict", "HarperWord", &uri)
+            .await;
+
+        let english_user_dict = tokio::fs::read_to_string(&harness.test_config.user_dict_path)
+            .await
+            .unwrap();
+        assert!(english_user_dict.contains("HarperWord"));
+
+        use harper_core::language::german::dialects::GermanDialect;
+        let german_lang = Language::German(GermanDialect::Standard);
+        let german_user_dict =
+            Backend::dialect_path(&harness.test_config.user_dict_path, german_lang);
+        if german_user_dict.exists() {
+            assert!(
+                !tokio::fs::read_to_string(&german_user_dict)
+                    .await
+                    .unwrap()
+                    .contains("HarperWord")
+            );
+        }
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn shutdown_persists_stats_file() {
+        let harness = TestHarness::new().await;
+        harness.install_temp_config().await;
+
+        harness.backend().shutdown().await.unwrap();
+        for _ in 0..20 {
+            if harness.test_config.stats_path.exists() {
+                break;
+            }
+            std::thread::sleep(std::time::Duration::from_millis(25));
+        }
+        assert!(
+            harness.test_config.stats_path.exists(),
+            "shutdown should persist stats file"
+        );
+    }
+
+    #[tokio::test(flavor = "current_thread")]
+    async fn shutdown_uris_returns_empty_when_doc_state_lock_is_busy() {
+        let harness = TestHarness::new().await;
+        let _doc_state_guard = harness.backend().doc_state.lock().await;
+
+        assert!(
+            harness.backend().shutdown_uris().is_empty(),
+            "shutdown should skip URI collection when doc_state is contended"
+        );
     }
 }

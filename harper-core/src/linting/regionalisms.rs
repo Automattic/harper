@@ -1,5 +1,5 @@
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian, Indian},
+    EnglishDialect::{self as Dialect, American, Australian, British, Canadian, Indian},
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
@@ -39,11 +39,9 @@ enum Concept {
     CaravanTrailer,
     CatsupKetchupTomatoSauce,
     CellPhoneMobilePhone,
-    CheckCheque,
-    CheckbookChequebook,
+    CoolboxCoolerEsky,
     ChipsCrisps,
     CilantroCoriander,
-    CoolboxCoolerEsky,
     Crore,
     Crores,
     DiaperNappy,
@@ -55,7 +53,6 @@ enum Concept {
     FootpathPavementSidewalk,
     GasolinePetrol,
     GasStationPetrolStationServiceStation,
-    GodownWarehouse,
     // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
     Lakh,
@@ -71,9 +68,8 @@ enum Concept {
     Prepone,
     SpannerWrench,
     StationWagonEstate,
-    TireTyre,
-    UpdatesUpdations,
     UpdateUpdation,
+    UpdatesUpdations,
     WindscreenWindshield,
 }
 
@@ -196,30 +192,6 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: CellPhoneMobilePhone,
-    },
-    Term {
-        term: "check",
-        flag: UniversalTerm,
-        dialects: &[American],
-        concept: CheckCheque,
-    },
-    Term {
-        term: "checkbook",
-        flag: Flag,
-        dialects: &[American],
-        concept: CheckbookChequebook,
-    },
-    Term {
-        term: "cheque",
-        flag: Flag,
-        dialects: &[Australian, British, Canadian, Indian],
-        concept: CheckCheque,
-    },
-    Term {
-        term: "chequebook",
-        flag: Flag,
-        dialects: &[Australian, British, Canadian, Indian],
-        concept: CheckbookChequebook,
     },
     Term {
         term: "chips",
@@ -364,12 +336,6 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: GasolinePetrol,
-    },
-    Term {
-        term: "godown",
-        flag: Flag,
-        dialects: &[Indian],
-        concept: GodownWarehouse,
     },
     Term {
         term: "India",
@@ -559,18 +525,6 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: FaucetTap,
     },
     Term {
-        term: "tire",
-        flag: HasOtherMeanings,
-        dialects: &[American, Canadian],
-        concept: TireTyre,
-    },
-    Term {
-        term: "tyre",
-        flag: Flag,
-        dialects: &[Australian, British, Indian],
-        concept: TireTyre,
-    },
-    Term {
         term: "tomato sauce",
         flag: HasOtherMeanings,
         dialects: &[Australian],
@@ -635,12 +589,6 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: PhotocopyXerox,
-    },
-    Term {
-        term: "warehouse",
-        flag: UniversalTerm,
-        dialects: &[American, Australian, British, Canadian],
-        concept: GodownWarehouse,
     },
     Term {
         term: "wrench",
@@ -920,10 +868,5 @@ mod tests {
     #[test]
     fn americans_dont_say_nought() {
         assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
-    }
-
-    #[test]
-    fn godown_isnt_used_outside_asia() {
-        assert_suggestion_result("godown", Regionalisms::new(Dialect::American), "warehouse");
     }
 }

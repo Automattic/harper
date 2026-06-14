@@ -4,14 +4,6 @@ use crate::linting::tests::{
 
 use super::lint_group;
 
-/// Helper function to create a lint group with only a single rule enabled.
-fn single_lint(rule_name: &str) -> crate::linting::LintGroup {
-    let mut group = lint_group();
-    group.set_all_rules_to(None); // Disable all linters
-    group.config.set_rule_enabled(rule_name, true); // Enable only the specified rule
-    group
-}
-
 // 1:1 tests
 
 // Ado
@@ -834,9 +826,15 @@ fn corrects_vuln() {
 #[test]
 fn corrects_vulns() {
     // Fix just this lint
+    let mut only_expand_vuln = lint_group();
+    only_expand_vuln.set_all_rules_to(None); // Disable all linters
+    only_expand_vuln
+        .config
+        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
+
     assert_suggestion_result(
         "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
-        single_lint("ExpandVulnerability"),
+        only_expand_vuln,
         "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
     );
     // Fix all lints in the `LintGroup`
@@ -1958,17 +1956,8 @@ fn fix_everybody_seams() {
 fn fix_everyone_seams() {
     assert_suggestion_result(
         "everyone seams to use the editor now a days plus there is a tun of extensions available",
-        single_lint("SeamToSeem"),
-        "everyone seems to use the editor now a days plus there is a tun of extensions available",
-    );
-}
-
-#[test]
-fn fix_everyone_seams_combined_with_now_a_days() {
-    assert_suggestion_result(
-        "everyone seams to use the editor now a days plus there is a tun of extensions available",
         lint_group(),
-        "everyone seems to use the editor nowadays plus there is a tun of extensions available",
+        "everyone seems to use the editor now a days plus there is a tun of extensions available",
     );
 }
 
@@ -2856,6 +2845,53 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// InHindsight
+
+#[test]
+fn corrects_on_hindsight() {
+    assert_suggestion_result(
+        "On hindsight, the tip to \"try launching your terminal\" would've been useful",
+        lint_group(),
+        "In hindsight, the tip to \"try launching your terminal\" would've been useful",
+    );
+}
+
+#[test]
+fn corrects_in_hind_sight_hyphenated() {
+    assert_suggestion_result(
+        "It probably could have been better to fake an OSS project name in hind-sight, but anyway we can still fix this.",
+        lint_group(),
+        "It probably could have been better to fake an OSS project name in hindsight, but anyway we can still fix this.",
+    );
+}
+
+#[test]
+fn corrects_in_hind_sight() {
+    assert_suggestion_result(
+        "In hind sight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
+        lint_group(),
+        "In hindsight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
+    )
+}
+
+#[test]
+fn corrects_on_hind_sight() {
+    assert_suggestion_result(
+        "Yes, on hind sight I've used tasks that don't respond well to kills.",
+        lint_group(),
+        "Yes, in hindsight I've used tasks that don't respond well to kills.",
+    )
+}
+
+#[test]
+fn corrects_on_hind_sight_hyphenated() {
+    assert_suggestion_result(
+        "On hind-sight the likely root cause was not force cleaning helm config.",
+        lint_group(),
+        "In hindsight the likely root cause was not force cleaning helm config.",
+    )
+}
+
 // MakeItSeem
 
 #[test]
@@ -3019,107 +3055,6 @@ fn fix_no_only_were() {
         "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
         lint_group(),
         "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
-    );
-}
-
-// Nowadays
-
-#[test]
-fn fix_now_a_days_spaces() {
-    assert_suggestion_result(
-        "Now a days, movie recommendation systems are well developed and are user focused.",
-        lint_group(),
-        "Nowadays, movie recommendation systems are well developed and are user focused.",
-    );
-}
-
-#[test]
-fn fix_now_a_days_apostrophe() {
-    assert_suggestion_result(
-        "Now a day's recognizing the activity from the surveillance video is a challenging task.",
-        lint_group(),
-        "Nowadays recognizing the activity from the surveillance video is a challenging task.",
-    );
-}
-
-#[test]
-fn fix_now_a_days_hyphen() {
-    assert_suggestion_result(
-        "Recommendation engines are now a one of the most common Machine Learning project that can be seen now-a-days.",
-        lint_group(),
-        "Recommendation engines are now a one of the most common Machine Learning project that can be seen nowadays.",
-    );
-}
-
-#[test]
-fn fix_now_a_day() {
-    assert_suggestion_result(
-        "Now a day a calendar is a daily essential things.",
-        lint_group(),
-        "Nowadays a calendar is a daily essential things.",
-    );
-}
-
-#[test]
-fn fix_now_a_day_hyphen() {
-    assert_suggestion_result(
-        "Now-a-day, lots of people prefer ordering food online to save their time and effort.",
-        lint_group(),
-        "Nowadays, lots of people prefer ordering food online to save their time and effort.",
-    );
-}
-
-#[test]
-fn fix_now_adays_hyphen() {
-    assert_suggestion_result(
-        "@andyp1per knows most about those Python scripts now-adays.",
-        lint_group(),
-        "@andyp1per knows most about those Python scripts nowadays.",
-    );
-}
-
-#[test]
-fn fix_now_adays_space() {
-    assert_suggestion_result(
-        "Coding is one of my fav thing to do now adays.!",
-        lint_group(),
-        "Coding is one of my fav thing to do nowadays.!",
-    );
-}
-
-#[test]
-fn fix_nowaday() {
-    assert_suggestion_result(
-        "nowaday, I have to capitalize the first letter of the name gets from @babel/types.",
-        lint_group(),
-        "nowadays, I have to capitalize the first letter of the name gets from @babel/types.",
-    );
-}
-
-#[test]
-fn fix_now_adays_apostrophe() {
-    assert_suggestion_result(
-        "I believe CSS clamp has great browser support now aday's as well.",
-        lint_group(),
-        "I believe CSS clamp has great browser support nowadays as well.",
-    );
-}
-
-#[test]
-fn fix_nowa_days() {
-    assert_suggestion_result(
-        "But discord would be great cause discord is universally used for all games and companies and schools nowa days.",
-        lint_group(),
-        "But discord would be great cause discord is universally used for all games and companies and schools nowadays.",
-    );
-}
-
-#[test]
-fn fix_now_aday() {
-    assert_suggestion_result(
-        "OF all Occupations that now aday is used,I would not be a butcher",
-        lint_group(),
-        "OF all Occupations that nowadays is used,I would not be a butcher",
     );
 }
 

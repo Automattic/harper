@@ -1,5 +1,5 @@
 use harper_core::{
-    Dialect, IgnoredLints,
+    EnglishDialect, IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
@@ -24,7 +24,7 @@ pub enum ConfigError {
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
     pub mutable_dictionary: MutableDictionary,
-    pub dialect: Dialect,
+    pub dialect: Language,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
@@ -55,10 +55,9 @@ impl Config {
         }
     }
 
-    pub fn detect_system_dialect() -> Dialect {
-        tauri_plugin_os::locale()
-            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
-            .unwrap_or(Dialect::American)
+    pub fn detect_system_dialect() -> Language {
+        // TODO: Implement BCP47 to Dialect conversion
+        Language::English(EnglishDialect::American)
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
@@ -150,7 +149,7 @@ impl Config {
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
-        config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
+        config.mutable_dictionary = load_dict(dictionary_path).await?;
 
         Ok(config)
     }

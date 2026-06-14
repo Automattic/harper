@@ -1,6 +1,6 @@
 use crate::linting::LintGroup;
 
-use super::MapPhraseLinter;
+use super::map_phrase_linter::MapPhraseLinter;
 
 pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();

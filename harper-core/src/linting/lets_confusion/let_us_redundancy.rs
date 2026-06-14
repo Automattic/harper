@@ -43,7 +43,10 @@ impl ExprLinter for LetUsRedundancy {
                     format!("lets {pronoun}").chars().collect(),
                     template,
                 ),
-                Suggestion::replace_with_match_case("let's".chars().collect(), template),
+                Suggestion::replace_with_match_case(
+                    "let's".to_string().chars().collect(),
+                    template,
+                ),
             ],
             message: "`let's` stands for `let us`, so including another pronoun is redundant."
                 .to_owned(),

@@ -1,6 +1,7 @@
 use crate::config::{CodeActionConfig, DiagnosticSeverity};
 use crate::diagnostics::{lint_to_code_actions, lints_to_diagnostics};
 use crate::pos_conv::range_to_span;
+use harper_core::languages::Language;
 use harper_core::linting::{Lint, LintGroup, Linter};
 use harper_core::spell::{MergedDictionary, MutableDictionary};
 use harper_core::{Document, IgnoredLints, TokenKind, remove_overlaps_map};
@@ -15,6 +16,7 @@ pub struct DocumentState {
     pub language_id: Option<String>,
     pub ignored_lints: IgnoredLints,
     pub uri: Uri,
+    pub cached_language: Option<Language>,
 }
 
 impl DocumentState {
@@ -24,7 +26,9 @@ impl DocumentState {
 
     pub fn generate_diagnostics(&mut self, severity: DiagnosticSeverity) -> Vec<Diagnostic> {
         let temp = self.linter.config.clone();
-        self.linter.config.fill_with_curated();
+        self.linter
+            .config
+            .fill_with_curated_for_language(self.cached_language.unwrap_or_default());
 
         let mut lints = self.linter.organized_lints(&self.document);
 
@@ -52,7 +56,9 @@ impl DocumentState {
         code_action_config: &CodeActionConfig,
     ) -> Vec<CodeActionOrCommand> {
         let temp = self.linter.config.clone();
-        self.linter.config.fill_with_curated();
+        self.linter
+            .config
+            .fill_with_curated_for_language(self.cached_language.unwrap_or_default());
 
         let mut lints = self.linter.lint(&self.document);
 
@@ -103,6 +109,7 @@ impl Default for DocumentState {
             language_id: Default::default(),
             ignored_lints: Default::default(),
             uri: "https://example.net".parse().unwrap(),
+            cached_language: None,
         }
     }
 }

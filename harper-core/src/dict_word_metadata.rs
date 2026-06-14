@@ -2,16 +2,63 @@ use harper_brill::UPOS;
 use is_macro::Is;
 use itertools::Itertools;
 use paste::paste;
+use serde::ser::SerializeStruct;
 use serde::{Deserialize, Serialize};
+use serde_json::Value;
 use smallvec::SmallVec;
-use strum::{EnumCount as _, VariantArray as _};
-use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
+use std::ops::{BitOr, BitOrAssign};
 
-use std::convert::TryFrom;
-
+// Import dialect types from the central dialects module for modularity.
+use crate::dialects::dialect_enum::DialectsEnum;
+use crate::dialects::dialect_trait::DialectFlags as _;
 use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
+
+// Import all dialect types from central re-exports
+use crate::dialects::english::{EnglishDialect, EnglishDialectFlags};
+use crate::dialects::german::{GermanDialect, GermanDialectFlags};
+use crate::dialects::portuguese::{PortugueseDialect, PortugueseDialectFlags};
+
+// =============================================================================
+// DIALECT FLAGS CODE GENERATION
+// =============================================================================
+// This section uses macros to generate per-language code.
+// To add a new language, update the LANGUAGES! macro below.
+
+/// Define all languages with dialect support.
+/// Format: (RustName, snake_case, DialectType, FlagsType)
+/// This is the ONLY place that needs updating for new languages.
+macro_rules! LANGUAGES {
+    () => {
+        (English, english, EnglishDialect, EnglishDialectFlags),
+        (German, german, GermanDialect, GermanDialectFlags),
+        (Portuguese, portuguese, PortugueseDialect, PortugueseDialectFlags),
+    };
+}
+
+// =============================================================================
+// LANGUAGES MACRO
+// This is the central list of all languages with dialect support.
+// To add a new language, add an entry here.
+//
+// Format: (RustName, snake_case, DialectType, FlagsType)
+// Example: (Spanish, spanish, SpanishDialect, SpanishDialectFlags)
+//
+// IMPORTANT: After adding a language here, you must also update:
+// - The DialectFlags struct fields below
+// - The ScopedDialectFlagsSerde struct fields
+// - The LegacyDialect enum and LegacyDialectFlags bitflags
+// - The serialization/deserialization logic
+// - All methods that reference specific languages
+// =============================================================================
+macro_rules! LANGUAGES {
+    () => {
+        (English, english, EnglishDialect, EnglishDialectFlags),
+        (German, german, GermanDialect, GermanDialectFlags),
+        (Portuguese, portuguese, PortugueseDialect, PortugueseDialectFlags),
+    };
+}
 
 /// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
 /// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
@@ -35,7 +82,7 @@ pub struct DictWordMetadata {
     pub swear: Option<bool>,
     /// The dialects this word belongs to.
     /// If no dialects are defined, it can be assumed that the word is
-    /// valid in all dialects of English.
+    /// valid in all supported dialects.
     #[serde(default = "default_default")]
     pub dialects: DialectFlags,
     /// Orthographic information: letter case, spaces, hyphens, etc.
@@ -1024,127 +1071,234 @@ impl AffixData {
     }
 }
 
-/// A regional dialect.
-///
-/// Note: these have bit-shifted values so that they can ergonomically integrate with
-/// `DialectFlags`. Each value here must have a unique bit index inside
-/// `DialectsUnderlyingType`.
-#[derive(
-    Debug,
-    Clone,
-    Copy,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    PartialOrd,
-    Eq,
-    Hash,
-    EnumCount,
-    EnumString,
-    EnumIter,
-    Display,
-    VariantArray,
-)]
-pub enum Dialect {
-    American = 1 << 0,
-    Canadian = 1 << 1,
-    Australian = 1 << 2,
-    British = 1 << 3,
-    Indian = 1 << 4,
+// Legacy flat dialect representation removed — the codebase now requires scoped, language-specific dialect flags.
+// Old legacy support (numeric bitmasks and flat strings) has been removed to simplify the data model.
+// Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
+struct ScopedDialectFlagsSerde {
+    english: EnglishDialectFlags,
+    german: GermanDialectFlags,
+    portuguese: PortugueseDialectFlags,
 }
-impl Dialect {
-    /// Tries to guess the dialect used in the document by finding which dialect is used the most.
-    /// Returns `None` if it fails to find a single dialect that is used the most.
-    #[must_use]
-    pub fn try_guess_from_document(document: &Document) -> Option<Self> {
-        Self::try_from(DialectFlags::get_most_used_dialects_from_document(document)).ok()
-    }
 
-    /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
-    /// recognized.
-    ///
-    /// # Examples
-    ///
-    /// ```
-    /// use harper_core::Dialect;
-    ///
-    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
-    /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
-    ///
-    /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
-    /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
-    /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
-    /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
-    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
-    /// ```
-    #[must_use]
-    pub fn try_from_abbr(abbr: &str) -> Option<Self> {
-        match abbr {
-            "US" => Some(Self::American),
-            "CA" => Some(Self::Canadian),
-            "AU" => Some(Self::Australian),
-            "GB" => Some(Self::British),
-            "IN" => Some(Self::Indian),
-            _ => None,
-        }
-    }
-    // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
-    pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
-        bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
-    }
-}
-impl TryFrom<DialectFlags> for Dialect {
-    type Error = ();
+impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::{Error, Unexpected};
 
-    /// Attempts to convert `DialectFlags` to a single `Dialect`.
-    ///
-    /// # Errors
-    ///
-    /// Will return `Err` if more than one dialect is enabled or if an undefined dialect is
-    /// enabled.
-    fn try_from(dialect_flags: DialectFlags) -> Result<Self, Self::Error> {
-        // Ensure only one dialect is enabled before converting.
-        if dialect_flags.bits().count_ones() == 1 {
-            match dialect_flags {
-                df if df.is_dialect_enabled_strict(Dialect::American) => Ok(Dialect::American),
-                df if df.is_dialect_enabled_strict(Dialect::Canadian) => Ok(Dialect::Canadian),
-                df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
-                df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
-                df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
-                _ => Err(()),
+        let value = Value::deserialize(deserializer)?;
+
+        match value {
+            Value::Object(map) => {
+                let mut english = EnglishDialectFlags::default();
+                let mut german = GermanDialectFlags::default();
+                let mut portuguese = PortugueseDialectFlags::default();
+
+                for (key, val) in map {
+                    match key.as_str() {
+                        "english" => match val {
+                            Value::String(s) => {
+                                english = match s.as_str() {
+                                    "AMERICAN" => EnglishDialectFlags::AMERICAN,
+                                    "CANADIAN" => EnglishDialectFlags::CANADIAN,
+                                    "AUSTRALIAN" => EnglishDialectFlags::AUSTRALIAN,
+                                    "BRITISH" => EnglishDialectFlags::BRITISH,
+                                    "INDIAN" => EnglishDialectFlags::INDIAN,
+                                    _ => {
+                                        return Err(Error::custom(format!(
+                                            "Unknown English dialect: {s}"
+                                        )));
+                                    }
+                                };
+                            }
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                english = EnglishDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-string, non-number"),
+                                    &"a string or number",
+                                ));
+                            }
+                        },
+                        "german" => match val {
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                german = GermanDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-number"),
+                                    &"a number",
+                                ));
+                            }
+                        },
+                        "portuguese" => match val {
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                portuguese = PortugueseDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("non-number"),
+                                    &"a number",
+                                ));
+                            }
+                        },
+                        _ => {
+                            return Err(Error::unknown_field(
+                                &key,
+                                &["english", "german", "portuguese"],
+                            ));
+                        }
+                    }
+                }
+
+                Ok(ScopedDialectFlagsSerde {
+                    english,
+                    german,
+                    portuguese,
+                })
             }
-        } else {
-            // More than one dialect enabled; can't soundly convert.
-            Err(())
+            Value::String(s) => {
+                // Backward compatibility: handle legacy flat dialect format
+                let english = match s.as_str() {
+                    "AMERICAN" => EnglishDialectFlags::AMERICAN,
+                    "CANADIAN" => EnglishDialectFlags::CANADIAN,
+                    "AUSTRALIAN" => EnglishDialectFlags::AUSTRALIAN,
+                    "BRITISH" => EnglishDialectFlags::BRITISH,
+                    "INDIAN" => EnglishDialectFlags::INDIAN,
+                    _ => {
+                        return Err(Error::custom(format!(
+                            "Unknown legacy English dialect: {s}"
+                        )));
+                    }
+                };
+
+                Ok(ScopedDialectFlagsSerde {
+                    english,
+                    german: GermanDialectFlags::default(),
+                    portuguese: PortugueseDialectFlags::default(),
+                })
+            }
+            _ => Err(Error::invalid_type(
+                Unexpected::Other("non-object, non-string"),
+                &"an object or string",
+            )),
         }
     }
 }
 
-// The underlying type used for DialectFlags.
-// At the time of writing, this is currently a `u8`. If we want to define more than 8 dialects in
-// the future, we will need to switch this to a larger type.
-type DialectFlagsUnderlyingType = u8;
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]
+pub struct DialectFlags {
+    // IMPORTANT: These fields must match the LANGUAGES! macro above.
+    // To add a new language, add a field here and update LANGUAGES!.
+    pub english: EnglishDialectFlags,
+    pub german: GermanDialectFlags,
+    pub portuguese: PortugueseDialectFlags,
+}
 
-bitflags::bitflags! {
-    /// A collection of bit flags used to represent enabled dialects.
-    ///
-    /// This is generally used to allow a word (or similar) to be tagged with multiple dialects.
-    #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
-    #[serde(transparent)]
-    pub struct DialectFlags: DialectFlagsUnderlyingType {
-        const AMERICAN = Dialect::American as DialectFlagsUnderlyingType;
-        const CANADIAN = Dialect::Canadian as DialectFlagsUnderlyingType;
-        const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
-        const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
-        const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+impl Serialize for DialectFlags {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut scoped = serializer.serialize_struct("DialectFlags", 3)?;
+        scoped.serialize_field("english", &self.english)?;
+        scoped.serialize_field("german", &self.german)?;
+        scoped.serialize_field("portuguese", &self.portuguese)?;
+        scoped.end()
     }
 }
+
+impl<'de> Deserialize<'de> for DialectFlags {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        // Only accept the new scoped, language-specific dialect flags format.
+        let scoped = ScopedDialectFlagsSerde::deserialize(deserializer)?;
+        Ok(scoped.into())
+    }
+}
+
+impl From<ScopedDialectFlagsSerde> for DialectFlags {
+    fn from(value: ScopedDialectFlagsSerde) -> Self {
+        Self {
+            english: value.english,
+            german: value.german,
+            portuguese: value.portuguese,
+        }
+    }
+}
+
 impl DialectFlags {
+    #[must_use]
+    pub const fn empty() -> Self {
+        Self {
+            english: EnglishDialectFlags::empty(),
+            german: GermanDialectFlags::empty(),
+            portuguese: PortugueseDialectFlags::empty(),
+        }
+    }
+
+    #[must_use]
+    pub fn is_empty(self) -> bool {
+        self.english.is_empty() && self.german.is_empty() && self.portuguese.is_empty()
+    }
+
     /// Checks if the provided dialect is enabled.
     /// If no dialect is explicitly enabled, it is assumed that all dialects are enabled.
     #[must_use]
-    pub fn is_dialect_enabled(self, dialect: Dialect) -> bool {
-        self.is_empty() || self.intersects(Self::from_dialect(dialect))
+    pub fn is_dialect_enabled(self, dialect: impl Into<DialectsEnum>) -> bool {
+        if self.is_empty() {
+            return true;
+        }
+
+        match dialect.into() {
+            DialectsEnum::English(EnglishDialect::American) => {
+                !self.english.is_empty()
+                    && self.english.is_dialect_enabled(EnglishDialect::American)
+            }
+            DialectsEnum::English(EnglishDialect::Canadian) => {
+                !self.english.is_empty()
+                    && self.english.is_dialect_enabled(EnglishDialect::Canadian)
+            }
+            DialectsEnum::English(EnglishDialect::Australian) => {
+                !self.english.is_empty()
+                    && self.english.is_dialect_enabled(EnglishDialect::Australian)
+            }
+            DialectsEnum::English(EnglishDialect::British) => {
+                !self.english.is_empty() && self.english.is_dialect_enabled(EnglishDialect::British)
+            }
+            DialectsEnum::English(EnglishDialect::Indian) => {
+                !self.english.is_empty() && self.english.is_dialect_enabled(EnglishDialect::Indian)
+            }
+            DialectsEnum::German(GermanDialect::Standard) => {
+                !self.german.is_empty() && self.german.is_dialect_enabled(GermanDialect::Standard)
+            }
+            DialectsEnum::German(GermanDialect::Austrian) => {
+                !self.german.is_empty() && self.german.is_dialect_enabled(GermanDialect::Austrian)
+            }
+            DialectsEnum::German(GermanDialect::Swiss) => {
+                !self.german.is_empty() && self.german.is_dialect_enabled(GermanDialect::Swiss)
+            }
+            DialectsEnum::Portuguese(portuguese) => {
+                !self.portuguese.is_empty() && self.portuguese.is_dialect_enabled(portuguese)
+            }
+        }
     }
 
     /// Checks if the provided dialect is ***explicitly*** enabled.
@@ -1152,23 +1306,109 @@ impl DialectFlags {
     /// Unlike `is_dialect_enabled`, this will return false when no dialects are explicitly
     /// enabled.
     #[must_use]
-    pub fn is_dialect_enabled_strict(self, dialect: Dialect) -> bool {
-        self.intersects(Self::from_dialect(dialect))
+    pub fn is_dialect_enabled_strict(self, dialect: impl Into<DialectsEnum>) -> bool {
+        match dialect.into() {
+            DialectsEnum::English(EnglishDialect::American) => self
+                .english
+                .is_dialect_enabled_strict(EnglishDialect::American),
+            DialectsEnum::English(EnglishDialect::Canadian) => self
+                .english
+                .is_dialect_enabled_strict(EnglishDialect::Canadian),
+            DialectsEnum::English(EnglishDialect::Australian) => self
+                .english
+                .is_dialect_enabled_strict(EnglishDialect::Australian),
+            DialectsEnum::English(EnglishDialect::British) => self
+                .english
+                .is_dialect_enabled_strict(EnglishDialect::British),
+            DialectsEnum::English(EnglishDialect::Indian) => self
+                .english
+                .is_dialect_enabled_strict(EnglishDialect::Indian),
+            DialectsEnum::German(GermanDialect::Standard) => self
+                .german
+                .is_dialect_enabled_strict(GermanDialect::Standard),
+            DialectsEnum::German(GermanDialect::Austrian) => self
+                .german
+                .is_dialect_enabled_strict(GermanDialect::Austrian),
+            DialectsEnum::German(GermanDialect::Swiss) => {
+                self.german.is_dialect_enabled_strict(GermanDialect::Swiss)
+            }
+            DialectsEnum::Portuguese(portuguese) => {
+                self.portuguese.is_dialect_enabled_strict(portuguese)
+            }
+        }
     }
 
-    /// Constructs a `DialectFlags` from the provided `Dialect`, with only that dialect being
-    /// enabled.
-    ///
-    /// # Panics
-    ///
-    /// This will panic if `dialect` represents a dialect that is not defined in
-    /// `DialectFlags`.
     #[must_use]
-    pub fn from_dialect(dialect: Dialect) -> Self {
-        let Some(out) = Self::from_bits(dialect as DialectFlagsUnderlyingType) else {
-            panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
-        };
-        out
+    pub fn is_english_dialect_enabled(self, dialect: EnglishDialect) -> bool {
+        self.english.is_dialect_enabled(dialect)
+    }
+
+    #[must_use]
+    pub fn is_english_dialect_enabled_strict(self, dialect: EnglishDialect) -> bool {
+        self.english.is_dialect_enabled_strict(dialect)
+    }
+
+    #[must_use]
+    pub fn is_german_dialect_enabled(self, dialect: GermanDialect) -> bool {
+        self.german.is_dialect_enabled(dialect)
+    }
+
+    #[must_use]
+    pub fn is_german_dialect_enabled_strict(self, dialect: GermanDialect) -> bool {
+        self.german.is_dialect_enabled_strict(dialect)
+    }
+
+    #[must_use]
+    pub fn is_portuguese_dialect_enabled(self, dialect: PortugueseDialect) -> bool {
+        self.portuguese.is_dialect_enabled(dialect)
+    }
+
+    #[must_use]
+    pub fn is_portuguese_dialect_enabled_strict(self, dialect: PortugueseDialect) -> bool {
+        self.portuguese.is_dialect_enabled_strict(dialect)
+    }
+
+    /// Constructs `DialectFlags` from the provided dialect.
+    #[must_use]
+    pub fn from_dialect(dialect: impl Into<DialectsEnum>) -> Self {
+        match dialect.into() {
+            DialectsEnum::English(EnglishDialect::American) => Self {
+                english: EnglishDialectFlags::from_dialect(EnglishDialect::American),
+                ..Self::empty()
+            },
+            DialectsEnum::English(EnglishDialect::Canadian) => Self {
+                english: EnglishDialectFlags::from_dialect(EnglishDialect::Canadian),
+                ..Self::empty()
+            },
+            DialectsEnum::English(EnglishDialect::Australian) => Self {
+                english: EnglishDialectFlags::from_dialect(EnglishDialect::Australian),
+                ..Self::empty()
+            },
+            DialectsEnum::English(EnglishDialect::British) => Self {
+                english: EnglishDialectFlags::from_dialect(EnglishDialect::British),
+                ..Self::empty()
+            },
+            DialectsEnum::English(EnglishDialect::Indian) => Self {
+                english: EnglishDialectFlags::from_dialect(EnglishDialect::Indian),
+                ..Self::empty()
+            },
+            DialectsEnum::German(GermanDialect::Standard) => Self {
+                german: GermanDialectFlags::from_dialect(GermanDialect::Standard),
+                ..Self::empty()
+            },
+            DialectsEnum::German(GermanDialect::Austrian) => Self {
+                german: GermanDialectFlags::from_dialect(GermanDialect::Austrian),
+                ..Self::empty()
+            },
+            DialectsEnum::German(GermanDialect::Swiss) => Self {
+                german: GermanDialectFlags::from_dialect(GermanDialect::Swiss),
+                ..Self::empty()
+            },
+            DialectsEnum::Portuguese(portuguese) => Self {
+                portuguese: PortugueseDialectFlags::from_dialect(portuguese),
+                ..Self::empty()
+            },
+        }
     }
 
     /// Gets the most commonly used dialect(s) in the document.
@@ -1179,11 +1419,25 @@ impl DialectFlags {
     #[must_use]
     pub fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
-        let mut dialect_counters: [(Dialect, usize); Dialect::COUNT] = Dialect::VARIANTS
-            .iter()
-            .map(|d| (*d, 0))
-            .collect_array()
-            .unwrap();
+        let mut dialect_counters = [
+            (DialectsEnum::English(EnglishDialect::American), 0usize),
+            (DialectsEnum::English(EnglishDialect::Canadian), 0usize),
+            (DialectsEnum::English(EnglishDialect::Australian), 0usize),
+            (DialectsEnum::English(EnglishDialect::British), 0usize),
+            (DialectsEnum::English(EnglishDialect::Indian), 0usize),
+            (DialectsEnum::German(GermanDialect::Standard), 0usize),
+            (DialectsEnum::German(GermanDialect::Austrian), 0usize),
+            (DialectsEnum::German(GermanDialect::Swiss), 0usize),
+            (
+                DialectsEnum::Portuguese(PortugueseDialect::European),
+                0usize,
+            ),
+            (
+                DialectsEnum::Portuguese(PortugueseDialect::Brazilian),
+                0usize,
+            ),
+            (DialectsEnum::Portuguese(PortugueseDialect::African), 0usize),
+        ];
 
         // Count word dialects.
         document.iter_words().for_each(|w| {
@@ -1214,6 +1468,27 @@ impl DialectFlags {
             })
     }
 }
+
+impl BitOr for DialectFlags {
+    type Output = Self;
+
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self {
+            english: self.english | rhs.english,
+            german: self.german | rhs.german,
+            portuguese: self.portuguese | rhs.portuguese,
+        }
+    }
+}
+
+impl BitOrAssign for DialectFlags {
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.english |= rhs.english;
+        self.german |= rhs.german;
+        self.portuguese |= rhs.portuguese;
+    }
+}
+
 impl Default for DialectFlags {
     /// A default value with no dialects explicitly enabled.
     /// Implicitly, this state corresponds to all dialects being enabled.
@@ -1236,16 +1511,20 @@ pub mod tests {
     }
 
     mod dialect {
-        use super::super::{Dialect, DialectFlags};
+        use super::super::DialectFlags;
         use crate::Document;
+        use crate::dialects::dialect_enum::DialectsEnum;
+        use crate::dialects::english::EnglishDialect;
+        use serde_json::json;
 
         #[test]
         fn guess_british_dialect() {
             let document = Document::new_plain_english_curated("Aluminium was used.");
             let df = DialectFlags::get_most_used_dialects_from_document(&document);
             assert!(
-                df.is_dialect_enabled_strict(Dialect::British)
-                    && !df.is_dialect_enabled_strict(Dialect::American)
+                df.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British))
+                    && !df
+                        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American))
             );
         }
 
@@ -1254,9 +1533,67 @@ pub mod tests {
             let document = Document::new_plain_english_curated("Aluminum was used.");
             let df = DialectFlags::get_most_used_dialects_from_document(&document);
             assert!(
-                df.is_dialect_enabled_strict(Dialect::American)
-                    && !df.is_dialect_enabled_strict(Dialect::British)
+                df.is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American))
+                    && !df
+                        .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British))
             );
+        }
+
+        #[test]
+        fn deserializes_legacy_dialect_flags() {
+            // Legacy flat string dialect format should now be supported for backward compatibility
+            let res: Result<crate::DictWordMetadata, _> =
+                serde_json::from_value(json!({ "dialects": "AMERICAN" }));
+            assert!(
+                res.is_ok(),
+                "legacy flat dialect format should deserialize for backward compatibility"
+            );
+
+            let metadata = res.unwrap();
+            assert!(
+                metadata
+                    .dialects
+                    .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American))
+            );
+        }
+
+        #[test]
+        fn deserializes_new_language_scoped_dialect_flags() {
+            let metadata: crate::DictWordMetadata = serde_json::from_value(json!({
+                "dialects": {
+                    "english": "AMERICAN",
+                    "german": 0,
+                    "portuguese": 0
+                }
+            }))
+            .unwrap();
+            assert!(
+                metadata
+                    .dialects
+                    .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::American))
+            );
+            assert!(
+                !metadata
+                    .dialects
+                    .is_dialect_enabled_strict(DialectsEnum::English(EnglishDialect::British))
+            );
+        }
+
+        #[test]
+        fn serializes_dialect_flags_to_language_scoped_format() {
+            let metadata = crate::DictWordMetadata {
+                dialects: DialectFlags::from_dialect(DialectsEnum::English(
+                    EnglishDialect::American,
+                )),
+                ..crate::DictWordMetadata::default()
+            };
+
+            let value = serde_json::to_value(metadata).unwrap();
+            let dialects = value.get("dialects").unwrap();
+            assert!(dialects.get("english").is_some());
+            assert!(dialects.get("german").is_some());
+            assert!(dialects.get("portuguese").is_some());
+            assert_eq!(dialects.get("english").unwrap(), "AMERICAN");
         }
     }
 

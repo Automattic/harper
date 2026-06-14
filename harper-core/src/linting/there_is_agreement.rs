@@ -1,5 +1,5 @@
 use crate::{
-    CharStringExt, Dialect, IrregularNouns, Lint, Lrc, Token, TokenStringExt,
+    CharStringExt, EnglishDialect, IrregularNouns, Lint, Lrc, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr, SpelledNumberExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{
@@ -192,7 +192,7 @@ fn get_new_nouns<'a, D: Dictionary>(
         .collect::<Vec<_>>()
         .into_iter()
         .map(|n| {
-            let art = match starts_with_vowel(&n, Dialect::American) {
+            let art = match starts_with_vowel(&n, EnglishDialect::American) {
                 Some(InitialSound::Vowel) => &['a', 'n'][..],
                 Some(InitialSound::Consonant) => &['a'][..],
                 // Some(InitialSound::Either) => &[&['a'][..], &['a', 'n'][..]],
@@ -265,7 +265,7 @@ fn handle_statement<D: Dictionary>(
     // Only add article and space for singular nouns
     if matches!(mismatch_type, PluralBeSingularNoun) {
         // get the indefinite article for the orig_noun
-        let article = match starts_with_vowel(orig_noun, Dialect::American) {
+        let article = match starts_with_vowel(orig_noun, EnglishDialect::American) {
             Some(InitialSound::Vowel) => &['a', 'n'][..],
             Some(InitialSound::Consonant) => &['a'][..],
             // TODO InitialSound::Either needs to return an array of ["a", "an"]
@@ -428,7 +428,7 @@ fn handle_question<D: Dictionary>(
 
     // Only add article and space for singular nouns
     if matches!(mismatch_type, PluralBeSingularNoun) {
-        let article = match starts_with_vowel(orig_noun, Dialect::American) {
+        let article = match starts_with_vowel(orig_noun, EnglishDialect::American) {
             Some(InitialSound::Vowel) => &['a', 'n'][..],
             Some(InitialSound::Consonant) => &['a'][..],
             // TODO InitialSound::Either needs to return an array of ["a", "an"]

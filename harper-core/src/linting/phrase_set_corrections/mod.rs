@@ -1,6 +1,6 @@
 use crate::linting::LintKind;
 
-use super::{LintGroup, MapPhraseSetLinter};
+use super::{LintGroup, map_phrase_set_linter::MapPhraseSetLinter};
 
 #[cfg(test)]
 mod tests;
@@ -856,6 +856,14 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "InHindsight" => (
+            &[
+                (&["in hind sight", "in hind-sight", "on hindsight", "on hind sight", "on hind-sight"], &["in hindsight"]),
+            ],
+            "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
+            "Corrects incorrect variants of `in hindsight` to the standard phrase.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -894,21 +902,6 @@ pub fn lint_group() -> LintGroup {
             "Use `not only` instead of `no only` in this expression.",
             "Corrects `no only` to `not only` before forms of `to be`.",
             LintKind::Grammar
-        ),
-        "Nowadays" => (
-            &[(
-                &[
-                    "now a days", "now-a-days", "now a day's",
-                    "nowaday", "now a day", "now-a-day",
-                    "now adays", "now-adays", "now aday's",
-                    "now aday",
-                    "nowa days",
-                ],
-                &["nowadays"]
-            )],
-            "Use `nowadays` instead of common misspellings.",
-            "Corrects common misspellings of `nowadays`.",
-            LintKind::Usage
         ),
         "RiseTheQuestion" => (
             &[

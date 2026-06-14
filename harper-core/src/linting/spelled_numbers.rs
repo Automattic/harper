@@ -52,59 +52,51 @@ fn spell_out_number(num: u64) -> Option<String> {
         return None;
     }
 
-    match num {
-        hundred if hundred % 100 == 0 && hundred > 0 => Some(format!(
-            "{} hundred",
-            spell_out_number(hundred / 100).unwrap()
-        )),
-        // Match numbers above 100 (like 110), OR two-digit numbers that don't end in 0 (like 21)
-        num if num > 100 || (num > 20 && num % 10 != 0) => {
+    Some(match num {
+        0 => "zero".to_owned(),
+        1 => "one".to_owned(),
+        2 => "two".to_owned(),
+        3 => "three".to_owned(),
+        4 => "four".to_owned(),
+        5 => "five".to_owned(),
+        6 => "six".to_owned(),
+        7 => "seven".to_owned(),
+        8 => "eight".to_owned(),
+        9 => "nine".to_owned(),
+        10 => "ten".to_owned(),
+        11 => "eleven".to_owned(),
+        12 => "twelve".to_owned(),
+        13 => "thirteen".to_owned(),
+        14 => "fourteen".to_owned(),
+        15 => "fifteen".to_owned(),
+        16 => "sixteen".to_owned(),
+        17 => "seventeen".to_owned(),
+        18 => "eighteen".to_owned(),
+        19 => "nineteen".to_owned(),
+        20 => "twenty".to_owned(),
+        30 => "thirty".to_owned(),
+        40 => "forty".to_owned(),
+        50 => "fifty".to_owned(),
+        60 => "sixty".to_owned(),
+        70 => "seventy".to_owned(),
+        80 => "eighty".to_owned(),
+        90 => "ninety".to_owned(),
+        hundred if hundred % 100 == 0 => {
+            format!("{} hundred", spell_out_number(hundred / 100).unwrap())
+        }
+        _ => {
             let n = 10u64.pow((num as f32).log10() as u32);
             let parent = (num / n) * n; // truncate
             let child = num % n;
 
-            Some(format!(
+            format!(
                 "{}{}{}",
                 spell_out_number(parent).unwrap(),
                 if num <= 99 { '-' } else { ' ' },
                 spell_out_number(child).unwrap()
-            ))
+            )
         }
-        base_num => Some(
-            match base_num {
-                0 => "zero",
-                1 => "one",
-                2 => "two",
-                3 => "three",
-                4 => "four",
-                5 => "five",
-                6 => "six",
-                7 => "seven",
-                8 => "eight",
-                9 => "nine",
-                10 => "ten",
-                11 => "eleven",
-                12 => "twelve",
-                13 => "thirteen",
-                14 => "fourteen",
-                15 => "fifteen",
-                16 => "sixteen",
-                17 => "seventeen",
-                18 => "eighteen",
-                19 => "nineteen",
-                20 => "twenty",
-                30 => "thirty",
-                40 => "forty",
-                50 => "fifty",
-                60 => "sixty",
-                70 => "seventy",
-                80 => "eighty",
-                90 => "ninety",
-                _ => return None,
-            }
-            .to_owned(),
-        ),
-    }
+    })
 }
 
 #[cfg(test)]

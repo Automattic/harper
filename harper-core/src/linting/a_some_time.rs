@@ -18,7 +18,7 @@ impl Default for ASomeTime {
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(Word::new("time")),
-                    Box::new(TimeUnitExpr::plurals_only()),
+                    Box::new(TimeUnitExpr::default()),
                 ]),
         }
     }

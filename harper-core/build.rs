@@ -69,13 +69,8 @@ fn rust_string_literal(value: &str) -> String {
     format!("{value:?}")
 }
 
-fn main() {
-    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
-    let weir_rule_dir = manifest_dir.join("./src/linting/weir_rules");
-    let out_dir = Path::new(&env::var("OUT_DIR").unwrap()).to_path_buf();
-    let dest = out_dir.join("weir_rules_generated_list.rs");
-
-    let mut entries = fs::read_dir(&weir_rule_dir)
+fn write_grouped_weir_boilerplate(weir_rule_dir: &Path, dest: &Path) {
+    let mut entries = fs::read_dir(weir_rule_dir)
         .unwrap()
         .filter_map(Result::ok)
         .collect::<Vec<_>>();
@@ -94,7 +89,7 @@ fn main() {
 
         if file_type.is_dir() {
             let public_name = entry.file_name().to_string_lossy().to_string();
-            let children = collect_weir_files(&path, &path, &weir_rule_dir);
+            let children = collect_weir_files(&path, &path, weir_rule_dir);
 
             if !children.is_empty() {
                 grouped_rules.push(GroupedRule {
@@ -107,7 +102,7 @@ fn main() {
 
             standalone_rules.push(StandaloneRule {
                 name: rule_name_from_path(&path),
-                relative_path: path_as_weir_relative(&path, &weir_rule_dir),
+                relative_path: path_as_weir_relative(&path, weir_rule_dir),
             });
         }
     }
@@ -145,9 +140,79 @@ fn main() {
     code.push_str("    ],\n");
     code.push_str("}\n");
 
-    fs::write(&dest, code).unwrap();
+    fs::write(dest, code).unwrap();
+}
+
+fn write_flat_weir_boilerplate(weir_rule_dir: &Path, dest: &Path) {
+    let mut files = match fs::read_dir(weir_rule_dir) {
+        Ok(entries) => entries
+            .filter_map(Result::ok)
+            .map(|entry| entry.path())
+            .filter(|path| path.is_file() && path.extension().is_some_and(|ext| ext == "weir"))
+            .collect::<Vec<_>>(),
+        Err(_) => Vec::new(),
+    };
+
+    files.sort();
+
+    let mut code = String::new();
+    code.push_str("generate_boilerplate!{[");
+
+    for file in files {
+        println!("cargo:rerun-if-changed={}", file.display());
+        code.push_str(&format!(
+            "{},\n",
+            file.file_stem().unwrap().to_string_lossy()
+        ));
+    }
+
+    code.push_str("]}");
+    fs::write(dest, code).unwrap();
+}
+
+fn main() {
+    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+    let out_dir = Path::new(&env::var("OUT_DIR").unwrap()).to_path_buf();
+
+    // Main English weir rules (in linting/weir_rules/)
+    let english_weir_rule_dir = manifest_dir.join("./src/linting/weir_rules");
+    let english_dest = out_dir.join("weir_rules_generated_list.rs");
+    write_grouped_weir_boilerplate(&english_weir_rule_dir, &english_dest);
+    println!(
+        "cargo:rustc-env=WEIR_RULE_DIR={}",
+        english_weir_rule_dir.display()
+    );
+    println!("cargo:rustc-env=WEIR_RULE_LIST={}", english_dest.display());
+
+    // Language-specific weir rules (in language/<name>/linting/weir_rules/)
+    // For German, the rules are in a subdirectory 'de/' for the locale
+    let language_weir_configs = vec![
+        (
+            "GERMAN",
+            "german",
+            "./src/language/german/linting/weir_rules/de",
+        ),
+        // Add new languages here with their weir rule directory path
+        // Example: ("FRENCH", "french", "./src/language/french/linting/weir_rules"),
+    ];
+
+    for (lang_upper, lang_name, weir_path) in language_weir_configs {
+        let weir_rule_dir = manifest_dir.join(weir_path);
+        let dest = out_dir.join(format!("{}_weir_rules_generated_list.rs", lang_name));
+
+        write_flat_weir_boilerplate(&weir_rule_dir, &dest);
+
+        println!(
+            "cargo:rustc-env={}_WEIR_RULE_DIR={}",
+            lang_upper,
+            weir_rule_dir.display()
+        );
+        println!(
+            "cargo:rustc-env={}_WEIR_RULE_LIST={}",
+            lang_upper,
+            dest.display()
+        );
+    }
 
     println!("cargo:rerun-if-changed=build.rs");
-    println!("cargo:rustc-env=WEIR_RULE_DIR={}", weir_rule_dir.display());
-    println!("cargo:rustc-env=WEIR_RULE_LIST={}", dest.display());
 }

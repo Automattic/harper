@@ -118,19 +118,36 @@ fn find_line_start(chars: &[char], pos: usize) -> usize {
     start
 }
 
-/// A parser that wraps the [`PlainEnglish`] parser that allows one to parse
+/// A parser that wraps a plain-text parser and allows one to parse
 /// Org-mode files.
 ///
 /// Will ignore code blocks, source blocks, and other org-mode specific elements
 /// that should not be linted for prose.
-#[derive(Default, Clone, Debug, Copy)]
-pub struct OrgMode;
+#[derive(Clone, Debug, Copy)]
+pub struct OrgMode {
+    inline_parser: fn(&[char]) -> Vec<Token>,
+}
 
-impl OrgMode {}
+impl Default for OrgMode {
+    fn default() -> Self {
+        Self {
+            inline_parser: |source| PlainEnglish.parse(source),
+        }
+    }
+}
+
+impl OrgMode {
+    pub fn with_inline_parser(inline_parser: fn(&[char]) -> Vec<Token>) -> Self {
+        Self { inline_parser }
+    }
+
+    fn parse_inline_text(&self, source: &[char]) -> Vec<Token> {
+        (self.inline_parser)(source)
+    }
+}
 
 impl Parser for OrgMode {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let english_parser = PlainEnglish;
         let mut tokens = Vec::new();
         let mut cursor = 0;
         let mut in_source_block = false;
@@ -170,7 +187,7 @@ impl Parser for OrgMode {
                 // If there's actual text after the stars, parse it
                 if header_text_start < line_end {
                     let mut header_tokens =
-                        english_parser.parse(&source[header_text_start..line_end]);
+                        self.parse_inline_text(&source[header_text_start..line_end]);
                     header_tokens
                         .iter_mut()
                         .for_each(|token| token.span.push_by(header_text_start));
@@ -204,7 +221,7 @@ impl Parser for OrgMode {
                 let line_chars = &source[line_start..line_end];
                 let normalized_chars = normalize_list_item_whitespace(line_chars);
 
-                let mut line_tokens = english_parser.parse(&normalized_chars);
+                let mut line_tokens = self.parse_inline_text(&normalized_chars);
                 line_tokens
                     .iter_mut()
                     .for_each(|token| token.span.push_by(line_start));
@@ -217,7 +234,7 @@ impl Parser for OrgMode {
             // For normal text, parse with the English parser
             let line_end = find_line_end(source, cursor);
             if cursor < line_end {
-                let mut line_tokens = english_parser.parse(&source[cursor..line_end]);
+                let mut line_tokens = self.parse_inline_text(&source[cursor..line_end]);
                 line_tokens
                     .iter_mut()
                     .for_each(|token| token.span.push_by(cursor));
@@ -252,7 +269,7 @@ mod tests {
     #[test]
     fn simple_text() {
         let source = "This is simple text.";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         assert!(!tokens.is_empty());
         assert!(tokens.iter().any(|t| matches!(t.kind, TokenKind::Word(_))));
     }
@@ -260,7 +277,7 @@ mod tests {
     #[test]
     fn header_parsing() {
         let source = "* This is a header\nThis is regular text.";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         let token_kinds: Vec<_> = tokens.iter().map(|t| &t.kind).collect();
 
         // Should have words from header and paragraph break
@@ -275,7 +292,7 @@ mod tests {
     #[test]
     fn multiple_level_headers() {
         let source = "** Second level header\n*** Third level header";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         let token_kinds: Vec<_> = tokens.iter().map(|t| &t.kind).collect();
 
         // Should parse text from both headers
@@ -296,7 +313,7 @@ fn main() {
 #+END_SRC
 More regular text."#;
 
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         let unlintable_count = tokens
             .iter()
             .filter(|t| matches!(t.kind, TokenKind::Unlintable))
@@ -315,7 +332,7 @@ More regular text."#;
 #+AUTHOR: Test Author
 This is regular text."#;
 
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         let unlintable_count = tokens
             .iter()
             .filter(|t| matches!(t.kind, TokenKind::Unlintable))
@@ -334,7 +351,7 @@ This is regular text."#;
 print("hello")
 #+end_src"#;
 
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
         let unlintable_count = tokens
             .iter()
             .filter(|t| matches!(t.kind, TokenKind::Unlintable))
@@ -347,7 +364,7 @@ print("hello")
     #[test]
     fn empty_header() {
         let source = "*\nRegular text.";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
 
         // Should handle empty headers gracefully
         assert!(tokens.iter().any(|t| matches!(t.kind, TokenKind::Word(_))));
@@ -356,7 +373,7 @@ print("hello")
     #[test]
     fn no_trailing_newline() {
         let source = "Simple text without newline";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
 
         // Should not end with newline token if source doesn't
         assert!(!tokens.last().unwrap().kind.is_newline());
@@ -365,7 +382,7 @@ print("hello")
     #[test]
     fn list_items_with_tabs() {
         let source = "- First item\n\t- Indented with tab\n+ Second item\n1. Numbered item";
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
 
         assert!(tokens.iter().any(|t| matches!(t.kind, TokenKind::Word(_))));
 
@@ -383,7 +400,7 @@ print("hello")
 + Plus item
 2) Parenthesis numbered"#;
 
-        let tokens = OrgMode.parse_str(source);
+        let tokens = OrgMode::default().parse_str(source);
 
         // Should recognize all list formats
         let word_count = tokens

@@ -92,14 +92,22 @@ pub enum Dialect {
     Indian,
 }
 
-impl From<Dialect> for harper_core::Dialect {
+impl From<Dialect> for harper_core::Language {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => harper_core::Dialect::American,
-            Dialect::Canadian => harper_core::Dialect::Canadian,
-            Dialect::Australian => harper_core::Dialect::Australian,
-            Dialect::British => harper_core::Dialect::British,
-            Dialect::Indian => harper_core::Dialect::Indian,
+            Dialect::American => {
+                harper_core::Language::English(harper_core::EnglishDialect::American)
+            }
+            Dialect::Canadian => {
+                harper_core::Language::English(harper_core::EnglishDialect::Canadian)
+            }
+            Dialect::Australian => {
+                harper_core::Language::English(harper_core::EnglishDialect::Australian)
+            }
+            Dialect::British => {
+                harper_core::Language::English(harper_core::EnglishDialect::British)
+            }
+            Dialect::Indian => harper_core::Language::English(harper_core::EnglishDialect::Indian),
         }
     }
 }
@@ -131,7 +139,8 @@ impl Linter {
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
         let dictionary = Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())]);
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
+        let core_language: harper_core::Language = dialect.into();
+        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), core_language);
 
         Self {
             lint_group,
@@ -154,8 +163,9 @@ impl Linter {
 
         self.dictionary = Self::construct_merged_dict(&constituent_dictionaries);
 
+        let core_language: harper_core::Language = self.dialect.into();
         self.lint_group =
-            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+            LintGroup::new_curated_empty_config(self.dictionary.clone(), core_language);
 
         self.lint_group.config.merge_from(lint_config);
     }
@@ -455,7 +465,13 @@ impl Linter {
                 (
                     word.chars().collect::<CharString>(),
                     DictWordMetadata {
-                        dialects: DialectFlags::from_dialect(self.dialect.into()),
+                        dialects: DialectFlags::from_dialect(match self.dialect {
+                            Dialect::American => harper_core::EnglishDialect::American,
+                            Dialect::British => harper_core::EnglishDialect::British,
+                            Dialect::Australian => harper_core::EnglishDialect::Australian,
+                            Dialect::Canadian => harper_core::EnglishDialect::Canadian,
+                            Dialect::Indian => harper_core::EnglishDialect::Indian,
+                        }),
                         ..Default::default()
                     },
                 )
@@ -696,16 +712,16 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let core_language: harper_core::Language = Dialect::American.into();
+    let config = LintGroup::new_curated(MutableDictionary::new().into(), core_language).config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let core_language: harper_core::Language = Dialect::American.into();
+    let config = LintGroup::new_curated(MutableDictionary::new().into(), core_language).config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

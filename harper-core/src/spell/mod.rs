@@ -11,9 +11,15 @@ pub use self::merged_dictionary::MergedDictionary;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;
+pub use crate::language::german::spell::{curated_german_dictionary, german_dictionary};
+pub use crate::language::portuguese::spell::{
+    curated_portuguese_dictionary, portuguese_dictionary,
+};
 
 mod dictionary;
+pub(crate) mod embedded_dictionary;
 mod fst_dictionary;
+
 mod merged_dictionary;
 mod mutable_dictionary;
 mod rune;

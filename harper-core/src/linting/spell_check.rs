@@ -5,10 +5,10 @@ use smallvec::ToSmallVec;
 
 use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
+use crate::dialects::english::EnglishDialect as Dialect;
 use crate::document::Document;
-use crate::expr::{Filter, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
+use crate::{CharString, CharStringExt, TokenStringExt};
 
 pub struct SpellCheck<T>
 where
@@ -65,25 +65,6 @@ impl<T: Dictionary> SpellCheck<T> {
         // no suggestions found
         Vec::new()
     }
-}
-
-fn parenthetical_plural_s_expr() -> Filter {
-    Filter::new(vec![
-        Box::new(
-            SequenceExpr::default()
-                .then_any_word()
-                .then_kind_where(|kind| kind.is_open_round())
-                .t_aco("s")
-                .then_kind_where(|kind| kind.is_close_round()),
-        ),
-        Box::new(
-            SequenceExpr::default()
-                .then_kind_where(|kind| kind.is_open_round())
-                .t_aco("s")
-                .then_kind_where(|kind| kind.is_close_round()),
-        ),
-        Box::new(SequenceExpr::aco("s")),
-    ])
 }
 
 impl<T: Dictionary> Linter for SpellCheck<T> {
@@ -151,8 +132,6 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             })
         }
 
-        remove_lints_overlapping_expr(&parenthetical_plural_s_expr(), document, &mut lints);
-
         lints
     }
 
@@ -166,14 +145,12 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
+    use crate::dialects::english::EnglishDialect as Dialect;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
+    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-    use crate::{
-        Dialect,
-        linting::tests::{assert_lint_count, assert_suggestion_result},
-    };
     use crate::{DictWordMetadata, Document};
 
     // Capitalization tests
@@ -553,66 +530,6 @@ mod tests {
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             &["macOS"],
             &["MacOS"],
-        );
-    }
-
-    #[test]
-    fn allows_parenthetical_plural_s() {
-        assert_no_lints(
-            "Please ask each person(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
-
-    #[test]
-    fn allows_multiple_parenthetical_plural_s_markers() {
-        assert_no_lints(
-            "Review the person(s) and document(s).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
-
-    #[test]
-    fn allows_uppercase_parenthetical_plural_s() {
-        assert_no_lints(
-            "CONTACT THE PERSON(S).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
-    }
-
-    #[test]
-    fn still_flags_misspelled_word_before_parenthetical_plural_s() {
-        assert_lint_count(
-            "Please ask each persson(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
-    }
-
-    #[test]
-    fn still_flags_parenthetical_s_without_preceding_word() {
-        assert_lint_count(
-            "Please mark (s) on the form.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
-    }
-
-    #[test]
-    fn still_flags_spaced_parenthetical_s() {
-        assert_lint_count(
-            "Please ask each person (s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
-    }
-
-    #[test]
-    fn still_flags_longer_parenthetical_marker() {
-        assert_lint_count(
-            "Please ask each person(ss) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
         );
     }
 
