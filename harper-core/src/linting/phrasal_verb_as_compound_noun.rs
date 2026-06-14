@@ -813,4 +813,33 @@ mod tests {
             "How to properly set up a backup link (and have it act like a backup again after stop/start of master link)",
         );
     }
+
+    // Only the verb misuse ("going to rollback again") is flagged; the correct
+    // noun usage ("did a rollback") is left alone.
+    #[test]
+    fn issue_3239_flag_rollback_again() {
+        assert_lint_count(
+            "I already did a rollback. I'm not going to rollback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn issue_3239_correct_rollback_again() {
+        assert_suggestion_result(
+            "I already did a rollback. I'm not going to rollback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a rollback. I'm not going to roll back again.",
+        );
+    }
+
+    #[test]
+    fn issue_3239_correct_rollback_the_update() {
+        assert_suggestion_result(
+            "I'm going to rollback the update.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I'm going to roll back the update.",
+        );
+    }
 }
