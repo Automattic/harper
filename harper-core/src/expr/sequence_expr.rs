@@ -127,6 +127,11 @@ impl SequenceExpr {
         Self::default().then_optional(expr)
     }
 
+    /// Match a series of words separated by whitespace.
+    pub fn word_seq(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_seq(words)
+    }
+
     /// Match a fixed phrase.
     pub fn fixed_phrase(phrase: &'static str) -> Self {
         Self::default().then_fixed_phrase(phrase)
@@ -294,6 +299,21 @@ impl SequenceExpr {
     /// Match examples of `word` case-sensitively.
     pub fn then_exact_word(self, word: &'static str) -> Self {
         self.then(Word::new_exact(word))
+    }
+
+    /// Match a series of words separated by whitespace.
+    pub fn then_word_seq(self, words: &'static [&'static str]) -> Self {
+        debug_assert!(!words.is_empty(), "words must not be empty");
+
+        if let Some((first, rest)) = words.split_first() {
+            let mut expr = self.t_aco(first);
+            for word in rest {
+                expr = expr.t_ws().t_aco(word);
+            }
+            expr
+        } else {
+            self
+        }
     }
 
     /// Match a fixed phrase.
