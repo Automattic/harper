@@ -174,4 +174,22 @@ mod tests_portuguese {
             LanguageFamily::English,
         );
     }
+
+    #[test]
+    fn test_portuguese_dictionary_contains_common_words() {
+        use harper_core::language::portuguese::spell::portuguese_dictionary;
+        use harper_core::spell::Dictionary;
+        
+        let dict = portuguese_dictionary();
+        
+        // Test some common Portuguese words that should be in the dictionary
+        assert!(dict.contains_exact_word(&"feliz".chars().collect::<Vec<_>>()));
+        assert!(dict.contains_exact_word(&"triste".chars().collect::<Vec<_>>()));
+        assert!(dict.contains_exact_word(&"Brasil".chars().collect::<Vec<_>>()));
+        assert!(dict.contains_exact_word(&"português".chars().collect::<Vec<_>>()));
+        
+        // Test that some English words are NOT in the Portuguese dictionary
+        assert!(!dict.contains_exact_word(&"hello".chars().collect::<Vec<_>>()));
+        assert!(!dict.contains_exact_word(&"world".chars().collect::<Vec<_>>()));
+    }
 }
