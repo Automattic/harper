@@ -11,9 +11,7 @@ pub struct NotOnlyInversion {
 impl Default for NotOnlyInversion {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("not")
-                .t_ws()
-                .t_aco("only")
+            expr: SequenceExpr::word_seq(&["not", "only"])
                 .t_ws()
                 .then_word_set(&["I", "we", "you", "he", "she", "it", "they"])
                 .t_ws()
