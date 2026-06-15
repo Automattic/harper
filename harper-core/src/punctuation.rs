@@ -86,6 +86,8 @@ pub enum Punctuation {
     SinglePrime,
     /// `″`
     DoublePrime,
+    /// `\``,
+    Backtick,
 }
 
 impl Punctuation {
@@ -132,7 +134,7 @@ impl Punctuation {
             '}' => Punctuation::CloseCurly,
             '(' => Punctuation::OpenRound,
             ')' => Punctuation::CloseRound,
-
+            '`' => Punctuation::Backtick,
             _ => Punctuation::Currency(Currency::from_char(c)?),
         };
 

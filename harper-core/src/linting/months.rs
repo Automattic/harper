@@ -111,7 +111,7 @@ impl ExprLinter for Months {
             span: month_tok.span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(month_vec)],
-            message: "Months should be written with a capital letter.".to_string(),
+            message: "Months should be written with a capital letter.".to_owned(),
             priority: 126,
         })
     }

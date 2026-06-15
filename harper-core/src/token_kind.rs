@@ -99,8 +99,11 @@ impl TokenKind {
         is_linking_verb,
         is_verb_lemma,
         is_verb_past_form,
+        is_verb_regular_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
+        is_verb_simple_past_only,
+        is_verb_past_participle_only,
         is_verb_progressive_form,
         is_verb_third_person_singular_present_form,
 
@@ -305,6 +308,10 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::DoublePrime))
     }
 
+    pub fn is_backtick(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Backtick))
+    }
+
     // Miscellaneous is-methods
 
     /// Checks whether a token is word-like--meaning it is more complex than punctuation and can
@@ -329,7 +336,10 @@ impl TokenKind {
             TokenKind::Punctuation(punct) => {
                 matches!(
                     punct,
-                    Punctuation::Comma | Punctuation::Quote { .. } | Punctuation::Colon
+                    Punctuation::Comma
+                        | Punctuation::Semicolon
+                        | Punctuation::Quote { .. }
+                        | Punctuation::Colon
                 )
             }
             _ => false,
@@ -445,6 +455,29 @@ mod tests {
         let doc = Document::new_plain_english_curated("equipment");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(!tk.is_countable_noun());
+    }
+
+    #[test]
+    fn ate_is_simple_past_only() {
+        let doc = Document::new_plain_english_curated("ate");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_simple_past_only());
+        assert!(!tk.is_verb_past_participle_only());
+    }
+
+    #[test]
+    fn eaten_is_past_participle_only() {
+        let doc = Document::new_plain_english_curated("eaten");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_past_participle_only());
+        assert!(!tk.is_verb_simple_past_only());
+    }
+
+    #[test]
+    fn thought_is_regular_past_form() {
+        let doc = Document::new_plain_english_curated("thought");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_regular_past_form());
     }
 
     #[test]
