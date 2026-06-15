@@ -16,6 +16,7 @@ ABI/NgS             # application binary interface, cf. API
 ABM/ONSg
 ABS/NO
 AC/NOgJ
+ACC/N               # anterior cingulate cortex
 ACL/NgS             # anterior cruciate ligament
 ACLU/Og
 ACT/ON
@@ -1652,6 +1653,7 @@ CAP/NO
 CARE
 CATV/N
 CB/NOJ              # citizen's band (radio)
+CBASP/N
 CBC/ONgJ
 CBS/ONg             # media company
 CCP/Og              # political party
@@ -3759,6 +3761,7 @@ GHz/
 GI/JNV
 GIF/NSg             # file format
 GIGO/
+Glu/N               # symbol for glutamate (anion of glutamic acid)
 GM/NOgVJ            # car company
 GMAT/O              # global
 GMO/NJ
@@ -7148,6 +7151,7 @@ Mozambique/ONg
 Mozart/NOg
 Mozilla/g           # company
 Mr/NSg
+MRS/N               # magnetic resonance spectroscopy
 Ms/NS
 Msgr
 Mt/                 # Meitnerium
@@ -7845,6 +7849,7 @@ PED/NgS             # performance-enhancing drug
 PET/NOg             # early computer
 PFC/N
 PG/JNO
+pgACC/N             # pregenual anterior cingulate cortex
 PGP/NO              # encryption
 PHP/NOg             # programming language
 PIN/N               # personal identification number
@@ -8510,6 +8515,7 @@ RP/NOV
 RPM/NgS
 RR/NOV
 RSA/Ng              # encryption standard
+rsFC/Nm             # resting state functional connectivity
 RSFSR/O
 RSI/N
 RSS/NOV             # Really Simple Syndication
@@ -17727,6 +17733,7 @@ cinematic/~JN
 cinematographer/~NgS
 cinematographic/J
 cinematography/~Nmg
+cingulate/JN
 cinnabar/NmgJ
 cinnamon/~NmgJ
 cipher/~NSgVGde
@@ -27010,6 +27017,7 @@ glummest/Ju
 glumness/Ng
 gluon/NS
 glut/~NgSVn
+glutamate/NS        # amino acid (anion of glutamic acid)
 gluten/Ng
 glutenous/J
 glutinous/JY
@@ -40451,6 +40459,7 @@ preflight/JNgSVdG
 preform/NSVGd
 preformative/NJ!@_₹
 prefrontal/JN
+pregenual/JN        # subarea of anterior cingulate cortex
 pregame/~NSgJV
 pregnancy/~NwSg
 pregnant/~JN
@@ -41662,6 +41671,8 @@ race/~NwgSVGd>Z
 racecourse/~NSg
 racegoer/NS
 racehorse/~NgS
+racemate/NS         # equal mixture of left- and right-handed enantiomers
+racemic/J           # see: racemate
 raceme/NgS
 racer/~Ng
 racetrack/~NgS
