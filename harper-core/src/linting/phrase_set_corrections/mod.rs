@@ -232,6 +232,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
             LintKind::Style
         ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
+            LintKind::Style
+        ),
         "ExpandNotification" => (
             &[
                 ("notif", "notification"),

@@ -754,6 +754,26 @@ fn corrects_derefs() {
     );
 }
 
+// ExpandDirectory
+
+#[test]
+fn expands_dir() {
+    assert_suggestion_result(
+        "Error: library dir does not exist: /Users/u/trr/node_modules/opencv",
+        lint_group(),
+        "Error: library directory does not exist: /Users/u/trr/node_modules/opencv",
+    );
+}
+
+#[test]
+fn expands_dirs() {
+    assert_suggestion_result(
+        "Dirs/files are missing when scanning on windows after 1.27.12",
+        lint_group(),
+        "Directories/files are missing when scanning on windows after 1.27.12",
+    );
+}
+
 // ExpandNotification
 
 #[test]
