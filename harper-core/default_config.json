@@ -4384,6 +4384,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsComparedTo",
+								"state": true,
+								"label": "As Compared To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsOpposedTo",
 								"state": true,
 								"label": "As Opposed To"
