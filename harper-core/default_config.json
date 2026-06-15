@@ -5123,6 +5123,13 @@
 								"state": true,
 								"label": "Leaving In Droves"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InADifferentDirection",
+								"state": true,
+								"label": "In A Different Direction"
+							}
 						}
 					]
 				}
