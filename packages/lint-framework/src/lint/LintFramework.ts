@@ -362,10 +362,10 @@ export default class LintFramework {
 			const renderedBoxes = this.filterNearCaretHighlight(boxes);
 			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(renderedBoxes);
-			this.popupHandler.updateLintBoxes(renderedBoxes);
+			this.popupHandler.updateLintBoxes(boxes);
 
 			this.renderRequested = false;
-			this.lastBoxes = renderedBoxes;
+			this.lastBoxes = boxes;
 		});
 	}
 }
