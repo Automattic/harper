@@ -125,7 +125,8 @@ const faqs = [
 	},
 	{
 		q: 'Where Did the Name Harper Come From?',
-		a: 'See this blog post.',
+		a: 'See this blog post',
+		href: 'https://elijahpotter.dev/articles/naming-harper',
 	},
 	{
 		q: 'Do I Need a GPU?',
