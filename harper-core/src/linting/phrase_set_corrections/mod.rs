@@ -61,6 +61,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+                ("arguments to be said", "arguments to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -125,6 +134,17 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `confirm` rather than `conform`?",
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
+        ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
         ),
         "DefiniteArticle" => (
             &[
@@ -210,6 +230,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `dereference` instead of `deref`",
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
             LintKind::Style
         ),
         "ExpandNotification" => (
@@ -836,14 +865,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
-        "InHindsight" => (
-            &[
-                (&["in hind sight", "in hind-sight", "on hindsight", "on hind sight", "on hind-sight"], &["in hindsight"]),
-            ],
-            "Use `in hindsight` when reflecting on past events with the benefit of current knowledge.",
-            "Corrects incorrect variants of `in hindsight` to the standard phrase.",
-            LintKind::Usage
-        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -882,6 +903,21 @@ pub fn lint_group() -> LintGroup {
             "Use `not only` instead of `no only` in this expression.",
             "Corrects `no only` to `not only` before forms of `to be`.",
             LintKind::Grammar
+        ),
+        "Nowadays" => (
+            &[(
+                &[
+                    "now a days", "now-a-days", "now a day's",
+                    "nowaday", "now a day", "now-a-day",
+                    "now adays", "now-adays", "now aday's",
+                    "now aday",
+                    "nowa days",
+                ],
+                &["nowadays"]
+            )],
+            "Use `nowadays` instead of common misspellings.",
+            "Corrects common misspellings of `nowadays`.",
+            LintKind::Usage
         ),
         "RiseTheQuestion" => (
             &[

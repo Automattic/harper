@@ -21,7 +21,7 @@ impl Default for TheLastDays {
                 .then_word_set(&[
                     "seconds", "minutes", "hours", "days", "weeks", "months", "years", "decades",
                 ])
-                .and_not(
+                .but_not(
                     SequenceExpr::anything() // prep 0
                         .t_any() // _
                         .t_any() // the 2
