@@ -20,8 +20,11 @@ mod another_thing_coming;
 mod another_think_coming;
 mod apart_from;
 mod arrive_to;
+mod as_how;
+mod as_to_interrogative;
 mod ask_no_preposition;
 mod aspire_to;
+mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
 mod be_adjective_confusions;
@@ -32,9 +35,11 @@ mod boring_words;
 mod bought;
 mod brand_brandish;
 mod by_accident;
+mod by_the_book;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
+mod catch_22;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
@@ -42,10 +47,12 @@ mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
 mod comma_fixes;
+mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
 mod correct_number_suffix;
+mod crave_for;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
@@ -76,11 +83,13 @@ mod far_be_it;
 mod fascinated_by;
 mod fed_up_with;
 mod feel_fell;
+mod fellow_co_redundancy;
 mod few_units_of_time_ago;
 mod filler_words;
 mod find_fine;
 mod first_aid_kit;
 mod flesh_out_vs_full_fledged;
+mod for_free_of_charge;
 mod for_noun;
 mod free_predicate;
 mod friend_of_me;
@@ -115,6 +124,7 @@ mod its_possessive;
 mod jealous_of;
 mod johns_hopkins;
 mod lead_rise_to;
+mod leaving_in_droves;
 mod left_right_hand;
 mod less_worse;
 mod let_to_do;
@@ -124,6 +134,7 @@ mod lint;
 mod lint_group;
 mod lint_kind;
 mod long_sentences;
+mod long_time_ago;
 mod look_down_ones_nose;
 mod looking_forward_to;
 mod map_phrase_linter;
@@ -148,6 +159,7 @@ mod most_of_the_times;
 mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
 mod nail_on_the_head;
+mod naked_eye;
 mod need_to_noun;
 mod no_french_spaces;
 mod no_longer;
@@ -172,8 +184,10 @@ mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
+mod out_of_the_window;
 mod oxford_comma;
 mod oxymorons;
+mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
@@ -231,8 +245,10 @@ mod the_how_why;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
+mod the_the_to_that_the;
 mod then_than;
 mod there_is_agreement;
+mod there_own;
 mod theres;
 mod theses_these;
 mod theyre_confusions;
@@ -273,7 +289,7 @@ mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
 
-pub use expr_linter::{Chunk, ExprLinter};
+pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
 pub use lint_group::{
@@ -431,7 +447,7 @@ pub mod tests {
                         span: *ws,
                         lint_kind: LintKind::Spelling,
                         suggestions,
-                        message: "Test linter for 'linting assertion' tests".to_string(),
+                        message: "Test linter for 'linting assertion' tests".to_owned(),
                         ..Default::default()
                     }
                 })

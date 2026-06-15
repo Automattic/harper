@@ -25,7 +25,7 @@ impl Default for EverEvery {
             .then_subject_pronoun()
             .t_ws()
             .t_aco("every")
-            .and_not(SequenceExpr::anything().t_any().t_aco("it")),
+            .but_not(SequenceExpr::anything().t_any().t_aco("it")),
         }
     }
 }
@@ -47,7 +47,7 @@ impl ExprLinter for EverEvery {
                 content[..content.len() - 1].to_vec(),
                 content,
             )],
-            message: "Is this `every` a typo that should be `ever`?".to_string(),
+            message: "Is this `every` a typo that should be `ever`?".to_owned(),
             ..Default::default()
         })
     }

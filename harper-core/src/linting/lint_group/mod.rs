@@ -28,8 +28,11 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
+use super::as_how::AsHow;
+use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
+use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
 use super::be_allowed::BeAllowed;
@@ -39,19 +42,23 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
+use super::by_the_book::ByTheBook;
 use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
+use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
 use super::correct_number_suffix::CorrectNumberSuffix;
+use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
@@ -80,11 +87,13 @@ use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
 use super::feel_fell::FeelFell;
+use super::fellow_co_redundancy::FellowCoRedundancy;
 use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
+use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
@@ -113,12 +122,14 @@ use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::lead_rise_to::LeadRiseTo;
+use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
+use super::long_time_ago::LongTimeAgo;
 use super::look_down_ones_nose::LookDownOnesNose;
 use super::looking_forward_to::LookingForwardTo;
 use super::mass_nouns::MassNouns;
@@ -139,6 +150,7 @@ use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::nail_on_the_head::NailOnTheHead;
+use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_longer::NoLonger;
@@ -162,8 +174,10 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
 use super::plural_decades::PluralDecades;
@@ -218,8 +232,10 @@ use super::the_how_why::TheHowWhy;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
+use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
+use super::there_own::ThereOwn;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -264,7 +280,7 @@ use super::wrong_apostrophe::WrongApostrophe;
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
 use crate::linting::dashes::Dashes;
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, Sentence};
 use crate::linting::open_compounds::OpenCompounds;
 use crate::linting::{
     be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
@@ -285,6 +301,8 @@ pub struct LintGroup {
     linters: BTreeMap<String, Box<dyn Linter>>,
     /// We use a binary map here so the ordering is stable.
     chunk_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Chunk>>>,
+    /// We use a binary map here so the ordering is stable.
+    sentence_expr_linters: BTreeMap<String, Box<dyn ExprLinter<Unit = Sentence>>>,
     /// Since [`ExprLinter`]s operate on a chunk-basis, we can store a
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
@@ -293,6 +311,8 @@ pub struct LintGroup {
     /// of the key.
     #[expect(clippy::complexity)]
     chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
+    #[expect(clippy::complexity)]
+    sentence_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -305,7 +325,9 @@ impl LintGroup {
             config: FlatConfig::default(),
             linters: BTreeMap::new(),
             chunk_expr_linters: BTreeMap::new(),
+            sentence_expr_linters: BTreeMap::new(),
             chunk_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
+            sentence_expr_cache: LruCache::new(NonZero::new(1000).unwrap()),
             hasher_builder: RandomState::default(),
             clashing_linter_names: None,
         }
@@ -315,6 +337,7 @@ impl LintGroup {
     pub fn contains_key(&self, name: impl AsRef<str>) -> bool {
         self.linters.contains_key(name.as_ref())
             || self.chunk_expr_linters.contains_key(name.as_ref())
+            || self.sentence_expr_linters.contains_key(name.as_ref())
     }
 
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
@@ -358,6 +381,27 @@ impl LintGroup {
         }
     }
 
+    /// Add a sentence-based [`ExprLinter`] to the group, returning whether the operation was successful.
+    /// If it returns `false`, it is because a linter with that key already existed in the group.
+    pub fn add_sentence_expr_linter(
+        &mut self,
+        name: impl AsRef<str>,
+        linter: impl ExprLinter<Unit = Sentence> + 'static,
+    ) -> bool {
+        if self.contains_key(&name) {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(name.as_ref().to_string());
+            }
+            false
+        } else {
+            self.sentence_expr_linters
+                .insert(name.as_ref().to_string(), Box::new(linter) as _);
+            true
+        }
+    }
+
     /// Merge the contents of another [`LintGroup`] into this one.
     pub fn merge_from(&mut self, other: LintGroup) {
         self.config.merge_from(other.config);
@@ -384,12 +428,27 @@ impl LintGroup {
             }
         }
         self.chunk_expr_linters.extend(other.chunk_expr_linters);
+
+        if let Some((conflicting_key, _)) = other
+            .sentence_expr_linters
+            .iter()
+            .find(|(k, _)| self.contains_key(k))
+        {
+            if self.clashing_linter_names.is_none() {
+                self.clashing_linter_names = Some(vec![conflicting_key.clone()]);
+            } else if let Some(clashing_names) = &mut self.clashing_linter_names {
+                clashing_names.push(conflicting_key.clone());
+            }
+        }
+        self.sentence_expr_linters
+            .extend(other.sentence_expr_linters);
     }
 
     pub fn iter_keys(&self) -> impl Iterator<Item = &str> {
         self.linters
             .keys()
             .chain(self.chunk_expr_linters.keys())
+            .chain(self.sentence_expr_linters.keys())
             .map(|v| v.as_str())
     }
 
@@ -416,6 +475,11 @@ impl LintGroup {
                     .iter()
                     .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
             )
+            .chain(
+                self.sentence_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), ExprLinter::description(value))),
+            )
             .collect()
     }
 
@@ -426,6 +490,11 @@ impl LintGroup {
             .map(|(key, value)| (key.as_str(), value.description_html()))
             .chain(
                 self.chunk_expr_linters
+                    .iter()
+                    .map(|(key, value)| (key.as_str(), value.description_html())),
+            )
+            .chain(
+                self.sentence_expr_linters
                     .iter()
                     .map(|(key, value)| (key.as_str(), value.description_html())),
             )
@@ -525,7 +594,10 @@ impl LintGroup {
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
+        insert_expr_rule!(AsHow, true);
+        insert_expr_rule!(AsToInterrogative, true);
         insert_expr_rule!(AskNoPreposition, true);
+        insert_expr_rule!(AvoidContractions, false);
         insert_expr_rule!(AvoidCurses, true);
         insert_expr_rule!(BackInTheDay, true);
         insert_expr_rule!(BeAllowed, true);
@@ -535,19 +607,23 @@ impl LintGroup {
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(ByAccident, true);
+        insert_expr_rule!(ByTheBook, true);
         insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_expr_rule!(Catch22, true);
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
         insert_expr_rule!(CloseTightKnit, true);
         insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
+        insert_expr_rule!(ComplainAsNoun, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
+        insert_expr_rule!(CraveFor, true);
         insert_expr_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
@@ -575,11 +651,13 @@ impl LintGroup {
         insert_expr_rule!(FascinatedBy, true);
         insert_expr_rule_with_dialect!(FedUpWith, true);
         insert_expr_rule!(FeelFell, true);
+        insert_expr_rule!(FellowCoRedundancy, true);
         insert_expr_rule!(FewUnitsOfTimeAgo, true);
         insert_expr_rule!(FillerWords, true);
         insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(FleshOutVsFullFledged, true);
+        insert_expr_rule!(ForFreeOfCharge, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
         insert_expr_rule!(FriendOfMe, true);
@@ -608,12 +686,14 @@ impl LintGroup {
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(LeadRiseTo, true);
+        insert_expr_rule!(LeavingInDroves, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
         insert_struct_rule!(LetsConfusion, true);
         insert_expr_rule!(Likewise, true);
         insert_struct_rule!(LongSentences, true);
+        insert_expr_rule!(LongTimeAgo, true);
         insert_expr_rule!(LookDownOnesNose, true);
         insert_expr_rule!(LookingForwardTo, true);
         insert_struct_rule_with_dict!(MassNouns, true);
@@ -633,6 +713,7 @@ impl LintGroup {
         insert_expr_rule!(MostOfTheTimes, true);
         insert_expr_rule!(MultipleSequentialPronouns, true);
         insert_expr_rule!(NailOnTheHead, true);
+        insert_expr_rule!(NakedEye, true);
         insert_expr_rule!(NeedToNoun, true);
         insert_struct_rule!(NoFrenchSpaces, true);
         insert_expr_rule!(NoLonger, true);
@@ -657,8 +738,10 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency, true);
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
+        insert_expr_rule_with_dialect!(OutOfTheWindow, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
+        insert_expr_rule!(PayForPrice, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
@@ -710,7 +793,9 @@ impl LintGroup {
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
+        insert_expr_rule!(TheTheToThatThe, true);
         insert_expr_rule!(ThenThan, true);
+        insert_expr_rule!(ThereOwn, true);
         insert_expr_rule!(Theres, true);
         insert_expr_rule!(ThesesThese, true);
         insert_struct_rule!(TheyreConfusions, true);
@@ -748,7 +833,6 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
@@ -770,10 +854,6 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -788,6 +868,14 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         out
     }
@@ -858,6 +946,53 @@ impl LintGroup {
             }
         }
 
+        // Sentence Expr linters
+        for sentence in document.iter_sentences() {
+            let Some(sentence_span) = sentence.span() else {
+                continue;
+            };
+
+            let sentence_chars = document.get_span_content(&sentence_span);
+            let config_hash = self.hasher_builder.hash_one(&self.config);
+            let char_hash = self.hasher_builder.hash_one(sentence_chars);
+            let cache_key = (char_hash, config_hash);
+
+            let sentence_results = if let Some(hit) = self.sentence_expr_cache.get(&cache_key) {
+                hit.clone()
+            } else {
+                let mut pattern_lints = BTreeMap::new();
+
+                for (key, linter) in &mut self.sentence_expr_linters {
+                    if self.config.is_rule_enabled(key) {
+                        let lints =
+                            run_on_chunk(linter, sentence, document.get_source()).map(|mut l| {
+                                l.span.pull_by(sentence_span.start);
+                                l
+                            });
+
+                        pattern_lints.insert(key.clone(), lints.collect());
+                    }
+                }
+
+                let pattern_lints = Lrc::new(pattern_lints);
+
+                self.sentence_expr_cache
+                    .put(cache_key, pattern_lints.clone());
+                pattern_lints
+            };
+
+            for (key, vec) in sentence_results.iter() {
+                results
+                    .entry(key.to_owned())
+                    .or_default()
+                    .extend(vec.iter().cloned().map(|mut lint| {
+                        // Bring the spans back into document-space
+                        lint.span.push_by(sentence_span.start);
+                        lint
+                    }));
+            }
+        }
+
         results
     }
 }
@@ -889,6 +1024,7 @@ mod tests {
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
+    use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
 
     fn test_group() -> LintGroup {
@@ -954,6 +1090,31 @@ mod tests {
     #[test]
     fn ok_becomes_okay() {
         assert_suggestion_result("This is ok.", test_group(), "This is okay.");
+    }
+
+    #[test]
+    fn weir_linter_uses_configured_sentence_scope() {
+        let source = r#"
+            expr main one**two
+            let message "Use three."
+            let description "Test sentence-scoped Weir."
+            let kind "Miscellaneous"
+            let becomes "three"
+            let strategy "Exact"
+            let scope "Sentence"
+        "#;
+
+        let mut group = LintGroup::empty();
+        group.add_sentence_expr_linter(
+            "TestSentenceWeir",
+            WeirLinter::new(source)
+                .unwrap()
+                .into_sentence_linter()
+                .unwrap_or_else(|_| unreachable!()),
+        );
+        group.config.set_rule_enabled("TestSentenceWeir", true);
+
+        assert_suggestion_result("one, two.", group, "three.");
     }
 
     #[test]
