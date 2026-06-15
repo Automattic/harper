@@ -303,8 +303,6 @@ impl SequenceExpr {
 
     /// Match a series of words separated by whitespace.
     pub fn then_word_seq(self, words: &'static [&'static str]) -> Self {
-        debug_assert!(!words.is_empty(), "words must not be empty");
-
         if let Some((first, rest)) = words.split_first() {
             let mut expr = self.t_aco(first);
             for word in rest {
