@@ -5137,6 +5137,13 @@
 								"state": true,
 								"label": "Leaving In Droves"
 							}
+						},
+						{
+							"Bool": {
+								"name": "DependsBasedOn",
+								"state": true,
+								"label": "Depends Based On"
+							}
 						}
 					]
 				}
