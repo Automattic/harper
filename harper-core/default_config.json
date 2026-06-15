@@ -1927,6 +1927,13 @@
 								"state": true,
 								"label": "To Some Degree"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FootInchMinuteSecondSymbols",
+								"state": true,
+								"label": "Foot, Inch, Minute, and Second Symbols"
+							}
 						}
 					]
 				}
