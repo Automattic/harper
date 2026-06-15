@@ -82,4 +82,7 @@ export interface LintOptions {
 
 	/** Remove overlapping lints. An undefined value is assumed to be true. */
 	dedup?: boolean;
+
+	/** Ignore text that is unlikely to be English. An undefined value is assumed to be false. */
+	isolateEnglish?: boolean;
 }
