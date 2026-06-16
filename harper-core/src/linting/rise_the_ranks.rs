@@ -61,7 +61,7 @@ impl ExprLinter for RiseTheRanks {
                 Suggestion::InsertAfter(vec![' ', 't', 'h', 'r', 'o', 'u', 'g', 'h']),
                 Suggestion::InsertAfter(vec![' ', 'f', 'r', 'o', 'm']),
             ],
-            message: "Use either the modern standard 'rise through the ranks' or the traditional 'rise from the ranks'. 'Rise the ranks' is nonstandard.".to_string(),
+            message: "Use either the modern standard 'rise through the ranks' or the traditional 'rise from the ranks'. 'Rise the ranks' is nonstandard.".to_owned(),
             ..Default::default()
         })
     }

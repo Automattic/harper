@@ -86,7 +86,7 @@ impl ExprLinter for GoodAt {
                 "at".chars().collect(),
                 prep_span.get_content(src),
             )],
-            message: "Use 'good at' to describe proficiency with a skill.".to_string(),
+            message: "Use 'good at' to describe proficiency with a skill.".to_owned(),
             ..Default::default()
         })
     }

@@ -57,7 +57,7 @@ impl ExprLinter for FeelFell {
                 "feel",
                 fell_token.get_ch(src),
             )],
-            message: "It looks like this is a typo, did you mean `feel`?".to_string(),
+            message: "It looks like this is a typo, did you mean `feel`?".to_owned(),
             ..Default::default()
         })
     }
