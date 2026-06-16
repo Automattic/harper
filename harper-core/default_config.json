@@ -5165,6 +5165,13 @@
 								"state": true,
 								"label": "Leaving In Droves"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NoPluralModifiers",
+								"state": true,
+								"label": "No Plural Modifiers"
+							}
 						}
 					]
 				}
