@@ -14,7 +14,7 @@ pub struct ThingThink {
 impl Default for ThingThink {
     fn default() -> Self {
         let subject_pronouns = WordSet::new(&["I", "you", "we", "they"]);
-        let indefinite_pronouns = FirstMatchOf::new(vec![
+        let indefinite_pronouns = FirstMatchOf::new([
             Box::new(WordSet::new(&[
                 "anybody",
                 "anyone",
@@ -24,7 +24,7 @@ impl Default for ThingThink {
             // "Any one thing", "every one thing", "any body thing" cause false positives.
             Box::new(FixedPhrase::from_phrase("every body")),
         ]);
-        let pronoun = FirstMatchOf::new(vec![
+        let pronoun = FirstMatchOf::new([
             Box::new(subject_pronouns) as Box<dyn Expr>,
             Box::new(indefinite_pronouns),
         ]);
@@ -58,7 +58,7 @@ impl Default for ThingThink {
         let adverb_of_frequency =
             WordSet::new(&["always", "sometimes", "often", "usually", "never"]);
 
-        let pre_context = FirstMatchOf::new(vec![
+        let pre_context = FirstMatchOf::new([
             Box::new(pronoun) as Box<dyn Expr>,
             Box::new(verb_to),
             Box::new(modal),

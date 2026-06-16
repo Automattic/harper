@@ -22,7 +22,7 @@ impl Default for Addicting {
                     // positive - any word
                     Box::new(SequenceExpr::any_word()),
                     // negative - reflexive pronoun or object pronoun
-                    Box::new(SequenceExpr::unless(FirstMatchOf::new(vec![
+                    Box::new(SequenceExpr::unless(FirstMatchOf::new([
                         Box::new(ReflexivePronoun::with_common_errors()) as Box<dyn Expr>,
                         Box::new(SequenceExpr::default().then_object_pronoun()),
                     ]))),

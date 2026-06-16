@@ -58,8 +58,10 @@ impl Expr for SpelledNumberExpr {
             ])
             .then_word_set(units);
 
-        let expr =
-            LongestMatchOf::new(vec![Box::new(single_words), Box::new(tens_units_compounds)]);
+        let expr = LongestMatchOf::new(vec![
+            Box::new(single_words) as Box<dyn Expr>,
+            Box::new(tens_units_compounds),
+        ]);
 
         expr.run(cursor, tokens, source)
     }

@@ -12,7 +12,7 @@ pub struct CraveFor {
 impl Default for CraveFor {
     fn default() -> Self {
         Self {
-            expr: FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new([
                 Box::new(
                     SequenceExpr::word_set(&["crave", "craved", "craves"])
                         .t_ws()

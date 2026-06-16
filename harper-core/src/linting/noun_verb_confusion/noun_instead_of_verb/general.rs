@@ -52,8 +52,8 @@ impl Default for GeneralNounInsteadOfVerb {
             .then_any_word();
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(pattern_followed_by_punctuation),
+            expr: Box::new(LongestMatchOf::new([
+                Box::new(pattern_followed_by_punctuation) as Box<dyn Expr>,
                 Box::new(pattern_followed_by_word),
                 Box::new(basic_pattern),
             ])),

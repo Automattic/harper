@@ -24,7 +24,7 @@ where
                 .then_positive_adjective()
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
                 // Or a following hyphen which we'll use to identify a false positive #3568
-                .then_optional(FirstMatchOf::new(vec![
+                .then_optional(FirstMatchOf::new([
                     Box::new(
                         SequenceExpr::whitespace()
                             .t_aco("than")
