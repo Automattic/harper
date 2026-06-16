@@ -17,7 +17,7 @@ impl Default for CraveFor {
                     SequenceExpr::word_set(&["crave", "craved", "craves"])
                         .t_ws()
                         .t_aco("for"),
-                ),
+                ) as Box<dyn Expr>,
                 Box::new(
                     SequenceExpr::any_of(vec![
                         Box::new(InflectionOfBe::default()),

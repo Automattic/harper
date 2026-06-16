@@ -59,7 +59,7 @@ impl<D: Dictionary> ThereIsAgreement<D> {
                     t.kind.is_adjective()
                         || t.get_ch(s)
                             .eq_any_ignore_ascii_case_chars(&[&['n', 'o'], &['n', 'o', 't']])
-                }),
+                }) as Box<dyn Expr>,
                 Box::new(SpelledNumberExpr),
             ]),
         ));

@@ -16,7 +16,7 @@ impl Default for RedundantAdditiveAdverbs {
         let as_well = FixedPhrase::from_phrase("as well");
 
         let additive_adverb = Lrc::new(FirstMatchOf::new(vec![
-            Box::new(also_too),
+            Box::new(also_too) as Box<dyn Expr>,
             Box::new(as_well),
         ]));
 

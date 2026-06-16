@@ -66,7 +66,7 @@ impl Default for Months {
         // An Expr that matches either a plain month
         // Or an ambiguous month after a disambiguating word
         let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
-            Box::new(only_months),
+            Box::new(only_months) as Box<dyn Expr>,
             Box::new(
                 SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()

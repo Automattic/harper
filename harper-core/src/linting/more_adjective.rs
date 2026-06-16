@@ -30,7 +30,7 @@ where
                             .t_aco("than")
                             .t_ws()
                             .then_positive_adjective(),
-                    ),
+                    ) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
                 ])),
             dict,

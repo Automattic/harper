@@ -24,7 +24,7 @@ impl Default for GeneralNounInsteadOfVerb {
         };
 
         let pre_context = FirstMatchOf::new(vec![
-            Box::new(WordSet::new(PRONOUNS)),
+            Box::new(WordSet::new(PRONOUNS)) as Box<dyn Expr>,
             Box::new(ModalVerb::with_common_errors()),
             Box::new(WordSet::new(&["do", "don't", "dont"])),
             Box::new(adverb_of_frequency),

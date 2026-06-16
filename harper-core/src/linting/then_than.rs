@@ -41,7 +41,7 @@ impl ThenThan {
 
         Self {
             expr: FirstMatchOf::new(vec![
-                Box::new(comparison),
+                Box::new(comparison) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("easier said then done")),
                 Box::new(FixedPhrase::from_phrase("now and than")),
                 Box::new(FixedPhrase::from_phrase("other then")),
