@@ -3761,7 +3761,6 @@ GHz/
 GI/JNV
 GIF/NSg             # file format
 GIGO/
-Glu/N               # symbol for glutamate (anion of glutamic acid)
 GM/NOgVJ            # car company
 GMAT/O              # global
 GMO/NJ
@@ -4016,6 +4015,7 @@ Glenna/Og
 Gloria/Og
 Gloucester/ONg
 Glover/NOg
+Glu/N               # symbol for glutamate (anion of glutamic acid)
 Gnostic/JNg
 Gnosticism/Ng
 GnuPG
@@ -6268,6 +6268,7 @@ MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
 MRI/NgV             # magnetic resonance imaging
+MRS/N               # magnetic resonance spectroscopy
 MS/NOg              # US state (Mississippi)
 MSG/NOg             # flavour enhancer
 MSRP/NSg
@@ -7151,7 +7152,6 @@ Mozambique/ONg
 Mozart/NOg
 Mozilla/g           # company
 Mr/NSg
-MRS/N               # magnetic resonance spectroscopy
 Ms/NS
 Msgr
 Mt/                 # Meitnerium
@@ -7849,7 +7849,6 @@ PED/NgS             # performance-enhancing drug
 PET/NOg             # early computer
 PFC/N
 PG/JNO
-pgACC/N             # pregenual anterior cingulate cortex
 PGP/NO              # encryption
 PHP/NOg             # programming language
 PIN/N               # personal identification number
@@ -8515,7 +8514,6 @@ RP/NOV
 RPM/NgS
 RR/NOV
 RSA/Ng              # encryption standard
-rsFC/Nm             # resting state functional connectivity
 RSFSR/O
 RSI/N
 RSS/NOV             # Really Simple Syndication
@@ -54594,6 +54592,7 @@ pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
+pgACC/N             # pregenual anterior cingulate cortex
 plist/NgS           # Apple property list
 polysyntheses/N9    # linguistics
 polysynthesis/Nw0g  # linguistics
@@ -54612,6 +54611,7 @@ reranker/NgS
 roadmap/NgS         # overtook "road map" c. 2000 but not in dictionaries yet
 roguelike/NgS
 royale/~NSgJ        # !! please check and comment !! dictionaries only list noun sense type of custard
+rsFC/Nm             # resting state functional connectivity
 runahead/NgS
 s.t./~              # !! please check and comment !!
 sRGB/Og             # colour space
