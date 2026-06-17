@@ -159,6 +159,7 @@ use super::no_french_spaces::NoFrenchSpaces;
 use super::no_longer::NoLonger;
 use super::no_match_for::NoMatchFor;
 use super::no_oxford_comma::NoOxfordComma;
+use super::no_plural_modifiers::NoPluralModifiers;
 use super::nobody::Nobody;
 use super::nominal_wants::NominalWants;
 use super::nor_modal_pronoun::NorModalPronoun;
@@ -725,6 +726,7 @@ impl LintGroup {
         insert_expr_rule!(NoLonger, true);
         insert_expr_rule!(NoMatchFor, true);
         insert_struct_rule!(NoOxfordComma, false);
+        insert_expr_rule!(NoPluralModifiers, true);
         insert_expr_rule!(Nobody, true);
         insert_expr_rule!(NominalWants, true);
         insert_expr_rule!(NorModalPronoun, true);
