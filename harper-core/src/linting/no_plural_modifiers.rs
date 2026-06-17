@@ -20,6 +20,7 @@ const MODIFIER_NOUNS: &[&str] = &[
     "files",
     "games",
     "keys",
+    "modes",
     "modules",
     "scores",
     "shoes",
@@ -41,6 +42,7 @@ const HEAD_NOUNS: &[&str] = &[
     "shops",
     "station",
     "store",
+    "support",
     "system",
     "table",
     "wash",
@@ -267,6 +269,15 @@ mod tests {
             "When I try to set this in lazy.nvim's keys table, I receive the \"E492: Not an editor command: ^UTmuxNavigateRight\" error",
             NoPluralModifiers::default(),
             "When I try to set this in lazy.nvim's key table, I receive the \"E492: Not an editor command: ^UTmuxNavigateRight\" error",
+        );
+    }
+
+    #[test]
+    fn modes_support() {
+        assert_suggestion_result(
+            "ECS screen modes support",
+            NoPluralModifiers::default(),
+            "ECS screen mode support",
         );
     }
 
