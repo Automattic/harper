@@ -41,6 +41,7 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
+	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
@@ -85,14 +86,6 @@ export default class LintFramework {
 			this.update();
 		};
 
-		const timeoutCallback = () => {
-			this.update();
-
-			setTimeout(timeoutCallback, 100);
-		};
-
-		timeoutCallback();
-
 		this.attachWindowListeners();
 	}
 
@@ -115,13 +108,27 @@ export default class LintFramework {
 	}
 
 	async requestLintUpdate() {
-		if (this.lintRequested) {
+		if (this.lintRequested || this.targets.size === 0) {
 			return;
 		}
 
 		const delay = (await this.actions.getDelay?.()) ?? 0;
-		if (delay > 0 && Date.now() - this.lastInputAt < delay) {
+		const remainingDelay = delay - (Date.now() - this.lastInputAt);
+		if (delay > 0 && remainingDelay > 0) {
+			if (this.lintDelayTimer != null) {
+				window.clearTimeout(this.lintDelayTimer);
+			}
+
+			this.lintDelayTimer = window.setTimeout(() => {
+				this.lintDelayTimer = null;
+				void this.requestLintUpdate();
+			}, remainingDelay);
 			return;
+		}
+
+		if (this.lintDelayTimer != null) {
+			window.clearTimeout(this.lintDelayTimer);
+			this.lintDelayTimer = null;
 		}
 
 		// Avoid duplicate requests in the queue
