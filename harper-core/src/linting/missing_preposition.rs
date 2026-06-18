@@ -90,9 +90,10 @@ impl ExprLinter for MissingPreposition {
             return None;
         }
 
-        // Check if the adjective (index 2 in matched tokens) is attributive-safe
-        // Pattern: [0]=NOUN/PRON/PROPN, [1]=AUX, [2]=ADJ, [3]=NOUN/PRON/PROPN
-        if let Some(adj_token) = matched_tokens.get(2) {
+        // Find the adjective token (UPOS::ADJ) in matched tokens
+        // Pattern: [NOUN/PRON/PROPN] [AUX] [ADJ] [NOUN/PRON/PROPN] (with optional whitespace tokens)
+        let adj_token = matched_tokens.iter().find(|t| t.kind.is_upos(UPOS::ADJ));
+        if let Some(adj_token) = adj_token {
             let adj_chars: String = adj_token.span.get_content_string(_source).chars().collect();
             if is_attributive_safe(&adj_chars) {
                 return None;
