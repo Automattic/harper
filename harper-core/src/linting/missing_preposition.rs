@@ -11,6 +11,46 @@ use crate::{Token, TokenStringExt};
 use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
+/// Adjectives that can be used attributively (directly modifying a noun)
+/// without requiring a preposition. These are common superlatives and
+/// attributive-only adjectives that produce false positives in the
+/// MissingPreposition lint.
+const ATTRIBUTIVE_SAFE_ADJECTIVES: &[&str] = &[
+    "best",
+    "worst",
+    "closest",
+    "dearest",
+    "finest",
+    "greatest",
+    "latest",
+    "oldest",
+    "youngest",
+    "first",
+    "last",
+    "next",
+    "previous",
+    "same",
+    "other",
+    "own",
+    "very",
+    "mere",
+    "sheer",
+    "utter",
+    "chief",
+    "main",
+    "principal",
+    "sole",
+    "exact",
+    "particular",
+    "specific",
+];
+
+fn is_attributive_safe(adj_text: &str) -> bool {
+    ATTRIBUTIVE_SAFE_ADJECTIVES
+        .iter()
+        .any(|&safe| safe.eq_ignore_ascii_case(adj_text))
+}
+
 pub struct MissingPreposition {
     expr: SequenceExpr,
 }
@@ -48,6 +88,15 @@ impl ExprLinter for MissingPreposition {
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
             return None;
+        }
+
+        // Check if the adjective (index 2 in matched tokens) is attributive-safe
+        // Pattern: [0]=NOUN/PRON/PROPN, [1]=AUX, [2]=ADJ, [3]=NOUN/PRON/PROPN
+        if let Some(adj_token) = matched_tokens.get(2) {
+            let adj_chars: String = adj_token.span.get_content_string(_source).chars().collect();
+            if is_attributive_safe(&adj_chars) {
+                return None;
+            }
         }
 
         Some({
@@ -145,5 +194,16 @@ mod tests {
             "Each agent has specific tools and tasks orchestrated through a crew workflow.",
             MissingPreposition::default(),
         );
+    }
+
+    #[test]
+    fn allows_best_friends() {
+        assert_no_lints("We were best friends.", MissingPreposition::default());
+        assert_no_lints("They are closest friends.", MissingPreposition::default());
+        assert_no_lints("She is my dearest friend.", MissingPreposition::default());
+        assert_no_lints("This is the finest example.", MissingPreposition::default());
+        assert_no_lints("He is the greatest player.", MissingPreposition::default());
+        assert_no_lints("We share the same values.", MissingPreposition::default());
+        assert_no_lints("This is my own decision.", MissingPreposition::default());
     }
 }
