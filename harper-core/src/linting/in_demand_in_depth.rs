@@ -41,12 +41,8 @@ impl ExprLinter for InDemandInDepth {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
-        let Some(tok) = toks.get(3) else {
-            return None;
-        };
-
         Some(Lint {
-            span: tok.span,
+            span: toks.get(3)?.span,
             lint_kind: LintKind::Punctuation,
             suggestions: vec![Suggestion::ReplaceWith(vec!['-'])],
             message: "When used as adjectives, `in-demand` and `in-depth` should be hyphenated."
