@@ -32,7 +32,7 @@ impl Default for InDemandInDepth {
                 .t_ws()
                 .t_aco("in")
                 .t_ws()
-                .t_set(&["demand", "demands", "depth", "depths"]),
+                .t_set(&["demand", "depth"]),
         }
     }
 }
