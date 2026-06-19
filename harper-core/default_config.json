@@ -1728,6 +1728,13 @@
 								"state": true,
 								"label": "Worst Case Scenario"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InDemandInDepth",
+								"state": true,
+								"label": "In Demand / In Depth"
+							}
 						}
 					]
 				}
@@ -5171,6 +5178,13 @@
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RunIntoProblemsOrTrouble",
+								"state": true,
+								"label": "Run Into Problems / Trouble"
 							}
 						}
 					]
