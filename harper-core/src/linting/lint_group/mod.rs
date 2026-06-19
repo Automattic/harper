@@ -210,6 +210,7 @@ use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
+use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -776,6 +777,7 @@ impl LintGroup {
         insert_expr_rule!(RightClick, true);
         insert_expr_rule!(RiseTheRanks, true);
         insert_expr_rule!(RollerSkated, true);
+        insert_expr_rule!(RunIntoProblemsOrTrouble, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
         insert_struct_rule_with_dict!(SentenceCapitalization, true);

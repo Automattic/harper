@@ -221,6 +221,7 @@ mod respond;
 mod right_click;
 mod rise_the_ranks;
 mod roller_skated;
+mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
