@@ -5165,6 +5165,13 @@
 								"state": true,
 								"label": "Leaving In Droves"
 							}
+						},
+						{
+							"Bool": {
+								"name": "RunIntoProblemsOrTrouble",
+								"state": true,
+								"label": "Run Into Problems / Trouble"
+							}
 						}
 					]
 				}
