@@ -2346,6 +2346,13 @@
 								"state": true,
 								"label": "Wok Verb Typo"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CrossPlatform",
+								"state": true,
+								"label": "Cross Platform"
+							}
 						}
 					]
 				}
@@ -5178,6 +5185,13 @@
 								"name": "LeavingInDroves",
 								"state": true,
 								"label": "Leaving In Droves"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AndSuch",
+								"state": true,
+								"label": "And Such"
 							}
 						},
 						{
