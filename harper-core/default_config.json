@@ -2790,6 +2790,13 @@
 								"state": true,
 								"label": "The The To That The"
 							}
+						},
+						{
+							"Bool": {
+								"name": "Hazzle",
+								"state": true,
+								"label": "Hazzle"
+							}
 						}
 					]
 				}
