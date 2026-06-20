@@ -2339,6 +2339,13 @@
 								"state": true,
 								"label": "Wok Verb Typo"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CrossPlatform",
+								"state": true,
+								"label": "Cross Platform"
+							}
 						}
 					]
 				}
