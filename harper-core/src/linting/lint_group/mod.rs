@@ -57,6 +57,7 @@ use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
+use super::convenient_store::ConvenientStore;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -93,6 +94,7 @@ use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
+use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
@@ -101,6 +103,7 @@ use super::go_so_far_as_to::GoSoFarAsTo;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
+use super::handful_of_more::HandfulOfMore;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -111,6 +114,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
 use super::in_time_from_now::InTimeFromNow;
@@ -206,6 +210,7 @@ use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
+use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -229,6 +234,7 @@ use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
+use super::the_last_days::TheLastDays;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
@@ -657,6 +663,7 @@ impl LintGroup {
         insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(FleshOutVsFullFledged, true);
+        insert_expr_rule!(FootInchMinuteSecondSymbols, true);
         insert_expr_rule!(ForFreeOfCharge, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
@@ -665,6 +672,7 @@ impl LintGroup {
         insert_expr_rule!(GoToWar, true);
         insert_expr_rule!(GoodAt, true);
         insert_expr_rule!(Handful, true);
+        insert_expr_rule!(HandfulOfMore, true);
         insert_expr_rule!(HavePronoun, true);
         insert_struct_rule_with_dialect!(HaveTakeALook, true);
         insert_expr_rule!(Hedging, true);
@@ -675,6 +683,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
+        insert_expr_rule!(InDemandInDepth, true);
         insert_expr_rule!(InFavourOfDoing, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
         insert_expr_rule!(InTimeFromNow, true);
@@ -768,6 +777,7 @@ impl LintGroup {
         insert_expr_rule!(RightClick, true);
         insert_expr_rule!(RiseTheRanks, true);
         insert_expr_rule!(RollerSkated, true);
+        insert_expr_rule!(RunIntoProblemsOrTrouble, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
         insert_struct_rule_with_dict!(SentenceCapitalization, true);
@@ -790,6 +800,7 @@ impl LintGroup {
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
+        insert_expr_rule!(TheLastDays, true);
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
@@ -837,6 +848,10 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
         out.config.set_rule_enabled("AspireTo", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("ConvenientStore", ConvenientStore::default());
+        out.config.set_rule_enabled("ConvenientStore", true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

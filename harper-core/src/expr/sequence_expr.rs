@@ -127,6 +127,11 @@ impl SequenceExpr {
         Self::default().then_optional(expr)
     }
 
+    /// Match a series of words separated by whitespace.
+    pub fn word_seq(words: &'static [&'static str]) -> Self {
+        Self::default().then_word_seq(words)
+    }
+
     /// Match a fixed phrase.
     pub fn fixed_phrase(phrase: &'static str) -> Self {
         Self::default().then_fixed_phrase(phrase)
@@ -219,7 +224,7 @@ impl SequenceExpr {
         self.then_whitespace()
     }
 
-    /// Match against one or more whitespace tokens.
+    /// Match against whitespace tokens or a hyphen.
     pub fn then_whitespace_or_hyphen(self) -> Self {
         self.then(WhitespacePattern.or(|tok: &Token, _: &[char]| tok.kind.is_hyphen()))
     }
@@ -227,6 +232,16 @@ impl SequenceExpr {
     /// Shorthand for [`Self::then_whitespace_or_hyphen`].
     pub fn t_ws_h(self) -> Self {
         self.then_whitespace_or_hyphen()
+    }
+
+    /// Match against zero or more whitespace tokens.
+    pub fn then_optional_whitespace(self) -> Self {
+        self.then_optional(WhitespacePattern)
+    }
+
+    /// Shorthand for [`Self::then_optional_whitespace`].
+    pub fn t_ows(self) -> Self {
+        self.then_optional_whitespace()
     }
 
     /// Match against zero or more occurrences of the given expression. Like `*` in regex.
@@ -294,6 +309,19 @@ impl SequenceExpr {
     /// Match examples of `word` case-sensitively.
     pub fn then_exact_word(self, word: &'static str) -> Self {
         self.then(Word::new_exact(word))
+    }
+
+    /// Match a series of words separated by whitespace.
+    pub fn then_word_seq(self, words: &'static [&'static str]) -> Self {
+        if let Some((first, rest)) = words.split_first() {
+            let mut expr = self.t_aco(first);
+            for word in rest {
+                expr = expr.t_ws().t_aco(word);
+            }
+            expr
+        } else {
+            self
+        }
     }
 
     /// Match a fixed phrase.
@@ -503,7 +531,7 @@ impl SequenceExpr {
     }
 
     /// Match a token where any of the first token kind predicates returns true
-    /// and the second returns false.    
+    /// and the second returns false.
     pub fn then_kind_any_but_not<F1, F2>(self, preds_is: &'static [F1], pred_not: F2) -> Self
     where
         F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
@@ -631,6 +659,10 @@ impl SequenceExpr {
     gen_then_from_is!(backslash);
     gen_then_from_is!(slash);
     gen_then_from_is!(percent);
+    gen_then_from_is!(degree);
+    gen_then_from_is!(open_single);
+    gen_then_from_is!(single_prime);
+    gen_then_from_is!(double_prime);
     gen_then_from_is!(backtick);
 
     // Other
