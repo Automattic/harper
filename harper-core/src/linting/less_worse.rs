@@ -11,7 +11,7 @@ pub struct LessWorse {
 impl Default for LessWorse {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["less", "least"])
+            expr: SequenceExpr::word_set(&["less", "least", "even"])
                 .t_ws_h()
                 .then_word_set(&["worse", "worst"]),
         }
@@ -76,6 +76,11 @@ impl ExprLinter for LessWorse {
                 ],
                 "These words conflict with each other. Choose `less bad` or `least bad` for more standard English, or `least worst` for more idiomatic English.",
             ),
+            // "Even worst": `even` intensifies comparatives, so the superlative `worst` is incorrect here.
+            (['e', 'v', 'e', 'n'], _, ['w', 'o', 'r', 's', 't']) => (
+                &[&['e', 'v', 'e', 'n', ' ', 'w', 'o', 'r', 's', 'e']],
+                "`even` intensifies comparatives, so use `even worse` instead of `even worst`.",
+            ),
             _ => return None,
         };
 
@@ -94,15 +99,19 @@ impl ExprLinter for LessWorse {
     }
 
     fn description(&self) -> &'static str {
-        "Suggests alternatives to `less/least worse/worst` for more standard, clearer comparisons."
+        "Suggests alternatives to `less/least/even worse/worst` for more standard, clearer comparisons."
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_good_and_bad_suggestions, assert_lint_count, assert_suggestion_result,
+    };
 
     use super::LessWorse;
+
+    // ── existing tests ────────────────────────────────────────────────────────
 
     #[test]
     fn correct_least_worse() {
@@ -150,6 +159,112 @@ mod tests {
                 "May be the least bad choice for some little playlists.",
             ],
             &[],
+        );
+    }
+
+    // ── `even worst` tests (issue #3663) ─────────────────────────────────────
+
+    #[test]
+    fn correct_even_worst_issue_3663() {
+        assert_suggestion_result(
+            "But it's even worst because when you look at it.",
+            LessWorse::default(),
+            "But it's even worse because when you look at it.",
+        );
+    }
+
+    #[test]
+    fn correct_even_worst_sentence_start() {
+        assert_suggestion_result(
+            "Even worst, the server crashed overnight.",
+            LessWorse::default(),
+            "Even worse, the server crashed overnight.",
+        );
+    }
+
+    #[test]
+    fn correct_even_worst_exclamation() {
+        assert_suggestion_result(
+            "The second attempt was even worst!",
+            LessWorse::default(),
+            "The second attempt was even worse!",
+        );
+    }
+
+    #[test]
+    fn correct_even_worst_question() {
+        assert_suggestion_result(
+            "Could the situation get even worst?",
+            LessWorse::default(),
+            "Could the situation get even worse?",
+        );
+    }
+
+    #[test]
+    fn correct_even_worst_multiline() {
+        assert_suggestion_result(
+            "The first version had bugs.\nThe second was even worst.",
+            LessWorse::default(),
+            "The first version had bugs.\nThe second was even worse.",
+        );
+    }
+
+    /// `even worse` is grammatically correct and must not be flagged.
+    #[test]
+    fn allows_even_worse() {
+        assert_lint_count(
+            "But it's even worse because when you look at it.",
+            LessWorse::default(),
+            0,
+        );
+    }
+
+    /// Stand-alone `worst` without a conflicting adverb must not be flagged.
+    #[test]
+    fn allows_standalone_worst() {
+        assert_lint_count(
+            "That was the worst movie I have ever seen.",
+            LessWorse::default(),
+            0,
+        );
+    }
+
+    /// `even` without a following `worst`/`worse` must not be flagged.
+    #[test]
+    fn allows_even_without_worst() {
+        assert_lint_count("Even the best tools can fail.", LessWorse::default(), 0);
+    }
+
+    /// `the worst` is a valid superlative use.
+    #[test]
+    fn allows_the_worst() {
+        assert_lint_count(
+            "This is the worst idea I have heard.",
+            LessWorse::default(),
+            0,
+        );
+    }
+
+    // ── regression tests ──────────────────────────────────────────────────────
+
+    /// Regression: existing `least worst` behaviour is unaffected.
+    #[test]
+    fn regression_least_worst_still_flagged() {
+        assert_good_and_bad_suggestions(
+            "Pick the least worst option available.",
+            LessWorse::default(),
+            &["Pick the least bad option available."],
+            &[],
+        );
+    }
+
+    /// Regression: existing `less worse` behaviour is unaffected.
+    #[test]
+    fn regression_less_worse_still_flagged() {
+        assert_suggestion_result(
+            "That makes things less worse than before.",
+            LessWorse::default(),
+            "That makes things less bad than before.",
         );
     }
 }
