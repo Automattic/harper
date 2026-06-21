@@ -370,6 +370,18 @@ impl ExprLinter for MissingTo {
 
         let next_is_noun_but_not_verb = next_is_noun && !next_is_verb;
 
+        // The permissive pattern matches on dictionary verb-lemma *capability*,
+        // so a word like "feature" (also a verb in the dictionary) can pair with
+        // a controller. But if the tagger is confident the following word is a
+        // non-verb noun — no verb reading even among its plausible (top-k) tags —
+        // then there is no infinitive to complete: "a standard and expected
+        // feature" is a nominal phrase, not "expected *to* feature". A genuine
+        // homograph (e.g. "site selling …", where `selling` keeps its VERB
+        // reading in the top-k) is unaffected and still fires.
+        if next_is_noun_but_not_verb && !next_token.kind.could_be_upos(UPOS::VERB) {
+            return None;
+        }
+
         if matches!(
             controller_text,
             "learn"
