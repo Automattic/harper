@@ -63,6 +63,19 @@ fn parse_single_expr(tokens: &[Token], source: &[char]) -> Result<FoundNode<AstE
         TokenKind::Punctuation(Punctuation::Star) => {
             Ok(FoundNode::new(AstExprNode::Anything, 1))
         }
+        // The loose-POS notation: `~TAG` matches a *plausible* reading of the
+        // token (argmax or a close runner-up the tagger kept), not just the
+        // strict argmax. Must directly precede a single UPOS tag, e.g. `~NOUN`.
+        TokenKind::Punctuation(Punctuation::Tilde) => {
+            let res = parse_single_expr(&tokens[1..], source)?;
+            match res.node {
+                AstExprNode::UPOSSet(tags) => Ok(FoundNode::new(
+                    AstExprNode::UPOSSetLoose(tags),
+                    res.next_idx + 1,
+                )),
+                _ => Err(Error::UnsupportedToken("~ must precede a UPOS tag".into())),
+            }
+        }
         TokenKind::Word(_) => {
             let text = tok.get_str(source);
 
