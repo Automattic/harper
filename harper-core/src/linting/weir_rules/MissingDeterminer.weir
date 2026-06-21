@@ -1,6 +1,6 @@
 expr techNoun [bug, case, change, comment, feature, fix, log, note, problem, reason, report, repro, reproduction, request, response, scenario, screenshot, solution, step, summary, test, ticket, answer, example, explanation, idea, issue, update]
 expr requestNounHead @techNoun
-expr requestBareNounPhrase [@requestNounHead, (ADJ @requestNounHead), (ADJ ADJ @requestNounHead), (ADV ADJ @requestNounHead), (ADV ADJ ADJ @requestNounHead), (@requestNounHead @requestNounHead), (ADJ @requestNounHead @requestNounHead), (ADV ADJ @requestNounHead @requestNounHead)]
+expr requestBareNounPhrase [@requestNounHead, (~ADJ @requestNounHead), (~ADJ ~ADJ @requestNounHead), (~ADV ~ADJ @requestNounHead), (~ADV ~ADJ ~ADJ @requestNounHead), (@requestNounHead @requestNounHead), (~ADJ @requestNounHead @requestNounHead), (~ADV ~ADJ @requestNounHead @requestNounHead)]
 expr narrativeNoun [portrait, nest, glass, hand, coin, toy, victor]
 expr narrativeBareNounPhrase [@narrativeNoun, (ADJ @narrativeNoun)]
 
