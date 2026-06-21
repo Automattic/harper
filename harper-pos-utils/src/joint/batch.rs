@@ -1,17 +1,16 @@
 //! Batch construction: tokenises sentences into char-id tensors with padding masks.
-
-use crate::joint::char_vocab::CharVocab;
-use crate::joint::suffix_vocab::SuffixVocab;
-use crate::joint::{CHAR_PAD, TAG_PAD_CLASS};
 use crate::UPOS;
+use crate::joint::char_vocab::CharVocab;
+use crate::joint::suffix_vocab::{SUFFIX_UNK, SuffixVocab};
+use crate::joint::{CHAR_PAD, TAG_PAD_CLASS};
 use burn::tensor::{Int, Tensor, TensorData, backend::Backend};
 
 pub struct JointBatch {
-    pub char_buf: Vec<i32>,  // [batch * max_sent * max_word]
+    pub char_buf: Vec<i32>,   // [batch * max_sent * max_word]
     pub suffix_buf: Vec<i32>, // [batch * max_sent]
-    pub tag_buf: Vec<i32>,   // [batch * max_sent]
-    pub np_buf: Vec<f32>,    // [batch * max_sent]
-    pub mask_buf: Vec<f32>,  // [batch * max_sent]
+    pub tag_buf: Vec<i32>,    // [batch * max_sent]
+    pub np_buf: Vec<f32>,     // [batch * max_sent]
+    pub mask_buf: Vec<f32>,   // [batch * max_sent]
     pub batch: usize,
     pub max_sent: usize,
     pub max_word: usize,
@@ -31,7 +30,7 @@ impl JointBatch {
         let max_sent = sents.iter().map(Vec::len).max().unwrap_or(0).max(1);
 
         let mut char_buf = vec![CHAR_PAD as i32; batch * max_sent * max_word];
-        let mut suffix_buf = vec![crate::joint::suffix_vocab::SUFFIX_UNK; batch * max_sent];
+        let mut suffix_buf = vec![SUFFIX_UNK; batch * max_sent];
         let mut tag_buf = vec![TAG_PAD_CLASS as i32; batch * max_sent];
         let mut np_buf = vec![0f32; batch * max_sent];
         let mut mask_buf = vec![0f32; batch * max_sent];
@@ -46,13 +45,27 @@ impl JointBatch {
                 if let Some(Some(t)) = tags[si].get(wi) {
                     tag_buf[tok] = *t as i32; // 0-based class (ADJ..VERB == 0..15)
                 }
-                np_buf[tok] = if np[si].get(wi).copied().unwrap_or(false) { 1.0 } else { 0.0 };
+                np_buf[tok] = if np[si].get(wi).copied().unwrap_or(false) {
+                    1.0
+                } else {
+                    0.0
+                };
                 mask_buf[tok] = 1.0;
                 real_tokens += 1;
             }
         }
 
-        Self { char_buf, suffix_buf, tag_buf, np_buf, mask_buf, batch, max_sent, max_word, real_tokens }
+        Self {
+            char_buf,
+            suffix_buf,
+            tag_buf,
+            np_buf,
+            mask_buf,
+            batch,
+            max_sent,
+            max_word,
+            real_tokens,
+        }
     }
 
     pub fn char_ids<B: Backend>(&self, device: &B::Device) -> Tensor<B, 2, Int> {
@@ -83,11 +96,6 @@ impl JointBatch {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::joint::{CHAR_PAD, TAG_PAD_CLASS};
-    use crate::joint::char_vocab::CharVocab;
-    use crate::joint::suffix_vocab::SuffixVocab;
-    use crate::UPOS;
-
     #[test]
     fn pads_words_and_tokens_with_sentinels() {
         let sents = vec![

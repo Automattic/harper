@@ -1,17 +1,17 @@
 //! Joint char-based UPOS tagger + NP chunker. One model produces both
 //! per-token outputs from a shared char-CNN + BiLSTM encoder.
 
-pub mod char_vocab;
-pub mod suffix_vocab;
-pub mod model;
 pub mod batch;
-pub mod runtime;
+pub mod char_vocab;
 #[cfg(feature = "training")]
 pub mod eval;
 #[cfg(feature = "training")]
-pub mod train;
-#[cfg(feature = "training")]
 pub mod inject;
+pub mod model;
+pub mod runtime;
+pub mod suffix_vocab;
+#[cfg(feature = "training")]
+pub mod train;
 
 /// Char id reserved for word padding (never a real char).
 pub const CHAR_PAD: usize = 0;

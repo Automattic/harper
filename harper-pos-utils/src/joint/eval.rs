@@ -15,7 +15,11 @@ pub fn upos_accuracy(pred: &[Vec<Option<UPOS>>], gold: &[Vec<Option<UPOS>>]) -> 
             }
         }
     }
-    if total == 0 { 0.0 } else { correct as f64 / total as f64 }
+    if total == 0 {
+        0.0
+    } else {
+        correct as f64 / total as f64
+    }
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -37,14 +41,26 @@ pub fn np_prf1(pred: &[Vec<bool>], gold: &[Vec<bool>]) -> Prf1 {
             }
         }
     }
-    let precision = if tp + fp == 0 { 0.0 } else { tp as f64 / (tp + fp) as f64 };
-    let recall = if tp + fn_ == 0 { 0.0 } else { tp as f64 / (tp + fn_) as f64 };
+    let precision = if tp + fp == 0 {
+        0.0
+    } else {
+        tp as f64 / (tp + fp) as f64
+    };
+    let recall = if tp + fn_ == 0 {
+        0.0
+    } else {
+        tp as f64 / (tp + fn_) as f64
+    };
     let f1 = if precision + recall == 0.0 {
         0.0
     } else {
         2.0 * precision * recall / (precision + recall)
     };
-    Prf1 { precision, recall, f1 }
+    Prf1 {
+        precision,
+        recall,
+        f1,
+    }
 }
 
 #[cfg(test)]

@@ -52,7 +52,10 @@ impl SuffixVocab {
     /// Encode a word to its suffix id (UNK = 0 for unseen suffixes).
     pub fn encode_word(&self, word: &str) -> i32 {
         let suf = Self::suffix_of(word, self.k);
-        self.map.get(&suf).map(|&id| id as i32).unwrap_or(SUFFIX_UNK)
+        self.map
+            .get(&suf)
+            .map(|&id| id as i32)
+            .unwrap_or(SUFFIX_UNK)
     }
 
     pub fn to_json(&self) -> String {
@@ -79,12 +82,18 @@ mod tests {
     fn build_assigns_ids_unseen_is_unk() {
         let sents = vec![
             vec!["accuracy".to_string(), "privacy".to_string()], // both -acy
-            vec!["massive".to_string()],                          // -ive
+            vec!["massive".to_string()],                         // -ive
         ];
         let v = SuffixVocab::build(&sents, 3, 100);
         // "-acy" (2x) and "-ive" (1x) are real ids >= 1; unseen -> 0.
-        assert!(v.encode_word("intricacy") >= 1, "seen suffix -acy gets a real id");
-        assert!(v.encode_word("elusive") >= 1, "seen suffix -ive gets a real id");
+        assert!(
+            v.encode_word("intricacy") >= 1,
+            "seen suffix -acy gets a real id"
+        );
+        assert!(
+            v.encode_word("elusive") >= 1,
+            "seen suffix -ive gets a real id"
+        );
         assert_eq!(v.encode_word("xyzzq"), SUFFIX_UNK, "unseen suffix -> UNK");
         assert_eq!(v.len(), 3); // 1 reserved + {acy, ive}
     }

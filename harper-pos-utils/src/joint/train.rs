@@ -105,7 +105,8 @@ pub fn train_joint<B: AutodiffBackend>(
             let b = &batches[bi];
             let char_ids = b.char_ids::<B>(&device);
             let suffix_ids = b.suffix_ids::<B>(&device);
-            let (tag_logits, chunk_logits) = model.forward(char_ids, suffix_ids, b.batch, b.max_sent);
+            let (tag_logits, chunk_logits) =
+                model.forward(char_ids, suffix_ids, b.batch, b.max_sent);
 
             // Tag CE over flattened tokens; padded slots zeroed by pad_tokens.
             let flat_logits = tag_logits.reshape([b.batch * b.max_sent, TAG_CLASSES]);

@@ -96,7 +96,9 @@ mod tests {
         // new(char_vocab, char_dim, conv_channels, hidden, suffix_vocab, suffix_dim, device)
         let model = JointModel::<NdArray>::new(10, 8, 16, 12, 20, 4, &device);
         let (batch, max_sent, max_word) = (2usize, 3usize, 4usize);
-        let char_data: Vec<i32> = (0..(batch * max_sent * max_word) as i32).map(|x| x % 10).collect();
+        let char_data: Vec<i32> = (0..(batch * max_sent * max_word) as i32)
+            .map(|x| x % 10)
+            .collect();
         let char_ids = burn::tensor::Tensor::<NdArray, 1, burn::tensor::Int>::from_data(
             burn::tensor::TensorData::from(char_data.as_slice()),
             &device,

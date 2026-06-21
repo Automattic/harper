@@ -56,14 +56,14 @@ pub fn load_joint_from_bytes(
     cfg: &JointArch,
 ) -> (JointModel<NdArray>, CharVocab, SuffixVocab) {
     let device = NdArrayDevice::Cpu;
-    let vocab = CharVocab::from_json(vocab_json);
+    let char_vocab = CharVocab::from_json(vocab_json);
     let suffix_vocab = SuffixVocab::from_json(suffix_vocab_json);
     let recorder = NamedMpkBytesRecorder::<HalfPrecisionSettings>::new();
     let record = recorder
         .load(model_bytes.to_vec(), &device)
         .expect("load model record from bytes");
     let model = JointModel::<NdArray>::new(
-        vocab.len(),
+        char_vocab.len(),
         cfg.char_dim,
         cfg.conv_channels,
         cfg.hidden,
@@ -72,7 +72,7 @@ pub fn load_joint_from_bytes(
         &device,
     )
     .load_record(record);
-    (model, vocab, suffix_vocab)
+    (model, char_vocab, suffix_vocab)
 }
 
 use crate::joint::batch::JointBatch;
@@ -259,12 +259,12 @@ mod cache_tests {
     fn tagger_and_chunker_share_one_annotate() {
         let device = NdArrayDevice::Cpu;
         let sents = vec![vec!["the".to_string(), "dog".to_string()]];
-        let vocab = CharVocab::build(&sents);
+        let char_vocab = CharVocab::build(&sents);
         let suffix_vocab = SuffixVocab::build(&sents, 3, 100);
-        let model = JointModel::new(vocab.len(), 8, 16, 12, suffix_vocab.len(), 4, &device);
+        let model = JointModel::new(char_vocab.len(), 8, 16, 12, suffix_vocab.len(), 4, &device);
         let rt = Rc::new(JointRuntime::new(
             model,
-            vocab,
+            char_vocab,
             suffix_vocab,
             6,
             NonZeroUsize::new(8).unwrap(),
@@ -319,11 +319,11 @@ mod tests {
     fn save_then_load_preserves_forward() {
         let device = NdArrayDevice::Cpu;
         let sents = vec![vec!["hi".to_string(), "yo".to_string()]];
-        let vocab = CharVocab::build(&sents);
+        let char_vocab = CharVocab::build(&sents);
         let suffix_vocab = SuffixVocab::build(&sents, 3, 100);
         let a = arch();
         let model = JointModel::<NdArray>::new(
-            vocab.len(),
+            char_vocab.len(),
             a.char_dim,
             a.conv_channels,
             a.hidden,
@@ -333,7 +333,7 @@ mod tests {
         );
 
         let dir = std::env::temp_dir().join("harper_joint_roundtrip");
-        save_joint(&model, &vocab, &suffix_vocab, &dir, &a);
+        save_joint(&model, &char_vocab, &suffix_vocab, &dir, &a);
 
         let model_bytes = std::fs::read(dir.join("model.mpk")).unwrap();
         let vocab_json = std::fs::read_to_string(dir.join("char_vocab.json")).unwrap();

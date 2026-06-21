@@ -103,8 +103,9 @@ fn ensure_file(cache_dir: &Path, repo: &str, file: &str) -> PathBuf {
         return dest;
     }
     std::fs::create_dir_all(cache_dir).expect("create UD cache dir");
-    let url =
-        format!("https://raw.githubusercontent.com/UniversalDependencies/{repo}/{UD_BRANCH}/{file}");
+    let url = format!(
+        "https://raw.githubusercontent.com/UniversalDependencies/{repo}/{UD_BRANCH}/{file}"
+    );
     let part = cache_dir.join(format!("{file}.part"));
     eprintln!("  downloading: {url}");
     let status = Command::new("curl")
@@ -164,7 +165,7 @@ fn main() {
 
     let (dev_s, dev_t, dev_n) = extract_records_from_files(&[&dev_file]);
     // Build vocabs from the combined corpus so injected words/suffixes are in-vocab.
-    let vocab = CharVocab::build(&sents);
+    let char_vocab = CharVocab::build(&sents);
     let suffix_vocab = SuffixVocab::build(&sents, ARCH.suffix_k, SUFFIX_VOCAB_CAP);
 
     eprintln!(
@@ -175,7 +176,7 @@ fn main() {
     );
     eprintln!(
         "  char vocab:  {}  suffix vocab: {}",
-        vocab.len(),
+        char_vocab.len(),
         suffix_vocab.len()
     );
 
@@ -198,7 +199,12 @@ fn main() {
 
     eprintln!(
         "  arch: char_dim={} conv_channels={} hidden={} suffix_k={} suffix_dim={} max_word={}",
-        ARCH.char_dim, ARCH.conv_channels, ARCH.hidden, ARCH.suffix_k, ARCH.suffix_dim, ARCH.max_word
+        ARCH.char_dim,
+        ARCH.conv_channels,
+        ARCH.hidden,
+        ARCH.suffix_k,
+        ARCH.suffix_dim,
+        ARCH.max_word
     );
     eprintln!(
         "  training: epochs={} batch={} lr={} chunk_loss_weight={}",
@@ -210,7 +216,7 @@ fn main() {
         &sents,
         &tags,
         &np,
-        &vocab,
+        &char_vocab,
         &suffix_vocab,
         &cfg,
         device,
@@ -218,7 +224,7 @@ fn main() {
     eprintln!("trained in {:.1?}", t.elapsed());
 
     // Persist artifacts (model.mpk + char_vocab.json + suffix_vocab.json).
-    save_joint(&model, &vocab, &suffix_vocab, &out, &ARCH);
+    save_joint(&model, &char_vocab, &suffix_vocab, &out, &ARCH);
     eprintln!("wrote artifacts to {}", out.display());
 
     // Evaluate on dev via the CPU runtime (matches the production inference path).
