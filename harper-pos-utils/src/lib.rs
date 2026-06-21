@@ -1,6 +1,7 @@
 mod chunker;
 #[cfg(feature = "training")]
-mod conllu_utils;
+pub mod conllu_utils;
+pub mod joint;
 mod patch_criteria;
 mod tagger;
 mod upos;
