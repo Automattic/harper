@@ -61,15 +61,9 @@ impl FallRunAFoul {
 
 impl RigLinter for FallRunAFoul {
     fn match_to_lint(&self, rig_match: &RigMatch) -> Option<Lint> {
-        let (all_toks, src) = (rig_match.tokens, rig_match.source);
-
-        let Some(capture) = rig_match.captures.get(&0) else {
-            return None;
-        };
-
-        let span = capture.to_char_span(all_toks);
+        let span = rig_match.captures.get(&0)?.to_char_span(rig_match.tokens);
         const AFOUL: &str = "afoul";
-        let tmp = span.get_content(src);
+        let tmp = span.get_content(rig_match.source);
         let i: usize = (!tmp.starts_with_ignore_ascii_case_str("a")).into();
 
         Some(Lint {
