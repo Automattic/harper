@@ -21,7 +21,10 @@ where
             .t_ws()
             .then_kind_is_but_is_not(TokenKind::is_plural_nominal, TokenKind::is_singular_nominal)
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]))
+            // The head noun is often a noun/verb homograph ("song", "books",
+            // "shop") that the tagger ranks VERB#1, NOUN#2 in this OOD
+            // possessive-mistake frame — accept the plausible NOUN reading.
+            .then(UPOSSet::new_loose(&[UPOS::NOUN, UPOS::PROPN]))
             .then_optional(SequenceExpr::anything().t_any());
 
         let additional_req = SequenceExpr::anything().t_any().t_any().t_any().then_noun();
