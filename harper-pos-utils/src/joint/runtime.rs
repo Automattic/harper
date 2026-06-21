@@ -90,8 +90,9 @@ pub fn index_to_upos(class: usize) -> Option<UPOS> {
     UPOS::iter().find(|u| *u as usize == class)
 }
 
-/// Sentence (token list) -> cached `(tags, np)` annotation.
-type AnnotateCache = LruCache<Vec<String>, (Vec<Option<UPOS>>, Vec<bool>)>;
+/// Sentence (token list) -> cached annotation: argmax tags, plausible-tag
+/// (top-k) sets, and NP-membership flags — all derived from one forward pass.
+type AnnotateCache = LruCache<Vec<String>, (Vec<Option<UPOS>>, Vec<Vec<UPOS>>, Vec<bool>)>;
 
 pub struct JointRuntime {
     model: JointModel<NdArray>,
@@ -118,23 +119,38 @@ impl JointRuntime {
         }
     }
 
-    pub fn annotate(&self, sentence: &[String]) -> (Vec<Option<UPOS>>, Vec<bool>) {
+    /// One forward pass producing all three per-token outputs together —
+    /// argmax UPOS tags, the plausible-tag (top-k) sets, and NP-membership
+    /// flags — cached per sentence. Tagging, probability-aware top-k, and
+    /// chunking the same sentence therefore cost a single inference, not three
+    /// (the tag head feeds both the argmax and the softmax top-k).
+    fn infer(&self, sentence: &[String]) -> (Vec<Option<UPOS>>, Vec<Vec<UPOS>>, Vec<bool>) {
+        // Top-k floor, tuned against the lint suite: low enough to admit the
+        // correct rank-2 reading of an ambiguous homograph (observed as low as
+        // ~0.07), high enough that a confidently-tagged token stays a singleton.
+        const FLOOR: f32 = 0.05;
         if sentence.is_empty() {
-            return (Vec::new(), Vec::new());
+            return (Vec::new(), Vec::new(), Vec::new());
         }
-        let key: Vec<String> = sentence.to_vec();
+        // Look up by borrowed slice — `Vec<String>: Borrow<[String]>` and both
+        // hash identically, so a cache hit costs only the hash, no key clone.
+        // The owned key is allocated only on a miss (the `put` below).
         if let Ok(mut c) = self.cache.try_lock()
-            && let Some(hit) = c.get(&key)
+            && let Some(hit) = c.get(sentence)
         {
             return hit.clone();
         }
 
-        // One forward pass; batch = 1.
+        // Cache miss: one owned copy serves both the forward pass and the
+        // cache insert below.
+        let owned: Vec<String> = sentence.to_vec();
+
+        // A single forward pass (batch = 1) yields both heads.
         let device = NdArrayDevice::Cpu;
         let dummy_tags = vec![None; sentence.len()];
         let dummy_np = vec![false; sentence.len()];
         let b = JointBatch::build(
-            std::slice::from_ref(&key),
+            std::slice::from_ref(&owned),
             std::slice::from_ref(&dummy_tags),
             std::slice::from_ref(&dummy_np),
             &self.vocab,
@@ -145,82 +161,71 @@ impl JointRuntime {
             self.model
                 .forward(b.char_ids(&device), b.suffix_ids(&device), 1, b.max_sent);
 
-        // tag_logits: [1, max_sent, TAG_CLASSES]
-        // argmax(2) keeps the dim: [1, max_sent, 1] with dtype Int (i64).
-        let classes = tag_logits.argmax(2).into_data();
+        // tag_logits: [1, max_sent, TAG_CLASSES]. The tensor argmax (kept for
+        // identical tie-breaking) gives the tag; the raw logits also feed the
+        // per-token softmax for the top-k set.
+        let classes = tag_logits.clone().argmax(2).into_data();
         let class_vec: Vec<i64> = classes.iter::<i64>().collect();
+        let flat: Vec<f32> = tag_logits.into_data().iter::<f32>().collect();
         // chunk_logits: [1, max_sent]
-        let np_data = chunk_logits.into_data();
-        let np_vec: Vec<f32> = np_data.iter::<f32>().collect();
+        let np_vec: Vec<f32> = chunk_logits.into_data().iter::<f32>().collect();
 
         let n = sentence.len();
+        let tc = crate::joint::TAG_CLASSES;
         let mut tags = Vec::with_capacity(n);
+        let mut topk = Vec::with_capacity(n);
         let mut np = Vec::with_capacity(n);
         for i in 0..n {
-            tags.push(index_to_upos(class_vec[i] as usize));
+            let am = class_vec[i] as usize; // argmax class (== the chosen tag)
+            let am_tag = index_to_upos(am);
+            tags.push(am_tag);
+
+            let row = &flat[i * tc..(i + 1) * tc];
+            let max = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
+            let exps: Vec<f32> = row.iter().map(|x| (x - max).exp()).collect();
+            let sum: f32 = exps.iter().sum();
+            // Plausible-tag set with the argmax FIRST, then any runner-up that
+            // clears the floor. Argmax-first lets a caller read the top tag as
+            // `set[0]` (see the generic `annotate` in harper-core), keeping the
+            // chosen `pos_tag` and the `pos_tag_topk` set in lockstep.
+            let mut set: Vec<UPOS> = Vec::new();
+            if let Some(u) = am_tag {
+                set.push(u);
+            }
+            for (c, e) in exps.iter().enumerate() {
+                if c != am
+                    && e / sum >= FLOOR
+                    && let Some(u) = index_to_upos(c)
+                {
+                    set.push(u);
+                }
+            }
+            topk.push(set);
+
             np.push(np_vec[i] > 0.5);
         }
 
         if let Ok(mut c) = self.cache.try_lock() {
-            c.put(key, (tags.clone(), np.clone()));
+            c.put(owned, (tags.clone(), topk.clone(), np.clone()));
         }
+        (tags, topk, np)
+    }
+
+    /// Sentence -> (argmax tags, NP-membership flags). Backed by the shared,
+    /// cached single forward pass (see [`Self::infer`]).
+    pub fn annotate(&self, sentence: &[String]) -> (Vec<Option<UPOS>>, Vec<bool>) {
+        let (tags, _topk, np) = self.infer(sentence);
         (tags, np)
     }
 
     /// Per-token set of *plausible* POS tags: the argmax plus every tag whose
-    /// softmax probability clears `FLOOR`. Powers probability-aware linting — a
-    /// genuine homograph ("books" = NOUN or VERB; "right" = ADV or ADJ) keeps
+    /// softmax probability clears the floor. Powers probability-aware linting —
+    /// a genuine homograph ("books" = NOUN or VERB; "right" = ADV or ADJ) keeps
     /// both readings so a rule can match the one it needs rather than being
-    /// defeated by a hair-thin argmax.
+    /// defeated by a hair-thin argmax. Shares the cached forward pass with
+    /// [`Self::annotate`].
     pub fn tag_topk(&self, sentence: &[String]) -> Vec<Vec<UPOS>> {
-        // Tuned against the lint suite: low enough to admit the correct rank-2
-        // reading of an ambiguous homograph (observed as low as ~0.07), high
-        // enough that a confidently-tagged token stays a singleton set.
-        const FLOOR: f32 = 0.05;
-        if sentence.is_empty() {
-            return Vec::new();
-        }
-        let device = NdArrayDevice::Cpu;
-        let key: Vec<String> = sentence.to_vec();
-        let dummy_tags = vec![None; sentence.len()];
-        let dummy_np = vec![false; sentence.len()];
-        let b = JointBatch::build(
-            std::slice::from_ref(&key),
-            std::slice::from_ref(&dummy_tags),
-            std::slice::from_ref(&dummy_np),
-            &self.vocab,
-            &self.suffix_vocab,
-            self.max_word,
-        );
-        let (tag_logits, _) =
-            self.model
-                .forward(b.char_ids(&device), b.suffix_ids(&device), 1, b.max_sent);
-        let flat: Vec<f32> = tag_logits.into_data().iter::<f32>().collect(); // [max_sent * TAG_CLASSES]
-
-        let n = sentence.len();
-        let mut out = Vec::with_capacity(n);
-        for i in 0..n {
-            let row = &flat[i * crate::joint::TAG_CLASSES..(i + 1) * crate::joint::TAG_CLASSES];
-            let max = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
-            let exps: Vec<f32> = row.iter().map(|x| (x - max).exp()).collect();
-            let sum: f32 = exps.iter().sum();
-            let argmax = exps
-                .iter()
-                .enumerate()
-                .max_by(|a, b| a.1.partial_cmp(b.1).unwrap())
-                .map(|(c, _)| c)
-                .unwrap_or(0);
-            let mut tags: Vec<UPOS> = Vec::new();
-            for (c, e) in exps.iter().enumerate() {
-                if (c == argmax || e / sum >= FLOOR)
-                    && let Some(u) = index_to_upos(c)
-                {
-                    tags.push(u);
-                }
-            }
-            out.push(tags);
-        }
-        out
+        self.infer(sentence).1
     }
 }
 
