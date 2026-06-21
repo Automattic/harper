@@ -2346,6 +2346,13 @@
 								"state": true,
 								"label": "Wok Verb Typo"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CrossPlatform",
+								"state": true,
+								"label": "Cross Platform"
+							}
 						}
 					]
 				}
@@ -2782,6 +2789,13 @@
 								"name": "TheTheToThatThe",
 								"state": true,
 								"label": "The The To That The"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hazzle",
+								"state": true,
+								"label": "Hazzle"
 							}
 						}
 					]
@@ -5171,6 +5185,13 @@
 								"name": "LeavingInDroves",
 								"state": true,
 								"label": "Leaving In Droves"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AndSuch",
+								"state": true,
+								"label": "And Such"
 							}
 						},
 						{
