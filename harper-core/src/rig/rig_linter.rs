@@ -69,34 +69,24 @@ where
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::Document;
-    use crate::linting::LintKind;
-    use crate::linting::Linter;
-    use crate::rig::{Atom, CaptureGroup, Concat};
+    use crate::{
+        Document,
+        linting::{LintKind, Linter},
+        rig::{Atom, CaptureGroup, Concat},
+    };
 
     struct TestRigLinter {
-        pattern: Box<dyn RegexNode>,
+        rig: Box<dyn RegexNode>,
     }
 
     impl RigLinter for TestRigLinter {
         fn pattern(&self) -> &dyn RegexNode {
-            self.pattern.as_ref()
+            self.rig.as_ref()
         }
 
         fn match_to_lint(&self, rig_match: &RigMatch) -> Option<Lint> {
-            // Convert token span to character span
-            let char_span = if rig_match.span.start < rig_match.tokens.len() {
-                let start_char = rig_match.tokens[rig_match.span.start].span.start;
-                let end_char = rig_match.tokens[rig_match.span.end.saturating_sub(1)]
-                    .span
-                    .end;
-                crate::Span::new(start_char, end_char)
-            } else {
-                crate::Span::new(0, 0)
-            };
-
             Some(Lint {
-                span: char_span,
+                span: rig_match.span.to_char_span(rig_match.tokens),
                 lint_kind: LintKind::Miscellaneous,
                 message: "Test match".to_string(),
                 suggestions: vec![],
@@ -123,7 +113,7 @@ mod tests {
     #[test]
     fn test_rig_linter_basic() {
         let pattern = Box::new(Atom::word("hello"));
-        let mut linter = TestRigLinter { pattern };
+        let mut linter = TestRigLinter { rig: pattern };
 
         let doc = Document::new_plain_english_curated("hello world");
         let lints = linter.lint(&doc);
@@ -134,7 +124,7 @@ mod tests {
     #[test]
     fn test_rig_linter_with_capture() {
         let pattern = Box::new(CaptureGroup::new(0, Box::new(Atom::word("hello"))));
-        let mut linter = TestRigLinter { pattern };
+        let mut linter = TestRigLinter { rig: pattern };
 
         let doc = Document::new_plain_english_curated("hello world");
         let lints = linter.lint(&doc);
@@ -148,7 +138,7 @@ mod tests {
             Box::new(Atom::any()),
             Box::new(Atom::any()),
         ]));
-        let mut linter = TestRigLinter { pattern };
+        let mut linter = TestRigLinter { rig: pattern };
 
         let doc = Document::new_plain_english_curated("hello world");
         let lints = linter.lint(&doc);
