@@ -11,9 +11,7 @@ pub struct NoLonger {
 impl Default for NoLonger {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("not")
-                .t_ws()
-                .t_aco("longer")
+            expr: SequenceExpr::word_seq(&["not", "longer"])
                 .then_optional(SequenceExpr::default().t_ws().then_kind_any(
                     &[
                         TokenKind::is_verb_lemma,
