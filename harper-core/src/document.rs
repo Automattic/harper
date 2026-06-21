@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, brill_tagger, burn_chunker};
+use harper_brill::{brill_tagger, burn_chunker};
 use itertools::Itertools;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
@@ -186,6 +186,9 @@ impl Document {
                 .collect();
 
             let token_tags = tagger.tag_sentence(&token_strings);
+            // Plausible-tag sets for probability-aware linting (argmax + close
+            // runner-ups); empty for taggers without a probability distribution.
+            let token_topk = tagger.tag_sentence_topk(&token_strings);
             let np_flags = chunker.chunk_sentence(&token_strings, &token_tags);
 
             // Annotate DictWord metadata
@@ -206,6 +209,9 @@ impl Document {
 
                     if let Some(inner) = &mut found_meta {
                         inner.pos_tag = token_tags[ti].or_else(|| inner.infer_pos_tag());
+                        if let Some(topk) = token_topk.get(ti) {
+                            inner.pos_tag_topk = topk.iter().copied().collect();
+                        }
                         inner.np_member = Some(np_flags[ti]);
                     }
 

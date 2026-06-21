@@ -380,6 +380,18 @@ impl TokenKind {
         meta.pos_tag == Some(upos)
     }
 
+    /// Probability-aware counterpart to [`TokenKind::is_upos`]: true if `upos` is
+    /// a *plausible* reading of this token (the argmax or a close runner-up the
+    /// tagger kept in `pos_tag_topk`). Use in linters whose slot is a genuine
+    /// homograph the tagger can only rank, not resolve, from the error context.
+    pub fn could_be_upos(&self, upos: UPOS) -> bool {
+        let Some(Some(meta)) = self.as_word() else {
+            return false;
+        };
+
+        meta.could_be_pos(upos)
+    }
+
     // Miscellaneous non-is methods
 
     /// Checks that `self` is the same enum variant as `other`, regardless of
