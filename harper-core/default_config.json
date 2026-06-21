@@ -5179,6 +5179,13 @@
 								"state": true,
 								"label": "Run Into Problems / Trouble"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InDueCourse",
+								"state": true,
+								"label": "In Due Course"
+							}
 						}
 					]
 				}
