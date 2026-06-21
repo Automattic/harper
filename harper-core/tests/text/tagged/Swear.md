@@ -1,17 +1,17 @@
 >              Swears
-# HeadingStart NPl/V3
+# HeadingStart NPl/V3+
 >
 #
-> This    documents tests   that     different forms   / variations of swears are tagged as    such  .
-# I/Ddem+ NPl/V3+   NPl/V3+ I/C/Ddem NSg/J+    NPl/V3+ . NPl        P  NPl/V3 VLB VP/J   R/C/P NSg/I .
+> This    documents tests  that     different forms  / variations of swears  are tagged as    such  .
+# I/Ddem+ NPl/V3+   NPl/V3 I/C/Ddem NSg/J     NPl/V3 . NPl        P  NPl/V3+ VLB VP/J   R/C/P NSg/I .
 >
 #
 >              Examples
 # HeadingStart NPl/V3+
 >
 #
-> One      turd      , two turds    .
-# NSg/I/J+ NSg/VB+/B . NSg NPl/V3/B .
+> One      turd      , two  turds     .
+# NSg/I/J+ NSg/VB+/B . NSg+ NPl/V3+/B .
 >
 #
 > I       fart     , you're farting   , he       farts    , she  farted .
