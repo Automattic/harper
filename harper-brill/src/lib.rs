@@ -3,7 +3,8 @@ use std::rc::Rc;
 
 use harper_pos_utils::joint::runtime::{JointArch, JointRuntime, load_joint_from_bytes};
 pub use harper_pos_utils::{
-    BrillChunker, BrillTagger, BurnChunkerCpu, CachedChunker, Chunker, FreqDict, Tagger, UPOS,
+    Annotator, BrillChunker, BrillTagger, BurnChunkerCpu, CachedChunker, Chunker, FreqDict, TagSet,
+    Tagger, UPOS,
 };
 
 // The English part-of-speech tagger and noun-phrase chunker are now a single
@@ -53,6 +54,15 @@ pub fn brill_tagger() -> Rc<dyn Tagger> {
 /// same joint model as [`brill_tagger`]; one instance per thread, memoized.
 pub fn burn_chunker() -> Rc<dyn Chunker> {
     JOINT.with(|j| j.clone() as Rc<dyn Chunker>)
+}
+
+/// Get the shared English [`Annotator`] — the joint model exposed as a single
+/// tagging-plus-chunking lookup. Prefer this over pairing [`brill_tagger`] with
+/// [`burn_chunker`] when you need both: it returns the argmax tags, the
+/// plausible-tag (top-k) sets, and NP flags from one cached forward pass. One
+/// instance per thread, memoized.
+pub fn annotator() -> Rc<dyn Annotator> {
+    JOINT.with(|j| j.clone() as Rc<dyn Annotator>)
 }
 
 #[cfg(test)]

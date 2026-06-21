@@ -2,7 +2,7 @@ use std::cmp::Ordering;
 use std::collections::VecDeque;
 use std::fmt::Display;
 
-use harper_brill::{Chunker, Tagger, UPOS, brill_tagger, burn_chunker};
+use harper_brill::{Annotator, TagSet, annotator};
 use itertools::Itertools;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
@@ -16,20 +16,15 @@ use crate::{OrdinalSuffix, Span};
 /// Per-token annotation of a sentence: the plausible POS-tag sets (most-likely
 /// tag first) and noun-phrase membership flags.
 struct Annotation {
-    tags: Vec<Vec<UPOS>>,
+    tags: Vec<TagSet>,
     np: Vec<bool>,
 }
 
-/// Annotate one sentence with a tagger and a chunker, returning the
-/// plausible-tag sets and NP flags together. Generic over any [`Tagger`] /
-/// [`Chunker`]: when both are backed by the same joint model (as for English)
-/// the two calls share its cached single forward pass; when they are separate
-/// models (e.g. a Brill tagger + a Burn chunker) they run independently. The
-/// most-likely tag of token `i` is `tags[i].first()`.
-fn annotate(tagger: &dyn Tagger, chunker: &dyn Chunker, sentence: &[String]) -> Annotation {
-    let tags = tagger.tag_sentence_topk(sentence);
-    let argmax: Vec<Option<UPOS>> = tags.iter().map(|set| set.first().copied()).collect();
-    let np = chunker.chunk_sentence(sentence, &argmax);
+/// Annotate one sentence with an [`Annotator`], returning the plausible-tag sets
+/// and NP flags together. For the joint English model both come from a single
+/// cached forward pass; the most-likely tag of token `i` is `tags[i].first()`.
+fn annotate(annotator: &dyn Annotator, sentence: &[String]) -> Annotation {
+    let (tags, np) = annotator.annotate(sentence);
     Annotation { tags, np }
 }
 
@@ -195,8 +190,7 @@ impl Document {
     fn parse(&mut self, dictionary: &impl Dictionary) {
         self.apply_fixups();
 
-        let chunker = burn_chunker();
-        let tagger = brill_tagger();
+        let annotator = annotator();
 
         for sent in self.tokens.iter_sentences_mut() {
             let token_strings: Vec<_> = sent
@@ -205,10 +199,9 @@ impl Document {
                 .map(|t| t.get_str(&self.source))
                 .collect();
 
-            // One annotation pass yields the plausible-tag sets (for
-            // probability-aware linting) and the NP flags; the most-likely tag
-            // is the first of each set.
-            let annotation = annotate(tagger.as_ref(), chunker.as_ref(), &token_strings);
+            // One annotation pass yields the most-likely tags, the plausible-tag
+            // sets (for probability-aware linting), and the NP flags.
+            let annotation = annotate(annotator.as_ref(), &token_strings);
 
             // Annotate DictWord metadata
             let word_sources: Vec<_> = sent
@@ -227,11 +220,14 @@ impl Document {
                         .map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {
+                        // Most-likely tag is the first of the plausible-tag set;
+                        // the set itself is `pos_tag_topk` (same `TagSet` type, so
+                        // it moves in without re-collecting).
                         inner.pos_tag = annotation.tags[ti]
                             .first()
                             .copied()
                             .or_else(|| inner.infer_pos_tag());
-                        inner.pos_tag_topk = annotation.tags[ti].iter().copied().collect();
+                        inner.pos_tag_topk = annotation.tags[ti].clone();
                         inner.np_member = Some(annotation.np[ti]);
                     }
 

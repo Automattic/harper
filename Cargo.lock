@@ -4383,6 +4383,7 @@ dependencies = [
  "rs-conllu",
  "serde",
  "serde_json",
+ "smallvec",
  "strum 0.28.0",
  "strum_macros 0.28.0",
 ]

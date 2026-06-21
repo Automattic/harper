@@ -75,8 +75,9 @@ pub fn load_joint_from_bytes(
     (model, char_vocab, suffix_vocab)
 }
 
+use crate::annotator::TagSet;
 use crate::joint::batch::JointBatch;
-use crate::{Chunker, Tagger, UPOS};
+use crate::{Annotator, Chunker, Tagger, UPOS};
 use lru::LruCache;
 use std::num::NonZeroUsize;
 use std::sync::Mutex;
@@ -90,9 +91,9 @@ pub fn index_to_upos(class: usize) -> Option<UPOS> {
     UPOS::iter().find(|u| *u as usize == class)
 }
 
-/// Sentence (token list) -> cached annotation: argmax tags, plausible-tag
-/// (top-k) sets, and NP-membership flags — all derived from one forward pass.
-type AnnotateCache = LruCache<Vec<String>, (Vec<Option<UPOS>>, Vec<Vec<UPOS>>, Vec<bool>)>;
+/// Sentence (token list) -> cached annotation: per-token plausible-tag sets
+/// (argmax first) and NP-membership flags — both derived from one forward pass.
+type AnnotateCache = LruCache<Vec<String>, (Vec<TagSet>, Vec<bool>)>;
 
 pub struct JointRuntime {
     model: JointModel<NdArray>,
@@ -119,18 +120,19 @@ impl JointRuntime {
         }
     }
 
-    /// One forward pass producing all three per-token outputs together —
-    /// argmax UPOS tags, the plausible-tag (top-k) sets, and NP-membership
-    /// flags — cached per sentence. Tagging, probability-aware top-k, and
-    /// chunking the same sentence therefore cost a single inference, not three
-    /// (the tag head feeds both the argmax and the softmax top-k).
-    fn infer(&self, sentence: &[String]) -> (Vec<Option<UPOS>>, Vec<Vec<UPOS>>, Vec<bool>) {
+    /// One forward pass producing both per-token outputs together — the
+    /// plausible-tag (top-k) sets (argmax first) and NP-membership flags —
+    /// cached per sentence. Tagging, probability-aware top-k, and chunking the
+    /// same sentence therefore cost a single inference, not three (the tag head
+    /// feeds both the argmax and the softmax top-k; the most-likely tag is the
+    /// first element of each set).
+    fn infer(&self, sentence: &[String]) -> (Vec<TagSet>, Vec<bool>) {
         // Top-k floor, tuned against the lint suite: low enough to admit the
         // correct rank-2 reading of an ambiguous homograph (observed as low as
         // ~0.07), high enough that a confidently-tagged token stays a singleton.
         const FLOOR: f32 = 0.05;
         if sentence.is_empty() {
-            return (Vec::new(), Vec::new(), Vec::new());
+            return (Vec::new(), Vec::new());
         }
         // Look up by borrowed slice — `Vec<String>: Borrow<[String]>` and both
         // hash identically, so a cache hit costs only the hash, no key clone.
@@ -172,24 +174,22 @@ impl JointRuntime {
 
         let n = sentence.len();
         let tc = crate::joint::TAG_CLASSES;
-        let mut tags = Vec::with_capacity(n);
-        let mut topk = Vec::with_capacity(n);
+        let mut topk: Vec<TagSet> = Vec::with_capacity(n);
         let mut np = Vec::with_capacity(n);
         for i in 0..n {
             let am = class_vec[i] as usize; // argmax class (== the chosen tag)
-            let am_tag = index_to_upos(am);
-            tags.push(am_tag);
 
             let row = &flat[i * tc..(i + 1) * tc];
             let max = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
             let exps: Vec<f32> = row.iter().map(|x| (x - max).exp()).collect();
             let sum: f32 = exps.iter().sum();
             // Plausible-tag set with the argmax FIRST, then any runner-up that
-            // clears the floor. Argmax-first lets a caller read the top tag as
-            // `set[0]` (see the generic `annotate` in harper-core), keeping the
-            // chosen `pos_tag` and the `pos_tag_topk` set in lockstep.
-            let mut set: Vec<UPOS> = Vec::new();
-            if let Some(u) = am_tag {
+            // clears the floor. Argmax-first lets a caller read the most-likely
+            // tag as `set.first()`. A `SmallVec` keeps the common 1-3 tag set
+            // inline (no heap allocation) and matches harper-core's
+            // `pos_tag_topk` type, so it flows in without re-collecting.
+            let mut set = TagSet::new();
+            if let Some(u) = index_to_upos(am) {
                 set.push(u);
             }
             for (c, e) in exps.iter().enumerate() {
@@ -206,41 +206,36 @@ impl JointRuntime {
         }
 
         if let Ok(mut c) = self.cache.try_lock() {
-            c.put(owned, (tags.clone(), topk.clone(), np.clone()));
+            c.put(owned, (topk.clone(), np.clone()));
         }
-        (tags, topk, np)
-    }
-
-    /// Sentence -> (argmax tags, NP-membership flags). Backed by the shared,
-    /// cached single forward pass (see [`Self::infer`]).
-    pub fn annotate(&self, sentence: &[String]) -> (Vec<Option<UPOS>>, Vec<bool>) {
-        let (tags, _topk, np) = self.infer(sentence);
-        (tags, np)
-    }
-
-    /// Per-token set of *plausible* POS tags: the argmax plus every tag whose
-    /// softmax probability clears the floor. Powers probability-aware linting —
-    /// a genuine homograph ("books" = NOUN or VERB; "right" = ADV or ADJ) keeps
-    /// both readings so a rule can match the one it needs rather than being
-    /// defeated by a hair-thin argmax. Shares the cached forward pass with
-    /// [`Self::annotate`].
-    pub fn tag_topk(&self, sentence: &[String]) -> Vec<Vec<UPOS>> {
-        self.infer(sentence).1
+        (topk, np)
     }
 }
 
+/// The joint model is a unified annotator: the plausible-tag sets and NP flags
+/// both come from one cached forward pass ([`Self::infer`]).
+impl Annotator for JointRuntime {
+    fn annotate(&self, sentence: &[String]) -> (Vec<TagSet>, Vec<bool>) {
+        self.infer(sentence)
+    }
+}
+
+// `Tagger` and `Chunker` remain implemented so the legacy `brill_tagger()` /
+// `burn_chunker()` accessors keep working; both just read the shared `infer`.
 impl Chunker for JointRuntime {
     fn chunk_sentence(&self, sentence: &[String], _tags: &[Option<UPOS>]) -> Vec<bool> {
-        self.annotate(sentence).1
+        self.infer(sentence).1
     }
 }
 
 impl Tagger for JointRuntime {
     fn tag_sentence(&self, sentence: &[String]) -> Vec<Option<UPOS>> {
-        self.annotate(sentence).0
-    }
-    fn tag_sentence_topk(&self, sentence: &[String]) -> Vec<Vec<UPOS>> {
-        self.tag_topk(sentence)
+        // The most-likely tag is the first of each plausible-tag set.
+        self.infer(sentence)
+            .0
+            .iter()
+            .map(|set| set.first().copied())
+            .collect()
     }
 }
 
@@ -250,7 +245,7 @@ mod cache_tests {
     use crate::joint::char_vocab::CharVocab;
     use crate::joint::model::JointModel;
     use crate::joint::suffix_vocab::SuffixVocab;
-    use crate::{Chunker, Tagger};
+    use crate::{Annotator, Chunker, Tagger};
     use burn_ndarray::NdArrayDevice;
     use std::num::NonZeroUsize;
     use std::rc::Rc;
@@ -271,16 +266,21 @@ mod cache_tests {
         ));
 
         let sentence = vec!["the".to_string(), "dog".to_string()];
-        // JointRuntime implements both traits directly.
+        // Tagger, Chunker, and the unified Annotator all read the same cached
+        // forward pass, so their views agree.
         let tags = Tagger::tag_sentence(&*rt, &sentence);
         let np = Chunker::chunk_sentence(&*rt, &sentence, &tags);
 
         assert_eq!(tags.len(), 2);
         assert_eq!(np.len(), 2);
-        // annotate() is deterministic; calling again returns identical vectors.
-        let (t2, n2) = rt.annotate(&sentence);
-        assert_eq!(tags, t2);
-        assert_eq!(np, n2);
+        // The unified Annotator returns the same NP flags as the Chunker view,
+        // and its tag sets lead with the Tagger's argmax (all read one cached
+        // pass).
+        let (a_sets, a_np) = Annotator::annotate(&*rt, &sentence);
+        assert_eq!(np, a_np);
+        assert_eq!(a_sets.len(), 2);
+        let argmax: Vec<_> = a_sets.iter().map(|s| s.first().copied()).collect();
+        assert_eq!(tags, argmax);
     }
 
     #[test]

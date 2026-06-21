@@ -31,6 +31,7 @@ use burn::backend::wgpu::graphics::Metal;
 use burn::backend::wgpu::{WgpuDevice, init_setup};
 use burn::backend::{Autodiff, wgpu::Wgpu};
 
+use harper_pos_utils::Annotator;
 use harper_pos_utils::UPOS;
 use harper_pos_utils::conllu_utils::extract_records_from_files;
 use harper_pos_utils::joint::char_vocab::CharVocab;
@@ -244,7 +245,16 @@ fn main() {
         NonZeroUsize::new(10_000).unwrap(),
     ));
 
-    let pred_tags: Vec<Vec<Option<UPOS>>> = dev_s.iter().map(|s| rt.annotate(s).0).collect();
+    let pred_tags: Vec<Vec<Option<UPOS>>> = dev_s
+        .iter()
+        .map(|s| {
+            rt.annotate(s)
+                .0
+                .iter()
+                .map(|set| set.first().copied())
+                .collect()
+        })
+        .collect();
     let pred_np: Vec<Vec<bool>> = dev_s.iter().map(|s| rt.annotate(s).1).collect();
 
     let acc = upos_accuracy(&pred_tags, &dev_t);

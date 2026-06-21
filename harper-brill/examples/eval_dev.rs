@@ -5,6 +5,7 @@
 use std::num::NonZeroUsize;
 use std::path::PathBuf;
 
+use harper_pos_utils::Annotator;
 use harper_pos_utils::joint::runtime::{JointArch, JointRuntime, load_joint_from_bytes};
 
 const ARCH: JointArch = JointArch {
@@ -84,7 +85,9 @@ fn main() {
 
     for sent in &sents {
         let toks: Vec<String> = sent.iter().map(|(f, _)| f.clone()).collect();
-        let (pred, _np) = rt.annotate(&toks);
+        // Most-likely tag per token = first of each plausible-tag set.
+        let (sets, _np) = rt.annotate(&toks);
+        let pred: Vec<Option<_>> = sets.iter().map(|s| s.first().copied()).collect();
         for wi in 0..toks.len() {
             let gold = &sent[wi].1;
             // skip tags our 16-variant enum can't represent (e.g. "X")

@@ -1,3 +1,4 @@
+mod annotator;
 mod chunker;
 #[cfg(feature = "training")]
 pub mod conllu_utils;
@@ -8,6 +9,7 @@ mod upos;
 #[cfg(feature = "training")]
 mod word_counter;
 
+pub use annotator::{Annotator, TagSet};
 pub use chunker::{
     BrillChunker, BurnChunker, BurnChunkerCpu, CachedChunker, Chunker, UPOSFreqDict,
 };
