@@ -37,7 +37,7 @@ impl ExprLinter for MostOfTheTimes {
                 "time".chars().collect(),
                 span.get_content(src),
             )],
-            message: "Singular `time` is usually the correct form in this context.".to_string(),
+            message: "Singular `time` is usually the correct form in this context.".to_owned(),
             priority: 32,
         })
     }

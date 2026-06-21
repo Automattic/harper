@@ -6,9 +6,9 @@ use accessibility_sys::{
     AXUIElementCopyParameterizedAttributeValue, AXUIElementGetPid, AXUIElementSetAttributeValue,
     AXValueCreate, AXValueGetType, AXValueGetValue, AXValueRef, error_string,
     kAXBoundsForRangeParameterizedAttribute, kAXErrorAttributeUnsupported, kAXErrorIllegalArgument,
-    kAXErrorNoValue, kAXErrorParameterizedAttributeUnsupported, kAXErrorSuccess,
-    kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt, kAXValueTypeCFRange,
-    kAXValueTypeCGRect, pid_t,
+    kAXErrorNoValue, kAXErrorNotImplemented, kAXErrorParameterizedAttributeUnsupported,
+    kAXErrorSuccess, kAXFocusedApplicationAttribute, kAXTrustedCheckOptionPrompt,
+    kAXValueTypeCFRange, kAXValueTypeCGRect, pid_t,
 };
 use core::{ffi::c_void, mem::MaybeUninit};
 use core_foundation::array::CFArray;
@@ -38,7 +38,7 @@ use std::{
 };
 
 use crate::config::{Config, Integration};
-use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
+use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
@@ -251,8 +251,7 @@ impl MacBroker {
         match set_enhanced_user_interface_preserving_previous(app, true) {
             Ok(enhanced_user_interface_restore_value) => {
                 eprintln!(
-                    "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; waiting for {} debounce",
-                    "Chromium"
+                    "Requested AXEnhancedUserInterface for {bundle_id} pid {pid}; waiting for Chromium debounce"
                 );
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
@@ -268,13 +267,16 @@ impl MacBroker {
             }
             Err(error) if is_unsupported_accessibility_activation_error(error) => {
                 eprintln!(
-                    "AXEnhancedUserInterface unsupported for {bundle_id} pid {pid}: {}",
+                    "AXEnhancedUserInterface unsupported for {bundle_id} pid {pid}: {}; proceeding to verification",
                     error_string(error)
                 );
                 self.accessibility_activation = Some(AccessibilityActivationState {
                     pid,
                     bundle_id: bundle_id.to_string(),
-                    status: AccessibilityActivationStatus::RetryLater,
+                    status: AccessibilityActivationStatus::Pending {
+                        ready_at: now,
+                        verification_attempts: 0,
+                    },
                     last_attempted_at: now,
                     enhanced_user_interface_restore_value: None,
                 });
@@ -415,6 +417,103 @@ impl OsBroker for MacBroker {
 
         Ok(())
     }
+
+    fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
+        let query = query.trim();
+
+        if query.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        // Search for apps by display name using mdfind
+        // Use case-insensitive search and ensure we only get .app bundles
+        let escaped_query = query.replace('\\', "\\\\").replace('"', "\\\"");
+        let output = Command::new("mdfind")
+            .arg(format!(
+                "kMDItemContentType == 'com.apple.application-bundle' && kMDItemDisplayName == '*{escaped_query}*'cd"
+            ))
+            .output()
+            .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
+
+        if !output.status.success() {
+            return Err(format!(
+                "mdfind failed: {}",
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+
+        let mut results = Vec::new();
+        let mut seen_bundle_ids = std::collections::HashSet::new();
+
+        for line in String::from_utf8_lossy(&output.stdout).lines() {
+            let line = line.trim();
+
+            // Skip if not an .app bundle
+            if !line.ends_with(".app") {
+                continue;
+            }
+
+            if let Some(display_name) = display_name_from_app_path(line) {
+                // Skip if display name looks like a bundle ID (contains dots)
+                if display_name.contains('.') {
+                    continue;
+                }
+
+                if let Some(bundle_id) = bundle_id_from_app_path(line) {
+                    // Skip if we've already seen this bundle ID (deduplication)
+                    if seen_bundle_ids.contains(&bundle_id) {
+                        continue;
+                    }
+
+                    // Skip if bundle ID looks like a path or is invalid
+                    if bundle_id.contains('/') || bundle_id.is_empty() {
+                        continue;
+                    }
+
+                    seen_bundle_ids.insert(bundle_id.clone());
+                    results.push(AppSearchResult {
+                        name: display_name,
+                        bundle_id,
+                    });
+                }
+            }
+        }
+
+        Ok(results)
+    }
+}
+
+fn bundle_id_from_app_path(path: &str) -> Option<String> {
+    let output = Command::new("mdls")
+        .arg("-name")
+        .arg("kMDItemCFBundleIdentifier")
+        .arg(path)
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    let output = String::from_utf8_lossy(&output.stdout);
+
+    // Parse the output from mdls which looks like:
+    // kMDItemCFBundleIdentifier = "com.example.app"
+    let bundle_id = output
+        .lines()
+        .find(|line| line.contains("kMDItemCFBundleIdentifier"))
+        .and_then(|line| {
+            line.split('=')
+                .nth(1)
+                .map(|s| s.trim().trim_matches('"').to_string())
+        })?;
+
+    // Filter out null or empty bundle IDs
+    if bundle_id.is_empty() || bundle_id == "(null)" || bundle_id == "null" {
+        return None;
+    }
+
+    Some(bundle_id)
 }
 
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {
@@ -529,7 +628,9 @@ fn release_accessibility_activation(state: &AccessibilityActivationState) {
 
 /// Returns whether an AX error means the target does not support this attribute.
 fn is_unsupported_accessibility_activation_error(error: i32) -> bool {
-    error == kAXErrorAttributeUnsupported || error == kAXErrorNoValue
+    error == kAXErrorAttributeUnsupported
+        || error == kAXErrorNoValue
+        || error == kAXErrorNotImplemented
 }
 
 /// Sets `AXEnhancedUserInterface` while returning its old value when readable.
@@ -537,7 +638,23 @@ fn set_enhanced_user_interface_preserving_previous(
     app: &AXUIElement,
     enabled: bool,
 ) -> Result<Option<bool>, i32> {
-    set_boolean_attribute_preserving_previous(app, "AXEnhancedUserInterface", enabled)
+    match set_boolean_attribute_preserving_previous(app, "AXEnhancedUserInterface", enabled) {
+        Ok(previous) => Ok(previous),
+        Err(error) => {
+            // Some apps (notably Electron/Chromium ones such as Slack) reject
+            // `AXEnhancedUserInterface` (e.g. with kAXErrorNotImplemented) but
+            // support the Electron-specific `AXManualAccessibility` attribute to
+            // enable their accessibility tree. Fall back to it. No restore value
+            // is preserved because restoration targets `AXEnhancedUserInterface`.
+            match set_boolean_attribute(app, "AXManualAccessibility", enabled) {
+                Ok(()) => {
+                    eprintln!("Activated accessibility via AXManualAccessibility fallback");
+                    Ok(None)
+                }
+                Err(_) => Err(error),
+            }
+        }
+    }
 }
 
 /// Restores a boolean AX attribute if a previous value was captured.
@@ -905,13 +1022,14 @@ impl TreeVisitor for AccessibilityActivationProbe {
             self.found_supported_text_element.set(true);
 
             let string = cf_type_to_string(&value).unwrap_or_default();
-            let bounds = if string.is_empty() {
-                TextRangeBoundsProbe::Unavailable
+            let bounds_usable = if string.is_empty() {
+                false
             } else {
-                probe_element_rect_for_text_range(element, 0, 1)
+                probe_element_rect_for_text_range(element, 0, 1).has_usable_text_metrics()
+                    || element_rect_for_text_range_with_fallback(element, &string, 0, 1).is_some()
             };
 
-            if bounds.has_usable_text_metrics() {
+            if bounds_usable {
                 self.found_text_range_bounds.set(true);
                 return TreeWalkerFlow::Exit;
             }
@@ -941,10 +1059,11 @@ impl TreeVisitor for RectCollector<'_> {
 
             for (rule_name, lints) in organized_lints {
                 for lint in lints {
-                    if let Ok(Some(rect)) = element_rect_for_text_range(
+                    if let Some(rect) = element_rect_for_text_range_with_fallback(
                         element,
-                        lint.span.start as isize,
-                        lint.span.len() as isize,
+                        &string,
+                        lint.span.start,
+                        lint.span.len(),
                     ) {
                         let element = element.clone();
                         let source_text = string.clone();
@@ -1018,6 +1137,101 @@ fn is_supported_text_role(role: &str) -> bool {
     matches!(role, "AXTextArea" | "AXTextField")
 }
 
+/// Collects `AXStaticText` descendants with their string values.
+///
+/// Chromium-based apps (e.g. Slack) report degenerate `AXBoundsForRange`
+/// rects on the editable `AXTextArea` wrapper but expose usable bounds on the
+/// `AXStaticText` leaf nodes inside it.
+struct StaticTextCollector {
+    texts: RefCell<Vec<(AXUIElement, String)>>,
+}
+
+impl StaticTextCollector {
+    fn new() -> Self {
+        Self {
+            texts: RefCell::new(Vec::new()),
+        }
+    }
+
+    fn into_texts(self) -> Vec<(AXUIElement, String)> {
+        self.texts.into_inner()
+    }
+}
+
+impl TreeVisitor for StaticTextCollector {
+    fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
+        if let Ok(role) = element.role()
+            && role == "AXStaticText"
+            && let Ok(value) = element.value()
+            && let Some(string) = cf_type_to_string(&value)
+            && !string.is_empty()
+        {
+            self.texts.borrow_mut().push((element.clone(), string));
+        }
+
+        TreeWalkerFlow::Continue
+    }
+
+    fn exit_element(&self, _element: &AXUIElement) {}
+}
+
+/// Finds `needle` within `haystack` starting at char offset `from`.
+fn find_char_subslice(haystack: &[char], needle: &[char], from: usize) -> Option<usize> {
+    if needle.is_empty() || haystack.len() < needle.len() {
+        return None;
+    }
+
+    let end = haystack.len() - needle.len();
+    (from..=end).find(|&i| haystack[i..i + needle.len()] == *needle)
+}
+
+/// Resolves text-range bounds, falling back to `AXStaticText` descendants
+/// when the element itself reports unusable bounds (Chromium-based apps).
+fn element_rect_for_text_range_with_fallback(
+    element: &AXUIElement,
+    full_text: &str,
+    start_index: usize,
+    length: usize,
+) -> Option<Rect> {
+    if let Ok(Some(rect)) =
+        element_rect_for_text_range(element, start_index as isize, length as isize)
+    {
+        return Some(rect);
+    }
+
+    let walker = TreeWalker::new();
+    let collector = StaticTextCollector::new();
+    walker.walk(element, &collector);
+
+    let full_chars: Vec<char> = full_text.chars().collect();
+    let mut cursor = 0usize;
+
+    for (child, child_text) in collector.into_texts() {
+        let child_chars: Vec<char> = child_text.chars().collect();
+        // Locate this child's text within the parent value, starting at the
+        // cursor, to absorb any separators the parent inserts between children.
+        let Some(child_start) = find_char_subslice(&full_chars, &child_chars, cursor) else {
+            continue;
+        };
+        let child_end = child_start + child_chars.len();
+
+        if start_index >= child_start
+            && start_index + length <= child_end
+            && let Ok(Some(rect)) = element_rect_for_text_range(
+                &child,
+                (start_index - child_start) as isize,
+                length as isize,
+            )
+        {
+            return Some(rect);
+        }
+
+        cursor = child_end;
+    }
+
+    None
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -1033,6 +1247,18 @@ mod tests {
         assert!(!is_supported_text_role("AXButton"));
         assert!(!is_supported_text_role("AXStaticText"));
         assert!(!is_supported_text_role(""));
+    }
+
+    #[test]
+    fn finds_char_subslice_respecting_offset() {
+        let haystack: Vec<char> = "one\ntwo two".chars().collect();
+        let needle: Vec<char> = "two".chars().collect();
+
+        assert_eq!(find_char_subslice(&haystack, &needle, 0), Some(4));
+        assert_eq!(find_char_subslice(&haystack, &needle, 5), Some(8));
+        assert_eq!(find_char_subslice(&haystack, &needle, 9), None);
+        assert_eq!(find_char_subslice(&haystack, &[], 0), None);
+        assert_eq!(find_char_subslice(&[], &needle, 0), None);
     }
 
     #[test]
