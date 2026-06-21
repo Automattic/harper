@@ -2229,6 +2229,7 @@ dependencies = [
  "cfg_aliases",
  "cubecl-common",
  "cubecl-core",
+ "cubecl-cpp",
  "cubecl-runtime",
  "derive-new",
  "derive_more 2.0.1",
@@ -4141,6 +4142,7 @@ dependencies = [
 name = "harper-brill"
 version = "2.5.0"
 dependencies = [
+ "burn",
  "harper-pos-utils",
  "serde_json",
 ]

@@ -9,6 +9,32 @@ repository = "https://github.com/automattic/harper"
 [dependencies]
 harper-pos-utils = { path = "../harper-pos-utils/", version = "2.0.0" }
 serde_json = "1.0.150"
+# Only pulled in by the `training` feature (GPU regeneration tooling). Inference
+# and tests never need it — the trained model is embedded as bytes and run on CPU.
+burn = { version = "0.19.1", default-features = false, optional = true }
 
 [build-dependencies]
 serde_json = "1.0.150"
+
+[features]
+# Tooling to (re)train and regenerate the embedded joint model on a GPU — see the
+# `regenerate_english_joint` and `joint_determinism_check` examples. Adds burn's
+# autodiff + Metal/wgpu backend. NOT needed for inference, linting, or the test
+# suite, which load the committed `finished_joint/model.mpk` and run on CPU.
+training = [
+  "dep:burn",
+  "burn/std",
+  "burn/autodiff",
+  "burn/metal",
+  "harper-pos-utils/training",
+]
+
+[[example]]
+name = "regenerate_english_joint"
+path = "examples/regenerate_english_joint.rs"
+required-features = ["training"]
+
+[[example]]
+name = "joint_determinism_check"
+path = "examples/joint_determinism_check.rs"
+required-features = ["training"]
