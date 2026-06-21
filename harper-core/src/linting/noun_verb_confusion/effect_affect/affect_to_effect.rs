@@ -194,7 +194,14 @@ fn matches_preceding_context_impl(
         return false;
     }
 
-    if !allow_verb_like && token.kind.is_upos(UPOS::VERB) && !is_take_form_word {
+    // A noun/verb homograph the tagger ranked VERB#1 but NOUN#2 (e.g. "sound" in
+    // "sound affects", "sound affect") is still valid preceding context — it's
+    // the modifier of the affect/effect head, not a governing verb.
+    if !allow_verb_like
+        && token.kind.is_upos(UPOS::VERB)
+        && !token.kind.could_be_upos(UPOS::NOUN)
+        && !is_take_form_word
+    {
         return false;
     }
 

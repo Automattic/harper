@@ -23,7 +23,11 @@ impl Default for VerbInsteadOfNoun {
         ));
         Self {
             expr: Box::new(
-                SequenceExpr::with(UPOSSet::new(&[UPOS::ADJ, UPOS::ADP]))
+                // The modifier before the misused verb-form noun ("deep" in
+                // "deep breathe") is often ranked ADJ#2 in this frame — match the
+                // plausible reading. The AUX guard in `match_to_lint` and the
+                // verb-list keep this from over-firing.
+                SequenceExpr::with(UPOSSet::new_loose(&[UPOS::ADJ, UPOS::ADP]))
                     .then_whitespace()
                     .then(verbs.clone()),
             ),
