@@ -36,7 +36,8 @@ impl Default for OldestInTheBook {
         Self {
             expr: SequenceExpr::fixed_phrase("oldest ")
                 .then(noun_phrase)
-                .then_fixed_phrase(" in the books"),
+                .t_ws()
+                .then_word_seq(&["in", "the", "books"]),
         }
     }
 }

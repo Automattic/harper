@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.3.1",
+	"version": "2.5.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -462,6 +462,12 @@
 					"default": true,
 					"description": "Corrects the phrase `as follow`, which is sometimes produced by overcorrection. While it appeared briefly in 19th-century English, it is now considered archaic; modern standard usage requires `as follows` regardless of number."
 				},
+				"harper.linters.AsHow": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `as how` to `as to how`."
+				},
 				"harper.linters.AsIfThough": {
 					"scope": "resource",
 					"type": "boolean",
@@ -504,6 +510,12 @@
 					"default": true,
 					"description": "Expands an initialism."
 				},
+				"harper.linters.AsToInterrogative": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `to` to `as to` between certain adjectives and `wh-words`."
+				},
 				"harper.linters.AskNoPreposition": {
 					"scope": "resource",
 					"type": "boolean",
@@ -526,7 +538,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `on face value` to the more usual `at face value`."
+					"description": "Corrects nonstandard variants of `at face value`."
 				},
 				"harper.linters.AtLeasToLeast": {
 					"scope": "resource",
@@ -557,6 +569,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "The correct idiom is `at the expense of`, with singular `expense`. But retain `expanse` if this phrase refers to a wide area."
+				},
+				"harper.linters.AtTheVeryLeast": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `in the very least` to `at the very least`."
 				},
 				"harper.linters.Australia": {
 					"scope": "resource",
@@ -756,6 +774,12 @@
 					"default": true,
 					"description": "Joins the two-word spelling of the optical disc format into the standard compound form."
 				},
+				"harper.linters.BoarderBorder": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags the eggcorn `boarder` (a lodger) where `border` (an edge/boundary) is intended."
+				},
 				"harper.linters.Bollocks": {
 					"scope": "resource",
 					"type": "boolean",
@@ -846,6 +870,12 @@
 					"default": true,
 					"description": "Corrects `way` to `wait` in high-confidence contexts such as `can't way to` and `doesn't way for`."
 				},
+				"harper.linters.CapitalizeOn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
+				},
 				"harper.linters.CapitalizePersonalPronouns": {
 					"scope": "resource",
 					"type": "boolean",
@@ -863,6 +893,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensures `case-sensitive` is correctly hyphenated."
+				},
+				"harper.linters.Catch22": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects mistakenly using similar-sounding words in the idiom `catch 22`."
 				},
 				"harper.linters.CauseItIsBecause": {
 					"scope": "resource",
@@ -959,6 +995,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Ensure proper capitalization of companies, products, and trademarks."
+				},
+				"harper.linters.ComplainAsNoun": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the use of `complain` as a noun."
 				},
 				"harper.linters.CompoundNouns": {
 					"scope": "resource",
@@ -1332,6 +1374,12 @@
 					"default": true,
 					"description": "Detects variants like `on route` or `in route` and suggests `en route`."
 				},
+				"harper.linters.EnvironmentVariable": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
+				},
 				"harper.linters.EverEvery": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1637,6 +1685,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects some expressions using `fell` where `feel` is correct."
+				},
+				"harper.linters.FellowCoRedundancy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects redundant use of `fellow` with `co-`."
 				},
 				"harper.linters.FetalPosition": {
 					"scope": "resource",
@@ -2088,6 +2142,12 @@
 					"default": true,
 					"description": "After `imitate ...`, idiomatic phrasing points to the inspiration with `of` instead of `from`."
 				},
+				"harper.linters.Impressed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `impressed of` to `impressed by` or `impressed with`."
+				},
 				"harper.linters.InAHurry": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2184,6 +2244,12 @@
 					"default": true,
 					"description": "Checks for redundant use of `in` before [period of time] together with `from now` after it."
 				},
+				"harper.linters.IncidentReport": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
+				},
 				"harper.linters.IncludingButNotLimitedToPunctuation": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2219,6 +2285,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `insofar`."
+				},
+				"harper.linters.InspiredBy": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `inspired from` to `inspired by`, as `by` is the standard preposition for indicating the source of inspiration."
 				},
 				"harper.linters.Instead": {
 					"scope": "resource",
@@ -2459,6 +2531,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Changes `let along` to `let alone`."
+				},
+				"harper.linters.LetMeKnow": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
 				},
 				"harper.linters.LetToDo": {
 					"scope": "resource",
@@ -2970,6 +3048,12 @@
 					"default": true,
 					"description": "Handles common confusions between related nouns and verbs (e.g., 'advice/advise', 'breath/breathe')"
 				},
+				"harper.linters.NowKnownAs": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `now know as` to `now known as` for proper grammar."
+				},
 				"harper.linters.NowWay": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3150,6 +3234,12 @@
 					"default": true,
 					"description": "Corrects `out of sink` to `out of sync` or `out of synch`."
 				},
+				"harper.linters.OutOfTheWindow": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A linter for the idiom `out (of) the window`."
+				},
 				"harper.linters.Overall": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3209,6 +3299,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Keeps the compound adjective together before nouns like folders, files, or web pages so the dependency between them is clear."
+				},
+				"harper.linters.PayForPrice": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects extraneous `for` when used of charges, fees, prices, etc."
 				},
 				"harper.linters.Payed": {
 					"scope": "resource",
@@ -3959,6 +4055,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Checks for redundant `the` before possessive proper noun such as `The London's population`."
+				},
+				"harper.linters.TheTheToThatThe": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `the the` to `that the` or to a single `the`."
 				},
 				"harper.linters.TheWhetherWeather": {
 					"scope": "resource",

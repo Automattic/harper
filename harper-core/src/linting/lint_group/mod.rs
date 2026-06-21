@@ -28,6 +28,8 @@ use super::another_thing_coming::AnotherThingComing;
 use super::another_think_coming::AnotherThinkComing;
 use super::apart_from::ApartFrom;
 use super::arrive_to::ArriveTo;
+use super::as_how::AsHow;
+use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
@@ -44,15 +46,18 @@ use super::by_the_book::ByTheBook;
 use super::call_them::CallThem;
 use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
+use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
 use super::confident::Confident;
+use super::convenient_store::ConvenientStore;
 use super::correct_number_suffix::CorrectNumberSuffix;
 use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
@@ -89,6 +94,7 @@ use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
+use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
 use super::free_predicate::FreePredicate;
@@ -97,6 +103,7 @@ use super::go_so_far_as_to::GoSoFarAsTo;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
+use super::handful_of_more::HandfulOfMore;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -107,6 +114,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
 use super::in_time_from_now::InTimeFromNow;
@@ -118,6 +126,7 @@ use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::lead_rise_to::LeadRiseTo;
+use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
@@ -169,6 +178,7 @@ use super::open_the_light::OpenTheLight;
 use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
+use super::out_of_the_window::OutOfTheWindow;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::pay_for_price::PayForPrice;
@@ -200,6 +210,7 @@ use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
 use super::roller_skated::RollerSkated;
+use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
@@ -223,6 +234,7 @@ use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
+use super::the_last_days::TheLastDays;
 use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
@@ -588,6 +600,8 @@ impl LintGroup {
         insert_expr_rule!(AnotherThinkComing, false);
         insert_expr_rule!(ApartFrom, true);
         insert_expr_rule!(ArriveTo, true);
+        insert_expr_rule!(AsHow, true);
+        insert_expr_rule!(AsToInterrogative, true);
         insert_expr_rule!(AskNoPreposition, true);
         insert_expr_rule!(AvoidContractions, false);
         insert_expr_rule!(AvoidCurses, true);
@@ -603,12 +617,14 @@ impl LintGroup {
         insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
         insert_struct_rule!(CapitalizePersonalPronouns, true);
+        insert_expr_rule!(Catch22, true);
         insert_expr_rule!(CautionaryTale, true);
         insert_expr_rule!(ChangeTack, true);
         insert_expr_rule!(ChockFull, true);
         insert_expr_rule!(CloseTightKnit, true);
         insert_expr_rule!(CodeInWriteIn, true);
         insert_struct_rule!(CommaFixes, true);
+        insert_expr_rule!(ComplainAsNoun, true);
         insert_struct_rule!(CompoundNouns, true);
         insert_expr_rule!(CompoundSubjectI, true);
         insert_expr_rule!(Confident, true);
@@ -647,6 +663,7 @@ impl LintGroup {
         insert_struct_rule!(FindFine, true);
         insert_expr_rule!(FirstAidKit, true);
         insert_expr_rule!(FleshOutVsFullFledged, true);
+        insert_expr_rule!(FootInchMinuteSecondSymbols, true);
         insert_expr_rule!(ForFreeOfCharge, true);
         insert_expr_rule!(ForNoun, true);
         insert_expr_rule!(FreePredicate, true);
@@ -655,6 +672,7 @@ impl LintGroup {
         insert_expr_rule!(GoToWar, true);
         insert_expr_rule!(GoodAt, true);
         insert_expr_rule!(Handful, true);
+        insert_expr_rule!(HandfulOfMore, true);
         insert_expr_rule!(HavePronoun, true);
         insert_struct_rule_with_dialect!(HaveTakeALook, true);
         insert_expr_rule!(Hedging, true);
@@ -665,6 +683,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay, true);
         insert_expr_rule!(IAmAgreement, true);
         insert_expr_rule!(IfWouldve, true);
+        insert_expr_rule!(InDemandInDepth, true);
         insert_expr_rule!(InFavourOfDoing, true);
         insert_struct_rule_with_dialect!(InOnTheCards, true);
         insert_expr_rule!(InTimeFromNow, true);
@@ -676,6 +695,7 @@ impl LintGroup {
         insert_expr_rule!(JealousOf, true);
         insert_expr_rule!(JohnsHopkins, true);
         insert_expr_rule!(LeadRiseTo, true);
+        insert_expr_rule!(LeavingInDroves, true);
         insert_expr_rule!(LeftRightHand, true);
         insert_expr_rule!(LessWorse, true);
         insert_expr_rule!(LetToDo, true);
@@ -727,6 +747,7 @@ impl LintGroup {
         insert_expr_rule!(OrthographicConsistency, true);
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
+        insert_expr_rule_with_dialect!(OutOfTheWindow, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_expr_rule!(PayForPrice, true);
@@ -756,6 +777,7 @@ impl LintGroup {
         insert_expr_rule!(RightClick, true);
         insert_expr_rule!(RiseTheRanks, true);
         insert_expr_rule!(RollerSkated, true);
+        insert_expr_rule!(RunIntoProblemsOrTrouble, true);
         insert_expr_rule!(SafeToSave, true);
         insert_expr_rule!(SaveToSafe, true);
         insert_struct_rule_with_dict!(SentenceCapitalization, true);
@@ -778,6 +800,7 @@ impl LintGroup {
         insert_expr_rule!(ThatThan, true);
         insert_expr_rule!(ThatWhich, true);
         insert_expr_rule!(TheHowWhy, true);
+        insert_expr_rule!(TheLastDays, true);
         insert_expr_rule!(TheMy, true);
         insert_expr_rule!(ThePointFor, true);
         insert_expr_rule!(TheProperNounPossessive, true);
@@ -821,11 +844,14 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom, true);
         insert_expr_rule_with_dict!(WorthToDo, true);
         insert_expr_rule!(WouldNeverHave, true);
-        insert_expr_rule!(WrongApostrophe, true);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
         out.config.set_rule_enabled("AspireTo", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("ConvenientStore", ConvenientStore::default());
+        out.config.set_rule_enabled("ConvenientStore", true);
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
@@ -843,10 +869,6 @@ impl LintGroup {
         out.add("PluralDecades", PluralDecades::default());
         out.config.set_rule_enabled("PluralDecades", true);
 
-        // Uses Sentence rather than Chunk
-        out.add("WereWhere", WereWhere::default());
-        out.config.set_rule_enabled("WereWhere", true);
-
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         out.config.set_rule_enabled("SpellCheck", true);
@@ -861,6 +883,14 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
         out.config.set_rule_enabled("WebScraping", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+        out.config.set_rule_enabled("WereWhere", true);
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+        out.config.set_rule_enabled("WrongApostrophe", true);
 
         out
     }

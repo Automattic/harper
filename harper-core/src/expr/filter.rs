@@ -17,7 +17,7 @@ use super::Expr;
 /// use harper_core::expr::{SequenceExpr, Filter, ExprExt};
 /// use harper_core::{Span, Document};
 ///
-/// let a = SequenceExpr::aco("chock").t_ws().t_aco("full");
+/// let a = SequenceExpr::word_seq(&["chock", "full"]);
 /// let b = WhitespacePattern;
 ///
 /// let filter = Filter::new(vec![Box::new(a), Box::new(b)]);

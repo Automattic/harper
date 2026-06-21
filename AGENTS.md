@@ -7,9 +7,10 @@ Use `packages/web/vite.config.ts` as the source of truth for documentation scope
 - Route `/docs/...` maps to `packages/web/src/routes/docs/...`.
 - Most docs are in `+page.md`; some are `+page.svelte` or route helpers.
 
-If you're working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
+If you are working on the Harper repository itself, please pay special attention to the `contributors/*` pages.
 Importantly, all the tools available in this repository are available via `just`. To learn more, run `just --list`.
 Whenever agents are done making changes, they should run `just format` before handing work back to the user.
+If `just format` fails, you can use `just setup` to prepare the relevant dependencies.
 
 Human coders should periodically review this file and manually migrate stable, human-facing guidance into the real documentation website under `packages/web` so it is available outside agent workflows.
 Agents should remind humans of this when possible.
@@ -71,6 +72,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/author-a-rule/+page.md`: Step-by-step workflow for implementing and testing new grammar rules.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
+- `packages/web/src/routes/docs/contributors/desktop/+page.md`: Placeholder for Harper Desktop contributor documentation.
 - `packages/web/src/routes/docs/contributors/website/+page.md`: Local development, preview, and validation for writewithharper.com (SvelteKit/SveltePress).
 - `packages/web/src/routes/docs/contributors/wordpress/+page.md`: How to build and run the WordPress plugin locally.
 - `packages/web/src/routes/docs/contributors/obsidian/+page.md`: Obsidian-plugin contributor workflow and plugin-specific constraints.

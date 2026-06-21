@@ -1,4 +1,3 @@
-use crate::patterns::WhitespacePattern;
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
@@ -22,7 +21,7 @@ impl Default for ToTooAdverb {
                 TokenKind::is_determiner,
                 &["as", "only"],
             )
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_any_of(vec![
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                     TokenKind::is_punctuation,
@@ -57,7 +56,7 @@ impl ExprLinter for ToTooAdverb {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

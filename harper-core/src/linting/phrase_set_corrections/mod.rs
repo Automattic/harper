@@ -232,6 +232,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
             LintKind::Style
         ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
+            LintKind::Style
+        ),
         "ExpandNotification" => (
             &[
                 ("notif", "notification"),
@@ -894,6 +903,21 @@ pub fn lint_group() -> LintGroup {
             "Use `not only` instead of `no only` in this expression.",
             "Corrects `no only` to `not only` before forms of `to be`.",
             LintKind::Grammar
+        ),
+        "Nowadays" => (
+            &[(
+                &[
+                    "now a days", "now-a-days", "now a day's",
+                    "nowaday", "now a day", "now-a-day",
+                    "now adays", "now-adays", "now aday's",
+                    "now aday",
+                    "nowa days",
+                ],
+                &["nowadays"]
+            )],
+            "Use `nowadays` instead of common misspellings.",
+            "Corrects common misspellings of `nowadays`.",
+            LintKind::Usage
         ),
         "RiseTheQuestion" => (
             &[
