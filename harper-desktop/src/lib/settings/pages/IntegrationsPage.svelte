@@ -37,12 +37,8 @@ async function loadIntegrations() {
 function toIntegrationRow(integration: Integration): IntegrationRow {
 	return {
 		...integration,
-		name: integrationName(integration.bundle_id),
+		name: integration.display_name,
 	};
-}
-
-function integrationName(bundleId: string) {
-	return bundleId.split('.').at(-1) || bundleId;
 }
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
@@ -93,12 +89,16 @@ async function addIntegration(bundleId: string) {
 
 	const previousIntegrations = integrations;
 
-	integrations = [...integrations, { bundle_id: trimmedBundleId, enabled: true }];
+	integrations = [
+		...integrations,
+		{ bundle_id: trimmedBundleId, enabled: true, display_name: trimmedBundleId },
+	];
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
 	try {
 		await Client.addIntegration(trimmedBundleId);
+		await loadIntegrations();
 		closeAppPicker();
 	} catch (error) {
 		integrations = previousIntegrations;
@@ -115,29 +115,6 @@ function closeAppPicker() {
 </script>
 
 <section>
-  <div class="stanza">
-    <div class="eyebrow">App integrations</div>
-    <div class="row top">
-      <div>
-        <strong>Watch everywhere</strong>
-        <p>Harper checks writing in any app that supports text input.</p>
-      </div>
-      <button
-        class="toggle"
-        type="button"
-        role="switch"
-        aria-checked="false"
-        aria-label="Toggle watch everywhere"
-        disabled
-        title="Not wired yet"
-      >
-        <span></span>
-      </button>
-    </div>
-  </div>
-
-  <div class="divider"></div>
-
   <div class="stanza">
     <div class="eyebrow">Selected apps</div>
     <p class="section-copy">Harper will only watch the apps you enable here.</p>

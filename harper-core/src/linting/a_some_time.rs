@@ -12,9 +12,7 @@ pub struct ASomeTime {
 impl Default for ASomeTime {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("a")
-                .t_ws()
-                .t_aco("some")
+            expr: SequenceExpr::word_seq(&["a", "some"])
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(Word::new("time")),
@@ -41,7 +39,7 @@ impl ExprLinter for ASomeTime {
             span: a_some_span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "Remove the indefinite article `a` before `some`.".to_string(),
+            message: "Remove the indefinite article `a` before `some`.".to_owned(),
             ..Default::default()
         })
     }
@@ -106,7 +104,6 @@ mod tests {
         );
     }
 
-    // I guess support people is was cheaper than just a some hours of an engineer who can actually fix the platform
     #[test]
     fn a_some_hours() {
         assert_suggestion_result(

@@ -33,14 +33,54 @@ pub trait OsBroker {
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
         self.accessibility_permission_status()
     }
+
+    fn system_integration_display_name(&self, _bundle_id: &str) -> Option<String> {
+        None
+    }
+
+    fn integration_display_name(&self, bundle_id: &str) -> String {
+        self.system_integration_display_name(bundle_id)
+            .unwrap_or_else(|| fallback_integration_display_name(bundle_id))
+    }
+
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
+        Err("Launching apps by bundle ID is only supported on macOS.".to_string())
+    }
+
+    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> {
+        Err("App search is only supported on macOS.".to_string())
+    }
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct AppSearchResult {
+    pub name: String,
+    pub bundle_id: String,
+}
+
+fn fallback_integration_display_name(bundle_id: &str) -> String {
+    let trimmed = bundle_id.trim();
+
+    if trimmed.is_empty() {
+        return "Unknown app".to_string();
+    }
+
+    trimmed
+        .split('.')
+        .rev()
+        .find(|segment| !segment.is_empty())
+        .unwrap_or(trimmed)
+        .to_string()
 }
 
 /// No-op platform broker for targets that do not have an OS implementation yet.
 ///
 /// This lets the highlighter compile on non-macOS platforms while making it explicit that there is
 /// currently no accessibility or cursor integration there.
+#[cfg(not(target_os = "macos"))]
 pub struct NoopBroker;
 
+#[cfg(not(target_os = "macos"))]
 impl OsBroker for NoopBroker {
     fn get_boxes(
         &mut self,
@@ -51,5 +91,29 @@ impl OsBroker for NoopBroker {
 
     fn cursor_position(&self) -> Option<egui::Pos2> {
         None
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::fallback_integration_display_name;
+
+    #[test]
+    fn fallback_handles_empty_bundle_ids() {
+        assert_eq!(fallback_integration_display_name(""), "Unknown app");
+        assert_eq!(fallback_integration_display_name("   "), "Unknown app");
+    }
+
+    #[test]
+    fn fallback_uses_last_non_empty_segment_without_changing_case() {
+        assert_eq!(
+            fallback_integration_display_name("com.microsoft.VSCode"),
+            "VSCode"
+        );
+        assert_eq!(
+            fallback_integration_display_name("com.googlecode.iterm2"),
+            "iterm2"
+        );
+        assert_eq!(fallback_integration_display_name("com.example."), "example");
     }
 }

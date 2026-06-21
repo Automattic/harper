@@ -30,7 +30,7 @@ impl Default for ChangeTack {
                     .t_ws()
                     .then_word_set(eggcorns),
                 ),
-                Box::new(SequenceExpr::aco("different").t_ws().t_aco("tact")),
+                Box::new(SequenceExpr::word_seq(&["different", "tact"])),
             ]),
         }
     }

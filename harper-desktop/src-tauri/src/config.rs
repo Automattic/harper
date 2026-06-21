@@ -28,6 +28,10 @@ pub struct Config {
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
+    pub debounce_ms: u64,
+    pub auto_update: bool,
+    pub last_update_check: Option<u64>,
+    pub highlighter_service_enabled: bool,
 }
 
 #[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
@@ -40,11 +44,21 @@ impl Config {
     pub fn new() -> Self {
         Self {
             mutable_dictionary: MutableDictionary::new(),
-            dialect: Dialect::American,
+            dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Self::curated_integrations(),
+            debounce_ms: 0,
+            auto_update: true,
+            last_update_check: None,
+            highlighter_service_enabled: true,
         }
+    }
+
+    pub fn detect_system_dialect() -> Dialect {
+        tauri_plugin_os::locale()
+            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
+            .unwrap_or(Dialect::American)
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
@@ -53,6 +67,8 @@ impl Config {
             "com.apple.mail",
             "com.apple.MobileSMS",
             "com.apple.Notes",
+            "com.tinyspeck.slackmacgap",
+            "com.hnc.Discord",
         ]
         .into_iter()
         .map(|bundle_id| Integration {
@@ -118,6 +134,16 @@ impl Config {
         Ok(())
     }
 
+    pub fn main_config_exists() -> Result<bool, ConfigError> {
+        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+
+        match fs::metadata(main_path) {
+            Ok(_) => Ok(true),
+            Err(error) if error.kind() == io::ErrorKind::NotFound => Ok(false),
+            Err(error) => Err(error.into()),
+        }
+    }
+
     pub async fn load_from_system() -> Result<Self, ConfigError> {
         let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
         let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
@@ -170,6 +196,10 @@ impl Config {
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
+            "debounce_ms": self.debounce_ms,
+            "auto_update": self.auto_update,
+            "last_update_check": self.last_update_check,
+            "highlighter_service_enabled": self.highlighter_service_enabled,
         }))
     }
 
@@ -187,6 +217,18 @@ impl Config {
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
                 .unwrap_or_else(Self::curated_integrations),
+            debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
+            auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
+            last_update_check: deserialize_optional_field::<Option<u64>>(
+                object,
+                "last_update_check",
+            )?
+            .flatten(),
+            highlighter_service_enabled: deserialize_optional_field(
+                object,
+                "highlighter_service_enabled",
+            )?
+            .unwrap_or(true),
         })
     }
 }
@@ -247,6 +289,10 @@ mod tests {
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
         assert!(serialized.contains("integrations"));
+        assert!(serialized.contains("debounce_ms"));
+        assert!(serialized.contains("auto_update"));
+        assert!(serialized.contains("last_update_check"));
+        assert!(serialized.contains("highlighter_service_enabled"));
     }
 
     #[test]
@@ -262,6 +308,13 @@ mod tests {
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(deserialized.integrations, config.integrations);
+        assert_eq!(deserialized.debounce_ms, config.debounce_ms);
+        assert_eq!(deserialized.auto_update, config.auto_update);
+        assert_eq!(deserialized.last_update_check, config.last_update_check);
+        assert_eq!(
+            deserialized.highlighter_service_enabled,
+            config.highlighter_service_enabled
+        );
         assert_eq!(
             serde_json::from_str::<serde_json::Value>(&deserialized.serialize_main().unwrap())
                 .unwrap(),
@@ -278,6 +331,8 @@ mod tests {
         assert!(config.is_integration_enabled("com.apple.mail"));
         assert!(config.is_integration_enabled("com.apple.MobileSMS"));
         assert!(config.is_integration_enabled("com.apple.Notes"));
+        assert!(config.is_integration_enabled("com.tinyspeck.slackmacgap"));
+        assert!(config.is_integration_enabled("com.hnc.Discord"));
     }
 
     #[test]
@@ -290,6 +345,49 @@ mod tests {
         let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
 
         assert_eq!(deserialized.integrations, Config::curated_integrations());
+        assert!(deserialized.is_integration_enabled("com.tinyspeck.slackmacgap"));
+        assert!(deserialized.is_integration_enabled("com.hnc.Discord"));
+    }
+
+    #[test]
+    fn deserialize_main_uses_zero_debounce_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("debounce_ms");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.debounce_ms, 0);
+    }
+
+    #[test]
+    fn deserialize_main_uses_default_update_settings_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().remove("auto_update");
+        value.as_object_mut().unwrap().remove("last_update_check");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.auto_update);
+        assert_eq!(deserialized.last_update_check, None);
+    }
+
+    #[test]
+    fn deserialize_main_enables_highlighter_service_when_missing() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("highlighter_service_enabled");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.highlighter_service_enabled);
     }
 
     #[test]
@@ -349,6 +447,14 @@ mod tests {
             path.parent().unwrap().file_name().unwrap(),
             "harper-desktop"
         );
+    }
+
+    #[test]
+    fn main_config_exists_reports_missing_file() {
+        let exists = Config::main_config_exists().unwrap();
+        let expected = Config::main_path().unwrap().exists();
+
+        assert_eq!(exists, expected);
     }
 
     #[test]

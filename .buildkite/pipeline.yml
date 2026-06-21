@@ -1,0 +1,23 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/buildkite/pipeline-schema/main/schema.json
+---
+
+agents:
+  queue: mac
+
+env:
+  IMAGE_ID: $IMAGE_ID
+
+steps:
+  - label: ":tauri: Build, sign, notarize harper-desktop"
+    key: build-desktop
+    command: .buildkite/commands/build-desktop.sh
+    plugins: [$CI_TOOLKIT_PLUGIN, $NVM_PLUGIN]
+    artifact_paths:
+      # Branch/PR builds produce `aarch64-apple-darwin` artifacts; master and
+      # tag builds produce `universal-apple-darwin`. Glob both.
+      - target/*-apple-darwin/release/bundle/dmg/*.dmg
+      - target/*-apple-darwin/release/bundle/macos/*.app.tar.gz
+      - target/*-apple-darwin/release/bundle/macos/*.app.tar.gz.sig
+    notify:
+      - github_commit_status:
+          context: "Build, sign, notarize harper-desktop"

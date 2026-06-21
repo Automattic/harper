@@ -47,7 +47,7 @@ impl ExprLinter for LookDownOnesNose {
                     .collect(),
                 toks.span()?.get_content(src),
             )],
-            message: "The correct idiom is `look down one's nose`.".to_string(),
+            message: "The correct idiom is `look down one's nose`.".to_owned(),
             ..Default::default()
         })
     }
