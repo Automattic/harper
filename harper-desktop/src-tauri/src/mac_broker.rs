@@ -61,6 +61,7 @@ pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
+    installed_app_search_results: Mutex<Option<Vec<AppSearchResult>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -107,6 +108,7 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
+            installed_app_search_results: Mutex::new(None),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -464,11 +466,18 @@ impl OsBroker for MacBroker {
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
         let query = query.trim();
+        let installed_apps = self.installed_app_search_results()?;
 
         if query.is_empty() {
-            return app_search_results_for_predicate(&format!(
-                "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
-            ));
+            return Ok(installed_apps);
+        }
+
+        if let Some(result) = installed_apps
+            .iter()
+            .find(|result| result.bundle_id == query)
+            .cloned()
+        {
+            return Ok(vec![result]);
         }
 
         if let Some(app_path) = application_path_for_bundle_id(query) {
@@ -478,12 +487,36 @@ impl OsBroker for MacBroker {
             ]);
         }
 
-        // Search for apps by display name using mdfind.
-        // Use case-insensitive search and ensure we only get .app bundles.
-        let escaped_query = escape_spotlight_string(query);
-        app_search_results_for_predicate(&format!(
-            "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}' && kMDItemDisplayName == '*{escaped_query}*'cd"
-        ))
+        let lower_query = query.to_lowercase();
+        Ok(installed_apps
+            .into_iter()
+            .filter(|result| {
+                result.name.to_lowercase().contains(&lower_query)
+                    || result.bundle_id.to_lowercase().contains(&lower_query)
+            })
+            .collect())
+    }
+}
+
+impl MacBroker {
+    fn installed_app_search_results(&self) -> Result<Vec<AppSearchResult>, String> {
+        if let Some(results) = self
+            .installed_app_search_results
+            .lock()
+            .map_err(|error| format!("Failed to read app search cache: {error}"))?
+            .clone()
+        {
+            return Ok(results);
+        }
+
+        let results = discover_app_search_results()?;
+        *self
+            .installed_app_search_results
+            .lock()
+            .map_err(|error| format!("Failed to update app search cache: {error}"))? =
+            Some(results.clone());
+
+        Ok(results)
     }
 }
 
@@ -513,9 +546,11 @@ fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
     })
 }
 
-fn app_search_results_for_predicate(predicate: &str) -> Result<Vec<AppSearchResult>, String> {
+fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
     let output = Command::new("mdfind")
-        .arg(predicate)
+        .arg(format!(
+            "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
+        ))
         .output()
         .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
 
