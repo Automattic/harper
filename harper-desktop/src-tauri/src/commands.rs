@@ -15,7 +15,7 @@ use harper_core::{
 };
 use std::sync::{Arc, Mutex as StdMutex};
 use tauri::ipc::Invoke;
-use tauri::{Runtime, State};
+use tauri::{Manager, Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
@@ -306,17 +306,22 @@ fn get_installed_application_bundle_ids(
 }
 
 #[tauri::command]
-fn get_application_icon_data_url(
+async fn get_application_icon_data_url<R: Runtime>(
     bundle_id: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    app_handle: tauri::AppHandle<R>,
 ) -> Result<String, String> {
-    let icon_png = broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .application_icon_png(&bundle_id)?;
-    let encoded = general_purpose::STANDARD.encode(icon_png);
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
+        let icon_png = broker
+            .lock()
+            .map_err(|error| format!("Failed to read platform broker: {error}"))?
+            .application_icon_png(&bundle_id)?;
+        let encoded = general_purpose::STANDARD.encode(icon_png);
 
-    Ok(format!("data:image/png;base64,{encoded}"))
+        Ok(format!("data:image/png;base64,{encoded}"))
+    })
+    .await
+    .map_err(|error| format!("Failed to load application icon: {error}"))?
 }
 
 #[tauri::command]
