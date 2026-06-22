@@ -1,5 +1,6 @@
 <script lang="ts">
 import { type AppSearchResult, Client } from '$lib/client';
+import AppIcon from './AppIcon.svelte';
 
 export let bundleId = '';
 export let existingBundleIds: string[];
@@ -116,8 +117,11 @@ function submit() {
               }
             }}
           >
-            <div class="app-result-name">{result.name}</div>
-            <div class="app-result-bundle-id">{result.bundle_id}</div>
+            <AppIcon bundleId={result.bundle_id} name={result.name} />
+            <div class="app-result-copy">
+              <div class="app-result-name">{result.name}</div>
+              <div class="app-result-bundle-id">{result.bundle_id}</div>
+            </div>
           </div>
         {/each}
       {:else if trimmedBundleId}

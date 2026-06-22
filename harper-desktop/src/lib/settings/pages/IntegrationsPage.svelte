@@ -1,11 +1,11 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { Client, type Integration } from '$lib/client';
+import AppIcon from '../components/AppIcon.svelte';
 import AppPickerModal from '../components/AppPickerModal.svelte';
 
 interface IntegrationRow extends Integration {
 	name: string;
-	iconDataUrl?: string;
 }
 
 let integrations: Integration[] = [];
@@ -29,7 +29,6 @@ async function loadIntegrations() {
 	try {
 		integrations = await Client.getIntegrations();
 		integrationApps = integrations.map(toIntegrationRow);
-		void loadIntegrationIcons(integrations);
 	} catch (error) {
 		integrationsError = `Unable to load integrations: ${error}`;
 	} finally {
@@ -42,23 +41,6 @@ function toIntegrationRow(integration: Integration): IntegrationRow {
 		...integration,
 		name: integration.display_name,
 	};
-}
-
-async function loadIntegrationIcons(integrationsToLoad: Integration[]) {
-	await Promise.all(
-		integrationsToLoad.map(async (integration) => {
-			const bundleId = integration.bundle_id;
-
-			try {
-				const iconDataUrl = await Client.getApplicationIconDataUrl(bundleId);
-				integrationApps = integrationApps.map((app) =>
-					app.bundle_id === bundleId ? { ...app, iconDataUrl } : app,
-				);
-			} catch {
-				// Keep the single-letter fallback when an app icon cannot be loaded.
-			}
-		}),
-	);
 }
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
@@ -164,13 +146,7 @@ function closeAppPicker() {
       {:else}
         {#each integrationApps as app}
           <div class="app-row">
-            <div class="app-tile" style="--app-tint: #6b6f78">
-              {#if app.iconDataUrl}
-                <img src={app.iconDataUrl} alt="" />
-              {:else}
-                {app.name[0]}
-              {/if}
-            </div>
+            <AppIcon bundleId={app.bundle_id} name={app.name} />
             <div class="grow">
               <strong>{app.name}</strong>
               <p>{app.bundle_id}</p>

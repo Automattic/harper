@@ -748,7 +748,8 @@ em,
 }
 
 .pack-icon,
-.app-tile {
+.app-tile,
+.app-icon {
 	display: grid;
 	place-items: center;
 	color: #fff;
@@ -772,7 +773,8 @@ em,
 	flex-basis: 16px;
 }
 
-.app-tile {
+.app-tile,
+.app-icon {
 	width: 28px;
 	height: 28px;
 	flex: 0 0 28px;
@@ -781,7 +783,8 @@ em,
 	overflow: hidden;
 }
 
-.app-tile img {
+.app-tile img,
+.app-icon img {
 	width: 24px;
 	height: 24px;
 	object-fit: contain;
@@ -928,8 +931,8 @@ em,
 
 .app-result {
 	display: flex;
-	flex-direction: column;
-	gap: 2px;
+	align-items: center;
+	gap: 10px;
 	padding: 10px 12px;
 	border-radius: 6px;
 	cursor: pointer;
@@ -942,6 +945,10 @@ em,
 .app-result:focus {
 	outline: 2px solid var(--settings-accent);
 	outline-offset: -2px;
+}
+
+.app-result-copy {
+	min-width: 0;
 }
 
 .app-result-name {
