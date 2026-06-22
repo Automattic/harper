@@ -39,7 +39,7 @@ use std::{
 };
 
 use crate::config::{Config, Integration};
-use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
+use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
@@ -460,6 +460,103 @@ impl OsBroker for MacBroker {
 
         Ok(())
     }
+
+    fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
+        let query = query.trim();
+
+        if query.is_empty() {
+            return Ok(Vec::new());
+        }
+
+        // Search for apps by display name using mdfind
+        // Use case-insensitive search and ensure we only get .app bundles
+        let escaped_query = query.replace('\\', "\\\\").replace('"', "\\\"");
+        let output = Command::new("mdfind")
+            .arg(format!(
+                "kMDItemContentType == 'com.apple.application-bundle' && kMDItemDisplayName == '*{escaped_query}*'cd"
+            ))
+            .output()
+            .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
+
+        if !output.status.success() {
+            return Err(format!(
+                "mdfind failed: {}",
+                String::from_utf8_lossy(&output.stderr)
+            ));
+        }
+
+        let mut results = Vec::new();
+        let mut seen_bundle_ids = std::collections::HashSet::new();
+
+        for line in String::from_utf8_lossy(&output.stdout).lines() {
+            let line = line.trim();
+
+            // Skip if not an .app bundle
+            if !line.ends_with(".app") {
+                continue;
+            }
+
+            if let Some(display_name) = display_name_from_app_path(line) {
+                // Skip if display name looks like a bundle ID (contains dots)
+                if display_name.contains('.') {
+                    continue;
+                }
+
+                if let Some(bundle_id) = bundle_id_from_app_path(line) {
+                    // Skip if we've already seen this bundle ID (deduplication)
+                    if seen_bundle_ids.contains(&bundle_id) {
+                        continue;
+                    }
+
+                    // Skip if bundle ID looks like a path or is invalid
+                    if bundle_id.contains('/') || bundle_id.is_empty() {
+                        continue;
+                    }
+
+                    seen_bundle_ids.insert(bundle_id.clone());
+                    results.push(AppSearchResult {
+                        name: display_name,
+                        bundle_id,
+                    });
+                }
+            }
+        }
+
+        Ok(results)
+    }
+}
+
+fn bundle_id_from_app_path(path: &str) -> Option<String> {
+    let output = Command::new("mdls")
+        .arg("-name")
+        .arg("kMDItemCFBundleIdentifier")
+        .arg(path)
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    let output = String::from_utf8_lossy(&output.stdout);
+
+    // Parse the output from mdls which looks like:
+    // kMDItemCFBundleIdentifier = "com.example.app"
+    let bundle_id = output
+        .lines()
+        .find(|line| line.contains("kMDItemCFBundleIdentifier"))
+        .and_then(|line| {
+            line.split('=')
+                .nth(1)
+                .map(|s| s.trim().trim_matches('"').to_string())
+        })?;
+
+    // Filter out null or empty bundle IDs
+    if bundle_id.is_empty() || bundle_id == "(null)" || bundle_id == "null" {
+        return None;
+    }
+
+    Some(bundle_id)
 }
 
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {

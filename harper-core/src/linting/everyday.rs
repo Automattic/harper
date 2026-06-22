@@ -13,7 +13,7 @@ pub struct Everyday {
 impl Default for Everyday {
     fn default() -> Self {
         let everyday = Word::new("everyday");
-        let every_day = Lrc::new(SequenceExpr::aco("every").t_ws().t_aco("day"));
+        let every_day = Lrc::new(SequenceExpr::word_seq(&["every", "day"]));
 
         let everyday_bad_after = All::new(vec![
             Box::new(SequenceExpr::with(everyday.clone()).t_ws().then_any_word()),

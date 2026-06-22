@@ -926,6 +926,35 @@ em,
 	padding: 6px;
 }
 
+.app-result {
+	display: flex;
+	flex-direction: column;
+	gap: 2px;
+	padding: 10px 12px;
+	border-radius: 6px;
+	cursor: pointer;
+}
+
+.app-result:hover {
+	background: rgba(0, 0, 0, 0.04);
+}
+
+.app-result:focus {
+	outline: 2px solid var(--settings-accent);
+	outline-offset: -2px;
+}
+
+.app-result-name {
+	font-weight: 600;
+	color: var(--settings-ink);
+}
+
+.app-result-bundle-id {
+	font-size: 11.5px;
+	color: var(--settings-ink-3);
+	font-family: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+
 .picker-row {
 	width: 100%;
 	display: flex;

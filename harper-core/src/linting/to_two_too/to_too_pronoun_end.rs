@@ -2,7 +2,6 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{AnchorEnd, AnchorStart, Expr, SequenceExpr},
-    patterns::WhitespacePattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -25,7 +24,7 @@ impl Default for ToTooPronounEnd {
                         |_| false,
                         &["`", "\"", "'", "“", "”", "‘", "’"],
                     )
-                    .then_optional(WhitespacePattern),
+                    .then_optional_whitespace(),
             ),
         ])
         .then_pronoun()

@@ -3,7 +3,7 @@
 
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
-use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
+use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::{
     IntegrationView, PlatformBroker, accessibility_allows_highlighter_start, platform_broker,
 };
@@ -45,6 +45,7 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         start_highlighter_service,
         stop_highlighter_service,
         launch_app,
+        search_apps,
     ]
 }
 
@@ -371,4 +372,9 @@ pub(crate) async fn stop_highlighter_service(
 #[tauri::command]
 fn launch_app(bundle_id: String) -> Result<(), String> {
     platform_broker().launch_app_bundle(&bundle_id)
+}
+
+#[tauri::command]
+fn search_apps(query: String) -> Result<Vec<AppSearchResult>, String> {
+    platform_broker().search_apps(&query)
 }

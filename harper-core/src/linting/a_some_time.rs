@@ -12,9 +12,7 @@ pub struct ASomeTime {
 impl Default for ASomeTime {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("a")
-                .t_ws()
-                .t_aco("some")
+            expr: SequenceExpr::word_seq(&["a", "some"])
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(Word::new("time")),
