@@ -49,6 +49,7 @@ const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration = Dura
 const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
 const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
+const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
@@ -468,12 +469,12 @@ impl OsBroker for MacBroker {
             return Ok(Vec::new());
         }
 
-        // Search for apps by display name using mdfind
-        // Use case-insensitive search and ensure we only get .app bundles
-        let escaped_query = query.replace('\\', "\\\\").replace('"', "\\\"");
+        // Search for apps by display name using mdfind.
+        // Use case-insensitive search and ensure we only get .app bundles.
+        let escaped_query = escape_spotlight_string(query);
         let output = Command::new("mdfind")
             .arg(format!(
-                "kMDItemContentType == 'com.apple.application-bundle' && kMDItemDisplayName == '*{escaped_query}*'cd"
+                "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}' && kMDItemDisplayName == '*{escaped_query}*'cd"
             ))
             .output()
             .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
@@ -526,46 +527,15 @@ impl OsBroker for MacBroker {
     }
 }
 
-fn bundle_id_from_app_path(path: &str) -> Option<String> {
-    let output = Command::new("mdls")
-        .arg("-name")
-        .arg("kMDItemCFBundleIdentifier")
-        .arg(path)
-        .output()
-        .ok()?;
-
-    if !output.status.success() {
-        return None;
-    }
-
-    let output = String::from_utf8_lossy(&output.stdout);
-
-    // Parse the output from mdls which looks like:
-    // kMDItemCFBundleIdentifier = "com.example.app"
-    let bundle_id = output
-        .lines()
-        .find(|line| line.contains("kMDItemCFBundleIdentifier"))
-        .and_then(|line| {
-            line.split('=')
-                .nth(1)
-                .map(|s| s.trim().trim_matches('"').to_string())
-        })?;
-
-    // Filter out null or empty bundle IDs
-    if bundle_id.is_empty() || bundle_id == "(null)" || bundle_id == "null" {
-        return None;
-    }
-
-    Some(bundle_id)
-}
-
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {
     application_path_for_bundle_id(bundle_id).and_then(|path| display_name_from_app_path(&path))
 }
 
 fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
     let output = Command::new("mdfind")
-        .arg("kMDItemContentType == \"com.apple.application-bundle\"")
+        .arg(format!(
+            "kMDItemContentType == \"{APPLICATION_BUNDLE_CONTENT_TYPE}\""
+        ))
         .output()
         .map_err(|error| format!("Failed to list installed applications: {error}"))?;
 

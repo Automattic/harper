@@ -375,6 +375,12 @@ fn launch_app(bundle_id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn search_apps(query: String) -> Result<Vec<AppSearchResult>, String> {
-    platform_broker().search_apps(&query)
+fn search_apps(
+    query: String,
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> Result<Vec<AppSearchResult>, String> {
+    broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .search_apps(&query)
 }

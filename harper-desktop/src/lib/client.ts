@@ -40,6 +40,11 @@ export interface Integration {
 	display_name: string;
 }
 
+export interface AppSearchResult {
+	name: string;
+	bundle_id: string;
+}
+
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
 export class Client {
@@ -159,6 +164,10 @@ export class Client {
 
 	static async getApplicationIconDataUrl(bundleId: string): Promise<string> {
 		return await invoke<string>('get_application_icon_data_url', { bundleId });
+	}
+
+	static async searchApps(query: string): Promise<AppSearchResult[]> {
+		return await invoke<AppSearchResult[]>('search_apps', { query });
 	}
 
 	static async launchApp(bundleId: string): Promise<void> {

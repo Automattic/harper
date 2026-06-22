@@ -1,5 +1,5 @@
 <script lang="ts">
-import { invoke } from '@tauri-apps/api/core';
+import { type AppSearchResult, Client } from '$lib/client';
 
 export let bundleId = '';
 export let existingBundleIds: string[];
@@ -7,7 +7,7 @@ export let isSaving = false;
 export let close: () => void;
 export let add: (bundleId: string) => void;
 
-let searchResults: Array<{ name: string; bundle_id: string }> = [];
+let searchResults: AppSearchResult[] = [];
 let isSearching = false;
 let debounceTimeout: number | null = null;
 
@@ -23,10 +23,7 @@ async function performSearch(query: string) {
 
 	isSearching = true;
 	try {
-		const results = await invoke<Array<{ name: string; bundle_id: string }>>('search_apps', {
-			query,
-		});
-		searchResults = results;
+		searchResults = await Client.searchApps(query);
 	} catch (error) {
 		console.error('Search failed:', error);
 		searchResults = [];
