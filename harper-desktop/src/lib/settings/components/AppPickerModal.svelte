@@ -18,7 +18,11 @@ $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
 $: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
 
 onMount(() => {
-	void performSearch(bundleId);
+	const initialSearch = window.setTimeout(() => {
+		void performSearch(bundleId);
+	}, 0);
+
+	return () => window.clearTimeout(initialSearch);
 });
 
 async function performSearch(query: string) {
