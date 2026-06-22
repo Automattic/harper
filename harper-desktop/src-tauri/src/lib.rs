@@ -271,6 +271,20 @@ fn platform_broker() -> PlatformBroker {
     PlatformBroker::default()
 }
 
+fn warm_app_search_cache(app: tauri::AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let result = broker
+            .lock()
+            .map_err(|error| format!("failed to read platform broker: {error}"))
+            .and_then(|broker| broker.search_apps("").map(|_| ()));
+
+        if let Err(error) = result {
+            eprintln!("failed to warm app search cache: {error}");
+        }
+    });
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     let args = Args::parse();
@@ -354,6 +368,8 @@ pub fn run_tauri() {
 
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
+
+            warm_app_search_cache(app.handle().clone());
 
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
