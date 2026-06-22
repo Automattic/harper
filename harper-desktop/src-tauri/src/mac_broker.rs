@@ -466,65 +466,86 @@ impl OsBroker for MacBroker {
         let query = query.trim();
 
         if query.is_empty() {
-            return Ok(Vec::new());
+            return app_search_results_for_predicate(&format!(
+                "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
+            ));
+        }
+
+        if let Some(app_path) = application_path_for_bundle_id(query) {
+            return Ok(vec![
+                app_search_result_from_app_path(&app_path)
+                    .unwrap_or_else(|| app_search_result_from_bundle_id(self, query)),
+            ]);
         }
 
         // Search for apps by display name using mdfind.
         // Use case-insensitive search and ensure we only get .app bundles.
         let escaped_query = escape_spotlight_string(query);
-        let output = Command::new("mdfind")
-            .arg(format!(
-                "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}' && kMDItemDisplayName == '*{escaped_query}*'cd"
-            ))
-            .output()
-            .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
-
-        if !output.status.success() {
-            return Err(format!(
-                "mdfind failed: {}",
-                String::from_utf8_lossy(&output.stderr)
-            ));
-        }
-
-        let mut results = Vec::new();
-        let mut seen_bundle_ids = std::collections::HashSet::new();
-
-        for line in String::from_utf8_lossy(&output.stdout).lines() {
-            let line = line.trim();
-
-            // Skip if not an .app bundle
-            if !line.ends_with(".app") {
-                continue;
-            }
-
-            if let Some(display_name) = display_name_from_app_path(line) {
-                // Skip if display name looks like a bundle ID (contains dots)
-                if display_name.contains('.') {
-                    continue;
-                }
-
-                if let Some(bundle_id) = bundle_id_from_app_path(line) {
-                    // Skip if we've already seen this bundle ID (deduplication)
-                    if seen_bundle_ids.contains(&bundle_id) {
-                        continue;
-                    }
-
-                    // Skip if bundle ID looks like a path or is invalid
-                    if bundle_id.contains('/') || bundle_id.is_empty() {
-                        continue;
-                    }
-
-                    seen_bundle_ids.insert(bundle_id.clone());
-                    results.push(AppSearchResult {
-                        name: display_name,
-                        bundle_id,
-                    });
-                }
-            }
-        }
-
-        Ok(results)
+        app_search_results_for_predicate(&format!(
+            "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}' && kMDItemDisplayName == '*{escaped_query}*'cd"
+        ))
     }
+}
+
+fn app_search_result_from_bundle_id(broker: &MacBroker, bundle_id: &str) -> AppSearchResult {
+    AppSearchResult {
+        name: broker.integration_display_name(bundle_id),
+        bundle_id: bundle_id.to_string(),
+    }
+}
+
+fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
+    let display_name = display_name_from_app_path(path)?;
+
+    if display_name.contains('.') {
+        return None;
+    }
+
+    let bundle_id = bundle_id_from_app_path(path)?;
+
+    if bundle_id.contains('/') || bundle_id.is_empty() {
+        return None;
+    }
+
+    Some(AppSearchResult {
+        name: display_name,
+        bundle_id,
+    })
+}
+
+fn app_search_results_for_predicate(predicate: &str) -> Result<Vec<AppSearchResult>, String> {
+    let output = Command::new("mdfind")
+        .arg(predicate)
+        .output()
+        .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
+
+    if !output.status.success() {
+        return Err(format!(
+            "mdfind failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        ));
+    }
+
+    let mut results = Vec::new();
+    let mut seen_bundle_ids = BTreeSet::new();
+
+    for line in String::from_utf8_lossy(&output.stdout).lines() {
+        let line = line.trim();
+
+        if !line.ends_with(".app") {
+            continue;
+        }
+
+        let Some(result) = app_search_result_from_app_path(line) else {
+            continue;
+        };
+
+        if seen_bundle_ids.insert(result.bundle_id.clone()) {
+            results.push(result);
+        }
+    }
+
+    Ok(results)
 }
 
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {

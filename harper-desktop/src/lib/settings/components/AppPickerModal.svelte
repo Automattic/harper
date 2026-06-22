@@ -1,4 +1,5 @@
 <script lang="ts">
+import { onMount } from 'svelte';
 import { type AppSearchResult, Client } from '$lib/client';
 import AppIcon from './AppIcon.svelte';
 
@@ -16,12 +17,11 @@ $: trimmedBundleId = bundleId.trim();
 $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
 $: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
 
-async function performSearch(query: string) {
-	if (!query.trim()) {
-		searchResults = [];
-		return;
-	}
+onMount(() => {
+	void performSearch(bundleId);
+});
 
+async function performSearch(query: string) {
 	isSearching = true;
 	try {
 		searchResults = await Client.searchApps(query);
