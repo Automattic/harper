@@ -29,7 +29,7 @@ pub struct JointArch {
 /// Panics if `dir` cannot be created or any file cannot be written.
 pub fn save_joint<B: Backend>(
     model: &JointModel<B>,
-    vocab: &CharVocab,
+    char_vocab: &CharVocab,
     suffix_vocab: &SuffixVocab,
     dir: &Path,
     _cfg: &JointArch,
@@ -41,7 +41,8 @@ pub fn save_joint<B: Backend>(
         .clone()
         .save_file(dir.join("model"), &recorder)
         .expect("save model.mpk");
-    std::fs::write(dir.join("char_vocab.json"), vocab.to_json()).expect("write char_vocab.json");
+    std::fs::write(dir.join("char_vocab.json"), char_vocab.to_json())
+        .expect("write char_vocab.json");
     std::fs::write(dir.join("suffix_vocab.json"), suffix_vocab.to_json())
         .expect("write suffix_vocab.json");
 }
@@ -136,7 +137,7 @@ type AnnotateCache = LruCache<Vec<String>, (Vec<TagSet>, Vec<bool>)>;
 
 pub struct JointRuntime {
     model: JointModel<NdArray>,
-    vocab: CharVocab,
+    char_vocab: CharVocab,
     suffix_vocab: SuffixVocab,
     max_word: usize,
     cache: Mutex<AnnotateCache>,
@@ -145,14 +146,14 @@ pub struct JointRuntime {
 impl JointRuntime {
     pub fn new(
         model: JointModel<NdArray>,
-        vocab: CharVocab,
+        char_vocab: CharVocab,
         suffix_vocab: SuffixVocab,
         max_word: usize,
         capacity: NonZeroUsize,
     ) -> Self {
         Self {
             model,
-            vocab,
+            char_vocab,
             suffix_vocab,
             max_word,
             cache: Mutex::new(LruCache::new(capacity)),
@@ -186,15 +187,13 @@ impl JointRuntime {
         // cache insert below.
         let owned: Vec<String> = sentence.to_vec();
 
-        // A single forward pass (batch = 1) yields both heads.
+        // A single forward pass (batch = 1) yields both heads. Inference reads
+        // only the char/suffix inputs, so build the lean inference batch — no
+        // gold-label buffers, no dummy tag/np vectors.
         let device = NdArrayDevice::Cpu;
-        let dummy_tags = vec![None; sentence.len()];
-        let dummy_np = vec![false; sentence.len()];
-        let b = JointBatch::build(
+        let b = JointBatch::build_inference(
             std::slice::from_ref(&owned),
-            std::slice::from_ref(&dummy_tags),
-            std::slice::from_ref(&dummy_np),
-            &self.vocab,
+            &self.char_vocab,
             &self.suffix_vocab,
             self.max_word,
         );
@@ -219,8 +218,15 @@ impl JointRuntime {
             // Chosen tag = argmax of this row; its value doubles as the softmax shift.
             let am = argmax_first(row);
             let max = row[am];
-            let exps: Vec<f32> = row.iter().map(|x| (x - max).exp()).collect();
-            let sum: f32 = exps.iter().sum();
+            // Softmax over the row into a fixed stack buffer (no per-token heap
+            // alloc) — `row.len() == TAG_CLASSES`, so the array fits exactly.
+            let mut exps = [0f32; crate::joint::TAG_CLASSES];
+            let mut sum = 0f32;
+            for (c, &x) in row.iter().enumerate() {
+                let e = (x - max).exp();
+                exps[c] = e;
+                sum += e;
+            }
             // Plausible-tag set with the argmax FIRST, then any runner-up that
             // clears the floor. Argmax-first lets a caller read the most-likely
             // tag as `set.first()`. A `SmallVec` keeps the common 1-3 tag set
@@ -332,7 +338,10 @@ mod cache_tests {
             assert_eq!(index_to_upos(u as usize), Some(u));
             count += 1;
         }
-        assert_eq!(count, 16, "UPOS variant count changed; update index_to_upos");
+        assert_eq!(
+            count, 16,
+            "UPOS variant count changed; update index_to_upos"
+        );
         // TAG_PAD_CLASS (16), the class-count sentinel (17), and anything else -> None.
         assert_eq!(index_to_upos(crate::joint::TAG_PAD_CLASS), None);
         assert_eq!(index_to_upos(crate::joint::TAG_CLASSES), None);

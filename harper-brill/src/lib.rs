@@ -33,11 +33,15 @@ thread_local! {
 }
 
 fn build_joint() -> JointRuntime {
-    let (model, vocab, suffix_vocab) =
-        load_joint_from_bytes(JOINT_MODEL_BIN, JOINT_CHAR_VOCAB, JOINT_SUFFIX_VOCAB, &JOINT_ARCH);
+    let (model, char_vocab, suffix_vocab) = load_joint_from_bytes(
+        JOINT_MODEL_BIN,
+        JOINT_CHAR_VOCAB,
+        JOINT_SUFFIX_VOCAB,
+        &JOINT_ARCH,
+    );
     JointRuntime::new(
         model,
-        vocab,
+        char_vocab,
         suffix_vocab,
         JOINT_ARCH.max_word,
         NonZero::new(10_000).unwrap(),

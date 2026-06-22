@@ -18,10 +18,8 @@ pub struct JointBatch {
 }
 
 impl JointBatch {
-    pub fn build(
+    pub fn build_inference(
         sents: &[Vec<String>],
-        tags: &[Vec<Option<UPOS>>],
-        np: &[Vec<bool>],
         vocab: &CharVocab,
         suffix_vocab: &SuffixVocab,
         max_word: usize,
@@ -31,9 +29,6 @@ impl JointBatch {
 
         let mut char_buf = vec![CHAR_PAD as i32; batch * max_sent * max_word];
         let mut suffix_buf = vec![SUFFIX_UNK; batch * max_sent];
-        let mut tag_buf = vec![TAG_PAD_CLASS as i32; batch * max_sent];
-        let mut np_buf = vec![0f32; batch * max_sent];
-        let mut mask_buf = vec![0f32; batch * max_sent];
         let mut real_tokens = 0usize;
 
         for (si, sent) in sents.iter().enumerate() {
@@ -42,15 +37,6 @@ impl JointBatch {
                 let enc = vocab.encode_word(word, max_word);
                 char_buf[tok * max_word..(tok + 1) * max_word].copy_from_slice(&enc);
                 suffix_buf[tok] = suffix_vocab.encode_word(word);
-                if let Some(Some(t)) = tags[si].get(wi) {
-                    tag_buf[tok] = *t as i32; // 0-based class (ADJ..VERB == 0..15)
-                }
-                np_buf[tok] = if np[si].get(wi).copied().unwrap_or(false) {
-                    1.0
-                } else {
-                    0.0
-                };
-                mask_buf[tok] = 1.0;
                 real_tokens += 1;
             }
         }
@@ -58,14 +44,48 @@ impl JointBatch {
         Self {
             char_buf,
             suffix_buf,
-            tag_buf,
-            np_buf,
-            mask_buf,
+            tag_buf: Vec::new(),
+            np_buf: Vec::new(),
+            mask_buf: Vec::new(),
             batch,
             max_sent,
             max_word,
             real_tokens,
         }
+    }
+
+    /// Build a full training batch: the model inputs (via [`Self::build_inference`])
+    /// plus the gold `tag`/`np`/`mask` label buffers used by the loss.
+    pub fn build(
+        sents: &[Vec<String>],
+        tags: &[Vec<Option<UPOS>>],
+        np: &[Vec<bool>],
+        vocab: &CharVocab,
+        suffix_vocab: &SuffixVocab,
+        max_word: usize,
+    ) -> Self {
+        let mut b = Self::build_inference(sents, vocab, suffix_vocab, max_word);
+        let n = b.batch * b.max_sent;
+        b.tag_buf = vec![TAG_PAD_CLASS as i32; n];
+        b.np_buf = vec![0f32; n];
+        b.mask_buf = vec![0f32; n];
+
+        for (si, sent) in sents.iter().enumerate() {
+            for (wi, _word) in sent.iter().enumerate() {
+                let tok = si * b.max_sent + wi;
+                if let Some(Some(t)) = tags[si].get(wi) {
+                    b.tag_buf[tok] = *t as i32; // 0-based class (ADJ..VERB == 0..15)
+                }
+                b.np_buf[tok] = if np[si].get(wi).copied().unwrap_or(false) {
+                    1.0
+                } else {
+                    0.0
+                };
+                b.mask_buf[tok] = 1.0;
+            }
+        }
+
+        b
     }
 
     pub fn char_ids<B: Backend>(&self, device: &B::Device) -> Tensor<B, 2, Int> {
@@ -79,15 +99,27 @@ impl JointBatch {
     }
 
     pub fn flat_tags<B: Backend>(&self, device: &B::Device) -> Tensor<B, 1, Int> {
+        debug_assert!(
+            !self.tag_buf.is_empty(),
+            "label buffers absent — flat_tags requires a training batch (build), not build_inference"
+        );
         Tensor::<B, 1, Int>::from_data(TensorData::from(self.tag_buf.as_slice()), device)
     }
 
     pub fn np<B: Backend>(&self, device: &B::Device) -> Tensor<B, 2> {
+        debug_assert!(
+            !self.np_buf.is_empty(),
+            "label buffers absent — np requires a training batch (build), not build_inference"
+        );
         Tensor::<B, 1>::from_data(TensorData::from(self.np_buf.as_slice()), device)
             .reshape([self.batch, self.max_sent])
     }
 
     pub fn mask<B: Backend>(&self, device: &B::Device) -> Tensor<B, 2> {
+        debug_assert!(
+            !self.mask_buf.is_empty(),
+            "label buffers absent — mask requires a training batch (build), not build_inference"
+        );
         Tensor::<B, 1>::from_data(TensorData::from(self.mask_buf.as_slice()), device)
             .reshape([self.batch, self.max_sent])
     }
