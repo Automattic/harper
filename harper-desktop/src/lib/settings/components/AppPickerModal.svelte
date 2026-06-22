@@ -12,6 +12,7 @@ export let add: (bundleId: string) => void;
 let searchResults: AppSearchResult[] = [];
 let isSearching = false;
 let debounceTimeout: number | null = null;
+let searchRequestId = 0;
 
 $: trimmedBundleId = bundleId.trim();
 $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
@@ -26,14 +27,25 @@ onMount(() => {
 });
 
 async function performSearch(query: string) {
+	const requestId = ++searchRequestId;
+
 	isSearching = true;
 	try {
-		searchResults = await Client.searchApps(query);
+		const results = await Client.searchApps(query);
+
+		if (requestId === searchRequestId && query === bundleId) {
+			searchResults = results;
+		}
 	} catch (error) {
 		console.error('Search failed:', error);
-		searchResults = [];
+
+		if (requestId === searchRequestId) {
+			searchResults = [];
+		}
 	} finally {
-		isSearching = false;
+		if (requestId === searchRequestId) {
+			isSearching = false;
+		}
 	}
 }
 
@@ -52,7 +64,7 @@ function handleInput(event: Event) {
 
 function selectApp(selectedBundleId: string) {
 	bundleId = selectedBundleId;
-	searchResults = [];
+	void performSearch(bundleId);
 }
 
 function submit() {
