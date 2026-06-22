@@ -47,6 +47,8 @@ export interface AppSearchResult {
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
+/** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
+ * Relevant because that is where the canonical state is stored. */
 export class Client {
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
@@ -199,18 +201,20 @@ export class Client {
 	}
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
 	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	const timeout = new Promise<never>((_, reject) => {
 		timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
 	});
 
-	return Promise.race([promise, timeout]).finally(() => {
+	try {
+		return await Promise.race([promise, timeout]);
+	} finally {
 		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
-	});
+	}
 }
 
 function rustDialectToDialect(dialect: RustDialect): Dialect {
