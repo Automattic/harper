@@ -81,14 +81,53 @@ use crate::{Annotator, Chunker, Tagger, UPOS};
 use lru::LruCache;
 use std::num::NonZeroUsize;
 use std::sync::Mutex;
-use strum::IntoEnumIterator;
 
 /// Map a 0-based class index to UPOS.
 /// Classes `0..=15` map to the 16 `UPOS` variants in declaration order
 /// (`ADJ`..`VERB`), i.e. the class equals the variant's discriminant.
 /// `TAG_PAD_CLASS` (16) and anything else out of range return `None`.
+///
+/// A direct `match` (jump table) rather than a scan over `UPOS::iter()`. The
+/// arms mirror the enum's declaration order; `index_to_upos_maps_classes`
+/// checks every arm against the real discriminant, so a reorder or a new
+/// variant fails the test loudly instead of silently mis-tagging.
 pub fn index_to_upos(class: usize) -> Option<UPOS> {
-    UPOS::iter().find(|u| *u as usize == class)
+    use UPOS::*;
+    Some(match class {
+        0 => ADJ,
+        1 => ADP,
+        2 => ADV,
+        3 => AUX,
+        4 => CCONJ,
+        5 => DET,
+        6 => INTJ,
+        7 => NOUN,
+        8 => NUM,
+        9 => PART,
+        10 => PRON,
+        11 => PROPN,
+        12 => PUNCT,
+        13 => SCONJ,
+        14 => SYM,
+        15 => VERB,
+        _ => return None,
+    })
+}
+
+/// Index of the maximum value in `row`, first occurrence on ties. Mirrors
+/// burn's ndarray `argmax` (a strictly-greater fold from index 0), so the
+/// chosen tag is identical to the previous tensor-`argmax(2)` path including
+/// tie-breaking. `row` must be non-empty.
+fn argmax_first(row: &[f32]) -> usize {
+    let mut am = 0;
+    let mut max = row[0];
+    for (i, &v) in row.iter().enumerate() {
+        if v > max {
+            max = v;
+            am = i;
+        }
+    }
+    am
 }
 
 /// Sentence (token list) -> cached annotation: per-token plausible-tag sets
@@ -163,11 +202,10 @@ impl JointRuntime {
             self.model
                 .forward(b.char_ids(&device), b.suffix_ids(&device), 1, b.max_sent);
 
-        // tag_logits: [1, max_sent, TAG_CLASSES]. The tensor argmax (kept for
-        // identical tie-breaking) gives the tag; the raw logits also feed the
-        // per-token softmax for the top-k set.
-        let classes = tag_logits.clone().argmax(2).into_data();
-        let class_vec: Vec<i64> = classes.iter::<i64>().collect();
+        // tag_logits: [1, max_sent, TAG_CLASSES] -> read ONCE into a flat buffer.
+        // The chosen tag (argmax) and the softmax top-k are both derived per row
+        // from `flat` below via `argmax_first`, so there is no separate argmax
+        // tensor op and no clone of the logits tensor.
         let flat: Vec<f32> = tag_logits.into_data().iter::<f32>().collect();
         // chunk_logits: [1, max_sent]
         let np_vec: Vec<f32> = chunk_logits.into_data().iter::<f32>().collect();
@@ -177,10 +215,10 @@ impl JointRuntime {
         let mut topk: Vec<TagSet> = Vec::with_capacity(n);
         let mut np = Vec::with_capacity(n);
         for i in 0..n {
-            let am = class_vec[i] as usize; // argmax class (== the chosen tag)
-
             let row = &flat[i * tc..(i + 1) * tc];
-            let max = row.iter().copied().fold(f32::NEG_INFINITY, f32::max);
+            // Chosen tag = argmax of this row; its value doubles as the softmax shift.
+            let am = argmax_first(row);
+            let max = row[am];
             let exps: Vec<f32> = row.iter().map(|x| (x - max).exp()).collect();
             let sum: f32 = exps.iter().sum();
             // Plausible-tag set with the argmax FIRST, then any runner-up that
@@ -285,14 +323,31 @@ mod cache_tests {
 
     #[test]
     fn index_to_upos_maps_classes() {
-        // class 0 -> first variant -> UPOS::ADJ
-        assert_eq!(index_to_upos(0), Some(crate::UPOS::ADJ));
-        // class 15 -> last variant -> UPOS::VERB
-        assert_eq!(index_to_upos(15), Some(crate::UPOS::VERB));
-        // TAG_PAD_CLASS = 17 -> out of range -> None
+        use strum::IntoEnumIterator;
+        // Drift guard: every UPOS variant must round-trip through its own
+        // discriminant, keeping index_to_upos's match arms in lock-step with the
+        // enum's declaration order. A reorder or a new variant fails here.
+        let mut count = 0;
+        for u in crate::UPOS::iter() {
+            assert_eq!(index_to_upos(u as usize), Some(u));
+            count += 1;
+        }
+        assert_eq!(count, 16, "UPOS variant count changed; update index_to_upos");
+        // TAG_PAD_CLASS (16), the class-count sentinel (17), and anything else -> None.
         assert_eq!(index_to_upos(crate::joint::TAG_PAD_CLASS), None);
-        // arbitrary large index -> None
+        assert_eq!(index_to_upos(crate::joint::TAG_CLASSES), None);
         assert_eq!(index_to_upos(999), None);
+    }
+
+    #[test]
+    fn argmax_first_matches_burn_tiebreak() {
+        // Strictly-greater fold => first occurrence of the max wins on ties,
+        // exactly like burn's ndarray argmax (base.rs `e > acc.0`).
+        assert_eq!(argmax_first(&[1.0, 3.0, 2.0]), 1);
+        assert_eq!(argmax_first(&[3.0, 3.0, 1.0]), 0); // tie at 0,1 -> first (0)
+        assert_eq!(argmax_first(&[1.0, 3.0, 3.0]), 1); // tie at 1,2 -> first (1)
+        assert_eq!(argmax_first(&[-1.0, -3.0, -1.0]), 0); // negatives, tie -> first (0)
+        assert_eq!(argmax_first(&[5.0]), 0);
     }
 }
 
