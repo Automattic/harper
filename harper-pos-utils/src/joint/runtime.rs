@@ -93,24 +93,23 @@ use std::sync::Mutex;
 /// checks every arm against the real discriminant, so a reorder or a new
 /// variant fails the test loudly instead of silently mis-tagging.
 pub fn index_to_upos(class: usize) -> Option<UPOS> {
-    use UPOS::*;
     Some(match class {
-        0 => ADJ,
-        1 => ADP,
-        2 => ADV,
-        3 => AUX,
-        4 => CCONJ,
-        5 => DET,
-        6 => INTJ,
-        7 => NOUN,
-        8 => NUM,
-        9 => PART,
-        10 => PRON,
-        11 => PROPN,
-        12 => PUNCT,
-        13 => SCONJ,
-        14 => SYM,
-        15 => VERB,
+        0 => UPOS::ADJ,
+        1 => UPOS::ADP,
+        2 => UPOS::ADV,
+        3 => UPOS::AUX,
+        4 => UPOS::CCONJ,
+        5 => UPOS::DET,
+        6 => UPOS::INTJ,
+        7 => UPOS::NOUN,
+        8 => UPOS::NUM,
+        9 => UPOS::PART,
+        10 => UPOS::PRON,
+        11 => UPOS::PROPN,
+        12 => UPOS::PUNCT,
+        13 => UPOS::SCONJ,
+        14 => UPOS::SYM,
+        15 => UPOS::VERB,
         _ => return None,
     })
 }
@@ -318,8 +317,7 @@ mod cache_tests {
         assert_eq!(tags.len(), 2);
         assert_eq!(np.len(), 2);
         // The unified Annotator returns the same NP flags as the Chunker view,
-        // and its tag sets lead with the Tagger's argmax (all read one cached
-        // pass).
+        // and its tag sets lead with the Tagger's argmax (all read one cached pass).
         let (a_sets, a_np) = Annotator::annotate(&*rt, &sentence);
         assert_eq!(np, a_np);
         assert_eq!(a_sets.len(), 2);

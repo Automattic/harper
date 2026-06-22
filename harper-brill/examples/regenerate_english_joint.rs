@@ -16,8 +16,7 @@
 //! splits of the other treebanks are left untouched.
 //!
 //! ```bash
-//! cargo run --release -p harper-embedded-dict \
-//!   --example regenerate_english_joint --features training
+//! cargo run --release -p harper-brill --example regenerate_english_joint --features training
 //! ```
 
 use std::num::NonZeroUsize;
@@ -26,13 +25,9 @@ use std::process::Command;
 use std::rc::Rc;
 use std::time::Instant;
 
-use burn::backend::wgpu::RuntimeOptions;
-use burn::backend::wgpu::graphics::Metal;
-use burn::backend::wgpu::{WgpuDevice, init_setup};
+use burn::backend::wgpu::{RuntimeOptions, WgpuDevice, graphics::Metal, init_setup};
 use burn::backend::{Autodiff, wgpu::Wgpu};
 
-use harper_pos_utils::Annotator;
-use harper_pos_utils::UPOS;
 use harper_pos_utils::conllu_utils::extract_records_from_files;
 use harper_pos_utils::joint::char_vocab::CharVocab;
 use harper_pos_utils::joint::eval::{np_prf1, upos_accuracy};
@@ -42,6 +37,7 @@ use harper_pos_utils::joint::runtime::{
 };
 use harper_pos_utils::joint::suffix_vocab::SuffixVocab;
 use harper_pos_utils::joint::train::{JointTrainConfig, train_joint};
+use harper_pos_utils::{Annotator, UPOS};
 
 /// Architecture constants — MUST match what harper-brill embeds (`JOINT_ARCH`).
 /// Morphology-aware char encoder: multi-width convs + a word-final suffix
@@ -66,7 +62,7 @@ const UD_BRANCH: &str = "master";
 struct Treebank {
     repo: &'static str,
     train: &'static str,
-    dev: Option<&'static str>,
+    test: Option<&'static str>,
 }
 
 /// Train on all four train splits; hold out EWT dev for eval.
@@ -74,22 +70,22 @@ const TREEBANKS: &[Treebank] = &[
     Treebank {
         repo: "UD_English-EWT",
         train: "en_ewt-ud-train.conllu",
-        dev: Some("en_ewt-ud-dev.conllu"),
+        test: Some("en_ewt-ud-test.conllu"),
     },
     Treebank {
         repo: "UD_English-GUM",
         train: "en_gum-ud-train.conllu",
-        dev: None,
+        test: Some("en_gum-ud-test.conllu"),
     },
     Treebank {
         repo: "UD_English-ParTUT",
         train: "en_partut-ud-train.conllu",
-        dev: None,
+        test: Some("en_partut-ud-test.conllu"),
     },
     Treebank {
         repo: "UD_English-LinES",
         train: "en_lines-ud-train.conllu",
-        dev: None,
+        test: Some("en_lines-ud-test.conllu"),
     },
 ];
 
@@ -140,17 +136,16 @@ fn main() {
     // Fetch (or reuse cached) every treebank's train split, plus the held-out
     // dev split from whichever treebank declares one.
     let mut train_files: Vec<PathBuf> = Vec::new();
-    let mut dev_file: Option<PathBuf> = None;
+    let mut test_files: Vec<PathBuf> = Vec::new();
     for tb in TREEBANKS {
         train_files.push(ensure_file(&cache, tb.repo, tb.train));
-        if let Some(dev) = tb.dev {
-            dev_file = Some(ensure_file(&cache, tb.repo, dev));
+        if let Some(f) = tb.test {
+            test_files.push(ensure_file(&cache, tb.repo, f));
         }
     }
-    let dev_file = dev_file.expect("a treebank must supply the held-out dev split");
 
     eprintln!("  train files: {}", train_files.len());
-    eprintln!("  dev file:    {}", dev_file.display());
+    eprintln!("  test file:    {}", test_files.len());
 
     let (mut sents, mut tags, mut np) = extract_records_from_files(&train_files);
 
@@ -164,16 +159,16 @@ fn main() {
     tags.extend(inj_t);
     np.extend(inj_n);
 
-    let (dev_s, dev_t, dev_n) = extract_records_from_files(&[&dev_file]);
+    let (test_s, test_t, test_n) = extract_records_from_files(&test_files);
     // Build vocabs from the combined corpus so injected words/suffixes are in-vocab.
     let char_vocab = CharVocab::build(&sents);
     let suffix_vocab = SuffixVocab::build(&sents, ARCH.suffix_k, SUFFIX_VOCAB_CAP);
 
     eprintln!(
-        "  train sents: {} (+{} injected)  dev sents: {}",
+        "  train sents: {} (+{} injected)  test sents: {}",
         sents.len(),
         n_inj,
-        dev_s.len()
+        test_s.len()
     );
     eprintln!(
         "  char vocab:  {}  suffix vocab: {}",
@@ -213,15 +208,8 @@ fn main() {
     );
 
     let t = Instant::now();
-    let model = train_joint::<Autodiff<Wgpu>>(
-        &sents,
-        &tags,
-        &np,
-        &char_vocab,
-        &suffix_vocab,
-        &cfg,
-        device,
-    );
+    let model =
+        train_joint::<Autodiff<Wgpu>>(&sents, &tags, &np, &char_vocab, &suffix_vocab, &cfg, device);
     eprintln!("trained in {:.1?}", t.elapsed());
 
     // Persist artifacts (model.mpk + char_vocab.json + suffix_vocab.json).
@@ -245,7 +233,7 @@ fn main() {
         NonZeroUsize::new(10_000).unwrap(),
     ));
 
-    let pred_tags: Vec<Vec<Option<UPOS>>> = dev_s
+    let pred_tags: Vec<Vec<Option<UPOS>>> = test_s
         .iter()
         .map(|s| {
             rt.annotate(s)
@@ -255,10 +243,10 @@ fn main() {
                 .collect()
         })
         .collect();
-    let pred_np: Vec<Vec<bool>> = dev_s.iter().map(|s| rt.annotate(s).1).collect();
+    let pred_np: Vec<Vec<bool>> = test_s.iter().map(|s| rt.annotate(s).1).collect();
 
-    let acc = upos_accuracy(&pred_tags, &dev_t);
-    let m = np_prf1(&pred_np, &dev_n);
+    let acc = upos_accuracy(&pred_tags, &test_t);
+    let m = np_prf1(&pred_np, &test_n);
     println!(
         "[dev] UPOS acc = {:.4}  NP prec = {:.4}  NP rec = {:.4}  NP F1 = {:.4}",
         acc, m.precision, m.recall, m.f1

@@ -33,8 +33,3 @@ training = [
 name = "regenerate_english_joint"
 path = "examples/regenerate_english_joint.rs"
 required-features = ["training"]
-
-[[example]]
-name = "joint_determinism_check"
-path = "examples/joint_determinism_check.rs"
-required-features = ["training"]
