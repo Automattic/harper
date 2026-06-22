@@ -39,7 +39,9 @@ use std::{
 };
 
 use crate::config::{Config, Integration};
-use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
+use crate::os_broker::{
+    AccessibilityPermissionStatus, AppSearchResult, OsBroker, in_memory_app_search_results,
+};
 use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
@@ -468,16 +470,14 @@ impl OsBroker for MacBroker {
         let query = query.trim();
         let installed_apps = self.installed_app_search_results()?;
 
-        if query.is_empty() {
-            return Ok(installed_apps);
-        }
+        let in_memory_results = in_memory_app_search_results(&installed_apps, query);
 
-        if let Some(result) = installed_apps
-            .iter()
-            .find(|result| result.bundle_id == query)
-            .cloned()
+        if query.is_empty()
+            || in_memory_results
+                .iter()
+                .any(|result| result.bundle_id == query)
         {
-            return Ok(vec![result]);
+            return Ok(in_memory_results);
         }
 
         if let Some(app_path) = application_path_for_bundle_id(query) {
@@ -487,14 +487,7 @@ impl OsBroker for MacBroker {
             ]);
         }
 
-        let lower_query = query.to_lowercase();
-        Ok(installed_apps
-            .into_iter()
-            .filter(|result| {
-                result.name.to_lowercase().contains(&lower_query)
-                    || result.bundle_id.to_lowercase().contains(&lower_query)
-            })
-            .collect())
+        Ok(in_memory_results)
     }
 }
 

@@ -74,6 +74,36 @@ pub struct AppSearchResult {
     pub bundle_id: String,
 }
 
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
+pub(crate) fn in_memory_app_search_results(
+    installed_apps: &[AppSearchResult],
+    query: &str,
+) -> Vec<AppSearchResult> {
+    let query = query.trim();
+
+    if query.is_empty() {
+        return installed_apps.to_vec();
+    }
+
+    if let Some(result) = installed_apps
+        .iter()
+        .find(|result| result.bundle_id == query)
+        .cloned()
+    {
+        return vec![result];
+    }
+
+    let lower_query = query.to_lowercase();
+    installed_apps
+        .iter()
+        .filter(|result| {
+            result.name.to_lowercase().contains(&lower_query)
+                || result.bundle_id.to_lowercase().contains(&lower_query)
+        })
+        .cloned()
+        .collect()
+}
+
 fn fallback_integration_display_name(bundle_id: &str) -> String {
     let trimmed = bundle_id.trim();
 
@@ -113,7 +143,28 @@ impl OsBroker for NoopBroker {
 
 #[cfg(test)]
 mod tests {
-    use super::fallback_integration_display_name;
+    use super::{AppSearchResult, fallback_integration_display_name, in_memory_app_search_results};
+
+    #[test]
+    fn exact_bundle_id_search_returns_the_matching_app() {
+        let results = in_memory_app_search_results(
+            &[
+                AppSearchResult {
+                    name: "TextEdit".to_string(),
+                    bundle_id: "com.apple.TextEdit".to_string(),
+                },
+                AppSearchResult {
+                    name: "TextEdit Helper".to_string(),
+                    bundle_id: "com.example.TextEditHelper".to_string(),
+                },
+            ],
+            "com.apple.TextEdit",
+        );
+
+        assert_eq!(results.len(), 1);
+        assert_eq!(results[0].name, "TextEdit");
+        assert_eq!(results[0].bundle_id, "com.apple.TextEdit");
+    }
 
     #[test]
     fn fallback_handles_empty_bundle_ids() {
