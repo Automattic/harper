@@ -129,10 +129,10 @@ fn modifier_number(token: &Token, document: &Document) -> ModifierNumber {
     }
 
     if token.kind.is_quantifier() {
-        return if matches!(word.as_str(), "each" | "every") {
-            ModifierNumber::Singular
-        } else {
-            ModifierNumber::Plural
+        return match word.as_str() {
+            "each" | "every" => ModifierNumber::Singular,
+            "both" | "few" | "fewer" | "many" | "multiple" | "several" => ModifierNumber::Plural,
+            _ => ModifierNumber::Unknown,
         };
     }
 
@@ -296,6 +296,20 @@ mod tests {
     #[test]
     fn allows_singular_number_with_singular_criterion() {
         assert_lint_count("1 criterion was enough.", PluralCriterionPhenomenon, 0)
+    }
+
+    #[test]
+    fn allows_comparative_modifier_with_singular_phenomenon() {
+        assert_lint_count(
+            "To the wingless a more interesting phenomenon is their dissimilarity.",
+            PluralCriterionPhenomenon,
+            0,
+        )
+    }
+
+    #[test]
+    fn allows_ambiguous_quantifier_with_singular_criterion() {
+        assert_lint_count("No criterion was enough.", PluralCriterionPhenomenon, 0)
     }
 
     #[test]
