@@ -3902,3 +3902,23 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
     );
 }
+
+// -to to-
+#[test]
+fn corrects_to_to() {
+    assert_suggestion_result(
+        "I need to add that to my to to list first.",
+        lint_group(),
+        "I need to add that to my to do list first.",
+    );
+}
+
+// -to-to-
+#[test]
+fn corrects_to_to_with_hyphen() {
+    assert_suggestion_result(
+        "I need to add that to my to-to list first.",
+        lint_group(),
+        "I need to add that to my to-do list first.",
+    );
+}
