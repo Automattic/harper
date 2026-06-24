@@ -1728,6 +1728,13 @@
 								"state": true,
 								"label": "Worst Case Scenario"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InDemandInDepth",
+								"state": true,
+								"label": "In Demand / In Depth"
+							}
 						}
 					]
 				}
@@ -2339,6 +2346,13 @@
 								"state": true,
 								"label": "Wok Verb Typo"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CrossPlatform",
+								"state": true,
+								"label": "Cross Platform"
+							}
 						}
 					]
 				}
@@ -2775,6 +2789,13 @@
 								"name": "TheTheToThatThe",
 								"state": true,
 								"label": "The The To That The"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hazzle",
+								"state": true,
+								"label": "Hazzle"
 							}
 						}
 					]
@@ -3803,6 +3824,13 @@
 								"name": "ComplainAsNoun",
 								"state": true,
 								"label": "Complain As Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ReadsAndWrites",
+								"state": true,
+								"label": "Reads and Writes"
 							}
 						}
 					]
@@ -5164,6 +5192,27 @@
 								"name": "LeavingInDroves",
 								"state": true,
 								"label": "Leaving In Droves"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AndSuch",
+								"state": true,
+								"label": "And Such"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RunIntoProblemsOrTrouble",
+								"state": true,
+								"label": "Run Into Problems / Trouble"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InDueCourse",
+								"state": true,
+								"label": "In Due Course"
 							}
 						}
 					]
