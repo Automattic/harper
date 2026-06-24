@@ -1,6 +1,6 @@
 use crate::{Span, Token};
 
-use super::Expr;
+use super::{AsBoxedExpr, Expr};
 
 /// An expression that wraps other expressions to build a filter-line pipeline.
 ///
@@ -14,13 +14,13 @@ use super::Expr;
 ///
 /// ``` rust
 /// use harper_core::patterns::WhitespacePattern;
-/// use harper_core::expr::{SequenceExpr, Filter, ExprExt};
+/// use harper_core::expr::{AsBoxedExpr, Expr, SequenceExpr, Filter, ExprExt};
 /// use harper_core::{Span, Document};
 ///
 /// let a = SequenceExpr::word_seq(&["chock", "full"]);
 /// let b = WhitespacePattern;
 ///
-/// let filter = Filter::new(vec![Box::new(a), Box::new(b)]);
+/// let filter = Filter::new([Box::new(a) as Box<dyn Expr>, Box::new(b)]);
 /// let doc = Document::new_markdown_default_curated("This test is chock full of insights.");
 ///
 /// let matches: Vec<_> = filter.iter_matches_in_doc(&doc).collect();
@@ -31,8 +31,10 @@ pub struct Filter {
 }
 
 impl Filter {
-    pub fn new(steps: Vec<Box<dyn Expr>>) -> Self {
-        Self { steps }
+    pub fn new(steps: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
+        Self {
+            steps: steps.into_iter().map(|s| s.into_boxed_expr()).collect(),
+        }
     }
 }
 

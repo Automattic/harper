@@ -20,9 +20,9 @@ impl Default for ThisTypeOfThing {
                 )
                 .t_aco("of")
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     // "thing" is common in this construction and won't be part of a compound noun.
-                    Box::new(WordSet::new(&["thing", "things"])),
+                    Box::new(WordSet::new(&["thing", "things"])) as Box<dyn Expr>,
                     // Other singular nouns may be part of hard-to-determine compound nouns, but plural nouns won't.
                     Box::new(
                         SequenceExpr::default()

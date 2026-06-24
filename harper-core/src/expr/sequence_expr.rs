@@ -2,7 +2,7 @@ use paste::paste;
 
 use crate::{
     CharStringExt, Lrc, Span, Token, TokenKind,
-    expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
+    expr::{AsBoxedExpr, FirstMatchOf, FixedPhrase, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
 };
 
@@ -140,12 +140,12 @@ impl SequenceExpr {
     // Multiple expressions
 
     /// Match the first of multiple expressions.
-    pub fn any_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn any_of(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         Self::default().then_any_of(exprs)
     }
 
     /// Match the longest of multiple expressions.
-    pub fn longest_of(exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn longest_of(exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         Self::default().then_longest_of(exprs)
     }
 
@@ -183,7 +183,7 @@ impl SequenceExpr {
     /// If more than one of the provided expressions match, this function provides no guarantee
     /// as to which match will end up being used. If you need to get the longest of multiple
     /// matches, use [`Self::then_longest_of()`] instead.
-    pub fn then_any_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn then_any_of(mut self, exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         self.exprs.push(Box::new(FirstMatchOf::new(exprs)));
         self
     }
@@ -192,7 +192,7 @@ impl SequenceExpr {
     ///
     /// If you don't need the longest match, prefer using the short-circuiting
     /// [`Self::then_any_of()`] instead.
-    pub fn then_longest_of(mut self, exprs: Vec<Box<dyn Expr>>) -> Self {
+    pub fn then_longest_of(mut self, exprs: impl IntoIterator<Item = impl AsBoxedExpr>) -> Self {
         self.exprs.push(Box::new(LongestMatchOf::new(exprs)));
         self
     }
@@ -687,7 +687,7 @@ where
 mod tests {
     use crate::{
         Document, TokenKind,
-        expr::{AnchorEnd, ExprExt, SequenceExpr},
+        expr::{AnchorEnd, Expr, ExprExt, SequenceExpr},
         linting::tests::SpanVecExt,
     };
 
@@ -720,8 +720,8 @@ mod tests {
 
     #[test]
     fn flag_foo_followed_by_bar_or_at_end_1() {
-        let expr = SequenceExpr::aco("foo").then_any_of(vec![
-            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
             Box::new(AnchorEnd),
         ]);
 
@@ -740,8 +740,8 @@ mod tests {
 
     #[test]
     fn flag_foo_followed_by_bar_or_at_end_2() {
-        let expr = SequenceExpr::aco("foo").then_any_of(vec![
-            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
             Box::new(AnchorEnd),
         ]);
 
@@ -760,8 +760,8 @@ mod tests {
 
     #[test]
     fn flag_foo_followed_by_bar_or_at_end_3() {
-        let expr = SequenceExpr::aco("foo").then_any_of(vec![
-            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)),
+        let expr = SequenceExpr::aco("foo").then_any_of([
+            Box::new(SequenceExpr::whitespace().t_aco("bar").then(AnchorEnd)) as Box<dyn Expr>,
             Box::new(AnchorEnd),
         ]);
 

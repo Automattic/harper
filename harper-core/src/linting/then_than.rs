@@ -34,7 +34,7 @@ impl ThenThan {
                         .t_ws()
                         .then_unless(Word::new("that")),
                 ),
-            ])),
+            ])) as Box<dyn Expr>,
             // Exceptions to the rule.
             Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
         ]);
