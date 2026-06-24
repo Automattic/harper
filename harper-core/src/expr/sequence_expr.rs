@@ -3,7 +3,7 @@ use paste::paste;
 use crate::{
     CharStringExt, Lrc, Span, Token, TokenKind,
     expr::{FirstMatchOf, FixedPhrase, LongestMatchOf},
-    patterns::{AnyPattern, IndefiniteArticle, WhitespacePattern, Word, WordSet},
+    patterns::{AnyPattern, IndefiniteArticle, RelativePronoun, WhitespacePattern, Word, WordSet},
 };
 
 use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
@@ -596,6 +596,10 @@ impl SequenceExpr {
     gen_then_from_is!(third_person_plural_pronoun);
     gen_then_from_is!(subject_pronoun);
     gen_then_from_is!(object_pronoun);
+
+    pub fn then_relative_pronoun(self) -> Self {
+        self.then(RelativePronoun::default())
+    }
 
     // Verbs
 
