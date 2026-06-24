@@ -13,7 +13,7 @@ pub struct ThenThan {
 impl ThenThan {
     pub fn new() -> Self {
         let comparison = All::new(vec![
-            Box::new(FirstMatchOf::new(vec![
+            Box::new(FirstMatchOf::new([
                 // Comparative form of adjective
                 Box::new(
                     SequenceExpr::with(Box::new(|tok: &Token, source: &[char]| {
@@ -40,8 +40,8 @@ impl ThenThan {
         ]);
 
         Self {
-            expr: FirstMatchOf::new(vec![
-                Box::new(comparison),
+            expr: FirstMatchOf::new([
+                Box::new(comparison) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("easier said then done")),
                 Box::new(FixedPhrase::from_phrase("now and than")),
                 Box::new(FixedPhrase::from_phrase("other then")),
