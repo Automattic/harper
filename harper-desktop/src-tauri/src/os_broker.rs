@@ -43,6 +43,22 @@ pub trait OsBroker {
             .unwrap_or_else(|| fallback_integration_display_name(bundle_id))
     }
 
+    /// Returns the bundle identifiers for installed graphical applications.
+    ///
+    /// Implementations should return stable bundle ID strings, sorted and deduplicated where
+    /// possible. Platforms that do not support bundle IDs should return an error.
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        Err("Listing installed application bundle IDs is only supported on macOS.".to_string())
+    }
+
+    /// Returns the application icon for `bundle_id` encoded as PNG bytes.
+    ///
+    /// The broker returns raw bytes so callers can choose their own transport format, such as a
+    /// Tauri command converting them into a data URL.
+    fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String> {
+        Err("Reading application icons by bundle ID is only supported on macOS.".to_string())
+    }
+
     fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
         Err("Launching apps by bundle ID is only supported on macOS.".to_string())
     }
@@ -56,6 +72,36 @@ pub trait OsBroker {
 pub struct AppSearchResult {
     pub name: String,
     pub bundle_id: String,
+}
+
+#[cfg_attr(not(target_os = "macos"), allow(dead_code))]
+pub(crate) fn in_memory_app_search_results(
+    installed_apps: &[AppSearchResult],
+    query: &str,
+) -> Vec<AppSearchResult> {
+    let query = query.trim();
+
+    if query.is_empty() {
+        return installed_apps.to_vec();
+    }
+
+    if let Some(result) = installed_apps
+        .iter()
+        .find(|result| result.bundle_id == query)
+        .cloned()
+    {
+        return vec![result];
+    }
+
+    let lower_query = query.to_lowercase();
+    installed_apps
+        .iter()
+        .filter(|result| {
+            result.name.to_lowercase().contains(&lower_query)
+                || result.bundle_id.to_lowercase().contains(&lower_query)
+        })
+        .cloned()
+        .collect()
 }
 
 fn fallback_integration_display_name(bundle_id: &str) -> String {
@@ -78,6 +124,7 @@ fn fallback_integration_display_name(bundle_id: &str) -> String {
 /// This lets the highlighter compile on non-macOS platforms while making it explicit that there is
 /// currently no accessibility or cursor integration there.
 #[cfg(not(target_os = "macos"))]
+#[derive(Default)]
 pub struct NoopBroker;
 
 #[cfg(not(target_os = "macos"))]
@@ -96,7 +143,28 @@ impl OsBroker for NoopBroker {
 
 #[cfg(test)]
 mod tests {
-    use super::fallback_integration_display_name;
+    use super::{AppSearchResult, fallback_integration_display_name, in_memory_app_search_results};
+
+    #[test]
+    fn exact_bundle_id_search_returns_the_matching_app() {
+        let results = in_memory_app_search_results(
+            &[
+                AppSearchResult {
+                    name: "TextEdit".to_string(),
+                    bundle_id: "com.apple.TextEdit".to_string(),
+                },
+                AppSearchResult {
+                    name: "TextEdit Helper".to_string(),
+                    bundle_id: "com.example.TextEditHelper".to_string(),
+                },
+            ],
+            "com.apple.TextEdit",
+        );
+
+        assert_eq!(results.len(), 1);
+        assert_eq!(results[0].name, "TextEdit");
+        assert_eq!(results[0].bundle_id, "com.apple.TextEdit");
+    }
 
     #[test]
     fn fallback_handles_empty_bundle_ids() {
