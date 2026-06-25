@@ -3160,9 +3160,9 @@
 						},
 						{
 							"Bool": {
-								"name": "SelfHarmOneself",
+								"name": "RedundantSelf",
 								"state": true,
-								"label": "Self Harm Oneself"
+								"label": "Redundant Self"
 							}
 						},
 						{
