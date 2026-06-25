@@ -37,15 +37,11 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateSettings() {
+		this.settings = undefined;
 		this.state.getSettings().then((v) => {
-			const shouldRedrawWholeTab = this.settings == null;
 			this.settings = v;
 			this.updateToggleAllRulesButton();
-			if (shouldRedrawWholeTab) {
-				this.display(false);
-				return;
-			}
-			this.rerenderLintSettings();
+			this.display(false);
 		});
 	}
 
@@ -74,7 +70,6 @@ export class HarperSettingTab extends PluginSettingTab {
 	display(update = true) {
 		if (update) {
 			this.update();
-			this.display(false);
 		}
 
 		const { containerEl } = this;

@@ -20,9 +20,7 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::aco("worth")
-                .t_ws()
-                .t_aco("to")
+            expr: SequenceExpr::word_seq(&["worth", "to"])
                 .t_ws()
                 .then_verb_lemma(),
             dict,

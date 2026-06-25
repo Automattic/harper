@@ -1,11 +1,12 @@
 use std::sync::Arc;
 
 use super::{ExprLinter, Lint, LintKind};
-use crate::Token;
-use crate::expr::{Expr, SequenceExpr};
-use crate::linting::Suggestion;
-use crate::linting::expr_linter::Chunk;
-use crate::patterns::{ImpliesQuantity, WordSet};
+use crate::{
+    expr::{Expr, SequenceExpr},
+    linting::{Suggestion, expr_linter::Chunk},
+    patterns::{ImpliesQuantity, WordSet},
+    {CharStringExt, Token},
+};
 
 pub struct ExpandMemoryShorthands {
     expr: SequenceExpr,
@@ -73,7 +74,24 @@ impl ExprLinter for ExpandMemoryShorthands {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
+    // use crate::linting::debug::format_tokens;
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        // #3715 fix "B plus/ B minus grade:"
+        if matched_tokens
+            .last()
+            .is_some_and(|t| t.get_ch(source).eq_ch(&['b']))
+            && context
+                .and_then(|(_, after)| after.first())
+                .is_some_and(|hy| hy.kind.is_plus() || hy.kind.is_hyphen())
+        {
+            return None;
+        }
+
         let offending_span = matched_tokens.last()?.span;
         let implies_plural = ImpliesQuantity::implies_plurality(matched_tokens.first()?, source);
 
@@ -111,7 +129,7 @@ impl ExprLinter for ExpandMemoryShorthands {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::ExpandMemoryShorthands;
 
@@ -237,5 +255,10 @@ mod tests {
             ExpandMemoryShorthands::new(),
             0,
         );
+    }
+
+    #[test]
+    fn dont_flag_is_a_b_plus_3715() {
+        assert_no_lints("Is a B+ a 3.3 GPA?", ExpandMemoryShorthands::new());
     }
 }
