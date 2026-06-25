@@ -5161,6 +5161,13 @@
 						},
 						{
 							"Bool": {
+								"name": "JumpTheGun",
+								"state": true,
+								"label": "Jump The Gun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
