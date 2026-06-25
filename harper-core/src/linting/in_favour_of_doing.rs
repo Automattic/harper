@@ -30,7 +30,7 @@ impl ExprLinter for InFavourOfDoing {
             span: toks[fav_idx].span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::InsertAfter(" of".chars().collect())],
-            message: "The word `of` is missing.".to_string(),
+            message: "The word `of` is missing.".to_owned(),
             ..Default::default()
         })
     }

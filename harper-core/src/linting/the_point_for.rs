@@ -60,7 +60,7 @@ impl ExprLinter for ThePointFor {
                 "of",
                 forspan.get_content(src),
             )],
-            message: "Did you mean `the point of`?".to_string(),
+            message: "Did you mean `the point of`?".to_owned(),
             ..Default::default()
         })
     }
