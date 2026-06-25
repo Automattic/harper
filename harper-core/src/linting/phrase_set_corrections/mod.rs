@@ -865,6 +865,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "LevelOfDetails" => (
+            &[
+                (&["level of details"], &["level of detail", "levels of detail"]),
+                (&["level-of-details"], &["level-of-detail", "levels-of-details"]),
+                (&["levels of details"], &["levels of detail"])
+            ],
+            "For multiple levels, pluralize `level` instead of `detail`. `Detail` remains singular whether one or multiple levels.",
+            "Corrects `level of details` to `level of detail` or `levels of detail`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
