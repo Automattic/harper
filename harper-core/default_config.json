@@ -5189,6 +5189,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MassExodus",
+								"state": true,
+								"label": "Mass Exodus"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LeavingInDroves",
 								"state": true,
 								"label": "Leaving In Droves"
