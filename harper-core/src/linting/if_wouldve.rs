@@ -16,12 +16,12 @@ impl Default for IfWouldve {
                 .t_ws()
                 .then(NominalPhrase)
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     Box::new(
                         SequenceExpr::word_set(&["would", "had"])
                             .t_ws()
                             .then_word_set(&["have", "of"]),
-                    ),
+                    ) as Box<dyn Expr>,
                     Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
                 ])
                 .t_ws()
