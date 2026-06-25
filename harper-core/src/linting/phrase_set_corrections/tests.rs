@@ -2876,6 +2876,53 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// LevelOfDetails
+
+#[test]
+fn corrects_level_of_details_singular_contrived() {
+    assert_suggestion_result(
+        "The model has a high level of details.",
+        lint_group(),
+        "The model has a high level of detail.",
+    );
+}
+
+#[test]
+fn corrects_levels_of_details_plural_contrived() {
+    assert_suggestion_result(
+        "The game uses several level of details to save memory.",
+        lint_group(),
+        "The game uses several levels of detail to save memory.",
+    );
+}
+
+#[test]
+fn corrects_level_of_details_singular_real_world() {
+    assert_suggestion_result(
+        "How to implement a level of details visualizer for 3D meshes?",
+        lint_group(),
+        "How to implement a level of detail visualizer for 3D meshes?",
+    );
+}
+
+#[test]
+fn corrects_level_of_details_plural_real_world() {
+    assert_suggestion_result(
+        "LOD's (Level of details) are a set of lower models used for the purpose of optimisation",
+        lint_group(),
+        "LOD's (Levels of detail) are a set of lower models used for the purpose of optimisation",
+    );
+}
+
+#[test]
+fn corrects_levels_of_details_real_world() {
+    assert_suggestion_result(
+        "The file completion uses two levels of details to optimize performance.",
+        lint_group(),
+        "The file completion uses two levels of detail to optimize performance.",
+    );
+}
+
 // MakeItSeem
 
 #[test]

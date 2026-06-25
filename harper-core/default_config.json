@@ -892,9 +892,9 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandDeref",
+								"name": "ExpandDereference",
 								"state": true,
-								"label": "Expand Deref"
+								"label": "Expand Dereference"
 							}
 						},
 						{
@@ -1343,6 +1343,27 @@
 								"name": "ExpandVulnerability",
 								"state": true,
 								"label": "Expand Vulnerability"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandConfiguration",
+								"state": true,
+								"label": "Expand Configuration"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPerformance",
+								"state": true,
+								"label": "Expand Performance"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPreference",
+								"state": true,
+								"label": "Expand Preference"
 							}
 						},
 						{
@@ -3331,6 +3352,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LevelOfDetails",
+								"state": true,
+								"label": "Level of Details"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ProgressiveNeedsBe",
 								"state": true,
 								"label": "Progressive Needs Be"
@@ -3824,6 +3852,13 @@
 								"name": "ComplainAsNoun",
 								"state": true,
 								"label": "Complain As Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OnesOwnAccord",
+								"state": true,
+								"label": "One's Own Accord"
 							}
 						},
 						{
@@ -5119,6 +5154,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsMuchAs",
+								"state": true,
+								"label": "As Much As"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InspiredBy",
 								"state": true,
 								"label": "Inspired By"
@@ -5171,6 +5213,13 @@
 								"name": "NoLongerPronoun",
 								"state": true,
 								"label": "No Longer Pronoun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NeitherHereNorThere",
+								"state": true,
+								"label": "Neither Here Nor There"
 							}
 						},
 						{
