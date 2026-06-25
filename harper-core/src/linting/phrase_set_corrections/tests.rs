@@ -1305,6 +1305,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InThisThatRegard
+
+#[test]
+fn fix_in_this_regards() {
+    assert_suggestion_result(
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regards.",
+        lint_group(),
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regard.",
+    );
+}
+
+#[test]
+fn fix_in_that_regards() {
+    assert_suggestion_result(
+        "Looks like that are all settings I can make in the Buderus in that regards.",
+        lint_group(),
+        "Looks like that are all settings I can make in the Buderus in that regard.",
+    );
+}
+
 // InflectionPoint
 
 #[test]

@@ -5161,6 +5161,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InThisThatRegard",
+								"state": true,
+								"label": "In This/That Regard"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsMuchAs",
 								"state": true,
 								"label": "As Much As"
