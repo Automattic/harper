@@ -3835,6 +3835,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OnesOwnAccord",
+								"state": true,
+								"label": "One's Own Accord"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReadsAndWrites",
 								"state": true,
 								"label": "Reads and Writes"
