@@ -25,7 +25,7 @@ use std::process::Command;
 use std::rc::Rc;
 use std::time::Instant;
 
-use burn::backend::wgpu::{RuntimeOptions, WgpuDevice, graphics::Metal, init_setup};
+use burn::backend::wgpu::{RuntimeOptions, WgpuDevice, graphics::AutoGraphicsApi, init_setup};
 use burn::backend::{Autodiff, wgpu::Wgpu};
 
 use harper_pos_utils::conllu_utils::extract_records_from_files;
@@ -176,9 +176,13 @@ fn main() {
         suffix_vocab.len()
     );
 
-    // Explicit Metal init must precede any tensor operations on macOS.
+    // Explicit wgpu init must precede any tensor operations on macOS.
+    // `AutoGraphicsApi` selects the platform's native graphics API at runtime —
+    // Metal on macOS, Vulkan on Linux (NVIDIA/AMD/Intel), DX12 on Windows — so the
+    // same example runs on any GPU wgpu supports, not just Apple Metal. Override
+    // in tests via the `AUTO_GRAPHICS_BACKEND` env var.
     let device = WgpuDevice::DefaultDevice;
-    init_setup::<Metal>(&device, RuntimeOptions::default());
+    init_setup::<AutoGraphicsApi>(&device, RuntimeOptions::default());
 
     let cfg = JointTrainConfig {
         char_dim: ARCH.char_dim,

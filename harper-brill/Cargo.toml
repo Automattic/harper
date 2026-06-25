@@ -11,7 +11,7 @@ harper-pos-utils = { path = "../harper-pos-utils/", version = "2.0.0" }
 serde_json = "1.0.150"
 # Only pulled in by the `training` feature (GPU regeneration tooling). Inference
 # and tests never need it — the trained model is embedded as bytes and run on CPU.
-burn = { version = "0.19.1", default-features = false, optional = true }
+burn = { version = "0.21.0", default-features = false, optional = true }
 
 [build-dependencies]
 serde_json = "1.0.150"

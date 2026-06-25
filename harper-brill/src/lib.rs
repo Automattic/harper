@@ -27,8 +27,9 @@ const JOINT_ARCH: JointArch = JointArch {
 };
 
 thread_local! {
-    // burn's NdArray model is `!Sync`, so the runtime is a per-thread `Rc`
-    // rather than a process-wide `Arc`. Inference is memoized inside the runtime.
+    // The runtime is a per-thread `Rc` (not a process-wide `Arc`): burn CPU
+    // models are not guaranteed `Sync`, and a per-thread instance also keeps the
+    // memoization cache lock-free across threads. Inference is memoized inside.
     static JOINT: Rc<JointRuntime> = Rc::new(build_joint());
 }
 

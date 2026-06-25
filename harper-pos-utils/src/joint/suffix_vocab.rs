@@ -3,6 +3,7 @@
 
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
+use std::collections::BTreeMap;
 
 /// Reserved id for an unseen suffix or a padded token slot.
 pub const SUFFIX_UNK: i32 = 0;
@@ -59,7 +60,19 @@ impl SuffixVocab {
     }
 
     pub fn to_json(&self) -> String {
-        serde_json::to_string(self).expect("serialize suffix vocab")
+        // Ordered (BTreeMap by suffix) + pretty-printed so the committed artifact
+        // has a stable, diff-friendly layout. `k` and the id values carry the
+        // meaning; key order is cosmetic and does not affect decoding.
+        #[derive(Serialize)]
+        struct Pretty<'a> {
+            k: usize,
+            map: BTreeMap<&'a str, usize>,
+        }
+        let pretty = Pretty {
+            k: self.k,
+            map: self.map.iter().map(|(s, &v)| (s.as_str(), v)).collect(),
+        };
+        serde_json::to_string_pretty(&pretty).expect("serialize suffix vocab")
     }
 
     pub fn from_json(s: &str) -> Self {
