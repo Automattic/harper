@@ -223,7 +223,7 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
             LintKind::Style
         ),
-        "ExpandDeref" => (
+        "ExpandDereference" => (
             &[
                 ("deref", "dereference"),
                 ("derefs", "dereferences"),
