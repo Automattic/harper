@@ -51,8 +51,8 @@ impl Default for RedundantAcronyms {
             .iter()
             .map(|&(acronym, _, last_str, _)| {
                 let last_string = last_str.to_string();
-                Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of(vec![
-                    Box::new(Word::new(last_str)),
+                Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of([
+                    Box::new(Word::new(last_str)) as Box<dyn Expr>,
                     Box::new(move |t: &Token, src: &[char]| {
                         t.get_ch(src).eq_str(&format!("{last_string}s"))
                     }),
@@ -122,7 +122,7 @@ impl ExprLinter for RedundantAcronyms {
             span: toks.span()?,
             lint_kind: LintKind::Redundancy,
             suggestions,
-            message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_string(),
+            message: "The acronym's last letter already stands for the last word. Use just the acronym or the full phrase.".to_owned(),
             ..Default::default()
         })
     }

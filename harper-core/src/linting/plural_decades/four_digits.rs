@@ -82,7 +82,7 @@ pub fn match_to_lint_four_digits(
     Some(Lint {
         span: toks.span()?,
         lint_kind: LintKind::Usage,
-        message: "Plural decades do not use an apostrophe before the `s`".to_string(),
+        message: "Plural decades do not use an apostrophe before the `s`".to_owned(),
         suggestions: vec![Suggestion::ReplaceWith([decade, suffix].concat())],
         ..Default::default()
     })

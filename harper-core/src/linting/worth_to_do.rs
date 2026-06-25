@@ -20,9 +20,7 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::aco("worth")
-                .t_ws()
-                .t_aco("to")
+            expr: SequenceExpr::word_seq(&["worth", "to"])
                 .t_ws()
                 .then_verb_lemma(),
             dict,
@@ -86,7 +84,7 @@ where
             span: tolemspan,
             lint_kind: LintKind::Grammar,
             suggestions,
-            message: "Use the `gerund` of the verb, the form that ends in `-ing`".to_string(),
+            message: "Use the `gerund` of the verb, the form that ends in `-ing`".to_owned(),
             ..Default::default()
         })
     }
