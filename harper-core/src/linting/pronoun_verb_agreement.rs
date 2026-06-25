@@ -90,7 +90,7 @@ where
                         .t_ws()
                         .then(verb_lemma),
                 ),
-                Box::new(SequenceExpr::aco("it").t_ws().t_aco("don't")),
+                Box::new(SequenceExpr::word_seq(&["it", "don't"])),
             ]),
             dict,
         }
