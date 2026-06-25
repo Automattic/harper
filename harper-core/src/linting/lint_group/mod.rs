@@ -106,6 +106,7 @@ use super::handful::Handful;
 use super::handful_of_more::HandfulOfMore;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
+use super::have_the_nerve::HaveTheNerve;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::hereby::Hereby;
@@ -675,6 +676,7 @@ impl LintGroup {
         insert_expr_rule!(HandfulOfMore, true);
         insert_expr_rule!(HavePronoun, true);
         insert_struct_rule_with_dialect!(HaveTakeALook, true);
+        insert_expr_rule!(HaveTheNerve, true);
         insert_expr_rule!(Hedging, true);
         insert_expr_rule!(HelloGreeting, true);
         insert_expr_rule!(Hereby, true);
