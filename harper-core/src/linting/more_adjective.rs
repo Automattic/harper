@@ -13,10 +13,7 @@ pub struct MoreAdjective<D> {
     dict: D,
 }
 
-impl<D> MoreAdjective<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> MoreAdjective<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::word_set(&["more", "most"])
@@ -49,10 +46,7 @@ where
     }
 }
 
-impl<D> ExprLinter for MoreAdjective<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
