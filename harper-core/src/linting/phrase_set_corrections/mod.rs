@@ -232,6 +232,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
             LintKind::Style
         ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
+            LintKind::Style
+        ),
         "ExpandNotification" => (
             &[
                 ("notif", "notification"),
@@ -1024,7 +1033,16 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        )
+        ),
+        "ToTo" => (
+            &[
+                (&["to to"], &["to do"]),
+                (&["to-to"], &["to-do"]),
+            ],
+            "Did you mean to write `do` instead of a second `to`?",
+            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
+            LintKind::Typo
+        ),
     });
 
     group.set_all_rules_to(Some(true));

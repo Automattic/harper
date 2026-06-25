@@ -754,6 +754,26 @@ fn corrects_derefs() {
     );
 }
 
+// ExpandDirectory
+
+#[test]
+fn expands_dir() {
+    assert_suggestion_result(
+        "Error: library dir does not exist: /Users/u/trr/node_modules/opencv",
+        lint_group(),
+        "Error: library directory does not exist: /Users/u/trr/node_modules/opencv",
+    );
+}
+
+#[test]
+fn expands_dirs() {
+    assert_suggestion_result(
+        "Dirs/files are missing when scanning on windows after 1.27.12",
+        lint_group(),
+        "Directories/files are missing when scanning on windows after 1.27.12",
+    );
+}
+
 // ExpandNotification
 
 #[test]
@@ -3880,5 +3900,25 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
         lint_group(),
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
+    );
+}
+
+// -to to-
+#[test]
+fn corrects_to_to() {
+    assert_suggestion_result(
+        "I need to add that to my to to list first.",
+        lint_group(),
+        "I need to add that to my to do list first.",
+    );
+}
+
+// -to-to-
+#[test]
+fn corrects_to_to_with_hyphen() {
+    assert_suggestion_result(
+        "I need to add that to my to-to list first.",
+        lint_group(),
+        "I need to add that to my to-do list first.",
     );
 }

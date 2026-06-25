@@ -2,7 +2,7 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
+    patterns::{SingleTokenPattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -22,9 +22,9 @@ impl Default for ToTooAdjectiveEnd {
                 TokenKind::is_verb,
                 &["standard", "only"],
             )
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_optional(SequenceExpr::any_word())
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_optional(SequenceExpr::default().then_punctuation());
 
         Self {
