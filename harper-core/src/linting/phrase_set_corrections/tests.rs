@@ -4,6 +4,14 @@ use crate::linting::tests::{
 
 use super::lint_group;
 
+/// Helper function to create a lint group with only a single rule enabled.
+fn single_lint(rule_name: &str) -> crate::linting::LintGroup {
+    let mut group = lint_group();
+    group.set_all_rules_to(None); // Disable all linters
+    group.config.set_rule_enabled(rule_name, true); // Enable only the specified rule
+    group
+}
+
 // 1:1 tests
 
 // Ado
@@ -23,6 +31,35 @@ fn corrects_much_ado() {
         "After much adieu this functionality is now available.",
         lint_group(),
         "After much ado this functionality is now available.",
+    );
+}
+
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
     );
 }
 
@@ -295,6 +332,55 @@ fn corrects_conforming_that() {
         "Thanks for conforming that this issue is fixed in the latest version.",
         lint_group(),
         "Thanks for confirming that this issue is fixed in the latest version.",
+    );
+}
+
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
     );
 }
 
@@ -668,6 +754,26 @@ fn corrects_derefs() {
     );
 }
 
+// ExpandDirectory
+
+#[test]
+fn expands_dir() {
+    assert_suggestion_result(
+        "Error: library dir does not exist: /Users/u/trr/node_modules/opencv",
+        lint_group(),
+        "Error: library directory does not exist: /Users/u/trr/node_modules/opencv",
+    );
+}
+
+#[test]
+fn expands_dirs() {
+    assert_suggestion_result(
+        "Dirs/files are missing when scanning on windows after 1.27.12",
+        lint_group(),
+        "Directories/files are missing when scanning on windows after 1.27.12",
+    );
+}
+
 // ExpandNotification
 
 #[test]
@@ -748,15 +854,9 @@ fn corrects_vuln() {
 #[test]
 fn corrects_vulns() {
     // Fix just this lint
-    let mut only_expand_vuln = lint_group();
-    only_expand_vuln.set_all_rules_to(None); // Disable all linters
-    only_expand_vuln
-        .config
-        .set_rule_enabled("ExpandVulnerability", true); // Enable only ExpandVuln
-
     assert_suggestion_result(
         "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
-        only_expand_vuln,
+        single_lint("ExpandVulnerability"),
         "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
     );
     // Fix all lints in the `LintGroup`
@@ -1878,8 +1978,17 @@ fn fix_everybody_seams() {
 fn fix_everyone_seams() {
     assert_suggestion_result(
         "everyone seams to use the editor now a days plus there is a tun of extensions available",
-        lint_group(),
+        single_lint("SeamToSeem"),
         "everyone seems to use the editor now a days plus there is a tun of extensions available",
+    );
+}
+
+#[test]
+fn fix_everyone_seams_combined_with_now_a_days() {
+    assert_suggestion_result(
+        "everyone seams to use the editor now a days plus there is a tun of extensions available",
+        lint_group(),
+        "everyone seems to use the editor nowadays plus there is a tun of extensions available",
     );
 }
 
@@ -2767,51 +2876,51 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
-// InHindsight
+// LevelOfDetails
 
 #[test]
-fn corrects_on_hindsight() {
+fn corrects_level_of_details_singular_contrived() {
     assert_suggestion_result(
-        "On hindsight, the tip to \"try launching your terminal\" would've been useful",
+        "The model has a high level of details.",
         lint_group(),
-        "In hindsight, the tip to \"try launching your terminal\" would've been useful",
+        "The model has a high level of detail.",
     );
 }
 
 #[test]
-fn corrects_in_hind_sight_hyphenated() {
+fn corrects_levels_of_details_plural_contrived() {
     assert_suggestion_result(
-        "It probably could have been better to fake an OSS project name in hind-sight, but anyway we can still fix this.",
+        "The game uses several level of details to save memory.",
         lint_group(),
-        "It probably could have been better to fake an OSS project name in hindsight, but anyway we can still fix this.",
+        "The game uses several levels of detail to save memory.",
     );
 }
 
 #[test]
-fn corrects_in_hind_sight() {
+fn corrects_level_of_details_singular_real_world() {
     assert_suggestion_result(
-        "In hind sight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
+        "How to implement a level of details visualizer for 3D meshes?",
         lint_group(),
-        "In hindsight, this is obvious, but the error message led to hours of wasted debugging in the wrong places.",
-    )
+        "How to implement a level of detail visualizer for 3D meshes?",
+    );
 }
 
 #[test]
-fn corrects_on_hind_sight() {
+fn corrects_level_of_details_plural_real_world() {
     assert_suggestion_result(
-        "Yes, on hind sight I've used tasks that don't respond well to kills.",
+        "LOD's (Level of details) are a set of lower models used for the purpose of optimisation",
         lint_group(),
-        "Yes, in hindsight I've used tasks that don't respond well to kills.",
-    )
+        "LOD's (Levels of detail) are a set of lower models used for the purpose of optimisation",
+    );
 }
 
 #[test]
-fn corrects_on_hind_sight_hyphenated() {
+fn corrects_levels_of_details_real_world() {
     assert_suggestion_result(
-        "On hind-sight the likely root cause was not force cleaning helm config.",
+        "The file completion uses two levels of details to optimize performance.",
         lint_group(),
-        "In hindsight the likely root cause was not force cleaning helm config.",
-    )
+        "The file completion uses two levels of detail to optimize performance.",
+    );
 }
 
 // MakeItSeem
@@ -2977,6 +3086,107 @@ fn fix_no_only_were() {
         "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
         lint_group(),
         "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+    );
+}
+
+// Nowadays
+
+#[test]
+fn fix_now_a_days_spaces() {
+    assert_suggestion_result(
+        "Now a days, movie recommendation systems are well developed and are user focused.",
+        lint_group(),
+        "Nowadays, movie recommendation systems are well developed and are user focused.",
+    );
+}
+
+#[test]
+fn fix_now_a_days_apostrophe() {
+    assert_suggestion_result(
+        "Now a day's recognizing the activity from the surveillance video is a challenging task.",
+        lint_group(),
+        "Nowadays recognizing the activity from the surveillance video is a challenging task.",
+    );
+}
+
+#[test]
+fn fix_now_a_days_hyphen() {
+    assert_suggestion_result(
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen now-a-days.",
+        lint_group(),
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_a_day() {
+    assert_suggestion_result(
+        "Now a day a calendar is a daily essential things.",
+        lint_group(),
+        "Nowadays a calendar is a daily essential things.",
+    );
+}
+
+#[test]
+fn fix_now_a_day_hyphen() {
+    assert_suggestion_result(
+        "Now-a-day, lots of people prefer ordering food online to save their time and effort.",
+        lint_group(),
+        "Nowadays, lots of people prefer ordering food online to save their time and effort.",
+    );
+}
+
+#[test]
+fn fix_now_adays_hyphen() {
+    assert_suggestion_result(
+        "@andyp1per knows most about those Python scripts now-adays.",
+        lint_group(),
+        "@andyp1per knows most about those Python scripts nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_adays_space() {
+    assert_suggestion_result(
+        "Coding is one of my fav thing to do now adays.!",
+        lint_group(),
+        "Coding is one of my fav thing to do nowadays.!",
+    );
+}
+
+#[test]
+fn fix_nowaday() {
+    assert_suggestion_result(
+        "nowaday, I have to capitalize the first letter of the name gets from @babel/types.",
+        lint_group(),
+        "nowadays, I have to capitalize the first letter of the name gets from @babel/types.",
+    );
+}
+
+#[test]
+fn fix_now_adays_apostrophe() {
+    assert_suggestion_result(
+        "I believe CSS clamp has great browser support now aday's as well.",
+        lint_group(),
+        "I believe CSS clamp has great browser support nowadays as well.",
+    );
+}
+
+#[test]
+fn fix_nowa_days() {
+    assert_suggestion_result(
+        "But discord would be great cause discord is universally used for all games and companies and schools nowa days.",
+        lint_group(),
+        "But discord would be great cause discord is universally used for all games and companies and schools nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_aday() {
+    assert_suggestion_result(
+        "OF all Occupations that now aday is used,I would not be a butcher",
+        lint_group(),
+        "OF all Occupations that nowadays is used,I would not be a butcher",
     );
 }
 
@@ -3737,5 +3947,25 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
         lint_group(),
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
+    );
+}
+
+// -to to-
+#[test]
+fn corrects_to_to() {
+    assert_suggestion_result(
+        "I need to add that to my to to list first.",
+        lint_group(),
+        "I need to add that to my to do list first.",
+    );
+}
+
+// -to-to-
+#[test]
+fn corrects_to_to_with_hyphen() {
+    assert_suggestion_result(
+        "I need to add that to my to-to list first.",
+        lint_group(),
+        "I need to add that to my to-do list first.",
     );
 }

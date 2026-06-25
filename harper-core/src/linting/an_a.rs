@@ -1,8 +1,10 @@
 use itertools::Itertools;
 
-use crate::indefinite_article::{InitialSound, starts_with_vowel};
-use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Dialect, Document, TokenStringExt};
+use crate::{
+    CharStringExt, Dialect, Document, TokenStringExt,
+    indefinite_article::{InitialSound, starts_with_vowel},
+    linting::{Lint, LintKind, Linter, Suggestion},
+};
 
 #[derive(Debug)]
 pub struct AnA {
@@ -43,6 +45,26 @@ impl Linter for AnA {
                     .next()
                     .unwrap_or(chars_second);
 
+                // Capital letter 'A' might be a test grade rather than an article
+                if chars_first == ['A'] {
+                    // Check for range of test grades starting with "A-"
+                    if second_idx == first_idx + 2
+                        && chunk[first_idx + 1].kind.is_hyphen()
+                        && ('B'..='F').contains(&chars_second[0])
+                    {
+                        continue;
+                    }
+
+                    // Check for an indefinite article before: "an A" or "a A"
+                    if let Some(prev) = document.get_next_word_from_offset(first_idx, -1)
+                        && prev
+                            .get_ch(document.get_source())
+                            .eq_any_ignore_ascii_case_chars(&[&['a'], &['a', 'n']])
+                    {
+                        continue;
+                    }
+                }
+
                 let is_a_an = match chars_first {
                     ['a'] => Some(true),
                     ['A'] => Some(true),
@@ -76,7 +98,7 @@ impl Linter for AnA {
                             replacement,
                             chars_first,
                         )],
-                        message: "Incorrect indefinite article.".to_string(),
+                        message: "Incorrect indefinite article.".to_owned(),
                         priority: 31,
                     })
                 }
@@ -94,8 +116,10 @@ impl Linter for AnA {
 #[cfg(test)]
 mod tests {
     use super::AnA;
-    use crate::Dialect;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::{
+        Dialect,
+        linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result},
+    };
 
     #[test]
     fn detects_html_as_vowel() {
@@ -349,5 +373,15 @@ mod tests {
             AnA::new(Dialect::American),
             0,
         );
+    }
+
+    #[test]
+    fn dont_flag_a_f_grading_scale_3715() {
+        assert_no_lints("an A-F grading scale", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn dont_flag_is_80_an_a_3715() {
+        assert_no_lints("Is 80 an A in Malaysia?", AnA::new(Dialect::American));
     }
 }

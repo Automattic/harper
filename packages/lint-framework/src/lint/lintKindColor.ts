@@ -1,4 +1,7 @@
+import type { LintKind } from 'harper.js';
 import { getContrastingTextColor } from './utils';
+
+export type { LintKind } from 'harper.js';
 
 // First, define the color map as a constant
 const LINT_KIND_COLORS = {
@@ -22,10 +25,8 @@ const LINT_KIND_COLORS = {
 	Typo: '#FF6B35', // Vibrant orange-red
 	Usage: '#1E90FF', // Dodger blue
 	WordChoice: '#228B22', // Forest green
-} as const;
-
-// Export the type for the lint kind keys
-export type LintKind = keyof typeof LINT_KIND_COLORS;
+	WordOrder: '#4D4DFF', // Royal blue
+} as const satisfies Record<LintKind, string>;
 
 // Export the array of all lint kind names
 export const LINT_KINDS = Object.keys(LINT_KIND_COLORS) as LintKind[];

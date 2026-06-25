@@ -344,6 +344,13 @@
 								"state": true,
 								"label": "To Be Honest"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LetMeKnow",
+								"state": true,
+								"label": "Let Me Know"
+							}
 						}
 					]
 				}
@@ -801,6 +808,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ArgumentToBeMade",
+								"state": true,
+								"label": "Argument To Be Made"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Bollocks",
 								"state": true,
 								"label": "Bollocks"
@@ -878,9 +892,9 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandDeref",
+								"name": "ExpandDereference",
 								"state": true,
-								"label": "Expand Deref"
+								"label": "Expand Dereference"
 							}
 						},
 						{
@@ -1028,6 +1042,13 @@
 								"name": "OperatingSystem",
 								"state": true,
 								"label": "Operating System"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EnvironmentVariable",
+								"state": true,
+								"label": "Environment Variable"
 							}
 						},
 						{
@@ -1277,6 +1298,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HandfulOfMore",
+								"state": true,
+								"label": "Handful Of More"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FormativeYears",
 								"state": true,
 								"label": "Formative Years"
@@ -1298,6 +1326,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandDirectory",
+								"state": true,
+								"label": "Expand Directory"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandNotification",
 								"state": true,
 								"label": "Expand Notification"
@@ -1308,6 +1343,41 @@
 								"name": "ExpandVulnerability",
 								"state": true,
 								"label": "Expand Vulnerability"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandConfiguration",
+								"state": true,
+								"label": "Expand Configuration"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPerformance",
+								"state": true,
+								"label": "Expand Performance"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPreference",
+								"state": true,
+								"label": "Expand Preference"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Nowadays",
+								"state": true,
+								"label": "Nowadays"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ConstituteAs",
+								"state": true,
+								"label": "Constitute As"
 							}
 						}
 					]
@@ -1514,6 +1584,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CantWay",
+								"state": true,
+								"label": "Cant Way"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CaseSensitive",
 								"state": true,
 								"label": "Case Sensitive"
@@ -1580,6 +1657,13 @@
 								"name": "IntroCueCommaBeforeThanks",
 								"state": true,
 								"label": "Intro Cue Comma Before Thanks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncludingButNotLimitedToPunctuation",
+								"state": true,
+								"label": "Including But Not Limited To Punctuation"
 							}
 						},
 						{
@@ -1664,6 +1748,13 @@
 								"name": "WorstCaseScenario",
 								"state": true,
 								"label": "Worst Case Scenario"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InDemandInDepth",
+								"state": true,
+								"label": "In Demand / In Depth"
 							}
 						}
 					]
@@ -1864,6 +1955,13 @@
 								"state": true,
 								"label": "To Some Degree"
 							}
+						},
+						{
+							"Bool": {
+								"name": "FootInchMinuteSecondSymbols",
+								"state": true,
+								"label": "Foot, Inch, Minute, and Second Symbols"
+							}
 						}
 					]
 				}
@@ -1985,6 +2083,13 @@
 								"name": "TheMy",
 								"state": true,
 								"label": "The My"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThereOwn",
+								"state": true,
+								"label": "There Own"
 							}
 						},
 						{
@@ -2262,6 +2367,13 @@
 								"state": true,
 								"label": "Wok Verb Typo"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CrossPlatform",
+								"state": true,
+								"label": "Cross Platform"
+							}
 						}
 					]
 				}
@@ -2383,6 +2495,13 @@
 								"name": "CaseInPoint",
 								"state": true,
 								"label": "Case In Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ClicheAccent",
+								"state": true,
+								"label": "Cliche Accent"
 							}
 						},
 						{
@@ -2685,6 +2804,20 @@
 								"state": true,
 								"label": "Close Tight Knit"
 							}
+						},
+						{
+							"Bool": {
+								"name": "TheTheToThatThe",
+								"state": true,
+								"label": "The The To That The"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hazzle",
+								"state": true,
+								"label": "Hazzle"
+							}
 						}
 					]
 				}
@@ -2696,6 +2829,13 @@
 				"description": "Highlights wordy, repetitive, or overly weak phrasing that can usually be tightened up.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AvoidContractions",
+								"state": false,
+								"label": "Avoid Contractions"
+							}
+						},
 						{
 							"Bool": {
 								"name": "BoringWords",
@@ -2908,6 +3048,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandThough",
+								"state": true,
+								"label": "Expand Though"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandThrough",
 								"state": true,
 								"label": "Expand Through"
@@ -3009,6 +3156,27 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForFreeOfCharge",
+								"state": true,
+								"label": "For Free of Charge"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FellowCoRedundancy",
+								"state": true,
+								"label": "Fellow Co- Redundancy"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OverPlus",
+								"state": true,
+								"label": "Over Plus"
 							}
 						}
 					]
@@ -3187,6 +3355,13 @@
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LevelOfDetails",
+								"state": true,
+								"label": "Level of Details"
 							}
 						},
 						{
@@ -3643,6 +3818,62 @@
 								"state": true,
 								"label": "Code In Write In"
 							}
+						},
+						{
+							"Bool": {
+								"name": "ThereIsAgreement",
+								"state": true,
+								"label": "There Is Agreement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ASomeTime",
+								"state": true,
+								"label": "A Some Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CapitalizeOn",
+								"state": true,
+								"label": "Capitalize On"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NakedEye",
+								"state": true,
+								"label": "Naked Eye"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsToInterrogative",
+								"state": true,
+								"label": "As To Interrogative"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ComplainAsNoun",
+								"state": true,
+								"label": "Complain As Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OnesOwnAccord",
+								"state": true,
+								"label": "One's Own Accord"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ReadsAndWrites",
+								"state": true,
+								"label": "Reads and Writes"
+							}
 						}
 					]
 				}
@@ -3729,6 +3960,13 @@
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallThem",
+								"state": true,
+								"label": "Call Them"
 							}
 						},
 						{
@@ -4237,6 +4475,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsComparedTo",
+								"state": true,
+								"label": "As Compared To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsOpposedTo",
 								"state": true,
 								"label": "As Opposed To"
@@ -4268,6 +4513,13 @@
 								"name": "AtTheExpenseOf",
 								"state": true,
 								"label": "At The Expense Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AtTheVeryLeast",
+								"state": true,
+								"label": "At The Very Least"
 							}
 						},
 						{
@@ -4338,6 +4590,13 @@
 								"name": "BlanketStatement",
 								"state": true,
 								"label": "Blanket Statement"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BoarderBorder",
+								"state": true,
+								"label": "Boarder Border"
 							}
 						},
 						{
@@ -4860,6 +5119,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ConvenientStore",
+								"state": true,
+								"label": "Convenient Store"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MoreThanMeetsTheEye",
 								"state": true,
 								"label": "More Than Meets The Eye"
@@ -4867,9 +5133,163 @@
 						},
 						{
 							"Bool": {
+								"name": "TheLastDays",
+								"state": true,
+								"label": "The Last Days"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InFavourOfDoing",
+								"state": true,
+								"label": "In Favour Of Doing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InHindsight",
 								"state": true,
 								"label": "In Hindsight"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LongTimeAgo",
+								"state": true,
+								"label": "Long Time Ago"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CraveFor",
+								"state": true,
+								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsMuchAs",
+								"state": true,
+								"label": "As Much As"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InspiredBy",
+								"state": true,
+								"label": "Inspired By"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByTheBook",
+								"state": true,
+								"label": "By The Book"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverySingleOneOf",
+								"state": true,
+								"label": "Every Single One Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Impressed",
+								"state": true,
+								"label": "Impressed"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Catch22",
+								"state": true,
+								"label": "Catch-22"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PayForPrice",
+								"state": true,
+								"label": "Pay For Price"
+							}
+						},
+						{
+							"Bool": {
+								"name": "IncidentReport",
+								"state": true,
+								"label": "Incident Report"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NoLongerPronoun",
+								"state": true,
+								"label": "No Longer Pronoun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NeitherHereNorThere",
+								"state": true,
+								"label": "Neither Here Nor There"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TheEntiretyOf",
+								"state": true,
+								"label": "The Entirety Of"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NowKnownAs",
+								"state": true,
+								"label": "Now Known As"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsHow",
+								"state": true,
+								"label": "As How"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MassExodus",
+								"state": true,
+								"label": "Mass Exodus"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LeavingInDroves",
+								"state": true,
+								"label": "Leaving In Droves"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AndSuch",
+								"state": true,
+								"label": "And Such"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RunIntoProblemsOrTrouble",
+								"state": true,
+								"label": "Run Into Problems / Trouble"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InDueCourse",
+								"state": true,
+								"label": "In Due Course"
 							}
 						}
 					]
@@ -4894,6 +5314,13 @@
 								"name": "Touristic",
 								"state": true,
 								"label": "Touristic"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OutOfTheWindow",
+								"state": true,
+								"label": "Out (of) the Window"
 							}
 						}
 					]
@@ -5240,6 +5667,13 @@
 								"name": "FondOn",
 								"state": true,
 								"label": "Fond On"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToTo",
+								"state": true,
+								"label": "To To"
 							}
 						}
 					]

@@ -86,4 +86,15 @@ mod tests {
         Typst.parse_str("#(.$#$$$. ");
         Typst.parse_str("=#{m\"\".'m\"\"#p#");
     }
+
+    #[test]
+    fn issue_2126_show_rule_preserves_token_order() {
+        let tokens = Typst.parse_str("#show \"a\": \"a\"");
+        let spans = tokens
+            .iter()
+            .map(|token| (token.span.start, token.span.end))
+            .collect_vec();
+
+        assert_eq!(spans, vec![(7, 8), (12, 13)]);
+    }
 }

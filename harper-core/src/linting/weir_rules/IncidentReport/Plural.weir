@@ -1,0 +1,8 @@
+expr main incidence reports
+
+let message "Did you mean `incident reports`?"
+let description "Corrects `incidence reports` to `incident reports`."
+let kind "WordChoice"
+let becomes "incident reports"
+
+test "We calibrate this pool of models to incidence reports using Hamiltonian Monte Carlo." "We calibrate this pool of models to incident reports using Hamiltonian Monte Carlo."
