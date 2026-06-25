@@ -167,6 +167,7 @@ mod naked_eye;
 mod need_to_noun;
 mod no_french_spaces;
 mod no_longer;
+mod no_longer_pronoun;
 mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
