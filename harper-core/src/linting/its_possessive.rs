@@ -114,7 +114,7 @@ impl Default for ItsPossessive {
 
         map.insert(start_of_chunk_after_conjunction, 2);
 
-        let special = SequenceExpr::aco("it's").t_ws().t_aco("various");
+        let special = SequenceExpr::word_seq(&["it's", "various"]);
 
         map.insert(special, 0);
 
@@ -140,7 +140,7 @@ impl ExprLinter for ItsPossessive {
                 "its",
                 span.get_content(source),
             )],
-            message: "Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.".to_string(),
+            message: "Use the possessive pronoun `its` (without an apostrophe) to show ownership. The word `it's` (with an apostrophe) is a contraction of 'it is' or 'it has' and should not be used to indicate possession.".to_owned(),
             priority: 31,
         })
     }
