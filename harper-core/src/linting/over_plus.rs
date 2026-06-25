@@ -17,8 +17,8 @@ impl Default for OverPlus {
         Self {
             expr: SequenceExpr::aco("over")
                 .t_ws()
-                .then_any_of(vec![
-                    Box::new(SpelledNumberExpr),
+                .then_any_of([
+                    Box::new(SpelledNumberExpr) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _src: &[char]| tok.kind.is_number()),
                 ])
                 .then_optional(
