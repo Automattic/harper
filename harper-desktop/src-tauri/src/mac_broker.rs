@@ -28,17 +28,20 @@ use objc2_app_kit::{NSRunningApplication, NSWorkspace};
 use objc2_foundation::NSRect;
 use std::{
     cell::{Cell, RefCell},
-    collections::BTreeMap,
+    collections::{BTreeMap, BTreeSet, HashMap},
     error::Error as StdError,
-    path::Path,
+    fs,
+    path::{Path, PathBuf},
     process::Command,
     ptr,
-    rc::Rc,
+    sync::{Arc, Mutex},
     time::{Duration, Instant},
 };
 
 use crate::config::{Config, Integration};
-use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
+use crate::os_broker::{
+    AccessibilityPermissionStatus, AppSearchResult, OsBroker, in_memory_app_search_results,
+};
 use crate::rect::{ActionableLint, Rect};
 
 const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
@@ -48,6 +51,7 @@ const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration = Dura
 const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
 const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
+const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 type WindowInfo = CFDictionary<CFString, CFType>;
 
 /// macOS implementation of the OS data the highlighter needs.
@@ -57,7 +61,9 @@ type WindowInfo = CFDictionary<CFString, CFType>;
 /// targeting the app the user was reviewing.
 pub struct MacBroker {
     last_focused: Option<pid_t>,
-    integrations: Rc<RefCell<Vec<Integration>>>,
+    integrations: Arc<Mutex<Vec<Integration>>>,
+    application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
+    installed_app_search_results: Mutex<Option<Vec<AppSearchResult>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -99,10 +105,12 @@ enum AccessibilityActivationVerification {
 }
 
 impl MacBroker {
-    pub fn new(integrations: Rc<RefCell<Vec<Integration>>>) -> Self {
+    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
         Self {
             last_focused: None,
             integrations,
+            application_icon_cache: Mutex::new(HashMap::new()),
+            installed_app_search_results: Mutex::new(None),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -302,7 +310,7 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new(Rc::new(RefCell::new(Config::curated_integrations())))
+        Self::new(Arc::new(Mutex::new(Config::curated_integrations())))
     }
 }
 
@@ -346,7 +354,17 @@ impl OsBroker for MacBroker {
             }
         };
 
-        if !Config::is_integration_enabled_in(&self.integrations.borrow(), &bundle_identifier) {
+        let integration_enabled = match self.integrations.lock() {
+            Ok(integrations) => {
+                Config::is_integration_enabled_in(&integrations, &bundle_identifier)
+            }
+            Err(error) => {
+                eprintln!("Unable to read integrations: {error}");
+                false
+            }
+        };
+
+        if !integration_enabled {
             self.window_movement = None;
             self.reset_accessibility_activation();
             return Vec::new();
@@ -402,6 +420,36 @@ impl OsBroker for MacBroker {
         system_integration_display_name(bundle_id)
     }
 
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        installed_application_bundle_ids()
+    }
+
+    fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
+        let bundle_id = bundle_id.trim();
+
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+
+        if let Some(icon_png) = self
+            .application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to read application icon cache: {error}"))?
+            .get(bundle_id)
+            .cloned()
+        {
+            return Ok(icon_png);
+        }
+
+        let icon_png = application_icon_png(bundle_id)?;
+        self.application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to update application icon cache: {error}"))?
+            .insert(bundle_id.to_string(), icon_png.clone());
+
+        Ok(icon_png)
+    }
+
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
         let bundle_id = bundle_id.trim();
 
@@ -417,16 +465,186 @@ impl OsBroker for MacBroker {
 
         Ok(())
     }
+
+    fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
+        let query = query.trim();
+        let installed_apps = self.installed_app_search_results()?;
+
+        let in_memory_results = in_memory_app_search_results(&installed_apps, query);
+
+        if query.is_empty()
+            || in_memory_results
+                .iter()
+                .any(|result| result.bundle_id == query)
+        {
+            return Ok(in_memory_results);
+        }
+
+        if let Some(app_path) = application_path_for_bundle_id(query) {
+            return Ok(vec![
+                app_search_result_from_app_path(&app_path)
+                    .unwrap_or_else(|| app_search_result_from_bundle_id(self, query)),
+            ]);
+        }
+
+        Ok(in_memory_results)
+    }
+}
+
+impl MacBroker {
+    fn installed_app_search_results(&self) -> Result<Vec<AppSearchResult>, String> {
+        if let Some(results) = self
+            .installed_app_search_results
+            .lock()
+            .map_err(|error| format!("Failed to read app search cache: {error}"))?
+            .clone()
+        {
+            return Ok(results);
+        }
+
+        let results = discover_app_search_results()?;
+        *self
+            .installed_app_search_results
+            .lock()
+            .map_err(|error| format!("Failed to update app search cache: {error}"))? =
+            Some(results.clone());
+
+        Ok(results)
+    }
+}
+
+fn app_search_result_from_bundle_id(broker: &MacBroker, bundle_id: &str) -> AppSearchResult {
+    AppSearchResult {
+        name: broker.integration_display_name(bundle_id),
+        bundle_id: bundle_id.to_string(),
+    }
+}
+
+fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
+    let display_name = display_name_from_app_path(path)?;
+
+    if display_name.contains('.') {
+        return None;
+    }
+
+    let bundle_id = bundle_id_from_app_path(path)?;
+
+    if bundle_id.contains('/') || bundle_id.is_empty() {
+        return None;
+    }
+
+    Some(AppSearchResult {
+        name: display_name,
+        bundle_id,
+    })
+}
+
+fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
+    let output = Command::new("mdfind")
+        .arg(format!(
+            "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
+        ))
+        .output()
+        .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
+
+    if !output.status.success() {
+        return Err(format!(
+            "mdfind failed: {}",
+            String::from_utf8_lossy(&output.stderr)
+        ));
+    }
+
+    let mut results = Vec::new();
+    let mut seen_bundle_ids = BTreeSet::new();
+
+    for line in String::from_utf8_lossy(&output.stdout).lines() {
+        let line = line.trim();
+
+        if !line.ends_with(".app") {
+            continue;
+        }
+
+        let Some(result) = app_search_result_from_app_path(line) else {
+            continue;
+        };
+
+        if seen_bundle_ids.insert(result.bundle_id.clone()) {
+            results.push(result);
+        }
+    }
+
+    Ok(results)
 }
 
 fn system_integration_display_name(bundle_id: &str) -> Option<String> {
+    application_path_for_bundle_id(bundle_id).and_then(|path| display_name_from_app_path(&path))
+}
+
+fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
+    let output = Command::new("mdfind")
+        .arg(format!(
+            "kMDItemContentType == \"{APPLICATION_BUNDLE_CONTENT_TYPE}\""
+        ))
+        .output()
+        .map_err(|error| format!("Failed to list installed applications: {error}"))?;
+
+    if !output.status.success() {
+        return Err("Failed to list installed applications with Spotlight.".to_string());
+    }
+
+    let bundle_ids = String::from_utf8_lossy(&output.stdout)
+        .lines()
+        .filter_map(|line| bundle_id_from_app_path(line.trim()))
+        .collect::<Vec<_>>();
+
+    Ok(deduplicate_and_sort_bundle_ids(bundle_ids))
+}
+
+fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
+    let bundle_id = bundle_id.trim();
+
+    if bundle_id.is_empty() {
+        return Err("Bundle ID cannot be empty.".to_string());
+    }
+
+    let app_path = application_path_for_bundle_id(bundle_id)
+        .ok_or_else(|| format!("No application found for bundle ID {bundle_id}."))?;
+    let icon_path = icon_path_for_app(&app_path)
+        .ok_or_else(|| format!("No application icon found for bundle ID {bundle_id}."))?;
+    let output_path = std::env::temp_dir().join(format!(
+        "harper-{bundle_id}-icon-{}.png",
+        std::process::id()
+    ));
+
+    let output = Command::new("sips")
+        .arg("-s")
+        .arg("format")
+        .arg("png")
+        .arg(&icon_path)
+        .arg("--out")
+        .arg(&output_path)
+        .output()
+        .map_err(|error| format!("Failed to convert icon for {bundle_id}: {error}"))?;
+
+    if !output.status.success() {
+        return Err(format!("Failed to convert icon for {bundle_id} to PNG."));
+    }
+
+    let bytes = fs::read(&output_path)
+        .map_err(|error| format!("Failed to read converted icon for {bundle_id}: {error}"))?;
+    let _ = fs::remove_file(output_path);
+
+    Ok(bytes)
+}
+
+fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
     let bundle_id = bundle_id.trim();
 
     if bundle_id.is_empty() {
         return None;
     }
 
-    let predicate_bundle_id = bundle_id.replace('\\', "\\\\").replace('"', "\\\"");
+    let predicate_bundle_id = escape_spotlight_string(bundle_id);
     let output = Command::new("mdfind")
         .arg(format!(
             "kMDItemCFBundleIdentifier == \"{predicate_bundle_id}\""
@@ -440,8 +658,89 @@ fn system_integration_display_name(bundle_id: &str) -> Option<String> {
 
     String::from_utf8_lossy(&output.stdout)
         .lines()
-        .filter_map(|line| display_name_from_app_path(line.trim()))
-        .next()
+        .map(str::trim)
+        .find(|line| !line.is_empty() && line.ends_with(".app"))
+        .map(ToString::to_string)
+}
+
+fn bundle_id_from_app_path(path: &str) -> Option<String> {
+    if path.is_empty() {
+        return None;
+    }
+
+    let output = Command::new("mdls")
+        .arg("-raw")
+        .arg("-name")
+        .arg("kMDItemCFBundleIdentifier")
+        .arg(path)
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    let bundle_id = String::from_utf8_lossy(&output.stdout).trim().to_string();
+
+    if bundle_id.is_empty() || bundle_id == "(null)" {
+        None
+    } else {
+        Some(bundle_id)
+    }
+}
+
+fn icon_path_for_app(app_path: &str) -> Option<PathBuf> {
+    let resources_path = Path::new(app_path).join("Contents/Resources");
+    let icon_file = app_icon_file(app_path)?;
+    let icon_path = resources_path.join(&icon_file);
+
+    if icon_path.exists() {
+        return Some(icon_path);
+    }
+
+    let icon_path = resources_path.join(format!("{icon_file}.icns"));
+
+    if icon_path.exists() {
+        Some(icon_path)
+    } else {
+        None
+    }
+}
+
+fn app_icon_file(app_path: &str) -> Option<String> {
+    let info_plist_path = Path::new(app_path).join("Contents/Info.plist");
+    let output = Command::new("/usr/libexec/PlistBuddy")
+        .arg("-c")
+        .arg("Print :CFBundleIconFile")
+        .arg(info_plist_path)
+        .output()
+        .ok()?;
+
+    if !output.status.success() {
+        return None;
+    }
+
+    let icon_file = String::from_utf8_lossy(&output.stdout).trim().to_string();
+
+    if icon_file.is_empty() {
+        None
+    } else {
+        Some(icon_file)
+    }
+}
+
+fn escape_spotlight_string(value: &str) -> String {
+    value.replace('\\', "\\\\").replace('"', "\\\"")
+}
+
+fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
+    bundle_ids
+        .into_iter()
+        .map(|bundle_id| bundle_id.trim().to_string())
+        .filter(|bundle_id| !bundle_id.is_empty() && bundle_id != "(null)")
+        .collect::<BTreeSet<_>>()
+        .into_iter()
+        .collect()
 }
 
 fn display_name_from_app_path(path: &str) -> Option<String> {
@@ -1170,6 +1469,34 @@ mod tests {
             CHROMIUM_ACCESSIBILITY_SETTLE_DURATION,
             Duration::from_secs(3)
         );
+    }
+
+    #[test]
+    fn deduplicates_and_sorts_bundle_ids() {
+        assert_eq!(
+            deduplicate_and_sort_bundle_ids(vec![
+                "com.example.Beta".to_string(),
+                " com.example.Alpha ".to_string(),
+                "com.example.Beta".to_string(),
+                "".to_string(),
+                "(null)".to_string(),
+            ]),
+            vec!["com.example.Alpha", "com.example.Beta"]
+        );
+    }
+
+    #[test]
+    fn escapes_spotlight_strings() {
+        assert_eq!(
+            escape_spotlight_string(r#"com.example.\"quoted\""#),
+            r#"com.example.\\\"quoted\\\""#
+        );
+    }
+
+    #[test]
+    fn empty_bundle_id_has_no_application_path() {
+        assert_eq!(application_path_for_bundle_id(""), None);
+        assert_eq!(application_path_for_bundle_id("   "), None);
     }
 
     #[test]

@@ -27,7 +27,7 @@ impl ExprLinter for ExpandPeople {
             "people",
             span.get_content(src),
         )];
-        let message = "Use `people` instead of `ppl`.".to_string();
+        let message = "Use `people` instead of `ppl`.".to_owned();
         Some(Lint {
             span,
             lint_kind,

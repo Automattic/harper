@@ -50,15 +50,10 @@ impl MapPhraseLinter {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let patterns = LongestMatchOf::new(
-            phrase
-                .into_iter()
-                .map(|p| {
-                    let expr: Box<dyn Expr> = Box::new(weir_expr_to_expr(p.as_ref()).unwrap());
-                    expr
-                })
-                .collect(),
-        );
+        let patterns = LongestMatchOf::new(phrase.into_iter().map(|p| {
+            let expr: Box<dyn Expr> = Box::new(weir_expr_to_expr(p.as_ref()).unwrap());
+            expr
+        }));
 
         Self::new(
             Box::new(patterns),
