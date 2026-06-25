@@ -5303,6 +5303,7 @@ July/OgS
 Jun/Og
 June/OgS
 Juneau/Og
+Juneteenth/gO
 Jung/Og
 Jungfrau/Og         # mountain
 Jungian/JNg
@@ -7098,7 +7099,7 @@ Moran/Og
 Moravia/Og
 Moravian/JNg
 Mordred/Og
-More/Og
+More/Og             # surname: Sir Thomas ~, Henry ~; language of Burkina Faso
 Moreno/Og
 Morgan/ONSg
 Morgantown/Og
@@ -13105,7 +13106,7 @@ ardor/NgS
 ardour/NwgS!@_₹
 arduous/~JYp
 arduousness/Ng
-are/~VlS            # 2nd person singular & plural / 1st & 3rd person plural present of 'be'
+are/~Vl             # 2nd person singular & plural / 1st & 3rd person plural present of 'be'
 area/~NwSg
 areal/J
 aren't/V
@@ -14949,7 +14950,7 @@ bitplane/NgS
 bitrate/NgS
 bitstream/Sg
 bitten/~VT
-bitter/~JY^>pNgSV
+bitter/~JY^>pNgSVdG
 bittern/~NSg
 bitterness/~Nmg
 bitters/NgV
@@ -16444,6 +16445,8 @@ camelhair/N
 camellia/NgS
 cameo/~NgSV
 camera/~NgS
+camera obscura/NgS
+camerae obscurae/N9
 cameraman/~N0g
 cameramen/N9
 camerapeople/N9
@@ -21644,6 +21647,7 @@ dipstick/NSgV
 dipterous/J
 diptych/N0g
 diptychs/N9
+dir/NgS†
 dire/~JY^>
 dire wolf/Ng
 dire wolves/9
@@ -24582,7 +24586,10 @@ fancywork/Ng
 fandango/~NgSV
 fandom/~N
 fanfare/~NwSgV
-fanfic/Nmg†
+fanfic/Nmg†         # AHD:yes, Britannica:no, Cambridge:yes, Chambers:no, Collins:yes, Longman:->fanfic, MW:yes, OED:yes, OL:also
+fan fic/Nmg†        # AHD:no, Britannica:no, Cambridge:also, Chambers:no, Collins:no, Longman: no, MW:no, OED:no, OL:no
+fanfiction/Nmg      # AHD:no, Britannica:no, Cambridge:no, Chambers:no, Collins:no, Longman:yes, MW:->fan fiction, OED:->fan fiction, OL:no
+fan fiction/Nmg     # AHD:yes, Britannica:no, Cambridge:yes, Chambers:no, Collins:yes, Longman:->fanfic, MW:yes, OED:yes, OL:yes
 fang/~NgSVd
 fanlight/NSg
 fanmade/J
@@ -24936,7 +24943,7 @@ fibulae/N9
 fibular/J
 fiche/NSg
 fichu/NSg
-fickle/J^>pV
+fickle/JpV
 fickleness/Ng
 fiction/~NmgS
 fictional/~JY
@@ -25641,7 +25648,7 @@ fop/NSg
 foppery/Nmg
 foppish/Jp
 foppishness/Nmg
-for/~CPRH
+for/~PCRH
 fora/~N9
 forage/~NSgVd>GZ
 forager/NgS
@@ -25768,7 +25775,7 @@ forgoes/V
 forgone/V
 forgot/~Vt
 forgotten/~JVTNU
-fork/~NgSVdG
+fork/~NgSVdGB
 forkful/NSg
 forklift/NgSV
 forlorn/JYNV
@@ -26857,7 +26864,7 @@ girth/NwgSV
 girths/N
 GIS/N # Geographic Information System
 gist/NgSV
-git/~NOSV
+git/~NOgSV
 gite/NS
 give/~VG>SNZz
 giveaway/NgSJ
@@ -27082,6 +27089,7 @@ godlike/J
 godliness/NmgU
 godly/J>^pU
 godmother/~NSgV
+godown/NSg₹
 godparent/NSg
 godsend/NSg
 godson/NSg
@@ -27870,6 +27878,7 @@ halftone/NgSV
 halfway/~J
 halfwit/NSg
 halibut/NSg
+halide/NSg
 halite/Ng
 halitosis/Ng
 hall/~NgS
@@ -27897,6 +27906,7 @@ halve/VdSG
 halyard/NgS
 ham/~NwSgV
 ham-fisted/J
+hamate/NgSJ
 hamburg/~NSgV>Z
 hamburger/~NwgSV
 hamlet/~NgS
@@ -30503,7 +30513,10 @@ instigate/VdSGn
 instigation/~Ngm
 instigator/NgS
 instil/VS!_₹
+instill/VS<@
 instillation/Ngm
+instilled/VtT
+instilling/V6
 instinct/~NgSJv
 instinctive/JY
 instinctual/J
@@ -30833,7 +30846,7 @@ invention/~NwgSr
 inventive/~JYp
 inventiveness/Ng
 inventor/~NgS
-inventory/~NSgVdG
+inventory/~NwSgVdG
 inverse/~JYNSgV
 invert/~Vd>GSNgJZ
 inverter/Ng
@@ -34223,7 +34236,7 @@ methamphetamine/NgS
 methane/~Ng
 methanol/~Ng
 methinks/
-method/~NgSV
+method/~NgS
 methodical/~JYp
 methodicalness/Ng
 methodological/~JY
@@ -34822,6 +34835,7 @@ mocker/NgS
 mockery/~NwSg
 mocking/~VNJY
 mockingbird/~NSg
+mockumentary/NSg
 mockup/NgS          # American Heritage ("also" in Cambridge, Collins)
 mod/~NSgVJ^
 modal/~JNSg
@@ -34919,7 +34933,7 @@ mollusk/NSg
 molly/~NSgV
 mollycoddle/NSgVdG
 molt/Vd>GSNgnZ
-molten/JV!@_₹
+molten/J
 molter/Ng
 molybdenum/Nmg
 mom/~NSgV<@
@@ -36958,7 +36972,7 @@ oestrus/NgS!_₹
 oeuvre/~NgS
 of/~P
 of course/R
-off/~J>PVGdSNZz
+off/~JPVGdSNZz
 off-grid/J
 off-limits/J
 off-ramp/NgS
@@ -37402,7 +37416,7 @@ ostracism/Ng
 ostracize/VGdS
 ostrich/~NgS
 other/~JpNgSV
-otherwise/~RJ
+otherwise/~RCJ
 otherworldly/J
 otiose/J
 otter/~NgS
@@ -40245,6 +40259,7 @@ pounding/VSNmgJ
 pour/~VGdSNz
 pout/VGd>SNgZ
 pouter/Ng
+poutine/Nmg
 poverty/~Nmg
 pow/~N
 powder/~NwSgVGd
@@ -41538,6 +41553,7 @@ quest/~NgSViWr
 quested/V
 questing/NV
 question/~NSgVd>GZBz
+questionability/Nmg
 questionable/~JU
 questionably/RyU
 questioned/~VtTU
@@ -43639,6 +43655,8 @@ salad/~NwgS
 salamander/~NSgV
 salami/NwSg
 salary/~NSgVdJ
+salaryman/N0g
+salarymen/N9
 sale/~NgSrB
 saleable/JNU!@_₹
 saleroom/NS
@@ -45287,6 +45305,8 @@ sideload/VdGS
 sidelong/J
 sideman/~Ng
 sidemen/9
+sidenote/NSg
+side note/NSg
 sidepiece/NgS
 sidereal/J
 sidesaddle/NgS
@@ -47240,14 +47260,14 @@ stigmatization/Nge
 stigmatize/VGdSe
 stile/NSgV
 stiletto/NSgV
-still/~J^RNSVGdi
+still/~J^RNSVGd
 still's
 stillbirth/Ng
 stillbirths/N
 stillborn/~JN
-stilled/JVtTi!_₹
+stilled/JVtT
 stiller/~JN
-stilling/V6Ni!_₹
+stilling/V6N
 stillness/Ng
 stilt/~NSgVd
 stilted/JYV
@@ -47283,7 +47303,7 @@ stitch's
 stitchery/Ng
 stitching/NgV
 stoat/NSg
-stochastic/~J
+stochastic/~JQ
 stock/~NwSVGdJr
 stock's
 stockade/~NSgVdG
@@ -49413,7 +49433,7 @@ throne's
 throng/NSgVGdJ
 throttle/~NSgVd>GZ
 throttler/Ng
-through/~PJN
+through/~PJ
 throughout/~P
 throughput/~Ng
 throughway/NgS!@_₹
@@ -49627,7 +49647,7 @@ tirade/NSgV
 tiramisu/NgS
 tire/~VGdSNr
 tire's
-tired/~V>JY^p
+tired/~VJYp
 tiredness/Nmg
 tireless/~JYp
 tirelessness/Ng
@@ -50824,7 +50844,7 @@ ugh/~
 uglification/NwgS
 ugliness/Nmg
 ugly/~J^>pNV
-uh/~N
+uh/~
 uh-huh
 uh-oh
 uhf/~
@@ -52792,7 +52812,7 @@ wench/NgSV
 wend/VdGSN
 went/~VtN
 wept/V
-were/~VltN
+were/~Vlt
 weren't/Vt
 werewolf/~N0g
 werewolves/N9
@@ -53846,7 +53866,7 @@ ASUS/Og
 ATF/Ng              # automatic transmission fluid
 AVC/Ng              # H.264 video format
 AVL tree/NgS        # data structure
-Afroasiatic/OmgJ.   # linguistics
+Afroasiatic/OmgJ    # linguistics
 Airbnb/ONSg
 Akismet/Og
 Alexa/Og            # voice assistant
@@ -54393,7 +54413,7 @@ VS Code/Og
 Vaadin/Sg
 VaultPress/Og
 Vercel/Og           # cloud
-Verlilog/Og.        # hardware description language
+Verlilog/Og         # hardware description language
 VideoPress/Og
 Viktor/Sg
 Vim script/Omg      # the spelling/capitalization variant used on Vim's docs
@@ -54567,7 +54587,7 @@ pentesting/NmgV6
 plist/NgS           # Apple property list
 polysyntheses/N9    # linguistics
 polysynthesis/Nw0g  # linguistics
-polysynthetic/J.    # linguistics
+polysynthetic/J     # linguistics
 postfix/NgSVdG
 pre/~PNV(           # !! please check and comment !! dictionaries only list prefix pre-
 preshared/J
@@ -54615,6 +54635,7 @@ timespan/NgS
 tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
+uncomment/VSdG
 unicast/JVSdG
 unlintable/J
 upsert/VdSGNg       # database operation: update or insert
@@ -54658,7 +54679,7 @@ livestreamer/NSg    # main: OED, Oxford Learner's; also: Cambridge
 live streamer/NSg   # Cambridge
 menarche/Nmg        # medicine
 micronutrient/NSg
-misprediction/NSg.  # not in dictionaries
+misprediction/NSg   # not in dictionaries
 monolatrous/J
 monolatry/Nmg
 offeror/NSg

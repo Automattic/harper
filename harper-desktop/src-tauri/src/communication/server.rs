@@ -59,6 +59,9 @@ where
             Request::GetDialect => Response::GetDialect {
                 dialect: self.config.lock().await.dialect,
             },
+            Request::GetDebounceMs => Response::GetDebounceMs {
+                debounce_ms: self.config.lock().await.debounce_ms,
+            },
             Request::GetIgnoredLints => Response::GetIgnoredLints {
                 ignored_lints: self.config.lock().await.ignored_lints.clone(),
             },

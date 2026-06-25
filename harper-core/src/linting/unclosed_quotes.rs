@@ -17,7 +17,7 @@ impl Linter for UnclosedQuotes {
                     span: token.span,
                     lint_kind: LintKind::Formatting,
                     suggestions: vec![],
-                    message: "This quote has no termination.".to_string(),
+                    message: "This quote has no termination.".to_owned(),
                     priority: 255,
                 })
             }

@@ -37,10 +37,18 @@ function getConfigLinter(): Promise<LocalLinterType> {
 export interface Integration {
 	bundle_id: string;
 	enabled: boolean;
+	display_name: string;
+}
+
+export interface AppSearchResult {
+	name: string;
+	bundle_id: string;
 }
 
 export type AccessibilityPermissionStatus = 'Granted' | 'NotGranted' | 'Unsupported';
 
+/** Provides an easy-to-use interface for interacting with the main Rust Tauri process.
+ * Relevant because that is where the canonical state is stored. */
 export class Client {
 	static async getLintConfig(): Promise<LintConfig> {
 		return await invoke<LintConfig>('get_lint_config');
@@ -66,6 +74,30 @@ export class Client {
 
 	static async setDialect(dialect: Dialect): Promise<void> {
 		await invoke('set_dialect', { dialect: dialectToRustDialect(dialect) });
+	}
+
+	static async getDebounceMs(): Promise<number> {
+		return await invoke<number>('get_debounce_ms');
+	}
+
+	static async setDebounceMs(debounceMs: number): Promise<void> {
+		await invoke('set_debounce_ms', { debounceMs });
+	}
+
+	static async getAutoUpdate(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_update');
+	}
+
+	static async setAutoUpdate(autoUpdate: boolean): Promise<void> {
+		await invoke('set_auto_update', { autoUpdate });
+	}
+
+	static async getLastUpdateCheck(): Promise<number | null> {
+		return await invoke<number | null>('get_last_update_check');
+	}
+
+	static async setLastUpdateCheck(lastUpdateCheck: number | null): Promise<void> {
+		await invoke('set_last_update_check', { lastUpdateCheck });
 	}
 
 	static async getLaunchAtStartup(): Promise<boolean> {
@@ -128,6 +160,22 @@ export class Client {
 		await invoke('set_integration_enabled', { bundleId, enabled });
 	}
 
+	static async getInstalledApplicationBundleIds(): Promise<string[]> {
+		return await invoke<string[]>('get_installed_application_bundle_ids');
+	}
+
+	static async getApplicationIconDataUrl(bundleId: string): Promise<string> {
+		return await invoke<string>('get_application_icon_data_url', { bundleId });
+	}
+
+	static async searchApps(query: string): Promise<AppSearchResult[]> {
+		return await invoke<AppSearchResult[]>('search_apps', { query });
+	}
+
+	static async launchApp(bundleId: string): Promise<void> {
+		await invoke('launch_app', { bundleId });
+	}
+
 	static async getAccessibilityPermissionStatus(): Promise<AccessibilityPermissionStatus> {
 		return await withTimeout(
 			invoke<AccessibilityPermissionStatus>('get_accessibility_permission_status'),
@@ -143,20 +191,30 @@ export class Client {
 			'Accessibility permission request timed out',
 		);
 	}
+
+	static async startHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('start_highlighter_service');
+	}
+
+	static async stopHighlighterService(): Promise<boolean> {
+		return await invoke<boolean>('stop_highlighter_service');
+	}
 }
 
-function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
+async function withTimeout<T>(promise: Promise<T>, timeoutMs: number, message: string): Promise<T> {
 	let timeoutId: ReturnType<typeof setTimeout> | undefined;
 
 	const timeout = new Promise<never>((_, reject) => {
 		timeoutId = setTimeout(() => reject(new Error(message)), timeoutMs);
 	});
 
-	return Promise.race([promise, timeout]).finally(() => {
+	try {
+		return await Promise.race([promise, timeout]);
+	} finally {
 		if (timeoutId) {
 			clearTimeout(timeoutId);
 		}
-	});
+	}
 }
 
 function rustDialectToDialect(dialect: RustDialect): Dialect {

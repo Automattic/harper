@@ -11,9 +11,7 @@ pub struct NotOnlyInversion {
 impl Default for NotOnlyInversion {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("not")
-                .t_ws()
-                .t_aco("only")
+            expr: SequenceExpr::word_seq(&["not", "only"])
                 .t_ws()
                 .then_word_set(&["I", "we", "you", "he", "she", "it", "they"])
                 .t_ws()
@@ -48,7 +46,7 @@ impl ExprLinter for NotOnlyInversion {
         Some(Lint {
             span: pronbetoks.span()?,
             lint_kind: LintKind::Grammar,
-            message: "After `not only` the subject and verb should be inverted.".to_string(),
+            message: "After `not only` the subject and verb should be inverted.".to_owned(),
             suggestions: vec![Suggestion::replace_with_match_case(
                 inverted,
                 pronbetoks.span()?.get_content(src),

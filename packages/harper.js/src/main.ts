@@ -36,7 +36,8 @@ export type LintKind =
 	| 'Style'
 	| 'Typo'
 	| 'Usage'
-	| 'WordChoice';
+	| 'WordChoice'
+	| 'WordOrder';
 
 export type StructuredLintSetting =
 	| StructuredLintBoolSetting
