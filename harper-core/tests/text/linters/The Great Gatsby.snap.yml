@@ -1199,7 +1199,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     1065 | “The only crazy I was was when I married him. I knew right away I made a
          |                   ^~~~~~~ Did you mean to repeat this word?
@@ -1967,7 +1967,7 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
-         |                                                 ^~~~ `outa` should probably be written as `out a`.
+         |                                                 ^~~~ `outa` should possibly be written as `out a`.
 Suggest:
   - Replace with: “out a”
 
@@ -2629,6 +2629,17 @@ Message: |
          |             ^~~~~~~~~~~~ Did you mean `Kissinger`?
 Suggest:
   - Replace with: “Kissinger”
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+    1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were
+         |                                                                            ^~~~~
+    1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
+         | ~~~ There is disagreement in number between the verb and the noun.
+Suggest:
+  - Replace with: “was a Gus”
 
 
 
@@ -4489,7 +4500,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
          |                                                                           ^~~~~
@@ -5499,6 +5510,16 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
+         |                                      ^~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    4150 | life and family institutions, and next they’ll throw everything overboard and
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     4175 | me.”
@@ -5593,7 +5614,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     4347 | Her frightened eyes told that whatever intentions, whatever courage she had had,
          |                                                                         ^~~~~~~ Did you mean to repeat this word?

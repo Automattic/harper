@@ -61,6 +61,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `adieu` to `ado`.",
             LintKind::Eggcorn
         ),
+        "ArgumentToBeMade" => (
+            &[
+                ("argument to be said", "argument to be made"),
+                ("arguments to be said", "arguments to be made"),
+            ],
+            "The phrase `argument to be made` is correct.",
+            "Corrects `argument to be said` to `argument to be made`.",
+            LintKind::Usage
+        ),
         "Bollocks" => (
             &[
                 ("bullocks!", "bollocks!"),
@@ -126,6 +135,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `conform` typos to `confirm`.",
             LintKind::Typo
         ),
+        "ConstituteAs" => (
+            &[
+                ("constitute as", "constitute"),
+                ("constituted as", "constituted"),
+                ("constitutes as", "constitutes"),
+                ("constituting as", "constituting"),
+            ],
+            "`As` is extraneous after forms of `constitute`.",
+            "Removes extraneous `as` after the verb `constitute`.",
+            LintKind::Usage
+        ),
         "DefiniteArticle" => (
             &[
                 ("definitive article", "definite article"),
@@ -176,6 +196,15 @@ pub fn lint_group() -> LintGroup {
             "Tries to correct typos of `dose` to `does`.",
             LintKind::Typo
         ),
+        "ExpandAlgorithm" => (
+            &[
+                ("algo", "algorithm"),
+                ("algos", "algorithms"),
+            ],
+            "Use `algorithm` instead of `algo`",
+            "Expands the abbreviation `algo` to the full word `algorithm` for clarity.",
+            LintKind::Style
+        ),
         "ExpandArgument" => (
             &[
                 ("arg", "argument"),
@@ -201,6 +230,24 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `dereference` instead of `deref`",
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandNotification" => (
+            &[
+                ("notif", "notification"),
+                ("notifs", "notifications"),
+            ],
+            "Use `notification` instead of `notif`",
+            "Expands the abbreviation `notif` to the full word `notification` for clarity.",
             LintKind::Style
         ),
         "ExpandParameter" => (
@@ -229,6 +276,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use `standard input`, `standard output`, and `standard error` instead of `stdin`, `stdout`, and `stderr`",
             "Expands the abbreviations `stdin`, `stdout`, and `stderr` to the full words `standard input`, etc. for clarity.",
+            LintKind::Style
+        ),
+        "ExpandVulnerability" => (
+            &[
+                ("vuln", "vulnerability"),
+                ("vulns", "vulnerabilities"),
+            ],
+            "Use `vulnerability` instead of `vuln`",
+            "Expands the abbreviation `vuln` to the full word `vulnerability` for clarity.",
             LintKind::Style
         ),
         "ExplanationMark" => (
@@ -730,6 +786,15 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `alloc` to the full word `allocate` or `allocation` for clarity.",
             LintKind::Style
         ),
+        "ExpandCoordinate" => (
+            &[
+                (&["coord"], &["coordinate"]),
+                (&["coords"], &["coordinates"]),
+            ],
+            "Use `coordinate` instead of `coord`",
+            "Expands the abbreviation `coord` to the full word `coordinate` for clarity.",
+            LintKind::Style
+        ),
         "ExpandDecl" => (
             &[
                 (&["decl"], &["declaration", "declarator"]),
@@ -800,6 +865,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "LevelOfDetails" => (
+            &[
+                (&["level of details"], &["level of detail", "levels of detail"]),
+                (&["level-of-details"], &["level-of-detail", "levels-of-details"]),
+                (&["levels of details"], &["levels of detail"])
+            ],
+            "For multiple levels, pluralize `level` instead of `detail`. `Detail` remains singular whether one or multiple levels.",
+            "Corrects `level of details` to `level of detail` or `levels of detail`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -809,6 +884,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Don't inflect `seem` in `make it seem`.",
             "Corrects `make it seems` to `make it seem`."
+        ),
+        "Monumentous" => (
+            &[
+                (&["monumentous"], &["momentous", "monumental"]),
+                (&["monumentously"], &["momentously", "monumentally"]),
+            ],
+            "Retain `monumentous` for jocular effect. Otherwise `momentous` indicates great signifcance while `monumental` indicates imposing size.",
+            "Advises using `momentous` or `monumental` instead of `monumentous` for serious usage.",
+            LintKind::Nonstandard
         ),
         "NervousWreck" => (
             &[
@@ -830,6 +914,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects `no only` to `not only` before forms of `to be`.",
             LintKind::Grammar
         ),
+        "Nowadays" => (
+            &[(
+                &[
+                    "now a days", "now-a-days", "now a day's",
+                    "nowaday", "now a day", "now-a-day",
+                    "now adays", "now-adays", "now aday's",
+                    "now aday",
+                    "nowa days",
+                ],
+                &["nowadays"]
+            )],
+            "Use `nowadays` instead of common misspellings.",
+            "Corrects common misspellings of `nowadays`.",
+            LintKind::Usage
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),
@@ -846,6 +945,16 @@ pub fn lint_group() -> LintGroup {
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
+        ),
+        "SideTangent" => (
+            &[
+                (&["a side tangent"], &["a tangent", "an aside"]),
+                (&["side tangent"], &["tangent", "aside"]),
+                (&["side tangents"], &["tangents", "aside"])
+            ],
+            "The word `side` is redundant in this phrase.",
+            "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
+            LintKind::Redundancy
         ),
         "ToTooIdioms" => (
             &[
@@ -934,7 +1043,16 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        )
+        ),
+        "ToTo" => (
+            &[
+                (&["to to"], &["to do"]),
+                (&["to-to"], &["to-do"]),
+            ],
+            "Did you mean to write `do` instead of a second `to`?",
+            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
+            LintKind::Typo
+        ),
     });
 
     group.set_all_rules_to(Some(true));

@@ -4,6 +4,14 @@ use crate::linting::tests::{
 
 use super::lint_group;
 
+/// Helper function to create a lint group with only a single rule enabled.
+fn single_lint(rule_name: &str) -> crate::linting::LintGroup {
+    let mut group = lint_group();
+    group.set_all_rules_to(None); // Disable all linters
+    group.config.set_rule_enabled(rule_name, true); // Enable only the specified rule
+    group
+}
+
 // 1:1 tests
 
 // Ado
@@ -23,6 +31,35 @@ fn corrects_much_ado() {
         "After much adieu this functionality is now available.",
         lint_group(),
         "After much ado this functionality is now available.",
+    );
+}
+
+// ArgumentToBeMade
+
+#[test]
+fn corrects_theres_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "I guess there s an argument to be said that if the TUCKR_HOME is already defined, it should use that instead.",
+        lint_group(),
+        "I guess there s an argument to be made that if the TUCKR_HOME is already defined, it should use that instead.",
+    );
+}
+
+#[test]
+fn corrects_there_is_an_argument_to_be_said() {
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+    );
+}
+
+#[test]
+fn corrects_theres_theres_arguments_to_be_said() {
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
     );
 }
 
@@ -298,6 +335,55 @@ fn corrects_conforming_that() {
     );
 }
 
+// ConstituteAs
+
+#[test]
+fn corrects_constitute_as() {
+    assert_suggestion_result(
+        "This doesn't really constitute as an implicit cast in the eyes of the system.",
+        lint_group(),
+        "This doesn't really constitute an implicit cast in the eyes of the system.",
+    );
+}
+
+#[test]
+fn corrects_constituted_as() {
+    assert_suggestion_result(
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted as a denial of service attack which we are not responsible for.",
+        lint_group(),
+        "We do not recommend setting the number of threads to more than 20, as that can be constituted a denial of service attack which we are not responsible for.",
+    );
+}
+
+#[test]
+fn corrects_constitutes_as() {
+    assert_suggestion_result(
+        "Hello! I was just wondering what constitutes as a prompt in GitHub CoPilot that consumes premium request tokens.",
+        lint_group(),
+        "Hello! I was just wondering what constitutes a prompt in GitHub CoPilot that consumes premium request tokens.",
+    );
+}
+
+#[test]
+fn corrects_constituting_as_example() {
+    assert_suggestion_result(
+        "This is the example constituting as hull-demo 's values.yaml",
+        lint_group(),
+        "This is the example constituting hull-demo 's values.yaml",
+    );
+}
+
+#[test]
+#[ignore = "Not sure if this would be a false positive or a true positive"]
+fn ambiguous_constituting_as() {
+    assert_suggestion_result(
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+        lint_group(),
+        // Maybe this one was supposed to be "contributing"?
+        "Note that spinning up a Client is a non-trivial operation, constituting as much as a millisecond of overhead.",
+    );
+}
+
 // DefiniteArticle
 
 #[test]
@@ -565,6 +651,26 @@ fn corrects_why_dose() {
 
 // Note: no false positive detected for 'why does'. Only true positives.
 
+// ExpandAlgorithm
+
+#[test]
+fn corrects_algo() {
+    assert_suggestion_result(
+        "Always glad when the algo feeds me a new dissident.",
+        lint_group(),
+        "Always glad when the algorithm feeds me a new dissident.",
+    );
+}
+
+#[test]
+fn corrects_algos() {
+    assert_suggestion_result(
+        "I moved algos development to a private repository.",
+        lint_group(),
+        "I moved algorithms development to a private repository.",
+    );
+}
+
 // ExpandArgument
 
 #[test]
@@ -582,6 +688,26 @@ fn corrects_args() {
         "but every test I've done shows args as being about 65% faster",
         lint_group(),
         "but every test I've done shows arguments as being about 65% faster",
+    );
+}
+
+// ExpandCoordinate
+
+#[test]
+fn corrects_coord() {
+    assert_suggestion_result(
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coord systems that do not support them",
+        lint_group(),
+        "Prompted by #5684, we should probably emit more meaningful messages when position guides are specified in coordinate systems that do not support them",
+    );
+}
+
+#[test]
+fn corrects_coords() {
+    assert_suggestion_result(
+        "Here is how you can extract the list of coords from any geometry:",
+        lint_group(),
+        "Here is how you can extract the list of coordinates from any geometry:",
     );
 }
 
@@ -625,6 +751,46 @@ fn corrects_derefs() {
         "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
         lint_group(),
         "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+    );
+}
+
+// ExpandDirectory
+
+#[test]
+fn expands_dir() {
+    assert_suggestion_result(
+        "Error: library dir does not exist: /Users/u/trr/node_modules/opencv",
+        lint_group(),
+        "Error: library directory does not exist: /Users/u/trr/node_modules/opencv",
+    );
+}
+
+#[test]
+fn expands_dirs() {
+    assert_suggestion_result(
+        "Dirs/files are missing when scanning on windows after 1.27.12",
+        lint_group(),
+        "Directories/files are missing when scanning on windows after 1.27.12",
+    );
+}
+
+// ExpandNotification
+
+#[test]
+fn corrects_notif() {
+    assert_suggestion_result(
+        "Amazing to see the notif of this on my phone!",
+        lint_group(),
+        "Amazing to see the notification of this on my phone!",
+    );
+}
+
+#[test]
+fn corrects_notifs() {
+    assert_suggestion_result(
+        "I don't encourage you spending all your time on social media or keeping the notifs on if you're working on something serious.",
+        lint_group(),
+        "I don't encourage you spending all your time on social media or keeping the notifications on if you're working on something serious.",
     );
 }
 
@@ -673,6 +839,33 @@ fn correct_ptrs() {
 
 // ExpandStandardOutput
 // -none-
+
+// ExpandVulnerability
+
+#[test]
+fn corrects_vuln() {
+    assert_suggestion_result(
+        "I did not understand this vuln in first place now I do not understand in 2nd place as well😢",
+        lint_group(),
+        "I did not understand this vulnerability in first place now I do not understand in 2nd place as well😢",
+    );
+}
+
+#[test]
+fn corrects_vulns() {
+    // Fix just this lint
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        single_lint("ExpandVulnerability"),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive params, and auth endpoints.",
+    );
+    // Fix all lints in the `LintGroup`
+    assert_suggestion_result(
+        "... when persisted, containing endpoints, vulns, WAF bypasses, sensitive params, and auth endpoints.",
+        lint_group(),
+        "... when persisted, containing endpoints, vulnerabilities, WAF bypasses, sensitive parameters, and auth endpoints.",
+    );
+}
 
 // ExplanationMark
 #[test]
@@ -1785,8 +1978,17 @@ fn fix_everybody_seams() {
 fn fix_everyone_seams() {
     assert_suggestion_result(
         "everyone seams to use the editor now a days plus there is a tun of extensions available",
-        lint_group(),
+        single_lint("SeamToSeem"),
         "everyone seems to use the editor now a days plus there is a tun of extensions available",
+    );
+}
+
+#[test]
+fn fix_everyone_seams_combined_with_now_a_days() {
+    assert_suggestion_result(
+        "everyone seams to use the editor now a days plus there is a tun of extensions available",
+        lint_group(),
+        "everyone seems to use the editor nowadays plus there is a tun of extensions available",
     );
 }
 
@@ -2674,6 +2876,53 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// LevelOfDetails
+
+#[test]
+fn corrects_level_of_details_singular_contrived() {
+    assert_suggestion_result(
+        "The model has a high level of details.",
+        lint_group(),
+        "The model has a high level of detail.",
+    );
+}
+
+#[test]
+fn corrects_levels_of_details_plural_contrived() {
+    assert_suggestion_result(
+        "The game uses several level of details to save memory.",
+        lint_group(),
+        "The game uses several levels of detail to save memory.",
+    );
+}
+
+#[test]
+fn corrects_level_of_details_singular_real_world() {
+    assert_suggestion_result(
+        "How to implement a level of details visualizer for 3D meshes?",
+        lint_group(),
+        "How to implement a level of detail visualizer for 3D meshes?",
+    );
+}
+
+#[test]
+fn corrects_level_of_details_plural_real_world() {
+    assert_suggestion_result(
+        "LOD's (Level of details) are a set of lower models used for the purpose of optimisation",
+        lint_group(),
+        "LOD's (Levels of detail) are a set of lower models used for the purpose of optimisation",
+    );
+}
+
+#[test]
+fn corrects_levels_of_details_real_world() {
+    assert_suggestion_result(
+        "The file completion uses two levels of details to optimize performance.",
+        lint_group(),
+        "The file completion uses two levels of detail to optimize performance.",
+    );
+}
+
 // MakeItSeem
 
 #[test]
@@ -2718,6 +2967,26 @@ fn corrects_made_it_seemed() {
         "The path made it seemed a bit \"internal\".",
         lint_group(),
         "The path made it seem a bit \"internal\".",
+    );
+}
+
+// Monumentous
+
+#[test]
+fn corrects_monumentous() {
+    assert_suggestion_result(
+        "I think that would be a monumentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+        lint_group(),
+        "I think that would be a momentous step in the right direction, and would DEFINATLY turn heads in not just the music industry, but every ...",
+    );
+}
+
+#[test]
+fn corrects_monumentously() {
+    assert_suggestion_result(
+        "the most impressive thing out of all of this is that GitHub created such a monumentously good name",
+        lint_group(),
+        "the most impressive thing out of all of this is that GitHub created such a monumentally good name",
     );
 }
 
@@ -2817,6 +3086,107 @@ fn fix_no_only_were() {
         "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
         lint_group(),
         "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+    );
+}
+
+// Nowadays
+
+#[test]
+fn fix_now_a_days_spaces() {
+    assert_suggestion_result(
+        "Now a days, movie recommendation systems are well developed and are user focused.",
+        lint_group(),
+        "Nowadays, movie recommendation systems are well developed and are user focused.",
+    );
+}
+
+#[test]
+fn fix_now_a_days_apostrophe() {
+    assert_suggestion_result(
+        "Now a day's recognizing the activity from the surveillance video is a challenging task.",
+        lint_group(),
+        "Nowadays recognizing the activity from the surveillance video is a challenging task.",
+    );
+}
+
+#[test]
+fn fix_now_a_days_hyphen() {
+    assert_suggestion_result(
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen now-a-days.",
+        lint_group(),
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_a_day() {
+    assert_suggestion_result(
+        "Now a day a calendar is a daily essential things.",
+        lint_group(),
+        "Nowadays a calendar is a daily essential things.",
+    );
+}
+
+#[test]
+fn fix_now_a_day_hyphen() {
+    assert_suggestion_result(
+        "Now-a-day, lots of people prefer ordering food online to save their time and effort.",
+        lint_group(),
+        "Nowadays, lots of people prefer ordering food online to save their time and effort.",
+    );
+}
+
+#[test]
+fn fix_now_adays_hyphen() {
+    assert_suggestion_result(
+        "@andyp1per knows most about those Python scripts now-adays.",
+        lint_group(),
+        "@andyp1per knows most about those Python scripts nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_adays_space() {
+    assert_suggestion_result(
+        "Coding is one of my fav thing to do now adays.!",
+        lint_group(),
+        "Coding is one of my fav thing to do nowadays.!",
+    );
+}
+
+#[test]
+fn fix_nowaday() {
+    assert_suggestion_result(
+        "nowaday, I have to capitalize the first letter of the name gets from @babel/types.",
+        lint_group(),
+        "nowadays, I have to capitalize the first letter of the name gets from @babel/types.",
+    );
+}
+
+#[test]
+fn fix_now_adays_apostrophe() {
+    assert_suggestion_result(
+        "I believe CSS clamp has great browser support now aday's as well.",
+        lint_group(),
+        "I believe CSS clamp has great browser support nowadays as well.",
+    );
+}
+
+#[test]
+fn fix_nowa_days() {
+    assert_suggestion_result(
+        "But discord would be great cause discord is universally used for all games and companies and schools nowa days.",
+        lint_group(),
+        "But discord would be great cause discord is universally used for all games and companies and schools nowadays.",
+    );
+}
+
+#[test]
+fn fix_now_aday() {
+    assert_suggestion_result(
+        "OF all Occupations that now aday is used,I would not be a butcher",
+        lint_group(),
+        "OF all Occupations that nowadays is used,I would not be a butcher",
     );
 }
 
@@ -2941,6 +3311,35 @@ fn detect_arisen_the_question() {
         "Some have arisen the question like how to use this wireless HD mini camera",
         lint_group(),
         "Some have raised the question like how to use this wireless HD mini camera",
+    );
+}
+
+// SideTangent
+
+#[test]
+fn fix_side_tangent_start_of_sentence() {
+    assert_suggestion_result(
+        "Side tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+        lint_group(),
+        "Tangent: I personally wouldn't worry about using ; for removing the selection unless you need to.",
+    );
+}
+
+#[test]
+fn fix_side_tangent_aside() {
+    assert_suggestion_result(
+        "As a side tangent, in addition to not solving the gradual code repair problem",
+        lint_group(),
+        "As an aside, in addition to not solving the gradual code repair problem",
+    );
+}
+
+#[test]
+fn fix_side_tangents() {
+    assert_suggestion_result(
+        "so we don't get bogged down by tiny formatting bikeshedding side tangents",
+        lint_group(),
+        "so we don't get bogged down by tiny formatting bikeshedding tangents",
     );
 }
 
@@ -3548,5 +3947,25 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
         lint_group(),
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
+    );
+}
+
+// -to to-
+#[test]
+fn corrects_to_to() {
+    assert_suggestion_result(
+        "I need to add that to my to to list first.",
+        lint_group(),
+        "I need to add that to my to do list first.",
+    );
+}
+
+// -to-to-
+#[test]
+fn corrects_to_to_with_hyphen() {
+    assert_suggestion_result(
+        "I need to add that to my to-to list first.",
+        lint_group(),
+        "I need to add that to my to-do list first.",
     );
 }

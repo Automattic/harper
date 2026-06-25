@@ -30,7 +30,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
 
     match flag {
         Prefer::Circle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
@@ -38,7 +38,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
             ),
         ),
         Prefer::Cycle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
@@ -46,7 +46,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
             ),
         ),
         Prefer::DontCare => {
-            Box::new(seq.and_not(SequenceExpr::default().then_word_except(&["viscous"])))
+            Box::new(seq.but_not(SequenceExpr::default().then_word_except(&["viscous"])))
         }
     }
 }
@@ -87,9 +87,9 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                 nountok.get_ch(src),
             )],
             message: if pref == Prefer::Circle {
-                "This idiom originally used `circle`, not `cycle`".to_string()
+                "This idiom originally used `circle`, not `cycle`".to_owned()
             } else {
-                "Though this idiom originally used `circle`, `cycle` is preferred.".to_string()
+                "Though this idiom originally used `circle`, `cycle` is preferred.".to_owned()
             },
             ..Default::default()
         });

@@ -12,20 +12,20 @@ pub struct EverEvery {
 impl Default for EverEvery {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![
+            expr: SequenceExpr::any_of([
                 Box::new(WordSet::new(&[
                     "are", "aren't", "arent", "did", "didn't", "didnt", "do", "does", "doesn't",
                     "doesnt", "dont", "don't", "had", "hadn't", "hadnt", "has", "hasn't", "hasnt",
                     "have", "haven't", "havent", "is", "isn't", "isnt", "was", "wasn't", "wasnt",
                     "were", "weren't", "werent",
-                ])),
+                ])) as Box<dyn Expr>,
                 Box::new(ModalVerb::with_common_errors()),
             ])
             .t_ws()
             .then_subject_pronoun()
             .t_ws()
             .t_aco("every")
-            .and_not(SequenceExpr::anything().t_any().t_aco("it")),
+            .but_not(SequenceExpr::anything().t_any().t_aco("it")),
         }
     }
 }
@@ -47,7 +47,7 @@ impl ExprLinter for EverEvery {
                 content[..content.len() - 1].to_vec(),
                 content,
             )],
-            message: "Is this `every` a typo that should be `ever`?".to_string(),
+            message: "Is this `every` a typo that should be `ever`?".to_owned(),
             ..Default::default()
         })
     }

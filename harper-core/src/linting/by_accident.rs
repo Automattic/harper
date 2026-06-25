@@ -1,8 +1,3 @@
-/*
-let message "Did you mean `by accident`?"
-let description "Incorrect preposition: `by accident` is the idiomatic expression."
- */
-
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr},
@@ -51,7 +46,7 @@ impl ExprLinter for ByAccident {
             span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "Did you mean `by accident`?".to_string(),
+            message: "Did you mean `by accident`?".to_owned(),
             ..Default::default()
         })
     }
