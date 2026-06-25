@@ -121,8 +121,8 @@ impl<B: Backend> BurnChunker<B> {
             .save_file(dir.join("model.mpk"), &recorder)
             .unwrap();
 
-        let vocab_bytes = serde_json::to_vec(&self.vocab).unwrap();
-        std::fs::write(dir.join("vocab.json"), vocab_bytes).unwrap();
+        let vocab_json = crate::map_to_json_tabs(self.vocab.iter().map(|(k, &v)| (k.as_str(), v)));
+        std::fs::write(dir.join("vocab.json"), vocab_json).unwrap();
     }
 
     pub fn load_from_bytes(

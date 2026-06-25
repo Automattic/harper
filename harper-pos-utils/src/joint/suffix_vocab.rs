@@ -72,7 +72,7 @@ impl SuffixVocab {
             k: self.k,
             map: self.map.iter().map(|(s, &v)| (s.as_str(), v)).collect(),
         };
-        serde_json::to_string_pretty(&pretty).expect("serialize suffix vocab")
+        crate::to_json_tabs(&pretty)
     }
 
     pub fn from_json(s: &str) -> Self {

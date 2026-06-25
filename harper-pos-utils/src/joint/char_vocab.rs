@@ -3,7 +3,6 @@
 use crate::joint::{CHAR_PAD, CHAR_UNK};
 use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
-use std::collections::BTreeMap;
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CharVocab {
@@ -54,11 +53,7 @@ impl CharVocab {
     }
 
     pub fn to_json(&self) -> String {
-        // Ordered (BTreeMap by char) + pretty-printed so the committed artifact
-        // has a stable, diff-friendly layout. The ids are the values; key order
-        // is cosmetic and does not affect decoding.
-        let ordered: BTreeMap<char, usize> = self.map.iter().map(|(&k, &v)| (k, v)).collect();
-        serde_json::to_string_pretty(&ordered).expect("serialize char vocab")
+        crate::map_to_json_tabs(self.map.iter().map(|(&k, &v)| (k, v)))
     }
 
     pub fn from_json(s: &str) -> Self {
