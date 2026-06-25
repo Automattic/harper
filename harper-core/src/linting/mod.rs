@@ -190,6 +190,7 @@ mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
 mod out_of_the_window;
+mod over_plus;
 mod oxford_comma;
 mod oxymorons;
 mod pay_for_price;

@@ -181,6 +181,7 @@ use super::orthographic_consistency::OrthographicConsistency;
 use super::ought_to_be::OughtToBe;
 use super::out_of_date::OutOfDate;
 use super::out_of_the_window::OutOfTheWindow;
+use super::over_plus::OverPlus;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
 use super::pay_for_price::PayForPrice;
@@ -750,6 +751,7 @@ impl LintGroup {
         insert_expr_rule!(OughtToBe, true);
         insert_expr_rule!(OutOfDate, true);
         insert_expr_rule_with_dialect!(OutOfTheWindow, true);
+        insert_expr_rule!(OverPlus, true);
         insert_struct_rule!(OxfordComma, true);
         insert_expr_rule!(Oxymorons, true);
         insert_expr_rule!(PayForPrice, true);
