@@ -30,8 +30,8 @@ impl Default for WebScraping {
 
         let hyphenated_compounds = FirstMatchOf::new(open_and_hyphenated_compounds);
 
-        let web_scraps = FirstMatchOf::new(vec![
-            Box::new(closed_compounds),
+        let web_scraps = FirstMatchOf::new([
+            Box::new(closed_compounds) as Box<dyn Expr>,
             Box::new(hyphenated_compounds),
         ]);
 
@@ -71,7 +71,10 @@ impl Default for WebScraping {
             .then_word_set(scrapables);
 
         Self {
-            expr: FirstMatchOf::new(vec![Box::new(web_scraps), Box::new(scrap_the_web)]),
+            expr: FirstMatchOf::new(vec![
+                Box::new(web_scraps) as Box<dyn Expr>,
+                Box::new(scrap_the_web),
+            ]),
         }
     }
 }

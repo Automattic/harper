@@ -1,5 +1,6 @@
 use crate::char_ext::CharExt;
 use std::borrow::Cow;
+use std::iter::Iterator;
 
 use smallvec::SmallVec;
 
@@ -101,6 +102,15 @@ impl CharStringExt for [char] {
     }
 
     fn eq_str(&self, other: &str) -> bool {
+        // Assert that the right-hand side is all-lowercase as required
+        debug_assert!(
+            other
+                .chars()
+                .all(|c| c.is_ascii_lowercase() || !c.is_ascii_alphabetic()),
+            "eq_str requires right-hand side to be lowercase ASCII, but got: {:?}",
+            other
+        );
+
         let mut chit = self.iter();
         let mut strit = other.chars();
 
@@ -119,6 +129,15 @@ impl CharStringExt for [char] {
     }
 
     fn eq_ch(&self, other: &[char]) -> bool {
+        // Assert that the right-hand side is all-lowercase as required
+        debug_assert!(
+            other
+                .iter()
+                .all(|c| c.is_ascii_lowercase() || !c.is_ascii_alphabetic()),
+            "eq_ch requires right-hand side to be lowercase ASCII, but got: {:?}",
+            other
+        );
+
         self.len() == other.len()
             && self
                 .iter()
@@ -253,5 +272,17 @@ mod tests {
     #[test]
     fn differs_only_by_length_2() {
         assert!(!['c'].eq_str("cc"));
+    }
+
+    #[test]
+    #[should_panic]
+    fn right_side_must_be_all_lowercase_str() {
+        assert!(['c'].eq_str("C"))
+    }
+
+    #[test]
+    #[should_panic]
+    fn right_side_must_be_all_lowercase_ch() {
+        assert!(['c'].eq_ch(&['C']))
     }
 }

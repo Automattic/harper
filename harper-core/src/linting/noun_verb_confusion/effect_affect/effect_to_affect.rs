@@ -5,7 +5,6 @@ use crate::{
     CharStringExt, Token, TokenKind,
     expr::{Expr, ExprMap, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WhitespacePattern,
 };
 
 pub(super) struct EffectToAffect {
@@ -21,9 +20,9 @@ impl Default for EffectToAffect {
             .then(|tok: &Token, source: &[char]| is_effect_word(tok, source))
             .t_ws()
             .then(matches_following_context)
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_optional(matches_optional_following)
-            .then_optional(WhitespacePattern);
+            .then_optional_whitespace();
 
         map.insert(context, 2);
 
