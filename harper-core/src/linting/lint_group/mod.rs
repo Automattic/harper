@@ -42,6 +42,7 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
+use super::by_ones_own::ByOnesOwn;
 use super::by_the_book::ByTheBook;
 use super::call_them::CallThem;
 use super::cant::Cant;
@@ -617,6 +618,7 @@ impl LintGroup {
         insert_expr_rule!(Bought, true);
         insert_expr_rule!(BrandBrandish, true);
         insert_expr_rule!(ByAccident, true);
+        insert_expr_rule!(ByOnesOwn, true);
         insert_expr_rule!(ByTheBook, true);
         insert_expr_rule!(CallThem, true);
         insert_expr_rule!(Cant, true);
