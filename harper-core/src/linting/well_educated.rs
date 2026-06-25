@@ -22,7 +22,7 @@ impl Default for WellEducated {
             .then_optional_whitespace()
             .t_aco("educated");
 
-        let expr = SequenceExpr::any_of(vec![Box::new(combined), Box::new(separated)]);
+        let expr = SequenceExpr::any_of([Box::new(combined) as Box<dyn Expr>, Box::new(separated)]);
 
         Self { expr }
     }

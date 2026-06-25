@@ -19,8 +19,8 @@ impl Default for CraveFor {
                         .t_aco("for"),
                 ) as Box<dyn Expr>,
                 Box::new(
-                    SequenceExpr::any_of(vec![
-                        Box::new(InflectionOfBe::default()),
+                    SequenceExpr::any_of([
+                        Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
                         Box::new(WordSet::new(&[
                             "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
                         ])),

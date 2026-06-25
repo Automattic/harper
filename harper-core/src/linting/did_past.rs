@@ -19,8 +19,8 @@ where
 {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::longest_of(vec![
-                Box::new(WordSet::new(&["did", "didn't", "didnt"])),
+            expr: SequenceExpr::longest_of([
+                Box::new(WordSet::new(&["did", "didn't", "didnt"])) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("did not")),
             ])
             .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
