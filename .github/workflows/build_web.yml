@@ -11,15 +11,15 @@ jobs:
   build-web:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6.0.3
       - name: Setup node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".node-version"
       - name: Retrieve version after install
         id: nodenv
         run: echo "node-version=$(node -v | sed 's/^v//')" >> $GITHUB_OUTPUT
-      - uses: redhat-actions/buildah-build@v2
+      - uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2.13
         with:
           image: web
           containerfiles: |

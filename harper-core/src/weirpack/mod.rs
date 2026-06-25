@@ -72,7 +72,15 @@ impl Weirpack {
 
         for (name, rule) in &self.rules {
             let linter = WeirLinter::new(rule)?;
-            group.add_chunk_expr_linter(name, linter);
+            match linter.into_sentence_linter() {
+                Ok(linter) => group.add_sentence_expr_linter(name, linter),
+                Err(linter) => group.add_chunk_expr_linter(
+                    name,
+                    linter
+                        .into_chunk_linter()
+                        .unwrap_or_else(|_| unreachable!()),
+                ),
+            };
             group.config.set_rule_enabled(name, true);
         }
 

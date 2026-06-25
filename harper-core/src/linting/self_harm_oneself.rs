@@ -11,21 +11,21 @@ pub struct SelfHarmOneself {
 impl Default for SelfHarmOneself {
     fn default() -> Self {
         Self {
-            expr: FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new([
                 Box::new(
                     SequenceExpr::aco("self")
                         .t_ws_h()
                         .t_set(&["harm", "harmed", "harming", "harms"])
                         .t_ws()
                         .then(ReflexivePronoun::with_common_errors())
-                        .and_not(
+                        .but_not(
                             SequenceExpr::anything()
                                 .t_any()
                                 .t_aco("harm")
                                 .t_any()
                                 .t_aco("itself"),
                         ),
-                ),
+                ) as Box<dyn Expr>,
                 Box::new(
                     SequenceExpr::aco("self")
                         .t_ws_h()
