@@ -1,4 +1,4 @@
-expr main <(([(haven't), (hasn't), (hadn't), (have not), (has not), (had not), (have n't), (has n't), (had n't)] VERB no NOUN)), no>
+expr main <(([(haven't), (hasn't), (hadn't), (have not), (has not), (had not), (have n't), (has n't), (had n't)] VERB no ~NOUN)), no>
 
 let message "This negative form sounds nonstandard; use `any` after the negated auxiliary."
 let description "Rewrites `no` to `any` in clauses like `haven't done no X` so the sentence keeps a single clear negation."

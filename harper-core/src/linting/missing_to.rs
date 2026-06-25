@@ -349,6 +349,11 @@ impl ExprLinter for MissingTo {
 
         let next_is_verb = next_upos == Some(UPOS::VERB);
         let next_is_noun = matches!(next_upos, Some(UPOS::NOUN | UPOS::PROPN | UPOS::ADJ));
+        // A genuine homograph keeps a verb reading among its plausible (top-k)
+        // tags even when the argmax is a noun (e.g. "finish"/"submit" tag NOUN
+        // first but rank VERB just behind). The controller-specific noun guards
+        // below otherwise suppress on the argmax alone, killing "wants finish".
+        let next_could_be_verb = next_token.kind.could_be_upos(UPOS::VERB);
 
         let determiner_within_three = Self::determiner_within_three(source, span.start);
 
@@ -397,6 +402,7 @@ impl ExprLinter for MissingTo {
                 | "wanting"
                 | "wants"
         ) && next_is_noun_but_not_verb
+            && !next_could_be_verb
         {
             return None;
         }
@@ -410,7 +416,7 @@ impl ExprLinter for MissingTo {
         let next_non_whitespace_char = Self::next_non_whitespace_char(source, next_token.span.end);
 
         if matches!(controller_text, "need" | "needed" | "needing" | "needs")
-            && (next_is_noun_but_not_verb
+            && ((next_is_noun_but_not_verb && !next_could_be_verb)
                 || next_text == "help"
                 || next_non_whitespace_char == Some('-'))
         {
@@ -469,6 +475,15 @@ mod tests {
             "We need talk about pricing.",
             MissingTo::default(),
             "We need to talk about pricing.",
+        );
+    }
+
+    #[test]
+    fn inserts_to_after_need_submit() {
+        assert_suggestion_result(
+            "You need submit it tonight.",
+            MissingTo::default(),
+            "You need to submit it tonight.",
         );
     }
 

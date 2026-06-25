@@ -1,4 +1,4 @@
-expr main <(([rainbow, cream] [colored, coloured]) NOUN), ( )>
+expr main <(([rainbow, cream] [colored, coloured]) ~NOUN), ( )>
 
 let message "Keep these compound color modifiers hyphenated before their nouns."
 let description "When rainbow-colored or cream-colored describe a noun, replace the space between the color words with a hyphen to keep the modifier cohesive."
