@@ -16,7 +16,7 @@ impl Default for JumpTheGun {
                 .t_set(&["a", "an", "the"])
                 .t_ws()
                 .t_set(&["gun", "guns"])
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_aco("the")
