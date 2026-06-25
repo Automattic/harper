@@ -257,6 +257,7 @@ use super::though_thought::ThoughThought;
 use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
 use super::throw_rubbish::ThrowRubbish;
+use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
@@ -826,6 +827,7 @@ impl LintGroup {
         insert_expr_rule!(ThriveOn, true);
         insert_expr_rule!(ThrowAway, true);
         insert_struct_rule!(ThrowRubbish, true);
+        insert_expr_rule_with_dialect!(TillDate, true);
         insert_expr_rule!(ToAdverb, true);
         insert_struct_rule!(ToTwoToo, true);
         insert_expr_rule!(Touristic, true);
