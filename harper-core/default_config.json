@@ -3835,6 +3835,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InRetaliationTo",
+								"state": true,
+								"label": "In Retaliation To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CapitalizeOn",
 								"state": true,
 								"label": "Capitalize On"
