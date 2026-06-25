@@ -85,6 +85,7 @@ use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::fall_run_a_foul::FallRunAFoul;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
@@ -866,6 +867,10 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
         out.config.set_rule_enabled("Damages", true);
+
+        // Uses Rig rather than Expr
+        out.add("FallRunAFoul", FallRunAFoul::new());
+        out.config.set_rule_enabled("FallRunAFoul", true);
 
         // Uses Sentence rather than Chunk
         out.add(

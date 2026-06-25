@@ -26,6 +26,7 @@ pub mod patterns;
 mod punctuation;
 mod regular_nouns;
 mod render_markdown;
+pub mod rig;
 mod span;
 pub mod spell;
 mod sync;
