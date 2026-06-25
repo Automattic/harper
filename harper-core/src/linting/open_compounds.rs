@@ -51,7 +51,7 @@ impl Default for OpenCompounds {
 
         Self {
             expr: LongestMatchOf::new(vec![
-                Box::new(with_prev_and_next),
+                Box::new(with_prev_and_next) as Box<dyn Expr>,
                 Box::new(with_prev),
                 Box::new(with_next),
                 Box::new(compound),

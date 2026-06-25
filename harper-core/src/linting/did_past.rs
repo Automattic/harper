@@ -16,8 +16,8 @@ pub struct DidPast<D> {
 impl<D: Dictionary> DidPast<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::longest_of(vec![
-                Box::new(WordSet::new(&["did", "didn't", "didnt"])),
+            expr: SequenceExpr::longest_of([
+                Box::new(WordSet::new(&["did", "didn't", "didnt"])) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("did not")),
             ])
             .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
@@ -100,7 +100,7 @@ impl<D: Dictionary> ExprLinter for DidPast<D> {
                     .into_iter()
                     .map(|s| Suggestion::replace_with_match_case(s, vchars))
                     .collect(),
-                message: "Use the base form of the verb with \"did\".".to_string(),
+                message: "Use the base form of the verb with \"did\".".to_owned(),
                 ..Default::default()
             })
         } else {
