@@ -28,7 +28,7 @@ impl ExprLinter for ExceptOf {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if followed_by_word(ctx, |t| t.get_ch(src).eq_str("course")) {
+        if followed_by_word(ctx, |t| t.eq_str(src, "course")) {
             return None;
         }
 
