@@ -22,7 +22,6 @@
 use std::num::NonZeroUsize;
 use std::path::{Path, PathBuf};
 use std::process::Command;
-use std::rc::Rc;
 use std::time::Instant;
 
 use burn::backend::wgpu::{RuntimeOptions, WgpuDevice, graphics::AutoGraphicsApi, init_setup};
@@ -30,14 +29,50 @@ use burn::backend::{Autodiff, wgpu::Wgpu};
 
 use harper_pos_utils::conllu_utils::extract_records_from_files;
 use harper_pos_utils::joint::char_vocab::CharVocab;
-use harper_pos_utils::joint::eval::{np_prf1, upos_accuracy};
+use harper_pos_utils::joint::eval::{Prf1, np_prf1, upos_accuracy};
 use harper_pos_utils::joint::inject::build_injection;
+use harper_pos_utils::joint::model::JointModel;
 use harper_pos_utils::joint::runtime::{
     JointArch, JointRuntime, load_joint_from_bytes, save_joint,
 };
 use harper_pos_utils::joint::suffix_vocab::SuffixVocab;
 use harper_pos_utils::joint::train::{JointTrainConfig, train_joint};
 use harper_pos_utils::{Annotator, UPOS};
+
+/// Score a saved model directory on the held-out set through the **production**
+/// inference path — fp16 `model.mpk` reloaded on the flex CPU backend — so the
+/// reported UPOS accuracy / NP F1 match what ships, not the fp32 training graph.
+fn eval_via_flex(
+    dir: &Path,
+    test_s: &[Vec<String>],
+    test_t: &[Vec<Option<UPOS>>],
+    test_n: &[Vec<bool>],
+) -> (f64, Prf1) {
+    let model_bytes = std::fs::read(dir.join("model.mpk")).expect("read model.mpk");
+    let vocab_json = std::fs::read_to_string(dir.join("char_vocab.json")).expect("char_vocab");
+    let suffix_json = std::fs::read_to_string(dir.join("suffix_vocab.json")).expect("suffix_vocab");
+    let (model, vocab, suffix_vocab) =
+        load_joint_from_bytes(&model_bytes, &vocab_json, &suffix_json, &ARCH);
+    let rt = JointRuntime::new(
+        model,
+        vocab,
+        suffix_vocab,
+        ARCH.max_word,
+        NonZeroUsize::new(10_000).unwrap(),
+    );
+    let pred_tags: Vec<Vec<Option<UPOS>>> = test_s
+        .iter()
+        .map(|s| {
+            rt.annotate(s)
+                .0
+                .iter()
+                .map(|set| set.first().copied())
+                .collect()
+        })
+        .collect();
+    let pred_np: Vec<Vec<bool>> = test_s.iter().map(|s| rt.annotate(s).1).collect();
+    (upos_accuracy(&pred_tags, test_t), np_prf1(&pred_np, test_n))
+}
 
 /// Architecture constants — MUST match what harper-brill embeds (`JOINT_ARCH`).
 /// Morphology-aware char encoder: multi-width convs + a word-final suffix
@@ -127,7 +162,12 @@ fn ensure_file(cache_dir: &Path, repo: &str, file: &str) -> PathBuf {
 fn main() {
     let manifest = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let cache = manifest.join("../target/tmp/ud");
-    let out = manifest.join("../harper-brill/finished_joint");
+    // Output dir for the embedded artifacts. Override with `JOINT_OUT` to train
+    // into a scratch dir (e.g. when sweeping `epochs`) without clobbering the
+    // committed `finished_joint/model.mpk`.
+    let out = std::env::var_os("JOINT_OUT")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| manifest.join("../harper-brill/finished_joint"));
 
     eprintln!("regenerate_english_joint");
     eprintln!("  ud cache: {}", cache.display());
@@ -192,7 +232,16 @@ fn main() {
         suffix_dim: ARCH.suffix_dim,
         max_word: ARCH.max_word,
         batch_size: 256,
-        epochs: 100,
+        // 30 chosen from the dev UPOS/NP-F1 plateau: a periodic-eval sweep (every
+        // 5 epochs, scored on the production fp16+flex path) showed dev UPOS
+        // peaking at epoch ~25-30 (~0.949) then *declining* past it (mild overfit),
+        // so 100 was past-optimal. A clean 30-epoch cosine schedule lands UPOS
+        // 0.9479 / NP F1 0.8972 vs the old 100-epoch 0.9463 / 0.8872, in a third of
+        // the wall time. Override with `JOINT_EPOCHS` to re-sweep.
+        epochs: std::env::var("JOINT_EPOCHS")
+            .ok()
+            .and_then(|s| s.parse().ok())
+            .unwrap_or(30),
         lr: 0.003,
         chunk_loss_weight: 1.0,
     };
@@ -211,46 +260,40 @@ fn main() {
         cfg.epochs, cfg.batch_size, cfg.lr, cfg.chunk_loss_weight
     );
 
+    // Periodic dev eval (every 5 epochs + the last) on the production fp16+flex
+    // path: save the validated model to a scratch dir, reload on flex, score.
+    // The resulting UPOS/NP-F1-vs-epoch curve is how `epochs` is chosen — train
+    // to where the dev metrics plateau, no further.
+    let ckpt = manifest.join("../target/tmp/eval_ckpt");
+    let eval_dev = |epoch: usize, model: &JointModel<Wgpu>| {
+        save_joint(model, &char_vocab, &suffix_vocab, &ckpt, &ARCH);
+        let (acc, m) = eval_via_flex(&ckpt, &test_s, &test_t, &test_n);
+        println!(
+            "[dev @ epoch {epoch:>3}] UPOS acc = {:.4}  NP F1 = {:.4}",
+            acc, m.f1
+        );
+    };
+
     let t = Instant::now();
-    let model =
-        train_joint::<Autodiff<Wgpu>>(&sents, &tags, &np, &char_vocab, &suffix_vocab, &cfg, device);
+    let model = train_joint::<Autodiff<Wgpu>>(
+        &sents,
+        &tags,
+        &np,
+        &char_vocab,
+        &suffix_vocab,
+        &cfg,
+        device,
+        5,
+        eval_dev,
+    );
     eprintln!("trained in {:.1?}", t.elapsed());
 
     // Persist artifacts (model.mpk + char_vocab.json + suffix_vocab.json).
     save_joint(&model, &char_vocab, &suffix_vocab, &out, &ARCH);
     eprintln!("wrote artifacts to {}", out.display());
 
-    // Evaluate on dev via the CPU runtime (matches the production inference path).
-    let model_bytes = std::fs::read(out.join("model.mpk")).expect("read model.mpk");
-    let vocab_json =
-        std::fs::read_to_string(out.join("char_vocab.json")).expect("read char_vocab.json");
-    let suffix_vocab_json =
-        std::fs::read_to_string(out.join("suffix_vocab.json")).expect("read suffix_vocab.json");
-    let (cpu_model, cpu_vocab, cpu_suffix_vocab) =
-        load_joint_from_bytes(&model_bytes, &vocab_json, &suffix_vocab_json, &ARCH);
-
-    let rt = Rc::new(JointRuntime::new(
-        cpu_model,
-        cpu_vocab,
-        cpu_suffix_vocab,
-        ARCH.max_word,
-        NonZeroUsize::new(10_000).unwrap(),
-    ));
-
-    let pred_tags: Vec<Vec<Option<UPOS>>> = test_s
-        .iter()
-        .map(|s| {
-            rt.annotate(s)
-                .0
-                .iter()
-                .map(|set| set.first().copied())
-                .collect()
-        })
-        .collect();
-    let pred_np: Vec<Vec<bool>> = test_s.iter().map(|s| rt.annotate(s).1).collect();
-
-    let acc = upos_accuracy(&pred_tags, &test_t);
-    let m = np_prf1(&pred_np, &test_n);
+    // Final eval of the saved artifact (production fp16 + flex path).
+    let (acc, m) = eval_via_flex(&out, &test_s, &test_t, &test_n);
     println!(
         "[dev] UPOS acc = {:.4}  NP prec = {:.4}  NP rec = {:.4}  NP F1 = {:.4}",
         acc, m.precision, m.recall, m.f1

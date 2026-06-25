@@ -32,6 +32,10 @@ pub struct JointTrainConfig {
     pub chunk_loss_weight: f64,
 }
 
+// Training entry point: data + vocabs + config + device, plus a periodic-eval
+// hook. The arg list is wide but each is distinct and threading them through a
+// struct would only move the noise around.
+#[allow(clippy::too_many_arguments)]
 pub fn train_joint<B: AutodiffBackend>(
     sents: &[Vec<String>],
     tags: &[Vec<Option<UPOS>>],
@@ -40,6 +44,14 @@ pub fn train_joint<B: AutodiffBackend>(
     suffix_vocab: &SuffixVocab,
     cfg: &JointTrainConfig,
     device: B::Device,
+    // Periodic evaluation hook. When `eval_every > 0`, after every `eval_every`
+    // epochs (and the final one) the validated inner-backend model is handed to
+    // `on_eval(epoch, &model)` so the caller can score it on a held-out set —
+    // crucially through the same fp16 + flex inference path it ships on, so the
+    // reported UPOS/NP-F1 curve reflects production, not the fp32 training graph.
+    // Pass `(0, |_, _| {})` to disable.
+    eval_every: usize,
+    mut on_eval: impl FnMut(usize, &JointModel<B::InnerBackend>),
 ) -> JointModel<B::InnerBackend> {
     // Length-bucketed groups (mirror burn_chunker grouping).
     let mut order: Vec<usize> = (0..sents.len()).collect();
@@ -141,6 +153,14 @@ pub fn train_joint<B: AutodiffBackend>(
             lr,
             epoch_loss / batch_order.len().max(1) as f64
         );
+
+        // Score the held-out set on the production (fp16 + flex) path so we can
+        // read where dev UPOS/NP-F1 plateaus and pick `epochs` from data. Always
+        // eval the final epoch so the persisted model has a reported score.
+        let is_last = epoch + 1 == cfg.epochs;
+        if eval_every != 0 && ((epoch + 1) % eval_every == 0 || is_last) {
+            on_eval(epoch + 1, &model.valid());
+        }
     }
 
     model.valid() // map onto B::InnerBackend for inference/saving
@@ -188,6 +208,8 @@ mod tests {
             &suffix_vocab,
             &cfg,
             NdArrayDevice::Cpu,
+            0,
+            |_, _| {},
         );
         // Smoke: model usable for a forward pass on the inner (non-autodiff) backend.
         let b = crate::joint::batch::JointBatch::build(
