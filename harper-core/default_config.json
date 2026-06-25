@@ -5182,6 +5182,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NeitherHereNorThere",
+								"state": true,
+								"label": "Neither Here Nor There"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheEntiretyOf",
 								"state": true,
 								"label": "The Entirety Of"
