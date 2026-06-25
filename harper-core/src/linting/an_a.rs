@@ -94,8 +94,7 @@ impl Linter for AnA {
 #[cfg(test)]
 mod tests {
     use super::AnA;
-    use crate::Dialect;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::{Dialect, linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result}};
 
     #[test]
     fn detects_html_as_vowel() {
@@ -349,5 +348,15 @@ mod tests {
             AnA::new(Dialect::American),
             0,
         );
+    }
+
+    #[test]
+    fn dont_flag_a_f_grading_scale_3715() {
+        assert_no_lints("an A-F grading scale", AnA::new(Dialect::American));
+    }
+
+    #[test]
+    fn dont_flag_is_80_an_a_3715() {
+        assert_no_lints("Is 80 an A in Malaysia?", AnA::new(Dialect::American));
     }
 }

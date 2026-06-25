@@ -111,7 +111,7 @@ impl ExprLinter for ExpandMemoryShorthands {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::ExpandMemoryShorthands;
 
@@ -237,5 +237,10 @@ mod tests {
             ExpandMemoryShorthands::new(),
             0,
         );
+    }
+
+    #[test]
+    fn dont_flag_is_a_b_plus_3715() {
+        assert_no_lints("Is a B+ a 3.3 GPA?", ExpandMemoryShorthands::new());
     }
 }
