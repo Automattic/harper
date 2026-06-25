@@ -3779,6 +3779,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PluralGerunds",
+								"state": true,
+								"label": "Plural Gerunds"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CodeInWriteIn",
 								"state": true,
 								"label": "Code In Write In"
