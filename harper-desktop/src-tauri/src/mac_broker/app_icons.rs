@@ -6,7 +6,7 @@ use std::{
 
 use super::app_catalog::application_path_for_bundle_id;
 
-/// Provided an application's bundle ID, gets the PNG icon for that application.
+/// Converts an installed app's icon resource to PNG bytes using the macOS `sips` tool.
 pub fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
     let bundle_id = bundle_id.trim();
 
@@ -44,7 +44,6 @@ pub fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
     Ok(bytes)
 }
 
-/// Given an app disk location, grabs the location on disk of that app's icon.
 fn icon_path_for_app(app_path: &str) -> Option<PathBuf> {
     let resources_path = Path::new(app_path).join("Contents/Resources");
     let icon_file = app_icon_file(app_path)?;

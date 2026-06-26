@@ -6,61 +6,28 @@ use super::MacBroker;
 
 const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 
-pub fn app_search_result_from_bundle_id(broker: &MacBroker, bundle_id: &str) -> AppSearchResult {
+pub fn app_search_result_from_bundle_id(bundle_id: &str) -> AppSearchResult {
     AppSearchResult {
-        name: broker.integration_display_name(bundle_id),
+        name: system_integration_display_name(bundle_id).unwrap_or_else(|| bundle_id.to_owned()),
         bundle_id: bundle_id.to_string(),
     }
 }
 
-pub fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
-    let display_name = display_name_from_app_path(path)?;
-
-    if display_name.contains('.') {
-        return None;
-    }
-
-    let bundle_id = bundle_id_from_app_path(path)?;
-
-    if bundle_id.contains('/') || bundle_id.is_empty() {
-        return None;
-    }
-
-    Some(AppSearchResult {
-        name: display_name,
-        bundle_id,
-    })
-}
-
-/// Discovers installed macOS app bundles through Spotlight and converts them to search results.
-pub fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
-    let output = Command::new("mdfind")
-        .arg(format!(
-            "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
-        ))
-        .output()
-        .map_err(|error| format!("Failed to execute mdfind: {error}"))?;
-
-    if !output.status.success() {
-        return Err(format!(
-            "mdfind failed: {}",
-            String::from_utf8_lossy(&output.stderr)
-        ));
-    }
+/// Generate a complete and searchable list of installed applications.
+pub fn generate_installed_app_search_index() -> Result<Vec<AppSearchResult>, String> {
+    let installed_bundles = installed_application_bundle_ids()?;
 
     let mut results = Vec::new();
     let mut seen_bundle_ids = BTreeSet::new();
 
-    for line in String::from_utf8_lossy(&output.stdout).lines() {
-        let line = line.trim();
+    for bundle_id in installed_bundles {
+        let line = bundle_id.trim();
 
         if !line.ends_with(".app") {
             continue;
         }
 
-        let Some(result) = app_search_result_from_app_path(line) else {
-            continue;
-        };
+        let result = app_search_result_from_bundle_id(&bundle_id);
 
         if seen_bundle_ids.insert(result.bundle_id.clone()) {
             results.push(result);
@@ -68,6 +35,10 @@ pub fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
     }
 
     Ok(results)
+}
+
+pub fn system_integration_display_name(bundle_id: &str) -> Option<String> {
+    application_path_for_bundle_id(bundle_id).and_then(|path| display_name_from_app_path(&path))
 }
 
 pub fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
@@ -157,7 +128,7 @@ fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
         .collect()
 }
 
-pub(super) fn display_name_from_app_path(path: &str) -> Option<String> {
+fn display_name_from_app_path(path: &str) -> Option<String> {
     let file_name = Path::new(path).file_name()?.to_str()?;
     let display_name = file_name.strip_suffix(".app").unwrap_or(file_name).trim();
 

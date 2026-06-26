@@ -4,7 +4,7 @@ mod accessibility_text;
 mod app_catalog;
 mod app_icons;
 mod core_foundation_utilities;
-mod focused_application;
+mod focused_window_pid;
 mod window_stability;
 
 use accessibility::TreeWalker;
@@ -13,6 +13,8 @@ use accessibility_sys::{error_string, pid_t};
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::Lint;
+use objc2_app_kit::NSRunningApplication;
+use std::time::Duration;
 use std::{
     collections::{BTreeMap, HashMap},
     error::Error as StdError,
@@ -29,7 +31,7 @@ use crate::rect::ActionableLint;
 use self::accessibility_activation::{
     ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL, AccessibilityActivationState,
     AccessibilityActivationStatus, AccessibilityActivationVerification,
-    accessibility_activation_verification_retry_interval, instant_after,
+    accessibility_activation_verification_retry_interval,
     is_unsupported_accessibility_activation_error, release_accessibility_activation,
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
@@ -39,14 +41,16 @@ use self::window_stability::{
     settled_window_state, window_frame_changed,
 };
 
-/// Provides abstracted access to macOS system primitives.
+/// macOS implementation of the OS data the highlighter needs.
+///
+/// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
+/// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
+/// targeting the app the user was reviewing.
 pub struct MacBroker {
-    /// The last focused process ID. Points to the process that was focused _before_ the current
-    /// one, or the last one that was focused if no window is actively focused.
     last_focused: Option<pid_t>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
-    installed_app_search_results: Mutex<Option<Vec<AppSearchResult>>>,
+    installed_app_search_index: Mutex<Option<Vec<AppSearchResult>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -57,15 +61,14 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
-            installed_app_search_results: Mutex::new(None),
+            installed_app_search_index: Mutex::new(None),
             window_movement: None,
             accessibility_activation: None,
         }
     }
 
-    /// Computes the PID of the window that the highlighter should target.
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
-        let focused_pid = focused_application::focused_window_pid()?;
+        let focused_pid = focused_window_pid::focused_window_pid()?;
         let current_pid = std::process::id() as pid_t;
 
         if focused_pid == current_pid {
@@ -76,7 +79,6 @@ impl MacBroker {
         }
     }
 
-    /// Checks if the currently focused or frontmost window is moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -111,8 +113,6 @@ impl MacBroker {
     }
 
     /// Activates the focused app and waits until text range bounds are usable.
-    /// This is necessary because many apps do not correctly expose accessibility information unless
-    /// explicitly requested to do so. This is that request.
     fn ensure_accessibility_activation(
         &mut self,
         pid: pid_t,
@@ -260,7 +260,7 @@ impl MacBroker {
 
     fn installed_app_search_results(&self) -> Result<Vec<AppSearchResult>, String> {
         if let Some(results) = self
-            .installed_app_search_results
+            .installed_app_search_index
             .lock()
             .map_err(|error| format!("Failed to read app search cache: {error}"))?
             .clone()
@@ -268,9 +268,10 @@ impl MacBroker {
             return Ok(results);
         }
 
-        let results = app_catalog::discover_app_search_results()?;
+        let results = app_catalog::generate_installed_app_search_index()?;
+
         *self
-            .installed_app_search_results
+            .installed_app_search_index
             .lock()
             .map_err(|error| format!("Failed to update app search cache: {error}"))? =
             Some(results.clone());
@@ -291,11 +292,10 @@ impl Drop for MacBroker {
     }
 }
 
+pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
+
 impl OsBroker for MacBroker {
-    fn get_boxes(
-        &mut self,
-        lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
-    ) -> Vec<ActionableLint> {
+    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
@@ -311,7 +311,7 @@ impl OsBroker for MacBroker {
             }
         };
 
-        let bundle_identifier = match focused_application::bundle_identifier_for_pid(pid) {
+        let bundle_identifier = match bundle_identifier_for_pid(pid) {
             Ok(Some(bundle_identifier)) => bundle_identifier,
             Ok(None) => {
                 self.window_movement = None;
@@ -376,8 +376,7 @@ impl OsBroker for MacBroker {
     }
 
     fn system_integration_display_name(&self, bundle_id: &str) -> Option<String> {
-        app_catalog::application_path_for_bundle_id(bundle_id)
-            .and_then(|path| app_catalog::display_name_from_app_path(&path))
+        app_catalog::system_integration_display_name(bundle_id)
     }
 
     fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
@@ -428,13 +427,22 @@ impl OsBroker for MacBroker {
             return Ok(in_memory_results);
         }
 
-        if let Some(app_path) = app_catalog::application_path_for_bundle_id(query) {
-            return Ok(vec![
-                app_catalog::app_search_result_from_app_path(&app_path)
-                    .unwrap_or_else(|| app_catalog::app_search_result_from_bundle_id(self, query)),
-            ]);
-        }
-
-        Ok(in_memory_results)
+        return Ok(vec![app_catalog::app_search_result_from_bundle_id(query)]);
     }
+}
+
+fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
+    let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
+        return Ok(None);
+    };
+    let Some(bundle_identifier) = app.bundleIdentifier() else {
+        return Ok(None);
+    };
+
+    Ok(Some(bundle_identifier.to_string()))
+}
+
+/// Adds a duration to an instant without panicking on overflow.
+fn instant_after(now: Instant, duration: Duration) -> Instant {
+    now.checked_add(duration).unwrap_or(now)
 }

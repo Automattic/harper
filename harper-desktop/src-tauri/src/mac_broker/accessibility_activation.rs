@@ -19,27 +19,27 @@ use super::accessibility_text::{
     probe_element_rect_for_text_range,
 };
 
-pub(super) const ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL: Duration = Duration::from_secs(10);
-pub(super) const ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL: Duration =
+pub const ACCESSIBILITY_ACTIVATION_RETRY_INTERVAL: Duration = Duration::from_secs(10);
+pub const ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL: Duration =
     Duration::from_millis(250);
-pub(super) const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration =
+pub const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Duration =
     Duration::from_secs(1);
-pub(super) const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
-pub(super) const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
+pub const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
+pub const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 
 /// Tracks an app accessibility activation attempt and any AX value Harper should restore later.
 #[derive(Debug, Clone)]
-pub(super) struct AccessibilityActivationState {
-    pub(super) pid: pid_t,
-    pub(super) bundle_id: String,
-    pub(super) status: AccessibilityActivationStatus,
-    pub(super) last_attempted_at: Instant,
-    pub(super) enhanced_user_interface_restore_value: Option<bool>,
+pub struct AccessibilityActivationState {
+    pub pid: pid_t,
+    pub bundle_id: String,
+    pub status: AccessibilityActivationStatus,
+    pub last_attempted_at: Instant,
+    pub enhanced_user_interface_restore_value: Option<bool>,
 }
 
 /// State of the focused app's accessibility activation attempt.
 #[derive(Debug, Clone, Copy)]
-pub(super) enum AccessibilityActivationStatus {
+pub enum AccessibilityActivationStatus {
     Pending {
         ready_at: Instant,
         verification_attempts: u8,
@@ -50,15 +50,13 @@ pub(super) enum AccessibilityActivationStatus {
 
 /// Result of checking whether an activated app exposes usable text geometry.
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
-pub(super) enum AccessibilityActivationVerification {
+pub enum AccessibilityActivationVerification {
     FoundTextRangeBounds,
     FoundSupportedTextElement,
     NoSupportedTextElement,
 }
 
-pub(super) fn accessibility_activation_verification_retry_interval(
-    verification_attempts: u8,
-) -> Duration {
+pub fn accessibility_activation_verification_retry_interval(verification_attempts: u8) -> Duration {
     if verification_attempts <= ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS {
         ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL
     } else {
@@ -66,13 +64,8 @@ pub(super) fn accessibility_activation_verification_retry_interval(
     }
 }
 
-/// Adds a duration to an instant without panicking on overflow.
-pub(super) fn instant_after(now: Instant, duration: Duration) -> Instant {
-    now.checked_add(duration).unwrap_or(now)
-}
-
 /// Restores `AXEnhancedUserInterface` when a previous value was captured.
-pub(super) fn release_accessibility_activation(state: &AccessibilityActivationState) {
+pub fn release_accessibility_activation(state: &AccessibilityActivationState) {
     if state.enhanced_user_interface_restore_value.is_none() {
         return;
     }
@@ -87,14 +80,14 @@ pub(super) fn release_accessibility_activation(state: &AccessibilityActivationSt
 }
 
 /// Returns whether an AX error means the target does not support this attribute.
-pub(super) fn is_unsupported_accessibility_activation_error(error: i32) -> bool {
+pub fn is_unsupported_accessibility_activation_error(error: i32) -> bool {
     error == kAXErrorAttributeUnsupported
         || error == kAXErrorNoValue
         || error == kAXErrorNotImplemented
 }
 
 /// Sets `AXEnhancedUserInterface` while returning its old value when readable.
-pub(super) fn set_enhanced_user_interface_preserving_previous(
+pub fn set_enhanced_user_interface_preserving_previous(
     app: &AXUIElement,
     enabled: bool,
 ) -> Result<Option<bool>, i32> {
@@ -196,9 +189,7 @@ fn set_boolean_attribute(element: &AXUIElement, name: &str, value: bool) -> Resu
 }
 
 /// Walks an app accessibility tree to determine whether activation exposes usable text bounds.
-pub(super) fn verify_accessibility_activation(
-    app: &AXUIElement,
-) -> AccessibilityActivationVerification {
+pub fn verify_accessibility_activation(app: &AXUIElement) -> AccessibilityActivationVerification {
     let walker = TreeWalker::new();
     let probe = AccessibilityActivationProbe::new();
 
