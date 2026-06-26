@@ -35,6 +35,7 @@ pub(super) fn app_search_result_from_app_path(path: &str) -> Option<AppSearchRes
     })
 }
 
+/// Discovers installed macOS app bundles through Spotlight and converts them to search results.
 pub(super) fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
     let output = Command::new("mdfind")
         .arg(format!(
@@ -96,6 +97,7 @@ pub(super) fn installed_application_bundle_ids() -> Result<Vec<String>, String> 
     Ok(deduplicate_and_sort_bundle_ids(bundle_ids))
 }
 
+/// Resolves a bundle identifier to an installed `.app` path using Spotlight metadata.
 pub(super) fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
     let bundle_id = bundle_id.trim();
 
@@ -148,11 +150,11 @@ fn bundle_id_from_app_path(path: &str) -> Option<String> {
     }
 }
 
-pub(super) fn escape_spotlight_string(value: &str) -> String {
+fn escape_spotlight_string(value: &str) -> String {
     value.replace('\\', "\\\\").replace('"', "\\\"")
 }
 
-pub(super) fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
+fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
     bundle_ids
         .into_iter()
         .map(|bundle_id| bundle_id.trim().to_string())
@@ -187,4 +189,37 @@ pub(super) fn launch_app_bundle(bundle_id: &str) -> Result<(), String> {
         .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
 
     Ok(())
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn deduplicates_and_sorts_bundle_ids() {
+        assert_eq!(
+            deduplicate_and_sort_bundle_ids(vec![
+                "com.example.Beta".to_string(),
+                " com.example.Alpha ".to_string(),
+                "com.example.Beta".to_string(),
+                "".to_string(),
+                "(null)".to_string(),
+            ]),
+            vec!["com.example.Alpha", "com.example.Beta"]
+        );
+    }
+
+    #[test]
+    fn escapes_spotlight_strings() {
+        assert_eq!(
+            escape_spotlight_string(r#"com.example.\"quoted\""#),
+            r#"com.example.\\\"quoted\\\""#
+        );
+    }
+
+    #[test]
+    fn empty_bundle_id_has_no_application_path() {
+        assert_eq!(application_path_for_bundle_id(""), None);
+        assert_eq!(application_path_for_bundle_id("   "), None);
+    }
 }

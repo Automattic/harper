@@ -18,6 +18,7 @@ use crate::rect::{ActionableLint, Rect};
 
 use super::LintCallback;
 
+/// Outcome of asking macOS for the bounds of a text range.
 pub(super) enum TextRangeBoundsProbe {
     Success(Rect),
     Unavailable,
@@ -125,10 +126,11 @@ pub(super) fn probe_element_rect_for_text_range(
 }
 
 /// Returns whether a text rectangle has enough geometry to render a highlight.
-pub(super) fn rect_has_usable_text_metrics(rect: Rect) -> bool {
+fn rect_has_usable_text_metrics(rect: Rect) -> bool {
     rect.width > 0.0 && rect.height > 0.0
 }
 
+/// Collects lint rectangles while walking supported text elements in an AX tree.
 pub(super) struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
     lint_text: RefCell<&'a mut LintCallback<'a>>,
@@ -221,7 +223,7 @@ pub(super) fn is_supported_text_element(el: &AXUIElement) -> bool {
 }
 
 /// Returns whether an AX role represents editable text supported by the highlighter.
-pub(super) fn is_supported_text_role(role: &str) -> bool {
+fn is_supported_text_role(role: &str) -> bool {
     matches!(role, "AXTextArea" | "AXTextField")
 }
 
@@ -264,7 +266,7 @@ impl TreeVisitor for StaticTextCollector {
 }
 
 /// Finds `needle` within `haystack` starting at char offset `from`.
-pub(super) fn find_char_subslice(haystack: &[char], needle: &[char], from: usize) -> Option<usize> {
+fn find_char_subslice(haystack: &[char], needle: &[char], from: usize) -> Option<usize> {
     if needle.is_empty() || haystack.len() < needle.len() {
         return None;
     }
@@ -330,5 +332,62 @@ fn element_rect_for_text_range(
         TextRangeBoundsProbe::InvalidRangeValue => Err(Error::Ax(kAXErrorIllegalArgument)),
         TextRangeBoundsProbe::AxError(error) => Err(Error::Ax(error)),
         TextRangeBoundsProbe::Unavailable => Ok(None),
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::rect::Rect;
+
+    #[test]
+    fn supported_text_roles_include_text_area_and_text_field() {
+        assert!(is_supported_text_role("AXTextArea"));
+        assert!(is_supported_text_role("AXTextField"));
+    }
+
+    #[test]
+    fn supported_text_roles_reject_unrelated_roles() {
+        assert!(!is_supported_text_role("AXButton"));
+        assert!(!is_supported_text_role("AXStaticText"));
+        assert!(!is_supported_text_role(""));
+    }
+
+    #[test]
+    fn finds_char_subslice_respecting_offset() {
+        let haystack: Vec<char> = "one\ntwo two".chars().collect();
+        let needle: Vec<char> = "two".chars().collect();
+
+        assert_eq!(find_char_subslice(&haystack, &needle, 0), Some(4));
+        assert_eq!(find_char_subslice(&haystack, &needle, 5), Some(8));
+        assert_eq!(find_char_subslice(&haystack, &needle, 9), None);
+        assert_eq!(find_char_subslice(&haystack, &[], 0), None);
+        assert_eq!(find_char_subslice(&[], &needle, 0), None);
+    }
+
+    #[test]
+    fn text_range_bounds_probe_requires_non_zero_geometry() {
+        let usable = TextRangeBoundsProbe::Success(Rect {
+            x: 10.0,
+            y: 20.0,
+            width: 1.0,
+            height: 12.0,
+        });
+        let unavailable = TextRangeBoundsProbe::Unavailable;
+
+        assert!(usable.has_usable_text_metrics());
+        assert!(!unavailable.has_usable_text_metrics());
+        assert!(rect_has_usable_text_metrics(Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 1.0,
+            height: 1.0,
+        }));
+        assert!(!rect_has_usable_text_metrics(Rect {
+            x: 0.0,
+            y: 0.0,
+            width: 0.0,
+            height: 1.0,
+        }));
     }
 }

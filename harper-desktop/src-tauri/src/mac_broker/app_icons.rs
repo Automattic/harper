@@ -6,6 +6,7 @@ use std::{
 
 use super::app_catalog::application_path_for_bundle_id;
 
+/// Converts an installed app's icon resource to PNG bytes using the macOS `sips` tool.
 pub(super) fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
     let bundle_id = bundle_id.trim();
 

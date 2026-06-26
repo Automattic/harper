@@ -17,6 +17,7 @@ use super::core_foundation_utilities::{
 pub(super) const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
 
+/// Last observed frontmost window frame for a target process.
 pub(super) struct WindowMovementState {
     pub(super) pid: pid_t,
     pub(super) frame: Rect,

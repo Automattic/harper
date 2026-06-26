@@ -27,6 +27,7 @@ pub(super) const ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL: Dura
 pub(super) const ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS: u8 = 20;
 pub(super) const CHROMIUM_ACCESSIBILITY_SETTLE_DURATION: Duration = Duration::from_secs(3);
 
+/// Tracks an app accessibility activation attempt and any AX value Harper should restore later.
 #[derive(Debug, Clone)]
 pub(super) struct AccessibilityActivationState {
     pub(super) pid: pid_t,
@@ -194,6 +195,7 @@ fn set_boolean_attribute(element: &AXUIElement, name: &str, value: bool) -> Resu
     }
 }
 
+/// Walks an app accessibility tree to determine whether activation exposes usable text bounds.
 pub(super) fn verify_accessibility_activation(
     app: &AXUIElement,
 ) -> AccessibilityActivationVerification {
@@ -258,4 +260,33 @@ impl TreeVisitor for AccessibilityActivationProbe {
     }
 
     fn exit_element(&self, _element: &AXUIElement) {}
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn chromium_activation_uses_chromium_settle_duration() {
+        assert_eq!(
+            CHROMIUM_ACCESSIBILITY_SETTLE_DURATION,
+            Duration::from_secs(3)
+        );
+    }
+
+    #[test]
+    fn verification_retry_slows_after_fast_attempts() {
+        assert_eq!(
+            accessibility_activation_verification_retry_interval(
+                ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS
+            ),
+            ACCESSIBILITY_ACTIVATION_VERIFICATION_RETRY_INTERVAL
+        );
+        assert_eq!(
+            accessibility_activation_verification_retry_interval(
+                ACCESSIBILITY_ACTIVATION_FAST_VERIFICATION_ATTEMPTS + 1
+            ),
+            ACCESSIBILITY_ACTIVATION_SLOW_VERIFICATION_RETRY_INTERVAL
+        );
+    }
 }
