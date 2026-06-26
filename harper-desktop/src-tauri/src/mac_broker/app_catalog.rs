@@ -6,17 +6,14 @@ use super::MacBroker;
 
 const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 
-pub(super) fn app_search_result_from_bundle_id(
-    broker: &MacBroker,
-    bundle_id: &str,
-) -> AppSearchResult {
+pub fn app_search_result_from_bundle_id(broker: &MacBroker, bundle_id: &str) -> AppSearchResult {
     AppSearchResult {
         name: broker.integration_display_name(bundle_id),
         bundle_id: bundle_id.to_string(),
     }
 }
 
-pub(super) fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
+pub fn app_search_result_from_app_path(path: &str) -> Option<AppSearchResult> {
     let display_name = display_name_from_app_path(path)?;
 
     if display_name.contains('.') {
@@ -36,7 +33,7 @@ pub(super) fn app_search_result_from_app_path(path: &str) -> Option<AppSearchRes
 }
 
 /// Discovers installed macOS app bundles through Spotlight and converts them to search results.
-pub(super) fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
+pub fn discover_app_search_results() -> Result<Vec<AppSearchResult>, String> {
     let output = Command::new("mdfind")
         .arg(format!(
             "kMDItemContentType == '{APPLICATION_BUNDLE_CONTENT_TYPE}'"
@@ -73,11 +70,7 @@ pub(super) fn discover_app_search_results() -> Result<Vec<AppSearchResult>, Stri
     Ok(results)
 }
 
-pub(super) fn system_integration_display_name(bundle_id: &str) -> Option<String> {
-    application_path_for_bundle_id(bundle_id).and_then(|path| display_name_from_app_path(&path))
-}
-
-pub(super) fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
+pub fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
     let output = Command::new("mdfind")
         .arg(format!(
             "kMDItemContentType == \"{APPLICATION_BUNDLE_CONTENT_TYPE}\""
@@ -98,7 +91,7 @@ pub(super) fn installed_application_bundle_ids() -> Result<Vec<String>, String> 
 }
 
 /// Resolves a bundle identifier to an installed `.app` path using Spotlight metadata.
-pub(super) fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
+pub fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
     let bundle_id = bundle_id.trim();
 
     if bundle_id.is_empty() {
@@ -164,7 +157,7 @@ fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
         .collect()
 }
 
-fn display_name_from_app_path(path: &str) -> Option<String> {
+pub(super) fn display_name_from_app_path(path: &str) -> Option<String> {
     let file_name = Path::new(path).file_name()?.to_str()?;
     let display_name = file_name.strip_suffix(".app").unwrap_or(file_name).trim();
 
@@ -175,7 +168,7 @@ fn display_name_from_app_path(path: &str) -> Option<String> {
     }
 }
 
-pub(super) fn launch_app_bundle(bundle_id: &str) -> Result<(), String> {
+pub fn launch_app_bundle(bundle_id: &str) -> Result<(), String> {
     let bundle_id = bundle_id.trim();
 
     if bundle_id.is_empty() {

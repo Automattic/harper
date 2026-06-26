@@ -39,12 +39,10 @@ use self::window_stability::{
     settled_window_state, window_frame_changed,
 };
 
-/// macOS implementation of the OS data the highlighter needs.
-///
-/// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
-/// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
-/// targeting the app the user was reviewing.
+/// Provides abstracted access to macOS system primitives.
 pub struct MacBroker {
+    /// The last focused process ID. Points to the process that was focused _before_ the current
+    /// one, or the last one that was focused if no window is actively focused.
     last_focused: Option<pid_t>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
@@ -65,6 +63,7 @@ impl MacBroker {
         }
     }
 
+    /// Computes the PID of the window that the highlighter should target.
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
         let focused_pid = focused_application::focused_window_pid()?;
         let current_pid = std::process::id() as pid_t;
@@ -77,6 +76,7 @@ impl MacBroker {
         }
     }
 
+    /// Checks if the currently focused or frontmost window is moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -111,6 +111,8 @@ impl MacBroker {
     }
 
     /// Activates the focused app and waits until text range bounds are usable.
+    /// This is necessary because many apps do not correctly expose accessibility information unless
+    /// explicitly requested to do so. This is that request.
     fn ensure_accessibility_activation(
         &mut self,
         pid: pid_t,
@@ -289,10 +291,11 @@ impl Drop for MacBroker {
     }
 }
 
-pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
-
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
+    fn get_boxes(
+        &mut self,
+        lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
+    ) -> Vec<ActionableLint> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
@@ -373,7 +376,8 @@ impl OsBroker for MacBroker {
     }
 
     fn system_integration_display_name(&self, bundle_id: &str) -> Option<String> {
-        app_catalog::system_integration_display_name(bundle_id)
+        app_catalog::application_path_for_bundle_id(bundle_id)
+            .and_then(|path| app_catalog::display_name_from_app_path(&path))
     }
 
     fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {

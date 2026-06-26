@@ -16,8 +16,6 @@ use std::{cell::RefCell, ptr};
 
 use crate::rect::{ActionableLint, Rect};
 
-use super::LintCallback;
-
 /// Outcome of asking macOS for the bounds of a text range.
 pub(super) enum TextRangeBoundsProbe {
     Success(Rect),
@@ -133,7 +131,7 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 /// Collects lint rectangles while walking supported text elements in an AX tree.
 pub(super) struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
-    lint_text: RefCell<&'a mut LintCallback<'a>>,
+    lint_text: RefCell<&'a mut dyn FnMut(&str) -> std::collections::BTreeMap<String, Vec<Lint>>>,
 }
 
 impl TreeVisitor for RectCollector<'_> {
@@ -185,7 +183,9 @@ impl TreeVisitor for RectCollector<'_> {
 }
 
 impl<'a> RectCollector<'a> {
-    pub(super) fn new(lint_text: &'a mut LintCallback) -> Self {
+    pub(super) fn new(
+        lint_text: &'a mut dyn FnMut(&str) -> std::collections::BTreeMap<String, Vec<Lint>>,
+    ) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
             lint_text: RefCell::new(lint_text),
