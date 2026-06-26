@@ -19,7 +19,7 @@ use crate::rect::{ActionableLint, Rect};
 use super::LintCallback;
 
 /// Outcome of asking macOS for the bounds of a text range.
-pub(super) enum TextRangeBoundsProbe {
+pub enum TextRangeBoundsProbe {
     Success(Rect),
     Unavailable,
     InvalidRangeValue,
@@ -28,20 +28,20 @@ pub(super) enum TextRangeBoundsProbe {
 
 impl TextRangeBoundsProbe {
     /// Returns true only when the probe produced non-zero text geometry.
-    pub(super) fn has_usable_text_metrics(self) -> bool {
+    pub fn has_usable_text_metrics(self) -> bool {
         matches!(self, Self::Success(_))
     }
 }
 
 /// Converts a Core Foundation value to a Rust string when it is a `CFString`.
-pub(super) fn cf_type_to_string(value: &CFType) -> Option<String> {
+pub fn cf_type_to_string(value: &CFType) -> Option<String> {
     value
         .instance_of::<CFString>()
         .then(|| unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _) }.to_string())
 }
 
 /// Probes `AXBoundsForRange` for a specific text range on an element.
-pub(super) fn probe_element_rect_for_text_range(
+pub fn probe_element_rect_for_text_range(
     element: &AXUIElement,
     start_index: isize,
     length: isize,
@@ -131,7 +131,7 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 }
 
 /// Collects lint rectangles while walking supported text elements in an AX tree.
-pub(super) struct RectCollector<'a> {
+pub struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
     lint_text: RefCell<&'a mut LintCallback<'a>>,
 }
@@ -185,14 +185,14 @@ impl TreeVisitor for RectCollector<'_> {
 }
 
 impl<'a> RectCollector<'a> {
-    pub(super) fn new(lint_text: &'a mut LintCallback) -> Self {
+    pub fn new(lint_text: &'a mut LintCallback) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
             lint_text: RefCell::new(lint_text),
         }
     }
 
-    pub(super) fn unwrap_rects(self) -> Vec<ActionableLint> {
+    pub fn unwrap_rects(self) -> Vec<ActionableLint> {
         self.rects.into_inner()
     }
 }
@@ -214,7 +214,7 @@ fn apply_suggestion_to_element(
 }
 
 /// Returns whether an accessibility element has a text role Harper can lint.
-pub(super) fn is_supported_text_element(el: &AXUIElement) -> bool {
+pub fn is_supported_text_element(el: &AXUIElement) -> bool {
     if let Ok(role) = el.role() {
         return is_supported_text_role(&role.to_string());
     }
@@ -277,7 +277,7 @@ fn find_char_subslice(haystack: &[char], needle: &[char], from: usize) -> Option
 
 /// Resolves text-range bounds, falling back to `AXStaticText` descendants
 /// when the element itself reports unusable bounds (Chromium-based apps).
-pub(super) fn element_rect_for_text_range_with_fallback(
+pub fn element_rect_for_text_range_with_fallback(
     element: &AXUIElement,
     full_text: &str,
     start_index: usize,

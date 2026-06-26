@@ -14,24 +14,24 @@ use super::core_foundation_utilities::{
     WindowInfo, dictionary_dictionary, dictionary_f64, dictionary_i64,
 };
 
-pub(super) const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+pub const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
 const WINDOW_FRAME_TOLERANCE: f64 = 0.5;
 
 /// Last observed frontmost window frame for a target process.
-pub(super) struct WindowMovementState {
-    pub(super) pid: pid_t,
-    pub(super) frame: Rect,
-    pub(super) last_changed_at: Instant,
+pub struct WindowMovementState {
+    pub pid: pid_t,
+    pub frame: Rect,
+    pub last_changed_at: Instant,
 }
 
-pub(super) fn window_frame_changed(previous: Rect, current: Rect) -> bool {
+pub fn window_frame_changed(previous: Rect, current: Rect) -> bool {
     !nearly_equal(previous.x, current.x)
         || !nearly_equal(previous.y, current.y)
         || !nearly_equal(previous.width, current.width)
         || !nearly_equal(previous.height, current.height)
 }
 
-pub(super) fn settled_window_state(pid: pid_t, frame: Rect, now: Instant) -> WindowMovementState {
+pub fn settled_window_state(pid: pid_t, frame: Rect, now: Instant) -> WindowMovementState {
     WindowMovementState {
         pid,
         frame,
@@ -45,7 +45,7 @@ fn nearly_equal(left: f64, right: f64) -> bool {
     (left - right).abs() <= WINDOW_FRAME_TOLERANCE
 }
 
-pub(super) fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
+pub fn frontmost_window_frame_for_pid(pid: pid_t) -> Option<Rect> {
     let window_infos = core_graphics::window::copy_window_info(
         kCGWindowListOptionOnScreenOnly | kCGWindowListExcludeDesktopElements,
         kCGNullWindowID,

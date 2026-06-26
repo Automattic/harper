@@ -115,22 +115,6 @@ fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
         .collect()
 }
 
-pub fn launch_app_bundle(bundle_id: &str) -> Result<(), String> {
-    let bundle_id = bundle_id.trim();
-
-    if bundle_id.is_empty() {
-        return Err("Bundle ID cannot be empty.".to_string());
-    }
-
-    Command::new("open")
-        .arg("-b")
-        .arg(bundle_id)
-        .spawn()
-        .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
-
-    Ok(())
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;

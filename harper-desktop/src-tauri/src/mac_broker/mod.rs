@@ -10,11 +10,19 @@ mod window_stability;
 
 use accessibility::TreeWalker;
 use accessibility::ui_element::AXUIElement;
+use accessibility_sys::{
+    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXTrustedCheckOptionPrompt,
+};
 use accessibility_sys::{error_string, pid_t};
+use core_foundation::base::TCFType;
+use core_foundation::boolean::CFBoolean;
+use core_foundation::dictionary::CFDictionary;
+use core_foundation::string::CFString;
 use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::Lint;
 use objc2_app_kit::NSRunningApplication;
+use std::process::Command;
 use std::time::Duration;
 use std::{
     collections::{BTreeMap, HashMap},
@@ -67,6 +75,7 @@ impl MacBroker {
         }
     }
 
+    /// The process ID of the currently focused window.
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
         let focused_pid = focused_window_pid::focused_window_pid()?;
         let current_pid = std::process::id() as pid_t;
@@ -79,6 +88,7 @@ impl MacBroker {
         }
     }
 
+    /// Check if the fronmost window for a given process is currently moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -321,6 +331,7 @@ impl OsBroker for MacBroker {
             return Vec::new();
         }
 
+        // Hide highlights while window is moving to avoid "sliding" behavior.
         if self.window_is_moving(pid) {
             return Vec::new();
         }
@@ -347,19 +358,28 @@ impl OsBroker for MacBroker {
     }
 
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
-        accessibility_permissions::accessibility_permission_status()
+        if unsafe { AXIsProcessTrusted() } {
+            AccessibilityPermissionStatus::Granted
+        } else {
+            AccessibilityPermissionStatus::NotGranted
+        }
     }
 
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
-        accessibility_permissions::request_accessibility_permission()
+        let prompt_key = unsafe { CFString::wrap_under_get_rule(kAXTrustedCheckOptionPrompt) };
+        let prompt_value = CFBoolean::true_value();
+        let options: CFDictionary<CFString, CFBoolean> =
+            CFDictionary::from_CFType_pairs(&[(prompt_key, prompt_value)]);
+
+        if unsafe { AXIsProcessTrustedWithOptions(options.as_concrete_TypeRef()) } {
+            AccessibilityPermissionStatus::Granted
+        } else {
+            AccessibilityPermissionStatus::NotGranted
+        }
     }
 
     fn system_integration_display_name(&self, bundle_id: &str) -> String {
         app_catalog::system_integration_display_name(bundle_id)
-    }
-
-    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
-        app_catalog::installed_application_bundle_ids()
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
@@ -389,7 +409,17 @@ impl OsBroker for MacBroker {
     }
 
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
-        app_catalog::launch_app_bundle(bundle_id)
+        let bundle_id: &str = bundle_id;
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty() {
+            return Err("Bundle ID cannot be empty.".to_string());
+        }
+        Command::new("open")
+            .arg("-b")
+            .arg(bundle_id)
+            .spawn()
+            .map_err(|error| format!("Failed to launch {bundle_id}: {error}"))?;
+        Ok(())
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
