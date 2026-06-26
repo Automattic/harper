@@ -3,6 +3,7 @@ mod accessibility_permissions;
 mod accessibility_text;
 mod app_catalog;
 mod app_icons;
+mod app_search_index;
 mod core_foundation_utilities;
 mod focused_window_pid;
 mod window_stability;
@@ -23,9 +24,7 @@ use std::{
 };
 
 use crate::config::{Config, Integration};
-use crate::os_broker::{
-    AccessibilityPermissionStatus, AppSearchResult, OsBroker, in_memory_app_search_results,
-};
+use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::ActionableLint;
 
 use self::accessibility_activation::{
@@ -36,6 +35,7 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
+use self::app_search_index::AppSearchIndex;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -50,7 +50,7 @@ pub struct MacBroker {
     last_focused: Option<pid_t>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
-    installed_app_search_index: Mutex<Option<Vec<AppSearchResult>>>,
+    installed_app_search_index: Mutex<AppSearchIndex>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -61,7 +61,7 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
-            installed_app_search_index: Mutex::new(None),
+            installed_app_search_index: Mutex::new(AppSearchIndex::new()),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -257,27 +257,6 @@ impl MacBroker {
             }
         }
     }
-
-    fn installed_app_search_results(&self) -> Result<Vec<AppSearchResult>, String> {
-        if let Some(results) = self
-            .installed_app_search_index
-            .lock()
-            .map_err(|error| format!("Failed to read app search cache: {error}"))?
-            .clone()
-        {
-            return Ok(results);
-        }
-
-        let results = app_catalog::generate_installed_app_search_index()?;
-
-        *self
-            .installed_app_search_index
-            .lock()
-            .map_err(|error| format!("Failed to update app search cache: {error}"))? =
-            Some(results.clone());
-
-        Ok(results)
-    }
 }
 
 impl Default for MacBroker {
@@ -375,7 +354,7 @@ impl OsBroker for MacBroker {
         accessibility_permissions::request_accessibility_permission()
     }
 
-    fn system_integration_display_name(&self, bundle_id: &str) -> Option<String> {
+    fn system_integration_display_name(&self, bundle_id: &str) -> String {
         app_catalog::system_integration_display_name(bundle_id)
     }
 
@@ -414,20 +393,16 @@ impl OsBroker for MacBroker {
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
-        let query = query.trim();
-        let installed_apps = self.installed_app_search_results()?;
+        let mut lock = self
+            .installed_app_search_index
+            .lock()
+            .map_err(|_| "Could not lock search index.".to_owned())?;
 
-        let in_memory_results = in_memory_app_search_results(&installed_apps, query);
-
-        if query.is_empty()
-            || in_memory_results
-                .iter()
-                .any(|result| result.bundle_id == query)
-        {
-            return Ok(in_memory_results);
+        if lock.is_empty() {
+            lock.populate()?;
         }
 
-        return Ok(vec![app_catalog::app_search_result_from_bundle_id(query)]);
+        Ok(lock.search(query))
     }
 }
 

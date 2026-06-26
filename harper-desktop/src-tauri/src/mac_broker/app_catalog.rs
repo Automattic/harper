@@ -1,44 +1,31 @@
 use std::{collections::BTreeSet, path::Path, process::Command};
 
-use crate::os_broker::{AppSearchResult, OsBroker};
-
-use super::MacBroker;
+use crate::os_broker::AppSearchResult;
 
 const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 
 pub fn app_search_result_from_bundle_id(bundle_id: &str) -> AppSearchResult {
     AppSearchResult {
-        name: system_integration_display_name(bundle_id).unwrap_or_else(|| bundle_id.to_owned()),
+        name: system_integration_display_name(bundle_id),
         bundle_id: bundle_id.to_string(),
     }
 }
 
-/// Generate a complete and searchable list of installed applications.
-pub fn generate_installed_app_search_index() -> Result<Vec<AppSearchResult>, String> {
-    let installed_bundles = installed_application_bundle_ids()?;
-
-    let mut results = Vec::new();
-    let mut seen_bundle_ids = BTreeSet::new();
-
-    for bundle_id in installed_bundles {
-        let line = bundle_id.trim();
-
-        if !line.ends_with(".app") {
-            continue;
-        }
-
-        let result = app_search_result_from_bundle_id(&bundle_id);
-
-        if seen_bundle_ids.insert(result.bundle_id.clone()) {
-            results.push(result);
-        }
-    }
-
-    Ok(results)
+pub fn system_integration_display_name(bundle_id: &str) -> String {
+    application_path_for_bundle_id(bundle_id)
+        .and_then(|path| display_name_from_app_path(&path))
+        .unwrap_or_else(|| bundle_id.to_owned())
 }
 
-pub fn system_integration_display_name(bundle_id: &str) -> Option<String> {
-    application_path_for_bundle_id(bundle_id).and_then(|path| display_name_from_app_path(&path))
+fn display_name_from_app_path(path: &str) -> Option<String> {
+    let file_name = Path::new(path).file_name()?.to_str()?;
+    let display_name = file_name.strip_suffix(".app").unwrap_or(file_name).trim();
+
+    if display_name.is_empty() {
+        None
+    } else {
+        Some(display_name.to_string())
+    }
 }
 
 pub fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
@@ -126,17 +113,6 @@ fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect()
-}
-
-fn display_name_from_app_path(path: &str) -> Option<String> {
-    let file_name = Path::new(path).file_name()?.to_str()?;
-    let display_name = file_name.strip_suffix(".app").unwrap_or(file_name).trim();
-
-    if display_name.is_empty() {
-        None
-    } else {
-        Some(display_name.to_string())
-    }
 }
 
 pub fn launch_app_bundle(bundle_id: &str) -> Result<(), String> {
