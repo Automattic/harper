@@ -33,6 +33,10 @@ yansi = "1.0.1"
 [dev-dependencies]
 tempfile = "3"
 
+[[bin]]
+name = "harper-lang-stats"
+path = "src/bin/lang_stats.rs"
+
 [features]
 default = []
 training = ["harper-pos-utils/training"]

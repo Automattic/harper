@@ -1,0 +1,108 @@
+# Harper Language Testing and Coverage Recipes
+
+# Import for main justfile to use these recipes
+# These recipes are all prefixed with 'language-' for easy identification
+
+# Language statistics - analyze all languages
+language-stats:
+	@echo "📊 Harper Language Statistics"
+	@echo "==============================="
+	
+	# Create output directory
+	@mkdir -p .stats
+	
+	# Analyze each language
+	@for lang in english german portuguese; do \
+	    echo "Analyzing $$lang language..." && \
+	    cargo run --quiet --bin harper-lang-stats -- $$lang > .stats/$$lang-stats.txt 2>/dev/null || \
+	    echo "⚠️  Could not analyze $$lang"; \
+	    echo; \
+	done
+	
+	@echo "✅ Statistics generated in .stats/ directory"
+	@echo "=========================================="
+
+# German coverage analysis
+language-german-coverage:
+	@echo "🔍 German Coverage Analysis"
+	@echo "==========================="
+	@python3 scripts/german_coverage.py
+	@echo "==========================="
+
+# Clean statistics
+language-clean-stats:
+	@rm -rf .stats
+	@echo "✅ Statistics cleaned"
+
+# Show German statistics
+language-german-stats:
+	@echo "📊 German Language Statistics"
+	@echo "=============================="
+	@cargo run --quiet --bin harper-lang-stats -- german
+	@echo "=============================="
+
+# Validate all dictionaries
+language-validate-dicts:
+	@echo "🔍 Validating Dictionaries"
+	@echo "=========================="
+	@for lang in english german portuguese; do \
+	    echo "Validating $$lang dictionary..." && \
+	    cargo run --quiet --bin harper-dict-validator -- $$lang || \
+	    echo "❌ $$lang dictionary has issues"; \
+	    echo; \
+	done
+	@echo "=========================="
+
+# Full language analysis
+language-full-analysis:
+	@just language-stats
+	@just language-german-coverage
+	@just language-validate-dicts
+
+# Build the language testing framework
+language-build-lang-test:
+	@echo "🛠️  Building language testing framework"
+	@echo "========================================="
+	@cd harper-core/src/language/testing_framework && \
+	  cargo build --release
+	@echo "✅ Language testing framework built"
+	@echo "==================================="
+
+# Test a specific language
+language-test-language language="german":
+	@echo "🧪 Testing {{language}} language"
+	@echo "==============================="
+	@cd harper-core/src/language/testing_framework && \
+	  ./target/release/harper-lang-test --language "{{language}}" --test
+	@echo "==============================="
+
+# Test all languages
+language-test-all-languages:
+	@echo "🧪 Testing all languages"
+	@echo "========================"
+	@for lang in english german portuguese; do \
+	    echo "Testing $$lang language..." && \
+	    just language-test-language "$$lang" || \
+	    echo "❌ $$lang language tests failed"; \
+	    echo; \
+	done
+	@echo "========================"
+
+# Full language analysis (alternative name)
+language-full-language-analysis:
+	@echo "🔬 Full Language Analysis"
+	@echo "========================="
+	@just language-build-lang-test
+	@just language-test-all-languages
+	@just language-german-coverage
+	@echo "========================="
+
+# Clean language test artifacts
+language-clean-lang-test:
+	@echo "🧹 Cleaning language test artifacts"
+	@echo "===================================="
+	@cd harper-core/src/language/testing_framework && \
+	  cargo clean
+	@rm -rf harper-core/src/language/testing_framework/target
+	@echo "✅ Language test artifacts cleaned"
+	@echo "================================="

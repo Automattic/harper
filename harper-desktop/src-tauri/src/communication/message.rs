@@ -1,5 +1,5 @@
 use crate::config::Integration;
-use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
+use harper_core::{IgnoredLints, Language, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
 /// Canonical client-to-server protocol message sent by the highlighter process.
@@ -24,7 +24,7 @@ pub enum Request {
 pub enum Response {
     GetLintConfig { config: FlatConfig },
     GetDictionary { words: Vec<String> },
-    GetDialect { dialect: Dialect },
+    GetDialect { dialect: Language },
     GetDebounceMs { debounce_ms: u64 },
     GetIgnoredLints { ignored_lints: IgnoredLints },
     GetIntegrations { integrations: Vec<Integration> },
@@ -34,6 +34,7 @@ pub enum Response {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use harper_core::EnglishDialect;
 
     #[test]
     fn request_serializes_as_json() {
@@ -188,7 +189,7 @@ mod tests {
     #[test]
     fn dialect_response_serializes_as_json() {
         let response = Response::GetDialect {
-            dialect: Dialect::British,
+            dialect: Language::English(EnglishDialect::British),
         };
         let encoded = serde_json::to_string(&response).unwrap();
         let decoded: Response = serde_json::from_str(&encoded).unwrap();
@@ -196,7 +197,7 @@ mod tests {
         assert!(matches!(
             decoded,
             Response::GetDialect {
-                dialect: Dialect::British
+                dialect: Language::English(EnglishDialect::British)
             }
         ));
     }

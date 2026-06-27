@@ -1,55 +1,31 @@
-//! This module implements rudimentary, dictionary-based English language detection.
+//! Legacy English language detector wrapper.
+//!
+//! This file is kept for backward compatibility but the actual implementation
+//! has been moved to language::english::language_detection.
 
+use crate::language::english::language_detection::{
+    EnglishDetector as EnglishLanguageDetector, is_likely_english as english_is_likely_english,
+};
 use crate::spell::Dictionary;
-use crate::{Document, Token, TokenKind};
+use crate::{Document, Token};
 
 /// Check if the contents of the document are likely intended to represent
 /// English.
 pub fn is_doc_likely_english(doc: &Document, dict: &impl Dictionary) -> bool {
-    is_likely_english(doc.get_tokens(), doc.get_source(), dict)
+    english_is_likely_english(doc.get_tokens(), doc.get_source(), dict)
 }
 
 /// Check if given tokens are likely intended to represent English.
+///
+/// This is a wrapper around the new implementation in language::english.
 pub fn is_likely_english(toks: &[Token], source: &[char], dict: &impl Dictionary) -> bool {
-    let mut total_words = 0;
-    let mut valid_words = 0;
-    let mut punctuation = 0;
-    let mut unlintable = 0;
-
-    for token in toks {
-        match token.kind {
-            TokenKind::Word(_) => {
-                total_words += 1;
-
-                let word_content = token.get_ch(source);
-                if dict.contains_word(word_content) {
-                    valid_words += 1;
-                }
-            }
-            TokenKind::Punctuation(_) => punctuation += 1,
-            TokenKind::Unlintable => unlintable += 1,
-            _ => (),
-        }
-    }
-
-    if total_words <= 7 && total_words - valid_words > 0 {
-        return false;
-    }
-
-    if unlintable > valid_words {
-        return false;
-    }
-
-    if (punctuation as f32 * 1.25) > valid_words as f32 {
-        return false;
-    }
-
-    if (valid_words as f64 / total_words as f64) < 0.7 {
-        return false;
-    }
-
-    true
+    english_is_likely_english(toks, source, dict)
 }
+
+/// English language detector (fallback).
+///
+/// This is a type alias for the new implementation in language::english.
+pub type EnglishDetector = EnglishLanguageDetector;
 
 #[cfg(test)]
 mod tests {
@@ -98,12 +74,12 @@ mod tests {
 
     #[test]
     fn detects_english() {
-        assert_english("This is perfectly valid English, evn if it has a cople typos.")
+        assert_english("This is perfectly valid English, evn if it has a cople typos.");
     }
 
     #[test]
     fn detects_expressive_english() {
-        assert_english("Look above! That is real English! So is this: bippity bop!")
+        assert_english("Look above! That is real English! So is this: bippity bop!");
     }
 
     /// Useful for detecting commented-out code.
@@ -111,7 +87,7 @@ mod tests {
     fn detects_python_fib() {
         assert_not_english(
             r"
-def fibIter(n):
+ndef fibIter(n):
     if n < 2:
         return n
     fibPrev = 1

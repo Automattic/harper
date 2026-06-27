@@ -1,6 +1,9 @@
 default:
   @just --list
 
+# Import language-specific recipes
+import "harper-core/src/language/justfile"
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:

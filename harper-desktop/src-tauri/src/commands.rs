@@ -4,18 +4,15 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{
-    IntegrationView, PlatformBroker, accessibility_allows_highlighter_start, platform_broker,
-};
-use base64::{Engine as _, engine::general_purpose};
+use crate::{IntegrationView, accessibility_allows_highlighter_start, platform_broker};
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints,
+    DictWordMetadata, IgnoredLints, Language,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::Arc;
 use tauri::ipc::Invoke;
-use tauri::{Manager, Runtime, State};
+use tauri::{Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
@@ -38,8 +35,6 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         add_integration,
         remove_integration,
         set_integration_enabled,
-        get_installed_application_bundle_ids,
-        get_application_icon_data_url,
         get_accessibility_permission_status,
         request_accessibility_permission,
         start_highlighter_service,
@@ -58,7 +53,7 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
 }
 
 #[tauri::command]
-async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
+async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Language, String> {
     Ok(config.lock().await.dialect)
 }
 
@@ -126,7 +121,7 @@ async fn set_last_update_check(
 
 #[tauri::command]
 async fn set_dialect(
-    dialect: Dialect,
+    dialect: Language,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
@@ -232,12 +227,9 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-    broker: State<'_, StdMutex<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?;
+    let broker = platform_broker();
 
     Ok(integrations
         .into_iter()
@@ -296,35 +288,6 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-fn get_installed_application_bundle_ids(
-    broker: State<'_, StdMutex<PlatformBroker>>,
-) -> Result<Vec<String>, String> {
-    broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .installed_application_bundle_ids()
-}
-
-#[tauri::command]
-async fn get_application_icon_data_url<R: Runtime>(
-    bundle_id: String,
-    app_handle: tauri::AppHandle<R>,
-) -> Result<String, String> {
-    tauri::async_runtime::spawn_blocking(move || {
-        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
-        let icon_png = broker
-            .lock()
-            .map_err(|error| format!("Failed to read platform broker: {error}"))?
-            .application_icon_png(&bundle_id)?;
-        let encoded = general_purpose::STANDARD.encode(icon_png);
-
-        Ok(format!("data:image/png;base64,{encoded}"))
-    })
-    .await
-    .map_err(|error| format!("Failed to load application icon: {error}"))?
-}
-
-#[tauri::command]
 fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
     platform_broker().accessibility_permission_status()
 }
@@ -380,12 +343,6 @@ fn launch_app(bundle_id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn search_apps(
-    query: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
-) -> Result<Vec<AppSearchResult>, String> {
-    broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .search_apps(&query)
+fn search_apps(query: String) -> Result<Vec<AppSearchResult>, String> {
+    platform_broker().search_apps(&query)
 }
