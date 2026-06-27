@@ -752,7 +752,7 @@ mod tests {
                 "Witch Doctor was able to right itself but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
                 "Witch Doctor was able to self-right but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
             ],
-            &[]
+            &[],
         );
     }
 
@@ -761,11 +761,8 @@ mod tests {
         assert_good_and_bad_suggestions(
             "Bite Force self-rights itself.",
             RedundantSelf::default(),
-            &[
-                "Bite Force rights itself.",
-                "Bite Force self-rights.",
-            ],
-            &[]
+            &["Bite Force rights itself.", "Bite Force self-rights."],
+            &[],
         );
     }
 
@@ -778,7 +775,7 @@ mod tests {
                 "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again righted itself.",
                 "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted.",
             ],
-            &[]
+            &[],
         );
     }
 }
