@@ -53,6 +53,10 @@ impl Default for RedundantSelf {
                     "regulated",
                     "regulates",
                     "regulating",
+                    "right",
+                    "righted",
+                    "righting",
+                    "rights",
                     "sabotage",
                     "sabotaged",
                     "sabotages",
@@ -736,6 +740,45 @@ mod tests {
         assert_no_lints(
             "They decided to host it themselves",
             RedundantSelf::default(),
+        );
+    }
+
+    #[test]
+    fn fix_self_right_itself() {
+        assert_good_and_bad_suggestions(
+            "Witch Doctor was able to self-right itself but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
+            RedundantSelf::default(),
+            &[
+                "Witch Doctor was able to right itself but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
+                "Witch Doctor was able to self-right but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
+            ],
+            &[]
+        );
+    }
+
+    #[test]
+    fn fix_self_rights_itself() {
+        assert_good_and_bad_suggestions(
+            "Bite Force self-rights itself.",
+            RedundantSelf::default(),
+            &[
+                "Bite Force rights itself.",
+                "Bite Force self-rights.",
+            ],
+            &[]
+        );
+    }
+
+    #[test]
+    fn fix_self_righted_itself() {
+        assert_good_and_bad_suggestions(
+            "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted itself.",
+            RedundantSelf::default(),
+            &[
+                "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again righted itself.",
+                "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted.",
+            ],
+            &[]
         );
     }
 }
