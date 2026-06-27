@@ -421,6 +421,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects unidiomatic plural `in details` to `in detail`.",
             LintKind::Usage
         ),
+        "InThisThatRegard" => (
+            &[
+                ("in this regards", "in this regard"),
+                ("in that regards", "in that regard"),
+            ],
+            "Use `in this/that regard` with singular `regard`.",
+            "Corrects `in this/that regards` to `in this/that regard`.",
+            LintKind::Usage
+        ),
         "InflectionPoint" => (
             &[
                 ("infliction point", "inflection point"),
@@ -864,6 +873,14 @@ pub fn lint_group() -> LintGroup {
             "Don't use both `how` and `like` together to express similarity.",
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
+        ),
+        "InRetaliationTo" => (
+            &[
+                (&["in retaliation to"], &["in retaliation for", "in response to"]),
+            ],
+            "Did you mean `in retaliation for` or `in response to`?",
+            "Corrects `in retaliation to` to `in retaliation for` or `in response to`.",
+            LintKind::Usage
         ),
         "LevelOfDetails" => (
             &[

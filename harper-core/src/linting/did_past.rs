@@ -13,10 +13,7 @@ pub struct DidPast<D> {
     dict: D,
 }
 
-impl<D> DidPast<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> DidPast<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::longest_of([
@@ -45,10 +42,7 @@ where
     }
 }
 
-impl<D> ExprLinter for DidPast<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for DidPast<D> {
     type Unit = Chunk;
 
     fn description(&self) -> &str {

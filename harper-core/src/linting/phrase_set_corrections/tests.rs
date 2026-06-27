@@ -1305,6 +1305,26 @@ fn in_more_detail_real_world() {
     );
 }
 
+// InThisThatRegard
+
+#[test]
+fn fix_in_this_regards() {
+    assert_suggestion_result(
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regards.",
+        lint_group(),
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regard.",
+    );
+}
+
+#[test]
+fn fix_in_that_regards() {
+    assert_suggestion_result(
+        "Looks like that are all settings I can make in the Buderus in that regards.",
+        lint_group(),
+        "Looks like that are all settings I can make in the Buderus in that regard.",
+    );
+}
+
 // InflectionPoint
 
 #[test]
@@ -2876,6 +2896,26 @@ fn correct_how_it_looks_like_with_apostrophe() {
     );
 }
 
+// InRetaliationTo
+
+#[test]
+fn corrects_in_retaliation_to_to_for() {
+    assert_suggestion_result(
+        "Damage caused in retaliation to another attack by the Thorns enchantment.",
+        lint_group(),
+        "Damage caused in retaliation for another attack by the Thorns enchantment.",
+    );
+}
+
+#[test]
+fn corrects_in_retaliation_to_to_in_response_to() {
+    assert_suggestion_result(
+        "In retaliation to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+        lint_group(),
+        "In response to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+    );
+}
+
 // LevelOfDetails
 
 #[test]
@@ -2887,7 +2927,6 @@ fn corrects_level_of_details_singular_contrived() {
     );
 }
 
-#[test]
 fn corrects_levels_of_details_plural_contrived() {
     assert_suggestion_result(
         "The game uses several level of details to save memory.",

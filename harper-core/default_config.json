@@ -3842,6 +3842,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InRetaliationTo",
+								"state": true,
+								"label": "In Retaliation To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CapitalizeOn",
 								"state": true,
 								"label": "Capitalize On"
@@ -3960,6 +3967,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByOnesOwn",
+								"state": true,
+								"label": "By One's Own"
 							}
 						},
 						{
@@ -5161,9 +5175,23 @@
 						},
 						{
 							"Bool": {
+								"name": "JumpTheGun",
+								"state": true,
+								"label": "Jump The Gun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InThisThatRegard",
+								"state": true,
+								"label": "In This/That Regard"
 							}
 						},
 						{
@@ -5290,6 +5318,13 @@
 								"name": "InDueCourse",
 								"state": true,
 								"label": "In Due Course"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AMeansToAnEnd",
+								"state": true,
+								"label": "A Means To An End"
 							}
 						}
 					]
