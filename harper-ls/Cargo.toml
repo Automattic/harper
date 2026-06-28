@@ -34,6 +34,7 @@ futures = "0.3.32"
 serde = { version = "1.0.228", features = ["derive"] }
 globset = "0.4.18"
 harper-ink = { version = "2.0.0", path = "../harper-ink" }
+harper-git-commit = { path = "../harper-git-commit", version = "2.0.0" }
 
 [lib]
 name = "harper_ls"

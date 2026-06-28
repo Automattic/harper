@@ -158,7 +158,7 @@ fn analyze_german(args: &Args) {
         }
 
         let mut sorted: Vec<_> = annotation_counts.into_iter().collect();
-        sorted.sort_by(|a, b| b.1.cmp(&a.1));
+        sorted.sort_by_key(|b| std::cmp::Reverse(b.1));
         println!("\nAnnotation Types:");
         for (annotation, count) in &sorted {
             println!("  {}: {} words", annotation, count);
@@ -228,7 +228,7 @@ fn count_english_annotations() -> (usize, Vec<(String, usize)>) {
     annotation_counts.insert("Adverb".to_string(), 3000);
 
     let mut sorted: Vec<_> = annotation_counts.into_iter().collect();
-    sorted.sort_by(|a, b| b.1.cmp(&a.1));
+    sorted.sort_by_key(|b| std::cmp::Reverse(b.1));
 
     (48000, sorted)
 }
@@ -241,7 +241,7 @@ fn count_portuguese_annotations() -> (usize, Vec<(String, usize)>) {
     annotation_counts.insert("Adjective".to_string(), 3000);
 
     let mut sorted: Vec<_> = annotation_counts.into_iter().collect();
-    sorted.sort_by(|a, b| b.1.cmp(&a.1));
+    sorted.sort_by_key(|b| std::cmp::Reverse(b.1));
 
     (16000, sorted)
 }

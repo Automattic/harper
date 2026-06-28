@@ -4362,6 +4362,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-dictionary-wordlist",
+ "harper-git-commit",
  "harper-html",
  "harper-ink",
  "harper-jjdescription",
