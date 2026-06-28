@@ -25,13 +25,22 @@ impl Default for QuoteSpacing {
 impl Linter for QuoteSpacing {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
+        let source = document.get_source();
 
-        for (index, m) in self.expr.iter_matches_in_doc(document).enumerate() {
+        for m in self.expr.iter_matches_in_doc(document) {
             let matched_tokens = m.get_content(document.get_tokens());
 
-            let Some(span) = matched_tokens.span() else {
+            let Some(_span) = matched_tokens.span() else {
                 continue;
             };
+
+            let quote_span = matched_tokens[1].span;
+
+            // Count quotes before this one to determine if it's opening (even) or closing (odd)
+            let quote_index = source[..quote_span.start]
+                .iter()
+                .filter(|&&c| c == '"')
+                .count();
 
             let mut suggestions = vec![
                 super::Suggestion::ReplaceWith(vec![' ', '"']),
@@ -39,7 +48,7 @@ impl Linter for QuoteSpacing {
             ];
 
             // Every odd-numbered quote is likely a close quote, ie space likely should be after it.
-            if index % 2 == 1 {
+            if quote_index % 2 == 1 {
                 suggestions.swap(0, 1);
             }
 
