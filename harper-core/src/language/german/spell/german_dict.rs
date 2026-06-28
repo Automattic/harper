@@ -45,7 +45,8 @@ pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
 ///
 /// For annotation-aware features, use `annotated_german_dictionary()` instead.
 pub fn curated_german_dictionary() -> Arc<FstDictionary> {
-    german_dictionary()
+    // Convert the annotated mutable dictionary to FST format
+    Arc::new((**GERMAN_ANNOTATED_DICT).clone().into())
 }
 
 /// Returns the mutable German dictionary for annotation processing.

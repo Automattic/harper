@@ -22,24 +22,50 @@ language-stats:
 	@echo "✅ Statistics generated in .stats/ directory"
 	@echo "=========================================="
 
-# German coverage analysis
-language-german-coverage:
-	@echo "🔍 German Coverage Analysis"
-	@echo "==========================="
-	@python3 scripts/german_coverage.py
-	@echo "==========================="
+# German language analysis (dictionary stats + coverage)
+language-german-analysis:
+	#!/usr/bin/env bash
+	
+	echo "📊 German Dictionary"
+	echo "==================="
+	echo "Curated Words: $(head -1 harper-core/src/language/german/dictionary.dict | tr -d ' ')"
+	echo "FST-Expanded Words: $(./harper-core/src/language/testing_framework/target/release/harper-lang-test --language german --dict harper-core/src/language/german/dictionary.dict --annotations harper-core/src/language/german/annotations-german.json --text "test" 2>&1 | grep "Word count:" | awk '{print $3}')"
+	echo "Affix Rules: 22"
+	echo ""
+	
+	# Build test framework if not present
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then \
+	    echo "🛠️  Building language testing framework..." && \
+	    cd harper-core/src/language/testing_framework && \
+	    cargo build --release && \
+	    cd /home/konrad/gallery/harper; \
+	fi
+	
+	# Run coverage analysis
+	python3 scripts/german_coverage.py
+
+# Test German text with dynamic dictionary/annotations loading
+language-german-test *text:
+	#!/usr/bin/env bash
+	# Build test framework if not present
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then \
+	    echo "🛠️  Building language testing framework..." && \
+	    cd harper-core/src/language/testing_framework && \
+	    cargo build --release && \
+	    cd /home/konrad/gallery/harper; \
+	fi
+	
+	# Run the test framework with dynamic dictionary and annotations
+	./harper-core/src/language/testing_framework/target/release/harper-lang-test \
+	    --language german \
+	    --dict harper-core/src/language/german/dictionary.dict \
+	    --annotations harper-core/src/language/german/annotations-german.json \
+	    --text "{{text}}"
 
 # Clean statistics
 language-clean-stats:
 	@rm -rf .stats
 	@echo "✅ Statistics cleaned"
-
-# Show German statistics
-language-german-stats:
-	@echo "📊 German Language Statistics"
-	@echo "=============================="
-	@cargo run --quiet --bin harper-lang-stats -- german
-	@echo "=============================="
 
 # Validate all dictionaries
 language-validate-dicts:
@@ -56,7 +82,7 @@ language-validate-dicts:
 # Full language analysis
 language-full-analysis:
 	@just language-stats
-	@just language-german-coverage
+	@just language-german-analysis
 	@just language-validate-dicts
 
 # Build the language testing framework
@@ -94,7 +120,7 @@ language-full-language-analysis:
 	@echo "========================="
 	@just language-build-lang-test
 	@just language-test-all-languages
-	@just language-german-coverage
+	@just language-german-analysis
 	@echo "========================="
 
 # Clean language test artifacts

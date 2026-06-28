@@ -8,10 +8,14 @@ import gzip
 import subprocess
 import sys
 import os
+import random
 from collections import Counter
 
 def analyze_german_coverage():
     """Analyze coverage of German dictionary against expanded benchmark"""
+    
+    # Set random seed for reproducibility
+    random.seed(42)
     
     print("🔍 German Coverage Analysis")
     print("============================")
@@ -50,7 +54,7 @@ def analyze_german_coverage():
     print(f"   Loaded {len(expanded_words):,} words from expanded dictionary")
     
     # Filter to reasonable test sample (remove proper nouns, abbreviations, etc.)
-    test_words = []
+    filtered_words = []
     for word in expanded_words:
         # Skip words that start with hyphen or uppercase
         if word.startswith('-') or word[0].isupper():
@@ -61,12 +65,12 @@ def analyze_german_coverage():
         # Skip words that are too short
         if len(word) < 3:
             continue
-        test_words.append(word)
-        # Limit sample size for performance
-        if len(test_words) >= 10000:
-            break
+        filtered_words.append(word)
     
-    print(f"   Using {len(test_words):,} words for coverage testing")
+    # Randomly sample 10,000 words from the filtered list
+    test_words = random.sample(filtered_words, min(10000, len(filtered_words)))
+    
+    print(f"   Using {len(test_words):,} randomly sampled words for coverage testing")
     
     # Test words with Harper
     print("🧪 Testing words with Harper...")

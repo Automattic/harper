@@ -56,7 +56,6 @@ pub use dict_word_metadata::{
     AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
     VerbData, VerbForm, VerbFormFlags,
 };
-pub use language::dialects::dialect_flags::DialectFlags;
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
@@ -64,6 +63,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
+pub use language::dialects::dialect_flags::DialectFlags;
 pub use language::{Language, LanguageFamily};
 pub use linting::{Lint, LintGroup, LintKind, Linter, Suggestion};
 pub use mask::{Mask, Masker, RegexMasker};
@@ -71,8 +71,8 @@ pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use regular_nouns::{get_plurals, get_singulars};
 pub use span::Span;
+pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, TrieDictionary};
 pub use sync::{LSend, Lrc};
-pub use spell::{Dictionary, FstDictionary, MutableDictionary, MergedDictionary, TrieDictionary};
 pub use title_case::{make_title_case, make_title_case_str};
 pub use token::Token;
 pub use token_kind::TokenKind;

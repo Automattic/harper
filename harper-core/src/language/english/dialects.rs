@@ -11,8 +11,7 @@ use crate::language::dialects::dialect_trait::{Dialect, DialectFlags};
 use crate::language::languages::LanguageFamily;
 use crate::token_string_ext::TokenStringExt;
 
-use bitflags::bitflags;
-use strum::{EnumCount as _, IntoEnumIterator, VariantArray as _};
+use strum::{EnumCount as _, VariantArray as _};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 /// The underlying type used for dialect flags.

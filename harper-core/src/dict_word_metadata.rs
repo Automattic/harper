@@ -6,11 +6,8 @@ use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
 
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::document::Document;
 use crate::language::dialects::dialect_flags::DialectFlags;
 use crate::spell::WordId;
-use crate::token_kind::TokenKind;
-use crate::token_string_ext::TokenStringExt;
 // This section uses macros to generate per-language code.
 // To add a new language, update the LANGUAGES! macro below.
 
@@ -1046,9 +1043,6 @@ impl AffixData {
 // Use the DialectFlags (language-scoped) for serialization/deserialization.
 
 // English dialect support - kept here to match master branch structure
-use std::convert::TryFrom;
-use strum::{EnumCount as _, VariantArray as _};
-use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 // English dialects have been moved to language::english::dialects
 

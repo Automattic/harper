@@ -45,8 +45,6 @@ impl<T: Dictionary> PortugueseSpellCheck<T> {
 
     /// Filter suggestions to only include words that match the configured dialect.
     fn filter_suggestions_by_dialect(&self, suggestions: &mut Vec<Vec<char>>) {
-
-
         suggestions.retain(|suggestion| {
             // Check if this suggestion word exists in the dictionary with our dialect
             if let Some(metadata) = self.dictionary.get_word_metadata(suggestion) {

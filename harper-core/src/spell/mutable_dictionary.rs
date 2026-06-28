@@ -66,6 +66,21 @@ impl MutableDictionary {
         (*DICT).clone()
     }
 
+    /// Iterate over all entries in the dictionary.
+    pub fn iter(&self) -> impl Iterator<Item = (&CharString, &DictWordMetadata)> {
+        self.word_map.iter().map(|entry| (&entry.canonical_spelling, &entry.metadata))
+    }
+
+    /// Get the total number of words in the dictionary.
+    pub fn len(&self) -> usize {
+        self.word_map.len()
+    }
+
+    /// Check if the dictionary is empty.
+    pub fn is_empty(&self) -> bool {
+        self.word_map.len() == 0
+    }
+
     /// Appends words to the dictionary.
     /// It is significantly faster to append many words with one call than many
     /// distinct calls to this function.
