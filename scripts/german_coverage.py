@@ -18,7 +18,7 @@ def analyze_german_coverage():
     random.seed(42)
     
     print("🔍 German Coverage Analysis")
-    print("============================")
+    print("===========================")
     
     # Paths
     expanded_dict_path = "harper-core/src/language/german/german_dictionary.dict.gz"
@@ -134,9 +134,16 @@ def analyze_german_coverage():
             word_count = int(line.strip())
             break
     
+    # English dictionary size for efficiency calculation
+    english_dict_size = 54705
+    
     print(f"   Harper Dictionary Size: {word_count:,} words")
     print(f"   Expanded Dictionary Size: {len(expanded_words):,} words")
     print(f"   Size Ratio: {word_count/len(expanded_words)*100:.2f}%")
+    
+    # Efficiency calculation: (coverage / dict_size) / (1 / english_dict_size) * 100
+    efficiency = (coverage_percentage / 100) * english_dict_size / word_count * 100
+    print(f"   Efficiency: {efficiency:.2f}% (relative to English)")
     
     # Annotation statistics
     print(f"\n🏷️  Annotation Statistics")
@@ -171,8 +178,9 @@ def analyze_german_coverage():
     if word_count < 40000:
         print(f"   🔄 Dictionary growth needed: {target_size - word_count:,} more words")
     
-    print(f"\n============================")
+    print(f"\n===========================")
     print(f"📈 Summary: {coverage_percentage:.1f}% coverage with {word_count:,} words")
+    print(f"   Efficiency: {efficiency:.2f}% (vs English baseline)")
     print(f"   Target: {target_size:,} words for comprehensive German support")
 
 if __name__ == "__main__":
