@@ -1,7 +1,6 @@
 use clap::Parser;
 use harper_core::language::{
-    LanguageModule, english::module::EnglishModule,
-    portuguese::module::PortugueseModule,
+    LanguageModule, english::module::EnglishModule, portuguese::module::PortugueseModule,
 };
 use harper_core::spell::Dictionary;
 
@@ -78,9 +77,11 @@ fn analyze_german(args: &Args) {
     } else {
         0
     };
-    
+
     // Load FST dictionary for other stats
-    use harper_core::language::german::spell::{curated_german_dictionary, mutable_german_dictionary};
+    use harper_core::language::german::spell::{
+        curated_german_dictionary, mutable_german_dictionary,
+    };
     let _dict = curated_german_dictionary();
 
     // Basic statistics - show file-based count
@@ -88,21 +89,22 @@ fn analyze_german(args: &Args) {
 
     // Annotation statistics - count from actual curated dictionary
     let mutable_dict = mutable_german_dictionary();
-    
+
     // Count annotated words (words with any metadata)
-    let annotated_count = mutable_dict.iter()
+    let annotated_count = mutable_dict
+        .iter()
         .filter(|(_, metadata)| {
-            metadata.noun.is_some() || 
-            metadata.verb.is_some() || 
-            metadata.adjective.is_some() || 
-            metadata.adverb.is_some() || 
-            metadata.pronoun.is_some() || 
-            metadata.conjunction.is_some() || 
-            metadata.determiner.is_some() || 
-            metadata.affix.is_some() || 
-            metadata.preposition ||
-            metadata.pos_tag.is_some() ||
-            !metadata.dialects.is_empty()
+            metadata.noun.is_some()
+                || metadata.verb.is_some()
+                || metadata.adjective.is_some()
+                || metadata.adverb.is_some()
+                || metadata.pronoun.is_some()
+                || metadata.conjunction.is_some()
+                || metadata.determiner.is_some()
+                || metadata.affix.is_some()
+                || metadata.preposition
+                || metadata.pos_tag.is_some()
+                || !metadata.dialects.is_empty()
         })
         .count();
     let total_count = mutable_dict.len();
@@ -115,7 +117,7 @@ fn analyze_german(args: &Args) {
     if args.detailed {
         use std::collections::HashMap;
         let mut annotation_counts: HashMap<String, usize> = HashMap::new();
-        
+
         // Count POS types
         for (_, metadata) in mutable_dict.iter() {
             if metadata.noun.is_some() {
@@ -125,7 +127,9 @@ fn analyze_german(args: &Args) {
                 *annotation_counts.entry("Verb".to_string()).or_insert(0) += 1;
             }
             if metadata.adjective.is_some() {
-                *annotation_counts.entry("Adjective".to_string()).or_insert(0) += 1;
+                *annotation_counts
+                    .entry("Adjective".to_string())
+                    .or_insert(0) += 1;
             }
             if metadata.adverb.is_some() {
                 *annotation_counts.entry("Adverb".to_string()).or_insert(0) += 1;
@@ -134,19 +138,25 @@ fn analyze_german(args: &Args) {
                 *annotation_counts.entry("Pronoun".to_string()).or_insert(0) += 1;
             }
             if metadata.conjunction.is_some() {
-                *annotation_counts.entry("Conjunction".to_string()).or_insert(0) += 1;
+                *annotation_counts
+                    .entry("Conjunction".to_string())
+                    .or_insert(0) += 1;
             }
             if metadata.determiner.is_some() {
-                *annotation_counts.entry("Determiner".to_string()).or_insert(0) += 1;
+                *annotation_counts
+                    .entry("Determiner".to_string())
+                    .or_insert(0) += 1;
             }
             if metadata.affix.is_some() {
                 *annotation_counts.entry("Affix".to_string()).or_insert(0) += 1;
             }
             if metadata.preposition {
-                *annotation_counts.entry("Preposition".to_string()).or_insert(0) += 1;
+                *annotation_counts
+                    .entry("Preposition".to_string())
+                    .or_insert(0) += 1;
             }
         }
-        
+
         let mut sorted: Vec<_> = annotation_counts.into_iter().collect();
         sorted.sort_by(|a, b| b.1.cmp(&a.1));
         println!("\nAnnotation Types:");

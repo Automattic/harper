@@ -68,7 +68,9 @@ impl MutableDictionary {
 
     /// Iterate over all entries in the dictionary.
     pub fn iter(&self) -> impl Iterator<Item = (&CharString, &DictWordMetadata)> {
-        self.word_map.iter().map(|entry| (&entry.canonical_spelling, &entry.metadata))
+        self.word_map
+            .iter()
+            .map(|entry| (&entry.canonical_spelling, &entry.metadata))
     }
 
     /// Get the total number of words in the dictionary.
