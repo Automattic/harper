@@ -282,6 +282,125 @@
         "noun": {}
       },
       "rename_ok": true
+    },
+    "O": {
+      "#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "e",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "Q": {
+      "#": "Adjective declension -em (masculine/neuter dative singular)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "em",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "R": {
+      "#": "Adjective declension -en (plural and masculine/neuter genitive singular)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "en",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "S": {
+      "#": "Adjective declension -er (masculine nominative singular)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "er",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "T": {
+      "#": "Adjective declension -es (neuter nominative/accusative singular)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "es",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "U": {
+      "#": "Adjective comparative -er",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "er",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
+    },
+    "W": {
+      "#": "Adjective superlative -sten",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "sten",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "adjective": {}
+      },
+      "rename_ok": true
     }
   },
   "properties": {
