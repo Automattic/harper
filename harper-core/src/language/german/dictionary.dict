@@ -1,4 +1,4 @@
-150111
+150118
 abspeisenden/~~V # verb
 abspeisender/~~N # noun
 abspeisendes/~~N # noun
@@ -15124,6 +15124,7 @@ Feuer/~~N # neuter noun fire
 heil/~N # frequency: 11
 näher/~N # frequency: 11
 reich/~N # frequency: 11
+reich/~~JOQRSTUW # adjective rich
 reif/~N # frequency: 11
 sicher/~N # frequency: 11
 wunder/~N # frequency: 11
@@ -15167,6 +15168,7 @@ frisch/~J # adjective root, frequency: 9
 gleich/~N # frequency: 9
 grün/~N # frequency: 9
 jung/~N # frequency: 9
+jung/~~JOQRSTUW # adjective young
 kecker/~N # frequency: 9
 keim/~N # frequency: 9
 knall/~N # frequency: 9
@@ -15333,6 +15335,7 @@ schlag/~N # frequency: 8
 schlapp/~N # frequency: 8
 schluck/~N # frequency: 8
 schnell/~N # frequency: 8
+schnell/~~JOQRSTUW # adjective fast
 schnörkel/~N # frequency: 8
 schon/~N # frequency: 8
 schraub/~N # frequency: 8
@@ -15342,6 +15345,7 @@ schräg/~N # frequency: 8
 schwefel/~N # frequency: 8
 schweiß/~N # frequency: 8
 schwer/~N # frequency: 8
+schwer/~~JOQRSTUW # adjective heavy/difficult
 schwindel/~N # frequency: 8
 seil/~N # frequency: 8
 siech/~N # frequency: 8
@@ -15569,6 +15573,7 @@ effektvoll/~N # frequency: 7
 eifer/~N # frequency: 7
 eindrucksvoll/~N # frequency: 7
 einfach/~N # frequency: 7
+einfach/~~JOQRSTUW # adjective simple
 einfallsreich/~N # frequency: 7
 einflussreich/~N # frequency: 7
 eingriff/~N # frequency: 7
@@ -19848,6 +19853,7 @@ lehr/~N # frequency: 6
 lehrplangemäß/~N # frequency: 6
 leichenfahl/~N # frequency: 6
 leicht/~N # frequency: 6
+leicht/~~JOQRSTUW # adjective light/easy
 leichtfertig/~J # adjective root, frequency: 6
 leichtgewichtig/~J # adjective root, frequency: 6
 leichtgläubig/~J # adjective root, frequency: 6
@@ -45769,7 +45775,7 @@ schuss/~~N # auto-added
 schute/~~N # auto-added
 schutt/~~N # auto-added
 schutz/~~N # auto-added
-schwach/~~J # auto-added
+schwach/~~JOQRSTUW # auto-added
 schwan/~~N # auto-added
 schwarz/~~N # auto-added
 schwester/~~F # auto-added
@@ -46524,7 +46530,7 @@ starb/~~N # auto-added
 starbt/~~N # auto-added
 stare/~~N # auto-added
 staren/~~V # auto-added
-stark/~~J # auto-added
+stark/~~JOQRSTUW # auto-added
 starke/~~N # auto-added
 starre/~~N # auto-added
 starrt/~~N # auto-added
