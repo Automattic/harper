@@ -401,6 +401,111 @@
         "adjective": {}
       },
       "rename_ok": true
+    },
+    "X": {
+      "#": "Noun plural -e (Frau -> Frauen)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "e",
+          "condition": "."
+        }
+      ],
+      "target": [
+        {
+          "metadata": {
+            "noun": {
+              "number": "PLURAL"
+            }
+          }
+        }
+      ],
+      "base_metadata": {
+        "noun": {}
+      },
+      "rename_ok": true
+    },
+    "Y": {
+      "#": "Noun plural -n/-en (Hand -> Hände, Student -> Studenten)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "n",
+          "condition": "."
+        },
+        {
+          "remove": "",
+          "add": "en",
+          "condition": "."
+        }
+      ],
+      "target": [
+        {
+          "metadata": {
+            "noun": {
+              "number": "PLURAL"
+            }
+          }
+        }
+      ],
+      "base_metadata": {
+        "noun": {}
+      },
+      "rename_ok": true
+    },
+    "a": {
+      "#": "Noun plural -er + umlaut (Mann -> Männer)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "er",
+          "condition": "."
+        }
+      ],
+      "target": [
+        {
+          "metadata": {
+            "noun": {
+              "number": "PLURAL"
+            }
+          }
+        }
+      ],
+      "base_metadata": {
+        "noun": {}
+      },
+      "rename_ok": true
+    },
+    "b": {
+      "#": "Noun plural -s (Auto -> Autos)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "s",
+          "condition": "."
+        }
+      ],
+      "target": [
+        {
+          "metadata": {
+            "noun": {
+              "number": "PLURAL"
+            }
+          }
+        }
+      ],
+      "base_metadata": {
+        "noun": {}
+      },
+      "rename_ok": true
     }
   },
   "properties": {
