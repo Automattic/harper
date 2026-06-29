@@ -31,7 +31,7 @@ impl Expr for DurationExpr {
 
         let expr = SequenceExpr::longest_of([
             Box::new(SpelledNumberExpr) as Box<dyn Expr>,
-            Box::new(SequenceExpr::default().then_number()),
+            Box::new(SequenceExpr::number()),
             Box::new(IndefiniteArticle::default()),
             Box::new(a_couple_of),
             Box::new(a_few),
