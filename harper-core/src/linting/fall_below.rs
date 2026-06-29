@@ -42,7 +42,7 @@ impl ExprLinter for FallBelow {
         })?
         .span;
 
-        // extend span backwards to include the word before "below"
+        // extend span backwards to include the whitespace before "below"
         let new_span = Span::new(below_span.start.saturating_sub(1), below_span.end);
 
         Some(Lint {
