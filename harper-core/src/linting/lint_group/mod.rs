@@ -85,6 +85,7 @@ use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::fall_below::FallBelow;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
@@ -659,6 +660,7 @@ impl LintGroup {
         insert_expr_rule!(ExpandMemoryShorthands, true);
         insert_expr_rule!(ExpandPeople, true);
         insert_expr_rule!(ExpandTimeShorthands, true);
+        insert_expr_rule!(FallBelow, true);
         insert_expr_rule!(FarBeIt, true);
         insert_expr_rule!(FascinatedBy, true);
         insert_expr_rule_with_dialect!(FedUpWith, true);
