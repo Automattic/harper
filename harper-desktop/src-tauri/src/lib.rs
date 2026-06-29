@@ -10,7 +10,12 @@ use harper_core::{
     spell::MutableDictionary,
 };
 use serde::Serialize;
-use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
+use std::{
+    cell::RefCell,
+    rc::Rc,
+    sync::{Arc, Mutex as StdMutex},
+    time::Duration,
+};
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
@@ -257,13 +262,27 @@ fn start_highlighter_service_if_enabled_and_permitted(
 }
 
 #[cfg(target_os = "macos")]
-fn platform_broker() -> impl OsBroker {
-    mac_broker::MacBroker::default()
-}
+pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
 #[cfg(not(target_os = "macos"))]
-fn platform_broker() -> impl OsBroker {
-    os_broker::NoopBroker
+pub(crate) type PlatformBroker = os_broker::NoopBroker;
+
+fn platform_broker() -> PlatformBroker {
+    PlatformBroker::default()
+}
+
+fn warm_app_search_cache(app: tauri::AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let result = broker
+            .lock()
+            .map_err(|error| format!("failed to read platform broker: {error}"))
+            .and_then(|broker| broker.search_apps("").map(|_| ()));
+
+        if let Err(error) = result {
+            eprintln!("failed to warm app search cache: {error}");
+        }
+    });
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -317,6 +336,7 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
+        .manage(StdMutex::new(platform_broker()))
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
@@ -348,6 +368,8 @@ pub fn run_tauri() {
 
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
+
+            warm_app_search_cache(app.handle().clone());
 
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
@@ -464,7 +486,7 @@ pub fn run_highlighter() {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let integrations = Rc::new(RefCell::new(startup_config.integrations));
+    let integrations = Arc::new(StdMutex::new(startup_config.integrations));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
 
@@ -637,7 +659,7 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    integrations: &Rc<RefCell<Vec<Integration>>>,
+    integrations: &Arc<StdMutex<Vec<Integration>>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
@@ -645,7 +667,10 @@ fn apply_highlighter_config(
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
-    *integrations.borrow_mut() = config.integrations;
+    match integrations.lock() {
+        Ok(mut integrations) => *integrations = config.integrations,
+        Err(error) => eprintln!("failed to update integrations: {error}"),
+    }
     *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
 }

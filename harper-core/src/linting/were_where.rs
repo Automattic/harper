@@ -26,16 +26,12 @@ impl Default for WereWhere {
         // "you where" alone is ambiguous ("I'll show you where to go"), so only flag
         // it when followed by a verb, auxiliary, or adjective — confirming a verb slot.
         // e.g. "you where going" → "you were going"
-        let you_where_verb = SequenceExpr::aco("you")
-            .t_ws()
-            .t_aco("where")
+        let you_where_verb = SequenceExpr::word_seq(&["you", "where"])
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
         // "where you ..." can be a typo for "were you ..." when it starts a question.
-        let where_you_verb = SequenceExpr::aco("where")
-            .t_ws()
-            .t_aco("you")
+        let where_you_verb = SequenceExpr::word_seq(&["where", "you"])
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
