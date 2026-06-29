@@ -182,9 +182,6 @@ onMount(() => {
 				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
 			</p>
-			<p class="!mt-3 !mb-0 !font-serif text-[1.12rem] leading-[1.35] text-[#807a6e] italic dark:text-white/55">
-				I make you look like a grammar genius.
-			</p>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Get Harper</PillButton>
 				<PillButton href={marketingLinks.github} kind="secondary" size="lg">Star on GitHub</PillButton>
