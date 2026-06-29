@@ -76,6 +76,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 			];
 		});
 
+	// The Source Control commit message box is a document with the `scminput`
+	// language id. It is not backed by a file on disk, so it is matched by
+	// language alone rather than by scheme.
+	clientOptions.documentSelector.push({ language: 'scminput' });
+
 	clientOptions.outputChannel = window.createOutputChannel('Harper');
 	context.subscriptions.push(clientOptions.outputChannel);
 
