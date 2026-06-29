@@ -1,5 +1,4 @@
 mod accessibility_activation;
-mod accessibility_permissions;
 mod accessibility_text;
 mod app_catalog;
 mod app_icons;
