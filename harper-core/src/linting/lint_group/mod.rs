@@ -180,7 +180,6 @@ use super::oxymorons::Oxymorons;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
-use super::plural_criterion_phenomenon::PluralCriterionPhenomenon;
 use super::plural_decades::PluralDecades;
 use super::plural_wrong_word_of_phrase::PluralWrongWordOfPhrase;
 use super::possessive_noun::PossessiveNoun;
@@ -625,7 +624,7 @@ impl LintGroup {
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_expr_rule!(CraveFor, true);
-        insert_expr_rule!(CriteriaPhenomena, true);
+        insert_struct_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
@@ -745,7 +744,6 @@ impl LintGroup {
         insert_expr_rule!(PayForPrice, true);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun, true);
         insert_expr_rule!(PiqueInterest, true);
-        insert_struct_rule!(PluralCriterionPhenomenon, true);
         insert_expr_rule!(PluralWrongWordOfPhrase, true);
         insert_struct_rule_with_dict!(PossessiveNoun, false);
         insert_expr_rule!(PossessiveYour, true);

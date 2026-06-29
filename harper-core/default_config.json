@@ -5293,13 +5293,6 @@
 						},
 						{
 							"Bool": {
-								"name": "PluralCriterionPhenomenon",
-								"state": true,
-								"label": "Plural Criterion Phenomenon"
-							}
-						},
-						{
-							"Bool": {
 								"name": "DespiteItIs",
 								"state": true,
 								"label": "Despite It Is"

@@ -1,4 +1,4 @@
-use super::{Lint, LintKind, Linter, Suggestion};
+use super::super::{Lint, LintKind, Linter, Suggestion};
 use crate::{Document, Number, Punctuation, Span, Token, TokenStringExt};
 use harper_brill::UPOS;
 
