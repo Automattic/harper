@@ -5319,6 +5319,13 @@
 								"state": true,
 								"label": "A Means To An End"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CallItQuits",
+								"state": true,
+								"label": "Call It Quits"
+							}
 						}
 					]
 				}
