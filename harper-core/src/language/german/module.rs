@@ -7,7 +7,8 @@ use crate::language::german::language_detection::GermanDetector;
 use crate::language::german::lexing::lex_german_token;
 use crate::language::german::linting::{new_curated_german, weir_rules};
 use crate::language::german::parsers::PlainGerman;
-use crate::language::german::spell::german_dictionary;
+use crate::language::german::spell::curated_german_dictionary;
+
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
@@ -39,7 +40,7 @@ impl LanguageModule for GermanModule {
     }
 
     fn dictionary() -> Arc<FstDictionary> {
-        german_dictionary()
+        curated_german_dictionary()
     }
 
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
