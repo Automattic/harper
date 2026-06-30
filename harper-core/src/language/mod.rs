@@ -8,8 +8,14 @@ pub mod module;
 pub mod registry;
 
 pub mod english;
+
+#[cfg(feature = "de")]
 pub mod german;
+
+#[cfg(feature = "pt")]
 pub mod portuguese;
+
+#[cfg(feature = "sk")]
 pub mod slovak;
 
 // Re-export core types

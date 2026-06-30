@@ -5,8 +5,14 @@ use serde_json::Value;
 // Import dialect types from the central dialects module for modularity.
 use crate::language::dialects::dialect_trait::DialectFlags as _;
 use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
+
+#[cfg(feature = "de")]
 use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
+
+#[cfg(feature = "pt")]
 use crate::language::portuguese::dialects::{PortugueseDialect, PortugueseDialectFlags};
+
+#[cfg(feature = "sk")]
 use crate::language::slovak::dialects::{SlovakDialect, SlovakDialectFlags};
 
 /// This represents a collection of dialect flags for all supported languages.
@@ -16,8 +22,11 @@ pub struct DialectFlags {
     // IMPORTANT: These fields must match the LANGUAGES! macro in dict_word_metadata.rs.
     // To add a new language, add a field here and update the LANGUAGES! macro.
     pub english: EnglishDialectFlags,
+    #[cfg(feature = "de")]
     pub german: GermanDialectFlags,
+    #[cfg(feature = "pt")]
     pub portuguese: PortugueseDialectFlags,
+    #[cfg(feature = "sk")]
     pub slovak: SlovakDialectFlags,
 }
 
@@ -28,8 +37,11 @@ impl Serialize for DialectFlags {
     {
         let mut scoped = serializer.serialize_struct("DialectFlags", 4)?;
         scoped.serialize_field("english", &self.english)?;
+        #[cfg(feature = "de")]
         scoped.serialize_field("german", &self.german)?;
+        #[cfg(feature = "pt")]
         scoped.serialize_field("portuguese", &self.portuguese)?;
+        #[cfg(feature = "sk")]
         scoped.serialize_field("slovak", &self.slovak)?;
         scoped.end()
     }
@@ -50,8 +62,11 @@ impl From<ScopedDialectFlagsSerde> for DialectFlags {
     fn from(value: ScopedDialectFlagsSerde) -> Self {
         Self {
             english: value.english,
+            #[cfg(feature = "de")]
             german: value.german,
+            #[cfg(feature = "pt")]
             portuguese: value.portuguese,
+            #[cfg(feature = "sk")]
             slovak: value.slovak,
         }
     }
@@ -62,24 +77,30 @@ impl DialectFlags {
     pub const fn empty() -> Self {
         Self {
             english: EnglishDialectFlags::empty(),
+            #[cfg(feature = "de")]
             german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pt")]
             portuguese: PortugueseDialectFlags::empty(),
+            #[cfg(feature = "sk")]
             slovak: SlovakDialectFlags::empty(),
         }
     }
 
-    /// Creates a DialectFlags with the specified English, German, Portuguese, and Slovak dialect flags.
+    /// Creates a DialectFlags with the specified dialect flags.
     #[must_use]
     pub const fn new(
         english: EnglishDialectFlags,
-        german: GermanDialectFlags,
-        portuguese: PortugueseDialectFlags,
-        slovak: SlovakDialectFlags,
+        #[cfg(feature = "de")] german: GermanDialectFlags,
+        #[cfg(feature = "pt")] portuguese: PortugueseDialectFlags,
+        #[cfg(feature = "sk")] slovak: SlovakDialectFlags,
     ) -> Self {
         Self {
             english,
+            #[cfg(feature = "de")]
             german,
+            #[cfg(feature = "pt")]
             portuguese,
+            #[cfg(feature = "sk")]
             slovak,
         }
     }
@@ -98,15 +119,21 @@ impl DialectFlags {
 
         Self {
             english: english_flags,
+            #[cfg(feature = "de")]
             german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pt")]
             portuguese: PortugueseDialectFlags::empty(),
+            #[cfg(feature = "sk")]
             slovak: SlovakDialectFlags::empty(),
         }
     }
 
     #[must_use]
     pub fn is_empty(self) -> bool {
-        self.english.is_empty() && self.german.is_empty() && self.portuguese.is_empty() && self.slovak.is_empty()
+        self.english.is_empty()
+            #[cfg(feature = "de")] && self.german.is_empty()
+            #[cfg(feature = "pt")] && self.portuguese.is_empty()
+            #[cfg(feature = "sk")] && self.slovak.is_empty()
     }
 
     #[must_use]
@@ -119,31 +146,37 @@ impl DialectFlags {
         self.english.is_dialect_enabled_strict(dialect)
     }
 
+    #[cfg(feature = "de")]
     #[must_use]
     pub fn is_german_dialect_enabled(self, dialect: GermanDialect) -> bool {
         self.german.is_dialect_enabled(dialect)
     }
 
+    #[cfg(feature = "de")]
     #[must_use]
     pub fn is_german_dialect_enabled_strict(self, dialect: GermanDialect) -> bool {
         self.german.is_dialect_enabled_strict(dialect)
     }
 
+    #[cfg(feature = "pt")]
     #[must_use]
     pub fn is_portuguese_dialect_enabled(self, dialect: PortugueseDialect) -> bool {
         self.portuguese.is_dialect_enabled(dialect)
     }
 
+    #[cfg(feature = "pt")]
     #[must_use]
     pub fn is_portuguese_dialect_enabled_strict(self, dialect: PortugueseDialect) -> bool {
         self.portuguese.is_dialect_enabled_strict(dialect)
     }
 
+    #[cfg(feature = "sk")]
     #[must_use]
     pub fn is_slovak_dialect_enabled(self, dialect: SlovakDialect) -> bool {
         self.slovak.is_dialect_enabled(dialect)
     }
 
+    #[cfg(feature = "sk")]
     #[must_use]
     pub fn is_slovak_dialect_enabled_strict(self, dialect: SlovakDialect) -> bool {
         self.slovak.is_dialect_enabled_strict(dialect)
@@ -158,16 +191,22 @@ impl DialectFlags {
     pub fn get_most_used_dialects_from_document(document: &crate::Document) -> Self {
         // Get the most used dialects for each language separately
         let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "de")]
         let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "pt")]
         let portuguese_flags =
             PortugueseDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "sk")]
         let slovak_flags =
             SlovakDialectFlags::get_most_used_dialects_from_document(document);
 
         Self {
             english: english_flags,
+            #[cfg(feature = "de")]
             german: german_flags,
+            #[cfg(feature = "pt")]
             portuguese: portuguese_flags,
+            #[cfg(feature = "sk")]
             slovak: slovak_flags,
         }
     }
@@ -179,8 +218,11 @@ impl std::ops::BitOr for DialectFlags {
     fn bitor(self, rhs: Self) -> Self::Output {
         Self {
             english: self.english | rhs.english,
+            #[cfg(feature = "de")]
             german: self.german | rhs.german,
+            #[cfg(feature = "pt")]
             portuguese: self.portuguese | rhs.portuguese,
+            #[cfg(feature = "sk")]
             slovak: self.slovak | rhs.slovak,
         }
     }
@@ -189,8 +231,11 @@ impl std::ops::BitOr for DialectFlags {
 impl std::ops::BitOrAssign for DialectFlags {
     fn bitor_assign(&mut self, rhs: Self) {
         self.english |= rhs.english;
+        #[cfg(feature = "de")]
         self.german |= rhs.german;
+        #[cfg(feature = "pt")]
         self.portuguese |= rhs.portuguese;
+        #[cfg(feature = "sk")]
         self.slovak |= rhs.slovak;
     }
 }
@@ -208,8 +253,11 @@ impl Default for DialectFlags {
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
 struct ScopedDialectFlagsSerde {
     english: EnglishDialectFlags,
+    #[cfg(feature = "de")]
     german: GermanDialectFlags,
+    #[cfg(feature = "pt")]
     portuguese: PortugueseDialectFlags,
+    #[cfg(feature = "sk")]
     slovak: SlovakDialectFlags,
 }
 
