@@ -506,6 +506,129 @@
         "noun": {}
       },
       "rename_ok": true
+    },
+    "c": {
+      "#": "Verb present participle -enden (lern-enden)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "enden",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {}
+      },
+      "rename_ok": true
+    },
+    "d": {
+      "#": "Verb preterite -te (lern-te)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "te",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST"
+        }
+      },
+      "rename_ok": true
+    },
+    "e": {
+      "#": "Verb preterite -ten (lern-ten)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "ten",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST"
+        }
+      },
+      "rename_ok": true
+    },
+    "f": {
+      "#": "Verb present -e (lern-e)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "e",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {}
+      },
+      "rename_ok": true
+    },
+    "h": {
+      "#": "Verb present -st (lern-st)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "st",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {}
+      },
+      "rename_ok": true
+    },
+    "i": {
+      "#": "Verb present -t (lern-t)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "t",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {}
+      },
+      "rename_ok": true
+    },
+    "j": {
+      "#": "Verb present/plural -en (lern-en)",
+      "kind": "suffix",
+      "cross_product": true,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "en",
+          "condition": "."
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {}
+      },
+      "rename_ok": true
     }
   },
   "properties": {
