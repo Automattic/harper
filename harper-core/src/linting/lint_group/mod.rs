@@ -638,7 +638,7 @@ impl LintGroup {
         insert_expr_rule!(Confident, true);
         insert_struct_rule!(CorrectNumberSuffix, true);
         insert_expr_rule!(CraveFor, true);
-        insert_expr_rule!(CriteriaPhenomena, true);
+        insert_struct_rule!(CriteriaPhenomena, true);
         insert_expr_rule!(CureFor, true);
         insert_struct_rule!(CurrencyPlacement, true);
         insert_expr_rule!(Dashes, true);
