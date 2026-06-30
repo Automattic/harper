@@ -35,7 +35,10 @@ impl Default for General {
                 .t_ws()
                 .then(UPOSSet::new(&[UPOS::ADJ]))
                 .t_ws()
-                .then(UPOSSet::new(&[UPOS::SCONJ, UPOS::PART])),
+                // "for" introducing the infinitival clause ("its common FOR users
+                // to ...") is ranked ADP#1, SCONJ#2 by the tagger — match the
+                // plausible SCONJ reading so the contraction error is caught.
+                .then(UPOSSet::new_loose(&[UPOS::SCONJ, UPOS::PART])),
         );
 
         Self {
@@ -120,9 +123,12 @@ impl General {
         {
             true
         } else if modifier.kind.is_upos(UPOS::ADJ) {
+            // "for" introducing the infinitival clause is ranked ADP#1, SCONJ#2 —
+            // accept the plausible SCONJ/PART reading.
             contraction_adjectives.contains(&modifier_lower.as_str())
-                && next_kind
-                    .is_some_and(|kind| kind.is_upos(UPOS::SCONJ) || kind.is_upos(UPOS::PART))
+                && next_kind.is_some_and(|kind| {
+                    kind.could_be_upos(UPOS::SCONJ) || kind.could_be_upos(UPOS::PART)
+                })
         } else if modifier.kind.is_upos(UPOS::VERB) || modifier.kind.is_upos(UPOS::AUX) {
             let blocks_contraction = !strong_predicative_verbs.contains(&modifier_lower.as_str())
                 && (next_non_whitespace_word(source, modifier.span.end).is_some_and(|word| {

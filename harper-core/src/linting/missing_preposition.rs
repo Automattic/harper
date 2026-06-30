@@ -11,6 +11,71 @@ use crate::{Token, TokenStringExt};
 use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
 
+/// Predicate adjectives that idiomatically take a prepositional complement, so a
+/// bare noun phrase right after them signals a missing preposition. Restricting
+/// the rule to these (rather than any adjective) is what keeps it from
+/// over-firing on attributive adjective-noun phrases ("live hedgehogs") and
+/// clause-heading adjectives ("sure he'd start"), which are structurally
+/// identical to the real errors. Trade-off: the rule only flags listed
+/// adjectives — precision over recall, deliberately.
+const PP_TAKING_ADJECTIVES: &[&str] = &[
+    "afraid",
+    "angry",
+    "annoyed",
+    "anxious",
+    "ashamed",
+    "aware",
+    "capable",
+    "certain",
+    "characteristic",
+    "confident",
+    "conscious",
+    "critical",
+    "curious",
+    "dependent",
+    "desirous",
+    "devoid",
+    "envious",
+    "fearful",
+    "fond",
+    "famous",
+    "free",
+    "full",
+    "glad",
+    "guilty",
+    "ignorant",
+    "incapable",
+    "independent",
+    "indicative",
+    "interested",
+    "jealous",
+    "keen",
+    "mindful",
+    "nervous",
+    "oblivious",
+    "passionate",
+    "proud",
+    "reminiscent",
+    "representative",
+    "resentful",
+    "respectful",
+    "responsible",
+    "scared",
+    "sceptical",
+    "skeptical",
+    "suspicious",
+    "terrified",
+    "thankful",
+    "tired",
+    "tolerant",
+    "typical",
+    "unaware",
+    "wary",
+    "weary",
+    "worried",
+    "worthy",
+];
+
 pub struct MissingPreposition {
     expr: SequenceExpr,
 }
@@ -45,8 +110,23 @@ impl ExprLinter for MissingPreposition {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
+            return None;
+        }
+
+        // The predicate adjective must be one that idiomatically takes a
+        // prepositional complement (interested IN, famous FOR, angry AT, afraid
+        // OF). A general descriptive adjective merely modifies the following noun
+        // attributively ("live hedgehogs", "terrible stuff") or heads a clause
+        // ("sure he'd start") — neither is a missing-preposition error. Matching
+        // the adjective against this set is what separates the real errors from
+        // the structurally-identical false positives the bare pattern produces.
+        let adj_idx = matched_tokens
+            .iter()
+            .position(|t| t.kind.is_upos(UPOS::ADJ))?;
+        let adj = matched_tokens[adj_idx].get_str(source).to_lowercase();
+        if !PP_TAKING_ADJECTIVES.contains(&adj.as_str()) {
             return None;
         }
 

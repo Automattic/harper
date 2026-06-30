@@ -1,4 +1,4 @@
-expr main <(all ready ADJ), (all ready)>
+expr main <(all ready ~ADJ), (all ready)>
 
 let message "Use `already` before adjectives instead of the two-word phrase."
 let description "Flags `all ready` when it precedes an adjective so the adverb `already` can take its place."

@@ -1,6 +1,7 @@
 use harper_brill::UPOS;
 
 use crate::Token;
+use crate::TokenKind;
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::ExprMap;
@@ -10,6 +11,20 @@ use crate::patterns::UPOSSet;
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
+
+/// The slot after `it's` that, when filled, signals a possessive misuse: a noun
+/// the contraction could "own". Accepts a NOUN/PROPN tag or a suffixed number
+/// (`it's 2nd`), but rejects an adjective-only word — one the dictionary knows
+/// as an adjective and *not* a noun — because `it's <adj>` is the contraction
+/// "it is <adj>" (e.g. "it's insincere"), even when the tagger mislabels the
+/// adjective NOUN. Words that are both adjective and noun (e.g. "potential")
+/// stay eligible, so genuine "it's <noun>" errors still fire.
+fn possessable_noun(kind: &TokenKind) -> bool {
+    let noun_tag = kind.is_upos(UPOS::NOUN) || kind.is_upos(UPOS::PROPN);
+    let suffixed_number = kind.as_number().is_some_and(|n| n.suffix.is_some());
+    let adjective_only = kind.is_adjective() && !kind.is_noun();
+    (noun_tag || suffixed_number) && !adjective_only
+}
 
 pub struct ItsPossessive {
     expr: ExprMap<usize>,
@@ -28,22 +43,14 @@ impl Default for ItsPossessive {
             .t_aco("it's")
             .then_optional(adj_term_mid_sentence)
             .t_ws()
-            .then(
-                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
-                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
-                }),
-            );
+            .then_kind_where(possessable_noun);
 
         map.insert(mid_sentence, 2);
 
         let start_of_sentence_noun = SequenceExpr::with(AnchorStart)
             .t_aco("it's")
             .t_ws()
-            .then(
-                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
-                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
-                }),
-            )
+            .then_kind_where(possessable_noun)
             .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
                 UPOS::VERB,
                 UPOS::PART,
@@ -96,11 +103,7 @@ impl Default for ItsPossessive {
             .t_ws()
             .t_aco("it's")
             .t_ws()
-            .then(
-                UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]).or(|tok: &Token, _: &[char]| {
-                    tok.kind.as_number().is_some_and(|n| n.suffix.is_some())
-                }),
-            )
+            .then_kind_where(possessable_noun)
             .then_unless(SequenceExpr::default().t_ws().then(UPOSSet::new(&[
                 UPOS::VERB,
                 UPOS::PART,
@@ -359,6 +362,11 @@ mod tests {
             "But feel free to omit it if you feel it's insincere.",
             ItsPossessive::default(),
         );
+    }
+
+    #[test]
+    fn allows_careless() {
+        assert_no_lints("It's careless of them.", ItsPossessive::default());
     }
 
     #[test]

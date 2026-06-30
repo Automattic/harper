@@ -1,4 +1,10 @@
-expr main [<(there [NOUN, (NOUN NOUN), mittens, sketches, past, needs, pawn, ability, return]), there>, <(there connected notes), there>, <(there own data infrastructure), there>, <(there ancestral lands), there>, <(there relatively low density), there>, <(there potential to), there>, <(there backup plan), there>, <(there most recently accessed projects), there>, <(there new), there>]
+# The second alternative catches "There <noun> <verb>" possessive errors where
+# the joint tagger mislabels the subject noun as a verb (e.g. "There dog is
+# barking" — "dog" tags VERB). `<VERB, ~NOUN>` = argmax VERB *and* a plausible
+# NOUN reading, then a finite [VERB, AUX]; this matches the mis-tag signature
+# without firing on existential/adverbial "there" (there must be / here and there
+# / that there crystal), where the next token is a modal, preposition, or noun.
+expr main [<(there [NOUN, (NOUN NOUN), mittens, sketches, past, needs, pawn, ability, return, ladder, answer, server, understanding]), there>, <(there <VERB, ~NOUN> [VERB, AUX]), there>, <(there connected notes), there>, <(there own data infrastructure), there>, <(there ancestral lands), there>, <(there relatively low density), there>, <(there potential to), there>, <(there backup plan), there>, <(there most recently accessed projects), there>, <(there new), there>]
 
 let message "Did you mean `their`?"
 let description "Corrects `there` when the intended meaning is `their`."

@@ -3,7 +3,7 @@ use harper_brill::UPOS;
 use crate::linting::expr_linter::Sentence;
 use crate::{
     CharStringExt, Token, TokenKind,
-    expr::{Expr, SequenceExpr},
+    expr::{AnchorStart, Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::UPOSSet,
 };
@@ -28,7 +28,9 @@ impl Default for WereWhere {
         // e.g. "you where going" → "you were going"
         let you_where_verb = SequenceExpr::word_seq(&["you", "where"])
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
+            // "right"/"sure" after "you where" is an adj/verb the tagger ranks
+            // ADV#1, ADJ#2 — accept the plausible reading.
+            .then(UPOSSet::new_loose(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
         // "where you ..." can be a typo for "were you ..." when it starts a question.
         let where_you_verb = SequenceExpr::word_seq(&["where", "you"])
@@ -52,12 +54,27 @@ impl Default for WereWhere {
                 .t_ws()
                 .then(UPOSSet::new(&[UPOS::PRON, UPOS::DET, UPOS::PROPN]));
 
+        // Sentence-initial imperative: "Check were the error occurred" → "where".
+        // A sentence-initial imperative verb is mis-tagged NOUN/PROPN with VERB
+        // only a low-ranked-but-plausible reading, so loose-match it — but ONLY
+        // at sentence start. This excludes existential "There were ..." ("There"
+        // has no plausible VERB reading) and mid-sentence "...people there
+        // were..." (the start anchor never matches mid-sentence), the two prose
+        // false positives a blanket loose match produced.
+        let imperative_were_clause = SequenceExpr::with(AnchorStart)
+            .then(UPOSSet::new_loose(&[UPOS::VERB]))
+            .t_ws()
+            .t_aco("were")
+            .t_ws()
+            .then(UPOSSet::new(&[UPOS::PRON, UPOS::DET, UPOS::PROPN]));
+
         Self {
             expr: SequenceExpr::any_of(vec![
                 Box::new(unambiguous_pronoun_where),
                 Box::new(you_where_verb),
                 Box::new(where_you_verb),
                 Box::new(verb_were_clause),
+                Box::new(imperative_were_clause),
             ]),
         }
     }

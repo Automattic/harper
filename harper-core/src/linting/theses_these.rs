@@ -14,7 +14,10 @@ impl Default for ThesesThese {
         let expr = SequenceExpr::default()
             .t_aco("theses")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PROPN]));
+            // Loose: the head noun is a homograph the tagger may rank as a verb
+            // (e.g. "apples" in "theses apples" tags VERB@0.86 / NOUN@0.06), so
+            // accept a plausible NOUN/PROPN reading, not just the argmax.
+            .then(UPOSSet::new_loose(&[UPOS::NOUN, UPOS::PROPN]));
 
         Self { expr }
     }

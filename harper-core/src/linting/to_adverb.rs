@@ -7,7 +7,10 @@ use crate::{Span, Token};
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 use crate::linting::expr_linter::Chunk;
 
-const AMBIGUOUS_ADVERBS: &[&str] = &["just", "not"];
+// Adverbs the tagger frequently mislabels in the `to <adv> to <verb>` frame, so
+// match them by word rather than relying on an ADV tag. (The joint model tags
+// "maybe" VERB in "to maybe to take".)
+const AMBIGUOUS_ADVERBS: &[&str] = &["just", "not", "maybe"];
 
 pub struct ToAdverb {
     expr: SequenceExpr,

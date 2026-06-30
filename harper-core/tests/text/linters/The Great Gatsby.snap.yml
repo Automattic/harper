@@ -2151,15 +2151,6 @@ Suggest:
 
 
 
-Lint:    Grammar (31 priority)
-Message: |
-    1839 | honey, and pour me a last drop into that there crystal glass.”
-         |                                          ^~~~~ Did you mean `their`?
-Suggest:
-  - Replace with: “their”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1848 | From East Egg, then, came the Chester Beckers and the Leeches, and a man named
@@ -7272,13 +7263,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5405 | “We were close friends.”
-         |     ^~~~~ You may be missing a preposition here.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5412 | “If he’d of lived, he’d of been a great man. A man like James J. Hill. He’d of
@@ -7957,14 +7941,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     5783 | them together, and let other people clean up the mess they had made. . . .
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 43 words long.
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    5780 | entirely justified. It was all very careless and confused. They were careless
-         |                                                                 ^~~~~ You may be missing a preposition here.
-    5781 | people, Tom and Daisy—they smashed up things and creatures and then retreated
 
 
 

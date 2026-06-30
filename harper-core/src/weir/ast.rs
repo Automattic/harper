@@ -86,6 +86,11 @@ pub enum AstExprNode {
     /// A progressive verb.
     Progressive,
     UPOSSet(Vec<UPOS>),
+    /// Probability-aware POS set, written `~TAG` in the DSL. Matches when any
+    /// tag is a *plausible* reading of the token (argmax or a close runner-up the
+    /// tagger kept), not only the strict argmax. For confusable rules whose slot
+    /// is a homograph the tagger can rank but not resolve from the error context.
+    UPOSSetLoose(Vec<UPOS>),
     Word(CharString),
     DerivativeOf(CharString),
     Punctuation(Punctuation),
@@ -111,6 +116,7 @@ impl AstExprNode {
                 tok.kind.is_verb_progressive_form()
             })),
             AstExprNode::UPOSSet(upos) => Ok(Box::new(UPOSSet::new(upos))),
+            AstExprNode::UPOSSetLoose(upos) => Ok(Box::new(UPOSSet::new_loose(upos))),
             AstExprNode::Whitespace => Ok(Box::new(WhitespacePattern)),
             AstExprNode::Word(word) => Ok(Box::new(Word::from_chars(word))),
             AstExprNode::DerivativeOf(word) => Ok(Box::new(DerivedFrom::new_from_chars(word))),

@@ -57,24 +57,53 @@ macro_rules! generate_boilerplate {
 
         #[cfg(test)]
         mod tests {
-            use crate::weir::tests::assert_passes_all;
-            use crate::weir::WeirLinter;
+            use crate::weir::{TestResult, WeirLinter};
 
+            // Run EVERY rule and aggregate the failures, rather than asserting
+            // per-rule (which panics on the first failing rule and masks the
+            // rest). One broken rule used to hide every later one in iteration
+            // order — see the joint-tagger retrain, where a single weir failure
+            // concealed three more.
             #[test]
             fn run_tests_for_weir_rules() {
+                let mut failures: Vec<(&str, Vec<TestResult>)> = Vec::new();
+
                 $(
                     let mut linter = WeirLinter::new(
                         include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $standalone_path)),
                     ).unwrap();
-                    assert_passes_all(&mut linter);
+                    let res = linter.run_tests();
+                    if !res.is_empty() {
+                        failures.push(($standalone_name, res));
+                    }
                 )*
 
                 $($(
                     let mut linter = WeirLinter::new(
                         include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $child_path)),
                     ).unwrap();
-                    assert_passes_all(&mut linter);
+                    let res = linter.run_tests();
+                    if !res.is_empty() {
+                        failures.push(($child_name, res));
+                    }
                 )*)*
+
+                assert!(
+                    failures.is_empty(),
+                    "{} weir rule(s) have failing test cases:\n{}",
+                    failures.len(),
+                    failures
+                        .iter()
+                        .map(|(name, res)| format!(
+                            "  {name}: {}",
+                            res.iter()
+                                .map(|r| format!("[expected {:?}, got {:?}]", r.expected, r.got))
+                                .collect::<Vec<_>>()
+                                .join(", ")
+                        ))
+                        .collect::<Vec<_>>()
+                        .join("\n")
+                );
             }
         }
     };

@@ -14,11 +14,31 @@ strum_macros = "0.28.0"
 serde = { version = "1.0.228", features = ["derive"] }
 is-macro = "0.3.7"
 rand = { version = "0.10.1", optional = true }
-burn = { version = "0.19.1", default-features = false, features = ["std"] }
-burn-ndarray = { version = "0.19.0", default-features = false }
+burn = { version = "0.21.0", default-features = false, features = ["std"] }
+burn-ndarray = { version = "0.21.0", default-features = false }
 serde_json = "1.0.150"
+smallvec = "1.15.1"
 lru = "0.18.0"
 rayon = { version = "1.12.0", optional = true }
+
+# The joint tagger infers on burn-flex (0.21+) on every target: a fast pure-Rust
+# CPU backend (gemm + SIMD) — ~5.6x faster cold inference than burn-ndarray, at
+# byte-identical output. Native uses the default features (incl. rayon).
+# burn-ndarray remains only for the legacy `BurnChunker` (burn_chunker.rs) and
+# tests; its explicit SIMD kernels need the `simd` feature (not no_std-clean, so
+# it also pulls `std`), hence the native-only entry below.
+[target.'cfg(not(target_arch = "wasm32"))'.dependencies]
+burn-ndarray = { version = "0.21.0", default-features = false, features = ["simd", "std"] }
+burn-flex = { version = "0.21.0" }
+
+# wasm32 has no threads (drop `rayon`) and no atomic CAS (flex requires the
+# `critical-section` shim there). SIMD uses wasm's simd128.
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+burn-flex = { version = "0.21.0", default-features = false, features = ["std", "simd", "critical-section"] }
+# burn-flex's RNG init pulls getrandom 0.4, which needs its `wasm_js` backend
+# feature enabled to build for wasm32-unknown-unknown (mirrors harper-wasm's own
+# getrandom 0.3 wasm_js setup; the two major versions coexist independently).
+getrandom = { version = "0.4", default-features = false, features = ["wasm_js"] }
 
 [features]
 default = []

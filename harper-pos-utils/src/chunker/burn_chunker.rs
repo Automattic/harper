@@ -121,8 +121,8 @@ impl<B: Backend> BurnChunker<B> {
             .save_file(dir.join("model.mpk"), &recorder)
             .unwrap();
 
-        let vocab_bytes = serde_json::to_vec(&self.vocab).unwrap();
-        std::fs::write(dir.join("vocab.json"), vocab_bytes).unwrap();
+        let vocab_json = crate::map_to_json_tabs(self.vocab.iter().map(|(k, &v)| (k.as_str(), v)));
+        std::fs::write(dir.join("vocab.json"), vocab_json).unwrap();
     }
 
     pub fn load_from_bytes(
@@ -285,57 +285,21 @@ impl<B: Backend + AutodiffBackend> BurnChunker<B> {
     }
 
     fn extract_sents_from_files(files: &[impl AsRef<Path>]) -> ExtractedSentences {
-        use super::np_extraction::locate_noun_phrases_in_sent;
-        use crate::conllu_utils::iter_sentences_in_conllu;
+        use crate::conllu_utils::extract_records_from_files;
+
+        // CoNLL-U → (merged surface tokens, tags, NP mask) per sentence —
+        // multiword-token and contraction aware (see
+        // `conllu_utils::sentence_to_training_record`).
+        let (sents, sent_tags, labs) = extract_records_from_files(files);
 
         let mut vocab: HashMap<String, usize> = HashMap::new();
         vocab.insert("<UNK>".into(), UNK_IDX);
-
-        let mut sents: Vec<Vec<String>> = Vec::new();
-        let mut sent_tags: Vec<Vec<Option<UPOS>>> = Vec::new();
-        let mut labs: Vec<Vec<bool>> = Vec::new();
-
-        const CONTRACTIONS: &[&str] = &["sn't", "n't", "'ll", "'ve", "'re", "'d", "'m", "'s"];
-
-        for file in files {
-            for sent in iter_sentences_in_conllu(file) {
-                let spans = locate_noun_phrases_in_sent(&sent);
-
-                let mut original_mask = vec![false; sent.tokens.len()];
-                for span in spans {
-                    for i in span {
-                        original_mask[i] = true;
-                    }
+        for toks in &sents {
+            for t in toks {
+                if !vocab.contains_key(t) {
+                    let next = vocab.len();
+                    vocab.insert(t.clone(), next);
                 }
-
-                let mut toks: Vec<String> = Vec::new();
-                let mut tags: Vec<Option<UPOS>> = Vec::new();
-                let mut mask: Vec<bool> = Vec::new();
-
-                for (idx, tok) in sent.tokens.iter().enumerate() {
-                    let is_contraction = CONTRACTIONS.contains(&&tok.form[..]);
-                    if is_contraction && !toks.is_empty() {
-                        let prev_tok = toks.pop().unwrap();
-                        let prev_mask = mask.pop().unwrap();
-                        toks.push(format!("{prev_tok}{}", tok.form));
-                        mask.push(prev_mask || original_mask[idx]);
-                    } else {
-                        toks.push(tok.form.clone());
-                        tags.push(tok.upos.and_then(UPOS::from_conllu));
-                        mask.push(original_mask[idx]);
-                    }
-                }
-
-                for t in &toks {
-                    if !vocab.contains_key(t) {
-                        let next = vocab.len();
-                        vocab.insert(t.clone(), next);
-                    }
-                }
-
-                sents.push(toks);
-                sent_tags.push(tags);
-                labs.push(mask);
             }
         }
 

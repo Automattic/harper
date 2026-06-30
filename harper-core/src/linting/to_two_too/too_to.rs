@@ -46,6 +46,18 @@ impl ExprLinter for TooTo {
             return None;
         }
 
+        // Suppress-guard: don't convert "too" -> "to" when the next word could
+        // plausibly be an adjective ("too stiff/slippery/polite" is correct
+        // excess-degree usage), even if the tagger's argmax landed on VERB for
+        // the homograph. Probability-aware in reverse — the rule fires only when
+        // the adjective reading is implausible.
+        if matched_tokens
+            .get(2)
+            .is_some_and(|t| t.kind.could_be_upos(UPOS::ADJ))
+        {
+            return None;
+        }
+
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
