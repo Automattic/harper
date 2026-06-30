@@ -234,27 +234,19 @@ mod tests {
 
     #[test]
     fn fix_doing_something() {
-        assert_good_and_bad_suggestions(
+        assert_suggestion_result(
             "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something of which I was passionate.",
             PassionateAbout::default(),
-            &[
-                "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something about which I was passionate.",
-                "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something which I was passionate about.",
-            ],
-            &[],
+            "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something about which I was passionate.",
         );
     }
 
     #[test]
     fn fix_environmetal_fields() {
-        assert_good_and_bad_suggestions(
+        assert_suggestion_result(
             "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields of which I am passionate.",
             PassionateAbout::default(),
-            &[
-                "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields about which I am passionate.",
-                "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields which I am passionate about.",
-            ],
-            &[],
+            "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields about which I am passionate.",
         );
     }
 }
