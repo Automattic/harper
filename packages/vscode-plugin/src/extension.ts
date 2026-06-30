@@ -70,16 +70,19 @@ export async function activate(context: ExtensionContext): Promise<void> {
 		.filter((e) => e.startsWith('onLanguage:'))
 		.flatMap((e) => {
 			const language = e.split(':')[1];
+
+			// The Source Control commit message box is a document with the
+			// `scminput` language id. It is not backed by a file on disk, so it is
+			// matched by language alone rather than by scheme.
+			if (language === 'scminput') {
+				return [{ language: 'scminput' }];
+			}
+
 			return [
 				{ language, scheme: 'file' },
 				{ language, scheme: 'untitled' },
 			];
 		});
-
-	// The Source Control commit message box is a document with the `scminput`
-	// language id. It is not backed by a file on disk, so it is matched by
-	// language alone rather than by scheme.
-	clientOptions.documentSelector.push({ language: 'scminput' });
 
 	clientOptions.outputChannel = window.createOutputChannel('Harper');
 	context.subscriptions.push(clientOptions.outputChannel);
