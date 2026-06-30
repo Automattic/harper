@@ -6,15 +6,23 @@
 use crate::spell::{FstDictionary, MutableDictionary};
 use std::sync::{Arc, LazyLock};
 
-// New annotated dictionary using Rune format
-static SLOVAK_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(|| {
+#[cfg(feature = "sk")]
+fn load_slovak_annotated_dict() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
         include_str!("../dictionary.dict"),
         include_str!("../annotations.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load Slovak annotated dictionary: {}", e))
-});
+}
+
+#[cfg(not(feature = "sk"))]
+fn load_slovak_annotated_dict() -> Arc<MutableDictionary> {
+    Arc::new(MutableDictionary::new())
+}
+
+// New annotated dictionary using Rune format
+static SLOVAK_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_slovak_annotated_dict);
 
 /// Returns a shared reference to the original Slovak FstDictionary.
 ///

@@ -7,6 +7,7 @@ use crate::language::dialects::dialect_trait::DialectFlags as _;
 use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
 use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
 use crate::language::portuguese::dialects::{PortugueseDialect, PortugueseDialectFlags};
+use crate::language::slovak::dialects::{SlovakDialect, SlovakDialectFlags};
 
 /// This represents a collection of dialect flags for all supported languages.
 /// Each language has its own set of dialect flags.
@@ -17,6 +18,7 @@ pub struct DialectFlags {
     pub english: EnglishDialectFlags,
     pub german: GermanDialectFlags,
     pub portuguese: PortugueseDialectFlags,
+    pub slovak: SlovakDialectFlags,
 }
 
 impl Serialize for DialectFlags {
@@ -24,10 +26,11 @@ impl Serialize for DialectFlags {
     where
         S: serde::Serializer,
     {
-        let mut scoped = serializer.serialize_struct("DialectFlags", 3)?;
+        let mut scoped = serializer.serialize_struct("DialectFlags", 4)?;
         scoped.serialize_field("english", &self.english)?;
         scoped.serialize_field("german", &self.german)?;
         scoped.serialize_field("portuguese", &self.portuguese)?;
+        scoped.serialize_field("slovak", &self.slovak)?;
         scoped.end()
     }
 }
@@ -49,6 +52,7 @@ impl From<ScopedDialectFlagsSerde> for DialectFlags {
             english: value.english,
             german: value.german,
             portuguese: value.portuguese,
+            slovak: value.slovak,
         }
     }
 }
@@ -60,20 +64,23 @@ impl DialectFlags {
             english: EnglishDialectFlags::empty(),
             german: GermanDialectFlags::empty(),
             portuguese: PortugueseDialectFlags::empty(),
+            slovak: SlovakDialectFlags::empty(),
         }
     }
 
-    /// Creates a DialectFlags with the specified English, German, and Portuguese dialect flags.
+    /// Creates a DialectFlags with the specified English, German, Portuguese, and Slovak dialect flags.
     #[must_use]
     pub const fn new(
         english: EnglishDialectFlags,
         german: GermanDialectFlags,
         portuguese: PortugueseDialectFlags,
+        slovak: SlovakDialectFlags,
     ) -> Self {
         Self {
             english,
             german,
             portuguese,
+            slovak,
         }
     }
 
@@ -93,12 +100,13 @@ impl DialectFlags {
             english: english_flags,
             german: GermanDialectFlags::empty(),
             portuguese: PortugueseDialectFlags::empty(),
+            slovak: SlovakDialectFlags::empty(),
         }
     }
 
     #[must_use]
     pub fn is_empty(self) -> bool {
-        self.english.is_empty() && self.german.is_empty() && self.portuguese.is_empty()
+        self.english.is_empty() && self.german.is_empty() && self.portuguese.is_empty() && self.slovak.is_empty()
     }
 
     #[must_use]
@@ -131,6 +139,16 @@ impl DialectFlags {
         self.portuguese.is_dialect_enabled_strict(dialect)
     }
 
+    #[must_use]
+    pub fn is_slovak_dialect_enabled(self, dialect: SlovakDialect) -> bool {
+        self.slovak.is_dialect_enabled(dialect)
+    }
+
+    #[must_use]
+    pub fn is_slovak_dialect_enabled_strict(self, dialect: SlovakDialect) -> bool {
+        self.slovak.is_dialect_enabled_strict(dialect)
+    }
+
     /// Gets the most commonly used dialect(s) in the document.
     ///
     /// If multiple dialects are used equally often, they will all be enabled in the returned
@@ -143,11 +161,14 @@ impl DialectFlags {
         let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
         let portuguese_flags =
             PortugueseDialectFlags::get_most_used_dialects_from_document(document);
+        let slovak_flags =
+            SlovakDialectFlags::get_most_used_dialects_from_document(document);
 
         Self {
             english: english_flags,
             german: german_flags,
             portuguese: portuguese_flags,
+            slovak: slovak_flags,
         }
     }
 }
@@ -160,6 +181,7 @@ impl std::ops::BitOr for DialectFlags {
             english: self.english | rhs.english,
             german: self.german | rhs.german,
             portuguese: self.portuguese | rhs.portuguese,
+            slovak: self.slovak | rhs.slovak,
         }
     }
 }
@@ -169,6 +191,7 @@ impl std::ops::BitOrAssign for DialectFlags {
         self.english |= rhs.english;
         self.german |= rhs.german;
         self.portuguese |= rhs.portuguese;
+        self.slovak |= rhs.slovak;
     }
 }
 
@@ -187,6 +210,7 @@ struct ScopedDialectFlagsSerde {
     english: EnglishDialectFlags,
     german: GermanDialectFlags,
     portuguese: PortugueseDialectFlags,
+    slovak: SlovakDialectFlags,
 }
 
 impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
@@ -203,6 +227,7 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                 let mut english = EnglishDialectFlags::default();
                 let mut german = GermanDialectFlags::default();
                 let mut portuguese = PortugueseDialectFlags::default();
+                let mut slovak = SlovakDialectFlags::default();
 
                 for (key, val) in map {
                     match key.as_str() {
@@ -289,10 +314,35 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                 ));
                             }
                         },
+                        "slovak" => match val {
+                            Value::String(s) => {
+                                slovak = match s.as_str() {
+                                    "STANDARD" => SlovakDialectFlags::STANDARD,
+                                    _ => {
+                                        return Err(Error::custom(format!(
+                                            "Unknown Slovak dialect: {s}"
+                                        )));
+                                    }
+                                };
+                            }
+                            Value::Number(n) => {
+                                let num =
+                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
+                                        as u8;
+                                slovak = SlovakDialectFlags::from_bits(num)
+                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
+                            }
+                            _ => {
+                                return Err(Error::invalid_type(
+                                    Unexpected::Other("slovak"),
+                                    &"string or number",
+                                ));
+                            }
+                        },
                         _ => {
                             return Err(Error::unknown_field(
                                 &key,
-                                &["english", "german", "portuguese"],
+                                &["english", "german", "portuguese", "slovak"],
                             ));
                         }
                     }
@@ -302,6 +352,7 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                     english,
                     german,
                     portuguese,
+                    slovak,
                 })
             }
             Value::String(s) => {
@@ -311,56 +362,67 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::AMERICAN,
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "CANADIAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::CANADIAN,
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "AUSTRALIAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::AUSTRALIAN,
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "BRITISH" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::BRITISH,
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "INDIAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::INDIAN,
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "STANDARD" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::STANDARD,
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "AUSTRIAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::AUSTRIAN,
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "SWISS" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::SWISS,
                         portuguese: PortugueseDialectFlags::default(),
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "EUROPEAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::EUROPEAN,
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "BRAZILIAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::BRAZILIAN,
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     "AFRICAN" => Ok(ScopedDialectFlagsSerde {
                         english: EnglishDialectFlags::default(),
                         german: GermanDialectFlags::default(),
                         portuguese: PortugueseDialectFlags::AFRICAN,
+                        slovak: SlovakDialectFlags::default(),
                     }),
                     _ => Err(Error::custom(format!("Unknown dialect string: {s}"))),
                 }

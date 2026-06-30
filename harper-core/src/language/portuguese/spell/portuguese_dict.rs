@@ -6,14 +6,22 @@ use std::sync::{Arc, LazyLock};
 
 use crate::spell::{FstDictionary, MutableDictionary};
 
-static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(|| {
+#[cfg(feature = "pt")]
+fn load_portuguese_dict() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
         include_str!("../dictionary.dict"),
         include_str!("../annotations.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load Portuguese dictionary: {}", e))
-});
+}
+
+#[cfg(not(feature = "pt"))]
+fn load_portuguese_dict() -> Arc<MutableDictionary> {
+    Arc::new(MutableDictionary::new())
+}
+
+static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_portuguese_dict);
 
 /// Returns a shared reference to the Portuguese FstDictionary.
 ///
