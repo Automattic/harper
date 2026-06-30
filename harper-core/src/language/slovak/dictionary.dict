@@ -1,0 +1,93 @@
+100
+# Basic Slovak dictionary with common words
+# Format: word/~~POS # annotation
+
+# Pronouns
+a/~~P # personal pronoun
+aja/~~P # personal pronoun (I)
+ja/~~P # personal pronoun (I)
+ty/~~P # personal pronoun (you)
+on/~~P # personal pronoun (he)
+ona/~~P # personal pronoun (she)
+ono/~~P # personal pronoun (it)
+my/~~P # personal pronoun (we)
+vy/~~P # personal pronoun (you plural)
+oni/~~P # personal pronoun (they)
+ony/~~P # personal pronoun (they feminine)
+
+# Verbs
+byť/~~V # verb (to be)
+som/~~V # verb (I am)
+si/~~V # verb (you are)
+je/~~V # verb (he/she/it is)
+sme/~~V # verb (we are)
+ste/~~V # verb (you are)
+sú/~~V # verb (they are)
+mať/~~V # verb (to have)
+mám/~~V # verb (I have)
+máš/~~V # verb (you have)
+má/~~V # verb (he/she/it has)
+máme/~~V # verb (we have)
+máte/~~V # verb (you have)
+majú/~~V # verb (they have)
+
+# Common nouns
+človek/~~N # noun (person)
+den/~~N # noun (day)
+noč/~~N # noun (night)
+svet/~~N # noun (world)
+slovo/~~N # noun (word)
+jazyk/~~N # noun (language)
+kniha/~~N # noun (book)
+dom/~~N # noun (house)
+šcola/~~N # noun (school)
+práca/~~N # noun (work)
+mesto/~~N # noun (city/town)
+
+# Common adjectives
+dobrý/~~A # adjective (good)
+zlý/~~A # adjective (bad)
+veľký/~~A # adjective (big)
+malý/~~A # adjective (small)
+nový/~~A # adjective (new)
+starý/~~A # adjective (old)
+
+# Common adverbs
+dnes/~~D # adverb (today)
+včera/~~D # adverb (yesterday)
+zajtra/~~D # adverb (tomorrow)
+tu/~~D # adverb (here)
+tam/~~D # adverb (there)
+
+# Common prepositions
+v/~~R # preposition (in)
+z/~~R # preposition (from)
+do/~~R # preposition (to)
+na/~~R # preposition (on)
+po/~~R # preposition (after)
+pre/~~R # preposition (for)
+o/~~R # preposition (about)
+k/~~R # preposition (to)
+
+# Common conjunctions
+a/~~C # conjunction (and)
+ale/~~C # conjunction (but)
+alebo/~~C # conjunction (or)
+
+# Common particles
+nie/~~T # particle (no)
+áno/~~T # particle (yes)
+aj/~~T # particle (also)
+
+# Proper nouns
+Bratislava/~~N # proper noun (capital of Slovakia)
+Slovensko/~~N # proper noun (Slovakia)
+Európa/~~N # proper noun (Europe)
+
+# Numbers
+nula/~~M # numeral (zero)
+jeden/~~M # numeral (one)
+dva/~~M # numeral (two)
+tri/~~M # numeral (three)
+štyri/~~M # numeral (four)
+pet/~~M # numeral (five)

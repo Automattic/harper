@@ -5,6 +5,7 @@
 use crate::language::english::dialects::EnglishDialect;
 use crate::language::german::dialects::GermanDialect;
 use crate::language::portuguese::dialects::PortugueseDialect;
+use crate::language::slovak::dialects::SlovakDialect;
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString};
 
@@ -52,6 +53,10 @@ pub fn parse_language(s: &str) -> Option<Language> {
             Some(Language::Portuguese(PortugueseDialect::Brazilian))
         }
         "ao" => Some(Language::Portuguese(PortugueseDialect::African)),
+        // Slovak
+        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {
+            Some(Language::Slovak(SlovakDialect::Standard))
+        }
         _ => None,
     }
 }
@@ -69,6 +74,8 @@ pub enum Language {
     German(GermanDialect),
     /// Portuguese language with its dialects
     Portuguese(PortugueseDialect),
+    /// Slovak language with its dialects
+    Slovak(SlovakDialect),
 }
 
 /// A family of languages (e.g., English, German, Portuguese).
@@ -99,6 +106,8 @@ pub enum LanguageFamily {
     German,
     /// Portuguese language family
     Portuguese,
+    /// Slovak language family
+    Slovak,
 }
 
 impl From<Language> for LanguageFamily {
@@ -107,17 +116,19 @@ impl From<Language> for LanguageFamily {
             Language::English(_) => Self::English,
             Language::German(_) => Self::German,
             Language::Portuguese(_) => Self::Portuguese,
+            Language::Slovak(_) => Self::Slovak,
         }
     }
 }
 
 impl LanguageFamily {
     /// Returns a suffix to append to dictionary file paths for this language family.
-    /// English returns `""` (default). German returns `"-de"`. Portuguese returns `"-pt"`.
+    /// English returns `""` (default). German returns `"-de"`. Portuguese returns `"-pt"`. Slovak returns `"-sk"`.
     pub fn dict_suffix(&self) -> &'static str {
         match self {
             Self::German => "-de",
             Self::Portuguese => "-pt",
+            Self::Slovak => "-sk",
             Self::English => "",
         }
     }
@@ -130,6 +141,7 @@ impl Language {
             Language::English(_) => LanguageFamily::English,
             Language::German(_) => LanguageFamily::German,
             Language::Portuguese(_) => LanguageFamily::Portuguese,
+            Language::Slovak(_) => LanguageFamily::Slovak,
         }
     }
 }

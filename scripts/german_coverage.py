@@ -23,7 +23,7 @@ def analyze_german_coverage():
     # Paths
     expanded_dict_path = "harper-core/src/language/german/german_dictionary.dict.gz"
     harper_dict_path = "harper-core/src/language/german/dictionary.dict"
-    annotations_path = "harper-core/src/language/german/annotations-german.json"
+    annotations_path = "harper-core/src/language/german/annotations.json"
     test_framework = "harper-core/src/language/testing_framework/target/release/harper-lang-test"
     
     # Check if files exist

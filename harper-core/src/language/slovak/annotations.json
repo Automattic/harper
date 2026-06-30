@@ -1,0 +1,87 @@
+{
+  "affixes": {
+    "A": {
+      "#": "'-ne' negative prefix (safe)",
+      "kind": "prefix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "ne",
+          "condition": "^[^n]"
+        }
+      ],
+      "target": [],
+      "base_metadata": {},
+      "rename_ok": true
+    },
+    "B": {
+      "#": "'-sa' reflexive pronoun (safe)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "sa",
+          "condition": "$"
+        }
+      ],
+      "target": [],
+      "base_metadata": {},
+      "rename_ok": true
+    },
+    "C": {
+      "#": "'-ť' verb ending (safe)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "ť",
+          "condition": "$"
+        }
+      ],
+      "target": [],
+      "base_metadata": {},
+      "rename_ok": true
+    }
+  },
+  "pattern_rules": {
+    "N": {
+      "#": "nouns (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý", "ä", "ö", "ň", "š", "č", "ž", "ť", "ď", "ľ", "ô"]
+    },
+    "V": {
+      "#": "verbs (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý", "ä", "ö", "ň", "š", "č", "ž", "ť", "ď", "ľ", "ô"]
+    },
+    "A": {
+      "#": "adjectives (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý", "ä", "ö", "ň", "š", "č", "ž", "ť", "ď", "ľ", "ô"]
+    },
+    "D": {
+      "#": "adverbs (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý", "ä", "ö", "ň", "š", "č", "ž", "ť", "ď", "ľ", "ô"]
+    },
+    "R": {
+      "#": "prepositions (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý"]
+    },
+    "C": {
+      "#": "conjunctions (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý"]
+    },
+    "T": {
+      "#": "particles (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý"]
+    },
+    "P": {
+      "#": "pronouns (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý"]
+    },
+    "M": {
+      "#": "numerals (safe)",
+      "patterns": ["a", "e", "i", "o", "u", "y", "á", "é", "í", "ó", "ú", "ý"]
+    }
+  }
+}

@@ -9,7 +9,7 @@ use crate::spell::{FstDictionary, MutableDictionary};
 static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(|| {
     MutableDictionary::from_rune_files(
         include_str!("../dictionary.dict"),
-        include_str!("../annotations-portuguese.json"),
+        include_str!("../annotations.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load Portuguese dictionary: {}", e))

@@ -166,8 +166,8 @@ fn analyze_german(args: &Args) {
     }
 
     // Affix rules - count unique affix flags from the annotations file
-    // The annotations-german.json file defines affix rules
-    let annotations_path = "harper-core/src/language/german/annotations-german.json";
+    // The annotations.json file defines affix rules
+    let annotations_path = "harper-core/src/language/german/annotations.json";
     let affix_count = if let Ok(contents) = fs::read_to_string(annotations_path) {
         if let Ok(parsed) = serde_json::from_str::<serde_json::Value>(&contents) {
             if let Some(affixes) = parsed.get("affixes").and_then(|v| v.as_object()) {

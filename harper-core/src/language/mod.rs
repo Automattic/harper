@@ -10,6 +10,7 @@ pub mod registry;
 pub mod english;
 pub mod german;
 pub mod portuguese;
+pub mod slovak;
 
 // Re-export core types
 pub use languages::{Language, LanguageFamily, parse_language};

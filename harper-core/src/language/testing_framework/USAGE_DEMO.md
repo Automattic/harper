@@ -84,7 +84,7 @@ cd harper-core/src/language/testing_framework
 ==================================================
 📚 Testing language: portuguese
 📖 Dictionary: ../../language/portuguese/dictionary.dict
-📝 Annotations: ../../language/portuguese/annotations-portuguese.json
+📝 Annotations: ../../language/portuguese/annotations.json
 🧪 Running basic tests...
 ✅ Dictionary loaded successfully!
    Word count: 147
@@ -156,7 +156,7 @@ For German:
 
 For Portuguese:
 - Dictionary: `../../language/portuguese/dictionary.dict`
-- Annotations: `../../language/portuguese/annotations-portuguese.json`
+- Annotations: `../../language/portuguese/annotations.json`
 
 ## Supported Languages
 

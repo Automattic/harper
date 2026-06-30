@@ -29,7 +29,7 @@ language-german-analysis:
 	echo "📊 German Dictionary"
 	echo "==================="
 	echo "Curated Words: $(head -1 harper-core/src/language/german/dictionary.dict | tr -d ' ')"
-	echo "FST-Expanded Words: $(./harper-core/src/language/testing_framework/target/release/harper-lang-test --language german --dict harper-core/src/language/german/dictionary.dict --annotations harper-core/src/language/german/annotations-german.json --text "test" 2>&1 | grep "Word count:" | awk '{print $3}')"
+	echo "FST-Expanded Words: $(./harper-core/src/language/testing_framework/target/release/harper-lang-test --language german --dict harper-core/src/language/german/dictionary.dict --annotations harper-core/src/language/german/annotations.json --text "test" 2>&1 | grep "Word count:" | awk '{print $3}')"
 	echo "Affix Rules: 22"
 	echo ""
 	
@@ -59,7 +59,7 @@ language-german-test *text:
 	./harper-core/src/language/testing_framework/target/release/harper-lang-test \
 	    --language german \
 	    --dict harper-core/src/language/german/dictionary.dict \
-	    --annotations harper-core/src/language/german/annotations-german.json \
+	    --annotations harper-core/src/language/german/annotations.json \
 	    --text "{{text}}"
 
 # Clean statistics

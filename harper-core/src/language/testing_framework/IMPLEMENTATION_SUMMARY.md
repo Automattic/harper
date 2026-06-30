@@ -80,7 +80,7 @@ harper-core/src/language/
 │   └── annotations-german.json
 ├── portuguese/
 │   ├── dictionary.dict
-│   └── annotations-portuguese.json
+│   └── annotations.json
 └── ... (other languages)
 ```
 

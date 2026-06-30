@@ -18,7 +18,7 @@ static GERMAN_FST_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
 static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(|| {
     MutableDictionary::from_rune_files(
         include_str!("../dictionary.dict"),
-        include_str!("../annotations-german.json"),
+        include_str!("../annotations.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load German annotated dictionary: {}", e))

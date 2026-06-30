@@ -17,6 +17,7 @@ use super::english::module::EnglishModule;
 use super::german::module::GermanModule;
 use super::module::{LanguageDetector, LanguageModule};
 use super::portuguese::module::PortugueseModule;
+use super::slovak::module::SlovakModule;
 
 // ========== DETECTION ==========
 
@@ -25,8 +26,10 @@ static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::ne
     vec![
         // German has highest confidence due to unique characters (\u{00df}, \u{00e4}, \u{00f6}, \u{00fc})
         (Box::new(GermanModule::detector()), 0.95),
+        // Slovak has high confidence due to unique characters (\u{010d}, \u{0161}, \u{017e}, \u{0148}, \u{0107})
+        (Box::new(SlovakModule::detector()), 0.90),
         // Portuguese has high confidence due to unique characters (\u{00e3}, \u{00f5}, \u{00e7})
-        (Box::new(PortugueseModule::detector()), 0.90),
+        (Box::new(PortugueseModule::detector()), 0.85),
         // English is the fallback with lower confidence
         // When no other language is detected, English will be used as the default
         (Box::new(EnglishModule::detector()), 0.30),
@@ -60,6 +63,7 @@ pub enum ProseLanguage {
     English,
     German,
     Portuguese,
+    Slovak,
 }
 
 /// Convert a Harper Language to a ProseLanguage.
@@ -68,6 +72,7 @@ pub fn prose_language(language: &Language) -> ProseLanguage {
         Language::English(_) => ProseLanguage::English,
         Language::German(_) => ProseLanguage::German,
         Language::Portuguese(_) => ProseLanguage::Portuguese,
+        Language::Slovak(_) => ProseLanguage::Slovak,
     }
 }
 
@@ -79,6 +84,7 @@ pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {
         LanguageFamily::English => EnglishModule::dictionary(),
         LanguageFamily::German => GermanModule::dictionary(),
         LanguageFamily::Portuguese => PortugueseModule::dictionary(),
+        LanguageFamily::Slovak => SlovakModule::dictionary(),
     }
 }
 
@@ -99,12 +105,18 @@ pub fn parser_for_prose(
         // Mail format
         ("mail", ProseLanguage::German) => Some(Box::new(GermanModule::plain_parser())),
         ("mail", ProseLanguage::Portuguese) => Some(Box::new(PortugueseModule::plain_parser())),
+        ("mail", ProseLanguage::Slovak) => Some(Box::new(SlovakModule::plain_parser())),
         ("mail", ProseLanguage::English) => Some(Box::new(EnglishModule::plain_parser())),
 
         // Markdown/Quarto format
         ("markdown" | "quarto", ProseLanguage::German) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 GermanModule::plain_parser().parse(source)
+            }),
+        )),
+        ("markdown" | "quarto", ProseLanguage::Slovak) => Some(Box::new(
+            Markdown::with_inline_parser(markdown_options, |source| {
+                SlovakModule::plain_parser().parse(source)
             }),
         )),
         // English and Portuguese use the default Markdown parser
@@ -120,6 +132,9 @@ pub fn parser_for_prose(
                 PortugueseModule::plain_parser().parse(source)
             })))
         }
+        ("org", ProseLanguage::Slovak) => Some(Box::new(OrgMode::with_inline_parser(|source| {
+            SlovakModule::plain_parser().parse(source)
+        }))),
         // English uses the default Org mode parser (fallback)
         ("org", _) => Some(Box::new(OrgMode::default())),
 
@@ -129,6 +144,9 @@ pub fn parser_for_prose(
         }
         ("plaintext" | "text", ProseLanguage::Portuguese) => {
             Some(Box::new(PortugueseModule::plain_parser()))
+        }
+        ("plaintext" | "text", ProseLanguage::Slovak) => {
+            Some(Box::new(SlovakModule::plain_parser()))
         }
         ("plaintext" | "text", ProseLanguage::English) => {
             Some(Box::new(EnglishModule::plain_parser()))
@@ -154,6 +172,10 @@ pub fn add_language_specific_linters(
             let lang_group = PortugueseModule::rust_lint_group(dictionary);
             out.merge_from(lang_group);
         }
+        Language::Slovak(_dialect) => {
+            let lang_group = SlovakModule::rust_lint_group(dictionary);
+            out.merge_from(lang_group);
+        }
         Language::English(_dialect) => {
             let lang_group = EnglishModule::rust_lint_group(dictionary);
             out.merge_from(lang_group);
@@ -169,6 +191,7 @@ pub fn weir_rules_lint_group(language: Language) -> LintGroup {
         Language::German(_) => GermanModule::weir_lint_group(),
         Language::English(_) => EnglishModule::weir_lint_group(),
         Language::Portuguese(_) => PortugueseModule::weir_lint_group(),
+        Language::Slovak(_) => SlovakModule::weir_lint_group(),
     }
 }
 
@@ -208,6 +231,16 @@ pub fn new_curated_for_language(
             let mut group = LintGroup::empty();
             group.merge_from(PortugueseModule::weir_lint_group());
             group.merge_from(PortugueseModule::rust_lint_group(lang_dict));
+            group.set_all_rules_to(Some(true));
+            group
+        }
+        Language::Slovak(_dialect) => {
+            use crate::language::slovak::module::SlovakModule;
+
+            let lang_dict = SlovakModule::dictionary();
+            let mut group = LintGroup::empty();
+            group.merge_from(SlovakModule::weir_lint_group());
+            group.merge_from(SlovakModule::rust_lint_group(lang_dict));
             group.set_all_rules_to(Some(true));
             group
         }
