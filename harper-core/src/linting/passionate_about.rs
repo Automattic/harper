@@ -90,7 +90,7 @@ impl ExprLinter for PassionateAbout {
                 }
 
                 let [prep_first, prep_last] =
-                    [1..=8, 2..=9].map(|r| toks[r].span().and_then(|s| Some(s.get_content(src))));
+                    [1..=8, 2..=9].map(|r| toks[r].span().map(|s| s.get_content(src)));
 
                 let span = toks.span()?;
                 let content = span.get_content(src);
