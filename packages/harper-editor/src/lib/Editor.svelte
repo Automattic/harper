@@ -1,4 +1,5 @@
 <script lang="ts">
+import { DelayedRender } from 'components';
 import type { Lint, Linter } from 'harper.js';
 import {
 	type IgnorableLintBox,
@@ -8,7 +9,6 @@ import {
 } from 'lint-framework';
 import { tick } from 'svelte';
 import { fade } from 'svelte/transition';
-import DelayedRender from './DelayedRender.svelte';
 import {
 	type EditorFontFamily,
 	type EditorFontSize,

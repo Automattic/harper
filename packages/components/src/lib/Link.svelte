@@ -1,10 +1,10 @@
 <script lang="ts">
 import { createEventDispatcher } from 'svelte';
-import type { AnchorHTMLAttributes } from 'svelte/elements';
+import type { HTMLAnchorAttributes } from 'svelte/elements';
 
-export let href: AnchorHTMLAttributes['href'] = undefined;
-export let target: AnchorHTMLAttributes['target'] = undefined;
-export let rel: AnchorHTMLAttributes['rel'] = undefined;
+export let href: HTMLAnchorAttributes['href'] = undefined;
+export let target: HTMLAnchorAttributes['target'] = undefined;
+export let rel: HTMLAnchorAttributes['rel'] = undefined;
 // Alias for the `class` attribute since `class` is a reserved TS keyword
 export let className: string | undefined = undefined;
 export let underline = false;

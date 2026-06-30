@@ -6,8 +6,8 @@ export const frontmatter = {
 
 <script lang="ts">
 import { browser } from '$app/environment';
-import Arrow from '$lib/components/Arrow.svelte';
-import TestimonialCollection from '$lib/components/TestimonialCollection.svelte';
+import { Arrow } from 'components';
+import { TestimonialCollection } from 'components';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
