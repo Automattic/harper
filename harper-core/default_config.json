@@ -5326,6 +5326,13 @@
 								"state": true,
 								"label": "Linked List"
 							}
+						},
+						{
+							"Bool": {
+								"name": "CallItQuits",
+								"state": true,
+								"label": "Call It Quits"
+							}
 						}
 					]
 				}
