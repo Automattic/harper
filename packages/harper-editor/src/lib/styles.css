@@ -6,19 +6,6 @@
 
 .harper-editor {
 	--harper-editor-font-size: inherit;
-	container-type: size;
-}
-
-@container (max-width: 760px) {
-	.harper-editor-problems-sidebar {
-		display: none;
-	}
-}
-
-@container (max-aspect-ratio: 4 / 3) {
-	.harper-editor-problems-sidebar {
-		display: none;
-	}
 }
 
 .harper-editor *,
