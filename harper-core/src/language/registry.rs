@@ -29,7 +29,7 @@ use super::slovak::module::SlovakModule;
 
 /// All language detectors, sorted by confidence (highest to lowest).
 static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::new(|| {
-    let mut detectors = Vec::new();
+    let mut detectors: Vec<(Box<dyn LanguageDetector>, f64)> = Vec::new();
     
     // Add detectors for enabled languages (highest confidence first)
     #[cfg(feature = "de")]
