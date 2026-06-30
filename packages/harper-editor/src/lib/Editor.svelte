@@ -8,6 +8,7 @@ import {
 } from 'lint-framework';
 import { tick } from 'svelte';
 import { fade } from 'svelte/transition';
+import DelayedRender from './DelayedRender.svelte';
 import {
 	type EditorFontFamily,
 	type EditorFontSize,
@@ -38,8 +39,6 @@ let fontFamily = normalizeFontFamily(defaultFontFamily);
 let fontSize = normalizeFontSize(defaultFontSize);
 let lastExternalContent = content;
 let readySent = false;
-let restoreButtonTimeout: ReturnType<typeof setTimeout> | null = null;
-let restoreButtonVisible = false;
 let sidebarVisible = true;
 let lastSidebarAction: SidebarAction = 'automated';
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
@@ -293,12 +292,6 @@ async function showSidebar(reason: SidebarAction = 'automated') {
 		return;
 	}
 
-	if (restoreButtonTimeout != null) {
-		clearTimeout(restoreButtonTimeout);
-		restoreButtonTimeout = null;
-	}
-
-	restoreButtonVisible = false;
 	await tick();
 	lastSidebarAction = reason;
 
@@ -316,19 +309,6 @@ function hideSidebar(reason: SidebarAction = 'automated'): void {
 	}
 
 	sidebarVisible = false;
-
-	restoreButtonVisible = false;
-
-	if (restoreButtonTimeout != null) {
-		clearTimeout(restoreButtonTimeout);
-	}
-
-	restoreButtonTimeout = setTimeout(() => {
-		if (!sidebarVisible) {
-			restoreButtonVisible = true;
-		}
-		restoreButtonTimeout = null;
-	}, restoreButtonDelay);
 }
 </script>
 
@@ -345,7 +325,7 @@ function hideSidebar(reason: SidebarAction = 'automated'): void {
 				</div>
 			</div>
 
-			{#if !sidebarVisible && restoreButtonVisible}
+			<DelayedRender active={!sidebarVisible} delayMs={restoreButtonDelay}>
 				<button
 					type="button"
 					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
@@ -363,7 +343,7 @@ function hideSidebar(reason: SidebarAction = 'automated'): void {
 						<path d="M12.5 3v14" />
 					</svg>
 				</button>
-			{/if}
+			</DelayedRender>
 		</section>
 
 		{#if sidebarVisible}
