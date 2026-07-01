@@ -14,7 +14,7 @@ impl Default for WebScraping {
         let scrap_verbs = &["scrap", "scrapped", "scraps", "scrapping"][..];
         let scrap_nouns = &["scrapper", "scrappers"][..];
 
-        let mut closed_compounds = WordSet::new(&[]);
+        let mut closed_compounds = WordSet::new(std::iter::empty::<&str>());
         let mut open_and_hyphenated_compounds = vec![];
 
         scrap_verbs.iter().chain(scrap_nouns).for_each(|scrap| {
