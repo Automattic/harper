@@ -892,9 +892,9 @@
 						},
 						{
 							"Bool": {
-								"name": "ExpandDeref",
+								"name": "ExpandDereference",
 								"state": true,
-								"label": "Expand Deref"
+								"label": "Expand Dereference"
 							}
 						},
 						{
@@ -1343,6 +1343,27 @@
 								"name": "ExpandVulnerability",
 								"state": true,
 								"label": "Expand Vulnerability"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandConfiguration",
+								"state": true,
+								"label": "Expand Configuration"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPerformance",
+								"state": true,
+								"label": "Expand Performance"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandPreference",
+								"state": true,
+								"label": "Expand Preference"
 							}
 						},
 						{
@@ -3150,6 +3171,13 @@
 								"state": true,
 								"label": "Fellow Co- Redundancy"
 							}
+						},
+						{
+							"Bool": {
+								"name": "OverPlus",
+								"state": true,
+								"label": "Over Plus"
+							}
 						}
 					]
 				}
@@ -3327,6 +3355,13 @@
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
+							}
+						},
+						{
+							"Bool": {
+								"name": "LevelOfDetails",
+								"state": true,
+								"label": "Level of Details"
 							}
 						},
 						{
@@ -3800,6 +3835,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InRetaliationTo",
+								"state": true,
+								"label": "In Retaliation To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CapitalizeOn",
 								"state": true,
 								"label": "Capitalize On"
@@ -3824,6 +3866,20 @@
 								"name": "ComplainAsNoun",
 								"state": true,
 								"label": "Complain As Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OnesOwnAccord",
+								"state": true,
+								"label": "One's Own Accord"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ReadsAndWrites",
+								"state": true,
+								"label": "Reads and Writes"
 							}
 						}
 					]
@@ -3904,6 +3960,13 @@
 								"name": "Bought",
 								"state": true,
 								"label": "Bought"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ByOnesOwn",
+								"state": true,
+								"label": "By One's Own"
 							}
 						},
 						{
@@ -5105,9 +5168,30 @@
 						},
 						{
 							"Bool": {
+								"name": "JumpTheGun",
+								"state": true,
+								"label": "Jump The Gun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InThisThatRegard",
+								"state": true,
+								"label": "In This/That Regard"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AsMuchAs",
+								"state": true,
+								"label": "As Much As"
 							}
 						},
 						{
@@ -5161,6 +5245,20 @@
 						},
 						{
 							"Bool": {
+								"name": "NoLongerPronoun",
+								"state": true,
+								"label": "No Longer Pronoun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NeitherHereNorThere",
+								"state": true,
+								"label": "Neither Here Nor There"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheEntiretyOf",
 								"state": true,
 								"label": "The Entirety Of"
@@ -5178,6 +5276,13 @@
 								"name": "AsHow",
 								"state": true,
 								"label": "As How"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MassExodus",
+								"state": true,
+								"label": "Mass Exodus"
 							}
 						},
 						{
@@ -5206,6 +5311,20 @@
 								"name": "InDueCourse",
 								"state": true,
 								"label": "In Due Course"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AMeansToAnEnd",
+								"state": true,
+								"label": "A Means To An End"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallItQuits",
+								"state": true,
+								"label": "Call It Quits"
 							}
 						}
 					]
@@ -5583,6 +5702,13 @@
 								"name": "FondOn",
 								"state": true,
 								"label": "Fond On"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ToTo",
+								"state": true,
+								"label": "To To"
 							}
 						}
 					]
