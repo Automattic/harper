@@ -1050,6 +1050,7 @@ impl AffixData {
 // All English dialect implementations have been moved to language::english::dialects
 
 #[test]
+#[cfg(feature = "de")]
 fn deserializes_new_language_scoped_dialect_flags() {
     use serde_json::json;
 
@@ -1075,6 +1076,7 @@ fn deserializes_new_language_scoped_dialect_flags() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn serializes_dialect_flags_to_language_scoped_format() {
     use crate::language::english::dialects::EnglishDialect;
 

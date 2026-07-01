@@ -3,8 +3,14 @@
 //! This module provides the core types for supporting multiple languages in Harper,
 //! including language families and specific language variants with dialects.
 use crate::language::english::dialects::EnglishDialect;
+
+#[cfg(feature = "de")]
 use crate::language::german::dialects::GermanDialect;
+
+#[cfg(feature = "pt")]
 use crate::language::portuguese::dialects::PortugueseDialect;
+
+#[cfg(feature = "sk")]
 use crate::language::slovak::dialects::SlovakDialect;
 use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString};
@@ -36,24 +42,31 @@ pub fn parse_language(s: &str) -> Option<Language> {
             Some(Language::English(EnglishDialect::Canadian))
         }
         // German
+        #[cfg(feature = "de")]
         "de" | "german" | "deutsch" | "de-de" | "de_de" => {
             Some(Language::German(GermanDialect::Standard))
         }
+        #[cfg(feature = "de")]
         "at" | "austria" | "austrian" | "de-at" | "de_at" => {
             Some(Language::German(GermanDialect::Austrian))
         }
+        #[cfg(feature = "de")]
         "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
             Some(Language::German(GermanDialect::Swiss))
         }
         // Portuguese
+        #[cfg(feature = "pt")]
         "pt" | "pt-pt" | "pt_pt" | "portuguese" | "portugu\u{00ea}s" => {
             Some(Language::Portuguese(PortugueseDialect::European))
         }
+        #[cfg(feature = "pt")]
         "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" => {
             Some(Language::Portuguese(PortugueseDialect::Brazilian))
         }
+        #[cfg(feature = "pt")]
         "ao" => Some(Language::Portuguese(PortugueseDialect::African)),
         // Slovak
+        #[cfg(feature = "sk")]
         "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {
             Some(Language::Slovak(SlovakDialect::Standard))
         }
@@ -71,10 +84,13 @@ pub enum Language {
     /// English language with its dialects
     English(EnglishDialect),
     /// German language with its dialects
+    #[cfg(feature = "de")]
     German(GermanDialect),
     /// Portuguese language with its dialects
+    #[cfg(feature = "pt")]
     Portuguese(PortugueseDialect),
     /// Slovak language with its dialects
+    #[cfg(feature = "sk")]
     Slovak(SlovakDialect),
 }
 
@@ -103,10 +119,13 @@ pub enum LanguageFamily {
     #[default]
     English,
     /// German language family
+    #[cfg(feature = "de")]
     German,
     /// Portuguese language family
+    #[cfg(feature = "pt")]
     Portuguese,
     /// Slovak language family
+    #[cfg(feature = "sk")]
     Slovak,
 }
 
@@ -114,8 +133,11 @@ impl From<Language> for LanguageFamily {
     fn from(value: Language) -> Self {
         match value {
             Language::English(_) => Self::English,
+            #[cfg(feature = "de")]
             Language::German(_) => Self::German,
+            #[cfg(feature = "pt")]
             Language::Portuguese(_) => Self::Portuguese,
+            #[cfg(feature = "sk")]
             Language::Slovak(_) => Self::Slovak,
         }
     }
@@ -126,10 +148,13 @@ impl LanguageFamily {
     /// English returns `""` (default). German returns `"-de"`. Portuguese returns `"-pt"`. Slovak returns `"-sk"`.
     pub fn dict_suffix(&self) -> &'static str {
         match self {
-            Self::German => "-de",
-            Self::Portuguese => "-pt",
-            Self::Slovak => "-sk",
             Self::English => "",
+            #[cfg(feature = "de")]
+            Self::German => "-de",
+            #[cfg(feature = "pt")]
+            Self::Portuguese => "-pt",
+            #[cfg(feature = "sk")]
+            Self::Slovak => "-sk",
         }
     }
 }
@@ -137,12 +162,7 @@ impl LanguageFamily {
 impl Language {
     /// Returns the language family for this language.
     pub fn family(&self) -> LanguageFamily {
-        match self {
-            Language::English(_) => LanguageFamily::English,
-            Language::German(_) => LanguageFamily::German,
-            Language::Portuguese(_) => LanguageFamily::Portuguese,
-            Language::Slovak(_) => LanguageFamily::Slovak,
-        }
+        (*self).into()
     }
 }
 

@@ -3,26 +3,44 @@
 //! The word list is derived from the igerman98 dictionary (GPLv2/GPLv3),
 //! expanded using Hunspell affix rules for comprehensive coverage.
 //! It is embedded as gzip-compressed data and decompressed once at first use.
-use crate::spell::embedded_dictionary::fst_dictionary_from_gzip_bytes;
 use crate::spell::{FstDictionary, MutableDictionary};
+
+#[cfg(feature = "de")]
+use crate::spell::embedded_dictionary::fst_dictionary_from_gzip_bytes;
 use std::sync::{Arc, LazyLock};
 
-// Original FST dictionary for backward compatibility
-static GERMAN_FST_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
+#[cfg(feature = "de")]
+fn load_german_fst_dict() -> Arc<FstDictionary> {
     Arc::new(fst_dictionary_from_gzip_bytes(include_bytes!(
         "../german_dictionary.dict.gz"
     )))
-});
+}
 
-// New annotated dictionary using Rune format
-static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(|| {
+#[cfg(not(feature = "de"))]
+fn load_german_fst_dict() -> Arc<FstDictionary> {
+    Arc::new(FstDictionary::new(Vec::new()))
+}
+
+#[cfg(feature = "de")]
+fn load_german_annotated_dict() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
         include_str!("../dictionary.dict"),
         include_str!("../annotations.json"),
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load German annotated dictionary: {}", e))
-});
+}
+
+#[cfg(not(feature = "de"))]
+fn load_german_annotated_dict() -> Arc<MutableDictionary> {
+    Arc::new(MutableDictionary::new())
+}
+
+// Original FST dictionary for backward compatibility
+static GERMAN_FST_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(load_german_fst_dict);
+
+// New annotated dictionary using Rune format
+static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_german_annotated_dict);
 
 /// Returns a shared reference to the original German FstDictionary.
 ///

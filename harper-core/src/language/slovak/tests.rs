@@ -16,6 +16,7 @@ mod tests {
         // and basic functionality is available
         use crate::language::slovak::module::SlovakModule;
         use crate::language::module::LanguageModule;
+        use crate::language::module::LanguageDetector;
         
         // Test that we can get the default dialect
         let dialect = SlovakModule::default_dialect();
