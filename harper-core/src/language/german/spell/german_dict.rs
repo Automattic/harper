@@ -40,7 +40,8 @@ fn load_german_annotated_dict() -> Arc<MutableDictionary> {
 static GERMAN_FST_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(load_german_fst_dict);
 
 // New annotated dictionary using Rune format
-static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_german_annotated_dict);
+static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
+    LazyLock::new(load_german_annotated_dict);
 
 /// Returns a shared reference to the original German FstDictionary.
 ///

@@ -25,26 +25,21 @@ use super::portuguese::module::PortugueseModule;
 #[cfg(feature = "sk")]
 use super::slovak::module::SlovakModule;
 
-// ========== DETECTION ==========
-
 /// All language detectors, sorted by confidence (highest to lowest).
 static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::new(|| {
     let mut detectors: Vec<(Box<dyn LanguageDetector>, f64)> = Vec::new();
-    
-    // Add detectors for enabled languages (highest confidence first)
+
     #[cfg(feature = "de")]
     detectors.push((Box::new(GermanModule::detector()), 0.95));
-    
+
     #[cfg(feature = "sk")]
     detectors.push((Box::new(SlovakModule::detector()), 0.90));
-    
+
     #[cfg(feature = "pt")]
     detectors.push((Box::new(PortugueseModule::detector()), 0.85));
-    
-    // English is the fallback with lower confidence
-    // When no other language is detected, English will be used as the default
+
     detectors.push((Box::new(EnglishModule::detector()), 0.30));
-    
+
     detectors
 });
 
@@ -66,8 +61,6 @@ pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Lan
     }
     default_language
 }
-
-// ========== PROSE LANGUAGE ==========
 
 /// Prose languages supported by Harper for text parsing.
 #[derive(Clone, Copy, Debug, Eq, PartialEq)]
@@ -93,8 +86,6 @@ pub fn prose_language(language: &Language) -> ProseLanguage {
         Language::Slovak(_) => ProseLanguage::Slovak,
     }
 }
-
-// ========== DICTIONARIES ==========
 
 /// Get the dictionary for a language family.
 pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {
@@ -123,7 +114,6 @@ pub fn parser_for_prose(
     markdown_options: MarkdownOptions,
 ) -> Option<Box<dyn Parser>> {
     match (language_id, prose_language(&language)) {
-        // Mail format
         ("mail", ProseLanguage::English) => Some(Box::new(EnglishModule::plain_parser())),
         #[cfg(feature = "de")]
         ("mail", ProseLanguage::German) => Some(Box::new(GermanModule::plain_parser())),
@@ -151,8 +141,6 @@ pub fn parser_for_prose(
                 PortugueseModule::plain_parser().parse(source)
             }),
         )),
-        // English and other languages use the default Markdown parser
-        // English is the implicit fallback when no specific language is matched
         ("markdown" | "quarto", _) => Some(Box::new(Markdown::new(markdown_options))),
 
         // Org mode format
@@ -170,7 +158,6 @@ pub fn parser_for_prose(
         ("org", ProseLanguage::Slovak) => Some(Box::new(OrgMode::with_inline_parser(|source| {
             SlovakModule::plain_parser().parse(source)
         }))),
-        // English uses the default Org mode parser (fallback)
         ("org", _) => Some(Box::new(OrgMode::default())),
 
         // Plain text format
@@ -251,11 +238,6 @@ pub fn new_curated_for_language(
     match language {
         Language::English(_dialect) => {
             let group = EnglishModule::curated_lint_group(_dialect);
-            // For English, the curated group uses the module's dictionary.
-            // We need to rebuild it with the provided dictionary.
-            // This is a workaround until the LanguageModule trait supports custom dictionaries.
-            // For now, we'll just return the curated group as-is since English
-            // doesn't use the passed dictionary in the current implementation.
             group
         }
         #[cfg(feature = "de")]

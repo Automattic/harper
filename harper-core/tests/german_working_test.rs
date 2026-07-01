@@ -117,8 +117,8 @@ fn test_german_ls_simulation() {
     let dict = Arc::new(curated_german_dictionary());
     let mut linter = new_curated_german(GermanDialect::Standard);
 
-    let text =
-        std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md").expect("test file missing");
+    let text = std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md")
+        .expect("test file missing");
     let parser = Markdown::new(MarkdownOptions::default());
     let doc = Document::new(&text, &parser, &dict);
 

@@ -14,14 +14,17 @@ mod tests {
     fn test_slovak_module_structure() {
         // This test verifies that the Slovak module can be imported
         // and basic functionality is available
-        use crate::language::slovak::module::SlovakModule;
-        use crate::language::module::LanguageModule;
         use crate::language::module::LanguageDetector;
-        
+        use crate::language::module::LanguageModule;
+        use crate::language::slovak::module::SlovakModule;
+
         // Test that we can get the default dialect
         let dialect = SlovakModule::default_dialect();
-        assert_eq!(dialect, crate::language::slovak::dialects::SlovakDialect::Standard);
-        
+        assert_eq!(
+            dialect,
+            crate::language::slovak::dialects::SlovakDialect::Standard
+        );
+
         // Test that we can get the detector
         let detector = SlovakModule::detector();
         assert_eq!(detector.name(), "slovak");

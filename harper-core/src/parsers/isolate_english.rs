@@ -1,5 +1,5 @@
 use super::{Parser, Token, TokenStringExt};
-use crate::language_detection::is_likely_english;
+use crate::language::english::language_detection::is_likely_english;
 use crate::spell::Dictionary;
 
 /// A parser that wraps another, using heuristics to quickly redact paragraphs of a document that aren't

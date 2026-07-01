@@ -208,8 +208,7 @@ impl DialectFlags {
         let portuguese_flags =
             PortugueseDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "sk")]
-        let slovak_flags =
-            SlovakDialectFlags::get_most_used_dialects_from_document(document);
+        let slovak_flags = SlovakDialectFlags::get_most_used_dialects_from_document(document);
 
         Self {
             english: english_flags,
@@ -265,7 +264,6 @@ impl Default for DialectFlags {
     }
 }
 
-// Old legacy support (numeric bitmasks and flat strings) has been removed to simplify the data model.
 // Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.
 #[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
 struct ScopedDialectFlagsSerde {
@@ -299,117 +297,67 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
 
                 for (key, val) in map {
                     match key.as_str() {
-                        "english" => match val {
-                            Value::String(s) => {
-                                english = match s.as_str() {
-                                    "AMERICAN" => EnglishDialectFlags::AMERICAN,
-                                    "CANADIAN" => EnglishDialectFlags::CANADIAN,
-                                    "AUSTRALIAN" => EnglishDialectFlags::AUSTRALIAN,
-                                    "BRITISH" => EnglishDialectFlags::BRITISH,
-                                    "INDIAN" => EnglishDialectFlags::INDIAN,
+                        "english" => {
+                            english = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "AMERICAN" => Ok(EnglishDialectFlags::AMERICAN),
+                                    "CANADIAN" => Ok(EnglishDialectFlags::CANADIAN),
+                                    "AUSTRALIAN" => Ok(EnglishDialectFlags::AUSTRALIAN),
+                                    "BRITISH" => Ok(EnglishDialectFlags::BRITISH),
+                                    "INDIAN" => Ok(EnglishDialectFlags::INDIAN),
                                     _ => {
-                                        return Err(Error::custom(format!(
-                                            "Unknown English dialect: {s}"
-                                        )));
+                                        Err(Error::custom(format!("Unknown English dialect: {s}")))
                                     }
-                                };
-                            }
-                            Value::Number(n) => {
-                                let num =
-                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
-                                        as u8;
-                                english = EnglishDialectFlags::from_bits(num)
-                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
-                            }
-                            _ => {
-                                return Err(Error::invalid_type(
+                                },
+                                _ => Err(Error::invalid_type(
                                     Unexpected::Other("english"),
-                                    &"string or number",
-                                ));
-                            }
-                        },
+                                    &"string",
+                                )),
+                            }?;
+                        }
                         #[cfg(feature = "de")]
-                        "german" => match val {
-                            Value::String(s) => {
-                                german = match s.as_str() {
-                                    "STANDARD" => GermanDialectFlags::STANDARD,
-                                    "AUSTRIAN" => GermanDialectFlags::AUSTRIAN,
-                                    "SWISS" => GermanDialectFlags::SWISS,
-                                    _ => {
-                                        return Err(Error::custom(format!(
-                                            "Unknown German dialect: {s}"
-                                        )));
-                                    }
-                                };
-                            }
-                            Value::Number(n) => {
-                                let num =
-                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
-                                        as u8;
-                                german = GermanDialectFlags::from_bits(num)
-                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
-                            }
-                            _ => {
-                                return Err(Error::invalid_type(
-                                    Unexpected::Other("german"),
-                                    &"string or number",
-                                ));
-                            }
-                        },
+                        "german" => {
+                            german = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "STANDARD" => Ok(GermanDialectFlags::STANDARD),
+                                    "AUSTRIAN" => Ok(GermanDialectFlags::AUSTRIAN),
+                                    "SWISS" => Ok(GermanDialectFlags::SWISS),
+                                    _ => Err(Error::custom(format!("Unknown German dialect: {s}"))),
+                                },
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("german"), &"string"))
+                                }
+                            }?;
+                        }
                         #[cfg(feature = "pt")]
-                        "portuguese" => match val {
-                            Value::String(s) => {
-                                portuguese = match s.as_str() {
-                                    "EUROPEAN" => PortugueseDialectFlags::EUROPEAN,
-                                    "BRAZILIAN" => PortugueseDialectFlags::BRAZILIAN,
-                                    "AFRICAN" => PortugueseDialectFlags::AFRICAN,
-                                    _ => {
-                                        return Err(Error::custom(format!(
-                                            "Unknown Portuguese dialect: {s}"
-                                        )));
-                                    }
-                                };
-                            }
-                            Value::Number(n) => {
-                                let num =
-                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
-                                        as u8;
-                                portuguese = PortugueseDialectFlags::from_bits(num)
-                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
-                            }
-                            _ => {
-                                return Err(Error::invalid_type(
+                        "portuguese" => {
+                            portuguese = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "EUROPEAN" => Ok(PortugueseDialectFlags::EUROPEAN),
+                                    "BRAZILIAN" => Ok(PortugueseDialectFlags::BRAZILIAN),
+                                    "AFRICAN" => Ok(PortugueseDialectFlags::AFRICAN),
+                                    _ => Err(Error::custom(format!(
+                                        "Unknown Portuguese dialect: {s}"
+                                    ))),
+                                },
+                                _ => Err(Error::invalid_type(
                                     Unexpected::Other("portuguese"),
-                                    &"string or number",
-                                ));
-                            }
-                        },
+                                    &"string",
+                                )),
+                            }?;
+                        }
                         #[cfg(feature = "sk")]
-                        "slovak" => match val {
-                            Value::String(s) => {
-                                slovak = match s.as_str() {
-                                    "STANDARD" => SlovakDialectFlags::STANDARD,
-                                    _ => {
-                                        return Err(Error::custom(format!(
-                                            "Unknown Slovak dialect: {s}"
-                                        )));
-                                    }
-                                };
-                            }
-                            Value::Number(n) => {
-                                let num =
-                                    n.as_u64().ok_or_else(|| Error::custom("Invalid number"))?
-                                        as u8;
-                                slovak = SlovakDialectFlags::from_bits(num)
-                                    .ok_or_else(|| Error::custom("Invalid dialect flags"))?;
-                            }
-                            _ => {
-                                return Err(Error::invalid_type(
-                                    Unexpected::Other("slovak"),
-                                    &"string or number",
-                                ));
-                            }
-                        },
+                        "slovak" => {
+                            slovak = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "STANDARD" => Ok(SlovakDialectFlags::STANDARD),
+                                    _ => Err(Error::custom(format!("Unknown Slovak dialect: {s}"))),
+                                },
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("slovak"), &"string"))
+                                }
+                            }?;
+                        }
                         _ => {
                             // Build list of valid fields based on enabled features
                             let valid_fields: Vec<&'static str> = {
@@ -431,7 +379,8 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                             };
                             // Convert to a static slice by leaking the memory
                             // This is safe as it's only done during deserialization error handling
-                            let valid_fields_static: &'static [&'static str] = Box::leak(valid_fields.into_boxed_slice());
+                            let valid_fields_static: &'static [&'static str] =
+                                Box::leak(valid_fields.into_boxed_slice());
                             return Err(Error::unknown_field(&key, valid_fields_static));
                         }
                     }
@@ -447,125 +396,10 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                     slovak,
                 })
             }
-            Value::String(s) => {
-                // Legacy format: single string representing one dialect
-                match s.as_str() {
-                    // English dialects
-                    "AMERICAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::AMERICAN,
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    "CANADIAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::CANADIAN,
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    "AUSTRALIAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::AUSTRALIAN,
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    "BRITISH" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::BRITISH,
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    "INDIAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::INDIAN,
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    // German dialects
-                    #[cfg(feature = "de")]
-                    "STANDARD" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        german: GermanDialectFlags::STANDARD,
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    #[cfg(feature = "de")]
-                    "AUSTRIAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        german: GermanDialectFlags::AUSTRIAN,
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    #[cfg(feature = "de")]
-                    "SWISS" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        german: GermanDialectFlags::SWISS,
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    // Portuguese dialects
-                    #[cfg(feature = "pt")]
-                    "EUROPEAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        portuguese: PortugueseDialectFlags::EUROPEAN,
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    #[cfg(feature = "pt")]
-                    "BRAZILIAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        portuguese: PortugueseDialectFlags::BRAZILIAN,
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    #[cfg(feature = "pt")]
-                    "AFRICAN" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        portuguese: PortugueseDialectFlags::AFRICAN,
-                        #[cfg(feature = "sk")]
-                        slovak: SlovakDialectFlags::default(),
-                    }),
-                    // Slovak dialect
-                    #[cfg(feature = "sk")]
-                    "SLOVAK" => Ok(ScopedDialectFlagsSerde {
-                        english: EnglishDialectFlags::default(),
-                        #[cfg(feature = "de")]
-                        german: GermanDialectFlags::default(),
-                        #[cfg(feature = "pt")]
-                        portuguese: PortugueseDialectFlags::default(),
-                        slovak: SlovakDialectFlags::STANDARD,
-                    }),
-                    _ => Err(Error::custom(format!("Unknown dialect string: {s}"))),
-                }
-            }
-            _ => Err(Error::custom("Expected object or string for dialect flags")),
+            Value::String(s) => Err(Error::custom(format!(
+                "Legacy flat string format for dialect flags is no longer supported: {s}"
+            ))),
+            _ => Err(Error::custom("Expected object for dialect flags")),
         }
     }
 }

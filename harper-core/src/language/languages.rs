@@ -16,67 +16,49 @@ use serde::{Deserialize, Serialize};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString};
 
 /// Parse a language from a string representation.
-/// This function handles various formats including:
-/// - Abbreviations: "us", "uk", "de", "pt", "pt_br"
-/// - Full names: "american", "british", "german", "portuguese", "brazilian"
-/// - Locale codes: "en-US", "en-GB", "de-DE", "pt-BR"
 pub fn parse_language(s: &str) -> Option<Language> {
     let s_lower = s.to_ascii_lowercase();
 
-    // Try string matching
     match s_lower.as_str() {
         // English
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
-            Some(Language::English(EnglishDialect::American))
-        }
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => {
-            Some(Language::English(EnglishDialect::British))
-        }
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
-            Some(Language::English(EnglishDialect::Australian))
-        }
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => {
-            Some(Language::English(EnglishDialect::Indian))
-        }
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => {
-            Some(Language::English(EnglishDialect::Canadian))
-        }
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" =>
+            Some(Language::English(EnglishDialect::American)),
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" =>
+            Some(Language::English(EnglishDialect::British)),
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" =>
+            Some(Language::English(EnglishDialect::Australian)),
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" =>
+            Some(Language::English(EnglishDialect::Indian)),
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" =>
+            Some(Language::English(EnglishDialect::Canadian)),
         // German
         #[cfg(feature = "de")]
-        "de" | "german" | "deutsch" | "de-de" | "de_de" => {
-            Some(Language::German(GermanDialect::Standard))
-        }
+        "de" | "german" | "deutsch" | "de-de" | "de_de" =>
+            Some(Language::German(GermanDialect::Standard)),
         #[cfg(feature = "de")]
-        "at" | "austria" | "austrian" | "de-at" | "de_at" => {
-            Some(Language::German(GermanDialect::Austrian))
-        }
+        "at" | "austria" | "austrian" | "de-at" | "de_at" =>
+            Some(Language::German(GermanDialect::Austrian)),
         #[cfg(feature = "de")]
-        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
-            Some(Language::German(GermanDialect::Swiss))
-        }
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" =>
+            Some(Language::German(GermanDialect::Swiss)),
         // Portuguese
         #[cfg(feature = "pt")]
-        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "portugu\u{00ea}s" => {
-            Some(Language::Portuguese(PortugueseDialect::European))
-        }
+        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "portugu\u{00ea}s" =>
+            Some(Language::Portuguese(PortugueseDialect::European)),
         #[cfg(feature = "pt")]
-        "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" => {
-            Some(Language::Portuguese(PortugueseDialect::Brazilian))
-        }
+        "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" =>
+            Some(Language::Portuguese(PortugueseDialect::Brazilian)),
         #[cfg(feature = "pt")]
         "ao" => Some(Language::Portuguese(PortugueseDialect::African)),
         // Slovak
         #[cfg(feature = "sk")]
-        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {
-            Some(Language::Slovak(SlovakDialect::Standard))
-        }
+        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" =>
+            Some(Language::Slovak(SlovakDialect::Standard)),
         _ => None,
     }
 }
 
 /// A specific language with its dialects.
-///
-/// This enum represents all supported languages in Harper, each with their specific dialect.
 #[derive(
     Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumCount, Display,
 )]
@@ -94,37 +76,18 @@ pub enum Language {
     Slovak(SlovakDialect),
 }
 
-/// A family of languages (e.g., English, German, Portuguese).
-///
-/// This is used when we need to identify the broad language category
-/// without specifying a particular dialect.
+/// A family of languages.
 #[derive(
-    Default,
-    Debug,
-    Clone,
-    Copy,
-    Serialize,
-    Deserialize,
-    PartialEq,
-    PartialOrd,
-    Eq,
-    Hash,
-    EnumCount,
-    EnumString,
-    EnumIter,
-    Display,
+    Default, Debug, Clone, Copy, Serialize, Deserialize,
+    PartialEq, PartialOrd, Eq, Hash, EnumCount, EnumString, EnumIter, Display,
 )]
 pub enum LanguageFamily {
-    /// English language family
     #[default]
     English,
-    /// German language family
     #[cfg(feature = "de")]
     German,
-    /// Portuguese language family
     #[cfg(feature = "pt")]
     Portuguese,
-    /// Slovak language family
     #[cfg(feature = "sk")]
     Slovak,
 }
@@ -144,8 +107,6 @@ impl From<Language> for LanguageFamily {
 }
 
 impl LanguageFamily {
-    /// Returns a suffix to append to dictionary file paths for this language family.
-    /// English returns `""` (default). German returns `"-de"`. Portuguese returns `"-pt"`. Slovak returns `"-sk"`.
     pub fn dict_suffix(&self) -> &'static str {
         match self {
             Self::English => "",
@@ -160,7 +121,6 @@ impl LanguageFamily {
 }
 
 impl Language {
-    /// Returns the language family for this language.
     pub fn family(&self) -> LanguageFamily {
         (*self).into()
     }

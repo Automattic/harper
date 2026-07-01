@@ -1038,8 +1038,6 @@ impl AffixData {
     }
 }
 
-// Legacy flat dialect representation removed — the codebase now requires scoped, language-specific dialect flags.
-// Old legacy support (numeric bitmasks and flat strings) has been removed to simplify the data model.
 // Use the DialectFlags (language-scoped) for serialization/deserialization.
 
 // English dialect support - kept here to match master branch structure

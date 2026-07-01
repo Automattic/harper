@@ -16,7 +16,6 @@ mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
 pub mod language;
-pub mod language_detection;
 mod lexing;
 pub mod linting;
 mod mask;

@@ -22,7 +22,8 @@ fn load_slovak_annotated_dict() -> Arc<MutableDictionary> {
 }
 
 // New annotated dictionary using Rune format
-static SLOVAK_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_slovak_annotated_dict);
+static SLOVAK_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
+    LazyLock::new(load_slovak_annotated_dict);
 
 /// Returns a shared reference to the original Slovak FstDictionary.
 ///

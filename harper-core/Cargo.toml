@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "2.5.0"
+version = "2.6.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -54,16 +54,12 @@ name = "spellcheck"
 harness = false
 
 [features]
-default = ["en", "thesaurus"]
+default = ["thesaurus"]
 concurrent = []
 thesaurus = ["dep:harper-thesaurus"]
 
-# Language support features
+# Optional language support features
 # English is always included as the base language
-en = []
-# Optional languages
 de = []
 pt = []
 sk = []
-# All languages convenience feature
-all-languages = ["en", "de", "pt", "sk"]

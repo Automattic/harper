@@ -29,59 +29,13 @@ impl LanguageDetector for SlovakDetector {
         // High-confidence Slovak indicators (articles, pronouns, common verbs)
         let slovak_indicators = [
             // Personal pronouns
-            "ja",
-            "ty",
-            "on",
-            "ona",
-            "ono",
-            "my",
-            "vy",
-            "oni",
-            "ony",
-            "mňa",
-            "teba",
-            "ho",
-            "ju",
-            "nás",
-            "vás",
-            // Verb forms
-            "som",
-            "si",
-            "je",
-            "sme",
-            "ste",
-            "sú",
-            "mám",
-            "máš",
-            "má",
-            "máme",
-            "máte",
-            "majú",
+            "ja", "ty", "on", "ona", "ono", "my", "vy", "oni", "ony", "mňa", "teba", "ho", "ju",
+            "nás", "vás", // Verb forms
+            "som", "si", "je", "sme", "ste", "sú", "mám", "máš", "má", "máme", "máte", "majú",
             // Common words
-            "nie",
-            "áno",
-            "aj",
-            "ale",
-            "a",
-            "i",
-            "alebo",
-            "v",
-            "z",
-            "do",
-            "na",
-            "pri",
-            "po",
-            "pre",
-            "o",
-            "k",
-            // Prepositions and other common words
-            "od",
-            "za",
-            "pod",
-            "nad",
-            "medzi",
-            "bez",
-            "cez",
+            "nie", "áno", "aj", "ale", "a", "i", "alebo", "v", "z", "do", "na", "pri", "po", "pre",
+            "o", "k", // Prepositions and other common words
+            "od", "za", "pod", "nad", "medzi", "bez", "cez",
         ];
 
         for token in toks {
@@ -206,10 +160,7 @@ mod tests {
 
     #[test]
     fn detects_mixed_slovak_english() {
-        test_detection(
-            "Ja som happy v dome. Ty si tired v škole.",
-            true,
-        );
+        test_detection("Ja som happy v dome. Ty si tired v škole.", true);
     }
 
     #[test]
