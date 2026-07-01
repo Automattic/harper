@@ -136,6 +136,7 @@ mod left_right_hand;
 mod less_worse;
 mod let_to_do;
 mod lets_confusion;
+mod lifetime_life;
 mod likewise;
 mod lint;
 mod lint_group;
