@@ -20,6 +20,7 @@ use super::after_later::AfterLater;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::allow_to::AllowTo;
+use super::allude_vs_elude::AlludeVsElude;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
@@ -598,6 +599,7 @@ impl LintGroup {
         insert_expr_rule!(AllHellBreakLoose, true);
         insert_expr_rule!(AllIntentsAndPurposes, true);
         insert_expr_rule!(AllowTo, true);
+        insert_expr_rule!(AlludeVsElude, true);
         insert_expr_rule!(AmInTheMorning, true);
         insert_expr_rule!(AmountsFor, true);
         insert_struct_rule_with_dialect!(AnA, true);

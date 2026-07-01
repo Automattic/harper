@@ -12,6 +12,7 @@ mod after_later;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
 mod allow_to;
+mod allude_vs_elude;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
