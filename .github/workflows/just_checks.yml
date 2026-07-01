@@ -53,7 +53,7 @@ jobs:
           sudo apt-get install -y libappindicator3-dev || true
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
-      - uses: cargo-bins/cargo-binstall@f8810ffa11196f23afb38e6fb64716fbf814ad8f # main
+      - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
