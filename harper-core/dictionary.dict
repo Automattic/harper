@@ -12258,7 +12258,7 @@ aloe/NwSg
 aloft/~
 aloha/~NgS
 alone/~J
-along/~P
+along/~P¶
 alongshore/J
 alongside/~P
 aloof/~JYpP
@@ -12859,7 +12859,7 @@ anywise/
 aorta/NgS
 aortic/~J
 apace/
-apart/~J            # removed `1` noun, probably imported from Wiktionary's misspelling sense!
+apart/~J¶           # removed `1` noun, probably imported from Wiktionary's misspelling sense!
 apartheid/~NgV
 apartment/~NgS
 apathetic/JQ
@@ -13176,7 +13176,7 @@ aromatherapist/NgS
 aromatherapy/Ng
 aromatic/~JNgSQ
 arose/~Vt
-around/~PJ
+around/~PJ¶
 arousal/~Nmg
 arouse/VGdS
 arpeggio/NgSV
@@ -13285,7 +13285,7 @@ ashore/~
 ashram/~NgS
 ashtray/NSgV
 ashy/J^>
-aside/~JNgS
+aside/~JNgS¶
 asinine/JY
 asininity/NSg
 ask/~VdGSN
@@ -13749,7 +13749,7 @@ awardee/NS
 aware/~JpVU
 awareness/~NmgU
 awash/J
-away/~JV
+away/~JV¶
 awe/~Nm☁SgVdG
 aweigh/J
 awesome/~JYpN
@@ -13815,7 +13815,7 @@ bachelorhood/Nmg
 bacillary/J
 bacilli/N9
 bacillus/~N0g
-back/~J>NSgVGdzZ
+back/~J>NSgVGdzZ¶
 back door/NgSVGd
 back off/V/
 back to back/R
@@ -16249,7 +16249,7 @@ buzzword/NSg
 buzzy/H
 bx/~N
 bxs/N
-by/~PNg             # removed adjective sense
+by/~PNg¶            # removed adjective sense
 bye/~NSgJP
 bygone/JNSg
 bylaw/NSg
@@ -22252,7 +22252,7 @@ dowel/~NSgVdG
 dowelled/VtT!@_₹
 dowelling/V6N!@_₹
 dower/~NSgVdG
-down/~PJ>VdGSNwgZ
+down/~PJ>VdGSNwgZ¶
 downbeat/NSgJ
 downcast/JNV
 downdraft/N0gS
@@ -29937,7 +29937,7 @@ impure/~JY^>V
 impurity/~NSg
 imputation/NSg
 impute/VdSGB
-in/~PJR(g           # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
+in/~PJR(g¶          # removed `4`, verb senses are obsolete, `NS`, noun sense is marginal
 in addition         # dictionaries don't list this with a POS, or use 'phrase'
 in addition to/P
 in-depth/J
@@ -36978,7 +36978,7 @@ oestrus/NgS!_₹
 oeuvre/~NgS
 of/~P
 of course/R
-off/~JPVGdSNZz
+off/~JPVGdSNZz¶
 off-grid/J
 off-limits/J
 off-ramp/NgS
@@ -37112,7 +37112,7 @@ omniscient/JN
 omnivore/NgS
 omnivorous/~JYp
 omnivorousness/Nmg
-on/~JP              # verb sense is nonstandard dialectal and interferes with linter heuristics
+on/~JP¶             # verb sense is nonstandard dialectal and interferes with linter heuristics
 on-off/J
 onboard/~JRVSdG
 once/~CNg
@@ -37440,7 +37440,7 @@ ourself/Ia1F        # I:pronoun a:personal 1:person .~singular F:reflexive (of t
 ourselves/~Ia1F:    # I:pronoun a:personal 1:person :~plural F:reflexive
 oust/~VGd>SZ
 ouster/~NgSV
-out/~PNSgVGd>JR(z
+out/~PNSgVGd>JR(z¶
 out-and-out/J
 out of date
 outage/NSg
@@ -37605,7 +37605,7 @@ oven/~NgSV
 ovenbird/NSg
 ovenproof/J
 ovenware/Nmg
-over/~JYNgSP(
+over/~JYNgSP(¶
 overabundance/Ng
 overabundant/J
 overachieve/VGd>SZ
@@ -49442,7 +49442,7 @@ throne's
 throng/NSgVGdJ
 throttle/~NSgVd>GZ
 throttler/Ng
-through/~PJ
+through/~PJ¶
 throughout/~P
 throughput/~Ng
 throughway/NgS!@_₹
@@ -49730,7 +49730,7 @@ toffee/NwSgV
 tofu/~Nwg
 tog/NSgV
 toga/NgSd
-together/~Jp
+together/~Jp¶
 togetherness/Nmg
 togged/JtT
 togging/V6
@@ -51492,7 +51492,7 @@ unworthy/~J^N
 unwound/V
 unwrapping/V6N
 unyielding/J
-up/~PJNSV
+up/~PJNSV¶
 up front/JR
 upbeat/~JNgS
 upbraid/VGdSN
