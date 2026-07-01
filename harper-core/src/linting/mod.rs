@@ -314,6 +314,13 @@ pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
 
+/// Maximum number of sequential lint suggestions explored when searching for a
+/// transformation path (for example in Weir rule tests or linting test helpers).
+///
+/// This is a compile-time limit that prevents unbounded search when suggestion
+/// application cycles or deep multi-step fixes are involved.
+pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
+
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
 /// Commonly implemented via [`ExprLinter`].
@@ -601,7 +608,8 @@ pub mod tests {
     /// Applies suggestions iteratively until any combination produces the expected result.
     ///
     /// Explores all possible suggestion branches (depth-first search) until finding a path
-    /// that produces the expected result. Stops after 100 iterations to prevent infinite loops.
+    /// that produces the expected result. Stops after
+    /// [`MAX_SUGGESTION_TRANSFORMATION_DEPTH`] iterations to prevent infinite loops.
     ///
     /// Use this when you want to verify that *some* suggestion sequence produces the
     /// expected result, without caring which specific suggestions are used.
@@ -637,8 +645,11 @@ pub mod tests {
         depth: usize,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > 100 {
-            eprintln!("⚠️  Reached depth limit (100)");
+        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+            eprintln!(
+                "⚠️  Reached depth limit ({})",
+                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+            );
             return false;
         }
 
