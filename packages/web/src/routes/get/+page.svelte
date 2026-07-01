@@ -1,4 +1,5 @@
 <script lang="ts">
+import { onMount } from 'svelte';
 import {
 	type Integration,
 	integrationCategories,
@@ -8,9 +9,17 @@ import {
 import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 import MarketingFooter from '$lib/marketing/MarketingFooter.svelte';
 import MarketingHeader from '$lib/marketing/MarketingHeader.svelte';
+import { isUpToDate, liveVersions, loadLiveVersions } from '$lib/marketing/versions';
 
 let activeCategory = 'all';
 let query = '';
+
+const VERSION_UPTODATE = 'Up-to-date';
+const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
+
+onMount(() => {
+	void loadLiveVersions();
+});
 
 $: filtered = integrations.filter((integration) => {
 	if (activeCategory === 'community' && !integration.community) {
@@ -61,24 +70,40 @@ function clearFilters() {
 
 	<section class="border-b-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] px-10 py-16 pb-[4.25rem] text-center dark:border-white/10 dark:bg-black max-[860px]:px-4">
 		<div class="mx-auto max-w-[58rem]">
-			<h1 class="!mt-[0.85rem] !mb-0 py-0 font-serif text-[clamp(3.2rem,7vw,3.5rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
+			<h1 class="!mt-[0.85rem] !mb-0 py-0 !font-serif text-[clamp(3.2rem,7vw,3.5rem)] font-[650] leading-[1.02] tracking-normal text-inherit">
 				Take Harper with you.
 			</h1>
-			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
+			<p class="mx-auto !mt-3 !mb-[2.2rem] max-w-[35rem] !font-serif text-[1.2rem] leading-[1.45] text-[#4a463e] dark:text-white/70">
 				Use Harper in your favorite apps and browsers. Good grammar goes where you are.
 			</p>
 			<div class="mx-auto grid max-w-[47.5rem] grid-cols-2 gap-[0.85rem] text-left max-[640px]:grid-cols-1">
 				{#each ['desktop', 'chrome'] as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
 							href={integration.href}
 						>
 							<IntegrationTile {integration} size={40} />
 							<span class="flex min-w-0 flex-col">
-								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
+								<div class="flex items-center gap-1.5">
+									<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
+									{#if $liveVersions[integration.id]}
+		                				{#if upToDate != null}
+										<span
+										    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+										    title={titleText}
+										>
+											{$liveVersions[integration.id]}
+										</span>
+										{/if}
+									{/if}
+								</div>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
+									{integration.desc}
+								</small>
 							</span>
 							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
@@ -157,23 +182,39 @@ function clearFilters() {
 			<div class="grid grid-cols-[repeat(auto-fill,minmax(20rem,1fr))] gap-3 max-[640px]:grid-cols-1">
 				{#if filtered.length === 0}
 					<div class="col-span-full rounded-[0.9rem] border-[0.5px] border-dashed border-[rgba(28,26,22,0.16)] bg-white px-6 py-[3.75rem] text-center dark:border-white/15 dark:bg-white/5">
-						<h2 class="!mt-0 !mb-1.5 py-0 font-serif text-[1.4rem]">No match for "{query}"</h2>
+						<h2 class="!mt-0 !mb-1.5 py-0 !font-serif text-[1.4rem]">No match for "{query}"</h2>
 						<p class="!m-0 text-[#807a6e] dark:text-white/55">
 							Don’t see your editor? <a class="font-extrabold !text-[#b06a1b] no-underline hover:no-underline dark:!text-primary-300" href={marketingLinks.github}>Help us build it →</a>
 						</p>
 					</div>
 				{:else}
 					{#each filtered as integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="grid grid-cols-[2.5rem_1fr_auto] items-center gap-[0.9rem] rounded-xl border-[0.5px] border-[rgba(28,26,22,0.1)] bg-white px-[1.1rem] py-[0.9rem] !text-[#1c1a16] no-underline transition-[transform,box-shadow,border-color] duration-150 hover:-translate-y-px hover:border-[#b06a1b] hover:shadow-[0_10px_24px_-16px_rgba(28,26,22,0.16)] hover:no-underline dark:border-white/10 dark:bg-white/5 dark:!text-white dark:hover:border-primary-300 max-[640px]:grid-cols-[2.5rem_1fr] [&_em]:max-[640px]:col-start-2"
 							href={integration.href}
 						>
-							<IntegrationTile {integration} size={40} />
-							<span class="flex min-w-0 flex-col">
+						<IntegrationTile {integration} size={40} />
+						<span class="flex min-w-0 flex-col">
+							<div class="flex items-center gap-1.5">
 								<strong class="text-[0.94rem] leading-[1.25]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">{integration.platform}</small>
-							</span>
-							<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
+								{#if $liveVersions[integration.id]}
+									{#if upToDate != null}
+									<span
+									    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.68rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+									    title={titleText}
+									>
+										{$liveVersions[integration.id]}
+									</span>
+									{/if}
+								{/if}
+							</div>
+							<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.8rem] leading-[1.4] text-[#807a6e] dark:text-white/55">
+								{integration.platform}
+							</small>
+						</span>
+						<em class="whitespace-nowrap text-[0.78rem] font-extrabold text-[#b06a1b] not-italic dark:text-primary-300">{ctaLabel(integration)} →</em>
 						</a>
 					{/each}
 				{/if}

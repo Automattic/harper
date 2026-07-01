@@ -6,17 +6,34 @@ import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
 import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 
-function languageOptionToWasmLanguage(languageOption: LintOptions['language']): Language {
-	switch (languageOption) {
+type WasmLintArgs = [string, Language, boolean, string | undefined, boolean, boolean];
+
+function toWasmLanguage(language: LintOptions['language']): Language {
+	switch (language) {
 		case 'plaintext':
 			return Language.Plain;
 		case 'typst':
 			return Language.Typst;
 		case 'latex':
 			return Language.Latex;
+		case 'markdown':
+		case undefined:
+			return Language.Markdown;
 		default:
+			console.warn(`Unknown Harper language '${String(language)}'; using markdown.`);
 			return Language.Markdown;
 	}
+}
+
+function toWasmLintArgs(text: string, options?: LintOptions): WasmLintArgs {
+	return [
+		text,
+		toWasmLanguage(options?.language),
+		options?.forceAllHeadings ?? false,
+		options?.regex_mask,
+		options?.dedup ?? true,
+		options?.isolateEnglish ?? false,
+	];
 }
 
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
@@ -48,31 +65,12 @@ export default class LocalLinter implements Linter {
 
 	async lint(text: string, options?: LintOptions): Promise<Lint[]> {
 		const inner = await this.inner;
-
-		const language = languageOptionToWasmLanguage(options?.language);
-
-		const lints = inner.lint(
-			text,
-			language,
-			options?.forceAllHeadings ?? false,
-			options?.regex_mask,
-			options?.dedup ?? true,
-		);
-
-		return lints;
+		return inner.lint(...toWasmLintArgs(text, options));
 	}
 
 	async organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
 		const inner = await this.inner;
-		const language = languageOptionToWasmLanguage(options?.language);
-
-		const lintGroups = inner.organized_lints(
-			text,
-			language,
-			options?.forceAllHeadings ?? false,
-			options?.regex_mask,
-			options?.dedup ?? true,
-		);
+		const lintGroups = inner.organized_lints(...toWasmLintArgs(text, options));
 
 		const output: Record<string, Lint[]> = {};
 

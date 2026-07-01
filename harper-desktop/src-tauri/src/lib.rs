@@ -6,17 +6,23 @@ use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
-    linting::{FlatConfig, Lint, LintGroup},
-    spell::{Dictionary, MutableDictionary},
+    linting::{Lint, LintGroup},
+    spell::MutableDictionary,
 };
 use serde::Serialize;
-use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
+use std::{
+    cell::RefCell,
+    rc::Rc,
+    sync::{Arc, Mutex as StdMutex},
+    time::Duration,
+};
 use tauri::{
-    Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
+    Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     image::Image,
-    menu::{Menu, MenuItem, PredefinedMenuItem},
+    menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
+use tauri_plugin_opener::OpenerExt;
 
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use tokio::{
@@ -26,11 +32,11 @@ use tokio::{
 };
 
 pub mod color;
+mod commands;
 pub mod communication;
 pub mod config;
 mod debounce;
 pub mod highlighter;
-pub mod highlighter_process;
 pub mod highlighter_service;
 pub mod lint_kind_color;
 mod os_broker;
@@ -56,6 +62,7 @@ const TRAY_MENU_BAR_ID: &str = "harper-menu-bar";
 const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
 const OPEN_EDITOR_MENU_ID: &str = "open-editor";
 const SETTINGS_MENU_ID: &str = "settings";
+const REPORT_ISSUE_MENU_ID: &str = "report-issue";
 const QUIT_MENU_ID: &str = "quit";
 
 #[derive(Debug, Clone, Serialize)]
@@ -148,6 +155,38 @@ fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
     Ok(())
 }
 
+fn open_issue_report(app: &tauri::AppHandle) {
+    if let Err(error) = app.opener().open_url(
+        "https://github.com/Automattic/harper/issues/new/choose",
+        None::<&str>,
+    ) {
+        eprintln!("failed to open issue report URL: {error}");
+    }
+}
+
+fn desktop_app_menu(app: &tauri::AppHandle) -> tauri::Result<Menu<tauri::Wry>> {
+    let menu = Menu::default(app)?;
+
+    if let Some(help_menu) = menu
+        .get(HELP_SUBMENU_ID)
+        .and_then(|item| item.as_submenu().cloned())
+    {
+        if !help_menu.items()?.is_empty() {
+            help_menu.append(&PredefinedMenuItem::separator(app)?)?;
+        }
+
+        help_menu.append(&MenuItem::with_id(
+            app,
+            REPORT_ISSUE_MENU_ID,
+            "Report an Issue",
+            true,
+            None::<&str>,
+        )?)?;
+    }
+
+    Ok(menu)
+}
+
 fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
     let service_toggle = MenuItem::with_id(
         app,
@@ -160,11 +199,25 @@ fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
         MenuItem::with_id(app, OPEN_EDITOR_MENU_ID, "Open Editor", true, None::<&str>)?;
     let separator = PredefinedMenuItem::separator(app)?;
     let settings = MenuItem::with_id(app, SETTINGS_MENU_ID, "Settings", true, None::<&str>)?;
+    let report_issue = MenuItem::with_id(
+        app,
+        REPORT_ISSUE_MENU_ID,
+        "Report an Issue",
+        true,
+        None::<&str>,
+    )?;
     let quit = MenuItem::with_id(app, QUIT_MENU_ID, "Quit", true, None::<&str>)?;
 
     let menu = Menu::with_items(
         app,
-        &[&service_toggle, &open_editor, &separator, &settings, &quit],
+        &[
+            &service_toggle,
+            &open_editor,
+            &separator,
+            &settings,
+            &report_issue,
+            &quit,
+        ],
     )?;
 
     Ok(TrayMenu {
@@ -208,312 +261,28 @@ fn start_highlighter_service_if_enabled_and_permitted(
     }
 }
 
-#[tauri::command]
-async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
-    let mut lint_config = config.lock().await.lint_config.clone();
-    lint_config.fill_with_curated();
-
-    Ok(lint_config)
-}
-
-#[tauri::command]
-async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
-    Ok(config.lock().await.dialect)
-}
-
-#[tauri::command]
-async fn get_debounce_ms(config: State<'_, Arc<Mutex<Config>>>) -> Result<u64, String> {
-    Ok(config.lock().await.debounce_ms)
-}
-
-#[tauri::command]
-async fn set_debounce_ms(
-    debounce_ms: u64,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.debounce_ms = debounce_ms;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_auto_update(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
-    Ok(config.lock().await.auto_update)
-}
-
-#[tauri::command]
-async fn set_auto_update(
-    auto_update: bool,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.auto_update = auto_update;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_last_update_check(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Option<u64>, String> {
-    Ok(config.lock().await.last_update_check)
-}
-
-#[tauri::command]
-async fn set_last_update_check(
-    last_update_check: Option<u64>,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.last_update_check = last_update_check;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_dialect(
-    dialect: Dialect,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.dialect = dialect;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_lint_config(
-    lint_config: FlatConfig,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut lint_config = lint_config;
-    lint_config.fill_with_curated();
-
-    let mut config = config.lock().await;
-    config.lint_config = lint_config;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_dictionary(config: State<'_, Arc<Mutex<Config>>>) -> Result<Vec<String>, String> {
-    let mut words = config
-        .lock()
-        .await
-        .mutable_dictionary
-        .words_iter()
-        .map(|word| word.iter().collect::<String>())
-        .collect::<Vec<_>>();
-    words.sort();
-
-    Ok(words)
-}
-
-#[tauri::command]
-async fn set_dictionary(
-    words: Vec<String>,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut dictionary = MutableDictionary::new();
-    dictionary.extend_words(words.into_iter().map(|word| {
-        (
-            word.chars().collect::<Vec<_>>(),
-            DictWordMetadata::default(),
-        )
-    }));
-
-    let mut config = config.lock().await;
-    config.mutable_dictionary = dictionary;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn ignore_lint(
-    ignored_lints: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let ignored_lints =
-        serde_json::from_str::<IgnoredLints>(&ignored_lints).map_err(|error| error.to_string())?;
-
-    let mut config = config.lock().await;
-    config.ignored_lints.append(ignored_lints);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn add_to_dictionary(
-    word: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config
-        .mutable_dictionary
-        .append_word_str(&word, DictWordMetadata::default());
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_integrations(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Vec<IntegrationView>, String> {
-    let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker();
-
-    Ok(integrations
-        .into_iter()
-        .map(|integration| IntegrationView {
-            display_name: broker.integration_display_name(&integration.bundle_id),
-            bundle_id: integration.bundle_id,
-            enabled: integration.enabled,
-        })
-        .collect())
-}
-
-#[tauri::command]
-async fn add_integration(
-    bundle_id: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.add_integration(bundle_id);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn remove_integration(
-    bundle_id: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.remove_integration(&bundle_id);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_integration_enabled(
-    bundle_id: String,
-    enabled: bool,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.set_integration_enabled(&bundle_id, enabled);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
-}
-
-#[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
-}
-
-#[tauri::command]
-async fn start_highlighter_service(
-    config: State<'_, Arc<Mutex<Config>>>,
-    highlighter_service: State<'_, HighlighterService>,
-) -> Result<bool, String> {
-    {
-        let mut config = config.lock().await;
-        config.highlighter_service_enabled = true;
-        config
-            .save_to_system()
-            .await
-            .map_err(|error| error.to_string())?;
-    }
-
-    if accessibility_allows_highlighter_start() {
-        highlighter_service
-            .start()
-            .map_err(|error| error.to_string())?;
-    }
-
-    Ok(highlighter_service.is_running())
-}
-
-#[tauri::command]
-async fn stop_highlighter_service(
-    config: State<'_, Arc<Mutex<Config>>>,
-    highlighter_service: State<'_, HighlighterService>,
-) -> Result<bool, String> {
-    {
-        let mut config = config.lock().await;
-        config.highlighter_service_enabled = false;
-        config
-            .save_to_system()
-            .await
-            .map_err(|error| error.to_string())?;
-    }
-
-    Ok(highlighter_service.stop())
-}
-
-#[tauri::command]
-fn launch_app(bundle_id: String) -> Result<(), String> {
-    platform_broker().launch_app_bundle(&bundle_id)
-}
-
 #[cfg(target_os = "macos")]
-fn platform_broker() -> impl OsBroker {
-    mac_broker::MacBroker::default()
-}
+pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
 #[cfg(not(target_os = "macos"))]
-fn platform_broker() -> impl OsBroker {
-    os_broker::NoopBroker
+pub(crate) type PlatformBroker = os_broker::NoopBroker;
+
+fn platform_broker() -> PlatformBroker {
+    PlatformBroker::default()
+}
+
+fn warm_app_search_cache(app: tauri::AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let result = broker
+            .lock()
+            .map_err(|error| format!("failed to read platform broker: {error}"))
+            .and_then(|broker| broker.search_apps("").map(|_| ()));
+
+        if let Err(error) = result {
+            eprintln!("failed to warm app search cache: {error}");
+        }
+    });
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -567,37 +336,20 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
+        .manage(StdMutex::new(platform_broker()))
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
         ))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
-        .invoke_handler(tauri::generate_handler![
-            get_lint_config,
-            get_dialect,
-            get_debounce_ms,
-            set_debounce_ms,
-            get_auto_update,
-            set_auto_update,
-            get_last_update_check,
-            set_last_update_check,
-            set_dialect,
-            set_lint_config,
-            get_dictionary,
-            set_dictionary,
-            ignore_lint,
-            add_to_dictionary,
-            get_integrations,
-            add_integration,
-            remove_integration,
-            set_integration_enabled,
-            get_accessibility_permission_status,
-            request_accessibility_permission,
-            start_highlighter_service,
-            stop_highlighter_service,
-            launch_app,
-        ])
+        .invoke_handler(commands::application_message_handler())
+        .menu(desktop_app_menu)
+        .on_menu_event(|app, event| {
+            if event.id().as_ref() == REPORT_ISSUE_MENU_ID {
+                open_issue_report(app);
+            }
+        })
         .on_window_event(|window, event| {
             if should_hide_window_on_close(window.label())
                 && let WindowEvent::CloseRequested { api, .. } = event
@@ -617,6 +369,8 @@ pub fn run_tauri() {
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
 
+            warm_app_search_cache(app.handle().clone());
+
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
                 .icon(menu_bar_icon(is_service_running)?)
@@ -627,15 +381,17 @@ pub fn run_tauri() {
                         let highlighter_service = app.state::<HighlighterService>();
 
                         let toggle_result = if highlighter_service.is_running() {
-                            tauri::async_runtime::block_on(stop_highlighter_service(
+                            tauri::async_runtime::block_on(commands::stop_highlighter_service(
                                 app.state::<Arc<Mutex<Config>>>(),
                                 highlighter_service,
                             ))
                         } else {
-                            let result = tauri::async_runtime::block_on(start_highlighter_service(
-                                app.state::<Arc<Mutex<Config>>>(),
-                                highlighter_service,
-                            ));
+                            let result = tauri::async_runtime::block_on(
+                                commands::start_highlighter_service(
+                                    app.state::<Arc<Mutex<Config>>>(),
+                                    highlighter_service,
+                                ),
+                            );
 
                             if matches!(result, Ok(false))
                                 && !accessibility_allows_highlighter_start()
@@ -677,6 +433,7 @@ pub fn run_tauri() {
                             eprintln!("failed to show settings window: {error}");
                         }
                     }
+                    REPORT_ISSUE_MENU_ID => open_issue_report(app),
                     QUIT_MENU_ID => app.exit(0),
                     _ => {}
                 })
@@ -729,7 +486,7 @@ pub fn run_highlighter() {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let integrations = Rc::new(RefCell::new(startup_config.integrations));
+    let integrations = Arc::new(StdMutex::new(startup_config.integrations));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
 
@@ -902,7 +659,7 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    integrations: &Rc<RefCell<Vec<Integration>>>,
+    integrations: &Arc<StdMutex<Vec<Integration>>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
@@ -910,7 +667,10 @@ fn apply_highlighter_config(
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
-    *integrations.borrow_mut() = config.integrations;
+    match integrations.lock() {
+        Ok(mut integrations) => *integrations = config.integrations,
+        Err(error) => eprintln!("failed to update integrations: {error}"),
+    }
     *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
 }
