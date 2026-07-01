@@ -35,10 +35,7 @@ pub struct PronounVerbAgreement<D> {
     dict: D,
 }
 
-impl<D> PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> PronounVerbAgreement<D> {
     pub fn new(dict: D) -> Self {
         // TODO: allowing "you" leads to false positives:
         // "8 years to give you rewards", "all I can do is give you examples"
@@ -166,10 +163,7 @@ where
     }
 }
 
-impl<D> ExprLinter for PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {

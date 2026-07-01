@@ -21,14 +21,12 @@ impl Default for AndTheLike {
                         .then_word_set(&["alike", "alikes", "like", "likes"]),
                 ),
                 Box::new(SequenceExpr::unless(
-                    SequenceExpr::word_set(&["and", "or"])
-                        .t_ws()
-                        .then_any_of(vec![
-                            // But not the correct variants
-                            Box::new(FixedPhrase::from_phrase("the like")),
-                            // And not the phrases that were coincidentally caught in the net
-                            Box::new(WordSet::new(&["like", "likes"])),
-                        ]),
+                    SequenceExpr::word_set(&["and", "or"]).t_ws().then_any_of([
+                        // But not the correct variants
+                        Box::new(FixedPhrase::from_phrase("the like")) as Box<dyn Expr>,
+                        // And not the phrases that were coincidentally caught in the net
+                        Box::new(WordSet::new(&["like", "likes"])),
+                    ]),
                 )),
             ]),
         }

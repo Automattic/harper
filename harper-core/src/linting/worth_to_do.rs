@@ -14,10 +14,7 @@ where
     dict: D,
 }
 
-impl<D> WorthToDo<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> WorthToDo<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::word_seq(&["worth", "to"])
@@ -28,10 +25,7 @@ where
     }
 }
 
-impl<D> ExprLinter for WorthToDo<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for WorthToDo<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {

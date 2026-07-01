@@ -12,10 +12,7 @@ pub struct PossessiveNoun<D> {
     dict: D,
 }
 
-impl<D> PossessiveNoun<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> PossessiveNoun<D> {
     pub fn new(dict: D) -> Self {
         let expr = SequenceExpr::with(UPOSSet::new(&[UPOS::DET, UPOS::PROPN]))
             .t_ws()
@@ -44,10 +41,7 @@ where
     }
 }
 
-impl<D> ExprLinter for PossessiveNoun<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for PossessiveNoun<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {

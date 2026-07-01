@@ -16,8 +16,8 @@ impl Default for MeansALotTo {
                 // Note that "meaning a lot to" is not used.
                 .t_set(&["mean", "means", "meant"])
                 .t_ws()
-                .then_any_of(vec![
-                    Box::new(FixedPhrase::from_phrase("a lot")),
+                .then_any_of([
+                    Box::new(FixedPhrase::from_phrase("a lot")) as Box<dyn Expr>,
                     Box::new(WordSet::new(&["alot", "lot"])),
                 ])
                 .t_ws()
