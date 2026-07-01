@@ -162,6 +162,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "Cham is a legit word in Malaysia"]
     fn test_3355_result() {
         assert_suggestion_result(
             "cham peng",
@@ -171,6 +172,7 @@ mod tests {
     }
 
     #[test]
+    #[ignore = "Cham is a legit word in Malaysia"]
     fn test_3355_count() {
         assert_suggestion_count(
             "cham peng",

@@ -206,6 +206,7 @@ Ahmadinejad/Og
 Ahmed/Og
 Ahriman/Og
 Aida/Og
+Aidilfitri/Ogʒ㎳     # Muslim festival
 Aiken/Og
 Aileen/Og
 Aimee/Og
@@ -1582,6 +1583,7 @@ Bugatti/ONg
 Bugzilla/Og
 Buick/ONSg
 Bujumbura/Og
+Bukit/Oʒ㎳           # Malay 'hill' in place names
 Bukhara/Og
 Bukharin/Og
 Bulawayo/Og
@@ -2734,6 +2736,7 @@ Decker/Og
 Dedekind/Og
 Dee/ONg
 Deena/Og
+Deepavali/Ogʒ㎳      # Hindu festival
 Deere/ONg
 Defoe/Og
 Degas/g
@@ -4218,6 +4221,7 @@ Gullah/ONgJ
 Gulliver/Og
 Gumbel/g
 Gunther/Og
+Gunung/Oʒ㎳          # Malay 'mountain' in place names
 Guofeng/g
 Gupta/Og
 Gurkha/NgJ
@@ -4241,6 +4245,7 @@ Gypsy/NOSgJ
 H-1B/NgS
 HBO/Og
 HBase/g
+HDB/ONgSʒ           # singapore public housing
 HDD/N
 HDMI/O
 HDTV/N
@@ -4359,6 +4364,8 @@ Hardin/Og
 Harding/Og
 Hardy/Og
 Hargreaves/Og
+Hari Raya/Ogʒ㎳      # 
+Hari Raya Aidilfitri/Ogʒ㎳  # Muslim festival
 Harlan/Og
 Harlem/Og
 Harlequin/Og
@@ -5021,6 +5028,7 @@ Izmir/Og
 Izod/g
 Izvestia/g
 J/NOgd
+JB/Ogʒ㎳             # Johor Bahru
 JCS/O
 JD/NO
 JDM
@@ -5229,6 +5237,8 @@ Johns/ONg
 Johnson/ONg
 Johnston/Og
 Johnstown/Og
+Johor/Og            # Malaysian state
+Johorean/ONgSJ
 Jolene/Og
 Jolson/Og
 Jon/Og
@@ -5328,6 +5338,8 @@ KFC/Og              # company
 KGB/Og              # Soviet intelligence agency
 KIA/NJ              # killed in action
 KKK/Og
+KL/Ogʒ㎳            # Kuala Lumpur
+KLCC/Ogʒ㎳          # Kuala Lumpur city centre
 KO/NgV
 KP/N
 KS/ONV              # US state (Kansas)
@@ -5358,7 +5370,9 @@ Kamasutra           # American Heritage, Chambers
 Kamchatka/Og
 Kamehameha/Og
 Kampala/Og
+Kampong/Oʒ㎳         # Malay 'village' in place names
 Kampuchea/Og        # old name of Cambodia
+Kampung/Oʒ㎳         # Malay 'village' in place names
 Kan/OgS
 Kanchenjunga/Og
 Kandahar/Og
@@ -5627,6 +5641,7 @@ Kosciusko/Og
 Kosovo/Og
 Kossuth/Og
 Kosygin/g
+Kota/Oʒ㎳            # Malay 'fort' in place names
 Kotlin/Og
 Koufax/g
 Kowloon/Og
@@ -5665,8 +5680,10 @@ Krugerrand/Ng
 Krupp/Og
 Krystal/Og
 Kshatriya/Ng
+Kuala/Oʒ㎳           # Malay 'estuary' etc. in place names
 Kublai/g
 Kubrick/Og
+Kuching/Og          # Malaysian city
 Kuhn/Og
 Kuibyshev/g
 Kulthumm/g
@@ -5722,6 +5739,7 @@ LOGO
 LP/NOg
 LPG/N
 LPN/NSg
+LRT/Ogʒ㎳            # light rail transit
 LSAT
 LSD/Ng
 LVN/N
@@ -6146,7 +6164,7 @@ Loyd/Og
 Loyola/Og
 Lr/                 # Lawrencium
 Lt/N
-Ltd/JN
+Ltd/JN              # Limited
 Lu/                 # Lutetium
 Luanda/Og
 Luann/Og
@@ -6267,6 +6285,7 @@ MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
 MRI/NgV             # magnetic resonance imaging
+MRT/Ogʒ㎳            # mass rapid transit
 MS/NOg              # US state (Mississippi)
 MSG/NOg             # flavour enhancer
 MSRP/NSg
@@ -7581,6 +7600,7 @@ NutraSweet/g        # trademark
 NyQuil/g            # trademark
 Nyasa/g
 Nyerere/Og
+Nyonya/Ogʒ㎳         # ethnicity
 O/NOSgPJ            # Oxygen
 O'Brien/Og
 O'Casey/Og
@@ -7967,6 +7987,7 @@ Parsons/Og
 Parthenon/Og
 Parthia/Og
 Pasadena/Og
+Pasar/Oʒ㎳           # Malay 'market' in place names
 Pascagoula/Og
 Pascal/OgS          # cf. pascal, PASCAL
 Pascal case/Nmg
@@ -8036,6 +8057,7 @@ Pembroke/Og
 Pen/Og
 Pena/Og
 Penang/Og
+Penangite/ONSg
 Penderecki/g
 Penelope/Og
 Penn/Og
@@ -8059,6 +8081,7 @@ Pepin/Og
 Pepsi/ONg           # drink brand
 Pepys/Og
 Pequot/NOg
+Peranakan/Ogʒ㎳      # ethnicity
 Percheron/Ng
 Percival/Og
 Percy/Og
@@ -8392,6 +8415,7 @@ Puerto/O
 Puget/Og            # - Sound
 Pugh/Og
 Pulaski/Og
+Pulau/Oʒ㎳           # Malay 'island' in place names
 Pulitzer/NOg
 Pullman/NOSg
 Punch/ONg
@@ -9003,6 +9027,8 @@ Saab/ONg            # car brand
 Saar/Og
 Saarinen/g
 Saatchi/Og
+Sabah/Og
+Sabahan/JNOgS
 Sabbath/Ng
 Sabbaths/N
 Sabik/Og
@@ -9117,6 +9143,7 @@ Saran/Og
 Sarasota/Og
 Saratov/Og
 Sarawak/Og
+Sarawakian/ONgSJ
 Sardinia/Og
 Sargasso/ONg
 Sargent/Og
@@ -9239,6 +9266,8 @@ Sculley/Og
 Scylla/Og
 Scythia/Og
 Scythian/JNOg
+Sdn. Bhd./㎳         # Pty Ltd
+Sdn Bhd/㎳           # Pty Ltd
 Se/                 # Selenium
 Seaborg/Og
 Seagate/Og          # hard drive company
@@ -9266,6 +9295,7 @@ Seiko/Og
 Seine/Og
 Seinfeld/g
 Sejong/Og
+Selangor/Og         # Malaysian state
 Selassie/g
 Selectric/g
 Selena/Og
@@ -9795,6 +9825,8 @@ Sundanese/NOgJ
 Sundas/Og
 Sunday/NgSV
 Sung/Og
+Sungai/Oʒ㎳          # Malay 'river' in place names
+Sungei/Oʒ㎳          # Malay 'river' in place names
 Sunkist/g
 Sunni/JNOSg
 Sunnite/JNgS
@@ -9962,6 +9994,8 @@ Tangier/OgS
 Tangshan/Og
 Tania/Og
 Tanisha/Og
+Tanjong/Oʒ㎳         # Malay 'cape/promontory' in place names
+Tanjung/Oʒ㎳         # Malay 'cape/promontory' in place names
 Tanner/Og
 Tannhauser/g
 Tantalus/Og
@@ -10014,7 +10048,9 @@ Telemann/g
 Teletype
 Tell/Og>
 Teller/Og
+Telok/Oʒ㎳           # Malay 'bay' in place names
 Telugu/ONg
+Teluk/Oʒ㎳           # Malay 'bay' in place names
 Temecula/Og
 Tempe/O
 Templar/NgS
@@ -10452,6 +10488,7 @@ Ukrainian/JNOSg
 Ulaanbaatar/Og
 Ulster/ONg
 Ultrasuede/Ng
+Ulu/Oʒ㎳             # Malay word used in place names
 Uluru/Og
 Ulyanovsk/Og
 Ulysses/Og
@@ -17060,6 +17097,7 @@ cement/~NwgSVd>GZ
 cementer/Ng
 cementum/Ng
 cemetery/~NSg
+cendol/Nmg㎳         # a dessert
 cenobite/NgS
 cenobitic/J
 cenotaph/~Ng
@@ -17196,6 +17234,7 @@ challenge/~NwSgVd>GZ
 challenged/~JVtTU
 challenger/~NgS
 challis/Ng
+cham/Nmgʒ㎳          # mix of coffee and tea
 chamber/~NSgVdG
 chamberlain/~NgS
 chambermaid/NgS
@@ -17266,6 +17305,7 @@ chappy/NSJ
 chapstick/NgS
 chapter/~NSgVdG
 char/~VSNg
+char kway teow/Nmgʒ㎳
 charabanc/NgSV
 character/~NwgSV
 characterful/J
@@ -17374,6 +17414,7 @@ checkroom/NgS
 checksum/NgSVdG
 checkup/NgS
 cheddar/NwSgV
+chee cheong fun/Nʒ㎳
 cheek/~NgSVGd
 cheekbone/NSg
 cheekily/Ry
@@ -17415,6 +17456,7 @@ chemo/NmgV
 chemotherapeutic/JN
 chemotherapy/~Ng
 chemurgy/Ng
+chendol/Nmgʒ        # a dessert
 chenille/Ng
 cheque/NgSJ>GdZ!@_₹
 chequebook/NgS!@_₹
@@ -27095,7 +27137,7 @@ godlike/J
 godliness/NmgU
 godly/J>^pU
 godmother/~NSgV
-godown/NSg₹
+godown/NSg₹ʒ㎳
 godparent/NSg
 godsend/NSg
 godson/NSg
@@ -27935,6 +27977,8 @@ hand-drawn/J
 hand-me-down/JNgS
 hand-off/NwSg
 hand out/V/
+hand phone/NgSʒ㎳
+handphone/NgSʒ㎳
 hand's
 handbag/NSgV
 handball/~NwgSV
@@ -28029,6 +28073,7 @@ happiness/~NmgU
 happy/~J^>pNVU
 happy-go-lucky/J
 haptic/J
+haram/J             # opposite of halal
 harangue/NgSVGd
 harass/~VGd>SNLZ
 harasser/NgS
@@ -28184,6 +28229,7 @@ havoc/~NmgV
 haw/~VGdSNg
 hawk/~NgSVd>GZ
 hawker/~NgS
+hawker centre/NgSʒ
 hawkish/Jp
 hawkishness/Nmg
 hawser/NSg
@@ -31492,6 +31538,7 @@ karmic/J
 kart/~NgSV
 katakana/~N
 katydid/NSg
+kaya/Nmgʒ㎳          # coconut jam
 kayak/NSgVdG
 kayaker/NgS
 kayaking/~NgV
@@ -31783,6 +31830,7 @@ kookaburra/NSg
 kookiness/Nmg
 kooky/J^>pN
 kopeck/NgS
+kopitiam/NSgʒ㎳      # traditional coffee shop
 korma/Nmg
 kosher/~JVdSG
 kowtow/VGdSNg
@@ -31894,6 +31942,7 @@ lakefront/JNS
 lakeside/~NJ
 lakh/N0g₹
 lakhs/N9₹
+laksa/Nmgʒ㎳         # a noodle soup dish
 lam/~VSNg
 lama/~NgS
 lamasery/NSg
@@ -32879,6 +32928,7 @@ loincloths/N9
 loiter/VGd>SNZ
 loiterer/Ng
 loitering/V6Ng
+lok-lok/Nmgʒ㎳       # a food
 lolcat/NSg
 loll/VdSG
 lollipop/NSg
@@ -32963,7 +33013,7 @@ lorebook/NgS
 lorgnette/NSg
 loris/NgS
 lorn/JV
-lorry/~NSgV
+lorry/~NSgV!ʒ㎳
 lose/~VbG>SZz
 loser/~NgS
 losing/~VJNmg
@@ -33046,7 +33096,7 @@ loyalist/~NSg
 loyalties/~N9
 loyalty/~N0wgE
 lozenge/~NSgV
-ltd/~J
+ltd/~J              # limited
 luau/NgS
 lubber/NgSY
 lube/NwgSVGdJ
@@ -33440,6 +33490,7 @@ malty/J^>
 malware/~Nmg
 mam/~NS
 mama/~NgS
+mamak/ngSʒ㎳         # Indian muslim
 mamba/~NSg
 mambo/~NSgVGd
 mamma/Ng
@@ -33951,6 +34002,7 @@ medley/~NgSV
 medulla/NSg
 medusa/~N
 medusae/9
+mee/Nmgʒ㎳           # noodles
 meed/NgV
 meek/~JY^>pV
 meekness/Ng
@@ -37421,6 +37473,7 @@ ostracise/VGdS!_₹
 ostracism/Ng
 ostracize/VGdS
 ostrich/~NgS
+otak-otak/Nmgʒ㎳
 other/~JpNgSV
 otherwise/~RCJ
 otherworldly/J
@@ -38119,6 +38172,7 @@ pancreas/~NgS
 pancreatic/~J
 pancreatitis/~N
 panda/~NSg
+pandan/Nmgʒ㎳        # herb
 pandemic/~JNSg
 pandemonium/NwgS
 pander/NgSVd>GZ
@@ -40050,6 +40104,7 @@ pop/~NwSgVJ
 popcorn/~NwgV
 pope/~NgSV
 popgun/NSg
+popiah/NgSʒ㎳        # spring roll
 popinjay/NgS
 poplar/~NSg
 poplin/Ng
@@ -43267,6 +43322,7 @@ roguishness/Nmg
 roil/VGdS
 roister/VGd>SNZ
 roisterer/Ng
+rojak/Nmgʒ㎳         # fruit/salad dish
 role/~NgS
 roleplay/VSdG
 roll/~Vd>GSNgZzr
@@ -43353,6 +43409,8 @@ rotationally/Ry
 rotatory/J
 rote/~NgJV
 rotgut/Nmg
+roti canai/N㎳
+roti prata/Nʒ
 rotisserie/NSgV
 rotogravure/NgS
 rotor/~NSg
@@ -43724,6 +43782,7 @@ samara/~N0S
 samarae/N9
 samarium/Nmg
 samba/~NgSVdG
+sambal/NwgSʒ㎳
 same/~JpIS
 same sex/Ng
 same-sex/J
@@ -46301,6 +46360,7 @@ song/~NwgS
 songbird/NSg
 songbook/~NSg
 songfest/NSg
+songkok/NgSʒ㎳
 songster/NgS
 songstress/NgS
 songwriter/~NSg
@@ -48922,6 +48982,7 @@ teetotal/J>NVZ
 teetotaler/Ng
 teetotalism/Ng
 teetotaller/NgS!@_₹
+teh tarik/NmgS      # 'pulled tea'
 tektite/NSg
 tel/~N
 # tele              # prefixes that are not also words in their own right don't belong in the dictionary
@@ -53936,6 +53997,7 @@ CDMA/NSg
 CDN/NSg             # content delivery network
 CERN/Og             # intergovernmental organization
 CI/NSg              # continuous integration
+CIMB/Og             # bank
 CISC/Ng             # cpu architecture
 CLR/Og              # common language runtime
 CMOS/N              # microchip process
@@ -54132,6 +54194,7 @@ JSONP/Og
 JVM/Sg              # Java virtual machine
 JWT/Ng              # JSON Web Token
 Jacoco/Sg
+Jalan/Oʒ㎳           # Malay 'road/street' in place names
 Japonic/OmgJ        # linguistics
 JavaDoc/Sg
 JavaScript/ONSg     # programming language
@@ -54198,11 +54261,13 @@ MSNBC/Og            # media company
 MSVC                # Microsoft Visual C++
 MTA/NSg
 MVC                 # model-view-controller
+MYR                 # malaysian ringgit
 MacBook/OgS         # Apple product
 Manilas/N
 Manilla/Og
 MapReduce/N
 Marchus/Sg
+Maybank/Og          # bank
 Mbps                # megabits per second
 MediaWiki/Og        # the software Wikimedia runs on
 #Metal/Og           # 3D graphics API - not working yet due to canonical spelling bug
@@ -54326,7 +54391,7 @@ Ryzen/ONgS
 SCM/Ng              # source code management
 SDK/NSg             # software development kit
 SDL/Og              # Simple DirectMedia Layer
-SGD/Nmg             # stochastic gradient descent
+SGD/Nmg             # stochastic gradient descent; singapore dollar
 SHA/ONg             # Secure Hash Algorithm
 SIGINT/Nmg          # signals intelligence
 SIMD/NSg            # single instruction, multiple data
@@ -54622,6 +54687,7 @@ scatterplot/NSgVG   # dictionaries prefer: scatter plot
 screencast/VdSG
 scrollbar/NSg       # dictionaries prefer: scroll bar
 sed/Og              # *nix tool / language
+sen/N09g            # subunit of ringgit, plural same as singular
 sigil/NgS
 singleplayer/J
 sioyek/Sg           # !! please check and comment !!
@@ -54683,26 +54749,41 @@ exocentric/JQ
 fae/Nmg             # fantasy alternative for "fey"
 iaido/Nmg           # martial art
 kalimba/NSg
+kapcai/Nʒ㎳†         # slang for small motorbike
+kopi C/Nmgʒ㎳
+kopi O/Nmgʒ㎳
+kopiah/NgSʒ㎳        # cap worn by muslim men
+kueh/Nmgʒ㎳
 licensor/NSg
 live stream/NSgVdG  # main: Cambridge (n only), Merriam-Webster, Oxford Learner's (n only)
 live-stream/NSgVdG  # main: Oxford Learner's (v only); also: Cambridge (n only), Merriam-Webster
 livestream/NSgVdG   # main: Cambridge (v only), Collins, OED; also: Cambridge (n only), Merriam-Webster
 livestreamer/NSg    # main: OED, Oxford Learner's; also: Cambridge
 live streamer/NSg   # Cambridge
+loh mee/Nmg         # noodle dish
+lor mee/Nmgʒ㎳       # noodle dish
 menarche/Nmg        # medicine
 micronutrient/NSg
 misprediction/NSg   # not in dictionaries
 monolatrous/J
 monolatry/Nmg
+nasi campur/Nmgʒ㎳
+nasi dalca/Nmgʒ㎳
+nasi kandar/Nmg㎳
+nasi kerabu/Nmgʒ㎳
+nasi lemak/Nmgʒ㎳
+nasi padang/Nmgʒ㎳
 offeror/NSg
 omnipredicativity/N0
 orthopractic/J
 orthopraxy/Nwg
 piebaldism/Nmg      # medicine
 praxis/Nmg
+Pte Ltd/ʒ           # Private Limited
 queenship/Nwg
 resolutive/J
 retrocomputing/Nmg
+sohai/Nʒ㎳x†        # curse
 sortition/Nmg       # Political science: a method of appointment to office by random draw
 subvocalization/Nwg # phonetics
 supervenience/Nmg   # From emergentist ontology
@@ -54713,5 +54794,7 @@ unminted/J
 vicomital/J         # Adjective version of "viscount/viscountess"
 vicontiel/J         # As above, alternative version
 viscomital/J        # As above, alternative version
+wanton mee/Nmgʒ㎳
+wonton mee/Nmgʒ㎳
 WordCamp/Og
 worldbuild/V>G
