@@ -3,7 +3,8 @@
 use crate::language::dialects::dialect_trait::{Dialect, DialectFlags};
 use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
-use strum::{EnumCount, VariantArray};
+#[allow(unused_imports)]
+use strum::{EnumCount as _, VariantArray as _};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use crate::Document;
@@ -117,7 +118,7 @@ impl DialectFlags<SlovakDialect> for SlovakDialectFlags {
     }
 
     /// Gets the most commonly used dialect(s) in the document.
-    fn get_most_used_dialects_from_document(document: &Document) -> Self {
+    fn get_most_used_dialects_from_document(_document: &Document) -> Self {
         // For now, Slovak has only one dialect, so we return the standard flag
         // This will be enhanced when more dialects are added
         Self::from_dialect(SlovakDialect::Standard)

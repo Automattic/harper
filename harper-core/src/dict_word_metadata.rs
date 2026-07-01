@@ -1057,7 +1057,7 @@ fn deserializes_new_language_scoped_dialect_flags() {
     let metadata: crate::DictWordMetadata = serde_json::from_value(json!({
         "dialects": {
             "english": "AMERICAN",
-            "german": 0
+            "german": "STANDARD"
         }
     }))
     .unwrap();
