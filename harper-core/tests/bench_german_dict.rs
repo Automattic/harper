@@ -37,7 +37,7 @@ fn test_detection_for_german_file() {
     use harper_core::Document;
     use harper_core::spell::FstDictionary;
 
-    let text = std::fs::read_to_string("tests/test_sources/german_basic.md").unwrap();
+    let text = std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md").unwrap();
     let _dict = FstDictionary::curated();
     let doc = Document::new_plain_english_curated(&text);
 

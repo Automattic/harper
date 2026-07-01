@@ -118,7 +118,7 @@ fn test_german_ls_simulation() {
     let mut linter = new_curated_german(GermanDialect::Standard);
 
     let text =
-        std::fs::read_to_string("tests/test_sources/german_basic.md").expect("test file missing");
+        std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md").expect("test file missing");
     let parser = Markdown::new(MarkdownOptions::default());
     let doc = Document::new(&text, &parser, &dict);
 
@@ -164,7 +164,8 @@ fn test_german_curated_config_disables_english_indefinite_article_rule() {
 fn lint_markdown_fixture(path: &str) -> Vec<String> {
     let dict = curated_german_dictionary();
     let mut linter = new_curated_german(GermanDialect::Standard);
-    let text = std::fs::read_to_string(path).expect("test file missing");
+    let full_path = format!("../../src/language/german/test_sources/{}", path);
+    let text = std::fs::read_to_string(&full_path).expect("test file missing");
     let parser = Markdown::new(MarkdownOptions::default());
     let document = Document::new(&text, &parser, &dict);
 
@@ -178,7 +179,7 @@ fn lint_markdown_fixture(path: &str) -> Vec<String> {
 #[ignore = "German dictionary incomplete - words like Sicherungskonzept, Überblick need to be added"]
 #[test]
 fn test_german_storage_fixture_stays_clean() {
-    let messages = lint_markdown_fixture("tests/test_sources/german_storage_guide.md");
+    let messages = lint_markdown_fixture("german_storage_guide.md");
 
     assert!(
         messages.is_empty(),
@@ -189,7 +190,7 @@ fn test_german_storage_fixture_stays_clean() {
 #[ignore = "German dictionary incomplete - words like Produktbasiert, Frühlingsversion need to be added"]
 #[test]
 fn test_german_release_notes_fixture_stays_clean() {
-    let messages = lint_markdown_fixture("tests/test_sources/german_release_notes.md");
+    let messages = lint_markdown_fixture("german_release_notes.md");
 
     assert!(
         messages.is_empty(),
@@ -199,7 +200,7 @@ fn test_german_release_notes_fixture_stays_clean() {
 
 #[test]
 fn test_german_support_fixture_surfaces_expected_issues() {
-    let messages = lint_markdown_fixture("tests/test_sources/german_support_ticket.md");
+    let messages = lint_markdown_fixture("german_support_ticket.md");
 
     assert!(
         messages
