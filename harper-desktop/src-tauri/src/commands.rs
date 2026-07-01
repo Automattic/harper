@@ -35,6 +35,7 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         add_integration,
         remove_integration,
         set_integration_enabled,
+        get_application_icon_data_url,
         get_accessibility_permission_status,
         request_accessibility_permission,
         start_highlighter_service,
@@ -285,6 +286,25 @@ async fn set_integration_enabled(
         .map_err(|error| error.to_string())?;
 
     Ok(())
+}
+
+#[tauri::command]
+async fn get_application_icon_data_url<R: Runtime>(
+    bundle_id: String,
+    app_handle: tauri::AppHandle<R>,
+) -> Result<String, String> {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
+        let icon_png = broker
+            .lock()
+            .map_err(|error| format!("Failed to read platform broker: {error}"))?
+            .application_icon_png(&bundle_id)?;
+        let encoded = general_purpose::STANDARD.encode(icon_png);
+
+        Ok(format!("data:image/png;base64,{encoded}"))
+    })
+    .await
+    .map_err(|error| format!("Failed to load application icon: {error}"))?
 }
 
 #[tauri::command]

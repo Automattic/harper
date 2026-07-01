@@ -1,13 +1,11 @@
 <script lang="ts">
 import '../app.css';
 
-import { Link } from 'components';
+import { AutomatticLogo, GutterCenter, Link } from 'components';
 import posthog from 'posthog-js';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
 import { page } from '$app/stores';
-import AutomatticLogo from '$lib/components/AutomatticLogo.svelte';
-import GutterCenter from '$lib/components/GutterCenter.svelte';
 
 onMount(() => {
 	if (browser) {

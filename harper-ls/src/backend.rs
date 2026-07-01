@@ -567,7 +567,7 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "git-commit" | "gitcommit" | "octo" => {
+            "git-commit" | "gitcommit" | "octo" | "scminput" => {
                 Some(Box::new(GitCommitParser::new(markdown_options)))
             }
             "html" => Some(Box::new(HtmlParser::default())),
