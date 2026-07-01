@@ -63,6 +63,33 @@ impl Default for WereWhere {
     }
 }
 
+fn looks_like_embedded_question_before_think(
+    toks: &[Token],
+    src: &[char],
+    context: Option<(&[Token], &[Token])>,
+) -> bool {
+    if !toks.first().is_some_and(|tok| {
+        matches!(tok.kind, TokenKind::Word(_)) && tok.span.get_content(src).eq_str("think")
+    }) {
+        return false;
+    }
+
+    let Some((before, _)) = context else {
+        return false;
+    };
+
+    let previous_words: Vec<_> = before
+        .iter()
+        .rev()
+        .filter(|tok| matches!(tok.kind, TokenKind::Word(_)))
+        .take(3)
+        .map(|tok| tok.span.get_content(src))
+        .collect();
+
+    matches!(previous_words.as_slice(), [you, do_, what]
+        if you.eq_str("you") && do_.eq_str("do") && what.eq_str("what"))
+}
+
 impl ExprLinter for WereWhere {
     type Unit = Sentence;
 
@@ -104,6 +131,10 @@ impl ExprLinter for WereWhere {
                 ..Default::default()
             })
         } else {
+            if looks_like_embedded_question_before_think(toks, src, context) {
+                return None;
+            }
+
             were_tok.map(|tok| Lint {
                 span: tok.span,
                 lint_kind: LintKind::Typo,
@@ -370,6 +401,14 @@ mod tests {
     fn no_flag_confirmed_they_were() {
         // "they" sits between "confirmed" and "were" — not adjacent, no match
         assert_no_lints("I confirmed they were correct.", WereWhere::default());
+    }
+
+    #[test]
+    fn no_flag_embedded_what_do_you_think_were() {
+        assert_no_lints(
+            "What do you think were the effects the olives had on the pasta's flavor?",
+            WereWhere::default(),
+        );
     }
 
     #[test]
