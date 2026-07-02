@@ -14,6 +14,8 @@ function toWasmLanguage(language: LintOptions['language']): Language {
 			return Language.Plain;
 		case 'typst':
 			return Language.Typst;
+		case 'latex':
+			return Language.Latex;
 		case 'markdown':
 		case undefined:
 			return Language.Markdown;
