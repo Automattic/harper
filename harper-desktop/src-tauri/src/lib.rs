@@ -19,7 +19,6 @@ use std::{
 };
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
-    image::Image,
     menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
@@ -55,7 +54,10 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Command {
-    Highlighter,
+    Highlighter {
+        #[arg(long)]
+        no_parent: bool,
+    },
 }
 
 const EDITOR_WINDOW_LABEL: &str = "main";
@@ -262,7 +264,7 @@ pub fn run() {
     let args = Args::parse();
 
     match args.command {
-        Some(Command::Highlighter) => run_highlighter(),
+        Some(Command::Highlighter { no_parent }) => run_highlighter(!no_parent),
         None => run_tauri(),
     }
 }
@@ -435,7 +437,9 @@ pub fn run_tauri() {
         .expect("error while running tauri application");
 }
 
-pub fn run_highlighter() {
+/// Run as a highlighter process.
+/// Can configure whether to run standalone, or with a parent Tauri process
+pub fn run_highlighter(has_parent: bool) {
     let client = Rc::new(RefCell::new(Client::current_process()));
     let sync_runtime = Rc::new(
         Builder::new_current_thread()
@@ -444,7 +448,11 @@ pub fn run_highlighter() {
             .expect("failed to build highlighter protocol runtime"),
     );
 
-    let startup_config = fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime);
+    let startup_config = if has_parent {
+        fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime)
+    } else {
+        Ok(Config::default())
+    };
 
     let startup_config = match startup_config {
         Ok(config) => config,
@@ -563,20 +571,23 @@ pub fn run_highlighter() {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
-    let refresh_config = move || match fetch_highlighter_config(
-        &mut refresh_client.borrow_mut(),
-        &refresh_runtime,
-    ) {
-        Ok(config) => apply_highlighter_config(
-            config,
-            &refresh_ignored_lints,
-            &refresh_user_dictionary,
-            &refresh_dialect,
-            &refresh_integrations,
-            &refresh_debounce_ms,
-            &refresh_linter,
-        ),
-        Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+    let refresh_config = move || {
+        if !has_parent {
+            return;
+        }
+
+        match fetch_highlighter_config(&mut refresh_client.borrow_mut(), &refresh_runtime) {
+            Ok(config) => apply_highlighter_config(
+                config,
+                &refresh_ignored_lints,
+                &refresh_user_dictionary,
+                &refresh_dialect,
+                &refresh_integrations,
+                &refresh_debounce_ms,
+                &refresh_linter,
+            ),
+            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+        }
     };
 
     #[cfg(target_os = "macos")]
