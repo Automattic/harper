@@ -15,7 +15,6 @@ use std::{
     cell::RefCell,
     rc::Rc,
     sync::{Arc, Mutex as StdMutex},
-    time::Duration,
 };
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
