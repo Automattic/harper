@@ -44,8 +44,7 @@ impl DiscourseMarkers {
         let phrases_expr = FirstMatchOf::new(
             phrases
                 .iter()
-                .map(|text: &&str| Box::new(FixedPhrase::from_phrase(text)) as Box<dyn Expr>)
-                .collect(),
+                .map(|text: &&str| Box::new(FixedPhrase::from_phrase(text)) as Box<dyn Expr>),
         );
 
         Self {

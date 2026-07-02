@@ -1,8 +1,6 @@
 <script lang="ts">
+import { Arrow, DiscordLogo, GitHubLogo } from 'components';
 import { onMount } from 'svelte';
-import Arrow from '$lib/components/Arrow.svelte';
-import DiscordLogo from '$lib/components/DiscordLogo.svelte';
-import GitHubLogo from '$lib/components/GitHubLogo.svelte';
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
 import MarketingDocSearch from './MarketingDocSearch.svelte';

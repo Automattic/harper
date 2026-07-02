@@ -36,7 +36,9 @@ mod boring_words;
 mod bought;
 mod brand_brandish;
 mod by_accident;
+mod by_ones_own;
 mod by_the_book;
+mod call_it_quits;
 mod call_them;
 mod cant;
 mod capitalize_personal_pronouns;
@@ -52,6 +54,7 @@ mod complain_as_noun;
 mod compound_nouns;
 mod compound_subject_i;
 mod confident;
+mod convenient_store;
 mod correct_number_suffix;
 mod crave_for;
 mod criteria_phenomena;
@@ -90,6 +93,7 @@ mod filler_words;
 mod find_fine;
 mod first_aid_kit;
 mod flesh_out_vs_full_fledged;
+mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
 mod free_predicate;
@@ -98,6 +102,7 @@ mod go_so_far_as_to;
 mod go_to_war;
 mod good_at;
 mod handful;
+mod handful_of_more;
 mod have_pronoun;
 mod have_take_a_look;
 mod hedging;
@@ -109,6 +114,7 @@ mod how_to;
 mod hyphenate_number_day;
 mod i_am_agreement;
 mod if_wouldve;
+mod in_demand_in_depth;
 mod in_favour_of_doing;
 mod in_on_the_cards;
 mod in_time_from_now;
@@ -124,6 +130,7 @@ mod its_contraction;
 mod its_possessive;
 mod jealous_of;
 mod johns_hopkins;
+mod jump_the_gun;
 mod lead_rise_to;
 mod leaving_in_droves;
 mod left_right_hand;
@@ -164,6 +171,7 @@ mod naked_eye;
 mod need_to_noun;
 mod no_french_spaces;
 mod no_longer;
+mod no_longer_pronoun;
 mod no_match_for;
 mod no_oxford_comma;
 mod nobody;
@@ -180,12 +188,14 @@ mod on_floor;
 mod once_or_twice;
 mod one_and_the_same;
 mod one_of_the_singular;
+mod ones_own_accord;
 mod open_compounds;
 mod open_the_light;
 mod orthographic_consistency;
 mod ought_to_be;
 mod out_of_date;
 mod out_of_the_window;
+mod over_plus;
 mod oxford_comma;
 mod oxymorons;
 mod pay_for_price;
@@ -218,6 +228,7 @@ mod respond;
 mod right_click;
 mod rise_the_ranks;
 mod roller_skated;
+mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
@@ -243,6 +254,7 @@ mod take_serious;
 mod that_than;
 mod that_which;
 mod the_how_why;
+mod the_last_days;
 mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
@@ -302,6 +314,13 @@ pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
+
+/// Maximum number of sequential lint suggestions explored when searching for a
+/// transformation path (for example in Weir rule tests or linting test helpers).
+///
+/// This is a compile-time limit that prevents unbounded search when suggestion
+/// application cycles or deep multi-step fixes are involved.
+pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
@@ -590,7 +609,8 @@ pub mod tests {
     /// Applies suggestions iteratively until any combination produces the expected result.
     ///
     /// Explores all possible suggestion branches (depth-first search) until finding a path
-    /// that produces the expected result. Stops after 100 iterations to prevent infinite loops.
+    /// that produces the expected result. Stops after
+    /// [`MAX_SUGGESTION_TRANSFORMATION_DEPTH`] iterations to prevent infinite loops.
     ///
     /// Use this when you want to verify that *some* suggestion sequence produces the
     /// expected result, without caring which specific suggestions are used.
@@ -626,8 +646,11 @@ pub mod tests {
         depth: usize,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > 100 {
-            eprintln!("⚠️  Reached depth limit (100)");
+        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+            eprintln!(
+                "⚠️  Reached depth limit ({})",
+                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+            );
             return false;
         }
 
