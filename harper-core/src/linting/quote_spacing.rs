@@ -39,7 +39,7 @@ impl Linter for QuoteSpacing {
             let quote_index = m.start + 1; // Quote is the second token in the match
             let is_closing = if let TokenKind::Punctuation(Punctuation::Quote(q)) = quote_tok.kind {
                 // If twin_loc points backward, this is a closing quote
-                q.twin_loc.map_or(false, |twin| twin < quote_index)
+                q.twin_loc.is_some_and(|twin| twin < quote_index)
             } else {
                 false
             };
