@@ -1,3 +1,4 @@
+use cached::cached;
 mod accessibility_activation;
 mod accessibility_text;
 mod app_catalog;
@@ -443,6 +444,7 @@ impl OsBroker for MacBroker {
     }
 }
 
+#[cached(max_size = 1_000)]
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
     let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
         return Ok(None);
