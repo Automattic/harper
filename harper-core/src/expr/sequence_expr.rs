@@ -120,6 +120,11 @@ impl SequenceExpr {
         Self::default().then_any_word()
     }
 
+    /// Match any number.
+    pub fn number() -> Self {
+        Self::default().then_number()
+    }
+
     // Expressions of more than one token
 
     /// Optionally match an expression.
