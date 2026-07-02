@@ -4221,6 +4221,7 @@ dependencies = [
  "blanket",
  "cached",
  "criterion",
+ "flate2",
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
@@ -4350,7 +4351,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.6.0"
+version = "2.5.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -4370,10 +4371,12 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
+ "itertools 0.13.0",
  "open",
  "resolve-path",
  "serde",
  "serde_json",
+ "tempfile",
  "tokio",
  "tower-lsp-server",
  "tracing",

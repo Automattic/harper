@@ -1,0 +1,10 @@
+[package]
+name = "harper-lang-test"
+version = "0.1.0"
+edition = "2021"
+
+[workspace]
+
+[dependencies]
+harper-core = { path = "../../.." }
+clap = { version = "4.0", features = ["derive"] }

@@ -36,6 +36,7 @@ bitflags = { version = "2.11.0", features = ["serde"] }
 trie-rs = "0.4.2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
 regex = "1.12.3"
+flate2 = "1.1"
 
 [dev-dependencies]
 criterion = { version = "0.8.2", default-features = false }
@@ -56,3 +57,9 @@ harness = false
 default = ["thesaurus"]
 concurrent = []
 thesaurus = ["dep:harper-thesaurus"]
+
+# Optional language support features
+# English is always included as the base language
+de = []
+pt = []
+sk = []

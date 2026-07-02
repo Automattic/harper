@@ -4,18 +4,15 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{
-    IntegrationView, PlatformBroker, accessibility_allows_highlighter_start, platform_broker,
-};
-use base64::{Engine as _, engine::general_purpose};
+use crate::{IntegrationView, accessibility_allows_highlighter_start, platform_broker};
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints,
+    DictWordMetadata, IgnoredLints, Language,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::Arc;
 use tauri::ipc::Invoke;
-use tauri::{Manager, Runtime, State};
+use tauri::{Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
@@ -57,7 +54,7 @@ async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatCo
 }
 
 #[tauri::command]
-async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
+async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Language, String> {
     Ok(config.lock().await.dialect)
 }
 
@@ -125,7 +122,7 @@ async fn set_last_update_check(
 
 #[tauri::command]
 async fn set_dialect(
-    dialect: Dialect,
+    dialect: Language,
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<(), String> {
     let mut config = config.lock().await;
@@ -231,12 +228,9 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-    broker: State<'_, StdMutex<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?;
+    let broker = platform_broker();
 
     Ok(integrations
         .into_iter()
@@ -369,12 +363,6 @@ fn launch_app(bundle_id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn search_apps(
-    query: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
-) -> Result<Vec<AppSearchResult>, String> {
-    broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .search_apps(&query)
+fn search_apps(query: String) -> Result<Vec<AppSearchResult>, String> {
+    platform_broker().search_apps(&query)
 }

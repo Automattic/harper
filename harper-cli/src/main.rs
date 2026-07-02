@@ -1,5 +1,6 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::language::{Language, parse_language};
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
@@ -1014,17 +1015,10 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-/// Parse a dialect string into a Dialect enum value.
+/// Parse a dialect string into a Language value.
 /// Supports common synonyms, abbreviations, and codes.
-fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
-    match dialect.to_lowercase().as_str() {
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
-        _ => Err(anyhow!("Unknown dialect: {}", dialect)),
-    }
+fn parse_dialect(dialect: &str) -> anyhow::Result<Language> {
+    parse_language(dialect).ok_or_else(|| anyhow!("Unknown dialect: {}", dialect))
 }
 
 /// Split a dictionary line into its word and annotation segments

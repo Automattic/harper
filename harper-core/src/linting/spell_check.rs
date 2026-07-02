@@ -7,6 +7,7 @@ use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
 use crate::expr::{Filter, SequenceExpr};
+
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
 
@@ -51,7 +52,7 @@ impl<T: Dictionary> SpellCheck<T> {
                             .get_word_metadata(v)
                             .unwrap()
                             .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .is_english_dialect_enabled(self.dialect)
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -98,7 +99,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             }
 
             if let Some(metadata) = word.kind.as_word().unwrap()
-                && metadata.dialects.is_dialect_enabled(self.dialect)
+                && metadata.dialects.is_english_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
                     || self.dictionary.contains_exact_word(&word_chars.to_lower()))
             {
@@ -166,7 +167,7 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::dict_word_metadata::DialectFlags;
+    use crate::language::dialects::dialect_flags::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
@@ -453,7 +454,7 @@ mod tests {
         user_dict.append_word_str(
             "Calibre",
             DictWordMetadata {
-                dialects: DialectFlags::from_dialect(user_dialect),
+                dialects: DialectFlags::from_english_dialect(user_dialect),
                 ..Default::default()
             },
         );

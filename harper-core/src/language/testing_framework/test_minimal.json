@@ -1,0 +1,19 @@
+{
+  "affixes": {},
+  "properties": {
+    "N": {
+      "#": "noun property (German)",
+      "metadata": {
+        "noun": {}
+      }
+    },
+    "a": {
+      "#": "test verb property",
+      "metadata": {
+        "verb": {
+          "verb_form": "INFINITIV"
+        }
+      }
+    }
+  }
+}

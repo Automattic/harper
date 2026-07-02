@@ -1,7 +1,8 @@
 use std::path::Path;
 
+use harper_core::language::dialects::dialect_flags::DialectFlags;
 use harper_core::{
-    Dialect, DialectFlags, DictWordMetadata,
+    DictWordMetadata,
     spell::{Dictionary, MutableDictionary},
 };
 use itertools::Itertools;
@@ -40,20 +41,17 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
+pub async fn load_dict(path: impl AsRef<Path>) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
-    dict_from_word_list(read, dialect).await
+    dict_from_word_list(read).await
 }
 
 /// Load a dictionary from a list of words.
 /// It could definitely be optimized to use less memory.
 /// Right now it isn't an issue.
-async fn dict_from_word_list(
-    mut r: impl AsyncRead + Unpin,
-    dialect: Dialect,
-) -> Result<MutableDictionary> {
+async fn dict_from_word_list(mut r: impl AsyncRead + Unpin) -> Result<MutableDictionary> {
     let mut str = String::new();
 
     r.read_to_string(&mut str).await?;
@@ -63,7 +61,7 @@ async fn dict_from_word_list(
         (
             l.chars().collect::<Vec<char>>(),
             DictWordMetadata {
-                dialects: DialectFlags::from_dialect(dialect),
+                dialects: DialectFlags::default(),
                 ..Default::default()
             },
         )

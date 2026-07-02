@@ -1,0 +1,405 @@
+use serde::ser::SerializeStruct;
+use serde::{Deserialize, Serialize};
+use serde_json::Value;
+
+// Import dialect types from the central dialects module for modularity.
+use crate::language::dialects::dialect_trait::DialectFlags as _;
+use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
+
+#[cfg(feature = "de")]
+use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
+
+#[cfg(feature = "pt")]
+use crate::language::portuguese::dialects::{PortugueseDialect, PortugueseDialectFlags};
+
+#[cfg(feature = "sk")]
+use crate::language::slovak::dialects::{SlovakDialect, SlovakDialectFlags};
+
+/// This represents a collection of dialect flags for all supported languages.
+/// Each language has its own set of dialect flags.
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]
+pub struct DialectFlags {
+    // IMPORTANT: These fields must match the LANGUAGES! macro in dict_word_metadata.rs.
+    // To add a new language, add a field here and update the LANGUAGES! macro.
+    pub english: EnglishDialectFlags,
+    #[cfg(feature = "de")]
+    pub german: GermanDialectFlags,
+    #[cfg(feature = "pt")]
+    pub portuguese: PortugueseDialectFlags,
+    #[cfg(feature = "sk")]
+    pub slovak: SlovakDialectFlags,
+}
+
+impl Serialize for DialectFlags {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        let mut scoped = serializer.serialize_struct("DialectFlags", 4)?;
+        scoped.serialize_field("english", &self.english)?;
+        #[cfg(feature = "de")]
+        scoped.serialize_field("german", &self.german)?;
+        #[cfg(feature = "pt")]
+        scoped.serialize_field("portuguese", &self.portuguese)?;
+        #[cfg(feature = "sk")]
+        scoped.serialize_field("slovak", &self.slovak)?;
+        scoped.end()
+    }
+}
+
+impl<'de> Deserialize<'de> for DialectFlags {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        // Only accept the new scoped, language-specific dialect flags format.
+        let scoped = ScopedDialectFlagsSerde::deserialize(deserializer)?;
+        Ok(scoped.into())
+    }
+}
+
+impl From<ScopedDialectFlagsSerde> for DialectFlags {
+    fn from(value: ScopedDialectFlagsSerde) -> Self {
+        Self {
+            english: value.english,
+            #[cfg(feature = "de")]
+            german: value.german,
+            #[cfg(feature = "pt")]
+            portuguese: value.portuguese,
+            #[cfg(feature = "sk")]
+            slovak: value.slovak,
+        }
+    }
+}
+
+impl DialectFlags {
+    #[must_use]
+    pub const fn empty() -> Self {
+        Self {
+            english: EnglishDialectFlags::empty(),
+            #[cfg(feature = "de")]
+            german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pt")]
+            portuguese: PortugueseDialectFlags::empty(),
+            #[cfg(feature = "sk")]
+            slovak: SlovakDialectFlags::empty(),
+        }
+    }
+
+    /// Creates a DialectFlags with the specified dialect flags.
+    #[must_use]
+    pub const fn new(
+        english: EnglishDialectFlags,
+        #[cfg(feature = "de")] german: GermanDialectFlags,
+        #[cfg(feature = "pt")] portuguese: PortugueseDialectFlags,
+        #[cfg(feature = "sk")] slovak: SlovakDialectFlags,
+    ) -> Self {
+        Self {
+            english,
+            #[cfg(feature = "de")]
+            german,
+            #[cfg(feature = "pt")]
+            portuguese,
+            #[cfg(feature = "sk")]
+            slovak,
+        }
+    }
+
+    /// Creates a DialectFlags with only the specified English dialect enabled.
+    /// This is a convenience method for tests and cases where only English dialects are needed.
+    #[must_use]
+    pub fn from_english_dialect(dialect: EnglishDialect) -> Self {
+        let english_flags = match dialect {
+            EnglishDialect::American => EnglishDialectFlags::AMERICAN,
+            EnglishDialect::Canadian => EnglishDialectFlags::CANADIAN,
+            EnglishDialect::Australian => EnglishDialectFlags::AUSTRALIAN,
+            EnglishDialect::British => EnglishDialectFlags::BRITISH,
+            EnglishDialect::Indian => EnglishDialectFlags::INDIAN,
+        };
+
+        Self {
+            english: english_flags,
+            #[cfg(feature = "de")]
+            german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pt")]
+            portuguese: PortugueseDialectFlags::empty(),
+            #[cfg(feature = "sk")]
+            slovak: SlovakDialectFlags::empty(),
+        }
+    }
+
+    #[must_use]
+    #[allow(unused_mut)]
+    pub fn is_empty(self) -> bool {
+        let mut result = self.english.is_empty();
+        #[cfg(feature = "de")]
+        {
+            result = result && self.german.is_empty();
+        }
+        #[cfg(feature = "pt")]
+        {
+            result = result && self.portuguese.is_empty();
+        }
+        #[cfg(feature = "sk")]
+        {
+            result = result && self.slovak.is_empty();
+        }
+        result
+    }
+
+    #[must_use]
+    pub fn is_english_dialect_enabled(self, dialect: EnglishDialect) -> bool {
+        self.english.is_dialect_enabled(dialect)
+    }
+
+    #[must_use]
+    pub fn is_english_dialect_enabled_strict(self, dialect: EnglishDialect) -> bool {
+        self.english.is_dialect_enabled_strict(dialect)
+    }
+
+    #[cfg(feature = "de")]
+    #[must_use]
+    pub fn is_german_dialect_enabled(self, dialect: GermanDialect) -> bool {
+        self.german.is_dialect_enabled(dialect)
+    }
+
+    #[cfg(feature = "de")]
+    #[must_use]
+    pub fn is_german_dialect_enabled_strict(self, dialect: GermanDialect) -> bool {
+        self.german.is_dialect_enabled_strict(dialect)
+    }
+
+    #[cfg(feature = "pt")]
+    #[must_use]
+    pub fn is_portuguese_dialect_enabled(self, dialect: PortugueseDialect) -> bool {
+        self.portuguese.is_dialect_enabled(dialect)
+    }
+
+    #[cfg(feature = "pt")]
+    #[must_use]
+    pub fn is_portuguese_dialect_enabled_strict(self, dialect: PortugueseDialect) -> bool {
+        self.portuguese.is_dialect_enabled_strict(dialect)
+    }
+
+    #[cfg(feature = "sk")]
+    #[must_use]
+    pub fn is_slovak_dialect_enabled(self, dialect: SlovakDialect) -> bool {
+        self.slovak.is_dialect_enabled(dialect)
+    }
+
+    #[cfg(feature = "sk")]
+    #[must_use]
+    pub fn is_slovak_dialect_enabled_strict(self, dialect: SlovakDialect) -> bool {
+        self.slovak.is_dialect_enabled_strict(dialect)
+    }
+
+    /// Gets the most commonly used dialect(s) in the document.
+    ///
+    /// If multiple dialects are used equally often, they will all be enabled in the returned
+    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
+    /// will be the only one enabled.
+    #[must_use]
+    pub fn get_most_used_dialects_from_document(document: &crate::Document) -> Self {
+        // Get the most used dialects for each language separately
+        let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "de")]
+        let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "pt")]
+        let portuguese_flags =
+            PortugueseDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "sk")]
+        let slovak_flags = SlovakDialectFlags::get_most_used_dialects_from_document(document);
+
+        Self {
+            english: english_flags,
+            #[cfg(feature = "de")]
+            german: german_flags,
+            #[cfg(feature = "pt")]
+            portuguese: portuguese_flags,
+            #[cfg(feature = "sk")]
+            slovak: slovak_flags,
+        }
+    }
+}
+
+impl std::ops::BitOr for DialectFlags {
+    type Output = Self;
+
+    fn bitor(self, rhs: Self) -> Self::Output {
+        Self {
+            english: self.english | rhs.english,
+            #[cfg(feature = "de")]
+            german: self.german | rhs.german,
+            #[cfg(feature = "pt")]
+            portuguese: self.portuguese | rhs.portuguese,
+            #[cfg(feature = "sk")]
+            slovak: self.slovak | rhs.slovak,
+        }
+    }
+}
+
+impl std::ops::BitOrAssign for DialectFlags {
+    fn bitor_assign(&mut self, rhs: Self) {
+        self.english |= rhs.english;
+        #[cfg(feature = "de")]
+        {
+            self.german |= rhs.german;
+        }
+        #[cfg(feature = "pt")]
+        {
+            self.portuguese |= rhs.portuguese;
+        }
+        #[cfg(feature = "sk")]
+        {
+            self.slovak |= rhs.slovak;
+        }
+    }
+}
+
+impl Default for DialectFlags {
+    /// A default value with no dialects explicitly enabled.
+    /// Implicitly, this state corresponds to all dialects being enabled.
+    fn default() -> Self {
+        Self::empty()
+    }
+}
+
+// Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.
+#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]
+struct ScopedDialectFlagsSerde {
+    english: EnglishDialectFlags,
+    #[cfg(feature = "de")]
+    german: GermanDialectFlags,
+    #[cfg(feature = "pt")]
+    portuguese: PortugueseDialectFlags,
+    #[cfg(feature = "sk")]
+    slovak: SlovakDialectFlags,
+}
+
+impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
+    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        use serde::de::{Error, Unexpected};
+
+        let value = Value::deserialize(deserializer)?;
+
+        match value {
+            Value::Object(map) => {
+                let mut english = EnglishDialectFlags::default();
+                #[cfg(feature = "de")]
+                let mut german = GermanDialectFlags::default();
+                #[cfg(feature = "pt")]
+                let mut portuguese = PortugueseDialectFlags::default();
+                #[cfg(feature = "sk")]
+                let mut slovak = SlovakDialectFlags::default();
+
+                for (key, val) in map {
+                    match key.as_str() {
+                        "english" => {
+                            english = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "AMERICAN" => Ok(EnglishDialectFlags::AMERICAN),
+                                    "CANADIAN" => Ok(EnglishDialectFlags::CANADIAN),
+                                    "AUSTRALIAN" => Ok(EnglishDialectFlags::AUSTRALIAN),
+                                    "BRITISH" => Ok(EnglishDialectFlags::BRITISH),
+                                    "INDIAN" => Ok(EnglishDialectFlags::INDIAN),
+                                    _ => {
+                                        Err(Error::custom(format!("Unknown English dialect: {s}")))
+                                    }
+                                },
+                                _ => Err(Error::invalid_type(
+                                    Unexpected::Other("english"),
+                                    &"string",
+                                )),
+                            }?;
+                        }
+                        #[cfg(feature = "de")]
+                        "german" => {
+                            german = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "STANDARD" => Ok(GermanDialectFlags::STANDARD),
+                                    "AUSTRIAN" => Ok(GermanDialectFlags::AUSTRIAN),
+                                    "SWISS" => Ok(GermanDialectFlags::SWISS),
+                                    _ => Err(Error::custom(format!("Unknown German dialect: {s}"))),
+                                },
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("german"), &"string"))
+                                }
+                            }?;
+                        }
+                        #[cfg(feature = "pt")]
+                        "portuguese" => {
+                            portuguese = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "EUROPEAN" => Ok(PortugueseDialectFlags::EUROPEAN),
+                                    "BRAZILIAN" => Ok(PortugueseDialectFlags::BRAZILIAN),
+                                    "AFRICAN" => Ok(PortugueseDialectFlags::AFRICAN),
+                                    _ => Err(Error::custom(format!(
+                                        "Unknown Portuguese dialect: {s}"
+                                    ))),
+                                },
+                                _ => Err(Error::invalid_type(
+                                    Unexpected::Other("portuguese"),
+                                    &"string",
+                                )),
+                            }?;
+                        }
+                        #[cfg(feature = "sk")]
+                        "slovak" => {
+                            slovak = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "STANDARD" => Ok(SlovakDialectFlags::STANDARD),
+                                    _ => Err(Error::custom(format!("Unknown Slovak dialect: {s}"))),
+                                },
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("slovak"), &"string"))
+                                }
+                            }?;
+                        }
+                        _ => {
+                            // Build list of valid fields based on enabled features
+                            let valid_fields: Vec<&'static str> = {
+                                #[allow(unused_mut)]
+                                let mut fields = vec!["english"];
+                                #[cfg(feature = "de")]
+                                {
+                                    fields.push("german");
+                                }
+                                #[cfg(feature = "pt")]
+                                {
+                                    fields.push("portuguese");
+                                }
+                                #[cfg(feature = "sk")]
+                                {
+                                    fields.push("slovak");
+                                }
+                                fields
+                            };
+                            // Convert to a static slice by leaking the memory
+                            // This is safe as it's only done during deserialization error handling
+                            let valid_fields_static: &'static [&'static str] =
+                                Box::leak(valid_fields.into_boxed_slice());
+                            return Err(Error::unknown_field(&key, valid_fields_static));
+                        }
+                    }
+                }
+
+                Ok(ScopedDialectFlagsSerde {
+                    english,
+                    #[cfg(feature = "de")]
+                    german,
+                    #[cfg(feature = "pt")]
+                    portuguese,
+                    #[cfg(feature = "sk")]
+                    slovak,
+                })
+            }
+            Value::String(s) => Err(Error::custom(format!(
+                "Legacy flat string format for dialect flags is no longer supported: {s}"
+            ))),
+            _ => Err(Error::custom("Expected object for dialect flags")),
+        }
+    }
+}

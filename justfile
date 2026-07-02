@@ -1,6 +1,9 @@
 default:
   @just --list
 
+# Import language-specific recipes
+import "harper-core/src/language/justfile"
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
@@ -460,9 +463,22 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
-install:
-  cargo install --path harper-ls --locked
-  cargo install --path harper-cli --locked
+# FEATURES: Comma-separated list of features to enable (e.g., "de,pt").
+# If not specified, all features (de,pt,sk,thesaurus,concurrent) are enabled.
+install *FEATURES:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  
+  # If no features specified, use all available features
+  if [ -z "{{FEATURES}}" ]; then
+    FEATURES="de,pt,sk,thesaurus,concurrent"
+  else
+    FEATURES="{{FEATURES}}"
+  fi
+  
+  echo "Installing with features: ${FEATURES}"
+  cargo install --path harper-ls --locked --features "${FEATURES}"
+  cargo install --path harper-cli --locked --features "${FEATURES}"
 
 # Run `harper-cli` on the Harper repository
 dogfood:

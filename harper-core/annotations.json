@@ -847,7 +847,7 @@
 			"#": "American property",
 			"propagate": true,
 			"metadata": {
-				"dialects": "AMERICAN"
+				"dialects": {"english": "AMERICAN"}
 			},
 			"rename_ok": true
 		},
@@ -855,7 +855,7 @@
 			"#": "GB property",
 			"propagate": true,
 			"metadata": {
-				"dialects": "BRITISH"
+				"dialects": {"english": "BRITISH"}
 			},
 			"rename_ok": true
 		},
@@ -864,7 +864,7 @@
 			"//": "mnemonic: at symbol resembles an 'a' inside a 'C'",
 			"propagate": true,
 			"metadata": {
-				"dialects": "CANADIAN"
+				"dialects": {"english": "CANADIAN"}
 			}
 		},
 		"_": {
@@ -872,7 +872,7 @@
 			"//": "mnemonic: down under",
 			"propagate": true,
 			"metadata": {
-				"dialects": "AUSTRALIAN"
+				"dialects": {"english": "AUSTRALIAN"}
 			}
 		},
 		"₹": {
@@ -880,7 +880,7 @@
 			"//": "mnemonic: rupee symbol",
 			"propagate": true,
 			"metadata": {
-				"dialects": "INDIAN"
+				"dialects": {"english": "INDIAN"}
 			}
 		},
 		"F": {
