@@ -48,7 +48,7 @@ impl ExprLinter for AsToInterrogative {
                 "as to",
                 matched_tokens[2].get_ch(source),
             )],
-            message: "This construction requires `as to` instead of just `to`.".to_string(),
+            message: "This construction requires `as to` instead of just `to`.".to_owned(),
             ..Default::default()
         })
     }

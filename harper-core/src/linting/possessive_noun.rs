@@ -75,7 +75,7 @@ impl<D: Dictionary> ExprLinter for PossessiveNoun<D> {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(replacement.chars().collect())],
-            message: self.description().to_string(),
+            message: self.description().to_owned(),
             priority: 10,
         })
     }

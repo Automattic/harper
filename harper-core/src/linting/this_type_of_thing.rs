@@ -143,7 +143,7 @@ impl ExprLinter for ThisTypeOfThing {
                 bad_tok.get_ch(src),
             )],
             message: "The grammatical number of the determiner and the two nouns must agree."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
