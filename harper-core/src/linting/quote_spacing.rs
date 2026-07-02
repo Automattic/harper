@@ -1,8 +1,8 @@
-use crate::expr::{ExprExt, SequenceExpr};
-use crate::linting::LintKind;
-use crate::{Document, TokenStringExt};
-
-use super::{Lint, Linter};
+use crate::{
+    expr::{ExprExt, SequenceExpr},
+    linting::{Lint, LintKind, Linter},
+    {Document, Punctuation, TokenKind, TokenStringExt},
+};
 
 pub struct QuoteSpacing {
     expr: SequenceExpr,
@@ -25,7 +25,6 @@ impl Default for QuoteSpacing {
 impl Linter for QuoteSpacing {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
-        let source = document.get_source();
 
         for m in self.expr.iter_matches_in_doc(document) {
             let matched_tokens = m.get_content(document.get_tokens());
@@ -34,21 +33,24 @@ impl Linter for QuoteSpacing {
                 continue;
             };
 
-            let quote_span = matched_tokens[1].span;
+            let quote_tok = &matched_tokens[1];
 
-            // Count quotes before this one to determine if it's opening (even) or closing (odd)
-            let quote_index = source[..quote_span.start]
-                .iter()
-                .filter(|&&c| c == '"')
-                .count();
+            // Is this an opening or closing quote?
+            let quote_index = m.start + 1; // Quote is the second token in the match
+            let is_closing = if let TokenKind::Punctuation(Punctuation::Quote(q)) = quote_tok.kind {
+                // If twin_loc points backward, this is a closing quote
+                q.twin_loc.map_or(false, |twin| twin < quote_index)
+            } else {
+                false
+            };
 
             let mut suggestions = vec![
                 super::Suggestion::ReplaceWith(vec![' ', '"']),
                 super::Suggestion::ReplaceWith(vec!['"', ' ']),
             ];
 
-            // Every odd-numbered quote is likely a close quote, ie space likely should be after it.
-            if quote_index % 2 == 1 {
+            // For closing quotes, space likely should be after it
+            if is_closing {
                 suggestions.swap(0, 1);
             }
 
@@ -72,7 +74,10 @@ impl Linter for QuoteSpacing {
 #[cfg(test)]
 mod tests {
     use super::QuoteSpacing;
-    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{
+        assert_first_suggestion_result, assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
+    };
 
     #[test]
     fn flags_missing_space_before_quote() {
@@ -105,5 +110,38 @@ mod tests {
             QuoteSpacing::default(),
             "It's not a complete sentence since it lacks a verb but it would be valid as a title or answer to a question since \"dog runs\" are things which exist",
         );
+    }
+
+    #[test]
+    fn ensure_first_suggestion_is_space_then_quote() {
+        assert_first_suggestion_result(
+            "foo\"bar\" bar",
+            QuoteSpacing::default(),
+            "foo \"bar\" bar",
+        );
+    }
+
+    #[test]
+    fn ensure_first_suggestion_is_quote_then_space() {
+        assert_first_suggestion_result(
+            "foo \"bar\"bar",
+            QuoteSpacing::default(),
+            "foo \"bar\" bar",
+        );
+    }
+
+    #[test]
+    #[should_panic]
+    fn ensure_first_suggestion_is_not_quote_then_space() {
+        assert_first_suggestion_result(
+            "foo \"bar\"bar",
+            QuoteSpacing::default(),
+            "foo\" bar\" bar",
+        );
+    }
+
+    #[test]
+    fn ensure_quote_then_space_is_suggested_even_when_wrong() {
+        assert_suggestion_result("foo\"bar\" bar", QuoteSpacing::default(), "foo\" bar\" bar");
     }
 }
