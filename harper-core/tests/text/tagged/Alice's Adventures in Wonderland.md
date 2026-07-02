@@ -984,13 +984,13 @@
 # I/Ddem+ . .
 >
 #
->  “Fury said to a
+>      “Fury said to a
 # Unlintable
->             mouse, That he
-# Unlintable Unlintable
->            met in the
-# Unlintable Unlintable
 >
+#
+>      mouse, That he
+# Unlintable
+> >     met in the
 # Unlintable
 >
 #
