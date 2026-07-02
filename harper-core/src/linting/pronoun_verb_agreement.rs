@@ -231,7 +231,7 @@ impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
             lint_kind: LintKind::Agreement,
             suggestions,
             message: "The form of the verb must agree in grammatical number with the pronoun."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
