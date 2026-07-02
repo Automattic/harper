@@ -1,5 +1,5 @@
 import type { LintOptions } from 'harper.js';
-import { closestBox, type IgnorableLintBox } from './Box';
+import { type Box, boxesOverlap, closestBox, type IgnorableLintBox } from './Box';
 import computeLintBoxes from './computeLintBoxes/index';
 import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
@@ -32,6 +32,8 @@ type FrameworkActions = {
 const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
 /** Events on the window that can trigger a re-render. */
 const PAGE_EVENTS = ['resize', 'scroll'];
+const NEAR_CARET_SUPPRESSION_HORIZONTAL_PX = 12;
+const NEAR_CARET_SUPPRESSION_VERTICAL_PX = 2;
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
@@ -42,6 +44,7 @@ export default class LintFramework {
 	private lintRequested = false;
 	private renderRequested = false;
 	private lastInputAt = 0;
+	private suppressNearCaretHighlights = false;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
@@ -114,15 +117,23 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
+	private isDebouncePending(delay: number): boolean {
+		return delay > 0 && Date.now() - this.lastInputAt < delay;
+	}
+
 	async requestLintUpdate() {
 		if (this.lintRequested) {
 			return;
 		}
 
 		const delay = (await this.actions.getDelay?.()) ?? 0;
-		if (delay > 0 && Date.now() - this.lastInputAt < delay) {
+		if (this.isDebouncePending(delay)) {
+			this.suppressNearCaretHighlights = true;
+			this.requestRender();
 			return;
 		}
+
+		this.suppressNearCaretHighlights = false;
 
 		// Avoid duplicate requests in the queue
 		this.lintRequested = true;
@@ -166,6 +177,7 @@ export default class LintFramework {
 		);
 
 		this.lastLints = lintResults.filter((r) => r.target != null) as any;
+		this.suppressNearCaretHighlights = false;
 		this.lintRequested = false;
 		this.requestRender();
 	}
@@ -276,6 +288,36 @@ export default class LintFramework {
 		}
 	}
 
+	private filterNearCaretHighlight(boxes: IgnorableLintBox[]): IgnorableLintBox[] {
+		if (!this.suppressNearCaretHighlights || boxes.length === 0) {
+			return boxes;
+		}
+
+		const caretPosition = getCaretPosition();
+		if (caretPosition == null) {
+			return boxes;
+		}
+
+		const closestIdx = closestBox(caretPosition, boxes);
+		if (closestIdx < 0) {
+			return boxes;
+		}
+
+		const closest = boxes[closestIdx];
+		if (
+			!isBoxWithinThreshold(
+				caretPosition,
+				closest,
+				NEAR_CARET_SUPPRESSION_HORIZONTAL_PX,
+				NEAR_CARET_SUPPRESSION_VERTICAL_PX,
+			)
+		) {
+			return boxes;
+		}
+
+		return boxes.filter((_, idx) => idx !== closestIdx);
+	}
+
 	private getTargetText(target: Node): {
 		text: string | null;
 		isCM: boolean;
@@ -344,14 +386,25 @@ export default class LintFramework {
 					}),
 				);
 			});
+			const renderedBoxes = this.filterNearCaretHighlight(boxes);
 			this.lastLintBoxes = boxes;
-			this.highlights.renderLintBoxes(boxes);
+			this.highlights.renderLintBoxes(renderedBoxes);
 			this.popupHandler.updateLintBoxes(boxes);
 
 			this.renderRequested = false;
 			this.lastBoxes = boxes;
 		});
 	}
+}
+
+function isBoxWithinThreshold(a: Box, b: Box, horizontalPx: number, verticalPx: number): boolean {
+	if (boxesOverlap(a, b)) {
+		return true;
+	}
+
+	const dx = Math.max(a.x - (b.x + b.width), b.x - (a.x + a.width), 0);
+	const dy = Math.max(a.y - (b.y + b.height), b.y - (a.y + a.height), 0);
+	return dx <= horizontalPx && dy <= verticalPx;
 }
 
 /**
