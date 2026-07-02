@@ -80,7 +80,7 @@ impl MacBroker {
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
         if let Some((last_focused, measurement_time)) = self.last_focused {
             if Instant::now().duration_since(measurement_time).as_secs() < 3 {
-                return Some(last_focused);
+                return Ok(Some(last_focused));
             }
         }
 
@@ -88,9 +88,9 @@ impl MacBroker {
         let current_pid = std::process::id() as pid_t;
 
         if focused_pid == current_pid {
-            Ok(self.last_focused)
+            Ok(self.last_focused.map(|v| v.0))
         } else {
-            self.last_focused = Some(focused_pid);
+            self.last_focused = Some((focused_pid, Instant::now()));
             Ok(Some(focused_pid))
         }
     }
