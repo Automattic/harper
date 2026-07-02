@@ -1,15 +1,19 @@
 use clap::Parser;
-use harper_core::language::{
-    LanguageModule, english::module::EnglishModule, portuguese::module::PortugueseModule,
-};
+use harper_core::language::{LanguageModule, english::module::EnglishModule};
 use harper_core::spell::Dictionary;
+
+#[cfg(feature = "pt")]
+use harper_core::language::portuguese::module::PortugueseModule;
+
+#[cfg(feature = "de")]
+use harper_core::language::german::module::GermanModule;
 
 /// Harper Language Statistics Tool
 /// Analyzes dictionary size, annotation coverage, and other metrics
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Language to analyze (english, german, portuguese)
+    /// Language to analyze (english, german, portuguese - depending on enabled features)
     #[arg(required = true)]
     language: String,
 
@@ -23,7 +27,9 @@ fn main() {
 
     match args.language.as_str() {
         "english" => analyze_english(&args),
+        #[cfg(feature = "de")]
         "german" => analyze_german(&args),
+        #[cfg(feature = "pt")]
         "portuguese" => analyze_portuguese(&args),
         _ => eprintln!("Unknown language: {}", args.language),
     }
@@ -61,6 +67,7 @@ fn analyze_english(args: &Args) {
     println!("==================================");
 }
 
+#[cfg(feature = "de")]
 fn analyze_german(args: &Args) {
     println!("📊 German Language Statistics");
     println!("==================================");
@@ -186,6 +193,7 @@ fn analyze_german(args: &Args) {
     println!("==================================");
 }
 
+#[cfg(feature = "pt")]
 fn analyze_portuguese(args: &Args) {
     println!("📊 Portuguese Language Statistics");
     println!("==================================");

@@ -21,39 +21,50 @@ pub fn parse_language(s: &str) -> Option<Language> {
 
     match s_lower.as_str() {
         // English
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" =>
-            Some(Language::English(EnglishDialect::American)),
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" =>
-            Some(Language::English(EnglishDialect::British)),
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" =>
-            Some(Language::English(EnglishDialect::Australian)),
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" =>
-            Some(Language::English(EnglishDialect::Indian)),
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" =>
-            Some(Language::English(EnglishDialect::Canadian)),
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
+            Some(Language::English(EnglishDialect::American))
+        }
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => {
+            Some(Language::English(EnglishDialect::British))
+        }
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
+            Some(Language::English(EnglishDialect::Australian))
+        }
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => {
+            Some(Language::English(EnglishDialect::Indian))
+        }
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => {
+            Some(Language::English(EnglishDialect::Canadian))
+        }
         // German
         #[cfg(feature = "de")]
-        "de" | "german" | "deutsch" | "de-de" | "de_de" =>
-            Some(Language::German(GermanDialect::Standard)),
+        "de" | "german" | "deutsch" | "de-de" | "de_de" => {
+            Some(Language::German(GermanDialect::Standard))
+        }
         #[cfg(feature = "de")]
-        "at" | "austria" | "austrian" | "de-at" | "de_at" =>
-            Some(Language::German(GermanDialect::Austrian)),
+        "at" | "austria" | "austrian" | "de-at" | "de_at" => {
+            Some(Language::German(GermanDialect::Austrian))
+        }
         #[cfg(feature = "de")]
-        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" =>
-            Some(Language::German(GermanDialect::Swiss)),
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
+            Some(Language::German(GermanDialect::Swiss))
+        }
         // Portuguese
         #[cfg(feature = "pt")]
-        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "portugu\u{00ea}s" =>
-            Some(Language::Portuguese(PortugueseDialect::European)),
+        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "portugu\u{00ea}s" => {
+            Some(Language::Portuguese(PortugueseDialect::European))
+        }
         #[cfg(feature = "pt")]
-        "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" =>
-            Some(Language::Portuguese(PortugueseDialect::Brazilian)),
+        "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" => {
+            Some(Language::Portuguese(PortugueseDialect::Brazilian))
+        }
         #[cfg(feature = "pt")]
         "ao" => Some(Language::Portuguese(PortugueseDialect::African)),
         // Slovak
         #[cfg(feature = "sk")]
-        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" =>
-            Some(Language::Slovak(SlovakDialect::Standard)),
+        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {
+            Some(Language::Slovak(SlovakDialect::Standard))
+        }
         _ => None,
     }
 }
@@ -78,8 +89,20 @@ pub enum Language {
 
 /// A family of languages.
 #[derive(
-    Default, Debug, Clone, Copy, Serialize, Deserialize,
-    PartialEq, PartialOrd, Eq, Hash, EnumCount, EnumString, EnumIter, Display,
+    Default,
+    Debug,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    PartialOrd,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumString,
+    EnumIter,
+    Display,
 )]
 pub enum LanguageFamily {
     #[default]
