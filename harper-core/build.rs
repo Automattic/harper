@@ -410,9 +410,7 @@ fn generate_languages_file(src_dir: &Path) {
     code.push_str("            Some(Language::Portuguese(PortugueseDialect::Brazilian))\n");
     code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"pt\")]\n");
-    code.push_str("        \"ao\" => {\n");
-    code.push_str("            Some(Language::Portuguese(PortugueseDialect::African))\n");
-    code.push_str("        }\n");
+    code.push_str("        \"ao\" => Some(Language::Portuguese(PortugueseDialect::African)),\n");
 
     code.push_str("        // Slovak\n");
     code.push_str("        #[cfg(feature = \"sk\")]\n");
@@ -559,6 +557,7 @@ fn generate_registry_file(src_dir: &Path) {
 
     // DETECTION
     code.push_str("/// All language detectors, sorted by confidence (highest to lowest).\n");
+    code.push_str("#[allow(clippy::vec_init_then_push)]\n");
     code.push_str(
         "static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::new(|| {\n",
     );
@@ -779,6 +778,7 @@ fn generate_registry_file(src_dir: &Path) {
     code.push_str("    use crate::language::module::LanguageModule;\n\n");
     code.push_str("    match language {\n");
     code.push_str("        Language::English(_dialect) => {\n");
+    code.push_str("            #[allow(clippy::let_and_return)]\n");
     code.push_str("            let group = EnglishModule::curated_lint_group(_dialect);\n");
     code.push_str("            group\n");
     code.push_str("        }\n");

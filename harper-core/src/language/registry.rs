@@ -26,6 +26,7 @@ use super::portuguese::module::PortugueseModule;
 use super::slovak::module::SlovakModule;
 
 /// All language detectors, sorted by confidence (highest to lowest).
+#[allow(clippy::vec_init_then_push)]
 static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::new(|| {
     let mut detectors: Vec<(Box<dyn LanguageDetector>, f64)> = Vec::new();
 
@@ -237,6 +238,7 @@ pub fn new_curated_for_language(
 
     match language {
         Language::English(_dialect) => {
+            #[allow(clippy::let_and_return)]
             let group = EnglishModule::curated_lint_group(_dialect);
             group
         }
