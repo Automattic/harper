@@ -17,7 +17,10 @@ use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
 
 use crate::expr::{Expr, ExprExt};
-use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Sentence, Suggestion};
+use crate::linting::{
+    Chunk, ExprLinter, Lint, LintKind, Linter, MAX_SUGGESTION_TRANSFORMATION_DEPTH, Sentence,
+    Suggestion,
+};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
@@ -216,7 +219,7 @@ impl WeirLinter {
             Some(text_chars.iter().collect())
         }
 
-        fn transform_top3_to_expected(
+        fn transform_to_expected(
             text: &str,
             expected: &str,
             linter: &mut impl Linter,
@@ -232,7 +235,7 @@ impl WeirLinter {
                     return Some(current);
                 }
 
-                if depth >= 100 {
+                if depth >= MAX_SUGGESTION_TRANSFORMATION_DEPTH {
                     continue;
                 }
 
@@ -244,7 +247,7 @@ impl WeirLinter {
                 let lints = linter.lint(&doc);
 
                 if let Some(lint) = lints.first() {
-                    for i in 0..3 {
+                    for i in 0..lint.suggestions.len() {
                         if let Some(next) = apply_nth_suggestion(&current, lint, i)
                             && seen.insert(next.clone())
                         {
@@ -280,7 +283,7 @@ impl WeirLinter {
                 }
 
                 iter_count += 1;
-                if iter_count == 100 {
+                if iter_count == MAX_SUGGESTION_TRANSFORMATION_DEPTH {
                     break;
                 }
             }
@@ -306,7 +309,7 @@ impl WeirLinter {
             .collect();
 
         for (text, expected) in tests {
-            let matched = transform_top3_to_expected(&text, &expected, self);
+            let matched = transform_to_expected(&text, &expected, self);
 
             match matched {
                 Some(result) => {
@@ -461,6 +464,30 @@ pub mod tests {
 
         assert_passes_all(&mut linter);
         assert_eq!(5, linter.count_tests());
+    }
+
+    #[test]
+    fn array_prefers_longest_match_over_first_match() {
+        for main in [
+            "[(capitalized off of), (capitalized off)]",
+            "[(capitalized off), (capitalized off of)]",
+        ] {
+            let source = format!(
+                r#"
+            expr main {main}
+            let message "Use the replacement."
+            let description "Regression test for overlapping Weir array options."
+            let kind "Miscellaneous"
+            let becomes "replacement"
+            let strategy "Exact"
+
+            test "capitalized off of" "replacement"
+            "#
+            );
+
+            let mut linter = WeirLinter::new(&source).unwrap();
+            assert_passes_all(&mut linter);
+        }
     }
 
     #[test]
@@ -639,6 +666,30 @@ pub mod tests {
         let source = "expr main";
         let res = WeirLinter::new(source);
         assert_eq!(res.err(), Some(Error::ExpectedVariableUndefined))
+    }
+
+    #[test]
+    fn becomes_array_with_many_alternatives() {
+        let source = r#"
+ expr main (the fact)
+ let message "Consider alternative phrasing"
+ let description "Test that all 'becomes' alternatives can be reached"
+ let kind "Miscellaneous"
+ let becomes ["the allegation", "the idea", "the claim", "the story", "the rumor"]
+ let strategy "Exact"
+
+ test "There is truth to the fact that people like images." "There is truth to the allegation that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the idea that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the claim that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the story that people like images."
+ test "There is truth to the fact that people like images." "There is truth to the rumor that people like images."
+
+ allows "There is truth to the story that people like images."
+ "#;
+
+        let mut linter = WeirLinter::new(source).unwrap();
+        assert_passes_all(&mut linter);
+        assert_eq!(6, linter.count_tests());
     }
 
     #[quickcheck]
