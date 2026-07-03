@@ -26,27 +26,39 @@ jobs:
             test-chrome-plugin,
             test-firefox-plugin,
             test-obsidian,
+            check-desktop,
           ]
     steps:
-      - uses: actions/checkout@v4
-      - uses: extractions/setup-just@v2
+      - uses: actions/checkout@v7.0.0
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - name: Install pnpm
-        uses: pnpm/action-setup@v4
-      - uses: actions-rust-lang/setup-rust-toolchain@v1
+        uses: pnpm/action-setup@0ebf47130e4866e96fce0953f49152a61190b271 # v6.0.9
+      - uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
         with:
           components: rustfmt,clippy
       - name: Install Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v6
         with:
           node-version-file: ".node-version"
       - name: Enable Corepack
         run: corepack enable
+      - name: Install Tauri Linux dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            libwebkit2gtk-4.1-dev \
+            libxdo-dev
+          sudo apt-get install -y libappindicator3-dev || true
       - name: Rust Cache
-        uses: Swatinem/rust-cache@v2.7.8
-      - uses: cargo-bins/cargo-binstall@main
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+      - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
         run: cargo binstall cargo-hack --force --no-confirm
+      - name: Install `tauri-cli`
+        run: cargo binstall tauri-cli --force --no-confirm
       - name: Run `${{ matrix.task }}`
         run: just ${{ matrix.task }}

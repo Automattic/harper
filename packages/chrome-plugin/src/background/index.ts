@@ -26,6 +26,7 @@ import {
 	type GetHotkeyResponse,
 	type GetInstalledOnRequest,
 	type GetInstalledOnResponse,
+	type GetIsolateEnglishResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetReviewedRequest,
@@ -50,6 +51,7 @@ import {
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
+	type SetIsolateEnglishRequest,
 	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
@@ -105,11 +107,95 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
 
 let linter: LocalLinter;
 const WEIRPACKS_KEY = 'weirpacks';
+const linterStorageKeys = [
+	'dialect',
+	'ignoredLints',
+	'lintConfig',
+	WEIRPACKS_KEY,
+	'userDictionary',
+];
+let linterHasPersistedState = false;
+const defaultEnabledDomains = [
+	'old.reddit.com',
+	'sh.reddit.com',
+	'www.reddit.com',
+	'chatgpt.com',
+	'www.perplexity.ai',
+	'textarea.online',
+	'webmail.porkbun.com',
+	'mail.google.com',
+	'trix-editor.org',
+	'github.com',
+	'linear.app',
+	'messages.google.com',
+	'blank.page',
+	'blankpage.im',
+	'froala.com',
+	'playground.lexical.dev',
+	'discord.com',
+	'www.youtube.com',
+	'www.instagram.com',
+	'web.whatsapp.com',
+	'outlook.live.com',
+	'www.linkedin.com',
+	'bsky.app',
+	'pootlewriter.com',
+	'www.tumblr.com',
+	'dayone.me',
+	'medium.com',
+	'x.com',
+	'www.notion.so',
+	'hashnode.com',
+	'www.slatejs.org',
+	'localhost',
+	'writewithharper.com',
+	'prosemirror.net',
+	'draftjs.org',
+	'gitlab.com',
+	'core.trac.wordpress.org',
+	'write.ellipsus.com',
+	'www.facebook.com',
+	'www.upwork.com',
+	'news.ycombinator.com',
+	'classroom.google.com',
+	'quilljs.com',
+	'www.wattpad.com',
+	'ckeditor.com',
+	'app.slack.com',
+	'openrouter.ai',
+	'docs.google.com',
+	'typst.app',
+	'steamcommunity.com',
+	'store.steampowered.com',
+	'steampowered.com',
+	'help.steampowered.com',
+] as const;
+const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 
-const linterReady = getDialect()
+let linterReady = getDialect()
 	.then(setDialect)
 	.catch((err) => console.error('Failed to initialize linter:', err));
 setInstalledOnIfMissing();
+
+chrome.storage.onChanged.addListener((changes, areaName) => {
+	if (areaName !== 'local') {
+		return;
+	}
+
+	const resetLinter = linterStorageKeys.some((key) => {
+		const change = changes[key];
+		return change != null && change.oldValue !== undefined && change.newValue === undefined;
+	});
+
+	if (resetLinter) {
+		linterReady = linterReady
+			.then(async () => {
+				await initializeLinter(await getDialect());
+				linterHasPersistedState = false;
+			})
+			.catch((err) => console.error('Failed to reset linter:', err));
+	}
+});
 
 /** Await this function to "wait" for the linter to boot up. */
 async function ensureLinterReady() {
@@ -117,64 +203,9 @@ async function ensureLinterReady() {
 }
 
 async function enableDefaultDomains() {
-	const defaultEnabledDomains = [
-		'old.reddit.com',
-		'sh.reddit.com',
-		'www.reddit.com',
-		'chatgpt.com',
-		'www.perplexity.ai',
-		'textarea.online',
-		'webmail.porkbun.com',
-		'mail.google.com',
-		'trix-editor.org',
-		'github.com',
-		'messages.google.com',
-		'blank.page',
-		'blankpage.im',
-		'froala.com',
-		'playground.lexical.dev',
-		'discord.com',
-		'www.youtube.com',
-		'www.instagram.com',
-		'web.whatsapp.com',
-		'outlook.live.com',
-		'www.linkedin.com',
-		'bsky.app',
-		'pootlewriter.com',
-		'www.tumblr.com',
-		'dayone.me',
-		'medium.com',
-		'x.com',
-		'www.notion.so',
-		'hashnode.com',
-		'www.slatejs.org',
-		'localhost',
-		'writewithharper.com',
-		'prosemirror.net',
-		'draftjs.org',
-		'gitlab.com',
-		'core.trac.wordpress.org',
-		'write.ellipsus.com',
-		'www.facebook.com',
-		'www.upwork.com',
-		'news.ycombinator.com',
-		'classroom.google.com',
-		'quilljs.com',
-		'www.wattpad.com',
-		'ckeditor.com',
-		'app.slack.com',
-		'openrouter.ai',
-		'docs.google.com',
-		'typst.app',
-		'steamcommunity.com',
-		'store.steampowered.com',
-		'steampowered.com',
-		'help.steampowered.com',
-	];
-
 	for (const item of defaultEnabledDomains) {
 		if (!(await isDomainSet(item))) {
-			setDomainEnable(item, true);
+			await setDomainEnable(item, true);
 		}
 	}
 }
@@ -199,6 +230,10 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getIsolateEnglish':
+			return handleGetIsolateEnglish();
+		case 'setIsolateEnglish':
+			return handleSetIsolateEnglish(message);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
@@ -257,6 +292,7 @@ async function handleLint(
 	sender?: chrome.runtime.MessageSender,
 ): Promise<LintResponse> {
 	await ensureLinterReady();
+	await resetLinterIfPersistedStateWasCleared();
 
 	// Keep the content-script keepalive ping cheap; empty requests should not hit inheritance or linting.
 	if (req.text.length === 0) {
@@ -267,7 +303,8 @@ async function handleLint(
 		return { kind: 'lints', lints: {} };
 	}
 
-	const grouped = await linter.organizedLints(req.text, req.options);
+	const isolateEnglish = req.options?.isolateEnglish === true || (await getIsolateEnglish());
+	const grouped = await linter.organizedLints(req.text, { ...req.options, isolateEnglish });
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -276,6 +313,19 @@ async function handleLint(
 	);
 	const unpackedBySource = Object.fromEntries(unpackedEntries) as UnpackedLintGroups;
 	return { kind: 'lints', lints: unpackedBySource };
+}
+
+async function resetLinterIfPersistedStateWasCleared(): Promise<void> {
+	if (!linterHasPersistedState) {
+		return;
+	}
+
+	const stored = await chrome.storage.local.get(linterStorageKeys);
+	const hasStoredLinterState = linterStorageKeys.some((key) => stored[key] !== undefined);
+	if (!hasStoredLinterState) {
+		await initializeLinter(await getDialect());
+		linterHasPersistedState = false;
+	}
 }
 
 async function shouldLintForRequest(
@@ -339,6 +389,16 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 
 async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
+}
+
+async function handleGetIsolateEnglish(): Promise<GetIsolateEnglishResponse> {
+	return { kind: 'getIsolateEnglish', isolateEnglish: await getIsolateEnglish() };
+}
+
+async function handleSetIsolateEnglish(req: SetIsolateEnglishRequest): Promise<UnitResponse> {
+	await setIsolateEnglish(req.isolateEnglish);
+
+	return createUnitResponse();
 }
 
 async function handleGetDelay(_req: GetDelayRequest): Promise<GetDelayResponse> {
@@ -504,6 +564,7 @@ async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDat
 }
 
 async function handleGetInstalledOn(_req: GetInstalledOnRequest): Promise<GetInstalledOnResponse> {
+	await setInstalledOnIfMissing();
 	return { kind: 'getInstalledOn', installedOn: await getInstalledOn() };
 }
 
@@ -578,6 +639,7 @@ async function handleRemoveWeirpack(req: RemoveWeirpackRequest): Promise<UnitRes
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	await linter.setLintConfig(lintConfig);
+	linterHasPersistedState = true;
 
 	const json = await linter.getLintConfigAsJSON();
 
@@ -594,6 +656,7 @@ async function getLintConfig(): Promise<LintConfig> {
 /** Get the ignored lint state from permanent storage. */
 async function setIgnoredLints(state: string): Promise<void> {
 	await linter.importIgnoredLints(state);
+	linterHasPersistedState = true;
 
 	const json = await linter.exportIgnoredLints();
 
@@ -616,6 +679,15 @@ async function getDialect(): Promise<Dialect> {
 	}
 
 	return resp.dialect;
+}
+
+async function getIsolateEnglish(): Promise<boolean> {
+	const resp = await chrome.storage.local.get({ isolateEnglish: false });
+	return resp.isolateEnglish === true;
+}
+
+async function setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
+	await chrome.storage.local.set({ isolateEnglish });
 }
 
 async function getActivationKey(): Promise<ActivationKey> {
@@ -661,6 +733,7 @@ async function initializeLinter(dialect: Dialect) {
 }
 
 async function setDialect(dialect: Dialect) {
+	linterHasPersistedState = true;
 	await chrome.storage.local.set({ dialect });
 	await initializeLinter(dialect);
 }
@@ -714,6 +787,12 @@ async function enabledForDomain(domain: string): Promise<boolean | null> {
 		return stored;
 	}
 
+	if (
+		getDomainLookupCandidates(domain).some((candidate) => defaultEnabledDomainSet.has(candidate))
+	) {
+		return true;
+	}
+
 	return await enabledByDefault();
 }
 
@@ -760,6 +839,7 @@ async function resetDictionary(): Promise<void> {
 async function addToDictionary(words: string[]): Promise<void> {
 	const exported = await linter.exportWords();
 	exported.push(...words);
+	linterHasPersistedState = true;
 
 	await Promise.all([
 		linter.importWords(exported),
@@ -824,6 +904,7 @@ function base64ToBytes(encoded: string): Uint8Array {
 }
 
 async function setStoredWeirpacks(weirpacks: StoredWeirpack[]): Promise<void> {
+	linterHasPersistedState = true;
 	await chrome.storage.local.set({ [WEIRPACKS_KEY]: weirpacks });
 }
 

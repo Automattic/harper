@@ -1,25 +1,61 @@
 <script lang="ts">
-import { Card } from 'components';
-import type Linter from 'harper.js';
+import { DelayedRender } from 'components';
+import type { Lint, Linter } from 'harper.js';
 import {
 	type IgnorableLintBox,
 	LintFramework,
 	type UnpackedLintGroups,
 	unpackLint,
 } from 'lint-framework';
+import { tick } from 'svelte';
+import { fade } from 'svelte/transition';
+import {
+	type EditorFontFamily,
+	type EditorFontSize,
+	fontStackFor,
+	normalizeFontFamily,
+	normalizeFontSize,
+} from './editorDisplay.js';
 import LintSidebar from './LintSidebar.svelte';
+import StatusBar from './StatusBar.svelte';
+
+/** Who initiated an action on the sidebar. Automated actions can be overwritten by anyone, user actions can only be overwritten by the user. */
+type SidebarAction = 'user' | 'automated';
 
 export let content = '';
 export let linter: Linter;
 export let onReady: () => void = () => null;
+export let defaultFontFamily: EditorFontFamily = 'sans';
+export let defaultFontSize: EditorFontSize = 'default';
+export let onChange: (text: string) => void = () => {};
 
 let editor: HTMLDivElement | null;
 let linterVersion = 0;
 let quill: any;
 let lintBoxes: IgnorableLintBox[] = [];
+let activeLintId: string | null = null;
+let documentText = content;
+let fontFamily = normalizeFontFamily(defaultFontFamily);
+let fontSize = normalizeFontSize(defaultFontSize);
+let lastExternalContent = content;
+let readySent = false;
+let sidebarVisible = true;
+let lastSidebarAction: SidebarAction = 'automated';
+let syncTimeout: ReturnType<typeof setTimeout> | null = null;
+
+const sidebarTransitionDuration = 250;
+const restoreButtonDelay = sidebarTransitionDuration + 40;
+
+$: fontStack = fontStackFor(fontFamily);
+$: editorStyle =
+	`--harper-editor-font-family: ${fontStack};` +
+	(fontSize === 'default' ? '' : ` --harper-editor-font-size: ${fontSize}px;`);
 
 $: if (linter != null && quill != null) {
-	onReady();
+	if (!readySent) {
+		readySent = true;
+		onReady();
+	}
 }
 
 let lfw = new LintFramework(
@@ -27,7 +63,7 @@ let lfw = new LintFramework(
 		const raw = await linter.organizedLints(text);
 		// The framework expects grouped lints keyed by source
 		const entries = await Promise.all(
-			Object.entries(raw).map(async ([source, lintGroup]) => {
+			Object.entries(raw).map(async ([source, lintGroup]: [string, Lint[]]) => {
 				const unpacked = await Promise.all(lintGroup.map((lint) => unpackLint(text, lint, linter)));
 				return [source, unpacked] as const;
 			}),
@@ -35,7 +71,7 @@ let lfw = new LintFramework(
 
 		const grouped: UnpackedLintGroups = Object.fromEntries(entries);
 
-		lintBoxes = lfw.getLastIgnorableLintBoxes();
+		scheduleLintBoxSync();
 
 		return grouped;
 	},
@@ -46,12 +82,32 @@ let lfw = new LintFramework(
 				console.log(`Ignored ${hash}`);
 				// Re-run linting to hide ignored lint immediately
 				lfw.update();
+				scheduleLintBoxSync();
 			} catch (e) {
 				console.error('Failed to ignore lint', e);
 			}
 		},
 	},
 );
+
+/** Exists to automatically hide the sidebar on smaller screens. */
+let resizeObserver = new ResizeObserver((entries) => {
+	for (let entry of entries) {
+		if (entry.contentBoxSize[0].inlineSize < 640) {
+			hideSidebar('automated');
+		} else {
+			showSidebar('automated');
+		}
+	}
+});
+
+let editorContainer: Element | null = null;
+
+$: {
+	if (editorContainer != null) {
+		resizeObserver.observe(editorContainer);
+	}
+}
 
 $: {
 	const version = ++linterVersion;
@@ -86,10 +142,16 @@ async function updateLintFrameworkElements() {
 		let { default: Quill } = await import('quill');
 		quill = new Quill(editor, {});
 		const container = quill.container ?? quill.root?.parentElement;
-		container?.classList.add('h-full', 'min-h-0');
+		container?.classList.add('harper-editor-quill-container');
 
-		quill.root?.classList.add('flex', 'flex-col', 'h-full', 'min-h-0', 'outline-transparent');
+		quill.root?.classList.add('harper-editor-surface');
 		quill.root?.setAttribute('data-enable-grammarly', 'false');
+		quill.root?.setAttribute('spellcheck', 'false');
+		setQuillText(content, false);
+		quill.on('text-change', () => {
+			syncDocumentText(true);
+			scheduleLintFrameworkUpdate();
+		});
 	}
 
 	for (let el of editor.getElementsByTagName('p')) {
@@ -103,10 +165,20 @@ $: if (editor != null) {
 	updateLintFrameworkElements();
 }
 
+$: if (quill != null && content !== lastExternalContent) {
+	lastExternalContent = content;
+	if (content !== documentText) {
+		setQuillText(content, false);
+		scheduleLintFrameworkUpdate();
+	}
+}
+
 function jumpTo(lintBox: IgnorableLintBox) {
 	if (typeof window === 'undefined') {
 		return;
 	}
+
+	activeLintId = lintBox.lint.context_hash;
 
 	const range = lintBox.range;
 	if (!range) {
@@ -129,17 +201,171 @@ function jumpTo(lintBox: IgnorableLintBox) {
 		console.error('Failed to jump to lint', error);
 	}
 }
+
+// Quill always keeps a trailing document newline; callers expect plain text.
+function normalizeQuillText(text: string): string {
+	return text.endsWith('\n') ? text.slice(0, -1) : text;
+}
+
+function setQuillText(text: string, notify: boolean) {
+	if (quill == null) {
+		documentText = text;
+		return;
+	}
+
+	const source = notify ? 'user' : 'silent';
+	quill.setText(text, source);
+	syncDocumentText(notify);
+}
+
+// Keep the public text state and `onChange` callback in sync with Quill's document.
+function syncDocumentText(notify: boolean) {
+	if (quill == null) {
+		return;
+	}
+
+	const next = normalizeQuillText(quill.getText());
+	if (next === documentText) {
+		return;
+	}
+
+	documentText = next;
+	if (notify) {
+		onChange(next);
+	}
+}
+
+// The lint framework owns highlight DOM, so copy its latest boxes into Svelte state.
+function syncLintBoxes() {
+	lintBoxes = [...lfw.getLastIgnorableLintBoxes()];
+	if (
+		activeLintId != null &&
+		!lintBoxes.some((lintBox) => lintBox.lint.context_hash === activeLintId)
+	) {
+		activeLintId = null;
+	}
+}
+
+// Lint decorations settle across layout frames; the timeout catches slower browser updates.
+function scheduleLintBoxSync() {
+	requestAnimationFrame(() => {
+		requestAnimationFrame(syncLintBoxes);
+	});
+
+	if (syncTimeout != null) {
+		clearTimeout(syncTimeout);
+	}
+
+	syncTimeout = setTimeout(syncLintBoxes, 150);
+}
+
+// Refresh target elements, ask the framework to lint, then mirror its current boxes.
+function scheduleLintFrameworkUpdate() {
+	updateLintFrameworkElements();
+	lfw.update();
+	scheduleLintBoxSync();
+}
+
+// Suggestions and ignores mutate the document/lint state outside Quill's text-change path.
+function handleProblemAction() {
+	syncDocumentText(true);
+	scheduleLintFrameworkUpdate();
+}
+
+async function ignoreAllProblems() {
+	syncDocumentText(false);
+
+	const text = documentText;
+	const activeLinter = linter;
+	const groupedLints = await activeLinter.organizedLints(text, { dedup: false });
+	const lints = Object.values(groupedLints).flat();
+
+	if (lints.length === 0) {
+		return;
+	}
+
+	await activeLinter.ignoreLints(text, lints);
+}
+
+async function showSidebar(reason: SidebarAction = 'automated') {
+	if (lastSidebarAction === 'user' && reason === 'automated') {
+		return;
+	}
+
+	await tick();
+	lastSidebarAction = reason;
+
+	sidebarVisible = true;
+}
+
+function hideSidebar(reason: SidebarAction = 'automated'): void {
+	if (lastSidebarAction === 'user' && reason === 'automated') {
+		return;
+	}
+	lastSidebarAction = reason;
+
+	if (sidebarVisible === false) {
+		return;
+	}
+
+	sidebarVisible = false;
+}
 </script>
 
-<div class="flex flex-row h-full w-full [&_*]:outline-none">
-	<Card class="flex-1 h-full p-5 z-10 max-w-full text-lg mr-5 bg-white dark:bg-black overflow-auto">
-		<div bind:this={editor} spellcheck="false">
-			{@html content.replace(/\n\n/g, '<br>')}
-		</div>
-	</Card>
+<div
+	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 shadow-2xl shadow-stone-950/5"
+	style={editorStyle}
+  bind:this={editorContainer}
+>
+	<div class="flex min-h-0 min-w-0 flex-1">
+		<section class="relative min-w-0 flex-1 bg-[#fbfaf6]" aria-label="Document editor">
+			<div class="h-full overflow-auto p-[34px_40px_56px] @max-[760px]:p-[28px_24px_42px]">
+				<div class="mx-auto flex min-h-full max-w-[640px]">
+					<div bind:this={editor} class="flex min-h-full w-full flex-1" spellcheck="false"></div>
+				</div>
+			</div>
 
-	<LintSidebar
-		lintBoxes={lintBoxes}
-		focusLint={jumpTo}
+			<DelayedRender active={!sidebarVisible} delayMs={restoreButtonDelay}>
+				<button
+					type="button"
+					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+					aria-label="Show problems sidebar"
+					title="Show problems sidebar"
+					in:fade={{ duration: 120 }}
+					on:click={() => showSidebar("user")}
+				>
+					<svg
+						viewBox="0 0 20 20"
+						aria-hidden="true"
+						class="h-[18px] w-[18px] fill-none stroke-current stroke-[1.5] [stroke-linecap:round] [stroke-linejoin:round]"
+					>
+						<rect x="3.5" y="3" width="13" height="14" rx="3" />
+						<path d="M12.5 3v14" />
+					</svg>
+				</button>
+			</DelayedRender>
+		</section>
+
+		{#if sidebarVisible}
+			<LintSidebar
+				{lintBoxes}
+				{activeLintId}
+				focusLint={jumpTo}
+				onActivate={(lintBox) => (activeLintId = lintBox == null ? null : lintBox.lint.context_hash)}
+				onApplied={handleProblemAction}
+				onIgnored={handleProblemAction}
+				onIgnoreAll={ignoreAllProblems}
+				onHideSidebar={() => hideSidebar("user")}
+			/>
+		{/if}
+	</div>
+
+	<StatusBar
+		text={documentText}
+		problemCount={lintBoxes.length}
+		{fontFamily}
+		{fontSize}
+		onFontFamilyChange={(next) => (fontFamily = next)}
+		onFontSizeChange={(next) => (fontSize = normalizeFontSize(next))}
 	/>
 </div>

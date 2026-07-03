@@ -6,6 +6,34 @@ import type Linter from './Linter';
 import type { LinterInit, WeirpackTestFailures } from './Linter';
 import type { LintConfig, LintOptions, StructuredLintConfig } from './main';
 
+type WasmLintArgs = [string, Language, boolean, string | undefined, boolean, boolean];
+
+function toWasmLanguage(language: LintOptions['language']): Language {
+	switch (language) {
+		case 'plaintext':
+			return Language.Plain;
+		case 'typst':
+			return Language.Typst;
+		case 'markdown':
+		case undefined:
+			return Language.Markdown;
+		default:
+			console.warn(`Unknown Harper language '${String(language)}'; using markdown.`);
+			return Language.Markdown;
+	}
+}
+
+function toWasmLintArgs(text: string, options?: LintOptions): WasmLintArgs {
+	return [
+		text,
+		toWasmLanguage(options?.language),
+		options?.forceAllHeadings ?? false,
+		options?.regex_mask,
+		options?.dedup ?? true,
+		options?.isolateEnglish ?? false,
+	];
+}
+
 /** A Linter that runs in the current JavaScript context (meaning it is allowed to block the event loop).
  * See the interface definition for more details. */
 export default class LocalLinter implements Linter {
@@ -35,52 +63,12 @@ export default class LocalLinter implements Linter {
 
 	async lint(text: string, options?: LintOptions): Promise<Lint[]> {
 		const inner = await this.inner;
-
-		let language = Language.Markdown;
-
-		switch (options?.language) {
-			case 'plaintext':
-				language = Language.Plain;
-				break;
-			case 'markdown':
-				language = Language.Markdown;
-				break;
-			case 'typst':
-				language = Language.Typst;
-		}
-
-		const lints = inner.lint(
-			text,
-			language,
-			options?.forceAllHeadings ?? false,
-			options?.regex_mask,
-		);
-
-		return lints;
+		return inner.lint(...toWasmLintArgs(text, options));
 	}
 
 	async organizedLints(text: string, options?: LintOptions): Promise<Record<string, Lint[]>> {
 		const inner = await this.inner;
-		let language = Language.Markdown;
-
-		switch (options?.language) {
-			case 'plaintext':
-				language = Language.Plain;
-				break;
-			case 'markdown':
-				language = Language.Markdown;
-				break;
-			case 'typst':
-				language = Language.Typst;
-				break;
-		}
-
-		const lintGroups = inner.organized_lints(
-			text,
-			language,
-			options?.forceAllHeadings ?? false,
-			options?.regex_mask,
-		);
+		const lintGroups = inner.organized_lints(...toWasmLintArgs(text, options));
 
 		const output: Record<string, Lint[]> = {};
 
@@ -170,13 +158,17 @@ export default class LocalLinter implements Linter {
 	}
 
 	async ignoreLint(source: string, lint: Lint): Promise<void> {
+		return await this.ignoreLints(source, [lint]);
+	}
+
+	async ignoreLints(source: string, lints: Lint[]): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_lint(source, lint);
+		inner.ignore_lints(source, lints);
 	}
 
 	async ignoreLintHash(hash: bigint): Promise<void> {
 		const inner = await this.inner;
-		inner.ignore_hash(hash);
+		inner.ignore_hashes(new BigUint64Array([hash]));
 	}
 
 	async exportIgnoredLints(): Promise<string> {
