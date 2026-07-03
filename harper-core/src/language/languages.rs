@@ -147,6 +147,91 @@ impl Language {
     pub fn family(&self) -> LanguageFamily {
         (*self).into()
     }
+
+    /// Parse a language from a BCP 47 language tag.
+    /// 
+    /// BCP 47 tags are standardized language identifiers like "en-US", "de-DE", "pt-BR", etc.
+    /// This method handles both the language code and region subtags.
+    /// 
+    /// # Examples
+    /// 
+    /// ```
+    /// use harper_core::language::Language;
+    /// 
+    /// let lang = Language::try_from_bcp47("en-US");
+    /// assert_eq!(lang, Some(Language::English(EnglishDialect::American)));
+    /// 
+    /// let lang = Language::try_from_bcp47("de-DE");
+    /// assert_eq!(lang, Some(Language::German(GermanDialect::Standard)));
+    /// ```
+    pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        let bcp47_lower = bcp47.to_ascii_lowercase();
+        let parts: Vec<&str> = bcp47_lower.split('-').collect();
+        
+        if parts.is_empty() {
+            return None;
+        }
+
+        let lang_code = parts[0];
+        let region = parts.get(1).copied();
+
+        match (lang_code, region) {
+            // English variants
+            ("en", Some("us") | Some("usa") | Some("america") | Some("american")) => {
+                Some(Self::English(EnglishDialect::American))
+            }
+            ("en", Some("gb") | Some("uk") | Some("british") | Some("britain")) => {
+                Some(Self::English(EnglishDialect::British))
+            }
+            ("en", Some("au") | Some("aus") | Some("australia") | Some("australian")) => {
+                Some(Self::English(EnglishDialect::Australian))
+            }
+            ("en", Some("ca") | Some("canada") | Some("canadian")) => {
+                Some(Self::English(EnglishDialect::Canadian))
+            }
+            ("en", Some("in") | Some("india") | Some("indian") | Some("bharat")) => {
+                Some(Self::English(EnglishDialect::Indian))
+            }
+            ("en", _) => Some(Self::English(EnglishDialect::American)), // Default English
+            
+            // German variants
+            #[cfg(feature = "de")]
+            ("de", Some("de") | Some("germany") | Some("deutsch") | None) => {
+                Some(Self::German(GermanDialect::Standard))
+            }
+            #[cfg(feature = "de")]
+            ("de", Some("at") | Some("austria") | Some("austrian")) => {
+                Some(Self::German(GermanDialect::Austrian))
+            }
+            #[cfg(feature = "de")]
+            ("de", Some("ch") | Some("switzerland") | Some("swiss")) => {
+                Some(Self::German(GermanDialect::Swiss))
+            }
+            
+            // Portuguese variants
+            #[cfg(feature = "pt")]
+            ("pt", Some("pt") | Some("portugal") | None) => {
+                Some(Self::Portuguese(PortugueseDialect::European))
+            }
+            #[cfg(feature = "pt")]
+            ("pt", Some("br") | Some("brazil") | Some("brazilian")) => {
+                Some(Self::Portuguese(PortugueseDialect::Brazilian))
+            }
+            #[cfg(feature = "pt")]
+            ("pt", Some("ao") | Some("angola") | Some("african")) => {
+                Some(Self::Portuguese(PortugueseDialect::African))
+            }
+            
+            // Slovak variants
+            #[cfg(feature = "sk")]
+            ("sk", _) => Some(Self::Slovak(SlovakDialect::Standard)),
+            
+            // If we only have a language code without region, try to match it
+            (lang, None) => parse_language(lang),
+            
+            _ => None,
+        }
+    }
 }
 
 impl Default for Language {

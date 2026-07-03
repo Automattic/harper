@@ -58,8 +58,11 @@ default = ["thesaurus"]
 concurrent = []
 thesaurus = ["dep:harper-thesaurus"]
 
-# Optional language support features
+# Language support features
 # English is always included as the base language
 de = []
 pt = []
 sk = []
+
+# Convenience feature to enable all supported languages
+all-languages = ["de", "pt", "sk"]

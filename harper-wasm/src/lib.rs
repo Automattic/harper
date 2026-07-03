@@ -116,11 +116,11 @@ impl From<Dialect> for harper_core::Language {
 impl From<Dialect> for harper_core::Dialect {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => harper_core::EnglishDialect::American,
-            Dialect::Canadian => harper_core::EnglishDialect::Canadian,
-            Dialect::Australian => harper_core::EnglishDialect::Australian,
-            Dialect::British => harper_core::EnglishDialect::British,
-            Dialect::Indian => harper_core::EnglishDialect::Indian,
+            Dialect::American => harper_core::Dialect::American,
+            Dialect::Canadian => harper_core::Dialect::Canadian,
+            Dialect::Australian => harper_core::Dialect::Australian,
+            Dialect::British => harper_core::Dialect::British,
+            Dialect::Indian => harper_core::Dialect::Indian,
         }
     }
 }
@@ -482,11 +482,11 @@ impl Linter {
                     word.chars().collect::<CharString>(),
                     DictWordMetadata {
                         dialects: DialectFlags::from_english_dialect(match self.dialect {
-                            Dialect::American => harper_core::EnglishDialect::American,
-                            Dialect::British => harper_core::EnglishDialect::British,
-                            Dialect::Australian => harper_core::EnglishDialect::Australian,
-                            Dialect::Canadian => harper_core::EnglishDialect::Canadian,
-                            Dialect::Indian => harper_core::EnglishDialect::Indian,
+                            Dialect::American => harper_core::Dialect::American,
+                            Dialect::British => harper_core::Dialect::British,
+                            Dialect::Australian => harper_core::Dialect::Australian,
+                            Dialect::Canadian => harper_core::Dialect::Canadian,
+                            Dialect::Indian => harper_core::Dialect::Indian,
                         }),
                         ..Default::default()
                     },

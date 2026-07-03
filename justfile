@@ -464,14 +464,14 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 # FEATURES: Comma-separated list of features to enable (e.g., "de,pt").
-# If not specified, all features (de,pt,sk,thesaurus,concurrent) are enabled.
+# If not specified, all features (all-languages,thesaurus,concurrent) are enabled.
 install *FEATURES:
   #!/usr/bin/env bash
   set -eo pipefail
   
   # If no features specified, use all available features
   if [ -z "{{FEATURES}}" ]; then
-    FEATURES="de,pt,sk,thesaurus,concurrent"
+    FEATURES="all-languages,thesaurus,concurrent"
   else
     FEATURES="{{FEATURES}}"
   fi

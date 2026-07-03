@@ -1,6 +1,6 @@
 [package]
 name = "harper-ls"
-version = "2.5.0"
+version = "2.6.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -43,9 +43,15 @@ path = "src/lib.rs"
 [features]
 default = []
 thesaurus = ["harper-core/thesaurus"]
+
+# Individual language features (forward to harper-core)
 de = ["harper-core/de"]
 pt = ["harper-core/pt"]
 sk = ["harper-core/sk"]
+
+# Convenience feature to enable all supported languages
+all-languages = ["harper-core/all-languages"]
+
 concurrent = ["harper-core/concurrent"]
 
 [dev-dependencies]

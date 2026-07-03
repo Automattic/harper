@@ -1,6 +1,5 @@
 use harper_core::language::new_curated_for_language;
-use harper_core::{
-    EnglishDialect, IgnoredLints, Language,
+use harper_core::{IgnoredLints, Language, try_from_bcp47,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
@@ -57,8 +56,9 @@ impl Config {
     }
 
     pub fn detect_system_dialect() -> Language {
-        // TODO: Implement BCP47 to Dialect conversion
-        Language::English(EnglishDialect::American)
+        tauri_plugin_os::locale()
+            .and_then(|bcp47| try_from_bcp47(&bcp47))
+            .unwrap_or(Language::default())
     }
 
     pub fn curated_integrations() -> Vec<Integration> {

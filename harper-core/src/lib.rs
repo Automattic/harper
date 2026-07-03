@@ -63,7 +63,7 @@ pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
 pub use language::dialects::dialect_flags::DialectFlags;
-pub use language::{Language, LanguageFamily};
+pub use language::{Language, LanguageFamily, try_from_bcp47};
 pub use linting::{Lint, LintGroup, LintKind, Linter, Suggestion};
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
