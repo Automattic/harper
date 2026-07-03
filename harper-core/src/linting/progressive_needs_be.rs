@@ -80,7 +80,7 @@ impl ExprLinter for ProgressiveNeedsBe {
                 ),
                 Suggestion::InsertAfter(" been".chars().collect()),
             ],
-            message: "Use present progressive (`…'re/…'m …`) or present perfect progressive (`… have been …`/`…'ve been …`) instead of `… have …ing` or `…'ve …ing`.".to_string(),
+            message: "Use present progressive (`…'re/…'m …`) or present perfect progressive (`… have been …`/`…'ve been …`) instead of `… have …ing` or `…'ve …ing`.".to_owned(),
             priority: 31,
         })
     }

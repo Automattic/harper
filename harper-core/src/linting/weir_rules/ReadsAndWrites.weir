@@ -1,0 +1,9 @@
+expr main (read and writes)
+
+let message "Did you mean `reads and writes` or `read and write`? If they are main nouns they should probably both be plural (disk reads and writes). If they describe another noun, they should probably both be singular (read and write permissions)."
+let description "Corrects inconsistent noun or verb forms when `read` and `write` are paired."
+let kind "Grammar"
+let becomes ["reads and writes", "read and write"]
+
+test "And it appears what that means is any read and writes to memory on the 2GS when you first power it up are always going to just go to bank zero." "And it appears what that means is any reads and writes to memory on the 2GS when you first power it up are always going to just go to bank zero."
+test "AppWrite puts the read and writes permissions of the database on the client-side." "AppWrite puts the read and write permissions of the database on the client-side."

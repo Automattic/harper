@@ -175,12 +175,14 @@ where
 {
     /// Returns an expression that matches either the current one or the expression contained in `other`.
     fn or(self, other: impl Expr + 'static) -> FirstMatchOf {
-        FirstMatchOf::new(vec![Box::new(self), Box::new(other)])
+        let exprs: Vec<Box<dyn Expr>> = vec![Box::new(self), Box::new(other)];
+        FirstMatchOf::new(exprs)
     }
 
     /// Returns an expression that matches only if both the current one and the expression contained in `other` do.
     fn and(self, other: impl Expr + 'static) -> All {
-        All::new(vec![Box::new(self), Box::new(other)])
+        let exprs: Vec<Box<dyn Expr>> = vec![Box::new(self), Box::new(other)];
+        All::new(exprs)
     }
 
     /// Returns an expression that matches only if the current one matches and the expression contained in `other` does not.
@@ -192,6 +194,39 @@ where
     ///
     /// If you don't need the longest match, prefer using the short-circuiting [`Self::or()`] instead.
     fn or_longest(self, other: impl Expr + 'static) -> LongestMatchOf {
-        LongestMatchOf::new(vec![Box::new(self), Box::new(other)])
+        let exprs: Vec<Box<dyn Expr>> = vec![Box::new(self), Box::new(other)];
+        LongestMatchOf::new(exprs)
+    }
+}
+
+pub trait IntoBoxedExpr {
+    fn into_boxed(self) -> Box<dyn Expr>;
+}
+
+impl<T: Expr + 'static> IntoBoxedExpr for Box<T> {
+    fn into_boxed(self) -> Box<dyn Expr> {
+        self
+    }
+}
+
+impl IntoBoxedExpr for Box<dyn Expr> {
+    fn into_boxed(self) -> Box<dyn Expr> {
+        self
+    }
+}
+
+pub trait AsBoxedExpr {
+    fn into_boxed_expr(self) -> Box<dyn Expr>;
+}
+
+impl<T: Expr + 'static> AsBoxedExpr for Box<T> {
+    fn into_boxed_expr(self) -> Box<dyn Expr> {
+        self
+    }
+}
+
+impl AsBoxedExpr for Box<dyn Expr> {
+    fn into_boxed_expr(self) -> Box<dyn Expr> {
+        self
     }
 }

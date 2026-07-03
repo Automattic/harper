@@ -2689,9 +2689,9 @@ dependencies = [
 
 [[package]]
 name = "ecolor"
-version = "0.34.2"
+version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "55f6cc0cb3b84a21232c468db972ebcddd34decbf1ff02cdebffd807c13bbd81"
+checksum = "a05fbfa222ffb51989d5ccf33e5f7aebfcf96c5023413856b0c3618a7f79896e"
 dependencies = [
  "bytemuck",
  "emath",
@@ -2708,9 +2708,9 @@ dependencies = [
 
 [[package]]
 name = "egui"
-version = "0.34.2"
+version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "3cbe28ac1a9c0761319aafb9ad37737720cc49d99c13a4a6b990768fa01ffe67"
+checksum = "42112be0ae157289312b92b3dfaf20e911b5a3c4c65d4aab0e7c47fbc0ce16e3"
 dependencies = [
  "accesskit",
  "ahash",
@@ -2811,9 +2811,9 @@ checksum = "48c757948c5ede0e46177b7add2e67155f70e33c07fea8284df6576da70b3719"
 
 [[package]]
 name = "emath"
-version = "0.34.2"
+version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a74fbbf7501c430b89df62d102b6bfa02162faaf3e155512c677c9d20f5708d1"
+checksum = "b53f0d33a479321da6b0caa71366c9f67e8a2c149762d90bdc0d16e601ee8ecb"
 dependencies = [
  "bytemuck",
 ]
@@ -3014,9 +3014,9 @@ dependencies = [
 
 [[package]]
 name = "epaint"
-version = "0.34.2"
+version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "92b452e348c2758115288802ca25f86ee286ce2cfae6643711ce116662311310"
+checksum = "6675898a291ec212fc3df04f537d177fce8496120244590e6359dcaa4c25da79"
 dependencies = [
  "ahash",
  "bytemuck",
@@ -3036,9 +3036,9 @@ dependencies = [
 
 [[package]]
 name = "epaint_default_fonts"
-version = "0.34.2"
+version = "0.34.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1644e25dbe3d663fd9c2a4181772c64b23361e377e550c10422ecc3a7de1c3c2"
+checksum = "f8970033a4282a7bcf899b38b5ed3a58b732fe093d03785d58648515d8d309da"
 
 [[package]]
 name = "equivalent"
@@ -4128,7 +4128,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4139,7 +4139,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -4177,7 +4177,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -4214,7 +4214,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "ammonia",
  "bitflags 2.11.0",
@@ -4253,10 +4253,11 @@ dependencies = [
 
 [[package]]
 name = "harper-desktop"
-version = "2.2.1"
+version = "2.4.0"
 dependencies = [
  "accessibility",
  "accessibility-sys",
+ "base64 0.22.1",
  "clap",
  "core-foundation 0.10.1",
  "core-graphics 0.25.0",
@@ -4285,7 +4286,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4293,8 +4294,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "harper-git-commit"
+version = "2.6.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-gitcommit",
+]
+
+[[package]]
 name = "harper-html"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4305,7 +4317,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4316,7 +4328,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4327,7 +4339,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -4338,7 +4350,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -4349,6 +4361,7 @@ dependencies = [
  "harper-comments",
  "harper-core",
  "harper-dictionary-wordlist",
+ "harper-git-commit",
  "harper-html",
  "harper-ink",
  "harper-jjdescription",
@@ -4369,7 +4382,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -4387,7 +4400,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4398,7 +4411,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -4409,7 +4422,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -4417,7 +4430,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.13.1",
@@ -4428,7 +4441,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -4447,7 +4460,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.2.1"
+version = "2.6.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4469,7 +4482,7 @@ dependencies = [
  "serde",
  "serde-wasm-bindgen",
  "serde_json",
- "sysinfo 0.38.4",
+ "sysinfo 0.39.5",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -4519,6 +4532,17 @@ dependencies = [
  "foldhash 0.2.0",
  "serde",
  "serde_core",
+]
+
+[[package]]
+name = "hashbrown"
+version = "0.17.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ed5909b6e89a2db4456e54cd5f673791d7eca6732202bbf2a9cc504fe2f9b84a"
+dependencies = [
+ "allocator-api2",
+ "equivalent",
+ "foldhash 0.2.0",
 ]
 
 [[package]]
@@ -5311,11 +5335,11 @@ dependencies = [
 
 [[package]]
 name = "lru"
-version = "0.16.3"
+version = "0.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a1dc47f592c06f33f8e3aea9591776ec7c9f9e4124778ff8a3c3b87159f7e593"
+checksum = "8a860605968fce16869fd239cf4237a82f3ac470723415db603b0e8b6c8d4fb9"
 dependencies = [
- "hashbrown 0.16.1",
+ "hashbrown 0.17.1",
 ]
 
 [[package]]
@@ -7859,9 +7883,9 @@ dependencies = [
 
 [[package]]
 name = "serde_json"
-version = "1.0.149"
+version = "1.0.150"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "83fc039473c5595ace860d8c4fafa220ff474b3fc6bfdb4293327f1a37e94d86"
+checksum = "e8014e44b4736ed0538adeecded0fce2a272f22dc9578a7eb6b2d9993c74cfb9"
 dependencies = [
  "indexmap 2.13.1",
  "itoa",
@@ -8479,9 +8503,9 @@ dependencies = [
 
 [[package]]
 name = "sysinfo"
-version = "0.38.4"
+version = "0.39.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "92ab6a2f8bfe508deb3c6406578252e491d299cbbf3bc0529ecc3313aee4a52f"
+checksum = "2c8bd2130a9b60bee2581bf82cfe89ee836424d1f37dcfa4ce21509611684673"
 dependencies = [
  "libc",
  "memchr",
@@ -8557,9 +8581,9 @@ dependencies = [
 
 [[package]]
 name = "tar"
-version = "0.4.45"
+version = "0.4.46"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "22692a6476a21fa75fdfc11d452fda482af402c008cdbaf3476414e122040973"
+checksum = "3f6221d9a6003c78398e3b239969f352578258df48c8eb051caadae0015bc840"
 dependencies = [
  "filetime",
  "libc",
@@ -9626,6 +9650,16 @@ name = "tree-sitter-cpp"
 version = "0.23.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "df2196ea9d47b4ab4a31b9297eaa5a5d19a0b121dceb9f118f6790ad0ab94743"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-gitcommit"
+version = "0.5.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "38b051221607cfde94e2d0132ad99ef50a9f78a990c068380717ea0a4ce61899"
 dependencies = [
  "cc",
  "tree-sitter-language",

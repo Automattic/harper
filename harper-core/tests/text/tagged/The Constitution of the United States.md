@@ -984,8 +984,8 @@
 # D/P N🅪Sg/VB/JC P  NPl      P  NSg/VB    VB/C NSg/VB/J/P+ NSg/VB+   NSg/VB/J P  D   NSg/J N🅪Sg/VB/JC
 > of Senators and  Representatives in        Congress to which the District  would be
 # P  NPl+     VB/C NPl+            NPr/J/R/P NPr/VB+  P  I/C+  D   NSg/VB/J+ VXB   NSg/VLXB
-> entitled if    it       were     a   State    , but     in        no       event   more         than the least    populous
-# VP/J     NSg/C NPr/ISg+ NSg/VLPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/Dq/P NSg/VB+ NPr/I/J/R/Dq C/P  D   NSg/J/Dq J
+> entitled if    it       were a   State    , but     in        no       event   more         than the least    populous
+# VP/J     NSg/C NPr/ISg+ VLPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/Dq/P NSg/VB+ NPr/I/J/R/Dq C/P  D   NSg/J/Dq J
 > State    ; they shall be       in        addition to those  appointed by    the States    , but     they
 # N🅪Sg/VB+ . IPl+ VXB   NSg/VLXB NPr/J/R/P NSg+     P  I/Ddem VP/J+     NSg/P D   NPrPl/V3+ . NSg/C/P IPl+
 > shall be       considered , for   the purposes of the election of President and  Vice
