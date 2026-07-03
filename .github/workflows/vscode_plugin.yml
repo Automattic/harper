@@ -42,7 +42,7 @@ jobs:
             code_target: alpine-arm64
     runs-on: ${{ matrix.platform.os }}
     steps:
-      - uses: actions/checkout@v6.0.2
+      - uses: actions/checkout@v7.0.0
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
       - uses: actions/setup-node@v6
         with:
@@ -50,7 +50,7 @@ jobs:
       - name: Enable Corepack
         run: corepack enable
       - name: Rust Cache
-        uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
+        uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:
           cache-bin: "true"
       - name: Build harper-ls
