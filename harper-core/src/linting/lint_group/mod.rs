@@ -79,6 +79,7 @@ use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
+use super::emigrate_immigrate::EmigrateImmigrate;
 use super::ever_every::EverEvery;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
@@ -656,6 +657,7 @@ impl LintGroup {
         insert_expr_rule!(DoubleModal, true);
         insert_struct_rule!(EllipsisLength, true);
         insert_expr_rule!(ElsePossessive, true);
+        insert_expr_rule!(EmigrateImmigrate, true);
         insert_expr_rule!(EverEvery, true);
         insert_expr_rule!(Everyday, true);
         insert_expr_rule!(ExceptOf, true);

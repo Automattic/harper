@@ -5126,6 +5126,13 @@
 						},
 						{
 							"Bool": {
+								"name": "EmigrateImmigrate",
+								"state": true,
+								"label": "Emigrate Immigrate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ConvenientStore",
 								"state": true,
 								"label": "Convenient Store"
