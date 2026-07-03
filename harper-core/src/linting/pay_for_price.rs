@@ -37,7 +37,7 @@ impl ExprLinter for PayForPrice {
         let span = matched_tokens[2..4].span()?;
         let lint_kind = LintKind::Usage;
         let suggestions = vec![Suggestion::Remove];
-        let message = "You `pay for` things or services, but just `pay prices/fees`, etc with no preposition.".to_string();
+        let message = "You `pay for` things or services, but just `pay prices/fees`, etc with no preposition.".to_owned();
         Some(Lint {
             span,
             lint_kind,

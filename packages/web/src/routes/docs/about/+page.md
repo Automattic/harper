@@ -70,6 +70,8 @@ Some of the open-source projects using Harper include:
 - [`local-harper`](https://kraxen72.github.io/local-harper/)
 - [QOwnNotes](https://www.qownnotes.org/)
 - [Grammate](https://grammate.goodishlab.com/)
+- [PhrAIse](https://github.com/hqrrr/Phraise)
+- [inline-scribe](https://github.com/mk668a/inline-scribe)
 
 Are you using Harper in your open source work and want to be included in this list?
 If so, please open a PR. 
