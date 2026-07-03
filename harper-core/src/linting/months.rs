@@ -65,8 +65,8 @@ impl Default for Months {
 
         // An Expr that matches either a plain month
         // Or an ambiguous month after a disambiguating word
-        let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
-            Box::new(only_months),
+        let month_expr = SequenceExpr::with(FirstMatchOf::new([
+            Box::new(only_months) as Box<dyn Expr>,
             Box::new(
                 SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()
@@ -111,7 +111,7 @@ impl ExprLinter for Months {
             span: month_tok.span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(month_vec)],
-            message: "Months should be written with a capital letter.".to_string(),
+            message: "Months should be written with a capital letter.".to_owned(),
             priority: 126,
         })
     }

@@ -56,7 +56,7 @@ impl ExprLinter for ExceptOf {
                 replacement,
                 span.get_content(src),
             )],
-            message: msg.to_string(),
+            message: msg.to_owned(),
             ..Default::default()
         })
     }

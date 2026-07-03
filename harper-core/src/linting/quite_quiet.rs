@@ -40,7 +40,14 @@ impl Default for QuiteQuiet {
         let adverb_quite = SequenceExpr::default()
             .then_kind_except(
                 TokenKind::is_adverb,
-                &["actually", "never", "not", "really", "generally"],
+                &[
+                    "actually",
+                    "never",
+                    "not",
+                    "probably",
+                    "really",
+                    "generally",
+                ],
             )
             .t_ws()
             .t_aco("quite");
@@ -75,7 +82,7 @@ impl ExprLinter for QuiteQuiet {
                     "quiet".chars().collect(),
                     quite_span.get_content(src),
                 )],
-                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_string(),
+                message: "‘Quite’ might be a typo here. It means ‘rather’ but you might be trying to say ‘quiet’ (not noisy).".to_owned(),
                 priority: 63,
             });
         } else if text.starts_with("quiet") {
@@ -88,7 +95,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });
         } else if text.ends_with("quiet") {
@@ -101,7 +108,7 @@ impl ExprLinter for QuiteQuiet {
                     "quite".chars().collect(),
                     quiet_span.get_content(src),
                 )],
-                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_string(),
+                message: "‘Quiet’ might be a typo here. It means ‘not noisy’ but you might be trying to say ‘quite’ (rather).".to_owned(),
                 priority: 63,
             });
         }
@@ -338,5 +345,30 @@ mod tests {
             QuiteQuiet::default(),
             "That was quite impressive.",
         );
+    }
+
+    // --- Issue #3560: "probably quite" should not be flagged ---
+
+    #[test]
+    fn dont_flag_probably_quite_doable_3560() {
+        assert_no_lints("It's probably quite doable.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_probably_quite_reasonable_3560() {
+        assert_no_lints(
+            "That seems probably quite reasonable.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_quite_happy_3560() {
+        assert_no_lints("I'm quite happy with the result.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn dont_flag_quite_large_3560() {
+        assert_no_lints("The project is quite large.", QuiteQuiet::default());
     }
 }

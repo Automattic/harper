@@ -19,6 +19,7 @@ let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
+let isolateEnglish = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
@@ -69,6 +70,10 @@ Promise.all([
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getIsolateEnglish().then((value) => {
+	isolateEnglish = value;
 });
 
 ProtocolClient.getDelay().then((value) => {
@@ -205,6 +210,17 @@ $effect(() => {
 
 function updateLintConfig(nextConfig: LintConfig) {
 	lintConfig = nextConfig;
+}
+
+function setIsolateEnglishFromCheckbox(event: Event): void {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		console.warn('Could not update isolate English setting: missing checkbox input.');
+		return;
+	}
+
+	isolateEnglish = input.checked;
+	ProtocolClient.setIsolateEnglish(input.checked);
 }
 
 function toggleGroup(groupKey: string) {
@@ -349,6 +365,23 @@ async function removeWeirpack(id: string) {
             <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
             <option value={Dialect.Indian}>🇮🇳 Indian</option>
           </Select>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Ignore Non-English Text</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Skip text that Harper detects as not English.
+            </p>
+          </div>
+          <input
+            type="checkbox"
+            checked={isolateEnglish}
+            onchange={setIsolateEnglishFromCheckbox}
+            class="h-5 w-5"
+          />
         </div>
       </div>
 

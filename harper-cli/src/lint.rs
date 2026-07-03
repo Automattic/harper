@@ -92,6 +92,7 @@ pub struct LintOptions {
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
+    pub quiet: bool,
 }
 
 enum ReportStyle {
@@ -361,6 +362,7 @@ fn lint_one_input(
         weirpack_inputs: _,
         color: _,
         format: _,
+        quiet: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -480,7 +482,7 @@ fn lint_one_input(
                     &lint_rules,
                     // Reporting arguments
                     batch_mode,
-                    report_mode,
+                    (report_mode, lint_options.quiet),
                 );
             }
         }
@@ -583,8 +585,10 @@ fn single_input_report(
     lint_rules: &HashMap<String, usize>,
     // Reporting parameters
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
-    report_mode: &ReportStyle,
+    report_info: (&ReportStyle, bool),
 ) {
+    let (report_mode, quiet) = report_info;
+
     // JSON mode: all output is handled by the caller after collecting results
     if matches!(report_mode, ReportStyle::Json) {
         return;
@@ -621,23 +625,30 @@ fn single_input_report(
 
     if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
         report_mode = &ReportStyle::BriefCountsOnly;
-        println!(
-            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-            input.format_path()
-        );
+        if !quiet {
+            println!(
+                "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+                input.format_path()
+            );
+        }
     }
 
     // Report the number of lints no matter what report mode we are in
-    println!(
-        "{}: {}",
-        input.format_path(),
-        match (lint_count_before, lint_count_after) {
-            (0, _) => "No lints found".to_string(),
-            (before, after) if before != after =>
-                format!("{before} lints before overlap removal, {after} after"),
-            (before, _) => format!("{before} lints"),
+    if lint_count_before == 0 {
+        if !quiet {
+            println!("{}: No lints found", input.format_path());
         }
-    );
+    } else {
+        println!(
+            "{}: {}",
+            input.format_path(),
+            match (lint_count_before, lint_count_after) {
+                (before, after) if before != after =>
+                    format!("{before} lints before overlap removal, {after} after"),
+                (before, _) => format!("{before} lints"),
+            }
+        );
+    }
 
     // If we are in Ariadne mode, print the report
     if matches!(report_mode, ReportStyle::FullAriadne) {
