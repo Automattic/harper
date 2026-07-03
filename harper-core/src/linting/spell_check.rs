@@ -52,7 +52,7 @@ impl<T: Dictionary> SpellCheck<T> {
                             .get_word_metadata(v)
                             .unwrap()
                             .dialects
-                            .is_english_dialect_enabled(self.dialect)
+                            .is_dialect_enabled(self.dialect)
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -99,7 +99,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             }
 
             if let Some(metadata) = word.kind.as_word().unwrap()
-                && metadata.dialects.is_english_dialect_enabled(self.dialect)
+                && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
                     || self.dictionary.contains_exact_word(&word_chars.to_lower()))
             {
@@ -454,7 +454,7 @@ mod tests {
         user_dict.append_word_str(
             "Calibre",
             DictWordMetadata {
-                dialects: DialectFlags::from_english_dialect(user_dialect),
+                dialects: crate::dict_word_metadata::DialectFlags::from_dialect(user_dialect),
                 ..Default::default()
             },
         );

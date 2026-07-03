@@ -1,10 +1,10 @@
-use crate::language::english::dialects::EnglishDialect;
 use crate::{
+    Dialect,
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
 };
-use EnglishDialect::{self as Dialect, American, Australian, British, Canadian, Indian};
+use Dialect::{American, Australian, British, Canadian, Indian};
 
 use super::ExprLinter;
 use crate::linting::expr_linter::Chunk;

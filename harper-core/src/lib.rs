@@ -16,6 +16,7 @@ mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
 pub mod language;
+pub mod language_detection;
 mod lexing;
 pub mod linting;
 mod mask;
@@ -44,16 +45,9 @@ use std::collections::{BTreeMap, VecDeque};
 pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
-pub use language::english::dialects::{EnglishDialect, EnglishDialectFlags};
-
-// Type alias for master branch compatibility during feature development.
-// This allows linting modules to use `Dialect` (matching master) while preserving
-// `EnglishDialect` for backward compatibility and to avoid massive refactoring.
-// When this feature branch is merged, the actual enum can be renamed from EnglishDialect to Dialect.
-pub type Dialect = EnglishDialect;
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, DictWordMetadata, NounData, PronounData,
-    VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
+    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
@@ -62,15 +56,13 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
-pub use language::dialects::dialect_flags::DialectFlags;
-pub use language::{Language, LanguageFamily};
-pub use linting::{Lint, LintGroup, LintKind, Linter, Suggestion};
+pub use linting::{LintGroup, Linter};
+use linting::Lint;
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
 pub use regular_nouns::{get_plurals, get_singulars};
 pub use span::Span;
-pub use spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, TrieDictionary};
 pub use sync::{LSend, Lrc};
 pub use title_case::{make_title_case, make_title_case_str};
 pub use token::Token;
@@ -217,7 +209,7 @@ mod tests {
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Document, EnglishDialect,
+        Dialect, Document,
         linting::{LintGroup, Linter},
         remove_overlaps,
     };
@@ -226,7 +218,7 @@ mod tests {
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
         let mut lints = linter.lint(&doc);
 
@@ -240,7 +232,7 @@ mod tests {
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), EnglishDialect::American);
+        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
         let mut lint_map = linter.organized_lints(&doc);
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();

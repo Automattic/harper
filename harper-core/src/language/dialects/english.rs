@@ -1,5 +1,6 @@
 //! English dialect re-exports.
 //!
-//! The actual implementation is in dict_word_metadata.rs to match the master branch structure.
+//! Re-exports the original English dialect types from dict_word_metadata.rs
+//! to maintain compatibility with the master branch structure.
 
-pub use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
+pub use crate::dict_word_metadata::{Dialect, DialectFlags};

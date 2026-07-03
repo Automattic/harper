@@ -4,9 +4,12 @@ use itertools::Itertools;
 use paste::paste;
 use serde::{Deserialize, Serialize};
 use smallvec::SmallVec;
+use strum::{EnumCount as _, VariantArray as _};
+use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
+
+use std::convert::TryFrom;
 
 use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::language::dialects::dialect_flags::DialectFlags;
 use crate::spell::WordId;
 use crate::{Document, TokenKind, TokenStringExt};
 
@@ -1021,52 +1024,207 @@ impl AffixData {
     }
 }
 
-#[test]
-#[cfg(feature = "de")]
-fn deserializes_new_language_scoped_dialect_flags() {
-    use serde_json::json;
+/// A regional dialect.
+///
+/// Note: these have bit-shifted values so that they can ergonomically integrate with
+/// `DialectFlags`. Each value here must have a unique bit index inside
+/// `DialectsUnderlyingType`.
+#[derive(
+    Debug,
+    Clone,
+    Copy,
+    Serialize,
+    Deserialize,
+    PartialEq,
+    PartialOrd,
+    Eq,
+    Hash,
+    EnumCount,
+    EnumString,
+    EnumIter,
+    Display,
+    VariantArray,
+    Default,
+)]
+pub enum Dialect {
+    #[default]
+    American = 1 << 0,
+    Canadian = 1 << 1,
+    Australian = 1 << 2,
+    British = 1 << 3,
+    Indian = 1 << 4,
+}
+impl Dialect {
+    /// Tries to guess the dialect used in the document by finding which dialect is used the most.
+    /// Returns `None` if it fails to find a single dialect that is used the most.
+    #[must_use]
+    pub fn try_guess_from_document(document: &Document) -> Option<Self> {
+        Self::try_from(DialectFlags::get_most_used_dialects_from_document(document)).ok()
+    }
 
-    use crate::language::english::dialects::EnglishDialect;
-
-    let metadata: crate::DictWordMetadata = serde_json::from_value(json!({
-        "dialects": {
-            "english": "AMERICAN",
-            "german": "STANDARD"
+    /// Tries to get a dialect from its abbreviation. Returns `None` if the abbreviation is not
+    /// recognized.
+    ///
+    /// # Examples
+    ///
+    /// ```
+    /// use harper_core::Dialect;
+    ///
+    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
+    /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
+    ///
+    /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
+    /// assert_eq!(Some(Dialect::Canadian), dialects.next().unwrap()); // CA
+    /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
+    /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
+    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
+    /// ```
+    #[must_use]
+    pub fn try_from_abbr(abbr: &str) -> Option<Self> {
+        match abbr {
+            "US" => Some(Self::American),
+            "CA" => Some(Self::Canadian),
+            "AU" => Some(Self::Australian),
+            "GB" => Some(Self::British),
+            "IN" => Some(Self::Indian),
+            _ => None,
         }
-    }))
-    .unwrap();
-    assert!(
-        metadata
-            .dialects
-            .is_english_dialect_enabled_strict(EnglishDialect::American)
-    );
-    assert!(
-        !metadata
-            .dialects
-            .is_english_dialect_enabled_strict(EnglishDialect::British)
-    );
+    }
+    // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
+    pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
+    }
+}
+impl TryFrom<DialectFlags> for Dialect {
+    type Error = ();
+
+    /// Attempts to convert `DialectFlags` to a single `Dialect`.
+    ///
+    /// # Errors
+    ///
+    /// Will return `Err` if more than one dialect is enabled or if an undefined dialect is
+    /// enabled.
+    fn try_from(dialect_flags: DialectFlags) -> Result<Self, Self::Error> {
+        // Ensure only one dialect is enabled before converting.
+        if dialect_flags.bits().count_ones() == 1 {
+            match dialect_flags {
+                df if df.is_dialect_enabled_strict(Dialect::American) => Ok(Dialect::American),
+                df if df.is_dialect_enabled_strict(Dialect::Canadian) => Ok(Dialect::Canadian),
+                df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
+                df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
+                df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
+                _ => Err(()),
+            }
+        } else {
+            // More than one dialect enabled; can't soundly convert.
+            Err(())
+        }
+    }
 }
 
-#[test]
-#[cfg(feature = "de")]
-fn serializes_dialect_flags_to_language_scoped_format() {
-    use crate::language::english::dialects::EnglishDialect;
+// The underlying type used for DialectFlags.
+// At the time of writing, this is currently a `u8`. If we want to define more than 8 dialects in
+// the future, we will need to switch this to a larger type.
+type DialectFlagsUnderlyingType = u8;
 
-    let metadata = DictWordMetadata {
-        dialects: DialectFlags::from_english_dialect(EnglishDialect::American),
-        ..DictWordMetadata::default()
-    };
+bitflags::bitflags! {
+    /// A collection of bit flags used to represent enabled dialects.
+    ///
+    /// This is generally used to allow a word (or similar) to be tagged with multiple dialects.
+    #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash)]
+    #[serde(transparent)]
+    pub struct DialectFlags: DialectFlagsUnderlyingType {
+        const AMERICAN = Dialect::American as DialectFlagsUnderlyingType;
+        const CANADIAN = Dialect::Canadian as DialectFlagsUnderlyingType;
+        const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
+        const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
+        const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+    }
+}
+impl DialectFlags {
+    /// Checks if the provided dialect is enabled.
+    /// If no dialect is explicitly enabled, it is assumed that all dialects are enabled.
+    #[must_use]
+    pub fn is_dialect_enabled(self, dialect: Dialect) -> bool {
+        self.is_empty() || self.intersects(Self::from_dialect(dialect))
+    }
 
-    let value = serde_json::to_value(metadata).unwrap();
-    let dialects = value.get("dialects").unwrap();
-    assert!(dialects.get("english").is_some());
-    assert!(dialects.get("german").is_some());
-    assert_eq!(dialects.get("english").unwrap(), "AMERICAN");
+    /// Checks if the provided dialect is ***explicitly*** enabled.
+    ///
+    /// Unlike `is_dialect_enabled`, this will return false when no dialects are explicitly
+    /// enabled.
+    #[must_use]
+    pub fn is_dialect_enabled_strict(self, dialect: Dialect) -> bool {
+        self.intersects(Self::from_dialect(dialect))
+    }
+
+    /// Constructs a `DialectFlags` from the provided `Dialect`, with only that dialect being
+    /// enabled.
+    ///
+    /// # Panics
+    ///
+    /// This will panic if `dialect` represents a dialect that is not defined in
+    /// `DialectFlags`.
+    #[must_use]
+    pub fn from_dialect(dialect: Dialect) -> Self {
+        let Some(out) = Self::from_bits(dialect as DialectFlagsUnderlyingType) else {
+            panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
+        };
+        out
+    }
+
+    /// Gets the most commonly used dialect(s) in the document.
+    ///
+    /// If multiple dialects are used equally often, they will all be enabled in the returned
+    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
+    /// will be the only one enabled.
+    #[must_use]
+    pub fn get_most_used_dialects_from_document(document: &Document) -> Self {
+        // Initialize counters.
+        let mut dialect_counters: [(Dialect, usize); Dialect::COUNT] = Dialect::VARIANTS
+            .iter()
+            .map(|d| (*d, 0))
+            .collect_array()
+            .unwrap();
+
+        // Count word dialects.
+        document.iter_words().for_each(|w| {
+            if let TokenKind::Word(Some(lexeme_metadata)) = &w.kind {
+                // If the token is a word, iterate though the dialects in `dialect_counters` and
+                // increment those counters where the word has the respective dialect enabled.
+                dialect_counters.iter_mut().for_each(|(dialect, count)| {
+                    if lexeme_metadata.dialects.is_dialect_enabled(*dialect) {
+                        *count += 1;
+                    }
+                });
+            }
+        });
+
+        // Find max counter.
+        let max_counter = dialect_counters
+            .iter()
+            .map(|(_, count)| count)
+            .max()
+            .unwrap();
+        // Get and convert the collection of most used dialects into a `DialectFlags`.
+        dialect_counters
+            .into_iter()
+            .filter(|(_, count)| count == max_counter)
+            .fold(DialectFlags::empty(), |acc, dialect| {
+                // Fold most used dialects into `DialectFlags` via bitwise or.
+                acc | Self::from_dialect(dialect.0)
+            })
+    }
+}
+impl Default for DialectFlags {
+    /// A default value with no dialects explicitly enabled.
+    /// Implicitly, this state corresponds to all dialects being enabled.
+    fn default() -> Self {
+        Self::empty()
+    }
 }
 
 mod noun {
-    #[cfg(test)]
-    #[cfg(test)]
     use crate::dict_word_metadata::tests::md;
 
     #[test]
@@ -1229,11 +1387,9 @@ mod noun {
 }
 
 mod pronoun {
-    #[cfg(test)]
     use crate::dict_word_metadata::tests::md;
 
     mod i_me_myself {
-        #[cfg(test)]
         use crate::dict_word_metadata::tests::md;
 
         #[test]
@@ -1667,7 +1823,6 @@ mod pronoun {
 }
 
 mod nominal {
-    #[cfg(test)]
     use crate::dict_word_metadata::tests::md;
 
     #[test]
@@ -1702,9 +1857,7 @@ mod nominal {
 }
 
 mod adjective {
-    #[cfg(test)]
     use super::Degree;
-    #[cfg(test)]
     use crate::dict_word_metadata::tests::md;
 
     // Getting degrees
@@ -1747,17 +1900,39 @@ mod adjective {
 }
 
 pub mod tests {
-    // Helper function to get metadata from the curated dictionary
-    #[cfg(test)]
     use crate::DictWordMetadata;
-    #[cfg(test)]
     use crate::spell::{Dictionary, FstDictionary};
 
-    #[cfg(test)]
+    // Helper function to get metadata from the curated dictionary
     pub fn md(word: &str) -> DictWordMetadata {
         FstDictionary::curated()
             .get_word_metadata_str(word)
             .unwrap_or_else(|| panic!("Word '{word}' not found in dictionary"))
             .into_owned()
+    }
+
+    mod dialect {
+        use super::super::{Dialect, DialectFlags};
+        use crate::Document;
+
+        #[test]
+        fn guess_british_dialect() {
+            let document = Document::new_plain_english_curated("Aluminium was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::British)
+                    && !df.is_dialect_enabled_strict(Dialect::American)
+            );
+        }
+
+        #[test]
+        fn guess_american_dialect() {
+            let document = Document::new_plain_english_curated("Aluminum was used.");
+            let df = DialectFlags::get_most_used_dialects_from_document(&document);
+            assert!(
+                df.is_dialect_enabled_strict(Dialect::American)
+                    && !df.is_dialect_enabled_strict(Dialect::British)
+            );
+        }
     }
 }
