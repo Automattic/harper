@@ -9,6 +9,7 @@ use std::error::Error as StdError;
 use super::core_foundation_utilities::ax_element_attribute;
 
 /// Pretty self-explanatory. Grabs the PID of the currently focused window.
+/// Can be expensive. Do not perform in a hot loop.
 pub fn focused_window_pid() -> Result<pid_t, Box<dyn StdError>> {
     let system = AXUIElement::system_wide();
     let app = match ax_element_attribute(&system, kAXFocusedApplicationAttribute) {
