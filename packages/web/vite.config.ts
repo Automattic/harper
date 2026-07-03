@@ -196,6 +196,14 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/chrome-extension',
 										},
 										{
+											title: 'Harper Desktop',
+											to: '/docs/contributors/desktop',
+										},
+										{
+											title: 'Website',
+											to: '/docs/contributors/website',
+										},
+										{
 											title: 'WordPress',
 											to: '/docs/contributors/wordpress',
 										},
@@ -206,6 +214,10 @@ export default defineConfig(async () => {
 										{
 											title: 'Reviewing Pull Requests',
 											to: '/docs/contributors/review',
+										},
+										{
+											title: 'Committer',
+											to: '/docs/contributors/committer',
 										},
 										{
 											title: 'Local Statistics',

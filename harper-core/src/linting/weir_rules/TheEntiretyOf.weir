@@ -1,0 +1,9 @@
+expr main (the entire of)
+
+let message "Use `the entirety of` instead of `the entire of`."
+let description "Corrects `the entire of` to `the entirety of`."
+let kind "Usage"
+let becomes "the entirety of"
+
+test "I'm certain that is not the entire of your traceback" "I'm certain that is not the entirety of your traceback"
+test "I think there's still value in sharp emitting the metadata event when the entire of the input is available" "I think there's still value in sharp emitting the metadata event when the entirety of the input is available"
