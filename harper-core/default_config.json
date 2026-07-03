@@ -5182,6 +5182,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MeanBy",
+								"state": true,
+								"label": "Mean By"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InThisThatRegard",
 								"state": true,
 								"label": "In This/That Regard"
