@@ -496,7 +496,7 @@ fn generate_languages_file(src_dir: &Path) {
     fs::write(&dest, code).unwrap();
 
     // Also generate registry.rs
-    generate_registry_file(&src_dir);
+    generate_registry_file(src_dir);
 }
 
 /// Generate registry.rs with all language-specific registry code
@@ -637,7 +637,7 @@ fn generate_registry_file(src_dir: &Path) {
     code.push_str("        (\"mail\", ProseLanguage::Portuguese) => Some(Box::new(PortugueseModule::plain_parser())),\n");
     code.push_str("        #[cfg(feature = \"sk\")]\n");
     code.push_str("        (\"mail\", ProseLanguage::Slovak) => Some(Box::new(SlovakModule::plain_parser())),\n");
-    code.push_str("\n");
+    code.push('\n');
     code.push_str("        // Markdown/Quarto format\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
     code.push_str("        (\"markdown\" | \"quarto\", ProseLanguage::German) => Some(Box::new(\n");
@@ -660,7 +660,7 @@ fn generate_registry_file(src_dir: &Path) {
     code.push_str("            }),\n");
     code.push_str("        )),\n");
     code.push_str("        (\"markdown\" | \"quarto\", _) => Some(Box::new(Markdown::new(markdown_options))),\n");
-    code.push_str("\n");
+    code.push('\n');
     code.push_str("        // Org mode format\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
     code.push_str("        (\"org\", ProseLanguage::German) => Some(Box::new(OrgMode::with_inline_parser(|source| {\n");
@@ -677,7 +677,7 @@ fn generate_registry_file(src_dir: &Path) {
     code.push_str("            SlovakModule::plain_parser().parse(source)\n");
     code.push_str("        }))),\n");
     code.push_str("        (\"org\", _) => Some(Box::new(OrgMode::default())),\n");
-    code.push_str("\n");
+    code.push('\n');
     code.push_str("        // Plain text format\n");
     code.push_str("        (\"plaintext\" | \"text\", ProseLanguage::English) => {\n");
     code.push_str("            Some(Box::new(EnglishModule::plain_parser()))\n");
