@@ -5,6 +5,7 @@ import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
+import { remapLintToCurrentSource } from './spanMapping';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
@@ -133,30 +134,7 @@ export default class LintFramework {
 					return { target: null as HTMLElement | null, lints: {} };
 				}
 
-				let text = null;
-
-				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
-				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
-
-				if (isCM) {
-					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
-					const lines = Array.from(lineElements).map((el) => el.textContent);
-					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
-				} else {
-					text =
-						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-							? target.value
-							: target.textContent;
-				}
-
-				const newLineIndices = [];
-				let i = 0;
-				for (const c of text ?? '') {
-					if (c == '\n') {
-						newLineIndices.push(i);
-					}
-					i++;
-				}
+				const { text, isCM, newLineIndices } = this.getTargetText(target);
 
 				if (!text || text.length > 120000) {
 					return { target: null as HTMLElement | null, lints: {} };
@@ -298,6 +276,39 @@ export default class LintFramework {
 		}
 	}
 
+	private getTargetText(target: Node): {
+		text: string | null;
+		isCM: boolean;
+		newLineIndices: number[];
+	} {
+		let text: string | null = null;
+
+		// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
+		const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
+
+		if (isCM) {
+			const lineElements = (target as HTMLElement).querySelectorAll<HTMLElement>('.cm-line');
+			const lines = Array.from(lineElements).map((el) => el.textContent);
+			text = lines.reduce((acc: string, x: string | null) => `${acc}${x ?? ''}\n`, '');
+		} else {
+			text =
+				target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+					? target.value
+					: (target as HTMLElement).innerText;
+		}
+
+		const newLineIndices: number[] = [];
+		let i = 0;
+		for (const c of text ?? '') {
+			if (c == '\n') {
+				newLineIndices.push(i);
+			}
+			i++;
+		}
+
+		return { text, isCM, newLineIndices };
+	}
+
 	private requestRender() {
 		if (this.renderRequested) {
 			return;
@@ -306,17 +317,33 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) =>
-				target
-					? Object.entries(lints).flatMap(([ruleName, ls]) =>
-							ls.flatMap((l) =>
-								computeLintBoxes(target, l as any, ruleName, {
-									ignoreLint: this.actions.ignoreLint,
-								}),
-							),
-						)
-					: [],
-			);
+			const boxes = this.lastLints.flatMap(({ target, lints }) => {
+				if (!target) {
+					return [];
+				}
+
+				const { text, isCM } = this.getTargetText(target);
+				if (text == null) {
+					return [];
+				}
+
+				return Object.entries(lints).flatMap(([ruleName, ls]) =>
+					ls.flatMap((lint) => {
+						const currentLint = isCM
+							? lint.source === text
+								? lint
+								: null
+							: remapLintToCurrentSource(lint, text);
+						if (currentLint == null) {
+							return [];
+						}
+
+						return computeLintBoxes(target, currentLint, ruleName, {
+							ignoreLint: this.actions.ignoreLint,
+						});
+					}),
+				);
+			});
 			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);

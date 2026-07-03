@@ -30,7 +30,7 @@ impl Linter for CapitalizePersonalPronouns {
                         lint_kind: LintKind::Capitalization,
                         suggestions: vec![Suggestion::ReplaceWith(replacement)],
                         message: "The first-person singular subject pronoun must be capitalized."
-                            .to_string(),
+                            .to_owned(),
                         priority: 31,
                     })
                 } else {

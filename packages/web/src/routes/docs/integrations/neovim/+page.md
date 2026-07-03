@@ -33,11 +33,10 @@ require('lspconfig').harper_ls.setup {
         AnA = true,
         SentenceCapitalization = true,
         UnclosedQuotes = true,
-        WrongQuotes = false,
+        WrongApostrophe = false,
         LongSentences = true,
         RepeatedWords = true,
         Spaces = true,
-        Matcher = true,
         CorrectNumberSuffix = true
       },
       codeActions = {

@@ -1,0 +1,9 @@
+expr main (in do course)
+
+let message "Use `in due course` instead of `in do course`."
+let description "Corrects `do` to `due` in the eggcorn `in do course`."
+let kind "Eggcorn"
+let becomes "in due course"
+
+test "We will menage everything in do course of time." "We will menage everything in due course of time."
+test "What might not come in do course of the game if you don't play it smart is the uber loot." "What might not come in due course of the game if you don't play it smart is the uber loot."

@@ -14,7 +14,7 @@ impl Default for ArriveTo {
             expr: SequenceExpr::word_set(&["arrive", "arrived", "arrives", "arriving"])
                 .t_ws()
                 .t_aco("to")
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()
@@ -41,7 +41,7 @@ impl ExprLinter for ArriveTo {
             span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_string(),
+            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_owned(),
             ..Default::default()
         })
     }

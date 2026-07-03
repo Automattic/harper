@@ -262,7 +262,7 @@ impl Parser for Markdown {
 
                     tokens.append(&mut new_tokens);
                 }
-                // TODO: Support via `harper-html`
+                // TO-DO: Support via `harper-html`
                 pulldown_cmark::Event::Html(_) | pulldown_cmark::Event::InlineHtml(_) => {
                     let size = span_end - span_start;
                     tokens.push(Token {
@@ -556,7 +556,7 @@ Paragraph.
 
     #[test]
     fn hang2() {
-        // This seems to only be a java specific problem...
+        // This seems to only be a java specific problem…
         let opts = MarkdownOptions::default();
         let parser = Markdown::new(opts);
         let _res = parser.parse_str("//{@j");
