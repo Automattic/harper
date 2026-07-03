@@ -6,7 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 use harper_core::language::dialects::dialect_flags::DialectFlags;
-use harper_core::language_detection::is_doc_likely_english;
+use harper_core::language::english::language_detection::is_likely_english;
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
@@ -200,7 +200,11 @@ impl Linter {
     /// Helper method to quickly check if a plain string is likely intended to be English
     pub fn is_likely_english(&self, text: String) -> bool {
         let document = Document::new_plain_english(&text, &self.dictionary);
-        is_doc_likely_english(&document, &self.dictionary)
+        is_likely_english(
+            document.get_tokens(),
+            document.get_source(),
+            &self.dictionary,
+        )
     }
 
     /// Helper method to remove non-English text from a plain English document.

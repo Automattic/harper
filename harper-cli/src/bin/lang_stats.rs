@@ -1,12 +1,13 @@
 use clap::Parser;
-use harper_core::language::{LanguageModule, english::module::EnglishModule};
+use harper_core::language::english::module::EnglishModule;
+use harper_core::language::module::LanguageModule;
 use harper_core::spell::Dictionary;
 
 #[cfg(feature = "pt")]
 use harper_core::language::portuguese::module::PortugueseModule;
 
 #[cfg(feature = "de")]
-use harper_core::language::german::module::GermanModule;
+use harper_core::language::german::spell::{curated_german_dictionary, mutable_german_dictionary};
 
 /// Harper Language Statistics Tool
 /// Analyzes dictionary size, annotation coverage, and other metrics
@@ -86,9 +87,6 @@ fn analyze_german(args: &Args) {
     };
 
     // Load FST dictionary for other stats
-    use harper_core::language::german::spell::{
-        curated_german_dictionary, mutable_german_dictionary,
-    };
     let _dict = curated_german_dictionary();
 
     // Basic statistics - show file-based count
@@ -241,6 +239,7 @@ fn count_english_annotations() -> (usize, Vec<(String, usize)>) {
     (48000, sorted)
 }
 
+#[cfg(feature = "pt")]
 fn count_portuguese_annotations() -> (usize, Vec<(String, usize)>) {
     let mut annotation_counts = std::collections::HashMap::new();
 
@@ -258,6 +257,7 @@ fn count_english_affix_rules() -> usize {
     25 // English has more affix rules
 }
 
+#[cfg(feature = "pt")]
 fn count_portuguese_affix_rules() -> usize {
     8 // Portuguese has fewer rules
 }
