@@ -136,12 +136,14 @@ impl AstExprNode {
 
                 Ok(Box::new(expr))
             }
-            AstExprNode::Filter(children) => Ok(Box::new(Filter::new(
-                children
+            AstExprNode::Filter(children) => {
+                let steps: Vec<Box<dyn Expr>> = children
                     .iter()
                     .map(|n| n.to_expr(ctx_exprs))
-                    .process_results(|iter| iter.collect())?,
-            ))),
+                    .process_results(|iter| iter.collect())?;
+
+                Ok(Box::new(Filter::new(steps)))
+            }
             AstExprNode::Punctuation(punct) => {
                 let punct = *punct;
 

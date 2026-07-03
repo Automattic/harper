@@ -16,8 +16,8 @@ impl Default for RunIntoProblemsOrTrouble {
                 .t_ws()
                 .t_aco("into")
                 .t_ws()
-                .then_any_of(vec![
-                    Box::new(WordSet::new(&["problem", "troubles"])),
+                .then_any_of([
+                    Box::new(WordSet::new(&["problem", "troubles"])) as Box<dyn Expr>,
                     Box::new(SequenceExpr::word_seq(&["a", "trouble"])),
                 ]),
         }
