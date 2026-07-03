@@ -22,6 +22,7 @@ export const LINT_KIND_COLORS = {
 	Typo: '#FF6B35',
 	Usage: '#1E90FF',
 	WordChoice: '#228B22',
+	WordOrder: '#4D4DFF',
 } as const;
 
 export function lintKindColor(lintKindKey: string): string {

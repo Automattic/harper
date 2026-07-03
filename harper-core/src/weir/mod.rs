@@ -17,7 +17,10 @@ use parsing::{parse_expr_str, parse_str};
 use strum_macros::{AsRefStr, EnumString};
 
 use crate::expr::{Expr, ExprExt};
-use crate::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Sentence, Suggestion};
+use crate::linting::{
+    Chunk, ExprLinter, Lint, LintKind, Linter, MAX_SUGGESTION_TRANSFORMATION_DEPTH, Sentence,
+    Suggestion,
+};
 use crate::parsers::Markdown;
 use crate::spell::FstDictionary;
 use crate::{Document, Lrc, Token, TokenStringExt};
@@ -232,7 +235,7 @@ impl WeirLinter {
                     return Some(current);
                 }
 
-                if depth >= 100 {
+                if depth >= MAX_SUGGESTION_TRANSFORMATION_DEPTH {
                     continue;
                 }
 
@@ -280,7 +283,7 @@ impl WeirLinter {
                 }
 
                 iter_count += 1;
-                if iter_count == 100 {
+                if iter_count == MAX_SUGGESTION_TRANSFORMATION_DEPTH {
                     break;
                 }
             }

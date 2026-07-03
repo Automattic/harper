@@ -58,7 +58,7 @@ impl ExprLinter for WishCould {
                 "could",
                 can_span.get_content(src),
             )],
-            message: "Use 'could' instead of 'can' after 'wish'.".to_string(),
+            message: "Use 'could' instead of 'can' after 'wish'.".to_owned(),
             ..Default::default()
         })
     }

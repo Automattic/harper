@@ -55,6 +55,7 @@ pub fn lint_kind_color(lint_kind: LintKind) -> Color {
         LintKind::Typo => Color::new(0xFF, 0x6B, 0x35),
         LintKind::Usage => Color::new(0x1E, 0x90, 0xFF),
         LintKind::WordChoice => Color::new(0x22, 0x8B, 0x22),
+        LintKind::WordOrder => Color::new(0x4D, 0x4D, 0xFF),
     }
 }
 

@@ -46,7 +46,7 @@ impl ExprLinter for ByAccident {
             span,
             lint_kind: LintKind::Preposition,
             suggestions,
-            message: "Did you mean `by accident`?".to_string(),
+            message: "Did you mean `by accident`?".to_owned(),
             ..Default::default()
         })
     }

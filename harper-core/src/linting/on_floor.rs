@@ -40,7 +40,7 @@ impl Default for OnFloor {
         ]));
 
         let pattern = LongestMatchOf::new(vec![
-            Box::new(on_the_floor.clone()),
+            Box::new(on_the_floor.clone()) as Box<dyn Expr>,
             Box::new(
                 SequenceExpr::with(exceptions.clone())
                     .t_ws()
@@ -78,7 +78,7 @@ impl ExprLinter for OnFloor {
             message: format!(
                 "Corrects `{incorrect_preposition}` to `on` when talking about position inside a building",
             )
-            .to_string(),
+            .to_owned(),
             priority: 63,
         })
     }

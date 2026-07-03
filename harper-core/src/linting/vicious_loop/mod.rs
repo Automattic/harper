@@ -87,9 +87,9 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                 nountok.get_ch(src),
             )],
             message: if pref == Prefer::Circle {
-                "This idiom originally used `circle`, not `cycle`".to_string()
+                "This idiom originally used `circle`, not `cycle`".to_owned()
             } else {
-                "Though this idiom originally used `circle`, `cycle` is preferred.".to_string()
+                "Though this idiom originally used `circle`, `cycle` is preferred.".to_owned()
             },
             ..Default::default()
         });
@@ -139,7 +139,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
             )],
             message:
                 "The idiom uses the word `vicious`, not `viscous`, which describes thick liquids."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         });
     }

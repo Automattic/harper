@@ -26,6 +26,7 @@ const LINT_KIND_COLORS = {
 	Typo: '#FF6B35', // Vibrant orange-red
 	Usage: '#1E90FF', // Dodger blue
 	WordChoice: '#228B22', // Forest green
+	WordOrder: '#4D4DFF', // Royal blue
 } as const satisfies Record<LintKind, string>;
 
 // Export the array of all lint kind names
