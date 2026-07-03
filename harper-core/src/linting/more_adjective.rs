@@ -170,7 +170,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
             lint_kind: LintKind::Style,
             suggestions,
             message: "This is not an error, but an inflected form of this adjective also exists"
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

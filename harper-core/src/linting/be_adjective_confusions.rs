@@ -90,7 +90,7 @@ impl ExprLinter for BeAdjectiveLinter {
                 self.adjective,
                 wtok.span.get_content(src),
             )],
-            message: self.message.to_string(),
+            message: self.message.to_owned(),
             ..Default::default()
         })
     }
