@@ -83,7 +83,7 @@ impl<T: Dictionary> Linter for SentenceCapitalization<T> {
                             suggestions: vec![Suggestion::ReplaceWith(replacement_chars)],
                             priority: 31,
                             message: "This sentence does not start with a capital letter"
-                                .to_string(),
+                                .to_owned(),
                         });
                     }
                 }

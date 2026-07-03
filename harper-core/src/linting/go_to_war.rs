@@ -45,7 +45,7 @@ impl ExprLinter for GoToWar {
             span: prep_span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str("to", prep_chars)],
-            message: "Use `to` instead of `at`.".to_string(),
+            message: "Use `to` instead of `at`.".to_owned(),
             ..Default::default()
         })
     }

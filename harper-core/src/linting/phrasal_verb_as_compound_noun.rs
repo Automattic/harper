@@ -1,8 +1,10 @@
 use std::sync::Arc;
 
-use super::{Lint, LintKind, Linter, Suggestion};
-use crate::spell::{Dictionary, FstDictionary};
-use crate::{CharStringExt, Document, Span, TokenStringExt};
+use crate::{
+    linting::{Lint, LintKind, Linter, Suggestion},
+    spell::{Dictionary, FstDictionary},
+    {CharStringExt, Document, Token, TokenStringExt},
+};
 
 /// Detect phrasal verbs written as compound nouns.
 pub struct PhrasalVerbAsCompoundNoun {
@@ -38,6 +40,12 @@ enum Why {
     ItsAKnownFalsePositive,
     ItDoesntEndWithOneOfTheParticles,
     NeitherTheWholeWordNorThePartBeforeTheParticleIsAVerb,
+    Contextual(Context),
+    TheresNothingWrongWithIt,
+}
+
+#[derive(Debug, PartialEq)]
+enum Context {
     ItsInIsolation,
     IHaveNoConfidenceThatItsAVerb,
     TheresAnAdjectiveOrDeterminerBeforeIt,
@@ -48,41 +56,38 @@ enum Why {
     TheresNothingBeforeItAndAPrepositionAfterIt,
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
-    TheresNothingWrongWithIt,
+    ItsFollowedByVerb,
 }
 
 impl PhrasalVerbAsCompoundNoun {
-    fn logic_and_heuristics(
+    fn analyse(
         &self,
         document: &Document,
         i: usize,
-        token: &crate::Token,
+        token: &Token,
     ) -> Result<(Vec<char>, Confidence), Why> {
         // It would be handy if there could be a dict flag for nouns which are compounds of phrasal verbs.
         // Instead, let's use a few heuristics.
 
-        // let no_phrasal_verb = String::new();
         // * Can't also be a proper noun or a real verb.
         if token.kind.is_proper_noun() || token.kind.is_verb() {
             return Err(Why::ItsAProperNounOrVerb);
         }
-        let nountok_charsl = document.get_span_content(&token.span);
+        let noun_chars = document.get_span_content(&token.span);
         // * Can't contain space, hyphen or apostrophe
-        if nountok_charsl.contains(&' ')
-            || nountok_charsl.contains(&'-')
-            || nountok_charsl.contains(&'\'')
-            || nountok_charsl.contains(&'’')
+        if noun_chars.contains(&' ')
+            || noun_chars.contains(&'-')
+            || noun_chars.contains(&'\'')
+            || noun_chars.contains(&'’')
         {
             return Err(Why::ItContainsSpaceHyphenOrApostrophe);
         }
 
-        let nountok_lower = nountok_charsl.to_lower();
-        let nountok_lower = nountok_lower.as_ref();
-
         // * Must not be in the set of known false positives.
-        if nountok_lower == ['g', 'a', 'l', 'l', 'o', 'n']
-            || nountok_lower == ['d', 'r', 'a', 'g', 'o', 'n']
-        {
+        if noun_chars.eq_any_ignore_ascii_case_chars(&[
+            &['g', 'a', 'l', 'l', 'o', 'n'],
+            &['d', 'r', 'a', 'g', 'o', 'n'],
+        ]) {
             return Err(Why::ItsAKnownFalsePositive);
         }
 
@@ -99,25 +104,13 @@ impl PhrasalVerbAsCompoundNoun {
             &['u', 'p'],
         ];
 
-        let mut found_particle_len = 0;
-        if !particle_endings.iter().any(|ending| {
-            let ending_len = ending.len();
-            if ending_len <= nountok_charsl.len()
-                && ending
-                    .iter()
-                    .eq(nountok_charsl[nountok_charsl.len() - ending_len..].iter())
-            {
-                found_particle_len = ending_len;
-                true
-            } else {
-                false
-            }
-        }) {
-            return Err(Why::ItDoesntEndWithOneOfTheParticles);
-        }
+        let found_particle_len = particle_endings
+            .iter()
+            .find(|ending| noun_chars.ends_with_ignore_ascii_case_chars(ending))
+            .map(|ending| ending.len())
+            .ok_or(Why::ItDoesntEndWithOneOfTheParticles)?;
 
-        let verb_part = &nountok_charsl[..nountok_charsl.len() - found_particle_len];
-        let particle_part = &nountok_charsl[nountok_charsl.len() - found_particle_len..];
+        let (verb_part, particle_part) = noun_chars.split_at(noun_chars.len() - found_particle_len);
         let phrasal_verb = [verb_part, &[' '], particle_part].concat();
 
         // Check if both things are verbs.
@@ -146,42 +139,44 @@ impl PhrasalVerbAsCompoundNoun {
 
         // If it's in isolation, a compound noun is fine.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_none() {
-            return Err(Why::ItsInIsolation);
+            return Err(Why::Contextual(Context::ItsInIsolation));
         }
 
         let confidence = match (phrasal_verb_is_verb, verb_part_is_verb) {
             (true, _) => Confidence::DefinitelyVerb,
             (false, true) => Confidence::PossiblyVerb,
-            _ => return Err(Why::IHaveNoConfidenceThatItsAVerb),
+            _ => return Err(Why::Contextual(Context::IHaveNoConfidenceThatItsAVerb)),
         };
+
+        let source = document.get_source();
 
         if let Some(prev_tok) = maybe_prev_tok {
             if prev_tok.kind.is_adjective() || prev_tok.kind.is_determiner() {
-                return Err(Why::TheresAnAdjectiveOrDeterminerBeforeIt);
+                return Err(Why::Contextual(
+                    Context::TheresAnAdjectiveOrDeterminerBeforeIt,
+                ));
             }
 
             // "dictionary lookup" is not a mistake but "couples breakup" is.
             // But "settings plugin" is not.
             if prev_tok.kind.is_noun() && !prev_tok.kind.is_plural_noun()
-                || prev_tok.get_ch(document.get_source()).eq_str("settings")
+                || prev_tok.get_ch(source).eq_str("settings")
             {
-                return Err(Why::ItsPrecededByANonPluralNoun);
+                return Err(Why::Contextual(Context::ItsPrecededByANonPluralNoun));
             }
 
             if is_part_of_noun_list(document, i) {
-                return Err(Why::ItsAnItemInAListOfNouns);
+                return Err(Why::Contextual(Context::ItsAnItemInAListOfNouns));
             }
 
             // If the previous word is (only) a preposition, this word is surely a noun
-            if prev_tok.kind.is_preposition()
-                && !prev_tok.get_ch(document.get_source()).eq_str("to")
-            {
-                return Err(Why::ItsPrecededByAPreposition);
+            if prev_tok.kind.is_preposition() && !prev_tok.get_ch(source).eq_str("to") {
+                return Err(Why::Contextual(Context::ItsPrecededByAPreposition));
             }
 
             // If the previous word is OOV, those are most commonly nouns
             if prev_tok.kind.is_oov() {
-                return Err(Why::ItsPrecededByAnUnknownWord);
+                return Err(Why::Contextual(Context::ItsPrecededByAnUnknownWord));
             }
         }
 
@@ -191,70 +186,84 @@ impl PhrasalVerbAsCompoundNoun {
         // ✅ Plugin for text editors.
         // ✅ Plug in for faster performance.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_some_and(|t| t.kind.is_preposition()) {
-            return Err(Why::TheresNothingBeforeItAndAPrepositionAfterIt);
+            return Err(Why::Contextual(
+                Context::TheresNothingBeforeItAndAPrepositionAfterIt,
+            ));
         }
 
-        if let Some(next_tok) = maybe_next_tok {
-            // "That" or "which" can follow a noun as relative pronouns.
-            if next_tok.kind.is_pronoun()
-                && next_tok
-                    .get_ch(document.get_source())
-                    .eq_any_ignore_ascii_case_chars(&[
-                        &['t', 'h', 'a', 't'][..],
-                        &['w', 'h', 'i', 'c', 'h'][..],
-                    ])
-            {
-                return Err(Why::ItsFollowedByThatOrWhich);
-            }
+        // "That" or "which" can follow a noun as relative pronouns.
+        if let Some(next_tok) = maybe_next_tok
+            && next_tok.kind.is_pronoun()
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_chars(&[
+                &['t', 'h', 'a', 't'][..],
+                &['w', 'h', 'i', 'c', 'h'][..],
+            ])
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByThatOrWhich));
         }
 
         // If the compound noun is followed by another noun, check for larger compound nouns.
         if let Some(next_tok) = maybe_next_tok.filter(|tok| tok.kind.is_noun())
-            && match nountok_lower {
-                ['b', 'a', 'c', 'k', 'u', 'p'] => &[
-                    "file",
-                    "images",
-                    "link",
-                    "links",
-                    "location",
-                    "plan",
-                    "sites",
-                    "snapshots",
-                ][..],
-                ['c', 'a', 'l', 'l', 'b', 'a', 'c', 'k'] => &["function", "handlers"][..],
-                ['l', 'a', 'y', 'o', 'u', 't'] => &["estimation"][..],
-                ['m', 'a', 'r', 'k', 'u', 'p'] => &["language", "languages"][..],
-                ['m', 'o', 'u', 's', 'e', 'o', 'v', 'e', 'r'] => &["hints"][..],
-                ['p', 'l', 'a', 'y', 'b', 'a', 'c', 'k'] => &["latency", "speed"][..],
-                ['p', 'l', 'u', 'g', 'i', 'n'] => &[
-                    "architecture",
-                    "classes",
-                    "development",
-                    "developer",
-                    "docs",
-                    "ecosystem",
-                    "files",
-                    "interface",
-                    "name",
-                    "packages",
-                    "suite",
-                    "support",
-                ][..],
-                ['p', 'o', 'p', 'u', 'p'] => &["window"][..],
-                ['r', 'o', 'l', 'l', 'o', 'u', 't'] => &["logic", "status"][..],
-                ['s', 't', 'a', 'r', 't', 'u', 'p'] => &["environments"][..],
-                ['t', 'h', 'r', 'o', 'w', 'b', 'a', 'c', 'k'] => &["machine"][..],
-                ['w', 'o', 'r', 'k', 'o', 'u', 't'] => &["constraints", "preference"][..],
-                _ => &[],
-            }
-            .contains(
-                &next_tok
-                    .get_str(document.get_source())
-                    .to_lowercase()
-                    .as_ref(),
+            && next_tok.get_ch(source).eq_any_ignore_ascii_case_str(
+                [
+                    (
+                        "backup",
+                        &[
+                            "file",
+                            "images",
+                            "link",
+                            "links",
+                            "location",
+                            "plan",
+                            "sites",
+                            "snapshots",
+                        ][..],
+                    ),
+                    ("callback", &["function", "handlers"][..]),
+                    ("layout", &["estimation"][..]),
+                    ("markup", &["language", "languages"][..]),
+                    ("mouseover", &["hints"][..]),
+                    ("playback", &["latency", "speed"][..]),
+                    (
+                        "plugin",
+                        &[
+                            "architecture",
+                            "classes",
+                            "development",
+                            "developer",
+                            "docs",
+                            "ecosystem",
+                            "files",
+                            "interface",
+                            "name",
+                            "packages",
+                            "suite",
+                            "support",
+                        ][..],
+                    ),
+                    ("popup", &["window"][..]),
+                    ("rollout", &["logic", "status"][..]),
+                    ("startup", &["environments"][..]),
+                    ("throwback", &["machine"][..]),
+                    ("workout", &["constraints", "preference"][..]),
+                ]
+                .iter()
+                .find(|(prefix, _)| noun_chars.eq_str(prefix))
+                .map(|(_, suffixes)| *suffixes)
+                .unwrap_or(&[]),
             )
         {
-            return Err(Why::ItsActuallyPartOfANounPhrase);
+            return Err(Why::Contextual(Context::ItsActuallyPartOfANounPhrase));
+        }
+
+        // If the next word is a present or simple past verb form compatible with a 3rd person singular noun
+        if let Some(next_tok) = maybe_next_tok
+            && (next_tok.kind.is_verb_third_person_singular_present_form()
+                || next_tok.kind.is_verb_simple_past_form()
+                || next_tok.kind.is_verb_past_form())
+            && !next_tok.kind.is_plural_noun()
+        {
+            return Err(Why::Contextual(Context::ItsFollowedByVerb));
         }
 
         Ok((phrasal_verb, confidence))
@@ -263,32 +272,30 @@ impl PhrasalVerbAsCompoundNoun {
 
 impl Linter for PhrasalVerbAsCompoundNoun {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
-        let mut lints = Vec::new();
+        document
+            .iter_noun_indices()
+            .filter_map(|i| {
+                let token = document.get_token(i).unwrap();
 
-        for i in document.iter_noun_indices() {
-            let token = document.get_token(i).unwrap();
-
-            if let Ok((phrasal_verb, confidence)) = self.logic_and_heuristics(document, i, token) {
-                let message = match confidence {
-                    Confidence::DefinitelyVerb => {
-                        "This word should be a phrasal verb, not a compound noun."
-                    }
-                    Confidence::PossiblyVerb => {
-                        "This word might be a phrasal verb rather than a compound noun."
-                    }
-                };
-
-                lints.push(Lint {
-                    span: Span::new(token.span.start, token.span.end),
-                    lint_kind: LintKind::WordChoice,
-                    suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
-                    message: message.to_string(),
-                    priority: 63,
-                });
-            }
-        }
-
-        lints
+                self.analyse(document, i, token)
+                    .ok()
+                    .map(|(phrasal_verb, confidence)| Lint {
+                        span: token.span,
+                        lint_kind: LintKind::WordChoice,
+                        suggestions: vec![Suggestion::ReplaceWith(phrasal_verb)],
+                        message: match confidence {
+                            Confidence::DefinitelyVerb => {
+                                "This word should be a phrasal verb, not a compound noun."
+                            }
+                            Confidence::PossiblyVerb => {
+                                "This word might be a phrasal verb rather than a compound noun."
+                            }
+                        }
+                        .to_string(),
+                        priority: 63,
+                    })
+            })
+            .collect()
     }
 
     fn description(&self) -> &str {
@@ -528,10 +535,11 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_all_caps() {
-        assert_no_lints(
+    fn flag_all_caps() {
+        assert_lint_count(
             "I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.",
             PhrasalVerbAsCompoundNoun::default(),
+            2,
         );
     }
 
@@ -811,6 +819,14 @@ mod tests {
             "How to properly setup a backup link (and have it act like a backup again after stop/start of master link)",
             PhrasalVerbAsCompoundNoun::default(),
             "How to properly set up a backup link (and have it act like a backup again after stop/start of master link)",
+        );
+    }
+
+    #[test]
+    fn dont_flag_meltdown_3591() {
+        assert_no_lints(
+            "Unfortunately, Meltdown ended up being problematic.",
+            PhrasalVerbAsCompoundNoun::default(),
         );
     }
 }

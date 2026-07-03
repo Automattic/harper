@@ -18,9 +18,9 @@ impl Default for SimplePastToPastParticiple {
             expr: All::new(vec![
                 // positive: the general case
                 Box::new(
-                    SequenceExpr::any_of(vec![
+                    SequenceExpr::any_of([
                         // for perfect tenses
-                        Box::new(WordSet::new(&["have", "had", "has", "having"])),
+                        Box::new(WordSet::new(&["have", "had", "has", "having"])) as Box<dyn Expr>,
                         // for passive voice
                         Box::new(InflectionOfBe::default()),
                         // pronoun + have contractions

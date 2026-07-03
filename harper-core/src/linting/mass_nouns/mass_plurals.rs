@@ -12,10 +12,7 @@ pub struct MassPlurals<D> {
     dict: D,
 }
 
-impl<D> MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> MassPlurals<D> {
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
         let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
@@ -51,10 +48,7 @@ where
     }
 }
 
-impl<D> ExprLinter for MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for MassPlurals<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {

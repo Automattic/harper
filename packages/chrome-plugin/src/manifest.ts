@@ -70,6 +70,7 @@ export default defineManifest({
 			matches: ['<all_urls>'],
 			all_frames: true,
 			match_about_blank: true,
+			match_origin_as_fallback: true,
 			js: ['src/contentScript/index.ts'],
 			run_at: 'document_idle',
 		},
