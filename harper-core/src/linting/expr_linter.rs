@@ -178,10 +178,23 @@ pub fn followed_by_word(
     false
 }
 
-pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
+/// Check for a specific token type after a matched span.
+///
+/// Validates that the "after" context starts with a token that matches the predicate.
+/// This is useful for checking for specific punctuation or other token types.
+///
+/// Returns `false` if context is `None`, missing tokens, or the structure is malformed.
+pub fn followed_by_token(
+    context: Option<(&[Token], &[Token])>,
+    predicate: impl Fn(&Token) -> bool,
+) -> bool {
     context
         .and_then(|(_, after)| after.first())
-        .is_some_and(|hy| hy.kind.is_hyphen())
+        .is_some_and(predicate)
+}
+
+pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
+    followed_by_token(context, |hy| hy.kind.is_hyphen())
 }
 
 /// Counterintuitively, a sentence includes the whitespace after
@@ -246,7 +259,7 @@ mod tests_context {
         fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
             Some(Lint {
                 span: toks.span()?,
-                message: "simple".to_string(),
+                message: "simple".to_owned(),
                 suggestions: vec![Suggestion::ReplaceWith(vec!['2'])],
                 ..Default::default()
             })
@@ -292,21 +305,18 @@ mod tests_context {
                     && after.eq_ignore_ascii_case(" three")
                 {
                     (
-                        "ascending".to_string(),
+                        "ascending".to_owned(),
                         vec![Suggestion::ReplaceWith(vec!['>'])],
                     )
                 } else if before.eq_ignore_ascii_case("three ")
                     && after.eq_ignore_ascii_case(" one")
                 {
                     (
-                        "descending".to_string(),
+                        "descending".to_owned(),
                         vec![Suggestion::ReplaceWith(vec!['<'])],
                     )
                 } else {
-                    (
-                        "dunno".to_string(),
-                        vec![Suggestion::ReplaceWith(vec!['?'])],
-                    )
+                    ("dunno".to_owned(), vec![Suggestion::ReplaceWith(vec!['?'])])
                 };
 
                 return Some(Lint {
@@ -422,7 +432,7 @@ mod tests_context {
         fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
             Some(Lint {
                 span: toks.span()?,
-                message: "sentence".to_string(),
+                message: "sentence".to_owned(),
                 suggestions: vec![Suggestion::ReplaceWith(vec!['2', '&', '2'])],
                 ..Default::default()
             })

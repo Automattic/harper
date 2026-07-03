@@ -39,7 +39,7 @@ impl ExprLinter for ThrowAway {
                 Suggestion::replace_with_match_case_str("threw", original),
             ],
             message: "Use `throw away` or `threw away`, depending on the tense you need."
-                .to_string(),
+                .to_owned(),
             priority: 60,
         })
     }

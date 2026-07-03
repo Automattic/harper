@@ -19,12 +19,12 @@ impl Default for ToTooDegreeWords {
             .t_aco("to")
             .t_ws()
             .then_word_set(&["many", "much", "few"])
-            .then_any_of(vec![
+            .then_any_of([
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                     TokenKind::is_punctuation,
                     |_| false,
                     &["`", "\"", "'", "“", "”", "‘", "’", "-", "–", "—"],
-                )),
+                )) as Box<dyn Expr>,
                 Box::new(AnchorEnd),
             ]);
 
@@ -53,7 +53,7 @@ impl ExprLinter for ToTooDegreeWords {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }
