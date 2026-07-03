@@ -289,22 +289,11 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-async fn get_application_icon_data_url<R: Runtime>(
-    bundle_id: String,
-    app_handle: tauri::AppHandle<R>,
-) -> Result<String, String> {
-    tauri::async_runtime::spawn_blocking(move || {
-        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
-        let icon_png = broker
-            .lock()
-            .map_err(|error| format!("Failed to read platform broker: {error}"))?
-            .application_icon_png(&bundle_id)?;
-        let encoded = general_purpose::STANDARD.encode(icon_png);
+async fn get_application_icon_data_url(bundle_id: String) -> Result<String, String> {
+    let icon_png = platform_broker().application_icon_png(&bundle_id)?;
+    let encoded = data_encoding::BASE64.encode(&icon_png);
 
-        Ok(format!("data:image/png;base64,{encoded}"))
-    })
-    .await
-    .map_err(|error| format!("Failed to load application icon: {error}"))?
+    Ok(format!("data:image/png;base64,{encoded}"))
 }
 
 #[tauri::command]

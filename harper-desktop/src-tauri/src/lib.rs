@@ -11,12 +11,7 @@ use harper_core::{
     spell::MutableDictionary,
 };
 use serde::Serialize;
-use std::{
-    cell::RefCell,
-    rc::Rc,
-    sync::{Arc, Mutex as StdMutex},
-    time::Duration,
-};
+use std::{cell::RefCell, rc::Rc, sync::Arc};
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},

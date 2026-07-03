@@ -60,7 +60,7 @@ impl Config {
     pub fn detect_system_dialect() -> Language {
         tauri_plugin_os::locale()
             .and_then(|bcp47| parse_language(&bcp47))
-            .unwrap_or(Language::default())
+            .unwrap_or_default()
     }
 
     pub fn curated_integrations() -> Vec<Integration> {
