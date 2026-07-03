@@ -20,7 +20,7 @@ impl Default for ModalOf {
             SequenceExpr::with(ModalVerb::default())
                 .then_whitespace()
                 .t_aco("of")
-                .and_not(FirstMatchOf::new(vec![
+                .but_not(FirstMatchOf::new(vec![
                     Box::new(Word::new("can")),
                     Box::new(Word::new_exact("May")),
                 ])),
@@ -54,7 +54,7 @@ impl Default for ModalOf {
 
         Self {
             expr: LongestMatchOf::new(vec![
-                Box::new(anyword_might_of_course),
+                Box::new(anyword_might_of_course) as Box<dyn Expr>,
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
                 Box::new(noun_will_of_naive),
@@ -118,7 +118,7 @@ impl ExprLinter for ModalOf {
                 modal_have,
                 span_modal_of.get_content(source_chars),
             )],
-            message: "Use `have` rather than `of` here.".to_string(),
+            message: "Use `have` rather than `of` here.".to_owned(),
             priority: 126,
         })
     }

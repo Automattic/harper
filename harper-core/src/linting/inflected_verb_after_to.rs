@@ -55,7 +55,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
                 lints.push(Lint {
                     span: Span::new(prep.span.start, word.span.end),
                     lint_kind: LintKind::WordChoice,
-                    message: "The base form of the verb is needed here.".to_string(),
+                    message: "The base form of the verb is needed here.".to_owned(),
                     suggestions: vec![Suggestion::ReplaceWith(
                         prep_to
                             .iter()

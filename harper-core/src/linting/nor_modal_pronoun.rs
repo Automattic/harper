@@ -89,7 +89,7 @@ impl ExprLinter for NorModalPronoun {
             span: pron_modal_span,
             lint_kind: LintKind::Grammar,
             suggestions: vec![suggestion],
-            message: "After `nor`, the modal verb should come before the pronoun.".to_string(),
+            message: "After `nor`, the modal verb should come before the pronoun.".to_owned(),
             ..Default::default()
         })
     }

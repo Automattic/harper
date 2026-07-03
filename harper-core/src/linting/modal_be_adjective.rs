@@ -29,6 +29,7 @@ impl Default for ModalBeAdjective {
                     &[
                         "backup", // adjective commonly misused as a verb
                         "likely", // adjective but with special usage
+                        "way",    // typo for "wait" in patterns like "can't way to"
                     ] as &[_],
                 ),
         }
@@ -63,7 +64,7 @@ impl ExprLinter for ModalBeAdjective {
             span: toks[0].span,
             suggestions: vec![Suggestion::InsertAfter(" be".chars().collect())],
             message: "You may be missing the word `be` between this modal verb and adjective."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
@@ -153,6 +154,14 @@ mod tests {
     fn ignore_soft_fork_3168() {
         assert_no_lints(
             "You should soft-fork the repository.",
+            ModalBeAdjective::default(),
+        );
+    }
+
+    #[test]
+    fn ignore_cant_way() {
+        assert_no_lints(
+            "I can't way for something better to be released.",
             ModalBeAdjective::default(),
         );
     }
