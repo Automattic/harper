@@ -59,7 +59,9 @@ pub fn parse_language(s: &str) -> Option<Language> {
             Some(Language::Portuguese(PortugueseDialect::Brazilian))
         }
         #[cfg(feature = "pt")]
-        "ao" => Some(Language::Portuguese(PortugueseDialect::African)),
+        "ao" => {
+            Some(Language::Portuguese(PortugueseDialect::African))
+        }
         // Slovak
         #[cfg(feature = "sk")]
         "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {

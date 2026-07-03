@@ -361,51 +361,64 @@ fn generate_languages_file(src_dir: &Path) {
     code.push_str("    match s_lower.as_str() {\n");
     code.push_str("        // English\n");
     code.push_str(
-        "        \"us\" | \"usa\" | \"america\" | \"american\" | \"en-us\" | \"en_us\" =>\n",
+        "        \"us\" | \"usa\" | \"america\" | \"american\" | \"en-us\" | \"en_us\" => {\n",
     );
-    code.push_str("            Some(Language::English(EnglishDialect::American)),\n");
+    code.push_str("            Some(Language::English(EnglishDialect::American))\n");
+    code.push_str("        }\n");
     code.push_str(
-        "        \"uk\" | \"gb\" | \"british\" | \"britain\" | \"en-gb\" | \"en_gb\" =>\n",
+        "        \"uk\" | \"gb\" | \"british\" | \"britain\" | \"en-gb\" | \"en_gb\" => {\n",
     );
-    code.push_str("            Some(Language::English(EnglishDialect::British)),\n");
+    code.push_str("            Some(Language::English(EnglishDialect::British))\n");
+    code.push_str("        }\n");
     code.push_str(
-        "        \"au\" | \"aus\" | \"australia\" | \"australian\" | \"en-au\" | \"en_au\" =>\n",
+        "        \"au\" | \"aus\" | \"australia\" | \"australian\" | \"en-au\" | \"en_au\" => {\n",
     );
-    code.push_str("            Some(Language::English(EnglishDialect::Australian)),\n");
+    code.push_str("            Some(Language::English(EnglishDialect::Australian))\n");
+    code.push_str("        }\n");
     code.push_str(
-        "        \"in\" | \"india\" | \"indian\" | \"bharat\" | \"en-in\" | \"en_in\" =>\n",
+        "        \"in\" | \"india\" | \"indian\" | \"bharat\" | \"en-in\" | \"en_in\" => {\n",
     );
-    code.push_str("            Some(Language::English(EnglishDialect::Indian)),\n");
-    code.push_str("        \"ca\" | \"canada\" | \"canadian\" | \"en-ca\" | \"en_ca\" =>\n");
-    code.push_str("            Some(Language::English(EnglishDialect::Canadian)),\n");
+    code.push_str("            Some(Language::English(EnglishDialect::Indian))\n");
+    code.push_str("        }\n");
+    code.push_str("        \"ca\" | \"canada\" | \"canadian\" | \"en-ca\" | \"en_ca\" => {\n");
+    code.push_str("            Some(Language::English(EnglishDialect::Canadian))\n");
+    code.push_str("        }\n");
 
     code.push_str("        // German\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
-    code.push_str("        \"de\" | \"german\" | \"deutsch\" | \"de-de\" | \"de_de\" =>\n");
-    code.push_str("            Some(Language::German(GermanDialect::Standard)),\n");
+    code.push_str("        \"de\" | \"german\" | \"deutsch\" | \"de-de\" | \"de_de\" => {\n");
+    code.push_str("            Some(Language::German(GermanDialect::Standard))\n");
+    code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
-    code.push_str("        \"at\" | \"austria\" | \"austrian\" | \"de-at\" | \"de_at\" =>\n");
-    code.push_str("            Some(Language::German(GermanDialect::Austrian)),\n");
+    code.push_str("        \"at\" | \"austria\" | \"austrian\" | \"de-at\" | \"de_at\" => {\n");
+    code.push_str("            Some(Language::German(GermanDialect::Austrian))\n");
+    code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
-    code.push_str("        \"ch\" | \"switzerland\" | \"swiss\" | \"de-ch\" | \"de_ch\" =>\n");
-    code.push_str("            Some(Language::German(GermanDialect::Swiss)),\n");
+    code.push_str("        \"ch\" | \"switzerland\" | \"swiss\" | \"de-ch\" | \"de_ch\" => {\n");
+    code.push_str("            Some(Language::German(GermanDialect::Swiss))\n");
+    code.push_str("        }\n");
 
     code.push_str("        // Portuguese\n");
     code.push_str("        #[cfg(feature = \"pt\")]\n");
     code.push_str(
-        "        \"pt\" | \"pt-pt\" | \"pt_pt\" | \"portuguese\" | \"portugu\\u{00ea}s\" =>\n",
+        "        \"pt\" | \"pt-pt\" | \"pt_pt\" | \"portuguese\" | \"portugu\\u{00ea}s\" => {\n",
     );
-    code.push_str("            Some(Language::Portuguese(PortugueseDialect::European)),\n");
+    code.push_str("            Some(Language::Portuguese(PortugueseDialect::European))\n");
+    code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"pt\")]\n");
-    code.push_str("        \"br\" | \"brazil\" | \"portuguese-brazilian\" | \"portuguese_brazilian\" | \"pt-br\" | \"pt_br\" =>\n");
-    code.push_str("            Some(Language::Portuguese(PortugueseDialect::Brazilian)),\n");
+    code.push_str("        \"br\" | \"brazil\" | \"portuguese-brazilian\" | \"portuguese_brazilian\" | \"pt-br\" | \"pt_br\" => {\n");
+    code.push_str("            Some(Language::Portuguese(PortugueseDialect::Brazilian))\n");
+    code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"pt\")]\n");
-    code.push_str("        \"ao\" => Some(Language::Portuguese(PortugueseDialect::African)),\n");
+    code.push_str("        \"ao\" => {\n");
+    code.push_str("            Some(Language::Portuguese(PortugueseDialect::African))\n");
+    code.push_str("        }\n");
 
     code.push_str("        // Slovak\n");
     code.push_str("        #[cfg(feature = \"sk\")]\n");
-    code.push_str("        \"sk\" | \"slovak\" | \"slovensko\" | \"sk-sk\" | \"sk_sk\" =>\n");
-    code.push_str("            Some(Language::Slovak(SlovakDialect::Standard)),\n");
+    code.push_str("        \"sk\" | \"slovak\" | \"slovensko\" | \"sk-sk\" | \"sk_sk\" => {\n");
+    code.push_str("            Some(Language::Slovak(SlovakDialect::Standard))\n");
+    code.push_str("        }\n");
 
     code.push_str("        _ => None,\n");
     code.push_str("    }\n");
@@ -433,10 +446,20 @@ fn generate_languages_file(src_dir: &Path) {
     // LanguageFamily enum
     code.push_str("/// A family of languages.\n");
     code.push_str("#[derive(\n");
-    code.push_str("    Default, Debug, Clone, Copy, Serialize, Deserialize,\n");
-    code.push_str(
-        "    PartialEq, PartialOrd, Eq, Hash, EnumCount, EnumString, EnumIter, Display,\n",
-    );
+    code.push_str("    Default,\n");
+    code.push_str("    Debug,\n");
+    code.push_str("    Clone,\n");
+    code.push_str("    Copy,\n");
+    code.push_str("    Serialize,\n");
+    code.push_str("    Deserialize,\n");
+    code.push_str("    PartialEq,\n");
+    code.push_str("    PartialOrd,\n");
+    code.push_str("    Eq,\n");
+    code.push_str("    Hash,\n");
+    code.push_str("    EnumCount,\n");
+    code.push_str("    EnumString,\n");
+    code.push_str("    EnumIter,\n");
+    code.push_str("    Display,\n");
     code.push_str(")]\n");
     code.push_str("pub enum LanguageFamily {\n");
     code.push_str("    #[default]\n");
