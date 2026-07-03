@@ -17,7 +17,7 @@ pub mod portuguese;
 #[cfg(feature = "sk")]
 pub mod slovak;
 
-pub use languages::{Language, LanguageFamily, parse_language, try_from_bcp47};
+pub use languages::{Language, LanguageFamily, parse_language};
 pub use module::{LanguageDetector, LanguageModule};
 pub use registry::{
     ProseLanguage, add_language_specific_linters, detect_language, dictionary,
