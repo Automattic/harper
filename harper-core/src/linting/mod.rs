@@ -105,6 +105,7 @@ mod handful;
 mod handful_of_more;
 mod have_pronoun;
 mod have_take_a_look;
+mod have_the_nerve;
 mod hedging;
 mod hello_greeting;
 mod hereby;
