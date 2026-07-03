@@ -168,7 +168,7 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 // [svp! df:+]use super::my_rule::MyRule;
 ```
 
-Finally, enable it in a macro invocation near the bottom:
+Finally, add it in a macro invocation near the bottom:
 
 ```rust title="harper-core/src/linting/lint_group.rs"
 insert_struct_rule!(AdjectiveOfA);
