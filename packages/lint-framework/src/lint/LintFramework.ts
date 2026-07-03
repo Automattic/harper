@@ -107,14 +107,14 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
-	async requestLintUpdate() {
+	async requestLintUpdate(force = false) {
 		if (this.lintRequested || this.targets.size === 0) {
 			return;
 		}
 
 		const delay = (await this.actions.getDelay?.()) ?? 0;
 		const remainingDelay = delay - (Date.now() - this.lastInputAt);
-		if (delay > 0 && remainingDelay > 0) {
+		if (!force && delay > 0 && remainingDelay > 0) {
 			if (this.lintDelayTimer != null) {
 				window.clearTimeout(this.lintDelayTimer);
 			}
@@ -346,7 +346,12 @@ export default class LintFramework {
 						}
 
 						return computeLintBoxes(target, currentLint, ruleName, {
-							ignoreLint: this.actions.ignoreLint,
+							ignoreLint: this.actions.ignoreLint
+								? async (hash: string) => {
+										await this.actions.ignoreLint?.(hash);
+										await this.requestLintUpdate(true);
+									}
+								: undefined,
 						});
 					}),
 				);
