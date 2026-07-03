@@ -17,13 +17,13 @@ impl Default for QuantifierNumeralConflict {
                     SequenceExpr::default()
                         .then_quantifier()
                         .t_ws()
-                        .then_longest_of(vec![
-                            Box::new(SpelledNumberExpr),
+                        .then_longest_of([
+                            Box::new(SpelledNumberExpr) as Box<dyn Expr>,
                             Box::new(SequenceExpr::default().then_cardinal_number()),
                         ]),
                 ),
-                Box::new(SequenceExpr::unless(SequenceExpr::any_of(vec![
-                    Box::new(WordSet::new(&["all", "any", "every", "no"])),
+                Box::new(SequenceExpr::unless(SequenceExpr::any_of([
+                    Box::new(WordSet::new(&["all", "any", "every", "no"])) as Box<dyn Expr>,
                     Box::new(
                         SequenceExpr::word_set(&["each", "some"])
                             .t_ws()

@@ -55,7 +55,7 @@ impl ExprLinter for SafeToSave {
             span: safe_tok.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith("save".chars().collect())],
-            message: "The word `safe` is an adjective. Did you mean the verb `save`?".to_string(),
+            message: "The word `safe` is an adjective. Did you mean the verb `save`?".to_owned(),
             priority: 57,
         })
     }
