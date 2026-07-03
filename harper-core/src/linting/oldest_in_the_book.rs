@@ -66,7 +66,7 @@ impl ExprLinter for OldestInTheBook {
         } else {
             "If this is a play on the idiom `oldest trick in the book`, it should use singular `book` instead of plural `books`."
         }
-        .to_string();
+        .to_owned();
 
         Some(Lint {
             span: toks.last()?.span,
