@@ -1693,6 +1693,7 @@ CPI/NOg
 CPO/N
 CPR/NOg             # cardiac pulmonary resuscitation
 CPU/NgS
+CRISPR/Nmg
 CRT/NSg             # cathode ray tube
 CSS/NOg
 CST/ONg
@@ -5313,6 +5314,7 @@ July/OgS
 Jun/Og
 June/OgS
 Juneau/Og
+Juneteenth/gO
 Jung/Og
 Jungfrau/Og         # mountain
 Jungian/JNg
@@ -16475,6 +16477,7 @@ cambium/NwSg
 cambric/Ng
 camcorder/NSgV
 came/~VtPN
+came in/V/t
 camel/~NgSJ
 camel case/Nmg
 camelhair/N
@@ -17542,6 +17545,7 @@ chilling/~JYV6N
 chillness/Nmg
 chilly/~J^>pN
 chime/~NgSVGd>Z
+chime in/V/
 chimer/NgS
 chimera/NgS
 chimeric/J
@@ -18536,6 +18540,7 @@ combustible/~JNgS
 combustion/~Nmg
 come/~VbTG>SNgPiZ
 come back/V/
+come in/V/
 comeback/~NgS
 comedian/~NgS
 comedic/~J
@@ -25226,6 +25231,7 @@ fisticuffs/Nmg
 fistula/NSg
 fistulous/Jg
 fit/~JVbtTSNgKr
+fit in/V/btT
 fitful/JYp
 fitfulness/Ng
 fitly/Ry
@@ -25235,6 +25241,7 @@ fitted/~VtTJNUr
 fitter/NgSJc
 fittest/JuV
 fitting/~V6SJYNg
+fitting in/V/6
 five/~NgS>Z
 fix/~VGd>SNgZBz
 fix up/V/
@@ -37737,6 +37744,7 @@ overemotional/J
 overemphasis/Ng
 overemphasise/V!_₹
 overemphasize/VGdS
+overengineer/VGdS
 overenthusiastic/J
 overestimate/VGdSNgn
 overestimation/Nmg
@@ -45543,6 +45551,7 @@ sinicization/Nmg
 sinicize/VGdS
 sinister/~J
 sink/~VG>SNgBZ
+sink in/V/
 sinkable/JU
 sinker/Ng
 sinkhole/NSgV
@@ -48062,7 +48071,8 @@ sunflower/~NgS
 sung/~VTU
 sunglasses/~N9g
 sunhat/NS
-sunk/~Vn
+sunk/~VTn
+sunk in/V/T
 sunken/JT
 sunlamp/NSg
 sunless/J
@@ -50980,6 +50990,7 @@ unary/JN
 unashamed/J
 unassertive/J
 unassimilable/J
+unassociated/J
 unassuming/JY
 unauthorised/J!_₹
 unauthorized/J
@@ -52821,9 +52832,11 @@ weepy/J^>NSg
 weevil/~NgS
 weft/NgS
 weigh/~VGdNr
+weigh in/V/
 weigh's
 weighbridge/NS
 weighs/~Vr
+weighs in/V/r
 weight/~NwgSVdGz
 weighted/~VtTJU
 weightily/Ry

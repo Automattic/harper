@@ -114,7 +114,7 @@ impl Default for ItsPossessive {
 
         map.insert(start_of_chunk_after_conjunction, 2);
 
-        let special = SequenceExpr::aco("it's").t_ws().t_aco("various");
+        let special = SequenceExpr::word_seq(&["it's", "various"]);
 
         map.insert(special, 0);
 

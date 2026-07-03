@@ -39,7 +39,8 @@ impl<D: Dictionary + 'static> OneOfTheSingular<D> {
             .then_zero_or_more_spaced(SequenceExpr::default().then_my_noun_or_adjective());
 
         Self {
-            expr: SequenceExpr::fixed_phrase("one of the ")
+            expr: SequenceExpr::word_seq(&["one", "of", "the"])
+                .t_ws()
                 .then(SequenceExpr::optional(advs.t_ws()).then(adj_or_nouns)),
             dict,
         }

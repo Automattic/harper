@@ -54,7 +54,7 @@ impl Default for ModalOf {
 
         Self {
             expr: LongestMatchOf::new(vec![
-                Box::new(anyword_might_of_course),
+                Box::new(anyword_might_of_course) as Box<dyn Expr>,
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
                 Box::new(noun_will_of_naive),

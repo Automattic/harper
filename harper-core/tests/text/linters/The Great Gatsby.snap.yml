@@ -5510,6 +5510,16 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
+         |                                      ^~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    4150 | life and family institutions, and next they’ll throw everything overboard and
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     4175 | me.”
