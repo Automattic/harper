@@ -132,7 +132,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                             .collect(),
                         verb_and_sep_span.get_content(src),
                     )],
-                    message: "This idiom uses the word `fledged`.".to_string(),
+                    message: "This idiom uses the word `fledged`.".to_owned(),
                     ..Default::default()
                 })
             }
@@ -149,7 +149,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                     },
                     vtok_chars,
                 )],
-                message: "This idiom uses the word `flesh`.".to_string(),
+                message: "This idiom uses the word `flesh`.".to_owned(),
                 ..Default::default()
             }),
             // TODO: only with "fully" and not "full"?
@@ -168,7 +168,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                         vtok_chars,
                     ),
                 ],
-                message: "Perhaps you're confusing `fully fledged` and `fleshed out`?".to_string(),
+                message: "Perhaps you're confusing `fully fledged` and `fleshed out`?".to_owned(),
                 ..Default::default()
             }),
             _ => None,
