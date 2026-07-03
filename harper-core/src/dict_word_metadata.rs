@@ -8,25 +8,8 @@ use smallvec::SmallVec;
 use crate::dict_word_metadata_orthography::OrthFlags;
 use crate::language::dialects::dialect_flags::DialectFlags;
 use crate::spell::WordId;
-// This section uses macros to generate per-language code.
-// To add a new language, update the LANGUAGES! macro below.
+use crate::{Document, TokenKind, TokenStringExt};
 
-/// Define all languages with dialect support.
-/// Format: (RustName, snake_case, DialectType, FlagsType)
-/// This is the ONLY place that needs updating for new languages.
-// =============================================================================
-// LANGUAGES MACRO
-// This is the central list of all languages with dialect support.
-// To add a new language, add an entry here.
-//
-// Format: (RustName, snake_case, DialectType, FlagsType)
-// Example: (Spanish, spanish, SpanishDialect, SpanishDialectFlags)
-//
-// IMPORTANT: After adding a language here, you must also update:
-// - The DialectFlags struct fields in dialects/dialect_flags.rs
-// - The serialization/deserialization logic
-// - All methods that reference specific languages
-// =============================================================================
 /// This represents a "lexeme" or "headword" which is case-folded but affix-expanded.
 /// So not only lemmata but also inflected forms are stored here, with "horn" and "horns" each
 /// having their own lexeme, but "Ivy" and "ivy" sharing the same lexeme.
@@ -1037,15 +1020,6 @@ impl AffixData {
         }
     }
 }
-
-// Use the DialectFlags (language-scoped) for serialization/deserialization.
-
-// English dialect support - kept here to match master branch structure
-
-// English dialects have been moved to language::english::dialects
-
-// EnglishDialectFlags has been moved to language::english::dialects
-// All English dialect implementations have been moved to language::english::dialects
 
 #[test]
 #[cfg(feature = "de")]
