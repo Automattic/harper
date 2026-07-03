@@ -1,8 +1,9 @@
 use harper_core::language::new_curated_for_language;
-use harper_core::{IgnoredLints, Language, try_from_bcp47,
+use harper_core::{IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
+use harper_core::language::parse_language;
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use serde::{
     Deserialize, Serialize,
@@ -57,7 +58,7 @@ impl Config {
 
     pub fn detect_system_dialect() -> Language {
         tauri_plugin_os::locale()
-            .and_then(|bcp47| try_from_bcp47(&bcp47))
+            .and_then(|bcp47| parse_language(&bcp47))
             .unwrap_or(Language::default())
     }
 
