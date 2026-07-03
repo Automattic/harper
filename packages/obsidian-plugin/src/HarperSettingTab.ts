@@ -164,7 +164,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName('Ignored Files')
 			.setDesc(
-				'Instruct Harper to ignore certain files in your vault. Accepts glob matches (`folder/**`, etc.)',
+				'Instruct Harper to ignore certain files in your vault. Accepts glob matches (`folder/**`, etc.). When ignoring a single file, do not forget to include the file extension (`journal_entry.md`, etc.).',
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;

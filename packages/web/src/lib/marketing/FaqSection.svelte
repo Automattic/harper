@@ -1,5 +1,5 @@
 <script lang="ts">
-import Arrow from '$lib/components/Arrow.svelte';
+import { Arrow } from 'components';
 
 type FaqItem = {
 	q: string;

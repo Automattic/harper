@@ -5326,6 +5326,27 @@
 								"state": true,
 								"label": "A Means To An End"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LinkedList",
+								"state": true,
+								"label": "Linked List"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CallItQuits",
+								"state": true,
+								"label": "Call It Quits"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForTheNthTime",
+								"state": true,
+								"label": "For The Nth Time"
+							}
 						}
 					]
 				}

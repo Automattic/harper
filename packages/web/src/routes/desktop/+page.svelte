@@ -50,6 +50,9 @@ const faqs = [
 					Use Harper Desktop in the apps you use every day such as Mail, Slack, Notes, Pages,
 					and Discord.
 				</p>
+				<p class="!mt-5 !mb-0 max-w-[28.75rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
+          Currently in beta.
+				</p>
 				<div class="mt-6 flex flex-col items-start gap-[0.6rem] [&_svg]:size-[0.95rem] [&_svg]:fill-current">
 					<PillButton href="/desktop/download" size="lg">
 						<svg slot="icon" viewBox="0 0 24 24" aria-hidden="true">
@@ -130,7 +133,7 @@ const faqs = [
 				Free. Forever. Yours.
 			</h2>
 			<p class="!mt-6 !mb-[1.6rem] text-base leading-[1.6] text-[#4a463e] dark:text-white/70">
-				Harper Desktop is free, like the rest of Harper. No account or credit card necessary.
+				Harper Desktop is free, like the rest of Harper. No account or credit card necessary. Download the beta today.
 			</p>
 			<PillButton href="/desktop/download" size="lg">Download for macOS</PillButton>
 			<div class='mt-4 text-xs text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>macOS 14 Sonoma or later · Apple Silicon &amp; Intel</div>
