@@ -24,7 +24,7 @@ impl Default for GeneralNounInsteadOfVerb {
         };
 
         let pre_context = FirstMatchOf::new(vec![
-            Box::new(WordSet::new(PRONOUNS)),
+            Box::new(WordSet::new(PRONOUNS)) as Box<dyn Expr>,
             Box::new(ModalVerb::with_common_errors()),
             Box::new(WordSet::new(&["do", "don't", "dont"])),
             Box::new(adverb_of_frequency),
@@ -52,8 +52,8 @@ impl Default for GeneralNounInsteadOfVerb {
             .then_any_word();
 
         Self {
-            expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(pattern_followed_by_punctuation),
+            expr: Box::new(LongestMatchOf::new([
+                Box::new(pattern_followed_by_punctuation) as Box<dyn Expr>,
                 Box::new(pattern_followed_by_word),
                 Box::new(basic_pattern),
             ])),

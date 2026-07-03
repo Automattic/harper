@@ -11,9 +11,7 @@ pub struct Nobody {
 
 impl Default for Nobody {
     fn default() -> Self {
-        let pattern = SequenceExpr::aco("no")
-            .then_whitespace()
-            .t_aco("body")
+        let pattern = SequenceExpr::word_seq(&["no", "body"])
             .then_whitespace()
             .then_verb();
         Self { expr: pattern }

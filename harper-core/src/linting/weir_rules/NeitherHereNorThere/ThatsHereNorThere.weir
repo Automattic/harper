@@ -1,0 +1,9 @@
+expr main (that's here nor there)
+
+let message "Did you mean `that's neither here nor there`?"
+let description "Corrects `that's here nor their` to the standard idiom `that's neither here nor there`."
+let kind "Usage"
+let becomes "that's neither here nor there"
+
+test "modifications of existing inventions is what I do, but that's neither here nor there" "modifications of existing inventions is what I do, but that's neither here nor there"
+test "(Ideally both would use a small say ~3px threshold but that's here nor there…)" "(Ideally both would use a small say ~3px threshold but that's neither here nor there…)"

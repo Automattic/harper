@@ -11,8 +11,8 @@ pub struct LongTimeAgo {
 impl Default for LongTimeAgo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![
-                Box::new(AnchorStart),
+            expr: SequenceExpr::any_of([
+                Box::new(AnchorStart) as Box<dyn Expr>,
                 Box::new(SequenceExpr::default().then_word_except(&["a"]).t_ws()),
             ])
             .t_aco("long")
@@ -41,7 +41,7 @@ impl ExprLinter for LongTimeAgo {
                 "a long time ago",
                 span.get_content(source),
             )],
-            message: "The correct phrase is `a long time ago`.".to_string(),
+            message: "The correct phrase is `a long time ago`.".to_owned(),
             ..Default::default()
         })
     }

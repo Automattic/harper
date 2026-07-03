@@ -216,6 +216,10 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/review',
 										},
 										{
+											title: 'Committer',
+											to: '/docs/contributors/committer',
+										},
+										{
 											title: 'Local Statistics',
 											to: '/docs/contributors/local-stats',
 										},
