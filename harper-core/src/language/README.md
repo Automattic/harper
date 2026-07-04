@@ -2,7 +2,13 @@
 
 ## Quick Start for Senior Developers
 
-### Adding a New Language
+### Special Case: English
+
+**English is built into Harper core and does not use the standard language module structure.**
+It uses an embedded dictionary (`FstDictionary::curated()`) and does not require feature flags.
+All other languages (German, Portuguese, Slovak, etc.) follow the standard module structure.
+
+### Adding a New Language (non-English)
 
 1. **Create module structure:**
    ```bash
@@ -10,15 +16,15 @@
    mkdir -p harper-core/src/language/<lang>/tests
    ```
 
-2. **Implement required files** (use existing languages as templates):
+2. **Implement required files** (copy from German/Portuguese/Slovak):
    - `mod.rs` - module exports
-   - `module.rs` - implement `LanguageModule` trait
+   - `module.rs` - language module implementation
    - `dialects.rs` - dialect definitions
    - `language_detection.rs` - language detector
    - `lexing.rs` - token lexing
    - `parsers.rs` - text parser
-   - `spell/mod.rs` - dictionary
-   - `linting/mod.rs` - linters
+   - `spell/mod.rs` - dictionary loading
+   - `linting/mod.rs` - linter group
    - `annotations.json` - word formation rules
    - `dictionary.dict` - word list with POS tags
    - `tests/mod.rs` - tests
@@ -34,47 +40,42 @@
      #[cfg(feature = "<lang>")]
      use super::<lang>::module::<Lang>Module;
      
-     // In DETECTORS array:
      #[cfg(feature = "<lang>")]
      detectors.push((Box::new(<Lang>Module::detector()), <confidence>));
      
-     // In ProseLanguage enum:
      #[cfg(feature = "<lang>")]
      <Lang>,
      ```
-   - Add to `harper-core/src/language/languages.rs`:
-     ```rust
-     <Lang>(<Lang>Dialect),
-     ```
+   - Add to `harper-core/src/language/languages.rs`
 
-4. **Test it:**
+4. **Build and test:**
    ```bash
    just language-test-language language="<lang>"
    ```
 
 ### Rapid Iteration Without Recompilation
 
-Use the language testing framework to test dictionary and annotations changes instantly:
+The language testing framework allows you to test dictionary and annotation changes **without rebuilding**:
 
 ```bash
-# Test text with current dictionary and annotations (no rebuild needed)
+# For German (pre-built just recipe):
 just language-german-test "your test text here"
 
-# For other languages, use:
+# For any language (including new ones):
 ./harper-core/src/language/testing_framework/target/release/harper-lang-test \
     --language <lang> \
     --dict harper-core/src/language/<lang>/dictionary.dict \
     --annotations harper-core/src/language/<lang>/annotations.json \
     --text "your text"
 
-# Build the testing framework first if needed:
+# Build the framework first:
 just language-build-lang-test
 ```
 
-### Language Analysis
+### Language Analysis Commands
 
 ```bash
-# Full analysis of a language (dictionary stats + coverage)
+# Full analysis (stats + coverage) - language specific
 just language-<lang>-analysis
 
 # Validate all dictionaries
@@ -83,75 +84,36 @@ just language-validate-dicts
 # Test all languages
 just language-test-all-languages
 
-# Full language analysis (stats + validation + tests)
+# Full analysis (all languages)
 just language-full-analysis
 ```
 
-### Architecture Principles
+### Template Languages
 
-- Each language is **isolated** in its own module
-- Each language implements the `LanguageModule` trait
-- English is always included (no feature flag)
-- Other languages use **feature flags** (`de`, `pt`, `sk`) for conditional compilation
-- All language-specific code uses `#[cfg(feature = "<lang>")]`
-- Dictionary and annotations can be tested without recompiling using the testing framework
-
-### Existing Languages to Use as Templates
-
+Use these as templates for new languages:
 - **German (de):** Full implementation with linters, dictionary, annotations
-- **Portuguese (pt):** Similar structure to German
-- **Slovak (sk):** Similar structure to German
-- **English:** Special case - always included, different structure
+- **Portuguese (pt):** Similar to German
+- **Slovak (sk):** Similar to German
 
-For new languages, copy the structure from German or Portuguese.
+**Note:** English does not follow this structure - it's embedded in the core.
 
-### Key Trait: LanguageModule
-
-Every language must implement these methods:
-
-```rust
-pub trait LanguageModule {
-    type Dialect;
-    type Detector;
-    
-    fn default_dialect() -> Self::Dialect;
-    fn detector() -> Self::Detector;
-    fn lex_token(source: &[char]) -> FoundToken;
-    fn plain_parser() -> impl Parser;
-    fn dictionary() -> Arc<FstDictionary>;
-    fn rust_lint_group(dictionary: Arc<impl Dictionary>) -> LintGroup;
-    fn weir_lint_group() -> LintGroup;
-    fn curated_lint_group(dialect: Self::Dialect) -> LintGroup;
-}
-```
-
-### Directory Structure Example (German)
+### Directory Structure (Standard Languages)
 
 ```
-harper-core/src/language/german/
+harper-core/src/language/<lang>/
 ├── mod.rs                    # Module exports
-├── module.rs                # LanguageModule implementation
+├── module.rs                # Language module implementation
 ├── dialects.rs               # Dialect definitions
 ├── language_detection.rs    # Language detector
 ├── lexing.rs                # Token lexing
 ├── parsers.rs               # Text parsers
 ├── spell/
-│   └── mod.rs               # Dictionary
+│   └── mod.rs               # Dictionary loading
 ├── linting/
 │   ├── mod.rs               # Linter group
-│   ├── german_noun_capitalization.rs
-│   ├── german_spell_check.rs
-│   ├── german_sentence_capitalization.rs
-│   └── german_filler_words.rs
+│   └── <lang>_*.rs          # Language-specific linters
 ├── annotations.json          # Word formation rules
 ├── dictionary.dict           # Word list with POS tags
 └── tests/
     └── mod.rs               # Language tests
 ```
-
-### Notes
-
-- The testing framework (`harper-core/src/language/testing_framework/`) allows rapid iteration
-- Once built, you can test dictionary and annotation changes without recompiling
-- All language-specific tests go in the language's `tests/` directory
-- Use `just language-test-all-languages` to ensure your changes don't break other languages
