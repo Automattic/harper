@@ -263,10 +263,10 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         let lower_metadata = self.dictionary.get_word_metadata(&lower);
 
         // If word is explicitly marked as a noun in dictionary, it's a noun
-        if let Some(ref metadata) = word_metadata {
-            if metadata.noun.is_some() {
-                return true;
-            }
+        if let Some(ref metadata) = word_metadata
+            && metadata.noun.is_some()
+        {
+            return true;
         }
         if let Some(ref metadata) = lower_metadata
             && metadata.noun.is_some()
