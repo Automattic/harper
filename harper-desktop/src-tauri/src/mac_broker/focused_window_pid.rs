@@ -3,7 +3,7 @@ use accessibility_sys::{
     AXUIElementGetPid, error_string, kAXErrorSuccess, kAXFocusedApplicationAttribute, pid_t,
 };
 use core_foundation::base::TCFType;
-use objc2_app_kit::{NSRunningApplication, NSWorkspace};
+use objc2_app_kit::NSWorkspace;
 use std::error::Error as StdError;
 
 use super::core_foundation_utilities::ax_element_attribute;
