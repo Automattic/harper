@@ -1,4 +1,5 @@
 use harper_core::Dialect;
+use harper_core::Document;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;

@@ -5,8 +5,7 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-use harper_core::language::dialects::dialect_flags::DialectFlags;
-use harper_core::language::english::language_detection::is_likely_english;
+use harper_core::{DialectFlags, language_detection::is_likely_english};
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
@@ -485,13 +484,7 @@ impl Linter {
                 (
                     word.chars().collect::<CharString>(),
                     DictWordMetadata {
-                        dialects: DialectFlags::from_english_dialect(match self.dialect {
-                            Dialect::American => harper_core::Dialect::American,
-                            Dialect::British => harper_core::Dialect::British,
-                            Dialect::Australian => harper_core::Dialect::Australian,
-                            Dialect::Canadian => harper_core::Dialect::Canadian,
-                            Dialect::Indian => harper_core::Dialect::Indian,
-                        }),
+                        dialects: DialectFlags::from_dialect(self.dialect.into()),
                         ..Default::default()
                     },
                 )

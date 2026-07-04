@@ -51,6 +51,8 @@ pub use dict_word_metadata::{
 };
 pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
+pub use language::{Language, LanguageFamily};
+pub use language::english::dialects::EnglishDialect;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};

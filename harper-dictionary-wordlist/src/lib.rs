@@ -1,7 +1,7 @@
 use std::path::Path;
 
-use harper_core::language::dialects::dialect_flags::DialectFlags;
 use harper_core::{
+    DialectFlags,
     DictWordMetadata,
     spell::{Dictionary, MutableDictionary},
 };

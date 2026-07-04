@@ -167,7 +167,7 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::language::dialects::dialect_flags::DialectFlags;
+    use crate::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};

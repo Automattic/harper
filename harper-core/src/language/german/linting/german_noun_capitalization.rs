@@ -124,6 +124,7 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "auch",
     "noch",
     "schon",
+    "wieder",
     "nur",
     "sehr",
     "hier",
