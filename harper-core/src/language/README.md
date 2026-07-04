@@ -50,7 +50,7 @@ All other languages (German, Portuguese, Slovak, etc.) follow the standard modul
 
 4. **Build and test:**
    ```bash
-   just language-test-language language="<lang>"
+   just language-test <lang> "test text"
    ```
 
 ### Rapid Iteration Without Recompilation
@@ -58,35 +58,41 @@ All other languages (German, Portuguese, Slovak, etc.) follow the standard modul
 The language testing framework allows you to test dictionary and annotation changes **without rebuilding**:
 
 ```bash
-# For German (pre-built just recipe):
-just language-german-test "your test text here"
+# Test text for any standard language (german, portuguese, slovak, etc.)
+just language-test <language> "your test text here"
 
-# For any language (including new ones):
-./harper-core/src/language/testing_framework/target/release/harper-lang-test \
-    --language <lang> \
-    --dict harper-core/src/language/<lang>/dictionary.dict \
-    --annotations harper-core/src/language/<lang>/annotations.json \
-    --text "your text"
+# Examples:
+just language-test german "die freiheit ist wichtig"
+just language-test portuguese "a liberdade e importante"
 
-# Build the framework first:
-just language-build-lang-test
+# Build the framework first (only needed once):
+just language-build
 ```
 
 ### Language Analysis Commands
 
 ```bash
-# Full analysis (stats + coverage) - language specific
-just language-<lang>-analysis
+# Full analysis for a specific language
+just language-analyze <language>
 
 # Validate all dictionaries
-just language-validate-dicts
+just language-validate-all
 
-# Test all languages
-just language-test-all-languages
+# Test all standard languages
+just language-test-all
 
-# Full analysis (all languages)
-just language-full-analysis
+# Full check (validate + test + analyze all languages)
+just language-full-check
+
+# Clean build artifacts
+just language-clean
 ```
+
+### Legacy Recipe Names
+
+For backward compatibility, these old names still work:
+- `language-german-test` → use `language-test german` instead
+- `language-build-lang-test` → use `language-build` instead
 
 ### Template Languages
 
