@@ -5347,6 +5347,13 @@
 								"state": true,
 								"label": "For The Nth Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "AsIsWithAnything",
+								"state": true,
+								"label": "As Is With Anything"
+							}	
 						}
 					]
 				}
