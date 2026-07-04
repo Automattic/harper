@@ -5,9 +5,9 @@
 //! from language_detection.rs to match the master branch structure.
 
 use crate::language::languages::Language;
-use crate::language_detection::{is_likely_english, is_doc_likely_english};
+use crate::language_detection::is_likely_english;
 use crate::spell::FstDictionary;
-use crate::{Document, Token};
+use crate::Token;
 
 /// English language detector (fallback).
 #[derive(Debug)]

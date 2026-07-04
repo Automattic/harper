@@ -1224,6 +1224,7 @@ impl Default for DialectFlags {
     }
 }
 
+#[cfg(test)]
 mod noun {
     use crate::dict_word_metadata::tests::md;
 
@@ -1386,6 +1387,7 @@ mod noun {
     }
 }
 
+#[cfg(test)]
 mod pronoun {
     use crate::dict_word_metadata::tests::md;
 
@@ -1822,6 +1824,7 @@ mod pronoun {
     }
 }
 
+#[cfg(test)]
 mod nominal {
     use crate::dict_word_metadata::tests::md;
 
@@ -1856,6 +1859,7 @@ mod nominal {
     }
 }
 
+#[cfg(test)]
 mod adjective {
     use super::Degree;
     use crate::dict_word_metadata::tests::md;
@@ -1911,6 +1915,7 @@ pub mod tests {
             .into_owned()
     }
 
+    #[cfg(test)]
     mod dialect {
         use super::super::{Dialect, DialectFlags};
         use crate::Document;

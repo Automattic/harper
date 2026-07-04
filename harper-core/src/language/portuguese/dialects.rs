@@ -175,7 +175,8 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
                     if lexeme_metadata
                         .dialects
-                        .is_portuguese_dialect_enabled(*dialect)
+                        .portuguese
+                        .is_dialect_enabled(*dialect)
                     {
                         *count += 1;
                     }

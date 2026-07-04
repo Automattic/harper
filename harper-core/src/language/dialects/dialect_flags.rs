@@ -2,8 +2,6 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
-// Import dialect types from the central dialects module for modularity.
-use crate::language::dialects::dialect_trait::DialectFlags as _;
 use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
 
 #[cfg(feature = "de")]

@@ -50,7 +50,8 @@ impl<T: Dictionary> PortugueseSpellCheck<T> {
             if let Some(metadata) = self.dictionary.get_word_metadata(suggestion) {
                 metadata
                     .dialects
-                    .is_portuguese_dialect_enabled(self.dialect)
+                    .portuguese
+                    .is_dialect_enabled(self.dialect)
             } else {
                 // If we can't get metadata, include the suggestion (better to have false positives than miss valid ones)
                 true

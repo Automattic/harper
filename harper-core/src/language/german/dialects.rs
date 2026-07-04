@@ -143,7 +143,7 @@ impl DialectFlags<GermanDialect> for GermanDialectFlags {
         document.iter_words().for_each(|w| {
             if let TokenKind::Word(Some(lexeme_metadata)) = &w.kind {
                 dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.is_german_dialect_enabled(*dialect) {
+                    if lexeme_metadata.dialects.german.is_dialect_enabled(*dialect) {
                         *count += 1;
                     }
                 });
