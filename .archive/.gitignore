@@ -1,4 +1,1 @@
-# Ignore all files in .archive except Python scripts and .gitignore
 *
-!*.py
-!.gitignore
