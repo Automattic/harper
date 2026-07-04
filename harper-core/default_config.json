@@ -2825,6 +2825,13 @@
 								"state": true,
 								"label": "Not Long After"
 							}
+						},
+						{
+							"Bool": {
+								"name": "MayOfPronoun",
+								"state": true,
+								"label": "May Of Pronoun"
+							}
 						}
 					]
 				}
@@ -3163,6 +3170,13 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RedundantSelf",
+								"state": true,
+								"label": "Redundant Self"
 							}
 						},
 						{
