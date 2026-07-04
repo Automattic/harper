@@ -79,10 +79,10 @@ impl MacBroker {
     /// The process ID of the currently focused window.
     /// In the interest of performance, the returned value may be slightly stale.
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
-        if let Some((last_focused, measurement_time)) = self.last_focused {
-            if Instant::now().duration_since(measurement_time).as_secs() < 3 {
-                return Ok(Some(last_focused));
-            }
+        if let Some((last_focused, measurement_time)) = self.last_focused
+            && Instant::now().duration_since(measurement_time).as_secs() < 3
+        {
+            return Ok(Some(last_focused));
         }
 
         let focused_pid = focused_window_pid::focused_window_pid()?;
