@@ -43,18 +43,23 @@ impl YamlMasker {
         is_candidate_kind && !Self::is_mapping_key(n)
     }
 
-    /// True if `n` sits in the "key" slot of its nearest enclosing
-    /// `block_mapping_pair`/`flow_pair` ancestor - i.e. its start position
-    /// coincides with the pair's start position (the key is always the
-    /// first token in a mapping pair; the value always starts later, after
-    /// `key:`).
+    /// True if `n` lies within the "key" field of its nearest enclosing
+    /// `block_mapping_pair`/`flow_pair` ancestor. This uses tree-sitter's
+    /// named `key` field rather than a byte-position heuristic, so it
+    /// correctly handles explicit-key syntax (`? key` / `: value`), where
+    /// the key node does not start at the same byte offset as the pair
+    /// itself.
     fn is_mapping_key(n: &Node) -> bool {
         let n_start = n.start_byte();
+        let n_end = n.end_byte();
         let mut node = *n;
 
         while let Some(parent) = node.parent() {
             if matches!(parent.kind(), "block_mapping_pair" | "flow_pair") {
-                return parent.start_byte() == n_start;
+                return match parent.child_by_field_name("key") {
+                    Some(key) => key.start_byte() <= n_start && n_end <= key.end_byte(),
+                    None => false,
+                };
             }
             node = parent;
         }
@@ -89,7 +94,26 @@ impl Masker for YamlMasker {
         }
 
         spans.sort_by_key(|s| s.start);
-        spans.into_iter().collect()
+
+        // Defensive guard: `Mask`'s `FromIterator` panics on overlapping
+        // spans. The comment pass and the scalar pass are independent
+        // tree-sitter queries, and under adversarial input / parser error
+        // recovery they could theoretically produce overlapping spans. To
+        // avoid turning that into a panic (a DoS in harper-ls), coalesce any
+        // overlapping (or touching) spans by merging them, keeping all
+        // prose rather than silently dropping any of it.
+        let mut coalesced: Vec<Span<char>> = Vec::with_capacity(spans.len());
+        for span in spans {
+            if let Some(last) = coalesced.last_mut()
+                && span.start <= last.end
+            {
+                last.end = last.end.max(span.end);
+                continue;
+            }
+            coalesced.push(span);
+        }
+
+        coalesced.into_iter().collect()
     }
 }
 
@@ -295,6 +319,23 @@ mod yaml_masker_tests {
         // never be linted -- keys are not prose.
         let texts = allowed_text("\"a fairly long key name\": short value\n");
         assert!(texts.is_empty());
+    }
+
+    #[test]
+    fn excludes_explicit_key_from_lint_pass() {
+        // Explicit-key YAML syntax (`? key` / `: value`) puts the key node
+        // in a different byte position than the pair itself, which used to
+        // trip up the old byte-position heuristic and let the key bleed
+        // into the lint pass. It must still be excluded, just like an
+        // implicit key would be.
+        let texts = allowed_text("? a genuinely long explicit key here\n: short\n");
+
+        assert!(
+            !texts
+                .iter()
+                .any(|t| t.contains("a genuinely long explicit key here")),
+            "explicit key leaked into an allowed span: {texts:?}"
+        );
     }
 
     #[test]

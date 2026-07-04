@@ -1,61 +1,53 @@
 /// Decides whether a YAML scalar value looks like prose worth
 /// grammar-checking, as opposed to structural config data
-/// (identifiers, enum values, URLs, paths, version strings).
+/// (identifiers, enum values, etc).
 ///
 /// Comments are never passed through this function — they're
 /// always linted, handled separately in `YamlMasker`.
 pub(crate) fn is_prose_scalar(text: &str) -> bool {
+    let text = strip_block_scalar_indicator(text);
     let word_count = text.split_whitespace().count();
 
-    word_count >= 3 && !looks_url_path_or_version(text) && !looks_like_identifier(text)
+    word_count >= 3 && !looks_like_identifier(text)
 }
 
-/// True only if `text` is, in its entirety, a single whitespace-separated
-/// token that is itself URL-, path-, or version-shaped (e.g. `v1.2.3`,
-/// `0.15.9`, `https://example.com`, `/usr/local/bin`) — not merely a
-/// sentence that happens to mention one (e.g. "Update the library to
-/// version 1.2.3" is prose worth checking, not a bare version string).
+/// YAML block scalars (`|`, `>`, and their chomping/indent variants
+/// like `|-`, `>+`, `|2`, `>-2`) are masked including their leading
+/// indicator line. That indicator line is not part of the prose body
+/// and shouldn't count toward the word-count gate, so strip it off
+/// before measuring.
 ///
-/// A value with 3+ words already fails `is_prose_scalar`'s word-count
-/// gate before this function's result can matter, so in practice this
-/// only ever returns `true` for single-token values. Kept explicit and
-/// correct on its own terms rather than relying on that gate implicitly.
-fn looks_url_path_or_version(text: &str) -> bool {
-    let mut words = text.split_whitespace();
-
-    let Some(only_word) = words.next() else {
-        return false;
+/// Only strips when the trimmed first line is *entirely* a block
+/// scalar header token — a plain scalar that merely contains a
+/// literal `|` or `>` mid-sentence is left untouched.
+fn strip_block_scalar_indicator(text: &str) -> &str {
+    let (first_line, rest) = match text.split_once('\n') {
+        Some((first, rest)) => (first, Some(rest)),
+        None => (text, None),
     };
 
-    if words.next().is_some() {
-        return false;
+    let trimmed = first_line.trim();
+
+    let Some(after_marker) = trimmed
+        .strip_prefix('|')
+        .or_else(|| trimmed.strip_prefix('>'))
+    else {
+        return text;
+    };
+
+    let is_header = after_marker
+        .chars()
+        .all(|c| c == '+' || c == '-' || c.is_ascii_digit());
+
+    if !is_header {
+        return text;
     }
 
-    only_word.starts_with("http://")
-        || only_word.starts_with("https://")
-        || only_word.starts_with("ftp://")
-        || only_word.contains('/')
-        || only_word.contains('\\')
-        || is_semver_like(only_word)
-}
-
-/// Matches strings shaped like `1.2.3`, `v1.2.3`, or `12.34.56.7`
-/// (semver-ish): an optional leading `v`/`V`, then digit groups
-/// separated by dots, at least two dots, no other characters.
-fn is_semver_like(word: &str) -> bool {
-    let trimmed = word.trim_matches(|c: char| !c.is_ascii_alphanumeric());
-    let trimmed = trimmed.strip_prefix(['v', 'V']).unwrap_or(trimmed);
-    let parts: Vec<&str> = trimmed.split('.').collect();
-
-    parts.len() >= 3
-        && parts
-            .iter()
-            .all(|p| !p.is_empty() && p.chars().all(|c| c.is_ascii_digit()))
+    rest.unwrap_or("")
 }
 
 /// True if the whole value reads as an identifier/enum/constant
-/// rather than a sentence: entirely uppercase, or snake_case, or
-/// kebab-case.
+/// rather than a sentence: entirely uppercase.
 fn looks_like_identifier(text: &str) -> bool {
     let has_letters = text.chars().any(|c| c.is_alphabetic());
 
@@ -63,38 +55,9 @@ fn looks_like_identifier(text: &str) -> bool {
         return false;
     }
 
-    let is_all_caps = text.chars().any(|c| c.is_alphabetic())
-        && text
-            .chars()
-            .filter(|c| c.is_alphabetic())
-            .all(|c| c.is_uppercase());
-
-    if is_all_caps {
-        return true;
-    }
-
-    is_snake_or_kebab_case(text)
-}
-
-/// True if the entire string is a single token of the shape
-/// `word(_word)*` or `word(-word)*` with no spaces — i.e. it reads
-/// as one identifier, not a sentence.
-fn is_snake_or_kebab_case(text: &str) -> bool {
-    if text.contains(char::is_whitespace) {
-        return false;
-    }
-
-    let is_snake = text.contains('_')
-        && text
-            .chars()
-            .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '_');
-
-    let is_kebab = text.contains('-')
-        && text
-            .chars()
-            .all(|c| c.is_ascii_lowercase() || c.is_ascii_digit() || c == '-');
-
-    is_snake || is_kebab
+    text.chars()
+        .filter(|c| c.is_alphabetic())
+        .all(|c| c.is_uppercase())
 }
 
 #[cfg(test)]
@@ -207,5 +170,27 @@ mod tests {
     #[test]
     fn rejects_whitespace_only() {
         assert!(!is_prose_scalar("   \n  "));
+    }
+
+    #[test]
+    fn rejects_block_scalar_with_short_body() {
+        assert!(!is_prose_scalar("|\n  hello world"));
+    }
+
+    #[test]
+    fn accepts_block_scalar_with_prose_body() {
+        assert!(is_prose_scalar("|\n  the quick brown fox"));
+    }
+
+    #[test]
+    fn rejects_folded_block_scalar_with_chomping_and_short_body() {
+        assert!(!is_prose_scalar(">-\n  hello world"));
+    }
+
+    #[test]
+    fn accepts_sentence_with_literal_pipe_not_a_block_header() {
+        // The `|` here is mid-sentence, not a block scalar header on
+        // its own line, so it must not be stripped.
+        assert!(is_prose_scalar("run foo | grep bar please"));
     }
 }
