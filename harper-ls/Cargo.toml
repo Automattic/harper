@@ -19,6 +19,7 @@ harper-typst = { path = "../harper-typst", version = "2.0.0" }
 harper-tex = { path = "../harper-tex", version = "2.0.0" }
 harper-html = { path = "../harper-html", version = "2.0.0" }
 harper-python = { path = "../harper-python", version = "2.0.0" }
+harper-yaml = { path = "../harper-yaml", version = "2.0.0" }
 harper-asciidoc = { path = "../harper-asciidoc", version = "2.0.0" }
 tower-lsp-server = "0.22.1"
 tokio = { version = "1.52.1", default-features = false, features = ["fs", "io-std", "io-util", "macros", "net", "rt-multi-thread", "sync"] }
