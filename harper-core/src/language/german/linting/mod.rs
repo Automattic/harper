@@ -7,7 +7,7 @@ pub mod german_spell_check;
 pub mod weir_rules;
 
 use crate::language::german::dialects::GermanDialect;
-use crate::language::german::spell::curated_german_dictionary;
+use crate::language::german::spell::combined_german_dictionary;
 use crate::language::languages::Language;
 use crate::linting::LintGroup;
 
@@ -17,7 +17,7 @@ pub fn new_curated_german(dialect: GermanDialect) -> LintGroup {
     use crate::language::module::LanguageModule;
     use crate::language::registry::weir_rules_lint_group;
 
-    let dictionary = curated_german_dictionary();
+    let dictionary = combined_german_dictionary();
     let language = Language::German(dialect);
 
     let mut group = LintGroup::empty();

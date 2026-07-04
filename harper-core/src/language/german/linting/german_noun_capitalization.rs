@@ -365,15 +365,15 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::language::german::spell::curated_german_dictionary;
+    use crate::language::german::spell::combined_german_dictionary;
     use crate::document::Document;
 
     fn test_linter() -> GermanNounCapitalization<impl Dictionary> {
-        GermanNounCapitalization::new(curated_german_dictionary())
+        GermanNounCapitalization::new(combined_german_dictionary())
     }
 
     fn create_document(text: &str) -> Document {
-        Document::new_markdown_default(text, &curated_german_dictionary())
+        Document::new_markdown_default(text, &combined_german_dictionary())
     }
 
     #[test]

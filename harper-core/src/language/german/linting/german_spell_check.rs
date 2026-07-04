@@ -209,12 +209,12 @@ mod tests {
     use crate::Document;
     use crate::language::german::dialects::GermanDialect;
     use crate::language::german::parsers::PlainGerman;
-    use crate::language::german::spell::curated_german_dictionary;
+    use crate::language::german::spell::combined_german_dictionary;
     use crate::linting::Linter;
 
     fn lint_text(text: &str) -> Vec<String> {
         use crate::language::german::linting::new_curated_german;
-        let dict = curated_german_dictionary();
+        let dict = combined_german_dictionary();
         let mut linter = new_curated_german(GermanDialect::Standard);
         let document = Document::new(text, &PlainGerman, &dict);
 
@@ -226,7 +226,7 @@ mod tests {
     }
 
     fn recognizes_compound(word: &str) -> bool {
-        let dict = curated_german_dictionary();
+        let dict = combined_german_dictionary();
         let spellcheck = GermanSpellCheck::new(dict);
         let chars: Vec<char> = word.chars().collect();
 

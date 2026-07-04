@@ -2221,7 +2221,7 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.5.0"
+version = "2.6.0"
 dependencies = [
  "ammonia",
  "bitflags",
