@@ -35,6 +35,8 @@ harper-core/src/language/<lang>/
   - `g` = past participle, `t` = past tense, `c` = comparative, `s` = superlative
   - `r` = adverb, `D` = determiner, `O` = preposition, `C` = conjunction
 
+**Important Rule:** Do NOT add compound words to the dictionary. Compound words should be handled by the grammar system, not stored as base entries. Only add base words and simple inflected forms.
+
 Example:
 ```
 Mondlandung/~~NF    # compound noun, feminine

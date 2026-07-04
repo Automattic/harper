@@ -56,6 +56,15 @@ Das Projekt ist gescheitert und wurde abgebrochen
 - "wurde" should be recognized as a verb
 - "abgebrochen" should be recognized as a past participle
 
+### Sentence 6: Verb Forms
+Die Forschung hat Ergebnisse erzielt
+
+**Expected behavior:**
+- "Forschung" should be recognized as a noun (FEMININE)
+- "hat" should be recognized as a verb (past participle of haben)
+- "Ergebnisse" should be recognized as a noun (PLURAL)
+- "erzielt" should be recognized as a verb (past participle of erzielen)
+
 ## Common Problem Areas
 
 ### False Positives to Avoid

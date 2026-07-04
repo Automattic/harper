@@ -60,6 +60,17 @@ TEST_CASES = [
         },
         "description": "Mixed parts of speech test"
     },
+    {
+        "name": "Verb Forms",
+        "sentence": "die forschung hat ergebnisse erzielt",
+        "expected_metadata": {
+            "forschung": {"noun": True, "verb": False, "adjective": False, "adverb": False},
+            "hat": {"noun": False, "verb": True, "adjective": False, "adverb": False},
+            "ergebnisse": {"noun": True, "verb": False, "adjective": False, "adverb": False},
+            "erzielt": {"noun": False, "verb": True, "adjective": False, "adverb": False},
+        },
+        "description": "Verb forms test with hat and erzielt"
+    },
 ]
 
 
