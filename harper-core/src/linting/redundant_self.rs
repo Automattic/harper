@@ -25,6 +25,10 @@ impl Default for RedundantSelf {
                     "corrected",
                     "correcting",
                     "corrects",
+                    "defend",
+                    "defended",
+                    "defending",
+                    "defends",
                     "describe",
                     "described",
                     "describes",
@@ -776,6 +780,15 @@ mod tests {
                 "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted.",
             ],
             &[],
+        );
+    }
+
+    #[test]
+    fn fix_self_defend_itself() {
+        assert_suggestion_result(
+            "I'm on dudes side, the person that self defended himself",
+            RedundantSelf::default(),
+            "I'm on dudes side, the person that defended himself",
         );
     }
 }
