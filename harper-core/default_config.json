@@ -3160,6 +3160,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RedundantSelf",
+								"state": true,
+								"label": "Redundant Self"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TruthToTheFact",
 								"state": true,
 								"label": "Truth To The Fact"

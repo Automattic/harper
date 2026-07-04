@@ -211,6 +211,7 @@ use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
+use super::redundant_self::RedundantSelf;
 use super::regionalisms::Regionalisms;
 use super::regular_irregulars::RegularIrregulars;
 use super::repeated_words::RepeatedWords;
@@ -772,6 +773,7 @@ impl LintGroup {
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
         insert_expr_rule!(RedundantProgressiveComparative);
+        insert_expr_rule!(RedundantSelf);
         insert_struct_rule_with_dialect!(Regionalisms);
         insert_expr_rule_with_dict!(RegularIrregulars);
         insert_struct_rule!(RepeatedWords);
