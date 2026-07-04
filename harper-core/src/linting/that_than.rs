@@ -49,7 +49,7 @@ impl ExprLinter for ThatThan {
                 that_tok.get_ch(src),
             )],
             message: "This looks like a comparison that should use `than` rather than `that`."
-                .to_string(),
+                .to_owned(),
             priority: 31,
         })
     }

@@ -39,7 +39,7 @@ impl ExprLinter for TheTheToThatThe {
                 .iter()
                 .map(|s| Suggestion::replace_with_match_case_str(s, ch))
                 .collect(),
-            message: "Did you mean `that the` or just `the`?".to_string(),
+            message: "Did you mean `that the` or just `the`?".to_owned(),
             priority: 126, // Higher priority than `RepeatedWords`
         })
     }

@@ -60,10 +60,7 @@ impl Default for NumericRangeEnDash {
         // Match isolated numeric ranges like `12-14` or `3—5`.
         // The context check below skips dates, version chains, and similar
         // multipart numeric forms that should keep their existing separators.
-        let pattern = SequenceExpr::default()
-            .then_number()
-            .then(is_target_dash)
-            .then_number();
+        let pattern = SequenceExpr::number().then(is_target_dash).then_number();
 
         Self { expr: pattern }
     }
