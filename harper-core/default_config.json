@@ -3160,6 +3160,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TruthToTheFact",
+								"state": true,
+								"label": "Truth To The Fact"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForFreeOfCharge",
 								"state": true,
 								"label": "For Free of Charge"
