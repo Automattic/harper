@@ -1,12 +1,12 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Token, TokenKind,
-    expr::{Expr, SequenceExpr},
+    CharStringExt, Token, TokenKind,
+    expr::{AnchorEnd, Expr, FirstMatchOf, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
 
 pub struct ThatThan {
-    expr: SequenceExpr,
+    expr: FirstMatchOf,
 }
 
 impl Default for ThatThan {
@@ -21,8 +21,21 @@ impl Default for ThatThan {
             .t_ws()
             .then_word_except(&["way"]);
 
+        let more_less_common_that_digit_word = SequenceExpr::word_set(&["more", "less"])
+            .t_ws()
+            .t_aco("common")
+            .t_ws()
+            .t_aco("that")
+            .t_ws()
+            .then(|tok: &Token, src: &[char]| tok.get_ch(src).iter().any(|ch| ch.is_ascii_digit()))
+            .then_optional(SequenceExpr::default().then_punctuation())
+            .then(AnchorEnd);
+
         Self {
-            expr: adjective_er_that_nextword,
+            expr: FirstMatchOf::new([
+                Box::new(adjective_er_that_nextword) as Box<dyn Expr>,
+                Box::new(more_less_common_that_digit_word),
+            ]),
         }
     }
 }
@@ -35,11 +48,7 @@ impl ExprLinter for ThatThan {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 5 {
-            return None;
-        }
-
-        let that_tok = &toks[2];
+        let that_tok = toks.iter().find(|tok| tok.get_ch(src).eq_str("that"))?;
 
         Some(Lint {
             span: that_tok.span,
@@ -202,6 +211,42 @@ mod tests {
     fn dont_flag_more_clear_that() {
         assert_lint_count(
             "Make it more clear that users need to download the VS tooling installer for .NET Core in VS.",
+            ThatThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn fix_way_less_common_that_mp3() {
+        assert_suggestion_result(
+            "This format is way less common that mp3.",
+            ThatThan::default(),
+            "This format is way less common than mp3.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_less_common_that_people_clause() {
+        assert_lint_count(
+            "It is less common that people configure this manually.",
+            ThatThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_common_that_users_clause() {
+        assert_lint_count(
+            "It is more common that users choose the default option.",
+            ThatThan::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_less_common_that_mp3_players_break() {
+        assert_lint_count(
+            "It's less common that mp3 players break than CD players.",
             ThatThan::default(),
             0,
         );
