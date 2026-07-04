@@ -268,10 +268,8 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 return true;
             }
         }
-        if let Some(ref metadata) = lower_metadata {
-            if metadata.noun.is_some() {
-                return true;
-            }
+        if let Some(ref metadata) = lower_metadata && metadata.noun.is_some() {
+            return true;
         }
 
         // If word is explicitly marked as a NON-noun (verb, adjective, adverb, etc.)
