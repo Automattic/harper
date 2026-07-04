@@ -47,11 +47,14 @@ impl<T: Dictionary> PortugueseSpellCheck<T> {
     fn filter_suggestions_by_dialect(&self, suggestions: &mut Vec<Vec<char>>) {
         suggestions.retain(|suggestion| {
             // Check if this suggestion word exists in the dictionary with our dialect
-            if let Some(metadata) = self.dictionary.get_word_metadata(suggestion) {
-                metadata
-                    .dialects
-                    .portuguese
-                    .is_dialect_enabled(self.dialect)
+            if let Some(_metadata) = self.dictionary.get_word_metadata(suggestion) {
+                // Since we can't extract Portuguese dialect info from the old DialectFlags,
+                // we always return true for now.
+                // metadata
+                //     .dialects
+                //     .portuguese
+                //     .is_dialect_enabled(self.dialect)
+                true
             } else {
                 // If we can't get metadata, include the suggestion (better to have false positives than miss valid ones)
                 true

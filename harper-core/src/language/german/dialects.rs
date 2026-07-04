@@ -132,7 +132,7 @@ impl DialectFlags<GermanDialect> for GermanDialectFlags {
     /// Gets the most commonly used dialect(s) in the document.
     fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
-        let mut dialect_counters: [(GermanDialect, usize); GermanDialect::COUNT] =
+        let dialect_counters: [(GermanDialect, usize); GermanDialect::COUNT] =
             GermanDialect::VARIANTS
                 .iter()
                 .map(|d| (*d, 0))
@@ -140,13 +140,19 @@ impl DialectFlags<GermanDialect> for GermanDialectFlags {
                 .unwrap();
 
         // Count word dialects.
+        // Note: The current dict_word_metadata::DialectFlags only supports English dialects,
+        // so for German dialects, we always return empty flags for now.
+        // TODO: Migrate to use the new language::dialects::dialect_flags::DialectFlags
         document.iter_words().for_each(|w| {
-            if let TokenKind::Word(Some(lexeme_metadata)) = &w.kind {
-                dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata.dialects.german.is_dialect_enabled(*dialect) {
-                        *count += 1;
-                    }
-                });
+            if let TokenKind::Word(Some(_lexeme_metadata)) = &w.kind {
+                // Since we can't extract German dialect info from the old DialectFlags,
+                // we skip counting for now. This means German dialect detection won't work
+                // until we migrate to the new system.
+                // dialect_counters.iter_mut().for_each(|(dialect, count)| {
+                //     if lexeme_metadata.dialects.german.is_dialect_enabled(*dialect) {
+                //         *count += 1;
+                //     }
+                // });
             }
         });
 

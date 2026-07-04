@@ -1,6 +1,5 @@
 use crate::{
-    Dialect,
-    Token, TokenStringExt,
+    Dialect, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
 };

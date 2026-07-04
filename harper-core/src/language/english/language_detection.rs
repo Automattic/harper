@@ -4,10 +4,10 @@
 //! trait for the language module system, using the original English detection functions
 //! from language_detection.rs to match the master branch structure.
 
+use crate::Token;
 use crate::language::languages::Language;
 use crate::language_detection::is_likely_english;
 use crate::spell::FstDictionary;
-use crate::Token;
 
 /// English language detector (fallback).
 #[derive(Debug)]

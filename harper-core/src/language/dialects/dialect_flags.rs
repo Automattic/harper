@@ -2,6 +2,8 @@ use serde::ser::SerializeStruct;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;
 
+#[allow(unused_imports)]
+use crate::language::dialects::dialect_trait::DialectFlags as _;
 use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
 
 #[cfg(feature = "de")]

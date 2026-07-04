@@ -629,6 +629,87 @@
         "verb": {}
       },
       "rename_ok": true
+    },
+    "k": {
+      "#": "Verb past participle -t (regular verbs: ge-macht, ge-lernt)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "t",
+          "condition": "ge[^t]"
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST_PARTICIPLE"
+        }
+      },
+      "rename_ok": true
+    },
+    "l": {
+      "#": "Verb past participle -en (strong verbs: ge-schrieben, ge-laufen)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "en",
+          "condition": "ge[^n]"
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST_PARTICIPLE"
+        }
+      },
+      "rename_ok": true
+    },
+    "m": {
+      "#": "Verb past participle without ge- prefix (insep. prefixes: be-, er-, ver-, zer-, ent-, emp-)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "t",
+          "condition": "(be|er|ver|zer|ent|emp|miss)[^t]"
+        },
+        {
+          "remove": "",
+          "add": "en",
+          "condition": "(be|er|ver|zer|ent|emp|miss)[^n]"
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST_PARTICIPLE"
+        }
+      },
+      "rename_ok": true
+    },
+    "n": {
+      "#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen)",
+      "kind": "suffix",
+      "cross_product": false,
+      "replacements": [
+        {
+          "remove": "",
+          "add": "geschlagen",
+          "condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
+        }
+      ],
+      "target": [],
+      "base_metadata": {
+        "verb": {
+          "verb_form": "PAST_PARTICIPLE"
+        }
+      },
+      "rename_ok": true
     }
   },
   "properties": {
@@ -646,6 +727,12 @@
     },
     "J": {
       "#": "adjective property (German)",
+      "metadata": {
+        "adjective": {}
+      }
+    },
+    "A": {
+      "#": "adjective property (German) - alias for J",
       "metadata": {
         "adjective": {}
       }

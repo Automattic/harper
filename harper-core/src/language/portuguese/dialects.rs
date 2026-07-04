@@ -160,7 +160,7 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
     /// will be the only one enabled.
     fn get_most_used_dialects_from_document(document: &Document) -> Self {
         // Initialize counters.
-        let mut dialect_counters: [(PortugueseDialect, usize); PortugueseDialect::COUNT] =
+        let dialect_counters: [(PortugueseDialect, usize); PortugueseDialect::COUNT] =
             PortugueseDialect::VARIANTS
                 .iter()
                 .map(|d| (*d, 0))
@@ -169,18 +169,21 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
 
         // Count word dialects.
         document.iter_words().for_each(|w| {
-            if let TokenKind::Word(Some(lexeme_metadata)) = &w.kind {
+            if let TokenKind::Word(Some(_lexeme_metadata)) = &w.kind {
                 // If the token is a word, iterate though the dialects in `dialect_counters` and
                 // increment those counters where the word has the respective dialect enabled.
-                dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                    if lexeme_metadata
-                        .dialects
-                        .portuguese
-                        .is_dialect_enabled(*dialect)
-                    {
-                        *count += 1;
-                    }
-                });
+                // Since we can't extract Portuguese dialect info from the old DialectFlags,
+                // we skip counting for now. This means Portuguese dialect detection won't work
+                // until we migrate to the new system.
+                // dialect_counters.iter_mut().for_each(|(dialect, count)| {
+                //     if lexeme_metadata
+                //         .dialects
+                //         .portuguese
+                //         .is_dialect_enabled(*dialect)
+                //     {
+                //         *count += 1;
+                //     }
+                // });
             }
         });
 

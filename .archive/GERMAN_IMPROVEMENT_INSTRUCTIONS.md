@@ -53,7 +53,7 @@ Created `.archive/fix_german_dict_conservative.py` script that:
 
 **Result**: 30 specific entries corrected in `harper-core/src/language/german/dictionary.dict`
 
-### Long-term Solution Required
+### Long-term Solution Implementation Status
 
 #### 1. Implement Verb Conjugation Affix Rules
 
@@ -69,9 +69,16 @@ Following the same approach used for adjectives and nouns:
 - Generates plural forms dynamically
 - Removed 10,589 explicit plural forms
 
-**Verb Optimization (TODO)**:
-- Need to add verb conjugation affix rules
-- Should generate: present (-e, -st, -t, -en), preterite (-te, -ten), participles (-t, -en)
+**Verb Optimization (PARTIALLY COMPLETED - 2026-07-04)**:
+- ✅ Added verb past participle affix rules (k, l, m, n flags):
+  - `k`: Regular verbs -t (ge-macht, ge-lernt)
+  - `l`: Strong verbs -en (ge-schrieben, ge-laufen)
+  - `m`: Verbs with inseparable prefixes -t/-en (be-schrieben, ver-loren, er-funden)
+  - `n`: Verbs with separable prefixes (auf-geschlagen, zu-geschlagen)
+- ✅ Defined missing `A` property (adjective alias for J)
+- ⏳ TODO: Add remaining present tense conjugation rules for all persons
+- ⏳ TODO: Add preterite conjugation rules
+- ⏳ TODO: Systematically clean up all verb forms with incorrect annotations
 - Expected impact: Remove thousands of redundant verb forms, improve efficiency from ~10% to ~15-20%
 
 #### 2. Dictionary Annotation Cleanup
