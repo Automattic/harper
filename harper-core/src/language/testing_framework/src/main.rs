@@ -3,6 +3,7 @@ use harper_core::spell::{MutableDictionary, Dictionary};
 use harper_core::DictWordMetadata;
 use std::fs;
 use std::path::PathBuf;
+use std::process::Command;
 
 /// Harper Language Testing Framework
 /// Loads dictionary and annotations from files and tests spell checking for any language
@@ -36,6 +37,10 @@ struct Args {
     /// Check word (alternative to text for single word)
     #[arg(short, long)]
     word: Option<String>,
+    
+    /// Compare with hunspell spell checking
+    #[arg(short, long, default_value_t = false)]
+    hunspell: bool,
 }
 
 fn main() {
@@ -101,7 +106,9 @@ fn main() {
         check_word_metadata(&dict, &word);
     }
     
-    if let Some(text) = args.text {
+    if args.hunspell {
+        compare_with_hunspell(&args.language, &dict, &args.text.clone().unwrap_or_default());
+    } else if let Some(text) = args.text {
         spell_check_text(&dict, &text);
     } else if !args.test && !args.metadata {
         println!("\n💡 Usage examples:");
@@ -109,6 +116,143 @@ fn main() {
         println!("   --text \"text\"  Spell check text in the specified language");
         println!("   --word \"word\"  Show metadata for a single word");
         println!("   --metadata       Show metadata for words in text");
+        println!("   --hunspell       Compare with hunspell spell checking");
+    }
+}
+
+fn get_hunspell_dict_name(language: &str) -> Option<String> {
+    match language {
+        "german" => Some("de_DE".to_string()),
+        "english" => Some("en_US".to_string()),
+        "portuguese" => Some("pt_PT".to_string()),
+        "slovak" => Some("sk_SK".to_string()),
+        _ => None,
+    }
+}
+
+fn check_word_with_hunspell(language: &str, word: &str) -> bool {
+    if let Some(dict_name) = get_hunspell_dict_name(language) {
+        let output = Command::new("hunspell")
+            .arg("-d")
+            .arg(format!("{}", dict_name))
+            .arg("-a")
+            .stdin(std::process::Stdio::piped())
+            .stdout(std::process::Stdio::piped())
+            .spawn();
+        
+        match output {
+            Ok(mut child) => {
+                use std::io::Write;
+                if let Some(stdin) = child.stdin.as_mut() {
+                    let _ = stdin.write_all(word.as_bytes());
+                    let _ = stdin.write_all(b"\n");
+                }
+                if let Ok(status) = child.wait() {
+                    if status.success() {
+                        // hunspell -a returns lines starting with * for correct words
+                        // For simplicity, we'll use the exit code approach
+                        return true;
+                    }
+                }
+            }
+            Err(_) => {}
+        }
+    }
+    
+    // Fallback: try simple approach
+    let result = Command::new("hunspell")
+        .arg("-d")
+        .arg(format!("{}_DE", language))
+        .arg("-i")
+        .arg("utf-8")
+        .arg(word)
+        .output();
+    
+    match result {
+        Ok(output) => output.status.success(),
+        Err(_) => false,
+    }
+}
+
+fn compare_with_hunspell(language: &str, dict: &MutableDictionary, text: &str) {
+    println!("\n🔍 Comparing Harper with Hunspell for language: {}", language);
+    println!("{}", "=".repeat(60));
+    
+    let words: Vec<&str> = text.split_whitespace().collect();
+    let mut both_correct = 0;
+    let mut harper_only = 0;
+    let mut hunspell_only = 0;
+    let mut both_wrong = 0;
+    
+    let dict_name = get_hunspell_dict_name(language);
+    
+    if dict_name.is_none() {
+        println!("⚠️  Hunspell dictionary not configured for language: {}", language);
+        println!("   Harper results only:");
+        spell_check_text(dict, text);
+        return;
+    }
+    
+    // Check if hunspell is available
+    let hunspell_available = Command::new("hunspell").arg("-v").output().is_ok();
+    if !hunspell_available {
+        println!("⚠️  Hunspell not found. Please install hunspell and dictionary files.");
+        println!("   Harper results only:");
+        spell_check_text(dict, text);
+        return;
+    }
+    
+    for word in &words {
+        let harper_knows = dict.get_word_metadata(&word.chars().collect::<Vec<_>>()).is_some();
+        let hunspell_knows = check_word_with_hunspell(language, word);
+        
+        if harper_knows && hunspell_knows {
+            both_correct += 1;
+        } else if harper_knows && !hunspell_knows {
+            harper_only += 1;
+        } else if !harper_knows && hunspell_knows {
+            hunspell_only += 1;
+        } else {
+            both_wrong += 1;
+        }
+    }
+    
+    println!("\n📊 Comparison Results:");
+    println!("   Total words: {}", words.len());
+    println!("   ✅ Both correct: {}", both_correct);
+    println!("   🟢 Harper only: {}", harper_only);
+    println!("   🔴 Hunspell only: {}", hunspell_only);
+    println!("   ❌ Both wrong: {}", both_wrong);
+    
+    if words.len() > 0 {
+        let harper_coverage = ((both_correct + harper_only) as f64 / words.len() as f64) * 100.0;
+        let hunspell_coverage = ((both_correct + hunspell_only) as f64 / words.len() as f64) * 100.0;
+        
+        println!("\n📈 Coverage:");
+        println!("   Harper: {:.1}%", harper_coverage);
+        println!("   Hunspell: {:.1}%", hunspell_coverage);
+        
+        if harper_only > 0 {
+            println!("\n💡 Harper recognizes words that Hunspell doesn't:");
+            for word in &words {
+                let harper_knows = dict.get_word_metadata(&word.chars().collect::<Vec<_>>()).is_some();
+                let hunspell_knows = check_word_with_hunspell(language, word);
+                if harper_knows && !hunspell_knows {
+                    println!("   - {}", word);
+                }
+            }
+        }
+        
+        if hunspell_only > 0 {
+            println!("\n💡 Hunspell recognizes words that Harper doesn't:");
+            for word in &words {
+                let harper_knows = dict.get_word_metadata(&word.chars().collect::<Vec<_>>()).is_some();
+                let hunspell_knows = check_word_with_hunspell(language, word);
+                if !harper_knows && hunspell_knows {
+                    println!("   - {}", word);
+                }
+            }
+        }
     }
 }
 

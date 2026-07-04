@@ -97,6 +97,25 @@ just language-meta-text german "die mondlandung ist wieder fehlgeschlagen"
 just language-dict-test german
 ```
 
+## Coverage and Efficiency Analysis
+
+```bash
+# Analyze coverage against expanded dictionary (requires *.dict.gz file)
+just language-coverage german
+
+# Analyze efficiency (base words vs expanded coverage)
+just language-efficiency german
+
+# Compare Harper with hunspell spell checking
+just language-hunspell german "die mondlandung ist wieder fehlgeschlagen"
+
+# Test all example texts in test_sources/ folder
+just language-test-examples german
+```
+
+These recipes work for any standard language (german, portuguese, slovak, etc.).
+Note: English is a special case - some recipes may not work for English.
+
 ## Complete Language Development Toolkit
 
 ```bash
@@ -168,7 +187,76 @@ just language-meta-text german "die mondlandung ist wieder fehlgeschlagen"
 
 # Run all tests
 python3 harper-core/src/language/german/test_sources/test_german_noun_verification.py
+
+# Compare with hunspell to find missing words
+just language-hunspell german "example text with missing words"
 ```
+
+## Improving Dictionary and Annotations with Example Texts
+
+1. **Create example text files** in `harper-core/src/language/<lang>/test_sources/`
+   - Each file should contain example sentences
+   - Create a companion `.expected.md` file with expected Harper output
+
+2. **Run example tests** to verify behavior:
+   ```bash
+   just language-test-examples german
+   ```
+
+3. **Compare with Hunspell** to find gaps:
+   ```bash
+   just language-hunspell german "your test text"
+   ```
+
+4. **Check coverage** against the full expanded dictionary:
+   ```bash
+   just language-coverage german
+   ```
+
+5. **Check efficiency** to see how well your rules generate words:
+   ```bash
+   just language-efficiency german
+   ```
+
+## Step-by-Step Improvement Process
+
+### When Harper incorrectly identifies a word's POS:
+
+1. **Identify the issue** with metadata inspection:
+   ```bash
+   just language-meta german "problemword"
+   ```
+
+2. **Fix the dictionary entry** in `dictionary.dict`:
+   - Add correct POS flags (e.g., `fehlgeschlagen/~~g` for past participle)
+   - Remove incorrect flags
+
+3. **Add missing properties** to `annotations.json` if needed:
+   ```json
+   {
+     "properties": {
+       "g": {"metadata": {"verb": {"verb_form": "PAST_PARTICIPLE"}}}
+     }
+   }
+   ```
+
+4. **Test the fix**:
+   ```bash
+   just language-meta german "problemword"
+   just language-test german "sentence with problemword"
+   ```
+
+5. **Verify with Hunspell** that the word is recognized:
+   ```bash
+   just language-hunspell german "problemword"
+   ```
+
+### When Harper doesn't recognize a valid word:
+
+1. **Add the word** to `dictionary.dict` with appropriate flags
+2. **Add necessary affix rules** to `annotations.json` if it's an inflected form
+3. **Test** with the new word
+4. **Update example texts** if this was a known gap
 
 ## Legacy Recipe Names
 

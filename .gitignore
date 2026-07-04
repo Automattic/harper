@@ -6,6 +6,7 @@ build
 *.pdf
 node_modules
 mariadb_data
+.archive
 
 # Ignore direnv files
 .direnv/*

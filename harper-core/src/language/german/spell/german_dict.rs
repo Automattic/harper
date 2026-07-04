@@ -47,17 +47,17 @@ static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
 // The annotated dictionary is checked first for metadata, then the FST dictionary for word existence
 static GERMAN_COMBINED_DICT: LazyLock<Arc<MergedDictionary>> = LazyLock::new(|| {
     use std::sync::Arc;
-    
+
     let mut merged = MergedDictionary::new();
-    
+
     // Add annotated dictionary FIRST - it has metadata for 237K words
     // This ensures that when a word exists in both, we get the annotation metadata
     merged.add_dictionary(Arc::clone(&*GERMAN_ANNOTATED_DICT) as Arc<dyn Dictionary>);
-    
+
     // Add FST dictionary SECOND - it has 1.3M+ words but no explicit metadata
     // This provides comprehensive word coverage
     merged.add_dictionary(Arc::clone(&*GERMAN_FST_DICT) as Arc<dyn Dictionary>);
-    
+
     Arc::new(merged)
 });
 

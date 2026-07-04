@@ -1,8 +1,7 @@
 use std::path::Path;
 
 use harper_core::{
-    DialectFlags,
-    DictWordMetadata,
+    DialectFlags, DictWordMetadata,
     spell::{Dictionary, MutableDictionary},
 };
 use itertools::Itertools;
