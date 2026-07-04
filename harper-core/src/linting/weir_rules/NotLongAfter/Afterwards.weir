@@ -1,0 +1,9 @@
+expr main (not along afterwards)
+
+let message "Did you mean `not long afterwards`?"
+let description "Corrects `not along afterwards` to `not long afterwards`."
+let kind "Typo"
+let becomes "not long afterwards"
+
+test "Not along afterwards, the young Artemis began seeing news reports that his father had disappeared while traveling on his yacht." "Not long afterwards, the young Artemis began seeing news reports that his father had disappeared while traveling on his yacht."
+test "a younger, \“modern\” couple with three children moved in a couple houses down, and not along afterwards began to build a patio." "a younger, \“modern\” couple with three children moved in a couple houses down, and not long afterwards began to build a patio."
