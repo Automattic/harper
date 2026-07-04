@@ -3,6 +3,7 @@
 use std::collections::HashMap;
 use std::convert::Into;
 use std::io::Cursor;
+use std::panic;
 use std::sync::Arc;
 
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
@@ -344,7 +345,11 @@ impl Linter {
         regex_mask: Option<String>,
         isolate_english: bool,
     ) -> Option<Box<dyn Parser>> {
-        let mut parser = language.create_parser();
+        let parser_result = std::panic::catch_unwind(|| language.create_parser());
+        let mut parser = match parser_result {
+            Ok(parser) => parser,
+            Err(_) => return None,
+        };
 
         if let Some(regex) = regex_mask {
             let Some(masker) = RegexMasker::new(regex.as_str(), true) else {
