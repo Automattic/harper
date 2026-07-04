@@ -17,6 +17,37 @@ language-test language text:
 		--annotations "harper-core/src/language/{{language}}/annotations.json" \
 		--text "{{text}}"
 
+# Show metadata for a single word in any language
+# Usage: just language-meta german "word"
+language-meta language word:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test \
+		--language "{{language}}" \
+		--dict "harper-core/src/language/{{language}}/dictionary.dict" \
+		--annotations "harper-core/src/language/{{language}}/annotations.json" \
+		--word "{{word}}"
+
+# Show metadata for all words in text
+# Usage: just language-meta-text german "text with multiple words"
+language-meta-text language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test \
+		--language "{{language}}" \
+		--dict "harper-core/src/language/{{language}}/dictionary.dict" \
+		--annotations "harper-core/src/language/{{language}}/annotations.json" \
+		--metadata \
+		--text "{{text}}"
+
+# Run basic dictionary tests for a language
+# Usage: just language-dict-test german
+language-dict-test language:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test \
+		--language "{{language}}" \
+		--dict "harper-core/src/language/{{language}}/dictionary.dict" \
+		--annotations "harper-core/src/language/{{language}}/annotations.json" \
+		--test
+
 # Legacy aliases
 language-german-test text:
 	just language-test german "{{text}}"

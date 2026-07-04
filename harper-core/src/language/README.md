@@ -1,90 +1,177 @@
-# Harper Language Support
+# Harper Language Support - Architecture Guide
 
-## Quick Start for Senior Developers
+## Core Principle
 
-### Special Case: English
+**Each language uses exactly 2 files:**
+- **`dictionary.dict`** - Base words with POS flags
+- **`annotations.json`** - Word formation rules + POS metadata mappings
 
-**English is built into Harper core and does not use the standard language module structure.**
-It uses an embedded dictionary and does not require feature flags.
-All other languages (German, Portuguese, Slovak, etc.) follow the standard module structure.
+Both files are combined at runtime to create a comprehensive dictionary with metadata.
 
-### Adding a New Language (non-English)
+## File Structure
 
-1. **Create module structure** (copy from German):
-   ```bash
-   harper-core/src/language/<lang>/
-   ├── mod.rs              # Module exports
-   ├── module.rs          # Language module implementation (implements LanguageModule)
-   ├── dialects.rs         # Dialect definitions
-   ├── language_detection.rs  # Language detector
-   ├── lexing.rs          # Token lexing
-   ├── parsers.rs         # Text parsers
-   ├── spell/
-   │   └── mod.rs         # Dictionary loading
-   ├── linting/
-   │   ├── mod.rs         # Linter group
-   │   └── <lang>_*.rs    # Language-specific linters
-   ├── annotations.json    # Word formation rules
-   └── dictionary.dict     # Word list with POS tags
-   ```
+```
+harper-core/src/language/<lang>/
+├── mod.rs              # Exports
+├── module.rs          # LanguageModule implementation
+├── dialects.rs       # Dialect definitions
+├── language_detection.rs
+├── lexing.rs          # Token lexing
+├── parsers/
+├── spell/
+├── linting/           # Language-specific linters
+├── test_sources/      # Test files
+├── annotations.json    # Word formation rules + POS mappings
+└── dictionary.dict     # Base words with POS flags
+```
 
-2. **Register the language:**
-   - Add feature flag in `harper-core/Cargo.toml`: `<lang> = []`
-   - Add to `harper-core/src/language/registry.rs` with `#[cfg(feature = "<lang>")]`
-   - Add to `harper-core/src/language/languages.rs`
+## Dictionary Format
 
-3. **Test:**
-   ```bash
-   just language-test <lang> "test text"
-   ```
+### dictionary.dict
+- One word per line: `word/flags # comment`
+- Flags are single characters (POS tags), separated by `~`:
+  - `N` = noun, `V` = verb, `J` = adjective, `A` = adjective (alias)
+  - `M` = masculine noun, `F` = feminine noun, `Z` = neuter noun, `P` = plural
+  - `g` = past participle, `t` = past tense, `c` = comparative, `s` = superlative
+  - `r` = adverb, `D` = determiner, `O` = preposition, `C` = conjunction
 
-### Rapid Iteration Without Recompilation
+Example:
+```
+Mondlandung/~~NF    # compound noun, feminine
+schreiben/~~V      # verb infinitive
+fehlgeschlagen/~~g # past participle
+wieder/~~r         # adverb
+```
 
-Test dictionary and annotation changes without rebuilding:
+### annotations.json
+- `affixes`: Word formation rules (generate inflected forms)
+- `properties`: Maps flags to metadata (e.g., `N` → noun, `V` → verb)
+
+Example:
+```json
+{
+  "properties": {
+    "N": {"metadata": {"noun": {}}},
+    "V": {"metadata": {"verb": {}}},
+    "g": {"metadata": {"verb": {"verb_form": "PAST_PARTICIPLE"}}},
+    "r": {"metadata": {"adverb": {}}}
+  }
+}
+```
+
+## Special Case: English
+
+**English is built into Harper core and does NOT use this structure.**
+- Uses embedded files: `harper-core/dictionary.dict` + `harper-core/annotations.json`
+- No feature flag needed
+- All other languages follow the standard module structure above
+
+## Adding a New Language
+
+1. **Copy German** as template to `harper-core/src/language/<lang>/`
+2. **Register** in 3 files:
+   - `harper-core/Cargo.toml`: add `<lang> = []` feature
+   - `harper-core/src/language/registry.rs`: add with `#[cfg(feature = "<lang>")]`
+   - `harper-core/src/language/languages.rs`: add language enum
+3. **Create** `dictionary.dict` + `annotations.json`
+4. **Implement** `module.rs`
+
+## Rapid Iteration Without Recompilation
 
 ```bash
-# Test text for any standard language
+# Build the testing framework (once):
+just language-build
+
+# Test spell checking for any language:
 just language-test german "die freiheit ist wichtig"
 just language-test portuguese "a liberdade e importante"
 
-# Build the framework first (only needed once):
-just language-build
+# Show metadata for a single word:
+just language-meta german "Mondlandung"
+just language-meta german "ist"
+
+# Show metadata for all words in text:
+just language-meta-text german "die mondlandung ist wieder fehlgeschlagen"
+
+# Run basic dictionary tests:
+just language-dict-test german
 ```
 
-### Complete Language Development Toolkit
+## Complete Language Development Toolkit
 
 ```bash
-# Full analysis for a specific language
-just language-analyze <language>
+# Build the testing framework
+just language-build
 
-# Validate all language dictionaries
-just language-validate-all
+# Test text for a language
+just language-test <lang> "text to test"
 
-# Test all standard languages
-just language-test-all
+# Show metadata for a single word
+just language-meta <lang> "word"
 
-# Full check (validate + test + analyze all languages)
-just language-full-check
+# Show metadata for all words in text
+just language-meta-text <lang> "text to test"
 
-# Clean build artifacts
-just language-clean
+# Run basic dictionary tests
+just language-dict-test <lang>
 
 # Run Rust unit tests for a language
 just language-rust-test german
 
 # Run all Rust tests for standard languages
 just language-rust-test-all
+
+# Clean build artifacts
+just language-clean
 ```
 
-### Legacy Recipe Names
+## Improving Dictionary and Annotations
+
+### Step-by-step process:
+
+1. **Add missing words** to `dictionary.dict` with correct POS flags
+2. **Add properties** to `annotations.json` if needed for new flags
+3. **Test** with `just language-meta <lang> "word"` or `just language-meta-text <lang> "sentence"`
+4. **Verify** metadata is correctly applied
+
+### Quick Examples:
+
+Add a noun:
+```
+Mondlandung/~~NF  # feminine noun
+```
+
+Add a verb:
+```
+schreiben/~~V  # verb
+```
+
+Add an adverb:
+```
+wieder/~~r  # adverb (requires property in annotations.json)
+```
+
+Then add the property to annotations.json:
+```json
+"properties": {
+  "r": {"metadata": {"adverb": {}}}
+}
+```
+
+### Testing:
+```bash
+# Test single word
+just language-meta german "Mondlandung"
+
+# Test sentence
+just language-meta-text german "die mondlandung ist wieder fehlgeschlagen"
+
+# Run all tests
+python3 harper-core/src/language/german/test_sources/test_german_noun_verification.py
+```
+
+## Legacy Recipe Names
 
 For backward compatibility:
 - `language-german-test` → use `language-test german` instead
 - `language-build-lang-test` → use `language-build` instead
-
-### Template Languages
-
-Use these as templates for new languages:
-- **German (de):** Full implementation with linters, dictionary, annotations
-- **Portuguese (pt):** Similar to German
-- **Slovak (sk):** Similar to German

@@ -1,5 +1,6 @@
 use clap::Parser;
 use harper_core::spell::{MutableDictionary, Dictionary};
+use harper_core::DictWordMetadata;
 use std::fs;
 use std::path::PathBuf;
 
@@ -27,6 +28,14 @@ struct Args {
     /// Test mode - run basic tests
     #[arg(short, long, default_value_t = false)]
     test: bool,
+    
+    /// Show metadata for words
+    #[arg(short, long, default_value_t = false)]
+    metadata: bool,
+    
+    /// Check word (alternative to text for single word)
+    #[arg(short, long)]
+    word: Option<String>,
 }
 
 fn main() {
@@ -84,12 +93,22 @@ fn main() {
         run_language_tests(&dict, &args.language);
     }
     
+    if args.metadata {
+        show_metadata(&dict, &args.word.clone().unwrap_or_default(), &args.text.clone().unwrap_or_default());
+    }
+    
+    if let Some(word) = args.word {
+        check_word_metadata(&dict, &word);
+    }
+    
     if let Some(text) = args.text {
         spell_check_text(&dict, &text);
-    } else if !args.test {
+    } else if !args.test && !args.metadata {
         println!("\n💡 Usage examples:");
         println!("   --test          Run basic dictionary tests");
         println!("   --text \"text\"  Spell check text in the specified language");
+        println!("   --word \"word\"  Show metadata for a single word");
+        println!("   --metadata       Show metadata for words in text");
     }
 }
 
@@ -163,5 +182,105 @@ fn spell_check_text(dict: &MutableDictionary, text: &str) {
         for word in unknown_words {
             println!("      - {}", word);
         }
+    }
+}
+
+fn check_word_metadata(dict: &MutableDictionary, word: &str) {
+    println!("\n🔍 Checking metadata for word: \"{}\"", word);
+    
+    let word_chars: Vec<char> = word.chars().collect();
+    let lowercase_chars: Vec<char> = word_chars.iter().map(|c| c.to_ascii_lowercase()).collect();
+    
+    if let Some(metadata) = dict.get_word_metadata(&word_chars) {
+        println!("   ✅ Found (exact case):");
+        print_metadata(&metadata, 6);
+    } else if let Some(metadata) = dict.get_word_metadata(&lowercase_chars) {
+        println!("   ✅ Found (lowercase):");
+        print_metadata(&metadata, 6);
+    } else {
+        println!("   ❌ Word not found in dictionary");
+    }
+}
+
+fn show_metadata(dict: &MutableDictionary, single_word: &str, text: &str) {
+    let words_to_check: Vec<&str> = if !single_word.is_empty() {
+        vec![single_word]
+    } else if !text.is_empty() {
+        text.split_whitespace().collect()
+    } else {
+        return;
+    };
+    
+    println!("\n📋 Word Metadata Report");
+    println!("{}", "=".repeat(50));
+    
+    for word in &words_to_check {
+        let word_chars: Vec<char> = word.chars().collect();
+        let lowercase_chars: Vec<char> = word_chars.iter().map(|c| c.to_ascii_lowercase()).collect();
+        
+        println!("\n🔹 Word: \"{}\"", word);
+        
+        // Check exact case
+        if let Some(metadata) = dict.get_word_metadata(&word_chars) {
+            println!("   ✅ Exact case:");
+            print_metadata(&metadata, 6);
+        } else {
+            println!("   ❌ Not found (exact case)");
+        }
+        
+        // Check lowercase
+        if let Some(metadata) = dict.get_word_metadata(&lowercase_chars) {
+            println!("   ✅ Lowercase:");
+            print_metadata(&metadata, 6);
+        } else {
+            println!("   ❌ Not found (lowercase)");
+        }
+    }
+}
+
+fn print_metadata(metadata: &DictWordMetadata, indent: usize) {
+    let prefix = " ".repeat(indent);
+    
+    if let Some(noun) = &metadata.noun {
+        let is_singular = noun.is_singular.as_ref().map(|s| if *s { ", singular" } else { ", plural" }).unwrap_or_default();
+        let is_plural = noun.is_plural.as_ref().map(|p| if *p { ", plural" } else { "" }).unwrap_or_default();
+        let is_proper = noun.is_proper.as_ref().map(|p| if *p { ", proper" } else { "" }).unwrap_or_default();
+        println!("{}📚 Noun{}{}{}", prefix, is_singular, is_plural, is_proper);
+    }
+    
+    if let Some(verb) = &metadata.verb {
+        let form = verb.verb_forms.as_ref().map(|f| format!(", form: {:?}", f)).unwrap_or_default();
+        println!("{}✍️ Verb{}", prefix, form);
+    }
+    
+    if let Some(adjective) = &metadata.adjective {
+        println!("{}🎨 Adjective", prefix);
+    }
+    
+    if let Some(adverb) = &metadata.adverb {
+        println!("{}💨 Adverb", prefix);
+    }
+    
+    if let Some(conjunction) = &metadata.conjunction {
+        println!("{}🔗 Conjunction", prefix);
+    }
+    
+    if let Some(determiner) = &metadata.determiner {
+        println!("{}📍 Determiner", prefix);
+    }
+    
+    if let Some(pronoun) = &metadata.pronoun {
+        println!("{}👤 Pronoun", prefix);
+    }
+    
+    if metadata.preposition {
+        println!("{}📌 Preposition", prefix);
+    }
+    
+    if metadata.noun.is_none() && metadata.verb.is_none() && metadata.adjective.is_none() 
+       && metadata.adverb.is_none() && metadata.conjunction.is_none() 
+       && metadata.determiner.is_none() && metadata.pronoun.is_none() 
+       && !metadata.preposition {
+        println!("{}⚪ No specific POS metadata", prefix);
     }
 }
