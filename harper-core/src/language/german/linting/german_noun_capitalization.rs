@@ -286,7 +286,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 .and_then(|m| m.noun.as_ref())
                 .is_some();
 
-        let has_non_noun_metadata = word_metadata.as_ref().map_or(false, |m| {
+        let has_non_noun_metadata = word_metadata.as_ref().is_some_and(|m| {
             m.verb.is_some()
                 || m.adjective.is_some()
                 || m.adverb.is_some()
@@ -294,7 +294,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 || m.determiner.is_some()
                 || m.pronoun.is_some()
                 || m.preposition
-        }) || lower_metadata.as_ref().map_or(false, |m| {
+        }) || lower_metadata.as_ref().is_some_and(|m| {
             m.verb.is_some()
                 || m.adjective.is_some()
                 || m.adverb.is_some()
