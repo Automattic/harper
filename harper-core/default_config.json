@@ -1379,6 +1379,13 @@
 								"state": true,
 								"label": "Constitute As"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LifetimeLife",
+								"state": true,
+								"label": "Lifetime Life"
+							}
 						}
 					]
 				}
