@@ -261,7 +261,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // Check both the word and its lowercase form
         let word_metadata = self.dictionary.get_word_metadata(word);
         let lower_metadata = self.dictionary.get_word_metadata(&lower);
-        
+
         // If word is explicitly marked as a noun in dictionary, it's a noun
         if let Some(ref metadata) = word_metadata {
             if metadata.noun.is_some() {
@@ -273,21 +273,37 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 return true;
             }
         }
-        
+
         // If word is explicitly marked as a NON-noun (verb, adjective, adverb, etc.)
         // in the dictionary, it should NOT be treated as a noun
         // This prevents false positives like "schreibe" (verb) or "fehlgeschlagen" (participle)
-        let has_noun_metadata = word_metadata.as_ref().and_then(|m| m.noun.as_ref()).is_some()
-            || lower_metadata.as_ref().and_then(|m| m.noun.as_ref()).is_some();
-        
-        let has_non_noun_metadata = word_metadata.as_ref().map_or(false, |m| 
-            m.verb.is_some() || m.adjective.is_some() || m.adverb.is_some() 
-            || m.conjunction.is_some() || m.determiner.is_some() || m.pronoun.is_some() || m.preposition
-        ) || lower_metadata.as_ref().map_or(false, |m| 
-            m.verb.is_some() || m.adjective.is_some() || m.adverb.is_some() 
-            || m.conjunction.is_some() || m.determiner.is_some() || m.pronoun.is_some() || m.preposition
-        );
-        
+        let has_noun_metadata = word_metadata
+            .as_ref()
+            .and_then(|m| m.noun.as_ref())
+            .is_some()
+            || lower_metadata
+                .as_ref()
+                .and_then(|m| m.noun.as_ref())
+                .is_some();
+
+        let has_non_noun_metadata = word_metadata.as_ref().map_or(false, |m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        }) || lower_metadata.as_ref().map_or(false, |m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        });
+
         if has_non_noun_metadata && !has_noun_metadata {
             return false;
         }
@@ -365,8 +381,8 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::language::german::spell::combined_german_dictionary;
     use crate::document::Document;
+    use crate::language::german::spell::combined_german_dictionary;
 
     fn test_linter() -> GermanNounCapitalization<impl Dictionary> {
         GermanNounCapitalization::new(combined_german_dictionary())
@@ -382,9 +398,12 @@ mod tests {
         let text = "die mondlandung";
         let document = create_document(text);
         let lints = linter.lint(&document);
-        
+
         // "mondlandung" should be detected as a noun and flagged for capitalization
-        assert!(lints.len() > 0, "Expected at least one lint for lowercase noun");
+        assert!(
+            lints.len() > 0,
+            "Expected at least one lint for lowercase noun"
+        );
         let lint = &lints[0];
         let word: String = document.get_span_content(&lint.span).iter().collect();
         assert_eq!(word, "mondlandung");
@@ -397,7 +416,7 @@ mod tests {
         let text = "ich schreibe und lerne";
         let document = create_document(text);
         let lints = linter.lint(&document);
-        
+
         // "schreibe" and "lerne" should NOT be detected as nouns
         assert_eq!(lints.len(), 0, "Verbs should not be detected as nouns");
     }
@@ -408,9 +427,13 @@ mod tests {
         let text = "es ist fehlgeschlagen";
         let document = create_document(text);
         let lints = linter.lint(&document);
-        
+
         // "fehlgeschlagen" should NOT be detected as a noun
-        assert_eq!(lints.len(), 0, "Past participles should not be detected as nouns");
+        assert_eq!(
+            lints.len(),
+            0,
+            "Past participles should not be detected as nouns"
+        );
     }
 
     #[test]
@@ -419,9 +442,12 @@ mod tests {
         let text = "die freiheit und die menschheit";
         let document = create_document(text);
         let lints = linter.lint(&document);
-        
+
         // "freiheit" and "menschheit" should be detected as nouns via suffix
-        assert!(lints.len() >= 1, "Expected at least one lint for nouns with suffixes");
+        assert!(
+            lints.len() >= 1,
+            "Expected at least one lint for nouns with suffixes"
+        );
     }
 
     #[test]
@@ -430,9 +456,13 @@ mod tests {
         let text = "die mondlandung ist wieder fehlgeschlagen";
         let document = create_document(text);
         let lints = linter.lint(&document);
-        
+
         // Only "mondlandung" should be detected as a noun
-        assert_eq!(lints.len(), 1, "Expected exactly one lint for 'mondlandung'");
+        assert_eq!(
+            lints.len(),
+            1,
+            "Expected exactly one lint for 'mondlandung'"
+        );
         let lint = &lints[0];
         let word: String = document.get_span_content(&lint.span).iter().collect();
         assert_eq!(word, "mondlandung");
