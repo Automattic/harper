@@ -1,5 +1,9 @@
 # Harper Language Support - Architecture Guide
 
+## Compile-Time Plugin Architecture
+
+Harper uses a compile-time plugin architecture for language support, where each language is implemented as a modular component that integrates seamlessly at build time.
+
 ## File Structure
 
 Each language's functionality is in a subfolder `harper-core/src/language/<lang>`.
@@ -38,22 +42,46 @@ harper-core/src/language/<lang>/
 
 For language-specific details, see the individual language directories.
 
+## Architecture Overview
+
+```mermaid
+graph TD
+    A[Core System] -->|Build Script| B[Language Discovery]
+    B --> C[English: Always Included]
+    B --> D[German: #[cfg(feature="de")]]
+    B --> E[Portuguese: #[cfg(feature="pt")]]
+    B --> F[Slovak: #[cfg(feature="sk")]]
+    B -->|Generates| G[src/language/mod.rs]
+    G -->|Exports| H[LanguageModule Implementations]
+    H --> I[Runtime Registry]
+```
+
+## Key Components
+
+1. **LanguageModule Trait**: Core interface that all languages must implement
+2. **Build Script**: Automatically discovers and registers language modules
+3. **Feature Flags**: Control which languages are compiled (except English)
+4. **Generated Code**: `src/language/mod.rs` created by build script
+
 ## Special Case: English
 
 **English does NOT use this structure.**
 - Uses embedded files: `harper-core/dictionary.dict` + `harper-core/annotations.json`
-- No feature flag needed
+- No feature flag needed (always included)
 - All other languages follow the standard module structure above
 
 ## Adding a New Language
 
-1. **Copy German** as template to `harper-core/src/language/<lang>/`
-2. **Register** in 3 files:
-   - `harper-core/Cargo.toml`: add `<lang> = []` feature
-   - `harper-core/src/language/registry.rs`: add with `#[cfg(feature = "<lang>")]`
-   - `harper-core/src/language/languages.rs`: add language enum
-3. **Create** `dictionary.dict` + `annotations.json`
-4. **Implement** `module.rs`
+1. **Create language directory**: `harper-core/src/language/<lang>/`
+2. **Implement LanguageModule**: Create `module.rs` with trait implementation
+3. **Add feature flag**: In `harper-core/Cargo.toml`, add `<lang> = []`
+4. **Create language files**: `dictionary.dict` + `annotations.json`
+5. **Add to registry**: Update `harper-core/src/language/languages.rs` with new enum
+
+The build script automatically handles:
+- Module discovery and registration
+- Feature flag integration
+- Code generation for `src/language/mod.rs`
 
 ## Rapid Iteration Without Recompilation
 
