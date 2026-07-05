@@ -1,5 +1,5 @@
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{TokenStringExt, document::Document, spell::Dictionary, Token};
+use crate::{Token, TokenStringExt, document::Document, spell::Dictionary};
 use harper_brill::UPOS;
 
 /// A linter that checks to make sure German nouns are capitalized.
@@ -261,22 +261,34 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // Heuristic overrides for common verb/adjective/adverb patterns
         // These help override incorrect dictionary metadata
         let word_str: String = lower.iter().collect();
-        
+
         // Common verb endings (infinitive and conjugated forms)
-        if word_str.ends_with("en") || word_str.ends_with("est") || word_str.ends_with("et") || 
-           word_str.ends_with("t") || word_str.ends_with("te") || word_str.ends_with("ten") {
+        if word_str.ends_with("en")
+            || word_str.ends_with("est")
+            || word_str.ends_with("et")
+            || word_str.ends_with("t")
+            || word_str.ends_with("te")
+            || word_str.ends_with("ten")
+        {
             return false;
         }
-        
+
         // Common adjective endings
-        if word_str.ends_with("e") || word_str.ends_with("er") || word_str.ends_with("es") || 
-           word_str.ends_with("em") || word_str.ends_with("en") || word_str.ends_with("ste") || 
-           word_str.ends_with("ere") || word_str.ends_with("tes") {
+        if word_str.ends_with("e")
+            || word_str.ends_with("er")
+            || word_str.ends_with("es")
+            || word_str.ends_with("em")
+            || word_str.ends_with("en")
+            || word_str.ends_with("ste")
+            || word_str.ends_with("ere")
+            || word_str.ends_with("tes")
+        {
             return false;
         }
-        
+
         // Common adverb endings
-        if word_str.ends_with("lich") || word_str.ends_with("weise") || word_str.ends_with("wärts") {
+        if word_str.ends_with("lich") || word_str.ends_with("weise") || word_str.ends_with("wärts")
+        {
             return false;
         }
 
@@ -344,9 +356,10 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // Also use Brill tagger to override incorrect dictionary metadata
         if word_token.kind.is_upos(UPOS::NOUN) {
             return true;
-        } else if word_token.kind.is_upos(UPOS::VERB) 
-            || word_token.kind.is_upos(UPOS::ADJ) 
-            || word_token.kind.is_upos(UPOS::ADV) {
+        } else if word_token.kind.is_upos(UPOS::VERB)
+            || word_token.kind.is_upos(UPOS::ADJ)
+            || word_token.kind.is_upos(UPOS::ADV)
+        {
             // Brill tagger says this is not a noun, so override dictionary metadata
             return false;
         }
@@ -385,59 +398,75 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         .iter()
                         .map(|c| c.to_lowercase().next().unwrap_or(*c))
                         .collect();
-                    
+
                     // First check: known non-nouns (fast path)
                     if Self::is_non_noun(&lower) {
                         continue;
                     }
-                    
+
                     // Heuristic overrides for common verb/adjective/adverb patterns
                     // These help override incorrect dictionary metadata BEFORE checking dictionary
                     let word_str: String = lower.iter().collect();
                     let mut is_heuristically_non_noun = false;
-                    
+
                     // Common verb endings (infinitive and conjugated forms)
                     // Only apply to longer words to avoid false positives on short nouns
-                    if word_str.len() > 3 && 
-                       (word_str.ends_with("en") || word_str.ends_with("est") || word_str.ends_with("et") || 
-                        word_str.ends_with("te") || word_str.ends_with("ten")) {
+                    if word_str.len() > 3
+                        && (word_str.ends_with("en")
+                            || word_str.ends_with("est")
+                            || word_str.ends_with("et")
+                            || word_str.ends_with("te")
+                            || word_str.ends_with("ten"))
+                    {
                         is_heuristically_non_noun = true;
                     }
                     // Common adjective endings - be more specific to avoid false positives
-                    else if word_str.len() > 4 && 
-                             (word_str.ends_with("ste") || word_str.ends_with("ere") || word_str.ends_with("tes")) {
+                    else if word_str.len() > 4
+                        && (word_str.ends_with("ste")
+                            || word_str.ends_with("ere")
+                            || word_str.ends_with("tes"))
+                    {
                         is_heuristically_non_noun = true;
                     }
                     // Common adverb endings
-                    else if word_str.ends_with("lich") || word_str.ends_with("weise") || word_str.ends_with("wärts") {
+                    else if word_str.ends_with("lich")
+                        || word_str.ends_with("weise")
+                        || word_str.ends_with("wärts")
+                    {
                         is_heuristically_non_noun = true;
                     }
                     // Specific common function words that are often misclassified
-                    else if word_str == "zuerst" || word_str == "hält" || word_str == "genutzte" || word_str == "ältere" {
+                    else if word_str == "zuerst"
+                        || word_str == "hält"
+                        || word_str == "genutzte"
+                        || word_str == "ältere"
+                    {
                         is_heuristically_non_noun = true;
                     }
-                    
+
                     if is_heuristically_non_noun {
                         continue;
                     }
-                    
+
                     // Check if word has noun or verb metadata (for German, we need to use dictionary metadata directly)
                     let word_metadata = self.dictionary.get_word_metadata(word_chars);
                     let lower_metadata = self.dictionary.get_word_metadata(&lower);
-                    
-                    let has_noun_metadata = word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
-                        || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some());
-                    
-                    let has_verb_metadata = word_metadata.as_ref().is_some_and(|m| m.verb.is_some())
-                        || lower_metadata.as_ref().is_some_and(|m| m.verb.is_some());
-                    
+
+                    let has_noun_metadata =
+                        word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+                            || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some());
+
+                    let has_verb_metadata =
+                        word_metadata.as_ref().is_some_and(|m| m.verb.is_some())
+                            || lower_metadata.as_ref().is_some_and(|m| m.verb.is_some());
+
                     // For German, we use dictionary metadata to determine if a word is a noun
                     // Only flag as noun if it has noun metadata and no verb metadata (to avoid false positives on ambiguous words)
                     // Also use the heuristic fallback for words not in dictionary or with ambiguous metadata
                     let is_noun_from_metadata = has_noun_metadata && !has_verb_metadata;
 
-                    
-                    let should_flag = is_noun_from_metadata || self.is_likely_noun(word_chars, word, document);
+                    let should_flag =
+                        is_noun_from_metadata || self.is_likely_noun(word_chars, word, document);
 
                     if should_flag {
                         let mut replacement: Vec<char> = word_chars.to_vec();

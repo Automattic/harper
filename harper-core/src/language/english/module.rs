@@ -5,7 +5,10 @@
 
 use std::sync::Arc;
 
-use crate::language::english::dialects::EnglishDialect;
+use serde::{Deserialize, Serialize};
+
+use crate::language::dialects::dialect_trait::Dialect;
+use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
 use crate::language::english::language_detection::EnglishDetector;
 use crate::lexing::{FoundToken, lex_english_token};
 use crate::linting::{LintGroup, weir_rules};
@@ -55,5 +58,24 @@ impl LanguageModule for EnglishModule {
 
     fn curated_lint_group(dialect: Self::Dialect) -> LintGroup {
         LintGroup::new_curated(Self::dictionary(), dialect)
+    }
+
+    fn serialize_dialect_flags<S>(
+        flags: &<Self::Dialect as Dialect>::Flags,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        flags.serialize(serializer)
+    }
+
+    fn deserialize_dialect_flags<'de, D>(
+        deserializer: D,
+    ) -> Result<<Self::Dialect as Dialect>::Flags, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        EnglishDialectFlags::deserialize(deserializer)
     }
 }

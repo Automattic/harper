@@ -1,4 +1,126 @@
-use std::{env, fs, path::Path};
+use std::{collections::HashSet, env, fs, path::Path};
+
+/// Configuration for a supported language
+#[allow(dead_code)]
+#[derive(Debug, Clone)]
+struct LanguageConfig {
+    /// Name of the language (e.g., "English", "German")
+    name: &'static str,
+    /// Directory name in the language folder (e.g., "english", "german")
+    dir_name: &'static str,
+    /// Cargo feature name (e.g., None for English, Some("de") for German)
+    feature: Option<&'static str>,
+    /// Module name for the dialect type (e.g., "GermanDialect")
+    dialect_module: &'static str,
+    /// Module name for the dialect flags type (e.g., "GermanDialectFlags")
+    flags_module: &'static str,
+}
+
+/// Known non-language directories in src/language/ that should be skipped
+fn get_non_language_directories() -> HashSet<&'static str> {
+    HashSet::from(["dialects", "testing_framework"])
+}
+
+/// Map directory names to Cargo feature names
+fn map_directory_to_feature(dir_name: &str) -> Option<&'static str> {
+    match dir_name {
+        "german" => Some("de"),
+        "portuguese" => Some("pt"),
+        "slovak" => Some("sk"),
+        "english" => None, // English is always included
+        _ => None,         // Unknown languages have no feature (will be always included)
+    }
+}
+
+/// Capitalize the first letter of a string
+fn capitalize_first_letter(s: &str) -> String {
+    let mut chars = s.chars();
+    match chars.next() {
+        None => String::new(),
+        Some(first) => first.to_uppercase().chain(chars).collect(),
+    }
+}
+
+/// Discover all supported languages by scanning the language directory
+fn discover_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
+    let language_dir = manifest_dir.join("src/language");
+    let mut languages = Vec::new();
+    let non_language_dirs = get_non_language_directories();
+
+    // Check if language directory exists
+    if !language_dir.exists() || !language_dir.is_dir() {
+        eprintln!(
+            "Warning: Language directory not found at {}",
+            language_dir.display()
+        );
+        return languages;
+    }
+
+    // Read directory entries
+    let entries = match fs::read_dir(&language_dir) {
+        Ok(entries) => entries,
+        Err(e) => {
+            eprintln!("Warning: Could not read language directory: {}", e);
+            return languages;
+        }
+    };
+
+    // Sort entries for deterministic ordering
+    let mut sorted_entries: Vec<_> = entries
+        .filter_map(Result::ok)
+        .filter(|entry| entry.path().is_dir())
+        .collect();
+    sorted_entries.sort_by_key(|entry| entry.path());
+
+    for entry in sorted_entries {
+        let dir_name = match entry.file_name().to_str() {
+            Some(name) => name.to_string(),
+            None => continue,
+        };
+
+        // Skip non-language directories
+        if non_language_dirs.contains(dir_name.as_str()) {
+            continue;
+        }
+
+        // Skip directories that don't contain language modules
+        // Look for module.rs file as a heuristic
+        let module_path = entry.path().join("module.rs");
+        if !module_path.exists() {
+            continue;
+        }
+
+        let name = capitalize_first_letter(&dir_name);
+        let feature = map_directory_to_feature(&dir_name);
+        let dialect_module = format!("{}Dialect", capitalize_first_letter(&dir_name));
+        let flags_module = format!("{}DialectFlags", capitalize_first_letter(&dir_name));
+
+        // Helper function to convert owned string to &'static str
+        fn to_static_str(s: String) -> &'static str {
+            Box::leak(s.into_boxed_str())
+        }
+
+        // Convert feature to static reference
+        let feature_static: Option<&'static str> = feature.map(|f| to_static_str(f.to_string()));
+
+        // Store the owned strings in LanguageConfig using Box::leak
+        languages.push(LanguageConfig {
+            name: to_static_str(name),
+            dir_name: to_static_str(dir_name.clone()),
+            feature: feature_static,
+            dialect_module: to_static_str(dialect_module),
+            flags_module: to_static_str(flags_module),
+        });
+    }
+
+    languages
+}
+
+/// Get configuration for all supported languages
+#[allow(dead_code)]
+fn get_supported_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
+    discover_languages(manifest_dir)
+}
 
 #[derive(Debug)]
 struct StandaloneRule {
@@ -330,6 +452,9 @@ fn generate_language_modules(_out_dir: &Path) {
 
     println!("cargo:rerun-if-changed=src/language/mod.rs");
     println!("cargo:rerun-if-changed=build.rs");
+
+    // Track dialect flags file for regeneration
+    println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
 }
 
 /// Generate languages.rs with all the language-related code
@@ -815,4 +940,511 @@ fn generate_registry_file(src_dir: &Path) {
 
     let dest = src_dir.join("registry.rs");
     fs::write(&dest, code).unwrap();
+
+    // Generate dialect flags
+    generate_dialect_flags_file(&src_dir);
+}
+
+/// Generate dialect_flags.rs with dynamic dialect flags collection
+fn generate_dialect_flags_file(src_dir: &Path) {
+    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+
+    let languages = get_supported_languages(manifest_dir);
+    let mut code = String::new();
+
+    // Header
+    code.push_str("// Auto-generated by build.rs - do not edit manually\n");
+    code.push_str(
+        "// This file provides a centralized DialectFlags struct for all supported languages.\n",
+    );
+    code.push_str(
+        "// Language-specific dialect flags are defined in each language's dialects.rs file.\n\n",
+    );
+
+    // Imports
+    code.push_str("use serde::ser::SerializeStruct;\n");
+    code.push_str("use serde::{Deserialize, Serialize};\n");
+    code.push_str("use serde_json::Value;\n\n");
+
+    // Import dialect types - these come from individual language modules
+    code.push_str("#[allow(unused_imports)]\n");
+    code.push_str("use crate::language::dialects::dialect_trait::DialectFlags as _;\n");
+
+    // Add imports for each language
+    for lang in &languages {
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("#[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!(
+            "use crate::language::{}::dialects::{{{}, {}}};\n",
+            lang.dir_name, lang.dialect_module, lang.flags_module
+        ));
+        if lang.feature.is_none() {
+            code.push_str("\n");
+        }
+    }
+
+    code.push_str("\n");
+
+    // Main DialectFlags struct
+    code.push_str(
+        "/// This represents a collection of dialect flags for all supported languages.\n",
+    );
+    code.push_str("/// Each language has its own set of dialect flags.\n");
+    code.push_str("#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]\n");
+    code.push_str("pub struct DialectFlags {\n");
+
+    // Add struct fields
+    for lang in &languages {
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!(
+            "    pub {}: {},\n",
+            lang.dir_name.to_lowercase(),
+            lang.flags_module
+        ));
+    }
+
+    code.push_str("}\n\n");
+
+    // Serialize implementation - this delegates to individual language serialization via their Serialize derives
+    code.push_str("impl Serialize for DialectFlags {\n");
+    code.push_str("    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>\n");
+    code.push_str("    where\n");
+    code.push_str("        S: serde::Serializer,\n");
+    code.push_str("    {\n");
+    code.push_str("        let mut scoped = serializer.serialize_struct(\"DialectFlags\", 4)?;\n");
+    code.push_str("        scoped.serialize_field(\"english\", &self.english)?;\n");
+    code.push_str("        #[cfg(feature = \"de\")]\n");
+    code.push_str("        scoped.serialize_field(\"german\", &self.german)?;\n");
+    code.push_str("        #[cfg(feature = \"pt\")]\n");
+    code.push_str("        scoped.serialize_field(\"portuguese\", &self.portuguese)?;\n");
+    code.push_str("        #[cfg(feature = \"sk\")]\n");
+    code.push_str("        scoped.serialize_field(\"slovak\", &self.slovak)?;\n");
+    code.push_str("        scoped.end()\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // This is where it gets complex - the Deserialize implementation
+    // The current implementation uses a ScopedDialectFlagsSerde helper
+    code.push_str("impl<'de> Deserialize<'de> for DialectFlags {\n");
+    code.push_str("    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>\n");
+    code.push_str("    where\n");
+    code.push_str("        D: serde::Deserializer<'de>,\n");
+    code.push_str("    {\n");
+    code.push_str(
+        "        // Only accept the new scoped, language-specific dialect flags format.\n",
+    );
+    code.push_str("        let scoped = ScopedDialectFlagsSerde::deserialize(deserializer)?;\n");
+    code.push_str("        Ok(scoped.into())\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // From implementation
+    code.push_str("impl From<ScopedDialectFlagsSerde> for DialectFlags {\n");
+    code.push_str("    fn from(value: ScopedDialectFlagsSerde) -> Self {\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english: value.english,\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german: value.german,\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese: value.portuguese,\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak: value.slovak,\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // empty() method
+    code.push_str("impl DialectFlags {\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub const fn empty() -> Self {\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english: EnglishDialectFlags::empty(),\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german: GermanDialectFlags::empty(),\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese: PortugueseDialectFlags::empty(),\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak: SlovakDialectFlags::empty(),\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n\n");
+
+    // new() method
+    code.push_str("    /// Creates a DialectFlags with the specified dialect flags.\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub const fn new(\n");
+    code.push_str("        english: EnglishDialectFlags,\n");
+    code.push_str("        #[cfg(feature = \"de\")] german: GermanDialectFlags,\n");
+    code.push_str("        #[cfg(feature = \"pt\")] portuguese: PortugueseDialectFlags,\n");
+    code.push_str("        #[cfg(feature = \"sk\")] slovak: SlovakDialectFlags,\n");
+    code.push_str("    ) -> Self {\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english,\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german,\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese,\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak,\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n\n");
+
+    // from_english_dialect() method
+    code.push_str(
+        "    /// Creates a DialectFlags with only the specified English dialect enabled.\n",
+    );
+    code.push_str("    /// This is a convenience method for tests and cases where only English dialects are needed.\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub fn from_english_dialect(dialect: EnglishDialect) -> Self {\n");
+    code.push_str("        let english_flags = match dialect {\n");
+    code.push_str("            EnglishDialect::American => EnglishDialectFlags::AMERICAN,\n");
+    code.push_str("            EnglishDialect::Canadian => EnglishDialectFlags::CANADIAN,\n");
+    code.push_str("            EnglishDialect::Australian => EnglishDialectFlags::AUSTRALIAN,\n");
+    code.push_str("            EnglishDialect::British => EnglishDialectFlags::BRITISH,\n");
+    code.push_str("            EnglishDialect::Indian => EnglishDialectFlags::INDIAN,\n");
+    code.push_str("        };\n\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english: english_flags,\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german: GermanDialectFlags::empty(),\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese: PortugueseDialectFlags::empty(),\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak: SlovakDialectFlags::empty(),\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n\n");
+
+    // is_empty() method
+    code.push_str("    #[must_use]\n");
+    code.push_str("    #[allow(unused_mut)]\n");
+    code.push_str("    pub fn is_empty(self) -> bool {\n");
+    code.push_str("        let mut result = self.english.is_empty();\n");
+    code.push_str("        #[cfg(feature = \"de\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            result = result && self.german.is_empty();\n");
+    code.push_str("        }\n");
+    code.push_str("        #[cfg(feature = \"pt\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            result = result && self.portuguese.is_empty();\n");
+    code.push_str("        }\n");
+    code.push_str("        #[cfg(feature = \"sk\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            result = result && self.slovak.is_empty();\n");
+    code.push_str("        }\n");
+    code.push_str("        result\n");
+    code.push_str("    }\n\n");
+
+    // English dialect helper methods
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn is_english_dialect_enabled(self, dialect: EnglishDialect) -> bool {\n",
+    );
+    code.push_str("        self.english.is_dialect_enabled(dialect)\n");
+    code.push_str("    }\n\n");
+
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn is_english_dialect_enabled_strict(self, dialect: EnglishDialect) -> bool {\n",
+    );
+    code.push_str("        self.english.is_dialect_enabled_strict(dialect)\n");
+    code.push_str("    }\n\n");
+
+    // German dialect helper methods
+    code.push_str("    #[cfg(feature = \"de\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub fn is_german_dialect_enabled(self, dialect: GermanDialect) -> bool {\n");
+    code.push_str("        self.german.is_dialect_enabled(dialect)\n");
+    code.push_str("    }\n\n");
+
+    code.push_str("    #[cfg(feature = \"de\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn is_german_dialect_enabled_strict(self, dialect: GermanDialect) -> bool {\n",
+    );
+    code.push_str("        self.german.is_dialect_enabled_strict(dialect)\n");
+    code.push_str("    }\n\n");
+
+    // Portuguese dialect helper methods
+    code.push_str("    #[cfg(feature = \"pt\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn is_portuguese_dialect_enabled(self, dialect: PortugueseDialect) -> bool {\n",
+    );
+    code.push_str("        self.portuguese.is_dialect_enabled(dialect)\n");
+    code.push_str("    }\n\n");
+
+    code.push_str("    #[cfg(feature = \"pt\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub fn is_portuguese_dialect_enabled_strict(self, dialect: PortugueseDialect) -> bool {\n");
+    code.push_str("        self.portuguese.is_dialect_enabled_strict(dialect)\n");
+    code.push_str("    }\n\n");
+
+    // Slovak dialect helper methods
+    code.push_str("    #[cfg(feature = \"sk\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str("    pub fn is_slovak_dialect_enabled(self, dialect: SlovakDialect) -> bool {\n");
+    code.push_str("        self.slovak.is_dialect_enabled(dialect)\n");
+    code.push_str("    }\n\n");
+
+    code.push_str("    #[cfg(feature = \"sk\")]\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn is_slovak_dialect_enabled_strict(self, dialect: SlovakDialect) -> bool {\n",
+    );
+    code.push_str("        self.slovak.is_dialect_enabled_strict(dialect)\n");
+    code.push_str("    }\n\n");
+
+    // get_most_used_dialects_from_document method
+    code.push_str("    /// Gets the most commonly used dialect(s) in the document.\n");
+    code.push_str("    ///\n");
+    code.push_str("    /// If multiple dialects are used equally often, they will all be enabled in the returned\n");
+    code.push_str("    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it\n");
+    code.push_str("    /// will be the only one enabled.\n");
+    code.push_str("    #[must_use]\n");
+    code.push_str(
+        "    pub fn get_most_used_dialects_from_document(document: &crate::Document) -> Self {\n",
+    );
+    code.push_str("        // Get the most used dialects for each language separately\n");
+    code.push_str("        let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);\n");
+    code.push_str("        #[cfg(feature = \"de\")]\n");
+    code.push_str("        let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);\n");
+    code.push_str("        #[cfg(feature = \"pt\")]\n");
+    code.push_str("        let portuguese_flags =\n");
+    code.push_str(
+        "            PortugueseDialectFlags::get_most_used_dialects_from_document(document);\n",
+    );
+    code.push_str("        #[cfg(feature = \"sk\")]\n");
+    code.push_str("        let slovak_flags = SlovakDialectFlags::get_most_used_dialects_from_document(document);\n\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english: english_flags,\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german: german_flags,\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese: portuguese_flags,\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak: slovak_flags,\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n\n");
+
+    // BitOr implementation
+    code.push_str("}\n\n");
+    code.push_str("impl std::ops::BitOr for DialectFlags {\n");
+    code.push_str("    type Output = Self;\n\n");
+    code.push_str("    fn bitor(self, rhs: Self) -> Self::Output {\n");
+    code.push_str("        Self {\n");
+    code.push_str("            english: self.english | rhs.english,\n");
+    code.push_str("            #[cfg(feature = \"de\")]\n");
+    code.push_str("            german: self.german | rhs.german,\n");
+    code.push_str("            #[cfg(feature = \"pt\")]\n");
+    code.push_str("            portuguese: self.portuguese | rhs.portuguese,\n");
+    code.push_str("            #[cfg(feature = \"sk\")]\n");
+    code.push_str("            slovak: self.slovak | rhs.slovak,\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // BitOrAssign implementation
+    code.push_str("impl std::ops::BitOrAssign for DialectFlags {\n");
+    code.push_str("    fn bitor_assign(&mut self, rhs: Self) {\n");
+    code.push_str("        self.english |= rhs.english;\n");
+    code.push_str("        #[cfg(feature = \"de\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            self.german |= rhs.german;\n");
+    code.push_str("        }\n");
+    code.push_str("        #[cfg(feature = \"pt\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            self.portuguese |= rhs.portuguese;\n");
+    code.push_str("        }\n");
+    code.push_str("        #[cfg(feature = \"sk\")]\n");
+    code.push_str("        {\n");
+    code.push_str("            self.slovak |= rhs.slovak;\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // Default implementation
+    code.push_str("impl Default for DialectFlags {\n");
+    code.push_str("    /// A default value with no dialects explicitly enabled.\n");
+    code.push_str("    /// Implicitly, this state corresponds to all dialects being enabled.\n");
+    code.push_str("    fn default() -> Self {\n");
+    code.push_str("        Self::empty()\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // ScopedDialectFlagsSerde for deserialization
+    code.push_str("// Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.\n");
+    code.push_str("#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]\n");
+    code.push_str("struct ScopedDialectFlagsSerde {\n");
+    code.push_str("    english: EnglishDialectFlags,\n");
+    code.push_str("    #[cfg(feature = \"de\")]\n");
+    code.push_str("    german: GermanDialectFlags,\n");
+    code.push_str("    #[cfg(feature = \"pt\")]\n");
+    code.push_str("    portuguese: PortugueseDialectFlags,\n");
+    code.push_str("    #[cfg(feature = \"sk\")]\n");
+    code.push_str("    slovak: SlovakDialectFlags,\n");
+    code.push_str("}\n\n");
+
+    // Deserialize implementation for ScopedDialectFlagsSerde
+    code.push_str("impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {\n");
+    code.push_str("    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>\n");
+    code.push_str("    where\n");
+    code.push_str("        D: serde::Deserializer<'de>,\n");
+    code.push_str("    {\n");
+    code.push_str("        use serde::de::{Error, Unexpected};\n\n");
+    code.push_str("        let value = Value::deserialize(deserializer)?;\n\n");
+    code.push_str("        match value {\n");
+    code.push_str("            Value::Object(map) => {\n");
+    code.push_str("                let mut english = EnglishDialectFlags::default();\n");
+    code.push_str("                #[cfg(feature = \"de\")]\n");
+    code.push_str("                let mut german = GermanDialectFlags::default();\n");
+    code.push_str("                #[cfg(feature = \"pt\")]\n");
+    code.push_str("                let mut portuguese = PortugueseDialectFlags::default();\n");
+    code.push_str("                #[cfg(feature = \"sk\")]\n");
+    code.push_str("                let mut slovak = SlovakDialectFlags::default();\n\n");
+    code.push_str("                for (key, val) in map {\n");
+    code.push_str("                    match key.as_str() {\n");
+    code.push_str("                        \"english\" => {\n");
+    code.push_str("                            english = match val {\n");
+    code.push_str("                                Value::String(s) => match s.as_str() {\n");
+    code.push_str(
+        "                                    \"AMERICAN\" => Ok(EnglishDialectFlags::AMERICAN),\n",
+    );
+    code.push_str(
+        "                                    \"CANADIAN\" => Ok(EnglishDialectFlags::CANADIAN),\n",
+    );
+    code.push_str("                                    \"AUSTRALIAN\" => Ok(EnglishDialectFlags::AUSTRALIAN),\n");
+    code.push_str(
+        "                                    \"BRITISH\" => Ok(EnglishDialectFlags::BRITISH),\n",
+    );
+    code.push_str(
+        "                                    \"INDIAN\" => Ok(EnglishDialectFlags::INDIAN),\n",
+    );
+    code.push_str("                                    _ => {\n");
+    code.push_str("                                        Err(Error::custom(format!(\"Unknown English dialect: {s}\")))\n");
+    code.push_str("                                    }\n");
+    code.push_str("                                },\n");
+    code.push_str("                                _ => Err(Error::invalid_type(\n");
+    code.push_str("                                    Unexpected::Other(\"english\"),\n");
+    code.push_str("                                    &\"string\",\n");
+    code.push_str("                                )),\n");
+    code.push_str("                            }?;\n");
+    code.push_str("                        }\n");
+
+    // German deserialization
+    code.push_str("                        #[cfg(feature = \"de\")]\n");
+    code.push_str("                        \"german\" => {\n");
+    code.push_str("                            german = match val {\n");
+    code.push_str("                                Value::String(s) => match s.as_str() {\n");
+    code.push_str(
+        "                                    \"STANDARD\" => Ok(GermanDialectFlags::STANDARD),\n",
+    );
+    code.push_str(
+        "                                    \"AUSTRIAN\" => Ok(GermanDialectFlags::AUSTRIAN),\n",
+    );
+    code.push_str(
+        "                                    \"SWISS\" => Ok(GermanDialectFlags::SWISS),\n",
+    );
+    code.push_str("                                    _ => Err(Error::custom(format!(\"Unknown German dialect: {s}\"))),\n");
+    code.push_str("                                },\n");
+    code.push_str("                                _ => {\n");
+    code.push_str("                                    Err(Error::invalid_type(Unexpected::Other(\"german\"), &\"string\"))\n");
+    code.push_str("                                }\n");
+    code.push_str("                            }?;\n");
+    code.push_str("                        }\n");
+
+    // Portuguese deserialization
+    code.push_str("                        #[cfg(feature = \"pt\")]\n");
+    code.push_str("                        \"portuguese\" => {\n");
+    code.push_str("                            portuguese = match val {\n");
+    code.push_str("                                Value::String(s) => match s.as_str() {\n");
+    code.push_str("                                    \"EUROPEAN\" => Ok(PortugueseDialectFlags::EUROPEAN),\n");
+    code.push_str("                                    \"BRAZILIAN\" => Ok(PortugueseDialectFlags::BRAZILIAN),\n");
+    code.push_str(
+        "                                    \"AFRICAN\" => Ok(PortugueseDialectFlags::AFRICAN),\n",
+    );
+    code.push_str("                                    _ => Err(Error::custom(format!(\n");
+    code.push_str("                                        \"Unknown Portuguese dialect: {s}\"\n");
+    code.push_str("                                    ))),\n");
+    code.push_str("                                },\n");
+    code.push_str("                                _ => Err(Error::invalid_type(\n");
+    code.push_str("                                    Unexpected::Other(\"portuguese\"),\n");
+    code.push_str("                                    &\"string\",\n");
+    code.push_str("                                )),\n");
+    code.push_str("                            }?;\n");
+    code.push_str("                        }\n");
+
+    // Slovak deserialization
+    code.push_str("                        #[cfg(feature = \"sk\")]\n");
+    code.push_str("                        \"slovak\" => {\n");
+    code.push_str("                            slovak = match val {\n");
+    code.push_str("                                Value::String(s) => match s.as_str() {\n");
+    code.push_str(
+        "                                    \"STANDARD\" => Ok(SlovakDialectFlags::STANDARD),\n",
+    );
+    code.push_str("                                    _ => Err(Error::custom(format!(\"Unknown Slovak dialect: {s}\"))),\n");
+    code.push_str("                                },\n");
+    code.push_str("                                _ => {\n");
+    code.push_str("                                    Err(Error::invalid_type(Unexpected::Other(\"slovak\"), &\"string\"))\n");
+    code.push_str("                                }\n");
+    code.push_str("                            }?;\n");
+    code.push_str("                        }\n");
+    code.push_str("                        _ => {\n");
+    code.push_str(
+        "                            // Build list of valid fields based on enabled features\n",
+    );
+    code.push_str("                            let valid_fields: Vec<&'static str> = {\n");
+    code.push_str("                                #[allow(unused_mut)]\n");
+    code.push_str("                                let mut fields = vec![\"english\"];\n");
+    code.push_str("                                #[cfg(feature = \"de\")]\n");
+    code.push_str("                                {\n");
+    code.push_str("                                    fields.push(\"german\");\n");
+    code.push_str("                                }\n");
+    code.push_str("                                #[cfg(feature = \"pt\")]\n");
+    code.push_str("                                {\n");
+    code.push_str("                                    fields.push(\"portuguese\");\n");
+    code.push_str("                                }\n");
+    code.push_str("                                #[cfg(feature = \"sk\")]\n");
+    code.push_str("                                {\n");
+    code.push_str("                                    fields.push(\"slovak\");\n");
+    code.push_str("                                }\n");
+    code.push_str("                                fields\n");
+    code.push_str("                            };\n");
+    code.push_str(
+        "                            // Convert to a static slice by leaking the memory\n",
+    );
+    code.push_str("                            // This is safe as it's only done during deserialization error handling\n");
+    code.push_str(
+        "                            let valid_fields_static: &'static [&'static str] =\n",
+    );
+    code.push_str("                                Box::leak(valid_fields.into_boxed_slice());\n");
+    code.push_str("                            return Err(Error::unknown_field(&key, valid_fields_static));\n");
+    code.push_str("                        }\n");
+    code.push_str("                    }\n");
+    code.push_str("                }\n\n");
+    code.push_str("                Ok(ScopedDialectFlagsSerde {\n");
+    code.push_str("                    english,\n");
+    code.push_str("                    #[cfg(feature = \"de\")]\n");
+    code.push_str("                    german,\n");
+    code.push_str("                    #[cfg(feature = \"pt\")]\n");
+    code.push_str("                    portuguese,\n");
+    code.push_str("                    #[cfg(feature = \"sk\")]\n");
+    code.push_str("                    slovak,\n");
+    code.push_str("                })\n");
+    code.push_str("            }\n");
+    code.push_str("            Value::String(s) => Err(Error::custom(format!(\n");
+    code.push_str("                \"Legacy flat string format for dialect flags is no longer supported: {s}\"\n");
+    code.push_str("            ))),\n");
+    code.push_str("            _ => Err(Error::custom(\"Expected object for dialect flags\"))\n");
+    code.push_str("        }\n");
+    code.push_str("    }\n");
+    code.push_str("}\n");
+
+    // Write the generated file
+    let dest = src_dir.join("dialects").join("dialect_flags.rs");
+    fs::create_dir_all(dest.parent().unwrap()).unwrap();
+    fs::write(&dest, code).unwrap();
+
+    println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
 }

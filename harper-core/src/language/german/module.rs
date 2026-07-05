@@ -2,7 +2,10 @@
 
 use std::sync::Arc;
 
-use crate::language::german::dialects::GermanDialect;
+use serde::{Deserialize, Serialize};
+
+use crate::language::dialects::dialect_trait::Dialect;
+use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
 use crate::language::german::language_detection::GermanDetector;
 use crate::language::german::lexing::lex_german_token;
 use crate::language::german::linting::{new_curated_german, weir_rules};
@@ -74,5 +77,24 @@ impl LanguageModule for GermanModule {
 
     fn curated_lint_group(dialect: Self::Dialect) -> LintGroup {
         new_curated_german(dialect)
+    }
+
+    fn serialize_dialect_flags<S>(
+        flags: &<Self::Dialect as Dialect>::Flags,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer,
+    {
+        flags.serialize(serializer)
+    }
+
+    fn deserialize_dialect_flags<'de, D>(
+        deserializer: D,
+    ) -> Result<<Self::Dialect as Dialect>::Flags, D::Error>
+    where
+        D: serde::Deserializer<'de>,
+    {
+        GermanDialectFlags::deserialize(deserializer)
     }
 }

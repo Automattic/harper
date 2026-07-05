@@ -7,6 +7,7 @@ use std::fmt::Debug;
 use std::sync::Arc;
 
 use crate::Token;
+use crate::language::dialects::dialect_trait::Dialect;
 use crate::language::languages::Language;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
@@ -34,8 +35,8 @@ pub trait LanguageDetector: Debug + Send + Sync {
 /// - For English, use an adapter pattern to point to master's existing files
 /// - Associated types allow each language to use its own dialect and detector types
 pub trait LanguageModule: 'static {
-    /// Language variant enum (e.g., American, British for English)
-    type Dialect: Clone + Copy + Debug + PartialEq + Eq + Send + Sync + 'static;
+    /// Language variant enum
+    type Dialect: Clone + Copy + Debug + PartialEq + Eq + Send + Sync + 'static + Dialect;
 
     /// Language identification implementation
     type Detector: LanguageDetector + 'static;
@@ -63,4 +64,21 @@ pub trait LanguageModule: 'static {
 
     /// Create a complete curated lint group for this language
     fn curated_lint_group(dialect: Self::Dialect) -> LintGroup;
+
+    /// Serializes dialect flags for this language to JSON.
+    /// Each language provides its own serialization logic for dialect flags.
+    fn serialize_dialect_flags<S>(
+        flags: &<Self::Dialect as Dialect>::Flags,
+        serializer: S,
+    ) -> Result<S::Ok, S::Error>
+    where
+        S: serde::Serializer;
+
+    /// Deserializes dialect flags for this language from JSON.
+    /// Each language provides its own deserialization logic for dialect flags.
+    fn deserialize_dialect_flags<'de, D>(
+        deserializer: D,
+    ) -> Result<<Self::Dialect as Dialect>::Flags, D::Error>
+    where
+        D: serde::Deserializer<'de>;
 }
