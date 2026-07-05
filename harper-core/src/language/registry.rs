@@ -106,8 +106,6 @@ pub fn dictionary(language: Language) -> Arc<FstDictionary> {
     dictionary_for_language(language.family())
 }
 
-// ========== PARSERS ==========
-
 /// Get a parser for the given language ID and language.
 pub fn parser_for_prose(
     language_id: &str,
@@ -181,8 +179,6 @@ pub fn parser_for_prose(
     }
 }
 
-// ========== LINTERS ==========
-
 /// Add language-specific linters to the lint group.
 pub fn add_language_specific_linters(
     out: &mut LintGroup,
@@ -212,8 +208,6 @@ pub fn add_language_specific_linters(
     }
 }
 
-// ========== WIR RULES ==========
-
 /// Get the Weir rule lint group for a specific language.
 pub fn weir_rules_lint_group(language: Language) -> LintGroup {
     match language {
@@ -226,8 +220,6 @@ pub fn weir_rules_lint_group(language: Language) -> LintGroup {
         Language::Slovak(_) => SlovakModule::weir_lint_group(),
     }
 }
-
-// ========== CURATED LINT GROUPS ==========
 
 /// Create a new curated lint group for a specific language with a custom dictionary.
 pub fn new_curated_for_language(
