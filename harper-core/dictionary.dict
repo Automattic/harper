@@ -1691,6 +1691,7 @@ CPI/NOg
 CPO/N
 CPR/NOg             # cardiac pulmonary resuscitation
 CPU/NgS
+CRISPR/Nmg
 CRT/NSg             # cathode ray tube
 CSS/NOg
 CST/ONg
@@ -5303,6 +5304,7 @@ July/OgS
 Jun/Og
 June/OgS
 Juneau/Og
+Juneteenth/gO
 Jung/Og
 Jungfrau/Og         # mountain
 Jungian/JNg
@@ -7098,7 +7100,7 @@ Moran/Og
 Moravia/Og
 Moravian/JNg
 Mordred/Og
-More/Og
+More/Og             # surname: Sir Thomas ~, Henry ~; language of Burkina Faso
 Moreno/Og
 Morgan/ONSg
 Morgantown/Og
@@ -16438,12 +16440,15 @@ cambium/NwSg
 cambric/Ng
 camcorder/NSgV
 came/~VtPN
+came in/V/t
 camel/~NgSJ
 camel case/Nmg
 camelhair/N
 camellia/NgS
 cameo/~NgSV
 camera/~NgS
+camera obscura/NgS
+camerae obscurae/N9
 cameraman/~N0g
 cameramen/N9
 camerapeople/N9
@@ -17498,6 +17503,7 @@ chilling/~JYV6N
 chillness/Nmg
 chilly/~J^>pN
 chime/~NgSVGd>Z
+chime in/V/
 chimer/NgS
 chimera/NgS
 chimeric/J
@@ -18492,6 +18498,7 @@ combustible/~JNgS
 combustion/~Nmg
 come/~VbTG>SNgPiZ
 come back/V/
+come in/V/
 comeback/~NgS
 comedian/~NgS
 comedic/~J
@@ -24940,7 +24947,7 @@ fibulae/N9
 fibular/J
 fiche/NSg
 fichu/NSg
-fickle/J^>pV
+fickle/JpV
 fickleness/Ng
 fiction/~NmgS
 fictional/~JY
@@ -25182,6 +25189,7 @@ fisticuffs/Nmg
 fistula/NSg
 fistulous/Jg
 fit/~JVbtTSNgKr
+fit in/V/btT
 fitful/JYp
 fitfulness/Ng
 fitly/Ry
@@ -25191,6 +25199,7 @@ fitted/~VtTJNUr
 fitter/NgSJc
 fittest/JuV
 fitting/~V6SJYNg
+fitting in/V/6
 five/~NgS>Z
 fix/~VGd>SNgZBz
 fix up/V/
@@ -27086,6 +27095,7 @@ godlike/J
 godliness/NmgU
 godly/J>^pU
 godmother/~NSgV
+godown/NSg₹
 godparent/NSg
 godsend/NSg
 godson/NSg
@@ -27874,6 +27884,7 @@ halftone/NgSV
 halfway/~J
 halfwit/NSg
 halibut/NSg
+halide/NSg
 halite/Ng
 halitosis/Ng
 hall/~NgS
@@ -34231,7 +34242,7 @@ methamphetamine/NgS
 methane/~Ng
 methanol/~Ng
 methinks/
-method/~NgSV
+method/~NgS
 methodical/~JYp
 methodicalness/Ng
 methodological/~JY
@@ -36967,7 +36978,7 @@ oestrus/NgS!_₹
 oeuvre/~NgS
 of/~P
 of course/R
-off/~J>PVGdSNZz
+off/~JPVGdSNZz
 off-grid/J
 off-limits/J
 off-ramp/NgS
@@ -37680,6 +37691,7 @@ overemotional/J
 overemphasis/Ng
 overemphasise/V!_₹
 overemphasize/VGdS
+overengineer/VGdS
 overenthusiastic/J
 overestimate/VGdSNgn
 overestimation/Nmg
@@ -45480,6 +45492,7 @@ sinicization/Nmg
 sinicize/VGdS
 sinister/~J
 sink/~VG>SNgBZ
+sink in/V/
 sinkable/JU
 sinker/Ng
 sinkhole/NSgV
@@ -47998,7 +48011,8 @@ sunflower/~NgS
 sung/~VTU
 sunglasses/~N9g
 sunhat/NS
-sunk/~Vn
+sunk/~VTn
+sunk in/V/T
 sunken/JT
 sunlamp/NSg
 sunless/J
@@ -49428,7 +49442,7 @@ throne's
 throng/NSgVGdJ
 throttle/~NSgVd>GZ
 throttler/Ng
-through/~PJN
+through/~PJ
 throughout/~P
 throughput/~Ng
 throughway/NgS!@_₹
@@ -49642,7 +49656,7 @@ tirade/NSgV
 tiramisu/NgS
 tire/~VGdSNr
 tire's
-tired/~V>JY^p
+tired/~VJYp
 tiredness/Nmg
 tireless/~JYp
 tirelessness/Ng
@@ -50839,7 +50853,7 @@ ugh/~
 uglification/NwgS
 ugliness/Nmg
 ugly/~J^>pNV
-uh/~N
+uh/~
 uh-huh
 uh-oh
 uhf/~
@@ -50915,6 +50929,7 @@ unary/JN
 unashamed/J
 unassertive/J
 unassimilable/J
+unassociated/J
 unassuming/JY
 unauthorised/J!_₹
 unauthorized/J
@@ -52756,9 +52771,11 @@ weepy/J^>NSg
 weevil/~NgS
 weft/NgS
 weigh/~VGdNr
+weigh in/V/
 weigh's
 weighbridge/NS
 weighs/~Vr
+weighs in/V/r
 weight/~NwgSVdGz
 weighted/~VtTJU
 weightily/Ry
@@ -52807,7 +52824,7 @@ wench/NgSV
 wend/VdGSN
 went/~VtN
 wept/V
-were/~VltN
+were/~Vlt
 weren't/Vt
 werewolf/~N0g
 werewolves/N9
