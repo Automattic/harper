@@ -8,12 +8,6 @@ use harper_core::language::registry::{detect_language, new_curated_for_language}
 use harper_core::spell::FstDictionary;
 use harper_core::{Document, EnglishDialect, Language};
 
-struct TestDialect;
-impl TestDialect {
-    const AMERICAN: Language = Language::English(EnglishDialect::American);
-    const GERMAN: Language = Language::German(GermanDialect::Standard);
-}
-
 /// Test full workflow: open German file → auto-detect → lint → suggest corrections
 #[test]
 fn test_full_workflow_german_document() {
@@ -21,11 +15,15 @@ fn test_full_workflow_german_document() {
 
     // Step 1: Auto-detect language
     let german_text = "der Hund spielt im Garten. das Auto ist schnell.";
-    let detected = detect_language(german_text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(
+        german_text,
+        &dict,
+        Language::English(EnglishDialect::American),
+    );
 
     assert_eq!(
         detected,
-        TestDialect::GERMAN,
+        Language::German(GermanDialect::Standard),
         "Should auto-detect German text"
     );
 
@@ -38,7 +36,7 @@ fn test_full_workflow_german_document() {
 
     // Step 3: Lint the document
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::GERMAN);
+    let mut linter = new_curated_for_language(dict, Language::German(GermanDialect::Standard));
     let lints = linter.lint(&document);
 
     // Step 4: Verify suggestions are generated
@@ -77,8 +75,12 @@ fn test_full_workflow_german_spelling_errors() {
     let text = "Der Hunte ist im Gartens. dieser Satz ist klein.";
 
     // Auto-detect
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
-    assert_eq!(detected, TestDialect::GERMAN, "Should detect German");
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
+    assert_eq!(
+        detected,
+        Language::German(GermanDialect::Standard),
+        "Should detect German"
+    );
 
     // Parse and lint
     let document = Document::new(
@@ -88,7 +90,7 @@ fn test_full_workflow_german_spelling_errors() {
     );
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::GERMAN);
+    let mut linter = new_curated_for_language(dict, Language::German(GermanDialect::Standard));
     let lints = linter.lint(&document);
 
     // Should detect multiple errors
@@ -119,9 +121,10 @@ fn test_mixed_language_german_english_quotes() {
     let text = "Der Autor sagt: \"The quick brown fox jumps over the lazy dog.\"";
 
     // Should detect one language (both are acceptable for mixed content)
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
     assert!(
-        detected == TestDialect::GERMAN || detected == TestDialect::AMERICAN,
+        detected == Language::German(GermanDialect::Standard)
+            || detected == Language::English(EnglishDialect::American),
         "Should detect a language for mixed content, got {:?}",
         detected
     );
@@ -134,7 +137,7 @@ fn test_mixed_language_german_english_quotes() {
     );
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::GERMAN);
+    let mut linter = new_curated_for_language(dict, Language::German(GermanDialect::Standard));
 
     // Should not crash on mixed content
     let lints = linter.lint(&document);
@@ -153,9 +156,10 @@ fn test_mixed_language_english_german_terms() {
     let text = "The Kindergarten is in Germany. The Doppelgänger effect is strange.";
 
     // Should detect one language (both are acceptable for mixed content)
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
     assert!(
-        detected == TestDialect::GERMAN || detected == TestDialect::AMERICAN,
+        detected == Language::German(GermanDialect::Standard)
+            || detected == Language::English(EnglishDialect::American),
         "Should detect a language for mixed content, got {:?}",
         detected
     );
@@ -164,7 +168,7 @@ fn test_mixed_language_english_german_terms() {
     let document = Document::new_curated(text, &harper_core::parsers::PlainEnglish);
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::AMERICAN);
+    let mut linter = new_curated_for_language(dict, Language::English(EnglishDialect::American));
     let lints = linter.lint(&document);
 
     assert!(
@@ -182,18 +186,19 @@ fn test_code_switching_mid_sentence() {
     let text = "Das Auto ist fast wie the car in the movie.";
 
     // Detect primary language
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
 
     // Should pick one (either is acceptable for mixed content)
     assert!(
-        detected == TestDialect::GERMAN || detected == TestDialect::AMERICAN,
+        detected == Language::German(GermanDialect::Standard)
+            || detected == Language::English(EnglishDialect::American),
         "Should detect a language, got {:?}",
         detected
     );
 
     // Should not crash on code-switching
     let document = match detected {
-        TestDialect::GERMAN => Document::new(
+        Language::German(GermanDialect::Standard) => Document::new(
             text,
             &harper_core::language::german::parsers::PlainGerman,
             &curated_german_dictionary(),
@@ -221,10 +226,10 @@ fn test_empty_document_workflow() {
     let text = "";
 
     // Should default to provided default dialect
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
     assert_eq!(
         detected,
-        TestDialect::AMERICAN,
+        Language::English(EnglishDialect::American),
         "Empty document should default to American English"
     );
 
@@ -232,7 +237,7 @@ fn test_empty_document_workflow() {
     let document = Document::new_curated(text, &harper_core::parsers::PlainEnglish);
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::AMERICAN);
+    let mut linter = new_curated_for_language(dict, Language::English(EnglishDialect::American));
     let lints = linter.lint(&document);
 
     assert!(lints.is_empty(), "Empty document should have no lints");
@@ -247,10 +252,10 @@ fn test_very_short_text_workflow() {
     let text = "Hund";
 
     // Should default for very short text
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
     assert_eq!(
         detected,
-        TestDialect::AMERICAN,
+        Language::English(EnglishDialect::American),
         "Very short text should default to American English"
     );
 
@@ -258,7 +263,7 @@ fn test_very_short_text_workflow() {
     let document = Document::new_curated(text, &harper_core::parsers::PlainEnglish);
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::AMERICAN);
+    let mut linter = new_curated_for_language(dict, Language::English(EnglishDialect::American));
     let lints = linter.lint(&document);
 
     // May have lints but should not crash
@@ -279,7 +284,7 @@ fn test_full_workflow_performance() {
     let start = std::time::Instant::now();
 
     // Step 1: Detect
-    let detected = detect_language(text, &dict, TestDialect::AMERICAN);
+    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
 
     // Step 2: Parse
     let document = Document::new(
@@ -290,13 +295,17 @@ fn test_full_workflow_performance() {
 
     // Step 3: Lint
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, TestDialect::GERMAN);
+    let mut linter = new_curated_for_language(dict, Language::German(GermanDialect::Standard));
     let lints = linter.lint(&document);
 
     let duration = start.elapsed();
 
     // Verify results
-    assert_eq!(detected, TestDialect::GERMAN, "Should detect German");
+    assert_eq!(
+        detected,
+        Language::German(GermanDialect::Standard),
+        "Should detect German"
+    );
     assert!(
         lints.len() >= 2,
         "Should detect lowercase sentence starts: 'die' and 'das'"

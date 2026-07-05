@@ -1,69 +1,46 @@
 # Harper Language Support - Architecture Guide
 
-## Core Principle
-
-**Each language uses exactly 2 files:**
-- **`dictionary.dict`** - Base words with POS flags
-- **`annotations.json`** - Word formation rules + POS metadata mappings
-
-Both files are combined at runtime to create a comprehensive dictionary with metadata.
-
 ## File Structure
+
+Each language's functionality is in a subfolder `harper-core/src/language/<lang>`.
+The core trait `LanguageModule` must be implemented. (defined in `harper-core/src/language/module.rs`).
 
 ```
 harper-core/src/language/<lang>/
-├── mod.rs              # Exports
-├── module.rs          # LanguageModule implementation
-├── dialects.rs       # Dialect definitions
-├── language_detection.rs
-├── lexing.rs          # Token lexing
-├── parsers/
-├── spell/
-├── linting/           # Language-specific linters
-├── test_sources/      # Test files
-├── annotations.json    # Word formation rules + POS mappings
-└── dictionary.dict     # Base words with POS flags
+├── mod.rs                    # Exports language module
+├── module.rs                # LanguageModule trait implementation (REQUIRED)
+├── dialects.rs             # Dialect definitions for language variants
+├── language_detection.rs   # Language detection logic
+├── lexing.rs                # Token lexing rules
+├── parsers/                 # Language-specific parser implementations
+├── spell/                   # Spell checking module (REQUIRED for dictionary loading)
+│   └── <lang>_dict.rs       # Dictionary loading - uses include_str!() for dictionary.dict and annotations.json
+├── linting/                 # Language-specific linters
+├── test_sources/            # Test files and expected outputs
+├── annotations.json          # Word formation rules + POS mappings (REQUIRED - loaded via include_str!)
+└── dictionary.dict           # Base words with POS flags (REQUIRED - loaded via include_str!)
 ```
 
-## Dictionary Format
+**Important:** Harper's build system uses `include_str!()` to embed dictionary and annotation files directly into the binary. This means the file structure **must** follow this exact pattern. The spell module (`<lang>_dict.rs`) expects `dictionary.dict` and `annotations.json` in the parent directory.
 
-### dictionary.dict
+## Dictionary and Annotations Structure
+
+**Note:** The exact structure of `dictionary.dict` and `annotations.json` varies by language. Consult the language-specific implementations for details.
+
+### dictionary.dict (General Guidelines)
 - One word per line: `word/flags # comment`
-- Flags are single characters (POS tags), separated by `~`:
-  - `N` = noun, `V` = verb, `J` = adjective, `A` = adjective (alias)
-  - `M` = masculine noun, `F` = feminine noun, `Z` = neuter noun, `P` = plural
-  - `g` = past participle, `t` = past tense, `c` = comparative, `s` = superlative
-  - `r` = adverb, `D` = determiner, `O` = preposition, `C` = conjunction
+- Flags are single characters (POS tags), separated by `~`
+- Do NOT add compound words to the dictionary, they are handled by the grammar system. 
 
-**Important Rule:** Do NOT add compound words to the dictionary. Compound words should be handled by the grammar system, not stored as base entries. Only add base words and simple inflected forms.
-
-Example:
-```
-Mondlandung/~~NF    # compound noun, feminine
-schreiben/~~V      # verb infinitive
-fehlgeschlagen/~~g # past participle
-wieder/~~r         # adverb
-```
-
-### annotations.json
+### annotations.json (General Guidelines)
 - `affixes`: Word formation rules (generate inflected forms)
 - `properties`: Maps flags to metadata (e.g., `N` → noun, `V` → verb)
 
-Example:
-```json
-{
-  "properties": {
-    "N": {"metadata": {"noun": {}}},
-    "V": {"metadata": {"verb": {}}},
-    "g": {"metadata": {"verb": {"verb_form": "PAST_PARTICIPLE"}}},
-    "r": {"metadata": {"adverb": {}}}
-  }
-}
-```
+For language-specific details, see the individual language directories.
 
 ## Special Case: English
 
-**English is built into Harper core and does NOT use this structure.**
+**English does NOT use this structure.**
 - Uses embedded files: `harper-core/dictionary.dict` + `harper-core/annotations.json`
 - No feature flag needed
 - All other languages follow the standard module structure above
