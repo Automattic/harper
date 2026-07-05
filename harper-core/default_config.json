@@ -2818,6 +2818,20 @@
 								"state": true,
 								"label": "Hazzle"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NotLongAfter",
+								"state": true,
+								"label": "Not Long After"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MayOfPronoun",
+								"state": true,
+								"label": "May Of Pronoun"
+							}
 						}
 					]
 				}
