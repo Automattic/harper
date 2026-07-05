@@ -1,50 +1,50 @@
 {
-  "affixes": {
-    "A": {
-      "#": "'-ne' negative prefix (safe)",
-      "kind": "prefix",
-      "cross_product": false,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "ne",
-          "condition": "^[^n]"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    },
-    "B": {
-      "#": "'-sa' reflexive pronoun (safe)",
-      "kind": "suffix",
-      "cross_product": false,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "sa",
-          "condition": "$"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    },
-    "C": {
-      "#": "'-ť' verb ending (safe)",
-      "kind": "suffix",
-      "cross_product": false,
-      "replacements": [
-        {
-          "remove": "",
-          "add": "ť",
-          "condition": "$"
-        }
-      ],
-      "target": [],
-      "base_metadata": {},
-      "rename_ok": true
-    }
-  },
-  "properties": {}
+	"affixes": {
+		"A": {
+			"#": "'-ne' negative prefix (safe)",
+			"kind": "prefix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ne",
+					"condition": "^[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"B": {
+			"#": "'-sa' reflexive pronoun (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "sa",
+					"condition": "$"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"C": {
+			"#": "'-ť' verb ending (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ť",
+					"condition": "$"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		}
+	},
+	"properties": {}
 }

@@ -82,6 +82,8 @@ build-harperjs: build-wasm
   set -eo pipefail
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
+  # Small delay to ensure files are fully written (helps with CI file system sync)
+  sleep 2
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
