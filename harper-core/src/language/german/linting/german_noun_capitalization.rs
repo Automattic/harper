@@ -1,5 +1,5 @@
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{Token, TokenStringExt, document::Document, spell::Dictionary};
+use crate::{document::Document, spell::Dictionary, Token, TokenStringExt};
 use harper_brill::UPOS;
 
 /// A linter that checks to make sure German nouns are capitalized.
@@ -298,13 +298,245 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         let lower_metadata = self.dictionary.get_word_metadata(&lower);
 
         // If word is explicitly marked as a noun in dictionary, it's a noun
-        if let Some(ref metadata) = word_metadata
-            && metadata.noun.is_some()
+        if word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+            || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some())
         {
             return true;
         }
-        if let Some(ref metadata) = lower_metadata
-            && metadata.noun.is_some()
+
+        // If word is explicitly marked as a NON-noun (verb, adjective, adverb, etc.)
+        // in the dictionary, it should NOT be treated as a noun
+        // This prevents false positives like "schreibe" (verb) or "fehlgeschlagen" (participle)
+        let has_noun_metadata = word_metadata
+            .as_ref()
+            .and_then(|m| m.noun.as_ref())
+            .is_some()
+            || lower_metadata
+                .as_ref()
+                .and_then(|m| m.noun.as_ref())
+                .is_some();
+
+        let has_non_noun_metadata = word_metadata.as_ref().is_some_and(|m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        }) || lower_metadata.as_ref().is_some_and(|m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        });
+
+        if has_non_noun_metadata && !has_noun_metadata {
+            return false;
+        }
+
+        // Check for common noun suffixes (with minimum length guards)
+        // Only apply suffix heuristics if we don't have explicit dictionary info
+        for (suffix, min_len) in &self.noun_suffixes {
+            if lower.len() >= *min_len && &lower[lower.len() - suffix.len()..] == suffix {
+                return true;
+            }
+        }
+
+        // Use Brill POS tagging as a fallback for words not clearly identified by dictionary metadata
+        // This helps distinguish between ambiguous words like "hält" (verb) vs "Halt" (noun)
+        // Also use Brill tagger to override incorrect dictionary metadata
+        if word_token.kind.is_upos(UPOS::NOUN) {
+            return true;
+        } else if word_token.kind.is_upos(UPOS::VERB)
+            || word_token.kind.is_upos(UPOS::ADJ)
+            || word_token.kind.is_upos(UPOS::ADV)
+        {
+            // Brill tagger says this is not a noun, so override dictionary metadata
+            return false;
+        }
+
+        false
+    }
+
+    /// Optimized method that checks if a word is a German noun, consolidating all heuristic
+    /// and dictionary checks to avoid redundant computations.
+    fn check_if_word_is_noun(
+        &self,
+        word_chars: &[char],
+        word_token: &Token,
+        document: &Document,
+    ) -> bool {
+        // Early exit: cache lowercase conversion to avoid redundant computation
+        let lower: Vec<char> = word_chars
+            .iter()
+            .map(|c| c.to_lowercase().next().unwrap_or(*c))
+            .collect();
+        let word_str: String = lower.iter().collect();
+        let word_len = word_str.len();
+
+        // Fast path 1: early rejection for known function words (most common case)
+        if Self::is_non_noun(&lower) {
+            return false;
+        }
+
+        // Fast path 2: early rejection for common verb/adjective/adverb patterns
+        // Reordered to check most common patterns first for better cache locality
+
+        // Common verb endings (infinitive and conjugated forms) - check length first for performance
+        if word_len > 3
+            && (word_str.ends_with("en")
+                || word_str.ends_with("est")
+                || word_str.ends_with("et")
+                || word_str.ends_with("t")
+                || word_str.ends_with("te")
+                || word_str.ends_with("ten"))
+        {
+            return false;
+        }
+
+        // Common adjective endings - more specific to avoid false positives
+        if word_len > 4
+            && (word_str.ends_with("ste") || word_str.ends_with("ere") || word_str.ends_with("tes"))
+        {
+            return false;
+        }
+
+        // Common adverb endings
+        if word_str.ends_with("lich") || word_str.ends_with("weise") || word_str.ends_with("wärts")
+        {
+            return false;
+        }
+
+        // Specific common function words that are often misclassified
+        if word_str == "zuerst"
+            || word_str == "hält"
+            || word_str == "genutzte"
+            || word_str == "ältere"
+        {
+            return false;
+        }
+
+        // Fast path 3: check Brill POS tagging first (cheaper than dictionary lookups)
+        // Use Brill tagger to override incorrect dictionary metadata
+        if word_token.kind.is_upos(UPOS::NOUN) {
+            return true;
+        } else if word_token.kind.is_upos(UPOS::VERB)
+            || word_token.kind.is_upos(UPOS::ADJ)
+            || word_token.kind.is_upos(UPOS::ADV)
+        {
+            return false;
+        }
+
+        // Dictionary metadata checks - most reliable but more expensive
+        // Check both the word and its lowercase form in a single pass
+        let word_metadata = self.dictionary.get_word_metadata(word_chars);
+        let lower_metadata = self.dictionary.get_word_metadata(&lower);
+
+        // If word is explicitly marked as a noun in dictionary, it's a noun
+        if word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+            || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+        {
+            return true;
+        }
+
+        // If word is explicitly marked as a NON-noun (verb, adjective, adverb, etc.)
+        // in the dictionary, it should NOT be treated as a noun
+        let has_non_noun_metadata = word_metadata.as_ref().is_some_and(|m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        }) || lower_metadata.as_ref().is_some_and(|m| {
+            m.verb.is_some()
+                || m.adjective.is_some()
+                || m.adverb.is_some()
+                || m.conjunction.is_some()
+                || m.determiner.is_some()
+                || m.pronoun.is_some()
+                || m.preposition
+        });
+
+        if has_non_noun_metadata {
+            return false;
+        }
+
+        // Check for common noun suffixes (with minimum length guards)
+        // Only apply suffix heuristics if we don't have explicit dictionary info
+        for (suffix, min_len) in &self.noun_suffixes {
+            if word_len >= *min_len && word_str.ends_with(&suffix.iter().collect::<String>()) {
+                return true;
+            }
+        }
+
+        // Fallback to the more comprehensive heuristic analysis for ambiguous cases
+        self.is_likely_noun_comprehensive(&lower, word_token, document)
+    }
+
+    /// Comprehensive heuristic analysis for ambiguous cases (fallback only)
+    fn is_likely_noun_comprehensive(
+        &self,
+        lower: &[char],
+        word_token: &Token,
+        _document: &Document,
+    ) -> bool {
+        let word_str: String = lower.iter().collect();
+
+        // Never flag known function words
+        if Self::is_non_noun(lower) {
+            return false;
+        }
+
+        // Heuristic overrides for common verb/adjective/adverb patterns
+        // These help override incorrect dictionary metadata
+        let _word_len = word_str.len();
+
+        // Common verb endings (infinitive and conjugated forms)
+        if word_str.ends_with("en")
+            || word_str.ends_with("est")
+            || word_str.ends_with("et")
+            || word_str.ends_with("t")
+            || word_str.ends_with("te")
+            || word_str.ends_with("ten")
+        {
+            return false;
+        }
+
+        // Common adjective endings
+        if word_str.ends_with("e")
+            || word_str.ends_with("er")
+            || word_str.ends_with("es")
+            || word_str.ends_with("em")
+            || word_str.ends_with("en")
+            || word_str.ends_with("ste")
+            || word_str.ends_with("ere")
+            || word_str.ends_with("tes")
+        {
+            return false;
+        }
+
+        // Common adverb endings
+        if word_str.ends_with("lich") || word_str.ends_with("weise") || word_str.ends_with("wärts")
+        {
+            return false;
+        }
+
+        // Check dictionary metadata first - most reliable
+        // Check both the word and its lowercase form
+        let word_metadata = self
+            .dictionary
+            .get_word_metadata(&word_str.chars().collect::<Vec<_>>());
+        let lower_metadata = self.dictionary.get_word_metadata(lower);
+
+        // If word is explicitly marked as a noun in dictionary, it's a noun
+        if word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+            || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some())
         {
             return true;
         }
@@ -381,8 +613,9 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     let word_chars = document.get_span_content(&word.span);
 
                     // Skip words that are already capitalized
-                    if let Some(first_char) = word_chars.first()
-                        && first_char.is_uppercase()
+                    if word_chars
+                        .first()
+                        .is_some_and(|first_char| first_char.is_uppercase())
                     {
                         continue;
                     }
@@ -392,81 +625,9 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         continue;
                     }
 
-                    // Check if word is a noun using POS tag (primary, if unambiguous) or heuristic (fallback)
-                    // Only trust POS tag if the word doesn't have conflicting metadata
-                    let lower: Vec<char> = word_chars
-                        .iter()
-                        .map(|c| c.to_lowercase().next().unwrap_or(*c))
-                        .collect();
-
-                    // First check: known non-nouns (fast path)
-                    if Self::is_non_noun(&lower) {
-                        continue;
-                    }
-
-                    // Heuristic overrides for common verb/adjective/adverb patterns
-                    // These help override incorrect dictionary metadata BEFORE checking dictionary
-                    let word_str: String = lower.iter().collect();
-                    let mut is_heuristically_non_noun = false;
-
-                    // Common verb endings (infinitive and conjugated forms)
-                    // Only apply to longer words to avoid false positives on short nouns
-                    if word_str.len() > 3
-                        && (word_str.ends_with("en")
-                            || word_str.ends_with("est")
-                            || word_str.ends_with("et")
-                            || word_str.ends_with("te")
-                            || word_str.ends_with("ten"))
-                    {
-                        is_heuristically_non_noun = true;
-                    }
-                    // Common adjective endings - be more specific to avoid false positives
-                    else if word_str.len() > 4
-                        && (word_str.ends_with("ste")
-                            || word_str.ends_with("ere")
-                            || word_str.ends_with("tes"))
-                    {
-                        is_heuristically_non_noun = true;
-                    }
-                    // Common adverb endings
-                    else if word_str.ends_with("lich")
-                        || word_str.ends_with("weise")
-                        || word_str.ends_with("wärts")
-                    {
-                        is_heuristically_non_noun = true;
-                    }
-                    // Specific common function words that are often misclassified
-                    else if word_str == "zuerst"
-                        || word_str == "hält"
-                        || word_str == "genutzte"
-                        || word_str == "ältere"
-                    {
-                        is_heuristically_non_noun = true;
-                    }
-
-                    if is_heuristically_non_noun {
-                        continue;
-                    }
-
-                    // Check if word has noun or verb metadata (for German, we need to use dictionary metadata directly)
-                    let word_metadata = self.dictionary.get_word_metadata(word_chars);
-                    let lower_metadata = self.dictionary.get_word_metadata(&lower);
-
-                    let has_noun_metadata =
-                        word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
-                            || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some());
-
-                    let has_verb_metadata =
-                        word_metadata.as_ref().is_some_and(|m| m.verb.is_some())
-                            || lower_metadata.as_ref().is_some_and(|m| m.verb.is_some());
-
-                    // For German, we use dictionary metadata to determine if a word is a noun
-                    // Only flag as noun if it has noun metadata and no verb metadata (to avoid false positives on ambiguous words)
-                    // Also use the heuristic fallback for words not in dictionary or with ambiguous metadata
-                    let is_noun_from_metadata = has_noun_metadata && !has_verb_metadata;
-
-                    let should_flag =
-                        is_noun_from_metadata || self.is_likely_noun(word_chars, word, document);
+                    // Check if word is a noun using optimized heuristic and dictionary lookup
+                    // This consolidates all the checks to avoid redundant computations
+                    let should_flag = self.check_if_word_is_noun(word_chars, word, document);
 
                     if should_flag {
                         let mut replacement: Vec<char> = word_chars.to_vec();
