@@ -50,7 +50,9 @@ fn noun_gap() -> SequenceExpr {
 
 /// Build one pattern variant: superlative + noun gap + " PREP POSS lifetime"
 fn build_variant(phrase: &'static str) -> SequenceExpr {
-    superlative_prefix().then(noun_gap()).then_fixed_phrase(phrase)
+    superlative_prefix()
+        .then(noun_gap())
+        .then_fixed_phrase(phrase)
 }
 
 /// All the fixed-phrase suffixes we want to match after the superlative + noun gap.
@@ -102,7 +104,9 @@ impl ExprLinter for LifetimeLife {
         let matched_text = toks.span()?.get_content_string(src).to_lowercase();
 
         // "once in a lifetime" is a well-established idiom — don't flag it
-        if matched_text.contains("once in a lifetime") || matched_text.contains("once-in-a-lifetime") {
+        if matched_text.contains("once in a lifetime")
+            || matched_text.contains("once-in-a-lifetime")
+        {
             return None;
         }
 
