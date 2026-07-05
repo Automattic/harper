@@ -5368,6 +5368,13 @@
 								"state": true,
 								"label": "For The Nth Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NoHarmNoFoul",
+								"state": true,
+								"label": "No Harm, No Foul"
+							}
 						}
 					]
 				}

@@ -161,6 +161,7 @@ use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
 use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
@@ -863,6 +864,9 @@ impl LintGroup {
             "MultipleFrequencyAdverbs",
             MultipleFrequencyAdverbs::default(),
         );
+
+        // Uses Sentence rather than Chunk
+        out.add("NoHarmNoFoul", NoHarmNoFoul::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
