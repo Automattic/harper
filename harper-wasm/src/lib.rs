@@ -3,7 +3,6 @@
 use std::collections::HashMap;
 use std::convert::Into;
 use std::io::Cursor;
-use std::panic;
 use std::sync::Arc;
 
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
