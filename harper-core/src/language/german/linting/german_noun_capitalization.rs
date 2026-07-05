@@ -327,16 +327,9 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
         for paragraph in document.iter_paragraphs() {
             for sentence in paragraph.iter_sentences() {
                 // Get the first word of this sentence to skip it
-                let first_word = sentence.first_non_whitespace();
+                let _first_word = sentence.first_non_whitespace();
 
                 for word in sentence.iter_words() {
-                    // Skip first word of sentence (handled by sentence capitalization)
-                    if let Some(fw) = &first_word
-                        && word.span == fw.span
-                    {
-                        continue;
-                    }
-
                     let word_chars = document.get_span_content(&word.span);
 
                     // Skip words that are already capitalized
@@ -347,9 +340,39 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     }
 
                     // Skip non-alphabetic words
-                    if word_chars.iter().all(|c| c.is_alphabetic())
-                        && self.is_likely_noun(word_chars, document)
-                    {
+                    if !word_chars.iter().all(|c| c.is_alphabetic()) {
+                        continue;
+                    }
+
+                    // Check if word is a noun using POS tag (primary, if unambiguous) or heuristic (fallback)
+                    // Only trust POS tag if the word doesn't have conflicting metadata
+                    let lower: Vec<char> = word_chars
+                        .iter()
+                        .map(|c| c.to_lowercase().next().unwrap_or(*c))
+                        .collect();
+                    
+                    // First check: known non-nouns (fast path)
+                    if Self::is_non_noun(&lower) {
+                        continue;
+                    }
+                    
+                    // Check if word has noun or verb metadata (for German, we need to use dictionary metadata directly)
+                    let word_metadata = self.dictionary.get_word_metadata(word_chars);
+                    let lower_metadata = self.dictionary.get_word_metadata(&lower);
+                    
+                    let has_noun_metadata = word_metadata.as_ref().is_some_and(|m| m.noun.is_some())
+                        || lower_metadata.as_ref().is_some_and(|m| m.noun.is_some());
+                    
+                    let has_verb_metadata = word_metadata.as_ref().is_some_and(|m| m.verb.is_some())
+                        || lower_metadata.as_ref().is_some_and(|m| m.verb.is_some());
+                    
+                    // For German, we use dictionary metadata to determine if a word is a noun
+                    // Only flag as noun if it has noun metadata and no verb metadata (to avoid false positives on ambiguous words)
+                    // Also use the heuristic fallback for words not in dictionary or with ambiguous metadata
+                    let is_noun_from_metadata = has_noun_metadata && !has_verb_metadata;
+                    let should_flag = is_noun_from_metadata || self.is_likely_noun(word_chars, document);
+
+                    if should_flag {
                         let mut replacement: Vec<char> = word_chars.to_vec();
                         if let Some(first_char) = replacement.first_mut() {
                             *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
@@ -407,6 +430,24 @@ mod tests {
         let lint = &lints[0];
         let word: String = document.get_span_content(&lint.span).iter().collect();
         assert_eq!(word, "mondlandung");
+        assert!(lint.message.contains("noun"));
+    }
+
+    #[test]
+    fn test_simple_nouns_are_detected() {
+        let mut linter = test_linter();
+        let text = "der mond ist aufgegangen";
+        let document = create_document(text);
+        let lints = linter.lint(&document);
+
+        // "mond" should be detected as a noun and flagged for capitalization
+        assert!(
+            lints.len() > 0,
+            "Expected at least one lint for lowercase noun 'mond'"
+        );
+        let lint = &lints[0];
+        let word: String = document.get_span_content(&lint.span).iter().collect();
+        assert_eq!(word, "mond");
         assert!(lint.message.contains("noun"));
     }
 

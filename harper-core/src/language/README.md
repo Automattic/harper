@@ -30,7 +30,7 @@ harper-core/src/language/<lang>/
 ### dictionary.dict (General Guidelines)
 - One word per line: `word/flags # comment`
 - Flags are single characters (POS tags), separated by `~`
-- Do NOT add compound words to the dictionary, they are handled by the grammar system. 
+- Compound word handling varies by language (see language-specific READMEs). 
 
 ### annotations.json (General Guidelines)
 - `affixes`: Word formation rules (generate inflected forms)

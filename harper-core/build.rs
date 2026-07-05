@@ -784,13 +784,8 @@ fn generate_registry_file(src_dir: &Path) {
     code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"de\")]\n");
     code.push_str("        Language::German(_dialect) => {\n");
-    code.push_str("            use crate::language::german::module::GermanModule;\n\n");
-    code.push_str("            let lang_dict = GermanModule::dictionary();\n");
-    code.push_str("            let mut group = LintGroup::empty();\n");
-    code.push_str("            group.merge_from(GermanModule::weir_lint_group());\n");
-    code.push_str("            group.merge_from(GermanModule::rust_lint_group(lang_dict));\n");
-    code.push_str("            group.set_all_rules_to(Some(true));\n");
-    code.push_str("            group\n");
+    code.push_str("            use crate::language::german::linting::new_curated_german;\n");
+    code.push_str("            new_curated_german(_dialect)\n");
     code.push_str("        }\n");
     code.push_str("        #[cfg(feature = \"pt\")]\n");
     code.push_str("        Language::Portuguese(_dialect) => {\n");
