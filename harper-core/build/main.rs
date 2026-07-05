@@ -1,13 +1,10 @@
 use std::{env, path::Path};
 
-mod lib;
+mod build_lib;
 
-use lib::language_config;
-use lib::weir_rules;
-use lib::language_modules;
-
-use lib::weir_rules::{write_grouped_weir_boilerplate, process_language_weir_rules};
-use lib::language_modules::generate_language_modules;
+use build_lib::language_config;
+use build_lib::weir_rules::{write_grouped_weir_boilerplate, process_language_weir_rules};
+use build_lib::language_modules::generate_language_modules;
 
 fn main() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
