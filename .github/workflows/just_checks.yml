@@ -15,7 +15,7 @@ jobs:
   just-checks:
     runs-on: ubuntu-latest
     name: just ${{ matrix.task }}
-    timeout-minutes: 60
+    timeout-minutes: 120
     env:
       DISABLE_WASM_OPT: 1
     strategy:
