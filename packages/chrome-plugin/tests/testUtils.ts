@@ -132,7 +132,7 @@ export async function waitForHarperHighlightCenter(
 
 	const box = await highlight.boundingBox();
 	if (box == null || box.width <= 0 || box.height <= 0) {
-		console.log(`[TIMING] Harper highlight has invalid bounding box`);
+		console.log('[TIMING] Harper highlight has invalid bounding box');
 		return null;
 	}
 
