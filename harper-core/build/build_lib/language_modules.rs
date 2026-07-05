@@ -247,7 +247,7 @@ fn generate_languages_file(src_dir: &Path) {
     fs::write(&dest, code).unwrap();
 
     // Also generate registry.rs
-    generate_registry_file(&src_dir);
+    generate_registry_file(src_dir);
 }
 
 /// Generate registry.rs with all language-specific registry code
@@ -543,7 +543,7 @@ fn generate_registry_file(src_dir: &Path) {
     fs::write(&dest, code).unwrap();
 
     // Generate dialect flags
-    generate_dialect_flags_file(&src_dir);
+    generate_dialect_flags_file(src_dir);
 }
 
 /// Generate dialect_flags.rs with dynamic dialect flags collection
