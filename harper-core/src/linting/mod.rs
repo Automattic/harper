@@ -96,6 +96,7 @@ mod flesh_out_vs_full_fledged;
 mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
+mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
 mod go_so_far_as_to;
@@ -221,6 +222,7 @@ mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod redundant_progressive_comparative;
+mod redundant_self;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
@@ -808,6 +810,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }
