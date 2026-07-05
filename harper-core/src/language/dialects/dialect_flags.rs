@@ -220,9 +220,7 @@ impl DialectFlags {
             slovak: slovak_flags,
         }
     }
-
 }
-
 impl std::ops::BitOr for DialectFlags {
     type Output = Self;
 
@@ -386,7 +384,6 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                         }
                     }
                 }
-
                 Ok(ScopedDialectFlagsSerde {
                     english,
                     #[cfg(feature = "de")]
@@ -400,7 +397,7 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
             Value::String(s) => Err(Error::custom(format!(
                 "Legacy flat string format for dialect flags is no longer supported: {s}"
             ))),
-            _ => Err(Error::custom("Expected object for dialect flags"))
+            _ => Err(Error::custom("Expected object for dialect flags")),
         }
     }
 }

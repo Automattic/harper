@@ -31,7 +31,17 @@ test.describe('review banner', () => {
 
 		await page.getByText("Let's start writing").click();
 
+		const startTime = Date.now();
+		console.log(`[TIMING] Starting wait for Harper intro text at ${startTime}`);
 		await expect(page.getByText('Harper is')).toBeVisible();
+		
+		const introTime = Date.now();
+		console.log(`[TIMING] Harper intro text appeared after ${introTime - startTime}ms`);
+		
+		console.log(`[TIMING] Starting wait for review banner at ${introTime}`);
 		await expect(page.getByText('Would you mind giving us a review?')).toHaveCount(1);
+		
+		const endTime = Date.now();
+		console.log(`[TIMING] Review banner appeared after ${endTime - introTime}ms (total: ${endTime - startTime}ms)`);
 	});
 });

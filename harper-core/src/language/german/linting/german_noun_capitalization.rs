@@ -1,5 +1,9 @@
-use crate::linting::{Lint, LintKind, Linter, Suggestion};
-use crate::{document::Document, spell::Dictionary, Token, TokenStringExt};
+use crate::{
+    Token, TokenStringExt,
+    document::Document,
+    linting::{Lint, LintKind, Linter, Suggestion},
+    spell::Dictionary,
+};
 use harper_brill::UPOS;
 
 /// A linter that checks to make sure German nouns are capitalized.

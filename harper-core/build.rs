@@ -1,4 +1,4 @@
-use std::{collections::HashSet, env, fs, path::Path};
+use std::{env, fs, path::Path};
 
 /// Configuration for a supported language
 #[allow(dead_code)]
@@ -17,8 +17,8 @@ struct LanguageConfig {
 }
 
 /// Known non-language directories in src/language/ that should be skipped
-fn get_non_language_directories() -> HashSet<&'static str> {
-    HashSet::from(["dialects", "testing_framework"])
+fn get_non_language_directories() -> [&'static str; 2] {
+    ["dialects", "testing_framework"]
 }
 
 /// Map directory names to Cargo feature names
@@ -79,7 +79,7 @@ fn discover_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
         };
 
         // Skip non-language directories
-        if non_language_dirs.contains(dir_name.as_str()) {
+        if non_language_dirs.contains(&dir_name.as_str()) {
             continue;
         }
 
@@ -293,7 +293,7 @@ fn write_flat_weir_boilerplate(weir_rule_dir: &Path, dest: &Path) {
 }
 
 fn process_language_weir_rules(language_dir: &Path, out_dir: &Path) {
-    if let Ok(language_entries) = fs::read_dir(&language_dir) {
+    if let Ok(language_entries) = fs::read_dir(language_dir) {
         for language_entry in language_entries.filter_map(Result::ok) {
             let language_path = language_entry.path();
             if !language_path.is_dir() {
@@ -942,7 +942,7 @@ fn generate_registry_file(src_dir: &Path) {
     fs::write(&dest, code).unwrap();
 
     // Generate dialect flags
-    generate_dialect_flags_file(&src_dir);
+    generate_dialect_flags_file(src_dir);
 }
 
 /// Generate dialect_flags.rs with dynamic dialect flags collection
@@ -980,11 +980,11 @@ fn generate_dialect_flags_file(src_dir: &Path) {
             lang.dir_name, lang.dialect_module, lang.flags_module
         ));
         if lang.feature.is_none() {
-            code.push_str("\n");
+            code.push('\n');
         }
     }
 
-    code.push_str("\n");
+    code.push('\n');
 
     // Main DialectFlags struct
     code.push_str(
@@ -1226,10 +1226,10 @@ fn generate_dialect_flags_file(src_dir: &Path) {
     code.push_str("            #[cfg(feature = \"sk\")]\n");
     code.push_str("            slovak: slovak_flags,\n");
     code.push_str("        }\n");
-    code.push_str("    }\n\n");
+    code.push_str("    }\n");
 
     // BitOr implementation
-    code.push_str("}\n\n");
+    code.push_str("}\n");
     code.push_str("impl std::ops::BitOr for DialectFlags {\n");
     code.push_str("    type Output = Self;\n\n");
     code.push_str("    fn bitor(self, rhs: Self) -> Self::Output {\n");
@@ -1422,7 +1422,7 @@ fn generate_dialect_flags_file(src_dir: &Path) {
     code.push_str("                            return Err(Error::unknown_field(&key, valid_fields_static));\n");
     code.push_str("                        }\n");
     code.push_str("                    }\n");
-    code.push_str("                }\n\n");
+    code.push_str("                }\n");
     code.push_str("                Ok(ScopedDialectFlagsSerde {\n");
     code.push_str("                    english,\n");
     code.push_str("                    #[cfg(feature = \"de\")]\n");
@@ -1436,11 +1436,10 @@ fn generate_dialect_flags_file(src_dir: &Path) {
     code.push_str("            Value::String(s) => Err(Error::custom(format!(\n");
     code.push_str("                \"Legacy flat string format for dialect flags is no longer supported: {s}\"\n");
     code.push_str("            ))),\n");
-    code.push_str("            _ => Err(Error::custom(\"Expected object for dialect flags\"))\n");
+    code.push_str("            _ => Err(Error::custom(\"Expected object for dialect flags\")),\n");
     code.push_str("        }\n");
     code.push_str("    }\n");
     code.push_str("}\n");
-
     // Write the generated file
     let dest = src_dir.join("dialects").join("dialect_flags.rs");
     fs::create_dir_all(dest.parent().unwrap()).unwrap();
