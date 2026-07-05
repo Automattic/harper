@@ -114,7 +114,9 @@ export async function waitForHarperHighlightCenter(
 ): Promise<ScreenPoint | null> {
 	const highlight = getHarperHighlights(page).first();
 	const startTime = Date.now();
-	console.log(`[TIMING] Starting wait for Harper highlight at ${startTime} with timeout ${timeoutMs}ms`);
+	console.log(
+		`[TIMING] Starting wait for Harper highlight at ${startTime} with timeout ${timeoutMs}ms`,
+	);
 
 	try {
 		await highlight.waitFor({ state: 'visible', timeout: timeoutMs });
@@ -130,11 +132,13 @@ export async function waitForHarperHighlightCenter(
 
 	const box = await highlight.boundingBox();
 	if (box == null || box.width <= 0 || box.height <= 0) {
-		console.log(`[TIMING] Harper highlight has invalid bounding box`);
+		console.log('[TIMING] Harper highlight has invalid bounding box');
 		return null;
 	}
 
-	console.log(`[TIMING] Harper highlight bounding box: ${box.width}x${box.height} at (${box.x}, ${box.y})`);
+	console.log(
+		`[TIMING] Harper highlight bounding box: ${box.width}x${box.height} at (${box.x}, ${box.y})`,
+	);
 	return {
 		x: box.x + box.width / 2,
 		y: box.y + box.height / 2,

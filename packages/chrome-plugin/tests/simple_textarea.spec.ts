@@ -138,15 +138,15 @@ test('Can dismiss with escape key', async ({ page }) => {
 
 	const startTime = Date.now();
 	console.log(`[TIMING] Starting click Harper highlight at ${startTime}`);
-	
+
 	await clickHarperHighlight(page);
-	
+
 	const clickTime = Date.now();
 	console.log(`[TIMING] Harper highlight clicked after ${clickTime - startTime}ms`);
 
 	console.log(`[TIMING] Starting wait for popup container at ${clickTime}`);
 	await page.locator('.harper-container').waitFor({ state: 'visible' });
-	
+
 	const popupTime = Date.now();
 	console.log(`[TIMING] Popup container appeared after ${popupTime - clickTime}ms`);
 
@@ -154,12 +154,12 @@ test('Can dismiss with escape key', async ({ page }) => {
 
 	console.log(`[TIMING] Starting wait for popup container to hide at ${popupTime}`);
 	await page.locator('.harper-container').waitFor({ state: 'hidden' });
-	
+
 	const hideTime = Date.now();
 	console.log(`[TIMING] Popup container hidden after ${hideTime - popupTime}ms`);
 
 	await assertLocatorIsFocused(page, editor);
-	
+
 	const endTime = Date.now();
 	console.log(`[TIMING] Total test duration: ${endTime - startTime}ms`);
 });

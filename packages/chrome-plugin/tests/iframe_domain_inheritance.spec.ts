@@ -58,13 +58,13 @@ async function waitForChildHighlight(page: Page) {
 	const highlight = getChildHighlights(page).first();
 	const startTime = Date.now();
 	console.log(`[TIMING] Starting wait for child highlight at ${startTime}`);
-	
+
 	await highlight.waitFor({ state: 'visible', timeout: 30000 }); // Increased from 12000 to 30000
-	
+
 	const endTime = Date.now();
 	const duration = endTime - startTime;
 	console.log(`[TIMING] Child highlight appeared after ${duration}ms`);
-	
+
 	return highlight;
 }
 
