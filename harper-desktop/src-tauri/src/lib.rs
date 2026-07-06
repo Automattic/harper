@@ -148,7 +148,7 @@ pub fn run_tauri() {
     if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
         && highlighter_service_enabled
     {
-        highlighter_service
+        let _ = highlighter_service
             .start()
             .inspect_err(|err| error!("Unable to start highlighter: {err}"));
     }
@@ -157,6 +157,7 @@ pub fn run_tauri() {
         .manage(config)
         .manage(highlighter_service)
         .manage(StdMutex::new(platform_broker()))
+        .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,

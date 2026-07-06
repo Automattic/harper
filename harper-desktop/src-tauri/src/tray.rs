@@ -1,9 +1,13 @@
+use std::time::Duration;
+
 use tauri::image::Image;
 use tauri::tray::TrayIconBuilder;
+use tokio::time::sleep;
 use tracing::error;
 
 use tauri::menu::{Menu, MenuBuilder};
 use tauri::{AppHandle, Manager, Runtime, State};
+use tokio::runtime::Runtime as AsyncRuntime;
 
 use crate::highlighter_service::HighlighterService;
 use crate::windows::{open_issue_report, show_editor_window, show_settings_window};
@@ -21,8 +25,9 @@ fn tray_menu<R: Runtime, M: Manager<R>>(manager: &M) -> tauri::Result<Menu<R>> {
 
 pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
     let highlighter_service: State<HighlighterService> = app.state();
+    let async_runtime: State<AsyncRuntime> = app.state();
 
-    TrayIconBuilder::new()
+    let tray_icon = TrayIconBuilder::new()
         .icon(menu_bar_icon(highlighter_service.is_running())?)
         .menu(&tray_menu(app)?)
         .on_menu_event(move |app, event| {
@@ -50,6 +55,24 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
             };
         })
         .build(app)?;
+
+    let app = app.clone();
+    async_runtime.spawn(async move {
+        loop {
+            sleep(Duration::from_millis(250)).await;
+
+            {
+                let highlighter_service: State<HighlighterService> = app.state();
+
+                let Ok(new_icon) = menu_bar_icon(highlighter_service.is_running()) else {
+                    error!("Unable to generate new menu bar icon.");
+                    continue;
+                };
+
+                tray_icon.set_icon(Some(new_icon));
+            }
+        }
+    });
 
     Ok(())
 }
