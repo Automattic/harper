@@ -205,8 +205,7 @@ impl DialectFlags {
         #[cfg(feature = "de")]
         let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "pt")]
-        let portuguese_flags =
-            PortugueseDialectFlags::get_most_used_dialects_from_document(document);
+        let portuguese_flags = PortugueseDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "sk")]
         let slovak_flags = SlovakDialectFlags::get_most_used_dialects_from_document(document);
 
@@ -339,10 +338,9 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                         "Unknown Portuguese dialect: {s}"
                                     ))),
                                 },
-                                _ => Err(Error::invalid_type(
-                                    Unexpected::Other("portuguese"),
-                                    &"string",
-                                )),
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("portuguese"), &"string"))
+                                }
                             }?;
                         }
                         #[cfg(feature = "sk")]

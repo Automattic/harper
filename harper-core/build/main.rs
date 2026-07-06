@@ -1,3 +1,22 @@
+// Harper Core Build Script Main Logic
+//
+// This module contains the main orchestration logic for Harper's compile-time
+// code generation system. It is invoked by `build.rs`.
+//
+// ## What This Script Does
+//
+// 1. **Weir Rule Processing**:
+//    - Processes main English weir rules from `src/linting/weir_rules/`
+//    - Discovers and processes language-specific weir rules from `src/language/<lang>/linting/weir_rules/`
+//
+// 2. **Language Integration**:
+//    - Generates `src/language/mod.rs`, `src/language/languages.rs`
+//    - Generates `src/language/registry.rs`, `src/language/dialects/dialect_flags.rs`
+//
+// 3. **Feature-based Compilation**:
+//    - Automatically adds `#[cfg(feature)]` attributes for optional languages
+//    - English is always included (no feature flag)
+
 use std::{env, path::Path};
 
 mod build_lib;

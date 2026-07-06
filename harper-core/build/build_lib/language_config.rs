@@ -87,9 +87,9 @@ pub fn get_language_dialect_alias_groups(dir_name: &str) -> Vec<(Vec<&'static st
             (vec!["ch", "switzerland", "swiss", "de-ch", "de_ch"], "Swiss"),
         ],
         "portuguese" => vec![
-            (vec!["pt", "pt-pt", "pt_pt", "portuguese", "portugu\u{00ea}s"], "European"),
-            (vec!["br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br"], "Brazilian"),
-            (vec!["ao"], "African"),
+            (vec!["pt", "pt-pt", "pt_pt", "portuguese", "portugu\u{00ea}s"], "PT"),
+            (vec!["br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br"], "BR"),
+            (vec!["ao"], "AO"),
         ],
         "slovak" => vec![
             (vec!["sk", "slovak", "slovensko", "sk-sk", "sk_sk"], "Standard"),

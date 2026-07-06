@@ -3,6 +3,8 @@
 //!
 //! This module provides the core types for supporting multiple languages in Harper,
 //! including language families and specific language variants with dialects.
+use crate::language::dialects::dialect_trait::Dialect;
+
 use crate::language::english::dialects::EnglishDialect;
 
 #[cfg(feature = "de")]
@@ -51,15 +53,15 @@ pub fn parse_language(s: &str) -> Option<Language> {
         }
         #[cfg(feature = "pt")]
         "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("European").unwrap()))
+            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()))
         }
         #[cfg(feature = "pt")]
         "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("Brazilian").unwrap()))
+            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()))
         }
         #[cfg(feature = "pt")]
         "ao" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("African").unwrap()))
+            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap()))
         }
         #[cfg(feature = "sk")]
         "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {

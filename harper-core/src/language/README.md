@@ -1,13 +1,25 @@
-# Harper Language Support - Architecture Guide
+# Harper Language Support Architecture
 
-## Compile-Time Plugin Architecture
+## Core Architecture
 
-Harper uses a compile-time plugin architecture for language support, where each language is implemented as a modular component that integrates seamlessly at build time.
+Compile-time plugin architecture. Each language implements the `LanguageModule` trait and integrates automatically via the build system.
 
 ## File Structure
 
-Each language's functionality is in a subfolder `harper-core/src/language/<lang>`.
-The core trait `LanguageModule` must be implemented. (defined in `harper-core/src/language/module.rs`).
+Each language lives in `harper-core/src/language/<lang>/` and must implement the `LanguageModule` trait (defined in `harper-core/src/language/module.rs`).
+
+Required files:
+```
+harper-core/src/language/<lang>/
+├── mod.rs              # Module exports
+├── module.rs          # LanguageModule trait implementation (REQUIRED)
+├── dialects.rs        # Dialect definitions
+├── spell/<lang>_dict.rs # Dictionary loading (REQUIRED)
+├── annotations.json    # Word formation rules + POS mappings (REQUIRED)
+└── dictionary.dict     # Base words with POS flags (REQUIRED)
+```
+
+**Note:** Files are embedded via `include_str!()`. Structure must match exactly.
 
 ```
 harper-core/src/language/<lang>/
@@ -42,26 +54,21 @@ harper-core/src/language/<lang>/
 
 For language-specific details, see the individual language directories.
 
-## Architecture Overview
+## Build System
 
-```mermaid
-graph TD
-    A[Core System] -->|Build Script| B[Language Discovery]
-    B --> C[English: Always Included]
-    B --> D[German: #[cfg(feature="de")]]
-    B --> E[Portuguese: #[cfg(feature="pt")]]
-    B --> F[Slovak: #[cfg(feature="sk")]]
-    B -->|Generates| G[src/language/mod.rs]
-    G -->|Exports| H[LanguageModule Implementations]
-    H --> I[Runtime Registry]
-```
+The build script (`build.rs` → `build/main.rs` → `build/build_lib/`) automatically:
+
+1. Discovers language directories with `module.rs` via `discover_languages()`
+2. Maps directory names to feature flags via `map_directory_to_feature()`
+3. Generates: `mod.rs`, `languages.rs`, `registry.rs`, `dialects/dialect_flags.rs`
+4. Handles English as always-included, other languages behind `#[cfg(feature)]`
 
 ## Key Components
 
-1. **LanguageModule Trait**: Core interface that all languages must implement
-2. **Build Script**: Automatically discovers and registers language modules
-3. **Feature Flags**: Control which languages are compiled (except English)
-4. **Generated Code**: `src/language/mod.rs` created by build script
+- **LanguageModule Trait**: Core interface in `module.rs`
+- **Build Script**: Automatic discovery and code generation
+- **Feature Flags**: Conditional compilation for optional languages
+- **Generated Code**: Centralizes all language integration
 
 ## Special Case: English
 
@@ -72,16 +79,14 @@ graph TD
 
 ## Adding a New Language
 
-1. **Create language directory**: `harper-core/src/language/<lang>/`
-2. **Implement LanguageModule**: Create `module.rs` with trait implementation
-3. **Add feature flag**: In `harper-core/Cargo.toml`, add `<lang> = []`
-4. **Create language files**: `dictionary.dict` + `annotations.json`
-5. **Add to registry**: Update `harper-core/src/language/languages.rs` with new enum
-
-The build script automatically handles:
-- Module discovery and registration
-- Feature flag integration
-- Code generation for `src/language/mod.rs`
+1. Create `harper-core/src/language/<lang>/` with required files
+2. Implement `LanguageModule` in `module.rs`
+3. Add feature flag to `harper-core/Cargo.toml`: `<lang> = []`
+4. Add metadata to `build/build_lib/language_config.rs`:
+   - `map_directory_to_feature()`: Map dir name to feature flag
+   - `get_language_metadata()`: Aliases and confidence for detection
+   - `get_language_dialect_alias_groups()`: Dialect alias mappings
+5. Build system handles the rest automatically
 
 ## Rapid Iteration Without Recompilation
 
