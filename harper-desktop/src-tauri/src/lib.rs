@@ -115,6 +115,7 @@ pub fn run_tauri() {
         .build()
         .expect("failed to build config runtime");
 
+    // Infer
     let is_first_launch = match Config::main_config_exists() {
         Ok(exists) => !exists,
         Err(error) => {
