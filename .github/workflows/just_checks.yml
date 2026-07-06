@@ -53,6 +53,10 @@ jobs:
           sudo apt-get install -y libappindicator3-dev || true
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
+        with:
+          # Give each matrix task its own cache. Without this, every job
+          # shares one cache key and all but one rebuild from scratch.
+          key: ${{ matrix.task }}
       - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
