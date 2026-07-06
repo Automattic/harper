@@ -55,10 +55,18 @@ impl DirInput {
         let iter = std::fs::read_dir(&self.path)?
             .flatten()
             .map(|e| e.path())
-            // Skip binary files commonly in directories full of text files.
-            .filter(|p| p.file_name().is_some_and(|n| n != ".DS_Store"))
-            // Skip text-based file formats which don't deterministically contain English prose.
-            .filter(|p| !p.to_string_lossy().to_lowercase().ends_with(".json"))
+            .filter(|p| {
+                p.file_name().is_some_and(|raw_name| {
+                    // Skip any files with this exact name
+                    raw_name != ".DS_Store" && {
+                        let name = raw_name.to_string_lossy().to_lowercase();
+                        // SKip all files whose names start with these characters
+                        !name.starts_with("._")
+                        // Skip all files whose names have these extensions
+                        && !name.ends_with(".json")
+                    }
+                })
+            })
             .filter_map(|p| FileInput::try_from_path(&p).ok());
 
         Ok(iter)
