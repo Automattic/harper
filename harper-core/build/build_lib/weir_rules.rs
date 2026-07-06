@@ -207,11 +207,20 @@ pub fn process_language_weir_rules(language_dir: &Path, out_dir: &Path) {
                 continue;
             }
 
-            // For German, look in the 'de' subdirectory for locale-specific rules
-            let final_weir_dir = if language_name == "GERMAN" {
-                weir_rules_dir.join("de")
+            // Load language configuration to check for weir rules subdirectory
+            use crate::language_config::load_language_config;
+            
+            let final_weir_dir = if let Some(config) = load_language_config(&language_path) {
+                // Use configured subdirectory if specified
+                if let Some(subdir) = &config.weir_rules_subdirectory {
+                    weir_rules_dir.join(subdir)
+                } else {
+                    weir_rules_dir
+                }
             } else {
-                weir_rules_dir
+                // No config.toml? Skip this language for weir rules processing
+                // All languages must have a config.toml file
+                continue;
             };
 
             // Only process if the directory exists and contains .weir files

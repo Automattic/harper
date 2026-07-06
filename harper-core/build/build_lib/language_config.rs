@@ -5,24 +5,26 @@ use std::{fs, path::Path};
 #[derive(Debug, Clone)]
 pub struct LanguageConfig {
     /// Name of the language (e.g., "English", "German")
-    pub name: &'static str,
+    pub name: String,
     /// Directory name in the language folder (e.g., "english", "german")
-    pub dir_name: &'static str,
+    pub dir_name: String,
     /// Cargo feature name (e.g., None for English, Some("de") for German)
-    pub feature: Option<&'static str>,
+    pub feature: Option<String>,
     /// Module name for the dialect type (e.g., "GermanDialect")
-    pub dialect_module: &'static str,
+    pub dialect_module: String,
     /// Module name for the dialect flags type (e.g., "GermanDialectFlags")
-    pub flags_module: &'static str,
+    pub flags_module: String,
     /// Module name for the language module (e.g., "EnglishModule")
-    pub module_name: &'static str,
+    pub module_name: String,
     /// Language aliases for parsing (e.g., ["de", "german", "deutsch"])
-    pub aliases: Vec<&'static str>,
+    pub aliases: Vec<String>,
     /// Detector confidence value (0.0-1.0) for language detection ordering
     pub confidence: f64,
     /// Dialect alias groups: each group maps multiple aliases to a dialect variant
-    /// e.g., [("us", vec!["us", "usa", "america", "american", "en-us", "en_us"]), "US")] for English
-    pub dialect_alias_groups: Vec<(Vec<&'static str>, &'static str)>,
+    /// e.g., [("us", vec!["us", "usa", ...]), "US")] for English
+    pub dialect_alias_groups: Vec<(Vec<String>, String)>,
+    /// Optional subdirectory for weir rules (e.g., "de" for German)
+    pub weir_rules_subdirectory: Option<String>,
 }
 
 /// Known non-language directories in src/language/ that should be skipped
@@ -30,72 +32,152 @@ pub fn get_non_language_directories() -> [&'static str; 2] {
     ["dialects", "testing_framework"]
 }
 
-/// Map directory names to Cargo feature names
-pub fn map_directory_to_feature(dir_name: &str) -> Option<&'static str> {
-    match dir_name {
-        "german" => Some("de"),
-        "portuguese" => Some("pt"),
-        "slovak" => Some("sk"),
-        "english" => None, // English is always included
-        _ => None,         // Unknown languages have no feature (will be always included)
+/// Load language configuration from a config.toml file in the language directory
+pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
+    let config_path = dir_path.join("config.toml");
+    if !config_path.exists() {
+        return None;
     }
-}
 
-/// Get language-specific metadata and configuration
-pub fn get_language_metadata(dir_name: &str) -> Option<(Vec<&'static str>, f64)> {
-    match dir_name {
-        "english" => Some((vec![
-            "us", "usa", "america", "american", "en-us", "en_us",
-            "uk", "gb", "british", "britain", "en-gb", "en_gb",
-            "au", "aus", "australia", "australian", "en-au", "en_au",
-            "in", "india", "indian", "bharat", "en-in", "en_in",
-            "ca", "canada", "canadian", "en-ca", "en_ca",
-        ], 0.30)),
-        "german" => Some((vec![
-            "de", "german", "deutsch", "de-de", "de_de",
-            "at", "austria", "austrian", "de-at", "de_at",
-            "ch", "switzerland", "swiss", "de-ch", "de_ch",
-        ], 0.95)),
-        "portuguese" => Some((vec![
-            "pt", "pt-pt", "pt_pt", "portuguese", "portugu\u{00ea}s",
-            "br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br",
-            "ao",
-        ], 0.85)),
-        "slovak" => Some((vec![
-            "sk", "slovak", "slovensko", "sk-sk", "sk_sk",
-        ], 0.90)),
-        _ => None, // Unknown languages have no metadata
-    }
-}
+    let content = match fs::read_to_string(&config_path) {
+        Ok(c) => c,
+        Err(_) => return None,
+    };
 
-/// Get language-specific dialect alias groups for parsing
-/// Returns a vector of (aliases, dialect_name) where aliases is a group of alias strings
-/// that all map to the same dialect variant name (what try_from_abbr expects)
-#[allow(dead_code)]
-pub fn get_language_dialect_alias_groups(dir_name: &str) -> Vec<(Vec<&'static str>, &'static str)> {
-    match dir_name {
-        "english" => vec![
-            (vec!["us", "usa", "america", "american", "en-us", "en_us"], "US"),
-            (vec!["uk", "gb", "british", "britain", "en-gb", "en_gb"], "GB"),
-            (vec!["au", "aus", "australia", "australian", "en-au", "en_au"], "AU"),
-            (vec!["in", "india", "indian", "bharat", "en-in", "en_in"], "IN"),
-            (vec!["ca", "canada", "canadian", "en-ca", "en_ca"], "CA"),
-        ],
-        "german" => vec![
-            (vec!["de", "german", "deutsch", "de-de", "de_de"], "Standard"),
-            (vec!["at", "austria", "austrian", "de-at", "de_at"], "Austrian"),
-            (vec!["ch", "switzerland", "swiss", "de-ch", "de_ch"], "Swiss"),
-        ],
-        "portuguese" => vec![
-            (vec!["pt", "pt-pt", "pt_pt", "portuguese", "portugu\u{00ea}s"], "PT"),
-            (vec!["br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br"], "BR"),
-            (vec!["ao"], "AO"),
-        ],
-        "slovak" => vec![
-            (vec!["sk", "slovak", "slovensko", "sk-sk", "sk_sk"], "Standard"),
-        ],
-        _ => vec![], // Unknown languages have no dialect aliases
-    }
+    // Try to parse as TOML
+    let value: toml::Value = match content.parse() {
+        Ok(v) => v,
+        Err(_) => return None,
+    };
+
+    // Extract language section
+    let language_table = match value.get("language") {
+        Some(toml::Value::Table(t)) => t,
+        _ => {
+            eprintln!("Warning: Missing [language] section in config.toml for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    let name = match language_table.get("name").and_then(|v| v.as_str()) {
+        Some(n) => n.to_string(),
+        None => {
+            eprintln!("Warning: Missing 'name' in [language] section for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    let dir_name = match language_table.get("dir_name").and_then(|v| v.as_str()) {
+        Some(d) => d.to_string(),
+        None => {
+            eprintln!("Warning: Missing 'dir_name' in [language] section for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    let feature = language_table.get("feature").and_then(|v| v.as_str()).map(|s| s.to_string());
+
+    // If feature is explicitly "null" or empty, treat as None
+    let feature = if feature.as_ref().map_or(false, |f| f == "null" || f.is_empty()) {
+        None
+    } else {
+        feature
+    };
+
+    // Extract metadata section
+    let metadata_table = match value.get("metadata") {
+        Some(toml::Value::Table(t)) => t,
+        _ => {
+            eprintln!("Warning: Missing [metadata] section in config.toml for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    let aliases = match metadata_table.get("aliases") {
+        Some(toml::Value::Array(arr)) => {
+            arr.iter()
+                .filter_map(|v| v.as_str().map(|s| s.to_string()))
+                .collect()
+        }
+        _ => {
+            eprintln!("Warning: Missing or invalid 'aliases' in [metadata] section for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    let confidence = match metadata_table.get("confidence") {
+        Some(toml::Value::Float(f)) => *f,
+        Some(toml::Value::Integer(i)) => *i as f64,
+        _ => {
+            eprintln!("Warning: Missing or invalid 'confidence' in [metadata] section for {}", dir_path.display());
+            return None;
+        }
+    };
+
+    // Extract dialects section - can be either inline table with alias_groups or array of tables
+    let dialect_alias_groups = if let Some(toml::Value::Array(dialects_array)) = value.get("dialects") {
+        // Array of tables format: [[dialects]], [[dialects]], ...
+        let mut result = Vec::new();
+        for dialect_table in dialects_array {
+            if let toml::Value::Table(table) = dialect_table {
+                if let (Some(toml::Value::String(name)), Some(toml::Value::Array(aliases_arr))) = 
+                    (table.get("name"), table.get("aliases")) {
+                    let aliases: Vec<String> = aliases_arr
+                        .iter()
+                        .filter_map(|v| v.as_str().map(|s| s.to_string()))
+                        .collect();
+                    result.push((aliases, name.clone()));
+                }
+            }
+        }
+        result
+    } else if let Some(toml::Value::Table(dialects_table)) = value.get("dialects") {
+        // Inline table format with alias_groups
+        if let Some(toml::Value::Table(groups)) = dialects_table.get("alias_groups") {
+            let mut result = Vec::new();
+            let mut keys: Vec<_> = groups.keys().cloned().collect();
+            keys.sort();
+            
+            for dialect_name in keys {
+                if let Some(toml::Value::Array(aliases_arr)) = groups.get(&dialect_name) {
+                    let aliases: Vec<String> = aliases_arr
+                        .iter()
+                        .filter_map(|v| v.as_str().map(|s| s.to_string()))
+                        .collect();
+                    result.push((aliases, dialect_name.clone()));
+                }
+            }
+            result
+        } else {
+            Vec::new()
+        }
+    } else {
+        Vec::new()
+    };
+
+    // Extract weir section (optional)
+    let weir_rules_subdirectory = value.get("weir")
+        .and_then(|w| w.get("rules_subdirectory"))
+        .and_then(|v| v.as_str())
+        .map(|s| s.to_string());
+
+    // Generate derived names
+    let dialect_module = format!("{}Dialect", capitalize_first_letter(&name));
+    let flags_module = format!("{}DialectFlags", capitalize_first_letter(&name));
+    let module_name = format!("{}Module", capitalize_first_letter(&name));
+
+    Some(LanguageConfig {
+        name,
+        dir_name,
+        feature,
+        dialect_module,
+        flags_module,
+        module_name,
+        aliases,
+        confidence,
+        dialect_alias_groups,
+        weir_rules_subdirectory,
+    })
 }
 
 /// Capitalize the first letter of a string
@@ -156,59 +238,13 @@ pub fn discover_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
             continue;
         }
 
-        let name = capitalize_first_letter(&dir_name);
-        let feature = map_directory_to_feature(&dir_name);
-        let dialect_module = format!("{}Dialect", capitalize_first_letter(&dir_name));
-        let flags_module = format!("{}DialectFlags", capitalize_first_letter(&dir_name));
-        let module_name = format!("{}Module", capitalize_first_letter(&dir_name));
-        
-        // Get language-specific metadata
-        let (aliases, confidence) = get_language_metadata(&dir_name)
-            .unwrap_or_else(|| (vec![], 0.5)); // Default confidence for unknown languages
-        
-        // Get dialect alias groups
-        let dialect_alias_groups = get_language_dialect_alias_groups(&dir_name);
-
-        // Helper function to convert owned string to &'static str
-        fn to_static_str(s: String) -> &'static str {
-            Box::leak(s.into_boxed_str())
+        // Load configuration from config.toml
+        if let Some(config) = load_language_config(&entry.path()) {
+            // Validate that dir_name matches
+            if config.dir_name == dir_name {
+                languages.push(config);
+            }
         }
-
-        // Helper function to convert Vec<&'static str> to Vec<&'static str> with Box::leak
-        fn to_static_str_vec_static(v: Vec<&'static str>) -> Vec<&'static str> {
-            v.into_iter().map(|s| to_static_str(s.to_string())).collect()
-        }
-
-        // Helper function to convert Vec<(Vec<&'static str>, &'static str)> to Vec<(Vec<&'static str>, &'static str)>
-        fn to_static_str_dialect_groups(v: Vec<(Vec<&'static str>, &'static str)>) -> Vec<(Vec<&'static str>, &'static str)> {
-            v.into_iter().map(|(aliases, dialect)| {
-                let aliases_static: Vec<&'static str> = aliases.into_iter().map(|a| to_static_str(a.to_string())).collect();
-                let dialect_static = to_static_str(dialect.to_string());
-                (aliases_static, dialect_static)
-            }).collect()
-        }
-
-        // Convert feature to static reference
-        let feature_static: Option<&'static str> = feature.map(|f| to_static_str(f.to_string()));
-        
-        // Convert aliases to static references
-        let aliases_static = to_static_str_vec_static(aliases);
-        
-        // Convert dialect alias groups to static references
-        let dialect_alias_groups_static = to_static_str_dialect_groups(dialect_alias_groups);
-
-        // Store the owned strings in LanguageConfig using Box::leak
-        languages.push(LanguageConfig {
-            name: to_static_str(name),
-            dir_name: to_static_str(dir_name.clone()),
-            feature: feature_static,
-            dialect_module: to_static_str(dialect_module),
-            flags_module: to_static_str(flags_module),
-            module_name: to_static_str(module_name),
-            aliases: aliases_static,
-            confidence,
-            dialect_alias_groups: dialect_alias_groups_static,
-        });
     }
 
     languages

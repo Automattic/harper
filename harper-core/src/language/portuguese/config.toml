@@ -1,0 +1,24 @@
+[language]
+name = "Portuguese"
+dir_name = "portuguese"
+feature = "pt"
+
+[metadata]
+aliases = [
+    "pt", "pt-pt", "pt_pt", "portuguese", "português",
+    "br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br",
+    "ao"
+]
+confidence = 0.85
+
+[[dialects]]
+name = "PT"
+aliases = ["pt", "pt-pt", "pt_pt", "portuguese", "português"]
+
+[[dialects]]
+name = "BR"
+aliases = ["br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br"]
+
+[[dialects]]
+name = "AO"
+aliases = ["ao"]

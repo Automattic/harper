@@ -373,8 +373,7 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                     fields.push("slovak");
                                 }
                                 fields
-                            };
-                            // Convert to a static slice by leaking the memory
+                            };                            // Convert to a static slice by leaking the memory
                             // This is safe as it's only done during deserialization error handling
                             let valid_fields_static: &'static [&'static str] =
                                 Box::leak(valid_fields.into_boxed_slice());

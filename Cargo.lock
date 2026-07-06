@@ -4278,6 +4278,7 @@ dependencies = [
  "strum 0.28.0",
  "strum_macros 0.28.0",
  "thiserror 2.0.18",
+ "toml 0.8.23",
  "trie-rs",
  "unicode-blocks",
  "unicode-script",

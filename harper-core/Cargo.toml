@@ -38,6 +38,9 @@ zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
 regex = "1.12.3"
 flate2 = "1.1"
 
+[build-dependencies]
+toml = "0.8"
+
 [dev-dependencies]
 criterion = { version = "0.8.2", default-features = false }
 rand = "0.10.1"

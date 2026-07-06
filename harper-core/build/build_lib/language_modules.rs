@@ -1062,20 +1062,21 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("                                #[allow(unused_mut)]\n");
     code.push_str("                                let mut fields = vec![\"english\"];\n");
 
-    code.push_str("                                #[cfg(feature = \"de\")]\n");
-    code.push_str("                                {\n");
-    code.push_str("                                    fields.push(\"german\");\n");
-    code.push_str("                                }\n");
-    code.push_str("                                #[cfg(feature = \"pt\")]\n");
-    code.push_str("                                {\n");
-    code.push_str("                                    fields.push(\"portuguese\");\n");
-    code.push_str("                                }\n");
-    code.push_str("                                #[cfg(feature = \"sk\")]\n");
-    code.push_str("                                {\n");
-    code.push_str("                                    fields.push(\"slovak\");\n");
-    code.push_str("                                }\n");
+    // Generate valid_fields list dynamically from discovered languages
+    for lang in &languages {
+        if lang.dir_name == "english" {
+            continue; // English already added
+        }
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("                                #[cfg(feature = \"{}\")]\n", feature));
+            code.push_str("                                {\n");
+            code.push_str(&format!("                                    fields.push(\"{}\");\n", lang.dir_name.to_lowercase()));
+            code.push_str("                                }\n");
+        }
+    }
+
     code.push_str("                                fields\n");
-    code.push_str("                            };\n");
+    code.push_str("                            };");
     code.push_str(
         "                            // Convert to a static slice by leaking the memory\n",
     );
@@ -1090,12 +1091,18 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("                }\n");
     code.push_str("                Ok(ScopedDialectFlagsSerde {\n");
     code.push_str("                    english,\n");
-    code.push_str("                    #[cfg(feature = \"de\")]\n");
-    code.push_str("                    german,\n");
-    code.push_str("                    #[cfg(feature = \"pt\")]\n");
-    code.push_str("                    portuguese,\n");
-    code.push_str("                    #[cfg(feature = \"sk\")]\n");
-    code.push_str("                    slovak,\n");
+    
+    // Generate struct fields dynamically
+    for lang in &languages {
+        if lang.dir_name == "english" {
+            continue; // English already added
+        }
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("                    #[cfg(feature = \"{}\")]\n", feature));
+            code.push_str(&format!("                    {},\n", lang.dir_name.to_lowercase()));
+        }
+    }
+    
     code.push_str("                })\n");
     code.push_str("            }\n");
     code.push_str("            Value::String(s) => Err(Error::custom(format!(\n");
