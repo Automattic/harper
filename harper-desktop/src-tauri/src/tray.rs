@@ -69,7 +69,9 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
                     continue;
                 };
 
-                tray_icon.set_icon(Some(new_icon));
+                let _ = tray_icon
+                    .set_icon(Some(new_icon))
+                    .inspect_err(|err| error!("Unable to set new icon: {err}"));
             }
         }
     });
