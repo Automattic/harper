@@ -40,12 +40,9 @@ impl<D: Dictionary> ExprLinter for BarelyUn<D> {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let last = toks.last()?;
 
-        let Some(correction) = last
+        let correction = last
             .get_ch(src)
-            .strip_prefix_ignore_ascii_case_chars(&['u', 'n'])
-        else {
-            return None;
-        };
+            .strip_prefix_ignore_ascii_case_chars(&['u', 'n'])?;
 
         let span = last.span;
 
