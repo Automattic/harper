@@ -110,10 +110,11 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let config_runtime = Builder::new_current_thread()
+    let async_runtime = Builder::new_current_thread()
         .enable_all()
         .build()
         .expect("failed to build config runtime");
+
     let is_first_launch = match Config::main_config_exists() {
         Ok(exists) => !exists,
         Err(error) => {
@@ -125,13 +126,13 @@ pub fn run_tauri() {
     let config = if is_first_launch {
         let config = Config::new();
 
-        if let Err(error) = config_runtime.block_on(config.save_to_system()) {
+        if let Err(error) = async_runtime.block_on(config.save_to_system()) {
             eprintln!("failed to save initial config: {error}");
         }
 
         config
     } else {
-        match config_runtime.block_on(Config::load_from_system()) {
+        match async_runtime.block_on(Config::load_from_system()) {
             Ok(config) => config,
             Err(error) => {
                 eprintln!("failed to load config, using defaults: {error}");
@@ -145,6 +146,7 @@ pub fn run_tauri() {
 
     let highlighter_service = HighlighterService::new(config.clone());
     if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+        && highlighter_service_enabled
     {
         highlighter_service
             .start()
