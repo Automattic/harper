@@ -1,11 +1,11 @@
 use std::{env, fs, path::Path};
 
-use crate::build_lib::language_config::{discover_languages, LanguageConfig};
+use crate::build_lib::language_config::{LanguageConfig, discover_languages};
 
 /// Helper function to generate parse_language match arms dynamically
 fn generate_parse_language_match_arms(languages: &[LanguageConfig]) -> String {
     let mut code = String::new();
-    
+
     // Handle English language parsing - always included
     if let Some(english_lang) = languages.iter().find(|lang| lang.dir_name == "english") {
         for (aliases, dialect_name) in &english_lang.dialect_alias_groups {
@@ -15,28 +15,31 @@ fn generate_parse_language_match_arms(languages: &[LanguageConfig]) -> String {
             code.push_str("        }\n");
         }
     }
-    
+
     // Handle other languages
     for lang in languages {
         if lang.dir_name == "english" {
             continue; // English already handled above
         }
-        
+
         for (aliases, dialect_name) in &lang.dialect_alias_groups {
             let aliases_str = aliases.join("\" | \"");
-            
+
             // Add conditional compilation for non-English languages
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
-            
+
             // Add the match arm
             code.push_str(&format!("        \"{}\" => {{\n", aliases_str));
-            code.push_str(&format!("            Some(Language::{}({}Dialect::try_from_abbr(\"{}\").unwrap()))\n", lang.name, lang.name, dialect_name));
+            code.push_str(&format!(
+                "            Some(Language::{}({}Dialect::try_from_abbr(\"{}\").unwrap()))\n",
+                lang.name, lang.name, dialect_name
+            ));
             code.push_str("        }\n");
         }
     }
-    
+
     code
 }
 
@@ -66,7 +69,8 @@ pub fn generate_language_modules(_out_dir: &Path) {
 
     // Optional language modules - generated from discovered languages
     for lang in &languages {
-        if lang.feature.is_some() { // Skip English as it's already included
+        if lang.feature.is_some() {
+            // Skip English as it's already included
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("#[cfg(feature = \"{}\")]\n", feature));
                 code.push_str(&format!("pub mod {};\n\n", lang.dir_name));
@@ -114,10 +118,9 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str(
         "//! including language families and specific language variants with dialects.\n",
     );
-    
-    // Import Dialect trait for try_from_abbr method
-    code.push_str("use crate::language::dialects::dialect_trait::Dialect;\n\n");
-    
+
+    // Import Dialect trait for try_from_abbr method (removed - unused import)
+
     // English is always included
     code.push_str("use crate::language::english::dialects::EnglishDialect;\n\n");
 
@@ -125,7 +128,10 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     for lang in languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("#[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("use crate::language::{}::dialects::{}Dialect;\n\n", lang.dir_name, lang.name));
+            code.push_str(&format!(
+                "use crate::language::{}::dialects::{}Dialect;\n\n",
+                lang.dir_name, lang.name
+            ));
         }
     }
     code.push_str("use serde::{Deserialize, Serialize};\n");
@@ -136,11 +142,11 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("pub fn parse_language(s: &str) -> Option<Language> {\n");
     code.push_str("    let s_lower = s.to_ascii_lowercase();\n\n");
     code.push_str("    match s_lower.as_str() {\n");
-    
+
     // Use helper function to generate parse language logic
     let parse_language_code = generate_parse_language_match_arms(languages);
     code.push_str(&parse_language_code);
-    
+
     code.push_str("        _ => None,\n");
     code.push_str("    }\n");
     code.push_str("}\n\n");
@@ -151,14 +157,17 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumCount, Display,\n");
     code.push_str(")]\n");
     code.push_str("pub enum Language {\n");
-    
+
     // Generate Language enum variants dynamically
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("    /// English language with its dialects\n");
             code.push_str("    English(EnglishDialect),\n");
         } else {
-            code.push_str(&format!("    /// {} language with its dialects\n", lang.name));
+            code.push_str(&format!(
+                "    /// {} language with its dialects\n",
+                lang.name
+            ));
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
             }
@@ -186,7 +195,7 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    Display,\n");
     code.push_str(")]\n");
     code.push_str("pub enum LanguageFamily {\n");
-    
+
     // Generate LanguageFamily enum variants dynamically
     for (i, lang) in languages.iter().enumerate() {
         if i == 0 {
@@ -207,7 +216,7 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("impl From<Language> for LanguageFamily {\n");
     code.push_str("    fn from(value: Language) -> Self {\n");
     code.push_str("        match value {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("            Language::English(_) => Self::English,\n");
@@ -215,7 +224,10 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
             }
-            code.push_str(&format!("            Language::{}(_) => Self::{},\n", lang.name, lang.name));
+            code.push_str(&format!(
+                "            Language::{}(_) => Self::{},\n",
+                lang.name, lang.name
+            ));
         }
     }
     code.push_str("        }\n");
@@ -226,7 +238,7 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("impl LanguageFamily {\n");
     code.push_str("    pub fn dict_suffix(&self) -> &'static str {\n");
     code.push_str("        match self {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("            Self::English => \"\",\n");
@@ -234,7 +246,11 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
             }
-            code.push_str(&format!("            Self::{0} => \"-{1}\",\n", lang.name, feature_to_suffix(lang)));
+            code.push_str(&format!(
+                "            Self::{0} => \"-{1}\",\n",
+                lang.name,
+                feature_to_suffix(lang)
+            ));
         }
     }
     code.push_str("        }\n");
@@ -283,9 +299,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
         "//! Language registry - central integration point using LanguageModule trait.\n",
     );
     code.push_str("//!\n");
-    code.push_str(
-        "//! This module provides all orchestration functions for language support.\n",
-    );
+    code.push_str("//! This module provides all orchestration functions for language support.\n");
     code.push_str(
         "//! It is the only place that imports concrete language module implementations.\n\n",
     );
@@ -308,11 +322,14 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
         if lang.dir_name == "english" {
             continue; // English already imported above
         }
-        
+
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("#[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("use super::{}::module::{}Module;\n\n", lang.dir_name, lang.name));
+        code.push_str(&format!(
+            "use super::{}::module::{}Module;\n\n",
+            lang.dir_name, lang.name
+        ));
     }
 
     // DETECTION
@@ -325,19 +342,26 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
 
     // Generate detector registrations dynamically, sorted by confidence (highest first)
     let mut sorted_languages = languages.to_vec();
-    sorted_languages.sort_by(|a, b| b.confidence.partial_cmp(&a.confidence).unwrap_or(std::cmp::Ordering::Equal));
-    
+    sorted_languages.sort_by(|a, b| {
+        b.confidence
+            .partial_cmp(&a.confidence)
+            .unwrap_or(std::cmp::Ordering::Equal)
+    });
+
     for lang in &sorted_languages {
         if lang.dir_name == "english" {
             continue; // English detector added last (lowest confidence)
         }
-        
+
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("    detectors.push((Box::new({}Module::detector()), {:.2}));\n\n", lang.name, lang.confidence));
+        code.push_str(&format!(
+            "    detectors.push((Box::new({}Module::detector()), {:.2}));\n\n",
+            lang.name, lang.confidence
+        ));
     }
-    
+
     // English detector always added last
     code.push_str("    detectors.push((Box::new(EnglishModule::detector()), 0.30));\n\n");
     code.push_str("    detectors\n");
@@ -368,7 +392,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("/// Prose languages supported by Harper for text parsing.\n");
     code.push_str("#[derive(Clone, Copy, Debug, Eq, PartialEq)]\n");
     code.push_str("pub enum ProseLanguage {\n");
-    
+
     // Generate ProseLanguage enum variants dynamically
     for (i, lang) in languages.iter().enumerate() {
         if i > 0 {
@@ -386,7 +410,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("/// Convert a Harper Language to a ProseLanguage.\n");
     code.push_str("pub fn prose_language(language: &Language) -> ProseLanguage {\n");
     code.push_str("    match language {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        Language::English(_) => ProseLanguage::English,\n");
@@ -394,7 +418,10 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
-            code.push_str(&format!("        Language::{}(_) => ProseLanguage::{},\n", lang.name, lang.name));
+            code.push_str(&format!(
+                "        Language::{}(_) => ProseLanguage::{},\n",
+                lang.name, lang.name
+            ));
         }
     }
     code.push_str("    }\n");
@@ -406,7 +433,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
         "pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {\n",
     );
     code.push_str("    match family {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        LanguageFamily::English => EnglishModule::dictionary(),\n");
@@ -414,7 +441,10 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
-            code.push_str(&format!("        LanguageFamily::{0} => {1}Module::dictionary(),\n", lang.name, lang.name));
+            code.push_str(&format!(
+                "        LanguageFamily::{0} => {1}Module::dictionary(),\n",
+                lang.name, lang.name
+            ));
         }
     }
     code.push_str("    }\n");
@@ -433,7 +463,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    markdown_options: MarkdownOptions,\n");
     code.push_str(") -> Option<Box<dyn Parser>> {\n");
     code.push_str("    match (language_id, prose_language(&language)) {\n");
-    
+
     // Mail format parsers
     for lang in languages {
         if lang.dir_name == "english" {
@@ -447,50 +477,65 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     }
     code.push('\n');
     code.push_str("        // Markdown/Quarto format\n");
-    
+
     // Markdown parsers for non-English languages
     for lang in languages {
         if lang.dir_name == "english" {
             continue;
         }
-        
+
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("        (\"markdown\" | \"quarto\", ProseLanguage::{0}) => Some(Box::new(\n", lang.name));
+        code.push_str(&format!(
+            "        (\"markdown\" | \"quarto\", ProseLanguage::{0}) => Some(Box::new(\n",
+            lang.name
+        ));
         code.push_str("            Markdown::with_inline_parser(markdown_options, |source| {\n");
-        code.push_str(&format!("                {}Module::plain_parser().parse(source)\n", lang.name));
+        code.push_str(&format!(
+            "                {}Module::plain_parser().parse(source)\n",
+            lang.name
+        ));
         code.push_str("            }),\n");
         code.push_str("        )),\n");
     }
     code.push_str("        (\"markdown\" | \"quarto\", _) => Some(Box::new(Markdown::new(markdown_options))),\n");
     code.push('\n');
     code.push_str("        // Org mode format\n");
-    
+
     // Org mode parsers for non-English languages
     for lang in languages {
         if lang.dir_name == "english" {
             continue;
         }
-        
+
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
         }
         code.push_str(&format!("        (\"org\", ProseLanguage::{0}) => Some(Box::new(OrgMode::with_inline_parser(|source| {{\n", lang.name));
-        code.push_str(&format!("            {}Module::plain_parser().parse(source)\n", lang.name));
+        code.push_str(&format!(
+            "            {}Module::plain_parser().parse(source)\n",
+            lang.name
+        ));
         code.push_str("        }))),\n");
     }
     code.push_str("        (\"org\", _) => Some(Box::new(OrgMode::default())),\n");
     code.push('\n');
     code.push_str("        // Plain text format\n");
-    
+
     // Plain text parsers
     for lang in languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("        (\"plaintext\" | \"text\", ProseLanguage::{0}) => {{\n", lang.name));
-        code.push_str(&format!("            Some(Box::new({}Module::plain_parser()))\n", lang.name));
+        code.push_str(&format!(
+            "        (\"plaintext\" | \"text\", ProseLanguage::{0}) => {{\n",
+            lang.name
+        ));
+        code.push_str(&format!(
+            "            Some(Box::new({}Module::plain_parser()))\n",
+            lang.name
+        ));
         code.push_str("        }\n");
     }
     code.push_str("        _ => None,\n");
@@ -505,11 +550,13 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    dictionary: Arc<impl Dictionary + 'static>,\n");
     code.push_str(") {\n");
     code.push_str("    match language {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        Language::English(_dialect) => {\n");
-            code.push_str("            let lang_group = EnglishModule::rust_lint_group(dictionary);\n");
+            code.push_str(
+                "            let lang_group = EnglishModule::rust_lint_group(dictionary);\n",
+            );
             code.push_str("            out.merge_from(lang_group);\n");
             code.push_str("        }\n");
         } else {
@@ -517,7 +564,10 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
             code.push_str(&format!("        Language::{}(_) => {{\n", lang.name));
-            code.push_str(&format!("            let lang_group = {}Module::rust_lint_group(dictionary);\n", lang.name));
+            code.push_str(&format!(
+                "            let lang_group = {}Module::rust_lint_group(dictionary);\n",
+                lang.name
+            ));
             code.push_str("            out.merge_from(lang_group);\n");
             code.push_str("        }\n");
         }
@@ -529,7 +579,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("/// Get the Weir rule lint group for a specific language.\n");
     code.push_str("pub fn weir_rules_lint_group(language: Language) -> LintGroup {\n");
     code.push_str("    match language {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        Language::English(_) => EnglishModule::weir_lint_group(),\n");
@@ -537,14 +587,19 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
             if let Some(feature) = &lang.feature {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
-            code.push_str(&format!("        Language::{}(_) => {}Module::weir_lint_group(),\n", lang.name, lang.name));
+            code.push_str(&format!(
+                "        Language::{}(_) => {}Module::weir_lint_group(),\n",
+                lang.name, lang.name
+            ));
         }
     }
     code.push_str("    }\n");
     code.push_str("}\n\n");
 
     // CURATED LINT GROUPS
-    code.push_str("/// Create a new curated lint group for a specific language with a custom dictionary.\n");
+    code.push_str(
+        "/// Create a new curated lint group for a specific language with a custom dictionary.\n",
+    );
     code.push_str("pub fn new_curated_for_language(\n");
     code.push_str("    _dictionary: Arc<impl Dictionary + 'static>,\n");
     code.push_str("    language: Language,\n");
@@ -552,7 +607,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    use crate::language::module::LanguageModule;\n\n");
 
     code.push_str("    match language {\n");
-    
+
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        Language::English(_dialect) => {\n");
@@ -565,8 +620,14 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
                 code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             }
             code.push_str(&format!("        Language::{}(dialect) => {{\n", lang.name));
-            code.push_str(&format!("            use crate::language::{}::module::{}Module;\n\n", lang.dir_name, lang.name));
-            code.push_str(&format!("            let group = {}Module::curated_lint_group(dialect);\n", lang.name));
+            code.push_str(&format!(
+                "            use crate::language::{}::module::{}Module;\n\n",
+                lang.dir_name, lang.name
+            ));
+            code.push_str(&format!(
+                "            let group = {}Module::curated_lint_group(dialect);\n",
+                lang.name
+            ));
             code.push_str("            group\n");
             code.push_str("        }\n");
         }
@@ -651,13 +712,17 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("        S: serde::Serializer,\n");
     code.push_str("    {\n");
     code.push_str("        let mut scoped = serializer.serialize_struct(\"DialectFlags\", 4)?;\n");
-    
+
     // Generate serialize fields dynamically
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("        scoped.serialize_field(\"{}\", &self.{})?;\n", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+        code.push_str(&format!(
+            "        scoped.serialize_field(\"{}\", &self.{})?;\n",
+            lang.dir_name.to_lowercase(),
+            lang.dir_name.to_lowercase()
+        ));
     }
     code.push_str("        scoped.end()\n");
     code.push_str("    }\n");
@@ -682,13 +747,21 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("impl From<ScopedDialectFlagsSerde> for DialectFlags {\n");
     code.push_str("    fn from(value: ScopedDialectFlagsSerde) -> Self {\n");
     code.push_str("        Self {\n");
-    
+
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("            {}: value.{},\n", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            {}: value.{},\n",
+                lang.dir_name.to_lowercase(),
+                lang.dir_name.to_lowercase()
+            ));
         } else {
-            code.push_str(&format!("            {}: value.{},", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            {}: value.{},",
+                lang.dir_name.to_lowercase(),
+                lang.dir_name.to_lowercase()
+            ));
             if lang.dir_name != "slovak" {
                 code.push_str("\n");
             }
@@ -703,13 +776,21 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("    #[must_use]\n");
     code.push_str("    pub const fn empty() -> Self {\n");
     code.push_str("        Self {\n");
-    
+
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("            {}: {}::empty(),\n", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "            {}: {}::empty(),\n",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
         } else {
-            code.push_str(&format!("            {}: {}::empty(),", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "            {}: {}::empty(),",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
             if lang.dir_name != "slovak" {
                 code.push_str("\n");
             }
@@ -722,22 +803,31 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("    /// Creates a DialectFlags with the specified dialect flags.\n");
     code.push_str("    #[must_use]\n");
     code.push_str("    pub const fn new(\n");
-    
+
     // Generate parameters dynamically
     for (i, lang) in languages.iter().enumerate() {
         if i == 0 {
             code.push_str("        english: EnglishDialectFlags,\n");
         } else {
             if let Some(feature) = &lang.feature {
-                code.push_str(&format!("        #[cfg(feature = \"{}\")] {}: {},\n", feature, lang.dir_name.to_lowercase(), lang.flags_module));
+                code.push_str(&format!(
+                    "        #[cfg(feature = \"{}\")] {}: {},\n",
+                    feature,
+                    lang.dir_name.to_lowercase(),
+                    lang.flags_module
+                ));
             } else {
-                code.push_str(&format!("        {}: {},\n", lang.dir_name.to_lowercase(), lang.flags_module));
+                code.push_str(&format!(
+                    "        {}: {},\n",
+                    lang.dir_name.to_lowercase(),
+                    lang.flags_module
+                ));
             }
         }
     }
     code.push_str("    ) -> Self {\n");
     code.push_str("        Self {\n");
-    
+
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
@@ -769,16 +859,24 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
 
     code.push_str("        Self {\n");
     code.push_str("            english: english_flags,\n");
-    
+
     for lang in &languages {
         if lang.dir_name == "english" {
             continue;
         }
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("            {}: {}::empty(),\n", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "            {}: {}::empty(),\n",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
         } else {
-            code.push_str(&format!("            {}: {}::empty(),", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "            {}: {}::empty(),",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
             if lang.dir_name != "slovak" {
                 code.push_str("\n");
             }
@@ -792,7 +890,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("    #[allow(unused_mut)]\n");
     code.push_str("    pub fn is_empty(self) -> bool {\n");
     code.push_str("        let mut result = self.english.is_empty();\n");
-    
+
     for lang in &languages {
         if lang.dir_name == "english" {
             continue;
@@ -800,7 +898,10 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             code.push_str("        {\n");
-            code.push_str(&format!("            result = result && self.{}.is_empty();\n", lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            result = result && self.{}.is_empty();\n",
+                lang.dir_name.to_lowercase()
+            ));
             code.push_str("        }\n");
         }
     }
@@ -827,21 +928,35 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         if lang.dir_name == "english" {
             continue;
         }
-        
+
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
         }
         code.push_str("    #[must_use]\n");
-        code.push_str(&format!("    pub fn is_{}_dialect_enabled(self, dialect: {}Dialect) -> bool {{\n", lang.dir_name.to_lowercase(), lang.name));
-        code.push_str(&format!("        self.{}.is_dialect_enabled(dialect)\n", lang.dir_name.to_lowercase()));
+        code.push_str(&format!(
+            "    pub fn is_{}_dialect_enabled(self, dialect: {}Dialect) -> bool {{\n",
+            lang.dir_name.to_lowercase(),
+            lang.name
+        ));
+        code.push_str(&format!(
+            "        self.{}.is_dialect_enabled(dialect)\n",
+            lang.dir_name.to_lowercase()
+        ));
         code.push_str("    }\n\n");
 
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
         }
         code.push_str("    #[must_use]\n");
-        code.push_str(&format!("    pub fn is_{}_dialect_enabled_strict(self, dialect: {}Dialect) -> bool {{\n", lang.dir_name.to_lowercase(), lang.name));
-        code.push_str(&format!("        self.{}.is_dialect_enabled_strict(dialect)\n", lang.dir_name.to_lowercase()));
+        code.push_str(&format!(
+            "    pub fn is_{}_dialect_enabled_strict(self, dialect: {}Dialect) -> bool {{\n",
+            lang.dir_name.to_lowercase(),
+            lang.name
+        ));
+        code.push_str(&format!(
+            "        self.{}.is_dialect_enabled_strict(dialect)\n",
+            lang.dir_name.to_lowercase()
+        ));
         code.push_str("    }\n\n");
     }
 
@@ -859,7 +974,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     );
     code.push_str("        // Get the most used dialects for each language separately\n");
     code.push_str("        let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);\n");
-    
+
     for lang in &languages {
         if lang.dir_name == "english" {
             continue;
@@ -867,21 +982,33 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("        let {}_flags = {}::get_most_used_dialects_from_document(document);\n", lang.dir_name.to_lowercase(), lang.flags_module));
+        code.push_str(&format!(
+            "        let {}_flags = {}::get_most_used_dialects_from_document(document);\n",
+            lang.dir_name.to_lowercase(),
+            lang.flags_module
+        ));
     }
 
     code.push_str("\n        Self {\n");
     code.push_str("            english: english_flags,\n");
-    
+
     for lang in &languages {
         if lang.dir_name == "english" {
             continue;
         }
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("            {}: {}_flags,\n", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            {}: {}_flags,\n",
+                lang.dir_name.to_lowercase(),
+                lang.dir_name.to_lowercase()
+            ));
         } else {
-            code.push_str(&format!("            {}: {}_flags,", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            {}: {}_flags,",
+                lang.dir_name.to_lowercase(),
+                lang.dir_name.to_lowercase()
+            ));
             if lang.dir_name != "slovak" {
                 code.push_str("\n");
             }
@@ -897,12 +1024,17 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
 
     code.push_str("    fn bitor(self, rhs: Self) -> Self::Output {\n");
     code.push_str("        Self {\n");
-    
+
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
         }
-        code.push_str(&format!("            {}: self.{} | rhs.{},", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+        code.push_str(&format!(
+            "            {}: self.{} | rhs.{},",
+            lang.dir_name.to_lowercase(),
+            lang.dir_name.to_lowercase(),
+            lang.dir_name.to_lowercase()
+        ));
         code.push_str("\n");
     }
     code.push_str("        }\n");
@@ -913,7 +1045,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("impl std::ops::BitOrAssign for DialectFlags {\n");
     code.push_str("    fn bitor_assign(&mut self, rhs: Self) {\n");
     code.push_str("        self.english |= rhs.english;\n");
-    
+
     for lang in &languages {
         if lang.dir_name == "english" {
             continue;
@@ -921,7 +1053,11 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
             code.push_str("        {\n");
-            code.push_str(&format!("            self.{} |= rhs.{};\n", lang.dir_name.to_lowercase(), lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "            self.{} |= rhs.{};\n",
+                lang.dir_name.to_lowercase(),
+                lang.dir_name.to_lowercase()
+            ));
             code.push_str("        }\n");
         }
     }
@@ -943,13 +1079,21 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     );
     code.push_str("#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]\n");
     code.push_str("struct ScopedDialectFlagsSerde {\n");
-    
+
     for lang in &languages {
         if let Some(feature) = &lang.feature {
             code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("    {}: {},\n", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "    {}: {},\n",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
         } else {
-            code.push_str(&format!("    {}: {},", lang.dir_name.to_lowercase(), lang.flags_module));
+            code.push_str(&format!(
+                "    {}: {},",
+                lang.dir_name.to_lowercase(),
+                lang.flags_module
+            ));
             if lang.dir_name != "slovak" {
                 code.push_str("\n");
             }
@@ -977,16 +1121,23 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
             continue;
         }
         if let Some(feature) = &lang.feature {
-            code.push_str(&format!("                #[cfg(feature = \"{}\")]\n", feature));
+            code.push_str(&format!(
+                "                #[cfg(feature = \"{}\")]\n",
+                feature
+            ));
         }
-        code.push_str(&format!("                let mut {} = {}::default();\n", lang.dir_name.to_lowercase(), lang.flags_module));
+        code.push_str(&format!(
+            "                let mut {} = {}::default();\n",
+            lang.dir_name.to_lowercase(),
+            lang.flags_module
+        ));
     }
-    
+
     code.push_str("\n");
 
     code.push_str("                for (key, val) in map {\n");
     code.push_str("                    match key.as_str() {\n");
-    
+
     // English deserialization
     code.push_str("                        \"english\" => {\n");
     code.push_str("                            english = match val {\n");
@@ -1020,33 +1171,46 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         if lang.dir_name == "english" {
             continue;
         }
-        
+
         if let Some(feature) = &lang.feature {
-            code.push_str(&format!("                        #[cfg(feature = \"{}\")]\n", feature));
+            code.push_str(&format!(
+                "                        #[cfg(feature = \"{}\")]\n",
+                feature
+            ));
         }
-        code.push_str(&format!("                        \"{}\" => {{\n", lang.dir_name.to_lowercase()));
-        code.push_str(&format!("                            {} = match val {{\n", lang.dir_name.to_lowercase()));
+        code.push_str(&format!(
+            "                        \"{}\" => {{\n",
+            lang.dir_name.to_lowercase()
+        ));
+        code.push_str(&format!(
+            "                            {} = match val {{\n",
+            lang.dir_name.to_lowercase()
+        ));
         code.push_str("                                Value::String(s) => match s.as_str() {\n");
-        
+
         // Generate dialect variant match arms
         // This is hardcoded per language for now
         if lang.dir_name == "german" {
             code.push_str("                                    \"STANDARD\" => Ok(GermanDialectFlags::STANDARD),\n");
             code.push_str("                                    \"AUSTRIAN\" => Ok(GermanDialectFlags::AUSTRIAN),\n");
-            code.push_str("                                    \"SWISS\" => Ok(GermanDialectFlags::SWISS),\n");
+            code.push_str(
+                "                                    \"SWISS\" => Ok(GermanDialectFlags::SWISS),\n",
+            );
             code.push_str("                                    _ => Err(Error::custom(format!(\"Unknown German dialect: {s}\"))),\n");
         } else if lang.dir_name == "portuguese" {
             code.push_str("                                    \"EUROPEAN\" => Ok(PortugueseDialectFlags::EUROPEAN),\n");
             code.push_str("                                    \"BRAZILIAN\" => Ok(PortugueseDialectFlags::BRAZILIAN),\n");
             code.push_str("                                    \"AFRICAN\" => Ok(PortugueseDialectFlags::AFRICAN),\n");
             code.push_str("                                    _ => Err(Error::custom(format!(\n");
-            code.push_str("                                        \"Unknown Portuguese dialect: {s}\"\n");
+            code.push_str(
+                "                                        \"Unknown Portuguese dialect: {s}\"\n",
+            );
             code.push_str("                                    ))),\n");
         } else if lang.dir_name == "slovak" {
             code.push_str("                                    \"STANDARD\" => Ok(SlovakDialectFlags::STANDARD),\n");
             code.push_str("                                    _ => Err(Error::custom(format!(\"Unknown Slovak dialect: {s}\"))),\n");
         }
-        
+
         code.push_str("                                },\n");
         code.push_str("                                _ => {\n");
         code.push_str(&format!("                                    Err(Error::invalid_type(Unexpected::Other(\"{}\"), &\"string\"))\n", lang.dir_name.to_lowercase()));
@@ -1068,9 +1232,15 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
             continue; // English already added
         }
         if let Some(feature) = &lang.feature {
-            code.push_str(&format!("                                #[cfg(feature = \"{}\")]\n", feature));
+            code.push_str(&format!(
+                "                                #[cfg(feature = \"{}\")]\n",
+                feature
+            ));
             code.push_str("                                {\n");
-            code.push_str(&format!("                                    fields.push(\"{}\");\n", lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "                                    fields.push(\"{}\");\n",
+                lang.dir_name.to_lowercase()
+            ));
             code.push_str("                                }\n");
         }
     }
@@ -1091,18 +1261,24 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     code.push_str("                }\n");
     code.push_str("                Ok(ScopedDialectFlagsSerde {\n");
     code.push_str("                    english,\n");
-    
+
     // Generate struct fields dynamically
     for lang in &languages {
         if lang.dir_name == "english" {
             continue; // English already added
         }
         if let Some(feature) = &lang.feature {
-            code.push_str(&format!("                    #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("                    {},\n", lang.dir_name.to_lowercase()));
+            code.push_str(&format!(
+                "                    #[cfg(feature = \"{}\")]\n",
+                feature
+            ));
+            code.push_str(&format!(
+                "                    {},\n",
+                lang.dir_name.to_lowercase()
+            ));
         }
     }
-    
+
     code.push_str("                })\n");
     code.push_str("            }\n");
     code.push_str("            Value::String(s) => Err(Error::custom(format!(\n");

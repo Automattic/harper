@@ -3,8 +3,6 @@
 //!
 //! This module provides the core types for supporting multiple languages in Harper,
 //! including language families and specific language variants with dialects.
-use crate::language::dialects::dialect_trait::Dialect;
-
 use crate::language::english::dialects::EnglishDialect;
 
 #[cfg(feature = "de")]
