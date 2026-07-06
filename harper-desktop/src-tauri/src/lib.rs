@@ -21,7 +21,7 @@ use std::{
     sync::{Arc, Mutex as StdMutex},
 };
 use tauri::Manager as _;
-use tracing::Level;
+use tracing::{Level, error};
 use tracing_subscriber::FmtSubscriber;
 
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
@@ -64,23 +64,6 @@ struct IntegrationView {
     bundle_id: String,
     enabled: bool,
     display_name: String,
-}
-
-fn accessibility_allows_highlighter_start() -> bool {
-    platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
-}
-
-fn start_highlighter_service_if_enabled_and_permitted(
-    highlighter_service: &HighlighterService,
-    highlighter_service_enabled: bool,
-) {
-    if !highlighter_service_enabled || !accessibility_allows_highlighter_start() {
-        return;
-    }
-
-    if let Err(error) = highlighter_service.start() {
-        eprintln!("failed to start highlighter service: {error}");
-    }
 }
 
 #[cfg(target_os = "macos")]
@@ -159,11 +142,14 @@ pub fn run_tauri() {
 
     let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
+
     let highlighter_service = HighlighterService::new(config.clone());
-    start_highlighter_service_if_enabled_and_permitted(
-        &highlighter_service,
-        highlighter_service_enabled,
-    );
+    if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+    {
+        highlighter_service
+            .start()
+            .inspect_err(|err| error!("Unable to start highlighter: {err}"));
+    }
 
     tauri::Builder::default()
         .manage(config)
@@ -181,7 +167,6 @@ pub fn run_tauri() {
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
 
             set_up_tray_menu(app.handle())?;
-
             warm_app_search_cache(app.handle().clone());
 
             if is_first_launch {
