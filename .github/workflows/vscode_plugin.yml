@@ -54,7 +54,7 @@ jobs:
         with:
           cache-bin: "true"
       - name: Build harper-ls
-        uses: houseabsolute/actions-rust-cross@fe6ede73c7f0a50412ec05994e2aa5a7bf635eac # v1.0.7
+        uses: houseabsolute/actions-rust-cross@21b0f18dc621b25bfae556ff2791fca4173121e8 # v1.0.8
         with:
           target: ${{ matrix.platform.rust_target }}
           args: "--locked --release --bin harper-ls"
