@@ -3,6 +3,7 @@ use std::time::{Duration, Instant};
 use winit::application::ApplicationHandler;
 use winit::event::{ElementState, MouseButton, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
+use winit::monitor::MonitorHandle;
 #[cfg(target_os = "macos")]
 use winit::platform::macos::{ActivationPolicy, EventLoopBuilderExtMacOS};
 use winit::window::WindowId;
@@ -16,6 +17,9 @@ use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
+
+const DEFAULT_READ_INTERVAL: Duration = Duration::from_nanos(16_666_667);
+const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
 ///
@@ -32,8 +36,6 @@ pub struct WindowManager {
     add_to_dictionary: AddToDictionary,
     disable_rule: DisableRule,
     refresh_config: RefreshConfig,
-    read_interval: Duration,
-    config_poll_interval: Duration,
 }
 
 pub struct WindowManagerCallbacks {
@@ -44,11 +46,6 @@ pub struct WindowManagerCallbacks {
     pub refresh_config: RefreshConfig,
 }
 
-pub struct WindowManagerIntervals {
-    pub read: Duration,
-    pub config_poll: Duration,
-}
-
 impl WindowManager {
     /// Creates the event loop before windows exist because winit requires window creation to happen
     /// from inside that loop's lifecycle callbacks.
@@ -56,7 +53,6 @@ impl WindowManager {
         context: egui::Context,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
-        intervals: WindowManagerIntervals,
     ) -> Result<Self, Error> {
         let mut event_loop_builder = EventLoop::builder();
 
@@ -75,19 +71,12 @@ impl WindowManager {
             add_to_dictionary: callbacks.add_to_dictionary,
             disable_rule: callbacks.disable_rule,
             refresh_config: callbacks.refresh_config,
-            read_interval: intervals.read,
-            config_poll_interval: intervals.config_poll,
         })
     }
 
     /// Seeds externally supplied lint rectangles before the event loop takes ownership of rendering.
     pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
         self.rects = rects;
-    }
-
-    /// Lets callers tune OS polling without exposing the window-manager internals that schedule it.
-    pub fn set_read_interval(&mut self, read_interval: Duration) {
-        self.read_interval = read_interval;
     }
 
     /// Transfers ownership into winit's application handler because `run_app` owns the process-level
@@ -104,14 +93,11 @@ impl WindowManager {
                 disable_rule: self.disable_rule,
                 refresh_config: self.refresh_config,
             },
-            WindowManagerIntervals {
-                read: self.read_interval,
-                config_poll: self.config_poll_interval,
-            },
         );
 
-        self.event_loop
-            .set_control_flow(ControlFlow::WaitUntil(Instant::now() + self.read_interval));
+        self.event_loop.set_control_flow(ControlFlow::WaitUntil(
+            Instant::now() + DEFAULT_READ_INTERVAL,
+        ));
         let result = self.event_loop.run_app(&mut app);
 
         if let Some(error) = app.error {
@@ -129,7 +115,6 @@ struct WindowManagerApp {
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
     read_interval: Duration,
-    config_poll_interval: Duration,
     last_read: Instant,
     last_config_poll: Instant,
     refresh_config: RefreshConfig,
@@ -146,9 +131,8 @@ impl WindowManagerApp {
         rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
-        intervals: WindowManagerIntervals,
     ) -> Self {
-        let read_interval = intervals.read;
+        let read_interval = DEFAULT_READ_INTERVAL;
         Self {
             context,
             windows: Vec::new(),
@@ -161,7 +145,6 @@ impl WindowManagerApp {
             os_broker,
             lint_text: callbacks.lint_text,
             read_interval,
-            config_poll_interval: intervals.config_poll,
             last_read: Instant::now() - read_interval,
             last_config_poll: Instant::now(),
             refresh_config: callbacks.refresh_config,
@@ -235,6 +218,13 @@ impl WindowManagerApp {
     }
 }
 
+fn monitor_refresh_interval(monitor: &MonitorHandle) -> Option<Duration> {
+    monitor
+        .refresh_rate_millihertz()
+        .filter(|refresh_rate| *refresh_rate > 0)
+        .map(|refresh_rate| Duration::from_nanos(1_000_000_000_000 / u64::from(refresh_rate)))
+}
+
 impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
@@ -244,7 +234,7 @@ impl ApplicationHandler for WindowManagerApp {
             self.last_read = now;
         }
 
-        if now.duration_since(self.last_config_poll) >= self.config_poll_interval {
+        if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
             self.last_config_poll = now;
         }
@@ -252,7 +242,7 @@ impl ApplicationHandler for WindowManagerApp {
         self.update_cursor_hittest(event_loop);
 
         let next_read = self.last_read + self.read_interval;
-        let next_config_poll = self.last_config_poll + self.config_poll_interval;
+        let next_config_poll = self.last_config_poll + CONFIG_POLL_INTERVAL;
         event_loop.set_control_flow(ControlFlow::WaitUntil(next_read.min(next_config_poll)));
     }
 
@@ -261,7 +251,13 @@ impl ApplicationHandler for WindowManagerApp {
             return;
         }
 
-        for monitor in event_loop.available_monitors() {
+        let monitors = event_loop.available_monitors().collect::<Vec<_>>();
+
+        if let Some(refresh_interval) = monitors.iter().filter_map(monitor_refresh_interval).min() {
+            self.read_interval = refresh_interval;
+        }
+
+        for monitor in monitors {
             match pollster::block_on(Window::new(event_loop, monitor, self.context.clone())) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
