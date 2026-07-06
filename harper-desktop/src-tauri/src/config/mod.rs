@@ -1,4 +1,6 @@
 mod error;
+mod integration;
+
 pub use error::Error;
 use harper_core::{
     Dialect, IgnoredLints,
@@ -6,10 +8,8 @@ use harper_core::{
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
-use serde::{
-    Deserialize, Serialize,
-    de::{DeserializeOwned, Error as _},
-};
+pub use integration::Integration;
+use serde::de::{DeserializeOwned, Error as _};
 use std::{fs, io, path::PathBuf, sync::Arc};
 
 /// User-controlled app state needed by Tauri commands and the highlighter process.
@@ -25,12 +25,6 @@ pub struct Config {
     pub highlighter_service_enabled: bool,
 }
 
-#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]
-pub struct Integration {
-    pub bundle_id: String,
-    pub enabled: bool,
-}
-
 impl Config {
     pub fn new() -> Self {
         Self {
@@ -38,7 +32,7 @@ impl Config {
             dialect: Self::detect_system_dialect(),
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
-            integrations: Self::curated_integrations(),
+            integrations: Integration::curated_integrations(),
             debounce_ms: 0,
             auto_update: true,
             last_update_check: None,
@@ -46,34 +40,14 @@ impl Config {
         }
     }
 
-    pub fn detect_system_dialect() -> Dialect {
+    fn detect_system_dialect() -> Dialect {
         tauri_plugin_os::locale()
             .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
             .unwrap_or(Dialect::American)
     }
 
-    pub fn curated_integrations() -> Vec<Integration> {
-        [
-            "com.apple.TextEdit",
-            "com.apple.mail",
-            "com.apple.MobileSMS",
-            "com.apple.Notes",
-            "com.tinyspeck.slackmacgap",
-            "com.hnc.Discord",
-        ]
-        .into_iter()
-        .map(|bundle_id| Integration {
-            bundle_id: bundle_id.to_string(),
-            enabled: true,
-        })
-        .collect()
-    }
-
     pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
-        Self::is_integration_enabled_in(&self.integrations, bundle_id)
-    }
-
-    pub fn is_integration_enabled_in(integrations: &[Integration], bundle_id: &str) -> bool {
+        let integrations: &[Integration] = &self.integrations;
         integrations
             .iter()
             .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
@@ -156,7 +130,7 @@ impl Config {
         Arc::new(dictionary)
     }
 
-    pub fn create_dictionary(&self) -> Arc<MergedDictionary> {
+    fn create_dictionary(&self) -> Arc<MergedDictionary> {
         Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
     }
 
@@ -207,7 +181,7 @@ impl Config {
             ignored_lints: deserialize_field(object, "ignored_lints")?,
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
-                .unwrap_or_else(Self::curated_integrations),
+                .unwrap_or_else(Integration::curated_integrations),
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
             auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
             last_update_check: deserialize_optional_field::<Option<u64>>(
@@ -311,33 +285,6 @@ mod tests {
                 .unwrap(),
             serde_json::from_str::<serde_json::Value>(&serialized).unwrap()
         );
-    }
-
-    #[test]
-    fn new_uses_curated_integrations() {
-        let config = Config::new();
-
-        assert_eq!(config.integrations, Config::curated_integrations());
-        assert!(config.is_integration_enabled("com.apple.TextEdit"));
-        assert!(config.is_integration_enabled("com.apple.mail"));
-        assert!(config.is_integration_enabled("com.apple.MobileSMS"));
-        assert!(config.is_integration_enabled("com.apple.Notes"));
-        assert!(config.is_integration_enabled("com.tinyspeck.slackmacgap"));
-        assert!(config.is_integration_enabled("com.hnc.Discord"));
-    }
-
-    #[test]
-    fn deserialize_main_uses_curated_integrations_when_missing() {
-        let config = Config::new();
-        let mut value =
-            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
-        value.as_object_mut().unwrap().remove("integrations");
-
-        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
-
-        assert_eq!(deserialized.integrations, Config::curated_integrations());
-        assert!(deserialized.is_integration_enabled("com.tinyspeck.slackmacgap"));
-        assert!(deserialized.is_integration_enabled("com.hnc.Discord"));
     }
 
     #[test]

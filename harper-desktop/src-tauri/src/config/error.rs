@@ -1,5 +1,4 @@
 use std::io;
-
 use thiserror::Error;
 
 #[derive(Debug, Error)]
