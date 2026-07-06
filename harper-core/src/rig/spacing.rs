@@ -27,7 +27,7 @@ impl Spacing {
     ///
     /// Useful for matching punctuation that may or may not have spacing.
     pub fn with_optional_spacing(pattern: Box<dyn RegexNode>) -> Box<dyn RegexNode> {
-        Box::new(Concat::new(vec![
+        Box::new(Concat::new([
             Self::optional_whitespace(),
             pattern,
             Self::optional_whitespace(),
@@ -38,7 +38,7 @@ impl Spacing {
     ///
     /// This handles cases like "word,word" vs "word, word" vs "word , word".
     pub fn spaced(left: Box<dyn RegexNode>, right: Box<dyn RegexNode>) -> Box<dyn RegexNode> {
-        Box::new(Concat::new(vec![left, Self::optional_whitespace(), right]))
+        Box::new(Concat::new([left, Self::optional_whitespace(), right]))
     }
 
     /// Match a pattern with flexible spacing around punctuation.

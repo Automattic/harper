@@ -111,8 +111,8 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let pattern = Concat::new(vec![
-            Box::new(AnchorStart),
+        let pattern = Concat::new([
+            Box::new(AnchorStart) as Box<dyn RegexNode>,
             Box::new(Atom::any()),
             Box::new(Atom::any()),
             Box::new(AnchorEnd),
@@ -132,7 +132,10 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let pattern = Concat::new(vec![Box::new(Atom::word("hello")), Box::new(AnchorEnd)]);
+        let pattern = Concat::new([
+            Box::new(Atom::word("hello")) as Box<dyn RegexNode>,
+            Box::new(AnchorEnd),
+        ]);
 
         let result = pattern.exec(tokens, source, 0);
 

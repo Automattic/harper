@@ -12,8 +12,10 @@ pub struct Concat {
 
 impl Concat {
     /// Create a new Concat from a vector of patterns.
-    pub fn new(nodes: Vec<Box<dyn RegexNode>>) -> Self {
-        Self { nodes }
+    pub fn new(nodes: impl IntoIterator<Item = Box<dyn RegexNode>>) -> Self {
+        Self {
+            nodes: nodes.into_iter().collect(),
+        }
     }
 
     /// Create an empty Concat.
@@ -68,7 +70,10 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let concat = Concat::new(vec![Box::new(Atom::any()), Box::new(Atom::any())]);
+        let concat = Concat::new([
+            Box::new(Atom::any()) as Box<dyn RegexNode>,
+            Box::new(Atom::any()),
+        ]);
 
         let result = concat.exec(tokens, source, 0);
 
@@ -83,8 +88,8 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let concat = Concat::new(vec![
-            Box::new(Atom::word("hello")),
+        let concat = Concat::new([
+            Box::new(Atom::word("hello")) as Box<dyn RegexNode>,
             Box::new(Atom::word("goodbye")),
         ]);
 
@@ -101,8 +106,8 @@ mod tests {
 
         use crate::rig::CaptureGroup;
 
-        let concat = Concat::new(vec![
-            Box::new(CaptureGroup::new(0, Box::new(Atom::any()))),
+        let concat = Concat::new([
+            Box::new(CaptureGroup::new(0, Box::new(Atom::any()))) as Box<dyn RegexNode>,
             Box::new(CaptureGroup::new(1, Box::new(Atom::any()))),
         ]);
 

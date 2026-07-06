@@ -134,8 +134,8 @@ mod tests {
 
     #[test]
     fn test_rig_linter_concat() {
-        let pattern = Box::new(Concat::new(vec![
-            Box::new(Atom::any()),
+        let pattern = Box::new(Concat::new([
+            Box::new(Atom::any()) as Box<dyn RegexNode>,
             Box::new(Atom::any()),
         ]));
         let mut linter = TestRigLinter { rig: pattern };

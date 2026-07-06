@@ -21,10 +21,10 @@ impl Linter for FallRunAFoul {
 impl FallRunAFoul {
     pub fn new() -> Self {
         Self {
-            rig: Box::new(Concat::new(vec![
-                Box::new(Quantifier::optional(Box::new(Concat::new(vec![
-                    Box::new(Alternation::new(vec![
-                        Box::new(Atom::word("fall")),
+            rig: Box::new(Concat::new([
+                Box::new(Quantifier::optional(Box::new(Concat::new([
+                    Box::new(Alternation::new([
+                        Box::new(Atom::word("fall")) as Box<dyn RegexNode>,
                         Box::new(Atom::word("fell")),
                         Box::new(Atom::word("falls")),
                         Box::new(Atom::word("falling")),
@@ -32,25 +32,25 @@ impl FallRunAFoul {
                         Box::new(Atom::word("ran")),
                         Box::new(Atom::word("runs")),
                         Box::new(Atom::word("running")),
-                    ])),
+                    ])) as Box<dyn RegexNode>,
                     Box::new(Atom::whitespace()),
-                ])))),
+                ])))) as Box<dyn RegexNode>,
                 Box::new(Concat::new(vec![
                     Box::new(CaptureGroup::new(
                         0,
-                        Box::new(Alternation::new(vec![
-                            Box::new(Atom::word("fowl")),
+                        Box::new(Alternation::new([
+                            Box::new(Atom::word("fowl")) as Box<dyn RegexNode>,
                             Box::new(Atom::word("afowl")),
-                            Box::new(Concat::new(vec![
-                                Box::new(Atom::word("a")),
+                            Box::new(Concat::new([
+                                Box::new(Atom::word("a")) as Box<dyn RegexNode>,
                                 Box::new(Atom::whitespace()),
-                                Box::new(Alternation::new(vec![
-                                    Box::new(Atom::word("fowl")),
+                                Box::new(Alternation::new([
+                                    Box::new(Atom::word("fowl")) as Box<dyn RegexNode>,
                                     Box::new(Atom::word("foul")),
                                 ])),
                             ])),
                         ])),
-                    )),
+                    )) as Box<dyn RegexNode>,
                     Box::new(Atom::whitespace()),
                     Box::new(Atom::word("of")),
                 ])),

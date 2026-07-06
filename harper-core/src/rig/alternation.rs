@@ -10,8 +10,10 @@ pub struct Alternation {
 
 impl Alternation {
     /// Create a new Alternation from a vector of patterns.
-    pub fn new(nodes: Vec<Box<dyn RegexNode>>) -> Self {
-        Self { nodes }
+    pub fn new(nodes: impl IntoIterator<Item = Box<dyn RegexNode>>) -> Self {
+        Self {
+            nodes: nodes.into_iter().collect(),
+        }
     }
 
     /// Create an empty Alternation.
@@ -56,8 +58,8 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let alt = Alternation::new(vec![
-            Box::new(Atom::word("hello")),
+        let alt = Alternation::new([
+            Box::new(Atom::word("hello")) as Box<dyn RegexNode>,
             Box::new(Atom::word("goodbye")),
         ]);
 
@@ -73,8 +75,8 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let alt = Alternation::new(vec![
-            Box::new(Atom::word("hello")),
+        let alt = Alternation::new([
+            Box::new(Atom::word("hello")) as Box<dyn RegexNode>,
             Box::new(Atom::word("goodbye")),
         ]);
 
@@ -90,8 +92,8 @@ mod tests {
         let tokens = doc.get_tokens();
         let source = doc.get_source();
 
-        let alt = Alternation::new(vec![
-            Box::new(Atom::word("foo")),
+        let alt = Alternation::new([
+            Box::new(Atom::word("foo")) as Box<dyn RegexNode>,
             Box::new(Atom::word("bar")),
         ]);
 
