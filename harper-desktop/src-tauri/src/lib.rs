@@ -298,6 +298,7 @@ pub fn run_tauri() {
             }
         }
     };
+
     let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
     let highlighter_service = HighlighterService::new(config.clone());

@@ -1,3 +1,5 @@
+mod error;
+pub use error::Error;
 use harper_core::{
     Dialect, IgnoredLints,
     linting::{FlatConfig, LintGroup},
@@ -6,20 +8,9 @@ use harper_core::{
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use serde::{
     Deserialize, Serialize,
-    de::{DeserializeOwned, Error},
+    de::{DeserializeOwned, Error as _},
 };
 use std::{fs, io, path::PathBuf, sync::Arc};
-use thiserror::Error;
-
-#[derive(Debug, Error)]
-pub enum ConfigError {
-    #[error("system config directory is unavailable")]
-    ConfigDirUnavailable,
-    #[error("failed to serialize or deserialize config")]
-    Serde(#[from] serde_json::Error),
-    #[error("failed to access config file")]
-    Io(#[from] io::Error),
-}
 
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
@@ -122,10 +113,10 @@ impl Config {
         }
     }
 
-    pub async fn save_to_system(&self) -> Result<(), ConfigError> {
-        let folder_path = Self::folder_path().ok_or(ConfigError::ConfigDirUnavailable)?;
-        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
-        let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+    pub async fn save_to_system(&self) -> Result<(), Error> {
+        let folder_path = Self::folder_path().ok_or(Error::ConfigDirUnavailable)?;
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        let dictionary_path = Self::dictionary_path().ok_or(Error::ConfigDirUnavailable)?;
 
         fs::create_dir_all(folder_path)?;
         fs::write(main_path, self.serialize_main()?)?;
@@ -134,8 +125,8 @@ impl Config {
         Ok(())
     }
 
-    pub fn main_config_exists() -> Result<bool, ConfigError> {
-        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+    pub fn main_config_exists() -> Result<bool, Error> {
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
 
         match fs::metadata(main_path) {
             Ok(_) => Ok(true),
@@ -144,9 +135,9 @@ impl Config {
         }
     }
 
-    pub async fn load_from_system() -> Result<Self, ConfigError> {
-        let main_path = Self::main_path().ok_or(ConfigError::ConfigDirUnavailable)?;
-        let dictionary_path = Self::dictionary_path().ok_or(ConfigError::ConfigDirUnavailable)?;
+    pub async fn load_from_system() -> Result<Self, Error> {
+        let main_path = Self::main_path().ok_or(Error::ConfigDirUnavailable)?;
+        let dictionary_path = Self::dictionary_path().ok_or(Error::ConfigDirUnavailable)?;
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
