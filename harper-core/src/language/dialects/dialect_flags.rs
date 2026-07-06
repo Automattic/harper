@@ -205,7 +205,8 @@ impl DialectFlags {
         #[cfg(feature = "de")]
         let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "pt")]
-        let portuguese_flags = PortugueseDialectFlags::get_most_used_dialects_from_document(document);
+        let portuguese_flags =
+            PortugueseDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "sk")]
         let slovak_flags = SlovakDialectFlags::get_most_used_dialects_from_document(document);
 
@@ -338,9 +339,10 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                         "Unknown Portuguese dialect: {s}"
                                     ))),
                                 },
-                                _ => {
-                                    Err(Error::invalid_type(Unexpected::Other("portuguese"), &"string"))
-                                }
+                                _ => Err(Error::invalid_type(
+                                    Unexpected::Other("portuguese"),
+                                    &"string",
+                                )),
                             }?;
                         }
                         #[cfg(feature = "sk")]
@@ -373,8 +375,8 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                     fields.push("slovak");
                                 }
                                 fields
-                            };                            // Convert to a static slice by leaking the memory
-                            // This is safe as it's only done during deserialization error handling
+                            }; // Convert to a static slice by leaking the memory
+                               // This is safe as it's only done during deserialization error handling
                             let valid_fields_static: &'static [&'static str] =
                                 Box::leak(valid_fields.into_boxed_slice());
                             return Err(Error::unknown_field(&key, valid_fields_static));

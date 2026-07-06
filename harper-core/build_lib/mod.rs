@@ -24,7 +24,7 @@ pub mod language_modules;
 pub mod weir_rules;
 
 use self::language_modules::generate_language_modules;
-use weir_rules::{write_grouped_weir_boilerplate, process_language_weir_rules};
+use weir_rules::{process_language_weir_rules, write_grouped_weir_boilerplate};
 
 pub fn run_build() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));

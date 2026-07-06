@@ -54,7 +54,10 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     let language_table = match value.get("language") {
         Some(toml::Value::Table(t)) => t,
         _ => {
-            eprintln!("Warning: Missing [language] section in config.toml for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing [language] section in config.toml for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
@@ -62,7 +65,10 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     let name = match language_table.get("name").and_then(|v| v.as_str()) {
         Some(n) => n.to_string(),
         None => {
-            eprintln!("Warning: Missing 'name' in [language] section for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing 'name' in [language] section for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
@@ -70,15 +76,24 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     let dir_name = match language_table.get("dir_name").and_then(|v| v.as_str()) {
         Some(d) => d.to_string(),
         None => {
-            eprintln!("Warning: Missing 'dir_name' in [language] section for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing 'dir_name' in [language] section for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
 
-    let feature = language_table.get("feature").and_then(|v| v.as_str()).map(|s| s.to_string());
+    let feature = language_table
+        .get("feature")
+        .and_then(|v| v.as_str())
+        .map(|s| s.to_string());
 
     // If feature is explicitly "null" or empty, treat as None
-    let feature = if feature.as_ref().map_or(false, |f| f == "null" || f.is_empty()) {
+    let feature = if feature
+        .as_ref()
+        .map_or(false, |f| f == "null" || f.is_empty())
+    {
         None
     } else {
         feature
@@ -88,19 +103,24 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     let metadata_table = match value.get("metadata") {
         Some(toml::Value::Table(t)) => t,
         _ => {
-            eprintln!("Warning: Missing [metadata] section in config.toml for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing [metadata] section in config.toml for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
 
     let aliases = match metadata_table.get("aliases") {
-        Some(toml::Value::Array(arr)) => {
-            arr.iter()
-                .filter_map(|v| v.as_str().map(|s| s.to_string()))
-                .collect()
-        }
+        Some(toml::Value::Array(arr)) => arr
+            .iter()
+            .filter_map(|v| v.as_str().map(|s| s.to_string()))
+            .collect(),
         _ => {
-            eprintln!("Warning: Missing or invalid 'aliases' in [metadata] section for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing or invalid 'aliases' in [metadata] section for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
@@ -109,19 +129,25 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
         Some(toml::Value::Float(f)) => *f,
         Some(toml::Value::Integer(i)) => *i as f64,
         _ => {
-            eprintln!("Warning: Missing or invalid 'confidence' in [metadata] section for {}", dir_path.display());
+            eprintln!(
+                "Warning: Missing or invalid 'confidence' in [metadata] section for {}",
+                dir_path.display()
+            );
             return None;
         }
     };
 
     // Extract dialects section - can be either inline table with alias_groups or array of tables
-    let dialect_alias_groups = if let Some(toml::Value::Array(dialects_array)) = value.get("dialects") {
+    let dialect_alias_groups = if let Some(toml::Value::Array(dialects_array)) =
+        value.get("dialects")
+    {
         // Array of tables format: [[dialects]], [[dialects]], ...
         let mut result = Vec::new();
         for dialect_table in dialects_array {
             if let toml::Value::Table(table) = dialect_table {
-                if let (Some(toml::Value::String(name)), Some(toml::Value::Array(aliases_arr))) = 
-                    (table.get("name"), table.get("aliases")) {
+                if let (Some(toml::Value::String(name)), Some(toml::Value::Array(aliases_arr))) =
+                    (table.get("name"), table.get("aliases"))
+                {
                     let aliases: Vec<String> = aliases_arr
                         .iter()
                         .filter_map(|v| v.as_str().map(|s| s.to_string()))
@@ -137,7 +163,7 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
             let mut result = Vec::new();
             let mut keys: Vec<_> = groups.keys().cloned().collect();
             keys.sort();
-            
+
             for dialect_name in keys {
                 if let Some(toml::Value::Array(aliases_arr)) = groups.get(&dialect_name) {
                     let aliases: Vec<String> = aliases_arr
@@ -156,7 +182,8 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     };
 
     // Extract weir section (optional)
-    let weir_rules_subdirectory = value.get("weir")
+    let weir_rules_subdirectory = value
+        .get("weir")
         .and_then(|w| w.get("rules_subdirectory"))
         .and_then(|v| v.as_str())
         .map(|s| s.to_string());
