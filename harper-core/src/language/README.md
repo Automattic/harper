@@ -4,6 +4,31 @@
 
 Compile-time plugin architecture. Each language implements the `LanguageModule` trait and integrates automatically via the build system.
 
+## Configuration
+
+Each language directory requires a `config.toml` file with language metadata. The build system uses this to generate all integration code.
+
+### config.toml Structure
+```toml
+[language]
+name = "LanguageName"        # e.g., "German"
+dir_name = "language_dir"   # e.g., "german" 
+feature = "lang"            # e.g., "de" for German (optional for English)
+
+[metadata]
+aliases = ["lang", "language", "lang-code"]  # Language detection aliases
+confidence = 0.95                            # Detection confidence (0.0-1.0)
+
+[[dialects]]
+name = "DialectName"     # e.g., "Standard"
+aliases = ["dialect_aliases"]  # e.g., ["de", "german", "deutsch"]
+
+[weir]  # Optional
+rules_subdirectory = "lang"  # e.g., "de" for German weir rules
+```
+
+For English: omit the `feature` field (or set to `null`) as it's always included.
+
 ## File Structure
 
 Each language lives in `harper-core/src/language/<lang>/` and must implement the `LanguageModule` trait (defined in `harper-core/src/language/module.rs`).
@@ -59,7 +84,7 @@ For language-specific details, see the individual language directories.
 The build script (`build.rs` → `build/main.rs` → `build/build_lib/`) automatically:
 
 1. Discovers language directories with `module.rs` via `discover_languages()`
-2. Maps directory names to feature flags via `map_directory_to_feature()`
+2. Loads language metadata from `config.toml` in each language directory
 3. Generates: `mod.rs`, `languages.rs`, `registry.rs`, `dialects/dialect_flags.rs`
 4. Handles English as always-included, other languages behind `#[cfg(feature)]`
 
@@ -72,21 +97,20 @@ The build script (`build.rs` → `build/main.rs` → `build/build_lib/`) automat
 
 ## Special Case: English
 
-**English does NOT use this structure.**
+**English follows the same structure but is always included.**
 - Uses embedded files: `harper-core/dictionary.dict` + `harper-core/annotations.json`
-- No feature flag needed (always included)
-- All other languages follow the standard module structure above
+- No feature flag needed (always included via `feature = null` in config.toml)
+- Has config.toml like other languages but without a feature declaration
+- All other languages follow the same module structure with optional feature flags
 
 ## Adding a New Language
 
 1. Create `harper-core/src/language/<lang>/` with required files
 2. Implement `LanguageModule` in `module.rs`
-3. Add feature flag to `harper-core/Cargo.toml`: `<lang> = []`
-4. Add metadata to `build/build_lib/language_config.rs`:
-   - `map_directory_to_feature()`: Map dir name to feature flag
-   - `get_language_metadata()`: Aliases and confidence for detection
-   - `get_language_dialect_alias_groups()`: Dialect alias mappings
-5. Build system handles the rest automatically
+3. Create `config.toml` with language metadata (name, feature, aliases, confidence, dialects)
+4. Add feature flag to `harper-core/Cargo.toml`: `<lang> = []`
+5. Update dependent Cargo.toml files to forward the feature (harper-cli, harper-ls, harper-wasm)
+6. Build system handles the rest automatically
 
 ## Rapid Iteration Without Recompilation
 
