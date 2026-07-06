@@ -1,116 +1,65 @@
 # Harper Language Support Architecture
 
-## Core Architecture
-
 Compile-time plugin architecture. Each language implements the `LanguageModule` trait and integrates automatically via the build system.
+
+## Architecture
+
+- **LanguageModule Trait**: Core interface in `module.rs`
+- **Build System**: Discovers languages via `config.toml`, generates all integration code
+- **Feature Flags**: Optional languages use `#[cfg(feature)]` for conditional compilation
+- **Generated Code**: `mod.rs`, `languages.rs`, `registry.rs`, `dialects/dialect_flags.rs`
 
 ## Configuration
 
-Each language directory requires a `config.toml` file with language metadata. The build system uses this to generate all integration code.
-
-### config.toml Structure
+Each language requires `harper-core/src/language/<lang>/config.toml`:
 ```toml
 [language]
-name = "LanguageName"        # e.g., "German"
-dir_name = "language_dir"   # e.g., "german" 
-feature = "lang"            # e.g., "de" for German (optional for English)
+name = "LanguageName"    # e.g., "German"
+dir_name = "language"   # directory name
+feature = "lang"       # e.g., "de" (omit for English - always included)
 
 [metadata]
-aliases = ["lang", "language", "lang-code"]  # Language detection aliases
-confidence = 0.95                            # Detection confidence (0.0-1.0)
+aliases = ["lang", "language"]  # detection aliases
+confidence = 0.95                # detection priority (0.0-1.0)
 
 [[dialects]]
-name = "DialectName"     # e.g., "Standard"
-aliases = ["dialect_aliases"]  # e.g., ["de", "german", "deutsch"]
+name = "Standard"
+aliases = ["primary", "aliases"]
 
 [weir]  # Optional
-rules_subdirectory = "lang"  # e.g., "de" for German weir rules
+rules_subdirectory = "lang"  # e.g., "de" for weir rules
 ```
 
-For English: omit the `feature` field (or set to `null`) as it's always included.
-
-## File Structure
-
-Each language lives in `harper-core/src/language/<lang>/` and must implement the `LanguageModule` trait (defined in `harper-core/src/language/module.rs`).
-
-Required files:
-```
-harper-core/src/language/<lang>/
-├── mod.rs              # Module exports
-├── module.rs          # LanguageModule trait implementation (REQUIRED)
-├── dialects.rs        # Dialect definitions
-├── spell/<lang>_dict.rs # Dictionary loading (REQUIRED)
-├── annotations.json    # Word formation rules + POS mappings (REQUIRED)
-└── dictionary.dict     # Base words with POS flags (REQUIRED)
-```
-
-**Note:** Files are embedded via `include_str!()`. Structure must match exactly.
+## Required Files
 
 ```
 harper-core/src/language/<lang>/
-├── mod.rs                    # Exports language module
-├── module.rs                # LanguageModule trait implementation (REQUIRED)
-├── dialects.rs             # Dialect definitions for language variants
-├── language_detection.rs   # Language detection logic
-├── lexing.rs                # Token lexing rules
-├── parsers/                 # Language-specific parser implementations
-├── spell/                   # Spell checking module (REQUIRED for dictionary loading)
-│   └── <lang>_dict.rs       # Dictionary loading - uses include_str!() for dictionary.dict and annotations.json
-├── linting/                 # Language-specific linters
-├── test_sources/            # Test files and expected outputs
-├── annotations.json          # Word formation rules + POS mappings (REQUIRED - loaded via include_str!)
-└── dictionary.dict           # Base words with POS flags (REQUIRED - loaded via include_str!)
+├── config.toml          # Language metadata
+├── module.rs           # LanguageModule trait implementation
+├── dialects.rs         # Dialect definitions
+├── language_detection.rs
+├── lexing.rs
+├── mod.rs
+├── parsers/
+├── spell/
+│   └── <lang>_dict.rs  # Dictionary loading (uses include_str!)
+├── linting/
+├── dictionary.dict      # Base words with POS flags
+├── annotations.json     # Word formation rules + POS mappings
+└── test_sources/
 ```
 
-**Important:** Harper's build system uses `include_str!()` to embed dictionary and annotation files directly into the binary. This means the file structure **must** follow this exact pattern. The spell module (`<lang>_dict.rs`) expects `dictionary.dict` and `annotations.json` in the parent directory.
-
-## Dictionary and Annotations Structure
-
-**Note:** The exact structure of `dictionary.dict` and `annotations.json` varies by language. Consult the language-specific implementations for details.
-
-### dictionary.dict (General Guidelines)
-- One word per line: `word/flags # comment`
-- Flags are single characters (POS tags), separated by `~`
-- Compound word handling varies by language (see language-specific READMEs). 
-
-### annotations.json (General Guidelines)
-- `affixes`: Word formation rules (generate inflected forms)
-- `properties`: Maps flags to metadata (e.g., `N` → noun, `V` → verb)
-
-For language-specific details, see the individual language directories.
-
-## Build System
-
-The build script (`build.rs` → `build/main.rs` → `build/build_lib/`) automatically:
-
-1. Discovers language directories with `module.rs` via `discover_languages()`
-2. Loads language metadata from `config.toml` in each language directory
-3. Generates: `mod.rs`, `languages.rs`, `registry.rs`, `dialects/dialect_flags.rs`
-4. Handles English as always-included, other languages behind `#[cfg(feature)]`
-
-## Key Components
-
-- **LanguageModule Trait**: Core interface in `module.rs`
-- **Build Script**: Automatic discovery and code generation
-- **Feature Flags**: Conditional compilation for optional languages
-- **Generated Code**: Centralizes all language integration
-
-## Special Case: English
-
-**English follows the same structure but is always included.**
-- Uses embedded files: `harper-core/dictionary.dict` + `harper-core/annotations.json`
-- No feature flag needed (always included via `feature = null` in config.toml)
-- Has config.toml like other languages but without a feature declaration
-- All other languages follow the same module structure with optional feature flags
+Files are embedded via `include_str!()`. Structure must match exactly.
 
 ## Adding a New Language
 
 1. Create `harper-core/src/language/<lang>/` with required files
-2. Implement `LanguageModule` in `module.rs`
-3. Create `config.toml` with language metadata (name, feature, aliases, confidence, dialects)
-4. Add feature flag to `harper-core/Cargo.toml`: `<lang> = []`
-5. Update dependent Cargo.toml files to forward the feature (harper-cli, harper-ls, harper-wasm)
-6. Build system handles the rest automatically
+2. Implement `LanguageModule` trait in `module.rs`
+3. Create `config.toml` with language metadata
+4. Add feature to `harper-core/Cargo.toml`: `<lang> = []`
+5. Forward feature in dependent Cargo.toml files (harper-cli, harper-ls, harper-wasm) as needed
+
+**Note**: Feature forwarding is intentional. Different binaries can enable different language sets (e.g., CLI with all languages, Chrome plugin with English only).
 
 ## Rapid Iteration Without Recompilation
 
