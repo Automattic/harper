@@ -100,7 +100,7 @@ impl Linter for ThrowRubbish {
                         lint_kind: LintKind::Miscellaneous,
                         suggestions,
                         message: "To dispose of rubbish we don't just throw it, we throw it away"
-                            .to_string(),
+                            .to_owned(),
                         priority: 63,
                     });
                 }

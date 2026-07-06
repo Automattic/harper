@@ -29,9 +29,9 @@ impl Expr for DurationExpr {
         // positive "a few" and negative "few"
         let a_few = SequenceExpr::optional(SequenceExpr::aco("a").t_ws()).t_aco("few");
 
-        let expr = SequenceExpr::longest_of(vec![
-            Box::new(SpelledNumberExpr),
-            Box::new(SequenceExpr::default().then_number()),
+        let expr = SequenceExpr::longest_of([
+            Box::new(SpelledNumberExpr) as Box<dyn Expr>,
+            Box::new(SequenceExpr::number()),
             Box::new(IndefiniteArticle::default()),
             Box::new(a_couple_of),
             Box::new(a_few),

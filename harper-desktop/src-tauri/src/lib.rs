@@ -1,5 +1,6 @@
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
+use self::menu_bar_icon::menu_bar_icon;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
@@ -10,10 +11,13 @@ use harper_core::{
     spell::MutableDictionary,
 };
 use serde::Serialize;
-use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
+use std::{
+    cell::RefCell,
+    rc::Rc,
+    sync::{Arc, Mutex as StdMutex},
+};
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
-    image::Image,
     menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
@@ -34,6 +38,7 @@ mod debounce;
 pub mod highlighter;
 pub mod highlighter_service;
 pub mod lint_kind_color;
+mod menu_bar_icon;
 mod os_broker;
 pub mod rect;
 
@@ -48,7 +53,10 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Command {
-    Highlighter,
+    Highlighter {
+        #[arg(long)]
+        no_parent: bool,
+    },
 }
 
 const EDITOR_WINDOW_LABEL: &str = "main";
@@ -76,36 +84,6 @@ fn service_menu_text(is_running: bool) -> &'static str {
     match is_running {
         true => "Stop Harper Service",
         false => "Start Harper Service",
-    }
-}
-
-fn service_status_color(is_running: bool) -> [u8; 4] {
-    match is_running {
-        true => [34, 197, 94, 255],
-        false => [239, 68, 68, 255],
-    }
-}
-
-fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
-    let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
-    let width = icon.width();
-    let height = icon.height();
-    let mut rgba = icon.rgba().to_vec();
-
-    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
-
-    Ok(Image::new_owned(rgba, width, height))
-}
-
-fn draw_status_line(rgba: &mut [u8], width: u32, height: u32, color: [u8; 4]) {
-    let line_height = (height.min(width) / 14).max(3);
-    let start_y = height.saturating_sub(line_height);
-
-    for y in start_y..height {
-        for x in 0..width {
-            let index = ((y * width + x) * 4) as usize;
-            rgba[index..index + 4].copy_from_slice(&color);
-        }
     }
 }
 
@@ -257,13 +235,27 @@ fn start_highlighter_service_if_enabled_and_permitted(
 }
 
 #[cfg(target_os = "macos")]
-fn platform_broker() -> impl OsBroker {
-    mac_broker::MacBroker::default()
-}
+pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
 #[cfg(not(target_os = "macos"))]
-fn platform_broker() -> impl OsBroker {
-    os_broker::NoopBroker
+pub(crate) type PlatformBroker = os_broker::NoopBroker;
+
+fn platform_broker() -> PlatformBroker {
+    PlatformBroker::default()
+}
+
+fn warm_app_search_cache(app: tauri::AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let result = broker
+            .lock()
+            .map_err(|error| format!("failed to read platform broker: {error}"))
+            .and_then(|broker| broker.search_apps("").map(|_| ()));
+
+        if let Err(error) = result {
+            eprintln!("failed to warm app search cache: {error}");
+        }
+    });
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -271,7 +263,7 @@ pub fn run() {
     let args = Args::parse();
 
     match args.command {
-        Some(Command::Highlighter) => run_highlighter(),
+        Some(Command::Highlighter { no_parent }) => run_highlighter(!no_parent),
         None => run_tauri(),
     }
 }
@@ -317,6 +309,7 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
+        .manage(StdMutex::new(platform_broker()))
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
@@ -348,6 +341,8 @@ pub fn run_tauri() {
 
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
+
+            warm_app_search_cache(app.handle().clone());
 
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
@@ -441,7 +436,9 @@ pub fn run_tauri() {
         .expect("error while running tauri application");
 }
 
-pub fn run_highlighter() {
+/// Run as a highlighter process.
+/// Can configure whether to run standalone, or with a parent Tauri process
+pub fn run_highlighter(has_parent: bool) {
     let client = Rc::new(RefCell::new(Client::current_process()));
     let sync_runtime = Rc::new(
         Builder::new_current_thread()
@@ -450,7 +447,11 @@ pub fn run_highlighter() {
             .expect("failed to build highlighter protocol runtime"),
     );
 
-    let startup_config = fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime);
+    let startup_config = if has_parent {
+        fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime)
+    } else {
+        Ok(Config::default())
+    };
 
     let startup_config = match startup_config {
         Ok(config) => config,
@@ -464,7 +465,7 @@ pub fn run_highlighter() {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let integrations = Rc::new(RefCell::new(startup_config.integrations));
+    let integrations = Arc::new(StdMutex::new(startup_config.integrations));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
 
@@ -569,20 +570,23 @@ pub fn run_highlighter() {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
-    let refresh_config = move || match fetch_highlighter_config(
-        &mut refresh_client.borrow_mut(),
-        &refresh_runtime,
-    ) {
-        Ok(config) => apply_highlighter_config(
-            config,
-            &refresh_ignored_lints,
-            &refresh_user_dictionary,
-            &refresh_dialect,
-            &refresh_integrations,
-            &refresh_debounce_ms,
-            &refresh_linter,
-        ),
-        Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+    let refresh_config = move || {
+        if !has_parent {
+            return;
+        }
+
+        match fetch_highlighter_config(&mut refresh_client.borrow_mut(), &refresh_runtime) {
+            Ok(config) => apply_highlighter_config(
+                config,
+                &refresh_ignored_lints,
+                &refresh_user_dictionary,
+                &refresh_dialect,
+                &refresh_integrations,
+                &refresh_debounce_ms,
+                &refresh_linter,
+            ),
+            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+        }
     };
 
     #[cfg(target_os = "macos")]
@@ -599,7 +603,6 @@ pub fn run_highlighter() {
         disable_rule,
         refresh_config,
     )
-    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
@@ -637,7 +640,7 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    integrations: &Rc<RefCell<Vec<Integration>>>,
+    integrations: &Arc<StdMutex<Vec<Integration>>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
@@ -645,7 +648,10 @@ fn apply_highlighter_config(
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
-    *integrations.borrow_mut() = config.integrations;
+    match integrations.lock() {
+        Ok(mut integrations) => *integrations = config.integrations,
+        Err(error) => eprintln!("failed to update integrations: {error}"),
+    }
     *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
 }

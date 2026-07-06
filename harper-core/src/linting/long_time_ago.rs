@@ -11,8 +11,8 @@ pub struct LongTimeAgo {
 impl Default for LongTimeAgo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![
-                Box::new(AnchorStart),
+            expr: SequenceExpr::any_of([
+                Box::new(AnchorStart) as Box<dyn Expr>,
                 Box::new(SequenceExpr::default().then_word_except(&["a"]).t_ws()),
             ])
             .t_aco("long")
