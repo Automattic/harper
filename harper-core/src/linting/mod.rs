@@ -600,6 +600,66 @@ pub mod tests {
         Markdown,
     }
 
+    /// Iterator that yields all text states reachable via suggestion transformations.
+    ///
+    /// Performs depth-first search through the suggestion tree, yielding each state
+    /// encountered. Stops after [`MAX_SUGGESTION_TRANSFORMATION_DEPTH`] iterations to
+    /// prevent infinite loops.
+    struct SuggestionIterator<'a> {
+        stack: Vec<(String, usize)>,
+        doc_type: DocumentType,
+        linter: &'a mut dyn Linter,
+    }
+
+    impl<'a> SuggestionIterator<'a> {
+        fn new(doc_type: DocumentType, initial_text: &str, linter: &'a mut dyn Linter) -> Self {
+            Self {
+                stack: vec![(initial_text.to_string(), 0)],
+                doc_type,
+                linter,
+            }
+        }
+    }
+
+    impl<'a> Iterator for SuggestionIterator<'a> {
+        type Item = String;
+
+        fn next(&mut self) -> Option<String> {
+            while let Some((text, depth)) = self.stack.pop() {
+                // Prevent infinite recursion (e.g. cycles in suggestions)
+                if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+                    eprintln!(
+                        "⚠️  Reached depth limit ({})",
+                        super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+                    );
+                    continue;
+                }
+
+                // Lint current text and generate next states
+                let chars: Vec<char> = text.chars().collect();
+                let document = create_document(&chars, self.doc_type);
+                let mut lints = self.linter.lint(&document);
+                lints.sort_by_key(|l| l.priority);
+
+                if let Some(lint) = lints.first() {
+                    // Push suggestion branches onto stack in reverse order
+                    // so they're processed in original order (DFS)
+                    for sug in lint.suggestions.iter().rev() {
+                        let mut chars_copy = chars.clone();
+                        sug.apply(lint.span, &mut chars_copy);
+                        let next: String = chars_copy.iter().collect();
+                        self.stack.push((next, depth + 1));
+                    }
+                }
+
+                // Yield the current state
+                return Some(text);
+            }
+
+            None
+        }
+    }
+
     /// Creates a document of the specified type from character data
     fn create_document(chars: &[char], doc_type: DocumentType) -> Document {
         match doc_type {
@@ -620,8 +680,13 @@ pub mod tests {
     /// See issue #950: https://github.com/Automattic/harper/issues/950
     #[track_caller]
     pub fn assert_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if search_for_suggestion(DocumentType::PlainEnglish, text, &mut linter, needle, 0) {
-            return;
+        let linter_ref: &mut dyn Linter = &mut linter;
+        let mut iter = SuggestionIterator::new(DocumentType::PlainEnglish, text, linter_ref);
+
+        while let Some(state) = iter.next() {
+            if state == needle {
+                return;
+            }
         }
 
         panic!(
@@ -633,54 +698,16 @@ pub mod tests {
     /// DFS implementation using markdown instead of plain English
     #[track_caller]
     pub fn assert_markdown_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if !search_for_suggestion(DocumentType::Markdown, text, &mut linter, needle, 0) {
-            panic!("No suggestion sequence produced the expected result.\nExpected: {needle}");
-        }
-    }
+        let linter_ref: &mut dyn Linter = &mut linter;
+        let mut iter = SuggestionIterator::new(DocumentType::Markdown, text, linter_ref);
 
-    /// Recursively searches all suggestion combinations using depth-first search.
-    /// Returns true if any path reaches the expected result, false otherwise.
-    fn search_for_suggestion(
-        doc_type: DocumentType,
-        text: &str,
-        linter: &mut impl Linter,
-        needle: &str,
-        depth: usize,
-    ) -> bool {
-        // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
-            eprintln!(
-                "⚠️  Reached depth limit ({})",
-                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
-            );
-            return false;
-        }
-
-        // Check if we've reached the expected result
-        if text == needle {
-            return true;
-        }
-
-        // Lint current text and try each suggestion branch
-        let chars: Vec<char> = text.chars().collect();
-        let document = create_document(&chars, doc_type);
-        let mut lints = linter.lint(&document);
-        lints.sort_by_key(|l| l.priority);
-
-        if let Some(lint) = lints.first() {
-            for sug in lint.suggestions.iter() {
-                let mut chars_copy = chars.clone();
-                sug.apply(lint.span, &mut chars_copy);
-                let next: String = chars_copy.iter().collect();
-
-                // Recursively search this branch
-                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1) {
-                    return true;
-                }
+        while let Some(state) = iter.next() {
+            if state == needle {
+                return;
             }
         }
 
-        false
+        panic!("No suggestion sequence produced the expected result.\nExpected: {needle}");
     }
 
     #[test]
@@ -733,20 +760,17 @@ pub mod tests {
         mut linter: impl Linter,
         bad_suggestion: &str,
     ) {
-        if !search_for_suggestion(
-            DocumentType::PlainEnglish,
-            text,
-            &mut linter,
-            bad_suggestion,
-            0,
-        ) {
-            return;
-        }
+        let linter_ref: &mut dyn Linter = &mut linter;
+        let mut iter = SuggestionIterator::new(DocumentType::PlainEnglish, text, linter_ref);
 
-        panic!(
-            "A suggestion sequence produced the undesired result.\n\
-            Undesired: \"{bad_suggestion}\""
-        );
+        while let Some(state) = iter.next() {
+            if state == bad_suggestion {
+                panic!(
+                    "A suggestion sequence produced the undesired result.\n\
+                    Undesired: \"{bad_suggestion}\""
+                );
+            }
+        }
     }
 
     #[test]
@@ -774,8 +798,7 @@ pub mod tests {
     // TODO verify many suggestions but not the one we want fails
 
     /// Asserts both that the given text matches the expected good suggestions and that none of the
-    /// suggestions are in the bad suggestions list.
-    /// TODO: Reimplement similar to `search_suggestion_tree`
+    /// suggestions are in the list of bad suggestions.
     #[track_caller]
     pub fn assert_good_and_bad_suggestions(
         text: &str,
@@ -783,38 +806,27 @@ pub mod tests {
         good: &[&str],
         bad: &[&str],
     ) {
-        let test = Document::new_plain_english_curated(text);
-        let lints = linter.lint(&test);
+        let linter_ref: &mut dyn Linter = &mut linter;
+        let iter = SuggestionIterator::new(DocumentType::PlainEnglish, text, linter_ref);
+
+        // Collect all states, but skip the initial text (depth 0)
+        let all_states: HashSet<String> = iter.skip(1).collect();
 
         let mut unseen_good: HashSet<_> = good.iter().cloned().collect();
         let mut found_bad = Vec::new();
         let mut found_good = Vec::new();
 
-        for (i, lint) in lints.into_iter().enumerate() {
-            for (j, suggestion) in lint.suggestions.into_iter().enumerate() {
-                let mut text_chars: Vec<char> = text.chars().collect();
-                suggestion.apply(lint.span, &mut text_chars);
-                let suggestion_text: String = text_chars.into_iter().collect();
-
-                // Check for bad suggestions
-                if bad.contains(&&*suggestion_text) {
-                    found_bad.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ❌ Found bad suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                }
-                // Check for good suggestions
-                else if good.contains(&&*suggestion_text) {
-                    found_good.push((i, j, suggestion_text.clone()));
-                    eprintln!(
-                        "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                    unseen_good.remove(suggestion_text.as_str());
-                } else {
-                    eprintln!(
-                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
-                    );
-                }
+        for state in &all_states {
+            // Check for bad suggestions
+            if bad.contains(&state.as_str()) {
+                found_bad.push(state.clone());
+                eprintln!("  ❌ Found bad suggestion: \"{state}\"");
+            }
+            // Check for good suggestions
+            else if good.contains(&state.as_str()) {
+                found_good.push(state.clone());
+                eprintln!("  ✅ Found good suggestion: \"{state}\"");
+                unseen_good.remove(state.as_str());
             }
         }
 
@@ -824,8 +836,8 @@ pub mod tests {
 
             if !found_bad.is_empty() {
                 eprintln!("\n❌ Found {} bad suggestions:", found_bad.len());
-                for (i, j, text) in &found_bad {
-                    eprintln!("  - lint[{i}].suggestions[{j}]: \"{text}\"");
+                for text in &found_bad {
+                    eprintln!("  - \"{text}\"");
                 }
             }
 
