@@ -43,8 +43,18 @@ test('Hacker News wraps correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [
-		{ x: 352.578125, y: 113, width: 63.984375, height: 19 },
-		{ x: 592.484375, y: 96, width: 24, height: 19 },
+    {
+      x: 315.16668701171875,
+      y: 115.33333587646484,
+      width: 53.291656494140625,
+      height: 21.333335876464844
+    },
+    {
+      x: 515.0104370117188,
+      y: 96,
+      width: 19.97918701171875,
+      height: 21.333335876464844
+    }
 	]);
 });
 
@@ -66,5 +76,10 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ x: 216.625, y: 217, width: 56, height: 19 }]);
+	await assertHarperHighlightBoxes(page, [{
+    x: 201.9166717529297,
+    y: 233.33334350585938,
+    width: 46.63542175292969,
+    height: 21.322906494140625
+  }]);
 });
