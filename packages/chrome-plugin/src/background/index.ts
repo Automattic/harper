@@ -26,6 +26,7 @@ import {
 	type GetHotkeyResponse,
 	type GetInstalledOnRequest,
 	type GetInstalledOnResponse,
+	type GetIsolateEnglishResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetReviewedRequest,
@@ -50,6 +51,7 @@ import {
 	type SetDialectRequest,
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
+	type SetIsolateEnglishRequest,
 	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
@@ -124,6 +126,7 @@ const defaultEnabledDomains = [
 	'mail.google.com',
 	'trix-editor.org',
 	'github.com',
+	'linear.app',
 	'messages.google.com',
 	'blank.page',
 	'blankpage.im',
@@ -227,6 +230,10 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getIsolateEnglish':
+			return handleGetIsolateEnglish();
+		case 'setIsolateEnglish':
+			return handleSetIsolateEnglish(message);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
@@ -296,7 +303,8 @@ async function handleLint(
 		return { kind: 'lints', lints: {} };
 	}
 
-	const grouped = await linter.organizedLints(req.text, req.options);
+	const isolateEnglish = req.options?.isolateEnglish === true || (await getIsolateEnglish());
+	const grouped = await linter.organizedLints(req.text, { ...req.options, isolateEnglish });
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -381,6 +389,16 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 
 async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
+}
+
+async function handleGetIsolateEnglish(): Promise<GetIsolateEnglishResponse> {
+	return { kind: 'getIsolateEnglish', isolateEnglish: await getIsolateEnglish() };
+}
+
+async function handleSetIsolateEnglish(req: SetIsolateEnglishRequest): Promise<UnitResponse> {
+	await setIsolateEnglish(req.isolateEnglish);
+
+	return createUnitResponse();
 }
 
 async function handleGetDelay(_req: GetDelayRequest): Promise<GetDelayResponse> {
@@ -661,6 +679,15 @@ async function getDialect(): Promise<Dialect> {
 	}
 
 	return resp.dialect;
+}
+
+async function getIsolateEnglish(): Promise<boolean> {
+	const resp = await chrome.storage.local.get({ isolateEnglish: false });
+	return resp.isolateEnglish === true;
+}
+
+async function setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
+	await chrome.storage.local.set({ isolateEnglish });
 }
 
 async function getActivationKey(): Promise<ActivationKey> {

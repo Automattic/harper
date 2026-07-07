@@ -649,7 +649,8 @@ fn is_spelling_kind(lint_kind: LintKind) -> bool {
         | LintKind::Repetition
         | LintKind::Style
         | LintKind::Usage
-        | LintKind::WordChoice => false,
+        | LintKind::WordChoice
+        | LintKind::WordOrder => false,
     }
 }
 
@@ -689,7 +690,8 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
         | LintKind::Regionalism
         | LintKind::Style
         | LintKind::Usage
-        | LintKind::WordChoice => PopupStyle {
+        | LintKind::WordChoice
+        | LintKind::WordOrder => PopupStyle {
             color,
             background: hex(0xf3, 0xf4, 0xf6),
             foreground: hex(0x37, 0x41, 0x51),
