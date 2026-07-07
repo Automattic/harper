@@ -321,9 +321,12 @@ test-firefox-plugin: build-firefox-plugin
 
 # Run VSCode plugin unit and integration tests.
 alias test-vscode-extension := test-vscode
-test-vscode:
+test-vscode: 
   #!/usr/bin/env bash
   set -eo pipefail
+
+  # Needed so `pnpm install` can succeed.
+  DISABLE_WASM_OPT=1 just build-harperjs
 
   ext_dir="{{justfile_directory()}}/packages/vscode-plugin"
   bin_dir="${ext_dir}/bin"
@@ -333,7 +336,7 @@ test-vscode:
   fi
 
   echo Building binaries
-  cargo build --release -q
+  cargo build --release -p harper-ls
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
