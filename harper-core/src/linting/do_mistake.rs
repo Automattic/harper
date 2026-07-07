@@ -18,11 +18,11 @@ impl Default for DoMistake {
             expr: Box::new(
                 SequenceExpr::word_set(&["do", "did", "does", "doing", "done"])
                     .t_ws()
-                    .then_longest_of(vec![
+                    .then_longest_of([
                         Box::new(WordSet::new(&[
                             "a", "an", "the", "that", "these", "this", "those", "another", "many",
                             "several", "some", "my", "our", "your", "his", "her", "its", "their",
-                        ])),
+                        ])) as Box<dyn Expr>,
                         Box::new(FixedPhrase::from_phrase("a lot of")),
                         Box::new(FixedPhrase::from_phrase("lots of")),
                         Box::new(FixedPhrase::from_phrase("that kind of")),
@@ -78,7 +78,7 @@ impl ExprLinter for DoMistake {
             span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(make, chars)],
-            message: "In English we `make` mistakes, not `do` them".to_string(),
+            message: "In English we `make` mistakes, not `do` them".to_owned(),
             ..Default::default()
         })
     }

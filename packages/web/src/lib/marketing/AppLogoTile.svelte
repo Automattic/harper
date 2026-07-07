@@ -1,17 +1,19 @@
 <script lang="ts">
-import DiscordLogo from '$lib/components/DiscordLogo.svelte';
-import GitHubLogo from '$lib/components/GitHubLogo.svelte';
-import GmailLogo from '$lib/components/GmailLogo.svelte';
-import IMessageLogo from '$lib/components/IMessageLogo.svelte';
-import LinearLogo from '$lib/components/LinearLogo.svelte';
-import NotionLogo from '$lib/components/NotionLogo.svelte';
-import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
-import RedditLogo from '$lib/components/RedditLogo.svelte';
-import ScrivenerLogo from '$lib/components/ScrivenerLogo.svelte';
-import SlackLogo from '$lib/components/SlackLogo.svelte';
-import TelegramLogo from '$lib/components/TelegramLogo.svelte';
-import ThingsLogo from '$lib/components/ThingsLogo.svelte';
-import WhatsAppLogo from '$lib/components/WhatsAppLogo.svelte';
+import {
+	DiscordLogo,
+	GitHubLogo,
+	GmailLogo,
+	IMessageLogo,
+	LinearLogo,
+	NotionLogo,
+	ObsidianLogo,
+	RedditLogo,
+	ScrivenerLogo,
+	SlackLogo,
+	TelegramLogo,
+	ThingsLogo,
+	WhatsAppLogo,
+} from 'components';
 
 export let id: string;
 export let size = 40;
