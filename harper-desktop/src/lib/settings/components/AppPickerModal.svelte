@@ -1,5 +1,7 @@
 <script lang="ts">
-import { invoke } from '@tauri-apps/api/core';
+import { onMount } from 'svelte';
+import { type AppSearchResult, Client } from '$lib/client';
+import AppIcon from './AppIcon.svelte';
 
 export let bundleId = '';
 export let existingBundleIds: string[];
@@ -7,31 +9,43 @@ export let isSaving = false;
 export let close: () => void;
 export let add: (bundleId: string) => void;
 
-let searchResults: Array<{ name: string; bundle_id: string }> = [];
+let searchResults: AppSearchResult[] = [];
 let isSearching = false;
 let debounceTimeout: number | null = null;
+let searchRequestId = 0;
 
 $: trimmedBundleId = bundleId.trim();
 $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
 $: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
 
+onMount(() => {
+	const initialSearch = window.setTimeout(() => {
+		void performSearch(bundleId);
+	}, 0);
+
+	return () => window.clearTimeout(initialSearch);
+});
+
 async function performSearch(query: string) {
-	if (!query.trim()) {
-		searchResults = [];
-		return;
-	}
+	const requestId = ++searchRequestId;
 
 	isSearching = true;
 	try {
-		const results = await invoke<Array<{ name: string; bundle_id: string }>>('search_apps', {
-			query,
-		});
-		searchResults = results;
+		const results = await Client.searchApps(query);
+
+		if (requestId === searchRequestId && query === bundleId) {
+			searchResults = results;
+		}
 	} catch (error) {
 		console.error('Search failed:', error);
-		searchResults = [];
+
+		if (requestId === searchRequestId) {
+			searchResults = [];
+		}
 	} finally {
-		isSearching = false;
+		if (requestId === searchRequestId) {
+			isSearching = false;
+		}
 	}
 }
 
@@ -50,7 +64,7 @@ function handleInput(event: Event) {
 
 function selectApp(selectedBundleId: string) {
 	bundleId = selectedBundleId;
-	searchResults = [];
+	void performSearch(bundleId);
 }
 
 function submit() {
@@ -119,8 +133,11 @@ function submit() {
               }
             }}
           >
-            <div class="app-result-name">{result.name}</div>
-            <div class="app-result-bundle-id">{result.bundle_id}</div>
+            <AppIcon bundleId={result.bundle_id} name={result.name} />
+            <div class="app-result-copy">
+              <div class="app-result-name">{result.name}</div>
+              <div class="app-result-bundle-id">{result.bundle_id}</div>
+            </div>
           </div>
         {/each}
       {:else if trimmedBundleId}
