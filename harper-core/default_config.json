@@ -2818,6 +2818,20 @@
 								"state": true,
 								"label": "Hazzle"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NotLongAfter",
+								"state": true,
+								"label": "Not Long After"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MayOfPronoun",
+								"state": true,
+								"label": "May Of Pronoun"
+							}
 						}
 					]
 				}
@@ -3156,6 +3170,13 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RedundantSelf",
+								"state": true,
+								"label": "Redundant Self"
 							}
 						},
 						{
@@ -5185,6 +5206,13 @@
 								"name": "CraveFor",
 								"state": true,
 								"label": "Crave For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AnalogAcousticBike",
+								"state": false,
+								"label": "Analog/Acoustic Bike"
 							}
 						},
 						{
