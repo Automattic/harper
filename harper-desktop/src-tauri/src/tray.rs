@@ -63,10 +63,7 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
 
             {
                 let highlighter_service: State<HighlighterService> = app.state();
-
                 let is_running = highlighter_service.is_running();
-
-                dbg!(is_running);
 
                 let Ok(new_icon) = menu_bar_icon(is_running) else {
                     error!("Unable to generate new menu bar icon.");
