@@ -361,7 +361,10 @@ impl Backend {
                     Some(Box::new(ts_parser))
                 }
             }
-            "git-commit" | "gitcommit" | "octo" | "scminput" => {
+            // Sublime Text collapses its whole `text.git.*` scope family (commit,
+            // ignore, config, rebase) to the `git` language id, so this also
+            // catches non-commit git files edited in Sublime (#3781).
+            "git-commit" | "gitcommit" | "git" | "octo" | "scminput" => {
                 Some(Box::new(GitCommitParser::default()))
             }
             "html" => Some(Box::new(HtmlParser::default())),
