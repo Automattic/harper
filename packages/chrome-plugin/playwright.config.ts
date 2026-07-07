@@ -10,9 +10,9 @@ export default defineConfig({
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
 	/* Retry on CI only */
-	retries: process.env.CI ? 4 : 0,
+	retries: 4,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: process.env.CI ? 1 : "20%",
+	workers: '20%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {

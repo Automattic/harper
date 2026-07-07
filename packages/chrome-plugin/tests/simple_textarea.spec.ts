@@ -60,8 +60,8 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 		]);
 	} else {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 10, y: 71, width: 57.599998474121094, height: 17 },
-			{ x: 218.8000030517578, y: 26, width: 21.600006103515625, height: 17 },
+			{ x: 178, y: 28, width: 48, height: 20 },
+			{ x: 358, y: 10, width: 18, height: 20 },
 		]);
 	}
 });
