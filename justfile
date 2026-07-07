@@ -63,6 +63,9 @@ build-harper-editor: build-lint-framework build-components
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
+
+  export CARGO_TERM_QUIET=true
+
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
     wasm-pack build --target web --no-opt --out-name harper_wasm
