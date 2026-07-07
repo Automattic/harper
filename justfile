@@ -296,8 +296,9 @@ test-chrome-plugin: build-chrome-plugin
   pnpm playwright install
 
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project chromium
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project chromium 
   else
     pnpm test --project chromium
   fi

@@ -12,7 +12,7 @@ export default defineConfig({
 	/* Retry on CI only */
 	retries: process.env.CI ? 4 : 0,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: 1,
+	workers: process.env.CI ? 1 : "25%",
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
