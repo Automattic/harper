@@ -374,6 +374,38 @@ mod tests {
     }
 
     #[test]
+    fn allow_issue_1553_short() {
+        assert_no_lints(
+            "Other people that may be interested should be able to opt in.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1923_key_may_be_missing() {
+        assert_no_lints(
+            "This key may be missing from the configuration.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1923_this_may_be_useful() {
+        assert_no_lints(
+            "This may be useful to see what a given website looks like.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
+    fn allow_issue_1923_command_prompt_may_be_located() {
+        assert_no_lints(
+            "Once you've installed the build tools, this command prompt may be easily located by searching the start menu.",
+            CompoundNouns::default(),
+        );
+    }
+
+    #[test]
     fn allow_issue_1496() {
         assert_no_lints(
             "I am not able to respond to messages.",
