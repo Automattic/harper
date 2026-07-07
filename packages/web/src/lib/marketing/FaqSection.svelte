@@ -1,9 +1,10 @@
 <script lang="ts">
-import Arrow from '$lib/components/Arrow.svelte';
+import { Arrow } from 'components';
 
 type FaqItem = {
 	q: string;
 	a: string;
+	href?: string;
 };
 
 export let items: FaqItem[] = [];
@@ -59,7 +60,13 @@ $: innerClass =
 							>
 						</summary>
 						<p class="!m-0 max-w-152 pb-5 text-base leading-relaxed text-black/70 dark:text-white/70">
-							{item.a}
+							{#if item.href}
+								<a class="font-bold text-primary no-underline dark:text-primary-300" href={item.href}
+									>{item.a}</a
+								>
+							{:else}
+								{item.a}
+							{/if}
 						</p>
 					</details>
 				{/each}
@@ -70,7 +77,13 @@ $: innerClass =
 							{item.q}
 						</h3>
 						<p class="!mt-1.5 !mb-0 text-base leading-relaxed text-black/70 dark:text-white/70">
-							{item.a}
+							{#if item.href}
+								<a class="font-bold text-primary no-underline dark:text-primary-300" href={item.href}
+									>{item.a}</a
+								>
+							{:else}
+								{item.a}
+							{/if}
 						</p>
 					</div>
 				{/each}

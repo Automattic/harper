@@ -37,7 +37,7 @@ impl ExprLinter for FillerWords {
             span: toks.span()?,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::Remove],
-            message: "Remove this unnecessary filler word.".to_string(),
+            message: "Remove this unnecessary filler word.".to_owned(),
             priority: 31,
         })
     }
