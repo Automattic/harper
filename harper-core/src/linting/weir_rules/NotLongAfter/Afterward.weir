@@ -1,0 +1,9 @@
+expr main (not along afterward)
+
+let message "Did you mean `not long afterward`?"
+let description "Corrects `not along afterward` to `not long afterward`."
+let kind "Typo"
+let becomes "not long afterward"
+
+test "Camp Bucca closed not along afterward." "Camp Bucca closed not long afterward."
+test "Not along afterward, the cat was successfully rescued by an expressway traffic officer" "Not long afterward, the cat was successfully rescued by an expressway traffic officer"
