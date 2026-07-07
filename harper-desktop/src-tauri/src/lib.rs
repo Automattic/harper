@@ -332,7 +332,10 @@ pub fn run_highlighter(has_parent: bool) {
                 &refresh_debounce_ms,
                 &refresh_linter,
             ),
-            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+            Err(error) => {
+                eprintln!("failed to refresh highlighter config: {error}");
+                std::process::exit(1);
+            }
         }
     };
 
