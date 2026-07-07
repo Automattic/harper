@@ -31,8 +31,7 @@ impl Default for SoonToBe {
         };
 
         let hyphenated_number_modifier = || {
-            SequenceExpr::default()
-                .then_number()
+            SequenceExpr::number()
                 .then_hyphen()
                 .then_nominal()
                 .then_optional(SequenceExpr::default().then_hyphen().then_adjective())
