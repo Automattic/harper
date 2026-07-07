@@ -1,9 +1,6 @@
 <script lang="ts">
-import { Button, Card } from 'components';
+import { Button, Card, CloseIcon, DownloadIcon, PlayIcon } from 'components';
 import type { ComponentType } from 'svelte';
-import CloseIcon from '$lib/components/icons/CloseIcon.svelte';
-import DownloadIcon from '$lib/components/icons/DownloadIcon.svelte';
-import PlayIcon from '$lib/components/icons/PlayIcon.svelte';
 import WeirStudioFileExplorer from '$lib/components/WeirStudioFileExplorer.svelte';
 
 export let drawerOpen = true;

@@ -32,7 +32,7 @@ impl ExprLinter for ExprLinterSkeleton {
             "correction",
             span.get_content(source),
         )];
-        let message = "Fix this erorr".to_string();
+        let message = "Fix this erorr".to_owned();
         Some(Lint {
             span,
             lint_kind,
