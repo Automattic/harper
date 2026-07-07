@@ -38,7 +38,6 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         add_integration,
         remove_integration,
         set_integration_enabled,
-        get_installed_application_bundle_ids,
         get_application_icon_data_url,
         get_accessibility_permission_status,
         request_accessibility_permission,
@@ -293,16 +292,6 @@ async fn set_integration_enabled(
         .map_err(|error| error.to_string())?;
 
     Ok(())
-}
-
-#[tauri::command]
-fn get_installed_application_bundle_ids(
-    broker: State<'_, StdMutex<PlatformBroker>>,
-) -> Result<Vec<String>, String> {
-    broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .installed_application_bundle_ids()
 }
 
 #[tauri::command]

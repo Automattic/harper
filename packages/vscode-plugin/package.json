@@ -62,6 +62,7 @@
 		"onLanguage:ruby",
 		"onLanguage:rust",
 		"onLanguage:scala",
+		"onLanguage:scminput",
 		"onLanguage:shellscript",
 		"onLanguage:solidity",
 		"onLanguage:swift",

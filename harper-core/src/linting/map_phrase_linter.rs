@@ -128,7 +128,7 @@ impl ExprLinter for MapPhraseLinter {
                     )
                 })
                 .collect(),
-            message: self.message.to_string(),
+            message: self.message.to_owned(),
             priority: 31,
         })
     }
