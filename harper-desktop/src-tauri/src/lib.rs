@@ -110,7 +110,7 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let async_runtime = Builder::new_current_thread()
+    let async_runtime = Builder::new_multi_thread()
         .enable_all()
         .build()
         .expect("failed to build config runtime");
