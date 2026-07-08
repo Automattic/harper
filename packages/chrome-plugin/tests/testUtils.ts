@@ -441,16 +441,24 @@ export async function testMultipleSuggestionsAndUndo(
 
 export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
 	const highlights = getHarperHighlights(page);
+
 	await expect(highlights).toHaveCount(boxes.length);
 
-	for (let i = 0; i < (await highlights.count()); i++) {
+	const count = await highlights.count();
+
+	const gotBoxes: Box[] = [];
+	for (let i = 0; i < count; i++) {
 		const box = await highlights.nth(i).boundingBox();
-		expect(box).not.toBeNull();
+		gotBoxes.push(box!);
+	}
 
-		console.log(`Expected: ${JSON.stringify(boxes[i])}`);
-		console.log(`Got: ${JSON.stringify(box)}`);
+	console.log('Got:', gotBoxes);
+	console.log('Expected:', boxes);
 
-		assertBoxesClose(box!, boxes[i]);
+	for (let i = 0; i < count; i++) {
+		expect(gotBoxes[i]).not.toBeNull();
+
+		assertBoxesClose(gotBoxes[i]!, boxes[i]);
 	}
 }
 

@@ -33,10 +33,30 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 
 	if (testInfo.project.name == 'chromium') {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 233.90625, y: 44, width: 48, height: 19 },
-			{ x: 281.90625, y: 44, width: 8, height: 19 },
-			{ x: 10, y: 61, width: 8, height: 19 },
-			{ x: 241.90625, y: 27, width: 24, height: 19 },
+			{
+				x: 196.52084350585938,
+				y: 48.66666793823242,
+				width: 39.96875,
+				height: 21.322917938232422,
+			},
+			{
+				x: 236.5,
+				y: 48.66666793823242,
+				width: 6.6666717529296875,
+				height: 21.322917938232422,
+			},
+			{
+				x: 10,
+				y: 68,
+				width: 6.666667938232422,
+				height: 21.333335876464844,
+			},
+			{
+				x: 203.17709350585938,
+				y: 29.33333396911621,
+				width: 20,
+				height: 21.33333396911621,
+			},
 		]);
 	} else {
 		await assertHarperHighlightBoxes(page, [
