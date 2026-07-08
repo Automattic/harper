@@ -84,9 +84,12 @@ impl PhrasalVerbAsCompoundNoun {
         }
 
         // * Must not be in the set of known false positives.
+        //   These end in a particle after a real verb ("gall on", "drag on",
+        //   "left over") yet aren't phrasal verbs miswritten as compound nouns.
         if noun_chars.eq_any_ignore_ascii_case_chars(&[
             &['g', 'a', 'l', 'l', 'o', 'n'],
             &['d', 'r', 'a', 'g', 'o', 'n'],
+            &['l', 'e', 'f', 't', 'o', 'v', 'e', 'r'],
         ]) {
             return Err(Why::ItsAKnownFalsePositive);
         }
@@ -826,6 +829,14 @@ mod tests {
     fn dont_flag_meltdown_3591() {
         assert_no_lints(
             "Unfortunately, Meltdown ended up being problematic.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_leftover_adjective_3707() {
+        assert_no_lints(
+            "\"Remnants\" typically implies passive, leftover debris.",
             PhrasalVerbAsCompoundNoun::default(),
         );
     }
