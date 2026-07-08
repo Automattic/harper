@@ -65,7 +65,7 @@ impl ExprLinter for RedundantFirsts {
 
         let message = match VERBS
             .iter()
-            .find(|(v, _)| verb.eq_str(*v))
+            .find(|(v, _)| verb.eq_str(v))
             .map(|(_, level)| level)?
         {
             RedundancyLevel::Probable => {
