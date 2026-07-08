@@ -5375,6 +5375,13 @@
 								"state": true,
 								"label": "For The Nth Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "InStock",
+								"state": true,
+								"label": "In Stock"
+							}
 						}
 					]
 				}

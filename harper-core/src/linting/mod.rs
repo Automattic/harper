@@ -118,6 +118,7 @@ mod if_wouldve;
 mod in_demand_in_depth;
 mod in_favour_of_doing;
 mod in_on_the_cards;
+mod in_stock;
 mod in_time_from_now;
 mod inflected_verb_after_to;
 mod informal_laughter;
