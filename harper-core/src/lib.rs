@@ -212,7 +212,10 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
+    use crate::Span;
+    use crate::expr::{AnchorStart, SequenceExpr};
     use crate::linting::Lint;
+    use crate::remove_lints_overlapping_expr;
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
