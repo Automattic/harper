@@ -320,9 +320,9 @@ test-firefox-plugin: build-firefox-plugin
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]]; then
     env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project firefox -j "80%"
+    xvfb-run --auto-servernum pnpm test --project firefox -j "20%"
   else
-    pnpm test --project firefox -j "80%"
+    pnpm test --project firefox -j "20%"
   fi
 
 # Run VSCode plugin unit and integration tests.

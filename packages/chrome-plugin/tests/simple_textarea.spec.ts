@@ -60,8 +60,14 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 		]);
 	} else {
 		await assertHarperHighlightBoxes(page, [
-			{ x: 178, y: 28, width: 48, height: 20 },
-			{ x: 358, y: 10, width: 18, height: 20 },
+			[
+				{ x: 10, y: 71, width: 57.599998474121094, height: 17 },
+				{ x: 218.8000030517578, y: 26, width: 21.600006103515625, height: 17 },
+			],
+			[
+				{ x: 178, y: 28, width: 48, height: 20 },
+				{ x: 358, y: 10, width: 18, height: 20 },
+			],
 		]);
 	}
 });
@@ -77,7 +83,10 @@ test('Scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ x: 76, y: 86, width: 42, height: 20 }]);
+	await assertHarperHighlightBoxes(page, [
+		[{ height: 19, width: 56, x: 97.953125, y: 63 }],
+		[{ x: 76, y: 86, width: 42, height: 20 }],
+	]);
 });
 
 test.describe('textarea lint delay', () => {

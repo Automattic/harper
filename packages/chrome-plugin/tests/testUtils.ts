@@ -425,10 +425,14 @@ export async function testMultipleSuggestionsAndUndo(
 	});
 }
 
-export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
+export async function assertHarperHighlightBoxes(
+	page: Page,
+	boxes: Box[] | Box[][],
+): Promise<void> {
+	const expectedAlternatives = isBoxAlternatives(boxes) ? boxes : [boxes];
 	const highlights = getHarperHighlights(page);
 
-	await expect(highlights).toHaveCount(boxes.length);
+	await expect(highlights).toHaveCount(expectedAlternatives[0].length);
 
 	const count = await highlights.count();
 
@@ -441,11 +445,12 @@ export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Prom
 	console.log('Got:', gotBoxes);
 	console.log('Expected:', boxes);
 
-	for (let i = 0; i < count; i++) {
-		expect(gotBoxes[i]).not.toBeNull();
-
-		assertBoxesClose(gotBoxes[i]!, boxes[i]);
+	for (const gotBox of gotBoxes) {
+		expect(gotBox).not.toBeNull();
 	}
+
+	const matches = expectedAlternatives.some((expectedBoxes) => boxesClose(gotBoxes, expectedBoxes));
+	expect(matches).toBe(true);
 }
 
 /** Create a test to assert that a page has a certain number highlights.
@@ -477,6 +482,29 @@ export function assertBoxesClose(a: Box, b: Box) {
 	assertClose(a.height, b.height);
 }
 
+function isBoxAlternatives(boxes: Box[] | Box[][]): boxes is Box[][] {
+	return Array.isArray(boxes[0]);
+}
+
+function boxesClose(actual: Box[], expected: Box[]) {
+	if (actual.length !== expected.length) return false;
+
+	return actual.every((actualBox, i) => boxClose(actualBox, expected[i]));
+}
+
+function boxClose(actual: Box, expected: Box) {
+	return (
+		close(actual.x, expected.x) &&
+		close(actual.y, expected.y) &&
+		close(actual.width, expected.width) &&
+		close(actual.height, expected.height)
+	);
+}
+
+function close(actual: number, expected: number) {
+	return Math.abs(actual - expected) <= 15;
+}
+
 function assertClose(actual: number, expected: number) {
-	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(15);
+	expect(close(actual, expected)).toBe(true);
 }
