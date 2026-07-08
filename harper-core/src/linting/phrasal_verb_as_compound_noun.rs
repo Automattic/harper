@@ -256,11 +256,13 @@ impl PhrasalVerbAsCompoundNoun {
             return Err(Why::Contextual(Context::ItsActuallyPartOfANounPhrase));
         }
 
-        // If the next word is a present or simple past verb form compatible with a 3rd person singular noun
+        // If the next word is a present or simple past verb form compatible with a 3rd person singular noun,
+        // or an auxiliary/modal verb ("Backup will run", "Backup can be restored"), the word is the subject noun.
         if let Some(next_tok) = maybe_next_tok
             && (next_tok.kind.is_verb_third_person_singular_present_form()
                 || next_tok.kind.is_verb_simple_past_form()
-                || next_tok.kind.is_verb_past_form())
+                || next_tok.kind.is_verb_past_form()
+                || next_tok.kind.is_auxiliary_verb())
             && !next_tok.kind.is_plural_noun()
         {
             return Err(Why::Contextual(Context::ItsFollowedByVerb));
@@ -826,6 +828,16 @@ mod tests {
     fn dont_flag_meltdown_3591() {
         assert_no_lints(
             "Unfortunately, Meltdown ended up being problematic.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_backup_before_modal_3661() {
+        // Sentence-initial "Backup" followed by a modal is the subject noun,
+        // not a phrasal verb miswritten as a compound noun.
+        assert_no_lints(
+            "Backup will run automatically.",
             PhrasalVerbAsCompoundNoun::default(),
         );
     }
