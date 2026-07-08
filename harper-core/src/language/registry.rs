@@ -73,8 +73,7 @@ pub enum ProseLanguage {
     #[cfg(feature = "pt")]
     Portuguese,
     #[cfg(feature = "sk")]
-    Slovak,
-}
+    Slovak,}
 
 /// Convert a Harper Language to a ProseLanguage.
 pub fn prose_language(language: &Language) -> ProseLanguage {
@@ -149,11 +148,9 @@ pub fn parser_for_prose(
             GermanModule::plain_parser().parse(source)
         }))),
         #[cfg(feature = "pt")]
-        ("org", ProseLanguage::Portuguese) => {
-            Some(Box::new(OrgMode::with_inline_parser(|source| {
-                PortugueseModule::plain_parser().parse(source)
-            })))
-        }
+        ("org", ProseLanguage::Portuguese) => Some(Box::new(OrgMode::with_inline_parser(|source| {
+            PortugueseModule::plain_parser().parse(source)
+        }))),
         #[cfg(feature = "sk")]
         ("org", ProseLanguage::Slovak) => Some(Box::new(OrgMode::with_inline_parser(|source| {
             SlovakModule::plain_parser().parse(source)

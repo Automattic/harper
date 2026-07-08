@@ -17,10 +17,10 @@ pub mod portuguese;
 #[cfg(feature = "sk")]
 pub mod slovak;
 
-pub use languages::{parse_language, Language, LanguageFamily};
+pub use languages::{Language, LanguageFamily, parse_language};
 pub use module::{LanguageDetector, LanguageModule};
 pub use registry::{
-    add_language_specific_linters, detect_language, dictionary, dictionary_for_language,
-    new_curated_for_language, parser_for_prose, prose_language, weir_rules_lint_group,
-    ProseLanguage,
+    ProseLanguage, add_language_specific_linters, detect_language, dictionary,
+    dictionary_for_language, new_curated_for_language, parser_for_prose, prose_language,
+    weir_rules_lint_group,
 };

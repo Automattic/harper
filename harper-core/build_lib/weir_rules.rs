@@ -145,6 +145,10 @@ pub fn write_grouped_weir_boilerplate(weir_rule_dir: &Path, dest: &Path) {
     code.push_str("    ],\n");
     code.push_str("}\n");
 
+    // Ensure the parent directory exists
+    if let Some(parent) = dest.parent() {
+        fs::create_dir_all(parent).unwrap();
+    }
     fs::write(dest, code).unwrap();
 }
 

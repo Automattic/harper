@@ -321,10 +321,15 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                     "STANDARD" => Ok(GermanDialectFlags::STANDARD),
                                     "AUSTRIAN" => Ok(GermanDialectFlags::AUSTRIAN),
                                     "SWISS" => Ok(GermanDialectFlags::SWISS),
-                                    _ => Err(Error::custom(format!("Unknown German dialect: {s}"))),
+                                    _ => Err(Error::custom(format!(
+                                        "Unknown German dialect: {s}"
+                                    ))),
                                 },
                                 _ => {
-                                    Err(Error::invalid_type(Unexpected::Other("german"), &"string"))
+                                    Err(Error::invalid_type(
+                                        Unexpected::Other("german"),
+                                        &"string",
+                                    ))
                                 }
                             }?;
                         }
@@ -339,10 +344,12 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                         "Unknown Portuguese dialect: {s}"
                                     ))),
                                 },
-                                _ => Err(Error::invalid_type(
-                                    Unexpected::Other("portuguese"),
-                                    &"string",
-                                )),
+                                _ => {
+                                    Err(Error::invalid_type(
+                                        Unexpected::Other("portuguese"),
+                                        &"string",
+                                    ))
+                                }
                             }?;
                         }
                         #[cfg(feature = "sk")]
@@ -350,10 +357,15 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                             slovak = match val {
                                 Value::String(s) => match s.as_str() {
                                     "STANDARD" => Ok(SlovakDialectFlags::STANDARD),
-                                    _ => Err(Error::custom(format!("Unknown Slovak dialect: {s}"))),
+                                    _ => Err(Error::custom(format!(
+                                        "Unknown Slovak dialect: {s}"
+                                    ))),
                                 },
                                 _ => {
-                                    Err(Error::invalid_type(Unexpected::Other("slovak"), &"string"))
+                                    Err(Error::invalid_type(
+                                        Unexpected::Other("slovak"),
+                                        &"string",
+                                    ))
                                 }
                             }?;
                         }
@@ -376,7 +388,7 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                 }
                                 fields
                             }; // Convert to a static slice by leaking the memory
-                               // This is safe as it's only done during deserialization error handling
+                            // This is safe as it's only done during deserialization error handling
                             let valid_fields_static: &'static [&'static str] =
                                 Box::leak(valid_fields.into_boxed_slice());
                             return Err(Error::unknown_field(&key, valid_fields_static));

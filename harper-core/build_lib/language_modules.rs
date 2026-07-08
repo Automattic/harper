@@ -1,42 +1,30 @@
-use std::{env, fs, io::Write, path::Path, process::Command};
+use std::{env, fs, path::Path, process::Command};
 
 use crate::build_lib::language_config::{LanguageConfig, discover_languages};
 
-/// Format Rust code using rustfmt if available, otherwise return original code
-fn format_rust_code(code: &str) -> String {
-    // Try to use rustfmt if available
-    if let Ok(mut child) = Command::new("rustfmt")
-        .arg("--emit=stdout")
+/// Format Rust code using cargo fmt to ensure consistent formatting
+fn format_rust_file(file_path: &Path) -> Result<(), String> {
+    // Use cargo fmt to format the file, which ensures the same configuration
+    // and behavior as when developers run cargo fmt manually
+    // Set the working directory to the project root to ensure consistent config file resolution
+    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+
+    let status = Command::new("cargo")
+        .current_dir(manifest_dir)
+        .arg("fmt")
+        .arg("--")
         .arg("--edition=2021")
-        .stdin(std::process::Stdio::piped())
-        .stdout(std::process::Stdio::piped())
-        .stderr(std::process::Stdio::piped())
-        .spawn()
-    {
-        if let Some(mut stdin) = child.stdin.take() {
-            if stdin.write_all(code.as_bytes()).is_ok() {
-                drop(stdin); // Important: close stdin to signal EOF to rustfmt
+        .arg(file_path)
+        .status();
 
-                match child.wait_with_output() {
-                    Ok(output) if output.status.success() => {
-                        if let Ok(formatted) = String::from_utf8(output.stdout) {
-                            return formatted;
-                        }
-                    }
-                    Ok(output) => {
-                        let stderr = String::from_utf8_lossy(&output.stderr);
-                        eprintln!("rustfmt error: {}", stderr);
-                    }
-                    Err(e) => {
-                        eprintln!("Failed to wait for rustfmt: {}", e);
-                    }
-                }
-            }
-        }
+    match status {
+        Ok(status) if status.success() => Ok(()),
+        Ok(status) => Err(format!(
+            "cargo fmt failed with exit code: {:?}",
+            status.code()
+        )),
+        Err(e) => Err(format!("Failed to run cargo fmt: {}", e)),
     }
-
-    // Fall back to original code if rustfmt is not available or fails
-    code.to_string()
 }
 
 /// Helper function to generate parse_language match arms dynamically
@@ -132,8 +120,12 @@ pub fn generate_language_modules(_out_dir: &Path) {
     // Write directly to mod.rs to replace the hand-written file
     let dest = src_dir.join("mod.rs");
     fs::create_dir_all(&src_dir).unwrap();
-    let formatted_code = format_rust_code(&code);
-    fs::write(&dest, formatted_code).unwrap();
+    fs::write(&dest, &code).unwrap();
+
+    // Format the file with rustfmt
+    if let Err(e) = format_rust_file(&dest) {
+        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
+    }
 
     // Also generate languages.rs
     generate_languages_file(&src_dir, &languages);
@@ -160,7 +152,9 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
         "//! including language families and specific language variants with dialects.\n",
     );
 
-    // Import Dialect trait for try_from_abbr method (removed - unused import)
+    // Import Dialect trait for try_from_abbr method
+    code.push_str("#[allow(unused_imports)]\n");
+    code.push_str("use crate::language::dialects::dialect_trait::Dialect;\n\n");
 
     // English is always included
     code.push_str("use crate::language::english::dialects::EnglishDialect;\n\n");
@@ -312,11 +306,15 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("}\n");
 
     let dest = src_dir.join("languages.rs");
-    let formatted_code = format_rust_code(&code);
-    fs::write(&dest, formatted_code).unwrap();
+    fs::write(&dest, &code).unwrap();
+
+    // Format the file with rustfmt
+    if let Err(e) = format_rust_file(&dest) {
+        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
+    }
 
     // Also generate registry.rs
-    generate_registry_file(&src_dir, &languages);
+    generate_registry_file(src_dir, languages);
 }
 
 /// Helper function to convert feature name to dict suffix
@@ -437,14 +435,14 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
 
     // Generate ProseLanguage enum variants dynamically
     for (i, lang) in languages.iter().enumerate() {
-        if i > 0 {
-            if let Some(feature) = &lang.feature {
-                code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-            }
+        if i > 0
+            && let Some(feature) = &lang.feature
+        {
+            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
         }
         code.push_str(&format!("    {},", lang.name));
         if i < languages.len() - 1 {
-            code.push_str("\n");
+            code.push('\n');
         }
     }
     code.push_str("}\n\n");
@@ -682,11 +680,15 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("}\n");
 
     let dest = src_dir.join("registry.rs");
-    let formatted_code = format_rust_code(&code);
-    fs::write(&dest, formatted_code).unwrap();
+    fs::write(&dest, &code).unwrap();
+
+    // Format the file with rustfmt
+    if let Err(e) = format_rust_file(&dest) {
+        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
+    }
 
     // Generate dialect flags
-    generate_dialect_flags_file(&src_dir, languages);
+    generate_dialect_flags_file(src_dir, languages);
 }
 
 /// Generate dialect_flags.rs with dynamic dialect flags collection
@@ -810,7 +812,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 lang.dir_name.to_lowercase()
             ));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -839,7 +841,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 lang.flags_module
             ));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -882,7 +884,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         } else {
             code.push_str(&format!("            {},", lang.dir_name.to_lowercase()));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -925,7 +927,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 lang.flags_module
             ));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -1076,7 +1078,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 lang.dir_name.to_lowercase()
             ));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -1101,7 +1103,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
             lang.dir_name.to_lowercase(),
             lang.dir_name.to_lowercase()
         ));
-        code.push_str("\n");
+        code.push('\n');
     }
     code.push_str("        }\n");
     code.push_str("    }\n");
@@ -1161,7 +1163,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 lang.flags_module
             ));
             if lang.dir_name != "slovak" {
-                code.push_str("\n");
+                code.push('\n');
             }
         }
     }
@@ -1199,7 +1201,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
         ));
     }
 
-    code.push_str("\n");
+    code.push('\n');
 
     code.push_str("                for (key, val) in map {\n");
     code.push_str("                    match key.as_str() {\n");
@@ -1287,9 +1289,7 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
 
         code.push_str("                                },\n");
         code.push_str("                                _ => {\n");
-        code.push_str(&format!(
-            "                                    Err(Error::invalid_type(\n",
-        ));
+        code.push_str("                                    Err(Error::invalid_type(\n");
         code.push_str(&format!(
             "                                        Unexpected::Other(\"{}\"),\n",
             lang.dir_name.to_lowercase()
@@ -1374,8 +1374,12 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
     // Write the generated file
     let dest = src_dir.join("dialects").join("dialect_flags.rs");
     fs::create_dir_all(dest.parent().unwrap()).unwrap();
-    let formatted_code = format_rust_code(&code);
-    fs::write(&dest, formatted_code).unwrap();
+    fs::write(&dest, &code).unwrap();
+
+    // Format the file with rustfmt
+    if let Err(e) = format_rust_file(&dest) {
+        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
+    }
 
     println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
 }

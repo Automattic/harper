@@ -92,7 +92,7 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
     // If feature is explicitly "null" or empty, treat as None
     let feature = if feature
         .as_ref()
-        .map_or(false, |f| f == "null" || f.is_empty())
+        .is_some_and(|f| f == "null" || f.is_empty())
     {
         None
     } else {
@@ -144,16 +144,15 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
         // Array of tables format: [[dialects]], [[dialects]], ...
         let mut result = Vec::new();
         for dialect_table in dialects_array {
-            if let toml::Value::Table(table) = dialect_table {
-                if let (Some(toml::Value::String(name)), Some(toml::Value::Array(aliases_arr))) =
+            if let toml::Value::Table(table) = dialect_table
+                && let (Some(toml::Value::String(name)), Some(toml::Value::Array(aliases_arr))) =
                     (table.get("name"), table.get("aliases"))
-                {
-                    let aliases: Vec<String> = aliases_arr
-                        .iter()
-                        .filter_map(|v| v.as_str().map(|s| s.to_string()))
-                        .collect();
-                    result.push((aliases, name.clone()));
-                }
+            {
+                let aliases: Vec<String> = aliases_arr
+                    .iter()
+                    .filter_map(|v| v.as_str().map(|s| s.to_string()))
+                    .collect();
+                result.push((aliases, name.clone()));
             }
         }
         result
