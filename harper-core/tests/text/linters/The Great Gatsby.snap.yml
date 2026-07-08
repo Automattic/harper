@@ -3140,16 +3140,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    2073 | A dead man passed us in a hearse heaped with blooms, followed by two carriages
-    2074 | with drawn blinds, and by more cheerful carriages for friends. The friends
-         |                           ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “cheerfuller”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2076 | Europe, and I was glad that the sight of Gatsby’s splendid car was included in
@@ -6437,16 +6427,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    4883 | “Of course she might have loved him just for a minute, when they were first
-    4884 | married—and loved me more even then, do you see?”
-         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “evener”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4921 | “I’m going to drain the pool to-day, Mr. Gatsby. Leaves’ll start falling pretty
@@ -7647,15 +7627,6 @@ Message: |
          |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “They”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    5659 | One of my most vivid memories is of coming back West from prep school and later
-         |           ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “vividest”
 
 
 
