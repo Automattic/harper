@@ -21,6 +21,8 @@ impl<D: Dictionary> MoreAdjective<D> {
                 .then_positive_adjective()
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
                 // Or a following hyphen which we'll use to identify a false positive #3568
+                // Or a following noun the adjective modifies, where `more` quantifies the
+                // noun phrase ("more short videos") rather than the adjective — false positive #3688
                 .then_optional(FirstMatchOf::new([
                     Box::new(
                         SequenceExpr::whitespace()
@@ -29,6 +31,7 @@ impl<D: Dictionary> MoreAdjective<D> {
                             .then_positive_adjective(),
                     ) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
+                    Box::new(SequenceExpr::whitespace().then_noun()),
                 ])),
             dict,
         }
@@ -326,6 +329,16 @@ mod tests {
     fn dont_correct_in_most_to_innest_3284() {
         assert_no_lints(
             "I have spent most in my life in Florida and had never heard \"display\" with an emphasis on the first syllable.",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_short_videos_3688() {
+        // "more" quantifies the noun phrase ("more [short videos]"), so "shorter
+        // videos" is not the intended meaning.
+        assert_no_lints(
+            "I want to watch more short videos.",
             MoreAdjective::new(FstDictionary::curated()),
         );
     }
