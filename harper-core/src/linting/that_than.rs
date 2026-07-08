@@ -21,8 +21,23 @@ impl Default for ThatThan {
             .t_ws()
             .then_word_except(&["way"]);
 
+        // "less/fewer [adj] that [...]" is almost always a comparison where
+        // "that" should be "than". "more [adj] that" is excluded because it
+        // frequently introduces a correct subordinate clause ("more clear that
+        // users need to...").
+        let periphrastic_that_nextword = SequenceExpr::word_set(&["less", "fewer"])
+            .t_ws()
+            .then_positive_adjective()
+            .t_ws()
+            .t_aco("that")
+            .t_ws()
+            .then_word_except(&["way"]);
+
         Self {
-            expr: adjective_er_that_nextword,
+            expr: SequenceExpr::any_of(vec![
+                Box::new(adjective_er_that_nextword),
+                Box::new(periphrastic_that_nextword),
+            ]),
         }
     }
 }
@@ -35,11 +50,13 @@ impl ExprLinter for ThatThan {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 5 {
-            return None;
-        }
+        let that_idx = match toks.len() {
+            5 => 2,
+            7 => 4,
+            _ => return None,
+        };
 
-        let that_tok = &toks[2];
+        let that_tok = &toks[that_idx];
 
         Some(Lint {
             span: that_tok.span,
@@ -185,6 +202,35 @@ mod tests {
             ThatThan::default(),
             0,
         )
+    }
+
+    // less/fewer [adj] that
+
+    #[test]
+    fn fix_less_common_that() {
+        assert_suggestion_result(
+            "way less common that mp3",
+            ThatThan::default(),
+            "way less common than mp3",
+        );
+    }
+
+    #[test]
+    fn fix_less_reliable_that() {
+        assert_suggestion_result(
+            "this approach is less reliable that the previous one",
+            ThatThan::default(),
+            "this approach is less reliable than the previous one",
+        );
+    }
+
+    #[test]
+    fn fix_fewer_errors_that() {
+        assert_suggestion_result(
+            "produces fewer errors that expected",
+            ThatThan::default(),
+            "produces fewer errors than expected",
+        );
     }
 
     // more/less adj that
