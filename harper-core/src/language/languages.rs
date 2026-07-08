@@ -25,49 +25,51 @@ pub fn parse_language(s: &str) -> Option<Language> {
     let s_lower = s.to_ascii_lowercase();
 
     match s_lower.as_str() {
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => {
-            Some(Language::English(EnglishDialect::try_from_abbr("US").unwrap()))
-        }
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => {
-            Some(Language::English(EnglishDialect::try_from_abbr("GB").unwrap()))
-        }
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => {
-            Some(Language::English(EnglishDialect::try_from_abbr("AU").unwrap()))
-        }
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => {
-            Some(Language::English(EnglishDialect::try_from_abbr("IN").unwrap()))
-        }
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => {
-            Some(Language::English(EnglishDialect::try_from_abbr("CA").unwrap()))
-        }
+        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Some(Language::English(
+            EnglishDialect::try_from_abbr("US").unwrap(),
+        )),
+        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Some(Language::English(
+            EnglishDialect::try_from_abbr("GB").unwrap(),
+        )),
+        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Some(Language::English(
+            EnglishDialect::try_from_abbr("AU").unwrap(),
+        )),
+        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Some(Language::English(
+            EnglishDialect::try_from_abbr("IN").unwrap(),
+        )),
+        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Some(Language::English(
+            EnglishDialect::try_from_abbr("CA").unwrap(),
+        )),
         #[cfg(feature = "de")]
-        "de" | "german" | "deutsch" | "de-de" | "de_de" => {
-            Some(Language::German(GermanDialect::try_from_abbr("Standard").unwrap()))
-        }
+        "de" | "german" | "deutsch" | "de-de" | "de_de" => Some(Language::German(
+            GermanDialect::try_from_abbr("Standard").unwrap(),
+        )),
         #[cfg(feature = "de")]
-        "at" | "austria" | "austrian" | "de-at" | "de_at" => {
-            Some(Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()))
-        }
+        "at" | "austria" | "austrian" | "de-at" | "de_at" => Some(Language::German(
+            GermanDialect::try_from_abbr("Austrian").unwrap(),
+        )),
         #[cfg(feature = "de")]
-        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => {
-            Some(Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()))
-        }
+        "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Some(Language::German(
+            GermanDialect::try_from_abbr("Swiss").unwrap(),
+        )),
         #[cfg(feature = "pt")]
-        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()))
-        }
+        "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" => Some(Language::Portuguese(
+            PortugueseDialect::try_from_abbr("PT").unwrap(),
+        )),
         #[cfg(feature = "pt")]
         "br" | "brazil" | "portuguese-brazilian" | "portuguese_brazilian" | "pt-br" | "pt_br" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()))
+            Some(Language::Portuguese(
+                PortugueseDialect::try_from_abbr("BR").unwrap(),
+            ))
         }
         #[cfg(feature = "pt")]
-        "ao" => {
-            Some(Language::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap()))
-        }
+        "ao" => Some(Language::Portuguese(
+            PortugueseDialect::try_from_abbr("AO").unwrap(),
+        )),
         #[cfg(feature = "sk")]
-        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => {
-            Some(Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()))
-        }
+        "sk" | "slovak" | "slovensko" | "sk-sk" | "sk_sk" => Some(Language::Slovak(
+            SlovakDialect::try_from_abbr("Standard").unwrap(),
+        )),
         _ => None,
     }
 }

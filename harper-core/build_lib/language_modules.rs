@@ -13,7 +13,6 @@ fn format_rust_file(file_path: &Path) -> Result<(), String> {
         .current_dir(manifest_dir)
         .arg("fmt")
         .arg("--")
-        .arg("--edition=2021")
         .arg(file_path)
         .status();
 

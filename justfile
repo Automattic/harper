@@ -437,8 +437,6 @@ check-rust: audit-dictionary
   #!/usr/bin/env bash
   set -eo pipefail
 
-  # Ensure all generated files are properly formatted after audit-dictionary
-  cargo fmt
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
