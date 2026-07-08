@@ -301,9 +301,9 @@ test-chrome-plugin: build-chrome-plugin
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]]; then
     env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project chromium -j "20%"
+    xvfb-run --auto-servernum pnpm test --project chromium 
   else
-    pnpm test --project chromium -j "20%"
+    pnpm test --project chromium 
   fi
 
 
@@ -320,9 +320,9 @@ test-firefox-plugin: build-firefox-plugin
   # For environments without displays like CI servers or containers
   if [[ "$(uname)" == "Linux" ]]; then
     env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
-    xvfb-run --auto-servernum pnpm test --project firefox -j "20%"
+    xvfb-run --auto-servernum pnpm test --project firefox 
   else
-    pnpm test --project firefox -j "20%"
+    pnpm test --project firefox 
   fi
 
 # Run VSCode plugin unit and integration tests.

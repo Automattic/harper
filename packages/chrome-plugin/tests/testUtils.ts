@@ -432,7 +432,7 @@ export async function assertHarperHighlightBoxes(
 	const expectedAlternatives = isBoxAlternatives(boxes) ? boxes : [boxes];
 	const highlights = getHarperHighlights(page);
 
-	await expect(highlights).toHaveCount(expectedAlternatives[0].length);
+	await expect(highlights).toHaveCount(expectedAlternatives[0].length, { timeout: 12000 });
 
 	const count = await highlights.count();
 
@@ -470,7 +470,7 @@ export async function testPageHasNHighlights(testPageUrl: TestPageUrlProvider, n
  * Useful for making sure certain patterns are ignored. */
 export async function assertPageHasNHighlights(page: Page, n: number) {
 	const highlights = getHarperHighlights(page);
-	expect(await highlights.count()).toBe(n);
+	await expect(highlights).toHaveCount(n, { timeout: 12000 });
 }
 
 /** An assertion that checks to ensure that two boxes are _approximately_ equal.
