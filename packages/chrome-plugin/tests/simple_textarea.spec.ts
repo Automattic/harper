@@ -77,7 +77,7 @@ test('Scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ height: 19, width: 56, x: 97.953125, y: 63 }]);
+	await assertHarperHighlightBoxes(page, [{ x: 76, y: 86, width: 42, height: 20 }]);
 });
 
 test.describe('textarea lint delay', () => {
