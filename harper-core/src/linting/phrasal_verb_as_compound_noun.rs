@@ -256,13 +256,15 @@ impl PhrasalVerbAsCompoundNoun {
             return Err(Why::Contextual(Context::ItsActuallyPartOfANounPhrase));
         }
 
-        // If the next word is a present or simple past verb form compatible with a 3rd person singular noun,
-        // or an auxiliary/modal verb ("Backup will run", "Backup can be restored"), the word is the subject noun.
+        // If the next word is a present or simple past verb form compatible with a 3rd person
+        // singular noun, the word is the subject noun. An auxiliary/modal ("Backup will run")
+        // is the same signal but only with nothing before it - mid-sentence will/can/might are
+        // just as often nouns, so restrict the modal case to sentence-initial position.
         if let Some(next_tok) = maybe_next_tok
             && (next_tok.kind.is_verb_third_person_singular_present_form()
                 || next_tok.kind.is_verb_simple_past_form()
                 || next_tok.kind.is_verb_past_form()
-                || next_tok.kind.is_auxiliary_verb())
+                || (maybe_prev_tok.is_none() && next_tok.kind.is_auxiliary_verb()))
             && !next_tok.kind.is_plural_noun()
         {
             return Err(Why::Contextual(Context::ItsFollowedByVerb));
