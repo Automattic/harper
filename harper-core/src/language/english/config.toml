@@ -1,15 +1,7 @@
 [language]
 name = "English"
-dir_name = "english"
 
 [metadata]
-aliases = [
-    "us", "usa", "america", "american", "en-us", "en_us",
-    "uk", "gb", "british", "britain", "en-gb", "en_gb",
-    "au", "aus", "australia", "australian", "en-au", "en_au",
-    "in", "india", "indian", "bharat", "en-in", "en_in",
-    "ca", "canada", "canadian", "en-ca", "en_ca"
-]
 confidence = 0.30
 
 [[dialects]]

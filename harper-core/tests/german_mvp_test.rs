@@ -7,12 +7,8 @@ use harper_core::language::german::dialects::GermanDialect;
 use harper_core::language::german::linting::new_curated_german;
 use harper_core::language::german::parsers::PlainGerman;
 use harper_core::language::german::spell::curated_german_dictionary;
-use harper_core::linting::{LintGroup, Linter};
+use harper_core::linting::Linter;
 use harper_core::parsers::Parser;
-
-fn german_lint_group() -> LintGroup {
-    new_curated_german(GermanDialect::Standard)
-}
 
 /// Test 1: German parser functionality
 #[test]
@@ -44,7 +40,7 @@ fn test_german_special_characters() {
 /// Test 3: Detects lowercase sentence start in German
 #[test]
 fn test_german_sentence_capitalization() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     let text = "der Hund ist im Garten. das Auto ist schnell.";
     let dict = curated_german_dictionary();
@@ -66,7 +62,7 @@ fn test_german_sentence_capitalization() {
 /// Test 4: German spell check detects misspellings
 #[test]
 fn test_german_spell_check() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     let text = "Der Hunte ist im Gartens.";
     let dict = curated_german_dictionary();
@@ -87,7 +83,7 @@ fn test_german_spell_check() {
 /// Test 5: Correct German text produces few issues
 #[test]
 fn test_german_proper_grammar() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     let proper_text =
         "Der Hund ist im Garten. Das Auto ist schnell. Die Katze schläft auf dem Sofa.";
@@ -105,7 +101,7 @@ fn test_german_proper_grammar() {
 /// Test 6: Combined check on text with intentional errors
 #[test]
 fn test_german_mvp_comprehensive() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     // "dieser" starts a sentence lowercase, "Worrt" and "flasch" are misspelled
     let test_text = "Der Hund spielt im Garten. dieser Satz beginnt klein. Worrt ist flasch.";
@@ -123,7 +119,7 @@ fn test_german_mvp_comprehensive() {
 /// Test 7: Performance — lint a typical German paragraph in < 500ms
 #[test]
 fn test_german_performance() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     let text = "Der Hund ist im Garten. Die Katze schläft auf dem Sofa. \
                 Das Auto ist sehr schnell. Die Kinder spielen im Park.";
@@ -144,7 +140,7 @@ fn test_german_performance() {
 /// Test 8: German compound words should not be false positives
 #[test]
 fn test_german_compound_words() {
-    let mut linter = german_lint_group();
+    let mut linter = new_curated_german(GermanDialect::Standard);
 
     let text = "Das Gartenhaus ist groß. Das Haus ist klein.";
     let dict = curated_german_dictionary();

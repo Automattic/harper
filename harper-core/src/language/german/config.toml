@@ -1,14 +1,8 @@
 [language]
 name = "German"
-dir_name = "german"
 feature = "de"
 
 [metadata]
-aliases = [
-    "de", "german", "deutsch", "de-de", "de_de",
-    "at", "austria", "austrian", "de-at", "de_at",
-    "ch", "switzerland", "swiss", "de-ch", "de_ch"
-]
 confidence = 0.95
 
 [[dialects]]

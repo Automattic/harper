@@ -16,8 +16,6 @@ pub struct LanguageConfig {
     pub flags_module: String,
     /// Module name for the language module (e.g., "EnglishModule")
     pub module_name: String,
-    /// Language aliases for parsing (e.g., ["de", "german", "deutsch"])
-    pub aliases: Vec<String>,
     /// Detector confidence value (0.0-1.0) for language detection ordering
     pub confidence: f64,
     /// Dialect alias groups: each group maps multiple aliases to a dialect variant
@@ -33,7 +31,7 @@ pub fn get_non_language_directories() -> [&'static str; 2] {
 }
 
 /// Load language configuration from a config.toml file in the language directory
-pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
+pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageConfig> {
     let config_path = dir_path.join("config.toml");
     if !config_path.exists() {
         return None;
@@ -73,17 +71,6 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
         }
     };
 
-    let dir_name = match language_table.get("dir_name").and_then(|v| v.as_str()) {
-        Some(d) => d.to_string(),
-        None => {
-            eprintln!(
-                "Warning: Missing 'dir_name' in [language] section for {}",
-                dir_path.display()
-            );
-            return None;
-        }
-    };
-
     let feature = language_table
         .get("feature")
         .and_then(|v| v.as_str())
@@ -105,20 +92,6 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
         _ => {
             eprintln!(
                 "Warning: Missing [metadata] section in config.toml for {}",
-                dir_path.display()
-            );
-            return None;
-        }
-    };
-
-    let aliases = match metadata_table.get("aliases") {
-        Some(toml::Value::Array(arr)) => arr
-            .iter()
-            .filter_map(|v| v.as_str().map(|s| s.to_string()))
-            .collect(),
-        _ => {
-            eprintln!(
-                "Warning: Missing or invalid 'aliases' in [metadata] section for {}",
                 dir_path.display()
             );
             return None;
@@ -194,12 +167,11 @@ pub fn load_language_config(dir_path: &Path) -> Option<LanguageConfig> {
 
     Some(LanguageConfig {
         name,
-        dir_name,
+        dir_name: dir_name.to_string(),
         feature,
         dialect_module,
         flags_module,
         module_name,
-        aliases,
         confidence,
         dialect_alias_groups,
         weir_rules_subdirectory,
@@ -265,19 +237,10 @@ pub fn discover_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
         }
 
         // Load configuration from config.toml
-        if let Some(config) = load_language_config(&entry.path()) {
-            // Validate that dir_name matches
-            if config.dir_name == dir_name {
-                languages.push(config);
-            }
+        if let Some(config) = load_language_config(&entry.path(), &dir_name) {
+            languages.push(config);
         }
     }
 
     languages
-}
-
-/// Get configuration for all supported languages
-#[allow(dead_code)]
-pub fn get_supported_languages(manifest_dir: &Path) -> Vec<LanguageConfig> {
-    discover_languages(manifest_dir)
 }

@@ -214,18 +214,24 @@ pub fn process_language_weir_rules(language_dir: &Path, out_dir: &Path) {
             // Load language configuration to check for weir rules subdirectory
             use crate::build_lib::language_config::load_language_config;
 
-            let final_weir_dir = if let Some(config) = load_language_config(&language_path) {
-                // Use configured subdirectory if specified
-                if let Some(subdir) = &config.weir_rules_subdirectory {
-                    weir_rules_dir.join(subdir)
+            let dir_name = language_path
+                .file_name()
+                .and_then(|name| name.to_str())
+                .unwrap_or("");
+
+            let final_weir_dir =
+                if let Some(config) = load_language_config(&language_path, dir_name) {
+                    // Use configured subdirectory if specified
+                    if let Some(subdir) = &config.weir_rules_subdirectory {
+                        weir_rules_dir.join(subdir)
+                    } else {
+                        weir_rules_dir
+                    }
                 } else {
-                    weir_rules_dir
-                }
-            } else {
-                // No config.toml? Skip this language for weir rules processing
-                // All languages must have a config.toml file
-                continue;
-            };
+                    // No config.toml? Skip this language for weir rules processing
+                    // All languages must have a config.toml file
+                    continue;
+                };
 
             // Only process if the directory exists and contains .weir files
             if !final_weir_dir.exists() {
