@@ -3,7 +3,25 @@ import path from 'path';
 import { createFixture } from 'playwright-webextext';
 
 const pathToExtension = path.join(import.meta.dirname, '../build');
-const { test, expect } = createFixture(pathToExtension);
+const { test: base, expect } = createFixture(pathToExtension);
+
+const test = base.extend({
+	browser: [
+		async ({ browser }, use) => {
+			await use(browser);
+			if (browser.isConnected()) {
+				await browser.close();
+			}
+		},
+		{ scope: 'worker', timeout: 0 },
+	],
+	context: async ({ browserName, context }, use) => {
+		await use(context);
+		if (browserName === 'chromium') {
+			await context.close();
+		}
+	},
+});
 
 async function getBackgroundForCleanup(context: BrowserContext) {
 	return (

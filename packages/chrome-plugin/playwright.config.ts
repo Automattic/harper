@@ -11,7 +11,7 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	retries: 4,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: 1,
+	workers: '50%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
@@ -31,7 +31,20 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
-			use: { ...devices['Desktop Chrome'] },
+			use: {
+				...devices['Desktop Chrome'],
+				launchOptions: {
+					executablePath: './vglrunWrapper.js',
+					args: [
+						'--disable-gpu-sandbox',
+						'--use-gl=desktop',
+						'--use-angle=vulkan',
+						'--enable-features=Vulkan',
+						'--disable-vulkan-surface',
+						'--enable-unsafe-webgpu',
+					],
+				},
+			},
 		},
 		{
 			name: 'firefox',
