@@ -710,7 +710,7 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = REGIONAL_TERMS
+        let concept = &REGIONAL_TERMS
             .iter()
             .find(|row| row.term == flagged_term_string)?
             .concept;
