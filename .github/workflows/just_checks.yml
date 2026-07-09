@@ -49,8 +49,7 @@ jobs:
             libayatana-appindicator3-dev \
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
-            libxdo-dev \ 
-            libappindicator3-dev
+            libxdo-dev 
       - name: Install VirtualGL
         run: |
           sudo apt-get update
