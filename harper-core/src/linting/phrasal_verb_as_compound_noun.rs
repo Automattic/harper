@@ -835,12 +835,69 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_backup_before_modal_3661() {
-        // Sentence-initial "Backup" followed by a modal is the subject noun,
-        // not a phrasal verb miswritten as a compound noun.
+    fn dont_flag_sentence_initial_backup_before_modal_3661() {
+        // Sentence-initial "Backup" is the subject noun when a modal follows, not a
+        // phrasal verb miswritten as a compound noun. #3661 was "Backup will run
+        // automatically"; the same reasoning holds across modals.
         assert_no_lints(
             "Backup will run automatically.",
             PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "Backup can be restored from the cloud.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "Backup should complete within an hour.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_back_up_verb_before_modal_3661() {
+        // Real-world sentences (found by @hippietrail while reviewing #3794) where the
+        // phrasal verb "back up" is legitimately followed by a modal. They are already
+        // two words so the rule never treats them as candidates, but they document that a
+        // following modal is not on its own evidence that the word is a subject noun.
+        assert_no_lints(
+            "The data you back up should be determined by how important it is to you.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "The number of files you back up can affect both the time and the size.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "Any gift you leave to Back Up will be deducted from your estate.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "The photos you back up might capture quiet moments at home.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "Immediately swimming back up would probably be enough.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+        assert_no_lints(
+            "The data you can back up may vary depending on your operating system.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    #[test]
+    fn still_flag_backup_verb_when_no_modal_follows_3661() {
+        // The modal exception must stay narrow: a "backup" written for the verb "back up"
+        // is still flagged when a modal does not follow it.
+        assert_suggestion_result(
+            "Backup your files daily.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "Back up your files daily.",
+        );
+        assert_suggestion_result(
+            "You should backup before upgrading.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "You should back up before upgrading.",
         );
     }
 }
