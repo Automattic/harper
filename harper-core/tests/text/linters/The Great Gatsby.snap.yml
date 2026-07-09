@@ -6427,6 +6427,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+    4883 | “Of course she might have loved him just for a minute, when they were first
+    4884 | married—and loved me more even then, do you see?”
+         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “evener”
+
+
+
 Lint:    Spelling (63 priority)
 Message: |
     4921 | “I’m going to drain the pool to-day, Mr. Gatsby. Leaves’ll start falling pretty

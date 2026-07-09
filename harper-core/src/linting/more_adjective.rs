@@ -22,7 +22,9 @@ impl<D: Dictionary> MoreAdjective<D> {
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
                 // Or a following hyphen which we'll use to identify a false positive #3568
                 // Or a following noun the adjective modifies, where `more` quantifies the
-                // noun phrase ("more short videos") rather than the adjective — false positive #3688
+                // noun phrase ("more short videos") rather than the adjective — false positive #3688.
+                // Require noun-but-not-adjective so a following word that's also an adjective
+                // ("more common plural") doesn't wrongly suppress the comparative suggestion.
                 .then_optional(FirstMatchOf::new([
                     Box::new(
                         SequenceExpr::whitespace()
@@ -31,7 +33,10 @@ impl<D: Dictionary> MoreAdjective<D> {
                             .then_positive_adjective(),
                     ) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
-                    Box::new(SequenceExpr::whitespace().then_noun()),
+                    Box::new(SequenceExpr::whitespace().then_kind_is_but_is_not(
+                        |kind| kind.is_noun(),
+                        |kind| kind.is_adjective(),
+                    )),
                 ])),
             dict,
         }

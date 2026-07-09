@@ -65,6 +65,16 @@ Suggest:
 
 
 
+Lint:    Style (127 priority)
+Message: |
+      32 | Correct grammatical tagging will reflect that "dogs" is here used as a verb, not
+      33 | as the more common plural noun. Grammatical context is one way to determine
+         |        ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
+Suggest:
+  - Replace with: “commoner”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
       33 | as the more common plural noun. Grammatical context is one way to determine
