@@ -357,4 +357,41 @@ mod tests {
             MoreAdjective::new(FstDictionary::curated()),
         );
     }
+
+    // Real-world sentences (all present in harper-core/tests/text/) that exercise the
+    // trailing-noun head check from #3688. The contrast between a noun head (suppress)
+    // and a noun+adjective word that modifies a following noun (still suggest) shows the
+    // check is doing real work, not passing by coincidence.
+
+    #[test]
+    fn dont_flag_more_perfect_union_3688() {
+        // US Constitution: "a more perfect Union". "Union" is the noun head, so "more"
+        // quantifies the phrase and "perfecter" must not be suggested.
+        assert_no_lints(
+            "in Order to form a more perfect Union,",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_flag_more_even_then_3688() {
+        // The Great Gatsby: "loved me more even then". "then" is not a noun, so "even" is
+        // the head; "evener" must not be suggested.
+        assert_no_lints(
+            "and loved me more even then, do you see?",
+            MoreAdjective::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn flag_more_common_before_plural_noun_3688() {
+        // A Wikipedia part-of-speech article: "the more common plural noun". "plural" is
+        // followed by the noun "noun", so it's adjectival, not the head - the comparative
+        // suggestion for "common" should still surface.
+        assert_suggestion_result(
+            "as the more common plural noun.",
+            MoreAdjective::new(FstDictionary::curated()),
+            "as the commoner plural noun.",
+        );
+    }
 }
