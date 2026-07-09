@@ -199,6 +199,7 @@ mod out_of_the_window;
 mod over_plus;
 mod oxford_comma;
 mod oxymorons;
+mod pale_by_comparison;
 mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;

@@ -5375,6 +5375,13 @@
 								"state": true,
 								"label": "For The Nth Time"
 							}
+						},
+						{
+							"Bool": {
+								"name": "PaleByComparison",
+								"state": true,
+								"label": "Pale by Comparison"
+							}
 						}
 					]
 				}
