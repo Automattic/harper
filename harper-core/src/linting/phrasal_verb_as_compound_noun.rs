@@ -57,6 +57,7 @@ enum Context {
     ItsFollowedByThatOrWhich,
     ItsActuallyPartOfANounPhrase,
     ItsFollowedByVerb,
+    ItsAnAttributiveAdjective,
 }
 
 impl PhrasalVerbAsCompoundNoun {
@@ -84,12 +85,11 @@ impl PhrasalVerbAsCompoundNoun {
         }
 
         // * Must not be in the set of known false positives.
-        //   These end in a particle after a real verb ("gall on", "drag on",
-        //   "left over") yet aren't phrasal verbs miswritten as compound nouns.
+        //   "gallon"/"dragon" only match because the prefix happens to be a verb and
+        //   the word happens to end in a particle - they aren't verb+particle at all.
         if noun_chars.eq_any_ignore_ascii_case_chars(&[
             &['g', 'a', 'l', 'l', 'o', 'n'],
             &['d', 'r', 'a', 'g', 'o', 'n'],
-            &['l', 'e', 'f', 't', 'o', 'v', 'e', 'r'],
         ]) {
             return Err(Why::ItsAKnownFalsePositive);
         }
@@ -143,6 +143,17 @@ impl PhrasalVerbAsCompoundNoun {
         // If it's in isolation, a compound noun is fine.
         if maybe_prev_tok.is_none() && maybe_next_tok.is_none() {
             return Err(Why::Contextual(Context::ItsInIsolation));
+        }
+
+        // With no usable previous word (e.g. punctuation before it), a word that's also
+        // an adjective sitting right before a noun is attributive ("passive, leftover
+        // debris", #3707), not a phrasal verb miswritten as a compound noun. When there
+        // is a previous word the adjective/determiner/preposition guards below decide.
+        if maybe_prev_tok.is_none()
+            && token.kind.is_adjective()
+            && maybe_next_tok.is_some_and(|t| t.kind.is_noun())
+        {
+            return Err(Why::Contextual(Context::ItsAnAttributiveAdjective));
         }
 
         let confidence = match (phrasal_verb_is_verb, verb_part_is_verb) {
