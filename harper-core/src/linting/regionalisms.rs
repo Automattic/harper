@@ -710,13 +710,10 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = match REGIONAL_TERMS
+        let concept = REGIONAL_TERMS
             .iter()
-            .find(|row| row.term == flagged_term_string)
-        {
-            Some(term) => &term.concept,
-            None => return None, // No matching term found, so nothing to lint
-        };
+            .find(|row| row.term == flagged_term_string)?
+            .concept;
 
         let other_terms = REGIONAL_TERMS
             .iter()
