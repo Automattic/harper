@@ -1,4 +1,4 @@
-#! /bin/node
+#!/usr/bin/env node
 
 import { spawnSync } from 'child_process';
 import { chromium } from 'playwright';
@@ -12,11 +12,13 @@ function hasProgram(program) {
 }
 
 if (hasProgram('vglrun')) {
+	console.log('Has vglrun');
 	spawnSync(`vglrun -d :0 -- ${chromiumExecutablePath} ${args}`, {
 		stdio: [0, 1, 2, 3, 4],
 		shell: true,
 	});
 } else {
+	console.log('Does not have vglrun');
 	spawnSync(`${chromiumExecutablePath} ${args}`, {
 		stdio: [0, 1, 2, 3, 4],
 		shell: true,

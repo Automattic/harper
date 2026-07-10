@@ -50,17 +50,6 @@ jobs:
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
             libxdo-dev 
-      - name: Install VirtualGL
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y wget gnupg ca-certificates
-          wget -q -O- https://packagecloud.io/dcommander/virtualgl/gpgkey \
-            | sudo gpg --dearmor -o /etc/apt/trusted.gpg.d/VirtualGL.gpg
-          sudo wget -q -O /etc/apt/sources.list.d/VirtualGL.list \
-            https://raw.githubusercontent.com/VirtualGL/repo/main/VirtualGL.list
-          sudo apt-get update
-          sudo apt-get install -y virtualgl
-          command -v vglrun
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:

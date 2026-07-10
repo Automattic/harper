@@ -1,4 +1,9 @@
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { defineConfig, devices } from '@playwright/test';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const wrapperPath = path.resolve(__dirname, './vglrunWrapper.js');
 
 /**
  * See https://playwright.dev/docs/test-configuration.
@@ -11,7 +16,7 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	retries: 4,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: '50%',
+	workers: process.env.ci ? 1 : '50%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
@@ -34,7 +39,7 @@ export default defineConfig({
 			use: {
 				...devices['Desktop Chrome'],
 				launchOptions: {
-					executablePath: './vglrunWrapper.js',
+					executablePath: wrapperPath,
 					args: [
 						'--disable-gpu-sandbox',
 						'--use-gl=desktop',
