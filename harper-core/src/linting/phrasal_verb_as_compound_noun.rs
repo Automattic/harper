@@ -145,13 +145,18 @@ impl PhrasalVerbAsCompoundNoun {
             return Err(Why::Contextual(Context::ItsInIsolation));
         }
 
-        // With no usable previous word (e.g. punctuation before it), a word that's also
-        // an adjective sitting right before a noun is attributive ("passive, leftover
-        // debris", #3707), not a phrasal verb miswritten as a compound noun. When there
-        // is a previous word the adjective/determiner/preposition guards below decide.
+        // A word that can be an adjective, sitting right before a noun and itself
+        // preceded by another adjective or determiner, is attributive rather than a
+        // phrasal verb: "passive, leftover debris" (#3707). The preceding modifier is
+        // separated by punctuation (the comma), so `maybe_prev_tok` misses it; we look
+        // back across the punctuation for it. A true sentence-initial imperative,
+        // "Backup files regularly." -> "Back up files", has no such modifier and is
+        // still flagged. The adverb in "Run fast, backup often." keeps `backup` flagged
+        // too, since the following word must be a noun for attributive use.
         if maybe_prev_tok.is_none()
             && token.kind.is_adjective()
             && maybe_next_tok.is_some_and(|t| t.kind.is_noun())
+            && preceding_modifier_across_punctuation(document, i)
         {
             return Err(Why::Contextual(Context::ItsAnAttributiveAdjective));
         }
@@ -342,6 +347,24 @@ fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
 
         _ => false,
     }
+}
+
+/// Looks backward from `current_index` across whitespace and non-terminal
+/// punctuation for the nearest word, returning true when it's an adjective or
+/// determiner. Stops at a sentence terminator or the start of input, since a
+/// modifier in a previous sentence does not apply to this word.
+fn preceding_modifier_across_punctuation(document: &Document, current_index: usize) -> bool {
+    let mut offset = -1;
+    while let Some(tok) = document.get_token_offset(current_index, offset) {
+        if tok.kind.is_sentence_terminator() {
+            return false;
+        }
+        if tok.kind.is_word() {
+            return tok.kind.is_adjective() || tok.kind.is_determiner();
+        }
+        offset -= 1;
+    }
+    false
 }
 
 #[cfg(test)]
@@ -849,6 +872,30 @@ mod tests {
         assert_no_lints(
             "\"Remnants\" typically implies passive, leftover debris.",
             PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    // "leftover" is attributive after a number/determiner (Writer's Digest, Longman).
+    // The preceding word here is adjacent, so the existing guard already covers it;
+    // this pins that the redesign keeps the common attributive case quiet.
+    #[test]
+    fn dont_flag_three_leftover_dinner_rolls() {
+        assert_no_lints(
+            "There were three leftover dinner rolls.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
+    // Sentence-initial imperative with no preceding modifier: a genuine error and a
+    // ubiquitous README mistake ("back up" is a documented common mistake per Linguix
+    // and grammar.com). Guards against the attributive check over-reaching to the
+    // no-previous-word case.
+    #[test]
+    fn flag_backup_your_database_sentence_initial() {
+        assert_suggestion_result(
+            "Backup your database before upgrading.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "Back up your database before upgrading.",
         );
     }
 }
