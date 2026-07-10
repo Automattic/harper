@@ -16,7 +16,7 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	retries: 4,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: process.env.ci ? 1 : '50%',
+	workers: process.env.CI ? 1 : '50%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {

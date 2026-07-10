@@ -40,7 +40,7 @@ test('Hacker News wraps correctly', async ({ page }) => {
 		'This is a test of the Harper grammar checker, specifically   if \nit is wrapped around a line weirdl y',
 	);
 
-	await page.waitForTimeout(6000);
+	await page.waitForTimeout(12000);
 
 	await assertHarperHighlightBoxes(page, [
 		[

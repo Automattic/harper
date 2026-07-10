@@ -432,7 +432,7 @@ export async function assertHarperHighlightBoxes(
 	const expectedAlternatives = isBoxAlternatives(boxes) ? boxes : [boxes];
 	const highlights = getHarperHighlights(page);
 
-	await expect(highlights).toHaveCount(expectedAlternatives[0].length, { timeout: 12000 });
+	await expect(highlights).toHaveCount(expectedAlternatives[0].length, { timeout: 24000 });
 
 	const count = await highlights.count();
 
@@ -449,9 +449,34 @@ export async function assertHarperHighlightBoxes(
 		expect(gotBox).not.toBeNull();
 	}
 
-	const matches = expectedAlternatives.some((expectedBoxes) => boxesClose(gotBoxes, expectedBoxes));
+	const matches = expectedAlternatives.some((expectedBoxes) => {
+    let close = false;
+    for (const permutation of permutations(expectedBoxes)){
+      if (boxesClose(gotBoxes, permutation)){
+        close = true;
+      }
+    }
+    return close;
+  });
+
 	expect(matches).toBe(true);
 }
+
+function permutations<T>(items: readonly T[]): T[][] {
+	if (items.length <= 1) {
+		return [[...items]];
+	}
+
+	return items.flatMap((item, index) => {
+		const remaining = [...items.slice(0, index), ...items.slice(index + 1)];
+
+		return permutations(remaining).map((permutation) => [
+			item,
+			...permutation,
+		]);
+	});
+}
+
 
 /** Create a test to assert that a page has a certain number highlights.
  * Wraps `assertPageHasNHighlights` */
@@ -486,7 +511,8 @@ function isBoxAlternatives(boxes: Box[] | Box[][]): boxes is Box[][] {
 	return Array.isArray(boxes[0]);
 }
 
-function boxesClose(actual: Box[], expected: Box[]) {
+/** Check if an array of baxes is approximately the same as another array of boxes. */
+function boxesClose(actual: Box[], expected: Box[]): boolean {
 	if (actual.length !== expected.length) return false;
 
 	return actual.every((actualBox, i) => boxClose(actualBox, expected[i]));

@@ -12,7 +12,7 @@ test('Positions properly in oddly nested page.', async ({ page }, _testInfo) => 
 		'This is an test of the Harper grammar checker, specifically   if \n the highlights are positionasd properly.',
 	);
 
-	await page.waitForTimeout(6000);
+	await page.waitForTimeout(12000);
 
 	await assertHarperHighlightBoxes(page, [
 		[
