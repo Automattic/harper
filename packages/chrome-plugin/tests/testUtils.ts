@@ -450,14 +450,14 @@ export async function assertHarperHighlightBoxes(
 	}
 
 	const matches = expectedAlternatives.some((expectedBoxes) => {
-    let close = false;
-    for (const permutation of permutations(expectedBoxes)){
-      if (boxesClose(gotBoxes, permutation)){
-        close = true;
-      }
-    }
-    return close;
-  });
+		let close = false;
+		for (const permutation of permutations(expectedBoxes)) {
+			if (boxesClose(gotBoxes, permutation)) {
+				close = true;
+			}
+		}
+		return close;
+	});
 
 	expect(matches).toBe(true);
 }
@@ -470,13 +470,9 @@ function permutations<T>(items: readonly T[]): T[][] {
 	return items.flatMap((item, index) => {
 		const remaining = [...items.slice(0, index), ...items.slice(index + 1)];
 
-		return permutations(remaining).map((permutation) => [
-			item,
-			...permutation,
-		]);
+		return permutations(remaining).map((permutation) => [item, ...permutation]);
 	});
 }
-
 
 /** Create a test to assert that a page has a certain number highlights.
  * Wraps `assertPageHasNHighlights` */
