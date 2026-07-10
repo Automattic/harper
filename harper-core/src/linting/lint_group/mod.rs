@@ -75,6 +75,7 @@ use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
 use super::do_mistake::DoMistake;
+use super::do_to_due_to::DoToDueTo;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
@@ -642,6 +643,7 @@ impl LintGroup {
         insert_struct_rule!(DiscourseMarkers);
         insert_expr_rule_with_dict!(DisjointPrefixes);
         insert_expr_rule!(DoMistake);
+        insert_struct_rule_with_dict!(DoToDueTo);
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
@@ -1052,6 +1054,21 @@ mod tests {
     #[test]
     fn clean_consensus() {
         assert_no_lints("But there is less consensus on this.", test_group());
+    }
+
+    #[test]
+    fn do_to_due_to_allows_compound_verb() {
+        let mut group = test_group();
+        let document = Document::new_plain_english_curated(
+            "If there is anything I can do to beta test a Mac or Windows version, let me know.",
+        );
+        let organized = group.organized_lints(&document);
+
+        assert!(
+            organized.get("DoToDueTo").is_none_or(Vec::is_empty),
+            "expected no DoToDueTo lint, but found {:?}",
+            organized.get("DoToDueTo")
+        );
     }
 
     #[test]
