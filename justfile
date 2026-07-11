@@ -192,7 +192,7 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   pnpm check
 
   cd "{{justfile_directory()}}"
-  cargo check -p harper-desktop --all-targets --all-features
+  cargo check -p harper-desktop --all-targets
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
@@ -341,7 +341,7 @@ test-vscode:
   fi
 
   echo Building binaries
-  cargo build --release --all-features -p harper-ls
+  cargo build --release -p harper-ls
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -383,7 +383,7 @@ package-vscode target="":
 
   if [[ -z "{{target}}" ]]; then
     echo Building binaries
-    cargo build --release --all-features -q
+    cargo build --release -q
 
     if ! [[ -d "$bin_dir" ]]; then
       mkdir "$bin_dir"
@@ -438,7 +438,7 @@ check-rust: audit-dictionary
   set -eo pipefail
 
   cargo fmt -- --check
-  cargo clippy --all-features -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+  cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
 
@@ -465,7 +465,7 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   set -eo pipefail
 
   echo Building binaries
-  cargo build --all-targets --all-features -q
+  cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 # FEATURES: Comma-separated list of features to enable (e.g., "de,pt").
@@ -488,7 +488,7 @@ install *FEATURES:
 # Run `harper-cli` on the Harper repository
 dogfood:
   #!/usr/bin/env bash
-  cargo build --release --all-features
+  cargo build --release
 
   if command -v fd &> /dev/null; then
     # Use fd if available (faster and more user-friendly)
