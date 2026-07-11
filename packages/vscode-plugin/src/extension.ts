@@ -112,10 +112,15 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 	await startLanguageServer();
 
-	// Send initial configuration to harper-ls
-	await client?.sendNotification('workspace/didChangeConfiguration', {
-		settings: { 'harper-ls': workspace.getConfiguration('harper') },
-	});
+	// Send initial configuration to harper-ls after the client is ready
+	if (client) {
+		await client.onRequest('initialize', () => {});
+		// Wait a bit for the server to be fully ready
+		await new Promise(resolve => setTimeout(resolve, 1000));
+		await client.sendNotification('workspace/didChangeConfiguration', {
+			settings: { 'harper-ls': workspace.getConfiguration('harper') },
+		});
+	}
 
 	// VS Code:
 	// <= 100 is between Copilot and Notifications.
