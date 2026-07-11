@@ -116,7 +116,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 	if (client) {
 		await client.onRequest('initialize', () => {});
 		// Wait a bit for the server to be fully ready
-		await new Promise(resolve => setTimeout(resolve, 1000));
+		await new Promise((resolve) => setTimeout(resolve, 1000));
 		await client.sendNotification('workspace/didChangeConfiguration', {
 			settings: { 'harper-ls': workspace.getConfiguration('harper') },
 		});
