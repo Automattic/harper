@@ -125,7 +125,13 @@ impl ExprLinter for NounCountability {
             || !noun_token.kind.is_mass_noun_only()
             || followed_by_hyphen(ctx)
             || followed_by_word(ctx, |t| {
-                t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
+                let nominal_head = if noun_token.get_ch(src).eq_str("software") {
+                    is_likely_nominal_head(t, src) && !t.get_ch(src).eq_str("like")
+                } else {
+                    t.kind.is_noun() || t.kind.is_oov()
+                };
+
+                nominal_head || t.get_ch(src).eq_str("and")
             })
             || (is_ing_word(noun_token, src) && followed_by_nominal_head(ctx, src))
         {
@@ -360,13 +366,14 @@ fn is_nominal_chain_boundary(tok: &Token, src: &[char]) -> bool {
 }
 
 fn is_software_phrase_word(tok: &Token, src: &[char]) -> bool {
-    !is_nominal_chain_boundary(tok, src)
-        && (tok.kind.is_adjective()
-            || tok.kind.is_adverb()
-            || tok.kind.is_noun()
-            || tok.kind.is_oov()
-            || tok.kind.is_verb_progressive_form()
-            || tok.kind.is_verb_past_participle_form())
+    tok.get_ch(src).eq_str("pro")
+        || (!is_nominal_chain_boundary(tok, src)
+            && (tok.kind.is_adjective()
+                || tok.kind.is_adverb()
+                || tok.kind.is_noun()
+                || tok.kind.is_oov()
+                || tok.kind.is_verb_progressive_form()
+                || tok.kind.is_verb_past_participle_form()))
 }
 
 fn is_likely_nominal_head(tok: &Token, src: &[char]) -> bool {
@@ -653,6 +660,247 @@ mod tests {
         assert_no_lints(
             "They operate a custom software development platform.",
             NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_full_software_stack() {
+        assert_lint_count(
+            "A full software stack includes many components.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_good_software_program() {
+        assert_lint_count(
+            "What makes a good software program?",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_developers() {
+        assert_lint_count(
+            "Most software developers aim to create software that bears the following principles.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_embedded_software_development_platform() {
+        assert_lint_count(
+            "CodeFusion Studio is an embedded software development platform leveraging Microsoft's Visual Studio Code.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_category() {
+        assert_lint_count(
+            "A third software category is that of network software, which coordinates communication between the computers linked in a network.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_stack_with_configuration() {
+        assert_lint_count(
+            "we define an experiment as the Cartesian product of a given software stack and its configuration",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_agent_framework() {
+        assert_lint_count(
+            "a novel software agent framework designed to bridge the gap between reasoning depth, efficiency, and context constraints",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_piece_of_software() {
+        assert_lint_count(
+            "A fork is the process of creating a separate and distinct piece of software by copying source code from an existing software package.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_free_software_wiki_package() {
+        assert_lint_count(
+            "MediaWiki is a free software open source wiki package written in PHP",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "missing comma makes `company` indistinguishable from a modifier"]
+    fn dont_flag_company_software_after_missing_comma() {
+        assert_lint_count(
+            "To a company software is a means to its ultimate goal of more profits.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "omitted `that` makes `reason` indistinguishable from a modifier"]
+    fn dont_flag_reason_software_clause() {
+        assert_lint_count(
+            "Not to say that there isn't a reason software grows so fast.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_engineering_after_truism() {
+        assert_lint_count(
+            "As a truism Software Engineering is the act of engineering software.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flags_quality_software() {
+        assert_lint_count(
+            "How do I find a quality software?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_platform_as_a_service_software() {
+        assert_lint_count(
+            "Extensible and open source Platform as a Service software.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_living_software() {
+        assert_lint_count("GLPI is a living software.", NounCountability::default(), 1);
+    }
+
+    #[test]
+    fn flags_old_software() {
+        assert_lint_count(
+            "What's an old software that you would like to have again?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_sap_software() {
+        assert_lint_count(
+            "I have not yet seen a SAP software that could not be replaced with a homemade Django/Rails web app",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_custom_software() {
+        assert_lint_count(
+            "My question is - have I just built a custom software for my own use-case?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_vector_animation_software() {
+        assert_lint_count(
+            "Expressive Animator is an SVG vector animation software that helps users create and export animated icons",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_cheap_software() {
+        assert_lint_count(
+            "you would never go through chain of approvals to buy a cheap software",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_pro_software() {
+        assert_lint_count(
+            "We do not expect to come as a pro software like them.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_virus_software() {
+        assert_lint_count(
+            "At newegg bought a virus software for $60.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_software_called_gifcam() {
+        assert_lint_count(
+            "Has anyone used a software called gifcam or similar?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_reliable_software() {
+        assert_lint_count(
+            "But you're right, the goal is not to write test but to ensure delivery of a reliable software.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_each_software_prototype() {
+        assert_lint_count(
+            "However each software is a prototype, something that has never been made before",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn dont_flag_free_software_code() {
+        assert_lint_count(
+            "This is a free software code, use fairly!",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_updates_synchronization() {
+        assert_lint_count(
+            "Since the WSUS configuration changed, a full software updates synchronization will occur rather than a delta synchronization.",
+            NounCountability::default(),
+            0,
         );
     }
 
