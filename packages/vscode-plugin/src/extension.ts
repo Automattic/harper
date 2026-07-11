@@ -112,6 +112,11 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 	await startLanguageServer();
 
+	// Send initial configuration to harper-ls
+	await client?.sendNotification('workspace/didChangeConfiguration', {
+		settings: { 'harper-ls': workspace.getConfiguration('harper') },
+	});
+
 	// VS Code:
 	// <= 100 is between Copilot and Notifications.
 	// 101..102 is between the magnifying glass and encoding
