@@ -21,11 +21,11 @@ impl Default for ThatThan {
             .t_ws()
             .then_word_except(&["way"]);
 
-        // "less/fewer [adj] that [...]" is almost always a comparison where
-        // "that" should be "than". "more [adj] that" is excluded because it
-        // frequently introduces a correct subordinate clause ("more clear that
-        // users need to...").
-        let periphrastic_that_nextword = SequenceExpr::word_set(&["less", "fewer"])
+        // "less [adj] that [...]" is almost always a comparison where "that"
+        // should be "than". "more [adj] that" is excluded because it frequently
+        // introduces a correct subordinate clause ("more clear that users
+        // need to...").
+        let periphrastic_that_nextword = SequenceExpr::word("less")
             .t_ws()
             .then_positive_adjective()
             .t_ws()
@@ -204,7 +204,7 @@ mod tests {
         )
     }
 
-    // less/fewer [adj] that
+    // less [adj] that
 
     #[test]
     fn fix_less_common_that() {
@@ -221,15 +221,6 @@ mod tests {
             "this approach is less reliable that the previous one",
             ThatThan::default(),
             "this approach is less reliable than the previous one",
-        );
-    }
-
-    #[test]
-    fn fix_fewer_errors_that() {
-        assert_suggestion_result(
-            "produces fewer errors that expected",
-            ThatThan::default(),
-            "produces fewer errors than expected",
         );
     }
 
@@ -267,7 +258,7 @@ mod tests {
     #[test]
     fn dont_flag_its_better_that() {
         assert_lint_count(
-            "It’s better that the shock should all come at once.",
+            "It's better that the shock should all come at once.",
             ThatThan::default(),
             0,
         )
