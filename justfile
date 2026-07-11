@@ -438,7 +438,7 @@ check-rust: audit-dictionary
   set -eo pipefail
 
   cargo fmt -- --check
-  cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+  cargo clippy --all-features -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
 

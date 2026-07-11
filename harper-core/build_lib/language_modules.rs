@@ -663,9 +663,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     for lang in languages {
         if lang.dir_name == "english" {
             code.push_str("        Language::English(_dialect) => {\n");
-            code.push_str("            #[allow(clippy::let_and_return)]\n");
-            code.push_str("            let group = EnglishModule::curated_lint_group(_dialect);\n");
-            code.push_str("            group\n");
+            code.push_str("            EnglishModule::curated_lint_group(_dialect)\n");
             code.push_str("        }\n");
         } else {
             if let Some(feature) = &lang.feature {
@@ -677,10 +675,9 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
                 lang.dir_name, lang.name
             ));
             code.push_str(&format!(
-                "            let group = {}Module::curated_lint_group(dialect);\n",
+                "            {}Module::curated_lint_group(dialect)\n",
                 lang.name
             ));
-            code.push_str("            group\n");
             code.push_str("        }\n");
         }
     }
