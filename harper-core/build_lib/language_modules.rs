@@ -409,6 +409,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     // detect_language function
     code.push_str("/// Detect the language of the given source text.\n");
     code.push_str("pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Language) -> Language {\n");
+    code.push_str("    use crate::language::languages::Language;\n");
     code.push_str("    use crate::parsers::PlainEnglish;\n\n");
     code.push_str("    let source_chars: Vec<char> = source.chars().collect();\n");
     code.push_str("    let tokens = PlainEnglish.parse(&source_chars);\n\n");
@@ -421,6 +422,14 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str(
         "        if let Some(language) = detector.detect(&tokens, &source_chars, dict) {\n",
     );
+    code.push_str(
+        "            // Special handling for English: if the default language is also English,\n",
+    );
+    code.push_str("            // use the default language (which includes the configured dialect) instead of\n");
+    code.push_str("            // the detector's hardcoded American dialect.\n");
+    code.push_str("            if matches!(language, Language::English(_)) && matches!(default_language, Language::English(_)) {\n");
+    code.push_str("                return default_language;\n");
+    code.push_str("            }\n");
     code.push_str("            return language;\n");
     code.push_str("        }\n");
     code.push_str("    }\n");

@@ -1044,9 +1044,12 @@ impl LanguageServer for Backend {
             let mut doc_lock = self.doc_state.lock().await;
 
             for doc in doc_lock.values_mut() {
-                info!("Constructing new LintGroup for updated configuration.");
-                let doc_language = doc.cached_language.unwrap_or(default_language);
-                let mut l = new_curated_for_language(doc.dict.clone(), doc_language);
+                info!("Clearing cached language due to configuration change.");
+                // Clear cached language so it gets re-detected with the new config.language
+                doc.cached_language = None;
+                // Update linter with new lint_config and default language
+                // (will be updated by update_document_from_file with re-detected language)
+                let mut l = new_curated_for_language(doc.dict.clone(), default_language);
                 l.config.merge_from(lint_config.clone());
                 doc.linter = l;
             }

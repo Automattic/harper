@@ -47,6 +47,7 @@ static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::ne
 
 /// Detect the language of the given source text.
 pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Language) -> Language {
+    use crate::language::languages::Language;
     use crate::parsers::PlainEnglish;
 
     let source_chars: Vec<char> = source.chars().collect();
@@ -58,6 +59,14 @@ pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Lan
 
     for (detector, _confidence) in DETECTORS.iter() {
         if let Some(language) = detector.detect(&tokens, &source_chars, dict) {
+            // Special handling for English: if the default language is also English,
+            // use the default language (which includes the configured dialect) instead of
+            // the detector's hardcoded American dialect.
+            if matches!(language, Language::English(_))
+                && matches!(default_language, Language::English(_))
+            {
+                return default_language;
+            }
             return language;
         }
     }
