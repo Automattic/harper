@@ -305,11 +305,7 @@ impl Linter {
 
         for lint in lints {
             if let Some(parser) = lint.language.create_parser() {
-                let document = Document::new_from_chars(
-                    source.clone(),
-                    &parser,
-                    &self.dictionary,
-                );
+                let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
                 self.ignored_lints.ignore_lint(&lint.inner, &document);
             }
@@ -328,11 +324,7 @@ impl Linter {
         let source: Vec<_> = source_text.chars().collect();
 
         if let Some(parser) = lint.language.create_parser() {
-            let document = Document::new_from_chars(
-                source.into(),
-                &parser,
-                &self.dictionary,
-            );
+            let document = Document::new_from_chars(source.into(), &parser, &self.dictionary);
 
             let ctx = LintContext::from_lint(&lint.inner, &document);
             ctx.default_hash()
@@ -525,11 +517,7 @@ impl Linter {
         let mut source: Vec<_> = source_text.chars().collect();
 
         if let Some(parser) = lint.language.create_parser() {
-            let doc = Document::new_from_chars(
-                source.clone().into(),
-                &parser,
-                &self.dictionary,
-            );
+            let doc = Document::new_from_chars(source.clone().into(), &parser, &self.dictionary);
 
             self.stats
                 .records
