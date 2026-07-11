@@ -239,31 +239,24 @@ pub fn new_curated_for_language(
     use crate::language::module::LanguageModule;
 
     match language {
-        Language::English(_dialect) => {
-            #[allow(clippy::let_and_return)]
-            let group = EnglishModule::curated_lint_group(_dialect);
-            group
-        }
+        Language::English(_dialect) => EnglishModule::curated_lint_group(_dialect),
         #[cfg(feature = "de")]
         Language::German(dialect) => {
             use crate::language::german::module::GermanModule;
 
-            let group = GermanModule::curated_lint_group(dialect);
-            group
+            GermanModule::curated_lint_group(dialect)
         }
         #[cfg(feature = "pt")]
         Language::Portuguese(dialect) => {
             use crate::language::portuguese::module::PortugueseModule;
 
-            let group = PortugueseModule::curated_lint_group(dialect);
-            group
+            PortugueseModule::curated_lint_group(dialect)
         }
         #[cfg(feature = "sk")]
         Language::Slovak(dialect) => {
             use crate::language::slovak::module::SlovakModule;
 
-            let group = SlovakModule::curated_lint_group(dialect);
-            group
+            SlovakModule::curated_lint_group(dialect)
         }
     }
 }
