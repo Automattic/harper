@@ -59,22 +59,20 @@ pub enum Language {
 }
 
 impl Language {
-    fn create_parser(&self) -> Box<dyn Parser> {
+    fn create_parser(&self) -> Option<Box<dyn Parser>> {
         match self {
-            Language::Plain => Box::new(PlainEnglish),
+            Language::Plain => Some(Box::new(PlainEnglish)),
             // TODO: Have a way to configure the Markdown parser
-            Language::Markdown => Box::new(Markdown::default()),
+            Language::Markdown => Some(Box::new(Markdown::default())),
             Language::Typst => {
                 #[cfg(feature = "typst")]
                 {
                     use harper_typst::Typst;
-                    Box::new(Typst)
+                    Some(Box::new(Typst))
                 }
                 #[cfg(not(feature = "typst"))]
                 {
-                    panic!(
-                        "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
-                    )
+                    None
                 }
             }
         }
@@ -306,13 +304,15 @@ impl Linter {
         let source: Lrc<_> = source_text.chars().collect();
 
         for lint in lints {
-            let document = Document::new_from_chars(
-                source.clone(),
-                &lint.language.create_parser(),
-                &self.dictionary,
-            );
+            if let Some(parser) = lint.language.create_parser() {
+                let document = Document::new_from_chars(
+                    source.clone(),
+                    &parser,
+                    &self.dictionary,
+                );
 
-            self.ignored_lints.ignore_lint(&lint.inner, &document);
+                self.ignored_lints.ignore_lint(&lint.inner, &document);
+            }
         }
     }
 
@@ -327,14 +327,18 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_chars(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        if let Some(parser) = lint.language.create_parser() {
+            let document = Document::new_from_chars(
+                source.into(),
+                &parser,
+                &self.dictionary,
+            );
 
-        let ctx = LintContext::from_lint(&lint.inner, &document);
-        ctx.default_hash()
+            let ctx = LintContext::from_lint(&lint.inner, &document);
+            ctx.default_hash()
+        } else {
+            0
+        }
     }
 
     fn create_lint_parser(
@@ -344,11 +348,7 @@ impl Linter {
         regex_mask: Option<String>,
         isolate_english: bool,
     ) -> Option<Box<dyn Parser>> {
-        let parser_result = std::panic::catch_unwind(|| language.create_parser());
-        let mut parser = match parser_result {
-            Ok(parser) => parser,
-            Err(_) => return None,
-        };
+        let mut parser = language.create_parser()?;
 
         if let Some(regex) = regex_mask {
             let Some(masker) = RegexMasker::new(regex.as_str(), true) else {
@@ -524,15 +524,17 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_chars(
-            source.clone().into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        if let Some(parser) = lint.language.create_parser() {
+            let doc = Document::new_from_chars(
+                source.clone().into(),
+                &parser,
+                &self.dictionary,
+            );
 
-        self.stats
-            .records
-            .push(Record::now(RecordKind::from_lint(&lint.inner, &doc)));
+            self.stats
+                .records
+                .push(Record::now(RecordKind::from_lint(&lint.inner, &doc)));
+        }
 
         suggestion.inner.apply(lint.inner.span, &mut source);
 
