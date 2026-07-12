@@ -5,6 +5,8 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
+use harper_core::language::languages::Language as HarperLanguage;
+use harper_core::language::registry::{dictionary, new_curated_for_language};
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
@@ -16,6 +18,8 @@ use harper_core::{
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_core::{DialectFlags, language_detection::is_likely_english};
+#[cfg(feature = "de")]
+use harper_core::language::german::dialects::GermanDialect;
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
@@ -88,24 +92,36 @@ pub enum Dialect {
     Australian,
     Canadian,
     Indian,
+    #[cfg(feature = "de")]
+    GermanStandard,
+    #[cfg(feature = "de")]
+    GermanAustrian,
+    #[cfg(feature = "de")]
+    GermanSwiss,
 }
 
-impl From<Dialect> for harper_core::Language {
+impl From<Dialect> for HarperLanguage {
     fn from(dialect: Dialect) -> Self {
         match dialect {
             Dialect::American => {
-                harper_core::Language::English(harper_core::EnglishDialect::American)
+                HarperLanguage::English(harper_core::EnglishDialect::American)
             }
             Dialect::Canadian => {
-                harper_core::Language::English(harper_core::EnglishDialect::Canadian)
+                HarperLanguage::English(harper_core::EnglishDialect::Canadian)
             }
             Dialect::Australian => {
-                harper_core::Language::English(harper_core::EnglishDialect::Australian)
+                HarperLanguage::English(harper_core::EnglishDialect::Australian)
             }
             Dialect::British => {
-                harper_core::Language::English(harper_core::EnglishDialect::British)
+                HarperLanguage::English(harper_core::EnglishDialect::British)
             }
-            Dialect::Indian => harper_core::Language::English(harper_core::EnglishDialect::Indian),
+            Dialect::Indian => HarperLanguage::English(harper_core::EnglishDialect::Indian),
+            #[cfg(feature = "de")]
+            Dialect::GermanStandard => HarperLanguage::German(GermanDialect::Standard),
+            #[cfg(feature = "de")]
+            Dialect::GermanAustrian => HarperLanguage::German(GermanDialect::Austrian),
+            #[cfg(feature = "de")]
+            Dialect::GermanSwiss => HarperLanguage::German(GermanDialect::Swiss),
         }
     }
 }
@@ -118,6 +134,13 @@ impl From<Dialect> for harper_core::Dialect {
             Dialect::Australian => harper_core::Dialect::Australian,
             Dialect::British => harper_core::Dialect::British,
             Dialect::Indian => harper_core::Dialect::Indian,
+            // German dialects don't have corresponding harper_core::Dialect variants
+            // as harper_core::Dialect only supports English dialects.
+            // Return American as a default for backwards compatibility when German is selected.
+            #[cfg(feature = "de")]
+            Dialect::GermanStandard | Dialect::GermanAustrian | Dialect::GermanSwiss => {
+                harper_core::Dialect::American
+            }
         }
     }
 }
@@ -148,9 +171,10 @@ impl Linter {
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
-        let dictionary = Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())]);
-        let core_dialect: harper_core::Dialect = dialect.into();
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), core_dialect);
+        let language: HarperLanguage = dialect.into();
+        let curated_dict = dictionary(language);
+        let dictionary = Self::construct_merged_dict_with_curated(&[Arc::new(MutableDictionary::default())], curated_dict.clone());
+        let lint_group = new_curated_for_language(curated_dict, language);
 
         Self {
             lint_group,
@@ -171,11 +195,11 @@ impl Linter {
         let mut constituent_dictionaries = vec![Arc::new(self.user_dictionary.clone())];
         constituent_dictionaries.extend(self.weirpack_dictionaries.iter().cloned());
 
-        self.dictionary = Self::construct_merged_dict(&constituent_dictionaries);
+        let language: HarperLanguage = self.dialect.into();
+        let curated_dict = dictionary(language);
+        self.dictionary = Self::construct_merged_dict_with_curated(&constituent_dictionaries, curated_dict.clone());
 
-        let core_dialect: harper_core::Dialect = self.dialect.into();
-        self.lint_group =
-            LintGroup::new_curated_empty_config(self.dictionary.clone(), core_dialect);
+        self.lint_group = new_curated_for_language(curated_dict, language);
 
         self.lint_group.config.merge_from(lint_config);
     }
@@ -186,6 +210,23 @@ impl Linter {
         let mut lint_dict = MergedDictionary::new();
 
         lint_dict.add_dictionary(FstDictionary::curated());
+
+        for dict in dicts {
+            lint_dict.add_dictionary(Arc::new(dict.clone()));
+        }
+
+        Arc::new(lint_dict)
+    }
+
+    /// Construct the actual dictionary to be used for linting and parsing from a specific curated dictionary
+    /// and any other runtime-provided dictionaries.
+    fn construct_merged_dict_with_curated(
+        dicts: &[Arc<impl Dictionary + 'static>],
+        curated_dict: Arc<FstDictionary>,
+    ) -> Arc<MergedDictionary> {
+        let mut lint_dict = MergedDictionary::new();
+
+        lint_dict.add_dictionary(curated_dict);
 
         for dict in dicts {
             lint_dict.add_dictionary(Arc::new(dict.clone()));

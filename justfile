@@ -68,10 +68,10 @@ build-wasm:
   #!/usr/bin/env bash
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt --out-name harper_wasm
+    wasm-pack build --target web --no-opt --out-name harper_wasm --all-features
     wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
   else
-    wasm-pack build --target web --out-name harper_wasm
+    wasm-pack build --target web --out-name harper_wasm --all-features
     wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
   fi
 
