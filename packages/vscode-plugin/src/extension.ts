@@ -167,9 +167,8 @@ async function startLanguageServer(): Promise<void> {
 		client = new LanguageClient('harper', 'Harper', serverOptions, clientOptions);
 		await client.start();
 
-		// Send initial configuration after the client is fully ready
+		// Send initial configuration immediately after the client starts
 		// This ensures harper-ls has the configuration before processing any documents
-		await client.onReady();
 		await client.sendNotification('workspace/didChangeConfiguration', {
 			settings: { 'harper-ls': workspace.getConfiguration('harper') },
 		});
