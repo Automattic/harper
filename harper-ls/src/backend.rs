@@ -37,9 +37,10 @@ use tower_lsp_server::lsp_types::{
     Diagnostic, DidChangeConfigurationParams, DidChangeTextDocumentParams,
     DidChangeWatchedFilesParams, DidCloseTextDocumentParams, DidOpenTextDocumentParams,
     DidSaveTextDocumentParams, ExecuteCommandOptions, ExecuteCommandParams, FileChangeType,
-    InitializeParams, InitializeResult, InitializedParams, MessageType, PublishDiagnosticsParams,
-    Range, ServerCapabilities, ServerInfo, TextDocumentSyncCapability, TextDocumentSyncKind,
-    TextDocumentSyncOptions, TextDocumentSyncSaveOptions, Uri,
+    FileSystemWatcher, GlobPattern, InitializeParams, InitializeResult, InitializedParams,
+    MessageType, PublishDiagnosticsParams, Range, Registration, ServerCapabilities, ServerInfo,
+    TextDocumentSyncCapability, TextDocumentSyncKind, TextDocumentSyncOptions,
+    TextDocumentSyncSaveOptions, Uri, DidChangeWatchedFilesRegistrationOptions, WatchKind,
 };
 use tower_lsp_server::{Client, LanguageServer, UriExt};
 use tracing::{debug, error, info, warn};
@@ -798,6 +799,27 @@ impl LanguageServer for Backend {
         self.client
             .log_message(MessageType::INFO, "Server initialized!")
             .await;
+
+        let did_change_watched_files = Registration {
+            id: "workspace/didChangeWatchedFiles".to_owned(),
+            method: "workspace/didChangeWatchedFiles".to_owned(),
+            register_options: Some(
+                serde_json::to_value(DidChangeWatchedFilesRegistrationOptions {
+                    watchers: vec![FileSystemWatcher {
+                        glob_pattern: GlobPattern::String("**/*".to_owned()),
+                        kind: Some(WatchKind::Delete),
+                    }],
+                })
+                .unwrap(),
+            ),
+        };
+        if let Err(err) = self
+            .client
+            .register_capability(vec![did_change_watched_files])
+            .await
+        {
+            warn!("Unable to register watch file capability: {}", err);
+        }
     }
 
     async fn did_open(&self, params: DidOpenTextDocumentParams) {
