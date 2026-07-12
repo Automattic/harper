@@ -112,6 +112,13 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
 	await startLanguageServer();
 
+	// Send initial configuration to harper-ls
+	if (client) {
+		await client.sendNotification('workspace/didChangeConfiguration', {
+			settings: { 'harper-ls': workspace.getConfiguration('harper') },
+		});
+	}
+
 	// VS Code:
 	// <= 100 is between Copilot and Notifications.
 	// 101..102 is between the magnifying glass and encoding
@@ -166,12 +173,6 @@ async function startLanguageServer(): Promise<void> {
 	try {
 		client = new LanguageClient('harper', 'Harper', serverOptions, clientOptions);
 		await client.start();
-
-		// Send initial configuration immediately after the client starts
-		// This ensures harper-ls has the configuration before processing any documents
-		await client.sendNotification('workspace/didChangeConfiguration', {
-			settings: { 'harper-ls': workspace.getConfiguration('harper') },
-		});
 	} catch (error) {
 		showError('Failed to start harper-ls', error);
 		client = undefined;
