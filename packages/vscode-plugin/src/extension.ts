@@ -113,8 +113,10 @@ export async function activate(context: ExtensionContext): Promise<void> {
 	await startLanguageServer();
 
 	// Send initial configuration to harper-ls after the client is ready
+	// The start() method should wait for the client to be ready, but we add a small
+	// delay to ensure the server has fully initialized before sending configuration
 	if (client) {
-		await client.onReady();
+		await new Promise((resolve) => setTimeout(resolve, 250));
 		await client.sendNotification('workspace/didChangeConfiguration', {
 			settings: { 'harper-ls': workspace.getConfiguration('harper') },
 		});
