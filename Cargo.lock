@@ -3445,6 +3445,7 @@ dependencies = [
  "harper-html",
  "harper-literate-haskell",
  "harper-typst",
+ "harper-yaml",
  "libfuzzer-sys",
 ]
 
@@ -4198,6 +4199,7 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
+ "harper-yaml",
  "hashbrown 0.16.1",
  "rayon",
  "serde",
@@ -4404,6 +4406,7 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
+ "harper-yaml",
  "open",
  "resolve-path",
  "serde",
@@ -4520,6 +4523,17 @@ dependencies = [
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
+]
+
+[[package]]
+name = "harper-yaml"
+version = "2.6.0"
+dependencies = [
+ "harper-core",
+ "harper-tree-sitter",
+ "paste",
+ "tree-sitter",
+ "tree-sitter-yaml",
 ]
 
 [[package]]
@@ -9910,6 +9924,16 @@ name = "tree-sitter-typescript"
 version = "0.23.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "6c5f76ed8d947a75cc446d5fccd8b602ebf0cde64ccf2ffa434d873d7a575eff"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-yaml"
+version = "0.7.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "53c223db85f05e34794f065454843b0668ebc15d240ada63e2b5939f43ce7c97"
 dependencies = [
  "cc",
  "tree-sitter-language",

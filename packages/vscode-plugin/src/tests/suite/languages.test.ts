@@ -52,6 +52,7 @@ describe('Languages >', () => {
 		{ type: 'TypeScript', file: 'typescript.ts', row: 0, column: 32 },
 		{ type: 'TypeScript JSX', file: 'typescriptreact.tsx', row: 3, column: 7 },
 		{ type: 'LaTeX', file: 'latex.tex', row: 4, column: 0 },
+		{ type: 'YAML', file: 'yaml.yaml', row: 1, column: 2 },
 	].forEach((testCase) => {
 		it(`gives correct diagnostics for ${testCase.type} files`, async () => {
 			const uri = getUri('languages', testCase.file);

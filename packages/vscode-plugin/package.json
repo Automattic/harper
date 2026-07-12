@@ -72,6 +72,7 @@
 		"onLanguage:typescript",
 		"onLanguage:typescriptreact",
 		"onLanguage:typst",
+		"onLanguage:yaml",
 		"onLanguage:zig"
 	],
 	"main": "./build/extension.js",
