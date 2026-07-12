@@ -12,7 +12,7 @@ mod plain_english;
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;
 pub use isolate_english::IsolateEnglish;
-pub use line_wise::LineWise;
+pub use line_wise::{LineClass, LineWise};
 pub use markdown::{Markdown, MarkdownOptions};
 pub use mask::Mask;
 pub use oops_all_headings::OopsAllHeadings;

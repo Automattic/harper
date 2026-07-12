@@ -1,4 +1,4 @@
-use harper_core::parsers::{LineWise, Parser};
+use harper_core::parsers::{LineClass, LineWise, Parser};
 use harper_core::{Span, Token};
 
 /// Parses each line of a (possibly multiline) span independently after
@@ -18,7 +18,7 @@ use harper_core::{Span, Token};
 /// only supplies the YAML-specific "strip" policy (trim whitespace).
 pub(crate) struct DedentLines<P>(Inner<P>);
 
-type StripFn = fn(&[char]) -> Span<char>;
+type StripFn = fn(&[char]) -> LineClass;
 type Inner<P> = LineWise<P, StripFn>;
 
 impl<P: Parser> DedentLines<P> {
@@ -33,15 +33,15 @@ impl<P: Parser> Parser for DedentLines<P> {
     }
 }
 
-/// The span of `line` with leading/trailing whitespace trimmed, or an
-/// empty span if the line is entirely whitespace.
-fn trim(line: &[char]) -> Span<char> {
+/// Trims leading/trailing whitespace from `line`, or skips it entirely
+/// if it's whitespace-only.
+fn trim(line: &[char]) -> LineClass {
     let Some(start) = line.iter().position(|c| !c.is_whitespace()) else {
-        return Span::new(0, 0);
+        return LineClass::skip();
     };
     let end = line.len() - line.iter().rev().position(|c| !c.is_whitespace()).unwrap();
 
-    Span::new(start, end)
+    LineClass::parse(Span::new(start, end))
 }
 
 #[cfg(test)]
