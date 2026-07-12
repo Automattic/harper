@@ -166,7 +166,7 @@ async function startLanguageServer(): Promise<void> {
 	try {
 		client = new LanguageClient('harper', 'Harper', serverOptions, clientOptions);
 		await client.start();
-		
+
 		// Send initial configuration after the client is fully ready
 		// This ensures harper-ls has the configuration before processing any documents
 		await client.onReady();
