@@ -108,6 +108,7 @@ use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::handful_of_more::HandfulOfMore;
+use super::have_a_hard_time::HaveAHardTime;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
@@ -674,6 +675,7 @@ impl LintGroup {
         insert_expr_rule!(GoodAt);
         insert_expr_rule!(Handful);
         insert_expr_rule!(HandfulOfMore);
+        insert_expr_rule_with_dialect!(HaveAHardTime);
         insert_expr_rule!(HavePronoun);
         insert_struct_rule_with_dialect!(HaveTakeALook);
         insert_expr_rule!(Hedging);
