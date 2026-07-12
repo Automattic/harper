@@ -341,7 +341,7 @@ test-vscode:
   fi
 
   echo Building binaries
-  cargo build --release -p harper-ls --features all-languages,thesaurus,concurrent
+  cargo build --release -p harper-ls
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
