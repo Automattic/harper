@@ -1,10 +1,9 @@
-use harper_core::parsers::Parser;
-use harper_core::{Span, Token, TokenKind};
+use harper_core::parsers::{LineWise, Parser};
+use harper_core::{Span, Token};
 
-/// Wraps a `Parser`, parsing each line of a (possibly multiline) span
-/// independently after trimming its leading/trailing whitespace, then
-/// stitching the results back together with a single explicit
-/// [`TokenKind::Newline`] token between lines.
+/// Parses each line of a (possibly multiline) span independently after
+/// trimming its leading/trailing whitespace, then stitches the results
+/// back together with a single explicit `Newline` token between lines.
 ///
 /// This exists for YAML block/folded scalars: their continuation lines
 /// carry literal indentation (e.g. two leading spaces). Feeding
@@ -13,55 +12,36 @@ use harper_core::{Span, Token, TokenKind};
 /// incorrectly triggers Harper's "double space" formatting rule.
 /// De-denting each line before parsing avoids that, without needing to
 /// understand YAML's specific indentation rules.
-pub(crate) struct DedentLines<P> {
-    inner: P,
-}
+///
+/// The actual line-splitting/stitching mechanism is shared with other
+/// per-line parsers (see `harper_core::parsers::LineWise`); this type
+/// only supplies the YAML-specific "strip" policy (trim whitespace).
+pub(crate) struct DedentLines<P>(Inner<P>);
+
+type StripFn = fn(&[char]) -> Span<char>;
+type Inner<P> = LineWise<P, StripFn>;
 
 impl<P: Parser> DedentLines<P> {
     pub(crate) fn new(inner: P) -> Self {
-        Self { inner }
+        Self(LineWise::new(inner, trim as StripFn))
     }
 }
 
 impl<P: Parser> Parser for DedentLines<P> {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let mut tokens = Vec::new();
-        let mut chars_traversed = 0;
-
-        for line in source.split(|c| *c == '\n') {
-            if let Some(trimmed) = trim(line) {
-                let mut new_tokens = self.inner.parse(trimmed.get_content(line));
-
-                new_tokens
-                    .iter_mut()
-                    .for_each(|t| t.span.push_by(chars_traversed + trimmed.start));
-
-                tokens.append(&mut new_tokens);
-            }
-
-            let line_end = chars_traversed + line.len();
-
-            if line_end < source.len() {
-                tokens.push(Token::new(
-                    Span::new_with_len(line_end, 1),
-                    TokenKind::Newline(1),
-                ));
-            }
-
-            chars_traversed += line.len() + 1;
-        }
-
-        tokens
+        self.0.parse(source)
     }
 }
 
-/// The span of `line` with leading/trailing whitespace trimmed, or
-/// `None` if the line is entirely whitespace.
-fn trim(line: &[char]) -> Option<Span<char>> {
-    let start = line.iter().position(|c| !c.is_whitespace())?;
-    let end = line.len() - line.iter().rev().position(|c| !c.is_whitespace())?;
+/// The span of `line` with leading/trailing whitespace trimmed, or an
+/// empty span if the line is entirely whitespace.
+fn trim(line: &[char]) -> Span<char> {
+    let Some(start) = line.iter().position(|c| !c.is_whitespace()) else {
+        return Span::new(0, 0);
+    };
+    let end = line.len() - line.iter().rev().position(|c| !c.is_whitespace()).unwrap();
 
-    Some(Span::new(start, end))
+    Span::new(start, end)
 }
 
 #[cfg(test)]
