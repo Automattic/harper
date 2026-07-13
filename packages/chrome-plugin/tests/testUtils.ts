@@ -8,7 +8,7 @@ type ScreenPoint = {
 	y: number;
 };
 
-let blockRuleSuggestionTestRegistered = false;
+const blockRuleSuggestionTestRegistered = false;
 
 export function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
@@ -329,7 +329,7 @@ export async function testCanBlockRuleSuggestion(
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
 
-    await page.waitForTimeout(1000);
+		await page.waitForTimeout(1000);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);

@@ -157,10 +157,7 @@ test('Can dismiss with escape key', async ({ page }) => {
 	await page.goto(TEST_PAGE_URL);
 
 	const editor = getTextarea(page);
-	await replaceEditorContent(
-		editor,
-		'This is an test.',
-	);
+	await replaceEditorContent(editor, 'This is an test.');
 
 	await page.waitForTimeout(1000);
 
