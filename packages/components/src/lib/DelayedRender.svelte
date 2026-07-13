@@ -16,7 +16,7 @@ let {
 } = $props();
 
 let visible = $state(false);
-let timeout = $state<ReturnType<typeof setTimeout> | null>(null);
+let timeout: ReturnType<typeof setTimeout> | null = null;
 
 /** Cancel the pending delayed render without changing currently rendered content. */
 function clearPendingDelay() {
