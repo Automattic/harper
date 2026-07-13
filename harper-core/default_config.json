@@ -3814,6 +3814,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
