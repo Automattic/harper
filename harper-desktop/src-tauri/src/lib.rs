@@ -1,19 +1,23 @@
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
+use self::menu_bar_icon::menu_bar_icon;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
-    linting::{FlatConfig, Lint, LintGroup},
-    spell::{Dictionary, MutableDictionary},
+    linting::{Lint, LintGroup},
+    spell::MutableDictionary,
 };
 use serde::Serialize;
-use std::{cell::RefCell, rc::Rc, sync::Arc, time::Duration};
+use std::{
+    cell::RefCell,
+    rc::Rc,
+    sync::{Arc, Mutex as StdMutex},
+};
 use tauri::{
-    Manager, State, WebviewUrl, WebviewWindowBuilder, WindowEvent,
-    image::Image,
+    Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
     menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
@@ -27,13 +31,14 @@ use tokio::{
 };
 
 pub mod color;
+mod commands;
 pub mod communication;
 pub mod config;
 mod debounce;
 pub mod highlighter;
-pub mod highlighter_process;
 pub mod highlighter_service;
 pub mod lint_kind_color;
+mod menu_bar_icon;
 mod os_broker;
 pub mod rect;
 
@@ -48,7 +53,10 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Command {
-    Highlighter,
+    Highlighter {
+        #[arg(long)]
+        no_parent: bool,
+    },
 }
 
 const EDITOR_WINDOW_LABEL: &str = "main";
@@ -76,36 +84,6 @@ fn service_menu_text(is_running: bool) -> &'static str {
     match is_running {
         true => "Stop Harper Service",
         false => "Start Harper Service",
-    }
-}
-
-fn service_status_color(is_running: bool) -> [u8; 4] {
-    match is_running {
-        true => [34, 197, 94, 255],
-        false => [239, 68, 68, 255],
-    }
-}
-
-fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
-    let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
-    let width = icon.width();
-    let height = icon.height();
-    let mut rgba = icon.rgba().to_vec();
-
-    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
-
-    Ok(Image::new_owned(rgba, width, height))
-}
-
-fn draw_status_line(rgba: &mut [u8], width: u32, height: u32, color: [u8; 4]) {
-    let line_height = (height.min(width) / 14).max(3);
-    let start_y = height.saturating_sub(line_height);
-
-    for y in start_y..height {
-        for x in 0..width {
-            let index = ((y * width + x) * 4) as usize;
-            rgba[index..index + 4].copy_from_slice(&color);
-        }
     }
 }
 
@@ -256,312 +234,28 @@ fn start_highlighter_service_if_enabled_and_permitted(
     }
 }
 
-#[tauri::command]
-async fn get_lint_config(config: State<'_, Arc<Mutex<Config>>>) -> Result<FlatConfig, String> {
-    let mut lint_config = config.lock().await.lint_config.clone();
-    lint_config.fill_with_curated();
-
-    Ok(lint_config)
-}
-
-#[tauri::command]
-async fn get_dialect(config: State<'_, Arc<Mutex<Config>>>) -> Result<Dialect, String> {
-    Ok(config.lock().await.dialect)
-}
-
-#[tauri::command]
-async fn get_debounce_ms(config: State<'_, Arc<Mutex<Config>>>) -> Result<u64, String> {
-    Ok(config.lock().await.debounce_ms)
-}
-
-#[tauri::command]
-async fn set_debounce_ms(
-    debounce_ms: u64,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.debounce_ms = debounce_ms;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_auto_update(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
-    Ok(config.lock().await.auto_update)
-}
-
-#[tauri::command]
-async fn set_auto_update(
-    auto_update: bool,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.auto_update = auto_update;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_last_update_check(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Option<u64>, String> {
-    Ok(config.lock().await.last_update_check)
-}
-
-#[tauri::command]
-async fn set_last_update_check(
-    last_update_check: Option<u64>,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.last_update_check = last_update_check;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_dialect(
-    dialect: Dialect,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.dialect = dialect;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_lint_config(
-    lint_config: FlatConfig,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut lint_config = lint_config;
-    lint_config.fill_with_curated();
-
-    let mut config = config.lock().await;
-    config.lint_config = lint_config;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_dictionary(config: State<'_, Arc<Mutex<Config>>>) -> Result<Vec<String>, String> {
-    let mut words = config
-        .lock()
-        .await
-        .mutable_dictionary
-        .words_iter()
-        .map(|word| word.iter().collect::<String>())
-        .collect::<Vec<_>>();
-    words.sort();
-
-    Ok(words)
-}
-
-#[tauri::command]
-async fn set_dictionary(
-    words: Vec<String>,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut dictionary = MutableDictionary::new();
-    dictionary.extend_words(words.into_iter().map(|word| {
-        (
-            word.chars().collect::<Vec<_>>(),
-            DictWordMetadata::default(),
-        )
-    }));
-
-    let mut config = config.lock().await;
-    config.mutable_dictionary = dictionary;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn ignore_lint(
-    ignored_lints: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let ignored_lints =
-        serde_json::from_str::<IgnoredLints>(&ignored_lints).map_err(|error| error.to_string())?;
-
-    let mut config = config.lock().await;
-    config.ignored_lints.append(ignored_lints);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn add_to_dictionary(
-    word: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config
-        .mutable_dictionary
-        .append_word_str(&word, DictWordMetadata::default());
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn get_integrations(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Vec<IntegrationView>, String> {
-    let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker();
-
-    Ok(integrations
-        .into_iter()
-        .map(|integration| IntegrationView {
-            display_name: broker.integration_display_name(&integration.bundle_id),
-            bundle_id: integration.bundle_id,
-            enabled: integration.enabled,
-        })
-        .collect())
-}
-
-#[tauri::command]
-async fn add_integration(
-    bundle_id: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.add_integration(bundle_id);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn remove_integration(
-    bundle_id: String,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.remove_integration(&bundle_id);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-async fn set_integration_enabled(
-    bundle_id: String,
-    enabled: bool,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.set_integration_enabled(&bundle_id, enabled);
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
-
-    Ok(())
-}
-
-#[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
-}
-
-#[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
-}
-
-#[tauri::command]
-async fn start_highlighter_service(
-    config: State<'_, Arc<Mutex<Config>>>,
-    highlighter_service: State<'_, HighlighterService>,
-) -> Result<bool, String> {
-    {
-        let mut config = config.lock().await;
-        config.highlighter_service_enabled = true;
-        config
-            .save_to_system()
-            .await
-            .map_err(|error| error.to_string())?;
-    }
-
-    if accessibility_allows_highlighter_start() {
-        highlighter_service
-            .start()
-            .map_err(|error| error.to_string())?;
-    }
-
-    Ok(highlighter_service.is_running())
-}
-
-#[tauri::command]
-async fn stop_highlighter_service(
-    config: State<'_, Arc<Mutex<Config>>>,
-    highlighter_service: State<'_, HighlighterService>,
-) -> Result<bool, String> {
-    {
-        let mut config = config.lock().await;
-        config.highlighter_service_enabled = false;
-        config
-            .save_to_system()
-            .await
-            .map_err(|error| error.to_string())?;
-    }
-
-    Ok(highlighter_service.stop())
-}
-
-#[tauri::command]
-fn launch_app(bundle_id: String) -> Result<(), String> {
-    platform_broker().launch_app_bundle(&bundle_id)
-}
-
 #[cfg(target_os = "macos")]
-fn platform_broker() -> impl OsBroker {
-    mac_broker::MacBroker::default()
-}
+pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
 #[cfg(not(target_os = "macos"))]
-fn platform_broker() -> impl OsBroker {
-    os_broker::NoopBroker
+pub(crate) type PlatformBroker = os_broker::NoopBroker;
+
+fn platform_broker() -> PlatformBroker {
+    PlatformBroker::default()
+}
+
+fn warm_app_search_cache(app: tauri::AppHandle) {
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let result = broker
+            .lock()
+            .map_err(|error| format!("failed to read platform broker: {error}"))
+            .and_then(|broker| broker.search_apps("").map(|_| ()));
+
+        if let Err(error) = result {
+            eprintln!("failed to warm app search cache: {error}");
+        }
+    });
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -569,7 +263,7 @@ pub fn run() {
     let args = Args::parse();
 
     match args.command {
-        Some(Command::Highlighter) => run_highlighter(),
+        Some(Command::Highlighter { no_parent }) => run_highlighter(!no_parent),
         None => run_tauri(),
     }
 }
@@ -615,37 +309,14 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
+        .manage(StdMutex::new(platform_broker()))
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
         ))
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
-        .invoke_handler(tauri::generate_handler![
-            get_lint_config,
-            get_dialect,
-            get_debounce_ms,
-            set_debounce_ms,
-            get_auto_update,
-            set_auto_update,
-            get_last_update_check,
-            set_last_update_check,
-            set_dialect,
-            set_lint_config,
-            get_dictionary,
-            set_dictionary,
-            ignore_lint,
-            add_to_dictionary,
-            get_integrations,
-            add_integration,
-            remove_integration,
-            set_integration_enabled,
-            get_accessibility_permission_status,
-            request_accessibility_permission,
-            start_highlighter_service,
-            stop_highlighter_service,
-            launch_app,
-        ])
+        .invoke_handler(commands::application_message_handler())
         .menu(desktop_app_menu)
         .on_menu_event(|app, event| {
             if event.id().as_ref() == REPORT_ISSUE_MENU_ID {
@@ -671,6 +342,8 @@ pub fn run_tauri() {
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
 
+            warm_app_search_cache(app.handle().clone());
+
             let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
                 .menu(&menu.menu)
                 .icon(menu_bar_icon(is_service_running)?)
@@ -681,15 +354,17 @@ pub fn run_tauri() {
                         let highlighter_service = app.state::<HighlighterService>();
 
                         let toggle_result = if highlighter_service.is_running() {
-                            tauri::async_runtime::block_on(stop_highlighter_service(
+                            tauri::async_runtime::block_on(commands::stop_highlighter_service(
                                 app.state::<Arc<Mutex<Config>>>(),
                                 highlighter_service,
                             ))
                         } else {
-                            let result = tauri::async_runtime::block_on(start_highlighter_service(
-                                app.state::<Arc<Mutex<Config>>>(),
-                                highlighter_service,
-                            ));
+                            let result = tauri::async_runtime::block_on(
+                                commands::start_highlighter_service(
+                                    app.state::<Arc<Mutex<Config>>>(),
+                                    highlighter_service,
+                                ),
+                            );
 
                             if matches!(result, Ok(false))
                                 && !accessibility_allows_highlighter_start()
@@ -761,7 +436,9 @@ pub fn run_tauri() {
         .expect("error while running tauri application");
 }
 
-pub fn run_highlighter() {
+/// Run as a highlighter process.
+/// Can configure whether to run standalone, or with a parent Tauri process
+pub fn run_highlighter(has_parent: bool) {
     let client = Rc::new(RefCell::new(Client::current_process()));
     let sync_runtime = Rc::new(
         Builder::new_current_thread()
@@ -770,7 +447,11 @@ pub fn run_highlighter() {
             .expect("failed to build highlighter protocol runtime"),
     );
 
-    let startup_config = fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime);
+    let startup_config = if has_parent {
+        fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime)
+    } else {
+        Ok(Config::default())
+    };
 
     let startup_config = match startup_config {
         Ok(config) => config,
@@ -784,7 +465,7 @@ pub fn run_highlighter() {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let integrations = Rc::new(RefCell::new(startup_config.integrations));
+    let integrations = Arc::new(StdMutex::new(startup_config.integrations));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
 
@@ -889,20 +570,23 @@ pub fn run_highlighter() {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
-    let refresh_config = move || match fetch_highlighter_config(
-        &mut refresh_client.borrow_mut(),
-        &refresh_runtime,
-    ) {
-        Ok(config) => apply_highlighter_config(
-            config,
-            &refresh_ignored_lints,
-            &refresh_user_dictionary,
-            &refresh_dialect,
-            &refresh_integrations,
-            &refresh_debounce_ms,
-            &refresh_linter,
-        ),
-        Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+    let refresh_config = move || {
+        if !has_parent {
+            return;
+        }
+
+        match fetch_highlighter_config(&mut refresh_client.borrow_mut(), &refresh_runtime) {
+            Ok(config) => apply_highlighter_config(
+                config,
+                &refresh_ignored_lints,
+                &refresh_user_dictionary,
+                &refresh_dialect,
+                &refresh_integrations,
+                &refresh_debounce_ms,
+                &refresh_linter,
+            ),
+            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+        }
     };
 
     #[cfg(target_os = "macos")]
@@ -919,7 +603,6 @@ pub fn run_highlighter() {
         disable_rule,
         refresh_config,
     )
-    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
@@ -957,7 +640,7 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    integrations: &Rc<RefCell<Vec<Integration>>>,
+    integrations: &Arc<StdMutex<Vec<Integration>>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
@@ -965,7 +648,10 @@ fn apply_highlighter_config(
     *ignored_lints.borrow_mut() = config.ignored_lints;
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
-    *integrations.borrow_mut() = config.integrations;
+    match integrations.lock() {
+        Ok(mut integrations) => *integrations = config.integrations,
+        Err(error) => eprintln!("failed to update integrations: {error}"),
+    }
     *debounce_ms.borrow_mut() = config.debounce_ms;
     *linter.borrow_mut() = linter_config;
 }

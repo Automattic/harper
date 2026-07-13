@@ -11,8 +11,8 @@ pub struct GoodAt {
 
 impl Default for GoodAt {
     fn default() -> Self {
-        let we_re_not_always_very_good_in_sth = SequenceExpr::any_of(vec![
-            Box::new(InflectionOfBe::default()),
+        let we_re_not_always_very_good_in_sth = SequenceExpr::any_of([
+            Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
             Box::new(WordSet::new(&[
                 "I'm", "we're", "you're", "he's", "she's", "it's", "they're", "Im", "were",
                 "youre", "your", "hes", "shes", "its", "theyre",
@@ -86,7 +86,7 @@ impl ExprLinter for GoodAt {
                 "at".chars().collect(),
                 prep_span.get_content(src),
             )],
-            message: "Use 'good at' to describe proficiency with a skill.".to_string(),
+            message: "Use 'good at' to describe proficiency with a skill.".to_owned(),
             ..Default::default()
         })
     }

@@ -16,10 +16,7 @@ const OVER_EXCEPTIONS: &[&str] = &["all", "joy", "long", "night", "reading", "st
 const UNDER_EXCEPTIONS: &[&str] = &["development", "mine"];
 const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
 
-impl<D> DisjointPrefixes<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> DisjointPrefixes<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::word_set(&[
@@ -57,10 +54,7 @@ where
     }
 }
 
-impl<D> ExprLinter for DisjointPrefixes<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -77,7 +71,10 @@ where
         let (pre, _) = ctx?;
 
         // Cloud Native Pub-Sub System at Pinterest -> subsystem
-        if pre.last().is_some_and(|p| p.kind.is_hyphen()) {
+        if pre
+            .last()
+            .is_some_and(|p| p.kind.is_hyphen() || p.kind.is_apostrophe())
+        {
             return None;
         }
 
@@ -133,7 +130,7 @@ where
             lint_kind: LintKind::Spelling,
             suggestions,
             message: "This looks like a prefix that can be joined with the rest of the word."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
@@ -166,6 +163,22 @@ mod tests {
             "Advanced Nginx configuration available for super users",
             DisjointPrefixes::new(FstDictionary::curated()),
             "Advanced Nginx configuration available for superusers",
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_ascii_apostrophe() {
+        assert_no_lints(
+            "you 're fresh so you don't neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_typographic_apostrophe() {
+        assert_no_lints(
+            "you ’re fresh so you don’t neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
         );
     }
 
