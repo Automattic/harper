@@ -29,9 +29,17 @@ type FrameworkActions = {
 };
 
 /** Events on an input (any kind) that can trigger a re-render. */
-const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
+const INPUT_EVENTS = ['focus', 'keyup', 'keydown', 'paste', 'change', 'scroll', 'input'];
 /** Events on the window that can trigger a re-render. */
-const PAGE_EVENTS = ['resize', 'scroll'];
+const PAGE_EVENTS = [
+	'resize',
+	'scroll',
+	'keyup',
+	'keydown',
+	'input',
+	'compositionend',
+	'selectionchange',
+];
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
@@ -85,6 +93,14 @@ export default class LintFramework {
 			this.lastInputAt = Date.now();
 			this.update();
 		};
+
+		// Catches edge cases where editors do not correctly emit events.
+		const timeoutCallback = () => {
+			this.update();
+
+			setTimeout(timeoutCallback, 1000);
+		};
+		timeoutCallback();
 
 		this.attachWindowListeners();
 	}

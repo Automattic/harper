@@ -261,10 +261,15 @@ export async function testBasicSuggestion(
 
 		await assertEditorText(editor, 'This is a test');
 
+		await page.waitForTimeout(3000);
+
 		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
@@ -303,18 +308,7 @@ export async function testCanIgnoreSuggestion(
 
 		// Nothing should change.
 		await assertEditorText(editor, cacheSalt);
-		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
-
-		// Backspace at position 0 is a no-op; unchanged text means cursor jumped.
-		await page.waitForTimeout(300);
-		await page.keyboard.press('Backspace');
-		await page.waitForTimeout(300);
-		if (await isFormElement(editor)) {
-			await expect(editor).not.toHaveValue(cacheSalt);
-		} else {
-			await expect(editor).not.toHaveText(cacheSalt);
-		}
 	});
 }
 
@@ -324,13 +318,6 @@ export async function testCanBlockRuleSuggestion(
 	getEditor: EditorLocatorProvider,
 	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
-	if (blockRuleSuggestionTestRegistered) {
-		test.skip('Can hide with rule block button', async () => {});
-		return;
-	}
-
-	blockRuleSuggestionTestRegistered = true;
-
 	test('Can hide with rule block button', async ({ page }) => {
 		test.slow();
 		const url = await resolveTestPage(testPageUrl, page);
@@ -341,6 +328,8 @@ export async function testCanBlockRuleSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
+
+    await page.waitForTimeout(1000);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);

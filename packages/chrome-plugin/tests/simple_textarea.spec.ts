@@ -159,10 +159,10 @@ test('Can dismiss with escape key', async ({ page }) => {
 	const editor = getTextarea(page);
 	await replaceEditorContent(
 		editor,
-		'This is a test of the Harper grammar checker, specifically   if it is wrapped around a line weirdl y',
+		'This is an test.',
 	);
 
-	await page.waitForTimeout(6000);
+	await page.waitForTimeout(1000);
 
 	await clickHarperHighlight(page);
 

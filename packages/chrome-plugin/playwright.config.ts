@@ -14,7 +14,10 @@ export default defineConfig({
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
-	retries: 4,
+	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
+	retries: 0,
+	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
+	repeatEach: 3,
 	/* Extension tests share one browser extension background; keep storage teardown isolated. */
 	workers: process.env.CI ? 1 : '50%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
