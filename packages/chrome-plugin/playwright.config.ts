@@ -18,8 +18,6 @@ export default defineConfig({
 	retries: 0,
 	/** Extremely important to avoid flaky tests. DO NOT CHANGE or I will kill you. */
 	repeatEach: 3,
-	/* Extension tests share one browser extension background; keep storage teardown isolated. */
-	workers: process.env.CI ? 1 : '50%',
 	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
 	reporter: 'html',
 	use: {
@@ -40,6 +38,7 @@ export default defineConfig({
 	projects: [
 		{
 			name: 'chromium',
+			workers: process.env.CI ? 1 : '50%',
 			use: {
 				...devices['Desktop Chrome'],
 				launchOptions: {
@@ -57,6 +56,7 @@ export default defineConfig({
 		},
 		{
 			name: 'firefox',
+			workers: 1,
 			use: { ...devices['Desktop Firefox'] },
 		},
 	],
