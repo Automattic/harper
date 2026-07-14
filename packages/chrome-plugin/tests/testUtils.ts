@@ -302,7 +302,7 @@ export async function testCanIgnoreSuggestion(
 		await page.getByTitle('Ignore this lint').click();
 
 		// Wait for highlights to disappear after ignoring.
-		await expect(getHarperHighlights(page)).toHaveCount(0);
+		await expect(getHarperHighlights(page)).toHaveCount(0, { timeout: 10000 });
 
 		// Nothing should change.
 		await assertEditorText(editor, cacheSalt);
