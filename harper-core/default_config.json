@@ -3793,6 +3793,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TenantTenet",
+								"state": true,
+								"label": "Tenant Tenet"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToWorryAbout",
 								"state": true,
 								"label": "To Worry About"

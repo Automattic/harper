@@ -1,0 +1,21 @@
+expr adj [core, central, fundamental, basic, guiding, cardinal, underlying, foundational, defining]
+expr main <(@adj tenants), tenants>
+
+let message "Did you mean `tenets`?"
+let description "`Tenants` (renters) is easily confused with `tenets` (principles). After an adjective like `core` or `fundamental`, the principle sense is the intended one."
+let kind "Malapropism"
+let becomes "tenets"
+let strategy "MatchCase"
+
+test "The core tenants of agile are simple." "The core tenets of agile are simple."
+test "These are the central tenants of the movement." "These are the central tenets of the movement."
+test "The fundamental tenants of the religion endure." "The fundamental tenets of the religion endure."
+test "We follow the basic tenants of good writing." "We follow the basic tenets of good writing."
+test "Its guiding tenants shaped the company." "Its guiding tenets shaped the company."
+test "The cardinal tenants of the order are few." "The cardinal tenets of the order are few."
+test "Core Tenants of Highly Effective Teams." "Core Tenets of Highly Effective Teams."
+
+allows "The building has three tenants."
+allows "The apartment's tenants moved out."
+allows "The main tenants renewed their leases."
+allows "Commercial tenants pay higher rent."
