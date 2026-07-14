@@ -72,6 +72,15 @@ test('Wraps correctly', async ({ page }, testInfo) => {
 				{ x: 178, y: 28, width: 48, height: 20 },
 				{ x: 358, y: 10, width: 18, height: 20 },
 			],
+			[
+				{ x: 10, y: 70, width: 57.73333740234375, height: 17 },
+				{
+					x: 219.28334045410156,
+					y: 25,
+					width: 21.649993896484375,
+					height: 17,
+				},
+			],
 		]);
 	}
 });
