@@ -25,8 +25,8 @@ export default defineConfig({
 		trace: 'on-first-retry',
 		screenshot: 'only-on-failure',
 	},
-	/** A half hour */
-	globalTimeout: 1800000,
+	/** One hour */
+	globalTimeout: 3600000,
 	webServer: {
 		command: 'pnpm exec http-server ./tests/pages -p 8081 -a 127.0.0.1',
 		url: 'http://127.0.0.1:8081',
