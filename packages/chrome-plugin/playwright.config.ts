@@ -56,7 +56,7 @@ export default defineConfig({
 		},
 		{
 			name: 'firefox',
-			workers: 1,
+			workers: process.env.CI ? 1 : '50%',
 			use: { ...devices['Desktop Firefox'] },
 		},
 	],

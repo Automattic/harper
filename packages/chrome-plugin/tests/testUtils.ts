@@ -8,8 +8,6 @@ type ScreenPoint = {
 	y: number;
 };
 
-const blockRuleSuggestionTestRegistered = false;
-
 export function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	let result = '';
