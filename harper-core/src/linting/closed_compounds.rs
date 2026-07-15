@@ -1,6 +1,52 @@
-use crate::linting::LintGroup;
+use crate::{
+    Token,
+    expr::Expr,
+    linting::{
+        ExprLinter, Lint, LintGroup,
+        expr_linter::{Chunk, preceded_by_word},
+    },
+};
 
 use super::MapPhraseLinter;
+
+struct Overall {
+    inner: MapPhraseLinter,
+}
+
+impl Default for Overall {
+    fn default() -> Self {
+        Self {
+            inner: MapPhraseLinter::new_closed_compound(["over all"], "overall"),
+        }
+    }
+}
+
+impl ExprLinter for Overall {
+    type Unit = Chunk;
+
+    fn expr(&self) -> &dyn Expr {
+        self.inner.expr()
+    }
+
+    fn match_to_lint_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
+        // "Over all" is normally a preposition followed by a quantifier. Only treat it as the
+        // adjective "overall" when a preceding determiner establishes that grammatical role.
+        if !preceded_by_word(context, |word| word.kind.is_determiner()) {
+            return None;
+        }
+
+        self.inner.match_to_lint(matched_tokens, source)
+    }
+
+    fn description(&self) -> &str {
+        self.inner.description()
+    }
+}
 
 pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();
@@ -57,7 +103,6 @@ pub fn lint_group() -> LintGroup {
         "Nothing"         => (&["no thing"][..], "nothing"),
         "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
         "Nowhere"         => (&["no where"][..], "nowhere"),
-        "Overall"         => (&["over all"][..], "overall"),
         "Overclocking"    => (&["over clocking"][..], "overclocking"),
         "Overload"        => (&["over load"][..], "overload"),
         "Overnight"       => (&["over night"][..], "overnight"),
@@ -82,6 +127,8 @@ pub fn lint_group() -> LintGroup {
         "Worldwide"       => (&["world wide"][..], "worldwide"),
         "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
     });
+
+    group.add("Overall", Box::new(Overall::default()));
 
     group.set_all_rules_to(Some(true));
 
@@ -155,6 +202,40 @@ mod tests {
         let test_sentence = "The over all performance was good.";
         let expected = "The overall performance was good.";
         assert_suggestion_result(test_sentence, lint_group(), expected);
+    }
+
+    #[test]
+    fn allow_over_all_the() {
+        assert_no_lints("Iterate over all the save data in the slot.", lint_group());
+    }
+
+    #[test]
+    fn allow_over_all_of_the() {
+        assert_no_lints(
+            "Iterate over all of the save data in the slot.",
+            lint_group(),
+        );
+    }
+
+    #[test]
+    fn allow_over_all_plural_noun() {
+        assert_no_lints(
+            "Congress may exercise authority over all places purchased by consent.",
+            lint_group(),
+        );
+    }
+
+    #[test]
+    fn allow_over_all_pronoun() {
+        assert_no_lints("A thrill passed over all of us.", lint_group());
+    }
+
+    #[test]
+    fn allow_over_all_at_sentence_start() {
+        assert_no_lints(
+            "Over all these years, the rule stayed the same.",
+            lint_group(),
+        );
     }
 
     #[test]
