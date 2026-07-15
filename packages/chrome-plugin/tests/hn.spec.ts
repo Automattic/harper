@@ -40,11 +40,17 @@ test('Hacker News wraps correctly', async ({ page }) => {
 		'This is a test of the Harper grammar checker, specifically   if \nit is wrapped around a line weirdl y',
 	);
 
-	await page.waitForTimeout(6000);
+	await page.waitForTimeout(12000);
 
 	await assertHarperHighlightBoxes(page, [
-		{ x: 352.578125, y: 113, width: 63.984375, height: 19 },
-		{ x: 592.484375, y: 96, width: 24, height: 19 },
+		[
+			{ x: 352.578125, y: 113, width: 63.984375, height: 19 },
+			{ x: 592.484375, y: 96, width: 24, height: 19 },
+		],
+		[
+			{ x: 304.66668701171875, y: 121, width: 53.333343505859375, height: 22 },
+			{ x: 504.66668701171875, y: 101, width: 20, height: 22 },
+		],
 	]);
 });
 
@@ -66,5 +72,8 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 
 	await page.waitForTimeout(6000);
 
-	await assertHarperHighlightBoxes(page, [{ x: 216.625, y: 217, width: 56, height: 19 }]);
+	await assertHarperHighlightBoxes(page, [
+		[{ x: 216.625, y: 217, width: 56, height: 19 }],
+		[{ x: 191.3333282470703, y: 245, width: 46.66667175292969, height: 22 }],
+	]);
 });
