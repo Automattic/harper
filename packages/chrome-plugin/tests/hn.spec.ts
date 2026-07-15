@@ -32,12 +32,12 @@ test('Hacker News wraps correctly', async ({ page }) => {
 
 	await assertHarperHighlightBoxes(page, [
 		[
-			{ x: 315.25, y: 115, width: 53.328125, height: 21 },
-			{ x: 515.171875, y: 96, width: 20.015625, height: 21 },
+			{ x: 353.34375, y: 111, width: 64.203125, height: 17 },
+			{ x: 594.0625, y: 96, width: 24.09375, height: 17 },
 		],
 		[
-			{ x: 304.66668701171875, y: 121, width: 53.333343505859375, height: 22 },
-			{ x: 504.66668701171875, y: 101, width: 20, height: 22 },
+			{ x: 354.26666259765625, y: 115, width: 64.13333129882812, height: 19 },
+			{ x: 594.7666625976562, y: 98, width: 24.04998779296875, height: 19 },
 		],
 	]);
 });
@@ -58,7 +58,7 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [
-		[{ x: 201.96875, y: 231, width: 46.65625, height: 21 }],
-		[{ x: 191.3333282470703, y: 245, width: 46.66667175292969, height: 22 }],
+		[{ x: 216.9375, y: 203, width: 56.171875, height: 17 }],
+		[{ x: 217.98333740234375, y: 221, width: 56.116668701171875, height: 19 }],
 	]);
 });
