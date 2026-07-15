@@ -17,4 +17,8 @@ export default class ProblematicLints {
 	public static async create(rec: ProblematicLintSubmission) {
 		await db.insert(problematicLintTable).values(rec);
 	}
+
+	public static async getAll(): Promise<ProblematicLintRow[]> {
+		return await db.select().from(problematicLintTable);
+	}
 }
