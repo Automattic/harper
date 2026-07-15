@@ -2,7 +2,7 @@
 use crate::{
     CharStringExt, Lint, Lrc, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::Word,
 };
 
@@ -41,14 +41,7 @@ impl Default for ThrowBabyWithBathwater {
 impl ExprLinter for ThrowBabyWithBathwater {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, ctx, src));
-
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let away_idx: Option<usize> = [2, 6]
             .into_iter()
             .find(|&i| toks[i].get_ch(src).eq_str("away"));
