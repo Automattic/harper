@@ -395,7 +395,9 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
 		// Move cursor away to test whether it handles race condition
-		await editor.press('End');
+		for (let i = 0; i < 4; i++) {
+			await editor.press('ArrowLeft');
+		}
 
 		await page.getByTitle('Replace with "test"').click();
 		await page.waitForTimeout(5000);
