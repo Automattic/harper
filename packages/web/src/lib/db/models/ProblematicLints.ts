@@ -1,6 +1,7 @@
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { problematicLintTable } from '../schema';
+import { gte } from 'drizzle-orm';
 
 export type ProblematicLintRow = typeof problematicLintTable.$inferSelect;
 const ProblematicLintRowParser = createSelectSchema(problematicLintTable);
@@ -20,5 +21,9 @@ export default class ProblematicLints {
 
 	public static async getAll(): Promise<ProblematicLintRow[]> {
 		return await db.select().from(problematicLintTable);
+	}
+
+	public static async getAllSince(date: Date) {
+		return await db.select().from(problematicLintTable).where(gte(problematicLintTable.timestamp, date));
 	}
 }
