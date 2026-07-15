@@ -50,7 +50,8 @@ You can make a copy of `docker-compose.yml` to run a full instance of the entire
 
 ## Admin Pages
 
-Admin pages, available at `/admin` are hidden by default, but can be enabled by setting the `ENABLE_ADMIN_ROUTES=true` environment variable.
+Admin pages, available at `/admin` are hidden by default, but can be enabled by setting the `ENABLE_ADMIN_ROUTES=true` environment variable before building the site.
+At the time of writing, they are not admin routes as much as they are insights into the reports submitted by users.
 
 ## Deployment
 
