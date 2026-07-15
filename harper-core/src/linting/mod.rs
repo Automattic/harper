@@ -83,6 +83,7 @@ mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
+mod fall_run_a_foul;
 mod far_be_it;
 mod fascinated_by;
 mod fed_up_with;
