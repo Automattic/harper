@@ -8,6 +8,8 @@ let entries = $derived(Object.entries(counts).toSorted(([_a, a], [_b, b]) => b -
 </script>
 
 <Isolate>
+  <h1>Most Reported Erroring Lint IDs</h1>
+
   <div class="flex flex-row [&>a]:px-4">
     <a href="/admin/all">All</a>
     <a href="/admin/last30days">Last 30 Days</a>
