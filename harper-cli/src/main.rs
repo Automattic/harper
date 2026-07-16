@@ -42,7 +42,7 @@ use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
-#[command(version, about)]
+#[command(version = harper_core::core_version(), about)]
 struct Cli {
     /// Disable colored output.
     #[arg(long, global = true)]
