@@ -187,7 +187,10 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 		return change != null && change.oldValue !== undefined && change.newValue === undefined;
 	});
 
-	if (resetLinter) {
+	// Also reinitialize linter when dialect changes to a different value
+	const dialectChanged = changes.dialect != null && changes.dialect.oldValue !== changes.dialect.newValue;
+
+	if (resetLinter || dialectChanged) {
 		linterReady = linterReady
 			.then(async () => {
 				await initializeLinter(await getDialect());
