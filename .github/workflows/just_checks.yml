@@ -52,8 +52,7 @@ jobs:
           sudo apt-get install -y \
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
-            libxdo-dev
-          sudo apt-get install -y libappindicator3-dev || true
+            libxdo-dev 
       - name: Rust Cache
         uses: Swatinem/rust-cache@c19371144df3bb44fab255c43d04cbc2ab54d1c4 # v2.9.1
         with:

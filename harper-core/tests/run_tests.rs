@@ -72,7 +72,7 @@ create_test!(whack_bullets.md, 1, Dialect::American);
 create_test!(issue_109.md, 0, Dialect::American);
 create_test!(issue_109_ext.md, 0, Dialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
-create_test!(obsidian_links.md, 3, Dialect::American);
+create_test!(obsidian_links.md, 2, Dialect::American);
 create_test!(issue_267.md, 0, Dialect::American);
 create_test!(proper_noun_capitalization.md, 3, Dialect::American);
 create_test!(amazon_hostname.md, 0, Dialect::American);

@@ -748,7 +748,7 @@ async function setDelay(delay: number) {
 }
 
 async function getDelay(): Promise<number> {
-	const resp = await chrome.storage.local.get({ delay: 300 });
+	const resp = await chrome.storage.local.get({ delay: 0 });
 	const { delay } = resp;
 
 	return typeof delay === 'number' && Number.isFinite(delay) && delay >= 0 ? delay : 0;
