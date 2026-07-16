@@ -5329,6 +5329,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NoPluralModifiers",
+								"state": true,
+								"label": "No Plural Modifiers"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"

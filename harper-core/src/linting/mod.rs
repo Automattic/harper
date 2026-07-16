@@ -175,6 +175,7 @@ mod no_longer;
 mod no_longer_pronoun;
 mod no_match_for;
 mod no_oxford_comma;
+mod no_plural_modifiers;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
