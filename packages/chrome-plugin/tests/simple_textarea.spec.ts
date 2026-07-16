@@ -1,4 +1,4 @@
-import { test } from './fixtures';
+import { expect, test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
 	assertLocatorIsFocused,
@@ -17,6 +17,70 @@ testBasicSuggestion(TEST_PAGE_URL, getTextarea);
 testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea);
 testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
 testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea);
+
+test('Keeps the textarea typable after opening a suggestion with a click', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This word is misspellled.');
+
+	expect(await clickHarperHighlight(page)).toBe(true);
+	await page.locator('.harper-container').waitFor({ state: 'visible' });
+	await assertLocatorIsFocused(page, editor);
+
+	const valueBeforeDelete = await editor.inputValue();
+	await page.keyboard.press('Delete');
+	expect(await editor.inputValue()).not.toBe(valueBeforeDelete);
+});
+
+test('Focuses suggestions when opening the popup with the activation key', async ({
+	context,
+	page,
+}) => {
+	const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+	await background.evaluate(() => chrome.storage.local.set({ activationKey: 'shift' }));
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This is an test.');
+	await page.locator('#harper-highlight').waitFor({ state: 'visible' });
+
+	await page.keyboard.press('Shift');
+	await page.waitForTimeout(50);
+	await page.keyboard.press('Shift');
+
+	const firstSuggestion = page.getByTitle('Replace with "a"');
+	await firstSuggestion.waitFor({ state: 'visible' });
+	await assertLocatorIsFocused(page, firstSuggestion);
+
+	await page.keyboard.press('Escape');
+	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+	await assertLocatorIsFocused(page, editor);
+
+	await page.keyboard.press('Shift');
+	await page.waitForTimeout(50);
+	await page.keyboard.press('Shift');
+	await firstSuggestion.waitFor({ state: 'visible' });
+	await assertLocatorIsFocused(page, firstSuggestion);
+
+	await page.keyboard.press('Enter');
+	await expect(editor).toHaveValue('This is a test.');
+});
+
+test('Dismisses a click-opened popup when clicking outside its highlight', async ({ page }) => {
+	await page.goto(TEST_PAGE_URL);
+
+	const editor = getTextarea(page);
+	await replaceEditorContent(editor, 'This word is misspellled.');
+
+	expect(await clickHarperHighlight(page)).toBe(true);
+	await page.locator('.harper-container').waitFor({ state: 'visible' });
+
+	await editor.click({ position: { x: 2, y: 2 } });
+
+	await page.locator('.harper-container').waitFor({ state: 'hidden' });
+	await assertLocatorIsFocused(page, editor);
+});
 
 test('Wraps correctly', async ({ page }, testInfo) => {
 	await page.goto(TEST_PAGE_URL);

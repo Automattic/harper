@@ -19,6 +19,12 @@ const disableIconSvg = iconSvg(faToggleOff);
 
 let previouslyActiveElement: null | HTMLElement = null;
 
+function rememberActiveElement() {
+	if (document.activeElement?.tagName.toLowerCase() != 'harper-render-box') {
+		previouslyActiveElement = document.activeElement as HTMLElement;
+	}
+}
+
 var FocusHook: any = function () {};
 FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousValue: any) {
 	if ((node as any).__harperAutofocused) {
@@ -26,10 +32,7 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	}
 
 	requestAnimationFrame(() => {
-		if (document.activeElement?.tagName.toLowerCase() != 'harper-render-box') {
-			previouslyActiveElement = document.activeElement as HTMLElement;
-		}
-
+		rememberActiveElement();
 		node.focus();
 		Object.defineProperty(node, '__harperAutofocused', {
 			value: true,
@@ -37,6 +40,11 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 			configurable: false,
 		});
 	});
+};
+
+var RememberFocusHook: any = function () {};
+RememberFocusHook.prototype.hook = function () {
+	requestAnimationFrame(rememberActiveElement);
 };
 
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
@@ -200,12 +208,13 @@ function suggestions(
 	lintKind: LintKind,
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
+	autofocusSuggestion: boolean,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label =
 			s.replacement_text !== '' ? s.replacement_text : String(suggestionKindToLabel(s.kind));
 		const desc = `Replace with "${label}"`;
-		const props = i === 0 ? { hook: new FocusHook() } : {};
+		const props = i === 0 && autofocusSuggestion ? { hook: new FocusHook() } : {};
 		return button(
 			label,
 			{ background: lintKindColor(lintKind), color: lintKindTextColor(lintKind) },
@@ -454,6 +463,7 @@ export default function SuggestionBox(
 		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	},
 	hint: string | null,
+	autofocusSuggestion: boolean,
 	close: () => void,
 ) {
 	const top = box.y + box.height + 3;
@@ -484,6 +494,7 @@ export default function SuggestionBox(
 		{
 			className: 'harper-container fade-in',
 			style: positionStyle,
+			'harper-remember-focus': autofocusSuggestion ? undefined : new RememberFocusHook(),
 			'harper-close-on-escape': new CloseOnEscapeHook(refocusClose),
 		},
 		[
@@ -498,10 +509,15 @@ export default function SuggestionBox(
 			),
 			body(box.lint.message_html),
 			footer(
-				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
-					box.applySuggestion(v);
-					refocusClose();
-				}),
+				suggestions(
+					box.lint.lint_kind,
+					box.lint.suggestions,
+					(v) => {
+						box.applySuggestion(v);
+						refocusClose();
+					},
+					autofocusSuggestion,
+				),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)

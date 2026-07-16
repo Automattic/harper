@@ -31,6 +31,7 @@ function monitorActivationKey(
 export default class PopupHandler {
 	private currentLintBoxes: IgnorableLintBox[];
 	private popupLint: number | undefined;
+	private autofocusSuggestion: boolean;
 	private currentHint: string | null | undefined;
 	private currentHintFor: number | undefined;
 	private renderBox: RenderBox;
@@ -53,6 +54,7 @@ export default class PopupHandler {
 	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];
+		this.autofocusSuggestion = false;
 		this.currentHint = undefined;
 		this.currentHintFor = undefined;
 		this.renderBox = new RenderBox(document.body);
@@ -92,6 +94,7 @@ export default class PopupHandler {
 
 			if (closestIdx >= 0) {
 				this.popupLint = closestIdx;
+				this.autofocusSuggestion = true;
 			}
 		}
 	}
@@ -102,12 +105,14 @@ export default class PopupHandler {
 
 			if (isPointInBox([e.x, e.y], box)) {
 				this.popupLint = i;
+				this.autofocusSuggestion = false;
 				this.render();
 				return;
 			}
 		}
 
 		this.popupLint = undefined;
+		this.autofocusSuggestion = false;
 		this.render();
 	}
 
@@ -119,10 +124,17 @@ export default class PopupHandler {
 		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
 			const box = this.currentLintBoxes[this.popupLint];
 
-			tree = SuggestionBox(box, this.actions, this.currentHint ?? null, () => {
-				this.popupLint = undefined;
-				this.updateHint();
-			});
+			tree = SuggestionBox(
+				box,
+				this.actions,
+				this.currentHint ?? null,
+				this.autofocusSuggestion,
+				() => {
+					this.popupLint = undefined;
+					this.autofocusSuggestion = false;
+					this.updateHint();
+				},
+			);
 			this.renderBox.getShadowHost().style.setProperty('visibility', 'visible', 'important');
 			this.renderBox.getShadowHost().showPopover();
 		} else {
@@ -160,6 +172,7 @@ export default class PopupHandler {
 
 		if (boxes.length != this.currentLintBoxes.length) {
 			this.popupLint = undefined;
+			this.autofocusSuggestion = false;
 		}
 
 		this.currentLintBoxes = boxes;
