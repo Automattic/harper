@@ -5,8 +5,14 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
+// Import dialect types for all languages
+use harper_core::EnglishDialect;
+use harper_core::language::dialects::dialect_trait::Dialect as DialectTrait;
+use harper_core::language::german::dialects::GermanDialect;
 use harper_core::language::languages::Language as HarperLanguage;
+use harper_core::language::portuguese::dialects::PortugueseDialect;
 use harper_core::language::registry::{dictionary, new_curated_for_language};
+use harper_core::language::slovak::dialects::SlovakDialect;
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
@@ -17,9 +23,10 @@ use harper_core::{
     remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
-use harper_core::{DialectFlags, language_detection::is_likely_english};
-#[cfg(feature = "de")]
-use harper_core::language::german::dialects::GermanDialect;
+use harper_core::{Dialect as HarperDialect, DialectFlags, language_detection::is_likely_english};
+
+// Include the auto-generated Dialect enum
+include!("generated_dialect.rs");
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
@@ -83,59 +90,42 @@ impl Language {
     }
 }
 
-/// Specifies a dialect, often used for linting.
-#[wasm_bindgen]
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
-pub enum Dialect {
-    // English dialects
-    American,
-    British,
-    Australian,
-    Canadian,
-    Indian,
-    // German dialects
-    GermanStandard,
-    GermanAustrian,
-    GermanSwiss,
-}
-
 impl From<Dialect> for HarperLanguage {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => {
-                HarperLanguage::English(harper_core::EnglishDialect::American)
-            }
-            Dialect::Canadian => {
-                HarperLanguage::English(harper_core::EnglishDialect::Canadian)
-            }
-            Dialect::Australian => {
-                HarperLanguage::English(harper_core::EnglishDialect::Australian)
-            }
-            Dialect::British => {
-                HarperLanguage::English(harper_core::EnglishDialect::British)
-            }
-            Dialect::Indian => HarperLanguage::English(harper_core::EnglishDialect::Indian),
+            Dialect::American => HarperLanguage::English(EnglishDialect::American),
+            Dialect::British => HarperLanguage::English(EnglishDialect::British),
+            Dialect::Australian => HarperLanguage::English(EnglishDialect::Australian),
+            Dialect::Canadian => HarperLanguage::English(EnglishDialect::Canadian),
+            Dialect::Indian => HarperLanguage::English(EnglishDialect::Indian),
             Dialect::GermanStandard => HarperLanguage::German(GermanDialect::Standard),
             Dialect::GermanAustrian => HarperLanguage::German(GermanDialect::Austrian),
             Dialect::GermanSwiss => HarperLanguage::German(GermanDialect::Swiss),
+            Dialect::PortuguesePT => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+            Dialect::PortugueseBR => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+            Dialect::PortugueseAO => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap()),
+            Dialect::SlovakStandard => HarperLanguage::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
         }
     }
 }
 
-impl From<Dialect> for harper_core::Dialect {
+impl From<Dialect> for HarperDialect {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => harper_core::Dialect::American,
-            Dialect::Canadian => harper_core::Dialect::Canadian,
-            Dialect::Australian => harper_core::Dialect::Australian,
-            Dialect::British => harper_core::Dialect::British,
-            Dialect::Indian => harper_core::Dialect::Indian,
-            // German dialects don't have corresponding harper_core::Dialect variants
-            // as harper_core::Dialect only supports English dialects.
-            // Return American as a default for backwards compatibility when German is selected.
-            Dialect::GermanStandard | Dialect::GermanAustrian | Dialect::GermanSwiss => {
-                harper_core::Dialect::American
-            }
+            Dialect::American => HarperDialect::American,
+            Dialect::British => HarperDialect::British,
+            Dialect::Australian => HarperDialect::Australian,
+            Dialect::Canadian => HarperDialect::Canadian,
+            Dialect::Indian => HarperDialect::Indian,
+            // Non-English dialects map to American for backward compatibility
+            // as HarperDialect only supports English dialects
+            Dialect::GermanStandard
+            | Dialect::GermanAustrian
+            | Dialect::GermanSwiss
+            | Dialect::PortuguesePT
+            | Dialect::PortugueseBR
+            | Dialect::PortugueseAO
+            | Dialect::SlovakStandard => HarperDialect::American,
         }
     }
 }
