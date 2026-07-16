@@ -4,6 +4,10 @@
 
 @source "./**/*.{svelte,ts}";
 
+@theme {
+	--font-serif: Domine, serif;
+}
+
 .harper-editor {
 	--harper-editor-font-size: inherit;
 }
