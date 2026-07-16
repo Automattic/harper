@@ -60,8 +60,6 @@ test.beforeEach(async ({ context }) => {
 				await chrome.storage.local.set({ dialect: 0 });
 			},
 		);
-		// Wait for the storage change to propagate and linter to reinitialize
-		await new Promise((resolve) => setTimeout(resolve, 500));
 	}
 });
 
