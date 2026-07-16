@@ -83,20 +83,19 @@ impl Language {
     }
 }
 
-/// Specifies an English Dialect, often used for linting.
+/// Specifies a dialect, often used for linting.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {
+    // English dialects
     American,
     British,
     Australian,
     Canadian,
     Indian,
-    #[cfg(feature = "de")]
+    // German dialects
     GermanStandard,
-    #[cfg(feature = "de")]
     GermanAustrian,
-    #[cfg(feature = "de")]
     GermanSwiss,
 }
 
@@ -116,11 +115,8 @@ impl From<Dialect> for HarperLanguage {
                 HarperLanguage::English(harper_core::EnglishDialect::British)
             }
             Dialect::Indian => HarperLanguage::English(harper_core::EnglishDialect::Indian),
-            #[cfg(feature = "de")]
             Dialect::GermanStandard => HarperLanguage::German(GermanDialect::Standard),
-            #[cfg(feature = "de")]
             Dialect::GermanAustrian => HarperLanguage::German(GermanDialect::Austrian),
-            #[cfg(feature = "de")]
             Dialect::GermanSwiss => HarperLanguage::German(GermanDialect::Swiss),
         }
     }
@@ -137,7 +133,6 @@ impl From<Dialect> for harper_core::Dialect {
             // German dialects don't have corresponding harper_core::Dialect variants
             // as harper_core::Dialect only supports English dialects.
             // Return American as a default for backwards compatibility when German is selected.
-            #[cfg(feature = "de")]
             Dialect::GermanStandard | Dialect::GermanAustrian | Dialect::GermanSwiss => {
                 harper_core::Dialect::American
             }
