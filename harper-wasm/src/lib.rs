@@ -101,10 +101,18 @@ impl From<Dialect> for HarperLanguage {
             Dialect::GermanStandard => HarperLanguage::German(GermanDialect::Standard),
             Dialect::GermanAustrian => HarperLanguage::German(GermanDialect::Austrian),
             Dialect::GermanSwiss => HarperLanguage::German(GermanDialect::Swiss),
-            Dialect::PortuguesePT => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
-            Dialect::PortugueseBR => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
-            Dialect::PortugueseAO => HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap()),
-            Dialect::SlovakStandard => HarperLanguage::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+            Dialect::PortuguesePT => {
+                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap())
+            }
+            Dialect::PortugueseBR => {
+                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap())
+            }
+            Dialect::PortugueseAO => {
+                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap())
+            }
+            Dialect::SlovakStandard => {
+                HarperLanguage::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap())
+            }
         }
     }
 }
@@ -158,7 +166,10 @@ impl Linter {
     pub fn new(dialect: Dialect) -> Self {
         let language: HarperLanguage = dialect.into();
         let curated_dict = dictionary(language);
-        let dictionary = Self::construct_merged_dict_with_curated(&[Arc::new(MutableDictionary::default())], curated_dict.clone());
+        let dictionary = Self::construct_merged_dict_with_curated(
+            &[Arc::new(MutableDictionary::default())],
+            curated_dict.clone(),
+        );
         let lint_group = new_curated_for_language(curated_dict, language);
 
         Self {
@@ -182,7 +193,10 @@ impl Linter {
 
         let language: HarperLanguage = self.dialect.into();
         let curated_dict = dictionary(language);
-        self.dictionary = Self::construct_merged_dict_with_curated(&constituent_dictionaries, curated_dict.clone());
+        self.dictionary = Self::construct_merged_dict_with_curated(
+            &constituent_dictionaries,
+            curated_dict.clone(),
+        );
 
         self.lint_group = new_curated_for_language(curated_dict, language);
 
@@ -191,6 +205,7 @@ impl Linter {
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
     /// and any other runtime-provided dictionaries.
+    #[allow(dead_code)]
     fn construct_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
