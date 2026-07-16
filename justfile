@@ -69,10 +69,8 @@ build-wasm:
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
     wasm-pack build --target web --no-opt --out-name harper_wasm --all-features
-    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
   else
     wasm-pack build --target web --out-name harper_wasm --all-features
-    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
   fi
 
 # Build `harper.js` with all size optimizations available.
@@ -85,7 +83,6 @@ build-harperjs: build-wasm
   # Small delay to ensure files are fully written (helps with CI file system sync)
   sleep 2
   perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
