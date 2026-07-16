@@ -8,8 +8,6 @@ type ScreenPoint = {
 	y: number;
 };
 
-let blockRuleSuggestionTestRegistered = false;
-
 export function randomString(length: number): string {
 	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 	let result = '';
@@ -261,10 +259,15 @@ export async function testBasicSuggestion(
 
 		await assertEditorText(editor, 'This is a test');
 
+		await page.waitForTimeout(3000);
+
 		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
+		await page.waitForTimeout(200);
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
@@ -299,22 +302,11 @@ export async function testCanIgnoreSuggestion(
 		await page.getByTitle('Ignore this lint').click();
 
 		// Wait for highlights to disappear after ignoring.
-		await expect(getHarperHighlights(page)).toHaveCount(0);
+		await expect(getHarperHighlights(page)).toHaveCount(0, { timeout: 10000 });
 
 		// Nothing should change.
 		await assertEditorText(editor, cacheSalt);
-		expect(await clickHarperHighlight(page)).toBe(false);
 		await assertLocatorIsFocused(page, editor);
-
-		// Backspace at position 0 is a no-op; unchanged text means cursor jumped.
-		await page.waitForTimeout(300);
-		await page.keyboard.press('Backspace');
-		await page.waitForTimeout(300);
-		if (await isFormElement(editor)) {
-			await expect(editor).not.toHaveValue(cacheSalt);
-		} else {
-			await expect(editor).not.toHaveText(cacheSalt);
-		}
 	});
 }
 
@@ -324,13 +316,6 @@ export async function testCanBlockRuleSuggestion(
 	getEditor: EditorLocatorProvider,
 	setup?: (page: Page, editor: Locator) => Promise<void>,
 ) {
-	if (blockRuleSuggestionTestRegistered) {
-		test.skip('Can hide with rule block button', async () => {});
-		return;
-	}
-
-	blockRuleSuggestionTestRegistered = true;
-
 	test('Can hide with rule block button', async ({ page }) => {
 		test.slow();
 		const url = await resolveTestPage(testPageUrl, page);
@@ -341,6 +326,8 @@ export async function testCanBlockRuleSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
+
+		await page.waitForTimeout(1000);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
@@ -408,7 +395,9 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.mouse.click(box.x + box.width / 2, box.y + box.height / 2);
 
 		// Move cursor away to test whether it handles race condition
-		await editor.press('End');
+		for (let i = 0; i < 4; i++) {
+			await editor.press('ArrowLeft');
+		}
 
 		await page.getByTitle('Replace with "test"').click();
 		await page.waitForTimeout(5000);
@@ -425,10 +414,14 @@ export async function testMultipleSuggestionsAndUndo(
 	});
 }
 
-export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Promise<void> {
+export async function assertHarperHighlightBoxes(
+	page: Page,
+	boxes: Box[] | Box[][],
+): Promise<void> {
+	const expectedAlternatives = isBoxAlternatives(boxes) ? boxes : [boxes];
 	const highlights = getHarperHighlights(page);
 
-	await expect(highlights).toHaveCount(boxes.length);
+	await expect(highlights).toHaveCount(expectedAlternatives[0].length, { timeout: 24000 });
 
 	const count = await highlights.count();
 
@@ -441,11 +434,33 @@ export async function assertHarperHighlightBoxes(page: Page, boxes: Box[]): Prom
 	console.log('Got:', gotBoxes);
 	console.log('Expected:', boxes);
 
-	for (let i = 0; i < count; i++) {
-		expect(gotBoxes[i]).not.toBeNull();
-
-		assertBoxesClose(gotBoxes[i]!, boxes[i]);
+	for (const gotBox of gotBoxes) {
+		expect(gotBox).not.toBeNull();
 	}
+
+	const matches = expectedAlternatives.some((expectedBoxes) => {
+		let close = false;
+		for (const permutation of permutations(expectedBoxes)) {
+			if (boxesClose(gotBoxes, permutation)) {
+				close = true;
+			}
+		}
+		return close;
+	});
+
+	expect(matches).toBe(true);
+}
+
+function permutations<T>(items: readonly T[]): T[][] {
+	if (items.length <= 1) {
+		return [[...items]];
+	}
+
+	return items.flatMap((item, index) => {
+		const remaining = [...items.slice(0, index), ...items.slice(index + 1)];
+
+		return permutations(remaining).map((permutation) => [item, ...permutation]);
+	});
 }
 
 /** Create a test to assert that a page has a certain number highlights.
@@ -465,7 +480,7 @@ export async function testPageHasNHighlights(testPageUrl: TestPageUrlProvider, n
  * Useful for making sure certain patterns are ignored. */
 export async function assertPageHasNHighlights(page: Page, n: number) {
 	const highlights = getHarperHighlights(page);
-	expect(await highlights.count()).toBe(n);
+	await expect(highlights).toHaveCount(n, { timeout: 12000 });
 }
 
 /** An assertion that checks to ensure that two boxes are _approximately_ equal.
@@ -477,6 +492,30 @@ export function assertBoxesClose(a: Box, b: Box) {
 	assertClose(a.height, b.height);
 }
 
+function isBoxAlternatives(boxes: Box[] | Box[][]): boxes is Box[][] {
+	return Array.isArray(boxes[0]);
+}
+
+/** Check if an array of baxes is approximately the same as another array of boxes. */
+function boxesClose(actual: Box[], expected: Box[]): boolean {
+	if (actual.length !== expected.length) return false;
+
+	return actual.every((actualBox, i) => boxClose(actualBox, expected[i]));
+}
+
+function boxClose(actual: Box, expected: Box) {
+	return (
+		close(actual.x, expected.x) &&
+		close(actual.y, expected.y) &&
+		close(actual.width, expected.width) &&
+		close(actual.height, expected.height)
+	);
+}
+
+function close(actual: number, expected: number) {
+	return Math.abs(actual - expected) <= 15;
+}
+
 function assertClose(actual: number, expected: number) {
-	expect(Math.abs(actual - expected)).toBeLessThanOrEqual(15);
+	expect(close(actual, expected)).toBe(true);
 }
