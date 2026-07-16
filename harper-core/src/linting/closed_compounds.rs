@@ -226,7 +226,7 @@ mod tests {
     }
 
     #[test]
-    fn allow_over_all_pronoun() {
+    fn allow_over_all_of_pronoun() {
         assert_no_lints("A thrill passed over all of us.", lint_group());
     }
 
