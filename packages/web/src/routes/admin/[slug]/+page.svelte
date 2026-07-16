@@ -1,6 +1,7 @@
 <script lang="ts">
 import { GutterCenter, Isolate } from 'components';
 import BarChart from '$lib/components/BarChart.svelte';
+import type { PageProps } from './$types';
 
 let { data }: PageProps = $props();
 let counts = $derived(data.counts as Record<string, number>);
