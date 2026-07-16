@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "vite dev",
 		"build": "pnpm run prepack",
-		"build:bundle": "svelte-kit sync && vite build",
+		"build:bundle": "svelte-kit sync && vite build -l warn",
 		"build:types": "svelte-package -i src/lib -o .svelte-package-tmp --types && node ./scripts/copy-package-types.mjs",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
