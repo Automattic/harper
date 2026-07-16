@@ -2,29 +2,25 @@ import ProblematicLints from '$lib/db/models/ProblematicLints';
 import type { PageLoad } from './$types';
 
 export const load = async ({ params }) => {
-  const slug = params.slug;
+	const slug = params.slug;
 
-  let date = null; 
+	let date = null;
 
-  switch (slug){
-    case 'last30days':
-      date = new Date(
-	      Date.now() - 30 * 24 * 60 * 60 * 1000,
-      );
-      break;
-    case 'lastday':
-      date = new Date(
-	      Date.now() -  24 * 60 * 60 * 1000,
-      );
-      break;
-    case 'all':
-      date =  new Date(0);
-      break;
-  }
+	switch (slug) {
+		case 'last30days':
+			date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
+			break;
+		case 'lastday':
+			date = new Date(Date.now() - 24 * 60 * 60 * 1000);
+			break;
+		case 'all':
+			date = new Date(0);
+			break;
+	}
 
-  if (date == null){
-    return { counts: {}}
-  }
+	if (date == null) {
+		return { counts: {} };
+	}
 
 	const problematicLints = await ProblematicLints.getAllSince(date);
 
