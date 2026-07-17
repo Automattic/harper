@@ -19,24 +19,39 @@ impl Go {
     }
 }
 
+/// Whether a comment line is a build constraint or a `go:` directive rather than prose.
+///
+/// `// +build` is the pre-1.17 spelling that `//go:build` replaced; files keeping
+/// compatibility still carry both.
+fn is_directive(line: &[char]) -> bool {
+    matches!(line, ['g', 'o', ':', ..]) || matches!(line, ['+', 'b', 'u', 'i', 'l', 'd', ..])
+}
+
 impl Parser for Go {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut actual = without_initiators(source);
-        let mut actual_source = actual.get_content(source);
 
-        if matches!(actual_source, ['g', 'o', ':', ..]) {
-            let Some(terminator) = source.iter().position(|c| *c == '\n') else {
+        // Skip leading machine-readable lines. `merge_whitespace_sep` hands us a
+        // whole comment block, so a `//go:build` file preamble arrives with the
+        // package doc merged in beneath it and there can be several in a row
+        // (`//go:build` is conventionally paired with a legacy `// +build`).
+        while is_directive(actual.get_content(source)) {
+            let Some(offset) = source[actual.start..actual.end]
+                .iter()
+                .position(|c| *c == '\n')
+            else {
                 return Vec::new();
             };
 
-            actual.start += terminator;
-
-            let Some(new_source) = actual.try_get_content(actual_source) else {
-                return Vec::new();
-            };
-
-            actual_source = new_source
+            // `actual` indexes `source`, so re-anchor there rather than in the
+            // already-stripped slice. This strictly advances, so it terminates.
+            actual.start += offset + 1;
+            actual.start += without_initiators(actual.get_content(source)).start;
         }
+
+        let Some(actual_source) = actual.try_get_content(source) else {
+            return Vec::new();
+        };
 
         let mut new_tokens = self.inner.parse(actual_source);
 

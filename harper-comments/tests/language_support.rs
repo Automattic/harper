@@ -41,6 +41,9 @@ macro_rules! create_test {
     };
 }
 
+create_test!(go_directives.go, 4);
+create_test!(go_build_tags.go, 2);
+create_test!(go_control.go, 4);
 create_test!(multiline_comments.cpp, 4);
 create_test!(multiline_comments.ts, 4);
 create_test!(multiline_comments.sol, 4);
