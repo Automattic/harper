@@ -5329,6 +5329,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InADifferentDirection",
+								"state": true,
+								"label": "In A Different Direction"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"
