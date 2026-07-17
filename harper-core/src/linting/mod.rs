@@ -15,6 +15,7 @@ mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
+mod analog_acoustic_bike;
 mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
@@ -95,6 +96,7 @@ mod flesh_out_vs_full_fledged;
 mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
+mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
 mod go_so_far_as_to;
@@ -221,6 +223,7 @@ mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod redundant_progressive_comparative;
+mod redundant_self;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
@@ -270,7 +273,9 @@ mod this_type_of_thing;
 mod though_thought;
 mod thrive_on;
 mod throw_away;
+mod throw_baby_with_bathwater;
 mod throw_rubbish;
+mod till_date;
 mod to_adverb;
 mod to_two_too;
 mod touristic;
@@ -314,6 +319,13 @@ pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
+
+/// Maximum number of sequential lint suggestions explored when searching for a
+/// transformation path (for example in Weir rule tests or linting test helpers).
+///
+/// This is a compile-time limit that prevents unbounded search when suggestion
+/// application cycles or deep multi-step fixes are involved.
+pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
@@ -602,7 +614,8 @@ pub mod tests {
     /// Applies suggestions iteratively until any combination produces the expected result.
     ///
     /// Explores all possible suggestion branches (depth-first search) until finding a path
-    /// that produces the expected result. Stops after 100 iterations to prevent infinite loops.
+    /// that produces the expected result. Stops after
+    /// [`MAX_SUGGESTION_TRANSFORMATION_DEPTH`] iterations to prevent infinite loops.
     ///
     /// Use this when you want to verify that *some* suggestion sequence produces the
     /// expected result, without caring which specific suggestions are used.
@@ -638,8 +651,11 @@ pub mod tests {
         depth: usize,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > 100 {
-            eprintln!("⚠️  Reached depth limit (100)");
+        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+            eprintln!(
+                "⚠️  Reached depth limit ({})",
+                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+            );
             return false;
         }
 
@@ -797,6 +813,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }

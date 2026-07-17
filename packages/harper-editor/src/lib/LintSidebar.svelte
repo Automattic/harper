@@ -167,18 +167,18 @@ function createSnippetFor(lintBox: LintBox) {
 <svelte:window on:click={handleWindowClick} on:keydown={handleWindowKeydown} />
 
 <aside
-	class="flex min-h-0 w-[320px] flex-[0_0_320px] overflow-hidden border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] [font-family:'Inter',-apple-system,BlinkMacSystemFont,'SF_Pro_Text','Helvetica_Neue',sans-serif] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
+	class="flex min-h-0 w-[320px] flex-[0_0_320px] overflow-hidden border-l-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#f4f0e7] @max-[760px]:w-full @max-[760px]:flex-[0_0_42%] @max-[760px]:border-t-[0.5px] @max-[760px]:border-l-0"
 	aria-label="Problems"
 	transition:fly={{ x: 320, duration: 250, easing: cubicOut }}
 >
 	<div class="flex min-h-0 flex-1 flex-col" transition:fade={{ duration: 250 }}>
 		<header class="flex items-center gap-1.5 px-3.5 pt-2.5 pb-2">
 			<h2
-				class="!m-0 flex min-w-0 flex-1 items-center !p-0 !text-[15px] !leading-none !font-bold text-stone-950 ![font-family:inherit]"
+				class="m-0! flex min-w-0 flex-1 items-center p-0! text-[15px]! leading-none! font-bold! text-stone-950 font-[inherit]!"
 			>
 				<button
 					type="button"
-					class="!m-0 inline-flex min-w-0 items-center gap-1.5 border-0 bg-transparent !p-0 text-left !text-[15px] !leading-none font-[inherit] text-inherit"
+					class="m-0! inline-flex min-w-0 items-center gap-1.5 border-0 bg-transparent p-0! text-left text-[15px]! leading-none! font-[inherit] text-inherit"
 					aria-expanded={showLintKindCounts}
 					on:click={() => (showLintKindCounts = !showLintKindCounts)}
 				>

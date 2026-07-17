@@ -78,7 +78,7 @@ impl ExprLinter for OnFloor {
             message: format!(
                 "Corrects `{incorrect_preposition}` to `on` when talking about position inside a building",
             )
-            .to_string(),
+            .to_owned(),
             priority: 63,
         })
     }
