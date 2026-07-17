@@ -1,3 +1,7 @@
+---
+title: Harper's Testing Strategy
+---
+
 # Harper's Testing Strategy
 
 Harper is a complex project. We deliver many artifacts to many users, and the automated processes we use to do so can seem intimidating.
@@ -102,7 +106,7 @@ Any web integration check that does not create clear substantial value should be
 
 ### Learning from Production
 
-Most bugs follow a Pareto distributor of impact.
+Most bugs follow a Pareto distribution of impact.
 Put another way, ~ 20% of bugs are responsible for 80% of negative user experience.
 If we can eliminate those few bugs that are most destructive to the user experience, Harper contributors can have a much larger impact on the final user experience.
 The question is: __how can we possibly know which 20% we should focus on?__
