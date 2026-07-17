@@ -260,6 +260,7 @@ use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
 use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
+use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
 use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
@@ -1087,6 +1088,7 @@ impl LintGroup {
         insert_expr_rule!(ThoughThought);
         insert_expr_rule!(ThriveOn);
         insert_expr_rule!(ThrowAway);
+        insert_expr_rule!(ThrowBabyWithBathwater);
         insert_struct_rule!(ThrowRubbish);
         insert_expr_rule_with_dialect!(TillDate);
         insert_expr_rule!(ToAdverb);
