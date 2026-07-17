@@ -2,7 +2,6 @@
 name = "harper-desktop"
 version = "2.4.0"
 description = "A Tauri App"
-authors = ["you"]
 edition = "2024"
 publish = false
 
