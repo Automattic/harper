@@ -1,7 +1,7 @@
 packages:
   - packages/*
   - harper-desktop
-  - harper-wasm
+  - harper-wasm/pkg
   - packages/harper.js/examples/*
 catalog:
   typescript: ^5.9.3

@@ -71,11 +71,11 @@ build-wasm:
 
   cd "{{justfile_directory()}}/harper-wasm"
   
-  # Always build the regular optimized version
+  # Build the regular optimized version with all language features
   wasm-pack build --target web --out-name harper_wasm --all-features
   
-  # Also build the slim (non-optimized) version for inlined usage
-  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --all-features
+  # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
+  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features --features harper-core/concurrent
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs

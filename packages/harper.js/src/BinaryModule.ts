@@ -1,6 +1,7 @@
 import * as defaultGlue from 'harper-wasm';
 import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
 import * as fullGlue from 'harper-wasm/harper_wasm.js';
+import * as slimGlue from 'harper-wasm/harper_wasm_slim.js';
 
 import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
@@ -32,7 +33,7 @@ export function resolveWasmGlueFlavor(
 
 function loadGlue(glueFlavor: WasmGlueFlavor): WasmModule {
 	if (glueFlavor === 'slim') {
-		return defaultGlue as WasmModule;
+		return slimGlue as WasmModule;
 	}
 
 	return fullGlue;
