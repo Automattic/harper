@@ -8,6 +8,7 @@ import detectBrowserEngine from '../detectBrowserEngine';
 import { main, type PopupState } from '../PopupState';
 import Main from './Main.svelte';
 import Onboarding from './Onboarding.svelte';
+import ReportProblematicDomain from './ReportProblematicDomain.svelte';
 import ReportProblematicLint from './ReportProblematicLint.svelte';
 
 let popupState: PopupState = $state({ page: 'main' });
@@ -85,6 +86,8 @@ function openUpdateHelpPage() {
     <Main /> 
   {:else if popupState.page == 'report-error'}
     <ReportProblematicLint example={popupState.example} rule_id={popupState.rule_id} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
+  {:else if popupState.page == 'report-domain'}
+    <ReportProblematicDomain domain={popupState.domain} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">
