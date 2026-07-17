@@ -3909,6 +3909,13 @@
 								"state": true,
 								"label": "Reads and Writes"
 							}
+						},
+						{
+							"Bool": {
+								"name": "HelpedPast",
+								"state": true,
+								"label": "Helped Past"
+							}
 						}
 					]
 				}

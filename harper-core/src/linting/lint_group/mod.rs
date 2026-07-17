@@ -112,6 +112,7 @@ use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
+use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::how_to::HowTo;
@@ -945,6 +946,7 @@ impl LintGroup {
         insert_struct_rule_with_dialect!(HaveTakeALook);
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
+        insert_expr_rule_with_dict!(HelpedPast);
         insert_expr_rule!(Hereby);
         insert_struct_rule!(HopHope);
         insert_expr_rule!(HowTo);

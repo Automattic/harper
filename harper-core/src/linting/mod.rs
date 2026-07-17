@@ -108,6 +108,7 @@ mod have_pronoun;
 mod have_take_a_look;
 mod hedging;
 mod hello_greeting;
+mod helped_past;
 mod hereby;
 mod hop_hope;
 mod hope_youre;
