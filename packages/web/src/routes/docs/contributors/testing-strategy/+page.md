@@ -136,6 +136,21 @@ It covers deterministic logic in addition to UX.
 
 To make this easier, we highly recommend that contributors dogfood any and all of Harper's integrations wherever reasonable.
 
+## Make Testing Easier
+
+There are a few things we can do to make the testing process easier.
+They may seem simple or obvious, but they can often be overlooked when an engineer is using strictly "short-term" thinking.
+
+First and foremost, consider whether a check or a manual test is even worth the effort.
+Some issues only affect a single user.
+If there are other issues that affect thousands, those should be where the efforts are focused.
+__Better__ tests (or checks) are more important than __more__ tests.
+Be mindful when you add them.
+
+Secondly, if you are having a tough time writing a test for a piece of code, consider whether the actual code simply is not testable.
+That is, it's easy to write code that is hard to test.
+Sometimes, in order to write effective checks, the underlying code needs to first be rearchitected.
+
 ## Glossary
 
 ### Check
@@ -152,6 +167,32 @@ Testing is the most reliable way to determine the quality of software, but it is
 
 Create checks whenever possible to get high confidence in Harper's behavior, but perform manual testing every so often to be absolutely sure your code behaves as you expect.
 
+## Tips
+
+As you know, Harper's core engine is written in Rust.
+As a corollary to that, we use Cargo to pull dependencies, build, and test the system.
+While we do take advantage of snapshot and integration tests, we tend to focus our efforts on unit tests.
+
+### Performance
+
+In the interest of maintaining fast iteration cycles, we run our tests with `opt-level = 1`.
+These optimizations are known to cause issues with debuggers.
+If you plan to use one, you may want to comment them out.
+
+@code(../../../../../../../Cargo.toml)
+
+### Filtering Tests
+
+Use `cargo test -- <REGEX>` to run only tests whose names match a pattern.
+When iterating on core rules, it is usually fastest to run this from `harper-core`:
+
+```bash
+cd harper-core
+cargo test -- <REGEX>
+```
+
+This repeatedly runs the rule's focused tests while skipping tests from other workspace crates.
+
 ## Additional Resources
 
 - [Quality Requires Visual Design](http://elijahpotter.dev/articles/quality-requires-visual-design)
@@ -160,3 +201,4 @@ Create checks whenever possible to get high confidence in Harper's behavior, but
 - [Integration Testing Thousands of Websites with Playwright](https://elijahpotter.dev/articles/integration-testing-thousands-of-sites-with-playwright)
 - [3 Traits of Good Test Suites](https://elijahpotter.dev/articles/3-traits-of-good-test-suites)
 - [LLM Assisted Fuzzing](https://elijahpotter.dev/articles/LLM-assisted-fuzzing)
+
