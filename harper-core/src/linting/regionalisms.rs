@@ -23,7 +23,7 @@ use CanFlag::*;
 /// Represents a unique concept that has different regional terms across English dialects.
 /// Each is named by an alphabetical concatenation of the terms that refer to the same concept.
 /// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 enum Concept {
     AubergineBrinjalEggplant,
     AuberginesBrinjalsEggplants,
@@ -710,16 +710,14 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = {
-            let term = REGIONAL_TERMS
-                .iter()
-                .find(|row| row.term == flagged_term_string)?;
-            &term.concept
-        };
+        let concept = REGIONAL_TERMS
+            .iter()
+            .find(|row| row.term == flagged_term_string)?
+            .concept;
 
         let other_terms = REGIONAL_TERMS
             .iter()
-            .filter(|row| row.concept == *concept)
+            .filter(|row| row.concept == concept)
             .filter_map(|row| {
                 if row.dialects.contains(&linter_dialect) {
                     Some(&row.term)

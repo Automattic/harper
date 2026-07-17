@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build && npm run prepack",
+		"build": "vite build -l warn && npm run prepack",
 		"build:css": "TAILWIND_MODE=build tailwindcss -i ./src/lib/styles.css -o ./dist/components.css --minify",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",

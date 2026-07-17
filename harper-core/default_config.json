@@ -5350,6 +5350,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TillDate",
+								"state": true,
+								"label": "Till Date"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AMeansToAnEnd",
 								"state": true,
 								"label": "A Means To An End"
@@ -5381,6 +5388,13 @@
 								"name": "HaveAHardTime",
 								"state": true,
 								"label": "Have a Hard Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ALittleOfPractice",
+								"state": true,
+								"label": "A Little of Practice"
 							}
 						}
 					]
