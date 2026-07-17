@@ -2,8 +2,6 @@
 title: Harper's Testing Strategy
 ---
 
-# Harper's Testing Strategy
-
 Harper is a complex project. We deliver many artifacts to many users, and the automated processes we use to do so can seem intimidating.
 While the hope is that contributors become familiar with our processes over time, it is only strictly necessary to understand their fundamental goal: __to assist in the production of extremely high-quality software__.
 
