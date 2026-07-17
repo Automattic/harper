@@ -95,7 +95,7 @@ impl<D: Dictionary> ExprLinter for DidPast<D> {
         if !suggs.is_empty() {
             Some(Lint {
                 span: vspan,
-                lint_kind: LintKind::Redundancy,
+                lint_kind: LintKind::Grammar,
                 suggestions: suggs
                     .into_iter()
                     .map(|s| Suggestion::replace_with_match_case(s, vchars))
