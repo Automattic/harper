@@ -70,11 +70,12 @@ build-wasm:
   export CARGO_TERM_QUIET=true
 
   cd "{{justfile_directory()}}/harper-wasm"
-  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt --out-name harper_wasm --all-features
-  else
-    wasm-pack build --target web --out-name harper_wasm --all-features
-  fi
+  
+  # Always build the regular optimized version
+  wasm-pack build --target web --out-name harper_wasm --all-features
+  
+  # Also build the slim (non-optimized) version for inlined usage
+  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --all-features
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs
@@ -84,8 +85,9 @@ build-harperjs: build-wasm
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
   # Small delay to ensure files are fully written (helps with CI file system sync)
-  sleep 2
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  sleep 5
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
