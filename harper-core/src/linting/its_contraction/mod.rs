@@ -293,6 +293,14 @@ mod tests {
     }
 
     #[test]
+    fn issue_2609() {
+        assert_no_lints(
+            "One such aspect is how the standard library takes great care to make working with its built-in collections as efficient as possible.",
+            ItsContraction::default(),
+        );
+    }
+
+    #[test]
     fn ignore_past_participle_noun_phrase() {
         assert_no_lints(
             "using the foo feature and its abetted parameter",
