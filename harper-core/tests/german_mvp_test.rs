@@ -42,7 +42,7 @@ mod tests {
     /// Test 3: Detects lowercase sentence start in German
     #[test]
     fn test_german_sentence_capitalization() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text = "der Hund ist im Garten. das Auto ist schnell.";
         let dict = curated_german_dictionary();
@@ -64,7 +64,7 @@ mod tests {
     /// Test 4: German spell check detects misspellings
     #[test]
     fn test_german_spell_check() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text = "Der Hunte ist im Gartens.";
         let dict = curated_german_dictionary();
@@ -85,7 +85,7 @@ mod tests {
     /// Test 5: Correct German text produces few issues
     #[test]
     fn test_german_proper_grammar() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let proper_text =
             "Der Hund ist im Garten. Das Auto ist schnell. Die Katze schläft auf dem Sofa.";
@@ -103,7 +103,7 @@ mod tests {
     /// Test 6: Combined check on text with intentional errors
     #[test]
     fn test_german_mvp_comprehensive() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         // "dieser" starts a sentence lowercase, "Worrt" and "flasch" are misspelled
         let test_text = "Der Hund spielt im Garten. dieser Satz beginnt klein. Worrt ist flasch.";
@@ -121,7 +121,7 @@ mod tests {
     /// Test 7: Performance — lint a typical German paragraph in < 500ms
     #[test]
     fn test_german_performance() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text = "Der Hund ist im Garten. Die Katze schläft auf dem Sofa. \
                 Das Auto ist sehr schnell. Die Kinder spielen im Park.";
@@ -142,7 +142,7 @@ mod tests {
     /// Test 8: German compound words should not be false positives
     #[test]
     fn test_german_compound_words() {
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text = "Das Gartenhaus ist groß. Das Haus ist klein.";
         let dict = curated_german_dictionary();

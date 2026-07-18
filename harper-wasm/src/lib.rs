@@ -163,7 +163,7 @@ impl Linter {
             &[Arc::new(MutableDictionary::default())],
             curated_dict.clone(),
         );
-        let lint_group = new_curated_for_language(curated_dict, language);
+        let lint_group = new_curated_for_language(dictionary.clone(), language);
 
         Self {
             lint_group,
@@ -191,7 +191,7 @@ impl Linter {
             curated_dict.clone(),
         );
 
-        self.lint_group = new_curated_for_language(curated_dict, language);
+        self.lint_group = new_curated_for_language(self.dictionary.clone(), language);
 
         self.lint_group.config.merge_from(lint_config);
     }

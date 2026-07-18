@@ -56,8 +56,8 @@ impl LanguageModule for EnglishModule {
         weir_rules::lint_group()
     }
 
-    fn curated_lint_group(dialect: Self::Dialect) -> LintGroup {
-        LintGroup::new_curated(Self::dictionary(), dialect)
+    fn curated_lint_group(dialect: Self::Dialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+        LintGroup::new_curated(dictionary, dialect)
     }
 
     fn serialize_dialect_flags<S>(

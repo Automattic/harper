@@ -75,8 +75,8 @@ impl LanguageModule for GermanModule {
         weir_rules::lint_group()
     }
 
-    fn curated_lint_group(dialect: Self::Dialect) -> LintGroup {
-        new_curated_german(dialect)
+    fn curated_lint_group(dialect: Self::Dialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+        new_curated_german(dialect, dictionary)
     }
 
     fn serialize_dialect_flags<S>(

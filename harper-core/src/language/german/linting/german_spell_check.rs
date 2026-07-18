@@ -214,8 +214,9 @@ mod tests {
 
     fn lint_text(text: &str) -> Vec<String> {
         use crate::language::german::linting::new_curated_german;
+        use crate::language::german::spell::combined_german_dictionary;
         let dict = combined_german_dictionary();
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, dict.clone());
         let document = Document::new(text, &PlainGerman, &dict);
 
         linter
@@ -320,7 +321,8 @@ mod tests {
     #[test]
     fn curated_german_uses_german_spellcheck_instead_of_generic_spellcheck() {
         use crate::language::german::linting::new_curated_german;
-        let linter = new_curated_german(GermanDialect::Standard);
+        use crate::language::german::spell::curated_german_dictionary;
+        let linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         assert!(linter.config.is_rule_enabled("GermanSpellCheck"));
         assert!(!linter.config.is_rule_enabled("SpellCheck"));

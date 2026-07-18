@@ -11,7 +11,7 @@ mod tests {
     use harper_core::linting::{LintGroup, Linter};
 
     fn create_german_lint_group() -> LintGroup {
-        new_curated_german(GermanDialect::Standard)
+        new_curated_german(GermanDialect::Standard, curated_german_dictionary())
     }
 
     /// Test basic compound word decomposition (no Fugen-s/n)

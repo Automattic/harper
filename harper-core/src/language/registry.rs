@@ -233,30 +233,30 @@ pub fn weir_rules_lint_group(language: Language) -> LintGroup {
 
 /// Create a new curated lint group for a specific language with a custom dictionary.
 pub fn new_curated_for_language(
-    _dictionary: Arc<impl Dictionary + 'static>,
+    dictionary: Arc<impl Dictionary + 'static>,
     language: Language,
 ) -> LintGroup {
     use crate::language::module::LanguageModule;
 
     match language {
-        Language::English(_dialect) => EnglishModule::curated_lint_group(_dialect),
+        Language::English(_dialect) => EnglishModule::curated_lint_group(_dialect, dictionary),
         #[cfg(feature = "de")]
         Language::German(dialect) => {
             use crate::language::german::module::GermanModule;
 
-            GermanModule::curated_lint_group(dialect)
+            GermanModule::curated_lint_group(dialect, dictionary)
         }
         #[cfg(feature = "pt")]
         Language::Portuguese(dialect) => {
             use crate::language::portuguese::module::PortugueseModule;
 
-            PortugueseModule::curated_lint_group(dialect)
+            PortugueseModule::curated_lint_group(dialect, dictionary)
         }
         #[cfg(feature = "sk")]
         Language::Slovak(dialect) => {
             use crate::language::slovak::module::SlovakModule;
 
-            SlovakModule::curated_lint_group(dialect)
+            SlovakModule::curated_lint_group(dialect, dictionary)
         }
     }
 }

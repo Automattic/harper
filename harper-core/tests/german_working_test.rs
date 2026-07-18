@@ -80,7 +80,7 @@ mod tests {
     #[test]
     fn test_german_lint_correct_text() {
         let dict = curated_german_dictionary();
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text = "Der Hund ist im Garten. Die Katze schläft auf dem Sofa.";
         let document = Document::new(text, &PlainGerman, &dict);
@@ -97,7 +97,7 @@ mod tests {
     #[test]
     fn test_german_lint_errors() {
         let dict = curated_german_dictionary();
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         // lowercase sentence start + two misspellings
         let text = "Der Hund ist da. dieser Satz ist klein. Worrt und flasch.";
@@ -117,7 +117,7 @@ mod tests {
         use std::sync::Arc;
 
         let dict = Arc::new(curated_german_dictionary());
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
         let text =
             std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md")
@@ -146,7 +146,7 @@ mod tests {
     #[test]
     fn test_german_curated_config_disables_english_indefinite_article_rule() {
         let dict = curated_german_dictionary();
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
         let text = "Die Übergabe hat unmittelbar an die neue Verwaltung zu erfolgen.";
         let document = Document::new(text, &PlainGerman, &dict);
 
@@ -166,7 +166,7 @@ mod tests {
 
     fn lint_markdown_fixture(path: &str) -> Vec<String> {
         let dict = curated_german_dictionary();
-        let mut linter = new_curated_german(GermanDialect::Standard);
+        let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
         let full_path = format!("../../src/language/german/test_sources/{}", path);
         let text = std::fs::read_to_string(&full_path).expect("test file missing");
         let parser = Markdown::new(MarkdownOptions::default());

@@ -6,18 +6,18 @@ pub mod german_sentence_capitalization;
 pub mod german_spell_check;
 pub mod weir_rules;
 
+use std::sync::Arc;
+
 use crate::language::german::dialects::GermanDialect;
-use crate::language::german::spell::combined_german_dictionary;
+use crate::language::german::module::GermanModule;
 use crate::language::languages::Language;
+use crate::language::module::LanguageModule;
+use crate::language::registry::weir_rules_lint_group;
 use crate::linting::LintGroup;
+use crate::spell::Dictionary;
 
-/// Create a new curated lint group for German language.
-pub fn new_curated_german(dialect: GermanDialect) -> LintGroup {
-    use crate::language::german::module::GermanModule;
-    use crate::language::module::LanguageModule;
-    use crate::language::registry::weir_rules_lint_group;
-
-    let dictionary = combined_german_dictionary();
+/// Create a new curated lint group for German language with a custom dictionary.
+pub fn new_curated_german(dialect: GermanDialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
     let language = Language::German(dialect);
 
     let mut group = LintGroup::empty();
