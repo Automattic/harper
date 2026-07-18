@@ -5,19 +5,11 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-// Import dialect types for all languages
+// Import types from harper-core language system
 use harper_core::EnglishDialect;
-use harper_core::language::dialects::dialect_trait::Dialect as DialectTrait;
 use harper_core::language::languages::Language as HarperLanguage;
+use harper_core::language::languages::parse_language;
 use harper_core::language::registry::{dictionary, new_curated_for_language};
-
-// Conditionally import language dialect types based on features
-#[cfg(feature = "de")]
-use harper_core::language::german::dialects::GermanDialect;
-#[cfg(feature = "pt")]
-use harper_core::language::portuguese::dialects::PortugueseDialect;
-#[cfg(feature = "sk")]
-use harper_core::language::slovak::dialects::SlovakDialect;
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
@@ -97,39 +89,24 @@ impl Language {
 
 impl From<Dialect> for HarperLanguage {
     fn from(dialect: Dialect) -> Self {
-        match dialect {
-            Dialect::American => HarperLanguage::English(EnglishDialect::American),
-            Dialect::British => HarperLanguage::English(EnglishDialect::British),
-            Dialect::Australian => HarperLanguage::English(EnglishDialect::Australian),
-            Dialect::Canadian => HarperLanguage::English(EnglishDialect::Canadian),
-            Dialect::Indian => HarperLanguage::English(EnglishDialect::Indian),
-            #[cfg(feature = "de")]
-            Dialect::GermanStandard => HarperLanguage::German(GermanDialect::Standard),
-            #[cfg(feature = "de")]
-            Dialect::GermanAustrian => HarperLanguage::German(GermanDialect::Austrian),
-            #[cfg(feature = "de")]
-            Dialect::GermanSwiss => HarperLanguage::German(GermanDialect::Swiss),
-            #[cfg(feature = "pt")]
-            Dialect::PortuguesePT => {
-                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap())
-            }
-            #[cfg(feature = "pt")]
-            Dialect::PortugueseBR => {
-                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap())
-            }
-            #[cfg(feature = "pt")]
-            Dialect::PortugueseAO => {
-                HarperLanguage::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap())
-            }
-            #[cfg(feature = "sk")]
-            Dialect::SlovakStandard => {
-                HarperLanguage::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap())
-            }
-            // For builds without all language features, fall back to English for unknown dialects
-            // This handles the case where Dialect has variants that HarperLanguage doesn't
-            #[allow(unreachable_patterns)]
-            _ => HarperLanguage::English(EnglishDialect::American),
-        }
+        // Convert Dialect enum to string representation
+        let dialect_str = match dialect {
+            Dialect::American => "american",
+            Dialect::British => "british",
+            Dialect::Australian => "australian",
+            Dialect::Canadian => "canadian",
+            Dialect::Indian => "indian",
+            Dialect::GermanStandard => "german",
+            Dialect::GermanAustrian => "austrian",
+            Dialect::GermanSwiss => "swiss",
+            Dialect::PortuguesePT => "pt",
+            Dialect::PortugueseBR => "br",
+            Dialect::PortugueseAO => "ao",
+            Dialect::SlovakStandard => "slovak",
+        };
+
+        // Use harper-core's parse_language which handles feature flags properly
+        parse_language(dialect_str).unwrap_or(HarperLanguage::English(EnglishDialect::American))
     }
 }
 
