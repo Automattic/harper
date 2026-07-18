@@ -340,8 +340,6 @@ export async function replaceGoogleDocsValue(
 
 		return false;
 	} catch (e) {
-		// Yeah never ignore silent failures bruh
-		console.error('[harper] replaceGoogleDocsValue failed:', e);
 		return false;
 	}
 }
