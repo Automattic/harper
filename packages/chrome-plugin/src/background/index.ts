@@ -657,22 +657,37 @@ async function setLintConfig(lintConfig: LintConfig): Promise<void> {
   linterHasPersistedState = true;
 
   const json = await linter.getLintConfigAsJSON();
+  const storedConfig = JSON.parse(json);
 
-  await chrome.storage.local.set({ lintConfig: json });
+  // Normalize: convert values that match defaults to null (use default) before storing
+  const defaultConfig = JSON.parse(await linter.getDefaultLintConfigAsJSON());
+  const normalizedConfig: Record<string, boolean | null> = {};
+  for (const [key, value] of Object.entries(storedConfig)) {
+		const defaultValue = defaultConfig[key as keyof typeof defaultConfig];
+		// If value is null, keep it as null (already means "use default")
+		// If value matches default, convert to null
+		// Otherwise, keep the value
+		normalizedConfig[key] = value == null ? null : value === defaultValue ? null : value;
+  }
+
+  await chrome.storage.local.set({ lintConfig: JSON.stringify(normalizedConfig) });
 }
 
 /** Get the lint configuration from permanent storage. */
 async function getLintConfig(): Promise<LintConfig> {
   const json = await linter.getLintConfigAsJSON();
-  const resp = await chrome.storage.local.get({ lintConfig: json });
-  const storedConfig = JSON.parse(resp.lintConfig);
+  const resp = await chrome.storage.local.get('lintConfig');
+  const storedConfig = resp.lintConfig != null ? JSON.parse(resp.lintConfig) : JSON.parse(json);
 
   // Normalize: convert values that match defaults to null (use default)
   const defaultConfig = JSON.parse(await linter.getDefaultLintConfigAsJSON());
   const normalizedConfig: Record<string, boolean | null> = {};
   for (const [key, value] of Object.entries(storedConfig)) {
     const defaultValue = defaultConfig[key as keyof typeof defaultConfig];
-    normalizedConfig[key] = value === defaultValue ? null : value;
+    // If value is null, keep it as null (already means "use default")
+    // If value matches default, convert to null
+    // Otherwise, keep the value
+    normalizedConfig[key] = value == null ? null : value === defaultValue ? null : value;
   }
 
   return normalizedConfig;
