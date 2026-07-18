@@ -11,7 +11,10 @@ use crate::linting::LintGroup;
 use crate::spell::Dictionary;
 
 /// Create a new curated lint group for Slovak language with a custom dictionary.
-pub fn new_curated_slovak(dialect: SlovakDialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+pub fn new_curated_slovak(
+    dialect: SlovakDialect,
+    dictionary: Arc<impl Dictionary + 'static>,
+) -> LintGroup {
     use crate::language::module::LanguageModule;
     use crate::language::registry::weir_rules_lint_group;
     use crate::language::slovak::module::SlovakModule;

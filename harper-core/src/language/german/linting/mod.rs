@@ -17,7 +17,10 @@ use crate::linting::LintGroup;
 use crate::spell::Dictionary;
 
 /// Create a new curated lint group for German language with a custom dictionary.
-pub fn new_curated_german(dialect: GermanDialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+pub fn new_curated_german(
+    dialect: GermanDialect,
+    dictionary: Arc<impl Dictionary + 'static>,
+) -> LintGroup {
     let language = Language::German(dialect);
 
     let mut group = LintGroup::empty();

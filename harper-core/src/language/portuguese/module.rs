@@ -60,7 +60,10 @@ impl LanguageModule for PortugueseModule {
         weir_rules::lint_group()
     }
 
-    fn curated_lint_group(dialect: Self::Dialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+    fn curated_lint_group(
+        dialect: Self::Dialect,
+        dictionary: Arc<impl Dictionary + 'static>,
+    ) -> LintGroup {
         new_curated_portuguese(dialect, dictionary)
     }
 

@@ -28,7 +28,10 @@ mod tests {
 }
 
 /// Create a new curated lint group for Portuguese language with a custom dictionary.
-pub fn new_curated_portuguese(dialect: PortugueseDialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+pub fn new_curated_portuguese(
+    dialect: PortugueseDialect,
+    dictionary: Arc<impl Dictionary + 'static>,
+) -> LintGroup {
     use crate::language::registry::{add_language_specific_linters, weir_rules_lint_group};
 
     let language = Language::Portuguese(dialect);

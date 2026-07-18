@@ -63,7 +63,10 @@ pub trait LanguageModule: 'static {
     fn weir_lint_group() -> LintGroup;
 
     /// Create a complete curated lint group for this language with a custom dictionary
-    fn curated_lint_group(dialect: Self::Dialect, dictionary: Arc<impl Dictionary + 'static>) -> LintGroup;
+    fn curated_lint_group(
+        dialect: Self::Dialect,
+        dictionary: Arc<impl Dictionary + 'static>,
+    ) -> LintGroup;
 
     /// Serializes dialect flags for this language to JSON.
     /// Each language provides its own serialization logic for dialect flags.
