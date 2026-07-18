@@ -667,7 +667,10 @@ async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 		// If value is null, keep it as null (already means "use default")
 		// If value matches default, convert to null
 		// Otherwise, keep the value
-		normalizedConfig[key] = value == null ? null : value === defaultValue ? null : value;
+		// Ensure we only store boolean or null values
+		const boolValue = typeof value === 'boolean' ? value : null;
+		const boolDefaultValue = typeof defaultValue === 'boolean' ? defaultValue : null;
+		normalizedConfig[key] = boolValue == null ? null : boolValue === boolDefaultValue ? null : boolValue;
   }
 
   await chrome.storage.local.set({ lintConfig: JSON.stringify(normalizedConfig) });
@@ -687,7 +690,10 @@ async function getLintConfig(): Promise<LintConfig> {
     // If value is null, keep it as null (already means "use default")
     // If value matches default, convert to null
     // Otherwise, keep the value
-    normalizedConfig[key] = value == null ? null : value === defaultValue ? null : value;
+    // Ensure we only store boolean or null values
+    const boolValue = typeof value === 'boolean' ? value : null;
+    const boolDefaultValue = typeof defaultValue === 'boolean' ? defaultValue : null;
+    normalizedConfig[key] = boolValue == null ? null : boolValue === boolDefaultValue ? null : boolValue;
   }
 
   return normalizedConfig;
