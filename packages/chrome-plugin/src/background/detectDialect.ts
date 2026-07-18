@@ -17,21 +17,6 @@ export function detectBrowserDialect(): Dialect {
 function localeToDialect(locale: string): Dialect {
 	const lower = locale.toLowerCase();
 
-	// German variants
-	if (lower.includes('de-de') || lower.includes('de_de') || lower.includes('german')) {
-		return Dialect.GermanStandard;
-	}
-	if (lower.includes('de-at') || lower.includes('de_at') || lower.includes('austria') || lower.includes('austrian')) {
-		return Dialect.GermanAustrian;
-	}
-	if (lower.includes('de-ch') || lower.includes('de_ch') || lower.includes('switzerland') || lower.includes('swiss')) {
-		return Dialect.GermanSwiss;
-	}
-	if (lower.startsWith('de')) {
-		// Plain 'de' → Standard German (default)
-		return Dialect.GermanStandard;
-	}
-
 	// Explicit matches
 	if (lower.includes('en-gb') || lower.includes('en_gb')) return Dialect.British;
 	if (lower.includes('en-au') || lower.includes('en_au')) return Dialect.Australian;
@@ -50,6 +35,6 @@ function localeToDialect(locale: string): Dialect {
 		return Dialect.American;
 	}
 
-	// Non-English and non-German languages → American (fallback)
+	// Non-English languages → American (fallback)
 	return Dialect.American;
 }

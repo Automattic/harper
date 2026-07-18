@@ -188,7 +188,8 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 	});
 
 	// Also reinitialize linter when dialect changes to a different value
-	const dialectChanged = changes.dialect != null && changes.dialect.oldValue !== changes.dialect.newValue;
+	const dialectChanged =
+		changes.dialect != null && changes.dialect.oldValue !== changes.dialect.newValue;
 
 	if (resetLinter || dialectChanged) {
 		linterReady = linterReady
@@ -311,7 +312,14 @@ async function handleLint(
 	const allHeadings = req.options?.forceAllHeadings ?? false;
 	const regexMask = req.options?.regex_mask;
 	const dedup = req.options?.dedup ?? true;
-	const grouped = await linter.organizedLints(req.text, markupLanguage, allHeadings, regexMask, dedup, isolateEnglish);
+	const grouped = await linter.organizedLints(
+		req.text,
+		markupLanguage,
+		allHeadings,
+		regexMask,
+		dedup,
+		isolateEnglish,
+	);
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
