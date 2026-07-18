@@ -1,7 +1,7 @@
 import { mkdir, rm } from 'node:fs/promises';
 import type { BrowserContext } from '@playwright/test';
 import path from 'path';
-import { test as base, expect } from '@playwright/test';
+import { expect, test as base } from '@playwright/test';
 import { withExtension } from 'playwright-webextext';
 
 const pathToExtension = path.join(import.meta.dirname, '../build');
@@ -55,8 +55,6 @@ test.beforeEach(async ({ context }) => {
 			async () => {
 				// Ensure the linter is initialized with American dialect for consistent test behavior
 				// This prevents locale detection from affecting test results
-				// Dialect enum: American = 0, British = 1, Australian = 2, Canadian = 3, Indian = 4
-				// German variants start at higher values
 				await chrome.storage.local.set({ dialect: 0 });
 			},
 		);

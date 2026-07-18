@@ -1,10 +1,10 @@
 /// <reference types="vitest" />
 import { playwright } from '@vitest/browser-playwright';
-import { defineConfig, type Plugin } from 'vite';
-import dts from 'vite-plugin-dts';
-import apiExtractorConfig from './api-extractor.json';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
+import { defineConfig, type Plugin } from 'vite';
+import apiExtractorConfig from './api-extractor.json';
+import dts from 'vite-plugin-dts';
 
 function removeAssetsPlugin(options: { test: RegExp }): Plugin {
 	return {
