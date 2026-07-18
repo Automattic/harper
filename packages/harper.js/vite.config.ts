@@ -3,8 +3,8 @@ import { playwright } from '@vitest/browser-playwright';
 import { readFileSync } from 'fs';
 import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
-import apiExtractorConfig from './api-extractor.json';
 import dts from 'vite-plugin-dts';
+import apiExtractorConfig from './api-extractor.json';
 
 function removeAssetsPlugin(options: { test: RegExp }): Plugin {
 	return {
@@ -25,13 +25,13 @@ function harperWasmPlugin(): Plugin {
 	return {
 		name: 'harper-wasm-resolver',
 		enforce: 'pre',
-		resolveId(source, importer) {
+		resolveId(source, _importer) {
 			// Handle imports like 'harper-wasm/harper_wasm_slim_bg.wasm?inline'
 			if (source.includes('harper-wasm/') && source.includes('.wasm')) {
 				// Strip the query parameters for file resolution
 				const filePath = source.split('?')[0];
 				const wasmFile = resolve(harperWasmPkgPath, filePath.replace('harper-wasm/', ''));
-				
+
 				// Check if file exists
 				try {
 					if (readFileSync(wasmFile)) {

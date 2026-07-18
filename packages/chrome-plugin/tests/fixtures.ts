@@ -1,7 +1,7 @@
 import { mkdir, rm } from 'node:fs/promises';
 import type { BrowserContext } from '@playwright/test';
+import { test as base, expect } from '@playwright/test';
 import path from 'path';
-import { expect, test as base } from '@playwright/test';
 import { withExtension } from 'playwright-webextext';
 
 const pathToExtension = path.join(import.meta.dirname, '../build');
@@ -51,13 +51,11 @@ async function getBackground(context: BrowserContext): Promise<any> {
 test.beforeEach(async ({ context }) => {
 	const bg = await getBackground(context);
 	if (bg) {
-		await bg.evaluate(
-			async () => {
-				// Ensure the linter is initialized with American dialect for consistent test behavior
-				// This prevents locale detection from affecting test results
-				await chrome.storage.local.set({ dialect: 0 });
-			},
-		);
+		await bg.evaluate(async () => {
+			// Ensure the linter is initialized with American dialect for consistent test behavior
+			// This prevents locale detection from affecting test results
+			await chrome.storage.local.set({ dialect: 0 });
+		});
 	}
 });
 
