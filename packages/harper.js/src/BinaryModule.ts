@@ -52,21 +52,13 @@ function getDefaultGlueBinary(binary: string, glueFlavor: WasmGlueFlavor): strin
 }
 
 function getInitInput(binary: string): InitInput {
-	if (
-		typeof process !== 'undefined' &&
-		process.versions != null &&
-		process.versions.node != null &&
-		binary.startsWith('file://')
-	) {
-		// In Node.js environment - use require which Vite already externalizes
-		const fs = require('fs');
-		return new Promise<Uint8Array>((resolve, reject) => {
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			fs.readFile(new URL(binary).pathname, (err: any, data: any) => {
-				if (err) reject(err);
-				resolve(data);
-			});
-		});
+	if (typeof process !== 'undefined' && binary.startsWith('file://')) {
+		// In Node.js environment, use dynamic import to read the file
+		// The @vite-ignore comment tells Vite not to bundle this for browser builds
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		return import('node:fs/promises').then((fs: any) =>
+			fs.readFile(new URL(binary).pathname).then((data: any) => data),
+		);
 	}
 
 	return binary;
