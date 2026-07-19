@@ -56,7 +56,7 @@ function getInitInput(binary: string): InitInput {
 		// In Node.js environment, use dynamic import to read the file
 		// The @vite-ignore comment tells Vite not to bundle this for browser builds
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		return import('node:fs/promises').then((fs: any) =>
+		return import('fs/promises').then((fs: any) =>
 			fs.readFile(new URL(binary).pathname).then((data: any) => data),
 		);
 	}
