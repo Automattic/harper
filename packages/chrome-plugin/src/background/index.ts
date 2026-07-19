@@ -653,22 +653,52 @@ async function handleRemoveWeirpack(req: RemoveWeirpackRequest): Promise<UnitRes
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */
 async function setLintConfig(lintConfig: LintConfig): Promise<void> {
-	await linter.setLintConfig(lintConfig);
+	// Get current config from linter
+	const currentJson = await linter.getLintConfigAsJSON();
+	const currentConfig = JSON.parse(currentJson);
+
+	// Get the default config to know all rule names
+	const defaultConfigJson = await linter.getDefaultLintConfigAsJSON();
+	const defaultConfig = JSON.parse(defaultConfigJson);
+
+	// Merge the new config with the current config
+	// The new config may be partial, so we need to preserve existing settings for keys not in the new config
+	const mergedConfig = { ...currentConfig, ...lintConfig };
+
+	await linter.setLintConfig(mergedConfig);
 	linterHasPersistedState = true;
 
 	const json = await linter.getLintConfigAsJSON();
 	const storedConfig = JSON.parse(json);
 
-	await chrome.storage.local.set({ lintConfig: JSON.stringify(storedConfig) });
+	// Ensure all rules are present in stored config with null for defaults
+	const storedConfigWithAllRules: Record<string, boolean | null> = {};
+	for (const key of Object.keys(defaultConfig)) {
+		// If the rule is in storedConfig, use its value (which could be true, false, or null)
+		// If not, it defaults to null
+		storedConfigWithAllRules[key] = storedConfig.hasOwnProperty(key) ? storedConfig[key] : null;
+	}
+
+	await chrome.storage.local.set({ lintConfig: JSON.stringify(storedConfigWithAllRules) });
 }
 
 /** Get the lint configuration from permanent storage. */
 async function getLintConfig(): Promise<LintConfig> {
 	const json = await linter.getLintConfigAsJSON();
 	const resp = await chrome.storage.local.get('lintConfig');
-	const storedConfig = resp.lintConfig != null ? JSON.parse(resp.lintConfig) : JSON.parse(json);
 
-	return storedConfig;
+	if (resp.lintConfig != null) {
+		return JSON.parse(resp.lintConfig);
+	}
+
+	// If no stored config, create one with all rules set to null (use defaults)
+	const defaultConfigJson = await linter.getDefaultLintConfigAsJSON();
+	const defaultConfig = JSON.parse(defaultConfigJson);
+	const configWithAllRules: LintConfig = {} as LintConfig;
+	for (const key of Object.keys(defaultConfig)) {
+		configWithAllRules[key as keyof LintConfig] = null as unknown as boolean | null;
+	}
+	return configWithAllRules;
 }
 
 /** Get the ignored lint state from permanent storage. */
