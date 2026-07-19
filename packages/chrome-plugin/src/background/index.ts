@@ -659,22 +659,7 @@ async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	const json = await linter.getLintConfigAsJSON();
 	const storedConfig = JSON.parse(json);
 
-	// Normalize: convert values that match defaults to null (use default) before storing
-	const defaultConfig = JSON.parse(await linter.getDefaultLintConfigAsJSON());
-	const normalizedConfig: Record<string, boolean | null> = {};
-	for (const [key, value] of Object.entries(storedConfig)) {
-		const defaultValue = defaultConfig[key as keyof typeof defaultConfig];
-		// If value is null, keep it as null (already means "use default")
-		// If value matches default, convert to null
-		// Otherwise, keep the value
-		// Ensure we only store boolean or null values
-		const boolValue = typeof value === 'boolean' ? value : null;
-		const boolDefaultValue = typeof defaultValue === 'boolean' ? defaultValue : null;
-		normalizedConfig[key] =
-			boolValue == null ? null : boolValue === boolDefaultValue ? null : boolValue;
-	}
-
-	await chrome.storage.local.set({ lintConfig: JSON.stringify(normalizedConfig) });
+	await chrome.storage.local.set({ lintConfig: JSON.stringify(storedConfig) });
 }
 
 /** Get the lint configuration from permanent storage. */
@@ -683,22 +668,7 @@ async function getLintConfig(): Promise<LintConfig> {
 	const resp = await chrome.storage.local.get('lintConfig');
 	const storedConfig = resp.lintConfig != null ? JSON.parse(resp.lintConfig) : JSON.parse(json);
 
-	// Normalize: convert values that match defaults to null (use default)
-	const defaultConfig = JSON.parse(await linter.getDefaultLintConfigAsJSON());
-	const normalizedConfig: Record<string, boolean | null> = {};
-	for (const [key, value] of Object.entries(storedConfig)) {
-		const defaultValue = defaultConfig[key as keyof typeof defaultConfig];
-		// If value is null, keep it as null (already means "use default")
-		// If value matches default, convert to null
-		// Otherwise, keep the value
-		// Ensure we only store boolean or null values
-		const boolValue = typeof value === 'boolean' ? value : null;
-		const boolDefaultValue = typeof defaultValue === 'boolean' ? defaultValue : null;
-		normalizedConfig[key] =
-			boolValue == null ? null : boolValue === boolDefaultValue ? null : boolValue;
-	}
-
-	return normalizedConfig;
+	return storedConfig;
 }
 
 /** Get the ignored lint state from permanent storage. */
