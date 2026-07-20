@@ -17,8 +17,8 @@ mod tests {
     use super::*;
     use crate::config::Config;
     use harper_core::{
-        Dialect, DictWordMetadata, Document, IgnoredLints, linting::FlatConfig, linting::Lint,
-        spell::Dictionary,
+        DictWordMetadata, Document, EnglishDialect, IgnoredLints, Language, linting::FlatConfig,
+        linting::Lint, spell::Dictionary,
     };
     use std::sync::Arc;
     use tokio::io::{duplex, empty, sink};
@@ -64,14 +64,14 @@ mod tests {
         let (client_request_writer, server_request_reader) = duplex(16_384);
         let (server_response_writer, client_response_reader) = duplex(16_384);
         let mut config = Config::new();
-        config.dialect = Dialect::British;
+        config.dialect = Language::English(EnglishDialect::British);
         let config = Arc::new(Mutex::new(config));
         let mut client = Client::new(client_response_reader, client_request_writer);
         let mut server = Server::new(server_request_reader, server_response_writer, config);
 
         let (dialect, request) = tokio::join!(client.get_dialect(), server.receive_request());
 
-        assert_eq!(dialect.unwrap(), Dialect::British);
+        assert_eq!(dialect.unwrap(), Language::English(EnglishDialect::British));
         assert!(matches!(request.unwrap(), Some(Request::GetDialect)));
     }
 

@@ -1,6 +1,9 @@
 default:
   @just --list
 
+# Import language-specific recipes
+import "harper-core/src/language/justfile"
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
@@ -67,13 +70,13 @@ build-wasm:
   export CARGO_TERM_QUIET=true
 
   cd "{{justfile_directory()}}/harper-wasm"
-  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt --out-name harper_wasm
-    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
-  else
-    wasm-pack build --target web --out-name harper_wasm
-    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
-  fi
+  
+  # Build the regular optimized version with all languages but without typst/thesaurus
+  wasm-pack build --target web --out-name harper_wasm --features all-languages
+  
+  # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
+  # harper-core dependency has default-features=false, so without --features it only gets concurrent
+  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs
@@ -82,8 +85,10 @@ build-harperjs: build-wasm
   set -eo pipefail
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
+  # Small delay to ensure files are fully written (helps with CI file system sync)
+  sleep 5
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
@@ -439,7 +444,7 @@ check-rust: audit-dictionary
   set -eo pipefail
 
   cargo fmt -- --check
-  cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+  cargo clippy --all-features -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
 
@@ -469,9 +474,22 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
-install:
-  cargo install --path harper-ls --locked
-  cargo install --path harper-cli --locked
+# FEATURES: Comma-separated list of features to enable (e.g., "de,pt").
+# If not specified, all features (all-languages,thesaurus,concurrent) are enabled.
+install *FEATURES:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  
+  # If no features specified, use all available features
+  if [ -z "{{FEATURES}}" ]; then
+    FEATURES="all-languages,thesaurus,concurrent"
+  else
+    FEATURES="{{FEATURES}}"
+  fi
+  
+  echo "Installing with features: ${FEATURES}"
+  cargo install --path harper-ls --locked --features "${FEATURES}"
+  cargo install --path harper-cli --locked --features "${FEATURES}"
 
 # Run `harper-cli` on the Harper repository
 dogfood:
@@ -493,7 +511,7 @@ dogfood:
 
 test-rust:
   echo Running all Rust tests
-  cargo test -q
+  cargo test --all-features -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin

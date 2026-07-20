@@ -1,0 +1,10 @@
+[language]
+name = "Slovak"
+feature = "sk"
+
+[metadata]
+confidence = 0.90
+
+[[dialects]]
+name = "Standard"
+aliases = ["sk", "slovak", "slovensko", "sk-sk", "sk_sk"]

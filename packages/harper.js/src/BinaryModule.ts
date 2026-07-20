@@ -1,6 +1,7 @@
 import * as defaultGlue from 'harper-wasm';
 import { Dialect, type InitInput, type Linter as WasmLinter } from 'harper-wasm';
 import * as fullGlue from 'harper-wasm/harper_wasm.js';
+import * as slimGlue from 'harper-wasm/harper_wasm_slim.js';
 
 import LazyPromise from 'p-lazy';
 import pMemoize from 'p-memoize';
@@ -32,7 +33,7 @@ export function resolveWasmGlueFlavor(
 
 function loadGlue(glueFlavor: WasmGlueFlavor): WasmModule {
 	if (glueFlavor === 'slim') {
-		return defaultGlue as WasmModule;
+		return slimGlue as WasmModule;
 	}
 
 	return fullGlue;
@@ -51,11 +52,20 @@ function getDefaultGlueBinary(binary: string, glueFlavor: WasmGlueFlavor): strin
 }
 
 function getInitInput(binary: string): InitInput {
-	if (typeof process !== 'undefined' && binary.startsWith('file://')) {
-		return import(/* webpackIgnore: true */ /* @vite-ignore */ 'fs').then(
-			(fs) =>
+	if (
+		typeof process !== 'undefined' &&
+		process.versions != null &&
+		process.versions.node != null &&
+		binary.startsWith('file://')
+	) {
+		// In Node.js environment - use dynamic import
+		// webpackIgnore: true
+		// @vite-ignore
+		// eslint-disable-next-line @typescript-eslint/no-explicit-any
+		return import(/* webpackIgnore: true */ 'fs').then(
+			(fs: any) =>
 				new Promise<Uint8Array>((resolve, reject) => {
-					fs.readFile(new URL(binary).pathname, (err, data) => {
+					fs.readFile(new URL(binary).pathname, (err: any, data: any) => {
 						if (err) reject(err);
 						resolve(data);
 					});

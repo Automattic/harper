@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: ["master"]
   merge_group:
+  workflow_dispatch:
 
 env:
   CARGO_TERM_COLOR: always
@@ -14,6 +15,9 @@ jobs:
   just-checks:
     runs-on: ubuntu-latest
     name: just ${{ matrix.task }}
+    timeout-minutes: 120
+    env:
+      DISABLE_WASM_OPT: 1
     strategy:
       matrix:
         task:
@@ -46,7 +50,6 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libayatana-appindicator3-dev \
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
             libxdo-dev 

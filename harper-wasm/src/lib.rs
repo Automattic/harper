@@ -5,17 +5,25 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
-use harper_core::language_detection::is_doc_likely_english;
+// Import types from harper-core language system
+use harper_core::EnglishDialect;
+use harper_core::language::languages::Language as HarperLanguage;
+use harper_core::language::languages::parse_language;
+use harper_core::language::registry::{dictionary, new_curated_for_language};
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
 use harper_core::{
-    CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
+    CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, RegexMasker,
+    remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
-use harper_core::{DialectFlags, RegexMasker};
+use harper_core::{Dialect as HarperDialect, DialectFlags, language_detection::is_likely_english};
+
+// Include the auto-generated Dialect enum
+include!("generated_dialect.rs");
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
@@ -59,47 +67,66 @@ pub enum Language {
 }
 
 impl Language {
-    fn create_parser(&self) -> Box<dyn Parser> {
+    fn create_parser(&self) -> Option<Box<dyn Parser>> {
         match self {
-            Language::Plain => Box::new(PlainEnglish),
+            Language::Plain => Some(Box::new(PlainEnglish)),
             // TODO: Have a way to configure the Markdown parser
-            Language::Markdown => Box::new(Markdown::default()),
+            Language::Markdown => Some(Box::new(Markdown::default())),
             Language::Typst => {
                 #[cfg(feature = "typst")]
                 {
                     use harper_typst::Typst;
-                    Box::new(Typst)
+                    Some(Box::new(Typst))
                 }
                 #[cfg(not(feature = "typst"))]
                 {
-                    panic!(
-                        "Typst is not supported in this version of Harper. Please use the Typst-supported binary."
-                    )
+                    None
                 }
             }
         }
     }
 }
 
-/// Specifies an English Dialect, often used for linting.
-#[wasm_bindgen]
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
-pub enum Dialect {
-    American,
-    British,
-    Australian,
-    Canadian,
-    Indian,
+impl From<Dialect> for HarperLanguage {
+    fn from(dialect: Dialect) -> Self {
+        // Convert Dialect enum to string representation
+        let dialect_str = match dialect {
+            Dialect::American => "american",
+            Dialect::British => "british",
+            Dialect::Australian => "australian",
+            Dialect::Canadian => "canadian",
+            Dialect::Indian => "indian",
+            Dialect::GermanStandard => "german",
+            Dialect::GermanAustrian => "austrian",
+            Dialect::GermanSwiss => "swiss",
+            Dialect::PortuguesePT => "pt",
+            Dialect::PortugueseBR => "br",
+            Dialect::PortugueseAO => "ao",
+            Dialect::SlovakStandard => "slovak",
+        };
+
+        // Use harper-core's parse_language which handles feature flags properly
+        parse_language(dialect_str).unwrap_or(HarperLanguage::English(EnglishDialect::American))
+    }
 }
 
-impl From<Dialect> for harper_core::Dialect {
+impl From<Dialect> for HarperDialect {
     fn from(dialect: Dialect) -> Self {
         match dialect {
-            Dialect::American => harper_core::Dialect::American,
-            Dialect::Canadian => harper_core::Dialect::Canadian,
-            Dialect::Australian => harper_core::Dialect::Australian,
-            Dialect::British => harper_core::Dialect::British,
-            Dialect::Indian => harper_core::Dialect::Indian,
+            Dialect::American => HarperDialect::American,
+            Dialect::British => HarperDialect::British,
+            Dialect::Australian => HarperDialect::Australian,
+            Dialect::Canadian => HarperDialect::Canadian,
+            Dialect::Indian => HarperDialect::Indian,
+            // Non-English dialects map to American for backward compatibility
+            // as HarperDialect only supports English dialects
+            Dialect::GermanStandard
+            | Dialect::GermanAustrian
+            | Dialect::GermanSwiss
+            | Dialect::PortuguesePT
+            | Dialect::PortugueseBR
+            | Dialect::PortugueseAO
+            | Dialect::SlovakStandard => HarperDialect::American,
         }
     }
 }
@@ -130,8 +157,13 @@ impl Linter {
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
-        let dictionary = Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())]);
-        let lint_group = LintGroup::new_curated_empty_config(dictionary.clone(), dialect.into());
+        let language: HarperLanguage = dialect.into();
+        let curated_dict = dictionary(language);
+        let dictionary = Self::construct_merged_dict_with_curated(
+            &[Arc::new(MutableDictionary::default())],
+            curated_dict.clone(),
+        );
+        let lint_group = new_curated_for_language(dictionary.clone(), language);
 
         Self {
             lint_group,
@@ -152,16 +184,21 @@ impl Linter {
         let mut constituent_dictionaries = vec![Arc::new(self.user_dictionary.clone())];
         constituent_dictionaries.extend(self.weirpack_dictionaries.iter().cloned());
 
-        self.dictionary = Self::construct_merged_dict(&constituent_dictionaries);
+        let language: HarperLanguage = self.dialect.into();
+        let curated_dict = dictionary(language);
+        self.dictionary = Self::construct_merged_dict_with_curated(
+            &constituent_dictionaries,
+            curated_dict.clone(),
+        );
 
-        self.lint_group =
-            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+        self.lint_group = new_curated_for_language(self.dictionary.clone(), language);
 
         self.lint_group.config.merge_from(lint_config);
     }
 
     /// Construct the actual dictionary to be used for linting and parsing from the curated dictionary
     /// and any other runtime-provided dictionaries.
+    #[allow(dead_code)]
     fn construct_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
 
@@ -174,10 +211,31 @@ impl Linter {
         Arc::new(lint_dict)
     }
 
+    /// Construct the actual dictionary to be used for linting and parsing from a specific curated dictionary
+    /// and any other runtime-provided dictionaries.
+    fn construct_merged_dict_with_curated(
+        dicts: &[Arc<impl Dictionary + 'static>],
+        curated_dict: Arc<FstDictionary>,
+    ) -> Arc<MergedDictionary> {
+        let mut lint_dict = MergedDictionary::new();
+
+        lint_dict.add_dictionary(curated_dict);
+
+        for dict in dicts {
+            lint_dict.add_dictionary(Arc::new(dict.clone()));
+        }
+
+        Arc::new(lint_dict)
+    }
+
     /// Helper method to quickly check if a plain string is likely intended to be English
     pub fn is_likely_english(&self, text: String) -> bool {
         let document = Document::new_plain_english(&text, &self.dictionary);
-        is_doc_likely_english(&document, &self.dictionary)
+        is_likely_english(
+            document.get_tokens(),
+            document.get_source(),
+            &self.dictionary,
+        )
     }
 
     /// Helper method to remove non-English text from a plain English document.
@@ -280,13 +338,11 @@ impl Linter {
         let source: Lrc<_> = source_text.chars().collect();
 
         for lint in lints {
-            let document = Document::new_from_chars(
-                source.clone(),
-                &lint.language.create_parser(),
-                &self.dictionary,
-            );
+            if let Some(parser) = lint.language.create_parser() {
+                let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
-            self.ignored_lints.ignore_lint(&lint.inner, &document);
+                self.ignored_lints.ignore_lint(&lint.inner, &document);
+            }
         }
     }
 
@@ -301,14 +357,14 @@ impl Linter {
     pub fn context_hash(&self, source_text: String, lint: &Lint) -> u64 {
         let source: Vec<_> = source_text.chars().collect();
 
-        let document = Document::new_from_chars(
-            source.into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        if let Some(parser) = lint.language.create_parser() {
+            let document = Document::new_from_chars(source.into(), &parser, &self.dictionary);
 
-        let ctx = LintContext::from_lint(&lint.inner, &document);
-        ctx.default_hash()
+            let ctx = LintContext::from_lint(&lint.inner, &document);
+            ctx.default_hash()
+        } else {
+            0
+        }
     }
 
     fn create_lint_parser(
@@ -318,7 +374,7 @@ impl Linter {
         regex_mask: Option<String>,
         isolate_english: bool,
     ) -> Option<Box<dyn Parser>> {
-        let mut parser = language.create_parser();
+        let mut parser = language.create_parser()?;
 
         if let Some(regex) = regex_mask {
             let Some(masker) = RegexMasker::new(regex.as_str(), true) else {
@@ -494,15 +550,13 @@ impl Linter {
     ) -> Result<String, String> {
         let mut source: Vec<_> = source_text.chars().collect();
 
-        let doc = Document::new_from_chars(
-            source.clone().into(),
-            &lint.language.create_parser(),
-            &self.dictionary,
-        );
+        if let Some(parser) = lint.language.create_parser() {
+            let doc = Document::new_from_chars(source.clone().into(), &parser, &self.dictionary);
 
-        self.stats
-            .records
-            .push(Record::now(RecordKind::from_lint(&lint.inner, &doc)));
+            self.stats
+                .records
+                .push(Record::now(RecordKind::from_lint(&lint.inner, &doc)));
+        }
 
         suggestion.inner.apply(lint.inner.span, &mut source);
 
@@ -706,16 +760,16 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let core_dialect: harper_core::Dialect = Dialect::American.into();
+    let config = LintGroup::new_curated(MutableDictionary::new().into(), core_dialect).config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), Dialect::American.into()).config;
+    let core_dialect: harper_core::Dialect = Dialect::American.into();
+    let config = LintGroup::new_curated(MutableDictionary::new().into(), core_dialect).config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();

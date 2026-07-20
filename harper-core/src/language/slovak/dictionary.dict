@@ -1,0 +1,99 @@
+75
+# Slovak dictionary with basic words and annotations
+
+# Pronouns (P = pronoun)
+ja/~P
+ty/~P
+on/~P
+ona/~P
+ono/~P
+my/~P
+vy/~P
+oni/~P
+ony/~P
+
+# Verbs (V = verb)
+byť/~V
+som/~V
+si/~V
+je/~V
+sme/~V
+ste/~V
+sú/~V
+mať/~V
+mám/~V
+máš/~V
+má/~V
+máme/~V
+máte/~V
+majú/~V
+robíš/~V
+
+# Common nouns (N = noun)
+človek/~N
+den/~N
+deň/~N
+noč/~N
+svet/~N
+slovo/~N
+jazyk/~N
+kniha/~N
+dom/~N
+šcola/~N
+práca/~N
+mesto/~N
+
+# Common adjectives (A = adjective)
+dobrý/~A
+zlý/~A
+veľký/~A
+malý/~A
+nový/~A
+starý/~A
+pekný/~A
+Šťastný/~A
+
+# Common adverbs (D = adverb)
+dnes/~D
+včera/~D
+zajtra/~D
+tu/~D
+tam/~D
+
+# Common prepositions (R = preposition)
+v/~R
+z/~R
+do/~R
+na/~R
+po/~R
+pre/~R
+o/~R
+k/~R
+
+# Common conjunctions (C = conjunction)
+a/~C
+ale/~C
+alebo/~C
+
+# Common particles (T = particle)
+nie/~T
+áno/~T
+aj/~T
+
+# Proper nouns (O = proper noun)
+Bratislava/~N
+Bratislave/~N
+Slovensko/~N
+Európa/~N
+
+# Numbers (M = numeral)
+nula/~M
+jeden/~M
+dva/~M
+tri/~M
+štyri/~M
+pet/~M
+
+# Additional words with diacritics
+Čo/~P
+Žijeme/~V

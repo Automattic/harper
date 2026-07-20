@@ -7,7 +7,6 @@ mod mask;
 mod oops_all_headings;
 mod org_mode;
 mod plain_english;
-
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;
 pub use isolate_english::IsolateEnglish;
@@ -62,7 +61,7 @@ mod tests {
     }
 
     fn assert_tokens_eq_org(test_str: impl AsRef<str>, expected: &[TokenKind]) {
-        assert_tokens_eq(test_str, expected, &OrgMode)
+        assert_tokens_eq(test_str, expected, &OrgMode::default())
     }
 
     #[test]

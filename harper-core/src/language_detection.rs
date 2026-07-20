@@ -125,12 +125,12 @@ def fibIter(n):
 
     #[test]
     fn mixed_french_english_park() {
-        assert_not_english("Je voudrais promener au the park a huit heures with ma voisine");
+        assert_not_english("Je voudrais promener au the park a huit heures with ma voisine")
     }
 
     #[test]
     fn mixed_french_english_drunk() {
-        assert_not_english("Je ne suis pas drunk, je suis only ivre by you");
+        assert_not_english("Je ne suis pas drunk, je suis only ivre by you")
     }
 
     #[test]
@@ -142,6 +142,6 @@ def fibIter(n):
 
     #[test]
     fn english_motto() {
-        assert_english("I have a simple motto in life");
+        assert_english("I have a simple motto in life")
     }
 }

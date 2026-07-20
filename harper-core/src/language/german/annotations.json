@@ -1,0 +1,801 @@
+{
+	"affixes": {
+		"A": {
+			"#": "'be-' inseparable prefix (safe)",
+			"kind": "prefix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "be",
+					"condition": "[^b]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"B": {
+			"#": "'-heit' feminine noun suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "heit",
+					"condition": "[^h]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"gender": "FEMININE"
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"C": {
+			"#": "'-keit' feminine noun suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "keit",
+					"condition": "[^k]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"gender": "FEMININE"
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"D": {
+			"#": "'-ung' feminine noun suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ung",
+					"condition": "[^u]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"gender": "FEMININE"
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"E": {
+			"#": "'ver-' inseparable prefix (safe)",
+			"kind": "prefix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ver",
+					"condition": "[^v]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"F": {
+			"#": "'-chen' neuter diminutive suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "chen",
+					"condition": "[^c]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"gender": "NEUTER"
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"G": {
+			"#": "'-lein' neuter diminutive suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "lein",
+					"condition": "[^l]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"gender": "NEUTER"
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"H": {
+			"#": "Compound word formation - noun + noun (no interfix)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"I": {
+			"#": "Compound word formation - noun + noun with 's' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"K": {
+			"#": "Compound word formation - noun + noun with 'n' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "n",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"L": {
+			"#": "Compound word formation - noun + noun with 'en' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"M": {
+			"#": "Compound word formation - noun + noun with 'er' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"N": {
+			"#": "Compound word formation - noun + noun with 'es' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"O": {
+			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"Q": {
+			"#": "Adjective declension -em (masculine/neuter dative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "em",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"R": {
+			"#": "Adjective declension -en (plural and masculine/neuter genitive singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"S": {
+			"#": "Adjective declension -er (masculine nominative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"T": {
+			"#": "Adjective declension -es (neuter nominative/accusative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"U": {
+			"#": "Adjective comparative -er",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"W": {
+			"#": "Adjective superlative -sten",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"X": {
+			"#": "Noun plural -e (Frau -> Frauen)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"number": "PLURAL"
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"Y": {
+			"#": "Noun plural -n/-en (Hand -> Hände, Student -> Studenten)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "n",
+					"condition": "."
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"number": "PLURAL"
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"a": {
+			"#": "Noun plural -er + umlaut (Mann -> Männer)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"number": "PLURAL"
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"b": {
+			"#": "Noun plural -s (Auto -> Autos)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {
+							"number": "PLURAL"
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"c": {
+			"#": "Verb present participle -enden (lern-enden)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"d": {
+			"#": "Verb preterite -te (lern-te)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
+		"e": {
+			"#": "Verb preterite -ten (lern-ten)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
+		"f": {
+			"#": "Verb present -e (lern-e)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"h": {
+			"#": "Verb present -st (lern-st)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"i": {
+			"#": "Verb present -t (lern-t)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"j": {
+			"#": "Verb present/plural -en (lern-en)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"k": {
+			"#": "Verb past participle -t (regular verbs: ge-macht, ge-lernt)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "ge[^t]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"l": {
+			"#": "Verb past participle -en (strong verbs: ge-schrieben, ge-laufen)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "ge[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"m": {
+			"#": "Verb past participle without ge- prefix (insep. prefixes: be-, er-, ver-, zer-, ent-, emp-)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "(be|er|ver|zer|ent|emp|miss)[^t]"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "(be|er|ver|zer|ent|emp|miss)[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"n": {
+			"#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "geschlagen",
+					"condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		}
+	},
+	"properties": {
+		"N": {
+			"#": "noun property (German)",
+			"metadata": {
+				"noun": {}
+			}
+		},
+		"V": {
+			"#": "verb property (German)",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"J": {
+			"#": "adjective property (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"A": {
+			"#": "adjective property (German) - alias for J",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"g": {
+			"#": "verb past participle property (German: ge- prefix)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			}
+		},
+		"t": {
+			"#": "verb past tense property (German)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
+		"M": {
+			"#": "masculine noun property (German)",
+			"metadata": {
+				"noun": {
+					"gender": "MASCULINE"
+				}
+			}
+		},
+		"F": {
+			"#": "feminine noun property (German)",
+			"metadata": {
+				"noun": {
+					"gender": "FEMININE"
+				}
+			}
+		},
+		"Z": {
+			"#": "neuter noun property (German)",
+			"metadata": {
+				"noun": {
+					"gender": "NEUTER"
+				}
+			}
+		},
+		"P": {
+			"#": "plural noun property (German)",
+			"metadata": {
+				"noun": {
+					"number": "PLURAL"
+				}
+			}
+		},
+		"R": {
+			"#": "adverb property (German)",
+			"metadata": {
+				"adverb": {}
+			}
+		},
+		"r": {
+			"#": "adverb property (German - lowercase)",
+			"metadata": {
+				"adverb": {}
+			}
+		}
+	}
+}

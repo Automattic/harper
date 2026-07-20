@@ -1,7 +1,8 @@
+use harper_core::Dialect;
+use harper_core::Document;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::OrgMode;
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
 
 /// Creates a unit test checking that the linting of a Markdown document (in
 /// `tests_sources`) produces the expected number of lints.
@@ -50,7 +51,7 @@ macro_rules! create_org_test {
                 );
 
                 let dict = FstDictionary::curated();
-                let document = Document::new(&source, &OrgMode, &dict);
+                let document = Document::new(&source, &OrgMode::default(), &dict);
 
                 let mut linter = LintGroup::new_curated(dict, $dialect);
                 let lints = linter.lint(&document);

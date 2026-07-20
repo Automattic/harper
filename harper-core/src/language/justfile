@@ -1,0 +1,95 @@
+# Harper Language Development Recipes
+# =====================================
+# All recipes work for standard languages (german, portuguese, slovak, etc.)
+# NOTE: English is a special case - these recipes do not work for English
+
+# Build the language testing framework
+language-build:
+	cd harper-core/src/language/testing_framework && cargo build --release
+
+# Test text for any language (without recompiling)
+# Usage: just language-test german "your text here"
+language-test language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{text}}"
+
+# Show metadata for a single word in any language
+# Usage: just language-meta german "word"
+language-meta language word:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}"
+
+# Show metadata for all words in text
+# Usage: just language-meta-text german "text with multiple words"
+language-meta-text language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --metadata --text "{{text}}"
+
+# Run basic dictionary tests for a language
+# Usage: just language-dict-test german
+language-dict-test language:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --test
+
+# Analyze language coverage against expanded dictionary
+# Usage: just language-coverage german
+language-coverage language:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	python3 scripts/language_coverage.py "{{language}}"
+
+# Analyze language efficiency (base words vs expanded coverage)
+# Usage: just language-efficiency german
+language-efficiency language:
+	#!/usr/bin/env bash
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	echo "📊 {{language}} Language Efficiency Analysis"
+	echo "==========================================="
+	base_words=$(grep -c "/" "harper-core/src/language/{{language}}/dictionary.dict" || echo 0); \
+	if [ -f "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" ]; then \
+		expanded_words=$(zcat "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" | wc -l); \
+		echo "   Base words: ${base_words}"; \
+		echo "   Expanded dictionary: ${expanded_words} words"; \
+		if [ "${base_words}" -gt 0 ] && [ "${expanded_words}" -gt 0 ]; then \
+			efficiency=$(echo "scale=2; ${expanded_words} / ${base_words}" | bc); \
+			echo "   Efficiency: ${efficiency} expanded words per base word"; \
+			echo "   (Higher is better - more words generated from fewer base words)"; \
+		fi; \
+	else \
+		echo "   ⚠️  No expanded dictionary found for comparison"; \
+	fi
+	echo "==========================================="
+
+# Compare with hunspell spell checking
+# Usage: just language-hunspell german "text to check"
+language-hunspell language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{text}}" --hunspell
+
+# Test example texts from folder with expected results
+# Usage: just language-test-examples german
+language-test-examples language:
+	#!/usr/bin/env bash
+	echo "📚 Testing example texts for {{language}}"
+	echo "======================================="
+	example_dir="harper-core/src/language/{{language}}/test_sources"; \
+	if [ -d "${example_dir}" ]; then \
+		for file in "${example_dir}"/*.md; do \
+			if [ -f "${file}" ]; then \
+				filename=$(basename "${file}" .md); \
+				echo "Testing: ${filename}"; \
+				text=$(cat "${file}"); \
+				just language-test {{language}} "${text}" || true; \
+				echo ""; \
+			fi; \
+		done; \
+	else \
+		echo "⚠️  No test_sources directory found for {{language}}"; \
+	fi
+	echo "======================================="
+
+# Legacy aliases
+language-german-test text:
+	just language-test german "{{text}}"
+
+language-build-lang-test:
+	just language-build
