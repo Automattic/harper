@@ -2,20 +2,24 @@
 import Chart from 'chart.js/auto';
 import { onMount } from 'svelte';
 
-export let data: Record<string, number> = {};
-export let label: string;
-export let title: string;
+interface Props {
+	data?: Record<string, number>;
+	label: string;
+	title: string;
+}
 
-let chartCanvas: HTMLCanvasElement;
+let { data = {}, label, title }: Props = $props();
+
+let chartCanvas = $state<HTMLCanvasElement>();
 let chart: Chart | null = null;
 
-let sortedEntries = Object.entries(data).toSorted(([_a, a], [_b, b]) => b - a);
-let keys = sortedEntries.map(([a, b]) => a);
-let values = sortedEntries.map(([a, b]) => b);
+let sortedEntries = $derived(Object.entries(data).toSorted(([_a, a], [_b, b]) => b - a));
+let keys = $derived(sortedEntries.map(([a]) => a));
+let values = $derived(sortedEntries.map(([, b]) => b));
 
 onMount(() => {
 	// Create a new Chart.js bar chart on mount
-	chart = new Chart(chartCanvas, {
+	chart = new Chart(chartCanvas!, {
 		type: 'bar',
 		data: {
 			labels: keys,
@@ -80,16 +84,18 @@ onMount(() => {
 // Update the chart data with new lint counts
 function updateChart() {
 	if (chart) {
-		chart.data.labels = Object.keys(data);
-		chart.data.datasets[0].data = Object.values(data);
+		chart.data.labels = keys;
+		chart.data.datasets[0].data = values;
 		chart.update();
 	}
 }
 
 // Whenever data changes, update the chart
-$: if (data) {
-	updateChart();
-}
+$effect(() => {
+	if (data) {
+		updateChart();
+	}
+});
 </script>
 
 

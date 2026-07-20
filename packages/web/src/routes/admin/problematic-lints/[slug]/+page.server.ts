@@ -1,5 +1,5 @@
-import ProblematicLints from '$lib/db/models/ProblematicLints';
 import { redirect } from '@sveltejs/kit';
+import ProblematicLints from '$lib/db/models/ProblematicLints';
 
 export const load = async ({ params }) => {
 	const slug = params.slug;
@@ -19,8 +19,8 @@ export const load = async ({ params }) => {
 	}
 
 	if (date == null) {
-    redirect(302, "/admin/problematic-lints/all")
-    return;
+		redirect(302, '/admin/problematic-lints/all');
+		return;
 	}
 
 	const problematicLints = await ProblematicLints.getAllSince(date);
