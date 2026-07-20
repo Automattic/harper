@@ -17,7 +17,7 @@ async function handleSubmit(event: SubmitEvent) {
 	submitting = true;
 
 	const success = await ProtocolClient.postFormData(
-		'https://writewithharper.com/api/problematic-domains',
+		'https://writewithharper.com/api/domain-reviews',
 		{
 			domain,
 			works: works ? 'yes' : 'no',
@@ -34,7 +34,7 @@ async function handleSubmit(event: SubmitEvent) {
 </script>
 
 <div class="p-5">
-	<h1 class="text-2xl font-semibold">Report Problematic Domain</h1>
+	<h1 class="text-2xl font-semibold">Domain Review</h1>
 	<p class="text-sm">
 		Only the data you enter below will be sent to the Harper maintainer.
 	</p>

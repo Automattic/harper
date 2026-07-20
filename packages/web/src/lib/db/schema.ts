@@ -16,7 +16,7 @@ export const problematicLintTable = mysqlTable('problematic_lint', {
 	timestamp: timestamp().notNull().defaultNow(),
 });
 
-export const problematicDomainTable = mysqlTable('problematic_domain', {
+export const domainReviewTable = mysqlTable('domain_review', {
 	id: int().autoincrement().primaryKey(),
 	works: boolean().notNull(),
 	feedback: text().notNull(),

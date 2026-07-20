@@ -1,5 +1,5 @@
 import { error, type RequestEvent, redirect } from '@sveltejs/kit';
-import ProblematicDomains from '$lib/db/models/ProblematicDomains';
+import DomainReviews from '$lib/db/models/DomainReviews';
 
 export const POST = async ({ request }: RequestEvent) => {
 	const data = await request.formData();
@@ -20,7 +20,7 @@ export const POST = async ({ request }: RequestEvent) => {
 		error(400, '`works` must be either yes or no.');
 	}
 
-	await ProblematicDomains.validateAndCreate({
+	await DomainReviews.validateAndCreate({
 		domain: data.get('domain'),
 		works,
 		feedback: data.get('feedback'),

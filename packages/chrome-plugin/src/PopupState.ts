@@ -12,7 +12,7 @@ export type PopupState =
 			rule_id: string;
 	  }
 	| {
-			page: 'report-domain';
+			page: 'domain-review';
 			works: boolean;
 			domain: string;
 			feedback: string;

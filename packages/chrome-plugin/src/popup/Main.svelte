@@ -149,7 +149,7 @@ function daysSince(date: Date): number {
         <Button size="xs" on:click={() => reviewDomain(true)}>
           <Fa icon={faThumbsUp} />
         </Button>
-        <Button size="xs"  on:click={() => reviewDomain(true)}>
+        <Button size="xs"  on:click={() => reviewDomain(false)}>
           <Fa icon={faThumbsDown} />
         </Button>
       </div>
