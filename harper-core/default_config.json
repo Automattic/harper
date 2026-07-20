@@ -5217,6 +5217,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GaspVsGrasp",
+								"state": true,
+								"label": "Gasp Vs Grasp"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AnalogAcousticBike",
 								"state": false,
 								"label": "Analog/Acoustic Bike"

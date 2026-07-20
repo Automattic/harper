@@ -103,6 +103,7 @@ use super::for_noun::ForNoun;
 use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
+use super::gasp_vs_grasp::GaspVsGrasp;
 use super::go_so_far_as_to::GoSoFarAsTo;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
@@ -673,6 +674,7 @@ impl LintGroup {
         insert_expr_rule!(ForTheNthTime);
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
+        insert_expr_rule!(GaspVsGrasp);
         insert_expr_rule!(GoSoFarAsTo);
         insert_expr_rule!(GoToWar);
         insert_expr_rule!(GoodAt);
