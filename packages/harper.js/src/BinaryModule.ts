@@ -52,7 +52,12 @@ function getDefaultGlueBinary(binary: string, glueFlavor: WasmGlueFlavor): strin
 }
 
 function getInitInput(binary: string): InitInput {
-	if (typeof process !== 'undefined' && process.versions != null && process.versions.node != null && binary.startsWith('file://')) {
+	if (
+		typeof process !== 'undefined' &&
+		process.versions != null &&
+		process.versions.node != null &&
+		binary.startsWith('file://')
+	) {
 		// In Node.js environment - use dynamic import
 		// @vite-ignore
 		// webpackIgnore: true
