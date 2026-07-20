@@ -59,10 +59,10 @@ function getInitInput(binary: string): InitInput {
 		binary.startsWith('file://')
 	) {
 		// In Node.js environment - use dynamic import
-		// @vite-ignore
 		// webpackIgnore: true
+		// @vite-ignore
 		// eslint-disable-next-line @typescript-eslint/no-explicit-any
-		return import('fs').then(
+		return import(/* webpackIgnore: true */ 'fs').then(
 			(fs: any) =>
 				new Promise<Uint8Array>((resolve, reject) => {
 					fs.readFile(new URL(binary).pathname, (err: any, data: any) => {
