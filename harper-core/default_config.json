@@ -3254,6 +3254,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GetAccessTo",
+								"state": true,
+								"label": "Get Access To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HowTo",
 								"state": true,
 								"label": "How To"
