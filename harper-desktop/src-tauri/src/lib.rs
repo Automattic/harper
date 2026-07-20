@@ -1,5 +1,6 @@
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
+use self::menu_bar_icon::menu_bar_icon;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
@@ -14,11 +15,9 @@ use std::{
     cell::RefCell,
     rc::Rc,
     sync::{Arc, Mutex as StdMutex},
-    time::Duration,
 };
 use tauri::{
     Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
-    image::Image,
     menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
     tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
 };
@@ -39,6 +38,7 @@ mod debounce;
 pub mod highlighter;
 pub mod highlighter_service;
 pub mod lint_kind_color;
+mod menu_bar_icon;
 mod os_broker;
 pub mod rect;
 
@@ -53,7 +53,10 @@ struct Args {
 
 #[derive(Subcommand)]
 enum Command {
-    Highlighter,
+    Highlighter {
+        #[arg(long)]
+        no_parent: bool,
+    },
 }
 
 const EDITOR_WINDOW_LABEL: &str = "main";
@@ -81,36 +84,6 @@ fn service_menu_text(is_running: bool) -> &'static str {
     match is_running {
         true => "Stop Harper Service",
         false => "Start Harper Service",
-    }
-}
-
-fn service_status_color(is_running: bool) -> [u8; 4] {
-    match is_running {
-        true => [34, 197, 94, 255],
-        false => [239, 68, 68, 255],
-    }
-}
-
-fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
-    let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
-    let width = icon.width();
-    let height = icon.height();
-    let mut rgba = icon.rgba().to_vec();
-
-    draw_status_line(&mut rgba, width, height, service_status_color(is_running));
-
-    Ok(Image::new_owned(rgba, width, height))
-}
-
-fn draw_status_line(rgba: &mut [u8], width: u32, height: u32, color: [u8; 4]) {
-    let line_height = (height.min(width) / 14).max(3);
-    let start_y = height.saturating_sub(line_height);
-
-    for y in start_y..height {
-        for x in 0..width {
-            let index = ((y * width + x) * 4) as usize;
-            rgba[index..index + 4].copy_from_slice(&color);
-        }
     }
 }
 
@@ -290,7 +263,7 @@ pub fn run() {
     let args = Args::parse();
 
     match args.command {
-        Some(Command::Highlighter) => run_highlighter(),
+        Some(Command::Highlighter { no_parent }) => run_highlighter(!no_parent),
         None => run_tauri(),
     }
 }
@@ -463,7 +436,9 @@ pub fn run_tauri() {
         .expect("error while running tauri application");
 }
 
-pub fn run_highlighter() {
+/// Run as a highlighter process.
+/// Can configure whether to run standalone, or with a parent Tauri process
+pub fn run_highlighter(has_parent: bool) {
     let client = Rc::new(RefCell::new(Client::current_process()));
     let sync_runtime = Rc::new(
         Builder::new_current_thread()
@@ -472,7 +447,11 @@ pub fn run_highlighter() {
             .expect("failed to build highlighter protocol runtime"),
     );
 
-    let startup_config = fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime);
+    let startup_config = if has_parent {
+        fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime)
+    } else {
+        Ok(Config::default())
+    };
 
     let startup_config = match startup_config {
         Ok(config) => config,
@@ -591,20 +570,23 @@ pub fn run_highlighter() {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
-    let refresh_config = move || match fetch_highlighter_config(
-        &mut refresh_client.borrow_mut(),
-        &refresh_runtime,
-    ) {
-        Ok(config) => apply_highlighter_config(
-            config,
-            &refresh_ignored_lints,
-            &refresh_user_dictionary,
-            &refresh_dialect,
-            &refresh_integrations,
-            &refresh_debounce_ms,
-            &refresh_linter,
-        ),
-        Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+    let refresh_config = move || {
+        if !has_parent {
+            return;
+        }
+
+        match fetch_highlighter_config(&mut refresh_client.borrow_mut(), &refresh_runtime) {
+            Ok(config) => apply_highlighter_config(
+                config,
+                &refresh_ignored_lints,
+                &refresh_user_dictionary,
+                &refresh_dialect,
+                &refresh_integrations,
+                &refresh_debounce_ms,
+                &refresh_linter,
+            ),
+            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+        }
     };
 
     #[cfg(target_os = "macos")]
@@ -621,7 +603,6 @@ pub fn run_highlighter() {
         disable_rule,
         refresh_config,
     )
-    .map(|highlighter| highlighter.with_read_interval(Duration::from_millis(16)))
     .and_then(Highlighter::run_window_for_each_monitor)
     {
         eprintln!("failed to run highlighter: {error}");
