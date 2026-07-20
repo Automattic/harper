@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import ProblematicLints from '$lib/db/models/ProblematicLints';
+import UninstallFeedback from '$lib/db/models/UninstallFeedback';
 
 export const load = async ({ params }) => {
 	const slug = params.slug;
@@ -19,15 +19,15 @@ export const load = async ({ params }) => {
 	}
 
 	if (date == null) {
-		redirect(302, '/admin/problematic-lints/all');
+		redirect(302, '/admin/ext-uninstall-reasons/all');
 	}
 
-	const problematicLints = await ProblematicLints.getAllSince(date);
+	const problematicLints = await UninstallFeedback.getAllSince(date);
 
 	const counts: Record<string, number> = {};
 
 	for (const item of problematicLints) {
-		const id = item.rule_id ?? 'OTHER';
+		const id = item.feedback ?? 'OTHER';
 
 		if (counts[id] === undefined) {
 			counts[id] = 1;
