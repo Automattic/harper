@@ -1,4 +1,3 @@
-
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { problematicDomainTable } from '../schema';

@@ -83,11 +83,11 @@ function openUpdateHelpPage() {
   {#if popupState.page == "onboarding"}
     <Onboarding onConfirm={() => { popupState = main();}} />
   {:else if popupState.page == "main"}
-    <Main /> 
+    <Main onReviewDomain={(works, domain) => { popupState = { page: 'report-domain', works, domain, feedback: "" }} }/> 
   {:else if popupState.page == 'report-error'}
     <ReportProblematicLint example={popupState.example} rule_id={popupState.rule_id} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {:else if popupState.page == 'report-domain'}
-    <ReportProblematicDomain domain={popupState.domain} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
+    <ReportProblematicDomain works={popupState.works} domain={popupState.domain} feedback={popupState.feedback} onSubmit={() => { popupState = main();}} />
   {/if}
 
   <footer class="flex items-center justify-center gap-6 px-3 py-2 text-sm border-t border-gray-100 rounded-b-lg bg-white/60 dark:border-slate-800 dark:bg-slate-900/70 dark:text-slate-100">

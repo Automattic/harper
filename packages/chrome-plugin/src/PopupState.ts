@@ -13,6 +13,7 @@ export type PopupState =
 	  }
 	| {
 			page: 'report-domain';
+			works: boolean;
 			domain: string;
 			feedback: string;
 	  };

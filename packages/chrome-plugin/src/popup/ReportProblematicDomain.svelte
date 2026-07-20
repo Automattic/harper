@@ -1,9 +1,13 @@
 <script lang="ts">
-import { Button, Input, Label } from 'components';
+import { Button, Input, Label, Select } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
-let { domain, feedback, onSubmit }: { domain: string; feedback: string; onSubmit: () => void } =
-	$props();
+let {
+	domain,
+	works,
+	feedback,
+	onSubmit,
+}: { domain: string; works: boolean; feedback: string; onSubmit: () => void } = $props();
 
 let submitting = $state(false);
 
@@ -16,6 +20,7 @@ async function handleSubmit(event: SubmitEvent) {
 		'https://writewithharper.com/api/problematic-domains',
 		{
 			domain,
+			works: works ? 'yes' : 'no',
 			feedback,
 		},
 	);
@@ -36,7 +41,7 @@ async function handleSubmit(event: SubmitEvent) {
 	<form class="mt-4 space-y-6" onsubmit={handleSubmit}>
 		<div class="space-y-3">
 			<div class="flex items-baseline gap-2">
-				<Label class=" ">Which domain is causing problems?</Label>
+				<Label class=" ">Which domain would you like to tell us about?</Label>
 			</div>
 			<Input
 				name="domain"
@@ -44,6 +49,17 @@ async function handleSubmit(event: SubmitEvent) {
 				placeholder="example.com"
 				class="dark:bg-slate-900 dark:border-slate-700 "
 			/>
+			<div class="flex items-baseline gap-2">
+				<Label class=" ">Would you say that Harper works well on this domain?</Label>
+			</div>
+			<Select
+				name="works"
+				bind:value={works}
+				class="dark:bg-slate-900 dark:border-slate-700 "
+			>
+        <option value={true}>Yes</option>
+        <option value={false}>No</option>
+        </Select>
 
 			<div class="flex items-baseline gap-2">
 				<Label class=" ">Additional Feedback</Label>

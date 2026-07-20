@@ -15,7 +15,13 @@ import { Button, Card, Input, Isolate, Label } from 'components';
 						<Label>Which domain is causing problems?</Label>
 					</div>
 					<Input name="domain" placeholder="example.com" required />
-
+					<div class="flex items-baseline gap-2">
+						<Label>Does Harper work as expected on this domain?</Label>
+					</div>
+          <select name="works" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select>
 					<div class="flex items-baseline gap-2">
 						<Label>Additional Feedback</Label>
 					</div>
