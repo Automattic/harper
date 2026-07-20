@@ -208,10 +208,14 @@ fn should_defer_to_spellcheck(
 
 #[cfg(test)]
 mod tests {
+    use itertools::Itertools;
+
+    use crate::Document;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_lint_message, assert_no_lints,
         assert_suggestion_result,
     };
+    use crate::linting::{Linter, Suggestion};
 
     use super::SplitWords;
 
@@ -363,6 +367,53 @@ mod tests {
     fn allows_informal_laughter() {
         for source in ["hah", "haha", "hahah", "hahaha", "Hahahah"] {
             assert_no_lints(source, SplitWords::default());
+        }
+    }
+
+    #[test]
+    fn does_not_split_iff() {
+        assert_no_lints("iff", SplitWords::default());
+    }
+
+    /// Checks for a condition where the SplitWords rule would correct a word to be composed of a
+    /// single letter (which is not a word), followed by a valid word.
+    ///
+    /// For example, `comitted` -> `c omitted`.
+    #[test]
+    fn never_corrects_to_invalid_single_letter_words() {
+        let triggers = [
+            "comitted", "testc", "testh", "testb", "testq", "testx", "testg", "teste", "testi",
+            "testj",
+        ];
+        let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'i', 'j'];
+
+        for trigger in triggers {
+            let mut rule = SplitWords::default();
+
+            let doc = Document::new_plain_english_curated(trigger);
+            let lints = rule.lint(&doc);
+
+            for lint in lints {
+                dbg!(&lint);
+
+                for sug in lint.suggestions {
+                    match sug {
+                        Suggestion::ReplaceWith(items) => {
+                            // Words created by the rule.
+                            let created_words = items.split(|c| c == &' ');
+
+                            for word in created_words {
+                                if word.len() == 1
+                                    && relevant_letters.iter().contains(&word.first().unwrap())
+                                {
+                                    panic!("Encountered bad output {word:?}")
+                                }
+                            }
+                        }
+                        _ => (),
+                    }
+                }
+            }
         }
     }
 }
