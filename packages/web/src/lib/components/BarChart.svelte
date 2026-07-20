@@ -4,11 +4,10 @@ import { onMount } from 'svelte';
 
 interface Props {
 	data?: Record<string, number>;
-	label: string;
 	title: string;
 }
 
-let { data = {}, label, title }: Props = $props();
+let { data = {},  title }: Props = $props();
 
 let chartCanvas = $state<HTMLCanvasElement>();
 let chart: Chart | null = null;
@@ -25,7 +24,6 @@ onMount(() => {
 			labels: keys,
 			datasets: [
 				{
-					label,
 					data: values,
 					borderColor: 'rgba(80, 80, 80, 1)',
 					borderWidth: 2,
