@@ -13788,7 +13788,7 @@ azalea/NSg
 azimuth/~N0g
 azimuths/N9
 azure/~NSgJV
-b/~J^VdK
+b/J^VdK
 baa/~NSgVdG
 babble/VGd>SNmgZ
 babbler/~Ng
@@ -16267,7 +16267,7 @@ bytecode/NwgS
 byway/~NSg
 byword/NSg
 byzantine/~JN
-c/~NSViE
+c/NSViE
 ca/P
 cab/~NSgV>Z
 cab sav/Nmg†_       # Australia slang = Cabernet Sauvignon
@@ -22711,7 +22711,7 @@ dystopi
 dystopia/NwgS
 dystopian/~J
 dz/NV
-e/~NSId^W
+e/NSId^W
 e-book/NgS
 e-commerce/Nmg
 e'en/
@@ -24916,7 +24916,6 @@ fewness/Ng
 fey/~JN
 fez/~Ng
 fezzes/N
-ff/~V
 fiance/NgVe
 fiancee/NgS
 fiances/N
@@ -26346,7 +26345,7 @@ fuzziness/Ng
 fuzzy/~J^>pNS
 fwd/~JNV
 fwy/N
-g/~NSnXvB
+g/NSnXvB
 gab/~NSgV
 gabardine/NSg
 gabbed/VtT
@@ -27764,7 +27763,7 @@ gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NgSVGd
-h/~NJGnXZvz         # removed `>` 'her' is not comparative of 'h'
+h/NJGnXZvz         # removed `>` 'her' is not comparative of 'h'
 h'm/
 ha/~
 hah/~
@@ -31076,7 +31075,7 @@ iv/~U
 ivory/~NwSgJ
 ivy/~NSgd
 ix/~
-j/~NW
+j/NW
 jab/NSgV
 jabbed/VtTJ
 jabber/Vd>GSNgZ
@@ -37947,7 +37946,7 @@ oxymoronic/J
 oyster/~NSgJV
 oz/~N
 ozone/~NgV
-p/~PNV>G^nXz
+p/PNV>G^nXz
 p.m./
 pH/
 pa/~NSgH
@@ -41443,7 +41442,7 @@ pyruvate/~N
 python/~NSg
 pyx/NgSV
 pzazz/N
-q/~N
+q/N
 qr/~N
 qt/~NS
 qty/N
@@ -53566,7 +53565,7 @@ wurst/NSg
 wuss/NgSV
 wussy/J>^NSg
 wyvern/NSg
-x/~                 # removed `5` and `7` adjective and `conjunction`
+x/                 # removed `5` and `7` adjective and `conjunction`
 x-axis/Ng
 x64/Ng
 x86/~Ng
