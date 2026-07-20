@@ -383,8 +383,9 @@ mod tests {
     fn never_corrects_to_invalid_single_letter_words() {
         let triggers = [
             "comitted", "testc", "testh", "testb", "testq", "testx", "testg", "teste", "testj",
+            "shes",
         ];
-        let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'j'];
+        let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'j', 's'];
 
         for trigger in triggers {
             let mut rule = SplitWords::default();

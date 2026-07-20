@@ -1202,6 +1202,24 @@ mod tests {
         );
     }
 
+    #[test]
+    fn fixes_disserve() {
+        assert_suggestion_result(
+            "I think you disserve a reward.",
+            test_group(),
+            "I think you deserve a reward.",
+        );
+    }
+
+    #[test]
+    fn fixes_buget() {
+        assert_suggestion_result(
+            "It was in their buget range.",
+            test_group(),
+            "It was in their budget range.",
+        );
+    }
+
     /// Tests that no linters' descriptions contain errors handled by other linters.
     ///
     /// This test verifies that the description of each linter (which is written in natural language)
