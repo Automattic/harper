@@ -676,7 +676,7 @@ async function setLintConfig(lintConfig: LintConfig): Promise<void> {
 	for (const key of Object.keys(defaultConfig)) {
 		// If the rule is in storedConfig, use its value (which could be true, false, or null)
 		// If not, it defaults to null
-		storedConfigWithAllRules[key] = storedConfig.hasOwnProperty(key) ? storedConfig[key] : null;
+		storedConfigWithAllRules[key] = Object.hasOwn(storedConfig, key) ? storedConfig[key] : null;
 	}
 
 	await chrome.storage.local.set({ lintConfig: JSON.stringify(storedConfigWithAllRules) });
