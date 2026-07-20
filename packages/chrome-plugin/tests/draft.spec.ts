@@ -7,7 +7,7 @@ import {
 	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
-const TEST_PAGE_URL = 'https://draftjs.org/';
+const TEST_PAGE_URL = 'http://localhost:8081/draft.html';
 
 async function setup(_page: Page, editor: Locator) {
 	await editor.scrollIntoViewIfNeeded();
