@@ -272,6 +272,7 @@ mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
+mod thread_local_linter;
 mod thrive_on;
 mod throw_away;
 mod throw_baby_with_bathwater;
@@ -308,6 +309,7 @@ mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
 
+use blanket::blanket;
 pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;

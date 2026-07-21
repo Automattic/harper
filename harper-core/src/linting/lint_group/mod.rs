@@ -1036,17 +1036,24 @@ impl Linter for LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::Arc;
+    use std::sync::{Arc, LazyLock};
 
     use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::thread_local_linter::ThreadLocalLinter;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
 
-    fn test_group() -> LintGroup {
-        LintGroup::new_curated(Arc::new(MutableDictionary::curated()), Dialect::American)
+    static TEST_GROUP: LazyLock<ThreadLocalLinter<LintGroup>> = LazyLock::new(|| {
+        ThreadLocalLinter::new(|| {
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        })
+    });
+
+    fn test_group() -> ThreadLocalLinter<LintGroup> {
+        (*TEST_GROUP).clone()
     }
 
     #[test]
@@ -1083,9 +1090,9 @@ mod tests {
 
     #[test]
     fn corrects_extention() {
-        let mut group = test_group();
+        let group = test_group();
         let document = Document::new_plain_english_curated("I love this extention!");
-        let organized = group.organized_lints(&document);
+        let organized = group.run_with_pool(|l| l.organized_lints(&document));
 
         let spellcheck_lints = organized
             .get("SpellCheck")
