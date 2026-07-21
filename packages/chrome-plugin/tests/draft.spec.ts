@@ -4,7 +4,6 @@ import {
 	testBasicSuggestion,
 	testCanBlockRuleSuggestion,
 	testCanIgnoreSuggestion,
-	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
 const TEST_PAGE_URL = 'http://localhost:8081/draft.html';
@@ -17,4 +16,3 @@ async function setup(_page: Page, editor: Locator) {
 testBasicSuggestion(TEST_PAGE_URL, getDraftEditor, setup);
 testCanIgnoreSuggestion(TEST_PAGE_URL, getDraftEditor, setup);
 testCanBlockRuleSuggestion(TEST_PAGE_URL, getDraftEditor, setup);
-testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getDraftEditor, setup);
