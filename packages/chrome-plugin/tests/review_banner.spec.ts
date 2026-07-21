@@ -5,7 +5,7 @@ test.describe('review banner', () => {
 
 	test('review request hidden before 14 days', async ({ context, page }) => {
 		test.slow();
-		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker', { timeout: 5000 }));
 		const extensionId = background.url().split('/')[2];
 
 		const popupUrl = `chrome-extension://${extensionId}/popup.html`;
@@ -19,7 +19,7 @@ test.describe('review banner', () => {
 
 	test('review request shown after 14 days', async ({ context, page }) => {
 		test.slow();
-		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker'));
+		const background = context.serviceWorkers()[0] ?? (await context.waitForEvent('serviceworker', { timeout: 5000 }));
 		const extensionId = background.url().split('/')[2];
 
 		const popupUrl = `chrome-extension://${extensionId}/popup.html`;
