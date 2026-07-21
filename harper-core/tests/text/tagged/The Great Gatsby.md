@@ -3005,7 +3005,7 @@
 > the lower     East   Side     of New   York . That      was  comprehensible . But     young     men
 # D   NSg/VB/JC NPr/J+ NSg/VB/J P  NSg/J NPr+ . I/C/Ddem+ VLPt J              . NSg/C/P NPr/VB/J+ NPl+
 > didn’t — at    least    in        my  provincial inexperience I       believed they didn’t — drift
-# VXPt   . NSg/P NSg/J/Dq NPr/J/R/P D$+ NSg/J      Nᴹ           ISg/#r+ VP/J     IPl+ VXPt   . NSg/VB
+# VXPt   . NSg/P NSg/J/Dq NPr/J/R/P D$+ NSg/J      N🅪Sg/VB      ISg/#r+ VP/J     IPl+ VXPt   . NSg/VB
 > coolly out          of nowhere and  buy    a   palace  on  Long     Island  Sound      .
 # R      NSg/VB/J/R/P P  NSg/J   VB/C NSg/VB D/P NSg/VB+ J/P NPr/VB/J NSg/VB+ N🅪Sg/VB/J+ .
 >
@@ -8136,8 +8136,8 @@
 #
 > The music      had died down        as    the ceremony began and  now       a    long      cheer   floated in        at
 # D+  N🅪Sg/VB/J+ VP  VP/J N🅪Sg/VB/J/P R/C/P D+  N🅪Sg+    VPt   VB/C NSg/J/R/C D/P+ NPr/VB/J+ NSg/VB+ VP/J    NPr/J/R/P NSg/P
-> the window  , followed by    intermittent cries  of “ Yea   — ea  — ea  ! ” and  finally by    a
-# D+  NSg/VB+ . VP/J     NSg/P NSg/J        NPl/V3 P  . NSg/C . NSg . NSg . . VB/C R       NSg/P D/P
+> the window  , followed by    intermittent cries  of “ Yea   — ea — ea ! ” and  finally by    a
+# D+  NSg/VB+ . VP/J     NSg/P NSg/J        NPl/V3 P  . NSg/C . ?  . ?  . . VB/C R       NSg/P D/P
 > burst  of jazz    as    the dancing began .
 # NSg/VB P  NSg/VB+ R/C/P D   Nᴹ/Vg/J VPt   .
 >
