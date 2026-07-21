@@ -41,8 +41,8 @@ async function getBackground(context: BrowserContext): Promise<any> {
 		context.serviceWorkers()[0] ??
 		context.backgroundPages()[0] ??
 		(await Promise.race([
-			context.waitForEvent('serviceworker', { timeout: 90000 }).catch(() => null),
-			context.waitForEvent('backgroundpage', { timeout: 90000 }).catch(() => null),
+			context.waitForEvent('serviceworker', { timeout: 5000 }).catch(() => null),
+			context.waitForEvent('backgroundpage', { timeout: 5000 }).catch(() => null),
 		]))
 	);
 }
