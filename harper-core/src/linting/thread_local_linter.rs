@@ -1,5 +1,7 @@
 use cached::sync_sync::RwLock;
 
+#[cfg(not(feature = "concurrent"))]
+use std::cell::RefCell;
 use std::rc::Rc;
 use std::sync::{Arc, Mutex};
 
@@ -7,6 +9,7 @@ use super::{Lint, Linter};
 
 pub struct ThreadLocalLinter<L: Linter> {
     ctor: fn() -> L,
+    #[cfg(feature = "concurrent")]
     pool: Arc<RwLock<Vec<Arc<Mutex<L>>>>>,
     description: String,
 }
@@ -18,11 +21,13 @@ impl<L: Linter> ThreadLocalLinter<L> {
 
         Self {
             ctor,
+            #[cfg(feature = "concurrent")]
             pool: Arc::new(RwLock::new(vec![Arc::new(Mutex::new(first))])),
             description,
         }
     }
 
+    #[cfg(feature = "concurrent")]
     pub fn run_with_pool<B>(&self, callback: impl FnOnce(&mut L) -> B) -> B {
         // Attempt to grab an open copy.
         {
@@ -41,6 +46,12 @@ impl<L: Linter> ThreadLocalLinter<L> {
             return callback(&mut write_pool.last().unwrap().clone().lock().unwrap());
         }
     }
+
+    #[cfg(not(feature = "concurrent"))]
+    pub fn run_with_pool<B>(&self, callback: impl FnOnce(&mut L) -> B) -> B {
+        let mut linter = (self.ctor)();
+        callback(&mut linter)
+    }
 }
 
 impl<L: Linter> Linter for ThreadLocalLinter<L> {
@@ -57,6 +68,7 @@ impl<L: Linter> Clone for ThreadLocalLinter<L> {
     fn clone(&self) -> Self {
         Self {
             ctor: self.ctor.clone(),
+            #[cfg(feature = "concurrent")]
             pool: self.pool.clone(),
             description: self.description.clone(),
         }

@@ -299,6 +299,7 @@ use super::wrong_apostrophe::WrongApostrophe;
 
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
+use crate::Span;
 use crate::linting::dashes::Dashes;
 use crate::linting::expr_linter::{Chunk, Sentence};
 use crate::linting::{
@@ -329,9 +330,9 @@ pub struct LintGroup {
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
     #[expect(clippy::complexity)]
-    chunk_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
+    chunk_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     #[expect(clippy::complexity)]
-    sentence_expr_cache: LruCache<(u64, u64), Lrc<BTreeMap<String, Vec<Lint>>>>,
+    sentence_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,
 }
@@ -918,6 +919,20 @@ impl LintGroup {
             }
         }
 
+        let mut insert_items_to_results =
+            |items: &BTreeMap<String, Vec<Lint>>, chunk_span: Span<char>| {
+                for (key, vec) in items.iter() {
+                    results
+                        .entry(key.to_owned())
+                        .or_default()
+                        .extend(vec.iter().cloned().map(|mut lint| {
+                            // Bring the spans back into document-space
+                            lint.span.push_by(chunk_span.start);
+                            lint
+                        }));
+                }
+            };
+
         // Expr linters
         for chunk in document.iter_chunks() {
             let Some(chunk_span) = chunk.span() else {
@@ -929,8 +944,8 @@ impl LintGroup {
             let char_hash = self.hasher_builder.hash_one(chunk_chars);
             let cache_key = (char_hash, config_hash);
 
-            let chunk_results = if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
-                hit.clone()
+            if let Some(hit) = self.chunk_expr_cache.get(&cache_key) {
+                insert_items_to_results(hit, chunk_span);
             } else {
                 let mut pattern_lints = BTreeMap::new();
 
@@ -946,21 +961,8 @@ impl LintGroup {
                     }
                 }
 
-                let pattern_lints = Lrc::new(pattern_lints);
-
                 self.chunk_expr_cache.put(cache_key, pattern_lints.clone());
-                pattern_lints
-            };
-
-            for (key, vec) in chunk_results.iter() {
-                results
-                    .entry(key.to_owned())
-                    .or_default()
-                    .extend(vec.iter().cloned().map(|mut lint| {
-                        // Bring the spans back into document-space
-                        lint.span.push_by(chunk_span.start);
-                        lint
-                    }));
+                insert_items_to_results(&pattern_lints, chunk_span);
             }
         }
 
@@ -975,8 +977,8 @@ impl LintGroup {
             let char_hash = self.hasher_builder.hash_one(sentence_chars);
             let cache_key = (char_hash, config_hash);
 
-            let sentence_results = if let Some(hit) = self.sentence_expr_cache.get(&cache_key) {
-                hit.clone()
+            if let Some(hit) = self.sentence_expr_cache.get(&cache_key) {
+                insert_items_to_results(hit, sentence_span);
             } else {
                 let mut pattern_lints = BTreeMap::new();
 
@@ -992,22 +994,9 @@ impl LintGroup {
                     }
                 }
 
-                let pattern_lints = Lrc::new(pattern_lints);
-
                 self.sentence_expr_cache
                     .put(cache_key, pattern_lints.clone());
-                pattern_lints
-            };
-
-            for (key, vec) in sentence_results.iter() {
-                results
-                    .entry(key.to_owned())
-                    .or_default()
-                    .extend(vec.iter().cloned().map(|mut lint| {
-                        // Bring the spans back into document-space
-                        lint.span.push_by(sentence_span.start);
-                        lint
-                    }));
+                insert_items_to_results(&pattern_lints, sentence_span);
             }
         }
 
@@ -1046,14 +1035,23 @@ mod tests {
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
 
+    #[cfg(feature = "concurrent")]
     static TEST_GROUP: LazyLock<ThreadLocalLinter<LintGroup>> = LazyLock::new(|| {
         ThreadLocalLinter::new(|| {
             LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
         })
     });
 
+    #[cfg(feature = "concurrent")]
     fn test_group() -> ThreadLocalLinter<LintGroup> {
         (*TEST_GROUP).clone()
+    }
+
+    #[cfg(not(feature = "concurrent"))]
+    fn test_group() -> ThreadLocalLinter<LintGroup> {
+        ThreadLocalLinter::new(|| {
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+        })
     }
 
     #[test]
