@@ -63,6 +63,9 @@ build-harper-editor: build-lint-framework build-components
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
+
+  export CARGO_TERM_QUIET=true
+
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
     wasm-pack build --target web --no-opt --out-name harper_wasm
@@ -296,10 +299,11 @@ test-chrome-plugin: build-chrome-plugin
   pnpm playwright install
 
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project chromium
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project chromium 
   else
-    pnpm test --project chromium
+    pnpm test --project chromium 
   fi
 
 
@@ -312,11 +316,13 @@ test-firefox-plugin: build-firefox-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
+
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project firefox
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project firefox 
   else
-    pnpm test --project firefox
+    pnpm test --project firefox 
   fi
 
 # Run VSCode plugin unit and integration tests.
