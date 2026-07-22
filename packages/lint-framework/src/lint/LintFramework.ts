@@ -29,9 +29,17 @@ type FrameworkActions = {
 };
 
 /** Events on an input (any kind) that can trigger a re-render. */
-const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
+const INPUT_EVENTS = ['focus', 'keyup', 'keydown', 'paste', 'change', 'scroll', 'input'];
 /** Events on the window that can trigger a re-render. */
-const PAGE_EVENTS = ['resize', 'scroll'];
+const PAGE_EVENTS = [
+	'resize',
+	'scroll',
+	'keyup',
+	'keydown',
+	'input',
+	'compositionend',
+	'selectionchange',
+];
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
@@ -86,6 +94,14 @@ export default class LintFramework {
 			this.update();
 		};
 
+		// Catches edge cases where editors do not correctly emit events.
+		const timeoutCallback = () => {
+			this.update();
+
+			setTimeout(timeoutCallback, 1000);
+		};
+		timeoutCallback();
+
 		this.attachWindowListeners();
 	}
 
@@ -107,21 +123,19 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
-	async requestLintUpdate(force = false) {
-		if (this.lintRequested || this.targets.size === 0) {
-			return;
-		}
-
+	async requestLintUpdate(immediate = false) {
 		const delay = (await this.actions.getDelay?.()) ?? 0;
 		const remainingDelay = delay - (Date.now() - this.lastInputAt);
-		if (!force && delay > 0 && remainingDelay > 0) {
+
+		// Extend the delay if there is one in effect (this is the debounce behavior).
+		if (!immediate && delay > 0 && remainingDelay > 0) {
 			if (this.lintDelayTimer != null) {
 				window.clearTimeout(this.lintDelayTimer);
 			}
 
 			this.lintDelayTimer = window.setTimeout(() => {
 				this.lintDelayTimer = null;
-				void this.requestLintUpdate();
+				this.requestLintUpdate();
 			}, remainingDelay);
 			return;
 		}
@@ -131,50 +145,56 @@ export default class LintFramework {
 			this.lintDelayTimer = null;
 		}
 
-		// Avoid duplicate requests in the queue
-		this.lintRequested = true;
+		if ((!this.lintRequested && this.targets.size !== 0) || immediate) {
+			// Avoid duplicate requests in the queue
+			if (!immediate) {
+				this.lintRequested = true;
+			}
 
-		const lintResults = await Promise.all(
-			this.onScreenTargets().map(async (target) => {
-				if (!document.contains(target)) {
-					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+			const lintResults = await Promise.all(
+				this.onScreenTargets().map(async (target) => {
+					if (!document.contains(target)) {
+						this.targets.delete(target);
+						return { target: null as HTMLElement | null, lints: {} };
+					}
 
-				const { text, isCM, newLineIndices } = this.getTargetText(target);
+					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+					if (!text || text.length > 120000) {
+						return { target: null as HTMLElement | null, lints: {} };
+					}
 
-				const language = getTargetLanguage(target);
-				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
-					forceAllHeadings: isHeading(target),
-					language,
-				});
+					const language = getTargetLanguage(target);
+					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+						forceAllHeadings: isHeading(target),
+						language,
+					});
 
-				if (isCM) {
-					// We're about to modify a reference, so let's work on a copy.
-					lintsBySource = window.structuredClone(lintsBySource);
+					if (isCM) {
+						// We're about to modify a reference, so let's work on a copy.
+						lintsBySource = window.structuredClone(lintsBySource);
 
-					for (const lints of Object.values(lintsBySource)) {
-						for (const lint of lints) {
-							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+						for (const lints of Object.values(lintsBySource)) {
+							for (const lint of lints) {
+								const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+								const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
 
-							lint.span.start -= offset_start;
-							lint.span.end -= offset_end;
+								lint.span.start -= offset_start;
+								lint.span.end -= offset_end;
+							}
 						}
 					}
-				}
 
-				return { target: target as HTMLElement, lints: lintsBySource };
-			}),
-		);
+					return { target: target as HTMLElement, lints: lintsBySource };
+				}),
+			);
 
-		this.lastLints = lintResults.filter((r) => r.target != null) as any;
-		this.lintRequested = false;
-		this.requestRender();
+			this.lastLints = lintResults.filter((r) => r.target != null) as any;
+			if (!immediate) {
+				this.lintRequested = false;
+			}
+			this.requestRender();
+		}
 	}
 
 	/**
