@@ -5420,6 +5420,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PaleByComparison",
+								"state": true,
+								"label": "Pale by Comparison"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BarelyUn",
 								"state": true,
 								"label": "Barely Un-"

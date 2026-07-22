@@ -206,6 +206,7 @@ mod out_of_the_window;
 mod over_plus;
 mod oxford_comma;
 mod oxymorons;
+mod pale_by_comparison;
 mod passionate_about;
 mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
