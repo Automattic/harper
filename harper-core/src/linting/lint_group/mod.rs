@@ -125,6 +125,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::in_better_shape::InBetterShape;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
@@ -704,6 +705,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay);
         insert_expr_rule!(IAmAgreement);
         insert_expr_rule!(IfWouldve);
+        insert_expr_rule!(InBetterShape);
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
