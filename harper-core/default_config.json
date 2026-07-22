@@ -2818,6 +2818,20 @@
 								"state": true,
 								"label": "Hazzle"
 							}
+						},
+						{
+							"Bool": {
+								"name": "NotLongAfter",
+								"state": true,
+								"label": "Not Long After"
+							}
+						},
+						{
+							"Bool": {
+								"name": "MayOfPronoun",
+								"state": true,
+								"label": "May Of Pronoun"
+							}
 						}
 					]
 				}
@@ -3156,6 +3170,20 @@
 								"name": "SideTangent",
 								"state": true,
 								"label": "Side Tangent"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RedundantSelf",
+								"state": true,
+								"label": "Redundant Self"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TruthToTheFact",
+								"state": true,
+								"label": "Truth To The Fact"
 							}
 						},
 						{
@@ -3880,6 +3908,13 @@
 								"name": "ReadsAndWrites",
 								"state": true,
 								"label": "Reads and Writes"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HelpedPast",
+								"state": true,
+								"label": "Helped Past"
 							}
 						}
 					]
@@ -5182,6 +5217,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AnalogAcousticBike",
+								"state": false,
+								"label": "Analog/Acoustic Bike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InThisThatRegard",
 								"state": true,
 								"label": "In This/That Regard"
@@ -5294,6 +5336,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InADifferentDirection",
+								"state": true,
+								"label": "In A Different Direction"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"
@@ -5315,9 +5364,23 @@
 						},
 						{
 							"Bool": {
+								"name": "TillDate",
+								"state": true,
+								"label": "Till Date"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AMeansToAnEnd",
 								"state": true,
 								"label": "A Means To An End"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FallBelow",
+								"state": true,
+								"label": "Fall Below"
 							}
 						},
 						{
@@ -5339,6 +5402,34 @@
 								"name": "ForTheNthTime",
 								"state": true,
 								"label": "For The Nth Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AWaysToGo",
+								"state": true,
+								"label": "A Ways To Go"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HaveAHardTime",
+								"state": true,
+								"label": "Have a Hard Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThrowBabyWithBathwater",
+								"state": true,
+								"label": "Throw Baby with Bathwater"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ALittleOfPractice",
+								"state": true,
+								"label": "A Little of Practice"
 							}
 						}
 					]

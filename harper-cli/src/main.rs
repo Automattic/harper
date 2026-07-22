@@ -396,7 +396,7 @@ fn main() -> anyhow::Result<()> {
                         &[]
                     }),
                 )
-                .print((&*input_identifier, Source::from(source)))?;
+                .print((input_identifier.as_ref(), Source::from(source)))?;
 
             Ok(())
         }
@@ -729,7 +729,7 @@ fn main() -> anyhow::Result<()> {
 
             // Update affixes (text-based replacement with context awareness)
             let updated_affixes_string =
-                affixes_string.replace(&format!("\"{}\":", &old), &format!("\"{}\":", &new));
+                affixes_string.replace(&format!("\"{}\":", old), &format!("\"{}\":", new));
 
             // Verify that the updated affixes string is valid JSON
             serde_json::from_str::<Value>(&updated_affixes_string)

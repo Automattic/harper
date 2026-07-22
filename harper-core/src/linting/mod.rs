@@ -4,6 +4,7 @@
 
 mod a_part;
 mod a_some_time;
+mod a_ways_to_go;
 mod a_while;
 mod addicting;
 mod adjective_double_degree;
@@ -15,6 +16,7 @@ mod allow_to;
 mod am_in_the_morning;
 mod amounts_for;
 mod an_a;
+mod analog_acoustic_bike;
 mod and_the_like;
 mod another_thing_coming;
 mod another_think_coming;
@@ -82,6 +84,7 @@ mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
 mod expr_linter;
+mod fall_below;
 mod far_be_it;
 mod fascinated_by;
 mod fed_up_with;
@@ -103,10 +106,12 @@ mod go_to_war;
 mod good_at;
 mod handful;
 mod handful_of_more;
+mod have_a_hard_time;
 mod have_pronoun;
 mod have_take_a_look;
 mod hedging;
 mod hello_greeting;
+mod helped_past;
 mod hereby;
 mod hop_hope;
 mod hope_youre;
@@ -221,6 +226,7 @@ mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
 mod redundant_progressive_comparative;
+mod redundant_self;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
@@ -270,7 +276,9 @@ mod this_type_of_thing;
 mod though_thought;
 mod thrive_on;
 mod throw_away;
+mod throw_baby_with_bathwater;
 mod throw_rubbish;
+mod till_date;
 mod to_adverb;
 mod to_two_too;
 mod touristic;
@@ -808,6 +816,10 @@ pub mod tests {
                         "  ✅ Found good suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
                     );
                     unseen_good.remove(suggestion_text.as_str());
+                } else {
+                    eprintln!(
+                        "  ⚠️  Found unexpected suggestion at lint[{i}].suggestions[{j}]: \"{suggestion_text}\""
+                    );
                 }
             }
         }

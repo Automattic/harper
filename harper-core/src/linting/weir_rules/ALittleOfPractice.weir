@@ -1,0 +1,11 @@
+expr main (a little of practice)
+
+let message "Have you perhaps confused `a little practice` or `a bit of practice`?"
+let description "Corrects `a little of practice` to `a little practice` or `a bit of practice`."
+let kind "Usage"
+let becomes ["a little practice", "a bit of practice"]
+
+test "Developing a theme takes a little of practice. There are multiple templates for each module." "Developing a theme takes a little practice. There are multiple templates for each module."
+test "I think with a little of practice I'll get better at making these." "I think with a bit of practice I'll get better at making these."
+test "But first you need a little of practice, and here we are:" "But first you need a little practice, and here we are:"
+test "Although it requires a little of practice and a learning curve, it totally worthy." "Although it requires a bit of practice and a learning curve, it totally worthy."

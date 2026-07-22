@@ -4,9 +4,7 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{
-    IntegrationView, PlatformBroker, accessibility_allows_highlighter_start, platform_broker,
-};
+use crate::{IntegrationView, PlatformBroker, platform_broker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints,
@@ -337,11 +335,9 @@ pub(crate) async fn start_highlighter_service(
             .map_err(|error| error.to_string())?;
     }
 
-    if accessibility_allows_highlighter_start() {
-        highlighter_service
-            .start()
-            .map_err(|error| error.to_string())?;
-    }
+    highlighter_service
+        .start()
+        .map_err(|error| error.to_string())?;
 
     Ok(highlighter_service.is_running())
 }
