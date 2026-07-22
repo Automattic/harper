@@ -5399,9 +5399,23 @@
 						},
 						{
 							"Bool": {
+								"name": "PassionateAbout",
+								"state": true,
+								"label": "Passionate About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForTheNthTime",
 								"state": true,
 								"label": "For The Nth Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HowDoesCompared",
+								"state": true,
+								"label": "How Does Compared"
 							}
 						},
 						{
