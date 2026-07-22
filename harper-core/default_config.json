@@ -5336,6 +5336,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DependsBasedOn",
+								"state": true,
+								"label": "Depends Based On"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InADifferentDirection",
 								"state": true,
 								"label": "In A Different Direction"
