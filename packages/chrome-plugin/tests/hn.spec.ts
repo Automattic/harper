@@ -1,4 +1,3 @@
-import type { Page } from '@playwright/test';
 import { test } from './fixtures';
 import {
 	assertHarperHighlightBoxes,
@@ -10,29 +9,18 @@ import {
 	testMultipleSuggestionsAndUndo,
 } from './testUtils';
 
-/** Must be computed. */
-async function getTestPageUrl(page: Page) {
-	await page.goto('https://news.ycombinator.com');
+const TEST_PAGE_URL = 'http://localhost:8081/hn.html';
 
-	const firstLink = page.locator('.subline').first().locator('a').last();
-	await firstLink.click();
-
-	return page.url();
-}
-
-testBasicSuggestion(getTestPageUrl, getTextarea);
-testCanIgnoreSuggestion(getTestPageUrl, getTextarea);
-testCanBlockRuleSuggestion(getTestPageUrl, getTextarea);
-testMultipleSuggestionsAndUndo(getTestPageUrl, getTextarea);
+testBasicSuggestion(TEST_PAGE_URL, getTextarea);
+testCanIgnoreSuggestion(TEST_PAGE_URL, getTextarea);
+testCanBlockRuleSuggestion(TEST_PAGE_URL, getTextarea);
+testMultipleSuggestionsAndUndo(TEST_PAGE_URL, getTextarea);
 
 test('Hacker News wraps correctly', async ({ page }) => {
-	await page.goto(await getTestPageUrl(page));
+	await page.goto(TEST_PAGE_URL);
 
 	await page.waitForTimeout(2000);
 	await page.reload();
-
-	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
-	await page.locator('.toptext').evaluate((el) => el.remove());
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(
@@ -44,25 +32,22 @@ test('Hacker News wraps correctly', async ({ page }) => {
 
 	await assertHarperHighlightBoxes(page, [
 		[
-			{ x: 352.578125, y: 113, width: 63.984375, height: 19 },
-			{ x: 592.484375, y: 96, width: 24, height: 19 },
+			{ x: 353.34375, y: 111, width: 64.203125, height: 17 },
+			{ x: 594.0625, y: 96, width: 24.09375, height: 17 },
 		],
 		[
-			{ x: 304.66668701171875, y: 121, width: 53.333343505859375, height: 22 },
-			{ x: 504.66668701171875, y: 101, width: 20, height: 22 },
+			{ x: 354.26666259765625, y: 115, width: 64.13333129882812, height: 19 },
+			{ x: 594.7666625976562, y: 98, width: 24.04998779296875, height: 19 },
 		],
 	]);
 });
 
 test('Hacker News scrolls correctly', async ({ page }) => {
 	test.slow();
-	await page.goto(await getTestPageUrl(page));
+	await page.goto(TEST_PAGE_URL);
 
 	await page.waitForTimeout(2000);
 	await page.reload();
-
-	// Needed because this element has a variable height and may offset the highlight boxes by an unknown amount.
-	await page.locator('.toptext').evaluate((el) => el.remove());
 
 	const editor = getTextarea(page);
 	await replaceEditorContent(
@@ -73,7 +58,7 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 	await page.waitForTimeout(6000);
 
 	await assertHarperHighlightBoxes(page, [
-		[{ x: 216.625, y: 217, width: 56, height: 19 }],
-		[{ x: 191.3333282470703, y: 245, width: 46.66667175292969, height: 22 }],
+		[{ x: 216.9375, y: 203, width: 56.171875, height: 17 }],
+		[{ x: 217.98333740234375, y: 221, width: 56.116668701171875, height: 19 }],
 	]);
 });
