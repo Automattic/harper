@@ -1090,7 +1090,7 @@ mod tests {
     fn corrects_extention() {
         let group = test_group();
         let document = Document::new_plain_english_curated("I love this extention!");
-        let organized = group.run_with_pool(|l| l.organized_lints(&document));
+        let organized = group.run_with_inner(|l| l.organized_lints(&document));
 
         let spellcheck_lints = organized
             .get("SpellCheck")

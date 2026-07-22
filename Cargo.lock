@@ -4264,6 +4264,7 @@ dependencies = [
  "levenshtein_automata",
  "lru",
  "ordered-float 5.3.0",
+ "parking_lot",
  "paste",
  "pulldown-cmark",
  "quickcheck",

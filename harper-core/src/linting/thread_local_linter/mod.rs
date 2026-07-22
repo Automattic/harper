@@ -1,76 +1,44 @@
-use cached::sync_sync::RwLock;
+#[cfg(feature = "concurrent")]
+mod multi_thread_pool;
+mod pool;
+mod single_thread_pool;
 
+use self::pool::Pool;
+use self::single_thread_pool::SingleThreadPool;
+use crate::Lint;
+
+use super::Linter;
+
+#[cfg(feature = "concurrent")]
+type SelectedPool<T> = multi_thread_pool::MultiThreadPool<T>;
 #[cfg(not(feature = "concurrent"))]
-use std::cell::RefCell;
-use std::rc::Rc;
-use std::sync::{Arc, Mutex};
+type SelectedPool<T> = SingleThreadPool<T>;
 
-use super::{Lint, Linter};
-
+#[derive(Clone)]
 pub struct ThreadLocalLinter<L: Linter> {
-    ctor: fn() -> L,
-    #[cfg(feature = "concurrent")]
-    pool: Arc<RwLock<Vec<Arc<Mutex<L>>>>>,
+    pool: SelectedPool<L>,
     description: String,
 }
 
 impl<L: Linter> ThreadLocalLinter<L> {
     pub fn new(ctor: fn() -> L) -> Self {
-        let first = ctor();
-        let description = first.description().to_string();
+        let pool = SelectedPool::new(ctor);
+        let description = pool.run_with_pool(|i| i.description().to_string());
 
-        Self {
-            ctor,
-            #[cfg(feature = "concurrent")]
-            pool: Arc::new(RwLock::new(vec![Arc::new(Mutex::new(first))])),
-            description,
-        }
+        Self { pool, description }
     }
 
-    #[cfg(feature = "concurrent")]
-    pub fn run_with_pool<B>(&self, callback: impl FnOnce(&mut L) -> B) -> B {
-        // Attempt to grab an open copy.
-        {
-            let read_pool = self.pool.read();
-            for i in read_pool.iter() {
-                let item = i.clone();
-                if let Ok(mut l) = item.try_lock() {
-                    return callback(&mut l);
-                }
-            }
-        }
-
-        {
-            let mut write_pool = self.pool.write();
-            write_pool.push(Arc::new(Mutex::new((self.ctor)())));
-            return callback(&mut write_pool.last().unwrap().clone().lock().unwrap());
-        }
-    }
-
-    #[cfg(not(feature = "concurrent"))]
-    pub fn run_with_pool<B>(&self, callback: impl FnOnce(&mut L) -> B) -> B {
-        let mut linter = (self.ctor)();
-        callback(&mut linter)
+    pub fn run_with_inner<B>(&self, callback: impl FnOnce(&mut L) -> B) -> B {
+        self.pool.run_with_pool(callback)
     }
 }
 
 impl<L: Linter> Linter for ThreadLocalLinter<L> {
     fn lint(&mut self, document: &crate::Document) -> Vec<Lint> {
-        self.run_with_pool(|linter| linter.lint(document))
+        self.run_with_inner(|linter| linter.lint(document))
     }
 
     fn description(&self) -> &str {
         &self.description
-    }
-}
-
-impl<L: Linter> Clone for ThreadLocalLinter<L> {
-    fn clone(&self) -> Self {
-        Self {
-            ctor: self.ctor.clone(),
-            #[cfg(feature = "concurrent")]
-            pool: self.pool.clone(),
-            description: self.description.clone(),
-        }
     }
 }

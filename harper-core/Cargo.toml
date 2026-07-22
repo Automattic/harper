@@ -36,6 +36,7 @@ bitflags = { version = "2.11.0", features = ["serde"] }
 trie-rs = "0.4.2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
 regex = "1.12.3"
+parking_lot = { version = "0.12.5", optional = true}
 
 [dev-dependencies]
 criterion = { version = "0.8.2", default-features = false }
@@ -54,5 +55,5 @@ harness = false
 
 [features]
 default = ["thesaurus"]
-concurrent = []
+concurrent = ["dep:parking_lot"]
 thesaurus = ["dep:harper-thesaurus"]
