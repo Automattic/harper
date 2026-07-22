@@ -12,6 +12,7 @@ use lru::LruCache;
 
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
+use super::a_ways_to_go::AWaysToGo;
 use super::a_while::AWhile;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
@@ -87,6 +88,7 @@ use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
 use super::expr_linter::run_on_chunk;
+use super::fall_below::FallBelow;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
@@ -585,6 +587,7 @@ impl LintGroup {
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
+        insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
         insert_expr_rule!(Addicting);
         insert_expr_rule!(AdjectiveDoubleDegree);
@@ -657,6 +660,7 @@ impl LintGroup {
         insert_expr_rule!(ExpandMemoryShorthands);
         insert_expr_rule!(ExpandPeople);
         insert_expr_rule!(ExpandTimeShorthands);
+        insert_expr_rule!(FallBelow);
         insert_expr_rule!(FarBeIt);
         insert_expr_rule!(FascinatedBy);
         insert_expr_rule_with_dialect!(FedUpWith);
