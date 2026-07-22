@@ -305,6 +305,7 @@ use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
+use super::wrong_negative::WrongNegative;
 
 use super::{ExprLinter, Lint};
 use super::{HtmlDescriptionLinter, Linter};
@@ -875,6 +876,7 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom);
         insert_expr_rule_with_dict!(WorthToDo);
         insert_expr_rule!(WouldNeverHave);
+        insert_expr_rule_with_dict!(WrongNegative);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
