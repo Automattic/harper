@@ -196,6 +196,7 @@ use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pale_by_comparison::PaleByComparison;
 use super::passionate_about::PassionateAbout;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
@@ -770,6 +771,7 @@ impl LintGroup {
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);
         insert_expr_rule!(Oxymorons);
+        insert_expr_rule!(PaleByComparison);
         insert_expr_rule!(PassionateAbout);
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
