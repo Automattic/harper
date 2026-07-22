@@ -37,6 +37,7 @@ use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
+use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
@@ -614,6 +615,7 @@ impl LintGroup {
         insert_expr_rule!(AvoidContractions);
         insert_expr_rule!(AvoidCurses);
         insert_expr_rule!(BackInTheDay);
+        insert_expr_rule_with_dict!(BarelyUn);
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
