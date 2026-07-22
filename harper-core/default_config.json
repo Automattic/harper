@@ -3909,6 +3909,13 @@
 								"state": true,
 								"label": "Reads and Writes"
 							}
+						},
+						{
+							"Bool": {
+								"name": "HelpedPast",
+								"state": true,
+								"label": "Helped Past"
+							}
 						}
 					]
 				}
@@ -5329,6 +5336,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InADifferentDirection",
+								"state": true,
+								"label": "In A Different Direction"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"
@@ -5346,6 +5360,13 @@
 								"name": "InDueCourse",
 								"state": true,
 								"label": "In Due Course"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TillDate",
+								"state": true,
+								"label": "Till Date"
 							}
 						},
 						{
@@ -5381,6 +5402,27 @@
 								"name": "BarelyUn",
 								"state": true,
 								"label": "Barely Un-"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HaveAHardTime",
+								"state": true,
+								"label": "Have a Hard Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThrowBabyWithBathwater",
+								"state": true,
+								"label": "Throw Baby with Bathwater"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ALittleOfPractice",
+								"state": true,
+								"label": "A Little of Practice"
 							}
 						}
 					]
