@@ -55,7 +55,7 @@ test.beforeEach(async ({ context }) => {
 			// Ensure the linter is initialized with American dialect for consistent test behavior
 			// This prevents locale detection from affecting test results
 			await chrome.storage.local.set({ dialect: 0 });
-		});
+		}).catch(() => {});
 	}
 });
 
