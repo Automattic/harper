@@ -5399,6 +5399,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PassionateAbout",
+								"state": true,
+								"label": "Passionate About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForTheNthTime",
 								"state": true,
 								"label": "For The Nth Time"
@@ -5409,6 +5416,13 @@
 								"name": "InStock",
 								"state": true,
 								"label": "In Stock"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HowDoesCompared",
+								"state": true,
+								"label": "How Does Compared"
 							}
 						},
 						{
