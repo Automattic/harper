@@ -5420,6 +5420,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BarelyUn",
+								"state": true,
+								"label": "Barely Un-"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HowDoesCompared",
 								"state": true,
 								"label": "How Does Compared"

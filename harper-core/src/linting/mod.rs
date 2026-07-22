@@ -29,6 +29,7 @@ mod aspire_to;
 mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
+mod barely_un;
 mod be_adjective_confusions;
 mod be_allowed;
 mod behind_the_scenes;
