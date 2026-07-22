@@ -1,6 +1,9 @@
+mod tray;
+mod windows;
+
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
-use self::menu_bar_icon::menu_bar_icon;
+use self::tray::set_up_tray_menu;
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
@@ -11,17 +14,15 @@ use harper_core::{
     spell::MutableDictionary,
 };
 use serde::Serialize;
+use std::io::stderr;
 use std::{
     cell::RefCell,
     rc::Rc,
     sync::{Arc, Mutex as StdMutex},
 };
-use tauri::{
-    Manager, WebviewUrl, WebviewWindowBuilder, WindowEvent,
-    menu::{HELP_SUBMENU_ID, Menu, MenuItem, PredefinedMenuItem},
-    tray::{MouseButton, TrayIconBuilder, TrayIconEvent},
-};
-use tauri_plugin_opener::OpenerExt;
+use tauri::Manager as _;
+use tracing::{Level, error};
+use tracing_subscriber::FmtSubscriber;
 
 use crate::os_broker::{AccessibilityPermissionStatus, OsBroker};
 use tokio::{
@@ -38,7 +39,6 @@ mod debounce;
 pub mod highlighter;
 pub mod highlighter_service;
 pub mod lint_kind_color;
-mod menu_bar_icon;
 mod os_broker;
 pub mod rect;
 
@@ -59,179 +59,11 @@ enum Command {
     },
 }
 
-const EDITOR_WINDOW_LABEL: &str = "main";
-const SETTINGS_WINDOW_LABEL: &str = "settings";
-const TRAY_MENU_BAR_ID: &str = "harper-menu-bar";
-const TOGGLE_SERVICE_MENU_ID: &str = "toggle-service";
-const OPEN_EDITOR_MENU_ID: &str = "open-editor";
-const SETTINGS_MENU_ID: &str = "settings";
-const REPORT_ISSUE_MENU_ID: &str = "report-issue";
-const QUIT_MENU_ID: &str = "quit";
-
 #[derive(Debug, Clone, Serialize)]
 struct IntegrationView {
     bundle_id: String,
     enabled: bool,
     display_name: String,
-}
-
-struct TrayMenu {
-    menu: Menu<tauri::Wry>,
-    service_toggle: MenuItem<tauri::Wry>,
-}
-
-fn service_menu_text(is_running: bool) -> &'static str {
-    match is_running {
-        true => "Stop Harper Service",
-        false => "Start Harper Service",
-    }
-}
-
-fn show_editor_window(app: &tauri::AppHandle) -> tauri::Result<()> {
-    if let Some(window) = app.get_webview_window(EDITOR_WINDOW_LABEL) {
-        window.show()?;
-        window.set_focus()?;
-        return Ok(());
-    }
-
-    let window = WebviewWindowBuilder::new(
-        app,
-        EDITOR_WINDOW_LABEL,
-        WebviewUrl::App("index.html".into()),
-    )
-    .title("Harper")
-    .inner_size(800.0, 600.0)
-    .build()?;
-    window.set_focus()?;
-
-    Ok(())
-}
-
-fn show_settings_window(app: &tauri::AppHandle) -> tauri::Result<()> {
-    if let Some(window) = app.get_webview_window(SETTINGS_WINDOW_LABEL) {
-        window.show()?;
-        window.set_focus()?;
-        return Ok(());
-    }
-
-    WebviewWindowBuilder::new(
-        app,
-        SETTINGS_WINDOW_LABEL,
-        WebviewUrl::App("index.html".into()),
-    )
-    .title("Harper Settings")
-    .inner_size(920.0, 680.0)
-    .min_inner_size(780.0, 520.0)
-    .center()
-    .build()?;
-
-    Ok(())
-}
-
-fn open_issue_report(app: &tauri::AppHandle) {
-    if let Err(error) = app.opener().open_url(
-        "https://github.com/Automattic/harper/issues/new/choose",
-        None::<&str>,
-    ) {
-        eprintln!("failed to open issue report URL: {error}");
-    }
-}
-
-fn desktop_app_menu(app: &tauri::AppHandle) -> tauri::Result<Menu<tauri::Wry>> {
-    let menu = Menu::default(app)?;
-
-    if let Some(help_menu) = menu
-        .get(HELP_SUBMENU_ID)
-        .and_then(|item| item.as_submenu().cloned())
-    {
-        if !help_menu.items()?.is_empty() {
-            help_menu.append(&PredefinedMenuItem::separator(app)?)?;
-        }
-
-        help_menu.append(&MenuItem::with_id(
-            app,
-            REPORT_ISSUE_MENU_ID,
-            "Report an Issue",
-            true,
-            None::<&str>,
-        )?)?;
-    }
-
-    Ok(menu)
-}
-
-fn tray_menu(app: &tauri::App, is_running: bool) -> tauri::Result<TrayMenu> {
-    let service_toggle = MenuItem::with_id(
-        app,
-        TOGGLE_SERVICE_MENU_ID,
-        service_menu_text(is_running),
-        true,
-        None::<&str>,
-    )?;
-    let open_editor =
-        MenuItem::with_id(app, OPEN_EDITOR_MENU_ID, "Open Editor", true, None::<&str>)?;
-    let separator = PredefinedMenuItem::separator(app)?;
-    let settings = MenuItem::with_id(app, SETTINGS_MENU_ID, "Settings", true, None::<&str>)?;
-    let report_issue = MenuItem::with_id(
-        app,
-        REPORT_ISSUE_MENU_ID,
-        "Report an Issue",
-        true,
-        None::<&str>,
-    )?;
-    let quit = MenuItem::with_id(app, QUIT_MENU_ID, "Quit", true, None::<&str>)?;
-
-    let menu = Menu::with_items(
-        app,
-        &[
-            &service_toggle,
-            &open_editor,
-            &separator,
-            &settings,
-            &report_issue,
-            &quit,
-        ],
-    )?;
-
-    Ok(TrayMenu {
-        menu,
-        service_toggle,
-    })
-}
-
-fn update_service_tray_state(
-    app: &tauri::AppHandle,
-    service_toggle: &MenuItem<tauri::Wry>,
-    is_running: bool,
-) -> tauri::Result<()> {
-    service_toggle.set_text(service_menu_text(is_running))?;
-
-    if let Some(tray) = app.tray_by_id(TRAY_MENU_BAR_ID) {
-        tray.set_icon(Some(menu_bar_icon(is_running)?))?;
-    }
-
-    Ok(())
-}
-
-fn should_hide_window_on_close(label: &str) -> bool {
-    label == EDITOR_WINDOW_LABEL || label == SETTINGS_WINDOW_LABEL
-}
-
-fn accessibility_allows_highlighter_start() -> bool {
-    platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
-}
-
-fn start_highlighter_service_if_enabled_and_permitted(
-    highlighter_service: &HighlighterService,
-    highlighter_service_enabled: bool,
-) {
-    if !highlighter_service_enabled || !accessibility_allows_highlighter_start() {
-        return;
-    }
-
-    if let Err(error) = highlighter_service.start() {
-        eprintln!("failed to start highlighter service: {error}");
-    }
 }
 
 #[cfg(target_os = "macos")]
@@ -260,6 +92,15 @@ fn warm_app_search_cache(app: tauri::AppHandle) {
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
+    let subscriber = FmtSubscriber::builder()
+        .map_writer(move |_| stderr)
+        .with_ansi(false)
+        .with_max_level(Level::WARN)
+        .finish();
+
+    tracing::subscriber::set_global_default(subscriber)
+        .expect("Unable to set up tracing subscriber.");
+
     let args = Args::parse();
 
     match args.command {
@@ -269,10 +110,12 @@ pub fn run() {
 }
 
 pub fn run_tauri() {
-    let config_runtime = Builder::new_current_thread()
+    let async_runtime = Builder::new_multi_thread()
         .enable_all()
         .build()
         .expect("failed to build config runtime");
+
+    // Infer
     let is_first_launch = match Config::main_config_exists() {
         Ok(exists) => !exists,
         Err(error) => {
@@ -284,13 +127,13 @@ pub fn run_tauri() {
     let config = if is_first_launch {
         let config = Config::new();
 
-        if let Err(error) = config_runtime.block_on(config.save_to_system()) {
+        if let Err(error) = async_runtime.block_on(config.save_to_system()) {
             eprintln!("failed to save initial config: {error}");
         }
 
         config
     } else {
-        match config_runtime.block_on(Config::load_from_system()) {
+        match async_runtime.block_on(Config::load_from_system()) {
             Ok(config) => config,
             Err(error) => {
                 eprintln!("failed to load config, using defaults: {error}");
@@ -298,18 +141,24 @@ pub fn run_tauri() {
             }
         }
     };
+
     let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
+
     let highlighter_service = HighlighterService::new(config.clone());
-    start_highlighter_service_if_enabled_and_permitted(
-        &highlighter_service,
-        highlighter_service_enabled,
-    );
+    if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+        && highlighter_service_enabled
+    {
+        let _ = highlighter_service
+            .start()
+            .inspect_err(|err| error!("Unable to start highlighter: {err}"));
+    }
 
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
         .manage(StdMutex::new(platform_broker()))
+        .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
             None,
@@ -317,117 +166,15 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(commands::application_message_handler())
-        .menu(desktop_app_menu)
-        .on_menu_event(|app, event| {
-            if event.id().as_ref() == REPORT_ISSUE_MENU_ID {
-                open_issue_report(app);
-            }
-        })
-        .on_window_event(|window, event| {
-            if should_hide_window_on_close(window.label())
-                && let WindowEvent::CloseRequested { api, .. } = event
-            {
-                api.prevent_close();
-
-                if let Err(error) = window.hide() {
-                    eprintln!("failed to hide {} window: {error}", window.label());
-                }
-            }
-        })
         .setup(move |app| {
-            let is_service_running = app.state::<HighlighterService>().is_running();
-            let menu = tray_menu(app, is_service_running)?;
-            let service_toggle = menu.service_toggle.clone();
-
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
 
+            set_up_tray_menu(app.handle())?;
             warm_app_search_cache(app.handle().clone());
 
-            let tray = TrayIconBuilder::with_id(TRAY_MENU_BAR_ID)
-                .menu(&menu.menu)
-                .icon(menu_bar_icon(is_service_running)?)
-                .tooltip("Harper Desktop")
-                .show_menu_on_left_click(false)
-                .on_menu_event(move |app, event| match event.id().as_ref() {
-                    TOGGLE_SERVICE_MENU_ID => {
-                        let highlighter_service = app.state::<HighlighterService>();
-
-                        let toggle_result = if highlighter_service.is_running() {
-                            tauri::async_runtime::block_on(commands::stop_highlighter_service(
-                                app.state::<Arc<Mutex<Config>>>(),
-                                highlighter_service,
-                            ))
-                        } else {
-                            let result = tauri::async_runtime::block_on(
-                                commands::start_highlighter_service(
-                                    app.state::<Arc<Mutex<Config>>>(),
-                                    highlighter_service,
-                                ),
-                            );
-
-                            if matches!(result, Ok(false))
-                                && !accessibility_allows_highlighter_start()
-                                && let Err(error) = show_settings_window(app)
-                            {
-                                eprintln!("failed to show settings window: {error}");
-                            }
-
-                            result
-                        };
-
-                        match toggle_result {
-                            Ok(status) => {
-                                if let Err(error) =
-                                    update_service_tray_state(app, &service_toggle, status)
-                                {
-                                    eprintln!("failed to update service tray state: {error}");
-                                }
-                            }
-                            Err(error) => {
-                                eprintln!("failed to toggle highlighter service: {error}");
-
-                                let is_running = app.state::<HighlighterService>().is_running();
-                                if let Err(error) =
-                                    update_service_tray_state(app, &service_toggle, is_running)
-                                {
-                                    eprintln!("failed to update service tray state: {error}");
-                                }
-                            }
-                        }
-                    }
-                    OPEN_EDITOR_MENU_ID => {
-                        if let Err(error) = show_editor_window(app) {
-                            eprintln!("failed to show editor window: {error}");
-                        }
-                    }
-                    SETTINGS_MENU_ID => {
-                        if let Err(error) = show_settings_window(app) {
-                            eprintln!("failed to show settings window: {error}");
-                        }
-                    }
-                    REPORT_ISSUE_MENU_ID => open_issue_report(app),
-                    QUIT_MENU_ID => app.exit(0),
-                    _ => {}
-                })
-                .on_tray_icon_event(|tray, event| {
-                    if let TrayIconEvent::Click {
-                        button: MouseButton::Left,
-                        ..
-                    } = event
-                    {
-                        let app = tray.app_handle().clone();
-
-                        if let Err(error) = show_settings_window(&app) {
-                            eprintln!("failed to show settings window: {error}");
-                        }
-                    }
-                });
-
-            tray.build(app)?;
-
             if is_first_launch {
-                show_settings_window(app.handle())?;
+                windows::show_settings_window(app.handle())?;
             }
 
             Ok(())
@@ -585,7 +332,10 @@ pub fn run_highlighter(has_parent: bool) {
                 &refresh_debounce_ms,
                 &refresh_linter,
             ),
-            Err(error) => eprintln!("failed to refresh highlighter config: {error}"),
+            Err(error) => {
+                eprintln!("failed to refresh highlighter config: {error}");
+                std::process::exit(1);
+            }
         }
     };
 
