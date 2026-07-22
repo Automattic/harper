@@ -5,6 +5,7 @@ import { isHeading, isVisible } from './domUtils';
 import { getCaretPosition, getCMRoot } from './editorUtils';
 import Highlights from './Highlights';
 import PopupHandler from './PopupHandler';
+import { remapLintToCurrentSource } from './spanMapping';
 import type { UnpackedLint, UnpackedLintGroups } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
@@ -16,10 +17,29 @@ type Hotkey = {
 	key: string;
 };
 
+type FrameworkActions = {
+	ignoreLint?: (hash: string) => Promise<void>;
+	getActivationKey?: () => Promise<ActivationKey>;
+	getHotkey?: () => Promise<Hotkey>;
+	getDelay?: () => Promise<number>;
+	openOptions?: () => Promise<void>;
+	addToUserDictionary?: (words: string[]) => Promise<void>;
+	reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+	setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
+};
+
 /** Events on an input (any kind) that can trigger a re-render. */
-const INPUT_EVENTS = ['focus', 'keyup', 'paste', 'change', 'scroll'];
+const INPUT_EVENTS = ['focus', 'keyup', 'keydown', 'paste', 'change', 'scroll', 'input'];
 /** Events on the window that can trigger a re-render. */
-const PAGE_EVENTS = ['resize', 'scroll'];
+const PAGE_EVENTS = [
+	'resize',
+	'scroll',
+	'keyup',
+	'keydown',
+	'input',
+	'compositionend',
+	'selectionchange',
+];
 
 /** Orchestrates linting and rendering in response to events on the page. */
 export default class LintFramework {
@@ -29,6 +49,8 @@ export default class LintFramework {
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
 	private renderRequested = false;
+	private lintDelayTimer: number | null = null;
+	private lastInputAt = 0;
 	private lastLints: { target: HTMLElement; lints: UnpackedLintGroups }[] = [];
 	private lastBoxes: IgnorableLintBox[] = [];
 	private lastLintBoxes: IgnorableLintBox[] = [];
@@ -43,15 +65,7 @@ export default class LintFramework {
 		options?: LintOptions,
 	) => Promise<UnpackedLintGroups>;
 	/** Actions wired by host environment (extension/app). */
-	private actions: {
-		ignoreLint?: (hash: string) => Promise<void>;
-		getActivationKey?: () => Promise<ActivationKey>;
-		getHotkey?: () => Promise<Hotkey>;
-		openOptions?: () => Promise<void>;
-		addToUserDictionary?: (words: string[]) => Promise<void>;
-		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-	};
+	private actions: FrameworkActions;
 
 	constructor(
 		lintProvider: (
@@ -59,15 +73,7 @@ export default class LintFramework {
 			domain: string,
 			options?: LintOptions,
 		) => Promise<UnpackedLintGroups>,
-		actions: {
-			ignoreLint?: (hash: string) => Promise<void>;
-			getActivationKey?: () => Promise<ActivationKey>;
-			getHotkey?: () => Promise<Hotkey>;
-			openOptions?: () => Promise<void>;
-			addToUserDictionary?: (words: string[]) => Promise<void>;
-			reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
-			setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
-		},
+		actions: FrameworkActions,
 	) {
 		this.lintProvider = lintProvider;
 		this.actions = actions;
@@ -84,15 +90,16 @@ export default class LintFramework {
 		this.lastLints = [];
 
 		this.updateEventCallback = () => {
+			this.lastInputAt = Date.now();
 			this.update();
 		};
 
+		// Catches edge cases where editors do not correctly emit events.
 		const timeoutCallback = () => {
 			this.update();
 
-			setTimeout(timeoutCallback, 100);
+			setTimeout(timeoutCallback, 1000);
 		};
-
 		timeoutCallback();
 
 		this.attachWindowListeners();
@@ -116,78 +123,78 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
-	async requestLintUpdate() {
-		if (this.lintRequested) {
+	async requestLintUpdate(immediate = false) {
+		const delay = (await this.actions.getDelay?.()) ?? 0;
+		const remainingDelay = delay - (Date.now() - this.lastInputAt);
+
+		// Extend the delay if there is one in effect (this is the debounce behavior).
+		if (!immediate && delay > 0 && remainingDelay > 0) {
+			if (this.lintDelayTimer != null) {
+				window.clearTimeout(this.lintDelayTimer);
+			}
+
+			this.lintDelayTimer = window.setTimeout(() => {
+				this.lintDelayTimer = null;
+				this.requestLintUpdate();
+			}, remainingDelay);
 			return;
 		}
 
-		// Avoid duplicate requests in the queue
-		this.lintRequested = true;
+		if (this.lintDelayTimer != null) {
+			window.clearTimeout(this.lintDelayTimer);
+			this.lintDelayTimer = null;
+		}
 
-		const lintResults = await Promise.all(
-			this.onScreenTargets().map(async (target) => {
-				if (!document.contains(target)) {
-					this.targets.delete(target);
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+		if ((!this.lintRequested && this.targets.size !== 0) || immediate) {
+			// Avoid duplicate requests in the queue
+			if (!immediate) {
+				this.lintRequested = true;
+			}
 
-				let text = null;
-
-				// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
-				const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
-
-				if (isCM) {
-					const lineElements = target.querySelectorAll<HTMLElement>('.cm-line');
-					const lines = Array.from(lineElements).map((el) => el.textContent);
-					text = lines.reduce((acc: string, x: string) => `${acc + x}\n`, '');
-				} else {
-					text =
-						target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
-							? target.value
-							: target.textContent;
-				}
-
-				const newLineIndices = [];
-				let i = 0;
-				for (const c of text ?? '') {
-					if (c == '\n') {
-						newLineIndices.push(i);
+			const lintResults = await Promise.all(
+				this.onScreenTargets().map(async (target) => {
+					if (!document.contains(target)) {
+						this.targets.delete(target);
+						return { target: null as HTMLElement | null, lints: {} };
 					}
-					i++;
-				}
 
-				if (!text || text.length > 120000) {
-					return { target: null as HTMLElement | null, lints: {} };
-				}
+					const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-				const language = getTargetLanguage(target);
-				let lintsBySource = await this.lintProvider(text, window.location.hostname, {
-					forceAllHeadings: isHeading(target),
-					language,
-				});
+					if (!text || text.length > 120000) {
+						return { target: null as HTMLElement | null, lints: {} };
+					}
 
-				if (isCM) {
-					// We're about to modify a reference, so let's work on a copy.
-					lintsBySource = window.structuredClone(lintsBySource);
+					const language = getTargetLanguage(target);
+					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+						forceAllHeadings: isHeading(target),
+						language,
+					});
 
-					for (const lints of Object.values(lintsBySource)) {
-						for (const lint of lints) {
-							const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-							const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+					if (isCM) {
+						// We're about to modify a reference, so let's work on a copy.
+						lintsBySource = window.structuredClone(lintsBySource);
 
-							lint.span.start -= offset_start;
-							lint.span.end -= offset_end;
+						for (const lints of Object.values(lintsBySource)) {
+							for (const lint of lints) {
+								const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+								const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+
+								lint.span.start -= offset_start;
+								lint.span.end -= offset_end;
+							}
 						}
 					}
-				}
 
-				return { target: target as HTMLElement, lints: lintsBySource };
-			}),
-		);
+					return { target: target as HTMLElement, lints: lintsBySource };
+				}),
+			);
 
-		this.lastLints = lintResults.filter((r) => r.target != null) as any;
-		this.lintRequested = false;
-		this.requestRender();
+			this.lastLints = lintResults.filter((r) => r.target != null) as any;
+			if (!immediate) {
+				this.lintRequested = false;
+			}
+			this.requestRender();
+		}
 	}
 
 	/**
@@ -296,6 +303,39 @@ export default class LintFramework {
 		}
 	}
 
+	private getTargetText(target: Node): {
+		text: string | null;
+		isCM: boolean;
+		newLineIndices: number[];
+	} {
+		let text: string | null = null;
+
+		// Check if it is a CodeMirror instance, which needs to be handled in a specific way.
+		const isCM = target instanceof HTMLElement && getCMRoot(target) != null;
+
+		if (isCM) {
+			const lineElements = (target as HTMLElement).querySelectorAll<HTMLElement>('.cm-line');
+			const lines = Array.from(lineElements).map((el) => el.textContent);
+			text = lines.reduce((acc: string, x: string | null) => `${acc}${x ?? ''}\n`, '');
+		} else {
+			text =
+				target instanceof HTMLTextAreaElement || target instanceof HTMLInputElement
+					? target.value
+					: (target as HTMLElement).innerText;
+		}
+
+		const newLineIndices: number[] = [];
+		let i = 0;
+		for (const c of text ?? '') {
+			if (c == '\n') {
+				newLineIndices.push(i);
+			}
+			i++;
+		}
+
+		return { text, isCM, newLineIndices };
+	}
+
 	private requestRender() {
 		if (this.renderRequested) {
 			return;
@@ -304,17 +344,38 @@ export default class LintFramework {
 		this.renderRequested = true;
 
 		requestAnimationFrame(() => {
-			const boxes = this.lastLints.flatMap(({ target, lints }) =>
-				target
-					? Object.entries(lints).flatMap(([ruleName, ls]) =>
-							ls.flatMap((l) =>
-								computeLintBoxes(target, l as any, ruleName, {
-									ignoreLint: this.actions.ignoreLint,
-								}),
-							),
-						)
-					: [],
-			);
+			const boxes = this.lastLints.flatMap(({ target, lints }) => {
+				if (!target) {
+					return [];
+				}
+
+				const { text, isCM } = this.getTargetText(target);
+				if (text == null) {
+					return [];
+				}
+
+				return Object.entries(lints).flatMap(([ruleName, ls]) =>
+					ls.flatMap((lint) => {
+						const currentLint = isCM
+							? lint.source === text
+								? lint
+								: null
+							: remapLintToCurrentSource(lint, text);
+						if (currentLint == null) {
+							return [];
+						}
+
+						return computeLintBoxes(target, currentLint, ruleName, {
+							ignoreLint: this.actions.ignoreLint
+								? async (hash: string) => {
+										await this.actions.ignoreLint?.(hash);
+										await this.requestLintUpdate(true);
+									}
+								: undefined,
+						});
+					}),
+				);
+			});
 			this.lastLintBoxes = boxes;
 			this.highlights.renderLintBoxes(boxes);
 			this.popupHandler.updateLintBoxes(boxes);

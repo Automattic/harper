@@ -276,18 +276,25 @@ impl Linter {
         Ok(())
     }
 
-    pub fn ignore_lint(&mut self, source_text: String, lint: Lint) {
+    pub fn ignore_lints(&mut self, source_text: String, lints: Vec<Lint>) {
         let source: Lrc<_> = source_text.chars().collect();
 
-        let document =
-            Document::new_from_chars(source, &lint.language.create_parser(), &self.dictionary);
+        for lint in lints {
+            let document = Document::new_from_chars(
+                source.clone(),
+                &lint.language.create_parser(),
+                &self.dictionary,
+            );
 
-        self.ignored_lints.ignore_lint(&lint.inner, &document);
+            self.ignored_lints.ignore_lint(&lint.inner, &document);
+        }
     }
 
     /// Add a specific context hash to the ignored lints list.
-    pub fn ignore_hash(&mut self, hash: u64) {
-        self.ignored_lints.ignore_hash(hash);
+    pub fn ignore_hashes(&mut self, hashes: Vec<u64>) {
+        for hash in hashes {
+            self.ignored_lints.ignore_hash(hash);
+        }
     }
 
     /// Compute the context hash of a given lint.
@@ -304,44 +311,73 @@ impl Linter {
         ctx.default_hash()
     }
 
-    pub fn organized_lints(
-        &mut self,
-        text: String,
+    fn create_lint_parser(
+        &self,
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
-    ) -> Vec<OrganizedGroup> {
-        let source: Lrc<_> = text.chars().collect();
-
+        isolate_english: bool,
+    ) -> Option<Box<dyn Parser>> {
         let mut parser = language.create_parser();
 
         if let Some(regex) = regex_mask {
-            let masker_maybe = RegexMasker::new(regex.as_str(), true);
-            if let Some(masker) = masker_maybe {
-                parser = Box::new(Mask::new(masker, parser));
-            } else {
-                return vec![];
-            }
+            let Some(masker) = RegexMasker::new(regex.as_str(), true) else {
+                tracing::warn!("Ignoring lint request because the regex mask is invalid: {regex}");
+                return None;
+            };
+
+            parser = Box::new(Mask::new(masker, parser));
         }
 
         if all_headings {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
+        if isolate_english {
+            parser = Box::new(IsolateEnglish::new(parser, self.dictionary.clone()));
+        }
 
-        let temp = self.lint_group.config.clone();
+        Some(parser)
+    }
+
+    fn with_curated_config<T>(&mut self, lint: impl FnOnce(&mut LintGroup) -> T) -> T {
+        let config = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
 
-        let mut lints = self.lint_group.organized_lints(&document);
+        let output = lint(&mut self.lint_group);
 
-        self.lint_group.config = temp;
+        self.lint_group.config = config;
+        output
+    }
+
+    pub fn organized_lints(
+        &mut self,
+        text: String,
+        language: Language,
+        all_headings: bool,
+        regex_mask: Option<String>,
+        dedup: bool,
+        isolate_english: bool,
+    ) -> Vec<OrganizedGroup> {
+        let source: Lrc<_> = text.chars().collect();
+        let Some(parser) =
+            self.create_lint_parser(language, all_headings, regex_mask, isolate_english)
+        else {
+            return vec![];
+        };
+
+        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
+
+        let mut lints =
+            self.with_curated_config(|lint_group| lint_group.organized_lints(&document));
 
         for value in lints.values_mut() {
             self.ignored_lints.remove_ignored(value, &document);
         }
 
-        remove_overlaps_map(&mut lints);
+        if dedup {
+            remove_overlaps_map(&mut lints);
+        }
 
         lints
             .into_iter()
@@ -349,12 +385,7 @@ impl Linter {
                 group: s,
                 lints: ls
                     .into_iter()
-                    .map(|l| {
-                        let problem_text = l.get_str(&source);
-                        let span = Into::<Span>::into(l.span).to_js_indices(&source);
-
-                        Lint::new(l, span, problem_text, language)
-                    })
+                    .map(|l| create_lint(l, &source, language))
                     .collect(),
             })
             .collect()
@@ -369,43 +400,28 @@ impl Linter {
         language: Language,
         all_headings: bool,
         regex_mask: Option<String>,
+        dedup: bool,
+        isolate_english: bool,
     ) -> Vec<Lint> {
         let source: Lrc<_> = text.chars().collect();
-
-        let mut parser = language.create_parser();
-
-        if let Some(regex) = regex_mask {
-            let masker_maybe = RegexMasker::new(regex.as_str(), true);
-            if let Some(masker) = masker_maybe {
-                parser = Box::new(Mask::new(masker, parser));
-            } else {
-                return vec![];
-            }
-        }
-
-        if all_headings {
-            parser = Box::new(OopsAllHeadings::new(parser));
-        }
+        let Some(parser) =
+            self.create_lint_parser(language, all_headings, regex_mask, isolate_english)
+        else {
+            return vec![];
+        };
 
         let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
 
-        let temp = self.lint_group.config.clone();
-        self.lint_group.config.fill_with_curated();
-
-        let mut lints = self.lint_group.lint(&document);
-
-        self.lint_group.config = temp;
+        let mut lints = self.with_curated_config(|lint_group| lint_group.lint(&document));
 
         self.ignored_lints.remove_ignored(&mut lints, &document);
-        remove_overlaps(&mut lints);
+        if dedup {
+            remove_overlaps(&mut lints);
+        }
 
         lints
             .into_iter()
-            .map(|l| {
-                let problem_text = l.get_str(&source);
-                let span = Into::<Span>::into(l.span).to_js_indices(&source);
-                Lint::new(l, span, problem_text, language)
-            })
+            .map(|l| create_lint(l, &source, language))
             .collect()
     }
 
@@ -547,6 +563,13 @@ impl Linter {
         self.lint_group.merge_from(group);
         Ok(JsValue::UNDEFINED)
     }
+}
+
+fn create_lint(lint: harper_core::linting::Lint, source: &[char], language: Language) -> Lint {
+    let problem_text = lint.get_str(source);
+    let span = Into::<Span>::into(lint.span).to_js_indices(source);
+
+    Lint::new(lint, span, problem_text, language)
 }
 
 #[wasm_bindgen]
@@ -782,7 +805,7 @@ mod tests {
         linter.import_words(vec![text.clone()]);
         dbg!(linter.dictionary.get_word_metadata_str(&text));
 
-        let lints = linter.lint(text, Language::Plain, false, None);
+        let lints = linter.lint(text, Language::Plain, false, None, true, false);
         assert!(lints.is_empty());
     }
 
@@ -803,6 +826,8 @@ mod tests {
                     Language::Plain,
                     false,
                     None,
+                    true,
+                    false,
                 );
 
                 assert!(results.is_empty())

@@ -1,0 +1,17 @@
+feat(stuff): use session-based authentiation
+
+BREAKING CHANGE: JWT authentication removed. API clients mustt now use
+session cookies instead of Authorization headers with bearer tokens.
+
+Sessions expire after 24 hours of inactvity.
+
+Closes: #247
+Reviewed-by: John Doe <john@example.com>
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch main
+# Changes to be committed:
+#	modified:   myfile.txt
+#

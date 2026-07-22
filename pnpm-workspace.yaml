@@ -1,5 +1,6 @@
 packages:
   - packages/*
+  - harper-desktop
   - harper-wasm/pkg
   - packages/harper.js/examples/*
 catalog:

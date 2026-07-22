@@ -10,7 +10,15 @@ export default class ProtocolClient {
 	});
 
 	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
-		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
+		return JSON.stringify([
+			domain,
+			text,
+			options?.language ?? 'markdown',
+			options?.forceAllHeadings ?? false,
+			options?.regex_mask ?? null,
+			options?.dedup ?? true,
+			options?.isolateEnglish ?? false,
+		]);
 	}
 
 	public static async lint(
@@ -60,6 +68,23 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
 	}
 
+	public static async getIsolateEnglish(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getIsolateEnglish' })).isolateEnglish;
+	}
+
+	public static async setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
+	}
+
+	public static async getDelay(): Promise<number> {
+		return (await chrome.runtime.sendMessage({ kind: 'getDelay' })).delay;
+	}
+
+	public static async setDelay(delay: number): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDelay', delay });
+	}
+
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
 		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
@@ -74,7 +99,12 @@ export default class ProtocolClient {
 		enabled: boolean,
 		overrideValue = true,
 	): Promise<void> {
-		await chrome.runtime.sendMessage({ kind: 'setDomainStatus', enabled, domain, overrideValue });
+		await chrome.runtime.sendMessage({
+			kind: 'setDomainStatus',
+			enabled,
+			domain,
+			overrideValue,
+		});
 	}
 
 	public static async getDefaultEnabled(): Promise<boolean> {
@@ -173,7 +203,11 @@ export default class ProtocolClient {
 
 	public static async addWeirpack(filename: string, bytes: Uint8Array): Promise<void> {
 		this.lintCache.clear();
-		await chrome.runtime.sendMessage({ kind: 'addWeirpack', filename, bytes: Array.from(bytes) });
+		await chrome.runtime.sendMessage({
+			kind: 'addWeirpack',
+			filename,
+			bytes: Array.from(bytes),
+		});
 	}
 
 	public static async removeWeirpack(id: string): Promise<void> {

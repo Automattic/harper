@@ -86,7 +86,7 @@ impl ExprLinter for ObsessPreposition {
         let message = if ok_prep_vec.len() == 1 {
             format!("Use 'over' instead of '{}'.", String::from_iter(prep_chars))
         } else {
-            "For `excessively preoccupied with` use `obsessed with`. For `paid close attention to details` use `obsessed over`".to_string()
+            "For `excessively preoccupied with` use `obsessed with`. For `paid close attention to details` use `obsessed over`".to_owned()
         };
 
         Some(Lint {

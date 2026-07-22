@@ -21,6 +21,7 @@ const fw = new LintFramework(
 		ignoreLint: (hash) => ProtocolClient.ignoreHash(hash),
 		getActivationKey: () => ProtocolClient.getActivationKey(),
 		getHotkey: () => ProtocolClient.getHotkey(),
+		getDelay: () => ProtocolClient.getDelay(),
 		openOptions: () => ProtocolClient.openOptions(),
 		addToUserDictionary: (words) => ProtocolClient.addToUserDictionary(words),
 		reportError: (lint: UnpackedLint, ruleId: string) =>
@@ -112,27 +113,29 @@ function scan() {
 			fw.addTarget(element);
 		});
 
-	document.querySelectorAll('[data-testid="gutenberg-editor"]').forEach((element) => {
-		const leafs = leafNodes(element);
+	document
+		.querySelectorAll('[data-testid="gutenberg-editor"], .block-editor-iframe__body')
+		.forEach((element) => {
+			const leafs = leafNodes(element);
 
-		const seenBlockContainers = new Set<Element>();
+			const seenBlockContainers = new Set<Element>();
 
-		for (const leaf of leafs) {
-			const blockContainer = getClosestBlockAncestor(leaf, element);
+			for (const leaf of leafs) {
+				const blockContainer = getClosestBlockAncestor(leaf, element);
 
-			if (!blockContainer || seenBlockContainers.has(blockContainer)) {
-				continue;
+				if (!blockContainer || seenBlockContainers.has(blockContainer)) {
+					continue;
+				}
+
+				seenBlockContainers.add(blockContainer);
+
+				if (!isVisible(blockContainer)) {
+					continue;
+				}
+
+				fw.addTarget(blockContainer);
 			}
-
-			seenBlockContainers.add(blockContainer);
-
-			if (!isVisible(blockContainer)) {
-				continue;
-			}
-
-			fw.addTarget(blockContainer);
-		}
-	});
+		});
 
 	document
 		.querySelectorAll<HTMLElement>('.cm-editor .cm-content[contenteditable="true"]')

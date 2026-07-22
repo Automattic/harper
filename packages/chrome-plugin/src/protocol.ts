@@ -9,6 +9,10 @@ export type Request =
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetIsolateEnglishRequest
+	| SetIsolateEnglishRequest
+	| GetDelayRequest
+	| SetDelayRequest
 	| SetDomainStatusRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
@@ -39,6 +43,8 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetIsolateEnglishResponse
+	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
@@ -54,7 +60,7 @@ export type LintRequest = {
 	kind: 'lint';
 	domain: string;
 	text: string;
-	options: LintOptions;
+	options?: LintOptions;
 };
 
 export type LintResponse = {
@@ -90,6 +96,20 @@ export type SetDialectRequest = {
 	dialect: Dialect;
 };
 
+export type GetDelayRequest = {
+	kind: 'getDelay';
+};
+
+export type GetDelayResponse = {
+	kind: 'getDelay';
+	delay: number;
+};
+
+export type SetDelayRequest = {
+	kind: 'setDelay';
+	delay: number;
+};
+
 export type GetLintDescriptionsRequest = {
 	kind: 'getLintDescriptions';
 };
@@ -106,6 +126,20 @@ export type GetDialectRequest = {
 export type GetDialectResponse = {
 	kind: 'getDialect';
 	dialect: Dialect;
+};
+
+export type GetIsolateEnglishRequest = {
+	kind: 'getIsolateEnglish';
+};
+
+export type GetIsolateEnglishResponse = {
+	kind: 'getIsolateEnglish';
+	isolateEnglish: boolean;
+};
+
+export type SetIsolateEnglishRequest = {
+	kind: 'setIsolateEnglish';
+	isolateEnglish: boolean;
 };
 
 export type GetDomainStatusRequest = {
