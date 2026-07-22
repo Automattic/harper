@@ -31812,7 +31812,7 @@ knotty/J^>
 know/~VbSB
 knowing/~JYPV6SNU
 knowledge/~Nmg
-knowledgeable/~JN
+knowledgeable/~JNU
 knowledgeably/Ry
 known/~JVT          # removed `N`, only a noun in the `unknown knows` sense
 knuckle/NSgVdG
@@ -31853,7 +31853,7 @@ kung fu/Ng
 kvetch/VGd>SNgZ
 kvetcher/Ng
 kw/~
-l/~NSd^GXz
+l/NSd^GXz
 la/NgJ
 lab/~NSg
 label/~NSVdG>r
@@ -44032,6 +44032,7 @@ scandalize/VdSG
 scandalmonger/NSg
 scandalous/~JY
 scandium/Nmg
+scannable/J
 scanned/~JVtT
 scanner/~NSg
 scanning/~V6N
@@ -54565,6 +54566,7 @@ backtest/NgSVdG
 baz/~               # cf. foo, bar
 bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
 blogpost/NgS        # !! blog post is many times more popular; both appear in some dictionaries
+catenative/J        # linguistics
 chroot/NgS
 clickstream/NgS
 concat/VSdG
@@ -54716,6 +54718,7 @@ truthy/J
 uncomment/VSdG
 unicast/JVSdG
 unlintable/J
+untensed/J          # grammar
 upsert/VdSGNg       # database operation: update or insert
 upsertion/NgS       # database operation: update or insert
 uptime/NwgS

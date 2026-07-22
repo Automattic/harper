@@ -2,7 +2,6 @@
 name = "harper-desktop"
 version = "2.4.0"
 description = "A Tauri App"
-authors = ["you"]
 edition = "2024"
 publish = false
 
@@ -16,11 +15,11 @@ name = "harper_desktop_lib"
 crate-type = ["staticlib", "cdylib", "rlib"]
 
 [build-dependencies]
-tauri-build = { version = "=2.6.1", features = [] }
+tauri-build = { version = "2.6.1", features = [] }
 
 [dependencies]
-tauri = { version = "=2.11.1", features = ["image-png", "tray-icon"] }
-tauri-plugin-opener = "=2.5.4"
+tauri = { version = "2.11.1", features = ["image-png", "tray-icon"] }
+tauri-plugin-opener = "2.5.4"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 base64 = "0.22.1"
@@ -37,6 +36,9 @@ harper-dictionary-wordlist = { path = "../../harper-dictionary-wordlist" }
 egui_commonmark = "0.23.0"
 tokio = { version = "1.52.2", features = ["full"] }
 tauri-plugin-os = "2.3.2"
+cached = "2.0.2"
+tracing = "0.1.44"
+tracing-subscriber = "0.3.23"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
