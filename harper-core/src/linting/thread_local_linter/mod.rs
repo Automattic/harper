@@ -14,7 +14,6 @@ type SelectedPool<T> = multi_thread_pool::MultiThreadPool<T>;
 #[cfg(not(feature = "concurrent"))]
 type SelectedPool<T> = SingleThreadPool<T>;
 
-#[derive(Clone)]
 pub struct ThreadLocalLinter<L: Linter> {
     pool: SelectedPool<L>,
     description: String,
@@ -41,4 +40,36 @@ impl<L: Linter> Linter for ThreadLocalLinter<L> {
     fn description(&self) -> &str {
         &self.description
     }
+}
+
+impl<L: Linter> Clone for ThreadLocalLinter<L> {
+    fn clone(&self) -> Self {
+        Self {
+            pool: self.pool.clone(),
+            description: self.description.clone(),
+        }
+    }
+}
+
+#[cfg(test)]
+pub mod for_tests {
+    macro_rules! create_test_pool {
+        ($linter_name:ident, $linter_ty:ty, $linter_ctor:expr) => {
+            mod test_group_container {
+                use super::$linter_name;
+                use super::*;
+                use crate::linting::ThreadLocalLinter;
+                use std::sync::LazyLock;
+
+                pub static TEST_GROUP: LazyLock<ThreadLocalLinter<$linter_ty>> =
+                    LazyLock::new(|| ThreadLocalLinter::new(|| $linter_ctor));
+            }
+
+            fn test_linter() -> crate::linting::ThreadLocalLinter<$linter_ty> {
+                (*test_group_container::TEST_GROUP).clone()
+            }
+        };
+    }
+
+    pub(crate) use create_test_pool;
 }

@@ -1,18 +1,18 @@
-use parking_lot::RwTock;
+use parking_lot::RwLock;
 use std::sync::{Arc, Mutex};
 
 use super::pool::Pool;
 
 pub struct MultiThreadPool<T> {
     ctor: fn() -> T,
-    pool: Arc<RwTock<Vec<Arc<Mutex<T>>>>>,
+    pool: Arc<RwLock<Vec<Arc<Mutex<T>>>>>,
 }
 
 impl<T> Pool<T> for MultiThreadPool<T> {
     fn new(ctor: fn() -> T) -> Self {
         let first = ctor();
         Self {
-            pool: Arc::new(RwTock::new(vec![Arc::new(Mutex::new(first))])),
+            pool: Arc::new(RwLock::new(vec![Arc::new(Mutex::new(first))])),
             ctor,
         }
     }

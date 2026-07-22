@@ -1031,64 +1031,52 @@ mod tests {
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::linting::thread_local_linter::ThreadLocalLinter;
+    use crate::linting::thread_local_linter::for_tests::create_test_pool;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
 
-    #[cfg(feature = "concurrent")]
-    static TEST_GROUP: LazyLock<ThreadLocalLinter<LintGroup>> = LazyLock::new(|| {
-        ThreadLocalLinter::new(|| {
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
-        })
-    });
-
-    #[cfg(feature = "concurrent")]
-    fn test_group() -> ThreadLocalLinter<LintGroup> {
-        (*TEST_GROUP).clone()
-    }
-
-    #[cfg(not(feature = "concurrent"))]
-    fn test_group() -> ThreadLocalLinter<LintGroup> {
-        ThreadLocalLinter::new(|| {
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
-        })
-    }
+    create_test_pool!(
+        LintGroup,
+        LintGroup,
+        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+    );
 
     #[test]
     fn clean_interjection() {
         assert_no_lints(
             "Although I only saw the need to interject once, I still saw it.",
-            test_group(),
+            test_linter(),
         );
     }
 
     #[test]
     fn clean_consensus() {
-        assert_no_lints("But there is less consensus on this.", test_group());
+        assert_no_lints("But there is less consensus on this.", test_linter());
     }
 
     #[test]
     fn ive_corrects_to_single_word() {
         assert_suggestion_result(
             "ive never seen that before",
-            test_group(),
+            test_linter(),
             "I've never seen that before",
         );
     }
 
     #[test]
     fn worthchecking_is_split() {
-        assert_suggestion_result("It is worthchecking", test_group(), "It is worth checking");
+        assert_suggestion_result("It is worthchecking", test_linter(), "It is worth checking");
     }
 
     #[test]
     fn its_not_perfect_keeps_apostrophe() {
-        assert_no_lints("It's not perfect", test_group());
+        assert_no_lints("It's not perfect", test_linter());
     }
 
     #[test]
     fn corrects_extention() {
-        let group = test_group();
+        let group = test_linter();
         let document = Document::new_plain_english_curated("I love this extention!");
         let organized = group.run_with_inner(|l| l.organized_lints(&document));
 
@@ -1112,7 +1100,7 @@ mod tests {
 
     #[test]
     fn ok_becomes_okay() {
-        assert_suggestion_result("This is ok.", test_group(), "This is okay.");
+        assert_suggestion_result("This is ok.", test_linter(), "This is okay.");
     }
 
     #[test]
@@ -1158,7 +1146,7 @@ mod tests {
     fn dont_flag_low_hanging_fruit_msg() {
         assert_no_lints(
             "The standard form is low-hanging fruit with a hyphen and singular form.",
-            test_group(),
+            test_linter(),
         );
     }
 
@@ -1166,7 +1154,7 @@ mod tests {
     fn dont_flag_low_hanging_fruit_desc() {
         assert_no_lints(
             "Corrects nonstandard variants of low-hanging fruit.",
-            test_group(),
+            test_linter(),
         );
     }
 
