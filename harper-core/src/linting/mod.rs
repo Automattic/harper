@@ -115,6 +115,7 @@ mod helped_past;
 mod hereby;
 mod hop_hope;
 mod hope_youre;
+mod how_does_compared;
 mod how_to;
 mod hyphenate_number_day;
 mod i_am_agreement;

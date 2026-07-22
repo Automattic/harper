@@ -5413,6 +5413,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HowDoesCompared",
+								"state": true,
+								"label": "How Does Compared"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AWaysToGo",
 								"state": true,
 								"label": "A Ways To Go"
