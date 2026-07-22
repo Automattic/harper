@@ -180,8 +180,8 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/dictionary',
 										},
 										{
-											title: 'Test Suite',
-											to: '/docs/contributors/tests',
+											title: 'Testing Strategy',
+											to: '/docs/contributors/testing-strategy',
 										},
 										{
 											title: 'Author a Rule',

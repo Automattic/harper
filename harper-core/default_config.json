@@ -5399,6 +5399,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HaveAHardTime",
+								"state": true,
+								"label": "Have a Hard Time"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThrowBabyWithBathwater",
 								"state": true,
 								"label": "Throw Baby with Bathwater"
