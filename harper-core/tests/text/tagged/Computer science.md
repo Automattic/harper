@@ -106,8 +106,8 @@
 # NSg/VB+ . NPr/J/R/P #    . I/C+  R          VPt  ISg+ D   NSg  P  D   NSg/J NSg/J
 > mechanical calculator , his     Analytical Engine  . He       started developing this    machine
 # NSg/J      NSg+       . ISg/D$+ J          NSg/VB+ . NPr/ISg+ VP/J    Nᴹ/Vg/J    I/Ddem+ NSg/VB+
-> in        1834 , and  " in        less       than two  years , he       had sketched out          many       of the salient
-# NPr/J/R/P #    . VB/C . NPr/J/R/P VB/J/R/C/P C/P  NSg+ NPl+  . NPr/ISg+ VP  VP/J     NSg/VB/J/R/P NSg/I/J/Dq P  D   NSg/J
+> in        1834 , and  " in        less    than two  years , he       had sketched out          many       of the salient
+# NPr/J/R/P #    . VB/C . NPr/J/R/P J/R/C/P C/P  NSg+ NPl+  . NPr/ISg+ VP  VP/J     NSg/VB/J/R/P NSg/I/J/Dq P  D   NSg/J
 > features of the modern computer " . " A    crucial step    was  the adoption of a   punched
 # NPl/V3   P  D   NSg/J  NSg+     . . . D/P+ J+      NSg/VB+ VLPt D   N🅪Sg     P  D/P VP/J
 > card     system derived from the Jacquard loom   " making  it       infinitely

@@ -1,4 +1,4 @@
-54701
+54800
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -11875,7 +11875,7 @@ affected/~JYNVtT
 affecting/~JYV
 affection/~Nm0gE
 affectionate/~JYV
-affections/~N9V
+affections/~N9
 afferent/JN
 affiance/VGdSN
 affidavit/~NSgV
@@ -14601,7 +14601,7 @@ benzene/~Nmg
 benzine/Nmg
 benzyl/N
 bequeath/VdG
-bequeaths/V
+bequeaths/Vh
 bequest/~NgSV
 berate/VGdS
 berberine/Nmg
@@ -15430,7 +15430,7 @@ bookmobile/NSg
 bookplate/NgSV
 bookseller/~NgS
 bookshelf/N0g
-bookshelves/N9V
+bookshelves/N9Vh
 bookshop/~NSg
 bookstall/NS
 bookstore/~NgS
@@ -30844,7 +30844,7 @@ invasion/~NgS
 invasive/~JN
 invective/NgJ
 inveigh/VGd
-inveighs/V
+inveighs/Vh
 inveigle/VGd>SZ
 inveigler/Ng
 invent/~VSGdrv
@@ -31258,7 +31258,7 @@ jitterbug/NgSV
 jitterbugged/VtT
 jitterbugger/Ng
 jitterbugging/V6
-jitters/NgV
+jitters/NgVh
 jittery/J>^
 jitting/V6
 jive/~VGdSNg
@@ -31408,7 +31408,7 @@ jump/~Vd>GNgJZ
 jumper/~NgV
 jumpily/Ry
 jumpiness/Ng
-jumps/~V
+jumps/~VhN9
 jumpsuit/NgS
 jumpy/J^>p
 jun/~N
@@ -31798,7 +31798,7 @@ krypton/~Nmg
 kryptonite/Nmg
 kt/~N
 kuchen/NSg
-kudos/NgV
+kudos/NgVb
 kudzu/NwSg
 kumquat/NgS
 kung fu/Ng
@@ -31833,7 +31833,7 @@ laboursaving/J!@_₹
 laburnum/NgS
 labyrinth/~NgV
 labyrinthine/J
-labyrinths/NV
+labyrinths/N9Vh
 lac/~Ng
 lace/~NwSVGdU
 lace's
@@ -32070,7 +32070,7 @@ laugh/~NgVdGB
 laughably/Ry
 laughing/~NgVY
 laughingstock/NSg
-laughs/~NV
+laughs/~N9Vh
 laughter/~Nmg
 launch/~VGdSNgr
 launcher/~NSg
@@ -32078,7 +32078,7 @@ launchpad/NSg
 launder/NSVd>GZ
 launderer/NgS
 launderette/NSg
-laundress/NgSV
+laundress/NgS
 laundromat/NgS
 laundry/~NwSg
 laundryman/N0g
@@ -32311,7 +32311,7 @@ length/~NwgVnX
 lengthen/VGd
 lengthily/Ry
 lengthiness/Nmg
-lengths/~NV
+lengths/~N9
 lengthwise/J
 lengthy/~J>^p
 lenience/Ng
@@ -32338,7 +32338,7 @@ lepton/~NgS
 lesbian/~JNSg♀V
 lesbianism/Nmg
 lesion/~NgSV
-less/~RPV>JCnX
+less/~RP>JCnX
 lessee/NgSV
 lessen/~VGdC
 lesser-known/J
@@ -32532,7 +32532,7 @@ likelihoods/N
 likeliness/NmgU
 likely/~J>^pNU
 liken/VSGd
-likeness/~NgVU
+likeness/~NgU
 likenesses/N
 liker/NJ
 likewise/~R
@@ -32622,11 +32622,11 @@ linnet/NgS
 lino/~N
 linoleum/Ng
 linseed/Ng
-lint/NVdGe
+lint/NwSVdGe
 lint's
 lintel/NgS
 linter/NSg
-lints/NV
+lints/N9Vh
 linty/J^>
 lion/~NgSJ
 lioness/NgS
@@ -32698,7 +32698,7 @@ lithium/~Nmg
 lithograph/N0gVd>GZ
 lithographer/Ng
 lithographic/JQ
-lithographs/N9V
+lithographs/N9Vh
 lithography/~Nmg
 lithosphere/NSg
 litigant/NSgJ
@@ -32921,7 +32921,7 @@ longueur/NSg
 longways/
 loo/~NV
 loofah/N0gV
-loofahs/N9V
+loofahs/N9Vh
 look/~Vd>GSNgZ
 look up/V/
 lookalike/NgS
@@ -32967,7 +32967,7 @@ lorry/~NSgV
 lose/~VbG>SZz
 loser/~NgS
 losing/~VJNmg
-loss/~NwgSV
+loss/~NwgS
 lossless/~J
 lossy/J>^
 lost/~VtTJ
@@ -33455,7 +33455,7 @@ mammy/NSg
 man/~NSVU           # removed pron: not a pronoun, dialectal, adj: marginal, proper noun: ? - complicates lint heuristics
 man child/Ng
 man-made/J
-man's/~NOJIVW
+man's/~NOJIW
 manacle/NSgVdG
 manage/~VGd>SNZL
 manageability/Nmg
@@ -33490,7 +33490,7 @@ mangetout/NS
 manginess/Ng
 mangle/VGd>SNgZ
 mango/~Nw0gV
-mangoes/N9V
+mangoes/N9Vh
 mangrove/~NgS
 mangy/J^>p
 manhandle/VGdS
@@ -33881,8 +33881,8 @@ meant/~VtTU
 meantime/~Ng
 meanwhile/~Ng
 meany/NSg
-meas/V
-measles/~NmgV
+meas/Vh
+measles/~Nmg
 measly/J>^
 measurable/~JN
 measurably/Ry
@@ -35236,7 +35236,7 @@ motorize/VdSG
 motorman/N0g
 motormen/N9
 motormouth/NgV
-motormouths/NV
+motormouths/N9Vh
 motorsport/NgS
 motorway/~NSg
 mottle/VGdSN
@@ -37101,7 +37101,7 @@ omit/~VS
 omitted/~VtT
 omitting/~VN6
 # omni              # prefixes that are not also words in their own right don't belong in the dictionary
-omnibus/~NgSJV
+omnibus/~NgSJVb
 omnidirectional/J
 omnipotence/Nmg
 omnipotent/JYN
@@ -37168,7 +37168,7 @@ oodles/N9g
 ooh/NSVGd
 oolong/Nwg          # tea
 oomph/NV
-oops/~NV
+oops/~N09Vb
 oopsy/NgS
 ooze/NgSVGd
 oozy/J^>
@@ -37464,13 +37464,13 @@ outcropped/VtT
 outcropping/NSgV6
 outcry/~NSgV
 outdated/~J
-outdid/V
+outdid/Vt
 outdistance/VGdS
 outdo/VG
-outdoes/V
-outdone/V
-outdoor/~JVS
-outdoors/~NgV
+outdoes/Vh
+outdone/VT
+outdoor/~J
+outdoors/~NgR
 outdoorsman/NgS
 outdoorsmen/9
 outdoorsy/J
@@ -37493,8 +37493,8 @@ outflank/VGSd
 outflow/~NgSV
 outfought/V
 outfox/VGdS
-outgo/VGNgz
-outgoes/V
+outgo/Ngz
+outgoing/J
 outgrew/V
 outgrow/VGSH
 outgrown/VT
@@ -37669,10 +37669,10 @@ overdecorate/VdSG
 overdependence/Nmg
 overdependent/J
 overdevelop/VSdG
-overdid/V
+overdid/Vt
 overdo/VG
-overdoes/V
-overdone/JV
+overdoes/Vh
+overdone/JVT
 overdose/~NgSVGd
 overdraft/NSgV
 overdraw/VGSN
@@ -38232,7 +38232,7 @@ parallelization/NwSg
 parallelize/VdSGB
 parallelogram/~NSg
 paralyse/VdSG!_₹
-paralyses/NV
+paralyses/NVh
 paralysing/JYV!_₹
 paralysingly/Ry@
 paralysis/~Nmg
@@ -38283,7 +38283,7 @@ parathion/Ng
 parathyroid/JNgS
 paratroop/NSV>Z
 paratrooper/Ng
-paratroops/NgV
+paratroops/N9Vh
 paratyphoid/JNg
 parboil/VdSG
 parcel/~NgSVGd
@@ -38501,7 +38501,7 @@ pathological/~JY
 pathologist/~NSg
 pathology/~NgS
 pathos/~Nmg
-paths/~N9V
+paths/~N9Vh
 pathway/~NgS
 patience/~Nm☁g
 patient/~J^NgSi
@@ -38910,7 +38910,7 @@ periodontist/NSg
 peripatetic/JNgS
 peripheral/~JYNgS
 periphery/~NSg
-periphrases/VN9
+periphrases/VN9h
 periphrasis/N0g
 periphrastic/J
 periscope/NSgV
@@ -39256,7 +39256,7 @@ photogenic/JQ
 photograph/~NgVd>GZ
 photographer/~NgS
 photographic/~JQ
-photographs/~NVr
+photographs/~N9Vhr
 photography/~Nmg
 photojournalism/Ng
 photojournalist/~NSg
@@ -39301,7 +39301,7 @@ physician/~NSg
 physicist/~NSg
 physicked/V
 physicking/VN
-physics/~NgV
+physics/~NgVh
 physio/NwSg
 physiognomy/NwSg
 physiography/Nmg
