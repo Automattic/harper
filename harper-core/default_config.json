@@ -5420,6 +5420,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FishNorFowl",
+								"state": true,
+								"label": "Fish Nor Fowl"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InStock",
 								"state": true,
 								"label": "In Stock"
