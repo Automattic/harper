@@ -420,7 +420,7 @@ fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint, style: PopupStyle) {
                 ui.label(
                     egui::RichText::new(lint.lint_kind.to_string().to_uppercase())
                         .strong()
-                        .size(11.0)
+                        .size(11.0_f32)
                         .color(style.foreground),
                 );
             });
@@ -754,7 +754,7 @@ fn hex(r: u8, g: u8, b: u8) -> egui::Color32 {
 }
 
 fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color32 {
-    let from_weight = 1.0 - to_weight;
+    let from_weight = 1.0_f32 - to_weight;
     let [fr, fg, fb, _] = from.to_array();
     let [tr, tg, tb, _] = to.to_array();
 
