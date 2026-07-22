@@ -12,6 +12,7 @@ use lru::LruCache;
 
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
+use super::a_ways_to_go::AWaysToGo;
 use super::a_while::AWhile;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
@@ -586,6 +587,7 @@ impl LintGroup {
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
+        insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
         insert_expr_rule!(Addicting);
         insert_expr_rule!(AdjectiveDoubleDegree);

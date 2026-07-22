@@ -5406,6 +5406,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AWaysToGo",
+								"state": true,
+								"label": "A Ways To Go"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HaveAHardTime",
 								"state": true,
 								"label": "Have a Hard Time"
