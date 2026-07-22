@@ -1781,7 +1781,7 @@
 > rustle as    she  swept about the room       . With the influence of the dress   her
 # NSg/VB R/C/P ISg+ VP/J  J/P   D   N🅪Sg/VB/J+ . P    D   N🅪Sg/VB   P  D+  NSg/VB+ ISg/D$+
 > personality had also undergone a    change   . The intense vitality that      had been     so
-# N🅪Sg+       VP  R/C  VB        D/P+ N🅪Sg/VB+ . D+  J+      Nᴹ+      I/C/Ddem+ VP  NSg/VLPp NSg/I/J/R/C
+# N🅪Sg+       VP  R/C  VPp       D/P+ N🅪Sg/VB+ . D+  J+      Nᴹ+      I/C/Ddem+ VP  NSg/VLPp NSg/I/J/R/C
 > remarkable in        the garage  was  converted into impressive hauteur . Her     laughter ,
 # J          NPr/J/R/P D+  NSg/VB+ VLPt VP/J      P    J          NSg     . ISg/D$+ Nᴹ+      .
 > her     gestures , her     assertions became more         violently affected moment by    moment ,
@@ -9571,7 +9571,7 @@
 > increased her     value    in        his     eyes    . He       felt      their presence all          about the house   ,
 # VP/J      ISg/D$+ N🅪Sg/VB+ NPr/J/R/P ISg/D$+ NPl/V3+ . NPr/ISg+ N🅪Sg/VP/J D$+   N🅪Sg/VB  NSg/I/J/C/Dq J/P   D+  NPr/VB+ .
 > pervading the air      with the shades  and  echoes of still      vibrant emotions .
-# Nᴹ/Vg/J   D   N🅪Sg/VB+ P    D   NPl/V3+ VB/C NPl/VB P  NSg/VB/J/R NSg/J   NPl+     .
+# Nᴹ/Vg/J   D   N🅪Sg/VB+ P    D   NPl/V3+ VB/C NPl/V3 P  NSg/VB/J/R NSg/J   NPl+     .
 >
 #
 > But     he       knew that     he       was  in        Daisy’s house   by    a   colossal accident . However
