@@ -3909,6 +3909,13 @@
 								"state": true,
 								"label": "Reads and Writes"
 							}
+						},
+						{
+							"Bool": {
+								"name": "HelpedPast",
+								"state": true,
+								"label": "Helped Past"
+							}
 						}
 					]
 				}
@@ -5336,6 +5343,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InADifferentDirection",
+								"state": true,
+								"label": "In A Different Direction"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AndSuch",
 								"state": true,
 								"label": "And Such"
@@ -5357,9 +5371,23 @@
 						},
 						{
 							"Bool": {
+								"name": "TillDate",
+								"state": true,
+								"label": "Till Date"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AMeansToAnEnd",
 								"state": true,
 								"label": "A Means To An End"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FallBelow",
+								"state": true,
+								"label": "Fall Below"
 							}
 						},
 						{
@@ -5381,6 +5409,34 @@
 								"name": "ForTheNthTime",
 								"state": true,
 								"label": "For The Nth Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AWaysToGo",
+								"state": true,
+								"label": "A Ways To Go"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HaveAHardTime",
+								"state": true,
+								"label": "Have a Hard Time"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ThrowBabyWithBathwater",
+								"state": true,
+								"label": "Throw Baby with Bathwater"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ALittleOfPractice",
+								"state": true,
+								"label": "A Little of Practice"
 							}
 						}
 					]
