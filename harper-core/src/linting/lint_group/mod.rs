@@ -109,10 +109,12 @@ use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::handful_of_more::HandfulOfMore;
+use super::have_a_hard_time::HaveAHardTime;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
+use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
 use super::how_to::HowTo;
@@ -579,6 +581,9 @@ impl LintGroup {
         out.merge_from(initialisms::lint_group());
         out.merge_from(be_adjective_confusions::lint_group());
 
+        // Add all the more complex rules to the group.
+        // Please maintain alphabetical order.
+        // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWhile);
@@ -675,10 +680,12 @@ impl LintGroup {
         insert_expr_rule!(GoodAt);
         insert_expr_rule!(Handful);
         insert_expr_rule!(HandfulOfMore);
+        insert_expr_rule_with_dialect!(HaveAHardTime);
         insert_expr_rule!(HavePronoun);
         insert_struct_rule_with_dialect!(HaveTakeALook);
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
+        insert_expr_rule_with_dict!(HelpedPast);
         insert_expr_rule!(Hereby);
         insert_struct_rule!(HopHope);
         insert_expr_rule!(HowTo);
@@ -853,7 +860,6 @@ impl LintGroup {
         insert_struct_rule!(WordPressDotcom);
         insert_expr_rule_with_dict!(WorthToDo);
         insert_expr_rule!(WouldNeverHave);
-        // >>>>>>> 515a97b7f93b4afbcfe138e80e79140a3faab133
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
