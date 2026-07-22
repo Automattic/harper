@@ -23,7 +23,7 @@ use CanFlag::*;
 /// Represents a unique concept that has different regional terms across English dialects.
 /// Each is named by an alphabetical concatenation of the terms that refer to the same concept.
 /// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 enum Concept {
     AubergineBrinjalEggplant,
     AuberginesBrinjalsEggplants,
@@ -39,9 +39,11 @@ enum Concept {
     CaravanTrailer,
     CatsupKetchupTomatoSauce,
     CellPhoneMobilePhone,
-    CoolboxCoolerEsky,
+    CheckCheque,
+    CheckbookChequebook,
     ChipsCrisps,
     CilantroCoriander,
+    CoolboxCoolerEsky,
     Crore,
     Crores,
     DiaperNappy,
@@ -53,6 +55,7 @@ enum Concept {
     FootpathPavementSidewalk,
     GasolinePetrol,
     GasStationPetrolStationServiceStation,
+    GodownWarehouse,
     // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
     Lakh,
@@ -60,6 +63,7 @@ enum Concept {
     LightBulbLightGlobe,
     LorryTruck,
     MotorhomeRv,
+    NoughtZero,
     PhotocopierXerox,
     PhotocopyXerox,
     PickupUte,
@@ -67,8 +71,9 @@ enum Concept {
     Prepone,
     SpannerWrench,
     StationWagonEstate,
-    UpdateUpdation,
+    TireTyre,
     UpdatesUpdations,
+    UpdateUpdation,
     WindscreenWindshield,
 }
 
@@ -191,6 +196,30 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American],
         concept: CellPhoneMobilePhone,
+    },
+    Term {
+        term: "check",
+        flag: UniversalTerm,
+        dialects: &[American],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "checkbook",
+        flag: Flag,
+        dialects: &[American],
+        concept: CheckbookChequebook,
+    },
+    Term {
+        term: "cheque",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckCheque,
+    },
+    Term {
+        term: "chequebook",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: CheckbookChequebook,
     },
     Term {
         term: "chips",
@@ -337,6 +366,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: GasolinePetrol,
     },
     Term {
+        term: "godown",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: GodownWarehouse,
+    },
+    Term {
         term: "India",
         flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian, Indian],
@@ -407,6 +442,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian],
         concept: BloodNoseNosebleed,
+    },
+    Term {
+        term: "nought",
+        flag: Flag,
+        dialects: &[Australian, British, Canadian, Indian],
+        concept: NoughtZero,
     },
     Term {
         term: "pacifier",
@@ -518,6 +559,18 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: FaucetTap,
     },
     Term {
+        term: "tire",
+        flag: HasOtherMeanings,
+        dialects: &[American, Canadian],
+        concept: TireTyre,
+    },
+    Term {
+        term: "tyre",
+        flag: Flag,
+        dialects: &[Australian, British, Indian],
+        concept: TireTyre,
+    },
+    Term {
         term: "tomato sauce",
         flag: HasOtherMeanings,
         dialects: &[Australian],
@@ -584,6 +637,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: PhotocopyXerox,
     },
     Term {
+        term: "warehouse",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: GodownWarehouse,
+    },
+    Term {
         term: "wrench",
         flag: Flag,
         dialects: &[American],
@@ -600,6 +659,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         flag: Flag,
         dialects: &[American, Canadian],
         concept: WindscreenWindshield,
+    },
+    Term {
+        term: "zero",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian, Indian],
+        concept: NoughtZero,
     },
 ];
 
@@ -645,17 +710,14 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = match REGIONAL_TERMS
+        let concept = REGIONAL_TERMS
             .iter()
-            .find(|row| row.term == flagged_term_string)
-        {
-            Some(term) => &term.concept,
-            None => return None, // No matching term found, so nothing to lint
-        };
+            .find(|row| row.term == flagged_term_string)?
+            .concept;
 
         let other_terms = REGIONAL_TERMS
             .iter()
-            .filter(|row| row.concept == *concept)
+            .filter(|row| row.concept == concept)
             .filter_map(|row| {
                 if row.dialects.contains(&linter_dialect) {
                     Some(&row.term)
@@ -850,5 +912,15 @@ mod tests {
             Regionalisms::new(Dialect::Australian),
             "Is eggplant used in curries or chutneys?",
         );
+    }
+
+    #[test]
+    fn americans_dont_say_nought() {
+        assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
+    }
+
+    #[test]
+    fn godown_isnt_used_outside_asia() {
+        assert_suggestion_result("godown", Regionalisms::new(Dialect::American), "warehouse");
     }
 }

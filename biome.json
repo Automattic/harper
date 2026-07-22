@@ -9,6 +9,7 @@
 		"ignoreUnknown": true,
 		"includes": [
 			"**/packages/**/*",
+			"**/harper-desktop/**/*",
 			"**/*.json",
 			"!**/test-results",
 			"!**/node_modules",

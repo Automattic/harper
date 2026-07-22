@@ -68,7 +68,7 @@ If you have Rust installed, `harper-ls` is on [crates.io](https://crates.io/crat
 cargo install harper-ls --locked
 ```
 
-For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
+For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`. We only support the latest stable version of Rust. If you are not sure if you have the latest version already, you may compare the output of `rustc --version` to the content of [this page.](https://blog.rust-lang.org/releases/latest)
 
 ### GitHub Releases
 
@@ -206,11 +206,10 @@ The list of linters together with their descriptions can be found at our [rules 
 			"AnA": true,
 			"SentenceCapitalization": true,
 			"UnclosedQuotes": true,
-			"WrongQuotes": false,
+			"WrongApostrophe": false,
 			"LongSentences": true,
 			"RepeatedWords": true,
 			"Spaces": true,
-			"Matcher": true,
 			"CorrectNumberSuffix": true
 		}
 	}

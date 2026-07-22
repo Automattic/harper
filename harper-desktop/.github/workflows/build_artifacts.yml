@@ -1,0 +1,70 @@
+name: Build Artifacts
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+    branches: ["master"]
+  merge_group:
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build-artifacts:
+    runs-on: ${{ matrix.platform }}
+    name: ${{ matrix.platform }} - just ${{ matrix.task }}
+    strategy:
+      matrix:
+        include:
+          - platform: 'ubuntu-latest'
+            task: build-linux
+            artifact_name: linux-bundles
+            artifact_paths: |
+              src-tauri/target/release/bundle/deb
+              src-tauri/target/release/bundle/rpm
+          # - platform: 'ubuntu-latest'
+          #   task: build-windows
+          #   artifact_name: windows-bundles
+          #   artifact_paths: |
+          #     src-tauri/target/release/bundle/nsis
+          - platform: 'macos-latest'
+            task: build-macos
+            artifact_name: macos-bundles
+            artifact_paths: |
+              src-tauri/target/release/bundle/app
+              src-tauri/target/release/bundle/dmg
+    steps:
+      - uses: actions/checkout@v4
+      - uses: extractions/setup-just@dd310ad5a97d8e7b41793f8ef055398d51ad4de6 # v2.0.0
+      - name: Install pnpm
+        uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4.3.0
+      - uses: actions-rust-lang/setup-rust-toolchain@46268bd060767258de96ed93c1251119784f2ab6 # v1.16.1
+        with:
+          components: rustfmt,clippy
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@9d47c6ad4b02e050fd481d890b2ea34778fd09d6 # v2.7.8
+      - uses: cargo-bins/cargo-binstall@f8810ffa11196f23afb38e6fb64716fbf814ad8f # main
+      - name: Install APT packages
+        if: matrix.platform == 'ubuntu-latest'
+        run: sudo apt update && sudo apt install libwebkit2gtk-4.1-dev build-essential curl wget file libxdo-dev libssl-dev libayatana-appindicator3-dev librsvg2-dev nsis lld llvm -y
+      - name: Install `wasm-pack`
+        run: cargo binstall wasm-pack --force --no-confirm
+      - name: Install `cargo xwin`
+        run: cargo binstall cargo-xwin --force --no-confirm
+      - name: Install `cargo tauri`
+        run: cargo binstall tauri-cli --force --no-confirm
+      - name: Install `cargo hack`
+        run: cargo binstall cargo-hack --force --no-confirm
+      - name: Run `${{ matrix.task }}`
+        run: just ${{ matrix.task }}
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.artifact_name }}
+          path: ${{ matrix.artifact_paths }}
+          if-no-files-found: error
