@@ -901,22 +901,24 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
+
+        // `SpellCheck` and `SpellCheckWithUsernames` are mutually exclusive
+        // `SpellCheckWithUsernames` is disabled by default
+
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
-
-        // Uses Dictionary, and Sentence rather than Chunk
-        out.add(
-            "ThereIsAgreement",
-            ThereIsAgreement::new(dictionary.clone()),
-        );
 
         // Uses Dictionary and Dialect
         out.add(
             "SpellCheckWithUsernames",
             SpellCheckWithUsernames::new(dictionary.clone(), dialect),
         );
-        out.config
-            .set_rule_enabled("SpellCheckWithUsernames", false);
+
+        // Uses Dictionary, and Sentence rather than Chunk
+        out.add(
+            "ThereIsAgreement",
+            ThereIsAgreement::new(dictionary.clone()),
+        );
 
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());

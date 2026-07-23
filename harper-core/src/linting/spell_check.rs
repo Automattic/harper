@@ -569,6 +569,7 @@ mod tests {
         );
     }
 
+    #[test]
     fn allows_parenthetical_plural_s() {
         assert_no_lints(
             "Please ask each person(s) to sign.",
