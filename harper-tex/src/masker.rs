@@ -20,10 +20,10 @@ impl harper_core::Masker for Masker {
 
             let c = source[cursor];
 
-            if matches!(c, '%') {
+            if matches!(c, '%') || is_explicit_space_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(1));
-            } else if let Some(ws) = newline_whitespace_at_cursor(cursor, source) {
-                actions.push_back(CursorAction::PushMaskAndIncBy(ws));
+            } else if let Some(ws_actions) = whitespace_actions_at_cursor(cursor, source) {
+                actions.extend(ws_actions);
             } else if let Some(s) = math_mode_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
             } else if let Some(s) = equation_at_cursor(cursor, source) {
@@ -57,19 +57,54 @@ impl harper_core::Masker for Masker {
     }
 }
 
-/// If the cursor is at a newline, mask the newline and any following whitespace (indentation).
-/// This prevents indentation at the start of lines from being grammar-checked.
-fn newline_whitespace_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
-    if source.get(cursor) != Some(&'\n') {
+fn is_blank(c: char) -> bool {
+    matches!(c, ' ' | '\t')
+}
+
+fn is_explicit_space_at_cursor(cursor: usize, source: &[char]) -> bool {
+    source.get(cursor) == Some(&'\\') && source.get(cursor + 1) == Some(&' ')
+}
+
+/// Collapses TeX whitespace while retaining one separator.
+fn whitespace_actions_at_cursor(cursor: usize, source: &[char]) -> Option<Vec<CursorAction>> {
+    let first = *source.get(cursor)?;
+    if !is_blank(first) && first != '\n' {
         return None;
     }
-    let ws_len = source[cursor..]
+
+    if cursor > 0 && source.get(cursor - 1) == Some(&'\\') {
+        return None;
+    }
+
+    let whitespace_len = source[cursor..]
         .iter()
-        .take_while(|&&c| c.is_whitespace())
+        .take_while(|&&c| is_blank(c) || c == '\n')
         .count();
-    // Only mask if there is actual indentation after the newline, not a bare line break.
-    // A bare \n between sentences should remain visible to preserve sentence boundaries.
-    if ws_len > 1 { Some(ws_len) } else { None }
+    let whitespace = &source[cursor..cursor + whitespace_len];
+    let newline_count = whitespace.iter().filter(|&&c| c == '\n').count();
+    let separator = if newline_count >= 2 {
+        whitespace.iter().rposition(|&c| c == '\n')?
+    } else {
+        whitespace
+            .iter()
+            .position(|&c| c == ' ')
+            .or_else(|| whitespace.iter().position(|&c| c == '\t'))
+            .or_else(|| whitespace.iter().position(|&c| c == '\n'))?
+    };
+
+    let mut actions = Vec::new();
+    if separator > 0 {
+        actions.push(CursorAction::PushMaskAndIncBy(separator));
+    }
+
+    actions.push(CursorAction::IncBy(1));
+
+    let trailing_whitespace = whitespace_len - separator - 1;
+    if trailing_whitespace > 0 {
+        actions.push(CursorAction::PushMaskAndIncBy(trailing_whitespace));
+    }
+
+    Some(actions)
 }
 
 /// Check whether there is a math mode block at the current cursor. If so, this function will return the amount cursor needs to be incremented by in order to escape the block.
@@ -91,6 +126,8 @@ fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
 /// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
 /// Returns whether the action queue was modified.
 fn command_at_cursor(cursor: usize, source: &[char], actions: &mut VecDeque<CursorAction>) -> bool {
+    // `\\` is intentionally deferred: a span-only mask cannot turn it into a visible
+    // separator without a source whitespace character to retain.
     let Some(CommandComponents {
         name,
         square_content,
@@ -272,23 +309,69 @@ enum CursorAction {
 
 #[cfg(test)]
 mod tests {
-    use harper_core::Masker as _;
+    use harper_core::{Masker as _, TokenKind, parsers::Parser};
 
-    use crate::masker::CommandComponents;
+    use crate::{TeX, masker::CommandComponents};
 
     use super::{Masker, deconstruct_command};
 
-    #[test]
-    fn does_not_mask_spaces_within_sentence() {
-        // Spaces between words (not before %) must remain in allowed spans
-        // so that lints like double-space detection can still fire.
-        let source: Vec<_> = "word  word".chars().collect();
-        let mask = Masker::default().create_mask(&source);
-        let allowed: String = mask
-            .iter_allowed(&source)
+    fn allowed_text(source: &[char]) -> String {
+        Masker::default()
+            .create_mask(source)
+            .iter_allowed(source)
             .flat_map(|(_, chars)| chars.iter().copied())
-            .collect();
-        assert_eq!(allowed, "word  word");
+            .collect()
+    }
+
+    fn paragraph_break_count(source: &str) -> usize {
+        TeX::default()
+            .parse(&source.chars().collect::<Vec<_>>())
+            .iter()
+            .filter(|token| matches!(&token.kind, TokenKind::ParagraphBreak))
+            .count()
+    }
+
+    #[test]
+    fn collapses_spaces_within_sentence() {
+        let source: Vec<_> = "word  word".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word word");
+    }
+
+    #[test]
+    fn collapses_whitespace_within_sentence() {
+        let source: Vec<_> = "word\t \t\t     \n\t\t  word".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word word");
+    }
+
+    #[test]
+    fn keeps_separator_for_empty_line() {
+        let source: Vec<_> = "word\n\nword".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word\nword");
+        assert_eq!(paragraph_break_count("word\n\nword"), 1);
+    }
+
+    #[test]
+    fn keeps_separator_for_blank_line() {
+        let source: Vec<_> = "word\n\t \t \nword".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word\nword");
+    }
+
+    #[test]
+    fn collapses_blank_lines() {
+        let source: Vec<_> = "word\t  \n\t \t \n  \n\n\n\t\n  \tword".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word\nword");
+    }
+
+    #[test]
+    fn keeps_explicit_and_non_breaking_spaces_visible() {
+        let source: Vec<_> = "word\\ word~word".chars().collect();
+
+        assert_eq!(allowed_text(&source), "word word~word");
     }
 
     #[test]
