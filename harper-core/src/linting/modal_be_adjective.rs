@@ -64,7 +64,7 @@ impl ExprLinter for ModalBeAdjective {
             span: toks[0].span,
             suggestions: vec![Suggestion::InsertAfter(" be".chars().collect())],
             message: "You may be missing the word `be` between this modal verb and adjective."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

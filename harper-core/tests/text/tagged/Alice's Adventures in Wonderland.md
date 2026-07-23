@@ -2496,8 +2496,8 @@
 # NSg+     NSg/I/C ISg/#r+ NSg/VB NPr/ISg+ NSg/VB/J+ . . NSg/I/C NPr/ISg+ VP/J    P     . NSg/I/J/R/C R         . I/C/Ddem ISg+
 > looked down          into its     face    in          some     alarm    . This    time       there could   be       no       mistake
 # VP/J   N🅪Sg/VB/J/P/T P    ISg/D$+ NSg/VB+ NPr/J/R/P/T I/J/R/Dq N🅪Sg/VB+ . I/Ddem+ N🅪Sg/VB/J+ R+    NSg/VXB NSg/VLXB NSg/Dq/P NSg/VB
-> about it       : it       was  neither more         nor   less       than a    pig     , and  she  felt      that     it       would be
-# J/P   NPr/ISg+ . NPr/ISg+ VLPt I/C     NPr/I/J/R/Dq NSg/C VB/J/R/C/P C/P  D/P+ NSg/VB+ . VB/C ISg+ N🅪Sg/VP/J I/C/Ddem NPr/ISg+ VXB   NSg/VLXB
+> about it       : it       was  neither more         nor   less    than a    pig     , and  she  felt      that     it       would be
+# J/P   NPr/ISg+ . NPr/ISg+ VLPt I/C     NPr/I/J/R/Dq NSg/C J/R/C/P C/P  D/P+ NSg/VB+ . VB/C ISg+ N🅪Sg/VP/J I/C/Ddem NPr/ISg+ VXB   NSg/VLXB
 > quite absurd for   her     to carry  it       further .
 # R     NSg/J  R/C/P ISg/D$+ P  NSg/VB NPr/ISg+ VB/JC   .
 >
@@ -3152,8 +3152,8 @@
 # NPr/I/J/R/Dq . .
 >
 #
-> “ You    mean     you    can’t take   less       , ” said the Hatter : “ it’s very easy     to take   more
-# . ISgPl+ NSg/VB/J ISgPl+ VXB   NSg/VB VB/J/R/C/P . . VP/J D   NSg/VB . . K    J/R  NSg/VB/J P  NSg/VB NPr/I/J/R/Dq
+> “ You    mean     you    can’t take   less    , ” said the Hatter : “ it’s very easy     to take   more
+# . ISgPl+ NSg/VB/J ISgPl+ VXB   NSg/VB J/R/C/P . . VP/J D   NSg/VB . . K    J/R  NSg/VB/J P  NSg/VB NPr/I/J/R/Dq
 > than nothing  . ”
 # C/P  NSg/I/J+ . .
 >
@@ -3866,8 +3866,8 @@
 # I/C/Ddem ISgPl+ VPt     P  N🅪Sg/VB Nᴹ/VB/J+ .
 >
 #
-> The Queen’s argument was  , that     if    something wasn’t done      about it       in          less       than no
-# D   NPr$    N🅪Sg/VB+ VLPt . I/C/Ddem NSg/C NSg/I/J+  VPt    NSg/VPp/J J/P   NPr/ISg+ NPr/J/R/P/T VB/J/R/C/P C/P  NSg/Dq/P
+> The Queen’s argument was  , that     if    something wasn’t done      about it       in          less    than no
+# D   NPr$    N🅪Sg/VB+ VLPt . I/C/Ddem NSg/C NSg/I/J+  VPt    NSg/VPp/J J/P   NPr/ISg+ NPr/J/R/P/T J/R/C/P C/P  NSg/Dq/P
 > time       she’d have    everybody executed , all          round      . ( It       was  this   last     remark that      had
 # N🅪Sg/VB/J+ K     NSg/VXB NSg/I+    VP/J     . NSg/I/J/C/Dq NSg/VB/J/P . . NPr/ISg+ VLPt I/Ddem NSg/VB/J NSg/VB I/C/Ddem+ VP
 > made the whole  party     look   so          grave     and  anxious . )
@@ -4030,8 +4030,8 @@
 # . P  NSg/VB+ NPr/ISg+ VL3 . . VP/J D   NSg/VB  . NPr/I+ VP/J   NSg/VB/J P  VB    P  NSg/I/VB+
 > that     Alice said ; “ there’s a   large mustard - mine      near       here . And  the moral    of that
 # I/C/Ddem NPr+  VP/J . . K       D/P NSg/J Nᴹ/J    . NSg/I/VB+ NSg/VB/J/P J/R  . VB/C D   NSg/VB/J P  I/C/Ddem+
-> is  — ‘ The more         there is  of mine      , the less       there is  of yours . ’ ”
-# VL3 . . D   NPr/I/J/R/Dq R     VL3 P  NSg/I/VB+ . D   VB/J/R/C/P R     VL3 P  I+    . . .
+> is  — ‘ The more         there is  of mine      , the less    there is  of yours . ’ ”
+# VL3 . . D   NPr/I/J/R/Dq R     VL3 P  NSg/I/VB+ . D   J/R/C/P R     VL3 P  I+    . . .
 >
 #
 > “ Oh     , I       know ! ” exclaimed Alice , who    had not     attended to this    last      remark  , “ it’s a
