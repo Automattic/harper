@@ -875,6 +875,14 @@ mod tests {
         );
     }
 
+    #[test]
+    fn dont_flag_punctuation_separated_attributive_leftover_3707() {
+        assert_no_lints(
+            "The exhibition included discarded, leftover paint.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
     // "leftover" is attributive after a number/determiner (Writer's Digest, Longman).
     // The preceding word here is adjacent, so the existing guard already covers it;
     // this pins that the redesign keeps the common attributive case quiet.
@@ -896,6 +904,15 @@ mod tests {
             "Backup your database before upgrading.",
             PhrasalVerbAsCompoundNoun::default(),
             "Back up your database before upgrading.",
+        );
+    }
+
+    #[test]
+    fn flag_backup_after_adverb_and_comma() {
+        assert_suggestion_result(
+            "Run fast, backup often.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "Run fast, back up often.",
         );
     }
 }
