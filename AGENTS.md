@@ -58,6 +58,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/integrations/emacs/+page.md`: Emacs setup using `harper-ls`, plus optional and common config tweaks.
 - `packages/web/src/routes/docs/integrations/zed/+page.md`: Zed extension entry point and link to canonical extension README.
 - `packages/web/src/routes/docs/integrations/sublime-text/+page.md`: Sublime Text setup with `harper-ls` and LSP package configuration.
+- `packages/web/src/routes/docs/integrations/jetbrains/+page.md`: JetBrains IDE setup via the LSP4IJ plugin's built-in `harper-ls` support.
 - `packages/web/src/routes/docs/harperjs/introduction/+page.md`: `harper.js` mission, package overview, and installation starting point.
 - `packages/web/src/routes/docs/harperjs/linting/+page.md`: Core `harper.js` lint workflow and linter usage patterns.
 - `packages/web/src/routes/docs/harperjs/spans/+page.md`: Explains span objects and how to use them to locate/handle lint ranges.
