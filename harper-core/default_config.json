@@ -4020,6 +4020,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsIsWithAnything",
+								"state": true,
+								"label": "As Is With Anything"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsItHappens",
 								"state": true,
 								"label": "As It Happens"
