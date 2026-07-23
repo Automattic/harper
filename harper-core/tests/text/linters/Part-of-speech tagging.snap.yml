@@ -393,16 +393,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-     142 | parsing (1997) that merely assigning the most common tag to each known word and
-         |                                          ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-     143 | the tag "proper noun" to all unknowns will approach 90% accuracy because many
-Suggest:
-  - Replace with: “commonest”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      148 | expensive since it enumerated all possibilities. It sometimes had to resort to
