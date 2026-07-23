@@ -685,17 +685,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-     253 | the Acceptance of Congress, become the Seat of the Government of the United
-     254 | States, and to exercise like Authority over all Places purchased by the Consent
-         |                                        ^~~~~~~~ Did you mean the closed compound `overall`?
-     255 | of the Legislature of the State in which the Same shall be, for the Erection of
-Suggest:
-  - Replace with: “overall”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      265 | The Migration or Importation of such Persons as any of the
