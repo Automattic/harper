@@ -1,8 +1,8 @@
 expr adj [core, central, fundamental, basic, guiding, cardinal, underlying, foundational, defining]
-expr main <(@adj tenants), tenants>
+expr main <(@adj tenants !NOUN), tenants>
 
 let message "Did you mean `tenets`?"
-let description "`Tenants` (renters) is easily confused with `tenets` (principles). After an adjective like `core` or `fundamental`, the principle sense is the intended one."
+let description "`Tenants` (renters) is easily confused with `tenets` (principles). After an adjective like `core` or `fundamental`, the principle sense is the intended one. Skipped when `tenants` modifies a following noun, where the renter or multi-tenancy sense is meant."
 let kind "Malapropism"
 let becomes "tenets"
 let strategy "MatchCase"
@@ -19,3 +19,6 @@ allows "The building has three tenants."
 allows "The apartment's tenants moved out."
 allows "The main tenants renewed their leases."
 allows "Commercial tenants pay higher rent."
+
+allows "The core tenants list is stored per region."
+allows "Our basic tenants dashboard shows usage."

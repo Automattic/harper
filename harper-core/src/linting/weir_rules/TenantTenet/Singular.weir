@@ -1,8 +1,8 @@
 expr adj [core, central, fundamental, basic, guiding, cardinal, underlying, foundational, defining]
-expr main <(@adj tenant), tenant>
+expr main <(@adj tenant !NOUN), tenant>
 
 let message "Did you mean `tenet`?"
-let description "`Tenant` (a renter) is easily confused with `tenet` (a principle). After an adjective like `core` or `fundamental`, the principle sense is the intended one."
+let description "`Tenant` (a renter) is easily confused with `tenet` (a principle). After an adjective like `core` or `fundamental`, the principle sense is the intended one. Skipped when `tenant` modifies a following noun, as in `core tenant isolation`, where the multi-tenancy sense is meant."
 let kind "Malapropism"
 let becomes "tenet"
 let strategy "MatchCase"
@@ -14,9 +14,16 @@ test "Respect is a basic tenant here." "Respect is a basic tenet here."
 test "That is a guiding tenant of the project." "That is a guiding tenet of the project."
 test "Nonviolence is a cardinal tenant of the movement." "Nonviolence is a cardinal tenet of the movement."
 test "An underlying tenant of the theory is symmetry." "An underlying tenet of the theory is symmetry."
-test "It rests on a foundational tenant." "It rests on a foundational tenet."
+test "It rests on a foundational tenant of trust." "It rests on a foundational tenet of trust."
+test "That defining tenant still holds today." "That defining tenet still holds today."
 
 allows "The tenant paid rent on time."
 allows "The main tenant of the building left."
 allows "A key tenant anchored the plaza."
 allows "Each tenant signed a lease."
+
+allows "The core tenant isolation logic lives here."
+allows "Our fundamental tenant model uses row-level security."
+allows "The basic tenant configuration is in config.yaml."
+allows "The service uses a multi-tenant architecture."
+allows "We store the tenant ID in the session."
