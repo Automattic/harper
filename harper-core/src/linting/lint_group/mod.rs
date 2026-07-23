@@ -37,6 +37,7 @@ use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
+use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
@@ -98,6 +99,7 @@ use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
+use super::fish_nor_fowl::FishNorFowl;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
 use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_free_of_charge::ForFreeOfCharge;
@@ -118,6 +120,7 @@ use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
+use super::how_does_compared::HowDoesCompared;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
@@ -125,6 +128,7 @@ use super::if_wouldve::IfWouldve;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
@@ -166,6 +170,7 @@ use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
 use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
@@ -194,6 +199,8 @@ use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pale_by_comparison::PaleByComparison;
+use super::passionate_about::PassionateAbout;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
@@ -611,6 +618,7 @@ impl LintGroup {
         insert_expr_rule!(AvoidContractions);
         insert_expr_rule!(AvoidCurses);
         insert_expr_rule!(BackInTheDay);
+        insert_expr_rule_with_dict!(BarelyUn);
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
@@ -670,6 +678,7 @@ impl LintGroup {
         insert_expr_rule!(FillerWords);
         insert_struct_rule!(FindFine);
         insert_expr_rule!(FirstAidKit);
+        insert_expr_rule!(FishNorFowl);
         insert_expr_rule!(FleshOutVsFullFledged);
         insert_expr_rule!(FootInchMinuteSecondSymbols);
         insert_expr_rule!(ForFreeOfCharge);
@@ -690,6 +699,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(HelpedPast);
         insert_expr_rule!(Hereby);
         insert_struct_rule!(HopHope);
+        insert_expr_rule!(HowDoesCompared);
         insert_expr_rule!(HowTo);
         insert_expr_rule!(HyphenateNumberDay);
         insert_expr_rule!(IAmAgreement);
@@ -697,6 +707,7 @@ impl LintGroup {
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
+        insert_expr_rule!(InStock);
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
@@ -765,6 +776,8 @@ impl LintGroup {
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);
         insert_expr_rule!(Oxymorons);
+        insert_expr_rule!(PaleByComparison);
+        insert_expr_rule!(PassionateAbout);
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);
@@ -877,6 +890,9 @@ impl LintGroup {
             "MultipleFrequencyAdverbs",
             MultipleFrequencyAdverbs::default(),
         );
+
+        // Uses Sentence rather than Chunk
+        out.add("NoHarmNoFoul", NoHarmNoFoul::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());

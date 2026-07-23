@@ -5399,6 +5399,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PassionateAbout",
+								"state": true,
+								"label": "Passionate About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ForTheNthTime",
 								"state": true,
 								"label": "For The Nth Time"
@@ -5409,6 +5416,48 @@
 								"name": "OnesSelf",
 								"state": true,
 								"label": "One's Self"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NoHarmNoFoul",
+								"state": true,
+								"label": "No Harm, No Foul"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FishNorFowl",
+								"state": true,
+								"label": "Fish Nor Fowl"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InStock",
+								"state": true,
+								"label": "In Stock"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PaleByComparison",
+								"state": true,
+								"label": "Pale by Comparison"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BarelyUn",
+								"state": true,
+								"label": "Barely Un-"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HowDoesCompared",
+								"state": true,
+								"label": "How Does Compared"
 							}
 						},
 						{
