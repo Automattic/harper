@@ -258,8 +258,8 @@
 # NSg/C/P NPl/V3  NPr/C NSg/VB/J/R JC     NPl/V3+   . NSg/I/J/R/C . R/C/P NSg/VB+ . NSg/C K      J/R  NSg/VPp D/P
 > noun    followed by    a   verb    , the next    item    may     be       very likely a   preposition ,
 # NSg/VB+ VP/J     NSg/P D/P NSg/VB+ . D   NSg/J/P NSg/VB+ NPr/VXB NSg/VLXB J/R  NSg/J  D/P NSg/VB      .
-> article , or    noun    , but     much         less       likely another verb    .
-# NSg/VB+ . NPr/C NSg/VB+ . NSg/C/P NSg/I/J/R/Dq VB/J/R/C/P NSg/J  I/D     NSg/VB+ .
+> article , or    noun    , but     much         less    likely another verb    .
+# NSg/VB+ . NPr/C NSg/VB+ . NSg/C/P NSg/I/J/R/Dq J/R/C/P NSg/J  I/D     NSg/VB+ .
 >
 #
 > When    several ambiguous words   occur together , the possibilities multiply .
@@ -282,8 +282,8 @@
 # Nᴹ/Vg/J . #    . I/C/Ddem+ R      Nᴹ/Vg/J   D   NSg/I/J/R/Dq NSg/VB/J NSg/VB+ P  Dq   VPp/J NSg/VB+ VB/C
 > the tag     " proper noun    " to all          unknowns will    approach 90 % accuracy because many
 # D   NSg/VB+ . NSg/J  NSg/VB+ . P  NSg/I/J/C/Dq NPl/V3+  NPr/VXB N🅪Sg/VB+ #  . N🅪Sg+    C/P     NSg/I/J/Dq
-> words   are unambiguous , and  many       others  only  rarely represent their less       - common
-# NPl/V3+ VLB J           . VB/C NSg/I/J/Dq NPl/V3+ J/R/C R      VB        D$+   VB/J/R/C/P . NSg/VB/J
+> words   are unambiguous , and  many       others  only  rarely represent their less    - common
+# NPl/V3+ VLB J           . VB/C NSg/I/J/Dq NPl/V3+ J/R/C R      VB        D$+   J/R/C/P . NSg/VB/J
 > parts  of speech   .
 # NPl/V3 P  N🅪Sg/VB+ .
 >
@@ -314,8 +314,8 @@
 #
 > In        1987 , Steven DeRose and  Kenneth W. Church     independently developed dynamic
 # NPr/J/R/P #    . NPr+   ?      VB/C NPr+    ?  NPr🅪Sg/VB+ R             VP/J      NSg/J
-> programming algorithms to solve  the same problem in        vastly less       time       . Their
-# Nᴹ/Vg/J+    NPl+       P  NSg/VB D   I/J  NSg/J+  NPr/J/R/P R      VB/J/R/C/P N🅪Sg/VB/J+ . D$+
+> programming algorithms to solve  the same problem in        vastly less    time       . Their
+# Nᴹ/Vg/J+    NPl+       P  NSg/VB D   I/J  NSg/J+  NPr/J/R/P R      J/R/C/P N🅪Sg/VB/J+ . D$+
 > methods were similar to the Viterbi algorithm known for   some     time       in        other
 # NPl+    VLPt NSg/J   P  D   ?       NSg       VPp/J R/C/P I/J/R/Dq N🅪Sg/VB/J+ NPr/J/R/P NSg/VB/J
 > fields    . DeRose used a   table  of pairs   , while      Church     used a   table  of triples and  a
