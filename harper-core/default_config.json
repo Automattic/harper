@@ -5413,6 +5413,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsIsWithAnything",
+								"state": true,
+								"label": "As Is With Anything"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantFirsts",
 								"state": true,
 								"label": "Redundant Firsts"
