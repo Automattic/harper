@@ -5070,6 +5070,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OnesSelf",
+								"state": true,
+								"label": "One's Self"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OnFirstGlance",
 								"state": true,
 								"label": "On First Glance"
