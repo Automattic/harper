@@ -145,7 +145,7 @@ pub fn match_to_lint_two_digits(
         span: toks.span()?,
         lint_kind: LintKind::Usage,
         suggestions,
-        message: "To refer to a decade the apostrophe must be before the decade. To refer to an age range, use no apostrophe.".to_string(),
+        message: "To refer to a decade the apostrophe must be before the decade. To refer to an age range, use no apostrophe.".to_owned(),
         ..Default::default()
     })
 }

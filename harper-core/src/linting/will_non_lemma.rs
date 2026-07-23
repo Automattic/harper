@@ -159,8 +159,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
             span: toks.span()?,
             lint_kind: LintKind::Grammar,
             suggestions,
-            message: "`Will` and `shall` should be followed by a verb in its base form."
-                .to_string(),
+            message: "`Will` and `shall` should be followed by a verb in its base form.".to_owned(),
             ..Default::default()
         })
     }

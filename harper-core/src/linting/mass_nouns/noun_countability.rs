@@ -1,8 +1,10 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Lrc, Span, Token, TokenStringExt,
-    expr::{Expr, LongestMatchOf, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    CharStringExt, Span, Token, TokenStringExt,
+    expr::{Expr, SequenceExpr},
+    linting::{
+        ExprLinter, Lint, LintKind, Suggestion,
+        expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
+    },
     patterns::{IndefiniteArticle, WordSet},
 };
 
@@ -21,7 +23,7 @@ pub enum Correction {
 use Correction::*;
 
 pub struct NounCountability {
-    expr: Box<dyn Expr>,
+    expr: SequenceExpr,
 }
 
 impl Default for NounCountability {
@@ -31,32 +33,13 @@ impl Default for NounCountability {
             "several",
         ]);
 
-        // A determiner or quantifier followed by a mass noun
-        let detquant_mass = Lrc::new(
-            SequenceExpr::any_of(vec![
+        Self {
+            expr: SequenceExpr::any_of(vec![
                 Box::new(IndefiniteArticle::default()),
-                Box::new(quantifier),
+                Box::new(quantifier) as Box<dyn Expr>,
             ])
             .then_whitespace()
             .then_mass_noun_only(),
-        );
-
-        let detauant_mass_then_hyphen =
-            Lrc::new(SequenceExpr::with(detquant_mass.clone()).then_hyphen());
-
-        let detquant_mass_following_context = Lrc::new(
-            SequenceExpr::with(detquant_mass.clone())
-                .then_whitespace()
-                // If we don't get the word, this won't be the longest match
-                .then_any_word(),
-        );
-
-        Self {
-            expr: Box::new(LongestMatchOf::new(vec![
-                Box::new(detquant_mass),
-                Box::new(detauant_mass_then_hyphen),
-                Box::new(detquant_mass_following_context),
-            ])),
         }
     }
 }
@@ -65,21 +48,24 @@ impl ExprLinter for NounCountability {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
-    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        toks: &[Token],
+        src: &[char],
+        ctx: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let toks_chars = toks.span()?.get_content(src);
 
-        // 4 tokens means the phrase was followed by a hyphen
-        if toks.len() == 4 {
-            return None;
-        }
-        // 3 tokens means the phrase was at the end of a chunk/sentence.
-        // 5 tokens means the phrase was in the middle of a chunk/sentence.
-        // If it's in the middle then we check if the next word token is a noun or OOV.
-        // Since the last token of our phrase is the mass noun, this would make it part of a compound noun.
-        if toks.len() == 5 && (toks.last()?.kind.is_noun() || toks.last()?.kind.is_oov()) {
+        if toks.len() != 3
+            || followed_by_hyphen(ctx)
+            || followed_by_word(ctx, |t| {
+                t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
+            })
+            || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
+        {
             return None;
         }
 
@@ -199,10 +185,86 @@ impl ExprLinter for NounCountability {
     }
 }
 
+fn is_ing_word(tok: &Token, src: &[char]) -> bool {
+    tok.get_ch(src).ends_with_ignore_ascii_case_str("ing")
+}
+
+fn followed_by_nominal_head(ctx: Option<(&[Token], &[Token])>, src: &[char]) -> bool {
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+
+    follows_modifiers_then_noun(after, src)
+        || follows_slash_separated_ing_modifiers_then_noun(after, src)
+}
+
+fn follows_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
+    let mut cursor = 0;
+
+    loop {
+        let Some([ws, word, rest @ ..]) = tokens.get(cursor..) else {
+            return false;
+        };
+
+        if !ws.kind.is_whitespace() {
+            return false;
+        }
+
+        if is_nominal_chain_boundary(word, src) {
+            return false;
+        }
+
+        if is_likely_nominal_head(word, src) {
+            return true;
+        }
+
+        if word.kind.is_adjective()
+            || word.kind.is_adverb()
+            || word.kind.is_verb_progressive_form()
+            || word.kind.is_verb_past_participle_form()
+        {
+            cursor = tokens.len() - rest.len();
+            continue;
+        }
+
+        return false;
+    }
+}
+
+fn is_nominal_chain_boundary(tok: &Token, src: &[char]) -> bool {
+    tok.kind.is_preposition()
+        || tok.kind.is_determiner()
+        || tok.kind.is_conjunction()
+        || tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
+            "about", "after", "as", "at", "before", "by", "for", "from", "in", "into", "of", "on",
+            "through", "to", "under", "with",
+        ])
+}
+
+fn is_likely_nominal_head(tok: &Token, src: &[char]) -> bool {
+    (tok.kind.is_noun() || tok.kind.is_oov()) && !is_nominal_chain_boundary(tok, src)
+}
+
+fn follows_slash_separated_ing_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
+    let mut cursor = 0;
+    let mut saw_slash_modifier = false;
+
+    while let Some([slash, word, rest @ ..]) = tokens.get(cursor..) {
+        if !slash.kind.is_slash() || !is_ing_word(word, src) {
+            break;
+        }
+
+        saw_slash_modifier = true;
+        cursor = tokens.len() - rest.len();
+    }
+
+    saw_slash_modifier && follows_modifiers_then_noun(&tokens[cursor..], src)
+}
+
 #[cfg(test)]
 mod tests {
     use super::NounCountability;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_a() {
@@ -322,6 +384,30 @@ mod tests {
             "Additionally, many software development platforms also provide access to a community of developers.",
             NounCountability::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_ing_modifier_before_adjective_noun() {
+        assert_no_lints(
+            "They succeeded by receiving a working direct link in return.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_slash_separated_ing_modifiers_before_noun() {
+        assert_no_lints(
+            "MockAPI is meant to be a prototyping/testing/learning tool.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_coordinate_predicate_ing_adjective() {
+        assert_no_lints(
+            "They're both confusing and tedious to use.",
+            NounCountability::default(),
         );
     }
 

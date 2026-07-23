@@ -35,10 +35,7 @@ pub struct PronounVerbAgreement<D> {
     dict: D,
 }
 
-impl<D> PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> PronounVerbAgreement<D> {
     pub fn new(dict: D) -> Self {
         // TODO: allowing "you" leads to false positives:
         // "8 years to give you rewards", "all I can do is give you examples"
@@ -90,7 +87,7 @@ where
                         .t_ws()
                         .then(verb_lemma),
                 ),
-                Box::new(SequenceExpr::aco("it").t_ws().t_aco("don't")),
+                Box::new(SequenceExpr::word_seq(&["it", "don't"])),
             ]),
             dict,
         }
@@ -110,7 +107,7 @@ where
                 // -ies -> -y
                 if form.ends_with_ignore_ascii_case_chars(&['i', 'e', 's']) {
                     words.push(
-                        format!("{}y", &form[0..form.len() - 3].iter().collect::<String>())
+                        format!("{}y", form[0..form.len() - 3].iter().collect::<String>())
                             .chars()
                             .collect(),
                     );
@@ -166,10 +163,7 @@ where
     }
 }
 
-impl<D> ExprLinter for PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -237,7 +231,7 @@ where
             lint_kind: LintKind::Agreement,
             suggestions,
             message: "The form of the verb must agree in grammatical number with the pronoun."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
