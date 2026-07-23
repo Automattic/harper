@@ -1,15 +1,11 @@
 mod flat_config;
 mod structured_config;
 
-use std::collections::BTreeMap;
-use std::hash::BuildHasher;
-use std::num::NonZero;
-use std::sync::Arc;
+use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 
-use foldhash::quality::RandomState;
-use hashbrown::HashMap;
-use lru::LruCache;
+use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
+// Individual Linters
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -88,7 +84,6 @@ use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
-use super::expr_linter::run_on_chunk;
 use super::fall_below::FallBelow;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
@@ -214,7 +209,6 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::pronoun_verb_agreement::PronounVerbAgreement;
-use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
@@ -222,6 +216,7 @@ use super::quote_spacing::QuoteSpacing;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::redundant_firsts::RedundantFirsts;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
 use super::redundant_self::RedundantSelf;
 use super::regionalisms::Regionalisms;
@@ -306,15 +301,23 @@ use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
 
-use super::{ExprLinter, Lint};
-use super::{HtmlDescriptionLinter, Linter};
-use crate::linting::dashes::Dashes;
-use crate::linting::expr_linter::{Chunk, Sentence};
-use crate::linting::{
-    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+// Modules that create multiple linters each
+use super::be_adjective_confusions;
+use super::closed_compounds;
+use super::initialisms;
+use super::phrase_set_corrections;
+use super::proper_noun_capitalization_linters;
+use super::weir_rules;
+
+use crate::{
+    linting::{
+        dashes::Dashes,
+        expr_linter::{Chunk, Sentence, run_on_chunk},
+        {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
+    },
+    spell::Dictionary,
+    {Dialect, Document, Lrc, TokenStringExt},
 };
-use crate::spell::Dictionary;
-use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 pub use flat_config::FlatConfig;
 pub use structured_config::{
@@ -797,6 +800,7 @@ impl LintGroup {
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
+        insert_expr_rule!(RedundantFirsts);
         insert_expr_rule!(RedundantProgressiveComparative);
         insert_expr_rule!(RedundantSelf);
         insert_struct_rule_with_dialect!(Regionalisms);

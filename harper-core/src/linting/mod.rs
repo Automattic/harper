@@ -232,6 +232,7 @@ mod quote_spacing;
 mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
+mod redundant_firsts;
 mod redundant_progressive_comparative;
 mod redundant_self;
 mod regionalisms;
