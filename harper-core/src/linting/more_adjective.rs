@@ -341,12 +341,20 @@ mod tests {
 
     #[test]
     fn dont_flag_more_short_videos_3688() {
-        // "more" quantifies the noun phrase ("more [short videos]"), so "shorter
-        // videos" is not the intended meaning.
         assert_no_lints(
             "I want to watch more short videos.",
             MoreAdjective::new(FstDictionary::curated()),
         );
+    }
+
+    #[test]
+    fn dont_flag_real_world_quantified_adjective_noun_phrases_3688() {
+        for text in [
+            "Young people are living in more diverse arrangements than at any point in the last 40 years.",
+            "It is among the more common ways to form a plural noun.",
+        ] {
+            assert_no_lints(text, MoreAdjective::new(FstDictionary::curated()));
+        }
     }
 
     #[test]
