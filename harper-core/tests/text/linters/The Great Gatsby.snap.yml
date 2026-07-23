@@ -5766,16 +5766,6 @@ Message: |
 
 
 
-Lint:    Agreement (31 priority)
-Message: |
-    4427 | policeman that it was light green. The other car, the one going toward New York,
-         |                                                       ^~~~~~~~~ `going` is a mass noun.
-    4428 | came to rest a hundred yards beyond, and it’s driver hurried back to where
-Suggest:
-  - Replace with: “one piece of going”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     4432 | Michaelis and this man reached her first, but when they had torn open her
