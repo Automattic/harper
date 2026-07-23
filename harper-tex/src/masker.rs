@@ -78,14 +78,12 @@ fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
         return None;
     }
 
-    Some(
-        source
-            .iter()
-            .skip(cursor + 1)
-            .take_while(|t| **t != '$')
-            .count()
-            + 2,
-    )
+    let closing_delimiter = source
+        .iter()
+        .skip(cursor + 1)
+        .position(|character| *character == '$')?;
+
+    Some(closing_delimiter + 2)
 }
 
 /// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
@@ -278,6 +276,16 @@ mod tests {
 
     use super::{Masker, deconstruct_command};
 
+    fn allowed_text(source: &str) -> Vec<String> {
+        let source: Vec<_> = source.chars().collect();
+
+        Masker::default()
+            .create_mask(&source)
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect())
+            .collect()
+    }
+
     #[test]
     fn does_not_mask_spaces_within_sentence() {
         // Spaces between words (not before %) must remain in allowed spans
@@ -383,6 +391,36 @@ mod tests {
             let source: Vec<_> = input.chars().collect();
             Masker::default().create_mask(&source);
         }
+    }
+
+    #[test]
+    fn leaves_text_after_unmatched_inline_math_allowed() {
+        assert_eq!(allowed_text("before $after"), ["before $after"]);
+    }
+
+    #[test]
+    fn masks_paired_inline_math() {
+        assert_eq!(allowed_text("before $x$ after"), ["before ", " after"]);
+    }
+
+    #[test]
+    fn masks_text_between_escaped_dollars() {
+        assert_eq!(allowed_text(r"before \$x\$ after"), ["before ", " after"]);
+    }
+
+    #[test]
+    fn masks_text_between_parenthesized_math_delimiters() {
+        assert_eq!(allowed_text(r"before \(x\) after"), ["before ", " after"]);
+    }
+
+    #[test]
+    fn masks_empty_inline_math() {
+        assert_eq!(allowed_text("before $$ after"), ["before ", " after"]);
+    }
+
+    #[test]
+    fn leaves_trailing_dollar_allowed() {
+        assert_eq!(allowed_text("before $"), ["before $"]);
     }
 
     #[test]
