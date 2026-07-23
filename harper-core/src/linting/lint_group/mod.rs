@@ -139,6 +139,7 @@ use super::left_right_hand::LeftRightHand;
 use super::less_worse::LessWorse;
 use super::let_to_do::LetToDo;
 use super::lets_confusion::LetsConfusion;
+use super::lifetime_life::LifetimeLife;
 use super::likewise::Likewise;
 use super::long_sentences::LongSentences;
 use super::long_time_ago::LongTimeAgo;
@@ -885,6 +886,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("ConvenientStore", ConvenientStore::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("LifetimeLife", LifetimeLife::default());
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());

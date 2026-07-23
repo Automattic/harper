@@ -5168,6 +5168,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LifetimeLife",
+								"state": true,
+								"label": "Lifetime Life"
+							}
+						},
+						{
+							"Bool": {
 								"name": "MoreThanMeetsTheEye",
 								"state": true,
 								"label": "More Than Meets The Eye"
