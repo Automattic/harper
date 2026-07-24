@@ -49,6 +49,8 @@ async function getBackground(context: BrowserContext): Promise<any> {
 
 // Ensure tests run with a consistent dialect (American English) for predictable results
 test.beforeEach(async ({ context }) => {
+	// Increase timeout for beforeEach to accommodate Firefox with larger WASM file
+	test.setTimeout(90000);
 	const bg = await getBackground(context);
 	if (bg) {
 		await bg.evaluate(async () => {
