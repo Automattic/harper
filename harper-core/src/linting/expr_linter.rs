@@ -1,7 +1,9 @@
-use crate::expr::{Expr, ExprExt};
 use blanket::blanket;
 
-use crate::{Document, LSend, Token, TokenStringExt};
+use crate::{
+    Document, LSend, Token, TokenStringExt,
+    expr::{Expr, ExprExt},
+};
 
 use super::{Lint, Linter};
 
@@ -40,8 +42,8 @@ impl DocumentIterator for Sentence {
 pub trait ExprLinter: LSend {
     type Unit: DocumentIterator;
 
-    /// A simple getter for the expression you want Harper to search for.
     fn expr(&self) -> &dyn Expr;
+
     /// If any portions of a [`Document`] match [`Self::expr`], they are passed through [`ExprLinter::match_to_lint`]
     /// or [`ExprLinter::match_to_lint_with_context`] to be transformed into a [`Lint`] for editor consumption.
     ///
@@ -52,7 +54,13 @@ pub trait ExprLinter: LSend {
     ///
     /// Return `None` to skip producing a lint for this match.
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        self.match_to_lint_with_context(matched_tokens, source, None)
+        // This is the original method. If it hasn't been overridden, try calling the other
+        // methods starting with the newest, most feature-rich one. If it's not overridden,
+        // we'll call down the stack until we hit a method that has been overridden.
+        // NOTE: If none are overridden, this will cause an infinite recursion panic at runtime.
+        self.match_to_lints_with_context(matched_tokens, source, None)
+            .into_iter()
+            .next()
     }
 
     /// Transform matched tokens into a [`Lint`] with access to surrounding context.
@@ -67,11 +75,29 @@ pub trait ExprLinter: LSend {
         source: &[char],
         _context: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        // Default implementation falls back to the simple version
+        // If this method isn't overridden, drop the context and keep calling down the call stack
+        // until we get to a method that has been overridden.
         self.match_to_lint(matched_tokens, source)
     }
-    /// A user-facing description of what kinds of grammatical errors this rule looks for.
-    /// It is usually shown in settings menus.
+
+    /// Transform matched tokens into multiple [`Lint`]s with access to surrounding context.
+    ///
+    /// When alternative corrections affect different parts of the sentence, this method can be
+    /// used to return multiple lints for a single match, each changing a different part of the
+    /// sentence.
+    fn match_to_lints_with_context(
+        &self,
+        matched_tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Vec<Lint> {
+        // If this method isn't overridden, drop the context and keep calling down the call stack
+        // until we get to a method that has been overridden.
+        self.match_to_lint_with_context(matched_tokens, source, context)
+            .into_iter()
+            .collect()
+    }
+
     fn description(&self) -> &str;
 }
 
@@ -141,8 +167,8 @@ pub fn run_on_chunk<'a>(
     linter
         .expr()
         .iter_matches(unit, source)
-        .filter_map(|match_span| {
-            linter.match_to_lint_with_context(
+        .flat_map(|match_span| {
+            linter.match_to_lints_with_context(
                 &unit[match_span.start..match_span.end],
                 source,
                 Some((&unit[..match_span.start], &unit[match_span.end..])),
@@ -215,12 +241,19 @@ pub fn preceded_by_word(
 
 #[cfg(test)]
 mod tests_context {
-    use crate::expr::{Expr, FixedPhrase};
-    use crate::linting::expr_linter::{Chunk, Sentence};
-    use crate::linting::tests::assert_suggestion_result;
-    use crate::linting::{ExprLinter, Suggestion};
-    use crate::token_string_ext::TokenStringExt;
-    use crate::{Lint, Token};
+    use crate::{
+        Lint, Token,
+        char_string::CharStringExt,
+        expr::{Expr, FixedPhrase, SequenceExpr},
+        linting::{
+            ExprLinter, Suggestion,
+            expr_linter::{Chunk, Sentence},
+            tests::{assert_good_and_bad_suggestions, assert_suggestion_result},
+        },
+        token_string_ext::TokenStringExt,
+    };
+
+    // Simple
 
     pub struct TestSimpleLinter {
         expr: Box<dyn Expr>,
@@ -254,6 +287,8 @@ mod tests_context {
             "test linter"
         }
     }
+
+    // Context
 
     pub struct TestContextLinter {
         expr: Box<dyn Expr>,
@@ -318,6 +353,81 @@ mod tests_context {
         }
     }
 
+    // Multi
+
+    pub struct TestMultiLinter {
+        expr: Box<dyn Expr>,
+    }
+
+    impl Default for TestMultiLinter {
+        fn default() -> Self {
+            Self {
+                expr: Box::new(
+                    SequenceExpr::default()
+                        .then_preposition()
+                        .t_ws()
+                        .t_aco("which")
+                        .t_ws()
+                        .then_pronoun()
+                        .t_ws()
+                        .then_verb()
+                        .t_ws()
+                        .then_preposition(),
+                ),
+            }
+        }
+    }
+
+    impl ExprLinter for TestMultiLinter {
+        type Unit = Chunk;
+
+        fn expr(&self) -> &dyn Expr {
+            &*self.expr
+        }
+
+        fn match_to_lints_with_context(
+            &self,
+            toks: &[Token],
+            src: &[char],
+            _context: Option<(&[Token], &[Token])>,
+        ) -> Vec<Lint> {
+            let mut lints = Vec::new();
+
+            // ignore context for this test
+
+            let message = format!(
+                "remove a {} preposition",
+                if toks[0].get_ch(src).eq_ch(toks[8].get_ch(src)) {
+                    "redundant"
+                } else {
+                    "conflicting"
+                }
+            );
+
+            let suggestions = vec![Suggestion::Remove];
+
+            lints.push(Lint {
+                span: toks[0..=1].span().unwrap(),
+                message: message.clone(),
+                suggestions: suggestions.clone(),
+                ..Default::default()
+            });
+
+            lints.push(Lint {
+                span: toks[7..=8].span().unwrap(),
+                message,
+                suggestions,
+                ..Default::default()
+            });
+
+            lints
+        }
+
+        fn description(&self) -> &str {
+            "multi linter"
+        }
+    }
+
     pub struct TestSentenceLinter {
         expr: Box<dyn Expr>,
     }
@@ -364,6 +474,32 @@ mod tests_context {
     #[test]
     fn context_test_321() {
         assert_suggestion_result("three two one", TestContextLinter::default(), "three < one");
+    }
+
+    #[test]
+    fn multi_test_redundant_preposition() {
+        assert_good_and_bad_suggestions(
+            "in this ever changing world in which we live in",
+            TestMultiLinter::default(),
+            &[
+                "in this ever changing world which we live in",
+                "in this ever changing world in which we live",
+            ],
+            &["in this ever changing world which we live"],
+        );
+    }
+
+    #[test]
+    fn multi_test_conflicting_preposition() {
+        assert_good_and_bad_suggestions(
+            "real change might occur that would upset the current order in which they benefited from",
+            TestMultiLinter::default(),
+            &[
+                "real change might occur that would upset the current order in which they benefited",
+                "real change might occur that would upset the current order which they benefited from",
+            ],
+            &["real change might occur that would upset the current order which they benefited"],
+        );
     }
 
     #[test]
