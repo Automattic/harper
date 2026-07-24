@@ -1379,6 +1379,13 @@
 								"state": true,
 								"label": "Wrote To Rote"
 							}
+						},
+						{
+							"Bool": {
+								"name": "LifetimeLife",
+								"state": true,
+								"label": "Lifetime Life"
+							}
 						}
 					]
 				}
@@ -5891,4 +5898,4 @@
 			}
 		}
 	]
-}
+}# CI trigger
