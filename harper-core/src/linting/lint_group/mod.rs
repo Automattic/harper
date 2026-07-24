@@ -1,17 +1,14 @@
 mod flat_config;
 mod structured_config;
 
-use std::collections::BTreeMap;
-use std::hash::BuildHasher;
-use std::num::NonZero;
-use std::sync::Arc;
+use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 
-use foldhash::quality::RandomState;
-use hashbrown::HashMap;
-use lru::LruCache;
+use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
+// Individual Linters
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
+use super::a_ways_to_go::AWaysToGo;
 use super::a_while::AWhile;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
@@ -36,6 +33,7 @@ use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
+use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
@@ -86,7 +84,7 @@ use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::expand_people::ExpandPeople;
 use super::expand_time_shorthands::ExpandTimeShorthands;
-use super::expr_linter::run_on_chunk;
+use super::fall_below::FallBelow;
 use super::far_be_it::FarBeIt;
 use super::fascinated_by::FascinatedBy;
 use super::fed_up_with::FedUpWith;
@@ -96,6 +94,7 @@ use super::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::filler_words::FillerWords;
 use super::find_fine::FindFine;
 use super::first_aid_kit::FirstAidKit;
+use super::fish_nor_fowl::FishNorFowl;
 use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
 use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_free_of_charge::ForFreeOfCharge;
@@ -108,12 +107,15 @@ use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
 use super::handful_of_more::HandfulOfMore;
+use super::have_a_hard_time::HaveAHardTime;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
+use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
 use super::hop_hope::HopHope;
+use super::how_does_compared::HowDoesCompared;
 use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
@@ -121,6 +123,7 @@ use super::if_wouldve::IfWouldve;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
+use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
@@ -162,6 +165,7 @@ use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
 use super::no_french_spaces::NoFrenchSpaces;
+use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
 use super::no_longer_pronoun::NoLongerPronoun;
 use super::no_match_for::NoMatchFor;
@@ -190,6 +194,8 @@ use super::out_of_the_window::OutOfTheWindow;
 use super::over_plus::OverPlus;
 use super::oxford_comma::OxfordComma;
 use super::oxymorons::Oxymorons;
+use super::pale_by_comparison::PaleByComparison;
+use super::passionate_about::PassionateAbout;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
@@ -203,7 +209,6 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::pronoun_verb_agreement::PronounVerbAgreement;
-use super::proper_noun_capitalization_linters;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
@@ -211,6 +216,7 @@ use super::quote_spacing::QuoteSpacing;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::redundant_firsts::RedundantFirsts;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
 use super::redundant_self::RedundantSelf;
 use super::regionalisms::Regionalisms;
@@ -260,7 +266,9 @@ use super::this_type_of_thing::ThisTypeOfThing;
 use super::though_thought::ThoughThought;
 use super::thrive_on::ThriveOn;
 use super::throw_away::ThrowAway;
+use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
+use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
@@ -293,15 +301,23 @@ use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
 
-use super::{ExprLinter, Lint};
-use super::{HtmlDescriptionLinter, Linter};
-use crate::linting::dashes::Dashes;
-use crate::linting::expr_linter::{Chunk, Sentence};
-use crate::linting::{
-    be_adjective_confusions, closed_compounds, initialisms, phrase_set_corrections, weir_rules,
+// Modules that create multiple linters each
+use super::be_adjective_confusions;
+use super::closed_compounds;
+use super::initialisms;
+use super::phrase_set_corrections;
+use super::proper_noun_capitalization_linters;
+use super::weir_rules;
+
+use crate::{
+    linting::{
+        dashes::Dashes,
+        expr_linter::{Chunk, Sentence, run_on_chunk},
+        {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
+    },
+    spell::Dictionary,
+    {Dialect, Document, Lrc, TokenStringExt},
 };
-use crate::spell::Dictionary;
-use crate::{Dialect, Document, Lrc, TokenStringExt};
 
 pub use flat_config::FlatConfig;
 pub use structured_config::{
@@ -581,6 +597,7 @@ impl LintGroup {
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart);
         insert_expr_rule!(ASomeTime);
+        insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
         insert_expr_rule!(Addicting);
         insert_expr_rule!(AdjectiveDoubleDegree);
@@ -604,6 +621,7 @@ impl LintGroup {
         insert_expr_rule!(AvoidContractions);
         insert_expr_rule!(AvoidCurses);
         insert_expr_rule!(BackInTheDay);
+        insert_expr_rule_with_dict!(BarelyUn);
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
@@ -653,6 +671,7 @@ impl LintGroup {
         insert_expr_rule!(ExpandMemoryShorthands);
         insert_expr_rule!(ExpandPeople);
         insert_expr_rule!(ExpandTimeShorthands);
+        insert_expr_rule!(FallBelow);
         insert_expr_rule!(FarBeIt);
         insert_expr_rule!(FascinatedBy);
         insert_expr_rule_with_dialect!(FedUpWith);
@@ -662,6 +681,7 @@ impl LintGroup {
         insert_expr_rule!(FillerWords);
         insert_struct_rule!(FindFine);
         insert_expr_rule!(FirstAidKit);
+        insert_expr_rule!(FishNorFowl);
         insert_expr_rule!(FleshOutVsFullFledged);
         insert_expr_rule!(FootInchMinuteSecondSymbols);
         insert_expr_rule!(ForFreeOfCharge);
@@ -674,12 +694,15 @@ impl LintGroup {
         insert_expr_rule!(GoodAt);
         insert_expr_rule!(Handful);
         insert_expr_rule!(HandfulOfMore);
+        insert_expr_rule_with_dialect!(HaveAHardTime);
         insert_expr_rule!(HavePronoun);
         insert_struct_rule_with_dialect!(HaveTakeALook);
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
+        insert_expr_rule_with_dict!(HelpedPast);
         insert_expr_rule!(Hereby);
         insert_struct_rule!(HopHope);
+        insert_expr_rule!(HowDoesCompared);
         insert_expr_rule!(HowTo);
         insert_expr_rule!(HyphenateNumberDay);
         insert_expr_rule!(IAmAgreement);
@@ -687,6 +710,7 @@ impl LintGroup {
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
+        insert_expr_rule!(InStock);
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
@@ -755,6 +779,8 @@ impl LintGroup {
         insert_expr_rule!(OverPlus);
         insert_struct_rule!(OxfordComma);
         insert_expr_rule!(Oxymorons);
+        insert_expr_rule!(PaleByComparison);
+        insert_expr_rule!(PassionateAbout);
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);
@@ -774,6 +800,7 @@ impl LintGroup {
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
+        insert_expr_rule!(RedundantFirsts);
         insert_expr_rule!(RedundantProgressiveComparative);
         insert_expr_rule!(RedundantSelf);
         insert_struct_rule_with_dialect!(Regionalisms);
@@ -821,7 +848,9 @@ impl LintGroup {
         insert_expr_rule!(ThoughThought);
         insert_expr_rule!(ThriveOn);
         insert_expr_rule!(ThrowAway);
+        insert_expr_rule!(ThrowBabyWithBathwater);
         insert_struct_rule!(ThrowRubbish);
+        insert_expr_rule_with_dialect!(TillDate);
         insert_expr_rule!(ToAdverb);
         insert_struct_rule!(ToTwoToo);
         insert_expr_rule!(Touristic);
@@ -865,6 +894,9 @@ impl LintGroup {
             "MultipleFrequencyAdverbs",
             MultipleFrequencyAdverbs::default(),
         );
+
+        // Uses Sentence rather than Chunk
+        out.add("NoHarmNoFoul", NoHarmNoFoul::default());
 
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
