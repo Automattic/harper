@@ -184,6 +184,52 @@ mod tests {
     }
 
     #[test]
+    fn apple_ipod_lowercase() {
+        assert_suggestion_result("apple ipod", lint_group(), "Apple iPod");
+    }
+
+    #[test]
+    fn apple_ipod_allow_correct() {
+        assert_lint_count("Apple iPod", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_macbook_family_lowercase() {
+        assert_suggestion_result("macbook pro", lint_group(), "MacBook Pro");
+        assert_suggestion_result("macbook air", lint_group(), "MacBook Air");
+    }
+
+    #[test]
+    fn apple_macbook_family_allow_correct() {
+        assert_lint_count("MacBook Pro", lint_group(), 0);
+        assert_lint_count("MacBook Air", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_mac_family_lowercase() {
+        assert_suggestion_result("mac pro", lint_group(), "Mac Pro");
+        assert_suggestion_result("mac mini", lint_group(), "Mac Mini");
+    }
+
+    #[test]
+    fn apple_mac_family_allow_correct() {
+        assert_lint_count("Mac Pro", lint_group(), 0);
+        assert_lint_count("Mac Mini", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_airpods_family_lowercase() {
+        assert_suggestion_result("airpods pro", lint_group(), "AirPods Pro");
+        assert_suggestion_result("airpods max", lint_group(), "AirPods Max");
+    }
+
+    #[test]
+    fn apple_airpods_family_allow_correct() {
+        assert_lint_count("AirPods Pro", lint_group(), 0);
+        assert_lint_count("AirPods Max", lint_group(), 0);
+    }
+
+    #[test]
     fn test_atlantic_ocean_lowercase() {
         assert_suggestion_result("atlantic ocean", lint_group(), "Atlantic Ocean");
     }
