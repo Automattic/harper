@@ -33,6 +33,14 @@ export default function DialectSelectRow() {
 						label: 'Indian',
 						value: Dialect.Indian.toString(),
 					},
+					{
+						label: 'Singaporean',
+						value: Dialect.Singaporean.toString(),
+					},
+					{
+						label: 'Malaysian',
+						value: Dialect.Malaysian.toString(),
+					},
 				]}
 				onChange={(value) => setDialect(Number.parseInt(value, 10))}
 			/>

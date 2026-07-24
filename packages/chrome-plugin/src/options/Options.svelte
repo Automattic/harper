@@ -364,6 +364,8 @@ async function removeWeirpack(id: string) {
             <option value={Dialect.Australian}>🇦🇺 Australian</option>
             <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
             <option value={Dialect.Indian}>🇮🇳 Indian</option>
+            <option value={Dialect.Singaporean}>🇸🇬 Singaporean</option>
+            <option value={Dialect.Malaysian}>🇲🇾 Malaysian</option>
           </Select>
         </div>
       </div>
