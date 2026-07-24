@@ -1,13 +1,13 @@
-> " This    " and  " that      " are common   and  fulfill multiple purposes in        everyday English      .
-# . I/Ddem+ . VB/C . I/C/Ddem+ . VLB NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/R/P NSg/J+   NPr🅪Sg/VB/J+ .
+> " This    " and  " that      " are common   and  fulfill multiple purposes in          everyday English      .
+# . I/Ddem+ . VB/C . I/C/Ddem+ . VLB NSg/VB/J VB/C VB/NoAm NSg/J/Dq NPl/V3   NPr/J/R/P/T NSg/J+   NPr🅪Sg/VB/J+ .
 > As    such  , disambiguating them     is  necessary .
 # R/C/P NSg/I . Nᴹ/Vg/J        NSg/IPl+ VL3 NSg/J     .
 >
 #
 > This    document contains various sentences that      use     " this    " , " that      " , " these  " , and
 # I/Ddem+ NSg/VB+  V3       J+      NPl/V3+   I/C/Ddem+ N🅪Sg/VB . I/Ddem+ . . . I/C/Ddem+ . . . I/Ddem . . VB/C
-> " those  " in        different contexts with a   lot    of edge    cases   .
-# . I/Ddem . NPr/J/R/P NSg/J     NPl/V3   P    D/P NPr/VB P  NSg/VB+ NPl/V3+ .
+> " those  " in          different contexts with a   lot    of edge    cases   .
+# . I/Ddem . NPr/J/R/P/T NSg/J     NPl/V3   P    D/P NPr/VB P  NSg/VB+ NPl/V3+ .
 >
 #
 >              Examples
@@ -70,5 +70,5 @@
 # ISg/#r+ NPr/VXB VXB I/Ddem VB/C I/C/Ddem+ .
 >
 #
-> We   unite  to stand  united in        unity .
-# IPl+ NSg/VB P  NSg/VB VP/J   NPr/J/R/P Nᴹ+   .
+> We   unite  to stand  united in          unity .
+# IPl+ NSg/VB P  NSg/VB VP/J   NPr/J/R/P/T Nᴹ+   .
