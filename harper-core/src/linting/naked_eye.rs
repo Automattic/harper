@@ -20,7 +20,7 @@ impl Default for NakedEye {
                     SequenceExpr::optional(
                         SequenceExpr::default()
                             .then_kind_any(&[
-                                TokenKind::is_determiner,
+                                TokenKind::is_determiner as fn(&TokenKind) -> bool,
                                 TokenKind::is_adjective,
                                 TokenKind::is_oov,
                             ])

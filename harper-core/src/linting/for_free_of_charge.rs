@@ -13,13 +13,13 @@ impl Default for ForFreeOfCharge {
         Self {
             expr: SequenceExpr::word_seq(&["for", "free", "of", "charge"]).then_any_of(vec![
                 Box::new(SequenceExpr::default().then_kind_any(&[
-                    TokenKind::is_sentence_terminator,
+                    TokenKind::is_sentence_terminator as fn(&TokenKind) -> bool,
                     TokenKind::is_comma,
                     TokenKind::is_quote,
                 ])),
                 Box::new(SequenceExpr::whitespace().then_kind_any_but_not(
                     &[
-                        TokenKind::is_conjunction,
+                        TokenKind::is_conjunction as fn(&TokenKind) -> bool,
                         TokenKind::is_preposition,
                         TokenKind::is_verb,
                     ],

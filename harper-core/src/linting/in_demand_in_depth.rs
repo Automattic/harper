@@ -22,7 +22,7 @@ impl Default for InDemandInDepth {
                     // ✘ [Defense] in Depth                                - abstract/mass noun
                     // ✘ and [MCP] in depth                                - mass noun
                     &[
-                        TokenKind::is_verb_lemma,
+                        TokenKind::is_verb_lemma as fn(&TokenKind) -> bool,
                         TokenKind::is_preposition,
                         TokenKind::is_quantifier,
                         TokenKind::is_degree_adverb,
