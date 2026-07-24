@@ -1,7 +1,11 @@
 <script lang="ts">
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'components';
+import Fa from 'svelte-fa';
 import generateGreeting from '../generateGreeting';
 import ProtocolClient from '../ProtocolClient';
+
+let { onReviewDomain }: { onReviewDomain: (works: boolean, domain: string) => void } = $props();
 
 let enabled = $state(true);
 let domain = $state('');
@@ -66,6 +70,10 @@ function openReviewPage() {
 	chrome.tabs.create({ url: REVIEW_URL });
 }
 
+async function reviewDomain(works: boolean) {
+	onReviewDomain(works, (await getCurrentTabDomain()) ?? 'unknown');
+}
+
 function isFirefoxExtension(): boolean {
 	try {
 		return new URL(chrome.runtime.getURL('')).protocol === 'moz-extension:';
@@ -119,6 +127,7 @@ function daysSince(date: Date): number {
       </p>
     </section>
   </section>
+
   
   {#if !isFirefox && installDate != null && daysSince(installDate) > 14 && hasBeenReviewed === false}
     <section class="bg-primary flex flex-row justify-between p-4">
@@ -129,6 +138,21 @@ function daysSince(date: Date): number {
       <Button on:click={openReviewPage}>
         Review
       </Button>
+    </section>
+  {:else}
+    <section class="flex flex-row justify-between p-2 items-center">
+      <p class="text-sm font-medium font-sans dark:text-white text-left">
+        Does Harper work well on this site?
+      </p>
+
+      <div class="flex flex-row *:ml-1">
+        <Button size="xs" on:click={() => reviewDomain(true)}>
+          <Fa icon={faThumbsUp} />
+        </Button>
+        <Button size="xs"  on:click={() => reviewDomain(false)}>
+          <Fa icon={faThumbsDown} />
+        </Button>
+      </div>
     </section>
   {/if}
 </main>
