@@ -877,6 +877,9 @@ run-snapshots:
   cd harper-core
   cargo test -- test_pos_tagger test_most_lints
 
+check-linters:
+  cargo run --bin harper-cli -- check-linters
+
 # list configuration groups by label and description, with settings if mode is verbose
 ls-config mode="brief":
   #! /usr/bin/env node
