@@ -1,0 +1,26 @@
+expr main <(very much so VERB), (very much so)>
+
+let message "Remove the redundant `so`."
+let description "`Very much` already intensifies the verb, so the trailing `so` is redundant. `Very much so` only reads correctly when the `so` refers back to something earlier, as in the reply `Yes, very much so.`"
+let kind "Redundancy"
+let becomes "very much"
+let strategy "MatchCase"
+
+test "I very much so feel like this is the turning point." "I very much feel like this is the turning point."
+test "I very much so want to make a modular tool." "I very much want to make a modular tool."
+test "I very much so appreciate the reports." "I very much appreciate the reports."
+test "I'm very much so enjoying it." "I'm very much enjoying it."
+test "She was very much so assaulted with questions yesterday." "She was very much assaulted with questions yesterday."
+test "We very much so need your help on this." "We very much need your help on this."
+test "They very much so understand the risks involved." "They very much understand the risks involved."
+test "He very much so wanted to win the round." "He very much wanted to win the round."
+test "You very much so deserve the credit here." "You very much deserve the credit here."
+test "Very much so agree with your read of it." "Very much agree with your read of it."
+
+allows "Yes, very much so."
+allows "Did you like it? Very much so!"
+allows "Thank you very much so far."
+allows "I like it very much so we left early."
+allows "I appreciate the feedback very much."
+allows "It was so much fun to build."
+allows "Everyone nodded, very much so that the point landed."
