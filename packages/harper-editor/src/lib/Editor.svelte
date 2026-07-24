@@ -317,12 +317,12 @@ function hideSidebar(reason: SidebarAction = 'automated'): void {
 </script>
 
 <div
-	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 shadow-2xl shadow-stone-950/5"
+	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 dark:border-[rgba(236,231,221,0.14)] dark:bg-[#1e1a14] dark:text-stone-100 shadow-2xl shadow-stone-950/5"
 	style={editorStyle}
   bind:this={editorContainer}
 >
 	<div class="flex min-h-0 min-w-0 flex-1">
-		<section class="relative min-w-0 flex-1 bg-[#fbfaf6]" aria-label="Document editor">
+		<section class="relative min-w-0 flex-1 bg-[#fbfaf6] dark:bg-[#1e1a14]" aria-label="Document editor">
 			<div class="h-full overflow-auto p-[34px_40px_56px] @max-[760px]:p-[28px_24px_42px]">
 				<div class="mx-auto flex min-h-full max-w-[640px]">
 					<div bind:this={editor} class="flex min-h-full w-full flex-1" spellcheck="false"></div>
@@ -332,7 +332,7 @@ function hideSidebar(reason: SidebarAction = 'automated'): void {
 			<DelayedRender active={!sidebarVisible} delayMs={restoreButtonDelay}>
 				<button
 					type="button"
-					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
+					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 dark:text-stone-400 shadow-none transition-colors duration-150 hover:text-stone-950 dark:hover:text-stone-100 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
 					aria-label="Show problems sidebar"
 					title="Show problems sidebar"
 					in:fade={{ duration: 120 }}
