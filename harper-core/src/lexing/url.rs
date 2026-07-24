@@ -86,17 +86,19 @@ fn lex_hostport(source: &[char]) -> Option<usize> {
     let hostname_end = lex_hostname(source)?;
 
     if source.get(hostname_end) == Some(&':') {
-        Some(
-            source
-                .iter()
-                .enumerate()
-                .find(|(_, c)| !{
-                    let c = **c;
-                    c.is_ascii_digit()
-                })
-                .map(|(i, _)| i)
-                .unwrap_or(source.len()),
-        )
+        // Scan the port number, which begins right after the ':'.
+        let port_start = hostname_end + 1;
+        let port_len = source[port_start..]
+            .iter()
+            .take_while(|c| c.is_ascii_digit())
+            .count();
+
+        if port_len == 0 {
+            // A ':' that isn't followed by a port; don't consume it.
+            Some(hostname_end)
+        } else {
+            Some(port_start + port_len)
+        }
     } else {
         Some(hostname_end)
     }
@@ -237,6 +239,21 @@ mod tests {
     #[test]
     fn consumes_issue_142() {
         assert_consumes_full("https://github.com/nodesource/distributions#debinstall")
+    }
+
+    #[test]
+    fn consumes_port() {
+        assert_consumes_full("http://localhost:8080")
+    }
+
+    #[test]
+    fn consumes_port_with_path() {
+        assert_consumes_full("http://localhost:8080/api/v1")
+    }
+
+    #[test]
+    fn consumes_ip_with_port() {
+        assert_consumes_full("http://127.0.0.1:3000/health")
     }
 
     /// Tests that the URL parser will not throw a panic under some random
