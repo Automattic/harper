@@ -15,6 +15,11 @@ pub trait CharExt: private::Sealed {
     fn is_english_lingual(&self) -> bool;
     fn is_emoji(&self) -> bool;
     fn is_punctuation(&self) -> bool;
+    /// Whether the character belongs to the Unicode Space_Separator (Zs) general category.
+    ///
+    /// Deliberately excludes `\t`, `\n`, and `\r` (Cc), as well as U+2028 and U+2029 (Zl/Zp
+    /// line separators), because they have distinct token semantics.
+    fn is_space_separator(&self) -> bool;
     /// Whether the character is an (English) vowel.
     ///
     /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
@@ -96,6 +101,29 @@ impl CharExt for char {
 
     fn is_punctuation(&self) -> bool {
         Punctuation::from_char(*self).is_some()
+    }
+
+    fn is_space_separator(&self) -> bool {
+        matches!(
+            *self,
+            '\u{0020}'
+                | '\u{00A0}'
+                | '\u{1680}'
+                | '\u{2000}'
+                | '\u{2001}'
+                | '\u{2002}'
+                | '\u{2003}'
+                | '\u{2004}'
+                | '\u{2005}'
+                | '\u{2006}'
+                | '\u{2007}'
+                | '\u{2008}'
+                | '\u{2009}'
+                | '\u{200A}'
+                | '\u{202F}'
+                | '\u{205F}'
+                | '\u{3000}'
+        )
     }
 
     fn is_vowel(&self) -> bool {
