@@ -4384,6 +4384,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DigUnderTheHood",
+								"state": true,
+								"label": "Dig Under The Hood"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoMistake",
 								"state": true,
 								"label": "Do Mistake"

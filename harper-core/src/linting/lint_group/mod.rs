@@ -70,6 +70,7 @@ use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
 use super::did_past::DidPast;
 use super::didnt::Didnt;
+use super::dig_under_the_hood::DigUnderTheHood;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
 use super::do_mistake::DoMistake;
@@ -657,6 +658,7 @@ impl LintGroup {
         insert_expr_rule!(DespiteOf);
         insert_expr_rule_with_dict!(DidPast);
         insert_expr_rule!(Didnt);
+        insert_expr_rule!(DigUnderTheHood);
         insert_struct_rule!(DiscourseMarkers);
         insert_expr_rule_with_dict!(DisjointPrefixes);
         insert_expr_rule!(DoMistake);
