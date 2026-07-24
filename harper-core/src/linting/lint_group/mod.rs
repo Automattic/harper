@@ -242,6 +242,7 @@ use super::soon_to_be::SoonToBe;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
 use super::spell_check::SpellCheck;
+use super::spell_check_with_usernames::SpellCheckWithUsernames;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
@@ -901,8 +902,17 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("PluralDecades", PluralDecades::default());
 
+        // `SpellCheck` and `SpellCheckWithUsernames` are mutually exclusive
+        // `SpellCheckWithUsernames` is disabled by default
+
         // Uses Dictionary and Dialect
         out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+
+        // Uses Dictionary and Dialect
+        out.add(
+            "SpellCheckWithUsernames",
+            SpellCheckWithUsernames::new(dictionary.clone(), dialect),
+        );
 
         // Uses Dictionary, and Sentence rather than Chunk
         out.add(
