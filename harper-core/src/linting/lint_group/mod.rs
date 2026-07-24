@@ -1189,6 +1189,61 @@ mod tests {
         );
     }
 
+    #[test]
+    fn fix_stoped() {
+        assert_suggestion_result("He stoped to think.", test_group(), "He stopped to think.");
+    }
+
+    #[test]
+    fn allow_playthrough() {
+        assert_no_lints("I recently did a playthrough.", test_group());
+    }
+
+    #[test]
+    fn fixes_politicans() {
+        assert_suggestion_result(
+            "I guess politicans like to complain.",
+            test_group(),
+            "I guess politicans like to complain.",
+        );
+    }
+
+    #[test]
+    fn fixes_benefitting() {
+        assert_suggestion_result(
+            "Who is really benefitting from it?",
+            test_group(),
+            "Who is really benefiting from it?",
+        );
+    }
+
+    #[test]
+    fn fixes_easir() {
+        assert_suggestion_result(
+            "It makes it easir to select it.",
+            test_group(),
+            "It makes it easier to select it.",
+        );
+    }
+
+    #[test]
+    fn fixes_disserve() {
+        assert_suggestion_result(
+            "I think you disserve a reward.",
+            test_group(),
+            "I think you deserve a reward.",
+        );
+    }
+
+    #[test]
+    fn fixes_buget() {
+        assert_suggestion_result(
+            "It was in their buget range.",
+            test_group(),
+            "It was in their budget range.",
+        );
+    }
+
     /// Tests that no linters' descriptions contain errors handled by other linters.
     ///
     /// This test verifies that the description of each linter (which is written in natural language)

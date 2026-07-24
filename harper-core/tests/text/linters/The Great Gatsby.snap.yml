@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -782,8 +782,8 @@ Message: |
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -816,8 +816,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -893,7 +893,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -1144,7 +1144,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -1700,15 +1700,6 @@ Suggest:
   - Replace with: “banjo's”
   - Replace with: “banjos”
   - Replace with: “bandies”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
-         |                                                    ^~~~~~~ `banjoes` should probably be written as `banjo es`.
-Suggest:
-  - Replace with: “banjo es”
 
 
 
@@ -2379,7 +2370,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -2607,7 +2598,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -3566,11 +3557,10 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` has a missing space between words.
+         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
     2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
 Suggest:
   - Replace with: “be aux”
-  - Replace with: “beau x”
 
 
 
@@ -3642,15 +3632,6 @@ Suggest:
   - Replace with: “dear's”
   - Replace with: “dares”
   - Replace with: “dearies”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
-         |        ^~~~~~ `deares` should probably be written as `dear es`.
-Suggest:
-  - Replace with: “dear es”
 
 
 
@@ -4997,15 +4978,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-         |      ^~~~ `bles` should probably be written as `bl es`.
-Suggest:
-  - Replace with: “bl es”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
@@ -5154,8 +5126,8 @@ Message: |
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5232,8 +5204,8 @@ Message: |
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5426,6 +5398,28 @@ Message: |
          |                                                ^~~ If you mean the informal word for `yes` and not the biblical or legalistic `yea`, the standard spelling is `yeah`.
 Suggest:
   - Replace with: “Yeah”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                    ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                       ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
 
 
 
@@ -5947,7 +5941,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -5958,7 +5952,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -5989,7 +5983,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -6057,9 +6051,8 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |                                                   ^~~~~~ `stopus` has a missing space between words.
+         |                                                   ^~~~~~ `stopus` should probably be written as `stop us`.
 Suggest:
-  - Replace with: “st opus”
   - Replace with: “stop us”
 
 
@@ -6783,8 +6776,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -7285,8 +7278,8 @@ Message: |
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -7317,7 +7310,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -7328,7 +7321,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -7574,9 +7567,9 @@ Message: |
     5613 | great for that. He told me I et like a hog once, and I beat him for it.”
          |                              ^~ Did you mean to spell `et` this way?
 Suggest:
-  - Replace with: “e”
-  - Replace with: “ea”
   - Replace with: “eat”
+  - Replace with: “eh”
+  - Replace with: “em”
 
 
 
@@ -7842,8 +7835,8 @@ Message: |
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
   - Replace with: “Ell”
-  - Replace with: “E”
-  - Replace with: “Ea”
+  - Replace with: “Eel”
+  - Replace with: “Eh”
 
 
 

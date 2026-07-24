@@ -13788,7 +13788,7 @@ azalea/NSg
 azimuth/~N0g
 azimuths/N9
 azure/~NSgJV
-b/~J^VdK
+b/J^VdK
 baa/~NSgVdG
 babble/VGd>SNmgZ
 babbler/~Ng
@@ -15950,7 +15950,7 @@ brute force/NwgSVdG
 brutish/JYp
 brutishness/Nmg
 brutus/
-bu/~N
+bu/N
 bub/NSgV
 bubble/~NSgVdG>
 bubble tea/NwgS
@@ -16267,7 +16267,7 @@ bytecode/NwgS
 byway/~NSg
 byword/NSg
 byzantine/~JN
-c/~NSViE
+c/NSViE
 ca/P
 cab/~NSgV>Z
 cab sav/Nmg†_       # Australia slang = Cabernet Sauvignon
@@ -21216,6 +21216,7 @@ desert/~NwSgJ>VdGZ
 deserter/NgS
 desertification/Nmg
 desertion/~NwSg
+deserve/~V>SZ
 deserved/~JYVU
 deserving/~JNVU
 desi/NgS₹
@@ -21680,7 +21681,7 @@ dirtball/NS
 dirtily/Ry
 dirtiness/Nmg
 dirty/~J^>pVdSG
-dis/~VNgI(
+dis/VNgI(
 disable/~VdSGJL
 disablement/Ng
 disambiguate/~VSdGn
@@ -22711,7 +22712,7 @@ dystopi
 dystopia/NwgS
 dystopian/~J
 dz/NV
-e/~NSId^W
+e/NSId^W
 e-book/NgS
 e-commerce/Nmg
 e'en/
@@ -22720,7 +22721,6 @@ e.g./~N
 eBay/OgV
 eMusic/g
 eSIM/NgS
-ea/~N
 each/~Dq
 each other/I
 eager/~J^Y>pVN
@@ -22853,7 +22853,7 @@ ecumenical/~JY
 ecumenicism/Ng
 ecumenism/Nmg
 eczema/Nwg
-ed/~NSgre
+ed/NSgre
 edamame/N
 eddy/~NSgVdG
 edelweiss/Ng
@@ -24223,7 +24223,7 @@ expenditure/~NwSg
 expense/~NwgSV
 expensive/~JYpi
 expensiveness/Nmgi
-experience/~Nw0gVd
+experience/~Nw0gVdi
 experiences/~N9Vh
 experiencing/~V6N
 experiential/~J
@@ -24916,7 +24916,6 @@ fewness/Ng
 fey/~JN
 fez/~Ng
 fezzes/N
-ff/~V
 fiance/NgVe
 fiancee/NgS
 fiances/N
@@ -26346,7 +26345,7 @@ fuzziness/Ng
 fuzzy/~J^>pNS
 fwd/~JNV
 fwy/N
-g/~NSnXvB
+g/NSnXvB
 gab/~NSgV
 gabardine/NSg
 gabbed/VtT
@@ -27764,7 +27763,7 @@ gyrofrequency/NgS
 gyroscope/NgS
 gyroscopic/J
 gyve/NgSVGd
-h/~NJGnXZvz         # removed `>` 'her' is not comparative of 'h'
+h/NJGnXZvz         # removed `>` 'her' is not comparative of 'h'
 h'm/
 ha/~
 hah/~
@@ -31076,7 +31075,7 @@ iv/~U
 ivory/~NwSgJ
 ivy/~NSgd
 ix/~
-j/~NW
+j/NW
 jab/NSgV
 jabbed/VtTJ
 jabber/Vd>GSNgZ
@@ -37947,7 +37946,7 @@ oxymoronic/J
 oyster/~NSgJV
 oz/~N
 ozone/~NgV
-p/~PNV>G^nXz
+p/PNV>G^nXz
 p.m./
 pH/
 pa/~NSgH
@@ -41443,7 +41442,7 @@ pyruvate/~N
 python/~NSg
 pyx/NgSV
 pzazz/N
-q/~N
+q/N
 qr/~N
 qt/~NS
 qty/N
@@ -46930,7 +46929,7 @@ squish/NgSVGd
 squishy/J>^N
 sriracha/N
 ssh/~VO
-st/~N
+st/N
 stab/~NgSVJY
 stabbed/~VtT
 stabber/NgS
@@ -49611,7 +49610,7 @@ tinder/NgV
 tinderbox/NgS
 tine/NgSJV
 tinfoil/NmgV
-ting/~NgVdGY
+ting/NgVdGY
 tinge/NSgV
 tingeing/V
 tingle/VdGSNgz
@@ -53566,7 +53565,7 @@ wurst/NSg
 wuss/NgSV
 wussy/J>^NSg
 wyvern/NSg
-x/~                 # removed `5` and `7` adjective and `conjunction`
+x/                 # removed `5` and `7` adjective and `conjunction`
 x-axis/Ng
 x64/Ng
 x86/~Ng
@@ -54717,3 +54716,4 @@ vicontiel/J         # As above, alternative version
 viscomital/J        # As above, alternative version
 WordCamp/Og
 worldbuild/V>G
+playthrough/gNS
