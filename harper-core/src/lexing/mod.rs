@@ -304,7 +304,7 @@ fn lex_tabs(source: &[char]) -> Option<FoundToken> {
 }
 
 fn lex_spaces(source: &[char]) -> Option<FoundToken> {
-    let count = source.iter().take_while(|c| **c == ' ').count();
+    let count = source.iter().take_while(|c| c.is_space_separator()).count();
 
     if count > 0 {
         Some(FoundToken {
@@ -362,8 +362,74 @@ mod tests {
     use super::lex_hex_number;
     use super::lex_long_decade;
     use super::lex_number;
+    use super::lex_spaces;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
+
+    #[test]
+    fn lexes_non_breaking_space_between_words() {
+        let source: Vec<_> = "the\u{00A0}the".chars().collect();
+        let expected_tokens = [
+            TokenKind::Word(None),
+            TokenKind::Space(1),
+            TokenKind::Word(None),
+        ];
+        let mut next_index = 0;
+
+        for expected_token in expected_tokens {
+            let token = lex_english_token(&source[next_index..]);
+            assert_eq!(token.token, expected_token);
+            next_index += token.next_index;
+        }
+    }
+
+    #[test]
+    fn lexes_unicode_space_separators() {
+        for character in ['\u{00A0}', '\u{202F}', '\u{2007}', '\u{2009}', '\u{3000}'] {
+            assert_eq!(
+                lex_spaces(&[character]),
+                Some(FoundToken {
+                    token: TokenKind::Space(1),
+                    next_index: 1,
+                })
+            );
+        }
+    }
+
+    #[test]
+    fn lexes_consecutive_non_breaking_spaces() {
+        let source = ['\u{00A0}', '\u{00A0}'];
+        assert_eq!(
+            lex_spaces(&source),
+            Some(FoundToken {
+                token: TokenKind::Space(2),
+                next_index: 2,
+            })
+        );
+    }
+
+    #[test]
+    fn preserves_newline_token() {
+        let source: Vec<_> = "a\nb".chars().collect();
+        let first = lex_english_token(&source);
+        let newline = lex_english_token(&source[first.next_index..]);
+
+        assert_eq!(newline.token, TokenKind::Newline(1));
+    }
+
+    #[test]
+    fn preserves_tab_width() {
+        let source: Vec<_> = "a\tb".chars().collect();
+        let first = lex_english_token(&source);
+        let tab = lex_english_token(&source[first.next_index..]);
+
+        assert_eq!(tab.token, TokenKind::Space(2));
+    }
+
+    #[test]
+    fn does_not_lex_line_separator_as_space() {
+        assert_eq!(lex_spaces(&['\u{2028}']), None);
+    }
 
     // test various kinds of number
     #[test]

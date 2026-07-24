@@ -508,8 +508,8 @@
 # D   NPr/J/R/P NSg/VB+ . Nᴹ/Vg/J  NSg/VB+ .
 > You    can't get    round      the headland when    the tide's in        .
 # ISgPl+ VXB   NSg/VB NSg/VB/J/P D   NSg      NSg/I/C D   NSg$   NPr/J/R/P .
-> in        by    descent  ;            in        by    purchase ;            in        of the seisin of her     husband
-# NPr/J/R/P NSg/P N🅪Sg/VB+ . Unlintable NPr/J/R/P NSg/P NSg/VB+  . Unlintable NPr/J/R/P P  D   ?      P  ISg/D$+ NSg/VB+
+> in        by    descent  ; in        by    purchase ; in        of the seisin of her     husband
+# NPr/J/R/P NSg/P N🅪Sg/VB+ . NPr/J/R/P NSg/P NSg/VB+  . NPr/J/R/P P  D   ?      P  ISg/D$+ NSg/VB+
 > He       is  very in        with the Joneses .
 # NPr/ISg+ VL3 J/R  NPr/J/R/P P    D   NPl/V3  .
 > I       need     to keep   in        with the neighbours   in        case       I       ever need     a    favour        from them     .
