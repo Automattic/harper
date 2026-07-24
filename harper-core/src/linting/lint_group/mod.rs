@@ -371,21 +371,61 @@ impl LintGroup {
             || self.sentence_expr_linters.contains_key(name.as_ref())
     }
 
+    /// Check for clashes between a new linter and existing linters
+    /// Returns detailed clash information with counts for debugging
+    fn check_clashes(&self, name: &str, child_names: &[&str]) -> Option<Vec<String>> {
+        use hashbrown::HashMap;
+        let mut clash_counts = HashMap::new();
+
+        // Check direct name clash with existing `Linter`s or `ExprLinter`s
+        if self.contains_key(name) {
+            *clash_counts.entry(name.to_string()).or_insert(0) += 1;
+        }
+
+        // Check if new linter's name clashes with child names of existing linters
+        for existing_linter in self.linters.values() {
+            if existing_linter.merged_linter_child_names().contains(&name) {
+                *clash_counts.entry(name.to_string()).or_insert(0) += 1;
+            }
+        }
+
+        // Check if child names clash with existing linters
+        for &child_name in child_names {
+            if self.contains_key(child_name) {
+                *clash_counts.entry(child_name.to_string()).or_insert(0) += 1;
+            }
+        }
+
+        if clash_counts.is_empty() {
+            None
+        } else {
+            Some(
+                clash_counts
+                    .into_iter()
+                    .map(|(name, count)| format!("{name} (used {} times)", count + 1))
+                    .collect(),
+            )
+        }
+    }
+
     /// Add a [`Linter`] to the group, returning whether the operation was successful.
     /// If it returns `false`, it is because a linter with that key already existed in the group.
     pub fn add(&mut self, name: impl AsRef<str>, linter: impl Linter + 'static) -> bool {
-        if self.contains_key(&name) {
+        let name_str = name.as_ref();
+        let child_names = linter.merged_linter_child_names();
+
+        if let Some(clashes) = self.check_clashes(name_str, &child_names) {
             if self.clashing_linter_names.is_none() {
-                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+                self.clashing_linter_names = Some(clashes);
             } else if let Some(clashing_names) = &mut self.clashing_linter_names {
-                clashing_names.push(name.as_ref().to_string());
+                clashing_names.extend(clashes);
             }
-            false
-        } else {
-            self.linters
-                .insert(name.as_ref().to_string(), Box::new(linter));
-            true
+            return false;
         }
+
+        // No clashes found, add the linter
+        self.linters.insert(name_str.to_string(), Box::new(linter));
+        true
     }
 
     /// Add a chunk-based [`ExprLinter`] to the group, returning whether the operation was successful.
@@ -398,18 +438,22 @@ impl LintGroup {
         name: impl AsRef<str>,
         linter: impl ExprLinter<Unit = Chunk> + 'static,
     ) -> bool {
-        if self.contains_key(&name) {
+        let name_str = name.as_ref();
+        let child_names = linter.merged_linter_child_names();
+
+        if let Some(clashes) = self.check_clashes(name_str, &child_names) {
             if self.clashing_linter_names.is_none() {
-                self.clashing_linter_names = Some(vec![name.as_ref().to_string()]);
+                self.clashing_linter_names = Some(clashes);
             } else if let Some(clashing_names) = &mut self.clashing_linter_names {
-                clashing_names.push(name.as_ref().to_string());
+                clashing_names.extend(clashes);
             }
-            false
-        } else {
-            self.chunk_expr_linters
-                .insert(name.as_ref().to_string(), Box::new(linter) as _);
-            true
+            return false;
         }
+
+        // No clashes found, add the linter
+        self.chunk_expr_linters
+            .insert(name_str.to_string(), Box::new(linter) as _);
+        true
     }
 
     /// Add a sentence-based [`ExprLinter`] to the group, returning whether the operation was successful.
@@ -1241,8 +1285,9 @@ mod tests {
         if let Some(names) = &group.clashing_linter_names {
             if !names.is_empty() {
                 panic!(
-                    "⚠️ Found {} clashing linter names: {}",
+                    "⚠️ Found {} linter name clash{}: {}",
                     names.len(),
+                    if names.len() == 1 { "" } else { "es" },
                     names.join(", ")
                 );
             }
