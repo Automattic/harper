@@ -21,8 +21,23 @@ impl Default for ThatThan {
             .t_ws()
             .then_word_except(&["way"]);
 
+        // "less [adj] that [...]" is almost always a comparison where "that"
+        // should be "than". "more [adj] that" is excluded because it frequently
+        // introduces a correct subordinate clause ("more clear that users
+        // need to...").
+        let periphrastic_that_nextword = SequenceExpr::word("less")
+            .t_ws()
+            .then_positive_adjective()
+            .t_ws()
+            .t_aco("that")
+            .t_ws()
+            .then_word_except(&["way"]);
+
         Self {
-            expr: adjective_er_that_nextword,
+            expr: SequenceExpr::any_of(vec![
+                Box::new(adjective_er_that_nextword),
+                Box::new(periphrastic_that_nextword),
+            ]),
         }
     }
 }
@@ -35,11 +50,13 @@ impl ExprLinter for ThatThan {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if toks.len() != 5 {
-            return None;
-        }
+        let that_idx = match toks.len() {
+            5 => 2,
+            7 => 4,
+            _ => return None,
+        };
 
-        let that_tok = &toks[2];
+        let that_tok = &toks[that_idx];
 
         Some(Lint {
             span: that_tok.span,
@@ -187,6 +204,26 @@ mod tests {
         )
     }
 
+    // less [adj] that
+
+    #[test]
+    fn fix_less_common_that() {
+        assert_suggestion_result(
+            "way less common that mp3",
+            ThatThan::default(),
+            "way less common than mp3",
+        );
+    }
+
+    #[test]
+    fn fix_less_reliable_that() {
+        assert_suggestion_result(
+            "this approach is less reliable that the previous one",
+            ThatThan::default(),
+            "this approach is less reliable than the previous one",
+        );
+    }
+
     // more/less adj that
 
     #[test]
@@ -221,7 +258,7 @@ mod tests {
     #[test]
     fn dont_flag_its_better_that() {
         assert_lint_count(
-            "It’s better that the shock should all come at once.",
+            "It's better that the shock should all come at once.",
             ThatThan::default(),
             0,
         )
