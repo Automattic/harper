@@ -127,6 +127,35 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
+    fn no_lint_quite_well() {
+        assert_no_lints(
+            "The book is laid out quite well.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_quite_good() {
+        assert_no_lints("The food was quite good.", QuiteQuiet::default());
+    }
+
+    #[test]
+    fn no_lint_quite_a_lot() {
+        assert_no_lints(
+            "There were quite a lot of people.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_quite_a_few() {
+        assert_no_lints(
+            "I have quite a few things to do.",
+            QuiteQuiet::default(),
+        );
+    }
+
+    #[test]
     fn fix_quiet_adverb() {
         assert_suggestion_result(
             "Rendering videos 145 frames, with lightx loras for 2.1 i experience reboots quiet often.",
