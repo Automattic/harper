@@ -5,7 +5,7 @@ use crate::{
         ExprLinter, Lint, LintKind, Suggestion,
         expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
     },
-    patterns::{IndefiniteArticle, WordSet},
+    patterns::{IndefiniteArticle, Pattern, WordSet},
 };
 
 #[derive(Debug, Clone, Copy)]
@@ -22,24 +22,83 @@ pub enum Correction {
 
 use Correction::*;
 
+/// Matches a qualified phrase only when `software` is its final noun.
+///
+/// Applying this to every mass noun produces false positives for words that also have valid
+/// countable senses.
+struct QualifiedSoftware;
+
+impl Pattern for QualifiedSoftware {
+    fn matches(&self, tokens: &[Token], source: &[char]) -> Option<usize> {
+        let mut cursor = 0;
+        let mut last_noun_end = None;
+        let mut software_end = None;
+
+        loop {
+            let token = tokens.get(cursor)?;
+
+            if !is_software_phrase_word(token, source) {
+                break;
+            }
+
+            if token.kind.is_noun() || token.kind.is_oov() {
+                last_noun_end = Some(cursor + 1);
+
+                if token.get_ch(source).eq_str("software") {
+                    software_end = Some(cursor + 1);
+                }
+            }
+
+            let Some(separator) = tokens.get(cursor + 1) else {
+                break;
+            };
+
+            if !separator.kind.is_whitespace() && !separator.kind.is_hyphen() {
+                break;
+            }
+
+            let Some(next) = tokens.get(cursor + 2) else {
+                break;
+            };
+
+            if !is_software_phrase_word(next, source) {
+                break;
+            }
+
+            cursor += 2;
+        }
+
+        match (last_noun_end, software_end) {
+            (Some(noun_end), Some(software_end)) if noun_end == software_end => Some(software_end),
+            _ => None,
+        }
+    }
+}
+
 pub struct NounCountability {
     expr: SequenceExpr,
 }
 
 impl Default for NounCountability {
     fn default() -> Self {
-        let quantifier = WordSet::new(&[
-            "another", "both", "each", "every", "few", "fewer", "many", "multiple", "one",
-            "several",
-        ]);
+        let determiner_or_quantifier = || {
+            let quantifier = WordSet::new(&[
+                "another", "both", "each", "every", "few", "fewer", "many", "multiple", "one",
+                "several",
+            ]);
 
-        Self {
-            expr: SequenceExpr::any_of(vec![
+            SequenceExpr::any_of(vec![
                 Box::new(IndefiniteArticle::default()),
                 Box::new(quantifier) as Box<dyn Expr>,
             ])
             .then_whitespace()
-            .then_mass_noun_only(),
+        };
+
+        let direct = determiner_or_quantifier().then_mass_noun_only();
+        let qualified_software = determiner_or_quantifier().then(QualifiedSoftware);
+
+        Self {
+            expr: SequenceExpr::longest_of([Box::new(direct), Box::new(qualified_software)]),
         }
     }
 }
@@ -57,23 +116,36 @@ impl ExprLinter for NounCountability {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        let toks_chars = toks.span()?.get_content(src);
+        let [dq_token, whitespace, rest @ ..] = toks else {
+            return None;
+        };
+        let noun_token = rest.last()?;
 
-        if toks.len() != 3
+        if !whitespace.kind.is_whitespace()
+            || !noun_token.kind.is_mass_noun_only()
             || followed_by_hyphen(ctx)
             || followed_by_word(ctx, |t| {
-                t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
+                let nominal_head = if noun_token.get_ch(src).eq_str("software") {
+                    is_likely_nominal_head(t, src) && !t.get_ch(src).eq_str("like")
+                } else {
+                    t.kind.is_noun() || t.kind.is_oov()
+                };
+
+                nominal_head || t.get_ch(src).eq_str("and")
             })
-            || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
+            || (is_ing_word(noun_token, src) && followed_by_nominal_head(ctx, src))
         {
             return None;
         }
 
         // the determiner or quantifier
-        let dq = toks[0].get_str(src).to_lowercase();
+        let dq = dq_token.get_str(src).to_lowercase();
 
         // the mass noun
-        let noun = toks[2].get_str(src).to_lowercase();
+        let noun = noun_token.get_str(src).to_lowercase();
+
+        let phrase_span = toks.span()?;
+        let toks_chars = phrase_span.get_content(src);
 
         let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
             ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[
@@ -150,29 +222,53 @@ impl ExprLinter for NounCountability {
 
         let mut suggestions = Vec::new();
 
-        for correction in synonym_corrections {
-            let parts = match correction {
-                ReplaceNounWith(w) => &[&dq, *w],
-                _ => return None,
-            };
-            suggestions.push(Suggestion::replace_with_match_case(
-                parts.join(" ").chars().collect(),
-                toks_chars,
-            ));
+        if toks.len() == 3 {
+            for correction in synonym_corrections {
+                let parts = match correction {
+                    ReplaceNounWith(w) => &[&dq, *w],
+                    _ => return None,
+                };
+                suggestions.push(Suggestion::replace_with_match_case(
+                    parts.join(" ").chars().collect(),
+                    toks_chars,
+                ));
+            }
+
+            suggestions.extend(basic_corrections.iter().map(|correction| {
+                let parts: &[&str] = match correction {
+                    DropDQ => &[&noun],
+                    ReplaceDQWith(w) => &[w, &noun],
+                    InsertBetween(w) => &[&dq, w, &noun],
+                    ReplaceNounWith(w) => &[&dq, w],
+                };
+                Suggestion::replace_with_match_case(parts.join(" ").chars().collect(), toks_chars)
+            }));
+        } else {
+            let noun_chars = noun_token.get_ch(src);
+            let dq_chars = dq_token.get_ch(src);
+            let before_noun = Span::new(phrase_span.start, noun_token.span.start).get_content(src);
+            let after_dq = Span::new(dq_token.span.end, noun_token.span.end).get_content(src);
+            let without_dq =
+                Span::new(rest.first()?.span.start, noun_token.span.end).get_content(src);
+
+            for correction in synonym_corrections {
+                let replacement = match correction {
+                    ReplaceNounWith(word) => replace_noun(before_noun, word, noun_chars),
+                    _ => return None,
+                };
+                suggestions.push(replacement);
+            }
+
+            suggestions.extend(basic_corrections.iter().map(|correction| match correction {
+                DropDQ => Suggestion::ReplaceWith(without_dq.to_vec()),
+                ReplaceDQWith(word) => replace_dq(word, dq_chars, after_dq),
+                InsertBetween(word) => insert_after_dq(word, dq_chars, after_dq),
+                ReplaceNounWith(word) => replace_noun(before_noun, word, noun_chars),
+            }));
         }
 
-        suggestions.extend(basic_corrections.iter().map(|correction| {
-            let parts: &[&str] = match correction {
-                DropDQ => &[&noun],
-                ReplaceDQWith(w) => &[w, &noun],
-                InsertBetween(w) => &[&dq, w, &noun],
-                ReplaceNounWith(w) => &[&dq, w],
-            };
-            Suggestion::replace_with_match_case(parts.join(" ").chars().collect(), toks_chars)
-        }));
-
         Some(Lint {
-            span: Span::new(toks[0].span.start, toks[2].span.end),
+            span: phrase_span,
             lint_kind: LintKind::Agreement,
             suggestions,
             message: format!("`{noun}` is a mass noun."),
@@ -183,6 +279,34 @@ impl ExprLinter for NounCountability {
     fn description(&self) -> &'static str {
         "Correct mass nouns that are preceded by the wrong determiners or quantifiers."
     }
+}
+
+fn match_case(value: &str, template: &[char]) -> Vec<char> {
+    let Suggestion::ReplaceWith(chars) = Suggestion::replace_with_match_case_str(value, template)
+    else {
+        unreachable!();
+    };
+    chars
+}
+
+fn replace_noun(prefix: &[char], replacement: &str, noun: &[char]) -> Suggestion {
+    let mut result = prefix.to_vec();
+    result.extend(match_case(replacement, noun));
+    Suggestion::ReplaceWith(result)
+}
+
+fn replace_dq(replacement: &str, dq: &[char], suffix: &[char]) -> Suggestion {
+    let mut result = match_case(replacement, dq);
+    result.extend_from_slice(suffix);
+    Suggestion::ReplaceWith(result)
+}
+
+fn insert_after_dq(insertion: &str, dq: &[char], suffix: &[char]) -> Suggestion {
+    let mut result = dq.to_vec();
+    result.push(' ');
+    result.extend(insertion.chars());
+    result.extend_from_slice(suffix);
+    Suggestion::ReplaceWith(result)
 }
 
 fn is_ing_word(tok: &Token, src: &[char]) -> bool {
@@ -239,6 +363,17 @@ fn is_nominal_chain_boundary(tok: &Token, src: &[char]) -> bool {
             "about", "after", "as", "at", "before", "by", "for", "from", "in", "into", "of", "on",
             "through", "to", "under", "with",
         ])
+}
+
+fn is_software_phrase_word(tok: &Token, src: &[char]) -> bool {
+    tok.get_ch(src).eq_str("pro")
+        || (!is_nominal_chain_boundary(tok, src)
+            && (tok.kind.is_adjective()
+                || tok.kind.is_adverb()
+                || tok.kind.is_noun()
+                || tok.kind.is_oov()
+                || tok.kind.is_verb_progressive_form()
+                || tok.kind.is_verb_past_participle_form()))
 }
 
 fn is_likely_nominal_head(tok: &Token, src: &[char]) -> bool {
@@ -463,6 +598,309 @@ mod tests {
             "HGroup-DIA, a software for analyzing multiple DIA data files.",
             NounCountability::default(),
             "HGroup-DIA, a software package for analyzing multiple DIA data files.",
+        );
+    }
+
+    #[test]
+    fn corrects_a_software_with_modifiers() {
+        assert_suggestion_result(
+            "bibisco is a novel writing software that helps you plan, organize and write your story without getting lost.",
+            NounCountability::default(),
+            "bibisco is a novel writing program that helps you plan, organize and write your story without getting lost.",
+        );
+    }
+
+    #[test]
+    fn preserves_modifiers_in_software_suggestions() {
+        assert_suggestion_result(
+            "They installed a useful software.",
+            NounCountability::default(),
+            "They installed useful software.",
+        );
+        assert_suggestion_result(
+            "They installed a useful software.",
+            NounCountability::default(),
+            "They installed some useful software.",
+        );
+        assert_suggestion_result(
+            "They tested one useful software.",
+            NounCountability::default(),
+            "They tested one piece of useful software.",
+        );
+    }
+
+    #[test]
+    fn corrects_hyphenated_modifiers() {
+        assert_suggestion_result(
+            "It is a novel-writing software.",
+            NounCountability::default(),
+            "It is a novel-writing program.",
+        );
+    }
+
+    #[test]
+    fn corrects_software_before_relative_clause() {
+        assert_suggestion_result(
+            "This is a software you can use.",
+            NounCountability::default(),
+            "This is a program you can use.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_modified_compound_nouns() {
+        assert_no_lints(
+            "It is a novel writing software tool.",
+            NounCountability::default(),
+        );
+        assert_no_lints(
+            "She is a software engineering manager.",
+            NounCountability::default(),
+        );
+        assert_no_lints(
+            "They operate a custom software development platform.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_full_software_stack() {
+        assert_lint_count(
+            "A full software stack includes many components.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_good_software_program() {
+        assert_lint_count(
+            "What makes a good software program?",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_developers() {
+        assert_lint_count(
+            "Most software developers aim to create software that bears the following principles.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_embedded_software_development_platform() {
+        assert_lint_count(
+            "CodeFusion Studio is an embedded software development platform leveraging Microsoft's Visual Studio Code.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_category() {
+        assert_lint_count(
+            "A third software category is that of network software, which coordinates communication between the computers linked in a network.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_stack_with_configuration() {
+        assert_lint_count(
+            "we define an experiment as the Cartesian product of a given software stack and its configuration",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_agent_framework() {
+        assert_lint_count(
+            "a novel software agent framework designed to bridge the gap between reasoning depth, efficiency, and context constraints",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_piece_of_software() {
+        assert_lint_count(
+            "A fork is the process of creating a separate and distinct piece of software by copying source code from an existing software package.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_free_software_wiki_package() {
+        assert_lint_count(
+            "MediaWiki is a free software open source wiki package written in PHP",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "missing comma makes `company` indistinguishable from a modifier"]
+    fn dont_flag_company_software_after_missing_comma() {
+        assert_lint_count(
+            "To a company software is a means to its ultimate goal of more profits.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    #[ignore = "omitted `that` makes `reason` indistinguishable from a modifier"]
+    fn dont_flag_reason_software_clause() {
+        assert_lint_count(
+            "Not to say that there isn't a reason software grows so fast.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_engineering_after_truism() {
+        assert_lint_count(
+            "As a truism Software Engineering is the act of engineering software.",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn flags_quality_software() {
+        assert_lint_count(
+            "How do I find a quality software?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_platform_as_a_service_software() {
+        assert_lint_count(
+            "Extensible and open source Platform as a Service software.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_living_software() {
+        assert_lint_count("GLPI is a living software.", NounCountability::default(), 1);
+    }
+
+    #[test]
+    fn flags_old_software() {
+        assert_lint_count(
+            "What's an old software that you would like to have again?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_sap_software() {
+        assert_lint_count(
+            "I have not yet seen a SAP software that could not be replaced with a homemade Django/Rails web app",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_custom_software() {
+        assert_lint_count(
+            "My question is - have I just built a custom software for my own use-case?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_vector_animation_software() {
+        assert_lint_count(
+            "Expressive Animator is an SVG vector animation software that helps users create and export animated icons",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_cheap_software() {
+        assert_lint_count(
+            "you would never go through chain of approvals to buy a cheap software",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_pro_software() {
+        assert_lint_count(
+            "We do not expect to come as a pro software like them.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_virus_software() {
+        assert_lint_count(
+            "At newegg bought a virus software for $60.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_software_called_gifcam() {
+        assert_lint_count(
+            "Has anyone used a software called gifcam or similar?",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_reliable_software() {
+        assert_lint_count(
+            "But you're right, the goal is not to write test but to ensure delivery of a reliable software.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn flags_each_software_prototype() {
+        assert_lint_count(
+            "However each software is a prototype, something that has never been made before",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn dont_flag_free_software_code() {
+        assert_lint_count(
+            "This is a free software code, use fairly!",
+            NounCountability::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_software_updates_synchronization() {
+        assert_lint_count(
+            "Since the WSUS configuration changed, a full software updates synchronization will occur rather than a delta synchronization.",
+            NounCountability::default(),
+            0,
         );
     }
 
