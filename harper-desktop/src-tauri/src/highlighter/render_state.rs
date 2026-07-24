@@ -703,13 +703,17 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
 fn suggestion_text(suggestion: &Suggestion) -> String {
     match suggestion {
         Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => chars.iter().collect(),
-        Suggestion::Remove => "Remove".to_owned(),
+        Suggestion::Remove | Suggestion::RemovePrefix(_) | Suggestion::RemoveSuffix(_) => {
+            "Remove".to_owned()
+        }
     }
 }
 
 fn suggestion_hover_text(suggestion: &Suggestion) -> String {
     match suggestion {
-        Suggestion::Remove => "Remove".to_owned(),
+        Suggestion::Remove | Suggestion::RemovePrefix(_) | Suggestion::RemoveSuffix(_) => {
+            "Remove".to_owned()
+        }
         Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => {
             format!("Replace with \"{}\"", chars.iter().collect::<String>())
         }
