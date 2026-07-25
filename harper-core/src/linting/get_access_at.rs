@@ -88,7 +88,7 @@ impl ExprLinter for GetAccessAt {
     }
 
     fn description(&self) -> &str {
-        "Flags 'get access at' and suggests replacing 'at' with 'to'."
+        "Flags `get access at` and suggests replacing `at` with `to`."
     }
 }
 
