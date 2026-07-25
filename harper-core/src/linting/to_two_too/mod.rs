@@ -101,6 +101,11 @@ mod tests {
     }
 
     #[test]
+    fn no_lint_to_audio() {
+        assert_no_lints("Convert a book to audio.", ToTwoToo::default());
+    }
+
+    #[test]
     fn fixes_too_go() {
         assert_suggestion_result(
             "I want too go abroad.",

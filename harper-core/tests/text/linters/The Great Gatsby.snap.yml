@@ -1920,16 +1920,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
-    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
-         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1683 | The shock that followed this declaration found voice in a sustained “Ah-h-h!” as
@@ -4665,15 +4655,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
-         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
