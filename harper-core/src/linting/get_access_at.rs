@@ -58,22 +58,21 @@ impl ExprLinter for GetAccessAt {
             let next_word = next.get_str(src).to_lowercase();
 
             // False positive checks: "at all", "at least"
-            if next_word == "all" || next_word == "least" {
+            if matches!(next_word.as_str(), "all" | "least") {
                 return None;
             }
 
             // False positive check: "at this time", "at the moment", "at the level", etc.
-            if next_word == "this" || next_word == "that" || next_word == "the" {
-                if let Some(following) = following_tok {
+            let is_time_or_level = match (next_word.as_str(), following_tok) {
+                ("this" | "that" | "the", Some(following)) => {
                     let fol_word = following.get_str(src).to_lowercase();
-                    if fol_word == "time"
-                        || fol_word == "moment"
-                        || fol_word == "stage"
-                        || fol_word == "level"
-                    {
-                        return None;
-                    }
+                    matches!(fol_word.as_str(), "time" | "moment" | "stage" | "level")
                 }
+                _ => false,
+            };
+
+            if is_time_or_level {
+                return None;
             }
 
             // False positive check: URLs / Web addresses
