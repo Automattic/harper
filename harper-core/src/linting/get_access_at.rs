@@ -32,7 +32,9 @@ impl Default for GetAccessAt {
             .t_ws()
             .t_aco("at")
             .t_ws()
-            .then_word_except(&["all", "least", "this", "that", "the"]);
+            .then_word_except(&["all", "least"])
+            .t_ws()
+            .then_any_word();
 
         Self { expr: pattern }
     }
@@ -50,11 +52,23 @@ impl ExprLinter for GetAccessAt {
 
         if let Some(next) = toks.get(6) {
             let next_str = next.get_str(src).to_lowercase();
+
+            // False positive check: URLs / Web addresses
             if next_str.starts_with("http://")
                 || next_str.starts_with("https://")
                 || next_str.contains("www.")
             {
                 return None;
+            }
+
+            // False positive check: "at this time", "at the moment", "at the level", "at the stage"
+            if matches!(next_str.as_str(), "this" | "that" | "the") {
+                if let Some(following) = toks.get(8) {
+                    let fol_str = following.get_str(src).to_lowercase();
+                    if matches!(fol_str.as_str(), "time" | "moment" | "stage" | "level") {
+                        return None;
+                    }
+                }
             }
         }
 
