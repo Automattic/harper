@@ -30,11 +30,7 @@ impl Default for GetAccessAt {
             .t_ws()
             .t_aco("access")
             .t_ws()
-            .t_aco("at")
-            .t_ws()
-            .then_word_except(&["all", "least"])
-            .t_ws()
-            .then_any_word();
+            .t_aco("at");
 
         Self { expr: pattern }
     }
@@ -48,29 +44,37 @@ impl ExprLinter for GetAccessAt {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let at_tok = toks.get(4)?;
+        let at_tok = toks.last()?;
+        let rest: String = src.get(at_tok.span.end..)?.iter().collect();
+        let rest_lower = rest.to_lowercase();
 
-        if let Some(next) = toks.get(6) {
-            let next_str = next.get_str(src).to_lowercase();
+        // False positive checks: "at all", "at least"
+        if rest_lower.starts_with(" all") || rest_lower.starts_with(" least") {
+            return None;
+        }
 
-            // False positive check: URLs / Web addresses
-            if next_str.starts_with("http://")
-                || next_str.starts_with("https://")
-                || next_str.contains("www.")
-            {
-                return None;
-            }
+        // False positive check: URLs / Web addresses
+        if rest_lower.starts_with(" http://")
+            || rest_lower.starts_with(" https://")
+            || rest_lower.starts_with(" www.")
+        {
+            return None;
+        }
 
-            // False positive check: "at this time", "at the moment", "at the level", "at the stage"
-            let is_time_or_level = matches!(next_str.as_str(), "this" | "that" | "the")
-                && toks.get(8).is_some_and(|following| {
-                    let fol_str = following.get_str(src).to_lowercase();
-                    matches!(fol_str.as_str(), "time" | "moment" | "stage" | "level")
-                });
-
-            if is_time_or_level {
-                return None;
-            }
+        // False positive check: "at this time", "at the moment", "at the level", "at the stage", etc.
+        if rest_lower.starts_with(" this time")
+            || rest_lower.starts_with(" this moment")
+            || rest_lower.starts_with(" this stage")
+            || rest_lower.starts_with(" this level")
+            || rest_lower.starts_with(" that time")
+            || rest_lower.starts_with(" that moment")
+            || rest_lower.starts_with(" that stage")
+            || rest_lower.starts_with(" that level")
+            || rest_lower.starts_with(" the moment")
+            || rest_lower.starts_with(" the stage")
+            || rest_lower.starts_with(" the level")
+        {
+            return None;
         }
 
         Some(Lint {
