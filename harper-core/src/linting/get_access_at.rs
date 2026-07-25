@@ -1,9 +1,8 @@
 use crate::expr::{Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Lrc, Token,
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    Lint, Token,
+    linting::{ExprLinter, LintKind, Suggestion},
 };
 
 /// Corrects "get access at <resource>" to "get access to <resource>", while avoiding
@@ -14,7 +13,7 @@ pub struct GetAccessAt {
 
 impl Default for GetAccessAt {
     fn default() -> Self {
-        let verbs = Lrc::new(WordSet::new(&[
+        let verbs = &[
             "get",
             "gets",
             "got",
@@ -25,15 +24,15 @@ impl Default for GetAccessAt {
             "obtains",
             "obtained",
             "obtaining",
-        ]));
-        let access = Lrc::new(WordSet::new(&["access"]));
-        let at = Lrc::new(WordSet::new(&["at"]));
+        ];
 
-        let pattern = SequenceExpr::with(verbs)
-            .then_whitespace()
-            .then(access)
-            .then_whitespace()
-            .then(at);
+        let pattern = SequenceExpr::word_set(verbs)
+            .t_ws()
+            .t_aco("access")
+            .t_ws()
+            .t_aco("at")
+            .t_ws()
+            .then_word_except(&["all", "least", "this", "that", "the"]);
 
         Self { expr: pattern }
     }
@@ -47,38 +46,13 @@ impl ExprLinter for GetAccessAt {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let at_tok = toks.last()?;
-        let at_idx = toks.len() - 1;
+        let at_tok = toks.get(4)?;
 
-        // Look at the tokens following "at" to prevent false positives
-        let next_tok = toks.get(at_idx + 1);
-        let following_tok = toks.get(at_idx + 2);
-
-        if let Some(next) = next_tok {
-            let next_word = next.get_str(src).to_lowercase();
-
-            // False positive checks: "at all", "at least"
-            if matches!(next_word.as_str(), "all" | "least") {
-                return None;
-            }
-
-            // False positive check: "at this time", "at the moment", "at the level", etc.
-            let is_time_or_level = match (next_word.as_str(), following_tok) {
-                ("this" | "that" | "the", Some(following)) => {
-                    let fol_word = following.get_str(src).to_lowercase();
-                    matches!(fol_word.as_str(), "time" | "moment" | "stage" | "level")
-                }
-                _ => false,
-            };
-
-            if is_time_or_level {
-                return None;
-            }
-
-            // False positive check: URLs / Web addresses
-            if next_word.starts_with("http://")
-                || next_word.starts_with("https://")
-                || next_word.contains("www.")
+        if let Some(next) = toks.get(6) {
+            let next_str = next.get_str(src).to_lowercase();
+            if next_str.starts_with("http://")
+                || next_str.starts_with("https://")
+                || next_str.contains("www.")
             {
                 return None;
             }
