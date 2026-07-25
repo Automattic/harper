@@ -15,7 +15,15 @@ pub struct GetAccessAt {
 impl Default for GetAccessAt {
     fn default() -> Self {
         let verbs = Lrc::new(WordSet::new(&[
-            "get", "gets", "got", "getting", "gained", "gaining", "obtain", "obtains", "obtained",
+            "get",
+            "gets",
+            "got",
+            "getting",
+            "gained",
+            "gaining",
+            "obtain",
+            "obtains",
+            "obtained",
             "obtaining",
         ]));
         let access = Lrc::new(WordSet::new(&["access"]));
