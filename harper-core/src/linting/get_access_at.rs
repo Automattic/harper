@@ -1,4 +1,4 @@
-use crate::expr::{Expr, OwnedExprExt, SequenceExpr};
+use crate::expr::{Expr, SequenceExpr};
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Lrc, Token,
