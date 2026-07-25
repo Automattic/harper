@@ -62,13 +62,14 @@ impl ExprLinter for GetAccessAt {
             }
 
             // False positive check: "at this time", "at the moment", "at the level", "at the stage"
-            if matches!(next_str.as_str(), "this" | "that" | "the") {
-                if let Some(following) = toks.get(8) {
+            let is_time_or_level = matches!(next_str.as_str(), "this" | "that" | "the")
+                && toks.get(8).is_some_and(|following| {
                     let fol_str = following.get_str(src).to_lowercase();
-                    if matches!(fol_str.as_str(), "time" | "moment" | "stage" | "level") {
-                        return None;
-                    }
-                }
+                    matches!(fol_str.as_str(), "time" | "moment" | "stage" | "level")
+                });
+
+            if is_time_or_level {
+                return None;
             }
         }
 
