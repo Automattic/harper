@@ -51,17 +51,5 @@ async function getBackground(context: BrowserContext): Promise<any> {
 // This needs to be set before any async operations in beforeEach
 test.setTimeout(90000);
 
-// Ensure tests run with a consistent dialect (American English) for predictable results
-test.beforeEach(async ({ context }) => {
-	const bg = await getBackground(context);
-	if (bg) {
-		await bg.evaluate(async () => {
-			// Ensure the linter is initialized with American dialect for consistent test behavior
-			// This prevents locale detection from affecting test results
-			await chrome.storage.local.set({ dialect: 0 });
-		}).catch(() => {});
-	}
-});
-
 export { test, expect };
 export { getBackground };

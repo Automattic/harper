@@ -395,7 +395,6 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             && (word_str.ends_with("en")
                 || word_str.ends_with("est")
                 || word_str.ends_with("et")
-                || word_str.ends_with("t")
                 || word_str.ends_with("te")
                 || word_str.ends_with("ten"))
         {
@@ -505,7 +504,6 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         if word_str.ends_with("en")
             || word_str.ends_with("est")
             || word_str.ends_with("et")
-            || word_str.ends_with("t")
             || word_str.ends_with("te")
             || word_str.ends_with("ten")
         {
