@@ -4,15 +4,16 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, accessibility_allows_highlighter_start, platform_broker};
+use crate::{IntegrationView, PlatformBroker, platform_broker};
+use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     DictWordMetadata, IgnoredLints, Language,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::Arc;
+use std::sync::{Arc, Mutex as StdMutex};
 use tauri::ipc::Invoke;
-use tauri::{Runtime, State};
+use tauri::{Manager, Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
@@ -291,7 +292,7 @@ async fn set_integration_enabled(
 #[tauri::command]
 async fn get_application_icon_data_url(bundle_id: String) -> Result<String, String> {
     let icon_png = platform_broker().application_icon_png(&bundle_id)?;
-    let encoded = data_encoding::BASE64.encode(&icon_png);
+    let encoded = general_purpose::STANDARD.encode(&icon_png);
 
     Ok(format!("data:image/png;base64,{encoded}"))
 }
@@ -320,11 +321,9 @@ pub(crate) async fn start_highlighter_service(
             .map_err(|error| error.to_string())?;
     }
 
-    if accessibility_allows_highlighter_start() {
-        highlighter_service
-            .start()
-            .map_err(|error| error.to_string())?;
-    }
+    highlighter_service
+        .start()
+        .map_err(|error| error.to_string())?;
 
     Ok(highlighter_service.is_running())
 }
