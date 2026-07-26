@@ -1,5 +1,6 @@
 use std::num::NonZeroU32;
 use std::sync::Arc;
+use std::time::Duration;
 
 use egui_wgpu::winit::Painter;
 use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
@@ -120,7 +121,12 @@ impl Window {
         }
     }
 
-    pub fn render(&mut self, render_state: &mut RenderState) {
+    /// Draws one frame and reports how long egui wants to wait before the next one.
+    ///
+    /// A `Duration::MAX` delay means egui is idle and the overlay can stop painting until something
+    /// actually changes. Honoring that is what keeps a transparent, permanently open overlay from
+    /// submitting GPU work every frame for as long as the app is running.
+    pub fn render(&mut self, render_state: &mut RenderState) -> Duration {
         let context = self.egui_state.egui_ctx().clone();
         let input = self.egui_state.take_egui_input(&self.inner);
         let output = context.run_ui(input, |ui| {
@@ -139,5 +145,10 @@ impl Window {
             &output.textures_delta,
             Vec::new(),
         );
+
+        output
+            .viewport_output
+            .get(&self.viewport_id)
+            .map_or(Duration::MAX, |viewport| viewport.repaint_delay)
     }
 }

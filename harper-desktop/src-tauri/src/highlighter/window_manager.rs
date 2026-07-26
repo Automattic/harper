@@ -120,7 +120,56 @@ struct WindowManagerApp {
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
+    repaint_schedule: RepaintSchedule,
     error: Option<Error>,
+}
+
+/// Remembers the earliest moment egui asked to be repainted.
+///
+/// The overlay only paints when something changed, so egui's own repaint requests — tooltip fade
+/// ins, hover feedback, popups closing themselves — are the one thing that still has to wake the
+/// windows up on a timer. Keeping that deadline here means an idle overlay schedules no frames at
+/// all instead of submitting one every refresh interval for the lifetime of the process.
+#[derive(Default)]
+struct RepaintSchedule {
+    next_repaint: Option<Instant>,
+}
+
+impl RepaintSchedule {
+    /// Records a repaint egui asked for, keeping the soonest of any competing requests.
+    ///
+    /// A `Duration::MAX` delay is egui's way of saying "nothing is animating", so it schedules
+    /// nothing at all.
+    fn schedule(&mut self, delay: Duration, now: Instant) {
+        if delay == Duration::MAX {
+            return;
+        }
+
+        let repaint_at = now.checked_add(delay).unwrap_or(now);
+
+        self.next_repaint = Some(match self.next_repaint {
+            Some(existing) => existing.min(repaint_at),
+            None => repaint_at,
+        });
+    }
+
+    /// Consumes the pending repaint when it comes due.
+    fn take_due(&mut self, now: Instant) -> bool {
+        if self
+            .next_repaint
+            .is_some_and(|repaint_at| repaint_at <= now)
+        {
+            self.next_repaint = None;
+            return true;
+        }
+
+        false
+    }
+
+    /// The moment the event loop has to wake up for the pending repaint, if there is one.
+    fn deadline(&self) -> Option<Instant> {
+        self.next_repaint
+    }
 }
 
 impl WindowManagerApp {
@@ -150,15 +199,23 @@ impl WindowManagerApp {
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
+            repaint_schedule: RepaintSchedule::default(),
             error: None,
         }
     }
 
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
+    ///
+    /// Reads happen at the monitor's refresh rate, but almost none of them change what is on screen.
+    /// Only redrawing when the geometry actually moved keeps an overlay that is left open for days
+    /// from rendering, tessellating and submitting a GPU frame millions of times over.
     fn read_rect_updates(&mut self) {
         let rects = self.os_broker.get_boxes(self.lint_text.as_mut());
-        self.render_state.set_rects(rects);
+
+        if !self.render_state.set_rects(rects) {
+            return;
+        }
 
         for window in &self.windows {
             window.request_redraw();
@@ -241,9 +298,18 @@ impl ApplicationHandler for WindowManagerApp {
 
         self.update_cursor_hittest(event_loop);
 
+        if self.repaint_schedule.take_due(now) {
+            for window in &self.windows {
+                window.request_redraw();
+            }
+        }
+
         let next_read = self.last_read + self.read_interval;
         let next_config_poll = self.last_config_poll + CONFIG_POLL_INTERVAL;
-        event_loop.set_control_flow(ControlFlow::WaitUntil(next_read.min(next_config_poll)));
+        let next_wake = next_read
+            .min(next_config_poll)
+            .min(self.repaint_schedule.deadline().unwrap_or(next_read));
+        event_loop.set_control_flow(ControlFlow::WaitUntil(next_wake));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
@@ -285,6 +351,8 @@ impl ApplicationHandler for WindowManagerApp {
         );
         let should_render = matches!(&event, WindowEvent::RedrawRequested);
 
+        let mut repaint_delay = None;
+
         if let Some(window) = self
             .windows
             .iter_mut()
@@ -293,8 +361,13 @@ impl ApplicationHandler for WindowManagerApp {
             window.handle_event(&event);
 
             if should_render {
-                window.render(&mut self.render_state);
+                repaint_delay = Some(window.render(&mut self.render_state));
             }
+        }
+
+        if let Some(repaint_delay) = repaint_delay {
+            self.repaint_schedule
+                .schedule(repaint_delay, Instant::now());
         }
 
         if should_select_hit_lint {
@@ -304,5 +377,57 @@ impl ApplicationHandler for WindowManagerApp {
         if matches!(&event, WindowEvent::CloseRequested) {
             event_loop.exit();
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn idle_egui_schedules_no_repaint() {
+        let mut schedule = RepaintSchedule::default();
+        let now = Instant::now();
+
+        schedule.schedule(Duration::MAX, now);
+
+        assert_eq!(schedule.deadline(), None);
+        assert!(!schedule.take_due(now + Duration::from_secs(60 * 60)));
+    }
+
+    #[test]
+    fn pending_repaint_comes_due_once() {
+        let mut schedule = RepaintSchedule::default();
+        let now = Instant::now();
+
+        schedule.schedule(Duration::from_millis(100), now);
+
+        assert_eq!(schedule.deadline(), Some(now + Duration::from_millis(100)));
+        assert!(!schedule.take_due(now + Duration::from_millis(99)));
+        assert!(schedule.take_due(now + Duration::from_millis(100)));
+        assert!(!schedule.take_due(now + Duration::from_millis(101)));
+        assert_eq!(schedule.deadline(), None);
+    }
+
+    #[test]
+    fn soonest_requested_repaint_wins() {
+        let mut schedule = RepaintSchedule::default();
+        let now = Instant::now();
+
+        schedule.schedule(Duration::from_millis(200), now);
+        schedule.schedule(Duration::from_millis(50), now);
+        schedule.schedule(Duration::from_millis(500), now);
+
+        assert_eq!(schedule.deadline(), Some(now + Duration::from_millis(50)));
+    }
+
+    #[test]
+    fn immediate_repaint_is_due_right_away() {
+        let mut schedule = RepaintSchedule::default();
+        let now = Instant::now();
+
+        schedule.schedule(Duration::ZERO, now);
+
+        assert!(schedule.take_due(now));
     }
 }

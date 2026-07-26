@@ -80,6 +80,19 @@ impl ActionableLint {
             apply_suggestion(suggestion);
         }
     }
+
+    /// Reports whether two lints would produce the same highlight and popup.
+    ///
+    /// `ActionableLint` cannot implement `PartialEq` because it owns a suggestion callback, but the
+    /// highlighter still needs to know whether a fresh accessibility read actually changed anything
+    /// on screen. Comparing only the rendered fields lets the overlay skip redraws when it would
+    /// paint the exact same frame again.
+    pub fn renders_same_as(&self, other: &Self) -> bool {
+        self.rect == other.rect
+            && self.rule_name == other.rule_name
+            && self.lint == other.lint
+            && self.source_text == other.source_text
+    }
 }
 
 impl ColoredRect {

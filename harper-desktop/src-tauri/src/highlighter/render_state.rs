@@ -91,13 +91,24 @@ impl RenderState {
             add_to_dictionary,
             disable_rule,
         };
-        state.set_rects(rects);
+        let _ = state.set_rects(rects);
         state
     }
 
     /// Replaces the accessibility-derived lint geometry while preventing a popup from pointing at a
     /// lint index that no longer exists after the latest read.
-    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
+    ///
+    /// Returns whether the next frame would differ from the last one. The overlay reads
+    /// accessibility state dozens of times per second, and the vast majority of those reads produce
+    /// exactly the same rectangles; repainting anyway means the process submits a GPU frame forever,
+    /// even while the machine sits idle overnight.
+    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) -> bool {
+        let changed = rects.len() != self.rects.len()
+            || rects
+                .iter()
+                .zip(&self.rects)
+                .any(|(new, old)| !new.renders_same_as(old));
+
         self.rects = rects;
 
         if self
@@ -105,7 +116,10 @@ impl RenderState {
             .is_some_and(|index| index >= self.rects.len())
         {
             self.highlighted_lint = None;
+            return true;
         }
+
+        changed
     }
 
     /// Updates which lint owns the suggestion popup without exposing render-state internals.
@@ -763,4 +777,109 @@ fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color3
         ((f32::from(fg) * from_weight) + (f32::from(tg) * to_weight)) as u8,
         ((f32::from(fb) * from_weight) + (f32::from(tb) * to_weight)) as u8,
     )
+}
+
+#[cfg(test)]
+mod tests {
+    use harper_core::Span;
+    use harper_core::linting::LintKind;
+
+    use super::*;
+    use crate::rect::Rect;
+
+    fn lint(message: &str) -> Lint {
+        Lint {
+            span: Span::new(0, 4),
+            lint_kind: LintKind::Spelling,
+            suggestions: Vec::new(),
+            message: message.to_string(),
+            priority: 31,
+        }
+    }
+
+    fn actionable_lint(rect: Rect, message: &str, source_text: &str) -> ActionableLint {
+        ActionableLint::new(
+            rect,
+            "TestRule".to_string(),
+            lint(message),
+            source_text.to_string(),
+            |_| {},
+        )
+    }
+
+    fn render_state(rects: Vec<ActionableLint>) -> RenderState {
+        RenderState::new(
+            rects,
+            Box::new(|_, _| {}),
+            Box::new(|_| {}),
+            Box::new(|_| {}),
+        )
+    }
+
+    fn rect() -> Rect {
+        Rect::new(10.0, 20.0, 30.0, 40.0)
+    }
+
+    #[test]
+    fn identical_reads_do_not_request_a_repaint() {
+        let mut state = render_state(vec![actionable_lint(rect(), "Typo", "teh cat")]);
+
+        assert!(!state.set_rects(vec![actionable_lint(rect(), "Typo", "teh cat")]));
+    }
+
+    #[test]
+    fn empty_reads_do_not_request_a_repaint() {
+        let mut state = render_state(Vec::new());
+
+        assert!(!state.set_rects(Vec::new()));
+    }
+
+    #[test]
+    fn moved_highlights_request_a_repaint() {
+        let mut state = render_state(vec![actionable_lint(rect(), "Typo", "teh cat")]);
+
+        assert!(state.set_rects(vec![actionable_lint(
+            Rect::new(11.0, 20.0, 30.0, 40.0),
+            "Typo",
+            "teh cat",
+        )]));
+    }
+
+    #[test]
+    fn changed_lints_request_a_repaint() {
+        let mut state = render_state(vec![actionable_lint(rect(), "Typo", "teh cat")]);
+
+        assert!(state.set_rects(vec![actionable_lint(rect(), "Spelling", "teh cat")]));
+    }
+
+    #[test]
+    fn edited_source_text_requests_a_repaint() {
+        let mut state = render_state(vec![actionable_lint(rect(), "Typo", "teh cat")]);
+
+        assert!(state.set_rects(vec![actionable_lint(rect(), "Typo", "teh cats")]));
+    }
+
+    #[test]
+    fn added_and_removed_highlights_request_a_repaint() {
+        let mut state = render_state(vec![actionable_lint(rect(), "Typo", "teh cat")]);
+
+        assert!(state.set_rects(vec![
+            actionable_lint(rect(), "Typo", "teh cat"),
+            actionable_lint(rect(), "Typo", "teh cat"),
+        ]));
+        assert!(state.set_rects(Vec::new()));
+    }
+
+    #[test]
+    fn dropping_a_stale_popup_requests_a_repaint() {
+        let mut state = render_state(vec![
+            actionable_lint(rect(), "Typo", "teh cat"),
+            actionable_lint(rect(), "Typo", "teh cat"),
+        ]);
+        state.set_highlighted_lint(Some(1));
+
+        // The same highlights are still on screen, but the popup they anchored is not.
+        assert!(state.set_rects(vec![actionable_lint(rect(), "Typo", "teh cat")]));
+        assert_eq!(state.popup_rect(), None);
+    }
 }
