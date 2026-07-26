@@ -6,10 +6,7 @@ use harper_core::{
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
-use serde::{
-    Deserialize, Serialize,
-    de::{DeserializeOwned, Error},
-};
+use serde::{Deserialize, Serialize, de::DeserializeOwned, de::Error};
 use std::{fs, io, path::PathBuf, sync::Arc};
 use thiserror::Error;
 
