@@ -147,6 +147,10 @@ export default defineConfig(async () => {
 											to: '/docs/harperjs/node',
 										},
 										{
+											title: 'Chrome Extension',
+											to: '/docs/harperjs/chrome-extension',
+										},
+										{
 											title: 'CDN',
 											to: '/docs/harperjs/CDN',
 										},
