@@ -4,16 +4,16 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, PlatformBroker, platform_broker};
+use crate::{IntegrationView, platform_broker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     DictWordMetadata, IgnoredLints, Language,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::Arc;
 use tauri::ipc::Invoke;
-use tauri::{Manager, Runtime, State};
+use tauri::{Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {

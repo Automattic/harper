@@ -3,6 +3,7 @@ mod integration;
 
 pub use error::Error;
 pub use integration::Integration;
+
 use harper_core::language::{new_curated_for_language, parse_language};
 use harper_core::{
     IgnoredLints, Language,
