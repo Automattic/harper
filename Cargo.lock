@@ -4233,6 +4233,7 @@ dependencies = [
  "tree-sitter-clojure",
  "tree-sitter-cmake",
  "tree-sitter-cpp",
+ "tree-sitter-elixir",
  "tree-sitter-gleam",
  "tree-sitter-go",
  "tree-sitter-groovy",
@@ -9705,6 +9706,16 @@ name = "tree-sitter-cpp"
 version = "0.23.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "df2196ea9d47b4ab4a31b9297eaa5a5d19a0b121dceb9f118f6790ad0ab94743"
+dependencies = [
+ "cc",
+ "tree-sitter-language",
+]
+
+[[package]]
+name = "tree-sitter-elixir"
+version = "0.3.5"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "66dd064a762ed95bfc29857fa3cb7403bb1e5cb88112de0f6341b7e47284ba40"
 dependencies = [
  "cc",
  "tree-sitter-language",
