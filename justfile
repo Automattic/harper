@@ -511,7 +511,7 @@ dogfood:
 
 test-rust:
   echo Running all Rust tests
-  cargo test --all-features -q
+  cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin

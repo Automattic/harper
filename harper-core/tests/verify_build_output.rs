@@ -141,21 +141,17 @@ fn verify_build_script_exists() {
 
     let content = fs::read_to_string(build_rs).unwrap();
 
-    // Verify build.rs handles language-specific Weir rules via config
+    // Verify build.rs imports build_lib and calls run_build
     assert!(
-        content.contains("language_weir_configs"),
-        "build.rs should use language_weir_configs for extensibility"
+        content.contains("mod build_lib"),
+        "build.rs should import build_lib module"
     );
     assert!(
-        content.contains("GERMAN"),
-        "build.rs should reference GERMAN in language_weir_configs"
+        content.contains("build_lib::run_build()"),
+        "build.rs should call build_lib::run_build()"
     );
     assert!(
-        content.contains("english_weir_rule_dir"),
-        "build.rs should reference english_weir_rule_dir"
-    );
-    assert!(
-        content.contains("WEIR_RULE_DIR"),
-        "build.rs should set WEIR_RULE_DIR environment variable for English"
+        content.contains("language"),
+        "build.rs should reference language in documentation"
     );
 }

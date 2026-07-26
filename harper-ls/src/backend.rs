@@ -1294,6 +1294,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
+    #[cfg(feature = "de")]
     async fn german_markdown_open_uses_german_dialect_and_emits_diagnostics() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("german.md");
@@ -1320,6 +1321,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
+    #[cfg(feature = "de")]
     async fn empty_markdown_document_switches_to_german_after_edit() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("empty-then-german.md");
@@ -1360,6 +1362,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
+    #[cfg(feature = "de")]
     async fn german_dictionary_commands_write_to_language_specific_paths() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("german-dicts.md");
@@ -1433,6 +1436,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
+    #[cfg(feature = "de")]
     async fn workspace_dictionary_command_uses_open_buffer_text_for_refresh() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("german-unsaved-buffer.md");
@@ -1497,6 +1501,7 @@ mod tests {
     }
 
     #[tokio::test(flavor = "current_thread")]
+    #[cfg(feature = "de")]
     async fn english_user_dictionary_command_keeps_default_path() {
         let harness = TestHarness::new().await;
         let uri = harness.file_uri("english.md");

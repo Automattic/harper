@@ -4,11 +4,14 @@ use std::{
 };
 
 use harper_core::EnglishDialect;
-use harper_core::language::german::dialects::GermanDialect;
 use harper_core::language::languages::Language;
-use harper_core::language::portuguese::dialects::PortugueseDialect;
 use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+
+#[cfg(feature = "de")]
+use harper_core::language::german::dialects::GermanDialect;
+#[cfg(feature = "pt")]
+use harper_core::language::portuguese::dialects::PortugueseDialect;
 
 fn get_tests_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests")
@@ -32,11 +35,17 @@ fn try_get_dialect_override(path: &Path) -> Option<Language> {
                 "AU" => Some(Language::English(EnglishDialect::Australian)),
                 "GB" => Some(Language::English(EnglishDialect::British)),
                 "IN" => Some(Language::English(EnglishDialect::Indian)),
+                #[cfg(feature = "de")]
                 "DE" => Some(Language::German(GermanDialect::Standard)),
+                #[cfg(feature = "de")]
                 "AT" => Some(Language::German(GermanDialect::Austrian)),
+                #[cfg(feature = "de")]
                 "CH" => Some(Language::German(GermanDialect::Swiss)),
+                #[cfg(feature = "pt")]
                 "PT" => Some(Language::Portuguese(PortugueseDialect::European)),
+                #[cfg(feature = "pt")]
                 "BR" => Some(Language::Portuguese(PortugueseDialect::Brazilian)),
+                #[cfg(feature = "pt")]
                 "AO" => Some(Language::Portuguese(PortugueseDialect::African)),
                 _ => None,
             }

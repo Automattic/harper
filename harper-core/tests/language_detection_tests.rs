@@ -4,10 +4,12 @@
 //! for various real-world scenarios.
 
 use harper_core::EnglishDialect;
-use harper_core::language::german::dialects::GermanDialect;
 use harper_core::language::languages::Language;
 use harper_core::language::registry::detect_language;
 use harper_core::spell::FstDictionary;
+
+#[cfg(feature = "de")]
+use harper_core::language::german::dialects::GermanDialect;
 
 fn test_detection(text: &str, expected_language: Language) {
     let dict = FstDictionary::curated();
@@ -30,6 +32,7 @@ fn test_very_short_text_defaults_to_english() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_pure_german_with_special_chars() {
     test_detection(
         "Der Hund spielt im Garten mit Äpfeln und Ölkannen.",
@@ -89,6 +92,7 @@ fn test_pure_english() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_mixed_german_dominant() {
     // Should detect as German due to 3:1 German:English word ratio
     test_detection(
@@ -99,6 +103,7 @@ fn test_mixed_german_dominant() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_mixed_english_dominant() {
     // Should detect as German due to significant German word presence (23%)
     // In real-world usage, 23% German words suggests German text with some English terms
@@ -120,6 +125,7 @@ fn test_code_blocks_should_not_confuse_detection() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_german_with_umlauts_high_confidence() {
     // Strong German detection due to special characters
     test_detection(
@@ -131,6 +137,7 @@ fn test_german_with_umlauts_high_confidence() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_german_pronouns_and_articles() {
     test_detection(
         "Ich gehe zur Schule. Du bist mein Freund. \
@@ -149,6 +156,7 @@ fn test_english_pronouns_and_articles() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_markdown_german_document() {
     let german_doc = r#"# Anleitung
 
@@ -195,6 +203,7 @@ The dog plays in the garden. The cat sleeps on the sofa.
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_german_technical_text() {
     let tech_german = r#"# Technische Dokumentation
 
@@ -249,6 +258,7 @@ If the program doesn't start, please check:
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_multilingual_german_dominant() {
     let multilingual = r#"# Multilingual Document
 
@@ -274,6 +284,7 @@ funktioniert gut. Vielen Dank für Ihre Aufmerksamkeit.
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_performance_long_document() {
     // Test with a longer document to ensure performance is acceptable
     let long_german = "Der Hund spielt im Garten. ".repeat(100);
@@ -308,6 +319,7 @@ fn test_edge_case_numbers_and_punctuation() {
 }
 
 #[test]
+#[cfg(feature = "de")]
 fn test_german_common_phrases() {
     test_detection(
         "Guten Tag! Wie geht es Ihnen? Danke, mir geht es gut.",
