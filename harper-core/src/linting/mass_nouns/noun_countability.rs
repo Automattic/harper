@@ -64,7 +64,8 @@ impl ExprLinter for NounCountability {
             || followed_by_word(ctx, |t| {
                 t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
             })
-            || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
+            || (is_ing_word(&toks[2], src)
+                && (followed_by_nominal_head(ctx, src) || is_ing_word_taking_an_object(ctx)))
         {
             return None;
         }
@@ -198,6 +199,27 @@ fn followed_by_nominal_head(ctx: Option<(&[Token], &[Token])>, src: &[char]) -> 
         || follows_slash_separated_ing_modifiers_then_noun(after, src)
 }
 
+/// Whether an `-ing` word is taking a direct object, which makes it verbal.
+///
+/// `follows_modifiers_then_noun` walks a chain of modifiers to a head noun, so
+/// it stops at a determiner: in `much programming knowledge` the `-ing` word
+/// modifies the head. That is the wrong shape for `affecting the other`, where
+/// the determiner opens the participle's own object rather than ending a noun
+/// phrase. Both are verbal uses, but only the first was recognised, so the
+/// second was read as a mass noun and produced suggestions like
+/// `one piece of affecting`.
+///
+/// A determiner immediately after an `-ing` form is a strong signal on its own:
+/// a real mass noun does not take an object, so `much writing the letter` is not
+/// a noun phrase whichever way it is read.
+fn is_ing_word_taking_an_object(ctx: Option<(&[Token], &[Token])>) -> bool {
+    let Some((_, [ws, word, ..])) = ctx else {
+        return false;
+    };
+
+    ws.kind.is_whitespace() && word.kind.is_determiner()
+}
+
 fn follows_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
     let mut cursor = 0;
 
@@ -265,6 +287,37 @@ fn follows_slash_separated_ing_modifiers_then_noun(tokens: &[Token], src: &[char
 mod tests {
     use super::NounCountability;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    // Issue #3819. "affecting" is the participle of "affect" and carries mass
+    // noun metadata, so a quantifier before it matched. Here it takes its own
+    // object, which is a verbal use, and the suggestion was "one piece of
+    // affecting".
+    #[test]
+    fn dont_flag_ing_word_taking_an_object_issue_3819() {
+        assert_no_lints(
+            "That way, we can keep the rankings and the questions separated without worrying about the scaling of one affecting the other.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_other_ing_words_taking_an_object() {
+        assert_no_lints(
+            "There is little point in one blaming the other.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn still_flag_a_mass_noun_before_a_determiner() {
+        // The new guard keys on the -ing form, so a plain mass noun followed by
+        // a determiner must still be caught.
+        assert_lint_count(
+            "He gave me one advice the other day.",
+            NounCountability::default(),
+            1,
+        );
+    }
 
     #[test]
     fn corrects_a() {
