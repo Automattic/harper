@@ -1145,6 +1145,7 @@ mod tests {
 
     struct TestHarness {
         _service: LspService<Backend>,
+        #[allow(dead_code)]
         tempdir: TempDir,
         test_config: Config,
         responder: JoinHandle<()>,
@@ -1209,17 +1210,20 @@ mod tests {
             self._service.inner()
         }
 
+        #[allow(dead_code)]
         fn file_uri(&self, relative: &str) -> Uri {
             let path = self.tempdir.path().join(relative);
             Uri::from_file_path(path).unwrap()
         }
 
+        #[allow(dead_code)]
         async fn write_document(&self, uri: &Uri, text: &str) {
             tokio::fs::write(uri.to_file_path().unwrap(), text)
                 .await
                 .unwrap();
         }
 
+        #[allow(dead_code)]
         async fn open_document(&self, uri: &Uri, language_id: &str, text: &str) {
             self.write_document(uri, text).await;
             self.backend()
@@ -1234,6 +1238,7 @@ mod tests {
                 .await;
         }
 
+        #[allow(dead_code)]
         async fn change_document(&self, uri: &Uri, version: i32, text: &str) {
             self.write_document(uri, text).await;
             self.backend()
@@ -1251,6 +1256,7 @@ mod tests {
                 .await;
         }
 
+        #[allow(dead_code)]
         async fn execute_command(&self, command: &str, word: &str, uri: &Uri) {
             self.backend()
                 .execute_command(ExecuteCommandParams {
@@ -1273,22 +1279,27 @@ mod tests {
         }
     }
 
+    #[allow(dead_code)]
     fn german_text_with_errors() -> &'static str {
         "Das ist ein deutscher Beispielsatz mit ausreichend vielen Woertern, damit die Sprache erkannt wird. dieser Satz enthaelt Worrt und flasch geschriebene Begriffe."
     }
 
+    #[allow(dead_code)]
     fn german_text_without_errors() -> &'static str {
         "Das ist ein deutscher Beispielsatz mit ausreichend vielen Wörtern, damit die Sprache erkannt wird. Dieser Satz enthält ansonsten nur normale deutsche Formulierungen."
     }
 
+    #[allow(dead_code)]
     fn english_text_with_error() -> &'static str {
         "This is an English sample sentence with enough words for detection to stay on the default dialect. this sentence starts with a lowercase word."
     }
 
+    #[allow(dead_code)]
     fn german_text_with_workspace_word() -> &'static str {
         "Das ist ein deutscher Beispielsatz mit ausreichend vielen Wörtern, damit die Sprache erkannt wird. Dieses Zqxjwort steht nur im Editorpuffer."
     }
 
+    #[allow(dead_code)]
     fn german_text_on_disk_after_unsaved_edit() -> &'static str {
         "Das ist weiterhin ein deutscher Beispielsatz mit ausreichend vielen Wörtern, aber ohne das neue Token im gespeicherten Zustand."
     }
