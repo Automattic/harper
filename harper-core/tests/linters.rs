@@ -197,6 +197,7 @@ fn test_most_lints() {
         let dialect = dialect_override
             .map(|lang| match lang {
                 Language::English(d) => d,
+                #[allow(unreachable_patterns)]
                 _ => Dialect::American, // Non-English languages should not use new_curated, but for now use American as fallback
             })
             .unwrap_or(Dialect::American);
