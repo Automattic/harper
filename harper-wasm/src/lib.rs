@@ -96,13 +96,23 @@ impl From<Dialect> for HarperLanguage {
             Dialect::Australian => "australian",
             Dialect::Canadian => "canadian",
             Dialect::Indian => "indian",
+            #[cfg(feature = "de")]
             Dialect::GermanStandard => "german",
+            #[cfg(feature = "de")]
             Dialect::GermanAustrian => "austrian",
+            #[cfg(feature = "de")]
             Dialect::GermanSwiss => "swiss",
+            #[cfg(feature = "pt")]
             Dialect::PortuguesePT => "pt",
+            #[cfg(feature = "pt")]
             Dialect::PortugueseBR => "br",
+            #[cfg(feature = "pt")]
             Dialect::PortugueseAO => "ao",
+            #[cfg(feature = "sk")]
             Dialect::SlovakStandard => "slovak",
+            // For builds without all language features, fall back to English for unknown dialects
+            #[allow(unreachable_patterns)]
+            _ => "american",
         };
 
         // Use harper-core's parse_language which handles feature flags properly
@@ -120,13 +130,19 @@ impl From<Dialect> for HarperDialect {
             Dialect::Indian => HarperDialect::Indian,
             // Non-English dialects map to American for backward compatibility
             // as HarperDialect only supports English dialects
-            Dialect::GermanStandard
-            | Dialect::GermanAustrian
-            | Dialect::GermanSwiss
-            | Dialect::PortuguesePT
-            | Dialect::PortugueseBR
-            | Dialect::PortugueseAO
-            | Dialect::SlovakStandard => HarperDialect::American,
+            #[cfg(feature = "de")]
+            Dialect::GermanStandard | Dialect::GermanAustrian | Dialect::GermanSwiss => {
+                HarperDialect::American
+            }
+            #[cfg(feature = "pt")]
+            Dialect::PortuguesePT | Dialect::PortugueseBR | Dialect::PortugueseAO => {
+                HarperDialect::American
+            }
+            #[cfg(feature = "sk")]
+            Dialect::SlovakStandard => HarperDialect::American,
+            // For builds without all language features, fall back to American for unknown dialects
+            #[allow(unreachable_patterns)]
+            _ => HarperDialect::American,
         }
     }
 }

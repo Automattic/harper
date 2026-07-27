@@ -72,7 +72,7 @@ build-wasm:
   cd "{{justfile_directory()}}/harper-wasm"
   
   # Build the regular optimized version with all languages but without typst/thesaurus
-  wasm-pack build --target web --out-name harper_wasm --features all-languages
+  wasm-pack build --target web --out-name harper_wasm
   
   # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
   # harper-core dependency has default-features=false, so without --features it only gets concurrent
@@ -444,7 +444,7 @@ check-rust: audit-dictionary
   set -eo pipefail
 
   cargo fmt -- --check
-  cargo clippy --all-features -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+  cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
 
