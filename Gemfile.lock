@@ -206,7 +206,7 @@ GEM
       mutex_m
     java-properties (0.3.0)
     jmespath (1.6.2)
-    json (2.19.5)
+    json (2.19.9)
     jwt (3.2.0)
       base64
     locale (2.1.5)
