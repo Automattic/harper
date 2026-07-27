@@ -135,9 +135,8 @@ pub fn generate_language_modules(_out_dir: &Path) {
     // Track dialect flags file for regeneration
     println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
 
-    // NOTE: Dialect enum generation has been moved to harper-wasm's build.rs
-    // to support wasm_bindgen attributes and feature-gated variants.
-    // generate_wasm_dialect(&languages);
+    // Generate Dialect enum for harper-wasm from language configurations
+    generate_wasm_dialect(&languages);
 }
 
 /// Generate languages.rs with all the language-related code
@@ -1396,7 +1395,6 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
 /// Generate the Dialect enum for harper-wasm
 /// This enum is auto-generated from harper-core's language configurations
 /// and allows harper-wasm to support all languages without manual updates
-#[allow(dead_code)]
 fn generate_wasm_dialect(languages: &[LanguageConfig]) {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
 
@@ -1453,12 +1451,12 @@ fn generate_wasm_dialect(languages: &[LanguageConfig]) {
         eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
     }
 
-    println!("cargo:rerun-if-changed=harper-wasm/src/generated_dialect.rs");
+    // Note: We don't use rerun-if-changed for generated_dialect.rs to avoid
+    // race conditions with harper-wasm's build script which also generates this file
 }
 
 /// Convert a dialect name for use in the Dialect enum variant
 /// Preserves uppercase for short codes (like PT, BR, AO) and converts others to PascalCase
-#[allow(dead_code)]
 fn to_dialect_variant(dialect_name: &str) -> String {
     // If the dialect name is all uppercase (like PT, BR, AO), keep it as-is
     if dialect_name.chars().all(|c| c.is_ascii_uppercase()) {
@@ -1470,7 +1468,6 @@ fn to_dialect_variant(dialect_name: &str) -> String {
 }
 
 /// Convert a string to PascalCase
-#[allow(dead_code)]
 fn to_pascal_case(s: &str) -> String {
     s.split('_')
         .map(|part| {

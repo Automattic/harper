@@ -438,6 +438,12 @@ update-vscode-linters:
   mv "$output_file" package.json
   just format
 
+# Validate language feature consistency across Cargo.toml files
+check-language-features:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  python3 "{{justfile_directory()}}/scripts/check_language_features.py"
+
 # Run Rust formatting and linting.
 check-rust: audit-dictionary
   #!/usr/bin/env bash
