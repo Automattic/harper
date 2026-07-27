@@ -55,7 +55,7 @@ impl Default for RegimenRegiment {
             // Check for "regimen(s)" with any of "regiment(s)" collocations
             expr: SequenceExpr::any_of([
                 Box::new(
-                    SequenceExpr::word_set(&WORDS_BEFORE_REGIMEN)
+                    SequenceExpr::word_set(WORDS_BEFORE_REGIMEN)
                         .t_ws()
                         .then(regimen_sgpl.clone()),
                 ),
@@ -64,12 +64,12 @@ impl Default for RegimenRegiment {
                         .t_ws()
                         .t_aco("with")
                         .t_ws()
-                        .t_set(&WORDS_AFTER_REGIMEN_WITH),
+                        .t_set(WORDS_AFTER_REGIMEN_WITH),
                 ),
             ])
             .but_not(FirstMatchOf::new([
                 Box::new(
-                    SequenceExpr::word_set(&WORDS_BEFORE_REGIMENT)
+                    SequenceExpr::word_set(WORDS_BEFORE_REGIMENT)
                         .t_ws()
                         .then(regimen_sgpl.clone()),
                 ),
@@ -78,7 +78,7 @@ impl Default for RegimenRegiment {
                         .t_ws()
                         .t_aco("for")
                         .t_ws()
-                        .t_set(&WORDS_AFTER_REGIMENT_FOR),
+                        .t_set(WORDS_AFTER_REGIMENT_FOR),
                 ),
             ])),
         }
