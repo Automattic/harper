@@ -65,7 +65,8 @@ impl ExprLinter for NounCountability {
                 t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
             })
             || (is_ing_word(&toks[2], src)
-                && (followed_by_nominal_head(ctx, src) || is_ing_word_taking_an_object(ctx)))
+                && (followed_by_nominal_head(ctx, src)
+                    || is_pronoun_one_before_participle(toks, src, ctx)))
         {
             return None;
         }
@@ -199,25 +200,50 @@ fn followed_by_nominal_head(ctx: Option<(&[Token], &[Token])>, src: &[char]) -> 
         || follows_slash_separated_ing_modifiers_then_noun(after, src)
 }
 
-/// Whether an `-ing` word is taking a direct object, which makes it verbal.
+/// Whether the matched quantifier is the pronoun `one` followed by a participle.
 ///
-/// `follows_modifiers_then_noun` walks a chain of modifiers to a head noun, so
-/// it stops at a determiner: in `much programming knowledge` the `-ing` word
-/// modifies the head. That is the wrong shape for `affecting the other`, where
-/// the determiner opens the participle's own object rather than ending a noun
-/// phrase. Both are verbal uses, but only the first was recognised, so the
-/// second was read as a mass noun and produced suggestions like
-/// `one piece of affecting`.
+/// Issue #3819 reports `the scaling of one affecting the other`. Here `one` is a
+/// pronoun standing for a thing, `of` takes it as its object, and `affecting the
+/// other` is a participial phrase modifying it. Nothing in that is a count
+/// quantifier before a mass noun, which is the only shape this rule targets.
 ///
-/// A determiner immediately after an `-ing` form is a strong signal on its own:
-/// a real mass noun does not take an object, so `much writing the letter` is not
-/// a noun phrase whichever way it is read.
-fn is_ing_word_taking_an_object(ctx: Option<(&[Token], &[Token])>) -> bool {
-    let Some((_, [ws, word, ..])) = ctx else {
+/// Deliberately narrow, and worth saying why. Two wider rules were tried and
+/// both silence real errors:
+///
+/// * "a determiner after an `-ing` form means the form is verbal" is wrong,
+///   because the determiner may open a relative clause modifying the `-ing`
+///   word instead of an object. `Every training the company offers is mandatory`
+///   is a genuine error, and that rule hides it.
+/// * "`one` after `of` is a pronoun" is wrong, because `of one` also occurs with
+///   a real quantifier. `The cost of one advice` is a genuine error, and that
+///   rule hides it too.
+///
+/// Requiring both the `of` and the participle keeps the fix to the construction
+/// actually reported. A gerund can still head a noun phrase and take an object,
+/// as in `Some people do not like eating peas`, so this says nothing about
+/// `-ing` words in general; it only declines to read `one` as a count.
+fn is_pronoun_one_before_participle(
+    toks: &[Token],
+    src: &[char],
+    ctx: Option<(&[Token], &[Token])>,
+) -> bool {
+    if !toks[0].span.get_content(src).eq_str("one") {
+        return false;
+    }
+
+    let Some((before, _)) = ctx else {
         return false;
     };
 
-    ws.kind.is_whitespace() && word.kind.is_determiner()
+    let mut idx = before.len();
+    while idx > 0 && before[idx - 1].kind.is_whitespace() {
+        idx -= 1;
+    }
+    if idx == 0 {
+        return false;
+    }
+
+    before[idx - 1].span.get_content(src).eq_str("of")
 }
 
 fn follows_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
@@ -289,22 +315,57 @@ mod tests {
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     // Issue #3819. "affecting" is the participle of "affect" and carries mass
-    // noun metadata, so a quantifier before it matched. Here it takes its own
-    // object, which is a verbal use, and the suggestion was "one piece of
+    // noun metadata, so "one" before it matched. But "one" here is a pronoun,
+    // the object of "of", not a count, and the suggestion was "one piece of
     // affecting".
     #[test]
-    fn dont_flag_ing_word_taking_an_object_issue_3819() {
+    fn dont_flag_pronoun_one_before_a_participle_issue_3819() {
         assert_no_lints(
             "That way, we can keep the rankings and the questions separated without worrying about the scaling of one affecting the other.",
             NounCountability::default(),
         );
     }
 
+    // A gerund can head a noun phrase and still take an object, so an -ing word
+    // with an object says nothing on its own about whether it is nominal.
+    // Raised in review of #3889.
     #[test]
-    fn dont_flag_other_ing_words_taking_an_object() {
+    fn dont_flag_a_gerund_taking_an_object() {
         assert_no_lints(
-            "There is little point in one blaming the other.",
+            "Some people do not like eating peas.",
             NounCountability::default(),
+        );
+    }
+
+    // A determiner after an -ing mass noun may open a relative clause modifying
+    // it rather than an object of it. These are real errors and must survive the
+    // fix above.
+    #[test]
+    fn still_flag_an_ing_mass_noun_followed_by_a_relative_clause() {
+        assert_lint_count(
+            "Every training the company offers is mandatory.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    #[test]
+    fn still_flag_an_ing_mass_noun_before_a_relative_clause_with_of() {
+        assert_lint_count(
+            "Every funding the government provides is audited.",
+            NounCountability::default(),
+            1,
+        );
+    }
+
+    // `of one` also occurs with a genuine count quantifier, so the fix must not
+    // key on `of` alone.
+    #[test]
+    fn still_flag_of_one_before_a_plain_mass_noun() {
+        assert_lint_count(
+            "They questioned the cost of one advice.",
+            NounCountability::default(),
+            1,
         );
     }
 
