@@ -1,11 +1,10 @@
 use crate::{
     CharStringExt, Lint, Token,
-    expr::{All, Expr, OwnedExprExt, Repeating, SequenceExpr},
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, find_the_only_token_matching},
     },
-    patterns::AnyPattern,
 };
 
 pub struct FullToTheBrim {
