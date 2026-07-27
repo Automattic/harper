@@ -235,6 +235,7 @@ mod redundant_additive_adverbs;
 mod redundant_firsts;
 mod redundant_progressive_comparative;
 mod redundant_self;
+mod regimen_regiment;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
