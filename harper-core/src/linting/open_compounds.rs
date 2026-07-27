@@ -152,6 +152,9 @@ fn get_compound_idx(toks: &[Token], src: &[char], compound: &str) -> Option<usiz
 mod tests {
     use super::OpenCompounds;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+
+    create_test_pool!(OpenCompounds, OpenCompounds, OpenCompounds::default());
 
     // In front
 
@@ -159,7 +162,7 @@ mod tests {
     fn corrects_lone_infront() {
         assert_suggestion_result(
             "Button always overlaps (infront) of other views.",
-            OpenCompounds::default(),
+            test_linter(),
             "Button always overlaps (in front) of other views.",
         );
     }
@@ -168,7 +171,7 @@ mod tests {
     fn corrects_infront() {
         assert_suggestion_result(
             "So if i have no variable or a running process id/name which indicates that liveley is infront/fullscreen i can't do anything further via batch and must wait ...",
-            OpenCompounds::default(),
+            test_linter(),
             "So if i have no variable or a running process id/name which indicates that liveley is in front/fullscreen i can't do anything further via batch and must wait ...",
         );
     }
@@ -177,7 +180,7 @@ mod tests {
     fn ignores_pascalcase() {
         assert_lint_count(
             "InFront Labs, LLC has 16 repositories available. Follow their code on GitHub.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -186,7 +189,7 @@ mod tests {
     fn ignores_camelcase() {
         assert_lint_count(
             "Click the \"toggle\" button to see how wrapping changes when an inFront is added to a letter in a word.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -195,26 +198,26 @@ mod tests {
     fn correct_with_period_after() {
         assert_suggestion_result(
             "Car with a reversed ramp infront.",
-            OpenCompounds::default(),
+            test_linter(),
             "Car with a reversed ramp in front.",
         );
     }
 
     #[test]
     fn ignore_hyphen_before() {
-        assert_lint_count("-infront", OpenCompounds::default(), 0);
+        assert_lint_count("-infront", test_linter(), 0);
     }
 
     #[test]
     fn ignore_hyphen_after() {
-        assert_lint_count("infront-", OpenCompounds::default(), 0);
+        assert_lint_count("infront-", test_linter(), 0);
     }
 
     #[test]
     fn ignores_with_hyphen_before() {
         assert_lint_count(
             "Instantly share code, notes, and snippets. @yossi-infront",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -223,18 +226,14 @@ mod tests {
     fn ignores_with_hyphen_after() {
         assert_lint_count(
             "infront-cycle.ipe · infront-cycle.ipe · infront-cycle.svg · infront-cycle.svg · infront-s1s2.ipe · infront-s1s2.ipe · infront-s1s2.svg · infront-s1s2.svg.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
 
     #[test]
     fn even_repeated_infront_works() {
-        assert_suggestion_result(
-            "infront infront",
-            OpenCompounds::default(),
-            "in front in front",
-        );
+        assert_suggestion_result("infront infront", test_linter(), "in front in front");
     }
 
     // A few
@@ -243,7 +242,7 @@ mod tests {
     fn correct_afew_atomic() {
         assert_suggestion_result(
             "ITK code to generate anisotropic metrics, mostly Riemannian metrics and afew particular cases of Finslerian metrics.",
-            OpenCompounds::default(),
+            test_linter(),
             "ITK code to generate anisotropic metrics, mostly Riemannian metrics and a few particular cases of Finslerian metrics.",
         );
     }
@@ -252,21 +251,21 @@ mod tests {
 
     #[test]
     fn correct_alot_atomic() {
-        assert_suggestion_result("Alot", OpenCompounds::default(), "A lot");
+        assert_suggestion_result("Alot", test_linter(), "A lot");
     }
 
     // As well
 
     #[test]
     fn correct_aswell_atomic() {
-        assert_suggestion_result("Aswell", OpenCompounds::default(), "As well");
+        assert_suggestion_result("Aswell", test_linter(), "As well");
     }
 
     #[test]
     fn corrects_as_keyboards_aswell() {
         assert_suggestion_result(
             "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
+            test_linter(),
             "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
         );
     }
@@ -275,7 +274,7 @@ mod tests {
     fn corrects_aswell_as() {
         assert_suggestion_result(
             "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-            OpenCompounds::default(),
+            test_linter(),
             "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
         );
     }
@@ -284,7 +283,7 @@ mod tests {
     fn corrects_toml_aswell() {
         assert_suggestion_result(
             "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
-            OpenCompounds::default(),
+            test_linter(),
             "format Cargo.toml as well #5893 - rust-lang/rustfmt",
         );
     }
@@ -293,7 +292,7 @@ mod tests {
     fn correct_aswell() {
         assert_suggestion_result(
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
+            test_linter(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
         );
     }
@@ -304,7 +303,7 @@ mod tests {
     fn correct_atall() {
         assert_suggestion_result(
             "claude code with vs code extension not working atall",
-            OpenCompounds::default(),
+            test_linter(),
             "claude code with vs code extension not working at all",
         );
     }
@@ -313,14 +312,14 @@ mod tests {
 
     #[test]
     fn correct_atleast_atomic() {
-        assert_suggestion_result("Atleast", OpenCompounds::default(), "At least");
+        assert_suggestion_result("Atleast", test_linter(), "At least");
     }
 
     #[test]
     fn ignore_atleast_pascalcase() {
         assert_lint_count(
             "I want to understand if we are using AtLeast correctly.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -329,7 +328,7 @@ mod tests {
     fn ignore_atleast_camelcase() {
         assert_lint_count(
             "verfiy with atLeast = 0 should pass even if the mocked function is never called.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -338,7 +337,7 @@ mod tests {
     fn correct_atleast() {
         assert_suggestion_result(
             "Mar 22, 2562 BE — constructor - expected atleast one input #250.",
-            OpenCompounds::default(),
+            test_linter(),
             "Mar 22, 2562 BE — constructor - expected at least one input #250.",
         );
     }
@@ -347,14 +346,14 @@ mod tests {
 
     #[test]
     fn correct_eachother_atomic() {
-        assert_suggestion_result("Eachother", OpenCompounds::default(), "Each other");
+        assert_suggestion_result("Eachother", test_linter(), "Each other");
     }
 
     #[test]
     fn correct_eachother() {
         assert_suggestion_result(
             "Script parsing fails when two scenes reference eachother",
-            OpenCompounds::default(),
+            test_linter(),
             "Script parsing fails when two scenes reference each other",
         );
     }
@@ -363,14 +362,14 @@ mod tests {
 
     #[test]
     fn correct_incase_atomic() {
-        assert_suggestion_result("Incase", OpenCompounds::default(), "In case");
+        assert_suggestion_result("Incase", test_linter(), "In case");
     }
 
     #[test]
     fn correct_in_case() {
         assert_suggestion_result(
             "Support for enum variable incase of reusable enum class",
-            OpenCompounds::default(),
+            test_linter(),
             "Support for enum variable in case of reusable enum class",
         );
     }
@@ -379,7 +378,7 @@ mod tests {
     fn ignore_incase_pascalcase() {
         assert_lint_count(
             "InCase save your secrets for a friend, so they can use in case it in case you went \"missing\".",
-            OpenCompounds::default(),
+            test_linter(),
             0,
         );
     }
@@ -390,7 +389,7 @@ mod tests {
     fn correct_infact_atomic() {
         assert_suggestion_result(
             "Yes I do infact exist :O",
-            OpenCompounds::default(),
+            test_linter(),
             "Yes I do in fact exist :O",
         );
     }
@@ -401,7 +400,7 @@ mod tests {
     fn correct_upto() {
         assert_suggestion_result(
             "Free for upto 10k subscribers, unlimited push notifications, in-browser messaging",
-            OpenCompounds::default(),
+            test_linter(),
             "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging",
         );
     }
