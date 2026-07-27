@@ -321,6 +321,8 @@ pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 pub(crate) use thread_local_linter::ThreadLocalLinter;
+#[cfg(test)]
+pub(crate) use thread_local_linter::for_tests::create_test_pool;
 
 use crate::{Document, LSend, render_markdown};
 

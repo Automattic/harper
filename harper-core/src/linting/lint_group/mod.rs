@@ -1027,6 +1027,8 @@ impl Linter for LintGroup {
 mod tests {
     use std::sync::{Arc, LazyLock};
 
+    use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
+
     use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
@@ -1175,31 +1177,28 @@ mod tests {
     fn lint_descriptions_are_clean() {
         let lints_to_check = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
 
-        let enforcer_config = FlatConfig::new_curated();
-        let mut lints_to_enforce =
-            LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
-                .with_lint_config(enforcer_config);
-
         let name_description_pairs: Vec<_> = lints_to_check
             .all_descriptions()
             .into_iter()
             .map(|(n, d)| (n.to_string(), d.to_string()))
             .collect();
 
-        for (lint_name, description) in name_description_pairs {
-            let doc = Document::new_markdown_default_curated(&description);
-            eprintln!("{lint_name}: {description}");
+        name_description_pairs
+            .iter()
+            .for_each(|(lint_name, description)| {
+                let doc = Document::new_markdown_default_curated(&description);
+                eprintln!("{lint_name}: {description}");
 
-            let mut lints = lints_to_enforce.lint(&doc);
+                let mut lints = test_linter().lint(&doc);
 
-            // Remove ones related to style
-            lints.retain(|l| l.lint_kind != LintKind::Style);
+                // Remove ones related to style
+                lints.retain(|l| l.lint_kind != LintKind::Style);
 
-            if !lints.is_empty() {
-                dbg!(lints);
-                panic!();
-            }
-        }
+                if !lints.is_empty() {
+                    dbg!(lints);
+                    panic!();
+                }
+            });
     }
 
     #[test]
