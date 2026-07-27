@@ -673,6 +673,7 @@ impl SequenceExpr {
     gen_then_from_is!(single_prime);
     gen_then_from_is!(double_prime);
     gen_then_from_is!(backtick);
+    gen_then_from_is!(plus);
 
     // Other
 
