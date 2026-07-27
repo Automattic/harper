@@ -15,12 +15,15 @@ merge_linters!(
 mod tests {
     use super::ItsContraction;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+
+    create_test_pool!(ItsContraction, ItsContraction, ItsContraction::default());
 
     #[test]
     fn fix_had() {
         assert_suggestion_result(
             "Its had an enormous effect.",
-            ItsContraction::default(),
+            test_linter(),
             "It's had an enormous effect.",
         );
     }
@@ -29,7 +32,7 @@ mod tests {
     fn fix_been() {
         assert_suggestion_result(
             "Its been months since we spoke.",
-            ItsContraction::default(),
+            test_linter(),
             "It's been months since we spoke.",
         );
     }
@@ -38,7 +41,7 @@ mod tests {
     fn fix_got() {
         assert_suggestion_result(
             "I think its got nothing to do with us.",
-            ItsContraction::default(),
+            test_linter(),
             "I think it's got nothing to do with us.",
         );
     }
@@ -47,25 +50,21 @@ mod tests {
     fn fixes_its_common() {
         assert_suggestion_result(
             "Its common for users to get frustrated.",
-            ItsContraction::default(),
+            test_linter(),
             "It's common for users to get frustrated.",
         );
     }
 
     #[test]
     fn ignore_correct_contraction() {
-        assert_lint_count(
-            "It's been a long year for everyone.",
-            ItsContraction::default(),
-            0,
-        );
+        assert_lint_count("It's been a long year for everyone.", test_linter(), 0);
     }
 
     #[test]
     fn ignore_possessive() {
         assert_lint_count(
             "The company revised its policies last week.",
-            ItsContraction::default(),
+            test_linter(),
             0,
         );
     }
@@ -74,25 +73,21 @@ mod tests {
     fn ignore_coroutine() {
         assert_lint_count(
             "Launch each task within its own child coroutine.",
-            ItsContraction::default(),
+            test_linter(),
             0,
         );
     }
 
     #[test]
     fn issue_381() {
-        assert_suggestion_result(
-            "Its a nice day.",
-            ItsContraction::default(),
-            "It's a nice day.",
-        );
+        assert_suggestion_result("Its a nice day.", test_linter(), "It's a nice day.");
     }
 
     #[test]
     fn ignore_nominal_progressive() {
         assert_lint_count(
             "The class preserves its existing properties.",
-            ItsContraction::default(),
+            test_linter(),
             0,
         );
     }
@@ -102,7 +97,7 @@ mod tests {
     fn ignore_nominal_perfect() {
         assert_lint_count(
             "The robot followed its predetermined route.",
-            ItsContraction::default(),
+            test_linter(),
             0,
         );
     }
@@ -111,7 +106,7 @@ mod tests {
     fn ignore_nominal_long() {
         assert_lint_count(
             "I think of its exploding marvelous spectacular output.",
-            ItsContraction::default(),
+            test_linter(),
             0,
         );
     }
@@ -120,7 +115,7 @@ mod tests {
     fn corrects_because() {
         assert_suggestion_result(
             "Its because they don't want to.",
-            ItsContraction::default(),
+            test_linter(),
             "It's because they don't want to.",
         );
     }
@@ -129,7 +124,7 @@ mod tests {
     fn corrects_its_hard() {
         assert_suggestion_result(
             "Its hard to believe that.",
-            ItsContraction::default(),
+            test_linter(),
             "It's hard to believe that.",
         );
     }
@@ -138,7 +133,7 @@ mod tests {
     fn corrects_its_easy() {
         assert_suggestion_result(
             "Its easy if you try.",
-            ItsContraction::default(),
+            test_linter(),
             "It's easy if you try.",
         );
     }
@@ -147,7 +142,7 @@ mod tests {
     fn corrects_its_a_picnic() {
         assert_suggestion_result(
             "Its a beautiful day for a picnic",
-            ItsContraction::default(),
+            test_linter(),
             "It's a beautiful day for a picnic",
         );
     }
@@ -156,7 +151,7 @@ mod tests {
     fn corrects_its_my() {
         assert_suggestion_result(
             "Its my favorite song.",
-            ItsContraction::default(),
+            test_linter(),
             "It's my favorite song.",
         );
     }
@@ -165,80 +160,63 @@ mod tests {
     fn allows_its_new() {
         assert_no_lints(
             "The company announced its new product line. ",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn allows_its_own_charm() {
-        assert_no_lints("The house has its own charm. ", ItsContraction::default());
+        assert_no_lints("The house has its own charm. ", test_linter());
     }
 
     #[test]
     fn allows_its_victory() {
-        assert_no_lints(
-            "The team celebrated its victory. ",
-            ItsContraction::default(),
-        );
+        assert_no_lints("The team celebrated its victory. ", test_linter());
     }
 
     #[test]
     fn allows_its_history() {
-        assert_no_lints(
-            "The country is proud of its history. ",
-            ItsContraction::default(),
-        );
+        assert_no_lints("The country is proud of its history. ", test_linter());
     }
 
     #[test]
     fn allows_its_secrets() {
-        assert_no_lints(
-            "The book contains its own secrets. ",
-            ItsContraction::default(),
-        );
+        assert_no_lints("The book contains its own secrets. ", test_linter());
     }
 
     #[test]
     fn corrects_think_google() {
         assert_suggestion_result(
             "I think its Google, not Microsoft.",
-            ItsContraction::default(),
+            test_linter(),
             "I think it's Google, not Microsoft.",
         );
     }
 
     #[test]
     fn corrects_hope_katie() {
-        assert_suggestion_result(
-            "I hope its Katie.",
-            ItsContraction::default(),
-            "I hope it's Katie.",
-        );
+        assert_suggestion_result("I hope its Katie.", test_linter(), "I hope it's Katie.");
     }
 
     #[test]
     fn corrects_guess_date() {
         assert_suggestion_result(
             "I guess its March 6.",
-            ItsContraction::default(),
+            test_linter(),
             "I guess it's March 6.",
         );
     }
 
     #[test]
     fn corrects_assume_john() {
-        assert_suggestion_result(
-            "We assume its John.",
-            ItsContraction::default(),
-            "We assume it's John.",
-        );
+        assert_suggestion_result("We assume its John.", test_linter(), "We assume it's John.");
     }
 
     #[test]
     fn corrects_doubt_tesla() {
         assert_suggestion_result(
             "They doubt its Tesla this year.",
-            ItsContraction::default(),
+            test_linter(),
             "They doubt it's Tesla this year.",
         );
     }
@@ -247,48 +225,36 @@ mod tests {
     fn handles_two_word_name() {
         assert_suggestion_result(
             "She thinks its New York.",
-            ItsContraction::default(),
+            test_linter(),
             "She thinks it's New York.",
         );
     }
 
     #[test]
     fn ignores_existing_contraction() {
-        assert_lint_count("I think it's Google.", ItsContraction::default(), 0);
+        assert_lint_count("I think it's Google.", test_linter(), 0);
     }
 
     #[test]
     fn ignores_possessive_noun_after_name() {
-        assert_lint_count(
-            "I think its Google product launch.",
-            ItsContraction::default(),
-            0,
-        );
+        assert_lint_count("I think its Google product launch.", test_linter(), 0);
     }
 
     #[test]
     fn ignores_without_opinion_verb() {
-        assert_lint_count(
-            "Its Google Pixel lineup is impressive.",
-            ItsContraction::default(),
-            0,
-        );
+        assert_lint_count("Its Google Pixel lineup is impressive.", test_linter(), 0);
     }
 
     #[test]
     fn ignores_common_noun_target() {
-        assert_lint_count(
-            "We hope its accuracy improves.",
-            ItsContraction::default(),
-            0,
-        );
+        assert_lint_count("We hope its accuracy improves.", test_linter(), 0);
     }
 
     #[test]
     fn issue_2547() {
         assert_no_lints(
             "using the foo feature and its associated parameter",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -296,7 +262,7 @@ mod tests {
     fn ignore_past_participle_noun_phrase() {
         assert_no_lints(
             "using the foo feature and its abetted parameter",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -304,7 +270,7 @@ mod tests {
     fn corrects_predicative_called() {
         assert_suggestion_result(
             "Its called recursion.",
-            ItsContraction::default(),
+            test_linter(),
             "It's called recursion.",
         );
     }
@@ -313,24 +279,21 @@ mod tests {
     fn corrects_predicative_named() {
         assert_suggestion_result(
             "Its named Manhattan.",
-            ItsContraction::default(),
+            test_linter(),
             "It's named Manhattan.",
         );
     }
 
     #[test]
     fn allows_possessive_generated_code() {
-        assert_no_lints(
-            "The compiler emits its generated code.",
-            ItsContraction::default(),
-        );
+        assert_no_lints("The compiler emits its generated code.", test_linter());
     }
 
     #[test]
     fn corrects_its_anybody() {
         assert_suggestion_result(
             "Its anybody who volunteers should speak up.",
-            ItsContraction::default(),
+            test_linter(),
             "It's anybody who volunteers should speak up.",
         );
     }
@@ -339,7 +302,7 @@ mod tests {
     fn corrects_its_anyone() {
         assert_suggestion_result(
             "Its anyone you ping will be looped in automatically.",
-            ItsContraction::default(),
+            test_linter(),
             "It's anyone you ping will be looped in automatically.",
         );
     }
@@ -348,7 +311,7 @@ mod tests {
     fn corrects_its_everyone() {
         assert_suggestion_result(
             "Its everyone on the thread noticed the spike.",
-            ItsContraction::default(),
+            test_linter(),
             "It's everyone on the thread noticed the spike.",
         );
     }
@@ -357,7 +320,7 @@ mod tests {
     fn corrects_its_everything() {
         assert_suggestion_result(
             "Its everything we collect ends up in the archive.",
-            ItsContraction::default(),
+            test_linter(),
             "It's everything we collect ends up in the archive.",
         );
     }
@@ -366,7 +329,7 @@ mod tests {
     fn corrects_its_somebody() {
         assert_suggestion_result(
             "Its somebody on call right now.",
-            ItsContraction::default(),
+            test_linter(),
             "It's somebody on call right now.",
         );
     }
@@ -375,7 +338,7 @@ mod tests {
     fn corrects_its_somewhere() {
         assert_suggestion_result(
             "Its somewhere safe to stash the nightly dump.",
-            ItsContraction::default(),
+            test_linter(),
             "It's somewhere safe to stash the nightly dump.",
         );
     }
@@ -384,7 +347,7 @@ mod tests {
     fn corrects_its_nobody() {
         assert_suggestion_result(
             "Its nobody left who can approve this.",
-            ItsContraction::default(),
+            test_linter(),
             "It's nobody left who can approve this.",
         );
     }
@@ -393,7 +356,7 @@ mod tests {
     fn corrects_its_anywhere() {
         assert_suggestion_result(
             "Its anywhere the monitors blink red.",
-            ItsContraction::default(),
+            test_linter(),
             "It's anywhere the monitors blink red.",
         );
     }
@@ -402,7 +365,7 @@ mod tests {
     fn corrects_its_anything() {
         assert_suggestion_result(
             "Its anything worth keeping should be archived.",
-            ItsContraction::default(),
+            test_linter(),
             "It's anything worth keeping should be archived.",
         );
     }
@@ -411,48 +374,39 @@ mod tests {
     fn corrects_its_something() {
         assert_suggestion_result(
             "Its something that keeps restarting the job.",
-            ItsContraction::default(),
+            test_linter(),
             "It's something that keeps restarting the job.",
         );
     }
 
     #[test]
     fn allows_its_tail() {
-        assert_no_lints(
-            "Its tail twitches every time I call it.",
-            ItsContraction::default(),
-        );
+        assert_no_lints("Its tail twitches every time I call it.", test_linter());
     }
 
     #[test]
     fn allows_its_release_pipeline() {
         assert_no_lints(
             "Its release pipeline is stable in production.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn allows_its_nodes() {
-        assert_no_lints(
-            "The cluster updates its nodes nightly.",
-            ItsContraction::default(),
-        );
+        assert_no_lints("The cluster updates its nodes nightly.", test_linter());
     }
 
     #[test]
     fn allows_its_cover_page() {
-        assert_no_lints(
-            "Its cover page mentions all contributors.",
-            ItsContraction::default(),
-        );
+        assert_no_lints("Its cover page mentions all contributors.", test_linter());
     }
 
     #[test]
     fn allows_its_not_anybody() {
         assert_no_lints(
             "Its not anybody to blame despite the outage.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -460,7 +414,7 @@ mod tests {
     fn allows_its_never_anywhere() {
         assert_no_lints(
             "Its never anywhere near the ideal timing we hoped for.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -468,7 +422,7 @@ mod tests {
     fn allows_at_its_highest() {
         assert_no_lints(
             "Curiosity about Gatsby was at its highest that night.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -476,7 +430,7 @@ mod tests {
     fn allows_its_pull_is() {
         assert_no_lints(
             "The Earth is huge, so its pull is super strong.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -484,7 +438,7 @@ mod tests {
     fn allows_its_unforeseen_consequences() {
         assert_no_lints(
             "The experiment continued despite its unforeseen consequences.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -492,7 +446,7 @@ mod tests {
     fn allows_its_potential_to_benefit() {
         assert_no_lints(
             "The proposal emphasized its potential to benefit local businesses.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
@@ -500,15 +454,12 @@ mod tests {
     fn allows_its_cover_was() {
         assert_no_lints(
             "Its cover was intricately engraved with floral patterns.",
-            ItsContraction::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn allows_its_starting_level() {
-        assert_no_lints(
-            "Reduce the tracker to its starting level.",
-            ItsContraction::default(),
-        );
+        assert_no_lints("Reduce the tracker to its starting level.", test_linter());
     }
 }

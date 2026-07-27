@@ -90,23 +90,26 @@ impl ExprLinter for CompoundNounAfterPossessive {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+
+    create_test_pool!(
+        CompoundNounAfterPossessive,
+        CompoundNounAfterPossessive,
+        CompoundNounAfterPossessive::default()
+    );
     use super::CompoundNounAfterPossessive;
     use crate::linting::tests::assert_lint_count;
 
     #[test]
     fn lets_is_not_possessive() {
-        assert_lint_count(
-            "Let's check out this article.",
-            CompoundNounAfterPossessive::default(),
-            0,
-        );
+        assert_lint_count("Let's check out this article.", test_linter(), 0);
     }
 
     #[test]
     fn lets_is_not_possessive_typographic_apostrophe() {
         assert_lint_count(
             "“Let’s go on with the game,” the Queen said to Alice;",
-            CompoundNounAfterPossessive::default(),
+            test_linter(),
             0,
         )
     }
@@ -115,7 +118,7 @@ mod tests {
     fn thats_is_not_possessive() {
         assert_lint_count(
             "And you might not be thinking that that's a very big issue, but ...",
-            CompoundNounAfterPossessive::default(),
+            test_linter(),
             0,
         );
     }
