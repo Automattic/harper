@@ -610,6 +610,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "boxcar"
+version = "0.2.14"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "36f64beae40a84da1b4b26ff2761a5b895c12adc41dc25aaee1c4f2bbfe97a6e"
+
+[[package]]
 name = "brotli"
 version = "8.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4252,6 +4258,7 @@ dependencies = [
  "ammonia",
  "bitflags 2.11.0",
  "blanket",
+ "boxcar",
  "cached 0.59.0",
  "criterion",
  "foldhash 0.2.0",
@@ -4264,7 +4271,6 @@ dependencies = [
  "levenshtein_automata",
  "lru",
  "ordered-float 5.3.0",
- "parking_lot",
  "paste",
  "pulldown-cmark",
  "quickcheck",

@@ -1,19 +1,21 @@
-use parking_lot::RwLock;
-use smallvec::{SmallVec, smallvec};
+use boxcar::Vec;
 use std::sync::{Arc, Mutex};
 
 use super::pool::Pool;
 
 pub struct MultiThreadPool<T> {
     ctor: fn() -> T,
-    pool: Arc<RwLock<SmallVec<[Arc<Mutex<T>>; 32]>>>,
+    pool: Arc<Vec<Mutex<T>>>,
 }
 
 impl<T> Pool<T> for MultiThreadPool<T> {
     fn new(ctor: fn() -> T) -> Self {
         let first = ctor();
+        let pool = Vec::new();
+        pool.push(Mutex::new(first));
+
         Self {
-            pool: Arc::new(RwLock::new(smallvec![Arc::new(Mutex::new(first))])),
+            pool: Arc::new(pool),
             ctor,
         }
     }
@@ -22,10 +24,7 @@ impl<T> Pool<T> for MultiThreadPool<T> {
     fn run_with_pool<B, C: FnOnce(&mut T) -> B>(&self, callback: C) -> B {
         // Attempt to grab an open copy.
         {
-            let read_pool = self.pool.read();
-
-            for i in read_pool.iter() {
-                let item = i.clone();
+            for (_, item) in self.pool.iter() {
                 if let Ok(mut l) = item.try_lock() {
                     return callback(&mut l);
                 }
@@ -35,10 +34,7 @@ impl<T> Pool<T> for MultiThreadPool<T> {
         let mut new_item = (self.ctor)();
         let result = callback(&mut new_item);
 
-        {
-            let mut write_pool = self.pool.write();
-            write_pool.push(Arc::new(Mutex::new(new_item)));
-        }
+        self.pool.push(Mutex::new(new_item));
 
         return result;
     }
