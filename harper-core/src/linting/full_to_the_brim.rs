@@ -3,7 +3,6 @@ use crate::{
     expr::{All, Expr, OwnedExprExt, Repeating, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
-        debug::format_lint_match,
         expr_linter::{Chunk, find_the_only_token_matching},
     },
     patterns::AnyPattern,
@@ -41,14 +40,7 @@ impl Default for FullToTheBrim {
 impl ExprLinter for FullToTheBrim {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        matched_tokens: &[Token],
-        source: &[char],
-        context: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
-
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let span = find_the_only_token_matching(matched_tokens, source, |t, _| {
             t.get_ch(source).eq_str("of")
         })?
