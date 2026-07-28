@@ -43,7 +43,6 @@ impl ExprLinter for RunIntoProblemsOrTrouble {
         } else {
             4
         };
-        // let from = toks.get_rel_slice(-1, 0)?.span()?;
 
         let nptoks = &toks[from..];
 
