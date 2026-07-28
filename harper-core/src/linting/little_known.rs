@@ -61,7 +61,7 @@ impl ExprLinter for LittleKnown {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_suggestion_result};
+    use crate::linting::tests::assert_suggestion_result;
 
     use super::LittleKnown;
 
