@@ -28,6 +28,7 @@ use crate::input::{
 
 /// Extract Dialect from Language for use with dictionary loading.
 /// For non-English languages, returns default dialect (temporary limitation).
+#[allow(unreachable_patterns)]
 fn language_to_dialect(language: Language) -> Dialect {
     match language {
         Language::English(d) => d,
