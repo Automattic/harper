@@ -6,7 +6,7 @@ pub use integration::Integration;
 
 use harper_core::language::{new_curated_for_language, parse_language};
 use harper_core::{
-    IgnoredLints, Language,
+    Dialect, IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
@@ -25,6 +25,15 @@ pub struct Config {
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
     pub highlighter_service_enabled: bool,
+}
+
+/// Extract Dialect from Language for use with dictionary loading.
+/// For non-English languages, returns default dialect (temporary limitation).
+fn language_to_dialect(language: Language) -> Dialect {
+    match language {
+        Language::English(d) => d,
+        _ => Dialect::default(),
+    }
 }
 
 impl Config {
@@ -117,7 +126,8 @@ impl Config {
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
-        config.mutable_dictionary = load_dict(dictionary_path).await?;
+        config.mutable_dictionary =
+            load_dict(dictionary_path, language_to_dialect(config.dialect)).await?;
 
         Ok(config)
     }
