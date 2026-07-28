@@ -10,4 +10,4 @@ let links = {
 };
 </script>
 
-<AnalyticsPage data={data} title="Most Common Reasons to Uninstall the Chrome Ext" {links}/>
+<AnalyticsPage data={data.counts} title="Most Common Reasons to Uninstall the Chrome Ext" {links}/>
