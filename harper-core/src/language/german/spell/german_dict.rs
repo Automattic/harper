@@ -9,18 +9,11 @@ use std::sync::{Arc, LazyLock};
 
 use super::compound;
 
-#[cfg(feature = "de")]
 fn load_german_fst_dict() -> Arc<FstDictionary> {
     // Convert the annotated dictionary to FST format for backward compatibility
     Arc::new((*load_german_annotated_dict()).clone().into())
 }
 
-#[cfg(not(feature = "de"))]
-fn load_german_fst_dict() -> Arc<FstDictionary> {
-    Arc::new(FstDictionary::new(Vec::new()))
-}
-
-#[cfg(feature = "de")]
 fn load_german_annotated_dict() -> Arc<MutableDictionary> {
     // Parse word list and attribute list
     let word_list = parse_word_list(include_str!("../dictionary.dict"))
@@ -42,11 +35,6 @@ fn load_german_annotated_dict() -> Arc<MutableDictionary> {
     }
 
     Arc::new(dict)
-}
-
-#[cfg(not(feature = "de"))]
-fn load_german_annotated_dict() -> Arc<MutableDictionary> {
-    Arc::new(MutableDictionary::new())
 }
 
 // Annotated dictionary using Rune format
