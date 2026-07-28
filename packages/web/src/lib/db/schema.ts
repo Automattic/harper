@@ -15,3 +15,11 @@ export const problematicLintTable = mysqlTable('problematic_lint', {
 	rule_id: text(),
 	timestamp: timestamp().notNull().defaultNow(),
 });
+
+export const domainReviewTable = mysqlTable('domain_review', {
+	id: int().autoincrement().primaryKey(),
+	works: boolean().notNull(),
+	feedback: text().notNull(),
+	domain: text().notNull(),
+	timestamp: timestamp().notNull().defaultNow(),
+});
