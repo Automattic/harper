@@ -87,9 +87,27 @@ pub fn find_the_only_token_matching<'a, F>(
 where
     F: Fn(&Token, &[char]) -> bool,
 {
-    let mut matches = tokens.iter().filter(|&tok| predicate(tok, source));
+    find_the_only_token_index_matching(tokens, source, predicate).map(|idx| &tokens[idx])
+}
+
+/// Helper function to find the index of the only occurrence of a token matching a predicate.
+///
+/// Returns `Some(index)` if exactly one token matches the predicate, `None` otherwise.
+pub fn find_the_only_token_index_matching<F>(
+    tokens: &[Token],
+    source: &[char],
+    predicate: F,
+) -> Option<usize>
+where
+    F: Fn(&Token, &[char]) -> bool,
+{
+    let mut matches = tokens
+        .iter()
+        .enumerate()
+        .filter(|&(_, tok)| predicate(tok, source));
+
     match (matches.next(), matches.next()) {
-        (Some(tok), None) => Some(tok),
+        (Some((idx, _)), None) => Some(idx),
         _ => None,
     }
 }

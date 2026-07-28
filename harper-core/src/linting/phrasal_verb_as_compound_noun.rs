@@ -360,6 +360,37 @@ mod tests {
         );
     }
 
+    // Issue #3239. Both of these are compound nouns whose dictionary entries once
+    // carried a stray verb flag, so the linter skipped them as legitimate verbs.
+    // The entries are correct now and the linter handles them, but nothing pinned
+    // that, and the shape of the bug (a data flag silently disabling a rule) is
+    // easy to reintroduce.
+    #[test]
+    fn flag_rollback_used_as_a_verb_issue_3239() {
+        assert_suggestion_result(
+            "I already did a rollback. I'm not going to rollback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a rollback. I'm not going to roll back again.",
+        );
+    }
+
+    #[test]
+    fn flag_comeback_used_as_a_verb_issue_3239() {
+        assert_suggestion_result(
+            "I already did a comeback. I'm not going to comeback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a comeback. I'm not going to come back again.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_rollback_or_comeback_as_nouns_issue_3239() {
+        assert_no_lints(
+            "I already did a rollback. It was quite a comeback.",
+            PhrasalVerbAsCompoundNoun::default(),
+        );
+    }
+
     #[test]
     fn dont_flag_random_words_that_happen_to_end_like_a_particle() {
         assert_no_lints("I like bacon.", test_linter());
