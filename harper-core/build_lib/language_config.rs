@@ -42,14 +42,14 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
         Err(_) => return None,
     };
 
-    // Try to parse as TOML
-    let value: toml::Value = match content.parse() {
-        Ok(v) => v,
+    // Try to parse as TOML table
+    let table = match content.parse::<toml::Table>() {
+        Ok(t) => t,
         Err(_) => return None,
     };
 
     // Extract language section
-    let language_table = match value.get("language") {
+    let language_table = match table.get("language") {
         Some(toml::Value::Table(t)) => t,
         _ => {
             eprintln!(
@@ -87,7 +87,7 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
     };
 
     // Extract metadata section
-    let metadata_table = match value.get("metadata") {
+    let metadata_table = match table.get("metadata") {
         Some(toml::Value::Table(t)) => t,
         _ => {
             eprintln!(
@@ -112,7 +112,7 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
 
     // Extract dialects section - can be either inline table with alias_groups or array of tables
     let dialect_alias_groups = if let Some(toml::Value::Array(dialects_array)) =
-        value.get("dialects")
+        table.get("dialects")
     {
         // Array of tables format: [[dialects]], [[dialects]], ...
         let mut result = Vec::new();
@@ -129,7 +129,7 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
             }
         }
         result
-    } else if let Some(toml::Value::Table(dialects_table)) = value.get("dialects") {
+    } else if let Some(toml::Value::Table(dialects_table)) = table.get("dialects") {
         // Inline table format with alias_groups
         if let Some(toml::Value::Table(groups)) = dialects_table.get("alias_groups") {
             let mut result = Vec::new();
@@ -154,7 +154,7 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
     };
 
     // Extract weir section (optional)
-    let weir_rules_subdirectory = value
+    let weir_rules_subdirectory = table
         .get("weir")
         .and_then(|w| w.get("rules_subdirectory"))
         .and_then(|v| v.as_str())

@@ -107,14 +107,14 @@ fn main() {
                     Err(_) => continue,
                 };
 
-                // Try to parse as TOML
-                let value: toml::Value = match content.parse() {
-                    Ok(v) => v,
+                // Try to parse as TOML table
+                let table = match content.parse::<toml::Table>() {
+                    Ok(t) => t,
                     Err(_) => continue,
                 };
 
                 // Extract language section
-                let language_table = match value.get("language") {
+                let language_table = match table.get("language") {
                     Some(toml::Value::Table(t)) => t,
                     _ => continue,
                 };
@@ -131,7 +131,7 @@ fn main() {
 
                 // Extract dialects
                 let dialects =
-                    if let Some(toml::Value::Array(dialects_array)) = value.get("dialects") {
+                    if let Some(toml::Value::Array(dialects_array)) = table.get("dialects") {
                         // Array of tables format: [[dialects]], [[dialects]], ...
                         let mut result = Vec::new();
                         for dialect_table in dialects_array {
