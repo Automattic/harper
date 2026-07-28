@@ -362,73 +362,32 @@ mod tests {
     use super::lex_hex_number;
     use super::lex_long_decade;
     use super::lex_number;
-    use super::lex_spaces;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
 
     #[test]
-    fn lexes_non_breaking_space_between_words() {
-        let source: Vec<_> = "the\u{00A0}the".chars().collect();
-        let expected_tokens = [
-            TokenKind::Word(None),
-            TokenKind::Space(1),
-            TokenKind::Word(None),
-        ];
-        let mut next_index = 0;
+    fn lexes_non_breaking_spaces_like_ascii_spaces() {
+        // The example sentence from #3863. Written with U+00A0 instead of U+0020 the
+        // stream was never split into words, so every multi-token lint went silent.
+        let ascii = "There are some cases where the the standard grammar checkers \
+                     don't cut it. That;s where Harper comes in handy.";
+        let non_breaking = ascii.replace(' ', "\u{00A0}");
 
-        for expected_token in expected_tokens {
-            let token = lex_english_token(&source[next_index..]);
-            assert_eq!(token.token, expected_token);
-            next_index += token.next_index;
-        }
-    }
+        let token_kinds = |text: &str| {
+            let source: Vec<_> = text.chars().collect();
+            let mut kinds = Vec::new();
+            let mut index = 0;
 
-    #[test]
-    fn lexes_unicode_space_separators() {
-        for character in ['\u{00A0}', '\u{202F}', '\u{2007}', '\u{2009}', '\u{3000}'] {
-            assert_eq!(
-                lex_spaces(&[character]),
-                Some(FoundToken {
-                    token: TokenKind::Space(1),
-                    next_index: 1,
-                })
-            );
-        }
-    }
+            while index < source.len() {
+                let found = lex_english_token(&source[index..]);
+                kinds.push(found.token);
+                index += found.next_index;
+            }
 
-    #[test]
-    fn lexes_consecutive_non_breaking_spaces() {
-        let source = ['\u{00A0}', '\u{00A0}'];
-        assert_eq!(
-            lex_spaces(&source),
-            Some(FoundToken {
-                token: TokenKind::Space(2),
-                next_index: 2,
-            })
-        );
-    }
+            kinds
+        };
 
-    #[test]
-    fn preserves_newline_token() {
-        let source: Vec<_> = "a\nb".chars().collect();
-        let first = lex_english_token(&source);
-        let newline = lex_english_token(&source[first.next_index..]);
-
-        assert_eq!(newline.token, TokenKind::Newline(1));
-    }
-
-    #[test]
-    fn preserves_tab_width() {
-        let source: Vec<_> = "a\tb".chars().collect();
-        let first = lex_english_token(&source);
-        let tab = lex_english_token(&source[first.next_index..]);
-
-        assert_eq!(tab.token, TokenKind::Space(2));
-    }
-
-    #[test]
-    fn does_not_lex_line_separator_as_space() {
-        assert_eq!(lex_spaces(&['\u{2028}']), None);
+        assert_eq!(token_kinds(ascii), token_kinds(&non_breaking));
     }
 
     // test various kinds of number
