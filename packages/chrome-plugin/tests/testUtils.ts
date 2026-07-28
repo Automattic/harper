@@ -8,15 +8,6 @@ type ScreenPoint = {
 	y: number;
 };
 
-export function randomString(length: number): string {
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	let result = '';
-	for (let i = 0; i < length; i++) {
-		result += chars.charAt(Math.floor(Math.random() * chars.length));
-	}
-	return result;
-}
-
 export async function getBackground(context: BrowserContext) {
 	return (
 		context.serviceWorkers()[0] ??
@@ -293,19 +284,30 @@ export async function testCanIgnoreSuggestion(
 			await setup(page, editor);
 		}
 
-		const cacheSalt = randomString(5);
-		await replaceEditorContent(editor, cacheSalt);
+		const testText = 'This is a mistaek.';
+		await replaceEditorContent(editor, testText);
 
-		// Open the popup for the first highlight and click Ignore.
+		// Ensure the test text produces only the spelling lint we intend to ignore.
+		await expect(getHarperHighlights(page)).toHaveCount(1);
+
+		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
+
+		// The popup captures the editor's cursor state on the next animation frame.
+		await page.evaluate(
+			() =>
+				new Promise<void>((resolve) =>
+					requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+				),
+		);
 		await page.getByTitle('Ignore this lint').click();
 
 		// Wait for highlights to disappear after ignoring.
 		await expect(getHarperHighlights(page)).toHaveCount(0, { timeout: 10000 });
 
 		// Nothing should change.
-		await assertEditorText(editor, cacheSalt);
+		await assertEditorText(editor, testText);
 		await assertLocatorIsFocused(page, editor);
 	});
 }
