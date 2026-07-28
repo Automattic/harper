@@ -3005,7 +3005,7 @@
 > the lower     East   Side     of New   York . That      was  comprehensible . But     young     men
 # D   NSg/VB/JC NPr/J+ NSg/VB/J P  NSg/J NPr+ . I/C/Ddem+ VLPt J              . NSg/C/P NPr/VB/J+ NPl+
 > didn’t — at    least    in        my  provincial inexperience I       believed they didn’t — drift
-# VXPt   . NSg/P NSg/J/Dq NPr/J/R/P D$+ NSg/J      N🅪Sg/VB      ISg/#r+ VP/J     IPl+ VXPt   . NSg/VB
+# VXPt   . NSg/P NSg/J/Dq NPr/J/R/P D$+ NSg/J      Nᴹ           ISg/#r+ VP/J     IPl+ VXPt   . NSg/VB
 > coolly out          of nowhere and  buy    a   palace  on  Long     Island  Sound      .
 # R      NSg/VB/J/R/P P  NSg/J   VB/C NSg/VB D/P NSg/VB+ J/P NPr/VB/J NSg/VB+ N🅪Sg/VB/J+ .
 >
