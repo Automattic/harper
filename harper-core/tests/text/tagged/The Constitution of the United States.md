@@ -1368,8 +1368,8 @@
 # VP/J       . NSg/C/P I/C     D   VP/J   NPrPl/V3+ NSg/C I/R/Dq+ N🅪Sg/VB+ VXB   VB     NPr/C NSg/VB/J I/R/Dq
 > debt or    obligation incurred in        aid     of insurrection or    rebellion against the
 # N🅪Sg NPr/C N🅪Sg+      VP       NPr/J/R/P N🅪Sg/VB P  N🅪Sg         NPr/C N🅪Sg+     C/P     D
-> United States    , or    any    claim   for   the loss     or    emancipation of any    slave   ; but     all
-# VP/J   NPrPl/V3+ . NPr/C I/R/Dq NSg/VB+ R/C/P D   N🅪Sg/VB+ NPr/C NSg          P  I/R/Dq NSg/VB+ . NSg/C/P NSg/I/J/C/Dq
+> United States    , or    any    claim   for   the loss  or    emancipation of any    slave   ; but     all
+# VP/J   NPrPl/V3+ . NPr/C I/R/Dq NSg/VB+ R/C/P D   N🅪Sg+ NPr/C NSg          P  I/R/Dq NSg/VB+ . NSg/C/P NSg/I/J/C/Dq
 > such  debts , obligations and  claims  shall be       held illegal and  void      .
 # NSg/I NPl+  . NPl         VB/C NPl/V3+ VXB   NSg/VLXB VP   NSg/J   VB/C NSg/VB/J+ .
 >
