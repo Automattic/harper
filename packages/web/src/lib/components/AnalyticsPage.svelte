@@ -10,7 +10,7 @@ type Props = {
 
 let { data, title, links }: Props = $props();
 
-let counts = $derived(data.counts);
+let counts = $derived(data);
 let entries = $derived(Object.entries(counts).toSorted(([_a, a], [_b, b]) => b - a));
 </script>
 
