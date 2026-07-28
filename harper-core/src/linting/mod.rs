@@ -151,6 +151,7 @@ mod likewise;
 mod lint;
 mod lint_group;
 mod lint_kind;
+mod little_known;
 mod long_sentences;
 mod long_time_ago;
 mod look_down_ones_nose;
