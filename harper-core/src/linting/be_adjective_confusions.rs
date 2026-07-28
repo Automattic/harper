@@ -130,7 +130,7 @@ pub fn lint_group() -> LintGroup {
 mod tests {
     use super::lint_group;
     use crate::linting::LintGroup;
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(LintGroup, LintGroup, lint_group());
 

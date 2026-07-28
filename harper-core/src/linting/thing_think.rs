@@ -101,8 +101,8 @@ impl ExprLinter for ThingThink {
 #[cfg(test)]
 mod tests {
     use super::ThingThink;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::assert_suggestion_result;
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
 
     create_test_pool!(ThingThink, ThingThink, ThingThink::default());
 

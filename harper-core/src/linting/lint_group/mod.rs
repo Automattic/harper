@@ -1031,9 +1031,9 @@ mod tests {
 
     use super::{FlatConfig, LintGroup};
     use crate::linting::LintKind;
+    use crate::linting::pooled_linter::PooledLinter;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
-    use crate::linting::thread_local_linter::ThreadLocalLinter;
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};

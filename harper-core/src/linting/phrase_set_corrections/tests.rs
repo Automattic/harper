@@ -1,8 +1,8 @@
 use super::LintGroup;
+use crate::linting::pooled_linter::for_tests::create_test_pool;
 use crate::linting::tests::{
     assert_good_and_bad_suggestions, assert_lint_count, assert_no_lints, assert_suggestion_result,
 };
-use crate::linting::thread_local_linter::for_tests::create_test_pool;
 
 use super::lint_group;
 

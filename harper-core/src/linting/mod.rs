@@ -207,6 +207,7 @@ mod phrase_set_corrections;
 mod pique_interest;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
+mod pooled_linter;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -272,7 +273,6 @@ mod theyre_confusions;
 mod thing_think;
 mod this_type_of_thing;
 mod though_thought;
-mod thread_local_linter;
 mod thrive_on;
 mod throw_away;
 mod throw_baby_with_bathwater;
@@ -319,10 +319,10 @@ pub use lint_group::{
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
-pub use suggestion::{Suggestion, SuggestionCollectionExt};
-pub(crate) use thread_local_linter::ThreadLocalLinter;
+pub(crate) use pooled_linter::PooledLinter;
 #[cfg(test)]
-pub(crate) use thread_local_linter::for_tests::create_test_pool;
+pub(crate) use pooled_linter::for_tests::create_test_pool;
+pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};
 

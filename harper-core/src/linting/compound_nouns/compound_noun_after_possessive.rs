@@ -90,7 +90,7 @@ impl ExprLinter for CompoundNounAfterPossessive {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(
         CompoundNounAfterPossessive,

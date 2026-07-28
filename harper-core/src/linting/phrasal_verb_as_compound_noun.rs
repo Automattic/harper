@@ -332,7 +332,7 @@ fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(
         PhrasalVerbAsCompoundNoun,

@@ -36,7 +36,7 @@ merge_linters!(
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(ToTwoToo, ToTwoToo, ToTwoToo::default());
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};

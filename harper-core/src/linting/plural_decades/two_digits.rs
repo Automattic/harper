@@ -152,7 +152,7 @@ pub fn match_to_lint_two_digits(
 
 #[cfg(test)]
 mod lints {
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(PluralDecades, PluralDecades, PluralDecades::default());
     use super::super::PluralDecades;

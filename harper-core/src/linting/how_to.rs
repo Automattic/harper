@@ -109,8 +109,8 @@ impl ExprLinter for HowTo {
 #[cfg(test)]
 mod tests {
     use super::HowTo;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
 
     create_test_pool!(HowTo, HowTo, HowTo::default());
 

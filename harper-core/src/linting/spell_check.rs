@@ -168,8 +168,8 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,

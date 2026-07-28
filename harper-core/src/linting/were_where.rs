@@ -124,7 +124,7 @@ impl ExprLinter for WereWhere {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::thread_local_linter::for_tests::create_test_pool;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
 
     create_test_pool!(WereWhere, WereWhere, WereWhere::default());
     use super::WereWhere;
