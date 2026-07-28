@@ -315,6 +315,44 @@ fn test_german_article_and_preposition_detection() {
 }
 
 #[test]
+fn test_german_preposition_metadata() {
+    let dict = mutable_german_dictionary();
+
+    // Test that prepositions have the preposition metadata flag set to true
+    let prepositions = ["in", "an", "auf", "aus", "mit", "nach", "von", "zu", "für"];
+    for preposition in prepositions {
+        if let Some(metadata) = dict.get_word_metadata_str(preposition) {
+            assert!(
+                metadata.preposition,
+                "{} should have preposition metadata set to true",
+                preposition
+            );
+        } else {
+            panic!("{} should be in dictionary", preposition);
+        }
+    }
+}
+
+#[test]
+fn test_german_pronoun_metadata() {
+    let dict = mutable_german_dictionary();
+
+    // Test that pronouns have the pronoun metadata set
+    let pronouns = ["ich", "du", "er", "sie", "es", "wir", "ihr"];
+    for pronoun in pronouns {
+        if let Some(metadata) = dict.get_word_metadata_str(pronoun) {
+            assert!(
+                metadata.pronoun.is_some(),
+                "{} should have pronoun metadata",
+                pronoun
+            );
+        } else {
+            panic!("{} should be in dictionary", pronoun);
+        }
+    }
+}
+
+#[test]
 fn test_german_conjunction_and_adverb_detection() {
     let dict = mutable_german_dictionary();
 

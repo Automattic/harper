@@ -3211,13 +3211,13 @@ checksum = "0ce7134b9999ecaf8bcd65542e436736ef32ddca1b3e06094cb6ec5755203b80"
 
 [[package]]
 name = "flate2"
-version = "1.1.5"
+version = "1.1.9"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bfe33edd8e85a12a67454e37f8c75e730830d83e313556ab9ebf9ee7fbeb3bfb"
+checksum = "843fba2746e448b37e26a819579957415c8cef339bf08564fe8b7ddbd959573c"
 dependencies = [
  "crc32fast",
- "libz-rs-sys",
  "miniz_oxide",
+ "zlib-rs",
 ]
 
 [[package]]
@@ -4280,7 +4280,7 @@ dependencies = [
  "strum 0.28.0",
  "strum_macros 0.28.0",
  "thiserror 2.0.18",
- "toml 0.8.23",
+ "toml 1.1.2+spec-1.1.0",
  "trie-rs",
  "unicode-blocks",
  "unicode-script",
@@ -4410,7 +4410,7 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
- "itertools 0.13.0",
+ "itertools 0.15.0",
  "open",
  "resolve-path",
  "serde",
@@ -4525,6 +4525,7 @@ dependencies = [
  "serde-wasm-bindgen",
  "serde_json",
  "sysinfo 0.39.5",
+ "toml 1.1.2+spec-1.1.0",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -5002,6 +5003,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "itertools"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
+dependencies = [
+ "either",
+]
+
+[[package]]
 name = "itoa"
 version = "1.0.15"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -5310,15 +5320,6 @@ dependencies = [
  "bitflags 2.11.0",
  "libc",
  "redox_syscall 0.5.17",
-]
-
-[[package]]
-name = "libz-rs-sys"
-version = "0.5.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "c10501e7805cee23da17c7790e59df2870c0d4043ec6d03f67d31e2b53e77415"
-dependencies = [
- "zlib-rs",
 ]
 
 [[package]]
@@ -12226,9 +12227,9 @@ dependencies = [
 
 [[package]]
 name = "zlib-rs"
-version = "0.5.5"
+version = "0.6.6"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "40990edd51aae2c2b6907af74ffb635029d5788228222c4bb811e9351c0caad3"
+checksum = "b142a20ec14a91d5bc708c1dc21b080c550113d8aa77afa29635673a65dd02c5"
 
 [[package]]
 name = "zmij"

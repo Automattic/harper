@@ -778,8 +778,10 @@
 			}
 		},
 		"P": {
-			"#": "pronoun or preposition property (German)",
-			"metadata": {}
+			"#": "preposition property (German)",
+			"metadata": {
+				"preposition": true
+			}
 		},
 		"C": {
 			"#": "conjunction property (German)",
@@ -791,6 +793,12 @@
 			"#": "determiner property (German - articles)",
 			"metadata": {
 				"determiner": {}
+			}
+		},
+		"I": {
+			"#": "pronoun property (German)",
+			"metadata": {
+				"pronoun": {}
 			}
 		},
 		"z": {

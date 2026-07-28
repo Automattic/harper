@@ -11156,14 +11156,14 @@ einem/~~Dz # indefinite article dative
 einen/~~Dz # indefinite article masculine accusative
 einer/~~Dz # indefinite article feminine genitive
 eines/~~Dz # indefinite article neuter genitive
-ich/~~P # pronoun I
-du/~~P # pronoun you
-er/~~P # pronoun he
-sie/~~P # pronoun she/they
-es/~~P # pronoun it
-wir/~~P # pronoun we
-ihr/~~P # pronoun you (plural)
-sie/~~P # pronoun they
+ich/~~I # pronoun I
+du/~~I # pronoun you
+er/~~I # pronoun he
+sie/~~I # pronoun she/they
+es/~~I # pronoun it
+wir/~~I # pronoun we
+ihr/~~I # pronoun you (plural)
+sie/~~I # pronoun they
 sein/~~V # verb to be
 hab/~~Vcj # REPLACES haben
 werd/~~Vcj # REPLACES werden
