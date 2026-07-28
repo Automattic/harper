@@ -283,6 +283,7 @@ These configs are under the `markdown` key:
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |

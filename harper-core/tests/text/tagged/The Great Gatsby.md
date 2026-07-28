@@ -8136,8 +8136,8 @@
 #
 > The music      had died down        as    the ceremony began and  now       a    long      cheer   floated in        at
 # D+  N🅪Sg/VB/J+ VP  VP/J N🅪Sg/VB/J/P R/C/P D+  N🅪Sg+    VPt   VB/C NSg/J/R/C D/P+ NPr/VB/J+ NSg/VB+ VP/J    NPr/J/R/P NSg/P
-> the window  , followed by    intermittent cries  of “ Yea   — ea  — ea  ! ” and  finally by    a
-# D+  NSg/VB+ . VP/J     NSg/P NSg/J        NPl/V3 P  . NSg/C . NSg . NSg . . VB/C R       NSg/P D/P
+> the window  , followed by    intermittent cries  of “ Yea   — ea — ea ! ” and  finally by    a
+# D+  NSg/VB+ . VP/J     NSg/P NSg/J        NPl/V3 P  . NSg/C . ?  . ?  . . VB/C R       NSg/P D/P
 > burst  of jazz    as    the dancing began .
 # NSg/VB P  NSg/VB+ R/C/P D   Nᴹ/Vg/J VPt   .
 >

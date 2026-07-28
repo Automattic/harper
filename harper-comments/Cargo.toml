@@ -38,6 +38,7 @@ tree-sitter-typescript = "0.23.2"
 harper-tree-sitter-dart = "0.0.5"
 tree-sitter-clojure = "0.1.0"
 tree-sitter-zig = "1.1.2"
+tree-sitter-gleam = "1.0.0"
 
 [dev-dependencies]
 paste = "1.0.15"
