@@ -1048,13 +1048,10 @@ impl Linter for LintGroup {
 
 #[cfg(test)]
 mod tests {
-    use std::sync::{Arc, LazyLock};
+    use std::sync::Arc;
 
-    use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-
-    use super::{FlatConfig, LintGroup};
+    use super::LintGroup;
     use crate::linting::LintKind;
-    use crate::linting::pooled_linter::PooledLinter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
