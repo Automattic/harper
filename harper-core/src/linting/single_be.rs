@@ -62,15 +62,15 @@ pub struct SingleBe {
 impl Default for SingleBe {
     fn default() -> Self {
         fn be_like_expr() -> SequenceExpr {
-            SequenceExpr::any_of(vec![
-                Box::new(InflectionOfBe::new()),
+            SequenceExpr::any_of([
+                Box::new(InflectionOfBe::new()) as Box<dyn Expr>,
                 Box::new(DerivedFrom::new_from_str("be")),
             ])
         }
 
         fn be_like_or_contraction() -> SequenceExpr {
-            SequenceExpr::any_of(vec![
-                Box::new(be_like_expr()),
+            SequenceExpr::any_of([
+                Box::new(be_like_expr()) as Box<dyn Expr>,
                 Box::new(looks_like_be_contraction),
             ])
         }

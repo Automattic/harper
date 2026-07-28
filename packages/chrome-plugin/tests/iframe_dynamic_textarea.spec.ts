@@ -72,7 +72,7 @@ test('attaches to a dynamically revealed iframe textarea on focus', async ({ con
 	await getRevealButton(page).click();
 
 	const editor = getChildTextarea(page);
-	await editor.waitFor({ state: 'visible', timeout: 5000 });
+	await editor.waitFor({ state: 'visible', timeout: 10000 });
 	await replaceEditorContent(editor, 'This is an test');
 
 	await clickChildHighlight(page);

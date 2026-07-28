@@ -180,8 +180,8 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/dictionary',
 										},
 										{
-											title: 'Test Suite',
-											to: '/docs/contributors/tests',
+											title: 'Testing Strategy',
+											to: '/docs/contributors/testing-strategy',
 										},
 										{
 											title: 'Author a Rule',
@@ -214,6 +214,10 @@ export default defineConfig(async () => {
 										{
 											title: 'Reviewing Pull Requests',
 											to: '/docs/contributors/review',
+										},
+										{
+											title: 'Committer',
+											to: '/docs/contributors/committer',
 										},
 										{
 											title: 'Local Statistics',

@@ -11,9 +11,7 @@ pub struct AllHellBreakLoose {
 impl Default for AllHellBreakLoose {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("all")
-                .t_ws()
-                .t_aco("hell")
+            expr: SequenceExpr::word_seq(&["all", "hell"])
                 .t_ws()
                 .then_word_set(&["break", "breaking", "breaks", "broke", "broken"])
                 .t_ws()

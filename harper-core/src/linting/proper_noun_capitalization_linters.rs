@@ -71,7 +71,7 @@ impl ExprLinter for ProperNounCapitalizationLinter {
             suggestions: vec![Suggestion::ReplaceWith(
                 canonical_case.get_source().to_vec(),
             )],
-            message: self.description.to_string(),
+            message: self.description.to_owned(),
             priority: 31,
         })
     }

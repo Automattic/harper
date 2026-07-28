@@ -1,14 +1,16 @@
 <script lang="ts">
-import ChromeLogo from '$lib/components/ChromeLogo.svelte';
-import CodeLogo from '$lib/components/CodeLogo.svelte';
-import EmacsLogo from '$lib/components/EmacsLogo.svelte';
-import FirefoxLogo from '$lib/components/FirefoxLogo.svelte';
-import HelixLogo from '$lib/components/HelixLogo.svelte';
-import NeovimLogo from '$lib/components/NeovimLogo.svelte';
-import ObsidianLogo from '$lib/components/ObsidianLogo.svelte';
-import SublimeLogo from '$lib/components/SublimeLogo.svelte';
-import WordPressLogo from '$lib/components/WordPressLogo.svelte';
-import ZedLogo from '$lib/components/ZedLogo.svelte';
+import {
+	ChromeLogo,
+	CodeLogo,
+	EmacsLogo,
+	FirefoxLogo,
+	HelixLogo,
+	NeovimLogo,
+	ObsidianLogo,
+	SublimeLogo,
+	WordPressLogo,
+	ZedLogo,
+} from 'components';
 import type { Integration } from './data';
 import HarperMark from './HarperMark.svelte';
 

@@ -292,6 +292,22 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Percent))
     }
 
+    pub fn is_degree(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Degree))
+    }
+
+    pub fn is_open_single(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::OpenSingle))
+    }
+
+    pub fn is_single_prime(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::SinglePrime))
+    }
+
+    pub fn is_double_prime(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::DoublePrime))
+    }
+
     pub fn is_backtick(&self) -> bool {
         matches!(self, TokenKind::Punctuation(Punctuation::Backtick))
     }

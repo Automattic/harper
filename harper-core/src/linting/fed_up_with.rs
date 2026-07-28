@@ -11,7 +11,7 @@ pub struct FedUpWith {
 
 impl FedUpWith {
     pub fn new(dialect: Dialect) -> Self {
-        let expr = SequenceExpr::fixed_phrase("fed up of");
+        let expr = SequenceExpr::word_seq(&["fed", "up", "of"]);
 
         Self { expr, dialect }
     }

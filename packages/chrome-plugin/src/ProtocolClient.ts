@@ -10,7 +10,15 @@ export default class ProtocolClient {
 	});
 
 	private static cacheKey(text: string, domain: string, options?: LintOptions): string {
-		return `${domain}:${text}:${options?.forceAllHeadings ?? ''}:${options?.language ?? ''}`;
+		return JSON.stringify([
+			domain,
+			text,
+			options?.language ?? 'markdown',
+			options?.forceAllHeadings ?? false,
+			options?.regex_mask ?? null,
+			options?.dedup ?? true,
+			options?.isolateEnglish ?? false,
+		]);
 	}
 
 	public static async lint(
@@ -58,6 +66,15 @@ export default class ProtocolClient {
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
+	}
+
+	public static async getIsolateEnglish(): Promise<boolean> {
+		return (await chrome.runtime.sendMessage({ kind: 'getIsolateEnglish' })).isolateEnglish;
+	}
+
+	public static async setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
 	}
 
 	public static async getDelay(): Promise<number> {

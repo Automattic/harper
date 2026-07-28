@@ -11,8 +11,8 @@ pub struct MostOfTheTimes {
 impl Default for MostOfTheTimes {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![
-                Box::new(FixedPhrase::from_phrase("a lot")),
+            expr: SequenceExpr::any_of([
+                Box::new(FixedPhrase::from_phrase("a lot")) as Box<dyn Expr>,
                 Box::new(Word::new("most")),
             ])
             .t_ws()

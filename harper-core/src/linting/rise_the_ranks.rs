@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct RiseTheRanks {
@@ -46,14 +46,7 @@ impl ExprLinter for RiseTheRanks {
         &self.expr
     }
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🧵 {}", format_lint_match(toks, ctx, src));
-
+    fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         Some(Lint {
             span: toks[0].span,
             lint_kind: LintKind::Usage,

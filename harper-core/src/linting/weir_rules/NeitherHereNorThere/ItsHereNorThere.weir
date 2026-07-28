@@ -1,0 +1,9 @@
+expr main (it's here nor there)
+
+let message "Did you mean `it's neither here nor there`?"
+let description "Corrects `it's here nor there` to the standard idiom `it's neither here nor there`."
+let kind "Usage"
+let becomes "it's neither here nor there"
+
+test "All psychology but it's here nor there to me." "All psychology but it's neither here nor there to me."
+test "Not that it's here nor there, but I also don't log short films or TV series." "Not that it's neither here nor there, but I also don't log short films or TV series."

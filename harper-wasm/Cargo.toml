@@ -23,7 +23,7 @@ getrandom = { version = "0.3.4", default-features = false, features = ["wasm_js"
 harper-stats = { path = "../harper-stats", version = "2.0.0", features = ["js"] }
 
 [dev-dependencies]
-sysinfo = { version = "0.38.3", default-features = false, features = [ "system" ] }
+sysinfo = { version = "0.39.5", default-features = false, features = [ "system" ] }
 
 [features]
 default = ["typst", "thesaurus"]

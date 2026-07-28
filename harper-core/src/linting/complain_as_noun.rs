@@ -47,7 +47,7 @@ impl ExprLinter for ComplainAsNoun {
                 noun.to_vec(),
                 matched_tokens[idx].get_ch(source),
             )],
-            message: "The noun form is `complaint`.".to_string(),
+            message: "The noun form is `complaint`.".to_owned(),
             ..Default::default()
         })
     }

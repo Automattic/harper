@@ -1,0 +1,8 @@
+expr main [config, conf]
+
+let message "Use `configuration` instead of `config` or `conf`"
+let description "Expands the abbreviation `config` or `conf` to the full word `configuration` for clarity."
+let kind "Style"
+let becomes "configuration"
+
+test "If you want to load config from a database or something, you would need to write some custom code." "If you want to load configuration from a database or something, you would need to write some custom code."

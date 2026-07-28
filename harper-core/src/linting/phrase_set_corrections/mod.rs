@@ -223,13 +223,22 @@ pub fn lint_group() -> LintGroup {
             "Expands the abbreviation `deps` to the full word `dependencies` for clarity.",
             LintKind::Style
         ),
-        "ExpandDeref" => (
+        "ExpandDereference" => (
             &[
                 ("deref", "dereference"),
                 ("derefs", "dereferences"),
             ],
             "Use `dereference` instead of `deref`",
             "Expands the abbreviation `deref` to the full word `dereference` for clarity.",
+            LintKind::Style
+        ),
+        "ExpandDirectory" => (
+            &[
+                ("dir", "directory"),
+                ("dirs", "directories")
+            ],
+            "Use `directory` instead of `dir`",
+            "Expands the abbreviation `dir` to the full word `directory` for clarity.",
             LintKind::Style
         ),
         "ExpandNotification" => (
@@ -410,6 +419,15 @@ pub fn lint_group() -> LintGroup {
             ],
             "Use singular `in detail` for referring to a detailed description.",
             "Corrects unidiomatic plural `in details` to `in detail`.",
+            LintKind::Usage
+        ),
+        "InThisThatRegard" => (
+            &[
+                ("in this regards", "in this regard"),
+                ("in that regards", "in that regard"),
+            ],
+            "Use `in this/that regard` with singular `regard`.",
+            "Corrects `in this/that regards` to `in this/that regard`.",
             LintKind::Usage
         ),
         "InflectionPoint" => (
@@ -856,6 +874,24 @@ pub fn lint_group() -> LintGroup {
             "Corrects `how ... looks like` to `how ... looks` or `what ... looks like`.",
             LintKind::Grammar
         ),
+        "InRetaliationTo" => (
+            &[
+                (&["in retaliation to"], &["in retaliation for", "in response to"]),
+            ],
+            "Did you mean `in retaliation for` or `in response to`?",
+            "Corrects `in retaliation to` to `in retaliation for` or `in response to`.",
+            LintKind::Usage
+        ),
+        "LevelOfDetails" => (
+            &[
+                (&["level of details"], &["level of detail", "levels of detail"]),
+                (&["level-of-details"], &["level-of-detail", "levels-of-details"]),
+                (&["levels of details"], &["levels of detail"])
+            ],
+            "For multiple levels, pluralize `level` instead of `detail`. `Detail` remains singular whether one or multiple levels.",
+            "Corrects `level of details` to `level of detail` or `levels of detail`.",
+            LintKind::Usage
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -1024,7 +1060,16 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        )
+        ),
+        "ToTo" => (
+            &[
+                (&["to to"], &["to do"]),
+                (&["to-to"], &["to-do"]),
+            ],
+            "Did you mean to write `do` instead of a second `to`?",
+            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
+            LintKind::Typo
+        ),
     });
 
     group.set_all_rules_to(Some(true));

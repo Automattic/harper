@@ -115,8 +115,7 @@ impl ExprLinter for PluralWrongWordOfPhrase {
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
             )],
-            message: "This phrase is pluralized on the main noun, not on the last noun."
-                .to_string(),
+            message: "This phrase is pluralized on the main noun, not on the last noun.".to_owned(),
             ..Default::default()
         })
     }

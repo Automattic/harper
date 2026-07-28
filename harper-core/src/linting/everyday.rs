@@ -13,7 +13,7 @@ pub struct Everyday {
 impl Default for Everyday {
     fn default() -> Self {
         let everyday = Word::new("everyday");
-        let every_day = Lrc::new(SequenceExpr::aco("every").t_ws().t_aco("day"));
+        let every_day = Lrc::new(SequenceExpr::word_seq(&["every", "day"]));
 
         let everyday_bad_after = All::new(vec![
             Box::new(SequenceExpr::with(everyday.clone()).t_ws().then_any_word()),
@@ -23,7 +23,7 @@ impl Default for Everyday {
         ]);
 
         let bad_before_every_day = All::new(vec![
-            Box::new(SequenceExpr::any_word().t_ws().then(every_day.clone())),
+            Box::new(SequenceExpr::any_word().t_ws().then(every_day.clone())) as Box<dyn Expr>,
             Box::new(|tok: &Token, _src: &[char]| {
                 // "this" and "that" are both determiners and pronouns
                 tok.kind.is_determiner() && !tok.kind.is_pronoun()

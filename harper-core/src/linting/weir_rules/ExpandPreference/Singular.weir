@@ -1,0 +1,8 @@
+expr main pref
+
+let message "Use `preference` instead of `pref`"
+let description "Expands the abbreviation `pref` to the full word `preference` for clarity."
+let kind "Style"
+let becomes "preference"
+
+test "Android: Asynchronous shared pref commit race condition" "Android: Asynchronous shared preference commit race condition"

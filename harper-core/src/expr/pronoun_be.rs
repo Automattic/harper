@@ -9,13 +9,13 @@ pub struct PronounBe {
 impl Default for PronounBe {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::default().then_any_of(vec![
+            expr: SequenceExpr::default().then_any_of([
                 Box::new(
                     SequenceExpr::default()
                         .then_subject_pronoun()
                         .t_ws()
                         .t_set(&["am", "are", "is", "was", "were"]),
-                ),
+                ) as Box<dyn Expr>,
                 Box::new(WordSet::new(&[
                     "i'm", "we're", "you're", "he's", "she's", "it's", "they're",
                 ])),

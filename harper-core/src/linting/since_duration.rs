@@ -1,8 +1,8 @@
-use crate::expr::{DurationExpr, Expr, SequenceExpr};
-use crate::{CharStringExt, Token, TokenStringExt};
-
-use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::linting::expr_linter::Chunk;
+use crate::{
+    CharStringExt, Token, TokenStringExt,
+    expr::{DurationExpr, Expr, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+};
 
 const AGO_VARIANTS: [&[char]; 3] = [&['a', 'g', 'o'], &['A', 'g', 'o'], &['A', 'G', 'O']];
 const FOR_VARIANTS: [&[char]; 3] = [&['f', 'o', 'r'], &['F', 'o', 'r'], &['F', 'O', 'R']];
@@ -272,7 +272,6 @@ mod tests {
     }
 
     #[test]
-    #[ignore = "We can't yet handle indefinite numbers."]
     fn not_yet_handled_3() {
         assert_suggestion_result(
             "I use a Wacom Cintiq 27QHDT since several years on Linux",
@@ -286,6 +285,46 @@ mod tests {
         assert_no_lints(
             "I've been coding since 11 years old and I'm now 57",
             SinceDuration::default(),
+        );
+    }
+
+    fn correct_since_a_few_months() {
+        assert_suggestion_result(
+            "I am struggling since a few months with the rebuild of an old FORTRAN program.",
+            SinceDuration::default(),
+            "I am struggling for a few months with the rebuild of an old FORTRAN program.",
+        );
+    }
+
+    // Note: Expects "few" to be corrected to "a few" by a different linter
+    fn correct_since_few_days() {
+        assert_suggestion_result(
+            "I've been struggling since few days with the rebuild of an old FORTRAN program.",
+            SinceDuration::default(),
+            "I've been struggling for few days with the rebuild of an old FORTRAN program.",
+        );
+    }
+
+    fn dont_flag_since_a_couple_hours_ago() {
+        assert_no_lints(
+            "[BUG] since a couple hours ago, the claude code agent often gets stuck while working.",
+            SinceDuration::default(),
+        );
+    }
+
+    fn fix_since_a_couple_of_days() {
+        assert_suggestion_result(
+            "Since a couple of days, I got this error",
+            SinceDuration::default(),
+            "For a couple of days, I got this error",
+        );
+    }
+
+    fn fix_since_a_couple_days() {
+        assert_suggestion_result(
+            "Values at 0 all the time since a couple days · Issue #91551",
+            SinceDuration::default(),
+            "Values at 0 all the time since a couple days ago · Issue #91551",
         );
     }
 }

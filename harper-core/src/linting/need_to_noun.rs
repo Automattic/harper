@@ -19,7 +19,7 @@ impl Default for NeedToNoun {
                     || tok.kind.is_determiner()
                     || tok.kind.is_unlintable()
                     || tok.kind.is_pronoun()
-            }),
+            }) as Box<dyn Expr>,
             Box::new(WordSet::new(&["about", "into", "it"])),
         ]);
 

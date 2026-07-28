@@ -37,15 +37,11 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateSettings() {
+		this.settings = undefined;
 		this.state.getSettings().then((v) => {
-			const shouldRedrawWholeTab = this.settings == null;
 			this.settings = v;
 			this.updateToggleAllRulesButton();
-			if (shouldRedrawWholeTab) {
-				this.display(false);
-				return;
-			}
-			this.rerenderLintSettings();
+			this.display(false);
 		});
 	}
 
@@ -74,7 +70,6 @@ export class HarperSettingTab extends PluginSettingTab {
 	display(update = true) {
 		if (update) {
 			this.update();
-			this.display(false);
 		}
 
 		const { containerEl } = this;
@@ -169,7 +164,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		new Setting(containerEl)
 			.setName('Ignored Files')
 			.setDesc(
-				'Instruct Harper to ignore certain files in your vault. Accepts glob matches (`folder/**`, etc.)',
+				'Instruct Harper to ignore certain files in your vault. Accepts glob matches (`folder/**`, etc.). When ignoring a single file, do not forget to include the file extension (`journal_entry.md`, etc.).',
 			)
 			.addTextArea((ta) => {
 				ta.inputEl.cols = 20;

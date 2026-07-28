@@ -12,9 +12,7 @@ pub struct AsHow {
 impl Default for AsHow {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_capitalization_of("as")
-                .t_ws()
-                .t_aco("how"),
+            expr: SequenceExpr::word_seq(&["as", "how"]),
         }
     }
 }

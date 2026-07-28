@@ -30,8 +30,8 @@ impl Default for ByTheBook {
             .t_aco("the")
             .t_ws()
             .t_aco("books")
-            .then_any_of(vec![
-                Box::new(AnchorEnd),
+            .then_any_of([
+                Box::new(AnchorEnd) as Box<dyn Expr>,
                 Box::new(SequenceExpr::whitespace().then_conjunction()),
             ]),
         }

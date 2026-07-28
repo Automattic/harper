@@ -1,4 +1,5 @@
 <script lang="ts">
+import { DelayedRender } from 'components';
 import type { Lint, Linter } from 'harper.js';
 import {
 	type IgnorableLintBox,
@@ -18,6 +19,9 @@ import {
 import LintSidebar from './LintSidebar.svelte';
 import StatusBar from './StatusBar.svelte';
 
+/** Who initiated an action on the sidebar. Automated actions can be overwritten by anyone, user actions can only be overwritten by the user. */
+type SidebarAction = 'user' | 'automated';
+
 export let content = '';
 export let linter: Linter;
 export let onReady: () => void = () => null;
@@ -35,9 +39,8 @@ let fontFamily = normalizeFontFamily(defaultFontFamily);
 let fontSize = normalizeFontSize(defaultFontSize);
 let lastExternalContent = content;
 let readySent = false;
-let restoreButtonTimeout: ReturnType<typeof setTimeout> | null = null;
-let restoreButtonVisible = false;
 let sidebarVisible = true;
+let lastSidebarAction: SidebarAction = 'automated';
 let syncTimeout: ReturnType<typeof setTimeout> | null = null;
 
 const sidebarTransitionDuration = 250;
@@ -86,6 +89,25 @@ let lfw = new LintFramework(
 		},
 	},
 );
+
+/** Exists to automatically hide the sidebar on smaller screens. */
+let resizeObserver = new ResizeObserver((entries) => {
+	for (let entry of entries) {
+		if (entry.contentBoxSize[0].inlineSize < 640) {
+			hideSidebar('automated');
+		} else {
+			showSidebar('automated');
+		}
+	}
+});
+
+let editorContainer: Element | null = null;
+
+$: {
+	if (editorContainer != null) {
+		resizeObserver.observe(editorContainer);
+	}
+}
 
 $: {
 	const version = ++linterVersion;
@@ -265,39 +287,37 @@ async function ignoreAllProblems() {
 	await activeLinter.ignoreLints(text, lints);
 }
 
-async function showSidebar() {
-	if (restoreButtonTimeout != null) {
-		clearTimeout(restoreButtonTimeout);
-		restoreButtonTimeout = null;
+async function showSidebar(reason: SidebarAction = 'automated') {
+	if (lastSidebarAction === 'user' && reason === 'automated') {
+		return;
 	}
 
-	restoreButtonVisible = false;
 	await tick();
+	lastSidebarAction = reason;
+
 	sidebarVisible = true;
 }
 
-function hideSidebar() {
-	sidebarVisible = false;
-	restoreButtonVisible = false;
+function hideSidebar(reason: SidebarAction = 'automated'): void {
+	if (lastSidebarAction === 'user' && reason === 'automated') {
+		return;
+	}
+	lastSidebarAction = reason;
 
-	if (restoreButtonTimeout != null) {
-		clearTimeout(restoreButtonTimeout);
+	if (sidebarVisible === false) {
+		return;
 	}
 
-	restoreButtonTimeout = setTimeout(() => {
-		if (!sidebarVisible) {
-			restoreButtonVisible = true;
-		}
-		restoreButtonTimeout = null;
-	}, restoreButtonDelay);
+	sidebarVisible = false;
 }
 </script>
 
 <div
 	class="harper-editor @container flex h-full min-h-0 w-full flex-col overflow-hidden rounded-[10px] border-[0.5px] border-[rgba(28,26,22,0.14)] bg-[#fbfaf6] text-stone-950 shadow-2xl shadow-stone-950/5"
 	style={editorStyle}
+  bind:this={editorContainer}
 >
-	<div class="flex min-h-0 min-w-0 flex-1 @max-[760px]:flex-col">
+	<div class="flex min-h-0 min-w-0 flex-1">
 		<section class="relative min-w-0 flex-1 bg-[#fbfaf6]" aria-label="Document editor">
 			<div class="h-full overflow-auto p-[34px_40px_56px] @max-[760px]:p-[28px_24px_42px]">
 				<div class="mx-auto flex min-h-full max-w-[640px]">
@@ -305,14 +325,14 @@ function hideSidebar() {
 				</div>
 			</div>
 
-			{#if !sidebarVisible && restoreButtonVisible}
+			<DelayedRender active={!sidebarVisible} delayMs={restoreButtonDelay}>
 				<button
 					type="button"
 					class="absolute top-3 right-3 z-20 inline-flex h-8 w-8 items-center justify-center rounded-md border-0 bg-transparent text-stone-600 shadow-none transition-colors duration-150 hover:text-stone-950 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-sky-500"
 					aria-label="Show problems sidebar"
 					title="Show problems sidebar"
 					in:fade={{ duration: 120 }}
-					on:click={showSidebar}
+					on:click={() => showSidebar("user")}
 				>
 					<svg
 						viewBox="0 0 20 20"
@@ -323,7 +343,7 @@ function hideSidebar() {
 						<path d="M12.5 3v14" />
 					</svg>
 				</button>
-			{/if}
+			</DelayedRender>
 		</section>
 
 		{#if sidebarVisible}
@@ -335,7 +355,7 @@ function hideSidebar() {
 				onApplied={handleProblemAction}
 				onIgnored={handleProblemAction}
 				onIgnoreAll={ignoreAllProblems}
-				onHideSidebar={hideSidebar}
+				onHideSidebar={() => hideSidebar("user")}
 			/>
 		{/if}
 	</div>

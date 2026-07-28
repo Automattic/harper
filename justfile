@@ -63,6 +63,9 @@ build-harper-editor: build-lint-framework build-components
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
+
+  export CARGO_TERM_QUIET=true
+
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
     wasm-pack build --target web --no-opt --out-name harper_wasm
@@ -74,7 +77,7 @@ build-wasm:
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs
-build-harperjs: build-wasm 
+build-harperjs: build-wasm
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -130,7 +133,7 @@ dev-wp: build-harperjs
   cd "{{justfile_directory()}}/packages/wordpress-plugin"
   pnpm install
   pnpm wp-now start &
-  pnpm start 
+  pnpm start
 
 # Build the WordPress plugin
 alias build-wordpress := build-wp
@@ -156,7 +159,7 @@ dev-web: build-harperjs build-lint-framework build-components build-harper-edito
 build-web: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
   set -eo pipefail
-  
+
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
   pnpm build
@@ -229,7 +232,7 @@ build-desktop-macos-unsigned: build-harperjs build-lint-framework build-componen
 build-obsidian: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail
-  
+
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
   max_bundle_size_bytes=$((30 * 1024 * 1024))
@@ -255,10 +258,10 @@ alias build-chrome-extension := build-chrome-plugin
 build-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
-  
+
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
-  pnpm install 
+  pnpm install
   pnpm zip-for-chrome
 
 # Start a development server for the Chrome extension.
@@ -267,10 +270,10 @@ alias dev-chrome-extension := dev-chrome-plugin
 dev-chrome-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
-  
+
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
-  pnpm install 
+  pnpm install
   pnpm dev
 
 # Build the Firefox extension.
@@ -279,10 +282,10 @@ alias build-firefox-extension := build-firefox-plugin
 build-firefox-plugin: build-harperjs build-lint-framework build-components
   #!/usr/bin/env bash
   set -eo pipefail
-  
+
   cd "{{justfile_directory()}}/packages/chrome-plugin"
 
-  pnpm install 
+  pnpm install
   pnpm zip-for-firefox
 
 alias test-chrome := test-chrome-plugin
@@ -296,10 +299,11 @@ test-chrome-plugin: build-chrome-plugin
   pnpm playwright install
 
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project chromium
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project chromium 
   else
-    pnpm test --project chromium
+    pnpm test --project chromium 
   fi
 
 
@@ -312,18 +316,23 @@ test-firefox-plugin: build-firefox-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
+
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project firefox
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project firefox 
   else
     pnpm test --project firefox 
   fi
 
 # Run VSCode plugin unit and integration tests.
 alias test-vscode-extension := test-vscode
-test-vscode:
+test-vscode: 
   #!/usr/bin/env bash
   set -eo pipefail
+
+  # Needed so `pnpm install` can succeed.
+  DISABLE_WASM_OPT=1 just build-harperjs
 
   ext_dir="{{justfile_directory()}}/packages/vscode-plugin"
   bin_dir="${ext_dir}/bin"
@@ -333,7 +342,7 @@ test-vscode:
   fi
 
   echo Building binaries
-  cargo build --release -q
+  cargo build --release -p harper-ls
 
   cp "{{justfile_directory()}}/target/release/harper-ls"* "$bin_dir"
 
@@ -452,7 +461,7 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
 setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
 
 # Perform full format and type checking, build all projects and run all tests. Run this before pushing your code.
-precommit: check test build-harperjs build-obsidian build-web build-wp build-firefox-plugin build-chrome-plugin 
+precommit: check test build-harperjs build-obsidian build-web build-wp build-firefox-plugin build-chrome-plugin
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -461,14 +470,14 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
 install:
-  cargo install --path harper-ls --locked 
-  cargo install --path harper-cli --locked 
+  cargo install --path harper-ls --locked
+  cargo install --path harper-cli --locked
 
 # Run `harper-cli` on the Harper repository
 dogfood:
   #!/usr/bin/env bash
   cargo build --release
-  
+
   if command -v fd &> /dev/null; then
     # Use fd if available (faster and more user-friendly)
     fd_cmd() { fd -e rs; }
@@ -507,7 +516,7 @@ spans file:
 alias add-noun := addnoun
 addnoun noun:
   #!/usr/bin/env bash
-  DICT_FILE=./harper-core/dictionary.dict 
+  DICT_FILE=./harper-core/dictionary.dict
 
   cat $DICT_FILE | grep "^{{noun}}/"
 
@@ -559,8 +568,8 @@ get-metadata-brief *words:
   cargo run --bin harper-cli -- metadata --brief {{words}}
 
 # Get all the forms of a word using the affixes.
-get-forms word:
-  cargo run --bin harper-cli -- forms {{word}}
+get-forms +words:
+  cargo run --bin harper-cli -- forms {{words}}
 
 # Trace the provenance of one or more words: how they ended up in the dictionary.
 alias provenance := word-provenance
@@ -571,7 +580,7 @@ word-provenance *words:
 sample-forms count:
   #!/usr/bin/env bash
   set -eo pipefail
-  DICT_FILE=./harper-core/dictionary.dict 
+  DICT_FILE=./harper-core/dictionary.dict
   # USER_DICT_FILE="$HOME/.config/harper-ls/dictionary.txt"
 
   if [ "{{count}}" -eq 0 ]; then
@@ -579,7 +588,7 @@ sample-forms count:
   fi
 
   total_lines=$(wc -l < $DICT_FILE)
-  
+
   # Cross-platform random line selection
   if command -v shuf >/dev/null 2>&1; then
     words=$(shuf -n "{{count}}" "$DICT_FILE")
@@ -591,7 +600,7 @@ sample-forms count:
     echo "Error: Neither 'shuf' nor 'jot' found. Cannot generate random words." >&2
     exit 1
   fi
-  
+
   cargo run --bin harper-cli -- forms $words
 
 bump-versions: update-vscode-linters
@@ -639,7 +648,7 @@ bump-versions: update-vscode-linters
 # Enter an infinite loop of property testing until a bug is found.
 fuzz:
   #!/usr/bin/env bash
-  
+
   while true
   do
       QUICKCHECK_TESTS=100000 cargo test
@@ -670,7 +679,7 @@ print-annotations:
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
   };
-  
+
   // Calculate the maximum description length for alignment
   const entries = Object.entries(allEntries);
   const maxDescLength = entries.reduce((max, [flag, fields]) => {
@@ -678,7 +687,7 @@ print-annotations:
     const lineLength = flag.length + 2 + description.length; // flag + ': ' + description
     return Math.max(max, lineLength);
   }, 0);
-  
+
   entries.sort((a, b) => a[0].localeCompare(b[0])).forEach(([flag, fields]) => {
     const description = fields['#'] || '';
     const comment = fields['//'] || null;
@@ -688,24 +697,24 @@ print-annotations:
       console.log(line + (comment ? `${padding}// ${comment}` : ''));
     }
   });
-  
-  console.log('Available letters for new flags:', [...Array.from({length: 26}, (_, i) => 
+
+  console.log('Available letters for new flags:', [...Array.from({length: 26}, (_, i) =>
     [String.fromCharCode(65 + i), String.fromCharCode(97 + i)]
   ).flat()].filter(letter => !Object.keys(allEntries).includes(letter)).sort().join(' '));
-  console.log('Available digits for new flags:', [...Array.from({length: 10}, (_, i) => 
+  console.log('Available digits for new flags:', [...Array.from({length: 10}, (_, i) =>
     String(i)
   )].filter(digit => !Object.keys(allEntries).includes(digit)).sort().join(' '));
   console.log('Available symbols for new flags:',
     [...Array.from('!"#$%&\'()*+,-./:;<=>?@\[\\\]\^_`{|}~')]
   .filter(symbol => !Object.keys(allEntries).includes(symbol)).sort().join(' '));
-  console.log('Available Latin-1 characters for new flags:'); 
+  console.log('Available Latin-1 characters for new flags:');
   [...Array.from({length: 256-160}, (_, i) => String.fromCharCode(160 + i))]
     .filter(char => !Object.keys(allEntries).includes(char) && char.charCodeAt(0) !== 160 && char.charCodeAt(0) !== 173)
     .sort()
     .join(' ')
     .match(/.{1,64}/g)
     .forEach(line => console.log('  ' + line));
-    
+
 # Get the most recent changes to the curated dictionary. Includes an optional argument to specify the number of commits to look back. Defaults to 1.
 newest-dict-changes *numCommits:
   #! /usr/bin/env node
@@ -823,21 +832,21 @@ suggest-annotation input:
     ...affixesData.affixes || {},
     ...affixesData.properties || {}
   };
-  
+
   // Get all used flags
   const usedFlags = new Set(Object.keys(allEntries));
-  
+
   // Process input string and check both cases
   const input = '{{input}}';
   const normalizedInput = input.replace(/\s/g, '');
   const uniqueChars = [...new Set(normalizedInput.toUpperCase() + normalizedInput.toLowerCase())];
-  
+
   console.log(`Checking input: "${input}"\n${'='.repeat(50)}`);
-  
+
   // Check each character in input
   const availableChars = [...new Set(uniqueChars)]
     .filter(char => !usedFlags.has(char));
-  
+
   if (availableChars.length > 0) {
     console.log(`These characters of "${input}" are available to use for new annotations:`);
     availableChars.forEach(char => console.log(`  '${char}' (${char.charCodeAt(0)})`));
@@ -846,7 +855,7 @@ suggest-annotation input:
     const renamable = Object.entries(allEntries)
       .filter(([flag, entry]) => entry.rename_ok && inputChars.has(flag))
       .sort((a, b) => a[0].localeCompare(b[0]));
-    
+
     if (renamable.length > 0) {
       console.log(`None of the characters of "${input}" are available to use for new annotations, but these ones are OK to be moved to make way for new annotations:`);
       renamable.forEach(([flag, entry]) => {
@@ -944,3 +953,26 @@ grep-config-settings query:
       console.log(`\x1b[36m${formatLine(matches)}\x1b[0m`);
     }
   });
+
+# Sort nested child settings in default_config.json by name
+sort-config-settings:
+  #! /usr/bin/env node
+  const fs = require('fs');
+  const path = require('path');
+  const configPath = path.join('{{justfile_directory()}}', 'harper-core/default_config.json');
+  const inputJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+  // Sort the nested child settings
+  inputJson.settings.forEach(item => {
+    if (item.Group && item.Group.child && item.Group.child.settings) {
+      item.Group.child.settings.sort((a, b) => {
+        // Extract the name property from the inner object (e.g., 'Bool')
+        const nameA = Object.values(a)[0].name;
+        const nameB = Object.values(b)[0].name;
+        return nameA.localeCompare(nameB);
+      });
+    }
+  });
+
+  fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
+  console.log('Sorted default_config.json child settings by name.');
