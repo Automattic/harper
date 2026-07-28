@@ -320,7 +320,6 @@ mod worth_to_do;
 mod would_never_have;
 mod wrong_apostrophe;
 
-use blanket::blanket;
 pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
@@ -330,6 +329,7 @@ pub use lint_group::{
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+#[cfg(test)]
 pub(crate) use pooled_linter::PooledLinter;
 #[cfg(test)]
 pub(crate) use pooled_linter::for_tests::create_test_pool;

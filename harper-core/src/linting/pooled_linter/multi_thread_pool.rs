@@ -36,14 +36,14 @@ impl<T> Pool<T> for MultiThreadPool<T> {
 
         self.pool.push(Mutex::new(new_item));
 
-        return result;
+        result
     }
 }
 
 impl<T> Clone for MultiThreadPool<T> {
     fn clone(&self) -> Self {
         Self {
-            ctor: self.ctor.clone(),
+            ctor: self.ctor,
             pool: self.pool.clone(),
         }
     }

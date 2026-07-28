@@ -17,8 +17,6 @@ impl<T> Pool<T> for SingleThreadPool<T> {
 
 impl<T> Clone for SingleThreadPool<T> {
     fn clone(&self) -> Self {
-        Self {
-            ctor: self.ctor.clone(),
-        }
+        Self { ctor: self.ctor }
     }
 }

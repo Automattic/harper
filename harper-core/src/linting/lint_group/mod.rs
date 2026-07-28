@@ -341,9 +341,7 @@ pub struct LintGroup {
     ///
     /// Since the expr linter results also depend on the config, we hash it and pass it as part
     /// of the key.
-    #[expect(clippy::complexity)]
     chunk_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
-    #[expect(clippy::complexity)]
     sentence_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     hasher_builder: RandomState,
     clashing_linter_names: Option<Vec<String>>,

@@ -4,6 +4,7 @@ mod pool;
 mod single_thread_pool;
 
 use self::pool::Pool;
+#[cfg(not(feature = "concurrent"))]
 use self::single_thread_pool::SingleThreadPool;
 use crate::Lint;
 
