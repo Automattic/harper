@@ -7,7 +7,7 @@ interface Props {
 	title: string;
 }
 
-let { data = {},  title }: Props = $props();
+let { data = {}, title }: Props = $props();
 
 let chartCanvas = $state<HTMLCanvasElement>();
 let chart: Chart | null = null;
