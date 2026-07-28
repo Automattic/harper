@@ -1,5 +1,6 @@
 use crate::{
     Lint, Token, TokenStringExt,
+    char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::WordSet,
@@ -19,6 +20,7 @@ impl Default for RunIntoProblemsOrTrouble {
                 .then_any_of([
                     Box::new(WordSet::new(&["problem", "troubles"])) as Box<dyn Expr>,
                     Box::new(SequenceExpr::word_seq(&["a", "trouble"])),
+                    Box::new(SequenceExpr::word_seq(&["further", "troubles"])),
                 ]),
         }
     }
@@ -28,13 +30,23 @@ impl ExprLinter for RunIntoProblemsOrTrouble {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let a = match toks.len() {
+        // 3 words = 5 tokens, 4 words = 7 tokens
+        let four_words = match toks.len() {
             5 => false,
             7 => true,
             _ => return None,
         };
 
-        let nptoks = &toks[4..];
+        // Are we replacing just the noun or also the 'a' before it?
+        let from = if four_words && !toks[4].get_ch(src).eq_ch(&['a']) {
+            6
+        } else {
+            4
+        };
+        // let from = toks.get_rel_slice(-1, 0)?.span()?;
+
+        let nptoks = &toks[from..];
+
         let npspan = nptoks.span()?;
         let noun = nptoks.last()?;
         let first = noun.get_ch(src).iter().next()?;
@@ -43,7 +55,7 @@ impl ExprLinter for RunIntoProblemsOrTrouble {
         // into   problem  -> problems / a problem
         // into a trouble  -> trouble
         // into   troubles -> trouble
-        let (replacements, msg): (&[&str], &str) = match (a, first, last) {
+        let (replacements, msg): (&[&str], &str) = match (four_words, first, last) {
             (false, &'p' | &'P', &'m' | &'M') => (
                 &["problems", "a problem"],
                 "The noun `problem` is countable. Use the plural `problems` or add the article `a`.",
@@ -52,7 +64,7 @@ impl ExprLinter for RunIntoProblemsOrTrouble {
                 &["trouble"],
                 "The noun `trouble` is uncountable. Drop the article `a`.",
             ),
-            (false, &'t' | &'T', &'s' | &'S') => (
+            (_, &'t' | &'T', &'s' | &'S') => (
                 &["trouble"],
                 "The idiom is `run into trouble`. Use the singular form.",
             ),
@@ -194,6 +206,15 @@ mod tests {
                 "Serving FaceNet with Tensorflow Serving runs into a problem with PyFunc",
             ],
             &[],
+        );
+    }
+
+    #[test]
+    fn run_into_further_troubles() {
+        assert_suggestion_result(
+            "Let me know if you run into further troubles!",
+            RunIntoProblemsOrTrouble::default(),
+            "Let me know if you run into further trouble!",
         );
     }
 }
