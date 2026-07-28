@@ -5,5 +5,5 @@ import BarChart from './BarChart.svelte';
 export let lintCounts: Record<string, number> = {};
 </script>
 
-<BarChart data={lintCounts} title="Most Common Kinds of Corrections" label="Number of Corrections Applied" />
+<BarChart data={lintCounts} title="Most Common Kinds of Corrections" />
 
