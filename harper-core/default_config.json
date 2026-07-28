@@ -2751,6 +2751,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SpellCheckWithUsernames",
+								"state": false,
+								"label": "Spell Check With Usernames"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SpinalChord",
 								"state": true,
 								"label": "Spinal Chord"
