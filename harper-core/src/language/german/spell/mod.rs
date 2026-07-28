@@ -5,4 +5,5 @@ pub use self::german_dict::{
     german_dictionary, mutable_german_dictionary,
 };
 
+pub mod compound;
 pub mod german_dict;

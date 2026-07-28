@@ -2,8 +2,12 @@
 //!
 //! The word list is derived from the igerman98 dictionary (GPLv2/GPLv3),
 //! using annotated dictionary format for comprehensive coverage.
+use crate::spell::rune::{AttributeList, parse_word_list};
+use crate::spell::word_map::WordMap;
 use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
 use std::sync::{Arc, LazyLock};
+
+use super::compound;
 
 #[cfg(feature = "de")]
 fn load_german_fst_dict() -> Arc<FstDictionary> {
@@ -18,12 +22,26 @@ fn load_german_fst_dict() -> Arc<FstDictionary> {
 
 #[cfg(feature = "de")]
 fn load_german_annotated_dict() -> Arc<MutableDictionary> {
-    MutableDictionary::from_rune_files(
-        include_str!("../dictionary.dict"),
-        include_str!("../annotations.json"),
-    )
-    .map(Arc::new)
-    .unwrap_or_else(|e| panic!("Failed to load German annotated dictionary: {}", e))
+    // Parse word list and attribute list
+    let word_list = parse_word_list(include_str!("../dictionary.dict"))
+        .expect("Failed to parse German dictionary word list");
+    let attr_list = AttributeList::parse(include_str!("../annotations.json"))
+        .expect("Failed to parse German dictionary attribute list");
+
+    // Create word map and expand annotated words
+    let mut word_map = WordMap::default();
+    attr_list.expand_annotated_words(word_list.clone(), &mut word_map);
+
+    // Generate German compound words from words with compound flags
+    compound::generate_compound_words(&word_list, &mut word_map);
+
+    // Create the MutableDictionary from the populated word map
+    let mut dict = MutableDictionary::new();
+    for entry in word_map.into_iter() {
+        dict.append_word(entry.canonical_spelling, entry.metadata);
+    }
+
+    Arc::new(dict)
 }
 
 #[cfg(not(feature = "de"))]
