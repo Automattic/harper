@@ -11,6 +11,9 @@ pub mod english;
 #[cfg(feature = "de")]
 pub mod german;
 
+#[cfg(feature = "pl")]
+pub mod polish;
+
 #[cfg(feature = "pt")]
 pub mod portuguese;
 

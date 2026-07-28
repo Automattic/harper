@@ -11,6 +11,9 @@ use crate::language::english::dialects::EnglishDialect;
 #[cfg(feature = "de")]
 use crate::language::german::dialects::GermanDialect;
 
+#[cfg(feature = "pl")]
+use crate::language::polish::dialects::PolishDialect;
+
 #[cfg(feature = "pt")]
 use crate::language::portuguese::dialects::PortugueseDialect;
 
@@ -52,6 +55,10 @@ pub fn parse_language(s: &str) -> Option<Language> {
         "ch" | "switzerland" | "swiss" | "de-ch" | "de_ch" => Some(Language::German(
             GermanDialect::try_from_abbr("Swiss").unwrap(),
         )),
+        #[cfg(feature = "pl")]
+        "pl" | "polish" | "polski" | "pl-pl" | "pl_pl" => Some(Language::Polish(
+            PolishDialect::try_from_abbr("Standard").unwrap(),
+        )),
         #[cfg(feature = "pt")]
         "pt" | "pt-pt" | "pt_pt" | "portuguese" | "português" => Some(Language::Portuguese(
             PortugueseDialect::try_from_abbr("PT").unwrap(),
@@ -84,6 +91,9 @@ pub enum Language {
     /// German language with its dialects
     #[cfg(feature = "de")]
     German(GermanDialect),
+    /// Polish language with its dialects
+    #[cfg(feature = "pl")]
+    Polish(PolishDialect),
     /// Portuguese language with its dialects
     #[cfg(feature = "pt")]
     Portuguese(PortugueseDialect),
@@ -114,6 +124,8 @@ pub enum LanguageFamily {
     English,
     #[cfg(feature = "de")]
     German,
+    #[cfg(feature = "pl")]
+    Polish,
     #[cfg(feature = "pt")]
     Portuguese,
     #[cfg(feature = "sk")]
@@ -126,6 +138,8 @@ impl From<Language> for LanguageFamily {
             Language::English(_) => Self::English,
             #[cfg(feature = "de")]
             Language::German(_) => Self::German,
+            #[cfg(feature = "pl")]
+            Language::Polish(_) => Self::Polish,
             #[cfg(feature = "pt")]
             Language::Portuguese(_) => Self::Portuguese,
             #[cfg(feature = "sk")]
@@ -140,6 +154,8 @@ impl LanguageFamily {
             Self::English => "",
             #[cfg(feature = "de")]
             Self::German => "-de",
+            #[cfg(feature = "pl")]
+            Self::Polish => "-pl",
             #[cfg(feature = "pt")]
             Self::Portuguese => "-pt",
             #[cfg(feature = "sk")]

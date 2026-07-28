@@ -1293,6 +1293,13 @@ fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
                 "                                        \"Unknown Slovak dialect: {s}\"\n",
             );
             code.push_str("                                    ))),\n");
+        } else if lang.dir_name == "polish" {
+            code.push_str("                                    \"STANDARD\" => Ok(PolishDialectFlags::STANDARD),\n");
+            code.push_str("                                    _ => Err(Error::custom(format!(\n");
+            code.push_str(
+                "                                        \"Unknown Polish dialect: {s}\"\n",
+            );
+            code.push_str("                                    ))),\n");
         }
 
         code.push_str("                                },\n");

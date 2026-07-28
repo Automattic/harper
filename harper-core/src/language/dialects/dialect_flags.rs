@@ -12,6 +12,8 @@ use crate::language::english::dialects::{EnglishDialect, EnglishDialectFlags};
 
 #[cfg(feature = "de")]
 use crate::language::german::dialects::{GermanDialect, GermanDialectFlags};
+#[cfg(feature = "pl")]
+use crate::language::polish::dialects::{PolishDialect, PolishDialectFlags};
 #[cfg(feature = "pt")]
 use crate::language::portuguese::dialects::{PortugueseDialect, PortugueseDialectFlags};
 #[cfg(feature = "sk")]
@@ -24,6 +26,8 @@ pub struct DialectFlags {
     pub english: EnglishDialectFlags,
     #[cfg(feature = "de")]
     pub german: GermanDialectFlags,
+    #[cfg(feature = "pl")]
+    pub polish: PolishDialectFlags,
     #[cfg(feature = "pt")]
     pub portuguese: PortugueseDialectFlags,
     #[cfg(feature = "sk")]
@@ -39,6 +43,8 @@ impl Serialize for DialectFlags {
         scoped.serialize_field("english", &self.english)?;
         #[cfg(feature = "de")]
         scoped.serialize_field("german", &self.german)?;
+        #[cfg(feature = "pl")]
+        scoped.serialize_field("polish", &self.polish)?;
         #[cfg(feature = "pt")]
         scoped.serialize_field("portuguese", &self.portuguese)?;
         #[cfg(feature = "sk")]
@@ -64,6 +70,8 @@ impl From<ScopedDialectFlagsSerde> for DialectFlags {
             english: value.english,
             #[cfg(feature = "de")]
             german: value.german,
+            #[cfg(feature = "pl")]
+            polish: value.polish,
             #[cfg(feature = "pt")]
             portuguese: value.portuguese,
             #[cfg(feature = "sk")]
@@ -79,6 +87,8 @@ impl DialectFlags {
             english: EnglishDialectFlags::empty(),
             #[cfg(feature = "de")]
             german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pl")]
+            polish: PolishDialectFlags::empty(),
             #[cfg(feature = "pt")]
             portuguese: PortugueseDialectFlags::empty(),
             #[cfg(feature = "sk")]
@@ -91,6 +101,7 @@ impl DialectFlags {
     pub const fn new(
         english: EnglishDialectFlags,
         #[cfg(feature = "de")] german: GermanDialectFlags,
+        #[cfg(feature = "pl")] polish: PolishDialectFlags,
         #[cfg(feature = "pt")] portuguese: PortugueseDialectFlags,
         #[cfg(feature = "sk")] slovak: SlovakDialectFlags,
     ) -> Self {
@@ -98,6 +109,8 @@ impl DialectFlags {
             english,
             #[cfg(feature = "de")]
             german,
+            #[cfg(feature = "pl")]
+            polish,
             #[cfg(feature = "pt")]
             portuguese,
             #[cfg(feature = "sk")]
@@ -121,6 +134,8 @@ impl DialectFlags {
             english: english_flags,
             #[cfg(feature = "de")]
             german: GermanDialectFlags::empty(),
+            #[cfg(feature = "pl")]
+            polish: PolishDialectFlags::empty(),
             #[cfg(feature = "pt")]
             portuguese: PortugueseDialectFlags::empty(),
             #[cfg(feature = "sk")]
@@ -135,6 +150,10 @@ impl DialectFlags {
         #[cfg(feature = "de")]
         {
             result = result && self.german.is_empty();
+        }
+        #[cfg(feature = "pl")]
+        {
+            result = result && self.polish.is_empty();
         }
         #[cfg(feature = "pt")]
         {
@@ -167,6 +186,18 @@ impl DialectFlags {
     #[must_use]
     pub fn is_german_dialect_enabled_strict(self, dialect: GermanDialect) -> bool {
         self.german.is_dialect_enabled_strict(dialect)
+    }
+
+    #[cfg(feature = "pl")]
+    #[must_use]
+    pub fn is_polish_dialect_enabled(self, dialect: PolishDialect) -> bool {
+        self.polish.is_dialect_enabled(dialect)
+    }
+
+    #[cfg(feature = "pl")]
+    #[must_use]
+    pub fn is_polish_dialect_enabled_strict(self, dialect: PolishDialect) -> bool {
+        self.polish.is_dialect_enabled_strict(dialect)
     }
 
     #[cfg(feature = "pt")]
@@ -204,6 +235,8 @@ impl DialectFlags {
         let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "de")]
         let german_flags = GermanDialectFlags::get_most_used_dialects_from_document(document);
+        #[cfg(feature = "pl")]
+        let polish_flags = PolishDialectFlags::get_most_used_dialects_from_document(document);
         #[cfg(feature = "pt")]
         let portuguese_flags =
             PortugueseDialectFlags::get_most_used_dialects_from_document(document);
@@ -214,6 +247,8 @@ impl DialectFlags {
             english: english_flags,
             #[cfg(feature = "de")]
             german: german_flags,
+            #[cfg(feature = "pl")]
+            polish: polish_flags,
             #[cfg(feature = "pt")]
             portuguese: portuguese_flags,
             #[cfg(feature = "sk")]
@@ -229,6 +264,8 @@ impl std::ops::BitOr for DialectFlags {
             english: self.english | rhs.english,
             #[cfg(feature = "de")]
             german: self.german | rhs.german,
+            #[cfg(feature = "pl")]
+            polish: self.polish | rhs.polish,
             #[cfg(feature = "pt")]
             portuguese: self.portuguese | rhs.portuguese,
             #[cfg(feature = "sk")]
@@ -243,6 +280,10 @@ impl std::ops::BitOrAssign for DialectFlags {
         #[cfg(feature = "de")]
         {
             self.german |= rhs.german;
+        }
+        #[cfg(feature = "pl")]
+        {
+            self.polish |= rhs.polish;
         }
         #[cfg(feature = "pt")]
         {
@@ -269,6 +310,8 @@ struct ScopedDialectFlagsSerde {
     english: EnglishDialectFlags,
     #[cfg(feature = "de")]
     german: GermanDialectFlags,
+    #[cfg(feature = "pl")]
+    polish: PolishDialectFlags,
     #[cfg(feature = "pt")]
     portuguese: PortugueseDialectFlags,
     #[cfg(feature = "sk")]
@@ -289,6 +332,8 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                 let mut english = EnglishDialectFlags::default();
                 #[cfg(feature = "de")]
                 let mut german = GermanDialectFlags::default();
+                #[cfg(feature = "pl")]
+                let mut polish = PolishDialectFlags::default();
                 #[cfg(feature = "pt")]
                 let mut portuguese = PortugueseDialectFlags::default();
                 #[cfg(feature = "sk")]
@@ -325,6 +370,18 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                 },
                                 _ => {
                                     Err(Error::invalid_type(Unexpected::Other("german"), &"string"))
+                                }
+                            }?;
+                        }
+                        #[cfg(feature = "pl")]
+                        "polish" => {
+                            polish = match val {
+                                Value::String(s) => match s.as_str() {
+                                    "STANDARD" => Ok(PolishDialectFlags::STANDARD),
+                                    _ => Err(Error::custom(format!("Unknown Polish dialect: {s}"))),
+                                },
+                                _ => {
+                                    Err(Error::invalid_type(Unexpected::Other("polish"), &"string"))
                                 }
                             }?;
                         }
@@ -366,6 +423,10 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                                 {
                                     fields.push("german");
                                 }
+                                #[cfg(feature = "pl")]
+                                {
+                                    fields.push("polish");
+                                }
                                 #[cfg(feature = "pt")]
                                 {
                                     fields.push("portuguese");
@@ -387,6 +448,8 @@ impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {
                     english,
                     #[cfg(feature = "de")]
                     german,
+                    #[cfg(feature = "pl")]
+                    polish,
                     #[cfg(feature = "pt")]
                     portuguese,
                     #[cfg(feature = "sk")]

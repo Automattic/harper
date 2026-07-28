@@ -20,6 +20,9 @@ use super::module::{LanguageDetector, LanguageModule};
 #[cfg(feature = "de")]
 use super::german::module::GermanModule;
 
+#[cfg(feature = "pl")]
+use super::polish::module::PolishModule;
+
 #[cfg(feature = "pt")]
 use super::portuguese::module::PortugueseModule;
 
@@ -33,6 +36,9 @@ static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::ne
 
     #[cfg(feature = "de")]
     detectors.push((Box::new(GermanModule::detector()), 0.95));
+
+    #[cfg(feature = "pl")]
+    detectors.push((Box::new(PolishModule::detector()), 0.90));
 
     #[cfg(feature = "sk")]
     detectors.push((Box::new(SlovakModule::detector()), 0.90));
@@ -79,6 +85,8 @@ pub enum ProseLanguage {
     English,
     #[cfg(feature = "de")]
     German,
+    #[cfg(feature = "pl")]
+    Polish,
     #[cfg(feature = "pt")]
     Portuguese,
     #[cfg(feature = "sk")]
@@ -91,6 +99,8 @@ pub fn prose_language(language: &Language) -> ProseLanguage {
         Language::English(_) => ProseLanguage::English,
         #[cfg(feature = "de")]
         Language::German(_) => ProseLanguage::German,
+        #[cfg(feature = "pl")]
+        Language::Polish(_) => ProseLanguage::Polish,
         #[cfg(feature = "pt")]
         Language::Portuguese(_) => ProseLanguage::Portuguese,
         #[cfg(feature = "sk")]
@@ -104,6 +114,8 @@ pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {
         LanguageFamily::English => EnglishModule::dictionary(),
         #[cfg(feature = "de")]
         LanguageFamily::German => GermanModule::dictionary(),
+        #[cfg(feature = "pl")]
+        LanguageFamily::Polish => PolishModule::dictionary(),
         #[cfg(feature = "pt")]
         LanguageFamily::Portuguese => PortugueseModule::dictionary(),
         #[cfg(feature = "sk")]
@@ -126,6 +138,8 @@ pub fn parser_for_prose(
         ("mail", ProseLanguage::English) => Some(Box::new(EnglishModule::plain_parser())),
         #[cfg(feature = "de")]
         ("mail", ProseLanguage::German) => Some(Box::new(GermanModule::plain_parser())),
+        #[cfg(feature = "pl")]
+        ("mail", ProseLanguage::Polish) => Some(Box::new(PolishModule::plain_parser())),
         #[cfg(feature = "pt")]
         ("mail", ProseLanguage::Portuguese) => Some(Box::new(PortugueseModule::plain_parser())),
         #[cfg(feature = "sk")]
@@ -136,6 +150,12 @@ pub fn parser_for_prose(
         ("markdown" | "quarto", ProseLanguage::German) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 GermanModule::plain_parser().parse(source)
+            }),
+        )),
+        #[cfg(feature = "pl")]
+        ("markdown" | "quarto", ProseLanguage::Polish) => Some(Box::new(
+            Markdown::with_inline_parser(markdown_options, |source| {
+                PolishModule::plain_parser().parse(source)
             }),
         )),
         #[cfg(feature = "pt")]
@@ -157,6 +177,10 @@ pub fn parser_for_prose(
         ("org", ProseLanguage::German) => Some(Box::new(OrgMode::with_inline_parser(|source| {
             GermanModule::plain_parser().parse(source)
         }))),
+        #[cfg(feature = "pl")]
+        ("org", ProseLanguage::Polish) => Some(Box::new(OrgMode::with_inline_parser(|source| {
+            PolishModule::plain_parser().parse(source)
+        }))),
         #[cfg(feature = "pt")]
         ("org", ProseLanguage::Portuguese) => {
             Some(Box::new(OrgMode::with_inline_parser(|source| {
@@ -176,6 +200,10 @@ pub fn parser_for_prose(
         #[cfg(feature = "de")]
         ("plaintext" | "text", ProseLanguage::German) => {
             Some(Box::new(GermanModule::plain_parser()))
+        }
+        #[cfg(feature = "pl")]
+        ("plaintext" | "text", ProseLanguage::Polish) => {
+            Some(Box::new(PolishModule::plain_parser()))
         }
         #[cfg(feature = "pt")]
         ("plaintext" | "text", ProseLanguage::Portuguese) => {
@@ -205,6 +233,11 @@ pub fn add_language_specific_linters(
             let lang_group = GermanModule::rust_lint_group(dictionary);
             out.merge_from(lang_group);
         }
+        #[cfg(feature = "pl")]
+        Language::Polish(_) => {
+            let lang_group = PolishModule::rust_lint_group(dictionary);
+            out.merge_from(lang_group);
+        }
         #[cfg(feature = "pt")]
         Language::Portuguese(_) => {
             let lang_group = PortugueseModule::rust_lint_group(dictionary);
@@ -224,6 +257,8 @@ pub fn weir_rules_lint_group(language: Language) -> LintGroup {
         Language::English(_) => EnglishModule::weir_lint_group(),
         #[cfg(feature = "de")]
         Language::German(_) => GermanModule::weir_lint_group(),
+        #[cfg(feature = "pl")]
+        Language::Polish(_) => PolishModule::weir_lint_group(),
         #[cfg(feature = "pt")]
         Language::Portuguese(_) => PortugueseModule::weir_lint_group(),
         #[cfg(feature = "sk")]
@@ -245,6 +280,12 @@ pub fn new_curated_for_language(
             use crate::language::german::module::GermanModule;
 
             GermanModule::curated_lint_group(dialect, dictionary)
+        }
+        #[cfg(feature = "pl")]
+        Language::Polish(dialect) => {
+            use crate::language::polish::module::PolishModule;
+
+            PolishModule::curated_lint_group(dialect, dictionary)
         }
         #[cfg(feature = "pt")]
         Language::Portuguese(dialect) => {

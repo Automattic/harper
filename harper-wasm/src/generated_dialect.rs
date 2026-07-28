@@ -17,6 +17,8 @@ pub enum Dialect {
     GermanStandard,
     GermanAustrian,
     GermanSwiss,
+    // Polish dialects
+    PolishStandard,
     // Portuguese dialects
     PortuguesePT,
     PortugueseBR,

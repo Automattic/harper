@@ -66,6 +66,7 @@ thesaurus = ["dep:harper-thesaurus"]
 de = []
 pt = []
 sk = []
+pl = []
 
 # Convenience feature to enable all supported languages
-all-languages = ["de", "pt", "sk"]
+all-languages = ["de", "pt", "sk", "pl"]
