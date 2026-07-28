@@ -693,14 +693,14 @@
 			"rename_ok": true
 		},
 		"n": {
-			"#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen)",
+			"#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen, fehl-geschlagen)",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
 					"remove": "",
 					"add": "geschlagen",
-					"condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
+					"condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|fehl|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
 				}
 			],
 			"target": [],
@@ -778,11 +778,115 @@
 			}
 		},
 		"P": {
-			"#": "plural noun property (German)",
+			"#": "pronoun or preposition property (German)",
+			"metadata": {}
+		},
+		"C": {
+			"#": "conjunction property (German)",
+			"metadata": {
+				"conjunction": {}
+			}
+		},
+		"D": {
+			"#": "determiner property (German - articles)",
+			"metadata": {
+				"determiner": {}
+			}
+		},
+		"z": {
+			"#": "neuter noun property (German - alternative)",
+			"metadata": {
+				"noun": {
+					"gender": "NEUTER"
+				}
+			}
+		},
+		"O": {
+			"#": "adjective declension -e (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"Q": {
+			"#": "adjective declension -em (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"S": {
+			"#": "adjective declension -er (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"T": {
+			"#": "adjective declension -es (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"U": {
+			"#": "adjective comparative -er (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"W": {
+			"#": "adjective superlative -sten (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"X": {
+			"#": "noun plural -e (German)",
 			"metadata": {
 				"noun": {
 					"number": "PLURAL"
 				}
+			}
+		},
+		"Y": {
+			"#": "noun plural -n/-en (German)",
+			"metadata": {
+				"noun": {
+					"number": "PLURAL"
+				}
+			}
+		},
+		"a": {
+			"#": "noun plural -er with umlaut (German)",
+			"metadata": {
+				"noun": {
+					"number": "PLURAL"
+				}
+			}
+		},
+		"b": {
+			"#": "noun plural -s (German)",
+			"metadata": {
+				"noun": {
+					"number": "PLURAL"
+				}
+			}
+		},
+		"c": {
+			"#": "verb present participle -enden (German)",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"e": {
+			"#": "verb preterite -ten (German)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
+		"j": {
+			"#": "verb infinitive/plural -en (German)",
+			"metadata": {
+				"verb": {}
 			}
 		},
 		"R": {
