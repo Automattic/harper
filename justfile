@@ -948,3 +948,26 @@ grep-config-settings query:
       console.log(`\x1b[36m${formatLine(matches)}\x1b[0m`);
     }
   });
+
+# Sort nested child settings in default_config.json by name
+sort-config-settings:
+  #! /usr/bin/env node
+  const fs = require('fs');
+  const path = require('path');
+  const configPath = path.join('{{justfile_directory()}}', 'harper-core/default_config.json');
+  const inputJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+  // Sort the nested child settings
+  inputJson.settings.forEach(item => {
+    if (item.Group && item.Group.child && item.Group.child.settings) {
+      item.Group.child.settings.sort((a, b) => {
+        // Extract the name property from the inner object (e.g., 'Bool')
+        const nameA = Object.values(a)[0].name;
+        const nameB = Object.values(b)[0].name;
+        return nameA.localeCompare(nameB);
+      });
+    }
+  });
+
+  fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
+  console.log('Sorted default_config.json child settings by name.');
