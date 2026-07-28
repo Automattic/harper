@@ -130,7 +130,7 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
             lint_kind: LintKind::Spelling,
             suggestions,
             message: "This looks like a prefix that can be joined with the rest of the word."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

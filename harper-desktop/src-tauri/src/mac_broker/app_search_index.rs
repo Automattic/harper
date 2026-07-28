@@ -2,9 +2,7 @@ use std::collections::BTreeSet;
 
 use crate::os_broker::AppSearchResult;
 
-use super::app_catalog::{
-    self, app_search_result_from_bundle_id, installed_application_bundle_ids,
-};
+use super::app_catalog::{app_search_result_from_bundle_id, installed_application_bundle_ids};
 
 pub struct AppSearchIndex {
     index: Vec<AppSearchResult>,

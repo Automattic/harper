@@ -88,7 +88,7 @@ impl ExprLinter for ByOnesOwn {
             suggestions,
             message:
                 "`By one's own` is not idiomatic. Consider either `on one's own` or `by oneself`."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         })
     }

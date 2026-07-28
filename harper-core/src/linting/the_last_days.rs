@@ -43,8 +43,8 @@ impl ExprLinter for TheLastDays {
         let last_idx = 4;
 
         let suggestions = vec![Suggestion::InsertAfter(" few".chars().collect())];
-        let message = "To speak about recent time use `the last few` rather than just `the last`."
-            .to_string();
+        let message =
+            "To speak about recent time use `the last few` rather than just `the last`.".to_owned();
 
         Some(Lint {
             span: toks[last_idx].span,

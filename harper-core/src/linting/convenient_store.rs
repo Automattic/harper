@@ -145,7 +145,7 @@ impl ExprLinter for ConvenientStore {
             "convenience",
             span.get_content(src),
         )];
-        let message = "Did you mean `convenience store`?".to_string();
+        let message = "Did you mean `convenience store`?".to_owned();
         Some(Lint {
             span,
             lint_kind,

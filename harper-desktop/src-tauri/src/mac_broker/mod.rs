@@ -1,3 +1,4 @@
+use cached::cached;
 mod accessibility_activation;
 mod accessibility_text;
 mod app_catalog;
@@ -54,7 +55,8 @@ use self::window_stability::{
 /// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
 /// targeting the app the user was reviewing.
 pub struct MacBroker {
-    last_focused: Option<pid_t>,
+    /// The PID of the most recently focused PID, along with the time the measurement was taken.
+    last_focused: Option<(pid_t, Instant)>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     installed_app_search_index: Mutex<AppSearchIndex>,
@@ -75,14 +77,21 @@ impl MacBroker {
     }
 
     /// The process ID of the currently focused window.
+    /// In the interest of performance, the returned value may be slightly stale.
     fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
+        if let Some((last_focused, measurement_time)) = self.last_focused
+            && Instant::now().duration_since(measurement_time).as_secs() < 3
+        {
+            return Ok(Some(last_focused));
+        }
+
         let focused_pid = focused_window_pid::focused_window_pid()?;
         let current_pid = std::process::id() as pid_t;
 
         if focused_pid == current_pid {
-            Ok(self.last_focused)
+            Ok(self.last_focused.map(|v| v.0))
         } else {
-            self.last_focused = Some(focused_pid);
+            self.last_focused = Some((focused_pid, Instant::now()));
             Ok(Some(focused_pid))
         }
     }
@@ -270,7 +279,7 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new(Arc::new(Mutex::new(Config::curated_integrations())))
+        Self::new(Arc::new(Mutex::new(Integration::curated_integrations())))
     }
 }
 
@@ -316,7 +325,7 @@ impl OsBroker for MacBroker {
 
         let integration_enabled = match self.integrations.lock() {
             Ok(integrations) => {
-                Config::is_integration_enabled_in(&integrations, &bundle_identifier)
+                Integration::is_integration_enabled_in(&integrations, &bundle_identifier)
             }
             Err(error) => {
                 eprintln!("Unable to read integrations: {error}");
@@ -435,6 +444,7 @@ impl OsBroker for MacBroker {
     }
 }
 
+#[cached(max_size = 1_000)]
 fn bundle_identifier_for_pid(pid: pid_t) -> Result<Option<String>, Box<dyn StdError>> {
     let Some(app) = NSRunningApplication::runningApplicationWithProcessIdentifier(pid) else {
         return Ok(None);

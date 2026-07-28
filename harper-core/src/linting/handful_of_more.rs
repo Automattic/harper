@@ -32,7 +32,7 @@ impl ExprLinter for HandfulOfMore {
             span: matched_tokens[first_ws_idx..=of_idx].span()?,
             lint_kind: LintKind::Nonstandard,
             suggestions: vec![Suggestion::Remove],
-            message: "Using `of` in this construction is not standard.".to_string(),
+            message: "Using `of` in this construction is not standard.".to_owned(),
             ..Default::default()
         })
     }

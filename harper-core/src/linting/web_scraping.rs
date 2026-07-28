@@ -120,7 +120,7 @@ fn match_web_then_scrap(toks: &[Token], src: &[char]) -> Option<Lint> {
         )],
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
-                .to_string(),
+                .to_owned(),
         ..Default::default()
     })
 }
@@ -154,7 +154,7 @@ fn match_scrap_then_web(toks: &[Token], src: &[char]) -> Option<Lint> {
         )],
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
-                .to_string(),
+                .to_owned(),
         ..Default::default()
     })
 }

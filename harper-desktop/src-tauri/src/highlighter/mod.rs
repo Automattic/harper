@@ -4,17 +4,14 @@ mod window;
 mod window_manager;
 
 use std::collections::BTreeMap;
-use std::time::Duration;
 
 pub use error::Error;
-use window_manager::{WindowManager, WindowManagerCallbacks, WindowManagerIntervals};
+use window_manager::{WindowManager, WindowManagerCallbacks};
 
 use harper_core::{Document, linting::Lint};
 
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
-
-const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(100);
 
 type IgnoreLint = Box<dyn FnMut(&Lint, &Document)>;
 type AddToDictionary = Box<dyn FnMut(&str)>;
@@ -58,18 +55,9 @@ impl Highlighter {
                     disable_rule,
                     refresh_config,
                 },
-                WindowManagerIntervals {
-                    read: DEFAULT_READ_INTERVAL,
-                    config_poll: Duration::from_secs(1),
-                },
             )?,
             context,
         })
-    }
-
-    pub fn with_read_interval(mut self, read_interval: Duration) -> Self {
-        self.window_manager.set_read_interval(read_interval);
-        self
     }
 
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {

@@ -107,7 +107,7 @@ impl<D: Dictionary> PronounVerbAgreement<D> {
                 // -ies -> -y
                 if form.ends_with_ignore_ascii_case_chars(&['i', 'e', 's']) {
                     words.push(
-                        format!("{}y", &form[0..form.len() - 3].iter().collect::<String>())
+                        format!("{}y", form[0..form.len() - 3].iter().collect::<String>())
                             .chars()
                             .collect(),
                     );
@@ -231,7 +231,7 @@ impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
             lint_kind: LintKind::Agreement,
             suggestions,
             message: "The form of the verb must agree in grammatical number with the pronoun."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

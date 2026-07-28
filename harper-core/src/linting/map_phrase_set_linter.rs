@@ -113,7 +113,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             span,
             lint_kind: self.lint_kind,
             suggestions,
-            message: self.message.to_string(),
+            message: self.message.to_owned(),
             priority: 31,
         })
     }

@@ -40,7 +40,7 @@ impl ExprLinter for JumpTheGun {
                 "the gun",
                 det_ws_gun_span.get_content(source),
             )],
-            message: "The correct idiom is `jump the gun`".to_string(),
+            message: "The correct idiom is `jump the gun`".to_owned(),
             ..Default::default()
         })
     }

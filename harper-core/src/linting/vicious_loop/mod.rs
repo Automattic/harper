@@ -139,7 +139,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
             )],
             message:
                 "The idiom uses the word `vicious`, not `viscous`, which describes thick liquids."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         });
     }
