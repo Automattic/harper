@@ -189,6 +189,6 @@ mod tests {
 
     #[test]
     fn dont_flag_cve_3580() {
-        assert_no_lints("CVE-2017-5753", NumericRangeEnDash::default());
+        assert_no_lints("CVE-2017-5753", NumericRangeEnDash::default(), crate::languages::LanguageFamily::English);
     }
 }

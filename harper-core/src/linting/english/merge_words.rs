@@ -130,10 +130,6 @@ mod tests {
 
     #[test]
     fn checks_weirdly() {
-        assert_suggestion_result(
-            "This is wrapped around the line weirdl y.",
-            MergeWords::default(),
-            "This is wrapped around the line weirdly.",
-        );
+        assert_suggestion_result("This is wrapped around the line weirdl y.", MergeWords::default(), "This is wrapped around the line weirdly.", crate::languages::LanguageFamily::English);
     }
 }

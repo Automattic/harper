@@ -357,11 +357,7 @@ mod tests {
 
         #[test]
         fn fix_digged() {
-            assert_suggestion_result(
-                "I digged a bit deeper.",
-                RegularIrregulars::new(FstDictionary::curated()),
-                "I dug a bit deeper.",
-            );
+            assert_suggestion_result("I digged a bit deeper.", RegularIrregulars::new(FstDictionary::curated()), "I dug a bit deeper.", LanguageFamily::English);
         }
     }
 

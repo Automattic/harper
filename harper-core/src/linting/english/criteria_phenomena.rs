@@ -1,14 +1,9 @@
-<<<<<<<< HEAD:harper-core/src/linting/english/criteria_phenomena.rs
-use super::Suggestion;
-========
 use super::super::Suggestion;
 use super::super::expr_linter::ExprLinter;
->>>>>>>> master:harper-core/src/linting/criteria_phenomena/singular_criteria_phenomena.rs
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
 use crate::linting::expr_linter::Chunk;
-use crate::linting::expr_linter::ExprLinter;
 use crate::patterns::WordSet;
 use crate::{Lint, Lrc, Token};
 
@@ -86,14 +81,9 @@ mod tests {
     fn can_detect_incorrect_criteria() {
         assert_suggestion_result(
             "...One criteria is essential...",
-<<<<<<<< HEAD:harper-core/src/linting/english/criteria_phenomena.rs
-            CriteriaPhenomena::new(),
-            1,
-            crate::languages::LanguageFamily::English,
-========
             SingularCriteriaPhenomena::default(),
             "...One criterion is essential...",
->>>>>>>> master:harper-core/src/linting/criteria_phenomena/singular_criteria_phenomena.rs
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -101,14 +91,9 @@ mod tests {
     fn can_detect_incorrect_phenomena() {
         assert_suggestion_result(
             "...I would like to see that phenomena.",
-<<<<<<<< HEAD:harper-core/src/linting/english/criteria_phenomena.rs
-            CriteriaPhenomena::new(),
-            1,
-            crate::languages::LanguageFamily::English,
-========
             SingularCriteriaPhenomena::default(),
             "...I would like to see that phenomenon.",
->>>>>>>> master:harper-core/src/linting/criteria_phenomena/singular_criteria_phenomena.rs
+            crate::languages::LanguageFamily::English,
         )
     }
 

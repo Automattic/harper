@@ -714,6 +714,7 @@ mod tests {
         assert_no_lints(
             "Please ask each person(s) to sign.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            LanguageFamily::English,
         );
     }
 
@@ -722,6 +723,7 @@ mod tests {
         assert_no_lints(
             "Review the person(s) and document(s).",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            LanguageFamily::English,
         );
     }
 
@@ -730,6 +732,7 @@ mod tests {
         assert_no_lints(
             "CONTACT THE PERSON(S).",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            LanguageFamily::English,
         );
     }
 
@@ -739,6 +742,7 @@ mod tests {
             "Please ask each persson(s) to sign.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             1,
+            LanguageFamily::English,
         );
     }
 
@@ -748,6 +752,7 @@ mod tests {
             "Please mark (s) on the form.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             1,
+            LanguageFamily::English,
         );
     }
 
@@ -757,6 +762,7 @@ mod tests {
             "Please ask each person (s) to sign.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             1,
+            LanguageFamily::English,
         );
     }
 
@@ -766,6 +772,7 @@ mod tests {
             "Please ask each person(ss) to sign.",
             SpellCheck::new(FstDictionary::curated(), Dialect::American),
             1,
+            LanguageFamily::English,
         );
     }
 

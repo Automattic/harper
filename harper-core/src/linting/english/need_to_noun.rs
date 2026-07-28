@@ -19,7 +19,7 @@ impl Default for NeedToNoun {
                     || tok.kind.is_determiner()
                     || tok.kind.is_unlintable()
                     || tok.kind.is_pronoun()
-            }),
+            }) as Box<dyn Expr>,
             Box::new(WordSet::new(&["about", "into", "it"])),
         ]);
 
@@ -67,7 +67,7 @@ impl ExprLinter for NeedToNoun {
         let noun_idx = 4;
         let noun_token = &matched_tokens[noun_idx];
 
-        let noun_text = noun_token.span.get_content_string(source);
+        let noun_text = noun_token.get_str(source);
         let span = to_token.span;
 
         Some(Lint {

@@ -212,10 +212,6 @@ mod tests {
 
     #[test]
     fn corrects_lmk() {
-        assert_suggestion_result(
-            "Lmk if you need any debug logs.",
-            lint_group(),
-            "Let me know if you need any debug logs.",
-        );
+        assert_suggestion_result("Lmk if you need any debug logs.", lint_group(), "Let me know if you need any debug logs.", crate::languages::LanguageFamily::English);
     }
 }

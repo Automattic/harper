@@ -227,11 +227,7 @@ mod tests {
 
     #[test]
     fn correct_rules_of_thumbs_hyphenated() {
-        assert_suggestion_result(
-            "Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".",
-            PluralWrongWordOfPhrase::default(),
-            "Add rules-of-thumb for basic metrics, like \"Spill more than 1GB is a red flag\".",
-        );
+        assert_suggestion_result("Add rule-of-thumbs for basic metrics, like \"Spill more than 1GB is a red flag\".", PluralWrongWordOfPhrase::default(), "Add rules-of-thumb for basic metrics, like \"Spill more than 1GB is a red flag\".", crate::languages::LanguageFamily::English);
     }
 
     // BodiesInWhite
@@ -270,30 +266,18 @@ mod tests {
 
     #[test]
     fn correct_flash_in_the_pans_hyphenated() {
-        assert_suggestion_result(
-            "what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here",
-            PluralWrongWordOfPhrase::default(),
-            "what makes 'Super Hexagon' rise above other nostalgic flashes-in-the-pan is that there is a game to be learned here",
-        );
+        assert_suggestion_result("what makes 'Super Hexagon' rise above other nostalgic flash-in-the-pans is that there is a game to be learned here", PluralWrongWordOfPhrase::default(), "what makes 'Super Hexagon' rise above other nostalgic flashes-in-the-pan is that there is a game to be learned here", crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn correct_flashes_in_the_pans() {
-        assert_suggestion_result(
-            "Who are some of the biggest flashes in the pans in wrestling history?",
-            PluralWrongWordOfPhrase::default(),
-            "Who are some of the biggest flashes in the pan in wrestling history?",
-        );
+        assert_suggestion_result("Who are some of the biggest flashes in the pans in wrestling history?", PluralWrongWordOfPhrase::default(), "Who are some of the biggest flashes in the pan in wrestling history?", crate::languages::LanguageFamily::English);
     }
 
     // ProofOfConcept
 
     #[test]
     fn correct_proof_of_concepts() {
-        assert_suggestion_result(
-            "I wrote about my love of throwaway prototypes; those little proof-of-concepts that exist purely to get an idea out of your head",
-            PluralWrongWordOfPhrase::default(),
-            "I wrote about my love of throwaway prototypes; those little proofs-of-concept that exist purely to get an idea out of your head",
-        );
+        assert_suggestion_result("I wrote about my love of throwaway prototypes; those little proof-of-concepts that exist purely to get an idea out of your head", PluralWrongWordOfPhrase::default(), "I wrote about my love of throwaway prototypes; those little proofs-of-concept that exist purely to get an idea out of your head", crate::languages::LanguageFamily::English);
     }
 }

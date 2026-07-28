@@ -91,7 +91,7 @@ impl ExprLinter for CodeInWriteIn {
                 span.get_content(source),
             )],
             message: "For writing code, the preposition should be `in` rather than `on`."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

@@ -169,11 +169,7 @@ mod tests {
 
     #[test]
     fn test_3355_result() {
-        assert_suggestion_result(
-            "cham peng",
-            TransposedSpace::new(FstDictionary::curated()),
-            "champ eng",
-        );
+        assert_suggestion_result("cham peng", TransposedSpace::new(FstDictionary::curated()), "champ eng", LanguageFamily::English);
     }
 
     #[test]

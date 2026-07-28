@@ -171,18 +171,12 @@ mod tests {
 
     #[test]
     fn dont_join_contraction_suffix_after_ascii_apostrophe() {
-        assert_no_lints(
-            "you 're fresh so you don't neglect them",
-            DisjointPrefixes::new(FstDictionary::curated()),
-        );
+        assert_no_lints("you 're fresh so you don't neglect them", DisjointPrefixes::new(FstDictionary::curated()), LanguageFamily::English);
     }
 
     #[test]
     fn dont_join_contraction_suffix_after_typographic_apostrophe() {
-        assert_no_lints(
-            "you ’re fresh so you don’t neglect them",
-            DisjointPrefixes::new(FstDictionary::curated()),
-        );
+        assert_no_lints("you ’re fresh so you don’t neglect them", DisjointPrefixes::new(FstDictionary::curated()), LanguageFamily::English);
     }
 
     #[test]

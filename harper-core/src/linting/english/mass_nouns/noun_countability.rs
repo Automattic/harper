@@ -402,26 +402,17 @@ mod tests {
 
     #[test]
     fn dont_flag_ing_modifier_before_adjective_noun() {
-        assert_no_lints(
-            "They succeeded by receiving a working direct link in return.",
-            NounCountability::default(),
-        );
+        assert_no_lints("They succeeded by receiving a working direct link in return.", NounCountability::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_slash_separated_ing_modifiers_before_noun() {
-        assert_no_lints(
-            "MockAPI is meant to be a prototyping/testing/learning tool.",
-            NounCountability::default(),
-        );
+        assert_no_lints("MockAPI is meant to be a prototyping/testing/learning tool.", NounCountability::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_coordinate_predicate_ing_adjective() {
-        assert_no_lints(
-            "They're both confusing and tedious to use.",
-            NounCountability::default(),
-        );
+        assert_no_lints("They're both confusing and tedious to use.", NounCountability::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]

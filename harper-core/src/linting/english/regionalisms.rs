@@ -942,6 +942,11 @@ mod tests {
 
     #[test]
     fn godown_isnt_used_outside_asia() {
-        assert_suggestion_result("godown", Regionalisms::new(Dialect::American), "warehouse");
+        assert_suggestion_result(
+            "godown",
+            Regionalisms::new(EnglishDialect::American),
+            "warehouse",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

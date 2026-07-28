@@ -370,6 +370,6 @@ mod tests {
 
     #[test]
     fn dont_flag_is_a_b_plus_3715() {
-        assert_no_lints("Is a B+ a 3.3 GPA?", ExpandMemoryShorthands::new());
+        assert_no_lints("Is a B+ a 3.3 GPA?", ExpandMemoryShorthands::new(), crate::languages::LanguageFamily::English);
     }
 }

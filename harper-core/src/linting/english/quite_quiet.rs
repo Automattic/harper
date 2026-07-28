@@ -338,24 +338,21 @@ mod tests {
 
     #[test]
     fn dont_flag_probably_quite_doable_3560() {
-        assert_no_lints("It's probably quite doable.", QuiteQuiet::default());
+        assert_no_lints("It's probably quite doable.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_probably_quite_reasonable_3560() {
-        assert_no_lints(
-            "That seems probably quite reasonable.",
-            QuiteQuiet::default(),
-        );
+        assert_no_lints("That seems probably quite reasonable.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_quite_happy_3560() {
-        assert_no_lints("I'm quite happy with the result.", QuiteQuiet::default());
+        assert_no_lints("I'm quite happy with the result.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 
     #[test]
     fn dont_flag_quite_large_3560() {
-        assert_no_lints("The project is quite large.", QuiteQuiet::default());
+        assert_no_lints("The project is quite large.", QuiteQuiet::default(), crate::languages::LanguageFamily::English);
     }
 }

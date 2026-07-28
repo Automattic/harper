@@ -284,42 +284,23 @@ mod tests {
     }
 
     fn correct_since_a_few_months() {
-        assert_suggestion_result(
-            "I am struggling since a few months with the rebuild of an old FORTRAN program.",
-            SinceDuration::default(),
-            "I am struggling for a few months with the rebuild of an old FORTRAN program.",
-        );
+        assert_suggestion_result("I am struggling since a few months with the rebuild of an old FORTRAN program.", SinceDuration::default(), "I am struggling for a few months with the rebuild of an old FORTRAN program.", crate::languages::LanguageFamily::English);
     }
 
     // Note: Expects "few" to be corrected to "a few" by a different linter
     fn correct_since_few_days() {
-        assert_suggestion_result(
-            "I've been struggling since few days with the rebuild of an old FORTRAN program.",
-            SinceDuration::default(),
-            "I've been struggling for few days with the rebuild of an old FORTRAN program.",
-        );
+        assert_suggestion_result("I've been struggling since few days with the rebuild of an old FORTRAN program.", SinceDuration::default(), "I've been struggling for few days with the rebuild of an old FORTRAN program.", crate::languages::LanguageFamily::English);
     }
 
     fn dont_flag_since_a_couple_hours_ago() {
-        assert_no_lints(
-            "[BUG] since a couple hours ago, the claude code agent often gets stuck while working.",
-            SinceDuration::default(),
-        );
+        assert_no_lints("[BUG] since a couple hours ago, the claude code agent often gets stuck while working.", SinceDuration::default(), crate::languages::LanguageFamily::English);
     }
 
     fn fix_since_a_couple_of_days() {
-        assert_suggestion_result(
-            "Since a couple of days, I got this error",
-            SinceDuration::default(),
-            "For a couple of days, I got this error",
-        );
+        assert_suggestion_result("Since a couple of days, I got this error", SinceDuration::default(), "For a couple of days, I got this error", crate::languages::LanguageFamily::English);
     }
 
     fn fix_since_a_couple_days() {
-        assert_suggestion_result(
-            "Values at 0 all the time since a couple days · Issue #91551",
-            SinceDuration::default(),
-            "Values at 0 all the time since a couple days ago · Issue #91551",
-        );
+        assert_suggestion_result("Values at 0 all the time since a couple days · Issue #91551", SinceDuration::default(), "Values at 0 all the time since a couple days ago · Issue #91551", crate::languages::LanguageFamily::English);
     }
 }

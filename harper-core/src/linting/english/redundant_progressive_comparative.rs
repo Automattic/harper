@@ -56,7 +56,7 @@ impl ExprLinter for RedundantProgressiveComparative {
                 replacement,
                 span.get_content(src),
             )],
-            message: message.to_string(),
+            message: message.to_owned(),
             priority: 31,
         })
     }
@@ -73,27 +73,52 @@ mod tests {
 
     #[test]
     fn fixes_increasingly_more() {
-        assert_suggestion_result("The issue is increasingly more prevalent in distributed systems.", RedundantProgressiveComparative::default(), "The issue is more and more prevalent in distributed systems.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The issue is increasingly more prevalent in distributed systems.",
+            RedundantProgressiveComparative::default(),
+            "The issue is more and more prevalent in distributed systems.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_increasingly_less() {
-        assert_suggestion_result("The outages are increasingly less frequent after the migration.", RedundantProgressiveComparative::default(), "The outages are less and less frequent after the migration.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The outages are increasingly less frequent after the migration.",
+            RedundantProgressiveComparative::default(),
+            "The outages are less and less frequent after the migration.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn preserves_match_case_title() {
-        assert_suggestion_result("The bug is Increasingly More Prevalent in nightly builds.", RedundantProgressiveComparative::default(), "The bug is More and more Prevalent in nightly builds.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The bug is Increasingly More Prevalent in nightly builds.",
+            RedundantProgressiveComparative::default(),
+            "The bug is More and more Prevalent in nightly builds.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn preserves_match_case_all_caps() {
-        assert_suggestion_result("The bug is INCREASINGLY MORE PREVALENT in nightly builds.", RedundantProgressiveComparative::default(), "The bug is MORE AND MORE PREVALENT in nightly builds.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The bug is INCREASINGLY MORE PREVALENT in nightly builds.",
+            RedundantProgressiveComparative::default(),
+            "The bug is MORE AND MORE PREVALENT in nightly builds.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn preserves_match_case_less_all_caps() {
-        assert_suggestion_result("The regressions are INCREASINGLY LESS SEVERE with each patch.", RedundantProgressiveComparative::default(), "The regressions are LESS AND LESS SEVERE with each patch.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The regressions are INCREASINGLY LESS SEVERE with each patch.",
+            RedundantProgressiveComparative::default(),
+            "The regressions are LESS AND LESS SEVERE with each patch.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
