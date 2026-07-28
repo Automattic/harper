@@ -73,6 +73,7 @@ pub mod for_tests {
         ($linter_name:ident, $linter_ty:ty, $linter_ctor:expr) => {
             mod test_group_container {
                 use super::$linter_name;
+                #[allow(unused_imports)]
                 use super::*;
                 use crate::linting::PooledLinter;
                 use std::sync::LazyLock;
