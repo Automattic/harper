@@ -54,6 +54,6 @@ name = "spellcheck"
 harness = false
 
 [features]
-default = ["thesaurus"]
+default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
