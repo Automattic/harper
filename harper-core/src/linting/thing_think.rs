@@ -101,7 +101,10 @@ impl ExprLinter for ThingThink {
 #[cfg(test)]
 mod tests {
     use super::ThingThink;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::assert_suggestion_result;
+
+    create_test_pool!(ThingThink, ThingThink, ThingThink::default());
 
     // Pronouns
 
@@ -109,7 +112,7 @@ mod tests {
     fn fix_you_thing() {
         assert_suggestion_result(
             "Whad do you thing about tinygo?",
-            ThingThink::default(),
+            test_linter(),
             "Whad do you think about tinygo?",
         );
     }
@@ -118,7 +121,7 @@ mod tests {
     fn fix_i_thing() {
         assert_suggestion_result(
             "bcz i thing hugging face embeddings and models are very complex",
-            ThingThink::default(),
+            test_linter(),
             "bcz i think hugging face embeddings and models are very complex",
         );
     }
@@ -127,7 +130,7 @@ mod tests {
     fn fix_we_thing() {
         assert_suggestion_result(
             "which information we thing to be missing",
-            ThingThink::default(),
+            test_linter(),
             "which information we think to be missing",
         );
     }
@@ -136,7 +139,7 @@ mod tests {
     fn fix_they_thing() {
         assert_suggestion_result(
             "they thing something is a good idea",
-            ThingThink::default(),
+            test_linter(),
             "they think something is a good idea",
         );
     }
@@ -145,7 +148,7 @@ mod tests {
     fn fix_everyone_thing() {
         assert_suggestion_result(
             "What does everyone thing here?",
-            ThingThink::default(),
+            test_linter(),
             "What does everyone think here?",
         );
     }
@@ -154,7 +157,7 @@ mod tests {
     fn fix_anyone_thing() {
         assert_suggestion_result(
             "Can anyone thing of a (reasonable) way to align them such that the 'a's in all 4 words will be in (more or less) the same vertical position?",
-            ThingThink::default(),
+            test_linter(),
             "Can anyone think of a (reasonable) way to align them such that the 'a's in all 4 words will be in (more or less) the same vertical position?",
         );
     }
@@ -163,7 +166,7 @@ mod tests {
     fn fix_anybody_thing() {
         assert_suggestion_result(
             "If anybody thing there is an issue in Karma, please re-open.",
-            ThingThink::default(),
+            test_linter(),
             "If anybody think there is an issue in Karma, please re-open.",
         );
     }
@@ -172,7 +175,7 @@ mod tests {
     fn fix_every_body_thing() {
         assert_suggestion_result(
             "What does every body thing I should do with my Randy Johnson rookie card.",
-            ThingThink::default(),
+            test_linter(),
             "What does every body think I should do with my Randy Johnson rookie card.",
         );
     }
@@ -183,7 +186,7 @@ mod tests {
     fn fix_have_to_thing() {
         assert_suggestion_result(
             "I always have to thing what button does what action.",
-            ThingThink::default(),
+            test_linter(),
             "I always have to think what button does what action.",
         );
     }
@@ -192,7 +195,7 @@ mod tests {
     fn fix_need_to_thing() {
         assert_suggestion_result(
             "No need to thing about the REGEX.",
-            ThingThink::default(),
+            test_linter(),
             "No need to think about the REGEX.",
         );
     }
@@ -201,7 +204,7 @@ mod tests {
     fn fix_want_to_thing() {
         assert_suggestion_result(
             "maybe you want to thing of this also as a feature enhancement.",
-            ThingThink::default(),
+            test_linter(),
             "maybe you want to think of this also as a feature enhancement.",
         );
     }
@@ -210,7 +213,7 @@ mod tests {
     fn fix_having_to_thing() {
         assert_suggestion_result(
             "it has saved me personally hours in combined time not having to thing about whether something is in seconds or milliseconds",
-            ThingThink::default(),
+            test_linter(),
             "it has saved me personally hours in combined time not having to think about whether something is in seconds or milliseconds",
         );
     }
@@ -219,7 +222,7 @@ mod tests {
     fn fix_needs_to() {
         assert_suggestion_result(
             "When implementing any functionality once needs to thing aboiut how it is going to be used.",
-            ThingThink::default(),
+            test_linter(),
             "When implementing any functionality once needs to think aboiut how it is going to be used.",
         );
     }
@@ -228,7 +231,7 @@ mod tests {
     fn fix_needed_to() {
         assert_suggestion_result(
             "Even in that case we needed to thing about the syntax so that we wouldn't need to change existing syntax",
-            ThingThink::default(),
+            test_linter(),
             "Even in that case we needed to think about the syntax so that we wouldn't need to change existing syntax",
         );
     }
@@ -237,7 +240,7 @@ mod tests {
     fn fix_had_to() {
         assert_suggestion_result(
             "I had to thing in ways of making people more interested in it",
-            ThingThink::default(),
+            test_linter(),
             "I had to think in ways of making people more interested in it",
         );
     }
@@ -246,7 +249,7 @@ mod tests {
     fn fix_trying_to_thing() {
         assert_suggestion_result(
             "Here I'm trying to thing about the following questions:",
-            ThingThink::default(),
+            test_linter(),
             "Here I'm trying to think about the following questions:",
         );
     }
@@ -257,7 +260,7 @@ mod tests {
     fn fix_can_thing() {
         assert_suggestion_result(
             "The exe file dosen't work allways, because antivirus can thing it is a virus.",
-            ThingThink::default(),
+            test_linter(),
             "The exe file dosen't work allways, because antivirus can think it is a virus.",
         );
     }
@@ -266,7 +269,7 @@ mod tests {
     fn fix_could_thing() {
         assert_suggestion_result(
             "\"doesNotReturnSameInstanceWhenCalledMultipleTimes\" is a terrible name, but the only one i could thing of immediately.",
-            ThingThink::default(),
+            test_linter(),
             "\"doesNotReturnSameInstanceWhenCalledMultipleTimes\" is a terrible name, but the only one i could think of immediately.",
         );
     }
@@ -275,7 +278,7 @@ mod tests {
     fn fix_might_thing() {
         assert_suggestion_result(
             "Consider what a reader might thing when reading a switch",
-            ThingThink::default(),
+            test_linter(),
             "Consider what a reader might think when reading a switch",
         );
     }
@@ -284,7 +287,7 @@ mod tests {
     fn fix_should_thing() {
         assert_suggestion_result(
             "And we should thing to add a flag so the user could decide if internal top level extension functions are ok or not.",
-            ThingThink::default(),
+            test_linter(),
             "And we should think to add a flag so the user could decide if internal top level extension functions are ok or not.",
         );
     }
@@ -293,7 +296,7 @@ mod tests {
     fn fix_may_thing() {
         assert_suggestion_result(
             "It is easier than you may thing to run both bands with hostapd.",
-            ThingThink::default(),
+            test_linter(),
             "It is easier than you may think to run both bands with hostapd.",
         );
     }
@@ -302,7 +305,7 @@ mod tests {
     fn fix_cannot_thing() {
         assert_suggestion_result(
             "I cannot thing of a simple way to implement compensation of a change in Fnco.",
-            ThingThink::default(),
+            test_linter(),
             "I cannot think of a simple way to implement compensation of a change in Fnco.",
         );
     }
@@ -311,7 +314,7 @@ mod tests {
     fn fix_will_thing() {
         assert_suggestion_result(
             "So user will thing that delete operation is fine but its not this code deletes the wrong page and make one extra page which wrong.",
-            ThingThink::default(),
+            test_linter(),
             "So user will think that delete operation is fine but its not this code deletes the wrong page and make one extra page which wrong.",
         );
     }
@@ -320,7 +323,7 @@ mod tests {
     fn fix_cant_thing() {
         assert_suggestion_result(
             "can't thing of another place, which could have such effect",
-            ThingThink::default(),
+            test_linter(),
             "can't think of another place, which could have such effect",
         );
     }
@@ -329,7 +332,7 @@ mod tests {
     fn fix_couldnt_thing() {
         assert_suggestion_result(
             "I couldn't thing about a better title, but I run into problems since the new dplyr release.",
-            ThingThink::default(),
+            test_linter(),
             "I couldn't think about a better title, but I run into problems since the new dplyr release.",
         );
     }
@@ -338,7 +341,7 @@ mod tests {
     fn fix_shouldnt_thing() {
         assert_suggestion_result(
             "When dealing with a multi-tenanted system, users shouldn't thing about 'Databases', they should think about Tenants.",
-            ThingThink::default(),
+            test_linter(),
             "When dealing with a multi-tenanted system, users shouldn't think about 'Databases', they should think about Tenants.",
         );
     }
@@ -347,7 +350,7 @@ mod tests {
     fn fix_wont_thing() {
         assert_suggestion_result(
             "I think you need to use an io.Pipe so the Go HTTP Request won't thing the buf has been fulling read.",
-            ThingThink::default(),
+            test_linter(),
             "I think you need to use an io.Pipe so the Go HTTP Request won't think the buf has been fulling read.",
         );
     }
@@ -358,7 +361,7 @@ mod tests {
     fn fix_always_thing() {
         assert_suggestion_result(
             "one should always thing of whether the efforts are better targeted to the improvement",
-            ThingThink::default(),
+            test_linter(),
             "one should always think of whether the efforts are better targeted to the improvement",
         );
     }
@@ -367,7 +370,7 @@ mod tests {
     fn fix_sometimes_thing() {
         assert_suggestion_result(
             "One thing that I sometimes thing would be nice is if I could make different instances",
-            ThingThink::default(),
+            test_linter(),
             "One thing that I sometimes think would be nice is if I could make different instances",
         );
     }
@@ -376,7 +379,7 @@ mod tests {
     fn fix_often_thing() {
         assert_suggestion_result(
             "When working with workflows on many forms I often thing I need to do the same over and over",
-            ThingThink::default(),
+            test_linter(),
             "When working with workflows on many forms I often think I need to do the same over and over",
         );
     }
@@ -385,7 +388,7 @@ mod tests {
     fn fix_never_thing() {
         assert_suggestion_result(
             "just use UUIDv7 and never thing about those details again",
-            ThingThink::default(),
+            test_linter(),
             "just use UUIDv7 and never think about those details again",
         );
     }
@@ -394,7 +397,7 @@ mod tests {
     fn fix_usually_thing() {
         assert_suggestion_result(
             "And the order of that relationship might be reversed from what one might usually thing.",
-            ThingThink::default(),
+            test_linter(),
             "And the order of that relationship might be reversed from what one might usually think.",
         );
     }

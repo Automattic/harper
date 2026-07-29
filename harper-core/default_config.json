@@ -3394,6 +3394,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FullToTheBrim",
+								"state": true,
+								"label": "Full to the Brim"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HadOf",
 								"state": true,
 								"label": "Had Of"
@@ -4888,6 +4895,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LittleKnown",
+								"state": true,
+								"label": "Little Known"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LongTimeAgo",
 								"state": true,
 								"label": "Long Time Ago"
@@ -5178,6 +5192,13 @@
 								"name": "RedundantFirsts",
 								"state": true,
 								"label": "Redundant Firsts"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RegimenRegiment",
+								"state": true,
+								"label": "Regimen Regiment"
 							}
 						},
 						{
