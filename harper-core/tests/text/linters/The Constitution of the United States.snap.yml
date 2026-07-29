@@ -959,6 +959,16 @@ Message: |
 
 
 
+Lint:    Formatting (31 priority)
+Message: |
+     367 | and such person shall act accordingly until a President or Vice President shall
+     368 | have qualified.The Congress may by law provide for the case of the death of any
+         |               ^ It looks like you're missing a space here.
+Suggest:
+  - Insert “ ”
+
+
+
 Lint:    Readability (127 priority)
 Message: |
      368 | have qualified.The Congress may by law provide for the case of the death of any
