@@ -4,10 +4,22 @@ import type { UnpackedLintGroups } from './unpackLint';
 
 /**
  * `LintFramework` polls itself every second to cover editors that fail to emit
- * events. Every wait here stays far below that, so a passing assertion means
- * the framework re-linted deliberately rather than being rescued by the poll.
+ * events, so that poll can supply a lint the framework never scheduled itself.
+ * Every wait here is bounded by wall-clock time well below one second, and the
+ * tests additionally assert on *when* a follow-up arrived. A lint produced by
+ * the poll is a second late by construction and cannot satisfy that, however
+ * slowly the machine happens to be running.
+ *
+ * Frame counting was tried first and is not good enough: `requestAnimationFrame`
+ * is throttled when a page is backgrounded and stretches under load, so a fixed
+ * number of frames can silently exceed the poll interval. That turns a broken
+ * scheduler into a passing test, which is worse than a flake.
+ *
+ * This value MUST stay below the poll interval in `LintFramework`'s
+ * constructor. Raising it above one second is what would let the poll satisfy
+ * these tests, quietly restoring the failure mode described above.
  */
-const TICKS = 10;
+const SETTLE_BUDGET_MS = 400;
 
 /** Let queued microtasks and one animation frame run. */
 async function tick() {
@@ -15,15 +27,18 @@ async function tick() {
 	await Promise.resolve();
 }
 
-async function waitTicks(count = TICKS) {
-	for (let i = 0; i < count; i++) {
+/** Wait for `count` lint requests, giving up well before the one-second poll. */
+async function waitForCalls(calls: string[], count: number) {
+	const deadline = performance.now() + SETTLE_BUDGET_MS;
+	while (calls.length < count && performance.now() < deadline) {
 		await tick();
 	}
 }
 
-/** Wait for `count` lint requests, giving up well before the one-second poll. */
-async function waitForCalls(calls: string[], count: number) {
-	for (let i = 0; i < TICKS && calls.length < count; i++) {
+/** Give the framework room to act when we are asserting that it does not. */
+async function quietPeriod() {
+	const deadline = performance.now() + SETTLE_BUDGET_MS / 2;
+	while (performance.now() < deadline) {
 		await tick();
 	}
 }
@@ -34,10 +49,13 @@ async function waitForCalls(calls: string[], count: number) {
  */
 function deferredProvider() {
 	const calls: string[] = [];
+	/** When each entry in `calls` was requested, for asserting promptness. */
+	const callTimes: number[] = [];
 	const pending: { resolve: () => void; reject: (reason: Error) => void }[] = [];
 
 	const provider = (text: string): Promise<UnpackedLintGroups> => {
 		calls.push(text);
+		callTimes.push(performance.now());
 		return new Promise((resolve, reject) => {
 			pending.push({ resolve: () => resolve({}), reject });
 		});
@@ -61,6 +79,7 @@ function deferredProvider() {
 	return {
 		provider,
 		calls,
+		callTimes,
 		/** Complete the oldest outstanding request. */
 		resolveNext: () => settleOldest('resolve'),
 		/** Fail the oldest outstanding request. */
@@ -103,7 +122,7 @@ afterEach(() => {
 describe('LintFramework lint scheduling', () => {
 	it('re-lints with the final text as soon as the in-flight pass finishes', async () => {
 		const editor = makeTextarea('T');
-		const { provider, calls, resolveNext } = deferredProvider();
+		const { provider, calls, callTimes, resolveNext } = deferredProvider();
 		const fw = new LintFramework(provider, {});
 
 		await fw.addTarget(editor);
@@ -116,19 +135,24 @@ describe('LintFramework lint scheduling', () => {
 		fw.update();
 		fw.update();
 		fw.update();
-		await waitTicks();
+		await quietPeriod();
 		expect(calls).toEqual(['T']);
 
+		const releasedAt = performance.now();
 		await resolveNext();
 		await waitForCalls(calls, 2);
 
 		// Exactly one follow-up, seeing the text as it now stands.
 		expect(calls).toEqual(['T', 'This is a mistaek.']);
+
+		// And issued off the back of the pass completing, not by the one-second
+		// poll -- which could not have produced it this quickly.
+		expect(callTimes[1] - releasedAt).toBeLessThan(SETTLE_BUDGET_MS);
 	});
 
 	it('still issues the queued follow-up when the in-flight pass rejects', async () => {
 		const editor = makeTextarea('T');
-		const { provider, calls, rejectNext } = deferredProvider();
+		const { provider, calls, callTimes, rejectNext } = deferredProvider();
 		const fw = new LintFramework(provider, {});
 
 		try {
@@ -141,16 +165,18 @@ describe('LintFramework lint scheduling', () => {
 			// Input arrives mid-pass and is coalesced into a follow-up.
 			editor.value = 'This is a mistaek.';
 			fw.update();
-			await waitTicks();
+			await quietPeriod();
 			expect(calls).toEqual(['T']);
 
 			// The pass then fails. Releasing the guard is not enough on its own: the
 			// queued work has to be handed off too, or the input that arrived during
 			// a failed lint is silently forgotten until the one-second poll.
+			const releasedAt = performance.now();
 			await rejectNext();
 			await waitForCalls(calls, 2);
 
 			expect(calls).toEqual(['T', 'This is a mistaek.']);
+			expect(callTimes[1] - releasedAt).toBeLessThan(SETTLE_BUDGET_MS);
 		} finally {
 			window.removeEventListener('unhandledrejection', suppressProviderFailure);
 		}
