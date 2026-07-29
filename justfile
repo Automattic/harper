@@ -124,6 +124,16 @@ test-obsidian: build-obsidian
   pnpm playwright install
   pnpm test
 
+alias test-lint-framework := test-lintframework
+test-lintframework: build-lint-framework
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  pnpm install
+  cd "{{justfile_directory()}}/packages/lint-framework"
+  pnpm playwright install
+  pnpm test
+
 alias dev-wordpress := dev-wp
 dev-wp: build-harperjs
   #!/usr/bin/env bash
@@ -496,7 +506,7 @@ test-rust:
   cargo test -q
 
 # Test everything.
-test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
+test: test-rust test-harperjs test-vscode test-obsidian test-lintframework test-chrome-plugin test-firefox-plugin
 
 # Use `harper-cli` to parse a provided file and print out the resulting tokens.
 parse file:

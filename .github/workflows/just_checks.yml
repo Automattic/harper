@@ -23,6 +23,7 @@ jobs:
             test-rust,
             test-harperjs,
             test-vscode,
+            test-lintframework,
             test-chrome-plugin,
             test-firefox-plugin,
             test-obsidian,
