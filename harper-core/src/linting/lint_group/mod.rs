@@ -162,6 +162,7 @@ use super::mass_nouns::MassNouns;
 use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
+use super::missing_space::MissingSpace;
 use super::missing_to::MissingTo;
 use super::misspell::Misspell;
 use super::mixed_bag::MixedBag;
@@ -769,6 +770,7 @@ impl LintGroup {
         insert_expr_rule!(MeansALotTo);
         insert_struct_rule!(MergeWords);
         insert_expr_rule!(MissingPreposition);
+        insert_struct_rule!(MissingSpace);
         insert_expr_rule!(MissingTo);
         insert_expr_rule!(Misspell);
         insert_expr_rule!(MixedBag);
@@ -1140,6 +1142,18 @@ mod tests {
     #[test]
     fn its_not_perfect_keeps_apostrophe() {
         assert_no_lints("It's not perfect", test_linter());
+    }
+
+    #[test]
+    fn issue_3800_reports_both_spacing_errors() {
+        let document = Document::new_plain_english_curated(
+            "The government .Once the policy changed, the program ended.",
+        );
+        let group = test_linter();
+        let organized = group.run_with_inner(|l| l.organized_lints(&document));
+
+        assert_eq!(organized.get("Spaces").map(Vec::len), Some(1));
+        assert_eq!(organized.get("MissingSpace").map(Vec::len), Some(1));
     }
 
     #[test]

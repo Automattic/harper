@@ -1654,6 +1654,13 @@
 						},
 						{
 							"Bool": {
+								"name": "MissingSpace",
+								"state": true,
+								"label": "Missing Space"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NoFrenchSpaces",
 								"state": true,
 								"label": "No French Spaces"
