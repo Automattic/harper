@@ -8,6 +8,21 @@ type ScreenPoint = {
 	y: number;
 };
 
+/**
+ * How long to let linting settle once highlights first appear.
+ *
+ * The follow-up pass over the final text is event-driven: `LintFramework`
+ * coalesces requests that arrive mid-lint and issues one as soon as the
+ * in-flight pass releases. This only has to cover that pass plus a render,
+ * which is why a modest interval is enough.
+ *
+ * It is deliberately not sized against the framework's one-second self-poll.
+ * This wait starts at an arbitrary phase relative to that timer, so it could
+ * not reliably cover it anyway -- and relying on the poll is the behaviour the
+ * coalescing fix exists to avoid.
+ */
+const LINT_SETTLE_MS = 1500;
+
 export async function getBackground(context: BrowserContext) {
 	return (
 		context.serviceWorkers()[0] ??
@@ -289,6 +304,14 @@ export async function testCanIgnoreSuggestion(
 
 		// Ensure the test text produces only the spelling lint we intend to ignore.
 		await expect(getHarperHighlights(page)).toHaveCount(1);
+
+		// That first highlight can come from a lint computed against a *prefix* of
+		// the text, because input events arriving mid-lint are coalesced into a
+		// follow-up pass. It looks identical on screen, but its context hash covers
+		// different trailing tokens, so ignoring it records a hash that never
+		// matches the real lint and the highlight returns. Wait for the follow-up
+		// pass to settle before acting on anything.
+		await page.waitForTimeout(LINT_SETTLE_MS);
 
 		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
