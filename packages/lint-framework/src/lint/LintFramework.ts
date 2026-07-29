@@ -48,6 +48,8 @@ export default class LintFramework {
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
 	private lintRequested = false;
+	/** Set when a lint request arrives while one is already in flight. */
+	private lintDirty = false;
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
@@ -149,51 +151,68 @@ export default class LintFramework {
 			// Avoid duplicate requests in the queue
 			if (!immediate) {
 				this.lintRequested = true;
+				// This pass reads the text as it is now, so it already covers every
+				// request made before it started.
+				this.lintDirty = false;
 			}
 
-			const lintResults = await Promise.all(
-				this.onScreenTargets().map(async (target) => {
-					if (!document.contains(target)) {
-						this.targets.delete(target);
-						return { target: null as HTMLElement | null, lints: {} };
-					}
+			try {
+				const lintResults = await Promise.all(
+					this.onScreenTargets().map(async (target) => {
+						if (!document.contains(target)) {
+							this.targets.delete(target);
+							return { target: null as HTMLElement | null, lints: {} };
+						}
 
-					const { text, isCM, newLineIndices } = this.getTargetText(target);
+						const { text, isCM, newLineIndices } = this.getTargetText(target);
 
-					if (!text || text.length > 120000) {
-						return { target: null as HTMLElement | null, lints: {} };
-					}
+						if (!text || text.length > 120000) {
+							return { target: null as HTMLElement | null, lints: {} };
+						}
 
-					const language = getTargetLanguage(target);
-					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
-						forceAllHeadings: isHeading(target),
-						language,
-					});
+						const language = getTargetLanguage(target);
+						let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+							forceAllHeadings: isHeading(target),
+							language,
+						});
 
-					if (isCM) {
-						// We're about to modify a reference, so let's work on a copy.
-						lintsBySource = window.structuredClone(lintsBySource);
+						if (isCM) {
+							// We're about to modify a reference, so let's work on a copy.
+							lintsBySource = window.structuredClone(lintsBySource);
 
-						for (const lints of Object.values(lintsBySource)) {
-							for (const lint of lints) {
-								const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-								const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
+							for (const lints of Object.values(lintsBySource)) {
+								for (const lint of lints) {
+									const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
+									const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
 
-								lint.span.start -= offset_start;
-								lint.span.end -= offset_end;
+									lint.span.start -= offset_start;
+									lint.span.end -= offset_end;
+								}
 							}
 						}
+
+						return { target: target as HTMLElement, lints: lintsBySource };
+					}),
+				);
+
+				this.lastLints = lintResults.filter((r) => r.target != null) as any;
+				this.requestRender();
+			} finally {
+				if (!immediate) {
+					this.lintRequested = false;
+
+					// Must run after the flag above is cleared, or this call hits the
+					// same guard, marks the framework dirty again and is dropped. It
+					// lives in the `finally` so that a pass which threw still hands off
+					// the input that arrived while it was running.
+					if (this.lintDirty) {
+						this.lintDirty = false;
+						void this.requestLintUpdate();
 					}
-
-					return { target: target as HTMLElement, lints: lintsBySource };
-				}),
-			);
-
-			this.lastLints = lintResults.filter((r) => r.target != null) as any;
-			if (!immediate) {
-				this.lintRequested = false;
+				}
 			}
-			this.requestRender();
+		} else if (!immediate && this.lintRequested) {
+			this.lintDirty = true;
 		}
 	}
 
