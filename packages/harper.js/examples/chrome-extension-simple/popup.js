@@ -1,5 +1,5 @@
-import { LocalLinter } from './vendor/index.js';
 import { binaryInlined } from './vendor/binaryInlined.js';
+import { LocalLinter } from './vendor/index.js';
 
 const statusEl = document.getElementById('status');
 const versionEl = document.getElementById('version');
