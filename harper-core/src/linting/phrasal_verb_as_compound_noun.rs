@@ -332,6 +332,13 @@ fn is_part_of_noun_list(document: &Document, current_index: usize) -> bool {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(
+        PhrasalVerbAsCompoundNoun,
+        PhrasalVerbAsCompoundNoun,
+        PhrasalVerbAsCompoundNoun::default()
+    );
     use super::PhrasalVerbAsCompoundNoun;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
@@ -339,7 +346,7 @@ mod tests {
     fn flag_breakup_and_workout() {
         assert_lint_count(
             "I will never breakup with Gym. We just seem to workout.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             2,
         );
     }
@@ -348,100 +355,111 @@ mod tests {
     fn correct_breakup_and_workout() {
         assert_suggestion_result(
             "I will never breakup with Gym. We just seem to workout.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             "I will never break up with Gym. We just seem to work out.",
+        );
+    }
+
+    // Issue #3239. Both of these are compound nouns whose dictionary entries once
+    // carried a stray verb flag, so the linter skipped them as legitimate verbs.
+    // The entries are correct now and the linter handles them, but nothing pinned
+    // that, and the shape of the bug (a data flag silently disabling a rule) is
+    // easy to reintroduce.
+    #[test]
+    fn flag_rollback_used_as_a_verb_issue_3239() {
+        assert_suggestion_result(
+            "I already did a rollback. I'm not going to rollback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a rollback. I'm not going to roll back again.",
+        );
+    }
+
+    #[test]
+    fn flag_comeback_used_as_a_verb_issue_3239() {
+        assert_suggestion_result(
+            "I already did a comeback. I'm not going to comeback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a comeback. I'm not going to come back again.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_rollback_or_comeback_as_nouns_issue_3239() {
+        assert_no_lints(
+            "I already did a rollback. It was quite a comeback.",
+            PhrasalVerbAsCompoundNoun::default(),
         );
     }
 
     #[test]
     fn dont_flag_random_words_that_happen_to_end_like_a_particle() {
-        assert_no_lints("I like bacon.", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("I like bacon.", test_linter());
     }
 
     #[test]
     fn dont_flag_non_verb_particles() {
-        assert_no_lints("non", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("non", test_linter());
     }
 
     #[test]
     fn correct_after_i() {
-        assert_suggestion_result(
-            "I backup",
-            PhrasalVerbAsCompoundNoun::default(),
-            "I back up",
-        );
+        assert_suggestion_result("I backup", test_linter(), "I back up");
     }
 
     #[test]
     fn correct_after_we() {
-        assert_suggestion_result(
-            "we breakup",
-            PhrasalVerbAsCompoundNoun::default(),
-            "we break up",
-        );
+        assert_suggestion_result("we breakup", test_linter(), "we break up");
     }
 
     #[test]
     fn dont_flag_checkin() {
         // It's actually not a noun in English.
-        assert_no_lints("checkin", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("checkin", test_linter());
     }
 
     #[test]
     fn dont_flag_cleanup() {
-        assert_no_lints("cleanup", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("cleanup", test_linter());
     }
 
     #[test]
     fn correct_after_you_lowercase() {
-        assert_suggestion_result(
-            "you checkout",
-            PhrasalVerbAsCompoundNoun::default(),
-            "you check out",
-        );
+        assert_suggestion_result("you checkout", test_linter(), "you check out");
     }
 
     #[test]
     fn correct_after_you_capitalized() {
-        assert_suggestion_result(
-            "You checkout",
-            PhrasalVerbAsCompoundNoun::default(),
-            "You check out",
-        );
+        assert_suggestion_result("You checkout", test_linter(), "You check out");
     }
 
     #[test]
     fn flag_checkout_after_you() {
-        assert_lint_count("you checkout", PhrasalVerbAsCompoundNoun::default(), 1);
+        assert_lint_count("you checkout", test_linter(), 1);
     }
 
     #[test]
     fn correct_after_they_lowercase() {
-        assert_suggestion_result(
-            "they cleanup",
-            PhrasalVerbAsCompoundNoun::default(),
-            "they clean up",
-        );
+        assert_suggestion_result("they cleanup", test_linter(), "they clean up");
     }
 
     #[test]
     fn flag_cleanup_after_they() {
-        assert_lint_count("they cleanup", PhrasalVerbAsCompoundNoun::default(), 1);
+        assert_lint_count("they cleanup", test_linter(), 1);
     }
 
     #[test]
     fn dont_flag_dictionary_lookup() {
-        assert_no_lints("dictionary lookup", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("dictionary lookup", test_linter());
     }
 
     #[test]
     fn flag_couples_breakup() {
-        assert_lint_count("couples breakup", PhrasalVerbAsCompoundNoun::default(), 1);
+        assert_lint_count("couples breakup", test_linter(), 1);
     }
 
     #[test]
     fn dont_flag_gallon() {
-        assert_no_lints("gallon", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("gallon", test_linter());
     }
 
     // Maybe this works by accident because "given" is also an adjective.
@@ -451,85 +469,64 @@ mod tests {
     fn dont_flag_startup_funding() {
         assert_no_lints(
             "Yarvin has actually given startup funding. They hang out and party together",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_huge_markup() {
-        assert_no_lints(
-            "Sell it back to Russia at a huge markup.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("Sell it back to Russia at a huge markup.", test_linter());
     }
 
     #[test]
     fn dont_flag_another_layoff() {
-        assert_no_lints(
-            "And now just announced another layoff",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("And now just announced another layoff", test_linter());
     }
 
     #[test]
     #[ignore = "\"Shakedown\" is a compound noun -- it's part of a comma-separated list with another noun \"threat\"\nBut this is not easy to check for so is not implemented yet."]
     fn dont_flag_a_threat_or_shakedown() {
-        assert_no_lints(
-            "Just a threat or Shakedown.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("Just a threat or Shakedown.", test_linter());
     }
 
     #[test]
     fn dont_flag_a_flyover() {
-        assert_no_lints(
-            "if I'm the Brits I'm doing a flyover",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("if I'm the Brits I'm doing a flyover", test_linter());
     }
 
     #[test]
     fn dont_flag_mafia_style_shakedown() {
         assert_no_lints(
             "Basically it's kind of a mafia style shakedown of Ukraine",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_my_meetup_repository() {
-        assert_no_lints(
-            "I might have in my Meetup repository",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("I might have in my Meetup repository", test_linter());
     }
 
     #[test]
     fn ignore_multi_word() {
-        assert_no_lints("I like this add-on!", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("I like this add-on!", test_linter());
     }
 
     #[test]
     fn dont_flag_list_of_nouns_1298() {
-        assert_no_lints(
-            "A printable format and layout.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("A printable format and layout.", test_linter());
     }
 
     #[test]
     fn dont_flag_oov_nvim_plugin_1280() {
-        assert_no_lints(
-            "This is the nvim plugin for you.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("This is the nvim plugin for you.", test_linter());
     }
 
     #[test]
     fn flag_title_case() {
         assert_lint_count(
             "I Will Never Breakup With Gym. We Just Seem To Workout.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             2,
         );
     }
@@ -538,7 +535,7 @@ mod tests {
     fn flag_all_caps() {
         assert_lint_count(
             "I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             2,
         );
     }
@@ -547,7 +544,7 @@ mod tests {
     fn false_positive_issue_1495() {
         assert_no_lints(
             "Color schemes are available by using the Style Settings plugin.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -555,7 +552,7 @@ mod tests {
     fn dont_flag_thanks_a_lot_linter_description() {
         assert_lint_count(
             "Thanks a lot` is the fixed, widely accepted form, while variants like `thanks lot` or `thanks alot` are non-standard and can jar readers.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             0,
         );
     }
@@ -564,7 +561,7 @@ mod tests {
     fn dont_flag_backup_location() {
         assert_no_lints(
             "Backup location: `%APPDATA%\\Cursor\\User\\globalStorage\\backups`",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -572,7 +569,7 @@ mod tests {
     fn dont_flag_backup_plan() {
         assert_no_lints(
             "Every backup plan is unique, based on your risk assessment.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -580,7 +577,7 @@ mod tests {
     fn dont_flag_backup_program() {
         assert_no_lints(
             "restic is a backup program that is fast, efficient and secure",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -588,7 +585,7 @@ mod tests {
     fn dont_flag_backup_solution_or_backup_problems() {
         assert_no_lints(
             "NPBackup is a multiparadigm backup solution which tries to solve two major backup problems",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -596,7 +593,7 @@ mod tests {
     fn dont_flag_backup_utilities_backup_system_or_backup_snapshots() {
         assert_no_lints(
             "GitHub Enterprise Server Backup Utilities is a backup system you install on a separate host, which takes backup snapshots",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -604,7 +601,7 @@ mod tests {
     fn dont_flag_backup_images() {
         assert_no_lints(
             "This App creates and stores backup images of your Nextcloud.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -612,7 +609,7 @@ mod tests {
     fn fix_backup_individual_apps() {
         assert_suggestion_result(
             "It requires root and allows you to backup individual apps and their data.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             "It requires root and allows you to back up individual apps and their data.",
         );
     }
@@ -621,20 +618,20 @@ mod tests {
     fn dont_flag_backup_strategy() {
         assert_no_lints(
             "This is for you if you want to quickly set up a backup strategy without much fuss.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_helm_backup_plugin() {
-        assert_no_lints("Helm Backup Plugin.", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("Helm Backup Plugin.", test_linter());
     }
 
     #[test]
     fn dont_flag_callback_function() {
         assert_no_lints(
             "By the time the `setTimeout` callback function was invoked",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -642,33 +639,30 @@ mod tests {
     fn dont_flag_playback_latency() {
         assert_no_lints(
             "Low-Latency HLS is a recently standardized variant of the protocol that allows to greatly reduce playback latency.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_workout_constraints() {
-        assert_no_lints("Workout constraints", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("Workout constraints", test_linter());
     }
 
     #[test]
     fn dont_flag_workout_preference() {
-        assert_no_lints("Workout preference", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("Workout preference", test_linter());
     }
 
     #[test]
     fn dont_flag_rollout_status() {
-        assert_no_lints(
-            "Rollout Status of Latest Image Release",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("Rollout Status of Latest Image Release", test_linter());
     }
 
     #[test]
     fn font_flag_with_plugin() {
         assert_no_lints(
             "**Xcode** (8.0+, otherwise [with plugin](https://github.com/robertvojta/LigatureXcodePlugin))",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         )
     }
 
@@ -676,23 +670,20 @@ mod tests {
     fn dont_flag_and_layout_of_data() {
         assert_no_lints(
             "shape, memory space, and layout of data, while performing the complicated indexing for the user",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_in_noun_list_without_space_after_comma() {
-        assert_no_lints(
-            "shape, memory space,and layout of data",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("shape, memory space,and layout of data", test_linter());
     }
 
     #[test]
     fn dont_flag_layout_estimation() {
         assert_no_lints(
             "Layout estimation focuses on predicting architectural elements, i.e., walls, doors, and windows, within an indoor scene.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -700,7 +691,7 @@ mod tests {
     fn dont_flag_plugin_that() {
         assert_no_lints(
             "plugin that provides way for auto-loading of Golang SDK",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -708,23 +699,20 @@ mod tests {
     fn dont_flag_load_balancing_and_failover() {
         assert_no_lints(
             "resilient mid-tier load balancing and failover",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_plugin_for() {
-        assert_no_lints(
-            "Plugin for text editors and IDEs.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("Plugin for text editors and IDEs.", test_linter());
     }
 
     #[test]
     fn dont_flag_markup_language() {
         assert_no_lints(
             "Markup language used for websites & web apps.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -732,7 +720,7 @@ mod tests {
     fn dont_flag_plugin_ecosystem_or_plugin_development() {
         assert_no_lints(
             "## 🧩 Plugin Ecosystem\n### Plugin Development",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -740,23 +728,20 @@ mod tests {
     fn dont_flag_plugin_files_or_plugin_packages() {
         assert_no_lints(
             "plugin files between plugin packages installed with pip must have unique filenames.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_plugin_docs() {
-        assert_no_lints(
-            "building your own plugin: [Plugin Docs]",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("building your own plugin: [Plugin Docs]", test_linter());
     }
 
     #[test]
     fn dont_flag_plugin_suite() {
         assert_no_lints(
             "An all-in-one digital audio workstation (DAW) and plugin suite.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -764,52 +749,46 @@ mod tests {
     fn dont_flag_hacker_news_throwback_machine() {
         assert_no_lints(
             "| Hacker News Throwback Machine | Shows what was popular on Hacker News on this day in previous years.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_plugin_interface() {
-        assert_no_lints("[Plugin interface]", PhrasalVerbAsCompoundNoun::default());
+        assert_no_lints("[Plugin interface]", test_linter());
     }
 
     #[test]
     fn issue_1918() {
         assert_no_lints(
             "Boost your productivity with our JetBrains plugin!",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_pop_up_2217() {
-        assert_no_lints(
-            "Popup window instead of command line.",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("Popup window instead of command line.", test_linter());
     }
 
     #[test]
     fn issue_1772() {
         assert_no_lints(
             "By default, only one tile size is instantiated for each data type, math instruction, and layout.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn issue_2369() {
-        assert_no_lints(
-            "## Plugin developer documentation",
-            PhrasalVerbAsCompoundNoun::default(),
-        );
+        assert_no_lints("## Plugin developer documentation", test_linter());
     }
 
     #[test]
     fn issue_2505_dont_flag_backup_links() {
         assert_no_lints(
             "seamless switching to one of the backup links ideally happens without packet drops",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 
@@ -817,7 +796,7 @@ mod tests {
     fn issue_2505_correct_setup_but_dont_flag_backup_link() {
         assert_suggestion_result(
             "How to properly setup a backup link (and have it act like a backup again after stop/start of master link)",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
             "How to properly set up a backup link (and have it act like a backup again after stop/start of master link)",
         );
     }
@@ -826,7 +805,7 @@ mod tests {
     fn dont_flag_meltdown_3591() {
         assert_no_lints(
             "Unfortunately, Meltdown ended up being problematic.",
-            PhrasalVerbAsCompoundNoun::default(),
+            test_linter(),
         );
     }
 }
