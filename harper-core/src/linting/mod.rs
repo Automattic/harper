@@ -151,6 +151,7 @@ mod likewise;
 mod lint;
 mod lint_group;
 mod lint_kind;
+mod little_known;
 mod long_sentences;
 mod long_time_ago;
 mod look_down_ones_nose;
@@ -217,6 +218,7 @@ mod phrase_set_corrections;
 mod pique_interest;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
+mod pooled_linter;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -236,6 +238,7 @@ mod redundant_additive_adverbs;
 mod redundant_firsts;
 mod redundant_progressive_comparative;
 mod redundant_self;
+mod regimen_regiment;
 mod regionalisms;
 mod regular_irregulars;
 mod repeated_words;
@@ -328,6 +331,10 @@ pub use lint_group::{
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::PooledLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::for_tests::create_test_pool;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};

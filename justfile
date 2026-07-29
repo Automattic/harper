@@ -162,7 +162,7 @@ build-web: build-harperjs build-lint-framework build-components build-harper-edi
 
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
-  pnpm build
+  ENABLE_ADMIN_ROUTES=false pnpm build
 
 # Start a development server for Harper Desktop.
 dev-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -444,9 +444,9 @@ check-rust: audit-dictionary
   cargo hack check --each-feature
 
 # Perform format and type checking.
-check: check-rust check-js build-web
+check: check-rust check-js
 
-check-js: build-harperjs build-lint-framework build-components build-harper-editor
+check-js: build-harperjs build-lint-framework build-components build-harper-editor build-web
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -455,7 +455,7 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
 
   # Needed because Svelte has special linters
   cd "{{justfile_directory()}}/packages/web"
-  pnpm check
+  ENABLE_ADMIN_ROUTES=false pnpm check
 
 # Populate build caches and install necessary local tooling (tools callable via `pnpm run <tool>`).
 setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
