@@ -57,25 +57,37 @@ macro_rules! generate_boilerplate {
 
         #[cfg(test)]
         mod tests {
+            use paste::paste;
             use crate::weir::tests::assert_passes_all;
             use crate::weir::WeirLinter;
 
-            #[test]
-            fn run_tests_for_weir_rules() {
-                $(
-                    let mut linter = WeirLinter::new(
-                        include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $standalone_path)),
-                    ).unwrap();
-                    assert_passes_all(&mut linter);
-                )*
+            $(
+                paste! {
+                    #[test]
+                    fn [<run_tests_in_ $standalone_name:snake >](){
+                        let mut linter = WeirLinter::new(
+                            include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $standalone_path)),
+                        ).unwrap();
+                        assert_passes_all(&mut linter);
+                    }
+                }
+            )*
 
-                $($(
-                    let mut linter = WeirLinter::new(
-                        include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $child_path)),
-                    ).unwrap();
-                    assert_passes_all(&mut linter);
-                )*)*
-            }
+            $(
+                paste! {
+                    #[test]
+                    fn [<run_tests_in_ $group_name:snake >](){
+                        $(
+                            {
+                                let mut linter = WeirLinter::new(
+                                    include_str!(concat!(env!("WEIR_RULE_DIR"), "/", $child_path)),
+                                ).unwrap();
+                                assert_passes_all(&mut linter);
+                            }
+                        )*
+                    }
+                }
+            )*
         }
     };
 }
