@@ -9,9 +9,17 @@ type ScreenPoint = {
 };
 
 /**
- * How long to let linting settle once highlights first appear. Comfortably
- * clears `LintFramework`'s one-second self-poll, which is the slowest path by
- * which a pass over the final text can arrive.
+ * How long to let linting settle once highlights first appear.
+ *
+ * The follow-up pass over the final text is event-driven: `LintFramework`
+ * coalesces requests that arrive mid-lint and issues one as soon as the
+ * in-flight pass releases. This only has to cover that pass plus a render,
+ * which is why a modest interval is enough.
+ *
+ * It is deliberately not sized against the framework's one-second self-poll.
+ * This wait starts at an arbitrary phase relative to that timer, so it could
+ * not reliably cover it anyway -- and relying on the poll is the behaviour the
+ * coalescing fix exists to avoid.
  */
 const LINT_SETTLE_MS = 1500;
 
