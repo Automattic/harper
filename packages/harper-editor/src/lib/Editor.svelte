@@ -65,6 +65,10 @@ let lfw = new LintFramework(
 		const entries = await Promise.all(
 			Object.entries(raw).map(async ([source, lintGroup]: [string, Lint[]]) => {
 				const unpacked = await Promise.all(lintGroup.map((lint) => unpackLint(text, lint, linter)));
+				lintGroup.forEach((l) => {
+					l.free();
+				});
+
 				return [source, unpacked] as const;
 			}),
 		);
