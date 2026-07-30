@@ -1213,6 +1213,15 @@ mod tests {
     }
 
     #[test]
+    fn fixes_extention_correctly() {
+        assert_suggestion_result(
+            "I really like this web extention.",
+            test_linter(),
+            "I really like this web extension.",
+        );
+    }
+
+    #[test]
     fn fixes_easir() {
         assert_suggestion_result(
             "It makes it easir to select it.",
@@ -1222,11 +1231,34 @@ mod tests {
     }
 
     #[test]
+    fn fixes_breakfest() {
+        assert_suggestion_result(
+            "Ice cream for breakfest?",
+            test_linter(),
+            "Ice cream for breakfast?",
+        );
+    }
+
+    #[test]
     fn fixes_buget() {
         assert_suggestion_result(
             "It was in their buget range.",
             test_linter(),
             "It was in their budget range.",
+        );
+    }
+
+    #[test]
+    fn allows_chest_compressions() {
+        assert_no_lints("Please continue chest compressions.", test_linter());
+    }
+
+    #[test]
+    fn fixes_tabe() {
+        assert_suggestion_result(
+            "Would you go get me some duct tabe?",
+            test_linter(),
+            "Would you go get me some duct tape?",
         );
     }
 
