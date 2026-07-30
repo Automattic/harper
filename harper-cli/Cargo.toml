@@ -46,6 +46,7 @@ thesaurus = ["harper-core/thesaurus"]
 de = ["harper-core/de"]
 pt = ["harper-core/pt"]
 sk = ["harper-core/sk"]
+pl = ["harper-core/pl"]
 
 # Convenience feature to enable all supported languages
 all-languages = ["harper-core/all-languages"]

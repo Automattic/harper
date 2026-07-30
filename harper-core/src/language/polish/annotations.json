@@ -1,16 +1,16 @@
 {
-  "affixes": {
-    "prefixes": [],
-    "suffixes": []
-  },
-  "properties": {
-    "CC": {"metadata": {"conjunction": {}}},
-    "IN": {"metadata": {"preposition": true}},
-    "RB": {"metadata": {"adverb": {}}},
-    "VBZ": {"metadata": {"verb": {"verb_form": "THIRD_PERSON_SINGULAR"}}},
-    "NN": {"metadata": {"noun": {"is_singular": true, "is_countable": true}}},
-    "VB": {"metadata": {"verb": {"verb_form": "INFINITIVE"}}},
-    "JJ": {"metadata": {"adjective": {}}},
-    "PRP": {"metadata": {"pronoun": {"is_personal": true}}}
-  }
+	"affixes": {
+		"prefixes": [],
+		"suffixes": []
+	},
+	"properties": {
+		"CC": { "metadata": { "conjunction": {} } },
+		"IN": { "metadata": { "preposition": true } },
+		"RB": { "metadata": { "adverb": {} } },
+		"VBZ": { "metadata": { "verb": { "verb_form": "THIRD_PERSON_SINGULAR" } } },
+		"NN": { "metadata": { "noun": { "is_singular": true, "is_countable": true } } },
+		"VB": { "metadata": { "verb": { "verb_form": "INFINITIVE" } } },
+		"JJ": { "metadata": { "adjective": {} } },
+		"PRP": { "metadata": { "pronoun": { "is_personal": true } } }
+	}
 }

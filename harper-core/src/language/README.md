@@ -129,6 +129,66 @@ just language-rust-test-all
 just language-clean
 ```
 
+## Enhanced Language Development Tools
+
+### Dictionary Validation and Analysis
+
+```bash
+# Validate dictionary format, flags, duplicates, and Unicode
+just language-validate german
+just language-validate portuguese
+just language-validate polish
+
+# Get detailed dictionary statistics
+just language-stats german
+just language-stats all  # All languages
+
+# Compare dictionaries between languages
+just language-diff german portuguese
+```
+
+### Dictionary Validation (`language-validate`)
+- **Purpose**: Validate dictionary.dict and annotations.json files before runtime
+- **Checks**: File existence, format validation, flag consistency, duplicate detection, Unicode validation
+- **Example**: `just language-validate german`
+
+### Dictionary Statistics (`language-stats`)
+- **Purpose**: Analyze dictionary composition and coverage
+- **Output**: Total word count, unique words, flag distribution, word length statistics, flag coverage
+- **Example**: `just language-stats german`
+
+### Dictionary Comparison (`language-diff`)
+- **Purpose**: Compare dictionaries between two languages
+- **Features**: Find words unique to each language, compare common words with different flags, flag usage differences
+- **Example**: `just language-diff german portuguese`
+
+## Automated Testing Framework
+
+```bash
+# Generate comprehensive integration test template for a language
+just language-generate-tests finnish
+
+# Generate all test types (integration, detection, dictionary)
+just language-generate-all-tests swedish
+
+# Run integration tests for all languages
+just language-all-test
+
+# Run integration tests for specific languages
+just language-all-test de,pt
+```
+
+### Test Template Generation (`language-generate-tests`)
+- **Purpose**: Generate comprehensive integration test templates for new languages
+- **Generates**: Module instantiation, dialect, detector, dictionary loading, parser, lint group tests
+- **Template**: Based on Polish integration test structure
+- **Example**: `just language-generate-tests finnish`
+
+### All-Languages Testing (`language-all-test`)
+- **Purpose**: Run integration tests for all enabled languages
+- **Features**: Auto-discovers languages, runs tests with proper feature flags, provides summary
+- **Example**: `just language-all-test` or `just language-all-test de,pt,sk`
+
 ## Improving Dictionary and Annotations
 
 ### Step-by-step process:

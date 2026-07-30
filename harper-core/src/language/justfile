@@ -87,6 +87,36 @@ language-test-examples language:
 	fi
 	echo "======================================="
 
+# Dictionary validation
+# Usage: just language-validate german
+language-validate language:
+	python3 scripts/validate_language_dict.py "{{language}}"
+
+# Dictionary statistics
+# Usage: just language-stats german
+language-stats language:
+	python3 scripts/language_stats.py "{{language}}"
+
+# Dictionary comparison
+# Usage: just language-diff german portuguese
+language-diff language1 language2:
+	python3 scripts/dictionary_diff.py "{{language1}}" "{{language2}}"
+
+# Test generation
+# Usage: just language-generate-tests finnish
+language-generate-tests language:
+	python3 scripts/generate_language_tests.py "{{language}}"
+
+# Test generation with all test types
+# Usage: just language-generate-all-tests finnish
+language-generate-all-tests language:
+	python3 scripts/generate_language_tests.py "{{language}}" --all
+
+# Run all language integration tests
+# Usage: just language-all-test (all languages) or just language-all-test de,pt (specific languages)
+language-all-test *languages:
+	python3 scripts/run_all_language_tests.py {{languages}}
+
 # Legacy aliases
 language-german-test text:
 	just language-test german "{{text}}"
