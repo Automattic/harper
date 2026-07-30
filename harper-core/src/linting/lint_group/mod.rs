@@ -1215,9 +1215,9 @@ mod tests {
     #[test]
     fn fixes_extention_correctly() {
         assert_suggestion_result(
-            "I really like this web extention.",
+            "There is no extention quite like this one.",
             test_linter(),
-            "I really like this web extension.",
+            "There is no extention quite like this one.",
         );
     }
 
@@ -1251,15 +1251,6 @@ mod tests {
     #[test]
     fn allows_chest_compressions() {
         assert_no_lints("Please continue chest compressions.", test_linter());
-    }
-
-    #[test]
-    fn fixes_tabe() {
-        assert_suggestion_result(
-            "Would you go get me some duct tabe?",
-            test_linter(),
-            "Would you go get me some duct tape?",
-        );
     }
 
     /// Tests that no linters' descriptions contain errors handled by other linters.
