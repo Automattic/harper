@@ -304,7 +304,7 @@ fn lex_tabs(source: &[char]) -> Option<FoundToken> {
 }
 
 fn lex_spaces(source: &[char]) -> Option<FoundToken> {
-    let count = source.iter().take_while(|c| **c == ' ').count();
+    let count = source.iter().take_while(|c| c.is_space_separator()).count();
 
     if count > 0 {
         Some(FoundToken {
@@ -364,6 +364,31 @@ mod tests {
     use super::lex_number;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
+
+    #[test]
+    fn lexes_non_breaking_spaces_like_ascii_spaces() {
+        // The example sentence from #3863. Written with U+00A0 instead of U+0020 the
+        // stream was never split into words, so every multi-token lint went silent.
+        let ascii = "There are some cases where the the standard grammar checkers \
+                     don't cut it. That;s where Harper comes in handy.";
+        let non_breaking = ascii.replace(' ', "\u{00A0}");
+
+        let token_kinds = |text: &str| {
+            let source: Vec<_> = text.chars().collect();
+            let mut kinds = Vec::new();
+            let mut index = 0;
+
+            while index < source.len() {
+                let found = lex_english_token(&source[index..]);
+                kinds.push(found.token);
+                index += found.next_index;
+            }
+
+            kinds
+        };
+
+        assert_eq!(token_kinds(ascii), token_kinds(&non_breaking));
+    }
 
     // test various kinds of number
     #[test]

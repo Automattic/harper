@@ -15,6 +15,12 @@ pub trait CharExt: private::Sealed {
     fn is_english_lingual(&self) -> bool;
     fn is_emoji(&self) -> bool;
     fn is_punctuation(&self) -> bool;
+    /// Whether the character separates words the way an ordinary space does:
+    /// `U+0020` and the non-breaking space `U+00A0`.
+    ///
+    /// Deliberately excludes `\t`, `\n`, and `\r`, which have their own tokens
+    /// (`lex_tabs`, `lex_newlines`) and would break the token stream if swallowed here.
+    fn is_space_separator(&self) -> bool;
     /// Whether the character is an (English) vowel.
     ///
     /// Checks whether the character is in the set (A, E, I, O, U); case-insensitive.
@@ -96,6 +102,10 @@ impl CharExt for char {
 
     fn is_punctuation(&self) -> bool {
         Punctuation::from_char(*self).is_some()
+    }
+
+    fn is_space_separator(&self) -> bool {
+        matches!(*self, '\u{0020}' | '\u{00A0}')
     }
 
     fn is_vowel(&self) -> bool {
