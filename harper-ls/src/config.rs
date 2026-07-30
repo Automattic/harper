@@ -147,9 +147,9 @@ impl Config {
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+                base.stats_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
-                bail!("fileDict path must be a string.");
+                bail!("statsPath must be a string.");
             }
         }
 
@@ -227,5 +227,39 @@ impl Default for Config {
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use serde_json::json;
+
+    use super::Config;
+
+    /// `statsPath` used to assign to `file_dict_path`, so setting it silently
+    /// redirected the file-local dictionary as well.
+    #[test]
+    fn stats_path_does_not_overwrite_file_dict_path() {
+        let workspace_root = std::env::temp_dir();
+        let defaults = Config::default();
+
+        let config = Config::from_lsp_config(
+            &workspace_root,
+            json!({"harper-ls": {"statsPath": "s.txt"}}),
+        )
+        .unwrap();
+
+        assert!(config.stats_path.ends_with("s.txt"));
+        assert_eq!(config.file_dict_path, defaults.file_dict_path);
+    }
+
+    #[test]
+    fn non_string_stats_path_is_rejected() {
+        let workspace_root = std::env::temp_dir();
+
+        let result =
+            Config::from_lsp_config(&workspace_root, json!({"harper-ls": {"statsPath": 7}}));
+
+        assert!(result.is_err());
     }
 }
