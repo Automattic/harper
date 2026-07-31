@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<!-- Remote stylesheets are not allowed in extensions, so keep styling inline. -->
+		<style>
+			body {
+				width: 360px;
+				font-family: sans-serif;
+				padding: 8px;
+			}
+
+			textarea {
+				width: 100%;
+				box-sizing: border-box;
+			}
+
+			footer {
+				color: gray;
+				font-size: 0.8em;
+			}
+		</style>
+		<script type="module" src="popup.js"></script>
+	</head>
+
+	<body>
+		<h1>Harper</h1>
+		<textarea id="maininput" rows="4">This is a example of how to use `harper.js` in an Chrome extension.</textarea>
+		<ul id="errorlist"></ul>
+		<footer id="version"></footer>
+	</body>
+</html>

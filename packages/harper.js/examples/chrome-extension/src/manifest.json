@@ -1,0 +1,12 @@
+{
+	"manifest_version": 3,
+	"name": "Harper Example",
+	"version": "1.0.0",
+	"description": "A minimal example that runs harper.js inside a Chrome extension popup.",
+	"action": {
+		"default_popup": "popup.html"
+	},
+	"content_security_policy": {
+		"extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+	}
+}
