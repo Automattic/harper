@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::{
     CharStringExt, Span, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
@@ -65,6 +67,12 @@ impl ExprLinter for NounCountability {
                 t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
             })
             || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
+            // Words like "affecting" are both a mass noun and a progressive verb in
+            // the dictionary, so `then_mass_noun_only` matches them wherever they
+            // appear. Only lint when this occurrence is actually being used as a
+            // noun: in "the scaling of one affecting the other" it is the verb, and
+            // "one" is the pronoun it hangs off, not a quantifier.
+            || toks[2].kind.is_upos(UPOS::VERB)
         {
             return None;
         }
@@ -568,6 +576,23 @@ mod tests {
             "Not in this form because it currently works with one punctuation with one letter either side.",
             NounCountability::default(),
             "Not in this form because it currently works with one punctuation mark with one letter either side.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_ing_word_used_as_a_verb() {
+        assert_no_lints(
+            "That way, we can keep the rankings and the questions separated without worrying about the scaling of one affecting the other.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn still_flags_ing_mass_noun_before_determiner() {
+        assert_lint_count(
+            "I bought one clothing the other day.",
+            NounCountability::default(),
+            1,
         );
     }
 }
