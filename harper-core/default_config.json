@@ -3767,7 +3767,14 @@
 							"Bool": {
 								"name": "TakeALookTo",
 								"state": true,
-								"label": "Take A Look To"
+								"label": "Take a Look to"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TakeCareOf",
+								"state": true,
+								"label": "Take Care of"
 							}
 						},
 						{
