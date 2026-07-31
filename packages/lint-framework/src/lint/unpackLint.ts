@@ -31,8 +31,8 @@ export default async function unpackLint(
 	linter: Linter,
 ): Promise<UnpackedLint> {
 	const span = lint.span();
-  let unpackedSpan = { start: span.start, end: span.end };
-  span.free();
+	const unpackedSpan = { start: span.start, end: span.end };
+	span.free();
 
 	return {
 		span: unpackedSpan,
@@ -41,8 +41,8 @@ export default async function unpackLint(
 		lint_kind: lint.lint_kind() as LintKind,
 		lint_kind_pretty: lint.lint_kind_pretty(),
 		suggestions: lint.suggestions().map((sug) => {
-      const unpacked = { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
-      sug.free();
+			const unpacked = { kind: sug.kind(), replacement_text: sug.get_replacement_text() };
+			sug.free();
 			return unpacked;
 		}),
 		context_hash: (await linter.contextHash(text, lint)).toString(),
