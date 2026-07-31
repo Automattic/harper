@@ -24,7 +24,7 @@ let entries = $derived(Object.entries(counts).toSorted(([_a, a], [_b, b]) => b -
   </div>
 
   <GutterCenter >
-    <BarChart data={counts} title="Most Commonly Complained-About Lint IDs"/>
+    <BarChart data={counts} title={title}/>
     
     <table>
     	<thead>

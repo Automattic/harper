@@ -759,9 +759,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -793,9 +793,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5045,9 +5045,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5123,9 +5123,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -6674,9 +6674,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 

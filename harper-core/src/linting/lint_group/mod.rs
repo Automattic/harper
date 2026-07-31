@@ -1215,11 +1215,29 @@ mod tests {
     }
 
     #[test]
+    fn fixes_extention_correctly() {
+        assert_suggestion_result(
+            "There is no extention quite like this one.",
+            test_linter(),
+            "There is no extention quite like this one.",
+        );
+    }
+
+    #[test]
     fn fixes_easir() {
         assert_suggestion_result(
             "It makes it easir to select it.",
             test_linter(),
             "It makes it easier to select it.",
+        );
+    }
+
+    #[test]
+    fn fixes_breakfest() {
+        assert_suggestion_result(
+            "Ice cream for breakfest?",
+            test_linter(),
+            "Ice cream for breakfast?",
         );
     }
 
@@ -1230,6 +1248,11 @@ mod tests {
             test_linter(),
             "It was in their budget range.",
         );
+    }
+
+    #[test]
+    fn allows_chest_compressions() {
+        assert_no_lints("Please continue chest compressions.", test_linter());
     }
 
     /// Tests that no linters' descriptions contain errors handled by other linters.
