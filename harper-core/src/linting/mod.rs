@@ -218,6 +218,7 @@ mod phrase_set_corrections;
 mod pique_interest;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
+mod pooled_linter;
 mod possessive_noun;
 mod possessive_your;
 mod progressive_needs_be;
@@ -266,6 +267,7 @@ mod split_words;
 mod subject_pronoun;
 mod suggestion;
 mod take_a_look_to;
+mod take_care_of;
 mod take_medicine;
 mod take_serious;
 mod that_than;
@@ -330,6 +332,10 @@ pub use lint_group::{
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::PooledLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::for_tests::create_test_pool;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 use crate::{Document, LSend, render_markdown};

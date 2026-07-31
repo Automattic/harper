@@ -28,6 +28,7 @@ const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
     ("GUI", &["graphical user"], "interface", None),
     ("LCD", &["liquid crystal"], "display", None),
     ("LLM", &["large language"], "model", None),
+    ("PCB", &["printed circuit"], "board", None),
     // Note: "pin number" (not capitalized) is used to refer to GPIO pins etc.
     ("PIN", &["personal identification"], "number", AllCapsOnly),
     (
@@ -424,6 +425,32 @@ mod tests {
             &[
                 "And because I didn't have US dollars, I used zip ties [music] instead of a proper microonal bass.",
                 "And because I didn't have USD, I used zip ties [music] instead of a proper microonal bass.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_pcb_board() {
+        assert_good_and_bad_suggestions(
+            "The PCB board is based on an STM32F microcontroller.",
+            RedundantAcronyms::default(),
+            &[
+                "The PCB is based on an STM32F microcontroller.",
+                "The printed circuit board is based on an STM32F microcontroller.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_pcb_boards() {
+        assert_good_and_bad_suggestions(
+            "course project aimed to classify PCB boards as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+            RedundantAcronyms::default(),
+            &[
+                "course project aimed to classify PCBs as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+                "course project aimed to classify printed circuit boards as defect or non-defect - ChethanaVaisali/PCB_Classification.",
             ],
             &[],
         );

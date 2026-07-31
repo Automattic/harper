@@ -35,7 +35,8 @@ harper-thesaurus = { path = "../harper-thesaurus", version = "2.0.0", optional =
 bitflags = { version = "2.11.0", features = ["serde"] }
 trie-rs = "0.4.2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
-regex = "1.12.3"
+regex = "1.13.1"
+boxcar = { version = "0.2.14", optional = true }
 flate2 = "1.1.9"
 
 [build-dependencies]
@@ -57,8 +58,8 @@ name = "spellcheck"
 harness = false
 
 [features]
-default = ["thesaurus"]
-concurrent = []
+default = ["thesaurus", "concurrent"]
+concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
 
 # Language support features
