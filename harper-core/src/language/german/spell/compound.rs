@@ -1,10 +1,12 @@
 //! German-specific compound word generation.
 //!
 //! This module provides compound word formation for German, which uses
-//! specific interfix flags (h, i, k, l, m, o) to generate valid compound nouns.
+//! specific interfix flags (h, i, k, l, m, o) to generate valid compound nouns,
+//! and the q flag for compound adjective participation.
 
 use hashbrown::HashSet;
 
+use crate::dict_word_metadata::AdjectiveData;
 use crate::spell::rune::word_list::AnnotatedWord;
 use crate::spell::word_map::{WordMap, WordMapEntry};
 use crate::{CharString, DictWordMetadata, NounData};
@@ -17,6 +19,7 @@ pub const COMPOUND_FLAG_N_INTERFIX: char = 'k';
 pub const COMPOUND_FLAG_EN_INTERFIX: char = 'l';
 pub const COMPOUND_FLAG_ER_INTERFIX: char = 'm';
 pub const COMPOUND_FLAG_ES_INTERFIX: char = 'o';
+pub const COMPOUND_ADJ_FLAG: char = 'q';
 
 /// Interfix strings for each compound flag
 const INTERFIX_MAP: &[(char, &str)] = &[
@@ -30,7 +33,7 @@ const INTERFIX_MAP: &[(char, &str)] = &[
 
 /// Generate compound words from a list of annotated words for German.
 ///
-/// This function processes words that have compound formation flags (h, i, k, l, m, o)
+/// This function processes words that have compound formation flags (h, i, k, l, m, o, q)
 /// and generates compound words by combining them with appropriate interfixes.
 ///
 /// # Arguments
@@ -80,34 +83,65 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
                 continue;
             }
 
-            // Use the first word's first compound flag to determine interfix
-            let interfix = get_interfix(first_flags[0]);
+            // Check if the first word has adjective flag (q)
+            let first_has_adj_flag = first_flags.contains(&COMPOUND_ADJ_FLAG);
+            // Check if the second word has adjective flag (q)
+            let second_has_adj_flag = second_flags.contains(&COMPOUND_ADJ_FLAG);
 
-            // Generate compound word
-            let mut compound_chars: CharString = first_word.letters.clone();
-            compound_chars.extend(interfix.chars());
-            compound_chars.extend_from_slice(&second_word.letters);
+            // For adjective compounds: if either word has the q flag, create an adjective compound
+            // This handles noun+adjective, adjective+noun, and adjective+adjective combinations
+            if first_has_adj_flag || second_has_adj_flag {
+                // Generate adjective compound word (no interfix for adjective compounds)
+                let mut compound_chars: CharString = first_word.letters.clone();
+                compound_chars.extend_from_slice(&second_word.letters);
 
-            // Create metadata for the compound
-            let compound_meta = DictWordMetadata {
-                noun: Some(NounData {
-                    is_proper: None,
-                    is_singular: None,
-                    is_plural: None,
-                    is_countable: None,
-                    is_mass: None,
-                    is_possessive: None,
-                }),
-                ..Default::default()
-            };
+                // Create metadata for the compound adjective
+                // We need to add the adjective declension flags so the inflection system can generate all forms
+                let compound_meta = DictWordMetadata {
+                    adjective: Some(AdjectiveData::default()),
+                    ..Default::default()
+                };
 
-            // Add to word map if not already present
-            let compound_str: String = compound_chars.iter().collect();
-            if !word_map.contains_str(&compound_str) {
-                word_map.insert(WordMapEntry {
-                    canonical_spelling: compound_chars,
-                    metadata: compound_meta,
-                });
+                // Add to word map if not already present
+                let compound_str: String = compound_chars.iter().collect();
+                if !word_map.contains_str(&compound_str) {
+                    word_map.insert(WordMapEntry {
+                        canonical_spelling: compound_chars,
+                        metadata: compound_meta,
+                    });
+                }
+            }
+            // For noun compounds: only when neither word has adjective flag
+            else {
+                // Use the first word's first compound flag to determine interfix
+                let interfix = get_interfix(first_flags[0]);
+
+                // Generate compound word
+                let mut compound_chars: CharString = first_word.letters.clone();
+                compound_chars.extend(interfix.chars());
+                compound_chars.extend_from_slice(&second_word.letters);
+
+                // Create metadata for the compound
+                let compound_meta = DictWordMetadata {
+                    noun: Some(NounData {
+                        is_proper: None,
+                        is_singular: None,
+                        is_plural: None,
+                        is_countable: None,
+                        is_mass: None,
+                        is_possessive: None,
+                    }),
+                    ..Default::default()
+                };
+
+                // Add to word map if not already present
+                let compound_str: String = compound_chars.iter().collect();
+                if !word_map.contains_str(&compound_str) {
+                    word_map.insert(WordMapEntry {
+                        canonical_spelling: compound_chars,
+                        metadata: compound_meta,
+                    });
+                }
             }
         }
     }
@@ -123,6 +157,7 @@ fn is_compound_flag(c: char) -> bool {
             | COMPOUND_FLAG_EN_INTERFIX
             | COMPOUND_FLAG_ER_INTERFIX
             | COMPOUND_FLAG_ES_INTERFIX
+            | COMPOUND_ADJ_FLAG
     )
 }
 

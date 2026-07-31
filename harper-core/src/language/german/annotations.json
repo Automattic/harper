@@ -283,6 +283,29 @@
 			},
 			"rename_ok": true
 		},
+		"o": {
+			"#": "Compound word formation - noun + noun with 'es' interfix (lowercase alias)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
 		"O": {
 			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
 			"kind": "suffix",
@@ -907,6 +930,12 @@
 			"#": "adverb property (German - lowercase)",
 			"metadata": {
 				"adverb": {}
+			}
+		},
+		"q": {
+			"#": "Compound adjective flag - words with this flag can participate in adjective compound formation",
+			"metadata": {
+				"adjective": {}
 			}
 		}
 	}

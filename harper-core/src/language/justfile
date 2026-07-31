@@ -131,3 +131,85 @@ language-german-test text:
 
 language-build-lang-test:
 	just language-build
+
+# Add a word to a language dictionary
+# Usage: just language-add-word german "word" FLAGS
+# Usage: just language-add-word german "word" FLAGS --force (to overwrite existing flags)
+# Example: just language-add-word german "neueswort" N
+language-add-word language word flags *args:
+	#!/usr/bin/env bash
+	DICT_FILE="harper-core/src/language/{{language}}/dictionary.dict"
+	
+	# Validate flags against annotations.json
+	echo "🔍 Validating flags '{{flags}}' for {{language}}..."
+	if ! python3 scripts/validate_flags.py "{{language}}" "{{flags}}"; then
+		echo "❌ Flag validation failed. Cannot add word with invalid flags."
+		exit 1
+	fi
+	
+	# Build testing framework if needed
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then
+		just language-build
+	fi
+	
+	# Check if Harper already recognizes the word
+	META_OUTPUT=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "$DICT_FILE" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}" 2>&1)
+	
+	if echo "$META_OUTPUT" | grep -q "✅ Found"; then
+		echo "✅ '{{word}}' is already recognized by Harper (no need to add)"
+		# Show the metadata
+		echo "$META_OUTPUT" | grep -A 5 "✅ Found"
+		exit 0
+	fi
+	
+	# Check if the word is already in the dictionary (case-insensitive)
+	if grep -qi "^{{word}}/" "$DICT_FILE"; then
+		EXACT_MATCH=$(grep -q "^{{word}}/" "$DICT_FILE" && echo "yes" || echo "no")
+		
+		if [ "$EXACT_MATCH" = "yes" ]; then
+			echo "⚠️  '{{word}}' is in the dictionary but not recognized by Harper"
+			echo "   This might be a metadata issue. Check the flags."
+			grep "^{{word}}/" "$DICT_FILE"
+			
+			# Check if --force flag is provided to update flags
+			FORCE_UPDATE="no"
+			for arg in {{args}}; do
+				if [ "$arg" = "--force" ] || [ "$arg" = "-f" ]; then
+					FORCE_UPDATE="yes"
+				fi
+			done
+			
+			if [ "$FORCE_UPDATE" = "yes" ]; then
+				echo "🔧 Updating existing entry with new flags..."
+				sed -i "s|^{{word}}/~.*|{{word}}/~~{{flags}} # auto-added|" "$DICT_FILE"
+				echo "✅ Updated '{{word}}' to use flags '{{flags}}'"
+				exit 0
+			else
+				echo "💡 To update the flags, use: just language-add-word {{language}} {{word}} {{flags}} --force"
+				exit 1
+			fi
+		else
+			echo "⚠️  '{{word}}' exists in the dictionary but with different case"
+			grep -i "^{{word}}/" "$DICT_FILE"
+			exit 1
+		fi
+	fi
+	
+	# Check if Hunspell recognizes the word
+	HUNSPELL_OUTPUT=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "$DICT_FILE" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{word}}" --hunspell 2>&1)
+	
+	if echo "$HUNSPELL_OUTPUT" | grep -q "Hunspell only"; then
+		echo "💡 '{{word}}' is recognized by Hunspell but not by Harper"
+	fi
+	
+	# Add the word to the dictionary
+	echo "📝 Adding '{{word}}' with flags '{{flags}}' to the dictionary..."
+	
+	# Check if file ends with newline
+	[[ -s "$DICT_FILE" && -n $(tail -c1 "$DICT_FILE") ]] && echo >> "$DICT_FILE"
+	
+	echo "{{word}}/~~{{flags}} # auto-added" >> "$DICT_FILE"
+	echo "✅ Added '{{word}}/~~{{flags}}' to the dictionary"
+	
+	# Show the new entry
+	tail -1 "$DICT_FILE"
