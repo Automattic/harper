@@ -1,4 +1,4 @@
-233538
+233542
 clara/~~N # proper noun, feminine name
 unordentlich/~~NJOQRSTUW # adjective and noun
 abspeisender/~~N # noun
@@ -11164,6 +11164,7 @@ es/~~I # pronoun it
 wir/~~I # pronoun we
 ihr/~~I # pronoun you (plural)
 sie/~~I # pronoun they
+Sie/~~I # pronoun You (formal, nominative/accusative)
 sein/~~V # verb to be
 hab/~~Vcj # REPLACES haben
 werd/~~Vcj # REPLACES werden
@@ -12236,7 +12237,7 @@ umtrieb/~N # frequency: 7
 umzingel/~N # frequency: 7
 ungefüg/~N # frequency: 7
 universell/~N # frequency: 7
-unser/~N # frequency: 7
+unser/~~I # pronoun of us (genitive)
 variantenreich/~N # frequency: 7
 variationsreich/~N # frequency: 7
 vegetabil/~N # frequency: 7
@@ -15099,7 +15100,7 @@ idiomorph/~N # frequency: 6
 idiotisch/~J # adjective root, frequency: 6
 idyllisch/~J # adjective root, frequency: 6
 igel/~N # frequency: 6
-ihr/~N # frequency: 6
+ihr/~~I # pronoun you (plural, genitive)
 ikonengleich/~N # frequency: 6
 ikonodul/~N # frequency: 6
 illegal/~N # frequency: 6
@@ -20605,7 +20606,7 @@ deichs/~~N # auto-added
 deine/~~N # auto-added
 deinem/~~N # auto-added
 deinen/~~V # auto-added
-deiner/~~M # auto-added
+deiner/~~I # pronoun of you (singular, genitive)
 deines/~~N # auto-added
 deinige/~~N # auto-added
 deins/~~N # auto-added
@@ -20758,7 +20759,7 @@ dibbele/~~N # auto-added
 dibbeln/~~V # auto-added
 dibbelt/~~NX # auto-added
 dibble/~~N # auto-added
-dich/~~N # auto-added
+dich/~~I # pronoun you (singular, accusative)
 dichte/~~N # auto-added
 dichtem/~~N # auto-added
 dichten/~~V # auto-added
@@ -20861,7 +20862,7 @@ dipp/~~Vej # REPLACES dippen
 dippt/~~NX # auto-added
 dipptet/~~N # auto-added
 diptam/~~N # auto-added
-dir/~~N # auto-added
+dir/~~I # pronoun to you (singular, dative)
 direkt/~~NX # auto-added
 dirndl/~~NY # auto-added
 dirndls/~~N # auto-added
@@ -22668,8 +22669,8 @@ etwa/~~Nb # auto-added
 etwaig/~~NX # auto-added
 etüde/~~N # auto-added
 etüden/~~V # auto-added
-euch/~~N # auto-added
-euer/~~M # auto-added
+euch/~~I # pronoun you all (accusative/dative)
+euer/~~I # pronoun of you all (genitive)
 euere/~~N # auto-added
 eufonie/~~N # auto-added
 eugenik/~~N # auto-added
@@ -27487,13 +27488,16 @@ igeltet/~~N # auto-added
 igitt/~~N # auto-added
 igle/~~N # auto-added
 iglu/~~Nb # auto-added
-ihm/~~N # auto-added
-ihn/~~N # auto-added
-ihnen/~~V # auto-added
-ihre/~~N # auto-added
+ihm/~~I # pronoun to him/it (dative)
+ihn/~~I # pronoun him (accusative)
+ihnen/~~I # pronoun to them (dative)
+Ihnen/~~I # pronoun to You (formal, dative)
+Ihre/~~I # pronoun your (formal, possessive)
+ihre/~~I # pronoun her/their (possessive)
 ihrem/~~N # auto-added
 ihren/~~V # auto-added
-ihrer/~~M # auto-added
+ihrer/~~I # pronoun of her/them/You (formal, genitive)
+Ihrer/~~I # pronoun of You (formal, genitive)
 ihres/~~N # auto-added
 ihrige/~~N # auto-added
 ihrigem/~~N # auto-added
@@ -31601,7 +31605,7 @@ meilers/~~N # auto-added
 meinem/~~N # auto-added
 mein/~~Vcej # REPLACES meinen
 meinens/~~N # auto-added
-meiner/~~M # auto-added
+meiner/~~I # pronoun of me (genitive)
 meines/~~N # auto-added
 meinige/~~N # auto-added
 meins/~~N # auto-added
@@ -31752,7 +31756,7 @@ miau/~~NX # auto-added
 miau/~~Vcej # REPLACES miauen
 miaut/~~NX # auto-added
 miautet/~~N # auto-added
-mich/~~N # auto-added
+mich/~~I # pronoun me (accusative)
 mickrig/~~NX # auto-added
 mied/~~N # auto-added
 mieden/~~V # auto-added
@@ -31869,7 +31873,7 @@ minzöls/~~N # auto-added
 minütig/~~NX # auto-added
 miozän/~~N # auto-added
 miozäne/~~N # auto-added
-mir/~~N # auto-added
+mir/~~I # pronoun to me (dative)
 mirakel/~~N # auto-added
 mische/~~N # auto-added
 mischen/~~Z # auto-added
@@ -36985,7 +36989,7 @@ seims/~~N # auto-added
 seine/~~N # auto-added
 seinem/~~N # auto-added
 seinen/~~V # auto-added
-seiner/~~M # auto-added
+seiner/~~I # pronoun of him/it (genitive)
 seines/~~N # auto-added
 seins/~~N # auto-added
 seit/~~NX # auto-added
@@ -38875,7 +38879,7 @@ unreif/~~NJOQRSTUW # adjective and noun
 unrein/~~N # auto-added
 unruh/~~NX # auto-added
 unrund/~~N # auto-added
-uns/~~N # auto-added
+uns/~~I # pronoun us/to us (accusative/dative)
 unsere/~~N # auto-added
 unserm/~~N # auto-added
 unsern/~~N # auto-added
