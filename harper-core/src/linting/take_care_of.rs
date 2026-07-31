@@ -1,5 +1,5 @@
 use crate::{
-    Lint, Token, TokenStringExt,
+    Lint, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
