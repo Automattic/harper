@@ -3570,7 +3570,7 @@
 						{
 							"Bool": {
 								"name": "MoreAdjective",
-								"state": true,
+								"state": false,
 								"label": "More Adjective"
 							}
 						},
