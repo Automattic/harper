@@ -45,6 +45,9 @@ pub mod rect;
 #[cfg(target_os = "macos")]
 mod mac_broker;
 
+#[cfg(windows)]
+mod win_broker;
+
 #[derive(Parser)]
 struct Args {
     #[command(subcommand)]
@@ -69,7 +72,10 @@ struct IntegrationView {
 #[cfg(target_os = "macos")]
 pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(windows)]
+pub(crate) type PlatformBroker = win_broker::WindowsBroker;
+
+#[cfg(not(any(target_os = "macos", windows)))]
 pub(crate) type PlatformBroker = os_broker::NoopBroker;
 
 fn platform_broker() -> PlatformBroker {
@@ -342,7 +348,10 @@ pub fn run_highlighter(has_parent: bool) {
     #[cfg(target_os = "macos")]
     let broker = mac_broker::MacBroker::new(integrations);
 
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(windows)]
+    let broker = win_broker::WindowsBroker::new(integrations);
+
+    #[cfg(not(any(target_os = "macos", windows)))]
     let broker = os_broker::NoopBroker;
 
     if let Err(error) = Highlighter::new(

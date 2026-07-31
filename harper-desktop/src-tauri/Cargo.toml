@@ -48,6 +48,20 @@ cached = "2.0.2"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
 
+[target.'cfg(windows)'.dependencies]
+windows = { version = "0.61", features = [
+    "Win32_Foundation",
+    "Win32_System_Com",
+    "Win32_System_Ole",
+    "Win32_System_Threading",
+    "Win32_System_Variant",
+    "Win32_UI_Accessibility",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_Shell",
+    "Win32_UI_HiDpi",
+] }
+
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
 core-foundation = "0.10.1"
