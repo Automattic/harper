@@ -345,6 +345,12 @@ importers:
         specifier: ^4.0.16
         version: 4.0.16(@types/node@22.13.10)(@vitest/browser-playwright@4.0.16)(@vitest/ui@4.0.16)(jiti@2.6.1)(jsdom@20.0.3)(lightningcss@1.32.0)(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
 
+  packages/harper.js/examples/chrome-extension:
+    dependencies:
+      harper.js:
+        specifier: workspace:*
+        version: link:../..
+
   packages/harper.js/examples/commonjs-simple:
     dependencies:
       harper.js:
