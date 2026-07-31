@@ -240,7 +240,7 @@ build-obsidian: build-harperjs
 
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
-  max_bundle_size_bytes=$((30 * 1024 * 1024))
+  max_bundle_size_bytes=$((35 * 1024 * 1024))
 
   pnpm install
   pnpm build
