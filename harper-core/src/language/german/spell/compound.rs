@@ -89,17 +89,17 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
             compound_chars.extend_from_slice(&second_word.letters);
 
             // Create metadata for the compound
-            let mut compound_meta = DictWordMetadata::default();
-
-            // Mark as noun (compounds are typically nouns)
-            compound_meta.noun = Some(NounData {
-                is_proper: None,
-                is_singular: None,
-                is_plural: None,
-                is_countable: None,
-                is_mass: None,
-                is_possessive: None,
-            });
+            let compound_meta = DictWordMetadata {
+                noun: Some(NounData {
+                    is_proper: None,
+                    is_singular: None,
+                    is_plural: None,
+                    is_countable: None,
+                    is_mass: None,
+                    is_possessive: None,
+                }),
+                ..Default::default()
+            };
 
             // Add to word map if not already present
             let compound_str: String = compound_chars.iter().collect();

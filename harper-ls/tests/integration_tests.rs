@@ -4,7 +4,7 @@
 
 use harper_core::language::registry::{detect_language, new_curated_for_language};
 use harper_core::spell::FstDictionary;
-use harper_core::{Document, Dialect, Language};
+use harper_core::{Dialect, Document, Language};
 
 /// Test edge case: empty document
 #[test]

@@ -17,7 +17,7 @@ mod tests {
     use super::*;
     use crate::config::Config;
     use harper_core::{
-        DictWordMetadata, Document, Dialect, IgnoredLints, Language, linting::FlatConfig,
+        Dialect, DictWordMetadata, Document, IgnoredLints, Language, linting::FlatConfig,
         linting::Lint, spell::Dictionary,
     };
     use std::sync::Arc;
