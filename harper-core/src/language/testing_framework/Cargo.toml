@@ -6,5 +6,5 @@ edition = "2021"
 [workspace]
 
 [dependencies]
-harper-core = { path = "../../.." }
+harper-core = { path = "../../..", features = ["de"] }
 clap = { version = "4.0", features = ["derive"] }

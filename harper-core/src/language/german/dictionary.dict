@@ -1,4 +1,4 @@
-233542
+233558
 clara/~~N # proper noun, feminine name
 unordentlich/~~NJOQRSTUW # adjective and noun
 abspeisender/~~N # noun
@@ -11207,16 +11207,43 @@ groß/~~NJOQRSTUW # adjective and noun
 klein/~~NJOQRSTUW # adjective and noun
 neu/~~NJOQRSTUW # adjective and noun
 alt/~~JOQRSTUW # adjective old
-Mann/~~M # masculine noun man
-Frau/~~F # feminine noun woman
-Kind/~~N # neuter noun child
-Haus/~~N # neuter noun house
-Buch/~~N # neuter noun book
-Tisch/~~M # masculine noun table
-Stuhl/~~M # masculine noun chair
-Wasser/~~N # neuter noun water
-Luft/~~F # feminine noun air
-Feuer/~~N # neuter noun fire
+Mann/~~Mh # masculine noun man
+Frau/~~Fh # feminine noun woman
+Kind/~~Nh # neuter noun child
+Haus/~~Nh # neuter noun house
+Buch/~~Nh # neuter noun book
+Tisch/~~Mh # masculine noun table
+Stuhl/~~Mh # masculine noun chair
+Wasser/~~Nh # neuter noun water
+Wand/~~Fh # feminine noun wall
+Luft/~~Fh # feminine noun air
+Feuer/~~Nh # neuter noun fire
+Sitz/~~Mh # masculine noun seat
+Verwaltung/~~Fi # feminine noun administration
+Konzern/~~Mh # masculine noun corporation
+Ober/~~Nh # neuter noun upper/top
+Gesellschaft/~~Fh # feminine noun company/society
+Obergesellschaft/~~Fh # feminine noun parent company
+Fuß/~~Mh # masculine noun foot
+Bett/~~Nh # neuter noun bed
+Arbeit/~~Fi # feminine noun work
+Platz/~~Mh # masculine noun place
+Bild/~~Nh # neuter noun image
+Schirm/~~Mh # masculine noun screen
+Dampf/~~Mh # masculine noun steam
+Schiff/~~Nh # neuter noun ship
+Bund/~~Mo # masculine noun federation
+Tag/~~Mh # masculine noun day
+
+# Proper nouns
+Birkenstock/~~N # proper noun company name
+
+# Technical/Business terms
+börsennotiert/~~J # adjective stock-listed
+steuertaktisch/~~J # adjective tax-tactical
+Kanalinsel/~~Fh # feminine noun channel island
+Fußbett/~~Nh # neuter noun footbed
+Einlage/~~Fh # feminine noun insole
 
 
 # German root vocabulary - extracted from expanded dictionary
@@ -11298,7 +11325,7 @@ stumpf/~N # frequency: 9
 süß/~N # frequency: 9
 teil/~N # frequency: 9
 trüb/~N # frequency: 9
-unter/~N # frequency: 9
+unter/~~P # preposition
 verleih/~N # frequency: 9
 versuch/~N # frequency: 9
 wach/~N # frequency: 9
@@ -11376,7 +11403,7 @@ hall/~N # frequency: 8
 heilig/~J # adjective root, frequency: 8
 heiter/~N # frequency: 8
 hell/~N # frequency: 8
-hinter/~N # frequency: 8
+hinter/~~P # preposition
 ideal/~N # frequency: 8
 imperativ/~N # frequency: 8
 kalk/~N # frequency: 8
@@ -21264,7 +21291,7 @@ duplex/~~N # auto-added
 dur/~~N # auto-added
 durabel/~~N # auto-added
 durable/~~N # auto-added
-durch/~~N # auto-added
+durch/~~P # preposition
 durchs/~~N # auto-added
 durfte/~~N # auto-added
 durften/~~V # auto-added
@@ -32791,7 +32818,7 @@ nebeln/~~V # auto-added
 nebels/~~N # auto-added
 nebelst/~~N # auto-added
 nebelt/~~NX # auto-added
-neben/~~V # auto-added
+neben/~~P # preposition
 nebenan/~~N # auto-added
 neble/~~N # auto-added
 neblig/~~NX # auto-added
@@ -33329,7 +33356,7 @@ ohio/~~Nb # auto-added
 ohiotal/~~N # auto-added
 ohm/~~N # auto-added
 ohmsch/~~NYX # auto-added
-ohne/~~N # auto-added
+ohne/~~P # preposition
 ohnehin/~~N # auto-added
 oho/~~N # auto-added
 ohr/~~ZX # auto-added
@@ -36992,7 +37019,7 @@ seinen/~~V # auto-added
 seiner/~~I # pronoun of him/it (genitive)
 seines/~~N # auto-added
 seins/~~N # auto-added
-seit/~~NX # auto-added
+seit/~~P # preposition
 seitig/~~NX # auto-added
 sekans/~~N # auto-added
 sekret/~~NX # auto-added
@@ -39126,7 +39153,7 @@ volles/~~N # auto-added
 volley/~~N # auto-added
 volt/~~N # auto-added
 vom/~~N # auto-added
-vor/~~NY # auto-added
+vor/~~P # preposition
 vorab/~~N # auto-added
 voran/~~N # auto-added
 vorauf/~~N # auto-added
@@ -40417,7 +40444,7 @@ zürnt/~~NX # auto-added
 üb/~~Vcej # REPLACES üben
 übende/~~N # auto-added
 übens/~~N # auto-added
-über/~~M # auto-added
+über/~~P # preposition
 überaß/~~N # auto-added
 überm/~~N # auto-added
 übern/~~N # auto-added
@@ -120108,7 +120135,7 @@ zwirnerei/~~N # auto-added
 zwirnes/~~N # auto-added
 zwirntest/~~N # auto-added
 zwirntet/~~N # auto-added
-zwischen/~~Z # auto-added
+zwischen/~~P # preposition
 zwisten/~~V # auto-added
 zwistes/~~N # auto-added
 zwitscher/~~M # auto-added
@@ -232766,6 +232793,7 @@ Friesische/~~J # adjective
 Verdrängung/~~F # feminine noun
 Blütezeit/~~F # feminine noun
 Schulsprache/~~F # feminine noun
+Schuh/~~Mh # masculine noun shoe
 Heimatsprache/~~F # feminine noun
 Einwanderer/~~M # masculine noun
 Siedlungsgebiet/~~N # neuter noun
@@ -232869,6 +232897,7 @@ Sprache/~~F # feminine noun
 Welt/~~F # feminine noun
 Bezeichnung/~~F # feminine noun
 Herkunft/~~F # feminine noun
+Hersteller/~~Mh # masculine noun manufacturer
 Gruppe/~~F # feminine noun
 Glottonym/~~N # neuter noun
 Ableitung/~~F # feminine noun

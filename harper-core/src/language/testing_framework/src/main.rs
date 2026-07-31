@@ -1,5 +1,6 @@
 use clap::Parser;
 use harper_core::spell::{MutableDictionary, Dictionary};
+use harper_core::spell::rune::AttributeList;
 use harper_core::DictWordMetadata;
 use std::fs;
 use std::path::PathBuf;
@@ -83,11 +84,49 @@ fn main() {
     println!("📝 Loading annotations from: {}", annotations_path.display());
     
     // Create dictionary from files
-    let dict = match MutableDictionary::from_rune_files(&dict_content, &annotations_content) {
-        Ok(dict) => dict,
-        Err(e) => {
-            eprintln!("❌ Failed to create dictionary: {}", e);
-            return;
+    let dict = if args.language == "german" {
+        // Use German-specific dictionary loading which includes compound generation
+        use harper_core::spell::rune::parse_word_list;
+        use harper_core::spell::word_map::WordMap;
+        use harper_core::language::german::spell::compound;
+        
+        let word_list = match parse_word_list(&dict_content) {
+            Ok(word_list) => word_list,
+            Err(e) => {
+                eprintln!("❌ Failed to parse word list: {}", e);
+                return;
+            }
+        };
+        
+        let attr_list = match AttributeList::parse(&annotations_content) {
+            Ok(attr_list) => attr_list,
+            Err(e) => {
+                eprintln!("❌ Failed to parse attribute list: {}", e);
+                return;
+            }
+        };
+        
+        // Create word map with standard expansion
+        let mut word_map = WordMap::default();
+        attr_list.expand_annotated_words(word_list.clone(), &mut word_map);
+        
+        // Generate German compound words
+        compound::generate_compound_words(&word_list, &mut word_map);
+        
+        // Convert to MutableDictionary
+        let mut dict = MutableDictionary::new();
+        for entry in word_map.into_iter() {
+            dict.append_word(entry.canonical_spelling, entry.metadata);
+        }
+        
+        dict
+    } else {
+        match MutableDictionary::from_rune_files(&dict_content, &annotations_content) {
+            Ok(dict) => dict,
+            Err(e) => {
+                eprintln!("❌ Failed to create dictionary: {}", e);
+                return;
+            }
         }
     };
     
