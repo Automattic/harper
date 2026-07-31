@@ -8,6 +8,39 @@ Compile-time plugin architecture. Each language implements the `LanguageModule` 
 - **Build System**: Discovers languages via `config.toml`, generates all integration code
 - **Feature Flags**: Optional languages use `#[cfg(feature)]` for conditional compilation
 - **Generated Code**: `mod.rs`, `languages.rs`, `registry.rs`, `dialects/dialect_flags.rs`
+- **Multilingual Feature**: The entire language module system is gated behind the `multilingual` feature flag in `harper-core/Cargo.toml`
+
+## Feature Flag Architecture
+
+The language module system uses a hierarchical feature flag structure:
+
+```toml
+# In harper-core/Cargo.toml:
+[features]
+# Master feature that enables all language support
+multilingual = ["de", "pt", "sk", "pl"]
+
+# Individual language features
+de = []
+pt = []
+sk = []
+pl = []
+
+# Legacy convenience feature (still supported)
+all-languages = ["multilingual"]
+```
+
+When the `multilingual` feature is **disabled**:
+- The `language` module in `harper-core` does not exist
+- English uses its original implementation (`dict_word_metadata.rs`, `language_detection.rs`)
+- This ensures clean merges from master branch
+
+When the `multilingual` feature is **enabled**:
+- The entire language module system is available
+- English is accessible both through original types and the `Language` enum
+- All configured languages (de, pt, sk, pl) are available
+
+## Configuration
 
 ## Configuration
 
@@ -58,8 +91,10 @@ Files are embedded via `include_str!()`. Structure must match exactly.
 3. Create `config.toml` with language metadata
 4. Add feature to `harper-core/Cargo.toml`: `<lang> = []`
 5. Forward feature in dependent Cargo.toml files (harper-cli, harper-ls, harper-wasm) as needed
+   - For full language support, forward the `multilingual` feature: `harper-core = { ..., features = ["multilingual"] }`
 
 **Note**: Feature forwarding is intentional. Different binaries can enable different language sets (e.g., CLI with all languages, Chrome plugin with English only).
+**Note**: To enable all language support, use the `multilingual` feature which includes de, pt, sk, and pl.
 
 ## Rapid Iteration Without Recompilation
 
@@ -100,6 +135,7 @@ just language-test-examples german
 
 These recipes work for any standard language (german, portuguese, slovak, etc.).
 Note: English is a special case - some recipes may not work for English.
+Note: When the multilingual feature is disabled, English uses its original implementation and the language module is not available.
 
 ## Complete Language Development Toolkit
 
