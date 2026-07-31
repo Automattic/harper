@@ -29,11 +29,16 @@ def analyze_language_coverage(language):
     annotations_path = f"{base_path}/annotations.json"
     test_framework = "harper-core/src/language/testing_framework/target/release/harper-lang-test"
     
-    # Check if files exist
+    # Check if files exist - try /tmp as fallback for expanded dictionary
     if not os.path.exists(expanded_dict_path):
-        print(f"❌ Expanded dictionary not found: {expanded_dict_path}")
-        print(f"   Expected: {language}_dictionary.dict.gz in {base_path}")
-        return
+        fallback_path = f"/tmp/{language}_dictionary.dict.gz"
+        if os.path.exists(fallback_path):
+            expanded_dict_path = fallback_path
+            print(f"📁 Using fallback expanded dictionary: {expanded_dict_path}")
+        else:
+            print(f"❌ Expanded dictionary not found: {expanded_dict_path}")
+            print(f"   Expected: {language}_dictionary.dict.gz in {base_path} or /tmp/")
+            return
     
     if not os.path.exists(harper_dict_path):
         print(f"❌ Harper dictionary not found: {harper_dict_path}")
@@ -83,11 +88,18 @@ def analyze_language_coverage(language):
     print("🧪 Testing words with Harper...")
     
     recognized = 0
+    all_unknown_words = []
     batch_size = 100
+    total_batches = (len(test_words) + batch_size - 1) // batch_size
     
-    for i in range(0, len(test_words), batch_size):
+    for batch_idx in range(total_batches):
+        i = batch_idx * batch_size
         batch = test_words[i:i+batch_size]
         text = ' '.join(batch)
+        
+        # Progress indicator
+        if (batch_idx + 1) % 10 == 0 or batch_idx == 0:
+            print(f"   Progress: batch {batch_idx + 1}/{total_batches} ({((batch_idx + 1) / total_batches * 100):.0f}%)")
         
         try:
             result = subprocess.run([
@@ -104,25 +116,27 @@ def analyze_language_coverage(language):
                 # Parse unknown words
                 lines = result.stdout.split('\n')
                 unknown_section = False
-                unknown_count = 0
+                batch_unknown_words = []
                 for line in lines:
                     if "Unknown words:" in line:
                         unknown_section = True
                         continue
                     if unknown_section and line.strip().startswith('-'):
-                        unknown_count += 1
+                        word = line.strip()[1:].strip()
+                        batch_unknown_words.append(word)
                     elif unknown_section and not line.strip():
                         break
-                recognized += (len(batch) - unknown_count)
+                all_unknown_words.extend(batch_unknown_words)
+                recognized += (len(batch) - len(batch_unknown_words))
             elif result.returncode != 0:
                 # If there's an error, assume none recognized
-                print(f"   ⚠️  Error in batch {i//batch_size + 1}: {result.stderr[:100]}")
+                print(f"   ⚠️  Error in batch {batch_idx + 1}: {result.stderr[:100]}")
                 
         except subprocess.TimeoutExpired:
-            print(f"   ⚠️  Timeout testing batch {i//batch_size + 1}")
+            print(f"   ⚠️  Timeout testing batch {batch_idx + 1}")
             continue
         except Exception as e:
-            print(f"   ❌ Error testing batch {i//batch_size + 1}: {e}")
+            print(f"   ❌ Error testing batch {batch_idx + 1}: {e}")
             continue
     
     coverage_percentage = (recognized / len(test_words)) * 100 if test_words else 0
@@ -131,6 +145,14 @@ def analyze_language_coverage(language):
     print(f"   Words Tested: {len(test_words):,}")
     print(f"   Words Recognized: {recognized:,}")
     print(f"   Coverage: {coverage_percentage:.1f}%")
+    
+    # Output sample of unrecognized words
+    if all_unknown_words:
+        print(f"\n📋 Sample of Unrecognized Words ({len(all_unknown_words)} total):")
+        sample_size = min(20, len(all_unknown_words))
+        unknown_sample = random.sample(all_unknown_words, sample_size)
+        for i, word in enumerate(unknown_sample, 1):
+            print(f"   {i:2d}. {word}")
     
     # Dictionary statistics
     print(f"\n📚 Dictionary Statistics")

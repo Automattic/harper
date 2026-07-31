@@ -45,8 +45,16 @@ language-efficiency language:
 	echo "📊 {{language}} Language Efficiency Analysis"
 	echo "==========================================="
 	base_words=$(grep -c "/" "harper-core/src/language/{{language}}/dictionary.dict" || echo 0); \
+	# Check in language directory first, then /tmp as fallback
 	if [ -f "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" ]; then \
-		expanded_words=$(zcat "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" | wc -l); \
+		expanded_dict="harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz"; \
+	elif [ -f "/tmp/{{language}}_dictionary.dict.gz" ]; then \
+		expanded_dict="/tmp/{{language}}_dictionary.dict.gz"; \
+	else \
+		expanded_dict=""; \
+	fi; \
+	if [ -n "${expanded_dict}" ]; then \
+		expanded_words=$(zcat "${expanded_dict}" | wc -l); \
 		echo "   Base words: ${base_words}"; \
 		echo "   Expanded dictionary: ${expanded_words} words"; \
 		if [ "${base_words}" -gt 0 ] && [ "${expanded_words}" -gt 0 ]; then \
