@@ -1,8 +1,7 @@
 //! English dialects.
 //!
-//! This module provides type aliases to the original English dialect types
-//! from dict_word_metadata.rs to maintain compatibility with the master branch
-//! while allowing English to also be a LanguageModule.
+//! This module provides the original English dialect types from dict_word_metadata.rs
+//! to integrate with the language module system.
 
 use crate::Document;
 use crate::dict_word_metadata::{Dialect, DialectFlags};

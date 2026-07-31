@@ -3,7 +3,7 @@
 //! These tests verify that the language detection system works correctly
 //! for various real-world scenarios.
 
-use harper_core::EnglishDialect;
+use harper_core::Dialect;
 use harper_core::language::languages::Language;
 use harper_core::language::registry::detect_language;
 use harper_core::spell::FstDictionary;
@@ -13,22 +13,22 @@ use harper_core::language::german::dialects::GermanDialect;
 
 fn test_detection(text: &str, expected_language: Language) {
     let dict = FstDictionary::curated();
-    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
+    let detected = detect_language(text, &dict, Language::English(Dialect::American));
     assert_eq!(detected, expected_language, "Failed for text: {}", text);
 }
 
 #[test]
 fn test_empty_file_defaults_to_english() {
     let dict = FstDictionary::curated();
-    let detected = detect_language("", &dict, Language::English(EnglishDialect::American));
-    assert_eq!(detected, Language::English(EnglishDialect::American));
+    let detected = detect_language("", &dict, Language::English(Dialect::American));
+    assert_eq!(detected, Language::English(Dialect::American));
 }
 
 #[test]
 fn test_very_short_text_defaults_to_english() {
-    test_detection("Hi", Language::English(EnglishDialect::American));
-    test_detection("Hello", Language::English(EnglishDialect::American));
-    test_detection("Test", Language::English(EnglishDialect::American));
+    test_detection("Hi", Language::English(Dialect::American));
+    test_detection("Hello", Language::English(Dialect::American));
+    test_detection("Test", Language::English(Dialect::American));
 }
 
 #[test]
@@ -76,18 +76,18 @@ fn test_pure_english() {
     test_detection(
         "The dog plays in the garden. The cat sleeps on the sofa. \
          The car is very fast and the bird sings in the tree.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
     test_detection(
         "This is a comprehensive guide to using the new machine. \
          We have been working on this project for several months. \
          The results have been excellent and we are very pleased.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
     test_detection(
         "The man goes to work. The woman stays at home. \
          The children play in the park. We are eating lunch now.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
 }
 
@@ -120,7 +120,7 @@ fn test_code_blocks_should_not_confuse_detection() {
     // This test shows the current behavior: English title + bash commands outweigh short German prose
     test_detection(
         "# German Guide\n\n```bash\ncd /home/user\nmkdir test\n```\n\nDer Hund spielt im Garten.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
 }
 
@@ -151,7 +151,7 @@ fn test_english_pronouns_and_articles() {
     test_detection(
         "I go to school. You are my friend. \
          He is at home. We are together.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
 }
 
@@ -199,7 +199,7 @@ Please follow these steps:
 The dog plays in the garden. The cat sleeps on the sofa.
 "#;
 
-    test_detection(english_doc, Language::English(EnglishDialect::American));
+    test_detection(english_doc, Language::English(Dialect::American));
 }
 
 #[test]
@@ -254,7 +254,7 @@ If the program doesn't start, please check:
 3. Configuration
 "#;
 
-    test_detection(tech_english, Language::English(EnglishDialect::American));
+    test_detection(tech_english, Language::English(Dialect::American));
 }
 
 #[test]
@@ -291,11 +291,7 @@ fn test_performance_long_document() {
     let dict = FstDictionary::curated();
 
     let start = std::time::Instant::now();
-    let detected = detect_language(
-        &long_german,
-        &dict,
-        Language::English(EnglishDialect::American),
-    );
+    let detected = detect_language(&long_german, &dict, Language::English(Dialect::American));
     let duration = start.elapsed();
 
     assert_eq!(detected, Language::German(GermanDialect::Standard));
@@ -308,14 +304,14 @@ fn test_performance_long_document() {
 
 #[test]
 fn test_edge_case_single_word() {
-    test_detection("Hund", Language::English(EnglishDialect::American)); // Too short
-    test_detection("Dog", Language::English(EnglishDialect::American)); // Too short
+    test_detection("Hund", Language::English(Dialect::American)); // Too short
+    test_detection("Dog", Language::English(Dialect::American)); // Too short
 }
 
 #[test]
 fn test_edge_case_numbers_and_punctuation() {
-    test_detection("123 456 789", Language::English(EnglishDialect::American)); // Numbers only
-    test_detection("... --- !!!", Language::English(EnglishDialect::American)); // Punctuation only
+    test_detection("123 456 789", Language::English(Dialect::American)); // Numbers only
+    test_detection("... --- !!!", Language::English(Dialect::American)); // Punctuation only
 }
 
 #[test]
@@ -331,6 +327,6 @@ fn test_german_common_phrases() {
 fn test_english_common_phrases() {
     test_detection(
         "Good morning! How are you? Thank you, I'm fine.",
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
     );
 }

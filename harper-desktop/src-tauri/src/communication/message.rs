@@ -34,7 +34,7 @@ pub enum Response {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use harper_core::EnglishDialect;
+    use harper_core::Dialect;
 
     #[test]
     fn request_serializes_as_json() {
@@ -189,7 +189,7 @@ mod tests {
     #[test]
     fn dialect_response_serializes_as_json() {
         let response = Response::GetDialect {
-            dialect: Language::English(EnglishDialect::British),
+            dialect: Language::English(Dialect::British),
         };
         let encoded = serde_json::to_string(&response).unwrap();
         let decoded: Response = serde_json::from_str(&encoded).unwrap();
@@ -197,7 +197,7 @@ mod tests {
         assert!(matches!(
             decoded,
             Response::GetDialect {
-                dialect: Language::English(EnglishDialect::British)
+                dialect: Language::English(Dialect::British)
             }
         ));
     }

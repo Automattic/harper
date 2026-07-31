@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use harper_core::EnglishDialect;
+use harper_core::Dialect;
 use harper_core::language::languages::Language;
 use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
@@ -30,11 +30,11 @@ fn try_get_dialect_override(path: &Path) -> Option<Language> {
         .filter_map(|abbr| {
             let upper = abbr.to_ascii_uppercase();
             match upper.as_str() {
-                "US" => Some(Language::English(EnglishDialect::American)),
-                "CA" => Some(Language::English(EnglishDialect::Canadian)),
-                "AU" => Some(Language::English(EnglishDialect::Australian)),
-                "GB" => Some(Language::English(EnglishDialect::British)),
-                "IN" => Some(Language::English(EnglishDialect::Indian)),
+                "US" => Some(Language::English(Dialect::American)),
+                "CA" => Some(Language::English(Dialect::Canadian)),
+                "AU" => Some(Language::English(Dialect::Australian)),
+                "GB" => Some(Language::English(Dialect::British)),
+                "IN" => Some(Language::English(Dialect::Indian)),
                 #[cfg(feature = "de")]
                 "DE" => Some(Language::German(GermanDialect::Standard)),
                 #[cfg(feature = "de")]

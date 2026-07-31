@@ -1,7 +1,7 @@
 //! English language module implementation of LanguageModule trait.
 //!
-//! This implementation points to the existing English functionality in master
-//! to allow easy merging of upstream changes.
+//! This implementation points to the existing English functionality in harper-core
+//! to allow integration with the language module system.
 
 use std::sync::Arc;
 
@@ -19,7 +19,7 @@ use crate::language::module::LanguageModule;
 
 /// English language module implementing the LanguageModule trait.
 ///
-/// This delegates to the existing English functionality that exists in master.
+/// This delegates to the existing English functionality that exists in harper-core.
 pub struct EnglishModule;
 
 impl LanguageModule for EnglishModule {

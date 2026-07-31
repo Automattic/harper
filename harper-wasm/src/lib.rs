@@ -6,7 +6,7 @@ use std::io::Cursor;
 use std::sync::Arc;
 
 // Import types from harper-core language system
-use harper_core::EnglishDialect;
+use harper_core::Dialect as EnglishDialect;
 use harper_core::language::languages::Language as HarperLanguage;
 use harper_core::language::languages::parse_language;
 use harper_core::language::registry::{dictionary, new_curated_for_language};

@@ -2,7 +2,7 @@
 //!
 //! This module provides the EnglishDetector struct that implements the LanguageDetector
 //! trait for the language module system, using the original English detection functions
-//! from language_detection.rs to match the master branch structure.
+//! from language_detection.rs.
 
 use crate::Token;
 use crate::language::languages::Language;

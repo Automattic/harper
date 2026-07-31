@@ -40,8 +40,7 @@ mod tests {
         use harper_core::spell::FstDictionary;
 
         let text =
-            std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md")
-                .unwrap();
+            std::fs::read_to_string("src/language/german/test_sources/german_basic.md").unwrap();
         let _dict = FstDictionary::curated();
         let doc = Document::new_plain_english_curated(&text);
 

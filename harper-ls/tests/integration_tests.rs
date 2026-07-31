@@ -4,7 +4,7 @@
 
 use harper_core::language::registry::{detect_language, new_curated_for_language};
 use harper_core::spell::FstDictionary;
-use harper_core::{Document, EnglishDialect, Language};
+use harper_core::{Document, Dialect, Language};
 
 /// Test edge case: empty document
 #[test]
@@ -14,10 +14,10 @@ fn test_empty_document_workflow() {
     let text = "";
 
     // Should default to provided default dialect
-    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
+    let detected = detect_language(text, &dict, Language::English(Dialect::American));
     assert_eq!(
         detected,
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
         "Empty document should default to American English"
     );
 
@@ -25,7 +25,7 @@ fn test_empty_document_workflow() {
     let document = Document::new_curated(text, &harper_core::parsers::PlainEnglish);
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, Language::English(EnglishDialect::American));
+    let mut linter = new_curated_for_language(dict, Language::English(Dialect::American));
     let lints = linter.lint(&document);
 
     assert!(lints.is_empty(), "Empty document should have no lints");
@@ -40,10 +40,10 @@ fn test_very_short_text_workflow() {
     let text = "Hund";
 
     // Should default for very short text
-    let detected = detect_language(text, &dict, Language::English(EnglishDialect::American));
+    let detected = detect_language(text, &dict, Language::English(Dialect::American));
     assert_eq!(
         detected,
-        Language::English(EnglishDialect::American),
+        Language::English(Dialect::American),
         "Very short text should default to American English"
     );
 
@@ -51,7 +51,7 @@ fn test_very_short_text_workflow() {
     let document = Document::new_curated(text, &harper_core::parsers::PlainEnglish);
 
     use harper_core::linting::Linter;
-    let mut linter = new_curated_for_language(dict, Language::English(EnglishDialect::American));
+    let mut linter = new_curated_for_language(dict, Language::English(Dialect::American));
     let lints = linter.lint(&document);
 
     // May have lints but should not crash
@@ -73,7 +73,7 @@ mod german_tests {
 
         // Step 1: Auto-detect language
         let german_text = "der Hund spielt im Garten. das Auto ist schnell.";
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(german_text, &dict, default_lang);
 
         // Step 2: Get parser and dictionary for detected language
@@ -125,7 +125,7 @@ mod german_tests {
         let text = "Der Hunte ist im Gartens. dieser Satz ist klein.";
 
         // Auto-detect
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(text, &dict, default_lang);
 
         // Parse and lint
@@ -166,12 +166,12 @@ mod german_tests {
         let text = "Der Autor sagt: \"The quick brown fox jumps over the lazy dog.\"";
 
         // Should detect one language (both are acceptable for mixed content)
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(text, &dict, default_lang);
 
         assert!(
             detected.family() == LanguageFamily::German
-                || detected == Language::English(EnglishDialect::American),
+                || detected == Language::English(Dialect::American),
             "Should detect a language for mixed content, got {:?}",
             detected
         );
@@ -202,12 +202,12 @@ mod german_tests {
         let text = "The Kindergarten is in Germany. The Doppelgänger effect is strange.";
 
         // Should detect one language (both are acceptable for mixed content)
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(text, &dict, default_lang);
 
         assert!(
             detected.family() == LanguageFamily::German
-                || detected == Language::English(EnglishDialect::American),
+                || detected == Language::English(Dialect::American),
             "Should detect a language for mixed content, got {:?}",
             detected
         );
@@ -237,13 +237,13 @@ mod german_tests {
         let text = "Das Auto ist fast wie the car in the movie.";
 
         // Detect primary language
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(text, &dict, default_lang);
 
         // Should pick one (either is acceptable for mixed content)
         assert!(
             detected.family() == LanguageFamily::German
-                || detected == Language::English(EnglishDialect::American),
+                || detected == Language::English(Dialect::American),
             "Should detect a language, got {:?}",
             detected
         );
@@ -279,7 +279,7 @@ mod german_tests {
         let start = std::time::Instant::now();
 
         // Step 1: Detect
-        let default_lang = Language::English(EnglishDialect::American);
+        let default_lang = Language::English(Dialect::American);
         let detected = detect_language(text, &dict, default_lang);
 
         // Step 2: Parse

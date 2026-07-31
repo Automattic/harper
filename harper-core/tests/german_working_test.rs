@@ -119,9 +119,8 @@ mod tests {
         let dict = Arc::new(curated_german_dictionary());
         let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
-        let text =
-            std::fs::read_to_string("../../src/language/german/test_sources/german_basic.md")
-                .expect("test file missing");
+        let text = std::fs::read_to_string("src/language/german/test_sources/german_basic.md")
+            .expect("test file missing");
         let parser = Markdown::new(MarkdownOptions::default());
         let doc = Document::new(&text, &parser, &dict);
 
@@ -167,7 +166,7 @@ mod tests {
     fn lint_markdown_fixture(path: &str) -> Vec<String> {
         let dict = curated_german_dictionary();
         let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
-        let full_path = format!("../../src/language/german/test_sources/{}", path);
+        let full_path = format!("src/language/german/test_sources/{}", path);
         let text = std::fs::read_to_string(&full_path).expect("test file missing");
         let parser = Markdown::new(MarkdownOptions::default());
         let document = Document::new(&text, &parser, &dict);

@@ -15,6 +15,7 @@ mod ignored_lints;
 mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
+#[cfg(feature = "multilingual")]
 pub mod language;
 pub mod language_detection;
 mod lexing;
@@ -56,7 +57,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
-pub use language::english::dialects::EnglishDialect;
+#[cfg(feature = "multilingual")]
 pub use language::{Language, LanguageFamily};
 use linting::Lint;
 pub use linting::{LintGroup, Linter};
@@ -212,12 +213,12 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
-    use crate::linting::{Lint, create_test_pool};
-    use crate::remove_overlaps_map;
-    use crate::spell::FstDictionary;
     use crate::Span;
     use crate::expr::{AnchorStart, SequenceExpr};
+    use crate::linting::{Lint, create_test_pool};
     use crate::remove_lints_overlapping_expr;
+    use crate::remove_overlaps_map;
+    use crate::spell::FstDictionary;
     use crate::{
         Dialect, Document,
         linting::{LintGroup, Linter},

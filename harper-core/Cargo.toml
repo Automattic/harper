@@ -62,12 +62,15 @@ default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
 
-# Language support features
-# English is always included as the base language
+# Multilingual support (language module system with English + all new languages)
+# This feature gates the entire language module system
+multilingual = ["de", "pt", "sk", "pl"]
+
+# Individual language features
 de = []
 pt = []
 sk = []
 pl = []
 
 # Convenience feature to enable all supported languages
-all-languages = ["de", "pt", "sk", "pl"]
+all-languages = ["multilingual"]
