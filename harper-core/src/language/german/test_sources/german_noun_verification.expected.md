@@ -76,7 +76,7 @@ just language-test german --word "fehlgeschlagen" # Should show: Verb (PAST_PART
 
 1. **For manual testing:** Use `just language-test german "sentence here"`
 2. **For automated testing:** Create Rust tests in `tests/` directory
-3. **For continuous verification:** Run `just language-rust-test german`
+3. **For continuous verification:** Run `just language-dict-test german` or `just language-validate german`
 
 ## Improvement Workflow
 

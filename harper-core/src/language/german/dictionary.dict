@@ -1,4 +1,4 @@
-233558
+233400
 clara/~~N # proper noun, feminine name
 unordentlich/~~NJOQRSTUW # adjective and noun
 abspeisender/~~N # noun
@@ -11163,7 +11163,6 @@ sie/~~I # pronoun she/they
 es/~~I # pronoun it
 wir/~~I # pronoun we
 ihr/~~I # pronoun you (plural)
-sie/~~I # pronoun they
 Sie/~~I # pronoun You (formal, nominative/accusative)
 sein/~~V # verb to be
 hab/~~Vcj # REPLACES haben
@@ -15127,7 +15126,6 @@ idiomorph/~N # frequency: 6
 idiotisch/~J # adjective root, frequency: 6
 idyllisch/~J # adjective root, frequency: 6
 igel/~N # frequency: 6
-ihr/~~I # pronoun you (plural, genitive)
 ikonengleich/~N # frequency: 6
 ikonodul/~N # frequency: 6
 illegal/~N # frequency: 6
@@ -232761,7 +232759,6 @@ sogenannten/~~J # adjective
 abgerundet/~~g # past participle
 Grundzügen/~~N # neuter plural
 veränderte/~~J # adjective
-abgerundet/~~g # past participle
 Sprachraum/~~M # masculine noun
 Sprecher/~~M # masculine noun
 geschätzt/~~g # past participle
@@ -232887,18 +232884,14 @@ Historische/~~J # adjective
 Gegenwärtige/~~J # adjective
 Form/~~F # feminine noun
 Germanische/~~J # adjective
-Sprache/~~F # feminine noun
-Sprachraum/~~M # masculine noun
 Mittellage/~~F # feminine noun
 Gebiet/~~N # neuter noun
 Romanische/~~J # adjective
 Slawische/~~J # adjective
-Sprache/~~F # feminine noun
 Welt/~~F # feminine noun
 Bezeichnung/~~F # feminine noun
 Herkunft/~~F # feminine noun
 Hersteller/~~Mh # masculine noun manufacturer
-Gruppe/~~F # feminine noun
 Glottonym/~~N # neuter noun
 Ableitung/~~F # feminine noun
 Volk/~~N # neuter noun
@@ -232908,7 +232901,6 @@ Ethnisch/~~J # adjective
 Volksname/~~M # masculine noun
 Karolingerzeit/~~F # feminine noun
 Pränationale/~~J # adjective
-Standardsprache/~~F # feminine noun
 Nationalstaat/~~M # masculine noun
 Bewusstsein/~~N # neuter noun
 Zusammengehörigkeit/~~F # feminine noun
@@ -232923,14 +232915,12 @@ Verkehrsverhältnis/~~N # neuter noun
 Siedlungsverhältnis/~~N # neuter noun
 Zusammenschreibung/~~F # feminine noun
 Landesbezeichnung/~~F # feminine noun
-Sprachraum/~~M # masculine noun
 Spätmittelhochdeutsch/~~N # neuter noun
 Durchsetzung/~~F # feminine noun
 Synodenbericht/~~M # masculine noun
 Nuntius/~~M # masculine noun
 Päpstliche/~~J # adjective
 Konziliarsplenum/~~N # neuter noun
-Klerus/~~M # masculine noun
 Latein/~~N # neuter noun
 Gegenüberstellung/~~F # feminine noun
 Altenglische/~~J # adjective
@@ -232950,12 +232940,10 @@ Chinesisch/~~J # adjective
 Vietnamesisch/~~J # adjective
 Japanisch/~~J # adjective
 Koreanisch/~~J # adjective
-Latein/~~N # neuter noun
 Nordsamisch/~~J # adjective
 Taiwanisch/~~J # adjective
 Sachsen/~~N # neuter noun
 Niedersächsisch/~~J # adjective
-Sprachraum/~~M # masculine noun
 Estnisch/~~J # adjective
 Finnisch/~~J # adjective
 Inarisamisch/~~J # adjective
@@ -232971,13 +232959,11 @@ Fremde/~~J # adjective
 Westliche/~~J # adjective
 Griechisch/~~J # adjective
 Barbar/~~M # masculine noun
-Ausnahme/~~F # feminine noun
 Mazedonisch/~~J # adjective
 Ungarisch/~~J # adjective
 Kasachisch/~~J # adjective
 Rumänisch/~~J # adjective
 Entlehnung/~~F # feminine noun
-Verbreitung/~~F # feminine noun
 Renaissance/~~F # feminine noun
 Englisch/~~J # adjective
 Außereuropäische/~~J # adjective
@@ -232989,31 +232975,23 @@ Grenze/~~F # feminine noun
 Welschland/~~N # neuter noun
 Frankreich/~~N # neuter noun
 Italien/~~N # neuter noun
-Verbreitung/~~F # feminine noun
-Französisch/~~J # adjective
 Arabisch/~~J # adjective
 Österreich/~~N # neuter noun
 Almāniyya/~~F # feminine noun
 Baskisch/~~J # adjective
 Bretonisch/~~J # adjective
-Französisch/~~J # adjective
 Galicisch/~~J # adjective
-Katalanisch/~~J # adjective
 Kornisch/~~J # adjective
-Korsisch/~~J # adjective
 Kurdisch/~~J # adjective
 Lingala/~~N # neuter noun
 Persisch/~~J # adjective
 Portugiesisch/~~J # adjective
-Spanisch/~~J # adjective
 Tetum/~~N # neuter noun
 Türkisch/~~J # adjective
-Walisisch/~~J # adjective
 Almanisch/~~J # adjective
 Albanisch/~~J # adjective
 Armenisch/~~J # adjective
 Bulgarisch/~~J # adjective
-Englisch/~~J # adjective
 Esperanto/~~N # neuter noun
 Georgisch/~~J # adjective
 Hebräisch/~~J # adjective
@@ -233021,19 +232999,15 @@ Hindi/~~N # neuter noun
 Ido/~~N # neuter noun
 Indonesisch/~~J # adjective
 Interlingua/~~F # feminine noun
-Irisch/~~J # adjective
 Kiswahili/~~N # neuter noun
 Manx/~~N # neuter noun
-Mazedonisch/~~J # adjective
 Mongolisch/~~J # adjective
 Neugriechisch/~~J # adjective
-Rumänisch/~~J # adjective
 Schottisch-Gälisch/~~J # adjective
 Thai/~~N # neuter noun
 Tibetisch/~~J # adjective
 Aschkenas/~~M # masculine noun
 Mittelalterliche/~~J # adjective
-Bezeichnung/~~F # feminine noun
 Deutschsprachige/~~J # adjective
 Länder/~~N # neuter plural
 Jatwingisch/~~J # adjective
@@ -233061,7 +233035,6 @@ Seiteninformation/~~F # feminine noun
 Zitierhilfe/~~F # feminine noun
 Kurzlink/~~M # masculine noun
 Legacy-Parser/~~M # masculine noun
-Drucken/~~N # neuter noun
 Exportieren/~~N # neuter noun
 PDF/~~N # neuter noun
 Herunterladen/~~N # neuter noun
@@ -233081,29 +233054,18 @@ Objekt/~~N # neuter noun
 Datenrepositorium/~~N # neuter noun
 Hauptartikel/~~M # masculine noun
 Definition/~~F # feminine noun
-Glottonym/~~N # neuter noun
 Etymologie/~~F # feminine noun
 Germanisch/~~J # adjective
 Urgermanische/~~J # adjective
-Sprache/~~F # feminine noun
 Rekonstruktion/~~F # feminine noun
-Sprachwissenschaft/~~F # feminine noun
-Althochdeutsch/~~N # neuter noun
 Thiota/~~F # feminine noun
 Thiot/~~N # neuter noun
 Adjektiv/~~N # neuter noun
 Thiutisk/~~J # adjective
-Mittelhochdeutsch/~~N # neuter noun
 Diutisch/~~J # adjective
 Tiusch/~~J # adjective
-Tiusch/~~J # adjective
-Entwicklung/~~F # feminine noun
-Volk/~~N # neuter noun
 Zugehörigkeit/~~F # feminine noun
-Gegenüberstellung/~~F # feminine noun
-Romanische/~~J # adjective
 Bevölkerung/~~F # feminine noun
-Latein/~~N # neuter noun
 Parallele/~~J # adjective
 Bildung/~~F # feminine noun
 Gotisch/~~J # adjective
@@ -233111,16 +233073,10 @@ Adverb/~~N # neuter noun
 Altgriechisch/~~J # adjective
 Ausdruck/~~M # masculine noun
 Ethnikós/~~J # adjective
-Heidnisch/~~J # adjective
 Gentīlis/~~J # adjective
-Lateinische/~~J # adjective
-Form/~~F # feminine noun
 Theodisce/~~J # adjective
-Synodenbericht/~~M # masculine noun
-Nuntius/~~M # masculine noun
 Georg/~~M # masculine noun
 Ostia/~~F # feminine noun
-Konziliarsplenum/~~N # neuter noun
 Kapitel/~~N # neuter noun
 Lauter/~~J # adjective
 Stimme/~~F # feminine noun
@@ -233130,51 +233086,22 @@ Volkssprache/~~F # feminine noun
 Altfränkische/~~J # adjective
 Sprachbezeichnung/~~F # feminine noun
 Amtliche/~~J # adjective
-Bezeichnung/~~F # feminine noun
-Karolingerzeit/~~F # feminine noun
 Spätmittelhochdeutsch/~~J # adjective
-Durchsetzung/~~F # feminine noun
 Sprachgewohnheit/~~F # feminine noun
 Oberdeutsche/~~J # adjective
 Schreibsprache/~~F # feminine noun
 Süddeutschland/~~N # neuter noun
-Österreich/~~N # neuter noun
 Achtzehnte/~~J # adjective
 Jahrhundert/~~N # neuter noun
-Zusammenschreibung/~~F # feminine noun
-Landesbezeichnung/~~F # feminine noun
-Spätmittelhochdeutsch/~~N # neuter noun
-Sprachraum/~~M # masculine noun
-Politische/~~J # adjective
 Gegebenheit/~~F # feminine noun
 Sprachgeographische/~~J # adjective
 Struktur/~~F # feminine noun
 Übereinstimmung/~~F # feminine noun
 Allgemeine/~~J # adjective
-Durchsetzung/~~F # feminine noun
-Pränationale/~~J # adjective
-Standardsprache/~~F # feminine noun
-Nationalstaat/~~M # masculine noun
 Sprachliche/~~J # adjective
-Selbstbezeichnung/~~F # feminine noun
-Ethnisch/~~J # adjective
-Volksname/~~M # masculine noun
-Regionalsprache/~~F # feminine noun
-Stammessprache/~~F # feminine noun
 Mündliche/~~J # adjective
 Schriftliche/~~J # adjective
-Eigenständigkeit/~~F # feminine noun
 Gliederung/~~F # feminine noun
-Verkehrsverhältnis/~~N # neuter noun
-Siedlungsverhältnis/~~N # neuter noun
-Zusammenschreibung/~~F # feminine noun
-Spätmittelalter/~~N # neuter noun
-Sprachraum/~~M # masculine noun
-Definition/~~F # feminine noun
-Althochdeutsch/~~N # neuter noun
-Mittelhochdeutsch/~~N # neuter noun
-Frühneuhochdeutsch/~~N # neuter noun
-Neuhochdeutsch/~~N # neuter noun
 Sprachstufe/~~F # feminine noun
 Unterteilung/~~F # feminine noun
 Sprachgeschichte/~~F # feminine noun
@@ -233183,13 +233110,9 @@ Hochdeutsche/~~J # adjective
 Lautverschiebung/~~F # feminine noun
 Konsonantensystem/~~N # neuter noun
 Niederdeutsche/~~J # adjective
-Dialekt/~~M # masculine noun
 Kontinentalwestgermanische/~~J # adjective
-Sprachgebiet/~~N # neuter noun
 Südosten/~~M # masculine noun
 Bairisch/~~J # adjective
-Monophthongierung/~~F # feminine noun
-Diphthongierung/~~F # feminine noun
 Vokalsystem/~~N # neuter noun
 Alemannisch/~~J # adjective
 Südwesten/~~M # masculine noun
@@ -233212,21 +233135,15 @@ Kaiser/~~M # masculine noun
 Beamte/~~M # masculine plural
 Verordnete/~~J # adjective
 Maximilianische/~~J # adjective
-Oberdeutsche/~~J # adjective
-Schreibsprache/~~F # feminine noun
 Maria/~~F # feminine noun
 Theresia/~~F # feminine noun
 Siebenjährige/~~J # adjective
 Krieg/~~M # masculine noun
-Normierung/~~F # feminine noun
-Ausgleich/~~M # masculine noun
 Grammatiker/~~M # masculine noun
-Achtzehnte/~~J # adjective
 Johann/~~M # masculine noun
 Christoph/~~J # adjective
 Adelung/~~M # masculine noun
 Wörterbuch/~~N # neuter noun
-Einfluss/~~M # masculine noun
 Zeitgenosse/~~M # masculine noun
 Lexikographie/~~F # feminine noun
 Jacob/~~M # masculine noun
@@ -233235,57 +233152,41 @@ Grimm/~~M # masculine noun
 Herausgabe/~~F # feminine noun
 Umfassende/~~J # adjective
 Überarbeitung/~~F # feminine noun
-Hochdeutsche/~~J # adjective
 Rechtschreibung/~~F # feminine noun
 Neunzehnte/~~J # adjective
-Jahrhundert/~~N # neuter noun
 Normiert/~~J # adjective
 Durchbruch/~~M # masculine noun
 Einheitsschreibung/~~F # feminine noun
 Orthographische/~~J # adjective
-Wörterbuch/~~N # neuter noun
 Konrad/~~M # masculine noun
 Duden/~~M # masculine noun
 Bibliographische/~~J # adjective
 Institut/~~N # neuter noun
 Grundlage/~~F # feminine noun
-Amtliche/~~J # adjective
-Rechtschreibung/~~F # feminine noun
 Erklärung/~~F # feminine noun
-Orthographische/~~J # adjective
 Konferenz/~~F # feminine noun
-Amtliche/~~J # adjective
 Status/~~M # masculine noun
 Erreichung/~~F # feminine noun
 Konkurrenzlos/~~J # adjective
-Wörterbuch/~~N # neuter noun
 Buchdruckerduden/~~M # masculine noun
-Herausgabe/~~F # feminine noun
-Bibliographische/~~J # adjective
-Institut/~~N # neuter noun
 Mitwirkung/~~F # feminine noun
 Nikolaus/~~M # masculine noun
 Wecklein/~~M # masculine noun
 Wörterverzeichnis/~~N # neuter noun
 Deutsche/~~J # adjective
-Rechtschreibung/~~F # feminine noun
 Nebst/~~P # preposition
 Ausgabe/~~F # feminine noun
 Einheitliche/~~J # adjective
 Schreibweise/~~F # feminine noun
 Preußische/~~J # adjective
 Kanzleien/~~F # feminine plural
-Amtliche/~~J # adjective
-Wörterverzeichnis/~~N # neuter noun
 Verwendung/~~F # feminine noun
 Preußen/~~N # neuter noun
 Abweichung/~~F # feminine noun
-Schreibweise/~~F # feminine noun
 Zulassung/~~F # feminine noun
 Mehrere/~~J # adjective
 Darstellung/~~F # feminine noun
 S-Laut/~~M # masculine noun
-Deutsche/~~J # adjective
 Schrift/~~F # feminine noun
 Fraktur/~~F # feminine noun
 Abänderung/~~F # feminine noun
@@ -233293,7 +233194,6 @@ Eigennamen/~~M # masculine plural
 Göthe/~~M # masculine noun
 Bismark/~~M # masculine noun
 Bismarck/~~M # masculine noun
-Deutscher/~~J # adjective
 Buchdrucker-Verein/~~M # masculine noun
 Reichsverband/~~M # masculine noun
 Österreichische/~~J # adjective
@@ -233301,61 +233201,37 @@ Buchdruckereibesitzer/~~M # masculine plural
 Verein/~~M # masculine noun
 Schweizerische/~~J # adjective
 Wunsch/~~M # masculine noun
-Buchdrucker-Verein/~~M # masculine noun
-Buchdruckerduden/~~M # masculine noun
-Buchdruckereibesitzer/~~M # masculine plural
 Rechtschreibreform/~~F # feminine noun
 Neunzehnhundertsechsundneunzig/~~N # neuter noun
 Vier/~~N # neuter noun
 Neun/~~N # neuter noun
 Sechs/~~N # neuter noun
-Neun/~~N # neuter noun
 Zweitausendsieben/~~N # neuter noun
-Sechs/~~N # neuter noun
-Hochdeutsche/~~J # adjective
 Aussprache/~~F # feminine noun
 Späte/~~J # adjective
-Neunzehnte/~~J # adjective
-Jahrhundert/~~N # neuter noun
 Regelungsversuch/~~M # masculine noun
 Orthoepie/~~F # feminine noun
 Theodor/~~M # masculine noun
 Siebs/~~M # masculine noun
 Aussprachewörterbuch/~~N # neuter noun
 Verbindlichkeit/~~F # feminine noun
-Erreichung/~~F # feminine noun
-Duden/~~M # masculine noun
-Rechtschreibung/~~F # feminine noun
-Niederdeutsche/~~J # adjective
 Schriftsprache/~~F # feminine noun
 Offiziell/~~r # adverb
-Normiert/~~J # adjective
-Beeinflussung/~~F # feminine noun
 Aufstellung/~~F # feminine noun
 Plattdeutsche/~~J # adjective
-Rechtschreibung/~~F # feminine noun
 Hamburg/~~N # neuter noun
-Wörterbuch/~~N # neuter noun
 Johannes/~~M # masculine noun
 Saß/~~M # masculine noun
-Einfluss/~~M # masculine noun
 Zentrale/~~J # adjective
 Lage/~~F # feminine noun
 Europa/~~N # neuter noun
-Jahrhundert/~~N # neuter noun
-Beeinflussung/~~F # feminine noun
-Sprache/~~F # feminine noun
 Mittelalter/~~N # neuter noun
-Lateinische/~~J # adjective
-Sprache/~~F # feminine noun
 Bedienung/~~F # feminine noun
 Alltägliche/~~J # adjective
 Wort/~~N # neuter noun
 Architektur/~~F # feminine noun
 Religion/~~F # feminine noun
 Kriegswesen/~~N # neuter noun
-Entlehnung/~~F # feminine noun
-Verdrängung/~~F # feminine noun
 Heilkundige/~~J # adjective
 Laachi/~~M # masculine noun
 Lachi/~~M # masculine noun
@@ -233363,7 +233239,6 @@ Schwedisch/~~J # adjective
 Läkare/~~M # masculine noun
 Bader/~~M # masculine noun
 Spätem/~~J # adjective
-Mittelalter/~~N # neuter noun
 Handel/~~M # masculine noun
 Finanzwesen/~~N # neuter noun
 Brutto/~~N # neuter noun
@@ -233377,14 +233252,9 @@ Cembalo/~~N # neuter noun
 Capo/~~N # neuter noun
 Bravo/~~N # neuter noun
 Dreißigjährige/~~J # adjective
-Krieg/~~M # masculine noun
 Hof/~~M # masculine noun
-Französisch/~~J # adjective
-Sprache/~~F # feminine noun
-Preußische/~~J # adjective
 König/~~M # masculine noun
 Beherrschung/~~F # feminine noun
-Deutsch/~~N # neuter noun
 Voltaire/~~M # masculine noun
 Soldat/~~M # masculine noun
 Pferd/~~N # neuter noun
@@ -233395,17 +233265,13 @@ Fremdsprachliche/~~J # adjective
 Lehnwort/~~N # neuter noun
 Textkorpus/~~M # masculine noun
 Anteil/~~M # masculine noun
-Niederländische/~~J # adjective
 Zwölfte/~~J # adjective
 Siebzehnte/~~J # adjective
-Jahrhundert/~~N # neuter noun
 Drei/~~N # neuter noun
-Vier/~~N # neuter noun
 Prozent/~~N # neuter noun
 Sprachbereich/~~M # masculine noun
 Prägung/~~F # feminine noun
 Seemannssprache/~~F # feminine noun
-Entlehnung/~~F # feminine noun
 Matrose/~~M # masculine noun
 Hängematte/~~F # feminine noun
 Harpune/~~F # feminine noun
@@ -233419,14 +233285,6 @@ Bückling/~~M # masculine noun
 Garnele/~~F # feminine noun
 Tanz/~~M # masculine noun
 Preis/~~M # masculine noun
-Französisch/~~J # adjective
-Einfluss/~~M # masculine noun
-Niederländische/~~J # adjective
-Beeinflussung/~~F # feminine noun
-Deutsch/~~N # neuter noun
-Sprachgebiet/~~N # neuter noun
-Slawische/~~J # adjective
-Sprache/~~F # feminine noun
 Jiddische/~~J # adjective
 Rotwelsch/~~N # neuter noun
 Meschugge/~~J # adjective
@@ -233435,8 +233293,6 @@ Schickse/~~F # feminine noun
 Schlamassel/~~M # masculine noun
 Zoff/~~M # masculine noun
 Arabische/~~J # adjective
-Einfluss/~~M # masculine noun
-Handel/~~M # masculine noun
 Botanik/~~F # feminine noun
 Orange/~~F # feminine noun
 Kaffee/~~M # masculine noun
@@ -233455,24 +233311,18 @@ Astronomie/~~F # feminine noun
 Almanach/~~M # masculine noun
 Zenit/~~M # masculine noun
 Rigel/~~M # masculine noun
-Mittelalter/~~N # neuter noun
 Kreuzzug/~~M # masculine noun
-Alltägliche/~~J # adjective
 Begriff/~~M # masculine noun
 Koffer/~~M # masculine noun
 Benzin/~~N # neuter noun
 Limonade/~~F # feminine noun
-Arabische/~~J # adjective
 Ursprung/~~M # masculine noun
 Mitte/~~F # feminine noun
 Zwanzigste/~~J # adjective
-Jahrhundert/~~N # neuter noun
 Verstärkung/~~F # feminine noun
 Spracheinfluss/~~M # masculine noun
 Englische/~~J # adjective
-Sprache/~~F # feminine noun
 Anglizismus/~~M # masculine noun
-Entwicklung/~~F # feminine noun
 Skeptisch/~~J # adjective
 Betrachtung/~~F # feminine noun
 Synonym/~~N # neuter noun
@@ -233490,7 +233340,6 @@ Unternehmen/~~N # neuter noun
 Arbeitnehmer/~~M # masculine noun
 Verhandlungssicher/~~J # adjective
 Unterdreißigjährige/~~J # adjective
-Gruppe/~~F # feminine noun
 Bewertung/~~F # feminine noun
 Gut/~~J # adjective
 Exzellent/~~J # adjective
@@ -233502,27 +233351,20 @@ Synchronisation/~~F # feminine noun
 Film/~~M # masculine noun
 Serie/~~F # feminine noun
 Untertitelung/~~F # feminine noun
-Original/~~N # neuter noun
 Englischsprachige/~~J # adjective
 Text/~~M # masculine noun
 Wahrung/~~F # feminine noun
 Sprachqualität/~~F # feminine noun
 Zuge/~~N # neuter noun
 Weltweite/~~J # adjective
-Handel/~~M # masculine noun
-Import/~~M # masculine noun
 Exotische/~~J # adjective
 Frucht/~~F # feminine noun
 Tier/~~N # neuter noun
-Auswanderer/~~M # masculine noun
 Siedlung/~~F # feminine noun
 Piranha/~~F # feminine noun
 Zahn-Fisch/~~M # masculine noun
 Tapir/~~M # masculine noun
 Tupi/~~N # neuter noun
-Sprache/~~F # feminine noun
-Erreichung/~~F # feminine noun
-Deutsch/~~N # neuter noun
 danke/~~V
 Arbeit/~~F
 Stelle/~~F

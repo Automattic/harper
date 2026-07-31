@@ -34,12 +34,11 @@ mod tests {
         // Test that we can attempt to get the dictionary
         // Note: The basic Polish dictionary may not load correctly yet
         // as it's just a placeholder for testing the architecture
-        let result = std::panic::catch_unwind(|| {
+        let _result = std::panic::catch_unwind(|| {
             let _dict = PolishModule::dictionary();
         });
         // For now, we just test that the module structure works
         // The actual dictionary loading will be implemented later
-        assert!(true, "Polish dictionary module structure is correct");
     }
 
     #[test]

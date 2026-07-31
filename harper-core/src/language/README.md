@@ -42,8 +42,6 @@ When the `multilingual` feature is **enabled**:
 
 ## Configuration
 
-## Configuration
-
 Each language requires `harper-core/src/language/<lang>/config.toml`:
 ```toml
 [language]
@@ -102,6 +100,8 @@ Files are embedded via `include_str!()`. Structure must match exactly.
 # Build the testing framework (once):
 just language-build
 
+**Note:** The testing framework requires the `multilingual` feature to be enabled in harper-core.
+
 # Test spell checking for any language:
 just language-test german "die freiheit ist wichtig"
 just language-test portuguese "a liberdade e importante"
@@ -120,10 +120,10 @@ just language-dict-test german
 ## Coverage and Efficiency Analysis
 
 ```bash
-# Analyze coverage against expanded dictionary (requires *.dict.gz file)
+# Analyze coverage against expanded dictionary (requires *.dict.gz file in language directory)
 just language-coverage german
 
-# Analyze efficiency (base words vs expanded coverage)
+# Analyze efficiency (base words vs expanded coverage, requires *.dict.gz file)
 just language-efficiency german
 
 # Compare Harper with hunspell spell checking
@@ -154,15 +154,6 @@ just language-meta-text <lang> "text to test"
 
 # Run basic dictionary tests
 just language-dict-test <lang>
-
-# Run Rust unit tests for a language
-just language-rust-test german
-
-# Run all Rust tests for standard languages
-just language-rust-test-all
-
-# Clean build artifacts
-just language-clean
 ```
 
 ## Enhanced Language Development Tools
@@ -194,9 +185,10 @@ just language-diff german portuguese
 - **Example**: `just language-stats german`
 
 ### Dictionary Comparison (`language-diff`)
-- **Purpose**: Compare dictionaries between two languages
-- **Features**: Find words unique to each language, compare common words with different flags, flag usage differences
-- **Example**: `just language-diff german portuguese`
+- **Purpose**: Compare dictionaries for the same language (different versions or dialects)
+- **Features**: Find words unique to each dictionary, compare common words with different flags, flag usage differences
+- **Example**: `just language-diff de_de de_at` (for dialect comparison)
+- **Note**: Not useful for comparing different languages (e.g., german vs portuguese)
 
 ## Automated Testing Framework
 
