@@ -4,6 +4,8 @@ import { Client, type Integration } from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
 import AppPickerModal from '../components/AppPickerModal.svelte';
 
+type IntegrationRow = Integration & { name: string };
+
 	const isWindows = navigator.userAgent.includes('Windows');
 
 let integrations: Integration[] = [];
