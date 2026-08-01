@@ -47,4 +47,4 @@ jobs:
         run: just check-desktop
         
       - name: Build Desktop App
-        run: just build-desktop-windows
+        run: just build-desktop-windows-unsigned
