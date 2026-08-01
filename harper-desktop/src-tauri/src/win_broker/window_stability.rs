@@ -38,7 +38,7 @@ fn nearly_equal(left: f64, right: f64) -> bool {
     (left - right).abs() <= WINDOW_FRAME_TOLERANCE
 }
 
-pub fn frontmost_window_frame_for_pid(pid: u32) -> Option<Rect> {
+pub fn foreground_window_frame_for_pid(pid: u32) -> Option<Rect> {
     let hwnd: HWND = unsafe { GetForegroundWindow() };
 
     if hwnd.is_invalid() {

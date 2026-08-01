@@ -19,13 +19,7 @@ impl Integration {
         ];
 
         #[cfg(windows)]
-        let ids: &[&str] = &[
-            "notepad.exe",
-            "notepad++.exe",
-            "slack.exe",
-            "discord.exe",
-            "applicationframehost.exe",
-        ];
+        let ids: &[&str] = &["notepad.exe"];
 
         #[cfg(not(any(target_os = "macos", windows)))]
         let ids: &[&str] = &[];

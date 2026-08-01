@@ -23,13 +23,13 @@ jobs:
           node-version: 22
           cache: 'pnpm'
       
-      - name: Rust Cache
-        uses: Swatinem/rust-cache@v2
-        
       - name: Install Rust
         uses: dtolnay/rust-toolchain@stable
         with:
           targets: x86_64-pc-windows-msvc
+          
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
           
       - name: Install just
         uses: taiki-e/install-action@just

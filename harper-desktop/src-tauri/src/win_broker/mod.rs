@@ -17,7 +17,7 @@ use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker}
 use crate::rect::ActionableLint;
 
 use self::window_stability::{
-    WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
+    WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, foreground_window_frame_for_pid,
     settled_window_state, window_frame_changed,
 };
 
@@ -65,7 +65,7 @@ impl WindowsBroker {
     }
 
     fn window_is_moving(&mut self, pid: u32) -> bool {
-        let Some(frame) = frontmost_window_frame_for_pid(pid) else {
+        let Some(frame) = foreground_window_frame_for_pid(pid) else {
             self.window_movement = None;
             return true;
         };

@@ -1,21 +1,24 @@
 use harper_core::linting::{Lint, Suggestion};
 use std::{cell::RefCell, collections::BTreeMap};
 use windows::{
-    Win32::Foundation::{HWND, RPC_E_CHANGED_MODE},
+    Win32::Foundation::RPC_E_CHANGED_MODE,
     Win32::System::Com::{
         CLSCTX_INPROC_SERVER, COINIT_MULTITHREADED, CoCreateInstance, CoInitializeEx, SAFEARRAY,
     },
-    Win32::System::Ole::{SafeArrayGetElement, SafeArrayGetLBound, SafeArrayGetUBound},
+    Win32::System::Ole::{
+        SafeArrayDestroy, SafeArrayGetElement, SafeArrayGetLBound, SafeArrayGetUBound,
+    },
     Win32::System::Variant::VARIANT,
     Win32::UI::Accessibility::{
         CUIAutomation, IUIAutomation, IUIAutomationCondition, IUIAutomationElement,
-        IUIAutomationTextPattern, IUIAutomationValuePattern, TextPatternRangeEndpoint_End,
-        TextPatternRangeEndpoint_Start, TextUnit_Character, TreeScope_Subtree,
-        UIA_ControlTypePropertyId, UIA_DocumentControlTypeId, UIA_EditControlTypeId,
-        UIA_TextPatternId, UIA_ValuePatternId,
+        IUIAutomationLegacyIAccessiblePattern, IUIAutomationTextPattern, IUIAutomationValuePattern,
+        TextPatternRangeEndpoint_End, TextPatternRangeEndpoint_Start, TextUnit_Character,
+        TreeScope_Subtree, UIA_ControlTypePropertyId, UIA_DocumentControlTypeId,
+        UIA_EditControlTypeId, UIA_LegacyIAccessiblePatternId, UIA_TextPatternId,
+        UIA_ValuePatternId,
     },
     Win32::UI::HiDpi::GetDpiForWindow,
-    core::BSTR,
+    core::{BSTR, PCWSTR},
 };
 
 use crate::rect::{ActionableLint, Rect};
@@ -96,11 +99,7 @@ fn collect_rects_for_element(
     let scale_factor = match unsafe { element.CurrentNativeWindowHandle() } {
         Ok(hwnd) if !hwnd.0.is_null() => {
             let dpi = unsafe { GetDpiForWindow(hwnd) };
-            if dpi > 0 {
-                dpi as f64 / 96.0
-            } else {
-                1.0
-            }
+            if dpi > 0 { dpi as f64 / 96.0 } else { 1.0 }
         }
         _ => 1.0,
     };
@@ -114,7 +113,9 @@ fn collect_rects_for_element(
 
     for (rule_name, lints) in organized_lints {
         for lint in lints {
-            let Some(rect) = text_range_rect(element, lint.span.start, lint.span.len(), scale_factor) else {
+            let Some(rect) =
+                text_range_rect(element, lint.span.start, lint.span.len(), scale_factor)
+            else {
                 continue;
             };
 
@@ -171,7 +172,12 @@ fn element_text(element: &IUIAutomationElement) -> Option<String> {
 }
 
 /// Returns screen-space bounds for a character range using TextPattern.
-fn text_range_rect(element: &IUIAutomationElement, start: usize, length: usize, scale_factor: f64) -> Option<Rect> {
+fn text_range_rect(
+    element: &IUIAutomationElement,
+    start: usize,
+    length: usize,
+    scale_factor: f64,
+) -> Option<Rect> {
     let pattern =
         unsafe { element.GetCurrentPatternAs::<IUIAutomationTextPattern>(UIA_TextPatternId) }
             .ok()?;
@@ -207,6 +213,7 @@ fn text_range_rect(element: &IUIAutomationElement, start: usize, length: usize, 
 
     let sa = unsafe { range.GetBoundingRectangles() }.ok()?;
     let values = unsafe { read_safearray_f64(sa) };
+    unsafe { SafeArrayDestroy(sa) }.ok();
 
     if values.len() < 4 {
         return None;
@@ -264,12 +271,22 @@ fn apply_suggestion_to_element(
     let mut chars: Vec<char> = source_text.chars().collect();
     suggestion.apply(lint.span, &mut chars);
     let updated: String = chars.into_iter().collect();
+    let bstr = BSTR::from(updated.as_str());
 
     if let Ok(pattern) =
         unsafe { element.GetCurrentPatternAs::<IUIAutomationValuePattern>(UIA_ValuePatternId) }
     {
-        let bstr = BSTR::from(updated.as_str());
         let _ = unsafe { pattern.SetValue(&bstr) };
+        return;
+    }
+
+    // Fallback for elements that expose TextPattern but not ValuePattern (e.g. multi-line editors).
+    if let Ok(pattern) = unsafe {
+        element.GetCurrentPatternAs::<IUIAutomationLegacyIAccessiblePattern>(
+            UIA_LegacyIAccessiblePatternId,
+        )
+    } {
+        let _ = unsafe { pattern.SetValue(PCWSTR(bstr.as_ptr())) };
     }
 }
 

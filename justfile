@@ -234,7 +234,7 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
   pnpm install
   pnpm tauri build -b nsis,msi
 
-
+# Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
   #!/usr/bin/env bash
   set -eo pipefail

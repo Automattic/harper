@@ -1,28 +1,28 @@
 use std::process::Command;
 
 pub fn application_icon_png(app_path: &str) -> Result<Vec<u8>, String> {
-    let script = format!(
-        r#"
+    // Path is passed via environment variable to avoid PowerShell string injection.
+    let script = r#"
 Add-Type -AssemblyName System.Drawing
-$target = "{app_path}"
-try {{
+$target = $env:HARPER_APP_PATH
+try {
     $icon = [System.Drawing.Icon]::ExtractAssociatedIcon($target)
-    if ($null -ne $icon) {{
+    if ($null -ne $icon) {
         $bmp = $icon.ToBitmap()
         $ms = New-Object System.IO.MemoryStream
         $bmp.Save($ms, [System.Drawing.Imaging.ImageFormat]::Png)
         Write-Output ([Convert]::ToBase64String($ms.ToArray()))
-    }}
-}} catch {{
+    }
+} catch {
     exit 1
-}}
-"#
-    );
+}
+"#;
 
     let output = Command::new("powershell")
         .arg("-NoProfile")
         .arg("-Command")
-        .arg(&script)
+        .arg(script)
+        .env("HARPER_APP_PATH", app_path)
         .output()
         .map_err(|e| format!("Failed to extract icon using PowerShell: {e}"))?;
 

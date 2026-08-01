@@ -8,19 +8,33 @@ $startMenuPaths = @(
     "$env:ProgramData\Microsoft\Windows\Start Menu\Programs",
     "$env:APPDATA\Microsoft\Windows\Start Menu\Programs"
 )
-$apps = Get-ChildItem -Path $startMenuPaths -Recurse -Filter *.lnk -ErrorAction SilentlyContinue | ForEach-Object {
-    $target = $shell.CreateShortcut($_.FullName).TargetPath
-    if ($target -match '\.exe$') {
-        [PSCustomObject]@{
-            Name = $_.BaseName
-            ExeName = [System.IO.Path]::GetFileName($target).ToLower()
-            Path = $target
-        }
-    }
-} | Group-Object ExeName | ForEach-Object {
-    $_.Group[0]
-}
-$apps | ConvertTo-Json -Depth 2
+
+$fromShortcuts = @(
+    Get-ChildItem -Path $startMenuPaths -Recurse -Filter *.lnk -ErrorAction SilentlyContinue |
+    ForEach-Object {
+        try {
+            $target = $shell.CreateShortcut($_.FullName).TargetPath
+            if ($target -match '\.exe$') {
+                [PSCustomObject]@{
+                    Name    = $_.BaseName
+                    ExeName = [System.IO.Path]::GetFileName($target).ToLower()
+                    Path    = $target
+                }
+            }
+        } catch {}
+    } |
+    Where-Object { $_ -ne $null }
+)
+
+# System executables that are always present but have no Start Menu shortcut.
+$systemApps = @(
+    [PSCustomObject]@{ Name = 'Notepad'; ExeName = 'notepad.exe'; Path = "$env:SystemRoot\System32\notepad.exe" },
+    [PSCustomObject]@{ Name = 'Paint';   ExeName = 'mspaint.exe'; Path = "$env:SystemRoot\System32\mspaint.exe"  }
+) | Where-Object { Test-Path $_.Path }
+
+$all = $fromShortcuts + @($systemApps)
+$apps = @($all | Where-Object { $_ } | Group-Object ExeName | ForEach-Object { $_.Group[0] })
+@($apps) | ConvertTo-Json -Depth 2
 "#;
 
 #[derive(serde::Deserialize, Debug, Clone)]
@@ -33,6 +47,7 @@ struct PsAppEntry {
     pub path: String,
 }
 
+// Built once at startup; new installs are visible only after a restart.
 static CATALOG_CACHE: OnceLock<Vec<PsAppEntry>> = OnceLock::new();
 
 fn get_app_catalog() -> &'static [PsAppEntry] {
@@ -68,7 +83,6 @@ pub fn search_apps(query: &str) -> Result<Vec<AppSearchResult>, String> {
         }
     }
 
-    // Sort alphabetically by name
     results.sort_by(|a, b| a.name.cmp(&b.name));
 
     Ok(results)

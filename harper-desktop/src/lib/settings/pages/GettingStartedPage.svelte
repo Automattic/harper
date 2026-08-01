@@ -33,7 +33,7 @@ let isLaunchingTextEdit = false;
 let testDriveError = '';
 
 const isWindows = navigator.userAgent.includes('Windows');
-const defaultAppBundleId = isWindows ? 'Microsoft.WindowsNotepad' : 'com.apple.TextEdit';
+const defaultAppBundleId = isWindows ? 'notepad.exe' : 'com.apple.TextEdit';
 const defaultAppName = isWindows ? 'Notepad' : 'TextEdit';
 
 $: defaultAppIntegration = integrations.find((item) => item.bundle_id === defaultAppBundleId);
@@ -296,7 +296,7 @@ function buildSetupSteps(
             </button>
           </div>
         {:else}
-          {#if accessibilityStatus !== "Granted"}
+          {#if !isWindows && accessibilityStatus !== "Granted"}
             <div class="warning-banner">
               <div class="big-mark amber">!</div>
               <div>
@@ -357,7 +357,7 @@ function buildSetupSteps(
                   <div class="detected-app">
                     <div class="app-tile" style="--app-tint: #b06a1b">A</div>
                     <div class="grow">
-                      <strong>Waiting for macOS</strong>
+                      <strong>Permission pending</strong>
                       <p>After granting access in System Settings, return here and recheck permission.</p>
                     </div>
                   </div>

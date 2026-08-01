@@ -4,9 +4,7 @@ import { Client, type Integration } from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
 import AppPickerModal from '../components/AppPickerModal.svelte';
 
-interface IntegrationRow extends Integration {
-	name: string;
-}
+	const isWindows = navigator.userAgent.includes('Windows');
 
 let integrations: Integration[] = [];
 let integrationApps: IntegrationRow[] = [];
@@ -184,7 +182,7 @@ function closeAppPicker() {
         disabled={isIntegrationsLoading || isIntegrationsSaving}
         on:click={() => (appPickerOpen = true)}
       >Add application...</button>
-      <span class="muted">Choose any app from your Applications folder.</span>
+      <span class="muted">{isWindows ? 'Choose any app installed on your computer.' : 'Choose any app from your Applications folder.'}</span>
     </div>
   </div>
 

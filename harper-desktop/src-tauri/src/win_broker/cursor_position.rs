@@ -1,5 +1,5 @@
 use windows::{
-    Win32::Foundation::{HWND, POINT},
+    Win32::Foundation::POINT,
     Win32::UI::HiDpi::GetDpiForWindow,
     Win32::UI::WindowsAndMessaging::{GetCursorPos, WindowFromPoint},
 };
@@ -12,11 +12,7 @@ pub fn cursor_position() -> Option<egui::Pos2> {
     let scale_factor = match unsafe { WindowFromPoint(point) } {
         hwnd if !hwnd.0.is_null() => {
             let dpi = unsafe { GetDpiForWindow(hwnd) };
-            if dpi > 0 {
-                dpi as f64 / 96.0
-            } else {
-                1.0
-            }
+            if dpi > 0 { dpi as f64 / 96.0 } else { 1.0 }
         }
         _ => 1.0,
     };

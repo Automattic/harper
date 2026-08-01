@@ -9,6 +9,8 @@ export let isSaving = false;
 export let close: () => void;
 export let add: (bundleId: string) => void;
 
+const isWindows = navigator.userAgent.includes('Windows');
+
 let searchResults: AppSearchResult[] = [];
 let isSearching = false;
 let debounceTimeout: number | null = null;
@@ -100,7 +102,7 @@ function submit() {
   >
     <div class="modal-head">
       <strong>Add application</strong>
-      <span>Enter the app bundle ID Harper should watch.</span>
+      <span>{isWindows ? 'Search for an app, or type the .exe filename to add it.' : 'Enter the app bundle ID Harper should watch.'}</span>
     </div>
     <div class="modal-search">
       <span class="settings-icon icon-search" aria-hidden="true"></span>
@@ -144,10 +146,10 @@ function submit() {
         {#if isDuplicate}
           <div class="empty">That application is already configured.</div>
         {:else}
-          <div class="empty">No matching apps found. Try typing the bundle ID directly (e.g., com.apple.TextEdit)</div>
+          <div class="empty">{isWindows ? 'No matching apps found. Try typing the .exe filename directly (e.g., notepad.exe).' : 'No matching apps found. Try typing the bundle ID directly (e.g., com.apple.TextEdit).'}</div>
         {/if}
       {:else}
-        <div class="empty">Search for an app by name, or enter the bundle ID directly.</div>
+        <div class="empty">{isWindows ? 'Search for an app by name, or type the .exe filename directly.' : 'Search for an app by name, or enter the bundle ID directly.'}</div>
       {/if}
     </div>
     <div class="modal-actions">
