@@ -79,6 +79,7 @@ pub struct AppSearchResult {
 /// currently no accessibility or cursor integration there.
 #[cfg(not(target_os = "macos"))]
 #[derive(Default)]
+#[allow(dead_code)]
 pub struct NoopBroker;
 
 #[cfg(not(target_os = "macos"))]

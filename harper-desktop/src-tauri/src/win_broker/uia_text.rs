@@ -1,7 +1,7 @@
 use harper_core::linting::{Lint, Suggestion};
 use std::{cell::RefCell, collections::BTreeMap};
 use windows::{
-    Win32::Foundation::RPC_E_CHANGED_MODE,
+    Win32::Foundation::{HWND, RPC_E_CHANGED_MODE},
     Win32::System::Com::{
         CLSCTX_INPROC_SERVER, COINIT_MULTITHREADED, CoCreateInstance, CoInitializeEx, SAFEARRAY,
     },
@@ -10,10 +10,11 @@ use windows::{
     Win32::UI::Accessibility::{
         CUIAutomation, IUIAutomation, IUIAutomationCondition, IUIAutomationElement,
         IUIAutomationTextPattern, IUIAutomationValuePattern, TextPatternRangeEndpoint_End,
-        TextPatternRangeEndpoint_Start, TextUnit_Character, TreeScope_Descendants,
+        TextPatternRangeEndpoint_Start, TextUnit_Character, TreeScope_Subtree,
         UIA_ControlTypePropertyId, UIA_DocumentControlTypeId, UIA_EditControlTypeId,
         UIA_TextPatternId, UIA_ValuePatternId,
     },
+    Win32::UI::HiDpi::GetDpiForWindow,
     core::BSTR,
 };
 
@@ -70,7 +71,7 @@ pub fn collect_rects(
         return Vec::new();
     };
 
-    let Ok(elements) = (unsafe { root.FindAll(TreeScope_Descendants, &condition) }) else {
+    let Ok(elements) = (unsafe { root.FindAll(TreeScope_Subtree, &condition) }) else {
         return Vec::new();
     };
 
@@ -92,6 +93,18 @@ fn collect_rects_for_element(
     lint_text: &mut LintCallback<'_>,
     rects: &mut Vec<ActionableLint>,
 ) {
+    let scale_factor = match unsafe { element.CurrentNativeWindowHandle() } {
+        Ok(hwnd) if !hwnd.0.is_null() => {
+            let dpi = unsafe { GetDpiForWindow(hwnd) };
+            if dpi > 0 {
+                dpi as f64 / 96.0
+            } else {
+                1.0
+            }
+        }
+        _ => 1.0,
+    };
+
     let text = match element_text(element) {
         Some(t) if !t.is_empty() => t,
         _ => return,
@@ -101,7 +114,7 @@ fn collect_rects_for_element(
 
     for (rule_name, lints) in organized_lints {
         for lint in lints {
-            let Some(rect) = text_range_rect(element, lint.span.start, lint.span.len()) else {
+            let Some(rect) = text_range_rect(element, lint.span.start, lint.span.len(), scale_factor) else {
                 continue;
             };
 
@@ -158,7 +171,7 @@ fn element_text(element: &IUIAutomationElement) -> Option<String> {
 }
 
 /// Returns screen-space bounds for a character range using TextPattern.
-fn text_range_rect(element: &IUIAutomationElement, start: usize, length: usize) -> Option<Rect> {
+fn text_range_rect(element: &IUIAutomationElement, start: usize, length: usize, scale_factor: f64) -> Option<Rect> {
     let pattern =
         unsafe { element.GetCurrentPatternAs::<IUIAutomationTextPattern>(UIA_TextPatternId) }
             .ok()?;
@@ -204,7 +217,12 @@ fn text_range_rect(element: &IUIAutomationElement, start: usize, length: usize) 
         return None;
     }
 
-    Some(Rect::new(x, y, w, h))
+    Some(Rect::new(
+        x / scale_factor,
+        y / scale_factor,
+        w / scale_factor,
+        h / scale_factor,
+    ))
 }
 
 /// Reads a SAFEARRAY of VT_R8 (f64) values into a Vec.

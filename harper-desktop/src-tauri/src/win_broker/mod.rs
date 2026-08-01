@@ -1,4 +1,5 @@
 mod app_catalog;
+mod app_icons;
 mod cursor_position;
 mod focused_window;
 mod uia_text;
@@ -6,7 +7,7 @@ mod window_stability;
 
 use harper_core::linting::Lint;
 use std::{
-    collections::BTreeMap,
+    collections::{BTreeMap, HashMap},
     sync::{Arc, Mutex},
     time::Instant,
 };
@@ -29,6 +30,7 @@ pub struct WindowsBroker {
     last_focused: Option<(u32, Instant)>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     window_movement: Option<WindowMovementState>,
+    application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
 }
 
 impl WindowsBroker {
@@ -37,6 +39,7 @@ impl WindowsBroker {
             last_focused: None,
             integrations,
             window_movement: None,
+            application_icon_cache: Mutex::new(HashMap::new()),
         }
     }
 
@@ -185,10 +188,33 @@ impl OsBroker for WindowsBroker {
     }
 
     fn system_integration_display_name(&self, app_id: &str) -> String {
-        app_catalog::app_display_name(app_id)
+        app_catalog::system_integration_display_name(app_id)
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
         app_catalog::search_apps(query)
+    }
+
+    fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
+        if let Some(icon_png) = self
+            .application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to read application icon cache: {error}"))?
+            .get(bundle_id)
+        {
+            return Ok(icon_png.clone());
+        }
+
+        let app_path = app_catalog::application_path_for_bundle_id(bundle_id)
+            .ok_or_else(|| format!("Could not find path for app: {bundle_id}"))?;
+
+        let icon_png = app_icons::application_icon_png(&app_path)?;
+
+        self.application_icon_cache
+            .lock()
+            .map_err(|error| format!("Failed to update application icon cache: {error}"))?
+            .insert(bundle_id.to_string(), icon_png.clone());
+
+        Ok(icon_png)
     }
 }
