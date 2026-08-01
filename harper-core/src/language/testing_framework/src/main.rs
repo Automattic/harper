@@ -6,6 +6,8 @@ use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
 
+mod coverage;
+
 /// Harper Language Testing Framework
 /// Loads dictionary and annotations from files and tests spell checking for any language
 #[derive(Parser, Debug)]
@@ -42,6 +44,18 @@ struct Args {
     /// Compare with hunspell spell checking
     #[arg(short, long, default_value_t = false)]
     hunspell: bool,
+
+    /// Run coverage analysis against expanded dictionary
+    #[arg(short, long, default_value_t = false)]
+    coverage: bool,
+
+    /// Path to the expanded dictionary file (for coverage analysis)
+    #[arg(short, long)]
+    expanded_dict: Option<PathBuf>,
+
+    /// Sample size for coverage analysis (default: 10000)
+    #[arg(short, long, default_value_t = 10000)]
+    sample_size: usize,
 }
 
 fn main() {
@@ -145,7 +159,23 @@ fn main() {
         check_word_metadata(&dict, &word);
     }
     
-    if args.hunspell {
+    if args.coverage {
+        // Determine expanded dictionary path
+        let expanded_dict_path = match args.expanded_dict {
+            Some(path) => path.to_string_lossy().to_string(),
+            None => format!("../../language/{}/{}_dictionary.dict.gz", args.language, args.language),
+        };
+
+        // Run coverage analysis with already-loaded dictionary
+        if let Err(e) = coverage::run_coverage_analysis_with_dict(
+            &args.language,
+            &dict,
+            &expanded_dict_path,
+            args.sample_size,
+        ) {
+            eprintln!("❌ Coverage analysis failed: {}", e);
+        }
+    } else if args.hunspell {
         compare_with_hunspell(&args.language, &dict, &args.text.clone().unwrap_or_default());
     } else if let Some(text) = args.text {
         spell_check_text(&dict, &text);
@@ -156,6 +186,7 @@ fn main() {
         println!("   --word \"word\"  Show metadata for a single word");
         println!("   --metadata       Show metadata for words in text");
         println!("   --hunspell       Compare with hunspell spell checking");
+        println!("   --coverage       Run coverage analysis against expanded dictionary");
     }
 }
 

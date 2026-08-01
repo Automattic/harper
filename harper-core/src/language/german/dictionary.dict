@@ -227,8 +227,6 @@ absteigendes/~~N # noun
 absteiger/~~N # noun
 absteigerIn/~~N # noun
 absteigerInnen/~~V # verb
-absteigerin/~~N # noun
-absteigerinnen/~~V # verb
 absteigern/~~N # noun
 absteigers/~~N # noun
 abstell/~~Vcej # REPLACES abstellen
@@ -977,7 +975,6 @@ abturnendem/~~N # noun
 abturnenden/~~V # verb
 abturnender/~~N # noun
 abturnendes/~~N # noun
-abturnendinnen/~~V # verb
 abtust/~~N # noun
 abtut/~~N # noun
 abtäte/~~F # feminine noun
@@ -1207,8 +1204,6 @@ abweichens/~~N # noun
 abweichler/~~N # noun
 abweichlerIn/~~N # noun
 abweichlerInnen/~~V # verb
-abweichlerin/~~N # noun
-abweichlerinnen/~~V # verb
 abweichlern/~~N # noun
 abweichlers/~~N # noun
 abweichung/~~F # feminine noun
@@ -3318,7 +3313,6 @@ achtjüngster/~~N # noun
 achtjüngstes/~~N # noun
 achtklässler/~~N # noun
 achtklässlerIn/~~N # noun
-achtklässlerin/~~N # noun
 achtklässlern/~~N # noun
 achtklässlers/~~N # noun
 achtle/~~F # feminine noun
@@ -3985,8 +3979,6 @@ abhörens/~~N # noun
 abhörer/~~N # noun
 abhörerIn/~~N # noun
 abhörerInnen/~~V # verb
-abhörerin/~~N # noun
-abhörerinnen/~~V # verb
 abhörern/~~N # noun
 abhörers/~~N # noun
 abhörsicher/~~N # noun
@@ -4024,8 +4016,6 @@ abiturient/~~N # noun
 abiturientIn/~~N # noun
 abiturientInnen/~~V # verb
 abiturienten/~~V # verb
-abiturientin/~~N # noun
-abiturientinnen/~~V # verb
 abiturs/~~N # noun
 abjag/~~Vcej # REPLACES abjagen
 abjagende/~~F # feminine noun
@@ -4357,8 +4347,6 @@ abkochendes/~~N # noun
 abkocher/~~N # noun
 abkocherIn/~~N # noun
 abkocherInnen/~~V # verb
-abkocherin/~~N # noun
-abkocherinnen/~~V # verb
 abkochern/~~N # noun
 abkochers/~~N # noun
 abkocht/~~NX # noun
@@ -4914,8 +4902,6 @@ abmahnens/~~N # noun
 abmahner/~~N # noun
 abmahnerIn/~~N # noun
 abmahnerInnen/~~V # verb
-abmahnerin/~~N # noun
-abmahnerinnen/~~V # verb
 abmahnern/~~N # noun
 abmahners/~~N # noun
 abmahnflut/~~N # noun
@@ -5157,8 +5143,6 @@ abnehmendes/~~N # noun
 abnehmer/~~N # noun
 abnehmerIn/~~N # noun
 abnehmerInnen/~~V # verb
-abnehmerin/~~N # noun
-abnehmerinnen/~~V # verb
 abnehmern/~~N # noun
 abnehmers/~~N # noun
 abneigen/~~V # verb
@@ -5270,8 +5254,6 @@ abonnent/~~N # noun
 abonnentIn/~~N # noun
 abonnentInnen/~~V # verb
 abonnenten/~~V # verb
-abonnentin/~~N # noun
-abonnentinnen/~~V # verb
 abonnier/~~Vcej # REPLACES abonnieren
 abonnierende/~~F # feminine noun
 abonnierendem/~~N # noun
@@ -5875,8 +5857,6 @@ absahnendes/~~N # noun
 absahner/~~N # noun
 absahnerIn/~~N # noun
 absahnerInnen/~~V # verb
-absahnerin/~~N # noun
-absahnerinnen/~~V # verb
 absahnern/~~N # noun
 absahners/~~N # noun
 absahnt/~~NX # noun
@@ -5903,7 +5883,6 @@ absammlung/~~F # feminine noun
 absammlungen/~~V # verb
 absandte/~~F # feminine noun
 absandteInnen/~~V # verb
-absandteinnen/~~V # verb
 absandten/~~V # verb
 absandtest/~~N # noun
 absandtet/~~N # noun
@@ -6336,7 +6315,6 @@ abschneidendes/~~N # noun
 abschneidens/~~N # noun
 abschneider/~~N # noun
 abschneiderIn/~~N # noun
-abschneiderin/~~N # noun
 abschneidern/~~N # noun
 abschneiders/~~N # noun
 abschneidet/~~N # noun
@@ -6450,7 +6428,6 @@ abschreibendes/~~N # noun
 abschreibens/~~N # noun
 abschreiber/~~N # noun
 abschreiberIn/~~N # noun
-abschreiberin/~~N # noun
 abschreibern/~~N # noun
 abschreibers/~~N # noun
 abschreibfehler/~~N # noun
@@ -6795,8 +6772,6 @@ absenderInnen/~~V # verb
 absenderadresse/~~F # feminine noun
 absenderangabe/~~F # feminine noun
 absenderangaben/~~V # verb
-absenderin/~~N # noun
-absenderinnen/~~V # verb
 absenderkonten/~~V # verb
 absenderkonto/~~Nb # noun
 absendern/~~N # noun
@@ -6977,8 +6952,6 @@ absolventInnen/~~V # verb
 absolventen/~~V # verb
 absolventenbuch/~~N # noun
 absolventenzahl/~~N # noun
-absolventin/~~N # noun
-absolventinnen/~~V # verb
 absolvier/~~Vcej # REPLACES absolvieren
 absolvierende/~~F # feminine noun
 absolvierendem/~~N # noun
@@ -7098,8 +7071,6 @@ aachenbesuchs/~~N # noun
 aachener/~~N # noun
 aachenerIn/~~N # noun
 aachenerInnen/~~V # verb
-aachenerin/~~N # noun
-aachenerinnen/~~V # verb
 aachenern/~~N # noun
 aacheners/~~N # noun
 aachenreise/~~F # feminine noun
@@ -7125,8 +7096,6 @@ aalfischer/~~N # noun
 aalfischerIn/~~N # noun
 aalfischerInnen/~~V # verb
 aalfischerei/~~N # noun
-aalfischerin/~~N # noun
-aalfischerinnen/~~V # verb
 aalfischern/~~N # noun
 aalfischers/~~N # noun
 aalglatt/~~NX # noun
@@ -7187,8 +7156,6 @@ aargau/~~Nb # noun
 aargauer/~~N # noun
 aargauerIn/~~N # noun
 aargauerInnen/~~V # verb
-aargauerin/~~N # noun
-aargauerinnen/~~V # verb
 aargauern/~~N # noun
 aargauers/~~N # noun
 aases/~~N # noun
@@ -7400,8 +7367,6 @@ abbiegens/~~N # noun
 abbieger/~~N # noun
 abbiegerIn/~~N # noun
 abbiegerInnen/~~V # verb
-abbiegerin/~~N # noun
-abbiegerinnen/~~V # verb
 abbiegern/~~N # noun
 abbiegers/~~N # noun
 abbiegerspur/~~N # noun
@@ -7563,8 +7528,6 @@ abbrechendes/~~N # noun
 abbrecher/~~N # noun
 abbrecherIn/~~N # noun
 abbrecherInnen/~~V # verb
-abbrecherin/~~N # noun
-abbrecherinnen/~~V # verb
 abbrechern/~~N # noun
 abbrecherquote/~~F # feminine noun
 abbrecherquoten/~~V # verb
@@ -7717,8 +7680,6 @@ abchasien/~~V # verb
 abchasienkrieg/~~N # noun
 abchasienkriegs/~~N # noun
 abchasiens/~~N # noun
-abchasin/~~N # noun
-abchasinnen/~~V # verb
 abcheck/~~Vcej # REPLACES abchecken
 abcheckende/~~F # feminine noun
 abcheckendem/~~N # noun
@@ -7763,8 +7724,6 @@ abdeckerIn/~~N # noun
 abdeckerInnen/~~V # verb
 abdeckerei/~~N # noun
 abdeckereien/~~V # verb
-abdeckerin/~~N # noun
-abdeckerinnen/~~V # verb
 abdeckern/~~N # noun
 abdeckers/~~N # noun
 abdeckt/~~NX # noun
@@ -8036,8 +7995,6 @@ abenteuerreiche/~~F # feminine noun
 abenteuers/~~N # noun
 abenteurerIn/~~N # noun
 abenteurerInnen/~~V # verb
-abenteurerin/~~N # noun
-abenteurerinnen/~~V # verb
 abenteurern/~~N # noun
 abenteurers/~~N # noun
 aberdutzende/~~F # feminine noun
@@ -8108,8 +8065,6 @@ abessiniens/~~N # noun
 abessinier/~~N # noun
 abessinierIn/~~N # noun
 abessinierInnen/~~V # verb
-abessinierin/~~N # noun
-abessinierinnen/~~V # verb
 abessinierkatze/~~F # feminine noun
 abessiniern/~~N # noun
 abessiniers/~~N # noun
@@ -8478,10 +8433,8 @@ abfuckende/~~F # feminine noun
 abfuckendem/~~N # noun
 abfuckender/~~N # noun
 abfuckendes/~~N # noun
-abfuckendinnen/~~V # verb
 abfuckte/~~F # feminine noun
 abfuckteInnen/~~V # verb
-abfuckteinnen/~~V # verb
 abfuhren/~~V # verb
 abfuhrst/~~N # noun
 abfuhrt/~~N # noun
@@ -8927,7 +8880,6 @@ abgefedertes/~~N # noun
 abgefeiert/~~N # noun
 abgefeiertInnen/~~V # verb
 abgefeierten/~~V # verb
-abgefeiertinnen/~~V # verb
 abgefeilt/~~NX # noun
 abgefeiltem/~~N # noun
 abgefeilten/~~V # verb
@@ -9027,7 +8979,6 @@ abgefucktem/~~N # noun
 abgefuckten/~~V # verb
 abgefuckter/~~N # noun
 abgefucktes/~~N # noun
-abgefucktinnen/~~V # verb
 abgefunden/~~V # verb
 abgefundene/~~F # feminine noun
 abgefundenem/~~N # noun
@@ -9719,7 +9670,6 @@ abgeneigtes/~~N # noun
 abgenervt/~~N # noun
 abgenervtInnen/~~V # verb
 abgenervten/~~V # verb
-abgenervtinnen/~~V # verb
 abgenibbelt/~~NX # noun
 abgenibbeltem/~~N # noun
 abgenibbelten/~~V # verb
@@ -11137,7 +11087,6 @@ abfindungs/~~N # noun (from coverage analysis)
 abflug/~~N # noun (from coverage analysis)
 abfluss/~~N # noun (from coverage analysis)
 abfuckeInnen/~~V # verb (from coverage analysis)
-abfuckeinnen/~~V # verb (from coverage analysis)
 abfuhr/~~N # noun (from coverage analysis)
 abführ/~~NX # noun (from coverage analysis)
 abgaben/~~V # verb (from coverage analysis)
@@ -11233,22 +11182,17 @@ Dampf/~~Mh # masculine noun steam
 Schiff/~~Nh # neuter noun ship
 Bund/~~Mo # masculine noun federation
 Tag/~~Mh # masculine noun day
-
 # Proper nouns
 Birkenstock/~~N # proper noun company name
-
 # Technical/Business terms
 börsennotiert/~~J # adjective stock-listed
 steuertaktisch/~~J # adjective tax-tactical
 Kanalinsel/~~Fh # feminine noun channel island
 Fußbett/~~Nh # neuter noun footbed
 Einlage/~~Fh # feminine noun insole
-
-
 # German root vocabulary - extracted from expanded dictionary
 # Focused on root words that can form compounds and inflected forms
 # Format: word/~annotations # comment
-
 heil/~N # frequency: 11
 näher/~N # frequency: 11
 reich/~~NJOQRSTUW # adjective and noun
@@ -230763,7 +230707,6 @@ schwallelements/~~N # auto-added
 schwarzhörender/~~N # auto-added
 schwunglosestes/~~N # auto-added
 schänkwirtInnen/~~N # auto-added
-schänkwirtinnen/~~N # auto-added
 schönrechnendes/~~N # auto-added
 seeräuberischem/~~N # auto-added
 segmentförmiger/~~N # auto-added
@@ -232665,7 +232608,6 @@ zusammenzusteckenden/~~N # auto-added
 zweistrombetriebenen/~~N # auto-added
 übereinanderstapelte/~~N # auto-added
 überlieferungszweigs/~~N # auto-added
-
 # Critical German words added for comprehensive language support
 westgermanische/~~J # adjective
 Muttersprache/~~F # feminine noun
@@ -232786,7 +232728,6 @@ Sagenstoff/~~M # masculine noun
 Sachliteratur/~~F # feminine noun
 Urkunde/~~F # feminine noun
 Überlieferung/~~F # feminine noun
-Abschwächung/~~F # feminine noun
 Nebensilben/~~F # feminine plural
 Zusammenbruch/~~M # masculine noun
 Kasussystem/~~N # neuter noun
@@ -232845,7 +232786,6 @@ Letzebuergesch/~~N # neuter noun
 Indirekt/~~r # adverb
 Zusammenfassung/~~F # feminine noun
 Sprachwissenschaft/~~F # feminine noun
-Disziplin/~~F # feminine noun
 Literatur/~~F # feminine noun
 Historische/~~J # adjective
 Gegenwärtige/~~J # adjective
@@ -232860,7 +232800,6 @@ Bezeichnung/~~F # feminine noun
 Herkunft/~~F # feminine noun
 Hersteller/~~Mh # masculine noun manufacturer
 Glottonym/~~N # neuter noun
-Ableitung/~~F # feminine noun
 Volk/~~N # neuter noun
 Volksbezeichnung/~~F # feminine noun
 Selbstbezeichnung/~~F # feminine noun
@@ -232936,7 +232875,6 @@ Englisch/~~J # adjective
 Außereuropäische/~~J # adjective
 Alamannen/~~M # masculine plural
 Bevölkerungsgruppe/~~F # feminine noun
-Westgermanische/~~J # adjective
 Kulturkreis/~~F # feminine noun
 Grenze/~~F # feminine noun
 Welschland/~~N # neuter noun
@@ -232975,7 +232913,6 @@ Thai/~~N # neuter noun
 Tibetisch/~~J # adjective
 Aschkenas/~~M # masculine noun
 Mittelalterliche/~~J # adjective
-Deutschsprachige/~~J # adjective
 Länder/~~N # neuter plural
 Jatwingisch/~~J # adjective
 Litauisch/~~J # adjective
@@ -233073,7 +233010,6 @@ Sprachstufe/~~F # feminine noun
 Unterteilung/~~F # feminine noun
 Sprachgeschichte/~~F # feminine noun
 Lautwandel/~~M # masculine noun
-Hochdeutsche/~~J # adjective
 Lautverschiebung/~~F # feminine noun
 Konsonantensystem/~~N # neuter noun
 Niederdeutsche/~~J # adjective
@@ -233117,7 +233053,6 @@ Jacob/~~M # masculine noun
 Wilhelm/~~M # masculine noun
 Grimm/~~M # masculine noun
 Herausgabe/~~F # feminine noun
-Umfassende/~~J # adjective
 Überarbeitung/~~F # feminine noun
 Rechtschreibung/~~F # feminine noun
 Neunzehnte/~~J # adjective
@@ -233149,14 +233084,12 @@ Preußische/~~J # adjective
 Kanzleien/~~F # feminine plural
 Verwendung/~~F # feminine noun
 Preußen/~~N # neuter noun
-Abweichung/~~F # feminine noun
 Zulassung/~~F # feminine noun
 Mehrere/~~J # adjective
 Darstellung/~~F # feminine noun
 S-Laut/~~M # masculine noun
 Schrift/~~F # feminine noun
 Fraktur/~~F # feminine noun
-Abänderung/~~F # feminine noun
 Eigennamen/~~M # masculine plural
 Göthe/~~M # masculine noun
 Bismark/~~M # masculine noun
@@ -233384,3 +233317,43 @@ xyzword/~~ABC # auto-added
 testword/~~XQZ # auto-added
 vergnügungssteuer/~~Nh # auto-added
 haltig/~~JOQRSTUWq # auto-added
+Sneaker/~~M # auto-added
+Superstar/~~M # auto-added
+Sneaker/~~M
+Superstar/~~M
+Basketballspieler/~~Mh
+Sammler/~~Mh
+Streifen/~~Mh
+Filz/~~Mh
+Zehe/~~Fh
+Kappe/~~Fh
+Silhouette/~~F
+Ferse/~~F
+Gummikappe/~~F
+Zehenkappe/~~F
+Auktion/~~Fh
+Hauptstadt/~~Fh
+Künstlerin/~~Fh
+Musikszene/~~Fh
+Jubiläum/~~Zh
+Design/~~Zh
+Material/~~Zh
+Modell/~~Zh
+gepolstert/~~V
+Adidas/~~M
+Supergrip/~~M
+Vintage/~~N
+Foundation/~~F
+Shelltoes/~~M
+Hersteller/~~Mh
+1970er/~~N
+Jubiläumskollektion/~~Fh
+Sonderkollektion/~~Fh
+Tennisschuhmodell/~~Zh
+Fabrikverkauf/~~Mh
+Farbkombination/~~Fh
+Materialzusammenstellung/~~Fh
+Spitzname/~~Mh
+Einzelnachweis/~~Mh
+Geschäftszahl/~~Fh
+Farbkombinationen/~~Fh
