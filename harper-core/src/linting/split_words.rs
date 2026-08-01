@@ -193,6 +193,7 @@ fn should_defer_to_spellcheck(
                     || tok.kind.is_pronoun()
                     || tok.kind.is_adjective()
                     || tok.kind.is_possessive_determiner()
+                    || tok.kind.is_preposition()
             })
     });
 
