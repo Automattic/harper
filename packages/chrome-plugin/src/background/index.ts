@@ -323,6 +323,12 @@ async function handleLint(
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
+
+			// Free the lints
+			lints.forEach((l) => {
+				l.free();
+			});
+
 			return [source, unpacked] as const;
 		}),
 	);
