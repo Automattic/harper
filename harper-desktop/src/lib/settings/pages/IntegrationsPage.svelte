@@ -6,7 +6,7 @@ import AppPickerModal from '../components/AppPickerModal.svelte';
 
 type IntegrationRow = Integration & { name: string };
 
-	const isWindows = navigator.userAgent.includes('Windows');
+const isWindows = navigator.userAgent.includes('Windows');
 
 let integrations: Integration[] = [];
 let integrationApps: IntegrationRow[] = [];

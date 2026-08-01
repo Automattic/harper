@@ -162,7 +162,10 @@ async function requestAccessibilityPermission() {
 	}
 }
 
-function accessibilityDescription(status: AccessibilityPermissionStatus | null, isWindows: boolean) {
+function accessibilityDescription(
+	status: AccessibilityPermissionStatus | null,
+	isWindows: boolean,
+) {
 	if (isWindows) {
 		return 'Harper on Windows does not require special accessibility permissions.';
 	}

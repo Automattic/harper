@@ -230,6 +230,9 @@ build-desktop-macos-unsigned: build-harperjs build-lint-framework build-componen
 
 # Build Harper Desktop Windows bundles (NSIS installer).
 build-desktop-windows: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm tauri build -b nsis,msi
