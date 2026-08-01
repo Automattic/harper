@@ -33,6 +33,9 @@ jobs:
           
       - name: Install just
         uses: taiki-e/install-action@just
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@wasm-pack
         
       - name: Build WebAssembly Module
         run: just build-wasm

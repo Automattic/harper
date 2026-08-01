@@ -36,7 +36,7 @@ impl Window {
         let position = monitor.position();
         let size = monitor.size();
 
-        let mut attributes = WinitWindow::default_attributes()
+        let attributes = WinitWindow::default_attributes()
             .with_title("Harper")
             .with_inner_size(size)
             .with_position(position)
@@ -47,17 +47,15 @@ impl Window {
             .with_window_level(WindowLevel::AlwaysOnTop)
             .with_active(false);
 
+        // WS_EX_NOREDIRECTIONBITMAP: without this, DWM composites the DirectComposition
+        // swap chain (see below) *behind* the HWND's redirection bitmap, and the redirection
+        // bitmap is painted with the window class's default (white) background brush, hiding
+        // the overlay.
         #[cfg(target_os = "windows")]
-        {
-            // WS_EX_NOREDIRECTIONBITMAP: without this, DWM composites the DirectComposition
-            // swap chain (see below) *behind* the HWND's redirection bitmap, and the redirection
-            // bitmap is painted with the window class's default (white) background brush, hiding
-            // the overlay.
-            attributes = attributes
-                .with_skip_taskbar(true)
-                .with_undecorated_shadow(false)
-                .with_no_redirection_bitmap(true);
-        }
+        let attributes = attributes
+            .with_skip_taskbar(true)
+            .with_undecorated_shadow(false)
+            .with_no_redirection_bitmap(true);
 
         let window = Arc::new(event_loop.create_window(attributes)?);
 
@@ -75,6 +73,7 @@ impl Window {
             None,
         );
 
+        #[allow(unused_mut)]
         let mut setup_create =
             egui_wgpu::WgpuSetupCreateNew::from_display_handle(event_loop.owned_display_handle());
         #[cfg(target_os = "windows")]
