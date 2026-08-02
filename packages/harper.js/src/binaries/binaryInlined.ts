@@ -1,4 +1,4 @@
-import { default as binaryInlinedUrl } from 'harper-wasm/pkg/harper_wasm_bg.wasm?inline';
+import { default as binaryInlinedUrl } from 'harper-wasm/harper_wasm_bg.wasm?inline';
 import { BinaryModuleImpl } from '../BinaryModule';
 
 /** A version of the Harper WebAssembly binary stored inline as a data URL. */
