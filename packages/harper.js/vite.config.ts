@@ -26,13 +26,13 @@ function harperWasmPlugin(): Plugin {
 		name: 'harper-wasm-resolver',
 		enforce: 'pre',
 		resolveId(source, _importer) {
-			// Handle imports like 'harper-wasm/harper_wasm_bg.wasm?inline'
+			// Handle imports like 'harper-wasm/pkg/harper_wasm_bg.wasm?inline'
 			if (source.includes('harper-wasm/') && source.includes('.wasm')) {
 				// Strip the query parameters for file resolution
 				const filePath = source.split('?')[0];
-				// filePath is like 'harper-wasm/harper_wasm_bg.wasm'
+				// filePath is like 'harper-wasm/pkg/harper_wasm_bg.wasm'
 				// We want to resolve to harperWasmPkgPath/harper_wasm_bg.wasm
-				const relativePath = filePath.replace('harper-wasm/', '');
+				const relativePath = filePath.replace('harper-wasm/pkg/', '');
 				const wasmFile = resolve(harperWasmPkgPath, relativePath);
 
 				// Check if file exists
@@ -96,7 +96,7 @@ export default defineConfig({
 	},
 	server: {
 		fs: {
-			allow: ['../../harper-wasm'],
+			allow: ['../../harper-wasm/pkg'],
 		},
 	},
 	test: {
