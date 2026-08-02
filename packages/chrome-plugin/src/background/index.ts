@@ -308,18 +308,7 @@ async function handleLint(
 	}
 
 	const isolateEnglish = req.options?.isolateEnglish === true || (await getIsolateEnglish());
-	const markupLanguage = req.options?.language ?? 'plaintext';
-	const allHeadings = req.options?.forceAllHeadings ?? false;
-	const regexMask = req.options?.regex_mask;
-	const dedup = req.options?.dedup ?? true;
-	const grouped = await linter.organizedLints(
-		req.text,
-		markupLanguage,
-		allHeadings,
-		regexMask,
-		dedup,
-		isolateEnglish,
-	);
+	const grouped = await linter.organizedLints(req.text, { ...req.options, isolateEnglish });
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
