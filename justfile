@@ -1091,3 +1091,30 @@ sort-config-settings:
 
   fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
   console.log('Sorted default_config.json child settings by name.');
+
+# Check the status of the most recent GitHub workflow run for the current branch
+# Returns 0 if the most recent workflow succeeded, 1 if it failed
+check-workflow:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
+  if [ -z "$BRANCH" ]; then
+    echo "Error: Not on a branch"
+    exit 1
+  fi
+
+  LATEST_RUN=$(gh run list --limit 1 --branch "$BRANCH" --json conclusion --jq ".[] | .conclusion" 2>/dev/null || echo "")
+
+  if [ -z "$LATEST_RUN" ]; then
+    echo "No workflow runs found for branch: $BRANCH"
+    exit 1
+  fi
+
+  if [ "$LATEST_RUN" = "success" ]; then
+    echo "Most recent workflow run: SUCCESS"
+    exit 0
+  else
+    echo "Most recent workflow run: $LATEST_RUN"
+    exit 1
+  fi
