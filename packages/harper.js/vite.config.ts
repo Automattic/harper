@@ -21,18 +21,17 @@ function removeAssetsPlugin(options: { test: RegExp }): Plugin {
 
 // Plugin to resolve harper-wasm wasm file imports
 function harperWasmPlugin(): Plugin {
-	const harperWasmPkgPath = resolve(__dirname, '../../../harper-wasm');
+	const harperWasmPkgPath = resolve(__dirname, '../../../harper-wasm/pkg');
 	return {
 		name: 'harper-wasm-resolver',
 		enforce: 'pre',
 		resolveId(source, _importer) {
-			// Handle imports like 'harper-wasm/pkg/harper_wasm_slim_bg.wasm?inline'
+			// Handle imports like 'harper-wasm/harper_wasm_bg.wasm?inline'
 			if (source.includes('harper-wasm/') && source.includes('.wasm')) {
 				// Strip the query parameters for file resolution
 				const filePath = source.split('?')[0];
-				// Remove 'harper-wasm/' prefix to get path relative to harper-wasm root
-				// filePath is like 'harper-wasm/pkg/harper_wasm_bg.wasm'
-				// We want to resolve to harperWasmPkgPath/pkg/harper_wasm_bg.wasm
+				// filePath is like 'harper-wasm/harper_wasm_bg.wasm'
+				// We want to resolve to harperWasmPkgPath/harper_wasm_bg.wasm
 				const relativePath = filePath.replace('harper-wasm/', '');
 				const wasmFile = resolve(harperWasmPkgPath, relativePath);
 
