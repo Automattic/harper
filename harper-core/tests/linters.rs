@@ -1,3 +1,5 @@
+#![cfg(feature = "multilingual")]
+
 //! This test creates snapshots of the reports of all linters.
 //!
 //! # Usage

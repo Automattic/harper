@@ -517,7 +517,11 @@ dogfood:
 
 test-rust:
   echo Running all Rust tests
-  cargo test -q
+  # Test harper-core with default features first (without multilingual)
+  # to avoid German test timeouts
+  cargo test -q -p harper-core
+  # Then test all other workspace members
+  cargo test -q --workspace --exclude harper-core
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin

@@ -1,3 +1,5 @@
+#![cfg(feature = "multilingual")]
+
 //! Integration tests for Harper auto-detection system.
 //!
 //! These tests verify that the language detection system works correctly

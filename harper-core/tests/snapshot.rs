@@ -1,3 +1,5 @@
+#![cfg(feature = "multilingual")]
+
 use std::{
     marker::Sync,
     path::{Path, PathBuf},

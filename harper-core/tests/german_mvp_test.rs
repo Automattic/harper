@@ -1,8 +1,9 @@
+#![cfg(feature = "de")]
+
 // Comprehensive German MVP Test
 // Tests the minimum viable product for German language support in Harper
 // Uses the public LintGroup API with German dialect.
 
-#[cfg(feature = "de")]
 mod tests {
     use harper_core::Document;
     use harper_core::language::german::dialects::GermanDialect;
