@@ -1,0 +1,24 @@
+{
+	"name": "harper-wasm",
+	"version": "0.1.0",
+	"type": "module",
+	"main": "./pkg/harper_wasm.js",
+	"types": "./pkg/harper_wasm.d.ts",
+	"module": "./pkg/harper_wasm.js",
+	"files": [
+		"./pkg"
+	],
+	"sideEffects": false,
+	"private": true,
+	"exports": {
+		"": "./pkg/harper_wasm.js",
+		"./harper_wasm.js": "./pkg/harper_wasm.js",
+		"./harper_wasm.d.ts": "./pkg/harper_wasm.d.ts",
+		"./harper_wasm_slim.js": "./pkg/harper_wasm_slim.js",
+		"./harper_wasm_slim.d.ts": "./pkg/harper_wasm_slim.d.ts"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/Automattic/harper"
+	}
+}
