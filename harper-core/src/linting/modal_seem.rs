@@ -72,11 +72,7 @@ impl ExprLinter for ModalSeem {
         let seen_token = matched_tokens
             .iter()
             .skip(context.modal_index)
-            .find(|tok| {
-                tok.span
-                    .get_content(source)
-                    .eq_ignore_ascii_case_str("seen")
-            })?;
+            .find(|tok| tok.get_ch(source).eq_str("seen"))?;
 
         let span = seen_token.span;
         let original = span.get_content(source);

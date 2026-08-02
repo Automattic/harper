@@ -57,7 +57,7 @@ export default class PopupHandler {
 		this.autofocusSuggestion = false;
 		this.currentHint = undefined;
 		this.currentHintFor = undefined;
-		this.renderBox = new RenderBox(document.body);
+		this.renderBox = new RenderBox(() => document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
 		this.renderBox.getShadowHost().style.border = 'none';
@@ -118,6 +118,7 @@ export default class PopupHandler {
 
 	private render() {
 		let tree = h('div', {}, []);
+		const host = this.renderBox.getShadowHost();
 
 		this.updateHint();
 
@@ -133,15 +134,24 @@ export default class PopupHandler {
 					this.popupLint = undefined;
 					this.autofocusSuggestion = false;
 					this.updateHint();
+					this.render();
 				},
 			);
-			this.renderBox.getShadowHost().style.setProperty('visibility', 'visible', 'important');
-			this.renderBox.getShadowHost().showPopover();
-		} else {
-			this.renderBox.getShadowHost().hidePopover();
 		}
 
 		this.renderBox.render(tree);
+
+		if (this.popupLint != null && this.popupLint < this.currentLintBoxes.length) {
+			host.style.setProperty('visibility', 'visible', 'important');
+			if (host.isConnected && !host.matches(':popover-open')) {
+				host.showPopover();
+			}
+		} else {
+			host.style.setProperty('visibility', 'hidden', 'important');
+			if (host.isConnected && host.matches(':popover-open')) {
+				host.hidePopover();
+			}
+		}
 	}
 
 	/** Synchronize the hint with the currently focused lint.

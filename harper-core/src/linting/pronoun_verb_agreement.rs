@@ -35,10 +35,7 @@ pub struct PronounVerbAgreement<D> {
     dict: D,
 }
 
-impl<D> PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> PronounVerbAgreement<D> {
     pub fn new(dict: D) -> Self {
         // TODO: allowing "you" leads to false positives:
         // "8 years to give you rewards", "all I can do is give you examples"
@@ -77,7 +74,7 @@ where
                 && !t.kind.is_conjunction() // "and"
                 && (!t.kind.is_auxiliary_verb() // "I go"≠"he goes" but "I can"="he can"
                 // We don't want modals because they don't inflect, but we want the other auxiliaries.
-                || t.span.get_content(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
+                || t.get_ch(src).eq_any_ignore_ascii_case_str(NON_MODAL_AUX))
         };
 
         Self {
@@ -90,7 +87,7 @@ where
                         .t_ws()
                         .then(verb_lemma),
                 ),
-                Box::new(SequenceExpr::aco("it").t_ws().t_aco("don't")),
+                Box::new(SequenceExpr::word_seq(&["it", "don't"])),
             ]),
             dict,
         }
@@ -110,7 +107,7 @@ where
                 // -ies -> -y
                 if form.ends_with_ignore_ascii_case_chars(&['i', 'e', 's']) {
                     words.push(
-                        format!("{}y", &form[0..form.len() - 3].iter().collect::<String>())
+                        format!("{}y", form[0..form.len() - 3].iter().collect::<String>())
                             .chars()
                             .collect(),
                     );
@@ -118,10 +115,7 @@ where
             }
         }
 
-        if let Some((lemma, _)) = IRREGULAR
-            .iter()
-            .find(|(_, f)| form.eq_ignore_ascii_case_str(f))
-        {
+        if let Some((lemma, _)) = IRREGULAR.iter().find(|(_, f)| form.eq_str(f)) {
             words.push(lemma.chars().collect::<Vec<char>>());
         }
 
@@ -169,10 +163,7 @@ where
     }
 }
 
-impl<D> ExprLinter for PronounVerbAgreement<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for PronounVerbAgreement<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -188,20 +179,27 @@ where
         let pron_tok = &toks[0];
         let is_3psg = pron_tok.kind.is_third_person_singular_pronoun();
 
+        // Skip when the pronoun is part of a hyphenated compound (e.g. "co-founded").
+        // The tokenizer splits "co-founded" into separate tokens, but "co" as a prefix
+        // is not acting as a pronoun.
+        if pron_tok.span.end < src.len() && src[pron_tok.span.end] == '-' {
+            return None;
+        }
+
         let verb_tok = toks.last()?;
 
         if let Some((before, _)) = ctx
             && let [.., prev_word_tok, ws_tok] = before
             && ws_tok.kind.is_whitespace()
         {
-            let prev_word = prev_word_tok.span.get_content(src);
+            let prev_word = prev_word_tok.get_ch(src);
             let is_exempt = if is_3psg {
                 prev_word_tok.kind.is_auxiliary_verb()
                     || prev_word.eq_any_ignore_ascii_case_str(SUBJUNCTIVE)
             } else if pron_tok.kind.is_subject_pronoun() {
                 // Clause structure: (... in you) is ... ≠ you is
                 // Look for "true" prepositions, not ones that are more like adverbial particles
-                prev_word_tok.kind.is_preposition() && !prev_word.eq_ignore_ascii_case_str("up")
+                prev_word_tok.kind.is_preposition() && !prev_word.eq_str("up")
                     // When the verb is ditransitive, the pronoun is object case, the verb position is actually a noun
                     || (prev_word.eq_any_ignore_ascii_case_str(DITRANSITIVE) && verb_tok.kind.is_noun())
             } else {
@@ -214,8 +212,8 @@ where
         }
 
         let verb_span = verb_tok.span;
-        let verb_chars = verb_tok.span.get_content(src);
-        let verb_str = verb_tok.span.get_content_string(src);
+        let verb_chars = verb_tok.get_ch(src);
+        let verb_str = verb_tok.get_str(src);
 
         let suggs = if is_3psg {
             self.lemma_to_third_person_singular_present(&verb_str)
@@ -233,7 +231,7 @@ where
             lint_kind: LintKind::Agreement,
             suggestions,
             message: "The form of the verb must agree in grammatical number with the pronoun."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
@@ -246,62 +244,50 @@ where
 #[cfg(test)]
 mod lints {
     use super::PronounVerbAgreement;
+    use crate::linting::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
+    use std::sync::Arc;
 
-    // Expected to be fixed, but there are exceptions
+    create_test_pool!(
+        PronounVerbAgreement,
+        PronounVerbAgreement<Arc<FstDictionary>>,
+        PronounVerbAgreement::new(FstDictionary::curated())
+    );
 
     #[test]
     fn issue_233_1() {
-        assert_suggestion_result(
-            "I likes this place.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "I like this place.",
-        );
+        assert_suggestion_result("I likes this place.", test_linter(), "I like this place.");
     }
 
     #[test]
     fn issue_233_2() {
-        assert_suggestion_result(
-            "I sits under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "I sit under the AC.",
-        );
+        assert_suggestion_result("I sits under the AC.", test_linter(), "I sit under the AC.");
     }
 
     #[test]
     #[ignore = "because 'like' is an adjective as well as a verb."]
     fn issue_233_1_reverse() {
-        assert_suggestion_result(
-            "He like this place.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He likes this place.",
-        );
+        assert_suggestion_result("He like this place.", test_linter(), "He likes this place.");
     }
 
     #[test]
     fn why_we_cant_flag_like_yet() {
-        assert_no_lints(
-            "What is he like?",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("What is he like?", test_linter());
     }
 
     #[test]
     fn issue_233_2_reverse() {
         assert_suggestion_result(
             "She sit under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
             "She sits under the AC.",
         );
     }
 
     #[test]
     fn dont_flag_correct_agreement() {
-        assert_no_lints(
-            "He likes this place. I sit under the AC.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("He likes this place. I sit under the AC.", test_linter());
     }
 
     // Every pronoun systematically
@@ -310,129 +296,84 @@ mod lints {
 
     #[test]
     fn fixes_i() {
-        assert_suggestion_result(
-            "I wakes up.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "I wake up.",
-        );
+        assert_suggestion_result("I wakes up.", test_linter(), "I wake up.");
     }
 
     #[test]
     fn fixes_we() {
-        assert_suggestion_result(
-            "We gets dressed.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "We get dressed.",
-        );
+        assert_suggestion_result("We gets dressed.", test_linter(), "We get dressed.");
     }
 
     #[test]
     fn fixes_you() {
         assert_suggestion_result(
             "You drops off the kids.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
             "You drop off the kids.",
         );
     }
 
     #[test]
     fn fixes_he() {
-        assert_suggestion_result(
-            "He work hard.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He works hard.",
-        );
+        assert_suggestion_result("He work hard.", test_linter(), "He works hard.");
     }
 
     #[test]
     fn fixes_she() {
-        assert_suggestion_result(
-            "She study hard.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "She studies hard.",
-        );
+        assert_suggestion_result("She study hard.", test_linter(), "She studies hard.");
     }
 
     #[test]
     #[ignore = "Becasue 'it' is also object case. Eg. 'watch it break down'"]
     fn we_cant_fix_it_yet() {
-        assert_suggestion_result(
-            "It break down.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "It breaks down.",
-        );
+        assert_suggestion_result("It break down.", test_linter(), "It breaks down.");
     }
 
     #[test]
     fn why_we_cant_fix_it_yet() {
-        assert_no_lints(
-            "I heard it break down.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("I heard it break down.", test_linter());
     }
 
     #[test]
     fn fixes_they() {
-        assert_suggestion_result(
-            "They repairs it.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "They repair it.",
-        )
+        assert_suggestion_result("They repairs it.", test_linter(), "They repair it.")
     }
 
     // Correct phrases that are expected not to get corrected
 
     #[test]
     fn dont_flag_i() {
-        assert_no_lints("I eat", PronounVerbAgreement::new(FstDictionary::curated()));
+        assert_no_lints("I eat", test_linter());
     }
 
     #[test]
     fn dont_flag_we() {
-        assert_no_lints(
-            "We drink",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("We drink", test_linter());
     }
 
     #[test]
     fn dont_flag_you() {
-        assert_no_lints(
-            "You walk",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("You walk", test_linter());
     }
 
     #[test]
     fn dont_flag_he() {
-        assert_no_lints(
-            "He runs",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("He runs", test_linter());
     }
 
     #[test]
     fn dont_flag_she() {
-        assert_no_lints(
-            "She swims",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("She swims", test_linter());
     }
 
     #[test]
     fn dont_flag_it() {
-        assert_no_lints(
-            "It works!",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("It works!", test_linter());
     }
 
     #[test]
     fn dont_flag_they() {
-        assert_no_lints(
-            "They finish",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-        );
+        assert_no_lints("They finish", test_linter());
     }
 
     // Ceck changing verb endings
@@ -440,37 +381,21 @@ mod lints {
     // -ies ↔ -y
     #[test]
     fn fix_flies() {
-        assert_suggestion_result(
-            "I flies",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "I fly",
-        );
+        assert_suggestion_result("I flies", test_linter(), "I fly");
     }
     #[test]
     fn fix_cry() {
-        assert_suggestion_result(
-            "He cry",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He cries",
-        );
+        assert_suggestion_result("He cry", test_linter(), "He cries");
     }
 
     // -o ↔ -oes
     #[test]
     fn fix_go() {
-        assert_suggestion_result(
-            "She go",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "She goes",
-        );
+        assert_suggestion_result("She go", test_linter(), "She goes");
     }
     #[test]
     fn fix_goes() {
-        assert_suggestion_result(
-            "They goes",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "They go",
-        );
+        assert_suggestion_result("They goes", test_linter(), "They go");
     }
 
     // Check irregular changes
@@ -478,55 +403,31 @@ mod lints {
     // has ↔ have
     #[test]
     fn fix_has() {
-        assert_suggestion_result(
-            "You has",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "You have",
-        );
+        assert_suggestion_result("You has", test_linter(), "You have");
     }
     #[test]
     fn fix_have() {
-        assert_suggestion_result(
-            "She have",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "She has",
-        );
+        assert_suggestion_result("She have", test_linter(), "She has");
     }
 
     // hasn't ↔ haven't
     #[test]
     fn fix_hasnt() {
-        assert_suggestion_result(
-            "You hasn't",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "You haven't",
-        );
+        assert_suggestion_result("You hasn't", test_linter(), "You haven't");
     }
     #[test]
     fn fix_havent() {
-        assert_suggestion_result(
-            "He haven't",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He hasn't",
-        );
+        assert_suggestion_result("He haven't", test_linter(), "He hasn't");
     }
 
     // -es
     #[test]
     fn fix_box() {
-        assert_suggestion_result(
-            "He box",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He boxes",
-        );
+        assert_suggestion_result("He box", test_linter(), "He boxes");
     }
     #[test]
     fn fix_boxes() {
-        assert_suggestion_result(
-            "You boxes",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "You box",
-        );
+        assert_suggestion_result("You boxes", test_linter(), "You box");
     }
 
     // TODO: Are there any double consonant endings to change?
@@ -537,38 +438,22 @@ mod lints {
     // doesn't ↔ don't
     #[test]
     fn fix_doesnt() {
-        assert_suggestion_result(
-            "We doesn't",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "We don't",
-        );
+        assert_suggestion_result("We doesn't", test_linter(), "We don't");
     }
     #[test]
     // Note: This requires a dedicated branch of the `[Expr]`
     fn fix_dont() {
-        assert_suggestion_result(
-            "It don't",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "It doesn't",
-        );
+        assert_suggestion_result("It don't", test_linter(), "It doesn't");
     }
 
     // Does do ↔ does behave differently to box ↔ boxes due to being an auxiliary verb?
     #[test]
     fn fix_do() {
-        assert_suggestion_result(
-            "He do",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "He does",
-        );
+        assert_suggestion_result("He do", test_linter(), "He does");
     }
     #[test]
     fn fix_does() {
-        assert_suggestion_result(
-            "You does",
-            PronounVerbAgreement::new(FstDictionary::curated()),
-            "You do",
-        );
+        assert_suggestion_result("You does", test_linter(), "You do");
     }
 
     // False positives found by Elijah
@@ -577,7 +462,7 @@ mod lints {
     fn false_positive_she_consider() {
         assert_no_lints(
             "On April 10th, I suggested she consider a smaller, more intimate gathering.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -585,7 +470,7 @@ mod lints {
     fn false_positive_she_sell() {
         assert_no_lints(
             "I suggested she sell it and use the proceeds to help with her relocation expenses, or perhaps rent a similar camera while in Barcelona.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -593,7 +478,7 @@ mod lints {
     fn false_positive_she_rent() {
         assert_no_lints(
             "I suggested she sell it and use the proceeds to help with her relocation expenses, or perhaps rent a similar camera while in Barcelona.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -601,7 +486,7 @@ mod lints {
     fn false_positive_he_donned() {
         assert_no_lints(
             "He donned his heavy oilskins and descended the winding staircase, his boots echoing in the hollow tower.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -609,7 +494,7 @@ mod lints {
     fn false_positive_he_cannot() {
         assert_no_lints(
             "Surely, he cannot offer the same sum as the developers.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -617,7 +502,7 @@ mod lints {
     fn false_positive_insisting_she_return() {
         assert_no_lints(
             "Am I the asshole for insisting she return the dress?",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -625,7 +510,7 @@ mod lints {
     fn false_positive_pride_in_you_is() {
         assert_no_lints(
             "It’s also important to recognize that your family's pride in you is a genuine reflection of your value.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -633,7 +518,7 @@ mod lints {
     fn false_positive_she_sought() {
         assert_no_lints(
             "She sought out Mrs. Hawthorne, the village’s oldest resident, a woman known for her vast knowledge of local history and her unsettlingly accurate intuition.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -641,7 +526,7 @@ mod lints {
     fn false_positive_lose_you_points() {
         assert_no_lints(
             "I admire your dedication to consistently drafting players who are actively trying to lose you points.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 
@@ -649,7 +534,7 @@ mod lints {
     fn false_positive_she_hung_up() {
         assert_no_lints(
             "When I reiterated the conditions I'd previously set, she hung up on me.",
-            PronounVerbAgreement::new(FstDictionary::curated()),
+            test_linter(),
         );
     }
 }

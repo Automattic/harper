@@ -65,8 +65,8 @@ impl Default for Months {
 
         // An Expr that matches either a plain month
         // Or an ambiguous month after a disambiguating word
-        let month_expr = SequenceExpr::with(FirstMatchOf::new(vec![
-            Box::new(only_months),
+        let month_expr = SequenceExpr::with(FirstMatchOf::new([
+            Box::new(only_months) as Box<dyn Expr>,
             Box::new(
                 SequenceExpr::with(before_month_sense_only)
                     .then_whitespace()
@@ -93,12 +93,12 @@ impl ExprLinter for Months {
     fn match_to_lint(&self, tokens: &[Token], src: &[char]) -> Option<Lint> {
         // `find` which token is the month by seeing which tok's content (lowercased) is in ALL_MONTHS
         let month_tok = tokens.iter().find(|token| {
-            let token_str = token.span.get_content_string(src);
+            let token_str = token.get_str(src);
             ALL_MONTHS.iter().any(|&m| m == token_str.to_lowercase())
         })?; // Return None if no month token found
 
         // let month_tok = tokens.last().unwrap();
-        let month_ch = month_tok.span.get_content(src);
+        let month_ch = month_tok.get_ch(src);
 
         if month_ch[0].is_uppercase() {
             return None;
@@ -111,7 +111,7 @@ impl ExprLinter for Months {
             span: month_tok.span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::ReplaceWith(month_vec)],
-            message: "Months should be written with a capital letter.".to_string(),
+            message: "Months should be written with a capital letter.".to_owned(),
             priority: 126,
         })
     }

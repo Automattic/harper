@@ -29,8 +29,8 @@ impl ExprLinter for DoubleModal {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let first_chars = matched_tokens.first()?.span.get_content(source);
-        let second_chars = matched_tokens.last()?.span.get_content(source);
+        let first_chars = matched_tokens.first()?.get_ch(source);
+        let second_chars = matched_tokens.last()?.get_ch(source);
 
         Some(Lint {
             span: matched_tokens.span()?,
@@ -39,7 +39,7 @@ impl ExprLinter for DoubleModal {
                 Suggestion::ReplaceWith(first_chars.into()),
                 Suggestion::ReplaceWith(second_chars.into()),
             ],
-            message: "Two modal verbs in a row are rarely grammatical; remove one.".to_string(),
+            message: "Two modal verbs in a row are rarely grammatical; remove one.".to_owned(),
             priority: 31,
         })
     }

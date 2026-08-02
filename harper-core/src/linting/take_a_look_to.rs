@@ -52,11 +52,10 @@ impl ExprLinter for TakeALookTo {
         if followed_by_word(ctx, |nw| {
             nw.kind.is_verb_lemma()
                 // Exception 1. Have/take a look to see if everything is ok
-                || (nw.span.get_content(src).eq_ignore_ascii_case_str("it")
+                || (nw.get_ch(src).eq_str("it")
                     // Exception 2. It has a look to it that I don't like
                     && toks.first().is_some_and(|tok| {
-                        tok.span
-                            .get_content(src)
+                        tok.get_ch(src)
                             .eq_any_ignore_ascii_case_str(HAVE_FORMS)
                     }))
         }) {
@@ -72,7 +71,7 @@ impl ExprLinter for TakeALookTo {
                 vec!['a', 't'],
                 to_span.get_content(src),
             )],
-            message: "This phrase uses `to` rather than `at`".to_string(),
+            message: "This phrase uses `to` rather than `at`".to_owned(),
             ..Default::default()
         })
     }

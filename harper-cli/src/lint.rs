@@ -1,8 +1,8 @@
 use std::borrow::Cow;
 use std::collections::BTreeMap;
+use std::fs;
 use std::path::{Component, Path, PathBuf};
 use std::sync::Arc;
-use std::{fs, process};
 
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
@@ -11,11 +11,12 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    linting::{Lint, LintGroup, LintGroupConfig, LintKind},
+    Dialect, DictWordMetadata, Document, Token, TokenKind,
+    linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
+    remove_overlaps_map,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
-    {Dialect, DictWordMetadata, Document, Token, TokenKind, remove_overlaps_map},
 };
 
 use crate::input::{
@@ -24,7 +25,7 @@ use crate::input::{
     single_input::{SingleInput, SingleInputTrait, StdinInput},
 };
 
-/// Sync version of harper-ls/src/dictionary_io@load_dict
+/// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
@@ -57,7 +58,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     Ok(packs)
 }
 
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
+/// Path version of harper-ls file dictionary name rewriting.
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 
@@ -92,6 +93,7 @@ pub struct LintOptions {
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
+    pub quiet: bool,
 }
 
 enum ReportStyle {
@@ -202,7 +204,7 @@ pub fn lint(
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
     // Uses a cached config to avoid expensive linter initialization
-    let mut config = LintGroupConfig::new_curated();
+    let mut config = FlatConfig::new_curated();
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);
@@ -341,6 +343,8 @@ pub fn lint(
         }
     }
 
+    let has_lints = !all_lint_kinds.is_empty();
+
     match report_mode {
         ReportStyle::Json => {
             println!("{}", serde_json::to_string_pretty(&json_results)?);
@@ -359,7 +363,11 @@ pub fn lint(
         }
     }
 
-    process::exit(1);
+    if has_lints {
+        anyhow::bail!("Lints were found");
+    }
+
+    Ok(())
 }
 
 struct LintOneResult {
@@ -400,6 +408,7 @@ fn lint_one_input(
         weirpack_inputs: _,
         color: _,
         format: _,
+        quiet: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -442,8 +451,8 @@ fn lint_one_input(
                 let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
 
                 for pack in weirpacks {
-                    let mut pack_group = pack.to_lint_group()?;
-                    lint_group.merge_from(&mut pack_group);
+                    let pack_group = pack.to_lint_group()?;
+                    lint_group.merge_from(pack_group);
                 }
 
                 // Turn specified rules on or off
@@ -474,7 +483,7 @@ fn lint_one_input(
                         for lint in rule_lints {
                             let (line, column) =
                                 char_index_to_line_col(source_chars, lint.span.start);
-                            let matched_text = lint.span.get_content_string(source_chars);
+                            let matched_text = lint.get_str(source_chars);
                             let suggestions: Vec<String> =
                                 lint.suggestions.iter().map(|s| format!("{s}")).collect();
                             lints.push(JsonLint {
@@ -519,7 +528,7 @@ fn lint_one_input(
                     &lint_rules,
                     // Reporting arguments
                     batch_mode,
-                    report_mode,
+                    (report_mode, lint_options.quiet),
                 );
             }
         }
@@ -605,7 +614,7 @@ fn collect_spellos(
         .get("SpellCheck")
         .into_iter()
         .flatten()
-        .map(|lint| lint.span.get_content_string(source))
+        .map(|lint| lint.get_str(source))
         .fold(HashMap::new(), |mut acc, spello| {
             *acc.entry(spello).or_insert(0) += 1;
             acc
@@ -622,8 +631,10 @@ fn single_input_report(
     lint_rules: &HashMap<String, usize>,
     // Reporting parameters
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
-    report_mode: &ReportStyle,
+    report_info: (&ReportStyle, bool),
 ) {
+    let (report_mode, quiet) = report_info;
+
     // JSON mode: all output is handled by the caller after collecting results
     if matches!(report_mode, ReportStyle::Json) {
         return;
@@ -660,23 +671,30 @@ fn single_input_report(
 
     if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
         report_mode = &ReportStyle::BriefCountsOnly;
-        println!(
-            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-            input.format_path()
-        );
+        if !quiet {
+            println!(
+                "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+                input.format_path()
+            );
+        }
     }
 
     // Report the number of lints no matter what report mode we are in
-    println!(
-        "{}: {}",
-        input.format_path(),
-        match (lint_count_before, lint_count_after) {
-            (0, _) => "No lints found".to_string(),
-            (before, after) if before != after =>
-                format!("{before} lints before overlap removal, {after} after"),
-            (before, _) => format!("{before} lints"),
+    if lint_count_before == 0 {
+        if !quiet {
+            println!("{}: No lints found", input.format_path());
         }
-    );
+    } else {
+        println!(
+            "{}: {}",
+            input.format_path(),
+            match (lint_count_before, lint_count_after) {
+                (before, after) if before != after =>
+                    format!("{before} lints before overlap removal, {after} after"),
+                (before, _) => format!("{before} lints"),
+            }
+        );
+    }
 
     // If we are in Ariadne mode, print the report
     if matches!(report_mode, ReportStyle::FullAriadne) {
@@ -762,7 +780,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
             curr_len_chars = 0;
             current_line_start_tok_idx = idx + 1;
         } else if matches!(tok.kind, TokenKind::Unlintable) {
-            // TODO would be more accurate to scan for \n in the tok.span.get_content(src)
+            // TODO would be more accurate to scan for \n in the tok.get_ch(src)
         } else {
             curr_len_chars += tok.span.len();
         }

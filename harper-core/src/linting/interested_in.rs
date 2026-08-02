@@ -34,7 +34,7 @@ impl ExprLinter for InterestedIn {
         let prep_span = tokens.last().unwrap().span;
         let prep_chars = prep_span.get_content(source);
 
-        if prep_chars.eq_ignore_ascii_case_chars(&['i', 'n']) {
+        if prep_chars.eq_ch(&['i', 'n']) {
             return None;
         }
 
@@ -45,7 +45,7 @@ impl ExprLinter for InterestedIn {
                 "in".chars().collect(),
                 prep_chars,
             )],
-            message: "The correct preposition to use with `interested` is `in`.".to_string(),
+            message: "The correct preposition to use with `interested` is `in`.".to_owned(),
             ..Default::default()
         })
     }

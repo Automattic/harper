@@ -5,7 +5,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -210,16 +210,6 @@ Message: |
       73 | bungalow at eighty a month, but at the last minute the firm ordered him to
 Suggest:
   - Replace with: “weather-beaten”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-      72 | sounded like a great idea. He found the house, a weatherbeaten cardboard
-         |                                                  ^~~~~~~~~~~~~ `weatherbeaten` should probably be written as `weather beaten`.
-      73 | bungalow at eighty a month, but at the last minute the firm ordered him to
-Suggest:
-  - Replace with: “weather beaten”
 
 
 
@@ -514,6 +504,13 @@ Message: |
 
 
 
+Lint:    Formatting (255 priority)
+Message: |
+     392 | “This idea is that we’re Nordics. I am, and you are, and you are, and—” After an
+         | ^ This quote has no termination.
+
+
+
 Lint:    Style (31 priority)
 Message: |
      394 | me again. ‘‘—And we’ve produced all the things that go to make civilization—oh,
@@ -521,24 +518,6 @@ Message: |
          | ^~~~~~~ An Oxford comma is necessary here.
 Suggest:
   - Insert “,”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-     395 | science and art, and all that. Do you see?”
-         |                                           ^ This quote has no termination.
-
-
-
-Lint:    Style (127 priority)
-Message: |
-     397 | There was something pathetic in his concentration, as if his complacency, more
-         |                                                                           ^~~~~
-     398 | acute than of old, was not enough to him any more. When, almost immediately, the
-         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “acuter”
 
 
 
@@ -568,7 +547,7 @@ Suggest:
 Lint:    Formatting (255 priority)
 Message: |
      452 | “Why—” she said hesitantly, ‘‘Tom’s got some woman in New York.”
-         |                                                                ^ This quote has no termination.
+         | ^ This quote has no termination.
 
 
 
@@ -635,16 +614,6 @@ Suggest:
   - Replace with: “contributory”
   - Replace with: “contributor”
   - Replace with: “contributors”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-     529 | the whole evening had been a trick of some sort to exact a contributary emotion
-         |                                                            ^~~~~~~~~~~~ `contributary` should probably be written as `con tributary`.
-     530 | from me. I waited, and sure enough, in a moment she looked at me with an
-Suggest:
-  - Replace with: “con tributary”
 
 
 
@@ -790,9 +759,9 @@ Message: |
      664 | it, you perceive, after a moment, the eyes of Doctor T. J. Eckleburg. The eyes
          |                                                      ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -802,8 +771,8 @@ Message: |
          |                                                         ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -824,9 +793,9 @@ Message: |
      665 | of Doctor T. J. Eckleburg are blue and gigantic—their retinas are one yard high.
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -836,8 +805,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -913,7 +882,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -1164,16 +1133,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1017 | “It’d be more discreet to go to Europe.”
-         |          ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “discreeter”
+  - Replace with: “BO”
 
 
 
@@ -1201,15 +1161,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    1060 | I never was any more crazy about him than I was about that man there.”
-         |                 ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “crazier”
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     1062 | She pointed suddenly at me, and every one looked at me accusingly. I tried to
@@ -1219,7 +1170,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     1065 | “The only crazy I was was when I married him. I knew right away I made a
          |                   ^~~~~~~ Did you mean to repeat this word?
@@ -1474,16 +1425,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    1202 | confident girls who weave here and there among the stouter and more stable,
-         |                                                                ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    1203 | become for a sharp, joyous moment the centre of a group, and then, excited with
-Suggest:
-  - Replace with: “stabler”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1202 | confident girls who weave here and there among the stouter and more stable,
@@ -1723,15 +1664,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    1413 | trembling a little to the stiff, tinny drip of the banjoes on the lawn.
-         |                                                    ^~~~~~~ `banjoes` should probably be written as `banjo es`.
-Suggest:
-  - Replace with: “banjo es”
-
-
-
 Lint:    Enhancement (31 priority)
 Message: |
     1457 | “I thought you knew, old sport. I’m afraid I’m not a very good host.”
@@ -1820,16 +1752,6 @@ Message: |
          |                   ^~~~~~~~~ Did you mean `Castoff's`?
 Suggest:
   - Replace with: “Castoff's”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1528 | drinking helped to set him off from his guests, for it seemed to me that he grew
-    1529 | more correct as the fraternal hilarity increased. When the “Jazz History of the
-         | ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “correcter”
 
 
 
@@ -1940,16 +1862,6 @@ Suggest:
 
 
 
-Lint:    WordChoice (127 priority)
-Message: |
-    1667 | “Don’t ask me,” said Owl Eyes, washing his hands of the whole matter. “I know
-    1668 | very little about driving—next to nothing. It happened, and that’s all I know.”
-         |                                ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     1683 | The shock that followed this declaration found voice in a sustained “Ah-h-h!” as
@@ -1987,7 +1899,7 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     1693 | “Wha’s matter?” he inquired calmly. “Did we run outa gas?”
-         |                                                 ^~~~ `outa` should probably be written as `out a`.
+         |                                                 ^~~~ `outa` should possibly be written as `out a`.
 Suggest:
   - Replace with: “out a”
 
@@ -2127,16 +2039,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     1792 | smile turned to the world and yet satisfy the demands of her hard, jaunty body.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    1800 | “You’re a rotten driver,” I protested. “Either you ought to be more careful, or
-         |                                                                ^~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    1801 | you oughtn’t to drive at all.”
-Suggest:
-  - Replace with: “carefuller”
 
 
 
@@ -2399,7 +2301,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -2627,7 +2529,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -2649,6 +2551,17 @@ Message: |
          |             ^~~~~~~~~~~~ Did you mean `Kissinger`?
 Suggest:
   - Replace with: “Kissinger”
+
+
+
+Lint:    Agreement (127 priority)
+Message: |
+    1877 | “the boarder”—I doubt if he had any other home. Of theatrical people there were
+         |                                                                            ^~~~~
+    1878 | Gus Waize and Horace O’Donavan and Lester Myer and George Duckweed and Francis
+         | ~~~ There is disagreement in number between the verb and the noun.
+Suggest:
+  - Replace with: “was a Gus”
 
 
 
@@ -3149,16 +3062,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    2073 | A dead man passed us in a hearse heaped with blooms, followed by two carriages
-    2074 | with drawn blinds, and by more cheerful carriages for friends. The friends
-         |                           ^~~~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “cheerfuller”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2076 | Europe, and I was glad that the sight of Gatsby’s splendid car was included in
@@ -3575,11 +3478,10 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` has a missing space between words.
+         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
     2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
 Suggest:
   - Replace with: “be aux”
-  - Replace with: “beau x”
 
 
 
@@ -3651,15 +3553,6 @@ Suggest:
   - Replace with: “dear's”
   - Replace with: “dares”
   - Replace with: “dearies”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2349 | “Here, deares’.” She groped around in a wastebasket she had with her on the bed
-         |        ^~~~~~ `deares` should probably be written as `dear es`.
-Suggest:
-  - Replace with: “dear es”
 
 
 
@@ -4509,7 +4402,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     3135 | uneasy anyhow until he had given them something, realizing in a vague way that
          |                                                                           ^~~~~
@@ -4674,15 +4567,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 48 words long.
-
-
-
-Lint:    WordChoice (127 priority)
-Message: |
-    3353 | inhabitants along a short-cut from nothing to nothing. She saw something awful
-         |                                            ^~ Use `too` here to mean ‘also’ or an excessive degree.
-Suggest:
-  - Replace with: “too”
 
 
 
@@ -5006,15 +4890,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
-         |      ^~~~ `bles` should probably be written as `bl es`.
-Suggest:
-  - Replace with: “bl es”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     3646 | “The bles-sed pre-cious! Did mother get powder on your old yellowy hair? Stand
@@ -5151,9 +5026,9 @@ Message: |
     3874 | while in silence. Then as Doctor T. J. Eckleburg’s faded eyes came into sight
          |                                  ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5163,8 +5038,8 @@ Message: |
          |                                     ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5229,9 +5104,9 @@ Message: |
     3948 | behind. Over the ashheaps the giant eyes of Doctor T. J. Eckleburg kept their
          |                                                    ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -5241,8 +5116,8 @@ Message: |
          |                                                       ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -5440,6 +5315,28 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                    ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
+    4070 | the window, followed by intermittent cries of “Yea—ea—ea!” and finally by a
+         |                                                       ^~ Did you mean to spell `ea` this way?
+Suggest:
+  - Replace with: “ear”
+  - Replace with: “eat”
+  - Replace with: “eh”
+
+
+
+Lint:    Spelling (63 priority)
+Message: |
     4073 | “We're getting old,” said Daisy. “lf we were young we’d rise and dance.”
          |                                   ^~ Did you mean to spell `lf` this way?
 Suggest:
@@ -5519,6 +5416,16 @@ Message: |
 
 
 
+Lint:    Punctuation (31 priority)
+Message: |
+    4149 | the idea you can count me out. . . . Nowadays people begin by sneering at family
+         |                                      ^~~~~~~~ Discourse markers at the beginning of a sentence should be followed by a comma.
+    4150 | life and family institutions, and next they’ll throw everything overboard and
+Suggest:
+  - Insert “,”
+
+
+
 Lint:    Formatting (255 priority)
 Message: |
     4175 | me.”
@@ -5534,21 +5441,6 @@ Message: |
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     4187 | conceal and it would be a privilege to partake vicariously of their emotions.
          | ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ This sentence is 41 words long.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    4201 | sometimes”—but there was no laughter in his eyes—“to think that you didn’t
-         |                                                  ^ This quote has no termination.
-    4202 | know.”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    4202 | know.”
-         |      ^ This quote has no termination.
 
 
 
@@ -5628,7 +5520,7 @@ Suggest:
 
 
 
-Lint:    Repetition (127 priority)
+Lint:    Repetition (128 priority)
 Message: |
     4347 | Her frightened eyes told that whatever intentions, whatever courage she had had,
          |                                                                         ^~~~~~~ Did you mean to repeat this word?
@@ -5961,7 +5853,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -5972,7 +5864,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -6003,7 +5895,7 @@ Message: |
 Suggest:
   - Replace with: “re”
   - Replace with: “a”
-  - Replace with: “e”
+  - Replace with: “i”
 
 
 
@@ -6071,9 +5963,8 @@ Suggest:
 Lint:    Typo (31 priority)
 Message: |
     4503 | “She ran out ina road. Son-of-a-bitch didn’t even stopus car.”
-         |                                                   ^~~~~~ `stopus` has a missing space between words.
+         |                                                   ^~~~~~ `stopus` should probably be written as `stop us`.
 Suggest:
-  - Replace with: “st opus”
   - Replace with: “stop us”
 
 
@@ -6150,14 +6041,6 @@ Suggest:
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    4509 | “One goin’ each way. Well, she”—his hand rose toward the blankets but stopped
-    4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
-         |                               ^ This quote has no termination.
-
-
-
 Lint:    Miscellaneous (31 priority)
 Message: |
     4510 | half way and fell to his side—“she ran out there an’ the one comin’ from N’York
@@ -6220,13 +6103,6 @@ Message: |
          |                       ^~~~ `goin` should probably be written as `go in`.
 Suggest:
   - Replace with: “go in”
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    4511 | knock right into her, goin’ thirty or forty miles an hour.”
-         |                                                           ^ This quote has no termination.
 
 
 
@@ -6399,6 +6275,15 @@ Message: |
 
 
 
+Lint:    WordChoice (31 priority)
+Message: |
+    4820 | “I can’t describe to you how surprised I was to find out I loved her, old sport.
+         |                                                 ^~~~~~~~ Use `find` instead of `find out` when you mean to discover something directly.
+Suggest:
+  - Replace with: “find”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     4822 | was in love with me too. She thought I knew a lot because I knew different
@@ -6454,16 +6339,6 @@ Message: |
          |              ^~~~~~~~~~~~~ Did you mean `challenging`?
 Suggest:
   - Replace with: “challenging”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    4883 | “Of course she might have loved him just for a minute, when they were first
-    4884 | married—and loved me more even then, do you see?”
-         |                      ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “evener”
 
 
 
@@ -6666,17 +6541,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-    5062 | morning—and from time to time sat down beside Wilson trying to keep him more
-         |                                                                         ^~~~~
-    5063 | quiet.
-         | ~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “quieter”
-
-
-
 Lint:    WordChoice (127 priority)
 Message: |
     5065 | “Have you got a church you go to sometimes, George? Maybe even if you haven’t
@@ -6774,21 +6638,6 @@ Suggest:
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    5151 | and walked to the rear window and leaned with his face pressed against it—“and I
-         |                                                                           ^ This quote has no termination.
-    5152 | said ‘God knows what you’ve been doing, everything you’ve been doing. You may
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5153 | fool me, but you can’t fool God!’”
-         |                                  ^ This quote has no termination.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5155 | Standing behind him, Michaelis saw with a shock that he was looking at the eyes
@@ -6806,9 +6655,9 @@ Message: |
     5156 | of Doctor T. J. Eckleburg, which had just emerged, pale and enormous, from the
          |           ^~ Did you mean to spell `T.` this way?
 Suggest:
-  - Replace with: “Ta”
   - Replace with: “Ti”
   - Replace with: “To”
+  - Replace with: “Th”
 
 
 
@@ -6818,8 +6667,8 @@ Message: |
          |              ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -7320,8 +7169,8 @@ Message: |
          |                                                               ^~ Did you mean to spell `J.` this way?
 Suggest:
   - Replace with: “Jo”
-  - Replace with: “J”
   - Replace with: “Jg”
+  - Replace with: “Jr”
 
 
 
@@ -7352,7 +7201,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “Bu”
+  - Replace with: “BO”
 
 
 
@@ -7363,7 +7212,7 @@ Message: |
 Suggest:
   - Replace with: “Fa”
   - Replace with: “Fe”
-  - Replace with: “Ff”
+  - Replace with: “Ft”
 
 
 
@@ -7489,21 +7338,6 @@ Suggest:
 
 
 
-Lint:    Formatting (255 priority)
-Message: |
-    5522 | of mine up to Albany. We were so thick like that in everything”—he held up two
-    5523 | bulbous fingers—“always together.”
-         |                 ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5523 | bulbous fingers—“always together.”
-         |                                  ^ This quote has no termination.
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     5552 | For a moment I thought he was going to suggest a “gonnegtion,” but he only
@@ -7523,16 +7357,6 @@ Suggest:
   - Replace with: “Gate”
   - Replace with: “Garth”
   - Replace with: “Goth”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    5568 | admiration from my eyes. He had shown it so often that I think it was more real
-         |                                                                       ^~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-    5569 | to him now than the house itself.
-Suggest:
-  - Replace with: “realer”
 
 
 
@@ -7624,9 +7448,9 @@ Message: |
     5613 | great for that. He told me I et like a hog once, and I beat him for it.”
          |                              ^~ Did you mean to spell `et` this way?
 Suggest:
-  - Replace with: “e”
-  - Replace with: “ea”
   - Replace with: “eat”
+  - Replace with: “eh”
+  - Replace with: “em”
 
 
 
@@ -7697,15 +7521,6 @@ Message: |
          |                                    ^~~~ This sentence does not start with a capital letter
 Suggest:
   - Replace with: “They”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-    5659 | One of my most vivid memories is of coming back West from prep school and later
-         |           ^~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “vividest”
 
 
 
@@ -7892,8 +7707,8 @@ Message: |
          |                                                                   ^~ Did you mean to spell `El` this way?
 Suggest:
   - Replace with: “Ell”
-  - Replace with: “E”
-  - Replace with: “Ea”
+  - Replace with: “Eel”
+  - Replace with: “Eh”
 
 
 
@@ -7960,20 +7775,6 @@ Lint:    Formatting (255 priority)
 Message: |
     5723 | for me, and I felt a little dizzy for a while.”
          |                                               ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5727 | “Oh, and do you remember”—she added—“a conversation we had once about driving a
-         |                                     ^ This quote has no termination.
-
-
-
-Lint:    Formatting (255 priority)
-Message: |
-    5728 | car?”
-         |     ^ This quote has no termination.
 
 
 

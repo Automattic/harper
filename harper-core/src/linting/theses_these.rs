@@ -30,7 +30,7 @@ impl ExprLinter for ThesesThese {
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let theses_token = matched_tokens.first()?;
 
-        let content = theses_token.span.get_content(source);
+        let content = theses_token.get_ch(source);
 
         let suggestions = vec![Suggestion::replace_with_match_case_str("these", content)];
 
@@ -38,7 +38,7 @@ impl ExprLinter for ThesesThese {
             span: theses_token.span,
             lint_kind: LintKind::Spelling,
             suggestions,
-            message: "Did you mean `these`?".to_string(),
+            message: "Did you mean `these`?".to_owned(),
             priority: 1,
         })
     }

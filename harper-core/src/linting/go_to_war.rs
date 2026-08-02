@@ -37,7 +37,7 @@ impl ExprLinter for GoToWar {
         let prep_span = prep_tok.span;
         let prep_chars = prep_span.get_content(src);
 
-        if prep_chars.eq_ignore_ascii_case_chars(&['t', 'o']) {
+        if prep_chars.eq_ch(&['t', 'o']) {
             return None;
         }
 
@@ -45,7 +45,7 @@ impl ExprLinter for GoToWar {
             span: prep_span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str("to", prep_chars)],
-            message: "Use `to` instead of `at`.".to_string(),
+            message: "Use `to` instead of `at`.".to_owned(),
             ..Default::default()
         })
     }

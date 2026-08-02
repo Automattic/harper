@@ -12,8 +12,8 @@ pub struct NoMatchFor {
 
 impl Default for NoMatchFor {
     fn default() -> Self {
-        let pre_context = FirstMatchOf::new(vec![
-            Box::new(InflectionOfBe::default()),
+        let pre_context = FirstMatchOf::new([
+            Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
             Box::new(WordSet::new(&[
                 "I'm", "we're", "you're", "he's", "she's", "it's", "they're", "Im", "were",
                 "youre", "hes", "shes", "its", "theyre",
@@ -41,8 +41,8 @@ impl ExprLinter for NoMatchFor {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let prep_tok = toks.last()?;
-        let prep_chars = prep_tok.span.get_content(src);
-        if prep_chars.eq_ignore_ascii_case_chars(&['f', 'o', 'r']) {
+        let prep_chars = prep_tok.get_ch(src);
+        if prep_chars.eq_ch(&['f', 'o', 'r']) {
             return None;
         }
 

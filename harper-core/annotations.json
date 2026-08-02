@@ -84,7 +84,7 @@
 			"base_metadata": {}
 		},
 		"H": {
-			"#": "'-ieth' suffix",
+			"#": "'-(ie)th' suffix",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -670,6 +670,18 @@
 			"propagate": true,
 			"metadata": {
 				"swear": true
+			}
+		},
+		"†": {
+			"#": "slang/informal/nonstandard (always) property",
+			"metadata": {
+				"slang": true
+			}
+		},
+		"‡": {
+			"#": "slang/informal/nonstandard (some senses only) property",
+			"metadata": {
+				"slang": true
 			}
 		},
 		"C": {

@@ -1,0 +1,9 @@
+expr main (at all cost)
+
+let message "Did you mean `at all costs`?"
+let description "Corrects `at all cost` to `at all costs`."
+let kind "Usage"
+let becomes "at all costs"
+
+test "Configs for my Arch system for maximum performance at all cost." "Configs for my Arch system for maximum performance at all costs."
+test "If ComfyUI wouldn't be such a helpful tool I would avoid it at all cost." "If ComfyUI wouldn't be such a helpful tool I would avoid it at all costs."

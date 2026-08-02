@@ -24,9 +24,7 @@ impl SeqExprExt for SequenceExpr {
             (t.kind.is_non_possessive_noun() || t.kind.is_adjective())
                 && !t.kind.is_preposition() // "in" etc.
                 && !t.kind.is_pronoun() // "who" etc.
-                && !t
-                    .span
-                    .get_content(s)
+                && !t.get_ch(s)
                     .eq_any_ignore_ascii_case_str(&["ah", "few", "first", "said", "uh"])
         })
     }
@@ -41,7 +39,8 @@ impl<D: Dictionary + 'static> OneOfTheSingular<D> {
             .then_zero_or_more_spaced(SequenceExpr::default().then_my_noun_or_adjective());
 
         Self {
-            expr: SequenceExpr::fixed_phrase("one of the ")
+            expr: SequenceExpr::word_seq(&["one", "of", "the"])
+                .t_ws()
                 .then(SequenceExpr::optional(advs.t_ws()).then(adj_or_nouns)),
             dict,
         }
@@ -136,7 +135,7 @@ impl<D: Dictionary + 'static> ExprLinter for OneOfTheSingular<D> {
             span: nounspan,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "The construction `one of the ...` should use a plural noun.".to_string(),
+            message: "The construction `one of the ...` should use a plural noun.".to_owned(),
             ..Default::default()
         })
     }

@@ -33,9 +33,9 @@ impl ExprLinter for Didnt {
             lint_kind: LintKind::Typo,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "didn't",
-                suspect.span.get_content(src),
+                suspect.get_ch(src),
             )],
-            message: "Consider using `didn't` here.".to_string(),
+            message: "Consider using `didn't` here.".to_owned(),
             priority: 63,
         })
     }

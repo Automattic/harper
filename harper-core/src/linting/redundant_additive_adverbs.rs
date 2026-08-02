@@ -15,8 +15,8 @@ impl Default for RedundantAdditiveAdverbs {
         let also_too = WordSet::new(&["also", "too"]);
         let as_well = FixedPhrase::from_phrase("as well");
 
-        let additive_adverb = Lrc::new(FirstMatchOf::new(vec![
-            Box::new(also_too),
+        let additive_adverb = Lrc::new(FirstMatchOf::new([
+            Box::new(also_too) as Box<dyn Expr>,
             Box::new(as_well),
         ]));
 
@@ -60,7 +60,7 @@ impl ExprLinter for RedundantAdditiveAdverbs {
         for word in toks
             .iter()
             .filter(|tok| tok.kind.is_word())
-            .map(|tok| tok.span.get_content(src))
+            .map(|tok| tok.get_ch(src))
             .collect::<Vec<_>>()
         {
             let term: &[char] = match word {

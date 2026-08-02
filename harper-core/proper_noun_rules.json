@@ -283,6 +283,7 @@
 			"Google Pixel",
 			"Google Nest",
 			"Google Workspace",
+			"Chrome Extension",
 			"Chrome Web Store",
 			"Google Chrome Web Store"
 		],
@@ -541,7 +542,7 @@
 		"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
 	},
 	"ProperNouns": {
-		"canonical": ["Bhagavad Gita", "Gilded Age", "Pax Americana"],
+		"canonical": ["Bhagavad Gita", "Gilded Age", "Jim Crow", "Pax Americana"],
 		"description": "Ensure proper capitalization of proper nouns."
 	},
 	"CompaniesProductsAndTrademarks": {

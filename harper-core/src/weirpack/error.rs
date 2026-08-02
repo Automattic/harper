@@ -20,4 +20,6 @@ pub enum Error {
     DuplicateManifest(&'static str),
     #[error("Invalid rule filename '{0}'.")]
     InvalidRuleFileName(String),
+    #[error("The Rune dictionary is not valid.")]
+    InvalidDictionaryFormat,
 }

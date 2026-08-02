@@ -3,10 +3,12 @@ import createElement from 'virtual-dom/create-element';
 import diff from 'virtual-dom/diff';
 import patch from 'virtual-dom/patch';
 
+type ParentResolver = () => Node;
+
 /** Wraps `virtual-dom` to create a box that is unaffected by the style of the rest of the page. */
 export default class RenderBox {
 	/** The node we reattach into if a host is removed by editor-managed DOM updates. */
-	private parent: Node;
+	private parentResolver: ParentResolver;
 	/** The element our virtual DOM is attached to. */
 	private virtualRoot: Element | undefined;
 	/** The current state of the virtual DOM */
@@ -14,16 +16,16 @@ export default class RenderBox {
 	/** The shadow DOM the `virtualRoot` is attached to. */
 	private shadowHost: HTMLElement;
 
-	constructor(parent: Node) {
-		this.parent = parent;
+	constructor(parent: Node | ParentResolver) {
+		this.parentResolver = typeof parent === 'function' ? parent : () => parent;
 		this.shadowHost = document.createElement('harper-render-box');
-		parent.appendChild(this.shadowHost);
+		this.parentResolver().appendChild(this.shadowHost);
 	}
 
 	/** Render to the box. */
 	public render(node: VNode) {
 		if (!this.shadowHost.isConnected) {
-			this.parent.appendChild(this.shadowHost);
+			this.parentResolver().appendChild(this.shadowHost);
 		}
 
 		if (!this.virtualRoot || !this.virtualTree) {

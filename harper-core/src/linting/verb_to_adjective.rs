@@ -46,8 +46,8 @@ impl ExprLinter for VerbToAdjective {
             suggestions: vec![],
             message: format!(
                 "`{}` is an adverb. Before the noun `{}`, this phrase more likely needs an adjective.",
-                adverb.span.get_content_string(source),
-                noun.span.get_content_string(source),
+                adverb.get_str(source),
+                noun.get_str(source),
             ),
             priority: 31,
         })

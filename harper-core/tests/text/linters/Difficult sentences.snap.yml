@@ -106,15 +106,6 @@ Suggest:
 
 
 
-Lint:    Typo (127 priority)
-Message: |
-     243 | His parents got him an in with the company.
-         |                     ^~ Did you mean `and in`?
-Suggest:
-  - Replace with: “and”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      249 | The bullet is about five centimetres in.
@@ -333,6 +324,15 @@ Suggest:
   - Replace with: “criticize”
   - Replace with: “criticism”
   - Replace with: “critic's”
+
+
+
+Lint:    Formatting (63 priority)
+Message: |
+     440 | The match result was 10-5, with John scoring three goals.
+         |                        ^ Use an en dash (–) in ranges of numbers. Ignore this if it is math.
+Suggest:
+  - Replace with: “–”
 
 
 

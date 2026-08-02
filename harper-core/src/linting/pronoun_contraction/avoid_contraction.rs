@@ -28,7 +28,7 @@ impl ExprLinter for AvoidContraction {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let word = matched_tokens[0].span.get_content(source);
+        let word = matched_tokens[0].get_ch(source);
 
         Some(Lint {
             span: matched_tokens[0].span,

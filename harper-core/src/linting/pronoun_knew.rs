@@ -31,7 +31,7 @@ impl Default for PronounKnew {
                 return false;
             }
 
-            let pronorm = tok.span.get_content_string(source).to_lowercase();
+            let pronorm = tok.get_str(source).to_lowercase();
             let excluded = ["every", "something", "nothing"];
             !excluded.contains(&&*pronorm)
         };
@@ -76,7 +76,7 @@ impl ExprLinter for PronounKnew {
                 "knew".chars().collect(),
                 typo_text,
             )],
-            message: "Did you mean “knew” (the past tense of “know”)?".to_string(),
+            message: "Did you mean “knew” (the past tense of “know”)?".to_owned(),
             priority: 31,
         })
     }

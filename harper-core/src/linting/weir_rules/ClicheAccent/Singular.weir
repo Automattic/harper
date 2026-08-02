@@ -1,0 +1,22 @@
+expr main cliche
+
+let message "Did you mean `cliché`?"
+let description "Adds the accent to the standard spelling of `cliché`."
+let kind "Spelling"
+let becomes "cliché"
+
+test "That ending is a cliche." "That ending is a cliché."
+test "It felt like a tired cliche." "It felt like a tired cliché."
+test "Avoid that cliche in the introduction." "Avoid that cliché in the introduction."
+test "The phrase has become a cliche." "The phrase has become a cliché."
+test "Calling it innovative is a cliche by now." "Calling it innovative is a cliché by now."
+test "This is another cliche, unfortunately." "This is another cliché, unfortunately."
+test "The plot twist was cliche-ridden." "The plot twist was cliché-ridden."
+test "Cliche examples can distract readers." "Cliché examples can distract readers."
+test "CLICHE headlines are easy to spot." "CLICHÉ headlines are easy to spot."
+test "A CLICHE? Not ideal." "A CLICHÉ? Not ideal."
+allows "That ending is a cliché."
+allows "The cliché-ridden plot bored me."
+allows "Clichés are sometimes useful shorthand."
+allows "Clichy is a commune in France."
+allows "The uncluttered sentence is not a stereotype."

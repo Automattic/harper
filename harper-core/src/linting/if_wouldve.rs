@@ -16,12 +16,12 @@ impl Default for IfWouldve {
                 .t_ws()
                 .then(NominalPhrase)
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     Box::new(
                         SequenceExpr::word_set(&["would", "had"])
                             .t_ws()
                             .then_word_set(&["have", "of"]),
-                    ),
+                    ) as Box<dyn Expr>,
                     Box::new(WordSet::new(&["would've", "wouldve", "had've", "hadve"])),
                 ])
                 .t_ws()
@@ -49,8 +49,8 @@ impl ExprLinter for IfWouldve {
             .rev()
             .step_by(2) // Check every other token since we're looking at pairs
             .find_map(|i| {
-                let prev = toks[i - 2].span.get_content(src);
-                let curr = toks[i].span.get_content(src);
+                let prev = toks[i - 2].get_ch(src);
+                let curr = toks[i].get_ch(src);
 
                 let would_had = &["would", "had"];
 
@@ -86,7 +86,7 @@ impl ExprLinter for IfWouldve {
                     vec!['h', 'a', 'd'],
                     span.get_content(src),
                 )],
-                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_string(),
+                message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_owned(),
                 ..Default::default()
             })
         })

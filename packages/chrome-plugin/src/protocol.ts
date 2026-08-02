@@ -1,13 +1,18 @@
-import type { Dialect, LintConfig, LintOptions } from 'harper.js';
+import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
 	| LintRequest
 	| GetConfigRequest
+	| GetStructuredConfigRequest
 	| SetConfigRequest
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetIsolateEnglishRequest
+	| SetIsolateEnglishRequest
+	| GetDelayRequest
+	| SetDelayRequest
 	| SetDomainStatusRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
@@ -34,9 +39,12 @@ export type Request =
 export type Response =
 	| LintResponse
 	| GetConfigResponse
+	| GetStructuredConfigResponse
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetIsolateEnglishResponse
+	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
@@ -52,7 +60,7 @@ export type LintRequest = {
 	kind: 'lint';
 	domain: string;
 	text: string;
-	options: LintOptions;
+	options?: LintOptions;
 };
 
 export type LintResponse = {
@@ -69,6 +77,15 @@ export type GetConfigResponse = {
 	config: LintConfig;
 };
 
+export type GetStructuredConfigRequest = {
+	kind: 'getStructuredConfig';
+};
+
+export type GetStructuredConfigResponse = {
+	kind: 'getStructuredConfig';
+	config: StructuredLintConfig;
+};
+
 export type SetConfigRequest = {
 	kind: 'setConfig';
 	config: LintConfig;
@@ -77,6 +94,20 @@ export type SetConfigRequest = {
 export type SetDialectRequest = {
 	kind: 'setDialect';
 	dialect: Dialect;
+};
+
+export type GetDelayRequest = {
+	kind: 'getDelay';
+};
+
+export type GetDelayResponse = {
+	kind: 'getDelay';
+	delay: number;
+};
+
+export type SetDelayRequest = {
+	kind: 'setDelay';
+	delay: number;
 };
 
 export type GetLintDescriptionsRequest = {
@@ -95,6 +126,20 @@ export type GetDialectRequest = {
 export type GetDialectResponse = {
 	kind: 'getDialect';
 	dialect: Dialect;
+};
+
+export type GetIsolateEnglishRequest = {
+	kind: 'getIsolateEnglish';
+};
+
+export type GetIsolateEnglishResponse = {
+	kind: 'getIsolateEnglish';
+	isolateEnglish: boolean;
+};
+
+export type SetIsolateEnglishRequest = {
+	kind: 'setIsolateEnglish';
+	isolateEnglish: boolean;
 };
 
 export type GetDomainStatusRequest = {

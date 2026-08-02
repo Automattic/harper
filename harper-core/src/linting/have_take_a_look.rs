@@ -35,7 +35,7 @@ impl ExprLinter for HaveTakeALook {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let light_verb_tok = toks.first().unwrap();
-        let light_verb_str = light_verb_tok.span.get_content_string(src);
+        let light_verb_str = light_verb_tok.get_str(src);
         let light_verb = light_verb_str.to_ascii_lowercase();
 
         let translated_light_verb: &[&str] = match light_verb.as_str() {
@@ -54,10 +54,7 @@ impl ExprLinter for HaveTakeALook {
         let suggestions = translated_light_verb
             .iter()
             .map(|s| {
-                Suggestion::replace_with_match_case(
-                    s.chars().collect(),
-                    light_verb_tok.span.get_content(src),
-                )
+                Suggestion::replace_with_match_case(s.chars().collect(), light_verb_tok.get_ch(src))
             })
             .collect();
 

@@ -1,5 +1,5 @@
 use harper_core::{
-    linting::{Lint, LintGroupConfig, LintKind},
+    linting::{FlatConfig, Lint, LintKind},
     Document, FatStringToken,
 };
 use serde::{Deserialize, Serialize};
@@ -30,7 +30,7 @@ pub enum RecordKind {
         kind: LintKind,
         context: Vec<FatStringToken>,
     },
-    LintConfigUpdate(LintGroupConfig),
+    LintConfigUpdate(FlatConfig),
 }
 
 impl RecordKind {

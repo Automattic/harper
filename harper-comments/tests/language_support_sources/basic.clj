@@ -6,9 +6,9 @@
 
 ;;;; Section Comment/Heading
 
-;;; Foo...
-;;; Bar...
-;;; Baz...
+;;; Foo
+;;; Bar
+;;; Baz
 
 ;; good
 (defn foo

@@ -11,9 +11,7 @@ pub struct NoLonger {
 impl Default for NoLonger {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("not")
-                .t_ws()
-                .t_aco("longer")
+            expr: SequenceExpr::word_seq(&["not", "longer"])
                 .then_optional(SequenceExpr::default().t_ws().then_kind_any(
                     &[
                         TokenKind::is_verb_lemma,
@@ -23,7 +21,7 @@ impl Default for NoLonger {
                         TokenKind::is_adjective,
                     ][..],
                 ))
-                .and_not(
+                .but_not(
                     SequenceExpr::anything()
                         .t_any()
                         .t_any()
@@ -51,9 +49,9 @@ impl ExprLinter for NoLonger {
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "no",
-                toks[0].span.get_content(src),
+                toks[0].get_ch(src),
             )],
-            message: "The correct expression is `no longer`.".to_string(),
+            message: "The correct expression is `no longer`.".to_owned(),
             ..Default::default()
         })
     }

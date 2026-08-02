@@ -84,7 +84,7 @@ fn dict_parsing() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "Typst");
+    assert_eq!(tokens[2].get_str(&charslice), "Typst");
 
     assert!(matches!(
         token_kinds.as_slice(),
@@ -157,8 +157,8 @@ fn header_parsing() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[0].span.get_content_string(&charslice), "Header");
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "Paragraph");
+    assert_eq!(tokens[0].get_str(&charslice), "Header");
+    assert_eq!(tokens[2].get_str(&charslice), "Paragraph");
 
     assert!(matches!(
         &token_kinds.as_slice(),
@@ -257,7 +257,7 @@ fn smart_apostrophe_newline() {
 
     let charslice = source.chars().collect_vec();
     let tokens = document.tokens().collect_vec();
-    assert_eq!(tokens[2].span.get_content_string(&charslice), "writing");
+    assert_eq!(tokens[2].get_str(&charslice), "writing");
 
     assert!(matches!(
         token_kinds.as_slice(),

@@ -14,6 +14,7 @@ test.describe('Lexical webcomponent regression', () => {
 		'Firefox extension build lacks background scripts',
 	);
 	test('Applying a suggestion does not duplicate text', async ({ page }) => {
+		test.slow();
 		await page.goto(TEST_PAGE_URL);
 
 		const lexical = getLexicalEditor(page);

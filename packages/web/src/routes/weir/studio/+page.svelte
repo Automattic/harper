@@ -1,9 +1,9 @@
 <script lang="ts">
+import { Isolate } from 'components';
 import { packWeirpackFiles, unpackWeirpackBytes } from 'harper.js';
 import type { ComponentType } from 'svelte';
 import { onMount } from 'svelte';
 import { browser } from '$app/environment';
-import Isolate from '$lib/components/Isolate.svelte';
 import type { Toast } from '$lib/components/Toasts.svelte';
 import Toasts from '$lib/components/Toasts.svelte';
 import WeirStudioStart from '$lib/components/WeirStudioStart.svelte';
@@ -373,8 +373,9 @@ onMount(async () => {
 	}
 	checkingStorage = false;
 
-	const [{ LocalLinter, binary }, { AceEditor }] = await Promise.all([
+	const [{ LocalLinter }, { binary }, { AceEditor }] = await Promise.all([
 		import('harper.js'),
+		import('harper.js/binary'),
 		import('svelte-ace'),
 	]);
 

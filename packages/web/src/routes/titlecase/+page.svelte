@@ -11,7 +11,10 @@ let titlecaseRun = 0;
 onMount(() => {
 	(async () => {
 		if (typeof Worker !== 'undefined') {
-			const { WorkerLinter, binary } = await import('harper.js');
+			const [{ WorkerLinter }, { binary }] = await Promise.all([
+				import('harper.js'),
+				import('harper.js/binary'),
+			]);
 			const newLinter = new WorkerLinter({ binary });
 
 			newLinter.setup();
@@ -70,7 +73,7 @@ $: if (linter) {
 			<article class="mb-8">
 				<Textarea
 					bind:value={text}
-					rows="1"
+					rows={1}
 					class="heading-textarea w-full font-serif text-2xl md:text-3xl font-bold border-none focus:ring-2 focus:ring-blue-200 bg-transparent p-0 resize-none overflow-hidden"
 					id="titleCaseInputField"
 				/>

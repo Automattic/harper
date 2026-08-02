@@ -23,7 +23,7 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
         return None;
     }
 
-    if matches!(word, ['S', 'Q', 'L'] | ['L', 'E', 'D']) {
+    if matches!(word, ['L', 'E', 'D'] | ['S', 'Q', 'L'] | ['U', 'R', 'L']) {
         return Some(InitialSound::Either);
     }
 
@@ -66,6 +66,12 @@ pub fn starts_with_vowel(word: &[char], dialect: Dialect) -> Option<InitialSound
 
     if matches!(word, ['u', 'b', 'i', ..]) {
         return Some(InitialSound::Either);
+    }
+
+    // Treat formats like `mp3` the same as `MP3`: the leading `m` is read as
+    // the letter name “em”, so it takes `an` rather than `a`.
+    if matches!(word, ['m', 'p', digit, ..] if digit.is_ascii_digit()) {
+        return Some(InitialSound::Vowel);
     }
 
     if matches!(word, ['e', 'u', 'l', 'e', ..]) {

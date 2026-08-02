@@ -54,7 +54,7 @@ impl SingleTokenPattern for Word {
             return false;
         }
 
-        let chars = token.span.get_content(source);
+        let chars = token.get_ch(source);
         if self.case_sensitive {
             chars == self.word.as_slice()
         } else {

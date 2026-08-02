@@ -15,7 +15,8 @@ RUN cargo install wasm-pack
 COPY . .
 
 WORKDIR /usr/build/harper-wasm
-RUN wasm-pack build --target web
+RUN wasm-pack build --target web --out-name harper_wasm
+RUN wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
 RUN cargo clean
 
 FROM node:${NODE_VERSION} AS node-build
@@ -42,7 +43,11 @@ RUN pnpm build && ./docs.sh
 WORKDIR /usr/build/packages/lint-framework
 RUN pnpm build
 
+WORKDIR /usr/build/packages/harper-editor
+RUN pnpm build
+
 WORKDIR /usr/build/packages/web
+ENV ENABLE_ADMIN_ROUTES=false
 RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 

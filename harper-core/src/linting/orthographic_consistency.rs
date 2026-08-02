@@ -64,7 +64,7 @@ impl ExprLinter for OrthographicConsistency {
             return None;
         };
 
-        let chars = word.span.get_content(source);
+        let chars = word.get_ch(source);
 
         let cur_flags = OrthFlags::from_letters(chars);
 

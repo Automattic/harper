@@ -18,11 +18,11 @@ impl Default for DoMistake {
             expr: Box::new(
                 SequenceExpr::word_set(&["do", "did", "does", "doing", "done"])
                     .t_ws()
-                    .then_longest_of(vec![
+                    .then_longest_of([
                         Box::new(WordSet::new(&[
                             "a", "an", "the", "that", "these", "this", "those", "another", "many",
                             "several", "some", "my", "our", "your", "his", "her", "its", "their",
-                        ])),
+                        ])) as Box<dyn Expr>,
                         Box::new(FixedPhrase::from_phrase("a lot of")),
                         Box::new(FixedPhrase::from_phrase("lots of")),
                         Box::new(FixedPhrase::from_phrase("that kind of")),
@@ -60,13 +60,13 @@ impl ExprLinter for DoMistake {
             return None;
         }
 
-        let make = if chars.eq_ignore_ascii_case_str("do") {
+        let make = if chars.eq_str("do") {
             "make"
-        } else if chars.eq_ignore_ascii_case_str("did") || chars.eq_ignore_ascii_case_str("done") {
+        } else if chars.eq_str("did") || chars.eq_str("done") {
             "made"
-        } else if chars.eq_ignore_ascii_case_str("does") {
+        } else if chars.eq_str("does") {
             "makes"
-        } else if chars.eq_ignore_ascii_case_str("doing") {
+        } else if chars.eq_str("doing") {
             "making"
         } else {
             return None;
@@ -78,7 +78,7 @@ impl ExprLinter for DoMistake {
             span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::replace_with_match_case(make, chars)],
-            message: "In English we `make` mistakes, not `do` them".to_string(),
+            message: "In English we `make` mistakes, not `do` them".to_owned(),
             ..Default::default()
         })
     }

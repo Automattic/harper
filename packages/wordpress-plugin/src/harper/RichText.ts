@@ -1,4 +1,5 @@
-import { binaryInlined, type Lint, LocalLinter, type Suggestion } from 'harper.js';
+import { type Lint, LocalLinter, type Suggestion } from 'harper.js';
+import { binaryInlined } from 'harper.js/binaryInlined';
 import type { LintBox } from './Box';
 import DataBlock from './DataBlock';
 import { getRangeForTextSpan } from './domUtils';

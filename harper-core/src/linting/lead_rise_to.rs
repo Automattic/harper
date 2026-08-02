@@ -62,7 +62,7 @@ impl ExprLinter for LeadRiseTo {
             span: lspan,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "The correct idiom is `give rise to`.".to_string(),
+            message: "The correct idiom is `give rise to`.".to_owned(),
             ..Default::default()
         })
     }

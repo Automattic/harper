@@ -16,10 +16,7 @@ const OVER_EXCEPTIONS: &[&str] = &["all", "joy", "long", "night", "reading", "st
 const UNDER_EXCEPTIONS: &[&str] = &["development", "mine"];
 const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
 
-impl<D> DisjointPrefixes<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> DisjointPrefixes<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::word_set(&[
@@ -41,7 +38,7 @@ where
             .t_ws_h()
             .then_kind_either(TokenKind::is_verb, TokenKind::is_noun)
             .then_optional_hyphen()
-            .and_not(SequenceExpr::any_of(vec![
+            .but_not(SequenceExpr::any_of(vec![
                 // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
                 Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
                 // Don't merge "co op" whether separated by space or hyphen.
@@ -57,10 +54,7 @@ where
     }
 }
 
-impl<D> ExprLinter for DisjointPrefixes<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
@@ -77,7 +71,10 @@ where
         let (pre, _) = ctx?;
 
         // Cloud Native Pub-Sub System at Pinterest -> subsystem
-        if pre.last().is_some_and(|p| p.kind.is_hyphen()) {
+        if pre
+            .last()
+            .is_some_and(|p| p.kind.is_hyphen() || p.kind.is_apostrophe())
+        {
             return None;
         }
 
@@ -85,9 +82,9 @@ where
         // that could result from naively using toks.span()?.get_content_string(src)
         let original = format!(
             "{}{}{}",
-            toks[0].span.get_content_string(src),
+            toks[0].get_str(src),
             if toks[1].kind.is_hyphen() { '-' } else { ' ' },
-            toks[2].span.get_content_string(src)
+            toks[2].get_str(src)
         );
 
         // If the original form is in the dictionary, return None
@@ -97,17 +94,9 @@ where
 
         let mut hyphenated = None;
         if !toks[1].kind.is_hyphen() {
-            hyphenated = Some(format!(
-                "{}-{}",
-                toks[0].span.get_content_string(src),
-                toks[2].span.get_content_string(src)
-            ));
+            hyphenated = Some(format!("{}-{}", toks[0].get_str(src), toks[2].get_str(src)));
         }
-        let joined = Some(format!(
-            "{}{}",
-            toks[0].span.get_content_string(src),
-            toks[2].span.get_content_string(src)
-        ));
+        let joined = Some(format!("{}{}", toks[0].get_str(src), toks[2].get_str(src)));
 
         // Check if either joined or hyphenated form is in the dictionary
         let joined_valid = joined
@@ -141,7 +130,7 @@ where
             lint_kind: LintKind::Spelling,
             suggestions,
             message: "This looks like a prefix that can be joined with the rest of the word."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }
@@ -174,6 +163,22 @@ mod tests {
             "Advanced Nginx configuration available for super users",
             DisjointPrefixes::new(FstDictionary::curated()),
             "Advanced Nginx configuration available for superusers",
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_ascii_apostrophe() {
+        assert_no_lints(
+            "you 're fresh so you don't neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn dont_join_contraction_suffix_after_typographic_apostrophe() {
+        assert_no_lints(
+            "you ’re fresh so you don’t neglect them",
+            DisjointPrefixes::new(FstDictionary::curated()),
         );
     }
 

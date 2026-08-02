@@ -18,7 +18,7 @@ impl ImpliesQuantity {
                     return Some(false);
                 }
 
-                let source = token.span.get_content(source);
+                let source = token.get_ch(source);
 
                 match source {
                     ['a'] => Some(false),

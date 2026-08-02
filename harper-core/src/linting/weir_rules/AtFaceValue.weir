@@ -1,8 +1,10 @@
-expr main (on face value)
+expr main [(at face values), (on face value), (on face values)]
 
-let message "`at face value is more idiomatic and more common."
-let description "Corrects `on face value` to the more usual `at face value`."
+let message "`at face value` is more idiomatic and more common."
+let description "Corrects nonstandard variants of `at face value`."
 let kind "WordChoice"
 let becomes "at face value"
 
 test "Obviously what you want is possible and on face value it's a trivial change on our end." "Obviously what you want is possible and at face value it's a trivial change on our end."
+test "their own work should of course not always be taken at face values" "their own work should of course not always be taken at face value"
+test "Sounds like you havent experienced all that Go can offer, and disposed it on face values." "Sounds like you havent experienced all that Go can offer, and disposed it at face value."

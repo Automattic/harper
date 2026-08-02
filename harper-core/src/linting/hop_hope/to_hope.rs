@@ -33,7 +33,7 @@ impl ExprLinter for ToHope {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let offending_word = &matched_tokens[2];
-        let word_chars = offending_word.span.get_content(source);
+        let word_chars = offending_word.get_ch(source);
 
         Some(Lint {
             span: offending_word.span,
@@ -42,7 +42,7 @@ impl ExprLinter for ToHope {
                 char_string!("hope").to_vec(),
                 word_chars,
             )],
-            message: "Did you mean to use 'hope' instead of 'hop' in this context?".to_string(),
+            message: "Did you mean to use 'hope' instead of 'hop' in this context?".to_owned(),
             ..Default::default()
         })
     }

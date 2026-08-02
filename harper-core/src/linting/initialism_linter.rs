@@ -47,7 +47,7 @@ impl ExprLinter for InitialismLinter {
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         let tok = matched_tokens.first()?;
-        let source = tok.span.get_content(source);
+        let source = tok.get_ch(source);
 
         let suggestions = self
             .expansions_lower

@@ -45,7 +45,7 @@ where
             return None;
         }
 
-        let word_chars = first.span.get_content(source);
+        let word_chars = first.get_ch(source);
         let inner_pattern = self.exprs.get(word_chars)?;
 
         inner_pattern.run(cursor, tokens, source)
