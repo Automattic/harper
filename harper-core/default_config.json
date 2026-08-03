@@ -4216,6 +4216,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BetterOffServed",
+								"state": true,
+								"label": "Better Off Served"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BewareOf",
 								"state": true,
 								"label": "Beware Of"

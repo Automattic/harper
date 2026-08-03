@@ -37,6 +37,7 @@ use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
+use super::better_off_served::BetterOffServed;
 use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
@@ -627,6 +628,7 @@ impl LintGroup {
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
+        insert_expr_rule!(BetterOffServed);
         insert_expr_rule!(BoringWords);
         insert_expr_rule!(Bought);
         insert_expr_rule!(BrandBrandish);

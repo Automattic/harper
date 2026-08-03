@@ -34,6 +34,7 @@ mod be_adjective_confusions;
 mod be_allowed;
 mod behind_the_scenes;
 mod best_of_all_time;
+mod better_off_served;
 mod boring_words;
 mod bought;
 mod brand_brandish;
