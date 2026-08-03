@@ -228,7 +228,7 @@ impl Linter {
     /// Note that this can mean constructing the curated dictionary, which is the most expensive operation
     /// in Harper.
     pub fn new(dialect: Dialect) -> Self {
-        let ling_language = dialect.clone().into();
+        let ling_language = dialect.into();
         let dictionary =
             Self::construct_merged_dict(&[Arc::new(MutableDictionary::default())], &ling_language);
         let lint_group = Self::create_lint_group(dictionary.clone(), &ling_language);
@@ -270,9 +270,7 @@ impl Linter {
         let mut lint_dict = MergedDictionary::new();
 
         // Add the curated dictionary for the specific language
-        lint_dict.add_dictionary(harper_core::language::registry::dictionary(
-            language.clone(),
-        ));
+        lint_dict.add_dictionary(harper_core::language::registry::dictionary(*language));
 
         for dict in dicts {
             lint_dict.add_dictionary(Arc::new(dict.clone()));
@@ -286,7 +284,7 @@ impl Linter {
         dictionary: Arc<impl Dictionary + 'static>,
         language: &harper_core::language::languages::Language,
     ) -> LintGroup {
-        harper_core::language::registry::new_curated_for_language(dictionary, language.clone())
+        harper_core::language::registry::new_curated_for_language(dictionary, *language)
     }
 
     /// Helper method to quickly check if a plain string is likely intended to be English
@@ -571,7 +569,7 @@ impl Linter {
         // Create dialect flags based on the language
         let dialect_flags = match self.ling_language {
             harper_core::language::languages::Language::English(dialect) => {
-                DialectFlags::from_dialect(dialect.into())
+                DialectFlags::from_dialect(dialect)
             }
             #[cfg(feature = "de")]
             harper_core::language::languages::Language::German(_) => DialectFlags::empty(), // German doesn't use legacy dialect flags yet
