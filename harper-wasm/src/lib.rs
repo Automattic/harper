@@ -161,9 +161,7 @@ impl From<Dialect> for harper_core::language::languages::Language {
                 harper_core::language::languages::Language::English(EnglishDialect::American)
             }
             #[cfg(not(feature = "pt"))]
-            Dialect::PortuguesePT
-            | Dialect::PortugueseBR
-            | Dialect::PortugueseAO => {
+            Dialect::PortuguesePT | Dialect::PortugueseBR | Dialect::PortugueseAO => {
                 harper_core::language::languages::Language::English(EnglishDialect::American)
             }
             #[cfg(not(feature = "sk"))]
