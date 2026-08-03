@@ -99,34 +99,7 @@ impl Language {
     }
 }
 
-/// Specifies a language dialect, often used for linting.
-/// This enum supports English, German, Polish, Portuguese, and Slovak dialects.
-#[wasm_bindgen]
-#[derive(Serialize, Deserialize, Debug, Clone, Copy)]
-pub enum Dialect {
-    // English dialects
-    American,
-    British,
-    Australian,
-    Canadian,
-    Indian,
-
-    // German dialects
-    GermanStandard,
-    GermanAustrian,
-    GermanSwiss,
-
-    // Polish dialects
-    PolishStandard,
-
-    // Portuguese dialects
-    PortugueseEuropean,
-    PortugueseBrazilian,
-    PortugueseAfrican,
-
-    // Slovak dialects
-    SlovakStandard,
-}
+include!("generated_dialect.rs");
 
 impl From<Dialect> for harper_core::language::languages::Language {
     fn from(dialect: Dialect) -> Self {
@@ -163,15 +136,15 @@ impl From<Dialect> for harper_core::language::languages::Language {
                 harper_core::language::languages::Language::Polish(PolishDialect::Standard)
             }
             #[cfg(feature = "pt")]
-            Dialect::PortugueseEuropean => {
+            Dialect::PortuguesePT => {
                 harper_core::language::languages::Language::Portuguese(PortugueseDialect::European)
             }
             #[cfg(feature = "pt")]
-            Dialect::PortugueseBrazilian => {
+            Dialect::PortugueseBR => {
                 harper_core::language::languages::Language::Portuguese(PortugueseDialect::Brazilian)
             }
             #[cfg(feature = "pt")]
-            Dialect::PortugueseAfrican => {
+            Dialect::PortugueseAO => {
                 harper_core::language::languages::Language::Portuguese(PortugueseDialect::African)
             }
             #[cfg(feature = "sk")]
@@ -188,9 +161,9 @@ impl From<Dialect> for harper_core::language::languages::Language {
                 harper_core::language::languages::Language::English(EnglishDialect::American)
             }
             #[cfg(not(feature = "pt"))]
-            Dialect::PortugueseEuropean
-            | Dialect::PortugueseBrazilian
-            | Dialect::PortugueseAfrican => {
+            Dialect::PortuguesePT
+            | Dialect::PortugueseBR
+            | Dialect::PortugueseAO => {
                 harper_core::language::languages::Language::English(EnglishDialect::American)
             }
             #[cfg(not(feature = "sk"))]

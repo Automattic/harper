@@ -1,9 +1,6 @@
 target
 build
 !harper-core/build
-
-# Auto-generated dialect file for harper-wasm
-harper-wasm/src/generated_dialect.rs
 .idea
 .vscode
 .DS_Store
