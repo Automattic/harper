@@ -22,7 +22,7 @@ jobs:
           node-version-file: ".node-version"
       - name: Enable Corepack
         run: corepack enable
-      - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
+      - uses: cargo-bins/cargo-binstall@f3284c9c2dd42d52f4437bf415a5712669699999 # main
       - name: Install wasm-pack
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Build
