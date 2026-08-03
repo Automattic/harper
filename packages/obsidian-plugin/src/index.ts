@@ -1,6 +1,6 @@
 import type { EditorView } from '@codemirror/view';
 import { Dialect } from 'harper.js';
-import { editorInfoField, MarkdownView, Menu, Notice, Plugin } from 'obsidian';
+import { addIcon, editorInfoField, MarkdownView, Menu, Notice, Plugin } from 'obsidian';
 import logoSvg from '../logo.svg?raw';
 import logoSvgDisabled from '../logo-disabled.svg?raw';
 import { HarperSettingTab } from './HarperSettingTab';
@@ -16,7 +16,7 @@ import {
 	ignoreVisibleTooltipDiagnostic,
 	navigateDiagnostic,
 } from './lint';
-import { Harper_Sidebar_View, SidebarView } from './SidebarView';
+import { SidebarView } from './SidebarView';
 import State from './State';
 
 export default class HarperPlugin extends Plugin {
@@ -30,6 +30,8 @@ export default class HarperPlugin extends Plugin {
 			new Notice('Please update your Electron version before running Harper.', 0);
 			return;
 		}
+
+		addIcon('harper-logo', logoSvg);
 
 		this.app.workspace.onLayoutReady(async () => {
 			this.state = new State(
@@ -46,18 +48,18 @@ export default class HarperPlugin extends Plugin {
 		this.settings = new HarperSettingTab(this.app, this);
 		this.addSettingTab(this.settings);
 
-		this.registerView(Harper_Sidebar_View, (leaf) => new SidebarView(leaf, this));
+		this.registerView('harper-sidebar-view', (leaf) => new SidebarView(leaf, this));
 
 		this.setupCommands();
 	}
 
 	async activateSidebarView() {
-		if (this.app.workspace.getLeavesOfType(Harper_Sidebar_View).length > 0) {
+		if (this.app.workspace.getLeavesOfType('harper-sidebar-view').length > 0) {
 			return;
 		}
 		const leaf = this.app.workspace.getRightLeaf(false);
 		await leaf.setViewState({
-			type: Harper_Sidebar_View,
+			type: 'harper-sidebar-view',
 			active: true,
 		});
 		this.app.workspace.revealLeaf(leaf);
@@ -68,7 +70,7 @@ export default class HarperPlugin extends Plugin {
 		const editorView = this.getActiveEditorView();
 		if (!editorView) return;
 
-		const leaves = this.app.workspace.getLeavesOfType(Harper_Sidebar_View);
+		const leaves = this.app.workspace.getLeavesOfType('harper-sidebar-view');
 		if (leaves.length > 0) {
 			const sidebar = leaves[0].view as SidebarView;
 			if (sidebar) {
@@ -172,13 +174,14 @@ export default class HarperPlugin extends Plugin {
 	}
 
 	private async toggleSidebar() {
-		const existingLeaves = this.app.workspace.getLeavesOfType(Harper_Sidebar_View);
+		const existingLeaves = this.app.workspace.getLeavesOfType('harper-sidebar-view');
 		if (existingLeaves.length > 0) {
 			existingLeaves.forEach((leaf) => {
 				leaf.detach();
 			});
 		} else {
 			await this.activateSidebarView();
+			await this.state.reinitialize();
 		}
 	}
 
@@ -193,7 +196,7 @@ export default class HarperPlugin extends Plugin {
 
 		this.addCommand({
 			id: 'harper-toggle-sidebar',
-			name: 'Toggle harper spellcheck sidebar',
+			name: 'Toggle spellcheck sidebar',
 			callback: () => {
 				this.toggleSidebar();
 			},
