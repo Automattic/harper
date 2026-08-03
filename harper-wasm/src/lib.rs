@@ -22,7 +22,18 @@ use harper_core::{DialectFlags, RegexMasker};
 
 // Import language module types
 use harper_core::language::english::dialects::EnglishDialect;
+
+#[cfg(feature = "de")]
 use harper_core::language::german::dialects::GermanDialect;
+
+#[cfg(feature = "pl")]
+use harper_core::language::polish::dialects::PolishDialect;
+
+#[cfg(feature = "pt")]
+use harper_core::language::portuguese::dialects::PortugueseDialect;
+
+#[cfg(feature = "sk")]
+use harper_core::language::slovak::dialects::SlovakDialect;
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
@@ -89,7 +100,7 @@ impl Language {
 }
 
 /// Specifies a language dialect, often used for linting.
-/// This enum supports English and German dialects.
+/// This enum supports English, German, Polish, Portuguese, and Slovak dialects.
 #[wasm_bindgen]
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum Dialect {
@@ -104,6 +115,17 @@ pub enum Dialect {
     GermanStandard,
     GermanAustrian,
     GermanSwiss,
+
+    // Polish dialects
+    PolishStandard,
+
+    // Portuguese dialects
+    PortugueseEuropean,
+    PortugueseBrazilian,
+    PortugueseAfrican,
+
+    // Slovak dialects
+    SlovakStandard,
 }
 
 impl From<Dialect> for harper_core::language::languages::Language {
@@ -124,32 +146,56 @@ impl From<Dialect> for harper_core::language::languages::Language {
             Dialect::Indian => {
                 harper_core::language::languages::Language::English(EnglishDialect::Indian)
             }
+            #[cfg(feature = "de")]
             Dialect::GermanStandard => {
                 harper_core::language::languages::Language::German(GermanDialect::Standard)
             }
+            #[cfg(feature = "de")]
             Dialect::GermanAustrian => {
                 harper_core::language::languages::Language::German(GermanDialect::Austrian)
             }
+            #[cfg(feature = "de")]
             Dialect::GermanSwiss => {
                 harper_core::language::languages::Language::German(GermanDialect::Swiss)
             }
-        }
-    }
-}
-
-use harper_core::Dialect as LegacyDialect;
-
-impl From<Dialect> for LegacyDialect {
-    fn from(dialect: Dialect) -> Self {
-        match dialect {
-            Dialect::American => LegacyDialect::American,
-            Dialect::Canadian => LegacyDialect::Canadian,
-            Dialect::Australian => LegacyDialect::Australian,
-            Dialect::British => LegacyDialect::British,
-            Dialect::Indian => LegacyDialect::Indian,
-            // For German dialects, fall back to American when converted to legacy Dialect
+            #[cfg(feature = "pl")]
+            Dialect::PolishStandard => {
+                harper_core::language::languages::Language::Polish(PolishDialect::Standard)
+            }
+            #[cfg(feature = "pt")]
+            Dialect::PortugueseEuropean => {
+                harper_core::language::languages::Language::Portuguese(PortugueseDialect::European)
+            }
+            #[cfg(feature = "pt")]
+            Dialect::PortugueseBrazilian => {
+                harper_core::language::languages::Language::Portuguese(PortugueseDialect::Brazilian)
+            }
+            #[cfg(feature = "pt")]
+            Dialect::PortugueseAfrican => {
+                harper_core::language::languages::Language::Portuguese(PortugueseDialect::African)
+            }
+            #[cfg(feature = "sk")]
+            Dialect::SlovakStandard => {
+                harper_core::language::languages::Language::Slovak(SlovakDialect::Standard)
+            }
+            // Fallback to English for dialects whose language support is not compiled in
+            #[cfg(not(feature = "de"))]
             Dialect::GermanStandard | Dialect::GermanAustrian | Dialect::GermanSwiss => {
-                LegacyDialect::American
+                harper_core::language::languages::Language::English(EnglishDialect::American)
+            }
+            #[cfg(not(feature = "pl"))]
+            Dialect::PolishStandard => {
+                harper_core::language::languages::Language::English(EnglishDialect::American)
+            }
+            #[cfg(not(feature = "pt"))]
+            Dialect::PortugueseEuropean
+            | Dialect::PortugueseBrazilian
+            | Dialect::PortugueseAfrican => {
+                harper_core::language::languages::Language::English(EnglishDialect::American)
+            }
+            #[cfg(not(feature = "sk"))]
+            Dialect::SlovakStandard => {
+                harper_core::language::languages::Language::English(EnglishDialect::American)
             }
         }
     }
@@ -527,10 +573,16 @@ impl Linter {
             harper_core::language::languages::Language::English(dialect) => {
                 DialectFlags::from_dialect(dialect.into())
             }
+            #[cfg(feature = "de")]
             harper_core::language::languages::Language::German(_) => DialectFlags::empty(), // German doesn't use legacy dialect flags yet
+            #[cfg(feature = "pl")]
             harper_core::language::languages::Language::Polish(_) => DialectFlags::empty(),
+            #[cfg(feature = "pt")]
             harper_core::language::languages::Language::Portuguese(_) => DialectFlags::empty(),
+            #[cfg(feature = "sk")]
             harper_core::language::languages::Language::Slovak(_) => DialectFlags::empty(),
+            // Fallback for any other language variants (when features are enabled in harper-core but not in harper-wasm)
+            _ => DialectFlags::empty(),
         };
 
         self.user_dictionary
@@ -786,18 +838,28 @@ fn char_idx_to_js_str_idx(char_idx: usize, char_str: &[char]) -> usize {
 
 #[wasm_bindgen]
 pub fn get_default_lint_config_as_json() -> String {
-    use harper_core::Dialect as LegacyDialect;
+    use harper_core::language::english::dialects::EnglishDialect;
+    use harper_core::language::languages::Language;
+    use harper_core::language::registry;
+
+    let dictionary: Arc<FstDictionary> = Arc::new(MutableDictionary::new().into());
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), LegacyDialect::American).config;
+        registry::new_curated_for_language(dictionary, Language::English(EnglishDialect::American))
+            .config;
 
     serde_json::to_string(&config).unwrap()
 }
 
 #[wasm_bindgen]
 pub fn get_default_lint_config() -> JsValue {
-    use harper_core::Dialect as LegacyDialect;
+    use harper_core::language::english::dialects::EnglishDialect;
+    use harper_core::language::languages::Language;
+    use harper_core::language::registry;
+
+    let dictionary: Arc<FstDictionary> = Arc::new(MutableDictionary::new().into());
     let config =
-        LintGroup::new_curated(MutableDictionary::new().into(), LegacyDialect::American).config;
+        registry::new_curated_for_language(dictionary, Language::English(EnglishDialect::American))
+            .config;
 
     // Important for downstream JSON serialization
     let serializer = Serializer::json_compatible();
