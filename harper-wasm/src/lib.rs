@@ -538,6 +538,7 @@ impl Linter {
         let init_len = self.user_dictionary.word_count();
 
         // Create dialect flags based on the language
+        #[allow(unreachable_patterns)]
         let dialect_flags = match self.ling_language {
             harper_core::language::languages::Language::English(dialect) => {
                 DialectFlags::from_dialect(dialect)
