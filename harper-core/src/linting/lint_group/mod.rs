@@ -250,6 +250,7 @@ use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
 use super::take_a_look_to::TakeALookTo;
+use super::take_care_of::TakeCareOf;
 use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
@@ -834,6 +835,7 @@ impl LintGroup {
         insert_expr_rule!(SplitWords);
         insert_struct_rule!(SubjectPronoun);
         insert_expr_rule!(TakeALookTo);
+        insert_expr_rule!(TakeCareOf);
         insert_expr_rule!(TakeMedicine);
         insert_expr_rule!(ThatThan);
         insert_expr_rule!(ThatWhich);
@@ -1217,11 +1219,29 @@ mod tests {
     }
 
     #[test]
+    fn fixes_extention_correctly() {
+        assert_suggestion_result(
+            "There is no extention quite like this one.",
+            test_linter(),
+            "There is no extention quite like this one.",
+        );
+    }
+
+    #[test]
     fn fixes_easir() {
         assert_suggestion_result(
             "It makes it easir to select it.",
             test_linter(),
             "It makes it easier to select it.",
+        );
+    }
+
+    #[test]
+    fn fixes_breakfest() {
+        assert_suggestion_result(
+            "Ice cream for breakfest?",
+            test_linter(),
+            "Ice cream for breakfast?",
         );
     }
 
@@ -1232,6 +1252,11 @@ mod tests {
             test_linter(),
             "It was in their budget range.",
         );
+    }
+
+    #[test]
+    fn allows_chest_compressions() {
+        assert_no_lints("Please continue chest compressions.", test_linter());
     }
 
     /// Tests that no linters' descriptions contain errors handled by other linters.
