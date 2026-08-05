@@ -11,13 +11,9 @@ pub struct OnceOrTwice {
 
 impl Default for OnceOrTwice {
     fn default() -> Self {
-        let pattern = SequenceExpr::aco("once")
-            .then_whitespace()
-            .t_aco("a")
-            .then_whitespace()
-            .t_aco("twice");
-
-        Self { expr: pattern }
+        Self {
+            expr: SequenceExpr::word_seq(&["once", "a", "twice"]),
+        }
     }
 }
 

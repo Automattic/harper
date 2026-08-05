@@ -41,10 +41,10 @@ impl ExprLinter for FarBeIt {
                     vec!['f', 'r', 'o', 'm'],
                     content,
                 )],
-                "`Far be it for` is a common error for `far be it from`".to_string(),
+                "`Far be it for` is a common error for `far be it from`".to_owned(),
             )
         } else {
-            (vec![], "The correct usage of the idiom is `far be it from` [someone] to [do something]. Try to rephrase the sentence.".to_string())
+            (vec![], "The correct usage of the idiom is `far be it from` [someone] to [do something]. Try to rephrase the sentence.".to_owned())
         };
 
         Some(Lint {

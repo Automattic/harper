@@ -78,13 +78,13 @@ impl Expr for TimeUnitExpr {
         let units_other_apos = WordSet::new(&["moment's", "night's", "weekend's"]);
 
         let units = if self.include_plurals_only {
-            LongestMatchOf::new(vec![
-                Box::new(units_definite_plural),
+            LongestMatchOf::new([
+                Box::new(units_definite_plural) as Box<dyn Expr>,
                 Box::new(units_other_plural),
             ])
         } else {
-            LongestMatchOf::new(vec![
-                Box::new(units_definite_singular),
+            LongestMatchOf::new([
+                Box::new(units_definite_singular) as Box<dyn Expr>,
                 Box::new(units_definite_plural),
                 Box::new(units_other_singular),
                 Box::new(units_other_plural),

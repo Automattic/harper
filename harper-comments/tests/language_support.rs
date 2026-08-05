@@ -49,6 +49,8 @@ create_test!(dirty.lua, 1);
 create_test!(clean.rs, 0);
 create_test!(clean.sol, 0);
 create_test!(clean.ps1, 0);
+create_test!(clean.gleam, 0);
+create_test!(dirty.gleam, 3);
 create_test!(jsdoc.ts, 4);
 create_test!(issue_96.lua, 0);
 create_test!(merged_lines.ts, 1);

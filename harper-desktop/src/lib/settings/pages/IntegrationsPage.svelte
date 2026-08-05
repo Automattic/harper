@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { Client, type Integration } from '$lib/client';
+import AppIcon from '../components/AppIcon.svelte';
 import AppPickerModal from '../components/AppPickerModal.svelte';
 
 interface IntegrationRow extends Integration {
@@ -8,13 +9,13 @@ interface IntegrationRow extends Integration {
 }
 
 let integrations: Integration[] = [];
+let integrationApps: IntegrationRow[] = [];
 let integrationsError = '';
 let isIntegrationsLoading = true;
 let isIntegrationsSaving = false;
 let appPickerOpen = false;
 let newBundleId = '';
 
-$: integrationApps = integrations.map(toIntegrationRow);
 $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
 onMount(() => {
@@ -27,6 +28,7 @@ async function loadIntegrations() {
 
 	try {
 		integrations = await Client.getIntegrations();
+		integrationApps = integrations.map(toIntegrationRow);
 	} catch (error) {
 		integrationsError = `Unable to load integrations: ${error}`;
 	} finally {
@@ -43,9 +45,13 @@ function toIntegrationRow(integration: Integration): IntegrationRow {
 
 async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = integrations.map((integration) =>
 		integration.bundle_id === bundleId ? { ...integration, enabled } : integration,
+	);
+	integrationApps = integrationApps.map((app) =>
+		app.bundle_id === bundleId ? { ...app, enabled } : app,
 	);
 	isIntegrationsSaving = true;
 	integrationsError = '';
@@ -54,6 +60,7 @@ async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 		await Client.setIntegrationEnabled(bundleId, enabled);
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to update integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
@@ -62,8 +69,10 @@ async function setIntegrationEnabled(bundleId: string, enabled: boolean) {
 
 async function removeIntegration(bundleId: string) {
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = integrations.filter((integration) => integration.bundle_id !== bundleId);
+	integrationApps = integrationApps.filter((app) => app.bundle_id !== bundleId);
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
@@ -71,6 +80,7 @@ async function removeIntegration(bundleId: string) {
 		await Client.removeIntegration(bundleId);
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to remove integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
@@ -88,11 +98,13 @@ async function addIntegration(bundleId: string) {
 	}
 
 	const previousIntegrations = integrations;
+	const previousIntegrationApps = integrationApps;
 
 	integrations = [
 		...integrations,
 		{ bundle_id: trimmedBundleId, enabled: true, display_name: trimmedBundleId },
 	];
+	integrationApps = integrations.map(toIntegrationRow);
 	isIntegrationsSaving = true;
 	integrationsError = '';
 
@@ -102,6 +114,7 @@ async function addIntegration(bundleId: string) {
 		closeAppPicker();
 	} catch (error) {
 		integrations = previousIntegrations;
+		integrationApps = previousIntegrationApps;
 		integrationsError = `Unable to add integration: ${error}`;
 	} finally {
 		isIntegrationsSaving = false;
@@ -133,7 +146,7 @@ function closeAppPicker() {
       {:else}
         {#each integrationApps as app}
           <div class="app-row">
-            <div class="app-tile" style="--app-tint: #6b6f78">{app.name[0]}</div>
+            <AppIcon bundleId={app.bundle_id} name={app.name} />
             <div class="grow">
               <strong>{app.name}</strong>
               <p>{app.bundle_id}</p>

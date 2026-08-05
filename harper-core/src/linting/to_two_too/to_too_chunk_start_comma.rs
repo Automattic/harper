@@ -2,7 +2,6 @@ use crate::{
     Token,
     char_string::CharStringExt,
     expr::{AnchorStart, Expr, SequenceExpr},
-    patterns::WhitespacePattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -16,7 +15,7 @@ impl Default for ToTooChunkStartComma {
     fn default() -> Self {
         let expr = SequenceExpr::with(AnchorStart)
             .t_aco("to")
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_comma();
 
         Self {
@@ -44,7 +43,7 @@ impl ExprLinter for ToTooChunkStartComma {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

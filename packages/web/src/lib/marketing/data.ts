@@ -17,6 +17,7 @@ export type Integration = {
 	categoryLabel: string;
 	tag?: string;
 	platform?: string;
+	version?: string;
 	cta: 'install' | 'docs';
 	color?: string;
 	fg?: string;
@@ -106,7 +107,7 @@ export const integrationCategories: IntegrationCategory[] = [
 		items: [
 			{
 				id: 'vscode',
-				name: 'Visual Studio Code',
+				name: 'VS Code',
 				desc: 'Marketplace extension.',
 				href: marketingLinks.vscode,
 				platform: 'VS Code, Cursor',

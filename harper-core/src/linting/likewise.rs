@@ -13,7 +13,7 @@ impl Default for Likewise {
     fn default() -> Self {
         let mut expr = All::default();
 
-        expr.add(SequenceExpr::aco("like").then_whitespace().t_aco("wise"));
+        expr.add(SequenceExpr::word_seq(&["like", "wise"]));
         expr.add(SequenceExpr::unless(
             SequenceExpr::anything()
                 .then_whitespace()

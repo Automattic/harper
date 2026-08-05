@@ -1,11 +1,11 @@
 {
 	"name": "harper-desktop",
-	"version": "2.3.1",
+	"version": "2.7.0",
 	"description": "",
 	"type": "module",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "vite build",
+		"build": "vite build -l warn",
 		"preview": "vite preview",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",

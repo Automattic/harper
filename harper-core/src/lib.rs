@@ -101,6 +101,45 @@ pub fn remove_overlaps(lints: &mut Vec<Lint>) {
     lints.remove_indices(remove_indices);
 }
 
+/// Remove lints whose character spans overlap any nonempty match of an expression.
+///
+/// This is useful for letting higher-level token patterns mark text ranges where otherwise valid
+/// lower-level lints should be suppressed. Expression matches are checked from every token index,
+/// including overlapping matches, and zero-width expression matches are ignored.
+pub fn remove_lints_overlapping_expr<E: expr::Expr + ?Sized>(
+    expr: &E,
+    document: &Document,
+    lints: &mut Vec<Lint>,
+) {
+    if lints.is_empty() {
+        return;
+    }
+
+    let tokens = document.get_tokens();
+    let source = document.get_source();
+    let matched_spans: Vec<Span<char>> = (0..tokens.len())
+        .filter_map(|cursor| {
+            let token_span = expr.run(cursor, tokens, source)?;
+
+            if token_span.is_empty() {
+                None
+            } else {
+                Some(token_span.to_char_span(tokens))
+            }
+        })
+        .collect();
+
+    if matched_spans.is_empty() {
+        return;
+    }
+
+    lints.retain(|lint| {
+        !matched_spans
+            .iter()
+            .any(|matched_span| lint.span.overlaps_with(*matched_span))
+    });
+}
+
 /// Remove overlapping lints from a map keyed by rule name, similar to [`remove_overlaps`].
 ///
 /// The map is treated as if all contained lints were in a single flat collection, ensuring the
@@ -171,20 +210,27 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
-    use crate::linting::Lint;
+    use crate::linting::{Lint, create_test_pool};
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Dialect, Document, Span,
+        expr::{AnchorStart, SequenceExpr},
         linting::{LintGroup, Linter},
-        remove_overlaps,
+        remove_lints_overlapping_expr, remove_overlaps,
     };
+
+    create_test_pool!(
+        LintGroup,
+        LintGroup,
+        LintGroup::new_curated(FstDictionary::curated(), Dialect::American)
+    );
 
     #[test]
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let mut linter = test_linter();
 
         let mut lints = linter.lint(&doc);
 
@@ -195,12 +241,51 @@ mod tests {
         assert_eq!(lints.len(), 3);
     }
 
+    #[test]
+    fn remove_lints_overlapping_expr_removes_overlapping_lints() {
+        let doc = Document::new_plain_english_curated("keep bad keep");
+        let mut lints = vec![Lint {
+            span: Span::new(5, 8),
+            ..Default::default()
+        }];
+
+        remove_lints_overlapping_expr(&SequenceExpr::aco("bad"), &doc, &mut lints);
+
+        assert!(lints.is_empty());
+    }
+
+    #[test]
+    fn remove_lints_overlapping_expr_keeps_non_overlapping_lints() {
+        let doc = Document::new_plain_english_curated("keep bad keep");
+        let mut lints = vec![Lint {
+            span: Span::new(0, 4),
+            ..Default::default()
+        }];
+
+        remove_lints_overlapping_expr(&SequenceExpr::aco("bad"), &doc, &mut lints);
+
+        assert_eq!(lints.len(), 1);
+    }
+
+    #[test]
+    fn remove_lints_overlapping_expr_ignores_zero_width_matches() {
+        let doc = Document::new_plain_english_curated("bad");
+        let mut lints = vec![Lint {
+            span: Span::new(0, 3),
+            ..Default::default()
+        }];
+
+        remove_lints_overlapping_expr(&AnchorStart, &doc, &mut lints);
+
+        assert_eq!(lints.len(), 1);
+    }
+
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+        let linter = test_linter();
 
-        let mut lint_map = linter.organized_lints(&doc);
+        let mut lint_map = linter.run_with_inner(|l| l.organized_lints(&doc));
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
 
         remove_overlaps_map(&mut lint_map);

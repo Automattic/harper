@@ -41,7 +41,7 @@ impl ExprLinter for ArriveTo {
             span,
             lint_kind: LintKind::Usage,
             suggestions,
-            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_string(),
+            message: "If the noun is a destination, use 'at' or 'in' instead of 'to'.".to_owned(),
             ..Default::default()
         })
     }

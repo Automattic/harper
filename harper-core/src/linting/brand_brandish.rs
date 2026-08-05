@@ -58,7 +58,7 @@ impl ExprLinter for BrandBrandish {
                 },
                 verb_chars,
             )],
-            message: "`Brandish` means to wield a weapon. You probably mean `brand`.".to_string(),
+            message: "`Brandish` means to wield a weapon. You probably mean `brand`.".to_owned(),
             ..Default::default()
         })
     }

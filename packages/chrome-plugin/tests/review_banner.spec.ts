@@ -25,9 +25,11 @@ test.describe('review banner', () => {
 		const popupUrl = `chrome-extension://${extensionId}/popup.html`;
 		await page.goto(popupUrl);
 
-		// 8 days
-		await page.clock.install();
-		await page.clock.fastForward(15 * 1000 * 60 * 60 * 24);
+		await background.evaluate(() =>
+			chrome.storage.local.set({
+				installedOn: new Date(Date.now() - 15 * 86400000).toISOString(),
+			}),
+		);
 
 		await page.getByText("Let's start writing").click();
 

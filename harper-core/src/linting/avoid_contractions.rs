@@ -144,7 +144,7 @@ impl ExprLinter for AvoidContractions {
                 expansion,
                 tok.get_ch(src),
             )],
-            message: "Consider expanding this contraction.".to_string(),
+            message: "Consider expanding this contraction.".to_owned(),
             priority: 63,
         })
     }

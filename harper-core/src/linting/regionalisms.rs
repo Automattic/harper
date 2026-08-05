@@ -23,7 +23,7 @@ use CanFlag::*;
 /// Represents a unique concept that has different regional terms across English dialects.
 /// Each is named by an alphabetical concatenation of the terms that refer to the same concept.
 /// This allows us to suggest appropriate regional alternatives when a term from another dialect is detected.
-#[derive(PartialEq)]
+#[derive(PartialEq, Copy, Clone)]
 enum Concept {
     AubergineBrinjalEggplant,
     AuberginesBrinjalsEggplants,
@@ -55,6 +55,7 @@ enum Concept {
     FootpathPavementSidewalk,
     GasolinePetrol,
     GasStationPetrolStationServiceStation,
+    GodownWarehouse,
     // HooverVacuumCleaner - Hoover is also a surname and vacuum cleaner is universal.
     JumperSweater,
     Lakh,
@@ -365,6 +366,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: GasolinePetrol,
     },
     Term {
+        term: "godown",
+        flag: Flag,
+        dialects: &[Indian],
+        concept: GodownWarehouse,
+    },
+    Term {
         term: "India",
         flag: UniversalTerm,
         dialects: &[American, Australian, British, Canadian, Indian],
@@ -630,6 +637,12 @@ const REGIONAL_TERMS: &[Term<'_>] = &[
         concept: PhotocopyXerox,
     },
     Term {
+        term: "warehouse",
+        flag: UniversalTerm,
+        dialects: &[American, Australian, British, Canadian],
+        concept: GodownWarehouse,
+    },
+    Term {
         term: "wrench",
         flag: Flag,
         dialects: &[American],
@@ -697,17 +710,14 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
-        let concept = match REGIONAL_TERMS
+        let concept = REGIONAL_TERMS
             .iter()
-            .find(|row| row.term == flagged_term_string)
-        {
-            Some(term) => &term.concept,
-            None => return None, // No matching term found, so nothing to lint
-        };
+            .find(|row| row.term == flagged_term_string)?
+            .concept;
 
         let other_terms = REGIONAL_TERMS
             .iter()
-            .filter(|row| row.concept == *concept)
+            .filter(|row| row.concept == concept)
             .filter_map(|row| {
                 if row.dialects.contains(&linter_dialect) {
                     Some(&row.term)
@@ -907,5 +917,10 @@ mod tests {
     #[test]
     fn americans_dont_say_nought() {
         assert_suggestion_result("nought", Regionalisms::new(Dialect::American), "zero");
+    }
+
+    #[test]
+    fn godown_isnt_used_outside_asia() {
+        assert_suggestion_result("godown", Regionalisms::new(Dialect::American), "warehouse");
     }
 }

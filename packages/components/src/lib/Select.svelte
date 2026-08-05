@@ -1,9 +1,9 @@
 <script lang="ts">
-import type { SelectHTMLAttributes } from 'svelte/elements';
+import type { HTMLSelectAttributes } from 'svelte/elements';
 
 type SelectSize = 'sm' | 'md' | 'lg';
 type SelectItem = {
-	value: SelectHTMLAttributes['value'];
+	value: HTMLSelectAttributes['value'];
 	name?: string;
 	label?: string;
 	disabled?: boolean;
@@ -13,7 +13,7 @@ type SelectItem = {
 export let size: SelectSize = 'md';
 export let items: SelectItem[] | undefined = undefined;
 export let className: string | undefined = undefined;
-export let value: SelectHTMLAttributes['value'] = undefined;
+export let value: HTMLSelectAttributes['value'] = undefined;
 
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};

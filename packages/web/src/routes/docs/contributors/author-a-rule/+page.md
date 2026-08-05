@@ -168,14 +168,14 @@ use super::correct_number_suffix::CorrectNumberSuffix;
 // [svp! df:+]use super::my_rule::MyRule;
 ```
 
-Finally, enable it in a macro invocation near the bottom:
+Finally, add it in a macro invocation near the bottom:
 
 ```rust title="harper-core/src/linting/lint_group.rs"
-insert_struct_rule!(AdjectiveOfA, true);
-insert_expr_rule!(BackInTheDay, true);
-insert_struct_rule!(WordPressDotcom, true);
-insert_expr_rule!(OutOfDate, true);
-// [svp! df:+]insert_expr_rule!(MyRule, true);
+insert_struct_rule!(AdjectiveOfA);
+insert_expr_rule!(BackInTheDay);
+insert_struct_rule!(WordPressDotcom);
+insert_expr_rule!(OutOfDate);
+// [svp! df:+]insert_expr_rule!(MyRule);
 ```
 
 If you use a `ExprLinter`, use `insert_expr_rule` to take advantage of Harper's aggressive caching.

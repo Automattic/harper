@@ -66,29 +66,32 @@ function getInitInput(binary: string): InitInput {
 	return binary;
 }
 
-const loadBinaryWithKey = pMemoize(
-	async (_cacheKey: string, binary: string, glueFlavor: WasmGlueFlavor) => {
-		const exports = loadGlue(glueFlavor);
+async function loadBinaryUncached(binary: string, glueFlavor: WasmGlueFlavor): Promise<WasmModule> {
+	const exports = loadGlue(glueFlavor);
 
-		const defaultGlueBinary = getDefaultGlueBinary(binary, glueFlavor);
-		if (defaultGlueBinary != null) {
-			try {
-				await defaultGlue.default({ module_or_path: getInitInput(defaultGlueBinary) });
-			} catch (err) {
-				if (glueFlavor === 'slim') {
-					throw err;
-				}
+	const defaultGlueBinary = getDefaultGlueBinary(binary, glueFlavor);
+	if (defaultGlueBinary != null) {
+		try {
+			await defaultGlue.default({ module_or_path: getInitInput(defaultGlueBinary) });
+		} catch (err) {
+			if (glueFlavor === 'slim') {
+				throw err;
 			}
 		}
+	}
 
-		await exports.default({ module_or_path: getInitInput(binary) });
+	await exports.default({ module_or_path: getInitInput(binary) });
 
-		return exports;
-	},
-);
+	return exports;
+}
+
+const loadBinaryByFlavor: Record<WasmGlueFlavor, (binary: string) => Promise<WasmModule>> = {
+	full: pMemoize((binary: string) => loadBinaryUncached(binary, 'full')),
+	slim: pMemoize((binary: string) => loadBinaryUncached(binary, 'slim')),
+};
 
 function loadBinary(binary: string, glueFlavor: WasmGlueFlavor) {
-	return loadBinaryWithKey(`${glueFlavor}:${binary}`, binary, glueFlavor);
+	return loadBinaryByFlavor[glueFlavor](binary);
 }
 
 export interface BinaryModule {

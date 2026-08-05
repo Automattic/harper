@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import AppIcon from '../components/AppIcon.svelte';
 import { createInitialSettingsState, type SectionId, type SettingsState } from '../settings-data';
 
 type SetupStep = {
@@ -370,7 +371,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted" && isLoadingIntegrations}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>Checking TextEdit</strong>
                       <p>Loading integration state...</p>
@@ -378,7 +379,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted" && isTextEditEnabled}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>TextEdit enabled</strong>
                       <p>Harper is configured to check TextEdit.</p>
@@ -386,7 +387,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted"}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>TextEdit detected</strong>
                       <p>A good starter app for trying Harper.</p>

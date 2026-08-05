@@ -54,7 +54,7 @@ impl Default for ModalOf {
 
         Self {
             expr: LongestMatchOf::new(vec![
-                Box::new(anyword_might_of_course),
+                Box::new(anyword_might_of_course) as Box<dyn Expr>,
                 Box::new(modal_of_course),
                 Box::new(anyword_might_of),
                 Box::new(noun_will_of_naive),
@@ -118,7 +118,7 @@ impl ExprLinter for ModalOf {
                 modal_have,
                 span_modal_of.get_content(source_chars),
             )],
-            message: "Use `have` rather than `of` here.".to_string(),
+            message: "Use `have` rather than `of` here.".to_owned(),
             priority: 126,
         })
     }
@@ -131,43 +131,46 @@ impl ExprLinter for ModalOf {
 #[cfg(test)]
 mod tests {
     use super::ModalOf;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    create_test_pool!(ModalOf, ModalOf, ModalOf::default());
 
     // atomic unit tests
 
     #[test]
     fn test_lowercase() {
-        assert_suggestion_result("could of", ModalOf::default(), "could have");
+        assert_suggestion_result("could of", test_linter(), "could have");
     }
 
     #[test]
     fn test_negative() {
-        assert_suggestion_result("mightn't of", ModalOf::default(), "mightn't have");
+        assert_suggestion_result("mightn't of", test_linter(), "mightn't have");
     }
 
     #[test]
     fn test_uppercase_negative() {
-        assert_suggestion_result("Mustn't of", ModalOf::default(), "Mustn't have");
+        assert_suggestion_result("Mustn't of", test_linter(), "Mustn't have");
     }
 
     #[test]
     fn test_false_positive_of_course() {
-        assert_lint_count("should of course", ModalOf::default(), 0);
+        assert_lint_count("should of course", test_linter(), 0);
     }
 
     #[test]
     fn test_false_positive_the_might_of() {
-        assert_lint_count("the might of", ModalOf::default(), 0);
+        assert_lint_count("the might of", test_linter(), 0);
     }
 
     #[test]
     fn test_false_positive_great_might_of() {
-        assert_lint_count("great might of", ModalOf::default(), 0);
+        assert_lint_count("great might of", test_linter(), 0);
     }
 
     #[test]
     fn test_false_positive_capital_negative() {
-        assert_lint_count("Wouldn't of course", ModalOf::default(), 0);
+        assert_lint_count("Wouldn't of course", test_linter(), 0);
     }
 
     // real-world tests
@@ -176,7 +179,7 @@ mod tests {
     fn test_buggy_implementation() {
         assert_lint_count(
             "... could of just been a buggy implementation",
-            ModalOf::default(),
+            test_linter(),
             1,
         );
     }
@@ -185,7 +188,7 @@ mod tests {
     fn test_missed_one() {
         assert_lint_count(
             "We already have a function ... that nedb can understand so we might of missed one.",
-            ModalOf::default(),
+            test_linter(),
             1,
         );
     }
@@ -194,7 +197,7 @@ mod tests {
     fn test_user_option() {
         assert_lint_count(
             "im more likely to believe you might of left in the 'user' option",
-            ModalOf::default(),
+            test_linter(),
             1,
         );
     }
@@ -203,7 +206,7 @@ mod tests {
     fn catches_must_of() {
         assert_suggestion_result(
             "Ah I must of missed that part.",
-            ModalOf::default(),
+            test_linter(),
             "Ah I must have missed that part.",
         );
     }
@@ -212,7 +215,7 @@ mod tests {
     fn catches_should_of() {
         assert_lint_count(
             "Yeah I should of just mentioned it should of been a for of.",
-            ModalOf::default(),
+            test_linter(),
             2,
         );
     }
@@ -221,7 +224,7 @@ mod tests {
     fn catches_would_of() {
         assert_suggestion_result(
             "now this issue would of caused hundreds of thousands of extra lines",
-            ModalOf::default(),
+            test_linter(),
             "now this issue would have caused hundreds of thousands of extra lines",
         );
     }
@@ -230,7 +233,7 @@ mod tests {
     fn doesnt_catch_you_could_of_course() {
         assert_lint_count(
             "You could of course explicit the else with each possibility",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -239,7 +242,7 @@ mod tests {
     fn doesnt_catch_compiler_could_of_course() {
         assert_lint_count(
             "The compiler could of course detect this too",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -248,7 +251,7 @@ mod tests {
     fn doesnt_catch_might_of_course_be() {
         assert_lint_count(
             "There might of course be other places where not implementing the IMemberSource might break ...",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -257,7 +260,7 @@ mod tests {
     fn doesnt_catch_not_a_must_of_course() {
         assert_lint_count(
             "Not a must of course if the convention should be .ts",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -266,7 +269,7 @@ mod tests {
     fn doesnt_catch_must_of_course_also() {
         assert_lint_count(
             "the schedular must of course also have run through",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -275,7 +278,7 @@ mod tests {
     fn doesnt_catch_should_of_course_not() {
         assert_lint_count(
             "not being local should of course not be supported",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
@@ -284,61 +287,57 @@ mod tests {
     fn doesnt_catch_would_of_course_just() {
         assert_lint_count(
             "I would of course just test this by compiling with MATX_MULTI_GPU=ON",
-            ModalOf::default(),
+            test_linter(),
             0,
         );
     }
 
     #[test]
     fn doesnt_catch_to_take_on_the_full_might_of_nato() {
-        assert_lint_count("To take on the full might of NATO.", ModalOf::default(), 0);
+        assert_lint_count("To take on the full might of NATO.", test_linter(), 0);
     }
 
     #[test]
     fn doesnt_catch_mixed_case_of_course() {
-        assert_lint_count(
-            "... for now you could of Course put ...",
-            ModalOf::default(),
-            0,
-        );
+        assert_lint_count("... for now you could of Course put ...", test_linter(), 0);
     }
 
     #[test]
     fn catches_mixed_case_could_of_put() {
-        assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1);
+        assert_lint_count("... for now you could of Put ...", test_linter(), 1);
     }
 
     #[test]
     fn doesnt_catch_noun_will_of() {
-        assert_lint_count("the will of the many", ModalOf::default(), 0);
+        assert_lint_count("the will of the many", test_linter(), 0);
     }
 
     #[test]
     fn doesnt_catch_noun_will_of_edgecase() {
-        assert_lint_count("he sent us a will of his", ModalOf::default(), 0);
+        assert_lint_count("he sent us a will of his", test_linter(), 0);
     }
 
     #[test]
     fn catch_modal_will_of() {
-        assert_lint_count("that will of an impact", ModalOf::default(), 1);
+        assert_lint_count("that will of an impact", test_linter(), 1);
     }
 
     #[test]
     fn catch_may_of() {
         assert_suggestion_result(
             "I may of made a mistake",
-            ModalOf::default(),
+            test_linter(),
             "I may have made a mistake",
         );
     }
 
     #[test]
     fn dont_flag_in_may_of_last_year_bug_2786() {
-        assert_no_lints("This happened in May of last year.", ModalOf::default());
+        assert_no_lints("This happened in May of last year.", test_linter());
     }
 
     #[test]
     fn dont_flag_can_of_red_bull_2807() {
-        assert_no_lints("I drank a can of Red Bull.", ModalOf::default());
+        assert_no_lints("I drank a can of Red Bull.", test_linter());
     }
 }

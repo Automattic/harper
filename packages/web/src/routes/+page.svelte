@@ -6,8 +6,8 @@ export const frontmatter = {
 
 <script lang="ts">
 import { browser } from '$app/environment';
-import Arrow from '$lib/components/Arrow.svelte';
-import TestimonialCollection from '$lib/components/TestimonialCollection.svelte';
+import { Arrow } from 'components';
+import { TestimonialCollection } from 'components';
 import { createEditorLinter } from '$lib/createEditorLinter';
 import FaqSection from '$lib/marketing/FaqSection.svelte';
 import HarperMark from '$lib/marketing/HarperMark.svelte';
@@ -19,11 +19,15 @@ import PrivacySpeedCards from '$lib/marketing/PrivacySpeedCards.svelte';
 import { featuredIntegrationIds, integrations, marketingLinks } from '$lib/marketing/data';
 import { LazyEditor } from 'harper-editor';
 import type { Linter } from 'harper.js';
+import { isUpToDate, loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
 
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
+
+const VERSION_UPTODATE = 'Up-to-date';
+const VERSION_BEHIND = 'This version is slightly behind the core engine due to a delay';
 
 const testimonials = [
 	{
@@ -125,7 +129,8 @@ const faqs = [
 	},
 	{
 		q: 'Where Did the Name Harper Come From?',
-		a: 'See this blog post.',
+		a: 'See this blog post',
+		href: 'https://elijahpotter.dev/articles/naming-harper',
 	},
 	{
 		q: 'Do I Need a GPU?',
@@ -141,10 +146,17 @@ const faqs = [
 	},
 ];
 
+let liveFxVer = '';
+let liveJsVer = '';
+let liveRustVer = '';
+let liveVscodeVer = '';
+
 onMount(() => {
 	void (async () => {
 		linter = await createEditorLinter();
 	})();
+
+    void loadLiveVersions();
 });
 
 </script>
@@ -169,9 +181,6 @@ onMount(() => {
 			<p class="!mt-[1.35rem] !mb-0 !font-serif text-[1.38rem] leading-[1.35]">
 				The <strong class="inline-block -rotate-1 bg-primary-100 p-1 text-black">Free</strong> Grammar Checker
 				That Respects Your Privacy
-			</p>
-			<p class="!mt-3 !mb-0 !font-serif text-[1.12rem] leading-[1.35] text-[#807a6e] italic dark:text-white/55">
-				I make you look like a grammar genius.
 			</p>
 			<div class="mt-7 flex flex-wrap gap-[0.65rem] max-[620px]:flex-col max-[620px]:items-stretch">
 				<PillButton href="/get" size="lg">Get Harper</PillButton>
@@ -240,14 +249,30 @@ onMount(() => {
 				{#each featuredIntegrationIds as id}
 					{@const integration = integrations.find((item) => item.id === id)}
 					{#if integration}
+						{@const upToDate = isUpToDate($liveVersions.harper, $liveVersions[integration.id])}
+						{@const titleText = upToDate ? VERSION_UPTODATE : upToDate === false ? VERSION_BEHIND : null}
 						<a
 							class="flex items-center gap-3 rounded-[0.65rem] px-3 py-[0.65rem] !text-[#1c1a16] no-underline hover:bg-black/[0.04] hover:no-underline dark:!text-white dark:hover:bg-white/10"
 							href={integration.href}
 						>
 							<IntegrationTile {integration} size={32} />
 							<span class="flex min-w-0 flex-col">
-								<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
-								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">{integration.desc}</small>
+								<div class="flex items-center gap-1.5 overflow-hidden">
+									<strong class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.84rem]">{integration.name}</strong>
+									{#if $liveVersions[integration.id]}
+		                				{#if upToDate != null}
+										<span
+										    class="inline-flex items-center rounded-full bg-[#f4f1ea] dark:bg-white/10 px-1.5 py-0.5 text-[0.65rem] font-mono font-medium text-[#6b6455] dark:text-white/80 border border-[#e4dfd3] dark:border-white/10 select-none"
+										    title={titleText}
+										>
+											{$liveVersions[integration.id]}
+										</span>
+										{/if}
+									{/if}
+								</div>
+								<small class="overflow-hidden text-ellipsis whitespace-nowrap text-[0.72rem] text-[#807a6e] dark:text-white/55">
+									{integration.desc}
+								</small>
 							</span>
 						</a>
 					{/if}

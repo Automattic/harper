@@ -47,7 +47,7 @@ impl ExprLinter for MixedBag {
                 "bag",
                 bad_span.get_content(src),
             )],
-            message: "Corrects the eggcorn `mixed bad` to `mixed bag`.".to_string(),
+            message: "Corrects the eggcorn `mixed bad` to `mixed bag`.".to_owned(),
             ..Default::default()
         })
     }

@@ -93,7 +93,7 @@ impl ExprLinter for FellowCoRedundancy {
                     Suggestion::ReplaceWith(cf.iter().chain(worker.iter()).copied().collect())
                 })
                 .into(),
-            message: "Using `fellow` with `co` is redundant.".to_string(),
+            message: "Using `fellow` with `co` is redundant.".to_owned(),
             ..Default::default()
         })
     }

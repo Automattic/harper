@@ -11,28 +11,21 @@ pub struct ForFreeOfCharge {
 impl Default for ForFreeOfCharge {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("for")
-                .t_ws()
-                .t_aco("free")
-                .t_ws_h()
-                .t_aco("of")
-                .t_ws_h()
-                .t_aco("charge")
-                .then_any_of(vec![
-                    Box::new(SequenceExpr::default().then_kind_any(&[
-                        TokenKind::is_sentence_terminator,
-                        TokenKind::is_comma,
-                        TokenKind::is_quote,
-                    ])),
-                    Box::new(SequenceExpr::whitespace().then_kind_any_but_not(
-                        &[
-                            TokenKind::is_conjunction,
-                            TokenKind::is_preposition,
-                            TokenKind::is_verb,
-                        ],
-                        TokenKind::is_noun,
-                    )),
-                ]),
+            expr: SequenceExpr::word_seq(&["for", "free", "of", "charge"]).then_any_of(vec![
+                Box::new(SequenceExpr::default().then_kind_any(&[
+                    TokenKind::is_sentence_terminator,
+                    TokenKind::is_comma,
+                    TokenKind::is_quote,
+                ])),
+                Box::new(SequenceExpr::whitespace().then_kind_any_but_not(
+                    &[
+                        TokenKind::is_conjunction,
+                        TokenKind::is_preposition,
+                        TokenKind::is_verb,
+                    ],
+                    TokenKind::is_noun,
+                )),
+            ]),
         }
     }
 }
@@ -50,7 +43,7 @@ impl ExprLinter for ForFreeOfCharge {
                 Suggestion::replace_with_match_case_str("for free", span.get_content(source)),
                 Suggestion::replace_with_match_case_str("free of charge", span.get_content(source)),
             ],
-            message: "Use only either `for free` or `free of charge`".to_string(),
+            message: "Use only either `for free` or `free of charge`".to_owned(),
             ..Default::default()
         })
     }

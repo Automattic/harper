@@ -1,12 +1,12 @@
 <script lang="ts">
 import { createEventDispatcher } from 'svelte';
-import type { InputHTMLAttributes } from 'svelte/elements';
+import type { HTMLInputAttributes } from 'svelte/elements';
 
 type InputSize = 'sm' | 'md' | 'lg';
 
-export let type: InputHTMLAttributes['type'] = 'text';
-export let value: InputHTMLAttributes['value'] = undefined;
-export let placeholder: InputHTMLAttributes['placeholder'] = undefined;
+export let type: HTMLInputAttributes['type'] = 'text';
+export let value: HTMLInputAttributes['value'] = undefined;
+export let placeholder: HTMLInputAttributes['placeholder'] = undefined;
 export let className: string | undefined = undefined;
 export let size: InputSize = 'md';
 
