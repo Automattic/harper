@@ -27,7 +27,7 @@ impl Linter for EllipsisLength {
                     span: tok.span,
                     lint_kind: LintKind::Formatting,
                     suggestions: vec![Suggestion::ReplaceWith(vec!['.', '.', '.'])],
-                    message: "Horizontal ellipsis must have 3 dots.".to_string(),
+                    message: "Horizontal ellipsis must have 3 dots.".to_owned(),
                     priority: 31,
                 })
             }

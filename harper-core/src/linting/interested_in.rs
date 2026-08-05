@@ -45,7 +45,7 @@ impl ExprLinter for InterestedIn {
                 "in".chars().collect(),
                 prep_chars,
             )],
-            message: "The correct preposition to use with `interested` is `in`.".to_string(),
+            message: "The correct preposition to use with `interested` is `in`.".to_owned(),
             ..Default::default()
         })
     }

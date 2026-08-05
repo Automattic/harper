@@ -1,15 +1,15 @@
-use super::{MutableDictionary, WordId};
+use std::{
+    borrow::Cow,
+    cell::RefCell,
+    sync::{Arc, LazyLock},
+};
+
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
-use std::borrow::Cow;
-use std::sync::LazyLock;
-use std::{cell::RefCell, sync::Arc};
 
+use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordId};
 use crate::{CharString, CharStringExt, DictWordMetadata};
-
-use super::Dictionary;
-use super::FuzzyMatchResult;
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///

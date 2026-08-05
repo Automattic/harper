@@ -13,14 +13,11 @@ pub struct DidPast<D> {
     dict: D,
 }
 
-impl<D> DidPast<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> DidPast<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::longest_of(vec![
-                Box::new(WordSet::new(&["did", "didn't", "didnt"])),
+            expr: SequenceExpr::longest_of([
+                Box::new(WordSet::new(&["did", "didn't", "didnt"])) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("did not")),
             ])
             .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
@@ -45,10 +42,7 @@ where
     }
 }
 
-impl<D> ExprLinter for DidPast<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for DidPast<D> {
     type Unit = Chunk;
 
     fn description(&self) -> &str {
@@ -101,12 +95,12 @@ where
         if !suggs.is_empty() {
             Some(Lint {
                 span: vspan,
-                lint_kind: LintKind::Redundancy,
+                lint_kind: LintKind::Grammar,
                 suggestions: suggs
                     .into_iter()
                     .map(|s| Suggestion::replace_with_match_case(s, vchars))
                     .collect(),
-                message: "Use the base form of the verb with \"did\".".to_string(),
+                message: "Use the base form of the verb with \"did\".".to_owned(),
                 ..Default::default()
             })
         } else {

@@ -42,7 +42,7 @@ impl ExprLinter for ToHope {
                 char_string!("hope").to_vec(),
                 word_chars,
             )],
-            message: "Did you mean to use 'hope' instead of 'hop' in this context?".to_string(),
+            message: "Did you mean to use 'hope' instead of 'hop' in this context?".to_owned(),
             ..Default::default()
         })
     }

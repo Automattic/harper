@@ -18,6 +18,8 @@ pub enum Error {
     InvalidLintKind,
     #[error("Invalid Replacement Strategy")]
     InvalidReplacementStrategy,
+    #[error("Invalid Scope")]
+    InvalidScope,
     #[error("Expected a variable type other than the one provided.")]
     ExpectedDifferentVariableType,
     #[error("Unable to resolve expression reference {0}")]

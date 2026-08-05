@@ -1,9 +1,8 @@
-use std::sync::Arc;
-
 use crate::expr::AnchorStart;
 use crate::expr::Expr;
 use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
+use crate::sync::Lrc;
 use crate::{Token, patterns::WordSet};
 
 use crate::Lint;
@@ -21,7 +20,7 @@ pub struct ShouldContract {
 
 impl Default for ShouldContract {
     fn default() -> Self {
-        let cap = Arc::new(
+        let cap = Lrc::new(
             SequenceExpr::word_set(&["your", "were"])
                 .then_whitespace()
                 .then_non_quantifier_determiner()
@@ -92,7 +91,7 @@ impl ExprLinter for ShouldContract {
                 .into_iter()
                 .map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
                 .collect(),
-            message: "Use the contraction or separate the words instead.".to_string(),
+            message: "Use the contraction or separate the words instead.".to_owned(),
             priority: 31,
         })
     }

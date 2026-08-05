@@ -16,10 +16,7 @@ pub struct MassNouns<D> {
     noun_countability: NounCountability,
 }
 
-impl<D> MassNouns<D>
-where
-    D: Dictionary + Clone,
-{
+impl<D: Dictionary + Clone> MassNouns<D> {
     pub fn new(dict: D) -> Self {
         Self {
             mass_plurals: MassPlurals::new(dict.clone()),
@@ -28,10 +25,7 @@ where
     }
 }
 
-impl<D> Linter for MassNouns<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> Linter for MassNouns<D> {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 

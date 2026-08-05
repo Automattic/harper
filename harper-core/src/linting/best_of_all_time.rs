@@ -55,7 +55,7 @@ impl ExprLinter for BestOfAllTime {
                 span: times_span,
                 lint_kind: LintKind::WordChoice,
                 suggestions: vec![Suggestion::ReplaceWith(time_singular.to_vec())],
-                message: "This expression uses singular `time`".to_string(),
+                message: "This expression uses singular `time`".to_owned(),
                 ..Default::default()
             });
         }

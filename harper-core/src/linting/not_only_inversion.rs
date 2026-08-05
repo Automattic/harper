@@ -1,7 +1,7 @@
 use crate::{
     Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct NotOnlyInversion {
@@ -11,9 +11,7 @@ pub struct NotOnlyInversion {
 impl Default for NotOnlyInversion {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::aco("not")
-                .t_ws()
-                .t_aco("only")
+            expr: SequenceExpr::word_seq(&["not", "only"])
                 .t_ws()
                 .then_word_set(&["I", "we", "you", "he", "she", "it", "they"])
                 .t_ws()
@@ -29,33 +27,25 @@ impl ExprLinter for NotOnlyInversion {
         "Corrects `not only it is` to `not only is it`"
     }
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🍭 {}", format_lint_match(toks, ctx, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let (prontok, betok) = (toks.get_rel(-3)?, toks.get_rel(-1)?);
         let (pronspan, bespan) = (prontok.span, betok.span);
         let (pronch, bech) = (pronspan.get_content(src), bespan.get_content(src));
 
         let pronbetoks = toks.get_rel_slice(-3, -1)?;
-        eprintln!("🍭🍭 '{}'", pronbetoks.span()?.get_content_string(src));
 
         let inverted = [bech.to_vec(), vec![' '], pronch.to_vec()].concat();
 
         Some(Lint {
             span: pronbetoks.span()?,
             lint_kind: LintKind::Grammar,
-            message: "After `not only` the subject and verb should be inverted.".to_string(),
+            message: "After `not only` the subject and verb should be inverted.".to_owned(),
             suggestions: vec![Suggestion::replace_with_match_case(
                 inverted,
                 pronbetoks.span()?.get_content(src),
             )],
             ..Default::default()
         })
-        // None
     }
 
     fn expr(&self) -> &dyn Expr {

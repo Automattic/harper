@@ -16,9 +16,7 @@ impl Default for HopeYoure {
 
         let prep = SequenceExpr::default().t_ws().then_preposition();
 
-        let expr = SequenceExpr::aco("hope")
-            .t_ws()
-            .t_aco("your")
+        let expr = SequenceExpr::word_seq(&["hope", "your"])
             .t_ws()
             .then_adjective()
             .then_optional(prep)
