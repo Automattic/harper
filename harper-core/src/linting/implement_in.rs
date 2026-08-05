@@ -47,7 +47,7 @@ impl ExprLinter for ImplementIn {
         // If "Into" is in title case and the middle word isn't there or is "the"
         //   it's probably the rust trait.
         if (midtok.is_none() || midtok.is_some_and(|t| t.get_ch(src).eq_ch(&['t', 'h', 'e'])))
-            && itok.get_ch(src) == &['I', 'n', 't', 'o']
+            && itok.get_ch(src) == ['I', 'n', 't', 'o']
         {
             return None;
         }
