@@ -135,7 +135,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
                 &mut candidates,
                 format!(
                     "{}i{}",
-                    &adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
+                    adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
                     ending
                 ),
             );
@@ -145,7 +145,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
                 &mut candidates,
                 format!(
                     "{}{}",
-                    &adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
+                    adj_chars[0..adj_chars.len() - 1].iter().collect::<String>(),
                     ending
                 ),
             );
