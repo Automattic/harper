@@ -1,13 +1,15 @@
 > <!--
 # Unlintable
->            source: https://en.wikipedia.org/w/index.php?title=Part-of-speech_tagging&oldid=1275774341
-# Unlintable Unlintable
->            license: CC BY-SA 4.0
-# Unlintable Unlintable
->            -->
-# Unlintable Unlintable
->                         Part      - of - speech   tagging
-# Unlintable HeadingStart NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg
+> source: https://en.wikipedia.org/w/index.php?title=Part-of-speech_tagging&oldid=1275774341
+# Unlintable
+> license: CC BY-SA 4.0
+# Unlintable
+> -->
+# Unlintable
+>
+#
+>              Part      - of - speech   tagging
+# HeadingStart NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg
 >
 #
 > In        corpus linguistics , part      - of - speech   tagging ( POS  tagging or    PoS  tagging or

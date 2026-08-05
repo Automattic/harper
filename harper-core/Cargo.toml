@@ -15,7 +15,7 @@ is-macro = "0.3.6"
 itertools = "0.14.0"
 ordered-float = { version = "5.3.0", features = ["serde"] }
 paste = "1.0.14"
-pulldown-cmark = "0.13.3"
+markdown = "1.0.0"
 serde = { version = "1.0.228", features = ["derive"] }
 serde_json = "1.0.150"
 smallvec = { version = "1.15.1", features = ["serde"] }

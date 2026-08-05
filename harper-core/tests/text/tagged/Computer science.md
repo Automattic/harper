@@ -1,13 +1,15 @@
 > <!--
 # Unlintable
->            source: https://en.wikipedia.org/w/index.php?title=Computer_science&oldid=1286173304
-# Unlintable Unlintable
->            license: CC BY-SA 4.0
-# Unlintable Unlintable
->            -->
-# Unlintable Unlintable
->                         Computer science
-# Unlintable HeadingStart NSg+     N🅪Sg/VB+
+> source: https://en.wikipedia.org/w/index.php?title=Computer_science&oldid=1286173304
+# Unlintable
+> license: CC BY-SA 4.0
+# Unlintable
+> -->
+# Unlintable
+>
+#
+>              Computer science
+# HeadingStart NSg+     N🅪Sg/VB+
 >
 #
 > Computer science  is  the study  of computation , information , and  automation .

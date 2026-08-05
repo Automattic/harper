@@ -11176,6 +11176,8 @@
 # NSg/J/P    .
 >
 #
+> ```
+# Unlintable
 > Rise from bed	6.00	a. m.
 # Unlintable
 > Dumbbell exercise and wall-scaling	6.15–6.30	„
@@ -11190,7 +11192,7 @@
 # Unlintable
 > Study needed inventions	7.00–9.00	„
 # Unlintable
->
+> ```
 # Unlintable
 >
 #

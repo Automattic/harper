@@ -1,11 +1,18 @@
 use ammonia::clean;
-use pulldown_cmark::{Options, Parser, html};
+use markdown::{CompileOptions, Options, to_html_with_options};
 
 /// The standard Markdown rendering function for the crate.
-/// Do not call `pulldown_cmark` directly. Use this.
+/// Do not call the `markdown` crate directly. Use this.
 pub fn render_markdown(markdown: &str) -> String {
-    let parser = Parser::new_ext(markdown, Options::all());
-    let mut html = String::new();
-    html::push_html(&mut html, parser);
+    let options = Options {
+        compile: CompileOptions {
+            // Raw HTML is sanitized by `ammonia` below.
+            allow_dangerous_html: true,
+            ..CompileOptions::gfm()
+        },
+        ..Options::gfm()
+    };
+
+    let html = to_html_with_options(markdown, &options).unwrap_or_else(|_| markdown.to_string());
     clean(&html)
 }

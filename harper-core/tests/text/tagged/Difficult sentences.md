@@ -10,8 +10,8 @@
 # NSg/VB+ I/C/Ddem I/J/R/Dq+ NSg/VB+ NPr/VXB NSg/R/C NSg/VLXB VP/J   R         NPr/VB/J NSg/J/R/C .
 >
 #
-> Most         example sentences are taken from https://en.wiktionary.org/. License : CC         BY    - SA        4.0 .
-# NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VLB VPp/J P    Url                         NSg/VB+ . NSg/VB/#r+ NSg/P . NPr/VB/J+ #   .
+> Most         example sentences are taken from https://en.wiktionary.org/ . License : CC         BY    - SA        4.0 .
+# NSg/I/J/R/Dq NSg/VB+ NPl/V3+   VLB VPp/J P    Url                        . NSg/VB+ . NSg/VB/#r+ NSg/P . NPr/VB/J+ #   .
 >
 #
 >              A
