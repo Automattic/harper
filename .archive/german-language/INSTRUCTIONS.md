@@ -219,6 +219,27 @@ python3 scripts/scrape_german_wikipedia_simple.py --topics Deutschland Berlin MÃ
 python3 scripts/scrape_german_wikipedia_simple.py --topics Deutschland --analyze
 ```
 
+### Version Control Note
+
+**Important**: The German dictionary (`dictionary.dict`) is under version control in Git. 
+Therefore, there is **no need to create backup files** with `.backup_*` suffixes when 
+modifying the dictionary. Git provides full version history, and you can always revert 
+changes using `git restore` or `git checkout` commands.
+
+If you need to experiment with dictionary changes, use Git features:
+```bash
+# Create a backup branch before major changes
+git checkout -b experiment/compound-flags
+
+# Or stash changes temporarily
+git stash push -m "experimental compound flag changes"
+
+# Revert specific file to last commit
+git restore harper-core/src/language/german/dictionary.dict
+```
+
+This keeps the repository clean and avoids unnecessary backup file proliferation.
+
 ### Running Unit Tests
 ```bash
 # Run German-specific unit tests
