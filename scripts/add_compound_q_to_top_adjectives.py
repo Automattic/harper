@@ -144,10 +144,7 @@ def add_q_to_top_adjectives(dict_path, max_adjectives=200):
             break
     
     # Write the modified dictionary
-    backup_path = f"{dict_path}.backup_{int(time.time())}"
-    shutil.copy2(dict_path, backup_path)
-    print(f"✅ Created backup: {backup_path}")
-    
+    # Note: No backup needed - dictionary is under Git version control
     with open(dict_path, 'w', encoding='utf-8') as f:
         f.writelines(lines)
     

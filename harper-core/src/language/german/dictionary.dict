@@ -11185,8 +11185,8 @@ Tag/~~Mh # masculine noun day
 # Proper nouns
 Birkenstock/~~N # proper noun company name
 # Technical/Business terms
-börsennotiert/~~J # adjective stock-listed
-steuertaktisch/~~J # adjective tax-tactical
+börsennotiert/~~Jq #adjective stock-listed
+steuertaktisch/~~Jq #adjective tax-tactical
 Kanalinsel/~~Fh # feminine noun channel island
 Fußbett/~~Nh # neuter noun footbed
 Einlage/~~Fh # feminine noun insole
@@ -11196,11 +11196,11 @@ Einlage/~~Fh # feminine noun insole
 heil/~N # frequency: 11
 näher/~N # frequency: 11
 reich/~~NJOQRSTUWq #adjective and noun
-reif/~~NJOQRSTUW # adjective and noun
+reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
-wunder/~~NJOQRSTUW # adjective and noun
-ärger/~~NJOQRSTUW # adjective and noun
-äußer/~~NJOQRSTUW # adjective and noun
+wunder/~~NJOQRSTUWq #adjective and noun
+ärger/~~NJOQRSTUWq #adjective and noun
+äußer/~~NJOQRSTUWq #adjective and noun
 bau/~N # frequency: 10
 besser/~N # frequency: 10
 ein/~N # frequency: 10
@@ -11230,7 +11230,7 @@ dampf/~N # frequency: 9
 dick/~N # frequency: 9
 ding/~N # frequency: 9
 faul/~N # frequency: 9
-flach/~~NJOQRSTUW # adjective and noun
+flach/~~NJOQRSTUWq #adjective and noun
 flau/~N # frequency: 9
 forsch/~N # frequency: 9
 frei/~N # frequency: 9
@@ -11335,7 +11335,7 @@ füll/~N # frequency: 8
 gabel/~N # frequency: 8
 gar/~N # frequency: 8
 geil/~N # frequency: 8
-gelb/~~NJOQRSTUW # adjective and noun
+gelb/~~NJOQRSTUWq #adjective and noun
 genial/~N # frequency: 8
 gewinn/~N # frequency: 8
 glück/~N # frequency: 8
@@ -11885,7 +11885,7 @@ kräftig/~J # adjective root, frequency: 7
 kränk/~N # frequency: 7
 kräusel/~N # frequency: 7
 kugel/~N # frequency: 7
-kulturell/~N # frequency: 7
+kulturell/~~JOQRSTUWq # fixed from noun to adjective
 kummervoll/~N # frequency: 7
 kunstvoll/~N # frequency: 7
 kuppel/~N # frequency: 7
@@ -11912,7 +11912,7 @@ licht/~N # frequency: 7
 liebediener/~N # frequency: 7
 liebevoll/~N # frequency: 7
 lob/~N # frequency: 7
-lokal/~N # frequency: 7
+lokal/~~JOQRSTUWq # fixed from noun to adjective
 lukrativ/~N # frequency: 7
 lustvoll/~N # frequency: 7
 löffel/~N # frequency: 7
@@ -12108,7 +12108,7 @@ sinnvoll/~N # frequency: 7
 skurril/~N # frequency: 7
 sog/~N # frequency: 7
 solid/~N # frequency: 7
-sozial/~N # frequency: 7
+sozial/~~JOQRSTUWq # fixed from noun to adjective
 spachtel/~N # frequency: 7
 spannungsreich/~N # frequency: 7
 speicher/~N # frequency: 7
@@ -12206,7 +12206,7 @@ umtausch/~N # frequency: 7
 umtrieb/~N # frequency: 7
 umzingel/~N # frequency: 7
 ungefüg/~N # frequency: 7
-universell/~N # frequency: 7
+universell/~~JOQRSTUWq # fixed from noun to adjective
 unser/~~I # pronoun of us (genitive)
 variantenreich/~N # frequency: 7
 variationsreich/~N # frequency: 7
@@ -14136,7 +14136,7 @@ filmreif/~N # frequency: 6
 filterstabil/~N # frequency: 6
 filz/~N # frequency: 6
 final/~N # frequency: 6
-finanziell/~N # frequency: 6
+finanziell/~~JOQRSTUWq # fixed from noun to adjective
 finanzier/~N # frequency: 6
 finanzschwach/~N # frequency: 6
 finanzstark/~N # frequency: 6
@@ -14599,7 +14599,7 @@ gletscherfrei/~N # frequency: 6
 glial/~N # frequency: 6
 glieder/~N # frequency: 6
 glitschig/~J # adjective root, frequency: 6
-global/~N # frequency: 6
+global/~~JOQRSTUWq # fixed from noun to adjective
 glockenhell/~N # frequency: 6
 glottal/~N # frequency: 6
 glutamaterg/~N # frequency: 6
@@ -15102,7 +15102,7 @@ indigoblau/~N # frequency: 6
 induktionsfrei/~N # frequency: 6
 induktiv/~N # frequency: 6
 industriekulturell/~N # frequency: 6
-industriell/~N # frequency: 6
+industriell/~~JOQRSTUWq # fixed from noun to adjective
 industrienah/~N # frequency: 6
 inertial/~N # frequency: 6
 inessentiell/~N # frequency: 6
@@ -15194,7 +15194,7 @@ intermedial/~N # frequency: 6
 interministeriell/~N # frequency: 6
 intermodal/~N # frequency: 6
 internal/~N # frequency: 6
-international/~N # frequency: 6
+international/~~JOQRSTUWq # fixed from noun to adjective
 interorganisational/~N # frequency: 6
 interpersonal/~N # frequency: 6
 interpersonell/~N # frequency: 6
@@ -31383,7 +31383,7 @@ marinen/~~V # auto-added
 mariner/~~M # auto-added
 marines/~~N # auto-added
 mariske/~~N # auto-added
-maritim/~~NX # auto-added
+maritim/~~JOQRSTUWq # fixed from noun to adjective
 markant/~~NX # auto-added
 marke/~~N # auto-added
 marken/~~V # auto-added
@@ -32008,7 +32008,7 @@ modders/~~N # auto-added
 moddrig/~~NX # auto-added
 mode/~~N # auto-added
 model/~~NX # auto-added
-modell/~~NX # auto-added
+modell/~~NXhm # auto-added compound component
 modells/~~N # auto-added
 modeln/~~V # auto-added
 models/~~N # auto-added
@@ -33017,7 +33017,7 @@ nonstop/~~N # auto-added
 noppe/~~N # auto-added
 noppen/~~V # auto-added
 noppig/~~NX # auto-added
-nord/~~NX # auto-added
+nord/~~NXh # auto-added
 norden/~~V # auto-added
 nordens/~~N # auto-added
 nordest/~~N # auto-added
@@ -33496,7 +33496,7 @@ ossärem/~~N # auto-added
 ossären/~~V # auto-added
 ossärer/~~M # auto-added
 ossäres/~~N # auto-added
-ost/~~N # auto-added
+ost/~~Nh # auto-added
 osten/~~V # auto-added
 ostens/~~N # auto-added
 oster/~~M # auto-added
@@ -37874,7 +37874,7 @@ söhn/~~Vej # REPLACES söhnen
 söhnst/~~N # auto-added
 söhnt/~~NX # auto-added
 süchte/~~N # auto-added
-süd/~~N # auto-added
+süd/~~Nh # auto-added
 süden/~~V # auto-added
 südens/~~N # auto-added
 süffig/~~NX # auto-added
@@ -39409,7 +39409,7 @@ wesirs/~~N # auto-added
 wespe/~~N # auto-added
 wespen/~~V # auto-added
 wessen/~~V # auto-added
-west/~~N # auto-added
+west/~~Nh # auto-added
 weste/~~N # auto-added
 wett/~~NX # auto-added
 wetten/~~V # auto-added
@@ -39934,7 +39934,7 @@ zitter/~~M # auto-added
 zittre/~~N # auto-added
 zitze/~~N # auto-added
 zitzen/~~V # auto-added
-zivil/~~NX # auto-added
+zivil/~~JOQRSTUWq # fixed from noun to adjective
 zobel/~~N # auto-added
 zobeln/~~V # auto-added
 zobels/~~N # auto-added
@@ -121445,7 +121445,7 @@ agitierbar/~~JOQRSTUW # adjective (auto-converted)
 agnatisch/~~JOQRSTUW # adjective (auto-converted)
 agnostisch/~~JOQRSTUW # adjective (auto-converted)
 agogisch/~~JOQRSTUW # adjective (auto-converted)
-agrarisch/~~JOQRSTUWq #adjective (auto-converted)
+agrarisch/~~JOQRSTUWq # fixed from noun to adjective
 ahnungslos/~~JOQRSTUW # adjective (auto-converted)
 akadisch/~~JOQRSTUW # adjective (auto-converted)
 akkadisch/~~JOQRSTUW # adjective (auto-converted)
@@ -123481,7 +123481,7 @@ nahrhaft/~~JOQRSTUW # adjective (auto-converted)
 namenlos/~~JOQRSTUW # adjective (auto-converted)
 namibisch/~~JOQRSTUW # adjective (auto-converted)
 narrativ/~~JOQRSTUW # adjective (auto-converted)
-national/~~JOQRSTUWq #adjective (auto-converted)
+national/~~JOQRSTUWq # fixed from noun to adjective
 naturell/~~JOQRSTUW # adjective (auto-converted)
 naturhaft/~~JOQRSTUW # adjective (auto-converted)
 natürlich/~~JOQRSTUWq #adjective (auto-converted)
@@ -123754,7 +123754,7 @@ regelhaft/~~JOQRSTUW # adjective (auto-converted)
 regellos/~~JOQRSTUW # adjective (auto-converted)
 regenlos/~~JOQRSTUW # adjective (auto-converted)
 regierbar/~~JOQRSTUW # adjective (auto-converted)
-regional/~~JOQRSTUWq #adjective (auto-converted)
+regional/~~JOQRSTUWq # fixed from noun to adjective
 regressiv/~~JOQRSTUW # adjective (auto-converted)
 regulativ/~~JOQRSTUW # adjective (auto-converted)
 rehartig/~~JOQRSTUW # adjective (auto-converted)
@@ -125654,7 +125654,7 @@ hissflagge/~~F # auto-added
 histogramm/~~N # auto-added
 histologie/~~F # auto-added
 historiker/~~N # auto-added
-historisch/~~N # auto-added
+historisch/~~JOQRSTUWq # fixed from noun to adjective
 hitlergruß/~~N # auto-added
 hitlerkult/~~N # auto-added
 hitlerzeit/~~N # auto-added
@@ -126158,7 +126158,7 @@ junkerlich/~~N # auto-added
 juradozent/~~N # auto-added
 juragipfel/~~N # auto-added
 jurassisch/~~N # auto-added
-juristisch/~~N # auto-added
+juristisch/~~JOQRSTUWq # fixed from noun to adjective
 jägersmann/~~N # auto-added
 kabardiner/~~N # auto-added
 kabeltülle/~~F # auto-added
@@ -133897,7 +133897,7 @@ zürichberg/~~N # auto-added
 öffentlich/~~Nq # auto-added
 ökobewusst/~~N # auto-added
 ökologisch/~~N # auto-added
-ökonomisch/~~N # auto-added
+ökonomisch/~~JOQRSTUWq # fixed from noun to adjective
 ökumenisch/~~N # auto-added
 ölbefeuert/~~N # auto-added
 ölgefeuert/~~N # auto-added
@@ -140504,7 +140504,7 @@ intelligent/~~N # auto-added
 intelligenz/~~N # auto-added
 intendieren/~~N # auto-added
 interaktion/~~F # auto-added
-interessant/~~N # auto-added
+interessant/~~JOQRSTUWq # fixed from noun to adjective
 interessent/~~N # auto-added
 interferenz/~~N # auto-added
 interleukin/~~N # auto-added
@@ -141978,7 +141978,7 @@ liquiditäts/~~N # auto-added
 listenerste/~~F # auto-added
 listenmäßig/~~N # auto-added
 literangabe/~~F # auto-added
-literarisch/~~N # auto-added
+literarisch/~~JOQRSTUWq # fixed from noun to adjective
 litfaßsäule/~~F # auto-added
 lithiumsalz/~~N # auto-added
 lithografie/~~F # auto-added
@@ -142392,7 +142392,7 @@ medianlinie/~~F # auto-added
 medianlöhne/~~F # auto-added
 mediaplayer/~~N # auto-added
 medienhetze/~~F # auto-added
-medizinisch/~~N # auto-added
+medizinisch/~~JOQRSTUWq # fixed from noun to adjective
 meerfenchel/~~N # auto-added
 meerforelle/~~F # auto-added
 meerrettich/~~N # auto-added
@@ -142525,7 +142525,7 @@ mikrozephal/~~N # auto-added
 milchbärtig/~~N # auto-added
 milchgebend/~~N # auto-added
 milchhaltig/~~N # auto-added
-militärisch/~~N # auto-added
+militärisch/~~JOQRSTUWq # fixed from noun to adjective
 milizoberst/~~N # auto-added
 milizsoldat/~~N # auto-added
 milizsystem/~~N # auto-added
@@ -142877,7 +142877,7 @@ muschelkalk/~~N # auto-added
 muselmänner/~~N # auto-added
 musentempel/~~N # auto-added
 museumsreif/~~N # auto-added
-musikalisch/~~N # auto-added
+musikalisch/~~JOQRSTUWq # fixed from noun to adjective
 musikalität/~~F # auto-added
 musikbegabt/~~N # auto-added
 musikmachen/~~N # auto-added
@@ -151733,7 +151733,7 @@ eigenbrötler/~~N # auto-added
 eigengenutzt/~~N # auto-added
 eigenmächtig/~~N # auto-added
 eigenschafts/~~N # auto-added
-eigenständig/~~N # auto-added
+eigenständig/~~JOQRSTUWq # auto-added adjective
 eigensüchtig/~~N # auto-added
 eigentumslos/~~N # auto-added
 einansichtig/~~N # auto-added
@@ -156595,7 +156595,7 @@ küfermeister/~~N # auto-added
 kühlgestellt/~~N # auto-added
 kümmelstange/~~F # auto-added
 kümmerdasein/~~N # auto-added
-künstlerisch/~~N # auto-added
+künstlerisch/~~JOQRSTUWq # fixed from noun to adjective
 küpenfärbung/~~F # auto-added
 kürbisfrucht/~~N # auto-added
 kürbiskernöl/~~N # auto-added
@@ -158444,7 +158444,7 @@ nordsaudisch/~~N # auto-added
 nordslawisch/~~N # auto-added
 nordspanisch/~~N # auto-added
 nordstaatler/~~N # auto-added
-nordwestlich/~~N # auto-added
+nordwestlich/~~NJOQRSTUW # adjective
 nordzyprisch/~~N # auto-added
 normalenform/~~N # auto-added
 normalspurig/~~N # auto-added
@@ -173022,7 +173022,7 @@ phenolisieren/~~N # auto-added
 pheromonfalle/~~F # auto-added
 philippinisch/~~N # auto-added
 philisterhaft/~~N # auto-added
-philosophisch/~~N # auto-added
+philosophisch/~~JOQRSTUWq # fixed from noun to adjective
 phonografisch/~~N # auto-added
 phonometrisch/~~N # auto-added
 phonotaktisch/~~N # auto-added
@@ -173437,7 +173437,7 @@ psychiatrisch/~~N # auto-added
 psychoanalyse/~~F # auto-added
 psychodynamik/~~N # auto-added
 psychohygiene/~~F # auto-added
-psychologisch/~~N # auto-added
+psychologisch/~~JOQRSTUWq # fixed from noun to adjective
 psychomotorik/~~N # auto-added
 psychosexuell/~~N # auto-added
 psychosomatik/~~N # auto-added
@@ -189561,7 +189561,7 @@ wirbelschleppe/~~F # auto-added
 wirkprinzipien/~~N # auto-added
 wirkstoffreich/~~N # auto-added
 wirkwiderstand/~~N # auto-added
-wirtschaftlich/~~N # auto-added
+wirtschaftlich/~~JOQRSTUWq # fixed from noun to adjective
 wirtschaftsnah/~~N # auto-added
 wirtshausmusik/~~N # auto-added
 wirtshausszene/~~F # auto-added
@@ -207740,7 +207740,7 @@ unwahrhaftigkeit/~~F # auto-added
 unweigerlichkeit/~~F # auto-added
 unwesentlichkeit/~~F # auto-added
 unwetterzentrale/~~F # auto-added
-unwirtschaftlich/~~N # auto-added
+unwirtschaftlich/~~JOQRSTUWq # fixed from noun to adjective
 unwuchtausgleich/~~N # auto-added
 unzugänglichkeit/~~F # auto-added
 unzulänglichkeit/~~F # auto-added
@@ -208377,7 +208377,7 @@ wirkwarenbetrieb/~~N # auto-added
 wirtschaftsfähig/~~N # auto-added
 wirtschaftsstark/~~N # auto-added
 wisentpopulation/~~F # auto-added
-wissenschaftlich/~~JOQRSTUWq #adjective
+wissenschaftlich/~~JOQRSTUWq # fixed from noun to adjective
 wissensgesteuert/~~N # auto-added
 wissenstechnisch/~~N # auto-added
 wissenszentriert/~~N # auto-added
@@ -208997,4 +208997,57 @@ androgenresistenz/~~N # auto-added
 androsteronsulfat/~~N # auto-added
 aneignungsversuch/~~N # auto-added
 aneinanderdrängen/~~Nh # auto-added
-aneinanderfesseln/~~N # auto-ad
+aneinanderfesseln/~~N # auto-added
+Erde/~~Fh # auto-added compound component
+Land/~~Nh # auto-added compound component
+Masse/~~Fh # auto-added compound component
+Kontinent/~~Mh # auto-added compound component
+Teil/~~Mh # auto-added compound component
+Entwicklung/~~Fh # auto-added compound component
+Sub/~~Nh # auto-added compound component
+Asien/~~Nh # auto-added compound component
+Europa/~~Nh # auto-added compound component
+Staat/~~Mh # auto-added compound component
+Mitte/~~Fh # auto-added compound component
+Haupt/~~Nh # auto-added compound component
+Stadt/~~Fh # auto-added compound component
+System/~~Nh # auto-added compound component
+Weg/~~Mh # auto-added compound component
+Zeit/~~Fh # auto-added compound component
+Welt/~~Fh # auto-added compound component
+Leben/~~Nh # auto-added compound component
+Hand/~~Fh # auto-added compound component
+Wind/~~Mh # auto-added compound component
+Erdteil/~~Mh # auto-added compound noun
+verwaltungstechnisch/~~JOQRSTUWq # auto-added compound adjective
+Adidas/~~N # worldwide known brand name
+Sneaker/~~Mhm # masculine noun compound component
+Herstellers/~~M # genitive of Hersteller
+1970ern/~~N # decade (1970er years)
+Zehenkappen/~~F # feminine plural noun
+Gummi/~~N # neuter noun
+Spitznamen/~~M # masculine noun
+shell-toes/~~N # English loanword
+Muschel-Zehen/~~F # compound noun with hyphen
+1970er/~~N # decade
+Gummikappe/~~F # feminine noun
+NBA-Spieler/~~M # compound noun
+ausgeliefert/~~NJOQRSTUW # adjective or participle
+beschwerten/~~V # verb
+begehrt/~~NJOQRSTUW # adjective
+Schuhunternehmen/~~N # compound noun
+1949/~~N # year
+wurde/~~V # verb (past tense of werden)
+Rosenheim/~~N # proper noun, city
+Bayern/~~N # proper noun, state
+hochwertige/~~JOQRSTUW # adjective
+Damenschuhe/~~F # compound noun
+stehen/~~V # verb
+Schuhen/~~N # dative plural of Schuh
+Pumps/~~M # plural noun
+bezeichnet/~~NJOQRSTUW # adjective or participle
+Antike/~~F # feminine noun
+Britannien/~~N # proper noun
+Tamar/~~N # proper noun
+Hispanien/~~N # proper noun
+Tambre/~~N # proper noun

@@ -92,9 +92,7 @@ def add_compound_flag_to_noun(dict_path, noun_word, compound_flag='h'):
     
     if modified:
         # Write the modified dictionary
-        backup_path = f"{dict_path}.backup_{int(time.time())}"
-        shutil.copy2(dict_path, backup_path)
-        print(f"✅ Created backup: {backup_path}")
+        # Note: No backup needed - dictionary is under Git version control
         
         with open(dict_path, 'w', encoding='utf-8') as f:
             f.writelines(lines)
@@ -171,9 +169,7 @@ def add_compound_flags_to_common_nouns(dict_path):
     
     if modified_count > 0:
         # Write the modified dictionary
-        backup_path = f"{dict_path}.backup_{int(time.time())}"
-        shutil.copy2(dict_path, backup_path)
-        print(f"✅ Created backup: {backup_path}")
+        # Note: No backup needed - dictionary is under Git version control
         
         with open(dict_path, 'w', encoding='utf-8') as f:
             f.writelines(lines)

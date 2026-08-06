@@ -126,6 +126,11 @@ language-generate-all-tests language:
 language-all-test *languages:
 	python3 scripts/run_all_language_tests.py {{languages}}
 
+# Download German Wikipedia texts for testing
+# Usage: just language-download-german-texts
+language-download-german-texts:
+	python3 .archive/german-language/scripts/download_german_texts.py
+
 # Legacy aliases
 language-german-test text:
 	just language-test german "{{text}}"

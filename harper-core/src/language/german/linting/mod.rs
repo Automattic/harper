@@ -1,5 +1,6 @@
 //! German linting rules and checkers.
 
+pub mod german_adjective_agreement;
 pub mod german_filler_words;
 pub mod german_noun_capitalization;
 pub mod german_sentence_capitalization;
