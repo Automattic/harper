@@ -1,17 +1,25 @@
 use paste::paste;
 
 use crate::{
+    CharStringExt, Lrc, Span, Token, TokenKind,
     expr::{AsBoxedExpr, FirstMatchOf, FixedPhrase, LongestMatchOf},
     patterns::{AnyPattern, IndefiniteArticle, RelativePronoun, WhitespacePattern, Word, WordSet},
-    CharStringExt, Lrc, Span, Token, TokenKind,
 };
 
 use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
-#[derive(Default)]
 pub struct SequenceExpr {
     exprs: Vec<Box<dyn Expr>>,
-    capture_range: Option<RangeEnum<usize>>,
+    capture_range: Span<Token>,
+}
+
+impl Default for SequenceExpr {
+    fn default() -> Self {
+        Self {
+            exprs: Default::default(),
+            capture_range: Span::FULL,
+        }
+    }
 }
 
 /// Generate a `then_*` method from an available `is_*` function on [`TokenKind`].
@@ -81,14 +89,9 @@ impl Expr for SequenceExpr {
             // If zero-width, don't expand window or advance cursor - just validate position
         }
 
-        match &self.capture_range {
-            Some(capture_range) if *capture_range != RangeEnum::RangeFull => {
-                let mut pulled_window = window.pulled_by(initial_cursor_pos).unwrap();
-                pulled_window = capture_range.clamp(pulled_window);
-                Some(pulled_window.pushed_by(initial_cursor_pos))
-            }
-            _ => Some(window),
-        }
+        let offset_capture_range = self.capture_range.saturating_pushed_by(initial_cursor_pos);
+        window = window.map(|val| val.clamp(offset_capture_range.start, offset_capture_range.end));
+        Some(window)
     }
 }
 
@@ -698,9 +701,7 @@ impl SequenceExpr {
     /// [`Expr`] set before this point will be required for a match, but will not be captured in
     /// the result.
     pub(crate) fn start_capture(mut self) -> Self {
-        self.capture_range
-            .get_or_insert(RangeEnum::RangeFull)
-            .set_start(self.exprs.len());
+        self.capture_range.start = self.exprs.len();
         self
     }
 
@@ -709,9 +710,7 @@ impl SequenceExpr {
     /// [`Expr`] set after this point will be required for a match, but will not be captured in the
     /// result.
     pub(crate) fn end_capture(mut self) -> Self {
-        self.capture_range
-            .get_or_insert(RangeEnum::RangeFull)
-            .set_end(self.exprs.len());
+        self.capture_range.end = self.exprs.len();
         self
     }
 }
@@ -731,9 +730,9 @@ where
 #[cfg(test)]
 mod tests {
     use crate::{
+        Document, TokenKind,
         expr::{AnchorEnd, Expr, ExprExt, SequenceExpr},
         linting::tests::SpanVecExt,
-        Document, TokenKind,
     };
 
     #[test]

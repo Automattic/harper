@@ -32,6 +32,13 @@ impl<T> Span<T> {
     /// A [`Span`] with a start and end index of 0.
     pub const ZERO: Self = Self::empty(0);
 
+    /// A [`Span`] of `usize::MIN..usize::MAX`.
+    pub(crate) const FULL: Self = Self {
+        start: usize::MIN,
+        end: usize::MAX,
+        span_type: PhantomData,
+    };
+
     /// Creates a new [`Span`] with the provided start and end indices.
     ///
     /// # Panics
@@ -150,6 +157,11 @@ impl<T> Span<T> {
         clone
     }
 
+    /// Like [`Self::pushed_by`], but uses saturating arithmetic to avoid overflow.
+    pub(crate) fn saturating_pushed_by(&self, by: usize) -> Self {
+        self.map(|val| val.saturating_add(by))
+    }
+
     /// Subtract an amount to a copy of both [`Self::start`] and [`Self::end`]
     pub fn pulled_by(&self, by: usize) -> Option<Self> {
         if by > self.start {
@@ -160,6 +172,13 @@ impl<T> Span<T> {
         clone.start -= by;
         clone.end -= by;
         Some(clone)
+    }
+
+    /// Applies a transformation to both the start and end indices of this span.
+    pub(crate) fn map(mut self, op: impl Fn(usize) -> usize) -> Self {
+        self.start = op(self.start);
+        self.end = op(self.end);
+        self
     }
 }
 
