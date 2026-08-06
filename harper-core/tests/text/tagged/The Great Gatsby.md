@@ -8675,7 +8675,7 @@
 > word    she  was  drawing   further and  further into herself , so          he       gave that      up         , and
 # NSg/VB+ ISg+ VLPt N🅪Sg/Vg/J VB/JC   VB/C VB/JC   P    ISg+    . NSg/I/J/R/C NPr/ISg+ VPt  I/C/Ddem+ NSg/VB/J/P . VB/C
 > only  the dead      dream     fought on  as    the afternoon slipped away , trying  to touch
-# J/R/C D+  NSg/VB/J+ NSg/VB/J+ VB     J/P R/C/P D+  N🅪Sg+     VP/J    VB/J . Nᴹ/Vg/J P  N🅪Sg/VB
+# J/R/C D+  NSg/VB/J+ NSg/VB/J+ VP     J/P R/C/P D+  N🅪Sg+     VP/J    VB/J . Nᴹ/Vg/J P  N🅪Sg/VB
 > what   was  no       longer tangible , struggling unhappily , undespairingly , toward that
 # NSg/I+ VLPt NSg/Dq/P NSg/JC NSg/J    . Nᴹ/Vg/J    R         . ?              . J/P    I/C/Ddem+
 > lost voice   across the room       .

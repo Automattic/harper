@@ -269,7 +269,7 @@
 > I've lived here for   three years .
 # K    VP/J  J/R  R/C/P NSg   NPl+  .
 > They fought for   days over    a    silly  pencil  .
-# IPl+ VB     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
+# IPl+ VP     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
 > The store   is  closed for   the day     .
 # D+  NSg/VB+ VL3 VP/J   R/C/P D+  NPr🅪Sg+ .
 > I       can     see    for   miles  .
