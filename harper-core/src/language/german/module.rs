@@ -10,7 +10,6 @@ use crate::language::german::language_detection::GermanDetector;
 use crate::language::german::lexing::lex_german_token;
 use crate::language::german::linting::{new_curated_german, weir_rules};
 use crate::language::german::parsers::PlainGerman;
-use crate::language::german::spell::curated_german_dictionary;
 
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
@@ -43,7 +42,11 @@ impl LanguageModule for GermanModule {
     }
 
     fn dictionary() -> Arc<FstDictionary> {
-        curated_german_dictionary()
+        // Use compound-aware dictionary for lazy compound checking
+        // This provides the same functionality but with lazy compound checking
+        // to avoid the O(n²) memory explosion of pre-generating all compounds
+        use crate::language::german::spell::base_german_dictionary_fst;
+        base_german_dictionary_fst()
     }
 
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {

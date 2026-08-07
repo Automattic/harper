@@ -67,9 +67,6 @@ def analyze_language_coverage(language):
         # Skip words that start with hyphen or uppercase
         if word.startswith('-') or (word and word[0].isupper()):
             continue
-        # Skip very long words (likely compounds we can't handle yet)
-        if len(word) > 30:
-            continue
         # Skip words that are too short
         if len(word) < 3:
             continue
