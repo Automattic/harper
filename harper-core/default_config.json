@@ -4895,6 +4895,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LifetimeLife",
+								"state": true,
+								"label": "Lifetime Life"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LinkedList",
 								"state": true,
 								"label": "Linked List"
