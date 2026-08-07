@@ -21781,6 +21781,7 @@ eirunde/~~N # auto-added
 eis/~~N # auto-added
 eisarm/~~NX # auto-added
 eisen/~~V # auto-added
+Eisen/~~Nih # noun form, auto-added compound component
 eisens/~~N # auto-added
 eisern/~~N # auto-added
 eiserne/~~N # auto-added
@@ -25941,7 +25942,7 @@ gulden/~~V # auto-added
 gulfhof/~~N # auto-added
 gully/~~N # auto-added
 gullys/~~N # auto-added
-gummi/~~Nb # auto-added
+gummi/~~Nbh # auto-added - fixed - added compound flags Nbh
 gunst/~~N # auto-added
 gunsten/~~V # auto-added
 gurgele/~~N # auto-added
@@ -39164,7 +39165,7 @@ wade/~~N # auto-added
 waden/~~V # auto-added
 wadi/~~Nb # auto-added
 waffe/~~N # auto-added
-waffel/~~N # auto-added
+waffel/~~Nh # auto-added - fixed - added compound flags Nh
 waffen/~~V # auto-added
 waffne/~~N # auto-added
 wag/~~NX # auto-added
@@ -148023,7 +148024,6 @@ wachtposten/~~N # auto-added
 wachzurufen/~~N # auto-added
 wackelbrett/~~N # auto-added
 wackersdorf/~~N # auto-added
-waffeleisen/~~N # auto-added
 waffenfähig/~~N # auto-added
 waffenwiege/~~F # auto-added
 wagenabteil/~~N # auto-added
@@ -149373,7 +149373,7 @@ amakrinzelle/~~F # auto-added
 amalgamieren/~~N # auto-added
 amarnagräber/~~N # auto-added
 amazonaswald/~~N # auto-added
-amazonenhaft/~~N # auto-added
+amazonenhaft/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
 ambitioniert/~~N # auto-added
 ambitionslos/~~N # auto-added
 ambulatorien/~~N # auto-added
@@ -200650,11 +200650,11 @@ alttestamentlich/~~N # auto-added
 aluminothermisch/~~N # auto-added
 alzheimerpatient/~~N # auto-added
 amaryllisgewächs/~~N # auto-added
-amazonenhafterem/~~N # auto-added
-amazonenhafteren/~~N # auto-added
-amazonenhafterer/~~N # auto-added
-amazonenhafteres/~~N # auto-added
-amazonenhafteste/~~F # auto-added
+amazonenhafterem/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhafteren/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhafterer/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhafteres/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhafteste/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
 ambulanzfahrzeug/~~N # auto-added
 ambulanzflugzeug/~~N # auto-added
 aminosulfonsäure/~~F # auto-added
@@ -208972,10 +208972,10 @@ altkötzschenbroda/~~N # auto-added
 altniederländisch/~~N # auto-added
 altniedersorbisch/~~N # auto-added
 altösterreichisch/~~N # auto-added
-amazonenhaftestem/~~N # auto-added
-amazonenhaftesten/~~N # auto-added
-amazonenhaftester/~~N # auto-added
-amazonenhaftestes/~~N # auto-added
+amazonenhaftestem/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhaftesten/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhaftester/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
+amazonenhaftestes/~~JOQRSTUWq # auto-added - fixed - changed from noun to adjective
 amerikafreundlich/~~N # auto-added
 aminosäurederivat/~~N # auto-added
 aminosäuresequenz/~~N # auto-added
@@ -209025,12 +209025,11 @@ Sneaker/~~Mhm # masculine noun compound component
 Herstellers/~~M # genitive of Hersteller
 1970ern/~~N # decade (1970er years)
 Zehenkappen/~~F # feminine plural noun
-Gummi/~~N # neuter noun
+Gummi/~~Nbh # neuter noun - fixed - added compound flags Nbh
 Spitznamen/~~M # masculine noun
 shell-toes/~~N # English loanword
 Muschel-Zehen/~~F # compound noun with hyphen
 1970er/~~N # decade
-Gummikappe/~~F # feminine noun
 NBA-Spieler/~~M # compound noun
 ausgeliefert/~~NJOQRSTUW # adjective or participle
 beschwerten/~~V # verb
@@ -209051,3 +209050,4 @@ Britannien/~~N # proper noun
 Tamar/~~N # proper noun
 Hispanien/~~N # proper noun
 Tambre/~~N # proper noun
+kappe/~~Fh # auto-added compound component
