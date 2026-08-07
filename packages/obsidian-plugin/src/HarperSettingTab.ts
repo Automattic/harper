@@ -37,6 +37,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateSettings() {
+		if (this.state == null) return;
 		this.settings = undefined;
 		this.state.getSettings().then((v) => {
 			this.settings = v;
@@ -46,6 +47,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateDescriptions() {
+		if (this.state == null) return;
 		this.state.getDescriptionHTML().then((v) => {
 			this.descriptionsHTML = v;
 			this.rerenderLintSettings();
@@ -53,6 +55,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateDefaults() {
+		if (this.state == null) return;
 		this.state.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
 			this.updateToggleAllRulesButton();
@@ -61,6 +64,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateStructuredConfig() {
+		if (this.state == null) return;
 		this.state.getStructuredLintConfig().then((v) => {
 			this.structuredLintConfig = v;
 			this.rerenderLintSettings();
