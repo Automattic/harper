@@ -255,7 +255,7 @@ fn render_lint_card(
             egui::Frame::new()
                 .fill(hex(0xff, 0xfd, 0xfa))
                 .stroke(egui::Stroke::new(
-                    1.0,
+                    1.0_f32,
                     egui::Color32::from_rgba_unmultiplied(0, 0, 0, 20),
                 ))
                 .corner_radius(egui::CornerRadius::same(12))
@@ -287,7 +287,7 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
     egui::Frame::new()
         .fill(blend(style.background, hex(0xff, 0xfd, 0xfa), 0.42))
         .stroke(egui::Stroke::new(
-            1.0,
+            1.0_f32,
             egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15),
         ))
         .corner_radius(egui::CornerRadius {
@@ -358,7 +358,7 @@ fn render_popover_footer(
     egui::Frame::new()
         .fill(egui::Color32::from_rgba_unmultiplied(0, 0, 0, 5))
         .stroke(egui::Stroke::new(
-            1.0,
+            1.0_f32,
             egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15),
         ))
         .inner_margin(egui::Margin::symmetric(10, 8))
@@ -420,7 +420,7 @@ fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint, style: PopupStyle) {
                 ui.label(
                     egui::RichText::new(lint.lint_kind.to_string().to_uppercase())
                         .strong()
-                        .size(11.0)
+                        .size(11.0_f32)
                         .color(style.foreground),
                 );
             });
@@ -448,7 +448,7 @@ fn suggestion_option(
     let stroke = if primary {
         egui::Stroke::NONE
     } else {
-        egui::Stroke::new(1.0, blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.64))
+        egui::Stroke::new(1.0_f32, blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.64))
     };
 
     ui.scope(|ui| {
@@ -537,7 +537,7 @@ fn hover_text(response: egui::Response, hover_text: impl Into<String>) -> egui::
         egui::Frame::new()
             .fill(hex(0xff, 0xfd, 0xfa))
             .stroke(egui::Stroke::new(
-                1.0,
+                1.0_f32,
                 egui::Color32::from_rgba_unmultiplied(0, 0, 0, 20),
             ))
             .corner_radius(egui::CornerRadius::same(8))
@@ -574,7 +574,7 @@ fn draw_glyph(ui: &egui::Ui, rect: egui::Rect, glyph: Glyph, color: egui::Color3
 /// Draws the close glyph separately from button behavior so icon styling can change without touching
 /// the popup's interaction contract.
 fn draw_close_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.6, color);
+    let stroke = egui::Stroke::new(1.6_f32, color);
 
     ui.painter()
         .line_segment([rect.left_top(), rect.right_bottom()], stroke);
@@ -583,7 +583,7 @@ fn draw_close_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
 }
 
 fn draw_settings_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.5, color);
+    let stroke = egui::Stroke::new(1.5_f32, color);
     let center = rect.center();
     let radius = rect.width().min(rect.height()) * 0.32;
 
@@ -601,7 +601,7 @@ fn draw_settings_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
 }
 
 fn draw_disable_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.5, color);
+    let stroke = egui::Stroke::new(1.5_f32, color);
 
     ui.painter().circle_stroke(
         rect.center(),
@@ -613,7 +613,7 @@ fn draw_disable_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
 }
 
 fn draw_plus_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.6, color);
+    let stroke = egui::Stroke::new(1.6_f32, color);
 
     ui.painter().line_segment(
         [
@@ -754,7 +754,7 @@ fn hex(r: u8, g: u8, b: u8) -> egui::Color32 {
 }
 
 fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color32 {
-    let from_weight = 1.0 - to_weight;
+    let from_weight = 1.0_f32 - to_weight;
     let [fr, fg, fb, _] = from.to_array();
     let [tr, tg, tb, _] = to.to_array();
 

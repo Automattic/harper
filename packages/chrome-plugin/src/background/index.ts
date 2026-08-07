@@ -308,6 +308,12 @@ async function handleLint(
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
+
+			// Free the lints
+			lints.forEach((l) => {
+				l.free();
+			});
+
 			return [source, unpacked] as const;
 		}),
 	);
@@ -744,7 +750,7 @@ async function setDelay(delay: number) {
 }
 
 async function getDelay(): Promise<number> {
-	const resp = await chrome.storage.local.get({ delay: 300 });
+	const resp = await chrome.storage.local.get({ delay: 0 });
 	const { delay } = resp;
 
 	return typeof delay === 'number' && Number.isFinite(delay) && delay >= 0 ? delay : 0;

@@ -269,7 +269,7 @@
 > I've lived here for   three years .
 # K    VP/J  J/R  R/C/P NSg   NPl+  .
 > They fought for   days over    a    silly  pencil  .
-# IPl+ VB     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
+# IPl+ VP     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
 > The store   is  closed for   the day     .
 # D+  NSg/VB+ VL3 VP/J   R/C/P D+  NPr🅪Sg+ .
 > I       can     see    for   miles  .
@@ -404,8 +404,8 @@
 # NPr/VXB ISgPl+ NSg/VLXB NSg/VB/J P  NSg/VB I/Ddem+ NPr/J/R/P D/P+ NSg/J+ .
 > They said they would call   us       in        a    week   .
 # IPl+ VP/J IPl+ VXB   NSg/VB NPr/IPl+ NPr/J/R/P D/P+ NSg/J+ .
-> Less       water    gets   in        your boots  this    way    .
-# VB/J/R/C/P N🅪Sg/VB+ NPl/V3 NPr/J/R/P D$+  NPl/V3 I/Ddem+ NSg/J+ .
+> Less    water    gets   in        your boots  this    way    .
+# J/R/C/P N🅪Sg/VB+ NPl/V3 NPr/J/R/P D$+  NPl/V3 I/Ddem+ NSg/J+ .
 > She  stood there looking in        the window  longingly .
 # ISg+ VP    R     Nᴹ/Vg/J NPr/J/R/P D+  NSg/VB+ R         .
 > In        replacing the faucet washers , he       felt      he       was  making  his     contribution to the environment .

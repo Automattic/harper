@@ -69,7 +69,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/committing/+page.md`: Commit message conventions and commit hygiene requirements.
 - `packages/web/src/routes/docs/contributors/architecture/+page.md`: System architecture and roles of core components like `harper-core`, `harper-ls`, and `harper.js`.
 - `packages/web/src/routes/docs/contributors/dictionary/+page.md`: Process for adding or updating curated dictionary entries.
-- `packages/web/src/routes/docs/contributors/tests/+page.md`: Test-suite strategy, quality/performance focus, and related testing references.
+- `packages/web/src/routes/docs/contributors/testing-strategy/+page.md`: Harper's risk-driven testing strategy, covering automated checks, production feedback, manual testing, and testability.
 - `packages/web/src/routes/docs/contributors/author-a-rule/+page.md`: Step-by-step workflow for implementing and testing new grammar rules.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
