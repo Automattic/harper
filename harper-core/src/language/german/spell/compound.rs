@@ -40,63 +40,94 @@ const INTERFIX_MAP: &[(char, &str)] = &[
 /// * `words` - List of annotated words from the German dictionary
 /// * `word_map` - WordMap to which generated compounds will be added
 pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) {
-    // Collect words with compound flags
-    let mut compound_words: Vec<&AnnotatedWord> = Vec::new();
+    // Collect words with compound flags and pre-compute their flags
+    let mut compound_words: Vec<CompoundWordInfo> = Vec::new();
 
     for word in words {
         // Check if this word has any compound flags
-        let has_compound_flag = word.annotations.iter().any(|&c| is_compound_flag(c));
+        let flags: Vec<char> = word
+            .annotations
+            .iter()
+            .filter(|&&c| is_compound_flag(c))
+            .copied()
+            .collect();
 
-        if has_compound_flag {
-            compound_words.push(word);
+        if !flags.is_empty() {
+            compound_words.push(CompoundWordInfo { word, flags });
         }
     }
 
-    // Generate compounds from all pairs
     let compound_count = compound_words.len();
+
+    // Sort by word length descending so we can skip long compounds early
+    // Actually, for O(n^2) we want to process shorter words first to avoid generating
+    // very long compounds. But the order doesn't matter for correctness.
+
+    // For performance, we'll use a more efficient approach:
+    // 1. Pre-compute all compound flags
+    // 2. Skip pairs where combined length exceeds a reasonable limit
+    // 3. Use early filtering to avoid unnecessary string operations
+    //
+    // Note: German can have very long compounds, but most common compounds are < 40 chars.
+    // We use a conservative limit to avoid generating millions of unlikely compounds.
+    const MAX_COMPOUND_LENGTH: usize = 35; // Most common German compounds are under 35 chars
+
     for i in 0..compound_count {
+        let first = &compound_words[i];
+        let first_word = first.word;
+        let first_flags = &first.flags;
+        let first_len = first_word.letters.len();
+
+        // Skip if first word is too long to form reasonable compounds
+        if first_len >= MAX_COMPOUND_LENGTH {
+            continue;
+        }
+
+        // Check if the first word has adjective flag (q)
+        let first_has_adj_flag = first_flags.contains(&COMPOUND_ADJ_FLAG);
+
+        // Pre-compute the interfix for noun compounds
+        let interfix = if first_has_adj_flag {
+            None
+        } else {
+            Some(get_interfix(first_flags[0]))
+        };
+
+        let interfix_len = interfix.map_or(0, |s| s.chars().count());
+        let min_second_len = MAX_COMPOUND_LENGTH.saturating_sub(first_len + interfix_len);
+
         for j in 0..compound_count {
             // Skip self-combination (word + word is rarely valid)
             if i == j {
                 continue;
             }
 
-            let first_word = &compound_words[i];
-            let second_word = &compound_words[j];
+            let second = &compound_words[j];
+            let second_word = second.word;
+            let second_flags = &second.flags;
+            let second_len = second_word.letters.len();
 
-            // Get compound flags for both words
-            let first_flags: Vec<char> = first_word
-                .annotations
-                .iter()
-                .filter(|&&c| is_compound_flag(c))
-                .copied()
-                .collect();
-
-            let second_flags: Vec<char> = second_word
-                .annotations
-                .iter()
-                .filter(|&&c| is_compound_flag(c))
-                .copied()
-                .collect();
-
-            if first_flags.is_empty() || second_flags.is_empty() {
+            if second_flags.is_empty() {
                 continue;
             }
 
-            // Check if the first word has adjective flag (q)
-            let first_has_adj_flag = first_flags.contains(&COMPOUND_ADJ_FLAG);
             // Check if the second word has adjective flag (q)
             let second_has_adj_flag = second_flags.contains(&COMPOUND_ADJ_FLAG);
+
+            // Fast path: check combined length before doing expensive operations
+            if first_len + interfix_len + second_len > MAX_COMPOUND_LENGTH {
+                continue;
+            }
 
             // For adjective compounds: if either word has the q flag, create an adjective compound
             // This handles noun+adjective, adjective+noun, and adjective+adjective combinations
             if first_has_adj_flag || second_has_adj_flag {
                 // Generate adjective compound word (no interfix for adjective compounds)
-                let mut compound_chars: CharString = first_word.letters.clone();
+                let mut compound_chars = CharString::with_capacity(first_len + second_len);
+                compound_chars.extend_from_slice(&first_word.letters);
                 compound_chars.extend_from_slice(&second_word.letters);
 
                 // Create metadata for the compound adjective
-                // We need to add the adjective declension flags so the inflection system can generate all forms
                 let compound_meta = DictWordMetadata {
                     adjective: Some(AdjectiveData::default()),
                     ..Default::default()
@@ -112,12 +143,11 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
                 }
             }
             // For noun compounds: only when neither word has adjective flag
-            else {
-                // Use the first word's first compound flag to determine interfix
-                let interfix = get_interfix(first_flags[0]);
-
+            else if let Some(interfix) = interfix {
                 // Generate compound word
-                let mut compound_chars: CharString = first_word.letters.clone();
+                let mut compound_chars =
+                    CharString::with_capacity(first_len + interfix_len + second_len);
+                compound_chars.extend_from_slice(&first_word.letters);
                 compound_chars.extend(interfix.chars());
                 compound_chars.extend_from_slice(&second_word.letters);
 
@@ -145,6 +175,12 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
             }
         }
     }
+}
+
+/// Helper struct to store pre-computed compound word information
+struct CompoundWordInfo<'a> {
+    word: &'a AnnotatedWord,
+    flags: Vec<char>,
 }
 
 /// Check if a character is a compound formation flag

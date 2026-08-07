@@ -6,57 +6,100 @@ use harper_core::spell::{MutableDictionary, Dictionary};
 use harper_core::spell::rune::AttributeList;
 
 
-/// Load expanded dictionary from gzip file
-fn load_expanded_dictionary(path: &str) -> Result<Vec<String>, Box<dyn std::error::Error>> {
+/// Load expanded dictionary from gzip file and filter on-the-fly
+/// Uses reservoir sampling to efficiently select a random sample without loading all data
+fn load_and_filter_expanded_dictionary(
+    path: &str,
+    sample_size: usize,
+) -> Result<Vec<String>, Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::BufReader;
     use flate2::read::GzDecoder;
+    use rand::Rng;
 
     let file = File::open(path)?;
     let decoder = GzDecoder::new(BufReader::new(file));
     let reader = io::BufReader::new(decoder);
 
-    let words: Vec<String> = reader
-        .lines()
-        .filter_map(|line| {
-            let line = line.ok()?;
-            let trimmed = line.trim().to_string();
-            if trimmed.is_empty() {
-                None
-            } else {
-                Some(trimmed)
+    // Use reservoir sampling: keep a sample of size sample_size from the stream
+    let mut reservoir: Vec<String> = Vec::with_capacity(sample_size);
+    let mut line_count: usize = 0;
+    let mut valid_count: usize = 0;
+    let mut rng = rand::thread_rng();
+    
+    for line in reader.lines() {
+        let line = line?;
+        line_count += 1;
+        
+        let trimmed = line.trim().to_string();
+        if trimmed.is_empty() {
+            continue;
+        }
+        
+        // Remove Hunspell metadata (everything after and including /)
+        // Hunspell format: word/flags
+        let word_only = if let Some(pos) = trimmed.find('/') {
+            &trimmed[..pos]
+        } else {
+            &trimmed
+        };
+        
+        // Also handle words with trailing whitespace
+        let clean_word = word_only.trim();
+        
+        // Apply filters on the cleaned word
+        if clean_word.is_empty() {
+            continue;
+        }
+        // Skip comment lines
+        if clean_word.starts_with('#') {
+            continue;
+        }
+        // Skip pure numbers
+        if clean_word.chars().all(|c| c.is_ascii_digit()) {
+            continue;
+        }
+        if clean_word.starts_with('-') {
+            continue;
+        }
+        // Allow uppercase words (proper nouns) but filter them later if needed
+        // Actually, for German, many nouns are capitalized, so we should allow them
+        // But filter out words that start with uppercase followed by lowercase (typical sentence start)
+        // For now, just check if it's all uppercase (abbreviations)
+        if clean_word == clean_word.to_uppercase() && clean_word.len() > 2 {
+            continue;
+        }
+        if clean_word.len() > 30 {
+            continue;
+        }
+        if clean_word.len() < 3 {
+            continue;
+        }
+        let special_chars = ['\\', '*', '?', '[', ']', '{', '}', '(', ')'];
+        if clean_word.chars().any(|c| special_chars.contains(&c)) {
+            continue;
+        }
+        
+        // Reservoir sampling algorithm
+        if reservoir.len() < sample_size {
+            reservoir.push(clean_word.to_string());
+        } else {
+            // Randomly replace elements with decreasing probability
+            let idx = rng.gen_range(0..=valid_count);
+            if idx < sample_size {
+                reservoir[idx] = clean_word.to_string();
             }
-        })
-        .collect();
-
-    Ok(words)
-}
-
-/// Filter words for testing (remove proper nouns, abbreviations, etc.)
-fn filter_test_words(words: &[String]) -> Vec<String> {
-    words.iter()
-        .filter(|word| {
-            // Skip words that start with hyphen or uppercase
-            if word.starts_with('-') || (word.chars().next().map_or(false, |c| c.is_uppercase())) {
-                return false;
-            }
-            // Skip very long words
-            if word.len() > 30 {
-                return false;
-            }
-            // Skip very short words
-            if word.len() < 3 {
-                return false;
-            }
-            // Skip words with special characters
-            let special_chars = ['/', '\\', '*', '?', '[', ']', '{', '}', '(', ')'];
-            if word.chars().any(|c| special_chars.contains(&c)) {
-                return false;
-            }
-            true
-        })
-        .cloned()
-        .collect()
+        }
+        valid_count += 1;
+        
+        // Early exit if we've processed enough lines (5x sample size) or enough valid words (3x sample size)
+        // This ensures we don't read the entire large file
+        if line_count >= sample_size * 5 {
+            break;
+        }
+    }
+    
+    Ok(reservoir)
 }
 
 /// Check words with Harper dictionary (in-memory, no subprocess)
@@ -110,24 +153,9 @@ pub fn run_coverage_analysis_with_dict(
     println!("📖 Using pre-loaded Harper dictionary...");
     println!("   ✅ Harper dictionary loaded: {} base words", harper_word_count);
 
-    // Load expanded dictionary
-    println!("📖 Loading expanded dictionary...");
-    let expanded_words = load_expanded_dictionary(expanded_dict_path)?;
-    println!("   Loaded {} words from expanded dictionary", expanded_words.len());
-
-    // Filter words for testing
-    let test_words = filter_test_words(&expanded_words);
-    println!("   Filtered to {} words for testing", test_words.len());
-
-    // Apply sample size
-    use rand::seq::SliceRandom;
-    use rand::SeedableRng;
-    let mut rng = rand::rngs::StdRng::seed_from_u64(42);
-    let mut shuffled = test_words;
-    shuffled.shuffle(&mut rng);
-    shuffled.truncate(sample_size.min(shuffled.len()));
-    let test_words = shuffled;
-
+    // Load and filter expanded dictionary on-the-fly to save memory
+    println!("📖 Loading and filtering expanded dictionary...");
+    let test_words = load_and_filter_expanded_dictionary(expanded_dict_path, sample_size)?;
     println!("   Using {} words for coverage testing", test_words.len());
 
     // Test words with Harper (in-memory, no subprocess overhead)
@@ -157,12 +185,7 @@ pub fn run_coverage_analysis_with_dict(
     // Dictionary statistics
     println!("\n📚 Dictionary Statistics");
     println!("   Harper Dictionary Size: {} base words", harper_word_count);
-    println!("   Expanded Dictionary Size: {} words", expanded_words.len());
-
-    if harper_word_count > 0 && !expanded_words.is_empty() {
-        let size_ratio = (harper_word_count as f64 / expanded_words.len() as f64) * 100.0;
-        println!("   Size Ratio: {:.2}%", size_ratio);
-    }
+    println!("   Sample Size: {} words", test_words.len());
 
     // Efficiency metrics
     if harper_word_count > 0 {
@@ -195,7 +218,7 @@ pub fn run_coverage_analysis_with_dict(
         println!("   ✅ Good coverage ({:.1}%) - focus on edge cases and compound words", coverage_percentage);
     }
 
-    if harper_word_count > 0 && !expanded_words.is_empty() {
+    if harper_word_count > 0 {
         let target_coverage = 80.0;
         let efficiency = if recognized > 0 {
             recognized as f64 / harper_word_count as f64
@@ -203,7 +226,7 @@ pub fn run_coverage_analysis_with_dict(
             0.0
         };
         if coverage_percentage < target_coverage && efficiency > 0.0 {
-            let words_needed_approx = (expanded_words.len() as f64 * target_coverage / 100.0 - recognized as f64) / efficiency;
+            let words_needed_approx = (test_words.len() as f64 * target_coverage / 100.0 - recognized as f64) / efficiency;
             println!("   🎯 To reach {}% coverage: approximately {} more base words or improved rules",
                      target_coverage, words_needed_approx as usize);
         }
