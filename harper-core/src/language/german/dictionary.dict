@@ -11531,7 +11531,6 @@ antrieb/~N # frequency: 7
 apokryph/~N # frequency: 7
 appellativ/~N # frequency: 7
 arbeitsintensiv/~N # frequency: 7
-arbeitsreich/~N # frequency: 7
 arbeitsscheu/~N # frequency: 7
 areal/~N # frequency: 7
 arm/~~NJOQRSTUWq #adjective and noun
@@ -11868,7 +11867,6 @@ konditional/~N # frequency: 7
 konfliktreich/~N # frequency: 7
 konservativ/~N # frequency: 7
 konstruktiv/~N # frequency: 7
-kontextreich/~N # frequency: 7
 kontrastreich/~N # frequency: 7
 konvulsiv/~N # frequency: 7
 koppel/~N # frequency: 7
@@ -11924,7 +11922,6 @@ mal/~N # frequency: 7
 mangel/~N # frequency: 7
 manipulativ/~N # frequency: 7
 mannigfach/~N # frequency: 7
-massereich/~N # frequency: 7
 matriarchal/~N # frequency: 7
 matsch/~N # frequency: 7
 maul/~N # frequency: 7
@@ -12281,7 +12278,6 @@ wiener/~N # frequency: 7
 wildreich/~N # frequency: 7
 willig/~J # adjective root, frequency: 7
 wind/~N # frequency: 7
-windreich/~N # frequency: 7
 windschief/~N # frequency: 7
 wink/~N # frequency: 7
 winkel/~N # frequency: 7
@@ -12504,7 +12500,6 @@ altdeutsch/~N # frequency: 6
 alternativ/~N # frequency: 6
 altersgemäß/~N # frequency: 6
 altersgrau/~N # frequency: 6
-altersschwach/~N # frequency: 6
 altersstufengemäß/~N # frequency: 6
 althochdeutsch/~N # frequency: 6
 altindustriell/~N # frequency: 6
@@ -12675,7 +12670,6 @@ arbeitsfreudig/~J # adjective root, frequency: 6
 arbeitsgemäß/~N # frequency: 6
 arbeitsgleich/~N # frequency: 6
 arbeitskraftintensiv/~N # frequency: 6
-arbeitskulturell/~N # frequency: 6
 arbeitsplatznah/~N # frequency: 6
 arbitragefrei/~N # frequency: 6
 archimetral/~N # frequency: 6
@@ -12689,7 +12683,6 @@ argwöhnisch/~J # adjective root, frequency: 6
 arid/~N # frequency: 6
 arisch/~J # adjective root, frequency: 6
 armdick/~N # frequency: 6
-armlang/~N # frequency: 6
 armselig/~J # adjective root, frequency: 6
 aromareich/~N # frequency: 6
 aromatisch/~J # adjective root, frequency: 6
@@ -13564,7 +13557,6 @@ duftneutral/~N # frequency: 6
 duktal/~N # frequency: 6
 duktil/~N # frequency: 6
 dunkelblau/~N # frequency: 6
-dunkelgelb/~N # frequency: 6
 dunkelgrau/~N # frequency: 6
 dunkeloliv/~N # frequency: 6
 dunstreich/~N # frequency: 6
@@ -13724,7 +13716,6 @@ einzahl/~N # frequency: 6
 eisblau/~N # frequency: 6
 eisenfrei/~N # frequency: 6
 eisengrau/~N # frequency: 6
-eisenreich/~N # frequency: 6
 eisfrei/~N # frequency: 6
 eisgrau/~N # frequency: 6
 eisig/~J # adjective root, frequency: 6
@@ -14677,7 +14668,6 @@ großartig/~J # adjective root, frequency: 6
 großdeutsch/~N # frequency: 6
 großflächig/~J # adjective root, frequency: 6
 großherzig/~J # adjective root, frequency: 6
-großindustriell/~N # frequency: 6
 großstadtnah/~N # frequency: 6
 großzügig/~J # adjective root, frequency: 6
 grundfalsch/~N # frequency: 6
@@ -14768,9 +14758,7 @@ halt/~N # frequency: 6
 hammergeil/~N # frequency: 6
 hamster/~N # frequency: 6
 handflächengroß/~N # frequency: 6
-handgroß/~N # frequency: 6
 handikap/~N # frequency: 6
-handlang/~N # frequency: 6
 handlich/~J # adjective root, frequency: 6
 handlungsaktiv/~N # frequency: 6
 handlungsreich/~N # frequency: 6
@@ -14920,11 +14908,9 @@ hochexpressiv/~N # frequency: 6
 hochfeudal/~N # frequency: 6
 hochfunktional/~N # frequency: 6
 hochfunktionell/~N # frequency: 6
-hochgenau/~N # frequency: 6
 hochgenial/~N # frequency: 6
 hochglazial/~N # frequency: 6
 hochindividuell/~N # frequency: 6
-hochindustriell/~N # frequency: 6
 hochinnovativ/~N # frequency: 6
 hochintellektuell/~N # frequency: 6
 hochintensiv/~N # frequency: 6
@@ -15300,7 +15286,6 @@ iterativ/~N # frequency: 6
 jahrelang/~N # frequency: 6
 jahresaktuell/~N # frequency: 6
 jahresgenau/~N # frequency: 6
-jahrgenau/~N # frequency: 6
 jahrhundertelang/~N # frequency: 6
 jahrtausendelang/~N # frequency: 6
 jahrzehntelang/~N # frequency: 6
@@ -15819,7 +15804,6 @@ land/~Nh #frequency: 6
 landesfremd/~N # frequency: 6
 landfremd/~N # frequency: 6
 landnah/~N # frequency: 6
-landreich/~N # frequency: 6
 landwirtschaftsnah/~N # frequency: 6
 langflügelig/~J # adjective root, frequency: 6
 langflüglig/~J # adjective root, frequency: 6
@@ -15848,7 +15832,6 @@ laufstark/~N # frequency: 6
 launisch/~J # adjective root, frequency: 6
 lautgetreu/~N # frequency: 6
 lautgleich/~N # frequency: 6
-lautstark/~N # frequency: 6
 lavendelblau/~N # frequency: 6
 lax/~N # frequency: 6
 leb/~N # frequency: 6
@@ -29715,7 +29698,6 @@ kurvige/~~N # auto-added
 kurvt/~~NX # auto-added
 kurvtet/~~N # auto-added
 kurzum/~~Z # auto-added
-kurzweg/~~N # auto-added
 kusch/~~NYX # auto-added
 kuschle/~~N # auto-added
 kuschst/~~N # auto-added
@@ -30082,7 +30064,6 @@ lampe/~~N # auto-added
 lampen/~~V # auto-added
 lampion/~~N # auto-added
 landab/~~N # auto-added
-landarm/~~NX # auto-added
 landauf/~~N # auto-added
 landaus/~~N # auto-added
 landein/~~N # auto-added
@@ -32899,7 +32880,6 @@ neustem/~~N # auto-added
 neuster/~~M # auto-added
 neustes/~~N # auto-added
 neutron/~~N # auto-added
-neuzeit/~~N # auto-added
 nevada/~~Nb # auto-added
 news/~~N # auto-added
 niacin/~~N # auto-added
@@ -61596,7 +61576,6 @@ echtfarben/~~V # auto-added
 echtgolden/~~V # auto-added
 echthaar/~~N # auto-added
 echtheit/~~F # auto-added
-echtzeit/~~N # auto-added
 eckchens/~~N # auto-added
 ecstasys/~~N # auto-added
 ecuadors/~~N # auto-added
@@ -64127,7 +64106,6 @@ eischalen/~~V # auto-added
 eisenach/~~N # auto-added
 eisenacher/~~M # auto-added
 eisenachs/~~N # auto-added
-eisenarm/~~NXa # auto-added
 eisenarmem/~~N # auto-added
 eisenarmen/~~V # auto-added
 eisenarmer/~~M # auto-added
@@ -72721,7 +72699,6 @@ fraulichen/~~Z # auto-added
 fraulicher/~~M # auto-added
 frauliches/~~N # auto-added
 fraulichst/~~N # auto-added
-fraustadt/~~N # auto-added
 fraustadts/~~N # auto-added
 fraßdruck/~~N # auto-added
 fraßdrucks/~~N # auto-added
@@ -73076,7 +73053,6 @@ frischstes/~~N # auto-added
 frischten/~~V # auto-added
 frischtest/~~N # auto-added
 frischtet/~~N # auto-added
-frischweg/~~N # auto-added
 friseuren/~~V # auto-added
 friseurin/~~N # auto-added
 friseurs/~~N # auto-added
@@ -81654,7 +81630,6 @@ großkhanen/~~V # auto-added
 großkhans/~~N # auto-added
 großkomtur/~~N # auto-added
 großmachen/~~Z # auto-added
-großreich/~~NX # auto-added
 großreichs/~~N # auto-added
 großschabe/~~N # auto-added
 großschot/~~NX # auto-added
@@ -82745,7 +82720,6 @@ hamstertet/~~N # auto-added
 handballer/~~M # auto-added
 handbemalt/~~N # auto-added
 handbrause/~~N # auto-added
-handbreit/~~NX # auto-added
 handelnd/~~N # auto-added
 handelnde/~~N # auto-added
 handelndem/~~N # auto-added
@@ -82797,7 +82771,6 @@ handouts/~~N # auto-added
 handramme/~~N # auto-added
 handshake/~~N # auto-added
 handvolle/~~N # auto-added
-handwarm/~~NX # auto-added
 handwerk/~~N # auto-added
 handwerks/~~N # auto-added
 handwurz/~~N # auto-added
@@ -86439,7 +86412,6 @@ jahrgeld/~~N # auto-added
 jahrgelds/~~N # auto-added
 jahrgänge/~~N # auto-added
 jahrmarkt/~~N # auto-added
-jahrwoche/~~N # auto-added
 jahrzehnt/~~N # auto-added
 jakobiner/~~M # auto-added
 jakobsweg/~~N # auto-added
@@ -87799,7 +87771,6 @@ kindbetts/~~N # auto-added
 kindchen/~~Z # auto-added
 kindchens/~~N # auto-added
 kinderei/~~N # auto-added
-kindfrau/~~N # auto-added
 kindheit/~~F # auto-added
 kindheits/~~N # auto-added
 kindische/~~N # auto-added
@@ -88068,7 +88039,6 @@ kleineren/~~V # auto-added
 kleinerer/~~J # auto-added - comparative adjective
 kleineres/~~N # auto-added
 kleinheit/~~F # auto-added
-kleinlaut/~~N # auto-added
 kleinoden/~~V # auto-added
 kleinodes/~~N # auto-added
 kleinodie/~~N # auto-added
@@ -90349,7 +90319,6 @@ langusten/~~V # auto-added
 langwarft/~~N # auto-added
 langweile/~~N # auto-added
 langweilt/~~N # auto-added
-langzeit/~~N # auto-added
 langziehe/~~N # auto-added
 langzieht/~~N # auto-added
 langzogen/~~V # auto-added
@@ -92413,7 +92382,6 @@ mannhoher/~~M # auto-added
 mannhohes/~~N # auto-added
 mannloch/~~N # auto-added
 mannlochs/~~N # auto-added
-mannmonat/~~N # auto-added
 mannsbild/~~N # auto-added
 mannshoch/~~Nh # auto-added
 mannshohe/~~N # auto-added
@@ -92424,7 +92392,6 @@ manntagen/~~V # auto-added
 manntags/~~N # auto-added
 mannweib/~~N # auto-added
 mannweibs/~~N # auto-added
-mannwoche/~~N # auto-added
 manometer/~~M # auto-added
 mansarde/~~N # auto-added
 mansarden/~~V # auto-added
@@ -95317,7 +95284,6 @@ nassestes/~~N # auto-added
 nassfest/~~N # auto-added
 nassfeste/~~N # auto-added
 nassfäule/~~N # auto-added
-nasskalt/~~NX # auto-added
 nasskern/~~V # auto-added
 nasskerne/~~N # auto-added
 nasskerns/~~N # auto-added
@@ -95591,7 +95557,6 @@ neuraler/~~M # auto-added
 neurales/~~N # auto-added
 neuralgie/~~N # auto-added
 neurechte/~~N # auto-added
-neureich/~~NX # auto-added
 neuritis/~~N # auto-added
 neurogen/~~V # auto-added
 neurogene/~~N # auto-added
@@ -96505,7 +96470,6 @@ ortsferne/~~N # auto-added
 ortsfest/~~N # auto-added
 ortsfeste/~~N # auto-added
 ortsfremd/~~N # auto-added
-ortsgenau/~~N # auto-added
 ortsnahem/~~N # auto-added
 ortsnahen/~~V # auto-added
 ortsnaher/~~M # auto-added
@@ -96526,7 +96490,6 @@ ostelbien/~~V # auto-added
 osteolyse/~~N # auto-added
 osteopath/~~N # auto-added
 osternah/~~NX # auto-added
-osteuropa/~~N # auto-added
 osthessen/~~V # auto-added
 ostpreuße/~~N # auto-added
 ostwärts/~~N # auto-added
@@ -97825,7 +97788,6 @@ pluskonto/~~N # auto-added
 pluspolen/~~V # auto-added
 pluspoles/~~N # auto-added
 pluspols/~~N # auto-added
-pluspunkt/~~N # auto-added
 plustaste/~~N # auto-added
 plustere/~~N # auto-added
 plustern/~~V # auto-added
@@ -105444,7 +105406,6 @@ starkochs/~~N # auto-added
 starkrede/~~N # auto-added
 starkult/~~N # auto-added
 starkults/~~N # auto-added
-starkwind/~~N # auto-added
 starköche/~~N # auto-added
 starlett/~~N # auto-added
 starletts/~~N # auto-added
@@ -106692,7 +106653,6 @@ substanz/~~N # auto-added
 substitut/~~N # auto-added
 substrat/~~NX # auto-added
 substrats/~~N # auto-added
-subsystem/~~N # auto-added
 subtile/~~N # auto-added
 subtilem/~~N # auto-added
 subtilen/~~V # auto-added
@@ -107125,7 +107085,6 @@ südabhang/~~N # auto-added
 südafrika/~~N # auto-added
 südalpin/~~N # auto-added
 südalpine/~~N # auto-added
-südeuropa/~~N # auto-added
 südkorea/~~Nb # auto-added
 südlichst/~~N # auto-added
 südländer/~~M # auto-added
@@ -107133,7 +107092,6 @@ südmali/~~Nb # auto-added
 südpolar/~~NX # auto-added
 südthule/~~N # auto-added
 südthules/~~N # auto-added
-südwest/~~N # auto-added
 südwesten/~~V # auto-added
 südwärts/~~N # auto-added
 süffele/~~N # auto-added
@@ -107770,7 +107728,6 @@ teilnehmt/~~N # auto-added
 teilnimmt/~~N # auto-added
 teilnähme/~~N # auto-added
 teiloffen/~~V # auto-added
-teilreich/~~N # auto-added
 teilstreb/~~N # auto-added
 teiltest/~~N # auto-added
 teiltet/~~N # auto-added
@@ -109529,7 +109486,6 @@ typograph/~~N # auto-added
 typologie/~~N # auto-added
 typschema/~~N # auto-added
 typsicher/~~M # auto-added
-typsystem/~~N # auto-added
 typtest/~~N # auto-added
 typtests/~~N # auto-added
 tyrannei/~~N # auto-added
@@ -116528,7 +116484,6 @@ weltmüden/~~V # auto-added
 weltmüder/~~M # auto-added
 weltmüdes/~~N # auto-added
 weltoffen/~~V # auto-added
-weltreich/~~N # auto-added
 weltweit/~~NX # auto-added
 wendehals/~~N # auto-added
 wendejahr/~~N # auto-added
@@ -116672,7 +116627,6 @@ westfale/~~N # auto-added
 westfalen/~~V # auto-added
 westfälin/~~N # auto-added
 westgoten/~~V # auto-added
-westreich/~~N # auto-added
 westwärts/~~N # auto-added
 weswegen/~~V # auto-added
 wetteifer/~~M # auto-added
@@ -116954,7 +116908,6 @@ windiges/~~N # auto-added
 windigst/~~N # auto-added
 windigste/~~N # auto-added
 windows/~~N # auto-added
-windstark/~~N # auto-added
 windstill/~~N # auto-added
 windsurfe/~~N # auto-added
 windsurft/~~N # auto-added
@@ -117812,7 +117765,6 @@ zartesten/~~V # auto-added
 zartester/~~M # auto-added
 zartestes/~~N # auto-added
 zartflöte/~~N # auto-added
-zartgelb/~~NX # auto-added
 zartgrau/~~NX # auto-added
 zartgrün/~~N # auto-added
 zartgrüne/~~N # auto-added
@@ -126474,7 +126426,6 @@ klauenzahl/~~N # auto-added
 klavikular/~~N # auto-added
 kleewurzel/~~N # auto-added
 kleinbekam/~~N # auto-added
-kleinklein/~~N # auto-added
 kleinmütig/~~N # auto-added
 kleinporig/~~N # auto-added
 kleinreden/~~N # auto-added
@@ -127075,7 +127026,6 @@ lautiertes/~~N # auto-added
 lautmalend/~~N # auto-added
 lautredend/~~N # auto-added
 lautstärke/~~F # auto-added
-lautsystem/~~N # auto-added
 lautwandel/~~N # auto-added
 lautwerden/~~N # auto-added
 lavafetzen/~~N # auto-added
@@ -128625,7 +128575,6 @@ nordafrika/~~N # auto-added
 nordbayern/~~N # auto-added
 nordelbien/~~N # auto-added
 norderelbe/~~F # auto-added
-nordeuropa/~~N # auto-added
 nordharzer/~~N # auto-added
 nordirisch/~~N # auto-added
 nordirland/~~N # auto-added
@@ -129425,7 +129374,6 @@ pulversand/~~N # auto-added
 pulverturm/~~N # auto-added
 punktbeste/~~F # auto-added
 punktetest/~~N # auto-added
-punktgenau/~~N # auto-added
 punktieren/~~N # auto-added
 punktweise/~~F # auto-added
 pupinspule/~~F # auto-added
@@ -130204,7 +130152,6 @@ satyrherme/~~F # auto-added
 satyrmaske/~~F # auto-added
 satzwertig/~~N # auto-added
 sauberkeit/~~F # auto-added
-saubermann/~~N # auto-added
 saufgelage/~~F # auto-added
 saufverein/~~N # auto-added
 saukomisch/~~N # auto-added
@@ -130870,7 +130817,6 @@ sporocyste/~~F # auto-added
 sporogonie/~~F # auto-added
 sporophyll/~~N # auto-added
 sportkupee/~~F # auto-added
-sportsmann/~~N # auto-added
 spotmärkte/~~F # auto-added
 sprachfrei/~~N # auto-added
 sprachlich/~~N # auto-added
@@ -131011,7 +130957,6 @@ steuerfile/~~F # auto-added
 steuerflag/~~N # auto-added
 steuerfrei/~~N # auto-added
 steuerlich/~~N # auto-added
-steuerplus/~~N # auto-added
 steuerungs/~~N # auto-added
 stewardess/~~N # auto-added
 stickkunst/~~N # auto-added
@@ -133164,7 +133109,6 @@ westafrika/~~N # auto-added
 westerburg/~~N # auto-added
 westerland/~~N # auto-added
 westerwald/~~N # auto-added
-westeuropa/~~N # auto-added
 westfranke/~~F # auto-added
 westseitig/~~N # auto-added
 westtheben/~~N # auto-added
@@ -133354,7 +133298,6 @@ zarenwitwe/~~F # auto-added
 zarewitsch/~~N # auto-added
 zaristisch/~~N # auto-added
 zartbitter/~~N # auto-added
-zartfarbig/~~N # auto-added
 zartgefühl/~~N # auto-added
 zarthäutig/~~N # auto-added
 zartmachen/~~N # auto-added
@@ -140183,7 +140126,6 @@ hochtrabend/~~N # auto-added
 hochtreiben/~~N # auto-added
 hochverehrt/~~N # auto-added
 hochvornehm/~~N # auto-added
-hochwichtig/~~N # auto-added
 hochwirbeln/~~N # auto-added
 hochwirksam/~~N # auto-added
 hochwüchsig/~~N # auto-added
@@ -143630,7 +143572,6 @@ orthografie/~~F # auto-added
 orthonormal/~~N # auto-added
 ortographie/~~F # auto-added
 ortsbedingt/~~N # auto-added
-ortsbekannt/~~N # auto-added
 ortsbezogen/~~Nh # auto-added
 ortsständig/~~N # auto-added
 ortstypisch/~~N # auto-added
@@ -145388,7 +145329,6 @@ schlaumache/~~F # auto-added
 schlaumacht/~~N # auto-added
 schlaumeier/~~N # auto-added
 schlechthin/~~N # auto-added
-schlechtweg/~~N # auto-added
 schleichweg/~~N # auto-added
 schleierlos/~~N # auto-added
 schleiferei/~~N # auto-added
@@ -145569,7 +145509,6 @@ schwerkrank/~~N # auto-added
 schwermütig/~~N # auto-added
 schwernimmt/~~N # auto-added
 schwernähme/~~F # auto-added
-schwerreich/~~N # auto-added
 schwerstens/~~N # auto-added
 schwerzutun/~~N # auto-added
 schwindelei/~~N # auto-added
@@ -146367,7 +146306,6 @@ subklinisch/~~N # auto-added
 subkritisch/~~N # auto-added
 sublimation/~~F # auto-added
 sublimieren/~~N # auto-added
-subnational/~~N # auto-added
 subparietal/~~N # auto-added
 subpersonal/~~N # auto-added
 subskribent/~~N # auto-added
@@ -146899,7 +146837,6 @@ trizyklisch/~~N # auto-added
 trockenheit/~~F # auto-added
 trockenrieb/~~N # auto-added
 trockensäße/~~F # auto-added
-trockenwarm/~~N # auto-added
 trogbauwerk/~~N # auto-added
 trogmuschel/~~N # auto-added
 trompetbass/~~N # auto-added
@@ -148329,7 +148266,6 @@ wellenartig/~~N # auto-added
 wellenkämme/~~F # auto-added
 wellenreich/~~N # auto-added
 welschtirol/~~N # auto-added
-weltbekannt/~~N # auto-added
 weltberühmt/~~N # auto-added
 weltbezogen/~~Nh # auto-added
 weltcupfeld/~~N # auto-added
@@ -148453,7 +148389,6 @@ windgebeugt/~~N # auto-added
 windgerötet/~~N # auto-added
 windhundtyp/~~Nh # auto-added
 windröschen/~~N # auto-added
-windschwach/~~N # auto-added
 winkelartig/~~N # auto-added
 winksprüche/~~F # auto-added
 winkzeichen/~~N # auto-added
@@ -151498,7 +151433,6 @@ dummgekommen/~~N # auto-added
 dummzukommen/~~N # auto-added
 dumpinglöhne/~~F # auto-added
 dumpingpreis/~~N # auto-added
-dunkelfarbig/~~N # auto-added
 dunkelfärben/~~N # auto-added
 dunkelhaarig/~~N # auto-added
 dunkelhäutig/~~N # auto-added
@@ -158179,7 +158113,6 @@ nashornköpfe/~~F # auto-added
 nashornmumie/~~F # auto-added
 nashornvogel/~~N # auto-added
 nashornvögel/~~N # auto-added
-nasschemisch/~~N # auto-added
 nassrasierer/~~N # auto-added
 nassspritzen/~~N # auto-added
 nasszumachen/~~N # auto-added
@@ -158634,7 +158567,6 @@ ostkarelisch/~~N # auto-added
 ostkirchlich/~~N # auto-added
 ostkroatisch/~~N # auto-added
 ostpazifisch/~~N # auto-added
-ostpolitisch/~~N # auto-added
 ostpreußisch/~~N # auto-added
 ostsibirisch/~~N # auto-added
 oststeirisch/~~N # auto-added
@@ -160480,7 +160412,6 @@ schwabenland/~~N # auto-added
 schwachatmig/~~N # auto-added
 schwachköpfe/~~F # auto-added
 schwachlicht/~~N # auto-added
-schwachpunkt/~~N # auto-added
 schwachstrom/~~N # auto-added
 schwachwirst/~~N # auto-added
 schwachwurde/~~F # auto-added
@@ -161086,7 +161017,6 @@ stachelartig/~~N # auto-added
 stachelbilch/~~N # auto-added
 stadiendauer/~~N # auto-added
 stadionrasen/~~N # auto-added
-stadtbekannt/~~N # auto-added
 stadtheilige/~~F # auto-added
 stadtrömisch/~~N # auto-added
 stadtwerdung/~~F # auto-added
@@ -161404,7 +161334,6 @@ subendemisch/~~N # auto-added
 subepidermal/~~N # auto-added
 subglottisch/~~N # auto-added
 subklonieren/~~N # auto-added
-subkulturell/~~N # auto-added
 submolekular/~~N # auto-added
 subokzipital/~~N # auto-added
 subordinativ/~~N # auto-added
@@ -165416,7 +165345,6 @@ bürgerschreck/~~N # auto-added
 bürokratielos/~~N # auto-added
 bürokratismen/~~N # auto-added
 bürokratismus/~~N # auto-added
-bürotechnisch/~~N # auto-added
 büschelförmig/~~N # auto-added
 büschelgräser/~~N # auto-added
 büßergewänder/~~N # auto-added
@@ -166789,9 +166717,6 @@ fabulierkunst/~~N # auto-added
 facebookseite/~~F # auto-added
 fachkompetent/~~N # auto-added
 fachperiodika/~~N # auto-added
-fachpolitisch/~~N # auto-added
-fachpraktisch/~~N # auto-added
-fachtechnisch/~~N # auto-added
 fackelähnlich/~~N # auto-added
 factoryoutlet/~~N # auto-added
 fadenabstände/~~F # auto-added
@@ -168017,7 +167942,6 @@ groschenblatt/~~N # auto-added
 groschenroman/~~N # auto-added
 groschenweise/~~F # auto-added
 grottenförmig/~~N # auto-added
-großagrarisch/~~N # auto-added
 großblätterig/~~N # auto-added
 großbramsegel/~~N # auto-added
 großbäuerlich/~~N # auto-added
@@ -168029,14 +167953,12 @@ großgewachsen/~~N # auto-added
 großkanonisch/~~N # auto-added
 großmarssegel/~~N # auto-added
 großmaßstäbig/~~N # auto-added
-großpolitisch/~~N # auto-added
 großschnauzig/~~N # auto-added
 großschnäuzig/~~N # auto-added
 großschreiben/~~N # auto-added
 großschönauer/~~N # auto-added
 großstadtmüde/~~F # auto-added
 großstädtisch/~~N # auto-added
-großtechnisch/~~N # auto-added
 großväterlich/~~N # auto-added
 grundbuchlich/~~N # auto-added
 grunderneuern/~~N # auto-added
@@ -168155,7 +168077,6 @@ handgefertigt/~~N # auto-added
 handgepflückt/~~N # auto-added
 handgeschöpft/~~N # auto-added
 handgesponnen/~~N # auto-added
-handgesteuert/~~N # auto-added
 handgestrickt/~~N # auto-added
 handgetrieben/~~N # auto-added
 handgetöpfert/~~N # auto-added
@@ -169520,7 +169441,6 @@ hochbedeutend/~~N # auto-added
 hochbesteuert/~~N # auto-added
 hochdefizitär/~~N # auto-added
 hochdekoriert/~~N # auto-added
-hochdynamisch/~~N # auto-added
 hocheffizient/~~N # auto-added
 hochelastisch/~~N # auto-added
 hochgekraxelt/~~N # auto-added
@@ -169551,7 +169471,6 @@ hochmolekular/~~N # auto-added
 hochmoralisch/~~N # auto-added
 hochmotiviert/~~N # auto-added
 hochplastisch/~~N # auto-added
-hochpolitisch/~~N # auto-added
 hochprozentig/~~N # auto-added
 hochrechenbar/~~N # auto-added
 hochromanisch/~~N # auto-added
@@ -170008,7 +169927,6 @@ jesuskindlein/~~N # auto-added
 joachimitisch/~~N # auto-added
 joachimsmühle/~~F # auto-added
 jobfokussiert/~~N # auto-added
-jobspezifisch/~~N # auto-added
 jochbeinbruch/~~N # auto-added
 jodbehandlung/~~F # auto-added
 jodlerverband/~~N # auto-added
@@ -174180,7 +174098,6 @@ schachtplombe/~~F # auto-added
 schachtränder/~~N # auto-added
 schadenfreude/~~F # auto-added
 schadowstraße/~~F # auto-added
-schadstoffarm/~~N # auto-added
 schaffensfroh/~~N # auto-added
 schafsfleisch/~~N # auto-added
 schaftbereich/~~N # auto-added
@@ -175962,7 +175879,6 @@ typbibliothek/~~N # auto-added
 typdefinition/~~F # auto-added
 typographisch/~~N # auto-added
 typsicherheit/~~F # auto-added
-typspezifisch/~~N # auto-added
 typumwandlung/~~F # auto-added
 typusexemplar/~~N # auto-added
 typverkürzung/~~F # auto-added
@@ -177117,7 +177033,6 @@ welterbeliste/~~F # auto-added
 welterbetitel/~~N # auto-added
 weltergewicht/~~N # auto-added
 weltkirchlich/~~N # auto-added
-weltpolitisch/~~N # auto-added
 weltstädtisch/~~N # auto-added
 weltumfassend/~~N # auto-added
 weltumrundung/~~F # auto-added
@@ -177366,15 +177281,12 @@ zeichnungslos/~~N # auto-added
 zeitaufgelöst/~~N # auto-added
 zeitaufwendig/~~N # auto-added
 zeitaufwändig/~~N # auto-added
-zeitdynamisch/~~N # auto-added
 zeiteffizient/~~N # auto-added
 zeitenwechsel/~~N # auto-added
 zeitgekoppelt/~~N # auto-added
-zeitgesteuert/~~N # auto-added
 zeitinvariant/~~N # auto-added
 zeitlupenhaft/~~N # auto-added
 zeitoptimiert/~~N # auto-added
-zeitpolitisch/~~N # auto-added
 zeituntypisch/~~N # auto-added
 zeitverzögert/~~N # auto-added
 zellauflösend/~~N # auto-added
@@ -178996,7 +178908,6 @@ charakteristik/~~N # auto-added
 charakterologe/~~F # auto-added
 chardonnaywein/~~Nh # auto-added
 charlottenburg/~~N # auto-added
-charttechnisch/~~N # auto-added
 chattenfeldzug/~~N # auto-added
 chausseestraße/~~F # auto-added
 chelatisierend/~~N # auto-added
@@ -182640,7 +182551,6 @@ hochdramatisch/~~N # auto-added
 hochentwickelt/~~N # auto-added
 hocherfreulich/~~N # auto-added
 hochgearbeitet/~~N # auto-added
-hochgefährlich/~~N # auto-added
 hochgeklettert/~~N # auto-added
 hochgekrempelt/~~N # auto-added
 hochgescheucht/~~N # auto-added
@@ -182669,7 +182579,6 @@ hochschulterig/~~N # auto-added
 hochseefischen/~~N # auto-added
 hochseetüchtig/~~N # auto-added
 hochsommerlich/~~N # auto-added
-hochspezifisch/~~N # auto-added
 hochsprachlich/~~N # auto-added
 hochtalentiert/~~N # auto-added
 hochverdichtet/~~N # auto-added
@@ -184186,7 +184095,6 @@ logistiksparte/~~F # auto-added
 logistiksystem/~~N # auto-added
 logistiktruppe/~~F # auto-added
 loireschlösser/~~N # auto-added
-lokalpolitisch/~~N # auto-added
 lokomotivdepot/~~N # auto-added
 lombardbestand/~~N # auto-added
 lombardpolitik/~~N # auto-added
@@ -185486,7 +185394,6 @@ orthorhombisch/~~N # auto-added
 ortlernordwand/~~N # auto-added
 ortlerstellung/~~F # auto-added
 ortschaftsräte/~~F # auto-added
-ortsspezifisch/~~N # auto-added
 ortsunabhängig/~~N # auto-added
 ortsungebunden/~~N # auto-added
 oscarnominiert/~~N # auto-added
@@ -185610,7 +185517,6 @@ partialanalyse/~~F # auto-added
 partiestellung/~~F # auto-added
 partikelfilter/~~N # auto-added
 partikelströme/~~F # auto-added
-partikelsystem/~~N # auto-added
 partitionieren/~~N # auto-added
 partneradäquat/~~N # auto-added
 partnerbezogen/~~Nh # auto-added
@@ -187653,7 +187559,6 @@ stadtauswärtig/~~N # auto-added
 stadteinwärtig/~~N # auto-added
 stadtfeindlich/~~N # auto-added
 stadtpatriziat/~~N # auto-added
-stadtpolitisch/~~N # auto-added
 stadtrechtlich/~~N # auto-added
 stadtstaatlich/~~N # auto-added
 stadtumwallung/~~F # auto-added
@@ -188164,7 +188069,6 @@ teuerungswelle/~~F # auto-added
 textanalytisch/~~N # auto-added
 textilveredler/~~N # auto-added
 textorientiert/~~N # auto-added
-textspezifisch/~~N # auto-added
 textverbindend/~~N # auto-added
 theaterwirksam/~~N # auto-added
 themenabhängig/~~N # auto-added
@@ -188779,7 +188683,6 @@ verbissschäden/~~N # auto-added
 verbrauchernah/~~N # auto-added
 verbrecherisch/~~N # auto-added
 verbruchquader/~~N # auto-added
-verbspezifisch/~~N # auto-added
 verdammenswert/~~N # auto-added
 verdaulichkeit/~~F # auto-added
 verdinglichung/~~F # auto-added
@@ -189264,7 +189167,6 @@ wegegrundstück/~~N # auto-added
 wegeverbindung/~~F # auto-added
 weggeschlichen/~~N # auto-added
 weggeschliffen/~~N # auto-added
-weggeschlossen/~~N # auto-added
 weggeschmissen/~~N # auto-added
 weggeschmolzen/~~N # auto-added
 weggeschnitten/~~N # auto-added
@@ -189425,7 +189327,6 @@ weltcupauftakt/~~N # auto-added
 weltcupstation/~~F # auto-added
 weltcupwertung/~~F # auto-added
 welterbestätte/~~F # auto-added
-welthistorisch/~~N # auto-added
 weltklasseteam/~~Nh # auto-added
 weltmarktfähig/~~N # auto-added
 weltmeisterelf/~~N # auto-added
@@ -189662,17 +189563,13 @@ zeigerstruktur/~~N # auto-added
 zeigervariable/~~F # auto-added
 zeitdilatation/~~F # auto-added
 zeitgenössisch/~~N # auto-added
-zeithistorisch/~~N # auto-added
 zeitkonsistent/~~N # auto-added
 zeitlupenartig/~~N # auto-added
 zeitlupentempo/~~N # auto-added
 zeitunabhängig/~~N # auto-added
 zeitverschoben/~~N # auto-added
-zeitökonomisch/~~N # auto-added
-zellbiologisch/~~N # auto-added
 zellophanhülle/~~F # auto-added
 zellschädigend/~~N # auto-added
-zellspezifisch/~~N # auto-added
 zellsuspension/~~F # auto-added
 zelluloseabbau/~~N # auto-added
 zellulosefaser/~~N # auto-added
@@ -190883,12 +190780,8 @@ bernsteinstraße/~~F # auto-added
 bernsteinzimmer/~~N # auto-added
 berufsausübende/~~F # auto-added
 berufsethischen/~~N # auto-added
-berufsnotwendig/~~N # auto-added
-berufspolitisch/~~N # auto-added
-berufspraktisch/~~N # auto-added
 berufsrechtlich/~~N # auto-added
 berufsständisch/~~N # auto-added
-berufstechnisch/~~N # auto-added
 berylliumbronze/~~F # auto-added
 berylliumstäube/~~F # auto-added
 berücksichtigen/~~Nh # auto-added
@@ -192073,7 +191966,6 @@ europacuprennen/~~N # auto-added
 europacupsaison/~~N # auto-added
 europacupsieger/~~N # auto-added
 europafeindlich/~~N # auto-added
-europapolitisch/~~N # auto-added
 europarechtlich/~~N # auto-added
 europaskeptisch/~~N # auto-added
 europiumchlorid/~~N # auto-added
@@ -192897,7 +192789,6 @@ gliedermaßstäbe/~~F # auto-added
 glimmerkristall/~~N # auto-added
 glimmerschiefer/~~N # auto-added
 globalisierungs/~~N # auto-added
-globalpolitisch/~~N # auto-added
 glockenschlägel/~~N # auto-added
 glucosenachweis/~~N # auto-added
 glucosespeicher/~~N # auto-added
@@ -194104,16 +193995,12 @@ hochentzündlich/~~N # auto-added
 hochfavorisiert/~~N # auto-added
 hochgerichtlich/~~N # auto-added
 hochgeschaukelt/~~N # auto-added
-hochgeschlossen/~~N # auto-added
 hochgeschrocken/~~N # auto-added
 hochintelligent/~~N # auto-added
-hochinteressant/~~N # auto-added
-hochkompliziert/~~N # auto-added
 hochkonvertiere/~~F # auto-added
 hochkonvertiert/~~N # auto-added
 hochmoortypisch/~~N # auto-added
 hochmoorähnlich/~~N # auto-added
-hochmusikalisch/~~N # auto-added
 hochnotpeinlich/~~N # auto-added
 hochofenabstich/~~N # auto-added
 hochschiffwände/~~F # auto-added
@@ -195176,7 +195063,6 @@ kurienkardinäle/~~F # auto-added
 kursivschreiben/~~N # auto-added
 kursmünzensätze/~~F # auto-added
 kursvernichtend/~~N # auto-added
-kurzgeschlossen/~~N # auto-added
 kurzgeschnitten/~~N # auto-added
 kurzreichweitig/~~N # auto-added
 kurzschlussfest/~~N # auto-added
@@ -195264,7 +195150,6 @@ latschengebüsch/~~N # auto-added
 laufmaschenfest/~~N # auto-added
 laugenbeständig/~~N # auto-added
 laugensituation/~~F # auto-added
-lautentwicklung/~~F # auto-added
 lautkombination/~~F # auto-added
 lautphysiologie/~~F # auto-added
 lautsprecherbox/~~N # auto-added
@@ -195468,7 +195353,6 @@ logistikzentren/~~N # auto-added
 logistikzentrum/~~N # auto-added
 lokalendemismen/~~N # auto-added
 lokalendemismus/~~N # auto-added
-lokalhistorisch/~~N # auto-added
 lokalklimatisch/~~N # auto-added
 lokführerstreik/~~N # auto-added
 lokomotivfabrik/~~N # auto-added
@@ -195908,7 +195792,6 @@ mitbeeinflussen/~~N # auto-added
 mitbeschuldigte/~~F # auto-added
 mitbeschäftigen/~~Nh # auto-added
 miteinzubringen/~~Nh # auto-added
-mitgliederstark/~~N # auto-added
 mitinstallieren/~~N # auto-added
 mitleiderregend/~~N # auto-added
 mitläufereffekt/~~N # auto-added
@@ -195981,7 +195864,6 @@ modalbestimmung/~~F # auto-added
 modellierhölzer/~~N # auto-added
 modellierschere/~~F # auto-added
 modellprädiktiv/~~N # auto-added
-modelltechnisch/~~N # auto-added
 modemverbindung/~~F # auto-added
 moderationstext/~~Nh # auto-added
 moderatoreffekt/~~N # auto-added
@@ -198203,8 +198085,6 @@ sowjetunionweit/~~N # auto-added
 sozialdarwinist/~~N # auto-added
 sozialenzyklika/~~N # auto-added
 sozialisierungs/~~N # auto-added
-sozialpflichtig/~~N # auto-added
-sozialpolitisch/~~N # auto-added
 sozialrechtlich/~~N # auto-added
 sozialschädlich/~~N # auto-added
 sozialstaatlich/~~N # auto-added
@@ -198339,7 +198219,6 @@ stabilitätsziel/~~N # auto-added
 stabquerschnitt/~~N # auto-added
 stabsichtigkeit/~~F # auto-added
 stadterweiternd/~~N # auto-added
-stadthistorisch/~~N # auto-added
 stadtköfferchen/~~N # auto-added
 stadtplanerisch/~~N # auto-added
 stadtschultheiß/~~N # auto-added
@@ -198436,8 +198315,6 @@ sternenforscher/~~N # auto-added
 sternornamentik/~~N # auto-added
 steueroasenland/~~N # auto-added
 steueroptimiert/~~N # auto-added
-steuerpflichtig/~~N # auto-added
-steuerpolitisch/~~N # auto-added
 steuerrechtlich/~~N # auto-added
 stichhaltigkeit/~~F # auto-added
 stichprobenhaft/~~N # auto-added
@@ -198624,7 +198501,6 @@ systematisieren/~~N # auto-added
 systemdefiniert/~~N # auto-added
 systemergänzend/~~N # auto-added
 systemerhaltend/~~N # auto-added
-systemtechnisch/~~N # auto-added
 szenariotechnik/~~N # auto-added
 szenengeometrie/~~F # auto-added
 szintigraphisch/~~N # auto-added
@@ -200791,10 +200667,7 @@ arabischsprachig/~~N # auto-added
 arbeitsaufwendig/~~N # auto-added
 arbeitsaufwändig/~~N # auto-added
 arbeitsdirectory/~~N # auto-added
-arbeitspflichtig/~~N # auto-added
-arbeitspolitisch/~~N # auto-added
 arbeitsrechtlich/~~N # auto-added
-arbeitstechnisch/~~N # auto-added
 arbeitszentriert/~~N # auto-added
 architravkonsole/~~F # auto-added
 archosaurierzahn/~~N # auto-added
@@ -201142,7 +201015,6 @@ berufsauspendler/~~N # auto-added
 berufsbefähigend/~~N # auto-added
 berufsbegleitend/~~N # auto-added
 berufsorientiert/~~N # auto-added
-berufsspezifisch/~~N # auto-added
 berufsspielertum/~~N # auto-added
 besamungsstation/~~F # auto-added
 beschaustatistik/~~N # auto-added
@@ -202076,7 +201948,6 @@ eunuchenfraktion/~~F # auto-added
 europacupeinsatz/~~N # auto-added
 europacupspieler/~~N # auto-added
 europaexekutiven/~~N # auto-added
-europafreundlich/~~N # auto-added
 europiumanomalie/~~F # auto-added
 eurozentristisch/~~N # auto-added
 evakuierungsplan/~~N # auto-added
@@ -206930,12 +206801,9 @@ sortenproduktion/~~F # auto-added
 souvenirgeschäft/~~N # auto-added
 sowjetfreundlich/~~N # auto-added
 sowjetunionreise/~~F # auto-added
-sozialfreundlich/~~N # auto-added
-sozialhistorisch/~~N # auto-added
 sozialhygienisch/~~N # auto-added
 sozialintegrativ/~~N # auto-added
 sozialversichert/~~N # auto-added
-sozialökonomisch/~~N # auto-added
 soziologiebücher/~~N # auto-added
 soziologiedozent/~~N # auto-added
 spanienfeindlich/~~N # auto-added
@@ -207278,7 +207146,6 @@ syrienfreundlich/~~N # auto-added
 systemgefährdend/~~N # auto-added
 systemintegrator/~~N # auto-added
 systemorientiert/~~N # auto-added
-systemspezifisch/~~N # auto-added
 systemunabhängig/~~N # auto-added
 systemveränderer/~~N # auto-added
 systemverändernd/~~N # auto-added
