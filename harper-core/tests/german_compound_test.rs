@@ -1,7 +1,5 @@
 //! Integration tests for German compound checking implementation
 
-use harper_core::spell::Dictionary;
-
 #[cfg(all(feature = "de", feature = "multilingual"))]
 #[test]
 fn test_compound_checker_creation() {
