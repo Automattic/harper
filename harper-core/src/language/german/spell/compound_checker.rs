@@ -11,7 +11,7 @@ use std::num::NonZeroUsize;
 use std::sync::Mutex;
 
 use crate::CharString;
-use crate::dict_word_metadata::{DictWordMetadata, NounData};
+use crate::dict_word_metadata::DictWordMetadata;
 use crate::spell::rune::word_list::AnnotatedWord;
 
 /// Compound word formation flags for German
@@ -237,12 +237,12 @@ impl CompoundChecker {
             return None;
         }
 
-        // Try to determine if it's a noun or adjective compound
-        // For now, we'll default to noun metadata as most German compounds are nouns
-        Some(DictWordMetadata {
-            noun: Some(NounData::default()),
-            ..Default::default()
-        })
+        // We don't return metadata for compound words to avoid false positives
+        // in rules like noun capitalization. The dictionary should only contain
+        // explicit words with known metadata. Compound words are valid for
+        // spell checking but their part of speech is ambiguous without
+        // additional context.
+        None
     }
 
     /// Check if a word can be decomposed and return the decomposition parts

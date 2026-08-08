@@ -226,6 +226,10 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "alle",
     "keine",
     "ideelle",
+    // Additional common words that are often misclassified
+    "bestimmt",
+    "mehr",
+    "lag",
 ];
 
 impl<T: Dictionary> GermanNounCapitalization<T> {
@@ -376,7 +380,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         &self,
         word_chars: &[char],
         word_token: &Token,
-        document: &Document,
+        _document: &Document,
     ) -> bool {
         // Early exit: cache lowercase conversion to avoid redundant computation
         let lower: Vec<char> = word_chars
@@ -405,9 +409,15 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             return false;
         }
 
-        // Common adjective endings - more specific to avoid false positives
-        if word_len > 4
-            && (word_str.ends_with("ste") || word_str.ends_with("ere") || word_str.ends_with("tes"))
+        // Common adjective endings - include all common endings to prevent false positives
+        if word_str.ends_with("e")
+            || word_str.ends_with("er")
+            || word_str.ends_with("es")
+            || word_str.ends_with("em")
+            || word_str.ends_with("en")
+            || word_str.ends_with("ste")
+            || word_str.ends_with("ere")
+            || word_str.ends_with("tes")
         {
             return false;
         }
@@ -429,14 +439,16 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
 
         // Fast path 3: check Brill POS tagging first (cheaper than dictionary lookups)
         // Use Brill tagger to override incorrect dictionary metadata
-        if word_token.kind.is_upos(UPOS::NOUN) {
-            return true;
-        } else if word_token.kind.is_upos(UPOS::VERB)
+        // Only trust Brill tagger for non-noun classifications, as noun classification
+        // can be inaccurate for words not in the dictionary
+        if word_token.kind.is_upos(UPOS::VERB)
             || word_token.kind.is_upos(UPOS::ADJ)
             || word_token.kind.is_upos(UPOS::ADV)
         {
             return false;
         }
+        // Note: We don't return true for UPOS::NOUN here because Brill tagger
+        // can misclassify words not in dictionary as nouns
 
         // Dictionary metadata checks - most reliable but more expensive
         // Check both the word and its lowercase form in a single pass
@@ -474,16 +486,10 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             return false;
         }
 
-        // Check for common noun suffixes (with minimum length guards)
-        // Only apply suffix heuristics if we don't have explicit dictionary info
-        for (suffix, min_len) in &self.noun_suffixes {
-            if word_len >= *min_len && word_str.ends_with(&suffix.iter().collect::<String>()) {
-                return true;
-            }
-        }
-
-        // Fallback to the more comprehensive heuristic analysis for ambiguous cases
-        self.is_likely_noun_comprehensive(&lower, word_token, document)
+        // Conservative approach: only flag as noun if we have strong evidence
+        // For compound words without explicit metadata, we don't flag them as nouns
+        // This prevents false positives for compound adjectives, verbs, etc.
+        false
     }
 
     /// Comprehensive heuristic analysis for ambiguous cases (fallback only)
