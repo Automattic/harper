@@ -69,9 +69,7 @@ impl Expr for SequenceExpr {
 
             // Zero-width assertions (like AnchorEnd) validate position without consuming tokens
             // They should not expand the window or advance the cursor
-            let is_zero_width = out.end == out.start;
-
-            if is_zero_width {
+            if out.is_empty() {
                 // If zero-width, don't expand window or advance cursor - just validate position
                 continue;
             }
