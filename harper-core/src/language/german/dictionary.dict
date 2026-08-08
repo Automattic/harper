@@ -18497,7 +18497,7 @@ kummerreich/~Nh #frequency: 6
 kumulativ/~Nh #frequency: 6
 kundenindividuell/~Nh #frequency: 6
 kundennah/~Nh #frequency: 6
-kunstgemäß/~Nh #frequency: 6
+kunstgemäß/~~JOQRSTUWqh # adjective with compound flag
 kunstreich/~Nh #frequency: 6
 kupferblau/~Nh #frequency: 6
 kurativ/~Nh #frequency: 6
@@ -149003,7 +149003,7 @@ betreffzeile/~~Fh
 betreuerisch/~~Nh
 betreuerstab/~~Nh
 betreuerteam/~~Nh # auto-added
-beträchtlich/~~Nh
+beträchtlich/~~JOQRSTUWpuvw
 betrügerisch/~~Nh
 bettenanzahl/~~Nh
 bettenmachen/~~Nh
@@ -159727,7 +159727,7 @@ syntheserate/~~Fh
 synthesewerk/~~Nh
 syphilitisch/~~Nh
 systematiker/~~Nh
-systematisch/~~Nh
+systematisch/~~JOQRSTUWqh # adjective with compound flag
 systemintern/~~Nh
 systemseitig/~~Nh
 szenebekannt/~~Nh
@@ -160569,6 +160569,7 @@ unvermittelt/~~Nh
 unverrichtet/~~Nh
 unverriegelt/~~Nh
 unverrückbar/~~Nh
+verschoben/~~JOQRSTUWVg # past participle as adjective
 unverschoben/~~Nh
 unversichert/~~Nh
 unversiegelt/~~Nh
@@ -166312,7 +166313,7 @@ heliumgefüllt/~~Nh
 heliumgekühlt/~~Nh
 helixstruktur/~~Nh
 hellenisieren/~~Nh
-hellenistisch/~~Nh
+hellenistisch/~~JOQRSTUWqh # adjective with compound flag
 hellerkräuter/~~Nh
 hellhörigkeit/~~Fh
 hellleuchtend/~~Nh
@@ -222510,6 +222511,7 @@ staedtepartnerschaften/~~V
 versicherungsstandorte/~~N
 hochausdifferenziertes/~~N
 bundesligamannschaften/~~V
+naturwissenschaftlich/~~JOQRSTUWqh # adjective with compound flag
 naturwissenschaftliche/~~N
 gesundheitsgefährdende/~~N
 sozialwissenschafterin/~~N
