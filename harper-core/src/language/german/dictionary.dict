@@ -27042,7 +27042,7 @@ gefahr/~~Nh
 gefaked/~~Nh
 gefakt/~~JOQRSTUWVg
 gefalle/~~Nh
-gefallt/~~Nah
+gefallt/~~JOQRSTUWVga
 gefalzt/~~JOQRSTUWVg
 gefasel/~~Nh
 gefasst/~~JOQRSTUWVg
@@ -27082,7 +27082,7 @@ gefror/~~Nh
 gefrort/~~JOQRSTUWVg
 gefräst/~~JOQRSTUWVg
 gefrönt/~~JOQRSTUWVg
-gefugt/~~NXah
+gefugt/~~JOQRSTUWVga
 gefunkt/~~JOQRSTUWVg
 gefurzt/~~JOQRSTUWVg
 gefährt/~~JOQRSTUWVg
@@ -27103,7 +27103,7 @@ gefühlt/~~JOQRSTUWVg
 geführt/~~JOQRSTUWVg
 gefüllt/~~JOQRSTUWVg
 gegafft/~~JOQRSTUWVg
-gegart/~~NXah
+gegart/~~JOQRSTUWVga
 gegeben/~~V # auto-added
 gegehrt/~~JOQRSTUWVg
 gegeigt/~~JOQRSTUWVg
@@ -27307,7 +27307,7 @@ gekräht/~~JOQRSTUWVg
 gekrönt/~~JOQRSTUWVg
 gekröse/~~Nh
 gekrüht/~~JOQRSTUWVg
-gekurt/~~Nah
+gekurt/~~JOQRSTUWVga
 gekurvt/~~JOQRSTUWVg
 gekämmt/~~JOQRSTUWVg
 gekäst/~~JOQRSTUWVg
@@ -27320,13 +27320,13 @@ geküsst/~~JOQRSTUWVg
 gel/~~NXh
 gelaber/~~Mh
 gelabt/~~JOQRSTUWVg
-gelacht/~~Nah
+gelacht/~~JOQRSTUWVga
 gelackt/~~JOQRSTUWVg
 geladen/~~V # auto-added
 gelage/~~Nh
 gelagen/~~V # auto-added
 gelages/~~Nh
-gelahmt/~~Nah
+gelahmt/~~JOQRSTUWVga
 gelang/~~Nh
 gelangt/~~JOQRSTUWVg
 gelappt/~~JOQRSTUWVg
@@ -27387,7 +27387,7 @@ gelohnt/~~JOQRSTUWVg
 geloopt/~~JOQRSTUWVg
 gelost/~~JOQRSTUWVg
 geloste/~~Nh
-gelotet/~~Nah
+gelotet/~~JOQRSTUWVga
 gelotst/~~JOQRSTUWVg
 gels/~~Nh
 gelte/~~Nh
@@ -27658,7 +27658,7 @@ gerte/~~Nh
 gerten/~~V # auto-added
 geruch/~~Nh
 geruchs/~~Nh
-geruckt/~~Nah
+geruckt/~~JOQRSTUWVga
 gerufen/~~V # auto-added
 geruh/~~Vcej # REPLACES geruhen
 geruht/~~JOQRSTUWVg
@@ -27686,13 +27686,13 @@ gerüsts/~~Nh
 gesackt/~~JOQRSTUWVg
 gesafed/~~Nh
 gesaft/~~JOQRSTUWVg
-gesagt/~~NXah
+gesagt/~~JOQRSTUWVga
 gesalbt/~~JOQRSTUWVg
 gesamt/~~JOQRSTUWVg
 gesandt/~~JOQRSTUWVg
 gesang/~~Nh
 gesangs/~~Nh
-gesaugt/~~NXah
+gesaugt/~~JOQRSTUWVga
 gesaust/~~JOQRSTUWVg
 geschah/~~Nh
 gesehen/~~V # auto-added
@@ -27723,8 +27723,8 @@ gespart/~~JOQRSTUWVg # auto-added
 gespaßt/~~JOQRSTUWVg
 gespien/~~V # auto-added
 gespukt/~~JOQRSTUWVg
-gespult/~~NXah
-gespurt/~~NXah
+gespult/~~JOQRSTUWVga
+gespurt/~~JOQRSTUWVga
 gespäht/~~JOQRSTUWVg
 gespött/~~JOQRSTUWVg
 gespült/~~JOQRSTUWVg
@@ -27842,11 +27842,11 @@ gevotet/~~JOQRSTUWVg
 gewacht/~~JOQRSTUWVg
 gewagt/~~JOQRSTUWVg
 gewahr/~~NXh
-gewahrt/~~NXah
+gewahrt/~~JOQRSTUWVga
 gewalkt/~~JOQRSTUWVg
 gewallt/~~JOQRSTUWVg
 gewalt/~~JOQRSTUWVg
-gewalzt/~~NXah
+gewalzt/~~JOQRSTUWVga
 gewand/~~Nh
 gewands/~~Nh
 gewandt/~~JOQRSTUWVg
@@ -27891,7 +27891,7 @@ gewitzt/~~JOQRSTUWVg
 gewoben/~~V # auto-added
 gewogen/~~V # auto-added
 gewogt/~~JOQRSTUWVg
-gewohnt/~~NXah
+gewohnt/~~JOQRSTUWVga
 gewollt/~~JOQRSTUWVg
 gewurmt/~~JOQRSTUWVg
 gewusst/~~JOQRSTUWVg
@@ -27924,8 +27924,8 @@ geysir/~~NXh
 geysirs/~~Nh
 gezackt/~~JOQRSTUWVg
 gezagt/~~JOQRSTUWVg
-gezahlt/~~NXah
-gezahnt/~~NXah
+gezahlt/~~JOQRSTUWVga
+gezahnt/~~JOQRSTUWVga
 gezankt/~~JOQRSTUWVg
 gezapft/~~JOQRSTUWVg
 gezecht/~~JOQRSTUWVg
@@ -27948,7 +27948,7 @@ gezofft/~~JOQRSTUWVg
 gezogen/~~V # auto-added
 gezollt/~~JOQRSTUWVg
 gezoomt/~~JOQRSTUWVg
-gezuckt/~~Nah
+gezuckt/~~JOQRSTUWVga
 gezupft/~~JOQRSTUWVg
 gezurrt/~~JOQRSTUWVg
 gezählt/~~JOQRSTUWVg
@@ -75615,28 +75615,28 @@ geblocktem/~~Nh
 geblockten/~~V # auto-added
 geblockter/~~Mh
 geblocktes/~~Nh
-gebloggt/~~Nh
-geblufft/~~Nh
-geblutet/~~Nh
+gebloggt/~~JOQRSTUWVg
+geblufft/~~JOQRSTUWVg
+geblutet/~~JOQRSTUWVg
 geblähtem/~~Nh
 geblähten/~~V # auto-added
 geblähter/~~Mh
 geblähtes/~~Nh
 gebläsen/~~V # auto-added
 gebläses/~~Nh
-geblättert/~~Nh
-geblödelt/~~Nh
+geblättert/~~JOQRSTUWVg
+geblödelt/~~JOQRSTUWVg
 geblümtem/~~Nh
 geblümten/~~V # auto-added
 geblümter/~~Mh
 geblümtes/~~Nh
-geboardet/~~Nh
+geboardet/~~JOQRSTUWVg
 gebogene/~~Nh
 gebogenem/~~Nh
 gebogenen/~~V # auto-added
 gebogener/~~Mh
 gebogenes/~~Nh
-gebohnert/~~NXh
+gebohnert/~~JOQRSTUWVg
 gebohrtem/~~Nh
 gebohrten/~~V # auto-added
 gebohrter/~~Mh
@@ -75646,9 +75646,9 @@ gebombtem/~~Nh
 gebombten/~~V # auto-added
 gebombter/~~Mh
 gebombtes/~~Nh
-geboostert/~~Nh
-geboostet/~~Nh
-gebootet/~~Nh
+geboostert/~~JOQRSTUWVg
+geboostet/~~JOQRSTUWVg
+gebootet/~~JOQRSTUWVg
 geborene/~~Nh
 geborenem/~~Nh
 geborenen/~~V # auto-added
@@ -75670,17 +75670,17 @@ gebotenem/~~Nh
 gebotenen/~~V # auto-added
 gebotener/~~Mh
 gebotenes/~~Nh
-gebotest/~~Nh
-gebouldert/~~Nh
+gebotest/~~JOQRSTUWVg
+gebouldert/~~JOQRSTUWVg
 gebounced/~~Nh
-gebrabbelt/~~Nh
-gebracht/~~NXh
+gebrabbelt/~~JOQRSTUWVg
+gebracht/~~JOQRSTUWVg
 gebrachtem/~~Nh
 gebrachten/~~V # auto-added
 gebrachter/~~Mh
 gebrachtes/~~Nh
-gebrandet/~~NXh
-gebrannt/~~NXh
+gebrandet/~~JOQRSTUWVg
+gebrannt/~~JOQRSTUWVg
 gebranntem/~~Nh
 gebrannten/~~V # auto-added
 gebrannter/~~Mh
@@ -75695,8 +75695,8 @@ gebrauche/~~Nh
 gebrauchen/~~XZ #  auto-added
 gebrauches/~~Nh
 gebrauchs/~~Nh
-gebraucht/~~NXh
-gebraust/~~Nh
+gebraucht/~~JOQRSTUWVg
+gebraust/~~JOQRSTUWVg
 gebrauste/~~Nh
 gebraustem/~~Nh
 gebrausten/~~V # auto-added
@@ -75709,38 +75709,38 @@ gebrautes/~~Nh
 gebreche/~~Nh
 gebrechen/~~XZ #  auto-added
 gebrechens/~~Nh
-gebreitet/~~Nh
-gebremst/~~Nh
+gebreitet/~~JOQRSTUWVg
+gebremst/~~JOQRSTUWVg
 gebremste/~~Nh
 gebremstem/~~Nh
 gebremsten/~~V # auto-added
 gebremster/~~Mh
 gebremstes/~~Nh
-gebricht/~~Nh
-gebrieft/~~Nh
+gebricht/~~JOQRSTUWVg
+gebrieft/~~JOQRSTUWVg
 gebrochen/~~XZ #  auto-added
 gebrochene/~~Nh
-gebrodelt/~~Nh
-gebrummelt/~~Nh
+gebrodelt/~~JOQRSTUWVg
+gebrummelt/~~JOQRSTUWVg
 gebrummes/~~Nh
 gebrumms/~~Nh
-gebrummt/~~NXh
+gebrummt/~~JOQRSTUWVg
 gebrummtem/~~Nh
 gebrummten/~~V # auto-added
 gebrummter/~~Mh
 gebrummtes/~~Nh
-gebruncht/~~Nh
-gebrutzelt/~~Nh
+gebruncht/~~JOQRSTUWVg
+gebrutzelt/~~JOQRSTUWVg
 gebräche/~~Nh
 gebräuche/~~Nh
 gebräuchen/~~XZ #  auto-added
-gebräunt/~~NXh
+gebräunt/~~JOQRSTUWVg
 gebräuntem/~~Nh
 gebräunten/~~V # auto-added
 gebräunter/~~Mh
 gebräuntes/~~Nh
-gebröckelt/~~Nh
-gebröselt/~~NXh
+gebröckelt/~~JOQRSTUWVg
+gebröselt/~~JOQRSTUWVg
 gebrüder/~~Mh
 gebrüdern/~~V # auto-added
 gebrühtem/~~Nh
@@ -75749,13 +75749,13 @@ gebrühter/~~Mh
 gebrühtes/~~Nh
 gebrülles/~~Nh
 gebrülls/~~Nh
-gebrüllt/~~NXh
+gebrüllt/~~JOQRSTUWVg
 gebrülltem/~~Nh
 gebrüllten/~~V # auto-added
 gebrüllter/~~Mh
 gebrülltes/~~Nh
-gebrüstet/~~Nh
-gebrütet/~~NXh
+gebrüstet/~~JOQRSTUWVg
+gebrütet/~~JOQRSTUWVg
 gebrütetem/~~Nh
 gebrüteten/~~V # auto-added
 gebrüteter/~~Mh
@@ -75764,11 +75764,11 @@ gebuchtem/~~Nh
 gebuchten/~~V # auto-added
 gebuchter/~~Mh
 gebuchtes/~~Nh
-gebuckelt/~~Nh
-gebuddelt/~~Nh
-gebuffert/~~Nh
-gebummelt/~~Nh
-gebummert/~~Nh
+gebuckelt/~~JOQRSTUWVg
+gebuddelt/~~JOQRSTUWVg
+gebuffert/~~JOQRSTUWVg
+gebummelt/~~JOQRSTUWVg
+gebummert/~~JOQRSTUWVg
 gebunden/~~V # auto-added
 gebundene/~~Nh
 gebundenem/~~Nh
@@ -75776,28 +75776,28 @@ gebundenen/~~V # auto-added
 gebundener/~~Mh
 gebundenes/~~Nh
 gebungen/~~V # auto-added
-gebunkert/~~NXh
+gebunkert/~~JOQRSTUWVg
 geburten/~~V # auto-added
-gebuttert/~~NXh
-gebuzzert/~~Nh
+gebuttert/~~JOQRSTUWVg
+gebuzzert/~~JOQRSTUWVg
 gebäcken/~~V # auto-added
-gebändert/~~NXh
-gebändigt/~~NXh
+gebändert/~~JOQRSTUWVg
+gebändigt/~~JOQRSTUWVg
 gebärden/~~V # auto-added
 gebärdend/~~Nh
 gebärdende/~~Nh
-gebärdet/~~NXh
+gebärdet/~~JOQRSTUWVg
 gebärdeten/~~V # auto-added
-gebärdetet/~~Nh
+gebärdetet/~~JOQRSTUWVg
 gebärende/~~Nh
 gebärendem/~~Nh
 gebärender/~~Mh
 gebärendes/~~Nh
 gebäuden/~~V # auto-added
 gebäudes/~~Nh
-geböllert/~~Nh
-gebördelt/~~Nh
-geböscht/~~NXh
+geböllert/~~JOQRSTUWVg
+gebördelt/~~JOQRSTUWVg
+geböscht/~~JOQRSTUWVg
 geböschtem/~~Nh
 geböschten/~~V # auto-added
 geböschter/~~Mh
@@ -75806,8 +75806,8 @@ gebücktem/~~Nh
 gebückten/~~V # auto-added
 gebückter/~~Mh
 gebücktes/~~Nh
-gebüffelt/~~Nh
-gebügelt/~~NXh
+gebüffelt/~~JOQRSTUWVg
+gebügelt/~~JOQRSTUWVg
 gebügeltem/~~Nh
 gebügelten/~~V # auto-added
 gebügelter/~~Mh
@@ -75815,15 +75815,15 @@ gebügeltes/~~Nh
 gebühr/~~Vej # REPLACES gebühren
 gebührend/~~Nh
 gebührende/~~Nh
-gebührst/~~Nh
-gebührtest/~~Nh
-gebührtet/~~Nh
-gebündelt/~~NXh
+gebührst/~~JOQRSTUWVg
+gebührtest/~~JOQRSTUWVg
+gebührtet/~~JOQRSTUWVg
+gebündelt/~~JOQRSTUWVg
 gebürgtem/~~Nh
 gebürgten/~~V # auto-added
 gebürgter/~~Mh
 gebürgtes/~~Nh
-gebürstet/~~NXh
+gebürstet/~~JOQRSTUWVg
 gebüsches/~~Nh
 gebüschs/~~Nh
 gebütztem/~~Nh
@@ -75838,87 +75838,87 @@ gecachtem/~~Nh
 gecachten/~~V # auto-added
 gecachter/~~Mh
 gecachtes/~~Nh
-gecancelt/~~Nh
-gecastet/~~Nh
-gecatfisht/~~Nh
-gechartert/~~Nh
-gechattet/~~Nh
-gecheckt/~~NXh
+gecancelt/~~JOQRSTUWVg
+gecastet/~~JOQRSTUWVg
+gecatfisht/~~JOQRSTUWVg
+gechartert/~~JOQRSTUWVg
+gechattet/~~JOQRSTUWVg
+gecheckt/~~JOQRSTUWVg
 gechecktem/~~Nh
 gecheckten/~~V # auto-added
 gecheckter/~~Mh
 gechecktes/~~Nh
-gechillt/~~NXh
+gechillt/~~JOQRSTUWVg
 gechilltem/~~Nh
 gechillten/~~V # auto-added
 gechillter/~~Mh
 gechilltes/~~Nh
-gechippt/~~NXh
+gechippt/~~JOQRSTUWVg
 gechipptem/~~Nh
 gechippten/~~V # auto-added
 gechippter/~~Mh
 gechipptes/~~Nh
-gechlort/~~NXh
+gechlort/~~JOQRSTUWVg
 gechlortem/~~Nh
 gechlorten/~~V # auto-added
 gechlorter/~~Mh
 gechlortes/~~Nh
-geclincht/~~Nh
-geclustert/~~Nh
-gecoacht/~~Nh
+geclincht/~~JOQRSTUWVg
+geclustert/~~JOQRSTUWVg
+gecoacht/~~JOQRSTUWVg
 gecoachten/~~V # auto-added
-gecoatet/~~Nh
-gecovert/~~NXh
+gecoatet/~~JOQRSTUWVg
+gecovert/~~JOQRSTUWVg
 gecovertem/~~Nh
 gecoverten/~~V # auto-added
 gecoverter/~~Mh
 gecovertes/~~Nh
-gecrackt/~~NXh
+gecrackt/~~JOQRSTUWVg
 gecracktem/~~Nh
 gecrackten/~~V # auto-added
 gecrackter/~~Mh
 gecracktes/~~Nh
-gecraftet/~~NXh
-gecrasht/~~Nh
+gecraftet/~~JOQRSTUWVg
+gecrasht/~~JOQRSTUWVg
 gecrashten/~~V # auto-added
-gecrawlt/~~Nh
+gecrawlt/~~JOQRSTUWVg
 gecrawlten/~~V # auto-added
 gecremtem/~~Nh
 gecremten/~~V # auto-added
 gecremter/~~Mh
 gecremtes/~~Nh
-gecrimpt/~~Nh
+gecrimpt/~~JOQRSTUWVg
 gecrimpten/~~V # auto-added
 gecruised/~~Nh
-gecruist/~~Nh
+gecruist/~~JOQRSTUWVg
 gecruisten/~~V # auto-added
 gecurlten/~~V # auto-added
 gedachtem/~~Nh
 gedachten/~~V # auto-added
 gedachter/~~Mh
 gedachtes/~~Nh
-gedachtest/~~Nh
-gedachtet/~~Nh
+gedachtest/~~JOQRSTUWVg
+gedachtet/~~JOQRSTUWVg
 gedacktem/~~Nh
 gedackten/~~V # auto-added
 gedackter/~~Mh
 gedacktes/~~Nh
-gedaddelt/~~Nh
-gedampft/~~Nah
+gedaddelt/~~JOQRSTUWVg
+gedampft/~~JOQRSTUWVga
 gedanced/~~Nh
 gedank/~~Vej # REPLACES gedanken
 gedankens/~~Nh
 gedanktem/~~Nh
 gedankter/~~Mh
 gedanktes/~~Nh
-gedartet/~~Nh
+gedartet/~~JOQRSTUWVg
 gedateten/~~V # auto-added
-gedauert/~~NXh
+gedauert/~~JOQRSTUWVg
 gedauertem/~~Nh
 gedauerten/~~V # auto-added
 gedauerter/~~Mh
 gedauertes/~~Nh
-gedeckelt/~~NXh
+gedeckelt/~~JOQRSTUWVg
 gedeck/~~Vej # REPLACES gedecken
 gedeckes/~~Nh
 gedecktem/~~Nh
@@ -75931,27 +75931,27 @@ gedehntes/~~Nh
 gedeihen/~~V # auto-added
 gedeihend/~~Nh
 gedeihende/~~Nh
-gedemütigt/~~Nh
+gedemütigt/~~JOQRSTUWVg
 gedenken/~~V # auto-added
 gedenkend/~~Nh
 gedenkende/~~Nh
 gedenkens/~~Nh
-gedeucht/~~Nh
-gedeutet/~~NXh
+gedeucht/~~JOQRSTUWVg
+gedeutet/~~JOQRSTUWVg
 gedeutetem/~~Nh
 gedeuteten/~~V # auto-added
 gedeuteter/~~Mh
 gedeutetes/~~Nh
 gedichten/~~V # auto-added
 gedichtes/~~Nh
-gedichtet/~~NXh
+gedichtet/~~JOQRSTUWVg
 gedichts/~~Nh
 gediegene/~~Nh
 gediegenem/~~Nh
 gediegenen/~~V # auto-added
 gediegener/~~Mh
 gediegenes/~~Nh
-gediegenst/~~Nh
+gediegenst/~~JOQRSTUWVg
 gediehen/~~V # auto-added
 gediehene/~~Nh
 gediehenem/~~Nh
@@ -75966,38 +75966,38 @@ gedimmtem/~~Nh
 gedimmten/~~V # auto-added
 gedimmter/~~Mh
 gedimmtes/~~Nh
-gedoktort/~~Nh
-gedonnert/~~Nh
-gedoodelt/~~Nh
-gedoppelt/~~NXh
+gedoktort/~~JOQRSTUWVg
+gedonnert/~~JOQRSTUWVg
+gedoodelt/~~JOQRSTUWVg
+gedoppelt/~~JOQRSTUWVg
 gedoptem/~~Nh
 gedopten/~~V # auto-added
 gedopter/~~Mh
 gedoptes/~~Nh
-gedoubelt/~~NXh
-gedrahtet/~~Nh
+gedoubelt/~~JOQRSTUWVg
+gedrahtet/~~JOQRSTUWVg
 gedrehtem/~~Nh
 gedrehten/~~V # auto-added
 gedrehter/~~Mh
 gedrehtes/~~Nh
-gedresst/~~Nh
+gedresst/~~JOQRSTUWVg
 gedressten/~~V # auto-added
-gedribbelt/~~Nh
-gedriftet/~~NXh
-gedrillt/~~NXh
+gedribbelt/~~JOQRSTUWVg
+gedriftet/~~JOQRSTUWVg
+gedrillt/~~JOQRSTUWVg
 gedrilltem/~~Nh
 gedrillten/~~V # auto-added
 gedrillter/~~Mh
 gedrilltes/~~Nh
-gedrittelt/~~Nh
+gedrittelt/~~JOQRSTUWVg
 gedrohtem/~~Nh
 gedrohten/~~V # auto-added
 gedrohter/~~Mh
 gedrohtes/~~Nh
 gedroschen/~~XZ #  auto-added
-gedrosselt/~~Nh
-gedruckst/~~Nh
-gedruckt/~~NXah
+gedrosselt/~~JOQRSTUWVg
+gedruckst/~~JOQRSTUWVg
+gedruckt/~~JOQRSTUWVga
 gedrucktem/~~Nh
 gedruckten/~~V # auto-added
 gedrucktes/~~Nh
@@ -76007,18 +76007,18 @@ gedränge/~~Nh
 gedrängel/~~Nh
 gedrängeln/~~V # auto-added
 gedrängels/~~Nh
-gedrängelt/~~Nh
+gedrängelt/~~JOQRSTUWVg
 gedräng/~~Vej # REPLACES gedrängen
 gedränges/~~Nh
-gedrängt/~~NXh
+gedrängt/~~JOQRSTUWVg
 gedrängtem/~~Nh
 gedrängter/~~Mh
 gedrängtes/~~Nh
 gedröhne/~~Nh
 gedröhnes/~~Nh
 gedröhns/~~Nh
-gedröhnt/~~Nh
-gedrückt/~~NXh
+gedröhnt/~~JOQRSTUWVg
+gedrückt/~~JOQRSTUWVg
 gedrücktem/~~Nh
 gedrückten/~~V # auto-added
 gedrücktes/~~Nh
@@ -76026,8 +76026,8 @@ geducktem/~~Nh
 geduckten/~~V # auto-added
 geduckter/~~Mh
 geducktes/~~Nh
-gedudelt/~~Nh
-geduftet/~~NXh
+gedudelt/~~JOQRSTUWVg
+geduftet/~~JOQRSTUWVg
 geduftetem/~~Nh
 gedufteten/~~V # auto-added
 gedufteter/~~Mh
@@ -76035,33 +76035,33 @@ geduftetes/~~Nh
 gedulden/~~V # auto-added
 geduldend/~~Nh
 geduldende/~~Nh
-geduldest/~~Nh
-geduldet/~~NXh
+geduldest/~~JOQRSTUWVg
+geduldet/~~JOQRSTUWVg
 geduldetem/~~Nh
 geduldeten/~~V # auto-added
 geduldeter/~~Mh
 geduldetes/~~Nh
-geduldetet/~~Nh
+geduldetet/~~JOQRSTUWVg
 geduldige/~~Nh
 geduldigem/~~Nh
 geduldigen/~~V # auto-added
 geduldiger/~~Mh
 geduldiges/~~Nh
-geduldigst/~~Nh
+geduldigst/~~JOQRSTUWVg
 gedungen/~~V # auto-added
 gedungene/~~Nh
 gedungenem/~~Nh
 gedungenen/~~V # auto-added
 gedungener/~~Mh
 gedungenes/~~Nh
-gedunkelt/~~Nh
+gedunkelt/~~JOQRSTUWVg
 gedunsen/~~V # auto-added
 gedunsene/~~Nh
 gedunsenem/~~Nh
 gedunsenen/~~V # auto-added
 gedunsener/~~Mh
 gedunsenes/~~Nh
-geduscht/~~NXh
+geduscht/~~JOQRSTUWVg
 geduschtem/~~Nh
 geduschten/~~V # auto-added
 geduschter/~~Mh
@@ -76072,14 +76072,14 @@ geduzter/~~Mh
 geduztes/~~Nh
 gedächte/~~Nh
 gedächten/~~V # auto-added
-gedächtet/~~Nh
+gedächtet/~~JOQRSTUWVg
 gedächtnis/~~Nh
-gedämmert/~~Nh
+gedämmert/~~JOQRSTUWVg
 gedämmtem/~~Nh
 gedämmten/~~V # auto-added
 gedämmter/~~Mh
 gedämmtes/~~Nh
-gedämpft/~~NXh
+gedämpft/~~JOQRSTUWVg
 gedämpftem/~~Nh
 gedämpften/~~V # auto-added
 gedämpftes/~~Nh
@@ -76089,14 +76089,14 @@ gedörrtem/~~Nh
 gedörrten/~~V # auto-added
 gedörrter/~~Mh
 gedörrtes/~~Nh
-gedübelt/~~Nh
-gedümpelt/~~Nh
+gedübelt/~~JOQRSTUWVg
+gedümpelt/~~JOQRSTUWVg
 gedüngtem/~~Nh
 gedüngten/~~V # auto-added
 gedüngter/~~Mh
 gedüngtes/~~Nh
-gedünstet/~~NXh
-gedürstet/~~Nh
+gedünstet/~~JOQRSTUWVg
+gedürstet/~~JOQRSTUWVg
 geebnetem/~~Nh
 geebneten/~~V # auto-added
 geebneter/~~Mh
@@ -76105,7 +76105,7 @@ geeggtem/~~Nh
 geeggten/~~V # auto-added
 geeggter/~~Mh
 geeggtes/~~Nh
-geehelicht/~~Nh
+geehelicht/~~JOQRSTUWVg
 geehrtem/~~Nh
 geehrten/~~V # auto-added
 geehrter/~~Mh
@@ -76114,7 +76114,7 @@ geeichtem/~~Nh
 geeichten/~~V # auto-added
 geeichter/~~Mh
 geeichtes/~~Nh
-geeifert/~~NXh
+geeifert/~~JOQRSTUWVg
 geeifertem/~~Nh
 geeiferten/~~V # auto-added
 geeiferter/~~Mh
@@ -76128,7 +76128,7 @@ geeiltem/~~Nh
 geeilten/~~V # auto-added
 geeilter/~~Mh
 geeiltes/~~Nh
-geeinigt/~~NXh
+geeinigt/~~JOQRSTUWVg
 geeinigtem/~~Nh
 geeinigten/~~V # auto-added
 geeinigter/~~Mh
@@ -76141,7 +76141,7 @@ geeistem/~~Nh
 geeisten/~~V # auto-added
 geeister/~~Mh
 geeistes/~~Nh
-geeitert/~~NXh
+geeitert/~~JOQRSTUWVg
 geeitertem/~~Nh
 geeiterten/~~V # auto-added
 geeiterter/~~Mh
@@ -76150,8 +76150,8 @@ geendetem/~~Nh
 geendeten/~~V # auto-added
 geendeter/~~Mh
 geendetes/~~Nh
-geendigt/~~Nh
-geentert/~~NXh
+geendigt/~~JOQRSTUWVg
+geentert/~~JOQRSTUWVg
 geentertem/~~Nh
 geenterten/~~V # auto-added
 geenterter/~~Mh
@@ -76164,7 +76164,7 @@ geerdetem/~~Nh
 geerdeten/~~V # auto-added
 geerdeter/~~Mh
 geerdetes/~~Nh
-geerntet/~~NXh
+geerntet/~~JOQRSTUWVg
 geerntetem/~~Nh
 geernteten/~~V # auto-added
 geernteter/~~Mh
@@ -76181,24 +76181,24 @@ geesthangs/~~Nh
 geesthöhe/~~Nh
 geesthügel/~~Nh
 geestinsel/~~Nh
-geestort/~~NXh
+geestort/~~JOQRSTUWVg
 geestorten/~~V # auto-added
 geestortes/~~Nh
 geestorts/~~Nh # auto-added
 geestrand/~~Nh
 geestrands/~~Nh
 geestzunge/~~Nh
-gefabelt/~~Nh
-gefacetimt/~~Nh
-gefackelt/~~Nh
-gefahndet/~~NXh
+gefabelt/~~JOQRSTUWVg
+gefacetimt/~~JOQRSTUWVg
+gefackelt/~~JOQRSTUWVg
+gefahndet/~~JOQRSTUWVg
 gefahren/~~V # auto-added
 gefahrene/~~Nh
 gefahrenem/~~Nh
 gefahrenen/~~V # auto-added
 gefahrener/~~Mh
 gefahrenes/~~Nh
-gefahrgut/~~Nh
+gefahrgut/~~JOQRSTUWVg
 gefahrguts/~~Nh
 gefaktem/~~Nh
 gefakten/~~V # auto-added
@@ -76210,7 +76210,7 @@ gefallenen/~~V # auto-added
 gefallener/~~Mh
 gefallenes/~~Nh
 gefallens/~~Nh
-gefaltet/~~NXh
+gefaltet/~~JOQRSTUWVg
 gefaltetem/~~Nh
 gefalteten/~~V # auto-added
 gefalteter/~~Mh
@@ -76226,8 +76226,8 @@ gefangenen/~~V # auto-added
 gefangener/~~Mh
 gefangenes/~~Nh
 gefasels/~~Nh
-gefaselt/~~Nh
-gefasert/~~NXh
+gefaselt/~~JOQRSTUWVg
+gefasert/~~JOQRSTUWVg
 gefasertem/~~Nh
 gefaserten/~~V # auto-added
 gefaserter/~~Mh
@@ -76237,9 +76237,9 @@ gefasstem/~~Nh
 gefassten/~~V # auto-added
 gefasster/~~Mh
 gefasstes/~~Nh
-gefastet/~~Nh
-gefaucht/~~Nh
-gefaulenzt/~~Nh
+gefastet/~~JOQRSTUWVg
+gefaucht/~~JOQRSTUWVg
+gefaulenzt/~~JOQRSTUWVg
 gefaultem/~~Nh
 gefaulten/~~V # auto-added
 gefaulter/~~Mh
@@ -76249,11 +76249,11 @@ gefaxten/~~V # auto-added
 gefaxter/~~Mh
 gefaxtes/~~Nh
 gefeatured/~~Nh
-gefeaturt/~~Nh
+gefeaturt/~~JOQRSTUWVg
 gefechten/~~V # auto-added
 gefechtes/~~Nh
 gefechts/~~Nh
-gefedert/~~NXh
+gefedert/~~JOQRSTUWVg
 gefedertem/~~Nh
 gefederten/~~V # auto-added
 gefederter/~~Mh
@@ -76266,12 +76266,12 @@ gefehltem/~~Nh
 gefehlten/~~V # auto-added
 gefehlter/~~Mh
 gefehltes/~~Nh
-gefeiert/~~NXh
+gefeiert/~~JOQRSTUWVg
 gefeiertem/~~Nh
 gefeierten/~~V # auto-added
 gefeierter/~~Mh
 gefeiertes/~~Nh
-gefeilscht/~~Nh
+gefeilscht/~~JOQRSTUWVg
 gefeiltem/~~Nh
 gefeilten/~~V # auto-added
 gefeilter/~~Mh
@@ -76281,14 +76281,14 @@ gefeiten/~~V # auto-added
 gefeiter/~~Mh
 gefeites/~~Nh
 gefertigt/~~JOQRSTUWVg # past participle as adjective
-gefesselt/~~NXh
-gefestigt/~~NXh
-gefettet/~~NXh
+gefesselt/~~JOQRSTUWVg
+gefestigt/~~JOQRSTUWVg
+gefettet/~~JOQRSTUWVg
 gefettetem/~~Nh
 gefetteten/~~V # auto-added
 gefetteter/~~Mh
 gefettetes/~~Nh
-gefeuert/~~NXh
+gefeuert/~~JOQRSTUWVg
 gefeuertem/~~Nh
 gefeuerten/~~V # auto-added
 gefeuerter/~~Mh
@@ -76297,90 +76297,90 @@ geficktem/~~Nh
 gefickten/~~V # auto-added
 gefickter/~~Mh
 geficktes/~~Nh
-gefiebert/~~Nh
-gefiedelt/~~Nh
+gefiebert/~~JOQRSTUWVg
+gefiedelt/~~JOQRSTUWVg
 gefieder/~~Mh
 gefiedern/~~V # auto-added
 gefieders/~~Nh
-gefiedert/~~NXh
+gefiedert/~~JOQRSTUWVg
 gefielen/~~V # auto-added
 gefiertem/~~Nh
 gefierten/~~V # auto-added
 gefierter/~~Mh
 gefiertes/~~Nh
-gefightet/~~Nh
+gefightet/~~JOQRSTUWVg
 gefilden/~~V # auto-added
 gefilmtem/~~Nh
 gefilmten/~~V # auto-added
 gefilmter/~~Mh
 gefilmtes/~~Nh
-gefiltert/~~NXh
+gefiltert/~~JOQRSTUWVg
 gefilztem/~~Nh
 gefilzten/~~V # auto-added
 gefilzter/~~Mh
 gefilztes/~~Nh
-gefingert/~~Nh
+gefingert/~~JOQRSTUWVg
 gefirmten/~~V # auto-added
-gefirnisst/~~Nh
-gefischt/~~NXh
+gefirnisst/~~JOQRSTUWVg
+gefischt/~~JOQRSTUWVg
 gefischtem/~~Nh
 gefischten/~~V # auto-added
 gefischter/~~Mh
 gefischtes/~~Nh
-gefittet/~~Nh
+gefittet/~~JOQRSTUWVg
 gefitteten/~~V # auto-added
 gefixten/~~V # auto-added
-geflachst/~~Nh
-geflackert/~~Nh
-geflaggt/~~NXh
+geflachst/~~JOQRSTUWVg
+geflackert/~~JOQRSTUWVg
+geflaggt/~~JOQRSTUWVg
 geflaggtem/~~Nh
 geflaggten/~~V # auto-added
 geflaggter/~~Mh
 geflaggtes/~~Nh
 geflaked/~~Nh
-geflammt/~~NXh
+geflammt/~~JOQRSTUWVg
 geflammtem/~~Nh
 geflammten/~~V # auto-added
 geflammter/~~Mh
 geflammtes/~~Nh
-geflankt/~~Nh
+geflankt/~~JOQRSTUWVg
 geflankten/~~V # auto-added
-geflanscht/~~Nh
-geflasht/~~Nh
+geflanscht/~~JOQRSTUWVg
+geflasht/~~JOQRSTUWVg
 geflashten/~~V # auto-added
-geflattert/~~Nh
-geflecht/~~NXh
+geflattert/~~JOQRSTUWVg
+geflecht/~~JOQRSTUWVg
 geflechten/~~V # auto-added
 geflechtes/~~Nh
 geflechts/~~Nh
-gefleckt/~~NXh
+gefleckt/~~JOQRSTUWVg
 geflecktem/~~Nh
 gefleckten/~~V # auto-added
 gefleckter/~~Mh
 geflecktes/~~Nh
-geflegelt/~~Nh
-geflennt/~~Nh
-gefletscht/~~Nh
-geflickt/~~NXh
+geflegelt/~~JOQRSTUWVg
+geflennt/~~JOQRSTUWVg
+gefletscht/~~JOQRSTUWVg
+geflickt/~~JOQRSTUWVg
 geflicktem/~~Nh
 geflickten/~~V # auto-added
 geflickter/~~Mh
 geflicktes/~~Nh
-gefliest/~~Nh
+gefliest/~~JOQRSTUWVg
 geflieste/~~Nh
 gefliestem/~~Nh
 gefliesten/~~V # auto-added
 gefliester/~~Mh
 gefliestes/~~Nh
-geflimmert/~~Nh
-geflippert/~~Nh
-geflippt/~~NXh
+geflimmert/~~JOQRSTUWVg
+geflippert/~~JOQRSTUWVg
+geflippt/~~JOQRSTUWVg
 geflipptem/~~Nh
 geflippten/~~V # auto-added
 geflippter/~~Mh
 geflipptes/~~Nh
-geflirtet/~~Nh
-geflitzt/~~Nh
+geflirtet/~~JOQRSTUWVg
+geflitzt/~~JOQRSTUWVg
 geflochten/~~V # auto-added
 geflogen/~~V # auto-added
 geflogene/~~Nh
@@ -76394,61 +76394,61 @@ geflohenem/~~Nh
 geflohenen/~~V # auto-added
 geflohener/~~Mh
 geflohenes/~~Nh
-gefloppt/~~NXh
+gefloppt/~~JOQRSTUWVg
 geflopptem/~~Nh
 gefloppten/~~V # auto-added
 gefloppter/~~Mh
 geflopptes/~~Nh
 geflossen/~~V # auto-added
 geflossene/~~Nh
-geflucht/~~Nh
+geflucht/~~JOQRSTUWVg
 geflunker/~~Mh
 geflunkers/~~Nh
-geflunkert/~~Nh
-geflutet/~~NXh
+geflunkert/~~JOQRSTUWVg
+geflutet/~~JOQRSTUWVg
 geflutetem/~~Nh
 gefluteten/~~V # auto-added
 gefluteter/~~Mh
 geflutetes/~~Nh
-geflutscht/~~Nh
-geflötet/~~Nh
-geflüchtet/~~Nh
+geflutscht/~~JOQRSTUWVg
+geflötet/~~JOQRSTUWVg
+geflüchtet/~~JOQRSTUWVg
 geflügel/~~Nh
 geflügeln/~~V # auto-added
 geflügels/~~Nh
-geflügelt/~~NXh
+geflügelt/~~JOQRSTUWVg
 geflüster/~~Mh
 geflüsters/~~Nh
-geflüstert/~~Nh
+geflüstert/~~JOQRSTUWVg
 gefochten/~~V # auto-added
 gefolgen/~~V # auto-added
-gefolgert/~~NXh
+gefolgert/~~JOQRSTUWVg
 gefolges/~~Nh
-gefoltert/~~NXh
+gefoltert/~~JOQRSTUWVg
 gefopptem/~~Nh
 gefoppten/~~V # auto-added
 gefoppter/~~Mh
 gefopptes/~~Nh
-gefordert/~~NXh
+gefordert/~~JOQRSTUWVg
 geformtem/~~Nh
 geformten/~~V # auto-added
 geformter/~~Mh
 geformtes/~~Nh
-geforscht/~~NXh
+geforscht/~~JOQRSTUWVg
 gefoultem/~~Nh
 gefoulten/~~V # auto-added
 gefoulter/~~Mh
 gefoultes/~~Nh
-gefrackt/~~Nh
+gefrackt/~~JOQRSTUWVg
 gefrackten/~~V # auto-added
 gefragtem/~~Nh
 gefragten/~~V # auto-added
 gefragter/~~Mh
 gefragtes/~~Nh
 geframed/~~Nh
-geframet/~~Nh
+geframet/~~JOQRSTUWVg
 geframten/~~V # auto-added
-gefranst/~~Nh
+gefranst/~~JOQRSTUWVg
 gefranste/~~Nh
 gefranstem/~~Nh
 gefransten/~~V # auto-added
@@ -76458,24 +76458,24 @@ gefreitem/~~Nh
 gefreiten/~~V # auto-added
 gefreiter/~~Mh
 gefreites/~~Nh
-gefremdelt/~~Nh
+gefremdelt/~~JOQRSTUWVg
 gefressen/~~V # auto-added
 gefressene/~~Nh
-gefrevelt/~~NXh
+gefrevelt/~~JOQRSTUWVg
 gefriere/~~Nh
 gefrieren/~~V # auto-added
 gefrierend/~~Nh
-gefriert/~~Nh
-gefristet/~~NXh
+gefriert/~~JOQRSTUWVg
+gefristet/~~JOQRSTUWVg
 gefroren/~~V # auto-added
 gefrorene/~~Nh
 gefrorenem/~~Nh
 gefrorenen/~~V # auto-added
 gefrorener/~~Mh
 gefrorenes/~~Nh
-gefrotzelt/~~Nh
-gefruchtet/~~Nh
-gefrustet/~~NXh
+gefrotzelt/~~JOQRSTUWVg
+gefruchtet/~~JOQRSTUWVg
+gefrustet/~~JOQRSTUWVg
 gefräste/~~Nh
 gefrästem/~~Nh
 gefrästen/~~V # auto-added
@@ -76486,36 +76486,36 @@ gefräßigem/~~Nh
 gefräßigen/~~V # auto-added
 gefräßiger/~~Mh
 gefräßiges/~~Nh
-gefräßigst/~~Nh
+gefräßigst/~~JOQRSTUWVg
 gefugtem/~~Nh
 gefugten/~~V # auto-added
 gefugtes/~~Nh
-gefummelt/~~Nh
+gefummelt/~~JOQRSTUWVg
 gefunden/~~V # auto-added
 gefundene/~~Nh
 gefundenem/~~Nh
 gefundenen/~~V # auto-added
 gefundener/~~Mh
 gefundenes/~~Nh
-gefunkelt/~~Nh
+gefunkelt/~~JOQRSTUWVg
 gefunktem/~~Nh
 gefunkten/~~V # auto-added
 gefunkter/~~Mh
 gefunktes/~~Nh
-gefurcht/~~NXh
+gefurcht/~~JOQRSTUWVg
 gefurchtem/~~Nh
 gefurchten/~~V # auto-added
 gefurchter/~~Mh
 gefurchtes/~~Nh
-gefuscht/~~NXh
+gefuscht/~~JOQRSTUWVg
 gefuschtem/~~Nh
 gefuschten/~~V # auto-added
 gefuschter/~~Mh
 gefuschtes/~~Nh
-gefusselt/~~Nh
-gefuttert/~~Nh
-gefächert/~~NXh
-gefädelt/~~NXh
+gefusselt/~~JOQRSTUWVg
+gefuttert/~~JOQRSTUWVg
+gefächert/~~JOQRSTUWVg
+gefädelt/~~JOQRSTUWVg
 gefädeltem/~~Nh
 gefädelten/~~V # auto-added
 gefädelter/~~Mh
@@ -76538,32 +76538,32 @@ gefälligem/~~Nh
 gefälligen/~~V # auto-added
 gefälliger/~~Mh
 gefälliges/~~Nh
-gefälligst/~~Nh
-gefällst/~~Nh
+gefälligst/~~JOQRSTUWVg
+gefällst/~~JOQRSTUWVg
 gefälltem/~~Nh
 gefälltes/~~Nh
-gefälscht/~~NXh
-gefältelt/~~NXh
+gefälscht/~~JOQRSTUWVg
+gefältelt/~~JOQRSTUWVg
 gefängnis/~~Nh
 gefärbtem/~~Nh
 gefärbten/~~V # auto-added
 gefärbter/~~Mh
 gefärbtes/~~Nh
 gefäßfreie/~~Nh
-gefäßnaht/~~Nh
+gefäßnaht/~~JOQRSTUWVg
 gefäßtonus/~~Nh
 geföhntem/~~Nh
 geföhnten/~~V # auto-added
 geföhnter/~~Mh
 geföhntes/~~Nh
-gefördert/~~NXh
+gefördert/~~JOQRSTUWVg
 gefügige/~~Nh
 gefügigem/~~Nh
 gefügigen/~~V # auto-added
 gefügiger/~~Mh
 gefügigere/~~Nh
 gefügiges/~~Nh
-gefügigst/~~Nh
+gefügigst/~~JOQRSTUWVg
 gefügigste/~~Nh
 gefügtem/~~Nh
 gefügtes/~~Nh
@@ -76581,15 +76581,15 @@ gefülltem/~~Nh
 gefüllten/~~V # auto-added
 gefüllter/~~Mh
 gefülltes/~~Nh
-gefürstet/~~NXh
-gefüttert/~~NXh
-gegabelt/~~NXh
+gefürstet/~~JOQRSTUWVg
+gefüttert/~~JOQRSTUWVg
+gegabelt/~~JOQRSTUWVg
 gegabeltem/~~Nh
 gegabelten/~~V # auto-added
 gegabelter/~~Mh
 gegabeltes/~~Nh
-gegackert/~~Nh
-gegammelt/~~Nh
+gegackert/~~JOQRSTUWVg
+gegammelt/~~JOQRSTUWVg
 gegangen/~~V # auto-added
 gegangene/~~Nh
 gegangenem/~~Nh
@@ -76599,39 +76599,39 @@ gegangenes/~~Nh
 gegartem/~~Nh
 gegarten/~~V # auto-added
 gegartes/~~Nh
-gegaunert/~~Nh
-gegautscht/~~Nh
+gegaunert/~~JOQRSTUWVg
+gegautscht/~~JOQRSTUWVg
 gegebene/~~Nh
 gegebenem/~~Nh
 gegebenen/~~V # auto-added
 gegebener/~~Mh
 gegebenes/~~Nh
-gegeifert/~~Nh
+gegeifert/~~JOQRSTUWVg
 gegeigtem/~~Nh
 gegeigten/~~V # auto-added
 gegeigter/~~Mh
 gegeigtes/~~Nh
-gegeistert/~~Nh
-gegeißelt/~~NXh
+gegeistert/~~JOQRSTUWVg
+gegeißelt/~~JOQRSTUWVg
 gegeltem/~~Nh
 gegelten/~~V # auto-added
 gegelter/~~Mh
 gegeltes/~~Nh
-gegendert/~~Nh
+gegendert/~~JOQRSTUWVg
 gegenlas/~~Nh
 gegenlasen/~~V # auto-added
-gegenlast/~~Nh
+gegenlast/~~JOQRSTUWVg
 gegenlenke/~~Nh
-gegenlenkt/~~Nh
+gegenlenkt/~~JOQRSTUWVg
 gegenlese/~~Nh
 gegenlesen/~~V # auto-added
-gegenlest/~~Nh
-gegenliest/~~Nh
+gegenlest/~~JOQRSTUWVg
+gegenliest/~~JOQRSTUWVg
 gegenläse/~~Nh
 gegenläsen/~~V # auto-added
-gegenläset/~~Nh
+gegenläset/~~JOQRSTUWVg
 gegenprüfe/~~Nh
-gegenprüft/~~Nh
+gegenprüft/~~JOQRSTUWVg
 gegenrudre/~~Nh
 gegenwarts/~~Nh
 gegenüber/~~Mh
@@ -76645,25 +76645,25 @@ gegessenem/~~Nh
 gegessenen/~~V # auto-added
 gegessener/~~Mh
 gegessenes/~~Nh
-geghostet/~~Nh
-gegiftet/~~Nh
-gegiggelt/~~Nh
-gegipfelt/~~Nh
-geglaubt/~~NXh
+geghostet/~~JOQRSTUWVg
+gegiftet/~~JOQRSTUWVg
+gegiggelt/~~JOQRSTUWVg
+gegipfelt/~~JOQRSTUWVg
+geglaubt/~~JOQRSTUWVg
 geglaubtem/~~Nh
 geglaubten/~~V # auto-added
 geglaubter/~~Mh
 geglaubtes/~~Nh
 geglichen/~~XZ #  auto-added
-gegliedert/~~Nh
+gegliedert/~~JOQRSTUWVg
 geglitten/~~V # auto-added
-geglitzert/~~Nh
+geglitzert/~~JOQRSTUWVg
 geglommen/~~V # auto-added
-geglotzt/~~Nh
-gegluckst/~~Nh
-geglänzt/~~Nh
-geglättet/~~NXh
-geglückt/~~NXh
+geglotzt/~~JOQRSTUWVg
+gegluckst/~~JOQRSTUWVg
+geglänzt/~~JOQRSTUWVg
+geglättet/~~JOQRSTUWVg
+geglückt/~~JOQRSTUWVg
 geglücktem/~~Nh
 geglückten/~~V # auto-added
 geglückter/~~Mh
@@ -76675,8 +76675,8 @@ gegoltenem/~~Nh
 gegoltenen/~~V # auto-added
 gegoltener/~~Mh
 gegoltenes/~~Nh
-gegondelt/~~Nh
-gegoogelt/~~NXh
+gegondelt/~~JOQRSTUWVg
+gegoogelt/~~JOQRSTUWVg
 gegoogled/~~Nh
 gegorene/~~Nh
 gegorenem/~~Nh
@@ -76695,60 +76695,60 @@ gegrabenem/~~Nh
 gegrabenen/~~V # auto-added
 gegrabener/~~Mh
 gegrabenes/~~Nh
-gegrabscht/~~Nh
-gegrapscht/~~Nh
-gegraupelt/~~Nh
-gegraust/~~Nh
-gegrenzt/~~Nh
+gegrabscht/~~JOQRSTUWVg
+gegrapscht/~~JOQRSTUWVg
+gegraupelt/~~JOQRSTUWVg
+gegraust/~~JOQRSTUWVg
+gegrenzt/~~JOQRSTUWVg
 gegriffen/~~V # auto-added
 gegriffene/~~Nh
-gegrillt/~~NXh
+gegrillt/~~JOQRSTUWVg
 gegrilltem/~~Nh
 gegrillten/~~V # auto-added
 gegrillter/~~Mh
 gegrilltes/~~Nh
-gegrinst/~~Nh
-gegrollt/~~Nh
+gegrinst/~~JOQRSTUWVg
+gegrollt/~~JOQRSTUWVg
 gegrooved/~~Nh
-gegroovt/~~Nh
+gegroovt/~~JOQRSTUWVg
 gegroovten/~~V # auto-added
-gegrummelt/~~Nh
-gegrunzt/~~NXh
+gegrummelt/~~JOQRSTUWVg
+gegrunzt/~~JOQRSTUWVg
 gegrunztem/~~Nh
 gegrunzten/~~V # auto-added
 gegrunzter/~~Mh
 gegrunztes/~~Nh
-gegruselt/~~Nh
-gegrätscht/~~Nh
+gegruselt/~~JOQRSTUWVg
+gegrätscht/~~JOQRSTUWVg
 gegröltem/~~Nh
 gegrölten/~~V # auto-added
 gegrölter/~~Mh
 gegröltes/~~Nh
 gegrübel/~~Nh
 gegrübels/~~Nh
-gegrübelt/~~Nh
-gegründelt/~~Nh
-gegründet/~~NXh
-gegrüßet/~~Nh
+gegrübelt/~~JOQRSTUWVg
+gegründelt/~~JOQRSTUWVg
+gegründet/~~JOQRSTUWVg
+gegrüßet/~~JOQRSTUWVg
 gegrüßtem/~~Nh
 gegrüßten/~~V # auto-added
 gegrüßter/~~Mh
 gegrüßtes/~~Nh
-gegurgelt/~~Nh
-gegurtet/~~NXah
+gegurgelt/~~JOQRSTUWVg
+gegurtet/~~JOQRSTUWVga
 gegurtetem/~~Nh
 gegurteten/~~V # auto-added
 gegurtetes/~~Nh
-gegängelt/~~NXh
+gegängelt/~~JOQRSTUWVg
 gegärtem/~~Nh
 gegärten/~~V # auto-added
 gegärtes/~~Nh
-gegärtnert/~~Nh
+gegärtnert/~~JOQRSTUWVg
 gegönntem/~~Nh
 gegönnten/~~V # auto-added
 gegönnter/~~Mh
 gegönntes/~~Nh
-gegürtet/~~NXh
+gegürtet/~~JOQRSTUWVg
 gegürtetem/~~Nh
 gegürteten/~~V # auto-added
 gegürtetes/~~Nh
@@ -76760,9 +76760,9 @@ gehacktem/~~Nh
 gehackten/~~V # auto-added
 gehackter/~~Mh
 gehacktes/~~Nh
-gehadert/~~Nh
-gehaftet/~~Nh
-gehagelt/~~Nh
+gehadert/~~JOQRSTUWVg
+gehaftet/~~JOQRSTUWVg
+gehagelt/~~JOQRSTUWVg
 gehalten/~~V # auto-added
 gehaltene/~~Nh
 gehaltenem/~~Nh
@@ -76770,22 +76770,22 @@ gehaltenen/~~V # auto-added
 gehaltener/~~Mh
 gehaltenes/~~Nh
 gehaltes/~~Nh
-gehamstert/~~Nh
-gehandelt/~~NXh
-gehandhabt/~~Nh
-gehangelt/~~Nh
+gehamstert/~~JOQRSTUWVg
+gehandelt/~~JOQRSTUWVg
+gehandhabt/~~JOQRSTUWVg
+gehangelt/~~JOQRSTUWVg
 gehangen/~~V # auto-added
 gehangene/~~Nh
 gehangenem/~~Nh
 gehangenen/~~V # auto-added
 gehangener/~~Mh
 gehangenes/~~Nh
-gehapert/~~Nh
+gehapert/~~JOQRSTUWVg
 geharktem/~~Nh
 geharkten/~~V # auto-added
 geharkter/~~Mh
 geharktes/~~Nh
-gehascht/~~Nh
+gehascht/~~JOQRSTUWVg
 gehashtem/~~Nh
 gehashten/~~V # auto-added
 gehashter/~~Mh
@@ -76795,8 +76795,8 @@ gehasstem/~~Nh
 gehassten/~~V # auto-added
 gehasster/~~Mh
 gehasstes/~~Nh
-gehastet/~~Nh
-gehaucht/~~NXh
+gehastet/~~JOQRSTUWVg
+gehaucht/~~JOQRSTUWVg
 gehauchtem/~~Nh
 gehauchten/~~V # auto-added
 gehauchter/~~Mh
@@ -76806,10 +76806,10 @@ gehauenem/~~Nh
 gehauenen/~~V # auto-added
 gehauener/~~Mh
 gehauenes/~~Nh
-gehebelt/~~Nh
+gehebelt/~~JOQRSTUWVg
 gehebelten/~~V # auto-added
-gehechelt/~~Nh
-geheftet/~~NXh
+gehechelt/~~JOQRSTUWVg
+geheftet/~~JOQRSTUWVg
 geheftetem/~~Nh
 gehefteten/~~V # auto-added
 gehefteter/~~Mh
@@ -76818,7 +76818,7 @@ gehegetür/~~Nh
 gehegtem/~~Nh
 gehegter/~~Mh
 gehegtes/~~Nh
-geheiligt/~~NXh
+geheiligt/~~JOQRSTUWVg
 geheiltem/~~Nh
 geheilten/~~V # auto-added
 geheilter/~~Mh
@@ -76837,13 +76837,13 @@ geheimstem/~~Nh
 geheimsten/~~V # auto-added
 geheimster/~~Mh
 geheimstes/~~Nh
-geheimtat/~~Nh
+geheimtat/~~JOQRSTUWVg
 geheimtue/~~Nh
 geheimtun/~~Nh
-geheimtust/~~Nh
-geheimtut/~~Nh
+geheimtust/~~JOQRSTUWVg
+geheimtut/~~JOQRSTUWVg
 geheimtäte/~~Nh
-geheiratet/~~Nh
+geheiratet/~~JOQRSTUWVg
 geheiztem/~~Nh
 geheizten/~~V # auto-added
 geheizter/~~Mh
@@ -76867,11 +76867,11 @@ gehenkten/~~V # auto-added
 gehenkter/~~Mh
 gehenktes/~~Nh
 gehenlasse/~~Nh
-gehenlasst/~~Nh
+gehenlasst/~~JOQRSTUWVg
 gehenließ/~~NXh
-gehenließt/~~Nh
-gehenlässt/~~Nh
-geherrscht/~~Nh
+gehenließt/~~JOQRSTUWVg
+gehenlässt/~~JOQRSTUWVg
+geherrscht/~~JOQRSTUWVg
 geherztem/~~Nh
 geherzten/~~V # auto-added
 geherzter/~~Mh
@@ -76880,17 +76880,17 @@ gehetztem/~~Nh
 gehetzten/~~V # auto-added
 gehetzter/~~Mh
 gehetztes/~~Nh
-geheuchelt/~~Nh
-geheuert/~~Nh
+geheuchelt/~~JOQRSTUWVg
+geheuert/~~JOQRSTUWVg
 geheules/~~Nh
 gehgipsen/~~V # auto-added
 gehgipses/~~Nh
 gehhilfe/~~Nh
 gehhilfen/~~V # auto-added
-gehijackt/~~NXh
+gehijackt/~~JOQRSTUWVg
 gehilfen/~~V # auto-added
 gehilfin/~~Nh
-gehindert/~~NXh
+gehindert/~~JOQRSTUWVg
 gehirnen/~~V # auto-added
 gehirnes/~~Nh
 gehisste/~~Nh
@@ -76898,7 +76898,7 @@ gehisstem/~~Nh
 gehissten/~~V # auto-added
 gehisster/~~Mh
 gehisstes/~~Nh
-gehobelt/~~NXh
+gehobelt/~~JOQRSTUWVg
 gehobeltem/~~Nh
 gehobelten/~~V # auto-added
 gehobelter/~~Mh
@@ -76909,14 +76909,14 @@ gehobenen/~~V # auto-added
 gehobener/~~Mh
 gehobenere/~~Nh
 gehobenes/~~Nh
-gehobenst/~~Nh
+gehobenst/~~JOQRSTUWVg
 gehobenste/~~Nh
 gehocktem/~~Nh
 gehockten/~~V # auto-added
 gehockter/~~Mh
 gehocktes/~~Nh
 geholfen/~~V # auto-added
-geholpert/~~Nh
+geholpert/~~JOQRSTUWVg
 geholtem/~~Nh
 geholten/~~V # auto-added
 geholter/~~Mh
@@ -76928,23 +76928,23 @@ gehopftes/~~Nh
 gehorche/~~Nh
 gehorchen/~~XZ #  auto-added
 gehorchend/~~Nh
-gehorchst/~~Nh
-gehorcht/~~NXh
+gehorchst/~~JOQRSTUWVg
+gehorcht/~~JOQRSTUWVg
 gehorchten/~~V # auto-added
-gehorchtet/~~Nh
+gehorchtet/~~JOQRSTUWVg
 gehorsame/~~Nh
 gehorsamem/~~Nh
 gehorsamen/~~V # auto-added
 gehorsamer/~~Mh
 gehorsames/~~Nh
 gehorsams/~~Nh
-gehorsamst/~~Nh
-gehortet/~~NXh
+gehorsamst/~~JOQRSTUWVg
+gehortet/~~JOQRSTUWVg
 gehortetem/~~Nh
 gehorteten/~~V # auto-added
 gehorteter/~~Mh
 gehortetes/~~Nh
-gehostet/~~NXh
+gehostet/~~JOQRSTUWVg
 gehostetem/~~Nh
 gehosteten/~~V # auto-added
 gehosteter/~~Mh
@@ -76953,38 +76953,38 @@ gehrende/~~Nh
 gehrendem/~~Nh
 gehrender/~~Mh
 gehrendes/~~Nh
-gehrtest/~~Nh
+gehrtest/~~JOQRSTUWVg
 gehsteigs/~~Nh
-gehudert/~~NXh
+gehudert/~~JOQRSTUWVg
 gehudertem/~~Nh
 gehuderten/~~V # auto-added
 gehuderter/~~Mh
 gehudertes/~~Nh
-gehuldigt/~~Nh
-gehumpelt/~~Nh
-gehungert/~~Nh
-gehuscht/~~Nh
-gehustet/~~Nh
+gehuldigt/~~JOQRSTUWVg
+gehumpelt/~~JOQRSTUWVg
+gehungert/~~JOQRSTUWVg
+gehuscht/~~JOQRSTUWVg
+gehustet/~~JOQRSTUWVg
 gehversuch/~~Nh
 gehwegen/~~V # auto-added
 gehweges/~~Nh
 gehypten/~~V # auto-added
-gehäckselt/~~Nh
-gehäkelt/~~NXh
+gehäckselt/~~JOQRSTUWVg
+gehäkelt/~~JOQRSTUWVg
 gehäkeltem/~~Nh
 gehäkelten/~~V # auto-added
 gehäkelter/~~Mh
 gehäkeltes/~~Nh
 gehältern/~~V # auto-added
-gehämmert/~~NXh
-gehändelt/~~Nh
+gehämmert/~~JOQRSTUWVg
+gehändelt/~~JOQRSTUWVg
 gehäng/~~Vej # REPLACES gehängen
 gehänges/~~Nh
 gehängtem/~~Nh
 gehängter/~~Mh
 gehängtes/~~Nh
-gehänselt/~~NXh
-gehärtet/~~NXh
+gehänselt/~~JOQRSTUWVg
+gehärtet/~~JOQRSTUWVg
 gehärtetem/~~Nh
 gehärteten/~~V # auto-added
 gehärteter/~~Mh
@@ -76994,14 +76994,14 @@ gehässigem/~~Nh
 gehässigen/~~V # auto-added
 gehässiger/~~Mh
 gehässiges/~~Nh
-gehässigst/~~Nh
+gehässigst/~~JOQRSTUWVg
 gehäuftem/~~Nh
 gehäuften/~~V # auto-added
 gehäufter/~~Mh
 gehäuftes/~~Nh
 gehäusen/~~V # auto-added
 gehäuses/~~Nh
-gehäutet/~~NXh
+gehäutet/~~JOQRSTUWVg
 gehäutetem/~~Nh
 gehäuteten/~~V # auto-added
 gehäuteter/~~Mh
@@ -77027,13 +77027,13 @@ gehörntes/~~Nh
 gehörtem/~~Nh
 gehörter/~~Mh
 gehörtes/~~Nh
-gehörtest/~~Nh
-gehörtet/~~Nh
+gehörtest/~~JOQRSTUWVg
+gehörtet/~~JOQRSTUWVg
 gehülltem/~~Nh
 gehüllten/~~V # auto-added
 gehüllter/~~Mh
 gehülltes/~~Nh
-gehüstelt/~~Nh
+gehüstelt/~~JOQRSTUWVg
 gehütetem/~~Nh
 gehüteten/~~V # auto-added
 gehüteter/~~Mh
@@ -77053,14 +77053,14 @@ geifernden/~~V # auto-added
 geifernder/~~Mh
 geiferndes/~~Nh
 geiferten/~~V # auto-added
-geifertest/~~Nh
-geifertet/~~Nh
+geifertest/~~JOQRSTUWVg
+geifertet/~~JOQRSTUWVg
 geigende/~~Nh
 geigendem/~~Nh
 geigender/~~Mh
 geigendes/~~Nh
 geigerin/~~Nh
-geigtest/~~Nh
+geigtest/~~JOQRSTUWVg
 geilerem/~~Nh
 geileren/~~V # auto-added
 geilerer/~~Mh
@@ -77070,7 +77070,7 @@ geilstem/~~Nh
 geilsten/~~V # auto-added
 geilster/~~Mh
 geilstes/~~Nh
-geiltest/~~Nh
+geiltest/~~JOQRSTUWVg
 geimpftem/~~Nh
 geimpften/~~V # auto-added
 geimpfter/~~Mh
@@ -77082,9 +77082,9 @@ geistere/~~Nh
 geistern/~~V # auto-added
 geisternd/~~Nh
 geisternde/~~Nh
-geistert/~~NXh
+geistert/~~JOQRSTUWVg
 geisterten/~~V # auto-added
-geistertet/~~Nh
+geistertet/~~JOQRSTUWVg
 geistigem/~~Nh
 geistigen/~~V # auto-added
 geistiger/~~Mh
@@ -77108,19 +77108,19 @@ geizigeren/~~V # auto-added
 geizigerer/~~Mh
 geizigeres/~~Nh
 geiziges/~~Nh
-geizigst/~~Nh
+geizigst/~~JOQRSTUWVg
 geizigste/~~Nh
 geizigstem/~~Nh
 geizigsten/~~V # auto-added
 geizigster/~~Mh
 geizigstes/~~Nh
 geizkragen/~~V # auto-added
-geiztest/~~Nh
+geiztest/~~JOQRSTUWVg
 geiztrieb/~~Nh
 geiztriebs/~~Nh
 geißbart/~~Nh # auto-added
 geißbarts/~~Nh
-geißblatt/~~Nh
+geißblatt/~~JOQRSTUWVg
 geißblatts/~~Nh
 geißbock/~~Nh
 geißbockes/~~Nh
@@ -77138,14 +77138,14 @@ geißelnder/~~Mh
 geißelndes/~~Nh
 geißelns/~~Nh
 geißelten/~~V # auto-added
-geißeltest/~~Nh
-geißeltet/~~Nh
+geißeltest/~~JOQRSTUWVg
+geißeltet/~~JOQRSTUWVg
 geißeltier/~~Mh
 geißelung/~~Fh
 geißfußes/~~Nh
 geißfüße/~~Nh
 geißfüßen/~~V # auto-added
-geißhirt/~~NXh
+geißhirt/~~JOQRSTUWVg
 geißhirten/~~V # auto-added
 geißhirtin/~~Nh
 geißhirts/~~Nh
@@ -77163,18 +77163,18 @@ gejagtes/~~Nh
 gejammer/~~Mh
 gejammere/~~Nh
 gejammers/~~Nh
-gejammert/~~Nh
-gejauchzt/~~Nh
+gejammert/~~JOQRSTUWVg
+gejauchzt/~~JOQRSTUWVg
 gejazzten/~~V # auto-added
-gejettet/~~Nh
-gejittert/~~Nh
-gejodelt/~~NXh
+gejettet/~~JOQRSTUWVg
+gejittert/~~JOQRSTUWVg
+gejodelt/~~JOQRSTUWVg
 gejodeltem/~~Nh
 gejodelten/~~V # auto-added
 gejodelter/~~Mh
 gejodeltes/~~Nh
 gejohles/~~Nh
-gejubelt/~~NXh
+gejubelt/~~JOQRSTUWVg
 gejubeltem/~~Nh
 gejubelten/~~V # auto-added
 gejubelter/~~Mh
@@ -77184,12 +77184,12 @@ gejätetem/~~Nh
 gejäteten/~~V # auto-added
 gejäteter/~~Mh
 gejätetes/~~Nh
-gekabelt/~~NXh
+gekabelt/~~JOQRSTUWVg
 gekabeltem/~~Nh
 gekabelten/~~V # auto-added
 gekabelter/~~Mh
 gekabeltes/~~Nh
-gekachelt/~~NXh
+gekachelt/~~JOQRSTUWVg
 gekalktem/~~Nh
 gekalkten/~~V # auto-added
 gekalkter/~~Mh
@@ -77198,12 +77198,12 @@ gekanntem/~~Nh
 gekannten/~~V # auto-added
 gekannter/~~Mh
 gekanntes/~~Nh
-gekantet/~~NXh
+gekantet/~~JOQRSTUWVg
 gekantetem/~~Nh
 gekanteten/~~V # auto-added
 gekanteter/~~Mh
 gekantetes/~~Nh
-gekapert/~~NXh
+gekapert/~~JOQRSTUWVg
 gekapertem/~~Nh
 gekaperten/~~V # auto-added
 gekaperter/~~Mh
@@ -77212,14 +77212,14 @@ gekapptem/~~Nh
 gekappten/~~V # auto-added
 gekappter/~~Mh
 gekapptes/~~Nh
-gekapselt/~~NXh
+gekapselt/~~JOQRSTUWVg
 gekarrtem/~~Nh
 gekarrten/~~V # auto-added
 gekarrter/~~Mh
 gekarrtes/~~Nh
-gekaspert/~~NXh
-gekaudert/~~NXh
-gekauert/~~NXh
+gekaspert/~~JOQRSTUWVg
+gekaudert/~~JOQRSTUWVg
+gekauert/~~JOQRSTUWVg
 gekauertem/~~Nh
 gekauerten/~~V # auto-added
 gekauerter/~~Mh
@@ -77232,7 +77232,7 @@ gekautem/~~Nh
 gekauten/~~V # auto-added
 gekauter/~~Mh
 gekautes/~~Nh
-gekegelt/~~Nh
+gekegelt/~~JOQRSTUWVg
 gekehltem/~~Nh
 gekehlten/~~V # auto-added
 gekehlter/~~Mh
@@ -77246,21 +77246,21 @@ gekeimtem/~~Nh
 gekeimten/~~V # auto-added
 gekeimter/~~Mh
 gekeimtes/~~Nh
-gekellnert/~~Nh
-gekeltert/~~NXh
-gekentert/~~NXh
+gekellnert/~~JOQRSTUWVg
+gekeltert/~~JOQRSTUWVg
+gekentert/~~JOQRSTUWVg
 gekerbtem/~~Nh
 gekerbten/~~V # auto-added
 gekerbter/~~Mh
 gekerbtes/~~Nh
-gekettet/~~NXh
+gekettet/~~JOQRSTUWVg
 gekettetem/~~Nh
 geketteten/~~V # auto-added
 geketteter/~~Mh
 gekettetes/~~Nh
 gekeuche/~~Nh
 gekeuches/~~Nh
-gekeucht/~~Nh
+gekeucht/~~JOQRSTUWVg
 gekeultem/~~Nh
 gekeulten/~~V # auto-added
 gekeulter/~~Mh
@@ -77268,13 +77268,13 @@ gekeultes/~~Nh
 gekicher/~~Mh
 gekichere/~~Nh
 gekichers/~~Nh
-gekichert/~~Nh
-gekidnappt/~~Nh
+gekichert/~~JOQRSTUWVg
+gekidnappt/~~JOQRSTUWVg
 gekieltem/~~Nh
 gekielten/~~V # auto-added
 gekielter/~~Mh
 gekieltes/~~Nh
-gekieselt/~~Nh
+gekieselt/~~JOQRSTUWVg
 gekieste/~~Nh
 gekiestem/~~Nh
 gekiesten/~~V # auto-added
@@ -77288,19 +77288,19 @@ gekipptem/~~Nh
 gekippten/~~V # auto-added
 gekippter/~~Mh
 gekipptes/~~Nh
-gekittet/~~NXh
+gekittet/~~JOQRSTUWVg
 gekittetem/~~Nh
 gekitteten/~~V # auto-added
 gekitteter/~~Mh
 gekittetes/~~Nh
-gekitzelt/~~NXh
-geklackert/~~Nh
-geklafft/~~Nh
-geklammert/~~Nh
-geklappert/~~Nh
-geklappt/~~Nh
+gekitzelt/~~JOQRSTUWVg
+geklackert/~~JOQRSTUWVg
+geklafft/~~JOQRSTUWVg
+geklammert/~~JOQRSTUWVg
+geklappert/~~JOQRSTUWVg
+geklappt/~~JOQRSTUWVg
 geklatsche/~~Nh
-geklatscht/~~Nh
+geklatscht/~~JOQRSTUWVg
 geklautem/~~Nh
 geklauten/~~V # auto-added
 geklauter/~~Mh
@@ -77309,31 +77309,31 @@ geklebtem/~~Nh
 geklebten/~~V # auto-added
 geklebter/~~Mh
 geklebtes/~~Nh
-gekleckert/~~Nh
-gekleidet/~~NXh
-geklemmt/~~NXh
+gekleckert/~~JOQRSTUWVg
+gekleidet/~~JOQRSTUWVg
+geklemmt/~~JOQRSTUWVg
 geklemmtem/~~Nh
 geklemmten/~~V # auto-added
 geklemmter/~~Mh
 geklemmtes/~~Nh
-geklettert/~~Nh
-geklickt/~~Nh
+geklettert/~~JOQRSTUWVg
+geklickt/~~JOQRSTUWVg
 geklickten/~~V # auto-added
 geklimper/~~Mh
 geklimpers/~~Nh
-geklimpert/~~Nh
-geklingelt/~~Nh
-geklinkert/~~Nh
+geklimpert/~~JOQRSTUWVg
+geklingelt/~~JOQRSTUWVg
+geklinkert/~~JOQRSTUWVg
 geklirrs/~~Nh
-geklirrt/~~Nh
+geklirrt/~~JOQRSTUWVg
 geklommen/~~V # auto-added
 geklontem/~~Nh
 geklonten/~~V # auto-added
 geklonter/~~Mh
 geklontes/~~Nh
-geklopft/~~Nh
-gekloppt/~~Nh
-geklotzt/~~Nh
+geklopft/~~JOQRSTUWVg
+gekloppt/~~JOQRSTUWVg
+geklotzt/~~JOQRSTUWVg
 geklotzten/~~V # auto-added
 geklungen/~~V # auto-added
 geklungene/~~Nh
@@ -77342,73 +77342,73 @@ geklärtem/~~Nh
 geklärten/~~V # auto-added
 geklärter/~~Mh
 geklärtes/~~Nh
-geklöppelt/~~Nh
-geknabbert/~~Nh
-geknackt/~~NXh
+geklöppelt/~~JOQRSTUWVg
+geknabbert/~~JOQRSTUWVg
+geknackt/~~JOQRSTUWVg
 geknacktem/~~Nh
 geknackten/~~V # auto-added
 geknackter/~~Mh
 geknacktes/~~Nh
 geknalle/~~Nh
 geknalles/~~Nh
-geknallt/~~Nh
-geknarrt/~~Nh
+geknallt/~~JOQRSTUWVg
+geknarrt/~~JOQRSTUWVg
 geknatter/~~Mh
 geknatters/~~Nh
-geknebelt/~~NXh
-geknechtet/~~Nh
-geknetet/~~NXh
+geknebelt/~~JOQRSTUWVg
+geknechtet/~~JOQRSTUWVg
+geknetet/~~JOQRSTUWVg
 geknetetem/~~Nh
 gekneteten/~~V # auto-added
 gekneteter/~~Mh
 geknetetes/~~Nh
-geknickst/~~Nh
-geknickt/~~NXh
+geknickst/~~JOQRSTUWVg
+geknickt/~~JOQRSTUWVg
 geknicktem/~~Nh
 geknickten/~~V # auto-added
 geknickter/~~Mh
 geknicktes/~~Nh
 gekniffen/~~V # auto-added
 gekniffene/~~Nh
-geknipst/~~Nh
+geknipst/~~JOQRSTUWVg
 geknipste/~~Nh
 geknipstem/~~Nh
 geknipsten/~~V # auto-added
 geknipster/~~Mh
 geknipstes/~~Nh
-geknirscht/~~Nh
+geknirscht/~~JOQRSTUWVg
 geknister/~~Mh
 geknisters/~~Nh
-geknistert/~~Nh
-geknittert/~~Nh
-geknobelt/~~Nh
-geknospt/~~Nh
-geknotet/~~NXh
+geknistert/~~JOQRSTUWVg
+geknittert/~~JOQRSTUWVg
+geknobelt/~~JOQRSTUWVg
+geknospt/~~JOQRSTUWVg
+geknotet/~~JOQRSTUWVg
 geknotetem/~~Nh
 geknoteten/~~V # auto-added
 geknoteter/~~Mh
 geknotetes/~~Nh
-geknuddelt/~~Nh
-geknurrt/~~Nh
-geknutscht/~~Nh
-geknäult/~~NXh
+geknuddelt/~~JOQRSTUWVg
+geknurrt/~~JOQRSTUWVg
+geknutscht/~~JOQRSTUWVg
+geknäult/~~JOQRSTUWVg
 geknäultem/~~Nh
 geknäulten/~~V # auto-added
 geknäulter/~~Mh
 geknäultes/~~Nh
-geknöpft/~~NXh
+geknöpft/~~JOQRSTUWVg
 geknöpftem/~~Nh
 geknöpften/~~V # auto-added
 geknöpfter/~~Mh
 geknöpftes/~~Nh
-geknüllt/~~Nh
+geknüllt/~~JOQRSTUWVg
 geknüllten/~~V # auto-added
-geknüpft/~~NXh
+geknüpft/~~JOQRSTUWVg
 geknüpftem/~~Nh
 geknüpften/~~V # auto-added
 geknüpfter/~~Mh
 geknüpftes/~~Nh
-geknüppelt/~~Nh
+geknüppelt/~~JOQRSTUWVg
 gekochtem/~~Nh
 gekochten/~~V # auto-added
 gekochter/~~Mh
@@ -77423,100 +77423,100 @@ gekonntem/~~Nh
 gekonnten/~~V # auto-added
 gekonnter/~~Mh
 gekonntes/~~Nh
-gekontert/~~Nh
-gekoppelt/~~NXh
-gekordelt/~~Nh
-gekostet/~~Nh
-gekrabbelt/~~Nh
-gekracht/~~Nh
-gekrakelt/~~Nh
-gekrallt/~~Nh
-gekratzt/~~NXh
+gekontert/~~JOQRSTUWVg
+gekoppelt/~~JOQRSTUWVg
+gekordelt/~~JOQRSTUWVg
+gekostet/~~JOQRSTUWVg
+gekrabbelt/~~JOQRSTUWVg
+gekracht/~~JOQRSTUWVg
+gekrakelt/~~JOQRSTUWVg
+gekrallt/~~JOQRSTUWVg
+gekratzt/~~JOQRSTUWVg
 gekratztem/~~Nh
 gekratzten/~~V # auto-added
 gekratzter/~~Mh
 gekratztes/~~Nh
-gekraucht/~~Nh
-gekrault/~~NXh
+gekraucht/~~JOQRSTUWVg
+gekrault/~~JOQRSTUWVg
 gekraultem/~~Nh
 gekraulten/~~V # auto-added
 gekraulter/~~Mh
 gekraultes/~~Nh
-gekraust/~~Nh
+gekraust/~~JOQRSTUWVg
 gekrauste/~~Nh
 gekraustem/~~Nh
 gekrausten/~~V # auto-added
 gekrauster/~~Mh
 gekraustes/~~Nh
-gekraxelt/~~Nh
+gekraxelt/~~JOQRSTUWVg
 gekreischs/~~Nh
-gekreischt/~~Nh
-gekreist/~~Nh
-gekrempelt/~~Nh
+gekreischt/~~JOQRSTUWVg
+gekreist/~~JOQRSTUWVg
+gekrempelt/~~JOQRSTUWVg
 gekremtem/~~Nh
 gekremten/~~V # auto-added
 gekremter/~~Mh
 gekremtes/~~Nh
-gekreuzigt/~~Nh
-gekreuzt/~~NXh
+gekreuzigt/~~JOQRSTUWVg
+gekreuzt/~~JOQRSTUWVg
 gekreuztem/~~Nh
 gekreuzten/~~V # auto-added
 gekreuzter/~~Mh
 gekreuztes/~~Nh
-gekribbelt/~~Nh
-gekriegt/~~Nh
-gekrimpt/~~Nh
+gekribbelt/~~JOQRSTUWVg
+gekriegt/~~JOQRSTUWVg
+gekrimpt/~~JOQRSTUWVg
 gekrimten/~~V # auto-added
-gekringelt/~~Nh
+gekringelt/~~JOQRSTUWVg
 gekritzel/~~Nh
 gekritzels/~~Nh
-gekritzelt/~~Nh
+gekritzelt/~~JOQRSTUWVg
 gekrochen/~~XZ #  auto-added
 gekrochene/~~Nh
 gekrächz/~~NXh
-gekrächzt/~~NXh
-gekräftigt/~~Nh
-gekränkt/~~NXh
+gekrächzt/~~JOQRSTUWVg
+gekräftigt/~~JOQRSTUWVg
+gekränkt/~~JOQRSTUWVg
 gekränktem/~~Nh
 gekränkten/~~V # auto-added
 gekränkter/~~Mh
 gekränktes/~~Nh
-gekräuselt/~~Nh
+gekräuselt/~~JOQRSTUWVg
 gekröntem/~~Nh
 gekrönten/~~V # auto-added
 gekrönter/~~Mh
 gekröntes/~~Nh
-gekröpft/~~NXh
+gekröpft/~~JOQRSTUWVg
 gekröpftem/~~Nh
 gekröpften/~~V # auto-added
 gekröpfter/~~Mh
 gekröpftes/~~Nh
 gekröses/~~Nh
-gekrümelt/~~Nh
-gekrümmt/~~NXh
+gekrümelt/~~JOQRSTUWVg
+gekrümmt/~~JOQRSTUWVg
 gekrümmtem/~~Nh
 gekrümmten/~~V # auto-added
 gekrümmter/~~Mh
 gekrümmtes/~~Nh
-gekugelt/~~Nh
-gekullert/~~Nh
-gekungelt/~~Nh
-gekuppelt/~~Nh
-gekurbelt/~~NXh
+gekugelt/~~JOQRSTUWVg
+gekullert/~~JOQRSTUWVg
+gekungelt/~~JOQRSTUWVg
+gekuppelt/~~JOQRSTUWVg
+gekurbelt/~~JOQRSTUWVg
 gekurvtem/~~Nh
 gekurvten/~~V # auto-added
 gekurvter/~~Mh
 gekurvtes/~~Nh
-gekuschelt/~~Nh
-gekuscht/~~Nh
+gekuschelt/~~JOQRSTUWVg
+gekuscht/~~JOQRSTUWVg
 gekämmtem/~~Nh
 gekämmten/~~V # auto-added
 gekämmter/~~Mh
 gekämmtes/~~Nh
-gekämpft/~~Nh
-gekärchert/~~Nh
-geköchelt/~~Nh
-geködert/~~NXh
+gekämpft/~~JOQRSTUWVg
+gekärchert/~~JOQRSTUWVg
+geköchelt/~~JOQRSTUWVg
+geködert/~~JOQRSTUWVg
 geködertem/~~Nh
 geköderten/~~V # auto-added
 geköderter/~~Mh
@@ -77533,10 +77533,10 @@ gekühltem/~~Nh
 gekühlten/~~V # auto-added
 gekühlter/~~Mh
 gekühltes/~~Nh
-gekümmert/~~Nh
-gekündet/~~Nh
-gekündigt/~~NXh
-gekünstelt/~~Nh
+gekümmert/~~JOQRSTUWVg
+gekündet/~~JOQRSTUWVg
+gekündigt/~~JOQRSTUWVg
+gekünstelt/~~JOQRSTUWVg
 gekürtem/~~Nh
 gekürten/~~V # auto-added
 gekürtes/~~Nh
@@ -77549,14 +77549,14 @@ geküsstem/~~Nh
 geküssten/~~V # auto-added
 geküsster/~~Mh
 geküsstes/~~Nh
-gelabelt/~~NXh
+gelabelt/~~JOQRSTUWVg
 gelabeltem/~~Nh
 gelabelten/~~V # auto-added
 gelabelter/~~Mh
 gelabeltes/~~Nh
 gelabere/~~Nh
 gelabers/~~Nh
-gelabert/~~Nh
+gelabert/~~JOQRSTUWVg
 gelabtem/~~Nh
 gelabten/~~V # auto-added
 gelabter/~~Mh
@@ -77567,12 +77567,12 @@ geladenen/~~V # auto-added
 geladener/~~Mh
 geladenes/~~Nh
 gelageraum/~~Za #  auto-added
-gelagert/~~NXh
+gelagert/~~JOQRSTUWVg
 gelagertem/~~Nh
 gelagerten/~~V # auto-added
 gelagerter/~~Mh
 gelagertes/~~Nh
-gelandet/~~NXh
+gelandet/~~JOQRSTUWVg
 gelandetem/~~Nh
 gelandeten/~~V # auto-added
 gelandeter/~~Mh
@@ -77582,13 +77582,13 @@ gelangende/~~Nh
 gelangtem/~~Nh
 gelangter/~~Mh
 gelangtes/~~Nh
-gelangtest/~~Nh
-gelangtet/~~Nh
+gelangtest/~~JOQRSTUWVg
+gelangtet/~~JOQRSTUWVg
 gelapptem/~~Nh
 gelappten/~~V # auto-added
 gelappter/~~Mh
 gelapptes/~~Nh
-gelasert/~~NXh
+gelasert/~~JOQRSTUWVg
 gelasertem/~~Nh
 gelaserten/~~V # auto-added
 gelaserter/~~Mh
@@ -77598,15 +77598,15 @@ gelassenem/~~Nh
 gelassenen/~~V # auto-added
 gelassener/~~Mh
 gelassenes/~~Nh
-gelassenst/~~Nh
+gelassenst/~~JOQRSTUWVg
 gelasses/~~Nh
-gelastet/~~Nh
-gelatcht/~~Nh
+gelastet/~~JOQRSTUWVg
+gelatcht/~~JOQRSTUWVg
 gelatine/~~Nh
 gelatinen/~~V # auto-added
 gelatinös/~~NXh
-gelatscht/~~Nh
-gelauert/~~Nh
+gelatscht/~~JOQRSTUWVg
+gelauert/~~JOQRSTUWVg
 gelaufen/~~V # auto-added
 gelaufene/~~Nh
 gelaufenem/~~Nh
@@ -77614,18 +77614,18 @@ gelaufenen/~~V # auto-added
 gelaufener/~~Mh
 gelaufenes/~~Nh
 gelaufes/~~Nh
-gelauncht/~~NXh
+gelauncht/~~JOQRSTUWVg
 gelauntem/~~Nh
 gelaunten/~~V # auto-added
 gelaunter/~~Mh
 gelauntes/~~Nh
-gelauscht/~~Nh
+gelauscht/~~JOQRSTUWVg
 gelauste/~~Nh
 gelaustem/~~Nh
 gelausten/~~V # auto-added
 gelauster/~~Mh
 gelaustes/~~Nh
-gelautet/~~Nah
+gelautet/~~JOQRSTUWVga
 gelbanteil/~~Nh
 gelbbeere/~~Nh
 gelbbeeren/~~V # auto-added
@@ -77639,8 +77639,8 @@ gelbfieber/~~Mh
 gelbfilter/~~Mh
 gelbfärbe/~~Nh
 gelbfärben/~~V # auto-added
-gelbfärbst/~~Nh
-gelbfärbt/~~NXh
+gelbfärbst/~~JOQRSTUWVg
+gelbfärbt/~~JOQRSTUWVg
 gelbgießer/~~Mh
 gelbglas/~~Nh
 gelbgold/~~Nh
@@ -77666,7 +77666,7 @@ gelbling/~~Mh
 gelblings/~~Nh
 gelbphase/~~Nh
 gelbphasen/~~V # auto-added
-gelbrost/~~Nh
+gelbrost/~~JOQRSTUWVg
 gelbrostes/~~Nh
 gelbrosts/~~Nh
 gelbrotem/~~Nh
@@ -77683,7 +77683,7 @@ gelbstern/~~V # auto-added
 gelbsterns/~~Nh
 gelbstich/~~Nh
 gelbstichs/~~Nh
-gelbsucht/~~Nh
+gelbsucht/~~JOQRSTUWVg
 gelbtones/~~Nh
 gelbtons/~~Nh
 gelbtöne/~~Nh
@@ -77702,7 +77702,7 @@ geldgeilem/~~Nh
 geldgeilen/~~V # auto-added
 geldgeiler/~~Mh
 geldgeiles/~~Nh
-geldheirat/~~Nh
+geldheirat/~~JOQRSTUWVg
 geldleihe/~~Nh
 geldleiher/~~Mh
 geldlosem/~~Nh
@@ -77714,7 +77714,7 @@ geldnahem/~~Nh
 geldnahen/~~V # auto-added
 geldnaher/~~Mh
 geldnahes/~~Nh
-geldwert/~~NXh
+geldwert/~~JOQRSTUWVg
 geldwertem/~~Nh
 geldwerten/~~V # auto-added
 geldwerter/~~Mh
@@ -77755,14 +77755,14 @@ gelehrigem/~~Nh
 gelehrigen/~~V # auto-added
 gelehriger/~~Mh
 gelehriges/~~Nh
-gelehrigst/~~Nh
+gelehrigst/~~JOQRSTUWVg
 gelehrtem/~~Nh
 gelehrten/~~V # auto-added
 gelehrter/~~Mh
 gelehrtere/~~Nh
 gelehrtes/~~Nh
-gelehrtest/~~Nh
-geleiert/~~NXh
+gelehrtest/~~JOQRSTUWVg
+geleiert/~~JOQRSTUWVg
 geleiertem/~~Nh
 geleierten/~~V # auto-added
 geleierter/~~Mh
@@ -77773,17 +77773,17 @@ geleimter/~~Mh
 geleimtes/~~Nh
 geleisen/~~V # auto-added
 geleises/~~Nh
-geleistet/~~NXh
+geleistet/~~JOQRSTUWVg
 geleiten/~~V # auto-added
 geleitend/~~Nh
 geleitende/~~Nh
-geleitest/~~Nh
-geleitet/~~NXh
+geleitest/~~JOQRSTUWVg
+geleitet/~~JOQRSTUWVg
 geleitetem/~~Nh
 geleiteten/~~V # auto-added
 geleiteter/~~Mh
 geleitetes/~~Nh
-geleitetet/~~Nh
+geleitetet/~~JOQRSTUWVg
 gelenk/~~Vej # REPLACES gelenken
 gelenkes/~~Nh
 gelenkfern/~~V # auto-added
@@ -77792,7 +77792,7 @@ gelenkigem/~~Nh
 gelenkigen/~~V # auto-added
 gelenkiger/~~Mh
 gelenkiges/~~Nh
-gelenkigst/~~Nh
+gelenkigst/~~JOQRSTUWVg
 gelenknahe/~~Nh
 gelenkobus/~~Nh
 gelenktem/~~Nh
@@ -77807,16 +77807,16 @@ gelesenem/~~Nh
 gelesenen/~~V # auto-added
 gelesener/~~Mh
 gelesenes/~~Nh
-geleuchtet/~~Nh
-geleugnet/~~NXh
+geleuchtet/~~JOQRSTUWVg
+geleugnet/~~JOQRSTUWVg
 gelichter/~~Mh
-gelichtet/~~NXh
-geliebkost/~~Nh
+gelichtet/~~JOQRSTUWVg
+geliebkost/~~JOQRSTUWVg
 geliebtem/~~Nh
 geliebten/~~V # auto-added
 geliebter/~~Mh
 geliebtes/~~Nh
-geliefert/~~NXh
+geliefert/~~JOQRSTUWVg
 geliehen/~~V # auto-added
 geliehene/~~Nh
 geliehenem/~~Nh
@@ -77828,9 +77828,9 @@ gelierende/~~Nh
 geliertem/~~Nh
 gelierter/~~Mh
 geliertes/~~Nh
-geliertest/~~Nh
-geliertet/~~Nh
-geliftet/~~NXh
+geliertest/~~JOQRSTUWVg
+geliertet/~~JOQRSTUWVg
+geliftet/~~JOQRSTUWVg
 geliftetem/~~Nh
 gelifteten/~~V # auto-added
 gelifteter/~~Mh
@@ -77848,18 +77848,18 @@ gelinderem/~~Nh
 gelinderen/~~V # auto-added
 gelinderer/~~Mh
 gelinderes/~~Nh
-gelindert/~~NXh
+gelindert/~~JOQRSTUWVg
 gelingen/~~V # auto-added
 gelingend/~~Nh
 gelingende/~~Nh
 gelingens/~~Nh
-gelingst/~~Nh
+gelingst/~~JOQRSTUWVg
 gelinktem/~~Nh
 gelinkten/~~V # auto-added
 gelinkter/~~Mh
 gelinktes/~~Nh
-gelispelt/~~NXh
-gelistet/~~NXh
+gelispelt/~~JOQRSTUWVg
+gelistet/~~JOQRSTUWVg
 gelistetem/~~Nh
 gelisteten/~~V # auto-added
 gelisteter/~~Mh
@@ -77874,7 +77874,7 @@ gellende/~~Nh
 gellendem/~~Nh
 gellender/~~Mh
 gellendes/~~Nh
-gelltest/~~Nh
+gelltest/~~JOQRSTUWVg
 gelobbten/~~V # auto-added
 gelobende/~~Nh
 gelobendem/~~Nh
@@ -77883,18 +77883,18 @@ gelobendes/~~Nh
 gelobtem/~~Nh
 gelobter/~~Mh
 gelobtes/~~Nh
-gelobtest/~~Nh
-gelobtet/~~Nh
+gelobtest/~~JOQRSTUWVg
+gelobtet/~~JOQRSTUWVg
 gelochtem/~~Nh
 gelochten/~~V # auto-added
 gelochter/~~Mh
 gelochtes/~~Nh
-gelockert/~~NXh
+gelockert/~~JOQRSTUWVg
 gelocktem/~~Nh
 gelockten/~~V # auto-added
 gelockter/~~Mh
 gelocktes/~~Nh
-gelodert/~~Nh
+gelodert/~~JOQRSTUWVg
 gelogene/~~Nh
 gelogenem/~~Nh
 gelogenen/~~V # auto-added
@@ -77919,20 +77919,20 @@ geltungen/~~V # auto-added
 geltungs/~~Nh
 gelullten/~~V # auto-added
 gelumpes/~~Nh
-geluncht/~~Nh
+geluncht/~~JOQRSTUWVg
 gelungene/~~Nh
 gelungenem/~~Nh
 gelungenen/~~V # auto-added
 gelungener/~~Mh
 gelungenes/~~Nh
-gelungenst/~~Nh
-gelutscht/~~NXh
-gelyncht/~~NXh
+gelungenst/~~JOQRSTUWVg
+gelutscht/~~JOQRSTUWVg
+gelyncht/~~JOQRSTUWVg
 gelynchtem/~~Nh
 gelynchten/~~V # auto-added
 gelynchter/~~Mh
 gelynchtes/~~Nh
-gelächelt/~~Nh
+gelächelt/~~JOQRSTUWVg
 gelächtern/~~V # auto-added
 gelächters/~~Nh
 gelähmtem/~~Nh
@@ -77948,24 +77948,24 @@ gelärmtem/~~Nh
 gelärmten/~~V # auto-added
 gelärmter/~~Mh
 gelärmtes/~~Nh
-gelästert/~~Nh
+gelästert/~~JOQRSTUWVg
 geläufige/~~Nh
 geläufigem/~~Nh
 geläufigen/~~V # auto-added
 geläufiger/~~Mh
 geläufiges/~~Nh
-geläufigst/~~Nh
-geläutert/~~NXh
+geläufigst/~~JOQRSTUWVg
+geläutert/~~JOQRSTUWVg
 geläutes/~~Nh
-geläutet/~~NXh
+geläutet/~~JOQRSTUWVg
 geläutetem/~~Nh
 geläuteten/~~V # auto-added
 geläutetes/~~Nh
 gelöbnis/~~Nh
 gelöbnisse/~~Nh
-gelöchert/~~NXh
-gelöffelt/~~Nh
-gelöscht/~~NXh
+gelöchert/~~JOQRSTUWVg
+gelöffelt/~~JOQRSTUWVg
+gelöscht/~~JOQRSTUWVg
 gelöschtem/~~Nh
 gelöschten/~~V # auto-added
 gelöschter/~~Mh
@@ -77984,7 +77984,7 @@ gelöteten/~~V # auto-added
 gelötetes/~~Nh
 gelübden/~~V # auto-added
 gelübdes/~~Nh
-gelüftet/~~NXh
+gelüftet/~~JOQRSTUWVg
 gelüftetem/~~Nh
 gelüfteten/~~V # auto-added
 gelüfteter/~~Mh
@@ -77992,9 +77992,9 @@ gelüftetes/~~Nh
 gelüsten/~~V # auto-added
 gelüstend/~~Nh
 gelüstende/~~Nh
-gelüstet/~~NXh
+gelüstet/~~JOQRSTUWVg
 gelüsteten/~~V # auto-added
-gelüstetet/~~Nh
+gelüstetet/~~JOQRSTUWVg
 gemaches/~~Nh
 gemachtem/~~Nh
 gemachten/~~V # auto-added
@@ -78012,46 +78012,46 @@ gemahnende/~~Nh
 gemahntem/~~Nh
 gemahnter/~~Mh
 gemahntes/~~Nh
-gemahntest/~~Nh
-gemahntet/~~Nh
+gemahntest/~~JOQRSTUWVg
+gemahntet/~~JOQRSTUWVg
 gemailten/~~V # auto-added
 gemaltem/~~Nh
 gemalten/~~V # auto-added
 gemalter/~~Mh
 gemaltes/~~Nh
-gemampft/~~NXh
+gemampft/~~JOQRSTUWVg
 gemampftem/~~Nh
 gemampften/~~V # auto-added
 gemampfter/~~Mh
 gemampftes/~~Nh
 gemanaged/~~Nh
-gemanagt/~~NXh
+gemanagt/~~JOQRSTUWVg
 gemanagtem/~~Nh
 gemanagten/~~V # auto-added
 gemanagter/~~Mh
 gemanagtes/~~Nh
-gemangelt/~~Nh
+gemangelt/~~JOQRSTUWVg
 gemappten/~~V # auto-added
 gemarkung/~~Fh
-gemartert/~~NXh
-gemasert/~~NXh
+gemartert/~~JOQRSTUWVg
+gemasert/~~JOQRSTUWVg
 gemasertem/~~Nh
 gemaserten/~~V # auto-added
 gemaserter/~~Mh
 gemasertes/~~Nh
-gemastert/~~Nh
-gematcht/~~Nh
-gematscht/~~Nh
-gemauert/~~NXh
+gemastert/~~JOQRSTUWVg
+gematcht/~~JOQRSTUWVg
+gematscht/~~JOQRSTUWVg
+gemauert/~~JOQRSTUWVg
 gemauertem/~~Nh
 gemauerten/~~V # auto-added
 gemauerter/~~Mh
 gemauertes/~~Nh
-gemausert/~~NXh
-gemeckert/~~Nh
+gemausert/~~JOQRSTUWVg
+gemeckert/~~JOQRSTUWVg
 gemeinde/~~Nh
 gemeinden/~~V # auto-added
-gemeindet/~~NXh
+gemeindet/~~JOQRSTUWVg
 gemeinem/~~Nh
 gemein/~~Vej # REPLACES gemeinen
 gemeiner/~~Mh
@@ -78061,7 +78061,7 @@ gemeineren/~~V # auto-added
 gemeinerer/~~Mh
 gemeineres/~~Nh
 gemeines/~~Nh
-gemeingut/~~Nh
+gemeingut/~~JOQRSTUWVg
 gemeinguts/~~Nh
 gemeinheit/~~Fh
 gemeinhin/~~Nh
@@ -78077,9 +78077,9 @@ gemeinter/~~Mh
 gemeintes/~~Nh
 gemeinwerk/~~Nh
 gemeinwohl/~~Nh
-gemeistert/~~Nh
-gemeißelt/~~NXh
-gemeldet/~~NXh
+gemeistert/~~JOQRSTUWVg
+gemeißelt/~~JOQRSTUWVg
+gemeldet/~~JOQRSTUWVg
 gemeldetem/~~Nh
 gemeldeten/~~V # auto-added
 gemeldeter/~~Mh
@@ -78098,36 +78098,36 @@ gemessenem/~~Nh
 gemessenen/~~V # auto-added
 gemessener/~~Mh
 gemessenes/~~Nh
-gemessert/~~NXh
+gemessert/~~JOQRSTUWVg
 gemetzel/~~Nh
 gemetzeln/~~V # auto-added
 gemetzels/~~Nh
-gemetzelt/~~Nh
-gemeuchelt/~~Nh
-gemeutert/~~Nh
+gemetzelt/~~JOQRSTUWVg
+gemeuchelt/~~JOQRSTUWVg
+gemeutert/~~JOQRSTUWVg
 gemieden/~~V # auto-added
 gemiedene/~~Nh
 gemiedenem/~~Nh
 gemiedenen/~~V # auto-added
 gemiedener/~~Mh
 gemiedenes/~~Nh
-gemietet/~~NXh
+gemietet/~~JOQRSTUWVg
 gemietetem/~~Nh
 gemieteten/~~V # auto-added
 gemieteter/~~Mh
 gemietetes/~~Nh
-gemildert/~~NXh
+gemildert/~~JOQRSTUWVg
 gemimtem/~~Nh
 gemimten/~~V # auto-added
 gemimter/~~Mh
 gemimtes/~~Nh
-gemindert/~~NXh
+gemindert/~~JOQRSTUWVg
 geminiere/~~Nh
 geminieren/~~V # auto-added
-geminierst/~~Nh
-geminiert/~~NXh
+geminierst/~~JOQRSTUWVg
+geminiert/~~JOQRSTUWVg
 gemischs/~~Nh
-gemischt/~~NXh
+gemischt/~~JOQRSTUWVg
 gemischtem/~~Nh
 gemischten/~~V # auto-added
 gemischter/~~Mh
@@ -78137,12 +78137,12 @@ gemisstem/~~Nh
 gemissten/~~V # auto-added
 gemisster/~~Mh
 gemisstes/~~Nh
-gemistet/~~NXh
+gemistet/~~JOQRSTUWVg
 gemistetem/~~Nh
 gemisteten/~~V # auto-added
 gemisteter/~~Mh
 gemistetes/~~Nh
-gemittelt/~~NXh
+gemittelt/~~JOQRSTUWVg
 gemixtem/~~Nh
 gemixten/~~V # auto-added
 gemixter/~~Mh
@@ -78155,19 +78155,19 @@ gemochtem/~~Nh
 gemochten/~~V # auto-added
 gemochter/~~Mh
 gemochtes/~~Nh
-gemodelt/~~Nh
+gemodelt/~~JOQRSTUWVg
 gemodelten/~~V # auto-added
-gemogelt/~~Nh
+gemogelt/~~JOQRSTUWVg
 gemolken/~~V # auto-added
 gemolkene/~~Nh
 gemolkenem/~~Nh
 gemolkenen/~~V # auto-added
 gemolkener/~~Mh
 gemolkenes/~~Nh
-gemoppelt/~~Nh
-gemordet/~~Nh
-gemosert/~~Nh
-gemountet/~~NXh
+gemoppelt/~~JOQRSTUWVg
+gemordet/~~JOQRSTUWVg
+gemosert/~~JOQRSTUWVg
+gemountet/~~JOQRSTUWVg
 gemsbart/~~Nh # auto-added
 gemsbock/~~Nh
 gemsbockes/~~Nh
@@ -78181,24 +78181,24 @@ gemshörner/~~Mh
 gemskitz/~~NXh
 gemskitzen/~~V # auto-added
 gemskitzes/~~Nh
-gemskraut/~~Nh
+gemskraut/~~JOQRSTUWVg
 gemskrauts/~~Nh
 gemskresse/~~Nh
 gemsleder/~~Mh
 gemsleders/~~Nh
 gemswurz/~~Nh
-gemuckst/~~Nh
-gemulcht/~~Nh
+gemuckst/~~JOQRSTUWVg
+gemulcht/~~JOQRSTUWVg
 gemulchten/~~V # auto-added
-gemundet/~~Nah
+gemundet/~~JOQRSTUWVga
 gemunkel/~~Nh
 gemunkels/~~Nh
-gemunkelt/~~Nh
+gemunkelt/~~JOQRSTUWVg
 gemurmel/~~Nh
 gemurmels/~~Nh
-gemurmelt/~~NXh
-gemustert/~~NXh
-gemutmaßt/~~NXh
+gemurmelt/~~JOQRSTUWVg
+gemustert/~~JOQRSTUWVg
+gemutmaßt/~~JOQRSTUWVg
 gemächern/~~V # auto-added
 gemähtem/~~Nh
 gemähten/~~V # auto-added
@@ -78206,22 +78206,22 @@ gemähter/~~Mh
 gemähtes/~~Nh
 gemälden/~~V # auto-added
 gemäldes/~~Nh
-gemästet/~~NXh
+gemästet/~~JOQRSTUWVg
 gemästetem/~~Nh
 gemästeten/~~V # auto-added
 gemästeter/~~Mh
 gemästetes/~~Nh
 gemäuern/~~V # auto-added
 gemäuers/~~Nh
-gemäßigt/~~NXh
+gemäßigt/~~JOQRSTUWVg
 gemäßigtem/~~Nh
 gemäßigten/~~V # auto-added
 gemäßigter/~~Mh
 gemäßigtes/~~Nh
-gemörsert/~~NXh
-gemörtelt/~~NXh
-gemüffelt/~~Nh
-gemündet/~~NXh
+gemörsert/~~JOQRSTUWVg
+gemörtelt/~~JOQRSTUWVg
+gemüffelt/~~JOQRSTUWVg
+gemündet/~~JOQRSTUWVg
 gemündetem/~~Nh
 gemündeten/~~V # auto-added
 gemündetes/~~Nh
@@ -78232,10 +78232,10 @@ gemünztes/~~Nh
 gemütern/~~V # auto-added
 gemütliche/~~Nh
 gemütsarm/~~NXh
-gemütskalt/~~Nh
+gemütskalt/~~JOQRSTUWVg
 gemütvolle/~~Nh
-genadelt/~~Nh
-genagelt/~~NXh
+genadelt/~~JOQRSTUWVg
+genagelt/~~JOQRSTUWVg
 genageltem/~~Nh
 genagelten/~~V # auto-added
 genagelter/~~Mh
@@ -78252,15 +78252,15 @@ genarbtem/~~Nh
 genarbten/~~V # auto-added
 genarbter/~~Mh
 genarbtes/~~Nh
-genascht/~~Nh
-genasest/~~Nh
-genasführt/~~Nh
+genascht/~~JOQRSTUWVg
+genasest/~~JOQRSTUWVg
+genasführt/~~JOQRSTUWVg
 genauere/~~Nh
 genauerem/~~Nh
 genaueren/~~V # auto-added
 genauerer/~~Mh
 genaueres/~~Nh
-genauest/~~Nh
+genauest/~~JOQRSTUWVg
 genaueste/~~Nh
 genauestem/~~Nh
 genauesten/~~V # auto-added
@@ -78271,9 +78271,9 @@ genaustem/~~Nh
 genaustens/~~Nh
 genauster/~~Mh
 genaustes/~~Nh
-genbasiert/~~Nh
+genbasiert/~~JOQRSTUWVg
 gendarmen/~~V # auto-added
-genderst/~~Nh
+genderst/~~JOQRSTUWVg
 genecktem/~~Nh
 geneckten/~~V # auto-added
 geneckter/~~Mh
@@ -78289,14 +78289,14 @@ genehmeres/~~Nh
 genehmes/~~Nh
 genehmige/~~Nh
 genehmigen/~~V # auto-added
-genehmigst/~~Nh
-genehmigt/~~NXh
+genehmigst/~~JOQRSTUWVg
+genehmigt/~~JOQRSTUWVg
 genehmste/~~Nh
 genehmstem/~~Nh
 genehmsten/~~V # auto-added
 genehmster/~~Mh
 genehmstes/~~Nh
-geneidet/~~Nh
+geneidet/~~JOQRSTUWVg
 geneigtem/~~Nh
 geneigten/~~V # auto-added
 geneigter/~~Mh
@@ -78318,8 +78318,8 @@ genereller/~~Mh
 generelles/~~Nh
 generiere/~~Nh
 generieren/~~V # auto-added
-generierst/~~Nh
-generiert/~~NXh
+generierst/~~JOQRSTUWVg
+generiert/~~JOQRSTUWVg
 generika/~~Nh
 generikum/~~Za #  auto-added
 generikums/~~Nh
@@ -78345,7 +78345,7 @@ genesenen/~~V # auto-added
 genesener/~~Mh
 genesenes/~~Nh
 genesens/~~Nh
-genestelt/~~Nh
+genestelt/~~JOQRSTUWVg
 genesung/~~Fh
 genesungen/~~V # auto-added
 genesungs/~~Nh
@@ -78364,7 +78364,7 @@ genialeren/~~V # auto-added
 genialerer/~~Mh
 genialeres/~~Nh
 geniales/~~Nh
-genialität/~~Nh
+genialität/~~JOQRSTUWVg
 genialste/~~Nh
 genialstem/~~Nh
 genialsten/~~V # auto-added
@@ -78383,10 +78383,10 @@ genierende/~~Nh
 geniertem/~~Nh
 genierter/~~Mh
 geniertes/~~Nh
-geniertest/~~Nh
-geniertet/~~Nh
-genieselt/~~Nh
-genietet/~~NXh
+geniertest/~~JOQRSTUWVg
+geniertet/~~JOQRSTUWVg
+genieselt/~~JOQRSTUWVg
+genietet/~~JOQRSTUWVg
 genietetem/~~Nh
 genieteten/~~V # auto-added
 genieteter/~~Mh
@@ -78398,8 +78398,8 @@ genießer/~~Mh
 genießerin/~~Nh
 genießern/~~V # auto-added
 genießers/~~Nh
-genießest/~~Nh
-genistet/~~Nh
+genießest/~~JOQRSTUWVg
+genistet/~~JOQRSTUWVg
 genitale/~~Nh
 genitalem/~~Nh
 genitalen/~~V # auto-added
@@ -78417,12 +78417,12 @@ genommenem/~~Nh
 genommenen/~~V # auto-added
 genommener/~~Mh
 genommenes/~~Nh
-genomweit/~~NXh
+genomweit/~~JOQRSTUWVg
 genopptem/~~Nh
 genoppten/~~V # auto-added
 genoppter/~~Mh
 genopptes/~~Nh
-genordet/~~NXh
+genordet/~~JOQRSTUWVg
 genordetem/~~Nh
 genordeten/~~V # auto-added
 genordeter/~~Mh
@@ -78437,7 +78437,7 @@ genossenem/~~Nh
 genossenen/~~V # auto-added
 genossener/~~Mh
 genossenes/~~Nh
-genossest/~~Nh
+genossest/~~JOQRSTUWVg
 genossin/~~Nh
 genotypen/~~V # auto-added
 genotyps/~~Nh
@@ -78461,33 +78461,33 @@ gentiler/~~Mh
 gentiles/~~Nh
 gentleman/~~Nh
 genuggetan/~~Nh
-genugtat/~~Nh
+genugtat/~~JOQRSTUWVg
 genugtaten/~~V # auto-added
-genugtatet/~~Nh
+genugtatet/~~JOQRSTUWVg
 genugtue/~~Nh
 genugtuend/~~Nh
 genugtun/~~Nh
-genugtust/~~Nh
-genugtut/~~Nh
+genugtust/~~JOQRSTUWVg
+genugtut/~~JOQRSTUWVg
 genugtuung/~~Fh
 genugtäte/~~Nh
 genugtäten/~~V # auto-added
-genugtätet/~~Nh
+genugtätet/~~JOQRSTUWVg
 genugzutun/~~Nh
 genuinem/~~Nh
 genuinen/~~V # auto-added
 genuiner/~~Mh
 genuines/~~Nh
 genullten/~~V # auto-added
-genuschelt/~~Nh
+genuschelt/~~JOQRSTUWVg
 genusform/~~Nh
 genusses/~~Nh
 genutztem/~~Nh
 genutzten/~~V # auto-added
 genutzter/~~Mh
 genutztes/~~Nh
-genächtigt/~~Nh
-genähert/~~NXh
+genächtigt/~~JOQRSTUWVg
+genähert/~~JOQRSTUWVg
 genähertem/~~Nh
 genäherten/~~V # auto-added
 genäherter/~~Mh
@@ -78500,10 +78500,10 @@ genähtem/~~Nh
 genähten/~~V # auto-added
 genähter/~~Mh
 genähtes/~~Nh
-genäselt/~~Nh
-genörgelt/~~Nh
+genäselt/~~JOQRSTUWVg
+genörgelt/~~JOQRSTUWVg
 genössen/~~V # auto-added
-genötigt/~~NXh
+genötigt/~~JOQRSTUWVg
 genötigtem/~~Nh
 genötigten/~~V # auto-added
 genötigter/~~Mh
@@ -78512,17 +78512,17 @@ genügende/~~Nh
 genügendem/~~Nh
 genügender/~~Mh
 genügendes/~~Nh
-genügendst/~~Nh
+genügendst/~~JOQRSTUWVg
 genügsame/~~Nh
 genügsamem/~~Nh
 genügsamen/~~V # auto-added
 genügsamer/~~Mh
 genügsames/~~Nh
-genügsamst/~~Nh
-genügtest/~~Nh
-genügtet/~~Nh
+genügsamst/~~JOQRSTUWVg
+genügtest/~~JOQRSTUWVg
+genügtet/~~JOQRSTUWVg
 genüssen/~~V # auto-added
-geobasiert/~~Nh
+geobasiert/~~JOQRSTUWVg
 geobotanik/~~Nh
 geochemie/~~Nh
 geodreieck/~~Nh
@@ -78533,7 +78533,7 @@ geograph/~~Nh
 geographen/~~V # auto-added
 geographie/~~Nh
 geographin/~~Nh
-geohrfeigt/~~Nh
+geohrfeigt/~~JOQRSTUWVg
 geologen/~~V # auto-added
 geologie/~~Nh
 geologin/~~Nh
@@ -78543,17 +78543,17 @@ geometers/~~Nh
 geometrie/~~Nh
 geometrien/~~V # auto-added
 geonosen/~~V # auto-added
-geopfert/~~NXh
+geopfert/~~JOQRSTUWVg
 geopfertem/~~Nh
 geopferten/~~V # auto-added
 geopferter/~~Mh
 geopfertes/~~Nh
-geordert/~~NXh
+geordert/~~JOQRSTUWVg
 geordertem/~~Nh
 georderten/~~V # auto-added
 georderter/~~Mh
 geordertes/~~Nh
-geordnet/~~NXh
+geordnet/~~JOQRSTUWVg
 geordnetem/~~Nh
 geordneten/~~V # auto-added
 geordneter/~~Mh
@@ -78576,18 +78576,18 @@ gepaartem/~~Nh
 gepaarten/~~V # auto-added
 gepaarter/~~Mh
 gepaartes/~~Nh
-gepachtet/~~NXh
+gepachtet/~~JOQRSTUWVg
 gepacktem/~~Nh
 gepackten/~~V # auto-added
 gepackter/~~Mh
 gepacktes/~~Nh
-gepaddelt/~~Nh
+gepaddelt/~~JOQRSTUWVg
 gepafftem/~~Nh
 gepafften/~~V # auto-added
 gepaffter/~~Mh
 gepafftes/~~Nh
-gepanscht/~~NXh
-gepanzert/~~NXh
+gepanscht/~~JOQRSTUWVg
+gepanzert/~~JOQRSTUWVg
 geparden/~~V # auto-added
 gepardin/~~Nh
 geparktem/~~Nh
@@ -78596,7 +78596,7 @@ geparkter/~~Mh
 geparktes/~~Nh
 geparsed/~~Nh
 geparsten/~~V # auto-added
-gepatcht/~~NXh
+gepatcht/~~JOQRSTUWVg
 gepatchtem/~~Nh
 gepatchten/~~V # auto-added
 gepatchter/~~Mh
@@ -78609,146 +78609,146 @@ gepeeltem/~~Nh
 gepeelten/~~V # auto-added
 gepeelter/~~Mh
 gepeeltes/~~Nh
-gepeinigt/~~NXh
-gepeitscht/~~Nh
+gepeinigt/~~JOQRSTUWVg
+gepeitscht/~~JOQRSTUWVg
 gepelltem/~~Nh
 gepellten/~~V # auto-added
 gepellter/~~Mh
 gepelltes/~~Nh
-gependelt/~~Nh
+gependelt/~~JOQRSTUWVg
 geperltem/~~Nh
 geperlten/~~V # auto-added
 geperlter/~~Mh
 geperltes/~~Nh
-gepfeffert/~~Nh
-gepfeilt/~~NXh
+gepfeffert/~~JOQRSTUWVg
+gepfeilt/~~JOQRSTUWVg
 gepfeiltem/~~Nh
 gepfeilten/~~V # auto-added
 gepfeilter/~~Mh
 gepfeiltes/~~Nh
-gepfercht/~~NXh
+gepfercht/~~JOQRSTUWVg
 gepfiffen/~~V # auto-added
 gepfiffene/~~Nh
-gepflanzt/~~NXh
-gepflegt/~~NXh
+gepflanzt/~~JOQRSTUWVg
+gepflegt/~~JOQRSTUWVg
 gepflegtem/~~Nh
 gepflegten/~~V # auto-added
 gepflegter/~~Mh
 gepflegtes/~~Nh
-gepflückt/~~NXh
-gepflügt/~~NXh
+gepflückt/~~JOQRSTUWVg
+gepflügt/~~JOQRSTUWVg
 gepflügtem/~~Nh
 gepflügten/~~V # auto-added
 gepflügter/~~Mh
 gepflügtes/~~Nh
-gepfropft/~~NXh
-gepfuscht/~~Nh
-gepfählt/~~NXh
+gepfropft/~~JOQRSTUWVg
+gepfuscht/~~JOQRSTUWVg
+gepfählt/~~JOQRSTUWVg
 gepfähltem/~~Nh
 gepfählten/~~V # auto-added
 gepfählter/~~Mh
 gepfähltes/~~Nh
-gepfändet/~~NXh
-gepichelt/~~Nh
-gepiekst/~~Nh
+gepfändet/~~JOQRSTUWVg
+gepichelt/~~JOQRSTUWVg
+gepiekst/~~JOQRSTUWVg
 gepieksten/~~V # auto-added
-gepiepst/~~Nh
+gepiepst/~~JOQRSTUWVg
 gepierced/~~Nh
-gepierct/~~NXh
+gepierct/~~JOQRSTUWVg
 gepierctem/~~Nh
 gepiercten/~~V # auto-added
 gepiercter/~~Mh
 gepierctes/~~Nh
-gepiesackt/~~Nh
-gepilgert/~~NXh
-gepimpert/~~Nh
+gepiesackt/~~JOQRSTUWVg
+gepilgert/~~JOQRSTUWVg
+gepimpert/~~JOQRSTUWVg
 gepimptem/~~Nh
 gepimpten/~~V # auto-added
 gepimpter/~~Mh
 gepimptes/~~Nh
-gepinkelt/~~Nh
+gepinkelt/~~JOQRSTUWVg
 gepinntem/~~Nh
 gepinnten/~~V # auto-added
 gepinnter/~~Mh
 gepinntes/~~Nh
-gepinselt/~~Nh
-gepitcht/~~Nh
+gepinselt/~~JOQRSTUWVg
+gepitcht/~~JOQRSTUWVg
 gepitchten/~~V # auto-added
 geplagtem/~~Nh
 geplagten/~~V # auto-added
 geplagter/~~Mh
 geplagtes/~~Nh
-geplanscht/~~Nh
+geplanscht/~~JOQRSTUWVg
 geplantem/~~Nh
 geplanten/~~V # auto-added
 geplanter/~~Mh
 geplantes/~~Nh
 geplapper/~~Mh
 geplappers/~~Nh
-geplappert/~~Nh
-geplatscht/~~Nh
-geplatzt/~~NXh
+geplappert/~~JOQRSTUWVg
+geplatscht/~~JOQRSTUWVg
+geplatzt/~~JOQRSTUWVg
 geplatztem/~~Nh
 geplatzten/~~V # auto-added
 geplatzter/~~Mh
 geplatztes/~~Nh
 geplauder/~~Mh
 geplauders/~~Nh
-geplaudert/~~Nh
-geplauscht/~~Nh
-geploppt/~~Nh
-geplottet/~~Nh
-geplumpst/~~Nh
+geplaudert/~~JOQRSTUWVg
+geplauscht/~~JOQRSTUWVg
+geploppt/~~JOQRSTUWVg
+geplottet/~~JOQRSTUWVg
+geplumpst/~~JOQRSTUWVg
 geplänkel/~~Nh
 geplänkeln/~~V # auto-added
 geplänkels/~~Nh
-geplänkelt/~~Nh
+geplänkelt/~~JOQRSTUWVg
 geplärres/~~Nh
 geplärrs/~~Nh
-geplättet/~~NXh
-geplündert/~~Nh
-gepokert/~~Nh
-gepolstert/~~Nh
+geplättet/~~JOQRSTUWVg
+geplündert/~~JOQRSTUWVg
+gepokert/~~JOQRSTUWVg
+gepolstert/~~JOQRSTUWVg
 gepoltem/~~Nh
 gepolten/~~V # auto-added
 gepolter/~~Mh
 gepolters/~~Nh
-gepoltert/~~Nh
+gepoltert/~~JOQRSTUWVg
 gepoltes/~~Nh
 gepoolten/~~V # auto-added
-gepopelt/~~Nh
+gepopelt/~~JOQRSTUWVg
 gepopptem/~~Nh
 gepoppten/~~V # auto-added
 gepoppter/~~Mh
 gepopptes/~~Nh
-gepostet/~~NXh
+gepostet/~~JOQRSTUWVg
 gepostetem/~~Nh
 geposteten/~~V # auto-added
 geposteter/~~Mh
 gepostetes/~~Nh
-gepowdert/~~Nh
-geprahlt/~~Nh
-geprallt/~~NXh
+gepowdert/~~JOQRSTUWVg
+geprahlt/~~JOQRSTUWVg
+geprallt/~~JOQRSTUWVg
 gepralltem/~~Nh
 geprallten/~~V # auto-added
 geprallter/~~Mh
 gepralltes/~~Nh
-geprangt/~~Nh
-geprasst/~~Nh
-gepredigt/~~NXh
-geprellt/~~NXh
+geprangt/~~JOQRSTUWVg
+geprasst/~~JOQRSTUWVg
+gepredigt/~~JOQRSTUWVg
+geprellt/~~JOQRSTUWVg
 geprelltem/~~Nh
 geprellten/~~V # auto-added
 geprellter/~~Mh
 geprelltes/~~Nh
-geprescht/~~Nh
-gepresst/~~Nh
+geprescht/~~JOQRSTUWVg
+gepresst/~~JOQRSTUWVg
 gepresste/~~Nh
 gepresstem/~~Nh
 gepressten/~~V # auto-added
 gepresster/~~Mh
 gepresstes/~~Nh
-geprickelt/~~Nh
+geprickelt/~~JOQRSTUWVg
 gepriesen/~~V # auto-added
 gepriesene/~~Nh
 geprimed/~~Nh
@@ -78757,8 +78757,8 @@ geprobtem/~~Nh
 geprobten/~~V # auto-added
 geprobter/~~Mh
 geprobtes/~~Nh
-geprotzt/~~Nh
-geprunkt/~~Nh
+geprotzt/~~JOQRSTUWVg
+geprunkt/~~JOQRSTUWVg
 gepräges/~~Nh
 geprägtem/~~Nh
 geprägten/~~V # auto-added
@@ -78768,19 +78768,19 @@ geprüftem/~~Nh
 geprüften/~~V # auto-added
 geprüfter/~~Mh
 geprüftes/~~Nh
-geprügelt/~~NXh
+geprügelt/~~JOQRSTUWVg
 gepuckten/~~V # auto-added
-gepudert/~~NXh
+gepudert/~~JOQRSTUWVg
 gepudertem/~~Nh
 gepuderten/~~V # auto-added
 gepuderter/~~Mh
 gepudertes/~~Nh
-gepuffert/~~NXh
+gepuffert/~~JOQRSTUWVg
 gepufftem/~~Nh
 gepufften/~~V # auto-added
 gepuffter/~~Mh
 gepufftes/~~Nh
-gepullert/~~Nh
+gepullert/~~JOQRSTUWVg
 gepulste/~~Nh
 gepulstem/~~Nh
 gepulsten/~~V # auto-added
@@ -78790,14 +78790,14 @@ gepultem/~~Nh
 gepulten/~~V # auto-added
 gepulter/~~Mh
 gepultes/~~Nh
-gepulvert/~~NXh
+gepulvert/~~JOQRSTUWVg
 gepumptem/~~Nh
 gepumpten/~~V # auto-added
 gepumpter/~~Mh
 gepumptes/~~Nh
-gepunktet/~~NXh
-gepurzelt/~~NXh
-gepuscht/~~NXh
+gepunktet/~~JOQRSTUWVg
+gepurzelt/~~JOQRSTUWVg
+gepuscht/~~JOQRSTUWVg
 gepuschtem/~~Nh
 gepuschten/~~V # auto-added
 gepuschter/~~Mh
@@ -78806,41 +78806,41 @@ gepushtem/~~Nh
 gepushten/~~V # auto-added
 gepushter/~~Mh
 gepushtes/~~Nh
-gepustet/~~NXh
+gepustet/~~JOQRSTUWVg
 gepustetem/~~Nh
 gepusteten/~~V # auto-added
 gepusteter/~~Mh
 gepustetes/~~Nh
-geputscht/~~Nh
+geputscht/~~JOQRSTUWVg
 geputztem/~~Nh
 geputzten/~~V # auto-added
 geputzter/~~Mh
 geputztes/~~Nh
-gepuzzelt/~~Nh
-gepöbelt/~~Nh
-gepökelt/~~NXh
+gepuzzelt/~~JOQRSTUWVg
+gepöbelt/~~JOQRSTUWVg
+gepökelt/~~JOQRSTUWVg
 gepökeltem/~~Nh
 gepökelten/~~V # auto-added
 gepökelter/~~Mh
 gepökeltes/~~Nh
-gequadert/~~NXh
-gequantelt/~~Nh
-gequarzt/~~Nh
+gequadert/~~JOQRSTUWVg
+gequantelt/~~JOQRSTUWVg
+gequarzt/~~JOQRSTUWVg
 gequarzten/~~V # auto-added
 gequatsche/~~Nh
-gequatscht/~~Nh
+gequatscht/~~JOQRSTUWVg
 gequengel/~~NXh
 gequengels/~~Nh
-gequengelt/~~Nh
+gequengelt/~~JOQRSTUWVg
 gequengle/~~Nh
 gequengles/~~Nh
 gequertem/~~Nh
 gequerten/~~V # auto-added
 gequerter/~~Mh
 gequertes/~~Nh
-gequetscht/~~Nh
-gequiekt/~~Nh
-gequirlt/~~NXh
+gequetscht/~~JOQRSTUWVg
+gequiekt/~~JOQRSTUWVg
+gequirlt/~~JOQRSTUWVg
 gequirltem/~~Nh
 gequirlten/~~V # auto-added
 gequirlter/~~Mh
@@ -78853,10 +78853,10 @@ gequälter/~~Mh
 gequältes/~~Nh
 geradeaus/~~Nh
 geradebog/~~Nh
-geradebogt/~~Nh
+geradebogt/~~JOQRSTUWVg
 geradeböge/~~Nh
 geradehin/~~Nh
-geradelt/~~Nh
+geradelt/~~JOQRSTUWVg
 geradeso/~~Nh
 geradeste/~~Nh
 geradestem/~~Nh
@@ -78868,7 +78868,7 @@ geradezu/~~Nh
 geradlage/~~Nh
 geraffel/~~Nh
 geraffels/~~Nh
-geraffelt/~~Nh
+geraffelt/~~JOQRSTUWVg
 gerafftem/~~Nh
 gerafften/~~V # auto-added
 geraffter/~~Mh
@@ -78877,33 +78877,33 @@ gerahmtem/~~Nh
 gerahmten/~~V # auto-added
 gerahmter/~~Mh
 gerahmtes/~~Nh
-gerammelt/~~Nh
+gerammelt/~~JOQRSTUWVg
 gerammtem/~~Nh
 gerammten/~~V # auto-added
 gerammter/~~Mh
 gerammtes/~~Nh
-gerandet/~~NXh
+gerandet/~~JOQRSTUWVg
 gerandetem/~~Nh
 gerandeten/~~V # auto-added
 gerandeter/~~Mh
 gerandetes/~~Nh
 gerangel/~~Nh
 gerangels/~~Nh
-gerangelt/~~Nh
+gerangelt/~~JOQRSTUWVg
 geranien/~~V # auto-added
 gerannen/~~V # auto-added
-gerappelt/~~Nh
+gerappelt/~~JOQRSTUWVg
 gerapptem/~~Nh
 gerappten/~~V # auto-added
 gerappter/~~Mh
 gerapptes/~~Nh
-geraschelt/~~Nh
-geraspelt/~~NXh
+geraschelt/~~JOQRSTUWVg
+geraspelt/~~JOQRSTUWVg
 gerassel/~~Nh
 gerassels/~~Nh
-gerasselt/~~Nh
-gerastert/~~NXh
-gerastet/~~Nh
+gerasselt/~~JOQRSTUWVg
+gerastert/~~JOQRSTUWVg
+gerastet/~~JOQRSTUWVg
 geratene/~~Nh
 geratenem/~~Nh
 geratenen/~~V # auto-added
@@ -78911,12 +78911,12 @@ geratener/~~Mh
 geratenes/~~Nh
 gerateten/~~V # auto-added
 geratewohl/~~Nh
-gerattert/~~Nh
+gerattert/~~JOQRSTUWVg
 geraubtem/~~Nh
 geraubten/~~V # auto-added
 geraubter/~~Mh
 geraubtes/~~Nh
-geraucht/~~NXh
+geraucht/~~JOQRSTUWVg
 gerauchtem/~~Nh
 gerauchten/~~V # auto-added
 gerauchter/~~Mh
@@ -78929,13 +78929,13 @@ gerauntem/~~Nh
 geraunten/~~V # auto-added
 geraunter/~~Mh
 gerauntes/~~Nh
-geraunzt/~~Nh
-gerauscht/~~Nh
+geraunzt/~~JOQRSTUWVg
+gerauscht/~~JOQRSTUWVg
 gerautem/~~Nh
 gerauten/~~V # auto-added
 gerauter/~~Mh
 gerautes/~~Nh
-gerautet/~~Nh
+gerautet/~~JOQRSTUWVg
 gerauteten/~~V # auto-added
 gerbende/~~Nh
 gerbendem/~~Nh
@@ -78948,39 +78948,39 @@ gerbmittel/~~Nh
 gerbrinde/~~Nh
 gerbstoff/~~NXh
 gerbstoffs/~~Nh
-gerbtest/~~Nh
-gerebelt/~~NXh
+gerbtest/~~JOQRSTUWVg
+gerebelt/~~JOQRSTUWVg
 gerebeltem/~~Nh
 gerebelten/~~V # auto-added
 gerebelter/~~Mh
 gerebeltes/~~Nh
-gerechnet/~~NXh
+gerechnet/~~JOQRSTUWVg
 gerechtem/~~Nh
 gerechten/~~V # auto-added
 gerechter/~~Mh
 gerechtere/~~Nh
 gerechtes/~~Nh
-gerechtest/~~Nh
+gerechtest/~~JOQRSTUWVg
 gerefftem/~~Nh
 gerefften/~~V # auto-added
 gereffter/~~Mh
 gerefftes/~~Nh
-geregelt/~~NXh
+geregelt/~~JOQRSTUWVg
 geregeltem/~~Nh
 geregelten/~~V # auto-added
 geregelter/~~Mh
 geregeltes/~~Nh
-geregnet/~~Nh
+geregnet/~~JOQRSTUWVg
 gereiche/~~Nh
 gereichen/~~XZ #  auto-added
 gereichend/~~Nh
-gereichst/~~Nh
-gereicht/~~NXh
+gereichst/~~JOQRSTUWVg
+gereicht/~~JOQRSTUWVg
 gereichtem/~~Nh
 gereichten/~~V # auto-added
 gereichter/~~Mh
 gereichtes/~~Nh
-gereichtet/~~Nh
+gereichtet/~~JOQRSTUWVg
 gereiftem/~~Nh
 gereiften/~~V # auto-added
 gereifter/~~Mh
@@ -78993,7 +78993,7 @@ gereimtem/~~Nh
 gereimten/~~V # auto-added
 gereimter/~~Mh
 gereimtes/~~Nh
-gereinigt/~~NXh
+gereinigt/~~JOQRSTUWVg
 gereiste/~~Nh
 gereistem/~~Nh
 gereisten/~~V # auto-added
@@ -79004,24 +79004,24 @@ gereizten/~~V # auto-added
 gereizter/~~Mh
 gereiztere/~~Nh
 gereiztes/~~Nh
-gereiztest/~~Nh
-geremixt/~~Nh
+gereiztest/~~JOQRSTUWVg
+geremixt/~~JOQRSTUWVg
 geremixten/~~V # auto-added
-gerempelt/~~Nh
-gerendert/~~NXh
-gerettet/~~NXh
+gerempelt/~~JOQRSTUWVg
+gerendert/~~JOQRSTUWVg
+gerettet/~~JOQRSTUWVg
 gerettetem/~~Nh
 geretteten/~~V # auto-added
 geretteter/~~Mh
 gerettetes/~~Nh
-gereviewt/~~Nh
+gereviewt/~~JOQRSTUWVg
 geriater/~~Mh
 geriatern/~~V # auto-added
 geriaters/~~Nh
 geriatrie/~~Nh
 gerichten/~~V # auto-added
 gerichtes/~~Nh
-gerichtet/~~NXh
+gerichtet/~~JOQRSTUWVg
 gerichts/~~Nh
 gerieben/~~V # auto-added
 geriebene/~~Nh
@@ -79033,27 +79033,27 @@ gerieftem/~~Nh
 gerieften/~~V # auto-added
 geriefter/~~Mh
 gerieftes/~~Nh
-geriegelt/~~NXh
+geriegelt/~~JOQRSTUWVg
 gerier/~~Vej # REPLACES gerieren
 gerierende/~~Nh
 geriertem/~~Nh
 gerierter/~~Mh
 geriertes/~~Nh
-geriertest/~~Nh
-geriertet/~~Nh
+geriertest/~~JOQRSTUWVg
+geriertet/~~JOQRSTUWVg
 geriesel/~~Nh
 gerieseln/~~V # auto-added
-gerieselt/~~Nh
-geriestert/~~Nh
+gerieselt/~~JOQRSTUWVg
+geriestert/~~JOQRSTUWVg
 gerieten/~~V # auto-added
-gerietest/~~Nh
-gerietet/~~Nh
-geriffelt/~~NXh
+gerietest/~~JOQRSTUWVg
+gerietet/~~JOQRSTUWVg
+geriffelt/~~JOQRSTUWVg
 gerilltem/~~Nh
 gerillten/~~V # auto-added
 gerillter/~~Mh
 gerilltes/~~Nh
-geringelt/~~NXh
+geringelt/~~JOQRSTUWVg
 geringem/~~Nh
 geringen/~~V # auto-added
 geringer/~~Mh
@@ -79075,7 +79075,7 @@ gerinnens/~~Nh
 gerinnsel/~~Nh
 gerinnseln/~~V # auto-added
 gerinnsels/~~Nh
-gerinnst/~~Nh
+gerinnst/~~JOQRSTUWVg
 gerinnung/~~Fh
 gerinnungs/~~Nh
 geripp/~~Vej # REPLACES gerippen
@@ -79103,22 +79103,22 @@ germanen/~~V # auto-added
 germanien/~~V # auto-added
 germaniens/~~Nh
 germanin/~~Nh
-germanist/~~Nh
+germanist/~~JOQRSTUWVg
 germanium/~~Za #  auto-added
 germaniums/~~Nh
 germknödel/~~Nh
 gernegroß/~~Nh
-gerngehabt/~~Nh
+gerngehabt/~~JOQRSTUWVg
 gernhabe/~~Nh
 gernhaben/~~V # auto-added
-gernhabt/~~Nh
-gernhast/~~Nh
+gernhabt/~~JOQRSTUWVg
+gernhast/~~JOQRSTUWVg
 gernhatte/~~Nh
 gernhatten/~~V # auto-added
-gernhattet/~~Nh
+gernhattet/~~JOQRSTUWVg
 gernhätte/~~Nh
 gernhätten/~~V # auto-added
-gernhättet/~~Nh
+gernhättet/~~JOQRSTUWVg
 gerochen/~~XZ #  auto-added
 gerochene/~~Nh
 gerochenem/~~Nh
@@ -79129,7 +79129,7 @@ gerocktem/~~Nh
 gerockten/~~V # auto-added
 gerockter/~~Mh
 gerocktes/~~Nh
-gerodelt/~~Nh
+gerodelt/~~JOQRSTUWVg
 gerodetem/~~Nh
 gerodeten/~~V # auto-added
 gerodeter/~~Mh
@@ -79144,19 +79144,19 @@ geronnenem/~~Nh
 geronnenen/~~V # auto-added
 geronnener/~~Mh
 geronnenes/~~Nh
-gerostet/~~Nah
-gerottet/~~Nh
-geroutet/~~NXh
+gerostet/~~JOQRSTUWVga
+gerottet/~~JOQRSTUWVg
+geroutet/~~JOQRSTUWVg
 geroutetem/~~Nh
 gerouteten/~~V # auto-added
 gerouteter/~~Mh
 geroutetes/~~Nh
 gerstesilo/~~Nh
 gertenhieb/~~Nh
-gerubbelt/~~Nh
+gerubbelt/~~JOQRSTUWVg
 geruches/~~Nh
-geruckelt/~~NXh
-gerudert/~~Nh
+geruckelt/~~JOQRSTUWVg
+gerudert/~~JOQRSTUWVg
 gerufene/~~Nh
 gerufenem/~~Nh
 gerufenen/~~V # auto-added
@@ -79171,11 +79171,11 @@ geruhsamem/~~Nh
 geruhsamen/~~V # auto-added
 geruhsamer/~~Mh
 geruhsames/~~Nh
-geruhsamst/~~Nh
-geruhtest/~~Nh
-geruhtet/~~Nh
-gerumpelt/~~Nh
-gerundet/~~NXh
+geruhsamst/~~JOQRSTUWVg
+geruhtest/~~JOQRSTUWVg
+geruhtet/~~JOQRSTUWVg
+gerumpelt/~~JOQRSTUWVg
+gerundet/~~JOQRSTUWVg
 gerundetem/~~Nh
 gerundeten/~~V # auto-added
 gerundeter/~~Mh
@@ -79188,34 +79188,34 @@ gerungenem/~~Nh
 gerungenen/~~V # auto-added
 gerungener/~~Mh
 gerungenes/~~Nh
-gerunzelt/~~NXh
+gerunzelt/~~JOQRSTUWVg
 gerupftem/~~Nh
 gerupften/~~V # auto-added
 gerupfter/~~Mh
 gerupftes/~~Nh
-gerutscht/~~NXh
+gerutscht/~~JOQRSTUWVg
 gerächtem/~~Nh
 gerächten/~~V # auto-added
 gerächter/~~Mh
 gerächtes/~~Nh
-gerädert/~~NXh
+gerädert/~~JOQRSTUWVg
 gerädertem/~~Nh
 geräderten/~~V # auto-added
 geräderter/~~Mh
 gerädertes/~~Nh
-geräkelt/~~Nh
-gerändelt/~~NXh
-gerändert/~~NXh
+geräkelt/~~JOQRSTUWVg
+gerändelt/~~JOQRSTUWVg
+gerändert/~~JOQRSTUWVg
 gerännen/~~V # auto-added
-gerännet/~~Nh
-gerätselt/~~Nh
-geräuchert/~~Nh
+gerännet/~~JOQRSTUWVg
+gerätselt/~~JOQRSTUWVg
+geräuchert/~~JOQRSTUWVg
 geräumige/~~Nh
 geräumigem/~~Nh
 geräumigen/~~V # auto-added
 geräumiger/~~Mh
 geräumiges/~~Nh
-geräumigst/~~Nh
+geräumigst/~~JOQRSTUWVg
 geräumtem/~~Nh
 geräumten/~~V # auto-added
 geräumter/~~Mh
@@ -79223,14 +79223,14 @@ geräumtes/~~Nh
 geräusch/~~NYXh
 geräusches/~~Nh
 geräuschs/~~Nh
-geräuspert/~~Nh
-geröchelt/~~NXh
-geröntgt/~~NXh
+geräuspert/~~JOQRSTUWVg
+geröchelt/~~JOQRSTUWVg
+geröntgt/~~JOQRSTUWVg
 geröntgtem/~~Nh
 geröntgten/~~V # auto-added
 geröntgter/~~Mh
 geröntgtes/~~Nh
-geröstet/~~NXh
+geröstet/~~JOQRSTUWVg
 geröstetem/~~Nh
 gerösteten/~~V # auto-added
 geröstetes/~~Nh
@@ -79245,7 +79245,7 @@ gerüchts/~~Nh
 gerücktem/~~Nh
 gerückten/~~V # auto-added
 gerücktes/~~Nh
-gerüffelt/~~Nh
+gerüffelt/~~JOQRSTUWVg
 gerügtem/~~Nh
 gerügten/~~V # auto-added
 gerügter/~~Mh
@@ -79262,28 +79262,28 @@ gerülpse/~~Nh
 gerülpses/~~Nh
 gerümpel/~~Nh
 gerümpels/~~Nh
-gerümpft/~~Nh
-gerüscht/~~Nh
+gerümpft/~~JOQRSTUWVg
+gerüscht/~~JOQRSTUWVg
 gerüschten/~~V # auto-added
 gerüstbau/~~Nbh
 gerüstbug/~~Nh
 gerüsten/~~V # auto-added
 gerüstes/~~Nh
-gerüstet/~~NXh
+gerüstet/~~JOQRSTUWVg
 gerüstetem/~~Nh
 gerüsteten/~~V # auto-added
 gerüsteter/~~Mh
 gerüstetes/~~Nh
 gerüstholz/~~Nh
-gerüttelt/~~NXh
-gesabbelt/~~Nh
-gesabbert/~~Nh
+gerüttelt/~~JOQRSTUWVg
+gesabbelt/~~JOQRSTUWVg
+gesabbert/~~JOQRSTUWVg
 gesacktem/~~Nh
 gesackten/~~V # auto-added
 gesackter/~~Mh
 gesacktes/~~Nh
 gesaften/~~V # auto-added
-gesaftet/~~Nh
+gesaftet/~~JOQRSTUWVg
 gesagtem/~~Nh
 gesagten/~~V # auto-added
 gesagtes/~~Nh
@@ -79308,7 +79308,7 @@ gesandten/~~V # auto-added
 gesandter/~~Mh
 gesandtes/~~Nh
 gesanges/~~Nh
-gesattelt/~~NXh
+gesattelt/~~JOQRSTUWVg
 gesaugtem/~~Nh
 gesaugten/~~V # auto-added
 gesaugtes/~~Nh
@@ -79317,39 +79317,39 @@ gesaustem/~~Nh
 gesausten/~~V # auto-added
 gesauster/~~Mh
 gesaustes/~~Nh
-gescannt/~~NXh
+gescannt/~~JOQRSTUWVg
 gescanntem/~~Nh
 gescannten/~~V # auto-added
 gescannter/~~Mh
 gescanntes/~~Nh
-geschabt/~~NXh
+geschabt/~~JOQRSTUWVg
 geschabtem/~~Nh
 geschabten/~~V # auto-added
 geschabter/~~Mh
 geschabtes/~~Nh
-geschadet/~~NXh
+geschadet/~~JOQRSTUWVg
 geschaffen/~~V # auto-added
-geschafft/~~NXh
+geschafft/~~JOQRSTUWVg
 geschahen/~~V # auto-added
-geschallt/~~NXh
-geschalt/~~Nah
-geschaltet/~~Nh
-geschanzt/~~Nh
-gescharrt/~~NXh
+geschallt/~~JOQRSTUWVg
+geschalt/~~JOQRSTUWVga
+geschaltet/~~JOQRSTUWVg
+geschanzt/~~JOQRSTUWVg
+gescharrt/~~JOQRSTUWVg
 geschart/~~NXh # auto-added
 geschartem/~~Nh
 gescharten/~~V # auto-added
 gescharter/~~Mh
 geschartes/~~Nh
-geschasst/~~Nh
+geschasst/~~JOQRSTUWVg
 geschasste/~~Nh
-geschauert/~~Nh
-geschaut/~~NXh
+geschauert/~~JOQRSTUWVg
+geschaut/~~JOQRSTUWVg
 geschautem/~~Nh
 geschauten/~~V # auto-added
 geschauter/~~Mh
 geschautes/~~Nh
-gescheckt/~~NXh
+gescheckt/~~JOQRSTUWVg
 geschehe/~~Nh
 geschehend/~~Nh
 geschehene/~~Nh
@@ -79359,21 +79359,21 @@ gescheit/~~FXh
 gescheitem/~~Nh
 gescheiten/~~V # auto-added
 gescheites/~~Nh
-geschellt/~~NXh
+geschellt/~~JOQRSTUWVg
 geschenke/~~Nh
 geschenken/~~V # auto-added
 geschenkes/~~Nh
 geschenks/~~Nh
-geschenkt/~~NXh
-geschert/~~NXh
+geschenkt/~~JOQRSTUWVg
+geschert/~~JOQRSTUWVg
 geschertem/~~Nh
 gescherten/~~V # auto-added
 gescherter/~~Mh
 geschertes/~~Nh
-gescherzt/~~NXh
-gescheucht/~~Nh
-gescheuert/~~Nh
-gescheut/~~NXh
+gescherzt/~~JOQRSTUWVg
+gescheucht/~~JOQRSTUWVg
+gescheuert/~~JOQRSTUWVg
+gescheut/~~JOQRSTUWVg
 gescheutem/~~Nh
 gescheuten/~~V # auto-added
 gescheuter/~~Mh
@@ -79384,81 +79384,81 @@ geschicke/~~Nh
 geschicken/~~V # auto-added
 geschickes/~~Nh
 geschicks/~~Nh
-geschickt/~~NXh
+geschickt/~~JOQRSTUWVg
 geschieden/~~V # auto-added
-geschieht/~~Nh
-geschielt/~~NXh
+geschieht/~~JOQRSTUWVg
+geschielt/~~JOQRSTUWVg
 geschienen/~~V # auto-added
-geschient/~~NXh
-geschifft/~~NXh
-geschimpft/~~Nh
-geschippt/~~Nh
-geschirmt/~~NXh
+geschient/~~JOQRSTUWVg
+geschifft/~~JOQRSTUWVg
+geschimpft/~~JOQRSTUWVg
+geschippt/~~JOQRSTUWVg
+geschirmt/~~JOQRSTUWVg
 geschirr/~~NXh
 geschirren/~~V # auto-added
 geschirres/~~Nh
 geschirrs/~~Nh
-geschirrt/~~Nh
+geschirrt/~~JOQRSTUWVg
 geschissen/~~V # auto-added
-geschlackt/~~Nh
+geschlackt/~~JOQRSTUWVg
 geschlafen/~~V # auto-added
 geschlagen/~~V # auto-added
-geschlampt/~~Nh
+geschlampt/~~JOQRSTUWVg
 geschlecht/~~Nh
-geschleckt/~~Nh
-geschleift/~~Nh
-geschleimt/~~Nh
-geschleißt/~~Nh
-geschlemmt/~~Nh
-geschlenzt/~~Nh
-geschleppt/~~Nh
-geschleust/~~Nh
-geschlitzt/~~Nh
-geschluckt/~~Nh
-geschlurft/~~Nh
-geschlämmt/~~Nh
-geschlüpft/~~Nh
-geschlürft/~~Nh
+geschleckt/~~JOQRSTUWVg
+geschleift/~~JOQRSTUWVg
+geschleimt/~~JOQRSTUWVg
+geschleißt/~~JOQRSTUWVg
+geschlemmt/~~JOQRSTUWVg
+geschlenzt/~~JOQRSTUWVg
+geschleppt/~~JOQRSTUWVg
+geschleust/~~JOQRSTUWVg
+geschlitzt/~~JOQRSTUWVg
+geschluckt/~~JOQRSTUWVg
+geschlurft/~~JOQRSTUWVg
+geschlämmt/~~JOQRSTUWVg
+geschlüpft/~~JOQRSTUWVg
+geschlürft/~~JOQRSTUWVg
 geschmack/~~Nh
 geschmacks/~~Nh
-geschmatzt/~~Nh
-geschmaust/~~Nh
-geschmeckt/~~Nh
+geschmatzt/~~JOQRSTUWVg
+geschmaust/~~JOQRSTUWVg
+geschmeckt/~~JOQRSTUWVg
 geschmeide/~~Nh
 geschmeiß/~~Nh
-geschmerzt/~~Nh
-geschmiegt/~~Nh
+geschmerzt/~~JOQRSTUWVg
+geschmiegt/~~JOQRSTUWVg
 geschmier/~~Mh
 geschmiere/~~Nh
 geschmiers/~~Nh
-geschmiert/~~Nh
-geschminkt/~~Nh
-geschmollt/~~Nh
-geschmort/~~NXh
-geschmust/~~Nh
-geschmutzt/~~Nh
-geschmäht/~~NXh
-geschmückt/~~Nh
-geschnackt/~~Nh
-geschnallt/~~Nh
-geschnappt/~~Nh
-geschnarrt/~~Nh
-geschnaubt/~~Nh
-geschnauft/~~Nh
-geschneit/~~Nh
-geschnellt/~~Nh
-geschnippt/~~Nh
-geschnitzt/~~Nh
-geschnorrt/~~Nh
-geschnupft/~~Nh
-geschnurrt/~~Nh
-geschnäuzt/~~Nh
-geschnürt/~~NXh
+geschmiert/~~JOQRSTUWVg
+geschminkt/~~JOQRSTUWVg
+geschmollt/~~JOQRSTUWVg
+geschmort/~~JOQRSTUWVg
+geschmust/~~JOQRSTUWVg
+geschmutzt/~~JOQRSTUWVg
+geschmäht/~~JOQRSTUWVg
+geschmückt/~~JOQRSTUWVg
+geschnackt/~~JOQRSTUWVg
+geschnallt/~~JOQRSTUWVg
+geschnappt/~~JOQRSTUWVg
+geschnarrt/~~JOQRSTUWVg
+geschnaubt/~~JOQRSTUWVg
+geschnauft/~~JOQRSTUWVg
+geschneit/~~JOQRSTUWVg
+geschnellt/~~JOQRSTUWVg
+geschnippt/~~JOQRSTUWVg
+geschnitzt/~~JOQRSTUWVg
+geschnorrt/~~JOQRSTUWVg
+geschnupft/~~JOQRSTUWVg
+geschnurrt/~~JOQRSTUWVg
+geschnäuzt/~~JOQRSTUWVg
+geschnürt/~~JOQRSTUWVg
 geschoben/~~V # auto-added
 geschobene/~~Nh
-geschockt/~~NXh
+geschockt/~~JOQRSTUWVg
 gescholten/~~V # auto-added
-geschont/~~NXah
+geschont/~~JOQRSTUWVga
 geschontem/~~Nh
 geschonten/~~V # auto-added
 geschontes/~~Nh
@@ -79467,79 +79467,79 @@ geschorene/~~Nh
 geschoss/~~NXh
 geschossen/~~V # auto-added
 geschosses/~~Nh
-geschrammt/~~Nh
-geschrappt/~~Nh
-geschraubt/~~Nh
-geschreckt/~~Nh
+geschrammt/~~JOQRSTUWVg
+geschrappt/~~JOQRSTUWVg
+geschraubt/~~JOQRSTUWVg
+geschreckt/~~JOQRSTUWVg
 geschrei/~~NbXh
 geschreies/~~Nh
 geschrien/~~V # auto-added
 geschriene/~~Nh
-geschrotet/~~Nh
-geschrubbt/~~Nh
-geschränkt/~~Nh
-geschröpft/~~Nh
-geschubst/~~Nh
-geschuftet/~~Nh
-geschuldet/~~Nh
-geschult/~~NXh
+geschrotet/~~JOQRSTUWVg
+geschrubbt/~~JOQRSTUWVg
+geschränkt/~~JOQRSTUWVg
+geschröpft/~~JOQRSTUWVg
+geschubst/~~JOQRSTUWVg
+geschuftet/~~JOQRSTUWVg
+geschuldet/~~JOQRSTUWVg
+geschult/~~JOQRSTUWVg
 geschultem/~~Nh
 geschulten/~~V # auto-added
 geschultes/~~Nh
 geschunden/~~V # auto-added
-geschuppt/~~NXh
+geschuppt/~~JOQRSTUWVg
 geschwader/~~Mh
 geschwafel/~~Nh
-geschwankt/~~Nh
-geschwappt/~~Nh
-geschwatzt/~~Nh
-geschwebt/~~Nh
-geschweift/~~Nh
+geschwankt/~~JOQRSTUWVg
+geschwappt/~~JOQRSTUWVg
+geschwatzt/~~JOQRSTUWVg
+geschwebt/~~JOQRSTUWVg
+geschweift/~~JOQRSTUWVg
 geschweige/~~Nh
-geschweißt/~~Nh
-geschwelgt/~~Nh
-geschwellt/~~Nh
-geschwelt/~~Nh
-geschwemmt/~~Nh
-geschwenkt/~~Nh
+geschweißt/~~JOQRSTUWVg
+geschwelgt/~~JOQRSTUWVg
+geschwellt/~~JOQRSTUWVg
+geschwelt/~~JOQRSTUWVg
+geschwemmt/~~JOQRSTUWVg
+geschwenkt/~~JOQRSTUWVg
 geschwind/~~Nh
 geschwinde/~~Nh
-geschwirrt/~~Nh
-geschwitzt/~~Nh
+geschwirrt/~~JOQRSTUWVg
+geschwitzt/~~JOQRSTUWVg
 geschworen/~~V # auto-added
-geschwulst/~~Nh
-geschwächt/~~Nh
-geschwänzt/~~Nh
-geschwärmt/~~Nh
-geschwärzt/~~Nh
+geschwulst/~~JOQRSTUWVg
+geschwächt/~~JOQRSTUWVg
+geschwänzt/~~JOQRSTUWVg
+geschwärmt/~~JOQRSTUWVg
+geschwärzt/~~JOQRSTUWVg
 geschwätz/~~Nh
-geschwätzt/~~Nh
+geschwätzt/~~JOQRSTUWVg
 geschwür/~~NXh
 geschwüren/~~V # auto-added
 geschwüres/~~Nh
 geschwürs/~~Nh
-geschädigt/~~Nh
+geschädigt/~~JOQRSTUWVg
 geschäfte/~~Nh
 geschäften/~~V # auto-added
 geschäftes/~~Nh
 geschäfts/~~Nh
 geschähe/~~Nh
 geschähen/~~V # auto-added
-geschäkert/~~Nh
-geschält/~~NXh
+geschäkert/~~JOQRSTUWVg
+geschält/~~JOQRSTUWVg
 geschältem/~~Nh
 geschälten/~~V # auto-added
 geschältes/~~Nh
-geschämt/~~NXh
+geschämt/~~JOQRSTUWVg
 geschämtem/~~Nh
 geschämten/~~V # auto-added
 geschämter/~~Mh
 geschämtes/~~Nh
-geschändet/~~Nh
-geschärft/~~NXh
-geschätzt/~~NXh
-geschäumt/~~NXh
-geschönt/~~NXh
+geschändet/~~JOQRSTUWVg
+geschärft/~~JOQRSTUWVg
+geschätzt/~~JOQRSTUWVg
+geschäumt/~~JOQRSTUWVg
+geschönt/~~JOQRSTUWVg
 geschöntem/~~Nh
 geschönten/~~V # auto-added
 geschöntes/~~Nh
@@ -79547,25 +79547,25 @@ geschöpfe/~~Nh
 geschöpfen/~~V # auto-added
 geschöpfes/~~Nh
 geschöpfs/~~Nh
-geschöpft/~~NXh
-geschürft/~~NXh
-geschürt/~~NXh
+geschöpft/~~JOQRSTUWVg
+geschürft/~~JOQRSTUWVg
+geschürt/~~JOQRSTUWVg
 geschürtem/~~Nh
 geschürten/~~V # auto-added
 geschürter/~~Mh
 geschürtes/~~Nh
-geschürzt/~~Nh
-geschüttet/~~Nh
+geschürzt/~~JOQRSTUWVg
+geschüttet/~~JOQRSTUWVg
 geschütz/~~NXh
 geschützen/~~V # auto-added
 geschützes/~~Nh
-geschützt/~~NXh
-gescoutet/~~Nh
-gescreent/~~NXh
-gescriptet/~~Nh
-gescrollt/~~Nh
-gesegelt/~~Nh
-gesegnet/~~NXh
+geschützt/~~JOQRSTUWVg
+gescoutet/~~JOQRSTUWVg
+gescreent/~~JOQRSTUWVg
+gescriptet/~~JOQRSTUWVg
+gescrollt/~~JOQRSTUWVg
+gesegelt/~~JOQRSTUWVg
+gesegnet/~~JOQRSTUWVg
 gesegnetem/~~Nh
 gesegneten/~~V # auto-added
 gesegneter/~~Mh
@@ -79575,7 +79575,7 @@ gesehenem/~~Nh
 gesehenen/~~V # auto-added
 gesehener/~~Mh
 gesehenes/~~Nh
-geselcht/~~NXh
+geselcht/~~JOQRSTUWVg
 geselchtem/~~Nh
 geselchten/~~V # auto-added
 geselchter/~~Mh
@@ -79587,14 +79587,14 @@ geselligem/~~Nh
 geselligen/~~V # auto-added
 geselliger/~~Mh
 geselliges/~~Nh
-geselligst/~~Nh
+geselligst/~~JOQRSTUWVg
 gesellin/~~Nh
 geselltem/~~Nh
 gesellter/~~Mh
 geselltes/~~Nh
-geselltest/~~Nh
-geselltet/~~Nh
-gesendet/~~NXh
+geselltest/~~JOQRSTUWVg
+geselltet/~~JOQRSTUWVg
+gesendet/~~JOQRSTUWVg
 gesendetem/~~Nh
 gesendeten/~~V # auto-added
 gesendeter/~~Mh
@@ -79614,7 +79614,7 @@ gesessenen/~~V # auto-added
 gesessener/~~Mh
 gesessenes/~~Nh
 gesettled/~~Nh
-gesettlet/~~Nh
+gesettlet/~~JOQRSTUWVg
 gesetzbuch/~~Nh
 gesetz/~~Vej # REPLACES gesetzen
 gesetzes/~~Nh
@@ -79622,31 +79622,31 @@ gesetztem/~~Nh
 gesetzter/~~Mh
 gesetztere/~~Nh
 gesetztes/~~Nh
-gesetztest/~~Nh
-geseufzt/~~Nh
+gesetztest/~~JOQRSTUWVg
+geseufzt/~~JOQRSTUWVg
 geshaked/~~Nh
 geshakten/~~V # auto-added
 geshared/~~Nh
 gesharten/~~V # auto-added
-geshootet/~~Nh
-geshoppt/~~Nh
-geshortet/~~Nh
-geshuffelt/~~Nh
-gesichert/~~NXh
+geshootet/~~JOQRSTUWVg
+geshoppt/~~JOQRSTUWVg
+geshortet/~~JOQRSTUWVg
+geshuffelt/~~JOQRSTUWVg
+gesichert/~~JOQRSTUWVg
 gesichter/~~Mh
 gesichtern/~~V # auto-added
 gesichtes/~~Nh
-gesichtet/~~NXh
+gesichtet/~~JOQRSTUWVg
 gesichts/~~Nh
-gesickert/~~NXh
+gesickert/~~JOQRSTUWVg
 gesiebtem/~~Nh
 gesiebten/~~V # auto-added
 gesiebter/~~Mh
 gesiebtes/~~Nh
-gesiecht/~~Nh
-gesiedelt/~~Nh
-gesiedet/~~Nh
-gesiegelt/~~NXh
+gesiecht/~~JOQRSTUWVg
+gesiedelt/~~JOQRSTUWVg
+gesiedet/~~JOQRSTUWVg
+gesiegelt/~~JOQRSTUWVg
 gesimsband/~~Nh
 gesims/~~Vej # REPLACES gesimsen
 gesimses/~~Nh
@@ -79664,24 +79664,24 @@ gesinnter/~~Mh
 gesinntes/~~Nh
 gesinnung/~~Fh
 gesinnungs/~~Nh
-gesintert/~~NXh
-gesittet/~~NXh
+gesintert/~~JOQRSTUWVg
+gesittet/~~JOQRSTUWVg
 gesittetem/~~Nh
 gesitteten/~~V # auto-added
 gesitteter/~~Mh
 gesittetes/~~Nh
 gesittung/~~Fh
 geskated/~~Nh
-geskatet/~~Nh
-geskippt/~~Nh
+geskatet/~~JOQRSTUWVg
+geskippt/~~JOQRSTUWVg
 geskyped/~~Nh
-geslicet/~~Nh
+geslicet/~~JOQRSTUWVg
 gesliceten/~~V # auto-added
-gesmasht/~~Nh
+gesmasht/~~JOQRSTUWVg
 gesmashten/~~V # auto-added
 gesmoked/~~Nh
 gesmokten/~~V # auto-added
-gesnackt/~~Nh
+gesnackt/~~JOQRSTUWVg
 gesnackten/~~V # auto-added
 gesoffen/~~V # auto-added
 gesoffene/~~Nh
@@ -79694,7 +79694,7 @@ gesogenem/~~Nh
 gesogenen/~~V # auto-added
 gesogener/~~Mh
 gesogenes/~~Nh
-gesondert/~~NXh
+gesondert/~~JOQRSTUWVg
 gesonnen/~~V # auto-added
 gesonnene/~~Nh
 gesonnenem/~~Nh
@@ -79710,12 +79710,12 @@ gesottenes/~~Nh
 gespaced/~~Nh
 gespalten/~~V # auto-added
 gespaltene/~~Nh
-gespaltet/~~NXh
-gespammt/~~Nh
+gespaltet/~~JOQRSTUWVg
+gespammt/~~JOQRSTUWVg
 gespann/~~Vej # REPLACES gespannen
 gespannes/~~Nh
 gespanns/~~Nh
-gespannt/~~NXh
+gespannt/~~JOQRSTUWVg
 gespanntem/~~Nh
 gespannter/~~Mh
 gespanntes/~~Nh
@@ -79723,34 +79723,34 @@ gespartem/~~Nh
 gesparten/~~V # auto-added
 gesparter/~~Mh
 gespartes/~~Nh
-gespawnt/~~NXh
+gespawnt/~~JOQRSTUWVg
 gespawntem/~~Nh
 gespawnten/~~V # auto-added
 gespawnter/~~Mh
 gespawntes/~~Nh
-gespeist/~~Nh
+gespeist/~~JOQRSTUWVg
 gespeiste/~~Nh
 gespeistem/~~Nh
 gespeisten/~~V # auto-added
 gespeister/~~Mh
 gespeistes/~~Nh
-gespendet/~~NXh
-gespenst/~~Nh
+gespendet/~~JOQRSTUWVg
+gespenst/~~JOQRSTUWVg
 gespenster/~~Mh
 gespenstes/~~Nh
-gesperrt/~~NXh
+gesperrt/~~JOQRSTUWVg
 gesperrtem/~~Nh
 gesperrten/~~V # auto-added
 gesperrter/~~Mh
 gesperrtes/~~Nh
-gespickt/~~NXh
+gespickt/~~JOQRSTUWVg
 gespicktem/~~Nh
 gespickten/~~V # auto-added
 gespickter/~~Mh
 gespicktes/~~Nh
-gespiegelt/~~Nh
+gespiegelt/~~JOQRSTUWVg
 gespielin/~~Nh
-gespielt/~~NXh
+gespielt/~~JOQRSTUWVg
 gespieltem/~~Nh
 gespielten/~~V # auto-added
 gespielter/~~Mh
@@ -79760,55 +79760,55 @@ gespienem/~~Nh
 gespienen/~~V # auto-added
 gespiener/~~Mh
 gespienes/~~Nh
-gespießt/~~NXh
+gespießt/~~JOQRSTUWVg
 gespießtem/~~Nh
 gespießten/~~V # auto-added
 gespießter/~~Mh
 gespießtes/~~Nh
-gespinst/~~Nh
+gespinst/~~JOQRSTUWVg
 gespinste/~~Nh
 gespinsten/~~V # auto-added
 gespinstes/~~Nh
 gespinsts/~~Nh
-gespitzelt/~~Nh
-gespitzt/~~NXh
+gespitzelt/~~JOQRSTUWVg
+gespitzt/~~JOQRSTUWVg
 gespitztem/~~Nh
 gespitzten/~~V # auto-added
 gespitzter/~~Mh
 gespitztes/~~Nh
-gespleißt/~~NXh
-gesplittet/~~Nh
-gespoilert/~~Nh
+gespleißt/~~JOQRSTUWVg
+gesplittet/~~JOQRSTUWVg
+gespoilert/~~JOQRSTUWVg
 gesponnen/~~V # auto-added
 gesponnene/~~Nh
-gesponsert/~~Nh
-gesponsort/~~Nh
-gespornt/~~NXh
+gesponsert/~~JOQRSTUWVg
+gesponsort/~~JOQRSTUWVg
+gespornt/~~JOQRSTUWVg
 gesporntem/~~Nh
 gespornten/~~V # auto-added
 gespornter/~~Mh
 gesporntes/~~Nh
-gespottet/~~NXh
-gesprayt/~~Nh
-gespreizt/~~NXh
-gesprengt/~~NXh
-gesprießt/~~NXh
-gesprintet/~~Nh
-gespritzt/~~NXh
+gespottet/~~JOQRSTUWVg
+gesprayt/~~JOQRSTUWVg
+gespreizt/~~JOQRSTUWVg
+gesprengt/~~JOQRSTUWVg
+gesprießt/~~JOQRSTUWVg
+gesprintet/~~JOQRSTUWVg
+gespritzt/~~JOQRSTUWVg
 gesprochen/~~XZ #  auto-added
 gesprossen/~~V # auto-added
-gesprudelt/~~Nh
+gesprudelt/~~JOQRSTUWVg
 gesprungen/~~V # auto-added
 gespräche/~~Nh
 gesprächen/~~XZ #  auto-added
 gespräches/~~Nh
 gesprächs/~~Nh
-gesprüht/~~NXh
+gesprüht/~~JOQRSTUWVg
 gesprühtem/~~Nh
 gesprühten/~~V # auto-added
 gesprühter/~~Mh
 gesprühtes/~~Nh
-gespuckt/~~NXh
+gespuckt/~~JOQRSTUWVg
 gespucktem/~~Nh
 gespuckten/~~V # auto-added
 gespuckter/~~Mh
@@ -79816,13 +79816,13 @@ gespucktes/~~Nh
 gespultem/~~Nh
 gespulten/~~V # auto-added
 gespultes/~~Nh
-gespundet/~~Nh
+gespundet/~~JOQRSTUWVg
 gespurtem/~~Nh
 gespurten/~~V # auto-added
 gespurtes/~~Nh
-gespurtet/~~NXh
-gesputet/~~Nh
-gespöttelt/~~Nh
+gespurtet/~~JOQRSTUWVg
+gesputet/~~JOQRSTUWVg
+gespöttelt/~~JOQRSTUWVg
 gespöttes/~~Nh
 gespötts/~~Nh
 gespültem/~~Nh
@@ -79831,58 +79831,58 @@ gespültes/~~Nh
 gespürtem/~~Nh
 gespürten/~~V # auto-added
 gespürtes/~~Nh
-gestachelt/~~Nh
+gestachelt/~~JOQRSTUWVg
 gestaden/~~V # auto-added
 gestades/~~Nh
-gestaffelt/~~Nh
+gestaffelt/~~JOQRSTUWVg
 gestagen/~~V # auto-added
 gestagene/~~Nh
 gestagenen/~~V # auto-added
 gestagens/~~Nh
-gestalkt/~~Nh
+gestalkt/~~JOQRSTUWVg
 gestalten/~~V # auto-added
 gestaltend/~~Nh
 gestaltens/~~Nh
 gestalter/~~Mh
 gestaltern/~~V # auto-added
 gestalters/~~Nh # auto-added
-gestaltest/~~Nh
-gestaltet/~~NXh
+gestaltest/~~JOQRSTUWVg
+gestaltet/~~JOQRSTUWVg
 gestaltung/~~Fh
 gestammel/~~Nh
 gestammels/~~Nh
-gestammelt/~~Nh
-gestammt/~~Nh
-gestampft/~~NXh
+gestammelt/~~JOQRSTUWVg
+gestammt/~~JOQRSTUWVg
+gestampft/~~JOQRSTUWVg
 gestanden/~~V # auto-added
 gestandene/~~Nh
-gestandest/~~Nh
-gestandet/~~Nh
+gestandest/~~JOQRSTUWVg
+gestandet/~~JOQRSTUWVg
 gestankes/~~Nh
 gestanks/~~Nh
-gestanzt/~~NXh
+gestanzt/~~JOQRSTUWVg
 gestanztem/~~Nh
 gestanzten/~~V # auto-added
 gestanzter/~~Mh
 gestanztes/~~Nh
-gestapelt/~~NXh
-gestapft/~~Nh
-gestarrt/~~Nh
-gestartet/~~NXh
+gestapelt/~~JOQRSTUWVg
+gestapft/~~JOQRSTUWVg
+gestarrt/~~JOQRSTUWVg
+gestartet/~~JOQRSTUWVg
 gestatte/~~Nh
 gestatten/~~V # auto-added
 gestattend/~~Nh
 gestattens/~~Nh
-gestattet/~~NXh
+gestattet/~~JOQRSTUWVg
 gestattung/~~Fh
-gestaubt/~~Nah
-gestaucht/~~NXh
-gestaunt/~~Nh
+gestaubt/~~JOQRSTUWVga
+gestaucht/~~JOQRSTUWVg
+gestaunt/~~JOQRSTUWVg
 gestautem/~~Nh
 gestauten/~~V # auto-added
 gestauter/~~Mh
 gestautes/~~Nh
-gesteckt/~~NXh
+gesteckt/~~JOQRSTUWVg
 gestecktem/~~Nh
 gesteckten/~~V # auto-added
 gesteckter/~~Mh
@@ -79890,91 +79890,91 @@ gestecktes/~~Nh
 gestehen/~~V # auto-added
 gestehend/~~Nh
 gestehende/~~Nh
-gestehst/~~Nh
-gesteift/~~NXh
+gestehst/~~JOQRSTUWVg
+gesteift/~~JOQRSTUWVg
 gesteiftem/~~Nh
 gesteiften/~~V # auto-added
 gesteifter/~~Mh
 gesteiftes/~~Nh
-gesteigert/~~Nh
+gesteigert/~~JOQRSTUWVg
 gesteine/~~Nh
 gesteinen/~~V # auto-added
 gesteines/~~Nh
-gesteinigt/~~Nh
+gesteinigt/~~JOQRSTUWVg
 gesteins/~~Nh
 gestell/~~Vej # REPLACES gestellen
 gestelles/~~Nh
 gestells/~~Nh
-gestellt/~~NXh
+gestellt/~~JOQRSTUWVg
 gestelltem/~~Nh
 gestellter/~~Mh
 gestelltes/~~Nh
-gestelzt/~~Nh
+gestelzt/~~JOQRSTUWVg
 gestelzten/~~V # auto-added
-gestemmt/~~NXh
+gestemmt/~~JOQRSTUWVg
 gestemmtem/~~Nh
 gestemmten/~~V # auto-added
 gestemmter/~~Mh
 gestemmtes/~~Nh
-gestempelt/~~Nh
-gesteppt/~~NXh
+gestempelt/~~JOQRSTUWVg
+gesteppt/~~JOQRSTUWVg
 gestepptem/~~Nh
 gesteppten/~~V # auto-added
 gesteppter/~~Mh
 gestepptes/~~Nh
 gesteuert/~~NXq # auto-added
-gestichelt/~~Nh
-gestickt/~~NXh
+gestichelt/~~JOQRSTUWVg
+gestickt/~~JOQRSTUWVg
 gesticktem/~~Nh
 gestickten/~~V # auto-added
 gestickter/~~Mh
 gesticktes/~~Nh
-gestiefelt/~~Nh
+gestiefelt/~~JOQRSTUWVg
 gestiegen/~~V # auto-added
 gestiegene/~~Nh
-gestielt/~~NXh
+gestielt/~~JOQRSTUWVg
 gestieltem/~~Nh
 gestielten/~~V # auto-added
 gestielter/~~Mh
 gestieltes/~~Nh
-gestiert/~~Nh
-gestiftet/~~NXh
+gestiert/~~JOQRSTUWVg
+gestiftet/~~JOQRSTUWVg
 gestiken/~~V # auto-added
-gestillt/~~NXh
+gestillt/~~JOQRSTUWVg
 gestilltem/~~Nh
 gestillten/~~V # auto-added
 gestillter/~~Mh
 gestilltes/~~Nh
-gestimmt/~~NXh
+gestimmt/~~JOQRSTUWVg
 gestimmtem/~~Nh
 gestimmten/~~V # auto-added
 gestimmter/~~Mh
 gestimmtes/~~Nh
-gestippt/~~Nh
+gestippt/~~JOQRSTUWVg
 gestirn/~~Vej # REPLACES gestirnen
 gestirns/~~Nh
-gestirnt/~~NXh
+gestirnt/~~JOQRSTUWVg
 gestirntem/~~Nh
 gestirnter/~~Mh
 gestirntes/~~Nh
 gestoben/~~V # auto-added
 gestochen/~~XZ #  auto-added
 gestochene/~~Nh
-gestochert/~~Nh
-gestockt/~~NXh
+gestochert/~~JOQRSTUWVg
+gestockt/~~JOQRSTUWVg
 gestocktem/~~Nh
 gestockten/~~V # auto-added
 gestockter/~~Mh
 gestocktes/~~Nh
 gestohlen/~~V # auto-added
 gestohlene/~~Nh
-gestolpert/~~Nh
-gestopft/~~NXh
+gestolpert/~~JOQRSTUWVg
+gestopft/~~JOQRSTUWVg
 gestopftem/~~Nh
 gestopften/~~V # auto-added
 gestopfter/~~Mh
 gestopftes/~~Nh
-gestoppt/~~NXh
+gestoppt/~~JOQRSTUWVg
 gestopptem/~~Nh
 gestoppten/~~V # auto-added
 gestoppter/~~Mh
@@ -79982,60 +79982,60 @@ gestopptes/~~Nh
 gestorben/~~V # auto-added
 gestorbene/~~Nh
 gestosen/~~V # auto-added
-gestottert/~~Nh
+gestottert/~~JOQRSTUWVg
 gestoßen/~~V # auto-added
 gestoßene/~~Nh
 gestoßenem/~~Nh
 gestoßenen/~~V # auto-added
 gestoßener/~~Mh
 gestoßenes/~~Nh
-gestrafft/~~NXh
-gestraft/~~NXh
+gestrafft/~~JOQRSTUWVg
+gestraft/~~JOQRSTUWVg
 gestraftem/~~Nh
 gestraften/~~V # auto-added
 gestrafter/~~Mh
 gestraftes/~~Nh
-gestrahlt/~~Nh
-gestrandet/~~Nh
-gestreamt/~~NXh
-gestrebt/~~NXh
+gestrahlt/~~JOQRSTUWVg
+gestrandet/~~JOQRSTUWVg
+gestreamt/~~JOQRSTUWVg
+gestrebt/~~JOQRSTUWVg
 gestrebtem/~~Nh
 gestrebten/~~V # auto-added
 gestrebter/~~Mh
 gestrebtes/~~Nh
-gestreckt/~~NXh
-gestreift/~~NXh
-gestreikt/~~Nh
+gestreckt/~~JOQRSTUWVg
+gestreift/~~JOQRSTUWVg
+gestreikt/~~JOQRSTUWVg
 gestrenge/~~Nh
 gestrengem/~~Nh
 gestrengen/~~V # auto-added
 gestrenger/~~Mh
 gestrenges/~~Nh
-gestresst/~~Nh
+gestresst/~~JOQRSTUWVg
 gestresste/~~Nh
-gestreunt/~~NXh
-gestreut/~~NXh
+gestreunt/~~JOQRSTUWVg
+gestreut/~~JOQRSTUWVg
 gestreutem/~~Nh
 gestreuten/~~V # auto-added
 gestreuter/~~Mh
 gestreutes/~~Nh
 gestrichen/~~XZ #  auto-added
-gestrickt/~~NXh
-gestriemt/~~NXh
-gestriezt/~~Nh
+gestrickt/~~JOQRSTUWVg
+gestriemt/~~JOQRSTUWVg
+gestriezt/~~JOQRSTUWVg
 gestrigem/~~Nh
 gestrigen/~~V # auto-added
 gestriger/~~Mh
 gestriges/~~Nh
-gestrippt/~~Nh
+gestrippt/~~JOQRSTUWVg
 gestritten/~~V # auto-added
-gestrolcht/~~Nh
-gestrotzt/~~Nh
-gestrudelt/~~Nh
-gesträubt/~~NXh
+gestrolcht/~~JOQRSTUWVg
+gestrotzt/~~JOQRSTUWVg
+gestrudelt/~~JOQRSTUWVg
+gesträubt/~~JOQRSTUWVg
 gesträuch/~~NXh
 gesträuchs/~~Nh
-geströmt/~~NXh
+geströmt/~~JOQRSTUWVg
 geströmtem/~~Nh
 geströmten/~~V # auto-added
 geströmter/~~Mh
@@ -80048,15 +80048,15 @@ gestuftem/~~Nh
 gestuften/~~V # auto-added
 gestufter/~~Mh
 gestuftes/~~Nh
-gestundet/~~NXh
+gestundet/~~JOQRSTUWVg
 gestunken/~~V # auto-added
-gestupst/~~Nh
+gestupst/~~JOQRSTUWVg
 gestupste/~~Nh
 gestupstem/~~Nh
 gestupsten/~~V # auto-added
 gestupster/~~Mh
 gestupstes/~~Nh
-gestutzt/~~NXah
+gestutzt/~~JOQRSTUWVga
 gestutztem/~~Nh
 gestutzten/~~V # auto-added
 gestutztes/~~Nh
@@ -80065,67 +80065,67 @@ gestyltem/~~Nh
 gestylten/~~V # auto-added
 gestylter/~~Mh
 gestyltes/~~Nh
-gestählt/~~NXh
+gestählt/~~JOQRSTUWVg
 gestähltem/~~Nh
 gestählten/~~V # auto-added
 gestählter/~~Mh
 gestähltes/~~Nh
 gestände/~~Nh
 geständen/~~V # auto-added
-geständet/~~Nh
+geständet/~~JOQRSTUWVg
 geständnis/~~Nh
 gestänge/~~Nh
 gestängen/~~V # auto-added
 gestänges/~~Nh
-gestänkert/~~Nh
-gestärkt/~~NXh
+gestänkert/~~JOQRSTUWVg
+gestärkt/~~JOQRSTUWVg
 gestärktem/~~Nh
 gestärkten/~~V # auto-added
 gestärkter/~~Mh
 gestärktes/~~Nh
-gestäubt/~~NXh
+gestäubt/~~JOQRSTUWVg
 gestäubtem/~~Nh
 gestäubten/~~V # auto-added
 gestäubtes/~~Nh
 gestöber/~~Mh
 gestöbern/~~V # auto-added
 gestöbers/~~Nh
-gestöbert/~~Nh
+gestöbert/~~JOQRSTUWVg
 gestöhne/~~Nh
 gestöhnes/~~Nh
 gestöhns/~~Nh
-gestöhnt/~~Nh
-gestöpselt/~~Nh
+gestöhnt/~~JOQRSTUWVg
+gestöpselt/~~JOQRSTUWVg
 gestörtem/~~Nh
 gestörten/~~V # auto-added
 gestörter/~~Mh
 gestörtes/~~Nh
-gestückelt/~~Nh
+gestückelt/~~JOQRSTUWVg
 gestühlen/~~V # auto-added
 gestühles/~~Nh
 gestühls/~~Nh
-gestülpt/~~NXh
+gestülpt/~~JOQRSTUWVg
 gestülptem/~~Nh
 gestülpten/~~V # auto-added
 gestülpter/~~Mh
 gestülptes/~~Nh
-gestümpert/~~Nh
+gestümpert/~~JOQRSTUWVg
 gestünde/~~Nh
 gestünden/~~V # auto-added
-gestündet/~~Nh
-gestürmt/~~NXh
+gestündet/~~JOQRSTUWVg
+gestürmt/~~JOQRSTUWVg
 gestürmtem/~~Nh
 gestürmten/~~V # auto-added
 gestürmter/~~Mh
 gestürmtes/~~Nh
-gestürzt/~~NXh
+gestürzt/~~JOQRSTUWVg
 gestürztem/~~Nh
 gestürzten/~~V # auto-added
 gestürzter/~~Mh
 gestürztes/~~Nh
 gestüten/~~V # auto-added
 gestütes/~~Nh
-gestützt/~~NXh
+gestützt/~~JOQRSTUWVg
 gestütztem/~~Nh
 gestützten/~~V # auto-added
 gestütztes/~~Nh
@@ -80136,26 +80136,26 @@ gesuchten/~~V # auto-added
 gesuchter/~~Mh
 gesuchtere/~~Nh
 gesuchtes/~~Nh
-gesuchtest/~~Nh
-gesudelt/~~NXh
+gesuchtest/~~JOQRSTUWVg
+gesudelt/~~JOQRSTUWVg
 gesudeltem/~~Nh
 gesudelten/~~V # auto-added
 gesudelter/~~Mh
 gesudeltes/~~Nh
-gesudert/~~Nh
+gesudert/~~JOQRSTUWVg
 gesuderten/~~V # auto-added
 gesummten/~~V # auto-added
 gesundbete/~~Nh
 gesundend/~~Nh
 gesundende/~~Nh
 gesundens/~~Nh
-gesundest/~~Nh
-gesundet/~~NXh
+gesundest/~~JOQRSTUWVg
+gesundet/~~JOQRSTUWVg
 gesundetem/~~Nh
 gesundeten/~~V # auto-added
 gesundeter/~~Mh
 gesundetes/~~Nh
-gesundetet/~~Nh
+gesundetet/~~JOQRSTUWVg
 gesundheit/~~Fh
 gesundung/~~Fh
 gesungen/~~V # auto-added
@@ -80176,15 +80176,15 @@ gesurrter/~~Mh
 gesurrtes/~~Nh
 geswiped/~~Nh
 geswipten/~~V # auto-added
-geswitcht/~~Nh
-gesächselt/~~Nh
+geswitcht/~~JOQRSTUWVg
+gesächselt/~~JOQRSTUWVg
 gesägtem/~~Nh
 gesägten/~~V # auto-added
 gesägtes/~~Nh
 gesängen/~~V # auto-added
-gesättigt/~~NXh
-gesäubert/~~NXh
-gesäuert/~~NXh
+gesättigt/~~JOQRSTUWVg
+gesäubert/~~JOQRSTUWVg
+gesäuert/~~JOQRSTUWVg
 gesäuertem/~~Nh
 gesäuerten/~~V # auto-added
 gesäuerter/~~Mh
@@ -80198,10 +80198,10 @@ gesäumter/~~Mh
 gesäumtes/~~Nh
 gesäusel/~~Nh
 gesäusels/~~Nh
-gesäuselt/~~NXh
+gesäuselt/~~JOQRSTUWVg
 gesöffen/~~V # auto-added
 gesöffes/~~Nh
-gesüffelt/~~Nh
+gesüffelt/~~JOQRSTUWVg
 gesühntem/~~Nh
 gesühnten/~~V # auto-added
 gesühnter/~~Mh
@@ -80212,20 +80212,20 @@ gesünderem/~~Nh
 gesünderen/~~V # auto-added
 gesünderer/~~Mh
 gesünderes/~~Nh
-gesündest/~~Nh
+gesündest/~~JOQRSTUWVg
 gesündeste/~~Nh
-gesündigt/~~NXh
+gesündigt/~~JOQRSTUWVg
 gesüßtem/~~Nh
 gesüßten/~~V # auto-added
 gesüßter/~~Mh
 gesüßtes/~~Nh
-getackert/~~NXh
-getadelt/~~NXh
+getackert/~~JOQRSTUWVg
+getadelt/~~JOQRSTUWVg
 getadeltem/~~Nh
 getadelten/~~V # auto-added
 getadelter/~~Mh
 getadeltes/~~Nh
-getafelt/~~NXah
+getafelt/~~JOQRSTUWVga
 getafeltem/~~Nh
 getafelten/~~V # auto-added
 getafeltes/~~Nh
@@ -80237,12 +80237,12 @@ getagtem/~~Nh
 getagten/~~V # auto-added
 getagter/~~Mh
 getagtes/~~Nh
-getakelt/~~NXh
+getakelt/~~JOQRSTUWVg
 getakeltem/~~Nh
 getakelten/~~V # auto-added
 getakelter/~~Mh
 getakeltes/~~Nh
-getaktet/~~NXh
+getaktet/~~JOQRSTUWVg
 getaktetem/~~Nh
 getakteten/~~V # auto-added
 getakteter/~~Mh
@@ -80264,13 +80264,13 @@ getarntem/~~Nh
 getarnten/~~V # auto-added
 getarnter/~~Mh
 getarntes/~~Nh
-getasert/~~Nh
-getastet/~~NXh
+getasert/~~JOQRSTUWVg
+getastet/~~JOQRSTUWVg
 getastetem/~~Nh
 getasteten/~~V # auto-added
 getasteter/~~Mh
 getastetes/~~Nh
-getaucht/~~NXh
+getaucht/~~JOQRSTUWVg
 getauchtem/~~Nh
 getauchten/~~V # auto-added
 getauchter/~~Mh
@@ -80283,13 +80283,13 @@ getaugtem/~~Nh
 getaugten/~~V # auto-added
 getaugter/~~Mh
 getaugtes/~~Nh
-getaumelt/~~NXh
-getauscht/~~NXh
+getaumelt/~~JOQRSTUWVg
+getauscht/~~JOQRSTUWVg
 getautem/~~Nh
 getauten/~~V # auto-added
 getauter/~~Mh
 getautes/~~Nh
-geteasert/~~Nh
+geteasert/~~JOQRSTUWVg
 geteertem/~~Nh
 geteerten/~~V # auto-added
 geteerter/~~Mh
@@ -80298,19 +80298,19 @@ geteiltem/~~Nh
 geteilten/~~V # auto-added
 geteilter/~~Mh
 geteiltes/~~Nh
-getelext/~~Nh
-getempert/~~NXh
-getestet/~~NXh
+getelext/~~JOQRSTUWVg
+getempert/~~JOQRSTUWVg
+getestet/~~JOQRSTUWVg
 getestetem/~~Nh
 getesteten/~~V # auto-added
 getesteter/~~Mh
 getestetes/~~Nh
-getextet/~~NXh
+getextet/~~JOQRSTUWVg
 getextetem/~~Nh
 getexteten/~~V # auto-added
 getexteter/~~Mh
 getextetes/~~Nh
-gethront/~~NXh
+gethront/~~JOQRSTUWVg
 gethrontem/~~Nh
 gethronten/~~V # auto-added
 gethronter/~~Mh
@@ -80319,7 +80319,7 @@ geticktem/~~Nh
 getickten/~~V # auto-added
 getickter/~~Mh
 geticktes/~~Nh
-getigert/~~NXh
+getigert/~~JOQRSTUWVg
 getigertem/~~Nh
 getigerten/~~V # auto-added
 getigerter/~~Mh
@@ -80332,16 +80332,16 @@ getimtem/~~Nh
 getimten/~~V # auto-added
 getimter/~~Mh
 getimtes/~~Nh
-getindert/~~Nh
-getingelt/~~Nh
-getippelt/~~NXh
+getindert/~~JOQRSTUWVg
+getingelt/~~JOQRSTUWVg
+getippelt/~~JOQRSTUWVg
 getipptem/~~Nh
 getippten/~~V # auto-added
 getippter/~~Mh
 getipptes/~~Nh
-getitscht/~~Nh
-getoastet/~~NXh
-getoggelt/~~Nh
+getitscht/~~JOQRSTUWVg
+getoastet/~~JOQRSTUWVg
+getoggelt/~~JOQRSTUWVg
 getolltem/~~Nh
 getollten/~~V # auto-added
 getollter/~~Mh
@@ -80351,18 +80351,18 @@ getopptem/~~Nh
 getoppten/~~V # auto-added
 getoppter/~~Mh
 getopptes/~~Nh
-getorkelt/~~NXh
+getorkelt/~~JOQRSTUWVg
 getostem/~~Nh
 getosten/~~V # auto-added
 getoster/~~Mh
 getostes/~~Nh
 getraced/~~Nh
-getrachtet/~~Nh
-getrackt/~~Nh
+getrachtet/~~JOQRSTUWVg
+getrackt/~~JOQRSTUWVg
 getrackten/~~V # auto-added
 getracten/~~V # auto-added
 getraded/~~Nh
-getradet/~~Nh
+getradet/~~JOQRSTUWVg
 getradeten/~~V # auto-added
 getragen/~~V # auto-added
 getragene/~~Nh
@@ -80370,24 +80370,24 @@ getragenem/~~Nh
 getragenen/~~V # auto-added
 getragener/~~Mh
 getragenes/~~Nh
-getrampelt/~~Nh
-getrampt/~~Nh
-getrappelt/~~Nh
+getrampelt/~~JOQRSTUWVg
+getrampt/~~JOQRSTUWVg
+getrappelt/~~JOQRSTUWVg
 getratsch/~~NXh
 getratschs/~~Nh
-getratscht/~~Nh
+getratscht/~~JOQRSTUWVg
 getrau/~~Vej # REPLACES getrauen
-getrauert/~~NXh
+getrauert/~~JOQRSTUWVg
 getrautem/~~Nh
 getrauter/~~Mh
 getrautes/~~Nh
-getreckt/~~Nh
+getreckt/~~JOQRSTUWVg
 getreide/~~Nh
-getreidelt/~~Nh
+getreidelt/~~JOQRSTUWVg
 getreides/~~Nh
-getrekkt/~~Nh
-getrendet/~~Nh
-getrennt/~~NXh
+getrekkt/~~JOQRSTUWVg
+getrendet/~~JOQRSTUWVg
+getrennt/~~JOQRSTUWVg
 getrenntem/~~Nh
 getrennten/~~V # auto-added
 getrennter/~~Mh
@@ -80403,67 +80403,67 @@ getreuen/~~V # auto-added
 getreuer/~~Mh
 getreues/~~Nh
 getreueste/~~Nh
-getrickst/~~Nh
+getrickst/~~JOQRSTUWVg
 getriebe/~~Nh
 getrieben/~~V # auto-added
 getriebene/~~Nh
 getriebes/~~Nh
-getrieft/~~NXh
+getrieft/~~JOQRSTUWVg
 getrieftem/~~Nh
 getrieften/~~V # auto-added
 getriefter/~~Mh
 getrieftes/~~Nh
-getriezt/~~Nh
-getriggert/~~Nh
-getrillert/~~Nh
-getrimmt/~~NXh
+getriezt/~~JOQRSTUWVg
+getriggert/~~JOQRSTUWVg
+getrillert/~~JOQRSTUWVg
+getrimmt/~~JOQRSTUWVg
 getrimmtem/~~Nh
 getrimmten/~~V # auto-added
 getrimmter/~~Mh
 getrimmtes/~~Nh
 getrippel/~~Nh
 getrippels/~~Nh
-getrippelt/~~Nh
-getrocknet/~~Nh
+getrippelt/~~JOQRSTUWVg
+getrocknet/~~JOQRSTUWVg
 getroffen/~~V # auto-added
 getroffene/~~Nh
 getrogen/~~V # auto-added
-getrollt/~~Nh
-getrommelt/~~Nh
-getropft/~~NXh
+getrollt/~~JOQRSTUWVg
+getrommelt/~~JOQRSTUWVg
+getropft/~~JOQRSTUWVg
 getropftem/~~Nh
 getropften/~~V # auto-added
 getropfter/~~Mh
 getropftes/~~Nh
-getrottet/~~NXh
-getrotzt/~~NXh
+getrottet/~~JOQRSTUWVg
+getrotzt/~~JOQRSTUWVg
 getrotztem/~~Nh
 getrotzten/~~V # auto-added
 getrotzter/~~Mh
 getrotztes/~~Nh
-getrudelt/~~Nh
-getrumpft/~~NXh
+getrudelt/~~JOQRSTUWVg
+getrumpft/~~JOQRSTUWVg
 getrunken/~~V # auto-added
 getrunkene/~~Nh
-geträllert/~~Nh
+geträllert/~~JOQRSTUWVg
 getränke/~~Nh
 getränk/~~Vej # REPLACES getränken
 getränkes/~~Nh
 getränks/~~Nh
-getränkt/~~NXh
+getränkt/~~JOQRSTUWVg
 getränktem/~~Nh
 getränkter/~~Mh
 getränktes/~~Nh
-geträufelt/~~Nh
-geträumt/~~NXh
+geträufelt/~~JOQRSTUWVg
+geträumt/~~JOQRSTUWVg
 geträumtem/~~Nh
 geträumten/~~V # auto-added
 geträumter/~~Mh
 geträumtes/~~Nh
-getrödelt/~~NXh
-getröpfelt/~~Nh
-getröstet/~~NXh
-getrötet/~~Nh
+getrödelt/~~JOQRSTUWVg
+getröpfelt/~~JOQRSTUWVg
+getröstet/~~JOQRSTUWVg
+getrötet/~~JOQRSTUWVg
 getröteten/~~V # auto-added
 getrübtem/~~Nh
 getrübten/~~V # auto-added
@@ -80471,12 +80471,12 @@ getrübter/~~Mh
 getrübtes/~~Nh
 gettowache/~~Nh
 gettozwang/~~Nh
-getummelt/~~NXh
+getummelt/~~JOQRSTUWVg
 getunktem/~~Nh
 getunkten/~~V # auto-added
 getunkter/~~Mh
 getunktes/~~Nh
-getunnelt/~~Nh
+getunnelt/~~JOQRSTUWVg
 getuntem/~~Nh
 getunten/~~V # auto-added
 getunter/~~Mh
@@ -80491,8 +80491,8 @@ geturnter/~~Mh
 geturntes/~~Nh
 getuschel/~~Nh
 getuschels/~~Nh
-getuschelt/~~Nh
-getuscht/~~NXh
+getuschelt/~~JOQRSTUWVg
+getuscht/~~JOQRSTUWVg
 getuschtem/~~Nh
 getuschten/~~V # auto-added
 getuschter/~~Mh
@@ -80501,41 +80501,41 @@ getutetem/~~Nh
 getuteten/~~V # auto-added
 getuteter/~~Mh
 getutetes/~~Nh
-getwittert/~~Nh
+getwittert/~~JOQRSTUWVg
 getyptem/~~Nh
 getypten/~~V # auto-added
 getypter/~~Mh
 getyptes/~~Nh
-getäfelt/~~NXh
+getäfelt/~~JOQRSTUWVg
 getäfeltem/~~Nh
 getäfelten/~~V # auto-added
 getäfeltes/~~Nh
-getändelt/~~NXh
-getänzelt/~~NXh
-getätigt/~~NXh
+getändelt/~~JOQRSTUWVg
+getänzelt/~~JOQRSTUWVg
+getätigt/~~JOQRSTUWVg
 getätigtem/~~Nh
 getätigten/~~V # auto-added
 getätigter/~~Mh
 getätigtes/~~Nh
-getäuscht/~~NXh
+getäuscht/~~JOQRSTUWVg
 getöntem/~~Nh
 getönten/~~V # auto-added
 getönter/~~Mh
 getöntes/~~Nh
-getöpfert/~~NXh
+getöpfert/~~JOQRSTUWVg
 getötetem/~~Nh
 getöteten/~~V # auto-added
 getöteter/~~Mh
 getötetes/~~Nh
-getüftelt/~~NXh
+getüftelt/~~JOQRSTUWVg
 getümmel/~~Nh
 getümmels/~~Nh
-getüncht/~~NXh
+getüncht/~~JOQRSTUWVg
 getünchtem/~~Nh
 getünchten/~~V # auto-added
 getünchter/~~Mh
 getünchtes/~~Nh
-getüpfelt/~~NXh
+getüpfelt/~~JOQRSTUWVg
 getürktem/~~Nh
 getürkten/~~V # auto-added
 getürkter/~~Mh
@@ -80544,27 +80544,27 @@ getürmtem/~~Nh
 getürmten/~~V # auto-added
 getürmter/~~Mh
 getürmtes/~~Nh
-getüttelt/~~NXh
+getüttelt/~~JOQRSTUWVg
 geulktem/~~Nh
 geulkten/~~V # auto-added
 geulkter/~~Mh
 geulktes/~~Nh
-geuploadet/~~Nh
-geurkundet/~~Nh
-geurteilt/~~Nh
-gevestet/~~Nh
+geuploadet/~~JOQRSTUWVg
+geurkundet/~~JOQRSTUWVg
+geurteilt/~~JOQRSTUWVg
+gevestet/~~JOQRSTUWVg
 gevesteten/~~V # auto-added
-geviertelt/~~Nh
+geviertelt/~~JOQRSTUWVg
 geviertmaß/~~Nh
 gevoteten/~~V # auto-added
-gevögelt/~~NXh
+gevögelt/~~JOQRSTUWVg
 gevögeltem/~~Nh
 gevögelten/~~V # auto-added
 gevögelter/~~Mh
 gevögeltes/~~Nh
 gewachs/~~Vej # REPLACES gewachsen
 gewachsene/~~Nh
-gewachst/~~Nh
+gewachst/~~JOQRSTUWVg
 gewachste/~~Nh
 gewachstem/~~Nh
 gewachster/~~Mh
@@ -80575,8 +80575,8 @@ gewachter/~~Mh
 gewachtes/~~Nh
 gewackel/~~Nh
 gewackels/~~Nh
-gewackelt/~~NXh
-gewaffnet/~~NXh
+gewackelt/~~JOQRSTUWVg
+gewaffnet/~~JOQRSTUWVg
 gewagtem/~~Nh
 gewagten/~~V # auto-added
 gewagter/~~Mh
@@ -80586,14 +80586,14 @@ gewagteren/~~V # auto-added
 gewagterer/~~Mh
 gewagteres/~~Nh
 gewagtes/~~Nh
-gewagtest/~~Nh
+gewagtest/~~JOQRSTUWVg
 gewagteste/~~Nh
 gewahr/~~Vej # REPLACES gewahren
 gewahrsams/~~Nh
 gewahrtem/~~Nh
 gewahrtes/~~Nh
-gewahrtest/~~Nh
-gewahrtet/~~Nh
+gewahrtest/~~JOQRSTUWVg
+gewahrtet/~~JOQRSTUWVg
 gewalktem/~~Nh
 gewalkten/~~V # auto-added
 gewalkter/~~Mh
@@ -80603,21 +80603,21 @@ gewallten/~~V # auto-added
 gewallter/~~Mh
 gewalltes/~~Nh
 gewalten/~~V # auto-added
-gewaltet/~~Nh
+gewaltet/~~JOQRSTUWVg
 gewaltige/~~Nh
 gewaltigem/~~Nh
 gewaltigen/~~V # auto-added
 gewaltiger/~~Mh
 gewaltiges/~~Nh
-gewaltigst/~~Nh
+gewaltigst/~~JOQRSTUWVg
 gewaltsame/~~Nh
 gewalztem/~~Nh
 gewalzten/~~V # auto-added
 gewalztes/~~Nh
-gewandelt/~~NXh
-gewandert/~~NXh
+gewandelt/~~JOQRSTUWVg
+gewandert/~~JOQRSTUWVg
 gewandes/~~Nh
-gewandet/~~NXh
+gewandet/~~JOQRSTUWVg
 gewandetem/~~Nh
 gewandeten/~~V # auto-added
 gewandeter/~~Mh
@@ -80629,48 +80629,48 @@ gewandten/~~V # auto-added
 gewandter/~~Mh
 gewandtere/~~Nh
 gewandtes/~~Nh
-gewandtest/~~Nh
+gewandtest/~~JOQRSTUWVg
 gewannen/~~V # auto-added
-gewappnet/~~NXh
+gewappnet/~~JOQRSTUWVg
 gewarntem/~~Nh
 gewarnten/~~V # auto-added
 gewarnter/~~Mh
 gewarntes/~~Nh
-gewartet/~~NXh
+gewartet/~~JOQRSTUWVg
 gewartetem/~~Nh
 gewarteten/~~V # auto-added
 gewarteter/~~Mh
 gewartetes/~~Nh
 gewaschen/~~XZ #  auto-added
 gewaschene/~~Nh
-gewassert/~~NXh
+gewassert/~~JOQRSTUWVg
 gewatetem/~~Nh
 gewateten/~~V # auto-added
 gewateter/~~Mh
 gewatetes/~~Nh
-gewatscht/~~Nh
+gewatscht/~~JOQRSTUWVg
 gewebstod/~~Nh
 gewebtem/~~Nh
 gewebter/~~Mh
 gewebtes/~~Nh
-gewechselt/~~Nh
+gewechselt/~~JOQRSTUWVg
 gewecktem/~~Nh
 geweckten/~~V # auto-added
 geweckter/~~Mh
 gewecktes/~~Nh
-gewedelt/~~Nh
+gewedelt/~~JOQRSTUWVg
 gewehren/~~V # auto-added
 gewehres/~~Nh
 gewehtem/~~Nh
 gewehten/~~V # auto-added
 gewehter/~~Mh
 gewehtes/~~Nh
-geweidet/~~NXh
+geweidet/~~JOQRSTUWVg
 geweidetem/~~Nh
 geweideten/~~V # auto-added
 geweideter/~~Mh
 geweidetes/~~Nh
-geweigert/~~Nh
+geweigert/~~JOQRSTUWVg
 geweihbaum/~~Za #  auto-added
 geweih/~~Vej # REPLACES geweihen
 geweihes/~~Nh
@@ -80678,8 +80678,8 @@ geweihfarn/~~Nh
 geweihtem/~~Nh
 geweihter/~~Mh
 geweihtes/~~Nh
-geweissagt/~~Nh
-geweitet/~~NXh
+geweissagt/~~JOQRSTUWVg
+geweitet/~~JOQRSTUWVg
 geweitetem/~~Nh
 geweiteten/~~V # auto-added
 geweiteter/~~Mh
@@ -80696,8 +80696,8 @@ gewelltem/~~Nh
 gewellten/~~V # auto-added
 gewellter/~~Mh
 gewelltes/~~Nh
-gewendelt/~~NXh
-gewendet/~~NXh
+gewendelt/~~JOQRSTUWVg
+gewendet/~~JOQRSTUWVg
 gewendetem/~~Nh
 gewendeten/~~V # auto-added
 gewendeter/~~Mh
@@ -80708,12 +80708,12 @@ gewerbes/~~Nh
 gewerbler/~~Mh
 gewerblern/~~V # auto-added
 gewerblers/~~Nh
-gewerkelt/~~Nh
+gewerkelt/~~JOQRSTUWVg
 gewerktem/~~Nh
 gewerkten/~~V # auto-added
 gewerkter/~~Mh
 gewerktes/~~Nh
-gewertet/~~NXh
+gewertet/~~JOQRSTUWVg
 gewertetem/~~Nh
 gewerteten/~~V # auto-added
 gewerteter/~~Mh
@@ -80723,8 +80723,8 @@ gewesenem/~~Nh
 gewesenen/~~V # auto-added
 gewesener/~~Mh
 gewesenes/~~Nh
-gewettert/~~Nh
-gewettet/~~NXh
+gewettert/~~JOQRSTUWVg
+gewettet/~~JOQRSTUWVg
 gewettetem/~~Nh
 gewetteten/~~V # auto-added
 gewetteter/~~Mh
@@ -80734,32 +80734,32 @@ gewetzten/~~V # auto-added
 gewetzter/~~Mh
 gewetztere/~~Nh
 gewetztes/~~Nh
-gewetztest/~~Nh
+gewetztest/~~JOQRSTUWVg
 gewichen/~~XZ #  auto-added
 gewichene/~~Nh
 gewichenem/~~Nh
 gewichenen/~~V # auto-added
 gewichener/~~Mh
 gewichenes/~~Nh
-gewichst/~~Nh
+gewichst/~~JOQRSTUWVg
 gewichste/~~Nh
 gewichstem/~~Nh
 gewichsten/~~V # auto-added
 gewichster/~~Mh
 gewichstes/~~Nh
 gewichte/~~Nh
-gewichtelt/~~Nh
+gewichtelt/~~JOQRSTUWVg
 gewichten/~~V # auto-added
 gewichtend/~~Nh
 gewichtens/~~Nh
 gewichtes/~~Nh
-gewichtet/~~NXh
+gewichtet/~~JOQRSTUWVg
 gewichthob/~~Nh
 gewichtige/~~Nh
 gewichts/~~Nh
 gewichtung/~~Fh
-gewickelt/~~NXh
-gewidmet/~~NXh
+gewickelt/~~JOQRSTUWVg
+gewidmet/~~JOQRSTUWVg
 gewidmetem/~~Nh
 gewidmeten/~~V # auto-added
 gewidmeter/~~Mh
@@ -80774,29 +80774,29 @@ gewiegter/~~Mh
 gewiegtes/~~Nh
 gewieher/~~Mh
 gewiehers/~~Nh
-gewiehert/~~NXh
-gewienert/~~NXh
-gewieselt/~~Nh
+gewiehert/~~JOQRSTUWVg
+gewienert/~~JOQRSTUWVg
+gewieselt/~~JOQRSTUWVg
 gewiesen/~~V # auto-added
 gewiesene/~~Nh
 gewiesenem/~~Nh
 gewiesenen/~~V # auto-added
 gewiesener/~~Mh
 gewiesenes/~~Nh
-gewildert/~~Nh
-gewillkürt/~~Nh
+gewildert/~~JOQRSTUWVg
+gewillkürt/~~JOQRSTUWVg
 gewilltem/~~Nh
 gewillten/~~V # auto-added
 gewillter/~~Mh
 gewilltes/~~Nh
 gewimmel/~~Nh
 gewimmels/~~Nh
-gewimmelt/~~NXh
-gewimmert/~~NXh
-gewindelt/~~NXh
+gewimmelt/~~JOQRSTUWVg
+gewimmert/~~JOQRSTUWVg
+gewindelt/~~JOQRSTUWVg
 gewinden/~~V # auto-added
 gewindes/~~Nh
-gewinkelt/~~NXh
+gewinkelt/~~JOQRSTUWVg
 gewinnen/~~V # auto-added
 gewinnend/~~Nh
 gewinnende/~~Nh
@@ -80814,23 +80814,23 @@ gewinnung/~~Fh
 gewinnungs/~~Nh
 gewinsel/~~Nh
 gewinsels/~~Nh
-gewinselt/~~NXh
+gewinselt/~~JOQRSTUWVg
 gewipptem/~~Nh
 gewippten/~~V # auto-added
 gewippter/~~Mh
 gewipptes/~~Nh
-gewirbelt/~~Nh
+gewirbelt/~~JOQRSTUWVg
 gewirktem/~~Nh
 gewirkten/~~V # auto-added
 gewirkter/~~Mh
 gewirktes/~~Nh
-gewischt/~~NXh
+gewischt/~~JOQRSTUWVg
 gewischtem/~~Nh
 gewischten/~~V # auto-added
 gewischter/~~Mh
 gewischtes/~~Nh
-gewispelt/~~Nh
-gewispert/~~NXh
+gewispelt/~~JOQRSTUWVg
+gewispert/~~JOQRSTUWVg
 gewissem/~~Nh
 gewissen/~~V # auto-added
 gewissens/~~Nh
@@ -80841,15 +80841,15 @@ gewitter/~~Mh
 gewittere/~~Nh
 gewittern/~~V # auto-added
 gewitters/~~Nh
-gewittert/~~NXh
+gewittert/~~JOQRSTUWVg
 gewittre/~~Nh
-gewitzelt/~~NXh
+gewitzelt/~~JOQRSTUWVg
 gewitztem/~~Nh
 gewitzten/~~V # auto-added
 gewitzter/~~Mh
 gewitztere/~~Nh
 gewitztes/~~Nh
-gewitztest/~~Nh
+gewitztest/~~JOQRSTUWVg
 gewobene/~~Nh
 gewobenem/~~Nh
 gewobenen/~~V # auto-added
@@ -80869,7 +80869,7 @@ gewollten/~~V # auto-added
 gewollter/~~Mh
 gewolltere/~~Nh
 gewolltes/~~Nh
-gewolltest/~~Nh
+gewolltest/~~JOQRSTUWVg
 gewonnen/~~V # auto-added
 gewonnene/~~Nh
 gewonnenem/~~Nh
@@ -80896,18 +80896,18 @@ geworfener/~~Mh
 geworfenes/~~Nh
 gewrungen/~~V # auto-added
 gewrungene/~~Nh
-gewuchert/~~NXh
-gewuchtet/~~NXh
+gewuchert/~~JOQRSTUWVg
+gewuchtet/~~JOQRSTUWVg
 gewunden/~~V # auto-added
 gewundene/~~Nh
 gewundenem/~~Nh
 gewundenen/~~V # auto-added
 gewundener/~~Mh
 gewundenes/~~Nh
-gewundert/~~Nh
+gewundert/~~JOQRSTUWVg
 gewunken/~~V # auto-added
-gewurstelt/~~Nh
-gewurzelt/~~NXh
+gewurstelt/~~JOQRSTUWVg
+gewurzelt/~~JOQRSTUWVg
 gewusste/~~Nh
 gewusstem/~~Nh
 gewussten/~~V # auto-added
@@ -80921,7 +80921,7 @@ gewählten/~~V # auto-added
 gewählter/~~Mh
 gewähltere/~~Nh
 gewähltes/~~Nh
-gewähltest/~~Nh
+gewähltest/~~JOQRSTUWVg
 gewähntem/~~Nh
 gewähnten/~~V # auto-added
 gewähnter/~~Mh
@@ -80930,11 +80930,11 @@ gewähr/~~Vej # REPLACES gewähren
 gewährend/~~Nh
 gewährende/~~Nh
 gewährens/~~Nh
-gewährst/~~Nh
+gewährst/~~JOQRSTUWVg
 gewährtem/~~Nh
 gewährtes/~~Nh
-gewährtest/~~Nh
-gewährtet/~~Nh
+gewährtest/~~JOQRSTUWVg
+gewährtet/~~JOQRSTUWVg
 gewährung/~~Fh
 gewälztem/~~Nh
 gewälzten/~~V # auto-added
@@ -80944,26 +80944,26 @@ gewänder/~~Mh
 gewändern/~~V # auto-added
 gewändes/~~Nh
 gewännen/~~V # auto-added
-gewännst/~~Nh
+gewännst/~~JOQRSTUWVg
 gewärmtem/~~Nh
 gewärmten/~~V # auto-added
 gewärmter/~~Mh
 gewärmtes/~~Nh
-gewärtigst/~~Nh
-gewärtigt/~~NXh
+gewärtigst/~~JOQRSTUWVg
+gewärtigt/~~JOQRSTUWVg
 gewässer/~~Mh
 gewässern/~~V # auto-added
 gewässers/~~Nh
-gewässert/~~NXh
+gewässert/~~JOQRSTUWVg
 gewöhn/~~Vej # REPLACES gewöhnen
 gewöhnend/~~Nh
 gewöhnende/~~Nh
 gewöhnens/~~Nh
-gewöhnst/~~Nh
+gewöhnst/~~JOQRSTUWVg
 gewöhntem/~~Nh
 gewöhntes/~~Nh
-gewöhntest/~~Nh
-gewöhntet/~~Nh
+gewöhntest/~~JOQRSTUWVg
+gewöhntet/~~JOQRSTUWVg
 gewöhnung/~~Fh
 gewölbebau/~~Nh
 gewölb/~~Vej # REPLACES gewölben
@@ -80973,20 +80973,20 @@ gewölbtem/~~Nh
 gewölbter/~~Mh
 gewölbtere/~~Nh
 gewölbtes/~~Nh
-gewölbtest/~~Nh
+gewölbtest/~~JOQRSTUWVg
 gewölken/~~V # auto-added
 gewölkes/~~Nh
 gewönnen/~~V # auto-added
-gewönnst/~~Nh
+gewönnst/~~JOQRSTUWVg
 gewühles/~~Nh
 gewühltem/~~Nh
 gewühlten/~~V # auto-added
 gewühlter/~~Mh
 gewühltes/~~Nh
-gewünscht/~~NXh
-gewürdigt/~~NXh
-gewürfelt/~~NXh
-gewürftelt/~~Nh
+gewünscht/~~JOQRSTUWVg
+gewürdigt/~~JOQRSTUWVg
+gewürfelt/~~JOQRSTUWVg
+gewürftelt/~~JOQRSTUWVg
 gewürgtem/~~Nh
 gewürgten/~~V # auto-added
 gewürgter/~~Mh
@@ -80997,7 +80997,7 @@ gewürztem/~~Nh
 gewürzter/~~Mh
 gewürztere/~~Nh
 gewürztes/~~Nh
-gewürztest/~~Nh
+gewürztest/~~JOQRSTUWVg
 geyoutubed/~~Nh
 geysiren/~~V # auto-added
 gezacktem/~~Nh
@@ -81016,21 +81016,21 @@ gezapfter/~~Mh
 gezapftes/~~Nh
 gezappel/~~Nh
 gezappels/~~Nh
-gezappelt/~~Nh
-gezaubert/~~NXh
-gezaudert/~~Nh
+gezappelt/~~JOQRSTUWVg
+gezaubert/~~JOQRSTUWVg
+gezaudert/~~JOQRSTUWVg
 gezechtem/~~Nh
 gezechten/~~V # auto-added
 gezechter/~~Mh
 gezechtes/~~Nh
-gezeichnet/~~Nh
+gezeichnet/~~JOQRSTUWVg
 gezeigtem/~~Nh
 gezeigten/~~V # auto-added
 gezeigter/~~Mh
 gezeigtes/~~Nh
 gezeiten/~~V # auto-added
-gezeitigt/~~Nh
-gezeltet/~~Nh
+gezeitigt/~~JOQRSTUWVg
+gezeltet/~~JOQRSTUWVg
 gezerrtem/~~Nh
 gezerrten/~~V # auto-added
 gezerrter/~~Mh
@@ -81046,17 +81046,17 @@ gezielten/~~V # auto-added
 gezielter/~~Mh
 gezieltere/~~Nh
 gezieltes/~~Nh
-gezieltest/~~Nh
+gezieltest/~~JOQRSTUWVg
 geziem/~~Vej # REPLACES geziemen
 geziemende/~~Nh
-geziemtest/~~Nh
-geziemtet/~~Nh
+geziemtest/~~JOQRSTUWVg
+geziemtet/~~JOQRSTUWVg
 geziertem/~~Nh
 gezierten/~~V # auto-added
 gezierter/~~Mh
 geziertes/~~Nh
-gezillmert/~~Nh
-gezimmert/~~NXh
+gezillmert/~~JOQRSTUWVg
+gezimmert/~~JOQRSTUWVg
 gezinktem/~~Nh
 gezinkten/~~V # auto-added
 gezinkter/~~Mh
@@ -81066,19 +81066,19 @@ gezinnten/~~V # auto-added
 gezinnter/~~Mh
 gezinntes/~~Nh
 gezippten/~~V # auto-added
-gezirkelt/~~NXh
+gezirkelt/~~JOQRSTUWVg
 gezirpes/~~Nh
 gezirptem/~~Nh
 gezirpten/~~V # auto-added
 gezirpter/~~Mh
 gezirptes/~~Nh
-gezischelt/~~Nh
-gezischt/~~NXh
+gezischelt/~~JOQRSTUWVg
+gezischt/~~JOQRSTUWVg
 gezischtem/~~Nh
 gezischten/~~V # auto-added
 gezischter/~~Mh
 gezischtes/~~Nh
-gezittert/~~Nh
+gezittert/~~JOQRSTUWVg
 gezofften/~~V # auto-added
 gezogene/~~Nh
 gezogenem/~~Nh
@@ -81093,7 +81093,7 @@ gezoomtem/~~Nh
 gezoomten/~~V # auto-added
 gezoomter/~~Mh
 gezoomtes/~~Nh
-gezuckert/~~NXh
+gezuckert/~~JOQRSTUWVg
 gezupftem/~~Nh
 gezupften/~~V # auto-added
 gezupfter/~~Mh
@@ -81102,21 +81102,21 @@ gezurrtem/~~Nh
 gezurrten/~~V # auto-added
 gezurrter/~~Mh
 gezurrtes/~~Nh
-gezuzelt/~~Nh
+gezuzelt/~~JOQRSTUWVg
 gezuzelten/~~V # auto-added
-gezweifelt/~~Nh
-gezwickt/~~NXh
+gezweifelt/~~JOQRSTUWVg
+gezwickt/~~JOQRSTUWVg
 gezwicktem/~~Nh
 gezwickten/~~V # auto-added
 gezwickter/~~Mh
 gezwicktes/~~Nh
-gezwiebelt/~~Nh
-gezwinkert/~~Nh
-gezwirbelt/~~Nh
-gezwirnt/~~Nh
+gezwiebelt/~~JOQRSTUWVg
+gezwinkert/~~JOQRSTUWVg
+gezwirbelt/~~JOQRSTUWVg
+gezwirnt/~~JOQRSTUWVg
 gezwungen/~~V # auto-added
 gezwungene/~~Nh
-gezwängt/~~NXh
+gezwängt/~~JOQRSTUWVg
 gezwängtem/~~Nh
 gezwängten/~~V # auto-added
 gezwängter/~~Mh
@@ -81136,34 +81136,34 @@ gezäumtem/~~Nh
 gezäumten/~~V # auto-added
 gezäumter/~~Mh
 gezäumtes/~~Nh
-gezögert/~~NXh
+gezögert/~~JOQRSTUWVg
 gezögertem/~~Nh
 gezögerten/~~V # auto-added
 gezögerter/~~Mh
 gezögertes/~~Nh
 gezüchten/~~V # auto-added
-gezüchtet/~~NXh
-gezüchtigt/~~Nh
+gezüchtet/~~JOQRSTUWVg
+gezüchtigt/~~JOQRSTUWVg
 gezücktem/~~Nh
 gezückten/~~V # auto-added
 gezücktes/~~Nh
-gezügelt/~~NXh
+gezügelt/~~JOQRSTUWVg
 gezügeltem/~~Nh
 gezügelten/~~V # auto-added
 gezügelter/~~Mh
 gezügeltes/~~Nh
-gezündelt/~~Nh
-gezündet/~~NXh
+gezündelt/~~JOQRSTUWVg
+gezündet/~~JOQRSTUWVg
 gezündetem/~~Nh
 gezündeten/~~V # auto-added
 gezündeter/~~Mh
 gezündetes/~~Nh
-gezüngelt/~~Nh
+gezüngelt/~~JOQRSTUWVg
 gezürntem/~~Nh
 gezürnten/~~V # auto-added
 gezürnter/~~Mh
 gezürntes/~~Nh
-geächtet/~~NXh
+geächtet/~~JOQRSTUWVg
 geächtetem/~~Nh
 geächteten/~~V # auto-added
 geächteter/~~Mh
@@ -81176,14 +81176,14 @@ geädertem/~~Nh
 geäderten/~~V # auto-added
 geäderter/~~Mh
 geädertes/~~Nh
-geähnelt/~~Nh
-geändert/~~NXh
+geähnelt/~~JOQRSTUWVg
+geändert/~~JOQRSTUWVg
 geändertem/~~Nh
 geänderten/~~V # auto-added
 geänderter/~~Mh
 geändertes/~~Nh
-geängstigt/~~Nh
-geärgert/~~NXh
+geängstigt/~~JOQRSTUWVg
+geärgert/~~JOQRSTUWVg
 geärgertem/~~Nh
 geärgerten/~~V # auto-added
 geärgerter/~~Mh
@@ -81192,12 +81192,12 @@ geätztem/~~Nh
 geätzten/~~V # auto-added
 geätzter/~~Mh
 geätztes/~~Nh
-geäußert/~~NXh
+geäußert/~~JOQRSTUWVg
 geäußertem/~~Nh
 geäußerten/~~V # auto-added
 geäußerter/~~Mh
 geäußertes/~~Nh
-geöffnet/~~NXh
+geöffnet/~~JOQRSTUWVg
 geöffnetem/~~Nh
 geöffneten/~~V # auto-added
 geöffneter/~~Mh
@@ -137229,7 +137229,7 @@ gaunerbande/~~Fh
 gaunerstück/~~Nh
 gauturnfest/~~Nh
 gazevorhang/~~Nh
-geantwortet/~~Nh
+geantwortet/~~JOQRSTUWVg
 gebeinreste/~~Fh
 gebetbücher/~~Nh
 gebetsartig/~~Nh
@@ -137240,17 +137240,17 @@ gebäckzange/~~Fh
 gebälkstück/~~Nh
 gedacktbass/~~Nh
 gedankenlos/~~Nh
-gedeichselt/~~Nh
+gedeichselt/~~JOQRSTUWVg
 gedichtband/~~Nh
 gedichtform/~~Nh
 gedichttext/~~Nh # auto-added
 gedingelohn/~~Nh
-gedrechselt/~~Nh
+gedrechselt/~~JOQRSTUWVg
 geduldspiel/~~Nh
 geestanteil/~~Nh
 geestdörfer/~~Nh
 geestfläche/~~Fh
-geestgebiet/~~Nh
+geestgebiet/~~JOQRSTUWVg
 geestgegend/~~Nh
 geestkörper/~~Nh
 geestplatte/~~Fh
@@ -137258,7 +137258,7 @@ geestränder/~~Nh
 geestrücken/~~Nh
 gefahrgüter/~~Nh
 gefahrstoff/~~Nh
-gefallsucht/~~Nh
+gefallsucht/~~JOQRSTUWVg
 gefolgsfrau/~~Nh
 gefolgsherr/~~Nh
 gefolgsmann/~~Nh
@@ -137266,12 +137266,12 @@ geformtheit/~~Fh
 gefragteste/~~Fh
 gefährdungs/~~Nh
 gefäßplexus/~~Nh
-gefühlsecht/~~Nh
-gefühlskalt/~~Nh
+gefühlsecht/~~JOQRSTUWVg
+gefühlskalt/~~JOQRSTUWVg
 gegebenheit/~~Fh
 gegebensein/~~Nh
 gegenchecke/~~Fh
-gegencheckt/~~Nh
+gegencheckt/~~JOQRSTUWVg
 gegenhalten/~~Nh
 gegenlenken/~~Nh
 gegenläufig/~~Nh
@@ -137282,17 +137282,17 @@ gegensinnig/~~Nh
 gegenteilig/~~Nh
 gegenwärtig/~~Nh
 gehaltsleer/~~Nh
-gehandicapt/~~Nh
-gehandikapt/~~Nh
-geharnischt/~~Nh
-gehegezucht/~~Nh
+gehandicapt/~~JOQRSTUWVg
+gehandikapt/~~JOQRSTUWVg
+geharnischt/~~JOQRSTUWVg
+gehegezucht/~~JOQRSTUWVg
 geheimgetan/~~Nh
 geheimzutun/~~Nh
 gehemmtheit/~~Fh
 gehenlassen/~~Nh
-gehenließet/~~Nh
+gehenließet/~~JOQRSTUWVg
 gehwegseite/~~Fh
-gehätschelt/~~Nh
+gehätschelt/~~JOQRSTUWVg
 geiergöttin/~~Nh
 geigenbauer/~~Nh
 geiseldrama/~~Nh
@@ -137302,20 +137302,20 @@ geistigkeit/~~Fh
 geisttötend/~~Nh
 geißblätter/~~Nh
 geißelzelle/~~Fh
-gekleistert/~~Nh
-geknautscht/~~Nh
-geknietscht/~~Nh
+gekleistert/~~JOQRSTUWVg
+geknautscht/~~JOQRSTUWVg
+geknietscht/~~JOQRSTUWVg
 gekrösevene/~~Fh
 gelageszene/~~Fh
-gelangweilt/~~Nh
+gelangweilt/~~JOQRSTUWVg
 gelbbleierz/~~Nh
 gelbfärbung/~~Fh
-gelbgefärbt/~~Nh
-gelbpigment/~~Nh
+gelbgefärbt/~~JOQRSTUWVg
+gelbpigment/~~JOQRSTUWVg
 gelbscheibe/~~Fh
 gelbschwanz/~~Nh
-geldbasiert/~~Nh
-geldbewusst/~~Nh
+geldbasiert/~~JOQRSTUWVg
+geldbewusst/~~JOQRSTUWVg
 geldähnlich/~~JOQRSTUWqh
 gelegegröße/~~Fh
 gelegenheit/~~Fh
@@ -137325,16 +137325,16 @@ gelenkartig/~~Nh
 gelenknäher/~~Nh
 geliebteste/~~Fh
 geltungslos/~~Nh
-gemauschelt/~~Nh
-gemaßregelt/~~Nh
+gemauschelt/~~JOQRSTUWVg
+gemaßregelt/~~JOQRSTUWVg
 gemeindlich/~~JOQRSTUWqh
-gemeingeist/~~Nh
+gemeingeist/~~JOQRSTUWVg
 gemeingüter/~~Nh
 gemeinplatz/~~Nh
-gemeinrecht/~~Nh
+gemeinrecht/~~JOQRSTUWVg
 gemeinwesen/~~Nh
 gemengelage/~~Fh
-gemengesaat/~~Nh
+gemengesaat/~~JOQRSTUWVg
 gemmenkreuz/~~Nh
 genauestens/~~Nh
 genauigkeit/~~Fh
@@ -137350,11 +137350,11 @@ genotypisch/~~Nh
 genregrenze/~~Fh
 gentilhomme/~~Fh
 gentilnamen/~~Nh
-genugtatest/~~Nh
+genugtatest/~~JOQRSTUWVg
 genusfehler/~~Nh
 genussystem/~~Nh
 geochemisch/~~Nh
-geoffenbart/~~Nh # auto-added
+geoffenbart/~~JOQRSTUWVg # auto-added
 geografisch/~~Nh
 geometrisch/~~Nh
 geopathogen/~~Nh # auto-added
@@ -137363,11 +137363,11 @@ georgskreuz/~~Nh
 geosynchron/~~Nh
 geotropisch/~~Nh
 geozyklisch/~~Nh
-gepflastert/~~Nh
-gepicknickt/~~Nh
-geplantscht/~~Nh
+gepflastert/~~JOQRSTUWVg
+gepicknickt/~~JOQRSTUWVg
+geplantscht/~~JOQRSTUWVg
 geplätscher/~~Nh
-gequietscht/~~Nh
+gequietscht/~~JOQRSTUWVg
 geradelegen/~~Nh # auto-added
 geradenwegs/~~Nh
 geradestand/~~Nh
@@ -137379,7 +137379,7 @@ geradzahlig/~~Nh
 gerberdaten/~~Nh
 gerbermühle/~~Fh
 gerberwolle/~~Fh
-gerbextrakt/~~Nh
+gerbextrakt/~~JOQRSTUWVg
 geriatrisch/~~Nh
 gerichtlich/~~JOQRSTUWqh
 geringfügig/~~Nh
@@ -137387,7 +137387,7 @@ germanistik/~~Nh
 gerngesehen/~~Nh
 gernzuhaben/~~Nh
 gerontologe/~~Fh
-gerätedrift/~~Nh
+gerätedrift/~~JOQRSTUWVg
 gerätefinal/~~Nh
 geräuscharm/~~Nh
 geräuschlos/~~Nh
@@ -137401,61 +137401,61 @@ gesamtdicke/~~Fh
 gesamtelfte/~~Fh
 gesamtreich/~~Nh
 gesangartig/~~Nh
-geschaudert/~~Nh
-geschaufelt/~~Nh
-geschaukelt/~~Nh
-gescheffelt/~~Nh
-gescheitelt/~~Nh
+geschaudert/~~JOQRSTUWVg
+geschaufelt/~~JOQRSTUWVg
+geschaukelt/~~JOQRSTUWVg
+gescheffelt/~~JOQRSTUWVg
+gescheitelt/~~JOQRSTUWVg
 gescheitert/~~g # past participle of scheitern
-gescheppert/~~Nh
-geschichtet/~~Nh
-geschildert/~~Nh
-geschillert/~~Nh
-geschimmelt/~~Nh
-geschimmert/~~Nh
-geschippert/~~Nh
-geschlaucht/~~Nh
+gescheppert/~~JOQRSTUWVg
+geschichtet/~~JOQRSTUWVg
+geschildert/~~JOQRSTUWVg
+geschillert/~~JOQRSTUWVg
+geschimmelt/~~JOQRSTUWVg
+geschimmert/~~JOQRSTUWVg
+geschippert/~~JOQRSTUWVg
+geschlaucht/~~JOQRSTUWVg
 geschlechte/~~Fh
 geschlechts/~~Nh
 geschlichen/~~Nh
 geschliffen/~~Nh
 geschlissen/~~Nh
 geschlossen/~~NJOQRSTUWq #adjective and noun
-geschluchzt/~~Nh
+geschluchzt/~~JOQRSTUWVg
 geschlungen/~~Nh # auto-added
-geschmiedet/~~Nh
+geschmiedet/~~JOQRSTUWVg
 geschmissen/~~Nh
 geschmolzen/~~Nh
 geschmunzel/~~Nh
 geschmäcker/~~Nh
-geschmälert/~~Nh
-geschmökert/~~Nh
-geschnarcht/~~Nh
+geschmälert/~~JOQRSTUWVg
+geschmökert/~~JOQRSTUWVg
+geschnarcht/~~JOQRSTUWVg
 geschnatter/~~Nh
 geschnitten/~~Nh
 geschnörkel/~~Nh
-geschottert/~~Nh
+geschottert/~~JOQRSTUWVg
 geschrieben/~~Nh
 geschritten/~~Nh
-geschrottet/~~Nh
-geschrumpft/~~Nh
-geschultert/~~Nh
-geschummelt/~~Nh
-geschunkelt/~~Nh
-geschustert/~~Nh
-geschwafelt/~~Nh
-geschwefelt/~~Nh
+geschrottet/~~JOQRSTUWVg
+geschrumpft/~~JOQRSTUWVg
+geschultert/~~JOQRSTUWVg
+geschummelt/~~JOQRSTUWVg
+geschunkelt/~~JOQRSTUWVg
+geschustert/~~JOQRSTUWVg
+geschwafelt/~~JOQRSTUWVg
+geschwefelt/~~JOQRSTUWVg
 geschwiegen/~~Nh # auto-added
 geschwister/~~Nh
 geschwollen/~~Nh
 geschwommen/~~Nh
 geschwunden/~~Nh
 geschwungen/~~Nh # auto-added
-geschwäbelt/~~Nh
+geschwäbelt/~~JOQRSTUWVg
 geschwülste/~~Fh
-geschächtet/~~Nh
-geschüttelt/~~Nh
-gesetzblatt/~~Nh
+geschächtet/~~JOQRSTUWVg
+geschüttelt/~~JOQRSTUWVg
+gesetzblatt/~~JOQRSTUWVg
 gesetzgeber/~~Nh
 gesetzmäßig/~~Nh
 gesichtslos/~~Nh
@@ -137463,38 +137463,38 @@ gesimsfigur/~~Nh
 gesimsstein/~~Nh
 gesimsstück/~~Nh
 gesindehaus/~~Nh
-gespachtelt/~~Nh
+gespachtelt/~~JOQRSTUWVg
 gespannhund/~~Nh
-gespeichert/~~Nh
-gesplittert/~~Nh
-gesprenkelt/~~Nh
+gespeichert/~~JOQRSTUWVg
+gesplittert/~~JOQRSTUWVg
+gesprenkelt/~~JOQRSTUWVg
 gestaltlich/~~JOQRSTUWqh
 gestaltungs/~~Nh
 gestapochef/~~Nh
-gestapohaft/~~Nh
+gestapohaft/~~JOQRSTUWVg
 gestapomann/~~Nh
 gestenspiel/~~Nh
-gestrampelt/~~Nh
-gestrichelt/~~Nh
-gestriegelt/~~Nh
+gestrampelt/~~JOQRSTUWVg
+gestrichelt/~~JOQRSTUWVg
+gestriegelt/~~JOQRSTUWVg
 gestütpferd/~~Nh
 gesundbeten/~~Nh
 gesundbeter/~~Nh
 gesundheits/~~Nh
 gesundstieß/~~Nh
-gesundstößt/~~Nh
-getischlert/~~Nh
+gesundstößt/~~JOQRSTUWVg
+getischlert/~~JOQRSTUWVg
 getriebelos/~~Nh
 gettodasein/~~Nh
 gettoschule/~~Fh
-getätschelt/~~Nh
-gevierteilt/~~Nh
+getätschelt/~~JOQRSTUWVg
+gevierteilt/~~JOQRSTUWVg
 gewaltaffin/~~Nh
 gewandfalte/~~Fh
 gewandnadel/~~Nh
 gewandsäume/~~Fh
 gewandtheit/~~Fh
-gewatschelt/~~Nh
+gewatschelt/~~JOQRSTUWVg
 gewebeartig/~~Nh
 gewebsartig/~~Nh
 gewebsdruck/~~Nh
@@ -137503,7 +137503,7 @@ gewebsstück/~~Nh
 geweihartig/~~Nh
 geweihkrone/~~Fh
 geweihstück/~~Nh
-gewichthebt/~~Nh
+gewichthebt/~~JOQRSTUWVg
 gewichthöbe/~~Fh
 gewichtslos/~~Nh
 gewinnertyp/~~Nh # auto-added
@@ -137518,7 +137518,7 @@ gewölbegang/~~Nh
 gewölbehöhe/~~Fh
 gewölbejoch/~~Nh
 gewölbelage/~~Fh
-gewölberest/~~Nh
+gewölberest/~~JOQRSTUWVg
 gewölbeteil/~~Nh
 gezeitenhub/~~Nh
 ghettowache/~~Fh
@@ -151556,7 +151556,7 @@ gebirgskämme/~~Fh
 gebirgstrage/~~Fh
 geborgenheit/~~Fh
 gebotsschild/~~Nh
-gebrandmarkt/~~Nh
+gebrandmarkt/~~JOQRSTUWVg
 gebundenheit/~~Fh
 gebäckfabrik/~~Nh
 gebäckschale/~~Fh
@@ -151568,11 +151568,11 @@ gedichtbände/~~Fh
 gedichttypus/~~Nh
 gedichtzeile/~~Fh
 gediegenheit/~~Fh
-gedolmetscht/~~Nh
-gedownloadet/~~Nh
+gedolmetscht/~~JOQRSTUWVg
+gedownloadet/~~JOQRSTUWVg
 geestbereich/~~Nh
 geestplateau/~~Nh
-geestschicht/~~Nh
+geestschicht/~~JOQRSTUWVg
 gefahrgutzug/~~Nh
 gefahrklasse/~~Fh
 gefahrstelle/~~Fh
@@ -151582,7 +151582,7 @@ gefolgschaft/~~Fh
 gefolgsleute/~~Fh
 gefolgstreue/~~Fh
 gefräßigkeit/~~Fh
-gefrühstückt/~~Nh
+gefrühstückt/~~JOQRSTUWVg
 gefälligkeit/~~Fh
 gefäßwandung/~~Fh
 gefäßwirksam/~~Nh
@@ -151591,10 +151591,10 @@ gefühlsmäßig/~~Nh
 gefühlsselig/~~Nh
 gegenanklage/~~Fh
 gegenchecken/~~Nh
-gegencheckst/~~Nh
+gegencheckst/~~JOQRSTUWVg
 gegencheckte/~~Fh
-gegengeklagt/~~Nh
-gegengelenkt/~~Nh
+gegengeklagt/~~JOQRSTUWVg
+gegengelenkt/~~JOQRSTUWVg
 gegengelesen/~~Nh
 gegenrechnen/~~Nh
 gegensteuern/~~Nh
@@ -151606,7 +151606,7 @@ gegenüberlag/~~Nh
 gegenübersah/~~Nh
 gegenübersaß/~~Nh
 gegnerschaft/~~Fh
-gehbehindert/~~Nh
+gehbehindert/~~JOQRSTUWVg
 geheimtuerei/~~Nh
 gehirnläsion/~~Fh
 gehorsamkeit/~~Fh
@@ -151624,7 +151624,7 @@ geiselnehmer/~~Nh
 geistzeugung/~~Fh
 geißelbruder/~~Nh
 geißelbrüder/~~Nh
-gelackmeiert/~~Nh
+gelackmeiert/~~JOQRSTUWVg
 gelassenheit/~~Fh
 gelatinewerk/~~Nh
 gelatinieren/~~Nh
@@ -151641,7 +151641,7 @@ gelegenheits/~~Nh
 gelehrigkeit/~~Fh
 gelenkigkeit/~~Fh
 gelenksteife/~~Fh
-geliebäugelt/~~Nh
+geliebäugelt/~~JOQRSTUWVg
 geliermittel/~~Nh
 gelierzucker/~~Nh
 geländefähig/~~Nh
@@ -151657,7 +151657,7 @@ gemeinnützig/~~Nh
 gemeinplätze/~~Fh
 gemeinschaft/~~Fh
 gemmologisch/~~Nh
-gemultiplext/~~Nh
+gemultiplext/~~JOQRSTUWVg
 gemäldeartig/~~Nh
 genealogisch/~~Nh
 genehmigungs/~~Nh
@@ -151672,10 +151672,10 @@ genickschuss/~~Nh
 genickstarre/~~Fh
 geniestreich/~~Nh
 genießerisch/~~Nh
-genomprojekt/~~Nh
+genomprojekt/~~JOQRSTUWVg
 genomsequenz/~~Nh
 genozidopfer/~~Nh
-genrebedingt/~~Nh
+genrebedingt/~~JOQRSTUWVg
 genrebegriff/~~Nh
 genrekonform/~~Nh
 genremalerei/~~Nh
@@ -151684,7 +151684,7 @@ genretypisch/~~Nh
 genrewechsel/~~Nh
 gentechnisch/~~Nh
 genussfertig/~~Nh
-genverändert/~~Nh
+genverändert/~~JOQRSTUWVg
 genügsamkeit/~~Fh
 geobotaniker/~~Nh
 geobotanisch/~~Nh
@@ -151701,13 +151701,13 @@ geostationär/~~Nh
 geotechnisch/~~Nh
 geothermisch/~~Nh
 geozentrisch/~~Nh
-gepidenfürst/~~Nh
+gepidenfürst/~~JOQRSTUWVg
 geradebiegen/~~Nh # auto-added
-geradebrecht/~~Nh
+geradebrecht/~~JOQRSTUWVg
 geradehalten/~~Nh
 geradeheraus/~~Nh
 gerademachen/~~Nh
-geradenpunkt/~~Nh
+geradenpunkt/~~JOQRSTUWVg
 geraderücken/~~Nh
 geradesetzen/~~Nh
 geradesitzen/~~Nh
@@ -151717,16 +151717,16 @@ geradestünde/~~Fh
 geradflügler/~~Nh
 geradführung/~~Fh
 geradstämmig/~~Nh
-geranienbeet/~~Nh
+geranienbeet/~~JOQRSTUWVg
 geranientopf/~~Nh
 gerberstraße/~~Fh
 gerbmaschine/~~Fh
-gerichtsfest/~~Nh
+gerichtsfest/~~JOQRSTUWVg
 geringachten/~~Nh
 geringhaltig/~~Nh
 geringwertig/~~Nh
 gerissenheit/~~Fh
-germanenkult/~~Nh
+germanenkult/~~JOQRSTUWVg
 germanenland/~~Nh
 gerontologie/~~Fh
 gersteladung/~~Fh
@@ -151744,44 +151744,44 @@ gerüstsystem/~~Nh
 gesamtdritte/~~Fh
 gesamtfällig/~~Nh
 gesangsmikro/~~Nh
-geschachtelt/~~Nh
+geschachtelt/~~JOQRSTUWVg
 gescheitsein/~~Nh
-geschlachtet/~~Nh
+geschlachtet/~~JOQRSTUWVg
 geschlechter/~~Nh
-geschlendert/~~Nh
-geschlenkert/~~Nh
-geschleudert/~~Nh
-geschlichtet/~~Nh
-geschlittert/~~Nh
-geschlottert/~~Nh
-geschlummert/~~Nh
-geschlängelt/~~Nh
-geschmachtet/~~Nh
+geschlendert/~~JOQRSTUWVg
+geschlenkert/~~JOQRSTUWVg
+geschleudert/~~JOQRSTUWVg
+geschlichtet/~~JOQRSTUWVg
+geschlittert/~~JOQRSTUWVg
+geschlottert/~~JOQRSTUWVg
+geschlummert/~~JOQRSTUWVg
+geschlängelt/~~JOQRSTUWVg
+geschmachtet/~~JOQRSTUWVg
 geschmacklos/~~Nh
-geschmettert/~~Nh
-geschmirgelt/~~Nh
-geschmuggelt/~~Nh
-geschmunzelt/~~Nh
-geschnattert/~~Nh
-geschneidert/~~Nh
-geschneppert/~~Nh
-geschnetzelt/~~Nh
-geschniegelt/~~Nh
-geschnippelt/~~Nh
-geschnitzelt/~~Nh
-geschnuppert/~~Nh
-geschnäppert/~~Nh
-geschnörkelt/~~Nh
-geschnüffelt/~~Nh
-geschreddert/~~Nh
+geschmettert/~~JOQRSTUWVg
+geschmirgelt/~~JOQRSTUWVg
+geschmuggelt/~~JOQRSTUWVg
+geschmunzelt/~~JOQRSTUWVg
+geschnattert/~~JOQRSTUWVg
+geschneidert/~~JOQRSTUWVg
+geschneppert/~~JOQRSTUWVg
+geschnetzelt/~~JOQRSTUWVg
+geschniegelt/~~JOQRSTUWVg
+geschnippelt/~~JOQRSTUWVg
+geschnitzelt/~~JOQRSTUWVg
+geschnuppert/~~JOQRSTUWVg
+geschnäppert/~~JOQRSTUWVg
+geschnörkelt/~~JOQRSTUWVg
+geschnüffelt/~~JOQRSTUWVg
+geschreddert/~~JOQRSTUWVg
 geschreibsel/~~Nh
-geschreinert/~~Nh
-geschurigelt/~~Nh
-geschwabbelt/~~Nh
-geschwindelt/~~Nh
-geschwächelt/~~Nh
-geschwängert/~~Nh
-geschwänzelt/~~Nh
+geschreinert/~~JOQRSTUWVg
+geschurigelt/~~JOQRSTUWVg
+geschwabbelt/~~JOQRSTUWVg
+geschwindelt/~~JOQRSTUWVg
+geschwächelt/~~JOQRSTUWVg
+geschwängert/~~JOQRSTUWVg
+geschwänzelt/~~JOQRSTUWVg
 geschäftlich/~~JOQRSTUWqh
 geschäftslos/~~Nh
 geschützbuch/~~Nh
@@ -151794,11 +151794,11 @@ geschützturm/~~Nh
 gesellenbund/~~Nh
 gesellenjahr/~~Nh
 gesellenlohn/~~Nh
-gesellenzeit/~~Nh
+gesellenzeit/~~JOQRSTUWVg
 geselligkeit/~~Fh
 gesellschaft/~~Fh
 gesetzbücher/~~Nh
-gesetzesfest/~~Nh
+gesetzesfest/~~JOQRSTUWVg
 gesetzgebend/~~Nh
 gesetzgebung/~~Fh
 gesetzwidrig/~~Nh
@@ -151810,21 +151810,21 @@ gesittetsten/~~Nh
 gespannszene/~~Fh
 gespannwagen/~~Nh # auto-added
 gespenstisch/~~Nh
-gespinstnest/~~Nh
+gespinstnest/~~JOQRSTUWVg
 gespinstnetz/~~Nh
-gestagentest/~~Nh
+gestagentest/~~JOQRSTUWVg
 gestaltlehre/~~Fh
 gestapoleute/~~Fh
 gestapoopfer/~~Nh
-gestaubsaugt/~~Nh
+gestaubsaugt/~~JOQRSTUWVg
 gesteinstaub/~~Nh
 gestellboden/~~Nh
 gestellböden/~~Nh
 gestelltsein/~~Nh
-gestrauchelt/~~Nh
-gestreichelt/~~Nh
+gestrauchelt/~~JOQRSTUWVg
+gestreichelt/~~JOQRSTUWVg
 gestängerohr/~~Nh
-gestüthengst/~~Nh
+gestüthengst/~~JOQRSTUWVg
 gestütsbrand/~~Nh
 gesundmachen/~~Nh
 gesundstoßen/~~Nh
@@ -151835,7 +151835,7 @@ gettoisieren/~~Nh
 gettoräumung/~~Fh
 gettoähnlich/~~JOQRSTUWqh
 geviertmeter/~~Nh
-gewaltbereit/~~Nh
+gewaltbereit/~~JOQRSTUWVg
 gewalthaltig/~~Nh
 gewebsatmung/~~Fh
 gewebshormon/~~Nh
@@ -151847,13 +151847,13 @@ gewerbemäßig/~~Nh
 gewerbsmäßig/~~Nh
 gewerkschaft/~~Fh
 gewerkverein/~~Nh
-gewetteifert/~~Nh
+gewetteifert/~~JOQRSTUWVg
 gewichtheben/~~Nh
 gewichtheber/~~Nh
 gewindefräse/~~Fh
 gewinnerbild/~~Nh
 gewinnerland/~~Nh
-gewissenhaft/~~Nh
+gewissenhaft/~~JOQRSTUWVg
 gewährsleute/~~Fh
 gewässergüte/~~Fh
 gewässerlauf/~~Nh
@@ -151874,7 +151874,7 @@ gewölberippe/~~Fh
 gewölbestein/~~Nh
 gezeitenwald/~~Nh
 gezeitenzone/~~Fh
-gezwitschert/~~Nh
+gezwitschert/~~JOQRSTUWVg
 ghettodasein/~~Nh
 ghettoschule/~~Fh
 gichtbrüchig/~~Nh
@@ -165606,15 +165606,15 @@ gedichtzyklen/~~Nh
 gedichtzyklus/~~Nh
 gedächtnislos/~~Nh
 geestgemeinde/~~Fh
-geestsediment/~~Nh
-geeststandort/~~Nh
+geestsediment/~~JOQRSTUWVg
+geeststandort/~~JOQRSTUWVg
 geeststreifen/~~Nh
-gefachsimpelt/~~Nh
+gefachsimpelt/~~JOQRSTUWVg
 gefahrenstoff/~~Nh
 gefahrzeichen/~~Nh
 gefallsüchtig/~~Nh
 gefangennahme/~~Fh
-gefangennimmt/~~Nh
+gefangennimmt/~~JOQRSTUWVg
 gefechtsmäßig/~~Nh
 gefiederfarbe/~~Fh
 gefiederglanz/~~Nh
@@ -165623,26 +165623,26 @@ gefolgsmänner/~~Nh
 gefällemesser/~~Nh
 gefällstrecke/~~Fh
 gefügeanalyse/~~Fh
-gefühlsbetont/~~Nh
+gefühlsbetont/~~JOQRSTUWVg
 gefühlsduslig/~~Nh
 gegencheckend/~~Nh
 gegencheckten/~~Nh
 gegeneinander/~~Nh
-gegengecheckt/~~Nh
-gegengerudert/~~Nh
+gegengecheckt/~~JOQRSTUWVg
+gegengerudert/~~JOQRSTUWVg
 gegenzeichnen/~~Nh
 gegenzulenken/~~Nh
 gegenzurudern/~~Nh
 gegenüberläge/~~Fh
 gegenübersähe/~~Fh
 gegenübersäße/~~Fh
-gegenübertrat/~~Nh
+gegenübertrat/~~JOQRSTUWVg
 gehegehaltung/~~Fh
 geheimnistuer/~~Nh
 gehengelassen/~~Nh
 gehenzulassen/~~Nh
 gehilfenbrief/~~Nh
-gehirngerecht/~~Nh
+gehirngerecht/~~JOQRSTUWVg
 gehirnähnlich/~~JOQRSTUWqh
 gehrungshobel/~~Nh
 gehtnichtmehr/~~Nh
@@ -165661,7 +165661,7 @@ geldbedürftig/~~Nh
 geldgetrieben/~~Nh
 geldpolitisch/~~Nh
 geldverlieren/~~Nh
-gelegeverlust/~~Nh
+gelegeverlust/~~JOQRSTUWVg
 gelehrsamkeit/~~Fh
 gelenkbildend/~~Nh
 gelingensfall/~~Nh # auto-added
@@ -165680,9 +165680,9 @@ gemeinschafts/~~Nh
 gemeinsprache/~~Fh
 gemütlichkeit/~~Fh
 genaugenommen/~~Nh
-gendergerecht/~~Nh
+gendergerecht/~~JOQRSTUWVg
 genderpolitik/~~Nh
-generaloberst/~~Nh
+generaloberst/~~JOQRSTUWVg
 generalsstäbe/~~Fh
 generatorisch/~~Nh
 generatorraum/~~Nh
@@ -165690,11 +165690,11 @@ generatorteil/~~Nh
 genieoffizier/~~Nh
 genitalanhang/~~Nh
 genitivendung/~~Fh
-genitivobjekt/~~Nh
+genitivobjekt/~~JOQRSTUWVg
 genitivphrase/~~Fh
 genomforscher/~~Nh
 genotypklasse/~~Fh
-genrevielfalt/~~Nh
+genrevielfalt/~~JOQRSTUWVg
 genspezifisch/~~Nh
 gentilordnung/~~Fh
 gentlemanlike/~~Fh
@@ -165715,8 +165715,8 @@ geradeauslauf/~~Nh
 geradeausspur/~~Nh
 geradeflügler/~~Nh
 geradegebogen/~~Nh # auto-added
-geradegemacht/~~Nh
-geradegerückt/~~Nh
+geradegemacht/~~JOQRSTUWVg
+geradegerückt/~~JOQRSTUWVg
 geraderichten/~~Nh
 geradestellen/~~Nh
 geranientöpfe/~~Fh
@@ -165729,7 +165729,7 @@ gerichtsstand/~~Nh
 gerichtsummen/~~Nh
 geringmächtig/~~Nh
 geringpreisig/~~Nh
-germanenfürst/~~Nh
+germanenfürst/~~JOQRSTUWVg
 germanenkrieg/~~Nh
 germanenstamm/~~Nh
 germanisieren/~~Nh
@@ -165753,9 +165753,9 @@ geschichtslos/~~Nh
 geschiebelehm/~~Nh
 geschmacklich/~~JOQRSTUWqh
 geschmackslos/~~Nh
-geschmeichelt/~~Nh
+geschmeichelt/~~JOQRSTUWVg
 geschnetzelte/~~Fh
-geschnorchelt/~~Nh
+geschnorchelt/~~JOQRSTUWVg
 geschossweise/~~Fh
 geschwürartig/~~Nh
 geschützfeuer/~~Nh
@@ -165774,7 +165774,7 @@ gesetzesartig/~~Nh
 gesetzgebungs/~~Nh
 gesindetreppe/~~Fh
 gesinnungslos/~~Nh
-gesnowboardet/~~Nh
+gesnowboardet/~~JOQRSTUWVg
 gespannfahrer/~~Nh
 gespinstfaden/~~Nh
 gespinstfaser/~~Nh
@@ -165787,7 +165787,7 @@ gestapoführer/~~Nh
 gestapoleiter/~~Nh
 gestapostelle/~~Fh
 gesteinstäube/~~Fh
-gestenbasiert/~~Nh
+gestenbasiert/~~JOQRSTUWVg
 gestensprache/~~Fh
 gestikulieren/~~Nh
 gestressteste/~~Fh
@@ -165796,7 +165796,7 @@ gesuchsteller/~~Nh
 gesundbeterei/~~Nh
 gesundbleiben/~~Nh
 gesundbrunnen/~~Nh
-gesundgemacht/~~Nh
+gesundgemacht/~~JOQRSTUWVg
 gesundpflegen/~~Nh # auto-added
 gesundschrieb/~~Nh
 gesundzubeten/~~Nh
@@ -165814,7 +165814,7 @@ gewebshypoxie/~~Fh
 gewebsnekrose/~~Fh
 gewebspolster/~~Nh
 gewebsschaden/~~Nh
-gewebsschicht/~~Nh
+gewebsschicht/~~JOQRSTUWVg
 gewebsschwund/~~Nh
 gewebsschäden/~~Nh
 gewebsstränge/~~Fh
@@ -165832,7 +165832,7 @@ gewächsanlage/~~Fh
 gewährleisten/~~Nh
 gewässerboden/~~Nh
 gewässerböden/~~Nh
-gewässerfahrt/~~Nh
+gewässerfahrt/~~JOQRSTUWVg
 gewässergrund/~~Nh
 gewässermitte/~~Fh
 gewässersohle/~~Fh
@@ -178595,16 +178595,16 @@ gauhauptmänner/~~Nh
 gauhauptstelle/~~Fh
 gauhauptstädte/~~Fh
 gaußverteilung/~~Fh
-gebauchpinselt/~~Nh
+gebauchpinselt/~~JOQRSTUWVg
 gebetesammlung/~~Fh
 gebietstypisch/~~Nh
 gebindeeinheit/~~Fh
 gebirgsbildend/~~Nh
 gebirgsquerung/~~Fh
 gebirgsähnlich/~~JOQRSTUWqh
-gebläsegekühlt/~~Nh
+gebläsegekühlt/~~JOQRSTUWVg
 geborenzeichen/~~Nh
-gebrandschatzt/~~Nh
+gebrandschatzt/~~JOQRSTUWVg
 gebrauchsfähig/~~Nh
 geburtenärmste/~~Fh
 gebäudebrütend/~~Nh
@@ -178618,11 +178618,11 @@ geestausläufer/~~Nh
 geestkerninsel/~~Nh
 gefahrübergang/~~Nh
 gefangenhalten/~~Nh
-gefangenhältst/~~Nh
+gefangenhältst/~~JOQRSTUWVg
 gefangennehmen/~~Nh
 gefangenschaft/~~Fh
 gefangensetzen/~~Nh
-gefechtsbereit/~~Nh
+gefechtsbereit/~~JOQRSTUWVg
 gefiederanteil/~~Nh
 gefiedermuster/~~Nh
 gefiederpartie/~~Fh
@@ -178637,18 +178637,18 @@ gefängnisartig/~~Nh
 gefäßverengend/~~Nh
 gefügestruktur/~~Nh
 gefügeänderung/~~Fh
-gefühlsbedingt/~~Nh
+gefühlsbedingt/~~JOQRSTUWVg
 gefühlsbeladen/~~Nh
 gefühlsduselei/~~Nh
-gefühlsgehemmt/~~Nh
+gefühlsgehemmt/~~JOQRSTUWVg
 gefühlsgeladen/~~Nh
 gegebenenfalls/~~Nh
 gegendiagonale/~~Fh
-gegengekoppelt/~~Nh
-gegengerechnet/~~Nh
-gegengesteuert/~~Nh
+gegengekoppelt/~~JOQRSTUWVg
+gegengerechnet/~~JOQRSTUWVg
+gegengesteuert/~~JOQRSTUWVg
 gegengewichtig/~~Nh
-gegenkaschiert/~~Nh
+gegenkaschiert/~~JOQRSTUWVg
 gegenrechenbar/~~Nh
 gegenstandslos/~~Nh
 gegenständlich/~~JOQRSTUWqh
@@ -178658,9 +178658,9 @@ gegenzuchecken/~~Nh
 gegenzurechnen/~~Nh
 gegenzusteuern/~~Nh
 gegenübersehen/~~Nh
-gegenübersieht/~~Nh
+gegenübersieht/~~JOQRSTUWVg
 gegenüberstand/~~Nh
-gegenübertritt/~~Nh
+gegenübertritt/~~JOQRSTUWVg
 gegenüberträte/~~Fh
 gehbehinderung/~~Fh
 gehegebewohner/~~Nh
@@ -178668,18 +178668,18 @@ geheimgehalten/~~Nh
 geheimtuerisch/~~Nh
 geheimzuhalten/~~Nh
 gehilfenstelle/~~Fh
-gehirnverletzt/~~Nh
+gehirnverletzt/~~JOQRSTUWVg
 gehrungswinkel/~~Nh
 gehölzaufwuchs/~~Nh
 gehölzstruktur/~~Nh
 geierrabenpaar/~~Nh
 geiselgangster/~~Nh
 geiselversteck/~~Nh
-geistesgestört/~~Nh
+geistesgestört/~~JOQRSTUWVg
 geistesmächtig/~~Nh
 geistfeindlich/~~JOQRSTUWqh
 geistlosigkeit/~~Fh
-gekennzeichnet/~~Nh
+gekennzeichnet/~~JOQRSTUWVg
 gekrösearterie/~~Fh
 gelatinefilter/~~Nh
 gelatinekapsel/~~Nh
@@ -178690,7 +178690,7 @@ geldbeschaffer/~~Nh
 geldfälscherei/~~Nh
 gelenkluxation/~~Fh
 gelenkschonend/~~Nh
-geländebedingt/~~Nh
+geländebedingt/~~JOQRSTUWVg
 gelöbnisformel/~~Nh
 gemarkungsteil/~~Nh
 gemeineigentum/~~Nh
@@ -178698,10 +178698,10 @@ gemeinfreiheit/~~Fh
 gemeingebrauch/~~Nh
 gemischbildung/~~Fh
 gemischtrassig/~~Nh
-gemischtvalent/~~Nh
+gemischtvalent/~~JOQRSTUWVg
 gemächlichkeit/~~Fh
 genaugenommene/~~Fh
-gendarmenmarkt/~~Nh
+gendarmenmarkt/~~JOQRSTUWVg
 generalbeichte/~~Fh
 generalisieren/~~Nh
 generalissimus/~~Nh
@@ -178709,8 +178709,8 @@ generalsgattin/~~Nh
 generalsmarsch/~~Nh
 generatorwagen/~~Nh # auto-added
 genießenwollen/~~Nh
-genmanipuliert/~~Nh
-genomabschnitt/~~Nh
+genmanipuliert/~~JOQRSTUWVg
+genomabschnitt/~~JOQRSTUWVg
 genomforschung/~~Fh
 genomvergleich/~~Nh
 genossenschaft/~~Fh
@@ -178721,10 +178721,10 @@ geodatenserver/~~Nh
 geologengruppe/~~Fh
 geologenhammer/~~Nh
 geologenhämmer/~~Nh
-geologiedozent/~~Nh
+geologiedozent/~~JOQRSTUWVg
 geomorphologie/~~Fh
 geostrategisch/~~Nh
-geradegestellt/~~Nh
+geradegestellt/~~JOQRSTUWVg
 geradezubiegen/~~Nh # auto-added
 geradezumachen/~~Nh
 geradezurücken/~~Nh
@@ -178738,7 +178738,7 @@ gerechtigkeits/~~Nh
 gerichtsintern/~~Nh
 gerichtskundig/~~Nh
 geringerwertig/~~Nh
-geringgeachtet/~~Nh
+geringgeachtet/~~JOQRSTUWVg
 geringschätzen/~~Nh
 geringschätzig/~~Nh
 geringzuachten/~~Nh
@@ -178786,7 +178786,7 @@ gesetzeswidrig/~~Nh
 gesetzlichkeit/~~Fh
 gesetzsammlung/~~Fh
 gesetztenfalls/~~Nh
-gesimsfragment/~~Nh
+gesimsfragment/~~JOQRSTUWVg
 gesimsschalung/~~Fh
 gesindeordnung/~~Fh
 gespenstkrabbe/~~Fh
@@ -178798,7 +178798,7 @@ gestaltbegriff/~~Nh
 gestaltbildung/~~Fh
 gestalttheorie/~~Fh
 gestaltähnlich/~~JOQRSTUWqh
-gestaporeferat/~~Nh
+gestaporeferat/~~JOQRSTUWVg
 gestellauswahl/~~Nh
 gestelleinheit/~~Fh
 gestellkühlung/~~Fh
@@ -178808,7 +178808,7 @@ gestresstesten/~~Nh
 gestresstester/~~Nh
 gestresstestes/~~Nh
 gestängeschale/~~Fh
-gesundgepflegt/~~Nh
+gesundgepflegt/~~JOQRSTUWVg
 gesundgestoßen/~~Nh
 gesundheitlich/~~JOQRSTUWqh
 gesundzumachen/~~Nh
@@ -178833,7 +178833,7 @@ gewinnbringend/~~Nh
 gewinnerländer/~~Nh
 gewinnerpartei/~~Nh
 gewinnerstraße/~~Fh
-gewirtschaftet/~~Nh
+gewirtschaftet/~~JOQRSTUWVg
 gewitterschwer/~~Nh
 gewohnheitlich/~~JOQRSTUWqh
 gewohntermaßen/~~Nh
@@ -190300,7 +190300,7 @@ gatterschaltung/~~Fh
 gattungsprägend/~~Nh
 gattungstypisch/~~Nh
 gauleitertagung/~~Fh
-geberfinanziert/~~Nh
+geberfinanziert/~~JOQRSTUWVg
 gebietsheimisch/~~Nh
 gebotsauslegung/~~Fh
 gebrauchsfertig/~~Nh
@@ -190309,11 +190309,11 @@ geburtenfreudig/~~Nh
 geburtenstärker/~~Nh
 geburtshilflich/~~JOQRSTUWqh
 gebärdensprache/~~Fh
-gebäudereplikat/~~Nh
-gebührenbefreit/~~Nh
+gebäudereplikat/~~JOQRSTUWVg
+gebührenbefreit/~~JOQRSTUWVg
 gebührengünstig/~~Nh
 gedacktregister/~~Nh
-gedichtfragment/~~Nh
+gedichtfragment/~~JOQRSTUWVg
 gedichtsammlung/~~Fh
 gedingearbeiter/~~Nh
 gedächtnismäßig/~~Nh
@@ -190322,7 +190322,7 @@ gefahrgutunfall/~~Nh # auto-added
 gefahrlosigkeit/~~Fh
 gefahrsituation/~~Fh
 gefallenenliste/~~Fh
-gefangengesetzt/~~Nh
+gefangengesetzt/~~JOQRSTUWVg
 gefechtsunfähig/~~Nh
 gefiederfärbung/~~Fh
 gefiederkraulen/~~Nh
@@ -190332,11 +190332,11 @@ gefriertrocknen/~~Nh
 gefäßausräumung/~~Fh
 gefäßerweiternd/~~Nh
 gefühllosigkeit/~~Fh
-gefühlsbestimmt/~~Nh
-gegengezeichnet/~~Nh
+gefühlsbestimmt/~~JOQRSTUWVg
+gegengezeichnet/~~JOQRSTUWVg
 gegenseitigkeit/~~Fh
-gegenstandswert/~~Nh
-gegenstandswort/~~Nh
+gegenstandswert/~~JOQRSTUWVg
+gegenstandswort/~~JOQRSTUWVg
 gegenzuzeichnen/~~Nh
 gegenüberliegen/~~Nh # auto-added
 gegenübersetzen/~~Nh
@@ -190351,17 +190351,17 @@ geheimnistuerei/~~Nh
 geherwettbewerb/~~Nh
 gehilfenaufgabe/~~Fh
 gehilfenprüfung/~~Fh
-gehirnamputiert/~~Nh
+gehirnamputiert/~~JOQRSTUWVg
 gehirngewaschen/~~Nh
 gehölzformation/~~Fh
 gehölzvitalität/~~Fh
-gehörgeschädigt/~~Nh
+gehörgeschädigt/~~JOQRSTUWVg
 geigenprinzipal/~~Nh
 geiselbefreiung/~~Fh
 geistersichtung/~~Fh
 geistesabwesend/~~Nh
-geistesverwandt/~~Nh
-gelatineschicht/~~Nh
+geistesverwandt/~~JOQRSTUWVg
+gelatineschicht/~~JOQRSTUWVg
 gelbfiebermücke/~~Fh
 gelbfieberviren/~~Nh
 gelbfiebervirus/~~Nh
@@ -190373,7 +190373,7 @@ gelenkerhaltend/~~Nh
 geltungssüchtig/~~Nh
 geländetauglich/~~JOQRSTUWqh
 gemarkungskarte/~~Fh
-gemeindebasiert/~~Nh
+gemeindebasiert/~~JOQRSTUWVg
 gemeinfriesisch/~~Nh
 gemeingläubiger/~~Nh
 gemeininteresse/~~Fh
@@ -190384,35 +190384,35 @@ gemmenschneider/~~Nh
 gendarmeriechef/~~Nh
 gendiagnostisch/~~Nh
 generalisierung/~~Fh
-generalresident/~~Nh
+generalresident/~~JOQRSTUWVg
 generalsanieren/~~Nh
 generalsuniform/~~Nh
-generalvikariat/~~Nh
+generalvikariat/~~JOQRSTUWVg
 generatorläufer/~~Nh
 generatorsystem/~~Nh
-genitivattribut/~~Nh
+genitivattribut/~~JOQRSTUWVg
 genitivfunktion/~~Fh
 genossenschafts/~~Nh
 genrekonvention/~~Fh
 genrespezifisch/~~Nh
-geologiestudent/~~Nh
+geologiestudent/~~JOQRSTUWVg
 geophysikalisch/~~Nh
-georeferenziert/~~Nh
-geradegerichtet/~~Nh
+georeferenziert/~~JOQRSTUWVg
+geradegerichtet/~~JOQRSTUWVg
 geradegestanden/~~Nh
 geradegewachsen/~~Nh
 geradezurichten/~~Nh
 geradezustellen/~~Nh
 geradzahligkeit/~~Fh
 geraniengewächs/~~Nh
-gerbstoffgehalt/~~Nh
+gerbstoffgehalt/~~JOQRSTUWVg
 gerbstoffhaltig/~~Nh
 gerbstofflastig/~~Nh
 gerichtsbarkeit/~~Fh
-gerichtsbekannt/~~Nh
+gerichtsbekannt/~~JOQRSTUWVg
 gerichtsähnlich/~~JOQRSTUWqh
 geringfügigkeit/~~Fh
-geringgeschätzt/~~Nh
+geringgeschätzt/~~JOQRSTUWVg
 geringschätzung/~~Fh
 geringstenfalls/~~Nh
 geringstmöglich/~~JOQRSTUWqh
@@ -190422,11 +190422,11 @@ germaneneinfall/~~Nh # auto-added
 germanenfeldzug/~~Nh
 germanenpolitik/~~Nh
 germanenproblem/~~Nh
-gersteproduzent/~~Nh
+gersteproduzent/~~JOQRSTUWVg
 geruchlosigkeit/~~Fh
 geruchsfilternd/~~Nh
 geruchsstärkste/~~Fh
-gerätegesteuert/~~Nh
+gerätegesteuert/~~JOQRSTUWVg
 gerätetechnisch/~~Nh
 gesamtasiatisch/~~Nh
 gesamtbayerisch/~~Nh
@@ -190440,7 +190440,7 @@ gesamtstädtisch/~~Nh
 gesandtenposten/~~Nh
 gesandtentreppe/~~Fh
 gesandtenzimmer/~~Nh
-geschauspielert/~~Nh
+geschauspielert/~~JOQRSTUWVg
 geschenkekaufen/~~Nh
 geschichtenbaum/~~Nh
 geschichtenbuch/~~Nh
@@ -190472,7 +190472,7 @@ gesetzlosigkeit/~~Fh
 gesetzmäßigkeit/~~Fh
 gesichtswahrend/~~Nh
 gespannfuhrwerk/~~Nh
-gesprächsbereit/~~Nh
+gesprächsbereit/~~JOQRSTUWVg
 gestaltqualität/~~Fh
 gestalttherapie/~~Fh
 gestapokommando/~~Nh
@@ -190480,7 +190480,7 @@ gestehungspreis/~~Nh
 gesteinsbildend/~~Nh
 gestellbelegung/~~Fh
 gestirnbewegung/~~Fh
-gestütsaufsicht/~~Nh
+gestütsaufsicht/~~JOQRSTUWVg
 gestütsdirektor/~~Nh
 gesunderhaltung/~~Fh
 gesundschreiben/~~Nh
@@ -190488,26 +190488,26 @@ gesundzupflegen/~~Nh # auto-added
 getreideähnlich/~~JOQRSTUWqh
 gewahrsamszelle/~~Fh
 gewaltablehnend/~~Nh
-gewaltdominiert/~~Nh
+gewaltdominiert/~~JOQRSTUWVg
 gewaltenteilung/~~Fh
 gewandschneider/~~Nh
 gewandzeichnung/~~Fh
-gewebeverstärkt/~~Nh
+gewebeverstärkt/~~JOQRSTUWVg
 gewebsuntergang/~~Nh
 gewerbetreibend/~~Nh
 gewerbsprivileg/~~Nh
 gewerkschaftler/~~Nh
-gewichtbelastet/~~Nh
+gewichtbelastet/~~JOQRSTUWVg
 gewichtssparend/~~Nh
 gewinnerentwurf/~~Nh
 gewinnerzielend/~~Nh
 gewinnratekurve/~~Fh
 gewächshausstil/~~Nh
-gewährgeleistet/~~Nh
+gewährgeleistet/~~JOQRSTUWVg
 gewässerbereich/~~Nh
 gewölbescheitel/~~Nh
 gewölbeunterbau/~~Nh
-gezeitenbericht/~~Nh
+gezeitenbericht/~~JOQRSTUWVg
 gezeitenreibung/~~Fh
 gezeitentabelle/~~Fh
 gezeitentheorie/~~Fh
@@ -200093,7 +200093,7 @@ gastwirtstochter/~~Nh
 gastwirtstöchter/~~Nh
 gasundurchlässig/~~Nh
 gaunersprachlich/~~JOQRSTUWqh
-gebetsmühlenhaft/~~Nh
+gebetsmühlenhaft/~~JOQRSTUWVg
 gebietsaustausch/~~Nh
 gebindepflichtig/~~Nh
 gebrauchstüchtig/~~Nh
@@ -200102,7 +200102,7 @@ geburtenstärkste/~~Fh
 gebäudetechnisch/~~Nh
 gebührenderweise/~~Fh
 gedankenverloren/~~Nh
-gedichtabschnitt/~~Nh
+gedichtabschnitt/~~JOQRSTUWVg
 gefallenenehrung/~~Fh
 gefangengehalten/~~Nh
 gefangengenommen/~~Nh
@@ -200111,7 +200111,7 @@ gefangenzunehmen/~~Nh
 geflechtdichtung/~~Fh
 geflechtschlauch/~~Nh
 gefolgschaftseid/~~Nh
-gefälleabschnitt/~~Nh
+gefälleabschnitt/~~JOQRSTUWVg
 gefängnisähnlich/~~JOQRSTUWqh
 gefäßausschälung/~~Fh
 gefäßchirurgisch/~~Nh
@@ -200123,14 +200123,14 @@ gegenständigkeit/~~Fh
 gegenzucheckende/~~Fh
 gegenübergelegen/~~Nh # auto-added
 gegenübergesehen/~~Nh
-gegenübergesetzt/~~Nh
+gegenübergesetzt/~~JOQRSTUWVg
 gegenüberstellen/~~Nh
 gegenüberzusehen/~~Nh
 geheimdienstlich/~~JOQRSTUWqh
 geheimnisumwoben/~~Nh
 geheimsprachlich/~~JOQRSTUWqh
 gehirngängigkeit/~~Fh
-gehorsamspflicht/~~Nh
+gehorsamspflicht/~~JOQRSTUWVg
 gehwegeinfassung/~~Fh
 gehörlosenschule/~~Fh
 gehörlosenverein/~~Nh
@@ -200138,7 +200138,7 @@ geiselentführung/~~Fh
 geistesschwächer/~~Nh
 geißblattgewächs/~~Nh
 gelbaugenpinguin/~~Nh
-gelbfiebergebiet/~~Nh
+gelbfiebergebiet/~~JOQRSTUWVg
 gelbfiebergefahr/~~Nh
 gelbfieberzyklen/~~Nh
 gelbfieberzyklus/~~Nh
@@ -200158,7 +200158,7 @@ gemischtbauweise/~~Fh
 gemischtrassisch/~~Nh
 gemischtsprachig/~~Nh
 genauigkeitsgrad/~~Nh
-genderorientiert/~~Nh
+genderorientiert/~~JOQRSTUWVg
 genderspezifisch/~~Nh
 generalvisitator/~~Nh
 generalüberholen/~~Nh
@@ -200166,19 +200166,19 @@ generationenhaus/~~Nh
 generationsmäßig/~~Nh
 generationsweise/~~Fh
 generatorgehäuse/~~Fh
-generikageschäft/~~Nh
+generikageschäft/~~JOQRSTUWVg
 genossenschafter/~~Nh
 genozidforschung/~~Fh
 genrebezeichnung/~~Fh
 gentechnologisch/~~Nh
 gentzentypkalkül/~~Nh
 genuesenquartier/~~Nh
-genussorientiert/~~Nh
+genussorientiert/~~JOQRSTUWVg
 geochronologisch/~~Nh
 geografenflechte/~~Fh
 geologenkongress/~~Nh
 geomorphologisch/~~Nh
-geothermalgebiet/~~Nh
+geothermalgebiet/~~JOQRSTUWVg
 geothermieanlage/~~Fh
 geradengleichung/~~Fh
 geriatriezentren/~~Nh
@@ -200192,12 +200192,12 @@ gerinnungshemmer/~~Nh
 germanienpolitik/~~Nh
 germaniumscheibe/~~Fh
 gertrudenkapelle/~~Fh
-geräteorientiert/~~Nh
+geräteorientiert/~~JOQRSTUWVg
 gerätespezifisch/~~Nh
 geräteunabhängig/~~Nh
 geräuschdämpfend/~~Nh
-geräuschisoliert/~~Nh
-gerüchtebehaftet/~~Nh
+geräuschisoliert/~~JOQRSTUWVg
+gerüchtebehaftet/~~JOQRSTUWVg
 gerüchtemacherei/~~Nh
 gerüstbaubetrieb/~~Nh
 gesamtafghanisch/~~Nh
@@ -200217,11 +200217,11 @@ gesangbuchsverse/~~Fh
 gesangstechnisch/~~Nh
 geschehensablauf/~~Nh
 geschichtenbäume/~~Fh
-geschichtsbewußt/~~Nh
+geschichtsbewußt/~~JOQRSTUWVg
 geschichtskundig/~~Nh
 geschicklichkeit/~~Fh
 geschickterweise/~~Fh
-geschlussfolgert/~~Nh
+geschlussfolgert/~~JOQRSTUWVg
 geschmackswidrig/~~Nh
 geschmäcklerisch/~~Nh
 geschossabweiser/~~Nh
@@ -200229,7 +200229,7 @@ geschwindigkeits/~~Nh
 geschwisterküken/~~Nh
 geschwisterliebe/~~Fh
 geschworenenbank/~~Nh
-geschäftsbedingt/~~Nh
+geschäftsbedingt/~~JOQRSTUWVg
 geschäftsführend/~~Nh
 geschäftsgebaren/~~Nh
 geschäftsunfähig/~~Nh
@@ -200245,7 +200245,7 @@ gestapotätigkeit/~~Fh
 gestehungskosten/~~Nh
 gesundschrumpfen/~~Nh
 gewaltentrennung/~~Fh
-gewaltorientiert/~~Nh
+gewaltorientiert/~~JOQRSTUWVg
 gewebefreundlich/~~JOQRSTUWqh
 gewebsentstehung/~~Fh
 gewebsschädigend/~~Nh
@@ -200255,12 +200255,12 @@ gewebszerstörung/~~Fh
 gewerberechtlich/~~JOQRSTUWqh
 gewerkschaftlich/~~JOQRSTUWqh
 gewichtsabhängig/~~Nh
-gewinnberechtigt/~~Nh
+gewinnberechtigt/~~JOQRSTUWVg
 gewinnerentwürfe/~~Fh
 gewinnmitnehmend/~~Nh
-gewinnorientiert/~~Nh
+gewinnorientiert/~~JOQRSTUWVg
 gewohnheitsmäßig/~~Nh
-gewässeraufsicht/~~Nh
+gewässeraufsicht/~~JOQRSTUWVg
 gewässerbiologie/~~Fh
 gewässerflurname/~~Fh
 gewässerforscher/~~Nh
@@ -200268,7 +200268,7 @@ gewässerkennzahl/~~Nh
 gewässerqualität/~~Fh
 gewässerstruktur/~~Nh
 gewässerökologie/~~Fh
-gewöhnungseffekt/~~Nh
+gewöhnungseffekt/~~JOQRSTUWVg
 gezeitenbewegung/~~Fh
 gezeitendrainage/~~Fh
 gezeitenströmung/~~Fh
@@ -219804,7 +219804,7 @@ quecksilberdampfgleichrichteranlage/~~N
 hauptrefinanzierungsgeschäftszinssätze/~~N
 restriktionsfragmentlängenpolymorphismus/~~N
 neue/~~N
-geht/~~N
+geht/~~Vt
 nato/~~N
 blob/~~N
 from/~~N
@@ -220649,7 +220649,7 @@ tueftler/~~N
 gewollte/~~N
 servlets/~~N
 strahlte/~~N
-gewaehlt/~~N
+gewaehlt/~~JOQRSTUWVg
 steuerte/~~N
 gruenden/~~V
 foerdern/~~N
@@ -221141,7 +221141,7 @@ verbessert/~~N
 massnahmen/~~V
 trassierte/~~N
 harlaching/~~N
-gefaehrdet/~~N
+gefaehrdet/~~JOQRSTUWVg
 chronische/~~N
 zuständige/~~N
 riverbreak/~~N
