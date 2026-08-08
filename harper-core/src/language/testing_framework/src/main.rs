@@ -1,6 +1,5 @@
 use clap::Parser;
 use harper_core::spell::{MutableDictionary, Dictionary};
-use harper_core::spell::rune::AttributeList;
 use harper_core::DictWordMetadata;
 use std::fs;
 use std::path::PathBuf;
@@ -58,7 +57,7 @@ struct Args {
     sample_size: usize,
 }
 
-fn main() {
+fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = Args::parse();
     
     println!("🌍 Harper Language Testing Framework");
@@ -77,22 +76,12 @@ fn main() {
     };
     
     // Load dictionary file
-    let dict_content = match fs::read_to_string(&dict_path) {
-        Ok(content) => content,
-        Err(e) => {
-            eprintln!("❌ Failed to read dictionary file {}: {}", dict_path.display(), e);
-            return;
-        }
-    };
+    let dict_content = fs::read_to_string(&dict_path)
+        .map_err(|e| format!("❌ Failed to read dictionary file {}: {}", dict_path.display(), e))?;
     
     // Load annotations file
-    let annotations_content = match fs::read_to_string(&annotations_path) {
-        Ok(content) => content,
-        Err(e) => {
-            eprintln!("❌ Failed to read annotations file {}: {}", annotations_path.display(), e);
-            return;
-        }
-    };
+    let annotations_content = fs::read_to_string(&annotations_path)
+        .map_err(|e| format!("❌ Failed to read annotations file {}: {}", annotations_path.display(), e))?;
     
     println!("📖 Loading dictionary from: {}", dict_path.display());
     println!("📝 Loading annotations from: {}", annotations_path.display());
@@ -101,13 +90,8 @@ fn main() {
     // For German in the testing framework, we use simple dictionary loading without compound generation
     // for performance. Compound generation is only needed for the actual linter.
     // The from_rune_files function still applies affix expansion, which is sufficient for testing.
-    let dict = match MutableDictionary::from_rune_files(&dict_content, &annotations_content) {
-        Ok(dict) => dict,
-        Err(e) => {
-            eprintln!("❌ Failed to create dictionary: {}", e);
-            return;
-        }
-    };
+    let dict = MutableDictionary::from_rune_files(&dict_content, &annotations_content)
+        .map_err(|e| format!("❌ Failed to create dictionary: {}", e))?;
     
     println!("✅ Dictionary loaded successfully!");
     println!("   Word count: {}", dict.word_count());
@@ -132,14 +116,12 @@ fn main() {
         };
 
         // Run coverage analysis with already-loaded dictionary
-        if let Err(e) = coverage::run_coverage_analysis_with_dict(
+        coverage::run_coverage_analysis_with_dict(
             &args.language,
             &dict,
             &expanded_dict_path,
             args.sample_size,
-        ) {
-            eprintln!("❌ Coverage analysis failed: {}", e);
-        }
+        )?;
     } else if args.hunspell {
         compare_with_hunspell(&args.language, &dict, &args.text.clone().unwrap_or_default());
     } else if let Some(text) = args.text {
@@ -153,6 +135,8 @@ fn main() {
         println!("   --hunspell       Compare with hunspell spell checking");
         println!("   --coverage       Run coverage analysis against expanded dictionary");
     }
+    
+    Ok(())
 }
 
 fn get_hunspell_dict_name(language: &str) -> Option<String> {
@@ -432,23 +416,23 @@ fn print_metadata(metadata: &DictWordMetadata, indent: usize) {
         println!("{}✍️ Verb{}", prefix, form);
     }
     
-    if let Some(adjective) = &metadata.adjective {
+    if metadata.adjective.is_some() {
         println!("{}🎨 Adjective", prefix);
     }
     
-    if let Some(adverb) = &metadata.adverb {
+    if metadata.adverb.is_some() {
         println!("{}💨 Adverb", prefix);
     }
     
-    if let Some(conjunction) = &metadata.conjunction {
+    if metadata.conjunction.is_some() {
         println!("{}🔗 Conjunction", prefix);
     }
     
-    if let Some(determiner) = &metadata.determiner {
+    if metadata.determiner.is_some() {
         println!("{}📍 Determiner", prefix);
     }
     
-    if let Some(pronoun) = &metadata.pronoun {
+    if metadata.pronoun.is_some() {
         println!("{}👤 Pronoun", prefix);
     }
     
