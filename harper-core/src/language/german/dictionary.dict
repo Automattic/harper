@@ -155,16 +155,12 @@ bratislava/~~N
 braue/~~MZ
 braunau/~~N
 braunauer/~~NF
-braungelb/~~J
 braunhaarig/~~J
-braunrot/~~J
 braunsberg/~~N
 braunsberger/~~NF
-braunschwarz/~~J
 braunschweig/~~NMZ
 braunschweiger/~~NF
 braunsfeld/~~N
-braunviolett/~~J
 brause/~~N
 bravheit/~~N
 bravur/~~MZ
@@ -13883,7 +13879,6 @@ abführ/~~NXh #noun (from coverage analysis)
 abgaben/~~V # verb (from coverage analysis)
 abgangs/~~Nh #noun (from coverage analysis)
 abgas/~~NXh #noun (from coverage analysis)
-
 der/~~DzMp # masculine article (nominative)
 die/~~DzFp # feminine article (nominative)
 das/~~DzZp # neuter article (nominative)
@@ -13984,59 +13979,59 @@ Einlage/~~Fhpuvw #feminine noun insole (nominative)
 # German root vocabulary - extracted from expanded dictionary
 # Focused on root words that can form compounds and inflected forms
 # Format: word/~annotations # comment
-heil/~~Nhpuvw #frequency: 11 (nominative)
-näher/~~Nhpuvw #frequency: 11 (nominative)
+heil/~~JOQRSTUWpuvw #frequency: 11 (adjective)
+näher/~~JOQRSTUWpuvw #frequency: 11 (adjective)
 reich/~~NJOQRSTUWq #adjective and noun
 reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
 ärger/~~NJOQRSTUWq #adjective and noun
 äußer/~~NJOQRSTUWq #adjective and noun
-bau/~~Nhpuvw #frequency: 10 (nominative)
-besser/~~Nhpuvw #frequency: 10 (nominative)
+bau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+besser/~~JOQRSTUWpuvw #frequency: 10 (adjective)
 ein/~Nh #frequency: 10
-fach/~~Nhpuvw #frequency: 10 (nominative)
-irr/~~Nhpuvw #frequency: 10 (nominative)
-klammer/~~Nhpuvw #frequency: 10 (nominative)
-lieb/~~Nhpuvw #frequency: 10 (nominative)
-link/~~Nhpuvw #frequency: 10 (nominative)
-locker/~~Nhpuvw #frequency: 10 (nominative)
-milder/~~Nhpuvw #frequency: 10 (nominative)
-minder/~~Nhpuvw #frequency: 10 (nominative)
-rau/~~Nhpuvw #frequency: 10 (nominative)
-schal/~~Nhpuvw #frequency: 10 (nominative)
-schick/~~Nhpuvw #frequency: 10 (nominative)
-schmäler/~~Nhpuvw #frequency: 10 (nominative)
-strahl/~~Nhpuvw #frequency: 10 (nominative)
-trau/~~Nhpuvw #frequency: 10 (nominative)
+fach/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+irr/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+klammer/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+lieb/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+link/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+locker/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+milder/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+minder/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+rau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+schal/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+schick/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+schmäler/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+strahl/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+trau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
 weich/~~NJOQRSTUWq #adjective and noun
-adel/~~Nhpuvw #frequency: 9 (nominative)
-anruf/~~Nhpuvw #frequency: 9 (nominative)
+adel/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+anruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 ball/~~Nhpuvw #frequency: 9 (nominative)
 bar/~Jq #adjective root, frequency: 9
-berg/~~Nhpuvw #frequency: 9 (nominative)
-beruf/~~Nhpuvw #frequency: 9 (nominative)
-bleich/~~Nhpuvw #frequency: 9 (nominative)
-dampf/~~Nhpuvw #frequency: 9 (nominative)
-dick/~~Nhpuvw #frequency: 9 (nominative)
-ding/~~Nhpuvw #frequency: 9 (nominative)
-faul/~~Nhpuvw #frequency: 9 (nominative)
+berg/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+beruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+bleich/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+dampf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+dick/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+ding/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+faul/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 flach/~~NJOQRSTUWq #adjective and noun
-flau/~~Nhpuvw #frequency: 9 (nominative)
-forsch/~~Nhpuvw #frequency: 9 (nominative)
-frei/~~Nhpuvw #frequency: 9 (nominative)
+flau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+forsch/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+frei/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 frisch/~Jq #adjective root, frequency: 9
-gleich/~~Nhpuvw #frequency: 9 (nominative)
-grün/~~Nhpuvw #frequency: 9 (nominative)
-jung/~~Nhpuvw #frequency: 9 (nominative)
+gleich/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+grün/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+jung/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 jung/~~JOQRSTUWq #adjective young
-kecker/~~Nhpuvw #frequency: 9 (nominative)
-keim/~~Nhpuvw #frequency: 9 (nominative)
-knall/~~Nhpuvw #frequency: 9 (nominative)
-kühl/~~Nhpuvw #frequency: 9 (nominative)
-lau/~~Nhpuvw #frequency: 9 (nominative)
-lauer/~~Nhpuvw #frequency: 9 (nominative)
-leck/~~Nhpuvw #frequency: 9 (nominative)
+kecker/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+keim/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+knall/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+kühl/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+lau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+lauer/~~JOQRSTUWpuvw #frequency: 9 (adjective)
+leck/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 loch/~Nhpuvw #frequency: 9
 mein/~Nhpuvw #frequency: 9
 nah/~Nhpuvw #frequency: 9
@@ -14223,7 +14218,7 @@ steig/~Jq #adjective root, frequency: 8
 steinig/~Jq #adjective root, frequency: 8
 stell/~Nhpuvw #frequency: 8
 stereotyp/~Nhpuvw #frequency: 8
-steuer/~~Nhpuvw #frequency: 8
+steuer/~~JOQRSTUWpuvw #frequency: 8
 stick/~Nhpuvw #frequency: 8
 stimm/~Nhpuvw #frequency: 8
 streng/~Nhpuvw #frequency: 8
@@ -86918,7 +86913,7 @@ insekten/~~V # auto-added
 insektes/~~Nh
 inselchen/~~XZ #  auto-added
 inselnahe/~~Nh
-inselweit/~~Nh
+inselweit/~~RJOQRSTUWqh # adjective
 inseraten/~~V # auto-added
 inserates/~~Nh
 inserats/~~Nh
@@ -95935,7 +95930,7 @@ netznahem/~~Nh
 netznahen/~~V # auto-added
 netznaher/~~Mh
 netznahes/~~Nh
-netzweit/~~NXh
+netzweit/~~RJOQRSTUWqh # adjective
 neubarock/~~Nh
 neuerbaut/~~Nh
 neuerung/~~Fh
@@ -104946,7 +104941,7 @@ sperrigst/~~Nh
 sperrtest/~~Nh
 sperrtet/~~Nh
 sperrung/~~Fh
-sperrweit/~~Nh
+sperrweit/~~RJOQRSTUWqh # adjective
 sperrzoll/~~Nh # auto-added
 spessart/~~Nh # auto-added
 spessarts/~~Nh
@@ -107683,7 +107678,7 @@ teamgeist/~~Nh
 teamsport/~~Nh
 teamtest/~~Nh
 teamtet/~~Nh
-teamweit/~~NXh
+teamweit/~~RJOQRSTUWqh # adjective
 teamwork/~~Nh
 teamworks/~~Nh
 teamärzte/~~Nh
@@ -116063,7 +116058,7 @@ werkendes/~~Nh
 werkfremd/~~Nh
 werksnah/~~NXh
 werkstatt/~~Nh
-werksweit/~~Nh
+werksweit/~~RJOQRSTUWqh # adjective
 werktags/~~Nh
 werktest/~~Nh
 werktet/~~Nh
@@ -126803,7 +126798,7 @@ mehrzeilig/~~RJOQRSTUWqh
 mehrzeller/~~Nh
 mehrzellig/~~RJOQRSTUWqh
 mehrzähnig/~~RJOQRSTUWqh
-meilenweit/~~Nh
+meilenweit/~~RJOQRSTUWqh # adjective
 meistercup/~~Nh
 meisterelf/~~Nh
 meistgebot/~~Nh
@@ -137791,7 +137786,7 @@ grubenartig/~~Nh
 gruftanlage/~~Fh
 grundgelegt/~~Nh
 grundstücks/~~Nh
-gruppenweit/~~Nh
+gruppenweit/~~RJOQRSTUWqh # adjective
 gräberreihe/~~Fh
 gräberstadt/~~Nh
 gräberwände/~~Fh
