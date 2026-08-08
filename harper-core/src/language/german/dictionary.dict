@@ -16075,7 +16075,7 @@ centromernah/~Nh #frequency: 6
 cerebrospinal/~Nh #frequency: 6
 chancengleich/~Nh #frequency: 6
 chaotisch/~Jq #adjective root, frequency: 6
-charakteristisch/~Jq #adjective root, frequency: 6
+charakteristisch/~~JOQRSTUWq #adjective root, frequency: 6
 charakterschwach/~Nh #frequency: 6
 charakterstark/~Nh #frequency: 6
 charaktervoll/~Nh #frequency: 6
@@ -17699,7 +17699,7 @@ hochspeziell/~Nh #frequency: 6
 hochstabil/~Nh #frequency: 6
 hochvolatil/~Nh #frequency: 6
 hochwasserfrei/~Nh #frequency: 6
-hochwertig/~Jq #adjective root, frequency: 6
+hochwertig/~~JOQRSTUWq #adjective root, frequency: 6
 hoffnungsfroh/~Nh #frequency: 6
 hoffnungsreich/~Nh #frequency: 6
 hoffremd/~Nh #frequency: 6
@@ -113600,7 +113600,7 @@ verwelkst/~~Nh
 verwelkt/~~NXh
 verwende/~~Nh
 verwender/~~Mh
-verwendet/~~Nh
+verwendet/~~JOQRSTUWVg # past participle as adjective
 verwerfen/~~V # auto-added
 verwert/~~NXh
 verwerter/~~Mh
@@ -142883,7 +142883,7 @@ prinzenpaar/~~Nh
 prinzenpark/~~Nh
 prinzenzeit/~~Nh
 prinzgemahl/~~Nh
-prinzipiell/~~Nh
+prinzipiell/~~JOQRSTUWpuvw
 prinzregent/~~Nh
 prismatisch/~~Nh
 privilegien/~~Nh
@@ -151696,7 +151696,7 @@ geobotaniker/~~Nh
 geobotanisch/~~Nh
 geodynamisch/~~Nh
 geografentag/~~Nh
-geographisch/~~Nh
+geographisch/~~JOQRSTUWqh # adjective with compound flag
 geoisotherme/~~Fh
 geopolitisch/~~Nh
 georgianisch/~~Nh
@@ -160681,7 +160681,7 @@ verdrießlich/~~Nh
 verdächtigen/~~Nh # auto-added
 verdübeltest/~~Nh
 verehelichen/~~Nh
-vereinfachen/~~Nh
+vereinfachen/~~V # verb
 vereinseigen/~~Nh # auto-added
 vereinsmeier/~~Nh
 vereinsmäßig/~~Nh
@@ -187361,7 +187361,7 @@ zeigerstellung/~~Fh
 zeigerstruktur/~~Nh
 zeigervariable/~~Fh
 zeitdilatation/~~Fh
-zeitgenössisch/~~Nh
+zeitgenössisch/~~JOQRSTUWqh # adjective with compound flag
 zeitkonsistent/~~Nh
 zeitlupenartig/~~Nh
 zeitlupentempo/~~Nh
