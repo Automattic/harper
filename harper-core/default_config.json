@@ -4383,15 +4383,22 @@
 							}
 						},
 						{
-							"Bool": {
-								"name": "Damages",
-								"state": true,
-								"label": "Damages"
-							}
-						},
-						{
-							"Bool": {
-								"name": "DampSquib",
+						              "Bool": {
+						                "name": "Damages",
+						                "state": true,
+						                "label": "Damages"
+						              }
+						            },
+						            {
+						              "Bool": {
+						                "name": "LifetimeLife",
+						                "state": true,
+						                "label": "Lifetime Life"
+						              }
+						            },
+						            {
+						              "Bool": {
+						                "name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
 							}
