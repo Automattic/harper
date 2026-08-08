@@ -888,8 +888,8 @@
 # IPl+ VLB P    ISgPl+ NSg/I/J/C/Dq D+  NSg/J+ .
 > There are a   number     of problems with your plan   .
 # R+    VLB D/P N🅪Sg/VB/JC P  NPl+     P    D$+  NSg/VB .
-> What   on  Earth    is  wrong      with my  keyboard ?
-# NSg/I+ J/P NPrᴹ/VB+ VL3 NSg/VB/J/R P    D$+ NSg/VB+  .
+> What   on  Earth      is  wrong      with my  keyboard ?
+# NSg/I+ J/P NPr🅪Sg/VB+ VL3 NSg/VB/J/R P    D$+ NSg/VB+  .
 > He       was  pleased with the outcome .
 # NPr/ISg+ VLPt VP/J    P    D+  NSg+    .
 > I’m upset    with my  father  .

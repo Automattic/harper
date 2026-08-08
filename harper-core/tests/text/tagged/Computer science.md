@@ -294,8 +294,8 @@
 # NSg/P   D   J       NSg+     . J+      NPl/V3+     . NSg+     N🅪Sg/VB+ Nᴹ/VB+   R/C
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
 # R     V3+        NSg/VB/J NPl/V3+     . NSg/I R/C/P NSg/J     N🅪Sg/VB . Nᴹ+         .
-> mathematics , physics , biology , Earth    science  , statistics , philosophy , and  logic    .
-# Nᴹ+         . NPl/V3+ . N🅪Sg+   . NPrᴹ/VB+ N🅪Sg/VB+ . NPl/V3+    . N🅪Sg/VB+   . VB/C Nᴹ/VB/J+ .
+> mathematics , physics , biology , Earth      science  , statistics , philosophy , and  logic    .
+# Nᴹ+         . NPl/V3+ . N🅪Sg+   . NPr🅪Sg/VB+ N🅪Sg/VB+ . NPl/V3+    . N🅪Sg/VB+   . VB/C Nᴹ/VB/J+ .
 >
 #
 > Computer science  is  considered by some     to have    a   much         closer relationship with

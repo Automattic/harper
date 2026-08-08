@@ -1262,8 +1262,8 @@
 # NPr🅪Sg/VB+ NSg/VB NPr/J/R/P D   NSg/VB+ . D+  N🅪Sg/VB+ VP  VPp/J NSg/VB/J/P . Nᴹ/Vg/J D/P NSg/J . NPr/VB/J N🅪Sg/VB+ .
 > with wings   beating in        the trees   and  a   persistent organ  sound      as    the full     bellows
 # P    NPl/V3+ Nᴹ/Vg/J NPr/J/R/P D+  NPl/V3+ VB/C D/P J          NSg/VB N🅪Sg/VB/J+ R/C/P D   NSg/VB/J NPl/V3
-> of the earth    blew      the frogs  full     of life     . The silhouette of a    moving  cat       wavered
-# P  D   NPrᴹ/VB+ NSg/VPt/J D   NPl/V3 NSg/VB/J P  N🅪Sg/VB+ . D   NSg/VB     P  D/P+ Nᴹ/Vg/J NSg/VB/J+ VP/J
+> of the earth      blew      the frogs  full     of life     . The silhouette of a    moving  cat       wavered
+# P  D   NPr🅪Sg/VB+ NSg/VPt/J D   NPl/V3 NSg/VB/J P  N🅪Sg/VB+ . D   NSg/VB     P  D/P+ Nᴹ/Vg/J NSg/VB/J+ VP/J
 > across the moonlight , and  turning my  head      to watch  it       , I       saw     that     I       was  not
 # NSg/P  D+  N🅪Sg/VB+  . VB/C Nᴹ/Vg/J D$+ NPr/VB/J+ P  NSg/VB NPr/ISg+ . ISg/#r+ NSg/VPt I/C/Ddem ISg/#r+ VLPt NSg/R/C
 > alone — fifty feet away a    figure  had emerged from the shadow   of my  neighbor’s
@@ -2390,8 +2390,8 @@
 # NSg/P   NPl+  NPr/I+ R     VPt  Dq   NSg$    NPl/V3+ .
 >
 #
-> The lights  grow brighter as    the earth    lurches away from the sun     , and  now       the
-# D+  NPl/V3+ VB   NSg/JC   R/C/P D+  NPrᴹ/VB+ NPl/V3  VB/J P    D   NPr/VB+ . VB/C NSg/J/R/C D
+> The lights  grow brighter as    the earth      lurches away from the sun     , and  now       the
+# D+  NPl/V3+ VB   NSg/JC   R/C/P D+  NPr🅪Sg/VB+ NPl/V3  VB/J P    D   NPr/VB+ . VB/C NSg/J/R/C D
 > orchestra is  playing yellow   cocktail  music      , and  the opera of voices  pitches a
 # NSg+      VL3 Nᴹ/Vg/J NSg/VB/J NSg/VB/J+ N🅪Sg/VB/J+ . VB/C D   NSg   P  NPl/V3+ NPl/V3+ D/P
 > key      higher . Laughter is  easier minute   by minute    , spilled with prodigality ,
@@ -5681,7 +5681,7 @@
 > vivid with new   flowers   , through dressing - rooms   and  poolrooms , and  bathrooms with
 # NSg/J P    NSg/J NPrPl/V3+ . J/P     Nᴹ/Vg/J+ . NPl/V3+ VB/C NPl       . VB/C NPl/V3+   P
 > sunken baths   — intruding into one     chamber where   a   dishevelled man     in        pajamas was
-# VPp/J  NSg/VB+ . Nᴹ/Vg/J   P    NSg/I/J NSg/VB+ NSg/R/C D/P VP/J/Comm   NPr/VB+ NPr/J/R/P NPl     VLPt
+# VPp/J  NPl/V3+ . Nᴹ/Vg/J   P    NSg/I/J NSg/VB+ NSg/R/C D/P VP/J/Comm   NPr/VB+ NPr/J/R/P NPl     VLPt
 > doing   liver   exercises on  the floor   . It       was  Mr   . Klipspringer , the ‘ ‘ boarder . ” I
 # Nᴹ/Vg/J N🅪Sg/J+ NPl/V3+   J/P D   NSg/VB+ . NPr/ISg+ VLPt NSg+ . ?            . D   . . NSg+    . . ISg/#r+
 > had seen    him  wandering hungrily about the beach   that      morning    . Finally we   came      to
@@ -7595,7 +7595,7 @@
 > Tom     came      out          of the house   wrapping a    quart     bottle  in        a    towel   , followed by Daisy
 # NPr/VB+ NSg/VPt/P NSg/VB/J/R/P P  D+  NPr/VB+ N🅪Sg/Vg+ D/P+ NSg/VB/J+ NSg/VB+ NPr/J/R/P D/P+ NSg/VB+ . VP/J     P  NPr
 > and  Jordan wearing small    tight hats   of metallic cloth and  carrying light      capes
-# VB/C NPr+   Nᴹ/Vg/J NPr/VB/J VB/J  NPl/V3 P  NSg/J+   NSg+  VB/C Nᴹ/Vg/J  N🅪Sg/VB/J+ NPl/V3+
+# VB/C NPr+   Nᴹ/Vg/J NPr/VB/J VB/J  NPl/V3 P  NSg/J+   N🅪Sg+ VB/C Nᴹ/Vg/J  N🅪Sg/VB/J+ NPl/V3+
 > over    their arms    .
 # NSg/J/P D$+   NPl/V3+ .
 >
@@ -7999,7 +7999,7 @@
 > of sweat    raced cool     across my  back     . The notion originated with Daisy’s
 # P  N🅪Sg/VB+ VP/J  NSg/VB/J NSg/P  D$+ NSg/VB/J . D+  NSg+   VP/J       P    NPr$
 > suggestion that      we   hire   five bathrooms and  take   cold  baths   , and  then      assumed
-# N🅪Sg+      I/C/Ddem+ IPl+ NSg/VB NSg  NPl/V3+   VB/C NSg/VB NSg/J NSg/VB+ . VB/C NSg/J/R/C VP/J
+# N🅪Sg+      I/C/Ddem+ IPl+ NSg/VB NSg  NPl/V3+   VB/C NSg/VB NSg/J NPl/V3+ . VB/C NSg/J/R/C VP/J
 > more         tangible form     as    “ a   place    to have    a   mint     julep . ” Each of us       said over    and
 # NPr/I/J/R/Dq NSg/J    N🅪Sg/VB+ R/C/P . D/P N🅪Sg/VB+ P  NSg/VXB D/P NSg/VB/J NSg   . . Dq   P  NPr/IPl+ VP/J NSg/J/P VB/C
 > over    that     it       was  a   “ crazy idea ” — we   all           talked at    once  to a   baffled clerk   and
@@ -11598,8 +11598,8 @@
 # ISg/D$+ N🅪Sg/VB . NSg/I/J+ N🅪Sg/VB+ ISg/#r+ VXPt VB   D/P+ N🅪Sg/VB/J+ NSg+ R     . VB/C NSg/VPt ISg/D$+ NPl/V3+ NSg/VB NSg/P
 > his     front     steps   . But     I       didn’t investigate . Probably it       was  some     final    guest  who
 # ISg/D$+ NSg/VB/J+ NPl/V3+ . NSg/C/P ISg/#r+ VXPt   VB          . R        NPr/ISg+ VLPt I/J/R/Dq NSg/VB/J NSg/VB NPr/I+
-> had been   away at    the ends   of the earth    and  didn’t know that     the party     was  over    .
-# VP  VLPp/B VB/J NSg/P D   NPl/V3 P  D+  NPrᴹ/VB+ VB/C VXPt   VB   I/C/Ddem D   NSg/VB/J+ VLPt NSg/J/P .
+> had been   away at    the ends   of the earth      and  didn’t know that     the party     was  over    .
+# VP  VLPp/B VB/J NSg/P D   NPl/V3 P  D+  NPr🅪Sg/VB+ VB/C VXPt   VB   I/C/Ddem D   NSg/VB/J+ VLPt NSg/J/P .
 >
 #
 > On  the last      night    , with my  trunk   packed and  my  car  sold   to the grocer , I       went

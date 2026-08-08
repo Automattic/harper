@@ -1389,7 +1389,7 @@
 > Purposes , as    Part     of this   Constitution , when    ratified by the Legislatures of
 # NPl/V3+  . R/C/P NSg/VB/J P  I/Ddem NPr+         . NSg/I/C VP/J     P  D   NPl          P
 > three fourths of the several States    , or    by Conventions in        three fourths
-# NSg   NSg     P  D   J/Dq    NPrPl/V3+ . NPr/C P  NPl+        NPr/J/R/P NSg   NSg
+# NSg   NPl     P  D   J/Dq    NPrPl/V3+ . NPr/C P  NPl+        NPr/J/R/P NSg   NPl
 > thereof , as    the one      or    the other    Mode of Ratification may     be       proposed by the
 # R       . R/C/P D   NSg/I/J+ NPr/C D   NSg/VB/J NSg  P  NSg+         NPr/VXB NSg/VLXB VP/J     P  D
 > Congress ; Provided that     no       Amendment which may     be       made prior to the Year One

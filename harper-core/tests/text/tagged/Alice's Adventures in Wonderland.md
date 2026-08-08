@@ -106,8 +106,8 @@
 # N🅪Sg/VB/J/P . N🅪Sg/VB/J/P . N🅪Sg/VB/J/P . VXB   D+  N🅪Sg/VB+ R     NSg/VBPp/P P  D/P+ NSg/VB+ . . ISg/#r+ N🅪Sg/VB NSg/C NSg/I/J/Dq+ NPrPl+
 > I’ve fallen by this   time       ? ” she  said aloud . “ I       must    be       getting somewhere near       the
 # K    VPp/J  P  I/Ddem N🅪Sg/VB/J+ . . ISg+ VP/J J     . . ISg/#r+ NSg/VXB NSg/VLXB NSg/Vg  R         NSg/VB/J/P D
-> centre      of the earth    . Let     me       see    : that      would be       four thousand miles  down        , I
-# NSg/VB/Comm P  D+  NPrᴹ/VB+ . NSg/VBP NPr/ISg+ NSg/VB . I/C/Ddem+ VXB   NSg/VLXB NSg+ NSg+     NPrPl+ N🅪Sg/VB/J/P . ISg/#r+
+> centre      of the earth      . Let     me       see    : that      would be       four thousand miles  down        , I
+# NSg/VB/Comm P  D+  NPr🅪Sg/VB+ . NSg/VBP NPr/ISg+ NSg/VB . I/C/Ddem+ VXB   NSg/VLXB NSg+ NSg+     NPrPl+ N🅪Sg/VB/J/P . ISg/#r+
 > think  — ” ( for   , you    see    , Alice had learnt several things of this    sort    in        her
 # NSg/VB . . . R/C/P . ISgPl+ NSg/VB . NPr+  VP  VB     J/Dq    NPl    P  I/Ddem+ NSg/VB+ NPr/J/R/P ISg/D$+
 > lessons in        the schoolroom , and  though this    was  not     a   very good     opportunity for
@@ -122,8 +122,8 @@
 # VLPt . NPr/C NSg+      I/C    . NSg/C/P N🅪Sg/VP IPl+ VLPt NPr/J NSg/J NPl/V3 P  NSg/VB . .
 >
 #
-> Presently she  began again . “ I       wonder  if    I       shall fall     right    through the earth    !
-# R         ISg+ VPt   P     . . ISg/#r+ N🅪Sg/VB NSg/C ISg/#r+ VXB   N🅪Sg/VB+ NPr/VB/J J/P     D+  NPrᴹ/VB+ .
+> Presently she  began again . “ I       wonder  if    I       shall fall     right    through the earth      !
+# R         ISg+ VPt   P     . . ISg/#r+ N🅪Sg/VB NSg/C ISg/#r+ VXB   N🅪Sg/VB+ NPr/VB/J J/P     D+  NPr🅪Sg/VB+ .
 > How   funny it’ll seem to come       out          among the people  that      walk   with their heads
 # NSg/C NSg/J K     VB   P  NSg/VBPp/P NSg/VB/J/R/P P     D   NPl/VB+ I/C/Ddem+ NSg/VB P    D$+   NPl/V3+
 > downward ! The Antipathies , I       think  — ” ( she  was  rather     glad     there was  no       one
@@ -2362,8 +2362,8 @@
 # . I/C+  VXB   NSg/R/C NSg/VLXB D/P+ N🅪Sg/VB+  . . VP/J NPr+  . NPr/I+ N🅪Sg/VP/J J/R  NSg/VB/J P  NSg/VB D/P
 > opportunity of showing off        a   little     of her     knowledge . “ Just think  of what   work
 # N🅪Sg        P  Nᴹ/Vg/J NSg/VB/J/P D/P NPr/I/J/Dq P  ISg/D$+ Nᴹ+       . . J/R  NSg/VB P  NSg/I+ N🅪Sg/VB+
-> it       would make   with the day    and  night    ! You    see    the earth    takes  twenty - four hours
-# NPr/ISg+ VXB   NSg/VB P    D   NPr🅪Sg VB/C N🅪Sg/VB+ . ISgPl+ NSg/VB D+  NPrᴹ/VB+ NPl/V3 NSg    . NSg  NPl
+> it       would make   with the day    and  night    ! You    see    the earth      takes  twenty - four hours
+# NPr/ISg+ VXB   NSg/VB P    D   NPr🅪Sg VB/C N🅪Sg/VB+ . ISgPl+ NSg/VB D+  NPr🅪Sg/VB+ NPl/V3 NSg    . NSg  NPl
 > to turn   round      on  its     axis — ”
 # P  NSg/VB NSg/VB/J/P J/P ISg/D$+ NPr+ . .
 >
@@ -4298,8 +4298,8 @@
 # . ISgPl+ NSg/I/VXB P  NSg/VLXB J       P  ISg+     R/C/P Nᴹ/Vg/J NSg/I+ D/P+ NSg/VB/J+ NSg/VB+  . . VP/J
 > the Gryphon ; and  then      they both   sat    silent and  looked at    poor     Alice , who    felt
 # D   ?       . VB/C NSg/J/R/C IPl+ I/C/Dq NSg/VP NSg/J  VB/C VP/J   NSg/P NSg/VB/J NPr+  . NPr/I+ N🅪Sg/VP/J
-> ready    to sink   into the earth    . At    last     the Gryphon said to the Mock     Turtle  ,
-# NSg/VB/J P  NSg/VB P    D   NPrᴹ/VB+ . NSg/P NSg/VB/J D   ?       VP/J P  D   NSg/VB/J NSg/VB+ .
+> ready    to sink   into the earth      . At    last     the Gryphon said to the Mock     Turtle  ,
+# NSg/VB/J P  NSg/VB P    D   NPr🅪Sg/VB+ . NSg/P NSg/VB/J D   ?       VP/J P  D   NSg/VB/J NSg/VB+ .
 > “ Drive   on  , old   fellow ! Don’t be       all          day     about it       ! ” and  he       went    on  in        these
 # . N🅪Sg/VB J/P . NSg/J NSg    . VXB   NSg/VLXB NSg/I/J/C/Dq NPr🅪Sg+ J/P   NPr/ISg+ . . VB/C NPr/ISg+ NSg/VPt J/P NPr/J/R/P I/Ddem+
 > words   :
