@@ -48,6 +48,30 @@ pub fn installed_application_bundle_ids() -> Result<Vec<String>, String> {
     Ok(deduplicate_and_sort_bundle_ids(bundle_ids))
 }
 
+/// Basic validation for macOS bundle identifiers (reverse-DNS-like).
+fn is_valid_bundle_id(bundle_id: &str) -> bool {
+    // must contain at least one dot, and only allow alnum / '-' / '_' / '.'
+    if !bundle_id.contains('.') {
+        return false;
+    }
+    bundle_id
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+}
+
+/// Sanitize an icon filename read from an Info.plist. Accept only simple filenames (no slashes),
+/// disallow absolute paths and parent-directory components.
+fn sanitize_icon_file(name: &str) -> Option<String> {
+    let s = name.trim();
+    if s.is_empty() {
+        return None;
+    }
+    if s.contains('/') || s.contains('\\') || s.contains("..") {
+        return None;
+    }
+    Some(s.to_string())
+}
+
 /// Resolves a bundle identifier to an installed `.app` path using Spotlight metadata.
 pub fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
     let bundle_id = bundle_id.trim();
@@ -55,7 +79,12 @@ pub fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
     if bundle_id.is_empty() {
         return None;
     }
-
+    
+    // Validate bundle ID – avoid passing arbitrary values to mdfind.
+    if !is_valid_bundle_id(bundle_id) {
+        return None;
+    }
+    
     let predicate_bundle_id = escape_spotlight_string(bundle_id);
     let output = Command::new("mdfind")
         .arg(format!(
