@@ -87,11 +87,8 @@ impl Expr for SequenceExpr {
                 continue;
             }
 
-            // Only expand the window if the match actually covers some tokens
-            if out.end > out.start {
-                window.expand_to_include(out.start);
-                window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
-            }
+            window.expand_to_include(out.start);
+            window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
         }
 
         Some(window)
