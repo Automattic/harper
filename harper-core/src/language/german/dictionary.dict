@@ -10855,15 +10855,15 @@ abgas/~~NXh #noun (from coverage analysis)
 der/~~DzMp # masculine article (nominative)
 die/~~DzFp # feminine article (nominative)
 das/~~DzZp # neuter article (nominative)
-den/~~Dz # masculine accusative
-dem/~~Dz # masculine/neuter dative
-des/~~Dz # masculine/neuter genitive
+den/~~DzMu # masculine accusative
+dem/~~DzMv # masculine/neuter dative
+des/~~DzMw # masculine/neuter genitive
 ein/~~DzMp # indefinite article (masculine/neuter nominative)
 eine/~~DzFp # indefinite article feminine (nominative)
-einem/~~Dz # indefinite article dative
-einen/~~Dz # indefinite article masculine accusative
-einer/~~Dz # indefinite article feminine genitive
-eines/~~Dz # indefinite article neuter genitive
+einem/~~DzMv # indefinite article dative
+einen/~~DzMu # indefinite article masculine accusative
+einer/~~DzFw # indefinite article feminine genitive
+eines/~~DzZw # indefinite article neuter genitive
 ich/~~Ip # pronoun I (nominative)
 du/~~Ip # pronoun you (nominative)
 er/~~Ip # pronoun he (nominative)
@@ -20361,7 +20361,7 @@ dibbele/~~Nh #auto-added
 dibbeln/~~V # auto-added
 dibbelt/~~NXh #auto-added
 dibble/~~Nh #auto-added
-dich/~~I # pronoun you (singular, accusative)
+dich/~~Iu # pronoun you (singular, accusative)
 dichte/~~Nh #auto-added
 dichtem/~~Nh #auto-added
 dichten/~~V # auto-added
@@ -22240,7 +22240,7 @@ etwa/~~Nbh #auto-added
 etwaig/~~NXh #auto-added
 etüde/~~Nh #auto-added
 etüden/~~V # auto-added
-euch/~~I # pronoun you all (accusative/dative)
+euch/~~Iu # pronoun you all (accusative/dative)
 euer/~~I # pronoun of you all (genitive)
 euere/~~Nh #auto-added
 eufonie/~~Nh #auto-added
@@ -26955,7 +26955,7 @@ igitt/~~Nh #auto-added
 igle/~~Nh #auto-added
 iglu/~~Nbh #auto-added
 ihm/~~I # pronoun to him/it (dative)
-ihn/~~I # pronoun him (accusative)
+ihn/~~Iu # pronoun him (accusative)
 ihnen/~~I # pronoun to them (dative)
 Ihnen/~~I # pronoun to You (formal, dative)
 Ihre/~~I # pronoun your (formal, possessive)
@@ -31136,7 +31136,7 @@ miau/~~NXh #auto-added
 miau/~~Vcej # REPLACES miauen
 miaut/~~NXh #auto-added
 miautet/~~Nh #auto-added
-mich/~~I # pronoun me (accusative)
+mich/~~Iu # pronoun me (accusative)
 mickrig/~~NXh #auto-added
 mied/~~Nh #auto-added
 mieden/~~V # auto-added
@@ -38122,7 +38122,7 @@ unreif/~~NJOQRSTUWq #adjective and noun
 unrein/~~Nh #auto-added
 unruh/~~NXh #auto-added
 unrund/~~Nh #auto-added
-uns/~~I # pronoun us/to us (accusative/dative)
+uns/~~Iv # pronoun us/to us (accusative/dative)
 unsere/~~Nh #auto-added
 unserm/~~Nh #auto-added
 unsern/~~Nh #auto-added
