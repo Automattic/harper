@@ -18,7 +18,7 @@ fn load_german_fst_dict() -> Arc<FstDictionary> {
 fn load_german_annotated_dict() -> Arc<MutableDictionary> {
     // Delegate to base dict to avoid O(n^2) memory explosion from compound pre-generation
     // Compound words are now checked lazily via compound_aware_german_dictionary()
-    load_german_base_dict()
+    load_german_base_dict_from_word_list(&GERMAN_WORD_LIST)
 }
 
 /// Load the German word list for lazy compound checking
@@ -28,15 +28,15 @@ fn load_german_word_list() -> Vec<crate::spell::rune::word_list::AnnotatedWord> 
 }
 
 /// Load the base German dictionary without pre-generated compounds
-fn load_german_base_dict() -> Arc<MutableDictionary> {
-    // Parse word list and attribute list
-    let word_list = load_german_word_list();
+fn load_german_base_dict_from_word_list(
+    word_list: &[crate::spell::rune::word_list::AnnotatedWord],
+) -> Arc<MutableDictionary> {
     let attr_list = AttributeList::parse(include_str!("../annotations.json"))
         .expect("Failed to parse German dictionary attribute list");
 
     // Create word map and expand annotated words (but don't generate compounds)
     let mut word_map = WordMap::default();
-    attr_list.expand_annotated_words(word_list, &mut word_map);
+    attr_list.expand_annotated_words(word_list.iter().cloned(), &mut word_map);
 
     // Create the MutableDictionary from the populated word map
     let mut dict = MutableDictionary::new();
@@ -47,25 +47,31 @@ fn load_german_base_dict() -> Arc<MutableDictionary> {
     Arc::new(dict)
 }
 
+// Word list for lazy compound checking (shared between all German dictionary components)
+// This is initialized first to avoid duplicate parsing
+static GERMAN_WORD_LIST: LazyLock<Vec<crate::spell::rune::word_list::AnnotatedWord>> =
+    LazyLock::new(load_german_word_list);
+
+// Base dictionary without pre-generated compounds
+static GERMAN_BASE_DICT: LazyLock<Arc<MutableDictionary>> =
+    LazyLock::new(|| load_german_base_dict_from_word_list(&GERMAN_WORD_LIST));
+
 // Annotated dictionary using Rune format
 static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
     LazyLock::new(load_german_annotated_dict);
 
-// Base dictionary without pre-generated compounds
-static GERMAN_BASE_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(load_german_base_dict);
-
 // Compound checker for lazy compound checking
 static GERMAN_COMPOUND_CHECKER: LazyLock<Arc<Mutex<CompoundChecker>>> = LazyLock::new(|| {
-    let word_list = load_german_word_list();
-    let checker = CompoundChecker::new(&word_list);
+    let word_list = &*GERMAN_WORD_LIST;
+    let checker = CompoundChecker::new(word_list);
     Arc::new(Mutex::new(checker))
 });
 
 // Compound-aware dictionary using lazy compound checking
 static GERMAN_COMPOUND_AWARE_DICT: LazyLock<Arc<CompoundAwareDictionary>> = LazyLock::new(|| {
     let base_dict = Arc::clone(&*GERMAN_BASE_DICT);
-    let word_list = load_german_word_list();
-    let compound_checker = CompoundChecker::new(&word_list);
+    let word_list = &*GERMAN_WORD_LIST;
+    let compound_checker = CompoundChecker::new(word_list);
 
     Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
 });
