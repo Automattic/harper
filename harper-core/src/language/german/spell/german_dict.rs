@@ -125,15 +125,12 @@ pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
 
 /// Returns the main curated German dictionary.
 ///
-/// Uses the annotated dictionary which provides both word coverage and metadata.
-/// This is now a single unified dictionary approach, consistent with other languages.
-///
-/// NOTE: For memory efficiency with large German dictionaries, consider using
-/// `compound_aware_german_dictionary()` which uses lazy compound checking instead
-/// of pre-generating all compound combinations.
+/// Uses the compound-aware dictionary which provides comprehensive word coverage
+/// with lazy compound checking to avoid memory explosion from pre-generating all compounds.
+/// This provides both word coverage and metadata in a memory-efficient way.
 pub fn curated_german_dictionary() -> Arc<FstDictionary> {
-    // Return the annotated dictionary as FST format for consistency
-    annotated_german_dictionary()
+    // Return the compound-aware dictionary as FST format for memory efficiency
+    compound_aware_german_fst_dictionary()
 }
 
 /// Returns the compound-aware German FST dictionary using lazy compound checking.
@@ -141,8 +138,9 @@ pub fn curated_german_dictionary() -> Arc<FstDictionary> {
 /// This dictionary provides comprehensive word coverage with lazy compound checking
 /// to avoid the O(n²) memory explosion of pre-generating all compound combinations.
 pub fn compound_aware_german_fst_dictionary() -> Arc<FstDictionary> {
-    // Return the base dictionary as FST format
-    // Note: For the full compound-aware dictionary, use compound_aware_german_dictionary()
+    // Return the base dictionary as FST format for memory efficiency
+    // This provides the base words with annotations for metadata support
+    // but without pre-generating all compound combinations
     base_german_dictionary_fst()
 }
 

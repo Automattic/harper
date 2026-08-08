@@ -10909,7 +10909,7 @@ jetzt/~~R # adverb now
 sehr/~~R # adverb very
 wichtig/~~JOQRSTUWq #adjective important
 gut/~~JOQRSTUWq #adjective good
-schön/~~NJOQRSTUWq #adjective and noun
+schön/~~JOQRSTUWq #adjective (primary), can be noun in some contexts
 groß/~~NJOQRSTUWq #adjective and noun
 klein/~~NJOQRSTUWq #adjective and noun
 neu/~~NJOQRSTUWq #adjective and noun
@@ -23699,7 +23699,7 @@ füßchen/~~XZ #  auto-added
 füße/~~Nh #auto-added
 füßeln/~~V # auto-added
 füßen/~~V # auto-added
-gab/~~NXh #auto-added
+gab/~~Vt # verb (past tense of geben)
 gabele/~~Nh #auto-added
 gabelig/~~NXh #auto-added
 gabeln/~~V # auto-added
@@ -27100,7 +27100,7 @@ inntals/~~Nh #auto-added
 innung/~~Fh #auto-added
 input/~~Nh #auto-added
 inputs/~~Nh #auto-added
-ins/~~Nh #auto-added
+ins/~~DzU # contraction of "in das" (dative/accusative)
 insasse/~~Nh #auto-added
 insekt/~~Nh #auto-added
 insekts/~~Nh #auto-added
@@ -36094,7 +36094,7 @@ schlund/~~Nh #auto-added
 schlupf/~~Nah #auto-added
 schluss/~~Nh #auto-added
 schläfe/~~Nh #auto-added
-schläft/~~Nh #auto-added
+schläft/~~V # verb (3rd person singular of schlafen)
 schläge/~~Nh #auto-added
 schlägt/~~Nh #auto-added
 schläue/~~Nh #auto-added
@@ -36651,7 +36651,7 @@ spick/~~NXh #auto-added
 spickt/~~NXh #auto-added
 spie/~~Nh #auto-added
 spiels/~~Nh #auto-added
-spielt/~~NXh #auto-added
+spielt/~~V # verb (3rd person singular of spielen)
 spien/~~V # auto-added
 spiere/~~Nh #auto-added
 spiet/~~Nh #auto-added
@@ -203547,3 +203547,15 @@ Hispanien/~~Nh #proper noun
 Tambre/~~Nh #proper noun
 kappe/~~Fh # auto-added compound component
 schwerpunkt/~~NY #  auto-added
+# Additional German words for better coverage
+Fünftel/~~Nh #auto-added
+eurasisch/~~Jq #auto-added
+erstreckt/~~V #auto-added
+Geographisch/~~Jq #auto-added
+Subkontinent/~~NXh #auto-added
+bezieht/~~V #auto-added
+zusammen/~~D #auto-added
+bildet/~~V #auto-added
+Eurasien/~~Nh #auto-added
+Begriff/~~NXh #auto-added
+Landmasse/~~Fh #auto-added

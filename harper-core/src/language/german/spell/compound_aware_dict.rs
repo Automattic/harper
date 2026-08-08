@@ -185,6 +185,7 @@ impl Dictionary for CompoundAwareDictionary {
 #[cfg(test)]
 mod tests {
     use super::*;
+    use crate::CharString;
     use crate::spell::MutableDictionary;
     use crate::spell::rune::word_list::AnnotatedWord;
 

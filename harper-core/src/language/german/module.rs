@@ -42,11 +42,10 @@ impl LanguageModule for GermanModule {
     }
 
     fn dictionary() -> Arc<FstDictionary> {
-        // Use compound-aware dictionary for lazy compound checking
-        // This provides the same functionality but with lazy compound checking
-        // to avoid the O(n²) memory explosion of pre-generating all compounds
-        use crate::language::german::spell::base_german_dictionary_fst;
-        base_german_dictionary_fst()
+        // Use curated dictionary for German which includes all word forms and metadata
+        // This provides comprehensive German language support with proper annotations
+        use crate::language::german::spell::curated_german_dictionary;
+        curated_german_dictionary()
     }
 
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
