@@ -30541,7 +30541,7 @@ jäher/~~Mh
 jähes/~~Nh
 jähre/~~Nh
 jähr/~~Vej # REPLACES jähren
-jährig/~~NXh
+jährig/~~JOQRSTUWqh # adjective with compound flag
 jährst/~~Nh
 jährt/~~NXh
 jährtet/~~Nh
@@ -55054,7 +55054,7 @@ beschwerde/~~Nh
 beschwere/~~Nh
 beschweren/~~V # auto-added
 beschwerer/~~Mh
-beschwert/~~NXh
+beschwert/~~JOQRSTUWVg # past participle as adjective
 beschwingt/~~Nh
 beschwipse/~~Nh
 beschwipst/~~Nh
@@ -133560,7 +133560,7 @@ aufgebunden/~~Nh
 aufgebügelt/~~Nh
 aufgebürdet/~~Nh
 aufgedampft/~~Nh
-aufgedruckt/~~Nh
+aufgedruckt/~~JOQRSTUWVg # past participle as adjective
 aufgedrängt/~~Nh
 aufgedrückt/~~Nh
 aufgedunsen/~~Nh
