@@ -52,28 +52,25 @@ fn position_to_index(source: &[char], position: Position) -> usize {
         return source.len().saturating_sub(1);
     };
 
-    // Get a pointer to the char we seek.
-    // Check if specified character index is within bounds of the target line.
-    let target_char_pointer = if position.character
+    if position.character
         < target_line
             .len()
             .try_into()
             .expect("target_line.len() can fit in u32")
     {
-        // Character index is inside the bounds of the specified line.
-        // Calculate pointer to the char we're looking for.
-        target_line
-            .as_ptr()
-            .wrapping_add(position.character as usize)
+        let ptr = target_line.as_ptr().wrapping_add(position.character as usize);
+        (ptr as usize - source.as_ptr() as usize) / size_of::<char>()
     } else {
-        // Character index is outside the bounds of the specified line.
-        // Get pointer to the last character of the line.
-        target_line.last().expect("line cannot be empty")
-    };
-
-    // Convert the char pointer to its index within `source`.
-    // Note: this could be simplified with `offset_from`, but that would require `unsafe`.
-    (target_char_pointer as usize - source.as_ptr() as usize) / size_of::<char>()
+        // If the line is empty, return the last index of the source as a best-effort.
+        if target_line.is_empty() {
+            return source.len().saturating_sub(1);
+        }
+        // Use the last character of the target line.
+        let last = target_line.last().unwrap();
+        let ptr = last as *const char;
+        (ptr as usize - source.as_ptr() as usize) / size_of::<char>()
+    }
+    
 }
 
 pub fn range_to_span(source: &[char], range: Range) -> Span<char> {
