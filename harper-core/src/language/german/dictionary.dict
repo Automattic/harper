@@ -14583,8 +14583,8 @@ hoheitsvoll/~Nhpuvw #frequency: 7
 hohl/~Nhpuvw #frequency: 7
 häng/~Nhpuvw #frequency: 7
 hör/~Nhpuvw #frequency: 7
-ideell/~Nhpuvw #frequency: 7
-ideenreich/~Nhpuvw #frequency: 7
+ideell/~~JOQRSTUWpuvw #frequency: 7
+ideenreich/~~JOQRSTUWpuvw #frequency: 7
 imker/~Nhpuvw #frequency: 7
 immobil/~Nhpuvw #frequency: 7
 impulsiv/~Nhpuvw #frequency: 7
@@ -19152,7 +19152,7 @@ allianz/~~Nh
 allogen/~~V # auto-added
 allrad/~~Nh
 alls/~~Nh
-alltag/~~Nh
+alltag/~~Mh
 alltags/~~Nh
 allweil/~~Nh
 allwo/~~Nh
@@ -26888,9 +26888,9 @@ gazelle/~~Nh
 gazen/~~V # auto-added
 gazette/~~Nh
 geaddet/~~Nh
-geadelt/~~NXh
-geahnt/~~NXh
-geartet/~~NXh
+geadelt/~~JOQRSTUWVg
+geahnt/~~JOQRSTUWVg
+geartet/~~JOQRSTUWVg
 geatmet/~~NXh
 gebadet/~~NXh
 gebahnt/~~NXh
@@ -29962,7 +29962,6 @@ idealer/~~Mh
 ideales/~~Nh
 ideals/~~Nh
 idee/~~Nh
-ideelle/~~JOQRSTUWqh
 ideen/~~V # auto-added
 idiom/~~NXh
 idiomen/~~V # auto-added
@@ -41031,7 +41030,7 @@ umflog/~~Nh
 umfuhr/~~Nh
 umgab/~~Nh
 umgabt/~~Nh
-umgang/~~Nh
+umgang/~~Mh
 umgebe/~~Nh
 umgebt/~~Nh
 umgehe/~~Nh
@@ -86539,12 +86538,8 @@ idealstem/~~Nh
 idealsten/~~V # auto-added
 idealster/~~Mh
 idealstes/~~Nh
-ideellem/~~Nh
-ideellen/~~V # auto-added
-ideeller/~~Mh
-ideellere/~~Nh
-ideelles/~~Nh
-ideellste/~~Nh
+ideellere/~~JOQRSTUWqh
+ideellste/~~JOQRSTUWqh
 ideenarm/~~NXh
 ideenkern/~~V # auto-added
 identitär/~~Nh
@@ -96791,7 +96786,7 @@ orbitaler/~~Mh
 orbitales/~~Nh
 orbitals/~~Nh
 orchester/~~Mh
-orchidee/~~Nh
+orchidee/~~Fh
 orchideen/~~V # auto-added
 ordernde/~~Nh
 orderndem/~~Nh
@@ -110023,7 +110018,7 @@ umgaben/~~V # auto-added
 umgangen/~~V # auto-added
 umgangene/~~Nh
 umganges/~~Nh
-umgangs/~~Nh
+umgangs/~~Mh
 umgarn/~~Vej # REPLACES umgarnen
 umgarnt/~~NXh
 umgarntem/~~Nh
@@ -124223,7 +124218,7 @@ heilsfront/~~Nh
 heilslehre/~~Fh
 heilspläne/~~Fh
 heimatflak/~~Nh
-heimatlich/~~Nh
+heimatlich/~~JOQRSTUWqh
 heimbegibt/~~Nh
 heimbegäbe/~~Fh
 heimfahren/~~Nh
@@ -124386,7 +124381,7 @@ herbewegen/~~Nh # auto-added
 herbrachte/~~Fh
 herbringen/~~Nh # auto-added
 herbrächte/~~Fh
-herbstlich/~~Nh
+herbstlich/~~JOQRSTUWqh
 herdbefund/~~Nh
 herdentier/~~Nh
 herdenwild/~~Nh
@@ -124500,7 +124495,7 @@ herzförmig/~~Nh
 herzgesund/~~Nh
 herzlichst/~~Nh
 herzockeln/~~Nh
-herzoglich/~~Nh
+herzoglich/~~JOQRSTUWqh
 herzogsamt/~~Nh
 herzogsgut/~~Nh
 herzogshof/~~Nh
@@ -126047,7 +126042,7 @@ körperweit/~~Nh
 kübelwagen/~~Nh # auto-added
 kükenstall/~~Nh
 kümmerform/~~Nh
-kümmerlich/~~Nh
+kümmerlich/~~JOQRSTUWqh
 kündigungs/~~Nh
 künftighin/~~Nh
 kürbisbaum/~~Nh
@@ -126743,8 +126738,8 @@ mayonnaise/~~Fh
 mazedonien/~~Nh
 mazedonier/~~Nh
 mazzenfest/~~Nh
-maßgeblich/~~Nh
-maßgerecht/~~Nh
+maßgeblich/~~JOQRSTUWqh
+maßgerecht/~~JOQRSTUWqh
 meatusenge/~~Fh
 mechaniker/~~Nh
 mechanisch/~~Nh
@@ -128036,8 +128031,8 @@ persistent/~~Nh
 persistenz/~~Nh
 personalia/~~Nh
 personalie/~~Fh
-persönlich/~~Nh
-peruanisch/~~Nh
+persönlich/~~JOQRSTUWqh
+peruanisch/~~JOQRSTUWqh
 perversion/~~Fh
 perzeption/~~Fh
 perzipiert/~~Nh
@@ -128063,8 +128058,8 @@ pfandleihe/~~Fh
 pfauenhaft/~~Nh
 pfeifenfuß/~~Nh
 pfeifentyp/~~Nh # auto-added
-pfeilartig/~~Nh
-pflanzlich/~~Nh
+pfeilartig/~~JOQRSTUWqh
+pflanzlich/~~JOQRSTUWqh
 pflanzplan/~~Nh
 pflanztrog/~~Nh
 pflanzzeit/~~Nh
@@ -129894,7 +129889,7 @@ sporophyll/~~Nh
 sportkupee/~~Fh
 spotmärkte/~~Fh
 sprachfrei/~~Nh
-sprachlich/~~Nh
+sprachlich/~~JOQRSTUWqh
 sprechchor/~~Nh
 spreebogen/~~Nh # auto-added
 spreebögen/~~Nh # auto-added
@@ -132986,8 +132981,8 @@ allerärmste/~~Fh
 alleskleber/~~Nh
 alleskönner/~~Nh
 alleswisser/~~Nh
-allgewaltig/~~Nh
-alljährlich/~~Nh
+allgewaltig/~~JOQRSTUWqh
+alljährlich/~~JOQRSTUWqh
 allmendegut/~~Nh
 allokierend/~~Nh
 allokiertet/~~Nh
@@ -147672,7 +147667,7 @@ aeronautisch/~~Nh
 aerosolbombe/~~Fh
 aerostatisch/~~Nh
 affektivität/~~Fh
-affenähnlich/~~Nh
+affenähnlich/~~JOQRSTUWqh
 afghanfüchse/~~Fh
 afrikaanisch/~~Nh
 afrotropisch/~~Nh
@@ -147714,7 +147709,7 @@ albumplanung/~~Fh
 aldehydprobe/~~Fh
 alexanderzug/~~Nh
 alexandriner/~~Nh
-algenähnlich/~~Nh
+algenähnlich/~~JOQRSTUWqh
 alimentation/~~Fh
 alimentieren/~~Nh
 aliquotieren/~~Nh
@@ -147725,9 +147720,9 @@ alkalisieren/~~Nh
 alkoholismus/~~Nh
 alkylchlorid/~~Nh
 alkylradikal/~~Nh
-allabendlich/~~Nh
+allabendlich/~~JOQRSTUWqh
 alleenstraße/~~Fh
-alleeähnlich/~~Nh
+alleeähnlich/~~JOQRSTUWqh
 alleinbesitz/~~Nh
 alleingültig/~~Nh
 alleinlassen/~~Nh
@@ -147750,8 +147745,8 @@ allgegenwart/~~Nh # auto-added
 allglasröhre/~~Fh
 alliteration/~~Fh
 alliterieren/~~Nh
-allmonatlich/~~Nh
-allnächtlich/~~Nh
+allmonatlich/~~JOQRSTUWqh
+allnächtlich/~~JOQRSTUWqh
 allokiertest/~~Nh
 allopathisch/~~Nh
 allopatrisch/~~Nh
@@ -147771,19 +147766,19 @@ altaisprache/~~Fh
 altangesehen/~~Nh
 altarmenisch/~~Nh
 altarretabel/~~Nh
-altarähnlich/~~Nh
-altassyrisch/~~Nh
+altarähnlich/~~JOQRSTUWqh
+altassyrisch/~~JOQRSTUWqh
 altbayerisch/~~Nh
 altbesiedelt/~~Nh
 altehrwürdig/~~Nh
-altengerecht/~~Nh
-altertümlich/~~Nh
-altfriesisch/~~Nh
+altengerecht/~~JOQRSTUWqh
+altertümlich/~~JOQRSTUWqh
+altfriesisch/~~JOQRSTUWqh
 altfränkisch/~~Nh
 altgeorgisch/~~Nh
 althebräisch/~~Nh
-altjapanisch/~~Nh
-altkirchlich/~~Nh
+altjapanisch/~~JOQRSTUWqh
+altkirchlich/~~JOQRSTUWqh
 altmarkkreis/~~Nh
 altnicänisch/~~Nh
 altpreußisch/~~Nh
@@ -162251,7 +162246,7 @@ akanthusranke/~~Fh
 akazienwälder/~~Nh
 akkommodation/~~Fh
 akkommodieren/~~Nh
-akkordähnlich/~~Nh
+akkordähnlich/~~JOQRSTUWqh
 akkreditieren/~~Nh
 akkubetrieben/~~Nh
 akkugepuffert/~~Nh
@@ -162291,7 +162286,7 @@ alexanderlied/~~Nh
 alexandersage/~~Fh
 algorithmisch/~~Nh
 aliquotstimme/~~Fh
-alkalilöslich/~~Nh
+alkalilöslich/~~JOQRSTUWqh
 alkoholdämpfe/~~Fh
 alkoholhaltig/~~Nh
 alkoholtremor/~~Nh
@@ -162316,7 +162311,7 @@ allesfressend/~~Nh
 allesreiniger/~~Nh
 allgemeinheit/~~Fh
 allheilmittel/~~Nh
-allherbstlich/~~Nh
+allherbstlich/~~JOQRSTUWqh
 allmendegüter/~~Nh
 allographisch/~~Nh
 alluvialboden/~~Nh
@@ -162329,9 +162324,9 @@ alptraumartig/~~Nh
 altamerikaner/~~Nh
 altanatolisch/~~Nh
 altbulgarisch/~~Nh
-altchinesisch/~~Nh
-altchristlich/~~Nh
-alteingeführt/~~Nh
+altchinesisch/~~JOQRSTUWqh
+altchristlich/~~JOQRSTUWqh
+alteingeführt/~~JOQRSTUWqh
 alternativlos/~~Nh
 altersbedingt/~~Nh
 altersbezogen/~~Nh # auto-added
@@ -162352,7 +162347,7 @@ altpleistozän/~~Nh
 altreformiert/~~Nh
 altsiedelland/~~Nh
 altslowenisch/~~Nh
-altsprachlich/~~Nh
+altsprachlich/~~JOQRSTUWqh
 altüberkommen/~~Nh
 amalrikanisch/~~Nh
 amanosgebirge/~~Fh
@@ -170358,7 +170353,7 @@ neurotizismus/~~Nh
 neuroökonomie/~~Fh
 neuruppinisch/~~Nh
 neusibirische/~~Fh
-neusprachlich/~~Nh
+neusprachlich/~~JOQRSTUWqh
 neutralleiter/~~Nh
 neutrinomasse/~~Fh
 neutronenhalo/~~Nh
@@ -174680,7 +174675,7 @@ vorrundenrang/~~Nh
 vorrundensieg/~~Nh
 vorschwindeln/~~Nh
 vorsokratisch/~~Nh
-vorsprachlich/~~Nh
+vorsprachlich/~~JOQRSTUWqh
 vorsteherhund/~~Nh
 vorteilskarte/~~Fh
 vorteilsnahme/~~Fh
@@ -175842,9 +175837,9 @@ allerhöchstens/~~Nh
 allerschwerste/~~Fh
 allerseelentag/~~Nh
 allesschneider/~~Nh
-allgegenwärtig/~~Nh
-allmorgendlich/~~Nh
-allmächtigstem/~~Nh
+allgegenwärtig/~~JOQRSTUWqh
+allmorgendlich/~~JOQRSTUWqh
+allmächtigstem/~~JOQRSTUWqh
 allmächtigster/~~Nh
 allmächtigstes/~~Nh
 allodialbesitz/~~Nh
@@ -175852,9 +175847,9 @@ allongeperücke/~~Fh
 alltagsbezogen/~~Nh # auto-added
 alltagsdeutsch/~~Nh
 alltäglichkeit/~~Fh
-allwetterfähig/~~Nh
-allwöchentlich/~~Nh
-almohadenreich/~~Nh
+allwetterfähig/~~JOQRSTUWqh
+allwöchentlich/~~JOQRSTUWqh
+almohadenreich/~~JOQRSTUWqh
 alpenstieglitz/~~Nh
 alphanumerisch/~~Nh
 alpinwettkampf/~~Nh
@@ -175870,9 +175865,9 @@ althergebracht/~~Nh
 altholländisch/~~Nh
 altitalienisch/~~Nh
 altkalischacht/~~Nh
-altmakedonisch/~~Nh
-altmeisterlich/~~Nh
-altmonarchisch/~~Nh
+altmakedonisch/~~JOQRSTUWqh
+altmeisterlich/~~JOQRSTUWqh
+altmonarchisch/~~JOQRSTUWqh
 altpaläozoisch/~~Nh
 altpietistisch/~~Nh
 altüberliefert/~~Nh
@@ -177969,7 +177964,7 @@ fabulierkünste/~~Fh
 fachmethodisch/~~Nh
 fachplanerisch/~~Nh
 fachschaftsrat/~~Nh
-fachsprachlich/~~Nh
+fachsprachlich/~~JOQRSTUWqh
 fachunabhängig/~~Nh
 fadenbakterium/~~Nh
 fahndungsmäßig/~~Nh
@@ -180491,7 +180486,7 @@ hochschulterig/~~Nh
 hochseefischen/~~Nh
 hochseetüchtig/~~Nh
 hochsommerlich/~~Nh
-hochsprachlich/~~Nh
+hochsprachlich/~~JOQRSTUWqh
 hochtalentiert/~~Nh
 hochverdichtet/~~Nh
 hochwillkommen/~~Nh
@@ -181801,7 +181796,7 @@ lautabgrenzung/~~Fh
 lautnachahmend/~~Nh
 lautproduktion/~~Fh
 lautrepertoire/~~Fh
-lautsprachlich/~~Nh
+lautsprachlich/~~JOQRSTUWqh
 lautstärkegrad/~~Nh
 lautstärkewert/~~Nh
 lautunabhängig/~~Nh
@@ -182335,7 +182330,7 @@ metalloprotein/~~Nh
 metallzeitlich/~~Nh
 metamathematik/~~Nh
 metaphernreich/~~Nh
-metasprachlich/~~Nh
+metasprachlich/~~JOQRSTUWqh
 meteoritenbahn/~~Nh # auto-added
 meteorologisch/~~Nh
 meterspurgleis/~~Nh
@@ -183214,7 +183209,7 @@ orbitalfenster/~~Nh
 orbitaltheorie/~~Fh
 orchestermusik/~~Nh
 orchestrierung/~~Fh
-orchideenreich/~~Nh
+orchideenreich/~~JOQRSTUWqh
 ordensgepränge/~~Fh
 ordentlichkeit/~~Fh
 ordinariatsrat/~~Nh
@@ -183345,7 +183340,7 @@ paramagnetisch/~~Nh
 paraphrasieren/~~Nh
 paraphrastisch/~~Nh
 parapsychologe/~~Fh
-parasprachlich/~~Nh
+parasprachlich/~~JOQRSTUWqh
 parenchymzelle/~~Fh
 parietallappen/~~Nh
 paritätsfehler/~~Nh
@@ -184337,7 +184332,7 @@ ruhrfestspiele/~~Fh
 ruhrgaumeister/~~Nh
 ruhrlandmuseum/~~Nh
 ruhrschnellweg/~~Nh
-ruhrsprachlich/~~Nh
+ruhrsprachlich/~~JOQRSTUWqh
 rumgeplantscht/~~Nh
 rumplantschend/~~Nh
 rumzuplanschen/~~Nh
@@ -187411,7 +187406,7 @@ zickzackförmig/~~Nh
 zielführendste/~~Fh
 zielkorrigiert/~~Nh
 zielorientiert/~~Nh
-zielsprachlich/~~Nh
+zielsprachlich/~~JOQRSTUWqh
 zigarettengroß/~~Nh
 zigarillolänge/~~Fh
 zigarrenförmig/~~Nh
@@ -187969,7 +187964,7 @@ akkordeonklänge/~~Fh
 akkreditierungs/~~Nh
 akkusativendung/~~Fh
 akkusativobjekt/~~Nh
-aktienrechtlich/~~Nh
+aktienrechtlich/~~JOQRSTUWqh
 aktivensprecher/~~Nh
 aktivierbarkeit/~~Fh
 aktualisierungs/~~Nh
@@ -188012,9 +188007,9 @@ allmachtsträume/~~Fh
 allokationsplan/~~Nh
 allradbetrieben/~~Nh
 allradgetrieben/~~Nh
-alltagsrelevant/~~Nh
-alltagstauglich/~~Nh
-alltagsweltlich/~~Nh
+alltagsrelevant/~~JOQRSTUWqh
+alltagstauglich/~~JOQRSTUWqh
+alltagsweltlich/~~JOQRSTUWqh
 alluvialschicht/~~Nh
 alpenauffaltung/~~Fh
 alphabetenquote/~~Fh
@@ -188420,7 +188415,7 @@ außerkörperlich/~~Nh
 außerliturgisch/~~Nh
 außermenschlich/~~Nh
 außerordentlich/~~Nh
-außersprachlich/~~Nh
+außersprachlich/~~JOQRSTUWqh
 axialkompressor/~~Nh
 axialverdichter/~~Nh
 axiomenschemata/~~Nh
@@ -190146,7 +190141,7 @@ freizuschwimmen/~~Nh
 freizuschütteln/~~Nh
 fremdfinanziert/~~Nh
 fremdlizenziert/~~Nh
-fremdsprachlich/~~Nh
+fremdsprachlich/~~JOQRSTUWqh
 fremdzuvergeben/~~Nh
 frequenzbasiert/~~Nh
 freskenbemalung/~~Fh
@@ -191916,7 +191911,7 @@ hörnerschlitten/~~Nh
 hörseltalradweg/~~Nh
 hülsenfrüchtler/~~Nh
 hüttentechnisch/~~Nh
-idealsprachlich/~~Nh
+idealsprachlich/~~JOQRSTUWqh
 ideenwettbewerb/~~Nh
 identifikations/~~Nh
 ideologienlehre/~~Fh
@@ -192042,7 +192037,7 @@ innerkoreanisch/~~Nh
 innerkörperlich/~~Nh
 innermuslimisch/~~Nh
 innerparteilich/~~Nh
-innersprachlich/~~Nh
+innersprachlich/~~JOQRSTUWqh
 innerösterreich/~~Nh
 innungsfreiheit/~~Fh
 innungsmitglied/~~Nh
@@ -192107,7 +192102,7 @@ interruptbuffer/~~Nh
 interruptvektor/~~Nh
 intersexualität/~~Fh
 interspezifisch/~~Nh
-intersprachlich/~~Nh
+intersprachlich/~~JOQRSTUWqh
 intertrochantär/~~Nh
 intervallbreite/~~Fh
 intervallgrenze/~~Fh
@@ -193973,7 +193968,7 @@ nichtmuslimisch/~~Nh
 nichtoxidierend/~~Nh
 nichtsbedeutend/~~Nh
 nichtsowjetisch/~~Nh
-nichtsprachlich/~~Nh
+nichtsprachlich/~~JOQRSTUWqh
 nichtzutreffend/~~Nh
 nichtöffentlich/~~NYq #  auto-added
 nickelelektrode/~~Fh
@@ -194655,7 +194650,7 @@ protoneneinfang/~~Nh
 protonenenergie/~~Fh
 protonephridien/~~Nh
 protonephridium/~~Nh
-protosprachlich/~~Nh
+protosprachlich/~~JOQRSTUWqh
 prototypenserie/~~Fh
 prototypversion/~~Fh
 providerwechsel/~~Nh
@@ -196637,6 +196632,7 @@ umfeldbedingung/~~Fh
 umformtechnisch/~~Nh
 umfunktionieren/~~Nh
 umgangsenglisch/~~Nh
+umgangssprachlich/~~JOQRSTUWqh
 umhergeschweift/~~Nh
 umhergesprungen/~~Nh # auto-added
 umhergestolpert/~~Nh
@@ -197085,7 +197081,7 @@ volksdeputierte/~~Fh
 volksfreundlich/~~Nh
 volkskirchentum/~~Nh
 volkssagenartig/~~Nh
-volkssprachlich/~~Nh
+volkssprachlich/~~JOQRSTUWqh
 volkstumsgrenze/~~Fh
 volksverhetzend/~~Nh
 volkszersetzend/~~Nh
@@ -198103,8 +198099,8 @@ abbildverhältnis/~~Nh
 abenteuerfreudig/~~Nh
 abenteuerhungrig/~~Nh
 abgabeberechtigt/~~Nh
-abgabenpflichtig/~~Nh
-abgabenrechtlich/~~Nh
+abgabenpflichtig/~~JOQRSTUWqh
+abgabenrechtlich/~~JOQRSTUWqh
 abgeltungssteuer/~~Nh
 abgeschiedenheit/~~Fh
 abgewirtschaftet/~~Nh
@@ -198229,9 +198225,9 @@ altocumulusdecke/~~Fh
 altocumuluswolke/~~Fh
 altrheinschlinge/~~Fh
 altritualistisch/~~Nh
-altskandinavisch/~~Nh
-altsteinzeitlich/~~Nh
-alttestamentlich/~~Nh
+altskandinavisch/~~JOQRSTUWqh
+altsteinzeitlich/~~JOQRSTUWqh
+alttestamentlich/~~JOQRSTUWqh
 aluminothermisch/~~Nh
 alzheimerpatient/~~Nh
 amaryllisgewächs/~~Nh
@@ -199385,7 +199381,7 @@ einzelanlieferer/~~Nh
 einzelgängerisch/~~Nh
 einzelkämpfertum/~~Nh
 einzellerprotein/~~Nh
-einzelsprachlich/~~Nh
+einzelsprachlich/~~JOQRSTUWqh
 einzubalsamieren/~~Nh
 einzukalkulieren/~~Nh
 einzumarschieren/~~Nh
@@ -199882,7 +199878,7 @@ folklorefestival/~~Nh
 forellenbestände/~~Fh
 formalausbildung/~~Fh
 formaljuristisch/~~Nh
-formalsprachlich/~~Nh
+formalsprachlich/~~JOQRSTUWqh
 formationsgruppe/~~Fh
 formationswasser/~~Nh
 formationswässer/~~Nh
@@ -200097,7 +200093,7 @@ gastwirtsfamilie/~~Fh
 gastwirtstochter/~~Nh
 gastwirtstöchter/~~Nh
 gasundurchlässig/~~Nh
-gaunersprachlich/~~Nh
+gaunersprachlich/~~JOQRSTUWqh
 gebetsmühlenhaft/~~Nh
 gebietsaustausch/~~Nh
 gebindepflichtig/~~Nh
@@ -200133,7 +200129,7 @@ gegenüberstellen/~~Nh
 gegenüberzusehen/~~Nh
 geheimdienstlich/~~Nh
 geheimnisumwoben/~~Nh
-geheimsprachlich/~~Nh
+geheimsprachlich/~~JOQRSTUWqh
 gehirngängigkeit/~~Fh
 gehorsamspflicht/~~Nh
 gehwegeinfassung/~~Fh
@@ -200158,7 +200154,7 @@ gemeinkostensatz/~~Nh
 gemeinnützigkeit/~~Fh
 gemeinschaftlich/~~Nh
 gemeinschaftsbau/~~Nh
-gemeinsprachlich/~~Nh
+gemeinsprachlich/~~JOQRSTUWqh
 gemischtbauweise/~~Fh
 gemischtrassisch/~~Nh
 gemischtsprachig/~~Nh
@@ -201505,7 +201501,7 @@ juckreizstillend/~~Nh
 jugendgefährdend/~~Nh
 jugendorientiert/~~Nh
 jugendspezifisch/~~Nh
-jugendsprachlich/~~Nh
+jugendsprachlich/~~JOQRSTUWqh
 jugendstilbauten/~~Nh
 jugendstilgrafik/~~Nh
 jugendstilpalais/~~Nh
@@ -202066,7 +202062,7 @@ körpermasseindex/~~Nh
 körperorientiert/~~Nh
 körperschaftlich/~~Nh
 körperschädigend/~~Nh
-körpersprachlich/~~Nh
+körpersprachlich/~~JOQRSTUWqh
 körperunabhängig/~~Nh
 kühlerverschluss/~~Nh
 kühlmittelseitig/~~Nh
@@ -202499,7 +202495,7 @@ membranpotenzial/~~Nh
 memorialleistung/~~Fh
 memorialstiftung/~~Fh
 menageriegebäude/~~Fh
-mengensprachlich/~~Nh
+mengensprachlich/~~JOQRSTUWqh
 mennonitenkirche/~~Fh
 menschenfressend/~~Nh
 menschenunwürdig/~~Nh
@@ -202759,7 +202755,7 @@ mutationstheorie/~~Fh
 muttermörderisch/~~Nh
 mutternschlüssel/~~Nh
 muttersporozyste/~~Fh
-muttersprachlich/~~Nh
+muttersprachlich/~~JOQRSTUWqh
 mäckingerbachtal/~~Nh
 mäßigungsversuch/~~Nh
 möglichkeitsform/~~Nh
@@ -203081,7 +203077,7 @@ objektbegleitend/~~Nh
 objektorientiert/~~Nh
 objektrelational/~~Nh
 objektspezifisch/~~Nh
-objektsprachlich/~~Nh
+objektsprachlich/~~JOQRSTUWqh
 obristendiktatur/~~Nh
 obsidianwerkzeug/~~Nh
 obstruktionskurs/~~Nh
@@ -203718,7 +203714,7 @@ rechtshistorisch/~~Nh
 rechtskatholisch/~~Nh
 rechtsorientiert/~~Nh
 rechtspositivist/~~Nh
-rechtssprachlich/~~Nh
+rechtssprachlich/~~JOQRSTUWqh
 rechtssymbolisch/~~Nh
 rechtsverletzend/~~Nh
 redakteursposten/~~Nh
@@ -205665,7 +205661,7 @@ vorzuselektieren/~~Nh
 vorzutemperieren/~~Nh
 vorübergeglitten/~~Nh
 vorüberzufliegen/~~Nh # auto-added
-vulgärsprachlich/~~Nh
+vulgärsprachlich/~~JOQRSTUWqh
 väterlicherseits/~~Nh
 völkerbundmandat/~~Nh
 völkerverbindend/~~Nh
@@ -206467,8 +206463,8 @@ alexanderschlacht/~~Nh
 alimentarstiftung/~~Fh
 alisphenoidkanäle/~~Fh
 alizarinfarbstoff/~~Nh
-alkoholgeschädigt/~~Nh
-alleinverbindlich/~~Nh
+alkoholgeschädigt/~~JOQRSTUWqh
+alleinverbindlich/~~JOQRSTUWqh
 allergenpotential/~~Nh
 allergenpotenzial/~~Nh
 allergieauslösend/~~Nh
@@ -206482,20 +206478,20 @@ allernotwendigste/~~Fh
 allerschnellstens/~~Nh
 alleruntertänigst/~~Nh
 allgebrauchslampe/~~Fh
-allgemeinärztlich/~~Nh
+allgemeinärztlich/~~JOQRSTUWqh
 allmachtsfantasie/~~Fh
 alltagsintegriert/~~Nh
 alltagsorientiert/~~Nh
-alltagssprachlich/~~Nh
+alltagssprachlich/~~JOQRSTUWqh
 allunionskongress/~~Nh
-allwettertauglich/~~Nh
-almwirtschaftlich/~~Nh
+allwettertauglich/~~JOQRSTUWqh
+almwirtschaftlich/~~JOQRSTUWqh
 alpentransversale/~~Fh
 alpinismustechnik/~~Nh
 alteritätsdiskurs/~~Nh
 alterssichtigkeit/~~Fh
-altersstarrsinnig/~~Nh
-altertumskundlich/~~Nh
+altersstarrsinnig/~~JOQRSTUWqh
+altertumskundlich/~~JOQRSTUWqh
 altkötzschenbroda/~~Nh
 altniederländisch/~~Nh
 altniedersorbisch/~~Nh
@@ -215433,7 +215429,7 @@ schanze/~~N
 schenke/~~N
 scholle/~~N
 spirale/~~N
-sprache/~~N
+sprache/~~Fh
 spritze/~~N
 strecke/~~N
 strippe/~~N
