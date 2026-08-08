@@ -137,10 +137,61 @@ impl Capitalize for str {
     }
 }
 
+/// Count the number of base entries in a dictionary file
+fn count_base_entries(dict_path: &str) -> Result<usize, Box<dyn std::error::Error>> {
+    use std::fs::File;
+    use std::io::{BufRead, BufReader};
+    
+    let file = File::open(dict_path)?;
+    let reader = BufReader::new(file);
+    
+    let mut count = 0;
+    for line in reader.lines() {
+        let line = line?;
+        let trimmed = line.trim();
+        if trimmed.is_empty() || trimmed.starts_with('#') {
+            continue;
+        }
+        // Skip the first line if it's just a number (legacy format)
+        if trimmed.parse::<usize>().is_ok() {
+            continue;
+        }
+        // Count lines that have content (word entries)
+        // Dictionary entries are in format: word/~~flags or word/flags
+        // Some may not have / but still be valid entries
+        if !trimmed.is_empty() {
+            count += 1;
+        }
+    }
+    Ok(count)
+}
+
+/// Count total words in expanded dictionary file
+fn count_expanded_words(expanded_dict_path: &str) -> Result<usize, Box<dyn std::error::Error>> {
+    use std::fs::File;
+    use std::io::BufReader;
+    use flate2::read::GzDecoder;
+    
+    let file = File::open(expanded_dict_path)?;
+    let decoder = GzDecoder::new(BufReader::new(file));
+    let reader = io::BufReader::new(decoder);
+    
+    let mut count = 0;
+    for line in reader.lines() {
+        let line = line?;
+        let trimmed = line.trim();
+        if !trimmed.is_empty() {
+            count += 1;
+        }
+    }
+    Ok(count)
+}
+
 /// Run coverage analysis with a pre-loaded dictionary (more efficient)
 pub fn run_coverage_analysis_with_dict(
     language: &str,
     dict: &MutableDictionary,
+    dict_path: &str,
     expanded_dict_path: &str,
     sample_size: usize,
 ) -> Result<(), Box<dyn std::error::Error>> {
@@ -151,7 +202,7 @@ pub fn run_coverage_analysis_with_dict(
 
     let harper_word_count = dict.word_count();
     println!("📖 Using pre-loaded Harper dictionary...");
-    println!("   ✅ Harper dictionary loaded: {} base words", harper_word_count);
+    println!("   ✅ Harper dictionary loaded: {} words (after expansion)", harper_word_count);
 
     // Load and filter expanded dictionary on-the-fly to save memory
     println!("📖 Loading and filtering expanded dictionary...");
@@ -182,27 +233,32 @@ pub fn run_coverage_analysis_with_dict(
         }
     }
 
+    // Count base entries from the dictionary file
+    let base_entries = count_base_entries(dict_path).unwrap_or(0);
+    
+    // Harper's word count is already the expanded count after affix rules
+    // So efficiency = harper_word_count (expanded) / base_entries
+    let efficiency = if base_entries > 0 {
+        harper_word_count as f64 / base_entries as f64
+    } else {
+        0.0
+    };
+
     // Dictionary statistics
     println!("\n📚 Dictionary Statistics");
-    println!("   Harper Dictionary Size: {} base words", harper_word_count);
+    println!("   Harper Dictionary Size: {} words (after expansion)", harper_word_count);
     println!("   Sample Size: {} words", test_words.len());
+    println!("   Base entries in dictionary: {}", base_entries);
 
     // Efficiency metrics
-    if harper_word_count > 0 {
-        let efficiency = if recognized > 0 {
-            recognized as f64 / harper_word_count as f64
-        } else {
-            0.0
-        };
-        println!("\n🎯 Efficiency Metrics");
-        println!("   Base words: {}", harper_word_count);
-        println!("   Words recognized: {}", recognized);
-        println!("   Efficiency ratio: {:.2} words per base word", efficiency);
+    println!("\n🎯 Efficiency Metrics");
+    println!("   Base entries: {}", base_entries);
+    println!("   Expanded words (Harper after affix expansion): {}", harper_word_count);
+    println!("   Efficiency ratio: {:.2} expanded words per base entry", efficiency);
 
-        println!("\n   For reference:");
-        println!("   - English typically has ~1.5-2.0 words per base word");
-        println!("   - German should aim for >2.5 due to compounding");
-    }
+    println!("\n   For reference:");
+    println!("   - English typically has ~1.5-2.0 expanded words per base entry");
+    println!("   - German should aim for >2.5 due to compounding");
 
     // Annotation statistics
     println!("\n🏷️  Annotation Statistics");
@@ -218,30 +274,24 @@ pub fn run_coverage_analysis_with_dict(
         println!("   ✅ Good coverage ({:.1}%) - focus on edge cases and compound words", coverage_percentage);
     }
 
-    if harper_word_count > 0 {
+    if base_entries > 0 && coverage_percentage < 80.0 {
+        // To improve coverage, we can either add more base entries or improve affix rules
+        // Coverage is based on sample testing against expanded dictionary
+        // To reach 80% coverage of the expanded dictionary, we need more base entries
         let target_coverage = 80.0;
-        let efficiency = if recognized > 0 {
-            recognized as f64 / harper_word_count as f64
-        } else {
-            0.0
-        };
-        if coverage_percentage < target_coverage && efficiency > 0.0 {
-            let words_needed_approx = (test_words.len() as f64 * target_coverage / 100.0 - recognized as f64) / efficiency;
-            println!("   🎯 To reach {}% coverage: approximately {} more base words or improved rules",
-                     target_coverage, words_needed_approx as usize);
+        // If we currently recognize coverage_percentage of the sample,
+        // to reach target_coverage we need to cover (target - current) more
+        // At current efficiency (expanded/base), each base entry gives us efficiency expanded words
+        // But this is complex - for now just show what efficiency we have
+        if coverage_percentage < target_coverage {
+            println!("   🎯 Current efficiency: {:.2} - add more base entries or improve affix rules to increase this", efficiency);
         }
     }
 
     println!("\n{}", "=".repeat(50));
-    println!("📈 Summary: {:.1}% coverage with {} base words", coverage_percentage, harper_word_count);
-    if harper_word_count > 0 {
-        let efficiency = if recognized > 0 {
-            recognized as f64 / harper_word_count as f64
-        } else {
-            0.0
-        };
-        println!("   Efficiency: {:.2} words per base word", efficiency);
-    }
+    println!("📈 Summary: {:.1}% coverage with {} base entries, {} expanded words (after affix)", 
+             coverage_percentage, base_entries, harper_word_count);
+    println!("   Efficiency: {:.2} expanded words per base entry", efficiency);
     println!("   Time elapsed: {:.2?}", start_time.elapsed());
     println!("{}", "=".repeat(50));
 

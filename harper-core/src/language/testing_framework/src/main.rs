@@ -119,6 +119,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         coverage::run_coverage_analysis_with_dict(
             &args.language,
             &dict,
+            &dict_path.to_string_lossy(),
             &expanded_dict_path,
             args.sample_size,
         )?;
