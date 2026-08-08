@@ -82,8 +82,13 @@ impl Expr for SequenceExpr {
             }
 
             if self.capture_range.start == i {
+                // This is the first expression being captured, set the window to start at the
+                // current cursor position.
+                // Even though it was set at the beginning of this function, it's necessary to set
+                // it again since the cursor may have advanced since then.
                 window = Span::empty(cursor);
             } else if !self.capture_range.contains(i) {
+                // Current expression is outside of capture range and shouldn't be captured.
                 continue;
             }
 
