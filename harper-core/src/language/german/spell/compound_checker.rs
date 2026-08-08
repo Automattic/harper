@@ -139,6 +139,25 @@ impl CompoundChecker {
         self.try_decompose_recursive(word, 0)
     }
 
+    /// Helper to get compound flags for a word, trying lowercase first if not found
+    fn get_compound_flags(&self, word: &[char]) -> Option<&HashSet<char>> {
+        // First try exact match
+        if let Some(flags) = self.compound_words.get(word) {
+            return Some(flags);
+        }
+
+        // For German, try with first letter lowercased (nouns are capitalized in text but stored lowercase in dict)
+        if !word.is_empty() {
+            let mut lowercased: CharString = word.iter().copied().collect();
+            if let Some(first_char) = lowercased.first_mut() {
+                *first_char = first_char.to_ascii_lowercase();
+            }
+            self.compound_words.get(&lowercased)
+        } else {
+            None
+        }
+    }
+
     /// Recursive helper to try decomposition starting from a given position
     fn try_decompose_recursive(&self, word: &[char], start_pos: usize) -> bool {
         if start_pos >= word.len() {
@@ -149,14 +168,15 @@ impl CompoundChecker {
         for split_pos in (start_pos + 1)..word.len() {
             let (first, rest) = word.split_at(split_pos);
 
-            // Check if first part is a compound word
-            if let Some(first_flags) = self.compound_words.get(first) {
+            // Check if first part is a compound word (case-insensitive lookup)
+            let first_flags = self.get_compound_flags(first);
+            if let Some(first_flags) = first_flags {
                 // Check if this is an adjective compound (no interfix needed)
                 if first_flags.contains(&COMPOUND_ADJ_FLAG) {
                     // For adjective compounds, the second part can be any compound word
                     if split_pos < word.len() {
                         let second = &word[split_pos..];
-                        if self.compound_words.contains_key(second) {
+                        if self.get_compound_flags(second).is_some() {
                             // Check if second part is also a compound word
                             return true;
                         }
@@ -200,8 +220,8 @@ impl CompoundChecker {
                         if second_start < word.len() {
                             let second = &word[second_start..];
 
-                            // Check if second part is a compound word
-                            if self.compound_words.contains_key(second) {
+                            // Check if second part is a compound word (case-insensitive)
+                            if self.get_compound_flags(second).is_some() {
                                 return true;
                             }
 
@@ -217,7 +237,7 @@ impl CompoundChecker {
                 if first_flags.contains(&COMPOUND_FLAG_NO_INTERFIX) {
                     let second = &word[split_pos..];
                     if !second.is_empty() {
-                        if self.compound_words.contains_key(second) {
+                        if self.get_compound_flags(second).is_some() {
                             return true;
                         }
                         if self.try_decompose_recursive(word, split_pos) {
@@ -263,7 +283,7 @@ impl CompoundChecker {
         for split_pos in 1..word.len() {
             let (first, _rest) = word.split_at(split_pos);
 
-            if let Some(first_flags) = self.compound_words.get(first)
+            if let Some(first_flags) = self.get_compound_flags(first)
                 && first_flags.contains(&COMPOUND_ADJ_FLAG)
             {
                 return true;
@@ -301,11 +321,11 @@ impl CompoundChecker {
         for split_pos in (start_pos + 1)..word.len() {
             let (first, rest) = word.split_at(split_pos);
 
-            if let Some(first_flags) = self.compound_words.get(first) {
+            if let Some(first_flags) = self.get_compound_flags(first) {
                 // Check adjective compounds
                 if first_flags.contains(&COMPOUND_ADJ_FLAG) && split_pos < word.len() {
                     let second = &word[split_pos..];
-                    if self.compound_words.contains_key(second) {
+                    if self.get_compound_flags(second).is_some() {
                         parts.push(first.iter().collect());
                         parts.push(second.iter().collect());
                         return true;
@@ -328,7 +348,7 @@ impl CompoundChecker {
                         let second_start = split_pos + interfix_len;
                         if second_start < word.len() {
                             let second = &word[second_start..];
-                            if self.compound_words.contains_key(second) {
+                            if self.get_compound_flags(second).is_some() {
                                 parts.push(first.iter().collect());
                                 parts.push(interfix.1.to_string());
                                 parts.push(second.iter().collect());
@@ -346,7 +366,7 @@ impl CompoundChecker {
                 // Try with no interfix for h flag
                 if first_flags.contains(&COMPOUND_FLAG_NO_INTERFIX) && split_pos < word.len() {
                     let second = &word[split_pos..];
-                    if self.compound_words.contains_key(second) {
+                    if self.get_compound_flags(second).is_some() {
                         parts.push(first.iter().collect());
                         parts.push(second.iter().collect());
                         return true;

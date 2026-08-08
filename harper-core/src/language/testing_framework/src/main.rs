@@ -4,6 +4,7 @@ use harper_core::DictWordMetadata;
 use std::fs;
 use std::path::PathBuf;
 use std::process::Command;
+use std::sync::Arc;
 
 mod coverage;
 
@@ -87,25 +88,44 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     println!("📝 Loading annotations from: {}", annotations_path.display());
     
     // Create dictionary from files
-    // For German in the testing framework, we use simple dictionary loading without compound generation
-    // for performance. Compound generation is only needed for the actual linter.
-    // The from_rune_files function still applies affix expansion, which is sufficient for testing.
-    let dict = MutableDictionary::from_rune_files(&dict_content, &annotations_content)
-        .map_err(|e| format!("❌ Failed to create dictionary: {}", e))?;
+    // For German, use compound-aware dictionary to support compound word generation
+    let dict: Arc<dyn Dictionary> = if args.language == "german" {
+        use std::sync::Arc;
+        use harper_core::spell::rune::parse_word_list;
+        use harper_core::language::german::spell::compound_aware_dict::CompoundAwareDictionary;
+        use harper_core::language::german::spell::compound_checker::CompoundChecker;
+        
+        // Parse the word list for the compound checker
+        let word_list = parse_word_list(&dict_content)
+            .map_err(|e| format!("❌ Failed to parse word list: {}", e))?;
+        let compound_checker = CompoundChecker::new(&word_list);
+        
+        // Create the base dictionary with affix expansion
+        let base_dict = Arc::new(MutableDictionary::from_rune_files(&dict_content, &annotations_content)
+            .map_err(|e| format!("❌ Failed to create base dictionary: {}", e))?);
+        
+        Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
+    } else {
+        // For other languages, use simple dictionary loading
+        // The from_rune_files function still applies affix expansion, which is sufficient for testing.
+        let simple_dict = MutableDictionary::from_rune_files(&dict_content, &annotations_content)
+            .map_err(|e| format!("❌ Failed to create dictionary: {}", e))?;
+        Arc::new(simple_dict)
+    };
     
     println!("✅ Dictionary loaded successfully!");
     println!("   Word count: {}", dict.word_count());
     
     if args.test {
-        run_language_tests(&dict, &args.language);
+        run_language_tests(&*dict, &args.language);
     }
     
     if args.metadata {
-        show_metadata(&dict, &args.word.clone().unwrap_or_default(), &args.text.clone().unwrap_or_default());
+        show_metadata(&*dict, &args.word.clone().unwrap_or_default(), &args.text.clone().unwrap_or_default());
     }
     
     if let Some(word) = args.word {
-        check_word_metadata(&dict, &word);
+        check_word_metadata(&*dict, &word);
     }
     
     if args.coverage {
@@ -118,15 +138,15 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         // Run coverage analysis with already-loaded dictionary
         coverage::run_coverage_analysis_with_dict(
             &args.language,
-            &dict,
+            &*dict,
             &dict_path.to_string_lossy(),
             &expanded_dict_path,
             args.sample_size,
         )?;
     } else if args.hunspell {
-        compare_with_hunspell(&args.language, &dict, &args.text.clone().unwrap_or_default());
+        compare_with_hunspell(&args.language, &*dict, &args.text.clone().unwrap_or_default());
     } else if let Some(text) = args.text {
-        spell_check_text(&dict, &text);
+        spell_check_text(&*dict, &text);
     } else if !args.test && !args.metadata {
         println!("\n💡 Usage examples:");
         println!("   --test          Run basic dictionary tests");
@@ -194,7 +214,7 @@ fn check_word_with_hunspell(language: &str, word: &str) -> bool {
     }
 }
 
-fn compare_with_hunspell(language: &str, dict: &MutableDictionary, text: &str) {
+fn compare_with_hunspell(language: &str, dict: &dyn Dictionary, text: &str) {
     println!("\n🔍 Comparing Harper with Hunspell for language: {}", language);
     println!("{}", "=".repeat(60));
     
@@ -276,7 +296,7 @@ fn compare_with_hunspell(language: &str, dict: &MutableDictionary, text: &str) {
     }
 }
 
-fn run_language_tests(dict: &MutableDictionary, language: &str) {
+fn run_language_tests(dict: &dyn Dictionary, language: &str) {
     println!("\n🧪 Running basic tests for {}...", language);
     
     // Language-specific test words
@@ -327,7 +347,7 @@ fn run_language_tests(dict: &MutableDictionary, language: &str) {
     }
 }
 
-fn spell_check_text(dict: &MutableDictionary, text: &str) {
+fn spell_check_text(dict: &dyn Dictionary, text: &str) {
     println!("\n🔍 Spell checking text: \"{}\"", text);
     
     let words: Vec<&str> = text.split_whitespace().collect();
@@ -349,7 +369,7 @@ fn spell_check_text(dict: &MutableDictionary, text: &str) {
     }
 }
 
-fn check_word_metadata(dict: &MutableDictionary, word: &str) {
+fn check_word_metadata(dict: &dyn Dictionary, word: &str) {
     println!("\n🔍 Checking metadata for word: \"{}\"", word);
     
     let word_chars: Vec<char> = word.chars().collect();
@@ -366,7 +386,7 @@ fn check_word_metadata(dict: &MutableDictionary, word: &str) {
     }
 }
 
-fn show_metadata(dict: &MutableDictionary, single_word: &str, text: &str) {
+fn show_metadata(dict: &dyn Dictionary, single_word: &str, text: &str) {
     let words_to_check: Vec<&str> = if !single_word.is_empty() {
         vec![single_word]
     } else if !text.is_empty() {

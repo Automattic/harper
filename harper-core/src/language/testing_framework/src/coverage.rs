@@ -104,7 +104,7 @@ fn load_and_filter_expanded_dictionary(
 
 /// Check words with Harper dictionary (in-memory, no subprocess)
 fn check_words_with_harper(
-    dict: &MutableDictionary,
+    dict: &dyn Dictionary,
     words: &[String],
 ) -> (usize, Vec<String>) {
     let mut recognized = 0;
@@ -180,7 +180,7 @@ fn count_expanded_words(expanded_dict_path: &str) -> Result<usize, Box<dyn std::
 /// Run coverage analysis with a pre-loaded dictionary (more efficient)
 pub fn run_coverage_analysis_with_dict(
     language: &str,
-    dict: &MutableDictionary,
+    dict: &dyn Dictionary,
     dict_path: &str,
     expanded_dict_path: &str,
     sample_size: usize,
