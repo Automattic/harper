@@ -16249,7 +16249,7 @@ buzzword/NSg
 buzzy/H
 bx/~N
 bxs/N
-by/~PNg             # removed adjective sense
+by/~P               # removed adjective & noun sense
 bye/~NSgJP
 bygone/JNSg
 bylaw/NSg
@@ -18974,7 +18974,7 @@ congregation/~Ng
 congregational/~J
 congregationalism/Ng
 congregationalist/~JNgS
-congress/~NgSV
+congress/~NgS
 congressional/~JY
 congressman/~N0g
 congressmen/~N9
@@ -40592,7 +40592,7 @@ preshrink/VbGS
 preshrunk/VT
 preside/~VGdS
 presidency/~NSg
-president/~NgSV     # removed `5` adj. sense archaic, interferes with heuristics
+president/~NgS      # removed `5` adj. sense archaic, `V` v. sense marginal
 presidential/~J
 presidium/~Ng
 presort/VdGS
@@ -52044,7 +52044,7 @@ vicar/~NSg
 vicarage/~NSg
 vicarious/JYp
 vicariousness/Ng
-vice/~NgSVJP(e
+vice/~NgSJP(e
 viced/JVtT
 vicegerent/NSgJ
 vicennial/JN
