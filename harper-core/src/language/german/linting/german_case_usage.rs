@@ -77,20 +77,30 @@ impl<T: Dictionary> GermanCaseUsage<T> {
         preposition: &str,
     ) -> Option<crate::dict_word_metadata::Case> {
         // Common German prepositions and their required cases
+        // Based on standard German grammar rules
         match preposition.to_lowercase().as_str() {
-            // Accusative prepositions
-            "durch" | "für" | "gegen" | "ohne" | "um" | "wider" => {
+            // Accusative-only prepositions
+            // These always require the accusative case
+            "durch" | "für" | "gegen" | "ohne" | "um" | "wider" | "bis" => {
                 Some(crate::dict_word_metadata::Case::Accusative)
             }
-            // Dative prepositions
-            "aus" | "außer" | "bei" | "mit" | "nach" | "seit" | "von" | "zu" => {
-                Some(crate::dict_word_metadata::Case::Dative)
+            // Dative-only prepositions
+            // These always require the dative case
+            "aus" | "außer" | "bei" | "mit" | "nach" | "seit" | "von" | "zu" | "entgegen"
+            | "gemäß" | "laut" => Some(crate::dict_word_metadata::Case::Dative),
+            // Genitive-only prepositions
+            // These always require the genitive case
+            "abseits" | "an Stelle" | "an Statt" | "auf Grund" | "aufgrund" | "dank" | "halber"
+            | "innerhalb" | "kraft" | "längs" | "mangels" | "trotz" | "während" | "wegen"
+            | "anhand" | "anlässlich" | "behufs" | "dienlich" | "entsprechend" | "oberhalb"
+            | "unterhalb" | "diesseits" | "jenseits" | "mittels" | "tagsüber" | "nachtsüber" => {
+                Some(crate::dict_word_metadata::Case::Genitive)
             }
-            // Genitive prepositions
-            "abseits" | "an Platz" | "an Stelle" | "an Statt" | "auf Grund" | "dank"
-            | "durcheinander" | "halber" | "innerhalb" | "kraft" | "längs" | "mangels"
-            | "trotz" | "während" | "wegen" => Some(crate::dict_word_metadata::Case::Genitive),
-            // Two-way prepositions (depend on verb/position)
+            // Two-way prepositions (Wechselpräpositionen)
+            // These can be either accusative or dative depending on context:
+            // - Accusative: when indicating direction/motion (wohin?)
+            // - Dative: when indicating location/position (wo?)
+            // For now, we skip these as they require sentence context analysis
             "an" | "auf" | "hinter" | "in" | "neben" | "über" | "unter" | "vor" | "zwischen" => {
                 None
             }
@@ -98,18 +108,22 @@ impl<T: Dictionary> GermanCaseUsage<T> {
         }
     }
 
-    /// Analyze preposition + noun case usage
+    /// Analyze preposition + following word case usage
+    /// Checks nouns, pronouns, and determiners (articles) after prepositions
     fn check_preposition_case(
         &self,
         preposition_token: &Token,
-        noun_token: &Token,
+        following_token: &Token,
         document: &Document,
     ) -> Option<Lint> {
         let preposition_text: String = document
             .get_span_content(&preposition_token.span)
             .iter()
             .collect();
-        let noun_text: String = document.get_span_content(&noun_token.span).iter().collect();
+        let following_text: String = document
+            .get_span_content(&following_token.span)
+            .iter()
+            .collect();
 
         // Check if this is a preposition
         if !preposition_token.kind.is_upos(UPOS::ADP) {
@@ -122,29 +136,35 @@ impl<T: Dictionary> GermanCaseUsage<T> {
             None => return None, // Skip two-way prepositions for now
         };
 
-        // Get the actual case of the noun
-        let noun_case = self.get_noun_case(noun_token, document)?;
+        // Try to get the actual case from different word types
+        let actual_case = if following_token.kind.is_upos(UPOS::NOUN)
+            || following_token.kind.is_upos(UPOS::PROPN)
+        {
+            self.get_noun_case(following_token, document)
+        } else if following_token.kind.is_upos(UPOS::PRON) {
+            self.get_pronoun_case(following_token, document)
+        } else if following_token.kind.is_upos(UPOS::DET) {
+            self.get_determiner_case(following_token, document)
+        } else {
+            None
+        }?;
 
         // Check for case mismatch
-        if noun_case != required_case {
-            let suggestion = match required_case {
-                crate::dict_word_metadata::Case::Accusative => {
-                    format!("{} (Accusative)", noun_text)
-                }
-                crate::dict_word_metadata::Case::Dative => format!("{} (Dative)", noun_text),
-                crate::dict_word_metadata::Case::Genitive => format!("{} (Genitive)", noun_text),
-                crate::dict_word_metadata::Case::Nominative => {
-                    format!("{} (Nominative)", noun_text)
-                }
+        if actual_case != required_case {
+            let case_name = match required_case {
+                crate::dict_word_metadata::Case::Accusative => "Accusative",
+                crate::dict_word_metadata::Case::Dative => "Dative",
+                crate::dict_word_metadata::Case::Genitive => "Genitive",
+                crate::dict_word_metadata::Case::Nominative => "Nominative",
             };
 
             Some(Lint {
-                span: noun_token.span,
+                span: following_token.span,
                 lint_kind: LintKind::Grammar,
-                suggestions: vec![Suggestion::ReplaceWith(suggestion.chars().collect())],
+                suggestions: vec![], // Suggestions would require declension logic
                 message: format!(
-                    "Possible case error: '{}' after '{}' may need to be in the {:?}",
-                    noun_text, preposition_text, required_case
+                    "Possible case error: '{}' after '{}' should be in the {}",
+                    following_text, preposition_text, case_name
                 ),
                 priority: 25,
             })
@@ -164,14 +184,18 @@ impl<T: Dictionary> Linter for GermanCaseUsage<T> {
 
         for i in 0..tokens.len() - 1 {
             let preposition_token = &tokens[i];
-            let noun_token = &tokens[i + 1];
+            let following_token = &tokens[i + 1];
 
-            // Check if this is a preposition followed by a noun
+            // Check if this is a preposition followed by a word that can have case
+            // (noun, proper noun, pronoun, or determiner/article)
             if preposition_token.kind.is_upos(UPOS::ADP)
-                && (noun_token.kind.is_upos(UPOS::NOUN) || noun_token.kind.is_upos(UPOS::PROPN))
+                && (following_token.kind.is_upos(UPOS::NOUN)
+                    || following_token.kind.is_upos(UPOS::PROPN)
+                    || following_token.kind.is_upos(UPOS::PRON)
+                    || following_token.kind.is_upos(UPOS::DET))
             {
                 if let Some(lint) =
-                    self.check_preposition_case(preposition_token, noun_token, document)
+                    self.check_preposition_case(preposition_token, following_token, document)
                 {
                     lints.push(lint);
                 }
