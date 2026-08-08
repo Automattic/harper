@@ -8,7 +8,7 @@ use std::fmt::Debug;
 use std::sync::{Arc, LazyLock};
 
 use super::languages::{Language, LanguageFamily};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 use crate::{
     LintGroup,
     parsers::{Markdown, MarkdownOptions, OrgMode, Parser},
@@ -52,7 +52,11 @@ static DETECTORS: LazyLock<Vec<(Box<dyn LanguageDetector>, f64)>> = LazyLock::ne
 });
 
 /// Detect the language of the given source text.
-pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Language) -> Language {
+pub fn detect_language(
+    source: &str,
+    dict: &dyn Dictionary,
+    default_language: Language,
+) -> Language {
     use crate::language::languages::Language;
     use crate::parsers::PlainEnglish;
 
@@ -109,7 +113,7 @@ pub fn prose_language(language: &Language) -> ProseLanguage {
 }
 
 /// Get the dictionary for a language family.
-pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {
+pub fn dictionary_for_language(family: LanguageFamily) -> Arc<dyn Dictionary> {
     match family {
         LanguageFamily::English => EnglishModule::dictionary(),
         #[cfg(feature = "de")]
@@ -124,7 +128,7 @@ pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {
 }
 
 /// Get the dictionary for a language.
-pub fn dictionary(language: Language) -> Arc<FstDictionary> {
+pub fn dictionary(language: Language) -> Arc<dyn Dictionary> {
     dictionary_for_language(language.family())
 }
 

@@ -8,7 +8,7 @@
 use crate::language::LanguageDetector;
 use crate::language::languages::Language;
 use crate::language::portuguese::dialects::PortugueseDialect;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
 
 /// Portuguese language detector with high confidence due to unique characters.
@@ -20,7 +20,7 @@ impl LanguageDetector for PortugueseDetector {
         "portuguese"
     }
 
-    fn detect(&self, toks: &[Token], source: &[char], dict: &FstDictionary) -> Option<Language> {
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
         let mut total_words = 0;
         let mut portuguese_char_count = 0;
         let mut common_portuguese_words = 0;

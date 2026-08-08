@@ -12,14 +12,14 @@ use crate::language::languages::Language;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 /// Core trait for language detectors.
 ///
 /// This trait is used by the LanguageModule trait and implemented by each language's detector.
 pub trait LanguageDetector: Debug + Send + Sync {
     fn name(&self) -> &str;
-    fn detect(&self, toks: &[Token], source: &[char], dict: &FstDictionary) -> Option<Language>;
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language>;
     fn confidence(&self) -> f64;
 }
 
@@ -54,7 +54,8 @@ pub trait LanguageModule: 'static {
     fn plain_parser() -> impl Parser + 'static;
 
     /// Access to the language's spell-checking dictionary
-    fn dictionary() -> Arc<FstDictionary>;
+    /// Returns FstDictionary for most languages, but CompoundAwareDictionary for German
+    fn dictionary() -> Arc<dyn Dictionary>;
 
     /// All language-specific Rust linting rules
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup;

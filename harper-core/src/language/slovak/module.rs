@@ -15,7 +15,7 @@ use crate::language::slovak::spell::curated_slovak_dictionary;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 use crate::language::module::LanguageModule;
 
@@ -42,7 +42,7 @@ impl LanguageModule for SlovakModule {
         PlainSlovak
     }
 
-    fn dictionary() -> Arc<FstDictionary> {
+    fn dictionary() -> Arc<dyn Dictionary> {
         curated_slovak_dictionary()
     }
 

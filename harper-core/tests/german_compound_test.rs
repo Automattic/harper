@@ -89,3 +89,27 @@ fn test_compound_aware_dictionary() {
     // Test that compound-aware dictionary is functional
     assert!(dict.word_count() > 0);
 }
+
+#[cfg(all(feature = "de", feature = "multilingual"))]
+#[test]
+fn test_compound_aware_dict_directly() {
+    use harper_core::language::german::spell::compound_aware_german_dictionary;
+
+    let dict = compound_aware_german_dictionary();
+
+    // Test base words - these should work
+    assert!(
+        dict.contains_word_str("farbe"),
+        "farbe should be in base dict"
+    );
+    assert!(
+        dict.contains_word_str("wunsch"),
+        "wunsch should be in base dict"
+    );
+
+    // Test compounds - these should work with lazy compound checking
+    assert!(
+        dict.contains_word_str("farbwunsch"),
+        "farbwunsch should be recognized as compound"
+    );
+}

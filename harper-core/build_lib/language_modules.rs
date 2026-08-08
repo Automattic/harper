@@ -350,7 +350,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("use std::sync::{Arc, LazyLock};\n\n");
 
     code.push_str("use super::languages::{Language, LanguageFamily};\n");
-    code.push_str("use crate::spell::{Dictionary, FstDictionary};\n");
+    code.push_str("use crate::spell::Dictionary;\n");
     code.push_str("use crate::{\n");
     code.push_str("    parsers::{Markdown, MarkdownOptions, OrgMode, Parser},\n");
     code.push_str("    LintGroup,\n");
@@ -411,7 +411,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
 
     // detect_language function
     code.push_str("/// Detect the language of the given source text.\n");
-    code.push_str("pub fn detect_language(source: &str, dict: &FstDictionary, default_language: Language) -> Language {\n");
+    code.push_str("pub fn detect_language(source: &str, dict: &dyn Dictionary, default_language: Language) -> Language {\n");
     code.push_str("    use crate::language::languages::Language;\n");
     code.push_str("    use crate::parsers::PlainEnglish;\n\n");
     code.push_str("    let source_chars: Vec<char> = source.chars().collect();\n");
@@ -481,7 +481,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     // DICTIONARIES
     code.push_str("/// Get the dictionary for a language family.\n");
     code.push_str(
-        "pub fn dictionary_for_language(family: LanguageFamily) -> Arc<FstDictionary> {\n",
+        "pub fn dictionary_for_language(family: LanguageFamily) -> Arc<dyn Dictionary> {\n",
     );
     code.push_str("    match family {\n");
 
@@ -502,7 +502,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("}\n\n");
 
     code.push_str("/// Get the dictionary for a language.\n");
-    code.push_str("pub fn dictionary(language: Language) -> Arc<FstDictionary> {\n");
+    code.push_str("pub fn dictionary(language: Language) -> Arc<dyn Dictionary> {\n");
     code.push_str("    dictionary_for_language(language.family())\n");
     code.push_str("}\n\n");
 

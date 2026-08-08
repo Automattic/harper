@@ -7,7 +7,7 @@
 use crate::Token;
 use crate::language::languages::Language;
 use crate::language_detection::is_likely_english;
-use crate::spell::FstDictionary;
+use crate::spell::Dictionary;
 
 /// English language detector (fallback).
 #[derive(Debug)]
@@ -18,7 +18,7 @@ impl crate::language::module::LanguageDetector for EnglishDetector {
         "english"
     }
 
-    fn detect(&self, toks: &[Token], source: &[char], dict: &FstDictionary) -> Option<Language> {
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
         // Use Harper's built-in English detection from the root module
         let is_english = is_likely_english(toks, source, dict);
 

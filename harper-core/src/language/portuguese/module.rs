@@ -14,7 +14,7 @@ use crate::language::portuguese::spell::portuguese_dictionary;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 use crate::language::module::LanguageModule;
 
@@ -41,7 +41,7 @@ impl LanguageModule for PortugueseModule {
         PlainPortuguese
     }
 
-    fn dictionary() -> Arc<FstDictionary> {
+    fn dictionary() -> Arc<dyn Dictionary> {
         portuguese_dictionary()
     }
 
@@ -90,10 +90,10 @@ impl LanguageModule for PortugueseModule {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::spell::FstDictionary;
 
     #[test]
     fn test_rust_lint_group_contains_spell_check() {
+        use crate::spell::FstDictionary;
         let dict = Arc::new(FstDictionary::curated()); // Use a dummy dictionary for testing
         let group = PortugueseModule::rust_lint_group(dict);
 

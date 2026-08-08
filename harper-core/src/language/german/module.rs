@@ -14,7 +14,7 @@ use crate::language::german::parsers::PlainGerman;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 use crate::language::module::LanguageModule;
 
@@ -41,11 +41,11 @@ impl LanguageModule for GermanModule {
         PlainGerman
     }
 
-    fn dictionary() -> Arc<FstDictionary> {
-        // Use curated dictionary for German which includes all word forms and metadata
-        // This provides comprehensive German language support with proper annotations
-        use crate::language::german::spell::curated_german_dictionary;
-        curated_german_dictionary()
+    fn dictionary() -> Arc<dyn Dictionary> {
+        // Use compound-aware dictionary for German which provides comprehensive word coverage
+        // with lazy compound checking to avoid memory explosion from pre-generating all compounds
+        use crate::language::german::spell::compound_aware_german_dictionary;
+        compound_aware_german_dictionary()
     }
 
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {

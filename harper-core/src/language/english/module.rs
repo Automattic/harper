@@ -13,9 +13,10 @@ use crate::language::english::language_detection::EnglishDetector;
 use crate::lexing::{FoundToken, lex_english_token};
 use crate::linting::{LintGroup, weir_rules};
 use crate::parsers::{Parser, PlainEnglish};
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 use crate::language::module::LanguageModule;
+use crate::spell::FstDictionary;
 
 /// English language module implementing the LanguageModule trait.
 ///
@@ -42,7 +43,7 @@ impl LanguageModule for EnglishModule {
         PlainEnglish
     }
 
-    fn dictionary() -> Arc<FstDictionary> {
+    fn dictionary() -> Arc<dyn Dictionary> {
         FstDictionary::curated()
     }
 

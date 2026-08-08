@@ -14,7 +14,7 @@ use crate::language::polish::spell::polish_dictionary;
 use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 
 use crate::language::module::LanguageModule;
 
@@ -41,7 +41,7 @@ impl LanguageModule for PolishModule {
         PlainPolish
     }
 
-    fn dictionary() -> Arc<FstDictionary> {
+    fn dictionary() -> Arc<dyn Dictionary> {
         polish_dictionary()
     }
 

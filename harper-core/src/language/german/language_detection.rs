@@ -8,7 +8,7 @@
 use crate::language::LanguageDetector;
 use crate::language::german::dialects::GermanDialect;
 use crate::language::languages::Language;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
 
 /// German language detector with high confidence due to unique characters.
@@ -20,7 +20,7 @@ impl LanguageDetector for GermanDetector {
         "german"
     }
 
-    fn detect(&self, toks: &[Token], source: &[char], dict: &FstDictionary) -> Option<Language> {
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
         let mut total_words = 0;
         let mut german_char_count = 0;
         let mut common_german_words = 0;

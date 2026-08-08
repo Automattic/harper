@@ -1,7 +1,7 @@
 use crate::language::LanguageDetector;
 use crate::language::languages::Language;
 use crate::language::polish::dialects::PolishDialect;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
 
 /// Polish language detector.
@@ -13,7 +13,7 @@ impl LanguageDetector for PolishDetector {
         "polish"
     }
 
-    fn detect(&self, toks: &[Token], source: &[char], dict: &FstDictionary) -> Option<Language> {
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
         let mut total_words = 0;
         let mut polish_char_count = 0;
         let mut common_polish_words = 0;
