@@ -223,12 +223,6 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "langsam",
     "viel",
     "wenig",
-    "alle",
-    "keine",
-    "ideelle",
-    // Additional common words that are often misclassified
-    "bestimmt",
-    "mehr",
     "lag",
 ];
 
