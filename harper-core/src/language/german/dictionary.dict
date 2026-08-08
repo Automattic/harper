@@ -1,4 +1,66 @@
 249342
+Arzt/~~Mh # doctor, physician
+Aufklärung/~~Fh # education, information
+Aufklärungen/~~F # plural of Aufklärung
+Aufzeichnung/~~Fh # recording, documentation
+Ausübung/~~Fh # practice, exercise - substantivation from ausüben
+Befund/~~Mh # finding, diagnosis
+Befunde/~~M # plural of Befund
+Behandlung/~~Fh # treatment - substantivation from behandeln
+Behinderung/~~Fh # disability
+Behinderung/~~Fh # disability, impairment - substantivation from behindern
+Behinderungen/~~F # plural of Behinderung
+Beziehung/~~Fh # relationship, relation
+Diagnose/~~Fh # diagnosis
+Diagnosen/~~F # plural of Diagnose
+Eingriff/~~Mh # intervention, procedure
+Eingriffe/~~M # plural of Eingriff
+Einwilligung/~~Fh # consent
+Einwilligungen/~~F # plural of Einwilligung
+Ergebnis/~~Nh # result, outcome
+Ergebnisse/~~N # plural of Ergebnis
+Erhaltung/~~Fh # preservation, maintenance - substantivation from erhalten
+Erkenntnis/~~Fh # knowledge, cognition - substantivation from erkennen
+Erkenntnisse/~~F # plural of Erkenntnis
+Erkrankung/~~Fh # disease, illness
+Forschung/~~Fh # research
+Fähigkeit/~~Fh # ability, capability
+Gesundheit/~~Fh # health
+Heiler/~~Mh # healer
+Heilkunde/~~Fh # medical science, healing art
+Heilkunst/~~Fh # healing art
+Heilung/~~Fh # healing, cure - substantivation from heilen
+Humanmedizin/~~Fh # human medicine
+Komplikation/~~Fh # complication
+Krankengeschichte/~~Fh # medical history
+Krankheit/~~Fh # disease, illness
+Krankheiten/~~F # plural of Krankheit
+Kuration/~~Fh # cure, healing
+Maßnahme/~~Fh # measure, action
+Maßnahmen/~~F # plural of Maßnahme
+Medizin/~~Fh # medicine
+Medizinmann/~~Mh # medicine man
+Palliation/~~Fh # palliative care
+Patient/~~Mh # patient
+Phytomedizin/~~Fh # plant medicine, phytomedicine
+Prävention/~~Fh # prevention
+Rehabilitation/~~Fh # rehabilitation
+Schamane/~~Mh # shaman
+Therapeut/~~Mh # therapist
+Therapie/~~Fh # therapy
+Therapien/~~F # plural of Therapie
+Tiermedizin/~~Fh # veterinary medicine
+Untersuchung/~~Fh # examination, investigation
+Verbesserung/~~Fh # improvement - substantivation from verbessern
+Verletzung/~~Fh # injury
+Verletzung/~~Fh # injury, damage - substantivation from verletzen
+Verletzungen/~~F # plural of Verletzung
+Veterinärmedizin/~~Fh # veterinary medicine
+Vorbeugung/~~Fh # prevention - substantivation from vorbeugen
+Wiederherstellung/~~Fh # restoration, recovery - substantivation from wiederherstellen
+Zahnarzt/~~Mh # dentist
+Zahnmedizin/~~Fh # dentistry
+anwendungsbezogen/~~RJOQRSTUWqh # application-related - adjective
 clara/~~Nh #proper noun, feminine name
 bodden/~~N
 bode/~~N
@@ -1039,7 +1101,7 @@ auswürgen/~~N
 auszahlen/~~NMZ
 auszehren/~~NMZ
 auszählen/~~NMZ
-ausüben/~~NMZ
+ausüben/~~Vcej # FIXED: verb - practice, exercise
 autismus/~~N
 autogamie/~~N
 autokephalie/~~N
@@ -1345,7 +1407,7 @@ bedauerns/~~N
 bedburg/~~N
 bedburger/~~NF
 bedecken/~~NMZ
-bedienen/~~NMZ
+bedienen/~~Vcej # FIXED: verb - use, operate
 bedingen/~~NMZ
 bedrohen/~~NMZ
 bedrohlichkeit/~~P
@@ -16636,7 +16698,7 @@ ergebnisreich/~Nh #frequency: 6
 ergiebig/~Jq #adjective root, frequency: 6
 ergreifend/~Nh #frequency: 6
 erhaben/~V # verb root, frequency: 6
-erhalten/~V # verb root, frequency: 6
+erhalten/~~Vcej #  verb root, frequency: 6 | maintain, preserve - needs conjugation
 erheb/~Nh #frequency: 6
 erheblich/~Jq #adjective root, frequency: 6
 erheiter/~Nh #frequency: 6
@@ -46530,7 +46592,7 @@ anweisern/~~V # auto-added
 anweisers/~~Nh
 anweisung/~~Fh
 anweisungs/~~Nh
-anwenden/~~V # auto-added
+anwenden/~~Vcej #  auto-added | ENHANCED: verb - apply, use
 anwendend/~~Nh
 anwendende/~~Nh
 anwendens/~~Nh
@@ -53118,7 +53180,7 @@ begräbst/~~Nh
 begrüben/~~V # auto-added
 begrübet/~~Nh
 begründe/~~Nh
-begründen/~~V # auto-added
+begründen/~~Vcej #  auto-added | justify, found - from Begründung
 begründend/~~Nh
 begründens/~~Nh
 begründer/~~Mh
@@ -53202,7 +53264,7 @@ behaltenes/~~Nh
 behaltens/~~Nh
 behaltet/~~Nh
 behandele/~~Nh
-behandeln/~~V # auto-added
+behandeln/~~Vcej #  auto-added | treat, handle - needs conjugation for Partizipien
 behandelnd/~~Nh
 behandelns/~~Nh
 behandelt/~~NXh
@@ -53317,7 +53379,7 @@ behielten/~~V # auto-added
 behieltest/~~Nh
 behieltet/~~Nh
 behindere/~~Nh
-behindern/~~V # auto-added
+behindern/~~Vcej #  auto-added | hinder, impede - needs conjugation for Behinderung
 behindernd/~~Nh
 behinderns/~~Nh
 behindert/~~NXh
@@ -56324,7 +56386,7 @@ bezauberns/~~Nh
 bezaubert/~~NXh
 bezaubre/~~Nh
 bezeichne/~~Nh
-bezeichnen/~~V # auto-added
+bezeichnen/~~Vcej #  auto-added | designate, denote - needs conjugation
 bezeichner/~~Mh
 bezeichnet/~~Nh
 bezeig/~~Vej # REPLACES bezeigen
@@ -67246,7 +67308,7 @@ entstauben/~~V # auto-added
 entstaubst/~~Nh
 entstaubt/~~NXh
 entstehe/~~Nh
-entstehen/~~V # auto-added
+entstehen/~~Vcej #  auto-added | arise, emerge - needs conjugation
 entstehend/~~Nh
 entstehens/~~Nh
 entstehst/~~Nh
@@ -67378,7 +67440,7 @@ entwichene/~~Nh
 entwichest/~~Nh
 entwicht/~~Nh
 entwickele/~~Nh
-entwickeln/~~V # auto-added
+entwickeln/~~Vcej #  auto-added | ENHANCED: verb - develop
 entwickelt/~~Nh
 entwickle/~~Nh
 entwickler/~~Mh
@@ -67614,7 +67676,7 @@ erahntes/~~Nh
 erahntest/~~Nh
 erahntet/~~Nh
 erarbeite/~~Nh
-erarbeiten/~~V # auto-added
+erarbeiten/~~Vcej #  auto-added | develop, work out - needs conjugation
 erarbeitet/~~Nh
 erbarm/~~Vej # REPLACES erbarmen
 erbarmende/~~Nh
@@ -68441,7 +68503,7 @@ erikaweg/~~Nh
 erikaweges/~~Nh
 erikawegs/~~Nh
 erinnere/~~Nh
-erinnern/~~V # auto-added
+erinnern/~~Vcej #  auto-added | remind, recall - needs conjugation
 erinnernd/~~Nh
 erinnernde/~~Nh
 erinnerns/~~Nh
@@ -68486,7 +68548,7 @@ erkaufter/~~Mh
 erkauftes/~~Nh
 erkauftest/~~Nh
 erkauftet/~~Nh
-erkennen/~~V # auto-added
+erkennen/~~Vcej #  auto-added | recognize, detect - needs conjugation
 erkennend/~~Nh
 erkennende/~~Nh
 erkennens/~~Nh
@@ -106391,7 +106453,7 @@ studenten/~~V # auto-added
 studentin/~~Nh
 studien/~~V # auto-added
 studiere/~~Nh
-studieren/~~V # auto-added
+studieren/~~Vcej #  auto-added | study - from Mediziner studiert
 studierst/~~Nh
 studiert/~~NXh
 studium/~~Za #  auto-added
@@ -112744,7 +112806,7 @@ verlesene/~~Nh
 verlesens/~~Nh
 verlesung/~~Fh
 verletze/~~Nh
-verletzen/~~V # auto-added
+verletzen/~~Vcej #  auto-added | injure, hurt - needs conjugation for Verletzung
 verletzer/~~Mh
 verletzt/~~NXh
 verleugne/~~Nh
@@ -113415,7 +113477,7 @@ versäumen/~~V # auto-added
 versäumst/~~Nh
 versäumt/~~NXh
 versöhne/~~Nh
-versöhnen/~~V # auto-added
+versöhnen/~~Vcej #  auto-added | reconcile, appease - needs conjugation
 versöhnst/~~Nh
 versöhnt/~~NXh
 versüße/~~Nh
@@ -114155,7 +114217,7 @@ vorberät/~~Nh
 vorbeten/~~V # auto-added
 vorbetend/~~Nh
 vorbeuge/~~Nh
-vorbeugen/~~V # auto-added
+vorbeugen/~~Vcej #  auto-added | prevent - from Vorbeugung
 vorbeugst/~~Nh
 vorbeugt/~~NXh
 vorbohre/~~Nh
@@ -131156,7 +131218,7 @@ verbandelt/~~Nh
 verbastele/~~Fh
 verbastelt/~~Nh
 verbeamten/~~Nh
-verbessern/~~Nh
+verbessern/~~Vcej # FIXED: verb - improve, enhance
 verbittern/~~Nh
 verbittert/~~Nh
 verblassen/~~Nh
@@ -133707,7 +133769,7 @@ auftoupiert/~~Nh
 auftrumpfen/~~Nh
 aufwicklung/~~Fh
 aufwuchsort/~~Nh
-aufzeichnen/~~Nh
+aufzeichnen/~~Vcej # FIXED: verb - record, document
 aufzubacken/~~Nh
 aufzubahren/~~Nh
 aufzubeißen/~~Nh
@@ -135533,7 +135595,7 @@ durchfrisst/~~Nh
 durchfroren/~~Nh
 durchfärben/~~Nh
 durchföchte/~~Fh
-durchführen/~~Nh
+durchführen/~~Vcej # FIXED: verb - carry out, perform
 durchgeboxt/~~Nh
 durchgeeilt/~~Nh
 durchgefegt/~~Nh
@@ -136367,7 +136429,7 @@ ermittelung/~~Fh
 ermittlungs/~~Nh
 ermstalbahn/~~Nh # auto-added
 ermächtigen/~~Nh # auto-added
-ermöglichen/~~Nh
+ermöglichen/~~Vcej # FIXED: verb - enable, make possible
 erneuerungs/~~Nh
 erniedrigen/~~Nh # auto-added
 erntefrisch/~~RJOQRSTUWqh
@@ -139940,7 +140002,7 @@ komatrinker/~~Nh
 kombimosaik/~~Nh
 kombimutter/~~Nh
 kombination/~~Fh
-kombinieren/~~Nh
+kombinieren/~~Vcej # FIXED: verb - combine
 kombisystem/~~Nh
 kometenbahn/~~Nh # auto-added
 kometenhaft/~~Nh
@@ -145843,7 +145905,7 @@ unterlabium/~~Nh
 unterlagern/~~Nh
 unterlassen/~~Nh
 unterlaufen/~~Nh
-unterliegen/~~Nh # auto-added
+unterliegen/~~Vcej #  auto-added | FIXED: verb - be subject to
 untermauern/~~Nh
 untermengen/~~Nh # auto-added
 unternehmen/~~Nh
@@ -145862,7 +145924,7 @@ unterspülen/~~Nh
 unterstehen/~~Nh
 unterstände/~~Fh
 unterstünde/~~Fh
-untersuchen/~~Nh
+untersuchen/~~Vcej # FIXED: verb - examine, investigate
 unterteilen/~~Nh
 untertiteln/~~Nh
 unterwallis/~~Nh
@@ -150276,7 +150338,7 @@ einschichtig/~~Nh
 einschleifen/~~Nh
 einschleppen/~~Nh
 einschleusen/~~Nh
-einschließen/~~Nh
+einschließen/~~Vcej # FIXED: verb - include, enclose
 einschläfern/~~Nh
 einschlürfen/~~Nh
 einschmeißen/~~Nh
@@ -161853,7 +161915,7 @@ zurückfinden/~~Nh
 zurückfluten/~~Nh
 zurückflösse/~~Fh
 zurückfragen/~~Nh # auto-added
-zurückführen/~~Nh
+zurückführen/~~Vcej # FIXED: verb - trace back, attribute
 zurückgebaut/~~Nh
 zurückgeeilt/~~Nh
 zurückgehabt/~~Nh
@@ -205864,7 +205926,7 @@ wiedereinzulösen/~~Nh
 wiederentstanden/~~Nh
 wiedergutgemacht/~~Nh
 wiederherrichten/~~Nh
-wiederherstellen/~~Nh
+wiederherstellen/~~Vcej # FIXED: verb - restore, re-establish
 wiederholbarkeit/~~Fh
 wiederholerquote/~~Fh
 wiedervereinigen/~~Nh # auto-added
@@ -206785,7 +206847,7 @@ fällen/~~N
 färben/~~N
 föhnen/~~V
 fühlen/~~V
-führen/~~N
+führen/~~Vcej # FIXED: verb - lead, conduct
 füllen/~~N
 gaffen/~~V
 geigen/~~V
@@ -206821,7 +206883,7 @@ harren/~~V
 harzen/~~V
 hecken/~~V
 hehlen/~~V
-heilen/~~N
+heilen/~~Vcej # FIXED: verb - heal, cure
 heizen/~~N
 heißen/~~V
 helfen/~~V
@@ -206993,7 +207055,7 @@ behexen/~~V
 beirren/~~V
 bereden/~~V
 bereuen/~~V
-beruhen/~~V
+beruhen/~~Vcej # be based on - needs conjugation
 besamen/~~V
 beäugen/~~V
 blecken/~~V
@@ -207061,7 +207123,7 @@ fressen/~~V
 frieren/~~V
 fuchsen/~~V
 gebären/~~V
-gehören/~~V
+gehören/~~Vcej # belong, pertain - needs conjugation
 geruhen/~~V
 glauben/~~N
 gleißen/~~V
@@ -212068,7 +212130,7 @@ tarieren/~~V
 taxieren/~~V
 trumpfen/~~V
 umdrehen/~~N
-umfassen/~~N
+umfassen/~~Vcej # FIXED: verb - comprise, include
 umformen/~~N
 umfärben/~~V
 umfüllen/~~V
@@ -222622,3 +222684,4 @@ kleidungsstücke/~~Nh # clothing items
 schnabelschuhen/~~M # pointed shoes
 sonnenkönigs/~~M # sun king's
 industriezeitalters/~~Nh # industrial age
+
