@@ -19,6 +19,12 @@ language-meta language word:
 	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}"
 
+# Check word against hunspell
+# Usage: just language-hunspell german "word"
+language-hunspell language word:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{word}}" --hunspell
+
 # Show metadata for all words in text
 # Usage: just language-meta-text german "text with multiple words"
 language-meta-text language text:
