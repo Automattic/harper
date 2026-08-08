@@ -88,7 +88,7 @@ impl Expr for SequenceExpr {
             }
 
             window.expand_to_include(out.start);
-            window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
+            window.expand_to_include(out.end - 1);
         }
 
         Some(window)
