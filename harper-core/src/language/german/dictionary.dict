@@ -1,4 +1,6 @@
 249342
+Altertum/~~Nh # antiquity
+Arznei/~~Fh # medicine, drug
 Arzt/~~Mh # doctor, physician
 Aufklärung/~~Fh # education, information
 Aufklärungen/~~F # plural of Aufklärung
@@ -10,7 +12,12 @@ Behandlung/~~Fh # treatment - substantivation from behandeln
 Behinderung/~~Fh # disability
 Behinderung/~~Fh # disability, impairment - substantivation from behindern
 Behinderungen/~~F # plural of Behinderung
+Bereich/~~Mh # area, field
+Bereiche/~~M # plural of Bereich
+Beschaffenheit/~~Fh # nature, condition
 Beziehung/~~Fh # relationship, relation
+Biologie/~~Fh # biology
+Chemie/~~Fh # chemistry
 Diagnose/~~Fh # diagnosis
 Diagnosen/~~F # plural of Diagnose
 Eingriff/~~Mh # intervention, procedure
@@ -24,42 +31,87 @@ Erkenntnis/~~Fh # knowledge, cognition - substantivation from erkennen
 Erkenntnisse/~~F # plural of Erkenntnis
 Erkrankung/~~Fh # disease, illness
 Forschung/~~Fh # research
+Funktion/~~Fh # function
 Fähigkeit/~~Fh # ability, capability
 Gesundheit/~~Fh # health
+Grundlage/~~Fh # basis, foundation
+Grundlagen/~~F # plural of Grundlage
+Handlung/~~Fh # action, deed
+Harmonie/~~Fh # harmony
+Harmonien/~~F # plural of Harmonie
+Heilberuf/~~Mh # healing profession
+Heilberufe/~~M # plural of Heilberuf
 Heiler/~~Mh # healer
+Heilkräuter/~~Nh # medicinal herbs
 Heilkunde/~~Fh # medical science, healing art
 Heilkunst/~~Fh # healing art
 Heilung/~~Fh # healing, cure - substantivation from heilen
+Heilungszeremonie/~~Fh # healing ceremony
+Heilungszeremonien/~~F # plural of Heilungszeremonie
 Humanmedizin/~~Fh # human medicine
 Komplikation/~~Fh # complication
 Krankengeschichte/~~Fh # medical history
 Krankheit/~~Fh # disease, illness
 Krankheiten/~~F # plural of Krankheit
+Kulturgeschichte/~~Fh # cultural history
+Kunst/~~Fh # art
 Kuration/~~Fh # cure, healing
+Körper/~~Mh # body
+Lebewesen/~~Nh # living being, organism
+Lehre/~~Fh # teaching, doctrine
+Lehrgebäude/~~N # plural of Lehrgebäude
+Lehrgebäude/~~Nh # teaching building, doctrine
+Macht/~~Fh # power
+Mana/~~Nh # mana (Polynesian concept)
 Maßnahme/~~Fh # measure, action
 Maßnahmen/~~F # plural of Maßnahme
 Medizin/~~Fh # medicine
+Medizinbeutel/~~Mh # medicine bag
+Mediziner/~~M # plural of Mediziner
+Mediziner/~~Mh # medical practitioner, physician
 Medizinmann/~~Mh # medicine man
+Medizinmänner/~~M # plural of Medizinmann
+Medizinrad/~~Nh # medicine wheel
 Palliation/~~Fh # palliative care
 Patient/~~Mh # patient
+Person/~~Fh # person
+Physik/~~Fh # physics
 Phytomedizin/~~Fh # plant medicine, phytomedicine
 Prävention/~~Fh # prevention
+Psychologie/~~Fh # psychology
 Rehabilitation/~~Fh # rehabilitation
 Schamane/~~Mh # shaman
+Schamanen/~~M # plural of Schamane
+Seelenreise/~~Fh # soul journey
+Störung/~~Fh # disturbance, disorder
+Störungen/~~F # plural of Störung
+Tabuverletzung/~~Fh # taboo violation
 Therapeut/~~Mh # therapist
 Therapie/~~Fh # therapy
 Therapien/~~F # plural of Therapie
+Therapieverfahren/~~Nh # therapy method
 Tiermedizin/~~Fh # veterinary medicine
+Tradition/~~Fh # tradition
+Traditionen/~~F # plural of Tradition
+Umwelt/~~Fh # environment
 Untersuchung/~~Fh # examination, investigation
 Verbesserung/~~Fh # improvement - substantivation from verbessern
 Verletzung/~~Fh # injury
 Verletzung/~~Fh # injury, damage - substantivation from verletzen
 Verletzungen/~~F # plural of Verletzung
+Verständnis/~~Nh # understanding, comprehension
+Versöhnung/~~Fh # reconciliation
 Veterinärmedizin/~~Fh # veterinary medicine
+Vielfalt/~~Fh # diversity, variety
 Vorbeugung/~~Fh # prevention - substantivation from vorbeugen
 Wiederherstellung/~~Fh # restoration, recovery - substantivation from wiederherstellen
+Wissenschaft/~~Fh # science
+Wissenschaften/~~F # plural of Wissenschaft
+Wort/~~Nh # word
+Zahl/~~Fh # number, count
 Zahnarzt/~~Mh # dentist
 Zahnmedizin/~~Fh # dentistry
+Zustand/~~Mh # state, condition
 anwendungsbezogen/~~RJOQRSTUWqh # application-related - adjective
 clara/~~Nh #proper noun, feminine name
 bodden/~~N
@@ -13956,6 +14008,7 @@ eines/~~DzZw # indefinite article neuter genitive
 ich/~~Ip # pronoun I (nominative)
 du/~~Ip # pronoun you (nominative)
 er/~~Ip # pronoun he (nominative)
+nordamerikanisch/~~RJOQRSTUWqh # North American - adjective
 sie/~~Ip # pronoun she/they (nominative)
 es/~~Ip # pronoun it (nominative)
 wir/~~Ip # pronoun we (nominative)
@@ -14047,6 +14100,8 @@ reich/~~NJOQRSTUWq #adjective and noun
 reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
+Ärzteschule/~~Fh # medical school
+Ärzteschulen/~~F # plural of Ärzteschule
 ärger/~~NJOQRSTUWq #adjective and noun
 äußer/~~NJOQRSTUWq #adjective and noun
 bau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
@@ -222684,4 +222739,5 @@ kleidungsstücke/~~Nh # clothing items
 schnabelschuhen/~~M # pointed shoes
 sonnenkönigs/~~M # sun king's
 industriezeitalters/~~Nh # industrial age
+
 
