@@ -67,7 +67,9 @@ export default defineManifest({
 			world: 'MAIN',
 		},
 		{
-			matches: ['<all_urls>'],
+			// Restrict content script matches to only the origins required by the extension.
+			// Update this list with exact domains your extension needs to run on.
+			matches: ['https://writewithharper.com/*'],
 			all_frames: true,
 			match_about_blank: true,
 			match_origin_as_fallback: true,
@@ -77,7 +79,8 @@ export default defineManifest({
 	],
 	web_accessible_resources: [
 		{
-			matches: ['<all_urls>'],
+			// Avoid '<all_urls>' — only allow trusted origins explicitely.
+			matches: ['https://writewithharper.com/*'],
 			resources: [
 				'wasm/harper_wasm_bg.wasm',
 				'google-docs-bridge.js',
