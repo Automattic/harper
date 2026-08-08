@@ -17,7 +17,7 @@
 use crate::{
     Token,
     document::Document,
-    linting::{Lint, LintKind, Linter, Suggestion},
+    linting::{Lint, LintKind, Linter},
     spell::Dictionary,
 };
 use harper_brill::UPOS;
