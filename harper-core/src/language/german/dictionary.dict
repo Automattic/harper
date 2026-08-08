@@ -3762,7 +3762,7 @@ abteiltet/~~Nh #noun
 abteilung/~~Fh #feminine noun
 abteilungen/~~V # verb
 abteilungs/~~Nh #noun
-abteilungsweit/~~NXh #noun
+abteilungsweit/~~RJOQRSTUWqh
 abteipark/~~Nh #noun
 abteiparks/~~Nh #noun
 abteistraße/~~Fh #feminine noun
@@ -25292,6 +25292,7 @@ eurige/~~Nh
 eurigen/~~V # auto-added
 euro/~~Nbh
 europa/~~Nbah
+europaweit/~~RJOQRSTUWqh
 euter/~~Mh
 eutern/~~Nh
 euters/~~Nh
@@ -39794,6 +39795,7 @@ stacht/~~Nh
 stack/~~Nh
 stacks/~~Nh
 stadt/~~Fah
+stadtweit/~~RJOQRSTUWqh
 stahl/~~Nh
 stahls/~~Nh
 stahlt/~~Nh
@@ -41657,6 +41659,7 @@ welpe/~~Nh
 welpen/~~V # auto-added
 welsch/~~NYXh
 welt/~~Fh
+weltweit/~~RJOQRSTUWqh
 welten/~~V # auto-added
 wem/~~Nh
 wen/~~V # auto-added
@@ -42398,7 +42401,7 @@ zweier/~~Mh
 zweig/~~NXh
 zweigs/~~Nh
 zweigt/~~NXh
-zweit/~~NXh
+zweit/~~RJOQRSTUWqh
 zwerg/~~NXh
 zwergs/~~Nh
 zwick/~~NXh
@@ -43277,7 +43280,7 @@ allgäuer/~~Mh
 allgäuerin/~~Nh
 allgäuern/~~V # auto-added
 allgäuers/~~Nh
-allgäuweit/~~Nh
+allgäuweit/~~RJOQRSTUWqh
 allianzen/~~V # auto-added
 alligator/~~Nh
 alligators/~~Nh
@@ -44455,7 +44458,7 @@ angelpunkt/~~Nh
 angelten/~~V # auto-added
 angeltest/~~Nh
 angeltet/~~Nh
-angelweit/~~NXh
+angelweit/~~RJOQRSTUWqh
 angelötet/~~NXh
 angelüftet/~~Nh
 angemacht/~~NXh
@@ -51965,7 +51968,7 @@ bankrotts/~~Nh
 bankster/~~Mh
 bankstern/~~V # auto-added
 banksters/~~Nh
-bankweit/~~NXh
+bankweit/~~RJOQRSTUWqh
 bankweitem/~~Nh
 bankweiten/~~V # auto-added
 bankweiter/~~Mh
@@ -52237,7 +52240,7 @@ bayernfan/~~Nh
 bayernfans/~~Nh
 bayernland/~~Nh
 bayernliga/~~Nh
-bayernweit/~~Nh
+bayernweit/~~RJOQRSTUWqh
 bayerwerk/~~NXh
 bayerwerks/~~Nh
 bayessche/~~Nh
@@ -54763,7 +54766,7 @@ berlinerin/~~Nh
 berlinern/~~V # auto-added
 berliners/~~Nh
 berlinert/~~Nh
-berlinweit/~~Nh
+berlinweit/~~RJOQRSTUWqh
 bernerin/~~Nh
 bernoulli/~~Nbh
 bernstein/~~Nh
@@ -58532,7 +58535,7 @@ bundbrief/~~NXh
 bundbriefs/~~Nh
 bundeslade/~~Nh
 bundestags/~~Nh
-bundesweit/~~Nh
+bundesweit/~~RJOQRSTUWqh
 bundfalte/~~Nh
 bundfalten/~~V # auto-added
 bundhose/~~Nh
@@ -59189,7 +59192,7 @@ chinarinde/~~Nh
 chinasäure/~~Nh
 chinatown/~~Nh
 chinatreue/~~Nh
-chinaweit/~~NXh
+chinaweit/~~RJOQRSTUWqh
 chinchilla/~~Nh
 chinesen/~~V # auto-added
 chinesin/~~Nh
@@ -60129,7 +60132,7 @@ dataphon/~~Nh
 dataphone/~~Nh
 dataphonen/~~V # auto-added
 dataphons/~~Nh
-dateiweit/~~NXh
+dateiweit/~~RJOQRSTUWqh
 datenbit/~~Nh
 datenbits/~~Nh
 datenbyte/~~Nh
@@ -61697,7 +61700,7 @@ dopplung/~~Fh
 dopplungen/~~V # auto-added
 dorfschöne/~~Nh
 dorfwarft/~~Nh
-dorfweit/~~NXh
+dorfweit/~~RJOQRSTUWqh
 dorfweitem/~~Nh
 dorfweiten/~~V # auto-added
 dorfweiter/~~Mh
@@ -63354,7 +63357,7 @@ eifelhöhen/~~V # auto-added
 eifelraum/~~Za #  auto-added
 eifelraums/~~Nh
 eifeltor/~~Nh
-eifelweit/~~NXh
+eifelweit/~~RJOQRSTUWqh
 eiferern/~~V # auto-added
 eiferers/~~Nh
 eifernde/~~Nh
@@ -67478,7 +67481,7 @@ entzogenes/~~Nh
 entzuges/~~Nh
 entzwei/~~Vej # REPLACES entzweien
 entzweiens/~~Nh
-entzweit/~~NXh
+entzweit/~~RJOQRSTUWqh
 entzweitem/~~Nh
 entzweiter/~~Mh
 entzweites/~~Nh
@@ -72281,7 +72284,7 @@ firmende/~~Nh
 firmendem/~~Nh
 firmender/~~Mh
 firmendes/~~Nh
-firmenweit/~~Nh
+firmenweit/~~RJOQRSTUWqh
 firmier/~~Vej # REPLACES firmieren
 firmiert/~~NXh
 firmiertet/~~Nh
@@ -86935,7 +86938,7 @@ insolvent/~~Nh
 insolvenz/~~Nh
 insomnie/~~Nh
 insomnien/~~V # auto-added
-insoweit/~~Nh
+insoweit/~~RJOQRSTUWqh
 inspektor/~~Nh
 instabile/~~Nh
 instantan/~~Nh
@@ -87047,7 +87050,7 @@ investors/~~Nh
 invitiere/~~Nh
 invitiert/~~Nh
 inwiefern/~~V # auto-added
-inwieweit/~~Nh
+inwieweit/~~RJOQRSTUWqh
 inzestuös/~~Nh
 inzident/~~NXh
 inzidenz/~~Nh
@@ -90087,7 +90090,7 @@ kreiselt/~~NXh
 kreisende/~~Nh
 kreisrund/~~Nh
 kreistet/~~Nh
-kreisweit/~~Nh
+kreisweit/~~RJOQRSTUWqh
 kreißend/~~Nh
 kreißende/~~Nh
 kreißsäle/~~Nh
@@ -91867,7 +91870,7 @@ ligatoren/~~V # auto-added
 ligatores/~~Nh
 ligators/~~Nh
 ligaturen/~~V # auto-added
-ligaweit/~~NXh
+ligaweit/~~RJOQRSTUWqh
 lightshow/~~Nh
 ligier/~~Vej # REPLACES ligieren
 ligiertem/~~Nh
@@ -93723,7 +93726,7 @@ meterspur/~~Nh
 meterstab/~~Nh
 metertief/~~Nh
 meterware/~~Nh
-meterweit/~~Nh
+meterweit/~~RJOQRSTUWqh
 methadon/~~Nh
 methadons/~~Nh
 methaneis/~~Nh
@@ -99724,7 +99727,7 @@ raumlosem/~~Nh
 raumlosen/~~V # auto-added
 raumloser/~~Mh
 raumloses/~~Nh
-raumweit/~~NXh
+raumweit/~~RJOQRSTUWqh
 raunende/~~Nh
 raunendem/~~Nh
 raunender/~~Mh
@@ -106193,7 +106196,7 @@ strebers/~~Nh
 strebtest/~~Nh
 strebtet/~~Nh
 strebung/~~Fh
-strebweit/~~Nh
+strebweit/~~RJOQRSTUWqh
 streck/~~Vej # REPLACES strecken
 streckens/~~Nh
 strecker/~~Mh
@@ -106993,6 +106996,7 @@ systeme/~~Nh
 systemen/~~V # auto-added
 systemnah/~~Nh
 systems/~~Nh
+systemweit/~~RJOQRSTUWqh
 szenarien/~~V # auto-added
 szenario/~~Nbh
 szenarium/~~Za #  auto-added
@@ -108248,7 +108252,7 @@ tiroler/~~Mh
 tirolerin/~~Nh
 tirolern/~~V # auto-added
 tirolers/~~Nh
-tirolweit/~~Nh
+tirolweit/~~RJOQRSTUWqh
 tischchen/~~XZ #  auto-added
 tischeben/~~V # auto-added
 tischen/~~XZ #  auto-added
@@ -124550,7 +124554,7 @@ hilfsweise/~~Fh
 himbeerrot/~~Nh
 himmelhoch/~~Nh # auto-added
 himmelhohe/~~Fh
-himmelweit/~~Nh
+himmelweit/~~RJOQRSTUWqh
 hinabbegab/~~Nh
 hinabeilen/~~Nh
 hinabfloss/~~Nh
@@ -125180,7 +125184,7 @@ ischämisch/~~Nh
 iselregion/~~Fh
 islamismus/~~Nh
 islandpony/~~Nh
-islandweit/~~Nh
+islandweit/~~RJOQRSTUWqh
 isländisch/~~Nh
 isomorphie/~~Fh
 isoprenoid/~~Nh
@@ -125348,7 +125352,7 @@ kampfesmut/~~Nh
 kampffähig/~~Nh
 kanaaniter/~~Nh
 kanadagans/~~Nh
-kanadaweit/~~Nh
+kanadaweit/~~RJOQRSTUWqh
 kanalartig/~~Nh
 kanalpegel/~~Nh
 kanalweise/~~Fh
@@ -126039,7 +126043,7 @@ körperfern/~~Nh
 körperfest/~~Nh
 körperlich/~~JOQRSTUWqh
 körperwarm/~~Nh
-körperweit/~~Nh
+körperweit/~~RJOQRSTUWqh
 kübelwagen/~~Nh # auto-added
 kükenstall/~~Nh
 kümmerform/~~Nh
@@ -126104,7 +126108,7 @@ lammbraten/~~Nh
 lammragout/~~Nh
 lammrücken/~~Nh
 landadlige/~~Fh
-landesweit/~~Nh
+landesweit/~~RJOQRSTUWqh
 landkomtur/~~Nh
 landlebend/~~Nh
 landläufig/~~Nh
@@ -127936,7 +127940,7 @@ parteiisch/~~Nh
 parteilich/~~JOQRSTUWqh
 parteitags/~~Nh
 parteitreu/~~Nh
-parteiweit/~~Nh
+parteiweit/~~RJOQRSTUWqh
 partikular/~~Nh
 partikulär/~~Nh
 partisanen/~~Nh
@@ -128700,7 +128704,7 @@ reichsfern/~~Nh
 reichsfrei/~~Nh
 reichstags/~~Nh
 reichstreu/~~Nh
-reichsweit/~~Nh
+reichsweit/~~RJOQRSTUWqh
 reichtümer/~~Nh
 reichweite/~~Fh
 reigentanz/~~Nh
@@ -129567,7 +129571,7 @@ seismograf/~~Nh
 seitenlang/~~Nh
 seitherige/~~Fh
 sektenhaft/~~Nh
-sektorweit/~~Nh
+sektorweit/~~RJOQRSTUWqh
 sekündlich/~~JOQRSTUWqh
 selbstisch/~~Nh
 selbstmatt/~~Nh
@@ -130971,7 +130975,7 @@ unifikator/~~Nh
 unigefärbt/~~Nh
 unilateral/~~Nh
 unionstreu/~~Nh
-unionsweit/~~Nh
+unionsweit/~~RJOQRSTUWqh
 unitarisch/~~Nh
 univariant/~~Nh
 unjustiert/~~Nh
@@ -134586,7 +134590,7 @@ bewusstsein/~~Nh
 bewusstwird/~~Nh
 bezichtigen/~~Nh # auto-added
 bezierkurve/~~Fh
-bezirksweit/~~Nh
+bezirksweit/~~RJOQRSTUWqh
 bezogenheit/~~Fh
 bezugsfähig/~~Nh
 beängstigen/~~Nh # auto-added
@@ -134635,7 +134639,7 @@ birkenfeige/~~Fh
 bischöflich/~~JOQRSTUWqh
 biskuitteig/~~Nh
 bistrotisch/~~Nh
-bistumsweit/~~Nh
+bistumsweit/~~RJOQRSTUWqh
 bithermisch/~~Nh
 bitoperator/~~Nh
 bittandacht/~~Nh
@@ -139350,7 +139354,7 @@ isotaktisch/~~Nh
 israelreise/~~Fh
 itaconsäure/~~Fh
 italienisch/~~NJOQRSTUWq #adjective and noun
-italienweit/~~Nh
+italienweit/~~RJOQRSTUWqh
 jachtsegler/~~Nh
 jacketkrone/~~Fh
 jagdbarkeit/~~Fh
@@ -140042,7 +140046,7 @@ konvertibel/~~Nh
 konvexlinse/~~Fh
 konvoifahrt/~~Nh
 konzedieren/~~Nh
-konzernweit/~~Nh
+konzernweit/~~RJOQRSTUWqh
 konzertiert/~~Nh
 konzessions/~~Nh # auto-added
 konzilsakte/~~Fh
@@ -142906,7 +142910,7 @@ progredient/~~Nh
 progression/~~Fh
 prohibition/~~Fh
 projektions/~~Nh
-projektweit/~~Nh
+projektweit/~~RJOQRSTUWqh
 projizieren/~~Nh
 proklitisch/~~Nh
 prokurdisch/~~Nh
@@ -143810,7 +143814,7 @@ sachsenheer/~~Nh
 sachsenland/~~Nh
 sachsenliga/~~Nh
 sachsenross/~~Nh
-sachsenweit/~~Nh
+sachsenweit/~~RJOQRSTUWqh
 sachverhalt/~~Nh
 sackbahnhof/~~Nh
 sackstutzen/~~Nh
@@ -144179,7 +144183,7 @@ schweinigel/~~Nh
 schweinisch/~~Nh
 schweinsohr/~~Nh
 schweinswal/~~Nh
-schweizweit/~~Nh
+schweizweit/~~RJOQRSTUWqh
 schweißerei/~~Nh
 schweißnass/~~Nh
 schwelbrand/~~Nh
@@ -145989,7 +145993,7 @@ verbrauchen/~~Nh
 verbraucher/~~Nh
 verbrechens/~~Nh
 verbreitern/~~Nh
-verbundweit/~~Nh
+verbundweit/~~RJOQRSTUWqh
 verderblich/~~JOQRSTUWqh
 verdreschen/~~Nh
 verdroschen/~~Nh
@@ -148858,7 +148862,7 @@ behelfsmäßig/~~Nh
 behelfsweise/~~Fh
 behutsamkeit/~~Fh
 behändigkeit/~~Fh
-behördenweit/~~Nh
+behördenweit/~~RJOQRSTUWqh
 beichtwillig/~~Nh
 beiderseitig/~~Nh
 beigeschmack/~~Nh
@@ -149213,7 +149217,7 @@ brackenrasse/~~Fh
 brahemündung/~~Fh
 brahmanentum/~~Nh
 brahmanismus/~~Nh
-branchenweit/~~Nh
+branchenweit/~~RJOQRSTUWqh
 brasilhölzer/~~Nh
 bratenplatte/~~Fh
 bratenwender/~~Nh
@@ -149776,7 +149780,7 @@ distribuiere/~~Fh
 distribuiert/~~Nh
 distribution/~~Fh
 distriktsitz/~~Nh
-distriktweit/~~Nh
+distriktweit/~~RJOQRSTUWqh
 disziplinlos/~~Nh
 dithmarschen/~~Nh
 divinisieren/~~Nh
@@ -151045,7 +151049,7 @@ fingerhakeln/~~Nh
 finitistisch/~~Nh
 finkenschlag/~~Nh
 finnenmesser/~~Nh
-finnlandweit/~~Nh
+finnlandweit/~~RJOQRSTUWqh
 finnländisch/~~Nh
 finnougrisch/~~Nh
 firmenintern/~~Nh
@@ -158041,7 +158045,7 @@ repräsentant/~~Nh
 repräsentanz/~~Nh
 republikaner/~~Nh
 republiktreu/~~Nh
-republikweit/~~Nh
+republikweit/~~RJOQRSTUWqh
 reputierlich/~~JOQRSTUWqh
 reservierbar/~~JOQRSTUWqh
 resetleitung/~~Fh
@@ -158256,7 +158260,7 @@ runterziehen/~~Nh
 runterzählen/~~Nh
 rurtalsperre/~~Fh
 russischkurs/~~Nh
-russlandweit/~~Nh
+russlandweit/~~RJOQRSTUWqh
 rutschgefahr/~~Nh
 rutschpartie/~~Fh
 rutschsicher/~~Nh
@@ -167598,7 +167602,7 @@ hochschnellen/~~Nh
 hochschrauben/~~Nh
 hochschrecken/~~Nh
 hochschultrig/~~Nh
-hochschulweit/~~Nh
+hochschulweit/~~RJOQRSTUWqh
 hochschwanger/~~Nh
 hochschwellig/~~Nh
 hochstrompuls/~~Nh
@@ -167851,7 +167855,7 @@ individuieren/~~Nh
 indizienkette/~~Fh
 indopazifisch/~~Nh
 industriefern/~~Nh
-industrieweit/~~Nh
+industrieweit/~~RJOQRSTUWqh
 inertisierend/~~Nh
 infantilismus/~~Nh
 infarktrisiko/~~Nh
@@ -168393,7 +168397,7 @@ kiesschüttung/~~Fh
 kiesvorkommen/~~Nh
 kilianskirche/~~Fh
 kilometerhohe/~~Fh
-kilometerweit/~~Nh
+kilometerweit/~~RJOQRSTUWqh
 kinderbezogen/~~Nh # auto-added
 kindergebären/~~Nh
 kinderschreck/~~Nh
@@ -169037,7 +169041,7 @@ landesbedingt/~~Nh
 landesheilige/~~Fh
 landestypisch/~~Nh
 landhausartig/~~Nh
-landkreisweit/~~Nh
+landkreisweit/~~RJOQRSTUWqh
 landnahmebuch/~~Nh
 landnahmezeit/~~Nh
 landsmännisch/~~Nh
@@ -170564,7 +170568,7 @@ obergefreiten/~~Nh
 oberlausitzer/~~Nh
 oberlößnitzer/~~Nh
 obermainkreis/~~Nh
-oberpfalzweit/~~Nh
+oberpfalzweit/~~RJOQRSTUWqh
 oberpfälzisch/~~Nh
 oberrheinisch/~~Nh
 oberschlesien/~~Nh
@@ -178351,7 +178355,7 @@ frankobelgisch/~~Nh
 frankokanadier/~~Nh
 frankreichbild/~~Nh
 frankreichtour/~~Nh
-frankreichweit/~~Nh
+frankreichweit/~~RJOQRSTUWqh
 fransenflügler/~~Nh
 franziskanisch/~~Nh
 franziskusbild/~~Nh
@@ -182935,7 +182939,7 @@ neurosekretion/~~Fh
 neurostimulans/~~Nh
 neurotoxizität/~~Fh
 neurovegetativ/~~Nh
-neuseelandweit/~~Nh
+neuseelandweit/~~RJOQRSTUWqh
 neuseeländisch/~~Nh
 neutralalkohol/~~Nh
 neutralisation/~~Fh
@@ -185243,7 +185247,7 @@ spermatogenese/~~Fh
 spermidinmenge/~~Fh
 spermienabgabe/~~Fh
 spermienaufbau/~~Nh
-sperrangelweit/~~Nh
+sperrangelweit/~~RJOQRSTUWqh
 spezialisieren/~~Nh
 spezialistisch/~~Nh
 speziesistisch/~~Nh
@@ -187882,7 +187886,7 @@ zündversteller/~~Nh
 ölsardinendose/~~Fh
 ölverbrauchend/~~Nh
 österreichisch/~~Nh
-österreichweit/~~Nh
+österreichweit/~~RJOQRSTUWqh
 östrogenhaltig/~~Nh
 östrogenmangel/~~Nh
 übellaunigkeit/~~Fh
@@ -188755,7 +188759,7 @@ branchenführend/~~Nh
 branchentypisch/~~Nh
 brandenburgisch/~~Nh
 brandenburgliga/~~Nh
-brandenburgweit/~~Nh
+brandenburgweit/~~RJOQRSTUWqh
 brandgefährlich/~~JOQRSTUWqh
 brasilienflotte/~~Fh
 brautsträußchen/~~Nh
@@ -189096,7 +189100,7 @@ deuteriumfusion/~~Fh
 deutschenfreund/~~Nh
 deutschenhasser/~~Nh
 deutschkundlich/~~JOQRSTUWqh
-deutschlandweit/~~Nh
+deutschlandweit/~~RJOQRSTUWqh
 deutschsprachig/~~Nh
 deutungsansätze/~~Fh
 deutungsmonopol/~~Nh
@@ -195808,7 +195812,7 @@ souvenirhändler/~~Nh
 souvenirverkauf/~~Nh
 souveränistisch/~~Nh
 sowjetfeindlich/~~JOQRSTUWqh
-sowjetunionweit/~~Nh
+sowjetunionweit/~~RJOQRSTUWqh
 sozialdarwinist/~~Nh
 sozialenzyklika/~~Nh
 sozialisierungs/~~Nh
@@ -202633,7 +202637,7 @@ mittelaltermarkt/~~Nh
 mittelanatolisch/~~Nh
 mittelatlantisch/~~Nh
 mittelchinesisch/~~Nh
-mitteleuropaweit/~~Nh
+mitteleuropaweit/~~RJOQRSTUWqh
 mitteleuropäisch/~~Nh
 mittelgewichtler/~~Nh
 mittelgriechisch/~~Nh
@@ -203138,7 +203142,7 @@ oscarpreisträger/~~Nh
 osmanenherrscher/~~Nh
 ostermarschierer/~~Nh
 osterzgebirgisch/~~Nh
-ostfrieslandweit/~~Nh
+ostfrieslandweit/~~RJOQRSTUWqh
 ostgrönlandstrom/~~Nh
 ostmitteldeutsch/~~Nh
 ostniederdeutsch/~~Nh
@@ -205248,7 +205252,7 @@ untereinanderlag/~~Nh
 untergangsgebiet/~~Nh
 untergangsstelle/~~Fh
 untermotorisiert/~~Nh
-unternehmensweit/~~Nh
+unternehmensweit/~~RJOQRSTUWqh
 unterrichtsfremd/~~Nh
 unterscharführer/~~Nh
 untertagebergbau/~~Nh # auto-added
