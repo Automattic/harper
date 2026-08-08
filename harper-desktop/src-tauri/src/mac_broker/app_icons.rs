@@ -3,6 +3,7 @@ use std::{
     path::{Path, PathBuf},
     process::Command,
 };
+use tempfile::Builder as TempFileBuilder;
 
 use super::app_catalog::application_path_for_bundle_id;
 
@@ -18,10 +19,13 @@ pub fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
         .ok_or_else(|| format!("No application found for bundle ID {bundle_id}."))?;
     let icon_path = icon_path_for_app(&app_path)
         .ok_or_else(|| format!("No application icon found for bundle ID {bundle_id}."))?;
-    let output_path = std::env::temp_dir().join(format!(
-        "harper-{bundle_id}-icon-{}.png",
-        std::process::id()
-    ));
+    let tmp_file = TempFileBuilder::new()
+        .prefix("harper-icon-")
+        .suffix(".png")
+        .tempfile_in(std::env::temp_dir())
+        .map_err(|e| format!("Failed to create temp file for icon conversion: {e}"))?;
+
+    let output_path = tmp_file.path().to_path_buf();
 
     let output = Command::new("sips")
         .arg("-s")
@@ -39,9 +43,9 @@ pub fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
 
     let bytes = fs::read(&output_path)
         .map_err(|error| format!("Failed to read converted icon for {bundle_id}: {error}"))?;
-    let _ = fs::remove_file(output_path);
 
     Ok(bytes)
+    
 }
 
 fn icon_path_for_app(app_path: &str) -> Option<PathBuf> {
