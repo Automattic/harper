@@ -38,7 +38,7 @@ name = "harper-lang-stats"
 path = "src/bin/lang_stats.rs"
 
 [features]
-default = []
+default = ["multilingual"]
 training = ["harper-pos-utils/training"]
 thesaurus = ["harper-core/thesaurus"]
 

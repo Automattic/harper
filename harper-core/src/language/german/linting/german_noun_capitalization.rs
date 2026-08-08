@@ -71,6 +71,7 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "jedes",
     // Prepositions
     "in",
+    "ins",
     "im",
     "an",
     "am",
@@ -130,6 +131,7 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "noch",
     "schon",
     "wieder",
+    "zudem",
     "nur",
     "sehr",
     "hier",
@@ -162,6 +164,7 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "werden",
     "wurde",
     "wurden",
+    "bezieht",
     "kann",
     "können",
     "konnte",
@@ -222,6 +225,7 @@ const GERMAN_NON_NOUNS: &[&str] = &[
     "wenig",
     "alle",
     "keine",
+    "ideelle",
 ];
 
 impl<T: Dictionary> GermanNounCapitalization<T> {

@@ -7,7 +7,7 @@ use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -263,9 +263,15 @@ fn main() -> anyhow::Result<()> {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
+            // Use language-specific dictionary based on dialect
+            let lang_curated_dictionary: Arc<dyn Dictionary> = {
+                use harper_core::language::registry::dictionary;
+                dictionary(dialect)
+            };
+
             lint(
                 markdown_options,
-                curated_dictionary,
+                lang_curated_dictionary,
                 inputs,
                 LintOptions {
                     count,
