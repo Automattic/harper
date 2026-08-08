@@ -164,8 +164,8 @@
 # NSg/P D$+ Nᴹ/Vg/J+  . IPl+ VXB    NSg/VLXB R      R     .
 > It       is  easy     to invert   a   2 - by    - 2 matrix .
 # NPr/ISg+ VL3 NSg/VB/J P  NSg/VB/J D/P # . NSg/P . # NSg+   .
-> The room       was  about 4 foot   by    6 foot    .
-# D+  N🅪Sg/VB/J+ VLPt J/P   # NSg/VB NSg/P # NSg/VB+ .
+> The room     was  about 4 foot   by    6 foot    .
+# D+  N🅪Sg/VB+ VLPt J/P   # NSg/VB NSg/P # NSg/VB+ .
 > The bricks  used to build  the wall    measured 10 by    20 by    30 cm  .
 # D+  NPl/V3+ VP/J P  NSg/VB D+  NPr/VB+ VP/J     #  NSg/P #  NSg/P #  #r+ .
 > She's a   lovely little     filly , by    Big   Lad , out          of Damsel in        Distress .
@@ -196,8 +196,8 @@
 # HeadingStart NSg/VB/J+
 >
 #
-> a   by    path    ; a   by    room       ( Out          of the way    , off        to one      side      . )
-# D/P NSg/P NSg/VB+ . D/P NSg/P N🅪Sg/VB/J+ . NSg/VB/J/R/P P  D+  NSg/J+ . NSg/VB/J/P P  NSg/I/J+ NSg/VB/J+ . .
+> a   by    path    ; a   by    room     ( Out          of the way    , off        to one      side      . )
+# D/P NSg/P NSg/VB+ . D/P NSg/P N🅪Sg/VB+ . NSg/VB/J/R/P P  D+  NSg/J+ . NSg/VB/J/P P  NSg/I/J+ NSg/VB/J+ . .
 > by    catch  ; a   by    issue  ( Subsidiary , incidental . )
 # NSg/P NSg/VB . D/P NSg/P NSg/VB . NSg/J+     . NSg/J      . .
 >
@@ -334,8 +334,8 @@
 # NPr/ISg+ VP  NPl/V3+ VP/J  P    NSg/VB+ P  NSg/VB  .
 > He       departed yesterday from Chicago .
 # NPr/ISg+ NSg/VP/J NSg       P    NPr+    .
-> This    figure  has been     changed from a    one      to a   seven .
-# I/Ddem+ NSg/VB+ V3  NSg/VLPp VP/J    P    D/P+ NSg/I/J+ P  D/P NSg   .
+> This    figure  has been   changed from a    one      to a   seven .
+# I/Ddem+ NSg/VB+ V3  VLPp/B VP/J    P    D/P+ NSg/I/J+ P  D/P NSg   .
 > Face    away from the wall    !
 # NSg/VB+ VB/J P    D+  NPr/VB+ .
 > The working day     runs   from 9 am         to 5 pm      .
@@ -356,8 +356,8 @@
 # D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ VLPt Nᴹ/Vg/J  .
 > From the top      of the lighthouse you    can     just see    the mainland .
 # P    D   NSg/VB/J P  D+  NSg+       ISgPl+ NPr/VXB J/R  NSg/VB D+  NSg+     .
-> I’ve been     doing   this    from pickney .
-# K    NSg/VLPp Nᴹ/Vg/J I/Ddem+ P    ?       .
+> I’ve been   doing   this    from pickney .
+# K    VLPp/B Nᴹ/Vg/J I/Ddem+ P    ?       .
 > Your opinions differ    from mine      .
 # D$+  NPl+     NPr/VB/JC P    NSg/I/VB+ .
 > He       knows right    from wrong      .
@@ -432,8 +432,8 @@
 # K      VP  D/P NPr/VB/J+ NPr/J/R/P NPr/ISg+ .
 > He's met his     match   in        her     .
 # NPr$ VP  ISg/D$+ NSg/VB+ NPr/J/R/P ISg/D$+ .
-> There has been     no       change  in        his     condition .
-# R+    V3  NSg/VLPp NSg/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
+> There has been   no       change  in        his     condition .
+# R+    V3  VLPp/B NSg/Dq/P N🅪Sg/VB NPr/J/R/P ISg/D$+ N🅪Sg/VB+  .
 > What   grade   did  he       get    in        English      ?
 # NSg/I+ NSg/VB+ VXPt NPr/ISg+ NSg/VB NPr/J/R/P NPr🅪Sg/VB/J+ .
 > Please pay      me       in        cash       — preferably in        tens and  twenties .
@@ -538,8 +538,8 @@
 #
 > Take   the chicken    out          of the freezer .
 # NSg/VB D+  N🅪Sg/VB/J+ NSg/VB/J/R/P P  D+  NSg+    .
-> He       hasn't been     well       of late  .
-# NPr/ISg+ V3     NSg/VLPp NSg/VB/J/R P  NSg/J .
+> He       hasn't been   well       of late  .
+# NPr/ISg+ V3     VLPp/B NSg/VB/J/R P  NSg/J .
 > Finally she  was  relieved of the burden of caring  for   her     sick      husband .
 # R       ISg+ VLPt VP/J     P  D   NSg/VB P  Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB/J+ NSg/VB+ .
 > He       seemed devoid of human     feelings .
@@ -756,8 +756,8 @@
 # NPr$ J/P ISg/D$+ N🅪Sg/VB+ NSg/VB+ .
 > I'm on  nights  all          this   week   .
 # K   J/P NPl/V3+ NSg/I/J/C/Dq I/Ddem NSg/J+ .
-> You've been     on  these  antidepressants far      too long     .
-# K      NSg/VLPp J/P I/Ddem NPl             NSg/VB/J R   NPr/VB/J .
+> You've been   on  these  antidepressants far      too long     .
+# K      VLPp/B J/P I/Ddem NPl             NSg/VB/J R   NPr/VB/J .
 > I       depended on  them     for   assistance .
 # ISg/#r+ VP/J     J/P NSg/IPl+ R/C/P Nᴹ+        .
 > He       will    promise on  certain conditions .
@@ -878,8 +878,8 @@
 # NPr+ VLPt Nᴹ/Vg/J   P  NPr  P    ISg/D$+ NPl/V3+ VP/J   .
 > The match   result  was  10 - 5 , with John scoring  three goals   .
 # D+  NSg/VB+ NSg/VB+ VLPt #  . # . P    NPr+ Nᴹ/Vg/J+ NSg+  NPl/V3+ .
-> With a   heavy    sigh   , she  looked around the empty     room       .
-# P    D/P NSg/VB/J NSg/VB . ISg+ VP/J   J/P    D+  NSg/VB/J+ N🅪Sg/VB/J+ .
+> With a   heavy    sigh   , she  looked around the empty     room     .
+# P    D/P NSg/VB/J NSg/VB . ISg+ VP/J   J/P    D+  NSg/VB/J+ N🅪Sg/VB+ .
 > Four people  were injured , with one     of them     in        critical condition .
 # NSg+ NPl/VB+ VLPt VP/J    . P    NSg/I/J P  NSg/IPl+ NPr/J/R/P NSg/J+   N🅪Sg/VB+  .
 > With their reputation on  the line    , they decided  to fire      their PR   team    .

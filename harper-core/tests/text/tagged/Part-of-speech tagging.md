@@ -132,8 +132,8 @@
 # R/C/P NSg/J/Dq NPl+      .
 >
 #
-> POS  tagging work     has been     done      in        a   variety of languages , and  the set       of POS
-# NSg+ NSg/Vg  N🅪Sg/VB+ V3  NSg/VLPp NSg/VPp/J NPr/J/R/P D/P N🅪Sg    P  NPl+      . VB/C D   NPr/VBP/J P  NSg+
+> POS  tagging work     has been   done      in        a   variety of languages , and  the set       of POS
+# NSg+ NSg/Vg  N🅪Sg/VB+ V3  VLPp/B NSg/VPp/J NPr/J/R/P D/P N🅪Sg    P  NPl+      . VB/C D   NPr/VBP/J P  NSg+
 > tags    used varies greatly with language . Tags    usually are designed to include
 # NPl/V3+ VP/J NPl/V3 R       P    N🅪Sg+    . NPl/V3+ R       VLB VP/J     P  NSg/VB
 > overt  morphological distinctions , although this   leads  to inconsistencies such  as
@@ -164,8 +164,8 @@
 # HeadingStart D+  NPr🅪Sg/VB/J NSg+
 >
 #
-> Research on  part      - of - speech   tagging has been     closely tied to corpus linguistics .
-# Nᴹ/VB    J/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  V3  NSg/VLPp R       VP/J P  NSg    Nᴹ+         .
+> Research on  part      - of - speech   tagging has been   closely tied to corpus linguistics .
+# Nᴹ/VB    J/P NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  V3  VLPp/B R       VP/J P  NSg    Nᴹ+         .
 > The first major    corpus of English     for   computer analysis was  the Brown       Corpus
 # D   NSg/J NPr/VB/J NSg    P  NPr🅪Sg/VB/J R/C/P NSg+     N🅪Sg+    VLPt D   NPr🅪Sg/VB/J NSg
 > developed at    Brown       University by    Henry Kučera and  W. Nelson Francis , in        the
@@ -198,16 +198,16 @@
 # +        Nᴹ/VXB/J NSg/R/C VB    . .
 >
 #
-> This    corpus has been     used for   innumerable studies of word    - frequency and  of
-# I/Ddem+ NSg+   V3  NSg/VLPp VP/J R/C/P J           NPl/V3  P  NSg/VB+ . NSg       VB/C P
+> This    corpus has been   used for   innumerable studies of word    - frequency and  of
+# I/Ddem+ NSg+   V3  VLPp/B VP/J R/C/P J           NPl/V3  P  NSg/VB+ . NSg       VB/C P
 > part      - of - speech   and  inspired the development of similar " tagged " corpora in        many
 # NSg/VB/J+ . P  . N🅪Sg/VB+ VB/C VP/J     D   N🅪Sg        P  NSg/J   . VP/J   . NPl+    NPr/J/R/P NSg/I/J/Dq
 > other    languages . Statistics derived by    analyzing it       formed the basis for   most
 # NSg/VB/J NPl+      . NPl/V3+    VP/J    NSg/P Nᴹ/Vg/J   NPr/ISg+ VP/J   D+  NSg+  R/C/P NSg/I/J/R/Dq
 > later part      - of - speech   tagging systems , such  as    CLAWS   and  VOLSUNGA . However , by
 # JC    NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NPl+    . NSg/I R/C/P NPl/V3+ VB/C ?        . C       . NSg/P
-> this    time       ( 2005 ) it       has been     superseded by    larger corpora such  as    the 100
-# I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  NSg/VLPp VP/J       NSg/P JC     NPl+    NSg/I R/C/P D   #
+> this    time       ( 2005 ) it       has been   superseded by    larger corpora such  as    the 100
+# I/Ddem+ N🅪Sg/VB/J+ . #    . NPr/ISg+ V3  VLPp/B VP/J       NSg/P JC     NPl+    NSg/I R/C/P D   #
 > million word    British National Corpus , even       though larger corpora are rarely so
 # NSg     NSg/VB+ NPr/J   NSg/J    NSg+   . NSg/VB/J/R C      JC     NPl+    VLB R      NSg/I/J/R/C
 > thoroughly curated .
@@ -408,12 +408,12 @@
 # NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/VB/J/R C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
 >
 #
-> Many        machine learning methods have    also been     applied to the problem of POS
-# NSg/I/J/Dq+ NSg/VB+ Nᴹ/Vg/J+ NPl+    NSg/VXB R/C  NSg/VLPp VP/J    P  D   NSg/J   P  NSg+
+> Many        machine learning methods have    also been   applied to the problem of POS
+# NSg/I/J/Dq+ NSg/VB+ Nᴹ/Vg/J+ NPl+    NSg/VXB R/C  VLPp/B VP/J    P  D   NSg/J   P  NSg+
 > tagging . Methods such  as    SVM , maximum entropy classifier , perceptron , and
 # NSg/Vg  . NPl+    NSg/I R/C/P ?   . NSg/J   NSg     NSg        . NSg        . VB/C
-> nearest - neighbor     have    all          been     tried , and  most         can     achieve accuracy above
-# JS      . NSg/VB/J/Am+ NSg/VXB NSg/I/J/C/Dq NSg/VLPp VP/J  . VB/C NSg/I/J/R/Dq NPr/VXB VB      N🅪Sg+    NSg/J/P
+> nearest - neighbor     have    all          been   tried , and  most         can     achieve accuracy above
+# JS      . NSg/VB/J/Am+ NSg/VXB NSg/I/J/C/Dq VLPp/B VP/J  . VB/C NSg/I/J/R/Dq NPr/VXB VB      N🅪Sg+    NSg/J/P
 > 95 % . [ citation needed ]
 # #  . . . NSg+     VP/J   .
 >
@@ -430,8 +430,8 @@
 # I/Ddem NSg/J      NSg     . . NSg  . NPr/ISg+ VXB    NSg/R/C NSg/VLXB VP/J    I/C/Ddem D+  NPl/V3+
 > reported here are the best       that      can     be       achieved with a    given        approach ; nor   even
 # VP/J     J/R  VLB D   NPr/VXB/JS I/C/Ddem+ NPr/VXB NSg/VLXB VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J/R
-> the best        that      have    been     achieved with a    given        approach .
-# D+  NPr/VXB/JS+ I/C/Ddem+ NSg/VXB NSg/VLPp VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ .
+> the best        that      have    been   achieved with a    given        approach .
+# D+  NPr/VXB/JS+ I/C/Ddem+ NSg/VXB VLPp/B VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ .
 >
 #
 > In        2014 , a    paper      reporting using   the structure regularization method for

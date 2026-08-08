@@ -82,8 +82,8 @@
 #
 > No        Person  shall be       a    Representative who    shall not     have    attained to the Age     of
 # NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB D/P+ NSg/J+         NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P
-> twenty five Years , and  been     seven Years a   Citizen of the United States    , and  who
-# NSg    NSg  NPl+  . VB/C NSg/VLPp NSg   NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+
+> twenty five Years , and  been   seven Years a   Citizen of the United States    , and  who
+# NSg    NSg  NPl+  . VB/C VLPp/B NSg   NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+
 > shall not     , when    elected  , be       an  Inhabitant of that     State    in        which he       shall be
 # VXB   NSg/R/C . NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  I/C/Ddem N🅪Sg/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VLXB
 > chosen   .
@@ -184,8 +184,8 @@
 #
 > No        Person  shall be       a    Senator who    shall not     have    attained to the Age     of thirty
 # NSg/Dq/P+ NSg/VB+ VXB   NSg/VLXB D/P+ NSg+    NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P  NSg
-> Years , and  been     nine Years a   Citizen of the United States    , and  who    shall not     ,
-# NPl+  . VB/C NSg/VLPp NSg  NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+ VXB   NSg/R/C .
+> Years , and  been   nine Years a   Citizen of the United States    , and  who    shall not     ,
+# NPl+  . VB/C VLPp/B NSg  NPl+  D/P NSg     P  D   VP/J   NPrPl/V3+ . VB/C NPr/I+ VXB   NSg/R/C .
 > when    elected  , be       an  Inhabitant of that     State    for   which he       shall be       chosen   .
 # NSg/I/C NSg/VP/J . NSg/VLXB D/P NSg/J      P  I/C/Ddem N🅪Sg/VB+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VLXB Nᴹ/VPp/J .
 >
@@ -312,8 +312,8 @@
 # NSg/Dq/P NSg     NPr/C NSg/J+         VXB   . VB/P   D+  N🅪Sg/VB/J+ R/C/P I/C+  NPr/ISg+ VLPt NSg/VP/J .
 > be       appointed to any    civil Office  under   the Authority of the United States    ,
 # NSg/VLXB VP/J      P  I/R/Dq J+    NSg/VB+ NSg/J/P D   N🅪Sg      P  D+  VP/J   NPrPl/V3+ .
-> which shall have    been     created , or    the Emoluments whereof shall have    been
-# I/C+  VXB   NSg/VXB NSg/VLPp VP/J    . NPr/C D   NPl        C       VXB   NSg/VXB NSg/VLPp
+> which shall have    been   created , or    the Emoluments whereof shall have    been
+# I/C+  VXB   NSg/VXB VLPp/B VP/J    . NPr/C D   NPl        C       VXB   NSg/VXB VLPp/B
 > encreased during such  time       ; and  no       Person  holding any    Office  under   the United
 # ?         VB/P   NSg/I N🅪Sg/VB/J+ . VB/C NSg/Dq/P NSg/VB+ Nᴹ/Vg/J I/R/Dq NSg/VB+ NSg/J/P D   VP/J
 > States    , shall be       a   Member of either House   during his     Continuance in        Office  . No
@@ -362,8 +362,8 @@
 # C/P     D   NPr/VB+ VXB   NSg/VLXB VP/J    J/P D   NSg/VB/J P  Dq   NPr/VB+ R            . NSg/C
 > any     Bill    shall not     be       returned by    the President within  ten Days ( Sundays
 # I/R/Dq+ NPr/VB+ VXB   NSg/R/C NSg/VLXB VP/J     NSg/P D   NSg/VB    NSg/J/P NSg NPl  . NPl/V3+
-> excepted ) after it       shall have    been     presented to him  , the Same shall be       a   Law     ,
-# VP/J     . P     NPr/ISg+ VXB   NSg/VXB NSg/VLPp VP/J      P  ISg+ . D   I/J  VXB   NSg/VLXB D/P N🅪Sg/VB .
+> excepted ) after it       shall have    been   presented to him  , the Same shall be       a   Law     ,
+# VP/J     . P     NPr/ISg+ VXB   NSg/VXB VLPp/B VP/J      P  ISg+ . D   I/J  VXB   NSg/VLXB D/P N🅪Sg/VB .
 > in        like         Manner as    if    he       had signed it       , unless the Congress by    their Adjournment
 # NPr/J/R/P NSg/VB/J/C/P NSg+   R/C/P NSg/C NPr/ISg+ VP  VP/J   NPr/ISg+ . C      D+  NPr/VB+  NSg/P D$+   NSg
 > prevent its     Return , in        which Case       it       shall not     be       a   Law      .
@@ -778,8 +778,8 @@
 # NSg/P D+  N🅪Sg/VB/J+ VP/J  R/C/P D   NSg/Vg/J  P  D   NSg/VB/J P  D+  NSg/VB+   . D+  NSg/VB+
 > elect    shall have    died , the Vice        President elect    shall become President . If    a
 # NSg/VB/J VXB   NSg/VXB VP/J . D   NSg/VB/J/P+ NSg/VB+   NSg/VB/J VXB   VBPp   NSg/VB+   . NSg/C D/P+
-> President shall not     have    been     chosen   before the time       fixed for   the beginning of
-# NSg/VB+   VXB   NSg/R/C NSg/VXB NSg/VLPp Nᴹ/VPp/J C/P    D+  N🅪Sg/VB/J+ VP/J  R/C/P D   NSg/Vg/J  P
+> President shall not     have    been   chosen   before the time       fixed for   the beginning of
+# NSg/VB+   VXB   NSg/R/C NSg/VXB VLPp/B Nᴹ/VPp/J C/P    D+  N🅪Sg/VB/J+ VP/J  R/C/P D   NSg/Vg/J  P
 > his     term      , or    if    the President elect    shall have    failed to qualify , then      the Vice
 # ISg/D$+ NSg/VB/J+ . NPr/C NSg/C D+  NSg/VB+   NSg/VB/J VXB   NSg/VXB VP/J   P  NSg/VB  . NSg/J/R/C D   NSg/VB/J/P+
 > President elect    shall act     as    President until a   President shall have    qualified ;
@@ -840,8 +840,8 @@
 # NSg/J    P  D   NSg/VB P  NSg/VB+   . I/C     VXB   I/R/Dq+ NSg/VB+ NSg/VLXB NSg/J    P
 > that     Office  who    shall not     have    attained to the Age     of thirty five Years , and
 # I/C/Ddem NSg/VB+ NPr/I+ VXB   NSg/R/C NSg/VXB VP/J     P  D   N🅪Sg/VB P  NSg    NSg  NPl+  . VB/C
-> been     fourteen Years a   Resident within  the United States    .
-# NSg/VLPp NSg      NPl+  D/P NSg/J+   NSg/J/P D   VP/J   NPrPl/V3+ .
+> been   fourteen Years a   Resident within  the United States    .
+# VLPp/B NSg      NPl+  D/P NSg/J+   NSg/J/P D   VP/J   NPrPl/V3+ .
 >
 #
 > No        person  shall be       elected  to the office of the President more         than twice , and
@@ -950,8 +950,8 @@
 # D+  NSg/VB+   VXB   . NSg/P VP/J   NPl/V3+ . NSg/VB  R/C/P ISg/D$+
 > Services , a    Compensation , which shall neither be       encreased nor   diminished
 # NPl/V3+  . D/P+ N🅪Sg+        . I/C+  VXB   I/C     NSg/VLXB ?         NSg/C VP/J
-> during the Period    for   which he       shall have    been     elected  , and  he       shall not
-# VB/P   D   NSg/VB/J+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VXB NSg/VLPp NSg/VP/J . VB/C NPr/ISg+ VXB   NSg/R/C
+> during the Period    for   which he       shall have    been   elected  , and  he       shall not
+# VB/P   D   NSg/VB/J+ R/C/P I/C+  NPr/ISg+ VXB   NSg/VXB VLPp/B NSg/VP/J . VB/C NPr/ISg+ VXB   NSg/R/C
 > receive within  that     Period    any    other    Emolument from the United States    , or    any
 # NSg/VB  NSg/J/P I/C/Ddem NSg/VB/J+ I/R/Dq NSg/VB/J NSg       P    D   VP/J   NPrPl/V3+ . NPr/C I/R/Dq
 > of them     .
@@ -1147,7 +1147,7 @@
 > The Trial    of all           Crimes  , except in        Cases   of Impeachment , shall be       by    Jury      ; and
 # D   NSg/VB/J P  NSg/I/J/C/Dq+ NPl/V3+ . VB/C/P NPr/J/R/P NPl/V3+ P  N🅪Sg        . VXB   NSg/VLXB NSg/P NSg/VB/J+ . VB/C
 > such  Trial     shall be       held in        the State    where   the said Crimes  shall have    been
-# NSg/I NSg/VB/J+ VXB   NSg/VLXB VP   NPr/J/R/P D   N🅪Sg/VB+ NSg/R/C D   VP/J NPl/V3+ VXB   NSg/VXB NSg/VLPp
+# NSg/I NSg/VB/J+ VXB   NSg/VLXB VP   NPr/J/R/P D   N🅪Sg/VB+ NSg/R/C D   VP/J NPl/V3+ VXB   NSg/VXB VLPp/B
 > committed ; but     when    not     committed within  any    State    , the Trial     shall be       at    such
 # VP/J      . NSg/C/P NSg/I/C NSg/R/C VP/J      NSg/J/P I/R/Dq N🅪Sg/VB+ . D   NSg/VB/J+ VXB   NSg/VLXB NSg/P NSg/I
 > Place   or    Places  as    the Congress may     by    Law      have    directed .
@@ -1214,8 +1214,8 @@
 # NPr/J/R/P NSg/I/J/C/Dq NSg/J    NPl          . D+  VP/J+   VXB   VB    D   NPr/VB/J P  D/P VB/J   VB/C
 > public  trial     , by    an  impartial jury     of the state    and  district  wherein the crime
 # Nᴹ/VB/J NSg/VB/J+ . NSg/P D/P J         NSg/VB/J P  D   N🅪Sg/VB+ VB/C NSg/VB/J+ C       D   N🅪Sg/VB+
-> shall have    been     committed , which district  shall have    been     previously
-# VXB   NSg/VXB NSg/VLPp VP/J      . I/C+  NSg/VB/J+ VXB   NSg/VXB NSg/VLPp R
+> shall have    been   committed , which district  shall have    been   previously
+# VXB   NSg/VXB VLPp/B VP/J      . I/C+  NSg/VB/J+ VXB   NSg/VXB VLPp/B R
 > ascertained by    law      , and  to be       informed of the nature   and  cause     of the
 # VP/J        NSg/P N🅪Sg/VB+ . VB/C P  NSg/VLXB VP/J     P  D   N🅪Sg/VB+ VB/C N🅪Sg/VB/C P  D
 > accusation ; to be       confronted with the witnesses against him  ; to have    compulsory
@@ -1300,8 +1300,8 @@
 #
 > Neither slavery nor   involuntary servitude , except as    a   punishment for   crime
 # I/C     NSg/J+  NSg/C J           NSg       . VB/C/P R/C/P D/P N🅪Sg       R/C/P N🅪Sg/VB+
-> whereof the party     shall have    been     duly convicted , shall exist within  the United
-# C       D   NSg/VB/J+ VXB   NSg/VXB NSg/VLPp R    VP/J      . VXB   VB    NSg/J/P D   VP/J
+> whereof the party     shall have    been   duly convicted , shall exist within  the United
+# C       D   NSg/VB/J+ VXB   NSg/VXB VLPp/B R    VP/J      . VXB   VB    NSg/J/P D   VP/J
 > States    , or    any    place    subject   to their jurisdiction . No        Person  held to Service
 # NPrPl/V3+ . NPr/C I/R/Dq N🅪Sg/VB+ NSg/VB/J+ P  D$+   N🅪Sg+        . NSg/Dq/P+ NSg/VB+ VP   P  NSg/VB
 > or    Labour          in        one      State    , under   the Laws    thereof , escaping into another , shall ,

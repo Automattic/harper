@@ -222,8 +222,8 @@
 # NSg/VB/P ISg/D$+ NSg/VB+ . D/P NSg/J       NSg/VB P  NSg+     N🅪Sg/VB+ NPl/VX3 NSg/R/C VB      D
 > study  of computers themselves . Because of this    , several alternative names   have
 # NSg/VB P  NPl+      IPl+       . C/P     P  I/Ddem+ . J/Dq+   NSg/J+      NPl/V3+ NSg/VXB
-> been     proposed . Certain departments of major     universities prefer the term
-# NSg/VLPp VP/J     . I/J     NPl         P  NPr/VB/J+ NPl+         VB     D+  NSg/VB/J+
+> been   proposed . Certain departments of major     universities prefer the term
+# VLPp/B VP/J     . I/J     NPl         P  NPr/VB/J+ NPl+         VB     D+  NSg/VB/J+
 > computing science  , to emphasize precisely that      difference . Danish  scientist
 # Nᴹ/Vg/J+  N🅪Sg/VB+ . P  VB        R         I/C/Ddem+ N🅪Sg/VB+   . NPrᴹ/J+ NSg+
 > Peter      Naur suggested the term      datalogy , to reflect the fact that     the scientific
@@ -254,8 +254,8 @@
 # VB/C VP/J    NSg            . NSg+  NPl+   JC    NPr/J/R/P D+  I/J+ NSg/VB/J+ . ?
 > was  suggested , followed next    year by    hypologist . The term      computics has also
 # VLPt VP/J      . VP/J     NSg/J/P NSg+ NSg/P ?          . D+  NSg/VB/J+ ?         V3  R/C
-> been     suggested . In        Europe , terms   derived from contracted translations of the
-# NSg/VLPp VP/J      . NPr/J/R/P NPr+   . NPl/V3+ VP/J    P    VP/J       NPl          P  D+
+> been   suggested . In        Europe , terms   derived from contracted translations of the
+# VLPp/B VP/J      . NPr/J/R/P NPr+   . NPl/V3+ VP/J    P    VP/J       NPl          P  D+
 > expression " automatic information " ( e.g. " informazione automatica " in        Italian )
 # N🅪Sg+      . NSg/J+    Nᴹ+         . . NSg  . ?            ?          . NPr/J/R/P N🅪Sg/J  .
 > or    " information and  mathematics " are often used , e.g. informatique ( French      ) ,
@@ -265,7 +265,7 @@
 > Portuguese ) , informatika ( Slavic languages and  Hungarian ) or    pliroforiki
 # NPr/J      . . ?           . NSg/J  NPl+      VB/C NSg/J     . NPr/C ?
 > ( π          λ          η          ρ          ο          φ          ο          ρ          ι          κ          ή          , which means  informatics ) in        Greek    . Similar words   have    also been
-# . Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable . I/C+  NPl/V3 Nᴹ          . NPr/J/R/P NPr/VB/J . NSg/J+  NPl/V3+ NSg/VXB R/C  NSg/VLPp
+# . Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable Unlintable . I/C+  NPl/V3 Nᴹ          . NPr/J/R/P NPr/VB/J . NSg/J+  NPl/V3+ NSg/VXB R/C  VLPp/B
 > adopted in        the UK   ( as    in        the School  of Informatics , University of Edinburgh ) .
 # VP/J    NPr/J/R/P D+  NPr+ . R/C/P NPr/J/R/P D   N🅪Sg/VB P  Nᴹ          . NSg        P  NPr+      . .
 > " In        the U.S. , however , informatics is  linked with applied computing , or
@@ -288,8 +288,8 @@
 # Nᴹ+      VL3 R       VP/J       NSg/VB/J P  NSg+     Nᴹ/Vg/J+    . NSg/VB/C/P D   NSg/VB P
 > commercial computer systems and  their deployment is  often called information
 # NSg/J+     NSg+     NPl+    VB/C D$+   NSg+       VL3 R     VP/J   Nᴹ+
-> technology or    information systems . However , there has been     exchange of ideas
-# N🅪Sg       NPr/C Nᴹ+         NPl+    . C       . R+    V3  NSg/VLPp NSg/VB   P  NPl+
+> technology or    information systems . However , there has been   exchange of ideas
+# N🅪Sg       NPr/C Nᴹ+         NPl+    . C       . R+    V3  VLPp/B NSg/VB   P  NPl+
 > between the various computer - related disciplines . Computer science  research also
 # NSg/P   D   J       NSg+     . J+      NPl/V3+     . NSg+     N🅪Sg/VB+ Nᴹ/VB+   R/C
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
@@ -378,8 +378,8 @@
 # N🅪Sg+     VB/C Nᴹ/Vg/J   NPr/ISg+ NSg/P NSg/I/J/C/Dq J          VB/C N🅪Sg+       NPl/V3 J         .
 >
 #
-> It       has since been     argued that     computer science  can     be       classified as    an   empirical
-# NPr/ISg+ V3  C/P+  NSg/VLPp VP/J   I/C/Ddem NSg+     N🅪Sg/VB+ NPr/VXB NSg/VLXB NSg/VP/J   R/C/P D/P+ NSg/J+
+> It       has since been   argued that     computer science  can     be       classified as    an   empirical
+# NPr/ISg+ V3  C/P+  VLPp/B VP/J   I/C/Ddem NSg+     N🅪Sg/VB+ NPr/VXB NSg/VLXB NSg/VP/J   R/C/P D/P+ NSg/J+
 > science  since it       makes  use     of empirical testing  to evaluate the correctness of
 # N🅪Sg/VB+ C/P   NPr/ISg+ NPl/V3 N🅪Sg/VB P  NSg/J     Nᴹ/Vg/J+ P  VB       D   NSg         P
 > programs  , but     a    problem remains in        defining the laws    and  theorems of computer
@@ -396,8 +396,8 @@
 # R/C  VB    I/C/Ddem NSg/VB/C/P NSg/J+    NPl/V3+  NSg/VB  NSg/I+ R         V3     . NSg+
 > science  observes what   is  possible to exist and  while      scientists discover  laws
 # N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       N🅪Sg/VB/J NPl/V3
-> from observation , no        proper laws    have    been     found  in        computer science  and  it       is
-# P    N🅪Sg+       . NSg/Dq/P+ NSg/J+ NPl/V3+ NSg/VXB NSg/VLPp NSg/VP NPr/J/R/P NSg+     N🅪Sg/VB+ VB/C NPr/ISg+ VL3
+> from observation , no        proper laws    have    been   found  in        computer science  and  it       is
+# P    N🅪Sg+       . NSg/Dq/P+ NSg/J+ NPl/V3+ NSg/VXB VLPp/B NSg/VP NPr/J/R/P NSg+     N🅪Sg/VB+ VB/C NPr/ISg+ VL3
 > instead concerned with creating phenomena .
 # R       VP/J      P    Nᴹ/Vg/J  NSg+      .
 >
@@ -732,16 +732,16 @@
 # NSg/J         NSg+       . Nᴹ/Vg/J+ . VB/C N🅪Sg+         NSg/VP NPr/J/R/P NPl/V3 VB/C
 > animals . From its     origins in        cybernetics and  in        the Dartmouth Conference ( 1956 ) ,
 # NPl+    . P    ISg/D$+ NPl+    NPr/J/R/P Nᴹ          VB/C NPr/J/R/P D   NPr+      NSg/VB+    . #    . .
-> artificial intelligence research has been     necessarily cross       - disciplinary ,
-# J          N🅪Sg+        Nᴹ/VB+   V3  NSg/VLPp R           NPr/VB/J/P+ . NSg/J        .
+> artificial intelligence research has been   necessarily cross       - disciplinary ,
+# J          N🅪Sg+        Nᴹ/VB+   V3  VLPp/B R           NPr/VB/J/P+ . NSg/J        .
 > drawing   on  areas of expertise such  as    applied mathematics , symbolic logic    ,
 # N🅪Sg/Vg/J J/P NPl   P  Nᴹ/VB+    NSg/I R/C/P VP/J    Nᴹ+         . J        Nᴹ/VB/J+ .
 > semiotics , electrical engineering , philosophy of mind    , neurophysiology , and
 # Nᴹ        . NSg/J      Nᴹ/Vg/J+    . N🅪Sg/VB    P  NSg/VB+ . Nᴹ              . VB/C
 > social intelligence . AI    is  associated in        the popular mind    with robotic
 # NSg/J  N🅪Sg+        . N🅪Sg+ VL3 VP/J       NPr/J/R/P D   NSg/J   NSg/VB+ P    J+
-> development , but     the main     field  of practical application has been     as    an  embedded
-# N🅪Sg+       . NSg/C/P D   NSg/VB/J NSg/VB P  NSg/J+    NSg+        V3  NSg/VLPp R/C/P D/P VP/J
+> development , but     the main     field  of practical application has been   as    an  embedded
+# N🅪Sg+       . NSg/C/P D   NSg/VB/J NSg/VB P  NSg/J+    NSg+        V3  VLPp/B R/C/P D/P VP/J
 > component in        areas of software development , which require computational
 # NSg/J     NPr/J/R/P NPl   P  Nᴹ+      N🅪Sg+       . I/C+  NSg/VB  J+
 > understanding . The starting point   in        the late   1940s was  Alan Turing's question
@@ -752,8 +752,8 @@
 # C        D   NPr    NSg/VB+ VL3 NSg/VB/J/R VP/J P  VB     NSg+     N🅪Sg/VBP+ J/P D   N🅪Sg/VB P
 > human    intelligence . But     the automation of evaluative and  predictive tasks   has
 # NSg/VB/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  J          VB/C J          NPl/V3+ V3
-> been     increasingly successful as    a   substitute for   human    monitoring and
-# NSg/VLPp R            J          R/C/P D/P NSg/VB+    R/C/P NSg/VB/J Nᴹ/Vg/J    VB/C
+> been   increasingly successful as    a   substitute for   human    monitoring and
+# VLPp/B R            J          R/C/P D/P NSg/VB+    R/C/P NSg/VB/J Nᴹ/Vg/J    VB/C
 > intervention in        domains of computer application involving complex  real  - world
 # NSg+         NPr/J/R/P NPl     P  NSg+     NSg+        Nᴹ/Vg/J   NSg/VB/J NSg/J . NSg/VB+
 > data  .
@@ -796,8 +796,8 @@
 # N🅪Sg        VL3 D/P NSg/VB   P  NPl+    NPr/J/R/P I/C+  J/Dq    NPl          VLB Nᴹ/Vg/J
 > simultaneously , and  potentially interacting with each other    . A   number     of
 # R              . VB/C R           Nᴹ/Vg/J     P    Dq   NSg/VB/J . D/P N🅪Sg/VB/JC P
-> mathematical models  have    been     developed for   general  concurrent computation
-# J+           NPl/V3+ NSg/VXB NSg/VLPp VP/J      R/C/P NSg/VB/J NSg/J      NSg
+> mathematical models  have    been   developed for   general  concurrent computation
+# J+           NPl/V3+ NSg/VXB VLPp/B VP/J      R/C/P NSg/VB/J NSg/J      NSg
 > including Petri nets   , process calculi and  the parallel random   access   machine
 # Nᴹ/Vg/J   ?     NPl/V3 . NSg/VB+ NSg     VB/C D   NSg/VB/J NSg/VB/J N🅪Sg/VB+ NSg/VB+
 > model     . When    multiple  computers are connected in        a    network while      using
