@@ -51426,7 +51426,7 @@ auswirk/~~Vej # REPLACES auswirken
 auswirkens/~~Nh
 auswirkt/~~NXh
 auswirktet/~~Nh
-auswirkung/~~Fh
+auswirkung/~~Fhpuvw
 auswische/~~Nh
 auswischen/~~XZ #  auto-added
 auswischst/~~Nh
@@ -76631,6 +76631,7 @@ gegenläse/~~Nh
 gegenläsen/~~V # auto-added
 gegenläset/~~JOQRSTUWVg
 gegenprüfe/~~Nh
+Gegenwart/~~Fh # feminine noun: present, current time
 gegenprüft/~~JOQRSTUWVg
 gegenrudre/~~Nh
 gegenwarts/~~Nh
@@ -86750,6 +86751,7 @@ induktion/~~Nh
 induktive/~~Nh
 industals/~~Nh
 industrie/~~Nh
+industrieprodukt/~~Nhpuvw # compound: industrie + produkt
 induziere/~~Nh
 induziert/~~Nh
 inertgas/~~NXh
@@ -125073,7 +125075,7 @@ ingredienz/~~Nh
 ingwerbier/~~Nh
 inhalation/~~Fh
 inhalieren/~~Nh
-inhaltlich/~~JOQRSTUWpuvw
+inhaltlich/~~JOQRSTUWqh
 inhaltsarm/~~Nh
 inhaltslos/~~Nh
 inhibieren/~~Nh
@@ -125170,7 +125172,7 @@ irrgläubig/~~Nh
 irritation/~~Fh
 irritieren/~~Nh
 irrtumslos/~~Nh
-irrtümlich/~~JOQRSTUWpuvw
+irrtümlich/~~JOQRSTUWqh
 isarbrücke/~~Fh
 isarstraße/~~Fh
 isarwinkel/~~Nh
@@ -125251,7 +125253,7 @@ judenbuche/~~Fh
 judenhetze/~~Fh
 judizieren/~~Nh
 judoverein/~~Nh
-jugendlich/~~JOQRSTUWpuvw
+jugendlich/~~JOQRSTUWqh
 julianisch/~~Nh
 julimorgen/~~Nh # auto-added
 juliusturm/~~Nh
@@ -125289,7 +125291,7 @@ kahlschöre/~~Fh
 kahlstelle/~~Fh
 kahnführer/~~Nh
 kahnladung/~~Fh
-kaiserlich/~~JOQRSTUWpuvw
+kaiserlich/~~JOQRSTUWqh
 kajakeiner/~~Nh
 kajütentür/~~Nh
 kakaoanbau/~~Nh
@@ -126035,7 +126037,7 @@ körnerhieb/~~Nh
 körnermais/~~Nh
 körperfern/~~Nh
 körperfest/~~Nh
-körperlich/~~JOQRSTUWpuvw
+körperlich/~~JOQRSTUWqh
 körperwarm/~~Nh
 körperweit/~~Nh
 kübelwagen/~~Nh # auto-added
@@ -126508,7 +126510,7 @@ lyderkönig/~~Nh
 lyderreich/~~Nh
 lyrikbände/~~Fh
 lyrikfähig/~~Nh
-lächerlich/~~JOQRSTUWpuvw
+lächerlich/~~JOQRSTUWqh
 ländereien/~~Nh
 läsionstyp/~~Nh # auto-added
 lässigkeit/~~Fh
@@ -126822,7 +126824,7 @@ mengfutter/~~Nh
 meningitis/~~Nh
 menschheit/~~Fh
 menschlein/~~Nh
-menschlich/~~JOQRSTUWpuvw
+menschlich/~~JOQRSTUWqh
 menschsein/~~Nh
 menstruell/~~Nh
 mensuriert/~~Nh
@@ -127313,7 +127315,7 @@ mündigkeit/~~Fh
 münsterbau/~~Nh
 münstertal/~~Nh
 mütterheim/~~Nh
-mütterlich/~~JOQRSTUWpuvw
+mütterlich/~~JOQRSTUWqh
 mützendieb/~~Nh
 mützenrand/~~Nh
 müßiggehen/~~Nh
@@ -148997,7 +148999,7 @@ betreffzeile/~~Fh
 betreuerisch/~~Nh
 betreuerstab/~~Nh
 betreuerteam/~~Nh # auto-added
-beträchtlich/~~JOQRSTUWpuvw
+beträchtlich/~~JOQRSTUWqh
 betrügerisch/~~Nh
 bettenanzahl/~~Nh
 bettenmachen/~~Nh
@@ -222581,7 +222583,6 @@ personenkraftwagen/~~Mh # passenger car (Pkw)
 nutzfahrzeug/~~Nh # commercial vehicle
 lastkraftwagen/~~Mh # truck (Lkw)
 verbrennungsmotor/~~Mh # internal combustion engine
-industrieprodukten/~~N # industrial products
 betriebsmittel/~~Nh # operating resources
 dokumentationen/~~F # documentations
 technologieführer/~~Mh # technology leader
