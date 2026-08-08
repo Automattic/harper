@@ -10,7 +10,7 @@ use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
 pub struct SequenceExpr {
     exprs: Vec<Box<dyn Expr>>,
-    capture_range: Span<Token>,
+    capture_range: Span<Box<dyn Expr>>,
 }
 
 impl Default for SequenceExpr {
@@ -62,35 +62,40 @@ impl Expr for SequenceExpr {
     ///
     /// If any step returns `None`, the entire expression does as well.
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        let initial_cursor_pos = cursor;
         let mut window = Span::empty(cursor);
 
-        for cur_expr in &self.exprs {
+        for (i, cur_expr) in self.exprs.iter().enumerate() {
             let out = cur_expr.run(cursor, tokens, source)?;
 
             // Zero-width assertions (like AnchorEnd) validate position without consuming tokens
             // They should not expand the window or advance the cursor
             let is_zero_width = out.end == out.start;
 
-            if !is_zero_width {
-                // Only expand the window if the match actually covers some tokens
-                if out.end > out.start {
-                    window.expand_to_include(out.start);
-                    window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
-                }
-
-                // Only advance cursor if we actually matched something
-                if out.end > cursor {
-                    cursor = out.end;
-                } else if out.start < cursor {
-                    cursor = out.start;
-                }
+            if is_zero_width {
+                // If zero-width, don't expand window or advance cursor - just validate position
+                continue;
             }
-            // If zero-width, don't expand window or advance cursor - just validate position
+
+            // Only advance cursor if we actually matched something
+            if out.end > cursor {
+                cursor = out.end;
+            } else if out.start < cursor {
+                cursor = out.start;
+            }
+
+            if self.capture_range.start == i {
+                window = Span::empty(cursor);
+            } else if !self.capture_range.contains(i) {
+                continue;
+            }
+
+            // Only expand the window if the match actually covers some tokens
+            if out.end > out.start {
+                window.expand_to_include(out.start);
+                window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
+            }
         }
 
-        let offset_capture_range = self.capture_range.saturating_pushed_by(initial_cursor_pos);
-        window = window.map(|val| val.clamp(offset_capture_range.start, offset_capture_range.end));
         Some(window)
     }
 }
@@ -731,7 +736,7 @@ where
 mod tests {
     use crate::{
         Document, TokenKind,
-        expr::{AnchorEnd, Expr, ExprExt, SequenceExpr},
+        expr::{AnchorEnd, Expr, ExprExt, Repeating, SequenceExpr},
         linting::tests::SpanVecExt,
     };
 
@@ -857,6 +862,28 @@ mod tests {
         );
         let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
         assert_eq!(matches.to_strings(&doc), vec!["one world", "two world"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token_expr() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then(Repeating::new(
+                Box::new(SequenceExpr::default().then_exact_word("world").t_ows()),
+                3,
+            ))
+            .end_capture()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world world world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world world world "]);
+
+        assert_no_matches_for("hello world world world", &expr);
+        assert_no_matches_for("world world world testing", &expr);
+        assert_no_matches_for("world world world", &expr);
     }
 
     #[test]
