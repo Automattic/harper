@@ -17135,10 +17135,10 @@ gattungsfremd/~Nh #frequency: 6
 gattungsgleich/~Nh #frequency: 6
 gaukel/~Nh #frequency: 6
 gazellenschlank/~Nh #frequency: 6
-geachtet/~Nh #frequency: 6
+geachtet/~~Vg # past participle
 gebefreudig/~Jq #adjective root, frequency: 6
 gebietsfremd/~Nh #frequency: 6
-gebildet/~Nh #frequency: 6
+gebildet/~~Vg # past participle
 gebrechlich/~Jq #adjective root, frequency: 6
 gebrochenrational/~Nh #frequency: 6
 gebräuchlich/~Jq #adjective root, frequency: 6
@@ -17157,14 +17157,14 @@ geduldig/~Jq #adjective root, frequency: 6
 gedächtnisschnell/~Nh #frequency: 6
 gedächtnisschwach/~Nh #frequency: 6
 gedächtnisstark/~Nh #frequency: 6
-geeignet/~Nh #frequency: 6
+geeignet/~~Vg # past participle
 gefahrbringend/~Nh #frequency: 6
 gefahrenfrei/~Nh #frequency: 6
 gefahrenreich/~Nh #frequency: 6
 gefahrenträchtig/~Jq #adjective root, frequency: 6
 gefallen/~V # verb root, frequency: 6
 gefräßig/~Jq #adjective root, frequency: 6
-gefährdet/~Nh #frequency: 6
+gefährdet/~~Vg # past participle
 gefährlich/~Jq #adjective root, frequency: 6
 gefäll/~Nh #frequency: 6
 gefällig/~Jq #adjective root, frequency: 6
@@ -17174,7 +17174,7 @@ gefügig/~Jq #adjective root, frequency: 6
 gefühlsintensiv/~Nh #frequency: 6
 gefühlsneutral/~Nh #frequency: 6
 gefühlsroh/~Nh #frequency: 6
-gefürchtet/~Nh #frequency: 6
+gefürchtet/~~Vg # past participle
 gegengleich/~Nh #frequency: 6
 gegenintuitiv/~Nh #frequency: 6
 gegenkulturell/~Nh #frequency: 6
@@ -17245,7 +17245,7 @@ genusssüchtig/~Jq #adjective root, frequency: 6
 genussvoll/~Nh #frequency: 6
 genügsam/~Jq #adjective root, frequency: 6
 geothermal/~Nh #frequency: 6
-gerechtfertigt/~Nh #frequency: 6
+gerechtfertigt/~~Vg # past participle
 gerichtsfremd/~Nh #frequency: 6
 gerichtsgebührenfrei/~Nh #frequency: 6
 germanophob/~Nh #frequency: 6
@@ -113733,7 +113733,7 @@ verzüge/~~Nh
 verächter/~~Mh
 verändere/~~Nh
 verändern/~~V # auto-added
-verändert/~~Nh
+verändert/~~Vg # past participle of verändern
 verändre/~~Nh
 veräppel/~~NXh
 veräppeln/~~V # auto-added
