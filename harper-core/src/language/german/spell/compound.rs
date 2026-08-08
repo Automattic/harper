@@ -94,7 +94,7 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
         };
 
         let interfix_len = interfix.map_or(0, |s| s.chars().count());
-        let min_second_len = MAX_COMPOUND_LENGTH.saturating_sub(first_len + interfix_len);
+        let _min_second_len = MAX_COMPOUND_LENGTH.saturating_sub(first_len + interfix_len);
 
         for j in 0..compound_count {
             // Skip self-combination (word + word is rarely valid)
@@ -160,6 +160,9 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
                         is_countable: None,
                         is_mass: None,
                         is_possessive: None,
+                        case: None,
+                        gender: None,
+                        number: None,
                     }),
                     ..Default::default()
                 };

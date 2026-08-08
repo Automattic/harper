@@ -10852,26 +10852,26 @@ abgaben/~~V # verb (from coverage analysis)
 abgangs/~~Nh #noun (from coverage analysis)
 abgas/~~NXh #noun (from coverage analysis)
 
-der/~~Dz # masculine article
-die/~~Dz # feminine article
-das/~~Dz # neuter article
+der/~~DzMp # masculine article (nominative)
+die/~~DzFp # feminine article (nominative)
+das/~~DzZp # neuter article (nominative)
 den/~~Dz # masculine accusative
 dem/~~Dz # masculine/neuter dative
 des/~~Dz # masculine/neuter genitive
-ein/~~Dz # indefinite article
-eine/~~Dz # indefinite article feminine
+ein/~~DzMp # indefinite article (masculine/neuter nominative)
+eine/~~DzFp # indefinite article feminine (nominative)
 einem/~~Dz # indefinite article dative
 einen/~~Dz # indefinite article masculine accusative
 einer/~~Dz # indefinite article feminine genitive
 eines/~~Dz # indefinite article neuter genitive
-ich/~~I # pronoun I
-du/~~I # pronoun you
-er/~~I # pronoun he
-sie/~~I # pronoun she/they
-es/~~I # pronoun it
-wir/~~I # pronoun we
-ihr/~~I # pronoun you (plural)
-Sie/~~I # pronoun You (formal, nominative/accusative)
+ich/~~Ip # pronoun I (nominative)
+du/~~Ip # pronoun you (nominative)
+er/~~Ip # pronoun he (nominative)
+sie/~~Ip # pronoun she/they (nominative)
+es/~~Ip # pronoun it (nominative)
+wir/~~Ip # pronoun we (nominative)
+ihr/~~Ip # pronoun you (plural, nominative)
+Sie/~~Ip # pronoun You (formal, nominative)
 sein/~~V # verb to be
 hab/~~Vcj # REPLACES haben
 werd/~~Vcj # REPLACES werden
@@ -10914,97 +10914,97 @@ groß/~~NJOQRSTUWq #adjective and noun
 klein/~~NJOQRSTUWq #adjective and noun
 neu/~~NJOQRSTUWq #adjective and noun
 alt/~~JOQRSTUWq #adjective old
-Mann/~~Mh # masculine noun man
-Frau/~~Fh # feminine noun woman
-Kind/~~Nh # neuter noun child
-Haus/~~Nh # neuter noun house
-Buch/~~Nh # neuter noun book
-Tisch/~~Mh # masculine noun table
-Stuhl/~~Mh # masculine noun chair
-Wasser/~~Nh # neuter noun water
-Wand/~~Fh # feminine noun wall
-Luft/~~Fh # feminine noun air
-Feuer/~~Nh # neuter noun fire
-Sitz/~~Mh # masculine noun seat
-Verwaltung/~~Fi # feminine noun administration
-Konzern/~~Mh # masculine noun corporation
-Ober/~~Nh # neuter noun upper/top
-Gesellschaft/~~Fh # feminine noun company/society
-Obergesellschaft/~~Fh # feminine noun parent company
-Fuß/~~Mh # masculine noun foot
-Bett/~~Nh # neuter noun bed
-Arbeit/~~Fi # feminine noun work
-Platz/~~Mh # masculine noun place
-Bild/~~Nh # neuter noun image
-Schirm/~~Mh # masculine noun screen
-Dampf/~~Mh # masculine noun steam
-Schiff/~~Nh # neuter noun ship
-Bund/~~MYo #  masculine noun federation
-Tag/~~Mh # masculine noun day
+Mann/~~Mhp # masculine noun man (nominative)
+Frau/~~Fhp # feminine noun woman (nominative)
+Kind/~~Nhp # neuter noun child (nominative)
+Haus/~~Nhp # neuter noun house (nominative)
+Buch/~~Nhp # neuter noun book (nominative)
+Tisch/~~Mhp # masculine noun table (nominative)
+Stuhl/~~Mhp # masculine noun chair (nominative)
+Wasser/~~Nhp # neuter noun water (nominative)
+Wand/~~Fhp # feminine noun wall (nominative)
+Luft/~~Fhp # feminine noun air (nominative)
+Feuer/~~Nhp # neuter noun fire (nominative)
+Sitz/~~Mhp # masculine noun seat (nominative)
+Verwaltung/~~Fhp # feminine noun administration (nominative)
+Konzern/~~Mhp # masculine noun corporation (nominative)
+Ober/~~Nhp # neuter noun upper/top (nominative)
+Gesellschaft/~~Fhp # feminine noun company/society (nominative)
+Obergesellschaft/~~Fhp # feminine noun parent company (nominative)
+Fuß/~~Mhp # masculine noun foot (nominative)
+Bett/~~Nhp # neuter noun bed (nominative)
+Arbeit/~~Fhp # feminine noun work (nominative)
+Platz/~~Mhp # masculine noun place (nominative)
+Bild/~~Nhp # neuter noun image (nominative)
+Schirm/~~Mhp # masculine noun screen (nominative)
+Dampf/~~Mhp # masculine noun steam (nominative)
+Schiff/~~Nhp # neuter noun ship (nominative)
+Bund/~~Mhp # masculine noun federation (nominative)
+Tag/~~Mhp # masculine noun day (nominative)
 # Proper nouns
-Birkenstock/~~Nh #proper noun company name
+Birkenstock/~~Nhp #proper noun company name (nominative)
 # Technical/Business terms
 börsennotiert/~~Jq #adjective stock-listed
 steuertaktisch/~~Jq #adjective tax-tactical
-Kanalinsel/~~Fh # feminine noun channel island
-Fußbett/~~Nh # neuter noun footbed
-Einlage/~~Fh # feminine noun insole
+Kanalinsel/~~Fhp # feminine noun channel island (nominative)
+Fußbett/~~Nhp # neuter noun footbed (nominative)
+Einlage/~~Fhp # feminine noun insole (nominative)
 # German root vocabulary - extracted from expanded dictionary
 # Focused on root words that can form compounds and inflected forms
 # Format: word/~annotations # comment
-heil/~Nh #frequency: 11
-näher/~Nh #frequency: 11
+heil/~~Nhp #frequency: 11 (nominative)
+näher/~~Nhp #frequency: 11 (nominative)
 reich/~~NJOQRSTUWq #adjective and noun
 reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
 ärger/~~NJOQRSTUWq #adjective and noun
 äußer/~~NJOQRSTUWq #adjective and noun
-bau/~Nh #frequency: 10
-besser/~Nh #frequency: 10
+bau/~~Nhp #frequency: 10 (nominative)
+besser/~~Nhp #frequency: 10 (nominative)
 ein/~Nh #frequency: 10
-fach/~~Nh # frequency: 10
-irr/~Nh #frequency: 10
-klammer/~Nh #frequency: 10
-lieb/~Nh #frequency: 10
-link/~Nh #frequency: 10
-locker/~Nh #frequency: 10
-milder/~Nh #frequency: 10
-minder/~Nh #frequency: 10
-rau/~Nh #frequency: 10
-schal/~Nh #frequency: 10
-schick/~Nh #frequency: 10
-schmäler/~Nh #frequency: 10
-strahl/~Nh #frequency: 10
-trau/~Nh #frequency: 10
+fach/~~Nhp # frequency: 10 (nominative)
+irr/~~Nhp #frequency: 10 (nominative)
+klammer/~~Nhp #frequency: 10 (nominative)
+lieb/~~Nhp #frequency: 10 (nominative)
+link/~~Nhp #frequency: 10 (nominative)
+locker/~~Nhp #frequency: 10 (nominative)
+milder/~~Nhp #frequency: 10 (nominative)
+minder/~~Nhp #frequency: 10 (nominative)
+rau/~~Nhp #frequency: 10 (nominative)
+schal/~~Nhp #frequency: 10 (nominative)
+schick/~~Nhp #frequency: 10 (nominative)
+schmäler/~~Nhp #frequency: 10 (nominative)
+strahl/~~Nhp #frequency: 10 (nominative)
+trau/~~Nhp #frequency: 10 (nominative)
 weich/~~NJOQRSTUWq #adjective and noun
-adel/~Nh #frequency: 9
-anruf/~Nh #frequency: 9
-ball/~Nh #frequency: 9
+adel/~~Nhp #frequency: 9 (nominative)
+anruf/~~Nhp #frequency: 9 (nominative)
+ball/~~Nhp #frequency: 9 (nominative)
 bar/~Jq #adjective root, frequency: 9
-berg/~Nh #frequency: 9
-beruf/~Nh #frequency: 9
-bleich/~Nh #frequency: 9
-dampf/~Nh #frequency: 9
-dick/~Nh #frequency: 9
-ding/~Nh #frequency: 9
-faul/~Nh #frequency: 9
+berg/~~Nhp #frequency: 9 (nominative)
+beruf/~~Nhp #frequency: 9 (nominative)
+bleich/~~Nhp #frequency: 9 (nominative)
+dampf/~~Nhp #frequency: 9 (nominative)
+dick/~~Nhp #frequency: 9 (nominative)
+ding/~~Nhp #frequency: 9 (nominative)
+faul/~~Nhp #frequency: 9 (nominative)
 flach/~~NJOQRSTUWq #adjective and noun
-flau/~Nh #frequency: 9
-forsch/~Nh #frequency: 9
-frei/~Nh #frequency: 9
+flau/~~Nhp #frequency: 9 (nominative)
+forsch/~~Nhp #frequency: 9 (nominative)
+frei/~~Nhp #frequency: 9 (nominative)
 frisch/~Jq #adjective root, frequency: 9
-gleich/~Nh #frequency: 9
-grün/~Nh #frequency: 9
-jung/~Nh #frequency: 9
+gleich/~~Nhp #frequency: 9 (nominative)
+grün/~~Nhp #frequency: 9 (nominative)
+jung/~~Nhp #frequency: 9 (nominative)
 jung/~~JOQRSTUWq #adjective young
-kecker/~Nh #frequency: 9
-keim/~Nh #frequency: 9
-knall/~Nh #frequency: 9
-kühl/~Nh #frequency: 9
-lau/~Nh #frequency: 9
-lauer/~Nh #frequency: 9
-leck/~Nh #frequency: 9
+kecker/~~Nhp #frequency: 9 (nominative)
+keim/~~Nhp #frequency: 9 (nominative)
+knall/~~Nhp #frequency: 9 (nominative)
+kühl/~~Nhp #frequency: 9 (nominative)
+lau/~~Nhp #frequency: 9 (nominative)
+lauer/~~Nhp #frequency: 9 (nominative)
+leck/~~Nhp #frequency: 9 (nominative)
 loch/~Nh #frequency: 9
 mein/~Nh #frequency: 9
 nah/~Nh #frequency: 9

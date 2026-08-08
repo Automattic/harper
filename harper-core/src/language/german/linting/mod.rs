@@ -1,10 +1,14 @@
 //! German linting rules and checkers.
 
 pub mod german_adjective_agreement;
+pub mod german_case_usage;
 pub mod german_filler_words;
 pub mod german_noun_capitalization;
+pub mod german_noun_declension;
+pub mod german_pronoun_agreement;
 pub mod german_sentence_capitalization;
 pub mod german_spell_check;
+pub mod german_subject_verb_agreement;
 pub mod weir_rules;
 
 use std::sync::Arc;

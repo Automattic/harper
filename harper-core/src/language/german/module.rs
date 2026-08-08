@@ -52,10 +52,13 @@ impl LanguageModule for GermanModule {
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
         use crate::language::german::linting::{
             german_adjective_agreement::GermanAdjectiveAgreement,
-            german_filler_words::GermanFillerWords,
+            german_case_usage::GermanCaseUsage, german_filler_words::GermanFillerWords,
             german_noun_capitalization::GermanNounCapitalization,
+            german_noun_declension::GermanNounDeclension,
+            german_pronoun_agreement::GermanPronounAgreement,
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck,
+            german_subject_verb_agreement::GermanSubjectVerbAgreement,
         };
 
         let mut group = LintGroup::empty();
@@ -66,6 +69,19 @@ impl LanguageModule for GermanModule {
         group.add(
             "GermanAdjectiveAgreement",
             GermanAdjectiveAgreement::new(dictionary.clone()),
+        );
+        group.add("GermanCaseUsage", GermanCaseUsage::new(dictionary.clone()));
+        group.add(
+            "GermanNounDeclension",
+            GermanNounDeclension::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanPronounAgreement",
+            GermanPronounAgreement::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanSubjectVerbAgreement",
+            GermanSubjectVerbAgreement::new(dictionary.clone()),
         );
         group.add(
             "GermanNounCapitalization",

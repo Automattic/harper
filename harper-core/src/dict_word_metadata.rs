@@ -214,6 +214,9 @@ impl DictWordMetadata {
                         is_countable: None,
                         is_mass: None,
                         is_possessive: None,
+                        case: None,
+                        gender: None,
+                        number: None,
                     })
                 }
 
@@ -240,6 +243,9 @@ impl DictWordMetadata {
                         is_countable: None,
                         is_mass: None,
                         is_possessive: None,
+                        case: None,
+                        gender: None,
+                        number: None,
                     })
                 }
 
@@ -637,7 +643,11 @@ impl DictWordMetadata {
         matches!(
             self.adjective,
             Some(AdjectiveData {
-                degree: Some(Degree::Comparative)
+                degree: Some(Degree::Comparative),
+                case: None,
+                position: None,
+                gender: None,
+                number: None,
             })
         )
     }
@@ -646,7 +656,11 @@ impl DictWordMetadata {
         matches!(
             self.adjective,
             Some(AdjectiveData {
-                degree: Some(Degree::Superlative)
+                degree: Some(Degree::Superlative),
+                case: None,
+                position: None,
+                gender: None,
+                number: None,
             })
         )
     }
@@ -656,10 +670,24 @@ impl DictWordMetadata {
         match self.adjective {
             Some(AdjectiveData {
                 degree: Some(Degree::Positive),
+                case: _,
+                position: _,
+                gender: _,
+                number: _,
             }) => true,
-            Some(AdjectiveData { degree: None }) => true,
+            Some(AdjectiveData {
+                degree: None,
+                case: _,
+                position: _,
+                gender: _,
+                number: _,
+            }) => true,
             Some(AdjectiveData {
                 degree: Some(degree),
+                case: _,
+                position: _,
+                gender: _,
+                number: _,
             }) => !matches!(degree, Degree::Comparative | Degree::Superlative),
             _ => false,
         }
@@ -788,6 +816,73 @@ impl DictWordMetadata {
 
         self
     }
+
+    // German-specific grammar metadata queries
+
+    // Noun metadata queries
+    pub fn get_noun_case(&self) -> Option<Case> {
+        self.noun.as_ref().and_then(|n| n.case)
+    }
+
+    pub fn get_noun_gender(&self) -> Option<Gender> {
+        self.noun.as_ref().and_then(|n| n.gender)
+    }
+
+    pub fn get_noun_number(&self) -> Option<Number> {
+        self.noun.as_ref().and_then(|n| n.number)
+    }
+
+    // Pronoun metadata queries
+    pub fn get_pronoun_case(&self) -> Option<Case> {
+        self.pronoun.as_ref().and_then(|p| p.case)
+    }
+
+    pub fn get_pronoun_gender(&self) -> Option<Gender> {
+        self.pronoun.as_ref().and_then(|p| p.gender)
+    }
+
+    pub fn get_pronoun_number(&self) -> Option<Number> {
+        self.pronoun.as_ref().and_then(|p| p.number)
+    }
+
+    // Determiner metadata queries
+    pub fn get_determiner_case(&self) -> Option<Case> {
+        self.determiner.as_ref().and_then(|d| d.case)
+    }
+
+    pub fn get_determiner_article_type(&self) -> Option<ArticleType> {
+        self.determiner.as_ref().and_then(|d| d.article_type)
+    }
+
+    pub fn get_determiner_gender(&self) -> Option<Gender> {
+        self.determiner.as_ref().and_then(|d| d.gender)
+    }
+
+    pub fn get_determiner_number(&self) -> Option<Number> {
+        self.determiner.as_ref().and_then(|d| d.number)
+    }
+
+    // Verb metadata queries
+    pub fn get_verb_mood(&self) -> Option<Mood> {
+        self.verb.as_ref().and_then(|v| v.mood)
+    }
+
+    // Adjective metadata queries
+    pub fn get_adjective_case(&self) -> Option<Case> {
+        self.adjective.as_ref().and_then(|a| a.case)
+    }
+
+    pub fn get_adjective_position(&self) -> Option<AdjectivePosition> {
+        self.adjective.as_ref().and_then(|a| a.position)
+    }
+
+    pub fn get_adjective_gender(&self) -> Option<Gender> {
+        self.adjective.as_ref().and_then(|a| a.gender)
+    }
+
+    pub fn get_adjective_number(&self) -> Option<Number> {
+        self.adjective.as_ref().and_then(|a| a.number)
+    }
 }
 
 // These verb forms are morphological variations, distinct from TAM (Tense-Aspect-Mood)
@@ -846,6 +941,8 @@ pub struct VerbData {
     pub is_auxiliary: Option<bool>,
     #[serde(rename = "verb_form", default)]
     pub verb_forms: Option<VerbFormFlags>,
+    // German-specific grammar field
+    pub mood: Option<Mood>,
 }
 
 impl VerbData {
@@ -864,6 +961,7 @@ impl VerbData {
             is_linking: self.is_linking.or(other.is_linking),
             is_auxiliary: self.is_auxiliary.or(other.is_auxiliary),
             verb_forms,
+            mood: self.mood.or(other.mood),
         }
     }
 }
@@ -878,6 +976,10 @@ pub struct NounData {
     pub is_countable: Option<bool>,
     pub is_mass: Option<bool>,
     pub is_possessive: Option<bool>,
+    // German-specific grammar fields
+    pub case: Option<Case>,
+    pub gender: Option<Gender>,
+    pub number: Option<Number>,
 }
 
 impl NounData {
@@ -890,6 +992,9 @@ impl NounData {
             is_countable: self.is_countable.or(other.is_countable),
             is_mass: self.is_mass.or(other.is_mass),
             is_possessive: self.is_possessive.or(other.is_possessive),
+            case: self.case.or(other.case),
+            gender: self.gender.or(other.gender),
+            number: self.number.or(other.number),
         }
     }
 }
@@ -900,6 +1005,56 @@ pub enum Person {
     First,
     Second,
     Third,
+}
+
+/// Grammatical case for German grammar (Nominative, Accusative, Dative, Genitive)
+/// Used for nouns, pronouns, adjectives, and determiners
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Case {
+    Nominative,
+    Accusative,
+    Dative,
+    Genitive,
+}
+
+/// Grammatical number for German grammar (Singular, Plural)
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Number {
+    Singular,
+    Plural,
+}
+
+/// Grammatical gender for German grammar (Masculine, Feminine, Neuter)
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Gender {
+    Masculine,
+    Feminine,
+    Neuter,
+}
+
+/// Verb mood for German grammar (Indicative, Imperative, Subjunctive I/II)
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Mood {
+    Indicative,
+    Imperative,
+    SubjunctiveI,
+    SubjunctiveII,
+}
+
+/// Article type for German determiners
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum ArticleType {
+    Definite,
+    Indefinite,
+    Demonstrative,
+    Possessive,
+}
+
+/// Adjective position in German grammar (Attributive vs Predicative)
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum AdjectivePosition {
+    Attributive,
+    Predicative,
 }
 
 // TODO for now focused on personal pronouns?
@@ -913,6 +1068,10 @@ pub struct PronounData {
     pub person: Option<Person>,
     pub is_subject: Option<bool>,
     pub is_object: Option<bool>,
+    // German-specific grammar fields
+    pub case: Option<Case>,
+    pub gender: Option<Gender>,
+    pub number: Option<Number>,
 }
 
 impl PronounData {
@@ -927,6 +1086,9 @@ impl PronounData {
             person: self.person.or(other.person),
             is_subject: self.is_subject.or(other.is_subject),
             is_object: self.is_object.or(other.is_object),
+            case: self.case.or(other.case),
+            gender: self.gender.or(other.gender),
+            number: self.number.or(other.number),
         }
     }
 }
@@ -937,6 +1099,11 @@ pub struct DeterminerData {
     pub is_demonstrative: Option<bool>,
     pub is_possessive: Option<bool>,
     pub is_quantifier: Option<bool>,
+    // German-specific grammar fields
+    pub case: Option<Case>,
+    pub article_type: Option<ArticleType>,
+    pub gender: Option<Gender>,
+    pub number: Option<Number>,
 }
 
 impl DeterminerData {
@@ -946,6 +1113,10 @@ impl DeterminerData {
             is_demonstrative: self.is_demonstrative.or(other.is_demonstrative),
             is_possessive: self.is_possessive.or(other.is_possessive),
             is_quantifier: self.is_quantifier.or(other.is_quantifier),
+            case: self.case.or(other.case),
+            article_type: self.article_type.or(other.article_type),
+            gender: self.gender.or(other.gender),
+            number: self.number.or(other.number),
         }
     }
 }
@@ -966,6 +1137,11 @@ pub enum Degree {
 #[derive(Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, Default)]
 pub struct AdjectiveData {
     pub degree: Option<Degree>,
+    // German-specific grammar fields
+    pub case: Option<Case>,
+    pub position: Option<AdjectivePosition>,
+    pub gender: Option<Gender>,
+    pub number: Option<Number>,
 }
 
 impl AdjectiveData {
@@ -973,6 +1149,10 @@ impl AdjectiveData {
     pub fn or(&self, other: &Self) -> Self {
         Self {
             degree: self.degree.or(other.degree),
+            case: self.case.or(other.case),
+            position: self.position.or(other.position),
+            gender: self.gender.or(other.gender),
+            number: self.number.or(other.number),
         }
     }
 }
