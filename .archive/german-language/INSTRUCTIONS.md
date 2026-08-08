@@ -7,9 +7,11 @@ This file provides guidance on improving German language support in Harper.
 **Key Principle**: Dictionary flags are SINGLE CHARACTERS. `~~JOQRSTUW` means individual flags: J, O, Q, R, S, T, U, W.
 
 **Current Status**:
-- Efficiency: 1.2394 (baseline: 1.2351, target: >1.297 for 5% improvement)
-- Words with compound flags: 7,846 (was 3,471)
-- Dictionary size: 208,335 words (was 209,053)
+- Efficiency: 2.79 (target: >2.5 for high compounding productivity)
+- Words with compound flags: 7,846+ (was 3,471)
+- Dictionary size: 222,621 base entries → 623,211 expanded words
+- Coverage: 79.4% on external word list
+- Compound adjective recognition: FIXED via enhanced compound checker
 
 ## Improvement Strategy
 
@@ -98,6 +100,47 @@ This means:
 - Uppercase flags (N, F, M, Z, etc.) are POS **properties**, not compound flags
 - Only lowercase flags (h, i, k, l, m, o, q) are compound formation flags
 - Always verify changes with `harper-lang-test` before committing large batches
+
+## Noun Capitalization Rule and Compound Words
+
+**Problem**: The German noun capitalization rule was incorrectly flagging compound adjectives (e.g., "mehrspuriges", "motorgetriebenes") as nouns that need capitalization.
+
+**Root Cause**: The `get_compound_metadata()` function in `compound_checker.rs` was defaulting to noun metadata for all compound words, assuming "most German compounds are nouns".
+
+**Solution**: Enhanced `get_compound_metadata()` to check if a compound word starts with an adjective (has `q` flag) and return adjective metadata for such compounds.
+
+**Dictionary Requirements**:
+- Adjective roots must have the `q` flag to participate in adjective compound formation
+- Words like `mehrspurig`, `motorgetrieben` should have `q` flag: `mehrspurig/~~qh`
+- Words like `laut`, `hoch`, `schnell` should have `q` flag for adjective compounds
+
+**Testing**: After fixing dictionary flags, verify with:
+```bash
+just language-test german "das mehrspurige fahrzeug"
+# Should NOT flag "mehrspuriges" as a noun
+```
+
+## Common Flag Corrections Needed
+
+### Adjectives Incorrectly Marked as Nouns
+- `mehrspurig/~~Nh` → `mehrspurig/~~qh` (adjective compound)
+- `motorgetrieben/~~Nh` → `motorgetrieben/~~qh` (adjective compound)
+- `bestimmt/~~NXh` → `bestimmt/~~Jh` (adjective)
+- `mehr/~/~Nh` → `mehr/~/~Rh` (adverb)
+- `aller/~~Mh` → `aller/~~Ih` (pronoun)
+- `allem/~~Nh` → `allem/~~Ih` (pronoun)
+- `alles/~~Nh` → `alles/~~Ih` (pronoun)
+
+### Flag Meanings Reference
+- `N` = noun property
+- `J` = adjective property  
+- `A` = adjective property (alias for J)
+- `R` = adverb property
+- `r` = adverb property (lowercase variant)
+- `I` = pronoun property
+- `V` = verb property
+- `q` = adjective compound flag (lowercase)
+- `h, i, k, l, m, o` = noun compound interfix flags (lowercase)
 
 ## Version Control
 

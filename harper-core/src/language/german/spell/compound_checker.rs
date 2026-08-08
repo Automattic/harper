@@ -11,7 +11,7 @@ use std::num::NonZeroUsize;
 use std::sync::Mutex;
 
 use crate::CharString;
-use crate::dict_word_metadata::DictWordMetadata;
+use crate::dict_word_metadata::{AdjectiveData, DictWordMetadata, NounData};
 use crate::spell::rune::word_list::AnnotatedWord;
 
 /// Compound word formation flags for German
@@ -237,12 +237,40 @@ impl CompoundChecker {
             return None;
         }
 
-        // We don't return metadata for compound words to avoid false positives
-        // in rules like noun capitalization. The dictionary should only contain
-        // explicit words with known metadata. Compound words are valid for
-        // spell checking but their part of speech is ambiguous without
-        // additional context.
-        None
+        // Try to determine if it's a noun or adjective compound by checking decomposition
+        // If the compound starts with an adjective (COMPOUND_ADJ_FLAG), it's likely an adjective
+        if self.is_adjective_compound(word) {
+            return Some(DictWordMetadata {
+                adjective: Some(AdjectiveData::default()),
+                ..Default::default()
+            });
+        }
+
+        // Default to noun metadata for other compounds (most German compounds are nouns)
+        Some(DictWordMetadata {
+            noun: Some(NounData::default()),
+            ..Default::default()
+        })
+    }
+
+    /// Check if a compound word is an adjective compound
+    fn is_adjective_compound(&self, word: &[char]) -> bool {
+        if word.is_empty() {
+            return false;
+        }
+
+        // Check all possible split points to see if any start with an adjective
+        for split_pos in 1..word.len() {
+            let (first, _rest) = word.split_at(split_pos);
+
+            if let Some(first_flags) = self.compound_words.get(first) {
+                if first_flags.contains(&COMPOUND_ADJ_FLAG) {
+                    return true;
+                }
+            }
+        }
+
+        false
     }
 
     /// Check if a word can be decomposed and return the decomposition parts
