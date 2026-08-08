@@ -16210,7 +16210,7 @@ diamantschwarz/~Nh #frequency: 6
 diametral/~Nh #frequency: 6
 diastereoselektiv/~Nh #frequency: 6
 dichotom/~Nh #frequency: 6
-dicht/~Nh #frequency: 6
+dicht/~~JOQRSTUWqh # adjective with compound flag
 dickköpfig/~Jq #adjective root, frequency: 6
 dicklich/~Jq #adjective root, frequency: 6
 dicktengleich/~Nh #frequency: 6
@@ -16993,7 +16993,7 @@ frauenfreundlich/~Jq #adjective root, frequency: 6
 fraulich/~Jq #adjective root, frequency: 6
 freideutsch/~Nh #frequency: 6
 freigebig/~Jq #adjective root, frequency: 6
-freiheitlich/~Jq #adjective root, frequency: 6
+freiheitlich/~~JOQRSTUWq #adjective root, frequency: 6
 freikonservativ/~Nh #frequency: 6
 freimütig/~Jq #adjective root, frequency: 6
 freizügig/~Jq #adjective root, frequency: 6
@@ -55158,7 +55158,7 @@ besiedele/~~Nh
 besiedeln/~~V # auto-added
 besiedelnd/~~Nh
 besiedelns/~~Nh
-besiedelt/~~NXh
+besiedelt/~~JOQRSTUWVg # past participle as adjective
 besiedle/~~Nh
 besiedlung/~~Fh
 besiegele/~~Nh
@@ -155093,7 +155093,7 @@ lateralkraft/~~Nh
 lateranplatz/~~Nh
 lateritboden/~~Nh
 lateritböden/~~Nh
-latinisieren/~~Nh
+latinisieren/~~V # verb
 latinistisch/~~Nh
 latrinenraum/~~Nh
 laubenanlage/~~Fh
