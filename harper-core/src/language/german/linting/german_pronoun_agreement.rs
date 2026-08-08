@@ -122,10 +122,10 @@ impl<T: Dictionary> Linter for GermanPronounAgreement<T> {
 
         for token in tokens {
             // Check if this is a pronoun
-            if token.kind.is_upos(UPOS::PRON) {
-                if let Some(lint) = self.check_pronoun_usage(token, document) {
-                    lints.push(lint);
-                }
+            if token.kind.is_upos(UPOS::PRON)
+                && let Some(lint) = self.check_pronoun_usage(token, document)
+            {
+                lints.push(lint);
             }
         }
 

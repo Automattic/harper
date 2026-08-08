@@ -131,10 +131,7 @@ impl<T: Dictionary> GermanCaseUsage<T> {
         }
 
         // Get the required case for this preposition
-        let required_case = match self.get_preposition_case_requirement(&preposition_text) {
-            Some(case) => case,
-            None => return None, // Skip two-way prepositions for now
-        };
+        let required_case = self.get_preposition_case_requirement(&preposition_text)?; // Skip two-way prepositions for now
 
         // Try to get the actual case from different word types
         let actual_case = if following_token.kind.is_upos(UPOS::NOUN)
@@ -193,12 +190,10 @@ impl<T: Dictionary> Linter for GermanCaseUsage<T> {
                     || following_token.kind.is_upos(UPOS::PROPN)
                     || following_token.kind.is_upos(UPOS::PRON)
                     || following_token.kind.is_upos(UPOS::DET))
-            {
-                if let Some(lint) =
+                && let Some(lint) =
                     self.check_preposition_case(preposition_token, following_token, document)
-                {
-                    lints.push(lint);
-                }
+            {
+                lints.push(lint);
             }
         }
 

@@ -263,10 +263,10 @@ impl CompoundChecker {
         for split_pos in 1..word.len() {
             let (first, _rest) = word.split_at(split_pos);
 
-            if let Some(first_flags) = self.compound_words.get(first) {
-                if first_flags.contains(&COMPOUND_ADJ_FLAG) {
-                    return true;
-                }
+            if let Some(first_flags) = self.compound_words.get(first)
+                && first_flags.contains(&COMPOUND_ADJ_FLAG)
+            {
+                return true;
             }
         }
 

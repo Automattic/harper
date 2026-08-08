@@ -34,8 +34,6 @@ impl CompoundAwareDictionary {
         }
     }
 
-    /// Create a new CompoundAwareDictionary from any dictionary and word list
-
     /// Get a reference to the base dictionary
     pub fn base_dict(&self) -> &Arc<MutableDictionary> {
         &self.base_dict

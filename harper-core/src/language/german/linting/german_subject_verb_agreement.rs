@@ -46,10 +46,10 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
 
         // Check metadata
         let token_chars = document.get_span_content(&token.span);
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if metadata.is_noun() || metadata.is_pronoun() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && (metadata.is_noun() || metadata.is_pronoun())
+        {
+            return true;
         }
 
         false
@@ -64,10 +64,10 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
 
         // Check metadata
         let token_chars = document.get_span_content(&token.span);
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if metadata.is_verb() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && metadata.is_verb()
+        {
+            return true;
         }
 
         false
@@ -76,13 +76,12 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
     /// Check if a verb is in 3rd person singular form
     fn is_third_person_singular(&self, token: &Token, document: &Document) -> bool {
         let token_chars = document.get_span_content(&token.span);
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if let Some(verb_data) = metadata.verb {
-                if let Some(verb_forms) = verb_data.verb_forms {
-                    return verb_forms
-                        .contains(crate::dict_word_metadata::VerbFormFlags::THIRD_PERSON_SINGULAR);
-                }
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && let Some(verb_data) = metadata.verb
+            && let Some(verb_forms) = verb_data.verb_forms
+        {
+            return verb_forms
+                .contains(crate::dict_word_metadata::VerbFormFlags::THIRD_PERSON_SINGULAR);
         }
 
         // Check common 3rd person singular verb endings
@@ -112,18 +111,17 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         }
 
         // Check metadata
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if metadata.is_noun() || metadata.is_pronoun() {
-                // Check for 3rd person singular pronouns
-                if let Some(pronoun_data) = metadata.pronoun {
-                    if pronoun_data.person == Some(crate::dict_word_metadata::Person::Third)
-                        && pronoun_data.is_singular == Some(true)
-                    {
-                        return true;
-                    }
-                }
-                return true; // Nouns are typically 3rd person
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && (metadata.is_noun() || metadata.is_pronoun())
+        {
+            // Check for 3rd person singular pronouns
+            if let Some(pronoun_data) = metadata.pronoun
+                && pronoun_data.person == Some(crate::dict_word_metadata::Person::Third)
+                && pronoun_data.is_singular == Some(true)
+            {
+                return true;
             }
+            return true; // Nouns are typically 3rd person
         }
 
         false
@@ -192,12 +190,12 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
             let verb_token = &tokens[i + 1];
 
             // Check if this is a subject followed by a verb
-            if self.is_subject(subject_token, document) && self.is_verb(verb_token, document) {
-                if let Some(lint) =
+            if self.is_subject(subject_token, document)
+                && self.is_verb(verb_token, document)
+                && let Some(lint) =
                     self.check_subject_verb_agreement(subject_token, verb_token, document)
-                {
-                    lints.push(lint);
-                }
+            {
+                lints.push(lint);
             }
         }
 

@@ -154,12 +154,10 @@ impl<T: Dictionary> Linter for GermanNounDeclension<T> {
             // Check if this is a determiner followed by a noun
             if (article_token.kind.is_upos(UPOS::DET) || article_token.kind.is_upos(UPOS::PRON))
                 && (noun_token.kind.is_upos(UPOS::NOUN) || noun_token.kind.is_upos(UPOS::PROPN))
-            {
-                if let Some(lint) =
+                && let Some(lint) =
                     self.check_article_noun_gender_agreement(article_token, noun_token, document)
-                {
-                    lints.push(lint);
-                }
+            {
+                lints.push(lint);
             }
         }
 

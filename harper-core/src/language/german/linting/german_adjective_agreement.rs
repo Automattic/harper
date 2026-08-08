@@ -48,10 +48,10 @@ impl<T: Dictionary> GermanAdjectiveAgreement<T> {
         }
 
         // Check metadata for determiners/pronouns
-        if let Some(Some(metadata)) = token.kind.as_word() {
-            if metadata.is_determiner() || metadata.is_pronoun() || metadata.preposition {
-                return true;
-            }
+        if let Some(Some(metadata)) = token.kind.as_word()
+            && (metadata.is_determiner() || metadata.is_pronoun() || metadata.preposition)
+        {
+            return true;
         }
 
         // Common determiners and pronouns in German
@@ -79,18 +79,18 @@ impl<T: Dictionary> GermanAdjectiveAgreement<T> {
         }
 
         // Check metadata
-        if let Some(Some(metadata)) = token.kind.as_word() {
-            if metadata.is_adjective() {
-                return true;
-            }
+        if let Some(Some(metadata)) = token.kind.as_word()
+            && metadata.is_adjective()
+        {
+            return true;
         }
 
         // Also check dictionary metadata for the token
         let token_chars = document.get_span_content(&token.span);
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if metadata.is_adjective() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && metadata.is_adjective()
+        {
+            return true;
         }
 
         false
@@ -104,18 +104,18 @@ impl<T: Dictionary> GermanAdjectiveAgreement<T> {
         }
 
         // Check metadata
-        if let Some(Some(metadata)) = token.kind.as_word() {
-            if metadata.is_noun() {
-                return true;
-            }
+        if let Some(Some(metadata)) = token.kind.as_word()
+            && metadata.is_noun()
+        {
+            return true;
         }
 
         // Also check dictionary metadata for the token
         let token_chars = document.get_span_content(&token.span);
-        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars) {
-            if metadata.is_noun() {
-                return true;
-            }
+        if let Some(metadata) = self.dictionary.get_word_metadata(token_chars)
+            && metadata.is_noun()
+        {
+            return true;
         }
 
         false

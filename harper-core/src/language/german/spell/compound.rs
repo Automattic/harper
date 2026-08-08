@@ -96,13 +96,12 @@ pub fn generate_compound_words(words: &[AnnotatedWord], word_map: &mut WordMap) 
         let interfix_len = interfix.map_or(0, |s| s.chars().count());
         let _min_second_len = MAX_COMPOUND_LENGTH.saturating_sub(first_len + interfix_len);
 
-        for j in 0..compound_count {
+        for (j, second) in compound_words.iter().enumerate().take(compound_count) {
             // Skip self-combination (word + word is rarely valid)
             if i == j {
                 continue;
             }
 
-            let second = &compound_words[j];
             let second_word = second.word;
             let second_flags = &second.flags;
             let second_len = second_word.letters.len();
