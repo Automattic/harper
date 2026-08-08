@@ -138,6 +138,7 @@ impl Capitalize for str {
 }
 
 /// Count the number of base entries in a dictionary file
+/// Uses the same method as language-efficiency: count lines containing "/"
 fn count_base_entries(dict_path: &str) -> Result<usize, Box<dyn std::error::Error>> {
     use std::fs::File;
     use std::io::{BufRead, BufReader};
@@ -148,18 +149,7 @@ fn count_base_entries(dict_path: &str) -> Result<usize, Box<dyn std::error::Erro
     let mut count = 0;
     for line in reader.lines() {
         let line = line?;
-        let trimmed = line.trim();
-        if trimmed.is_empty() || trimmed.starts_with('#') {
-            continue;
-        }
-        // Skip the first line if it's just a number (legacy format)
-        if trimmed.parse::<usize>().is_ok() {
-            continue;
-        }
-        // Count lines that have content (word entries)
-        // Dictionary entries are in format: word/~~flags or word/flags
-        // Some may not have / but still be valid entries
-        if !trimmed.is_empty() {
+        if line.contains('/') {
             count += 1;
         }
     }
@@ -246,19 +236,26 @@ pub fn run_coverage_analysis_with_dict(
 
     // Dictionary statistics
     println!("\n📚 Dictionary Statistics");
-    println!("   Harper Dictionary Size: {} words (after expansion)", harper_word_count);
+    println!("   Harper Dictionary Size: {} words (after affix expansion)", harper_word_count);
     println!("   Sample Size: {} words", test_words.len());
-    println!("   Base entries in dictionary: {}", base_entries);
+    println!("   Base entries in dictionary: {} (lines with /)", base_entries);
 
     // Efficiency metrics
-    println!("\n🎯 Efficiency Metrics");
+    // Efficiency = Harper's expanded words / Base entries
+    // This measures how productive the affix rules are at generating word forms
+    println!("\n🎯 Affix Expansion Efficiency");
     println!("   Base entries: {}", base_entries);
-    println!("   Expanded words (Harper after affix expansion): {}", harper_word_count);
+    println!("   Harper expanded words: {}", harper_word_count);
     println!("   Efficiency ratio: {:.2} expanded words per base entry", efficiency);
+    
+    // Coverage vs Efficiency relationship
+    println!("\n   Note: Coverage ({:.1}%) measures recognition of external word list,", coverage_percentage);
+    println!("         Efficiency ({:.2}) measures affix rule productivity.", efficiency);
+    println!("         High efficiency = affix rules generate many words from few entries.");
 
     println!("\n   For reference:");
-    println!("   - English typically has ~1.5-2.0 expanded words per base entry");
-    println!("   - German should aim for >2.5 due to compounding");
+    println!("   - English: ~2.0-2.5 (moderate compounding)");
+    println!("   - German: >2.5 (high compounding potential)");
 
     // Annotation statistics
     println!("\n🏷️  Annotation Statistics");

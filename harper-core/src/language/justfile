@@ -38,43 +38,51 @@ language-coverage language:
 	# English is a special case - dictionary is at root level, not in language/ directory
 	sh -c 'case "{{language}}" in english) harper-core/src/language/testing_framework/target/release/harper-lang-test --language "english" --dict "harper-core/dictionary.dict" --annotations "harper-core/annotations.json" --coverage --expanded-dict "harper-core/english_dictionary.dict.gz" 2>/dev/null || harper-core/src/language/testing_framework/target/release/harper-lang-test --language "english" --dict "harper-core/dictionary.dict" --annotations "harper-core/annotations.json" --coverage --expanded-dict "/tmp/english_dictionary.dict.gz" ;; *) harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --coverage --expanded-dict "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" 2>/dev/null || harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --coverage --expanded-dict "/tmp/{{language}}_dictionary.dict.gz" ;; esac'
 
-# Analyze language efficiency (base words vs expanded coverage)
+# Analyze language efficiency (Harper word count vs base entries)
 # Usage: just language-efficiency german
 language-efficiency language:
 	#!/usr/bin/env bash
 	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
 	echo "📊 {{language}} Language Efficiency Analysis"
 	echo "==========================================="
-	base_words=$(grep -c "/" "harper-core/src/language/{{language}}/dictionary.dict" || echo 0); \
-	# Check in language directory first, then /tmp as fallback
-	if [ -f "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" ]; then \
-		expanded_dict="harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz"; \
-	elif [ -f "/tmp/{{language}}_dictionary.dict.gz" ]; then \
-		expanded_dict="/tmp/{{language}}_dictionary.dict.gz"; \
-	else \
-		expanded_dict=""; \
-	fi; \
-	if [ -n "${expanded_dict}" ]; then \
-		expanded_words=$(zcat "${expanded_dict}" | wc -l); \
-		echo "   Base words: ${base_words}"; \
-		echo "   Expanded dictionary: ${expanded_words} words"; \
-		if [ "${base_words}" -gt 0 ] && [ "${expanded_words}" -gt 0 ]; then \
-			efficiency=$(echo "scale=2; ${expanded_words} / ${base_words}" | bc); \
-			echo "   Efficiency: ${efficiency} expanded words per base word"; \
-			echo "   (Higher is better - more words generated from fewer base words)"; \
-		fi; \
-	else \
-		echo "   ⚠️  No expanded dictionary found for comparison"; \
+	
+	# Determine dictionary path - English is special case
+	if [ "{{language}}" = "english" ]; then
+		dict_path="harper-core/dictionary.dict"
+		annotations_path="harper-core/annotations.json"
+	else
+		dict_path="harper-core/src/language/{{language}}/dictionary.dict"
+		annotations_path="harper-core/src/language/{{language}}/annotations.json"
+	fi
+	
+	# Count base entries (lines with /)
+	base_words=$(grep -c "/" "${dict_path}" || echo 0)
+	
+	# Get Harper's expanded word count
+	harper_word_count=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "${dict_path}" --annotations "${annotations_path}" 2>/dev/null | grep "Word count:" | awk '{print $NF}' || echo 0)
+	# Clean up the word count (remove commas if present)
+	harper_word_count=$(echo "${harper_word_count}" | tr -d ',')
+	
+	echo "   Base entries: ${base_words} (lines with /)"
+	echo "   Harper expanded words: ${harper_word_count} (after affix expansion)"
+	
+	if [ "${base_words}" -gt 0 ] && [ "${harper_word_count}" -gt 0 ]; then
+		efficiency=$(echo "scale=2; ${harper_word_count} / ${base_words}" | bc)
+		echo "   Affix Efficiency: ${efficiency} expanded words per base entry"
+		echo "   (Higher = more productive affix rules)"
+		
+		if (( $(echo "${efficiency} > 2.5" | bc) )); then
+			echo "   ✅ Excellent efficiency - highly productive affix rules"
+		elif (( $(echo "${efficiency} > 1.5" | bc) )); then
+			echo "   🟡 Good efficiency - moderate affix rule productivity"
+		else
+			echo "   ⚠️  Low efficiency - consider improving affix rules"
+		fi
+	else
+		echo "   ❌ Unable to calculate efficiency"
 	fi
 	echo "==========================================="
 
-# Compare with hunspell spell checking
-# Usage: just language-hunspell german "text to check"
-language-hunspell language text:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
-	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{text}}" --hunspell
-
-# Test example texts from folder with expected results
 # Usage: just language-test-examples german
 language-test-examples language:
 	#!/usr/bin/env bash
