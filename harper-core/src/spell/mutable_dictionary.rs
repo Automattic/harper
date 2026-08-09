@@ -452,9 +452,9 @@ mod tests {
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../annotations.json");
 
-        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
+        let merged = MutableDictionary::from_rune_files("blork/DGS", curated_attr_list).unwrap();
         let spread =
-            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
+            MutableDictionary::from_rune_files("blork/DG\nblork/S", curated_attr_list).unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

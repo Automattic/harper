@@ -14203,11 +14203,11 @@ austausch/~~Nh #frequency: 8
 bang/~~RJOQRSTUWqh #frequency: 8
 bann/~Nhpuvw #frequency: 8
 barsch/~~NJOQRSTUWq #frequency: 8
-begriff/~Nhpuvw #frequency: 8
+begriff/~~Mh #frequency: 8
 beleg/~Nhpuvw #frequency: 8
 bequem/~~RJOQRSTUWqh #frequency: 8
 besuch/~Nhpuvw #frequency: 8
-betrieb/~Nhpuvw #frequency: 8
+betrieb/~~MYh #frequency: 8
 beweg/~Nhpuvw #frequency: 8
 bieder/~~JOQRSTUWqh #frequency: 8
 bild/~Nhpuvw #frequency: 8
@@ -37149,7 +37149,7 @@ probier/~~Mh
 problem/~~Nh
 probt/~~NXh
 probtet/~~Nh
-produkt/~~NXh
+produkt/~~NYXh
 profan/~~Nh
 profane/~~Nh
 profi/~~Nbh
@@ -47999,7 +47999,7 @@ auffassens/~~Nh
 auffasst/~~Nh
 auffasste/~~Nh
 auffasstet/~~Nh
-auffassung/~~Fh
+auffassung/~~FYXh
 auffeg/~~Vej # REPLACES auffegen
 auffegtest/~~Nh
 auffegtet/~~Nh
@@ -53260,6 +53260,7 @@ begriffen/~~V # auto-added
 begriffene/~~Nh
 begriffes/~~Nh
 begriffs/~~Nh
+begriffsauffassung/~~FYXh # compound: begriff + auffassung
 begrifft/~~Nh
 begruben/~~V # auto-added
 begräbnis/~~Nh
@@ -86905,8 +86906,8 @@ indoxyls/~~Nh
 induktion/~~Nh
 induktive/~~Nh
 industals/~~Nh
-industrie/~~Nh
-industrieprodukt/~~Nh # compound: industrie + produkt
+industrie/~~Fh
+industrieprodukt/~~ZNYh # compound: industrie + produkt
 induziere/~~Nh
 induziert/~~Nh
 inertgas/~~NXh
@@ -112270,7 +112271,7 @@ verestre/~~Nh
 verewige/~~Nh
 verewigst/~~Nh
 verewigt/~~NXh
-verfahren/~~V # auto-added
+verfahren/~~ZVh # auto-added noun+verb
 verfallen/~~V # auto-added
 verfalles/~~Nh
 verfalls/~~Nh
@@ -131365,7 +131366,7 @@ vereinslos/~~Nh
 verelenden/~~Nh
 vererbungs/~~Nh
 verfahrbar/~~JOQRSTUWqh
-verfahrens/~~Nh # auto-added
+verfahrens/~~ZXh # auto-added
 verfahrweg/~~Nh
 verfechter/~~Nh
 verfeinern/~~Nh
@@ -153986,6 +153987,7 @@ indoeuropäer/~~Nh
 induktivität/~~Fh
 indusmündung/~~Fh
 industriearm/~~Nh
+industriebetrieb/~~MYh # compound: industrie + betreib
 industrielok/~~Nh
 inertisierst/~~Nh
 infektabwehr/~~Nh
