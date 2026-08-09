@@ -14,20 +14,24 @@ const isDev = process.env.NODE_ENV == 'development';
 export function makeExtensionCSP(isDev: boolean): string {
 	const scriptSrc = ["'self'", "'wasm-unsafe-eval'"]; // minimum, cannot add more
 	const objectSrc = ["'self'"]; // standard
-	const connectSrc = ["'self'"]; // WebSocket goes here
-	const styleSrc = ["'self'", "'unsafe-inline'", 'https://fonts.googleapis.com'];
+	// Keep connect-src minimal: only production endpoints and origins the extension explicitly needs.
+	// Add dev hosts only when isDev is true (below).
+	const connectSrc = ["'self'", 'https://writewithharper.com', 'https://api.writewithharper.com'];
+	// Avoid 'unsafe-inline' for style-src. Move inline styles into external CSS files or apply CSP nonce strategy if needed.
+	const styleSrc = ["'self'", 'https://fonts.googleapis.com'];
 	const fontSrc = ["'self'", 'https://fonts.gstatic.com', 'data:'];
-
+ 
 	if (isDev) {
 		// `ws://` and `http://` use the same host:port → list both
+		// Allow local dev HMR and local hosts only in dev builds.
 		connectSrc.push('http://localhost:5173', 'ws://localhost:5173');
-		// include the 127.0.0.1 loopback in case you switch hosts
 		connectSrc.push('http://127.0.0.1:*', 'ws://127.0.0.1:*');
-		styleSrc.push('http://localhost:5173', 'http://127.0.0.1:*');
+		// If you must use inline styles in development, add them only in dev and prefer external CSS for production.
+		// Note: we intentionally do not add 'unsafe-inline' here to keep dev behavior closer to production.
 	}
 
-	connectSrc.push('https://writewithharper.com');
-
+  // Production writewithharper domains already included above; keep connectSrc minimal.
+  
 	// Assemble the semicolon-delimited CSP
 	return `${[
 		`script-src ${scriptSrc.join(' ')}`,
