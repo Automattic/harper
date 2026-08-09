@@ -21,14 +21,14 @@ mod tests {
     use crate::CharStringExt;
     use crate::spell::rune::AttributeList;
 
-    pub const TEST_WORD_LIST: &str = "4\nhello\ntry/B\nwork/AB\nblank/";
+    pub const TEST_WORD_LIST: &str = "hello\ntry/B\nwork/AB\nblank/";
 
-    pub const TEST_WORD_LIST_WITH_BLANK_LINES: &str = "4\n\nhello\n\ntry/B\nwork/AB\n\n\nblank/";
+    pub const TEST_WORD_LIST_WITH_BLANK_LINES: &str = "\nhello\n\ntry/B\nwork/AB\n\n\nblank/";
 
     pub const TEST_WORD_LIST_WITH_FULL_LINE_COMMENTS: &str =
-        "4\n#\nhello\n#with\ntry/B\nwork/AB\n# some\n# comments aded\nblank/";
+        "#\nhello\n#with\ntry/B\nwork/AB\n# some\n# comments aded\nblank/";
 
-    pub const TEST_WORD_LIST_WITH_COMMENTS: &str = "4\nhello       # a word without attributes\ntry/B   \t  # a word with empty attributes\nwork/AB\t   #a word with one attribute\nblank/      #a word with two attributes";
+    pub const TEST_WORD_LIST_WITH_COMMENTS: &str = "hello       # a word without attributes\ntry/B   \t  # a word with empty attributes\nwork/AB\t   #a word with one attribute\nblank/      #a word with two attributes";
 
     pub static TEST_AFFIX_JSON: LazyLock<serde_json::Value> = LazyLock::new(|| {
         json!({
@@ -146,7 +146,7 @@ mod tests {
 
     #[test]
     fn plural_giants() {
-        let words = parse_word_list("1\ngiant/SM").unwrap();
+        let words = parse_word_list("giant/SM").unwrap();
 
         let attributes = AttributeList::parse(
             &json!({

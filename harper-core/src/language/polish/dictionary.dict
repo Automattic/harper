@@ -1,60 +1,60 @@
 # Polish dictionary - basic words for testing
-# Format: word/POS_flags
+# Format: word/flags
 
 # Common words
-i/CC
-w/IN
-na/IN
-z/IN
-do/IN
-że/CC
-jest/VBZ
-nie/RB
-tak/RB
+i/~C
+w/~I
+na/~I
+z/~I
+do/~I
+że/~C
+jest/~Z
+nie/~R
+tak/~R
 
 # Polish-specific words with diacritics
-ą/IN
-ć/IN
-ę/IN
-ł/IN
-ń/IN
-ó/IN
-ś/IN
-ź/IN
-ż/IN
+ą/~I
+ć/~I
+ę/~I
+ł/~I
+ń/~I
+ó/~I
+ś/~I
+ź/~I
+ż/~I
 
 # Basic nouns
-człowiek/NN
-dom/NN
-książka/NN
-miasto/NN
-kobieta/NN
-mężczyzna/NN
-dziecko/NN
+człowiek/~N
+dom/~N
+książka/~N
+miasto/~N
+kobieta/~N
+mężczyzna/~N
+dziecko/~N
 
 # Basic verbs
-być/VB
-mieć/VB
-robić/VB
-iść/VB
-mówić/VB
-pisać/VB
-czytać/VB
+być/~V
+mieć/~V
+robić/~V
+iść/~V
+mówić/~V
+pisać/~V
+czytać/~V
 
 # Basic adjectives
-dobry/JJ
-zły/JJ
-duży/JJ
-mały/JJ
-nowy/JJ
-stary/JJ
-piękny/JJ
+dobry/~J
+zły/~J
+duży/~J
+mały/~J
+nowy/~J
+stary/~J
+piękny/~J
 
 # Basic pronouns
-ja/PRP
-ty/PRP
-on/PRP
-ona/PRP
-my/PRP
-wy/PRP
-oni/PRP
+ja/~P
+ty/~P
+on/~P
+ona/~P
+my/~P
+wy/~P
+oni/~P

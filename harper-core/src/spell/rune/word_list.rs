@@ -11,17 +11,9 @@ pub struct AnnotatedWord {
 ///
 /// Returns [`None`] if the given string is invalid.
 pub fn parse_word_list(source: &str) -> Result<Vec<AnnotatedWord>, Error> {
-    let mut lines = source.lines();
+    let mut words = Vec::new();
 
-    let approx_item_count = lines
-        .next()
-        .ok_or(Error::MalformedItemCount)?
-        .parse()
-        .map_err(|_| Error::MalformedItemCount)?;
-
-    let mut words = Vec::with_capacity(approx_item_count);
-
-    for line in lines {
+    for line in source.lines() {
         // Ignore blank lines and full line comments.
         if line.is_empty() || line.starts_with('#') {
             continue;
