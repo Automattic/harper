@@ -1,5 +1,7 @@
 mod tray;
 mod windows;
+mod tauri_commands;
+
 
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
