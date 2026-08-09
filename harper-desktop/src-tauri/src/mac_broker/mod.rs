@@ -7,6 +7,8 @@ mod app_search_index;
 mod core_foundation_utilities;
 mod focused_window_pid;
 mod window_stability;
+// inside harper-desktop/src-tauri/src/mac_broker/mod.rs, near other `use` / `mod` lines:
+mod accessibility_consent;
 
 use accessibility::TreeWalker;
 use accessibility::ui_element::AXUIElement;
@@ -334,6 +336,19 @@ impl OsBroker for MacBroker {
         };
 
         if !integration_enabled {
+            self.window_movement = None;
+            self.reset_accessibility_activation();
+            return Vec::new();
+        }
+
+        // Additional user-level consent check: do not proceed to walk or probe
+        // accessibility trees for bundle identifiers the user has not explicitly approved.
+        // This is a privacy-first, fail-closed guard.
+        if !accessibility_consent::user_has_consented(&bundle_identifier) {
+            eprintln!(
+                "Accessibility access not granted by user for {}; skipping collection",
+                bundle_identifier
+            );
             self.window_movement = None;
             self.reset_accessibility_activation();
             return Vec::new();
