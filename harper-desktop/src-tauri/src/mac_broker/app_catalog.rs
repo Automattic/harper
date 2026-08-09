@@ -56,6 +56,14 @@ pub fn application_path_for_bundle_id(bundle_id: &str) -> Option<String> {
         return None;
     }
 
+    // Validate bundle ID – avoid passing arbitrary values to mdfind.
+    // Only accept reverse-DNS-like identifiers containing at least one dot and
+    // characters from the allowed set.
+    if !is_valid_bundle_id(bundle_id) {
+        eprintln!("Rejected invalid bundle_id: {}", bundle_id);
+        return None;
+    }
+
     let predicate_bundle_id = escape_spotlight_string(bundle_id);
     let output = Command::new("mdfind")
         .arg(format!(
@@ -96,9 +104,13 @@ fn bundle_id_from_app_path(path: &str) -> Option<String> {
 
     if bundle_id.is_empty() || bundle_id == "(null)" {
         None
-    } else {
+    } else if is_valid_bundle_id(&bundle_id) {
         Some(bundle_id)
+    } else {
+        eprintln!("mdls returned invalid bundle identifier for {}: {:?}", path, bundle_id);
+        None
     }
+    
 }
 
 fn escape_spotlight_string(value: &str) -> String {
@@ -113,6 +125,40 @@ fn deduplicate_and_sort_bundle_ids(bundle_ids: Vec<String>) -> Vec<String> {
         .collect::<BTreeSet<_>>()
         .into_iter()
         .collect()
+}
+
+/// Basic validation for macOS bundle identifiers (reverse-DNS-like).
+/// Returns true for strings like "com.example.app" and rejects pathological or
+/// potentially dangerous values.
+pub(crate) fn is_valid_bundle_id(bundle_id: &str) -> bool {
+    // must contain at least one dot, and only allow alnum / '-' / '_' / '.'
+    if bundle_id.trim().is_empty() {
+        return false;
+    }
+    if !bundle_id.contains('.') {
+        return false;
+    }
+    bundle_id
+        .chars()
+        .all(|c| c.is_ascii_alphanumeric() || c == '.' || c == '_' || c == '-')
+}
+
+/// Sanitize an icon filename read from an Info.plist. Accept only simple filenames
+/// (no slashes), disallow absolute paths and parent-directory components.
+pub(crate) fn sanitize_icon_file(name: &str) -> Option<String> {
+    let s = name.trim();
+    if s.is_empty() {
+        return None;
+    }
+    // Reject any path separators or traversal patterns.
+    if s.contains('/') || s.contains('\\') || s.contains("..") {
+        return None;
+    }
+    // Basic sanity: avoid names that look like absolute windows drive specifications.
+    if s.contains(':') && s.chars().any(|c| c == ':') {
+        return None;
+    }
+    Some(s.to_string())
 }
 
 #[cfg(test)]
