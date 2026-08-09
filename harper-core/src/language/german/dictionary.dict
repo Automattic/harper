@@ -14057,14 +14057,14 @@ klein/~~NJOQRSTUWq #adjective and noun
 neu/~~NJOQRSTUWq #adjective and noun
 alt/~~JOQRSTUWq #adjective old
 Mann/~~Mh #masculine noun man (nominative)
-Frau/~~Fhpuvw #feminine noun woman (nominative)
+Frau/~~Fh #feminine noun woman (nominative)
 Kind/~~Nh #neuter noun child (nominative)
 Haus/~~Nh #neuter noun house (nominative)
 Buch/~~Nh #neuter noun book (nominative)
 Tisch/~~Mh #masculine noun table (nominative)
 Stuhl/~~Mh #masculine noun chair (nominative)
 Wasser/~~Nh #neuter noun water (nominative)
-Wand/~~Fhpuvw #feminine noun wall (nominative)
+Wand/~~Fh #feminine noun wall (nominative)
 Luft/~~Fh #feminine noun air (nominative)
 Feuer/~~Nh #neuter noun fire (nominative)
 Sitz/~~Mh #masculine noun seat (nominative)
@@ -14075,22 +14075,22 @@ Gesellschaft/~~Fh #feminine noun company/society (nominative)
 Obergesellschaft/~~Fh #feminine noun parent company (nominative)
 Fuß/~~Mh #masculine noun foot (nominative)
 Bett/~~Nh #neuter noun bed (nominative)
-Arbeit/~~Fhpuvw #feminine noun work (nominative)
-Platz/~~Mhpuvw #masculine noun place (nominative)
+Arbeit/~~Fh #feminine noun work (nominative)
+Platz/~~Mh #masculine noun place (nominative)
 Bild/~~Nh #neuter noun image (nominative)
-Schirm/~~Mhpuvw #masculine noun screen (nominative)
-Dampf/~~Mhpuvw #masculine noun steam (nominative)
+Schirm/~~Mh #masculine noun screen (nominative)
+Dampf/~~Mh #masculine noun steam (nominative)
 Schiff/~~Nh #neuter noun ship (nominative)
-Bund/~~Mhpuvw #masculine noun federation (nominative)
-Tag/~~Mhpuvw #masculine noun day (nominative)
+Bund/~~Mh #masculine noun federation (nominative)
+Tag/~~Mh #masculine noun day (nominative)
 # Proper nouns
-Birkenstock/~~Nhpuvw #proper noun company name (nominative)
+Birkenstock/~~Nh #proper noun company name (nominative)
 # Technical/Business terms
 börsennotiert/~~Jq #adjective stock-listed
 steuertaktisch/~~Jq #adjective tax-tactical
-Kanalinsel/~~Fhpuvw #feminine noun channel island (nominative)
-Fußbett/~~Nhpuvw #neuter noun footbed (nominative)
-Einlage/~~Fhpuvw #feminine noun insole (nominative)
+Kanalinsel/~~Fh #feminine noun channel island (nominative)
+Fußbett/~~Nh #neuter noun footbed (nominative)
+Einlage/~~Fh #feminine noun insole (nominative)
 # German root vocabulary - extracted from expanded dictionary
 # Focused on root words that can form compounds and inflected forms
 # Format: word/~annotations # comment
@@ -30111,6 +30111,7 @@ igle/~~Nh
 iglu/~~Nbh
 Iserlohn/~~Nh
 Iwan/~~Mh
+Inquart/~~Mh
 Irritabilität/~~Fh
 ihm/~~I # pronoun to him/it (dative)
 ihn/~~Iu # pronoun him (accusative)
