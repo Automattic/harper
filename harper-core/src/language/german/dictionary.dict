@@ -14128,7 +14128,7 @@ trau/~~JOQRSTUWqh #frequency: 10 (adjective)
 weich/~~NJOQRSTUWq #adjective and noun
 adel/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 anruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
-ball/~~Nhpuvw #frequency: 9 (nominative)
+ball/~~Nh #frequency: 9 (nominative)
 bar/~Jq #adjective root, frequency: 9
 berg/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 beruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -14153,7 +14153,7 @@ kühl/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 lau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 lauer/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 leck/~~JOQRSTUWpuvw #frequency: 9 (adjective)
-loch/~Nhpuvw #frequency: 9
+loch/~~Nh #frequency: 9
 mein/~~JOQRSTUWqh #frequency: 9
 nah/~~RJOQRSTUWqh #frequency: 9
 offenbar/~Jq #adjective root, frequency: 9
@@ -14184,15 +14184,15 @@ wild/~~RJOQRSTUWqh #frequency: 9
 wilder/~~RJOQRSTUWqh #frequency: 9
 wohl/~~RJOQRSTUWqh #frequency: 9
 wucher/~~Nh #frequency: 9
-zink/~Nhpuvw #frequency: 9
-überreich/~Nhpuvw #frequency: 9
-achter/~Nhpuvw #frequency: 8
-aktiv/~Nhpuvw #frequency: 8
-anbau/~Nhpuvw #frequency: 8
-aufstau/~Nhpuvw #frequency: 8
-ausgleich/~Nhpuvw #frequency: 8
-ausruf/~Nhpuvw #frequency: 8
-austausch/~Nhpuvw #frequency: 8
+zink/~~Nh #frequency: 9
+überreich/~~RJOQRSTUWqh #frequency: 9
+achter/~~RJOQRSTUWqh #frequency: 8
+aktiv/~~RJOQRSTUWqh #frequency: 8
+anbau/~~Nh #frequency: 8
+aufstau/~~Nh #frequency: 8
+ausgleich/~~RJOQRSTUWqh #frequency: 8
+ausruf/~~Nh #frequency: 8
+austausch/~~Nh #frequency: 8
 bang/~Nhpuvw #frequency: 8
 bann/~Nhpuvw #frequency: 8
 barsch/~Nhpuvw #frequency: 8
@@ -29956,7 +29956,7 @@ häuten/~~V # auto-added
 häutend/~~Nh
 häutens/~~Nh
 häutet/~~NXh
-häutig/~~NXh
+häutig/~~JOQRSTUWqh
 häutung/~~Fh
 höbe/~~Nh
 höben/~~V # auto-added
@@ -32075,7 +32075,7 @@ kreiß/~~Vej # REPLACES kreißen
 kreißt/~~NXh
 krem/~~Vej # REPLACES kremen
 kremes/~~Nh
-kremig/~~NXh
+kremig/~~JOQRSTUWqh
 kreml/~~Nh
 kremls/~~Nh
 krempe/~~Nh
