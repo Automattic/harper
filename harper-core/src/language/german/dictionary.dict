@@ -14060,7 +14060,7 @@ Mann/~~Mhpuvw #masculine noun man (nominative)
 Frau/~~Fhpuvw #feminine noun woman (nominative)
 Kind/~~Nhpuvw #neuter noun child (nominative)
 Haus/~~Nhpuvw #neuter noun house (nominative)
-Buch/~~Nhpuvw #neuter noun book (nominative)
+Buch/~~Nh #neuter noun book (nominative)
 Tisch/~~Mhpuvw #masculine noun table (nominative)
 Stuhl/~~Mhpuvw #masculine noun chair (nominative)
 Wasser/~~Nhpuvw #neuter noun water (nominative)
@@ -14104,23 +14104,23 @@ wunder/~~NJOQRSTUWq #adjective and noun
 Ärzteschulen/~~F # plural of Ärzteschule
 ärger/~~NJOQRSTUWq #adjective and noun
 äußer/~~NJOQRSTUWq #adjective and noun
-bau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-besser/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+bau/~~JOQRSTUWqh #frequency: 10 (adjective)
+besser/~~JOQRSTUWqh #frequency: 10 (adjective)
 ein/~Nh #frequency: 10
-fach/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-irr/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-klammer/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-lieb/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-link/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-locker/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-milder/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-minder/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-rau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-schal/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-schick/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-schmäler/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-strahl/~~JOQRSTUWpuvw #frequency: 10 (adjective)
-trau/~~JOQRSTUWpuvw #frequency: 10 (adjective)
+fach/~~JOQRSTUWqh #frequency: 10 (adjective)
+irr/~~JOQRSTUWqh #frequency: 10 (adjective)
+klammer/~~JOQRSTUWqh #frequency: 10 (adjective)
+lieb/~~JOQRSTUWqh #frequency: 10 (adjective)
+link/~~JOQRSTUWqh #frequency: 10 (adjective)
+locker/~~JOQRSTUWqh #frequency: 10 (adjective)
+milder/~~JOQRSTUWqh #frequency: 10 (adjective)
+minder/~~JOQRSTUWqh #frequency: 10 (adjective)
+rau/~~JOQRSTUWqh #frequency: 10 (adjective)
+schal/~~JOQRSTUWqh #frequency: 10 (adjective)
+schick/~~JOQRSTUWqh #frequency: 10 (adjective)
+schmäler/~~JOQRSTUWqh #frequency: 10 (adjective)
+strahl/~~JOQRSTUWqh #frequency: 10 (adjective)
+trau/~~JOQRSTUWqh #frequency: 10 (adjective)
 weich/~~NJOQRSTUWq #adjective and noun
 adel/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 anruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -16244,6 +16244,7 @@ d'hondtsch/~Nh #frequency: 6
 dackel/~Nh #frequency: 6
 dampffrei/~Nh #frequency: 6
 dankbar/~Jq #adjective root, frequency: 6
+Dankbarkeitsgefühl/~~Nh # compound noun from Dankbarkeit + Gefühl (from hunspell)
 dantesk/~Nh #frequency: 6
 darlehensgleich/~Nh #frequency: 6
 darstell/~Nh #frequency: 6
@@ -16715,6 +16716,7 @@ entzündbar/~Jq #adjective root, frequency: 6
 entäußer/~Nh #frequency: 6
 enzianblau/~Nh #frequency: 6
 eosinophil/~Nh #frequency: 6
+Ephraim/~~Mh # proper noun, masculine (from hunspell)
 epidermal/~Nh #frequency: 6
 epigonal/~Nh #frequency: 6
 epiphyll/~Nh #frequency: 6
@@ -16970,6 +16972,7 @@ felsenreich/~Nh #frequency: 6
 felsgrau/~Nh #frequency: 6
 felsig/~Jq #adjective root, frequency: 6
 feministisch/~Jq #adjective root, frequency: 6
+Femininum/~~Nh # neuter noun, linguistic term (from hunspell)
 femoral/~Nh #frequency: 6
 fennoman/~Nh #frequency: 6
 ferkel/~Nh #frequency: 6
@@ -18480,6 +18483,7 @@ konterstark/~Nh #frequency: 6
 kontextfrei/~Nh #frequency: 6
 kontextuell/~Nh #frequency: 6
 kontinental/~Nh #frequency: 6
+Kontinentalschelf/~~Mh # masculine noun, continental shelf (from hunspell)
 kontingent/~Nh #frequency: 6
 kontraintuitiv/~Nh #frequency: 6
 kontraktgemäß/~Nh #frequency: 6
@@ -23830,6 +23834,7 @@ dreißig/~~Nh
 dresche/~~Nh
 drescht/~~NXh
 dresden/~~V # auto-added
+Dresdener/~~Fh # feminine noun, resident of Dresden (from hunspell)
 dress/~~NXh
 dresses/~~Nh
 dressur/~~Nh
@@ -29272,6 +29277,7 @@ herd/~~NXh
 herden/~~V # auto-added
 herdes/~~Nh
 herds/~~Nh
+Herdern/~~Nh # neuter noun, from Herd + -ern suffix (from hunspell)
 herein/~~Nh
 herfand/~~Nh
 herfiel/~~Nh
@@ -70137,6 +70143,7 @@ espenlaub/~~Nh
 espenwald/~~Nh
 espenwalds/~~Nh
 esperanto/~~Nh
+esperantist/~~Mh # masculine noun, person who speaks Esperanto (from hunspell)
 esplanade/~~Nh
 esplanaden/~~V # auto-added
 espresso/~~Nbh
@@ -86750,6 +86757,7 @@ imidazols/~~Nh
 imitaten/~~V # auto-added
 imitates/~~Nh
 imitation/~~Nh
+imitationsstrategie/~~Nh # compound noun from Imitation + Strategie (from hunspell)
 imitator/~~Nh
 imitiere/~~Nh
 imitieren/~~V # auto-added
@@ -147646,6 +147654,7 @@ zündfreudig/~~RJOQRSTUWqh
 zürichkrieg/~~Nh
 ähnlichkeit/~~Fhi
 ähnlichkeitsbeziehung/~~Fh # from hunspell
+ähnlichkeitsregel/~~Fh # compound noun from Ähnlichkeit + Regel (from hunspell)
 ähnlichsähe/~~Fh
 älterwerden/~~Nh
 äquatorfern/~~Nh
