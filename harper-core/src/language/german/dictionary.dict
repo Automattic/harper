@@ -14057,7 +14057,7 @@ dort/~~R # adverb there
 jetzt/~~R # adverb now
 sehr/~~R # adverb very
 wichtig/~~JOQRSTUWq #adjective important
-gut/~~JOQRSTUWq #adjective good
+gut/~~NJOQRSTUWq #adjective and noun
 schön/~~JOQRSTUWq #adjective (primary), can be noun in some contexts
 groß/~~NJOQRSTUWq #adjective and noun
 klein/~~NJOQRSTUWq #adjective and noun
@@ -14646,60 +14646,59 @@ gefühl/~Nhpuvw #frequency: 7
 gefühlsvoll/~~JOQRSTUWqh #frequency: 7
 gefühlvoll/~~JOQRSTUWqh #frequency: 7
 gehaltreich/~~JOQRSTUWqh #frequency: 7
-gehaltvoll/~Nhpuvw #frequency: 7
-geheimnisvoll/~Nhpuvw #frequency: 7
+gehaltvoll/~~JOQRSTUWqh #frequency: 7
+geheimnisvoll/~~JOQRSTUWqh #frequency: 7
 gehorsam/~Jq #adjective root, frequency: 7
-geistreich/~Nhpuvw #frequency: 7
-geistvoll/~Nhpuvw #frequency: 7
+geistreich/~~JOQRSTUWqh #frequency: 7
+geistvoll/~~JOQRSTUWqh #frequency: 7
 geißel/~Nhpuvw #frequency: 7
 gelenk/~Nhpuvw #frequency: 7
-gemein/~Nhpuvw #frequency: 7
+gemein/~~JOQRSTUWqh #frequency: 7
 genau/~~NJOQRSTUWqpuvw #adjective and noun
-generell/~Nhpuvw #frequency: 7
-genital/~Nhpuvw #frequency: 7
-genussreich/~Nhpuvw #frequency: 7
-gering/~Nhpuvw #frequency: 7
-geräuschintensiv/~Nhpuvw #frequency: 7
-geräuschvoll/~Nhpuvw #frequency: 7
-geschmackvoll/~Nhpuvw #frequency: 7
-gestrüppreich/~Nhpuvw #frequency: 7
-getreu/~Nhpuvw #frequency: 7
-gewitterintensiv/~Nhpuvw #frequency: 7
+generell/~~JOQRSTUWqh #frequency: 7
+genital/~~NJOQRSTUWq #frequency: 7
+genussreich/~~JOQRSTUWqh #frequency: 7
+gering/~~JOQRSTUWqh #frequency: 7
+geräuschintensiv/~~JOQRSTUWqh #frequency: 7
+geräuschvoll/~~JOQRSTUWqh #frequency: 7
+geschmackvoll/~~JOQRSTUWqh #frequency: 7
+gestrüppreich/~~JOQRSTUWqh #frequency: 7
+getreu/~~JOQRSTUWqh #frequency: 7
+gewitterintensiv/~~JOQRSTUWqh #frequency: 7
 gipfel/~Nhpuvw #frequency: 7
 glatthobel/~Nhpuvw #frequency: 7
-glazial/~Nhpuvw #frequency: 7
-glorreich/~Nhpuvw #frequency: 7
+glazial/~~NJOQRSTUWq #frequency: 7
+glorreich/~~JOQRSTUWqh #frequency: 7
 gläubiger/~Nhpuvw #frequency: 7
 grab/~Nhpuvw #frequency: 7
-grauenvoll/~Nhpuvw #frequency: 7
+grauenvoll/~~JOQRSTUWqh #frequency: 7
 greif/~Nhpuvw #frequency: 7
-grell/~Nhpuvw #frequency: 7
+grell/~~JOQRSTUWqh #frequency: 7
 grummel/~Nhpuvw #frequency: 7
 grusel/~Nhpuvw #frequency: 7
-gut/~Nhpuvw #frequency: 7
 gängel/~Nhpuvw #frequency: 7
 gärtner/~Nhpuvw #frequency: 7
 haar/~Nhpuvw #frequency: 7
 hagel/~Nhpuvw #frequency: 7
 handel/~Nhpuvw #frequency: 7
-harsch/~Nhpuvw #frequency: 7
+harsch/~~JOQRSTUWqh #frequency: 7
 hau/~Nhpuvw #frequency: 7
 hebel/~Nhpuvw #frequency: 7
 heft/~Nhpuvw #frequency: 7
 heiler/~Nhpuvw #frequency: 7
 heim/~Nhpuvw #frequency: 7
-heiß/~Nhpuvw #frequency: 7
-heliotrop/~Nhpuvw #frequency: 7
+heiß/~~NJOQRSTUWq #frequency: 7
+heliotrop/~~JOQRSTUWqh #frequency: 7
 herausforder/~Nhpuvw #frequency: 7
-herb/~Nhpuvw #frequency: 7
-heterolog/~Nhpuvw #frequency: 7
+herb/~~JOQRSTUWqh #frequency: 7
+heterolog/~~JOQRSTUWqh #frequency: 7
 hinder/~Nhpuvw #frequency: 7
-hingebungsvoll/~Nhpuvw #frequency: 7
+hingebungsvoll/~~JOQRSTUWqh #frequency: 7
 hobel/~Nhpuvw #frequency: 7
-hochachtungsvoll/~Nhpuvw #frequency: 7
-hoffnungsvoll/~Nhpuvw #frequency: 7
-hoheitsvoll/~Nhpuvw #frequency: 7
-hohl/~Nhpuvw #frequency: 7
+hochachtungsvoll/~~JOQRSTUWqh #frequency: 7
+hoffnungsvoll/~~JOQRSTUWqh #frequency: 7
+hoheitsvoll/~~JOQRSTUWqh #frequency: 7
+hohl/~~NJOQRSTUWq #frequency: 7
 häng/~Nhpuvw #frequency: 7
 hör/~Nhpuvw #frequency: 7
 ideell/~~JOQRSTUWpuvw #frequency: 7
