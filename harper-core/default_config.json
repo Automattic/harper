@@ -3653,6 +3653,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PluralNounSeems",
+								"state": true,
+								"label": "Plural Noun Seems"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
