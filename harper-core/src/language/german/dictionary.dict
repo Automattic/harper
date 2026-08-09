@@ -53,9 +53,11 @@ Komplikation/~~Fh # complication
 Krankengeschichte/~~Fh # medical history
 Krankheit/~~Fh # disease, illness
 Krankheiten/~~F # plural of Krankheit
+Kraupaer/~~Fh # from hunspell
 Kulturgeschichte/~~Fh # cultural history
 Kunst/~~Fh # art
 Kunstlehre/~~Fh # art theory, from hunspell
+Künstelei/~~Fh # from hunspell
 Kuration/~~Fh # cure, healing
 Körper/~~Mh # body
 Lebewesen/~~Nh # living being, organism
@@ -14101,6 +14103,7 @@ reich/~~NJOQRSTUWq #adjective and noun
 reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
+Ährchen/~~Zh # from hunspell
 Ärzteschule/~~Fh # medical school
 Ärzteschulen/~~F # plural of Ärzteschule
 Ägidius/~~Mh
