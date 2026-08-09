@@ -71,6 +71,7 @@ Mana/~~Nh # mana (Polynesian concept)
 Maßnahme/~~Fh # measure, action
 Maßnahmen/~~F # plural of Maßnahme
 Medizin/~~Fh # medicine
+Geomedizin/~~Fh # geomedicine
 Medizinbeutel/~~Mh # medicine bag
 Mediziner/~~M # plural of Mediziner
 Mediziner/~~Mh # medical practitioner, physician
@@ -17711,6 +17712,7 @@ heimwehkrank/~Nh #frequency: 6
 heiterhell/~Nh #frequency: 6
 heiz/~Nh #frequency: 6
 heißblütig/~Jq #adjective root, frequency: 6
+Heißblütigkeit/~~Fh # hot-bloodedness
 hektisch/~Jq #adjective root, frequency: 6
 helikal/~Nh #frequency: 6
 heliophob/~Nh #frequency: 6
@@ -28256,6 +28258,7 @@ glittet/~~Nh
 glitzer/~~Mh
 glitzre/~~Nh
 globin/~~Nh
+Globuli/~~M # homeopathic globules
 globine/~~Nh
 globins/~~Nh
 globus/~~Nh
@@ -30117,6 +30120,7 @@ igle/~~Nh
 iglu/~~Nbh
 Iserlohn/~~Nh
 Iwan/~~Mh
+Inangriffnahme/~~Fh # undertaking, tackling
 Inquart/~~Mh
 Irritabilität/~~Fh
 ihm/~~I # pronoun to him/it (dative)
@@ -31660,6 +31664,7 @@ knotens/~~Nh
 knotet/~~NXh
 knotig/~~RJOQRSTUWqh
 knowhow/~~Nh
+Know-how/~~Nh # expertise, know-how
 knubble/~~Nh
 knuddle/~~Nh
 knuff/~~Vej # REPLACES knuffen
@@ -70303,6 +70308,8 @@ evakostüm/~~Nh
 evakostüms/~~Nh
 evakuiere/~~Nh
 evakuieren/~~V # auto-added
+evakuierung/~~Fh # evacuation
+Evakuierungsplanung/~~Fh # evacuation planning
 evakuierst/~~Nh
 evakuiert/~~NXh
 evaluation/~~Nh
@@ -119815,6 +119822,8 @@ zürntet/~~Nh
 äolsharfe/~~Nh
 äpfelchen/~~XZ #  auto-added
 äquator/~~Nh
+Äquinoktium/~~Nh # equinox
+Äquinoktien/~~F # plural of Äquinoktium
 äquatoria/~~Nh
 äquators/~~Nh
 äquimolar/~~Nh
@@ -122459,6 +122468,7 @@ hüpfspiel/~~JOQRSTUWq #adjective (auto-converted)
 iberisch/~~JOQRSTUWq #adjective (auto-converted)
 ideenlos/~~JOQRSTUWq #adjective (auto-converted)
 identisch/~~JOQRSTUWq #adjective (auto-converted)
+Identivität/~~Fh # identity
 igelfisch/~~JOQRSTUWq #adjective (auto-converted)
 ikonisch/~~JOQRSTUWq #adjective (auto-converted)
 illertal/~~JOQRSTUWq #adjective (auto-converted)
@@ -124914,6 +124924,7 @@ hippocampi/~~Nh
 hippologie/~~Fh
 hiroschima/~~Nh
 hispanisch/~~RJOQRSTUWqh
+Hispanistik/~~Fh # Hispanic studies
 hissflagge/~~Fh
 histogramm/~~Nh
 histologie/~~Fh
@@ -125924,6 +125935,7 @@ konzeption/~~Fh
 konzeptlos/~~Nh
 konzertant/~~Nh
 konzession/~~Fh
+Konzessionär/~~Mh # concessionaire
 konziliant/~~Nh
 konzilianz/~~Nh
 kooptieren/~~Nh
