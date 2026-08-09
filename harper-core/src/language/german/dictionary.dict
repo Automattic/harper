@@ -16322,6 +16322,8 @@ diamantschwarz/~Nh #frequency: 6
 diametral/~Nh #frequency: 6
 diastereoselektiv/~Nh #frequency: 6
 dichotom/~Nh #frequency: 6
+Dimorphismus/~~Mh # from hunspell
+Dimorphismen/~~M # plural of Dimorphismus
 dicht/~~JOQRSTUWqh # adjective with compound flag
 dickköpfig/~Jq #adjective root, frequency: 6
 dicklich/~Jq #adjective root, frequency: 6
@@ -17385,6 +17387,8 @@ geschlechtskrank/~Nh #frequency: 6
 geschlechtsneutral/~Nh #frequency: 6
 geschlechtsreif/~Nh #frequency: 6
 geschlechtsstereotyp/~Nh #frequency: 6
+geschlechtsdimorphismus/~~Mh # from hunspell
+geschlechtsdimorphismen/~~M # plural of Geschlechtsdimorphismus
 geschmackfrei/~Nh #frequency: 6
 geschmacksfrei/~Nh #frequency: 6
 geschmacksintensiv/~Nh #frequency: 6
@@ -147641,6 +147645,7 @@ zünderbombe/~~Fh
 zündfreudig/~~RJOQRSTUWqh
 zürichkrieg/~~Nh
 ähnlichkeit/~~Fhi
+ähnlichkeitsbeziehung/~~Fh # from hunspell
 ähnlichsähe/~~Fh
 älterwerden/~~Nh
 äquatorfern/~~Nh
