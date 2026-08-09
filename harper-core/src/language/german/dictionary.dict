@@ -15,6 +15,7 @@ Bereich/~~Mh # area, field
 Bereiche/~~M # plural of Bereich
 Beschaffenheit/~~Fh # nature, condition
 Beziehung/~~Fh # relationship, relation
+beziehungen/~~F # plural of Beziehung
 Biologie/~~Fh # biology
 Chemie/~~Fh # chemistry
 Continuo/~~Mh
@@ -32,6 +33,7 @@ Erkenntnisse/~~F # plural of Erkenntnis
 Erkrankung/~~Fh # disease, illness
 Forschung/~~Fh # research
 Funktion/~~Fh # function
+funktionen/~~F # plural of Funktion
 Fähigkeit/~~Fh # ability, capability
 Gesundheit/~~Fh # health
 Grundlage/~~Fh # basis, foundation
@@ -98,6 +100,7 @@ Tradition/~~Fh # tradition
 Traditionen/~~F # plural of Tradition
 Umwelt/~~Fh # environment
 Untersuchung/~~Fh # examination, investigation
+untersuchungen/~~F # plural of Untersuchung
 Verbesserung/~~Fh # improvement - substantivation from verbessern
 Verletzung/~~Fh # injury
 Verletzung/~~Fh # injury, damage - substantivation from verletzen
@@ -81690,6 +81693,7 @@ gleichtust/~~Nh
 gleichtut/~~Nh
 gleichtäte/~~Nh
 gleichung/~~Fh
+gleichungen/~~F # plural of Gleichung
 gleichwarm/~~Nh
 gleichwie/~~Nh
 gleichwohl/~~Nh
@@ -106476,7 +106480,8 @@ strudelnd/~~Nh
 strudels/~~Nh
 strudelt/~~NXh
 strudle/~~Nh
-struktur/~~Nh
+struktur/~~FXh
+strukturen/~~F # plural of Struktur
 strumpf/~~Nh
 strumpfes/~~Nh
 strumpfs/~~Nh
@@ -135859,6 +135864,7 @@ eifelwälder/~~Nh
 eifersuchts/~~Nh
 eigenhändig/~~Nh
 eigenschaft/~~Fh
+eigenschaften/~~F # plural of Eigenschaft
 eigensicher/~~Nh
 eilguttarif/~~Nh
 eilzugmäßig/~~Nh
@@ -215348,7 +215354,8 @@ liede/~~N
 linse/~~N
 matte/~~N
 meise/~~N
-menge/~~N
+menge/~~Fh
+mengenlehre/~~Fh # set theory
 molke/~~N
 muffe/~~N
 niete/~~N
