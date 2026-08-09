@@ -18591,7 +18591,7 @@ commodious/JY
 commoditize/VdSG
 commodity/~NSg
 commodore/~NSg
-common/~JY^>pNVU
+common/~JY^>pVU
 common's
 commonality/NwgS
 commonalty/Ng
@@ -19603,11 +19603,11 @@ cottonwood/~NSg
 cottony/J
 cotyledon/NgS
 couch/~NgSVdG
-couchette/NS
+couchette/NSg
 cougar/~NSg
-cough/~VdGNg
-coughs/NV
-could/~NA
+cough/~VdGN0g
+coughs/N9Vh
+could/~A
 could've/V
 couldn't/~VA
 couldn't've/VA†
@@ -28504,7 +28504,7 @@ herd/~NgSVd>GZ
 herder/~NgS
 herdsman/N9g
 herdsmen/N9
-here/~JR            # removed `N` marginal noun sense complicates linting
+here/~R             # removed `N` marginal noun sense complicates linting
 here's
 hereabout/S
 hereafter/~NSgJ
@@ -31656,7 +31656,7 @@ kinetically/Ry
 kinetics/~Ng
 kinfolk/NSg
 kinfolks/Ng
-king/~NgSVY
+king/~NgSV
 kingdom/~NSg
 kingfisher/~NSg
 kingly/J>^
@@ -41545,7 +41545,7 @@ quayside/NS
 queasily/Ry
 queasiness/Ng
 queasy/J^>p
-queen/~NgSVGdY
+queen/~NgSVGd
 queenly/J>^
 queer/~J^Y>pNgSVGd
 queerness/Ng
@@ -44784,7 +44784,8 @@ setsquare/S
 sett/NSVG>BzZ
 settee/NgS
 setter/NgV
-setting/~NwgSV6J
+setting/~N0wgV6J
+settings/N9
 settle/~VGdSNrU
 settle's
 settlement/~N0gr
@@ -52829,8 +52830,8 @@ welterweight/~JNSg
 wen/~NgCI
 wench/NgSV
 wend/VdGSN
-went/~VtN
-wept/V
+went/~Vt
+wept/VtT
 were/~Vlt
 weren't/Vt
 werewolf/~N0g

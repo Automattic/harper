@@ -3,7 +3,7 @@
 >
 #
 > A   collection of difficult sentences to test   Harper's ability to correctly tag     unusual / uncommon but     correct  sentences .
-# D/P N🅪Sg       P  VB/J      NPl/V3+   P  NSg/VB NPr$     N🅪Sg+   P  R         NSg/VB+ NSg/J   . NSg/VB/J NSg/C/P NSg/VB/J NPl/V3+   .
+# D/P N🅪Sg       P  VB/J      NPl/V3+   P  NSg/VB NPr$     N🅪Sg+   P  R         NSg/VB+ NSg/J   . VB/J     NSg/C/P NSg/VB/J NPl/V3+   .
 >
 #
 > Note    that     some      word    may     not     be       tagged correctly right    now       .
@@ -120,8 +120,8 @@
 # ISg/#r+ VP/J    D+  NPl/V3+ P  Nᴹ/Vg/J J/R/C NSg/I/C IPl+ VPt     Nᴹ/Vg/J .
 > By Pythagoras ' theorem , we   can     calculate the length  of the hypotenuse .
 # P  NPr        . NSg/VB  . IPl+ NPr/VXB VB        D   N🅪Sg/VB P  D   NSg        .
-> We   went    by bus     .
-# IPl+ NSg/VPt P  NSg/VB+ .
+> We   went by bus     .
+# IPl+ VPt  P  NSg/VB+ .
 > I       discovered it       by chance    .
 # ISg/#r+ VP/J       NPr/ISg+ P  NPr/VB/J+ .
 > By ' maybe   ' she  means  ' no       ' .
@@ -144,8 +144,8 @@
 # IPl+ NSgPl/VP P  NSg+ NPl/V3+ P  NSg   .
 > His     date    of birth     was  wrong      by ten  years .
 # ISg/D$+ N🅪Sg/VB P  NSg/VB/J+ VLPt NSg/VB/J/R P  NSg+ NPl+  .
-> We   went    through the book    page    by page    .
-# IPl+ NSg/VPt J/P     D+  NSg/VB+ NPr/VB+ P  NPr/VB+ .
+> We   went through the book    page    by page    .
+# IPl+ VPt  J/P     D+  NSg/VB+ NPr/VB+ P  NPr/VB+ .
 > We   crawled forward  by inches  .
 # IPl+ VP/J    NSg/VB/J P  NPl/V3+ .
 > sold   by the yard    ; cheaper if    bought by the gross
@@ -267,7 +267,7 @@
 > Police combed his     flat     for   clues   .
 # Nᴹ/VB+ VP/J   ISg/D$+ NSg/VB/J R/C/P NPl/V3+ .
 > I've lived here for   three years .
-# K    VP/J  J/R  R/C/P NSg   NPl+  .
+# K    VP/J  R    R/C/P NSg   NPl+  .
 > They fought for   days over    a    silly  pencil  .
 # IPl+ VP     R/C/P NPl+ NSg/J/P D/P+ NSg/J+ NSg/VB+ .
 > The store   is  closed for   the day     .
@@ -314,8 +314,8 @@
 # NPr/J/R/P NSg/VB/J P  NSg/VB/J+ NPl/V3 . NPr/VB+ VLPt NSg   R/C/P NSg  J/P D+  NPr🅪Sg+
 > At    close    of play    , England were 305 for   3 .
 # NSg/P NSg/VB/J P  N🅪Sg/VB . NPr+    VLPt #   R/C/P # .
-> He       took the swing   shift   for   he       could   get    more         overtime .
-# NPr/ISg+ VPt  D+  NSg/VB+ NSg/VB+ R/C/P NPr/ISg+ NSg/VXB NSg/VB NPr/I/J/R/Dq NSg/VB   .
+> He       took the swing   shift   for   he       could get    more         overtime .
+# NPr/ISg+ VPt  D+  NSg/VB+ NSg/VB+ R/C/P NPr/ISg+ VXB   NSg/VB NPr/I/J/R/Dq NSg/VB   .
 > to account for   one's whereabouts .
 # P  NSg/VB  R/C/P NSg$+ NSg+        .
 >
@@ -349,11 +349,11 @@
 > You    can     study  anything  from math to literature .
 # ISgPl+ NPr/VXB NSg/VB NSg/I/VB+ P    +    P  Nᴹ         .
 > It's hard     to tell   from here .
-# +    N🅪Sg/J/R P  NPr/VB P    J/R  .
+# +    N🅪Sg/J/R P  NPr/VB P    R    .
 > Try      to see    it       from his     point  of view    .
 # NSg/VB/J P  NSg/VB NPr/ISg+ P    ISg/D$+ NSg/VB P  NSg/VB+ .
-> The bomb      went     off        just 100 yards   from where   they were standing .
-# D+  NSg/VB/J+ NSg/VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ VLPt Nᴹ/Vg/J  .
+> The bomb      went off        just 100 yards   from where   they were standing .
+# D+  NSg/VB/J+ VPt+ NSg/VB/J/P J/R  #   NPl/V3+ P    NSg/R/C IPl+ VLPt Nᴹ/Vg/J  .
 > From the top      of the lighthouse you    can     just see    the mainland .
 # P    D   NSg/VB/J P  D+  NSg+       ISgPl+ NPr/VXB J/R  NSg/VB D+  NSg+     .
 > I’ve been   doing   this    from pickney .
@@ -594,8 +594,8 @@
 # NSg/I/J/C/Dq+ D+  NPl/V3+ VLB J/P . NSg/I/J/R/C IPl+ NSg/VXB NSg/VLXB NSg/VB/J+ .
 > We   had to ration our food because there was  a    war      on  .
 # IPl+ VP  P  NSg/VB D$+ NSg+ C/P     R+    VLPt D/P+ N🅪Sg/VB+ J/P .
-> Some     of the cast     went    down        with flu  , but     the show's still      on  .
-# I/J/R/Dq P  D   NSg/VB/J NSg/VPt N🅪Sg/VB/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/VB/J/R J/P .
+> Some     of the cast     went down        with flu  , but     the show's still      on  .
+# I/J/R/Dq P  D   NSg/VB/J VPt  N🅪Sg/VB/J/P P    NSg+ . NSg/C/P D   NSg$   NSg/VB/J/R J/P .
 > That      TV   programme     that      you    wanted to watch  is  on  now       .
 # I/C/Ddem+ NSg+ NSg/VB/Au/Br+ I/C/Ddem+ ISgPl+ VP/J   P  NSg/VB VL3 J/P NSg/J/R/C .
 > This    is  her     last      song  . You're on  next    !
@@ -800,8 +800,8 @@
 # ISg/#r+ N🅪Sg/VXB I/J/R/Dq NPr/I/J/R/Dq NPl/V3+ P  NSg/VBP VB/C NPrPl/V3+ P  NSg/VB/J Nᴹ/Vg/J  P    .
 > If    he       hasn't read    it       yet      , he       ought     to .
 # NSg/C NPr/ISg+ V3     NSg/VBP NPr/ISg+ NSg/VB/C . NPr/ISg+ NSg/I/VXB P  .
-> I       went    to the shops   to buy    some      bread    .
-# ISg/#r+ NSg/VPt P  D+  NPl/V3+ P  NSg/VB I/J/R/Dq+ N🅪Sg/VB+ .
+> I       went to the shops   to buy    some      bread    .
+# ISg/#r+ VPt  P  D+  NPl/V3+ P  NSg/VB I/J/R/Dq+ N🅪Sg/VB+ .
 >
 #
 >              Preposition
@@ -870,8 +870,8 @@
 #
 > He       picked a   fight  with the class      bully     .
 # NPr/ISg+ VP/J   D/P NSg/VB P    D+  N🅪Sg/VB/J+ NSg/VB/J+ .
-> He       went    with his     friends   .
-# NPr/ISg+ NSg/VPt P    ISg/D$+ NPrPl/V3+ .
+> He       went with his     friends   .
+# NPr/ISg+ VPt  P    ISg/D$+ NPrPl/V3+ .
 > She  owns   a    motorcycle with a   sidecar .
 # ISg+ NPl/V3 D/P+ NSg/VB+    P    D/P NSg     .
 > Jim  was  listening to Bach with his     eyes    closed .
