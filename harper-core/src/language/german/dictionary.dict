@@ -25986,6 +25986,8 @@ finalen/~~V # auto-added
 finaler/~~Mh
 finales/~~Nh
 finanz/~~Nh
+finanzinnovation/~~Fh
+finanzinnovationen/~~F
 find/~~Vcj # REPLACES finden
 findens/~~Nh
 finder/~~Mh
@@ -37149,7 +37151,7 @@ probier/~~Mh
 problem/~~Nh
 probt/~~NXh
 probtet/~~Nh
-produkt/~~NYXh
+produkt/~~Zh
 profan/~~Nh
 profane/~~Nh
 profi/~~Nbh
@@ -47999,7 +48001,7 @@ auffassens/~~Nh
 auffasst/~~Nh
 auffasste/~~Nh
 auffasstet/~~Nh
-auffassung/~~FYXh
+auffassung/~~Fh
 auffeg/~~Vej # REPLACES auffegen
 auffegtest/~~Nh
 auffegtet/~~Nh
@@ -55958,7 +55960,7 @@ betriebe/~~Nh
 betrieben/~~V # auto-added
 betriebene/~~Nh
 betriebes/~~Nh
-betriebs/~~Nh
+betriebs/~~MYh
 betriebt/~~Nh
 betriffst/~~Nh
 betrifft/~~Nh
@@ -112271,7 +112273,7 @@ verestre/~~Nh
 verewige/~~Nh
 verewigst/~~Nh
 verewigt/~~NXh
-verfahren/~~ZVh # auto-added noun+verb
+verfahren/~~Zh # auto-added noun
 verfallen/~~V # auto-added
 verfalles/~~Nh
 verfalls/~~Nh
@@ -114647,6 +114649,7 @@ vorspiele/~~Nh
 vorspielt/~~Nh
 vorsprach/~~Nh
 vorsprang/~~Nh
+vorsprung/~~Mh
 vorspule/~~Nh
 vorspulen/~~V # auto-added
 vorspulst/~~Nh
