@@ -3653,6 +3653,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PathOfLeastResistance",
+								"state": true,
+								"label": "Path Of Least Resistance"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
