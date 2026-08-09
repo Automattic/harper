@@ -5,6 +5,7 @@ use std::{
 };
 
 use super::app_catalog::application_path_for_bundle_id;
+use super::app_catalog::sanitize_icon_file;
 
 /// Converts an installed app's icon resource to PNG bytes using the macOS `sips` tool.
 pub fn application_icon_png(bundle_id: &str) -> Result<Vec<u8>, String> {
@@ -77,9 +78,16 @@ fn app_icon_file(app_path: &str) -> Option<String> {
 
     let icon_file = String::from_utf8_lossy(&output.stdout).trim().to_string();
 
-    if icon_file.is_empty() {
-        None
-    } else {
-        Some(icon_file)
+    // Sanitize the icon filename. Reject absolute paths or traversal.
+    match sanitize_icon_file(&icon_file) {
+        Some(s) => Some(s),
+        None => {
+            eprintln!(
+                "Rejected CFBundleIconFile value for app at {}: {:?}",
+                app_path, icon_file
+            );
+            None
+        }
     }
+    
 }
