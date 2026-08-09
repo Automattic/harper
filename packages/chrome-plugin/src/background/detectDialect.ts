@@ -22,6 +22,8 @@ function localeToDialect(locale: string): Dialect {
 	if (lower.includes('en-au') || lower.includes('en_au')) return Dialect.Australian;
 	if (lower.includes('en-ca') || lower.includes('en_ca')) return Dialect.Canadian;
 	if (lower.includes('en-in') || lower.includes('en_in')) return Dialect.Indian;
+	if (lower.includes('en-sg') || lower.includes('en_sg')) return Dialect.Singaporean;
+	if (lower.includes('en-my') || lower.includes('en_my')) return Dialect.Malaysian;
 
 	// Fallback for English variants
 	if (lower.startsWith('en')) {

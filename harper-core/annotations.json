@@ -883,6 +883,22 @@
 				"dialects": "INDIAN"
 			}
 		},
+		"ʒ": {
+			"#": "SG property",
+			"//": "mnemonic: 'ʒ' looks like 'sg' for Singapore",
+			"propagate": true,
+			"metadata": {
+				"dialects": "SINGAPOREAN"
+			}
+		},
+		"㎳": {
+			"#": "MS property",
+			"//": "mnemonic: 'ms' is the ISO for the Malay language",
+			"propagate": true,
+			"metadata": {
+				"dialects": "MALAYSIAN"
+			}
+		},
 		"F": {
 			"#": "reflexive property",
 			"metadata": {
