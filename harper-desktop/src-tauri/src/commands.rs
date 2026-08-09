@@ -43,6 +43,9 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         stop_highlighter_service,
         launch_app,
         search_apps,
+        // Accessibility consent API (native handlers)
+        tauri_commands::has_user_consented,
+        tauri_commands::set_user_consent_cmd,
     ]
 }
 
