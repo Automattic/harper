@@ -211786,7 +211786,7 @@ tote/~~N
 ulme/~~N
 unke/~~N
 vorn/~~N
-ware/~~N
+ware/~~Fh
 wehe/~~N
 woge/~~N
 zehn/~~N
@@ -211831,6 +211831,7 @@ unken/~~V
 voilà/~~N
 wagen/~~Mh
 wagen/~~V
+waren/~~Fh
 waren/~~V
 weben/~~V
 wehen/~~V
@@ -212137,7 +212138,7 @@ verdeck/~~N
 verfall/~~N
 verkauf/~~N
 verkehr/~~N
-verlauf/~~N
+verlauf/~~Mh
 verleih/~~N
 vermerk/~~N
 verputz/~~N
@@ -222753,7 +222754,6 @@ erkenntnisgewinns/~~M # genitive of Erkenntnisgewinn
 erkenntnissen/~~F # dative plural of Erkenntnis
 systematizität/~~Fh # systematic nature
 wissensstände/~~M # knowledge states
-warenkunde/~~Fh # merchandise knowledge
 vorstellung/~~Fh # idea, concept, performance
 vorstellungen/~~F # plural of Vorstellung
 verarbeitung/~~Fh # processing
@@ -222778,6 +222778,44 @@ usw/~~R # abbreviation: und so weiter (etc.)
 zusammenhang/~~Mh # context, connection
 arbeitsvorbereiter/~~Mh # work preparer
 marxverständnis/~~Nh # understanding of Marx
+ausgebildeten/~~JOQRSTUWVg # trained, educated (past participle)
+behandlungsverlauf/~~Mh # treatment course
+bewusstseinsverändernde/~~RJOQRSTUWqh # consciousness-altering (adjective)
+erkrankungen/~~F # diseases, plural of Erkrankung
+ermöglichende/~~JOQRSTUWVg # enabling (present participle)
+erscheinungen/~~F # phenomena, appearances, plural of Erscheinung
+europäischenglischen/~~RJOQRSTUWqh # European-English (adjective)
+fähigkeiten/~~F # abilities, plural of Fähigkeit
+gleichgesetzten/~~JOQRSTUWVg # equated (past participle)
+handlungen/~~F # actions, plural of Handlung
+komplikationen/~~F # complications, plural of Komplikation
+lehrgebäuden/~~N # teaching buildings, dative plural of Lehrgebäude
+magischanimistischer/~~RJOQRSTUWqh # magical-animistic (adjective)
+nichtmateriellen/~~RJOQRSTUWqh # non-material (adjective)
+patientenakte/~~Fh # patient file
+patientenrechtegesetz/~~Nh # patient rights law
+pflanzenkrankheiten/~~F # plant diseases, plural
+physikalischen/~~RJOQRSTUWqh # physical (adjective)
+plainsindianer/~~Mh # Plains Indian
+ratgeben/~~V # to advise
+schädlingen/~~M # pests, dative plural of Schädling
+situationen/~~F # situations, plural of Situation
+substantivierten/~~JOQRSTUWVg # substantivated (past participle)
+tabuverletzungen/~~F # taboo violations, plural of Tabuverletzung
+therapeuten/~~M # therapists, plural of Therapeut
+umfassenden/~~RJOQRSTUWqh # comprehensive (adjective)
+unheilbaren/~~RJOQRSTUWqh # incurable (adjective)
+wiederherzustellen/~~V # to restore
+zusammensetzungen/~~F # compositions, compounds, plural of Zusammensetzung
+ars/~~Fh # art (Latin, used in German)
+berufsordnungen/~~F # professional regulations, plural of Berufsordnung
+datenschutz/~~Mh # data protection
+patientarztbeziehung/~~Fh # patient-doctor relationship
+patientenbezogenen/~~RJOQRSTUWqh # patient-related (adjective)
+resultaten/~~N # results, dative plural of Resultat
+unterlagen/~~F # documents, plural of Unterlage
+einschließend/~~JOQRSTUWVg # including (present participle)
+hinausgeht/~~V # goes beyond (verb form)
 begründungszusammenhang/~~Mh # contextual reasoning
 weiterentwicklung/~~Fh # further development
 arbeitsmittel/~~Nh # work tools, means
