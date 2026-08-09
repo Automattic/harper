@@ -14056,24 +14056,24 @@ groß/~~NJOQRSTUWq #adjective and noun
 klein/~~NJOQRSTUWq #adjective and noun
 neu/~~NJOQRSTUWq #adjective and noun
 alt/~~JOQRSTUWq #adjective old
-Mann/~~Mhpuvw #masculine noun man (nominative)
+Mann/~~Mh #masculine noun man (nominative)
 Frau/~~Fhpuvw #feminine noun woman (nominative)
 Kind/~~Nh #neuter noun child (nominative)
 Haus/~~Nh #neuter noun house (nominative)
 Buch/~~Nh #neuter noun book (nominative)
-Tisch/~~Mhpuvw #masculine noun table (nominative)
-Stuhl/~~Mhpuvw #masculine noun chair (nominative)
+Tisch/~~Mh #masculine noun table (nominative)
+Stuhl/~~Mh #masculine noun chair (nominative)
 Wasser/~~Nh #neuter noun water (nominative)
 Wand/~~Fhpuvw #feminine noun wall (nominative)
-Luft/~~Fhpuvw #feminine noun air (nominative)
+Luft/~~Fh #feminine noun air (nominative)
 Feuer/~~Nh #neuter noun fire (nominative)
-Sitz/~~Mhpuvw #masculine noun seat (nominative)
-Verwaltung/~~Fhpuvw #feminine noun administration (nominative)
-Konzern/~~Mhpuvw #masculine noun corporation (nominative)
+Sitz/~~Mh #masculine noun seat (nominative)
+Verwaltung/~~Fh #feminine noun administration (nominative)
+Konzern/~~Mh #masculine noun corporation (nominative)
 Ober/~~Nh #neuter noun upper/top (nominative)
-Gesellschaft/~~Fhpuvw #feminine noun company/society (nominative)
-Obergesellschaft/~~Fhpuvw #feminine noun parent company (nominative)
-Fuß/~~Mhpuvw #masculine noun foot (nominative)
+Gesellschaft/~~Fh #feminine noun company/society (nominative)
+Obergesellschaft/~~Fh #feminine noun parent company (nominative)
+Fuß/~~Mh #masculine noun foot (nominative)
 Bett/~~Nh #neuter noun bed (nominative)
 Arbeit/~~Fhpuvw #feminine noun work (nominative)
 Platz/~~Mhpuvw #masculine noun place (nominative)
@@ -30110,6 +30110,7 @@ igitt/~~Nh
 igle/~~Nh
 iglu/~~Nbh
 Iserlohn/~~Nh
+Iwan/~~Mh
 Irritabilität/~~Fh
 ihm/~~I # pronoun to him/it (dative)
 ihn/~~Iu # pronoun him (accusative)
@@ -206688,6 +206689,7 @@ Herstellers/~~Mh #genitive of Hersteller
 1970ern/~~Nh #decade (1970er years)
 Zehenkappen/~~Fh #feminine plural noun
 Gummi/~~Nbh # neuter noun - fixed - added compound flags Nbh
+Guido/~~Mh
 Spitznamen/~~Mh #masculine noun
 shell-toes/~~Nh #English loanword
 Muschel-Zehen/~~Fh #compound noun with hyphen
