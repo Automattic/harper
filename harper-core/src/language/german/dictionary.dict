@@ -14070,17 +14070,17 @@ Feuer/~~Nh #neuter noun fire (nominative)
 Sitz/~~Mhpuvw #masculine noun seat (nominative)
 Verwaltung/~~Fhpuvw #feminine noun administration (nominative)
 Konzern/~~Mhpuvw #masculine noun corporation (nominative)
-Ober/~~Nhpuvw #neuter noun upper/top (nominative)
+Ober/~~Nh #neuter noun upper/top (nominative)
 Gesellschaft/~~Fhpuvw #feminine noun company/society (nominative)
 Obergesellschaft/~~Fhpuvw #feminine noun parent company (nominative)
 Fuß/~~Mhpuvw #masculine noun foot (nominative)
-Bett/~~Nhpuvw #neuter noun bed (nominative)
+Bett/~~Nh #neuter noun bed (nominative)
 Arbeit/~~Fhpuvw #feminine noun work (nominative)
 Platz/~~Mhpuvw #masculine noun place (nominative)
-Bild/~~Nhpuvw #neuter noun image (nominative)
+Bild/~~Nh #neuter noun image (nominative)
 Schirm/~~Mhpuvw #masculine noun screen (nominative)
 Dampf/~~Mhpuvw #masculine noun steam (nominative)
-Schiff/~~Nhpuvw #neuter noun ship (nominative)
+Schiff/~~Nh #neuter noun ship (nominative)
 Bund/~~Mhpuvw #masculine noun federation (nominative)
 Tag/~~Mhpuvw #masculine noun day (nominative)
 # Proper nouns
@@ -14102,6 +14102,7 @@ sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
 Ärzteschule/~~Fh # medical school
 Ärzteschulen/~~F # plural of Ärzteschule
+Ägidius/~~Mh
 ärger/~~NJOQRSTUWq #adjective and noun
 äußer/~~NJOQRSTUWq #adjective and noun
 bau/~~JOQRSTUWqh #frequency: 10 (adjective)
@@ -30108,6 +30109,7 @@ igeltet/~~Nh
 igitt/~~Nh
 igle/~~Nh
 iglu/~~Nbh
+Iserlohn/~~Nh
 Irritabilität/~~Fh
 ihm/~~I # pronoun to him/it (dative)
 ihn/~~Iu # pronoun him (accusative)
@@ -34639,7 +34641,7 @@ molken/~~V # auto-added
 molkest/~~Nh
 molkt/~~Nh
 moll/~~Nh
-mollig/~~NXh
+mollig/~~RJOQRSTUWqh
 moloch/~~Nh
 molochs/~~Nh
 mols/~~Nh
@@ -35292,7 +35294,7 @@ nebelt/~~NXh
 neben/~~P # preposition
 nebenan/~~Nh
 neble/~~Nh
-neblig/~~NXh
+neblig/~~RJOQRSTUWqh
 nebst/~~Nh
 nebulin/~~Nh
 nebulös/~~NXh
@@ -35363,7 +35365,7 @@ neppt/~~NXh
 nepptet/~~Nh
 nerval/~~NXh
 nerv/~~Vcej # REPLACES nerven
-nervig/~~NXh
+nervig/~~RJOQRSTUWqh
 nervosa/~~Nh
 nervs/~~Nh
 nervt/~~NXh
@@ -128128,7 +128130,7 @@ pedaloktav/~~Nh
 pedalpauke/~~Fh
 pedaltürme/~~Fh
 pedanterie/~~Fh
-pedantisch/~~Nh
+pedantisch/~~RJOQRSTUWqh
 peddigrohr/~~Nh
 peergruppe/~~Fh
 peerswürde/~~Fh
@@ -132859,7 +132861,7 @@ zürichberg/~~Nh
 ätzprozess/~~Nh
 ätztechnik/~~Nh
 öchslegrad/~~Nh
-öffentlich/~~NYq #  auto-added
+öffentlich/~~RJOQRSTUWqh #  auto-added
 ökobewusst/~~Nh
 ökologisch/~~Nh
 ökonomisch/~~JOQRSTUWq # fixed from noun to adjective
@@ -215608,7 +215610,7 @@ anfunke/~~N
 blaffst/~~N
 chillst/~~N
 flankte/~~N
-geniest/~~N
+geniest/~~JOQRSTUWVg
 mampfst/~~N
 patchst/~~N
 ploppst/~~N
