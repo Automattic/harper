@@ -14154,7 +14154,7 @@ lau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 lauer/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 leck/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 loch/~Nhpuvw #frequency: 9
-mein/~Nhpuvw #frequency: 9
+mein/~~JOQRSTUWqh #frequency: 9
 nah/~~RJOQRSTUWqh #frequency: 9
 offenbar/~Jq #adjective root, frequency: 9
 plan/~~RJOQRSTUWqh #frequency: 9
@@ -14163,9 +14163,9 @@ rauch/~~Nh #frequency: 9
 reg/~~RJOQRSTUWqh #frequency: 9
 rock/~~Nh #frequency: 9
 rund/~~RJOQRSTUWqh #frequency: 9
-scheuer/~Nhpuvw #frequency: 9
+scheuer/~~RJOQRSTUWqh #frequency: 9
 schrei/~~Nh #frequency: 9
-schwäch/~Nhpuvw #frequency: 9
+schwäch/~~JOQRSTUWqh #frequency: 9
 stich/~~Nh #frequency: 9
 still/~~RJOQRSTUWqh #frequency: 9
 stock/~~RJOQRSTUWqh #frequency: 9
@@ -14179,11 +14179,11 @@ unter/~~P # preposition
 wach/~~RJOQRSTUWqh #frequency: 9
 wahr/~~RJOQRSTUWqh #frequency: 9
 weiß/~~RJOQRSTUWqh #frequency: 9
-widerruf/~Nhpuvw #frequency: 9
-wild/~Nhpuvw #frequency: 9
-wilder/~Nhpuvw #frequency: 9
-wohl/~Nhpuvw #frequency: 9
-wucher/~Nhpuvw #frequency: 9
+widerruf/~~Mh #frequency: 9
+wild/~~RJOQRSTUWqh #frequency: 9
+wilder/~~RJOQRSTUWqh #frequency: 9
+wohl/~~RJOQRSTUWqh #frequency: 9
+wucher/~~Nh #frequency: 9
 zink/~Nhpuvw #frequency: 9
 überreich/~Nhpuvw #frequency: 9
 achter/~Nhpuvw #frequency: 8
@@ -27323,7 +27323,7 @@ gehöhnt/~~JOQRSTUWVg
 gehölz/~~NXh
 gehöre/~~Nh
 gehör/~~Vcej # REPLACES gehören
-gehörig/~~NXh
+gehörig/~~JOQRSTUWqh
 gehörnt/~~JOQRSTUWVg
 gehörs/~~Nh
 gehörst/~~V
@@ -32278,7 +32278,7 @@ kund/~~Nh
 kunde/~~Nh
 kunden/~~V # auto-added
 kundgab/~~Nh
-kundig/~~NXh
+kundig/~~JOQRSTUWqh
 kundin/~~Nh
 kundtat/~~Nh
 kundtue/~~Nh
@@ -51561,7 +51561,7 @@ auswirk/~~Vej # REPLACES auswirken
 auswirkens/~~Nh
 auswirkt/~~NXh
 auswirktet/~~Nh
-auswirkung/~~Fhpuvw
+auswirkung/~~Fh
 auswische/~~Nh
 auswischen/~~XZ #  auto-added
 auswischst/~~Nh
@@ -86889,7 +86889,7 @@ induktion/~~Nh
 induktive/~~Nh
 industals/~~Nh
 industrie/~~Nh
-industrieprodukt/~~Nhpuvw # compound: industrie + produkt
+industrieprodukt/~~Nh # compound: industrie + produkt
 induziere/~~Nh
 induziert/~~Nh
 inertgas/~~NXh
@@ -127970,7 +127970,7 @@ orthogonal/~~Nh
 orthopädie/~~Fh
 ortlerpass/~~Nh
 ortsadlige/~~Fh
-ortskundig/~~Nh
+ortskundig/~~RJOQRSTUWqh
 orwellsche/~~Fh
 osirisgrab/~~Nh
 osmophobie/~~Fh
@@ -133067,7 +133067,7 @@ akquisiteur/~~Nh
 akquisition/~~Fh
 akrobatisch/~~RJOQRSTUWqh
 aksumitisch/~~Nh
-aktenkundig/~~Nh
+aktenkundig/~~RJOQRSTUWqh
 aktiensplit/~~Nh
 aktinbündel/~~Nh
 aktinhaltig/~~Nh
@@ -142344,7 +142344,7 @@ offenbiotop/~~Nh
 offenburger/~~Nh
 offengelegt/~~Nh
 offenhalten/~~Nh
-offenkundig/~~Nh
+offenkundig/~~RJOQRSTUWqh
 offenlassen/~~Nh
 offenstehen/~~Nh
 offenstände/~~Fh
@@ -154934,7 +154934,7 @@ kriegführend/~~Nh
 kriegsbereit/~~Nh
 kriegshändel/~~Nh
 kriegskomtur/~~Nh
-kriegskundig/~~Nh
+kriegskundig/~~RJOQRSTUWqh
 kriegswillig/~~Nh
 kriminalität/~~Fh
 kriminologie/~~Fh
@@ -155177,7 +155177,7 @@ lampionblume/~~Fh
 lampionumzug/~~Nh
 landeinwärts/~~Nh
 landesintern/~~Nh
-landeskundig/~~Nh
+landeskundig/~~RJOQRSTUWqh
 landesseitig/~~Nh
 landesüblich/~~JOQRSTUWqh
 landgebunden/~~Nh
@@ -155624,7 +155624,7 @@ lutschbeutel/~~Nh
 lutschbonbon/~~Nh
 lutschreflex/~~Nh
 lymphdränage/~~Fh
-länderkundig/~~Nh
+länderkundig/~~RJOQRSTUWqh
 längemessung/~~Fh
 längerwellig/~~Nh
 längsfalzung/~~Fh
@@ -157997,7 +157997,7 @@ rechtsgültig/~~Nh
 rechtshänder/~~Nh
 rechtshändig/~~Nh
 rechtshängig/~~Nh
-rechtskundig/~~Nh
+rechtskundig/~~RJOQRSTUWqh
 rechtslastig/~~Nh
 rechtsläufig/~~Nh
 rechtsschief/~~Nh
@@ -159432,7 +159432,7 @@ sportsüchtig/~~Nh
 sprachbegabt/~~Nh
 sprachfertig/~~Nh
 sprachformal/~~Nh
-sprachkundig/~~Nh
+sprachkundig/~~RJOQRSTUWqh
 sprachlastig/~~Nh
 sprechenließ/~~Nh
 sprecherräte/~~Fh
@@ -176871,7 +176871,7 @@ brailleschrift/~~Nh
 bramarbasieren/~~Nh
 branchengängig/~~Nh
 branchenintern/~~Nh
-branchenkundig/~~Nh
+branchenkundig/~~RJOQRSTUWqh
 branchenüblich/~~JOQRSTUWqh
 brandbekämpfer/~~Nh
 branderangriff/~~Nh
@@ -178881,7 +178881,7 @@ geranienstöcke/~~Fh
 gerechterweise/~~Fh
 gerechtigkeits/~~Nh
 gerichtsintern/~~Nh
-gerichtskundig/~~Nh
+gerichtskundig/~~RJOQRSTUWqh
 geringerwertig/~~Nh
 geringgeachtet/~~JOQRSTUWVg
 geringschätzen/~~Nh
@@ -178926,7 +178926,7 @@ gesellenverein/~~Nh
 gesellschafter/~~Nh
 gesenkschmiede/~~Fh
 gesetzentwürfe/~~Fh
-gesetzeskundig/~~Nh
+gesetzeskundig/~~RJOQRSTUWqh
 gesetzeswidrig/~~Nh
 gesetzlichkeit/~~Fh
 gesetzsammlung/~~Fh
