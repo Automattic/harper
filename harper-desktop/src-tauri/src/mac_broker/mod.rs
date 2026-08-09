@@ -422,6 +422,12 @@ impl OsBroker for MacBroker {
         if bundle_id.is_empty() {
             return Err("Bundle ID cannot be empty.".to_string());
         }
+
+        // Validate the bundle ID to avoid passing malformed inputs to `open -b`.
+        if !super::app_catalog::is_valid_bundle_id(bundle_id) {
+            return Err(format!("Invalid bundle ID: {}", bundle_id));
+        }
+        
         Command::new("open")
             .arg("-b")
             .arg(bundle_id)
