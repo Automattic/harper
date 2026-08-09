@@ -54,6 +54,7 @@ Krankheit/~~Fh # disease, illness
 Krankheiten/~~F # plural of Krankheit
 Kulturgeschichte/~~Fh # cultural history
 Kunst/~~Fh # art
+Kunstlehre/~~Fh # art theory, from hunspell
 Kuration/~~Fh # cure, healing
 Körper/~~Mh # body
 Lebewesen/~~Nh # living being, organism
@@ -52555,6 +52556,7 @@ bedeuteten/~~V # auto-added
 bedeutetet/~~Nh
 bedeutsame/~~Nh
 bedeutung/~~Fh
+bedeutungen/~~F # plural of Bedeutung
 bedeutungs/~~Nh
 bedien/~~Vej # REPLACES bedienen
 bedienende/~~Nh
@@ -125220,6 +125222,7 @@ innerviert/~~Nh
 innewerden/~~Nh
 innewohnen/~~Nh
 innovation/~~Fh
+innovationen/~~F # plural of Innovation
 innovieren/~~Nh
 inoperabel/~~Nh
 inoperable/~~Fh
