@@ -14058,15 +14058,15 @@ neu/~~NJOQRSTUWq #adjective and noun
 alt/~~JOQRSTUWq #adjective old
 Mann/~~Mhpuvw #masculine noun man (nominative)
 Frau/~~Fhpuvw #feminine noun woman (nominative)
-Kind/~~Nhpuvw #neuter noun child (nominative)
-Haus/~~Nhpuvw #neuter noun house (nominative)
+Kind/~~Nh #neuter noun child (nominative)
+Haus/~~Nh #neuter noun house (nominative)
 Buch/~~Nh #neuter noun book (nominative)
 Tisch/~~Mhpuvw #masculine noun table (nominative)
 Stuhl/~~Mhpuvw #masculine noun chair (nominative)
-Wasser/~~Nhpuvw #neuter noun water (nominative)
+Wasser/~~Nh #neuter noun water (nominative)
 Wand/~~Fhpuvw #feminine noun wall (nominative)
 Luft/~~Fhpuvw #feminine noun air (nominative)
-Feuer/~~Nhpuvw #neuter noun fire (nominative)
+Feuer/~~Nh #neuter noun fire (nominative)
 Sitz/~~Mhpuvw #masculine noun seat (nominative)
 Verwaltung/~~Fhpuvw #feminine noun administration (nominative)
 Konzern/~~Mhpuvw #masculine noun corporation (nominative)
@@ -24583,7 +24583,7 @@ eitrig/~~NXh
 eiweiß/~~NXh
 eizelle/~~Nh
 ekele/~~Nh
-ekelig/~~NXh
+ekelig/~~JOQRSTUWqh
 ekeln/~~V # auto-added
 ekelnd/~~Nh
 ekelnde/~~Nh
@@ -26208,7 +26208,7 @@ flucher/~~Mh
 fluches/~~Nh
 fluchs/~~Nh
 flucht/~~NXh
-fluffig/~~NXh
+fluffig/~~JOQRSTUWqh
 flug/~~NXh
 fluges/~~Nh
 flugs/~~Nh
@@ -28750,7 +28750,7 @@ götzen/~~V # auto-added
 gülden/~~V # auto-added
 güldene/~~Nh
 gülle/~~Nh
-gültig/~~NXh
+gültig/~~RJOQRSTUWqh
 gürte/~~Nh
 gürtel/~~Nh
 gürteln/~~V # auto-added
@@ -29641,7 +29641,7 @@ holpere/~~Nh
 holpern/~~Nh
 holpert/~~NXh
 holpre/~~Nh
-holprig/~~NXh
+holprig/~~JOQRSTUWqh
 holt/~~NXh
 holtest/~~Nh
 holtet/~~Nh
@@ -30108,6 +30108,7 @@ igeltet/~~Nh
 igitt/~~Nh
 igle/~~Nh
 iglu/~~Nbh
+Irritabilität/~~Fh
 ihm/~~I # pronoun to him/it (dative)
 ihn/~~Iu # pronoun him (accusative)
 ihnen/~~I # pronoun to them (dative)
@@ -39746,7 +39747,7 @@ sounds/~~Nh
 souper/~~Mh
 soviel/~~Nh
 sowas/~~Nh
-soweit/~~Nh
+soweit/~~RJOQRSTUWqh
 soweto/~~Nh
 sowie/~~C
 sowjet/~~Nh
@@ -116423,7 +116424,7 @@ wieselten/~~V # auto-added
 wiesenart/~~Nh # auto-added
 wiesentyp/~~Nh # auto-added
 wievielt/~~NXh
-wieweit/~~Nh
+wieweit/~~RJOQRSTUWqh
 wiewohl/~~Nh
 wikileaks/~~Nh
 wikimedia/~~Nh
@@ -126996,7 +126997,7 @@ meterweise/~~Fh
 methangase/~~Fh
 methanogen/~~Nh # auto-added
 methanolat/~~Nh
-methodisch/~~Nh
+methodisch/~~RJOQRSTUWqh
 methusalem/~~Nh
 methylamin/~~Nh
 metrolinie/~~Fh
@@ -211488,6 +211489,7 @@ hauptüberlieferungsstrang/~~N
 hautregenerationsfördernd/~~J
 heilerziehungspflegerisch/~~J
 hinterbliebenenversorgung/~~F
+Hinterbliebenenvorsorge/~~Fh
 hinzuverdienstmöglichkeit/~~F
 hybridisierungstemperatur/~~N
 häftlingsselbstverwaltung/~~F
@@ -215544,7 +215546,7 @@ pimpst/~~N
 ruckst/~~N
 ruckte/~~N
 tütest/~~N
-unweit/~~N
+unweit/~~RJOQRSTUWqh
 verweis/~~N
 verlies/~~N
 cellist/~~F
@@ -215590,7 +215592,7 @@ blaffte/~~N
 chillte/~~N
 errätst/~~N
 erzeige/~~N
-gerätst/~~N
+gerätst/~~JOQRSTUWVg
 hijacke/~~N
 kokelte/~~N
 kältest/~~J
