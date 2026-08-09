@@ -3233,6 +3233,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AdvantageOf",
+								"state": true,
+								"label": "Advantage Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AfterAll",
 								"state": true,
 								"label": "After All"
