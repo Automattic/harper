@@ -238,7 +238,7 @@ impl ExprLinter for AvoidCurses {
             span,
             lint_kind: LintKind::WordChoice,
             suggestions,
-            message: "Try to avoid offensive language.".to_string(),
+            message: "Try to avoid offensive language.".to_owned(),
             ..Default::default()
         })
     }

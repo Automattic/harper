@@ -40,7 +40,7 @@ impl ExprLinter for ThriveOn {
                 span.get_content(src),
             )],
             message: "Consider using `thrive on` instead of `thrive off` or `thrive off of`."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

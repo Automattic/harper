@@ -7,9 +7,8 @@ use tokio::net::TcpListener;
 mod backend;
 mod config;
 mod diagnostics;
-mod dictionary_io;
 mod document_state;
-mod git_commit_parser;
+
 mod ignored_lints_io;
 mod io_utils;
 mod pos_conv;

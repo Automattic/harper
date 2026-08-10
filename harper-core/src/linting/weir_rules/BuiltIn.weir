@@ -1,7 +1,19 @@
-expr main [(in built), (in-built), (built in)]
+expr safeBefore [AUX, DET, ADP, PUNCT, VERB]
+expr modifierHead [NOUN, (ADJ NOUN), (ADV ADJ NOUN), (PROPN NOUN), (PROPN PROPN NOUN)]
+expr builtInModifier <(@safeBefore built in @modifierHead), (built in)>
+expr main [(in built), (in-built), @builtInModifier]
 
 let message "Prefer the hyphenated compound `built-in`."
 let description "English convention treats `built-in` as a single, attributive adjective—meaning something integrated from the outset—whereas other forms like `in built` are nonstandard and can feel awkward to readers."
 let becomes "built-in"
 let kind "Punctuation"
 
+test "The app has built in support." "The app has built-in support."
+test "This is a built in feature." "This is a built-in feature."
+test "The tool provides built in Rust support." "The tool provides built-in Rust support."
+test "The device has in-built storage." "The device has built-in storage."
+
+allows "The Mixed Clan Jetty was built in 1962."
+allows "The software was built in Rust."
+allows "The team built in support for plugins."
+allows "The feature is built in."

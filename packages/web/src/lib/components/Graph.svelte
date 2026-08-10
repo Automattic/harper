@@ -14,7 +14,7 @@ for (let val of data.values()) {
 	}
 }
 
-let scaledData = new Map();
+let scaledData = new Map<string, number>();
 
 for (let [key, val] of data.entries()) {
 	scaledData.set(key, val / maxW);
@@ -32,18 +32,27 @@ function expand(_node: HTMLElement, { width, duration }: { width: number; durati
 }
 </script>
 
-<div class="flex flex-col justify-start w-full h-full">
+<div class="mt-auto flex flex-col gap-3">
 	{#each scaledData as [name, width] (name)}
 		<IntersectionObserver element={els[name]} let:intersecting>
 			<div bind:this={els[name]}>
 				{#if intersecting}
-					<div class="relative w-full h-full">
-						{name} - {width * maxW} ms
-						<div
-							class="rounded transition-all mb-4 p-2 font-bold bg-gray-200"
-							in:expand={{ width, duration: width * maxW }}
-							style={`width: ${width * 100}%;`}
-						></div>
+					<div
+						class='grid grid-cols-[1fr_3.5rem] items-center gap-x-3 gap-y-2 text-xs [font-family:"JetBrains_Mono",monospace] min-[421px]:grid-cols-[6.2rem_1fr_4rem]'
+					>
+						<span class="whitespace-nowrap text-current">{name}</span>
+						<b
+							class="col-span-full row-start-2 h-2 overflow-hidden rounded-full bg-white/10 dark:bg-black/10 min-[421px]:col-auto min-[421px]:row-auto"
+						>
+							<i
+								class={name === 'Harper'
+									? 'block h-full rounded-full bg-primary'
+									: 'block h-full rounded-full bg-white/20 dark:bg-black/20'}
+								in:expand={{ width, duration: width * maxW }}
+								style={`width: ${width * 100}%;`}
+							></i>
+						</b>
+						<em class="text-right not-italic text-white/75 dark:text-black/75">{width * maxW} ms</em>
 					</div>
 				{/if}
 			</div>

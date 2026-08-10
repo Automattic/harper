@@ -38,7 +38,7 @@ impl ExprLinter for TryOnesLuck {
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: ws_out_span,
-            message: "`Try out` is a different idiom than `try one's luck`".to_string(),
+            message: "`Try out` is a different idiom than `try one's luck`".to_owned(),
             suggestions: vec![Suggestion::Remove],
             ..Default::default()
         })

@@ -96,6 +96,36 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} deduplicates no more lints than raw lint output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = await linter.lint(source);
+		const explicitLints = await linter.lint(source, { dedup: true });
+		const rawLints = await linter.lint(source, { dedup: false });
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
+	test(`${linterName} deduplicates no more lints than raw organized output`, async () => {
+		const linter = new Linter({ binary });
+
+		const source = 'outstandin g';
+		const defaultLints = Object.values(await linter.organizedLints(source)).flat();
+		const explicitLints = Object.values(
+			await linter.organizedLints(source, { dedup: true }),
+		).flat();
+		const rawLints = Object.values(await linter.organizedLints(source, { dedup: false })).flat();
+
+		expect(explicitLints.length).toBe(defaultLints.length);
+		expect(defaultLints.length).toBeLessThanOrEqual(rawLints.length);
+
+		await linter.dispose();
+	}, 120000);
+
 	test(`${linterName} detects repeated words with multiple synchronous requests`, async () => {
 		const linter = new Linter({ binary });
 
@@ -143,6 +173,34 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 
 		expect(result).toBeTypeOf('boolean');
 		expect(result).toBe(false);
+
+		await linter.dispose();
+	});
+
+	test(`${linterName} can ignore non-English text in lint outputs`, async () => {
+		const linter = new Linter({ binary });
+		const source =
+			'En la mañana, como a dish de los huevos, un poquito of tocino, y a lot of leche.';
+
+		const defaultLints = await linter.lint(source, { language: 'plaintext' });
+		const englishOnlyLints = await linter.lint(source, {
+			language: 'plaintext',
+			isolateEnglish: true,
+		});
+		const defaultOrganizedLints = Object.values(
+			await linter.organizedLints(source, { language: 'plaintext' }),
+		).flat();
+		const englishOnlyOrganizedLints = Object.values(
+			await linter.organizedLints(source, {
+				language: 'plaintext',
+				isolateEnglish: true,
+			}),
+		).flat();
+
+		expect(defaultLints.length).toBeGreaterThan(0);
+		expect(defaultOrganizedLints.length).toBeGreaterThan(0);
+		expect(englishOnlyLints).toHaveLength(0);
+		expect(englishOnlyOrganizedLints).toHaveLength(0);
 
 		await linter.dispose();
 	});
@@ -332,6 +390,22 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		const secondRound = await linter.lint(source);
 
 		expect(secondRound.length).toBeLessThan(firstRound.length);
+		await linter.dispose();
+	});
+
+	test(`${linterName} can ignore multiple lints`, async () => {
+		const linter = new Linter({ binary });
+		const source = 'This is an test of exprting lints.';
+
+		const firstRound = await linter.lint(source);
+
+		expect(firstRound.length).toBeGreaterThanOrEqual(2);
+
+		await linter.ignoreLints(source, firstRound);
+
+		const secondRound = await linter.lint(source);
+
+		expect(secondRound.length).toBe(0);
 		await linter.dispose();
 	});
 

@@ -1,6 +1,6 @@
 <script lang="ts">
 import { createEventDispatcher } from 'svelte';
-import type { AnchorHTMLAttributes, ButtonHTMLAttributes } from 'svelte/elements';
+import type { HTMLAnchorAttributes, HTMLButtonAttributes } from 'svelte/elements';
 import Link from './Link.svelte';
 
 type ButtonSize = 'xs' | 'sm' | 'md' | 'lg';
@@ -10,10 +10,10 @@ export let size: ButtonSize = 'md';
 export let color: ButtonColor | string = 'primary';
 export let textColor: string | undefined = undefined;
 export let pill = false;
-export let href: AnchorHTMLAttributes['href'] = undefined;
-export let target: AnchorHTMLAttributes['target'] = undefined;
-export let rel: AnchorHTMLAttributes['rel'] = undefined;
-export let type: ButtonHTMLAttributes['type'] = 'button';
+export let href: HTMLAnchorAttributes['href'] = undefined;
+export let target: HTMLAnchorAttributes['target'] = undefined;
+export let rel: HTMLAnchorAttributes['rel'] = undefined;
+export let type: HTMLButtonAttributes['type'] = 'button';
 export let disabled: boolean | undefined = undefined;
 // Alias for the `class` attribute since `class` is a reserved TS keyword
 export let className: string | undefined = undefined;
@@ -61,7 +61,7 @@ $: inlineStyle =
 				.join(' ')
 		: undefined;
 
-function handleClick(event: MouseEvent) {
+function handleClick(event: Event) {
 	if (disabled) {
 		event.preventDefault();
 		event.stopPropagation();

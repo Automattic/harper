@@ -32,6 +32,7 @@ pub fn lint_group() -> LintGroup {
         "InMyHumbleOpinion"      => ("imho", &["in my humble opinion", "in my honest opinion"]),
         "InMyOpinion"            => ("imo", &["in my opinion"]),
         "InRealLife"             => ("irl", &["in real life"]),
+        "LetMeKnow"              => ("lmk", &["let me know"]),
         "NeverMind"              => ("nvm", &["never mind"]),
         "OhMyGod"                => ("omg", &["oh my god"]),
         "PleaseTakeALook"        => ("ptal", &["please take a look"]),
@@ -228,6 +229,15 @@ mod tests {
             "iiuc build caching in hol4 works at the file level",
             lint_group(),
             "if i understand correctly build caching in hol4 works at the file level",
+        );
+    }
+
+    #[test]
+    fn corrects_lmk() {
+        assert_suggestion_result(
+            "Lmk if you need any debug logs.",
+            lint_group(),
+            "Let me know if you need any debug logs.",
         );
     }
 }

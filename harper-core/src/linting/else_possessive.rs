@@ -23,7 +23,7 @@ impl Default for ElsePossessive {
             "everyone",
             "nobody",
         ])
-        .or(SequenceExpr::aco("no").then_whitespace().t_aco("one"));
+        .or(SequenceExpr::word_seq(&["no", "one"]));
 
         let pattern = SequenceExpr::with(pronouns)
             .then_whitespace()

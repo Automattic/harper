@@ -76,7 +76,7 @@ impl ExprLinter for PronounKnew {
                 "knew".chars().collect(),
                 typo_text,
             )],
-            message: "Did you mean “knew” (the past tense of “know”)?".to_string(),
+            message: "Did you mean “knew” (the past tense of “know”)?".to_owned(),
             priority: 31,
         })
     }

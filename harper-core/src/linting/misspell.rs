@@ -58,7 +58,7 @@ impl ExprLinter for Misspell {
             span,
             lint_kind: LintKind::BoundaryError,
             suggestions,
-            message: "Write `misspell` and its inflections as a single word.".to_string(),
+            message: "Write `misspell` and its inflections as a single word.".to_owned(),
             priority: 63,
         })
     }
