@@ -31,7 +31,7 @@ use std::{
     time::Instant,
 };
 
-use crate::config::{Config, Integration};
+use crate::config::Integration;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::ActionableLint;
 
