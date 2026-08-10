@@ -1039,7 +1039,7 @@
 >
 #
 > “ You    see    I       think  everything’s terrible anyhow , ” she  went on  in        a   convinced way    .
-# . ISgPl+ NSg/VB ISg/#r+ NSg/VB NSg$         J        J      . . ISg+ VPt  J/P NPr/J/R/P D/P VP/J      NSg/J+ .
+# . ISgPl+ NSg/VB ISg/#r+ NSg/VB NSg$         J        R      . . ISg+ VPt  J/P NPr/J/R/P D/P VP/J      NSg/J+ .
 > “ Everybody thinks so          — the most         advanced people  . And  I       know . I’ve been   everywhere
 # . NSg/I+    NPl/V3 NSg/I/J/R/C . D   NSg/I/J/R/Dq VP/J+    NPl/VB+ . VB/C ISg/#r+ VB   . K    VLPp/B Nᴹ/R
 > and  seen    everything and  done      everything . ” Her     eyes    flashed around her     in        a
@@ -3011,7 +3011,7 @@
 >
 #
 > “ Anyhow , he       gives  large  parties , ” said Jordan , changing the subject   with an
-# . J      . NPr/ISg+ NPl/V3 NSg/J+ NPl/V3+ . . VP/J NPr+   . Nᴹ/Vg/J  D   NSg/VB/J+ P    D/P
+# . R      . NPr/ISg+ NPl/V3 NSg/J+ NPl/V3+ . . VP/J NPr+   . Nᴹ/Vg/J  D   NSg/VB/J+ P    D/P
 > urban distaste for   the concrete   . “ And  I       like         large  parties . They’re so          intimate .
 # NPr/J NSg/VB   R/C/P D+  N🅪Sg/VB/J+ . . VB/C ISg/#r+ NSg/VB/J/C/P NSg/J+ NPl/V3+ . K       NSg/I/J/R/C NSg/VB/J .
 > At    small     parties there isn’t   any     privacy . ”
@@ -3877,7 +3877,7 @@
 > “ Look   here , old    sport   , ” he       broke     out          surprisingly , “ what’s your opinion of me       ,
 # . NSg/VB R    . NSg/J+ NSg/VB+ . . NPr/ISg+ NSg/VPt/J NSg/VB/J/R/P R            . . K      D$+  N🅪Sg    P  NPr/ISg+ .
 > anyhow ? ”
-# J      . .
+# R      . .
 >
 #
 > A    little      overwhelmed , I       began the generalized evasions which that     question
@@ -4471,7 +4471,7 @@
 >
 #
 > “ Who    is  he       , anyhow , an   actor ? ”
-# . NPr/I+ VL3 NPr/ISg+ . J      . D/P+ NSg+  . .
+# . NPr/I+ VL3 NPr/ISg+ . R      . D/P+ NSg+  . .
 >
 #
 > “ No       . ”
@@ -4551,7 +4551,7 @@
 >
 #
 > “ How’ve you    been   , anyhow ? ” demanded Tom    of me       . “ How’d you    happen to come       up         this
-# . ?      ISgPl+ VLPp/B . J      . . VP/J     NPr/VB P  NPr/ISg+ . . K     ISgPl+ VB     P  NSg/VBPp/P NSg/VB/J/P I/Ddem
+# . ?      ISgPl+ VLPp/B . R      . . VP/J     NPr/VB P  NPr/ISg+ . . K     ISgPl+ VB     P  NSg/VBPp/P NSg/VB/J/P I/Ddem
 > far      to eat ? ”
 # NSg/VB/J P  VB  . .
 >
@@ -6267,7 +6267,7 @@
 > He       was  profoundly affected by the fact that      Tom     was  there . But     he       would be
 # NPr/ISg+ VLPt R          NSg/VP/J P  D+  NSg+ I/C/Ddem+ NPr/VB+ VLPt R     . NSg/C/P NPr/ISg+ VXB   NSg/VLXB
 > uneasy   anyhow until he       had given       them     something , realizing         in        a    vague     way    that
-# NSg/VB/J J      C/P   NPr/ISg+ VP  NSg/VPp/J/P NSg/IPl+ NSg/I/J+  . Nᴹ/Vg/J/Comm/NoAm NPr/J/R/P D/P+ NSg/VB/J+ NSg/J+ I/C/Ddem+
+# NSg/VB/J R      C/P   NPr/ISg+ VP  NSg/VPp/J/P NSg/IPl+ NSg/I/J+  . Nᴹ/Vg/J/Comm/NoAm NPr/J/R/P D/P+ NSg/VB/J+ NSg/J+ I/C/Ddem+
 > that      was  all          they came      for   . Mr   . Sloane wanted nothing  . A    lemonade ? No       , thanks  . A
 # I/C/Ddem+ VLPt NSg/I/J/C/Dq IPl+ NSg/VPt/P R/C/P . NSg+ . NPr    VP/J   NSg/I/J+ . D/P+ N🅪Sg+    . NSg/Dq/P . NPl/V3+ . D/P+
 > little      champagne  ? Nothing  at    all          , thanks  . . . . I’m sorry    — — —
@@ -6571,7 +6571,7 @@
 >
 #
 > “ Well       , I       liked him  anyhow . ”
-# . NSg/VB/J/R . ISg/#r+ VP/J  ISg+ J      . .
+# . NSg/VB/J/R . ISg/#r+ VP/J  ISg+ R      . .
 >
 #
 > “ I’d a   little     rather     not     be       the polo  player , ” said Tom     pleasantly , “ I’d rather
@@ -6721,7 +6721,7 @@
 >
 #
 > “ Who    is  this   Gatsby anyhow ? ” demanded Tom     suddenly . “ Some     big   bootlegger ? ”
-# . NPr/I+ VL3 I/Ddem NPr    J      . . VP/J     NPr/VB+ R        . . I/J/R/Dq NSg/J NSg        . .
+# . NPr/I+ VL3 I/Ddem NPr    R      . . VP/J     NPr/VB+ R        . . I/J/R/Dq NSg/J NSg        . .
 >
 #
 > “ Where’d you    hear that      ? ” I       inquired .
@@ -7491,7 +7491,7 @@
 >
 #
 > “ Come       on  ! ” His     temper     cracked a   little     . “ What’s the matter   , anyhow ? If    we’re
-# . NSg/VBPp/P J/P . . ISg/D$+ NSg/VB/JC+ VP/J    D/P NPr/I/J/Dq . . K      D+  N🅪Sg/VB+ . J      . NSg/C K
+# . NSg/VBPp/P J/P . . ISg/D$+ NSg/VB/JC+ VP/J    D/P NPr/I/J/Dq . . K      D+  N🅪Sg/VB+ . R      . NSg/C K
 > going   to town , let’s start  . ”
 # Nᴹ/Vg/J P  NSg  . NSg$  NSg/VB . .
 >
@@ -8277,7 +8277,7 @@
 >
 #
 > “ What   kind  of a    row     are you    trying  to cause     in        my  house   anyhow ? ”
-# . NSg/I+ NSg/J P  D/P+ NSg/VB+ VLB ISgPl+ Nᴹ/Vg/J P  N🅪Sg/VB/C NPr/J/R/P D$+ NPr/VB+ J      . .
+# . NSg/I+ NSg/J P  D/P+ NSg/VB+ VLB ISgPl+ Nᴹ/Vg/J P  N🅪Sg/VB/C NPr/J/R/P D$+ NPr/VB+ R      . .
 >
 #
 > They were out          in        the open     at    last     and  Gatsby was  content    .
@@ -8597,7 +8597,7 @@
 >
 #
 > “ Who    are you    , anyhow ? ” broke     out          Tom     . “ You’re one     of that     bunch   that      hangs
-# . NPr/I+ VLB ISgPl+ . J      . . NSg/VPt/J NSg/VB/J/R/P NPr/VB+ . . K      NSg/I/J P  I/C/Ddem NSg/VB+ I/C/Ddem+ NPl/V3
+# . NPr/I+ VLB ISgPl+ . R      . . NSg/VPt/J NSg/VB/J/R/P NPr/VB+ . . K      NSg/I/J P  I/C/Ddem NSg/VB+ I/C/Ddem+ NPl/V3
 > around with Meyer Wolfshiem — that      much         I       happen to know . I’ve made a   little
 # J/P    P    NPr   ?         . I/C/Ddem+ NSg/I/J/R/Dq ISg/#r+ VB     P  VB   . K    VP   D/P NPr/I/J/Dq
 > investigation into your affairs — and  I’ll carry  it       further to - morrow . ”
@@ -9355,7 +9355,7 @@
 >
 #
 > “ Don’t tell   me       , old   sport   . ” He       winced . “ Anyhow — Daisy stepped on  it       . I       tried to
-# . VXB   NPr/VB NPr/ISg+ . NSg/J NSg/VB+ . . NPr/ISg+ VP/J   . . J      . NPr+  J       J/P NPr/ISg+ . ISg/#r+ VP/J  P
+# . VXB   NPr/VB NPr/ISg+ . NSg/J NSg/VB+ . . NPr/ISg+ VP/J   . . R      . NPr+  J       J/P NPr/ISg+ . ISg/#r+ VP/J  P
 > make   her     stop   , but     she  couldn’t , so          I       pulled on  the emergency brake  . Then      she
 # NSg/VB ISg/D$+ NSg/VB . NSg/C/P ISg+ VXB      . NSg/I/J/R/C ISg/#r+ VP/J   J/P D   N🅪Sg+     NSg/VB . NSg/J/R/C ISg+
 > fell      over    into my  lap       and  I       drove   on  .
@@ -9385,7 +9385,7 @@
 >
 #
 > “ All           night    , if    necessary . Anyhow , till       they all          go       to bed       . ”
-# . NSg/I/J/C/Dq+ N🅪Sg/VB+ . NSg/C NSg/J     . J      . NSg/VB/C/P IPl+ NSg/I/J/C/Dq NSg/VB/J P  NSg/VBP/J . .
+# . NSg/I/J/C/Dq+ N🅪Sg/VB+ . NSg/C NSg/J     . R      . NSg/VB/C/P IPl+ NSg/I/J/C/Dq NSg/VB/J P  NSg/VBP/J . .
 >
 #
 > A   new   point  of view    occurred to me       . Suppose Tom     found  out          that     Daisy had been
