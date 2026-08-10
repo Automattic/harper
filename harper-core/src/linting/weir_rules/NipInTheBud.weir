@@ -1,0 +1,30 @@
+# Corrects the eggcorn `nip it in the butt` -> `nip it in the bud`.
+expr nipverbs [nip, nips, nipped, nipping]
+expr main <(@nipverbs [it, this, that, them] in the butt), butt>
+
+let message "The idiom is `nip it in the bud`, from pruning plants."
+let description "Corrects the eggcorn `in the butt` to `in the bud` in the idiom `nip it in the bud`."
+let kind "Eggcorn"
+let becomes "bud"
+let strategy "MatchCase"
+
+# True positives
+
+test "Nip this problem in the butt early." "Nip this problem in the butt early."
+test "Let's nip it in the butt." "Let's nip it in the bud."
+test "We nipped that in the butt." "We nipped that in the bud."
+test "Nip this in the butt now." "Nip this in the bud now."
+test "They nip them in the butt fast." "They nip them in the bud fast."
+test "He nips it in the butt every time." "He nips it in the bud every time."
+test "Nipping it in the butt saved us." "Nipping it in the bud saved us."
+test "NIP IT IN THE BUTT." "NIP IT IN THE BUD."
+test "I nipped it in the butt yesterday." "I nipped it in the bud yesterday."
+test "We should nip that in the butt." "We should nip that in the bud."
+
+# False positives / true negatives
+
+allows "Let's nip it in the bud."
+allows "He kicked the ball and hit him in the butt."
+allows "The dog nipped him in the butt."
+allows "She fell and landed on her butt."
+allows "The comedian made a joke about the butt of the gun."
