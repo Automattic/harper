@@ -3943,6 +3943,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "AccuseOf",
+								"state": true,
+								"label": "Accuse of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
 								"label": "Ahead And"
