@@ -1,0 +1,29 @@
+# Corrects `phase me` -> `faze me` (to disturb).
+expr main <(phase [me, him, her, us, you, one, anyone, anybody]), phase>
+
+let message "Use `faze` (to disturb) rather than `phase` here."
+let description "Corrects the confusion of `phase` with `faze` when it means to disturb someone."
+let kind "Grammar"
+let becomes "faze"
+let strategy "MatchCase"
+
+# True positives
+
+test "That didn't phase me at all." "That didn't faze me at all."
+test "Nothing could phase him." "Nothing could faze him."
+test "The setback did not phase her." "The setback did not faze her."
+test "It won't phase us one bit." "It won't faze us one bit."
+test "Loud noises never phase you." "Loud noises never faze you."
+test "The criticism didn't phase me." "The criticism didn't faze me."
+test "Deadlines don't phase anyone here." "Deadlines don't faze anyone here."
+test "Failure doesn't phase him anymore." "Failure doesn't faze him anymore."
+test "IT WILL NOT PHASE ME." "IT WILL NOT FAZE ME."
+test "Pressure rarely phase you." "Pressure rarely faze you."
+
+# False positives / true negatives
+
+allows "That didn't faze me at all."
+allows "They will phase out the old API."
+allows "We plan to phase in the new rules."
+allows "Engineers will phase them out next year."
+allows "The moon enters a new phase tonight."

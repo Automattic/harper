@@ -3653,6 +3653,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PhaseFaze",
+								"state": true,
+								"label": "Phase Faze"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PluralWrongWordOfPhrase",
 								"state": true,
 								"label": "Plural Wrong Word Of Phrase"
