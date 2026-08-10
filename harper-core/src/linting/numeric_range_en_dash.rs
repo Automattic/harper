@@ -1,7 +1,10 @@
-use crate::Token;
-use crate::expr::{Expr, SequenceExpr};
-use crate::linting::expr_linter::Chunk;
-use crate::punctuation::Punctuation;
+use crate::{
+    Token,
+    char_string::CharStringExt,
+    expr::{Expr, SequenceExpr},
+    linting::expr_linter::Chunk,
+    punctuation::Punctuation,
+};
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
 
@@ -40,6 +43,14 @@ fn is_chained_numeric_form(context: Option<(&[Token], &[Token])>) -> bool {
     preceded_by_numeric_dash || followed_by_dash_numeric
 }
 
+fn is_cve(context: Option<(&[Token], &[Token])>, source: &[char]) -> bool {
+    context.is_some_and(|(before, _)| {
+        matches!(before, [.., word, hy]
+            if hy.kind.is_hyphen() && word.kind.is_word() && word.get_ch(source).eq_ch(&['c', 'v', 'e'])
+        )
+    })
+}
+
 pub struct NumericRangeEnDash {
     expr: SequenceExpr,
 }
@@ -49,10 +60,7 @@ impl Default for NumericRangeEnDash {
         // Match isolated numeric ranges like `12-14` or `3—5`.
         // The context check below skips dates, version chains, and similar
         // multipart numeric forms that should keep their existing separators.
-        let pattern = SequenceExpr::default()
-            .then_number()
-            .then(is_target_dash)
-            .then_number();
+        let pattern = SequenceExpr::number().then(is_target_dash).then_number();
 
         Self { expr: pattern }
     }
@@ -68,10 +76,14 @@ impl ExprLinter for NumericRangeEnDash {
     fn match_to_lint_with_context(
         &self,
         matched_tokens: &[Token],
-        _source: &[char],
+        source: &[char],
         context: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         if is_chained_numeric_form(context) {
+            return None;
+        }
+
+        if is_cve(context, source) {
             return None;
         }
 
@@ -217,5 +229,10 @@ mod tests {
             "The code spans 12-14-16 in the export.",
             NumericRangeEnDash::default(),
         );
+    }
+
+    #[test]
+    fn dont_flag_cve_3580() {
+        assert_no_lints("CVE-2017-5753", NumericRangeEnDash::default());
     }
 }

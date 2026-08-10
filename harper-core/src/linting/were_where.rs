@@ -26,16 +26,12 @@ impl Default for WereWhere {
         // "you where" alone is ambiguous ("I'll show you where to go"), so only flag
         // it when followed by a verb, auxiliary, or adjective — confirming a verb slot.
         // e.g. "you where going" → "you were going"
-        let you_where_verb = SequenceExpr::aco("you")
-            .t_ws()
-            .t_aco("where")
+        let you_where_verb = SequenceExpr::word_seq(&["you", "where"])
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
         // "where you ..." can be a typo for "were you ..." when it starts a question.
-        let where_you_verb = SequenceExpr::aco("where")
-            .t_ws()
-            .t_aco("you")
+        let where_you_verb = SequenceExpr::word_seq(&["where", "you"])
             .t_ws()
             .then(UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::ADJ]));
 
@@ -104,7 +100,7 @@ impl ExprLinter for WereWhere {
                     "were",
                     tok.span.get_content(src),
                 )],
-                message: "It looks like this is a typo, did you mean `were`?".to_string(),
+                message: "It looks like this is a typo, did you mean `were`?".to_owned(),
                 ..Default::default()
             })
         } else {
@@ -115,7 +111,7 @@ impl ExprLinter for WereWhere {
                     "where",
                     tok.span.get_content(src),
                 )],
-                message: "It looks like this is a typo, did you mean `where`?".to_string(),
+                message: "It looks like this is a typo, did you mean `where`?".to_owned(),
                 ..Default::default()
             })
         }
@@ -128,6 +124,9 @@ impl ExprLinter for WereWhere {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(WereWhere, WereWhere, WereWhere::default());
     use super::WereWhere;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
@@ -137,7 +136,7 @@ mod tests {
     fn fix_they_where() {
         assert_suggestion_result(
             "They where going to the store.",
-            WereWhere::default(),
+            test_linter(),
             "They were going to the store.",
         );
     }
@@ -146,7 +145,7 @@ mod tests {
     fn fix_we_where() {
         assert_suggestion_result(
             "We where right about that.",
-            WereWhere::default(),
+            test_linter(),
             "We were right about that.",
         );
     }
@@ -155,7 +154,7 @@ mod tests {
     fn fix_they_where_happy() {
         assert_suggestion_result(
             "They where happy with the result.",
-            WereWhere::default(),
+            test_linter(),
             "They were happy with the result.",
         );
     }
@@ -166,7 +165,7 @@ mod tests {
     fn fix_you_where_going() {
         assert_suggestion_result(
             "you where going in the right direction.",
-            WereWhere::default(),
+            test_linter(),
             "you were going in the right direction.",
         );
     }
@@ -175,7 +174,7 @@ mod tests {
     fn fix_you_where_right() {
         assert_suggestion_result(
             "you where right about that.",
-            WereWhere::default(),
+            test_linter(),
             "you were right about that.",
         );
     }
@@ -186,7 +185,7 @@ mod tests {
     fn fix_know_were_they() {
         assert_suggestion_result(
             "Do you know were they went?",
-            WereWhere::default(),
+            test_linter(),
             "Do you know where they went?",
         );
     }
@@ -195,7 +194,7 @@ mod tests {
     fn fix_forgot_were_i() {
         assert_suggestion_result(
             "I forgot were I put my keys.",
-            WereWhere::default(),
+            test_linter(),
             "I forgot where I put my keys.",
         );
     }
@@ -204,7 +203,7 @@ mod tests {
     fn fix_found_were_the() {
         assert_suggestion_result(
             "I found were the book was.",
-            WereWhere::default(),
+            test_linter(),
             "I found where the book was.",
         );
     }
@@ -213,7 +212,7 @@ mod tests {
     fn fix_go_were_they() {
         assert_suggestion_result(
             "Go were they tell you.",
-            WereWhere::default(),
+            test_linter(),
             "Go where they tell you.",
         );
     }
@@ -225,7 +224,7 @@ mod tests {
         // No following-word check needed for "we/they" — the pair alone is enough
         assert_suggestion_result(
             "We where almost done with the task.",
-            WereWhere::default(),
+            test_linter(),
             "We were almost done with the task.",
         );
     }
@@ -234,7 +233,7 @@ mod tests {
     fn fix_they_where_able() {
         assert_suggestion_result(
             "They where able to fix the issue in time.",
-            WereWhere::default(),
+            test_linter(),
             "They were able to fix the issue in time.",
         );
     }
@@ -243,7 +242,7 @@ mod tests {
     fn fix_we_where_told() {
         assert_suggestion_result(
             "We where told about the change last week.",
-            WereWhere::default(),
+            test_linter(),
             "We were told about the change last week.",
         );
     }
@@ -252,7 +251,7 @@ mod tests {
     fn fix_they_where_supposed() {
         assert_suggestion_result(
             "They where supposed to be here by now.",
-            WereWhere::default(),
+            test_linter(),
             "They were supposed to be here by now.",
         );
     }
@@ -264,7 +263,7 @@ mod tests {
         // "supposed" is ADJ — confirms verb slot
         assert_suggestion_result(
             "You where supposed to call me.",
-            WereWhere::default(),
+            test_linter(),
             "You were supposed to call me.",
         );
     }
@@ -274,7 +273,7 @@ mod tests {
         // "asked" past participle used as VERB
         assert_suggestion_result(
             "you where asked to leave the room.",
-            WereWhere::default(),
+            test_linter(),
             "you were asked to leave the room.",
         );
     }
@@ -283,7 +282,7 @@ mod tests {
     fn fix_where_you_able() {
         assert_suggestion_result(
             "Where you able to make forward progress here?",
-            WereWhere::default(),
+            test_linter(),
             "Were you able to make forward progress here?",
         );
     }
@@ -294,7 +293,7 @@ mod tests {
     fn fix_remember_were_i() {
         assert_suggestion_result(
             "Do you remember were I left the keys?",
-            WereWhere::default(),
+            test_linter(),
             "Do you remember where I left the keys?",
         );
     }
@@ -303,7 +302,7 @@ mod tests {
     fn fix_check_were_the() {
         assert_suggestion_result(
             "Check were the error occurred.",
-            WereWhere::default(),
+            test_linter(),
             "Check where the error occurred.",
         );
     }
@@ -312,7 +311,7 @@ mod tests {
     fn fix_asked_were_he() {
         assert_suggestion_result(
             "She asked were he lived.",
-            WereWhere::default(),
+            test_linter(),
             "She asked where he lived.",
         );
     }
@@ -321,7 +320,7 @@ mod tests {
     fn fix_know_were_the_bug() {
         assert_suggestion_result(
             "I know were the bug is.",
-            WereWhere::default(),
+            test_linter(),
             "I know where the bug is.",
         );
     }
@@ -330,7 +329,7 @@ mod tests {
     fn fix_find_were_it() {
         assert_suggestion_result(
             "Find were it crashed.",
-            WereWhere::default(),
+            test_linter(),
             "Find where it crashed.",
         );
     }
@@ -339,70 +338,70 @@ mod tests {
 
     #[test]
     fn no_flag_where_they_are() {
-        assert_no_lints("Do you know where they are going?", WereWhere::default());
+        assert_no_lints("Do you know where they are going?", test_linter());
     }
 
     #[test]
     fn no_flag_they_were_going() {
-        assert_no_lints("They were going to the store.", WereWhere::default());
+        assert_no_lints("They were going to the store.", test_linter());
     }
 
     #[test]
     fn no_flag_we_were_right() {
-        assert_no_lints("We were right about that.", WereWhere::default());
+        assert_no_lints("We were right about that.", test_linter());
     }
 
     #[test]
     fn no_flag_show_you_where() {
         // "you" before "where" is legitimate — followed by "to" (PART), not a verb
-        assert_no_lints("I'll show you where to go.", WereWhere::default());
+        assert_no_lints("I'll show you where to go.", test_linter());
     }
 
     #[test]
     fn no_flag_tell_you_where_the() {
         // "you where" followed by DET — not flagged (DET is not VERB/AUX/ADJ)
-        assert_no_lints("I'll tell you where the exit is.", WereWhere::default());
+        assert_no_lints("I'll tell you where the exit is.", test_linter());
     }
 
     #[test]
     fn no_flag_they_were_wrong() {
         // "they" (PRON) precedes "were", so VERB + "were" pattern does not fire
-        assert_no_lints("I think they were wrong.", WereWhere::default());
+        assert_no_lints("I think they were wrong.", test_linter());
     }
 
     #[test]
     fn no_flag_confirmed_they_were() {
         // "they" sits between "confirmed" and "were" — not adjacent, no match
-        assert_no_lints("I confirmed they were correct.", WereWhere::default());
+        assert_no_lints("I confirmed they were correct.", test_linter());
     }
 
     #[test]
     fn no_flag_found_they_were() {
-        assert_no_lints("He found they were missing.", WereWhere::default());
+        assert_no_lints("He found they were missing.", test_linter());
     }
 
     #[test]
     fn no_flag_where_were_they() {
         // "Where" is an adverb or subordinating conjunction here, not VERB — the were→where pattern does not fire
-        assert_no_lints("Where were they going?", WereWhere::default());
+        assert_no_lints("Where were they going?", test_linter());
     }
 
     #[test]
     fn no_flag_showed_me_where() {
         // Object pronoun "me" sits between "showed" and "where" — no direct adjacency
-        assert_no_lints("He showed me where the exit was.", WereWhere::default());
+        assert_no_lints("He showed me where the exit was.", test_linter());
     }
 
     #[test]
     fn no_flag_where_you_go() {
-        assert_no_lints("I wonder where you go from here.", WereWhere::default());
+        assert_no_lints("I wonder where you go from here.", test_linter());
     }
 
     #[test]
     fn no_flag_where_you_can_customize() {
         assert_no_lints(
             "Click the menu item where you can customize the settings.",
-            WereWhere::default(),
+            test_linter(),
         );
     }
 
@@ -410,7 +409,7 @@ mod tests {
     fn no_flag_where_you_allocate() {
         assert_no_lints(
             "Use the panel where you allocate resources for the task.",
-            WereWhere::default(),
+            test_linter(),
         );
     }
 
@@ -421,7 +420,7 @@ mod tests {
     fn fix_you_where_the_only_one() {
         assert_suggestion_result(
             "you where the only one there.",
-            WereWhere::default(),
+            test_linter(),
             "you were the only one there.",
         );
     }
@@ -431,7 +430,7 @@ mod tests {
     fn fix_where_they_going_sentence_start() {
         assert_suggestion_result(
             "Where they going to the party?",
-            WereWhere::default(),
+            test_linter(),
             "Were they going to the party?",
         );
     }
@@ -441,7 +440,7 @@ mod tests {
     fn fix_showed_me_were() {
         assert_suggestion_result(
             "He showed me were the exit was.",
-            WereWhere::default(),
+            test_linter(),
             "He showed me where the exit was.",
         );
     }

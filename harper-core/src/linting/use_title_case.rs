@@ -109,4 +109,20 @@ mod tests {
             "### Apple Launched iCloud",
         );
     }
+
+    #[test]
+    fn does_not_capitalize_am_in_time_expression() {
+        assert_no_lints(
+            "# Meeting at 9:05am",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn does_not_capitalize_pm_in_time_expression() {
+        assert_no_lints(
+            "# Dinner at 7pm",
+            UseTitleCase::new(FstDictionary::curated()),
+        );
+    }
 }

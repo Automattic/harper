@@ -75,7 +75,7 @@ impl ExprLinter for ShootOneselfInTheFoot {
             span: in_the_foot,
             lint_kind: LintKind::Miscellaneous,
             suggestions,
-            message: "The standard idiom is 'shoot oneself in the foot'.".to_string(),
+            message: "The standard idiom is 'shoot oneself in the foot'.".to_owned(),
             priority: 50,
         })
     }

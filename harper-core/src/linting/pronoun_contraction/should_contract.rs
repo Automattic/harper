@@ -91,7 +91,7 @@ impl ExprLinter for ShouldContract {
                 .into_iter()
                 .map(|v| Suggestion::replace_with_match_case(v, span.get_content(source)))
                 .collect(),
-            message: "Use the contraction or separate the words instead.".to_string(),
+            message: "Use the contraction or separate the words instead.".to_owned(),
             priority: 31,
         })
     }

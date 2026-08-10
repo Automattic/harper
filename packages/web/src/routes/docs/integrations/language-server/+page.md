@@ -60,6 +60,12 @@ or if you have the `nix-command` and `flakes` experimental features enabled:
 nix shell 'nixpkgs#harper'
 ```
 
+### Termux
+You can install Harper on Termux using the built-in package manager:
+```bash
+apt install harper
+```
+
 ### Cargo
 
 If you have Rust installed, `harper-ls` is on [crates.io](https://crates.io/crates/harper-ls), so you can simply run:
@@ -68,7 +74,7 @@ If you have Rust installed, `harper-ls` is on [crates.io](https://crates.io/crat
 cargo install harper-ls --locked
 ```
 
-For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`.
+For this to work, make sure that `~/.cargo/bin` is in your system `$PATH`. If you are on a Debian-based Linux distribution, you may need to install `build-essential`. We only support the latest stable version of Rust. If you are not sure if you have the latest version already, you may compare the output of `rustc --version` to the content of [this page.](https://blog.rust-lang.org/releases/latest)
 
 ### GitHub Releases
 
@@ -277,6 +283,7 @@ These configs are under the `markdown` key:
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |

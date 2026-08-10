@@ -45,7 +45,7 @@ impl ExprLinter for IAmAgreement {
                 "I am".chars().collect(),
                 toks.span()?.get_content(src),
             )],
-            message: "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.".to_string(),
+            message: "The first-person singular pronoun `I` requires the verb form `am`; `are` belongs to second-person or plural contexts.".to_owned(),
             priority: 31,
         })
     }

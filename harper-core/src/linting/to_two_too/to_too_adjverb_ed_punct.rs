@@ -51,7 +51,7 @@ impl ExprLinter for ToTooAdjVerbEdPunct {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

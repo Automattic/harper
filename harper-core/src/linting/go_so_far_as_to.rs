@@ -63,7 +63,7 @@ impl ExprLinter for GoSoFarAsTo {
             span: go_so_far_to_span,
             lint_kind: LintKind::Nonstandard,
             suggestions: vec![sugg],
-            message: "If this is intended to express going beyond what's expected, the standard idiom is `go so far as to`".to_string(),
+            message: "If this is intended to express going beyond what's expected, the standard idiom is `go so far as to`".to_owned(),
             ..Default::default()
         })
     }

@@ -39,7 +39,7 @@ impl ExprLinter for FirstAidKit {
                 "kit".chars().collect(),
                 typo_text,
             )],
-            message: "Did you mean `kit` (a set of items) instead of “kid”?".to_string(),
+            message: "Did you mean `kit` (a set of items) instead of “kid”?".to_owned(),
             priority: 31,
         })
     }

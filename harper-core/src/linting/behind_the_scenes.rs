@@ -52,7 +52,7 @@ impl ExprLinter for BehindTheScenes {
                 span.get_content(src),
             )]
             .to_vec(),
-            message: "This idiom uses the plural `scenes`.".to_string(),
+            message: "This idiom uses the plural `scenes`.".to_owned(),
             ..Default::default()
         })
     }

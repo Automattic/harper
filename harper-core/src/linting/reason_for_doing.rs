@@ -66,7 +66,7 @@ impl ExprLinter for ReasonForDoing {
                 "for",
                 ofspan.get_content(src),
             )],
-            message: "Use 'for' instead of 'of' with 'reason' and progressive verbs.".to_string(),
+            message: "Use 'for' instead of 'of' with 'reason' and progressive verbs.".to_owned(),
             ..Default::default()
         })
     }

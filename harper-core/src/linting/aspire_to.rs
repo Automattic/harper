@@ -74,7 +74,7 @@ impl ExprLinter for AspireTo {
                 "to",
                 prep_s.get_content(src),
             )],
-            message: "Use `aspire to` instead of `aspire for`.".to_string(),
+            message: "Use `aspire to` instead of `aspire for`.".to_owned(),
             ..Default::default()
         })
     }

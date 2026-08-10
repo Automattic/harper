@@ -1,0 +1,9 @@
+expr main hazzling
+
+let message "Did you mean `hassling`?"
+let description "Corrects `hazzling` to `hassling`."
+let kind "Spelling"
+let becomes "hassling"
+
+test "need to be exclusive from states so there is no hazzling with communtativity of the xor operator of hashing functions." "need to be exclusive from states so there is no hassling with communtativity of the xor operator of hashing functions."
+test "Due to some server hazzling I have to forward this stuff to my new server" "Due to some server hassling I have to forward this stuff to my new server"

@@ -1,6 +1,7 @@
 <script lang="ts">
 import { onMount } from 'svelte';
 import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import AppIcon from '../components/AppIcon.svelte';
 import { createInitialSettingsState, type SectionId, type SettingsState } from '../settings-data';
 
 type SetupStep = {
@@ -83,7 +84,10 @@ async function enableTextEditForSetup() {
 			);
 		} else {
 			await Client.addIntegration('com.apple.TextEdit');
-			integrations = [...integrations, { bundle_id: 'com.apple.TextEdit', enabled: true }];
+			integrations = [
+				...integrations,
+				{ bundle_id: 'com.apple.TextEdit', enabled: true, display_name: 'TextEdit' },
+			];
 		}
 
 		state = {
@@ -118,6 +122,10 @@ async function checkAccessibilityPermission() {
 
 	try {
 		accessibilityStatus = await Client.getAccessibilityPermissionStatus();
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to check Accessibility permission: ${error}`;
 	} finally {
@@ -137,6 +145,10 @@ async function requestAccessibilityPermission() {
 	try {
 		accessibilityStatus = await Client.requestAccessibilityPermission();
 		hasRequestedAccessibility = true;
+
+		if (accessibilityStatus === 'Granted') {
+			await Client.startHighlighterService();
+		}
 	} catch (error) {
 		accessibilityError = `Unable to request Accessibility permission: ${error}`;
 	} finally {
@@ -359,7 +371,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted" && isLoadingIntegrations}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>Checking TextEdit</strong>
                       <p>Loading integration state...</p>
@@ -367,7 +379,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted" && isTextEditEnabled}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>TextEdit enabled</strong>
                       <p>Harper is configured to check TextEdit.</p>
@@ -375,7 +387,7 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted"}
                   <div class="detected-app">
-                    <div class="app-tile" style="--app-tint: #5a5f68">T</div>
+                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
                     <div class="grow">
                       <strong>TextEdit detected</strong>
                       <p>A good starter app for trying Harper.</p>

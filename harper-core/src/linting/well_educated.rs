@@ -1,7 +1,7 @@
 use crate::{
     Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{WhitespacePattern, WordSet},
+    patterns::WordSet,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -17,12 +17,12 @@ impl Default for WellEducated {
 
         let separated = SequenceExpr::default()
             .t_aco("good")
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_hyphen()
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .t_aco("educated");
 
-        let expr = SequenceExpr::any_of(vec![Box::new(combined), Box::new(separated)]);
+        let expr = SequenceExpr::any_of([Box::new(combined) as Box<dyn Expr>, Box::new(separated)]);
 
         Self { expr }
     }
