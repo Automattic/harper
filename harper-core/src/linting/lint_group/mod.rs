@@ -10,6 +10,7 @@ use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
 use super::a_while::AWhile;
+use super::accuse_of::AccuseOf;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
@@ -602,6 +603,7 @@ impl LintGroup {
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
+        insert_expr_rule!(AccuseOf);
         insert_expr_rule!(Addicting);
         insert_expr_rule!(AdjectiveDoubleDegree);
         insert_struct_rule!(AdjectiveOfA);
