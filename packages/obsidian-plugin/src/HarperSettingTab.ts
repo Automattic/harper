@@ -7,6 +7,7 @@ import { type App, Notice, PluginSettingTab, Setting } from 'obsidian';
 import type HarperPlugin from './index.js';
 import type { Settings } from './State.js';
 import { linesToString, stringToLines } from './textUtils';
+import type State from './State.js';
 
 const LintSettingId = 'HarperLintSettings';
 
@@ -20,7 +21,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	private toggleAllButton?: ButtonComponent;
 	private expandedGroups = new Set<string>();
 
-	private get state() {
+	private get state(): State | null {
 		return this.plugin.state;
 	}
 
@@ -38,7 +39,7 @@ export class HarperSettingTab extends PluginSettingTab {
 
 	updateSettings() {
 		this.settings = undefined;
-		this.state.getSettings().then((v) => {
+		this.state?.getSettings().then((v) => {
 			this.settings = v;
 			this.updateToggleAllRulesButton();
 			this.display(false);
@@ -46,14 +47,14 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateDescriptions() {
-		this.state.getDescriptionHTML().then((v) => {
+		this.state?.getDescriptionHTML().then((v) => {
 			this.descriptionsHTML = v;
 			this.rerenderLintSettings();
 		});
 	}
 
 	updateDefaults() {
-		this.state.getDefaultLintConfig().then((v) => {
+		this.state?.getDefaultLintConfig().then((v) => {
 			this.defaultLintConfig = v as unknown as Record<string, boolean>;
 			this.updateToggleAllRulesButton();
 			this.rerenderLintSettings();
@@ -61,7 +62,7 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	updateStructuredConfig() {
-		this.state.getStructuredLintConfig().then((v) => {
+		this.state?.getStructuredLintConfig().then((v) => {
 			this.structuredLintConfig = v;
 			this.rerenderLintSettings();
 		});
@@ -92,7 +93,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.addToggle((toggle) =>
 				toggle.setValue(settings.useWebWorker).onChange(async (value) => {
 					settings.useWebWorker = value;
-					await this.state.initializeFromSettings(settings);
+					await this.state?.initializeFromSettings(settings);
 				}),
 			);
 
@@ -107,7 +108,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.onChange(async (value) => {
 					const dialect = Number.parseInt(value, 10);
 					settings.dialect = dialect;
-					await this.state.initializeFromSettings(settings);
+					await this.state?.initializeFromSettings(settings);
 					this.plugin.updateStatusBar(dialect);
 				});
 		});
@@ -117,7 +118,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.setDesc('Enable or disable Harper with this option.')
 			.addToggle((toggle) =>
 				toggle.setValue(settings.lintEnabled ?? true).onChange(async (_value) => {
-					this.state.toggleAutoLint();
+					this.state?.toggleAutoLint();
 					this.plugin.updateStatusBar();
 				}),
 			);
@@ -130,7 +131,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.addToggle((toggle) =>
 				toggle.setValue(this.settings.useWebStyleLints ?? false).onChange(async (value) => {
 					this.settings.useWebStyleLints = value;
-					await this.state.initializeFromSettings(this.settings);
+					await this.state?.initializeFromSettings(this.settings);
 				}),
 			);
 
@@ -142,7 +143,7 @@ export class HarperSettingTab extends PluginSettingTab {
 			.addTextArea((ta) =>
 				ta.setValue(settings.regexMask ?? '').onChange(async (value) => {
 					settings.regexMask = value;
-					await this.state.initializeFromSettings(settings);
+					await this.state?.initializeFromSettings(settings);
 				}),
 			);
 
@@ -157,7 +158,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				ta.setValue(linesToString(settings.userDictionary ?? [''])).onChange(async (v) => {
 					const dict = stringToLines(v);
 					settings.userDictionary = dict;
-					await this.state.initializeFromSettings(settings);
+					await this.state?.initializeFromSettings(settings);
 				});
 			});
 
@@ -171,7 +172,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				ta.setValue(linesToString(settings.ignoredGlobs ?? [''])).onChange(async (v) => {
 					const lines = stringToLines(v);
 					settings.ignoredGlobs = lines;
-					await this.state.initializeFromSettings(settings);
+					await this.state?.initializeFromSettings(settings);
 				});
 			});
 
@@ -187,7 +188,7 @@ export class HarperSettingTab extends PluginSettingTab {
 					.setValue(settings.delay ?? -1)
 					.onChange(async (value) => {
 						settings.delay = value;
-						await this.state.initializeFromSettings(settings);
+						await this.state?.initializeFromSettings(settings);
 					});
 			});
 
@@ -196,7 +197,7 @@ export class HarperSettingTab extends PluginSettingTab {
 				.setButtonText('Forget Ignored Suggestions')
 				.onClick(() => {
 					settings.ignoredLints = undefined;
-					this.state.initializeFromSettings(settings);
+					this.state?.initializeFromSettings(settings);
 				})
 				.setWarning();
 		});
@@ -225,8 +226,8 @@ export class HarperSettingTab extends PluginSettingTab {
 							'Reset all rule overrides to their defaults? This cannot be undone.',
 						);
 						if (!confirmed) return;
-						await this.state.resetAllRulesToDefaults();
-						this.settings = await this.state.getSettings();
+						await this.state?.resetAllRulesToDefaults();
+						this.settings = await this.state?.getSettings();
 						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 						this.updateToggleAllRulesButton();
 						new Notice('Harper rules reset to defaults');
@@ -244,13 +245,13 @@ export class HarperSettingTab extends PluginSettingTab {
 				this.toggleAllButton = button;
 				this.updateToggleAllRulesButton();
 				button.setWarning().onClick(async () => {
-					const anyEnabledNow = await this.state.areAnyRulesEnabled();
+					const anyEnabledNow = await this.state?.areAnyRulesEnabled();
 					const action = anyEnabledNow ? 'Disable' : 'Enable';
 					const confirmed = confirm(`${action} all rules? This will override individual settings.`);
 					if (!confirmed) return;
 
-					await this.state.setAllRulesEnabled(!anyEnabledNow);
-					this.settings = await this.state.getSettings();
+					await this.state?.setAllRulesEnabled(!anyEnabledNow);
+					this.settings = await this.state?.getSettings();
 					this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 					this.updateToggleAllRulesButton();
 					new Notice(`All Harper rules ${anyEnabledNow ? 'disabled' : 'enabled'}`);
@@ -261,7 +262,7 @@ export class HarperSettingTab extends PluginSettingTab {
 		lintSettings.id = LintSettingId;
 		containerEl.appendChild(lintSettings);
 
-		Promise.all([this.state.getDefaultLintConfig(), this.state.getStructuredLintConfig()]).then(
+		Promise.all([this.state?.getDefaultLintConfig(), this.state?.getStructuredLintConfig()]).then(
 			([defaults, structured]) => {
 				this.defaultLintConfig = defaults as unknown as Record<string, boolean>;
 				this.structuredLintConfig = structured;
@@ -276,14 +277,14 @@ export class HarperSettingTab extends PluginSettingTab {
 
 	private async updateToggleAllRulesButton() {
 		if (!this.toggleAllButton) return;
-		const anyEnabled = await this.state.areAnyRulesEnabled();
+		const anyEnabled = await this.state?.areAnyRulesEnabled();
 		this.toggleAllButton.setButtonText(anyEnabled ? 'Disable All Rules' : 'Enable All Rules');
 	}
 
 	async renderLintSettingsToId(searchQuery: string, id: string) {
 		const el = document.getElementById(id);
 		if (!el) return;
-		const effective = await this.state.getEffectiveLintConfig();
+		const effective = await this.state?.getEffectiveLintConfig();
 		this.renderLintSettings(searchQuery, el, effective);
 	}
 
@@ -464,8 +465,8 @@ export class HarperSettingTab extends PluginSettingTab {
 							settings.lintSettings[ruleName] = value === 'default' ? null : value === 'enable';
 						}
 
-						await this.state.initializeFromSettings(settings);
-						this.settings = await this.state.getSettings();
+						await this.state?.initializeFromSettings(settings);
+						this.settings = await this.state?.getSettings();
 						this.rerenderLintSettings();
 						this.updateToggleAllRulesButton();
 					});
@@ -587,8 +588,8 @@ export class HarperSettingTab extends PluginSettingTab {
 						// The structured config only organizes rules for display.
 						// Persist changes through the flat lint config keyed by rule name.
 						this.settings.lintSettings[setting] = v === 'enable';
-						await this.state.initializeFromSettings(this.settings);
-						this.settings = await this.state.getSettings();
+						await this.state?.initializeFromSettings(this.settings);
+						this.settings = await this.state?.getSettings();
 						this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 						this.updateToggleAllRulesButton();
 					});
@@ -623,8 +624,8 @@ export class HarperSettingTab extends PluginSettingTab {
 					this.settings.lintSettings[name] = name === selected;
 				}
 
-				await this.state.initializeFromSettings(this.settings);
-				this.settings = await this.state.getSettings();
+				await this.state?.initializeFromSettings(this.settings);
+				this.settings = await this.state?.getSettings();
 				this.renderLintSettingsToId(this.currentRuleSearchQuery, LintSettingId);
 				this.updateToggleAllRulesButton();
 			});
