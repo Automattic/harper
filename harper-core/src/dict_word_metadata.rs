@@ -31,6 +31,9 @@ pub struct DictWordMetadata {
     /// Whether the word is a [preposition](https://www.merriam-webster.com/dictionary/preposition).
     #[serde(default = "default_false")]
     pub preposition: bool,
+    /// Whether the word is an adverbial particle, such as 'in' in 'log in', 'up' in 'give up', etc.
+    #[serde(default = "default_false")]
+    pub adverbial_particle: bool,
     /// Whether the word is an offensive word.
     pub swear: Option<bool>,
     /// The dialects this word belongs to.
@@ -778,6 +781,7 @@ impl DictWordMetadata {
         self.determiner = merge!(self.determiner, other.determiner);
         self.affix = merge!(self.affix, other.affix);
         self.preposition |= other.preposition;
+        self.adverbial_particle |= other.adverbial_particle;
         self.dialects |= other.dialects;
         self.orth_info |= other.orth_info;
         self.swear = self.swear.or(other.swear);

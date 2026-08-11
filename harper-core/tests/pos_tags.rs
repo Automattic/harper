@@ -220,6 +220,9 @@ fn format_word_tag(word: &DictWordMetadata) -> String {
     if word.preposition {
         add("P", &mut tags);
     }
+    if word.adverbial_particle {
+        add("T", &mut tags);
+    }
     if word.is_roman_numerals() {
         add("#r", &mut tags);
     }

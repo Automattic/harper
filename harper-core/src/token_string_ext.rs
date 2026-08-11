@@ -68,6 +68,7 @@ pub trait TokenStringExt: private::Sealed {
     create_fns_for!(paragraph_break);
     create_fns_for!(pipe);
     create_fns_for!(preposition);
+    create_fns_for!(adverbial_particle);
     create_fns_for!(punctuation);
     create_fns_for!(quote);
     create_fns_for!(sentence_terminator);

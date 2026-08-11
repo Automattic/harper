@@ -648,6 +648,7 @@ impl SequenceExpr {
 
     gen_then_from_is!(conjunction);
     gen_then_from_is!(preposition);
+    gen_then_from_is!(adverbial_particle);
 
     // Numbers
 

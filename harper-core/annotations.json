@@ -1045,6 +1045,13 @@
 					"is_abstract": true
 				}
 			}
+		},
+		"¶": {
+			"#": "adverbial particle property",
+			"//": "mnemonic: 'pilcrow', 'preposition', and 'particle' all start with 'p'",
+			"metadata": {
+				"adverbial_particle": true
+			}
 		}
 	}
 }

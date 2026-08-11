@@ -405,6 +405,7 @@ fn main() -> anyhow::Result<()> {
                 ("D👉", DictWordMetadata::is_determiner),
                 ("P📥", |m| m.preposition),
                 ("I👤", DictWordMetadata::is_pronoun),
+                ("T🧩", |m| m.adverbial_particle),
             ];
 
             for word in words {
