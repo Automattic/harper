@@ -923,6 +923,14 @@ em,
 	padding: 0 10px;
 }
 
+.modal-error {
+	padding: 8px 14px;
+	border-bottom: 0.5px solid rgba(180, 35, 24, 0.18);
+	background: rgba(180, 35, 24, 0.06);
+	color: #b42318;
+	font-size: 11.5px;
+}
+
 .modal-list {
 	flex: 1;
 	overflow: auto;

@@ -168,6 +168,14 @@ export class Client {
 		return await invoke<AppSearchResult[]>('search_apps', { query });
 	}
 
+	static async resolveAppPath(path: string): Promise<AppSearchResult> {
+		return await invoke<AppSearchResult>('resolve_app_path', { path });
+	}
+
+	static async supportsAppBrowse(): Promise<boolean> {
+		return await invoke<boolean>('supports_app_browse');
+	}
+
 	static async launchApp(bundleId: string): Promise<void> {
 		await invoke('launch_app', { bundleId });
 	}

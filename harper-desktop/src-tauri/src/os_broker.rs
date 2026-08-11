@@ -65,9 +65,13 @@ pub trait OsBroker {
     fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> {
         Err("App search is only supported on macOS.".to_string())
     }
+
+    fn resolve_app_path(&self, _path: &str) -> Result<AppSearchResult, String> {
+        Err("Selecting application bundles is only supported on macOS.".to_string())
+    }
 }
 
-#[derive(Debug, Clone, Serialize)]
+#[derive(Debug, Clone, PartialEq, Eq, Serialize)]
 pub struct AppSearchResult {
     pub name: String,
     pub bundle_id: String,

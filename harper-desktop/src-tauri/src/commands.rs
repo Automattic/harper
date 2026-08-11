@@ -43,6 +43,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         stop_highlighter_service,
         launch_app,
         search_apps,
+        supports_app_browse,
+        resolve_app_path,
     ]
 }
 
@@ -365,12 +367,29 @@ fn launch_app(bundle_id: String) -> Result<(), String> {
 }
 
 #[tauri::command]
-fn search_apps(
+async fn search_apps<R: Runtime>(
     query: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    app_handle: tauri::AppHandle<R>,
 ) -> Result<Vec<AppSearchResult>, String> {
-    broker
-        .lock()
-        .map_err(|error| format!("Failed to read platform broker: {error}"))?
-        .search_apps(&query)
+    tauri::async_runtime::spawn_blocking(move || {
+        app_handle
+            .state::<StdMutex<PlatformBroker>>()
+            .lock()
+            .map_err(|error| format!("Failed to read platform broker: {error}"))?
+            .search_apps(&query)
+    })
+    .await
+    .map_err(|error| format!("Failed to search applications: {error}"))?
+}
+
+#[tauri::command]
+fn supports_app_browse() -> bool {
+    cfg!(target_os = "macos")
+}
+
+#[tauri::command]
+async fn resolve_app_path(path: String) -> Result<AppSearchResult, String> {
+    tauri::async_runtime::spawn_blocking(move || platform_broker().resolve_app_path(&path))
+        .await
+        .map_err(|error| format!("Failed to inspect selected application: {error}"))?
 }
