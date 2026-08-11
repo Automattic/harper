@@ -4608,6 +4608,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GoMissing",
+								"state": true,
+								"label": "Go Missing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoodAt",
 								"state": true,
 								"label": "Good At"
