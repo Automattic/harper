@@ -19,6 +19,7 @@ pub struct Config {
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
+    pub onboarding_completed: bool,
     pub debounce_ms: u64,
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
@@ -33,6 +34,7 @@ impl Config {
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Integration::curated_integrations(),
+            onboarding_completed: false,
             debounce_ms: 0,
             auto_update: true,
             last_update_check: None,
@@ -161,6 +163,7 @@ impl Config {
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
+            "onboarding_completed": self.onboarding_completed,
             "debounce_ms": self.debounce_ms,
             "auto_update": self.auto_update,
             "last_update_check": self.last_update_check,
@@ -182,6 +185,8 @@ impl Config {
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
                 .unwrap_or_else(Integration::curated_integrations),
+            onboarding_completed: deserialize_optional_field(object, "onboarding_completed")?
+                .unwrap_or(true),
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),
             auto_update: deserialize_optional_field(object, "auto_update")?.unwrap_or(true),
             last_update_check: deserialize_optional_field::<Option<u64>>(
@@ -240,6 +245,39 @@ mod tests {
     use harper_core::DictWordMetadata;
 
     #[test]
+    fn new_config_starts_with_onboarding_incomplete() {
+        assert!(!Config::new().onboarding_completed);
+    }
+
+    #[test]
+    fn onboarding_completion_round_trips() {
+        let mut config = Config::new();
+        config.onboarding_completed = true;
+
+        let deserialized = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
+
+        assert_eq!(
+            deserialized.onboarding_completed,
+            config.onboarding_completed
+        );
+    }
+
+    #[test]
+    fn missing_onboarding_completion_migrates_to_completed() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value
+            .as_object_mut()
+            .unwrap()
+            .remove("onboarding_completed");
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert!(deserialized.onboarding_completed);
+    }
+
+    #[test]
     fn serialize_main_excludes_dictionary_word_list() {
         let mut config = Config::new();
         config
@@ -254,6 +292,7 @@ mod tests {
         assert!(serialized.contains("ignored_lints"));
         assert!(serialized.contains("lint_config"));
         assert!(serialized.contains("integrations"));
+        assert!(serialized.contains("onboarding_completed"));
         assert!(serialized.contains("debounce_ms"));
         assert!(serialized.contains("auto_update"));
         assert!(serialized.contains("last_update_check"));
@@ -273,6 +312,10 @@ mod tests {
         assert_eq!(deserialized.dialect, config.dialect);
         assert_eq!(deserialized.lint_config, config.lint_config);
         assert_eq!(deserialized.integrations, config.integrations);
+        assert_eq!(
+            deserialized.onboarding_completed,
+            config.onboarding_completed
+        );
         assert_eq!(deserialized.debounce_ms, config.debounce_ms);
         assert_eq!(deserialized.auto_update, config.auto_update);
         assert_eq!(deserialized.last_update_check, config.last_update_check);
