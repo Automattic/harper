@@ -11942,7 +11942,7 @@ afterthought/NSg
 afterward/~R<
 afterwards/R!@_₹
 afterword/NgS
-again/~P
+again/~R
 against/~PC
 agape/JNg
 agar/~Ng
@@ -30650,6 +30650,7 @@ interest/~NwSgVdE
 interested/~JVtTU
 interesting/~JYV6
 interface/~NgSVGd
+interfacility/J
 interfaith/~J
 interfere/~VGdS
 interference/~NgSV
@@ -33880,7 +33881,7 @@ meaninglessness/Nmg
 meanness/Nmg
 meant/~VtTU
 meantime/~Ng
-meanwhile/~Ng
+meanwhile/~RN
 meany/NSg
 meas/Vh
 measles/~Nmg
@@ -51471,7 +51472,7 @@ untidy/J^>pV
 until/~PC
 untimely/~J^
 untiring/JY
-untaoasted/J
+untoasted/J
 untouchable/JNgS
 untoward/J
 untracked/J
@@ -54369,6 +54370,7 @@ SpaceX/Og
 Speccy/OgS          # nickname of the Sinclair ZX Spectrum 8-bit computer
 Spotify/Og
 Stellantis/Og       # car company
+SteamOS/Og
 Substack/Og
 Subversion/Og       # version control
 Svelte/Og           # js framework
@@ -54489,6 +54491,7 @@ a12s/9
 a8c/Sg
 aftertouch/Nmg      # MIDI feature
 ambitransitive/J    # verb which is both transitive and intransitive
+analyte/NgS
 anti-alias/VbSdG
 antimalware/Nmg
 arXiv/Og            # research archive
@@ -54506,6 +54509,7 @@ backend/NSg         # dictionaries prefer: back end
 backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
+bazzite/NwgS
 bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
 blogpost/NgS        # !! blog post is many times more popular; both appear in some dictionaries
 catenative/J        # linguistics
