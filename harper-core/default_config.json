@@ -3570,7 +3570,7 @@
 						{
 							"Bool": {
 								"name": "MoreAdjective",
-								"state": true,
+								"state": false,
 								"label": "More Adjective"
 							}
 						},
@@ -3767,7 +3767,14 @@
 							"Bool": {
 								"name": "TakeALookTo",
 								"state": true,
-								"label": "Take A Look To"
+								"label": "Take a Look to"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TakeCareOf",
+								"state": true,
+								"label": "Take Care of"
 							}
 						},
 						{
@@ -3898,6 +3905,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
@@ -3934,6 +3948,13 @@
 				"description": "Suggests more standard or idiomatic wording when a phrase is technically understandable but poorly chosen.",
 				"child": {
 					"settings": [
+						{
+							"Bool": {
+								"name": "AccuseOf",
+								"state": true,
+								"label": "Accuse of"
+							}
+						},
 						{
 							"Bool": {
 								"name": "AheadAnd",
@@ -4667,6 +4688,13 @@
 								"name": "ImitateFrom",
 								"state": true,
 								"label": "Imitate From"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImplementIn",
+								"state": true,
+								"label": "Implement In"
 							}
 						},
 						{

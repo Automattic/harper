@@ -10,6 +10,7 @@ use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
 use super::a_while::AWhile;
+use super::accuse_of::AccuseOf;
 use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
@@ -121,6 +122,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::implement_in::ImplementIn;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
@@ -249,6 +251,7 @@ use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
 use super::take_a_look_to::TakeALookTo;
+use super::take_care_of::TakeCareOf;
 use super::take_medicine::TakeMedicine;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
@@ -600,6 +603,7 @@ impl LintGroup {
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
+        insert_expr_rule!(AccuseOf);
         insert_expr_rule!(Addicting);
         insert_expr_rule!(AdjectiveDoubleDegree);
         insert_struct_rule!(AdjectiveOfA);
@@ -709,6 +713,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay);
         insert_expr_rule!(IAmAgreement);
         insert_expr_rule!(IfWouldve);
+        insert_expr_rule!(ImplementIn);
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
@@ -833,6 +838,7 @@ impl LintGroup {
         insert_expr_rule!(SplitWords);
         insert_struct_rule!(SubjectPronoun);
         insert_expr_rule!(TakeALookTo);
+        insert_expr_rule!(TakeCareOf);
         insert_expr_rule!(TakeMedicine);
         insert_expr_rule!(ThatThan);
         insert_expr_rule!(ThatWhich);
@@ -1199,7 +1205,7 @@ mod tests {
         assert_suggestion_result(
             "I guess politicans like to complain.",
             test_linter(),
-            "I guess politicans like to complain.",
+            "I guess politicians like to complain.",
         );
     }
 
@@ -1213,11 +1219,29 @@ mod tests {
     }
 
     #[test]
+    fn fixes_extention_correctly() {
+        assert_suggestion_result(
+            "There is no extention quite like this one.",
+            test_linter(),
+            "There is no extention quite like this one.",
+        );
+    }
+
+    #[test]
     fn fixes_easir() {
         assert_suggestion_result(
             "It makes it easir to select it.",
             test_linter(),
             "It makes it easier to select it.",
+        );
+    }
+
+    #[test]
+    fn fixes_breakfest() {
+        assert_suggestion_result(
+            "Ice cream for breakfest?",
+            test_linter(),
+            "Ice cream for breakfast?",
         );
     }
 
@@ -1228,6 +1252,11 @@ mod tests {
             test_linter(),
             "It was in their budget range.",
         );
+    }
+
+    #[test]
+    fn allows_chest_compressions() {
+        assert_no_lints("Please continue chest compressions.", test_linter());
     }
 
     /// Tests that no linters' descriptions contain errors handled by other linters.

@@ -1,3 +1,4 @@
+import { gte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { uninstallFeedbackTable } from '../schema';
@@ -16,5 +17,12 @@ export default class UninstallFeedback {
 
 	public static async create(rec: UninstallFeedbackSubmission) {
 		await db.insert(uninstallFeedbackTable).values(rec);
+	}
+
+	public static async getAllSince(date: Date) {
+		return await db
+			.select()
+			.from(uninstallFeedbackTable)
+			.where(gte(uninstallFeedbackTable.timestamp, date));
 	}
 }
