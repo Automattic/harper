@@ -281,7 +281,7 @@
 > It       is  unreasonable for   our boss      to withhold our wages   .
 # NPr/ISg+ VL3 J            R/C/P D$+ NSg/VB/J+ P  NSg/VB   D$+ NPl/V3+ .
 > I       don't think  it's a   good     idea for   you    and  me       to meet     ever again .
-# ISg/#r+ VXB   NSg/VB +    D/P NPr/VB/J NSg+ R/C/P ISgPl+ VB/C NPr/ISg+ P  NSg/VB/J J/R  P     .
+# ISg/#r+ VXB   NSg/VB +    D/P NPr/VB/J NSg+ R/C/P ISgPl+ VB/C NPr/ISg+ P  NSg/VB/J J/R  R     .
 > I       am        aiming  for   completion by the end    of business Thursday .
 # ISg/#r+ NPr/VLB/J Nᴹ/Vg/J R/C/P NSg+       P  D   NSg/VB P  N🅪Sg/J+  NSg+     .
 > He's going   for   his     doctorate .
@@ -713,7 +713,7 @@
 > Can     I       see    you    on  a    different day     ?
 # NPr/VXB ISg/#r+ NSg/VB ISgPl+ J/P D/P+ NSg/J+    NPr🅪Sg+ .
 > Smith   scored again on  twelve minutes , doubling Mudchester Rovers ' lead      .
-# NPr/VB+ VP/J   P     J/P NSg+   NPl/V3+ . Nᴹ/Vg/J  ?          W?     . N🅪Sg/VB/J .
+# NPr/VB+ VP/J   R     J/P NSg+   NPl/V3+ . Nᴹ/Vg/J  ?          W?     . N🅪Sg/VB/J .
 > I       was  reading     a   book   on  history .
 # ISg/#r+ VLPt NPr🅪Sg/Vg/J D/P NSg/VB J/P N🅪Sg+   .
 > The city hosted the World   Summit  on  the Information Society

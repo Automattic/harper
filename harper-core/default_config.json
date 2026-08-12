@@ -3905,6 +3905,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
@@ -4688,6 +4695,13 @@
 								"name": "ImitateFrom",
 								"state": true,
 								"label": "Imitate From"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImplementIn",
+								"state": true,
+								"label": "Implement In"
 							}
 						},
 						{
