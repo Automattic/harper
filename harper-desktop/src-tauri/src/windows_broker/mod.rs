@@ -12,13 +12,13 @@ use crate::{os_broker::OsBroker, rect::ActionableLint};
 mod automation_service;
 
 pub struct WindowsBroker {
-    service: AutomationService
+    service: AutomationService,
 }
 
 impl WindowsBroker {
     pub fn new() -> Self {
-        Self{
-            service: AutomationService::create_and_start()
+        Self {
+            service: AutomationService::create_and_start(),
         }
     }
 }
@@ -29,7 +29,7 @@ impl OsBroker for WindowsBroker {
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
     ) -> Vec<ActionableLint> {
         let text = self.service.get_text();
-        if let Some(text) = text{
+        if let Some(text) = text {
             println!("{text}");
         }
         return Vec::new();
