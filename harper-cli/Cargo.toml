@@ -1,6 +1,6 @@
 [package]
 name = "harper-cli"
-version = "2.7.0"
+version = "0.1.0"
 edition = "2024"
 publish = false
 repository = "https://github.com/automattic/harper"
