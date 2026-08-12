@@ -33,9 +33,9 @@ impl WordId {
     }
 }
 
-impl Into<u64> for WordId {
-    fn into(self) -> u64 {
-        self.hash
+impl From<WordId> for u64 {
+    fn from(val: WordId) -> Self {
+        val.hash
     }
 }
 
