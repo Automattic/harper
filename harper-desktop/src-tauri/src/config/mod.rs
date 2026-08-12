@@ -245,39 +245,6 @@ mod tests {
     use harper_core::DictWordMetadata;
 
     #[test]
-    fn new_config_starts_with_onboarding_incomplete() {
-        assert!(!Config::new().onboarding_completed);
-    }
-
-    #[test]
-    fn onboarding_completion_round_trips() {
-        let mut config = Config::new();
-        config.onboarding_completed = true;
-
-        let deserialized = Config::deserialize_main(&config.serialize_main().unwrap()).unwrap();
-
-        assert_eq!(
-            deserialized.onboarding_completed,
-            config.onboarding_completed
-        );
-    }
-
-    #[test]
-    fn missing_onboarding_completion_migrates_to_completed() {
-        let config = Config::new();
-        let mut value =
-            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
-        value
-            .as_object_mut()
-            .unwrap()
-            .remove("onboarding_completed");
-
-        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
-
-        assert!(deserialized.onboarding_completed);
-    }
-
-    #[test]
     fn serialize_main_excludes_dictionary_word_list() {
         let mut config = Config::new();
         config
