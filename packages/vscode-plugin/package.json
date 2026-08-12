@@ -38,6 +38,7 @@
 		"onLanguage:cpp",
 		"onLanguage:csharp",
 		"onLanguage:dart",
+		"onLanguage:elixir",
 		"onLanguage:git-commit",
 		"onLanguage:gleam",
 		"onLanguage:go",
