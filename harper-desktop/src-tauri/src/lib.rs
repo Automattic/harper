@@ -45,6 +45,9 @@ pub mod rect;
 #[cfg(target_os = "macos")]
 mod mac_broker;
 
+#[cfg(target_os = "windows")]
+mod windows_broker;
+
 #[derive(Parser)]
 struct Args {
     #[command(subcommand)]
@@ -343,7 +346,10 @@ pub fn run_highlighter(has_parent: bool) {
     #[cfg(target_os = "macos")]
     let broker = mac_broker::MacBroker::new(integrations);
 
-    #[cfg(not(target_os = "macos"))]
+    #[cfg(target_os = "windows")]
+    let broker = windows_broker::WindowsBroker::new();
+
+    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
     let broker = os_broker::NoopBroker;
 
     if let Err(error) = Highlighter::new(
