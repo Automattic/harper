@@ -4200,6 +4200,7 @@ dependencies = [
  "egui_commonmark",
  "harper-core",
  "harper-dictionary-wordlist",
+ "is-macro",
  "objc2-app-kit 0.3.2",
  "objc2-foundation 0.3.2",
  "pollster",
