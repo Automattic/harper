@@ -32,3 +32,15 @@ impl WordId {
         Self::from_word_chars(chars)
     }
 }
+
+impl Into<u64> for WordId {
+    fn into(self) -> u64 {
+        self.hash
+    }
+}
+
+impl From<u64> for WordId {
+    fn from(value: u64) -> Self {
+        Self { hash: value }
+    }
+}
