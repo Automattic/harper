@@ -714,7 +714,7 @@
 				}
 			}
 		},
-		"~": {
+		"©": {
 			"#": "common word property",
 			"metadata": {
 				"common": true
@@ -1043,6 +1043,31 @@
 			"metadata": {
 				"noun": {
 					"is_abstract": true
+				}
+			}
+		},
+		"~": {
+			"#": "indefinite property",
+			"//": "For indefinite pronouns like 'anybody', 'everything' and indefinite numbers like 'gazillion'",
+			"metadata": {
+				"//": "TODO: needs 'if_base'"
+			}
+		},
+		"♯": {
+			"#": "cardinal number word",
+			"//": "mnemonic: looks like number sign # wich is reserved for comments",
+			"metadata": {
+				"number_word": {
+					"is_cardinal": true
+				}
+			}
+		},
+		"ⁿ": {
+			"#": "ordinal number word",
+			"//": "mnemonic: reminds of 'nth' and superscript 'st'/'nd'/'rd'/'th'",
+			"metadata": {
+				"number_word": {
+					"is_ordinal": true
 				}
 			}
 		}
