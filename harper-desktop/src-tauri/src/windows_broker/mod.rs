@@ -31,8 +31,30 @@ impl OsBroker for WindowsBroker {
         let text = self.service.get_text();
         if let Some(text) = text {
             println!("{text}");
+
+            let lints = lint_text(text.as_str());
+
+            let all_lint_iter = lints.values().map(|r| r.iter()).flatten();
+            let rects = self
+                .service
+                .get_bounding_boxes(all_lint_iter.map(|l| l.span));
+
+            lints
+                .into_iter()
+                .map(|(lint_id, lints)| lints.into_iter().map(move |l| (lint_id.clone(), l)))
+                .flatten()
+                .zip(rects.into_iter())
+                .map(|((lint_id, lint), rects)| {
+                    let text = text.clone();
+                    rects.into_iter().map(|r| r.into_iter()).flatten().map(move |r| {
+                        ActionableLint::new(r, lint_id.clone(), lint.clone(), text.clone(), |_| {})
+                    })
+                })
+                .flatten()
+                .collect()
+        } else {
+            Vec::new()
         }
-        return Vec::new();
     }
 
     fn cursor_position(&self) -> Option<Pos2> {
