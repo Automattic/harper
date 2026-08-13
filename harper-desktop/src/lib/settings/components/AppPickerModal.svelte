@@ -1,5 +1,4 @@
 <script lang="ts">
-import { open } from '@tauri-apps/plugin-dialog';
 import { onMount } from 'svelte';
 import { type AppSearchResult, Client } from '$lib/client';
 import AppIcon from './AppIcon.svelte';
@@ -12,53 +11,20 @@ export let add: (bundleId: string) => void;
 
 let searchResults: AppSearchResult[] = [];
 let isSearching = false;
-let isBrowsing = false;
-let supportsBrowse = false;
-let pickerError = '';
 let debounceTimeout: number | null = null;
 let searchRequestId = 0;
-let browseRequestId = 0;
 
 $: trimmedBundleId = bundleId.trim();
 $: isDuplicate = existingBundleIds.includes(trimmedBundleId);
-$: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving && !isBrowsing;
+$: canAdd = Boolean(trimmedBundleId) && !isDuplicate && !isSaving;
 
 onMount(() => {
-	let mounted = true;
+	const initialSearch = window.setTimeout(() => {
+		void performSearch(bundleId);
+	}, 0);
 
-	void performSearch(bundleId);
-	void Client.supportsAppBrowse()
-		.then((supported) => {
-			if (mounted) {
-				supportsBrowse = supported;
-			}
-		})
-		.catch((error) => console.error('Unable to check Browse support:', error));
-
-	return () => {
-		mounted = false;
-		cancelPendingWork();
-	};
+	return () => window.clearTimeout(initialSearch);
 });
-
-function clearDebounce() {
-	if (debounceTimeout !== null) {
-		window.clearTimeout(debounceTimeout);
-		debounceTimeout = null;
-	}
-}
-
-function cancelPendingSearch() {
-	clearDebounce();
-	searchRequestId += 1;
-	isSearching = false;
-}
-
-function cancelPendingWork() {
-	cancelPendingSearch();
-	browseRequestId += 1;
-	isBrowsing = false;
-}
 
 async function performSearch(query: string) {
 	const requestId = ++searchRequestId;
@@ -86,69 +52,23 @@ async function performSearch(query: string) {
 function handleInput(event: Event) {
 	const target = event.target as HTMLInputElement;
 	bundleId = target.value;
-	pickerError = '';
-	cancelPendingSearch();
-	isSearching = true;
 
-	const query = bundleId;
+	if (debounceTimeout) {
+		clearTimeout(debounceTimeout);
+	}
+
 	debounceTimeout = window.setTimeout(() => {
-		debounceTimeout = null;
-		void performSearch(query);
+		performSearch(bundleId);
 	}, 300);
 }
 
-function selectApp(result: AppSearchResult) {
-	cancelPendingWork();
-	pickerError = '';
-	bundleId = result.bundle_id;
-	searchResults = [result];
-}
-
-async function browseForApp() {
-	const requestId = ++browseRequestId;
-	isBrowsing = true;
-
-	try {
-		const selectedPath = await open({
-			title: 'Choose an application',
-			defaultPath: '/Applications',
-			multiple: false,
-			directory: false,
-			filters: [{ name: 'Applications', extensions: ['app'] }],
-		});
-
-		if (requestId !== browseRequestId || typeof selectedPath !== 'string') {
-			return;
-		}
-
-		cancelPendingSearch();
-		pickerError = '';
-		const result = await Client.resolveAppPath(selectedPath);
-
-		if (requestId === browseRequestId) {
-			selectApp(result);
-		}
-	} catch (error) {
-		console.error('Unable to use selected application:', error);
-
-		if (requestId === browseRequestId) {
-			pickerError = `Unable to use that application: ${error}`;
-		}
-	} finally {
-		if (requestId === browseRequestId) {
-			isBrowsing = false;
-		}
-	}
-}
-
-function handleClose() {
-	cancelPendingWork();
-	close();
+function selectApp(selectedBundleId: string) {
+	bundleId = selectedBundleId;
+	void performSearch(bundleId);
 }
 
 function submit() {
 	if (canAdd) {
-		cancelPendingWork();
 		add(trimmedBundleId);
 	}
 }
@@ -159,10 +79,10 @@ function submit() {
   role="button"
   tabindex="0"
   aria-label="Close application picker"
-  on:click={handleClose}
+  on:click={close}
   on:keydown={(event) => {
     if (event.key === "Escape" || event.key === "Enter" || event.key === " ") {
-      handleClose();
+      close();
     }
   }}
 >
@@ -174,21 +94,21 @@ function submit() {
     on:click|stopPropagation={() => {}}
     on:keydown|stopPropagation={(event) => {
       if (event.key === "Escape") {
-        handleClose();
+        close();
       }
     }}
   >
     <div class="modal-head">
       <strong>Add application</strong>
-      <span>Search by app name or bundle ID.{#if supportsBrowse} Browse if the app is not listed.{/if}</span>
+      <span>Enter the app bundle ID Harper should watch.</span>
     </div>
     <div class="modal-search">
       <span class="settings-icon icon-search" aria-hidden="true"></span>
       <input
         type="text"
-        placeholder="App name or bundle ID"
+        placeholder="Search for an app..."
         value={bundleId}
-        disabled={isSaving || isBrowsing}
+        disabled={isSaving}
         on:input={handleInput}
         on:keydown={(event) => {
           if (event.key === "Enter") {
@@ -196,18 +116,7 @@ function submit() {
           }
         }}
       />
-      {#if supportsBrowse}
-        <button
-          class="button"
-          type="button"
-          disabled={isSaving || isBrowsing}
-          on:click={browseForApp}
-        >{isBrowsing ? "Browsing..." : "Browse..."}</button>
-      {/if}
     </div>
-    {#if pickerError}
-      <div class="modal-error" role="alert">{pickerError}</div>
-    {/if}
     <div class="modal-list">
       {#if isSearching}
         <div class="empty">Searching...</div>
@@ -217,10 +126,10 @@ function submit() {
             class="app-result"
             role="button"
             tabindex="0"
-            on:click={() => selectApp(result)}
+            on:click={() => selectApp(result.bundle_id)}
             on:keydown={(event) => {
               if (event.key === "Enter" || event.key === " ") {
-                selectApp(result);
+                selectApp(result.bundle_id);
               }
             }}
           >
@@ -234,19 +143,15 @@ function submit() {
       {:else if trimmedBundleId}
         {#if isDuplicate}
           <div class="empty">That application is already configured.</div>
-        {:else if supportsBrowse}
-          <div class="empty">No matching apps found. Search by app name or bundle ID, or use Browse.</div>
         {:else}
-          <div class="empty">No matching apps found. Search by app name or bundle ID.</div>
+          <div class="empty">No matching apps found. Try typing the bundle ID directly (e.g., com.apple.TextEdit)</div>
         {/if}
-      {:else if supportsBrowse}
-        <div class="empty">Search by app name or bundle ID. If the app is not listed, use Browse.</div>
       {:else}
-        <div class="empty">Search by app name or bundle ID.</div>
+        <div class="empty">Search for an app by name, or enter the bundle ID directly.</div>
       {/if}
     </div>
     <div class="modal-actions">
-      <button class="button" type="button" on:click={handleClose}>Cancel</button>
+      <button class="button" type="button" on:click={close}>Cancel</button>
       <button class="button primary" type="button" disabled={!canAdd} on:click={submit}>Add</button>
     </div>
   </div>

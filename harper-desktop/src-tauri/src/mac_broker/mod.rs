@@ -436,12 +436,11 @@ impl OsBroker for MacBroker {
             .lock()
             .map_err(|_| "Could not lock search index.".to_owned())?;
 
-        lock.populate()?;
-        Ok(lock.search(query))
-    }
+        if lock.is_empty() {
+            lock.populate()?;
+        }
 
-    fn resolve_app_path(&self, path: &str) -> Result<AppSearchResult, String> {
-        app_catalog::app_search_result_from_path(path)
+        Ok(lock.search(query))
     }
 }
 

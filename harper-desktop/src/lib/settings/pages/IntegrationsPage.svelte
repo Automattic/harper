@@ -184,7 +184,7 @@ function closeAppPicker() {
         disabled={isIntegrationsLoading || isIntegrationsSaving}
         on:click={() => (appPickerOpen = true)}
       >Add application...</button>
-      <span class="muted">Search installed apps by name or bundle ID.</span>
+      <span class="muted">Choose any app from your Applications folder.</span>
     </div>
   </div>
 
