@@ -8,7 +8,10 @@ use harper_core::Span;
 use is_macro::Is;
 use uiautomation::types::{TextPatternRangeEndpoint, TextUnit};
 use uiautomation::{UIAutomation, UIElement, patterns::UITextPattern};
+use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL, MonitorFromWindow};
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
+use windows::Win32::UI::WindowsAndMessaging::GetForegroundWindow;
+use windows::Win32::UI::HiDpi::{MDT_EFFECTIVE_DPI, GetDpiForMonitor};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -284,9 +287,10 @@ fn bounding_rectangles_for_span(
 
 fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>) -> JobResult {
     let Ok(element) = automation.get_focused_element() else {
-        
         return JobResult::Err;
     };
+
+    let effective_monitor_scale = get_focused_monitor_scale();
 
     let mut rects = Vec::with_capacity(arguments.len());
 
@@ -299,11 +303,26 @@ fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>)
             rects.push(
                 found_rects
                     .iter()
-                    .map(|(x, y, w, h)| Rect::new(*x, *y, *w, *h))
+                    .map(|(x, y, w, h)| Rect::new(*x / effective_monitor_scale, *y / effective_monitor_scale, *w / effective_monitor_scale, *h / effective_monitor_scale))
                     .collect(),
             );
         }
     }
 
     JobResult::GroupedRects(rects)
+}
+
+fn get_focused_monitor_scale() -> f64{
+    unsafe {
+        let window = GetForegroundWindow();
+        let monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
+
+        let mut x = 0;
+        let mut y = 0;
+
+        GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
+
+        let effective_scale = x as f64 / 96.; 
+        effective_scale
+    }   
 }
