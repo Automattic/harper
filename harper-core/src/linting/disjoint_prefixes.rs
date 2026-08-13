@@ -92,6 +92,16 @@ impl<D: Dictionary> ExprLinter for DisjointPrefixes<D> {
             return None;
         }
 
+        // "re" keeps its hyphen before an e-initial stem: re-execute, re-elect,
+        // re-examine. The joined spellings are affix-derived rather than attested,
+        // so don't push the user off the hyphenated form.
+        if toks[1].kind.is_hyphen()
+            && toks[0].get_str(src).eq_ignore_ascii_case("re")
+            && toks[2].get_str(src).starts_with(['e', 'E'])
+        {
+            return None;
+        }
+
         let mut hyphenated = None;
         if !toks[1].kind.is_hyphen() {
             hyphenated = Some(format!("{}-{}", toks[0].get_str(src), toks[2].get_str(src)));
@@ -204,6 +214,48 @@ mod tests {
             "My hobby is de extinction of the dinosaurs.",
             DisjointPrefixes::new(FstDictionary::curated()),
             "My hobby is de-extinction of the dinosaurs.",
+        );
+    }
+
+    #[test]
+    fn issue_3954_re_execute() {
+        assert_no_lints(
+            "Please re-execute the migration script.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_3954_re_elect() {
+        assert_no_lints(
+            "We must re-elect the mayor.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_3954_re_examine() {
+        assert_no_lints(
+            "I will re-examine the data.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_3954_still_joins_re_run() {
+        assert_suggestion_result(
+            "Please re-run the script.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "Please rerun the script.",
+        );
+    }
+
+    #[test]
+    fn issue_3954_still_joins_re_open() {
+        assert_suggestion_result(
+            "Let me re-open the ticket.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+            "Let me reopen the ticket.",
         );
     }
 }
