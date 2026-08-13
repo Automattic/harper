@@ -240,6 +240,10 @@ export default class LintFramework {
 					if (caretPosition != null) {
 						const closestIdx = closestBox(caretPosition, this.lastBoxes);
 
+						if (closestIdx < 0) {
+							return;
+						}
+
 						const previousBox = this.lastBoxes[closestIdx];
 						const suggestions = previousBox.lint.suggestions;
 						if (suggestions.length > 0) {
