@@ -8,20 +8,28 @@ pub struct Integration {
 
 impl Integration {
     pub fn curated_integrations() -> Vec<Self> {
-        [
+        #[cfg(target_os = "macos")]
+        let ids: &[&str] = &[
             "com.apple.TextEdit",
             "com.apple.mail",
             "com.apple.MobileSMS",
             "com.apple.Notes",
             "com.tinyspeck.slackmacgap",
             "com.hnc.Discord",
-        ]
-        .into_iter()
-        .map(|bundle_id| Integration {
-            bundle_id: bundle_id.to_string(),
-            enabled: true,
-        })
-        .collect()
+        ];
+
+        #[cfg(windows)]
+        let ids: &[&str] = &["notepad.exe"];
+
+        #[cfg(not(any(target_os = "macos", windows)))]
+        let ids: &[&str] = &[];
+
+        ids.iter()
+            .map(|&id| Integration {
+                bundle_id: id.to_string(),
+                enabled: true,
+            })
+            .collect()
     }
     pub fn is_integration_enabled_in(integrations: &[Self], bundle_id: &str) -> bool {
         integrations

@@ -228,6 +228,24 @@ build-desktop-macos-unsigned: build-harperjs build-lint-framework build-componen
   pnpm install
   pnpm tauri build -b app,dmg --config '{"bundle":{"createUpdaterArtifacts":false}}' --target universal-apple-darwin
 
+# Build Harper Desktop Windows bundles (NSIS installer).
+build-desktop-windows: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b nsis,msi
+
+# Build Harper Desktop Windows bundles without updater artifacts (for CI without signing keys).
+build-desktop-windows-unsigned: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build -b nsis,msi --config '{"bundle":{"createUpdaterArtifacts":false}}'
+
 # Build the Harper Obsidian plugin.
 build-obsidian: build-harperjs
   #!/usr/bin/env bash

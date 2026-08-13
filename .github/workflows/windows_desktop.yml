@@ -1,0 +1,50 @@
+name: Windows Desktop CI
+
+on:
+  push:
+    branches: ["master"]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 10.10.0
+      
+      - name: Install Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: 'pnpm'
+      
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@stable
+        with:
+          targets: x86_64-pc-windows-msvc
+          
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@v2
+          
+      - name: Install just
+        uses: taiki-e/install-action@just
+
+      - name: Install wasm-pack
+        uses: taiki-e/install-action@wasm-pack
+        
+      - name: Build WebAssembly Module
+        run: just build-wasm
+        
+      - name: Build Harper.js
+        run: just build-harperjs
+        
+      - name: Check Desktop App
+        run: just check-desktop
+        
+      - name: Build Desktop App
+        run: just build-desktop-windows-unsigned

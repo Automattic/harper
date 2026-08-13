@@ -2,12 +2,15 @@ use std::num::NonZeroU32;
 use std::sync::Arc;
 
 use egui_wgpu::winit::Painter;
-use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
+use egui_wgpu::{RendererOptions, WgpuConfiguration};
 use winit::dpi::{PhysicalPosition, PhysicalSize};
 use winit::event::WindowEvent;
 use winit::event_loop::ActiveEventLoop;
 use winit::monitor::MonitorHandle;
 use winit::window::{Window as WinitWindow, WindowButtons, WindowId, WindowLevel};
+
+#[cfg(target_os = "windows")]
+use winit::platform::windows::WindowAttributesExtWindows;
 
 use super::Error;
 use super::render_state::RenderState;
@@ -32,20 +35,29 @@ impl Window {
     ) -> Result<Self, Error> {
         let position = monitor.position();
         let size = monitor.size();
-        let window = Arc::new(
-            event_loop.create_window(
-                WinitWindow::default_attributes()
-                    .with_title("Harper")
-                    .with_inner_size(size)
-                    .with_position(position)
-                    .with_resizable(false)
-                    .with_enabled_buttons(WindowButtons::empty())
-                    .with_decorations(false)
-                    .with_transparent(true)
-                    .with_window_level(WindowLevel::AlwaysOnTop)
-                    .with_active(false),
-            )?,
-        );
+
+        let attributes = WinitWindow::default_attributes()
+            .with_title("Harper")
+            .with_inner_size(size)
+            .with_position(position)
+            .with_resizable(false)
+            .with_enabled_buttons(WindowButtons::empty())
+            .with_decorations(false)
+            .with_transparent(true)
+            .with_window_level(WindowLevel::AlwaysOnTop)
+            .with_active(false);
+
+        // WS_EX_NOREDIRECTIONBITMAP: without this, DWM composites the DirectComposition
+        // swap chain (see below) *behind* the HWND's redirection bitmap, and the redirection
+        // bitmap is painted with the window class's default (white) background brush, hiding
+        // the overlay.
+        #[cfg(target_os = "windows")]
+        let attributes = attributes
+            .with_skip_taskbar(true)
+            .with_undecorated_shadow(false)
+            .with_no_redirection_bitmap(true);
+
+        let window = Arc::new(event_loop.create_window(attributes)?);
 
         window.set_outer_position(PhysicalPosition::new(position.x, position.y));
         let _ = window.request_inner_size(PhysicalSize::new(size.width, size.height));
@@ -61,10 +73,28 @@ impl Window {
             None,
         );
 
+        #[allow(unused_mut)]
+        let mut setup_create =
+            egui_wgpu::WgpuSetupCreateNew::from_display_handle(event_loop.owned_display_handle());
+        #[cfg(target_os = "windows")]
+        {
+            // Route the DX12 backend through DirectComposition instead of a raw HWND swap chain.
+            // The HWND swap chain path only advertises `CompositeAlphaMode::Opaque`, so egui-wgpu
+            // cannot honour the transparent backbuffer and DWM composites the overlay as solid
+            // black. The DirectComposition path exposes `PreMultiplied`, which is what enables real
+            // per-pixel alpha for the overlay. wgpu owns the composition device/visual plumbing.
+            setup_create.instance_descriptor.backends = egui_wgpu::wgpu::Backends::DX12;
+            setup_create
+                .instance_descriptor
+                .backend_options
+                .dx12
+                .presentation_system = egui_wgpu::wgpu::Dx12SwapchainKind::DxgiFromVisual;
+        }
+
         let mut painter = Painter::new(
             context,
             WgpuConfiguration {
-                wgpu_setup: WgpuSetup::from_display_handle(event_loop.owned_display_handle()),
+                wgpu_setup: egui_wgpu::WgpuSetup::CreateNew(setup_create),
                 ..Default::default()
             },
             true,
