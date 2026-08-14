@@ -115,6 +115,27 @@ Amaç: genel "bu kelime var mı"; Zemberek süreci yok.
 
 ---
 
+## Faz 4b — GitHub'dan ek güvenli kalıplar ✅
+
+Amaç: GhostEdit dışında, GitHub'daki açık kaynak Türkçe dilbilgisi
+projelerini tara; TDK'yle çelişmeyen, homograph riski taşımayan kalıpları al.
+
+| Dilim | İş | Bitti |
+|---|---|---|
+| 4b-1 | `Denomas/Turkce-yazim-denetimi` (MIT) taraması | ✅ bkz. `turkish/KURALLAR.md` §2.4 |
+| 4b-2 | `TurkishUsage`'a ek bitişik/yazım hatası çiftleri | ✅ 22 yeni çift (`bişey`, `süpriz`, `deyil`, `gelicem`…) |
+| 4b-3 | Yeni kural: `TurkishMergeWords` (ayrı→bitişik) | ✅ `bir kaç`→`birkaç`, `vaz geçmek`→`vazgeçmek`, vb. |
+| 4b-4 | Yeni kural: `TurkishProperNouns` (özel isim büyük harf) | ✅ `türkiye`→`Türkiye`, `istanbul`→`İstanbul`, vb. — gün/ay adları bilerek **alınmadı** (bağlama bağlı) |
+| 4b-5 | Sözlüğe eksik kelimeler | ✅ `birçok`/`vazgeçti`/`teşekkürler`/`gideceğim` vb. |
+| 4b-6 | Önceden var olan gizli test hatası düzeltildi | ✅ `lint_descriptions_are_clean` — Türkçe açıklamalardaki örnekler artık backtick içinde |
+
+**Harvest:** `Denomas/Turkce-yazim-denetimi` MIT lisanslı, doğrudan alınabilir.
+Reddedilen/ertelenen kısımlar (argo kısaltmalar, deyimler, plaza Türkçesi,
+akademik dil sadeleştirme, gün/ay büyük harf) `KURALLAR.md` §2.4 ve §3.2'de
+gerekçesiyle listelendi.
+
+---
+
 ## Faz 5 — POS (büyük, ayrı) 🔄
 
 Amaç: özne-yüklem vb. Ancak `Document::parse` dil almadan başlanmaz.
@@ -140,15 +161,18 @@ Not: `turkish/DESKTOP.md`. Windows hâlâ `NoopBroker`.
 ## Mevcut Durum Özeti
 
 ```
-Faz 0 ✅ → Faz 1 ✅ → Faz 2 ✅ → Faz 3 ✅ → Faz 4 ✅ → Faz 5 🔄 → Faz 6 📋
+Faz 0 ✅ → Faz 1 ✅ → Faz 2 ✅ → Faz 3 ✅ → Faz 4 ✅ → Faz 4b ✅ → Faz 5 🔄 → Faz 6 📋
 ```
 
 **Tamamlanan özellikler:**
-- 102 birim test (tümü geçiyor)
-- 4 Türkçe lint kuralı (Usage, Redundancy, DeDaApostrophe, QuestionParticle)
+- 163 birim test (tümü geçiyor), toplam `harper-core` paketi 6286 test
+- 6 Türkçe lint kuralı (Usage, MergeWords, Redundancy, DeDaApostrophe,
+  QuestionParticle, ProperNouns)
 - 64.000+ kelimelik Türkçe sözlük
 - CLI `--profile turkish` desteği
 - WASM `Linter::new_turkish()` desteği
+- GhostEdit + GitHub (`Denomas/Turkce-yazim-denetimi`, MIT) çapraz kaynaklı
+  kural referansı: `turkish/KURALLAR.md`
 
 **Sonraki adımlar:**
 - Faz 5: POS eğitimi (opsiyonel, büyük iş)
