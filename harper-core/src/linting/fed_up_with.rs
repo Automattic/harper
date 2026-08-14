@@ -11,7 +11,7 @@ pub struct FedUpWith {
 
 impl FedUpWith {
     pub fn new(dialect: Dialect) -> Self {
-        let expr = SequenceExpr::fixed_phrase("fed up of");
+        let expr = SequenceExpr::word_seq(&["fed", "up", "of"]);
 
         Self { expr, dialect }
     }
@@ -39,7 +39,7 @@ impl ExprLinter for FedUpWith {
                 "with",
                 ofspan.get_content(src),
             )],
-            message: "`Fed up of` is not accepted outside of British English.".to_string(),
+            message: "`Fed up of` is not accepted outside of British English.".to_owned(),
             ..Default::default()
         })
     }

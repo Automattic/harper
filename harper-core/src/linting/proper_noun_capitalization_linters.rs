@@ -71,7 +71,7 @@ impl ExprLinter for ProperNounCapitalizationLinter {
             suggestions: vec![Suggestion::ReplaceWith(
                 canonical_case.get_source().to_vec(),
             )],
-            message: self.description.to_string(),
+            message: self.description.to_owned(),
             priority: 31,
         })
     }
@@ -116,60 +116,68 @@ pub fn lint_group() -> LintGroup {
 #[cfg(test)]
 mod tests {
     use super::lint_group;
+    use crate::linting::LintGroup;
+    use crate::linting::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    create_test_pool!(LintGroup, LintGroup, lint_group());
 
     #[test]
     fn americas_lowercase() {
-        assert_suggestion_result("south america", lint_group(), "South America");
-        assert_suggestion_result("north america", lint_group(), "North America");
+        assert_suggestion_result("south america", test_linter(), "South America");
+        assert_suggestion_result("north america", test_linter(), "North America");
     }
 
     #[test]
     fn americas_uppercase() {
-        assert_suggestion_result("SOUTH AMERICA", lint_group(), "South America");
-        assert_suggestion_result("NORTH AMERICA", lint_group(), "North America");
+        assert_suggestion_result("SOUTH AMERICA", test_linter(), "South America");
+        assert_suggestion_result("NORTH AMERICA", test_linter(), "North America");
     }
 
     #[test]
     fn americas_allow_correct() {
-        assert_lint_count("South America", lint_group(), 0);
-        assert_lint_count("North America", lint_group(), 0);
+        assert_lint_count("South America", test_linter(), 0);
+        assert_lint_count("North America", test_linter(), 0);
     }
 
     #[test]
     fn issue_798() {
         assert_suggestion_result(
             "The United states is a big country.",
-            lint_group(),
+            test_linter(),
             "The United States is a big country.",
         );
     }
 
     #[test]
     fn united_nations_uppercase() {
-        assert_suggestion_result("UNITED NATIONS", lint_group(), "United Nations");
+        assert_suggestion_result("UNITED NATIONS", test_linter(), "United Nations");
     }
 
     #[test]
     fn united_arab_emirates_lowercase() {
-        assert_suggestion_result("UNITED ARAB EMIRATES", lint_group(), "United Arab Emirates");
+        assert_suggestion_result(
+            "UNITED ARAB EMIRATES",
+            test_linter(),
+            "United Arab Emirates",
+        );
     }
 
     #[test]
     fn united_nations_allow_correct() {
-        assert_lint_count("United Nations", lint_group(), 0);
+        assert_lint_count("United Nations", test_linter(), 0);
     }
 
     #[test]
     fn meta_allow_correct() {
-        assert_lint_count("Meta Quest", lint_group(), 0);
+        assert_lint_count("Meta Quest", test_linter(), 0);
     }
 
     #[test]
     fn microsoft_lowercase() {
         assert_suggestion_result(
             "microsoft visual studio",
-            lint_group(),
+            test_linter(),
             "Microsoft Visual Studio",
         );
     }
@@ -178,81 +186,127 @@ mod tests {
     fn microsoft_first_word_is_correct() {
         assert_suggestion_result(
             "Microsoft visual studio",
-            lint_group(),
+            test_linter(),
             "Microsoft Visual Studio",
         );
     }
 
     #[test]
+    fn apple_ipod_lowercase() {
+        assert_suggestion_result("apple ipod", lint_group(), "Apple iPod");
+    }
+
+    #[test]
+    fn apple_ipod_allow_correct() {
+        assert_lint_count("Apple iPod", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_macbook_family_lowercase() {
+        assert_suggestion_result("macbook pro", lint_group(), "MacBook Pro");
+        assert_suggestion_result("macbook air", lint_group(), "MacBook Air");
+    }
+
+    #[test]
+    fn apple_macbook_family_allow_correct() {
+        assert_lint_count("MacBook Pro", lint_group(), 0);
+        assert_lint_count("MacBook Air", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_mac_family_lowercase() {
+        assert_suggestion_result("mac pro", lint_group(), "Mac Pro");
+        assert_suggestion_result("mac mini", lint_group(), "Mac Mini");
+    }
+
+    #[test]
+    fn apple_mac_family_allow_correct() {
+        assert_lint_count("Mac Pro", lint_group(), 0);
+        assert_lint_count("Mac Mini", lint_group(), 0);
+    }
+
+    #[test]
+    fn apple_airpods_family_lowercase() {
+        assert_suggestion_result("airpods pro", lint_group(), "AirPods Pro");
+        assert_suggestion_result("airpods max", lint_group(), "AirPods Max");
+    }
+
+    #[test]
+    fn apple_airpods_family_allow_correct() {
+        assert_lint_count("AirPods Pro", lint_group(), 0);
+        assert_lint_count("AirPods Max", lint_group(), 0);
+    }
+
+    #[test]
     fn test_atlantic_ocean_lowercase() {
-        assert_suggestion_result("atlantic ocean", lint_group(), "Atlantic Ocean");
+        assert_suggestion_result("atlantic ocean", test_linter(), "Atlantic Ocean");
     }
 
     #[test]
     fn test_pacific_ocean_lowercase() {
-        assert_suggestion_result("pacific ocean", lint_group(), "Pacific Ocean");
+        assert_suggestion_result("pacific ocean", test_linter(), "Pacific Ocean");
     }
 
     #[test]
     fn test_indian_ocean_lowercase() {
-        assert_suggestion_result("indian ocean", lint_group(), "Indian Ocean");
+        assert_suggestion_result("indian ocean", test_linter(), "Indian Ocean");
     }
 
     #[test]
     fn test_southern_ocean_lowercase() {
-        assert_suggestion_result("southern ocean", lint_group(), "Southern Ocean");
+        assert_suggestion_result("southern ocean", test_linter(), "Southern Ocean");
     }
 
     #[test]
     fn test_arctic_ocean_lowercase() {
-        assert_suggestion_result("arctic ocean", lint_group(), "Arctic Ocean");
+        assert_suggestion_result("arctic ocean", test_linter(), "Arctic Ocean");
     }
 
     #[test]
     fn test_mediterranean_sea_lowercase() {
-        assert_suggestion_result("mediterranean sea", lint_group(), "Mediterranean Sea");
+        assert_suggestion_result("mediterranean sea", test_linter(), "Mediterranean Sea");
     }
 
     #[test]
     fn test_caribbean_sea_lowercase() {
-        assert_suggestion_result("caribbean sea", lint_group(), "Caribbean Sea");
+        assert_suggestion_result("caribbean sea", test_linter(), "Caribbean Sea");
     }
 
     #[test]
     fn test_south_china_sea_lowercase() {
-        assert_suggestion_result("south china sea", lint_group(), "South China Sea");
+        assert_suggestion_result("south china sea", test_linter(), "South China Sea");
     }
 
     #[test]
     fn test_atlantic_ocean_correct() {
-        assert_lint_count("Atlantic Ocean", lint_group(), 0);
+        assert_lint_count("Atlantic Ocean", test_linter(), 0);
     }
 
     #[test]
     fn test_pacific_ocean_correct() {
-        assert_lint_count("Pacific Ocean", lint_group(), 0);
+        assert_lint_count("Pacific Ocean", test_linter(), 0);
     }
 
     #[test]
     fn test_indian_ocean_correct() {
-        assert_lint_count("Indian Ocean", lint_group(), 0);
+        assert_lint_count("Indian Ocean", test_linter(), 0);
     }
 
     #[test]
     fn test_mediterranean_sea_correct() {
-        assert_lint_count("Mediterranean Sea", lint_group(), 0);
+        assert_lint_count("Mediterranean Sea", test_linter(), 0);
     }
 
     #[test]
     fn test_south_china_sea_correct() {
-        assert_lint_count("South China Sea", lint_group(), 0);
+        assert_lint_count("South China Sea", test_linter(), 0);
     }
 
     #[test]
     fn day_one_in_sentence() {
         assert_suggestion_result(
             "I love day one. It is the best journaling app.",
-            lint_group(),
+            test_linter(),
             "I love Day One. It is the best journaling app.",
         );
     }
@@ -261,41 +315,41 @@ mod tests {
     fn gilded_age_in_sentence() {
         assert_suggestion_result(
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
-            lint_group(),
+            test_linter(),
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
         );
     }
 
     #[test]
     fn chrome_extension_lowercase() {
-        assert_suggestion_result("chrome extension", lint_group(), "Chrome Extension");
+        assert_suggestion_result("chrome extension", test_linter(), "Chrome Extension");
     }
 
     #[test]
     fn chrome_extension_uppercase() {
-        assert_suggestion_result("CHROME EXTENSION", lint_group(), "Chrome Extension");
+        assert_suggestion_result("CHROME EXTENSION", test_linter(), "Chrome Extension");
     }
 
     #[test]
     fn chrome_extension_mixed_case() {
-        assert_suggestion_result("cHrOmE eXtEnSiOn", lint_group(), "Chrome Extension");
+        assert_suggestion_result("cHrOmE eXtEnSiOn", test_linter(), "Chrome Extension");
     }
 
     #[test]
     fn chrome_extension_second_word_lowercase() {
-        assert_suggestion_result("Chrome extension", lint_group(), "Chrome Extension");
+        assert_suggestion_result("Chrome extension", test_linter(), "Chrome Extension");
     }
 
     #[test]
     fn chrome_extension_first_word_lowercase() {
-        assert_suggestion_result("chrome Extension", lint_group(), "Chrome Extension");
+        assert_suggestion_result("chrome Extension", test_linter(), "Chrome Extension");
     }
 
     #[test]
     fn chrome_extension_in_sentence() {
         assert_suggestion_result(
             "Install the chrome extension from the store.",
-            lint_group(),
+            test_linter(),
             "Install the Chrome Extension from the store.",
         );
     }
@@ -304,7 +358,7 @@ mod tests {
     fn chrome_extension_with_leading_article() {
         assert_suggestion_result(
             "The chrome extension is ready.",
-            lint_group(),
+            test_linter(),
             "The Chrome Extension is ready.",
         );
     }
@@ -313,7 +367,7 @@ mod tests {
     fn chrome_extension_with_trailing_period() {
         assert_suggestion_result(
             "We shipped the chrome extension.",
-            lint_group(),
+            test_linter(),
             "We shipped the Chrome Extension.",
         );
     }
@@ -322,7 +376,7 @@ mod tests {
     fn chrome_extension_with_trailing_comma() {
         assert_suggestion_result(
             "The chrome extension, not the app, needs review.",
-            lint_group(),
+            test_linter(),
             "The Chrome Extension, not the app, needs review.",
         );
     }
@@ -331,7 +385,7 @@ mod tests {
     fn chrome_extension_with_trailing_colon() {
         assert_suggestion_result(
             "Preferred install target: chrome extension",
-            lint_group(),
+            test_linter(),
             "Preferred install target: Chrome Extension",
         );
     }
@@ -340,28 +394,28 @@ mod tests {
     fn chrome_extension_inside_quotes() {
         assert_suggestion_result(
             "They called it the \"chrome extension\" build.",
-            lint_group(),
+            test_linter(),
             "They called it the \"Chrome Extension\" build.",
         );
     }
 
     #[test]
     fn chrome_extension_across_sentence_boundary_not_present() {
-        assert_lint_count("Chrome. Extension", lint_group(), 0);
+        assert_lint_count("Chrome. Extension", test_linter(), 0);
     }
 
     #[test]
     fn chrome_extension_allows_correct_case() {
-        assert_lint_count("Chrome Extension", lint_group(), 0);
+        assert_lint_count("Chrome Extension", test_linter(), 0);
     }
 
     #[test]
     fn chrome_extension_allows_correct_case_in_sentence() {
-        assert_lint_count("The Chrome Extension is ready.", lint_group(), 0);
+        assert_lint_count("The Chrome Extension is ready.", test_linter(), 0);
     }
 
     #[test]
     fn browser_extension_not_flagged() {
-        assert_lint_count("browser extension", lint_group(), 0);
+        assert_lint_count("browser extension", test_linter(), 0);
     }
 }

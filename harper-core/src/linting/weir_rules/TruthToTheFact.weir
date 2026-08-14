@@ -1,0 +1,22 @@
+expr main <(truth to the fact), fact>
+
+let message "A `fact` is something that is true. Did you mean a `claim`, `story`, `allegation`, or etc.?"
+let description "Flags the redundant phrase `truth to the fact`."
+let kind "Redundancy"
+let becomes ["allegation", "allegations", "claim", "claims", "idea", "rumor", "rumors", "rumour", "rumours", "story"]
+
+# From GitHub
+
+test "I think there is some truth to the fact that there is a certain amount of overhead to running under the JVM." "I think there is some truth to the allegation that there is a certain amount of overhead to running under the JVM."
+
+# From Stack Exchange
+
+test "Is there any truth to the fact that an op-amp will behave ideally in closed-loop configuration only when it's closed-loop gain << open-loop gain?" "Is there any truth to the allegation that an op-amp will behave ideally in closed-loop configuration only when it's closed-loop gain << open-loop gain?"
+
+# From Medium
+
+test "Though words are a necessary, enjoyable part of the way we communicate, there is truth to the fact that people are attracted to images over words." "Though words are a necessary, enjoyable part of the way we communicate, there is truth to the allegation that people are attracted to images over words."
+
+# From Reddit
+
+test "Is there any truth to the fact that Marc Martel's vocals are used in the first few seconds of the \"Bohemian Rhapsody\" trailer?" "Is there any truth to the allegation that Marc Martel's vocals are used in the first few seconds of the \"Bohemian Rhapsody\" trailer?"

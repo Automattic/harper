@@ -14,11 +14,11 @@ impl Default for WhomSubjectOfVerb {
         Self {
             expr: SequenceExpr::word_set(&["whom", "whomever", "whomsoever"])
                 .t_ws()
-                .then_any_of(vec![
+                .then_any_of([
                     Box::new(SequenceExpr::default().then_kind_where(|k| {
                         k.is_verb_third_person_singular_present_form()
                             || k.is_verb_simple_past_form()
-                    })),
+                    })) as Box<dyn Expr>,
                     Box::new(ModalVerb::with_common_errors()),
                 ]),
         }

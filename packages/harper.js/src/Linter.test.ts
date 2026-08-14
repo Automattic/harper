@@ -177,6 +177,34 @@ for (const [linterName, Linter] of Object.entries(linters)) {
 		await linter.dispose();
 	});
 
+	test(`${linterName} can ignore non-English text in lint outputs`, async () => {
+		const linter = new Linter({ binary });
+		const source =
+			'En la mañana, como a dish de los huevos, un poquito of tocino, y a lot of leche.';
+
+		const defaultLints = await linter.lint(source, { language: 'plaintext' });
+		const englishOnlyLints = await linter.lint(source, {
+			language: 'plaintext',
+			isolateEnglish: true,
+		});
+		const defaultOrganizedLints = Object.values(
+			await linter.organizedLints(source, { language: 'plaintext' }),
+		).flat();
+		const englishOnlyOrganizedLints = Object.values(
+			await linter.organizedLints(source, {
+				language: 'plaintext',
+				isolateEnglish: true,
+			}),
+		).flat();
+
+		expect(defaultLints.length).toBeGreaterThan(0);
+		expect(defaultOrganizedLints.length).toBeGreaterThan(0);
+		expect(englishOnlyLints).toHaveLength(0);
+		expect(englishOnlyOrganizedLints).toHaveLength(0);
+
+		await linter.dispose();
+	});
+
 	test(`${linterName} can run setup without issues`, async () => {
 		const linter = new Linter({ binary });
 
