@@ -3937,6 +3937,13 @@
 								"state": true,
 								"label": "Would Never Have"
 							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
+							}
 						}
 					]
 				}
