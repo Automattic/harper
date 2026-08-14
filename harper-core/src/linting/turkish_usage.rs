@@ -21,21 +21,33 @@ const USAGE_PAIRS: &[(&str, &str)] = &[
     ("hiçbirşey", "hiçbir şey"),
     ("herkez", "herkes"),
     ("yalnış", "yanlış"),
+    ("yanlız", "yalnız"),
     ("malesef", "maalesef"),
     ("yada", "ya da"),
     ("arasıra", "ara sıra"),
     ("bazan", "bazen"),
     ("herzaman", "her zaman"),
+    ("hergün", "her gün"),
     ("heryer", "her yer"),
+    ("heryerde", "her yerde"),
     ("birkez", "bir kez"),
     ("şuan", "şu an"),
     ("şuanda", "şu anda"),
+    // Circumflex eksik
+    ("eger", "eğer"),
+    ("gercek", "gerçek"),
+    ("gercekten", "gerçekten"),
     // "de/da" bağlacı: ayrı yazılır
     ("benimde", "benim de"),
     ("seninde", "senin de"),
     ("onunda", "onun da"),
     ("bizimde", "bizim de"),
     ("sizinde", "sizin de"),
+    ("onuda", "onu da"),
+    ("bunuda", "bunu da"),
+    ("şunuda", "şunu da"),
+    ("kendide", "kendi de"),
+    ("kendiside", "kendisi de"),
     // "ki" bağlacı: yalnızca ayrı yazılması gereken kapalı liste (benimki/halbuki değil)
     ("demekki", "demek ki"),
     ("öyleki", "öyle ki"),
@@ -351,5 +363,90 @@ mod tests {
     #[test]
     fn no_lint_onunki() {
         assert_no_lints("Bu onunki.", TurkishUsage::default());
+    }
+
+    #[test]
+    fn detects_hergun() {
+        assert_suggestion_result(
+            "Hergün çalışıyorum.",
+            TurkishUsage::default(),
+            "Her gün çalışıyorum.",
+        );
+    }
+
+    #[test]
+    fn detects_yanliz() {
+        assert_suggestion_result("Yanlız kaldım.", TurkishUsage::default(), "Yalnız kaldım.");
+    }
+
+    #[test]
+    fn detects_onuda() {
+        assert_suggestion_result("Onuda al.", TurkishUsage::default(), "Onu da al.");
+    }
+
+    #[test]
+    fn detects_bunuda() {
+        assert_suggestion_result("Bunuda iste.", TurkishUsage::default(), "Bunu da iste.");
+    }
+
+    #[test]
+    fn detects_kendide() {
+        assert_suggestion_result(
+            "Kendide bilmiyor.",
+            TurkishUsage::default(),
+            "Kendi de bilmiyor.",
+        );
+    }
+
+    #[test]
+    fn detects_kendiside() {
+        assert_suggestion_result(
+            "Kendiside geldi.",
+            TurkishUsage::default(),
+            "Kendisi de geldi.",
+        );
+    }
+
+    #[test]
+    fn detects_eger() {
+        assert_suggestion_result("Eger gelirsen.", TurkishUsage::default(), "Eğer gelirsen.");
+    }
+
+    #[test]
+    fn detects_gercek() {
+        assert_suggestion_result("Bu gercek mi?", TurkishUsage::default(), "Bu gerçek mi?");
+    }
+
+    #[test]
+    fn detects_gercekten() {
+        assert_suggestion_result(
+            "Gercekten güzel.",
+            TurkishUsage::default(),
+            "Gerçekten güzel.",
+        );
+    }
+
+    #[test]
+    fn detects_heryerde() {
+        assert_suggestion_result(
+            "Heryerde arıyorum.",
+            TurkishUsage::default(),
+            "Her yerde arıyorum.",
+        );
+    }
+
+    #[test]
+    fn no_lint_bunda_locative() {
+        assert_no_lints("Bunda bir sorun yok.", TurkishUsage::default());
+    }
+
+    #[test]
+    fn no_lint_sunda_locative() {
+        assert_no_lints("Şunda bir hata var.", TurkishUsage::default());
+    }
+
+    #[test]
+    fn no_lint_birkac() {
+        assert_no_lints("Birkaç kişi geldi.", TurkishUsage::default());
     }
 }
