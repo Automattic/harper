@@ -31,7 +31,10 @@ fn split_glued_particle(word: &str) -> Option<(String, String)> {
         if !lower.ends_with(particle) {
             continue;
         }
-        let stem_chars = lower.chars().count().checked_sub(particle.chars().count())?;
+        let stem_chars = lower
+            .chars()
+            .count()
+            .checked_sub(particle.chars().count())?;
         if stem_chars < 3 {
             continue;
         }
@@ -78,9 +81,7 @@ impl ExprLinter for TurkishQuestionParticle {
             span: tok.span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::ReplaceWith(replacement.chars().collect())],
-            message: format!(
-                "Soru eki ayrı yazılır: \"{matched}\" → \"{replacement}\"."
-            ),
+            message: format!("Soru eki ayrı yazılır: \"{matched}\" → \"{replacement}\"."),
             priority: 31,
         })
     }

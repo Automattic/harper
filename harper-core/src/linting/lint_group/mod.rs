@@ -263,10 +263,6 @@ use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
-use super::turkish_de_da_apostrophe::TurkishDeDaApostrophe;
-use super::turkish_question_particle::TurkishQuestionParticle;
-use super::turkish_redundancy::TurkishRedundancy;
-use super::turkish_usage::TurkishUsage;
 use super::there_own::ThereOwn;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
@@ -285,6 +281,10 @@ use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
 use super::try_ones_luck::TryOnesLuck;
+use super::turkish_de_da_apostrophe::TurkishDeDaApostrophe;
+use super::turkish_question_particle::TurkishQuestionParticle;
+use super::turkish_redundancy::TurkishRedundancy;
+use super::turkish_usage::TurkishUsage;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_ellipsis_character::UseEllipsisCharacter;
@@ -974,7 +974,9 @@ impl LintGroup {
         group.config.set_rule_enabled("TurkishUsage", true);
         group.config.set_rule_enabled("TurkishRedundancy", true);
         group.config.set_rule_enabled("TurkishDeDaApostrophe", true);
-        group.config.set_rule_enabled("TurkishQuestionParticle", true);
+        group
+            .config
+            .set_rule_enabled("TurkishQuestionParticle", true);
         group.config.set_rule_enabled("SpellCheck", true);
         group
     }
@@ -1112,10 +1114,10 @@ mod tests {
     use crate::linting::LintKind;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::parsers::PlainEnglish;
     use crate::spell::{FstDictionary, MutableDictionary, turkish_dictionary};
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
-    use crate::parsers::PlainEnglish;
 
     create_test_pool!(
         LintGroup,
@@ -1369,9 +1371,9 @@ mod tests {
         );
         let spelling = organized.get("SpellCheck").cloned().unwrap_or_default();
         assert!(
-            spelling.iter().any(|lint| {
-                document.get_span_content_str(&lint.span) == "kelme"
-            }),
+            spelling
+                .iter()
+                .any(|lint| { document.get_span_content_str(&lint.span) == "kelme" }),
             "expected SpellCheck on 'kelme', got {organized:?}"
         );
     }

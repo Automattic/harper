@@ -22,9 +22,7 @@ mod turkish_dictionary;
 mod word_id;
 mod word_map;
 
-pub use self::turkish_dictionary::{
-    load_turkish_wordlist, turkish_dictionary, turkish_fold_chars,
-};
+pub use self::turkish_dictionary::{load_turkish_wordlist, turkish_dictionary, turkish_fold_chars};
 
 #[derive(PartialEq, Debug, Hash, Eq)]
 pub struct FuzzyMatchResult<'a> {

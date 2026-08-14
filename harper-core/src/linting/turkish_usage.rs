@@ -152,20 +152,12 @@ mod tests {
 
     #[test]
     fn detects_herkez() {
-        assert_suggestion_result(
-            "Herkez geldi.",
-            TurkishUsage::default(),
-            "Herkes geldi.",
-        );
+        assert_suggestion_result("Herkez geldi.", TurkishUsage::default(), "Herkes geldi.");
     }
 
     #[test]
     fn detects_suan() {
-        assert_suggestion_result(
-            "Şuan gelecek.",
-            TurkishUsage::default(),
-            "Şu an gelecek.",
-        );
+        assert_suggestion_result("Şuan gelecek.", TurkishUsage::default(), "Şu an gelecek.");
     }
 
     #[test]
@@ -218,11 +210,7 @@ mod tests {
 
     #[test]
     fn detects_birsey_before_period() {
-        assert_suggestion_result(
-            "Bana birşey.",
-            TurkishUsage::default(),
-            "Bana bir şey.",
-        );
+        assert_suggestion_result("Bana birşey.", TurkishUsage::default(), "Bana bir şey.");
     }
 
     #[test]
@@ -295,11 +283,7 @@ mod tests {
 
     #[test]
     fn splits_taaki() {
-        assert_suggestion_result(
-            "Taaki bitsin.",
-            TurkishUsage::default(),
-            "Ta ki bitsin.",
-        );
+        assert_suggestion_result("Taaki bitsin.", TurkishUsage::default(), "Ta ki bitsin.");
     }
 
     #[test]
@@ -333,11 +317,7 @@ mod tests {
 
     #[test]
     fn detects_arasira() {
-        assert_suggestion_result(
-            "Arasıra uğrar.",
-            TurkishUsage::default(),
-            "Ara sıra uğrar.",
-        );
+        assert_suggestion_result("Arasıra uğrar.", TurkishUsage::default(), "Ara sıra uğrar.");
     }
 
     #[test]
@@ -356,11 +336,7 @@ mod tests {
 
     #[test]
     fn detects_yalnis() {
-        assert_suggestion_result(
-            "Bu yalnış.",
-            TurkishUsage::default(),
-            "Bu yanlış.",
-        );
+        assert_suggestion_result("Bu yalnış.", TurkishUsage::default(), "Bu yanlış.");
     }
 
     #[test]

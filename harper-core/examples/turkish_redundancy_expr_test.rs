@@ -1,8 +1,8 @@
-use harper_core::{Document, Token, TokenStringExt};
-use harper_core::parsers::PlainEnglish;
-use harper_core::spell::MutableDictionary;
 use harper_core::expr::{Expr, SequenceExpr};
 use harper_core::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
+use harper_core::parsers::PlainEnglish;
+use harper_core::spell::MutableDictionary;
+use harper_core::{Document, Token, TokenStringExt};
 
 /// Türkçe "gereksiz sözcük" kalıplarını Harper'ın kendi `SequenceExpr` desen
 /// motoruyla (elle string karşılaştırma yerine) yakalayan linter.
@@ -64,7 +64,10 @@ impl ExprLinter for TurkishRedundancy {
                 replacement.chars().collect(),
                 matched.chars().collect::<Vec<_>>(),
             )],
-            message: format!("\"{}\" gereksiz sözcük tekrarı içeriyor, \"{}\" yeterli.", matched, replacement),
+            message: format!(
+                "\"{}\" gereksiz sözcük tekrarı içeriyor, \"{}\" yeterli.",
+                matched, replacement
+            ),
             priority: 31,
         })
     }
@@ -76,7 +79,8 @@ impl ExprLinter for TurkishRedundancy {
 
 fn main() {
     let dictionary = MutableDictionary::new();
-    let text = "Kısa özet olarak, İlk Önce bunu geri iade etmemiz, sonra da Hür Özgür yaşamamız lazım.";
+    let text =
+        "Kısa özet olarak, İlk Önce bunu geri iade etmemiz, sonra da Hür Özgür yaşamamız lazım.";
     let doc = Document::new(text, &PlainEnglish, &dictionary);
 
     let mut linter = TurkishRedundancy::new();
@@ -85,7 +89,9 @@ fn main() {
     println!("Girdi: {}", text);
     println!("Bulunan {} hata:", lints.len());
     for lint in &lints {
-        let matched: String = doc.get_source()[lint.span.start..lint.span.end].iter().collect();
+        let matched: String = doc.get_source()[lint.span.start..lint.span.end]
+            .iter()
+            .collect();
         println!("  \"{}\" -> {}", matched, lint.message);
     }
 

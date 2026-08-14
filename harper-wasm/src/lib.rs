@@ -152,8 +152,10 @@ impl Linter {
     /// Turkish pattern linters plus the bundled Turkish word list.
     /// Does not use the English curated dictionary or `fill_with_curated`.
     pub fn new_turkish() -> Self {
-        let dictionary = Self::construct_turkish_merged_dict(&[Arc::new(MutableDictionary::default())]);
-        let lint_group = LintGroup::new_turkish_profile(dictionary.clone(), Dialect::American.into());
+        let dictionary =
+            Self::construct_turkish_merged_dict(&[Arc::new(MutableDictionary::default())]);
+        let lint_group =
+            LintGroup::new_turkish_profile(dictionary.clone(), Dialect::American.into());
 
         Self {
             lint_group,
@@ -204,7 +206,9 @@ impl Linter {
         Arc::new(lint_dict)
     }
 
-    fn construct_turkish_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
+    fn construct_turkish_merged_dict(
+        dicts: &[Arc<impl Dictionary + 'static>],
+    ) -> Arc<MergedDictionary> {
         let mut lint_dict = MergedDictionary::new();
         lint_dict.add_dictionary(turkish_dictionary());
         for dict in dicts {

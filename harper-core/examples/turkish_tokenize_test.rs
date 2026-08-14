@@ -1,5 +1,5 @@
-use harper_core::parsers::{Parser, PlainEnglish};
 use harper_core::TokenKind;
+use harper_core::parsers::{Parser, PlainEnglish};
 
 fn main() {
     let text = "Ayşe'de güzel bir gün geçirdik, İstanbul'dan Şükrü'yle döndük.";

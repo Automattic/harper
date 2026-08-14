@@ -1,7 +1,7 @@
-use harper_core::{Document, Span, Token, TokenStringExt};
+use harper_core::linting::{Lint, LintKind, Linter, Suggestion};
 use harper_core::parsers::PlainEnglish;
 use harper_core::spell::MutableDictionary;
-use harper_core::linting::{Lint, LintKind, Linter, Suggestion};
+use harper_core::{Document, Span, Token, TokenStringExt};
 use itertools::Itertools;
 
 /// Türkçe "gereksiz sözcük" (redundancy) kalıplarını (iki kelimelik) yakalayan

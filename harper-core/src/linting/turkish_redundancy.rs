@@ -283,7 +283,9 @@ mod tests {
 
     #[test]
     fn turkish_match_case_all_caps_ilk_once() {
-        let out: String = super::turkish_match_case("İLK ÖNCE", "önce").into_iter().collect();
+        let out: String = super::turkish_match_case("İLK ÖNCE", "önce")
+            .into_iter()
+            .collect();
         assert_eq!(out, "ÖNCE");
     }
 
@@ -359,7 +361,10 @@ mod tests {
 
     #[test]
     fn no_lint_on_ozet_alone() {
-        assert_no_lints("Özet olarak şunu söylemek isterim.", TurkishRedundancy::default());
+        assert_no_lints(
+            "Özet olarak şunu söylemek isterim.",
+            TurkishRedundancy::default(),
+        );
     }
 
     #[test]
@@ -381,11 +386,7 @@ mod tests {
 
     #[test]
     fn detects_hic_bir_before_period() {
-        assert_suggestion_result(
-            "Hiç bir.",
-            TurkishRedundancy::default(),
-            "Hiçbir.",
-        );
+        assert_suggestion_result("Hiç bir.", TurkishRedundancy::default(), "Hiçbir.");
     }
 
     #[test]

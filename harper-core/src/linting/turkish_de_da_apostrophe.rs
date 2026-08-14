@@ -67,9 +67,7 @@ impl ExprLinter for TurkishDeDaApostrophe {
             span: tok.span,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::ReplaceWith(replacement.chars().collect())],
-            message: format!(
-                "\"de/da\" bağlacı ayrı yazılır: \"{matched}\" → \"{replacement}\"."
-            ),
+            message: format!("\"de/da\" bağlacı ayrı yazılır: \"{matched}\" → \"{replacement}\"."),
             priority: 31,
         })
     }
@@ -104,11 +102,7 @@ mod tests {
 
     #[test]
     fn splits_before_period() {
-        assert_suggestion_result(
-            "Ayşe'de.",
-            TurkishDeDaApostrophe::default(),
-            "Ayşe de.",
-        );
+        assert_suggestion_result("Ayşe'de.", TurkishDeDaApostrophe::default(), "Ayşe de.");
     }
 
     #[test]

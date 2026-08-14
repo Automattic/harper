@@ -1,8 +1,8 @@
-use harper_core::{Document, Token, TokenKind, TokenStringExt};
-use harper_core::parsers::PlainEnglish;
-use harper_core::spell::MutableDictionary;
 use harper_core::expr::{Expr, SequenceExpr};
 use harper_core::linting::{Chunk, ExprLinter, Lint, LintKind, Linter, Suggestion};
+use harper_core::parsers::PlainEnglish;
+use harper_core::spell::MutableDictionary;
+use harper_core::{Document, Token, TokenKind, TokenStringExt};
 
 /// Rust'ın `to_lowercase()` fonksiyonu çoğu Türkçe harf için (ö,ü,ş,ğ,ç) zaten
 /// doğru çalışır (bunlar standart Unicode büyük/küçük harf çiftleridir).
@@ -104,7 +104,10 @@ impl ExprLinter for TurkishRedundancyFixed {
                 replacement.chars().collect(),
                 matched.chars().collect::<Vec<_>>(),
             )],
-            message: format!("\"{}\" gereksiz sözcük tekrarı içeriyor, \"{}\" yeterli.", matched, replacement),
+            message: format!(
+                "\"{}\" gereksiz sözcük tekrarı içeriyor, \"{}\" yeterli.",
+                matched, replacement
+            ),
             priority: 31,
         })
     }
@@ -116,7 +119,8 @@ impl ExprLinter for TurkishRedundancyFixed {
 
 fn main() {
     let dictionary = MutableDictionary::new();
-    let text = "Kısa özet olarak, İLK ÖNCE bunu geri iade etmemiz, sonra da HÜR ÖZGÜR yaşamamız lazım.";
+    let text =
+        "Kısa özet olarak, İLK ÖNCE bunu geri iade etmemiz, sonra da HÜR ÖZGÜR yaşamamız lazım.";
     let doc = Document::new(text, &PlainEnglish, &dictionary);
 
     let mut linter = TurkishRedundancyFixed::new();
@@ -125,7 +129,9 @@ fn main() {
     println!("Girdi: {}", text);
     println!("Bulunan {} hata:", lints.len());
     for lint in &lints {
-        let matched: String = doc.get_source()[lint.span.start..lint.span.end].iter().collect();
+        let matched: String = doc.get_source()[lint.span.start..lint.span.end]
+            .iter()
+            .collect();
         println!("  \"{}\" -> {}", matched, lint.message);
     }
 
