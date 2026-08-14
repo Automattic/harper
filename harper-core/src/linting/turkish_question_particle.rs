@@ -48,7 +48,7 @@ fn split_glued_particle(word: &str) -> Option<(String, String)> {
     None
 }
 
-/// Splits a question particle glued onto a verb (or var/yok): `gittimi` → `gitti mi`.
+/// Splits a question particle glued onto a verb (or var/yok): `geldimi` → `geldi mi`.
 pub struct TurkishQuestionParticle {
     expr: SequenceExpr,
 }
@@ -87,7 +87,7 @@ impl ExprLinter for TurkishQuestionParticle {
     }
 
     fn description(&self) -> &'static str {
-        "Splits a Turkish question particle glued to a verb (e.g. \"gittimi\" -> \"gitti mi\")."
+        "Splits a Turkish question particle glued to a verb (e.g. `geldimi` -> `geldi mi`)."
     }
 }
 

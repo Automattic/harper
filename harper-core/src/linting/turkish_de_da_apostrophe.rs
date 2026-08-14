@@ -73,7 +73,7 @@ impl ExprLinter for TurkishDeDaApostrophe {
     }
 
     fn description(&self) -> &'static str {
-        "Splits a Turkish conjunction de/da that was attached with an apostrophe (e.g. \"Ayşe'de\" -> \"Ayşe de\")."
+        "Splits a Turkish conjunction (`de`/`da`) that was attached with an apostrophe (e.g. `Ayşe'de` -> `Ayşe de`)."
     }
 }
 
