@@ -12,10 +12,10 @@ use serde::Serialize;
 
 use harper_core::{
     Dialect, DictWordMetadata, Document, Token, TokenKind,
-    linting::{FlatConfig, Lint, LintGroup, LintKind},
+    linting::{FlatConfig, Lint, LintGroup, LintKind, LintProfile},
     parsers::MarkdownOptions,
     remove_overlaps_map,
-    spell::{Dictionary, MergedDictionary, MutableDictionary},
+    spell::{Dictionary, MergedDictionary, MutableDictionary, turkish_dictionary},
     weirpack::Weirpack,
 };
 
@@ -90,6 +90,7 @@ pub struct LintOptions {
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
     pub dialect: Dialect,
+    pub profile: LintProfile,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
@@ -195,6 +196,11 @@ pub fn lint(
         ..
     } = lint_options;
 
+    let curated_dictionary: Arc<dyn Dictionary> = match lint_options.profile {
+        LintProfile::Turkish => turkish_dictionary(),
+        LintProfile::Curated => curated_dictionary,
+    };
+
     // Zero or more inputs, default to stdin if not provided
     if inputs.is_empty() {
         inputs.push(SingleInput::from(StdinInput).into());
@@ -233,7 +239,7 @@ pub fn lint(
 
     // Create merged dictionary with base dictionary
     let mut curated_plus_user_dict = MergedDictionary::new();
-    curated_plus_user_dict.add_dictionary(Arc::new(curated_dictionary));
+    curated_plus_user_dict.add_dictionary(curated_dictionary.clone());
 
     let user_dict_msg = match load_dict(&user_dict_path) {
         Ok(user_dict) => {
@@ -409,6 +415,7 @@ fn lint_one_input(
         color: _,
         format: _,
         quiet: _,
+        profile,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -434,7 +441,17 @@ fn lint_one_input(
             }
         }
 
-        match single_input.load(markdown_options, &merged_dictionary) {
+        let loaded = if *profile == LintProfile::Turkish {
+            single_input.get_content().map(|text| {
+                let parser = single_input.get_parser(markdown_options);
+                let doc = Document::new_lexicon(&text, &parser, &merged_dictionary);
+                (doc, text)
+            })
+        } else {
+            single_input.load(markdown_options, &merged_dictionary)
+        };
+
+        match loaded {
             Err(err) => {
                 eprintln!("{}", err);
                 if matches!(report_mode, ReportStyle::Json) {
@@ -448,7 +465,11 @@ fn lint_one_input(
             }
             Ok((doc, source)) => {
                 // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                let mut lint_group = LintGroup::new_for_profile(
+                    *profile,
+                    merged_dictionary.into(),
+                    *dialect,
+                );
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;

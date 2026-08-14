@@ -8,7 +8,7 @@ use itertools::Itertools;
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
 use crate::punctuation::Punctuation;
-use crate::spell::{Dictionary, FstDictionary};
+use crate::spell::{Dictionary, FstDictionary, turkish_fold_chars};
 use crate::vec_ext::VecExt;
 use crate::{CharStringExt, FatStringToken, FatToken, Lrc, Token, TokenKind, TokenStringExt};
 use crate::{OrdinalSuffix, Span};
@@ -78,6 +78,42 @@ impl Document {
         document.parse(dictionary);
 
         document
+    }
+
+    /// Like [`Self::new_from_chars`], but skips the English Brill/Burn POS
+    /// tagger. Word metadata comes only from the provided dictionary.
+    pub fn new_from_chars_lexicon(
+        source: Lrc<[char]>,
+        parser: &impl Parser,
+        dictionary: &impl Dictionary,
+    ) -> Self {
+        let tokens = parser.parse(&source);
+        let mut document = Self { source, tokens };
+        document.parse_lexicon_only(dictionary);
+        document
+    }
+
+    /// Like [`Self::new`], but skips English Brill/Burn tagging.
+    pub fn new_lexicon(text: &str, parser: &impl Parser, dictionary: &impl Dictionary) -> Self {
+        let source: Lrc<_> = text.chars().collect();
+        Self::new_from_chars_lexicon(source, parser, dictionary)
+    }
+
+    fn parse_lexicon_only(&mut self, dictionary: &impl Dictionary) {
+        self.apply_fixups();
+
+        for token in &mut self.tokens {
+            let span = token.span;
+            if let TokenKind::Word(meta) = &mut token.kind {
+                let chars = &self.source[span.start..span.end];
+                let folded = turkish_fold_chars(chars);
+                *meta = dictionary
+                    .get_word_metadata(chars)
+                    .or_else(|| dictionary.get_word_metadata(&chars.to_lower()))
+                    .or_else(|| dictionary.get_word_metadata(&folded))
+                    .map(|c| c.into_owned());
+            }
+        }
     }
 
     /// Create a new document from character data using the built-in [`PlainEnglish`]

@@ -14,7 +14,7 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
+use harper_core::linting::{LintGroup, LintProfile};
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
 use harper_core::{
@@ -39,6 +39,22 @@ use annotate::AnnotationType;
 mod lint;
 use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
+
+#[derive(Clone, Copy, Debug, Default, PartialEq, Eq, clap::ValueEnum)]
+enum CliLintProfile {
+    #[default]
+    Curated,
+    Turkish,
+}
+
+impl From<CliLintProfile> for LintProfile {
+    fn from(profile: CliLintProfile) -> Self {
+        match profile {
+            CliLintProfile::Curated => LintProfile::Curated,
+            CliLintProfile::Turkish => LintProfile::Turkish,
+        }
+    }
+}
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
@@ -74,9 +90,12 @@ enum Args {
         /// Overlapping lints are removed by default. This option disables that behavior.
         #[arg(short = 'o', long)]
         keep_overlapping_lints: bool,
-        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        /// English regional spelling. Not a language selector; use `--profile turkish` for Turkish.
         #[arg(short, long, default_value = "us")]
         dialect: String,
+        /// Curated English rules, or the Turkish pattern + spelling profile.
+        #[arg(long, value_enum, default_value_t = CliLintProfile::Curated)]
+        profile: CliLintProfile,
         /// Path to the user dictionary.
         #[arg(short, long, default_value = config_dir().unwrap().join("harper-ls/dictionary.txt").into_os_string(), value_hint = ValueHint::FilePath)]
         user_dict_path: PathBuf,
@@ -253,6 +272,7 @@ fn main() -> anyhow::Result<()> {
             only,
             keep_overlapping_lints,
             dialect: dialect_str,
+            profile,
             user_dict_path,
             file_dict_path,
             weirpacks,
@@ -272,6 +292,7 @@ fn main() -> anyhow::Result<()> {
                     only,
                     keep_overlapping_lints,
                     dialect,
+                    profile: profile.into(),
                     weirpack_inputs: weirpacks,
                     color,
                     format,

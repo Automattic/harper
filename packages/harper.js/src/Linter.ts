@@ -156,4 +156,6 @@ export interface LinterInit {
 	binary: BinaryModule;
 	/** The dialect of English Harper should use. If omitted, Harper will default to American English. */
 	dialect?: Dialect;
+	/** Use the Turkish lint profile and word list instead of curated English. */
+	turkish?: boolean;
 }

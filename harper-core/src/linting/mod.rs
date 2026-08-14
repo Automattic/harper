@@ -282,6 +282,10 @@ mod the_proper_noun_possessive;
 mod the_the_to_that_the;
 mod then_than;
 mod there_is_agreement;
+mod turkish_de_da_apostrophe;
+mod turkish_question_particle;
+mod turkish_redundancy;
+mod turkish_usage;
 mod there_own;
 mod theres;
 mod theses_these;
@@ -330,7 +334,8 @@ pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
 pub use lint_group::{
-    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, StructuredConfig,
+    FlatConfig, HumanReadableSetting, HumanReadableStructuredConfig, LintGroup, LintProfile,
+    StructuredConfig,
 };
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;

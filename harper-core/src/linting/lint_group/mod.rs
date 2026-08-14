@@ -263,6 +263,10 @@ use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::the_the_to_that_the::TheTheToThatThe;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
+use super::turkish_de_da_apostrophe::TurkishDeDaApostrophe;
+use super::turkish_question_particle::TurkishQuestionParticle;
+use super::turkish_redundancy::TurkishRedundancy;
+use super::turkish_usage::TurkishUsage;
 use super::there_own::ThereOwn;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
@@ -330,6 +334,14 @@ pub use flat_config::FlatConfig;
 pub use structured_config::{
     HumanReadableSetting, HumanReadableStructuredConfig, StructuredConfig,
 };
+
+/// Which curated rule set to load. Not an English [`crate::Dialect`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
+pub enum LintProfile {
+    #[default]
+    Curated,
+    Turkish,
+}
 
 /// A struct for collecting the output of a number of individual [Linter]s.
 /// Each child can be toggled via the public, mutable `Self::config` object.
@@ -853,6 +865,10 @@ impl LintGroup {
         insert_expr_rule!(ThereOwn);
         insert_expr_rule!(Theres);
         insert_expr_rule!(ThesesThese);
+        insert_expr_rule!(TurkishDeDaApostrophe);
+        insert_expr_rule!(TurkishQuestionParticle);
+        insert_expr_rule!(TurkishRedundancy);
+        insert_expr_rule!(TurkishUsage);
         insert_struct_rule!(TheyreConfusions);
         insert_expr_rule!(ThingThink);
         insert_expr_rule!(ThisTypeOfThing);
@@ -942,6 +958,36 @@ impl LintGroup {
         let mut group = Self::new_curated(dictionary, dialect);
         group.config.clear();
         group
+    }
+
+    /// Lint profile for Turkish text.
+    ///
+    /// This is not a [`Dialect`]: dialects are English regional spelling.
+    /// Callers should pass a Turkish word list (not the English curated
+    /// dictionary) so [`SpellCheck`] does not flag ordinary Turkish words.
+    pub fn new_turkish_profile(
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) -> Self {
+        let mut group = Self::new_curated(dictionary, dialect);
+        group.config.clear();
+        group.config.set_rule_enabled("TurkishUsage", true);
+        group.config.set_rule_enabled("TurkishRedundancy", true);
+        group.config.set_rule_enabled("TurkishDeDaApostrophe", true);
+        group.config.set_rule_enabled("TurkishQuestionParticle", true);
+        group.config.set_rule_enabled("SpellCheck", true);
+        group
+    }
+
+    pub fn new_for_profile(
+        profile: LintProfile,
+        dictionary: Arc<impl Dictionary + 'static>,
+        dialect: Dialect,
+    ) -> Self {
+        match profile {
+            LintProfile::Curated => Self::new_curated(dictionary, dialect),
+            LintProfile::Turkish => Self::new_turkish_profile(dictionary, dialect),
+        }
     }
 
     pub fn organized_lints(&mut self, document: &Document) -> BTreeMap<String, Vec<Lint>> {
@@ -1066,9 +1112,10 @@ mod tests {
     use crate::linting::LintKind;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
-    use crate::spell::{FstDictionary, MutableDictionary};
+    use crate::spell::{FstDictionary, MutableDictionary, turkish_dictionary};
     use crate::weir::WeirLinter;
     use crate::{Dialect, Document, linting::Linter};
+    use crate::parsers::PlainEnglish;
 
     create_test_pool!(
         LintGroup,
@@ -1300,6 +1347,45 @@ mod tests {
                     panic!();
                 }
             });
+    }
+
+    #[test]
+    fn turkish_profile_flags_redundancy_and_misspelling() {
+        let dict = turkish_dictionary();
+        let mut group = LintGroup::new_turkish_profile(dict.clone(), Dialect::American);
+        let document = Document::new_lexicon(
+            "Kısa özet olarak kelme haber ver.",
+            &PlainEnglish,
+            dict.as_ref(),
+        );
+        let organized = group.organized_lints(&document);
+
+        let redundancy = organized
+            .get("TurkishRedundancy")
+            .expect("TurkishRedundancy should run");
+        assert!(
+            !redundancy.is_empty(),
+            "expected a redundancy lint for 'kısa özet', got {organized:?}"
+        );
+        let spelling = organized.get("SpellCheck").cloned().unwrap_or_default();
+        assert!(
+            spelling.iter().any(|lint| {
+                document.get_span_content_str(&lint.span) == "kelme"
+            }),
+            "expected SpellCheck on 'kelme', got {organized:?}"
+        );
+    }
+
+    #[test]
+    fn turkish_profile_accepts_common_words() {
+        let dict = turkish_dictionary();
+        let mut group = LintGroup::new_turkish_profile(dict.clone(), Dialect::American);
+        let document = Document::new_lexicon("ve kelime", &PlainEnglish, dict.as_ref());
+        let organized = group.organized_lints(&document);
+        assert!(
+            organized.get("SpellCheck").is_none_or(Vec::is_empty),
+            "expected no SpellCheck on 've kelime', got {organized:?}"
+        );
     }
 
     #[test]

@@ -16,7 +16,7 @@ use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
 use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
-    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
+    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, turkish_dictionary},
 };
 use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
@@ -118,6 +118,7 @@ pub struct Linter {
     weirpack_dictionaries: Vec<Arc<MutableDictionary>>,
     ignored_lints: IgnoredLints,
     dialect: Dialect,
+    turkish: bool,
     stats: Stats,
 }
 
@@ -143,6 +144,25 @@ impl Linter {
             dictionary,
             ignored_lints: IgnoredLints::default(),
             dialect,
+            turkish: false,
+            stats: Stats::default(),
+        }
+    }
+
+    /// Turkish pattern linters plus the bundled Turkish word list.
+    /// Does not use the English curated dictionary or `fill_with_curated`.
+    pub fn new_turkish() -> Self {
+        let dictionary = Self::construct_turkish_merged_dict(&[Arc::new(MutableDictionary::default())]);
+        let lint_group = LintGroup::new_turkish_profile(dictionary.clone(), Dialect::American.into());
+
+        Self {
+            lint_group,
+            user_dictionary: MutableDictionary::new(),
+            weirpack_dictionaries: Vec::new(),
+            dictionary,
+            ignored_lints: IgnoredLints::default(),
+            dialect: Dialect::American,
+            turkish: true,
             stats: Stats::default(),
         }
     }
@@ -155,10 +175,17 @@ impl Linter {
         let mut constituent_dictionaries = vec![Arc::new(self.user_dictionary.clone())];
         constituent_dictionaries.extend(self.weirpack_dictionaries.iter().cloned());
 
-        self.dictionary = Self::construct_merged_dict(&constituent_dictionaries);
+        self.dictionary = if self.turkish {
+            Self::construct_turkish_merged_dict(&constituent_dictionaries)
+        } else {
+            Self::construct_merged_dict(&constituent_dictionaries)
+        };
 
-        self.lint_group =
-            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into());
+        self.lint_group = if self.turkish {
+            LintGroup::new_turkish_profile(self.dictionary.clone(), self.dialect.into())
+        } else {
+            LintGroup::new_curated_empty_config(self.dictionary.clone(), self.dialect.into())
+        };
 
         self.lint_group.config.merge_from(lint_config);
     }
@@ -174,6 +201,15 @@ impl Linter {
             lint_dict.add_dictionary(Arc::new(dict.clone()));
         }
 
+        Arc::new(lint_dict)
+    }
+
+    fn construct_turkish_merged_dict(dicts: &[Arc<impl Dictionary + 'static>]) -> Arc<MergedDictionary> {
+        let mut lint_dict = MergedDictionary::new();
+        lint_dict.add_dictionary(turkish_dictionary());
+        for dict in dicts {
+            lint_dict.add_dictionary(Arc::new(dict.clone()));
+        }
         Arc::new(lint_dict)
     }
 
@@ -336,7 +372,7 @@ impl Linter {
             parser = Box::new(OopsAllHeadings::new(parser));
         }
 
-        if isolate_english {
+        if isolate_english && !self.turkish {
             parser = Box::new(IsolateEnglish::new(parser, self.dictionary.clone()));
         }
 
@@ -344,6 +380,10 @@ impl Linter {
     }
 
     fn with_curated_config<T>(&mut self, lint: impl FnOnce(&mut LintGroup) -> T) -> T {
+        if self.turkish {
+            return lint(&mut self.lint_group);
+        }
+
         let config = self.lint_group.config.clone();
         self.lint_group.config.fill_with_curated();
 
@@ -369,7 +409,11 @@ impl Linter {
             return vec![];
         };
 
-        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
+        let document = if self.turkish {
+            Document::new_from_chars_lexicon(source.clone(), &parser, &self.dictionary)
+        } else {
+            Document::new_from_chars(source.clone(), &parser, &self.dictionary)
+        };
 
         let mut lints =
             self.with_curated_config(|lint_group| lint_group.organized_lints(&document));
@@ -413,7 +457,11 @@ impl Linter {
             return vec![];
         };
 
-        let document = Document::new_from_chars(source.clone(), &parser, &self.dictionary);
+        let document = if self.turkish {
+            Document::new_from_chars_lexicon(source.clone(), &parser, &self.dictionary)
+        } else {
+            Document::new_from_chars(source.clone(), &parser, &self.dictionary)
+        };
 
         let mut lints = self.with_curated_config(|lint_group| lint_group.lint(&document));
 

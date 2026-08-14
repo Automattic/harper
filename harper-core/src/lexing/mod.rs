@@ -255,7 +255,7 @@ fn lex_plural_digit(src: &[char]) -> Option<FoundToken> {
     let l = src.len();
     let mut i = 0;
 
-    if src.is_empty() || !src[i].is_ascii_alphanumeric() {
+    if src.is_empty() || !src[i].is_ascii_digit() {
         return None;
     }
     i += 1;
@@ -362,6 +362,7 @@ mod tests {
     use super::lex_hex_number;
     use super::lex_long_decade;
     use super::lex_number;
+    use super::lex_with;
     use super::lex_word;
     use super::{FoundToken, TokenKind};
 
@@ -780,9 +781,15 @@ mod tests {
     }
 
     #[test]
-    fn doesnt_lex_1s_apostrophe_joined_number() {
-        let source: Vec<_> = "1's1".chars().collect();
+    fn doesnt_lex_turkish_asil_as_plural_digit() {
+        let source: Vec<_> = "asıl".chars().collect();
         assert!(lex_plural_digit(&source).is_none());
+        let tokens = lex_with(&source, lex_english_token);
+        assert_eq!(tokens.len(), 1);
+        let word: String = source[tokens[0].span.start..tokens[0].span.end]
+            .iter()
+            .collect();
+        assert_eq!(word, "asıl");
     }
 
     #[test]

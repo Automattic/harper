@@ -3132,6 +3132,34 @@
 						},
 						{
 							"Bool": {
+								"name": "TurkishDeDaApostrophe",
+								"state": false,
+								"label": "Turkish Conjunction De/Da with Apostrophe"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TurkishQuestionParticle",
+								"state": false,
+								"label": "Turkish Question Particle Spacing"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TurkishRedundancy",
+								"state": false,
+								"label": "Turkish Redundant Phrases"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TurkishUsage",
+								"state": false,
+								"label": "Turkish Usage and Spacing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RepeatedWords",
 								"state": true,
 								"label": "Repeated Words"

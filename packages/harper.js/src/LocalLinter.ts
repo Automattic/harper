@@ -40,16 +40,21 @@ export default class LocalLinter implements Linter {
 	binary: SuperBinaryModule;
 	private inner: Promise<WasmLinter>;
 	private disposed = false;
+	private turkish = false;
 
 	constructor(init: LinterInit) {
 		this.binary = init.binary as SuperBinaryModule;
 		this.binary.setup();
-		this.inner = this.createInner(init.dialect);
+		this.turkish = init.turkish ?? false;
+		this.inner = this.createInner(init.dialect, this.turkish);
 	}
 
-	private createInner(dialect?: Dialect): Promise<WasmLinter> {
+	private createInner(dialect?: Dialect, turkish?: boolean): Promise<WasmLinter> {
 		return LazyPromise.from(async () => {
 			await this.binary.setup();
+			if (turkish) {
+				return this.binary.createTurkishLinter();
+			}
 			return this.binary.createLinter(dialect);
 		});
 	}
@@ -220,7 +225,7 @@ export default class LocalLinter implements Linter {
 
 		if (inner.get_dialect() !== dialect) {
 			inner.free();
-			this.inner = this.createInner(dialect);
+			this.inner = this.createInner(dialect, this.turkish);
 		}
 
 		return Promise.resolve();

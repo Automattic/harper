@@ -157,6 +157,11 @@ export class SuperBinaryModule extends BinaryModuleImpl {
 		return exported.Linter.new(dialect ?? Dialect.American);
 	}
 
+	async createTurkishLinter(): Promise<WasmLinter> {
+		const exported = await this.getBinaryModule();
+		return exported.Linter.new_turkish();
+	}
+
 	async getBinaryModule(): Promise<any> {
 		return await LazyPromise.from(() =>
 			loadBinary(typeof this.url === 'string' ? this.url : this.url.href, this.glueFlavor),
