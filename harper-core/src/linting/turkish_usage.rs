@@ -28,15 +28,40 @@ const USAGE_PAIRS: &[(&str, &str)] = &[
     ("bazan", "bazen"),
     ("herzaman", "her zaman"),
     ("hergün", "her gün"),
+    ("birgün", "bir gün"),
     ("heryer", "her yer"),
     ("heryerde", "her yerde"),
     ("birkez", "bir kez"),
     ("şuan", "şu an"),
     ("şuanda", "şu anda"),
+    ("hiçbirzaman", "hiçbir zaman"),
+    ("okadar", "o kadar"),
+    ("bukadar", "bu kadar"),
+    ("şukadar", "şu kadar"),
+    ("nekadar", "ne kadar"),
+    ("herhangibir", "herhangi bir"),
+    ("bişey", "bir şey"),
+    ("bişi", "bir şey"),
     // Circumflex eksik
     ("eger", "eğer"),
     ("gercek", "gerçek"),
     ("gercekten", "gerçekten"),
+    // Yaygın yazım hataları (kaynak: Denomas/Turkce-yazim-denetimi, MIT)
+    ("süpriz", "sürpriz"),
+    ("şarz", "şarj"),
+    ("espiri", "espri"),
+    ("insiyatif", "inisiyatif"),
+    ("teşekürler", "teşekkürler"),
+    ("teşekür", "teşekkür"),
+    ("diğil", "değil"),
+    ("deyil", "değil"),
+    ("yokki", "yok ki"),
+    ("varki", "var ki"),
+    // Konuşma dilindeki kısaltılmış gelecek zaman ekleri
+    ("gelicem", "geleceğim"),
+    ("gidicem", "gideceğim"),
+    ("yapıcam", "yapacağım"),
+    ("edicek", "edecek"),
     // "de/da" bağlacı: ayrı yazılır
     ("benimde", "benim de"),
     ("seninde", "senin de"),
@@ -108,7 +133,7 @@ impl ExprLinter for TurkishUsage {
     }
 
     fn description(&self) -> &'static str {
-        "Detects common Turkish spacing and clitic errors (e.g. \"birşey\" -> \"bir şey\")."
+        "Detects common Turkish spacing and clitic errors (e.g. `yanlız` -> `yalnız`)."
     }
 }
 
@@ -448,5 +473,160 @@ mod tests {
     #[test]
     fn no_lint_birkac() {
         assert_no_lints("Birkaç kişi geldi.", TurkishUsage::default());
+    }
+
+    // Kaynak: Denomas/Turkce-yazim-denetimi (MIT) — bkz. turkish/KURALLAR.md
+    #[test]
+    fn detects_birgun() {
+        assert_suggestion_result(
+            "Birgün geleceğim.",
+            TurkishUsage::default(),
+            "Bir gün geleceğim.",
+        );
+    }
+
+    #[test]
+    fn detects_hicbirzaman() {
+        assert_suggestion_result(
+            "Hiçbirzaman unutmam.",
+            TurkishUsage::default(),
+            "Hiçbir zaman unutmam.",
+        );
+    }
+
+    #[test]
+    fn detects_okadar() {
+        assert_suggestion_result(
+            "Okadar yorgunum ki.",
+            TurkishUsage::default(),
+            "O kadar yorgunum ki.",
+        );
+    }
+
+    #[test]
+    fn detects_bukadar() {
+        assert_suggestion_result("Bukadar basit.", TurkishUsage::default(), "Bu kadar basit.");
+    }
+
+    #[test]
+    fn detects_sukadar() {
+        assert_suggestion_result("Şukadar yeter.", TurkishUsage::default(), "Şu kadar yeter.");
+    }
+
+    #[test]
+    fn detects_nekadar() {
+        assert_suggestion_result("Nekadar sürer?", TurkishUsage::default(), "Ne kadar sürer?");
+    }
+
+    #[test]
+    fn detects_herhangibir() {
+        assert_suggestion_result(
+            "Herhangibir sorun olursa ara.",
+            TurkishUsage::default(),
+            "Herhangi bir sorun olursa ara.",
+        );
+    }
+
+    #[test]
+    fn detects_bisey() {
+        assert_suggestion_result("Bişey söyle.", TurkishUsage::default(), "Bir şey söyle.");
+    }
+
+    #[test]
+    fn detects_bisi() {
+        assert_suggestion_result("Bişi yedim.", TurkishUsage::default(), "Bir şey yedim.");
+    }
+
+    #[test]
+    fn detects_supriz() {
+        assert_suggestion_result("Ne süpriz ama!", TurkishUsage::default(), "Ne sürpriz ama!");
+    }
+
+    #[test]
+    fn detects_sarz() {
+        assert_suggestion_result(
+            "Telefonu şarz et.",
+            TurkishUsage::default(),
+            "Telefonu şarj et.",
+        );
+    }
+
+    #[test]
+    fn detects_espiri() {
+        assert_suggestion_result(
+            "Kötü bir espiri yaptı.",
+            TurkishUsage::default(),
+            "Kötü bir espri yaptı.",
+        );
+    }
+
+    #[test]
+    fn detects_insiyatif() {
+        assert_suggestion_result(
+            "İnsiyatif almalısın.",
+            TurkishUsage::default(),
+            "İnisiyatif almalısın.",
+        );
+    }
+
+    #[test]
+    fn detects_tesekurler() {
+        assert_suggestion_result(
+            "Çok teşekürler.",
+            TurkishUsage::default(),
+            "Çok teşekkürler.",
+        );
+    }
+
+    #[test]
+    fn detects_diğil() {
+        assert_suggestion_result("Bu diğil o.", TurkishUsage::default(), "Bu değil o.");
+    }
+
+    #[test]
+    fn detects_deyil() {
+        assert_suggestion_result("Doğru deyil.", TurkishUsage::default(), "Doğru değil.");
+    }
+
+    #[test]
+    fn detects_yokki() {
+        assert_suggestion_result(
+            "Param yokki vereyim.",
+            TurkishUsage::default(),
+            "Param yok ki vereyim.",
+        );
+    }
+
+    #[test]
+    fn detects_varki() {
+        assert_suggestion_result("Bir şey varki.", TurkishUsage::default(), "Bir şey var ki.");
+    }
+
+    #[test]
+    fn detects_gelicem() {
+        assert_suggestion_result(
+            "Yarın gelicem.",
+            TurkishUsage::default(),
+            "Yarın geleceğim.",
+        );
+    }
+
+    #[test]
+    fn detects_gidicem() {
+        assert_suggestion_result(
+            "Şimdi gidicem.",
+            TurkishUsage::default(),
+            "Şimdi gideceğim.",
+        );
+    }
+
+    #[test]
+    fn detects_yapicam() {
+        assert_suggestion_result("Onu yapıcam.", TurkishUsage::default(), "Onu yapacağım.");
+    }
+
+    #[test]
+    fn detects_edicek() {
+        assert_suggestion_result("Yardım edicek.", TurkishUsage::default(), "Yardım edecek.");
     }
 }
