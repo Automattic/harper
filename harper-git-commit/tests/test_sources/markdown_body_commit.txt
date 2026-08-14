@@ -1,0 +1,15 @@
+tests: add markhdown test
+
+The spell chekker works great.
+
+```rust
+fn main() {
+    let str = "intentionaly bad string";
+}
+```
+
+- First bullet poont
+- Second bullet point
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.

@@ -19,8 +19,8 @@ impl Default for SoughtAfter {
                 "abit", // Typo for "a bit"
                 "are",  // may cause false positive, but few found so far.
                 "bit",
-                // "is" causes many false postivies and disambiguating looks tricky.
-                // "maybe" causes many false postivies and disambiguating looks tricky.
+                // "is" causes many false positives and disambiguating looks tricky.
+                // "maybe" causes many false positives and disambiguating looks tricky.
                 "of", "quiet", // Common typo for "quite".
             ])),
         ])
@@ -229,7 +229,6 @@ mod tests {
         );
     }
 
-    // This part is occasionally sort after and if they were easily available I reckon you'd sell a few easily enough.
     #[test]
     fn fix_occasionally_sort_after() {
         assert_suggestion_result(
@@ -294,7 +293,6 @@ mod tests {
         );
     }
 
-    // The university that i studied my MBBS from offers the course as well and it is quite sort after for the above said course.
     #[test]
     fn fix_quite_sort_after() {
         assert_suggestion_result(

@@ -64,6 +64,7 @@ impl ExprLinter for NounCountability {
             || followed_by_word(ctx, |t| {
                 t.kind.is_noun() || t.kind.is_oov() || t.get_ch(src).eq_str("and")
             })
+            || (is_ing_word(&toks[2], src) && followed_by_nominal_head(ctx, src))
         {
             return None;
         }
@@ -73,6 +74,11 @@ impl ExprLinter for NounCountability {
 
         // the mass noun
         let noun = toks[2].get_str(src).to_lowercase();
+
+        // specific exceptions
+        if noun == "software" && followed_by_word(ctx, |t| t.get_ch(src).eq_str("rendered")) {
+            return None;
+        }
 
         let synonym_corrections: &'static [Correction] = match (noun.as_str(), dq.as_str()) {
             ("advice", "a" | "an" | "another" | "each" | "every" | "one") => &[
@@ -184,10 +190,86 @@ impl ExprLinter for NounCountability {
     }
 }
 
+fn is_ing_word(tok: &Token, src: &[char]) -> bool {
+    tok.get_ch(src).ends_with_ignore_ascii_case_str("ing")
+}
+
+fn followed_by_nominal_head(ctx: Option<(&[Token], &[Token])>, src: &[char]) -> bool {
+    let Some((_, after)) = ctx else {
+        return false;
+    };
+
+    follows_modifiers_then_noun(after, src)
+        || follows_slash_separated_ing_modifiers_then_noun(after, src)
+}
+
+fn follows_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
+    let mut cursor = 0;
+
+    loop {
+        let Some([ws, word, rest @ ..]) = tokens.get(cursor..) else {
+            return false;
+        };
+
+        if !ws.kind.is_whitespace() {
+            return false;
+        }
+
+        if is_nominal_chain_boundary(word, src) {
+            return false;
+        }
+
+        if is_likely_nominal_head(word, src) {
+            return true;
+        }
+
+        if word.kind.is_adjective()
+            || word.kind.is_adverb()
+            || word.kind.is_verb_progressive_form()
+            || word.kind.is_verb_past_participle_form()
+        {
+            cursor = tokens.len() - rest.len();
+            continue;
+        }
+
+        return false;
+    }
+}
+
+fn is_nominal_chain_boundary(tok: &Token, src: &[char]) -> bool {
+    tok.kind.is_preposition()
+        || tok.kind.is_determiner()
+        || tok.kind.is_conjunction()
+        || tok.get_ch(src).eq_any_ignore_ascii_case_str(&[
+            "about", "after", "as", "at", "before", "by", "for", "from", "in", "into", "of", "on",
+            "through", "to", "under", "with",
+        ])
+}
+
+fn is_likely_nominal_head(tok: &Token, src: &[char]) -> bool {
+    (tok.kind.is_noun() || tok.kind.is_oov()) && !is_nominal_chain_boundary(tok, src)
+}
+
+fn follows_slash_separated_ing_modifiers_then_noun(tokens: &[Token], src: &[char]) -> bool {
+    let mut cursor = 0;
+    let mut saw_slash_modifier = false;
+
+    while let Some([slash, word, rest @ ..]) = tokens.get(cursor..) {
+        if !slash.kind.is_slash() || !is_ing_word(word, src) {
+            break;
+        }
+
+        saw_slash_modifier = true;
+        cursor = tokens.len() - rest.len();
+    }
+
+    saw_slash_modifier && follows_modifiers_then_noun(&tokens[cursor..], src)
+}
+
 #[cfg(test)]
 mod tests {
     use super::NounCountability;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     #[test]
     fn corrects_a() {
@@ -307,6 +389,30 @@ mod tests {
             "Additionally, many software development platforms also provide access to a community of developers.",
             NounCountability::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_ing_modifier_before_adjective_noun() {
+        assert_no_lints(
+            "They succeeded by receiving a working direct link in return.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_slash_separated_ing_modifiers_before_noun() {
+        assert_no_lints(
+            "MockAPI is meant to be a prototyping/testing/learning tool.",
+            NounCountability::default(),
+        );
+    }
+
+    #[test]
+    fn dont_flag_coordinate_predicate_ing_adjective() {
+        assert_no_lints(
+            "They're both confusing and tedious to use.",
+            NounCountability::default(),
         );
     }
 
@@ -467,6 +573,14 @@ mod tests {
             "Not in this form because it currently works with one punctuation with one letter either side.",
             NounCountability::default(),
             "Not in this form because it currently works with one punctuation mark with one letter either side.",
+        );
+    }
+
+    #[test]
+    fn dont_flag_a_software_rendered_game() {
+        assert_no_lints(
+            "There was a software rendered game in vein of Tomb Raider",
+            NounCountability::default(),
         );
     }
 }

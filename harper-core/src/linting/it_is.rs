@@ -67,8 +67,7 @@ impl ExprLinter for ItIs {
                 "it's".chars().collect(),
                 text,
             )],
-            message: "Consider using 'it's' (it is) instead of 'its' (possessive form)."
-                .to_string(),
+            message: "Consider using 'it's' (it is) instead of 'its' (possessive form).".to_owned(),
             priority: 31,
         })
     }

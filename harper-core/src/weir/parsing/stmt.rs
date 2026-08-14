@@ -22,9 +22,8 @@ pub fn parse_str(weir_code: &str, use_optimizer: bool) -> Result<Arc<Ast>, Error
     // This is used as the key for the cache hashmap.
     type ParseStrParams = (Arc<String>, bool);
 
-    static PARSE_CACHE: LazyLock<
-        RwLock<LruCache<ParseStrParams, Arc<Ast>, hashbrown::DefaultHashBuilder>>,
-    > = LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
+    static PARSE_CACHE: LazyLock<RwLock<LruCache<ParseStrParams, Arc<Ast>>>> =
+        LazyLock::new(|| RwLock::new(LruCache::new(NonZeroUsize::new(10000).unwrap())));
 
     let weir_code = Arc::new(weir_code.to_owned());
 

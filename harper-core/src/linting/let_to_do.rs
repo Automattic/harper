@@ -56,7 +56,7 @@ impl ExprLinter for LetToDo {
             span: toks[toks.len() - 2..].span()?,
             lint_kind: LintKind::Usage,
             suggestions: vec![Suggestion::Remove],
-            message: "The word `to` should not be used with `let` in this way.".to_string(),
+            message: "The word `to` should not be used with `let` in this way.".to_owned(),
             ..Default::default()
         })
     }

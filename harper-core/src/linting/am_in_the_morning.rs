@@ -33,8 +33,14 @@ impl Default for AmInTheMorning {
 
         let ws_at_periods = FixedPhrase::from_phrase(" at night");
 
-        let expr = SequenceExpr::any_of(vec![Box::new(maybe_ws_am), Box::new(maybe_ws_pm)])
-            .then_any_of(vec![Box::new(ws_in_periods), Box::new(ws_at_periods)]);
+        let expr = SequenceExpr::any_of([
+            Box::new(maybe_ws_am) as Box<dyn Expr>,
+            Box::new(maybe_ws_pm),
+        ])
+        .then_any_of([
+            Box::new(ws_in_periods) as Box<dyn Expr>,
+            Box::new(ws_at_periods),
+        ]);
 
         Self { expr }
     }

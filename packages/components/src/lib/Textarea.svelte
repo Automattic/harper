@@ -1,10 +1,10 @@
 <script lang="ts">
-import type { TextareaHTMLAttributes } from 'svelte/elements';
+import type { HTMLTextareaAttributes } from 'svelte/elements';
 
 export let className: string | undefined = undefined;
-export let value: TextareaHTMLAttributes['value'] = undefined;
-export let rows: TextareaHTMLAttributes['rows'] = undefined;
-export let cols: TextareaHTMLAttributes['cols'] = undefined;
+export let value: HTMLTextareaAttributes['value'] = undefined;
+export let rows: HTMLTextareaAttributes['rows'] = undefined;
+export let cols: HTMLTextareaAttributes['cols'] = undefined;
 
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};

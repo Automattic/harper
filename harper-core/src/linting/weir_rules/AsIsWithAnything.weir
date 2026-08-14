@@ -1,0 +1,11 @@
+expr main (as is with anything)
+
+let message "The phrase `as is with anything` is ungrammatical. Use `as with anything` or `as is the case with anything`."
+let description "Flags the incorrect idiom blend `as is with anything` and suggests standard alternatives like `as with anything` or `as is the case with anything`."
+let kind "WordChoice"
+let becomes ["as with anything", "as is the case with anything"]
+
+test "As is with anything if you break it down to a step by step process, the task becomes more manageable." "As is the case with anything if you break it down to a step by step process, the task becomes more manageable."
+test "The most challenging part, as is with anything, was trying to get started." "The most challenging part, as with anything, was trying to get started."
+
+allows "Dietpi should work as-is with anything that supports Roon or Airplay protocol."

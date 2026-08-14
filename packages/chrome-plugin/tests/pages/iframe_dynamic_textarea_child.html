@@ -29,7 +29,6 @@
         font: 16px/1.4 sans-serif;
         border: 1px solid #a1a1aa;
         box-sizing: border-box;
-        opacity: 0;
       }
     </style>
   </head>
@@ -50,11 +49,6 @@
         textarea.spellcheck = true;
 
         editorRoot.appendChild(textarea);
-
-        // Reveal after Harper's one-shot delayed scan so focus is what triggers attachment.
-        window.setTimeout(() => {
-          textarea.style.opacity = '1';
-        }, 1500);
       });
     </script>
   </body>

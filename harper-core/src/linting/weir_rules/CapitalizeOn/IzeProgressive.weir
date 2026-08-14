@@ -1,0 +1,9 @@
+expr main [(capitalizing off of), (capitalizing off)]
+
+let message "Did you mean `capitalizing on`?"
+let description "Corrects `capitalize off` to `capitalize on`."
+let kind "Usage"
+let becomes "capitalizing on"
+
+test "splits it apart into distinct monolgoes, capitalizing off of the semi-structures format" "splits it apart into distinct monolgoes, capitalizing on the semi-structures format"
+test "By capitalizing off the intermediary points -- each step of the way" "By capitalizing on the intermediary points -- each step of the way"

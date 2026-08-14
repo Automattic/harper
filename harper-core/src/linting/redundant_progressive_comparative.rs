@@ -56,7 +56,7 @@ impl ExprLinter for RedundantProgressiveComparative {
                 replacement,
                 span.get_content(src),
             )],
-            message: message.to_string(),
+            message: message.to_owned(),
             priority: 31,
         })
     }
