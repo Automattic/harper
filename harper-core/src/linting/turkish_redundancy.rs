@@ -67,7 +67,7 @@ pub(super) fn turkish_match_case(template: &str, replacement: &str) -> Vec<char>
 /// `char_string.rs`'s `eq_ignore_ascii_case` family), which silently fails to
 /// match Turkish uppercase letters (İ, Ö, Ü, Ş, Ğ, Ç). This closure-based
 /// matcher sidesteps that without modifying shared/core comparison code.
-fn turkish_word(word: &'static str) -> impl Fn(&Token, &[char]) -> bool {
+pub(super) fn turkish_word(word: &'static str) -> impl Fn(&Token, &[char]) -> bool {
     let target = turkish_lower(word);
     move |tok: &Token, source: &[char]| {
         if !matches!(tok.kind, TokenKind::Word(_)) {
@@ -78,7 +78,7 @@ fn turkish_word(word: &'static str) -> impl Fn(&Token, &[char]) -> bool {
     }
 }
 
-fn phrase_expr(words: &'static [&'static str]) -> SequenceExpr {
+pub(super) fn phrase_expr(words: &'static [&'static str]) -> SequenceExpr {
     let mut expr = SequenceExpr::default();
     for (i, word) in words.iter().enumerate() {
         if i > 0 {
@@ -174,7 +174,7 @@ impl ExprLinter for TurkishRedundancy {
     }
 
     fn description(&self) -> &'static str {
-        "Detects Turkish redundant-word phrases (e.g. \"kısa özet\" -> \"özet\")."
+        "Detects Turkish redundant-word phrases (e.g. `kısa özet` -> `özet`)."
     }
 }
 

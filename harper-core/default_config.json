@@ -3139,6 +3139,20 @@
 						},
 						{
 							"Bool": {
+								"name": "TurkishMergeWords",
+								"state": false,
+								"label": "Turkish Merge Words"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TurkishProperNouns",
+								"state": false,
+								"label": "Turkish Proper Noun Capitalization"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TurkishQuestionParticle",
 								"state": false,
 								"label": "Turkish Question Particle Spacing"

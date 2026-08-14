@@ -282,6 +282,8 @@ use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
 use super::try_ones_luck::TryOnesLuck;
 use super::turkish_de_da_apostrophe::TurkishDeDaApostrophe;
+use super::turkish_merge_words::TurkishMergeWords;
+use super::turkish_proper_nouns::TurkishProperNouns;
 use super::turkish_question_particle::TurkishQuestionParticle;
 use super::turkish_redundancy::TurkishRedundancy;
 use super::turkish_usage::TurkishUsage;
@@ -866,6 +868,8 @@ impl LintGroup {
         insert_expr_rule!(Theres);
         insert_expr_rule!(ThesesThese);
         insert_expr_rule!(TurkishDeDaApostrophe);
+        insert_expr_rule!(TurkishMergeWords);
+        insert_expr_rule!(TurkishProperNouns);
         insert_expr_rule!(TurkishQuestionParticle);
         insert_expr_rule!(TurkishRedundancy);
         insert_expr_rule!(TurkishUsage);
@@ -973,6 +977,8 @@ impl LintGroup {
         group.config.clear();
         group.config.set_rule_enabled("TurkishUsage", true);
         group.config.set_rule_enabled("TurkishRedundancy", true);
+        group.config.set_rule_enabled("TurkishMergeWords", true);
+        group.config.set_rule_enabled("TurkishProperNouns", true);
         group.config.set_rule_enabled("TurkishDeDaApostrophe", true);
         group
             .config

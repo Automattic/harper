@@ -64573,3 +64573,12 @@ deniyorum
 deniyorsun
 deniyor
 deniyoruz
+vazgeçti
+vazgeçtim
+teşekkürler
+gideceğim
+yapacağım
+geçmeyin
+geçmeyelim
+geçmeyeceğim
+vazgeçmeyin

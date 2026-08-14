@@ -301,6 +301,8 @@ mod transposed_space;
 mod try_ones_hand_at;
 mod try_ones_luck;
 mod turkish_de_da_apostrophe;
+mod turkish_merge_words;
+mod turkish_proper_nouns;
 mod turkish_question_particle;
 mod turkish_redundancy;
 mod turkish_usage;
