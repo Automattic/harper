@@ -16,6 +16,7 @@ ağacında kalır; aksi halde upstream ile birleştirmek zorlaşır.
 | Fork notları | `turkish/FORK-NOTES.md` |
 | Geliştirme analizi (2026-08-14) | `turkish/GELISTIRME-ANALIZI.md` |
 | Geliştirme planı | `turkish/GELISTIRME-PLANI.md` |
+| **Tüm kuralların referans listesi** | `turkish/KURALLAR.md` |
 | WASM uçtan uca scriptleri | `turkish/scripts/` |
 | Sözlük | `turkish/data/wordlist-tr.txt` (`turkish_dictionary()`) |
 | Masaüstü notu | `turkish/DESKTOP.md` |
