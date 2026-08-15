@@ -54470,6 +54470,7 @@ Wikimedia/Og        # foundation that runs Wikipedia etc.
 Win32/Og            # Microsoft Windows API
 WireGuard/Sg
 WooCommerce/Og
+X11/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
 XPath/Og            # XML path language
@@ -54663,6 +54664,7 @@ tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
 uncomment/VSdG
+unexpandable/J
 unicast/JVSdG
 unlintable/J
 untensed/J          # grammar
