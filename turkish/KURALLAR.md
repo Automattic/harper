@@ -277,13 +277,14 @@ Dosya: `harper-core/src/spell/turkish_dictionary.rs` · Kaynak: `turkish/data/wo
 
 ---
 
-## 2. GhostEdit Arşiv Analizi (yerel tarama özeti)
+## 2. GhostEdit Arşiv Analizi
 
-Kaynak: `turkish/GELISTIRME-ANALIZI.md` (2026-08-14 tarihli, yerel `D:\Projeler\harper-fork`
-ortamında yapılmış analiz — bu ajan tarafından tekrar taranamaz, sadece aktarılır).
+Kaynak: `turkish/GELISTIRME-ANALIZI.md` (2026-08-14, yerel `D:\Projeler\harper-fork`
+ortamında yapılmış ilk analiz) + **2026-08-15 doğrudan doğrulama** (aşağıda 2.5).
 
 `D:\Projeler\Harper türkçe projesi` = önceki Electron + Zemberek + BERT denemesi.
-**Kod olarak taşınmaz**, yalnızca fikir/veri kaynağı.
+**Kod olarak taşınmaz**, yalnızca fikir/veri kaynağı. Arşivin tamamı
+`archive/ghostedit-reference` branch'ine push edildi (bkz. 2.5).
 
 ### 2.1 Katman sırası (`dictionary-checker.ts`)
 
@@ -341,6 +342,41 @@ Diğer taranan ama uygun bulunmayan kaynaklar:
 - **StarlangSoftware/TurkishSpellChecker**: FSM tabanlı morfolojik yazım
   denetleyici, ayrı bir dil (Java/Python/C++) altyapısı gerektiriyor; Harper
   Rust ile bütünleşmiyor, kod olarak taşınmadı.
+
+### 2.5 Doğrudan arşiv doğrulaması (2026-08-15)
+
+`archive/ghostedit-reference` branch'i push edildikten sonra bu ajan (cloud) arşivi
+`git archive` ile çıkarıp **doğrudan** okudu — artık aktarım/özet değil, birincil
+kaynak karşılaştırması. Sonuç: **2026-08-14 yerel analizinde listelenen her şey
+doğru ve tamdı**, ek olarak şunlar teyit edildi:
+
+- `TURKISH_USAGE_MAPPINGS` (31 kalıp) ve `TURKISH_USAGE_PHRASE_MAPPINGS` (15 kalıp) —
+  tek tek karşılaştırıldı, **tamamı** `turkish_usage.rs`/`turkish_redundancy.rs`'de
+  mevcut (bazıları kasıtlı olarak homograf riski nedeniyle `no_lint` testiyle
+  atlanmış: `kar`/`kâr`, `hala`/`hâlâ`, `hakim`/`hâkim`, `adet`/`âdet`, `bende`/`sende`).
+- `TURKISH_GRAMMAR_RULE_CATEGORIES` (BERT'in 25 kural kimliği) — GhostEdit'in kendisi
+  de yalnızca 2'sini otomatik düzeltiyordu (`RULE_DE_DA_APOSTROPHE=5`,
+  `RULE_COMPOUND_MERGE=22` → `hiç bir`→`hiçbir`); **ikisi de** Harper'da
+  `TurkishDeDaApostrophe` ve `TurkishRedundancy` olarak zaten var. Kalan 23 kategori
+  GhostEdit'te de "yalnızca işaretle, düzeltme önerme" statüsündeydi — model
+  taşınmadığı için Harper'da da checklist düzeyinde kalıyor (bkz. 3.2).
+- `zemberek-bridge/data/extra-dictionary-tr.txt` (64.333 satır) ile
+  `turkish/data/wordlist-tr.txt` (64.585 satır) satır-satır karşılaştırıldı
+  (`comm -23`): **tek bir eksik kelime** bulundu (`şıvgın`, "sürgün/filiz"
+  anlamında nadir bir kelime) — eklendi. Aradaki fark, bizim eklediğimiz fiil
+  çekimleri ve temel bağlaçlardan (`da`, `mu`, `mı`, `mü`, `ise` vb.) geliyor.
+- `TURKISH_EXPRESSION_ERROR_RULES` (anlatım bozukluğu — özne-yüklem uyumsuzluğu,
+  mantık hatası, anlam belirsizliği vb.) — GhostEdit'te bunlar yalnızca **LLM
+  promptu** olarak çözülüyordu (Bonsai/Ollama/bulut), kural-tabanlı değil.
+  GhostEdit'in kendi canlı testinde 8B ve altı yerel modellerin bu konuda
+  güvenilmez olduğu not edilmiş (bkz. `TURKCE-UYARLAMA-PLANI.md`, "hibrit
+  kural+LLM" bölümü). Harper LLM içermediğinden bu kategori **kapsam dışı**
+  kalmaya devam ediyor — 3.2'ye "yalnızca LLM ile mümkün" olarak not edildi.
+
+**Sonuç: GhostEdit arşivinde Harper'a taşınmamış, güvenli/mekanik bir kural
+kalmadı.** Kalan tek gerçek boşluk POS etiketleyici (özne-yüklem uyumu gibi
+kurallar için) ve LLM-gerektiren anlam-seviyesi kategoriler — ikisi de ayrı,
+büyük ölçekli işler (bkz. Bölüm 3).
 
 ---
 
