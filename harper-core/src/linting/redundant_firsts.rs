@@ -174,7 +174,6 @@ mod tests {
         );
     }
 
-    // Gröna Lund (a name which translates to “Green Grove”) was first founded in 1883, when German showman Jacob Schultheis rented a patch of land on the waterfront in Stockholm.
     #[test]
     fn fix_first_founded() {
         assert_suggestion_result(
