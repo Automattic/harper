@@ -1,3 +1,37 @@
+## Bu Fork ve Ajan Koordinasyonu (ÖNCE OKU)
+
+Bu repo, Türkçe dilbilgisi/yazım denetimi desteği eklenmiş bir Harper
+fork'udur. Bu repoda **birden fazla AI ajanı** (örn. Claude Code, Cursor)
+paralel çalışabilir — çakışmayı önlemek için önce şunları oku:
+
+1. **`CLAUDE.md`** (repo kökü) — Türkçe çalışma alanının kuralları.
+   Özellikle: yeni bir dosya/modül eklendiğinde veya mimari değiştiğinde
+   `PROJECT-MAP.md`'nin güncellenmesi ZORUNLU.
+2. **`PROJECT-MAP.md`** (repo kökü) — Tüm crate'lerin ve `packages/`
+   ekosisteminin dosya bazlı, güncel tutulan mimari haritası. Kod
+   değiştirmeden önce burada ara; keşfi tekrarlama.
+3. **`turkish/FORK-NOTES.md`** — Türkçe motor tarafında (kurallar, sözlük,
+   POS durumu) neyin yapıldığı/yapılmadığının özeti.
+4. **`"Harper türkçe projesi/"`** klasörü (repo içinde, ayrı bir git
+   reposu) — **arşivdir**. Eski Electron/GhostEdit tabanlı deneme burada
+   duruyor, referans için korunuyor ama **yeni Türkçe kural, sözlük veya
+   POS işi buraya eklenmemeli**; asıl motor `harper-core/src/linting/
+   turkish_*.rs` ve `harper-core/src/spell/turkish_dictionary.rs`'dir. Bu
+   klasörün kendi `ARSIV.md`'sinde aynı kural tekrarlanıyor.
+
+**Koordinasyon disiplini** (birden fazla ajan aynı repoda çalışırken):
+- Değişiklik yapmadan önce `git status`/`git diff` ile başka bir ajanın
+  yarım bıraktığı iş olup olmadığını kontrol et.
+- Küçük, odaklı commit'ler tercih et; uzun süre commit'lenmemiş büyük
+  değişiklik yığını bırakma (başka bir ajan/insan üzerine yazabilir).
+- Türkçe motoruyla ilgili her önemli değişiklikten sonra `PROJECT-MAP.md`'yi
+  güncelle — bu, diğer ajanların (ve insanların) "keşfetmeden" devam
+  edebilmesinin tek yolu.
+- Aynı dosyada aynı anda çalışma riski varsa, üzerinde çalıştığın dosya/
+  modülü bu bölüme (veya bir görev takip aracına) not düşmek faydalı olur.
+
+---
+
 # Harper Docs Map for Agents
 
 This repository’s documentation site is powered by Vite + SvelteKit + SveltePress.
