@@ -11942,7 +11942,7 @@ afterthought/NSg
 afterward/~R<
 afterwards/R!@_₹
 afterword/NgS
-again/~P
+again/~R
 against/~PC
 agape/JNg
 agar/~Ng
@@ -12301,17 +12301,17 @@ altitude/~NgS
 alto/~NSg
 altogether/~N
 altricial/J
-altruism/Ng
+altruism/Nmg
 altruist/NSg
 altruistic/JQ
 alum/~NSgV
 alumina/Ng
 aluminium/Nmg!_₹
 aluminum/~Nmg@<
-alumna/Ng
-alumnae/9
-alumni/~9
-alumnus/~Ng
+alumna/N0g♀
+alumnae/N9♀
+alumni/~N9
+alumnus/~N0g
 alveolar/~JNS
 alveoli/N9
 alveolus/N0g
@@ -17711,8 +17711,8 @@ cicada/NgS
 cicatrice/NSg@
 cicatrices/9
 cicatrix/Ng
-cicerone/NSgV
-ciceroni/N
+cicerone/N0SgV
+ciceroni/N9
 cider/~NwS
 cider's
 cigar/~NgS
@@ -18607,7 +18607,7 @@ commotion/~NwSg
 communal/~JY
 commune/~NSgVdGXn
 communicability/Ng
-communicable/Ji
+communicable/JiU
 communicably/Ry
 communicant/NgSJ
 communicate/~VGdSnvX
@@ -21556,7 +21556,7 @@ digress/VGdSv
 digression/NgS
 dike/~NgSVGd
 diktat/NS
-dilapidated/~VJ
+dilapidated/~VtTJ
 dilapidation/Nmg
 dilatation/Ng
 dilate/VdSGn
@@ -29470,12 +29470,12 @@ hysterical/~JY
 hysterics/Ng
 i/~
 i.e./~
-iMac/NgS
+iMac/ONgS
 iOS/Og
-iPad/NgS
-iPhone/NgS
-iPod/NgS
-iTunes/Ng
+iPad/ONgS
+iPhone/ONgS
+iPod/ONgS
+iTunes/O
 iamb/NgS
 iambi/N
 iambic/JNSg
@@ -29958,6 +29958,7 @@ inanimate/~JYpNV
 inanimateness/Ng
 inanity/NSg
 inappropriate/~JY
+inarguably/R
 inarticulate/JYN
 inasmuch/
 inaudible/J
@@ -30650,6 +30651,7 @@ interest/~NwSgVdE
 interested/~JVtTU
 interesting/~JYV6
 interface/~NgSVGd
+interfacility/J
 interfaith/~J
 interfere/~VGdS
 interference/~NgSV
@@ -33880,7 +33882,7 @@ meaninglessness/Nmg
 meanness/Nmg
 meant/~VtTU
 meantime/~Ng
-meanwhile/~Ng
+meanwhile/~RN
 meany/NSg
 meas/Vh
 measles/~Nmg
@@ -47462,7 +47464,7 @@ strategics/Ng
 strategist/~NSg
 strategize/VdSG
 strategy/~NwSg
-strati/N
+strati/N9
 stratification/~Nmg
 stratify/VdSGn
 stratosphere/NSg
@@ -51471,7 +51473,7 @@ untidy/J^>pV
 until/~PC
 untimely/~J^
 untiring/JY
-untaoasted/J
+untoasted/J
 untouchable/JNgS
 untoward/J
 untracked/J
@@ -52172,8 +52174,9 @@ virtualise/VdSG!_₹
 virtualization/~NwSg
 virtualize/VdSG
 virtue/~NSg
+virtuosi/N9
 virtuosity/Ng
-virtuoso/~NgJ
+virtuoso/~N0gJ
 virtuous/~JYp
 virtuousness/Ng
 virulence/~Ng
@@ -54369,6 +54372,7 @@ SpaceX/Og
 Speccy/OgS          # nickname of the Sinclair ZX Spectrum 8-bit computer
 Spotify/Og
 Stellantis/Og       # car company
+SteamOS/Og
 Substack/Og
 Subversion/Og       # version control
 Svelte/Og           # js framework
@@ -54489,6 +54493,7 @@ a12s/9
 a8c/Sg
 aftertouch/Nmg      # MIDI feature
 ambitransitive/J    # verb which is both transitive and intransitive
+analyte/NgS
 anti-alias/VbSdG
 antimalware/Nmg
 arXiv/Og            # research archive
@@ -54506,6 +54511,7 @@ backend/NSg         # dictionaries prefer: back end
 backoff/NsG
 backtest/NgSVdG
 baz/~               # cf. foo, bar
+bazzite/NwgS
 bitfield/NgS        # in this section since it's not in Cambridge, Collins, Longman, OED, Oxford, or Websters
 blogpost/NgS        # !! blog post is many times more popular; both appear in some dictionaries
 catenative/J        # linguistics
