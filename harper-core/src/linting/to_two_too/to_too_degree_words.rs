@@ -6,7 +6,7 @@ use crate::{
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, preceded_by_word};
 
 /// Verbs that commonly take "to" as a prepositional complement.
 /// Guards against false positives like "give to many charities".
@@ -19,9 +19,13 @@ const TO_TAKING_VERBS: &[&str] = &[
     "amounted",
     "amounting",
     "amounts",
+    "appeal",
+    "appealed",
+    "appealing",
+    "appeals",
     "applied",
-    "apply",
     "applies",
+    "apply",
     "applying",
     "attend",
     "attended",
@@ -138,10 +142,7 @@ impl Default for ToTooDegreeWords {
             .then_noun();
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
-                Box::new(at_end),
-                Box::new(before_noun),
-            ])),
+            expr: Box::new(FirstMatchOf::new([Box::new(at_end), Box::new(before_noun)])),
         }
     }
 }
@@ -164,13 +165,12 @@ impl ExprLinter for ToTooDegreeWords {
             .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
 
         // Suppress when "to" is a preposition, not a typo for "too".
-        if let Some((before, _)) = context
-            && let Some(prev) = before.iter().rfind(|t| !t.kind.is_whitespace())
-            && (prepositional_preceder().matches_token(prev, source)
+        if preceded_by_word(context, |prev| {
+            prepositional_preceder().matches_token(prev, source)
                 || prev
                     .get_ch(source)
-                    .eq_any_ignore_ascii_case_str(TO_TAKING_VERBS))
-        {
+                    .eq_any_ignore_ascii_case_str(TO_TAKING_VERBS)
+        }) {
             return None;
         }
 

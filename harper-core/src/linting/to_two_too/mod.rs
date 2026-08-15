@@ -537,4 +537,17 @@ mod tests {
     fn no_lint_connected_to_many_servers() {
         assert_no_lints("The app is connected to many servers.", ToTwoToo::default());
     }
+
+    #[test]
+    fn no_lint_appeals_to_many_developers() {
+        assert_no_lints(
+            "SemVer is a false promise that appeals to many developers.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_to_many_after_verb_with_trailing_whitespace() {
+        assert_no_lints("give \nto many charities", ToTwoToo::default());
+    }
 }

@@ -205,8 +205,7 @@ pub fn preceded_by_word(
     predicate: impl Fn(&Token) -> bool,
 ) -> bool {
     if let Some((before, _)) = context
-        && let [.., word, ws] = before
-        && ws.kind.is_whitespace()
+        && let Some(word) = before.iter().rev().find(|t| !t.kind.is_whitespace())
     {
         return predicate(word);
     }
