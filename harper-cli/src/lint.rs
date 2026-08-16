@@ -11,21 +11,21 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    Dialect, Document, Token, TokenKind,
     linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     remove_overlaps_map,
     spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry},
     weirpack::Weirpack,
+    Dialect, DictWordMetadata, Document, Token, TokenKind,
 };
 
 use crate::input::{
-    AnyInput, InputTrait,
     multi_input::MultiInput,
     single_input::{SingleInput, SingleInputTrait, StdinInput},
+    AnyInput, InputTrait,
 };
 
-/// Sync version of harper-ls/src/dictionary_io@load_dict
+/// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
@@ -55,7 +55,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
     Ok(packs)
 }
 
-/// Path version of harper-ls/src/dictionary_io@file_dict_name
+/// Path version of harper-ls file dictionary name rewriting.
 fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 
@@ -90,6 +90,7 @@ pub struct LintOptions {
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
+    pub quiet: bool,
 }
 
 enum ReportStyle {
@@ -404,6 +405,7 @@ fn lint_one_input(
         weirpack_inputs: _,
         color: _,
         format: _,
+        quiet: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
@@ -523,7 +525,7 @@ fn lint_one_input(
                     &lint_rules,
                     // Reporting arguments
                     batch_mode,
-                    report_mode,
+                    (report_mode, lint_options.quiet),
                 );
             }
         }
@@ -626,8 +628,10 @@ fn single_input_report(
     lint_rules: &HashMap<String, usize>,
     // Reporting parameters
     batch_mode: bool, // If true, we are processing multiple files, which affects how we report
-    report_mode: &ReportStyle,
+    report_info: (&ReportStyle, bool),
 ) {
+    let (report_mode, quiet) = report_info;
+
     // JSON mode: all output is handled by the caller after collecting results
     if matches!(report_mode, ReportStyle::Json) {
         return;
@@ -664,23 +668,30 @@ fn single_input_report(
 
     if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
         report_mode = &ReportStyle::BriefCountsOnly;
-        println!(
-            "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-            input.format_path()
-        );
+        if !quiet {
+            println!(
+                "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
+                input.format_path()
+            );
+        }
     }
 
     // Report the number of lints no matter what report mode we are in
-    println!(
-        "{}: {}",
-        input.format_path(),
-        match (lint_count_before, lint_count_after) {
-            (0, _) => "No lints found".to_string(),
-            (before, after) if before != after =>
-                format!("{before} lints before overlap removal, {after} after"),
-            (before, _) => format!("{before} lints"),
+    if lint_count_before == 0 {
+        if !quiet {
+            println!("{}: No lints found", input.format_path());
         }
-    );
+    } else {
+        println!(
+            "{}: {}",
+            input.format_path(),
+            match (lint_count_before, lint_count_after) {
+                (before, after) if before != after =>
+                    format!("{before} lints before overlap removal, {after} after"),
+                (before, _) => format!("{before} lints"),
+            }
+        );
+    }
 
     // If we are in Ariadne mode, print the report
     if matches!(report_mode, ReportStyle::FullAriadne) {
@@ -834,19 +845,19 @@ fn final_report(
     lint_kind_rule_pairs.sort_by(|a, b| {
         let (a, b) = ((&a.0, &a.1), (&b.0, &b.1));
         b.1.cmp(a.1)
-            .then_with(|| a.0.0.to_string().cmp(&b.0.0.to_string()))
-            .then_with(|| a.0.1.cmp(&b.0.1))
+            .then_with(|| a.0 .0.to_string().cmp(&b.0 .0.to_string()))
+            .then_with(|| a.0 .1.cmp(&b.0 .1))
     });
 
     // Format them using their colours
     let formatted_lint_kind_rule_pairs: Vec<(Option<String>, String)> = lint_kind_rule_pairs
         .into_iter()
         .map(|ele| {
-            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0.0));
+            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0 .0));
             let ansi_prefix = format!("\x1b[38;2;{r};{g};{b}m");
             (
                 Some(ansi_prefix),
-                format!("«« {} {}·{} »»", ele.1, ele.0.0, ele.0.1),
+                format!("«« {} {}·{} »»", ele.1, ele.0 .0, ele.0 .1),
             )
         })
         .collect();

@@ -428,6 +428,7 @@ impl Document {
                             | Some(Punctuation::EmDash)
                             | Some(Punctuation::EnDash)
                             | Some(Punctuation::Apostrophe)
+                            | Some(Punctuation::OpenSingle)
                     );
 
                 if is_open {

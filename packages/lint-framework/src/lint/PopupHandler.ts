@@ -123,6 +123,7 @@ export default class PopupHandler {
 			tree = SuggestionBox(box, this.actions, this.currentHint ?? null, () => {
 				this.popupLint = undefined;
 				this.updateHint();
+				this.render();
 			});
 		}
 

@@ -47,9 +47,9 @@ Message: |
       18 | two distinctive groups: rule-based and stochastic. E. Brill's tagger, one of the
          |                                                    ^~ Did you mean to spell `E.` this way?
 Suggest:
-  - Replace with: “E”
-  - Replace with: “Ea”
   - Replace with: “Eh”
+  - Replace with: “Em”
+  - Replace with: “Ex”
 
 
 
@@ -62,16 +62,6 @@ Suggest:
   - Replace with: “Bill's”
   - Replace with: “Brillo's”
   - Replace with: “Bill's”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-      32 | Correct grammatical tagging will reflect that "dogs" is here used as a verb, not
-      33 | as the more common plural noun. Grammatical context is one way to determine
-         |        ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-Suggest:
-  - Replace with: “commoner”
 
 
 
@@ -334,16 +324,6 @@ Suggest:
 
 
 
-Lint:    Style (127 priority)
-Message: |
-     125 | program can decide that "can" in "the can" is far more likely to be a noun than
-         |                                                   ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-     126 | a verb or a modal. The same method can, of course, be used to benefit from
-Suggest:
-  - Replace with: “likelier”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
      129 | More advanced ("higher-order") HMMs learn the probabilities not only of pairs
@@ -378,16 +358,6 @@ Suggest:
   - Replace with: “Cardiac”
   - Replace with: “Carnal”
   - Replace with: “Carnival”
-
-
-
-Lint:    Style (127 priority)
-Message: |
-     142 | parsing (1997) that merely assigning the most common tag to each known word and
-         |                                          ^~~~~~~~~~~ This is not an error, but an inflected form of this adjective also exists
-     143 | the tag "proper noun" to all unknowns will approach 90% accuracy because many
-Suggest:
-  - Replace with: “commonest”
 
 
 

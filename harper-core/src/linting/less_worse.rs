@@ -88,7 +88,7 @@ impl ExprLinter for LessWorse {
                 .iter()
                 .map(|s| Suggestion::replace_with_match_case(s.to_vec(), template))
                 .collect::<Vec<_>>(),
-            message: message.to_string(),
+            message: message.to_owned(),
             priority: 126,
         })
     }

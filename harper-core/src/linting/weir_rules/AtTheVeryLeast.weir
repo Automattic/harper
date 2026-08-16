@@ -1,0 +1,8 @@
+expr main (in the very least)
+
+let message "Did you mean `at the very least`?"
+let description "Corrects `in the very least` to `at the very least`."
+let kind "WordChoice"
+let becomes "at the very least"
+
+test "the layout of the object may be different (in the very least, its sizeof is different)" "the layout of the object may be different (at the very least, its sizeof is different)"

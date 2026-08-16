@@ -41,7 +41,7 @@ impl ExprLinter for TheProperNounPossessive {
             suggestions: vec![Suggestion::Remove],
             message:
                 "The definite article `the` is redundant before a proper noun in the possessive."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         })
     }

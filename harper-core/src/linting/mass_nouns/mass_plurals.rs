@@ -1,22 +1,18 @@
 use hashbrown::HashSet;
 
-use crate::linting::expr_linter::Chunk;
 use crate::{
     CharStringExt, Token, TokenStringExt,
     expr::{All, Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
 pub struct MassPlurals<D> {
-    expr: Box<dyn Expr>,
+    expr: FirstMatchOf,
     dict: D,
 }
 
-impl<D> MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> MassPlurals<D> {
     pub fn new(dict: D) -> Self {
         let oov = SequenceExpr::default().then_oov();
         let looks_plural = SequenceExpr::with(|tok: &Token, src: &[char]| {
@@ -31,10 +27,10 @@ where
         ]);
 
         Self {
-            expr: Box::new(FirstMatchOf::new(vec![
+            expr: FirstMatchOf::new(vec![
                 Box::new(oov_looks_plural),
-                Box::new(phrases),
-            ])),
+                Box::new(phrases) as Box<dyn Expr>,
+            ]),
             dict,
         }
     }
@@ -52,14 +48,11 @@ where
     }
 }
 
-impl<D> ExprLinter for MassPlurals<D>
-where
-    D: Dictionary,
-{
+impl<D: Dictionary> ExprLinter for MassPlurals<D> {
     type Unit = Chunk;
 
     fn expr(&self) -> &dyn Expr {
-        self.expr.as_ref()
+        &self.expr
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {

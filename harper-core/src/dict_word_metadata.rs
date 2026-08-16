@@ -477,6 +477,14 @@ impl DictWordMetadata {
         })
     }
 
+    pub fn is_verb_regular_past_form(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PRETERITE) && vf.contains(VerbFormFlags::PAST_PARTICIPLE)
+            })
+        })
+    }
+
     pub fn is_verb_simple_past_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -488,6 +496,24 @@ impl DictWordMetadata {
         self.verb.is_some_and(|v| {
             v.verb_forms
                 .is_some_and(|vf| vf.contains(VerbFormFlags::PAST_PARTICIPLE))
+        })
+    }
+
+    pub fn is_verb_simple_past_only(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PRETERITE)
+                    && !vf.intersects(VerbFormFlags::PAST | VerbFormFlags::PAST_PARTICIPLE)
+            })
+        })
+    }
+
+    pub fn is_verb_past_participle_only(&self) -> bool {
+        self.verb.is_some_and(|v| {
+            v.verb_forms.is_some_and(|vf| {
+                vf.contains(VerbFormFlags::PAST_PARTICIPLE)
+                    && !vf.intersects(VerbFormFlags::PAST | VerbFormFlags::PRETERITE)
+            })
         })
     }
 
@@ -1058,6 +1084,10 @@ impl Dialect {
             "IN" => Some(Self::Indian),
             _ => None,
         }
+    }
+    // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
+    pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
     }
 }
 impl TryFrom<DialectFlags> for Dialect {
@@ -1961,6 +1991,12 @@ pub mod tests {
         }
 
         #[test]
+        fn regular_past_thought() {
+            let md = md("thought");
+            assert!(md.is_verb_regular_past_form())
+        }
+
+        #[test]
         fn simple_past_ate() {
             let md = md("ate");
             assert!(md.is_verb_simple_past_form())
@@ -1970,6 +2006,42 @@ pub mod tests {
         fn past_participle_eaten() {
             let md = md("eaten");
             assert!(md.is_verb_past_participle_form())
+        }
+
+        #[test]
+        fn ate_is_simple_past_only() {
+            let md = md("ate");
+            assert!(md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
+        }
+
+        #[test]
+        fn eaten_is_past_participle_only() {
+            let md = md("eaten");
+            assert!(md.is_verb_past_participle_only());
+            assert!(!md.is_verb_simple_past_only());
+        }
+
+        #[test]
+        fn thought_is_neither_past_form_only() {
+            let md = md("thought");
+            assert!(!md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
+        }
+
+        #[test]
+        fn shared_past_forms_are_neither_past_form_only() {
+            let md = md("thought");
+            assert!(!md.is_verb_simple_past_only());
+            assert!(!md.is_verb_past_participle_only());
+            assert!(md.is_verb_regular_past_form());
+        }
+
+        #[test]
+        fn distinct_past_forms_are_not_regular_past() {
+            assert!(!md("ate").is_verb_regular_past_form());
+            assert!(!md("eaten").is_verb_regular_past_form());
+            assert!(!md("walked").is_verb_regular_past_form());
         }
 
         #[test]

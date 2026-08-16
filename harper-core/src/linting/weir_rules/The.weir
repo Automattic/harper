@@ -1,4 +1,4 @@
-expr main [(teh), (te)]
+expr main [(teh), (te), (t he)]
 
 let message "Did you mean the definite article?"
 let description "Fixes especially common misspellings of the word `the`"
@@ -6,3 +6,4 @@ let kind "Typo"
 let becomes "the"
 
 test "I adore teh light of the moon." "I adore the light of the moon."
+test "At t he time, I thought it was weird." "At the time, I thought it was weird."

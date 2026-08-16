@@ -108,6 +108,26 @@ describe('Integration >', () => {
 		);
 	});
 
+	it('gives correct diagnostics for the Source Control commit message box', async () => {
+		// The Source Control commit box uses the `scminput` language id. Harper
+		// should lint it like a git commit message, so the subject line is checked
+		// while lines starting with `#` (comments) are ignored.
+		const untitledUri = await openUntitled('Errorz\n# Errorz');
+
+		compareActualVsExpectedDiagnostics(
+			await waitForDiagnosticsChange(
+				untitledUri,
+				async () => await setTextDocumentLanguage(untitledUri, 'scminput'),
+			),
+			createExpectedDiagnostics({
+				message: 'Did you mean to spell `Errorz` this way?',
+				range: createRange(0, 0, 0, 6),
+				source: 'Harper',
+				code: 'SpellCheck',
+			}),
+		);
+	});
+
 	it('updates diagnostics on configuration change', async () => {
 		const config = workspace.getConfiguration('harper.linters');
 

@@ -46,7 +46,7 @@ impl ExprLinter for ThoughThought {
                 "thought",
                 tok.get_ch(src),
             )],
-            message: "Is this a typo for `thought`?".to_string(),
+            message: "Is this a typo for `thought`?".to_owned(),
             ..Default::default()
         })
     }

@@ -11,8 +11,7 @@ pub struct HyphenateNumberDay {
 
 impl Default for HyphenateNumberDay {
     fn default() -> Self {
-        let pattern = SequenceExpr::default()
-            .then_number()
+        let pattern = SequenceExpr::number()
             .then_whitespace()
             .t_aco("day")
             .then_longest_of(vec![

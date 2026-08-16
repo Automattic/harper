@@ -30,8 +30,8 @@ impl Default for WebScraping {
 
         let hyphenated_compounds = FirstMatchOf::new(open_and_hyphenated_compounds);
 
-        let web_scraps = FirstMatchOf::new(vec![
-            Box::new(closed_compounds),
+        let web_scraps = FirstMatchOf::new([
+            Box::new(closed_compounds) as Box<dyn Expr>,
             Box::new(hyphenated_compounds),
         ]);
 
@@ -71,7 +71,10 @@ impl Default for WebScraping {
             .then_word_set(scrapables);
 
         Self {
-            expr: FirstMatchOf::new(vec![Box::new(web_scraps), Box::new(scrap_the_web)]),
+            expr: FirstMatchOf::new(vec![
+                Box::new(web_scraps) as Box<dyn Expr>,
+                Box::new(scrap_the_web),
+            ]),
         }
     }
 }
@@ -117,7 +120,7 @@ fn match_web_then_scrap(toks: &[Token], src: &[char]) -> Option<Lint> {
         )],
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
-                .to_string(),
+                .to_owned(),
         ..Default::default()
     })
 }
@@ -151,7 +154,7 @@ fn match_scrap_then_web(toks: &[Token], src: &[char]) -> Option<Lint> {
         )],
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
-                .to_string(),
+                .to_owned(),
         ..Default::default()
     })
 }
@@ -177,6 +180,9 @@ impl ExprLinter for WebScraping {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(WebScraping, WebScraping, WebScraping::default());
     use crate::linting::tests::assert_suggestion_result;
 
     use super::WebScraping;
@@ -185,128 +191,128 @@ mod tests {
 
     #[test]
     fn scrap() {
-        assert_suggestion_result("webscrap", WebScraping::default(), "webscrape");
+        assert_suggestion_result("webscrap", test_linter(), "webscrape");
     }
 
     #[test]
     fn scraps() {
-        assert_suggestion_result("webscraps", WebScraping::default(), "webscrapes");
+        assert_suggestion_result("webscraps", test_linter(), "webscrapes");
     }
 
     #[test]
     fn scrapped() {
-        assert_suggestion_result("webscrapped", WebScraping::default(), "webscraped");
+        assert_suggestion_result("webscrapped", test_linter(), "webscraped");
     }
 
     #[test]
     fn scrapper() {
-        assert_suggestion_result("webscrapper", WebScraping::default(), "webscraper");
+        assert_suggestion_result("webscrapper", test_linter(), "webscraper");
     }
 
     #[test]
     fn scrappers() {
-        assert_suggestion_result("webscrappers", WebScraping::default(), "webscrapers");
+        assert_suggestion_result("webscrappers", test_linter(), "webscrapers");
     }
 
     #[test]
     fn scrapping() {
-        assert_suggestion_result("webscrapping", WebScraping::default(), "webscraping");
+        assert_suggestion_result("webscrapping", test_linter(), "webscraping");
     }
 
     // Basic open compound tests
 
     #[test]
     fn scrap_open() {
-        assert_suggestion_result("web scrap", WebScraping::default(), "web scrape");
+        assert_suggestion_result("web scrap", test_linter(), "web scrape");
     }
 
     #[test]
     fn scraps_open() {
-        assert_suggestion_result("web scraps", WebScraping::default(), "web scrapes");
+        assert_suggestion_result("web scraps", test_linter(), "web scrapes");
     }
 
     #[test]
     fn scrapped_open() {
-        assert_suggestion_result("web scrapped", WebScraping::default(), "web scraped");
+        assert_suggestion_result("web scrapped", test_linter(), "web scraped");
     }
 
     #[test]
     fn scrapper_open() {
-        assert_suggestion_result("web scrapper", WebScraping::default(), "web scraper");
+        assert_suggestion_result("web scrapper", test_linter(), "web scraper");
     }
 
     #[test]
     fn scrappers_open() {
-        assert_suggestion_result("web scrappers", WebScraping::default(), "web scrapers");
+        assert_suggestion_result("web scrappers", test_linter(), "web scrapers");
     }
 
     #[test]
     fn scrapping_open() {
-        assert_suggestion_result("web scrapping", WebScraping::default(), "web scraping");
+        assert_suggestion_result("web scrapping", test_linter(), "web scraping");
     }
 
     // Basic hyphenated compound tests
 
     #[test]
     fn scrap_hyphenated() {
-        assert_suggestion_result("web-scrap", WebScraping::default(), "web-scrape");
+        assert_suggestion_result("web-scrap", test_linter(), "web-scrape");
     }
 
     #[test]
     fn scraps_hyphenated() {
-        assert_suggestion_result("web-scraps", WebScraping::default(), "web-scrapes");
+        assert_suggestion_result("web-scraps", test_linter(), "web-scrapes");
     }
 
     #[test]
     fn scrapped_hyphenated() {
-        assert_suggestion_result("web-scrapped", WebScraping::default(), "web-scraped");
+        assert_suggestion_result("web-scrapped", test_linter(), "web-scraped");
     }
 
     #[test]
     fn scrapper_hyphenated() {
-        assert_suggestion_result("web-scrapper", WebScraping::default(), "web-scraper");
+        assert_suggestion_result("web-scrapper", test_linter(), "web-scraper");
     }
 
     #[test]
     fn scrappers_hyphenated() {
-        assert_suggestion_result("web-scrappers", WebScraping::default(), "web-scrapers");
+        assert_suggestion_result("web-scrappers", test_linter(), "web-scrapers");
     }
 
     #[test]
     fn scrapping_hyphenated() {
-        assert_suggestion_result("web-scrapping", WebScraping::default(), "web-scraping");
+        assert_suggestion_result("web-scrapping", test_linter(), "web-scraping");
     }
 
     // Verb+object basic functionality tests
 
     #[test]
     fn scrap_page() {
-        assert_suggestion_result("scrap page", WebScraping::default(), "scrape page");
+        assert_suggestion_result("scrap page", test_linter(), "scrape page");
     }
 
     #[test]
     fn scrapped_pages() {
-        assert_suggestion_result("scrapped pages", WebScraping::default(), "scraped pages");
+        assert_suggestion_result("scrapped pages", test_linter(), "scraped pages");
     }
 
     #[test]
     fn scraps_html() {
-        assert_suggestion_result("scraps html", WebScraping::default(), "scrapes html");
+        assert_suggestion_result("scraps html", test_linter(), "scrapes html");
     }
 
     #[test]
     fn scrapping_web() {
-        assert_suggestion_result("scrapping web", WebScraping::default(), "scraping web");
+        assert_suggestion_result("scrapping web", test_linter(), "scraping web");
     }
 
     #[test]
     fn scrapping_web_all_caps() {
-        assert_suggestion_result("SCRAPPING WEB", WebScraping::default(), "SCRAPING WEB");
+        assert_suggestion_result("SCRAPPING WEB", test_linter(), "SCRAPING WEB");
     }
 
     #[test]
     fn scrapping_web_mixed_case() {
-        assert_suggestion_result("Scrapping Web", WebScraping::default(), "Scraping Web");
+        assert_suggestion_result("Scrapping Web", test_linter(), "Scraping Web");
     }
 
     // Real-world examples harvested from GitHub
@@ -315,7 +321,7 @@ mod tests {
     fn web_scrap_lowercase() {
         assert_suggestion_result(
             "The goal of the project is to web scrap data from all pages of the website with capability of handling exceptions.",
-            WebScraping::default(),
+            test_linter(),
             "The goal of the project is to web scrape data from all pages of the website with capability of handling exceptions.",
         );
     }
@@ -324,7 +330,7 @@ mod tests {
     fn web_scrap_open_both_words_titlecase() {
         assert_suggestion_result(
             "Web Scrap on Jabama website to generate and analyze a dataset",
-            WebScraping::default(),
+            test_linter(),
             "Web Scrape on Jabama website to generate and analyze a dataset",
         );
     }
@@ -333,7 +339,7 @@ mod tests {
     fn web_scrapped_open_first_word_titlecase() {
         assert_suggestion_result(
             "Web scrapped an amazon page , automated the scraping, stored the data in csv file and created an email alert when the drop prices",
-            WebScraping::default(),
+            test_linter(),
             "Web scraped an amazon page , automated the scraping, stored the data in csv file and created an email alert when the drop prices",
         );
     }
@@ -342,7 +348,7 @@ mod tests {
     fn web_scrapped_open_both_words_titlecase() {
         assert_suggestion_result(
             "This project uses the data collected (Web Scrapped) from a website that list the houses for sale in Rwanda",
-            WebScraping::default(),
+            test_linter(),
             "This project uses the data collected (Web Scraped) from a website that list the houses for sale in Rwanda",
         );
     }
@@ -351,7 +357,7 @@ mod tests {
     fn web_scrapped_hyphenated_both_words_titlecase() {
         assert_suggestion_result(
             "Web-Scrapped Datasets",
-            WebScraping::default(),
+            test_linter(),
             "Web-Scraped Datasets",
         );
     }
@@ -360,7 +366,7 @@ mod tests {
     fn web_scrapper_open_both_words_titlecase() {
         assert_suggestion_result(
             "Web Scrapper Built Using Golang.",
-            WebScraping::default(),
+            test_linter(),
             "Web Scraper Built Using Golang.",
         );
     }
@@ -369,7 +375,7 @@ mod tests {
     fn web_scrappers_lowercase() {
         assert_suggestion_result(
             "Internet bots and web scrappers that will save a lot of your time!",
-            WebScraping::default(),
+            test_linter(),
             "Internet bots and web scrapers that will save a lot of your time!",
         );
     }
@@ -378,7 +384,7 @@ mod tests {
     fn web_scrappers_hyphenated() {
         assert_suggestion_result(
             "A Collection of web-scrappers with GUI written in Pyside6/PyQt6.",
-            WebScraping::default(),
+            test_linter(),
             "A Collection of web-scrapers with GUI written in Pyside6/PyQt6.",
         );
     }
@@ -387,7 +393,7 @@ mod tests {
     fn web_scrapping_lowercase() {
         assert_suggestion_result(
             "ScrapPaper is a web scrapping method to extract journal information from PubMed and Google Scholar using Python script.",
-            WebScraping::default(),
+            test_linter(),
             "ScrapPaper is a web scraping method to extract journal information from PubMed and Google Scholar using Python script.",
         );
     }
@@ -396,7 +402,7 @@ mod tests {
     fn web_scrapping_titlecase() {
         assert_suggestion_result(
             "Web Scrapping Examples using Beautiful Soup in Python.",
-            WebScraping::default(),
+            test_linter(),
             "Web Scraping Examples using Beautiful Soup in Python.",
         );
     }
@@ -405,7 +411,7 @@ mod tests {
     fn web_scrapping_hyphenated() {
         assert_suggestion_result(
             "some websites allow web-scrapping some don't.",
-            WebScraping::default(),
+            test_linter(),
             "some websites allow web-scraping some don't.",
         );
     }
@@ -414,7 +420,7 @@ mod tests {
     fn webscrapped() {
         assert_suggestion_result(
             "Example of webscrapped document : click here.",
-            WebScraping::default(),
+            test_linter(),
             "Example of webscraped document : click here.",
         );
     }
@@ -423,7 +429,7 @@ mod tests {
     fn webscrapper() {
         assert_suggestion_result(
             "A webscrapper to scrape all the words and their meanings from urban dictionary.",
-            WebScraping::default(),
+            test_linter(),
             "A webscraper to scrape all the words and their meanings from urban dictionary.",
         );
     }
@@ -432,7 +438,7 @@ mod tests {
     fn webscrappers_capitalized() {
         assert_suggestion_result(
             "A collection of Webscrappers I built using Scrapy while learning it hands on - SIdR4g/Scrapy_practice.",
-            WebScraping::default(),
+            test_linter(),
             "A collection of Webscrapers I built using Scrapy while learning it hands on - SIdR4g/Scrapy_practice.",
         );
     }
@@ -441,7 +447,7 @@ mod tests {
     fn webscrappers_camelcase() {
         assert_suggestion_result(
             "Awesome-WebScrappers. Collection of powerful and efficient web scrapers built using Python and BeautifulSoup.",
-            WebScraping::default(),
+            test_linter(),
             "Awesome-WebScrapers. Collection of powerful and efficient web scrapers built using Python and BeautifulSoup.",
         );
     }
@@ -450,7 +456,7 @@ mod tests {
     fn webscrapping() {
         assert_suggestion_result(
             "Webscrapping to identify and download latest pdf documents.",
-            WebScraping::default(),
+            test_linter(),
             "Webscraping to identify and download latest pdf documents.",
         );
     }
@@ -459,7 +465,7 @@ mod tests {
     fn webscraps_lowercase() {
         assert_suggestion_result(
             "gostapafor is a tool that webscraps and forwards html pages to other consumers",
-            WebScraping::default(),
+            test_linter(),
             "gostapafor is a tool that webscrapes and forwards html pages to other consumers",
         );
     }
@@ -468,7 +474,7 @@ mod tests {
     fn webscraps_camelcase() {
         assert_suggestion_result(
             "WebScraps the University of California, Santa Cruz's menu and texts it to the user for Breakfast, Lunch, Dinner, and Late Night.",
-            WebScraping::default(),
+            test_linter(),
             "WebScrapes the University of California, Santa Cruz's menu and texts it to the user for Breakfast, Lunch, Dinner, and Late Night.",
         );
     }
@@ -477,7 +483,7 @@ mod tests {
     fn scrap_html() {
         assert_suggestion_result(
             "Scrap a website's HTML, CSS and JS using this API.",
-            WebScraping::default(),
+            test_linter(),
             "Scrape a website's HTML, CSS and JS using this API.",
         );
     }
@@ -486,7 +492,7 @@ mod tests {
     fn scrapped_news_articles() {
         assert_suggestion_result(
             "Scrapped various news article including all the details using scrapy framework.",
-            WebScraping::default(),
+            test_linter(),
             "Scrapped various news article including all the details using scrapy framework.",
         );
     }
@@ -495,7 +501,7 @@ mod tests {
     fn scrapping_different_websites() {
         assert_suggestion_result(
             "This repository contains Python scripts based on Scrapping different websites.",
-            WebScraping::default(),
+            test_linter(),
             "This repository contains Python scripts based on Scraping different websites.",
         );
     }
@@ -504,7 +510,7 @@ mod tests {
     fn scrapping_web_content() {
         assert_suggestion_result(
             "Scrapping web content using PHP and Python.",
-            WebScraping::default(),
+            test_linter(),
             "Scraping web content using PHP and Python.",
         );
     }
@@ -513,7 +519,7 @@ mod tests {
     fn scraps_from_pages() {
         assert_suggestion_result(
             "It requests the website and scraps news from different pages.",
-            WebScraping::default(),
+            test_linter(),
             "It requests the website and scrapes news from different pages.",
         );
     }

@@ -71,7 +71,7 @@ impl ExprLinter for OfCourse {
                 "of course",
                 phrase_span.get_content(source),
             )],
-            message: "Did you mean `of course`?".to_string(),
+            message: "Did you mean `of course`?".to_owned(),
             priority: 31,
         })
     }

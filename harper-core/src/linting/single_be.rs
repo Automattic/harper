@@ -1,9 +1,8 @@
-use crate::dict_word_metadata::VerbFormFlags;
-use crate::linting::expr_linter::Chunk;
 use crate::{
     Span, Token,
+    dict_word_metadata::VerbFormFlags,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{DerivedFrom, InflectionOfBe},
 };
 
@@ -63,14 +62,20 @@ pub struct SingleBe {
 impl Default for SingleBe {
     fn default() -> Self {
         fn be_like_expr() -> SequenceExpr {
-            SequenceExpr::any_of(vec![
-                Box::new(InflectionOfBe::new()),
+            SequenceExpr::any_of([
+                Box::new(InflectionOfBe::new()) as Box<dyn Expr>,
                 Box::new(DerivedFrom::new_from_str("be")),
+            ])
+        }
+
+        fn be_like_or_contraction() -> SequenceExpr {
+            SequenceExpr::any_of([
+                Box::new(be_like_expr()) as Box<dyn Expr>,
                 Box::new(looks_like_be_contraction),
             ])
         }
 
-        let expr = SequenceExpr::with(be_like_expr())
+        let expr = SequenceExpr::with(be_like_or_contraction())
             .t_ws()
             .then(be_like_expr());
 
@@ -273,5 +278,13 @@ mod tests {
     #[test]
     fn ignores_single_be() {
         assert_no_lints("This is ready.", SingleBe::default());
+    }
+
+    #[test]
+    fn dont_flag_be_noun_apostrophe_s() {
+        assert_no_lints(
+            "Tiram seat believed to be DAP’s offer to Marina",
+            SingleBe::default(),
+        );
     }
 }
