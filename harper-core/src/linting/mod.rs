@@ -27,6 +27,7 @@ mod as_how;
 mod as_to_interrogative;
 mod ask_no_preposition;
 mod aspire_to;
+mod averse_vs_avert;
 mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;

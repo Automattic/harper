@@ -31,6 +31,7 @@ use super::as_how::AsHow;
 use super::as_to_interrogative::AsToInterrogative;
 use super::ask_no_preposition::AskNoPreposition;
 use super::aspire_to::AspireTo;
+use super::averse_vs_avert::AverseVsAvert;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
@@ -624,6 +625,7 @@ impl LintGroup {
         insert_expr_rule!(AsHow);
         insert_expr_rule!(AsToInterrogative);
         insert_expr_rule!(AskNoPreposition);
+        insert_expr_rule!(AverseVsAvert);
         insert_expr_rule!(AvoidContractions);
         insert_expr_rule!(AvoidCurses);
         insert_expr_rule!(BackInTheDay);
