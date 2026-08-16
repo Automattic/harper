@@ -2947,6 +2947,34 @@ fn corrects_levels_of_details_real_world() {
     );
 }
 
+// Lookalike
+
+#[test]
+fn corrects_look_a_like() {
+    assert_good_and_bad_suggestions(
+        "Define the look-a-like of the cursor/mouse pointer:",
+        test_linter(),
+        &[
+            "Define the lookalike of the cursor/mouse pointer:",
+            "Define the look-alike of the cursor/mouse pointer:",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn corrects_look_a_likes() {
+    assert_good_and_bad_suggestions(
+        "Attempt at using AWS facial recognition to find look-a-likes in the Rijksmuseum's art collection.",
+        test_linter(),
+        &[
+            "Attempt at using AWS facial recognition to find lookalikes in the Rijksmuseum's art collection.",
+            "Attempt at using AWS facial recognition to find look-alikes in the Rijksmuseum's art collection.",
+        ],
+        &[],
+    );
+}
+
 // MakeItSeem
 
 #[test]

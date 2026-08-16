@@ -2604,6 +2604,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
