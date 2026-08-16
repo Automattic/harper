@@ -11,18 +11,18 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
+    Dialect, Document, Token, TokenKind,
     linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     remove_overlaps_map,
     spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry},
     weirpack::Weirpack,
-    Dialect, DictWordMetadata, Document, Token, TokenKind,
 };
 
 use crate::input::{
+    AnyInput, InputTrait,
     multi_input::MultiInput,
     single_input::{SingleInput, SingleInputTrait, StdinInput},
-    AnyInput, InputTrait,
 };
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
@@ -845,19 +845,19 @@ fn final_report(
     lint_kind_rule_pairs.sort_by(|a, b| {
         let (a, b) = ((&a.0, &a.1), (&b.0, &b.1));
         b.1.cmp(a.1)
-            .then_with(|| a.0 .0.to_string().cmp(&b.0 .0.to_string()))
-            .then_with(|| a.0 .1.cmp(&b.0 .1))
+            .then_with(|| a.0.0.to_string().cmp(&b.0.0.to_string()))
+            .then_with(|| a.0.1.cmp(&b.0.1))
     });
 
     // Format them using their colours
     let formatted_lint_kind_rule_pairs: Vec<(Option<String>, String)> = lint_kind_rule_pairs
         .into_iter()
         .map(|ele| {
-            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0 .0));
+            let (r, g, b) = rgb_for_lint_kind(Some(&ele.0.0));
             let ansi_prefix = format!("\x1b[38;2;{r};{g};{b}m");
             (
                 Some(ansi_prefix),
-                format!("«« {} {}·{} »»", ele.1, ele.0 .0, ele.0 .1),
+                format!("«« {} {}·{} »»", ele.1, ele.0.0, ele.0.1),
             )
         })
         .collect();
