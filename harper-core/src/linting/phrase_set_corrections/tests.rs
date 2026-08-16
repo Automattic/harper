@@ -2445,26 +2445,6 @@ fn copywrote() {
     );
 }
 
-// Payed
-
-#[test]
-fn correct_payed() {
-    assert_suggestion_result(
-        "He payed the bill yesterday.",
-        test_linter(),
-        "He paid the bill yesterday.",
-    );
-}
-
-#[test]
-fn correct_overpayed() {
-    assert_suggestion_result(
-        "He overpayed in part to have the specification met.",
-        test_linter(),
-        "He overpaid in part to have the specification met.",
-    );
-}
-
 // DateBackFrom
 
 #[test]
@@ -3231,6 +3211,26 @@ fn fix_now_aday() {
         "OF all Occupations that now aday is used,I would not be a butcher",
         test_linter(),
         "OF all Occupations that nowadays is used,I would not be a butcher",
+    );
+}
+
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        test_linter(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        test_linter(),
+        "He overpaid in part to have the specification met.",
     );
 }
 

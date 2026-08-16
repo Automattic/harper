@@ -757,15 +757,6 @@ pub fn lint_group() -> LintGroup {
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
         ),
-        "Payed" => (
-            &[
-                (&["payed"], &["paid"]),
-                (&["overpayed"], &["overpaid"]),
-            ],
-            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
-            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
-            LintKind::Spelling
-        ),
         "DateBackFrom" => (
             &[
                 (&["date back from"], &["date from", "date back to"]),
@@ -946,6 +937,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of `nowadays`.",
             LintKind::Usage
         ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),
@@ -972,6 +972,15 @@ pub fn lint_group() -> LintGroup {
             "The word `side` is redundant in this phrase.",
             "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
             LintKind::Redundancy
+        ),
+        "ToTo" => (
+            &[
+                (&["to to"], &["to do"]),
+                (&["to-to"], &["to-do"]),
+            ],
+            "Did you mean to write `do` instead of a second `to`?",
+            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
+            LintKind::Typo
         ),
         "ToTooIdioms" => (
             &[
@@ -1060,15 +1069,6 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        ),
-        "ToTo" => (
-            &[
-                (&["to to"], &["to do"]),
-                (&["to-to"], &["to-do"]),
-            ],
-            "Did you mean to write `do` instead of a second `to`?",
-            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
-            LintKind::Typo
         ),
     });
 
