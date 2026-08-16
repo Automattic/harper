@@ -6,8 +6,8 @@
 #
 > We   the People of the United States    , in        Order    to form    a   more         perfect   Union     ,
 # IPl+ D   NPl/VB P  D+  VP/J   NPrPl/V3+ . NPr/J/R/P N🅪Sg/VB+ P  N🅪Sg/VB D/P NPr/I/J/R/Dq NSg/VB/J+ NPr/VB/J+ .
-> establish Justice , insure domestic Tranquility , provide for   the common   defence    ,
-# VB        NPr🅪Sg+ . VB     NSg/J    NSg         . VB      R/C/P D   NSg/VB/J N🅪Sg/Comm+ .
+> establish Justice , insure domestic Tranquility , provide for   the common defence    ,
+# VB        NPr🅪Sg+ . VB     NSg/J    NSg         . VB      R/C/P D   VB/J   N🅪Sg/Comm+ .
 > promote the general  Welfare , and  secure the Blessings of Liberty to ourselves
 # NSg/VB  D   NSg/VB/J Nᴹ/VB+  . VB/C VB/J   D   NPl/V3    P  NSg+    P  IPl+
 > and  our Posterity , do  ordain and  establish this   Constitution for   the United
@@ -390,8 +390,8 @@
 #
 > The Congress shall have    Power      To lay        and  collect  Taxes   , Duties ,
 # D+  NPr+     VXB   NSg/VXB N🅪Sg/VB/J+ P  NSg/VBPt/J VB/C NSg/VB/J NPl/V3+ . NPl+   .
-> Imposts and  Excises , to pay      the Debts and  provide for   the common   Defence    and
-# NPl     VB/C NPl/V3  . P  NSg/VB/J D   NPl+  VB/C VB      R/C/P D   NSg/VB/J N🅪Sg/Comm+ VB/C
+> Imposts and  Excises , to pay      the Debts and  provide for   the common Defence    and
+# NPl     VB/C NPl/V3  . P  NSg/VB/J D   NPl+  VB/C VB      R/C/P D   VB/J   N🅪Sg/Comm+ VB/C
 > general  Welfare of the United States    ; but     all          Duties , Imposts and  Excises shall
 # NSg/VB/J Nᴹ/VB   P  D   VP/J   NPrPl/V3+ . NSg/C/P NSg/I/J/C/Dq NPl+   . NPl     VB/C NPl/V3  VXB
 > be       uniform  throughout the United States    ;
@@ -646,8 +646,8 @@
 # Nᴹ/Vg/J I/R/Dq NSg/VB P  N🅪Sg/VBP/J+ NPr/C N🅪Sg/VB/J NSg/J/P NSg/IPl+ . VXB   . C/P     D   N🅪Sg/VP P
 > the Congress , accept   of any    present  , Emolument , Office  , or    Title   , of any    kind
 # D   NPr+     . NSg/VB/J P  I/R/Dq NSg/VB/J . NSg       . NSg/VB+ . NPr/C NSg/VB+ . P  I/R/Dq NSg/J+
-> whatever , from any    King      , Prince    , or    foreign State    .
-# NSg/I/J+ . P    I/R/Dq NPr/VB/J+ . NPr/VB/J+ . NPr/C NSg/J   N🅪Sg/VB+ .
+> whatever , from any    King    , Prince    , or    foreign State    .
+# NSg/I/J+ . P    I/R/Dq NPr/VB+ . NPr/VB/J+ . NPr/C NSg/J   N🅪Sg/VB+ .
 >
 #
 > The right    of citizens of the United States    to vote   in        any    primary  or    other
@@ -1226,14 +1226,14 @@
 # NSg/VB+ R/C/P ISg/D$+ N🅪Sg/VB/Am+ .
 >
 #
-> In        suits  at    common    law      , where   the value    in        controversy shall exceed twenty
-# NPr/J/R/P NPl/V3 NSg/P NSg/VB/J+ N🅪Sg/VB+ . NSg/R/C D   N🅪Sg/VB+ NPr/J/R/P N🅪Sg+       VXB   VB     NSg+
+> In        suits  at    common law      , where   the value    in        controversy shall exceed twenty
+# NPr/J/R/P NPl/V3 NSg/P VB/J+  N🅪Sg/VB+ . NSg/R/C D   N🅪Sg/VB+ NPr/J/R/P N🅪Sg+       VXB   VB     NSg+
 > dollars , the right    of trial     by jury      shall be       preserved , and  no        fact tried by a
 # NPl+    . D   NPr/VB/J P  NSg/VB/J+ P  NSg/VB/J+ VXB   NSg/VLXB VP/J      . VB/C NSg/Dq/P+ NSg+ VP/J  P  D/P+
 > jury      , shall be       otherwise reexamined in        any    court     of the United States    , than
 # NSg/VB/J+ . VXB   NSg/VLXB J/R/C     VP/J       NPr/J/R/P I/R/Dq N🅪Sg/VB/J P  D   VP/J   NPrPl/V3+ . C/P
-> according to the rules  of the common   law      .
-# Nᴹ/Vg/J   P  D   NPl/V3 P  D   NSg/VB/J N🅪Sg/VB+ .
+> according to the rules  of the common law      .
+# Nᴹ/Vg/J   P  D   NPl/V3 P  D   VB/J   N🅪Sg/VB+ .
 >
 #
 > Excessive bail    shall not     be       required , nor   excessive fines  imposed , nor   cruel
@@ -1389,7 +1389,7 @@
 > Purposes , as    Part     of this   Constitution , when    ratified by the Legislatures of
 # NPl/V3+  . R/C/P NSg/VB/J P  I/Ddem NPr+         . NSg/I/C VP/J     P  D   NPl          P
 > three fourths of the several States    , or    by Conventions in        three fourths
-# NSg   NSg     P  D   J/Dq    NPrPl/V3+ . NPr/C P  NPl+        NPr/J/R/P NSg   NSg
+# NSg   NPl     P  D   J/Dq    NPrPl/V3+ . NPr/C P  NPl+        NPr/J/R/P NSg   NPl
 > thereof , as    the one      or    the other    Mode of Ratification may     be       proposed by the
 # R       . R/C/P D   NSg/I/J+ NPr/C D   NSg/VB/J NSg  P  NSg+         NPr/VXB NSg/VLXB VP/J     P  D
 > Congress ; Provided that     no       Amendment which may     be       made prior to the Year One

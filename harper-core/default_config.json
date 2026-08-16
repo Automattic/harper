@@ -2604,6 +2604,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
@@ -3352,6 +3359,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -3905,6 +3919,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
@@ -3929,6 +3950,13 @@
 								"name": "WouldNeverHave",
 								"state": true,
 								"label": "Would Never Have"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
 							}
 						}
 					]
@@ -4538,6 +4566,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FirstAidKit",
 								"state": true,
 								"label": "First Aid Kit"
@@ -4681,6 +4716,13 @@
 								"name": "ImitateFrom",
 								"state": true,
 								"label": "Imitate From"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImplementIn",
+								"state": true,
+								"label": "Implement In"
 							}
 						},
 						{

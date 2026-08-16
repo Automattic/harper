@@ -142,8 +142,8 @@
 # NPr    VP/J      NPr/J/R/P NPr+  D   J                 ?            . D/P NSg/VB+   I/C/Ddem+
 > demonstrated the feasibility of an  electromechanical analytical engine  , on  which
 # VP/J         D   Nᴹ          P  D/P J                 J          NSg/VB+ . J/P I/C+
-> commands could   be       typed and  the results printed automatically . In        1937 , one
-# NPl/V3+  NSg/VXB NSg/VLXB VP/J  VB/C D   NPl/V3+ VP/J    R             . NPr/J/R/P #    . NSg/I/J
+> commands could be       typed and  the results printed automatically . In        1937 , one
+# NPl/V3+  VXB   NSg/VLXB VP/J  VB/C D   NPl/V3+ VP/J    R             . NPr/J/R/P #    . NSg/I/J
 > hundred years after Babbage's impossible dream     , Howard Aiken convinced IBM  ,
 # NSg     NPl+  P     NPr$      NSg/J      NSg/VB/J+ . NPr+   NPr   VP/J      NPr+ .
 > which was  making  all          kinds of punched card     equipment and  was  also in        the
@@ -164,8 +164,8 @@
 # NPl/V3   NSg/I R/C/P D   ?         . NPr🅪Sg/VB+ NSg+     VB/C ?     . D   NSg/VB/J+ NSg+     NSg/VPt/P
 > to refer  to the machines rather     than their human    predecessors . As    it       became
 # P  NSg/VB P  D   NPl/V3+  NPr/VB/J/R C/P  D$+   NSg/VB/J NPl+         . R/C/P NPr/ISg+ VPt
-> clear    that     computers could   be       used for   more         than just mathematical calculations ,
-# NSg/VB/J I/C/Ddem NPl+      NSg/VXB NSg/VLXB VP/J R/C/P NPr/I/J/R/Dq C/P  J/R  J+           +            .
+> clear    that     computers could be       used for   more         than just mathematical calculations ,
+# NSg/VB/J I/C/Ddem NPl+      VXB   NSg/VLXB VP/J R/C/P NPr/I/J/R/Dq C/P  J/R  J+           +            .
 > the field  of computer science  broadened to study  computation in        general  . In
 # D   NSg/VB P  NSg+     N🅪Sg/VB+ VP/J      P  NSg/VB NSg         NPr/J/R/P NSg/VB/J . NPr/J/R/P
 > 1945 , IBM  founded the Watson Scientific Computing Laboratory at    Columbia
@@ -216,8 +216,8 @@
 # NSg/VB/C/P Nᴹ/Vg/J D   NPl+            NSg/J   P  D/P NSg/J    NSg/VB+    . ISg/D$+ NPl/V3+ .
 > and  those  of others  such  as    numerical analyst George Forsythe , were rewarded :
 # VB/C I/Ddem P  NPl/V3+ NSg/I R/C/P J+        NSg+    NPr+   ?        . VLPt VP/J     .
-> universities went    on  to create such  departments , starting with Purdue in        1962 .
-# NPl+         NSg/VPt J/P P  VB/J   NSg/I NPl+        . Nᴹ/Vg/J  P    NPr    NPr/J/R/P #    .
+> universities went on  to create such  departments , starting with Purdue in        1962 .
+# NPl+         VPt  J/P P  VB/J   NSg/I NPl+        . Nᴹ/Vg/J  P    NPr    NPr/J/R/P #    .
 > Despite  its     name    , a   significant amount of computer science  does    not     involve the
 # NSg/VB/P ISg/D$+ NSg/VB+ . D/P NSg/J       NSg/VB P  NSg+     N🅪Sg/VB+ NPl/VX3 NSg/R/C VB      D
 > study  of computers themselves . Because of this    , several alternative names   have
@@ -294,8 +294,8 @@
 # NSg/P   D   J       NSg+     . J+      NPl/V3+     . NSg+     N🅪Sg/VB+ Nᴹ/VB+   R/C
 > often intersects other    disciplines , such  as    cognitive science , linguistics ,
 # R     V3+        NSg/VB/J NPl/V3+     . NSg/I R/C/P NSg/J     N🅪Sg/VB . Nᴹ+         .
-> mathematics , physics , biology , Earth    science  , statistics , philosophy , and  logic    .
-# Nᴹ+         . NPl/V3+ . N🅪Sg+   . NPrᴹ/VB+ N🅪Sg/VB+ . NPl/V3+    . N🅪Sg/VB+   . VB/C Nᴹ/VB/J+ .
+> mathematics , physics , biology , Earth      science  , statistics , philosophy , and  logic    .
+# Nᴹ+         . NPl/V3+ . N🅪Sg+   . NPr🅪Sg/VB+ N🅪Sg/VB+ . NPl/V3+    . N🅪Sg/VB+   . VB/C Nᴹ/VB/J+ .
 >
 #
 > Computer science  is  considered by some     to have    a   much         closer relationship with
@@ -806,8 +806,8 @@
 # N🅪Sg        . I/Ddem+ VL3 VPp/J R/C/P D/P VP/J+       NSg+   . NPl       NSg/J/P I/C/Ddem+
 > distributed system have    their own       private   memory , and  information can     be
 # VP/J        NSg+   NSg/VXB D$+   NSg/VB/J+ NSg/VB/J+ N🅪Sg+  . VB/C Nᴹ+         NPr/VXB NSg/VLXB
-> exchanged to achieve common    goals   .
-# VP/J      P  VB      NSg/VB/J+ NPl/V3+ .
+> exchanged to achieve common goals   .
+# VP/J      P  VB      VB/J+  NPl/V3+ .
 >
 #
 >              Computer networks
@@ -982,8 +982,8 @@
 #
 > Programming languages can     be       used to accomplish different tasks   in        different
 # Nᴹ/Vg/J+    NPl+      NPr/VXB NSg/VLXB VP/J P  VB         NSg/J     NPl/V3+ NPr/J/R/P NSg/J+
-> ways . Common    programming paradigms include :
-# NPl+ . NSg/VB/J+ Nᴹ/Vg/J+    NPl+      NSg/VB  .
+> ways . Common programming paradigms include :
+# NPl+ . VB/J+  Nᴹ/Vg/J+    NPl+      NSg/VB  .
 >
 #
 >

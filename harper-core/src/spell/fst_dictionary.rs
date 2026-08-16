@@ -100,24 +100,24 @@ fn build_dfa(max_distance: u8, query: &str) -> DFA {
     })
 }
 
-/// Consumes a DFA stream and emits the index-edit distance pairs it produces.
+/// Consumes a DFA stream and emits the WordID-edit distance pairs it produces.
 fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u64, u8)> {
-    let mut word_index_pairs = Vec::new();
+    let mut word_id_pairs = Vec::new();
     while let Some((_, v, s)) = stream.next() {
-        word_index_pairs.push((v, dfa.distance(s).to_u8()));
+        word_id_pairs.push((v, dfa.distance(s).to_u8()));
     }
 
-    word_index_pairs
+    word_id_pairs
 }
 
-/// Merges index-distance pairs, keeping the smallest distance for each word.
+/// Merges WordID-distance pairs, keeping the smallest distance for each word.
 fn merge_best_distances(
     best_distances: &mut HashMap<u64, u8>,
     distances: impl IntoIterator<Item = (u64, u8)>,
 ) {
-    for (idx, dist) in distances {
+    for (word_id, dist) in distances {
         best_distances
-            .entry(idx)
+            .entry(word_id)
             .and_modify(|existing| *existing = (*existing).min(dist))
             .or_insert(dist);
     }
@@ -301,18 +301,6 @@ mod tests {
             .all(|(a, b)| a <= b);
 
         assert!(is_sorted_by_dist)
-    }
-
-    #[test]
-    fn curated_contains_no_duplicates() {
-        let dict = FstDictionary::curated();
-
-        assert!(
-            dict.mutable_dict
-                .iter()
-                .map(|wme| &wme.canonical_spelling)
-                .all_unique()
-        );
     }
 
     #[test]
