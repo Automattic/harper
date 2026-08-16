@@ -892,6 +892,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `level of details` to `level of detail` or `levels of detail`.",
             LintKind::Usage
         ),
+        "Lookalike" => (
+            &[
+                (&["look-a-like"], &["lookalike", "look-alike"]),
+                (&["look-a-likes"], &["lookalikes", "look-alikes"])
+            ],
+            "Use `look alike` or `look-alike` instead of `look-a-like`.",
+            "Corrects `look-a-like` to `look alike` or `look-alike`.",
+            LintKind::Spelling
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
