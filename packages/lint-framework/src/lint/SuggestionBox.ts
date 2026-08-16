@@ -16,6 +16,8 @@ function iconSvg(definition: IconDefinition): string {
 
 const settingsIconSvg = iconSvg(faSliders);
 const disableIconSvg = iconSvg(faToggleOff);
+const SUGGESTION_BOX_MAX_WIDTH = 420;
+const SUGGESTION_BOX_VIEWPORT_MARGIN = 8;
 
 /** Saved cursor restore function, captured when the popup steals focus. */
 let savedRestore: (() => void) | null = null;
@@ -299,7 +301,8 @@ function styleTag(lintKind: LintKind) {
       border-radius:0.25rem
       }
       .harper-container{
-      max-width:420px;
+      max-width:${SUGGESTION_BOX_MAX_WIDTH}px;
+      box-sizing:border-box;
       max-height:400px;
       overflow-y:auto;
       background:#ffffff;
@@ -506,6 +509,9 @@ export default function SuggestionBox(
 	const top = box.y + box.height + 3;
 	let bottom: number | undefined;
 	const left = box.x;
+	const alignRight =
+		left + SUGGESTION_BOX_MAX_WIDTH > window.innerWidth - SUGGESTION_BOX_VIEWPORT_MARGIN;
+	const horizontalOrigin = alignRight ? 'right' : 'left';
 
 	if (top + 400 > window.innerHeight) {
 		bottom = window.innerHeight - box.y - 3;
@@ -515,8 +521,9 @@ export default function SuggestionBox(
 		position: 'fixed',
 		top: bottom ? '' : `${top}px`,
 		bottom: bottom ? `${bottom}px` : '',
-		left: `${left}px`,
-		transformOrigin: `${bottom ? 'bottom' : 'top'} left`,
+		left: alignRight ? '' : `${left}px`,
+		right: alignRight ? `${SUGGESTION_BOX_VIEWPORT_MARGIN}px` : '',
+		transformOrigin: `${bottom ? 'bottom' : 'top'} ${horizontalOrigin}`,
 	};
 
 	const ignoreLintCallback = box.ignoreLint;
