@@ -210,12 +210,14 @@ impl CharStringExt for [char] {
     }
 
     fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]> {
+        // `then` rather than `then_some`: the latter takes its argument by value and
+        // would index the slice even when the guard is false.
         (self.len() >= prefix.len()
             && self
                 .iter()
                 .zip(prefix)
                 .all(|(a, b)| a.eq_ignore_ascii_case(b)))
-        .then_some(&self[prefix.len()..])
+        .then(|| &self[prefix.len()..])
     }
 }
 
@@ -296,5 +298,30 @@ mod tests {
     #[should_panic]
     fn right_side_must_be_all_lowercase_ch() {
         assert!(['c'].eq_ch(&['C']))
+    }
+
+    /// The guard must be evaluated before the slice is indexed. Passing a prefix
+    /// longer than the haystack previously panicked, which `barely b` reached
+    /// through `BarelyUn`.
+    #[test]
+    fn strip_prefix_handles_prefix_longer_than_haystack() {
+        assert_eq!(['b'].strip_prefix_ignore_ascii_case_chars(&['u', 'n']), None);
+        assert_eq!([].strip_prefix_ignore_ascii_case_chars(&['u', 'n']), None);
+    }
+
+    #[test]
+    fn strip_prefix_is_case_insensitive() {
+        assert_eq!(
+            ['U', 'N', 'f', 'i', 't'].strip_prefix_ignore_ascii_case_chars(&['u', 'n']),
+            Some(['f', 'i', 't'].as_slice())
+        );
+    }
+
+    #[test]
+    fn strip_prefix_rejects_a_non_matching_prefix() {
+        assert_eq!(
+            ['f', 'i', 't'].strip_prefix_ignore_ascii_case_chars(&['u', 'n']),
+            None
+        );
     }
 }
