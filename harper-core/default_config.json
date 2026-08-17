@@ -2604,6 +2604,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
@@ -3348,6 +3355,13 @@
 								"name": "ComplainAsNoun",
 								"state": true,
 								"label": "Complain As Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
 							}
 						},
 						{
@@ -4548,6 +4562,13 @@
 								"name": "FeelFell",
 								"state": true,
 								"label": "Feel Fell"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
 							}
 						},
 						{
