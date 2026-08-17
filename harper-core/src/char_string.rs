@@ -305,7 +305,10 @@ mod tests {
     /// through `BarelyUn`.
     #[test]
     fn strip_prefix_handles_prefix_longer_than_haystack() {
-        assert_eq!(['b'].strip_prefix_ignore_ascii_case_chars(&['u', 'n']), None);
+        assert_eq!(
+            ['b'].strip_prefix_ignore_ascii_case_chars(&['u', 'n']),
+            None
+        );
         assert_eq!([].strip_prefix_ignore_ascii_case_chars(&['u', 'n']), None);
     }
 
