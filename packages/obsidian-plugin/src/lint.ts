@@ -323,6 +323,9 @@ const lintPlugin = ViewPlugin.fromClass(
 					Promise.all(sources.map((source) => Promise.resolve(source(this.view)))).then(
 						(annotations) => {
 							const all = annotations.reduce((a, b) => a.concat(b));
+							if ((window as any).app) {
+								(window as any).app.workspace.trigger('harper:lint-updated', all, this.view);
+							}
 							if (this.view.state.doc == state.doc)
 								this.view.dispatch(setDiagnostics(this.view.state, all));
 						},
