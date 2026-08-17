@@ -56,7 +56,7 @@ jobs:
           # Give each matrix task its own cache. Without this, every job
           # shares one cache key and all but one rebuild from scratch.
           key: ${{ matrix.task }}
-      - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
+      - uses: cargo-bins/cargo-binstall@b629f84e79e8fbc4f76616a8efd340f3ea605cab # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo hack`
