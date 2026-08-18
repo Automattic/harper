@@ -2604,6 +2604,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
@@ -3352,6 +3359,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -3936,6 +3950,13 @@
 								"name": "WouldNeverHave",
 								"state": true,
 								"label": "Would Never Have"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
 							}
 						}
 					]
@@ -4548,6 +4569,13 @@
 								"name": "FeelFell",
 								"state": true,
 								"label": "Feel Fell"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
 							}
 						},
 						{
@@ -5381,6 +5409,13 @@
 								"name": "SupposedTo",
 								"state": true,
 								"label": "Supposed To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Surreality",
+								"state": true,
+								"label": "Surreality"
 							}
 						},
 						{
