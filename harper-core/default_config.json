@@ -3415,6 +3415,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GetPassGoPass",
+								"state": true,
+								"label": "Get Pass, Go Pass"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HadOf",
 								"state": true,
 								"label": "Had Of"
