@@ -193,6 +193,35 @@ impl WordMap {
     }
 }
 
+// Functions for backward compatibility.
+impl WordMap {
+    /// Append a single word to the dictionary.
+    ///
+    /// If you are appending many words, consider using [`Self::extend_words`]
+    /// instead.
+    pub fn append_word(&mut self, word: impl AsRef<[char]>, metadata: DictWordMetadata) {
+        self.insert(WordMapEntry::new(word.as_ref()).with_md(metadata));
+    }
+
+    /// Append a single word to the dictionary.
+    ///
+    /// If you are appending many words, consider using [`Self::extend_words`]
+    /// instead.
+    pub fn append_word_str(&mut self, word: &str, metadata: DictWordMetadata) {
+        self.insert(WordMapEntry::new_str(word).with_md(metadata));
+    }
+
+    /// Appends words to the dictionary.
+    pub fn extend_words(
+        &mut self,
+        words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
+    ) {
+        self.extend(words.into_iter().map(|(canonical_spelling, metadata)| {
+            WordMapEntry::new(canonical_spelling.as_ref()).with_md(metadata)
+        }))
+    }
+}
+
 impl Extend<WordMapEntry> for WordMap {
     fn extend<T: IntoIterator<Item = WordMapEntry>>(&mut self, iter: T) {
         // [Copied from HashBrown::map::HashMap::extend]
