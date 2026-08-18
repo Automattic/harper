@@ -28,50 +28,52 @@ impl ExprLinter for ToTo {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        if surrounded_by_words(ctx, |before, after| {
-            if after.kind.is_verb_lemma()
-                && before.get_ch(src).eq_any_ignore_ascii_case_str(&[
-                    // Prepositions
-                    "according",
-                    // Verbs. If this list grows large, adding a dictionary annotation flag should be considered.
-                    "appeal",
-                    "appealed",
-                    "appealing",
-                    "appeals",
-                    "apply",
-                    "applied",
-                    "applies",
-                    "applying",
-                    "connect",
-                    "connected",
-                    "connecting",
-                    "connects",
-                    "have",
-                    "had",
-                    "having",
-                    "has",
-                    "need",
-                    "needed",
-                    "needing",
-                    "needs",
-                    "pray",
-                    "prayed",
-                    "praying",
-                    "prays",
-                    "refer",
-                    "referred",
-                    "referring",
-                    "refers",
-                    "resort",
-                    "resorted",
-                    "resorting",
-                    "resorts",
-                ])
-            {
-                return true;
-            }
-            false
-        }) {
+        if toks[1].kind.is_whitespace()
+            && surrounded_by_words(ctx, |before, after| {
+                if after.kind.is_verb_lemma()
+                    && before.get_ch(src).eq_any_ignore_ascii_case_str(&[
+                        // Prepositions
+                        "according",
+                        // Verbs. If this list grows large, adding a dictionary annotation flag should be considered.
+                        "appeal",
+                        "appealed",
+                        "appealing",
+                        "appeals",
+                        "apply",
+                        "applied",
+                        "applies",
+                        "applying",
+                        "connect",
+                        "connected",
+                        "connecting",
+                        "connects",
+                        "have",
+                        "had",
+                        "having",
+                        "has",
+                        "need",
+                        "needed",
+                        "needing",
+                        "needs",
+                        "pray",
+                        "prayed",
+                        "praying",
+                        "prays",
+                        "refer",
+                        "referred",
+                        "referring",
+                        "refers",
+                        "resort",
+                        "resorted",
+                        "resorting",
+                        "resorts",
+                    ])
+                {
+                    return true;
+                }
+                false
+            })
+        {
             return None;
         }
 
