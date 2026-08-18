@@ -277,6 +277,7 @@ use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
 use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
+use super::to_to::ToTo;
 use super::to_two_too::ToTwoToo;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
@@ -865,6 +866,7 @@ impl LintGroup {
         insert_struct_rule!(ThrowRubbish);
         insert_expr_rule_with_dialect!(TillDate);
         insert_expr_rule!(ToAdverb);
+        insert_expr_rule!(ToTo);
         insert_struct_rule!(ToTwoToo);
         insert_expr_rule!(Touristic);
         insert_expr_rule_with_dict!(TransposedSpace);
