@@ -8501,7 +8501,7 @@ RI/ON               # US state (Rhode Island)
 RIF/NV
 RIFA/Og
 RIP/ON
-RISC/N
+RISC/Ng
 RN/NOg
 RNA/Ng
 RNG/NgS             # random number generator
@@ -54319,7 +54319,7 @@ RAII                # resource acquisition is initialization
 RDBMS/NOSg          # relational database management system
 REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
-RISC/Ng             # cpu architecture
+RISC-V/Og             # cpu architecture
 RJ45/Ng             # ethernet connector
 RL/Nmg              # reinforcement learning
 RNN/NgS             # recurrent neural network
