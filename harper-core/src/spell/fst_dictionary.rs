@@ -341,6 +341,18 @@ mod tests {
     }
 
     #[test]
+    fn dickens_is_not_a_swear_1656() {
+        let dict = FstDictionary::curated();
+        let metadata = dict.get_word_metadata_str("Dickens").unwrap();
+
+        assert!(metadata.is_proper_noun());
+        assert!(!metadata.is_swear());
+        assert!(metadata.derived_from.is_none());
+        assert!(dict.contains_exact_word_str("dickens"));
+        assert!(dict.get_word_metadata_str("dick").unwrap().is_swear());
+    }
+
+    #[test]
     fn fuzzy_result_sorted_by_edit_distance() {
         let dict = FstDictionary::curated();
 
