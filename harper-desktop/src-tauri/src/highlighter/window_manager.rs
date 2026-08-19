@@ -177,6 +177,7 @@ impl WindowManagerApp {
         };
 
         let hit_target = self.render_state.hit_target_at_pos(cursor_pos);
+
         self.hovered_lint = match hit_target {
             HitTarget::Lint(index) => Some(index),
             HitTarget::Popup | HitTarget::None => None,
@@ -190,6 +191,7 @@ impl WindowManagerApp {
 
         for window in &self.windows {
             if let Err(error) = window.set_cursor_hittest(should_enable_hittest) {
+                                dbg!(&error);
                 self.error = Some(error);
                 event_loop.exit();
                 return;
