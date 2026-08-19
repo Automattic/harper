@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button, IconButton, Input, Panel, Toggle, TrashIcon, UploadIcon } from 'components';
 import { createInitialSettingsState, type Weirpack } from '../settings-data';
 
 let weirpacks = createInitialSettingsState().weirpacks;
@@ -74,7 +75,7 @@ function commitRenamePack() {
             }}
           >
             <span class="big-mark purple">
-              <span class="settings-icon icon-upload" aria-hidden="true"></span>
+              <UploadIcon className="control-icon" />
             </span>
             <span class="grow">
               <strong>{packDragState === "dragging" ? "Drop to install" : "Install a Weirpack"}</strong>
@@ -97,7 +98,7 @@ function commitRenamePack() {
 
         <div class="stanza">
           <div class="eyebrow">Installed packs</div>
-          <div class="list-card">
+          <Panel>
             {#each weirpacks as pack}
               <div class:disabled={!pack.enabled} class="pack-row">
                 <div class="pack-icon">
@@ -105,23 +106,24 @@ function commitRenamePack() {
                 </div>
                 <div class="grow">
                   {#if editingPackId === pack.id}
-                    <input
+                    <Input
+                      unstyled
                       class="inline-edit"
                       type="text"
                       bind:value={editingPackName}
                       on:blur={commitRenamePack}
                       on:keydown={(event) => {
-                        if (event.key === "Enter") commitRenamePack();
-                        if (event.key === "Escape") {
+                        if (event.detail.key === "Enter") commitRenamePack();
+                        if (event.detail.key === "Escape") {
                           editingPackId = null;
                           editingPackName = "";
                         }
                       }}
                     />
                   {:else}
-                    <button class="pack-title" type="button" disabled title="Not wired yet" on:dblclick={() => startRenamePack(pack)}>
+                    <Button unstyled class="pack-title" type="button" disabled title="Not wired yet" on:dblclick={() => startRenamePack(pack)}>
                       {pack.name}
-                    </button>
+                    </Button>
                   {/if}
                   <p>
                     <code>{pack.filename}</code>
@@ -131,31 +133,25 @@ function commitRenamePack() {
                     <span class={`status ${pack.installState}`}>{pack.installState}</span>
                   {/if}
                 </div>
-                <button
-                  class="icon-button danger"
-                  type="button"
+                <IconButton
+                  danger
                   disabled
                   title="Not wired yet"
                   aria-label={`Remove ${pack.name}`}
                   on:click={() => removePack(pack.id)}
                 >
-                  <span class="settings-icon icon-trash" aria-hidden="true"></span>
-                </button>
-                <button
-                  class:checked={pack.enabled}
-                  class="toggle"
-                  type="button"
-                  role="switch"
+                  <TrashIcon className="control-icon" />
+                </IconButton>
+                <Toggle
+                  appearance="settings"
+                  checked={pack.enabled}
                   disabled
                   title="Not wired yet"
-                  aria-checked={pack.enabled}
                   aria-label={`Toggle ${pack.name}`}
                   on:click={() => updatePack(pack.id, { enabled: !pack.enabled })}
-                >
-                  <span></span>
-                </button>
+                />
               </div>
             {/each}
-          </div>
+          </Panel>
         </div>
       </section>

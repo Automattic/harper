@@ -50,6 +50,9 @@ importers:
       '@tauri-apps/plugin-updater':
         specifier: ^2.10.1
         version: 2.10.1
+      components:
+        specifier: workspace:*
+        version: link:../packages/components
       harper-editor:
         specifier: workspace:*
         version: link:../packages/harper-editor
