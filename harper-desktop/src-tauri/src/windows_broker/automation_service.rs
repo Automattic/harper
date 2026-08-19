@@ -1,17 +1,22 @@
 use std::fmt::Arguments;
-use std::sync::mpsc::{Receiver, Sender, SyncSender, TryRecvError, TrySendError, sync_channel};
-use std::thread::{JoinHandle, sleep};
+use std::iter::once;
+use std::sync::mpsc::{sync_channel, Receiver, Sender, SyncSender, TryRecvError, TrySendError};
+use std::thread::{sleep, JoinHandle};
 use std::time::{Duration, Instant};
 
 use crate::rect::Rect;
+use crate::windows_broker::get_focused_monitor_scale;
 use harper_core::Span;
 use is_macro::Is;
 use uiautomation::types::{TextPatternRangeEndpoint, TextUnit};
-use uiautomation::{UIAutomation, UIElement, patterns::UITextPattern};
-use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL, MonitorFromWindow};
+use uiautomation::{patterns::UITextPattern, UIAutomation, UIElement};
+use windows::Win32::Foundation::HWND;
+use windows::Win32::Graphics::Gdi::{
+    MonitorFromWindow, MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL,
+};
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::WindowsAndMessaging::GetForegroundWindow;
-use windows::Win32::UI::HiDpi::{MDT_EFFECTIVE_DPI, GetDpiForMonitor};
+use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
+use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -23,6 +28,7 @@ struct WorkerData {
 #[derive(Debug, Is)]
 enum JobArgument {
     Span(Span<char>),
+    Window(isize, bool),
 }
 
 /// The result of a job run by the worker thread.
@@ -33,18 +39,46 @@ enum JobResult {
     Err,
 }
 
+struct CachedTextElement {
+    window: isize,
+    element: UIElement,
+}
+
+struct WorkerState {
+    automation: UIAutomation,
+    cached_text_element: Option<CachedTextElement>,
+}
+
+impl WorkerState {
+    fn cached_element_for_window(&self, window: isize) -> Option<UIElement> {
+        self.cached_text_element
+            .as_ref()
+            .filter(|cached| cached.window == window)
+            .map(|cached| cached.element.clone())
+    }
+
+    fn clear_cached_element(&mut self) {
+        self.cached_text_element = None;
+    }
+}
+
 /// An actual function pointer to be run by the worker thread.
-type WorkerJob = fn(&UIAutomation, Vec<JobArgument>) -> JobResult;
+type WorkerJob = fn(&mut WorkerState, Vec<JobArgument>) -> JobResult;
 
 /// Runs and communicates with a worker thread to interact with the Win32 Automation API to query the accessibility tree.
 /// Necessary because the API has very specific thread setting requirements to work.
 pub struct AutomationService {
     worker_data: Option<WorkerData>,
+    // Needed to redirect focus to the last focused window when the focus arrives on the Harper highlighter window
+    last_focused_window: Option<isize>,
 }
 
 impl AutomationService {
     pub fn create_and_start() -> Self {
-        let mut output = Self { worker_data: None };
+        let mut output = Self {
+            last_focused_window: None,
+            worker_data: None,
+        };
 
         output.start_worker_thread();
 
@@ -58,7 +92,11 @@ impl AutomationService {
         let (result_sender, result_receiver) = sync_channel(1);
 
         let handle = std::thread::spawn(move || {
-            let automation = UIAutomation::new().unwrap();
+            let mut state = WorkerState {
+                automation: UIAutomation::new().unwrap(),
+                cached_text_element: None,
+            };
+
             loop {
                 // Stop the thread if the other side of the channel has been closed (or dropped).
                 let job = match job_receiver.try_recv() {
@@ -68,11 +106,15 @@ impl AutomationService {
                 };
 
                 if let Some((job, arguments)) = job {
-                    let result = job(&automation, arguments);
+                    let result = job(&mut state, arguments);
 
                     // Stop the thread if the other side of the channel has been closed (or dropped).
-                    if let Err(TrySendError::Disconnected(_)) = result_sender.try_send(result) {
-                        break;
+                    if let Err(err) = result_sender.try_send(result) {
+                        if let TrySendError::Disconnected(_) = err {
+                            break;
+                        }else{
+                            dbg!(err);
+                        }
                     }
                 }
 
@@ -103,23 +145,56 @@ impl AutomationService {
     /// Grab text from the worker.
     /// Attempts to get the most up-to-date information possible.
     /// Returns `None` if the worker is not running.
-    pub fn get_text(&self) -> Option<String> {
-        let result = self.run_worker_job(get_text_job, vec![])?;
-        result.as_string().cloned()
+    pub fn get_text(&mut self) -> Option<String> {
+        let (window, use_cached_element) = self.resolve_focused_window()?;
+        let result = self.run_worker_job(
+            get_text_job,
+            vec![JobArgument::Window(window, use_cached_element)],
+        )?;
+
+        match result {
+            JobResult::String(text) => Some(text),
+            _ => {
+                self.last_focused_window = None;
+                None
+            }
+        }
     }
 
     /// Pass a collection of text spans to the worker and have it compute the associated bounding boxes for each span.
     /// Each span may have multiple bounding boxes.
     /// Input spans share the same index as their output bounding box.
     pub fn get_bounding_boxes(
-        &self,
+        &mut self,
         spans: impl IntoIterator<Item = Span<char>>,
     ) -> Option<Vec<Vec<Rect>>> {
+        let (window, use_cached_element) = self.resolve_focused_window()?;
+
         let result = self.run_worker_job(
             get_bounding_rect_job,
-            spans.into_iter().map(|s| JobArgument::Span(s)).collect(),
+            once(JobArgument::Window(window, use_cached_element))
+                .chain(spans.into_iter().map(|s| JobArgument::Span(s)))
+                .collect(),
         )?;
-        result.as_grouped_rects().cloned()
+
+        match result {
+            JobResult::GroupedRects(rects) => Some(rects),
+            _ => {
+                self.last_focused_window = None;
+                None
+            }
+        }
+    }
+
+    fn resolve_focused_window(&mut self) -> Option<(isize, bool)> {
+        let (focused_window, focused_process_id) = focused_window()?;
+
+        if focused_process_id == std::process::id() {
+            return self.last_focused_window.map(|window| (window, true));
+        }
+
+        self.last_focused_window = Some(focused_window);
+        Some((focused_window, false))
     }
 }
 
@@ -129,29 +204,46 @@ fn get_text(element: &UIElement) -> uiautomation::Result<String> {
     range.get_text(-1)
 }
 
-fn get_text_job(automation: &UIAutomation, _: Vec<JobArgument>) -> JobResult {
-    let root = automation.get_focused_element().unwrap();
-
-    if let Ok(text) = get_text(&root) {
-        JobResult::String(text)
+fn get_text_job(state: &mut WorkerState, args: Vec<JobArgument>) -> JobResult {
+    let Some(JobArgument::Window(window, use_cached_element)) = args.first() else {
+        return JobResult::Err;
+    };
+    let element = if *use_cached_element {
+        let Some(element) = state.cached_element_for_window(*window) else {
+            return JobResult::Err;
+        };
+        element
     } else {
-        JobResult::Err
+        let Ok(element) = state.automation.get_focused_element() else {
+            state.clear_cached_element();
+            return JobResult::Err;
+        };
+        element
+    };
+
+    match get_text(&element) {
+        Ok(text) => {
+            state.cached_text_element = Some(CachedTextElement {
+                window: *window,
+                element,
+            });
+            JobResult::String(text)
+        }
+        Err(_) => {
+            state.clear_cached_element();
+            JobResult::Err
+        }
     }
 }
 
 use std::{ffi::c_void, mem::size_of};
 
-use uiautomation::{
-
-    Error, Result,
-};
-use windows::Win32::{
-    System::{
-        Com::SAFEARRAY,
-        Ole::{
-            SafeArrayDestroy, SafeArrayGetDim, SafeArrayGetElement, SafeArrayGetElemsize,
-            SafeArrayGetLBound, SafeArrayGetUBound,
-        },
+use uiautomation::{Error, Result};
+use windows::Win32::System::{
+    Com::SAFEARRAY,
+    Ole::{
+        SafeArrayDestroy, SafeArrayGetDim, SafeArrayGetElement, SafeArrayGetElemsize,
+        SafeArrayGetLBound, SafeArrayGetUBound,
     },
 };
 
@@ -188,11 +280,7 @@ fn bounding_rectangles_for_span(
         TextPatternRangeEndpoint::Start,
     )?;
 
-    range.move_endpoint_by_unit(
-        TextPatternRangeEndpoint::Start,
-        TextUnit::Character,
-        start,
-    )?;
+    range.move_endpoint_by_unit(TextPatternRangeEndpoint::Start, TextUnit::Character, start)?;
 
     range.move_endpoint_by_range(
         TextPatternRangeEndpoint::End,
@@ -200,11 +288,7 @@ fn bounding_rectangles_for_span(
         TextPatternRangeEndpoint::Start,
     )?;
 
-    range.move_endpoint_by_unit(
-        TextPatternRangeEndpoint::End,
-        TextUnit::Character,
-        len,
-    )?;
+    range.move_endpoint_by_unit(TextPatternRangeEndpoint::End, TextUnit::Character, len)?;
 
     let raw: &IUIAutomationTextRange = range.as_ref();
     let array = OwnedSafeArray(unsafe { raw.GetBoundingRectangles()? });
@@ -271,11 +355,7 @@ fn bounding_rectangles_for_span(
                 })?;
 
             unsafe {
-                SafeArrayGetElement(
-                    array.0,
-                    &index,
-                    value as *mut f64 as *mut c_void,
-                )?;
+                SafeArrayGetElement(array.0, &index, value as *mut f64 as *mut c_void)?;
             }
         }
 
@@ -285,44 +365,58 @@ fn bounding_rectangles_for_span(
     Ok(result)
 }
 
-fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>) -> JobResult {
-    let Ok(element) = automation.get_focused_element() else {
+fn get_bounding_rect_job(state: &mut WorkerState, arguments: Vec<JobArgument>) -> JobResult {
+    let Some(JobArgument::Window(window, _)) = arguments.first() else {
+        return JobResult::Err;
+    };
+    let Some(text_element) = state.cached_element_for_window(*window) else {
         return JobResult::Err;
     };
 
     let effective_monitor_scale = get_focused_monitor_scale();
 
-    let mut rects = Vec::with_capacity(arguments.len());
+    let mut rects = Vec::with_capacity(arguments.len() - 1);
 
-    for span in arguments {
+    for span in arguments.into_iter().skip(1) {
         let span = span.expect_span();
 
-        if let Ok(found_rects) =
-            bounding_rectangles_for_span(&element, span.start as i32, span.len() as i32)
-        {
-            rects.push(
-                found_rects
-                    .iter()
-                    .map(|(x, y, w, h)| Rect::new(*x / effective_monitor_scale, *y / effective_monitor_scale, *w / effective_monitor_scale, *h / effective_monitor_scale))
-                    .collect(),
-            );
-        }
+        let Ok(found_rects) =
+            bounding_rectangles_for_span(&text_element, span.start as i32, span.len() as i32)
+        else {
+            state.clear_cached_element();
+            return JobResult::Err;
+        };
+
+        rects.push(
+            found_rects
+                .iter()
+                .map(|(x, y, w, h)| {
+                    Rect::new(
+                        *x / effective_monitor_scale,
+                        *y / effective_monitor_scale,
+                        *w / effective_monitor_scale,
+                        *h / effective_monitor_scale,
+                    )
+                })
+                .collect(),
+        );
     }
 
     JobResult::GroupedRects(rects)
 }
 
-fn get_focused_monitor_scale() -> f64{
+fn focused_window() -> Option<(isize, u32)> {
+    let hwnd: HWND = unsafe { GetForegroundWindow() };
+
+    if hwnd.0.is_null() {
+        return None;
+    }
+
+    let mut process_id = 0;
+
     unsafe {
-        let window = GetForegroundWindow();
-        let monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
+        GetWindowThreadProcessId(hwnd, Some(&mut process_id));
+    }
 
-        let mut x = 0;
-        let mut y = 0;
-
-        GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
-
-        let effective_scale = x as f64 / 96.; 
-        effective_scale
-    }   
+    Some((hwnd.0 as isize, process_id))
 }

@@ -5,10 +5,11 @@ use harper_core::linting::Lint;
 use uiautomation::Result;
 use uiautomation::{UIAutomation, UIElement, UITreeWalker};
 use windows::Win32::Foundation::POINT;
-use windows::Win32::UI::WindowsAndMessaging::GetCursorPos;
-
+use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
+use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
+use windows::Win32::UI::WindowsAndMessaging::{GetCursorPos, GetForegroundWindow, GetPhysicalCursorPos};
 use crate::windows_broker::automation_service::AutomationService;
-use crate::{os_broker::OsBroker, rect::ActionableLint};
+use crate::{os_broker::OsBroker, os_broker::AccessibilityPermissionStatus, rect::ActionableLint};
 mod automation_service;
 
 pub struct WindowsBroker {
@@ -30,7 +31,9 @@ impl OsBroker for WindowsBroker {
     ) -> Vec<ActionableLint> {
         let text = self.service.get_text();
         if let Some(text) = text {
-            println!("{text}");
+            if text.len() > 16_000 {
+                return Vec::new();
+            }
 
             let lints = lint_text(text.as_str());
 
@@ -61,9 +64,34 @@ impl OsBroker for WindowsBroker {
         let mut point = POINT::default();
 
         unsafe {
-            GetCursorPos(&mut point);
+            GetCursorPos(&mut point).unwrap();
         }
 
-        Some(Pos2::new(point.x as f32, point.y as f32))
+        let monitor_scale = get_focused_monitor_scale();
+
+        let pos = Pos2::new(point.x as f32 / monitor_scale as f32 , point.y as f32 / monitor_scale as f32);
+        dbg!(pos);
+
+        Some(pos)
     }
+
+    fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
+        AccessibilityPermissionStatus::Granted
+    }
+
+}
+
+fn get_focused_monitor_scale() -> f64{
+    unsafe {
+        let window = GetForegroundWindow();
+        let monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
+
+        let mut x = 0;
+        let mut y = 0;
+
+        GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
+
+        let effective_scale = x as f64 / 96.; 
+        effective_scale
+    }   
 }
