@@ -5602,6 +5602,13 @@
 						},
 						{
 							"Bool": {
+								"name": "UpcomingUpAndComing",
+								"state": true,
+								"label": "Upcoming Up And Coming"
+							}
+						},
+						{
+							"Bool": {
 								"name": "UpdatePlaceNames",
 								"state": true,
 								"label": "Update Place Names"
