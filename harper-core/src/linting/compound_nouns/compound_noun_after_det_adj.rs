@@ -65,6 +65,15 @@ impl ExprLinter for CompoundNounAfterDetAdj {
             return None;
         }
 
+        // "high school teacher": when the preceding word forms an open compound with the first
+        // word of the pair, the compound boundary falls to the left and the pair is not one noun.
+        if self
+            .split_expr
+            .is_open_compound(&matched_tokens[0], &matched_tokens[2], source)
+        {
+            return None;
+        }
+
         let span = matched_tokens[2..].span()?;
         let orig = span.get_content(source);
         // If the pattern matched, this will not return `None`.
