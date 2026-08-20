@@ -1,5 +1,7 @@
 use std::collections::{self, BTreeMap};
 
+use crate::windows_broker::automation_service::AutomationService;
+use crate::{os_broker::AccessibilityPermissionStatus, os_broker::OsBroker, rect::ActionableLint};
 use egui::Pos2;
 use harper_core::linting::Lint;
 use uiautomation::Result;
@@ -7,9 +9,9 @@ use uiautomation::{UIAutomation, UIElement, UITreeWalker};
 use windows::Win32::Foundation::POINT;
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
-use windows::Win32::UI::WindowsAndMessaging::{GetCursorPos, GetForegroundWindow, GetPhysicalCursorPos};
-use crate::windows_broker::automation_service::AutomationService;
-use crate::{os_broker::OsBroker, os_broker::AccessibilityPermissionStatus, rect::ActionableLint};
+use windows::Win32::UI::WindowsAndMessaging::{
+    GetCursorPos, GetForegroundWindow, GetPhysicalCursorPos,
+};
 mod automation_service;
 
 pub struct WindowsBroker {
@@ -49,9 +51,19 @@ impl OsBroker for WindowsBroker {
                 .zip(rects.into_iter())
                 .map(|((lint_id, lint), rects)| {
                     let text = text.clone();
-                    rects.into_iter().map(|r| r.into_iter()).flatten().map(move |r| {
-                        ActionableLint::new(r, lint_id.clone(), lint.clone(), text.clone(), |_| {})
-                    })
+                    rects
+                        .into_iter()
+                        .map(|r| r.into_iter())
+                        .flatten()
+                        .map(move |r| {
+                            ActionableLint::new(
+                                r,
+                                lint_id.clone(),
+                                lint.clone(),
+                                text.clone(),
+                                |_| {},
+                            )
+                        })
                 })
                 .flatten()
                 .collect()
@@ -69,7 +81,10 @@ impl OsBroker for WindowsBroker {
 
         let monitor_scale = get_focused_monitor_scale();
 
-        let pos = Pos2::new(point.x as f32 / monitor_scale as f32 , point.y as f32 / monitor_scale as f32);
+        let pos = Pos2::new(
+            point.x as f32 / monitor_scale as f32,
+            point.y as f32 / monitor_scale as f32,
+        );
         dbg!(pos);
 
         Some(pos)
@@ -78,10 +93,9 @@ impl OsBroker for WindowsBroker {
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
         AccessibilityPermissionStatus::Granted
     }
-
 }
 
-fn get_focused_monitor_scale() -> f64{
+fn get_focused_monitor_scale() -> f64 {
     unsafe {
         let window = GetForegroundWindow();
         let monitor = MonitorFromWindow(window, MONITOR_DEFAULTTONEAREST);
@@ -91,7 +105,7 @@ fn get_focused_monitor_scale() -> f64{
 
         GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
 
-        let effective_scale = x as f64 / 96.; 
+        let effective_scale = x as f64 / 96.;
         effective_scale
-    }   
+    }
 }
