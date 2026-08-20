@@ -191,7 +191,7 @@ impl WindowManagerApp {
 
         for window in &self.windows {
             if let Err(error) = window.set_cursor_hittest(should_enable_hittest) {
-                                dbg!(&error);
+                dbg!(&error);
                 self.error = Some(error);
                 event_loop.exit();
                 return;

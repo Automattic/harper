@@ -1,7 +1,7 @@
 use std::fmt::Arguments;
 use std::iter::once;
-use std::sync::mpsc::{sync_channel, Receiver, Sender, SyncSender, TryRecvError, TrySendError};
-use std::thread::{sleep, JoinHandle};
+use std::sync::mpsc::{Receiver, Sender, SyncSender, TryRecvError, TrySendError, sync_channel};
+use std::thread::{JoinHandle, sleep};
 use std::time::{Duration, Instant};
 
 use crate::rect::Rect;
@@ -9,10 +9,10 @@ use crate::windows_broker::get_focused_monitor_scale;
 use harper_core::Span;
 use is_macro::Is;
 use uiautomation::types::{TextPatternRangeEndpoint, TextUnit};
-use uiautomation::{patterns::UITextPattern, UIAutomation, UIElement};
+use uiautomation::{UIAutomation, UIElement, patterns::UITextPattern};
 use windows::Win32::Foundation::HWND;
 use windows::Win32::Graphics::Gdi::{
-    MonitorFromWindow, MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL,
+    MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL, MonitorFromWindow,
 };
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
@@ -112,7 +112,7 @@ impl AutomationService {
                     if let Err(err) = result_sender.try_send(result) {
                         if let TrySendError::Disconnected(_) = err {
                             break;
-                        }else{
+                        } else {
                             dbg!(err);
                         }
                     }

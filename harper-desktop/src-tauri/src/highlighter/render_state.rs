@@ -130,7 +130,9 @@ impl RenderState {
 
         dbg!(pos);
 
-        self.rects.iter().for_each(|r| {dbg!(r.rect);});
+        self.rects.iter().for_each(|r| {
+            dbg!(r.rect);
+        });
 
         self.rects
             .iter()
