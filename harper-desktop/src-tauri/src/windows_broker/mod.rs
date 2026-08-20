@@ -1,20 +1,21 @@
 use std::{
     cell::RefCell,
-    collections::{self, BTreeMap},
+    collections::BTreeMap,
     rc::Rc,
 };
 
 use crate::windows_broker::automation_service::AutomationService;
-use crate::{os_broker::AccessibilityPermissionStatus, os_broker::OsBroker, rect::ActionableLint};
+use crate::{
+    os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker},
+    rect::ActionableLint,
+};
 use egui::Pos2;
 use harper_core::linting::Lint;
-use uiautomation::Result;
-use uiautomation::{UIAutomation, UIElement, UITreeWalker};
 use windows::Win32::Foundation::POINT;
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{
-    GetCursorPos, GetForegroundWindow, GetPhysicalCursorPos,
+    GetCursorPos, GetForegroundWindow,
 };
 mod automation_service;
 
@@ -106,6 +107,31 @@ impl OsBroker for WindowsBroker {
 
     fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
         AccessibilityPermissionStatus::Granted
+    }
+
+    fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
+        AccessibilityPermissionStatus::Granted
+    }
+
+    fn integration_display_name(&self, bundle_id: &str) -> String {
+        bundle_id.to_string()
+    }
+
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        Ok(Vec::new())
+    }
+
+    fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String> {
+        Err("Not supported".to_string())
+    }
+
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
+        Ok(())
+    }
+
+    /// Search for an application in the OS' global list of installed apps.
+    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> {
+        Ok(Vec::new())
     }
 }
 

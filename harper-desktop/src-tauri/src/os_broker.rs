@@ -34,18 +34,16 @@ pub trait OsBroker {
     /// Request permission to access the OS' native accessibility API.
     fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus;
 
-    /// Given an application identifier, find that bundle's human-readable name.
-    fn system_integration_display_name(&self, bundle_id: &str) -> String;
-
+    /// Given an application identifier, find that integration's human-readable name.
     fn integration_display_name(&self, bundle_id: &str) -> String {
-        self.system_integration_display_name(bundle_id)
+        bundle_id.to_owned()
     }
 
     /// Returns the bundle identifiers for installed graphical applications.
     ///
     /// Implementations should return stable bundle ID strings, sorted and deduplicated where
     /// possible. Platforms that do not support bundle IDs should return an error.
-    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> ;
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String>;
 
     /// Returns the application icon for `bundle_id` encoded as PNG bytes.
     ///
@@ -54,10 +52,10 @@ pub trait OsBroker {
     fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String>;
 
     /// Start an application given its bundle ID.
-    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String>; 
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String>;
 
     /// Search for an application in the OS' global list of installed apps.
-    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> ;
+    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String>;
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -85,31 +83,23 @@ impl OsBroker for NoopBroker {
         None
     }
 
-    fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus{
+    fn accessibility_permission_status(&self) -> AccessibilityPermissionStatus {
         AccessibilityPermissionStatus::Unsupported
     }
 
-    fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus{
+    fn request_accessibility_permission(&self) -> AccessibilityPermissionStatus {
         AccessibilityPermissionStatus::Unsupported
-    }
-
-    fn system_integration_display_name(&self, bundle_id: &str) -> String{
-        bundle_id.to_string()
-    }
-
-    fn integration_display_name(&self, bundle_id: &str) -> String {
-        self.system_integration_display_name(bundle_id)
     }
 
     fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
-            Ok(Vec::new())
+        Ok(Vec::new())
     }
 
-    fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String>{
+    fn application_icon_png(&self, _bundle_id: &str) -> Result<Vec<u8>, String> {
         Err("Cannot get application icons.".to_string())
     }
 
-    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String>{
+    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
         Ok(())
     }
 

@@ -386,8 +386,8 @@ impl OsBroker for MacBroker {
         }
     }
 
-    fn system_integration_display_name(&self, bundle_id: &str) -> String {
-        app_catalog::system_integration_display_name(bundle_id)
+    fn integration_display_name(&self, bundle_id: &str) -> String {
+        app_catalog::integration_display_name(bundle_id)
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
