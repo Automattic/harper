@@ -1,4 +1,8 @@
-use std::collections::{self, BTreeMap};
+use std::{
+    cell::RefCell,
+    collections::{self, BTreeMap},
+    rc::Rc,
+};
 
 use crate::windows_broker::automation_service::AutomationService;
 use crate::{os_broker::AccessibilityPermissionStatus, os_broker::OsBroker, rect::ActionableLint};
@@ -15,13 +19,13 @@ use windows::Win32::UI::WindowsAndMessaging::{
 mod automation_service;
 
 pub struct WindowsBroker {
-    service: AutomationService,
+    service: Rc<RefCell<AutomationService>>,
 }
 
 impl WindowsBroker {
     pub fn new() -> Self {
         Self {
-            service: AutomationService::create_and_start(),
+            service: Rc::new(RefCell::new(AutomationService::create_and_start())),
         }
     }
 }
@@ -31,7 +35,7 @@ impl OsBroker for WindowsBroker {
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
     ) -> Vec<ActionableLint> {
-        let text = self.service.get_text();
+        let text = self.service.borrow_mut().get_text();
         if let Some(text) = text {
             if text.len() > 16_000 {
                 return Vec::new();
@@ -40,30 +44,40 @@ impl OsBroker for WindowsBroker {
             let lints = lint_text(text.as_str());
 
             let all_lint_iter = lints.values().map(|r| r.iter()).flatten();
-            let rects = self
+            let Some(rects) = self
                 .service
-                .get_bounding_boxes(all_lint_iter.map(|l| l.span));
+                .borrow_mut()
+                .get_bounding_boxes(all_lint_iter.map(|l| l.span))
+            else {
+                return Vec::new();
+            };
 
             lints
                 .into_iter()
                 .map(|(lint_id, lints)| lints.into_iter().map(move |l| (lint_id.clone(), l)))
                 .flatten()
-                .zip(rects.into_iter())
+                .zip(rects)
                 .map(|((lint_id, lint), rects)| {
                     let text = text.clone();
-                    rects
-                        .into_iter()
-                        .map(|r| r.into_iter())
-                        .flatten()
-                        .map(move |r| {
-                            ActionableLint::new(
-                                r,
-                                lint_id.clone(),
-                                lint.clone(),
-                                text.clone(),
-                                |_| {},
-                            )
-                        })
+                    let service = Rc::clone(&self.service);
+                    rects.into_iter().map(move |r| {
+                        let service = Rc::clone(&service);
+                        let suggestion_text = text.clone();
+                        let suggestion_span = lint.span;
+                        ActionableLint::new(
+                            r,
+                            lint_id.clone(),
+                            lint.clone(),
+                            text.clone(),
+                            move |suggestion| {
+                                service.borrow_mut().apply_suggestion(
+                                    suggestion_text,
+                                    suggestion_span,
+                                    suggestion,
+                                );
+                            },
+                        )
+                    })
                 })
                 .flatten()
                 .collect()
@@ -85,6 +99,7 @@ impl OsBroker for WindowsBroker {
             point.x as f32 / monitor_scale as f32,
             point.y as f32 / monitor_scale as f32,
         );
+
         Some(pos)
     }
 
