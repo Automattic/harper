@@ -122,10 +122,7 @@ impl RenderState {
         self.highlighted_lint = None;
     }
 
-    /// Finds the interactive highlighter region under a screen-space cursor position.
-    ///
-    /// Cursor polling lives outside the renderer, but hit-testing belongs next to the rectangles and
-    /// popup geometry being rendered so both paths use the same layout contract.
+    /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
         if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
             return HitTarget::Popup;

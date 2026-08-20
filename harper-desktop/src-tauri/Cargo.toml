@@ -47,6 +47,7 @@ tauri-plugin-os = "2.3.2"
 cached = "2.0.2"
 tracing = "0.1.44"
 tracing-subscriber = "0.3.23"
+is-macro = "0.3.7"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
@@ -65,9 +66,16 @@ objc2-foundation = { version = "0.3.2", default-features = false, features = [
 accessibility-sys = "0.2.0"
 core-graphics = "0.25.0"
 
+[target.'cfg(target_os = "windows")'.dependencies]
+windows = { version = "0.62.2", features = ["Win32_UI_HiDpi"] }
+uiautomation = { version = "0.25.0", features = ["process"] }
+
 [target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
 tauri-plugin-autostart = "2.5.1"
 tauri-plugin-updater = "2"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
 tauri-plugin-updater = "2"
+
+[profile.release]
+debug = true

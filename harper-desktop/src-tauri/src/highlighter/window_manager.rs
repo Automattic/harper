@@ -177,6 +177,7 @@ impl WindowManagerApp {
         };
 
         let hit_target = self.render_state.hit_target_at_pos(cursor_pos);
+
         self.hovered_lint = match hit_target {
             HitTarget::Lint(index) => Some(index),
             HitTarget::Popup | HitTarget::None => None,
