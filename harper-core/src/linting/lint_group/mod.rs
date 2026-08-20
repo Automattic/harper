@@ -278,6 +278,7 @@ use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
 use super::to_to::ToTo;
 use super::to_two_too::ToTwoToo;
+use super::tote_tout::ToteTout;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
@@ -866,6 +867,7 @@ impl LintGroup {
         insert_expr_rule!(ToAdverb);
         insert_expr_rule!(ToTo);
         insert_struct_rule!(ToTwoToo);
+        insert_struct_rule!(ToteTout);
         insert_expr_rule!(Touristic);
         insert_expr_rule_with_dict!(TransposedSpace);
         insert_expr_rule!(TryOnesHandAt);
