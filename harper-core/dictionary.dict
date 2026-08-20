@@ -2835,7 +2835,7 @@ Dianna/Og
 Dianne/Og
 Dias
 Diaspora/OgS
-Dick/OgX
+Dick/Og
 Dickens/Og
 Dickensian/JN
 Dickerson/Og
@@ -3423,6 +3423,7 @@ Ezekiel/Og
 Ezra/Og
 F/                  # Fluorine
 F1/9g
+FA/Og               # Football Association
 FAA/O
 FAQ/NSg
 FBI/ONg
@@ -8501,7 +8502,7 @@ RI/ON               # US state (Rhode Island)
 RIF/NV
 RIFA/Og
 RIP/ON
-RISC/N
+RISC/Ng
 RN/NOg
 RNA/Ng
 RNG/NgS             # random number generator
@@ -12301,17 +12302,17 @@ altitude/~NgS
 alto/~NSg
 altogether/~N
 altricial/J
-altruism/Ng
+altruism/Nmg
 altruist/NSg
 altruistic/JQ
 alum/~NSgV
 alumina/Ng
 aluminium/Nmg!_₹
 aluminum/~Nmg@<
-alumna/Ng
-alumnae/9
-alumni/~9
-alumnus/~Ng
+alumna/N0g♀
+alumnae/N9♀
+alumni/~N9
+alumnus/~N0g
 alveolar/~JNS
 alveoli/N9
 alveolus/N0g
@@ -17356,7 +17357,7 @@ cheapskate/NgS
 cheat/~VGd>SNgZ
 cheat sheet/NgS
 cheater/NgS
-check/~NgSVGdJr
+check/~NgSVGdJrB
 check in/V/
 check out/V/
 checkbook/NSg
@@ -17711,8 +17712,8 @@ cicada/NgS
 cicatrice/NSg@
 cicatrices/9
 cicatrix/Ng
-cicerone/NSgV
-ciceroni/N
+cicerone/N0SgV
+ciceroni/N9
 cider/~NwS
 cider's
 cigar/~NgS
@@ -18607,7 +18608,7 @@ commotion/~NwSg
 communal/~JY
 commune/~NSgVdGXn
 communicability/Ng
-communicable/Ji
+communicable/JiU
 communicably/Ry
 communicant/NgSJ
 communicate/~VGdSnvX
@@ -21460,8 +21461,9 @@ dichotomous/J
 dichotomy/~NSg
 dicier/Jc
 diciest/Ju
-dick/~NgSV>XZx
-dicker/VdGN
+dick/~NgSVx
+dickens/N
+dicker/VdGNS
 dickey/~NSgJ
 dickhead/NSx
 dickybird/S
@@ -21556,7 +21558,7 @@ digress/VGdSv
 digression/NgS
 dike/~NgSVGd
 diktat/NS
-dilapidated/~VJ
+dilapidated/~VtTJ
 dilapidation/Nmg
 dilatation/Ng
 dilate/VdSGn
@@ -29958,6 +29960,7 @@ inanimate/~JYpNV
 inanimateness/Ng
 inanity/NSg
 inappropriate/~JY
+inarguably/R
 inarticulate/JYN
 inasmuch/
 inaudible/J
@@ -32472,6 +32475,8 @@ lieutenancy/Ng
 lieutenant/~NgSJ
 life/~NwgV>Z
 life cycle/NgS
+life-cycle/NgS
+lifecycle/NgS
 life science/NgS
 lifebelt/NS
 lifeblood/Nmg
@@ -32927,6 +32932,7 @@ loofahs/N9Vh
 look/~Vd>GSNgZ
 look up/V/
 lookalike/NgS
+look-alike/NgS
 looker/NgS
 lookout/~NgS
 lookup/~NSV
@@ -41923,7 +41929,7 @@ rate limit/NgS
 rated/~JVU
 ratepayer/NS
 rater/Ng
-rather/~JNVR
+rather/~R
 rathskeller/NSg
 ratification/~Ng
 ratifier/Ng
@@ -47463,7 +47469,7 @@ strategics/Ng
 strategist/~NSg
 strategize/VdSG
 strategy/~NwSg
-strati/N
+strati/N9
 stratification/~Nmg
 stratify/VdSGn
 stratosphere/NSg
@@ -48224,6 +48230,7 @@ surreal/~JN
 surrealism/~Ng
 surrealist/~JNSg
 surrealistic/JQ
+surreality/Nmg
 surrender/~VdGSNg
 surreptitious/JYp
 surreptitiousness/Ng
@@ -50914,6 +50921,7 @@ unacceptability/Nmg
 unacceptable/~JN
 unaccommodating/J
 unaccountably/Ry
+unadapted/J
 unadventurous/J
 unaesthetic/J
 unaffected/JY
@@ -50931,6 +50939,7 @@ unappetising/J!_₹
 unappetizing/J
 unapplied/J
 unappreciative/J
+unarchive/VSdG
 unary/JN
 unashamed/J
 unassertive/J
@@ -52173,8 +52182,9 @@ virtualise/VdSG!_₹
 virtualization/~NwSg
 virtualize/VdSG
 virtue/~NSg
+virtuosi/N9
 virtuosity/Ng
-virtuoso/~NgJ
+virtuoso/~N0gJ
 virtuous/~JYp
 virtuousness/Ng
 virulence/~Ng
@@ -54313,7 +54323,7 @@ RAII                # resource acquisition is initialization
 RDBMS/NOSg          # relational database management system
 REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
-RISC/Ng             # cpu architecture
+RISC-V/Og             # cpu architecture
 RJ45/Ng             # ethernet connector
 RL/Nmg              # reinforcement learning
 RNN/NgS             # recurrent neural network
@@ -54353,6 +54363,7 @@ SSID/NgS
 SSL/Og              # Secure Sockets Layer
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
+SemVer/N            # semantic versioning - this is the std spelling but POS is unclear
 Sharman/OgS
 Shellsort/NgS       # algorithm
 Shibuya/Og
@@ -54468,6 +54479,7 @@ Wikimedia/Og        # foundation that runs Wikipedia etc.
 Win32/Og            # Microsoft Windows API
 WireGuard/Sg
 WooCommerce/Og
+X11/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
 XPath/Og            # XML path language
@@ -54661,6 +54673,7 @@ tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
 uncomment/VSdG
+unexpandable/J
 unicast/JVSdG
 unlintable/J
 untensed/J          # grammar

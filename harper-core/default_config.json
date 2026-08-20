@@ -2604,6 +2604,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
@@ -3352,6 +3359,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -3397,6 +3411,13 @@
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GetPassGoPass",
+								"state": true,
+								"label": "Get Pass, Go Pass"
 							}
 						},
 						{
@@ -3905,6 +3926,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
@@ -3929,6 +3957,13 @@
 								"name": "WouldNeverHave",
 								"state": true,
 								"label": "Would Never Have"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
 							}
 						}
 					]
@@ -3974,6 +4009,13 @@
 								"name": "AllowTo",
 								"state": true,
 								"label": "Allow To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllWellAndGood",
+								"state": true,
+								"label": "All Well and Good"
 							}
 						},
 						{
@@ -4139,6 +4181,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AWholeOther",
+								"state": true,
+								"label": "A Whole Other"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BadRap",
 								"state": true,
 								"label": "Bad Rap"
@@ -4219,6 +4268,13 @@
 								"name": "BesideThePoint",
 								"state": true,
 								"label": "Beside The Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BetterOffServed",
+								"state": true,
+								"label": "Better Off Served"
 							}
 						},
 						{
@@ -4405,6 +4461,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DissembleDisassemble",
+								"state": true,
+								"label": "Dissemble / Disassemble"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoMistake",
 								"state": true,
 								"label": "Do Mistake"
@@ -4534,6 +4597,13 @@
 								"name": "FeelFell",
 								"state": true,
 								"label": "Feel Fell"
+							}
+						},
+						{
+							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
 							}
 						},
 						{
@@ -5077,6 +5147,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OffLimits",
+								"state": true,
+								"label": "Off Limits"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OldestInTheBook",
 								"state": true,
 								"label": "Oldest In The Book"
@@ -5378,6 +5455,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Surreality",
+								"state": true,
+								"label": "Surreality"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TakeItPersonally",
 								"state": true,
 								"label": "Take It Personally"
@@ -5455,9 +5539,23 @@
 						},
 						{
 							"Bool": {
+								"name": "ToteTout",
+								"state": true,
+								"label": "Tote/Tout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "UnderneathOf",
+								"state": true,
+								"label": "Underneath of"
 							}
 						},
 						{

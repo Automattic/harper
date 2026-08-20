@@ -291,7 +291,7 @@ onMount(() => {
 		<div class="mx-auto max-w-[73.75rem] px-10 max-[880px]:px-4">
 			<div class="mb-11 text-center">
 				<h2 class="!mt-3 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit">
-					Loved by writers, journalists, and devs.
+					Loved by students, journalists, and devs.
 				</h2>
 			</div>
 			<TestimonialCollection {testimonials} />
