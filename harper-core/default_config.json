@@ -406,6 +406,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Codebase",
+								"state": true,
+								"label": "Codebase"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Codebases",
+								"state": true,
+								"label": "Codebases"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Deadlift",
 								"state": true,
 								"label": "Deadlift"
@@ -703,6 +717,13 @@
 								"name": "Somewhere",
 								"state": true,
 								"label": "Somewhere"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Tenfold",
+								"state": true,
+								"label": "Tenfold"
 							}
 						},
 						{
@@ -4156,6 +4177,13 @@
 								"name": "AtTheVeryLeast",
 								"state": true,
 								"label": "At The Very Least"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Audible",
+								"state": true,
+								"label": "Audible"
 							}
 						},
 						{
