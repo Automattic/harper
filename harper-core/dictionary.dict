@@ -54363,6 +54363,7 @@ SSID/NgS
 SSL/Og              # Secure Sockets Layer
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
+SemVer/N            # semantic versioning - this is the std spelling but POS is unclear
 Sharman/OgS
 Shellsort/NgS       # algorithm
 Shibuya/Og
