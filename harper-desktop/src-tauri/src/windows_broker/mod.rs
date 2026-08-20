@@ -143,7 +143,7 @@ fn get_focused_monitor_scale() -> f64 {
         let mut x = 0;
         let mut y = 0;
 
-        GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
+        let _ = GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
 
         let effective_scale = x as f64 / 96.;
         effective_scale
