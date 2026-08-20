@@ -1,18 +1,21 @@
 use std::fmt::Arguments;
 use std::iter::once;
-use std::sync::mpsc::{sync_channel, Receiver, Sender, SyncSender, TryRecvError, TrySendError};
-use std::thread::{sleep, JoinHandle};
+use std::sync::mpsc::{Receiver, Sender, SyncSender, TryRecvError, TrySendError, sync_channel};
+use std::thread::{JoinHandle, sleep};
 use std::time::{Duration, Instant};
 
 use crate::rect::Rect;
 use crate::windows_broker::get_focused_monitor_scale;
-use harper_core::Span;
+use harper_core::{Span, linting::Suggestion};
 use is_macro::Is;
 use uiautomation::types::{TextPatternRangeEndpoint, TextUnit};
-use uiautomation::{patterns::UITextPattern, UIAutomation, UIElement};
+use uiautomation::{
+    UIAutomation, UIElement,
+    patterns::{UITextPattern, UIValuePattern},
+};
 use windows::Win32::Foundation::HWND;
 use windows::Win32::Graphics::Gdi::{
-    MonitorFromWindow, MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL,
+    MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL, MonitorFromWindow,
 };
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
@@ -25,15 +28,25 @@ struct WorkerData {
     receiver: Receiver<JobResult>,
 }
 
+#[derive(Debug)]
+struct ApplySuggestionRequest {
+    window: isize,
+    expected_text: String,
+    span: Span<char>,
+    suggestion: Suggestion,
+}
+
 #[derive(Debug, Is)]
 enum JobArgument {
     Span(Span<char>),
     Window(isize, bool),
+    ApplySuggestion(ApplySuggestionRequest),
 }
 
 /// The result of a job run by the worker thread.
 #[derive(Debug, Is)]
 enum JobResult {
+    None,
     String(String),
     GroupedRects(Vec<Vec<Rect>>),
     Err,
@@ -112,7 +125,7 @@ impl AutomationService {
                     if let Err(err) = result_sender.try_send(result) {
                         if let TrySendError::Disconnected(_) = err {
                             break;
-                        }else{
+                        } else {
                             dbg!(err);
                         }
                     }
@@ -161,6 +174,29 @@ impl AutomationService {
         }
     }
 
+    pub fn apply_suggestion(
+        &mut self,
+        expected_text: String,
+        span: Span<char>,
+        suggestion: Suggestion,
+    ) {
+        let Some(window) = self.resolve_focused_window().map(|(window, _)| window) else{
+            return;
+        };
+
+        let request = ApplySuggestionRequest {
+            window,
+            expected_text,
+            span,
+            suggestion,
+        };
+
+        let _ = self.run_worker_job(
+            apply_suggestion_job,
+            vec![JobArgument::ApplySuggestion(request)],
+        );
+    }
+
     /// Pass a collection of text spans to the worker and have it compute the associated bounding boxes for each span.
     /// Each span may have multiple bounding boxes.
     /// Input spans share the same index as their output bounding box.
@@ -196,6 +232,85 @@ impl AutomationService {
         self.last_focused_window = Some(focused_window);
         Some((focused_window, false))
     }
+}
+
+fn apply_suggestion_job(state: &mut WorkerState, mut arguments: Vec<JobArgument>) -> JobResult {
+    let Some(JobArgument::ApplySuggestion(request)) = arguments.pop() else {
+        return JobResult::Err;
+    };
+
+    if !arguments.is_empty() {
+        return JobResult::Err;
+    }
+
+    let Some(element) = state.cached_element_for_window(request.window) else {
+        eprintln!(
+            "Unable to apply Windows suggestion: the source text element is no longer active"
+        );
+        return JobResult::None;
+    };
+
+    let Ok(current_text) = get_text(&element) else {
+        state.clear_cached_element();
+        eprintln!("Unable to apply Windows suggestion: the source text can no longer be read");
+        return JobResult::None;
+    };
+
+    let updated_text = match apply_suggestion_to_text(
+        &current_text,
+        &request.expected_text,
+        request.span,
+        &request.suggestion,
+    ) {
+        Ok(updated_text) => updated_text,
+        Err(error) => {
+            eprintln!("Unable to apply Windows suggestion: {error}");
+            return JobResult::None;
+        }
+    };
+
+    let Ok(value_pattern) = element.get_pattern::<UIValuePattern>() else {
+        eprintln!(
+            "Unable to apply Windows suggestion: the text element has no writable value pattern"
+        );
+        return JobResult::None;
+    };
+
+    match value_pattern.is_readonly() {
+        Ok(true) => {
+            eprintln!("Unable to apply Windows suggestion: the text element is read-only");
+        }
+        Ok(false) => {
+            if let Err(error) = value_pattern.set_value(&updated_text) {
+                eprintln!("Unable to apply Windows suggestion: {error}");
+                state.clear_cached_element();
+            }
+        }
+        Err(error) => {
+            eprintln!("Unable to determine whether the Windows text element is writable: {error}");
+        }
+    }
+
+    JobResult::None
+}
+
+fn apply_suggestion_to_text(
+    current_text: &str,
+    expected_text: &str,
+    span: Span<char>,
+    suggestion: &Suggestion,
+) -> std::result::Result<String, &'static str> {
+    if current_text != expected_text {
+        return Err("the source text changed after linting");
+    }
+
+    let mut chars = current_text.chars().collect::<Vec<_>>();
+    if span.end > chars.len() {
+        return Err("the lint span is outside the source text");
+    }
+
+    suggestion.apply(span, &mut chars);
+    Ok(chars.into_iter().collect())
 }
 
 fn get_text(element: &UIElement) -> uiautomation::Result<String> {
