@@ -3415,6 +3415,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GetPassGoPass",
+								"state": true,
+								"label": "Get Pass, Go Pass"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HadOf",
 								"state": true,
 								"label": "Had Of"
@@ -4006,6 +4013,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AllWellAndGood",
+								"state": true,
+								"label": "All Well and Good"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Alongside",
 								"state": true,
 								"label": "Alongside"
@@ -4167,6 +4181,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AWholeOther",
+								"state": true,
+								"label": "A Whole Other"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BadRap",
 								"state": true,
 								"label": "Bad Rap"
@@ -4247,6 +4268,13 @@
 								"name": "BesideThePoint",
 								"state": true,
 								"label": "Beside The Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BetterOffServed",
+								"state": true,
+								"label": "Better Off Served"
 							}
 						},
 						{
@@ -4429,6 +4457,13 @@
 								"name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DissembleDisassemble",
+								"state": true,
+								"label": "Dissemble / Disassemble"
 							}
 						},
 						{
@@ -4639,6 +4674,13 @@
 								"name": "GildedAge",
 								"state": true,
 								"label": "Gilded Age"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GoMissing",
+								"state": true,
+								"label": "Go Missing"
 							}
 						},
 						{
@@ -5105,6 +5147,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OffLimits",
+								"state": true,
+								"label": "Off Limits"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OldestInTheBook",
 								"state": true,
 								"label": "Oldest In The Book"
@@ -5500,6 +5549,13 @@
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "UnderneathOf",
+								"state": true,
+								"label": "Underneath of"
 							}
 						},
 						{
