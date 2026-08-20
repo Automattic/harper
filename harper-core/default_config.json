@@ -4167,6 +4167,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AWholeOther",
+								"state": true,
+								"label": "A Whole Other"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BadRap",
 								"state": true,
 								"label": "Bad Rap"
