@@ -1,8 +1,7 @@
-use std::fmt::Arguments;
 use std::iter::once;
-use std::sync::mpsc::{Receiver, Sender, SyncSender, TryRecvError, TrySendError, sync_channel};
+use std::sync::mpsc::{Receiver, SyncSender, TryRecvError, TrySendError, sync_channel};
 use std::thread::{JoinHandle, sleep};
-use std::time::{Duration, Instant};
+use std::time::Duration;
 
 use crate::rect::Rect;
 use crate::windows_broker::get_focused_monitor_scale;
@@ -14,16 +13,12 @@ use uiautomation::{
     patterns::{UITextPattern, UIValuePattern},
 };
 use windows::Win32::Foundation::HWND;
-use windows::Win32::Graphics::Gdi::{
-    MONITOR_DEFAULTTONEAREST, MONITOR_DEFAULTTONULL, MonitorFromWindow,
-};
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
 
 /// Information about a worker thread.
 struct WorkerData {
-    thread_handle: JoinHandle<()>,
+    _thread_handle: JoinHandle<()>,
     sender: SyncSender<(WorkerJob, Vec<JobArgument>)>,
     receiver: Receiver<JobResult>,
 }
@@ -136,7 +131,7 @@ impl AutomationService {
         self.worker_data = Some(WorkerData {
             receiver: result_receiver,
             sender: job_sender,
-            thread_handle: handle,
+            _thread_handle: handle,
         });
     }
 
@@ -229,6 +224,12 @@ impl AutomationService {
 
         self.last_focused_window = Some(focused_window);
         Some((focused_window, false))
+    }
+}
+
+impl Drop for AutomationService {
+    fn drop(&mut self) {
+        self.stop_worker_thread();
     }
 }
 
