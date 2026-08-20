@@ -35,7 +35,7 @@ impl MergeableWords {
     ///
     /// Used to tell "high school | teacher" from "high | school teacher": if the left pair is
     /// already a compound, the boundary falls between them and the right pair must not merge.
-    pub fn is_open_compound(&self, word_a: &Token, word_b: &Token, source: &[char]) -> bool {
+    fn is_open_compound(&self, word_a: &Token, word_b: &Token, source: &[char]) -> bool {
         let mut compound: CharString = word_a.get_ch(source).into();
         compound.push(' ');
         compound.extend_from_slice(word_b.get_ch(source));
@@ -77,6 +77,17 @@ impl Expr for MergeableWords {
         let inner_match = self.inner.run(cursor, tokens, source)?;
 
         if inner_match.len() != 3 {
+            return None;
+        }
+
+        // "high school teacher": when the word before the pair forms an open compound with the
+        // first word of the pair, the compound boundary falls to the left and the pair spans two
+        // compounds rather than being one.
+        if cursor >= 2
+            && tokens[cursor - 1].kind.is_whitespace()
+            && tokens[cursor - 2].kind.is_word()
+            && self.is_open_compound(&tokens[cursor - 2], &tokens[cursor], source)
+        {
             return None;
         }
 
