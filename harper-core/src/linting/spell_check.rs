@@ -7,6 +7,7 @@ use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
 use crate::document::Document;
 use crate::expr::{Filter, SequenceExpr};
+
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
 
@@ -166,7 +167,7 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::dict_word_metadata::DialectFlags;
+
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
@@ -445,7 +446,7 @@ mod tests {
         user_dict.append_word_str(
             "Calibre",
             DictWordMetadata {
-                dialects: DialectFlags::from_dialect(user_dialect),
+                dialects: crate::dict_word_metadata::DialectFlags::from_dialect(user_dialect),
                 ..Default::default()
             },
         );

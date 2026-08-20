@@ -1,0 +1,27 @@
+expr main [(verleihen verleihen)]
+
+let message "Das Verb wird doppelt geschrieben."
+let description "Removes the redundant `verleihen verleihen` sequence, keeping only `verleihen`."
+let kind "Grammar"
+let becomes "verleihen"
+let strategy "MatchCase"
+
+test "Ich kann es dir verleihen verleihen." "Ich kann es dir verleihen."
+test "Sie verleihen verleihen das Buch." "Sie verleihen das Buch."
+test "verleihen verleihen Geld" "verleihen Geld"
+test "verleihen verleihen sich etwas" "verleihen sich etwas"
+test "verleihen verleihen von ihm" "verleihen von ihm"
+test "verleihen verleihen für kurze Zeit" "verleihen für kurze Zeit"
+test "verleihen verleihen auf Dauer" "verleihen auf Dauer"
+test "verleihen verleihen kostenlos" "verleihen kostenlos"
+test "verleihen verleihen gegen Gebühr" "verleihen gegen Gebühr"
+test "verleihen verleihen gegen Bezahlung" "verleihen gegen Bezahlung"
+test "verleihen verleihen für immer" "verleihen für immer"
+test "verleihen verleihen zeitweise" "verleihen zeitweise"
+test "verleihen verleihen dauerhaft" "verleihen dauerhaft"
+test "verleihen verleihen auf unbestimmte Zeit" "verleihen auf unbestimmte Zeit"
+
+allows "verleiht"
+allows "ausleihen"
+allows "borgen"
+allows "leihen"

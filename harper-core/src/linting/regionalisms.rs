@@ -1,9 +1,9 @@
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian, Indian},
-    Token, TokenStringExt,
+    Dialect, Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
 };
+use Dialect::{American, Australian, British, Canadian, Indian};
 
 use super::ExprLinter;
 use crate::linting::expr_linter::Chunk;

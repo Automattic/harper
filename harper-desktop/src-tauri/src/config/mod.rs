@@ -2,20 +2,22 @@ mod error;
 mod integration;
 
 pub use error::Error;
+pub use integration::Integration;
+
+use harper_core::language::{new_curated_for_language, parse_language};
 use harper_core::{
-    Dialect, IgnoredLints,
+    Dialect, IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
-pub use integration::Integration;
 use serde::de::{DeserializeOwned, Error as _};
 use std::{fs, io, path::PathBuf, sync::Arc};
 
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
     pub mutable_dictionary: MutableDictionary,
-    pub dialect: Dialect,
+    pub dialect: Language,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
@@ -24,6 +26,16 @@ pub struct Config {
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
     pub highlighter_service_enabled: bool,
+}
+
+/// Extract Dialect from Language for use with dictionary loading.
+/// For non-English languages, returns default dialect (temporary limitation).
+#[allow(unreachable_patterns)]
+fn language_to_dialect(language: Language) -> Dialect {
+    match language {
+        Language::English(d) => d,
+        _ => Dialect::default(),
+    }
 }
 
 impl Config {
@@ -42,10 +54,10 @@ impl Config {
         }
     }
 
-    fn detect_system_dialect() -> Dialect {
+    fn detect_system_dialect() -> Language {
         tauri_plugin_os::locale()
-            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
-            .unwrap_or(Dialect::American)
+            .and_then(|bcp47| parse_language(&bcp47))
+            .unwrap_or_default()
     }
 
     pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
@@ -117,7 +129,8 @@ impl Config {
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
-        config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
+        config.mutable_dictionary =
+            load_dict(dictionary_path, language_to_dialect(config.dialect)).await?;
 
         Ok(config)
     }
@@ -137,7 +150,7 @@ impl Config {
     }
 
     pub fn create_linter(&self) -> LintGroup {
-        LintGroup::new_curated(self.create_dictionary(), self.dialect)
+        new_curated_for_language(self.create_dictionary(), self.dialect)
             .with_lint_config(self.lint_config.clone())
     }
 

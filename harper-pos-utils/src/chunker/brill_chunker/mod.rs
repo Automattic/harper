@@ -148,7 +148,7 @@ impl BrillChunker {
 
             let actual = locate_noun_phrases_in_sent(sent);
             let actual_flat = actual.into_iter().fold(HashSet::new(), |mut a, b| {
-                a.extend(b.into_iter());
+                a.extend(b);
                 a
             });
 

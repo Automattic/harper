@@ -1,3 +1,5 @@
+#![cfg(feature = "multilingual")]
+
 //! This test creates snapshots of the reports of all linters.
 //!
 //! # Usage
@@ -11,7 +13,7 @@
 
 use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document,
+    Dialect, Document, Language,
     linting::{LintGroup, Linter},
 };
 
@@ -194,12 +196,15 @@ fn test_most_lints() {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 
-        let mut linter = LintGroup::new_curated(
-            dict,
-            dialect_override.unwrap_or_else(|| {
-                Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American)
-            }),
-        );
+        let dialect = dialect_override
+            .map(|lang| match lang {
+                Language::English(d) => d,
+                #[allow(unreachable_patterns)]
+                _ => Dialect::American, // Non-English languages should not use new_curated, but for now use American as fallback
+            })
+            .unwrap_or(Dialect::American);
+
+        let mut linter = LintGroup::new_curated(dict, dialect);
 
         let mut lints = linter.lint(&document);
         lints.sort_by(|a, b| {

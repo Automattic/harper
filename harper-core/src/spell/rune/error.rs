@@ -4,8 +4,6 @@ use serde_json::Error as SerdeJsonError;
 
 #[derive(Debug, Clone, thiserror::Error)]
 pub enum Error {
-    #[error("The provided file's item count was malformed.")]
-    MalformedItemCount,
     #[error("Expected affix flag to be exactly one character.")]
     MultiCharacterFlag,
     #[error("Expected affix option to be a boolean.")]

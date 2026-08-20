@@ -16,10 +16,10 @@ mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
-mod rune;
+pub mod rune;
 mod trie_dictionary;
 mod word_id;
-mod word_map;
+pub mod word_map;
 
 #[derive(PartialEq, Debug, Hash, Eq)]
 pub struct FuzzyMatchResult<'a> {

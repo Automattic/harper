@@ -1,0 +1,223 @@
+# Harper Language Development Recipes
+# =====================================
+# All recipes work for standard languages (german, portuguese, slovak, etc.)
+# NOTE: English is a special case - these recipes do not work for English
+
+# Build the language testing framework
+language-build:
+	cd harper-core/src/language/testing_framework && cargo build --release
+
+# Test text for any language (without recompiling)
+# Usage: just language-test german "your text here"
+language-test language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{text}}"
+
+# Show metadata for a single word in any language
+# Usage: just language-meta german "word"
+language-meta language word:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}"
+
+# Check word against hunspell
+# Usage: just language-hunspell german "word"
+language-hunspell language word:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{word}}" --hunspell
+
+# Show metadata for all words in text
+# Usage: just language-meta-text german "text with multiple words"
+language-meta-text language text:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --metadata --text "{{text}}"
+
+# Run basic dictionary tests for a language
+# Usage: just language-dict-test german
+language-dict-test language:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --test
+
+# Analyze language coverage against expanded dictionary
+# Usage: just language-coverage german
+language-coverage language:
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	# English is a special case - dictionary is at root level, not in language/ directory
+	sh -c 'case "{{language}}" in english) harper-core/src/language/testing_framework/target/release/harper-lang-test --language "english" --dict "harper-core/dictionary.dict" --annotations "harper-core/annotations.json" --coverage --expanded-dict "harper-core/english_dictionary.dict.gz" 2>/dev/null || harper-core/src/language/testing_framework/target/release/harper-lang-test --language "english" --dict "harper-core/dictionary.dict" --annotations "harper-core/annotations.json" --coverage --expanded-dict "/tmp/english_dictionary.dict.gz" ;; *) harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --coverage --expanded-dict "harper-core/src/language/{{language}}/{{language}}_dictionary.dict.gz" 2>/dev/null || harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --coverage --expanded-dict "/tmp/{{language}}_dictionary.dict.gz" ;; esac'
+
+# Analyze language efficiency (Harper word count vs base entries)
+# Usage: just language-efficiency german
+language-efficiency language:
+	#!/usr/bin/env bash
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	echo "📊 {{language}} Language Efficiency Analysis"
+	echo "==========================================="
+	
+	# Determine dictionary path - English is special case
+	if [ "{{language}}" = "english" ]; then
+		dict_path="harper-core/dictionary.dict"
+		annotations_path="harper-core/annotations.json"
+	else
+		dict_path="harper-core/src/language/{{language}}/dictionary.dict"
+		annotations_path="harper-core/src/language/{{language}}/annotations.json"
+	fi
+	
+	# Count base entries (lines with /)
+	base_words=$(grep -c "/" "${dict_path}" || echo 0)
+	
+	# Get Harper's expanded word count
+	harper_word_count=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "${dict_path}" --annotations "${annotations_path}" 2>/dev/null | grep "Word count:" | awk '{print $NF}' || echo 0)
+	# Clean up the word count (remove commas if present)
+	harper_word_count=$(echo "${harper_word_count}" | tr -d ',')
+	
+	echo "   Base entries: ${base_words} (lines with /)"
+	echo "   Harper expanded words: ${harper_word_count} (after affix expansion)"
+	
+	if [ "${base_words}" -gt 0 ] && [ "${harper_word_count}" -gt 0 ]; then
+		efficiency=$(echo "scale=2; ${harper_word_count} / ${base_words}" | bc)
+		echo "   Affix Efficiency: ${efficiency} expanded words per base entry"
+		echo "   (Higher = more productive affix rules)"
+		
+		if (( $(echo "${efficiency} > 2.5" | bc) )); then
+			echo "   ✅ Excellent efficiency - highly productive affix rules"
+		elif (( $(echo "${efficiency} > 1.5" | bc) )); then
+			echo "   🟡 Good efficiency - moderate affix rule productivity"
+		else
+			echo "   ⚠️  Low efficiency - consider improving affix rules"
+		fi
+	else
+		echo "   ❌ Unable to calculate efficiency"
+	fi
+	echo "==========================================="
+
+# Usage: just language-test-examples german
+language-test-examples language:
+	#!/usr/bin/env bash
+	echo "📚 Testing example texts for {{language}}"
+	echo "======================================="
+	example_dir="harper-core/src/language/{{language}}/test_sources"; \
+	if [ -d "${example_dir}" ]; then \
+		for file in "${example_dir}"/*.md; do \
+			if [ -f "${file}" ]; then \
+				filename=$(basename "${file}" .md); \
+				echo "Testing: ${filename}"; \
+				text=$(cat "${file}"); \
+				just language-test {{language}} "${text}" || true; \
+				echo ""; \
+			fi; \
+		done; \
+	else \
+		echo "⚠️  No test_sources directory found for {{language}}"; \
+	fi
+	echo "======================================="
+
+# Dictionary validation
+# Usage: just language-validate german
+language-validate language:
+	python3 scripts/validate_language_dict.py "{{language}}"
+
+# Dictionary statistics
+# Usage: just language-stats german
+language-stats language:
+	python3 scripts/language_stats.py "{{language}}"
+
+# Dictionary comparison
+# Usage: just language-diff german portuguese
+language-diff language1 language2:
+	python3 scripts/dictionary_diff.py "{{language1}}" "{{language2}}"
+
+# Test generation
+# Usage: just language-generate-tests finnish
+language-generate-tests language:
+	python3 scripts/generate_language_tests.py "{{language}}"
+
+# Test generation with all test types
+# Usage: just language-generate-all-tests finnish
+language-generate-all-tests language:
+	python3 scripts/generate_language_tests.py "{{language}}" --all
+
+# Run all language integration tests
+# Usage: just language-all-test (all languages) or just language-all-test de,pt (specific languages)
+language-all-test *languages:
+	python3 scripts/run_all_language_tests.py {{languages}}
+
+# Add a word to a language dictionary
+# Usage: just language-add-word german "word" FLAGS
+# Usage: just language-add-word german "word" FLAGS --force (to overwrite existing flags)
+# Example: just language-add-word german "neueswort" N
+language-add-word language word flags *args:
+	#!/usr/bin/env bash
+	DICT_FILE="harper-core/src/language/{{language}}/dictionary.dict"
+	
+	# Validate flags against annotations.json
+	echo "🔍 Validating flags '{{flags}}' for {{language}}..."
+	if ! python3 scripts/validate_flags.py "{{language}}" "{{flags}}"; then
+		echo "❌ Flag validation failed. Cannot add word with invalid flags."
+		exit 1
+	fi
+	
+	# Build testing framework if needed
+	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then
+		just language-build
+	fi
+	
+	# Check if Harper already recognizes the word
+	META_OUTPUT=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "$DICT_FILE" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}" 2>&1)
+	
+	if echo "$META_OUTPUT" | grep -q "✅ Found"; then
+		echo "✅ '{{word}}' is already recognized by Harper (no need to add)"
+		# Show the metadata
+		echo "$META_OUTPUT" | grep -A 5 "✅ Found"
+		exit 0
+	fi
+	
+	# Check if the word is already in the dictionary (case-insensitive)
+	if grep -qi "^{{word}}/" "$DICT_FILE"; then
+		EXACT_MATCH=$(grep -q "^{{word}}/" "$DICT_FILE" && echo "yes" || echo "no")
+		
+		if [ "$EXACT_MATCH" = "yes" ]; then
+			echo "⚠️  '{{word}}' is in the dictionary but not recognized by Harper"
+			echo "   This might be a metadata issue. Check the flags."
+			grep "^{{word}}/" "$DICT_FILE"
+			
+			# Check if --force flag is provided to update flags
+			FORCE_UPDATE="no"
+			for arg in {{args}}; do
+				if [ "$arg" = "--force" ] || [ "$arg" = "-f" ]; then
+					FORCE_UPDATE="yes"
+				fi
+			done
+			
+			if [ "$FORCE_UPDATE" = "yes" ]; then
+				echo "🔧 Updating existing entry with new flags..."
+				sed -i "s|^{{word}}/~.*|{{word}}/~~{{flags}} # auto-added|" "$DICT_FILE"
+				echo "✅ Updated '{{word}}' to use flags '{{flags}}'"
+				exit 0
+			else
+				echo "💡 To update the flags, use: just language-add-word {{language}} {{word}} {{flags}} --force"
+				exit 1
+			fi
+		else
+			echo "⚠️  '{{word}}' exists in the dictionary but with different case"
+			grep -i "^{{word}}/" "$DICT_FILE"
+			exit 1
+		fi
+	fi
+	
+	# Check if Hunspell recognizes the word
+	HUNSPELL_OUTPUT=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "$DICT_FILE" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{word}}" --hunspell 2>&1)
+	
+	if echo "$HUNSPELL_OUTPUT" | grep -q "Hunspell only"; then
+		echo "💡 '{{word}}' is recognized by Hunspell but not by Harper"
+	fi
+	
+	# Add the word to the dictionary
+	echo "📝 Adding '{{word}}' with flags '{{flags}}' to the dictionary..."
+	
+	# Check if file ends with newline
+	[[ -s "$DICT_FILE" && -n $(tail -c1 "$DICT_FILE") ]] && echo >> "$DICT_FILE"
+	
+	echo "{{word}}/~~{{flags}} # auto-added" >> "$DICT_FILE"
+	echo "✅ Added '{{word}}/~~{{flags}}' to the dictionary"
+	
+	# Show the new entry
+	tail -1 "$DICT_FILE"

@@ -56,6 +56,10 @@ impl Matcher {
         self.operators.len()
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.operators.is_empty()
+    }
+
     pub fn matches(&self, chars: &[char]) -> bool {
         if chars.len() != self.len() {
             return false;
