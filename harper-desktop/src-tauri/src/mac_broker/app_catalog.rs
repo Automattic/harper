@@ -6,12 +6,12 @@ const APPLICATION_BUNDLE_CONTENT_TYPE: &str = "com.apple.application-bundle";
 
 pub fn app_search_result_from_bundle_id(bundle_id: &str) -> AppSearchResult {
     AppSearchResult {
-        name: system_integration_display_name(bundle_id),
+        name: integration_display_name(bundle_id),
         bundle_id: bundle_id.to_string(),
     }
 }
 
-pub fn system_integration_display_name(bundle_id: &str) -> String {
+pub fn integration_display_name(bundle_id: &str) -> String {
     application_path_for_bundle_id(bundle_id)
         .and_then(|path| display_name_from_app_path(&path))
         .unwrap_or_else(|| bundle_id.to_owned())
