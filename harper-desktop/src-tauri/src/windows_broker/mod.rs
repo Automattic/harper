@@ -85,8 +85,6 @@ impl OsBroker for WindowsBroker {
             point.x as f32 / monitor_scale as f32,
             point.y as f32 / monitor_scale as f32,
         );
-        dbg!(pos);
-
         Some(pos)
     }
 

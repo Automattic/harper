@@ -128,12 +128,6 @@ impl RenderState {
             return HitTarget::Popup;
         }
 
-        dbg!(pos);
-
-        self.rects.iter().for_each(|r| {
-            dbg!(r.rect);
-        });
-
         self.rects
             .iter()
             .position(|positioned_lint| rect_bounds(&positioned_lint.rect).contains(pos))

@@ -112,8 +112,6 @@ impl AutomationService {
                     if let Err(err) = result_sender.try_send(result) {
                         if let TrySendError::Disconnected(_) = err {
                             break;
-                        } else {
-                            dbg!(err);
                         }
                     }
                 }
