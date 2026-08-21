@@ -550,4 +550,68 @@ mod tests {
     fn no_lint_to_many_after_verb_with_trailing_whitespace() {
         assert_no_lints("give \nto many charities", ToTwoToo::default());
     }
+
+    // --- Known limitations (each reason explains why it's left failing) ---
+
+    #[test]
+    #[ignore = "false positive: 'expired' is an adjective/verb ending in 'ed', matched by ToTooAdjVerbEdPunct; full runs hide it via overlap with InflectedVerbAfterTo"]
+    fn no_lint_going_to_expired() {
+        assert_no_lints(
+            "I didn't know it was going to expired.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false negative: the parenthetical after the degree word breaks the pattern"]
+    fn correct_to_few_in_parenthetical() {
+        assert_suggestion_result(
+            "Possibly to few (unique) data points / predictions.",
+            ToTwoToo::default(),
+            "Possibly too few (unique) data points / predictions.",
+        );
+    }
+
+    #[test]
+    #[ignore = "false negative: a degree word followed by 'of' isn't handled yet"]
+    fn correct_to_much_of_regression() {
+        assert_suggestion_result(
+            "Question for checking python import times and warning if to much of regression.",
+            ToTwoToo::default(),
+            "Question for checking python import times and warning if too much of regression.",
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: only the token directly before 'to' is checked, so the noun between the verb and 'to' isn't recognized"]
+    fn no_lint_copy_files_to_many_hosts() {
+        assert_no_lints("Copy files to many hosts in parallel", ToTwoToo::default());
+    }
+
+    #[test]
+    #[ignore = "false positive: 'little endian' is a technical term, not an excess degree"]
+    fn no_lint_convert_opcode_to_little_endian() {
+        assert_no_lints(
+            "Small script to convert opcode to little endian format",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: 'little endian' is a technical term, not an excess degree"]
+    fn no_lint_conversion_to_little_endian() {
+        assert_no_lints(
+            "I was working on gpt package in go and I didn't realize that the author had handled conversion to little endian when writing header.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: the compound splits into tokens, 'theme' reads as a noun and TooTo misfires on the valid 'too'"]
+    fn no_lint_too_theme_happy() {
+        assert_no_lints(
+            "2018: we may have gotten a bit too theme-happy.",
+            ToTwoToo::default(),
+        );
+    }
 }
