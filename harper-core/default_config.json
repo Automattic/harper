@@ -3338,6 +3338,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsPartOf",
+								"state": true,
+								"label": "As Part Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AspireTo",
 								"state": true,
 								"label": "Aspire To"
