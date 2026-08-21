@@ -97,10 +97,12 @@ impl ExprLinter for ModalOf {
             }
             // False positive: <word> _ might _ of _ course
             7 => return None,
-            _ => unreachable!(),
+            // A `then_whitespace()` step consumes a whole run, and a run spanning a
+            // line break is several tokens, so other lengths are representable.
+            _ => return None,
         };
 
-        let span_modal_of = matched_toks[modal_index..modal_index + 3].span().unwrap();
+        let span_modal_of = matched_toks.get(modal_index..modal_index + 3)?.span()?;
 
         let modal_have = format!(
             "{} have",
