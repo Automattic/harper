@@ -38,6 +38,7 @@ use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
+use super::better_off_served::BetterOffServed;
 use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
@@ -73,6 +74,7 @@ use super::did_past::DidPast;
 use super::didnt::Didnt;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
+use super::dissemble_disassemble::DissembleDisassemble;
 use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
@@ -104,6 +106,8 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::get_pass_go_pass::GetPassGoPass;
+use super::go_missing::GoMissing;
 use super::go_so_far_as_to::GoSoFarAsTo;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
@@ -183,6 +187,7 @@ use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
+use super::off_limits::OffLimits;
 use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
 use super::once_or_twice::OnceOrTwice;
@@ -276,7 +281,9 @@ use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
 use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
+use super::to_to::ToTo;
 use super::to_two_too::ToTwoToo;
+use super::tote_tout::ToteTout;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
@@ -631,6 +638,7 @@ impl LintGroup {
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
+        insert_expr_rule!(BetterOffServed);
         insert_expr_rule!(BoringWords);
         insert_expr_rule!(Bought);
         insert_expr_rule!(BrandBrandish);
@@ -696,6 +704,8 @@ impl LintGroup {
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
         insert_expr_rule!(FullToTheBrim);
+        insert_expr_rule!(GetPassGoPass);
+        insert_expr_rule!(GoMissing);
         insert_expr_rule!(GoSoFarAsTo);
         insert_expr_rule!(GoToWar);
         insert_expr_rule!(GoodAt);
@@ -773,6 +783,7 @@ impl LintGroup {
         insert_expr_rule!(NumericRangeEnDash);
         insert_expr_rule!(ObsessPreposition);
         insert_expr_rule!(OfCourse);
+        insert_expr_rule!(OffLimits);
         insert_expr_rule!(OldestInTheBook);
         insert_expr_rule!(OnFloor);
         insert_expr_rule!(OnceOrTwice);
@@ -863,7 +874,9 @@ impl LintGroup {
         insert_struct_rule!(ThrowRubbish);
         insert_expr_rule_with_dialect!(TillDate);
         insert_expr_rule!(ToAdverb);
+        insert_expr_rule!(ToTo);
         insert_struct_rule!(ToTwoToo);
+        insert_struct_rule!(ToteTout);
         insert_expr_rule!(Touristic);
         insert_expr_rule_with_dict!(TransposedSpace);
         insert_expr_rule!(TryOnesHandAt);
@@ -900,6 +913,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
+
+        // Uses Sentence rather than CHunk
+        out.add("DissembleDisassemble", DissembleDisassemble::default());
 
         // Uses Sentence rather than Chunk
         out.add(
