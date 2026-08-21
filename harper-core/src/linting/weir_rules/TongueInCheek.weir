@@ -2,7 +2,7 @@ expr main (tongue and cheek)
 
 let message "Use `tongue in cheek` for the idiom."
 let description "Corrects the idiom when `and` replaces the needed preposition."
-let kind "WordChoice"
+let kind "Preposition"
 let becomes "tongue in cheek"
 
 test "The remark was entirely tongue and cheek." "The remark was entirely tongue in cheek."
