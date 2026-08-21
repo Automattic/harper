@@ -8,7 +8,7 @@ import {
 } from 'harper.js';
 import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
-import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
+import type { DomainStatus, Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
@@ -23,6 +23,27 @@ let isolateEnglish = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
+let defaultDomains: DomainStatus[] = $state([]);
+let customDomains: DomainStatus[] = $state([]);
+let defaultDomainSearch = $state('');
+let defaultDomainSearchLower = $derived(defaultDomainSearch.trim().toLowerCase());
+let defaultDomainsBusy = $state(false);
+let filteredDefaultDomains = $derived(
+	defaultDomains.filter((domain) => domain.domain.includes(defaultDomainSearchLower)),
+);
+let filteredCustomDomains = $derived(
+	customDomains.filter((domain) => domain.domain.includes(defaultDomainSearchLower)),
+);
+let anyDefaultDomainsEnabled = $derived(defaultDomains.some((domain) => domain.enabled));
+let supportedSitesOpen = $state(false);
+let otherSitesOpen = $state(false);
+
+$effect(() => {
+	if (defaultDomainSearchLower) {
+		supportedSitesOpen = true;
+		otherSitesOpen = true;
+	}
+});
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
 let modifyHotkeyButton: Button;
@@ -84,6 +105,18 @@ ProtocolClient.getDelay().then((value) => {
 ProtocolClient.getDefaultEnabled().then((d) => {
 	defaultEnabled = d;
 });
+
+ProtocolClient.getDefaultDomains()
+	.then((domains) => {
+		defaultDomains = domains;
+	})
+	.catch((error) => console.error('Failed to load default sites:', error));
+
+ProtocolClient.getCustomDomains()
+	.then((domains) => {
+		customDomains = domains;
+	})
+	.catch((error) => console.error('Failed to load custom site preferences:', error));
 
 ProtocolClient.getActivationKey().then((d) => {
 	activationKey = d;
@@ -249,6 +282,53 @@ async function exportEnabledDomainsCSV() {
 	}
 }
 
+async function setDefaultDomainsEnabled(enabled: boolean) {
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(enabled);
+		defaultDomains = defaultDomains.map((domain) => ({ ...domain, enabled }));
+	} catch (error) {
+		console.error('Failed to update default sites:', error);
+		defaultDomains = await ProtocolClient.getDefaultDomains();
+	} finally {
+		defaultDomainsBusy = false;
+	}
+}
+
+async function toggleDefaultDomains(): Promise<void> {
+	await setDefaultDomainsEnabled(!anyDefaultDomainsEnabled);
+}
+
+async function setSiteEnabled(domainName: string, enabled: boolean) {
+	try {
+		await ProtocolClient.setDomainEnabled(domainName, enabled);
+		defaultDomains = defaultDomains.map((domain) =>
+			domain.domain === domainName ? { ...domain, enabled } : domain,
+		);
+		customDomains = customDomains.map((domain) =>
+			domain.domain === domainName ? { ...domain, enabled } : domain,
+		);
+	} catch (error) {
+		console.error('Failed to update site preference:', error);
+		const [defaults, customs] = await Promise.all([
+			ProtocolClient.getDefaultDomains(),
+			ProtocolClient.getCustomDomains(),
+		]);
+		defaultDomains = defaults;
+		customDomains = customs;
+	}
+}
+
+async function removeCustomDomain(domainName: string) {
+	try {
+		await ProtocolClient.removeCustomDomain(domainName);
+		customDomains = customDomains.filter((domain) => domain.domain !== domainName);
+	} catch (error) {
+		console.error('Failed to reset site preference:', error);
+		customDomains = await ProtocolClient.getCustomDomains();
+	}
+}
+
 let buttonText = $state('Set Hotkey');
 let isBlue = $state(false); // modify color of hotkey button once it is pressed
 function startHotkeyCapture(_modifyHotkeyButton: Button) {
@@ -401,6 +481,120 @@ async function removeWeirpack(id: string) {
         </div>
       </div>
 
+      <section class="space-y-4">
+        <div>
+          <h3 class="text-sm">Site Preferences</h3>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            View and change every site with an explicit Harper setting.
+          </p>
+        </div>
+        <Input
+          bind:value={defaultDomainSearch}
+          aria-label="Search site preferences"
+          placeholder="Search sites"
+          size="sm"
+        />
+
+        <details bind:open={supportedSitesOpen} class="space-y-4">
+          <summary class="cursor-pointer text-sm font-medium">
+            Supported Sites ({filteredDefaultDomains.length})
+          </summary>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            Harper starts on these supported sites after installation. Use the checklist to choose
+            them individually, or turn them all off to opt in site by site from the popup.
+          </p>
+          <div class="flex flex-wrap gap-3">
+            <Button
+              size="sm"
+              disabled={defaultDomainsBusy || defaultDomains.length === 0}
+              on:click={toggleDefaultDomains}
+            >
+              {anyDefaultDomainsEnabled ? 'Disable All Default Sites' : 'Enable All Default Sites'}
+            </Button>
+          </div>
+          <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2">
+            {#each filteredDefaultDomains as domain}
+              <label class="flex items-center gap-2 text-sm">
+                <input
+                  type="checkbox"
+                  checked={domain.enabled}
+                  disabled={defaultDomainsBusy}
+                  onchange={(event) =>
+                    setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
+                  class="h-4 w-4"
+                />
+                {domain.domain}
+              </label>
+            {:else}
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                No supported sites match your search.
+              </p>
+            {/each}
+          </div>
+        </details>
+
+        <details bind:open={otherSitesOpen} class="space-y-4">
+          <summary class="cursor-pointer text-sm font-medium">
+            Other Site Preferences ({filteredCustomDomains.length})
+          </summary>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            These sites have an explicit setting, such as one changed from the popup. Resetting a
+            site makes it follow “Enable on New Sites by Default” again.
+          </p>
+          {#if customDomains.length === 0}
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              No other site preferences yet.
+            </p>
+          {:else if filteredCustomDomains.length > 0}
+            <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 sm:grid-cols-2">
+              {#each filteredCustomDomains as domain}
+                <div class="flex items-center justify-between gap-2">
+                  <label class="flex min-w-0 items-center gap-2 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={domain.enabled}
+                      onchange={(event) =>
+                        setSiteEnabled(
+                          domain.domain,
+                          (event.currentTarget as HTMLInputElement).checked,
+                        )}
+                      class="h-4 w-4"
+                    />
+                    <span class="truncate">{domain.domain}</span>
+                  </label>
+                  <Button
+                    size="xs"
+                    color="light"
+                    aria-label={`Reset ${domain.domain}`}
+                    on:click={() => removeCustomDomain(domain.domain)}
+                  >
+                    Reset
+                  </Button>
+                </div>
+              {/each}
+            </div>
+          {:else}
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              No other site preferences match your search.
+            </p>
+          {/if}
+        </details>
+      </section>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Export Enabled Domains</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Downloads JSON of domains explicitly enabled.
+            </p>
+          </div>
+          <Button size="sm" on:click={exportEnabledDomainsCSV}
+            >Export JSON</Button
+          >
+        </div>
+      </div>
+
       <div class="space-y-5">
         <div class="flex items-center justify-between gap-4">
           <div class="flex flex-col">
@@ -417,20 +611,6 @@ async function removeWeirpack(id: string) {
             bind:value={delay}
             class="w-44 rounded-lg border border-cream-200 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cream-300 focus:ring-2 focus:ring-primary-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:focus:border-cream-600 dark:focus:ring-primary-600"
           />
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Export Enabled Domains</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Downloads JSON of domains explicitly enabled.
-            </p>
-          </div>
-          <Button size="sm" on:click={exportEnabledDomainsCSV}
-            >Export JSON</Button
-          >
         </div>
       </div>
 

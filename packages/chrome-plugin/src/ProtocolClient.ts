@@ -1,7 +1,13 @@
 import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
-import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
+import type {
+	ActivationKey,
+	DomainStatus,
+	Hotkey,
+	SetDomainStatusResponse,
+	WeirpackMeta,
+} from './protocol';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -66,6 +72,7 @@ export default class ProtocolClient {
 	}
 
 	public static async setDialect(dialect: Dialect): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
 	}
 
@@ -87,7 +94,6 @@ export default class ProtocolClient {
 	}
 
 	public static async getDomainEnabled(domain: string): Promise<boolean> {
-		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDomainStatus', domain })).enabled;
 	}
 
@@ -100,16 +106,37 @@ export default class ProtocolClient {
 		enabled: boolean,
 		overrideValue = true,
 	): Promise<void> {
-		await chrome.runtime.sendMessage({
+		const response = (await chrome.runtime.sendMessage({
 			kind: 'setDomainStatus',
 			enabled,
 			domain,
 			overrideValue,
-		});
+		})) as SetDomainStatusResponse;
+
+		if (response.changed) {
+			this.lintCache.clear();
+		}
+	}
+
+	public static async getDefaultDomains(): Promise<DomainStatus[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getDefaultDomains' })).domains;
+	}
+
+	public static async getCustomDomains(): Promise<DomainStatus[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getCustomDomains' })).domains;
+	}
+
+	public static async setDefaultDomainsEnabled(enabled: boolean): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setDefaultDomainsStatus', enabled });
+	}
+
+	public static async removeCustomDomain(domain: string): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'removeCustomDomain', domain });
 	}
 
 	public static async getDefaultEnabled(): Promise<boolean> {
-		this.lintCache.clear();
 		return (await chrome.runtime.sendMessage({ kind: 'getDefaultStatus' })).enabled;
 	}
 
@@ -118,6 +145,7 @@ export default class ProtocolClient {
 	}
 
 	public static async setDefaultEnabled(enabled: boolean): Promise<void> {
+		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'setDefaultStatus', enabled });
 	}
 
