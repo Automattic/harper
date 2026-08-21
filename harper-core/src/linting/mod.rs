@@ -258,6 +258,7 @@ mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
+mod similar_to;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
