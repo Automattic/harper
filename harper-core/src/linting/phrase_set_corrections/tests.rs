@@ -2360,6 +2360,72 @@ fn correct_awaited_for() {
     );
 }
 
+// BackhandedCompliment
+
+#[test]
+fn correct_backhand_compliment() {
+    assert_suggestion_result(
+        "What's the Most insulting /backhand compliment you have ever received?",
+        test_linter(),
+        "What's the Most insulting /backhanded compliment you have ever received?",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_space() {
+    assert_suggestion_result(
+        "Thankfully, I'm a little young to receive that back hand compliment",
+        test_linter(),
+        "Thankfully, I'm a little young to receive that backhanded compliment",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_hyphen() {
+    assert_suggestion_result(
+        "They \"have it all\", but still need to back-hand compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+        test_linter(),
+        "They \"have it all\", but still need to backhanded compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+    );
+}
+
+#[test]
+fn correct_backhand_compliments() {
+    assert_suggestion_result(
+        "If backhand compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+        test_linter(),
+        "If backhanded compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments() {
+    assert_suggestion_result(
+        "I am laughing so hard watching the \"commercial\" with her back hand compliments.",
+        test_linter(),
+        "I am laughing so hard watching the \"commercial\" with her backhanded compliments.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments_caps() {
+    assert_suggestion_result(
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACK HAND COMPLIMENTS.",
+        test_linter(),
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACKHANDED COMPLIMENTS.",
+    );
+}
+
+// no praises, just tons of unnecessary back-hand compliments and lack of support
+#[test]
+fn correct_back_hand_compliments_hyphen() {
+    assert_suggestion_result(
+        "no praises, just tons of unnecessary back-hand compliments and lack of support",
+        test_linter(),
+        "no praises, just tons of unnecessary backhanded compliments and lack of support",
+    );
+}
+
 // CommitmentTo
 
 #[test]
