@@ -329,4 +329,22 @@ mod tests {
             DidPast::new(FstDictionary::curated()),
         );
     }
+
+    #[test]
+    fn derived_verbs_did_withstood() {
+        assert_suggestion_result(
+            "The bridge did withstood the storm.",
+            DidPast::new(FstDictionary::curated()),
+            "The bridge did withstand the storm.",
+        );
+    }
+
+    #[test]
+    fn derived_verbs_did_rewrote() {
+        assert_suggestion_result(
+            "I did rewrote the introduction.",
+            DidPast::new(FstDictionary::curated()),
+            "I did rewrite the introduction.",
+        );
+    }
 }
