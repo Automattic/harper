@@ -4496,6 +4496,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DependsBasedOn",
+								"state": true,
+								"label": "Depends Based On"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DissembleDisassemble",
 								"state": true,
 								"label": "Dissemble / Disassemble"
