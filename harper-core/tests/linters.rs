@@ -11,7 +11,8 @@
 
 use harper_core::spell::FstDictionary;
 use harper_core::{
-    Dialect, Document,
+    Document,
+    dialect::Dialect,
     linting::{LintGroup, Linter},
 };
 

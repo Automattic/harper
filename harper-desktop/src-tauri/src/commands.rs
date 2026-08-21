@@ -7,7 +7,8 @@ use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker}
 use crate::{IntegrationView, PlatformBroker, platform_broker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints,
+    DictWordMetadata, IgnoredLints,
+    dialect::Dialect,
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };

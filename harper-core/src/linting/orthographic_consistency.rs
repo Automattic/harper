@@ -1,10 +1,11 @@
 use std::sync::Arc;
 
 use crate::{
+    Token,
+    dict_word_metadata::orthography::OrthFlags,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     spell::{Dictionary, FstDictionary},
-    {OrthFlags, Token},
 };
 
 pub struct OrthographicConsistency {

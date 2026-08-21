@@ -1,6 +1,7 @@
+use harper_core::Document;
+use harper_core::dialect::Dialect;
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
 use harper_git_commit::GitCommitParser;
 
 /// Creates a unit test checking that the linting of a git commit document (in

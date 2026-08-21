@@ -14,12 +14,11 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
+use harper_core::dialect::Dialect;
 use harper_core::linting::LintGroup;
 use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
 use harper_core::weir::WeirLinter;
-use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
-};
+use harper_core::{CharStringExt, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt};
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 
