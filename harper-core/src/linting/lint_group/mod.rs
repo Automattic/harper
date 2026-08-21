@@ -120,6 +120,7 @@ use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
 use super::hereby::Hereby;
+use super::highly::Highly;
 use super::hop_hope::HopHope;
 use super::how_does_compared::HowDoesCompared;
 use super::how_to::HowTo;
@@ -718,6 +719,7 @@ impl LintGroup {
         insert_expr_rule!(HelloGreeting);
         insert_expr_rule_with_dict!(HelpedPast);
         insert_expr_rule!(Hereby);
+        insert_expr_rule!(Highly);
         insert_struct_rule!(HopHope);
         insert_expr_rule!(HowDoesCompared);
         insert_expr_rule!(HowTo);
