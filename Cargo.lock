@@ -4219,6 +4219,7 @@ dependencies = [
  "uiautomation",
  "windows 0.62.2",
  "winit",
+ "wintheon",
 ]
 
 [[package]]
@@ -10874,7 +10875,7 @@ dependencies = [
  "objc2-metal 0.3.2",
  "objc2-quartz-core 0.3.2",
  "once_cell",
- "ordered-float 4.6.0",
+ "ordered-float 5.5.0",
  "parking_lot",
  "portable-atomic",
  "portable-atomic-util",
@@ -10963,6 +10964,16 @@ name = "winapi-x86_64-pc-windows-gnu"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+
+[[package]]
+name = "wincorda"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a356fb015443d529bc912a8cb92d90487bfa6fab7af32949f544c1d59af201cb"
+dependencies = [
+ "thiserror 2.0.20",
+ "winapi",
+]
 
 [[package]]
 name = "window-vibrancy"
@@ -11575,6 +11586,20 @@ checksum = "cb5a765337c50e9ec252c2069be9bf91c7df47afb103b642ba3a53bf8101be97"
 dependencies = [
  "cfg-if",
  "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "wintheon"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55852331fd1934f900d4c7502016f6d26c25f90513e29eb21d80d81fc2a9dedc"
+dependencies = [
+ "png 0.18.1",
+ "thiserror 2.0.20",
+ "tracing",
+ "wincorda",
+ "windows 0.62.2",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
