@@ -2,7 +2,7 @@ use std::sync::Arc;
 
 use super::{Expr, SequenceExpr};
 use crate::spell::{Dictionary, FstDictionary};
-use crate::{CharString, DictWordMetadata, Span, Token};
+use crate::{CharString, CharStringExt, DictWordMetadata, Span, Token};
 
 type PredicateFn =
     dyn Fn(Option<&DictWordMetadata>, Option<&DictWordMetadata>) -> bool + Send + Sync;
@@ -41,6 +41,12 @@ impl MergeableWords {
     ) -> Option<CharString> {
         let a_chars: CharString = word_a.get_ch(source).into();
         let b_chars: CharString = word_b.get_ch(source).into();
+
+        // Don't treat "may be" as a split compound noun for "maybe" here.
+        // Deciding whether "may be" should be "maybe" depends on context and belongs in a dedicated linter.
+        if a_chars.eq_str("may") && b_chars.eq_str("be") {
+            return None;
+        }
 
         // First check if the open compound exists in the dictionary
         let mut compound = a_chars.clone();
@@ -149,5 +155,16 @@ mod tests {
         let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
 
         assert_eq!(merged, Some("frontline".chars().collect()));
+    }
+
+    #[test]
+    fn does_not_merge_modal_may_be() {
+        let doc = Document::new_plain_english_curated("may be");
+        let a = doc.tokens().next().unwrap();
+        let b = doc.tokens().nth(2).unwrap();
+
+        let merged = MergeableWords::new(predicate).get_merged_word(a, b, doc.get_source());
+
+        assert_eq!(merged, None);
     }
 }
