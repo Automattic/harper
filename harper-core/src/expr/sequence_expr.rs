@@ -8,9 +8,18 @@ use crate::{
 
 use super::{Expr, Optional, OwnedExprExt, Repeating, Step, UnlessStep};
 
-#[derive(Default)]
 pub struct SequenceExpr {
     exprs: Vec<Box<dyn Expr>>,
+    capture_range: Span<Box<dyn Expr>>,
+}
+
+impl Default for SequenceExpr {
+    fn default() -> Self {
+        Self {
+            exprs: Default::default(),
+            capture_range: Span::FULL,
+        }
+    }
 }
 
 /// Generate a `then_*` method from an available `is_*` function on [`TokenKind`].
@@ -55,28 +64,36 @@ impl Expr for SequenceExpr {
     fn run(&self, mut cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
         let mut window = Span::empty(cursor);
 
-        for cur_expr in &self.exprs {
+        for (i, cur_expr) in self.exprs.iter().enumerate() {
             let out = cur_expr.run(cursor, tokens, source)?;
 
             // Zero-width assertions (like AnchorEnd) validate position without consuming tokens
             // They should not expand the window or advance the cursor
-            let is_zero_width = out.end == out.start;
-
-            if !is_zero_width {
-                // Only expand the window if the match actually covers some tokens
-                if out.end > out.start {
-                    window.expand_to_include(out.start);
-                    window.expand_to_include(out.end.checked_sub(1).unwrap_or(out.start));
-                }
-
-                // Only advance cursor if we actually matched something
-                if out.end > cursor {
-                    cursor = out.end;
-                } else if out.start < cursor {
-                    cursor = out.start;
-                }
+            if out.is_empty() {
+                // If zero-width, don't expand window or advance cursor - just validate position
+                continue;
             }
-            // If zero-width, don't expand window or advance cursor - just validate position
+
+            // Only advance cursor if we actually matched something
+            if out.end > cursor {
+                cursor = out.end;
+            } else if out.start < cursor {
+                cursor = out.start;
+            }
+
+            if self.capture_range.start == i {
+                // This is the first expression being captured, set the window to start at the
+                // current cursor position.
+                // Even though it was set at the beginning of this function, it's necessary to set
+                // it again since the cursor may have advanced since then.
+                window = Span::empty(cursor);
+            } else if !self.capture_range.contains(i) {
+                // Current expression is outside of capture range and shouldn't be captured.
+                continue;
+            }
+
+            window.expand_to_include(out.start);
+            window.expand_to_include(out.end - 1);
         }
 
         Some(window)
@@ -682,6 +699,27 @@ impl SequenceExpr {
     gen_then_from_is!(sentence_terminator);
 }
 
+// Capture-range methods.
+impl SequenceExpr {
+    /// Start the capture at this point.
+    ///
+    /// [`Expr`] set before this point will be required for a match, but will not be captured in
+    /// the result.
+    pub(crate) fn start_capture(mut self) -> Self {
+        self.capture_range.start = self.exprs.len();
+        self
+    }
+
+    /// Start the capture at this point.
+    ///
+    /// [`Expr`] set after this point will be required for a match, but will not be captured in the
+    /// result.
+    pub(crate) fn end_capture(mut self) -> Self {
+        self.capture_range.end = self.exprs.len();
+        self
+    }
+}
+
 impl<S> From<S> for SequenceExpr
 where
     S: Step + 'static,
@@ -689,6 +727,7 @@ where
     fn from(step: S) -> Self {
         Self {
             exprs: vec![Box::new(step)],
+            ..Default::default()
         }
     }
 }
@@ -697,7 +736,7 @@ where
 mod tests {
     use crate::{
         Document, TokenKind,
-        expr::{AnchorEnd, Expr, ExprExt, SequenceExpr},
+        expr::{AnchorEnd, Expr, ExprExt, Repeating, SequenceExpr},
         linting::tests::SpanVecExt,
     };
 
@@ -726,6 +765,125 @@ mod tests {
         let doc = Document::new_plain_english_curated("Use a good example.");
         let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
         assert_eq!(matches.to_strings(&doc), vec!["Use", "example"]);
+    }
+
+    #[track_caller]
+    fn assert_no_matches_for(s: &str, expr: &SequenceExpr) {
+        let doc = Document::new_plain_english_curated(s);
+        let mut matches = expr.iter_matches_in_doc(&doc);
+        assert!(matches.next().is_none());
+    }
+
+    #[test]
+    fn test_start_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("world", &expr);
+        assert_no_matches_for(" world", &expr);
+    }
+
+    #[test]
+    fn test_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("world");
+
+        let doc = Document::new_plain_english_curated("hello world");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["hello"]);
+
+        assert_no_matches_for("hello", &expr);
+        assert_no_matches_for("hello ", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world"]);
+
+        assert_no_matches_for("hello world", &expr);
+        assert_no_matches_for("world testing", &expr);
+        assert_no_matches_for("world", &expr);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_exact_word("world")
+            .t_ws()
+            .then_exact_word("testing")
+            .end_capture()
+            .t_ws()
+            .then_any_word();
+
+        let doc = Document::new_plain_english_curated("hello world testing something else");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world testing"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_match() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then_any_word()
+            .t_ws()
+            .then_exact_word("world")
+            .end_capture()
+            .t_ws()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated(
+            "hello one world testing hello two world testing hello three world something else",
+        );
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["one world", "two world"]);
+    }
+
+    #[test]
+    fn test_start_end_capture_multi_token_expr() {
+        let expr = SequenceExpr::default()
+            .then_exact_word("hello")
+            .t_ws()
+            .start_capture()
+            .then(Repeating::new(
+                Box::new(SequenceExpr::default().then_exact_word("world").t_ows()),
+                3,
+            ))
+            .end_capture()
+            .then_exact_word("testing");
+
+        let doc = Document::new_plain_english_curated("hello world world world testing");
+        let matches = expr.iter_matches_in_doc(&doc).collect::<Vec<_>>();
+        assert_eq!(matches.to_strings(&doc), vec!["world world world "]);
+
+        assert_no_matches_for("hello world world world", &expr);
+        assert_no_matches_for("world world world testing", &expr);
+        assert_no_matches_for("world world world", &expr);
     }
 
     #[test]
