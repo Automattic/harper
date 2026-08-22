@@ -76,9 +76,13 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
 
             use ToVerbExpects::*;
 
-            let ed_specific_heuristics = || {
+            let expected_form_after_to = || {
                 if let Some(prev) = document.get_next_word_from_offset(pi, -1) {
                     let prev_chars = document.get_span_content(&prev.span);
+                    if prev_chars.eq_str("pointed") {
+                        return ToVerbExpects::ExpectsNominal;
+                    }
+
                     if let Some(metadata) = self.dictionary.get_word_metadata(prev_chars) {
                         // adj: "able to" expects an infinitive verb
                         // verb: "have/had/has/having to" expect an infinitive verb
@@ -96,7 +100,7 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
 
             if chars.ends_with(&['e', 'd']) {
                 let ed = check_stem(&chars[..chars.len() - 2]);
-                if ed && ed_specific_heuristics() == ExpectsInfinitive {
+                if ed && expected_form_after_to() == ExpectsInfinitive {
                     lint_from_stem(&chars[..chars.len() - 2]);
                 };
                 let d = check_stem(&chars[..chars.len() - 1]);
@@ -107,15 +111,13 @@ impl<T: Dictionary> Linter for InflectedVerbAfterTo<T> {
             }
             if chars.ends_with(&['e', 's']) {
                 let es = check_stem(&chars[..chars.len() - 2]);
-                // Add -es specific heuristics when needed
-                if es {
+                if es && expected_form_after_to() == ExpectsInfinitive {
                     lint_from_stem(&chars[..chars.len() - 2]);
                 };
             }
             if chars.ends_with(&['s']) {
                 let s = check_stem(&chars[..chars.len() - 1]);
-                // Add -s specific heuristics when needed
-                if s {
+                if s && expected_form_after_to() == ExpectsInfinitive {
                     lint_from_stem(&chars[..chars.len() - 1]);
                 };
             }
@@ -297,6 +299,15 @@ mod tests {
         // Hypothesis: when before "to" is not an adj, assume "to" is a preposition
         assert_lint_count(
             "Comparison to Expected Results",
+            InflectedVerbAfterTo::new(FstDictionary::curated()),
+            0,
+        );
+    }
+
+    #[test]
+    fn issue_2575_dont_flag_pointed_to_outlives() {
+        assert_lint_count(
+            "It is used to verify that the object being pointed to outlives the pointer.",
             InflectedVerbAfterTo::new(FstDictionary::curated()),
             0,
         );
