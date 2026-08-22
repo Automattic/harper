@@ -315,6 +315,7 @@ These configs are under the `markdown` key:
 | TypeScript          |         `typescript`          |            ✅ |
 | TypeScript React    |       `typescriptreact`       |            ✅ |
 | Typst               |            `typst`            |               |
+| YAML                |         `yaml`/`yml`          |               |
 | Zig                 |             `zig`             |            ✅ |
 | LaTeX/TeX           | `latex`/`tex`/`plaintex`      |               |
 
