@@ -71,7 +71,7 @@ impl ExprLinter for ForTheNthTime {
     fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
         Some(Lint {
             span: matched_tokens[0].span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter(vec![' ', 't', 'h', 'e'])],
             message: "The standard form of this construction requires the word 'the' to precede the ordinal.".to_owned(),
             ..Default::default()

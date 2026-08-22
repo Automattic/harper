@@ -641,6 +641,7 @@ fn is_spelling_kind(lint_kind: LintKind) -> bool {
         | LintKind::Formatting
         | LintKind::Grammar
         | LintKind::Miscellaneous
+        | LintKind::MissingWord
         | LintKind::Nonstandard
         | LintKind::Punctuation
         | LintKind::Readability
@@ -685,6 +686,7 @@ fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
         },
         LintKind::Enhancement
         | LintKind::Miscellaneous
+        | LintKind::MissingWord
         | LintKind::Nonstandard
         | LintKind::Redundancy
         | LintKind::Regionalism

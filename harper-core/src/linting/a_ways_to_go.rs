@@ -50,7 +50,7 @@ impl ExprLinter for AWaysToGo {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter([' ', 'a'].to_vec())],
             message: "This idiom requires the word `a`.".to_owned(),
             ..Default::default()

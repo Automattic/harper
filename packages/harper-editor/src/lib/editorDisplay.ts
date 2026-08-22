@@ -159,6 +159,14 @@ export const LINT_KIND_STYLES: Record<
 		softClass: 'bg-sky-50',
 		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-sky-500/10',
 	},
+	MissingWord: {
+		label: 'Missing Word',
+		dotClass: 'bg-amber-500',
+		haloClass: 'bg-amber-100',
+		textClass: 'text-amber-700',
+		softClass: 'bg-amber-50',
+		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-amber-500/10',
+	},
 	Nonstandard: {
 		label: 'Nonstandard',
 		dotClass: 'bg-stone-500',
@@ -246,6 +254,14 @@ export const LINT_KIND_STYLES: Record<
 		textClass: 'text-blue-700',
 		softClass: 'bg-blue-50',
 		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-blue-600/10',
+	},
+	WordOrder: {
+		label: 'Word Order',
+		dotClass: 'bg-purple-500',
+		haloClass: 'bg-purple-100',
+		textClass: 'text-purple-700',
+		softClass: 'bg-purple-50',
+		activeClass: 'border-[rgba(28,26,22,0.14)] shadow-purple-500/10',
 	},
 };
 
