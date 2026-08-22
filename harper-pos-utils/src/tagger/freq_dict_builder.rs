@@ -60,12 +60,16 @@ impl FreqDictBuilder {
     /// For error-handling purposes, this function should not be made accessible outside of training.
     #[cfg(feature = "training")]
     pub fn inc_from_conllu_file(&mut self, path: impl AsRef<Path>) {
-        use crate::conllu_utils::iter_sentences_in_conllu;
+        use crate::conllu_utils::{iter_sentences_in_conllu, sentence_to_training_pair};
 
         for sent in iter_sentences_in_conllu(path) {
-            for token in sent.tokens {
-                if let Some(upos) = token.upos.and_then(UPOS::from_conllu) {
-                    self.inc(&token.form, &upos)
+            // Count merged surface tokens — matching how the tagger tokenizes
+            // at runtime (Harper lexes "don't" as one token), and multiword-token
+            // and contraction aware (see `sentence_to_training_pair`).
+            let (toks, tags) = sentence_to_training_pair(&sent);
+            for (tok, tag) in toks.iter().zip(tags) {
+                if let Some(upos) = tag {
+                    self.inc(tok, &upos);
                 }
             }
         }
