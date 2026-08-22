@@ -186,6 +186,7 @@ mod multiple_sequential_pronouns;
 mod nail_on_the_head;
 mod naked_eye;
 mod need_to_noun;
+mod negative_modal_order;
 mod no_french_spaces;
 mod no_harm_no_foul;
 mod no_longer;

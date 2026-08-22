@@ -1,21 +1,20 @@
-use crate::expr::Expr;
-use crate::expr::SequenceExpr;
-use crate::patterns::ModalVerb;
-use crate::{Token, TokenStringExt};
-
-use super::Suggestion;
-use super::{ExprLinter, Lint, LintKind};
-use crate::linting::expr_linter::Chunk;
+use crate::{
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    patterns::ModalVerb,
+    {Lint, Token, TokenStringExt},
+};
 
 pub struct DoubleModal {
-    expr: SequenceExpr,
+    expr: All,
 }
 
 impl Default for DoubleModal {
     fn default() -> Self {
         let expr = SequenceExpr::with(ModalVerb::default())
             .t_ws()
-            .then(ModalVerb::default());
+            .then(ModalVerb::default())
+            .but_not(SequenceExpr::word_seq(&["will", "need"]));
 
         Self { expr }
     }
