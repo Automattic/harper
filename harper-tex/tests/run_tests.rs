@@ -1,6 +1,6 @@
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::{Dialect, Document, TokenKind};
 use harper_tex::TeX;
 
 /// Creates a unit test checking that the linting of a document in
@@ -44,3 +44,19 @@ create_test!(many_tags.tex, 6);
 create_test!(many_more_tags.tex, 11);
 create_test!(em_dash.tex, 0);
 create_test!(issue_2835.tex, 3);
+create_test!(issue_3224.tex, 0);
+
+#[test]
+fn issue_3224_preserves_the_paragraph_break() {
+    let source = include_str!("./test_sources/issue_3224.tex");
+    let dict = FstDictionary::curated();
+    let document = Document::new(&source, &TeX::default(), &dict);
+
+    assert_eq!(
+        document
+            .tokens()
+            .filter(|token| matches!(&token.kind, TokenKind::ParagraphBreak))
+            .count(),
+        1
+    );
+}
