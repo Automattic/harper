@@ -4,8 +4,8 @@ Message: |
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
+  - Replace with: “FA”
   - Replace with: “Fe”
-  - Replace with: “Ft”
 
 
 
@@ -7158,8 +7158,8 @@ Message: |
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
+  - Replace with: “FA”
   - Replace with: “Fe”
-  - Replace with: “Ft”
 
 
 
