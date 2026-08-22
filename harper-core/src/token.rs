@@ -40,9 +40,30 @@ impl Token {
 #[cfg(test)]
 mod tests {
     use crate::{
-        TokenStringExt,
+        Span, Token, TokenKind, TokenStringExt,
         parsers::{Parser, PlainEnglish},
     };
+
+    #[test]
+    fn unlintable_token_is_detected() {
+        let token = Token::new(Span::new(0, 5), TokenKind::Unlintable);
+        assert!(token.kind_is_unlintable());
+    }
+
+    #[test]
+    fn word_token_is_not_unlintable() {
+        let token = Token::new(
+            Span::new(0, 5),
+            TokenKind::Word(crate::WordMetadata::default()),
+        );
+        assert!(!token.kind_is_unlintable());
+    }
+
+    #[test]
+    fn newline_token_is_not_unlintable() {
+        let token = Token::new(Span::new(0, 1), TokenKind::Newline(1));
+        assert!(!token.kind_is_unlintable());
+    }
 
     #[test]
     fn parses_sentences_correctly() {
