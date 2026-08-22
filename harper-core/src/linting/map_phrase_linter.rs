@@ -79,29 +79,6 @@ impl MapPhraseLinter {
             lint_kind,
         )
     }
-
-    pub fn new_closed_compound(
-        phrases: impl IntoIterator<Item = impl AsRef<str>>,
-        correct_form: impl ToString,
-    ) -> Self {
-        let message = format!(
-            "Did you mean the closed compound `{}`?",
-            correct_form.to_string()
-        );
-
-        let description = format!(
-            "Looks for incorrect spacing inside the closed compound `{}`.",
-            correct_form.to_string()
-        );
-
-        Self::new_fixed_phrases(
-            phrases,
-            [correct_form],
-            message,
-            description,
-            Some(LintKind::Miscellaneous),
-        )
-    }
 }
 
 impl ExprLinter for MapPhraseLinter {

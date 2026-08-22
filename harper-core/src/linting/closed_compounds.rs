@@ -1,4 +1,4 @@
-use crate::linting::LintGroup;
+use crate::linting::{LintGroup, LintKind};
 
 use super::MapPhraseLinter;
 
@@ -6,11 +6,32 @@ pub fn lint_group() -> LintGroup {
     let mut group = LintGroup::empty();
 
     macro_rules! add_compound_mappings {
-        ($group:expr, { $($name:expr => ($bads:expr, $good:expr)),+ $(,)? }) => {
+        ($group:expr, { $($name:expr => $mappings:expr),+ $(,)? }) => {
             $(
+                let mut all_patterns: Vec<&[&str]> = Vec::new();
+                let mut all_correct: Vec<&str> = Vec::new();
+
+                for (bads, good) in $mappings {
+                    all_patterns.push(*bads);
+                    all_correct.push(*good);
+                }
+
+                let patterns_flat: Vec<&str> = all_patterns.iter().flat_map(|p| p.iter().copied()).collect();
+                let first_correct = if let Some(first) = all_correct.first() {
+                    *first
+                } else {
+                    ""
+                };
+
                 $group.add(
                     $name,
-                    Box::new(MapPhraseLinter::new_closed_compound($bads, $good)),
+                    Box::new(MapPhraseLinter::new_fixed_phrases(
+                        patterns_flat,
+                        all_correct,
+                        format!("Did you mean the closed compound `{}`?", first_correct),
+                        format!("Looks for incorrect spacing inside closed compounds."),
+                        Some(LintKind::Miscellaneous),
+                    )),
                 );
             )+
         };
@@ -21,69 +42,97 @@ pub fn lint_group() -> LintGroup {
     // The second column is the incorrect form of the word and the third column is the correct
     // form.
     add_compound_mappings!(group, {
-        "Anybody"         => (&["any body"][..], "anybody"),
-        "Anyhow"          => (&["any how"][..], "anyhow"),
-        "Anywhere"        => (&["any where"][..], "anywhere"),
-        "Backplane"       => (&["back plane"][..], "backplane"),
-        "Bypass"          => (&["by pass"][..], "bypass"),
-        "Chalkboard"      => (&["chalk board"][..], "chalkboard"),
-        "Codebase"        => (&["code base"][..], "codebase"),
-        "Codebases"       => (&["code bases"][..], "codebases"),
-        "Deadlift"        => (&["dead lift"][..], "deadlift"),
-        "Desktop"         => (&["desk top"][..], "desktop"),
-        "Devops"          => (&["dev ops"][..], "devops"),
-        "Everybody"       => (&["every body"][..], "everybody"),
-        "Everyone"        => (&["every one"][..], "everyone"),
-        "Everywhere"      => (&["every where"][..], "everywhere"),
-        "Furthermore"     => (&["further more"][..], "furthermore"),
-        "Henceforth"      => (&["hence forth"][..], "henceforth"),
-        "However"         => (&["how ever"][..], "however"),
-        "Insofar"         => (&["in so far"][..], "insofar"),
-        "Instead"         => (&["in stead"][..], "instead"),
-        "Intact"          => (&["in tact"][..], "intact"),
-        "Itself"          => (&["it self"][..], "itself"),
-        "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
-        "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
-        "Laptop"          => (&["lap top"][..], "laptop"),
-        "Middleware"      => (&["middle ware"][..], "middleware"),
-        "Meanwhile"       => (&["mean while"][..], "meanwhile"),
-        "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
-        "Misunderstood"   => (&["miss understood"][..], "misunderstood"),
-        "Misuse"          => (&["miss use"][..], "misuse"),
-        "Misused"         => (&["miss used"][..], "misused"),
-        "Multicore"       => (&["multi core"][..], "multicore"),
-        "Multimedia"      => (&["multi media"][..], "multimedia"),
-        "Multithreading"  => (&["multi threading"][..], "multithreading"),
-        "Myself"          => (&["my self"][..], "myself"),
-        "Nonetheless"     => (&["none the less"][..], "nonetheless"),
-        "Nothing"         => (&["no thing"][..], "nothing"),
-        "Notwithstanding" => (&["not with standing"][..], "notwithstanding"),
-        "Nowhere"         => (&["no where"][..], "nowhere"),
-        "Overall"         => (&["over all"][..], "overall"),
-        "Overclocking"    => (&["over clocking"][..], "overclocking"),
-        "Overload"        => (&["over load"][..], "overload"),
-        "Overnight"       => (&["over night"][..], "overnight"),
-        "Postpone"        => (&["post pone"][..], "postpone"),
-        "Proofread"       => (&["proof read"][..], "proofread"),
-        "Regardless"      => (&["regard less"][..], "regardless"),
-        "Shortcoming"     => (&["short coming"][..], "shortcoming"),
-        "Shortcomings"    => (&["short comings"][..], "shortcomings"),
-        "Somebody"        => (&["some body"][..], "somebody"),
-        "Somehow"         => (&["some how"][..], "somehow"),
-        "Someone"         => (&["some one"][..], "someone"),
-        "Somewhere"       => (&["some where"][..], "somewhere"),
-        "Tenfold"         => (&["ten fold"][..], "tenfold"),
-        "There"           => (&["the re"][..], "there"),
-        "Therefore"       => (&["there fore"][..], "therefore"),
-        "Thereupon"       => (&["there upon"][..], "thereupon"),
-        "Underclock"      => (&["under clock"][..], "underclock"),
-        "Upset"           => (&["up set"][..], "upset"),
-        "Upward"          => (&["up ward"][..], "upward"),
-        "Whereupon"       => (&["where upon"][..], "whereupon"),
-        "Widespread"      => (&["wide spread"][..], "widespread"),
-        "Without"         => (&["with out"][..], "without"),
-        "Worldwide"       => (&["world wide"][..], "worldwide"),
-        "Worthwhile"      => (&["worth while", "worth-while"][..], "worthwhile"),
+        "Anybody"         => &[(&["any body"], "anybody")],
+        "Anyhow"          => &[(&["any how"], "anyhow")],
+        "Anywhere"        => &[(&["any where"], "anywhere")],
+        "Backplane"       => &[(&["back plane"], "backplane"),
+                               (&["back planes"], "backplanes")],
+        "Bypass"          => &[(&["by pass"], "bypass"),
+                               (&["by passed"], "bypassed"),
+                               (&["by passing"], "bypassing"),
+                               (&["by passes"], "bypasses")],
+        "Chalkboard"      => &[(&["chalk board"], "chalkboard"),
+                               (&["chalk boards"], "chalkboards")],
+        "Codebase"        => &[(&["code base"], "codebase"),
+                               (&["code bases"], "codebases")],
+        "Deadlift"        => &[(&["dead lift"], "deadlift"),
+                               (&["dead lifts"], "deadlifts")],
+        "Desktop"         => &[(&["desk top"], "desktop"),
+                               (&["desk tops"], "desktops")],
+        "Devops"          => &[(&["dev ops"], "devops")],
+        "Everybody"       => &[(&["every body"], "everybody")],
+        "Everyone"        => &[(&["every one"], "everyone")],
+        "Everywhere"      => &[(&["every where"], "everywhere")],
+        "Furthermore"     => &[(&["further more"], "furthermore")],
+        "Henceforth"      => &[(&["hence forth"], "henceforth")],
+        "However"         => &[(&["how ever"], "however")],
+        "Insofar"         => &[(&["in so far"], "insofar")],
+        "Instead"         => &[(&["in stead"], "instead")],
+        "Intact"          => &[(&["in tact"], "intact")],
+        "Itself"          => &[(&["it self"], "itself")],
+        "Keystroke"       => &[(&["key stoke", "key stroke"], "keystroke"),
+                               (&["key stokes", "key strokes"], "keystrokes")],
+        "Laptop"          => &[(&["lap top"], "laptop"),
+                               (&["lap tops"], "laptops")],
+        "Middleware"      => &[(&["middle ware"], "middleware")],
+        "Meanwhile"       => &[(&["mean while"], "meanwhile")],
+        "Misunderstand"   => &[(&["miss understand"], "misunderstand"),
+                               (&["miss understanding"], "misunderstanding"),
+                               (&["miss understands"], "misunderstands"),
+                               (&["miss understood"], "misunderstood")],
+        "Misuse"          => &[(&["miss use"], "misuse"),
+                               (&["miss used"], "misused"),
+                               (&["miss uses"], "misuses"),
+                               (&["miss using"], "misusing")],
+        "Multicore"       => &[(&["multi core"], "multicore")],
+        "Multimedia"      => &[(&["multi media"], "multimedia")],
+        "Multithreading"  => &[(&["multi threading"], "multithreading")],
+        "Myself"          => &[(&["my self"], "myself")],
+        "Nonetheless"     => &[(&["none the less"], "nonetheless")],
+        "Nothing"         => &[(&["no thing"], "nothing")],
+        "Notwithstanding" => &[(&["not with standing"], "notwithstanding")],
+        "Nowhere"         => &[(&["no where"], "nowhere")],
+        "Overall"         => &[(&["over all"], "overall")],
+        "Overclocking"    => &[(&["over clocking"], "overclocking")],
+        "Overload"        => &[(&["over load"], "overload"),
+                               (&["over loaded"], "overloaded"),
+                               (&["over loading"], "overloading"),
+                               (&["over loads"], "overloads")],
+        "Overnight"       => &[(&["over night"], "overnight"),
+                               (&["over nights"], "overnights")],
+        "Postpone"        => &[(&["post pone"], "postpone"),
+                               (&["post poned"], "postponed"),
+                               (&["post pones"], "postpones"),
+                               (&["post poning"], "postponing")],
+        "Proofread"       => &[(&["proof read"], "proofread"),
+                               (&["proof reads"], "proofreads"),
+                               (&["proof reading"], "proofreading"),
+                               (&["proof reader"], "proofreader"),
+                               (&["proof readers"], "proofreaders")],
+        "Regardless"      => &[(&["regard less"], "regardless")],
+        "Shortcoming"     => &[(&["short coming"], "shortcoming"),
+                               (&["short comings"], "shortcomings")],
+        "Somebody"        => &[(&["some body"], "somebody")],
+        "Somehow"         => &[(&["some how"], "somehow")],
+        "Someone"         => &[(&["some one"], "someone")],
+        "Somewhere"       => &[(&["some where"], "somewhere")],
+        "Tenfold"         => &[(&["ten fold"], "tenfold")],
+        "There"           => &[(&["the re"], "there")],
+        "Therefore"       => &[(&["there fore"], "therefore")],
+        "Thereupon"       => &[(&["there upon"], "thereupon")],
+        "Underclock"      => &[(&["under clock"], "underclock"),
+                               (&["under clocked"], "underclocked"),
+                               (&["under clocking"], "underclocking"),
+                               (&["under clocks"], "underclocks")],
+        "Upset"           => &[(&["up set"], "upset"),
+                               (&["up sets"], "upsets")],
+        "Upward"          => &[(&["up ward"], "upward"),
+                               (&["up wards"], "upwards")],
+        "Whereupon"       => &[(&["where upon"], "whereupon")],
+        "Widespread"      => &[(&["wide spread"], "widespread")],
+        "Without"         => &[(&["with out"], "without")],
+        "Worldwide"       => &[(&["world wide"], "worldwide")],
+        "Worthwhile"      => &[(&["worth while", "worth-while"], "worthwhile")],
     });
 
     group.set_all_rules_to(Some(true));
