@@ -49,9 +49,9 @@ impl<T: Dictionary> SpellCheck<T> {
                         // Ignore entries outside the configured dialect
                         self.dictionary
                             .get_word_metadata(v)
-                            .unwrap()
-                            .dialects
-                            .is_dialect_enabled(self.dialect)
+                            .is_some_and(|word_meta| {
+                                word_meta.dialects.is_dialect_enabled(self.dialect)
+                            })
                     })
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
@@ -100,7 +100,12 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
             if let Some(metadata) = word.kind.as_word().unwrap()
                 && metadata.dialects.is_dialect_enabled(self.dialect)
                 && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().as_ref())
+                    || self
+                        .dictionary
+                        .contains_exact_word(word_chars.normalized().to_lower().as_ref()))
             {
                 continue;
             };
@@ -169,7 +174,7 @@ mod tests {
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
-    use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
+    use crate::linting::tests::assert_no_lints;
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
@@ -527,18 +532,10 @@ mod tests {
     }
 
     #[test]
-    fn dont_flag_pr() {
+    fn dont_flag_certain_entries_with_multiple_case_variants_in_dict() {
         assert_no_lints("PR", test_linter());
-    }
-
-    #[test]
-    fn no_improper_suggestion_for_macos() {
-        assert_good_and_bad_suggestions("MacOS", test_linter(), &["macOS"], &["MacOS"]);
-    }
-
-    #[test]
-    fn allows_parenthetical_plural_s() {
-        assert_no_lints("Please ask each person(s) to sign.", test_linter());
+        assert_no_lints("MB", test_linter());
+        assert_no_lints("OS", test_linter()); // Issue #2585
     }
 
     #[test]

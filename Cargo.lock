@@ -4157,6 +4157,7 @@ dependencies = [
  "harper-brill",
  "harper-thesaurus",
  "hashbrown 0.16.1",
+ "indexmap 2.14.0",
  "is-macro",
  "itertools 0.14.0",
  "levenshtein_automata",

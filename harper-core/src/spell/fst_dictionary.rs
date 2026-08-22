@@ -6,10 +6,11 @@ use std::{
 
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
+use itertools::Itertools;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordId};
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
+use crate::CharStringExt;
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
@@ -17,16 +18,16 @@ use crate::{CharString, CharStringExt, DictWordMetadata};
 /// [`MutableDictionary`].
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    mutable_dict: Arc<MutableDictionary>,
-    /// Used for fuzzy-finding the WordId of words or metadata
-    word_map: FstMap<Vec<u8>>,
+    mutable_dict: MutableDictionary,
+    /// Used for fuzzy-finding the index of words or metadata
+    fst_map: FstMap<Vec<u8>>,
 }
 
 const EXPECTED_DISTANCE: u8 = 3;
 const TRANSPOSITION_COST_ONE: bool = true;
 
 static DICT: LazyLock<Arc<FstDictionary>> =
-    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().into()));
+    LazyLock::new(|| Arc::new((*MutableDictionary::curated()).clone().to_fst()));
 
 thread_local! {
     // Builders are computationally expensive and do not depend on the word, so we store a
@@ -52,29 +53,29 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a wordlist as a source.
-    /// This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
-        words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
-        words.dedup_by(|(a, _), (b, _)| a == b);
+    /// Construct a new [`FstDictionary`] using a [`WordMap`] (or [`MutableDictionary`]) as
+    /// a source. This can be expensive, so only use this if fast fuzzy searches are worth it.
+    pub fn new(word_map: WordMap) -> Self {
+        let mut words = word_map.into_iter().collect_vec();
+
+        words.sort_unstable_by(|a, b| a.canonical_spelling.cmp(&b.canonical_spelling));
 
         let mut builder = fst::MapBuilder::memory();
-        for (word_chars, _) in words.iter() {
-            let word = word_chars.iter().collect::<String>();
+        for (index, wme) in words.iter().enumerate() {
+            let word = wme.canonical_spelling.to_string();
             builder
-                .insert(word, WordId::from_word_chars(word_chars).into())
+                .insert(word, index as u64)
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mut mutable_dict = MutableDictionary::new();
-        mutable_dict.extend_words(words.iter().cloned());
+        let mutable_dict = MutableDictionary::from_iter(words);
 
         let fst_bytes = builder.into_inner().unwrap();
-        let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
+        let fst_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
-            mutable_dict: Arc::new(mutable_dict),
-            word_map,
+            mutable_dict,
+            fst_map,
         }
     }
 }
@@ -123,20 +124,8 @@ fn merge_best_distances(
 }
 
 impl Dictionary for FstDictionary {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_word(word)
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_word_str(word)
-    }
-
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata_str(word)
+    fn get_word_map(&self) -> &WordMap {
+        &self.mutable_dict
     }
 
     fn fuzzy_match(
@@ -152,8 +141,8 @@ impl Dictionary for FstDictionary {
 
         // Actual FST search
         let dfa = build_dfa(max_distance, &misspelled_word_string);
-        let mut word_ids_stream = self.word_map.search_with_state(&dfa).into_stream();
-        let upper_dists = stream_distances_vec(&mut word_ids_stream, &dfa);
+        let mut word_indexes_stream = self.fst_map.search_with_state(&dfa).into_stream();
+        let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
 
         // Merge the two results, keeping the smallest distance when both DFAs match.
         // The uppercase and lowercase searches can return different result counts, so
@@ -165,23 +154,21 @@ impl Dictionary for FstDictionary {
         // Only build the lowercase DFA when the query is not already lowercase.
         if !is_already_lower {
             let dfa_lowercase = build_dfa(max_distance, &misspelled_lower);
-            let mut word_ids_lowercase_stream = self
-                .word_map
-                .search_with_state(&dfa_lowercase)
-                .into_stream();
-            let lower_dists = stream_distances_vec(&mut word_ids_lowercase_stream, &dfa_lowercase);
+            let mut word_indexes_lowercase_stream =
+                self.fst_map.search_with_state(&dfa_lowercase).into_stream();
+            let lower_dists =
+                stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
 
             merge_best_distances(&mut best_distances, lower_dists);
         }
 
         let mut merged = Vec::with_capacity(best_distances.len());
-        for (word_id, edit_distance) in best_distances {
-            let word = self.mutable_dict.get_word_from_id(&word_id.into()).unwrap();
-            let metadata = self.mutable_dict.get_word_metadata(word).unwrap();
+        for (index, edit_distance) in best_distances {
+            let wme = &self.mutable_dict[index as usize];
             merged.push(FuzzyMatchResult {
-                word,
+                word: &wme.canonical_spelling,
                 edit_distance,
-                metadata,
+                metadata: Cow::Borrowed(&wme.metadata),
             });
         }
 
@@ -195,43 +182,6 @@ impl Dictionary for FstDictionary {
         merged.truncate(max_results);
 
         merged
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.fuzzy_match(
-            word.chars().collect::<Vec<_>>().as_slice(),
-            max_distance,
-            max_results,
-        )
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.mutable_dict.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.mutable_dict.word_count()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_exact_word_str(word)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.mutable_dict.get_correct_capitalization_of(word)
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.mutable_dict.get_word_from_id(id)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
@@ -248,8 +198,7 @@ mod tests {
     use itertools::Itertools;
 
     use crate::CharStringExt;
-    use crate::DictWordMetadata;
-    use crate::spell::{Dictionary, MutableDictionary, WordId};
+    use crate::spell::{CanonicalWordId, Dictionary, MutableDictionary, WordMapEntry};
 
     use super::FstDictionary;
 
@@ -257,10 +206,10 @@ mod tests {
         let mut mutable = MutableDictionary::new();
 
         for word in words {
-            mutable.append_word_str(word, DictWordMetadata::default());
+            mutable.insert(WordMapEntry::new_str(word));
         }
 
-        let fst = FstDictionary::from(mutable.clone());
+        let fst = FstDictionary::new(mutable.clone());
 
         (mutable, fst)
     }
@@ -302,7 +251,7 @@ mod tests {
     }
 
     #[test]
-    fn fst_map_contains_all_in_mutable_dict() {
+    fn fst_map_contains_all_in_curated_dict() {
         let dict = FstDictionary::curated();
 
         for word in dict.words_iter() {
@@ -313,7 +262,7 @@ mod tests {
             dbg!(&misspelled_lower);
 
             assert!(!misspelled_word.is_empty());
-            assert!(dict.word_map.contains_key(misspelled_word));
+            assert!(dict.fst_map.contains_key(misspelled_word));
         }
     }
 
@@ -328,8 +277,8 @@ mod tests {
 
         assert!(dict.contains_word(&misspelled_normalized));
         assert!(
-            dict.word_map.contains_key(misspelled_lower)
-                || dict.word_map.contains_key(misspelled_word)
+            dict.fst_map.contains_key(misspelled_lower)
+                || dict.fst_map.contains_key(misspelled_word)
         );
     }
 
@@ -337,7 +286,7 @@ mod tests {
     fn on_is_not_nominal() {
         let dict = FstDictionary::curated();
 
-        assert!(!dict.get_word_metadata_str("on").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_exact_str("on").unwrap().is_nominal());
     }
 
     #[test]
@@ -347,7 +296,7 @@ mod tests {
 
         assert!(metadata.is_proper_noun());
         assert!(!metadata.is_swear());
-        assert!(metadata.derived_from.is_none());
+        assert!(metadata.derived_from.is_empty());
         assert!(dict.contains_exact_word_str("dickens"));
         assert!(dict.get_word_metadata_str("dick").unwrap().is_swear());
     }
@@ -375,10 +324,10 @@ mod tests {
         for contraction in contractions {
             dbg!(contraction);
             assert!(
-                dict.get_word_metadata_str(contraction)
+                dict.get_word_metadata_exact_str(contraction)
                     .unwrap()
                     .derived_from
-                    .is_none()
+                    .is_empty()
             )
         }
     }
@@ -387,12 +336,11 @@ mod tests {
     fn plural_llamas_derived_from_llama() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
-            dict.get_word_metadata_str("llamas")
+        assert!(
+            dict.get_word_metadata_exact_str("llamas")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("llama")
+                .contains(CanonicalWordId::from_word_str("llama"))
         )
     }
 
@@ -400,12 +348,11 @@ mod tests {
     fn plural_cats_derived_from_cat() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
-            dict.get_word_metadata_str("cats")
+        assert!(
+            dict.get_word_metadata_exact_str("cats")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("cat")
+                .contains(CanonicalWordId::from_word_str("cat"))
         );
     }
 
@@ -413,12 +360,11 @@ mod tests {
     fn unhappy_derived_from_happy() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
-            dict.get_word_metadata_str("unhappy")
+        assert!(
+            dict.get_word_metadata_exact_str("unhappy")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("happy")
+                .contains(CanonicalWordId::from_word_str("happy"))
         );
     }
 
@@ -426,12 +372,11 @@ mod tests {
     fn quickly_derived_from_quick() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
-            dict.get_word_metadata_str("quickly")
+        assert!(
+            dict.get_word_metadata_exact_str("quickly")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("quick")
+                .contains(CanonicalWordId::from_word_str("quick"))
         );
     }
 

@@ -70,7 +70,7 @@ impl Document {
     pub fn new_from_chars(
         source: Lrc<[char]>,
         parser: &impl Parser,
-        dictionary: &impl Dictionary,
+        dictionary: &(impl Dictionary + ?Sized),
     ) -> Self {
         let tokens = parser.parse(&source);
 
@@ -172,11 +172,13 @@ impl Document {
     /// Re-parse important language constructs.
     ///
     /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    fn parse(&mut self, dictionary: &(impl Dictionary + ?Sized)) {
         self.apply_fixups();
 
         let chunker = burn_chunker();
         let tagger = brill_tagger();
+
+        let wm = dictionary.get_word_map();
 
         for sent in self.tokens.iter_sentences_mut() {
             let token_strings: Vec<_> = sent
@@ -200,9 +202,7 @@ impl Document {
             for token in sent.iter_mut() {
                 if let TokenKind::Word(meta) = &mut token.kind {
                     let word_source = word_sources[wi];
-                    let mut found_meta = dictionary
-                        .get_word_metadata(word_source)
-                        .map(|c| c.into_owned());
+                    let mut found_meta = wm.get_word_metadata(word_source).map(|c| c.into_owned());
 
                     if let Some(inner) = &mut found_meta {
                         inner.pos_tag = token_tags[ti].or_else(|| inner.infer_pos_tag());

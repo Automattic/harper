@@ -679,7 +679,7 @@ impl LanguageServer for Backend {
                 stats.records.push(record);
             }
             "HarperAddToUserDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -689,7 +689,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_user_dictionary().await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_user_dictionary(dict)
+                self.save_user_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -700,7 +700,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToWSDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -710,7 +710,7 @@ impl LanguageServer for Backend {
 
                 let mut dict = self.load_workspace_dictionary().await;
                 dict.append_word(word, DictWordMetadata::default());
-                self.save_workspace_dictionary(dict)
+                self.save_workspace_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
@@ -721,7 +721,7 @@ impl LanguageServer for Backend {
                 self.publish_diagnostics(&file_uri).await;
             }
             "HarperAddToFileDict" => {
-                let word = &first.chars().collect::<Vec<_>>();
+                let word = first.chars().collect::<Vec<_>>();
 
                 let Some(second) = string_args.next() else {
                     return Ok(None);
@@ -741,7 +741,7 @@ impl LanguageServer for Backend {
                 };
                 dict.append_word(word, DictWordMetadata::default());
 
-                self.save_file_dictionary(&file_uri, dict)
+                self.save_file_dictionary(&file_uri, &dict)
                     .await
                     .map_err(|err| error!("{err}"))
                     .err();
