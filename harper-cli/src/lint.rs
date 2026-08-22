@@ -7,7 +7,6 @@ use std::sync::Arc;
 use anyhow::Context;
 use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
-use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
@@ -21,9 +20,9 @@ use harper_core::{
 
 use crate::input::{
     AnyInput, InputTrait,
-    multi_input::MultiInput,
-    single_input::{SingleInput, SingleInputTrait, StdinInput},
+    single_input::{SingleInput, SingleInputTrait},
 };
+use crate::input_helpers::{ExpandedInput, process_inputs_collect};
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
 fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
@@ -146,12 +145,6 @@ struct InputInfo<'a> {
     color: bool,
 }
 
-struct InputJob {
-    batch_mode: bool,
-    parent_input_id: String,
-    input: AnyInput,
-}
-
 impl InputInfo<'_> {
     /// Path without ANSI escapes, for machine-readable output.
     fn plain_path(&self) -> String {
@@ -180,7 +173,7 @@ impl InputInfo<'_> {
 pub fn lint(
     markdown_options: MarkdownOptions,
     curated_dictionary: Arc<dyn Dictionary>,
-    mut inputs: Vec<AnyInput>,
+    inputs: Vec<AnyInput>,
     mut lint_options: LintOptions,
     user_dict_path: PathBuf,
     // TODO workspace_dict_path?
@@ -194,11 +187,6 @@ pub fn lint(
         ref weirpack_inputs,
         ..
     } = lint_options;
-
-    // Zero or more inputs, default to stdin if not provided
-    if inputs.is_empty() {
-        inputs.push(SingleInput::from(StdinInput).into());
-    }
 
     let weirpacks = load_weirpacks(weirpack_inputs)?;
 
@@ -261,65 +249,31 @@ pub fn lint(
         (OutputFormat::Default, false) => ReportStyle::FullAriadne,
     };
 
-    let mut input_jobs = Vec::new();
-    for user_input in inputs {
-        if let Some(dir_input) = user_input
-            .try_as_multi_ref()
-            .and_then(MultiInput::try_as_dir_ref)
-        {
-            let mut file_entries: Vec<_> = dir_input.iter_files()?.collect();
-
-            file_entries.sort_by(|a, b| a.path().file_name().cmp(&b.path().file_name()));
-
-            for entry in file_entries.into_iter().map(SingleInput::from) {
-                input_jobs.push(InputJob {
-                    batch_mode: true,
-                    parent_input_id: user_input.get_identifier().to_string(),
-                    input: entry.into(),
-                });
-            }
-        } else {
-            input_jobs.push(InputJob {
-                batch_mode: false,
-                parent_input_id: String::new(),
-                input: user_input.clone(),
-            });
-        }
-    }
-
-    let per_input_results = {
-        let run_job = |job: InputJob| {
-            let InputJob {
-                batch_mode,
-                parent_input_id,
-                input,
-            } = job;
-            lint_one_input(
-                // Common properties of harper-cli
-                markdown_options,
-                &curated_plus_user_dict,
-                // Passed from the user for the `lint` subcommand
-                &report_mode,
-                &lint_options,
-                &weirpacks,
-                &file_dict_path,
-                // Are we linting multiple inputs inside a directory?
-                batch_mode,
-                // The current input to be linted
-                InputInfo {
-                    parent_input_id: parent_input_id.as_str(),
-                    input: &input,
-                    color: lint_options.color,
-                },
-            )
-        };
-
-        if input_jobs.len() > 1 {
-            input_jobs.into_par_iter().map(run_job).collect::<Vec<_>>()
-        } else {
-            input_jobs.into_iter().map(run_job).collect::<Vec<_>>()
-        }
-    };
+    let per_input_results = process_inputs_collect(inputs, true, |expanded| {
+        let ExpandedInput {
+            input,
+            parent_id,
+            is_batch,
+        } = expanded;
+        lint_one_input(
+            // Common properties of harper-cli
+            markdown_options,
+            &curated_plus_user_dict,
+            // Passed from the user for the `lint` subcommand
+            &report_mode,
+            &lint_options,
+            &weirpacks,
+            &file_dict_path,
+            // Are we linting multiple inputs inside a directory?
+            is_batch,
+            // The current input to be linted
+            InputInfo {
+                parent_input_id: parent_id.as_str(),
+                input: &input,
+                color: lint_options.color,
+            },
+        )
+    });
 
     let mut json_results: Vec<JsonFileResult> = Vec::new();
 
