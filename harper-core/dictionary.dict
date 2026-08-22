@@ -3445,9 +3445,12 @@ FOFL
 FORTRAN/Og
 FOSS/ONV            # free open source software
 FPO/N
+FPS/N               # frames per second; first-person shooter
 FSF/Og
 FSLIC/O
 FTC/O
+FTP/Ng              # file transfer protocol
+FTPS/Ng             # FTP over TLS
 FUD/NS
 FWD/N
 FWIW/
@@ -6267,6 +6270,7 @@ MP/NOgJ             # military police; member of parliament
 MP3/NSg             # audio format
 MP4/NSg             # audio/video format
 MPEG/ON
+MPG/N               # miles per gallon
 MRI/NgV             # magnetic resonance imaging
 MS/NOg              # US state (Mississippi)
 MSG/NOg             # flavour enhancer
@@ -8986,6 +8990,7 @@ SS/NOJ
 SSA/ONJ
 SSD/NSg             # solid-state drive
 SSE/NOgJ
+SSH/Ng              # secure shell
 SSS/ON
 SST/NO
 SSW/NgJ
