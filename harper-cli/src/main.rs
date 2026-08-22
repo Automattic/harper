@@ -1039,11 +1039,9 @@ fn line_to_parts(line: &str) -> (String, String) {
 fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
-    let wm = dictionary.get_word_map();
-
     let id = CanonicalWordId::from_word_str(word);
 
-    let children = wm.iter().filter_map(|wme| {
+    let children = dictionary.get_word_map().iter().filter_map(|wme| {
         wme.metadata
             .derived_from
             .contains(id)

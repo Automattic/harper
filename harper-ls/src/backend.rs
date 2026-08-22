@@ -16,10 +16,8 @@ use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
-use harper_core::spell::{
-    Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
-};
-use harper_core::{Dialect, Document, IgnoredLints};
+use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_git_commit::GitCommitParser;
 use harper_html::HtmlParser;
@@ -690,7 +688,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_user_dictionary().await;
-                dict.insert(WordMapEntry::new(word));
+                dict.append_word(word, DictWordMetadata::default());
                 self.save_user_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -711,7 +709,7 @@ impl LanguageServer for Backend {
                 let file_uri = second.parse().unwrap();
 
                 let mut dict = self.load_workspace_dictionary().await;
-                dict.insert(WordMapEntry::new(word));
+                dict.append_word(word, DictWordMetadata::default());
                 self.save_workspace_dictionary(&dict)
                     .await
                     .map_err(|err| error!("{err}"))
@@ -741,7 +739,7 @@ impl LanguageServer for Backend {
                         return Ok(None);
                     }
                 };
-                dict.insert(WordMapEntry::new(word));
+                dict.append_word(word, DictWordMetadata::default());
 
                 self.save_file_dictionary(&file_uri, &dict)
                     .await

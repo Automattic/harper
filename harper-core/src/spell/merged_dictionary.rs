@@ -117,12 +117,13 @@ impl Dictionary for MergedDictionary {
 mod tests {
     use std::sync::Arc;
 
-    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary, WordMapEntry};
+    use crate::DictWordMetadata;
+    use crate::spell::{Dictionary, MergedDictionary, MutableDictionary};
 
     #[test]
     fn merged_contains_exact_word_str_is_case_sensitive() {
         let mut user_dict = MutableDictionary::new();
-        user_dict.insert(WordMapEntry::new_str("Foo"));
+        user_dict.append_word_str("Foo", DictWordMetadata::default());
 
         let mut merged = MergedDictionary::new();
         merged.add_dictionary(Arc::new(user_dict));

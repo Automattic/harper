@@ -14,11 +14,11 @@ use harper_core::linting::{LintGroup, Linter as _};
 use harper_core::parsers::{IsolateEnglish, Markdown, Mask, OopsAllHeadings, Parser, PlainEnglish};
 use harper_core::remove_overlaps_map;
 use harper_core::weirpack::Weirpack;
-use harper_core::{DialectFlags, RegexMasker};
 use harper_core::{
-    DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
-    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry},
+    CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
+    spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
+use harper_core::{DialectFlags, RegexMasker};
 use harper_stats::{Record, RecordKind, Stats};
 use serde::{Deserialize, Serialize};
 use serde_wasm_bindgen::Serializer;
@@ -171,7 +171,7 @@ impl Linter {
         lint_dict.add_dictionary(FstDictionary::curated());
 
         for dict in dicts {
-            lint_dict.add_dictionary(dict.clone());
+            lint_dict.add_dictionary(Arc::new(dict.clone()));
         }
 
         Arc::new(lint_dict)
@@ -457,11 +457,14 @@ impl Linter {
         let init_len = self.user_dictionary.word_count();
 
         self.user_dictionary
-            .extend(additional_words.iter().map(|word| {
-                WordMapEntry::new_str(word).with_md(DictWordMetadata {
-                    dialects: DialectFlags::from_dialect(self.dialect.into()),
-                    ..Default::default()
-                })
+            .extend_words(additional_words.iter().map(|word| {
+                (
+                    word.chars().collect::<CharString>(),
+                    DictWordMetadata {
+                        dialects: DialectFlags::from_dialect(self.dialect.into()),
+                        ..Default::default()
+                    },
+                )
             }));
 
         // Only synchronize if we added words that were not there before.

@@ -175,9 +175,7 @@ mod tests {
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::assert_no_lints;
-    use crate::spell::{
-        Dictionary, FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry,
-    };
+    use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
         Dialect,
         linting::tests::{assert_lint_count, assert_suggestion_result},
@@ -449,10 +447,13 @@ mod tests {
 
         // Create a user dictionary with a word normally of another dialect in it.
         let mut user_dict = MutableDictionary::new();
-        user_dict.insert(WordMapEntry::new_str("Calibre").with_md(DictWordMetadata {
-            dialects: DialectFlags::from_dialect(user_dialect),
-            ..Default::default()
-        }));
+        user_dict.append_word_str(
+            "Calibre",
+            DictWordMetadata {
+                dialects: DialectFlags::from_dialect(user_dialect),
+                ..Default::default()
+            },
+        );
 
         // Create a merged dictionary, using curated first.
         let mut merged_dict = MergedDictionary::new();

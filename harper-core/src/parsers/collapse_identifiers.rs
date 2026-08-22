@@ -61,8 +61,11 @@ impl Parser for CollapseIdentifiers {
 #[cfg(test)]
 mod tests {
     use super::*;
-    use crate::parsers::{PlainEnglish, StrParser};
-    use crate::spell::{FstDictionary, MergedDictionary, MutableDictionary, WordMapEntry};
+    use crate::spell::{FstDictionary, MergedDictionary, MutableDictionary};
+    use crate::{
+        DictWordMetadata,
+        parsers::{PlainEnglish, StrParser},
+    };
 
     #[test]
     fn matches_kebab() {
@@ -98,7 +101,7 @@ mod tests {
         assert_eq!(tokens.len(), 13);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated_identifier"));
+        dict.append_word_str("separated_identifier", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
@@ -122,7 +125,7 @@ mod tests {
         assert_eq!(tokens.len(), 13);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated-identifier"));
+        dict.append_word_str("separated-identifier", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
@@ -146,7 +149,7 @@ mod tests {
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated_identifier_token"));
+        dict.append_word_str("separated_identifier_token", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
@@ -169,7 +172,7 @@ mod tests {
         assert_eq!(tokens.len(), 17);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated_identifier"));
+        dict.append_word_str("separated_identifier", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
@@ -192,8 +195,8 @@ mod tests {
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated_identifier"));
-        dict.insert(WordMapEntry::new_str("identifier_token"));
+        dict.append_word_str("separated_identifier", DictWordMetadata::default());
+        dict.append_word_str("identifier_token", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
@@ -216,8 +219,8 @@ mod tests {
         assert_eq!(tokens.len(), 15);
 
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("separated_identifier_token"));
-        dict.insert(WordMapEntry::new_str("separated_identifier"));
+        dict.append_word_str("separated_identifier_token", DictWordMetadata::default());
+        dict.append_word_str("separated_identifier", DictWordMetadata::default());
 
         let mut merged_dict = MergedDictionary::new();
         merged_dict.add_dictionary(curated_dictionary);
