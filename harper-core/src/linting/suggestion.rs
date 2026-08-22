@@ -17,6 +17,10 @@ pub enum Suggestion {
     InsertAfter(Vec<char>),
     /// Remove the offending text.
     Remove,
+    /// Remove N characters from the beginning of the offending text.
+    RemovePrefix(usize),
+    /// Remove N characters from the end of the offending text.
+    RemoveSuffix(usize),
 }
 
 impl Suggestion {
@@ -68,6 +72,14 @@ impl Suggestion {
                 source.extend(chars);
                 source.extend(popped);
             }
+            Self::RemovePrefix(n) => {
+                let remove_end = span.start + *n;
+                source.drain(span.start..remove_end);
+            }
+            Self::RemoveSuffix(n) => {
+                let remove_start = span.end - *n;
+                source.drain(remove_start..span.end);
+            }
         }
     }
 }
@@ -82,6 +94,8 @@ impl Display for Suggestion {
                 write!(f, "Insert “{}”", with.iter().collect::<String>())
             }
             Suggestion::Remove => write!(f, "Remove error"),
+            Suggestion::RemovePrefix(n) => write!(f, "Remove {n} characters from start"),
+            Suggestion::RemoveSuffix(n) => write!(f, "Remove {n} characters from end"),
         }
     }
 }
@@ -157,5 +171,25 @@ mod tests {
             Suggestion::replace_with_match_case(value, &template),
             Suggestion::ReplaceWith(correct)
         )
+    }
+
+    #[test]
+    fn remove_prefix() {
+        let source = "for free of charge";
+        let mut source_chars = source.chars().collect();
+        let sug = Suggestion::RemovePrefix("for ".len());
+        sug.apply(Span::new(0, 17), &mut source_chars);
+
+        assert_eq!(source_chars, "free of charge".chars().collect::<Vec<_>>());
+    }
+
+    #[test]
+    fn remove_suffix() {
+        let source = "for free of charge";
+        let mut source_chars = source.chars().collect();
+        let sug = Suggestion::RemoveSuffix(" of charge".len());
+        sug.apply(Span::new(0, 18), &mut source_chars);
+
+        assert_eq!(source_chars, "for free".chars().collect::<Vec<_>>());
     }
 }
