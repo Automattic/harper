@@ -17,6 +17,7 @@ use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
+use super::alley_ally::AlleyAlly;
 use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
@@ -618,6 +619,7 @@ impl LintGroup {
         insert_expr_rule!(AfterLater);
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
+        insert_expr_rule!(AlleyAlly);
         insert_expr_rule!(AllowTo);
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
