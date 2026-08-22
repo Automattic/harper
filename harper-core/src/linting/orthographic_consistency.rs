@@ -100,13 +100,15 @@ impl ExprLinter for OrthographicConsistency {
             | OrthFlags::HYPHENATED;
 
         // If any of the flags specified by flags_to_check differ between cur_flags and
-        // canonical_flags.
+        // canonical_flags...
         if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
+            // And there is a single known correct canonical spelling...
             && let Ok(canonical) = self
                 .dict
                 .get_case_folded(word_ids.case_folded())
                 .exactly_one()
                 .map(|wme| &wme.canonical_spelling)
+            // That differs from the current one...
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
