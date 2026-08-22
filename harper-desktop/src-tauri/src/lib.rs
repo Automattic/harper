@@ -166,7 +166,22 @@ pub fn run_tauri() {
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_os::init())
         .invoke_handler(commands::application_message_handler())
+        .on_window_event(|window, event| {
+            if windows::is_user_window(window.label())
+                && let tauri::WindowEvent::CloseRequested { api, .. } = event
+            {
+                api.prevent_close();
+
+                if let Err(error) = windows::hide_user_window(window) {
+                    error!("failed to hide {} window: {error}", window.label());
+                }
+            }
+        })
         .setup(move |app| {
+            #[cfg(target_os = "macos")]
+            app.handle()
+                .set_activation_policy(tauri::ActivationPolicy::Accessory)?;
+
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
 
