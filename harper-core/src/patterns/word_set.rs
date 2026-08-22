@@ -43,6 +43,19 @@ impl WordSet {
     }
 }
 
+impl<S> FromIterator<S> for WordSet
+where
+    S: AsRef<str>,
+{
+    fn from_iter<I: IntoIterator<Item = S>>(iter: I) -> Self {
+        let mut set = Self::default();
+        for str in iter {
+            set.add(str.as_ref());
+        }
+        set
+    }
+}
+
 impl SingleTokenPattern for WordSet {
     fn matches_token(&self, token: &Token, source: &[char]) -> bool {
         if !token.kind.is_word() {

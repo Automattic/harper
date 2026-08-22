@@ -3436,6 +3436,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ForSameReason",
+								"state": true,
+								"label": "For Same Reason"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
