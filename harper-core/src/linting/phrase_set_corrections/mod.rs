@@ -737,6 +737,15 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "BackhandedCompliment" => (
+            &[
+                (&["backhand compliment", "back-hand compliment", "back hand compliment"], &["backhanded compliment"]),
+                (&["backhand compliments", "back-hand compliments", "back hand compliments"], &["backhanded compliments"]),
+            ],
+            "The correct spelling is `backhanded`.",
+            "Corrects `backhand compliment` to `backhanded compliment`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),
@@ -981,15 +990,6 @@ pub fn lint_group() -> LintGroup {
             "The word `side` is redundant in this phrase.",
             "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
             LintKind::Redundancy
-        ),
-        "ToTo" => (
-            &[
-                (&["to to"], &["to do"]),
-                (&["to-to"], &["to-do"]),
-            ],
-            "Did you mean to write `do` instead of a second `to`?",
-            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
-            LintKind::Typo
         ),
         "ToTooIdioms" => (
             &[

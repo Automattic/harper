@@ -1059,45 +1059,17 @@ dependencies = [
 
 [[package]]
 name = "cached"
-version = "0.59.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53b6f5d101f0f6322c8646a45b7c581a673e476329040d97565815c2461dd0c4"
-dependencies = [
- "ahash",
- "cached_proc_macro 0.27.0",
- "cached_proc_macro_types 0.1.1",
- "hashbrown 0.16.1",
- "once_cell",
- "parking_lot",
- "thiserror 2.0.20",
- "web-time",
-]
-
-[[package]]
-name = "cached"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc0df7748fe2f601e376916ab19e7bfc2c74461b8abe3bce2ce20036ad8de38f"
 dependencies = [
  "ahash",
- "cached_proc_macro 2.0.0",
- "cached_proc_macro_types 1.0.0",
+ "cached_proc_macro",
+ "cached_proc_macro_types",
  "hashbrown 0.16.1",
  "parking_lot",
  "thiserror 2.0.20",
  "web-time",
-]
-
-[[package]]
-name = "cached_proc_macro"
-version = "0.27.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ebcf9c75f17a17d55d11afc98e46167d4790a263f428891b8705ab2f793eca3"
-dependencies = [
- "darling 0.20.11",
- "proc-macro2",
- "quote",
- "syn 2.0.119",
 ]
 
 [[package]]
@@ -1111,12 +1083,6 @@ dependencies = [
  "quote",
  "syn 2.0.119",
 ]
-
-[[package]]
-name = "cached_proc_macro_types"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ade8366b8bd5ba243f0a58f036cc0ca8a2f069cff1a2351ef1cac6b083e16fc0"
 
 [[package]]
 name = "cached_proc_macro_types"
@@ -4184,7 +4150,7 @@ dependencies = [
  "bitflags 2.13.1",
  "blanket",
  "boxcar",
- "cached 0.59.0",
+ "cached",
  "criterion",
  "foldhash 0.2.0",
  "fst",
@@ -4224,7 +4190,7 @@ dependencies = [
  "accessibility",
  "accessibility-sys",
  "base64 0.22.1",
- "cached 2.0.2",
+ "cached",
  "clap",
  "core-foundation 0.10.1",
  "core-graphics 0.25.0",
@@ -10135,9 +10101,9 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "uuid"
-version = "1.24.0"
+version = "1.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239"
+checksum = "2cefc03fd367c0c6d4305de1b312cf00248c4114f4a0418ce6a6af769e3b0bd9"
 dependencies = [
  "getrandom 0.4.3",
  "js-sys",

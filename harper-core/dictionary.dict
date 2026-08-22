@@ -2835,7 +2835,7 @@ Dianna/Og
 Dianne/Og
 Dias
 Diaspora/OgS
-Dick/OgX
+Dick/Og
 Dickens/Og
 Dickensian/JN
 Dickerson/Og
@@ -3423,6 +3423,7 @@ Ezekiel/Og
 Ezra/Og
 F/                  # Fluorine
 F1/9g
+FA/Og               # Football Association
 FAA/O
 FAQ/NSg
 FBI/ONg
@@ -8502,7 +8503,7 @@ RI/ON               # US state (Rhode Island)
 RIF/NV
 RIFA/Og
 RIP/ON
-RISC/N
+RISC/Ng
 RN/NOg
 RNA/Ng
 RNG/NgS             # random number generator
@@ -17357,7 +17358,7 @@ cheapskate/NgS
 cheat/~VGd>SNgZ
 cheat sheet/NgS
 cheater/NgS
-check/~NgSVGdJr
+check/~NgSVGdJrB
 check in/V/
 check out/V/
 checkbook/NSg
@@ -21461,8 +21462,9 @@ dichotomous/J
 dichotomy/~NSg
 dicier/Jc
 diciest/Ju
-dick/~NgSV>XZx
-dicker/VdGN
+dick/~NgSVx
+dickens/N
+dicker/VdGNS
 dickey/~NSgJ
 dickhead/NSx
 dickybird/S
@@ -32474,6 +32476,8 @@ lieutenancy/Ng
 lieutenant/~NgSJ
 life/~NwgV>Z
 life cycle/NgS
+life-cycle/NgS
+lifecycle/NgS
 life science/NgS
 lifebelt/NS
 lifeblood/Nmg
@@ -41926,7 +41930,7 @@ rate limit/NgS
 rated/~JVU
 ratepayer/NS
 rater/Ng
-rather/~JNVR
+rather/~R
 rathskeller/NSg
 ratification/~Ng
 ratifier/Ng
@@ -48227,6 +48231,7 @@ surreal/~JN
 surrealism/~Ng
 surrealist/~JNSg
 surrealistic/JQ
+surreality/Nmg
 surrender/~VdGSNg
 surreptitious/JYp
 surreptitiousness/Ng
@@ -50917,6 +50922,7 @@ unacceptability/Nmg
 unacceptable/~JN
 unaccommodating/J
 unaccountably/Ry
+unadapted/J
 unadventurous/J
 unaesthetic/J
 unaffected/JY
@@ -50934,6 +50940,7 @@ unappetising/J!_₹
 unappetizing/J
 unapplied/J
 unappreciative/J
+unarchive/VSdG
 unary/JN
 unashamed/J
 unassertive/J
@@ -54317,7 +54324,7 @@ RAII                # resource acquisition is initialization
 RDBMS/NOSg          # relational database management system
 REPL/NgS            # read evaluate print loop
 RFID/ONg            # radio frequency identification
-RISC/Ng             # cpu architecture
+RISC-V/Og             # cpu architecture
 RJ45/Ng             # ethernet connector
 RL/Nmg              # reinforcement learning
 RNN/NgS             # recurrent neural network
@@ -54357,6 +54364,7 @@ SSID/NgS
 SSL/Og              # Secure Sockets Layer
 SVG/ONs             # scalable vector graphics
 SVGA/N              # super VGA
+SemVer/N            # semantic versioning - this is the std spelling but POS is unclear
 Sharman/OgS
 Shellsort/NgS       # algorithm
 Shibuya/Og
@@ -54472,6 +54480,7 @@ Wikimedia/Og        # foundation that runs Wikipedia etc.
 Win32/Og            # Microsoft Windows API
 WireGuard/Sg
 WooCommerce/Og
+X11/Og
 XFS/Ng              # file system
 XLR/Ng              # connector
 XPath/Og            # XML path language
@@ -54665,6 +54674,7 @@ tmux/Og             # terminal multiplexer, uncapitalized proper noun
 trie/NgS            # data structure
 truthy/J
 uncomment/VSdG
+unexpandable/J
 unicast/JVSdG
 unlintable/J
 untensed/J          # grammar
