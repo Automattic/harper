@@ -1,0 +1,9 @@
+expr main hearable
+
+let message "The standard word for this is `audible`."
+let description "Corrects `hearable` to `audible`."
+let kind "WordChoice"
+let becomes "audible"
+
+test "Alexa devices speak works, but announcements is not hearable" "Alexa devices speak works, but announcements is not audible"
+test "The digital sound may be disturbing, so we can try to use waves outside of hearable range." "The digital sound may be disturbing, so we can try to use waves outside of audible range."

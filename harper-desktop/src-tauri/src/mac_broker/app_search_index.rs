@@ -19,12 +19,6 @@ impl AppSearchIndex {
         let mut seen_bundle_ids = BTreeSet::new();
 
         for bundle_id in installed_bundles {
-            let line = bundle_id.trim();
-
-            if !line.ends_with(".app") {
-                continue;
-            }
-
             let result = app_search_result_from_bundle_id(&bundle_id);
 
             if seen_bundle_ids.insert(result.bundle_id.clone()) {

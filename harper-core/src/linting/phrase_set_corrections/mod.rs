@@ -737,6 +737,15 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "BackhandedCompliment" => (
+            &[
+                (&["backhand compliment", "back-hand compliment", "back hand compliment"], &["backhanded compliment"]),
+                (&["backhand compliments", "back-hand compliments", "back hand compliments"], &["backhanded compliments"]),
+            ],
+            "The correct spelling is `backhanded`.",
+            "Corrects `backhand compliment` to `backhanded compliment`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),
@@ -756,15 +765,6 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
-        ),
-        "Payed" => (
-            &[
-                (&["payed"], &["paid"]),
-                (&["overpayed"], &["overpaid"]),
-            ],
-            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
-            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
-            LintKind::Spelling
         ),
         "DateBackFrom" => (
             &[
@@ -892,6 +892,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `level of details` to `level of detail` or `levels of detail`.",
             LintKind::Usage
         ),
+        "Lookalike" => (
+            &[
+                (&["look-a-like"], &["lookalike", "look-alike"]),
+                (&["look-a-likes"], &["lookalikes", "look-alikes"])
+            ],
+            "Use `look alike` or `look-alike` instead of `look-a-like`.",
+            "Corrects `look-a-like` to `look alike` or `look-alike`.",
+            LintKind::Spelling
+        ),
         "MakeItSeem" => (
             &[
                 (&["make it seems"], &["make it seem"]),
@@ -945,6 +954,15 @@ pub fn lint_group() -> LintGroup {
             "Use `nowadays` instead of common misspellings.",
             "Corrects common misspellings of `nowadays`.",
             LintKind::Usage
+        ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
         ),
         "RiseTheQuestion" => (
             &[
@@ -1060,15 +1078,6 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        ),
-        "ToTo" => (
-            &[
-                (&["to to"], &["to do"]),
-                (&["to-to"], &["to-do"]),
-            ],
-            "Did you mean to write `do` instead of a second `to`?",
-            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
-            LintKind::Typo
         ),
     });
 
