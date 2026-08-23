@@ -26,6 +26,12 @@ impl DerivedFrom {
         self.inner.is_empty()
     }
 
+    /// Is the list empty? In other words, Does this word have no known words it's derived from?
+    /// This is identical to `is_empty`. It's only here for backward-compatibility.
+    pub fn is_none(&self) -> bool {
+        self.is_empty()
+    }
+
     /// Is this word derived from the word represented by `id`?
     pub fn contains(&self, id: CanonicalWordId) -> bool {
         self.inner.contains(&id)
