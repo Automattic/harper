@@ -78,10 +78,8 @@ pub trait Dictionary: Send + Sync {
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
     fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>
-    where
-        Self: Sized,
     {
-        let mut found_words = self.get_word(word);
+        let mut found_words = self.get_word_map().get_word(word);
 
         match found_words.len() {
             0 => None,
@@ -185,8 +183,6 @@ pub trait Dictionary: Send + Sync {
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
     fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>
-    where
-        Self: Sized,
     {
         self.get_word_metadata(str_to_chars(word).as_ref())
     }
