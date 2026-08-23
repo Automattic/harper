@@ -135,6 +135,16 @@ pub trait Dictionary: Send + Sync {
             .map(|word| word.canonical_spelling.as_slice())
     }
 
+    /// Get the correct canonical capitalization for the given word.
+    /// Return `None` if there is no sole canonical capitalization.
+    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&[char]> {
+        let mut iter = self.get_word_map().get_correct_capitalizations_of(word);
+        match iter.len() {
+            1 => Some(iter.next().unwrap()),
+            _ => None,
+        }
+    }
+
     // STRING FUNCTION VARIANTS START
     /// Get the associated [`WordMapEntry`] for any capitalization of a given word.
     /// If the word isn't in the dictionary, the resulting metadata will be
