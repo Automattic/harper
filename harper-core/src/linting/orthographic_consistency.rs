@@ -1,23 +1,21 @@
 use std::sync::Arc;
 
-use itertools::Itertools;
-
 use crate::{
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
-    spell::{MutableDictionary, WordIdPair},
+    spell::{Dictionary, FstDictionary},
     {OrthFlags, Token},
 };
 
 pub struct OrthographicConsistency {
-    dict: Arc<MutableDictionary>,
+    dict: Arc<FstDictionary>,
     expr: SequenceExpr,
 }
 
 impl OrthographicConsistency {
     pub fn new() -> Self {
         Self {
-            dict: MutableDictionary::curated(),
+            dict: FstDictionary::curated(),
             expr: SequenceExpr::any_word(),
         }
     }
@@ -68,10 +66,7 @@ impl ExprLinter for OrthographicConsistency {
 
         let chars = word.get_ch(source);
 
-        // Cache the ID so we don't have to recalculate it.
-        let word_ids = WordIdPair::from_word_chars(chars);
-
-        if self.dict.contains_canonical(word_ids.canonical()) {
+        if self.dict.contains_exact_word(chars) {
             // Exit if the dictionary contains the exact word.
             return None;
         }
@@ -103,11 +98,7 @@ impl ExprLinter for OrthographicConsistency {
         // canonical_flags...
         if !((canonical_flags ^ cur_flags) & flags_to_check).is_empty()
             // And there is a single known correct canonical spelling...
-            && let Ok(canonical) = self
-                .dict
-                .get_case_folded(word_ids.case_folded())
-                .exactly_one()
-                .map(|wme| &wme.canonical_spelling)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
             // That differs from the current one...
             && alphabetic_differs(canonical, chars)
         {
@@ -125,11 +116,7 @@ impl ExprLinter for OrthographicConsistency {
 
         if metadata.is_titlecase()
             && cur_flags.contains(OrthFlags::LOWERCASE)
-            && let Ok(canonical) = self
-                .dict
-                .get_case_folded(word_ids.case_folded())
-                .exactly_one()
-                .map(|wme| &wme.canonical_spelling)
+            && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
             && alphabetic_differs(canonical, chars)
         {
             return Some(Lint {
