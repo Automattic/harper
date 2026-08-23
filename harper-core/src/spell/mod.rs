@@ -342,7 +342,7 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
     }
 
     // Boost common words.
-    if sug.metadata.common && sug.metadata.derived_from.is_empty() {
+    if sug.metadata.common && sug.metadata.derived_from.is_none() {
         score -= 4;
     }
 

@@ -1,4 +1,4 @@
-use super::word_map::WordMap;
+use super::{FstDictionary, word_map::WordMap};
 
 /// A basic dictionary that allows words to be added after instantiating.
 /// This is useful for user and file dictionaries that may change at runtime.
@@ -10,6 +10,12 @@ use super::word_map::WordMap;
 /// [`super::MergedDictionary`].
 pub type MutableDictionary = WordMap;
 
+impl From<MutableDictionary> for FstDictionary {
+    fn from(dict: MutableDictionary) -> Self {
+        FstDictionary::new(dict)
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::borrow::Cow;
@@ -17,8 +23,8 @@ mod tests {
     use hashbrown::HashSet;
     use itertools::Itertools;
 
-    use crate::char_string::char_string;
-    use crate::spell::{Dictionary, MutableDictionary, WordMapEntry};
+    use crate::spell::{Dictionary, MutableDictionary};
+    use crate::{DictWordMetadata, char_string::char_string};
 
     #[test]
     fn curated_contains_no_duplicates() {
@@ -39,18 +45,15 @@ mod tests {
     #[test]
     fn this_is_determiner() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_exact_str("this")
-                .unwrap()
-                .is_determiner()
-        );
+        assert!(dict.get_word_metadata_str("this").unwrap().is_determiner());
+        assert!(dict.get_word_metadata_str("This").unwrap().is_determiner());
     }
 
     #[test]
     fn several_is_quantifier() {
         let dict = MutableDictionary::curated();
         assert!(
-            dict.get_word_metadata_exact_str("several")
+            dict.get_word_metadata_str("several")
                 .unwrap()
                 .is_quantifier()
         );
@@ -59,41 +62,27 @@ mod tests {
     #[test]
     fn few_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_exact_str("few")
-                .unwrap()
-                .is_quantifier()
-        );
+        assert!(dict.get_word_metadata_str("few").unwrap().is_quantifier());
     }
 
     #[test]
     fn fewer_is_quantifier() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_exact_str("fewer")
-                .unwrap()
-                .is_quantifier()
-        );
+        assert!(dict.get_word_metadata_str("fewer").unwrap().is_quantifier());
     }
 
     #[test]
     fn than_is_conjunction() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_exact_str("than")
-                .unwrap()
-                .is_conjunction()
-        );
+        assert!(dict.get_word_metadata_str("than").unwrap().is_conjunction());
+        assert!(dict.get_word_metadata_str("Than").unwrap().is_conjunction());
     }
 
     #[test]
     fn herself_is_pronoun() {
         let dict = MutableDictionary::curated();
-        assert!(
-            dict.get_word_metadata_exact_str("herself")
-                .unwrap()
-                .is_pronoun()
-        );
+        assert!(dict.get_word_metadata_str("herself").unwrap().is_pronoun());
+        assert!(dict.get_word_metadata_str("Herself").unwrap().is_pronoun());
     }
 
     #[test]
@@ -105,7 +94,7 @@ mod tests {
     #[test]
     fn im_is_common() {
         let dict = MutableDictionary::curated();
-        assert!(dict.get_word_metadata_exact_str("I'm").unwrap().common);
+        assert!(dict.get_word_metadata_str("I'm").unwrap().common);
     }
 
     #[test]
@@ -125,10 +114,9 @@ mod tests {
     #[test]
     fn there_is_not_a_pronoun() {
         let dict = MutableDictionary::curated();
-        let there_meta = dict.get_word_metadata_exact_str("there").unwrap();
 
-        assert!(!there_meta.is_nominal());
-        assert!(!there_meta.is_pronoun());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_nominal());
+        assert!(!dict.get_word_metadata_str("there").unwrap().is_pronoun());
     }
 
     #[test]
@@ -154,7 +142,7 @@ mod tests {
     fn curated_contains_possessive_abandonment() {
         assert!(
             MutableDictionary::curated()
-                .get_word_metadata_exact_str("abandonment's")
+                .get_word_metadata_str("abandonment's")
                 .unwrap()
                 .is_possessive_noun()
         )
@@ -169,7 +157,7 @@ mod tests {
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
-        let has = dict.get_word_metadata_exact_str("has");
+        let has = dict.get_word_metadata_str("has");
         assert!(has.is_some());
 
         assert!(!has.unwrap().is_nominal())
@@ -179,7 +167,7 @@ mod tests {
     fn is_is_linking_verb() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_exact_str("is");
+        let is = dict.get_word_metadata_str("is");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_linking_verb());
@@ -203,14 +191,14 @@ mod tests {
     fn apart_is_not_noun() {
         let dict = MutableDictionary::curated();
 
-        assert!(!dict.get_word_metadata_exact_str("apart").unwrap().is_noun());
+        assert!(!dict.get_word_metadata_str("apart").unwrap().is_noun());
     }
 
     #[test]
     fn be_is_verb_lemma() {
         let dict = MutableDictionary::curated();
 
-        let is = dict.get_word_metadata_exact_str("be");
+        let is = dict.get_word_metadata_str("be");
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
@@ -219,10 +207,10 @@ mod tests {
     #[test]
     fn gets_prefixes_as_expected() {
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("predict"));
-        dict.insert(WordMapEntry::new_str("prelude"));
-        dict.insert(WordMapEntry::new_str("preview"));
-        dict.insert(WordMapEntry::new_str("dwight"));
+        dict.append_word_str("predict", DictWordMetadata::default());
+        dict.append_word_str("prelude", DictWordMetadata::default());
+        dict.append_word_str("preview", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
 
         let with_prefix = dict.find_words_with_prefix(char_string!("pre").as_slice());
 
@@ -235,9 +223,9 @@ mod tests {
     #[test]
     fn gets_common_prefixes_as_expected() {
         let mut dict = MutableDictionary::new();
-        dict.insert(WordMapEntry::new_str("pre"));
-        dict.insert(WordMapEntry::new_str("prep"));
-        dict.insert(WordMapEntry::new_str("dwight"));
+        dict.append_word_str("pre", DictWordMetadata::default());
+        dict.append_word_str("prep", DictWordMetadata::default());
+        dict.append_word_str("dwight", DictWordMetadata::default());
 
         let with_prefix =
             dict.find_words_with_common_prefix(char_string!("preposition").as_slice());
