@@ -225,6 +225,57 @@ impl MissingTo {
 
         false
     }
+
+    fn preposition_or_determiner_within_four(
+        source: &[char],
+        controller_span_start: usize,
+    ) -> bool {
+        let mut scan_cursor = controller_span_start;
+
+        for _ in 0..4 {
+            let Some((word, start)) = Self::previous_word_with_span(source, scan_cursor) else {
+                break;
+            };
+            let word = word.as_str();
+
+            if matches!(word, "and" | "or" | "but" | "nor") || word.ends_with("ing") {
+                scan_cursor = start;
+                continue;
+            }
+
+            if matches!(
+                word,
+                "a" | "an"
+                    | "the"
+                    | "this"
+                    | "that"
+                    | "these"
+                    | "those"
+                    | "of"
+                    | "for"
+                    | "in"
+                    | "with"
+                    | "without"
+                    | "during"
+                    | "after"
+                    | "before"
+                    | "by"
+                    | "about"
+                    | "against"
+                    | "from"
+                    | "on"
+                    | "at"
+                    | "into"
+                    | "through"
+            ) {
+                return true;
+            }
+
+            scan_cursor = start;
+        }
+
+        false
+    }
 }
 
 impl Default for MissingTo {
@@ -299,7 +350,9 @@ impl ExprLinter for MissingTo {
         let controller_text_ends_with_d_or_en =
             controller_text.ends_with('d') || controller_text.ends_with("en");
 
-        if previous_word == Some("of") && controller_text_ends_with_d_or_en {
+        if controller_text_ends_with_d_or_en
+            && Self::preposition_or_determiner_within_four(source, span.start)
+        {
             return None;
         }
 
@@ -728,6 +781,28 @@ mod tests {
         assert_no_lints(
             "Sometimes too much or too little to do. If too much, might be serious about wanting distance from others.",
             test_linter(),
+        );
+    }
+
+    #[test]
+    fn no_lint_attempted_murder() {
+        assert_no_lints(
+            "You’re under arrest for racketeering and attempted murder of Alek Suvor.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn no_lint_attempted_robbery() {
+        assert_no_lints("He was convicted of attempted robbery.", test_linter());
+    }
+
+    #[test]
+    fn inserts_to_after_attempted() {
+        assert_suggestion_result(
+            "They attempted solve the problem without assistance.",
+            test_linter(),
+            "They attempted to solve the problem without assistance.",
         );
     }
 }
