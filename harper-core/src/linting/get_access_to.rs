@@ -127,9 +127,7 @@ impl Default for GetAccessTo {
                 .t_ws()
                 .then_optional(optional_modifiers)
                 .then_optional(optional_adjectives)
-                .t_aco("access")
-                .t_ws()
-                .t_aco("at"),
+                .then_word_seq(&["access", "at"]),
         }
     }
 }
@@ -152,13 +150,16 @@ impl ExprLinter for GetAccessTo {
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
         if let Some((_, after)) = ctx {
-            let following_words: Vec<&Token> = after
-                .iter()
-                .filter(|t| !t.kind.is_whitespace())
-                .take(4)
-                .collect();
+            let mut following_words = [None; 4];
+            for (slot, tok) in following_words
+                .iter_mut()
+                .zip(after.iter().filter(|t| !t.kind.is_whitespace()))
+            {
+                *slot = Some(tok);
+            }
+            let following_words_len = following_words.iter().flatten().count();
 
-            if let Some(first_tok) = following_words.first() {
+            if let Some(first_tok) = following_words[0] {
                 // If followed by URL, hostname, email, or unlintable token
                 if matches!(
                     first_tok.kind,
@@ -178,8 +179,8 @@ impl ExprLinter for GetAccessTo {
                 }
 
                 // Check for temporal adverbials like "at this time", "at any point", "at that moment"
-                if following_words.len() >= 2 {
-                    let second_chars = following_words[1].span.get_content(src);
+                if following_words_len >= 2 {
+                    let second_chars = following_words[1].unwrap().span.get_content(src);
                     if first_chars.eq_any_ignore_ascii_case_str(TEMPORAL_DETERMINERS)
                         && second_chars.eq_any_ignore_ascii_case_str(TEMPORAL_NOUNS)
                     {
@@ -189,7 +190,7 @@ impl ExprLinter for GetAccessTo {
 
                 // Check for level expressions like "at the disk level", "at the system level"
                 if first_chars.eq_any_ignore_ascii_case_str(TEMPORAL_DETERMINERS) {
-                    for following_tok in &following_words[1..] {
+                    for following_tok in following_words[1..].iter().flatten() {
                         let word_chars = following_tok.span.get_content(src);
                         if word_chars.eq_any_ignore_ascii_case_str(&["level", "levels"]) {
                             return None;
