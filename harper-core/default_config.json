@@ -1647,13 +1647,6 @@
 						},
 						{
 							"Bool": {
-								"name": "NoOxfordComma",
-								"state": false,
-								"label": "No Oxford Comma"
-							}
-						},
-						{
-							"Bool": {
 								"name": "OffTheCuff",
 								"state": true,
 								"label": "Off The Cuff"
@@ -1667,10 +1660,10 @@
 							}
 						},
 						{
-							"Bool": {
+							"OneOfMany": {
+								"names": ["OxfordComma", "NoOxfordComma"],
 								"name": "OxfordComma",
-								"state": true,
-								"label": "Oxford Comma"
+								"labels": ["Oxford Comma", "No Oxford Comma"]
 							}
 						},
 						{
@@ -2754,13 +2747,6 @@
 								"name": "RegularIrregulars",
 								"state": true,
 								"label": "Regular Irregulars"
-							}
-						},
-						{
-							"Bool": {
-								"name": "SneakedSnuck",
-								"state": true,
-								"label": "Sneaked Snuck"
 							}
 						},
 						{
@@ -5311,6 +5297,13 @@
 								"name": "PrayingMantis",
 								"state": true,
 								"label": "Praying Mantis"
+							}
+						},
+						{
+							"OneOfMany": {
+								"names": ["PreferSneaked", "PreferSnuck"],
+								"name": "PreferSneaked",
+								"labels": ["Prefer ‘Sneaked’", "Prefer ‘Snuck’"]
 							}
 						},
 						{
