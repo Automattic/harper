@@ -254,6 +254,44 @@ fn correct_servers_side() {
     );
 }
 
+// Combinate
+
+#[test]
+fn correct_combinate() {
+    assert_suggestion_result(
+        "I'm at chapter 11 and I can't craft and combinate abyss gear, what should I do to unlock both of them",
+        test_linter(),
+        "I'm at chapter 11 and I can't craft and combine abyss gear, what should I do to unlock both of them",
+    );
+}
+
+#[test]
+fn correct_combinated() {
+    assert_suggestion_result(
+        "NFS WORLD COMBINATED MAP (NEW!)",
+        test_linter(),
+        "NFS WORLD COMBINED MAP (NEW!)",
+    );
+}
+
+#[test]
+fn correct_combinates() {
+    assert_suggestion_result(
+        "is there a game that combinates ottd and rts?",
+        test_linter(),
+        "is there a game that combines ottd and rts?",
+    );
+}
+
+#[test]
+fn correct_combinating() {
+    assert_suggestion_result(
+        "This section discusses how the color combinating is accomplished",
+        test_linter(),
+        "This section discusses how the color combining is accomplished",
+    );
+}
+
 // CompulseToCompel
 
 #[test]
@@ -2360,6 +2398,72 @@ fn correct_awaited_for() {
     );
 }
 
+// BackhandedCompliment
+
+#[test]
+fn correct_backhand_compliment() {
+    assert_suggestion_result(
+        "What's the Most insulting /backhand compliment you have ever received?",
+        test_linter(),
+        "What's the Most insulting /backhanded compliment you have ever received?",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_space() {
+    assert_suggestion_result(
+        "Thankfully, I'm a little young to receive that back hand compliment",
+        test_linter(),
+        "Thankfully, I'm a little young to receive that backhanded compliment",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_hyphen() {
+    assert_suggestion_result(
+        "They \"have it all\", but still need to back-hand compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+        test_linter(),
+        "They \"have it all\", but still need to backhanded compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+    );
+}
+
+#[test]
+fn correct_backhand_compliments() {
+    assert_suggestion_result(
+        "If backhand compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+        test_linter(),
+        "If backhanded compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments() {
+    assert_suggestion_result(
+        "I am laughing so hard watching the \"commercial\" with her back hand compliments.",
+        test_linter(),
+        "I am laughing so hard watching the \"commercial\" with her backhanded compliments.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments_caps() {
+    assert_suggestion_result(
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACK HAND COMPLIMENTS.",
+        test_linter(),
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACKHANDED COMPLIMENTS.",
+    );
+}
+
+// no praises, just tons of unnecessary back-hand compliments and lack of support
+#[test]
+fn correct_back_hand_compliments_hyphen() {
+    assert_suggestion_result(
+        "no praises, just tons of unnecessary back-hand compliments and lack of support",
+        test_linter(),
+        "no praises, just tons of unnecessary backhanded compliments and lack of support",
+    );
+}
+
 // CommitmentTo
 
 #[test]
@@ -2442,26 +2546,6 @@ fn copywrote() {
         "How do you find out if someone copywrote a movie",
         test_linter(),
         "How do you find out if someone copyrighted a movie",
-    );
-}
-
-// Payed
-
-#[test]
-fn correct_payed() {
-    assert_suggestion_result(
-        "He payed the bill yesterday.",
-        test_linter(),
-        "He paid the bill yesterday.",
-    );
-}
-
-#[test]
-fn correct_overpayed() {
-    assert_suggestion_result(
-        "He overpayed in part to have the specification met.",
-        test_linter(),
-        "He overpaid in part to have the specification met.",
     );
 }
 
@@ -2967,6 +3051,34 @@ fn corrects_levels_of_details_real_world() {
     );
 }
 
+// Lookalike
+
+#[test]
+fn corrects_look_a_like() {
+    assert_good_and_bad_suggestions(
+        "Define the look-a-like of the cursor/mouse pointer:",
+        test_linter(),
+        &[
+            "Define the lookalike of the cursor/mouse pointer:",
+            "Define the look-alike of the cursor/mouse pointer:",
+        ],
+        &[],
+    );
+}
+
+#[test]
+fn corrects_look_a_likes() {
+    assert_good_and_bad_suggestions(
+        "Attempt at using AWS facial recognition to find look-a-likes in the Rijksmuseum's art collection.",
+        test_linter(),
+        &[
+            "Attempt at using AWS facial recognition to find lookalikes in the Rijksmuseum's art collection.",
+            "Attempt at using AWS facial recognition to find look-alikes in the Rijksmuseum's art collection.",
+        ],
+        &[],
+    );
+}
+
 // MakeItSeem
 
 #[test]
@@ -3231,6 +3343,26 @@ fn fix_now_aday() {
         "OF all Occupations that now aday is used,I would not be a butcher",
         test_linter(),
         "OF all Occupations that nowadays is used,I would not be a butcher",
+    );
+}
+
+// Payed
+
+#[test]
+fn correct_payed() {
+    assert_suggestion_result(
+        "He payed the bill yesterday.",
+        test_linter(),
+        "He paid the bill yesterday.",
+    );
+}
+
+#[test]
+fn correct_overpayed() {
+    assert_suggestion_result(
+        "He overpayed in part to have the specification met.",
+        test_linter(),
+        "He overpaid in part to have the specification met.",
     );
 }
 
@@ -3991,25 +4123,5 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
         test_linter(),
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
-    );
-}
-
-// -to to-
-#[test]
-fn corrects_to_to() {
-    assert_suggestion_result(
-        "I need to add that to my to to list first.",
-        test_linter(),
-        "I need to add that to my to do list first.",
-    );
-}
-
-// -to-to-
-#[test]
-fn corrects_to_to_with_hyphen() {
-    assert_suggestion_result(
-        "I need to add that to my to-to list first.",
-        test_linter(),
-        "I need to add that to my to-do list first.",
     );
 }

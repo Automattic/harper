@@ -406,6 +406,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Codebase",
+								"state": true,
+								"label": "Codebase"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Codebases",
+								"state": true,
+								"label": "Codebases"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Deadlift",
 								"state": true,
 								"label": "Deadlift"
@@ -703,6 +717,13 @@
 								"name": "Somewhere",
 								"state": true,
 								"label": "Somewhere"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Tenfold",
+								"state": true,
+								"label": "Tenfold"
 							}
 						},
 						{
@@ -2422,6 +2443,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BackhandedCompliment",
+								"state": true,
+								"label": "Backhanded Compliment"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeenThere",
 								"state": true,
 								"label": "Been There"
@@ -2600,6 +2628,13 @@
 								"name": "LetAlone",
 								"state": true,
 								"label": "Let Alone"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
 							}
 						},
 						{
@@ -3352,6 +3387,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -3397,6 +3439,13 @@
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GetPassGoPass",
+								"state": true,
+								"label": "Get Pass, Go Pass"
 							}
 						},
 						{
@@ -3905,6 +3954,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryMuchSo",
+								"state": true,
+								"label": "Very Much So"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WantBe",
 								"state": true,
 								"label": "Want Be"
@@ -3929,6 +3985,13 @@
 								"name": "WouldNeverHave",
 								"state": true,
 								"label": "Would Never Have"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
 							}
 						}
 					]
@@ -3974,6 +4037,13 @@
 								"name": "AllowTo",
 								"state": true,
 								"label": "Allow To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllWellAndGood",
+								"state": true,
+								"label": "All Well and Good"
 							}
 						},
 						{
@@ -4118,6 +4188,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Audible",
+								"state": true,
+								"label": "Audible"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AvoidCurses",
 								"state": true,
 								"label": "Avoid Curses"
@@ -4135,6 +4212,13 @@
 								"name": "AWaysToGo",
 								"state": true,
 								"label": "A Ways To Go"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AWholeOther",
+								"state": true,
+								"label": "A Whole Other"
 							}
 						},
 						{
@@ -4219,6 +4303,13 @@
 								"name": "BesideThePoint",
 								"state": true,
 								"label": "Beside The Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BetterOffServed",
+								"state": true,
+								"label": "Better Off Served"
 							}
 						},
 						{
@@ -4342,6 +4433,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Combinate",
+								"state": true,
+								"label": "Combinate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ComprisesOf",
 								"state": true,
 								"label": "Comprises Of"
@@ -4408,6 +4506,13 @@
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DissembleDisassemble",
+								"state": true,
+								"label": "Dissemble / Disassemble"
 							}
 						},
 						{
@@ -4545,6 +4650,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FirstAidKit",
 								"state": true,
 								"label": "First Aid Kit"
@@ -4615,9 +4727,23 @@
 						},
 						{
 							"Bool": {
+								"name": "GoMissing",
+								"state": true,
+								"label": "Go Missing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoodAt",
 								"state": true,
 								"label": "Good At"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GoToSleep",
+								"state": true,
+								"label": "Go to Sleep"
 							}
 						},
 						{
@@ -4688,6 +4814,13 @@
 								"name": "ImitateFrom",
 								"state": true,
 								"label": "Imitate From"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ImplementIn",
+								"state": true,
+								"label": "Implement In"
 							}
 						},
 						{
@@ -4786,6 +4919,13 @@
 								"name": "InterestedIn",
 								"state": true,
 								"label": "Interested In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheGrandSchemeOfThings",
+								"state": true,
+								"label": "In the Grand Scheme of Things"
 							}
 						},
 						{
@@ -5066,6 +5206,13 @@
 								"name": "OfCourse",
 								"state": true,
 								"label": "Of Course"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OffLimits",
+								"state": true,
+								"label": "Off Limits"
 							}
 						},
 						{
@@ -5371,6 +5518,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Surreality",
+								"state": true,
+								"label": "Surreality"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TakeItPersonally",
 								"state": true,
 								"label": "Take It Personally"
@@ -5448,9 +5602,23 @@
 						},
 						{
 							"Bool": {
+								"name": "ToteTout",
+								"state": true,
+								"label": "Tote/Tout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "UnderneathOf",
+								"state": true,
+								"label": "Underneath of"
 							}
 						},
 						{
