@@ -2800,6 +2800,20 @@
 						},
 						{
 							"Bool": {
+								"name": "StrikeOfGenius",
+								"state": true,
+								"label": "Strike Of Genius"
+							}
+						},
+						{
+							"Bool": {
+								"name": "StrikeOfLuck",
+								"state": true,
+								"label": "Strike Of Luck"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatThis",
 								"state": true,
 								"label": "That This"
