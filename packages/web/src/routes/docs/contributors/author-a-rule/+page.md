@@ -186,7 +186,12 @@ Otherwise, use `insert_struct_rule`.
 Whenever you add a new rule, update `harper-core/default_config.json` too.
 That file defines the curated default configuration shown throughout Harper, so a new rule will not
 appear in the default setup until it is added there as well.
-See also [`StructuredConfig`](https://docs.rs/harper-core/latest/harper_core/linting/lint_group/struct.StructuredConfig.html).
+A test fails if the two ever disagree.
+
+Most rules need a single `Bool` entry inside the group they belong to.
+If your rule is one of several mutually exclusive alternatives, you want a `OneOfMany` entry instead.
+[The default configuration reference](./default-configuration) covers both, along with the invariants
+the file has to satisfy.
 
 ## Write Your Rule
 
