@@ -3,7 +3,6 @@ mod accessibility_activation;
 mod accessibility_text;
 mod app_catalog;
 mod app_icons;
-mod app_search_index;
 mod core_foundation_utilities;
 mod focused_window_pid;
 mod window_stability;
@@ -435,16 +434,31 @@ impl OsBroker for MacBroker {
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
-        let mut lock = self
-            .installed_app_search_index
-            .lock()
-            .map_err(|_| "Could not lock search index.".to_owned())?;
+        let list = installed_application_bundle_ids()?;
 
-        if lock.is_empty() {
-            lock.populate()?;
+        let query = query.trim();
+
+        if query.is_empty() {
+            return list.to_vec();
         }
 
-        Ok(lock.search(query))
+        if let Some(result) = list
+            .iter()
+            .find(|result| result.bundle_id == query)
+            .cloned()
+        {
+            return vec![result];
+        }
+
+        let lower_query = query.to_lowercase();
+        Ok(list
+            .iter()
+            .filter(|result| {
+                result.name.to_lowercase().contains(&lower_query)
+                    || result.bundle_id.to_lowercase().contains(&lower_query)
+            })
+            .cloned()
+            .collect())
     }
 }
 
