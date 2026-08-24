@@ -72,7 +72,10 @@ struct IntegrationView {
 #[cfg(target_os = "macos")]
 pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "windows")]
+pub(crate) type PlatformBroker = windows_broker::WindowsBroker;
+
+#[cfg(not(any(target_os = "macos", target_os = "windows")))]
 pub(crate) type PlatformBroker = os_broker::NoopBroker;
 
 fn platform_broker() -> PlatformBroker {
@@ -343,14 +346,7 @@ pub fn run_highlighter(has_parent: bool) {
         }
     };
 
-    #[cfg(target_os = "macos")]
-    let broker = mac_broker::MacBroker::new(integrations);
-
-    #[cfg(target_os = "windows")]
-    let broker = windows_broker::WindowsBroker::new();
-
-    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    let broker = os_broker::NoopBroker;
+    let broker = PlatformBroker::new();
 
     if let Err(error) = Highlighter::new(
         broker,

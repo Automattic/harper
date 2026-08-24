@@ -6,7 +6,13 @@ use crate::{
 use cached::cached;
 use egui::Pos2;
 use harper_core::linting::Lint;
-use std::{cell::RefCell, collections::BTreeMap, path::PathBuf, rc::Rc, sync::Arc};
+use std::{
+    cell::RefCell,
+    collections::BTreeMap,
+    path::PathBuf,
+    rc::Rc,
+    sync::{Arc, Mutex},
+};
 use windows::Win32::Foundation::POINT;
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
@@ -16,14 +22,20 @@ use wintheon::gather::Gatherer;
 mod automation_service;
 
 pub struct WindowsBroker {
-    service: Rc<RefCell<AutomationService>>,
+    service: Arc<Mutex<AutomationService>>,
 }
 
 impl WindowsBroker {
     pub fn new() -> Self {
         Self {
-            service: Rc::new(RefCell::new(AutomationService::create_and_start())),
+            service: Arc::new(Mutex::new(AutomationService::create_and_start())),
         }
+    }
+}
+
+impl Default for WindowsBroker {
+    fn default() -> Self {
+        Self::new()
     }
 }
 
@@ -32,7 +44,7 @@ impl OsBroker for WindowsBroker {
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
     ) -> Vec<ActionableLint> {
-        let text = self.service.borrow_mut().get_text();
+        let text = self.service.lock().unwrap().get_text();
         if let Some(text) = text {
             if text.len() > 16_000 {
                 return Vec::new();
@@ -43,7 +55,8 @@ impl OsBroker for WindowsBroker {
             let all_lint_iter = lints.values().map(|r| r.iter()).flatten();
             let Some(rects) = self
                 .service
-                .borrow_mut()
+                .lock()
+                .unwrap()
                 .get_bounding_boxes(all_lint_iter.map(|l| l.span))
             else {
                 return Vec::new();
@@ -56,9 +69,9 @@ impl OsBroker for WindowsBroker {
                 .zip(rects)
                 .map(|((lint_id, lint), rects)| {
                     let text = text.clone();
-                    let service = Rc::clone(&self.service);
+                    let service = self.service.clone();
                     rects.into_iter().map(move |r| {
-                        let service = Rc::clone(&service);
+                        let service = service.clone();
                         let suggestion_text = text.clone();
                         let suggestion_span = lint.span;
                         ActionableLint::new(
@@ -67,7 +80,7 @@ impl OsBroker for WindowsBroker {
                             lint.clone(),
                             text.clone(),
                             move |suggestion| {
-                                service.borrow_mut().apply_suggestion(
+                                service.lock().unwrap().apply_suggestion(
                                     suggestion_text,
                                     suggestion_span,
                                     suggestion,
