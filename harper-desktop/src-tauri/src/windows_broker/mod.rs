@@ -6,6 +6,7 @@ use crate::{
 use cached::cached;
 use egui::Pos2;
 use harper_core::linting::Lint;
+use std::process::Command;
 use std::{
     cell::RefCell,
     collections::BTreeMap,
@@ -149,7 +150,10 @@ impl OsBroker for WindowsBroker {
         }
     }
 
-    fn launch_app_bundle(&self, _bundle_id: &str) -> Result<(), String> {
+    fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
+        Command::new(bundle_id)
+            .spawn()
+            .map_err(|err| err.to_string())?;
         Ok(())
     }
 
