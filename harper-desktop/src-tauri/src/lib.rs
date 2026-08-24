@@ -346,7 +346,7 @@ pub fn run_highlighter(has_parent: bool) {
         }
     };
 
-    let broker = PlatformBroker::new();
+    let broker = PlatformBroker::default();
 
     if let Err(error) = Highlighter::new(
         broker,
