@@ -154,8 +154,36 @@ impl OsBroker for WindowsBroker {
     }
 
     /// Search for an application in the OS' global list of installed apps.
-    fn search_apps(&self, _query: &str) -> Result<Vec<AppSearchResult>, String> {
-        Ok(Vec::new())
+    fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
+        let list = installed_applications_list();
+        let query = query.trim();
+
+        if query.is_empty() {
+            return Ok(list.iter().map(|entry| entry.to_search_result()).collect());
+        }
+
+        if let Some(result) = list
+            .iter()
+            .find(|result| result.path.to_string_lossy() == query)
+            .cloned()
+        {
+            return Ok(vec![result.to_search_result()]);
+        }
+
+        let lower_query = query.to_lowercase();
+        Ok(list
+            .iter()
+            .filter(|result| {
+                result.display_name.to_lowercase().contains(&lower_query)
+                    || result
+                        .path
+                        .to_string_lossy()
+                        .to_lowercase()
+                        .contains(&lower_query)
+            })
+            .cloned()
+            .map(|entry| entry.to_search_result())
+            .collect())
     }
 }
 
@@ -180,6 +208,15 @@ struct ApplicationListEntry {
     /// The PNG bytes of an icon. 256 on a side, square.
     icon_png: Option<Vec<u8>>,
     display_name: String,
+}
+
+impl ApplicationListEntry {
+    fn to_search_result(&self) -> AppSearchResult {
+        AppSearchResult {
+            name: self.display_name.clone(),
+            bundle_id: self.path.to_string_lossy().to_owned().to_string(),
+        }
+    }
 }
 
 fn look_up_application(bundle_id: &str) -> Option<ApplicationListEntry> {
