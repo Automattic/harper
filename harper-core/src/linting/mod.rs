@@ -110,6 +110,7 @@ mod full_to_the_brim;
 mod get_pass_go_pass;
 mod go_missing;
 mod go_so_far_as_to;
+mod go_to_sleep;
 mod go_to_war;
 mod good_at;
 mod handful;
