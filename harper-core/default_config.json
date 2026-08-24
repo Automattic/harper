@@ -4433,6 +4433,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Combinate",
+								"state": true,
+								"label": "Combinate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ComprisesOf",
 								"state": true,
 								"label": "Comprises Of"
@@ -4727,6 +4734,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GoToSleep",
+								"state": true,
+								"label": "Go to Sleep"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Handful",
 								"state": true,
 								"label": "Handful"
@@ -4905,6 +4919,13 @@
 								"name": "InTheFirstPlace",
 								"state": true,
 								"label": "In the First Place"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheGrandSchemeOfThings",
+								"state": true,
+								"label": "In the Grand Scheme of Things"
 							}
 						},
 						{
