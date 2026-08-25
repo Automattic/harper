@@ -1,4 +1,6 @@
 <script lang="ts">
+import { onMount } from 'svelte';
+import { Client } from '$lib/client';
 import SettingsSidebar from './SettingsSidebar.svelte';
 import './settings.css';
 import AboutPage from './pages/AboutPage.svelte';
@@ -14,6 +16,7 @@ import type { SectionId } from './settings-data';
 
 let active: SectionId = 'getting-started';
 let contentEl: HTMLElement;
+let isLoadingOnboarding = true;
 
 const titleMap: Record<SectionId, string> = {
 	'getting-started': 'Getting Started',
@@ -27,6 +30,20 @@ const titleMap: Record<SectionId, string> = {
 	about: 'About',
 };
 
+onMount(() => {
+	void loadInitialSection();
+});
+
+async function loadInitialSection() {
+	try {
+		active = (await Client.getOnboardingCompleted()) ? 'general' : 'getting-started';
+	} catch (error) {
+		console.error('Unable to load onboarding state.', error);
+	} finally {
+		isLoadingOnboarding = false;
+	}
+}
+
 $: title = titleMap[active];
 
 $: if (contentEl && active) {
@@ -35,10 +52,14 @@ $: if (contentEl && active) {
 </script>
 
 <div class="settings-shell">
-  <SettingsSidebar bind:active />
+  {#if !isLoadingOnboarding}
+    <SettingsSidebar bind:active />
+  {/if}
 
-  <main bind:this={contentEl} class="content" aria-label={title}>
-    {#if active === "getting-started"}
+  <main bind:this={contentEl} class="content" aria-label={isLoadingOnboarding ? "Settings" : title}>
+    {#if isLoadingOnboarding}
+      <p>Loading settings...</p>
+    {:else if active === "getting-started"}
       <GettingStartedPage navigateToSection={(section) => (active = section)} />
     {:else if active === "general"}
       <GeneralPage />

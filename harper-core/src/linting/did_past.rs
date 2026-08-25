@@ -95,7 +95,7 @@ impl<D: Dictionary> ExprLinter for DidPast<D> {
         if !suggs.is_empty() {
             Some(Lint {
                 span: vspan,
-                lint_kind: LintKind::Redundancy,
+                lint_kind: LintKind::Grammar,
                 suggestions: suggs
                     .into_iter()
                     .map(|s| Suggestion::replace_with_match_case(s, vchars))
@@ -300,6 +300,32 @@ mod tests {
     fn ignore_did_you_read() {
         assert_no_lints(
             "Did You Read the Instructions?",
+            DidPast::new(FstDictionary::curated()),
+        );
+    }
+
+    #[test]
+    fn issue_3916_didnt_understood() {
+        assert_suggestion_result(
+            "I didn't understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I didn't understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_did_understood() {
+        assert_suggestion_result(
+            "I did understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I did understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_correct_usage() {
+        assert_no_lints(
+            "I didn't understand the problem.",
             DidPast::new(FstDictionary::curated()),
         );
     }

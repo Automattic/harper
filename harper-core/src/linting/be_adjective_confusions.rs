@@ -128,16 +128,22 @@ pub fn lint_group() -> LintGroup {
 
 #[cfg(test)]
 mod tests {
+    use super::lint_group;
+    use crate::linting::LintGroup;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(LintGroup, LintGroup, lint_group());
+
     mod biased {
         use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
-        use super::super::lint_group;
+        use super::test_linter;
 
         #[test]
         fn he_s_bias() {
             assert_suggestion_result(
                 "he's just on a rush to write a rejection letter probably because he's bias toward the origin or affiliation of the author",
-                lint_group(),
+                test_linter(),
                 "he's just on a rush to write a rejection letter probably because he's biased toward the origin or affiliation of the author",
             );
         }
@@ -146,7 +152,7 @@ mod tests {
         fn i_am_bias() {
             assert_suggestion_result(
                 "I guess I am bias/prefer udd-style fragments",
-                lint_group(),
+                test_linter(),
                 "I guess I am biased/prefer udd-style fragments",
             );
         }
@@ -155,7 +161,7 @@ mod tests {
         fn i_m_bias() {
             assert_suggestion_result(
                 "I'm bias towards vunit as it's by far the most user friendly HDL test runner I know of.",
-                lint_group(),
+                test_linter(),
                 "I'm biased towards vunit as it's by far the most user friendly HDL test runner I know of.",
             );
         }
@@ -164,7 +170,7 @@ mod tests {
         fn im_bias() {
             assert_suggestion_result(
                 "im bias, cause thats all im here for",
-                lint_group(),
+                test_linter(),
                 "im biased, cause thats all im here for",
             );
         }
@@ -173,7 +179,7 @@ mod tests {
         fn they_re_bias() {
             assert_suggestion_result(
                 "See, I told you they’re bias because they flagged my comment!",
-                lint_group(),
+                test_linter(),
                 "See, I told you they’re biased because they flagged my comment!",
             );
         }
@@ -183,7 +189,7 @@ mod tests {
         fn they_re_bias_could_also_be_their_bias() {
             assert_suggestion_result(
                 "As a general rule I try to steer clear of the major news media outlets because of their outright refusal to admit they're bias upfront.",
-                lint_group(),
+                test_linter(),
                 "As a general rule I try to steer clear of the major news media outlets because of their outright refusal to admit they're biased upfront.",
             );
         }
@@ -193,7 +199,7 @@ mod tests {
         fn were_bias() {
             assert_suggestion_result(
                 "the generated sample were bias in presence of negative cross-section",
-                lint_group(),
+                test_linter(),
                 "the generated sample were biased in presence of negative cross-section",
             );
         }
@@ -202,14 +208,14 @@ mod tests {
 
         #[test]
         fn dont_flag_bias_hyphen_corrected() {
-            assert_no_lints("I gather they are bias-corrected estimates.", lint_group());
+            assert_no_lints("I gather they are bias-corrected estimates.", test_linter());
         }
 
         #[test]
         fn dont_flag_bias_space_corrected() {
             assert_no_lints(
                 "All the images were bias corrected using N4 algorithm with a threshold value of 0.001.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -217,7 +223,7 @@ mod tests {
         fn dont_flag_its_bias_free() {
             assert_no_lints(
                 "Both the original model, and its bias-free counterpart, will be loaded.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -225,7 +231,7 @@ mod tests {
         fn dont_flag_if_there_were_bias() {
             assert_no_lints(
                 "which depend on several variables: if there were bias, the average size of the classes, as well as the number of teachers at the school",
-                lint_group(),
+                test_linter(),
             );
         }
     }
@@ -233,13 +239,13 @@ mod tests {
     mod concerned {
         use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
-        use super::super::lint_group;
+        use super::test_linter;
 
         #[test]
         fn hes_concern() {
             assert_suggestion_result(
                 "He's concern about my mental health because I'm alone in this city",
-                lint_group(),
+                test_linter(),
                 "He's concerned about my mental health because I'm alone in this city",
             );
         }
@@ -248,7 +254,7 @@ mod tests {
         fn i_am_concern() {
             assert_suggestion_result(
                 "I am learning to use this, but I am concern on data privacy and sharing issues.",
-                lint_group(),
+                test_linter(),
                 "I am learning to use this, but I am concerned on data privacy and sharing issues.",
             );
         }
@@ -257,7 +263,7 @@ mod tests {
         fn im_concern() {
             assert_suggestion_result(
                 "I'm concern if there is missing CVEs.",
-                lint_group(),
+                test_linter(),
                 "I'm concerned if there is missing CVEs.",
             );
         }
@@ -266,7 +272,7 @@ mod tests {
         fn im_no_apostrophe_concern() {
             assert_suggestion_result(
                 "The only thing im concern about is the crash.",
-                lint_group(),
+                test_linter(),
                 "The only thing im concerned about is the crash.",
             );
         }
@@ -276,7 +282,7 @@ mod tests {
         fn its_no_apostrophe_concern() {
             assert_suggestion_result(
                 "yes no one there answered and I thought its concern with this repo too so I clone it here!",
-                lint_group(),
+                test_linter(),
                 "yes no one there answered and I thought its concerned with this repo too so I cloned it here!",
             );
         }
@@ -285,7 +291,7 @@ mod tests {
         fn shes_concern() {
             assert_suggestion_result(
                 "she often courier food to her 40 year old son living in Jeju island because she’s concern about her son’s well being",
-                lint_group(),
+                test_linter(),
                 "she often courier food to her 40 year old son living in Jeju island because she’s concerned about her son’s well being",
             );
         }
@@ -294,7 +300,7 @@ mod tests {
         fn were_concern() {
             assert_suggestion_result(
                 "As far as we're concern, this is a very simple try catch on your end",
-                lint_group(),
+                test_linter(),
                 "As far as we're concerned, this is a very simple try catch on your end",
             );
         }
@@ -303,7 +309,7 @@ mod tests {
         fn we_are_concern() {
             assert_suggestion_result(
                 "We are concern and prioritize users' feedback and maintainability.",
-                lint_group(),
+                test_linter(),
                 "We are concerned and prioritize users' feedback and maintainability.",
             );
         }
@@ -312,7 +318,7 @@ mod tests {
         fn you_are_concern() {
             assert_suggestion_result(
                 "you are concern only in logging a more appropriate message error, but continue to throw the opaque assertion error.",
-                lint_group(),
+                test_linter(),
                 "you are concerned only in logging a more appropriate message error, but continue to throw the opaque assertion error.",
             );
         }
@@ -323,25 +329,25 @@ mod tests {
         fn dont_flag_noun_concern() {
             assert_no_lints(
                 "My main concern is the data that could be lost using this deletion.",
-                lint_group(),
+                test_linter(),
             );
         }
 
         #[test]
         fn dont_flag_verb_concern() {
-            assert_no_lints("This doesn't concern me at all.", lint_group());
+            assert_no_lints("This doesn't concern me at all.", test_linter());
         }
 
         #[test]
         fn dont_flag_concern_free() {
-            assert_no_lints("They don't pretend they're concern-free.", lint_group());
+            assert_no_lints("They don't pretend they're concern-free.", test_linter());
         }
 
         #[test]
         fn dont_flag_legit_its_concern() {
             assert_no_lints(
                 "The ByteBlockPool loses its reference to the buffers it's just zeroed, so it seems outside its concern to zero the buffers.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -350,7 +356,7 @@ mod tests {
         fn dont_flag_youre_your_error() {
             assert_no_lints(
                 "You're concern then is literally the \"-like\" in the message?",
-                lint_group(),
+                test_linter(),
             );
         }
     }
@@ -358,13 +364,13 @@ mod tests {
     mod prejudiced {
         use crate::linting::tests::assert_suggestion_result;
 
-        use super::super::lint_group;
+        use super::test_linter;
 
         #[test]
         fn i_was_prejudice() {
             assert_suggestion_result(
                 "I didn't know I was prejudice against some of my own people until I went looking for web framework documentation and was met with a BLM banner.",
-                lint_group(),
+                test_linter(),
                 "I didn't know I was prejudiced against some of my own people until I went looking for web framework documentation and was met with a BLM banner.",
             );
         }
@@ -373,7 +379,7 @@ mod tests {
         fn shes_prejudice() {
             assert_suggestion_result(
                 "She's prejudice against muslims.",
-                lint_group(),
+                test_linter(),
                 "She's prejudiced against muslims.",
             );
         }
@@ -382,7 +388,7 @@ mod tests {
         fn theyre_prejudice() {
             assert_suggestion_result(
                 "The people who manage the law are all about lying and tricking people, theyre prejudice and trying to make people look stupid",
-                lint_group(),
+                test_linter(),
                 "The people who manage the law are all about lying and tricking people, theyre prejudiced and trying to make people look stupid",
             );
         }
@@ -391,13 +397,13 @@ mod tests {
     mod shocked {
         use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
-        use super::super::lint_group;
+        use super::test_linter;
 
         #[test]
         fn we_were_shock() {
             assert_suggestion_result(
                 "We were shock because its working fine on 1st of April just after 3 days its not working with the same settings, that is our major concern.",
-                lint_group(),
+                test_linter(),
                 "We were shocked because its working fine on 1st of April just after 3 days its not working with the same settings, that is our major concern.",
             );
         }
@@ -408,7 +414,7 @@ mod tests {
         fn dont_flag_shock_jocks() {
             assert_no_lints(
                 "They're not commentators/anaylsts, they're shock jocks.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -417,7 +423,7 @@ mod tests {
         fn dont_flag_were_shock() {
             assert_no_lints(
                 "My first reactions when the topic of cryonics came up (early in our relationship) were shock, a bit of revulsion, and a lot of confusion.",
-                lint_group(),
+                test_linter(),
             );
         }
     }
@@ -427,13 +433,13 @@ mod tests {
             assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
         };
 
-        use super::super::lint_group;
+        use super::test_linter;
 
         #[test]
         fn he_is_worry() {
             assert_suggestion_result(
                 "I guess he is worry about \" * user * \" tag.",
-                lint_group(),
+                test_linter(),
                 "I guess he is worried about \" * user * \" tag.",
             );
         }
@@ -442,7 +448,7 @@ mod tests {
         fn he_was() {
             assert_suggestion_result(
                 "So he was worry about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
-                lint_group(),
+                test_linter(),
                 "So he was worried about her. Especially, when he got no response by calling her on her phone nor ranging her doorbell.",
             );
         }
@@ -451,7 +457,7 @@ mod tests {
         fn i_am_worry() {
             assert_suggestion_result(
                 "I didn't see any section dedicated to this so I am worry about:",
-                lint_group(),
+                test_linter(),
                 "I didn't see any section dedicated to this so I am worried about:",
             );
         }
@@ -460,7 +466,7 @@ mod tests {
         fn im_worry() {
             assert_suggestion_result(
                 "but I'm worry about memory leak caused by that long delay",
-                lint_group(),
+                test_linter(),
                 "but I'm worried about memory leak caused by that long delay",
             );
         }
@@ -469,7 +475,7 @@ mod tests {
         fn im_no_apostrophe_worry() {
             assert_suggestion_result(
                 "im worry now that if this inbound was dangerous and maybe it does something to my pc",
-                lint_group(),
+                test_linter(),
                 "im worried now that if this inbound was dangerous and maybe it does something to my pc",
             );
         }
@@ -478,7 +484,7 @@ mod tests {
         fn i_was() {
             assert_suggestion_result(
                 "So that's why I was worry.",
-                lint_group(),
+                test_linter(),
                 "So that's why I was worried.",
             );
         }
@@ -487,7 +493,7 @@ mod tests {
         fn i_were() {
             assert_suggestion_result(
                 "The only things that I were worry about is the data that could be lost using this deletion.",
-                lint_group(),
+                test_linter(),
                 "The only things that I were worried about is the data that could be lost using this deletion.",
             );
         }
@@ -496,7 +502,7 @@ mod tests {
         fn they_are_worry() {
             assert_suggestion_result(
                 "at the same time they are worry about the price for the upgrade each 3 years",
-                lint_group(),
+                test_linter(),
                 "at the same time they are worried about the price for the upgrade each 3 years",
             );
         }
@@ -505,7 +511,7 @@ mod tests {
         fn theyre_worry() {
             assert_suggestion_result(
                 "Because they're worry this link is spam or they scare have to pay more money.",
-                lint_group(),
+                test_linter(),
                 "Because they're worried this link is spam or they scare have to pay more money.",
             );
         }
@@ -514,7 +520,7 @@ mod tests {
         fn we_are() {
             assert_suggestion_result(
                 "We are analised this and we are worry because when our platform go to market",
-                lint_group(),
+                test_linter(),
                 "We are analised this and we are worried because when our platform go to market",
             );
         }
@@ -523,7 +529,7 @@ mod tests {
         fn were() {
             assert_suggestion_result(
                 "We're worry about all kinds of minority representation in TV.",
-                lint_group(),
+                test_linter(),
                 "We're worried about all kinds of minority representation in TV.",
             );
         }
@@ -532,7 +538,7 @@ mod tests {
         fn you_are() {
             assert_suggestion_result(
                 "You are worry because we are not annotating view interface itself, right?",
-                lint_group(),
+                test_linter(),
                 "You are worried because we are not annotating view interface itself, right?",
             );
         }
@@ -541,7 +547,7 @@ mod tests {
         fn youre() {
             assert_suggestion_result(
                 "You're worry about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
-                lint_group(),
+                test_linter(),
                 "You're worried about memory usage and wanna be sure that a Sequence-class won't hold your activity against GC — declare this class as static",
             );
         }
@@ -552,7 +558,7 @@ mod tests {
         fn dont_flag_it_is() {
             assert_no_lints(
                 "Part of it is worry that my bosses will get angry and fire me.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -560,30 +566,30 @@ mod tests {
         fn dont_flag_it_was() {
             assert_no_lints(
                 "Because what followed wasn't indifference, it was worry.",
-                lint_group(),
+                test_linter(),
             );
         }
 
         #[test]
         fn dont_flag_she_was_worry_free() {
-            assert_no_lints("Finally, she was worry-free.", lint_group());
+            assert_no_lints("Finally, she was worry-free.", test_linter());
         }
 
         #[test]
         fn dont_flag_theyre_worry_free() {
-            assert_no_lints("They don't pretend they're worry-free.", lint_group());
+            assert_no_lints("They don't pretend they're worry-free.", test_linter());
         }
 
         #[test]
         fn dont_flag_worry_warts() {
-            assert_no_lints("They’re worry warts", lint_group());
+            assert_no_lints("They’re worry warts", test_linter());
         }
 
         #[test]
         fn dont_flag_were_worry_space_free() {
             assert_no_lints(
                 "Thanks to jQuery, we're worry free from browser compatibility.",
-                lint_group(),
+                test_linter(),
             );
         }
 
@@ -592,7 +598,7 @@ mod tests {
         fn different_case_not_handled() {
             assert_good_and_bad_suggestions(
                 "Myself along with others are using it on an iPad successfully, so it is worry to hear that is broken for you.",
-                lint_group(),
+                test_linter(),
                 &[
                     "Myself along with others are using it on an iPad successfully, so it is worrying to hear that is broken for you.",
                     "Myself along with others are using it on an iPad successfully, so it is a worry to hear that is broken for you.",
@@ -604,7 +610,10 @@ mod tests {
         #[test]
         #[ignore = "This is a different error that should be caught by `ShouldContract`"]
         fn dont_flag_youre_youre_error() {
-            assert_no_lints("I think you're worry is not really an issue.", lint_group());
+            assert_no_lints(
+                "I think you're worry is not really an issue.",
+                test_linter(),
+            );
         }
     }
 }

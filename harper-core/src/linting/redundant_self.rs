@@ -162,11 +162,14 @@ impl ExprLinter for RedundantSelf {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{
         assert_good_and_bad_suggestions, assert_no_lints, assert_suggestion_result,
     };
 
     use super::RedundantSelf;
+
+    create_test_pool!(RedundantSelf, RedundantSelf, RedundantSelf::default());
 
     // Self-harm onself test
 
@@ -174,7 +177,7 @@ mod tests {
     fn fix_self_harm_herself_hy() {
         assert_good_and_bad_suggestions(
             "Camille about to self-harm herself",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Camille about to harm herself",
                 "Camille about to self-harm",
@@ -187,7 +190,7 @@ mod tests {
     fn fix_self_harming_herself_hy() {
         assert_good_and_bad_suggestions(
             "At times she was suicidal and started self-harming herself when she was 12.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "At times she was suicidal and started harming herself when she was 12.",
                 "At times she was suicidal and started self-harming when she was 12.",
@@ -200,7 +203,7 @@ mod tests {
     fn fix_self_harming_herself_sp() {
         assert_good_and_bad_suggestions(
             "Violet self harming herself is inter-spliced in this montage and Tate walks in to tell her she's cutting the wrong way.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Violet harming herself is inter-spliced in this montage and Tate walks in to tell her she's cutting the wrong way.",
                 "Violet self harming is inter-spliced in this montage and Tate walks in to tell her she's cutting the wrong way.",
@@ -213,7 +216,7 @@ mod tests {
     fn fix_self_harming_himself_hy() {
         assert_good_and_bad_suggestions(
             "I don't know the reason till now for doing so but I'm sure he was self-harming himself.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I don't know the reason till now for doing so but I'm sure he was harming himself.",
                 "I don't know the reason till now for doing so but I'm sure he was self-harming.",
@@ -226,7 +229,7 @@ mod tests {
     fn fix_self_harming_myself_sp() {
         assert_good_and_bad_suggestions(
             "I'm no programmer or anything like that but I like staying up late at night and self harming myself trying to get ajax to work.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I'm no programmer or anything like that but I like staying up late at night and harming myself trying to get ajax to work.",
                 "I'm no programmer or anything like that but I like staying up late at night and self harming trying to get ajax to work.",
@@ -239,7 +242,7 @@ mod tests {
     fn fix_self_harming_myself_hy() {
         assert_good_and_bad_suggestions(
             "How I stopped self-harming myself",
-            RedundantSelf::default(),
+            test_linter(),
             &["How I stopped harming myself", "How I stopped self-harming"],
             &[],
         );
@@ -249,7 +252,7 @@ mod tests {
     fn fix_self_harm_to_myself_hy() {
         assert_good_and_bad_suggestions(
             "I'm glad that I didn't do any self-harm to myself",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I'm glad that I didn't do any harm to myself",
                 "I'm glad that I didn't do any self-harm",
@@ -262,7 +265,7 @@ mod tests {
     fn fix_self_harm_to_myself_sp() {
         assert_good_and_bad_suggestions(
             "so I did self harm to myself with the teacher noticing",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "so I did harm to myself with the teacher noticing",
                 "so I did self harm with the teacher noticing",
@@ -275,7 +278,7 @@ mod tests {
     fn fix_self_harmed_myself_sp() {
         assert_good_and_bad_suggestions(
             "I haven't self harmed myself in exactly 3 months and 4 days!!!",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I haven't harmed myself in exactly 3 months and 4 days!!!",
                 "I haven't self harmed in exactly 3 months and 4 days!!!",
@@ -288,7 +291,7 @@ mod tests {
     fn fix_self_harmed_themself_sp() {
         assert_good_and_bad_suggestions(
             "trusted you enough to tell you that they self harmed themself",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "trusted you enough to tell you that they harmed themself",
                 "trusted you enough to tell you that they self harmed",
@@ -301,7 +304,7 @@ mod tests {
     fn fix_self_harming_yourself_hy() {
         assert_good_and_bad_suggestions(
             "Is psychologically self-harming yourself on purpose possible",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Is psychologically harming yourself on purpose possible",
                 "Is psychologically self-harming on purpose possible",
@@ -314,7 +317,7 @@ mod tests {
     fn fix_self_harming_yourself_sp() {
         assert_good_and_bad_suggestions(
             "What isn't seen as self harming yourself but actually is?",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "What isn't seen as harming yourself but actually is?",
                 "What isn't seen as self harming but actually is?",
@@ -327,7 +330,7 @@ mod tests {
     fn fix_self_harm_to_yourself_hy() {
         assert_good_and_bad_suggestions(
             "First of all, do not turn to physical abuse or any type of self-harm to yourself.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "First of all, do not turn to physical abuse or any type of harm to yourself.",
                 "First of all, do not turn to physical abuse or any type of self-harm.",
@@ -342,7 +345,7 @@ mod tests {
     fn fix_self_teaching_myself() {
         assert_suggestion_result(
             "This is a reference of me self-teaching myself the Barvinok algorithm.",
-            RedundantSelf::default(),
+            test_linter(),
             "This is a reference of me teaching myself the Barvinok algorithm.",
         );
     }
@@ -351,7 +354,7 @@ mod tests {
     fn fix_self_taught_myself() {
         assert_suggestion_result(
             "Since I wasn't blessed to learn security related topic back when I was undergrad, I self taught myself using udemy, and CTF Challenge online.",
-            RedundantSelf::default(),
+            test_linter(),
             "Since I wasn't blessed to learn security related topic back when I was undergrad, I taught myself using udemy, and CTF Challenge online.",
         );
     }
@@ -360,7 +363,7 @@ mod tests {
     fn fix_self_teach_myself() {
         assert_suggestion_result(
             "I decided to self-teach myself python so I could get more involved in wider aspects of research, specifically data science.",
-            RedundantSelf::default(),
+            test_linter(),
             "I decided to teach myself python so I could get more involved in wider aspects of research, specifically data science.",
         );
     }
@@ -370,7 +373,7 @@ mod tests {
     fn fix_self_teaching_themselves() {
         assert_suggestion_result(
             "The point of OSSU is to make things easier for people self-teaching themselves CS.",
-            RedundantSelf::default(),
+            test_linter(),
             "The point of OSSU is to make things easier for people teaching themselves CS.",
         );
     }
@@ -381,7 +384,7 @@ mod tests {
     fn fix_self_host_it_yourself() {
         assert_good_and_bad_suggestions(
             "If you want to self-host it yourself, get the latest release and download the distributable zip file attached to it",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "If you want to self-host it, get the latest release and download the distributable zip file attached to it",
                 "If you want to host it yourself, get the latest release and download the distributable zip file attached to it",
@@ -394,7 +397,7 @@ mod tests {
     fn fix_self_hosting_it_themselves() {
         assert_good_and_bad_suggestions(
             "I've open-sourced the codebase and written an installation guide to make it as easy as possible for others who are interested in self-hosting it themselves.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I've open-sourced the codebase and written an installation guide to make it as easy as possible for others who are interested in self-hosting it.",
                 "I've open-sourced the codebase and written an installation guide to make it as easy as possible for others who are interested in hosting it themselves.",
@@ -407,7 +410,7 @@ mod tests {
     fn fix_self_hosted_one_myself() {
         assert_good_and_bad_suggestions(
             "I though WalletConnect bridge server might be too flooded with requests, so I self-hosted one myself, same result.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I though WalletConnect bridge server might be too flooded with requests, so I self-hosted one, same result.",
                 "I though WalletConnect bridge server might be too flooded with requests, so I hosted one myself, same result.",
@@ -422,7 +425,7 @@ mod tests {
     fn fix_self_diagnosed_myself() {
         assert_good_and_bad_suggestions(
             "As a professional amateur doctor I have self-diagnosed myself with a mild case of alzheimer",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "As a professional amateur doctor I have self-diagnosed with a mild case of alzheimer",
                 "As a professional amateur doctor I have diagnosed myself with a mild case of alzheimer",
@@ -435,7 +438,7 @@ mod tests {
     fn fix_self_diagnose_himself() {
         assert_good_and_bad_suggestions(
             "a user can add his X-ray image in the application and he will be able to self diagnose himself",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "a user can add his X-ray image in the application and he will be able to self diagnose",
                 "a user can add his X-ray image in the application and he will be able to diagnose himself",
@@ -448,7 +451,7 @@ mod tests {
     fn fix_self_diagnose_itself() {
         assert_good_and_bad_suggestions(
             "a spare should self-diagnose itself and generate then store its performance stats in performance.txt",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "a spare should self-diagnose and generate then store its performance stats in performance.txt",
                 "a spare should diagnose itself and generate then store its performance stats in performance.txt",
@@ -461,7 +464,7 @@ mod tests {
     fn fix_self_diagnose_themselves() {
         assert_good_and_bad_suggestions(
             "Team application designed as a mediatery to help users self diagnose themselves or seek medical attention",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Team application designed as a mediatery to help users self diagnose or seek medical attention",
                 "Team application designed as a mediatery to help users diagnose themselves or seek medical attention",
@@ -476,7 +479,7 @@ mod tests {
     fn fix_self_describe_myself() {
         assert_good_and_bad_suggestions(
             "Moreover, each thing itself can self-describe itself under well-known, e.g.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Moreover, each thing itself can self-describe under well-known, e.g.",
                 "Moreover, each thing itself can describe itself under well-known, e.g.",
@@ -489,7 +492,7 @@ mod tests {
     fn fix_self_described_yourself() {
         assert_good_and_bad_suggestions(
             "I know this is asking for a lot, but since you self-described yourself as a documentation nerd- would you be willing to help ...",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I know this is asking for a lot, but since you self-described as a documentation nerd- would you be willing to help ...",
                 "I know this is asking for a lot, but since you described yourself as a documentation nerd- would you be willing to help ...",
@@ -502,7 +505,7 @@ mod tests {
     fn fix_self_describes_itself() {
         assert_good_and_bad_suggestions(
             "httpx self-describes itself as HTTPX is a fully featured HTTP client for Python 3",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "httpx self-describes as HTTPX is a fully featured HTTP client for Python 3",
                 "httpx describes itself as HTTPX is a fully featured HTTP client for Python 3",
@@ -515,7 +518,7 @@ mod tests {
     fn fix_self_describe_themselves() {
         assert_good_and_bad_suggestions(
             "This, along with some other capabilities, will better allow route handler delegates to self-describe themselves from just the type",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "This, along with some other capabilities, will better allow route handler delegates to self-describe from just the type",
                 "This, along with some other capabilities, will better allow route handler delegates to describe themselves from just the type",
@@ -530,7 +533,7 @@ mod tests {
     fn fix_self_medicate_ourselves() {
         assert_good_and_bad_suggestions(
             "Needless to say we took advantage of this to self-medicate ourselves during the scheduled downtime.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Needless to say we took advantage of this to self-medicate during the scheduled downtime.",
                 "Needless to say we took advantage of this to medicate ourselves during the scheduled downtime.",
@@ -543,7 +546,7 @@ mod tests {
     fn fix_self_medicate_themselves() {
         assert_good_and_bad_suggestions(
             "the patient decides to self-medicate themselves, thereby subjecting themselves to additional harms",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "the patient decides to self-medicate, thereby subjecting themselves to additional harms",
                 "the patient decides to medicate themselves, thereby subjecting themselves to additional harms",
@@ -558,7 +561,7 @@ mod tests {
     fn fix_self_sabotaging_yourself() {
         assert_good_and_bad_suggestions(
             "How to stop self-sabotaging yourself.  (My struggle with self-sabotagers) has already been recorded in the archive",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "How to stop self-sabotaging.  (My struggle with self-sabotagers) has already been recorded in the archive",
                 "How to stop sabotaging yourself.  (My struggle with self-sabotagers) has already been recorded in the archive",
@@ -571,7 +574,7 @@ mod tests {
     fn fix_self_sabotage_themselves() {
         assert_good_and_bad_suggestions(
             "I also just don't get why as an artist you'd self sabotage yourself, but you do you if you want you work to be replaced by lazy bastards",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "I also just don't get why as an artist you'd self sabotage, but you do you if you want you work to be replaced by lazy bastards",
                 "I also just don't get why as an artist you'd sabotage yourself, but you do you if you want you work to be replaced by lazy bastards",
@@ -586,7 +589,7 @@ mod tests {
     fn fix_self_correct_itself() {
         assert_good_and_bad_suggestions(
             "Going against the gradient assure that the algorithm self-correct itself, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Going against the gradient assure that the algorithm correct itself, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
                 "Going against the gradient assure that the algorithm self-correct, i.e. we obtain parameters that lead to predictions closer and closer to the actual ...",
@@ -599,7 +602,7 @@ mod tests {
     fn fix_self_corrects_itself() {
         assert_good_and_bad_suggestions(
             "Self corrects itself by fetching the width of the parent",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Self corrects by fetching the width of the parent",
                 "Corrects itself by fetching the width of the parent",
@@ -612,7 +615,7 @@ mod tests {
     fn fix_self_correcting_itself() {
         assert_good_and_bad_suggestions(
             "the server handling the http site being out of date and then self-correcting itself",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "the server handling the http site being out of date and then correcting itself",
                 "the server handling the http site being out of date and then self-correcting",
@@ -627,7 +630,7 @@ mod tests {
     fn fix_self_regulate_myself() {
         assert_good_and_bad_suggestions(
             "Fun fact: Self Regulate myself with Meditation",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 // TODO: due to a quirk in `replace_with_match_case`, this generates `ReguLate`
                 // "Fun fact: Regulate myself with Meditation",
@@ -641,7 +644,7 @@ mod tests {
     fn fix_self_regulating_ourselves() {
         assert_good_and_bad_suggestions(
             "in general we should be self regulating ourselves and trying to help each other succeed",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "in general we should be regulating ourselves and trying to help each other succeed",
                 "in general we should be self regulating and trying to help each other succeed",
@@ -656,7 +659,7 @@ mod tests {
     fn fix_self_censor_themselves() {
         assert_good_and_bad_suggestions(
             "this would not be desirable, as capturees would be able to self-censor themselves when captured",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "this would not be desirable, as capturees would be able to censor themselves when captured",
                 "this would not be desirable, as capturees would be able to self-censor when captured",
@@ -669,7 +672,7 @@ mod tests {
     fn fix_self_censoring_themselves() {
         assert_good_and_bad_suggestions(
             "Although people often realize that they are self-censoring themselves, it is not always the case.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Although people often realize that they are censoring themselves, it is not always the case.",
                 "Although people often realize that they are self-censoring, it is not always the case.",
@@ -684,7 +687,7 @@ mod tests {
     fn fix_self_govern_themselves() {
         assert_good_and_bad_suggestions(
             "system that enables Founders and investors to coordinate and self-govern themselves through a set of self-executing rules published on a public blockchain",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "system that enables Founders and investors to coordinate and govern themselves through a set of self-executing rules published on a public blockchain",
                 "system that enables Founders and investors to coordinate and self-govern through a set of self-executing rules published on a public blockchain",
@@ -699,7 +702,7 @@ mod tests {
     fn fix_self_identify_itself() {
         assert_good_and_bad_suggestions(
             "We need this in order for a job to be able to self-identify itself and potentially send it's own ID to a different service",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "We need this in order for a job to be able to identify itself and potentially send it's own ID to a different service",
                 "We need this in order for a job to be able to self-identify and potentially send it's own ID to a different service",
@@ -712,7 +715,7 @@ mod tests {
     fn fix_self_identified_themselves() {
         assert_good_and_bad_suggestions(
             "This is how the workers self-identified themselves to the scheduler.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "This is how the workers identified themselves to the scheduler.",
                 "This is how the workers self-identified to the scheduler.",
@@ -727,31 +730,25 @@ mod tests {
     fn dont_flag_self_harm_itself() {
         assert_no_lints(
             "I understand that self harm itself isn't something that you would have to report.",
-            RedundantSelf::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_self_host_without_pronoun() {
-        assert_no_lints(
-            "I prefer to self-host my applications",
-            RedundantSelf::default(),
-        );
+        assert_no_lints("I prefer to self-host my applications", test_linter());
     }
 
     #[test]
     fn dont_flag_host_without_self() {
-        assert_no_lints(
-            "They decided to host it themselves",
-            RedundantSelf::default(),
-        );
+        assert_no_lints("They decided to host it themselves", test_linter());
     }
 
     #[test]
     fn fix_self_right_itself() {
         assert_good_and_bad_suggestions(
             "Witch Doctor was able to self-right itself but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "Witch Doctor was able to right itself but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
                 "Witch Doctor was able to self-right but End Game delivered another massive hit that sent Witch Doctor several feet in the air.",
@@ -764,7 +761,7 @@ mod tests {
     fn fix_self_rights_itself() {
         assert_good_and_bad_suggestions(
             "Bite Force self-rights itself.",
-            RedundantSelf::default(),
+            test_linter(),
             &["Bite Force rights itself.", "Bite Force self-rights."],
             &[],
         );
@@ -774,7 +771,7 @@ mod tests {
     fn fix_self_righted_itself() {
         assert_good_and_bad_suggestions(
             "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted itself.",
-            RedundantSelf::default(),
+            test_linter(),
             &[
                 "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again righted itself.",
                 "End Game took Witch Doctor for a ride into the screws but Witch Doctor once again self-righted.",
@@ -787,7 +784,7 @@ mod tests {
     fn fix_self_defend_itself() {
         assert_suggestion_result(
             "I'm on dudes side, the person that self defended himself",
-            RedundantSelf::default(),
+            test_linter(),
             "I'm on dudes side, the person that defended himself",
         );
     }

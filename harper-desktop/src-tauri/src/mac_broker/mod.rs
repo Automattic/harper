@@ -31,7 +31,7 @@ use std::{
     time::Instant,
 };
 
-use crate::config::{Config, Integration};
+use crate::config::Integration;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::ActionableLint;
 
@@ -279,7 +279,7 @@ impl MacBroker {
 
 impl Default for MacBroker {
     fn default() -> Self {
-        Self::new(Arc::new(Mutex::new(Config::curated_integrations())))
+        Self::new(Arc::new(Mutex::new(Integration::curated_integrations())))
     }
 }
 
@@ -325,7 +325,7 @@ impl OsBroker for MacBroker {
 
         let integration_enabled = match self.integrations.lock() {
             Ok(integrations) => {
-                Config::is_integration_enabled_in(&integrations, &bundle_identifier)
+                Integration::is_integration_enabled_in(&integrations, &bundle_identifier)
             }
             Err(error) => {
                 eprintln!("Unable to read integrations: {error}");

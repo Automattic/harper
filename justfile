@@ -63,6 +63,9 @@ build-harper-editor: build-lint-framework build-components
 # Build the WebAssembly module
 build-wasm:
   #!/usr/bin/env bash
+
+  export CARGO_TERM_QUIET=true
+
   cd "{{justfile_directory()}}/harper-wasm"
   if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
     wasm-pack build --target web --no-opt --out-name harper_wasm
@@ -159,7 +162,7 @@ build-web: build-harperjs build-lint-framework build-components build-harper-edi
 
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
-  pnpm build
+  ENABLE_ADMIN_ROUTES=false pnpm build
 
 # Start a development server for Harper Desktop.
 dev-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -296,10 +299,11 @@ test-chrome-plugin: build-chrome-plugin
   pnpm playwright install
 
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project chromium
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project chromium 
   else
-    pnpm test --project chromium
+    pnpm test --project chromium 
   fi
 
 
@@ -312,11 +316,13 @@ test-firefox-plugin: build-firefox-plugin
   pnpm install
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm playwright install
+
   # For environments without displays like CI servers or containers
-  if [[ "$(uname)" == "Linux" ]] && [[ -z "$DISPLAY" ]]; then
-    xvfb-run --auto-servernum pnpm test --project firefox
+  if [[ "$(uname)" == "Linux" ]]; then
+    env -u WAYLAND_DISPLAY XDG_SESSION_TYPE=x11 \
+    xvfb-run --auto-servernum pnpm test --project firefox 
   else
-    pnpm test --project firefox
+    pnpm test --project firefox 
   fi
 
 # Run VSCode plugin unit and integration tests.
@@ -438,9 +444,9 @@ check-rust: audit-dictionary
   cargo hack check --each-feature
 
 # Perform format and type checking.
-check: check-rust check-js build-web
+check: check-rust check-js
 
-check-js: build-harperjs build-lint-framework build-components build-harper-editor
+check-js: build-harperjs build-lint-framework build-components build-harper-editor build-web
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -449,7 +455,7 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
 
   # Needed because Svelte has special linters
   cd "{{justfile_directory()}}/packages/web"
-  pnpm check
+  ENABLE_ADMIN_ROUTES=false pnpm check
 
 # Populate build caches and install necessary local tooling (tools callable via `pnpm run <tool>`).
 setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
@@ -910,6 +916,30 @@ grep-config query:
   config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
         .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
 
+# Run the native allocation profiler for spell-check operations.
+alias alloc-prof := alloc-profile
+alloc-profile:
+  cargo run --example alloc_profile -p harper-core --release
+
+# Run native benchmarks.
+bench:
+  cargo bench
+
+# Build harper-wasm with bench support and run the WASM benchmark harness.
+# Runs wasm-opt by default to match the shipping build; set DISABLE_WASM_OPT=1
+# to skip it (faster rebuilds, non-shipping numbers).
+bench-wasm:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-wasm"
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt --out-dir pkg-bench --features bench
+  else
+    wasm-pack build --target web --out-dir pkg-bench --features bench
+  fi
+  node benches/wasm_bench.js
+
 # search configuration group settings for substring in name
 grep-config-settings query:
   #! /usr/bin/env node
@@ -942,3 +972,26 @@ grep-config-settings query:
       console.log(`\x1b[36m${formatLine(matches)}\x1b[0m`);
     }
   });
+
+# Sort nested child settings in default_config.json by name
+sort-config-settings:
+  #! /usr/bin/env node
+  const fs = require('fs');
+  const path = require('path');
+  const configPath = path.join('{{justfile_directory()}}', 'harper-core/default_config.json');
+  const inputJson = JSON.parse(fs.readFileSync(configPath, 'utf8'));
+
+  // Sort the nested child settings
+  inputJson.settings.forEach(item => {
+    if (item.Group && item.Group.child && item.Group.child.settings) {
+      item.Group.child.settings.sort((a, b) => {
+        // Extract the name property from the inner object (e.g., 'Bool')
+        const nameA = Object.values(a)[0].name;
+        const nameB = Object.values(b)[0].name;
+        return nameA.localeCompare(nameB);
+      });
+    }
+  });
+
+  fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
+  console.log('Sorted default_config.json child settings by name.');
