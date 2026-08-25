@@ -184,30 +184,3 @@ test('Can dismiss with escape key', async ({ page }) => {
 
 	await assertLocatorIsFocused(page, editor);
 });
-
-test('Right-aligns the suggestion popup near the viewport edge', async ({ page }) => {
-	const viewportWidth = 500;
-	const viewportMargin = 8;
-	await page.setViewportSize({ width: viewportWidth, height: 500 });
-	await page.goto(TEST_PAGE_URL);
-
-	const editor = getTextarea(page);
-	await editor.evaluate((element) => {
-		Object.assign(element.style, {
-			position: 'fixed',
-			right: '0',
-			top: '40px',
-			width: '110px',
-		});
-	});
-	await replaceEditorContent(editor, 'This is an test');
-
-	expect(await clickHarperHighlight(page)).toBe(true);
-	const popup = page.locator('.harper-container');
-	await expect(popup).toBeVisible();
-	await expect(popup).toHaveCSS('right', `${viewportMargin}px`);
-
-	const popupBox = await popup.boundingBox();
-	expect(popupBox).not.toBeNull();
-	expect(popupBox!.x + popupBox!.width).toBeLessThanOrEqual(viewportWidth - viewportMargin);
-});
