@@ -857,6 +857,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClaimToFame",
+								"state": true,
+								"label": "Claim for Fame"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ClientOrServerSide",
 								"state": true,
 								"label": "Client Or Server Side"

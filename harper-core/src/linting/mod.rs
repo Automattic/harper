@@ -50,6 +50,7 @@ mod catch_22;
 mod cautionary_tale;
 mod change_tack;
 mod chock_full;
+mod claim_to_fame;
 mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;

@@ -53,6 +53,7 @@ use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
+use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
@@ -653,6 +654,7 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale);
         insert_expr_rule!(ChangeTack);
         insert_expr_rule!(ChockFull);
+        insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
         insert_expr_rule!(CodeInWriteIn);
         insert_struct_rule!(CommaFixes);
