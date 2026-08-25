@@ -137,7 +137,7 @@ mod tests {
         assert_suggestion_result(
             "Alan Holt has placed his claim for fame and so I've corrected this lovely image",
             ClaimToFame::default(),
-            "Alan Holt has placed his claim to fame fea I've corrected this lovely image",
+            "Alan Holt has placed his claim to fame and so I've corrected this lovely image",
         );
     }
 
