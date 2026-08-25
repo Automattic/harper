@@ -242,28 +242,17 @@ impl MissingTo {
                     break;
                 }
 
+                if tok.kind.is_punctuation() {
+                    break;
+                }
+
                 let word = tok.get_str(source).to_lowercase();
                 let word = word.as_str();
 
-                if tok.kind.is_conjunction()
-                    || matches!(word, "and" | "or" | "but" | "nor")
-                    || tok.kind.is_verb_progressive_form()
-                {
-                    continue;
-                }
-
-                if tok.kind.is_determiner()
-                    || tok.kind.is_upos(UPOS::ADP)
+                if tok.kind.is_upos(UPOS::ADP)
                     || matches!(
                         word,
-                        "a" | "an"
-                            | "the"
-                            | "this"
-                            | "that"
-                            | "these"
-                            | "those"
-                            | "of"
-                            | "for"
+                        "of" | "for"
                             | "in"
                             | "with"
                             | "without"
@@ -283,7 +272,28 @@ impl MissingTo {
                     return true;
                 }
 
-                break;
+                if words_checked == 1
+                    && (tok.kind.is_determiner()
+                        || matches!(
+                            word,
+                            "a" | "an" | "the" | "this" | "that" | "these" | "those"
+                        ))
+                {
+                    return true;
+                }
+
+                if tok.kind.is_conjunction()
+                    || matches!(word, "and" | "or" | "but" | "nor")
+                    || tok.kind.is_verb_progressive_form()
+                    || tok.kind.is_noun()
+                    || tok.kind.is_adjective()
+                {
+                    continue;
+                }
+
+                if tok.kind.is_verb() {
+                    break;
+                }
             }
             return false;
         }
