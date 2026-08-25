@@ -111,6 +111,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
         ),
+        "Combinate" => (
+            &[
+                ("combinate", "combine"),
+                ("combinated", "combined"),
+                ("combinating", "combining"),
+                ("combinates", "combines"),
+            ],
+            "Did you mean `combine` rather than the nonstandard `combinate`?",
+            "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
+            LintKind::Nonstandard
+        ),
         "CompulseToCompel" => (
             &[
                 ("compulse", "compel"),
