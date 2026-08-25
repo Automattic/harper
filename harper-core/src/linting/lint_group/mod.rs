@@ -52,6 +52,7 @@ use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::change_tack::ChangeTack;
+use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
@@ -654,6 +655,7 @@ impl LintGroup {
         insert_expr_rule!(Catch22);
         insert_expr_rule!(CautionaryTale);
         insert_expr_rule!(ChangeTack);
+        insert_expr_rule!(ChickenAndEgg);
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(CloseTightKnit);
         insert_expr_rule!(CodeInWriteIn);

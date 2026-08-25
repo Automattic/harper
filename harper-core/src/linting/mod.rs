@@ -49,6 +49,7 @@ mod capitalize_personal_pronouns;
 mod catch_22;
 mod cautionary_tale;
 mod change_tack;
+mod chicken_and_egg;
 mod chock_full;
 mod close_tight_knit;
 mod closed_compounds;
