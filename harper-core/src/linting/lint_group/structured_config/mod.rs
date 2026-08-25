@@ -47,8 +47,9 @@ impl StructuredConfig {
             match setting {
                 Setting::Bool { name, state } => config.set_rule_enabled(name, *state),
                 Setting::OneOfMany { names, choice, .. } => {
-                    if let Some(choice) = choice {
-                        config.set_rule_enabled(&names[*choice], true);
+                    for (i, name) in names.iter().enumerate() {
+                        config
+                            .set_rule_enabled(&names[i], choice.is_some_and(|choice| choice == i));
                     }
                 }
                 Setting::Group { child, .. } => {
