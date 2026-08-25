@@ -404,8 +404,8 @@
 # NSg/VB/J+ NPl     NPr/VXB I/C/Dq NSg/VLXB VP/J        Nᴹ/Vg/J D   ?       NSg       . D+
 > rule    - based Brill tagger is  unusual in        that     it       learns a   set       of rule    patterns , and
 # NSg/VB+ . VP/J  NSg/J NSg    VL3 NSg/J   NPr/J/R/P I/C/Ddem NPr/ISg+ NPl/V3 D/P NPr/VBP/J P  NSg/VB+ NPl/V3+  . VB/C
-> then      applies those  patterns rather     than optimizing a   statistical quantity .
-# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/VB/J/R C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
+> then      applies those  patterns rather than optimizing a   statistical quantity .
+# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/R  C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
 >
 #
 > Many        machine learning methods have    also been   applied to the problem of POS

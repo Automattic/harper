@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.7.0",
+	"version": "2.8.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -38,6 +38,7 @@
 		"onLanguage:cpp",
 		"onLanguage:csharp",
 		"onLanguage:dart",
+		"onLanguage:elixir",
 		"onLanguage:git-commit",
 		"onLanguage:gleam",
 		"onLanguage:go",
@@ -235,6 +236,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Enforces `awhile` after verbs and `a while` everywhere else."
+				},
+				"harper.linters.AccuseOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `accuse for` to `accuse of`."
 				},
 				"harper.linters.AdNauseam": {
 					"scope": "resource",
@@ -2324,6 +2331,12 @@
 					"default": true,
 					"description": "After `imitate ...`, idiomatic phrasing points to the inspiration with `of` instead of `from`."
 				},
+				"harper.linters.ImplementIn": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects nonstandard `implement into` to `implement in`."
+				},
 				"harper.linters.Impressed": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3077,7 +3090,7 @@
 				"harper.linters.MoreAdjective": {
 					"scope": "resource",
 					"type": "boolean",
-					"default": true,
+					"default": false,
 					"description": "Looks for comparative adjective constructions with `more` than could use inflected forms."
 				},
 				"harper.linters.MoreBetter": {
@@ -4316,6 +4329,12 @@
 					"default": true,
 					"description": "Corrects `take a look to`/`have a look to` to correctly use `at`."
 				},
+				"harper.linters.TakeCareOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `take care about` to `take care of`."
+				},
 				"harper.linters.TakeItPersonally": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4850,6 +4869,12 @@
 					"default": true,
 					"description": "Corrects `very less`."
 				},
+				"harper.linters.VeryMuchSo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "`Very much` already intensifies the verb, so the trailing `so` is redundant. `Very much so` only reads correctly when the `so` refers back to something earlier, as in the reply `Yes, very much so.`"
+				},
 				"harper.linters.VeryUnique": {
 					"scope": "resource",
 					"type": "boolean",
@@ -5077,6 +5102,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects semicolons, acute accents, and backticks typed instead of apostrophes."
+				},
+				"harper.linters.WrongNegative": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "If an unknown word looks like it might be a negative word, suggests correct words that are in the dictionary."
 				},
 				"harper.linters.WroteToRote": {
 					"scope": "resource",
