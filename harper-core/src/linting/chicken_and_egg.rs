@@ -64,7 +64,7 @@ impl Default for ChickenAndEgg {
         let conjunction = FirstMatchOf::new([
             Box::new(separated_conj) as Box<dyn Expr>,
             Box::new(conj_sym),
-            Box::new(SpaceOrHyphen::default()),
+            Box::new(SpaceOrHyphen),
         ]);
 
         Self {
