@@ -227,9 +227,67 @@ impl MissingTo {
     }
 
     fn preposition_or_determiner_within_four(
+        context: Option<(&[Token], &[Token])>,
         source: &[char],
         controller_span_start: usize,
     ) -> bool {
+        if let Some((before, _)) = context {
+            let mut words_checked = 0;
+            for tok in before.iter().rev() {
+                if tok.kind.is_space() || tok.kind.is_newline() {
+                    continue;
+                }
+                words_checked += 1;
+                if words_checked > 4 {
+                    break;
+                }
+
+                let word = tok.get_str(source).to_lowercase();
+                let word = word.as_str();
+
+                if tok.kind.is_conjunction()
+                    || matches!(word, "and" | "or" | "but" | "nor")
+                    || tok.kind.is_verb_progressive_form()
+                {
+                    continue;
+                }
+
+                if tok.kind.is_determiner()
+                    || tok.kind.is_upos(UPOS::ADP)
+                    || matches!(
+                        word,
+                        "a" | "an"
+                            | "the"
+                            | "this"
+                            | "that"
+                            | "these"
+                            | "those"
+                            | "of"
+                            | "for"
+                            | "in"
+                            | "with"
+                            | "without"
+                            | "during"
+                            | "after"
+                            | "before"
+                            | "by"
+                            | "about"
+                            | "against"
+                            | "from"
+                            | "on"
+                            | "at"
+                            | "into"
+                            | "through"
+                    )
+                {
+                    return true;
+                }
+
+                break;
+            }
+            return false;
+        }
+
         let mut scan_cursor = controller_span_start;
 
         for _ in 0..4 {
@@ -238,7 +296,7 @@ impl MissingTo {
             };
             let word = word.as_str();
 
-            if matches!(word, "and" | "or" | "but" | "nor") || word.ends_with("ing") {
+            if matches!(word, "and" | "or" | "but" | "nor") {
                 scan_cursor = start;
                 continue;
             }
@@ -351,7 +409,7 @@ impl ExprLinter for MissingTo {
             controller_text.ends_with('d') || controller_text.ends_with("en");
 
         if controller_text_ends_with_d_or_en
-            && Self::preposition_or_determiner_within_four(source, span.start)
+            && Self::preposition_or_determiner_within_four(context, source, span.start)
         {
             return None;
         }
@@ -803,6 +861,15 @@ mod tests {
             "They attempted solve the problem without assistance.",
             test_linter(),
             "They attempted to solve the problem without assistance.",
+        );
+    }
+
+    #[test]
+    fn inserts_to_after_attempted_with_preceding_thing() {
+        assert_suggestion_result(
+            "He found the thing and attempted solve it.",
+            test_linter(),
+            "He found the thing and attempted to solve it.",
         );
     }
 }
