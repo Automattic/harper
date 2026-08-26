@@ -1,8 +1,4 @@
-use std::{
-    cell::RefCell,
-    collections::BTreeMap,
-    rc::Rc,
-};
+use std::{cell::RefCell, collections::BTreeMap, rc::Rc};
 
 use crate::windows_broker::automation_service::AutomationService;
 use crate::{
@@ -14,9 +10,7 @@ use harper_core::linting::Lint;
 use windows::Win32::Foundation::POINT;
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
-use windows::Win32::UI::WindowsAndMessaging::{
-    GetCursorPos, GetForegroundWindow,
-};
+use windows::Win32::UI::WindowsAndMessaging::{GetCursorPos, GetForegroundWindow};
 mod automation_service;
 
 pub struct WindowsBroker {
