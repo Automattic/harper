@@ -11,6 +11,7 @@ const config = {
 				'chrome-extension://lodbfhdipoipcjmlebjbgmmgekckhpfb',
 				'chrome-extension://hkjdmakdmihopipoiplebkelbhebigea',
 				'chrome-extension://ihjkkjfembmnjldmdchmadigpmapkpdh',
+        'moz-extension://a684f72a-270e-4cc2-a215-98cab921e95d'
 			],
 		},
 		prerender: {
