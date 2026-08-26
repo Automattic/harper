@@ -4827,7 +4827,7 @@ IRS/ONg
 ISBN/NgS
 ISDN/Ng             # telephone standard
 ISIS/O
-ISO/ONgP            # standards organization
+ISO/ONgSP           # standards organization, optical disk image format
 ISP/N
 ISS/NO
 IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
@@ -15213,6 +15213,7 @@ blueberry/~NwSgJV
 bluebird/~NgS
 bluebonnet/NSg
 bluebottle/NSg
+fluefin/NSg         # type of tuna
 bluefish/N09gS      # singular and plural, also has a plural in -s
 bluegill/NgS
 bluegrass/~Ng
@@ -51136,7 +51137,8 @@ undersigned/JNg
 undersized/J
 underskirt/NSg
 undersold/VtTdJ
-underspent/V
+underspecify/VSdG
+underspent/VtT
 understaff/VSdG
 understand/~VbSGBz
 understandably/~Ry
@@ -51146,12 +51148,12 @@ understatement/NSg
 understood/~JVtT
 understudy/~VGdSNg
 undertake/~VG>SNZz
-undertaken/~V
+undertaken/~VT
 undertaker/~NgS
 undertaking/~NgV
 underthings/Ng
 undertone/NgSV
-undertook/~V
+undertook/~Vt
 undertow/VSNg
 underused/JV
 underutilised/JV!_₹
@@ -51162,14 +51164,14 @@ underwater/~JNV
 underway/~N
 underwear/~Nmg
 underweight/JNgV
-underwent/~V
+underwent/~Vt
 underwhelm/VdGS
 underwire/NSVd
 underworld/~NgS
 underwrite/VG>SZ
 underwriter/Ng
-underwritten/V
-underwrote/V
+underwritten/VT
+underwrote/Vt
 undesirable/~JNgS
 undiagnosed/J
 undies/NgV
@@ -51995,7 +51997,7 @@ vertices/~N9
 vertiginous/J
 vertigo/~Nmg
 verve/~Ng
-very/~R%J>^         # very is an adverb of debree but not an adverb of manner
+very/~R%J>^         # very is an adverb of degree but not an adverb of manner
 vesicle/~NSg
 vesicular/J
 vesiculate/VJ
