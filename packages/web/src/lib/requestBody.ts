@@ -14,7 +14,9 @@ import { error } from '@sveltejs/kit';
 export async function parseRequestBody(
 	request: Request,
 ): Promise<{ get(name: string): string | null }> {
-	const isJson = request.headers.get('content-type')?.toLowerCase().startsWith('application/json');
+	const contentType =
+		request.headers.get('content-type')?.split(';', 1)[0].trim().toLowerCase() ?? '';
+	const isJson = contentType === 'application/json';
 
 	if (isJson) {
 		let json: unknown;
