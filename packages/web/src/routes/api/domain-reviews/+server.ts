@@ -1,14 +1,11 @@
 import { error, type RequestEvent, redirect } from '@sveltejs/kit';
 import DomainReviews from '$lib/db/models/DomainReviews';
+import { parseRequestBody } from '$lib/requestBody';
 
 export const POST = async ({ request }: RequestEvent) => {
-	// The website's own <form> submits url-encoded (same-origin, unaffected by
-	// SvelteKit's CSRF check); the browser extension sends JSON instead of
-	// multipart/form-data specifically to sidestep that check cross-origin.
-	const isJson = request.headers.get('content-type')?.startsWith('application/json');
-	const data = isJson ? await request.json() : Object.fromEntries(await request.formData());
+	const data = await parseRequestBody(request);
 
-	const worksText = data.works;
+	const worksText = data.get('works');
 	let works = null;
 
 	switch (worksText) {
@@ -21,13 +18,13 @@ export const POST = async ({ request }: RequestEvent) => {
 	}
 
 	if (works === null) {
-		error(400, '`works` must be either yes or no.');
+		throw error(400, '`works` must be either yes or no.');
 	}
 
 	await DomainReviews.validateAndCreate({
-		domain: data.domain,
+		domain: data.get('domain'),
 		works,
-		feedback: data.feedback,
+		feedback: data.get('feedback'),
 	});
 
 	throw redirect(303, '/');
