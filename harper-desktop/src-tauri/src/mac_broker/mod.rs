@@ -389,6 +389,10 @@ impl OsBroker for MacBroker {
         app_catalog::integration_display_name(bundle_id)
     }
 
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        installed_application_bundle_ids()?.iter().collect()
+    }
+
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
         let bundle_id = bundle_id.trim();
 
