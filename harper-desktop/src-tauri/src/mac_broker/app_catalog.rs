@@ -1,4 +1,5 @@
-use std::{collections::BTreeSet, path::Path, process::Command};
+use cached::cached;
+use std::{collections::BTreeSet, path::Path, process::Command, sync::Arc};
 
 use crate::os_broker::AppSearchResult;
 
@@ -26,6 +27,20 @@ fn display_name_from_app_path(path: &str) -> Option<String> {
     } else {
         Some(display_name.to_string())
     }
+}
+
+/// Unfiltered.
+#[cached]
+pub fn installed_application_search_results() -> Result<Arc<Vec<AppSearchResult>>, String> {
+    let ids = installed_application_bundle_ids()?;
+
+    let mut results = Vec::with_capacity(ids.len());
+
+    for id in ids.iter() {
+        results.push(app_search_result_from_bundle_id(id));
+    }
+
+    Ok(Arc::new(results))
 }
 
 #[cached]

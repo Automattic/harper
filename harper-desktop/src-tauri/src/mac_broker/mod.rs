@@ -42,7 +42,6 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
-use self::app_search_index::AppSearchIndex;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -58,7 +57,6 @@ pub struct MacBroker {
     last_focused: Option<(pid_t, Instant)>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
-    installed_app_search_index: Mutex<AppSearchIndex>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -69,7 +67,6 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
-            installed_app_search_index: Mutex::new(AppSearchIndex::new()),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -390,7 +387,8 @@ impl OsBroker for MacBroker {
     }
 
     fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
-        installed_application_bundle_ids()?.iter().collect()
+        let ids = app_catalog::installed_application_bundle_ids()?;
+        Ok(ids.iter().cloned().collect())
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
@@ -438,12 +436,12 @@ impl OsBroker for MacBroker {
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
-        let list = installed_application_bundle_ids()?;
+        let list = app_catalog::installed_application_search_results()?;
 
         let query = query.trim();
 
         if query.is_empty() {
-            return list.to_vec();
+            return Ok(list.to_vec());
         }
 
         if let Some(result) = list
@@ -451,7 +449,7 @@ impl OsBroker for MacBroker {
             .find(|result| result.bundle_id == query)
             .cloned()
         {
-            return vec![result];
+            return Ok(vec![result]);
         }
 
         let lower_query = query.to_lowercase();
