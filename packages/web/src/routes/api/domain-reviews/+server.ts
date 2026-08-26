@@ -2,9 +2,9 @@ import { error, type RequestEvent, redirect } from '@sveltejs/kit';
 import DomainReviews from '$lib/db/models/DomainReviews';
 
 export const POST = async ({ request }: RequestEvent) => {
-	const data = await request.formData();
+	const data = await request.json();
 
-	const worksText = data.get('works');
+	const worksText = data.works;
 	let works = null;
 
 	switch (worksText) {
@@ -21,9 +21,9 @@ export const POST = async ({ request }: RequestEvent) => {
 	}
 
 	await DomainReviews.validateAndCreate({
-		domain: data.get('domain'),
+		domain: data.domain,
 		works,
-		feedback: data.get('feedback'),
+		feedback: data.feedback,
 	});
 
 	throw redirect(303, '/');
