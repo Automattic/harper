@@ -1,3 +1,5 @@
+import { error } from '@sveltejs/kit';
+
 /**
  * Parses a POST body that may arrive as either JSON or a native form submission
  * (`application/x-www-form-urlencoded` or `multipart/form-data`), exposing both
@@ -12,11 +14,24 @@
 export async function parseRequestBody(
 	request: Request,
 ): Promise<{ get(name: string): string | null }> {
-	const isJson = request.headers.get('content-type')?.startsWith('application/json');
+	const isJson = request.headers.get('content-type')?.toLowerCase().startsWith('application/json');
 
 	if (isJson) {
-		const json = await request.json();
-		return { get: (name: string) => (name in json ? (json[name] ?? null) : null) };
+		let json: unknown;
+		try {
+			json = await request.json();
+		} catch {
+			throw error(400, 'Malformed JSON body.');
+		}
+
+		if (typeof json !== 'object' || json === null) {
+			throw error(400, 'JSON body must be an object.');
+		}
+
+		const record = json as Record<string, unknown>;
+		return {
+			get: (name: string) => (typeof record[name] === 'string' ? record[name] : null),
+		};
 	}
 
 	const form = await request.formData();
