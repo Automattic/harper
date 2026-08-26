@@ -1375,6 +1375,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryLess",
+								"state": true,
+								"label": "Very Less"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WholeEntire",
 								"state": true,
 								"label": "Whole Entire"
@@ -3957,13 +3964,6 @@
 								"name": "VerbToAdjective",
 								"state": true,
 								"label": "Verb To Adjective"
-							}
-						},
-						{
-							"Bool": {
-								"name": "VeryLess",
-								"state": true,
-								"label": "Very Less"
 							}
 						},
 						{

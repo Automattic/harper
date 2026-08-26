@@ -295,6 +295,7 @@ use super::update_place_names::UpdatePlaceNames;
 use super::use_ellipsis_character::UseEllipsisCharacter;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
+use super::very_less::VeryLess;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
 use super::vicious_loop::ViciousCircle;
@@ -890,6 +891,7 @@ impl LintGroup {
         insert_struct_rule!(UseEllipsisCharacter);
         insert_struct_rule_with_dict!(UseTitleCase);
         insert_expr_rule!(VerbToAdjective);
+        insert_expr_rule!(VeryLess);
         insert_expr_rule!(VeryUnique);
         insert_expr_rule!(ViceVersa);
         insert_expr_rule!(ViciousCircle);
