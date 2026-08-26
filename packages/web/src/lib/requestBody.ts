@@ -24,7 +24,7 @@ export async function parseRequestBody(
 			throw error(400, 'Malformed JSON body.');
 		}
 
-		if (typeof json !== 'object' || json === null) {
+		if (typeof json !== 'object' || json === null || Array.isArray(json)) {
 			throw error(400, 'JSON body must be an object.');
 		}
 
