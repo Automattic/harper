@@ -1,42 +1,58 @@
 use crate::windows_broker::automation_service::AutomationService;
 use crate::{
+    config::Integration,
     os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker},
     rect::ActionableLint,
 };
 use cached::cached;
 use egui::Pos2;
 use harper_core::linting::Lint;
+use std::ffi::OsString;
+use std::os::windows::ffi::OsStringExt;
 use std::process::Command;
 use std::{
-    cell::RefCell,
     collections::BTreeMap,
     path::PathBuf,
-    rc::Rc,
     sync::{Arc, Mutex},
 };
-use windows::Win32::Foundation::POINT;
+use windows::Win32::Foundation::{CloseHandle, HWND, POINT};
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
+use windows::Win32::System::Threading::{
+    OpenProcess, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION, QueryFullProcessImageNameW,
+};
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
-use windows::Win32::UI::WindowsAndMessaging::{GetCursorPos, GetForegroundWindow};
+use windows::Win32::UI::WindowsAndMessaging::{
+    GetCursorPos, GetForegroundWindow, GetWindowThreadProcessId,
+};
+use windows::core::{PWSTR, Result as WindowsResult};
 use wintheon::file::{IconSize, Priority};
 use wintheon::gather::Gatherer;
 mod automation_service;
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
+    integrations: Arc<Mutex<Vec<Integration>>>,
 }
 
 impl WindowsBroker {
-    pub fn new() -> Self {
+    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
+            integrations,
         }
     }
-}
 
-impl Default for WindowsBroker {
-    fn default() -> Self {
-        Self::new()
+    pub fn should_lint_focused_window(&self) -> bool {
+        let Ok(path) = get_focused_window_path() else {
+            return false;
+        };
+
+        let path = path.to_string_lossy();
+        let Ok(integrations) = self.integrations.lock() else {
+            return false;
+        };
+
+        Integration::is_integration_enabled_in(&integrations, &path)
     }
 }
 
@@ -45,6 +61,10 @@ impl OsBroker for WindowsBroker {
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
     ) -> Vec<ActionableLint> {
+        if !self.should_lint_focused_window() {
+            return Vec::new();
+        }
+
         let text = self.service.lock().unwrap().get_text();
         if let Some(text) = text {
             if text.len() > 16_000 {
@@ -264,4 +284,32 @@ fn gatherer() -> Gatherer {
         .with_desktop(Priority(1.0))
         .with_start_menu(Priority(1.5))
         .with_windows_apps(Priority(2.0))
+}
+
+/// Returns the full executable path for the process that owns `hwnd`.
+pub fn get_focused_window_path() -> WindowsResult<PathBuf> {
+    unsafe {
+        let hwnd: HWND = GetForegroundWindow();
+        let mut process_id = 0;
+        GetWindowThreadProcessId(hwnd, Some(&mut process_id));
+
+        let process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, process_id)?;
+
+        let mut buffer = vec![0u16; 32_768];
+        let mut length = buffer.len() as u32;
+        let path_result = QueryFullProcessImageNameW(
+            process,
+            PROCESS_NAME_WIN32,
+            PWSTR(buffer.as_mut_ptr()),
+            &mut length,
+        );
+        let close_result = CloseHandle(process);
+
+        path_result?;
+        close_result?;
+
+        Ok(PathBuf::from(OsString::from_wide(
+            &buffer[..length as usize],
+        )))
+    }
 }

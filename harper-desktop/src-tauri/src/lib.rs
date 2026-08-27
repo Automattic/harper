@@ -78,8 +78,21 @@ pub(crate) type PlatformBroker = windows_broker::WindowsBroker;
 #[cfg(not(any(target_os = "macos", target_os = "windows")))]
 pub(crate) type PlatformBroker = os_broker::NoopBroker;
 
-fn platform_broker() -> PlatformBroker {
-    PlatformBroker::default()
+/// Creates the process-local platform broker.
+///
+/// The Tauri process stores its single broker as managed state, while the highlighter subprocess
+/// creates its own broker because it is a separate process.
+fn platform_broker(integrations: Arc<StdMutex<Vec<Integration>>>) -> PlatformBroker {
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
+    {
+        PlatformBroker::new(integrations)
+    }
+
+    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+    {
+        let _ = integrations;
+        PlatformBroker::default()
+    }
 }
 
 fn warm_app_search_cache(app: tauri::AppHandle) {
@@ -148,11 +161,14 @@ pub fn run_tauri() {
         }
     };
 
+    let integrations = Arc::new(StdMutex::new(config.integrations.clone()));
+    let broker = platform_broker(integrations);
+
     let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
 
     let highlighter_service = HighlighterService::new(config.clone());
-    if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+    if broker.accessibility_permission_status() == AccessibilityPermissionStatus::Granted
         && highlighter_service_enabled
     {
         let _ = highlighter_service
@@ -163,7 +179,7 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
-        .manage(StdMutex::new(platform_broker()))
+        .manage(StdMutex::new(broker))
         .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
@@ -221,6 +237,8 @@ pub fn run_highlighter(has_parent: bool) {
     let integrations = Arc::new(StdMutex::new(startup_config.integrations));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
+
+    let broker = platform_broker(integrations.clone());
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
@@ -345,8 +363,6 @@ pub fn run_highlighter(has_parent: bool) {
             }
         }
     };
-
-    let broker = PlatformBroker::default();
 
     if let Err(error) = Highlighter::new(
         broker,

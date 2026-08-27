@@ -67,7 +67,12 @@ accessibility-sys = "0.2.0"
 core-graphics = "0.25.0"
 
 [target.'cfg(target_os = "windows")'.dependencies]
-windows = { version = "0.62.2", features = ["Win32_UI_HiDpi"] }
+windows = { version = "0.62.2", features = [
+    "Win32_Foundation",
+    "Win32_System_Threading",
+    "Win32_UI_HiDpi",
+    "Win32_UI_WindowsAndMessaging",
+] }
 uiautomation = { version = "0.25.0", features = ["process"] }
 wintheon = "0.1.0"
 
