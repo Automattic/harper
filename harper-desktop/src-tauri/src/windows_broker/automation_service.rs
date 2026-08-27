@@ -18,7 +18,6 @@ use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThre
 
 /// Information about a worker thread.
 struct WorkerData {
-    _thread_handle: JoinHandle<()>,
     sender: SyncSender<(WorkerJob, Vec<JobArgument>)>,
     receiver: Receiver<JobResult>,
 }
@@ -131,7 +130,6 @@ impl AutomationService {
         self.worker_data = Some(WorkerData {
             receiver: result_receiver,
             sender: job_sender,
-            _thread_handle: handle,
         });
     }
 
