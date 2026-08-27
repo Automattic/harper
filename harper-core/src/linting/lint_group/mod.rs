@@ -328,13 +328,14 @@ use super::proper_noun_capitalization_linters;
 use super::weir_rules;
 
 use crate::{
+    Document, Span, TokenStringExt,
+    dialect::Dialect,
     linting::{
         dashes::Dashes,
         expr_linter::{Chunk, Sentence, run_on_chunk},
         {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
     },
     spell::Dictionary,
-    {Dialect, Document, Span, TokenStringExt},
 };
 
 pub use flat_config::FlatConfig;
@@ -1092,7 +1093,7 @@ mod tests {
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
     use crate::spell::{FstDictionary, MutableDictionary};
     use crate::weir::WeirLinter;
-    use crate::{Dialect, Document, linting::Linter};
+    use crate::{Document, dialect::Dialect, linting::Linter};
 
     create_test_pool!(
         LintGroup,

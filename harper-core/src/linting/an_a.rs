@@ -1,7 +1,8 @@
 use itertools::Itertools;
 
 use crate::{
-    CharStringExt, Dialect, Document, TokenStringExt,
+    CharStringExt, Document, TokenStringExt,
+    dialect::Dialect,
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{Lint, LintKind, Linter, Suggestion},
 };
@@ -117,7 +118,7 @@ impl Linter for AnA {
 mod tests {
     use super::AnA;
     use crate::{
-        Dialect,
+        dialect::Dialect,
         linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result},
     };
 

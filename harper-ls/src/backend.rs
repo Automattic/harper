@@ -12,12 +12,13 @@ use anyhow::{Context, Result, anyhow};
 use futures::future::join;
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
+use harper_core::dialect::Dialect;
 use harper_core::linting::{FlatConfig, LintGroup};
 use harper_core::parsers::{
     CollapseIdentifiers, IsolateEnglish, Markdown, OrgMode, Parser, PlainEnglish,
 };
 use harper_core::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use harper_core::{Dialect, DictWordMetadata, Document, IgnoredLints};
+use harper_core::{DictWordMetadata, Document, IgnoredLints};
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use harper_git_commit::GitCommitParser;
 use harper_html::HtmlParser;

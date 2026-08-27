@@ -1,5 +1,6 @@
 use crate::{
-    CharStringExt, Dialect, IrregularNouns, Lint, Lrc, Token, TokenStringExt,
+    CharStringExt, IrregularNouns, Lint, Lrc, Token, TokenStringExt,
+    dialect::Dialect,
     expr::{Expr, FirstMatchOf, OwnedExprExt, SequenceExpr, SpelledNumberExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{

@@ -72,7 +72,6 @@ pub mod for_tests {
     macro_rules! create_test_pool {
         ($linter_name:ident, $linter_ty:ty, $linter_ctor:expr) => {
             mod test_group_container {
-                use super::$linter_name;
                 #[allow(unused_imports)]
                 use super::*;
                 use crate::linting::PooledLinter;
@@ -82,7 +81,7 @@ pub mod for_tests {
                     LazyLock::new(|| PooledLinter::new(|| $linter_ctor));
             }
 
-            fn test_linter() -> crate::linting::PooledLinter<$linter_ty> {
+            pub fn test_linter() -> crate::linting::PooledLinter<$linter_ty> {
                 (*test_group_container::TEST_GROUP).clone()
             }
         };

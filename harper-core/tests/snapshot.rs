@@ -3,7 +3,7 @@ use std::{
     path::{Path, PathBuf},
 };
 
-use harper_core::Dialect;
+use harper_core::dialect::Dialect;
 use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
 

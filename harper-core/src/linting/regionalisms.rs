@@ -1,6 +1,6 @@
 use crate::{
-    Dialect::{self, American, Australian, British, Canadian, Indian},
     Token, TokenStringExt,
+    dialect::Dialect::{self, American, Australian, British, Canadian, Indian},
     expr::{Expr, FirstMatchOf, FixedPhrase},
     linting::{Lint, LintKind, Suggestion},
 };
