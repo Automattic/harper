@@ -45,7 +45,7 @@ impl WindowsBroker {
     pub fn should_lint_focused_window(&self) -> bool {
         let mut service = self.service.lock().unwrap();
 
-        let Some((focused_window, _)) = service.resolve_focused_window() else {
+        let Some(focused_window) = service.resolve_focused_window() else {
             return false;
         };
 
@@ -84,7 +84,7 @@ impl OsBroker for WindowsBroker {
                 .service
                 .lock()
                 .unwrap()
-                .get_bounding_boxes(all_lint_iter.map(|l| l.span))
+                .get_bounding_boxes(&text, all_lint_iter.map(|l| l.span))
             else {
                 return Vec::new();
             };

@@ -130,7 +130,9 @@ impl RenderState {
 
         self.rects
             .iter()
-            .position(|positioned_lint| rect_bounds(&positioned_lint.rect).contains(pos))
+            .position(|positioned_lint| {
+                rect_bounds(&positioned_lint.rect.with_friendly_padding()).contains(pos)
+            })
             .map_or(HitTarget::None, HitTarget::Lint)
     }
 

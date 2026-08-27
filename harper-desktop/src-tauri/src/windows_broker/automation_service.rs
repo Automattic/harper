@@ -7,14 +7,17 @@ use crate::rect::Rect;
 use crate::windows_broker::get_focused_monitor_scale;
 use harper_core::{Span, linting::Suggestion};
 use is_macro::Is;
-use uiautomation::types::{TextPatternRangeEndpoint, TextUnit};
+use uiautomation::types::{Handle, TextPatternRangeEndpoint, TextUnit, TreeScope, UIProperty};
+use uiautomation::variants::Variant;
 use uiautomation::{
     UIAutomation, UIElement,
     patterns::{UITextPattern, UIValuePattern},
 };
-use windows::Win32::Foundation::HWND;
+use windows::Win32::Foundation::{HWND, POINT};
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
+use windows::Win32::UI::WindowsAndMessaging::{
+    GetCursorPos, GetForegroundWindow, GetWindowThreadProcessId,
+};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -33,7 +36,8 @@ struct ApplySuggestionRequest {
 #[derive(Debug, Is)]
 enum JobArgument {
     Span(Span<char>),
-    Window(isize, bool),
+    Window(isize),
+    Text(String),
     ApplySuggestion(ApplySuggestionRequest),
 }
 
@@ -46,31 +50,8 @@ enum JobResult {
     Err,
 }
 
-struct CachedTextElement {
-    window: isize,
-    element: UIElement,
-}
-
-struct WorkerState {
-    automation: UIAutomation,
-    cached_text_element: Option<CachedTextElement>,
-}
-
-impl WorkerState {
-    fn cached_element_for_window(&self, window: isize) -> Option<UIElement> {
-        self.cached_text_element
-            .as_ref()
-            .filter(|cached| cached.window == window)
-            .map(|cached| cached.element.clone())
-    }
-
-    fn clear_cached_element(&mut self) {
-        self.cached_text_element = None;
-    }
-}
-
 /// An actual function pointer to be run by the worker thread.
-type WorkerJob = fn(&mut WorkerState, Vec<JobArgument>) -> JobResult;
+type WorkerJob = fn(&UIAutomation, Vec<JobArgument>) -> JobResult;
 
 /// Runs and communicates with a worker thread to interact with the Win32 Automation API to query the accessibility tree.
 /// Necessary because the API has very specific thread setting requirements to work.
@@ -99,10 +80,7 @@ impl AutomationService {
         let (result_sender, result_receiver) = sync_channel(1);
 
         std::thread::spawn(move || {
-            let mut state = WorkerState {
-                automation: UIAutomation::new().unwrap(),
-                cached_text_element: None,
-            };
+            let automation = UIAutomation::new().unwrap();
 
             loop {
                 // Stop the thread if the other side of the channel has been closed (or dropped).
@@ -113,7 +91,7 @@ impl AutomationService {
                 };
 
                 if let Some((job, arguments)) = job {
-                    let result = job(&mut state, arguments);
+                    let result = job(&automation, arguments);
 
                     // Stop the thread if the other side of the channel has been closed (or dropped).
                     if let Err(err) = result_sender.try_send(result) {
@@ -150,18 +128,12 @@ impl AutomationService {
     /// Attempts to get the most up-to-date information possible.
     /// Returns `None` if the worker is not running.
     pub fn get_text(&mut self) -> Option<String> {
-        let (window, use_cached_element) = self.resolve_focused_window()?;
-        let result = self.run_worker_job(
-            get_text_job,
-            vec![JobArgument::Window(window, use_cached_element)],
-        )?;
+        let window = self.resolve_focused_window()?;
+        let result = self.run_worker_job(get_text_job, vec![JobArgument::Window(window)])?;
 
         match result {
             JobResult::String(text) => Some(text),
-            _ => {
-                self.last_focused_window = None;
-                None
-            }
+            _ => None,
         }
     }
 
@@ -171,7 +143,7 @@ impl AutomationService {
         span: Span<char>,
         suggestion: Suggestion,
     ) {
-        let Some(window) = self.resolve_focused_window().map(|(window, _)| window) else {
+        let Some(window) = self.resolve_focused_window() else {
             return;
         };
 
@@ -193,35 +165,36 @@ impl AutomationService {
     /// Input spans share the same index as their output bounding box.
     pub fn get_bounding_boxes(
         &mut self,
+        text: &str,
         spans: impl IntoIterator<Item = Span<char>>,
     ) -> Option<Vec<Vec<Rect>>> {
-        let (window, use_cached_element) = self.resolve_focused_window()?;
+        let window = self.resolve_focused_window()?;
 
         let result = self.run_worker_job(
             get_bounding_rect_job,
-            once(JobArgument::Window(window, use_cached_element))
-                .chain(spans.into_iter().map(|s| JobArgument::Span(s)))
+            once(JobArgument::Window(window))
+                .chain(once(JobArgument::Text(text.to_string())))
+                .chain(spans.into_iter().map(JobArgument::Span))
                 .collect(),
         )?;
 
         match result {
             JobResult::GroupedRects(rects) => Some(rects),
-            _ => {
-                self.last_focused_window = None;
-                None
-            }
+            _ => None,
         }
     }
 
-    pub fn resolve_focused_window(&mut self) -> Option<(isize, bool)> {
+    /// Returns the foreground source window, retaining the last external window while Harper's
+    /// overlay owns focus.
+    pub fn resolve_focused_window(&mut self) -> Option<isize> {
         let (focused_window, focused_process_id) = focused_window()?;
 
         if focused_process_id == std::process::id() {
-            return self.last_focused_window.map(|window| (window, true));
+            return self.last_focused_window;
         }
 
         self.last_focused_window = Some(focused_window);
-        Some((focused_window, false))
+        Some(focused_window)
     }
 }
 
@@ -231,7 +204,7 @@ impl Drop for AutomationService {
     }
 }
 
-fn apply_suggestion_job(state: &mut WorkerState, mut arguments: Vec<JobArgument>) -> JobResult {
+fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::ApplySuggestion(request)) = arguments.pop() else {
         return JobResult::Err;
     };
@@ -240,15 +213,16 @@ fn apply_suggestion_job(state: &mut WorkerState, mut arguments: Vec<JobArgument>
         return JobResult::Err;
     }
 
-    let Some(element) = state.cached_element_for_window(request.window) else {
+    let Ok(element) =
+        text_element_for_window(automation, request.window, Some(&request.expected_text))
+    else {
         eprintln!(
-            "Unable to apply Windows suggestion: the source text element is no longer active"
+            "Unable to apply Windows suggestion: the source text element is no longer available"
         );
         return JobResult::None;
     };
 
     let Ok(current_text) = get_text(&element) else {
-        state.clear_cached_element();
         eprintln!("Unable to apply Windows suggestion: the source text can no longer be read");
         return JobResult::None;
     };
@@ -280,7 +254,6 @@ fn apply_suggestion_job(state: &mut WorkerState, mut arguments: Vec<JobArgument>
         Ok(false) => {
             if let Err(error) = value_pattern.set_value(&updated_text) {
                 eprintln!("Unable to apply Windows suggestion: {error}");
-                state.clear_cached_element();
             }
         }
         Err(error) => {
@@ -316,36 +289,86 @@ fn get_text(element: &UIElement) -> uiautomation::Result<String> {
     range.get_text(-1)
 }
 
-fn get_text_job(state: &mut WorkerState, args: Vec<JobArgument>) -> JobResult {
-    let Some(JobArgument::Window(window, use_cached_element)) = args.first() else {
-        return JobResult::Err;
-    };
-    let element = if *use_cached_element {
-        let Some(element) = state.cached_element_for_window(*window) else {
-            return JobResult::Err;
-        };
-        element
-    } else {
-        let Ok(element) = state.automation.get_focused_element() else {
-            state.clear_cached_element();
-            return JobResult::Err;
-        };
-        element
-    };
+/// Finds a fresh text element below `window`, preferring keyboard focus, then the smallest element
+/// below the cursor, and finally the first readable text element in UI Automation tree order. When
+/// `expected_text` is provided, unrelated text providers are excluded.
+fn text_element_for_window(
+    automation: &UIAutomation,
+    window: isize,
+    expected_text: Option<&str>,
+) -> uiautomation::Result<UIElement> {
+    let root = automation.element_from_handle(Handle::from(window))?;
+    let text_condition = automation.create_property_condition(
+        UIProperty::IsTextPatternAvailable,
+        Variant::from(true),
+        None,
+    )?;
+    let cursor = cursor_position();
+    let mut first_candidate = None;
+    let mut cursor_candidate = None;
 
-    match get_text(&element) {
-        Ok(text) => {
-            state.cached_text_element = Some(CachedTextElement {
-                window: *window,
-                element,
-            });
-            JobResult::String(text)
+    for element in root.find_all(TreeScope::Subtree, &text_condition)? {
+        let Ok(text) = get_text(&element) else {
+            continue;
+        };
+        if expected_text.is_some_and(|expected| expected != text) {
+            continue;
         }
-        Err(_) => {
-            state.clear_cached_element();
-            JobResult::Err
+        if element.has_keyboard_focus().unwrap_or(false) {
+            return Ok(element);
+        }
+
+        if first_candidate.is_none() {
+            first_candidate = Some(element.clone());
+        }
+
+        if let Some(area) = cursor_overlap_area(&element, cursor)
+            && cursor_candidate
+                .as_ref()
+                .is_none_or(|(best_area, _)| area < *best_area)
+        {
+            cursor_candidate = Some((area, element));
         }
     }
+
+    cursor_candidate
+        .map(|(_, element)| element)
+        .or(first_candidate)
+        .ok_or_else(|| Error::new(uiautomation::errors::ERR_NOTFOUND, "no text element found"))
+}
+
+fn cursor_overlap_area(element: &UIElement, cursor: Option<POINT>) -> Option<i64> {
+    let cursor = cursor?;
+    let rect = element.get_bounding_rectangle().ok()?;
+    if cursor.x < rect.get_left()
+        || cursor.x >= rect.get_right()
+        || cursor.y < rect.get_top()
+        || cursor.y >= rect.get_bottom()
+    {
+        return None;
+    }
+
+    Some(
+        (i64::from(rect.get_right()) - i64::from(rect.get_left()))
+            * (i64::from(rect.get_bottom()) - i64::from(rect.get_top())),
+    )
+}
+
+fn cursor_position() -> Option<POINT> {
+    let mut point = POINT::default();
+    unsafe { GetCursorPos(&mut point) }.ok()?;
+    Some(point)
+}
+
+fn get_text_job(automation: &UIAutomation, args: Vec<JobArgument>) -> JobResult {
+    let Some(JobArgument::Window(window)) = args.first() else {
+        return JobResult::Err;
+    };
+    let Ok(element) = text_element_for_window(automation, *window, None) else {
+        return JobResult::Err;
+    };
+
+    get_text(&element).map_or(JobResult::Err, JobResult::String)
 }
 
 use std::{ffi::c_void, mem::size_of};
@@ -477,25 +500,27 @@ fn bounding_rectangles_for_span(
     Ok(result)
 }
 
-fn get_bounding_rect_job(state: &mut WorkerState, arguments: Vec<JobArgument>) -> JobResult {
-    let Some(JobArgument::Window(window, _)) = arguments.first() else {
+fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>) -> JobResult {
+    let Some(JobArgument::Window(window)) = arguments.first() else {
         return JobResult::Err;
     };
-    let Some(text_element) = state.cached_element_for_window(*window) else {
+    let Some(JobArgument::Text(expected_text)) = arguments.get(1) else {
+        return JobResult::Err;
+    };
+    let Ok(text_element) = text_element_for_window(automation, *window, Some(expected_text)) else {
         return JobResult::Err;
     };
 
     let effective_monitor_scale = get_focused_monitor_scale();
 
-    let mut rects = Vec::with_capacity(arguments.len() - 1);
+    let mut rects = Vec::with_capacity(arguments.len().saturating_sub(2));
 
-    for span in arguments.into_iter().skip(1) {
+    for span in arguments.into_iter().skip(2) {
         let span = span.expect_span();
 
         let Ok(found_rects) =
             bounding_rectangles_for_span(&text_element, span.start as i32, span.len() as i32)
         else {
-            state.clear_cached_element();
             return JobResult::Err;
         };
 
