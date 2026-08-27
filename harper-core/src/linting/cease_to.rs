@@ -27,14 +27,13 @@ impl ExprLinter for CeaseTo {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let seize = toks.first()?;
+        let span = seize.span;
         let seize = seize.get_ch(src).get(4..)?;
 
         let cease: Vec<char> = ['c', 'e', 'a', 's']
             .into_iter()
             .chain(seize.iter().copied())
             .collect();
-
-        let span = seize.span;
 
         let suggestions = vec![Suggestion::replace_with_match_case(
             cease,
