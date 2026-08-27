@@ -51,6 +51,7 @@ use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
+use super::cease_to::CeaseTo;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
@@ -654,6 +655,7 @@ impl LintGroup {
         insert_struct_rule!(CapitalizePersonalPronouns);
         insert_expr_rule!(Catch22);
         insert_expr_rule!(CautionaryTale);
+        insert_expr_rule!(CeaseTo);
         insert_expr_rule!(ChangeTack);
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
