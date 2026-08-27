@@ -857,6 +857,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ClaimToFame",
+								"state": true,
+								"label": "Claim for Fame"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ClientOrServerSide",
 								"state": true,
 								"label": "Client Or Server Side"
@@ -2800,6 +2807,20 @@
 						},
 						{
 							"Bool": {
+								"name": "StrikeOfGenius",
+								"state": true,
+								"label": "Strike Of Genius"
+							}
+						},
+						{
+							"Bool": {
+								"name": "StrikeOfLuck",
+								"state": true,
+								"label": "Strike Of Luck"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatThis",
 								"state": true,
 								"label": "That This"
@@ -4419,6 +4440,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CeaseTo",
+								"state": true,
+								"label": "Cease to"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ChangeTack",
 								"state": true,
 								"label": "Change Tack"
@@ -4429,6 +4457,13 @@
 								"name": "ChockFull",
 								"state": true,
 								"label": "Chock Full"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Combinate",
+								"state": true,
+								"label": "Combinate"
 							}
 						},
 						{
@@ -4492,6 +4527,13 @@
 								"name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DigUnderTheHood",
+								"state": true,
+								"label": "Dig Under The Hood"
 							}
 						},
 						{
@@ -4727,6 +4769,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GoToSleep",
+								"state": true,
+								"label": "Go to Sleep"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Handful",
 								"state": true,
 								"label": "Handful"
@@ -4898,6 +4947,20 @@
 								"name": "InterestedIn",
 								"state": true,
 								"label": "Interested In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheGrandSchemeOfThings",
+								"state": true,
+								"label": "In the Grand Scheme of Things"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheSameVein",
+								"state": true,
+								"label": "In the Same Vein"
 							}
 						},
 						{

@@ -254,6 +254,44 @@ fn correct_servers_side() {
     );
 }
 
+// Combinate
+
+#[test]
+fn correct_combinate() {
+    assert_suggestion_result(
+        "I'm at chapter 11 and I can't craft and combinate abyss gear, what should I do to unlock both of them",
+        test_linter(),
+        "I'm at chapter 11 and I can't craft and combine abyss gear, what should I do to unlock both of them",
+    );
+}
+
+#[test]
+fn correct_combinated() {
+    assert_suggestion_result(
+        "NFS WORLD COMBINATED MAP (NEW!)",
+        test_linter(),
+        "NFS WORLD COMBINED MAP (NEW!)",
+    );
+}
+
+#[test]
+fn correct_combinates() {
+    assert_suggestion_result(
+        "is there a game that combinates ottd and rts?",
+        test_linter(),
+        "is there a game that combines ottd and rts?",
+    );
+}
+
+#[test]
+fn correct_combinating() {
+    assert_suggestion_result(
+        "This section discusses how the color combinating is accomplished",
+        test_linter(),
+        "This section discusses how the color combining is accomplished",
+    );
+}
+
 // CompulseToCompel
 
 #[test]
