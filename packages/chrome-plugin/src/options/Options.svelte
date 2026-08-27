@@ -474,19 +474,6 @@ async function removeWeirpack(id: string) {
       </div>
 
       <section class="space-y-4">
-        <div>
-          <h3 class="text-sm">Site Preferences</h3>
-          <p class="text-xs text-gray-600 dark:text-gray-400">
-            Enable or disable Harper on any site, bundled or not.
-          </p>
-        </div>
-        <Input
-          bind:value={siteSearch}
-          aria-label="Search site preferences"
-          placeholder="Search sites"
-          size="sm"
-        />
-
         <details bind:open={sitePreferencesOpen} class="space-y-4">
           <summary class="cursor-pointer text-sm font-medium">
             Site Preferences ({filteredConfiguredDomains.length})
@@ -496,6 +483,12 @@ async function removeWeirpack(id: string) {
             individual sites, or turn the defaults off and enable them from the popup as you visit
             each site. Sites marked Default are bundled; anything else is an explicit setting.
           </p>
+          <Input
+            bind:value={siteSearch}
+            aria-label="Search site preferences"
+            placeholder="Search sites"
+            size="sm"
+          />
           <div class="flex flex-wrap gap-3">
             <Button
               size="sm"
