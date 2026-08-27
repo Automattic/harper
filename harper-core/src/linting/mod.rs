@@ -48,6 +48,7 @@ mod cant;
 mod capitalize_personal_pronouns;
 mod catch_22;
 mod cautionary_tale;
+mod cease_to;
 mod change_tack;
 mod chock_full;
 mod claim_to_fame;
