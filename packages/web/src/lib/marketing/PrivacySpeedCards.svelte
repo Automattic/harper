@@ -4,7 +4,7 @@ import Graph from '$lib/components/Graph.svelte';
 export let desktop = false;
 </script>
 
-<div class="grid grid-cols-1 gap-7 md:grid-cols-2">
+<div class="grid grid-cols-1 gap-7 sm:grid-cols-2">
 	<article
 		class="flex min-h-44 flex-col gap-4 overflow-hidden rounded-2xl border border-black/10 bg-white p-6 text-black dark:border-white/10 dark:bg-black dark:text-white md:p-8"
 	>
