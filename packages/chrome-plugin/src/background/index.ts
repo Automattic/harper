@@ -12,12 +12,10 @@ import {
 	type AddToUserDictionaryRequest,
 	type AddWeirpackRequest,
 	createUnitResponse,
-	type DomainStatus,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
-	type GetCustomDomainsResponse,
-	type GetDefaultDomainsResponse,
+	type GetConfiguredDomainsResponse,
 	type GetDefaultStatusResponse,
 	type GetDelayRequest,
 	type GetDelayResponse,
@@ -44,9 +42,9 @@ import {
 	type OpenReportErrorRequest,
 	type PostFormDataRequest,
 	type PostFormDataResponse,
-	type RemoveCustomDomainRequest,
 	type RemoveWeirpackRequest,
 	type Request,
+	type ResetDomainRequest,
 	type Response,
 	type SetActivationKeyRequest,
 	type SetConfigRequest,
@@ -250,14 +248,12 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleGetDomainStatus(message);
 		case 'setDomainStatus':
 			return handleSetDomainStatus(message);
-		case 'getDefaultDomains':
-			return handleGetDefaultDomains();
-		case 'getCustomDomains':
-			return handleGetCustomDomains();
+		case 'getConfiguredDomains':
+			return handleGetConfiguredDomains();
 		case 'setDefaultDomainsStatus':
 			return handleSetDefaultDomainsStatus(message);
-		case 'removeCustomDomain':
-			return handleRemoveCustomDomain(message);
+		case 'resetDomain':
+			return handleResetDomain(message);
 		case 'addToUserDictionary':
 			return handleAddToUserDictionary(message);
 		case 'ignoreLint':
@@ -471,43 +467,44 @@ async function handleGetDomainStatus(
 	};
 }
 
-async function handleGetDefaultDomains(): Promise<GetDefaultDomainsResponse> {
+async function handleGetConfiguredDomains(): Promise<GetConfiguredDomainsResponse> {
 	await defaultDomainsReady;
-	const domains = await Promise.all(
-		defaultEnabledDomains.map(async (domain) => ({
-			domain,
-			enabled: await enabledForDomain(domain),
-		})),
-	);
 
-	return { kind: 'getDefaultDomains', domains };
-}
-
-async function handleGetCustomDomains(): Promise<GetCustomDomainsResponse> {
-	await defaultDomainsReady;
+	// Non-default overrides, deduped so a legacy `www.` key can't shadow the canonical one.
 	const stored = await getStoredDomainStatuses();
-	const bareKeys = new Set(
+	const bareStoredKeys = new Set(
 		stored.map(({ domain }) => domain).filter((domain) => !domain.startsWith('www.')),
 	);
-	const byDomain = new Map<string, boolean>();
-
+	const customByDomain = new Map<string, boolean>();
 	for (const { domain, enabled } of stored) {
 		const normalized = stripWww(domain);
 		if (isDefaultDomain(normalized)) {
 			continue;
 		}
-		if (domain.startsWith('www.') && bareKeys.has(normalized)) {
+		if (domain.startsWith('www.') && bareStoredKeys.has(normalized)) {
 			continue;
 		}
-		if (!byDomain.has(normalized)) {
-			byDomain.set(normalized, enabled);
+		if (!customByDomain.has(normalized)) {
+			customByDomain.set(normalized, enabled);
 		}
 	}
-	const domains = [...byDomain.entries()]
-		.map(([domain, enabled]) => ({ domain, enabled }))
+
+	const defaultDomains = await Promise.all(
+		defaultEnabledDomains.map(async (domain) => ({
+			domain,
+			enabled: await enabledForDomain(domain),
+			isDefault: true,
+		})),
+	);
+
+	const customDomains = [...customByDomain.entries()]
+		.map(([domain, enabled]) => ({ domain, enabled, isDefault: false }))
 		.sort((a, b) => a.domain.localeCompare(b.domain));
 
-	return { kind: 'getCustomDomains', domains };
+	return {
+		kind: 'getConfiguredDomains',
+		domains: [...defaultDomains, ...customDomains],
+	};
 }
 
 async function handleSetDomainStatus(
@@ -531,11 +528,9 @@ async function handleSetDefaultDomainsStatus(
 	return createUnitResponse();
 }
 
-async function handleRemoveCustomDomain(req: RemoveCustomDomainRequest): Promise<UnitResponse> {
+async function handleResetDomain(req: ResetDomainRequest): Promise<UnitResponse> {
 	const domain = stripWww(req.domain);
-	if (!isDefaultDomain(domain)) {
-		await chrome.storage.local.remove([formatDomainKey(domain), formatDomainKey(`www.${domain}`)]);
-	}
+	await chrome.storage.local.remove([formatDomainKey(domain), formatDomainKey(`www.${domain}`)]);
 
 	return createUnitResponse();
 }
@@ -847,7 +842,7 @@ function stripWww(domain: string): string {
 	return domain.replace(/^www\./, '');
 }
 
-async function getStoredDomainStatuses(): Promise<DomainStatus[]> {
+async function getStoredDomainStatuses(): Promise<Array<{ domain: string; enabled: boolean }>> {
 	const all = await chrome.storage.local.get(null as any);
 	const prefix = formatDomainKey(''); // yields 'domainStatus '
 

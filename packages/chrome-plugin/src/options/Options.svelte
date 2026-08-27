@@ -23,25 +23,21 @@ let isolateEnglish = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
-let defaultDomains: DomainStatus[] = $state([]);
-let customDomains: DomainStatus[] = $state([]);
-let defaultDomainSearch = $state('');
-let defaultDomainSearchLower = $derived(defaultDomainSearch.trim().toLowerCase());
+let configuredDomains: DomainStatus[] = $state([]);
+let siteSearch = $state('');
+let siteSearchLower = $derived(siteSearch.trim().toLowerCase());
 let defaultDomainsBusy = $state(false);
-let filteredDefaultDomains = $derived(
-	defaultDomains.filter((domain) => domain.domain.includes(defaultDomainSearchLower)),
+let filteredConfiguredDomains = $derived(
+	configuredDomains.filter((domain) => domain.domain.includes(siteSearchLower)),
 );
-let filteredCustomDomains = $derived(
-	customDomains.filter((domain) => domain.domain.includes(defaultDomainSearchLower)),
+let anyDefaultDomainsEnabled = $derived(
+	configuredDomains.some((domain) => domain.isDefault && domain.enabled),
 );
-let anyDefaultDomainsEnabled = $derived(defaultDomains.some((domain) => domain.enabled));
-let supportedSitesOpen = $state(false);
-let otherSitesOpen = $state(false);
+let sitePreferencesOpen = $state(false);
 
 $effect(() => {
-	if (defaultDomainSearchLower) {
-		supportedSitesOpen = true;
-		otherSitesOpen = true;
+	if (siteSearchLower) {
+		sitePreferencesOpen = true;
 	}
 });
 let activationKey: ActivationKey = $state(ActivationKey.Off);
@@ -106,17 +102,11 @@ ProtocolClient.getDefaultEnabled().then((d) => {
 	defaultEnabled = d;
 });
 
-ProtocolClient.getDefaultDomains()
+ProtocolClient.getConfiguredDomains()
 	.then((domains) => {
-		defaultDomains = domains;
+		configuredDomains = domains;
 	})
-	.catch((error) => console.error('Failed to load default sites:', error));
-
-ProtocolClient.getCustomDomains()
-	.then((domains) => {
-		customDomains = domains;
-	})
-	.catch((error) => console.error('Failed to load custom site preferences:', error));
+	.catch((error) => console.error('Failed to load site preferences:', error));
 
 ProtocolClient.getActivationKey().then((d) => {
 	activationKey = d;
@@ -286,10 +276,12 @@ async function setDefaultDomainsEnabled(enabled: boolean) {
 	defaultDomainsBusy = true;
 	try {
 		await ProtocolClient.setDefaultDomainsEnabled(enabled);
-		defaultDomains = defaultDomains.map((domain) => ({ ...domain, enabled }));
+		configuredDomains = configuredDomains.map((domain) =>
+			domain.isDefault ? { ...domain, enabled } : domain,
+		);
 	} catch (error) {
 		console.error('Failed to update default sites:', error);
-		defaultDomains = await ProtocolClient.getDefaultDomains();
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
 	} finally {
 		defaultDomainsBusy = false;
 	}
@@ -302,30 +294,30 @@ async function toggleDefaultDomains(): Promise<void> {
 async function setSiteEnabled(domainName: string, enabled: boolean) {
 	try {
 		await ProtocolClient.setDomainEnabled(domainName, enabled);
-		defaultDomains = defaultDomains.map((domain) =>
-			domain.domain === domainName ? { ...domain, enabled } : domain,
-		);
-		customDomains = customDomains.map((domain) =>
+		configuredDomains = configuredDomains.map((domain) =>
 			domain.domain === domainName ? { ...domain, enabled } : domain,
 		);
 	} catch (error) {
 		console.error('Failed to update site preference:', error);
-		const [defaults, customs] = await Promise.all([
-			ProtocolClient.getDefaultDomains(),
-			ProtocolClient.getCustomDomains(),
-		]);
-		defaultDomains = defaults;
-		customDomains = customs;
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
 	}
 }
 
-async function removeCustomDomain(domainName: string) {
+async function resetDomain(domainName: string) {
 	try {
-		await ProtocolClient.removeCustomDomain(domainName);
-		customDomains = customDomains.filter((domain) => domain.domain !== domainName);
+		await ProtocolClient.resetDomain(domainName);
+		configuredDomains = configuredDomains
+			.map((domain) => {
+				if (domain.domain !== domainName) {
+					return domain;
+				}
+				// Defaults reset to enabled; custom sites leave the list.
+				return domain.isDefault ? { ...domain, enabled: true } : null;
+			})
+			.filter((domain): domain is DomainStatus => domain !== null);
 	} catch (error) {
 		console.error('Failed to reset site preference:', error);
-		customDomains = await ProtocolClient.getCustomDomains();
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
 	}
 }
 
@@ -485,99 +477,66 @@ async function removeWeirpack(id: string) {
         <div>
           <h3 class="text-sm">Site Preferences</h3>
           <p class="text-xs text-gray-600 dark:text-gray-400">
-            View and change every site with an explicit Harper setting.
+            Enable or disable Harper on any site, bundled or not.
           </p>
         </div>
         <Input
-          bind:value={defaultDomainSearch}
+          bind:value={siteSearch}
           aria-label="Search site preferences"
           placeholder="Search sites"
           size="sm"
         />
 
-        <details bind:open={supportedSitesOpen} class="space-y-4">
+        <details bind:open={sitePreferencesOpen} class="space-y-4">
           <summary class="cursor-pointer text-sm font-medium">
-            Supported Sites ({filteredDefaultDomains.length})
+            Site Preferences ({filteredConfiguredDomains.length})
           </summary>
           <p class="text-xs text-gray-600 dark:text-gray-400">
-            Harper starts on these supported sites after installation. Use the checklist to choose
-            them individually, or turn them all off to opt in site by site from the popup.
+            Harper starts on the bundled sites by default. Use the checklist to enable or disable
+            individual sites, or turn the defaults off and enable them from the popup as you visit
+            each site. Sites marked Default are bundled; anything else is an explicit setting.
           </p>
           <div class="flex flex-wrap gap-3">
             <Button
               size="sm"
-              disabled={defaultDomainsBusy || defaultDomains.length === 0}
+              disabled={defaultDomainsBusy || configuredDomains.length === 0}
               on:click={toggleDefaultDomains}
             >
               {anyDefaultDomainsEnabled ? 'Disable All Default Sites' : 'Enable All Default Sites'}
             </Button>
           </div>
-          <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto sm:grid-cols-2">
-            {#each filteredDefaultDomains as domain}
-              <label class="flex items-center gap-2 text-sm">
-                <input
-                  type="checkbox"
-                  checked={domain.enabled}
-                  disabled={defaultDomainsBusy}
-                  onchange={(event) =>
-                    setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
-                  class="h-4 w-4"
-                />
-                {domain.domain}
-              </label>
+          <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 sm:grid-cols-2">
+            {#each filteredConfiguredDomains as domain}
+              <div class="flex items-center justify-between gap-2">
+                <label class="flex min-w-0 items-center gap-2 text-sm">
+                  <input
+                    type="checkbox"
+                    checked={domain.enabled}
+                    disabled={defaultDomainsBusy && domain.isDefault}
+                    onchange={(event) =>
+                      setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
+                    class="h-4 w-4"
+                  />
+                  <span class="truncate">{domain.domain}</span>
+                  {#if domain.isDefault}
+                    <span class="shrink-0 text-xs text-gray-400 dark:text-gray-500">Default</span>
+                  {/if}
+                </label>
+                <Button
+                  size="xs"
+                  color="light"
+                  aria-label={`Reset ${domain.domain}`}
+                  on:click={() => resetDomain(domain.domain)}
+                >
+                  Reset
+                </Button>
+              </div>
             {:else}
               <p class="text-xs text-gray-600 dark:text-gray-400">
-                No supported sites match your search.
+                No site preferences match your search.
               </p>
             {/each}
           </div>
-        </details>
-
-        <details bind:open={otherSitesOpen} class="space-y-4">
-          <summary class="cursor-pointer text-sm font-medium">
-            Other Site Preferences ({filteredCustomDomains.length})
-          </summary>
-          <p class="text-xs text-gray-600 dark:text-gray-400">
-            These sites have an explicit setting, such as one changed from the popup. Resetting a
-            site makes it follow “Enable on New Sites by Default” again.
-          </p>
-          {#if customDomains.length === 0}
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              No other site preferences yet.
-            </p>
-          {:else if filteredCustomDomains.length > 0}
-            <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 sm:grid-cols-2">
-              {#each filteredCustomDomains as domain}
-                <div class="flex items-center justify-between gap-2">
-                  <label class="flex min-w-0 items-center gap-2 text-sm">
-                    <input
-                      type="checkbox"
-                      checked={domain.enabled}
-                      onchange={(event) =>
-                        setSiteEnabled(
-                          domain.domain,
-                          (event.currentTarget as HTMLInputElement).checked,
-                        )}
-                      class="h-4 w-4"
-                    />
-                    <span class="truncate">{domain.domain}</span>
-                  </label>
-                  <Button
-                    size="xs"
-                    color="light"
-                    aria-label={`Reset ${domain.domain}`}
-                    on:click={() => removeCustomDomain(domain.domain)}
-                  >
-                    Reset
-                  </Button>
-                </div>
-              {/each}
-            </div>
-          {:else}
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              No other site preferences match your search.
-            </p>
-          {/if}
         </details>
       </section>
 

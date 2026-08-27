@@ -118,12 +118,8 @@ export default class ProtocolClient {
 		}
 	}
 
-	public static async getDefaultDomains(): Promise<DomainStatus[]> {
-		return (await chrome.runtime.sendMessage({ kind: 'getDefaultDomains' })).domains;
-	}
-
-	public static async getCustomDomains(): Promise<DomainStatus[]> {
-		return (await chrome.runtime.sendMessage({ kind: 'getCustomDomains' })).domains;
+	public static async getConfiguredDomains(): Promise<DomainStatus[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getConfiguredDomains' })).domains;
 	}
 
 	public static async setDefaultDomainsEnabled(enabled: boolean): Promise<void> {
@@ -131,9 +127,9 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setDefaultDomainsStatus', enabled });
 	}
 
-	public static async removeCustomDomain(domain: string): Promise<void> {
+	public static async resetDomain(domain: string): Promise<void> {
 		this.lintCache.clear();
-		await chrome.runtime.sendMessage({ kind: 'removeCustomDomain', domain });
+		await chrome.runtime.sendMessage({ kind: 'resetDomain', domain });
 	}
 
 	public static async getDefaultEnabled(): Promise<boolean> {

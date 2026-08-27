@@ -14,10 +14,9 @@ export type Request =
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
-	| GetDefaultDomainsRequest
-	| GetCustomDomainsRequest
+	| GetConfiguredDomainsRequest
 	| SetDefaultDomainsStatusRequest
-	| RemoveCustomDomainRequest
+	| ResetDomainRequest
 	| SetDefaultStatusRequest
 	| GetDomainStatusRequest
 	| GetDefaultStatusRequest
@@ -51,8 +50,7 @@ export type Response =
 	| GetDelayResponse
 	| GetDomainStatusResponse
 	| SetDomainStatusResponse
-	| GetDefaultDomainsResponse
-	| GetCustomDomainsResponse
+	| GetConfiguredDomainsResponse
 	| GetDefaultStatusResponse
 	| GetEnabledDomainsResponse
 	| GetUserDictionaryResponse
@@ -163,23 +161,15 @@ export type GetDomainStatusResponse = {
 export type DomainStatus = {
 	domain: string;
 	enabled: boolean;
+	isDefault: boolean;
 };
 
-export type GetDefaultDomainsRequest = {
-	kind: 'getDefaultDomains';
+export type GetConfiguredDomainsRequest = {
+	kind: 'getConfiguredDomains';
 };
 
-export type GetDefaultDomainsResponse = {
-	kind: 'getDefaultDomains';
-	domains: DomainStatus[];
-};
-
-export type GetCustomDomainsRequest = {
-	kind: 'getCustomDomains';
-};
-
-export type GetCustomDomainsResponse = {
-	kind: 'getCustomDomains';
+export type GetConfiguredDomainsResponse = {
+	kind: 'getConfiguredDomains';
 	domains: DomainStatus[];
 };
 
@@ -220,8 +210,8 @@ export type SetDefaultDomainsStatusRequest = {
 	enabled: boolean;
 };
 
-export type RemoveCustomDomainRequest = {
-	kind: 'removeCustomDomain';
+export type ResetDomainRequest = {
+	kind: 'resetDomain';
 	domain: string;
 };
 

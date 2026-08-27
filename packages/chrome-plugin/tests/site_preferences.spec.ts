@@ -21,7 +21,7 @@ test('site preferences: manage bundled defaults, custom sites, and lint gating',
 	const TEST_PAGE_URL = 'http://localhost:8081/simple_textarea.html';
 
 	// Bundled defaults: bulk disable, then re-enable one.
-	await openOptionsSection(context, page, 'Supported Sites');
+	await openOptionsSection(context, page, 'Site Preferences');
 	await expect(page.getByRole('checkbox', { name: 'docs.google.com' })).toBeVisible();
 	await page.getByRole('button', { name: 'Disable All Default Sites' }).click();
 
@@ -41,35 +41,46 @@ test('site preferences: manage bundled defaults, custom sites, and lint gating',
 		.toBe(true);
 	await expect(page.getByRole('button', { name: 'Enable All Default Sites' })).toBeVisible();
 
+	// Defaults always come from the defaults list; an override never duplicates them.
+	await expect(page.getByRole('checkbox', { name: 'www.youtube.com' })).toHaveCount(1);
+	await expect(page.getByRole('checkbox', { name: 'www.youtube.com' })).not.toBeChecked();
+
 	await page.getByRole('checkbox', { name: 'docs.google.com' }).check();
 	await expect.poll(() => getStoredDomainStatus(context, 'docs.google.com')).toBe(true);
 
-	// Other site preferences: explicit settings for non-default sites.
+	// Non-default overrides show in the same list (enabled or not); reload to re-fetch.
 	await setStoredDomainStatus(context, 'example.com', true);
-	await setStoredDomainStatus(context, 'youtube.com', false);
-	await openOptionsSection(context, page, 'Other Site Preferences');
+	await setStoredDomainStatus(context, 'example.org', false);
+	await openOptionsSection(context, page, 'Site Preferences');
 
 	const customDomain = page.getByRole('checkbox', { name: 'example.com' });
 	await expect(customDomain).toBeChecked();
-	await expect(page.getByRole('checkbox', { name: 'youtube.com', exact: true })).toHaveCount(0);
+	const disabledCustomDomain = page.getByRole('checkbox', { name: 'example.org', exact: true });
+	await expect(disabledCustomDomain).toBeVisible();
+	await expect(disabledCustomDomain).not.toBeChecked();
+
+	// Non-default sites carry no "Default" badge, while bundled defaults do.
+	await expect(
+		page.getByRole('checkbox', { name: 'example.org', exact: true }).locator('..'),
+	).not.toContainText('Default');
+	await expect(page.getByRole('checkbox', { name: 'docs.google.com' }).locator('..')).toContainText(
+		'Default',
+	);
 
 	await customDomain.uncheck();
 	await expect.poll(() => getStoredDomainStatus(context, 'example.com')).toBe(false);
 
+	// Resetting a custom site removes its override.
 	await page.getByRole('button', { name: 'Reset example.com' }).click();
 	await expect.poll(() => getStoredDomainStatus(context, 'example.com')).toBeUndefined();
 
-	// Lint gating: disabling a bundled default stops linting there until re-enabled.
-	await openOptionsSection(context, page, 'Supported Sites');
-	await page.getByRole('checkbox', { name: 'localhost', exact: true }).check();
-	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(true);
-
-	await page.goto(TEST_PAGE_URL);
-	await replaceEditorContent(getTextarea(page), 'This is an test');
-	await assertPageHasNHighlights(page, 1);
-
-	await openOptionsSection(context, page, 'Supported Sites');
-	await page.getByRole('checkbox', { name: 'localhost', exact: true }).uncheck();
+	// Resetting a disabled default returns it to its default-enabled state.
+	const localhostCheckbox = page.getByRole('checkbox', { name: 'localhost' });
+	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(false);
+	await page.getByRole('button', { name: 'Reset localhost' }).click();
+	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBeUndefined();
+	await expect(localhostCheckbox).toBeChecked();
+	await localhostCheckbox.uncheck();
 	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(false);
 
 	await page.goto(TEST_PAGE_URL);
@@ -77,8 +88,8 @@ test('site preferences: manage bundled defaults, custom sites, and lint gating',
 	await page.waitForTimeout(4000);
 	await assertPageHasNHighlights(page, 0);
 
-	await openOptionsSection(context, page, 'Supported Sites');
-	await page.getByRole('checkbox', { name: 'localhost', exact: true }).check();
+	await openOptionsSection(context, page, 'Site Preferences');
+	await localhostCheckbox.check();
 	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(true);
 
 	await page.goto(TEST_PAGE_URL);
