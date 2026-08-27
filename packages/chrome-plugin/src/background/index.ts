@@ -510,6 +510,7 @@ async function handleGetConfiguredDomains(): Promise<GetConfiguredDomainsRespons
 async function handleSetDomainStatus(
 	req: SetDomainStatusRequest,
 ): Promise<SetDomainStatusResponse> {
+	await defaultDomainsReady;
 	const changed = await setDomainEnable(req.domain, req.enabled, req.overrideValue);
 
 	return { kind: 'setDomainStatus', changed };
@@ -529,6 +530,7 @@ async function handleSetDefaultDomainsStatus(
 }
 
 async function handleResetDomain(req: ResetDomainRequest): Promise<UnitResponse> {
+	await defaultDomainsReady;
 	const domain = stripWww(req.domain);
 	await chrome.storage.local.remove([formatDomainKey(domain), formatDomainKey(`www.${domain}`)]);
 
@@ -866,7 +868,8 @@ function getDomainLookupCandidates(domain: string): string[] {
 
 /** True if the domain is a bundled default or a `www.`-stripped alias of one. */
 function isDefaultDomain(domain: string): boolean {
-	return defaultEnabledDomainSet.has(domain) || defaultEnabledDomainSet.has(`www.${domain}`);
+	const bare = stripWww(domain);
+	return defaultEnabledDomainSet.has(bare) || defaultEnabledDomainSet.has(`www.${bare}`);
 }
 
 /**
@@ -896,9 +899,7 @@ async function enabledForDomain(domain: string): Promise<boolean> {
 		return stored;
 	}
 
-	if (
-		getDomainLookupCandidates(domain).some((candidate) => defaultEnabledDomainSet.has(candidate))
-	) {
+	if (isDefaultDomain(domain)) {
 		return true;
 	}
 
