@@ -7,7 +7,7 @@ use crate::{
 use cached::cached;
 use egui::Pos2;
 use harper_core::linting::Lint;
-use std::ffi::OsString;
+use std::ffi::{OsString, c_void};
 use std::os::windows::ffi::OsStringExt;
 use std::process::Command;
 use std::{
@@ -43,7 +43,13 @@ impl WindowsBroker {
     }
 
     pub fn should_lint_focused_window(&self) -> bool {
-        let Ok(path) = get_focused_window_path() else {
+        let mut service = self.service.lock().unwrap();
+
+        let Some((focused_window, _)) = service.resolve_focused_window() else {
+            return false;
+        };
+
+        let Ok(path) = get_window_path(focused_window) else {
             return false;
         };
 
@@ -287,11 +293,10 @@ fn gatherer() -> Gatherer {
 }
 
 /// Returns the full executable path for the process that owns `hwnd`.
-pub fn get_focused_window_path() -> WindowsResult<PathBuf> {
+pub fn get_window_path(window_id: isize) -> WindowsResult<PathBuf> {
     unsafe {
-        let hwnd: HWND = GetForegroundWindow();
         let mut process_id = 0;
-        GetWindowThreadProcessId(hwnd, Some(&mut process_id));
+        GetWindowThreadProcessId(HWND(window_id as *mut c_void), Some(&mut process_id));
 
         let process = OpenProcess(PROCESS_QUERY_LIMITED_INFORMATION, false, process_id)?;
 
