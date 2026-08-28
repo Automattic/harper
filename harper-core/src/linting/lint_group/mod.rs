@@ -314,6 +314,7 @@ use super::widely_accepted::WidelyAccepted;
 use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
+use super::with_open_arms::WithOpenArms;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
@@ -910,6 +911,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(WillNonLemma);
         insert_expr_rule!(WinPrize);
         insert_expr_rule!(WishCould);
+        insert_expr_rule!(WithOpenArms);
         insert_struct_rule!(WordPressDotcom);
         insert_expr_rule_with_dict!(WorthToDo);
         insert_expr_rule!(WouldNeverHave);
