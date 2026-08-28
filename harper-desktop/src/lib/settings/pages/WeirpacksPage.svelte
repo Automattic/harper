@@ -1,5 +1,14 @@
 <script lang="ts">
-import { Button, IconButton, Input, Panel, Toggle, TrashIcon, UploadIcon } from 'components';
+import {
+	Button,
+	IconButton,
+	Input,
+	PackageIcon,
+	Panel,
+	Toggle,
+	TrashIcon,
+	UploadIcon,
+} from 'components';
 import { createInitialSettingsState, type Weirpack } from '../settings-data';
 
 let weirpacks = createInitialSettingsState().weirpacks;
@@ -102,7 +111,7 @@ function commitRenamePack() {
             {#each weirpacks as pack}
               <div class:disabled={!pack.enabled} class="pack-row">
                 <div class="pack-icon">
-                  <span class="settings-icon icon-package" aria-hidden="true"></span>
+                  <PackageIcon className="settings-icon" />
                 </div>
                 <div class="grow">
                   {#if editingPackId === pack.id}
