@@ -431,10 +431,6 @@ impl OsBroker for MacBroker {
         Ok(())
     }
 
-    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
-        app_catalog::installed_application_bundle_ids()
-    }
-
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
         let list = app_catalog::installed_application_search_results()?;
 
