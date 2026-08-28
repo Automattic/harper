@@ -20,10 +20,12 @@ pub enum AccessibilityPermissionStatus {
 /// macOS accessibility and pointer APIs.
 pub trait OsBroker {
     /// Get the actionable lint boxes from the OS, provided a linting source.
+    ///
+    /// `None` means the accessibility read failed and the last successful result should be retained.
     fn get_boxes(
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
-    ) -> Vec<ActionableLint>;
+    ) -> Option<Vec<ActionableLint>>;
 
     /// Grab the position of the user's cursor on the screen.
     fn cursor_position(&self) -> Option<egui::Pos2>;
@@ -75,8 +77,8 @@ impl OsBroker for NoopBroker {
     fn get_boxes(
         &mut self,
         _lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
-    ) -> Vec<ActionableLint> {
-        Vec::new()
+    ) -> Option<Vec<ActionableLint>> {
+        Some(Vec::new())
     }
 
     fn cursor_position(&self) -> Option<egui::Pos2> {

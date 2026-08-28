@@ -288,19 +288,19 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
+    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
-                return Vec::new();
+                return Some(Vec::new());
             }
             Err(err) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused window: {err}");
-                return Vec::new();
+                return None;
             }
         };
 
@@ -309,13 +309,13 @@ impl OsBroker for MacBroker {
             Ok(None) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
-                return Vec::new();
+                return None;
             }
             Err(error) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused app bundle: {error}");
-                return Vec::new();
+                return None;
             }
         };
 
@@ -325,24 +325,24 @@ impl OsBroker for MacBroker {
             }
             Err(error) => {
                 eprintln!("Unable to read integrations: {error}");
-                false
+                return None;
             }
         };
 
         if !integration_enabled {
             self.window_movement = None;
             self.reset_accessibility_activation();
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         // Hide highlights while window is moving to avoid "sliding" behavior.
         if self.window_is_moving(pid) {
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         let el = AXUIElement::application(pid);
         if !self.ensure_accessibility_activation(pid, &bundle_identifier, &el) {
-            return Vec::new();
+            return None;
         }
 
         let walker = TreeWalker::new();

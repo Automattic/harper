@@ -42,23 +42,16 @@ impl WindowsBroker {
         }
     }
 
-    pub fn should_lint_focused_window(&self) -> bool {
-        let mut service = self.service.lock().unwrap();
+    pub fn should_lint_focused_window(&self) -> Option<bool> {
+        let mut service = self.service.lock().ok()?;
+        let focused_window = service.resolve_focused_window()?;
+        let path = get_window_path(focused_window).ok()?;
+        let integrations = self.integrations.lock().ok()?;
 
-        let Some(focused_window) = service.resolve_focused_window() else {
-            return false;
-        };
-
-        let Ok(path) = get_window_path(focused_window) else {
-            return false;
-        };
-
-        let path = path.to_string_lossy();
-        let Ok(integrations) = self.integrations.lock() else {
-            return false;
-        };
-
-        Integration::is_integration_enabled_in(&integrations, &path)
+        Some(Integration::is_integration_enabled_in(
+            &integrations,
+            &path.to_string_lossy(),
+        ))
     }
 }
 
@@ -66,43 +59,41 @@ impl OsBroker for WindowsBroker {
     fn get_boxes(
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
-    ) -> Vec<ActionableLint> {
-        if !self.should_lint_focused_window() {
-            return Vec::new();
+    ) -> Option<Vec<ActionableLint>> {
+        match self.should_lint_focused_window() {
+            Some(true) => {}
+            Some(false) => return Some(Vec::new()),
+            None => return None,
         }
 
-        let text = self.service.lock().unwrap().get_text();
-        if let Some(text) = text {
-            if text.len() > 16_000 {
-                return Vec::new();
-            }
+        let text = self.service.lock().ok()?.get_text()?;
+        if text.len() > 16_000 {
+            return Some(Vec::new());
+        }
 
-            let lints = lint_text(text.as_str());
+        let lints = lint_text(&text);
+        let rects = self
+            .service
+            .lock()
+            .ok()?
+            .get_bounding_boxes(&text, lints.values().flatten().map(|lint| lint.span))?;
 
-            let all_lint_iter = lints.values().map(|r| r.iter()).flatten();
-            let Some(rects) = self
-                .service
-                .lock()
-                .unwrap()
-                .get_bounding_boxes(&text, all_lint_iter.map(|l| l.span))
-            else {
-                return Vec::new();
-            };
-
+        Some(
             lints
                 .into_iter()
-                .map(|(lint_id, lints)| lints.into_iter().map(move |l| (lint_id.clone(), l)))
-                .flatten()
+                .flat_map(|(lint_id, lints)| {
+                    lints.into_iter().map(move |lint| (lint_id.clone(), lint))
+                })
                 .zip(rects)
-                .map(|((lint_id, lint), rects)| {
+                .flat_map(|((lint_id, lint), rects)| {
                     let text = text.clone();
                     let service = self.service.clone();
-                    rects.into_iter().map(move |r| {
+                    rects.into_iter().map(move |rect| {
                         let service = service.clone();
                         let suggestion_text = text.clone();
                         let suggestion_span = lint.span;
                         ActionableLint::new(
-                            r,
+                            rect,
                             lint_id.clone(),
                             lint.clone(),
                             text.clone(),
@@ -116,11 +107,8 @@ impl OsBroker for WindowsBroker {
                         )
                     })
                 })
-                .flatten()
-                .collect()
-        } else {
-            Vec::new()
-        }
+                .collect(),
+        )
     }
 
     fn cursor_position(&self) -> Option<Pos2> {
