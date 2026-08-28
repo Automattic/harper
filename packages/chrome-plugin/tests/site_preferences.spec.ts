@@ -70,16 +70,21 @@ test('site preferences: manage bundled defaults, custom sites, and lint gating',
 	await customDomain.uncheck();
 	await expect.poll(() => getStoredDomainStatus(context, 'example.com')).toBe(false);
 
-	// Resetting a custom site removes its override.
-	await page.getByRole('button', { name: 'Reset example.com' }).click();
+	// Removing a custom site deletes its override.
+	await page.getByRole('button', { name: 'Remove example.com' }).click();
 	await expect.poll(() => getStoredDomainStatus(context, 'example.com')).toBeUndefined();
 
-	// Resetting a disabled default returns it to its default-enabled state.
+	// Defaults have no per-site Remove; re-enable via bulk Reset All.
 	const localhostCheckbox = page.getByRole('checkbox', { name: 'localhost' });
 	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(false);
-	await page.getByRole('button', { name: 'Reset localhost' }).click();
-	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBeUndefined();
-	await expect(localhostCheckbox).toBeChecked();
+
+	// Bulk Reset All to Defaults: re-enables defaults (stored true) and removes remaining customs.
+	page.once('dialog', async (dialog) => await dialog.accept());
+	await page.getByRole('button', { name: 'Reset All to Defaults' }).click();
+	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(true);
+	await expect.poll(() => getStoredDomainStatus(context, 'example.org')).toBeUndefined();
+	await expect(page.getByRole('button', { name: 'Disable All Default Sites' })).toBeVisible();
+	// Re-disable for lint gating.
 	await localhostCheckbox.uncheck();
 	await expect.poll(() => getStoredDomainStatus(context, 'localhost')).toBe(false);
 

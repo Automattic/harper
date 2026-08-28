@@ -321,6 +321,26 @@ async function resetDomain(domainName: string) {
 	}
 }
 
+async function resetAllToDefaults(): Promise<void> {
+	if (!confirm('Reset all site preferences to defaults? Custom sites will be removed.')) {
+		return;
+	}
+	defaultDomainsBusy = true;
+	try {
+		await ProtocolClient.setDefaultDomainsEnabled(true);
+		const fresh = await ProtocolClient.getConfiguredDomains();
+		for (const custom of fresh.filter((domain) => !domain.isDefault)) {
+			await ProtocolClient.resetDomain(custom.domain);
+		}
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} catch (error) {
+		console.error('Failed to reset all sites:', error);
+		configuredDomains = await ProtocolClient.getConfiguredDomains();
+	} finally {
+		defaultDomainsBusy = false;
+	}
+}
+
 let buttonText = $state('Set Hotkey');
 let isBlue = $state(false); // modify color of hotkey button once it is pressed
 function startHotkeyCapture(_modifyHotkeyButton: Button) {
@@ -497,6 +517,14 @@ async function removeWeirpack(id: string) {
             >
               {anyDefaultDomainsEnabled ? 'Disable All Default Sites' : 'Enable All Default Sites'}
             </Button>
+            <Button
+              size="sm"
+              color="light"
+              disabled={defaultDomainsBusy || configuredDomains.length === 0}
+              on:click={resetAllToDefaults}
+            >
+              Reset All to Defaults
+            </Button>
           </div>
           <div class="grid max-h-72 grid-cols-1 gap-2 overflow-y-auto pr-3 sm:grid-cols-2">
             {#each filteredConfiguredDomains as domain}
@@ -505,7 +533,7 @@ async function removeWeirpack(id: string) {
                   <input
                     type="checkbox"
                     checked={domain.enabled}
-                    disabled={defaultDomainsBusy && domain.isDefault}
+                    disabled={defaultDomainsBusy}
                     onchange={(event) =>
                       setSiteEnabled(domain.domain, (event.currentTarget as HTMLInputElement).checked)}
                     class="h-4 w-4"
@@ -515,14 +543,17 @@ async function removeWeirpack(id: string) {
                     <span class="shrink-0 text-xs text-gray-400 dark:text-gray-500">Default</span>
                   {/if}
                 </label>
-                <Button
-                  size="xs"
-                  color="light"
-                  aria-label={`Reset ${domain.domain}`}
-                  on:click={() => resetDomain(domain.domain)}
-                >
-                  Reset
-                </Button>
+                {#if !domain.isDefault}
+                  <Button
+                    size="xs"
+                    color="light"
+                    disabled={defaultDomainsBusy}
+                    aria-label={`Remove ${domain.domain}`}
+                    on:click={() => resetDomain(domain.domain)}
+                  >
+                    Remove
+                  </Button>
+                {/if}
               </div>
             {:else}
               <p class="text-xs text-gray-600 dark:text-gray-400">
