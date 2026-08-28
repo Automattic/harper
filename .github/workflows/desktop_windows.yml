@@ -29,14 +29,17 @@ jobs:
           node-version-file: ".node-version"
       - name: Enable Corepack
         run: corepack enable
-      - name: Install Tauri Linux dependencies
+      - name: Install Tauri and cross-compilation dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y \
             libayatana-appindicator3-dev \
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
-            libxdo-dev
+            libxdo-dev \
+            llvm
+      - name: Verify MSVC cross-compilation tools
+        run: command -v clang-cl llvm-lib
       - name: Rust Cache
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
