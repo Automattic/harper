@@ -206,6 +206,8 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
   #!/usr/bin/env bash
   set -eo pipefail
 
+  rustup target add x86_64-pc-windows-msvc 
+
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis 
