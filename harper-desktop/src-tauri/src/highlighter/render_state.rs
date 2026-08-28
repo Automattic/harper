@@ -91,16 +91,12 @@ impl RenderState {
             add_to_dictionary,
             disable_rule,
         };
-        state.set_lints(Some(rects));
+        state.set_lints(rects);
         state
     }
 
     /// Saves successful accessibility reads while retaining the previous lints after a failed read.
-    pub fn set_lints(&mut self, lints: Option<Vec<ActionableLint>>) {
-        let Some(lints) = lints else {
-            return;
-        };
-
+    pub fn set_lints(&mut self, lints: Vec<ActionableLint>) {
         self.last_lints = Some(lints);
 
         if self

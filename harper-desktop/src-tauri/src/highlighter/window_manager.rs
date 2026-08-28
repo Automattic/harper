@@ -158,7 +158,9 @@ impl WindowManagerApp {
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
         let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
-        self.render_state.set_lints(lints);
+        if let Some(lints) = lints {
+            self.render_state.set_lints(lints);
+        }
 
         for window in &self.windows {
             window.request_redraw();

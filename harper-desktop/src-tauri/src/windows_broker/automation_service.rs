@@ -303,38 +303,37 @@ fn text_element_for_window(
         Variant::from(true),
         None,
     )?;
-    let cursor = cursor_position();
-    let mut first_candidate = None;
-    let mut cursor_candidate = None;
+    let keyboard_condition = automation.create_property_condition(
+        UIProperty::HasKeyboardFocus,
+        Variant::from(true),
+        None,
+    )?;
+    let condition = automation.create_and_condition(text_condition, keyboard_condition)?;
 
-    for element in root.find_all(TreeScope::Subtree, &text_condition)? {
-        let Ok(text) = get_text(&element) else {
-            continue;
-        };
-        if expected_text.is_some_and(|expected| expected != text) {
-            continue;
-        }
-        if element.has_keyboard_focus().unwrap_or(false) {
-            return Ok(element);
+    for (index, element) in root
+        .find_all(TreeScope::Subtree, &condition)?
+        .into_iter()
+        .enumerate()
+    {
+        if let Some(expected) = expected_text {
+            let text = get_text(&element);
+
+            let Ok(text) = text else {
+                continue;
+            };
+
+            if expected_text.is_some_and(|expected| expected != text) {
+                continue;
+            }
         }
 
-        if first_candidate.is_none() {
-            first_candidate = Some(element.clone());
-        }
-
-        if let Some(area) = cursor_overlap_area(&element, cursor)
-            && cursor_candidate
-                .as_ref()
-                .is_none_or(|(best_area, _)| area < *best_area)
-        {
-            cursor_candidate = Some((area, element));
-        }
+        return Ok(element);
     }
 
-    cursor_candidate
-        .map(|(_, element)| element)
-        .or(first_candidate)
-        .ok_or_else(|| Error::new(uiautomation::errors::ERR_NOTFOUND, "no text element found"))
+    Err(Error::new(
+        uiautomation::errors::ERR_NOTFOUND,
+        "no text element found",
+    ))
 }
 
 fn cursor_overlap_area(element: &UIElement, cursor: Option<POINT>) -> Option<i64> {
