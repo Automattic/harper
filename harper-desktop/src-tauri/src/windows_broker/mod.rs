@@ -22,7 +22,8 @@ use windows::Win32::System::Threading::{
 };
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{
-    GetCursorPos, GetForegroundWindow, GetWindowThreadProcessId,
+    GUI_INMOVESIZE, GUITHREADINFO, GetCursorPos, GetForegroundWindow, GetGUIThreadInfo,
+    GetWindowThreadProcessId,
 };
 use windows::core::{PWSTR, Result as WindowsResult};
 use wintheon::file::{IconSize, Priority};
@@ -48,10 +49,19 @@ impl WindowsBroker {
         let path = get_window_path(focused_window).ok()?;
         let integrations = self.integrations.lock().ok()?;
 
-        Some(Integration::is_integration_enabled_in(
-            &integrations,
-            &path.to_string_lossy(),
-        ))
+        if !Integration::is_integration_enabled_in(&integrations, &path.to_string_lossy()) {
+            return Some(false);
+        }
+
+        match window_is_moving(HWND(focused_window as *mut c_void)) {
+            Ok(is_moving) => Some(!is_moving),
+            Err(error) => {
+                eprintln!(
+                    "Unable to determine whether the focused Windows window is moving: {error}"
+                );
+                None
+            }
+        }
     }
 }
 
@@ -202,6 +212,27 @@ impl OsBroker for WindowsBroker {
             .cloned()
             .map(|entry| entry.to_search_result())
             .collect())
+    }
+}
+
+/// Reports whether `hwnd` is in its GUI thread's modal move-or-resize loop.
+///
+/// Win32 combines moving and resizing under `GUI_INMOVESIZE`. Checking `hwndMoveSize` ensures a
+/// different window owned by the same GUI thread does not produce a false positive.
+fn window_is_moving(hwnd: HWND) -> WindowsResult<bool> {
+    unsafe {
+        let thread_id = GetWindowThreadProcessId(hwnd, None);
+        if thread_id == 0 {
+            return Err(windows::core::Error::from_thread());
+        }
+
+        let mut thread_info = GUITHREADINFO {
+            cbSize: size_of::<GUITHREADINFO>() as u32,
+            ..Default::default()
+        };
+        GetGUIThreadInfo(thread_id, &mut thread_info)?;
+
+        Ok(thread_info.flags.contains(GUI_INMOVESIZE) && thread_info.hwndMoveSize == hwnd)
     }
 }
 
