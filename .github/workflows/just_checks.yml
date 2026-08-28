@@ -27,6 +27,7 @@ jobs:
             test-firefox-plugin,
             test-obsidian,
             check-desktop,
+            build-desktop-windows,
           ]
     steps:
       - uses: actions/checkout@v7.0.1
@@ -59,6 +60,8 @@ jobs:
       - uses: cargo-bins/cargo-binstall@910d9e4456ce4b039662d2a02a34ef1d23c3c50c # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
+      - name: Install `cargo-xwin`
+        run: cargo binstall cargo-xwin --force --no-confirm
       - name: Install `cargo hack`
         run: cargo binstall cargo-hack --force --no-confirm
       - name: Install `tauri-cli`

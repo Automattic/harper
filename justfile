@@ -208,7 +208,7 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
 
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
-  pnpm tauri build -b msi
+  pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis 
 
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
