@@ -11,6 +11,8 @@ mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
 mod after_later;
+mod ajar;
+mod akimbo;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
 mod allow_to;
