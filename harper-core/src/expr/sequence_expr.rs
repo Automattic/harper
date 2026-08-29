@@ -612,6 +612,7 @@ impl SequenceExpr {
     gen_then_from_is!(auxiliary_verb);
     gen_then_from_is!(linking_verb);
     gen_then_from_is!(verb_lemma);
+    gen_then_from_is!(verb_past_form);
     gen_then_from_is!(verb_simple_past_form);
     gen_then_from_is!(verb_past_participle_form);
     gen_then_from_is!(verb_progressive_form);

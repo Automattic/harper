@@ -5175,6 +5175,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NegativeModalOrder",
+								"state": true,
+								"label": "Negative Modal Order"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NeitherHereNorThere",
 								"state": true,
 								"label": "Neither Here Nor There"
