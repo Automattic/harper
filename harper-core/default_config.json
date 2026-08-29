@@ -5189,6 +5189,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NailInCoffin",
+								"state": true,
+								"label": "Nail in Coffin"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NeitherHereNorThere",
 								"state": true,
 								"label": "Neither Here Nor There"
