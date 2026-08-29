@@ -24,8 +24,14 @@ impl Default for OverPlus {
                 .then_optional(
                     SequenceExpr::whitespace().t_set(&["thousand", "million", "billion"]),
                 )
-                .t_ws()
-                .then(SequenceExpr::aco("plus").but_not(Word::new_exact("PLUS")))
+                .then_any_of([
+                    Box::new(
+                        SequenceExpr::whitespace()
+                            .t_aco("plus")
+                            .but_not(Word::new_exact("PLUS")),
+                    ) as Box<dyn Expr>,
+                    Box::new(SequenceExpr::default().then_plus()),
+                ])
                 .but_not(SequenceExpr::anything().t_any().t_aco("one")),
         }
     }
@@ -49,11 +55,14 @@ impl ExprLinter for OverPlus {
             return None;
         }
 
-        let slices = [toks.get_rel_slice(0, -3)?, &toks[2..]];
+        let token_slices = [
+            toks.get_rel_slice(0, -2 - (toks.last()?.kind.is_word() as isize))?,
+            &toks[2..],
+        ];
 
         let span = toks.span()?;
 
-        let suggestions = slices
+        let suggestions = token_slices
             .iter()
             .map(|t| {
                 Suggestion::replace_with_match_case(
@@ -219,6 +228,19 @@ mod tests {
         assert_no_lints(
             "over 5,000 PLUS personnel will be on duty to assist highway users",
             OverPlus::default(),
+        );
+    }
+
+    #[test]
+    fn fix_plus_sign() {
+        assert_good_and_bad_suggestions(
+            "It took me over 1000+ blocks to make \"Livin' on a Prayer\" in Stardew Valley",
+            OverPlus::default(),
+            &[
+                "It took me over 1000 blocks to make \"Livin' on a Prayer\" in Stardew Valley",
+                "It took me 1000+ blocks to make \"Livin' on a Prayer\" in Stardew Valley",
+            ],
+            &[],
         );
     }
 }

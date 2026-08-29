@@ -431,13 +431,16 @@ impl ExprLinter for MissingTo {
 #[cfg(test)]
 mod tests {
     use super::MissingTo;
+    use crate::linting::create_test_pool;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+
+    create_test_pool!(MissingTo, MissingTo, MissingTo::default());
 
     #[test]
     fn inserts_to_after_meant() {
         assert_suggestion_result(
             "I meant call you last night.",
-            MissingTo::default(),
+            test_linter(),
             "I meant to call you last night.",
         );
     }
@@ -446,7 +449,7 @@ mod tests {
     fn inserts_to_after_wants() {
         assert_suggestion_result(
             "She wants finish early.",
-            MissingTo::default(),
+            test_linter(),
             "She wants to finish early.",
         );
     }
@@ -455,7 +458,7 @@ mod tests {
     fn inserts_to_after_need() {
         assert_suggestion_result(
             "We need talk about pricing.",
-            MissingTo::default(),
+            test_linter(),
             "We need to talk about pricing.",
         );
     }
@@ -464,7 +467,7 @@ mod tests {
     fn inserts_to_after_agreed() {
         assert_suggestion_result(
             "They agreed meet at dawn.",
-            MissingTo::default(),
+            test_linter(),
             "They agreed to meet at dawn.",
         );
     }
@@ -473,7 +476,7 @@ mod tests {
     fn inserts_to_after_forgot() {
         assert_suggestion_result(
             "He forgot send the file.",
-            MissingTo::default(),
+            test_linter(),
             "He forgot to send the file.",
         );
     }
@@ -482,7 +485,7 @@ mod tests {
     fn inserts_to_after_trying() {
         assert_suggestion_result(
             "I'm trying get better at chess.",
-            MissingTo::default(),
+            test_linter(),
             "I'm trying to get better at chess.",
         );
     }
@@ -491,7 +494,7 @@ mod tests {
     fn inserts_to_after_refused() {
         assert_suggestion_result(
             "She refused answer the question.",
-            MissingTo::default(),
+            test_linter(),
             "She refused to answer the question.",
         );
     }
@@ -500,7 +503,7 @@ mod tests {
     fn inserts_to_after_ready() {
         assert_suggestion_result(
             "We're ready start the meeting.",
-            MissingTo::default(),
+            test_linter(),
             "We're ready to start the meeting.",
         );
     }
@@ -509,7 +512,7 @@ mod tests {
     fn inserts_to_after_eager() {
         assert_suggestion_result(
             "I'm eager see the results.",
-            MissingTo::default(),
+            test_linter(),
             "I'm eager to see the results.",
         );
     }
@@ -518,7 +521,7 @@ mod tests {
     fn inserts_to_after_inclined() {
         assert_suggestion_result(
             "I'm inclined believe you.",
-            MissingTo::default(),
+            test_linter(),
             "I'm inclined to believe you.",
         );
     }
@@ -527,26 +530,26 @@ mod tests {
     fn inserts_to_after_resolved() {
         assert_suggestion_result(
             "She resolved solve the case.",
-            MissingTo::default(),
+            test_linter(),
             "She resolved to solve the case.",
         );
     }
 
     #[test]
     fn no_lint_when_to_present() {
-        assert_no_lints("She wants to finish early.", MissingTo::default());
+        assert_no_lints("She wants to finish early.", test_linter());
     }
 
     #[test]
     fn no_lint_with_noun_after_controller() {
-        assert_no_lints("They arranged a meeting at noon.", MissingTo::default());
+        assert_no_lints("They arranged a meeting at noon.", test_linter());
     }
 
     #[test]
     fn no_lint_needs_follow_up_appointments() {
         assert_no_lints(
             "Gus is recovering well, though he needs follow-up appointments.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -554,7 +557,7 @@ mod tests {
     fn no_lint_delays_meant_decisions() {
         assert_no_lints(
             "The delays meant decisions were often made on outdated information, hindering agility and potentially impacting return on investment.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -562,7 +565,7 @@ mod tests {
     fn no_lint_reduced_relative_clause_after_participle() {
         assert_no_lints(
             "The techniques learned would probably not change much with resolution so 480i would seem almost as usable for educational use as 8K video.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -570,7 +573,7 @@ mod tests {
     fn no_lint_bouquet_of_roses() {
         assert_no_lints(
             "I made a note to request a small bouquet of roses for his room, a simple gesture that I hoped would bring a moment of solace.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -578,7 +581,7 @@ mod tests {
     fn no_lint_for_intended_word_phrase() {
         assert_no_lints(
             "Detects incorrect usage of `peak` when the intended word is `pique`.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -586,7 +589,7 @@ mod tests {
     fn no_lint_long_passage() {
         assert_no_lints(
             "Before her was another long passage illuminated by lamps.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -594,7 +597,7 @@ mod tests {
     fn no_lint_long_island_sound() {
         assert_no_lints(
             "The sailboat drifted along Long Island Sound at sunrise.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -602,7 +605,7 @@ mod tests {
     fn no_lint_learn_tag_probabilities() {
         assert_no_lints(
             "These models learn tag probabilities from annotated corpora.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -610,7 +613,7 @@ mod tests {
     fn no_lint_standard_feature_nominal_phrase() {
         assert_no_lints(
             "This is a standard and expected feature for any e-commerce site selling visually-driven products.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
@@ -618,119 +621,113 @@ mod tests {
     fn no_lint_mixing_bowl_nominal_phrase() {
         assert_no_lints(
             "This is a 2-quart mixing bowl, ideal for everything from whipping cream to preparing cake batter.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn no_lint_try_and_say() {
-        assert_no_lints(
-            "I'll try and say hello before I leave.",
-            MissingTo::default(),
-        );
+        assert_no_lints("I'll try and say hello before I leave.", test_linter());
     }
 
     #[test]
     fn no_lint_failed_edit_attempts() {
-        assert_no_lints("failed edit attempts", MissingTo::default());
+        assert_no_lints("failed edit attempts", test_linter());
     }
 
     #[test]
     fn no_lint_ready_work() {
-        assert_no_lints("ready work", MissingTo::default());
+        assert_no_lints("ready work", test_linter());
     }
 
     #[test]
     fn no_lint_bad_at_managing_side_effects() {
-        assert_no_lints("Bad at managing side-effects", MissingTo::default());
+        assert_no_lints("Bad at managing side-effects", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_resolved_conflict() {
-        assert_no_lints("a fully resolved conflict", MissingTo::default());
+        assert_no_lints("a fully resolved conflict", test_linter());
     }
 
     #[test]
     fn no_lint_a_resolved_configuration() {
-        assert_no_lints("A resolved configuration", MissingTo::default());
+        assert_no_lints("A resolved configuration", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_resolved_configuration() {
-        assert_no_lints("A fully resolved configuration", MissingTo::default());
+        assert_no_lints("A fully resolved configuration", test_linter());
     }
 
     #[test]
     fn no_lint_a_resolved_set_of_configuration() {
-        assert_no_lints("A resolved set of configuration", MissingTo::default());
+        assert_no_lints("A resolved set of configuration", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_resolved_set_of_configuration() {
-        assert_no_lints(
-            "A fully resolved set of configuration",
-            MissingTo::default(),
-        );
+        assert_no_lints("A fully resolved set of configuration", test_linter());
     }
 
     #[test]
     fn no_lint_system_produced_a_fully_resolved_set_of_dependencies() {
         assert_no_lints(
             "System produced a fully resolved set of dependencies",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn no_lint_a_resolved_list_of_parameters() {
-        assert_no_lints("A resolved list of parameters", MissingTo::default());
+        assert_no_lints("A resolved list of parameters", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_resolved_list_of_parameters() {
-        assert_no_lints("A fully resolved list of parameters", MissingTo::default());
+        assert_no_lints("A fully resolved list of parameters", test_linter());
     }
 
     #[test]
     fn no_lint_a_prepared_stranger() {
-        assert_no_lints("A prepared stranger", MissingTo::default());
+        assert_no_lints("A prepared stranger", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_prepared_stranger() {
-        assert_no_lints("A fully prepared stranger", MissingTo::default());
+        assert_no_lints("A fully prepared stranger", test_linter());
     }
 
     #[test]
     fn no_lint_a_prepared_group_of_strangers() {
-        assert_no_lints("A prepared group of strangers", MissingTo::default());
+        assert_no_lints("A prepared group of strangers", test_linter());
     }
 
     #[test]
     fn no_lint_a_fully_prepared_group_of_strangers() {
-        assert_no_lints("A fully prepared group of strangers", MissingTo::default());
+        assert_no_lints("A fully prepared group of strangers", test_linter());
     }
 
     #[test]
     fn no_lint_a_nicely_arranged_set_of_flowers() {
-        assert_no_lints("A nicely arranged bunch of flowers", MissingTo::default());
+        assert_no_lints("A nicely arranged bunch of flowers", test_linter());
     }
 
     #[test]
     fn no_lint_a_recently_forgotten_list_of_names() {
-        assert_no_lints("A recently forgotten list of names", MissingTo::default());
+        assert_no_lints("A recently forgotten list of names", test_linter());
     }
 
     #[test]
     fn april_16_3188() {
-        assert_no_lints("I want people like you in my life.", MissingTo::default());
+        assert_no_lints("I want people like you in my life.", test_linter());
     }
 
     #[test]
     fn june_13_3188() {
         assert_no_lints(
             "Sometimes too much or too little to do. If too much, might be serious about wanting distance from others.",
-            MissingTo::default(),
+            test_linter(),
         );
     }
 }

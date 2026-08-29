@@ -47,7 +47,7 @@ export default class LintFramework {
 	private popupHandler: PopupHandler;
 	private targets: Set<Node>;
 	private scrollableAncestors: Set<HTMLElement>;
-	private lintRequested = false;
+	private lintRequest: Promise<unknown> | null = null;
 	private renderRequested = false;
 	private lintDelayTimer: number | null = null;
 	private lastInputAt = 0;
@@ -123,7 +123,7 @@ export default class LintFramework {
 		this.requestLintUpdate();
 	}
 
-	async requestLintUpdate(immediate = false) {
+	async requestLintUpdate(immediate = false): Promise<void> {
 		const delay = (await this.actions.getDelay?.()) ?? 0;
 		const remainingDelay = delay - (Date.now() - this.lastInputAt);
 
@@ -145,13 +145,24 @@ export default class LintFramework {
 			this.lintDelayTimer = null;
 		}
 
-		if ((!this.lintRequested && this.targets.size !== 0) || immediate) {
-			// Avoid duplicate requests in the queue
+		if (this.lintRequest != null) {
 			if (!immediate) {
-				this.lintRequested = true;
+				return;
 			}
 
-			const lintResults = await Promise.all(
+			// An immediate refresh must run after the current request. Running them concurrently
+			// allows an older result to finish last and redraw a lint that was just ignored.
+			try {
+				await this.lintRequest;
+			} catch {
+				// Still attempt the explicitly requested refresh after a failed background request.
+			}
+			await this.requestLintUpdate(true);
+			return;
+		}
+
+		if (this.targets.size !== 0) {
+			const request = Promise.all(
 				this.onScreenTargets().map(async (target) => {
 					if (!document.contains(target)) {
 						this.targets.delete(target);
@@ -189,10 +200,13 @@ export default class LintFramework {
 				}),
 			);
 
+			this.lintRequest = request;
+			const lintResults = await request.finally(() => {
+				if (this.lintRequest === request) {
+					this.lintRequest = null;
+				}
+			});
 			this.lastLints = lintResults.filter((r) => r.target != null) as any;
-			if (!immediate) {
-				this.lintRequested = false;
-			}
 			this.requestRender();
 		}
 	}
@@ -225,6 +239,10 @@ export default class LintFramework {
 
 					if (caretPosition != null) {
 						const closestIdx = closestBox(caretPosition, this.lastBoxes);
+
+						if (closestIdx < 0) {
+							return;
+						}
 
 						const previousBox = this.lastBoxes[closestIdx];
 						const suggestions = previousBox.lint.suggestions;
