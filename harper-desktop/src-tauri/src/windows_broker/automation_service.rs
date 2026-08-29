@@ -13,11 +13,9 @@ use uiautomation::{
     UIAutomation, UIElement,
     patterns::{UITextPattern, UIValuePattern},
 };
-use windows::Win32::Foundation::{HWND, POINT};
+use windows::Win32::Foundation::HWND;
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::WindowsAndMessaging::{
-    GetCursorPos, GetForegroundWindow, GetWindowThreadProcessId,
-};
+use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -289,9 +287,9 @@ fn get_text(element: &UIElement) -> uiautomation::Result<String> {
     range.get_text(-1)
 }
 
-/// Finds a fresh text element below `window`, preferring keyboard focus, then the smallest element
-/// below the cursor, and finally the first readable text element in UI Automation tree order. When
-/// `expected_text` is provided, unrelated text providers are excluded.
+/// Finds the focused text element below `window`.
+///
+/// When `expected_text` is provided, unrelated text providers are excluded.
 fn text_element_for_window(
     automation: &UIAutomation,
     window: isize,
@@ -310,11 +308,7 @@ fn text_element_for_window(
     )?;
     let condition = automation.create_and_condition(text_condition, keyboard_condition)?;
 
-    for (index, element) in root
-        .find_all(TreeScope::Subtree, &condition)?
-        .into_iter()
-        .enumerate()
-    {
+    for element in root.find_all(TreeScope::Subtree, &condition)? {
         if let Some(expected) = expected_text {
             let text = get_text(&element);
 
@@ -322,7 +316,7 @@ fn text_element_for_window(
                 continue;
             };
 
-            if expected_text.is_some_and(|expected| expected != text) {
+            if expected != text {
                 continue;
             }
         }
@@ -334,29 +328,6 @@ fn text_element_for_window(
         uiautomation::errors::ERR_NOTFOUND,
         "no text element found",
     ))
-}
-
-fn cursor_overlap_area(element: &UIElement, cursor: Option<POINT>) -> Option<i64> {
-    let cursor = cursor?;
-    let rect = element.get_bounding_rectangle().ok()?;
-    if cursor.x < rect.get_left()
-        || cursor.x >= rect.get_right()
-        || cursor.y < rect.get_top()
-        || cursor.y >= rect.get_bottom()
-    {
-        return None;
-    }
-
-    Some(
-        (i64::from(rect.get_right()) - i64::from(rect.get_left()))
-            * (i64::from(rect.get_bottom()) - i64::from(rect.get_top())),
-    )
-}
-
-fn cursor_position() -> Option<POINT> {
-    let mut point = POINT::default();
-    unsafe { GetCursorPos(&mut point) }.ok()?;
-    Some(point)
 }
 
 fn get_text_job(automation: &UIAutomation, args: Vec<JobArgument>) -> JobResult {
