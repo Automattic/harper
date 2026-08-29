@@ -37,9 +37,10 @@ jobs:
             librsvg2-dev \
             libwebkit2gtk-4.1-dev \
             libxdo-dev \
-            llvm
-      - name: Verify MSVC cross-compilation tools
-        run: command -v clang-cl llvm-lib
+            llvm \
+            nsis
+      - name: Verify Windows build tools
+        run: command -v clang-cl llvm-lib makensis
       - name: Rust Cache
         uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
         with:
