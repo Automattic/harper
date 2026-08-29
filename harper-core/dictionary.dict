@@ -2130,6 +2130,7 @@ Chișinău/Og
 Chisinau/Og
 Chittagong/Og       # old name of Chattogram
 Chivas/g
+Chloë/Og
 Chloe/Og
 Choctaw/ONSgJ
 Chomsky/Og
@@ -11833,6 +11834,7 @@ adware/Nmg
 adze/NSgV
 aegis/~Ng
 aeon/NSg!_₹
+# æon
 aerate/VdSGn
 aeration/Ng
 aerator/NSg
@@ -13023,6 +13025,8 @@ appurtenant/JN
 apricot/NwgSJ
 apron/~NgSV
 apropos/JPN
+# à propos
+# àpropos
 apse/~NSg
 apt/~JY^pNi
 apter/Jc
@@ -19365,6 +19369,7 @@ coop/~NgSVd>GZ
 cooper/~NgVdG
 cooperage/Ng
 cooperate/~VdSGnv
+# coöperate
 cooperation/~Nmg
 cooperative/~JYpNgS
 cooperativeness/Ng
@@ -19536,6 +19541,7 @@ corsage/NgS
 corsair/~NgS
 corset/NSgVGd
 cortege/NgS
+# cortège
 cortex/~NgS
 cortical/~J
 cortices/9
@@ -19912,6 +19918,7 @@ creativity/~Ng
 creator/~NgS
 creature/~NSg
 creche/NSg
+# crèche
 cred/N
 credence/~NmgV
 credential/JNSgVGd
@@ -19943,6 +19950,9 @@ crematoria/N9
 crematorium/~N0gS
 crematory/JNSg
 creme/~JNSgV
+# crème
+# crème brulée
+# crème brûlée
 crenelate/VGdSXn
 crenelation/Ng
 crenellate/VdSGnX!@_₹
@@ -20467,6 +20477,7 @@ daddy/~NSgVJ
 dado/~N0gV
 dadoes/N9V
 daemon/~NgS
+# dæmon
 daemonic/J
 daffiness/Ng
 daffodil/~NSgJ
@@ -20493,6 +20504,7 @@ dairymen/9
 dairywoman/Ng
 dairywomen/9
 dais/~NgS
+# daïs
 daisy/~NSg
 dale/~NSg
 dalliance/NgS
@@ -20788,6 +20800,7 @@ decompiler/NgS
 decongestant/NwgS
 deconstructionism/Nmg
 decor/NgS
+# décor
 decorate/~VGdSrnv
 decorating/~V6Ng
 decoration/~Nwgr
@@ -21188,6 +21201,7 @@ derogatorily/Ry
 derogatory/~JN
 derrick/~NSgV
 derriere/NSg
+# derrière
 derringer/NSg
 derv/N
 dervish/NgS
@@ -24446,6 +24460,7 @@ fabricate/VdSGnX
 fabrication/~Nmg
 fabricator/NSg
 fabulous/~JY
+façade/NSg
 facade/~NSg
 face/~NSVdGre
 face off/V
@@ -24922,6 +24937,7 @@ fez/~Ng
 fezzes/N
 fiance/NgVe
 fiancee/NgS
+# fiancée
 fiances/N
 fiasco/~Ng
 fiascoes/N0
@@ -25057,6 +25073,8 @@ filtrate/NSVGdin
 filtrate's
 filtration/~NwSgi
 fin/~NSgV>
+# fin de siècle
+# fin-de-siècle
 finagle/Vd>SGZ
 finagler/Ng
 final/~NSgJYV
@@ -25254,6 +25272,7 @@ flakiness/Nmg
 flaky/J^>p
 flamage/N
 flambe/JNgSV
+# flambé
 flambeed/VtT
 flambeing/V6
 flamboyance/Nmg
@@ -25956,6 +25975,7 @@ frankincense/Ng
 frankness/Ng
 frantic/~JNQ
 frappe/NSg
+# frappé
 frat/NgS
 fraternal/~JYN
 fraternisation/Ng!_₹
@@ -31119,6 +31139,7 @@ jailbreak/NSgVG
 jailbroken/VJ
 jailer/Ng
 jailhouse/~NS
+jalapeño/NgS
 jalapeno/NgS
 jalopy/NSg
 jalousie/NgS
@@ -34060,6 +34081,8 @@ men/~N9g
 menace/~NgSVGd
 menacing/~JYV6N
 menage/NgS
+# ménage à trois
+# ménage-à-trois
 menagerie/~NgS
 mend/~Vd>GSNgZ
 mendacious/JY
@@ -34669,6 +34692,8 @@ misdo/VGz
 misdoes/Vh
 misdoing/NgV
 misdone/VT
+# mise en scène
+# mise-en-scène
 miser/NSgY
 miserable/J
 miserableness/Nmg
@@ -35660,6 +35685,7 @@ nail biter/NgS
 nailbrush/NgSV
 naïve/~JN
 naive/~J>Y^N
+naïveté/Nmg
 naivete/Nmg
 naivety/Nmg
 naked/~JYpV
@@ -41055,6 +41081,7 @@ protectiveness/Ng
 protector/~NgS
 protectorate/~NgS
 protege/NSg
+# protégé
 protegee/NS
 protein/~NwSg
 protest/NwgS
@@ -42292,6 +42319,7 @@ reek/~NgSVGd
 reel/~NSVGdU
 reel's
 reelect/VdSG
+# reëlect
 reentrant/J
 reeve/~NVG
 reexecute/VSdG
@@ -43300,6 +43328,7 @@ rollout/NgS
 rollover/~NSgV
 romaine/~NgS
 roman/~JNg
+# roman à clef
 romance/~NgSVGd>Z
 romancer/Ng
 romanisation/NSg!_₹
@@ -46410,6 +46439,7 @@ soundproofing/~VNmg
 soundscape/NSgV
 soundtrack/~NSgV
 soup/~NwgSVdG
+coupçon/NgS
 soupcon/NgS
 soupy/J>^
 sour/~JY^>pNgSVdG
@@ -53931,7 +53961,6 @@ BERT/Og             # Bidirectional Encoder Representations from Transformers
 BLM/Ng
 BOM/NSg             # Byte Order Mark
 BPE/NgS             # Byte Pair Encoding
-BRICS/              # intergovernmental organization
 BSON/Ng             # binary JSON
 BSP/NSg             # data structure
 BYD/OgS             # Chinese automobile manufacturer
@@ -54698,9 +54727,16 @@ z-buffer/NgS
 # And they will be reviewed
 # Words added using the `just addnoun` command will be added here
 
+à la
+à la carte
+à la mode
+# açai
 agnatic/J           # Most often in the phrase "agnatic primogeniture"
+# après ski
+# après-ski
 APAC/gO             # Acronym for Asia-Pacific
 archipelagic/J      # As found in the phrase "Archipelagic state" in the "United Nations Convention on the Law of the Sea"
+# bric-à-brac
 chorded/J           # music: As refers to "chorded instruments"
 cognatic/J          # As with "agnatic"
 comital/J           # Adjective version of the noble rank "count/countess/earl"
@@ -54736,6 +54772,8 @@ retrocomputing/Nmg
 sortition/Nmg       # Political science: a method of appointment to office by random draw
 subvocalization/Nwg # phonetics
 supervenience/Nmg   # From emergentist ontology
+# tête à tête
+# tête-à-tête
 trimeter/NgS        # poetry
 trimetre/NgS!@_₹    # poetry
 trimetric/J
