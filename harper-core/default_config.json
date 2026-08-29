@@ -1382,6 +1382,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryLess",
+								"state": true,
+								"label": "Very Less"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WholeEntire",
 								"state": true,
 								"label": "Whole Entire"
@@ -3954,13 +3961,6 @@
 						},
 						{
 							"Bool": {
-								"name": "VeryLess",
-								"state": true,
-								"label": "Very Less"
-							}
-						},
-						{
-							"Bool": {
 								"name": "VeryMuchSo",
 								"state": true,
 								"label": "Very Much So"
@@ -4422,6 +4422,13 @@
 								"name": "CautionaryTale",
 								"state": true,
 								"label": "Cautionary Tale"
+							}
+						},
+						{
+							"Bool": {
+								"name": "CeaseTo",
+								"state": true,
+								"label": "Cease to"
 							}
 						},
 						{
@@ -5717,6 +5724,13 @@
 								"name": "WishCould",
 								"state": true,
 								"label": "Wish Could"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WithOpenArms",
+								"state": true,
+								"label": "With Open Arms"
 							}
 						},
 						{
