@@ -40,9 +40,9 @@ impl ExprLinter for Ajar {
 
         let fix: Vec<char> = a
             .get_ch(src)
-            .into_iter()
+            .iter()
             .copied()
-            .chain(jar.get_ch(src).into_iter().copied())
+            .chain(jar.get_ch(src).iter().copied())
             .collect();
 
         let suggestions = vec![Suggestion::ReplaceWith(fix)];
