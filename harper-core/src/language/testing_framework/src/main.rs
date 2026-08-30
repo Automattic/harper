@@ -350,12 +350,30 @@ fn run_language_tests(dict: &dyn Dictionary, language: &str) {
 fn spell_check_text(dict: &dyn Dictionary, text: &str) {
     println!("\n🔍 Spell checking text: \"{}\"", text);
     
-    let words: Vec<&str> = text.split_whitespace().collect();
+    // Extract words properly, filtering out punctuation
+    // For German, we consider alphabetic characters (including umlauts) and apostrophes as word characters
+    let mut words = Vec::new();
+    let mut current_word = String::new();
+    
+    for c in text.chars() {
+        if c.is_alphabetic() || c == '\'' {
+            current_word.push(c);
+        } else {
+            if !current_word.is_empty() {
+                words.push(current_word);
+                current_word = String::new();
+            }
+        }
+    }
+    if !current_word.is_empty() {
+        words.push(current_word);
+    }
+    
     let mut unknown_words = Vec::new();
     
     for word in &words {
         if dict.get_word_metadata(&word.chars().collect::<Vec<_>>()).is_none() {
-            unknown_words.push(word);
+            unknown_words.push(word.as_str());
         }
     }
     
