@@ -1371,7 +1371,7 @@ bauschaffende/~~N
 bauschaffender/~~N
 baustahl/~~NT
 baustähle/~~N
-bauten/~~MZ
+bauten/~~MZh
 bautzen/~~N
 bautzener/~~NF
 bauwerker/~~N
@@ -1892,7 +1892,7 @@ auerbacher/~~NF
 auersmacher/~~N
 auerstedt/~~N
 aufbahren/~~NMZ
-aufbauten/~~MZ
+aufbauten/~~MZh
 aufbetten/~~N
 aufblick/~~NPT
 aufbrachte/~~Z
@@ -2323,7 +2323,7 @@ analogisieren/~~N
 analphabetie/~~N
 analysandum/~~N
 analysans/~~N
-analyse/~~N
+analyse/~~Nh
 analytizität/~~P
 anamnesis/~~N
 anarcho/~~N
@@ -17769,6 +17769,7 @@ hydrophob/~Nh #frequency: 6
 hydrothermal/~Nh #frequency: 6
 hygienisch/~Jq #adjective root, frequency: 6
 hygrophil/~Nh #frequency: 6
+Hyper/~~Nh # prefix/word element meaning "over, above, excessive"
 hyperaktiv/~Nh #frequency: 6
 hyperkomplex/~Nh #frequency: 6
 hypermedial/~Nh #frequency: 6
@@ -30302,6 +30303,7 @@ israels/~~Nh
 iss/~~Nh
 isst/~~Vt # verb (3rd person singular of essen)
 ist/~~Vt # verb (3rd person singular of sein)
+Ist/~~Nh # noun meaning "current" or "existing"
 italic/~~Nh
 italien/~~V # auto-added
 item/~~Nh
@@ -71734,7 +71736,7 @@ festhängt/~~Nh
 festig/~~Vej # REPLACES festigen
 festigende/~~Nh
 festigens/~~Nh
-festigkeit/~~Fh
+festigkeit/~~Fhi
 festigtest/~~Nh
 festigtet/~~Nh
 festigung/~~Fh
@@ -86716,7 +86718,7 @@ impfmüdes/~~Nh
 impftest/~~Nh
 impfungen/~~V # auto-added
 implantat/~~Nh
-implizit/~~NXh
+implizit/~~NXhB
 implosion/~~Nh
 imponiere/~~Nh
 imponiert/~~Nh
@@ -90199,7 +90201,7 @@ kriselten/~~V # auto-added
 kriseltet/~~Nh
 kristall/~~NXh
 kristalls/~~Nh
-kriterien/~~V # auto-added
+kriterien/~~Nh # plural of Kriterium
 kriterium/~~Za #  auto-added
 kritiken/~~V # auto-added
 kritiker/~~Mh
@@ -119639,6 +119641,7 @@ zürntet/~~Nh
 äfftest/~~Nh
 ägypten/~~V # auto-added
 ägyptens/~~Nh
+Ägyptologie/~~Fh # Egyptology
 ägypter/~~Mh
 ägypterin/~~Nh
 ägyptern/~~V # auto-added
@@ -125142,6 +125145,7 @@ instrument/~~Nh
 inszenator/~~Nh
 integrität/~~Fh
 intensität/~~Fh
+Intensitätsanalyse/~~Fh
 interessen/~~Nh
 interferon/~~Nh
 interkalar/~~Nh
@@ -212195,7 +212199,7 @@ vergiften/~~N
 vergolden/~~N
 vergossen/~~J
 verhageln/~~N
-verhalten/~~N
+verhalten/~~Nh
 verheeren/~~V
 verhohlen/~~J
 verhärten/~~N
