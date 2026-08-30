@@ -13953,9 +13953,9 @@ dort/~~R # adverb there
 jetzt/~~R # adverb now
 sehr/~~R # adverb very
 wichtig/~~JOQRSTUWq #adjective important
-gut/~~NJOQRSTUWq #adjective and noun
-schön/~~JOQRSTUWq #adjective (primary), can be noun in some contexts
-groß/~~NJOQRSTUWq #adjective and noun
+gut/~~UNJOQRSTUWq #adjective and noun
+schön/~~UJOQRSTUWq #adjective (primary), can be noun in some contexts
+groß/~~UNJOQRSTUWq #adjective and noun
 klein/~~NJOQRSTUWq #adjective and noun
 neu/~~NJOQRSTUWq #adjective and noun
 alt/~~JOQRSTUWq #adjective old
@@ -14082,8 +14082,8 @@ teil/~~Nh #frequency: 9
 trüb/~~RJOQRSTUWqh #frequency: 9
 unter/~~P # preposition
 wach/~~RJOQRSTUWqh #frequency: 9
-wahr/~~RJOQRSTUWqh #frequency: 9
-weiß/~~RJOQRSTUWqh #frequency: 9
+wahr/~~URJOQRSTUWqh #frequency: 9
+weiß/~~URJOQRSTUWqh #frequency: 9
 widerruf/~~Mh #frequency: 9
 wild/~~RJOQRSTUWqh #frequency: 9
 wilder/~~RJOQRSTUWqh #frequency: 9
@@ -14121,7 +14121,7 @@ bündel/~Nhpuvw #frequency: 8
 deck/~Nhpuvw #frequency: 8
 deckel/~Nhpuvw #frequency: 8
 demütig/~Jq #adjective root, frequency: 8
-dichter/~Nhpuvw #frequency: 8
+dichter/~~NJOQRSTUWq #frequency: 8
 doppel/~Nhpuvw #frequency: 8
 druck/~Nhpuvw #frequency: 8
 ehelich/~Jq #adjective root, frequency: 8
@@ -14208,7 +14208,7 @@ roh/~~JOQRSTUWqh #frequency: 8
 ruf/~Nhpuvw #frequency: 8
 rutsch/~Nhpuvw #frequency: 8
 scheu/~~JOQRSTUWqh #frequency: 8
-schiefer/~Nhpuvw #frequency: 8
+schiefer/~~NJOQRSTUWq #frequency: 8
 schiff/~Nhpuvw #frequency: 8
 schimmel/~Nhpuvw #frequency: 8
 schlag/~Nhpuvw #frequency: 8
@@ -14216,7 +14216,6 @@ schlapp/~~RJOQRSTUWqh #frequency: 8
 schluck/~Nhpuvw #frequency: 8
 schnell/~~RJOQRSTUWqh #adjective fast
 schnörkel/~Nhpuvw #frequency: 8
-schon/~Nhpuvw #frequency: 8
 schraub/~Nhpuvw #frequency: 8
 schrill/~~RJOQRSTUWqh #frequency: 8
 schroff/~~RJOQRSTUWqh #frequency: 8
@@ -14318,7 +14317,7 @@ ahnungsvoll/~~JOQRSTUWqh #frequency: 7
 akephal/~~JOQRSTUWqh #frequency: 7
 aktuell/~~RJOQRSTUWqh #frequency: 7
 all/~~NJOQRSTUWq #frequency: 7
-amyotroph/~Nhpuvw #frequency: 7
+amyotroph/~~RJOQRSTUWqh #frequency: 7
 analog/~~RJOQRSTUWqh #frequency: 7
 ander/~Nhpuvw #frequency: 7
 angel/~Nhpuvw #frequency: 7
@@ -14434,7 +14433,7 @@ drang/~Nhpuvw #frequency: 7
 dreh/~Nhpuvw #frequency: 7
 drill/~Nhpuvw #frequency: 7
 droh/~Nhpuvw #frequency: 7
-drossel/~Nhpuvw #frequency: 7
+drossel/~~NJOQRSTUWq #frequency: 7
 drück/~Nhpuvw #frequency: 7
 dumpf/~~RJOQRSTUWqh #frequency: 7
 durchstich/~Nhpuvw #frequency: 7
@@ -14503,7 +14502,7 @@ fantasiereich/~~JOQRSTUWqh #frequency: 7
 fantasievoll/~~JOQRSTUWqh #frequency: 7
 fatal/~~JOQRSTUWqh #frequency: 7
 fei/~Nhpuvw #frequency: 7
-fertiger/~Nhpuvw #frequency: 7
+fertiger/~~NJOQRSTUWq #frequency: 7
 fesch/~~RJOQRSTUWqh #frequency: 7
 fessel/~Nhpuvw #frequency: 7
 fett/~~NJOQRSTUWq #frequency: 7
@@ -14572,7 +14571,7 @@ gipfel/~Nhpuvw #frequency: 7
 glatthobel/~Nhpuvw #frequency: 7
 glazial/~~NJOQRSTUWq #frequency: 7
 glorreich/~~JOQRSTUWqh #frequency: 7
-gläubiger/~Nhpuvw #frequency: 7
+gläubiger/~~NJOQRSTUWq #frequency: 7
 grab/~Nhpuvw #frequency: 7
 grauenvoll/~~JOQRSTUWqh #frequency: 7
 greif/~Nhpuvw #frequency: 7
@@ -14742,8 +14741,8 @@ mikrobizid/~~JOQRSTUWqh #frequency: 7
 mild/~~JOQRSTUWqh #frequency: 7
 mineralreich/~~JOQRSTUWqh #frequency: 7
 missbrauch/~Nhpuvw #frequency: 7
-mittel/~Nhpuvw #frequency: 7
-mittler/~Nhpuvw #frequency: 7
+mittel/~~NJOQRSTUWq #frequency: 7
+mittler/~~NJOQRSTUWq #frequency: 7
 mobil/~~JOQRSTUWqh #frequency: 7
 moder/~Nhpuvw #frequency: 7
 monumental/~~JOQRSTUWqh #frequency: 7
@@ -14863,7 +14862,7 @@ schauer/~Nhpuvw #frequency: 7
 scheffel/~Nhpuvw #frequency: 7
 scheitel/~Nhpuvw #frequency: 7
 schenk/~Nhpuvw #frequency: 7
-schief/~~RJOQRSTUWqh #frequency: 7
+schief/~~URJOQRSTUWqh #frequency: 7
 schier/~~RJOQRSTUWqh #frequency: 7
 schilder/~Nhpuvw #frequency: 7
 schirm/~Nhpuvw #frequency: 7
@@ -14872,7 +14871,7 @@ schlau/~~RJOQRSTUWqh #frequency: 7
 schlauch/~Nhpuvw #frequency: 7
 schleim/~Nhpuvw #frequency: 7
 schlepp/~Nhpuvw #frequency: 7
-schlichter/~Nhpuvw #frequency: 7
+schlichter/~~NJOQRSTUWq #frequency: 7
 schließ/~Nhpuvw #frequency: 7
 schliff/~Nhpuvw #frequency: 7
 schmachvoll/~~RJOQRSTUWqh #frequency: 7
@@ -15053,7 +15052,7 @@ volatil/~~RJOQRSTUWqh #frequency: 7
 voll/~~RJOQRSTUWqh #frequency: 7
 wackel/~Nhpuvw #frequency: 7
 wahlfrei/~~RJOQRSTUWqh #frequency: 7
-wahrer/~Nhpuvw #frequency: 7
+wahrer/~~NJOQRSTUWq #frequency: 7
 wahrheitsgetreu/~~RJOQRSTUWqh #frequency: 7
 waldreich/~~RJOQRSTUWqh #frequency: 7
 wander/~Nhpuvw #frequency: 7
@@ -16237,7 +16236,7 @@ diastereoselektiv/~Nh #frequency: 6
 dichotom/~Nh #frequency: 6
 Dimorphismus/~~Mh # from hunspell
 Dimorphismen/~~M # plural of Dimorphismus
-dicht/~~JOQRSTUWqh # adjective with compound flag
+dicht/~~UJOQRSTUWqh # adjective with compound flag
 dickköpfig/~Jq #adjective root, frequency: 6
 dicklich/~Jq #adjective root, frequency: 6
 dicktengleich/~Nh #frequency: 6
@@ -18539,7 +18538,7 @@ kurial/~Nh #frequency: 6
 kursiv/~Nh #frequency: 6
 kurvenreich/~Nh #frequency: 6
 kurvig/~Jq #adjective root, frequency: 6
-kurz/~~NJOQRSTUWq #adjective and noun
+kurz/~~UNJOQRSTUWq #adjective and noun
 kurzlebig/~Jq #adjective root, frequency: 6
 kurzschlussfrei/~Nh #frequency: 6
 kurzweilig/~Jq #adjective root, frequency: 6
@@ -29903,7 +29902,7 @@ höfen/~~V # auto-added
 höfling/~~Mh
 höhe/~~Nh
 höhen/~~V # auto-added
-höher/~~Mh
+höher/~~NJOQRSTUWq
 höhere/~~Nh
 höherem/~~Nh
 höheren/~~V # auto-added
@@ -32481,7 +32480,7 @@ kürzeln/~~V # auto-added
 kürzels/~~Nh
 kürz/~~Vcej # REPLACES kürzen
 kürzens/~~Nh
-kürzer/~~Mh
+kürzer/~~NJOQRSTUWq
 kürzere/~~Nh
 kürzt/~~NXh
 kürztet/~~Nh
@@ -33513,7 +33512,7 @@ ländern/~~Nh
 ländler/~~Mh
 länge/~~Nh
 längen/~~V # auto-added
-länger/~~Mh
+länger/~~NJOQRSTUWq
 längere/~~Nh
 längs/~~Nh
 längste/~~Nh
@@ -41725,7 +41724,7 @@ weizen/~~V # auto-added
 weiße/~~Nh
 weißem/~~Nh
 weiß/~~Vcej # REPLACES weißen
-weißer/~~Mh
+weißer/~~NJOQRSTUWq
 weißes/~~Nh
 weißt/~~NXh
 welch/~~NYXh
@@ -120626,9 +120625,9 @@ abgashaltig/~~JOQRSTUWq #adjective (auto-converted)
 abgebbar/~~JOQRSTUWq #adjective (auto-converted)
 abgleichbar/~~JOQRSTUWq #adjective (auto-converted)
 abglich/~~JOQRSTUWq #adjective (auto-converted)
-hoch/~~JOQRSTUWq #adjective (auto-converted)
+hoch/~~UJOQRSTUWq #adjective (auto-converted)
 tief/~~JOQRSTUWq #adjective (auto-converted)
-lang/~~NJOQRSTUWq #adjective and noun
+lang/~~UNJOQRSTUWq #adjective and noun
 advers/~~JOQRSTUWq #adjective (auto-converted)
 amtlich/~~NJOQRSTUWq #adjective and noun
 anglich/~~JOQRSTUWq #adjective (auto-converted)
