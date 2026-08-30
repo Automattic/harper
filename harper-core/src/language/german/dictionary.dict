@@ -2297,6 +2297,7 @@ alsdorfer/~~NF
 alsenborn/~~N
 alsenborner/~~NF
 alsfeld/~~N
+altsteinzeit/~~Fh
 altach/~~N
 altai/~~N
 altamira/~~N
@@ -2991,7 +2992,8 @@ ache/~~N
 achill/~~N
 achim/~~N
 achromatismus/~~N
-achse/~~MZ
+achse/~~MZh
+achsenmächte/~~Fh
 achtelfinale/~~N
 achtgeben/~~rI
 achthaben/~~rI
@@ -20602,6 +20604,8 @@ auxine/~~Nh
 auxinen/~~V # auto-added
 auxins/~~Nh
 außen/~~V # auto-added
+außen/~~Dh
+außengrenzen/~~Fh
 außer/~~Mh
 avancen/~~V # auto-added
 avionik/~~Nh
@@ -20725,6 +20729,7 @@ balls/~~Nh
 ballt/~~NXh
 balltet/~~Nh
 ballung/~~Fh
+ballungsraum/~~Mh
 balsam/~~Nh
 balsams/~~Nh
 balte/~~Nh
@@ -22520,6 +22525,7 @@ bunde/~~Nh
 bunden/~~V # auto-added
 bundes/~~Nh
 bundesbehörden/~~Fh
+bundeshauptstadt/~~Fh
 bunds/~~Nh
 bunkere/~~Nh
 bunkern/~~Nh
@@ -26285,6 +26291,7 @@ flyers/~~Nh
 flyover/~~Mh
 fläche/~~Nh
 flächen/~~XZ #  auto-added
+flächenstaaten/~~Mh
 flächenschwerpunkt/~~Mh
 flächig/~~RJOQRSTUWqh
 fläz/~~NXh
@@ -69177,6 +69184,7 @@ erobertes/~~Nh
 erobertest/~~Nh
 erobertet/~~Nh
 eroberung/~~Fh
+eroberungen/~~Fh
 eroberungs/~~Nh
 erodier/~~Vej # REPLACES erodieren
 erodierens/~~Nh
@@ -215585,7 +215593,7 @@ flotte/~~N
 franse/~~N
 fährte/~~N
 glucke/~~N
-grenze/~~N
+grenze/~~Fh
 idiome/~~N
 klappe/~~N
 klemme/~~N
