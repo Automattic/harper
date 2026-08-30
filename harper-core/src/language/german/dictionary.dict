@@ -14133,6 +14133,8 @@ schal/~~JOQRSTUWqh #frequency: 10 (adjective)
 schick/~~JOQRSTUWqh #frequency: 10 (adjective)
 schmäler/~~JOQRSTUWqh #frequency: 10 (adjective)
 strahl/~~JOQRSTUWqh #frequency: 10 (adjective)
+strahl/~~Mh
+strahlen/~~Mh
 trau/~~JOQRSTUWqh #frequency: 10 (adjective)
 weich/~~NJOQRSTUWq #adjective and noun
 adel/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -14237,6 +14239,7 @@ erwerb/~~RJOQRSTUWqh #frequency: 8
 feig/~Jq #adjective root, frequency: 8
 fertig/~Jq #adjective root, frequency: 8
 fest/~~RJOQRSTUWqh #frequency: 8
+festkörper/~~Mh
 finger/~Nhpuvw #frequency: 8
 fisch/~Jq #adjective root, frequency: 8
 fluch/~Nhpuvw #frequency: 8
@@ -14290,6 +14293,8 @@ negativ/~~RJOQRSTUWqh #frequency: 8
 nerv/~Nhpuvw #frequency: 8
 nötig/~Jq #adjective root, frequency: 8
 ober/~~RJOQRSTUWqh #frequency: 8
+oberfläche/~~Fh
+oberflächenchemie/~~Fh
 paar/~Nhpuvw #frequency: 8
 pack/~Nhpuvw #frequency: 8
 passiv/~~RJOQRSTUWqh #frequency: 8
@@ -22883,7 +22888,9 @@ chefin/~~Nh
 chefs/~~Nh
 chelat/~~NXh
 chelats/~~Nh
-chemie/~~Nh
+chemie/~~Fh
+chemoinformatik/~~Fh
+chemometrik/~~Fh
 chi/~~Nh
 chianti/~~Nh
 chiapas/~~Nh
@@ -25820,6 +25827,7 @@ felsige/~~Nh
 feluke/~~Nh
 feluken/~~V # auto-added
 feminin/~~Nh
+femto/~~Nh
 fenchel/~~Nh
 fenster/~~Mh
 ferien/~~V # auto-added
@@ -35311,6 +35319,7 @@ natrons/~~Nh
 natter/~~Mh
 nattern/~~Nh
 natur/~~Nh
+naturstoff/~~Mh
 natura/~~Nh
 natural/~~NXh
 naturen/~~V # auto-added
@@ -37483,6 +37492,7 @@ qualmig/~~RJOQRSTUWqh
 qualms/~~Nh
 qualmt/~~NXh
 quant/~~Nh
+quanten/~~Nh
 quanten/~~V # auto-added
 quantor/~~Nh
 quants/~~Nh
@@ -47635,7 +47645,8 @@ atmendem/~~Nh
 atmender/~~Mh
 atmendes/~~Nh
 atmetest/~~Nh
-atmosphäre/~~Nh
+atmosphäre/~~Fh
+atmosphärenchemie/~~Fh
 atmungen/~~V # auto-added
 atomarem/~~Nh
 atomaren/~~V # auto-added
@@ -185888,6 +185899,8 @@ superlativisch/~~RJOQRSTUWqh
 supervenierend/~~Nh
 supplementband/~~Nh
 supportvertrag/~~Nh
+supramolekular/~~NXh
+supramolekulare/~~NXh
 supraanodermal/~~Nh
 suprafluidität/~~Fh
 supraleitfähig/~~Nh
@@ -206901,7 +206914,8 @@ käsen/~~V
 küren/~~V
 laben/~~N
 laden/~~V
-leben/~~N
+leben/~~Nh
+lebensmittel/~~Nh
 legen/~~N
 lesen/~~N
 liken/~~V
@@ -215475,7 +215489,7 @@ juras/~~N
 kippe/~~N
 klage/~~N
 klebe/~~N
-kohle/~~N
+kohle/~~Fh
 lande/~~N
 liege/~~N
 melde/~~N
