@@ -78,7 +78,6 @@ Medizinbeutel/~~Mh # medicine bag
 Mediziner/~~M # plural of Mediziner
 Mediziner/~~Mh # medical practitioner, physician
 Medizinmann/~~Mh # medicine man
-Medizinmänner/~~M # plural of Medizinmann
 Medizinrad/~~Nh # medicine wheel
 Palliation/~~Fh # palliative care
 Patient/~~Mh # patient
@@ -173,11 +172,8 @@ bonaparte/~~N
 bonarenser/~~N
 bonhoeffer/~~N
 bonifatius/~~N
-bonndorf/~~N
 bonndorfer/~~NF
-bonngasse/~~N
 bonobo/~~N
-bonsaihaft/~~J
 bonzokratie/~~N
 bopfingen/~~N
 bopfinger/~~NF
@@ -215,7 +211,6 @@ borromäer/~~NF
 borromäus/~~N
 borschemich/~~N
 borschtsch/~~N
-borsdorf/~~N
 borsigallee/~~N
 borsigplatz/~~T
 borsigwalde/~~N
@@ -278,10 +273,8 @@ bratislava/~~N
 braue/~~MZ
 braunau/~~N
 braunauer/~~NF
-braunhaarig/~~J
 braunsberg/~~N
 braunsberger/~~NF
-braunschweig/~~NMZ
 braunschweiger/~~NF
 braunsfeld/~~N
 brause/~~N
@@ -307,9 +300,7 @@ brehme/~~N
 breinig/~~N
 breinigerberg/~~N
 breisacher/~~NF
-breisgau/~~N
 breisgauer/~~NF
-breitblättrig/~~J
 breite/~~MZ
 breitenbrunn/~~N
 breitenwang/~~N
@@ -334,7 +325,6 @@ bresewitz/~~N
 breslauer/~~NF
 brester/~~NF
 bretone/~~F
-brettach/~~N
 bretten/~~N
 bretton/~~N
 bretzfeld/~~N
@@ -365,7 +355,6 @@ brinkmann/~~N
 brisbane/~~N
 britannia/~~N
 britannier/~~N
-britischstämmig/~~J
 britta/~~N
 britz/~~N
 brixener/~~NF
@@ -378,7 +367,6 @@ broichweiden/~~N
 broichweidener/~~NF
 brokdorfer/~~NF
 brokhausen/~~N
-brombach/~~N
 brombacher/~~N
 bromberg/~~N
 bromberger/~~NF
@@ -453,11 +441,8 @@ buddelei/~~N
 buddenbrook/~~N
 budweis/~~N
 bufdi/~~N
-bugabschnitt/~~NPT
 bugansicht/~~P
 bugatti/~~N
-bugausleger/~~N
-bugbereich/~~NT
 bugenhagen/~~N
 bugenhagenhaus/~~T
 bugfahrwerk/~~NPT
@@ -466,8 +451,6 @@ bugform/~~P
 bugklappe/~~N
 bugleuchte/~~N
 bugmann/~~NT
-bugmänner/~~N
-bugpartie/~~N
 bugschott/~~P
 bugsektion/~~P
 bugspriet/~~NT
@@ -527,9 +510,7 @@ burtscheider/~~NF
 busbucht/~~P
 bush/~~N
 busserl/~~N
-bustransport/~~T
 busverkehr/~~N
-buttermulch/~~NrP
 buttforde/~~N
 butzbach/~~N
 butzbacher/~~NF
@@ -597,7 +578,6 @@ bübchen/~~N
 büberei/~~P
 büchel/~~N
 büchner/~~N
-bückeburg/~~N
 büderich/~~N
 büdericher/~~NF
 büdingen/~~N
@@ -612,7 +592,6 @@ bülerstraße/~~N
 bülow/~~N
 bülowstraße/~~N
 bündner/~~N
-bündnisgrüne/~~N
 bünz/~~N
 bürde/~~MZ
 büren/~~N
@@ -675,7 +654,6 @@ bereisung/~~N
 bereiten/~~NMZ
 bereiter/~~NMFZ
 bereithältst/~~X
-bereitschaft/~~PMZ
 berengar/~~N
 berensberg/~~N
 berensberger/~~NF
@@ -716,21 +694,16 @@ bernadine/~~N
 bernadotte/~~N
 bernau/~~N
 bernauer/~~NF
-bernburg/~~N
 bernburger/~~NF
 bernd/~~N
-berndorf/~~N
 berneuchener/~~N
 bernhard/~~N
 bernhardt/~~N
 bernreuth/~~N
 bernried/~~N
-bernsdorf/~~N
-bernward/~~N
 berolina/~~N
 beromünster/~~N
 berrehag/~~N
-berserkerhaft/~~J
 bersina/~~N
 bert/~~N
 berta/~~N
@@ -742,13 +715,6 @@ bertolt/~~N
 bertrada/~~N
 bertram/~~N
 berufen/~~rIX
-berufsethisch/~~J
-berufsnotwendig/~~J
-berufspolitisch/~~J
-berufsrechtlich/~~J
-berufsständisch/~~J
-berufstechnisch/~~J
-berufstypisch/~~J
 berufsunfähig/~~J
 beruhigen/~~NMZ
 berumerfehner/~~N
@@ -885,9 +851,6 @@ bewegen/~~NMZ
 bewegend/~~JOQRSTUWq
 bewegtheit/~~N
 bewetterung/~~P
-bewohnerbeirat/~~NT
-bewohnerbeiräte/~~N
-bewohnerschaft/~~N
 bewähren/~~NMZ
 bewährtheit/~~N
 bewölken/~~NMZ
@@ -909,7 +872,6 @@ bhutaner/~~NF
 bialystok/~~N
 bianca/~~N
 bianqing/~~N
-biberach/~~N
 biberacher/~~NF
 bibliomane/~~F
 bibliomanie/~~N
@@ -1015,7 +977,6 @@ bischkeker/~~NF
 bischofsheimer/~~N
 bischofshofen/~~N
 bischofshofener/~~N
-bischofszell/~~N
 bischofszeller/~~NF
 bischweiler/~~N
 bisektion/~~P
@@ -1039,8 +1000,6 @@ bitburg/~~N
 bitburger/~~NF
 bitonto/~~N
 bittelbronn/~~N
-bitterarm/~~J
-bitterkalt/~~J
 bitterlemon/~~N
 bitterling/~~NP
 bitternis/~~MZ
@@ -1079,8 +1038,6 @@ bleiben/~~NMZ
 bleibtreu/~~N
 blender/~~N
 blendt/~~N
-blindarm/~~Nr
-blindekuh/~~N
 blindfaden/~~Nr
 blindfäden/~~r
 blinkdarm/~~NrT
@@ -1128,7 +1085,6 @@ aussalzen/~~N
 ausschalung/~~P
 ausschelten/~~N
 ausschleusen/~~N
-ausschnitthaft/~~J
 ausschäumen/~~N
 aussee/~~N
 ausseer/~~N
@@ -1180,7 +1136,6 @@ autoxidation/~~P
 autun/~~N
 auwald/~~NT
 auwälder/~~N
-außenstehende/~~N
 außerrhoden/~~N
 avantgardismus/~~N
 avatar/~~N
@@ -1198,8 +1153,6 @@ axel/~~N
 axiologie/~~N
 axonometrie/~~N
 axthieb/~~NP
-axtmörder/~~NF
-axtschläge/~~N
 ayatollah/~~N
 ayurveda/~~N
 ayurweda/~~N
@@ -1294,7 +1247,6 @@ balinger/~~N
 balje/~~N
 balkanologe/~~F
 balkanologie/~~N
-balkonartig/~~J
 balkonien/~~N
 ballack/~~N
 ballen/~~NMZ
@@ -1373,7 +1325,6 @@ bartholdy/~~N
 bartholomäus/~~N
 bartholomäusdom/~~N
 bartschv/~~N
-bartähnlich/~~J
 baruch/~~N
 baruther/~~N
 barzel/~~N
@@ -1535,11 +1486,9 @@ behängen/~~N
 behüter/~~NF
 behütetheit/~~N
 beibehältst/~~X
-beichtstahl/~~NrT
 beidhänder/~~NF
 beienheim/~~N
 beiersdorf/~~N
-beifallsturm/~~NrT
 beifallstürme/~~r
 beifügen/~~NMZ
 beijing/~~N
@@ -1561,7 +1510,6 @@ bejahen/~~NMZ
 bekaa/~~N
 bekais/~~N
 bekannte/~~Z
-bekanntschaft/~~PMZ
 bekassine/~~N
 bekehren/~~NMZ
 bekennertum/~~N
@@ -1676,7 +1624,6 @@ apizes/~~N
 apnoedisziplin/~~P
 apnoeleistung/~~P
 apnoetauchen/~~N
-apnoetaucher/~~NF
 apnoezeit/~~P
 apnoist/~~PF
 apokalyptik/~~P
@@ -1708,14 +1655,12 @@ appretur/~~P
 approximant/~~P
 apriorismen/~~N
 apriorismus/~~N
-aquarellartig/~~J
 aquarellist/~~PF
 aquarianer/~~NF
 aquaristik/~~N
 aquin/~~N
 aquisgrana/~~N
 aquitaner/~~N
-arabischstämmig/~~J
 arabist/~~PF
 arabistik/~~N
 arachnophobie/~~N
@@ -1724,17 +1669,8 @@ aragonese/~~F
 aral/~~N
 aramäer/~~NF
 araukaner/~~N
-arbeitsfähig/~~J
-arbeitsgeber/~~NrF
 arbeitslosen/~~N
-arbeitsnehmer/~~NrF
-arbeitsreich/~~J
-arbeitssüchtig/~~J
-arbeitstauglich/~~J
-arbeitstäglich/~~J
-arbeitstüchtig/~~J
 arbeitsunfähig/~~J
-arbeitsunwillig/~~J
 arbitrarität/~~P
 arbon/~~N
 arboner/~~N
@@ -1747,8 +1683,6 @@ archaismus/~~N
 archangelsk/~~N
 archegonien/~~N
 archegonium/~~N
-archetyp/~~NP
-archetypus/~~N
 archidiakon/~~NP
 archidiakonat/~~NPT
 archimandrit/~~P
@@ -1806,18 +1740,13 @@ armamputierter/~~N
 armani/~~N
 armarium/~~N
 armbeuge/~~N
-armbeuger/~~N
 armen/~~N
 armin/~~N
 armine/~~N
 arminia/~~N
 arminius/~~N
 armlang/~~J
-armreliquiar/~~NP
-armschlinge/~~N
-armschwinge/~~N
 armschwünge/~~N
-armstrecker/~~N
 armstrong/~~N
 armvoll/~~N
 arndt/~~N
@@ -1841,13 +1770,11 @@ aronstab/~~NT
 arras/~~N
 arrestant/~~PF
 arsbeck/~~N
-artabhängig/~~J
 artaxerxes/~~N
 artemis/~~N
 artern/~~N
 arthur/~~N
 artothek/~~P
-artspezifisch/~~J
 artus/~~N
 aruba/~~N
 arupadhatu/~~N
@@ -1886,7 +1813,6 @@ aspisviper/~~N
 assad/~~N
 assassine/~~N
 asselborn/~~N
-asselburg/~~N
 assertion/~~P
 asservat/~~PT
 assignaten/~~N
@@ -2028,7 +1954,6 @@ aufstocker/~~NF
 aufsässigkeit/~~N
 auftauen/~~NMZ
 aufteilen/~~NMZ
-auftragsnehmer/~~NrF
 auftrittst/~~X
 aufwallen/~~NMZ
 aufwasch/~~N
@@ -2044,7 +1969,6 @@ augenlied/~~Nr
 augenthaler/~~N
 augenwurz/~~T
 augst/~~N
-augstein/~~N
 augur/~~P
 augusta/~~N
 auguste/~~N
@@ -2053,7 +1977,6 @@ augustinismus/~~N
 augustinus/~~N
 augustus/~~N
 augustusbrücke/~~N
-augäpfel/~~N
 auktionator/~~NP
 aulendorf/~~N
 aulfingen/~~N
@@ -2172,7 +2095,6 @@ alamein/~~N
 alan/~~NPF
 alanya/~~N
 alarich/~~N
-alaskastraße/~~N
 alawit/~~PF
 alba/~~N
 albachten/~~N
@@ -2191,9 +2113,7 @@ albigenser/~~NF
 albion/~~N
 albis/~~N
 albisbrunn/~~N
-albrecht/~~N
 albrechtshof/~~N
-albstadt/~~N
 alcatel/~~N
 aldenhoven/~~N
 aldenhovener/~~NF
@@ -2243,14 +2163,11 @@ allenstein/~~N
 allensteiner/~~NF
 allerheiligen/~~N
 allersberg/~~N
-allformel/~~N
 allg./~~N
 allgewalt/~~N
 alliierten/~~MZ
-allklasse/~~N
 allmendingen/~~N
 allmendshofen/~~N
-allmächtigkeit/~~N
 allode/~~N
 allodifikation/~~P
 allofon/~~NP
@@ -2272,7 +2189,6 @@ almeria/~~N
 almmusik/~~P
 almohade/~~N
 almoravide/~~N
-almrausch/~~T
 almsick/~~N
 aloe/~~N
 alois/~~N
@@ -2286,7 +2202,6 @@ alpenvorwand/~~r
 alpenwand/~~r
 alphorn/~~N
 alphubel/~~N
-alphörner/~~N
 alpinistik/~~N
 alpirsbach/~~N
 alpspitze/~~N
@@ -2328,26 +2243,18 @@ alterität/~~P
 alternanz/~~P
 alternat/~~NPT
 alternation/~~P
-altersabhängig/~~J
-altersschwach/~~J
-alterstypisch/~~J
-altersüblich/~~J
 altertümelei/~~P
 altglienicke/~~N
-altkirch/~~N
 altkircher/~~NF
 altkölln/~~N
 altköllner/~~NF
 altleiningen/~~N
 altlutheraner/~~NF
 altmaier/~~N
-altmühlalb/~~N
 altmünsterer/~~N
 altnicäner/~~N
 altona/~~N
 altonaer/~~NF
-altradikale/~~N
-altradikaler/~~N
 altruist/~~PF
 altshausen/~~N
 altsprachler/~~NF
@@ -2377,7 +2284,6 @@ amalthea/~~N
 amanda/~~N
 amarant/~~N
 amaryllis/~~N
-amateurhaft/~~J
 amateurismus/~~N
 amazja/~~N
 amazon/~~N
@@ -2417,7 +2323,6 @@ amphibolit/~~NP
 amphidromie/~~N
 amphiktyoneneid/~~NT
 amrumer/~~NF
-amselfeld/~~NT
 amstel/~~N
 amstetten/~~N
 amten/~~IX
@@ -2454,8 +2359,6 @@ andachte/~~Z
 andechs/~~N
 andechser/~~NF
 andenne/~~N
-andermatt/~~N
-andernach/~~N
 andernacher/~~NF
 andersch/~~N
 andersen/~~N
@@ -2490,7 +2393,6 @@ anfrage/~~MZ
 anfärbbarkeit/~~N
 anfügen/~~NMZ
 anführen/~~NMZ
-anführungsstich/~~NrP
 angabe/~~MZ
 angang/~~N
 angcor/~~N
@@ -2505,11 +2407,8 @@ angelika/~~N
 angelina/~~N
 angelique/~~N
 angelmodde/~~N
-angelsächsin/~~F
 angelus/~~N
-angerapp/~~N
 angermund/~~N
-angermünder/~~N
 angerner/~~NF
 angespanntheit/~~N
 angestaubtheit/~~P
@@ -2663,7 +2562,6 @@ abduktion/~~P
 abdullah/~~N
 abel/~~N
 abelitz/~~N
-abendhand/~~NrT
 abendmal/~~NrP
 abendroth/~~N
 abendwand/~~r
@@ -2673,7 +2571,6 @@ abessen/~~rI
 abeter/~~N
 abfertigen/~~NMZ
 abflachen/~~NMZ
-abflughand/~~NrT
 abflugwand/~~r
 abfrage/~~N
 abfälligkeit/~~N
@@ -2826,7 +2723,6 @@ abstrusität/~~P
 abstufen/~~NMZ
 abstützen/~~NMZ
 absurdistan/~~N
-abtaster/~~N
 abtauchen/~~NMZ
 abtragen/~~NMZ
 abtreiben/~~NMZ
@@ -2994,17 +2890,13 @@ achim/~~N
 achromatismus/~~N
 achse/~~MZh
 achsenmächte/~~Fh
-achtelfinale/~~N
 achtgeben/~~rI
 achthaben/~~rI
 achtlinge/~~N
 achtmonatige/~~J
 achtrup/~~N
 achtruper/~~NF
-achtzigfach/~~J
-achtzigste/~~J
 achämenide/~~N
-ackermann/~~N
 acls/~~N
 acpi/~~N
 acre/~~N
@@ -3093,7 +2985,6 @@ agonist/~~PF
 agora/~~N
 agoraphobie/~~N
 agoren/~~N
-agrarhand/~~NrT
 agrarier/~~N
 agrarisierung/~~N
 agrarwand/~~r
@@ -16329,7 +16220,6 @@ detailgenau/~Nh #frequency: 6
 determinativ/~Nh #frequency: 6
 deutlich/~Jq #adjective root, frequency: 6
 deutsch/~~NJOQRSTUWq #adjective and noun (base form)
-deutschland/~~N #proper noun, country
 devisenstark/~Nh #frequency: 6
 devotional/~Nh #frequency: 6
 dextranblau/~Nh #frequency: 6
@@ -76410,7 +76300,6 @@ gefahrenem/~~Nh
 gefahrenen/~~V # auto-added
 gefahrener/~~Mh
 gefahrenes/~~Nh
-gefahrgut/~~JOQRSTUWVg
 gefahrguts/~~Nh
 gefaktem/~~Nh
 gefakten/~~V # auto-added
@@ -76762,7 +76651,6 @@ gefärbten/~~V # auto-added
 gefärbter/~~Mh
 gefärbtes/~~Nh
 gefäßfreie/~~Nh
-gefäßnaht/~~JOQRSTUWVg
 gefäßtonus/~~Nh
 geföhntem/~~Nh
 geföhnten/~~V # auto-added
@@ -77050,11 +76938,9 @@ geheimstem/~~Nh
 geheimsten/~~V # auto-added
 geheimster/~~Mh
 geheimstes/~~Nh
-geheimtat/~~JOQRSTUWVg
 geheimtue/~~Nh
 geheimtun/~~Nh
 geheimtust/~~JOQRSTUWVg
-geheimtut/~~JOQRSTUWVg
 geheimtäte/~~Nh
 geheiratet/~~JOQRSTUWVg
 geheiztem/~~Nh
@@ -77266,7 +77152,6 @@ geifernden/~~V # auto-added
 geifernder/~~Mh
 geiferndes/~~Nh
 geiferten/~~V # auto-added
-geifertest/~~JOQRSTUWVg
 geifertet/~~JOQRSTUWVg
 geigende/~~Nh
 geigendem/~~Nh
@@ -77333,7 +77218,6 @@ geiztrieb/~~Nh
 geiztriebs/~~Nh
 geißbart/~~Nh # auto-added
 geißbarts/~~Nh
-geißblatt/~~JOQRSTUWVg
 geißblatts/~~Nh
 geißbock/~~Nh
 geißbockes/~~Nh
@@ -77351,7 +77235,6 @@ geißelnder/~~Mh
 geißelndes/~~Nh
 geißelns/~~Nh
 geißelten/~~V # auto-added
-geißeltest/~~JOQRSTUWVg
 geißeltet/~~JOQRSTUWVg
 geißeltier/~~Mh
 geißelung/~~Fh
@@ -77852,8 +77735,6 @@ gelbfieber/~~Mh
 gelbfilter/~~Mh
 gelbfärbe/~~Nh
 gelbfärben/~~V # auto-added
-gelbfärbst/~~JOQRSTUWVg
-gelbfärbt/~~JOQRSTUWVg
 gelbgießer/~~Mh
 gelbglas/~~Nh
 gelbgold/~~Nh
@@ -77879,7 +77760,6 @@ gelbling/~~Mh
 gelblings/~~Nh
 gelbphase/~~Nh
 gelbphasen/~~V # auto-added
-gelbrost/~~JOQRSTUWVg
 gelbrostes/~~Nh
 gelbrosts/~~Nh
 gelbrotem/~~Nh
@@ -77896,7 +77776,6 @@ gelbstern/~~V # auto-added
 gelbsterns/~~Nh
 gelbstich/~~Nh
 gelbstichs/~~Nh
-gelbsucht/~~JOQRSTUWVg
 gelbtones/~~Nh
 gelbtons/~~Nh
 gelbtöne/~~Nh
@@ -77915,7 +77794,6 @@ geldgeilem/~~Nh
 geldgeilen/~~V # auto-added
 geldgeiler/~~Mh
 geldgeiles/~~Nh
-geldheirat/~~JOQRSTUWVg
 geldleihe/~~Nh
 geldleiher/~~Mh
 geldlosem/~~Nh
@@ -77927,7 +77805,6 @@ geldnahem/~~Nh
 geldnahen/~~V # auto-added
 geldnaher/~~Mh
 geldnahes/~~Nh
-geldwert/~~JOQRSTUWVg
 geldwertem/~~Nh
 geldwerten/~~V # auto-added
 geldwerter/~~Mh
@@ -78445,7 +78322,6 @@ gemünztes/~~Nh
 gemütern/~~V # auto-added
 gemütliche/~~Nh
 gemütsarm/~~NXh
-gemütskalt/~~JOQRSTUWVg
 gemütvolle/~~Nh
 genadelt/~~JOQRSTUWVg
 genagelt/~~JOQRSTUWVg
@@ -78467,7 +78343,6 @@ genarbter/~~Mh
 genarbtes/~~Nh
 genascht/~~JOQRSTUWVg
 genasest/~~JOQRSTUWVg
-genasführt/~~JOQRSTUWVg
 genauere/~~Nh
 genauerem/~~Nh
 genaueren/~~V # auto-added
@@ -78630,7 +78505,6 @@ genommenem/~~Nh
 genommenen/~~V # auto-added
 genommener/~~Mh
 genommenes/~~Nh
-genomweit/~~JOQRSTUWVg
 genopptem/~~Nh
 genoppten/~~V # auto-added
 genoppter/~~Mh
@@ -78674,18 +78548,14 @@ gentiler/~~Mh
 gentiles/~~Nh
 gentleman/~~Nh
 genuggetan/~~Nh
-genugtat/~~JOQRSTUWVg
 genugtaten/~~V # auto-added
-genugtatet/~~JOQRSTUWVg
 genugtue/~~Nh
 genugtuend/~~Nh
 genugtun/~~Nh
 genugtust/~~JOQRSTUWVg
-genugtut/~~JOQRSTUWVg
 genugtuung/~~Fh
 genugtäte/~~Nh
 genugtäten/~~V # auto-added
-genugtätet/~~JOQRSTUWVg
 genugzutun/~~Nh
 genuinem/~~Nh
 genuinen/~~V # auto-added
@@ -79066,7 +78936,6 @@ gequälter/~~Mh
 gequältes/~~Nh
 geradeaus/~~Nh
 geradebog/~~Nh
-geradebogt/~~JOQRSTUWVg
 geradeböge/~~Nh
 geradehin/~~Nh
 geradelt/~~JOQRSTUWVg
@@ -79328,10 +79197,8 @@ gernhabt/~~JOQRSTUWVg
 gernhast/~~JOQRSTUWVg
 gernhatte/~~Nh
 gernhatten/~~V # auto-added
-gernhattet/~~JOQRSTUWVg
 gernhätte/~~Nh
 gernhätten/~~V # auto-added
-gernhättet/~~JOQRSTUWVg
 gerochen/~~XZ #  auto-added
 gerochene/~~Nh
 gerochenem/~~Nh
@@ -80350,7 +80217,6 @@ gesuchten/~~V # auto-added
 gesuchter/~~Mh
 gesuchtere/~~Nh
 gesuchtes/~~Nh
-gesuchtest/~~JOQRSTUWVg
 gesudelt/~~JOQRSTUWVg
 gesudeltem/~~Nh
 gesudelten/~~V # auto-added
@@ -80843,7 +80709,6 @@ gewandten/~~V # auto-added
 gewandter/~~Mh
 gewandtere/~~Nh
 gewandtes/~~Nh
-gewandtest/~~JOQRSTUWVg
 gewannen/~~V # auto-added
 gewappnet/~~JOQRSTUWVg
 gewarntem/~~Nh
@@ -137503,8 +137368,6 @@ geformtheit/~~Fh
 gefragteste/~~Fh
 gefährdungs/~~Nh
 gefäßplexus/~~Nh
-gefühlsecht/~~JOQRSTUWVg
-gefühlskalt/~~JOQRSTUWVg
 gegebenheit/~~Fh
 gegebensein/~~Nh
 gegenchecke/~~Fh
@@ -137548,11 +137411,8 @@ gelangweilt/~~JOQRSTUWVg
 gelbbleierz/~~Nh
 gelbfärbung/~~Fh
 gelbgefärbt/~~JOQRSTUWVg
-gelbpigment/~~JOQRSTUWVg
 gelbscheibe/~~Fh
 gelbschwanz/~~Nh
-geldbasiert/~~JOQRSTUWVg
-geldbewusst/~~JOQRSTUWVg
 geldähnlich/~~JOQRSTUWqh
 gelegegröße/~~Fh
 gelegenheit/~~Fh
@@ -137587,7 +137447,6 @@ genotypisch/~~RJOQRSTUWqh
 genregrenze/~~Fh
 gentilhomme/~~Fh
 gentilnamen/~~Nh
-genugtatest/~~JOQRSTUWVg
 genusfehler/~~Nh
 genussystem/~~Nh
 geochemisch/~~RJOQRSTUWqh
@@ -137719,7 +137578,6 @@ gesundbeten/~~Nh
 gesundbeter/~~Nh
 gesundheits/~~Nh
 gesundstieß/~~Nh
-gesundstößt/~~JOQRSTUWVg
 getischlert/~~JOQRSTUWVg
 getriebelos/~~Nh
 gettodasein/~~Nh
@@ -137755,7 +137613,6 @@ gewölbegang/~~Nh
 gewölbehöhe/~~Fh
 gewölbejoch/~~Nh
 gewölbelage/~~Fh
-gewölberest/~~JOQRSTUWVg
 gewölbeteil/~~Nh
 gezeitenhub/~~Nh
 ghettowache/~~Fh
@@ -151914,10 +151771,8 @@ genickschuss/~~Nh
 genickstarre/~~Fh
 geniestreich/~~Nh
 genießerisch/~~Nh
-genomprojekt/~~JOQRSTUWVg
 genomsequenz/~~Nh
 genozidopfer/~~Nh
-genrebedingt/~~JOQRSTUWVg
 genrebegriff/~~Nh
 genrekonform/~~Nh
 genremalerei/~~Nh
@@ -151945,7 +151800,6 @@ geothermisch/~~Nh
 geozentrisch/~~Nh
 gepidenfürst/~~JOQRSTUWVg
 geradebiegen/~~Nh # auto-added
-geradebrecht/~~JOQRSTUWVg
 geradehalten/~~Nh
 geradeheraus/~~Nh
 gerademachen/~~Nh
@@ -151963,7 +151817,6 @@ geranienbeet/~~JOQRSTUWVg
 geranientopf/~~Nh
 gerberstraße/~~Fh
 gerbmaschine/~~Fh
-gerichtsfest/~~JOQRSTUWVg
 geringachten/~~Nh
 geringhaltig/~~Nh
 geringwertig/~~Nh
@@ -152040,7 +151893,6 @@ gesellenzeit/~~JOQRSTUWVg
 geselligkeit/~~Fh
 gesellschaft/~~Fh
 gesetzbücher/~~Nh
-gesetzesfest/~~JOQRSTUWVg
 gesetzgebend/~~Nh
 gesetzgebung/~~Fh
 gesetzwidrig/~~Nh
@@ -165866,7 +165718,6 @@ gefolgsmänner/~~Nh
 gefällemesser/~~Nh
 gefällstrecke/~~Fh
 gefügeanalyse/~~Fh
-gefühlsbetont/~~JOQRSTUWVg
 gefühlsduslig/~~RJOQRSTUWqh
 gegencheckend/~~Nh
 gegencheckten/~~Nh
@@ -165879,7 +165730,6 @@ gegenzurudern/~~Nh
 gegenüberläge/~~Fh
 gegenübersähe/~~Fh
 gegenübersäße/~~Fh
-gegenübertrat/~~JOQRSTUWVg
 gehegehaltung/~~Fh
 geheimnistuer/~~Nh
 gehengelassen/~~Nh
@@ -165933,11 +165783,9 @@ generatorteil/~~Nh
 genieoffizier/~~Nh
 genitalanhang/~~Nh
 genitivendung/~~Fh
-genitivobjekt/~~JOQRSTUWVg
 genitivphrase/~~Fh
 genomforscher/~~Nh
 genotypklasse/~~Fh
-genrevielfalt/~~JOQRSTUWVg
 genspezifisch/~~Nh
 gentilordnung/~~Fh
 gentlemanlike/~~Fh
@@ -178869,7 +178717,6 @@ gefangenhältst/~~JOQRSTUWVg
 gefangennehmen/~~Nh
 gefangenschaft/~~Fh
 gefangensetzen/~~Nh
-gefechtsbereit/~~JOQRSTUWVg
 gefiederanteil/~~Nh
 gefiedermuster/~~Nh
 gefiederpartie/~~Fh
@@ -178884,7 +178731,6 @@ gefängnisartig/~~Nh
 gefäßverengend/~~Nh
 gefügestruktur/~~Nh
 gefügeänderung/~~Fh
-gefühlsbedingt/~~JOQRSTUWVg
 gefühlsbeladen/~~Nh
 gefühlsduselei/~~Nh
 gefühlsgehemmt/~~JOQRSTUWVg
@@ -178905,9 +178751,7 @@ gegenzuchecken/~~Nh
 gegenzurechnen/~~Nh
 gegenzusteuern/~~Nh
 gegenübersehen/~~Nh
-gegenübersieht/~~JOQRSTUWVg
 gegenüberstand/~~Nh
-gegenübertritt/~~JOQRSTUWVg
 gegenüberträte/~~Fh
 gehbehinderung/~~Fh
 gehegebewohner/~~Nh
@@ -178915,7 +178759,6 @@ geheimgehalten/~~Nh
 geheimtuerisch/~~RJOQRSTUWqh
 geheimzuhalten/~~Nh
 gehilfenstelle/~~Fh
-gehirnverletzt/~~JOQRSTUWVg
 gehrungswinkel/~~Nh
 gehölzaufwuchs/~~Nh
 gehölzstruktur/~~Nh
@@ -178937,7 +178780,6 @@ geldbeschaffer/~~Nh
 geldfälscherei/~~Nh
 gelenkluxation/~~Fh
 gelenkschonend/~~Nh
-geländebedingt/~~JOQRSTUWVg
 gelöbnisformel/~~Nh
 gemarkungsteil/~~Nh
 gemeineigentum/~~Nh
@@ -178957,7 +178799,6 @@ generalsmarsch/~~Nh
 generatorwagen/~~Nh # auto-added
 genießenwollen/~~Nh
 genmanipuliert/~~JOQRSTUWVg
-genomabschnitt/~~JOQRSTUWVg
 genomforschung/~~Fh
 genomvergleich/~~Nh
 genossenschaft/~~Fh
@@ -178968,7 +178809,6 @@ geodatenserver/~~Nh
 geologengruppe/~~Fh
 geologenhammer/~~Nh
 geologenhämmer/~~Nh
-geologiedozent/~~JOQRSTUWVg
 geomorphologie/~~Fh
 geostrategisch/~~RJOQRSTUWqh
 geradegestellt/~~JOQRSTUWVg
@@ -190550,7 +190390,6 @@ gatterschaltung/~~Fh
 gattungsprägend/~~Nh
 gattungstypisch/~~Nh
 gauleitertagung/~~Fh
-geberfinanziert/~~JOQRSTUWVg
 gebietsheimisch/~~Nh
 gebotsauslegung/~~Fh
 gebrauchsfertig/~~Nh
@@ -190582,7 +190421,6 @@ gefriertrocknen/~~Nh
 gefäßausräumung/~~Fh
 gefäßerweiternd/~~Nh
 gefühllosigkeit/~~Fh
-gefühlsbestimmt/~~JOQRSTUWVg
 gegengezeichnet/~~JOQRSTUWVg
 gegenseitigkeit/~~Fh
 gegenstandswert/~~JOQRSTUWVg
@@ -190601,7 +190439,6 @@ geheimnistuerei/~~Nh
 geherwettbewerb/~~Nh
 gehilfenaufgabe/~~Fh
 gehilfenprüfung/~~Fh
-gehirnamputiert/~~JOQRSTUWVg
 gehirngewaschen/~~Nh
 gehölzformation/~~Fh
 gehölzvitalität/~~Fh
@@ -190610,8 +190447,6 @@ geigenprinzipal/~~Nh
 geiselbefreiung/~~Fh
 geistersichtung/~~Fh
 geistesabwesend/~~Nh
-geistesverwandt/~~JOQRSTUWVg
-gelatineschicht/~~JOQRSTUWVg
 gelbfiebermücke/~~Fh
 gelbfieberviren/~~Nh
 gelbfiebervirus/~~Nh
@@ -190623,7 +190458,6 @@ gelenkerhaltend/~~Nh
 geltungssüchtig/~~Nh
 geländetauglich/~~JOQRSTUWqh
 gemarkungskarte/~~Fh
-gemeindebasiert/~~JOQRSTUWVg
 gemeinfriesisch/~~Nh
 gemeingläubiger/~~Nh
 gemeininteresse/~~Fh
@@ -190634,18 +190468,15 @@ gemmenschneider/~~Nh
 gendarmeriechef/~~Nh
 gendiagnostisch/~~Nh
 generalisierung/~~Fh
-generalresident/~~JOQRSTUWVg
 generalsanieren/~~Nh
 generalsuniform/~~Nh
 generalvikariat/~~JOQRSTUWVg
 generatorläufer/~~Nh
 generatorsystem/~~Nh
-genitivattribut/~~JOQRSTUWVg
 genitivfunktion/~~Fh
 genossenschafts/~~Nh
 genrekonvention/~~Fh
 genrespezifisch/~~Nh
-geologiestudent/~~JOQRSTUWVg
 geophysikalisch/~~Nh
 georeferenziert/~~JOQRSTUWVg
 geradegerichtet/~~JOQRSTUWVg
@@ -190655,11 +190486,9 @@ geradezurichten/~~Nh
 geradezustellen/~~Nh
 geradzahligkeit/~~Fh
 geraniengewächs/~~Nh
-gerbstoffgehalt/~~JOQRSTUWVg
 gerbstoffhaltig/~~Nh
 gerbstofflastig/~~Nh
 gerichtsbarkeit/~~Fh
-gerichtsbekannt/~~JOQRSTUWVg
 gerichtsähnlich/~~JOQRSTUWqh
 geringfügigkeit/~~Fh
 geringgeschätzt/~~JOQRSTUWVg
@@ -190672,7 +190501,6 @@ germaneneinfall/~~Nh # auto-added
 germanenfeldzug/~~Nh
 germanenpolitik/~~Nh
 germanenproblem/~~Nh
-gersteproduzent/~~JOQRSTUWVg
 geruchlosigkeit/~~Fh
 geruchsfilternd/~~Nh
 geruchsstärkste/~~Fh
@@ -190722,7 +190550,6 @@ gesetzlosigkeit/~~Fh
 gesetzmäßigkeit/~~Fh
 gesichtswahrend/~~Nh
 gespannfuhrwerk/~~Nh
-gesprächsbereit/~~JOQRSTUWVg
 gestaltqualität/~~Fh
 gestalttherapie/~~Fh
 gestapokommando/~~Nh
@@ -190730,7 +190557,6 @@ gestehungspreis/~~Nh
 gesteinsbildend/~~Nh
 gestellbelegung/~~Fh
 gestirnbewegung/~~Fh
-gestütsaufsicht/~~JOQRSTUWVg
 gestütsdirektor/~~Nh
 gesunderhaltung/~~Fh
 gesundschreiben/~~Nh
@@ -190747,7 +190573,6 @@ gewebsuntergang/~~Nh
 gewerbetreibend/~~Nh
 gewerbsprivileg/~~Nh
 gewerkschaftler/~~Nh
-gewichtbelastet/~~JOQRSTUWVg
 gewichtssparend/~~Nh
 gewinnerentwurf/~~Nh
 gewinnerzielend/~~Nh
@@ -200363,7 +200188,6 @@ gefangenzunehmen/~~Nh
 geflechtdichtung/~~Fh
 geflechtschlauch/~~Nh
 gefolgschaftseid/~~Nh
-gefälleabschnitt/~~JOQRSTUWVg
 gefängnisähnlich/~~JOQRSTUWqh
 gefäßausschälung/~~Fh
 gefäßchirurgisch/~~Nh
@@ -200382,7 +200206,6 @@ geheimdienstlich/~~JOQRSTUWqh
 geheimnisumwoben/~~Nh
 geheimsprachlich/~~JOQRSTUWqh
 gehirngängigkeit/~~Fh
-gehorsamspflicht/~~JOQRSTUWVg
 gehwegeinfassung/~~Fh
 gehörlosenschule/~~Fh
 gehörlosenverein/~~Nh
@@ -200390,7 +200213,6 @@ geiselentführung/~~Fh
 geistesschwächer/~~Nh
 geißblattgewächs/~~Nh
 gelbaugenpinguin/~~Nh
-gelbfiebergebiet/~~JOQRSTUWVg
 gelbfiebergefahr/~~Nh
 gelbfieberzyklen/~~Nh
 gelbfieberzyklus/~~Nh
@@ -200418,7 +200240,6 @@ generationenhaus/~~Nh
 generationsmäßig/~~Nh
 generationsweise/~~Fh
 generatorgehäuse/~~Fh
-generikageschäft/~~JOQRSTUWVg
 genossenschafter/~~Nh
 genozidforschung/~~Fh
 genrebezeichnung/~~Fh
@@ -200430,7 +200251,6 @@ geochronologisch/~~RJOQRSTUWqh
 geografenflechte/~~Fh
 geologenkongress/~~Nh
 geomorphologisch/~~RJOQRSTUWqh
-geothermalgebiet/~~JOQRSTUWVg
 geothermieanlage/~~Fh
 geradengleichung/~~Fh
 geriatriezentren/~~Nh
@@ -200448,7 +200268,6 @@ geräteorientiert/~~JOQRSTUWVg
 gerätespezifisch/~~RJOQRSTUWqh
 geräteunabhängig/~~Nh
 geräuschdämpfend/~~Nh
-geräuschisoliert/~~JOQRSTUWVg
 gerüchtebehaftet/~~JOQRSTUWVg
 gerüchtemacherei/~~Nh
 gerüstbaubetrieb/~~Nh
@@ -200481,7 +200300,6 @@ geschwindigkeits/~~Nh
 geschwisterküken/~~Nh
 geschwisterliebe/~~Fh
 geschworenenbank/~~Nh
-geschäftsbedingt/~~JOQRSTUWVg
 geschäftsführend/~~Nh
 geschäftsgebaren/~~Nh
 geschäftsunfähig/~~Nh
@@ -200507,12 +200325,10 @@ gewebszerstörung/~~Fh
 gewerberechtlich/~~JOQRSTUWqh
 gewerkschaftlich/~~JOQRSTUWqh
 gewichtsabhängig/~~Nh
-gewinnberechtigt/~~JOQRSTUWVg
 gewinnerentwürfe/~~Fh
 gewinnmitnehmend/~~Nh
 gewinnorientiert/~~JOQRSTUWVg
 gewohnheitsmäßig/~~Nh
-gewässeraufsicht/~~JOQRSTUWVg
 gewässerbiologie/~~Fh
 gewässerflurname/~~Fh
 gewässerforscher/~~Nh
@@ -206825,7 +206641,6 @@ Tamar/~~Nh #proper noun
 Hispanien/~~Nh #proper noun
 Tambre/~~Nh #proper noun
 kappe/~~Fh # auto-added compound component
-schwerpunkt/~~NY #  auto-added
 # Additional German words for better coverage
 Fünftel/~~Nh
 eurasisch/~~Jq
@@ -208282,7 +208097,6 @@ bildschirmfüllend/~~J
 bildschnitzerwerk/~~N
 bilduntertitelung/~~F
 bindegewebskapsel/~~N
-biographieverlauf/~~N
 biomassekraftwerk/~~N
 blausäurebegasung/~~F
 blumenkohlauflauf/~~N
@@ -208423,7 +208237,6 @@ erdölproduzierend/~~J
 erfahrungsbildend/~~J
 erhärtungsvorgang/~~N
 erhärtungszustand/~~N
-erkenntnisleitend/~~J
 erläuterungstafel/~~N
 erregerisolierung/~~F
 erreherverdünnung/~~F
@@ -208568,7 +208381,6 @@ granitbearbeitung/~~F
 granitintrusionen/~~V
 granitverkleidung/~~F
 graphikbildschirm/~~N
-gratisvorstellung/~~F
 graukopfstieglitz/~~N
 grauweidengebüsch/~~N
 grillenfängerisch/~~J
@@ -208731,10 +208543,8 @@ knoblauchhederich/~~N
 knochenresorption/~~F
 knorpelauswölbung/~~F
 knorpelschädigung/~~F
-knorpelverletzung/~~F
 knorpelzerstörung/~~F
 knöchelschwellung/~~F
-knöchelverletzung/~~F
 koaxialverbindung/~~F
 koextensionalität/~~F
 kohlenhydratabbau/~~N
@@ -208829,7 +208639,6 @@ luftverflüssigung/~~F
 machiavellistisch/~~J
 magazinverwaltung/~~F
 mainkanalisierung/~~F
-malariavorbeugung/~~F
 mandatsverwaltung/~~F
 mandelbrotfraktal/~~N
 manganhalogenoxid/~~N
@@ -208887,7 +208696,6 @@ mondsichelmadonna/~~N
 monosymptomatisch/~~J
 monumentalisieren/~~V
 morphinvergiftung/~~F
-mosaikbetrachtung/~~F
 motilitätsstörung/~~F
 motorrollerreifen/~~N
 multiplikatorisch/~~J
@@ -209026,7 +208834,6 @@ begünstigungstarif/~~N
 beharrungsvermögen/~~N
 beherrschungstrend/~~N
 beieinandergelegen/~~J
-benefizvorstellung/~~F
 berufsorientierend/~~J
 berufsvorbereitend/~~J
 beschichtungsstoff/~~N
@@ -209041,7 +208848,6 @@ bestrafungsfeldzug/~~N
 bestäubungstropfen/~~N
 betriebsrätegesetz/~~N
 betriebverlagerung/~~F
-bezügeverbesserung/~~F
 biegezugfestigkeit/~~F
 bimshohlblockstein/~~N
 bindegewebsprotein/~~N
@@ -209075,14 +208881,12 @@ chemotherapeutisch/~~J
 chinesischsprachig/~~J
 chiralitätszentren/~~V
 chiralitätszentrum/~~N
-choleraverbreitung/~~F
 chromatographieren/~~V
 clusterkopfschmerz/~~N
 curiumnitratlösung/~~F
 dammschüttmaterial/~~N
 dampfauslassventil/~~N
 dasselbeulengesetz/~~N
-datenschutzkonform/~~J
 dauertropfinfusion/~~F
 dauerzulagenantrag/~~N
 dazwischenzufahren/~~V
@@ -209163,7 +208967,6 @@ entzündungsvorgang/~~N
 erbgutuntersuchung/~~F
 erbschaftsanspruch/~~N
 erdölindustriellen/~~V
-erkenntniskritisch/~~J
 erkrankungsverlauf/~~N
 erkundigungsbesuch/~~N
 erlebnislandschaft/~~F
@@ -209234,7 +209037,6 @@ freiprogrammierbar/~~J
 frequenzverschoben/~~J
 freskendarstellung/~~F
 friedhofsparkplatz/~~N
-fundamentvorsprung/~~F
 fußballnationalelf/~~N
 fußgängerdurchgang/~~N
 fußgängerschutzweg/~~N
@@ -209512,11 +209314,9 @@ meliorationsgewinn/~~N
 meliorationsgraben/~~N
 meliorationsgräben/~~V
 meniskusquetschung/~~F
-meniskusverletzung/~~F
 menschenverachtend/~~J
 menschenverderbend/~~J
 mercatorprojektion/~~F
-messiasvorstellung/~~F
 metallverarbeitend/~~J
 metaprogrammierung/~~F
 metatarsaltuberkel/~~N
@@ -209624,7 +209424,6 @@ allokationsversagen/~~N
 allparteiengespräch/~~N
 amazonasbevölkerung/~~F
 amazonendarstellung/~~F
-analogiebetrachtung/~~F
 anbiederungsversuch/~~N
 aneinanderzudrängen/~~V
 aneinanderzugrenzen/~~V
@@ -209725,14 +209524,12 @@ charakterschädigend/~~J
 chassisbeschädigung/~~F
 cheilomakrozystiden/~~V
 christusdarstellung/~~F
-cockpitaufzeichnung/~~F
 computervisualistik/~~N
 coulombverschiebung/~~F
 dachrinnenreinigung/~~F
 darüberhinausgehend/~~J
 dateiformatstandard/~~N
 datenbankspezifisch/~~J
-datenschutzkritisch/~~J
 datierungsvorschlag/~~N
 debitorenauswertung/~~F
 dechiffrierprogramm/~~N
@@ -209879,7 +209676,6 @@ gendiagnostikgesetz/~~N
 generalisierbarkeit/~~F
 generalklauselartig/~~J
 generationenvertrag/~~N
-genusunterscheidung/~~F
 geowissenschaftlich/~~J
 geräuschreduzierend/~~J
 gesamtschuldnerisch/~~J
@@ -209974,19 +209770,16 @@ isolationswerkstoff/~~N
 italienischsprachig/~~J
 jakobusbruderschaft/~~F
 jakobusgesellschaft/~~F
-jenseitsvorstellung/~~F
 johannisbeerstrauch/~~N
 junggesellenwohnung/~~F
 juniorenländerspiel/~~N
 justierungsarbeiten/~~V
-kabarettvorstellung/~~F
 kalibrierintensität/~~F
 kalligrafielehrbuch/~~N
 kalziumausscheidung/~~F
 kalziumstoffwechsel/~~N
 kapitelnummerierung/~~F
 karotinoidfarbstoff/~~N
-kasusunterscheidung/~~F
 katharinenreliquiar/~~N
 katzenschreisyndrom/~~N
 kennungsanforderung/~~F
@@ -209994,7 +209787,6 @@ kindermalwettbewerb/~~N
 klassensprecherwahl/~~N
 klassikerverfilmung/~~F
 kleinbürgerlichkeit/~~F
-klischeevorstellung/~~F
 kniekehllymphknoten/~~N
 knochenmarkpunktion/~~F
 kohlehydratstruktur/~~N
@@ -210106,7 +209898,6 @@ mittelungsverfahren/~~N
 mobilmachungsgesetz/~~N
 modellierungsansatz/~~N
 modulüberschreitend/~~J
-modusunterscheidung/~~F
 molekülorientierung/~~F
 momentunterbrechung/~~F
 multifunktionsarena/~~N
@@ -210151,7 +209942,6 @@ nummerierungsschema/~~N
 nützlichkeitsdenken/~~N
 oberflächengebunden/~~J
 oberflächenschonend/~~J
-offlineverarbeitung/~~F
 oldtimerkennzeichen/~~N
 organochlorpestizid/~~N
 ovolaktovegetarisch/~~J
@@ -210243,8 +210033,6 @@ catcherveranstaltung/~~F
 chlorhydrinverfahren/~~N
 chloroformvergiftung/~~F
 dateiformaterkennung/~~F
-datenschutzrechtlich/~~J
-datenschutztechnisch/~~J
 debitorenbuchhaltung/~~F
 defäkationsverhalten/~~N
 demarkationsstreifen/~~N
@@ -210303,8 +210091,6 @@ entzifferungsversuch/~~N
 enzymzusammensetzung/~~F
 episodenpropagierung/~~F
 epizentralintensität/~~F
-erkenntniserweiternd/~~J
-erkenntnisunabhängig/~~J
 erlösungsvorstellung/~~F
 erniedrigungszeichen/~~N
 erschließungsvertrag/~~N
@@ -210317,7 +210103,6 @@ explikationsvorhaben/~~N
 exponentialgleichung/~~F
 extremwertverdächtig/~~J
 extrusionsblasformen/~~N
-exzellenzeinrichtung/~~F
 fadenführungselement/~~N
 fahrerlaubnisprüfung/~~F
 fahrgestellausschlag/~~N
@@ -210380,7 +210165,6 @@ gesellschaftstragend/~~J
 gesundheitsstrotzend/~~J
 gewaltverherrlichend/~~J
 gewandmacherprivileg/~~N
-gewässeruntersuchung/~~F
 gewölberestaurierung/~~F
 gezeitenmarschgürtel/~~N
 glasierungsabteilung/~~F
@@ -210558,7 +210342,6 @@ meteoritenbruchstück/~~N
 methanolintoxikation/~~F
 metropolitenresidenz/~~N
 michaelsbruderschaft/~~F
-mikroskopbetrachtung/~~F
 mindermengenzuschlag/~~N
 minenräumeinrichtung/~~F
 mineralisierungsgrad/~~N
@@ -210625,7 +210408,6 @@ nukleotidveresterung/~~F
 nullpunktsabweichung/~~F
 nummerierungszeichen/~~N
 oberlidpigmentierung/~~F
-obsidianverarbeitung/~~F
 omnipotenzfunktionen/~~V
 orphikergemeinschaft/~~F
 ortschaftsverwaltung/~~F
@@ -210697,7 +210479,6 @@ californiumverbindung/~~F
 christopherusskulptur/~~N
 cyclisierungsreaktion/~~F
 dampfschiffverbindung/~~F
-datenschutzfreundlich/~~J
 datierungseingrenzung/~~F
 deferoxaminbehandlung/~~F
 denaturierungszustand/~~N
@@ -210732,7 +210513,6 @@ entbunkerungsprogramm/~~N
 entindustrialisierung/~~F
 entschuldungsprogramm/~~N
 ergebnisbeeinflussend/~~J
-erkenntnistheoretisch/~~J
 erkenntnisvermittelnd/~~J
 erläuterungsbedürftig/~~J
 ernennungsmodalitäten/~~V
@@ -210852,7 +210632,6 @@ intensitätsschwankung/~~F
 intensitätsschwächung/~~F
 intensitätsunabhängig/~~J
 interelementkorrektur/~~N
-interruptverarbeitung/~~F
 intervallschachtelung/~~F
 invalidenversicherung/~~F
 isolationseinrichtung/~~F
@@ -210878,7 +210657,6 @@ kohlenwasserstofffrei/~~J
 koloniehybridisierung/~~F
 kolonisierungspolitik/~~N
 kommanditgesellschaft/~~F
-kommentarverarbeitung/~~F
 kompostierungstechnik/~~N
 komprehensionsprinzip/~~N
 konfessionsverbindend/~~J
@@ -210898,7 +210676,6 @@ landschaftsbestimmend/~~J
 langobardenprinzessin/~~N
 lautstärkeeinstellung/~~F
 lebendzellbeobachtung/~~F
-lebensmittelrechtlich/~~J
 legislativversammlung/~~F
 legitimierungsinstanz/~~N
 leistungsentsprechend/~~J
@@ -211099,7 +210876,6 @@ frühschwimmerabzeichen/~~N
 funkentstörkondensator/~~N
 fußgängergrenzübergang/~~N
 gastronomieausstattung/~~F
-gastronomieeinrichtung/~~F
 gebärmutterperistaltik/~~N
 gegeneinanderzuprallen/~~V
 gegenstandsbezeichnung/~~F
@@ -211111,7 +210887,6 @@ gemischzusammensetzung/~~F
 generalintendantenbüro/~~N
 generalsekretärsposten/~~N
 geruchsneutralisierend/~~J
-geschehenszusammenhang/~~N
 gewaltverzichtsvertrag/~~N
 gewerbesteuerpflichtig/~~J
 gewächshausbedingungen/~~V
@@ -211396,7 +211171,6 @@ kurzgeschichtensammlung/~~F
 körperschaftssteuersatz/~~N
 landesdomänenverwaltung/~~F
 laserstrahlaufzeichnung/~~F
-lebensmittelverträglich/~~J
 legierungseigenschaften/~~V
 leukozytenagglutination/~~F
 liberalisierungspolitik/~~N
@@ -211513,7 +211287,6 @@ inaktivierungstemperatur/~~N
 industrialisierungsschub/~~N
 industriellenvereinigung/~~F
 informationsverarbeitend/~~J
-infrastruktureinrichtung/~~F
 infrastrukturentwicklung/~~F
 inländergleichbehandlung/~~F
 instandsetzungsbedürftig/~~J
@@ -211746,7 +211519,6 @@ kalksteinverwitterungsböden/~~V
 knochengeweberemodellierung/~~F
 krankentagegeldversicherung/~~F
 kriegsfolgenlastenausgleich/~~N
-lebensmittelmikrobiologisch/~~J
 linearbeschleunigerstruktur/~~N
 mehrheitssozialdemokratisch/~~J
 mikrometeoritenschutzschild/~~N
@@ -212889,7 +212661,6 @@ präkeratinbildung/~~F
 präliminarfrieden/~~N
 prämienhöchstsatz/~~N
 prämiensteigerung/~~F
-präsidialmitglied/~~N
 präzessionswinkel/~~N
 pseudonymisierend/~~J
 psychopädagogisch/~~J
@@ -213086,7 +212857,6 @@ streifenquaderung/~~F
 stringüberprüfung/~~F
 studienortwechsel/~~N
 studiobeleuchtung/~~F
-studioeinrichtung/~~F
 styroporblöckchen/~~N
 styroporkügelchen/~~N
 ständebeteiligung/~~F
@@ -213542,7 +213312,6 @@ schwefelsäuredampf/~~N
 schweißerhandschuh/~~N
 schwerspatbergwerk/~~N
 schwerstpflegefall/~~N
-schwerstverletzung/~~F
 schädigungsvorsatz/~~N
 schüleraktivierend/~~J
 sechseinhalbwöchig/~~J
@@ -213556,7 +213325,6 @@ selbstpassivierung/~~F
 selbstreplizierend/~~J
 sendungsverfolgung/~~F
 sentimentalisieren/~~V
-sequenzbetrachtung/~~F
 sequenzierreaktion/~~F
 servatiusreliquiar/~~N
 settlementbewegung/~~F
@@ -213610,7 +213378,6 @@ stornoversicherung/~~F
 strafgesetzbüchern/~~N
 strangpresstechnik/~~N
 strangverlängerung/~~F
-straßenbahnähnlich/~~J
 straßenbegleitgrün/~~N
 strebgeradehaltung/~~F
 streckenunabhängig/~~J
@@ -213620,7 +213387,6 @@ stroessnerdiktatur/~~N
 stromstärkeeinheit/~~F
 strukturbestimmend/~~J
 styroporisolierung/~~F
-stärkeverarbeitung/~~F
 substratversorgung/~~F
 suizidaufforderung/~~F
 sukzessionsstadien/~~V
@@ -213730,7 +213496,6 @@ verknüpfungssymbol/~~N
 verkündigungsmotiv/~~N
 verkündigungstafel/~~N
 verkündungsauftrag/~~N
-verladeeinrichtung/~~F
 verladevorrichtung/~~F
 verlandungsbereich/~~N
 verlandungsstadien/~~V
@@ -213877,7 +213642,6 @@ physiotherapeutisch/~~J
 plutoniumverbindung/~~F
 pockenschutzimpfung/~~F
 polymerbeschichtung/~~F
-polymerverarbeitung/~~F
 polypenausbürgerung/~~F
 polyvinylpyrrolidon/~~N
 populationsrückgang/~~N
@@ -213984,7 +213748,6 @@ selbstverstümmelung/~~F
 sezessionsforderung/~~F
 silbentrennprogramm/~~N
 silikatverwitterung/~~F
-simultanvorstellung/~~F
 skalierungsfunktion/~~F
 slawenmissionierung/~~F
 sodomiterverfolgung/~~F
@@ -214230,7 +213993,6 @@ personenstandsgesetz/~~N
 petschengaexpedition/~~F
 pfadfinderausrüstung/~~F
 phantasiedarstellung/~~F
-phantasievorstellung/~~F
 phosphatanreicherung/~~F
 phosphatidylinositol/~~N
 phosphorpentachlorid/~~N
@@ -214337,7 +214099,6 @@ schwarzspechtbestand/~~N
 schwarzspechtrupfung/~~F
 schwefelsäurebetrieb/~~N
 schwefelsäuremolekül/~~N
-sedimentuntersuchung/~~F
 sedimentüberlagerung/~~F
 sekundarschulbereich/~~N
 sekundarschulbildung/~~F
@@ -214350,7 +214111,6 @@ sentimentindikatoren/~~V
 sequenzierungsvektor/~~N
 sezessionsbestrebung/~~F
 signalisierungskanal/~~N
-simultanverarbeitung/~~F
 sklavenhalterordnung/~~F
 sonatenhauptsatzform/~~N
 sonnenstandsabhängig/~~J
@@ -214359,7 +214119,6 @@ spektrenüberlagerung/~~F
 spezialisierungsgrad/~~N
 spielerverpflichtung/~~F
 spielzeugausstellung/~~F
-sportartenspezifisch/~~J
 sprechakttheoretisch/~~J
 springschreckenfauna/~~N
 sprunggelenksknochen/~~N
@@ -214382,11 +214141,9 @@ stundenplankollision/~~F
 stundenplantechnisch/~~J
 störungsverursachend/~~J
 supraleiterwerkstoff/~~N
-symmetriebetrachtung/~~F
 symptomunterdrückend/~~J
 synagogengedenkstein/~~N
 synchronisiereinheit/~~F
-tagebuchaufzeichnung/~~F
 teilnahmebestätigung/~~F
 telegrafenverbindung/~~F
 telemetrieverbindung/~~F
@@ -214567,7 +214324,6 @@ poststrukturalistisch/~~J
 potenzierungsoperator/~~N
 preisniveaustabilität/~~F
 primfaktordarstellung/~~F
-privilegienverletzung/~~F
 produzentenunabhängig/~~J
 promotionsstudiengang/~~N
 prämonstratenserabtei/~~N
@@ -215159,7 +214915,6 @@ straßenverkehrstechnisch/~~J
 stromeinspeisungseinheit/~~F
 stromeinspeisungsstellen/~~V
 subsistenzlandwirtschaft/~~F
-supplementäruntersuchung/~~F
 systematisierungsversuch/~~N
 tangentialbeschleunigung/~~F
 taschenspielerkunststück/~~N
@@ -216281,7 +216036,6 @@ dachdeckergeselle/~~N
 defereggengebirge/~~N
 dendrochronologie/~~N
 deponierungsgrube/~~N
-desktopoberfläche/~~N
 destillierkolonne/~~N
 diabeteskontrolle/~~N
 dickschnabellumme/~~N
@@ -216312,7 +216066,6 @@ emanationsgedanke/~~N
 entleerungsklappe/~~N
 entstörungsstelle/~~N
 erarbeitungsphase/~~N
-ersparnismaßnahme/~~N
 erzählgegenstände/~~N
 evakuierungsbühne/~~N
 evakuierungsfahrt/~~N
@@ -216323,7 +216076,6 @@ exkursionsstrecke/~~N
 extensionsschiene/~~N
 fahrgestellnummer/~~N
 fahrplanauskünfte/~~N
-faktorpreisgrenze/~~N
 fakturiermaschine/~~N
 feldjustieranlage/~~N
 festigkeitsgrenze/~~N
@@ -216433,7 +216185,6 @@ knappschaftsärzte/~~N
 kohlensäureschnee/~~N
 kombiwasserheizer/~~N
 kompensierscheibe/~~N
-komplementärfarbe/~~N
 komplikationsrate/~~N
 kondensatorbauart/~~N
 kontagionstheorie/~~N
@@ -216489,7 +216240,6 @@ markierungsbänder/~~N
 markierungsknöpfe/~~N
 markierungspfähle/~~N
 markierungsstelle/~~N
-membranoberfläche/~~N
 mennonitenkolonie/~~N
 messiasprätendent/~~N
 methodistenkirche/~~N
@@ -216505,7 +216255,6 @@ nachschusspflicht/~~N
 nachstellschraube/~~N
 nachtragshaushalt/~~N
 nachtwächterstaat/~~N
-niedriglohngrenze/~~N
 nukleotidschleife/~~N
 nullpunktsenergie/~~N
 nährstoffausträge/~~N
@@ -216930,7 +216679,6 @@ problemorientiert/~~J
 produktintegriert/~~J
 produktorientiert/~~J
 prozessorientiert/~~J
-reaktorproduziert/~~J
 renditeorientiert/~~J
 rollstuhlgeeignet/~~J
 rückfallgefährdet/~~J
@@ -217280,7 +217028,6 @@ dreieinigkeitsfest/~~N
 drilldüngemaschine/~~N
 durchlasskennlinie/~~N
 durchlichtaufsätze/~~N
-durchschlupfgrenze/~~N
 durchschreibpapier/~~N
 eingewöhnungsphase/~~N
 einschätzungsfrage/~~N
@@ -217288,7 +217035,6 @@ einzelstrangbrüche/~~N
 einzigkeitsannahme/~~N
 einäscherungshalle/~~N
 endrundenteilnahme/~~N
-entsenderichtlinie/~~N
 entstaubungsanlage/~~N
 epithelmuskelzelle/~~N
 erhärtungszustände/~~N
@@ -217390,7 +217136,6 @@ langfühlerschrecke/~~N
 laserstrahlanalyse/~~N
 lateinamerikareise/~~N
 lautsprecherstimme/~~N
-legislativmaßnahme/~~N
 ligationskontrolle/~~N
 lipiddoppelschicht/~~N
 lockerungsmaßnahme/~~N
@@ -217488,7 +217233,6 @@ schnellziehholster/~~N
 schuhmachergeselle/~~N
 schwankungsreserve/~~N
 schwarzmeerstrände/~~N
-sedimentoberfläche/~~N
 seidenspinnerraupe/~~N
 seitenschiffdächer/~~N
 selektionsmaßnahme/~~N
@@ -218365,14 +218109,11 @@ bewegungsorientiert/~~J
 computerunterstützt/~~J
 datenbankorientiert/~~J
 datensatzorientiert/~~J
-datenschutzrelevant/~~J
 diesseitsorientiert/~~J
-dritterfolgreichste/~~J
 effizienzorientiert/~~J
 exponentialverteilt/~~J
 funktionsorientiert/~~J
 fußballinteressiert/~~J
-fünfterfolgreichste/~~J
 grundwassergespeist/~~J
 handlungsorientiert/~~J
 hardwareunterstützt/~~J
@@ -218384,7 +218125,6 @@ kampfwertgesteigert/~~J
 kompetenzorientiert/~~J
 kriterienorientiert/~~J
 kunstwerkorientiert/~~J
-lebensmittelbedingt/~~J
 leistungsorientiert/~~J
 leistungsschwächste/~~J
 lochkartengesteuert/~~J
@@ -218430,7 +218170,6 @@ währungskursbedingt/~~J
 zielgruppenrelevant/~~J
 zirkularpolarisiert/~~J
 zusammenphantasiert/~~J
-zweiterfolgreichste/~~J
 zweitumfangreichste/~~J
 überlastungsbedingt/~~J
 überspannungssicher/~~J
@@ -218812,7 +218551,6 @@ vorlesungsmitschrift/~~N
 völkerwanderungszeit/~~N
 waffennachführanlage/~~N
 warenumschlagsplätze/~~N
-wegekostenrichtlinie/~~N
 wehrmachtsflugplätze/~~N
 weltkulturerbestätte/~~N
 wesersandsteinkirche/~~N
@@ -219094,7 +218832,6 @@ helikopterlandeplätze/~~N
 holocaustgedenkstätte/~~N
 häftlingsschreibstube/~~N
 identifizierungskarte/~~N
-infrastrukturmaßnahme/~~N
 instandsetzungsarbeit/~~N
 instandsetzungstruppe/~~N
 interpolationsaufgabe/~~N
@@ -219106,7 +218843,6 @@ kalligrafielehrbücher/~~N
 kampfmittelräumdienst/~~N
 kapuzinerinnenkloster/~~N
 kapuzinerinnenklöster/~~N
-katalysatoroberfläche/~~N
 kindschaftsverhältnis/~~N
 kirchenvorsteherämter/~~N
 klassifizierungsstufe/~~N
@@ -219432,7 +219168,6 @@ aufschlussverhältnisse/~~N
 aussprachewörterbücher/~~N
 autorisierungszentrale/~~N
 badegewässerrichtlinie/~~N
-bedruckstoffoberfläche/~~N
 bekanntmachungsblätter/~~N
 benachrichtigungsliste/~~N
 bernsteinschnitzkünste/~~N
@@ -219792,7 +219527,6 @@ interpreterschnittstelle/~~N
 kleinkaliberschießstände/~~N
 kohlenstoffmonoxidquelle/~~N
 kommandanturschreibstube/~~N
-korrosionsschutzmaßnahme/~~N
 kriegsgräbergedenkstätte/~~N
 kriegsheimkehrerverbände/~~N
 körperschaftssteuersätze/~~N
@@ -219928,7 +219662,6 @@ modernisierungsorientiert/~~J
 persönlichkeitsorientiert/~~J
 vorsteuerabzugsberechtigt/~~J
 zustellungsbevollmächtigt/~~J
-zweitbevölkerungsreichste/~~J
 mitarbeiterfreundlichstem/~~N
 mitarbeiterfreundlichster/~~N
 mitarbeiterfreundlichstes/~~N
@@ -222796,7 +222529,6 @@ grundausbildung/~~Fh # compound: Grund + Ausbildung
 parkettfußboden/~~Mh # compound: Parkett + Fußboden
 leinenschaft/~~Fh # from Leinwand +enschaft? or Leinen + Schaft?
 schuhband/~~Nh # compound: Schuh + Band
-schuhbänder/~~N # plural
 farbwünsche/~~M # plural
 schuhmodell/~~Nh # compound: Schuh + Modell
 schuhmode/~~Fh # compound: Schuh + Mode
@@ -222812,7 +222544,6 @@ hamsterkäufen/~~M # plural/dative of Hamsterkauf
 bezeichnung/~~Fh # standalone noun
 während/~~P # preposition
 tanzsälen/~~M # dative plural
-schuhbändern/~~N # dative plural
 1950er/~~N # decade
 1950ern/~~N # decade dative
 1960er/~~N # decade
@@ -222828,10 +222559,8 @@ erfahrungen/~~F # plural of Erfahrung
 hypothesen/~~F # plural of Hypothese
 gesetzmäßigkeiten/~~F # plural of Gesetzmäßigkeit
 erkenntnisgewinn/~~Mh # knowledge gain
-erkenntnisgewinns/~~M # genitive of Erkenntnisgewinn
 erkenntnissen/~~F # dative plural of Erkenntnis
 systematizität/~~Fh # systematic nature
-wissensstände/~~M # knowledge states
 vorstellung/~~Fh # idea, concept, performance
 vorstellungen/~~F # plural of Vorstellung
 verarbeitung/~~Fh # processing
@@ -222923,7 +222652,6 @@ wissenschaftsbereiche/~~Mh # scientific fields
 schuhmodelle/~~Nh # shoe models
 schuhformen/~~F # shoe types
 schuhtyp/~~Mh # shoe type
-arbeitsschuhen/~~M # work shoes
 sportschuhe/~~Mh # sports shoes
 skischuhe/~~Mh # ski boots
 herrenschuh/~~Mh # men's shoe
@@ -222939,7 +222667,6 @@ nullboden/~~Mh # flat sole
 schutzfunktion/~~Fh # protective function
 modeobjekt/~~Nh # fashion object
 kleidungsstücke/~~Nh # clothing items
-schnabelschuhen/~~M # pointed shoes
 sonnenkönigs/~~M # sun king's
 industriezeitalters/~~Nh # industrial age
 
