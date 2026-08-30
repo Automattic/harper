@@ -98,7 +98,18 @@ impl CompoundChecker {
                 .collect();
 
             if !flags.is_empty() {
-                compound_words.insert(word.letters.clone(), flags);
+                // Insert the original word
+                compound_words.insert(word.letters.clone(), flags.clone());
+
+                // Also insert a version with the first letter lowercased for case-insensitive lookup
+                if !word.letters.is_empty() {
+                    let mut lowercased_first = word.letters.clone();
+                    if let Some(first_char) = lowercased_first.first_mut() {
+                        // Use proper Unicode lowercasing for German characters like Ä, Ö, Ü
+                        *first_char = first_char.to_lowercase().next().unwrap_or(*first_char);
+                    }
+                    compound_words.insert(lowercased_first, flags);
+                }
             }
         }
 
