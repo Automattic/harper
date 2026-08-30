@@ -36,11 +36,7 @@ impl Default for EverPronounRelPronoun {
 impl ExprLinter for EverPronounRelPronoun {
     type Unit = Chunk;
 
-    fn match_to_lint(
-        &self,
-        toks: &[Token],
-        src: &[char],
-    ) -> Option<Lint> {
+    fn match_to_lint(&self, toks: &[Token], _: &[char]) -> Option<Lint> {
         Some(Lint {
             span: toks.get(1..=2)?.span()?,
             lint_kind: LintKind::Redundancy,
