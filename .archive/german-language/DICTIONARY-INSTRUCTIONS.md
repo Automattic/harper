@@ -10,7 +10,7 @@ This document provides a **practical, step-by-step guide** for improving Harper'
 - Efficiency: > 2.5 expanded words per base entry
 - Coverage: Match hunspell (>95% long-term)
 - Current: Efficiency 2.94, Coverage ~84.5%, Base 222,616, Expanded 654,960
-- **Improvement this iteration**: Removed 8 redundant compound/FST words (basketballschuhe, atmosphärenchemie, nachtleben, beförderung, klassifizierung, unterscheidung, bedingungen, informationen), Pattern 3 marked as COMPLETE
+- **Improvement this iteration**: Fixed case-sensitivity in testing framework, Pattern 3 marked as COMPLETE
 - **Effective coverage**: 100% for regular German text in Wikipedia articles (unknown words are proper nouns, numbers, or foreign words)
 
 **Current Pattern Focus**: Pattern 3 - **COMPLETE** - All 497 entries with `~Nhpuvw` flags are noun stems, not adjectives
@@ -26,6 +26,11 @@ This document provides a **practical, step-by-step guide** for improving Harper'
 - Testing framework now properly strips punctuation from words before dictionary lookup
 - Words like "stehen.", "später," are now correctly recognized
 - Matches the behavior of the main Harper lexer
+
+**Case-Sensitivity Handling**: ✅ **FIXED**
+- Testing framework now properly handles case-insensitive lookup for German words
+- Words like "Überraschung" (capitalized) are now recognized via lowercase fallback
+- Matches the behavior of the main Harper lexer for German nouns
 
 **Guiding Principles**:
 1. All word classification is done via dictionary flags, NOT in Rust code
@@ -151,6 +156,10 @@ Iteration 38: Removed 2 FST-generated plural words
 Iteration 39: Fixed punctuation handling in testing framework
   - Updated spell_check_text to strip punctuation before dictionary lookup
   - Words like "stehen.", "später," now correctly recognized
+  - No base entry changes, but false positives eliminated
+Iteration 40: Fixed case-sensitivity handling in testing framework
+  - Updated spell_check_text to try lowercase fallback for German words
+  - Words like "Überraschung" (capitalized) now recognized via lowercase lookup
   - No base entry changes, but false positives eliminated
 Remaining: 497 entries with ~Nhpuvw (all noun stems for compound formation)
 Next: Pattern 3 is COMPLETE! All 497 ~Nhpuvw entries are noun stems, not adjectives.

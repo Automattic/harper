@@ -372,7 +372,14 @@ fn spell_check_text(dict: &dyn Dictionary, text: &str) {
     let mut unknown_words = Vec::new();
     
     for word in &words {
-        if dict.get_word_metadata(&word.chars().collect::<Vec<_>>()).is_none() {
+        let word_chars: Vec<char> = word.chars().collect();
+        let lowercase_chars: Vec<char> = word.to_lowercase().chars().collect();
+        
+        // Try exact case first, then lowercase
+        let found = dict.get_word_metadata(&word_chars).is_some() || 
+                    dict.get_word_metadata(&lowercase_chars).is_some();
+        
+        if !found {
             unknown_words.push(word.as_str());
         }
     }
