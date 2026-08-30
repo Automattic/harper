@@ -30243,6 +30243,7 @@ infinit/~~NXh
 info/~~Nh
 infolge/~~Nh
 information/~~Nh
+informationen/~~Fh
 infrage/~~Nh
 ingwer/~~Mh
 ingwers/~~Nh
@@ -34125,6 +34126,9 @@ mediale/~~Nh
 mediane/~~Nh
 medians/~~Nh
 medien/~~V # auto-added
+medien/~~Nh
+mediendatei/~~Fh
+mediendateien/~~Fh
 medina/~~Nh
 medium/~~Za #  auto-added
 mediums/~~Nh
@@ -38244,6 +38248,7 @@ ribosen/~~V # auto-added
 ribosom/~~NXh
 richt/~~NXh
 richten/~~V # auto-added
+richtlinie/~~Fh
 richter/~~Mh
 richtet/~~NXh
 richtig/~~NJOQRSTUWq #adjective and noun
@@ -52625,6 +52630,7 @@ bedingtes/~~Nh
 bedingtest/~~Nh
 bedingtet/~~Nh
 bedingung/~~Fh
+bedingungen/~~Fh
 bedingungs/~~Nh
 bedroh/~~Vej # REPLACES bedrohen
 bedrohende/~~Nh
