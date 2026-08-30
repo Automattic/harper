@@ -87,6 +87,7 @@ use super::double_modal::DoubleModal;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
+use super::ever_pronoun_rel_pronoun::EverPronounRelPronoun;
 use super::everyday::Everyday;
 use super::except_of::ExceptOf;
 use super::expand_memory_shorthands::ExpandMemoryShorthands;
@@ -694,6 +695,7 @@ impl LintGroup {
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
+        insert_expr_rule!(EverPronounRelPronoun);
         insert_expr_rule!(Everyday);
         insert_expr_rule!(ExceptOf);
         insert_expr_rule!(ExpandMemoryShorthands);

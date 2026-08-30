@@ -2992,6 +2992,13 @@
 						},
 						{
 							"Bool": {
+								"name": "EverPronounRelPronoun",
+								"state": true,
+								"label": "Ever Pronoun + Relative Pronoun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Excellent",
 								"state": true,
 								"label": "Excellent"
