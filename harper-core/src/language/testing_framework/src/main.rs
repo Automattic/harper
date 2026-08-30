@@ -187,11 +187,21 @@ fn check_word_with_hunspell(language: &str, word: &str) -> bool {
                     let _ = stdin.write_all(word.as_bytes());
                     let _ = stdin.write_all(b"\n");
                 }
-                if let Ok(status) = child.wait() {
-                    if status.success() {
+                
+                if let Ok(output) = child.wait_with_output() {
+                    if output.status.success() {
                         // hunspell -a returns lines starting with * for correct words
-                        // For simplicity, we'll use the exit code approach
-                        return true;
+                        // Lines starting with & or + are misspelled
+                        let stdout = String::from_utf8_lossy(&output.stdout);
+                        for line in stdout.lines() {
+                            let line = line.trim();
+                            if line.starts_with("* ") || line.starts_with("*") {
+                                return true;
+                            }
+                            if line.starts_with("& ") || line.starts_with("+") || line.starts_with("&") {
+                                return false;
+                            }
+                        }
                     }
                 }
             }

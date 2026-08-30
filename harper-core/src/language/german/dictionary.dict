@@ -14110,7 +14110,7 @@ dichter/~~NJOQRSTUWq #frequency: 8
 doppel/~Nhpuvw #frequency: 8
 druck/~Nhpuvw #frequency: 8
 ehelich/~Jq #adjective root, frequency: 8
-einig/~Jq #adjective root, frequency: 8
+einig/~~JOQRSTUWq #adjective root, frequency: 8
 eiter/~Nhpuvw #frequency: 8
 ekel/~Nhpuvw #frequency: 8
 eng/~~RJOQRSTUWqh #frequency: 8
@@ -28417,7 +28417,7 @@ grollt/~~NXh
 groov/~~Vej # REPLACES grooven
 groovig/~~NXh
 groovt/~~NXh
-gros/~~Nh
+gros/~~N
 grotte/~~Nh
 grotten/~~V # auto-added
 grottig/~~NXh
@@ -42717,7 +42717,6 @@ zürnt/~~NXh
 übung/~~Fh
 übungs/~~Nh
 üppig/~~NXh
-a/~~Nh
 ab/~~Nh
 ad/~~Nh
 adernpaars/~~Nh
@@ -51769,7 +51768,6 @@ azurblauen/~~V # auto-added
 azurblauer/~~Mh
 azurblaues/~~Nh
 aß/~~Nh
-b/~~Nh
 baarjura/~~Nbh
 babbelnd/~~Nh
 babbelnde/~~Nh
@@ -58943,7 +58941,6 @@ büßerhemd/~~Nh
 büßerhemds/~~Nh
 büßerinnen/~~V # auto-added
 büßerkreuz/~~Nh
-c/~~Nh
 cabarets/~~Nh
 cabernet/~~Nh
 cabriolet/~~Nh
@@ -59740,7 +59737,6 @@ cäsiumazid/~~Nh
 cäsiumion/~~Nh
 cäsiumsalz/~~Nh
 cäsiumuhr/~~Nh
-d/~~Nh
 da/~~Nh
 dabehalte/~~Nh
 dabehalten/~~V # auto-added
@@ -63094,7 +63090,6 @@ düsterstem/~~Nh
 düstersten/~~V # auto-added
 düsterster/~~Mh
 düsterstes/~~Nh
-e/~~Nh
 ebbestrom/~~Nh
 ebbestroms/~~Nh
 ebbeströme/~~Nh
@@ -70600,7 +70595,6 @@ exzisiere/~~Nh
 exzisieren/~~V # auto-added
 exzisierst/~~Nh
 exzisiert/~~NXh
-f/~~Nh
 fabelbuch/~~Nh
 fabelbuchs/~~Nh
 fabelnde/~~Nh
@@ -75085,7 +75079,6 @@ füttertest/~~Nh
 füttertet/~~Nh
 fütterung/~~Fh
 füßchens/~~Nh
-g/~~Nh
 gabardine/~~Nh
 gabeligem/~~Nh
 gabeligen/~~V # auto-added
@@ -79512,7 +79505,6 @@ geschreckt/~~JOQRSTUWVg
 geschrei/~~NbXh
 geschreies/~~Nh
 geschrien/~~V # auto-added
-geschriene/~~Nh
 geschrotet/~~JOQRSTUWVg
 geschrubbt/~~JOQRSTUWVg
 geschränkt/~~JOQRSTUWVg
@@ -83203,7 +83195,6 @@ gütigstem/~~Nh
 gütigsten/~~V # auto-added
 gütigster/~~Mh
 gütigstes/~~Nh
-h/~~Nh
 ha/~~Nh
 haarbreit/~~NXh
 haardtrand/~~Nh
@@ -86555,7 +86546,6 @@ hütetest/~~Nh
 hüttchen/~~XZ #  auto-added
 hüttchens/~~Nh
 hütungen/~~V # auto-added
-i/~~Nh
 iatrogen/~~V # auto-added
 iatrogene/~~Nh
 iberiens/~~Nh
@@ -87265,7 +87255,6 @@ iteriert/~~NXh
 itzehoes/~~Nh
 ivorerin/~~Nh
 iwanplatz/~~Nh
-j/~~Nh
 ja/~~Nh
 jachtbau/~~Nbh
 jachtclub/~~Nh
@@ -87608,7 +87597,6 @@ jüngsten/~~V # auto-added
 jüngster/~~Mh
 jüngstes/~~Nh
 jütlands/~~Nh
-k/~~Nh
 kabarett/~~NXh
 kabaretts/~~Nh
 kabbelnd/~~Nh
@@ -90863,7 +90851,6 @@ küssender/~~Mh
 küssendes/~~Nh
 küsterin/~~Nh
 küvetten/~~V # auto-added
-l/~~Nh
 labbrigem/~~Nh
 labbrigen/~~V # auto-added
 labbriger/~~Mh
@@ -92794,7 +92781,6 @@ lüsternen/~~V # auto-added
 lüsterner/~~Mh
 lüsternes/~~Nh
 lüttichs/~~Nh
-m/~~Nh
 maasland/~~Nh
 maaslands/~~Nh
 maasseite/~~Nh
@@ -95351,7 +95337,6 @@ müßiggang/~~Nh
 müßiggehe/~~Nh
 müßiggeht/~~Nh
 müßigging/~~Nh
-n/~~Nh
 na/~~Nh
 naabtales/~~Nh
 naabtals/~~Nh
@@ -96470,7 +96455,6 @@ nützendem/~~Nh
 nützender/~~Mh
 nützendes/~~Nh
 nütztest/~~Nh
-o/~~Nh
 ob/~~Nh
 obduktion/~~Nh
 obduziere/~~Nh
@@ -96989,7 +96973,6 @@ ozonfrei/~~NXh
 ozoniden/~~V # auto-added
 ozonolyse/~~Nh
 ozonreich/~~Nh
-p/~~Nh
 paarende/~~Nh
 paarendem/~~Nh
 paarender/~~Mh
@@ -99206,7 +99189,6 @@ püriertem/~~Nh
 pürierter/~~Mh
 püriertes/~~Nh
 püriertet/~~Nh
-q/~~Nh
 qm/~~Nh
 quaddeln/~~V # auto-added
 quadrant/~~Nh
@@ -99370,7 +99352,6 @@ quälerin/~~Nh
 quälgeist/~~Nh
 quältest/~~Nh
 quäntchen/~~XZ #  auto-added
-r/~~Nh
 rabatten/~~V # auto-added
 rabattes/~~Nh
 rabbinat/~~NXh
@@ -101683,7 +101664,6 @@ rüttelnd/~~Nh
 rüttelnde/~~Nh
 rüttelten/~~V # auto-added
 rütteltet/~~Nh
-s/~~Nh
 saalanbau/~~Nh
 saalbaues/~~Nh
 saaldecke/~~Nh
@@ -102547,7 +102527,6 @@ schlafend/~~Nh
 schlafes/~~Nh
 schlaffe/~~Nh
 schlaffem/~~Nh
-schlaffen/~~V # auto-added
 schlaffer/~~Mh
 schlaffes/~~Nh
 schlagen/~~V # auto-added
@@ -107267,7 +107246,6 @@ süßsaures/~~Nh
 süßspeise/~~Nh
 süßtest/~~Nh
 süßungen/~~V # auto-added
-t/~~Nh
 tabbouleh/~~Nh
 tabelle/~~Nh
 tabellen/~~V # auto-added
@@ -109740,7 +109718,6 @@ türzargen/~~V # auto-added
 tütchen/~~XZ #  auto-added
 tütchens/~~Nh
 tütetest/~~Nh
-u/~~Nh
 ubiquitär/~~Nh
 ufernah/~~NXh
 ufernahem/~~Nh
@@ -111634,7 +111611,6 @@ utopisten/~~V # auto-added
 utopistin/~~Nh
 utrecht/~~Nh
 utrechts/~~Nh
-v/~~Nh
 vabanque/~~Nh
 vagabund/~~Nh
 vaginen/~~V # auto-added
@@ -114707,7 +114683,6 @@ völligem/~~Nh
 völligen/~~V # auto-added
 völliger/~~Mh
 völliges/~~Nh
-w/~~Nh
 waagrecht/~~Nh
 waalhafen/~~V # auto-added
 wabbele/~~Nh
@@ -117107,7 +117082,6 @@ wütendste/~~Nh
 wüteten/~~V # auto-added
 wütetest/~~Nh
 wütetet/~~Nh
-x/~~Nh
 xanthin/~~Nh
 xanthins/~~Nh
 xenofon/~~Nh
@@ -117135,7 +117109,6 @@ xylolen/~~V # auto-added
 xylophon/~~Nh
 xylophone/~~Nh
 xylophons/~~Nh
-y/~~Nh
 yachtbau/~~Nbh
 yachtclub/~~Nh
 yachten/~~V # auto-added
@@ -117157,7 +117130,6 @@ yucatan/~~Nh
 yucatans/~~Nh
 yunnans/~~Nh
 yuppies/~~Nh
-z/~~Nh
 zackens/~~Nh
 zackigem/~~Nh
 zackigen/~~V # auto-added
@@ -119640,7 +119612,6 @@ zürnender/~~Mh
 zürnendes/~~Nh
 zürntest/~~Nh
 zürntet/~~Nh
-ä/~~Nh
 äbtissin/~~Nh
 ächtend/~~Nh
 ächtende/~~Nh
@@ -119825,7 +119796,6 @@ zürntet/~~Nh
 äußertest/~~Nh
 äußertet/~~Nh
 äußerung/~~Fh
-ö/~~Nh
 öd/~~Nh
 ödematös/~~NXh
 ödestem/~~Nh
@@ -119904,7 +119874,6 @@ zürntet/~~Nh
 östrogen/~~V # auto-added
 östrogene/~~Nh
 östrogens/~~Nh
-ü/~~Nh
 übelkeit/~~Fh
 übelnahm/~~Nh
 übelnahmt/~~Nh
