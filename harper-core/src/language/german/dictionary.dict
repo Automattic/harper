@@ -15839,6 +15839,7 @@ befrei/~Nh #frequency: 6
 befremdlich/~Jq #adjective root, frequency: 6
 befriedigend/~Nh #frequency: 6
 beförder/~Nh #frequency: 6
+beförderung/~~Fh
 befüll/~Nh #frequency: 6
 begegnungsreich/~Nh #frequency: 6
 begehrlich/~Jq #adjective root, frequency: 6
@@ -40106,6 +40107,8 @@ straps/~~NXh
 strass/~~Nh
 strauß/~~NXh
 straße/~~Nh
+straßenbahn/~~Fh
+straßentransport/~~Mh
 strebt/~~NXh
 streit/~~NXh
 stress/~~NXh
@@ -88964,6 +88967,7 @@ klarwürde/~~Nh
 klassiere/~~Nh
 klassiert/~~Nh
 klassiker/~~Mh
+klassifizierung/~~Fh
 klatsche/~~Nh
 klatschen/~~XZ #  auto-added
 klatsches/~~Nh
@@ -133021,6 +133025,7 @@ zürichberg/~~Nh
 überschöbe/~~Fh
 übersenden/~~Nh
 übersetzen/~~Nh
+Übersetzung/~~Fh
 übersetzer/~~Nh
 übersichts/~~Nh
 übersprang/~~Nh
@@ -174357,6 +174362,7 @@ untermeerisch/~~Nh
 unterminieren/~~Nh
 unternehmungs/~~Nh
 unterscheiden/~~Nh
+unterscheidung/~~Fh
 unterscheidet/~~V # 3rd person singular of unterscheiden
 unterschieben/~~Nh
 unterschieden/~~Nh
