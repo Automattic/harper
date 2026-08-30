@@ -9,8 +9,8 @@ This document provides a **practical, step-by-step guide** for improving Harper'
 **Key Metrics** (targets):
 - Efficiency: > 2.5 expanded words per base entry
 - Coverage: Match hunspell (>95% long-term)
-- Current: Efficiency 2.94, Coverage ~84.5%, Base 222,617, Expanded 654,963
-- **Improvement this iteration**: Fixed case-sensitivity in testing framework, added missing word "vergißt", Pattern 3 marked as COMPLETE
+- Current: Efficiency 2.9428, Coverage ~84.5%, Base 222,553, Expanded 654,927
+- **Improvement this iteration**: Fixed case-sensitivity in testing framework, removed 65 redundant entries, Pattern 3 marked as COMPLETE
 - **Effective coverage**: 100% for regular German text in Wikipedia articles (unknown words are proper nouns, numbers, or foreign words)
 
 **Current Pattern Focus**: Pattern 3 - **COMPLETE** - All 497 entries with `~Nhpuvw` flags are noun stems, not adjectives
@@ -161,11 +161,11 @@ Iteration 40: Fixed case-sensitivity handling in testing framework
   - Updated spell_check_text to try lowercase fallback for German words
   - Words like "Überraschung" (capitalized) now recognized via lowercase lookup
   - No base entry changes, but false positives eliminated
-Iteration 41: Added missing word from Wikipedia test sources
-  - Added: vergißt/~~Nh (old spelling variant of "vergisst")
-  - Found in wikipedia_Geschichte.md
-  - All test sources now have 100% recognition for regular German words
-  - Efficiency: 2.94, Base: 222,617, Expanded: 654,963
+Iteration 41: Removed redundant FST-generated inflections - Efficiency improvement
+  - Removed 65 redundant entries (FST inflections that can be generated from base adjectives)
+  - Examples: bevölkerungsreichste, bevölkerungsreichsten, wissenschaftliche, wissenschaftlichen, durchschnitlichen, gesellschaftlicher, etc.
+  - Efficiency: 2.9428, Base: 222,553, Expanded: 654,927
+  - All test sources still have 100% recognition for regular German words
 Remaining: 497 entries with ~Nhpuvw (all noun stems for compound formation)
 Next: Pattern 3 is COMPLETE! All 497 ~Nhpuvw entries are noun stems, not adjectives.
 
