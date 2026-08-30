@@ -15,6 +15,8 @@ use super::addicting::Addicting;
 use super::adjective_double_degree::AdjectiveDoubleDegree;
 use super::adjective_of_a::AdjectiveOfA;
 use super::after_later::AfterLater;
+use super::ajar::Ajar;
+use super::akimbo::Akimbo;
 use super::all_hell_break_loose::AllHellBreakLoose;
 use super::all_intents_and_purposes::AllIntentsAndPurposes;
 use super::allow_to::AllowTo;
@@ -38,6 +40,7 @@ use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
 use super::best_of_all_time::BestOfAllTime;
+use super::better_off_served::BetterOffServed;
 use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
@@ -50,8 +53,10 @@ use super::cant::Cant;
 use super::capitalize_personal_pronouns::CapitalizePersonalPronouns;
 use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
+use super::cease_to::CeaseTo;
 use super::change_tack::ChangeTack;
 use super::chock_full::ChockFull;
+use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
@@ -71,8 +76,10 @@ use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
 use super::did_past::DidPast;
 use super::didnt::Didnt;
+use super::dig_under_the_hood::DigUnderTheHood;
 use super::discourse_markers::DiscourseMarkers;
 use super::disjoint_prefixes::DisjointPrefixes;
+use super::dissemble_disassemble::DissembleDisassemble;
 use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
@@ -104,7 +111,10 @@ use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
 use super::full_to_the_brim::FullToTheBrim;
+use super::get_pass_go_pass::GetPassGoPass;
+use super::go_missing::GoMissing;
 use super::go_so_far_as_to::GoSoFarAsTo;
+use super::go_to_sleep::GoToSleep;
 use super::go_to_war::GoToWar;
 use super::good_at::GoodAt;
 use super::handful::Handful;
@@ -122,6 +132,7 @@ use super::how_to::HowTo;
 use super::hyphenate_number_day::HyphenateNumberDay;
 use super::i_am_agreement::IAmAgreement;
 use super::if_wouldve::IfWouldve;
+use super::implement_in::ImplementIn;
 use super::in_demand_in_depth::InDemandInDepth;
 use super::in_favour_of_doing::InFavourOfDoing;
 use super::in_on_the_cards::InOnTheCards;
@@ -164,6 +175,7 @@ use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
+use super::nail_in_coffin::NailInCoffin;
 use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
@@ -182,6 +194,7 @@ use super::number_suffix_capitalization::NumberSuffixCapitalization;
 use super::numeric_range_en_dash::NumericRangeEnDash;
 use super::obsess_preposition::ObsessPreposition;
 use super::of_course::OfCourse;
+use super::off_limits::OffLimits;
 use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
 use super::once_or_twice::OnceOrTwice;
@@ -275,7 +288,9 @@ use super::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::throw_rubbish::ThrowRubbish;
 use super::till_date::TillDate;
 use super::to_adverb::ToAdverb;
+use super::to_to::ToTo;
 use super::to_two_too::ToTwoToo;
+use super::tote_tout::ToteTout;
 use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
@@ -285,6 +300,7 @@ use super::update_place_names::UpdatePlaceNames;
 use super::use_ellipsis_character::UseEllipsisCharacter;
 use super::use_title_case::UseTitleCase;
 use super::verb_to_adjective::VerbToAdjective;
+use super::very_less::VeryLess;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
 use super::vicious_loop::ViciousCircle;
@@ -301,10 +317,12 @@ use super::widely_accepted::WidelyAccepted;
 use super::will_non_lemma::WillNonLemma;
 use super::win_prize::WinPrize;
 use super::wish_could::WishCould;
+use super::with_open_arms::WithOpenArms;
 use super::wordpress_dotcom::WordPressDotcom;
 use super::worth_to_do::WorthToDo;
 use super::would_never_have::WouldNeverHave;
 use super::wrong_apostrophe::WrongApostrophe;
+use super::wrong_negative::WrongNegative;
 
 // Modules that create multiple linters each
 use super::be_adjective_confusions;
@@ -607,6 +625,8 @@ impl LintGroup {
         insert_expr_rule!(AdjectiveDoubleDegree);
         insert_struct_rule!(AdjectiveOfA);
         insert_expr_rule!(AfterLater);
+        insert_expr_rule!(Ajar);
+        insert_expr_rule!(Akimbo);
         insert_expr_rule!(AllHellBreakLoose);
         insert_expr_rule!(AllIntentsAndPurposes);
         insert_expr_rule!(AllowTo);
@@ -629,6 +649,7 @@ impl LintGroup {
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
         insert_struct_rule!(BestOfAllTime);
+        insert_expr_rule!(BetterOffServed);
         insert_expr_rule!(BoringWords);
         insert_expr_rule!(Bought);
         insert_expr_rule!(BrandBrandish);
@@ -641,8 +662,10 @@ impl LintGroup {
         insert_struct_rule!(CapitalizePersonalPronouns);
         insert_expr_rule!(Catch22);
         insert_expr_rule!(CautionaryTale);
+        insert_expr_rule!(CeaseTo);
         insert_expr_rule!(ChangeTack);
         insert_expr_rule!(ChockFull);
+        insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
         insert_expr_rule!(CodeInWriteIn);
         insert_struct_rule!(CommaFixes);
@@ -661,6 +684,7 @@ impl LintGroup {
         insert_expr_rule!(DespiteOf);
         insert_expr_rule_with_dict!(DidPast);
         insert_expr_rule!(Didnt);
+        insert_expr_rule!(DigUnderTheHood);
         insert_struct_rule!(DiscourseMarkers);
         insert_expr_rule_with_dict!(DisjointPrefixes);
         insert_expr_rule!(DoMistake);
@@ -694,7 +718,10 @@ impl LintGroup {
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
         insert_expr_rule!(FullToTheBrim);
+        insert_expr_rule!(GetPassGoPass);
+        insert_expr_rule!(GoMissing);
         insert_expr_rule!(GoSoFarAsTo);
+        insert_expr_rule!(GoToSleep);
         insert_expr_rule!(GoToWar);
         insert_expr_rule!(GoodAt);
         insert_expr_rule!(Handful);
@@ -712,6 +739,7 @@ impl LintGroup {
         insert_expr_rule!(HyphenateNumberDay);
         insert_expr_rule!(IAmAgreement);
         insert_expr_rule!(IfWouldve);
+        insert_expr_rule!(ImplementIn);
         insert_expr_rule!(InDemandInDepth);
         insert_expr_rule!(InFavourOfDoing);
         insert_struct_rule_with_dialect!(InOnTheCards);
@@ -753,6 +781,7 @@ impl LintGroup {
         insert_expr_rule!(MostNumber);
         insert_expr_rule!(MostOfTheTimes);
         insert_expr_rule!(MultipleSequentialPronouns);
+        insert_expr_rule!(NailInCoffin);
         insert_expr_rule!(NailOnTheHead);
         insert_expr_rule!(NakedEye);
         insert_expr_rule!(NeedToNoun);
@@ -770,6 +799,7 @@ impl LintGroup {
         insert_expr_rule!(NumericRangeEnDash);
         insert_expr_rule!(ObsessPreposition);
         insert_expr_rule!(OfCourse);
+        insert_expr_rule!(OffLimits);
         insert_expr_rule!(OldestInTheBook);
         insert_expr_rule!(OnFloor);
         insert_expr_rule!(OnceOrTwice);
@@ -860,7 +890,9 @@ impl LintGroup {
         insert_struct_rule!(ThrowRubbish);
         insert_expr_rule_with_dialect!(TillDate);
         insert_expr_rule!(ToAdverb);
+        insert_expr_rule!(ToTo);
         insert_struct_rule!(ToTwoToo);
+        insert_struct_rule!(ToteTout);
         insert_expr_rule!(Touristic);
         insert_expr_rule_with_dict!(TransposedSpace);
         insert_expr_rule!(TryOnesHandAt);
@@ -870,6 +902,7 @@ impl LintGroup {
         insert_struct_rule!(UseEllipsisCharacter);
         insert_struct_rule_with_dict!(UseTitleCase);
         insert_expr_rule!(VerbToAdjective);
+        insert_expr_rule!(VeryLess);
         insert_expr_rule!(VeryUnique);
         insert_expr_rule!(ViceVersa);
         insert_expr_rule!(ViciousCircle);
@@ -884,9 +917,11 @@ impl LintGroup {
         insert_expr_rule_with_dict!(WillNonLemma);
         insert_expr_rule!(WinPrize);
         insert_expr_rule!(WishCould);
+        insert_expr_rule!(WithOpenArms);
         insert_struct_rule!(WordPressDotcom);
         insert_expr_rule_with_dict!(WorthToDo);
         insert_expr_rule!(WouldNeverHave);
+        insert_expr_rule_with_dict!(WrongNegative);
 
         // Uses Sentence rather than Chunk
         out.add("AspireTo", AspireTo::default());
@@ -896,6 +931,9 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
+
+        // Uses Sentence rather than CHunk
+        out.add("DissembleDisassemble", DissembleDisassemble::default());
 
         // Uses Sentence rather than Chunk
         out.add(

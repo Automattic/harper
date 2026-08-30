@@ -59,9 +59,9 @@
 >
 #
 > Correct  grammatical tagging will    reflect that      " dogs    " is  here used as    a   verb    , not
-# NSg/VB/J J           NSg/Vg  NPr/VXB VB      I/C/Ddem+ . NPl/V3+ . VL3 J/R  VP/J R/C/P D/P NSg/VB+ . NSg/R/C
-> as    the more         common   plural noun    . Grammatical context  is  one     way   to determine
-# R/C/P D   NPr/I/J/R/Dq NSg/VB/J NSg/J  NSg/VB+ . J+          N🅪Sg/VB+ VL3 NSg/I/J NSg/J P  VB
+# NSg/VB/J J           NSg/Vg  NPr/VXB VB      I/C/Ddem+ . NPl/V3+ . VL3 R    VP/J R/C/P D/P NSg/VB+ . NSg/R/C
+> as    the more         common plural noun    . Grammatical context  is  one     way   to determine
+# R/C/P D   NPr/I/J/R/Dq VB/J   NSg/J  NSg/VB+ . J+          N🅪Sg/VB+ VL3 NSg/I/J NSg/J P  VB
 > this    ; semantic analysis can     also be       used to infer that      " sailor " and  " hatch  "
 # I/Ddem+ . NSg/J+   N🅪Sg+    NPr/VXB R/C  NSg/VLXB VP/J P  VB    I/C/Ddem+ . NSg+   . VB/C . NSg/VB .
 > implicate " dogs    " as    1 ) in        the nautical context  and  2 ) an  action     applied to the
@@ -92,8 +92,8 @@
 # VB/C NSg/VB/J+ NPl+   . NPr/J/R/P I/J/R/Dq NSg/Vg  NPl+    . NSg/J     NPl         P  D   I/J
 > root    word    will    get    different parts  of speech   , resulting in        a   large number     of
 # NPr/VB+ NSg/VB+ NPr/VXB NSg/VB NSg/J     NPl/V3 P  N🅪Sg/VB+ . Nᴹ/Vg/J   NPr/J/R/P D/P NSg/J N🅪Sg/VB/JC P
-> tags    . For   example , NN for   singular common   nouns  , NNS for   plural common   nouns  , NP
-# NPl/V3+ . R/C/P NSg/VB+ . ?  R/C/P NSg/J    NSg/VB/J NPl/V3 . ?   R/C/P NSg/J  NSg/VB/J NPl/V3 . NPr
+> tags    . For   example , NN for   singular common nouns  , NNS for   plural common nouns  , NP
+# NPl/V3+ . R/C/P NSg/VB+ . ?  R/C/P NSg/J    VB/J   NPl/V3 . ?   R/C/P NSg/J  VB/J   NPl/V3 . NPr
 > for   singular proper nouns  ( see    the POS  tags    used in        the Brown       Corpus ) . Other
 # R/C/P NSg/J    NSg/J  NPl/V3 . NSg/VB D   NSg+ NPl/V3+ VP/J NPr/J/R/P D   NPr🅪Sg/VB/J NSg+   . . NSg/VB/J
 > tagging systems use     a   smaller number     of tags    and  ignore fine     differences or
@@ -114,8 +114,8 @@
 # ?               NSg        NPr/J/R/P D   NPr🅪Sg/VB P  ?               NPr/VB/J NPl+      VL3
 > commonly expressed using   very short      mnemonics , such  as    Ncmsan for   Category = Noun    ,
 # R        VP/J      Nᴹ/Vg/J J/R  NPr/VB/J/P NPl       . NSg/I R/C/P ?      R/C/P NSg+     . NSg/VB+ .
-> Type    = common   , Gender     = masculine , Number      = singular , Case       = accusative , Animate
-# NSg/VB+ . NSg/VB/J . N🅪Sg/VB/J+ . NSg/J     . N🅪Sg/VB/JC+ . NSg/J    . NPr🅪Sg/VB+ . NSg/J      . VB/J
+> Type    = common , Gender     = masculine , Number      = singular , Case       = accusative , Animate
+# NSg/VB+ . VB/J   . N🅪Sg/VB/J+ . NSg/J     . N🅪Sg/VB/JC+ . NSg/J    . NPr🅪Sg/VB+ . NSg/J      . VB/J
 > = no       .
 # . NSg/Dq/P .
 >
@@ -184,8 +184,8 @@
 # D+  NPr🅪Sg/VB/J+ NSg+   VLPt R             . VP/J   . P    NSg/VB/J+ . P  . N🅪Sg/VB+ NPl/V3  NSg/J/P
 > many        years . A    first  approximation was  done      with a    program by Greene and  Rubin ,
 # NSg/I/J/Dq+ NPl+  . D/P+ NSg/J+ N🅪Sg+         VLPt NSg/VPp/J P    D/P+ NPr/VB+ P  NPr    VB/C NPr   .
-> which consisted of a   huge handmade list   of what   categories could   co     - occur at
-# I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       NSg/VXB NPr/I+ . VB    NSg/P
+> which consisted of a   huge handmade list   of what   categories could co     - occur at
+# I/C+  VP/J      P  D/P J    NSg/J    NSg/VB P  NSg/I+ NPl+       VXB   NPr/I+ . VB    NSg/P
 > all          . For   example , article then      noun    can     occur , but     article then      verb    ( arguably )
 # NSg/I/J/C/Dq . R/C/P NSg/VB+ . NSg/VB+ NSg/J/R/C NSg/VB+ NPr/VXB VB    . NSg/C/P NSg/VB+ NSg/J/R/C NSg/VB+ . R        .
 > cannot  . The program got about 70 % correct  . Its     results were repeatedly reviewed
@@ -278,12 +278,12 @@
 #
 > Eugene Charniak points  out          in        Statistical techniques for   natural language
 # NPr+   ?        NPl/V3+ NSg/VB/J/R/P NPr/J/R/P J           NPl        R/C/P NSg/J+  N🅪Sg+
-> parsing ( 1997 ) that      merely assigning the most         common   tag     to each known word    and
-# Nᴹ/Vg/J . #    . I/C/Ddem+ R      Nᴹ/Vg/J   D   NSg/I/J/R/Dq NSg/VB/J NSg/VB+ P  Dq   VPp/J NSg/VB+ VB/C
+> parsing ( 1997 ) that      merely assigning the most         common tag     to each known word    and
+# Nᴹ/Vg/J . #    . I/C/Ddem+ R      Nᴹ/Vg/J   D   NSg/I/J/R/Dq VB/J   NSg/VB+ P  Dq   VPp/J NSg/VB+ VB/C
 > the tag     " proper noun    " to all          unknowns will    approach 90 % accuracy because many
 # D   NSg/VB+ . NSg/J  NSg/VB+ . P  NSg/I/J/C/Dq NPl/V3+  NPr/VXB N🅪Sg/VB+ #  . N🅪Sg+    C/P     NSg/I/J/Dq
 > words   are unambiguous , and  many       others  only  rarely represent their less    - common
-# NPl/V3+ VLB J           . VB/C NSg/I/J/Dq NPl/V3+ J/R/C R      VB        D$+   J/R/C/P . NSg/VB/J
+# NPl/V3+ VLB J           . VB/C NSg/I/J/Dq NPl/V3+ J/R/C R      VB        D$+   J/R/C/P . VB/J
 > parts  of speech   .
 # NPl/V3 P  N🅪Sg/VB+ .
 >
@@ -346,8 +346,8 @@
 # ?        VB/C NPr$     NPl+    VXPt NSg/VB/J R/C/P I/J/R/Dq P  D   VPp/J NPl/V3+ NSg/R/C
 > semantics is  required , but     those  proved negligibly rare     . This   convinced many       in
 # NPl+      VL3 VP/J     . NSg/C/P I/Ddem VP/J   R          NSg/VB/J . I/Ddem VP/J      NSg/I/J/Dq NPr/J/R/P
-> the field   that      part      - of - speech   tagging could   usefully be       separated from the other
-# D+  NSg/VB+ I/C/Ddem+ NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  NSg/VXB R        NSg/VLXB VP/J      P    D   NSg/VB/J
+> the field   that      part      - of - speech   tagging could usefully be       separated from the other
+# D+  NSg/VB+ I/C/Ddem+ NSg/VB/J+ . P  . N🅪Sg/VB+ NSg/Vg  VXB   R        NSg/VLXB VP/J      P    D   NSg/VB/J
 > levels of processing ; this    , in        turn   , simplified the theory and  practice of
 # NPl/V3 P  Nᴹ/Vg/J+   . I/Ddem+ . NPr/J/R/P NSg/VB . VP/J       D   N🅪Sg   VB/C NSg/VB   P
 > computerized language analysis and  encouraged researchers to find   ways to
@@ -404,8 +404,8 @@
 # NSg/VB/J+ NPl     NPr/VXB I/C/Dq NSg/VLXB VP/J        Nᴹ/Vg/J D   ?       NSg       . D+
 > rule    - based Brill tagger is  unusual in        that     it       learns a   set       of rule    patterns , and
 # NSg/VB+ . VP/J  NSg/J NSg    VL3 NSg/J   NPr/J/R/P I/C/Ddem NPr/ISg+ NPl/V3 D/P NPr/VBP/J P  NSg/VB+ NPl/V3+  . VB/C
-> then      applies those  patterns rather     than optimizing a   statistical quantity .
-# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/VB/J/R C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
+> then      applies those  patterns rather than optimizing a   statistical quantity .
+# NSg/J/R/C V3      I/Ddem NPl/V3+  NPr/R  C/P  Nᴹ/Vg/J    D/P J           N🅪Sg+    .
 >
 #
 > Many        machine learning methods have    also been   applied to the problem of POS
@@ -429,7 +429,7 @@
 > this   particular dataset ) . Thus , it       should not     be       assumed that     the results
 # I/Ddem NSg/J      NSg     . . NSg  . NPr/ISg+ VXB    NSg/R/C NSg/VLXB VP/J    I/C/Ddem D+  NPl/V3+
 > reported here are the best       that      can     be       achieved with a    given        approach ; nor   even
-# VP/J     J/R  VLB D   NPr/VXB/JS I/C/Ddem+ NPr/VXB NSg/VLXB VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J/R
+# VP/J     R    VLB D   NPr/VXB/JS I/C/Ddem+ NPr/VXB NSg/VLXB VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ . NSg/C NSg/VB/J/R
 > the best        that      have    been   achieved with a    given        approach .
 # D+  NPr/VXB/JS+ I/C/Ddem+ NSg/VXB VLPp/B VP/J     P    D/P+ NSg/VPp/J/P+ N🅪Sg/VB+ .
 >
