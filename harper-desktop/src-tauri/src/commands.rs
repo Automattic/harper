@@ -11,7 +11,7 @@ use harper_core::{
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::Arc;
+use std::sync::{Arc, Mutex as StdMutex};
 use tauri::ipc::Invoke;
 use tauri::{Runtime, State};
 use tokio::sync::Mutex;
@@ -255,7 +255,7 @@ async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker();
+    let broker = platform_broker(Arc::new(StdMutex::new(integrations.clone())));
 
     Ok(integrations
         .into_iter()
@@ -314,8 +314,13 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-async fn get_application_icon_data_url(bundle_id: String) -> Result<String, String> {
-    let icon_png = platform_broker().application_icon_png(&bundle_id)?;
+async fn get_application_icon_data_url(
+    bundle_id: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<String, String> {
+    let integrations = config.lock().await.integrations.clone();
+    let broker = platform_broker(Arc::new(StdMutex::new(integrations)));
+    let icon_png = broker.application_icon_png(&bundle_id)?;
     let encoded = general_purpose::STANDARD.encode(&icon_png);
 
     Ok(format!("data:image/png;base64,{encoded}"))
@@ -397,6 +402,11 @@ fn launch_app(
 }
 
 #[tauri::command]
-fn search_apps(query: String) -> Result<Vec<AppSearchResult>, String> {
-    platform_broker().search_apps(&query)
+fn search_apps(
+    query: String,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<Vec<AppSearchResult>, String> {
+    let integrations = config.blocking_lock().integrations.clone();
+    let broker = platform_broker(Arc::new(StdMutex::new(integrations)));
+    broker.search_apps(&query)
 }
