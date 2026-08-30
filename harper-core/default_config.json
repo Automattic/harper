@@ -5728,6 +5728,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WaryWeary",
+								"state": true,
+								"label": "Wary Weary"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WasAloud",
 								"state": true,
 								"label": "Was Aloud"

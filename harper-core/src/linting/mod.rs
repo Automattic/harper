@@ -324,6 +324,7 @@ mod very_less;
 mod very_unique;
 mod vice_versa;
 mod vicious_loop;
+mod wary_weary;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
