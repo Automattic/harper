@@ -24535,6 +24535,7 @@ einwöbe/~~Nh
 einwöge/~~Nh
 einzel/~~Nh
 einzeln/~~V # auto-added
+einzelnachweise/~~Mh
 einzels/~~Nh
 einzig/~~RJOQRSTUWqh
 einzog/~~Nh
@@ -25627,6 +25628,8 @@ farbarm/~~NXh
 farben/~~V # auto-added
 farbige/~~Nh
 farblos/~~NXh
+farbkombination/~~Fh
+farbkombinationen/~~Fh
 farce/~~Nh
 farm/~~Nh
 farmen/~~V # auto-added
@@ -35897,6 +35900,8 @@ onkeln/~~V # auto-added
 onkels/~~Nh
 onkogen/~~V # auto-added
 online/~~Nh
+onlineauktion/~~Fh
+onlineauktionen/~~Fh
 onshore/~~Nh
 onyx/~~NXh
 onyxen/~~V # auto-added
@@ -50046,6 +50051,7 @@ ausführst/~~Nh
 ausführt/~~NXh
 ausführtet/~~Nh
 ausführung/~~Fh
+ausführungen/~~Fh
 ausfülle/~~Nh
 ausfüll/~~Vej # REPLACES ausfüllen
 ausfüllend/~~Nh
@@ -90949,6 +90955,7 @@ künftiger/~~Mh
 künftiges/~~Nh
 künsteln/~~V # auto-added
 künstler/~~Mh
+künstlerin/~~Fh
 künstlern/~~V # auto-added
 künstlers/~~Nh
 kürassier/~~Mh
@@ -93455,6 +93462,8 @@ matapfels/~~Nh
 matchball/~~Nh
 matchsack/~~Nh
 materials/~~Nh
+materialzusammenstellung/~~Fh
+materialzusammenstellungen/~~Fh
 materien/~~V # auto-added
 maternale/~~Nh
 matetees/~~Nh
@@ -94326,6 +94335,7 @@ mitgibst/~~Nh
 mitginge/~~Nh
 mitgingen/~~V # auto-added
 mitgingt/~~Nh
+mitglied/~~Zh
 mitglieds/~~Nh
 mitgroove/~~Nh
 mitgründe/~~Nh
@@ -131340,6 +131350,7 @@ verbrauchs/~~Nh
 verbrechen/~~Nh
 verbrecher/~~Nh
 verbreiten/~~Nh
+verbreitung/~~Fh
 verbreitet/~~Nh
 verbrennen/~~Nh
 verbrochen/~~Nh
@@ -198114,6 +198125,7 @@ zusammenspielen/~~Nh
 zusammenstecken/~~Nh
 zusammenstehlen/~~Nh
 zusammenstellen/~~Nh
+zusammenstellung/~~Fh
 zusammenstiehlt/~~Nh
 zusammenstimmen/~~Nh
 zusammenströmen/~~Nh
@@ -215365,7 +215377,7 @@ taler/~~N
 cache/~~N
 crêpe/~~N
 falle/~~N
-farbe/~~N
+farbe/~~Fh
 feile/~~N
 fuhre/~~N
 funke/~~N
