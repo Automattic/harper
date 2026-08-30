@@ -14494,6 +14494,7 @@ bestell/~Nhpuvw #frequency: 7
 betrag/~Nhpuvw #frequency: 7
 beutel/~Nhpuvw #frequency: 7
 bevölkerungsreich/~~JOQRSTUWqh #frequency: 7
+bevölkerungsreichste/~~NXh
 bewach/~Nhpuvw #frequency: 7
 bewunder/~Nhpuvw #frequency: 7
 bitter/~~NJOQRSTUWqpuvw #adjective and noun
@@ -22508,6 +22509,7 @@ bund/~~Nh
 bunde/~~Nh
 bunden/~~V # auto-added
 bundes/~~Nh
+bundesbehörden/~~Fh
 bunds/~~Nh
 bunkere/~~Nh
 bunkern/~~Nh
@@ -26270,6 +26272,7 @@ flyers/~~Nh
 flyover/~~Mh
 fläche/~~Nh
 flächen/~~XZ #  auto-added
+flächenschwerpunkt/~~Mh
 flächig/~~RJOQRSTUWqh
 fläz/~~NXh
 fläz/~~Vcej # REPLACES fläzen
@@ -41294,6 +41297,7 @@ union/~~Nh
 unions/~~Nh
 unitär/~~NXh
 universität/~~Nh
+universitäten/~~Fh
 unix/~~Nh
 unk/~~Vcej # REPLACES unken
 unklar/~~NXh
@@ -41493,6 +41497,7 @@ vieles/~~Nh
 vier/~~Vej # REPLACES vieren
 vierer/~~Mh
 viert/~~NXh
+viermächtestatus/~~Mh
 vif/~~NXh
 vifem/~~Nh
 vifen/~~V # auto-added
@@ -41894,6 +41899,7 @@ widre/~~Nh
 widrig/~~NXh
 wie/~~C
 wieder/~~r # adverb
+wiedervereinigung/~~Fh
 wieg/~~NXh
 wiegel/~~NXh
 wieg/~~Vcej # REPLACES wiegen
@@ -73479,6 +73485,7 @@ forschtest/~~Nh
 forschtet/~~Nh
 forschung/~~Fh
 forschungs/~~Nh
+forschungseinrichtungen/~~Fh
 forsteten/~~V # auto-added
 forstetest/~~Nh
 fortbegab/~~Nh
@@ -135450,6 +135457,7 @@ despotismus/~~Nh
 dessertwein/~~Nh # auto-added
 destillerie/~~Fh
 destination/~~Fh
+destinationen/~~Fh
 destruieren/~~Nh
 destruktion/~~Fh
 detailliert/~~Nh
@@ -150469,6 +150477,7 @@ einradeltest/~~Nh
 einrangieren/~~Nh
 einrechenbar/~~JOQRSTUWqh
 einreißhaken/~~Nh
+einrichtung/~~Fh
 einrichtungs/~~Nh
 einrieselten/~~Nh
 einschichtig/~~Nh
@@ -212169,6 +212178,7 @@ verdeck/~~N
 verfall/~~N
 verkauf/~~N
 verkehr/~~N
+verkehrsknotenpunkt/~~Mh
 verlauf/~~Mh
 verleih/~~N
 vermerk/~~N
@@ -215473,6 +215483,7 @@ messe/~~N
 miete/~~N
 morse/~~N
 nacht/~~N
+nachtleben/~~Nh
 nahme/~~N
 probe/~~N
 quere/~~N
