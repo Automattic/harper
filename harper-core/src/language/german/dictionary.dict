@@ -188,7 +188,6 @@ borgfelder/~~N
 borgsdorf/~~N
 boris/~~N
 borkumer/~~NF
-borland/~~N
 bormannsgrund/~~N
 bormio/~~N
 born/~~N
@@ -450,7 +449,6 @@ bugflagge/~~N
 bugform/~~P
 bugklappe/~~N
 bugleuchte/~~N
-bugmann/~~NT
 bugschott/~~P
 bugsektion/~~P
 bugspriet/~~NT
@@ -996,7 +994,6 @@ bistritz/~~N
 bisubjunkt/~~NP
 bisubjunktion/~~P
 bisubjunktor/~~NP
-bitburg/~~N
 bitburger/~~NF
 bitonto/~~N
 bittelbronn/~~N
@@ -1152,7 +1149,6 @@ aware/~~N
 axel/~~N
 axiologie/~~N
 axonometrie/~~N
-axthieb/~~NP
 ayatollah/~~N
 ayurveda/~~N
 ayurweda/~~N
@@ -1581,7 +1577,6 @@ antiochos/~~N
 antipas/~~N
 antiphos/~~N
 antipode/~~N
-antiqua/~~N
 antiquiertheit/~~P
 antisthenes/~~N
 antithesis/~~N
@@ -1745,7 +1740,6 @@ armin/~~N
 armine/~~N
 arminia/~~N
 arminius/~~N
-armlang/~~J
 armschwünge/~~N
 armstrong/~~N
 armvoll/~~N
@@ -1839,8 +1833,6 @@ astrographie/~~N
 astrolabium/~~N
 astrometrie/~~N
 astrozyt/~~P
-astsäge/~~N
-astung/~~P
 asylvfg/~~N
 asyndeton/~~N
 aszendent/~~P
@@ -2110,7 +2102,6 @@ albertinum/~~N
 albertus/~~N
 albertville/~~N
 albigenser/~~NF
-albion/~~N
 albis/~~N
 albisbrunn/~~N
 albrechtshof/~~N
@@ -2200,20 +2191,15 @@ alpenmulch/~~NrP
 alpenvorhand/~~NrT
 alpenvorwand/~~r
 alpenwand/~~r
-alphorn/~~N
 alphubel/~~N
 alpinistik/~~N
 alpirsbach/~~N
 alpspitze/~~N
 alraun/~~P
-alsbach/~~N
-alsdorf/~~N
 alsdorfer/~~NF
 alsenborn/~~N
 alsenborner/~~NF
-alsfeld/~~N
 altsteinzeit/~~Fh
-altach/~~N
 altai/~~N
 altamira/~~N
 altamura/~~N
@@ -2996,7 +2982,6 @@ aguti/~~N
 ahas/~~N
 ahasver/~~N
 ahaus/~~N
-ahauser/~~NF
 ahlbeck/~~N
 ahlener/~~NF
 ahmadinedschad/~~N
@@ -14133,7 +14118,6 @@ erwerb/~~RJOQRSTUWqh #frequency: 8
 feig/~Jq #adjective root, frequency: 8
 fertig/~Jq #adjective root, frequency: 8
 fest/~~RJOQRSTUWqh #frequency: 8
-festkörper/~~Mh
 finger/~Nhpuvw #frequency: 8
 fisch/~Jq #adjective root, frequency: 8
 fluch/~Nhpuvw #frequency: 8
@@ -14187,9 +14171,6 @@ negativ/~~RJOQRSTUWqh #frequency: 8
 nerv/~Nhpuvw #frequency: 8
 nötig/~Jq #adjective root, frequency: 8
 ober/~~RJOQRSTUWqh #frequency: 8
-oberfläche/~~Fh
-oberflächenchemie/~~Fh
-paar/~Nhpuvw #frequency: 8
 pack/~Nhpuvw #frequency: 8
 passiv/~~RJOQRSTUWqh #frequency: 8
 pfiff/~Nhpuvw #frequency: 8
@@ -14977,7 +14958,6 @@ temperamentvoll/~~RJOQRSTUWqh #frequency: 7
 temporeich/~~RJOQRSTUWqh #frequency: 7
 terminal/~~RJOQRSTUWqh #frequency: 7
 textil/~~RJOQRSTUWqh #frequency: 7
-textilschuhe/~~Mh
 theatral/~~RJOQRSTUWqh #frequency: 7
 tisch/~Jq #adjective root, frequency: 7
 titel/~Nhpuvw #frequency: 7
@@ -19185,7 +19165,6 @@ allogen/~~V # auto-added
 allrad/~~Nh
 alls/~~Nh
 allstar/~~Mh
-allstarschuhe/~~Mh
 alltag/~~Mh
 alltags/~~Nh
 allweil/~~Nh
@@ -22789,11 +22768,7 @@ chefs/~~Nh
 chelat/~~NXh
 chelats/~~Nh
 chemie/~~Fh
-chemoinformatik/~~Fh
-chemometrik/~~Fh
 chi/~~Nh
-chianti/~~Nh
-chiapas/~~Nh
 chicago/~~Nbh
 chice/~~Nh
 chicem/~~Nh
@@ -25538,8 +25513,6 @@ farbarm/~~NXh
 farben/~~V # auto-added
 farbige/~~Nh
 farblos/~~NXh
-farbkombination/~~Fh
-farbkombinationen/~~Fh
 farce/~~Nh
 farm/~~Nh
 farmen/~~V # auto-added
@@ -33948,7 +33921,6 @@ masrig/~~NXh
 massage/~~Nh
 masse/~~Nh
 massen/~~V # auto-added
-massenproduktion/~~Fh
 masseur/~~NXh
 massig/~~RJOQRSTUWqh
 massive/~~Nh
@@ -34044,8 +34016,6 @@ mediane/~~Nh
 medians/~~Nh
 medien/~~V # auto-added
 medien/~~Nh
-mediendatei/~~Fh
-mediendateien/~~Fh
 medina/~~Nh
 medium/~~Za #  auto-added
 mediums/~~Nh
@@ -35822,8 +35792,6 @@ onkeln/~~V # auto-added
 onkels/~~Nh
 onkogen/~~V # auto-added
 online/~~Nh
-onlineauktion/~~Fh
-onlineauktionen/~~Fh
 onshore/~~Nh
 onyx/~~NXh
 onyxen/~~V # auto-added
@@ -38167,7 +38135,6 @@ ribosen/~~V # auto-added
 ribosom/~~NXh
 richt/~~NXh
 richten/~~V # auto-added
-richtlinie/~~Fh
 richter/~~Mh
 richtet/~~NXh
 richtig/~~NJOQRSTUWq #adjective and noun
@@ -40026,8 +39993,6 @@ straps/~~NXh
 strass/~~Nh
 strauß/~~NXh
 straße/~~Nh
-straßenbahn/~~Fh
-straßentransport/~~Mh
 strebt/~~NXh
 streit/~~NXh
 stress/~~NXh
@@ -52176,7 +52141,6 @@ basisnäher/~~Mh
 basizität/~~Nh
 basketball/~~Mh
 basketballschuhe/~~Mh
-baskinnen/~~V # auto-added
 baslerin/~~Nh
 basophile/~~Nh
 basophilem/~~Nh
@@ -93374,8 +93338,6 @@ matapfels/~~Nh
 matchball/~~Nh
 matchsack/~~Nh
 materials/~~Nh
-materialzusammenstellung/~~Fh
-materialzusammenstellungen/~~Fh
 materien/~~V # auto-added
 maternale/~~Nh
 matetees/~~Nh
@@ -175233,8 +175195,6 @@ wischbewegung/~~Fh
 wisentbestand/~~Nh
 wisentknochen/~~Nh
 wissenschafts/~~Nh
-Wissenschaftsdisziplin/~~Fh # scientific discipline
-Wissenschaftsdisziplinen/~~F # plural of Wissenschaftsdisziplin
 wissertalbahn/~~Nh # auto-added
 witzigerweise/~~Fh
 wochentäglich/~~JOQRSTUWqh
@@ -206751,11 +206711,9 @@ küren/~~V
 laben/~~N
 laden/~~V
 leben/~~Nh
-lebensmittel/~~Nh
 legen/~~N
 lesen/~~N
 liken/~~V
-loben/~~V
 losen/~~V
 lugen/~~V
 lösen/~~N
