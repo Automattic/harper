@@ -14044,6 +14044,7 @@ von/~~P # preposition from
 zu/~~P # preposition to
 für/~~P # preposition for
 und/~~C # conjunction and
+undoder/~~C
 oder/~~C # conjunction or
 aber/~~C # conjunction but
 dass/~~C # conjunction that
@@ -14585,6 +14586,7 @@ erfahren/~V # verb root, frequency: 7
 erfindungsreich/~~JOQRSTUWqh #frequency: 7
 erfolg/~Nhpuvw #frequency: 7
 erfolgreich/~~JOQRSTUWqh #frequency: 7
+erfolgreichste/~~NXh
 ergeben/~V # verb root, frequency: 7
 erinner/~Nhpuvw #frequency: 7
 erklär/~Nhpuvw #frequency: 7
@@ -15083,6 +15085,7 @@ temperamentvoll/~~RJOQRSTUWqh #frequency: 7
 temporeich/~~RJOQRSTUWqh #frequency: 7
 terminal/~~RJOQRSTUWqh #frequency: 7
 textil/~~RJOQRSTUWqh #frequency: 7
+textilschuhe/~~Mh
 theatral/~~RJOQRSTUWqh #frequency: 7
 tisch/~Jq #adjective root, frequency: 7
 titel/~Nhpuvw #frequency: 7
@@ -19290,6 +19293,8 @@ allianz/~~Nh
 allogen/~~V # auto-added
 allrad/~~Nh
 alls/~~Nh
+allstar/~~Mh
+allstarschuhe/~~Mh
 alltag/~~Mh
 alltags/~~Nh
 allweil/~~Nh
@@ -28666,6 +28671,7 @@ gulfhof/~~Nh
 gully/~~Nh
 gullys/~~Nh
 gummi/~~Nbh # auto-added - fixed - added compound flags Nbh
+gummisohlen/~~Fh
 gunst/~~Nh
 gunsten/~~V # auto-added
 gurgele/~~Nh
@@ -33994,6 +34000,8 @@ maritim/~~JOQRSTUWq # fixed from noun to adjective
 markant/~~NXh
 marke/~~Nh
 marken/~~V # auto-added
+markenname/~~Mh
+markennamen/~~Mh
 markens/~~Nh
 marker/~~Mh
 markern/~~Nh
@@ -34044,6 +34052,7 @@ masrig/~~NXh
 massage/~~Nh
 masse/~~Nh
 massen/~~V # auto-added
+massenproduktion/~~Fh
 masseur/~~NXh
 massig/~~RJOQRSTUWqh
 massive/~~Nh
@@ -39887,6 +39896,7 @@ sporn/~~Nh
 sporns/~~Nh
 spornt/~~NXh
 sport/~~Nh
+sportarten/~~Fh
 sports/~~Nh # auto-added
 spot/~~Nh
 spots/~~Nh
@@ -52268,7 +52278,8 @@ basisnaher/~~Mh
 basisnahes/~~Nh
 basisnäher/~~Mh
 basizität/~~Nh
-basketball/~~Nh
+basketball/~~Mh
+basketballschuhe/~~Mh
 baskinnen/~~V # auto-added
 baslerin/~~Nh
 basophile/~~Nh
@@ -67569,6 +67580,7 @@ entwicht/~~Nh
 entwickele/~~Nh
 entwickeln/~~Vcej #  auto-added | ENHANCED: verb - develop
 entwickelt/~~Nh
+entwickelten/~~Nh
 entwickle/~~Nh
 entwickler/~~Mh
 entwidme/~~Nh
@@ -143107,6 +143119,7 @@ problemfrei/~~Nh
 probritisch/~~Nh
 produktions/~~Nh
 produzieren/~~Nh
+produziert/~~Nh
 profanieren/~~Nh
 professoral/~~Nh
 professoren/~~Nh
@@ -187974,6 +187987,7 @@ zusammensacken/~~Nh
 zusammenschiss/~~Nh
 zusammenschlug/~~Nh
 zusammenschoss/~~Nh
+zusammenschlossen/~~Nh
 zusammenschrak/~~Nh
 zusammenschrie/~~Fh
 zusammenschöbe/~~Fh
@@ -215474,7 +215488,7 @@ welle/~~N
 werft/~~N
 wette/~~N
 wille/~~N
-wolle/~~N
+wolle/~~Fh
 zacke/~~N
 zeche/~~N
 zelle/~~N
