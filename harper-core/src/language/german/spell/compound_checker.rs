@@ -165,7 +165,8 @@ impl CompoundChecker {
         if !word.is_empty() {
             let mut lowercased: CharString = word.iter().copied().collect();
             if let Some(first_char) = lowercased.first_mut() {
-                *first_char = first_char.to_ascii_lowercase();
+                // Use proper Unicode lowercasing for German characters like Ä, Ö, Ü
+                *first_char = first_char.to_lowercase().next().unwrap_or(*first_char);
             }
             self.compound_words.get(&lowercased)
         } else {
