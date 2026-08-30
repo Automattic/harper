@@ -32,6 +32,8 @@ Erkenntnis/~~Fh # knowledge, cognition - substantivation from erkennen
 Erkenntnisse/~~F # plural of Erkenntnis
 Erkrankung/~~Fh # disease, illness
 Forschung/~~Fh # research
+Fragestellung/~~Fh # question, issue
+Fragestellungen/~~F # plural of Fragestellung
 Funktion/~~Fh # function
 funktionen/~~F # plural of Funktion
 Fähigkeit/~~Fh # ability, capability
@@ -18916,7 +18918,7 @@ manganreich/~Nh #frequency: 6
 mangelfrei/~Nh #frequency: 6
 manifest/~Nh #frequency: 6
 manipulationsfrei/~Nh #frequency: 6
-mannigfaltig/~Jq #adjective root, frequency: 6
+mannigfaltig/~~JOQRSTUWqh #adjective root, frequency: 6
 mannsdick/~Nh #frequency: 6
 mannsgroß/~Nh #frequency: 6
 mannstoll/~Nh #frequency: 6
@@ -131574,7 +131576,7 @@ vielchörig/~~Nh
 vieldeutig/~~Nh
 vielerorts/~~Nh # auto-added
 vielfarbig/~~Jq
-vielfältig/~~Jq
+vielfältig/~~JOQRSTUWqh
 vieljährig/~~Nh
 vielkernig/~~Nh
 vielköpfig/~~Nh
@@ -174338,6 +174340,7 @@ untermeerisch/~~Nh
 unterminieren/~~Nh
 unternehmungs/~~Nh
 unterscheiden/~~Nh
+unterscheidet/~~V # 3rd person singular of unterscheiden
 unterschieben/~~Nh
 unterschieden/~~Nh
 unterschiedet/~~Nh
@@ -175319,6 +175322,8 @@ wischbewegung/~~Fh
 wisentbestand/~~Nh
 wisentknochen/~~Nh
 wissenschafts/~~Nh
+Wissenschaftsdisziplin/~~Fh # scientific discipline
+Wissenschaftsdisziplinen/~~F # plural of Wissenschaftsdisziplin
 wissertalbahn/~~Nh # auto-added
 witzigerweise/~~Fh
 wochentäglich/~~JOQRSTUWqh
@@ -199102,6 +199107,7 @@ chancenausgleich/~~Nh
 chaostheoretisch/~~RJOQRSTUWqh
 charakterbildend/~~Nh
 charakterisieren/~~Nh
+charakterisiert/~~JOQRSTUWVg # past participle of charakterisieren
 chargenkontrolle/~~Fh
 charlottenpolder/~~Nh
 charlottenstraße/~~Fh
@@ -209173,7 +209179,8 @@ ganzfeldexperiment/~~N
 ganzjahreszeitraum/~~N
 gefolgschaftswesen/~~N
 gegenstandsbegriff/~~N
-gegenstandsbereich/~~J
+gegenstandsbereich/~~MJh # noun (masculine) and adjective
+gegenstandsbereiche/~~M # plural of Gegenstandsbereich
 gegenstandsbezogen/~~J
 gegenständlichkeit/~~F
 gehörgangsfurunkel/~~N
@@ -221136,7 +221143,7 @@ mstatistik/~~N
 anerkannte/~~N
 begründete/~~N
 erweiterte/~~N
-unabhängig/~~J
+unabhängig/~~JOQRSTUWqh
 berufliche/~~N
 commonscat/~~N
 responsive/~~N
