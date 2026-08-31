@@ -20,9 +20,6 @@ export default class DomainReviews {
 	}
 
 	public static async getAllSince(date: Date) {
-		return await db
-			.select()
-			.from(domainReviewTable)
-			.where(gte(domainReviewTable.timestamp, date));
+		return await db.select().from(domainReviewTable).where(gte(domainReviewTable.timestamp, date));
 	}
 }
