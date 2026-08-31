@@ -29,6 +29,11 @@ export const load = async ({ params }) => {
 	for (const item of domainReviews) {
 		const id = item.domain ?? 'OTHER';
 
+		// We are looking for _problematic_ domains, not ones that Harper already works on.
+		if (item.works) {
+			continue;
+		}
+
 		if (counts[id] === undefined) {
 			counts[id] = 1;
 		} else {
