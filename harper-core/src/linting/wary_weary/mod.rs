@@ -5,7 +5,7 @@ mod to_weary;
 use to_wary::ToWary;
 use to_weary::ToWeary;
 
-merge_linters!(WaryWeary => ToWary, ToWeary => "Handles common confusions between `wary` (cautious) and `weary` (tired), such as `weary eye` (should be `wary eye`) and `bone wary` (should be `bone weary`).");
+merge_linters!(WaryWeary => ToWary, ToWeary => "Handles common confusions between `wary` (cautious) and `weary` (tired).");
 
 #[cfg(test)]
 mod tests {
