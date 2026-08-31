@@ -5581,6 +5581,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TakeControlOf",
+								"state": true,
+								"label": "Take Control of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TakeItPersonally",
 								"state": true,
 								"label": "Take It Personally"
