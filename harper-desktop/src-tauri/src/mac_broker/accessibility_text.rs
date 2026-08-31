@@ -12,7 +12,10 @@ use core_foundation::base::{CFRange, CFType, TCFType};
 use core_foundation::string::CFString;
 use harper_core::linting::{Lint, Suggestion};
 use objc2_foundation::NSRect;
-use std::{cell::RefCell, ptr};
+use std::{
+    cell::{Cell, RefCell},
+    ptr,
+};
 
 use crate::rect::{ActionableLint, Rect};
 
@@ -133,48 +136,57 @@ fn rect_has_usable_text_metrics(rect: Rect) -> bool {
 /// Collects lint rectangles while walking supported text elements in an AX tree.
 pub struct RectCollector<'a> {
     rects: RefCell<Vec<ActionableLint>>,
+    expected_rect_count: Cell<usize>,
+    read_failed: Cell<bool>,
     lint_text: RefCell<&'a mut LintCallback<'a>>,
 }
 
 impl TreeVisitor for RectCollector<'_> {
     fn enter_element(&self, element: &AXUIElement) -> TreeWalkerFlow {
-        if let Ok(value) = element.value()
-            && is_supported_text_element(element)
-        {
-            let string =
-                unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
+        if !is_supported_text_element(element) {
+            return TreeWalkerFlow::Continue;
+        }
 
-            let mut rects = self.rects.borrow_mut();
-            let organized_lints = (self.lint_text.borrow_mut())(&string);
+        let Ok(value) = element.value() else {
+            self.read_failed.set(true);
+            return TreeWalkerFlow::Continue;
+        };
 
-            for (rule_name, lints) in organized_lints {
-                for lint in lints {
-                    if let Some(rect) = element_rect_for_text_range_with_fallback(
-                        element,
-                        &string,
-                        lint.span.start,
-                        lint.span.len(),
-                    ) {
-                        let element = element.clone();
-                        let source_text = string.clone();
-                        let suggestion_source_text = string.clone();
-                        let suggestion_lint = lint.clone();
+        let string =
+            unsafe { CFString::wrap_under_get_rule(value.as_CFTypeRef() as _).to_string() };
+        let mut rects = self.rects.borrow_mut();
+        let organized_lints = (self.lint_text.borrow_mut())(&string);
 
-                        rects.push(ActionableLint::new(
-                            rect,
-                            rule_name.clone(),
-                            lint,
-                            source_text,
-                            move |suggestion| {
-                                apply_suggestion_to_element(
-                                    element,
-                                    suggestion_source_text,
-                                    suggestion_lint,
-                                    suggestion,
-                                );
-                            },
-                        ));
-                    }
+        for (rule_name, lints) in organized_lints {
+            for lint in lints {
+                self.expected_rect_count
+                    .set(self.expected_rect_count.get() + 1);
+
+                if let Some(rect) = element_rect_for_text_range_with_fallback(
+                    element,
+                    &string,
+                    lint.span.start,
+                    lint.span.len(),
+                ) {
+                    let element = element.clone();
+                    let source_text = string.clone();
+                    let suggestion_source_text = string.clone();
+                    let suggestion_lint = lint.clone();
+
+                    rects.push(ActionableLint::new(
+                        rect,
+                        rule_name.clone(),
+                        lint,
+                        source_text,
+                        move |suggestion| {
+                            apply_suggestion_to_element(
+                                element,
+                                suggestion_source_text,
+                                suggestion_lint,
+                                suggestion,
+                            );
+                        },
+                    ));
                 }
             }
         }
@@ -188,12 +200,20 @@ impl<'a> RectCollector<'a> {
     pub fn new(lint_text: &'a mut LintCallback) -> Self {
         Self {
             rects: RefCell::new(Vec::new()),
+            expected_rect_count: Cell::new(0),
+            read_failed: Cell::new(false),
             lint_text: RefCell::new(lint_text),
         }
     }
 
-    pub fn unwrap_rects(self) -> Vec<ActionableLint> {
-        self.rects.into_inner()
+    pub fn unwrap_rects(self) -> Option<Vec<ActionableLint>> {
+        let rects = self.rects.into_inner();
+
+        if rects.is_empty() && (self.expected_rect_count.get() > 0 || self.read_failed.get()) {
+            None
+        } else {
+            Some(rects)
+        }
     }
 }
 

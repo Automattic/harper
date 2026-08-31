@@ -4,7 +4,7 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, PlatformBroker, platform_broker};
+use crate::{IntegrationView, PlatformBroker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints,
@@ -336,13 +336,29 @@ async fn get_application_icon_data_url<R: Runtime>(
 }
 
 #[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
+fn get_accessibility_permission_status(
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.lock() {
+        Ok(broker) => broker.accessibility_permission_status(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
+fn request_accessibility_permission(
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.lock() {
+        Ok(broker) => broker.request_accessibility_permission(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
@@ -384,8 +400,14 @@ pub(crate) async fn stop_highlighter_service(
 }
 
 #[tauri::command]
-fn launch_app(bundle_id: String) -> Result<(), String> {
-    platform_broker().launch_app_bundle(&bundle_id)
+fn launch_app(
+    bundle_id: String,
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> Result<(), String> {
+    broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .launch_app_bundle(&bundle_id)
 }
 
 #[tauri::command]
