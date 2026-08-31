@@ -74,6 +74,18 @@ impl Linter for OxfordComma {
             let sentence = &sentence[skip..];
 
             for match_span in self.expr.iter_matches(sentence, document.get_source()) {
+                // A match closed by a comma and followed by a finite linking verb is likely
+                // parenthetical, with the second comma separating it from the continuing clause.
+                if let [comma, whitespace, verb, ..] = &sentence[match_span.end..]
+                    && comma.kind.is_comma()
+                    && whitespace.kind.is_whitespace()
+                    && verb.kind.is_linking_verb()
+                    && !verb.kind.is_verb_progressive_form()
+                    && !verb.kind.is_verb_past_participle_form()
+                {
+                    continue;
+                }
+
                 let lint = self.match_to_lint(
                     &sentence[match_span.start..match_span.end],
                     document.get_source(),
@@ -208,6 +220,15 @@ mod tests {
     fn allow_standoff() {
         assert_lint_count(
             "In a tense standoff, Alex and his reflection engage in a battle of wills.",
+            OxfordComma::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn issue_2803_parenthetical() {
+        assert_lint_count(
+            "Any resemblance to real persons, living or dead, is purely coincidental.",
             OxfordComma::default(),
             0,
         );
