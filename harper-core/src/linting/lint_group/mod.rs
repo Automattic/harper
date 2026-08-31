@@ -175,6 +175,7 @@ use super::most_number::MostNumber;
 use super::most_of_the_times::MostOfTheTimes;
 use super::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::multiple_sequential_pronouns::MultipleSequentialPronouns;
+use super::nail_in_coffin::NailInCoffin;
 use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
@@ -777,6 +778,7 @@ impl LintGroup {
         insert_expr_rule!(MostNumber);
         insert_expr_rule!(MostOfTheTimes);
         insert_expr_rule!(MultipleSequentialPronouns);
+        insert_expr_rule!(NailInCoffin);
         insert_expr_rule!(NailOnTheHead);
         insert_expr_rule!(NakedEye);
         insert_expr_rule!(NeedToNoun);

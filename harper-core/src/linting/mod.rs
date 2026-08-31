@@ -189,6 +189,7 @@ mod most_number;
 mod most_of_the_times;
 mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
+mod nail_in_coffin;
 mod nail_on_the_head;
 mod naked_eye;
 mod need_to_noun;
