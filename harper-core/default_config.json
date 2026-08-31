@@ -1382,6 +1382,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryLess",
+								"state": true,
+								"label": "Very Less"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WholeEntire",
 								"state": true,
 								"label": "Whole Entire"
@@ -3968,13 +3975,6 @@
 						},
 						{
 							"Bool": {
-								"name": "VeryLess",
-								"state": true,
-								"label": "Very Less"
-							}
-						},
-						{
-							"Bool": {
 								"name": "VeryMuchSo",
 								"state": true,
 								"label": "Very Much So"
@@ -4037,6 +4037,20 @@
 								"name": "AheadAnd",
 								"state": true,
 								"label": "Ahead And"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Ajar",
+								"state": true,
+								"label": "Ajar"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Akimbo",
+								"state": true,
+								"label": "Akimbo"
 							}
 						},
 						{
@@ -5175,6 +5189,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NailInCoffin",
+								"state": true,
+								"label": "Nail in Coffin"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NeitherHereNorThere",
 								"state": true,
 								"label": "Neither Here Nor There"
@@ -5731,6 +5752,13 @@
 								"name": "WishCould",
 								"state": true,
 								"label": "Wish Could"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WithOpenArms",
+								"state": true,
+								"label": "With Open Arms"
 							}
 						},
 						{
