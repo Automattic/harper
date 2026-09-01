@@ -1,8 +1,8 @@
-use crate::expr::ExprExt;
-use crate::expr::SequenceExpr;
-use crate::{Document, Token, TokenStringExt, patterns::NominalPhrase};
-
-use super::{Lint, LintKind, Linter, Suggestion};
+use crate::{
+    expr::{ExprExt, SequenceExpr},
+    linting::{Lint, LintKind, Linter, Suggestion},
+    {Document, Token, TokenStringExt, patterns::NominalPhrase},
+};
 
 pub struct NoOxfordComma {
     expr: SequenceExpr,
@@ -152,6 +152,15 @@ mod tests {
             "I like carrots, kale, nor broccoli.",
             NoOxfordComma::default(),
             "I like carrots, kale nor broccoli.",
+        );
+    }
+
+    #[test]
+    fn fix_the_second_sentence() {
+        assert_suggestion_result(
+            "One, two and three. But four, five, and six.",
+            NoOxfordComma::default(),
+            "One, two and three. But four, five and six.",
         );
     }
 }
