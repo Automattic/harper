@@ -1,9 +1,8 @@
-use crate::expr::ExprExt;
-use crate::expr::OwnedExprExt;
-use crate::expr::SequenceExpr;
-use crate::{Lrc, Token, TokenStringExt, linting::Linter};
-
-use super::{super::Lint, LintKind, Suggestion};
+use crate::{
+    expr::{ExprExt, OwnedExprExt, SequenceExpr},
+    linting::{Lint, LintKind, Linter, Suggestion},
+    {Lrc, Token, TokenStringExt},
+};
 
 pub struct OxfordComma {
     expr: SequenceExpr,
@@ -210,6 +209,15 @@ mod tests {
             "In a tense standoff, Alex and his reflection engage in a battle of wills.",
             OxfordComma::default(),
             0,
+        );
+    }
+
+    #[test]
+    fn fix_the_first_sentence() {
+        assert_suggestion_result(
+            "One, two and three. But four, five, and six.",
+            OxfordComma::default(),
+            "One, two, and three. But four, five, and six.",
         );
     }
 }

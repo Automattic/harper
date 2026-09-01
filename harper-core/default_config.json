@@ -1661,13 +1661,6 @@
 						},
 						{
 							"Bool": {
-								"name": "NoOxfordComma",
-								"state": false,
-								"label": "No Oxford Comma"
-							}
-						},
-						{
-							"Bool": {
 								"name": "OffTheCuff",
 								"state": true,
 								"label": "Off The Cuff"
@@ -1681,10 +1674,10 @@
 							}
 						},
 						{
-							"Bool": {
+							"OneOfMany": {
+								"names": ["OxfordComma", "NoOxfordComma"],
 								"name": "OxfordComma",
-								"state": true,
-								"label": "Oxford Comma"
+								"labels": ["Oxford Comma", "No Oxford Comma"]
 							}
 						},
 						{
@@ -2772,13 +2765,6 @@
 						},
 						{
 							"Bool": {
-								"name": "SneakedSnuck",
-								"state": true,
-								"label": "Sneaked Snuck"
-							}
-						},
-						{
-							"Bool": {
 								"name": "SomeOfThe",
 								"state": true,
 								"label": "Some Of The"
@@ -2988,6 +2974,13 @@
 								"name": "DiscourseMarkers",
 								"state": true,
 								"label": "Discourse Markers"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverPronounRelPronoun",
+								"state": true,
+								"label": "Ever Pronoun + Relative Pronoun"
 							}
 						},
 						{
@@ -5398,6 +5391,13 @@
 							}
 						},
 						{
+							"OneOfMany": {
+								"names": ["PreferSneaked", "PreferSnuck"],
+								"name": "PreferSneaked",
+								"labels": ["Prefer ‘Sneaked’", "Prefer ‘Snuck’"]
+							}
+						},
+						{
 							"Bool": {
 								"name": "QuiteMany",
 								"state": true,
@@ -5577,6 +5577,13 @@
 								"name": "Surreality",
 								"state": true,
 								"label": "Surreality"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TakeControlOf",
+								"state": true,
+								"label": "Take Control of"
 							}
 						},
 						{
@@ -6132,24 +6139,10 @@
 							}
 						},
 						{
-							"Bool": {
+							"OneOfMany": {
+								"names": ["ViciousCircle", "ViciousCircleOrCycle", "ViciousCycle"],
 								"name": "ViciousCircle",
-								"state": true,
-								"label": "Vicious Circle"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ViciousCircleOrCycle",
-								"state": false,
-								"label": "Vicious Circle Or Cycle"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ViciousCycle",
-								"state": false,
-								"label": "Vicious Cycle"
+								"labels": ["Vicious Circle", "Vicious Circle Or Cycle", "Vicious Cycle"]
 							}
 						},
 						{

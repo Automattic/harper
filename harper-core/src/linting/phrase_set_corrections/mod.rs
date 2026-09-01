@@ -666,6 +666,18 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "TakeControlOf" => (
+            &[
+                ("take control over", "take control of"),
+                ("taken control over", "taken control of"),
+                ("takes control over", "takes control of"),
+                ("taking control over", "taking control of"),
+                ("took control over", "took control of"),
+            ],
+            "Use `take control of` instead of `take control over`.",
+            "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
