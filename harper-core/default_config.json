@@ -3013,6 +3013,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandLegitimate",
+								"state": true,
+								"label": "Expand Legitimate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandMinimum",
 								"state": true,
 								"label": "Expand Minimum"
