@@ -48,6 +48,6 @@ impl ExprLinter for ToWeary {
     }
 
     fn description(&self) -> &'static str {
-        "Detects `wary` used where `weary` (tired) is intended, as in `bone weary` or `world weary`."
+        "Detects `wary` (cautious) used where `weary` (tired) is intended."
     }
 }
