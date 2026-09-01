@@ -43,6 +43,7 @@ Grundlagen/~~F # plural of Grundlage
 Handlung/~~Fh # action, deed
 Harmonie/~~Fh # harmony
 Harmonien/~~F # plural of Harmonie
+Hartz/~~Nh #frequency: 6
 Heilberuf/~~Mh # healing profession
 Heilberufe/~~M # plural of Heilberuf
 Heiler/~~Mh # healer
@@ -2496,7 +2497,7 @@ anstecken/~~NMZ
 anstellen/~~NMZ
 anstößigkeit/~~N
 antagonismen/~~N
-antagonist/~~PF
+antagonist/~~PFh
 antalya/~~N
 antares/~~N
 antestat/~~NP
@@ -14405,6 +14406,7 @@ defensiv/~~RJOQRSTUWqh #frequency: 7
 dekorativ/~~RJOQRSTUWqh #frequency: 7
 derb/~~RJOQRSTUWqh #frequency: 7
 destruktiv/~~RJOQRSTUWqh #frequency: 7
+Destruent/~~Mh
 detailgetreu/~~RJOQRSTUWqh #frequency: 7
 detailreich/~~RJOQRSTUWqh #frequency: 7
 differential/~~RJOQRSTUWqh #frequency: 7
@@ -16705,6 +16707,7 @@ erweck/~Nh #frequency: 6
 erweiter/~Nh #frequency: 6
 erwider/~Nh #frequency: 6
 erythroid/~Nh #frequency: 6
+erz/~Nh #frequency: 6
 erzeug/~Nh #frequency: 6
 erzfaul/~Nh #frequency: 6
 erzieh/~Nh #frequency: 6
@@ -18180,6 +18183,7 @@ kinderlieb/~Nh #frequency: 6
 kindgemäß/~Nh #frequency: 6
 kindisch/~Jq #adjective root, frequency: 6
 kindlich/~Jq #adjective root, frequency: 6
+Kindlichkeit/~~Fh #frequency: 6
 kindskopfgroß/~Nh #frequency: 6
 kinnlang/~Nh #frequency: 6
 kippel/~Nh #frequency: 6
@@ -22659,7 +22663,7 @@ caesium/~~Za #  auto-added
 caisson/~~Nh
 calcit/~~NXh
 calcits/~~Nh
-calcium/~~Za #  auto-added
+calcium/~~Zah #  auto-added
 call/~~Nh
 callboy/~~Nh
 calls/~~Nh
@@ -29181,6 +29185,7 @@ herd/~~NXh
 herden/~~V # auto-added
 herdes/~~Nh
 herds/~~Nh
+Herde/~~Fh
 Herdern/~~Nh # neuter noun, from Herd + -ern suffix (from hunspell)
 herein/~~Nh
 herfand/~~Nh
@@ -62517,7 +62522,7 @@ durcheilen/~~V # auto-added
 durcheilst/~~Nh
 durcheilt/~~NXh
 durchfahre/~~Nh
-durchfahrt/~~Nh
+durchfahrt/~~Nih
 durchfall/~~NXh # auto-added
 durchfalls/~~Nh
 durchfallt/~~Nh
@@ -66621,7 +66626,7 @@ entgiften/~~V # auto-added
 entgiftend/~~Nh
 entgiftens/~~Nh
 entgiftet/~~NXh
-entgiftung/~~Fh
+entgiftung/~~Fih
 entginge/~~Nh
 entgingen/~~V # auto-added
 entginget/~~Nh
@@ -139910,7 +139915,7 @@ kobaltzeche/~~Fh
 koboldartig/~~RJOQRSTUWqh
 kochsalzarm/~~Nh
 koedukation/~~Fh
-koeffizient/~~Nh
+koeffizient/~~Nlh
 kofferweise/~~Fh
 kognakbohne/~~Fh
 kohlblätter/~~Nh
@@ -151615,7 +151620,7 @@ gefolgsleute/~~Fh
 gefolgstreue/~~Fh
 gefräßigkeit/~~Fh
 gefrühstückt/~~JOQRSTUWVg
-gefälligkeit/~~Fh
+gefälligkeit/~~Fih
 gefäßwandung/~~Fh
 gefäßwirksam/~~Nh
 gefügeaufbau/~~Nh
@@ -152359,7 +152364,7 @@ heidepflanze/~~Fh
 heideröschen/~~Nh
 heideröslein/~~Nh
 heidetypisch/~~Nh
-heidschnucke/~~Fh
+heidschnucke/~~Fkh
 heilbringend/~~Nh
 heiligenbild/~~Nh
 heiligenblut/~~Nh
@@ -167405,7 +167410,7 @@ hinschlängeln/~~Nh
 hintangesetzt/~~Nh
 hintansetzung/~~Fh
 hintanstellen/~~Nh
-hinterblieben/~~Nh
+hinterblieben/~~Nlh
 hinterbringen/~~Nh # auto-added
 hinterbrächte/~~Fh
 hinterbänkler/~~Nh
@@ -189169,7 +189174,7 @@ dieselgetrieben/~~Nh
 diesseitsglaube/~~Fh
 diethylcarbonat/~~Nh
 diethylenglykol/~~Nh
-differentiation/~~Fh
+differentiation/~~Fih
 differenziation/~~Fh
 diffusionsfähig/~~Nh
 diffusionsoffen/~~Nh
@@ -199205,6 +199210,7 @@ doppeltgemoppelt/~~Nh
 doppelverdienend/~~Nh
 doppelzüngigkeit/~~Fh
 dornbuschsavanne/~~Fh
+Dotation/~~Fh
 dotationsurkunde/~~Fh
 dotierungsmittel/~~Nh
 dozentenaufgaben/~~Nh # auto-added
