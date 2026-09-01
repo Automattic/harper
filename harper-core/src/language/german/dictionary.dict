@@ -18042,6 +18042,7 @@ irrwitzig/~Jq #adjective root, frequency: 6
 islamfeindlich/~Jq #adjective root, frequency: 6
 islamistisch/~Jq #adjective root, frequency: 6
 islamophil/~Nh #frequency: 6
+Islamophilie/~~Fh
 islamophob/~Nh #frequency: 6
 isobar/~Jq #adjective root, frequency: 6
 isogonal/~Nh #frequency: 6
@@ -67424,7 +67425,7 @@ entwerter/~~Mh
 entwertern/~~V # auto-added
 entwerters/~~Nh
 entwertet/~~NXh
-entwertung/~~Fh
+entwertung/~~Fhi
 entwichene/~~Nh
 entwichest/~~Nh
 entwicht/~~Nh
@@ -76278,6 +76279,8 @@ gefangenem/~~Nh
 gefangenen/~~V # auto-added
 gefangener/~~Mh
 gefangenes/~~Nh
+Kriegsgefangener/~~Mhi
+Kriegsgefangenen/~~Mhi
 gefasels/~~Nh
 gefaselt/~~JOQRSTUWVg
 gefasert/~~JOQRSTUWVg
@@ -114269,6 +114272,7 @@ vorgäbe/~~Nh
 vorgäbet/~~Nh
 vorgänger/~~Mh
 vorhabe/~~Nh
+Vorhaben/~~Smh
 vorhaben/~~V # auto-added
 vorhabens/~~Nh
 vorhabt/~~Nh
@@ -119639,6 +119643,7 @@ zürntet/~~Nh
 äffchens/~~Nh
 äffinnen/~~V # auto-added
 äfftest/~~Nh
+Ägypten/~~Smi
 ägypten/~~V # auto-added
 ägyptens/~~Nh
 Ägyptologie/~~Fh # Egyptology
@@ -142201,6 +142206,7 @@ obersekunda/~~Nh
 oberständig/~~RJOQRSTUWqh
 oberthurgau/~~Nh
 oberägypten/~~Nh
+Ägyptenexpedition/~~Fh
 obligatorik/~~Nh
 observation/~~Fh
 observieren/~~Nh
@@ -167882,7 +167888,7 @@ influenzierst/~~Nh
 influenzstrom/~~Nh
 infolgedessen/~~Nh
 infragekommen/~~Nh
-infrastruktur/~~Nh
+infrastruktur/~~Nhi
 inganghaltung/~~Fh
 ingredienzien/~~Nh
 ingwergewächs/~~Nh
