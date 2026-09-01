@@ -265,6 +265,7 @@ use super::subject_pronoun::SubjectPronoun;
 use super::take_a_look_to::TakeALookTo;
 use super::take_care_of::TakeCareOf;
 use super::take_medicine::TakeMedicine;
+use super::take_pride_in::TakePrideIn;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
 use super::the_how_why::TheHowWhy;
@@ -868,6 +869,7 @@ impl LintGroup {
         insert_expr_rule!(TakeALookTo);
         insert_expr_rule!(TakeCareOf);
         insert_expr_rule!(TakeMedicine);
+        insert_expr_rule!(TakePrideIn);
         insert_expr_rule!(ThatThan);
         insert_expr_rule!(ThatWhich);
         insert_expr_rule!(TheHowWhy);

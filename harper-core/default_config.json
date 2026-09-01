@@ -5595,6 +5595,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TakePrideIn",
+								"state": true,
+								"label": "Take Pride in"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatChallenged",
 								"state": true,
 								"label": "That Challenged"
