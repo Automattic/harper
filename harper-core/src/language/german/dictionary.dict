@@ -2223,7 +2223,7 @@ altenholz/~~N
 altenhundem/~~N
 altenkunstadt/~~N
 altenkunstadter/~~N
-alter/~~NMZ
+alter/~~NMZi
 alteration/~~P
 alterität/~~P
 alternanz/~~P
@@ -2351,7 +2351,7 @@ andersen/~~N
 andesit/~~NP
 andienen/~~NMZ
 andorraner/~~NF
-andrea/~~N
+andrea/~~Ni
 andreasberg/~~N
 andria/~~N
 androgynophor/~~NP
@@ -13901,7 +13901,7 @@ es/~~Ip # pronoun it (nominative)
 wir/~~Ip # pronoun we (nominative)
 ihr/~~Ip # pronoun you (plural, nominative)
 Sie/~~Ip # pronoun You (formal, nominative)
-sein/~~V # verb to be
+sein/~~Vi # verb to be
 hab/~~Vcj # REPLACES haben
 werd/~~Vcj # REPLACES werden
 könn/~~Vcej # REPLACES können
@@ -13911,8 +13911,8 @@ woll/~~Vcej # REPLACES wollen
 dürf/~~Vej # REPLACES dürfen
 mög/~~Vcj # REPLACES mögen
 in/~~P # preposition in
-an/~~P # preposition at
-auf/~~P # preposition on
+an/~~Pi # preposition at
+auf/~~Pi # preposition on
 auf,/~~P # preposition on (with comma)
 aus/~~P # preposition from
 bei/~~PY # preposition at
@@ -13984,7 +13984,7 @@ Einlage/~~Fh #feminine noun insole (nominative)
 # Format: word/~annotations # comment
 heil/~~JOQRSTUWpuvw #frequency: 11 (adjective)
 näher/~~JOQRSTUWpuvw #frequency: 11 (adjective)
-reich/~~NJOQRSTUWq #adjective and noun
+reich/~~NJOQRSTUWqi #adjective and noun
 reif/~~NJOQRSTUWq #adjective and noun
 sicher/~~NJOQRSTUWq #adjective and noun
 wunder/~~NJOQRSTUWq #adjective and noun
@@ -14027,7 +14027,7 @@ dampf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 dick/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 ding/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 faul/~~JOQRSTUWpuvw #frequency: 9 (adjective)
-flach/~~NJOQRSTUWq #adjective and noun
+flach/~~NJOQRSTUWqi #adjective and noun
 flau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 forsch/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 frei/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -14090,7 +14090,7 @@ begriff/~~Mh #frequency: 8
 beleg/~Nhpuvw #frequency: 8
 bequem/~~RJOQRSTUWqh #frequency: 8
 besuch/~Nhpuvw #frequency: 8
-betrieb/~~MYh #frequency: 8
+betrieb/~~MYhi #frequency: 8
 beweg/~Nhpuvw #frequency: 8
 bieder/~~JOQRSTUWqh #frequency: 8
 bild/~Nhpuvw #frequency: 8
@@ -14114,7 +14114,7 @@ einig/~~JOQRSTUWq #adjective root, frequency: 8
 eiter/~Nhpuvw #frequency: 8
 ekel/~Nhpuvw #frequency: 8
 eng/~~RJOQRSTUWqh #frequency: 8
-erwerb/~~RJOQRSTUWqh #frequency: 8
+erwerb/~~RJOQRSTUWqhi #frequency: 8
 feig/~Jq #adjective root, frequency: 8
 fertig/~Jq #adjective root, frequency: 8
 fest/~~RJOQRSTUWqh #frequency: 8
@@ -14802,7 +14802,7 @@ rational/~~RJOQRSTUWqh #frequency: 7
 rationell/~~RJOQRSTUWqh #frequency: 7
 raub/~Nhpuvw #frequency: 7
 realitätsfremd/~~RJOQRSTUWqh #frequency: 7
-recht/~~RJOQRSTUWqh #frequency: 7
+recht/~~RJOQRSTUWqhi #frequency: 7
 reell/~~RJOQRSTUWqh #frequency: 7
 regel/~Nhpuvw #frequency: 7
 regenreich/~~RJOQRSTUWqh #frequency: 7
@@ -19164,7 +19164,7 @@ allogen/~~V # auto-added
 allrad/~~Nh
 alls/~~Nh
 allstar/~~Mh
-alltag/~~Mh
+alltag/~~Mhi
 alltags/~~Nh
 allweil/~~Nh
 allwo/~~Nh
@@ -21305,7 +21305,7 @@ berns/~~Nh
 berste/~~Nh
 bersten/~~V # auto-added
 berstet/~~Nh
-beruf/~~Vcj # REPLACES berufen
+beruf/~~Vcji # REPLACES berufen
 berufes/~~Nh
 berufs/~~Nh # auto-added
 beruh/~~Vcej # REPLACES beruhen
@@ -23266,7 +23266,7 @@ dekaden/~~V # auto-added
 dekagon/~~Nh
 dekalog/~~Nh
 dekan/~~Nh
-dekanat/~~NXh
+dekanat/~~NXhi
 dekane/~~Nh
 dekanen/~~V # auto-added
 dekanin/~~Nh
@@ -24395,7 +24395,7 @@ einsät/~~NXh
 einsäße/~~Nh
 einsöge/~~Nh
 eint/~~NXh
-ein/~~Vce # REPLACES einten
+ein/~~Vcei # REPLACES einten
 eintest/~~Nh
 eintet/~~Nh
 eintopf/~~Nh
@@ -24595,7 +24595,7 @@ emirats/~~Nh
 emiren/~~V # auto-added
 emirs/~~Nh
 emitter/~~Mh
-emotion/~~Nh
+emotion/~~Nhi
 empfahl/~~Nh
 empfand/~~Nh
 empfing/~~Nh
@@ -25080,7 +25080,7 @@ erobern/~~Nh
 erobert/~~NXh
 erobre/~~Nh
 erogene/~~Nh
-erosion/~~Nh
+erosion/~~Nhi
 erosive/~~Nh
 erotik/~~Nh
 erpel/~~Nh
@@ -25230,7 +25230,7 @@ erörtre/~~Nh
 esche/~~Nh
 eschen/~~XZ #  auto-added
 escudo/~~Nbh
-esel/~~Nh
+esel/~~Nhi
 eselei/~~Nh
 eselin/~~Nh
 eseln/~~V # auto-added
@@ -25748,8 +25748,8 @@ feston/~~Nh
 festons/~~Nh
 fests/~~Nh
 festsaß/~~Nh
-festtag/~~NXh
-festung/~~Fh
+festtag/~~NXhi
+festung/~~Fhi
 festzog/~~Nh
 fetale/~~Nh
 fetalem/~~Nh
@@ -26023,7 +26023,7 @@ flenn/~~Vcej # REPLACES flennen
 flennt/~~NXh
 fleucht/~~Nh
 flex/~~Vcej # REPLACES flexen
-flexion/~~Nh
+flexion/~~Nhi
 flext/~~NXh
 flicht/~~Nh
 flick/~~Vcej # REPLACES flicken
@@ -26231,7 +26231,7 @@ foltere/~~Nh
 foltern/~~Nh
 foltert/~~NXh
 foltre/~~Nh
-fond/~~Nh
+fond/~~Nhi
 fondant/~~Nh
 fonds/~~Nh
 fondue/~~Nh
@@ -26381,7 +26381,7 @@ frevels/~~Nh
 frevelt/~~NXh
 frevle/~~Nh
 friede/~~Nh
-frieden/~~V # auto-added
+frieden/~~Vi # auto-added
 frier/~~Vcj # REPLACES frieren
 fries/~~Nh
 friese/~~Nh
@@ -26883,7 +26883,7 @@ gatter/~~Mh
 gattern/~~Nh
 gatters/~~Nh
 gattin/~~Nh
-gattung/~~Fh
+gattung/~~Fhi
 gau/~~NbXh
 gaube/~~Nh
 gauben/~~V # auto-added
@@ -27658,7 +27658,7 @@ gereizt/~~JOQRSTUWVg
 gereue/~~Nh
 gereuen/~~V # auto-added
 gereut/~~JOQRSTUWVg
-gericht/~~JOQRSTUWVg
+gericht/~~JOQRSTUWVgi
 gerieft/~~JOQRSTUWVg
 geriert/~~JOQRSTUWVg
 geriet/~~JOQRSTUWVg
@@ -29049,7 +29049,7 @@ heikler/~~Mh
 heikles/~~Nh
 heiland/~~Nh
 heilem/~~Nh
-heil/~~Vcej # REPLACES heilen
+heil/~~Vceji # REPLACES heilen
 heilens/~~Nh
 heilere/~~Nh
 heilern/~~Nh
@@ -29205,7 +29205,7 @@ herholt/~~NXh
 herhält/~~Nh
 herhöre/~~Nh
 herhört/~~NXh
-hering/~~Nh
+hering/~~Nhi
 heringe/~~Nh
 herings/~~Nh
 herjagt/~~NXh
@@ -29702,7 +29702,7 @@ humösen/~~V # auto-added
 humöses/~~Nh
 hunan/~~Nh
 hunans/~~Nh
-hund/~~Mh
+hund/~~Mhi
 hunde/~~Nh
 hunden/~~V # auto-added
 hundert/~~NXh
@@ -30128,12 +30128,12 @@ infimum/~~Za #  auto-added
 infinit/~~NXh
 info/~~Nh
 infolge/~~Nh
-information/~~Nh
+information/~~Nhi
 infrage/~~Nh
 ingwer/~~Mh
 ingwers/~~Nh
 inhaber/~~Mh
-inhalt/~~NXh
+inhalt/~~NXhi
 inhalts/~~Nh
 inhuman/~~Nh
 inka/~~Nbh
@@ -30753,7 +30753,7 @@ kantert/~~NXh
 kantet/~~NXh
 kantig/~~RJOQRSTUWqh
 kantine/~~Nh
-kanton/~~Nh
+kanton/~~Nhi
 kantone/~~Nh
 kantons/~~Nh
 kantre/~~Nh
@@ -31780,7 +31780,7 @@ konvoi/~~Nbh
 konzept/~~NXh
 konzern/~~Nh
 konzert/~~NXh
-konzil/~~NXh
+konzil/~~NXhi
 konzils/~~Nh
 konzis/~~NXh
 koog/~~NXh
@@ -32008,7 +32008,7 @@ kricket/~~Nh
 krickle/~~Nh
 krieche/~~Nh
 kriecht/~~Nh
-krieg/~~Vej # REPLACES kriegen
+krieg/~~Veji # REPLACES kriegen
 krieger/~~Mh
 krieges/~~Nh
 kriegs/~~Nh
@@ -32141,7 +32141,7 @@ kubiert/~~NXh
 kubus/~~Nh
 kuchen/~~XZ #  auto-added
 kuchens/~~Nh
-kuckuck/~~Nh
+kuckuck/~~Nhi
 kufe/~~Nh
 kufen/~~V # auto-added
 kugele/~~Nh
@@ -32509,7 +32509,7 @@ lachsei/~~Nh
 lachsen/~~V # auto-added
 lachses/~~Nh
 lacht/~~NXh
-lach/~~Vce # REPLACES lachten
+lach/~~Vcei # REPLACES lachten
 lachtet/~~Nh
 lack/~~NXh
 lacken/~~V # auto-added
@@ -32694,7 +32694,7 @@ lauch/~~Nh
 lauches/~~Nh
 laude/~~Nh
 lauem/~~Nh
-lau/~~Vej # REPLACES lauen
+lau/~~Veji # REPLACES lauen
 lauerem/~~Nh
 lauer/~~Vej # REPLACES laueren
 lauerer/~~Mh
@@ -32842,7 +32842,7 @@ legern/~~Nh
 legers/~~Nh
 leggins/~~Nh
 legiert/~~NXh
-legion/~~Nh
+legion/~~Nhi
 legitim/~~NXh
 legt/~~NXh
 legtest/~~Nh
@@ -32851,7 +32851,7 @@ leguan/~~Nh
 leguane/~~Nh
 leguans/~~Nh
 legung/~~Fh
-lehen/~~V # auto-added
+lehen/~~Vi # auto-added
 lehens/~~Nh
 lehm/~~NXh
 lehmen/~~V # auto-added
@@ -32866,7 +32866,7 @@ lehrens/~~Nh
 lehrer/~~Mh
 lehrern/~~Nh
 lehrers/~~Nh
-lehrling/~~Mh
+lehrling/~~Mhi
 lehrt/~~NXh
 lehrtet/~~Nh
 leibe/~~Nh
@@ -33139,7 +33139,7 @@ linie/~~Nh
 linien/~~V # auto-added
 liniert/~~NXh
 linkem/~~Nh
-link/~~Vcej # REPLACES linken
+link/~~Vceji # REPLACES linken
 linker/~~Mh
 linkes/~~Nh
 links/~~Nh
@@ -33701,7 +33701,7 @@ mahnmal/~~NXh
 mahnt/~~NXh
 mahntet/~~Nh
 mahnung/~~Fh
-mai/~~NbYh
+mai/~~NbYhi
 maigrün/~~Nh
 mail/~~Vcej # REPLACES mailen
 mails/~~Nh
@@ -33813,7 +33813,7 @@ manchen/~~XZ #  auto-added
 mancher/~~Mh
 manches/~~Nh
 mandant/~~Nh
-mandat/~~NXh
+mandat/~~NXhi
 mandats/~~Nh
 mandel/~~Nh
 mandeln/~~V # auto-added
@@ -34136,7 +34136,7 @@ meriten/~~V # auto-added
 merk/~~Vcej # REPLACES merken
 merker/~~Mh
 merkern/~~Nh
-merkmal/~~NXh
+merkmal/~~NXhi
 merkt/~~NXh
 merktet/~~Nh
 merkur/~~Nh
@@ -34334,7 +34334,7 @@ mispel/~~Nh
 mispeln/~~V # auto-added
 miss/~~NXh
 miss/~~Vcej # REPLACES missen
-mission/~~Nh
+mission/~~Nhi
 missmut/~~Nh
 missrät/~~Nh
 misst/~~Nh
@@ -34633,7 +34633,7 @@ morbide/~~Nh
 morbus/~~Nh
 morchel/~~Nh
 mord/~~NXah
-mord/~~Vcj # REPLACES morden
+mord/~~Vcji # REPLACES morden
 mordens/~~Nh
 mordes/~~Nh
 mordet/~~NXh
@@ -35123,7 +35123,7 @@ nahm/~~NXh
 nahmen/~~V # auto-added
 nahmt/~~Nh
 nahost/~~Nh
-nahrung/~~Fh
+nahrung/~~Fhi
 naht/~~NXh
 nahtest/~~Nh
 nahtet/~~Nh
@@ -35903,7 +35903,7 @@ ornat/~~NXh
 ornaten/~~V # auto-added
 ornates/~~Nh
 ornats/~~Nh
-ort/~~NXh
+ort/~~NXhi
 orten/~~V # auto-added
 ortend/~~Nh
 ortende/~~Nh
@@ -36000,7 +36000,7 @@ paarmal/~~Nh
 paars/~~Nh
 paart/~~NXh # auto-added
 paartet/~~Nh
-paarung/~~Fh
+paarung/~~Fhi
 pacht/~~NXah
 pachten/~~V # auto-added
 pachtet/~~NXh
@@ -36163,7 +36163,7 @@ pass/~~Vcej # REPLACES passen
 passens/~~Nh
 passes/~~Nh
 passier/~~Mh
-passion/~~Nh
+passion/~~Nhi
 passiva/~~Nh
 passive/~~Nh
 passt/~~Nh
@@ -36770,7 +36770,7 @@ podest/~~Nh
 podeste/~~Nh
 podests/~~Nh
 podien/~~V # auto-added
-podium/~~Za #  auto-added
+podium/~~Zai #  auto-added
 podiums/~~Nh
 podsol/~~Nh
 podsols/~~Nh
@@ -37708,7 +37708,7 @@ rauchs/~~Nh
 raucht/~~NXh
 raudi/~~Nh
 rauem/~~Nh
-rau/~~Vcej # REPLACES rauen
+rau/~~Vceji # REPLACES rauen
 rauende/~~Nh
 rauer/~~Mh
 rauere/~~Nh
@@ -39031,7 +39031,7 @@ schad/~~NXh
 schaden/~~V # auto-added
 schadet/~~NXh
 schaf/~~NXah
-schaf/~~Vej # REPLACES schafen
+schaf/~~Veji # REPLACES schafen
 schafes/~~Nh
 schaff/~~NXh
 schafft/~~NXh
@@ -39296,7 +39296,7 @@ segele/~~Nh
 segeln/~~V # auto-added
 segels/~~Nh
 segelt/~~NXh
-segen/~~V # auto-added
+segen/~~Vi # auto-added
 segens/~~Nh
 segle/~~Nh
 segler/~~Mh
@@ -39947,7 +39947,7 @@ stiels/~~Nh
 stiert/~~NXh
 stieß/~~NXh
 stießt/~~Nh
-stift/~~NXh
+stift/~~NXhi
 stifts/~~Nh
 stigma/~~Nh
 stil/~~NXh
@@ -40726,7 +40726,7 @@ tram/~~Nh
 tramp/~~NXh
 trampt/~~NXh
 trams/~~Nh
-tran/~~Nh
+tran/~~Nhi
 trance/~~Nh
 trane/~~Nh
 tranen/~~V # auto-added
@@ -41066,7 +41066,7 @@ umbog/~~Nh
 umbogt/~~Nh
 umböge/~~Nh
 umdenk/~~NXh
-umfang/~~Nh
+umfang/~~Nhi
 umfeld/~~Nh
 umfiel/~~NXh
 umfing/~~Nh
@@ -41173,7 +41173,7 @@ uni/~~Nh
 unikal/~~NXh
 unikat/~~Nh
 unikum/~~Za #  auto-added
-union/~~Nh
+union/~~Nhi
 unions/~~Nh
 unitär/~~NXh
 universität/~~Nh
@@ -41425,7 +41425,7 @@ vogtes/~~Nh
 vokale/~~Nh
 vokals/~~Nh
 volant/~~Nh
-volk/~~NXah
+volk/~~NXahi
 volkes/~~Nh
 volks/~~Nh
 vollaß/~~Nh
@@ -41436,7 +41436,7 @@ volles/~~Nh
 volley/~~Nh
 volt/~~Nh
 vom/~~Nh
-vor/~~P # preposition
+vor/~~Pi # preposition
 Vorwissen/~~Nh # prior knowledge, from hunspell
 vorab/~~Nh
 voran/~~Nh
@@ -41844,7 +41844,7 @@ wirres/~~Nh
 wirrt/~~NXh
 wirsch/~~NYXh
 wirst/~~Nh
-wirt/~~NXh
+wirt/~~NXhi
 wirten/~~V # auto-added
 wirtes/~~Nh
 wirtin/~~Nh
@@ -42436,7 +42436,7 @@ zuzöge/~~Nh
 zuzüge/~~Nh
 zwack/~~NXh
 zwackt/~~NXh
-zwang/~~Nh
+zwang/~~Nhi
 zwangs/~~Nh
 zwangt/~~Nh
 zwar/~~Nh
@@ -45455,7 +45455,7 @@ annektion/~~Nh
 annelide/~~Nh
 anneliden/~~V # auto-added
 annexbau/~~Nbh
-annexion/~~Nh
+annexion/~~Nhi
 annexionen/~~V # auto-added
 annexraum/~~Za #  auto-added
 annexraums/~~Nh
@@ -47570,7 +47570,7 @@ attribut/~~NXh
 attributen/~~V # auto-added
 attributes/~~Nh
 attributs/~~Nh
-au/~~Nh
+au/~~Nhi
 aubergine/~~Nh
 auberginen/~~V # auto-added
 audienzen/~~V # auto-added
@@ -60966,7 +60966,7 @@ detektei/~~Nh
 detekteien/~~V # auto-added
 detektiere/~~Nh
 detektiert/~~Nh
-detektion/~~Nh
+detektion/~~Nhi
 detektivin/~~Nh
 detektivs/~~Nh
 detektor/~~Nh
@@ -62498,7 +62498,7 @@ durchbrach/~~Nh
 durchbrate/~~Nh
 durchbrich/~~Nh
 durchbriet/~~Nh
-durchbruch/~~Nh
+durchbruch/~~Nhi
 durchbräst/~~Nh
 durchbrät/~~Nh
 durchböge/~~Nh
@@ -63155,7 +63155,7 @@ echtfarbe/~~Nh
 echtfarben/~~V # auto-added
 echtgolden/~~V # auto-added
 echthaar/~~Nh
-echtheit/~~Fh
+echtheit/~~Fhi
 eckchens/~~Nh
 ecstasys/~~Nh
 ecuadors/~~Nh
@@ -63361,7 +63361,7 @@ ehrsames/~~Nh
 ehrsamkeit/~~Fh
 ehrungen/~~V # auto-added
 ehrwürdige/~~Nh
-ei/~~Nh
+ei/~~Nhi
 eiabgabe/~~Nh
 eiabgaben/~~V # auto-added
 eiablage/~~Nh
@@ -65950,7 +65950,7 @@ emeritus/~~Nh
 emigrant/~~Nh
 emigranten/~~V # auto-added
 emigrantin/~~Nh
-emigration/~~Nh
+emigration/~~Nhi
 emigriere/~~Nh
 emigrieren/~~V # auto-added
 emigrierst/~~Nh
@@ -69479,7 +69479,7 @@ erstiegen/~~V # auto-added
 erstiegt/~~Nh
 erstirbst/~~Nh
 erstirbt/~~Nh
-erstling/~~Mh
+erstling/~~Mhi
 erstlinge/~~Nh
 erstlingen/~~V # auto-added
 erstlings/~~Nh
@@ -69670,7 +69670,7 @@ eruptiere/~~Nh
 eruptieren/~~V # auto-added
 eruptierst/~~Nh
 eruptiert/~~NXh
-eruption/~~Nh
+eruption/~~Nhi
 eruptionen/~~V # auto-added
 eruptive/~~Nh
 eruptivem/~~Nh
@@ -70539,7 +70539,7 @@ extrahiere/~~Nh
 extrahiert/~~Nh
 extrakten/~~V # auto-added
 extraktes/~~Nh
-extraktion/~~Nh
+extraktion/~~Nhi
 extralange/~~Nh
 extraorale/~~Nh
 extrasolar/~~Nh
@@ -71145,7 +71145,7 @@ fasteten/~~V # auto-added
 fastetest/~~Nh
 fastetet/~~Nh
 fastfood/~~Nh
-fastnacht/~~Nh
+fastnacht/~~Nhi
 fastprim/~~NXh
 fastprimem/~~Nh
 fastprimen/~~V # auto-added
@@ -74104,7 +74104,7 @@ freveltet/~~Nh
 friedberg/~~Nh
 friedbergs/~~Nh
 friedens/~~Nh
-friedhof/~~Nh
+friedhof/~~Nhi
 friedhofes/~~Nh
 friedhofs/~~Nh
 friedhöfe/~~Nh
@@ -74630,7 +74630,7 @@ funkfreier/~~Mh
 funkfreies/~~Nh
 funkpeiler/~~Mh
 funktest/~~Nh
-funktion/~~Nh
+funktion/~~Nhi
 funktionen/~~V # auto-added
 funktions/~~Nh
 funktionär/~~Nh
@@ -75265,7 +75265,7 @@ gansjunges/~~Nh
 ganzbild/~~Nh
 ganzfoto/~~Nbh
 ganzgewebe/~~Nh
-ganzheit/~~Fh
+ganzheit/~~Fhi
 ganzholz/~~Nh
 ganzkörper/~~Mh
 ganzleder/~~Mh
@@ -75336,7 +75336,7 @@ garnierter/~~Mh
 garniertes/~~Nh
 garniertet/~~Nh
 garnierung/~~Fh
-garnison/~~Nh
+garnison/~~Nhi
 garnisonen/~~V # auto-added
 garnitur/~~Nh
 garnituren/~~V # auto-added
@@ -79437,7 +79437,7 @@ geschlackt/~~JOQRSTUWVg
 geschlafen/~~V # auto-added
 geschlagen/~~V # auto-added
 geschlampt/~~JOQRSTUWVg
-geschlecht/~~Nh
+geschlecht/~~Nhi
 geschleckt/~~JOQRSTUWVg
 geschleift/~~JOQRSTUWVg
 geschleimt/~~JOQRSTUWVg
@@ -80187,7 +80187,7 @@ gesundeten/~~V # auto-added
 gesundeter/~~Mh
 gesundetes/~~Nh
 gesundetet/~~JOQRSTUWVg
-gesundheit/~~Fh
+gesundheit/~~Fhi
 gesundung/~~Fh
 gesungen/~~V # auto-added
 gesungene/~~Nh
@@ -82031,7 +82031,7 @@ goutiertem/~~Nh
 goutierter/~~Mh
 goutiertes/~~Nh
 goutiertet/~~Nh
-gouverneur/~~Nh
+gouverneur/~~Nhi
 grabbele/~~Nh
 grabbeln/~~V # auto-added
 grabbelnd/~~Nh
@@ -86819,7 +86819,7 @@ infiniter/~~Mh
 infinites/~~Nh
 infiziere/~~Nh
 infiziert/~~Nh
-inflation/~~Nh
+inflation/~~Nhi
 influenza/~~Nh
 infomobil/~~Nh
 informale/~~Nh
@@ -86866,7 +86866,7 @@ initials/~~Nh
 initiator/~~Nh
 initiiere/~~Nh
 initiiert/~~Nh
-injektion/~~Nh
+injektion/~~Nhi
 injektive/~~Nh
 injiziere/~~Nh
 injiziert/~~Nh
@@ -86950,7 +86950,7 @@ inserats/~~Nh
 inserent/~~Nh
 inseriere/~~Nh
 inseriert/~~Nh
-insertion/~~Nh
+insertion/~~Nhi
 insgeheim/~~Nh
 insgesamt/~~Nh
 insiderin/~~Nh
@@ -87206,7 +87206,7 @@ isokorem/~~Nh
 isokoren/~~V # auto-added
 isokorer/~~Mh
 isokores/~~Nh
-isolation/~~Nh
+isolation/~~Nhi
 isolator/~~Nh
 isolators/~~Nh
 isoleucin/~~Nh
@@ -87246,7 +87246,7 @@ istanbul/~~Nh
 istanbuls/~~Nh
 italiener/~~Mh
 italiens/~~Nh
-iteration/~~Nh
+iteration/~~Nhi
 iterative/~~Nh
 iterator/~~Nh
 iterators/~~Nh
@@ -87283,7 +87283,7 @@ jahrbuchs/~~Nh
 jahresabo/~~Nh
 jahrfeier/~~Mh
 jahrfünft/~~Nh
-jahrgang/~~Nh
+jahrgang/~~Nhi
 jahrgangs/~~Nh
 jahrgeld/~~Nh
 jahrgelds/~~Nh
@@ -89841,7 +89841,7 @@ korrelat/~~NXh
 korrelats/~~Nh
 korridor/~~NXh
 korridors/~~Nh
-korrosion/~~Nh
+korrosion/~~Nhi
 korrosive/~~Nh
 korruptem/~~Nh
 korrupten/~~V # auto-added
@@ -92848,7 +92848,7 @@ magierin/~~Nh
 magister/~~Mh
 magistern/~~V # auto-added
 magisters/~~Nh
-magistrat/~~Nh
+magistrat/~~Nhi
 magmafeld/~~Nh
 magmaherd/~~Nh
 magmasee/~~Nh
@@ -95057,7 +95057,7 @@ mutagenes/~~Nh
 mutagens/~~Nh
 mutanten/~~V # auto-added
 mutantin/~~Nh
-mutation/~~Nh
+mutation/~~Nhi
 mutendem/~~Nh
 mutenden/~~V # auto-added
 mutender/~~Mh
@@ -96049,7 +96049,7 @@ niederer/~~Mh
 niederes/~~Nh
 niederkam/~~Nh
 niederste/~~Nh
-niederung/~~Fh
+niederung/~~Fhi
 niederzog/~~Nh
 niedrigst/~~Nh
 niemandem/~~Nh
@@ -96941,7 +96941,7 @@ ovidukts/~~Nh
 oxalaten/~~V # auto-added
 oxalsäure/~~Nh
 oxidasen/~~V # auto-added
-oxidation/~~Nh
+oxidation/~~Nhi
 oxiddicke/~~Nh
 oxidfilm/~~NXh
 oxidfilms/~~Nh
@@ -98756,7 +98756,7 @@ promoten/~~V # auto-added
 promoter/~~Mh
 promotern/~~V # auto-added
 promotet/~~NXh
-promotion/~~Nh
+promotion/~~Nhi
 promotor/~~Nh
 promotors/~~Nh
 promovend/~~Nh
@@ -99323,7 +99323,7 @@ quirltest/~~Nh
 quirltet/~~Nh
 quittiere/~~Nh
 quittiert/~~Nh
-quittung/~~Fh
+quittung/~~Fhi
 quizfrage/~~Nh
 quizrunde/~~Nh
 quizzende/~~Nh
@@ -99957,7 +99957,7 @@ recyclter/~~Mh
 recycltes/~~Nh
 recycltet/~~Nh
 redakteur/~~Nh
-redaktion/~~Nh
+redaktion/~~Nhi
 redefaul/~~NXh
 redendem/~~Nh
 redender/~~Mh
@@ -99974,7 +99974,7 @@ redmonds/~~Nh
 rednerin/~~Nh
 redoutes/~~Nh
 reduktase/~~Nh
-reduktion/~~Nh
+reduktion/~~Nhi
 redundant/~~Nh
 redundanz/~~Nh
 reduzier/~~Mh
@@ -100054,7 +100054,7 @@ regiertet/~~Nh
 regierung/~~Fh
 regiestar/~~Nh
 regimenah/~~Nh
-regiment/~~Nh
+regiment/~~Nhi
 regiments/~~Nh
 regionen/~~V # auto-added
 regionär/~~NXh
@@ -100449,7 +100449,7 @@ reliablen/~~V # auto-added
 reliabler/~~Mh
 reliables/~~Nh
 reliefarm/~~Nh
-religion/~~Nh
+religion/~~Nhi
 religions/~~Nh
 religiös/~~NXh
 relikten/~~V # auto-added
@@ -100646,7 +100646,7 @@ revidiert/~~Nh
 revieren/~~V # auto-added
 revierruf/~~Nh
 review/~~Vej # REPLACES reviewen
-revision/~~Nh
+revision/~~Nhi
 revisoren/~~V # auto-added
 revisorin/~~Nh
 revisors/~~Nh
@@ -100667,7 +100667,7 @@ rezenter/~~Mh
 rezentes/~~Nh
 rezepten/~~V # auto-added
 rezeptes/~~Nh
-rezeption/~~Nh
+rezeption/~~Nhi
 rezeptor/~~Nh
 rezeptors/~~Nh
 rezeptur/~~Nh
@@ -101793,7 +101793,7 @@ sakralem/~~Nh
 sakralen/~~V # auto-added
 sakraler/~~Mh
 sakrales/~~Nh
-sakrament/~~Nh
+sakrament/~~Nhi
 sakrileg/~~NXh
 sakrilegs/~~Nh
 sakristei/~~Nh
@@ -101960,7 +101960,7 @@ sanitärer/~~Mh
 sanitäres/~~Nh
 sanitäter/~~Mh
 sanitäts/~~Nh
-sanktion/~~Nh
+sanktion/~~Nhi
 sanktuar/~~NXh
 sanktuars/~~Nh
 santorin/~~Nh
@@ -102435,7 +102435,7 @@ schießend/~~Nh
 schießens/~~Nh
 schießest/~~Nh
 schiffbau/~~Nh
-schiff/~~Vej # REPLACES schiffen
+schiff/~~Veji # REPLACES schiffen
 schiffer/~~Mh
 schiffern/~~V # auto-added
 schiffers/~~Nh
@@ -103223,7 +103223,7 @@ schweifs/~~Nh
 schweift/~~NXh
 schweigst/~~Nh
 schweigt/~~Nh
-schwein/~~Nh # auto-added
+schwein/~~Nhi # auto-added
 schweine/~~Nh
 schweinen/~~V # auto-added
 schweines/~~Nh
@@ -103756,7 +103756,7 @@ sekretärs/~~Nh
 sektchen/~~XZ #  auto-added
 sektchens/~~Nh
 sektierer/~~Mh
-sektion/~~Nh
+sektion/~~Nhi
 sektionen/~~V # auto-added
 sektoren/~~V # auto-added
 sektors/~~Nh
@@ -103769,7 +103769,7 @@ selbigem/~~Nh
 selbigen/~~V # auto-added
 selbiger/~~Mh
 selbiges/~~Nh
-selektion/~~Nh
+selektion/~~Nhi
 selenarm/~~NXh
 selenat/~~NXh
 selenaten/~~V # auto-added
@@ -104399,7 +104399,7 @@ sittigen/~~V # auto-added
 sittiger/~~Mh
 sittiges/~~Nh
 sittsamst/~~Nh
-situation/~~Nh
+situation/~~Nhi
 situieren/~~V # auto-added
 situiert/~~NXh
 sitzende/~~Nh
@@ -104891,7 +104891,7 @@ spedieren/~~V # auto-added
 spedierst/~~Nh
 spediert/~~NXh
 spediteur/~~Nh
-spedition/~~Nh
+spedition/~~Nhi
 speedway/~~Nh
 speedways/~~Nh
 speeren/~~V # auto-added
@@ -105589,7 +105589,7 @@ statement/~~Nh
 statiker/~~Mh
 statikern/~~V # auto-added
 statikers/~~Nh
-station/~~Nh
+station/~~Nhi
 stationen/~~V # auto-added
 stationär/~~Nh
 statist/~~Nh
@@ -108495,7 +108495,7 @@ torovirus/~~Nh
 torpedo/~~Nbh
 torpors/~~Nh
 torreiche/~~Nh
-torsion/~~Nh
+torsion/~~Nhi
 torsionen/~~V # auto-added
 tortilla/~~Nbh
 torturen/~~V # auto-added
@@ -108668,7 +108668,7 @@ tradiere/~~Nh
 tradieren/~~V # auto-added
 tradierst/~~Nh
 tradiert/~~NXh
-tradition/~~Nh
+tradition/~~Nhi
 trafalgar/~~Nh
 trafest/~~Nh
 tragbarst/~~Nh
@@ -112132,7 +112132,7 @@ verestre/~~Nh
 verewige/~~Nh
 verewigst/~~Nh
 verewigt/~~NXh
-verfahren/~~Zh # auto-added noun
+verfahren/~~Zhi # auto-added noun
 verfallen/~~V # auto-added
 verfalles/~~Nh
 verfalls/~~Nh
@@ -113839,7 +113839,7 @@ vibrafon/~~Nh
 vibrafone/~~Nh
 vibrafons/~~Nh
 vibraphon/~~Nh
-vibration/~~Nh
+vibration/~~Nhi
 vibrator/~~Nh
 vibrators/~~Nh
 vibrier/~~Mh
@@ -114710,7 +114710,7 @@ wabertest/~~Nh
 wabertet/~~Nh
 wachende/~~Nh
 wachendem/~~Nh
-wach/~~Vce # REPLACES wachenden
+wach/~~Vcei # REPLACES wachenden
 wachender/~~Mh
 wachendes/~~Nh
 wachere/~~Nh
@@ -114927,7 +114927,7 @@ wallender/~~Mh
 wallendes/~~Nh
 wallens/~~Nh
 wallfahre/~~Nh
-wallfahrt/~~Nh
+wallfahrt/~~Nhi
 wallgang/~~Nh
 wallgangs/~~Nh
 wallgänge/~~Nh
@@ -115749,7 +115749,7 @@ wehrende/~~Nh
 wehrendem/~~Nh
 wehrender/~~Mh
 wehrendes/~~Nh
-wehrmacht/~~Nh
+wehrmacht/~~Nhi
 wehrpass/~~Nh
 wehrpässe/~~Nh
 wehrtest/~~Nh
@@ -115877,7 +115877,7 @@ weisestem/~~Nh
 weisesten/~~V # auto-added
 weisester/~~Mh
 weisestes/~~Nh
-weisheit/~~Fh
+weisheit/~~Fhi
 weismache/~~Nh
 weismacht/~~Nh
 weissage/~~Nh
@@ -118581,7 +118581,7 @@ zukommt/~~Nh
 zukork/~~Vej # REPLACES zukorken
 zukorkt/~~NXh
 zukorktet/~~Nh
-zukunft/~~Nh
+zukunft/~~Nhi
 zukunfts/~~Nh
 zukämen/~~V # auto-added
 zukämet/~~Nh
@@ -123985,7 +123985,7 @@ zünftisch/~~JOQRSTUWq #adjective (auto-converted)
 überzonal/~~JOQRSTUWq #adjective (auto-converted)
 frau/~~Nh
 luft/~~Nh
-mann/~~Nh
+mann/~~Nhi
 brühe/~~Fh
 büßer/~~Nh
 fähre/~~Fh
@@ -124463,7 +124463,7 @@ herreichen/~~Nh
 herrenisch/~~RJOQRSTUWqh
 herrichten/~~Nh
 herrjemine/~~Fh
-herrschaft/~~Fh
+herrschaft/~~Fhi
 herschauen/~~Nh
 herschrieb/~~Nh
 herstammen/~~Nh
@@ -125093,7 +125093,7 @@ ingolstadt/~~Nh
 ingrediens/~~Nh
 ingredienz/~~Nh
 ingwerbier/~~Nh
-inhalation/~~Fh
+inhalation/~~Fhi
 inhalieren/~~Nh
 inhaltlich/~~JOQRSTUWqh
 inhaltsarm/~~Nh
@@ -125138,7 +125138,7 @@ inserieren/~~Nh
 insinuiere/~~Fh
 insinuiert/~~Nh
 inspekteur/~~Nh
-inspektion/~~Fh
+inspektion/~~Fhi
 inspizient/~~Nh
 installier/~~Nh
 instrument/~~Nh
@@ -125146,7 +125146,7 @@ inszenator/~~Nh
 integrität/~~Fh
 intensität/~~Fh
 Intensitätsanalyse/~~Fh
-interessen/~~Nh
+interessen/~~Nhi
 interferon/~~Nh
 interkalar/~~Nh
 intermezzi/~~Nh
@@ -125161,7 +125161,7 @@ intimspray/~~Nh
 intolerant/~~Nh
 intoleranz/~~Nh
 intonateur/~~Nh
-intonation/~~Fh
+intonation/~~Fhi
 intonieren/~~Nh
 intrakutan/~~Nh
 intraossär/~~Nh
@@ -125427,7 +125427,7 @@ kardiologe/~~Fh
 karenzgeld/~~Nh
 karenzjahr/~~Nh
 karenzzeit/~~Nh
-karfreitag/~~Nh
+karfreitag/~~Nhi
 kariesloch/~~Nh
 karikieren/~~Nh
 karlsbader/~~Nh
@@ -125752,7 +125752,7 @@ konditions/~~Nh
 konditorei/~~Nh
 konduktanz/~~Nh
 konfektion/~~Fh
-konfession/~~Fh
+konfession/~~Fhi
 konfirmand/~~Nh
 konfiserie/~~Fh
 kongokrieg/~~Nh
@@ -125790,11 +125790,11 @@ kontrieren/~~Nh
 kontrovers/~~Nh
 konushülse/~~Fh
 konusmühle/~~Fh
-konvektion/~~Fh
-konvention/~~Fh
+konvektion/~~Fhi
+konvention/~~Fhi
 konvergent/~~Nh
 konvergenz/~~Nh
-konversion/~~Fh
+konversion/~~Fhi
 konzentrat/~~Nh
 konzeption/~~Fh
 konzeptlos/~~Nh
@@ -126777,7 +126777,7 @@ mediceisch/~~RJOQRSTUWqh
 medikament/~~Nh
 medikation/~~Fh
 medinawurm/~~Nh
-meditation/~~Fh
+meditation/~~Fhi
 mediterran/~~Nh
 meditieren/~~Nh
 meerbrasse/~~Fh
@@ -127226,7 +127226,7 @@ mostfässer/~~Nh
 mostkelter/~~Nh
 mostpresse/~~Fh
 motettisch/~~RJOQRSTUWqh
-motivation/~~Fh
+motivation/~~Fhi
 motivbezug/~~Nh
 motivebene/~~Fh
 motivieren/~~Nh
@@ -127483,7 +127483,7 @@ nahetreten/~~Nh
 nahtanfang/~~Nh
 nahtstelle/~~Fh
 nahtzugabe/~~Fh
-nahverkehr/~~Nh
+nahverkehr/~~Nhi
 nahöstlich/~~JOQRSTUWqh
 namenkunde/~~Fh
 namentlich/~~JOQRSTUWqh
@@ -128298,7 +128298,7 @@ pontifikat/~~Nh
 popenhände/~~Fh
 popkonzert/~~Nh
 popmusiker/~~Nh
-population/~~Fh
+population/~~Fhi
 populismus/~~Nh
 porenartig/~~RJOQRSTUWqh
 porenärmer/~~Nh
@@ -128372,7 +128372,7 @@ probierens/~~Nh
 problemlos/~~Nh
 problemnah/~~Nh
 prodeutsch/~~Nh
-produktion/~~Fh
+produktion/~~Fhi
 profanhaus/~~Nh
 profession/~~Fh
 profiliert/~~Nh
@@ -128418,7 +128418,7 @@ provitamin/~~Nh
 proxydaten/~~Nh
 prozedural/~~Nh
 prozentual/~~Nh
-prozession/~~Fh
+prozession/~~Fhi
 prozessual/~~Nh
 prunkbarke/~~Fh
 prunkfibel/~~Nh
@@ -128706,7 +128706,7 @@ regnitzarm/~~Nh
 regrediere/~~Fh
 regrediert/~~Nh
 regressand/~~Nh
-regression/~~Fh
+regression/~~Fhi
 regsamkeit/~~Fh
 regularien/~~Nh
 regulation/~~Fh
@@ -128827,7 +128827,7 @@ rentkammer/~~Nh
 reoperiere/~~Fh
 reoperiert/~~Nh
 reparateur/~~Nh
-reparation/~~Fh
+reparation/~~Fhi
 reparieren/~~Nh
 repertoire/~~Fh
 repetieren/~~Nh
@@ -128835,7 +128835,7 @@ repetition/~~Fh
 replikativ/~~Nh
 reponieren/~~Nh
 reposition/~~Fh
-repression/~~Fh
+repression/~~Fhi
 reputation/~~Fh
 requiemhai/~~Nh
 resedagrün/~~Nh
@@ -128999,7 +128999,7 @@ ruhenlässt/~~Nh
 ruhetremor/~~Nh
 ruhrbezirk/~~Nh
 ruhrchemie/~~Fh
-ruhrgebiet/~~Nh
+ruhrgebiet/~~Nhi
 ruhrkessel/~~Nh
 ruhrkumpel/~~Nh
 ruhrmuseum/~~Nh
@@ -129658,7 +129658,7 @@ showtalent/~~Nh
 shuttlebus/~~Nh
 siamesisch/~~RJOQRSTUWqh
 sicherging/~~Nh
-sicherheit/~~Fh
+sicherheit/~~Fhi
 sicherlich/~~JOQRSTUWqh
 sicherungs/~~Nh
 sickernass/~~Nh
@@ -131038,7 +131038,7 @@ unterhalts/~~Nh
 unterhavel/~~Nh
 unterheben/~~Nh
 unterhielt/~~Nh
-unterkunft/~~Nh
+unterkunft/~~Nhi
 unterlegen/~~Nh # auto-added
 unterlägen/~~Nh # auto-added
 unterlässt/~~Nh
@@ -131155,7 +131155,7 @@ vasenmaler/~~Nh
 vaterunser/~~Nh
 veganismus/~~Nh
 vegetarier/~~Nh
-vegetation/~~Fh
+vegetation/~~Fhi
 vegetativa/~~Nh
 vegetieren/~~Nh
 veitstänze/~~Fh
@@ -132032,7 +132032,7 @@ westerwald/~~Nh
 westfranke/~~Fh
 westseitig/~~Nh
 westtheben/~~Nh
-wettbewerb/~~Nh
+wettbewerb/~~Nhi
 wetteifern/~~Nh
 wetterfest/~~Nh
 wetterhart/~~Nh # auto-added
@@ -132091,7 +132091,7 @@ wildmachen/~~Nh
 willfahren/~~Nh
 willfährig/~~Nh
 willigkeit/~~Fh
-willkommen/~~Nh
+willkommen/~~Nhi
 willkürakt/~~Nh
 windblüher/~~Nh
 windblütig/~~Nh
@@ -132118,7 +132118,7 @@ wirkladung/~~Fh
 wirkradien/~~Nh
 wirkradius/~~Nh
 wirrköpfig/~~Nh
-wirtschaft/~~Fh
+wirtschaft/~~Fhi
 wirtsleute/~~Fh
 wirtsstube/~~Fh
 wirtssuche/~~Fh
@@ -135255,7 +135255,7 @@ deodorierst/~~Nh
 deodorierte/~~Fh
 departement/~~Nh
 deponieberg/~~Nh
-deportation/~~Fh
+deportation/~~Fhi
 deportieren/~~Nh
 depressions/~~Nh
 deprimieren/~~Nh
@@ -136512,7 +136512,7 @@ expandieren/~~Nh
 expeditions/~~Nh
 explizieren/~~Nh
 explodieren/~~Nh
-exploration/~~Fh
+exploration/~~Fhi
 explorieren/~~Nh
 exportfähig/~~Nh
 exportieren/~~Nh
@@ -139275,7 +139275,7 @@ inokulieren/~~Nh
 inputfaktor/~~Nh
 inputmuster/~~Nh
 inputparser/~~Nh
-inquisition/~~Fh
+inquisition/~~Fhi
 inselförmig/~~Nh
 inselinnere/~~Fh
 insertgröße/~~Fh
@@ -139301,7 +139301,7 @@ integritäts/~~Nh
 intelligent/~~Nh
 intelligenz/~~Nh
 intendieren/~~Nh
-interaktion/~~Fh
+interaktion/~~Fhi
 interessant/~~JOQRSTUWq # fixed from noun to adjective
 interessent/~~Nh
 interferenz/~~Nh
@@ -140044,7 +140044,7 @@ kontergriff/~~Nh
 kontermarke/~~Fh
 konterspiel/~~Nh
 kontinuität/~~Fh
-kontraktion/~~Fh
+kontraktion/~~Fhi
 kontrapunkt/~~Nh
 kontrastarm/~~Nh
 kontratenor/~~Nh
@@ -143053,7 +143053,7 @@ psychotisch/~~Nh
 psychotrope/~~Fh
 ptolemäisch/~~Nh
 pubertieren/~~Nh
-publikation/~~Fh
+publikation/~~Fhi
 publizieren/~~Nh
 publizistik/~~Nh
 puckverlust/~~Nh
@@ -143488,7 +143488,7 @@ rentiersame/~~Fh
 rentmeister/~~Nh
 reoperierst/~~Nh
 reoxidation/~~Fh
-replikation/~~Fh
+replikation/~~Fhi
 replizieren/~~Nh
 repressalie/~~Fh
 reprimieren/~~Nh
@@ -145003,7 +145003,7 @@ stützenfrei/~~Nh
 stützenpaar/~~Nh
 subdominant/~~Nh
 subduzieren/~~Nh
-sublimation/~~Fh
+sublimation/~~Fhi
 sublimieren/~~Nh
 subpersonal/~~Nh
 subskribent/~~Nh
@@ -145702,7 +145702,7 @@ umschwimmen/~~Nh
 umschwirren/~~Nh
 umschwärmen/~~Nh
 umschütteln/~~Nh
-umsiedelung/~~Fh
+umsiedelung/~~Fhi
 umskalieren/~~Nh
 umsortieren/~~Nh
 umspritzend/~~Nh
@@ -145866,7 +145866,7 @@ unterlaufen/~~Nh
 unterliegen/~~Vcej #  auto-added | FIXED: verb - be subject to
 untermauern/~~Nh
 untermengen/~~Nh # auto-added
-unternehmen/~~Nh
+unternehmen/~~Nhi
 unternehmer/~~Nh
 unternommen/~~Nh
 unterordnen/~~Nh
@@ -148151,7 +148151,7 @@ aschantiland/~~Nh
 ascheschicht/~~Nh
 asphaltieren/~~Nh
 assemblieren/~~Nh
-assimilation/~~Fh
+assimilation/~~Fhi
 assimilieren/~~Nh
 assoziations/~~Nh
 asthmakranke/~~Fh
@@ -149697,7 +149697,7 @@ desoxyzucker/~~Nh
 dessentwegen/~~Nh # auto-added
 dessertgabel/~~Nh
 destillateur/~~Nh
-destillation/~~Fh
+destillation/~~Fhi
 destillieren/~~Nh
 detaillieren/~~Nh
 detektivbüro/~~Nh # auto-added
@@ -151604,7 +151604,7 @@ gefahrklasse/~~Fh
 gefahrstelle/~~Fh
 gefechtsklar/~~Nh
 gefiederteil/~~Nh
-gefolgschaft/~~Fh
+gefolgschaft/~~Fhi
 gefolgsleute/~~Fh
 gefolgstreue/~~Fh
 gefräßigkeit/~~Fh
@@ -151818,7 +151818,7 @@ gesellenjahr/~~Nh
 gesellenlohn/~~Nh
 gesellenzeit/~~JOQRSTUWVg
 geselligkeit/~~Fh
-gesellschaft/~~Fh
+gesellschaft/~~Fhi
 gesetzbücher/~~Nh
 gesetzgebend/~~Nh
 gesetzgebung/~~Fh
@@ -151866,7 +151866,7 @@ geweihstange/~~Fh
 geweihträger/~~Nh
 gewerbemäßig/~~Nh
 gewerbsmäßig/~~Nh
-gewerkschaft/~~Fh
+gewerkschaft/~~Fhi
 gewerkverein/~~Nh
 gewetteifert/~~JOQRSTUWVg
 gewichtheben/~~Nh
@@ -152210,7 +152210,7 @@ habichtshund/~~Nh
 habichtskauz/~~Nh
 habichtsnase/~~Fh
 habichtspilz/~~Nh
-habilitation/~~Fh
+habilitation/~~Fhi
 habilitieren/~~Nh
 habsburgisch/~~Nh
 habseligkeit/~~Fh
@@ -153789,7 +153789,7 @@ illokutionär/~~Nh
 illumination/~~Fh
 illuminieren/~~Nh
 illusionslos/~~Nh
-illustration/~~Fh
+illustration/~~Fhi
 illustrieren/~~Nh
 imagebewusst/~~Nh
 imagegeprägt/~~Nh
@@ -154611,7 +154611,7 @@ komprimieren/~~Nh
 komturwappen/~~Nh
 komödienhaft/~~Nh
 komödienhaus/~~Nh
-kondensation/~~Fh
+kondensation/~~Fhi
 kondensieren/~~Nh
 konditorware/~~Fh
 konfektionär/~~Nh
@@ -155336,7 +155336,7 @@ liedsammlung/~~Fh
 lieferbereit/~~Nh
 lieferfertig/~~Nh
 liegenlassen/~~Nh
-liegenschaft/~~Fh
+liegenschaft/~~Fhi
 lieschgräser/~~Nh
 liftbenutzer/~~Nh # auto-added
 liftpersonal/~~Nh
@@ -156892,7 +156892,7 @@ orbitopathie/~~Fh
 orchideenart/~~Nh # auto-added
 ordensstatut/~~Nh
 ordinalskala/~~Nh
-organisation/~~Fh
+organisation/~~Fhi
 organisieren/~~Nh
 organogenese/~~Fh
 organografie/~~Fh
@@ -157906,11 +157906,11 @@ regelbezogen/~~Nh # auto-added
 regelgerecht/~~Nh
 regelkonform/~~Nh
 regellogisch/~~RJOQRSTUWqh
-regeneration/~~Fh
+regeneration/~~Fhi
 regenerieren/~~Nh
 regensburger/~~Nh
 regentenzeit/~~Nh
-regentschaft/~~Fh
+regentschaft/~~Fhi
 regieaufgabe/~~Fh
 regiebetrieb/~~Nh
 regieführung/~~Fh
@@ -158055,7 +158055,7 @@ reoperierend/~~Nh
 repatriieren/~~Nh
 replantation/~~Fh
 replizierbar/~~JOQRSTUWqh
-reproduktion/~~Fh
+reproduktion/~~Fhi
 reprographie/~~Fh
 repräsentant/~~Nh
 repräsentanz/~~Nh
@@ -158073,7 +158073,7 @@ respirometer/~~Nh
 ressentiment/~~Nh
 ressortfremd/~~Nh
 restaurateur/~~Nh
-restauration/~~Fh
+restauration/~~Fhi
 restaurieren/~~Nh
 restituieren/~~Nh
 retikulozyte/~~Fh
@@ -159677,9 +159677,9 @@ subklonieren/~~Nh
 submolekular/~~Nh
 subordinativ/~~Nh
 subsistieren/~~Nh
-subskription/~~Fh
+subskription/~~Fhi
 substanzwert/~~Nh
-substitution/~~Fh
+substitution/~~Fhi
 subtrahieren/~~Nh
 sudansprache/~~Fh
 sudanvertrag/~~Nh
@@ -160148,7 +160148,7 @@ transfektion/~~Fh
 transfusions/~~Nh
 translatiert/~~Nh
 transmembran/~~Nh
-transmission/~~Fh
+transmission/~~Fhi
 transorbital/~~Nh
 transoxanien/~~Nh
 transoxanier/~~Nh
@@ -161513,7 +161513,7 @@ wirbelstürme/~~Fh
 wirkerstühle/~~Fh
 wirkleistung/~~Fh
 wirkleitwert/~~Nh
-wirklichkeit/~~Fh
+wirklichkeit/~~Fhi
 wirkspektren/~~Nh
 wirkspektrum/~~Nh
 wirksubstanz/~~Nh
@@ -161534,7 +161534,7 @@ wismutgehalt/~~Nh
 wissbegierde/~~Fh
 wissbegierig/~~Nh
 wissenlassen/~~Nh
-wissenschaft/~~Fh
+wissenschaft/~~Fhi
 wissensdrang/~~Nh
 wissensmäßig/~~Nh
 wittenberger/~~Nh
@@ -161766,7 +161766,7 @@ zitterprämie/~~Fh
 zitterrochen/~~Nh
 zitterspinne/~~Fh
 zitzenförmig/~~RJOQRSTUWqh
-zivilisation/~~Fh
+zivilisation/~~Fhi
 zivilisieren/~~Nh
 zivilstreife/~~Fh
 zockerpapier/~~Nh
@@ -162602,7 +162602,7 @@ apparateteile/~~Fh
 appetithemmer/~~Nh
 appetitzügler/~~Nh
 apportierhund/~~Nh
-approximation/~~Fh
+approximation/~~Fhi
 approximieren/~~Nh
 aprikotierend/~~Nh
 aprikotiertet/~~Nh
@@ -165765,7 +165765,7 @@ gerüstschäden/~~Nh
 gerüstständer/~~Nh
 gesamtindisch/~~Nh
 gesamtzweiter/~~Nh
-gesandtschaft/~~Fh
+gesandtschaft/~~Fhi
 geschichtlich/~~JOQRSTUWqh
 geschichtslos/~~Nh
 geschiebelehm/~~Nh
@@ -168613,7 +168613,7 @@ kommersbücher/~~Nh
 kommerzialrat/~~Nh
 kommerzienrat/~~Nh
 kommissarisch/~~Nh
-kommunikation/~~Fh
+kommunikation/~~Fhi
 kommunionbank/~~Nh
 kommunionkind/~~Nh
 kommunistisch/~~Nh
@@ -170813,9 +170813,9 @@ partieverlust/~~Nh
 partikelgröße/~~Fh
 partikelstrom/~~Nh
 partitioniert/~~Nh
-partizipation/~~Fh
+partizipation/~~Fhi
 partizipieren/~~Nh
-partnerschaft/~~Fh
+partnerschaft/~~Fhi
 partystimmung/~~Fh
 partytauglich/~~JOQRSTUWqh
 parzellenform/~~Nh
@@ -172319,7 +172319,7 @@ schmandkuchen/~~Nh
 schmeißfliege/~~Fh
 schmerbäuchig/~~Nh
 schmetterball/~~Nh
-schmetterling/~~Nh
+schmetterling/~~Nhi
 schmiedstraße/~~Fh
 schmielgräser/~~Nh
 schminkaktion/~~Fh
@@ -173767,7 +173767,7 @@ transistorlos/~~Nh
 transitivität/~~Fh
 transitorisch/~~Nh
 transkriptase/~~Fh
-transkription/~~Fh
+transkription/~~Fhi
 translational/~~Nh
 translokation/~~Fh
 translozieren/~~Nh
@@ -178725,7 +178725,7 @@ genießenwollen/~~Nh
 genmanipuliert/~~JOQRSTUWVg
 genomforschung/~~Fh
 genomvergleich/~~Nh
-genossenschaft/~~Fh
+genossenschaft/~~Fhi
 genrevertreter/~~Nh
 genrezeichnung/~~Fh
 gentrifizieren/~~Nh
@@ -181265,7 +181265,7 @@ klasseleistung/~~Fh
 klassenbewusst/~~Nh
 klassenbezogen/~~Nh # auto-added
 klassenbildend/~~Nh
-klassifikation/~~Fh
+klassifikation/~~Fhi
 klassifizieren/~~Nh
 klassikertexte/~~Fh
 klassizistisch/~~RJOQRSTUWqh
@@ -182759,7 +182759,7 @@ nachgeschlagen/~~Nh # auto-added
 nachgeschossen/~~Nh
 nachgesprochen/~~Nh
 nachgiebigkeit/~~Fh
-nachhaltigkeit/~~Fh
+nachhaltigkeit/~~Fhi
 nachhausefahrt/~~Nh
 nachhausegehen/~~Nh
 nachhutgefecht/~~Nh
@@ -183958,7 +183958,7 @@ quadratlatsche/~~Fh
 quadrigarennen/~~Nh
 quadrophonisch/~~Nh
 qualifikations/~~Nh
-qualifizierung/~~Fh
+qualifizierung/~~Fhi
 quantenoptisch/~~RJOQRSTUWqh
 quantifikation/~~Fh
 quantifizieren/~~Nh
@@ -184160,7 +184160,7 @@ rekapitulieren/~~Nh
 rekognoszieren/~~Nh
 rekonstitution/~~Fh
 rekonstruieren/~~Nh
-rekonstruktion/~~Fh
+rekonstruktion/~~Fhi
 rekonvaleszent/~~Nh
 rekonvaleszenz/~~Nh
 rekordbrechend/~~Nh
@@ -186059,7 +186059,7 @@ transacetylase/~~Fh
 transalbingien/~~Nh
 transalpinisch/~~RJOQRSTUWqh
 transaminieren/~~Nh
-transformation/~~Fh
+transformation/~~Fhi
 transformieren/~~Nh
 transfundieren/~~Nh
 transkanadisch/~~RJOQRSTUWqh
@@ -192742,7 +192742,7 @@ krisengebeutelt/~~Nh
 krisengewinnler/~~Nh
 krisenhöhepunkt/~~Nh
 krisenresistent/~~Nh
-kristallisation/~~Fh
+kristallisation/~~Fhi
 kristallisieren/~~Nh
 kristallitgröße/~~Fh
 kristallografie/~~Fh
@@ -196482,7 +196482,7 @@ transliteration/~~Fh
 transliterieren/~~Nh
 transneptunisch/~~Nh
 transparentmode/~~Fh
-transplantation/~~Fh
+transplantation/~~Fhi
 transplantieren/~~Nh
 transporterraum/~~Nh
 transportfertig/~~Nh
@@ -196758,7 +196758,7 @@ unschädlichkeit/~~Fh
 unseresgleichen/~~Nh
 unspezialisiert/~~Nh
 unsportlichkeit/~~Fh
-unsterblichkeit/~~Fh
+unsterblichkeit/~~Fhi
 unterentwickelt/~~Nh
 unterfinanziert/~~Nh
 untergangsszene/~~Fh
@@ -206509,7 +206509,7 @@ aneignungsversuch/~~Nh
 aneinanderdrängen/~~Nh # auto-added
 aneinanderfesseln/~~Nh
 Erde/~~Fh # auto-added compound component
-Land/~~Nh # auto-added compound component
+Land/~~Nhi # auto-added compound component
 Masse/~~Fh # auto-added compound component
 Kontinent/~~Mh # auto-added compound component
 Teil/~~Mh # auto-added compound component
@@ -206517,7 +206517,7 @@ Entwicklung/~~Fh # auto-added compound component
 Sub/~~Nh # auto-added compound component
 Asien/~~Nh # auto-added compound component
 Europa/~~Nh # auto-added compound component
-Staat/~~Mh # auto-added compound component
+Staat/~~Mhi # auto-added compound component
 Mitte/~~Fh # auto-added compound component
 Haupt/~~Nh # auto-added compound component
 Stadt/~~Fh # auto-added compound component
@@ -206670,7 +206670,7 @@ käsen/~~V
 küren/~~V
 laben/~~N
 laden/~~V
-leben/~~Nh
+leben/~~Nhi
 legen/~~N
 lesen/~~N
 liken/~~V
@@ -206874,7 +206874,7 @@ leasen/~~V
 lecken/~~N
 lehnen/~~V
 lehren/~~V
-leiden/~~N
+leiden/~~Ni
 leihen/~~N
 leimen/~~V
 lenken/~~N
@@ -211900,15 +211900,15 @@ verdarb/~~N
 verdeck/~~N
 verfall/~~N
 verkauf/~~N
-verkehr/~~N
+verkehr/~~Ni
 verkehrsknotenpunkt/~~Mh
-verlauf/~~Mh
+verlauf/~~Mhi
 verleih/~~N
 vermerk/~~N
 verputz/~~N
 verrann/~~N
 verstoß/~~N
-vertrag/~~N
+vertrag/~~Ni
 verzehr/~~N
 veröden/~~N
 verölen/~~V
@@ -212199,7 +212199,7 @@ vergiften/~~N
 vergolden/~~N
 vergossen/~~J
 verhageln/~~N
-verhalten/~~Nh
+verhalten/~~Nhi
 verheeren/~~V
 verhohlen/~~J
 verhärten/~~N
@@ -213495,7 +213495,7 @@ wildschweinfleisch/~~N
 wildschweingulasch/~~N
 windschlüpfrigkeit/~~F
 windschutzanbauten/~~V
-wirtschaftlichkeit/~~F
+wirtschaftlichkeit/~~Fi
 wohlstandseinbußen/~~V
 wohlstandsillusion/~~F
 wohlstandswachstum/~~N
@@ -215183,7 +215183,7 @@ kippe/~~N
 klage/~~N
 klebe/~~N
 kohle/~~Fh
-lande/~~N
+lande/~~Ni
 liege/~~N
 melde/~~N
 messe/~~N
@@ -215363,7 +215363,7 @@ spritze/~~N
 strecke/~~N
 strippe/~~N
 wünsche/~~N
-zufahrt/~~N
+zufahrt/~~Ni
 zunahme/~~N
 einlege/~~N
 gedanke/~~N
@@ -220065,7 +220065,7 @@ haelt/~~N
 rotes/~~N
 black/~~N
 award/~~N
-peter/~~N
+peter/~~Ni
 south/~~N
 night/~~N
 finta/~~N
@@ -220722,7 +220722,7 @@ britische/~~N
 begegnete/~~N
 verließen/~~V
 russische/~~N
-friedrich/~~N
+friedrich/~~Ni
 belgische/~~N
 elections/~~N
 campaigns/~~N
