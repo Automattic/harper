@@ -14019,7 +14019,7 @@ weich/~~NJOQRSTUWq #adjective and noun
 adel/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 anruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 ball/~~Nh #frequency: 9 (nominative)
-bar/~Jq #adjective root, frequency: 9
+bar/~~JOQRSTUWqh #adjective root, frequency: 9
 berg/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 beruf/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 bleich/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -16436,8 +16436,8 @@ eineinhalbfach/~Nh #frequency: 6
 einfaktoriell/~Nh #frequency: 6
 einflüster/~Nh #frequency: 6
 einfuhrzollfrei/~Nh #frequency: 6
-einfältig/~Jq #adjective root, frequency: 6
-einfühlsam/~Jq #adjective root, frequency: 6
+einfältig/~~JOQRSTUWqh #adjective root, frequency: 6
+einfühlsam/~~JOQRSTUWqh #adjective root, frequency: 6
 einfüll/~Nh #frequency: 6
 eingangsnah/~Nh #frequency: 6
 eingehend/~Nh #frequency: 6
@@ -18230,7 +18230,7 @@ klotz/~Nh #frequency: 6
 klotzig/~Jq #adjective root, frequency: 6
 klug/~~NJOQRSTUWq #adjective and noun
 klumpenfrei/~Nh #frequency: 6
-kläglich/~Jq #adjective root, frequency: 6
+kläglich/~~JOQRSTUWqh #adjective root, frequency: 6
 klüngel/~Nh #frequency: 6
 knackevoll/~Nh #frequency: 6
 knackscharf/~Nh #frequency: 6
@@ -21911,7 +21911,7 @@ bocks/~~Nh
 bockt/~~NXh
 bocktet/~~Nh
 bodega/~~Nbh
-boden/~~V # auto-added
+boden/~~MhV # noun and verb
 bodens/~~Nh
 bodetal/~~Nh
 bog/~~Nh
@@ -106419,7 +106419,7 @@ studiere/~~Nh
 studieren/~~Vcej #  auto-added | study - from Mediziner studiert
 studierst/~~Nh
 studiert/~~NXh
-studium/~~Za #  auto-added
+studium/~~Zh #  auto-added
 studiums/~~Nh
 stufende/~~Nh
 stufendem/~~Nh
@@ -112949,7 +112949,7 @@ vermöbelt/~~Nh
 vermöble/~~Nh
 vermöchte/~~Nh
 vermöge/~~Nh
-vermögen/~~V # auto-added
+vermögen/~~NhV # noun and verb
 vermögend/~~Nh
 vermögens/~~Nh
 vermörtle/~~Nh
@@ -121874,7 +121874,7 @@ flavisch/~~JOQRSTUWq #adjective (auto-converted)
 flechsig/~~JOQRSTUWq #adjective (auto-converted)
 flechtbar/~~JOQRSTUWq #adjective (auto-converted)
 fleckenlos/~~JOQRSTUWq #adjective (auto-converted)
-fleischig/~~JOQRSTUWq #adjective (auto-converted)
+fleischig/~~JOQRSTUWqh #adjective (auto-converted)
 fleischlos/~~JOQRSTUWq #adjective (auto-converted)
 fließfähig/~~JOQRSTUWq #adjective (auto-converted)
 flinkfüßig/~~JOQRSTUWq #adjective (auto-converted)
@@ -215375,7 +215375,7 @@ zufahrt/~~Ni
 zunahme/~~N
 einlege/~~N
 gedanke/~~N
-pflanze/~~N
+pflanze/~~Nh
 schuppe/~~N
 schwebe/~~N
 schwere/~~N
