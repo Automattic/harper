@@ -1045,6 +1045,13 @@
 					"is_abstract": true
 				}
 			}
+		},
+		"4": {
+			"#": "abbreviation property",
+			"//": "mnemonic: 4 looks like A",
+			"metadata": {
+				"abbreviation": true
+			}
 		}
 	}
 }

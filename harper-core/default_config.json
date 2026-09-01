@@ -406,6 +406,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Codebase",
+								"state": true,
+								"label": "Codebase"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Codebases",
+								"state": true,
+								"label": "Codebases"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Deadlift",
 								"state": true,
 								"label": "Deadlift"
@@ -707,6 +721,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Tenfold",
+								"state": true,
+								"label": "Tenfold"
+							}
+						},
+						{
+							"Bool": {
 								"name": "There",
 								"state": true,
 								"label": "There"
@@ -832,6 +853,13 @@
 								"name": "ChampAtTheBit",
 								"state": true,
 								"label": "Champ At The Bit"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ClaimToFame",
+								"state": true,
+								"label": "Claim for Fame"
 							}
 						},
 						{
@@ -1354,6 +1382,13 @@
 						},
 						{
 							"Bool": {
+								"name": "VeryLess",
+								"state": true,
+								"label": "Very Less"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WholeEntire",
 								"state": true,
 								"label": "Whole Entire"
@@ -1626,13 +1661,6 @@
 						},
 						{
 							"Bool": {
-								"name": "NoOxfordComma",
-								"state": false,
-								"label": "No Oxford Comma"
-							}
-						},
-						{
-							"Bool": {
 								"name": "OffTheCuff",
 								"state": true,
 								"label": "Off The Cuff"
@@ -1646,10 +1674,10 @@
 							}
 						},
 						{
-							"Bool": {
+							"OneOfMany": {
+								"names": ["OxfordComma", "NoOxfordComma"],
 								"name": "OxfordComma",
-								"state": true,
-								"label": "Oxford Comma"
+								"labels": ["Oxford Comma", "No Oxford Comma"]
 							}
 						},
 						{
@@ -2422,6 +2450,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BackhandedCompliment",
+								"state": true,
+								"label": "Backhanded Compliment"
+							}
+						},
+						{
+							"Bool": {
 								"name": "BeenThere",
 								"state": true,
 								"label": "Been There"
@@ -2604,6 +2639,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lookalike",
+								"state": true,
+								"label": "Lookalike"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LooksLikes",
 								"state": true,
 								"label": "Looks Likes"
@@ -2723,13 +2765,6 @@
 						},
 						{
 							"Bool": {
-								"name": "SneakedSnuck",
-								"state": true,
-								"label": "Sneaked Snuck"
-							}
-						},
-						{
-							"Bool": {
 								"name": "SomeOfThe",
 								"state": true,
 								"label": "Some Of The"
@@ -2761,6 +2796,20 @@
 								"name": "StrikeChord",
 								"state": true,
 								"label": "Strike Chord"
+							}
+						},
+						{
+							"Bool": {
+								"name": "StrikeOfGenius",
+								"state": true,
+								"label": "Strike Of Genius"
+							}
+						},
+						{
+							"Bool": {
+								"name": "StrikeOfLuck",
+								"state": true,
+								"label": "Strike Of Luck"
 							}
 						},
 						{
@@ -2925,6 +2974,13 @@
 								"name": "DiscourseMarkers",
 								"state": true,
 								"label": "Discourse Markers"
+							}
+						},
+						{
+							"Bool": {
+								"name": "EverPronounRelPronoun",
+								"state": true,
+								"label": "Ever Pronoun + Relative Pronoun"
 							}
 						},
 						{
@@ -3352,6 +3408,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CuriousAbout",
+								"state": true,
+								"label": "Curious About"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DoIAdjective",
 								"state": true,
 								"label": "Do I Adjective"
@@ -3397,6 +3460,13 @@
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GetPassGoPass",
+								"state": true,
+								"label": "Get Pass, Go Pass"
 							}
 						},
 						{
@@ -3898,13 +3968,6 @@
 						},
 						{
 							"Bool": {
-								"name": "VeryLess",
-								"state": true,
-								"label": "Very Less"
-							}
-						},
-						{
-							"Bool": {
 								"name": "VeryMuchSo",
 								"state": true,
 								"label": "Very Much So"
@@ -3937,6 +4000,13 @@
 								"state": true,
 								"label": "Would Never Have"
 							}
+						},
+						{
+							"Bool": {
+								"name": "WrongNegative",
+								"state": true,
+								"label": "Wrong Negative"
+							}
 						}
 					]
 				}
@@ -3964,6 +4034,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Ajar",
+								"state": true,
+								"label": "Ajar"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Akimbo",
+								"state": true,
+								"label": "Akimbo"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ALittleOfPractice",
 								"state": true,
 								"label": "A Little of Practice"
@@ -3981,6 +4065,13 @@
 								"name": "AllowTo",
 								"state": true,
 								"label": "Allow To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AllWellAndGood",
+								"state": true,
+								"label": "All Well and Good"
 							}
 						},
 						{
@@ -4125,6 +4216,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Audible",
+								"state": true,
+								"label": "Audible"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AvoidCurses",
 								"state": true,
 								"label": "Avoid Curses"
@@ -4142,6 +4240,13 @@
 								"name": "AWaysToGo",
 								"state": true,
 								"label": "A Ways To Go"
+							}
+						},
+						{
+							"Bool": {
+								"name": "AWholeOther",
+								"state": true,
+								"label": "A Whole Other"
 							}
 						},
 						{
@@ -4226,6 +4331,13 @@
 								"name": "BesideThePoint",
 								"state": true,
 								"label": "Beside The Point"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BetterOffServed",
+								"state": true,
+								"label": "Better Off Served"
 							}
 						},
 						{
@@ -4335,6 +4447,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CeaseTo",
+								"state": true,
+								"label": "Cease to"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ChangeTack",
 								"state": true,
 								"label": "Change Tack"
@@ -4345,6 +4464,13 @@
 								"name": "ChockFull",
 								"state": true,
 								"label": "Chock Full"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Combinate",
+								"state": true,
+								"label": "Combinate"
 							}
 						},
 						{
@@ -4408,6 +4534,20 @@
 								"name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DigUnderTheHood",
+								"state": true,
+								"label": "Dig Under The Hood"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DissembleDisassemble",
+								"state": true,
+								"label": "Dissemble / Disassemble"
 							}
 						},
 						{
@@ -4545,6 +4685,13 @@
 						},
 						{
 							"Bool": {
+								"name": "FinishingTouches",
+								"state": true,
+								"label": "Finishing Touches"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FirstAidKit",
 								"state": true,
 								"label": "First Aid Kit"
@@ -4615,9 +4762,23 @@
 						},
 						{
 							"Bool": {
+								"name": "GoMissing",
+								"state": true,
+								"label": "Go Missing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GoodAt",
 								"state": true,
 								"label": "Good At"
+							}
+						},
+						{
+							"Bool": {
+								"name": "GoToSleep",
+								"state": true,
+								"label": "Go to Sleep"
 							}
 						},
 						{
@@ -4793,6 +4954,20 @@
 								"name": "InterestedIn",
 								"state": true,
 								"label": "Interested In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheGrandSchemeOfThings",
+								"state": true,
+								"label": "In the Grand Scheme of Things"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InTheSameVein",
+								"state": true,
+								"label": "In the Same Vein"
 							}
 						},
 						{
@@ -5007,6 +5182,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NailInCoffin",
+								"state": true,
+								"label": "Nail in Coffin"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NeitherHereNorThere",
 								"state": true,
 								"label": "Neither Here Nor There"
@@ -5073,6 +5255,13 @@
 								"name": "OfCourse",
 								"state": true,
 								"label": "Of Course"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OffLimits",
+								"state": true,
+								"label": "Off Limits"
 							}
 						},
 						{
@@ -5199,6 +5388,13 @@
 								"name": "PrayingMantis",
 								"state": true,
 								"label": "Praying Mantis"
+							}
+						},
+						{
+							"OneOfMany": {
+								"names": ["PreferSneaked", "PreferSnuck"],
+								"name": "PreferSneaked",
+								"labels": ["Prefer ‘Sneaked’", "Prefer ‘Snuck’"]
 							}
 						},
 						{
@@ -5378,6 +5574,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Surreality",
+								"state": true,
+								"label": "Surreality"
+							}
+						},
+						{
+							"Bool": {
+								"name": "TakeControlOf",
+								"state": true,
+								"label": "Take Control of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TakeItPersonally",
 								"state": true,
 								"label": "Take It Personally"
@@ -5455,9 +5665,23 @@
 						},
 						{
 							"Bool": {
+								"name": "ToteTout",
+								"state": true,
+								"label": "Tote/Tout"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ToTheMannerBorn",
 								"state": true,
 								"label": "To The Manner Born"
+							}
+						},
+						{
+							"Bool": {
+								"name": "UnderneathOf",
+								"state": true,
+								"label": "Underneath of"
 							}
 						},
 						{
@@ -5535,6 +5759,13 @@
 								"name": "WishCould",
 								"state": true,
 								"label": "Wish Could"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WithOpenArms",
+								"state": true,
+								"label": "With Open Arms"
 							}
 						},
 						{
@@ -5908,24 +6139,10 @@
 							}
 						},
 						{
-							"Bool": {
+							"OneOfMany": {
+								"names": ["ViciousCircle", "ViciousCircleOrCycle", "ViciousCycle"],
 								"name": "ViciousCircle",
-								"state": true,
-								"label": "Vicious Circle"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ViciousCircleOrCycle",
-								"state": false,
-								"label": "Vicious Circle Or Cycle"
-							}
-						},
-						{
-							"Bool": {
-								"name": "ViciousCycle",
-								"state": false,
-								"label": "Vicious Cycle"
+								"labels": ["Vicious Circle", "Vicious Circle Or Cycle", "Vicious Cycle"]
 							}
 						},
 						{
