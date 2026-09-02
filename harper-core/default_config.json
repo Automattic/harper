@@ -1312,6 +1312,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Provocate",
+								"state": true,
+								"label": "Provocate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantSuperlatives",
 								"state": true,
 								"label": "Redundant Superlatives"

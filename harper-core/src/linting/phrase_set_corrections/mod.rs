@@ -582,6 +582,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+        "Provocate" => (
+            &[
+                ("provocate", "provoke"),
+                ("provocated", "provoked"),
+                ("provocates", "provokes"),
+                ("provocating", "provoking"),
+            ],
+            "Did you mean `provoke`?",
+            "Corrects the misspelling `provocate` to `provoke`.",
+            LintKind::WordChoice
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
