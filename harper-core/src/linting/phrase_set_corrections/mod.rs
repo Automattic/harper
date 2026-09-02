@@ -582,6 +582,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+        "Provocate" => (
+            &[
+                ("provocate", "provoke"),
+                ("provocated", "provoked"),
+                ("provocates", "provokes"),
+                ("provocating", "provoking"),
+            ],
+            "Did you mean `provoke`?",
+            "Corrects the misspelling `provocate` to `provoke`.",
+            LintKind::WordChoice
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -665,6 +676,18 @@ pub fn lint_group() -> LintGroup {
             "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
+        ),
+        "TakeControlOf" => (
+            &[
+                ("take control over", "take control of"),
+                ("taken control over", "taken control of"),
+                ("takes control over", "takes control of"),
+                ("taking control over", "taking control of"),
+                ("took control over", "took control of"),
+            ],
+            "Use `take control of` instead of `take control over`.",
+            "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
         ),
         "UseToUsedTo" => (
             &[

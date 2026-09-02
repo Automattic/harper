@@ -1700,6 +1700,44 @@ fn fix_peaks() {
 // Piggyback
 // -none-
 
+// Provocate
+
+#[test]
+fn fix_provocate() {
+    assert_suggestion_result(
+        "Hardcoded chainId can provocate a possible replay attacks between chains in the event of a future chain split.",
+        test_linter(),
+        "Hardcoded chainId can provoke a possible replay attacks between chains in the event of a future chain split.",
+    );
+}
+
+#[test]
+fn fix_provocated() {
+    assert_suggestion_result(
+        "tempering with inconsistent content lengths provocated the error which lead me to encoding?",
+        test_linter(),
+        "tempering with inconsistent content lengths provoked the error which lead me to encoding?",
+    );
+}
+
+#[test]
+fn fix_provocates() {
+    assert_suggestion_result(
+        "it wont mark the check on the solving square, it provocates a timeout and return 500 Server Error",
+        test_linter(),
+        "it wont mark the check on the solving square, it provokes a timeout and return 500 Server Error",
+    );
+}
+
+#[test]
+fn fix_provocating() {
+    assert_suggestion_result(
+        "could return incorrect balances provocating an incorrect calculation of rsETH price",
+        test_linter(),
+        "could return incorrect balances provoking an incorrect calculation of rsETH price",
+    );
+}
+
 // RedundantSuperlatives
 
 #[test]
@@ -2154,6 +2192,53 @@ fn i_wish_it_was() {
         "but I wish it was more friendly to existing ecosystems",
         test_linter(),
         "but I wish it were more friendly to existing ecosystems",
+    );
+}
+
+// TakeControlOf
+
+#[test]
+fn take() {
+    assert_suggestion_result(
+        "allowed .editorconfig to set editor ruler and take control over soft-wrap",
+        test_linter(),
+        "allowed .editorconfig to set editor ruler and take control of soft-wrap",
+    );
+}
+
+#[test]
+fn taken() {
+    assert_suggestion_result(
+        "I've taken control over the inputValue to be able to render the wanted menu items",
+        test_linter(),
+        "I've taken control of the inputValue to be able to render the wanted menu items",
+    );
+}
+
+#[test]
+fn takes() {
+    assert_suggestion_result(
+        "AI takes control over players hand",
+        test_linter(),
+        "AI takes control of players hand",
+    );
+}
+
+#[test]
+fn taking() {
+    assert_suggestion_result(
+        "this inconsistent behavior is very annoying for taking control over your dependency graph",
+        test_linter(),
+        "this inconsistent behavior is very annoying for taking control of your dependency graph",
+    );
+}
+
+#[test]
+fn took() {
+    assert_suggestion_result(
+        "Noted drone was NOT stoping and manually took control over it to stop it.",
+        test_linter(),
+        "Noted drone was NOT stoping and manually took control of it to stop it.",
     );
 }
 
