@@ -12,11 +12,13 @@ pub struct ToWary {
 
 impl Default for ToWary {
     fn default() -> Self {
-        // "weary eye(s)" is nearly always a mistake for the fixed idiom
-        // "wary eye" (a cautious, watchful eye).
+        // "weary eye" (singular) is nearly always a mistake for the fixed idiom
+        // "wary eye" (a cautious, watchful eye). The plural "weary eyes" is
+        // deliberately excluded: it is a common, correct collocation for "tired
+        // eyes", so flagging it would produce frequent false positives.
         let pattern = SequenceExpr::word_set(&["weary"])
             .then_whitespace()
-            .then_word_set(&["eye", "eyes"]);
+            .then_word_set(&["eye"]);
 
         Self {
             expr: Box::new(pattern),

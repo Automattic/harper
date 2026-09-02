@@ -22,11 +22,14 @@ mod tests {
     }
 
     #[test]
-    fn corrects_weary_eyes_to_wary() {
+    fn does_not_touch_correct_weary_eyes() {
+        // "weary eyes" (plural) is a common, correct collocation for "tired
+        // eyes" and must not be flagged. Real-world testing showed this is the
+        // dominant usage, so the linter only targets the singular "weary eye".
         assert_suggestion_result(
-            "They watched with weary eyes for any danger.",
+            "She rubbed her weary eyes after the long shift.",
             WaryWeary::default(),
-            "They watched with wary eyes for any danger.",
+            "She rubbed her weary eyes after the long shift.",
         );
     }
 
