@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button, CloseIcon, IconButton, Input, Panel, SearchField, SearchIcon } from 'components';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 
@@ -162,32 +163,33 @@ async function submitDictionaryWord() {
           {/if}
 
           <div class="add-row">
-            <input
+            <Input
+              unstyled
               class="text-field"
               type="text"
               placeholder="Add a word..."
               disabled={isDictionaryLoading || isDictionarySaving}
               bind:value={newDictionaryWord}
-              on:keydown={(event) => event.key === "Enter" && submitDictionaryWord()}
+              on:keydown={(event) => event.detail.key === "Enter" && submitDictionaryWord()}
             />
-            <button
+            <Button
+              unstyled
               class="button primary"
               type="button"
               disabled={isDictionaryLoading || isDictionarySaving}
               on:click={submitDictionaryWord}
-            >Add</button>
+            >Add</Button>
           </div>
 
-          <div class="list-card">
-            <div class="search-strip">
-              <span class="settings-icon icon-search" aria-hidden="true"></span>
-              <input
-                type="text"
-                placeholder={`Search ${dictionary.length} words`}
-                bind:value={dictionarySearch}
-              />
-              <span>{filteredWords.length} of {dictionary.length}</span>
-            </div>
+          <Panel>
+            <SearchField
+              class="search-strip"
+              placeholder={`Search ${dictionary.length} words`}
+              bind:value={dictionarySearch}
+            >
+              <SearchIcon slot="leading" className="control-icon" />
+              <span slot="trailing">{filteredWords.length} of {dictionary.length}</span>
+            </SearchField>
 
             <div class="dictionary-list">
               {#if filteredWords.length === 0}
@@ -196,20 +198,19 @@ async function submitDictionaryWord() {
                 {#each filteredWords as word}
                   <div class="list-row">
                     <code>{word}</code>
-                    <button
-                      class="icon-button danger"
-                      type="button"
+                    <IconButton
+                      danger
                       disabled={isDictionaryLoading || isDictionarySaving}
                       aria-label={`Remove ${word}`}
                       on:click={() => removeDictionaryWord(word)}
                     >
-                      <span class="settings-icon icon-x" aria-hidden="true"></span>
-                    </button>
+                      <CloseIcon className="control-icon" />
+                    </IconButton>
                   </div>
                 {/each}
               {/if}
             </div>
-          </div>
+          </Panel>
 
           <div class="actions-row">
             <input
@@ -219,27 +220,30 @@ async function submitDictionaryWord() {
               hidden
               on:change={importDictionary}
             />
-            <button
+            <Button
+              unstyled
               class="button"
               type="button"
               disabled={isDictionaryLoading || isDictionarySaving}
               on:click={() => importInput.click()}
-            >Import from file...</button>
-            <button
+            >Import from file...</Button>
+            <Button
+              unstyled
               class="button"
               type="button"
               disabled={isDictionaryLoading || isDictionarySaving || dictionary.length === 0}
               on:click={exportDictionary}
-            >Export dictionary</button>
+            >Export dictionary</Button>
             <span class="spacer"></span>
-            <button
+            <Button
+              unstyled
               class="button danger"
               type="button"
               disabled={isDictionaryLoading || isDictionarySaving}
               on:click={clearDictionary}
             >
               Clear all
-            </button>
+            </Button>
           </div>
         </div>
       </section>
