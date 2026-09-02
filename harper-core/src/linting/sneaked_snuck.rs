@@ -1,4 +1,3 @@
-use super::merge_linters::merge_linters;
 use crate::{
     CharStringExt, Lint, Token,
     expr::Expr,
@@ -95,17 +94,10 @@ impl_expr_linter!(
     "Prefer `sneaked` over `snuck`."
 );
 
-merge_linters! {
-    SneakedSnuck =>
-        PreferSneaked,
-        PreferSnuck
-        => "Enforces `sneaked` v `snuck` preferences."
-}
-
 #[cfg(test)]
 mod tests {
     use super::{PreferSneaked, PreferSnuck};
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     // Prefer "snuck"
 
@@ -196,6 +188,20 @@ mod tests {
         assert_no_lints(
             "Something related to recent experiments of WASM support sneaked into the main branch.",
             PreferSneaked::default(),
+        );
+    }
+
+    // OneOfMany / Mutual exclusivity
+
+    #[test]
+    fn by_default_one_must_be_enabled_and_one_must_be_disabled() {
+        use crate::Dialect;
+        use crate::spell::FstDictionary;
+
+        assert_lint_count(
+            "I say 'snuck' but you say 'sneaked'.",
+            crate::linting::LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            1,
         );
     }
 }

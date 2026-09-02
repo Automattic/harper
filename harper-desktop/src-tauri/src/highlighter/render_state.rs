@@ -52,8 +52,8 @@ enum Glyph {
 /// into that plumbing. This keeps future highlight rectangles, styling, and animation state out of
 /// the platform/rendering infrastructure.
 pub struct RenderState {
-    /// Lints with their screen-space bounds, used to draw all highlights and resolve hit tests.
-    rects: Vec<ActionableLint>,
+    /// Last successful accessibility read, retained when a later read fails.
+    last_lints: Option<Vec<ActionableLint>>,
 
     /// Index of the lint whose suggestion popup is currently visible.
     ///
@@ -75,7 +75,7 @@ pub struct RenderState {
 }
 
 impl RenderState {
-    /// Creates render state through `set_rects` so initial lint data gets the same stale-popup guard
+    /// Creates render state through `set_lints` so initial lint data gets the same stale-popup guard
     /// used by later accessibility refreshes.
     pub fn new(
         rects: Vec<ActionableLint>,
@@ -84,28 +84,31 @@ impl RenderState {
         disable_rule: DisableRule,
     ) -> Self {
         let mut state = Self {
-            rects: Vec::new(),
+            last_lints: None,
             highlighted_lint: None,
             markdown_cache: CommonMarkCache::default(),
             ignore_lint,
             add_to_dictionary,
             disable_rule,
         };
-        state.set_rects(rects);
+        state.set_lints(rects);
         state
     }
 
-    /// Replaces the accessibility-derived lint geometry while preventing a popup from pointing at a
-    /// lint index that no longer exists after the latest read.
-    pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {
-        self.rects = rects;
+    /// Saves successful accessibility reads while retaining the previous lints after a failed read.
+    pub fn set_lints(&mut self, lints: Vec<ActionableLint>) {
+        self.last_lints = Some(lints);
 
         if self
             .highlighted_lint
-            .is_some_and(|index| index >= self.rects.len())
+            .is_some_and(|index| index >= self.lints().len())
         {
             self.highlighted_lint = None;
         }
+    }
+
+    fn lints(&self) -> &[ActionableLint] {
+        self.last_lints.as_deref().unwrap_or_default()
     }
 
     /// Updates which lint owns the suggestion popup without exposing render-state internals.
@@ -114,7 +117,7 @@ impl RenderState {
     /// selection. Filtering invalid indexes here keeps stale cursor state from selecting a lint that
     /// disappeared after the latest accessibility read.
     pub fn set_highlighted_lint(&mut self, highlighted_lint: Option<usize>) {
-        self.highlighted_lint = highlighted_lint.filter(|index| *index < self.rects.len());
+        self.highlighted_lint = highlighted_lint.filter(|index| *index < self.lints().len());
     }
 
     /// Centralizes the close behavior so the popup close button only has to clear the selected lint.
@@ -122,18 +125,17 @@ impl RenderState {
         self.highlighted_lint = None;
     }
 
-    /// Finds the interactive highlighter region under a screen-space cursor position.
-    ///
-    /// Cursor polling lives outside the renderer, but hit-testing belongs next to the rectangles and
-    /// popup geometry being rendered so both paths use the same layout contract.
+    /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
         if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
             return HitTarget::Popup;
         }
 
-        self.rects
+        self.lints()
             .iter()
-            .position(|positioned_lint| rect_bounds(&positioned_lint.rect).contains(pos))
+            .position(|positioned_lint| {
+                rect_bounds(&positioned_lint.rect.with_friendly_padding()).contains(pos)
+            })
             .map_or(HitTarget::None, HitTarget::Lint)
     }
 
@@ -141,19 +143,19 @@ impl RenderState {
     /// rendered bounds, which keeps hit-testing available before the next render pass completes.
     pub fn popup_rect(&self) -> Option<egui::Rect> {
         self.highlighted_lint
-            .and_then(|index| self.rects.get(index))
+            .and_then(|index| self.lints().get(index))
             .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
     }
 
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     pub fn render(&mut self, ui: &mut egui::Ui) {
-        for positioned_lint in &self.rects {
+        for positioned_lint in self.lints() {
             draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
         }
 
         if let Some(index) = self.highlighted_lint
-            && let Some(positioned_lint) = self.rects.get(index)
+            && let Some(positioned_lint) = self.lints().get(index)
         {
             let rect = positioned_lint.rect;
             let lint = positioned_lint.lint.clone();
@@ -162,7 +164,11 @@ impl RenderState {
             match render_lint_card(ui, &rect, &lint, &source_text, &mut self.markdown_cache) {
                 Some(LintCardAction::Close) => self.close_popup(),
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
-                    if let Some(actionable_lint) = self.rects.get_mut(index) {
+                    if let Some(actionable_lint) = self
+                        .last_lints
+                        .as_mut()
+                        .and_then(|lints| lints.get_mut(index))
+                    {
                         actionable_lint.apply_suggestion(suggestion);
                     }
 
@@ -170,7 +176,7 @@ impl RenderState {
                 }
                 Some(LintCardAction::IgnoreLint) => {
                     if let Some((lint, source_text)) =
-                        self.rects.get(index).map(|actionable_lint| {
+                        self.lints().get(index).map(|actionable_lint| {
                             (
                                 actionable_lint.lint.clone(),
                                 actionable_lint.source_text.clone(),
@@ -185,7 +191,7 @@ impl RenderState {
                 }
                 Some(LintCardAction::AddToDictionary) => {
                     if let Some((lint, source_text)) =
-                        self.rects.get(index).map(|actionable_lint| {
+                        self.lints().get(index).map(|actionable_lint| {
                             (
                                 actionable_lint.lint.clone(),
                                 actionable_lint.source_text.clone(),
@@ -201,7 +207,7 @@ impl RenderState {
                 }
                 Some(LintCardAction::DisableRule) => {
                     if let Some(rule_name) = self
-                        .rects
+                        .lints()
                         .get(index)
                         .map(|actionable_lint| actionable_lint.rule_name.clone())
                     {
