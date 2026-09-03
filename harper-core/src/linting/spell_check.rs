@@ -532,6 +532,14 @@ mod tests {
     }
 
     #[test]
+    fn dont_flag_themself() {
+        assert_no_lints(
+            "Avery caught themself staring at the stranger.",
+            test_linter(),
+        );
+    }
+
+    #[test]
     fn no_improper_suggestion_for_macos() {
         assert_good_and_bad_suggestions("MacOS", test_linter(), &["macOS"], &["MacOS"]);
     }
