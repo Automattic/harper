@@ -1853,10 +1853,9 @@ pub mod tests {
 
         // nonstandard pronouns
         #[test]
-        #[ignore = "not in dictionary"]
         fn nonstandard_pronouns() {
             assert!(md("themself").pronoun.is_some());
-            assert!(md("y'all'").pronoun.is_some());
+            assert!(md("y'all").pronoun.is_some());
         }
     }
 
