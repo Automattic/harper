@@ -5161,6 +5161,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lots",
+								"state": true,
+								"label": "Lots"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LowHangingFruit",
 								"state": true,
 								"label": "Low Hanging Fruit"

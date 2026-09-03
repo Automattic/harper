@@ -1,0 +1,8 @@
+expr main (a lots)
+
+let message "Are you confusing `lots` and `let's`? There is no apostrophe in `lots`."
+let description "Corrects `a lots` to `a lot's`."
+let kind "Punctuation"
+let becomes "a lot's"
+
+test "a lots changed overtime, add latest depends support" "a lot's changed overtime, add latest depends support"
