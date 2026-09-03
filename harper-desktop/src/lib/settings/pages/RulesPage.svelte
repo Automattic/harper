@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button, CloseIcon, IconButton, SearchField, SearchIcon, Select } from 'components';
 import type { LintConfig, StructuredLintConfig, StructuredLintSetting } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
@@ -334,21 +335,20 @@ function toggleGroup(groupId: string) {
         {/if}
 
         <div class="sticky-tools">
-          <div class="rule-search">
-            <span class="settings-icon icon-search" aria-hidden="true"></span>
-            <input type="text" placeholder="Search rules..." bind:value={rulesSearch} />
+          <SearchField class="rule-search" placeholder="Search rules..." bind:value={rulesSearch}>
+            <SearchIcon slot="leading" className="control-icon" />
             {#if rulesSearch}
-              <button class="icon-button" type="button" aria-label="Clear search" on:click={() => (rulesSearch = "")}>
-                <span class="settings-icon icon-x" aria-hidden="true"></span>
-              </button>
+              <IconButton slot="trailing" aria-label="Clear search" on:click={() => (rulesSearch = "")}>
+                <CloseIcon className="control-icon" />
+              </IconButton>
             {/if}
-          </div>
-          <button class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={resetRules}>
+          </SearchField>
+          <Button unstyled class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={resetRules}>
             Reset to defaults
-          </button>
-          <button class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={disableRules}>
+          </Button>
+          <Button unstyled class="button" type="button" disabled={isLintConfigLoading || isLintConfigSaving} on:click={disableRules}>
             Disable all
-          </button>
+          </Button>
         </div>
 
         {#if rulesQuery}
@@ -363,7 +363,7 @@ function toggleGroup(groupId: string) {
             {@const expanded = rulesQuery || expandedGroups[group.id]}
             {@const groupState = getGroupState(group)}
             <article class="rule-group">
-              <button class="group-head" type="button" on:click={() => toggleGroup(group.id)}>
+              <Button unstyled class="group-head" type="button" on:click={() => toggleGroup(group.id)}>
                 <svg class:expanded class="chevron" viewBox="0 0 16 16" aria-hidden="true">
                   <path
                     fill-rule="evenodd"
@@ -379,18 +379,19 @@ function toggleGroup(groupId: string) {
                     enabled
                   </small>
                 </span>
-                <select
+                <Select
+                  unstyled
                   class="select compact"
                   disabled={isLintConfigLoading || isLintConfigSaving}
                   value={groupState === "mixed" ? "default" : groupState}
-                  on:click|stopPropagation={() => {}}
-                  on:change={(event) => setGroupOverride(group, event.currentTarget.value as RuleOverride)}
+                  on:click={(event) => event.detail.stopPropagation()}
+                  on:change={(event) => setGroupOverride(group, (event.detail.currentTarget as HTMLSelectElement).value as RuleOverride)}
                 >
                   <option value="default">{groupState === "mixed" ? "Mixed" : "Default"}</option>
                   <option value="on">Enable all</option>
                   <option value="off">Disable all</option>
-                </select>
-              </button>
+                </Select>
+              </Button>
 
               {#if expanded}
                 <div class="rules-list">
@@ -403,16 +404,17 @@ function toggleGroup(groupId: string) {
                         {/if}
                         <p>{rule.desc}</p>
                       </div>
-                      <select
+                      <Select
+                        unstyled
                         class="select compact"
                         disabled={isLintConfigLoading || isLintConfigSaving}
                         value={getRuleValue(rule.id)}
-                        on:change={(event) => setRuleOverride(rule.id, event.currentTarget.value as RuleOverride)}
+                        on:change={(event) => setRuleOverride(rule.id, (event.detail.currentTarget as HTMLSelectElement).value as RuleOverride)}
                       >
                         {#each defaultRuleOptions as option}
                           <option value={option.value}>{option.label}</option>
                         {/each}
-                      </select>
+                      </Select>
                     </div>
                   {/each}
                 </div>
