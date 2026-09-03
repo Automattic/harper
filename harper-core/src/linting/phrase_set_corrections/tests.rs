@@ -254,6 +254,44 @@ fn correct_servers_side() {
     );
 }
 
+// Combinate
+
+#[test]
+fn correct_combinate() {
+    assert_suggestion_result(
+        "I'm at chapter 11 and I can't craft and combinate abyss gear, what should I do to unlock both of them",
+        test_linter(),
+        "I'm at chapter 11 and I can't craft and combine abyss gear, what should I do to unlock both of them",
+    );
+}
+
+#[test]
+fn correct_combinated() {
+    assert_suggestion_result(
+        "NFS WORLD COMBINATED MAP (NEW!)",
+        test_linter(),
+        "NFS WORLD COMBINED MAP (NEW!)",
+    );
+}
+
+#[test]
+fn correct_combinates() {
+    assert_suggestion_result(
+        "is there a game that combinates ottd and rts?",
+        test_linter(),
+        "is there a game that combines ottd and rts?",
+    );
+}
+
+#[test]
+fn correct_combinating() {
+    assert_suggestion_result(
+        "This section discusses how the color combinating is accomplished",
+        test_linter(),
+        "This section discusses how the color combining is accomplished",
+    );
+}
+
 // CompulseToCompel
 
 #[test]
@@ -1662,6 +1700,44 @@ fn fix_peaks() {
 // Piggyback
 // -none-
 
+// Provocate
+
+#[test]
+fn fix_provocate() {
+    assert_suggestion_result(
+        "Hardcoded chainId can provocate a possible replay attacks between chains in the event of a future chain split.",
+        test_linter(),
+        "Hardcoded chainId can provoke a possible replay attacks between chains in the event of a future chain split.",
+    );
+}
+
+#[test]
+fn fix_provocated() {
+    assert_suggestion_result(
+        "tempering with inconsistent content lengths provocated the error which lead me to encoding?",
+        test_linter(),
+        "tempering with inconsistent content lengths provoked the error which lead me to encoding?",
+    );
+}
+
+#[test]
+fn fix_provocates() {
+    assert_suggestion_result(
+        "it wont mark the check on the solving square, it provocates a timeout and return 500 Server Error",
+        test_linter(),
+        "it wont mark the check on the solving square, it provokes a timeout and return 500 Server Error",
+    );
+}
+
+#[test]
+fn fix_provocating() {
+    assert_suggestion_result(
+        "could return incorrect balances provocating an incorrect calculation of rsETH price",
+        test_linter(),
+        "could return incorrect balances provoking an incorrect calculation of rsETH price",
+    );
+}
+
 // RedundantSuperlatives
 
 #[test]
@@ -2119,6 +2195,53 @@ fn i_wish_it_was() {
     );
 }
 
+// TakeControlOf
+
+#[test]
+fn take() {
+    assert_suggestion_result(
+        "allowed .editorconfig to set editor ruler and take control over soft-wrap",
+        test_linter(),
+        "allowed .editorconfig to set editor ruler and take control of soft-wrap",
+    );
+}
+
+#[test]
+fn taken() {
+    assert_suggestion_result(
+        "I've taken control over the inputValue to be able to render the wanted menu items",
+        test_linter(),
+        "I've taken control of the inputValue to be able to render the wanted menu items",
+    );
+}
+
+#[test]
+fn takes() {
+    assert_suggestion_result(
+        "AI takes control over players hand",
+        test_linter(),
+        "AI takes control of players hand",
+    );
+}
+
+#[test]
+fn taking() {
+    assert_suggestion_result(
+        "this inconsistent behavior is very annoying for taking control over your dependency graph",
+        test_linter(),
+        "this inconsistent behavior is very annoying for taking control of your dependency graph",
+    );
+}
+
+#[test]
+fn took() {
+    assert_suggestion_result(
+        "Noted drone was NOT stoping and manually took control over it to stop it.",
+        test_linter(),
+        "Noted drone was NOT stoping and manually took control of it to stop it.",
+    );
+}
+
 // UseToUsedTo
 
 #[test]
@@ -2357,6 +2480,72 @@ fn correct_awaited_for() {
             "I have long waited for the rise of the Dagoat agenda, and it is glorious.",
         ],
         &[],
+    );
+}
+
+// BackhandedCompliment
+
+#[test]
+fn correct_backhand_compliment() {
+    assert_suggestion_result(
+        "What's the Most insulting /backhand compliment you have ever received?",
+        test_linter(),
+        "What's the Most insulting /backhanded compliment you have ever received?",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_space() {
+    assert_suggestion_result(
+        "Thankfully, I'm a little young to receive that back hand compliment",
+        test_linter(),
+        "Thankfully, I'm a little young to receive that backhanded compliment",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliment_hyphen() {
+    assert_suggestion_result(
+        "They \"have it all\", but still need to back-hand compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+        test_linter(),
+        "They \"have it all\", but still need to backhanded compliment, condescend, \"politely\" hurl passive-aggressive compliments/insults",
+    );
+}
+
+#[test]
+fn correct_backhand_compliments() {
+    assert_suggestion_result(
+        "If backhand compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+        test_linter(),
+        "If backhanded compliments or flattery are frequent and come with ulterior motives, it's a red flag.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments() {
+    assert_suggestion_result(
+        "I am laughing so hard watching the \"commercial\" with her back hand compliments.",
+        test_linter(),
+        "I am laughing so hard watching the \"commercial\" with her backhanded compliments.",
+    );
+}
+
+#[test]
+fn correct_back_hand_compliments_caps() {
+    assert_suggestion_result(
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACK HAND COMPLIMENTS.",
+        test_linter(),
+        "JUST SAY YOU DON'T LIKE THEM STOP GIVING FAKE BACKHANDED COMPLIMENTS.",
+    );
+}
+
+// no praises, just tons of unnecessary back-hand compliments and lack of support
+#[test]
+fn correct_back_hand_compliments_hyphen() {
+    assert_suggestion_result(
+        "no praises, just tons of unnecessary back-hand compliments and lack of support",
+        test_linter(),
+        "no praises, just tons of unnecessary backhanded compliments and lack of support",
     );
 }
 
@@ -4019,25 +4208,5 @@ fn detect_making_them_worst_atomic() {
         "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
         test_linter(),
         "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
-    );
-}
-
-// -to to-
-#[test]
-fn corrects_to_to() {
-    assert_suggestion_result(
-        "I need to add that to my to to list first.",
-        test_linter(),
-        "I need to add that to my to do list first.",
-    );
-}
-
-// -to-to-
-#[test]
-fn corrects_to_to_with_hyphen() {
-    assert_suggestion_result(
-        "I need to add that to my to-to list first.",
-        test_linter(),
-        "I need to add that to my to-do list first.",
     );
 }

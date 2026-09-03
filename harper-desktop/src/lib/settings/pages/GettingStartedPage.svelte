@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button, CheckIcon } from 'components';
 import { onMount } from 'svelte';
 import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
@@ -274,7 +275,7 @@ function buildSetupSteps(
         {#if setupAllDone}
           <div class="success-banner">
             <div class="big-mark green">
-              <span class="settings-icon icon-check" aria-hidden="true"></span>
+              <CheckIcon className="control-icon" />
             </div>
             <div class="grow">
               <h2>You're all set</h2>
@@ -286,9 +287,9 @@ function buildSetupSteps(
                 <p>{onboardingError}</p>
               {/if}
             </div>
-            <button class="button" type="button" disabled={isCompletingOnboarding} on:click={completeOnboarding}>
+            <Button unstyled class="button" type="button" disabled={isCompletingOnboarding} on:click={completeOnboarding}>
               {isCompletingOnboarding ? "Continuing..." : "Continue"}
-            </button>
+            </Button>
           </div>
         {:else}
           {#if accessibilityStatus !== "Granted"}
@@ -326,7 +327,7 @@ function buildSetupSteps(
             <div class:done={step.done} class:locked={step.locked} class="step-row">
               <div class="step-dot">
                 {#if step.done}
-                  <span class="settings-icon icon-check" aria-hidden="true"></span>
+                  <CheckIcon className="control-icon" />
                 {:else}
                   {index + 1}
                 {/if}
@@ -399,20 +400,21 @@ function buildSetupSteps(
                       <strong>TextEdit detected</strong>
                       <p>A good starter app for trying Harper.</p>
                     </div>
-                    <button class="button primary" type="button" disabled={isEnablingTextEdit} on:click={enableTextEditForSetup}>
+                    <Button unstyled class="button primary" type="button" disabled={isEnablingTextEdit} on:click={enableTextEditForSetup}>
                       {isEnablingTextEdit ? "Enabling..." : "Enable"}
-                    </button>
+                    </Button>
                   </div>
                 {/if}
               </div>
-              <button
+              <Button
+                unstyled
                 class={`button ${step.actionVariant === "primary" ? "primary" : ""}`}
                 type="button"
                 disabled={step.locked || step.actionDisabled}
                 on:click={step.action}
               >
                 {step.actionLabel}
-              </button>
+              </Button>
             </div>
           {/each}
         </div>
