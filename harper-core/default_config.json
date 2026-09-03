@@ -200,6 +200,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "AsFarAsICanTell",
+								"state": true,
+								"label": "As Far As I Can Tell"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsFarAsIKnow",
 								"state": true,
 								"label": "As Far As I Know"
