@@ -198,6 +198,7 @@ use super::of_course::OfCourse;
 use super::off_limits::OffLimits;
 use super::oldest_in_the_book::OldestInTheBook;
 use super::on_floor::OnFloor;
+use super::on_the_fence::OnTheFence;
 use super::once_or_twice::OnceOrTwice;
 use super::one_and_the_same::OneAndTheSame;
 use super::one_of_the_singular::OneOfTheSingular;
@@ -804,6 +805,7 @@ impl LintGroup {
         insert_expr_rule!(OffLimits);
         insert_expr_rule!(OldestInTheBook);
         insert_expr_rule!(OnFloor);
+        insert_expr_rule!(OnTheFence);
         insert_expr_rule!(OnceOrTwice);
         insert_expr_rule!(OneAndTheSame);
         insert_expr_rule_with_dict!(OneOfTheSingular);

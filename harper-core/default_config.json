@@ -5357,6 +5357,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OnTheFence",
+								"state": true,
+								"label": "On The Fence"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OnTheSpurOfTheMoment",
 								"state": true,
 								"label": "On The Spur Of The Moment"
