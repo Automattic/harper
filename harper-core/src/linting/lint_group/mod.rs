@@ -55,6 +55,7 @@ use super::catch_22::Catch22;
 use super::cautionary_tale::CautionaryTale;
 use super::cease_to::CeaseTo;
 use super::change_tack::ChangeTack;
+use super::chicken_and_egg::ChickenAndEgg;
 use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
@@ -664,6 +665,7 @@ impl LintGroup {
         insert_expr_rule!(CautionaryTale);
         insert_expr_rule!(CeaseTo);
         insert_expr_rule!(ChangeTack);
+        insert_expr_rule!(ChickenAndEgg);
         insert_expr_rule!(ChockFull);
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);

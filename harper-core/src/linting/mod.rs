@@ -52,6 +52,7 @@ mod catch_22;
 mod cautionary_tale;
 mod cease_to;
 mod change_tack;
+mod chicken_and_egg;
 mod chock_full;
 mod claim_to_fame;
 mod close_tight_knit;
