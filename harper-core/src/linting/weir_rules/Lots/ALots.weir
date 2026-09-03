@@ -1,6 +1,6 @@
 expr main (a lots)
 
-let message "Are you confusing `lots` and `let's`? There is no apostrophe in `lots`."
+let message "Are you confusing `lot's` and `lots`? The contraction of `lot is` and `lot has` is `lot's`."
 let description "Corrects `a lots` to `a lot's`."
 let kind "Punctuation"
 let becomes "a lot's"
