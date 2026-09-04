@@ -501,3 +501,22 @@ fn test_german_dictionary_fuzzy_matching() {
         "Should find suggestions for 'Hunde'"
     );
 }
+
+#[test]
+fn debug_worrt_scores() {
+    use crate::language::german::spell::german_dict::annotated_german_dictionary;
+    let dict = annotated_german_dictionary();
+    let results = suggest_correct_spelling_str("Worrt", 200, 2, &dict);
+    for r in &results {
+        let meta = dict.get_word_metadata_str(r);
+        let common = meta.as_ref().map(|m| m.common).unwrap_or(false);
+        let derived = meta.as_ref().and_then(|m| m.derived_from);
+        println!(
+            "suggestion={} common={} derived={:?}",
+            r,
+            common,
+            derived.is_some()
+        );
+    }
+    assert!(results.iter().take(3).any(|s| s == "wort"));
+}

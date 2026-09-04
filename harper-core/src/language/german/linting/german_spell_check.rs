@@ -1,6 +1,7 @@
 use hashbrown::HashMap;
 
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
+use crate::spell::suggest_correct_spelling;
 use crate::{TokenStringExt, document::Document, spell::Dictionary};
 
 const MIN_COMPOUND_PART_LEN: usize = 3;
@@ -122,11 +123,16 @@ impl<T: Dictionary> GermanSpellCheck<T> {
     }
 
     /// Get spelling suggestions for a word using fuzzy matching.
+    ///
+    /// Uses Harper's standard `suggest_correct_spelling` which applies relevance
+    /// scoring (common-word boost, first-letter match, misspellings patterns)
+    /// rather than returning results sorted by edit distance alone.
     fn get_suggestions(&self, word: &[char]) -> Vec<Vec<char>> {
-        // Use the dictionary's fuzzy matching (FST-based Levenshtein)
-        let results = self.dictionary.fuzzy_match(word, 2, 5);
-        let mut suggestions: Vec<Vec<char>> =
-            results.into_iter().map(|r| r.word.to_vec()).collect();
+        // Use Harper's scored suggestion engine, which applies the same
+        // relevance heuristics as the English spell checker (e.g. boosting
+        // common words and penalizing first-letter mismatches).
+        let results = suggest_correct_spelling(word, 5, 2, &self.dictionary);
+        let mut suggestions: Vec<Vec<char>> = results.into_iter().map(|r| r.to_vec()).collect();
 
         // Also try simple capitalization fix (common German error)
         if suggestions.is_empty() && word.len() > 1 {

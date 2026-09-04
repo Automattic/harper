@@ -8,7 +8,7 @@ use std::borrow::Cow;
 use std::sync::{Arc, Mutex};
 
 use crate::DictWordMetadata;
-use crate::spell::{Dictionary, MutableDictionary};
+use crate::spell::{Dictionary, FstDictionary};
 
 use super::compound_checker::CompoundChecker;
 
@@ -19,15 +19,15 @@ use super::compound_checker::CompoundChecker;
 /// it uses the compound checker to determine if the word can be decomposed into valid
 /// compound parts.
 pub struct CompoundAwareDictionary {
-    /// The base dictionary to check first (stored as MutableDictionary for conversion to FstDictionary)
-    base_dict: Arc<MutableDictionary>,
+    /// The base dictionary to check first (FST for fast lookups)
+    base_dict: Arc<FstDictionary>,
     /// The compound checker for lazy compound decomposition
     compound_checker: Arc<Mutex<CompoundChecker>>,
 }
 
 impl CompoundAwareDictionary {
     /// Create a new CompoundAwareDictionary from a base dictionary and word list
-    pub fn new(base_dict: Arc<MutableDictionary>, compound_checker: CompoundChecker) -> Self {
+    pub fn new(base_dict: Arc<FstDictionary>, compound_checker: CompoundChecker) -> Self {
         Self {
             base_dict,
             compound_checker: Arc::new(Mutex::new(compound_checker)),
@@ -35,13 +35,13 @@ impl CompoundAwareDictionary {
     }
 
     /// Get a reference to the base dictionary
-    pub fn base_dict(&self) -> &Arc<MutableDictionary> {
+    pub fn base_dict(&self) -> &Arc<FstDictionary> {
         &self.base_dict
     }
 
     /// Create a new CompoundAwareDictionary from a base dictionary and word list
     pub fn from_word_list(
-        base_dict: Arc<MutableDictionary>,
+        base_dict: Arc<FstDictionary>,
         word_list: &[crate::spell::rune::word_list::AnnotatedWord],
     ) -> Self {
         let compound_checker = CompoundChecker::new(word_list);
@@ -187,10 +187,9 @@ mod tests {
     use crate::spell::MutableDictionary;
     use crate::spell::rune::word_list::AnnotatedWord;
 
-    fn create_test_base_dict() -> Arc<MutableDictionary> {
+    fn create_test_base_dict() -> Arc<FstDictionary> {
         let mut dict = MutableDictionary::new();
 
-        // Add some base words
         dict.append_word("schuh".chars().collect::<CharString>(), Default::default());
         dict.append_word(
             "hersteller".chars().collect::<CharString>(),
@@ -198,7 +197,7 @@ mod tests {
         );
         dict.append_word("arbeit".chars().collect::<CharString>(), Default::default());
 
-        Arc::new(dict)
+        Arc::new(dict.into())
     }
 
     fn create_test_compound_checker() -> CompoundChecker {

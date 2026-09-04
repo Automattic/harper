@@ -52,9 +52,14 @@ fn load_german_base_dict_from_word_list(
 static GERMAN_WORD_LIST: LazyLock<Vec<crate::spell::rune::word_list::AnnotatedWord>> =
     LazyLock::new(load_german_word_list);
 
-// Base dictionary without pre-generated compounds
-static GERMAN_BASE_DICT: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(|| load_german_base_dict_from_word_list(&GERMAN_WORD_LIST));
+// Base dictionary without pre-generated compounds (FST for fast lookups)
+static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
+    Arc::new(
+        (*load_german_base_dict_from_word_list(&GERMAN_WORD_LIST))
+            .clone()
+            .into(),
+    )
+});
 
 // Annotated dictionary using Rune format
 static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
@@ -118,10 +123,8 @@ pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
 /// with lazy compound checking to avoid memory explosion from pre-generating all compounds.
 /// This provides both word coverage and metadata in a memory-efficient way.
 pub fn curated_german_dictionary() -> Arc<FstDictionary> {
-    // Convert compound-aware dictionary's base to FST format
-    // Compound checking is available through combined_german_dictionary()
-    // which uses the full compound-aware dictionary
-    Arc::new((*base_german_dictionary()).clone().into())
+    // Use the pre-built FST base dictionary directly
+    base_german_dictionary_fst()
 }
 
 /// Returns the compound-aware German FST dictionary using lazy compound checking.
@@ -161,12 +164,19 @@ pub fn combined_german_dictionary() -> Arc<MergedDictionary> {
 /// without any compound word generation. It's used as the foundation for
 /// lazy compound checking.
 pub fn base_german_dictionary() -> Arc<MutableDictionary> {
+    // Convert FST back to MutableDictionary for API compatibility
+    // Note: base_german_dictionary_fst() returns the FST version directly
+    Arc::new((*base_german_dictionary_fst()).clone().into())
+}
+
+/// Returns the base German dictionary as FST format (fast lookups).
+pub fn base_german_dictionary_fst() -> Arc<FstDictionary> {
     (*GERMAN_BASE_DICT).clone()
 }
 
-/// Returns the base German dictionary as FST format.
-pub fn base_german_dictionary_fst() -> Arc<FstDictionary> {
-    Arc::new((*base_german_dictionary()).clone().into())
+/// Returns the FST German dictionary (alias for base_german_dictionary_fst).
+pub fn german_dictionary_fst() -> Arc<FstDictionary> {
+    (*GERMAN_BASE_DICT).clone()
 }
 
 /// Returns the compound checker for German dictionary.

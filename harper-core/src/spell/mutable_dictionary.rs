@@ -291,6 +291,12 @@ impl From<MutableDictionary> for FstDictionary {
     }
 }
 
+impl From<FstDictionary> for MutableDictionary {
+    fn from(dict: FstDictionary) -> Self {
+        (*dict.mutable_dict).clone()
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use std::borrow::Cow;

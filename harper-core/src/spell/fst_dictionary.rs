@@ -15,9 +15,10 @@ use crate::{CharString, CharStringExt, DictWordMetadata};
 ///
 /// For dictionaries with changing contents, such as user and file dictionaries, prefer
 /// [`MutableDictionary`].
+#[derive(Clone)]
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
-    mutable_dict: Arc<MutableDictionary>,
+    pub(super) mutable_dict: Arc<MutableDictionary>,
     /// Used for fuzzy-finding the WordId of words or metadata
     word_map: FstMap<Vec<u8>>,
 }
