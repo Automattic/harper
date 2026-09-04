@@ -1700,6 +1700,44 @@ fn fix_peaks() {
 // Piggyback
 // -none-
 
+// Provocate
+
+#[test]
+fn fix_provocate() {
+    assert_suggestion_result(
+        "Hardcoded chainId can provocate a possible replay attacks between chains in the event of a future chain split.",
+        test_linter(),
+        "Hardcoded chainId can provoke a possible replay attacks between chains in the event of a future chain split.",
+    );
+}
+
+#[test]
+fn fix_provocated() {
+    assert_suggestion_result(
+        "tempering with inconsistent content lengths provocated the error which lead me to encoding?",
+        test_linter(),
+        "tempering with inconsistent content lengths provoked the error which lead me to encoding?",
+    );
+}
+
+#[test]
+fn fix_provocates() {
+    assert_suggestion_result(
+        "it wont mark the check on the solving square, it provocates a timeout and return 500 Server Error",
+        test_linter(),
+        "it wont mark the check on the solving square, it provokes a timeout and return 500 Server Error",
+    );
+}
+
+#[test]
+fn fix_provocating() {
+    assert_suggestion_result(
+        "could return incorrect balances provocating an incorrect calculation of rsETH price",
+        test_linter(),
+        "could return incorrect balances provoking an incorrect calculation of rsETH price",
+    );
+}
+
 // RedundantSuperlatives
 
 #[test]

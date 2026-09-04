@@ -17,6 +17,7 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
+        "AsFarAsICanTell"        => ("afaict", &["as far as I can tell"]),
         "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
         "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
         "BeRightBack"            => ("brb", &["be right back"]),
@@ -238,6 +239,15 @@ mod tests {
             "Lmk if you need any debug logs.",
             lint_group(),
             "Let me know if you need any debug logs.",
+        );
+    }
+
+    #[test]
+    fn corrects_afaict() {
+        assert_suggestion_result(
+            "AFAICT the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+            lint_group(),
+            "As far as i can tell the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
         );
     }
 }

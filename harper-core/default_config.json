@@ -200,6 +200,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "AsFarAsICanTell",
+								"state": true,
+								"label": "As Far As I Can Tell"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsFarAsIKnow",
 								"state": true,
 								"label": "As Far As I Know"
@@ -1263,6 +1270,13 @@
 						},
 						{
 							"Bool": {
+								"name": "NotForLackOf",
+								"state": true,
+								"label": "Not for Lack of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "NotOnly",
 								"state": true,
 								"label": "Not Only"
@@ -1308,6 +1322,13 @@
 								"name": "Piggyback",
 								"state": true,
 								"label": "Piggyback"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Provocate",
+								"state": true,
+								"label": "Provocate"
 							}
 						},
 						{
@@ -4468,6 +4489,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ChickenAndEgg",
+								"state": true,
+								"label": "Chicken and Egg"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ChockFull",
 								"state": true,
 								"label": "Chock Full"
@@ -4965,6 +4993,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InTheFirstPlace",
+								"state": true,
+								"label": "In the First Place"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InTheGrandSchemeOfThings",
 								"state": true,
 								"label": "In the Grand Scheme of Things"
@@ -5136,6 +5171,13 @@
 								"name": "LookingForwardTo",
 								"state": true,
 								"label": "Looking Forward To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Lots",
+								"state": true,
+								"label": "Lots"
 							}
 						},
 						{
@@ -5325,6 +5367,13 @@
 								"name": "OnFloor",
 								"state": true,
 								"label": "On Floor"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OnTheFence",
+								"state": true,
+								"label": "On The Fence"
 							}
 						},
 						{
