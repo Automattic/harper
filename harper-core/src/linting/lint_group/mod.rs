@@ -71,6 +71,7 @@ use super::crave_for::CraveFor;
 use super::criteria_phenomena::CriteriaPhenomena;
 use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
+use super::dairy_diary::DairyDiary;
 use super::damages::Damages;
 use super::day_and_age::DayAndAge;
 use super::despite_it_is::DespiteItIs;
@@ -681,6 +682,7 @@ impl LintGroup {
         insert_struct_rule!(CriteriaPhenomena);
         insert_expr_rule!(CureFor);
         insert_struct_rule!(CurrencyPlacement);
+        insert_struct_rule!(DairyDiary);
         insert_expr_rule!(Dashes);
         insert_expr_rule!(DayAndAge);
         insert_expr_rule!(DespiteItIs);
