@@ -61,6 +61,7 @@ use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
 use super::comma_fixes::CommaFixes;
+use super::command_line::CommandLine;
 use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
 use super::compound_subject_i::CompoundSubjectI;
@@ -672,6 +673,7 @@ impl LintGroup {
         insert_expr_rule!(CloseTightKnit);
         insert_expr_rule!(CodeInWriteIn);
         insert_struct_rule!(CommaFixes);
+        insert_expr_rule!(CommandLine);
         insert_expr_rule!(ComplainAsNoun);
         insert_struct_rule!(CompoundNouns);
         insert_expr_rule!(CompoundSubjectI);
