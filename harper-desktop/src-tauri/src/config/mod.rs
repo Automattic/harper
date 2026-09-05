@@ -8,7 +8,7 @@ use harper_core::language::{new_curated_for_language, parse_language};
 use harper_core::{
     Dialect, IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
-    spell::{FstDictionary, MergedDictionary, MutableDictionary},
+    spell::{MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
 use serde::de::{DeserializeOwned, Error as _};
@@ -136,17 +136,18 @@ impl Config {
     }
 
     pub fn dictionary_from_user_dictionary(
+        language: Language,
         user_dictionary: MutableDictionary,
     ) -> Arc<MergedDictionary> {
         let mut dictionary = MergedDictionary::new();
-        dictionary.add_dictionary(FstDictionary::curated());
+        dictionary.add_dictionary(harper_core::language::dictionary(language));
         dictionary.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(dictionary)
     }
 
     fn create_dictionary(&self) -> Arc<MergedDictionary> {
-        Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
+        Self::dictionary_from_user_dictionary(self.dialect, self.mutable_dictionary.clone())
     }
 
     pub fn create_linter(&self) -> LintGroup {
@@ -259,10 +260,10 @@ fn deserialize_language_compat(value: serde_json::Value) -> serde_json::Result<L
         return Ok(language);
     }
 
-    if value.is_string() {
-        if let Ok(dialect) = serde_json::from_value::<Dialect>(value) {
-            return Ok(Language::English(dialect));
-        }
+    if value.is_string()
+        && let Ok(dialect) = serde_json::from_value::<Dialect>(value)
+    {
+        return Ok(Language::English(dialect));
     }
 
     Err(serde_json::Error::custom(
@@ -463,6 +464,20 @@ mod tests {
             path.parent().unwrap().file_name().unwrap(),
             "harper-desktop"
         );
+    }
+
+    #[cfg(feature = "de")]
+    #[test]
+    fn dictionary_for_german_contains_german_words() {
+        use harper_core::Language;
+        use harper_core::language::german::dialects::GermanDialect;
+        use harper_core::spell::{Dictionary, MutableDictionary};
+        let dict = Config::dictionary_from_user_dictionary(
+            Language::German(GermanDialect::Standard),
+            MutableDictionary::new(),
+        );
+        assert!(dict.contains_word("Haus".chars().collect::<Vec<_>>().as_slice()));
+        assert!(dict.contains_word("Freiheit".chars().collect::<Vec<_>>().as_slice()));
     }
 
     #[test]
