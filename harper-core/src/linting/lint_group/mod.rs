@@ -308,6 +308,7 @@ use super::very_less::VeryLess;
 use super::very_unique::VeryUnique;
 use super::vice_versa::ViceVersa;
 use super::vicious_loop::{ViciousCircle, ViciousCircleOrCycle, ViciousCycle};
+use super::waist_waste::WaistWaste;
 use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::web_scraping::WebScraping;
@@ -917,6 +918,7 @@ impl LintGroup {
         insert_expr_rule!(ViciousCircle);
         insert_expr_rule!(ViciousCircleOrCycle);
         insert_expr_rule!(ViciousCycle);
+        insert_expr_rule!(WaistWaste);
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
         insert_expr_rule!(WellEducated);
