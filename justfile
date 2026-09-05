@@ -75,8 +75,8 @@ build-wasm:
   wasm-pack build --target web --out-name harper_wasm
   
   # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
-  # harper-core dependency has default-features=false, so without --features it only gets concurrent
-  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features
+  # harper-core dependency has default-features=false, so english enables only the English language module
+  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features --features english
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs

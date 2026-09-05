@@ -99,7 +99,7 @@ impl Language {
     }
 }
 
-include!("generated_dialect.rs");
+include!(concat!(env!("OUT_DIR"), "/generated_dialect.rs"));
 
 impl From<Dialect> for harper_core::language::languages::Language {
     fn from(dialect: Dialect) -> Self {
