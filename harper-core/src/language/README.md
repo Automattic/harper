@@ -45,6 +45,8 @@ When the `language-module` feature is **enabled** (via `multilingual`, any singl
 - English is accessible both through original types and the `Language` enum
 - Any configured languages whose features are enabled (de, pt, sk, pl) are available
 
+**Consumer base dependencies**: All consumer crates (`harper-cli`, `harper-ls`, `harper-wasm`, and `harper-desktop`) enable `language-module` in their **base** `harper-core` dependency, so the English language module is always present even when no language feature is selected. Per-language features (`de`/`pt`/`sk`/`pl`) add languages on top of that. The consumers' `english` features (which forward `harper-core/language-module`) are kept for explicitness/compatibility but are effectively redundant now.
+
 ## Configuration
 
 Each language requires `harper-core/src/language/<lang>/config.toml`:
@@ -96,7 +98,7 @@ Files are embedded via `include_str!()`. Structure must match exactly.
 5. Add the language's dialect variants to the `From<Dialect> for Language` impl in `harper-wasm/src/lib.rs`, with `#[cfg(feature = "<lang>")]` arms for each dialect and a `#[cfg(not(feature = "<lang>"))]` fallback arm that maps them to English
 6. Optionally add a dispatch arm in `harper-cli/src/bin/lang_stats.rs` for the `harper-lang-stats` binary
 
-**Note**: Feature forwarding is intentional. Different binaries can ship different language sets (e.g., CLI with all languages, Chrome extension with English only); each consumer declares which languages it wants.
+**Note**: Feature forwarding is intentional. Different binaries can ship different language sets (e.g., CLI with all languages, Chrome extension with English only); each consumer declares which languages it wants. The `language-module` marker should also stay in each consumer's **base** `harper-core` dependency so English is always available regardless of the selected language features.
 **Note**: To enable all language support, use the `multilingual` feature which includes de, pt, sk, and pl.
 
 ## Rapid Iteration Without Recompilation
