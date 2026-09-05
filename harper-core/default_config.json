@@ -5448,6 +5448,13 @@
 						},
 						{
 							"OneOfMany": {
+								"names": ["PreferPleaded", "PreferPled"],
+								"name": "PreferPleaded",
+								"labels": ["Prefer ‘Pleaded’", "Prefer ‘Pled’"]
+							}
+						},
+						{
+							"OneOfMany": {
 								"names": ["PreferSneaked", "PreferSnuck"],
 								"name": "PreferSneaked",
 								"labels": ["Prefer ‘Sneaked’", "Prefer ‘Snuck’"]
