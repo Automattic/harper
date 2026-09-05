@@ -3492,6 +3492,13 @@
 						},
 						{
 							"Bool": {
+								"name": "GetAccessTo",
+								"state": true,
+								"label": "Get Access To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "GetPassGoPass",
 								"state": true,
 								"label": "Get Pass, Go Pass"
