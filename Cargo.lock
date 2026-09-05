@@ -6715,6 +6715,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "posslq"
+version = "0.1.0"
+dependencies = [
+ "harper-core",
+ "posslq-macros",
+]
+
+[[package]]
+name = "posslq-macros"
+version = "0.1.0"
+dependencies = [
+ "quote",
+ "syn 2.0.117",
+]
+
+[[package]]
 name = "potential_utf"
 version = "0.1.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
