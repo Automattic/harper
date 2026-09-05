@@ -121,6 +121,10 @@ export default defineConfig(async () => {
 											title: 'Sublime Text',
 											to: '/docs/integrations/sublime-text',
 										},
+										{
+											title: 'JetBrains IDEs',
+											to: '/docs/integrations/jetbrains',
+										},
 									],
 								},
 								{
