@@ -81,12 +81,20 @@ def check_language_features(root_dir):
     language_features = ['de', 'pt', 'sk', 'pl', 'multilingual', 'all-languages']
     
     errors = []
+    warnings = []
     
     # Check harper-core features
     core_features = all_features.get('harper-core/Cargo.toml', {})
+    if 'language-module' not in core_features:
+        errors.append("Feature 'language-module' not found in harper-core/Cargo.toml")
+    
     for lang in ['de', 'pt', 'sk', 'pl']:
         if lang not in core_features:
             errors.append(f"Language feature '{lang}' not found in harper-core/Cargo.toml")
+        elif 'language-module' not in core_features[lang]:
+            errors.append(
+                f"Feature '{lang}' in harper-core/Cargo.toml does not include 'language-module'"
+            )
     
     if 'multilingual' not in core_features:
         errors.append("Feature 'multilingual' not found in harper-core/Cargo.toml")
@@ -107,12 +115,35 @@ def check_language_features(root_dir):
         if 'multilingual' not in all_langs_deps:
             errors.append("'multilingual' not included in all-languages feature")
     
+    # Check consumer crates forward language features to harper-core.
+    # Consumers are optional, so missing features only produce warnings.
+    consumers = [
+        'harper-ls/Cargo.toml',
+        'harper-cli/Cargo.toml',
+        'harper-wasm/Cargo.toml',
+        'harper-desktop/src-tauri/Cargo.toml',
+    ]
+    for consumer in consumers:
+        features = all_features.get(consumer, {})
+        for lang in ['de', 'pt', 'sk', 'pl', 'multilingual']:
+            if lang not in features:
+                warnings.append(f"Feature '{lang}' not found in {consumer}")
+        if 'de' in features and 'harper-core/de' not in features['de']:
+            warnings.append(
+                f"Feature 'de' in {consumer} does not include 'harper-core/de'"
+            )
+    
     if errors:
         print("ERRORS:")
         for error in errors:
             print(f"  - {error}")
         return False
     else:
+        if warnings:
+            print("WARNINGS:")
+            for warning in warnings:
+                print(f"  - {warning}")
+            print()
         print("✓ All language features are consistent!")
         return True
 
