@@ -298,6 +298,49 @@ onMount(() => {
 		</div>
 	</section>
 
+	<section
+		class="border-t-[0.5px] border-[rgba(28,26,22,0.1)] bg-[#fdfbf5] py-[4.8rem] dark:border-white/10 dark:bg-black"
+		aria-labelledby="made-by-title"
+	>
+		<div
+			class="mx-auto grid max-w-[68.75rem] grid-cols-[minmax(14rem,22rem)_minmax(0,1fr)] items-center gap-14 px-10 max-[880px]:grid-cols-1 max-[880px]:px-4"
+		>
+			<img
+				class="aspect-square w-full rounded-[0.9rem] object-cover shadow-[0_24px_50px_-24px_rgba(28,26,22,0.35)] max-[880px]:max-w-[22rem]"
+				src="/marketing/elijah-potter.webp"
+				alt="Elijah Potter"
+				width="720"
+				height="720"
+				loading="lazy"
+			/>
+			<div>
+				<h2
+					id="made-by-title"
+					class="!mt-0 !mb-0 py-0 !font-serif text-[clamp(2.2rem,5vw,2.5rem)] font-[650] leading-[1.08] tracking-normal text-inherit"
+				>
+					Made by Me and You
+				</h2>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					Harper was originally created by me,
+					<a
+						class="font-semibold !text-[#b06a1b] underline decoration-[#b06a1b]/35 underline-offset-4 hover:decoration-current dark:!text-primary-300"
+						href="https://elijahpotter.dev">Elijah Potter</a
+					>. Today, I work at Automattic and build it alongside Harper's users and maintainers.
+				</p>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					The Harper project seeks to enable everyone on Earth to speak their mind. We believe
+					that each human being has the right to express their thoughts and emotions freely. To
+					do that, we hope to provide universal access to great grammar checking at a low price
+					($0).
+				</p>
+				<p class="!mt-5 !mb-0 text-base leading-[1.65] text-[#4a463e] dark:text-white/70">
+					We believe that your thoughts are yours, so we see it as a moral obligation to do
+					everything we can to keep all of your data on your device. So far, we have succeeded.
+				</p>
+			</div>
+		</div>
+	</section>
+
 	<FaqSection
 		items={faqs}
 		title="Questions, answered."

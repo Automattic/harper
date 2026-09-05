@@ -3,7 +3,9 @@ use crate::linting::LintKind;
 use super::{LintGroup, MapPhraseSetLinter};
 
 #[cfg(test)]
-mod tests;
+mod many_to_many_tests;
+#[cfg(test)]
+mod one_to_one_tests;
 
 /// Produce a [`LintGroup`] that looks for errors in sets of common phrases.
 pub fn lint_group() -> LintGroup {
@@ -110,6 +112,17 @@ pub fn lint_group() -> LintGroup {
             "`Client-side` and `server-side` do not use an apostrophe.",
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
+        ),
+        "Combinate" => (
+            &[
+                ("combinate", "combine"),
+                ("combinated", "combined"),
+                ("combinating", "combining"),
+                ("combinates", "combines"),
+            ],
+            "Did you mean `combine` rather than the nonstandard `combinate`?",
+            "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
+            LintKind::Nonstandard
         ),
         "CompulseToCompel" => (
             &[
@@ -571,6 +584,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+        "Provocate" => (
+            &[
+                ("provocate", "provoke"),
+                ("provocated", "provoked"),
+                ("provocates", "provokes"),
+                ("provocating", "provoking"),
+            ],
+            "Did you mean `provoke`?",
+            "Corrects the misspelling `provocate` to `provoke`.",
+            LintKind::WordChoice
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -655,6 +679,18 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "TakeControlOf" => (
+            &[
+                ("take control over", "take control of"),
+                ("taken control over", "taken control of"),
+                ("takes control over", "takes control of"),
+                ("taking control over", "taking control of"),
+                ("took control over", "took control of"),
+            ],
+            "Use `take control of` instead of `take control over`.",
+            "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
@@ -736,6 +772,15 @@ pub fn lint_group() -> LintGroup {
             "`Await` and `for` are redundant when used together - use one or the other",
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
+        ),
+        "BackhandedCompliment" => (
+            &[
+                (&["backhand compliment", "back-hand compliment", "back hand compliment"], &["backhanded compliment"]),
+                (&["backhand compliments", "back-hand compliments", "back hand compliments"], &["backhanded compliments"]),
+            ],
+            "The correct spelling is `backhanded`.",
+            "Corrects `backhand compliment` to `backhanded compliment`.",
+            LintKind::Spelling
         ),
         "CommitmentTo" => (
             &[
@@ -955,6 +1000,20 @@ pub fn lint_group() -> LintGroup {
             "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
             LintKind::Spelling
         ),
+        "PlayAFactor" => (
+            &[
+                // singular
+                (&["play a factor"], &["play a part", "play a role", "be a factor", "are a factor", "am a factor"]),
+                (&["plays a factor"], &["plays a part", "plays a role", "is a factor"]),
+                (&["played a factor"], &["played a part", "played a role", "was a factor", "were a factor", "were factors", "been a factor"]),
+                (&["playing a factor"], &["playing a part", "playing a role", "a factor","being a factor"]),
+                // plural - NOTE some lead to more false positives than true errors
+                (&["played factors"], &["played parts", "played roles", "played a part", "played a role", "were a factor", "were factors"]),
+            ],
+            "Use `play a part` or `be a factor` instead of `play a factor`.",
+            "Corrects `play a factor` to `play a part` or `be a factor`.",
+            LintKind::Usage
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),
@@ -981,15 +1040,6 @@ pub fn lint_group() -> LintGroup {
             "The word `side` is redundant in this phrase.",
             "Corrects redundant `side tangent` and `side tangents` to more concise alternatives.",
             LintKind::Redundancy
-        ),
-        "ToTo" => (
-            &[
-                (&["to to"], &["to do"]),
-                (&["to-to"], &["to-do"]),
-            ],
-            "Did you mean to write `do` instead of a second `to`?",
-            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
-            LintKind::Typo
         ),
         "ToTooIdioms" => (
             &[

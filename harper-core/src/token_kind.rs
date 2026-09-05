@@ -132,6 +132,7 @@ impl TokenKind {
 
         // Generic word methods
         is_swear,
+        is_abbreviation,
         is_likely_homograph,
 
         // Orthography methods

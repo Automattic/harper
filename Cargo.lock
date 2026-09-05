@@ -1059,45 +1059,17 @@ dependencies = [
 
 [[package]]
 name = "cached"
-version = "0.59.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "53b6f5d101f0f6322c8646a45b7c581a673e476329040d97565815c2461dd0c4"
-dependencies = [
- "ahash",
- "cached_proc_macro 0.27.0",
- "cached_proc_macro_types 0.1.1",
- "hashbrown 0.16.1",
- "once_cell",
- "parking_lot",
- "thiserror 2.0.20",
- "web-time",
-]
-
-[[package]]
-name = "cached"
 version = "2.0.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "dc0df7748fe2f601e376916ab19e7bfc2c74461b8abe3bce2ce20036ad8de38f"
 dependencies = [
  "ahash",
- "cached_proc_macro 2.0.0",
- "cached_proc_macro_types 1.0.0",
+ "cached_proc_macro",
+ "cached_proc_macro_types",
  "hashbrown 0.16.1",
  "parking_lot",
  "thiserror 2.0.20",
  "web-time",
-]
-
-[[package]]
-name = "cached_proc_macro"
-version = "0.27.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8ebcf9c75f17a17d55d11afc98e46167d4790a263f428891b8705ab2f793eca3"
-dependencies = [
- "darling 0.20.11",
- "proc-macro2",
- "quote",
- "syn 2.0.119",
 ]
 
 [[package]]
@@ -1111,12 +1083,6 @@ dependencies = [
  "quote",
  "syn 2.0.119",
 ]
-
-[[package]]
-name = "cached_proc_macro_types"
-version = "0.1.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ade8366b8bd5ba243f0a58f036cc0ca8a2f069cff1a2351ef1cac6b083e16fc0"
 
 [[package]]
 name = "cached_proc_macro_types"
@@ -4090,7 +4056,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4101,7 +4067,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -4139,13 +4105,13 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-html",
  "harper-tree-sitter",
  "harper-tree-sitter-dart",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "paste",
  "tree-sitter",
  "tree-sitter-bash",
@@ -4178,13 +4144,13 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "ammonia",
  "bitflags 2.13.1",
  "blanket",
  "boxcar",
- "cached 0.59.0",
+ "cached",
  "criterion",
  "foldhash 0.2.0",
  "fst",
@@ -4192,10 +4158,10 @@ dependencies = [
  "harper-thesaurus",
  "hashbrown 0.16.1",
  "is-macro",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "levenshtein_automata",
  "lru",
- "ordered-float 5.3.0",
+ "ordered-float 5.5.0",
  "paste",
  "pulldown-cmark",
  "quickcheck",
@@ -4223,7 +4189,7 @@ dependencies = [
  "accessibility",
  "accessibility-sys",
  "base64 0.22.1",
- "cached 2.0.2",
+ "cached",
  "clap",
  "core-foundation 0.10.1",
  "core-graphics 0.25.0",
@@ -4234,6 +4200,7 @@ dependencies = [
  "egui_commonmark",
  "harper-core",
  "harper-dictionary-wordlist",
+ "is-macro",
  "objc2-app-kit 0.3.2",
  "objc2-foundation 0.3.2",
  "pollster",
@@ -4249,12 +4216,15 @@ dependencies = [
  "tokio",
  "tracing",
  "tracing-subscriber",
+ "uiautomation",
+ "windows 0.62.2",
  "winit",
+ "wintheon",
 ]
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -4263,7 +4233,7 @@ dependencies = [
 
 [[package]]
 name = "harper-git-commit"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4274,7 +4244,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4285,7 +4255,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4296,7 +4266,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4307,18 +4277,18 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-comments",
  "harper-core",
  "harper-tree-sitter",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "paste",
 ]
 
 [[package]]
 name = "harper-ls"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "anyhow",
  "clap",
@@ -4350,7 +4320,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -4368,7 +4338,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -4379,7 +4349,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "chrono",
  "harper-core",
@@ -4390,7 +4360,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "paste",
@@ -4398,18 +4368,18 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap 2.14.0",
- "itertools 0.14.0",
+ "itertools 0.15.0",
  "ruzstd",
  "zstd",
 ]
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -4428,11 +4398,11 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.8.0"
+version = "2.9.1"
 dependencies = [
  "harper-core",
- "itertools 0.14.0",
- "ordered-float 5.3.0",
+ "itertools 0.15.0",
+ "ordered-float 5.5.0",
  "paste",
  "typst-syntax",
 ]
@@ -4908,6 +4878,15 @@ name = "itertools"
 version = "0.14.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2b192c782037fadd9cfa75548310488aabdbf3d2da73885b31bd0abd03351285"
+dependencies = [
+ "either",
+]
+
+[[package]]
+name = "itertools"
+version = "0.15.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "8b4baf93f58d4425749ca49a51c50ebab072c5df6994d08fed93541c331481dc"
 dependencies = [
  "either",
 ]
@@ -6304,9 +6283,9 @@ checksum = "d6790f58c7ff633d8771f42965289203411a5e5c68388703c06e14f24770b41e"
 
 [[package]]
 name = "open"
-version = "5.4.1"
+version = "5.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f9cfef937e9c486488c7e3d949ae31c0f1d06bdacd75b99c086cb35356e30408"
+checksum = "ade3be4664bc1ef537ce133015f04c176b737815c2ba9fd60edf212d6e90dd55"
 dependencies = [
  "dunce",
  "is-wsl",
@@ -6346,9 +6325,9 @@ dependencies = [
 
 [[package]]
 name = "ordered-float"
-version = "5.3.0"
+version = "5.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b7d950ca161dc355eaf28f82b11345ed76c6e1f6eb1f4f4479e0323b9e2fbd0e"
+checksum = "8c7c9e0d9b23589f26070720bac724174bfec1083e82f7854cdd0267518343c0"
 dependencies = [
  "num-traits",
  "rand 0.8.7",
@@ -6704,9 +6683,9 @@ dependencies = [
 
 [[package]]
 name = "pollster"
-version = "0.4.0"
+version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "2f3a9f18d041e6d0e102a0a46750538147e5e8992d3b4873aaafee2520b00ce3"
+checksum = "bc6355899e1c9462875b6757c79f3caa011a1fdae12bbb1a2e72dd1f234f8336"
 
 [[package]]
 name = "polycool"
@@ -9968,6 +9947,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "uiautomation"
+version = "0.25.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "c68495a701b9f2f21f29353ac446f0d27dd0d7ce97aa9ccf9061bca0446cd744"
+dependencies = [
+ "chrono",
+ "uiautomation_derive",
+ "windows 0.62.2",
+ "windows-core 0.62.2",
+]
+
+[[package]]
+name = "uiautomation_derive"
+version = "0.7.8"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "ffcc4d404aa1c03a848f95cf5feadc3e63946d7f095bf388770b85550093d388"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn 2.0.119",
+]
+
+[[package]]
 name = "unic-char-property"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -10134,9 +10136,9 @@ checksum = "06abde3611657adf66d383f00b093d7faecc7fa57071cce2578660c9f1010821"
 
 [[package]]
 name = "uuid"
-version = "1.24.0"
+version = "1.24.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bf3923a6f5c4c6382e0b653c4117f48d631ea17f38ed86e2a828e6f7412f5239"
+checksum = "2cefc03fd367c0c6d4305de1b312cf00248c4114f4a0418ce6a6af769e3b0bd9"
 dependencies = [
  "getrandom 0.4.3",
  "js-sys",
@@ -10882,7 +10884,7 @@ dependencies = [
  "objc2-metal 0.3.2",
  "objc2-quartz-core 0.3.2",
  "once_cell",
- "ordered-float 5.3.0",
+ "ordered-float 5.5.0",
  "parking_lot",
  "portable-atomic",
  "portable-atomic-util",
@@ -10971,6 +10973,16 @@ name = "winapi-x86_64-pc-windows-gnu"
 version = "0.4.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "712e227841d057c1ee1cd2fb22fa7e5a5461ae8e48fa2ca79ec42cfc1931183f"
+
+[[package]]
+name = "wincorda"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "a356fb015443d529bc912a8cb92d90487bfa6fab7af32949f544c1d59af201cb"
+dependencies = [
+ "thiserror 2.0.20",
+ "winapi",
+]
 
 [[package]]
 name = "window-vibrancy"
@@ -11583,6 +11595,20 @@ checksum = "cb5a765337c50e9ec252c2069be9bf91c7df47afb103b642ba3a53bf8101be97"
 dependencies = [
  "cfg-if",
  "windows-sys 0.59.0",
+]
+
+[[package]]
+name = "wintheon"
+version = "0.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "55852331fd1934f900d4c7502016f6d26c25f90513e29eb21d80d81fc2a9dedc"
+dependencies = [
+ "png 0.18.1",
+ "thiserror 2.0.20",
+ "tracing",
+ "wincorda",
+ "windows 0.62.2",
+ "windows-sys 0.61.2",
 ]
 
 [[package]]
