@@ -25,7 +25,7 @@ impl<D: Dictionary> HelpedPast<D> {
                 .then_kind_where(|k| {
                     (k.is_verb_simple_past_form() || k.is_verb_past_form()) && !k.is_verb_lemma()
                 })
-                .but_not(SequenceExpr::anything().t_any().t_set(&["did", "got"])),
+                .but_not(SequenceExpr::anything().t_any().t_set(["did", "got"])),
             dict,
         }
     }

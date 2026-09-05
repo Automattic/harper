@@ -11,7 +11,7 @@ pub struct GoMissing {
 impl Default for GoMissing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["become", "became", "becomes", "becoming"])
+            expr: SequenceExpr::word_set(["become", "became", "becomes", "becoming"])
                 .t_ws()
                 .t_aco("missing")
                 .but_not(SequenceExpr::anything().t_any().t_any().t_ws().then(

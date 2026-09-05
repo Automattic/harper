@@ -11,9 +11,9 @@ pub struct LessWorse {
 impl Default for LessWorse {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["less", "least"])
+            expr: SequenceExpr::word_set(["less", "least"])
                 .t_ws_h()
-                .then_word_set(&["worse", "worst"]),
+                .then_word_set(["worse", "worst"]),
         }
     }
 }

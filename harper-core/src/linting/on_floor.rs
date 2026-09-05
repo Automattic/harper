@@ -15,7 +15,7 @@ pub struct OnFloor {
 
 impl Default for OnFloor {
     fn default() -> Self {
-        let preposition = WordSet::new(&["in", "at"]);
+        let preposition = WordSet::new(["in", "at"]);
 
         let on_the_floor = Lrc::new(
             SequenceExpr::with(preposition)
@@ -28,12 +28,12 @@ impl Default for OnFloor {
         );
 
         let look_up_phrase = Lrc::new(
-            SequenceExpr::word_set(&["look", "looking", "looks", "looked"])
+            SequenceExpr::word_set(["look", "looking", "looks", "looked"])
                 .t_ws()
                 .t_aco("up"),
         );
 
-        let stop = Lrc::new(WordSet::new(&["stop", "stopping", "stops", "stopped"]));
+        let stop = Lrc::new(WordSet::new(["stop", "stopping", "stops", "stopped"]));
         let exceptions = Lrc::new(LongestMatchOf::new(vec![
             Box::new(SequenceExpr::with(look_up_phrase.clone())),
             Box::new(SequenceExpr::with(stop.clone())),

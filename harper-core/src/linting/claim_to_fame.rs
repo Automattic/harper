@@ -13,7 +13,7 @@ pub struct ClaimToFame {
 impl Default for ClaimToFame {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["claim", "claims"])
+            expr: SequenceExpr::word_set(["claim", "claims"])
                 .t_ws()
                 .then_word_seq(&["for", "fame"]),
         }

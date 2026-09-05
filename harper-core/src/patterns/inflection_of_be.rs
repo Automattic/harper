@@ -18,7 +18,7 @@ impl Default for InflectionOfBe {
 impl InflectionOfBe {
     pub fn new() -> Self {
         Self {
-            inner: WordSet::new(&["be", "am", "is", "are", "was", "were", "been", "being"]),
+            inner: WordSet::new(["be", "am", "is", "are", "was", "were", "been", "being"]),
         }
     }
 }

@@ -11,11 +11,11 @@ pub struct DigUnderTheHood {
 impl Default for DigUnderTheHood {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["dig", "digging", "digs", "dug"])
+            expr: SequenceExpr::word_set(["dig", "digging", "digs", "dug"])
                 .t_ws()
                 .then_word_seq(&["under", "the"])
                 .t_ws()
-                .t_set(&["hood", "bonnet"]),
+                .t_set(["hood", "bonnet"]),
         }
     }
 }

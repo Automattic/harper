@@ -18,7 +18,7 @@ impl Default for OneAndTheSame {
         Self {
             expr: LongestMatchOf::new(vec![
                 Box::new(
-                    SequenceExpr::word_set(&["are", "were"])
+                    SequenceExpr::word_set(["are", "were"])
                         .t_ws()
                         .then(one_in_the_same.clone()),
                 ),

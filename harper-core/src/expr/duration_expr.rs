@@ -14,7 +14,7 @@ impl Expr for DurationExpr {
             return None;
         }
 
-        let units = WordSet::new(&[
+        let units = WordSet::new([
             "second", "seconds", "minute", "minutes", "hour", "hours", "day", "days", "week",
             "weeks", "month", "months", "year", "years",
         ]);

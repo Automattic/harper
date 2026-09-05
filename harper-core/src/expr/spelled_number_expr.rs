@@ -42,7 +42,7 @@ impl Expr for SpelledNumberExpr {
         ];
 
         let single_words = WordSet::new(
-            &units
+            units
                 .iter()
                 .chain(teens.iter())
                 .chain(tens.iter())

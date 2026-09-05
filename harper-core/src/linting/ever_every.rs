@@ -13,7 +13,7 @@ impl Default for EverEvery {
     fn default() -> Self {
         Self {
             expr: SequenceExpr::any_of([
-                Box::new(WordSet::new(&[
+                Box::new(WordSet::new([
                     "are", "aren't", "arent", "did", "didn't", "didnt", "do", "does", "doesn't",
                     "doesnt", "dont", "don't", "had", "hadn't", "hadnt", "has", "hasn't", "hasnt",
                     "have", "haven't", "havent", "is", "isn't", "isnt", "was", "wasn't", "wasnt",

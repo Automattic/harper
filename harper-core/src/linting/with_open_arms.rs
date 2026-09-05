@@ -14,18 +14,18 @@ impl Default for WithOpenArms {
         Self {
             expr: SequenceExpr::any_of([
                 Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
-                Box::new(WordSet::new(&["get", "gets", "getting", "got", "gotten"])),
+                Box::new(WordSet::new(["get", "gets", "getting", "got", "gotten"])),
             ])
             .t_ws()
-            .t_set(&["greet", "greeted", "welcome", "welcomed"])
+            .t_set(["greet", "greeted", "welcome", "welcomed"])
             .t_ws()
             .t_aco("with")
             .t_ws()
-            .t_set(&["open", "opened"])
+            .t_set(["open", "opened"])
             .t_ws()
-            .t_set(&["arm", "arms"])
+            .t_set(["arm", "arms"])
             .but_not(
-                SequenceExpr::word_set(&["greeted", "welcomed"])
+                SequenceExpr::word_set(["greeted", "welcomed"])
                     .t_any()
                     .t_any()
                     .t_any()

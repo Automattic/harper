@@ -21,9 +21,7 @@ impl Default for OverPlus {
                     Box::new(SpelledNumberExpr) as Box<dyn Expr>,
                     Box::new(|tok: &Token, _src: &[char]| tok.kind.is_number()),
                 ])
-                .then_optional(
-                    SequenceExpr::whitespace().t_set(&["thousand", "million", "billion"]),
-                )
+                .then_optional(SequenceExpr::whitespace().t_set(["thousand", "million", "billion"]))
                 .then_any_of([
                     Box::new(
                         SequenceExpr::whitespace()

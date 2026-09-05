@@ -11,7 +11,7 @@ pub struct AvoidContractions {
 impl Default for AvoidContractions {
     fn default() -> Self {
         Self {
-            expr: WordSet::new(&[
+            expr: WordSet::new([
                 "aren't",
                 "can't",
                 "could've",

@@ -19,14 +19,14 @@ impl Default for AllIntentsAndPurposes {
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(
-                        SequenceExpr::word_set(&[
+                        SequenceExpr::word_set([
                             "intents", // Correct, as long as it follows "for" or "to"
                             "extents", "intense", // Incorrect, no matter the preposition
                         ])
                         .t_ws()
                         .t_aco("and"),
                     ),
-                    Box::new(SequenceExpr::word_set(&[
+                    Box::new(SequenceExpr::word_set([
                         "intended",
                         "intense",
                         "intensive",

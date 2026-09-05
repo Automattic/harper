@@ -24,9 +24,9 @@ pub struct ViciousCircleOrCycle {
 // The Expr must have all three tokens because they should only be flagged when used together.
 // But we don't want to flag the legitimate combinations, and which those are depends on the user's preferences.
 fn build_expr(flag: Prefer) -> Box<dyn Expr> {
-    let seq = SequenceExpr::word_set(&["vicious", "virtuous", "viscous"])
+    let seq = SequenceExpr::word_set(["vicious", "virtuous", "viscous"])
         .t_ws()
-        .then_word_set(&["circle", "circles", "cycle", "cycles"]);
+        .then_word_set(["circle", "circles", "cycle", "cycles"]);
 
     match flag {
         Prefer::Circle => Box::new(
@@ -34,7 +34,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
-                    .then_word_set(&["circle", "circles"]),
+                    .then_word_set(["circle", "circles"]),
             ),
         ),
         Prefer::Cycle => Box::new(
@@ -42,7 +42,7 @@ fn build_expr(flag: Prefer) -> Box<dyn Expr> {
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
-                    .then_word_set(&["cycle", "cycles"]),
+                    .then_word_set(["cycle", "cycles"]),
             ),
         ),
         Prefer::DontCare => {

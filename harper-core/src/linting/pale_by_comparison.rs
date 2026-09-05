@@ -16,7 +16,7 @@ impl Default for PaleByComparison {
                 .t_ws()
                 .t_aco("pale")
                 .t_ws()
-                .t_set(&["by", "in"])
+                .t_set(["by", "in"])
                 .t_ws()
                 .t_aco("comparison"),
         }

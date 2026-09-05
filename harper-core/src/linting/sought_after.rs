@@ -15,7 +15,7 @@ impl Default for SoughtAfter {
                 SequenceExpr::default()
                     .then_kind_except(TokenKind::is_adverb, &["always", "maybe", "not", "perhaps"]),
             ),
-            Box::new(SequenceExpr::word_set(&[
+            Box::new(SequenceExpr::word_set([
                 "abit", // Typo for "a bit"
                 "are",  // may cause false positive, but few found so far.
                 "bit",

@@ -11,7 +11,7 @@ pub struct BrandBrandish {
 impl Default for BrandBrandish {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["brandish", "brandished", "brandishes", "brandishing"])
+            expr: SequenceExpr::word_set(["brandish", "brandished", "brandishes", "brandishing"])
                 .t_ws()
                 // "her" is also a possessive determiner as in "she brandished her sword"
                 // "it" and "them" can refer to objects as in "draw your sword(s) and brandish it/them"

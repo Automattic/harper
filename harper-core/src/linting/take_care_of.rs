@@ -11,7 +11,7 @@ pub struct TakeCareOf {
 impl Default for TakeCareOf {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["take", "taken", "takes", "taking", "took"])
+            expr: SequenceExpr::word_set(["take", "taken", "takes", "taking", "took"])
                 .t_ws()
                 .then_word_seq(&["care", "about"]),
         }

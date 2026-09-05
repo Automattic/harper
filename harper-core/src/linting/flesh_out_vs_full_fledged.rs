@@ -11,8 +11,8 @@ pub struct FleshOutVsFullFledged {
 impl Default for FleshOutVsFullFledged {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
-                .then_word_set(&[
+            expr: SequenceExpr::optional(SequenceExpr::word_set(["full", "fully"]).t_ws_h())
+                .then_word_set([
                     "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
                     "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged", "pledges",
                     "pledging",

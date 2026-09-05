@@ -12,13 +12,13 @@ pub struct AmountsFor {
 
 impl Default for AmountsFor {
     fn default() -> Self {
-        let singular_context = WordSet::new(&["that", "which", "it", "this"]);
+        let singular_context = WordSet::new(["that", "which", "it", "this"]);
 
         let singular_pattern = SequenceExpr::with(singular_context)
             .then_whitespace()
             .then_fixed_phrase("amounts for");
 
-        let singular_context = WordSet::new(&[
+        let singular_context = WordSet::new([
             "they", "can", "could", "may", "might", "must", "should", "will", "would",
         ]);
 

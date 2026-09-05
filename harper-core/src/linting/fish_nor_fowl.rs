@@ -11,11 +11,11 @@ pub struct FishNorFowl {
 impl Default for FishNorFowl {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["neither", "niether"])
+            expr: SequenceExpr::word_set(["neither", "niether"])
                 .t_ws()
                 .then_word_seq(&["fish", "nor"])
                 .t_ws()
-                .t_set(&["foul", "bird"]),
+                .t_set(["foul", "bird"]),
         }
     }
 }

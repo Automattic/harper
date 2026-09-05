@@ -11,7 +11,7 @@ pub struct GetPassGoPass {
 impl Default for GetPassGoPass {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "get", "gets", "getting", "got", "gotten", "go", "goes", "going", "gone", "went",
             ])
             .t_ws()

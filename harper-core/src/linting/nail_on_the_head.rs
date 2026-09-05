@@ -13,7 +13,7 @@ pub struct NailOnTheHead {
 
 impl Default for NailOnTheHead {
     fn default() -> Self {
-        let mis = WordSet::new(&["hat", "had", "hit", "hid"]);
+        let mis = WordSet::new(["hat", "had", "hit", "hid"]);
         let pattern = SequenceExpr::default()
             .t_aco("nail")
             .then_whitespace()

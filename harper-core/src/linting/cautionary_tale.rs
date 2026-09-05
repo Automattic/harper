@@ -14,7 +14,7 @@ pub struct CautionaryTale {
 
 impl Default for CautionaryTale {
     fn default() -> Self {
-        let adjectives = WordSet::new(&["cautionary", "inspirational"]);
+        let adjectives = WordSet::new(["cautionary", "inspirational"]);
 
         let pattern = SequenceExpr::with(adjectives).t_ws().t_aco("tail");
 

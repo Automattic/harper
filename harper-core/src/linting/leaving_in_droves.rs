@@ -11,7 +11,7 @@ pub struct LeavingInDroves {
 impl Default for LeavingInDroves {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["leave", "leaves", "leaving", "left"])
+            expr: SequenceExpr::word_set(["leave", "leaves", "leaving", "left"])
                 .t_ws()
                 .t_aco("in")
                 .t_ws()

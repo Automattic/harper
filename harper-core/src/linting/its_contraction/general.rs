@@ -15,18 +15,18 @@ impl Default for General {
     fn default() -> Self {
         let positive = SequenceExpr::default().t_aco("its").then_whitespace().then(
             UPOSSet::new(&[UPOS::VERB, UPOS::AUX, UPOS::DET, UPOS::PRON])
-                .or(WordSet::new(&[
+                .or(WordSet::new([
                     "anywhere",
                     "everywhere",
                     "somewhere",
                     "nowhere",
                 ]))
-                .or(WordSet::new(&["because"])),
+                .or(WordSet::new(["because"])),
         );
 
         let exceptions = SequenceExpr::anything()
             .then_anything()
-            .then_word_set(&["own", "intended"]);
+            .then_word_set(["own", "intended"]);
 
         let inverted = SequenceExpr::unless(exceptions);
 

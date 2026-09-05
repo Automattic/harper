@@ -11,7 +11,7 @@ pub struct ThriveOn {
 impl Default for ThriveOn {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["thrive", "thrived", "thrives", "thriving"])
+            expr: SequenceExpr::word_set(["thrive", "thrived", "thrives", "thriving"])
                 .t_ws()
                 .t_aco("off")
                 .then_optional(SequenceExpr::whitespace().t_aco("of")),

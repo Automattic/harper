@@ -14,7 +14,7 @@ impl DoubleClick {
         SequenceExpr::default()
             .t_aco("double")
             .t_ws()
-            .then_word_set(&["click", "clicked", "clicking", "clicks"])
+            .then_word_set(["click", "clicked", "clicking", "clicks"])
     }
 }
 
