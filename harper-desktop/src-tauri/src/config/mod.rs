@@ -193,7 +193,12 @@ impl Config {
 
         Ok(Self {
             mutable_dictionary: MutableDictionary::new(),
-            dialect: deserialize_field(object, "dialect")?,
+            dialect: {
+                let value = object
+                    .remove("dialect")
+                    .ok_or_else(|| serde_json::Error::custom("missing config field `dialect`"))?;
+                deserialize_language_compat(value)?
+            },
             ignored_lints: deserialize_field(object, "ignored_lints")?,
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
@@ -246,6 +251,26 @@ where
     serde_json::from_value(value).map(Some)
 }
 
+/// Deserialize the `dialect` config field, accepting both the current
+/// externally-tagged `Language` format and the legacy master format where the
+/// field was a plain `Dialect` string such as `"American"`.
+fn deserialize_language_compat(value: serde_json::Value) -> serde_json::Result<Language> {
+    if let Ok(language) = serde_json::from_value::<Language>(value.clone()) {
+        return Ok(language);
+    }
+
+    if value.is_string() {
+        if let Ok(dialect) = serde_json::from_value::<Dialect>(value) {
+            return Ok(Language::English(dialect));
+        }
+    }
+
+    Err(serde_json::Error::custom(
+        "invalid `dialect` field: expected a Language object like \
+         {\"English\": \"American\"} or a legacy dialect string like \"American\"",
+    ))
+}
+
 impl Default for Config {
     fn default() -> Self {
         Self::new()
@@ -255,7 +280,7 @@ impl Default for Config {
 #[cfg(test)]
 mod tests {
     use super::{Config, Integration};
-    use harper_core::DictWordMetadata;
+    use harper_core::{Dialect, DictWordMetadata, Language};
 
     #[test]
     fn serialize_main_excludes_dictionary_word_list() {
@@ -308,6 +333,36 @@ mod tests {
                 .unwrap(),
             serde_json::from_str::<serde_json::Value>(&serialized).unwrap()
         );
+    }
+
+    #[test]
+    fn deserialize_main_accepts_legacy_string_dialect() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().insert(
+            "dialect".to_string(),
+            serde_json::Value::String("American".to_string()),
+        );
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.dialect, Language::English(Dialect::American));
+    }
+
+    #[test]
+    fn deserialize_main_accepts_new_language_dialect() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().insert(
+            "dialect".to_string(),
+            serde_json::json!({ "English": "British" }),
+        );
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.dialect, Language::English(Dialect::British));
     }
 
     #[test]
