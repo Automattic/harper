@@ -3401,6 +3401,13 @@
 						},
 						{
 							"Bool": {
+								"name": "BearWithMe",
+								"state": true,
+								"label": "Bear With Me"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Beforehand",
 								"state": true,
 								"label": "Beforehand"
