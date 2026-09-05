@@ -1070,15 +1070,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-     668 | “Sure, it’s an arm, yer honour!” (He pronounced it “arrum.”)
-         |                                                     ^~~~~ `arrum` should probably be written as `arr um`.
-Suggest:
-  - Replace with: “arr um”
-
-
-
 Lint:    Regionalism (127 priority)
 Message: |
      681 | thought Alice. “I wonder what they’ll do next! As for pulling me out of the
@@ -3209,16 +3200,6 @@ Suggest:
   - Replace with: “beauty”
   - Replace with: “beaut”
   - Replace with: “beauts”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2490 | > beautiful Soup? Beau—ootiful Soo—oop! Beau—ootiful Soo—oop! Soo—oop of the
-    2491 | > e—e—evening, Beautiful, beauti—FUL SOUP!”
-         |                           ^~~~~~ `beauti` should probably be written as `beau ti`.
-Suggest:
-  - Replace with: “beau ti”
 
 
 
