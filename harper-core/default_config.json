@@ -4860,6 +4860,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Highly",
+								"state": true,
+								"label": "Highly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HopHope",
 								"state": true,
 								"label": "Hop Hope"

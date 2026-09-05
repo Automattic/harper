@@ -129,6 +129,7 @@ mod hedging;
 mod hello_greeting;
 mod helped_past;
 mod hereby;
+mod highly;
 mod hop_hope;
 mod hope_youre;
 mod how_does_compared;
