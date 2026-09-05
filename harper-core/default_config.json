@@ -2457,6 +2457,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AnAnd",
+								"state": true,
+								"label": "An vs. And"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AtLeasToLeast",
 								"state": true,
 								"label": "At Leas To Least"

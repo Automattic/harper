@@ -23,6 +23,7 @@ use super::allow_to::AllowTo;
 use super::am_in_the_morning::AmInTheMorning;
 use super::amounts_for::AmountsFor;
 use super::an_a::AnA;
+use super::an_and::AnAnd;
 use super::analog_acoustic_bike::AnalogAcousticBike;
 use super::and_the_like::AndTheLike;
 use super::another_thing_coming::AnotherThingComing;
@@ -635,6 +636,7 @@ impl LintGroup {
         insert_expr_rule!(AmInTheMorning);
         insert_expr_rule!(AmountsFor);
         insert_struct_rule_with_dialect!(AnA);
+        insert_expr_rule!(AnAnd);
         insert_expr_rule_with_dialect!(AnalogAcousticBike);
         insert_expr_rule!(AndTheLike);
         insert_expr_rule!(AnotherThingComing);
