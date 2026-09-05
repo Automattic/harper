@@ -1,11 +1,117 @@
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
-    expr::{AnchorEnd, Expr, SequenceExpr},
+    expr::{AnchorEnd, Expr, FirstMatchOf, SequenceExpr},
+    patterns::{SingleTokenPattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::{Chunk, preceded_by_word};
+
+/// Verbs that commonly take "to" as a prepositional complement.
+/// Guards against false positives like "give to many charities".
+const TO_TAKING_VERBS: &[&str] = &[
+    "add",
+    "added",
+    "adding",
+    "adds",
+    "amount",
+    "amounted",
+    "amounting",
+    "amounts",
+    "appeal",
+    "appealed",
+    "appealing",
+    "appeals",
+    "applied",
+    "applies",
+    "apply",
+    "applying",
+    "attend",
+    "attended",
+    "attending",
+    "attends",
+    "belong",
+    "belonged",
+    "belonging",
+    "belongs",
+    "came",
+    "cater",
+    "catered",
+    "catering",
+    "caters",
+    "come",
+    "comes",
+    "coming",
+    "contribute",
+    "contributed",
+    "contributes",
+    "contributing",
+    "donate",
+    "donated",
+    "donates",
+    "donating",
+    "expose",
+    "exposed",
+    "exposes",
+    "exposing",
+    "gave",
+    "give",
+    "given",
+    "gives",
+    "giving",
+    "go",
+    "goes",
+    "going",
+    "gone",
+    "lead",
+    "leading",
+    "leads",
+    "led",
+    "listen",
+    "listened",
+    "listening",
+    "listens",
+    "move",
+    "moved",
+    "moves",
+    "moving",
+    "refer",
+    "referred",
+    "referring",
+    "refers",
+    "relate",
+    "related",
+    "relates",
+    "relating",
+    "respond",
+    "responded",
+    "responding",
+    "responds",
+    "return",
+    "returned",
+    "returning",
+    "returns",
+    "send",
+    "sending",
+    "sends",
+    "sent",
+    "speak",
+    "speaking",
+    "speaks",
+    "spoke",
+    "spoken",
+    "talk",
+    "talked",
+    "talking",
+    "talks",
+    "went",
+    "write",
+    "writes",
+    "writing",
+    "written",
+    "wrote",
+];
 
 pub struct ToTooDegreeWords {
     expr: Box<dyn Expr>,
@@ -13,12 +119,11 @@ pub struct ToTooDegreeWords {
 
 impl Default for ToTooDegreeWords {
     fn default() -> Self {
-        // Only flag `to` before degree words when the phrase ends the clause
-        // (punctuation or end). Avoids false positives like "connected to many X".
-        let expr = SequenceExpr::default()
+        // Pattern 1: degree word at clause end.
+        let at_end = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_word_set(&["many", "much", "few"])
+            .then_word_set(&["many", "much", "few", "little"])
             .then_any_of([
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                     TokenKind::is_punctuation,
@@ -28,8 +133,16 @@ impl Default for ToTooDegreeWords {
                 Box::new(AnchorEnd),
             ]);
 
+        // Pattern 2: degree word followed by a noun (e.g. "to many cookies").
+        let before_noun = SequenceExpr::default()
+            .t_aco("to")
+            .t_ws()
+            .then_word_set(&["many", "much", "few", "little"])
+            .t_ws()
+            .then_noun();
+
         Self {
-            expr: Box::new(expr),
+            expr: Box::new(FirstMatchOf::new([Box::new(at_end), Box::new(before_noun)])),
         }
     }
 }
@@ -41,10 +154,25 @@ impl ExprLinter for ToTooDegreeWords {
         self.expr.as_ref()
     }
 
-    fn match_to_lint(&self, tokens: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint_with_context(
+        &self,
+        tokens: &[Token],
+        source: &[char],
+        context: Option<(&[Token], &[Token])>,
+    ) -> Option<Lint> {
         let to_tok = tokens
             .iter()
             .find(|t| t.get_ch(source).eq_ch(&['t', 'o']))?;
+
+        // Suppress when "to" is a preposition, not a typo for "too".
+        if preceded_by_word(context, |prev| {
+            prepositional_preceder().matches_token(prev, source)
+                || prev
+                    .get_ch(source)
+                    .eq_any_ignore_ascii_case_str(TO_TAKING_VERBS)
+        }) {
+            return None;
+        }
 
         Some(Lint {
             span: to_tok.span,
@@ -59,6 +187,6 @@ impl ExprLinter for ToTooDegreeWords {
     }
 
     fn description(&self) -> &str {
-        "Detects `to` used before degree words like `many`, `much`, or `few`."
+        "Detects `to` used before degree words like `many`, `much`, `few`, or `little`."
     }
 }
