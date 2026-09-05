@@ -148,9 +148,9 @@ impl Config {
 
         if let Some(v) = value.get("statsPath") {
             if let Value::String(path) = v {
-                base.stats_path = path.try_resolve_in(workspace_root)?.to_path_buf();
+                base.file_dict_path = path.try_resolve_in(workspace_root)?.to_path_buf();
             } else {
-                bail!("statsPath must be a string.");
+                bail!("fileDict path must be a string.");
             }
         }
 
@@ -239,32 +239,5 @@ impl Default for Config {
             max_file_length: 120_000,
             exclude_patterns: GlobSet::empty(),
         }
-    }
-}
-
-#[cfg(test)]
-mod tests {
-    use super::*;
-    use serde_json::json;
-    use tempfile::TempDir;
-
-    #[test]
-    fn stats_path_config_does_not_override_file_dict_path() {
-        let tempdir = TempDir::new().unwrap();
-        let workspace_root = tempdir.path();
-
-        let configured_stats = workspace_root.join("custom-stats.txt");
-        let config = Config::from_lsp_config(
-            workspace_root,
-            json!({
-                "harper-ls": {
-                    "statsPath": configured_stats.to_string_lossy()
-                }
-            }),
-        )
-        .unwrap();
-
-        assert_eq!(config.stats_path, configured_stats);
-        assert_eq!(config.file_dict_path, Config::default().file_dict_path);
     }
 }

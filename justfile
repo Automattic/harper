@@ -455,74 +455,6 @@ check-language-features:
   set -eo pipefail
   python3 "{{justfile_directory()}}/scripts/check_language_features.py"
 
-# Check if the most recent GitHub workflow failed
-check-latest-workflow:
-  #!/usr/bin/env bash
-  set -eo pipefail
-  
-  # Get the most recent workflow run for the current branch
-  # Using gh CLI to list runs and check the conclusion
-  BRANCH="${GITHUB_BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'HEAD')}"
-  
-  echo "Checking workflow status for branch: $BRANCH"
-  
-  # Get all completed workflow runs and check for any failures
-  ALL_RUNS=$(gh run list --branch "$BRANCH" --limit 10 --json conclusion,status,name,url,createdAt 2>/dev/null)
-  
-  # Check if there are any failed runs
-  FAILED_COUNT=$(echo "$ALL_RUNS" | jq '[.[] | select(.status == "completed")] | map(select(.conclusion != "success" and .conclusion != null)) | length')
-  
-  if [ "$FAILED_COUNT" -eq 0 ]; then
-    # No failed runs, get the latest successful one
-    LATEST_RUN=$(echo "$ALL_RUNS" | jq '[.[] | select(.status == "completed")] | sort_by(.createdAt) | reverse | .[0]')
-    
-    if [ -z "$LATEST_RUN" ] || [ "$LATEST_RUN" = "null" ]; then
-      echo "No completed workflow runs found for branch: $BRANCH"
-      exit 1
-    fi
-    
-    NAME=$(echo "$LATEST_RUN" | jq -r '.name // "unknown"')
-    URL=$(echo "$LATEST_RUN" | jq -r '.url // ""')
-    CREATED=$(echo "$LATEST_RUN" | jq -r '.createdAt // "unknown"')
-    echo "Latest completed workflow: $NAME ($CREATED)"
-    echo "Workflow SUCCEEDED: $URL"
-    exit 0
-  fi
-  
-  # If we have failed runs, report them
-  echo "Found $FAILED_COUNT FAILED workflow runs:"
-  echo "$ALL_RUNS" | jq -r '[.[] | select(.status == "completed")] | sort_by(.createdAt) | reverse | .[] | select(.conclusion != "success" and .conclusion != null) | "  - \(.name): \(.conclusion) - \(.url)"'
-  exit 1
-
-# Check if all recent workflows passed (ignoring known infrastructure failures like Build Web)
-check-workflows-ignoring-infra:
-  #!/usr/bin/env bash
-  set -eo pipefail
-  
-  BRANCH="${GITHUB_BRANCH:-$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo 'HEAD')}"
-  
-  echo "Checking workflow status for branch: $BRANCH (ignoring known infrastructure failures)"
-  
-  # Get the most recent completed workflow runs for each workflow name
-  # This ensures we only check the latest run of each workflow type
-  ALL_RUNS=$(gh run list --branch "$BRANCH" --limit 20 --json conclusion,status,name,url,createdAt 2>/dev/null)
-  
-  # Group by workflow name and get the most recent run for each
-  LATEST_RUNS=$(echo "$ALL_RUNS" | jq '[.[] | select(.status == "completed")] | group_by(.name) | map({name: .[0].name, runs: .}) | map({name: .name, run: (.runs | sort_by(.createdAt) | reverse | .[0])}) | map(.run)')
-  
-  # Check for failures excluding known infrastructure issues (Build Web)
-  FAILED_COUNT=$(echo "$LATEST_RUNS" | jq 'map(select(.conclusion != "success" and .conclusion != null and .name != "Build Web")) | length')
-  
-  if [ "$FAILED_COUNT" -eq 0 ]; then
-    echo "All workflows passed (excluding known infrastructure failures)"
-    exit 0
-  fi
-  
-  # If we have failed runs, report them
-  echo "Found $FAILED_COUNT FAILED workflow runs (excluding Build Web):"
-  echo "$LATEST_RUNS" | jq -r '.[] | select(.conclusion != "success" and .conclusion != null and .name != "Build Web") | "  - \(.name): \(.conclusion) - \(.url)"'
-  exit 1
-
 # Run Rust formatting and linting.
 check-rust: audit-dictionary
   #!/usr/bin/env bash
@@ -1102,30 +1034,3 @@ sort-config-settings:
 
   fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
   console.log('Sorted default_config.json child settings by name.');
-
-# Check the status of the most recent GitHub workflow run for the current branch
-# Returns 0 if the most recent workflow succeeded, 1 if it failed
-check-workflow:
-  #!/usr/bin/env bash
-  set -eo pipefail
-
-  BRANCH=$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "")
-  if [ -z "$BRANCH" ]; then
-    echo "Error: Not on a branch"
-    exit 1
-  fi
-
-  LATEST_RUN=$(gh run list --limit 1 --branch "$BRANCH" --json conclusion --jq ".[] | .conclusion" 2>/dev/null || echo "")
-
-  if [ -z "$LATEST_RUN" ]; then
-    echo "No workflow runs found for branch: $BRANCH"
-    exit 1
-  fi
-
-  if [ "$LATEST_RUN" = "success" ]; then
-    echo "Most recent workflow run: SUCCESS"
-    exit 0
-  else
-    echo "Most recent workflow run: $LATEST_RUN"
-    exit 1
-  fi

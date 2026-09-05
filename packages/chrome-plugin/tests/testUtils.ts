@@ -13,8 +13,8 @@ export async function getBackground(context: BrowserContext) {
 		context.serviceWorkers()[0] ??
 		context.backgroundPages()[0] ??
 		(await Promise.race([
-			context.waitForEvent('serviceworker', { timeout: 5000 }),
-			context.waitForEvent('backgroundpage', { timeout: 5000 }),
+			context.waitForEvent('serviceworker', { timeout: 90000 }),
+			context.waitForEvent('backgroundpage', { timeout: 90000 }),
 		]))
 	);
 }
@@ -99,35 +99,21 @@ export function getHarperHighlights(page: Page): Locator {
  */
 export async function waitForHarperHighlightCenter(
 	page: Page,
-	timeoutMs = 60000, // Increased from 30000 to 60000
+	timeoutMs = 30000,
 ): Promise<ScreenPoint | null> {
 	const highlight = getHarperHighlights(page).first();
-	const startTime = Date.now();
-	console.log(
-		`[TIMING] Starting wait for Harper highlight at ${startTime} with timeout ${timeoutMs}ms`,
-	);
 
 	try {
 		await highlight.waitFor({ state: 'visible', timeout: timeoutMs });
-		const endTime = Date.now();
-		const duration = endTime - startTime;
-		console.log(`[TIMING] Harper highlight appeared after ${duration}ms`);
 	} catch {
-		const endTime = Date.now();
-		const duration = endTime - startTime;
-		console.log(`[TIMING] Harper highlight wait failed after ${duration}ms`);
 		return null;
 	}
 
 	const box = await highlight.boundingBox();
 	if (box == null || box.width <= 0 || box.height <= 0) {
-		console.log('[TIMING] Harper highlight has invalid bounding box');
 		return null;
 	}
 
-	console.log(
-		`[TIMING] Harper highlight bounding box: ${box.width}x${box.height} at (${box.x}, ${box.y})`,
-	);
 	return {
 		x: box.x + box.width / 2,
 		y: box.y + box.height / 2,
