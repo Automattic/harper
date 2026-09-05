@@ -520,3 +520,48 @@ fn debug_worrt_scores() {
     }
     assert!(results.iter().take(3).any(|s| s == "wort"));
 }
+
+#[test]
+fn test_german_wikipedia_informatik_false_positives() {
+    let dict = mutable_german_dictionary();
+
+    // Base nouns that were missing from the dictionary
+    for word in [
+        "Entsprechung",
+        "Speicherung",
+        "Übertragung",
+        "Zahlendarstellung",
+    ] {
+        assert!(
+            dict.get_word_metadata_str(word).is_some(),
+            "{word} should be in dictionary"
+        );
+    }
+
+    // Nouns that now derive their plurals via the Y flag
+    for word in [
+        "Informationen",
+        "Empfehlungen",
+        "Entwicklungen",
+        "Vertretern",
+        "Informatikern",
+        "Mikrocontrollern",
+        "Integrieranlagen",
+        "Bildungen",
+        "Möglichkeiten",
+        "Universitäten",
+    ] {
+        assert!(
+            dict.get_word_metadata_str(word).is_some(),
+            "{word} should be derived from its singular by the Y plural rule"
+        );
+    }
+
+    // Verbs that now derive their preterite via the d flag
+    for word in ["formulierte", "signalisierte"] {
+        assert!(
+            dict.get_word_metadata_str(word).is_some(),
+            "{word} should be derived from its infinitive by the d preterite rule"
+        );
+    }
+}

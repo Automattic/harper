@@ -21622,7 +21622,7 @@ bildner/~~Mh
 bildnis/~~Nh
 bilds/~~Nh
 bildsam/~~JOQRSTUWqh
-bildung/~~Fh
+bildung/~~FY
 billard/~~Nh
 billett/~~Nh
 billigt/~~NXh
@@ -30135,7 +30135,7 @@ infimum/~~Za #  auto-added
 infinit/~~NXh
 info/~~Nh
 infolge/~~Nh
-information/~~Nhi
+information/~~NY
 infrage/~~Nh
 ingwer/~~Mh
 ingwers/~~Nh
@@ -34967,7 +34967,7 @@ möchtet/~~Nh
 möge/~~Nh
 mögende/~~Nh
 möget/~~Nh
-möglichkeit/~~Fh
+möglichkeit/~~FY
 mögt/~~Nh
 möhre/~~Nh
 möhren/~~V # auto-added
@@ -41183,7 +41183,7 @@ unikum/~~Za #  auto-added
 union/~~Nhi
 unions/~~Nh
 unitär/~~NXh
-universität/~~Nh
+universität/~~NY
 universitäten/~~Fh
 unix/~~Nh
 unk/~~Vcej # REPLACES unken
@@ -42097,6 +42097,7 @@ zag/~~Vcej # REPLACES zagen
 zagt/~~NXh
 zagtet/~~Nh
 zahl/~~Vcej # REPLACES zahlen
+zahlendarstellung/~~FY
 zahler/~~Mh
 zahlt/~~NXh
 zahm/~~NXh
@@ -66002,7 +66003,7 @@ empfehlen/~~V # auto-added
 empfehlend/~~Nh
 empfehlens/~~Nh
 empfehlt/~~Nh
-empfehlung/~~Fh
+empfehlung/~~FY
 empfiehl/~~Nh
 empfiehlt/~~Nh
 empfinde/~~Nh
@@ -104915,6 +104916,7 @@ speichere/~~Nh
 speichern/~~V # auto-added
 speichers/~~Nh
 speichert/~~Nh
+speicherung/~~FY
 speichre/~~Nh
 speiende/~~Nh
 speiendem/~~Nh
@@ -113523,7 +113525,7 @@ vertrat/~~Nh
 vertrauen/~~V # auto-added
 vertraut/~~NXh
 vertrete/~~Nh
-vertreter/~~Mh
+vertreter/~~MY
 vertretet/~~Nh
 vertriebe/~~Nh
 vertriebs/~~Nh
@@ -132880,6 +132882,7 @@ zürichberg/~~Nh
 übertiteln/~~Nh
 übertitelt/~~Nh
 übertragen/~~Nh # auto-added
+übertragung/~~FY
 übertreten/~~Nh
 übertrifft/~~Nh
 überwachen/~~Nh
@@ -136314,6 +136317,7 @@ entsorgende/~~Fh
 entsorgungs/~~Nh # auto-added
 entspiegeln/~~Nh
 entsprechen/~~Nh
+entsprechung/~~FY
 entsprießen/~~Nh
 entspringen/~~Nh # auto-added
 entsprochen/~~Nh
@@ -136951,7 +136955,7 @@ formenlehre/~~Fh
 formgerecht/~~Nh
 formgewandt/~~Nh
 formrichtig/~~Nh
-formulieren/~~Nh
+formulieren/~~Vd
 formwerdung/~~Fh
 formylieren/~~Nh
 fortbegeben/~~Nh
@@ -153859,7 +153863,7 @@ inflammation/~~Fh
 inflatorisch/~~RJOQRSTUWqh
 influenziere/~~Fh
 influenziert/~~Nh
-informatiker/~~Nh
+informatiker/~~NY
 informations/~~Nh
 informatisch/~~RJOQRSTUWqh
 infotainment/~~Nh
@@ -172729,7 +172733,7 @@ siegerprojekt/~~Nh
 siegertrophäe/~~Fh
 siegerurkunde/~~Fh
 siegestrunken/~~Nh
-signalisieren/~~Nh
+signalisieren/~~Vd
 signatarmacht/~~Nh
 signatarstaat/~~Nh
 signierstunde/~~Fh
@@ -192076,7 +192080,7 @@ integralbegriff/~~Nh
 integralbildung/~~Fh
 integraltabelle/~~Fh
 integralzeichen/~~Nh
-integrieranlage/~~Fh
+integrieranlage/~~FY
 intendantenhaus/~~Nh
 intendantensitz/~~Nh
 intendantenwahl/~~Nh
@@ -193478,7 +193482,7 @@ mikroanalytisch/~~Nh
 mikrobakteriell/~~Nh
 mikrobenteppich/~~Nh
 mikrobiologisch/~~Nh
-mikrocontroller/~~Nh
+mikrocontroller/~~NY
 mikrofonständer/~~Nh
 mikrogrammmenge/~~Fh
 mikroklimatisch/~~Nh
@@ -221346,7 +221350,7 @@ tangentiale/~~N
 erheblicher/~~N
 befürchtete/~~N
 fahrverbote/~~N
-entwicklung/~~Fh
+entwicklung/~~FY
 kanonischen/~~V
 erheblichem/~~N
 städtischer/~~N
