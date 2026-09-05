@@ -109,6 +109,7 @@ use super::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
 use super::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::for_free_of_charge::ForFreeOfCharge;
 use super::for_noun::ForNoun;
+use super::for_same_reason::ForSameReason;
 use super::for_the_nth_time::ForTheNthTime;
 use super::free_predicate::FreePredicate;
 use super::friend_of_me::FriendOfMe;
@@ -719,6 +720,7 @@ impl LintGroup {
         insert_expr_rule!(FootInchMinuteSecondSymbols);
         insert_expr_rule!(ForFreeOfCharge);
         insert_expr_rule!(ForNoun);
+        insert_expr_rule!(ForSameReason);
         insert_expr_rule!(ForTheNthTime);
         insert_expr_rule!(FreePredicate);
         insert_expr_rule!(FriendOfMe);
