@@ -1,5 +1,8 @@
 //! Integration tests for German compound checking implementation
 
+// Only needed when German tests are enabled; with default features every test
+// below is cfg'd out and an unconditional import would be unused.
+#[cfg(feature = "de")]
 use harper_core::spell::Dictionary;
 
 #[cfg(all(feature = "de", feature = "multilingual"))]
