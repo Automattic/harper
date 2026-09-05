@@ -124,6 +124,7 @@ use super::handful_of_more::HandfulOfMore;
 use super::have_a_hard_time::HaveAHardTime;
 use super::have_pronoun::HavePronoun;
 use super::have_take_a_look::HaveTakeALook;
+use super::head_off_heed::HeadOffHeed;
 use super::hedging::Hedging;
 use super::hello_greeting::HelloGreeting;
 use super::helped_past::HelpedPast;
@@ -336,13 +337,13 @@ use super::proper_noun_capitalization_linters;
 use super::weir_rules;
 
 use crate::{
+    Dialect, Document, Span, TokenStringExt,
     linting::{
+        ExprLinter, HtmlDescriptionLinter, Lint, Linter,
         dashes::Dashes,
         expr_linter::{Chunk, Sentence, run_on_chunk},
-        {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
     },
     spell::Dictionary,
-    {Dialect, Document, Span, TokenStringExt},
 };
 
 pub use flat_config::FlatConfig;
@@ -734,6 +735,7 @@ impl LintGroup {
         insert_expr_rule_with_dialect!(HaveAHardTime);
         insert_expr_rule!(HavePronoun);
         insert_struct_rule_with_dialect!(HaveTakeALook);
+        insert_expr_rule!(HeadOffHeed);
         insert_expr_rule!(Hedging);
         insert_expr_rule!(HelloGreeting);
         insert_expr_rule_with_dict!(HelpedPast);
