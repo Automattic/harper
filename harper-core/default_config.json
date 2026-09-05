@@ -4622,6 +4622,13 @@
 						},
 						{
 							"Bool": {
+								"name": "EmigrateImmigrate",
+								"state": true,
+								"label": "Emigrate / Immigrate"
+							}
+						},
+						{
+							"Bool": {
 								"name": "EnMasse",
 								"state": true,
 								"label": "En Masse"
