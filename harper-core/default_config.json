@@ -5791,6 +5791,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WaistWaste",
+								"state": true,
+								"label": "Waist / Waste"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WasAloud",
 								"state": true,
 								"label": "Was Aloud"
