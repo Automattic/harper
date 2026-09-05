@@ -165,7 +165,6 @@ use super::means_a_lot_to::MeansALotTo;
 use super::merge_words::MergeWords;
 use super::missing_preposition::MissingPreposition;
 use super::missing_to::MissingTo;
-use super::misspell::Misspell;
 use super::mixed_bag::MixedBag;
 use super::modal_be_adjective::ModalBeAdjective;
 use super::modal_of::ModalOf;
@@ -774,7 +773,6 @@ impl LintGroup {
         insert_struct_rule!(MergeWords);
         insert_expr_rule!(MissingPreposition);
         insert_expr_rule!(MissingTo);
-        insert_expr_rule!(Misspell);
         insert_expr_rule!(MixedBag);
         insert_expr_rule!(ModalBeAdjective);
         insert_expr_rule!(ModalOf);
