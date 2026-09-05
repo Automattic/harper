@@ -1,6 +1,6 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Lrc, Token,
+    CharStringExt, Lrc, Token,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::{UPOSSet, WordSet},
@@ -63,6 +63,16 @@ impl ExprLinter for VerbInsteadOfNoun {
         // "Sound" is both adjective and noun. We want to flag the common "sound advise"
         // But not "sound affect", which is just as correct as "sound effect".
         if adj_text == "sound" && verb_text == "affect" {
+            return None;
+        }
+
+        // "Hard sell", "soft sell", "tough sell", and "easy sell" are idioms where
+        // "sell" is a noun, not a verb.
+        if verb_lower == "sell"
+            && adj_tok
+                .get_ch(src)
+                .eq_any_ignore_ascii_case_str(&["hard", "soft", "tough", "easy"])
+        {
             return None;
         }
 
