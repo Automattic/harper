@@ -245,6 +245,7 @@ use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
+use super::rogue_rouge::RogueRouge;
 use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
@@ -855,6 +856,7 @@ impl LintGroup {
         insert_expr_rule!(Respond);
         insert_expr_rule!(RightClick);
         insert_expr_rule!(RiseTheRanks);
+        insert_expr_rule!(RogueRouge);
         insert_expr_rule!(RollerSkated);
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
