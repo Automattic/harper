@@ -423,15 +423,15 @@
 			"#": "feminine property",
 			"metadata": {
 				"noun": {
-					"gender": true
+					"gender": "Feminine"
 				}
 			}
 		},
 		"M": {
-			"#": "feminine property",
+			"#": "masculine property",
 			"metadata": {
 				"noun": {
-					"gender": false
+					"gender": "Masculine"
 				}
 			}
 		}

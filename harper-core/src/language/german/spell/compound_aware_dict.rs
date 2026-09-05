@@ -268,9 +268,9 @@ mod tests {
         let compound_checker = create_test_compound_checker();
         let dict = CompoundAwareDictionary::new(base_dict, compound_checker);
 
-        // Base word should return None for metadata (since we didn't set any)
+        // Base words return their own metadata (empty here) from the base dictionary.
         let base_metadata = dict.get_word_metadata(&"schuh".chars().collect::<Vec<_>>());
-        assert!(base_metadata.is_none());
+        assert_eq!(base_metadata.as_deref(), Some(&DictWordMetadata::default()));
 
         // Compound word should return compound metadata
         let compound_metadata =
