@@ -5,7 +5,7 @@ use crate::{
     patterns::{ModalVerb, Word, WordSet},
 };
 
-use super::super::NOUN_VERB_PAIRS;
+use super::super::{NOUN_VERB_PAIRS, conjugate_pair_verb};
 
 /// Pronouns that can come before verbs but not nouns
 const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
@@ -107,7 +107,9 @@ impl ExprLinter for GeneralNounInsteadOfVerb {
         let verb = NOUN_VERB_PAIRS
             .iter()
             .find(|(noun, _)| *noun == noun_lower)
-            .map(|(_, verb)| verb)?;
+            .map(|&(_, verb)| verb)?;
+
+        let verb = conjugate_pair_verb(verb, prev_tok, src);
 
         Some(Lint {
             span: noun_tok.span,
