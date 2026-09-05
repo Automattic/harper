@@ -644,11 +644,7 @@ fn corrects_what_dose() {
 #[test]
 #[ignore = "false positive not yet detected"]
 fn dont_fix_what_dose_false_positive() {
-    assert_lint_count(
-        "What dose of vitamin d should I take?",
-        test_linter(),
-        0,
-    );
+    assert_lint_count("What dose of vitamin d should I take?", test_linter(), 0);
 }
 
 #[test]
