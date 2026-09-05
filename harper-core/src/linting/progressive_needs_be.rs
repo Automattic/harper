@@ -72,7 +72,7 @@ impl ExprLinter for ProgressiveNeedsBe {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![
                 Suggestion::replace_with_match_case(
                     progressive_replacement.chars().collect(),

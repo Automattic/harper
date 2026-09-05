@@ -49,7 +49,7 @@ impl ExprLinter for RiseTheRanks {
     fn match_to_lint(&self, toks: &[Token], _src: &[char]) -> Option<Lint> {
         Some(Lint {
             span: toks[0].span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![
                 Suggestion::InsertAfter(vec![' ', 't', 'h', 'r', 'o', 'u', 'g', 'h']),
                 Suggestion::InsertAfter(vec![' ', 'f', 'r', 'o', 'm']),
