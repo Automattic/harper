@@ -331,7 +331,7 @@ mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
-mod weir_rules;
+pub mod weir_rules;
 mod well_educated;
 mod were_where;
 mod whereas;

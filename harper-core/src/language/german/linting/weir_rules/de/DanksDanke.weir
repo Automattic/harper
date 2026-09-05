@@ -1,0 +1,26 @@
+expr main [(Danks Danke)]
+
+let message "Meinten Sie »Danke«?"
+let description "Corrects `Danks` to the standard German thanks expression `Danke`."
+let kind "Grammar"
+let becomes "Danke"
+let strategy "MatchCase"
+
+test "Danks Danke für deine Hilfe." "Danke für deine Hilfe."
+test "Danks Danke für alles." "Danke für alles."
+test "Danks Danke für den Hinweis." "Danke für den Hinweis."
+test "Danks Danke für deine Unterstützung." "Danke für deine Unterstützung."
+test "Danks Danke für das Geschenk." "Danke für das Geschenk."
+test "Danks Danke für deine Zeit." "Danke für deine Zeit."
+test "Danks Danke für den Besuch." "Danke für den Besuch."
+test "Danks Danke für deine Mühe." "Danke für deine Mühe."
+test "Danks Danke für das Verständnis." "Danke für das Verständnis."
+test "Danks Danke für deine Freundschaft." "Danke für deine Freundschaft."
+test "Danks Danke für deine Geduld." "Danke für deine Geduld."
+test "Danks Danke für das Gespräch." "Danke für das Gespräch."
+test "Danks Danke für die Einladung." "Danke für die Einladung."
+test "Danks Danke für deine Arbeit." "Danke für deine Arbeit."
+test "Danks Danke für deine Kooperation." "Danke für deine Kooperation."
+
+allows "Danke"
+allows "danks"

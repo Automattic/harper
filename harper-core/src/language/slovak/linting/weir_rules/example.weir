@@ -1,0 +1,16 @@
+expr main (v dnes)
+
+let message "The correct phrase is `dnes` without the preposition `v`."
+let description "Corrects the redundant preposition `v` before `dnes` (today). In Slovak, `dnes` is used standalone."
+let kind "Redundancy"
+let becomes "dnes"
+
+# True positives - should be corrected
+test "v dnes je pekný deň." "dnes je pekný deň."
+test "v dnes som sa zúčastnil na schôdzi." "dnes som sa zúčastnil na schôdzi."
+test "v dnes budeme mať stretnutie." "dnes budeme mať stretnutie."
+
+# False positives - should NOT be corrected (these are different contexts)
+allows "V dome dnes"
+allows "V škole dnes"
+allows "V Bratislave dnes"

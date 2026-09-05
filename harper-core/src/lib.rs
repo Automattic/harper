@@ -15,6 +15,8 @@ mod ignored_lints;
 mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
+#[cfg(feature = "language-module")]
+pub mod language;
 pub mod language_detection;
 mod lexing;
 pub mod linting;
@@ -55,7 +57,10 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
+#[cfg(feature = "language-module")]
+pub use language::{Language, LanguageFamily};
 use linting::Lint;
+pub use linting::{LintGroup, Linter};
 pub use mask::{Mask, Masker, RegexMasker};
 pub use number::{Number, OrdinalSuffix};
 pub use punctuation::{Punctuation, Quote};
@@ -208,14 +213,16 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
+    use crate::Span;
+    use crate::expr::{AnchorStart, SequenceExpr};
     use crate::linting::{Lint, create_test_pool};
+    use crate::remove_lints_overlapping_expr;
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, Span,
-        expr::{AnchorStart, SequenceExpr},
+        Dialect, Document,
         linting::{LintGroup, Linter},
-        remove_lints_overlapping_expr, remove_overlaps,
+        remove_overlaps,
     };
 
     create_test_pool!(

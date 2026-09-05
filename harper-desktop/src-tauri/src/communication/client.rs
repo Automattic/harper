@@ -1,5 +1,5 @@
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints, linting::FlatConfig, spell::MutableDictionary,
+    DictWordMetadata, IgnoredLints, Language, linting::FlatConfig, spell::MutableDictionary,
 };
 use std::time::Duration;
 use tokio::{
@@ -57,7 +57,7 @@ where
         }
     }
 
-    pub async fn get_dialect(&mut self) -> Result<Dialect, ProtocolError> {
+    pub async fn get_dialect(&mut self) -> Result<Language, ProtocolError> {
         match self.send_request(Request::GetDialect).await? {
             Response::GetDialect { dialect } => Ok(dialect),
             _ => Err(ProtocolError::UnexpectedResponse {

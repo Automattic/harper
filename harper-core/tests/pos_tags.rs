@@ -1,3 +1,5 @@
+#![cfg(feature = "multilingual")]
+
 //! This test creates snapshots of the part-of-speech (POS) tags assigned by the
 //! [`Document`] struct to the text files in the `tests/text` directory.
 //!
