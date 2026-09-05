@@ -28,6 +28,7 @@ use harper_python::PythonParser;
 use harper_stats::{Record, Stats};
 use harper_tex::TeX;
 use harper_typst::Typst;
+use harper_yaml::YamlParser;
 use serde_json::{Value, json};
 use tokio::sync::{Mutex, RwLock};
 use tower_lsp_server::jsonrpc::Result as JsonResult;
@@ -399,6 +400,7 @@ impl Backend {
             "python" => Some(Box::new(PythonParser::default())),
             "typst" => Some(Box::new(Typst)),
             "tex" | "plaintex" | "latex" => Some(Box::new(TeX::default())),
+            "yaml" => Some(Box::new(YamlParser::default())),
             _ => None,
         };
 
