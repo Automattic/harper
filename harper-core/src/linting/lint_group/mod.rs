@@ -6,6 +6,7 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
 // Individual Linters
+use super::a_long_along::ALongAlong;
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -619,6 +620,7 @@ impl LintGroup {
         // Please maintain alphabetical order.
         // On *nix you can maintain sort order with `sort -t'(' -k2`
         insert_expr_rule!(APart);
+        insert_expr_rule!(ALongAlong);
         insert_expr_rule!(ASomeTime);
         insert_expr_rule!(AWaysToGo);
         insert_expr_rule!(AWhile);
