@@ -228,6 +228,7 @@ use super::pronoun_contraction::PronounContraction;
 use super::pronoun_inflection_be::PronounInflectionBe;
 use super::pronoun_knew::PronounKnew;
 use super::pronoun_verb_agreement::PronounVerbAgreement;
+use super::prove_ones_worth::ProveOnesWorth;
 use super::quantifier_needs_of::QuantifierNeedsOf;
 use super::quantifier_numeral_conflict::QuantifierNumeralConflict;
 use super::quite_quiet::QuiteQuiet;
@@ -838,6 +839,7 @@ impl LintGroup {
         insert_expr_rule!(PronounInflectionBe);
         insert_expr_rule!(PronounKnew);
         insert_expr_rule_with_dict!(PronounVerbAgreement);
+        insert_expr_rule!(ProveOnesWorth);
         insert_expr_rule!(QuantifierNeedsOf);
         insert_expr_rule!(QuantifierNumeralConflict);
         insert_expr_rule!(QuiteQuiet);

@@ -245,6 +245,7 @@ mod pronoun_inflection_be;
 mod pronoun_knew;
 mod pronoun_verb_agreement;
 mod proper_noun_capitalization_linters;
+mod prove_ones_worth;
 mod quantifier_needs_of;
 mod quantifier_numeral_conflict;
 mod quite_quiet;
