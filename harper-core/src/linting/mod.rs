@@ -232,6 +232,7 @@ mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod pleaded_pled;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod pooled_linter;
