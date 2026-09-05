@@ -778,6 +778,48 @@ This is a simple Typst document.
 
 		expect(lints).toHaveLength(0);
 	});
+
+	test(`${linterName} can request a LaTeX parser with normal binary.`, async () => {
+		const linter = new Linter({ binary });
+
+		const lints = await linter.lint(
+			String.raw`
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+\section{Introduction}
+
+This is a simple LaTeX document.
+
+\begin{equation}
+\int_0^\infty e^{-x^2} dx = \frac{\sqrt{\pi}}{2}
+\end{equation}
+
+\end{document}
+      `,
+			{ language: 'latex' },
+		);
+
+		expect(lints).toHaveLength(0);
+	});
+
+	test(`${linterName} can apply suggestions from LaTeX lints.`, async () => {
+		const linter = new Linter({ binary });
+		const source = String.raw`\begin{document}
+This is an test.
+\end{document}`;
+
+		const lints = await linter.lint(source, { language: 'latex' });
+		expect(lints).toHaveLength(1);
+
+		const suggestions = lints[0].suggestions();
+		const suggestion = suggestions.find((s) => s.get_replacement_text() === 'a');
+		expect(suggestion).toBeDefined();
+
+		const result = await linter.applySuggestion(source, lints[0], suggestion!);
+		expect(result).toContain('This is a test.');
+	});
 }
 
 // Disabled because it significantly slows down CI
