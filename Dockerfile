@@ -16,7 +16,7 @@ COPY . .
 
 WORKDIR /usr/build/harper-wasm
 RUN wasm-pack build --target web --out-name harper_wasm
-RUN wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
+RUN wasm-pack build --target web --out-name harper_wasm_slim --no-default-features --features english
 RUN cargo clean
 
 FROM node:${NODE_VERSION} AS node-build

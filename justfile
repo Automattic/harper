@@ -71,7 +71,7 @@ build-wasm:
 
   cd "{{justfile_directory()}}/harper-wasm"
   
-  # Build the regular optimized version with all languages but without typst/thesaurus
+  # Build the regular optimized version with all supported languages (plus typst/thesaurus)
   wasm-pack build --target web --out-name harper_wasm
   
   # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
