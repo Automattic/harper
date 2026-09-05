@@ -5073,6 +5073,12 @@
 					"default": true,
 					"description": "Detects incorrect usage of `want be` and suggests `won't be` or `want to be` based on context."
 				},
+				"harper.linters.WaryWeary": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Handles common confusions between `wary` (cautious) and `weary` (tired)."
+				},
 				"harper.linters.WasAloud": {
 					"scope": "resource",
 					"type": "boolean",
