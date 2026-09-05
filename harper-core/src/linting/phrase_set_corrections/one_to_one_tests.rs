@@ -651,7 +651,6 @@ fn dont_fix_what_dose_false_positive() {
     );
 }
 
-
 #[test]
 fn corrects_when_dose() {
     assert_suggestion_result(
