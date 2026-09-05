@@ -62,15 +62,20 @@ default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
 
+# Internal marker feature that gates the language module system itself.
+# English is always included when this is enabled. Each individual language
+# feature below enables it so that consumers can build "English + German only"
+# or "English only" without pulling in every language.
+language-module = []
+
 # Multilingual support (language module system with English + all new languages)
-# This feature gates the entire language module system
 multilingual = ["de", "pt", "sk", "pl"]
 
 # Individual language features
-de = []
-pt = []
-sk = []
-pl = []
+de = ["language-module"]
+pt = ["language-module"]
+sk = ["language-module"]
+pl = ["language-module"]
 
 # Convenience feature to enable all supported languages
 all-languages = ["multilingual"]

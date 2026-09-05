@@ -140,9 +140,10 @@ impl DialectFlags<GermanDialect> for GermanDialectFlags {
                 .unwrap();
 
         // Count word dialects.
-        // Note: The current dict_word_metadata::DialectFlags only supports English dialects,
-        // so for German dialects, we always return empty flags for now.
-        // TODO: Migrate to use the new language::dialects::dialect_flags::DialectFlags
+        // Note: German dialect auto-detection is not yet implemented. The
+        // dictionary metadata does not currently carry German dialect
+        // information, so the counters below remain stubbed and we always
+        // return empty flags for now.
         document.iter_words().for_each(|w| {
             if let TokenKind::Word(Some(_lexeme_metadata)) = &w.kind {
                 // Since we can't extract German dialect info from the old DialectFlags,

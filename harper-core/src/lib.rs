@@ -15,7 +15,7 @@ mod ignored_lints;
 mod indefinite_article;
 mod irregular_nouns;
 mod irregular_verbs;
-#[cfg(feature = "multilingual")]
+#[cfg(feature = "language-module")]
 pub mod language;
 pub mod language_detection;
 mod lexing;
@@ -57,7 +57,7 @@ pub use ignored_lints::{IgnoredLints, LintContext};
 pub use indefinite_article::{InitialSound, starts_with_vowel};
 pub use irregular_nouns::IrregularNouns;
 pub use irregular_verbs::IrregularVerbs;
-#[cfg(feature = "multilingual")]
+#[cfg(feature = "language-module")]
 pub use language::{Language, LanguageFamily};
 use linting::Lint;
 pub use linting::{LintGroup, Linter};

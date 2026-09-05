@@ -11,7 +11,7 @@
 //
 // 2. **Language Integration**:
 //    - Generates `src/language/mod.rs`, `src/language/languages.rs`
-//    - Generates `src/language/registry.rs`, `src/language/dialects/dialect_flags.rs`
+//    - Generates `src/language/registry.rs`
 //
 // 3. **Feature-based Compilation**:
 //    - Automatically adds `#[cfg(feature)]` attributes for optional languages

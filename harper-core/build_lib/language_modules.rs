@@ -1,29 +1,70 @@
-use std::{env, fs, path::Path, process::Command};
+use std::io::Write;
+use std::{
+    env, fs,
+    path::Path,
+    process::{Command, Stdio},
+};
 
 use crate::build_lib::language_config::{LanguageConfig, discover_languages};
 
-/// Format Rust code using cargo fmt to ensure consistent formatting
-fn format_rust_file(file_path: &Path) -> Result<(), String> {
-    // Use cargo fmt to format the file, which ensures the same configuration
-    // and behavior as when developers run cargo fmt manually
-    // Set the working directory to the project root to ensure consistent config file resolution
-    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+/// Format generated Rust source using the `rustfmt` binary, reading from stdin.
+///
+/// If `rustfmt` is unavailable or fails, the original content is returned
+/// unformatted so that a real change is still persisted.
+fn format_rust_content(content: &str) -> String {
+    let mut child = match Command::new("rustfmt")
+        .arg("--edition")
+        .arg("2024")
+        .stdin(Stdio::piped())
+        .stdout(Stdio::piped())
+        .stderr(Stdio::null())
+        .spawn()
+    {
+        Ok(child) => child,
+        Err(_) => {
+            eprintln!("Warning: rustfmt not found; writing unformatted generated code.");
+            return content.to_string();
+        }
+    };
 
-    let status = Command::new("cargo")
-        .current_dir(manifest_dir)
-        .arg("fmt")
-        .arg("--")
-        .arg(file_path)
-        .status();
-
-    match status {
-        Ok(status) if status.success() => Ok(()),
-        Ok(status) => Err(format!(
-            "cargo fmt failed with exit code: {:?}",
-            status.code()
-        )),
-        Err(e) => Err(format!("Failed to run cargo fmt: {}", e)),
+    if child
+        .stdin
+        .as_mut()
+        .and_then(|stdin| stdin.write_all(content.as_bytes()).ok())
+        .is_none()
+    {
+        eprintln!("Warning: failed to write to rustfmt; writing unformatted generated code.");
+        return content.to_string();
     }
+
+    match child.wait_with_output() {
+        Ok(output) if output.status.success() => {
+            String::from_utf8(output.stdout).unwrap_or_else(|_| content.to_string())
+        }
+        _ => {
+            eprintln!("Warning: rustfmt failed; writing unformatted generated code.");
+            content.to_string()
+        }
+    }
+}
+
+/// Write `content` to `dest` only when it differs from the file that already
+/// exists on disk. This keeps the source tree clean and avoids needless
+/// rebuilds when generated output has not actually changed.
+fn write_if_changed(dest: &Path, content: &str) {
+    let formatted = format_rust_content(content);
+
+    if let Ok(existing) = fs::read_to_string(dest)
+        && existing == formatted
+    {
+        return;
+    }
+
+    if let Some(parent) = dest.parent() {
+        fs::create_dir_all(parent).unwrap();
+    }
+
+    fs::write(dest, formatted).unwrap();
 }
 
 /// Helper function to generate parse_language match arms dynamically
@@ -119,24 +160,27 @@ pub fn generate_language_modules(_out_dir: &Path) {
     // Write directly to mod.rs to replace the hand-written file
     let dest = src_dir.join("mod.rs");
     fs::create_dir_all(&src_dir).unwrap();
-    fs::write(&dest, &code).unwrap();
-
-    // Format the file with rustfmt
-    if let Err(e) = format_rust_file(&dest) {
-        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
-    }
+    write_if_changed(&dest, &code);
 
     // Also generate languages.rs
     generate_languages_file(&src_dir, &languages);
 
-    println!("cargo:rerun-if-changed=src/language/mod.rs");
+    // Re-run the build when language configuration or module files change, not
+    // when the files this build script writes change (that would cause a
+    // rebuild loop).
+    for lang in &languages {
+        println!(
+            "cargo:rerun-if-changed=src/language/{}/config.toml",
+            lang.dir_name
+        );
+        println!(
+            "cargo:rerun-if-changed=src/language/{}/module.rs",
+            lang.dir_name
+        );
+    }
+    println!("cargo:rerun-if-changed=src/language/dialects");
+    println!("cargo:rerun-if-changed=build_lib");
     println!("cargo:rerun-if-changed=build.rs");
-
-    // Track dialect flags file for regeneration
-    println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
-
-    // Generate Dialect enum for harper-wasm from language configurations
-    generate_wasm_dialect(&languages);
 }
 
 /// Generate languages.rs with all the language-related code
@@ -308,12 +352,7 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("}\n");
 
     let dest = src_dir.join("languages.rs");
-    fs::write(&dest, &code).unwrap();
-
-    // Format the file with rustfmt
-    if let Err(e) = format_rust_file(&dest) {
-        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
-    }
+    write_if_changed(&dest, &code);
 
     // Also generate registry.rs
     generate_registry_file(src_dir, languages);
@@ -688,805 +727,5 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("}\n");
 
     let dest = src_dir.join("registry.rs");
-    fs::write(&dest, &code).unwrap();
-
-    // Format the file with rustfmt
-    if let Err(e) = format_rust_file(&dest) {
-        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
-    }
-
-    // Generate dialect flags
-    generate_dialect_flags_file(src_dir, languages);
-}
-
-/// Generate dialect_flags.rs with dynamic dialect flags collection
-fn generate_dialect_flags_file(src_dir: &Path, _languages: &[LanguageConfig]) {
-    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
-
-    let languages = discover_languages(manifest_dir);
-    let mut code = String::new();
-
-    // Header
-    code.push_str("// Auto-generated by build.rs - do not edit manually\n");
-    code.push_str(
-        "// This file provides a centralized DialectFlags struct for all supported languages.\n",
-    );
-    code.push_str(
-        "// Language-specific dialect flags are defined in each language's dialects.rs file.\n\n",
-    );
-
-    // Imports
-    code.push_str("use serde::ser::SerializeStruct;\n");
-    code.push_str("use serde::{Deserialize, Serialize};\n");
-    code.push_str("use serde_json::Value;\n\n");
-
-    // Import dialect types - these come from individual language modules
-    code.push_str("#[allow(unused_imports)]\n");
-    code.push_str("use crate::language::dialects::dialect_trait::DialectFlags as _;\n");
-
-    // Add imports for each language
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("#[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str(&format!(
-            "use crate::language::{}::dialects::{{{}, {}}};\n",
-            lang.dir_name, lang.dialect_module, lang.flags_module
-        ));
-        if lang.feature.is_none() {
-            code.push('\n');
-        }
-    }
-
-    code.push('\n');
-
-    // Main DialectFlags struct
-    code.push_str(
-        "/// This represents a collection of dialect flags for all supported languages.\n",
-    );
-    code.push_str("/// Each language has its own set of dialect flags.\n");
-    code.push_str("#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash)]\n");
-    code.push_str("pub struct DialectFlags {\n");
-
-    // Add struct fields
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str(&format!(
-            "    pub {}: {},\n",
-            lang.dir_name.to_lowercase(),
-            lang.flags_module
-        ));
-    }
-
-    code.push_str("}\n\n");
-
-    // Serialize implementation - this delegates to individual language serialization via their Serialize derives
-    code.push_str("impl Serialize for DialectFlags {\n");
-    code.push_str("    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>\n");
-    code.push_str("    where\n");
-    code.push_str("        S: serde::Serializer,\n");
-    code.push_str("    {\n");
-    code.push_str("        let mut scoped = serializer.serialize_struct(\"DialectFlags\", 4)?;\n");
-
-    // Generate serialize fields dynamically
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str(&format!(
-            "        scoped.serialize_field(\"{}\", &self.{})?;\n",
-            lang.dir_name.to_lowercase(),
-            lang.dir_name.to_lowercase()
-        ));
-    }
-    code.push_str("        scoped.end()\n");
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // This is where it gets complex - the Deserialize implementation
-    // The current implementation uses a ScopedDialectFlagsSerde helper
-    code.push_str("impl<'de> Deserialize<'de> for DialectFlags {\n");
-    code.push_str("    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>\n");
-    code.push_str("    where\n");
-    code.push_str("        D: serde::Deserializer<'de>,\n");
-    code.push_str("    {\n");
-    code.push_str(
-        "        // Only accept the new scoped, language-specific dialect flags format.\n",
-    );
-    code.push_str("        let scoped = ScopedDialectFlagsSerde::deserialize(deserializer)?;\n");
-    code.push_str("        Ok(scoped.into())\n");
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // From implementation
-    code.push_str("impl From<ScopedDialectFlagsSerde> for DialectFlags {\n");
-    code.push_str("    fn from(value: ScopedDialectFlagsSerde) -> Self {\n");
-    code.push_str("        Self {\n");
-
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!(
-                "            {}: value.{},\n",
-                lang.dir_name.to_lowercase(),
-                lang.dir_name.to_lowercase()
-            ));
-        } else {
-            code.push_str(&format!(
-                "            {}: value.{},",
-                lang.dir_name.to_lowercase(),
-                lang.dir_name.to_lowercase()
-            ));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // empty() method
-    code.push_str("impl DialectFlags {\n");
-    code.push_str("    #[must_use]\n");
-    code.push_str("    pub const fn empty() -> Self {\n");
-    code.push_str("        Self {\n");
-
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!(
-                "            {}: {}::empty(),\n",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-        } else {
-            code.push_str(&format!(
-                "            {}: {}::empty(),",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n\n");
-
-    // new() method
-    code.push_str("    /// Creates a DialectFlags with the specified dialect flags.\n");
-    code.push_str("    #[must_use]\n");
-    code.push_str("    pub const fn new(\n");
-
-    // Generate parameters dynamically
-    for (i, lang) in languages.iter().enumerate() {
-        if i == 0 {
-            code.push_str("        english: EnglishDialectFlags,\n");
-        } else {
-            if let Some(feature) = &lang.feature {
-                code.push_str(&format!(
-                    "        #[cfg(feature = \"{}\")] {}: {},\n",
-                    feature,
-                    lang.dir_name.to_lowercase(),
-                    lang.flags_module
-                ));
-            } else {
-                code.push_str(&format!(
-                    "        {}: {},\n",
-                    lang.dir_name.to_lowercase(),
-                    lang.flags_module
-                ));
-            }
-        }
-    }
-    code.push_str("    ) -> Self {\n");
-    code.push_str("        Self {\n");
-
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!("            {},\n", lang.dir_name.to_lowercase()));
-        } else {
-            code.push_str(&format!("            {},", lang.dir_name.to_lowercase()));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n\n");
-
-    // from_english_dialect() method
-    code.push_str(
-        "    /// Creates a DialectFlags with only the specified English dialect enabled.\n",
-    );
-    code.push_str("    /// This is a convenience method for tests and cases where only English dialects are needed.\n");
-    code.push_str("    #[must_use]\n");
-    code.push_str("    pub fn from_english_dialect(dialect: EnglishDialect) -> Self {\n");
-    code.push_str("        let english_flags = match dialect {\n");
-    code.push_str("            EnglishDialect::American => EnglishDialectFlags::AMERICAN,\n");
-    code.push_str("            EnglishDialect::Canadian => EnglishDialectFlags::CANADIAN,\n");
-    code.push_str("            EnglishDialect::Australian => EnglishDialectFlags::AUSTRALIAN,\n");
-    code.push_str("            EnglishDialect::British => EnglishDialectFlags::BRITISH,\n");
-    code.push_str("            EnglishDialect::Indian => EnglishDialectFlags::INDIAN,\n");
-    code.push_str("        };\n\n");
-
-    code.push_str("        Self {\n");
-    code.push_str("            english: english_flags,\n");
-
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!(
-                "            {}: {}::empty(),\n",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-        } else {
-            code.push_str(&format!(
-                "            {}: {}::empty(),",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n\n");
-
-    // is_empty() method
-    code.push_str("    #[must_use]\n");
-    code.push_str("    #[allow(unused_mut)]\n");
-    code.push_str("    pub fn is_empty(self) -> bool {\n");
-    code.push_str("        let mut result = self.english.is_empty();\n");
-
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str("        {\n");
-            code.push_str(&format!(
-                "            result = result && self.{}.is_empty();\n",
-                lang.dir_name.to_lowercase()
-            ));
-            code.push_str("        }\n");
-        }
-    }
-    code.push_str("        result\n");
-    code.push_str("    }\n\n");
-
-    // English dialect helper methods
-    code.push_str("    #[must_use]\n");
-    code.push_str(
-        "    pub fn is_english_dialect_enabled(self, dialect: EnglishDialect) -> bool {\n",
-    );
-    code.push_str("        self.english.is_dialect_enabled(dialect)\n");
-    code.push_str("    }\n\n");
-
-    code.push_str("    #[must_use]\n");
-    code.push_str(
-        "    pub fn is_english_dialect_enabled_strict(self, dialect: EnglishDialect) -> bool {\n",
-    );
-    code.push_str("        self.english.is_dialect_enabled_strict(dialect)\n");
-    code.push_str("    }\n\n");
-
-    // Non-English dialect helper methods
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str("    #[must_use]\n");
-        code.push_str(&format!(
-            "    pub fn is_{}_dialect_enabled(self, dialect: {}Dialect) -> bool {{\n",
-            lang.dir_name.to_lowercase(),
-            lang.name
-        ));
-        code.push_str(&format!(
-            "        self.{}.is_dialect_enabled(dialect)\n",
-            lang.dir_name.to_lowercase()
-        ));
-        code.push_str("    }\n\n");
-
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str("    #[must_use]\n");
-        code.push_str(&format!(
-            "    pub fn is_{}_dialect_enabled_strict(self, dialect: {}Dialect) -> bool {{\n",
-            lang.dir_name.to_lowercase(),
-            lang.name
-        ));
-        code.push_str(&format!(
-            "        self.{}.is_dialect_enabled_strict(dialect)\n",
-            lang.dir_name.to_lowercase()
-        ));
-        code.push_str("    }\n\n");
-    }
-
-    // get_most_used_dialects_from_document method
-    code.push_str("    /// Gets the most commonly used dialect(s) in the document.\n");
-    code.push_str("    ///\n");
-    code.push_str(
-        "    /// If multiple dialects are used equally often, they will all be enabled in the returned\n",
-    );
-    code.push_str("    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it\n");
-    code.push_str("    /// will be the only one enabled.\n");
-    code.push_str("    #[must_use]\n");
-    code.push_str(
-        "    pub fn get_most_used_dialects_from_document(document: &crate::Document) -> Self {\n",
-    );
-    code.push_str("        // Get the most used dialects for each language separately\n");
-    code.push_str("        let english_flags = EnglishDialectFlags::get_most_used_dialects_from_document(document);\n");
-
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
-        }
-        // Check if the line would be too long and needs splitting
-        let line_content = format!(
-            "        let {}_flags = {}::get_most_used_dialects_from_document(document);",
-            lang.dir_name.to_lowercase(),
-            lang.flags_module
-        );
-        if line_content.len() > 100 {
-            // Split across multiple lines for long expressions
-            code.push_str(&format!(
-                "        let {}_flags =\n",
-                lang.dir_name.to_lowercase()
-            ));
-            code.push_str(&format!(
-                "            {}::get_most_used_dialects_from_document(document);\n",
-                lang.flags_module
-            ));
-        } else {
-            // Keep on one line for shorter expressions
-            code.push_str(&format!(
-                "        let {}_flags = {}::get_most_used_dialects_from_document(document);\n",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-        }
-    }
-
-    code.push_str("\n        Self {\n");
-    code.push_str("            english: english_flags,\n");
-
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!(
-                "            {}: {}_flags,\n",
-                lang.dir_name.to_lowercase(),
-                lang.dir_name.to_lowercase()
-            ));
-        } else {
-            code.push_str(&format!(
-                "            {}: {}_flags,",
-                lang.dir_name.to_lowercase(),
-                lang.dir_name.to_lowercase()
-            ));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n");
-
-    // BitOr implementation
-    code.push_str("}\n");
-    code.push_str("impl std::ops::BitOr for DialectFlags {\n");
-    code.push_str("    type Output = Self;\n\n");
-
-    code.push_str("    fn bitor(self, rhs: Self) -> Self::Output {\n");
-    code.push_str("        Self {\n");
-
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("            #[cfg(feature = \"{}\")]\n", feature));
-        }
-        code.push_str(&format!(
-            "            {}: self.{} | rhs.{},",
-            lang.dir_name.to_lowercase(),
-            lang.dir_name.to_lowercase(),
-            lang.dir_name.to_lowercase()
-        ));
-        code.push('\n');
-    }
-    code.push_str("        }\n");
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // BitOrAssign implementation
-    code.push_str("impl std::ops::BitOrAssign for DialectFlags {\n");
-    code.push_str("    fn bitor_assign(&mut self, rhs: Self) {\n");
-    code.push_str("        self.english |= rhs.english;\n");
-
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str("        {\n");
-            code.push_str(&format!(
-                "            self.{} |= rhs.{};\n",
-                lang.dir_name.to_lowercase(),
-                lang.dir_name.to_lowercase()
-            ));
-            code.push_str("        }\n");
-        }
-    }
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // Default implementation
-    code.push_str("impl Default for DialectFlags {\n");
-    code.push_str("    /// A default value with no dialects explicitly enabled.\n");
-    code.push_str("    /// Implicitly, this state corresponds to all dialects being enabled.\n");
-    code.push_str("    fn default() -> Self {\n");
-    code.push_str("        Self::empty()\n");
-    code.push_str("    }\n");
-    code.push_str("}\n\n");
-
-    // ScopedDialectFlagsSerde for deserialization
-    code.push_str(
-        "// Use the ScopedDialectFlagsSerde and DialectFlags (language-scoped) for serialization/deserialization.\n",
-    );
-    code.push_str("#[derive(Debug, Clone, Copy, PartialEq, PartialOrd, Eq, Hash, Default)]\n");
-    code.push_str("struct ScopedDialectFlagsSerde {\n");
-
-    for lang in &languages {
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
-            code.push_str(&format!(
-                "    {}: {},\n",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-        } else {
-            code.push_str(&format!(
-                "    {}: {},",
-                lang.dir_name.to_lowercase(),
-                lang.flags_module
-            ));
-            if lang.dir_name != "slovak" {
-                code.push('\n');
-            }
-        }
-    }
-    code.push_str("}\n\n");
-
-    // Deserialize implementation for ScopedDialectFlagsSerde
-    code.push_str("impl<'de> Deserialize<'de> for ScopedDialectFlagsSerde {\n");
-    code.push_str("    fn deserialize<D>(deserializer: D) -> Result<Self, D::Error>\n");
-    code.push_str("    where\n");
-    code.push_str("        D: serde::Deserializer<'de>,\n");
-    code.push_str("    {\n");
-    code.push_str("        use serde::de::{Error, Unexpected};\n\n");
-
-    code.push_str("        let value = Value::deserialize(deserializer)?;\n\n");
-
-    code.push_str("        match value {\n");
-    code.push_str("            Value::Object(map) => {\n");
-    code.push_str("                let mut english = EnglishDialectFlags::default();\n");
-
-    // Generate variable declarations for each language's flags
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!(
-                "                #[cfg(feature = \"{}\")]\n",
-                feature
-            ));
-        }
-        code.push_str(&format!(
-            "                let mut {} = {}::default();\n",
-            lang.dir_name.to_lowercase(),
-            lang.flags_module
-        ));
-    }
-
-    code.push('\n');
-
-    code.push_str("                for (key, val) in map {\n");
-    code.push_str("                    match key.as_str() {\n");
-
-    // English deserialization
-    code.push_str("                        \"english\" => {\n");
-    code.push_str("                            english = match val {\n");
-    code.push_str("                                Value::String(s) => match s.as_str() {\n");
-    code.push_str(
-        "                                    \"AMERICAN\" => Ok(EnglishDialectFlags::AMERICAN),\n",
-    );
-    code.push_str(
-        "                                    \"CANADIAN\" => Ok(EnglishDialectFlags::CANADIAN),\n",
-    );
-    code.push_str("                                    \"AUSTRALIAN\" => Ok(EnglishDialectFlags::AUSTRALIAN),\n");
-    code.push_str(
-        "                                    \"BRITISH\" => Ok(EnglishDialectFlags::BRITISH),\n",
-    );
-    code.push_str(
-        "                                    \"INDIAN\" => Ok(EnglishDialectFlags::INDIAN),\n",
-    );
-    code.push_str("                                    _ => {\n");
-    code.push_str("                                        Err(Error::custom(format!(\"Unknown English dialect: {s}\")))\n");
-    code.push_str("                                    }\n");
-    code.push_str("                                },\n");
-    code.push_str("                                _ => Err(Error::invalid_type(\n");
-    code.push_str("                                    Unexpected::Other(\"english\"),\n");
-    code.push_str("                                    &\"string\",\n");
-    code.push_str("                                )),\n");
-    code.push_str("                            }?;\n");
-    code.push_str("                        }\n");
-
-    // Non-English language deserialization
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!(
-                "                        #[cfg(feature = \"{}\")]\n",
-                feature
-            ));
-        }
-        code.push_str(&format!(
-            "                        \"{}\" => {{\n",
-            lang.dir_name.to_lowercase()
-        ));
-        code.push_str(&format!(
-            "                            {} = match val {{\n",
-            lang.dir_name.to_lowercase()
-        ));
-        code.push_str("                                Value::String(s) => match s.as_str() {\n");
-
-        // Generate dialect variant match arms
-        // This is hardcoded per language for now
-        if lang.dir_name == "german" {
-            code.push_str("                                    \"STANDARD\" => Ok(GermanDialectFlags::STANDARD),\n");
-            code.push_str("                                    \"AUSTRIAN\" => Ok(GermanDialectFlags::AUSTRIAN),\n");
-            code.push_str(
-                "                                    \"SWISS\" => Ok(GermanDialectFlags::SWISS),\n",
-            );
-            code.push_str("                                    _ => Err(Error::custom(format!(\n");
-            code.push_str(
-                "                                        \"Unknown German dialect: {s}\"\n",
-            );
-            code.push_str("                                    ))),\n");
-        } else if lang.dir_name == "portuguese" {
-            code.push_str("                                    \"EUROPEAN\" => Ok(PortugueseDialectFlags::EUROPEAN),\n");
-            code.push_str("                                    \"BRAZILIAN\" => Ok(PortugueseDialectFlags::BRAZILIAN),\n");
-            code.push_str("                                    \"AFRICAN\" => Ok(PortugueseDialectFlags::AFRICAN),\n");
-            code.push_str("                                    _ => Err(Error::custom(format!(\n");
-            code.push_str(
-                "                                        \"Unknown Portuguese dialect: {s}\"\n",
-            );
-            code.push_str("                                    ))),\n");
-        } else if lang.dir_name == "slovak" {
-            code.push_str("                                    \"STANDARD\" => Ok(SlovakDialectFlags::STANDARD),\n");
-            code.push_str("                                    _ => Err(Error::custom(format!(\n");
-            code.push_str(
-                "                                        \"Unknown Slovak dialect: {s}\"\n",
-            );
-            code.push_str("                                    ))),\n");
-        } else if lang.dir_name == "polish" {
-            code.push_str("                                    \"STANDARD\" => Ok(PolishDialectFlags::STANDARD),\n");
-            code.push_str("                                    _ => Err(Error::custom(format!(\n");
-            code.push_str(
-                "                                        \"Unknown Polish dialect: {s}\"\n",
-            );
-            code.push_str("                                    ))),\n");
-        }
-
-        code.push_str("                                },\n");
-        code.push_str("                                _ => {\n");
-        code.push_str("                                    Err(Error::invalid_type(\n");
-        code.push_str(&format!(
-            "                                        Unexpected::Other(\"{}\"),\n",
-            lang.dir_name.to_lowercase()
-        ));
-        code.push_str("                                        &\"string\",\n");
-        code.push_str("                                    ))\n");
-        code.push_str("                                }\n");
-        code.push_str("                            }?;\n");
-        code.push_str("                        }\n");
-    }
-    code.push_str("                        _ => {\n");
-    code.push_str(
-        "                            // Build list of valid fields based on enabled features\n",
-    );
-    code.push_str("                            let valid_fields: Vec<&'static str> = {\n");
-    code.push_str("                                #[allow(unused_mut)]\n");
-    code.push_str("                                let mut fields = vec![\"english\"];\n");
-
-    // Generate valid_fields list dynamically from discovered languages
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue; // English already added
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!(
-                "                                #[cfg(feature = \"{}\")]\n",
-                feature
-            ));
-            code.push_str("                                {\n");
-            code.push_str(&format!(
-                "                                    fields.push(\"{}\");\n",
-                lang.dir_name.to_lowercase()
-            ));
-            code.push_str("                                }\n");
-        }
-    }
-
-    code.push_str("                                fields\n");
-    code.push_str(
-        "                            }; // Convert to a static slice by leaking the memory\n",
-    );
-    code.push_str("                            // This is safe as it's only done during deserialization error handling\n");
-    code.push_str(
-        "                            let valid_fields_static: &'static [&'static str] =\n",
-    );
-    code.push_str("                                Box::leak(valid_fields.into_boxed_slice());\n");
-    code.push_str("                            return Err(Error::unknown_field(&key, valid_fields_static));\n");
-    code.push_str("                        }\n");
-    code.push_str("                    }\n");
-    code.push_str("                }\n");
-    code.push_str("                Ok(ScopedDialectFlagsSerde {\n");
-    code.push_str("                    english,\n");
-
-    // Generate struct fields dynamically
-    for lang in &languages {
-        if lang.dir_name == "english" {
-            continue; // English already added
-        }
-        if let Some(feature) = &lang.feature {
-            code.push_str(&format!(
-                "                    #[cfg(feature = \"{}\")]\n",
-                feature
-            ));
-            code.push_str(&format!(
-                "                    {},\n",
-                lang.dir_name.to_lowercase()
-            ));
-        }
-    }
-
-    code.push_str("                })\n");
-    code.push_str("            }\n");
-    code.push_str("            Value::String(s) => Err(Error::custom(format!(\n");
-    code.push_str(
-        "                \"Legacy flat string format for dialect flags is no longer supported: {s}\"\n",
-    );
-    code.push_str("            ))),\n");
-    code.push_str("            _ => Err(Error::custom(\"Expected object for dialect flags\")),\n");
-    code.push_str("        }\n");
-    code.push_str("    }\n");
-    code.push_str("}\n");
-    // Write the generated file
-    let dest = src_dir.join("dialects").join("dialect_flags.rs");
-    fs::create_dir_all(dest.parent().unwrap()).unwrap();
-    fs::write(&dest, &code).unwrap();
-
-    // Format the file with rustfmt
-    if let Err(e) = format_rust_file(&dest) {
-        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
-    }
-
-    println!("cargo:rerun-if-changed=src/language/dialects/dialect_flags.rs");
-}
-
-/// Generate the Dialect enum for harper-wasm
-/// This enum is auto-generated from harper-core's language configurations
-/// and allows harper-wasm to support all languages without manual updates
-fn generate_wasm_dialect(languages: &[LanguageConfig]) {
-    let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
-
-    // The destination is in harper-wasm/src/
-    let wasm_src_dir = manifest_dir.parent().unwrap().join("harper-wasm/src");
-    let dest = wasm_src_dir.join("generated_dialect.rs");
-
-    let mut code = String::new();
-
-    // Header
-    code.push_str("// Auto-generated by harper-core build.rs - do not edit manually\n");
-    code.push_str("// This file provides the Dialect enum for harper-wasm.\n");
-    code.push_str("// It is auto-generated from harper-core's language configurations\n");
-    code.push_str("// to ensure all languages are automatically supported.\n\n");
-
-    // Generate the Dialect enum
-    code.push_str("/// Specifies a dialect, often used for linting.\n");
-    code.push_str("#[wasm_bindgen]\n");
-    code.push_str("#[derive(Serialize, Deserialize, Debug, Clone, Copy)]\n");
-    code.push_str("pub enum Dialect {\n");
-
-    // English dialects
-    code.push_str("    // English dialects\n");
-    code.push_str("    American,\n");
-    code.push_str("    British,\n");
-    code.push_str("    Australian,\n");
-    code.push_str("    Canadian,\n");
-    code.push_str("    Indian,\n");
-
-    // Other languages
-    for lang in languages {
-        if lang.dir_name == "english" {
-            continue;
-        }
-        code.push_str(&format!("    // {} dialects\n", lang.name));
-        for (_, dialect_name) in &lang.dialect_alias_groups {
-            // Convert dialect name to the appropriate format and prepend language name
-            let dialect_variant = to_dialect_variant(dialect_name);
-            let variant = format!("{}{}", lang.name, dialect_variant);
-            code.push_str(&format!("    {},\n", variant));
-        }
-    }
-
-    code.push_str("}\n");
-
-    // Create directory if needed
-    fs::create_dir_all(&wasm_src_dir).unwrap();
-
-    // Write the file
-    fs::write(&dest, &code).unwrap();
-
-    // Format the file
-    if let Err(e) = format_rust_file(&dest) {
-        eprintln!("Warning: Failed to format {}: {}", dest.display(), e);
-    }
-
-    // Note: We don't use rerun-if-changed for generated_dialect.rs to avoid
-    // race conditions with harper-wasm's build script which also generates this file
-}
-
-/// Convert a dialect name for use in the Dialect enum variant
-/// Preserves uppercase for short codes (like PT, BR, AO) and converts others to PascalCase
-fn to_dialect_variant(dialect_name: &str) -> String {
-    // If the dialect name is all uppercase (like PT, BR, AO), keep it as-is
-    if dialect_name.chars().all(|c| c.is_ascii_uppercase()) {
-        dialect_name.to_string()
-    } else {
-        // Otherwise convert to PascalCase
-        to_pascal_case(dialect_name)
-    }
-}
-
-/// Convert a string to PascalCase
-fn to_pascal_case(s: &str) -> String {
-    s.split('_')
-        .map(|part| {
-            let mut chars = part.chars();
-            match chars.next() {
-                None => String::new(),
-                Some(first) => {
-                    let mut result = first.to_ascii_uppercase().to_string();
-                    result.extend(chars.map(|c| c.to_ascii_lowercase()));
-                    result
-                }
-            }
-        })
-        .collect()
+    write_if_changed(&dest, &code);
 }

@@ -96,9 +96,10 @@ language-test-examples language:
 	echo "======================================="
 	example_dir="harper-core/src/language/{{language}}/test_sources"; \
 	if [ -d "${example_dir}" ]; then \
-		for file in "${example_dir}"/*.md; do \
+		for file in "${example_dir}"/*.md "${example_dir}"/*.txt; do \
 			if [ -f "${file}" ]; then \
-				filename=$(basename "${file}" .md); \
+				filename=$(basename "${file}"); \
+				filename="${filename%.*}"; \
 				echo "Testing: ${filename}"; \
 				text=$(cat "${file}"); \
 				just language-test {{language}} "${text}" || true; \
