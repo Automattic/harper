@@ -302,11 +302,11 @@ function getGoogleDocsPositionedLeafHost(child: Node, target: HTMLElement): HTML
  * The payload includes nearby context so the bridge can recover when the original
  * offsets have gone stale by the time the suggestion is applied.
  */
-export function replaceGoogleDocsValue(
+export async function replaceGoogleDocsValue(
 	span: { start: number; end: number },
 	replacementText: string,
 	source: string,
-) {
+): Promise<boolean> {
 	try {
 		const safeStart = Math.max(0, Math.min(span.start, source.length));
 		const safeEnd = Math.max(safeStart, Math.min(span.end, source.length));
@@ -323,23 +323,23 @@ export function replaceGoogleDocsValue(
 			beforeContext,
 			afterContext,
 		};
-		// This looks awkward because lint-framework cannot import chrome-plugin code directly.
-		// The content script puts the bridge client on window so this shared package can call it.
+
 		const bridgeClient = (window as WindowWithGoogleDocsBridgeClient)
 			.__harperGoogleDocsBridgeClient;
 		if (bridgeClient && typeof bridgeClient.replaceText === 'function') {
-			void Promise.resolve(
-				bridgeClient.replaceText(
-					payload.start,
-					payload.end,
-					payload.replacementText,
-					payload.expectedText,
-					payload.beforeContext,
-					payload.afterContext,
-				),
+			const applied = await bridgeClient.replaceText(
+				payload.start,
+				payload.end,
+				payload.replacementText,
+				payload.expectedText,
+				payload.beforeContext,
+				payload.afterContext,
 			);
+			return Boolean(applied);
 		}
-	} catch {
-		// Ignore bridge dispatch failures.
+
+		return false;
+	} catch (e) {
+		return false;
 	}
 }
