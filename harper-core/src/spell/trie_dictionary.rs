@@ -4,9 +4,7 @@ use std::sync::{Arc, LazyLock};
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use crate::DictWordMetadata;
-
-use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordId};
+use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
@@ -35,20 +33,8 @@ impl<D: Dictionary> TrieDictionary<D> {
 }
 
 impl<D: Dictionary> Dictionary for TrieDictionary<D> {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.inner.contains_word(word)
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.inner.contains_word_str(word)
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.inner.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.inner.contains_exact_word_str(word)
+    fn get_word_map(&self) -> &WordMap {
+        self.inner.get_word_map()
     }
 
     fn fuzzy_match(
@@ -58,39 +44,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         max_results: usize,
     ) -> Vec<FuzzyMatchResult<'_>> {
         self.inner.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.inner.fuzzy_match_str(word, max_distance, max_results)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.inner.get_correct_capitalization_of(word)
-    }
-
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.inner.get_word_metadata_str(word)
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.inner.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.inner.word_count()
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.inner.get_word_from_id(id)
     }
 
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {

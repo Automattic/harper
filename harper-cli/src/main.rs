@@ -1,6 +1,6 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
+use harper_core::spell::{CanonicalWordId, Dictionary, FstDictionary, MutableDictionary};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
@@ -1039,11 +1039,14 @@ fn line_to_parts(line: &str) -> (String, String) {
 fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary) {
     println!("{word}/{annot}");
 
-    let id = WordId::from_word_str(word);
+    let id = CanonicalWordId::from_word_str(word);
 
-    let children = dictionary
-        .words_iter()
-        .filter(|e| dictionary.get_word_metadata(e).unwrap().derived_from == Some(id));
+    let children = dictionary.get_word_map().iter().filter_map(|wme| {
+        wme.metadata
+            .derived_from
+            .contains(id)
+            .then_some(&wme.canonical_spelling)
+    });
 
     println!(" - {word}");
 
