@@ -347,15 +347,6 @@ mod tests {
     }
 
     #[test]
-    fn not_confident_proc_should_be_pro_c() {
-        assert_lint_message(
-            "proc",
-            SplitWords::default(),
-            "`proc` should possibly be written as `pro c`.",
-        );
-    }
-
-    #[test]
     fn confident_thankyou_should_be_thank_you() {
         assert_lint_message(
             "thankyou",
@@ -384,7 +375,7 @@ mod tests {
     fn never_corrects_to_invalid_single_letter_words() {
         let triggers = [
             "comitted", "testc", "testh", "testb", "testq", "testx", "testg", "teste", "testj",
-            "shes",
+            "shes", "proc",
         ];
         let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'j', 's'];
 

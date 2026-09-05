@@ -4,6 +4,8 @@ use crate::char_string::char_string;
 use crate::linting::informal_laughter::is_informal_laughter;
 use crate::{CharString, CharStringExt, Document, Span};
 
+pub const REPEATED_WORDS_PRIORITY: u8 = 128;
+
 #[derive(Debug, Clone)]
 pub struct RepeatedWords {
     /// Words that we need to make sure are detected.
@@ -77,7 +79,7 @@ impl Linter for RepeatedWords {
                             document.get_span_content(&tok_a.span).to_vec(),
                         )],
                         message: "Did you mean to repeat this word?".to_owned(),
-                        priority: 128, // Lower priority than `TheTheToThatThe`
+                        priority: REPEATED_WORDS_PRIORITY, // Lower priority (higher number) than `TheTheToThatThe`
                     })
                 }
             }

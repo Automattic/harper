@@ -920,13 +920,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 }
