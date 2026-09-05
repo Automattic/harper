@@ -2,6 +2,7 @@ use super::{Lint, LintKind, Linter, Suggestion};
 use crate::TokenStringExt;
 use crate::char_string::char_string;
 use crate::linting::informal_laughter::is_informal_laughter;
+use crate::token::TokenKind;
 use crate::{CharString, CharStringExt, Document, Span};
 
 #[derive(Debug, Clone)]
@@ -53,6 +54,13 @@ impl Linter for RepeatedWords {
                 if prev_tok.is_some_and(|t| t.kind.is_hyphen())
                     || next_tok.is_some_and(|t| t.kind.is_hyphen())
                 {
+                    continue;
+                }
+
+                let a_is_possessive = matches!(tok_a.kind, TokenKind::Word(ref w) if w.possessive_of.is_some());
+                let b_is_possessive = matches!(tok_b.kind, TokenKind::Word(ref w) if w.possessive_of.is_some());
+
+                if a_is_possessive != b_is_possessive {
                     continue;
                 }
 
@@ -186,5 +194,32 @@ mod tests {
         for source in ["ha ha", "Ha ha", "hah hah", "ha ha ha"] {
             assert_lint_count(source, RepeatedWords::default(), 0);
         }
+    }
+
+    #[test]
+    fn dont_flag_possessive_after_contraction() {
+        assert_lint_count(
+            "she's Kamen's friend",
+            RepeatedWords::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn dont_flag_contraction_after_possessive() {
+        assert_lint_count(
+            "Kamen's friend she's met before",
+            RepeatedWords::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn still_catches_repeated_possessives() {
+        assert_lint_count(
+            "Kamen's Kamen's friend",
+            RepeatedWords::default(),
+            1,
+        );
     }
 }
