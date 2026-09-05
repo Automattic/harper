@@ -3485,6 +3485,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ForSell",
+								"state": true,
+								"label": "For Sell"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
