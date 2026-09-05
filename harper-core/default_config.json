@@ -4057,7 +4057,7 @@
 							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
-								"label": "Ahead And"
+								"label": "Ahead and"
 							}
 						},
 						{
@@ -5437,6 +5437,13 @@
 								"name": "PiqueInterest",
 								"state": true,
 								"label": "Pique Interest"
+							}
+						},
+						{
+							"Bool": {
+								"name": "PlayAFactor",
+								"state": true,
+								"label": "Play a Factor"
 							}
 						},
 						{
