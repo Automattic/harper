@@ -7,8 +7,11 @@ use crate::{
 
 use super::super::{NOUN_VERB_PAIRS, conjugate_pair_verb};
 
-/// Pronouns that can come before verbs but not nouns
-const PRONOUNS: &[&str] = &["he", "I", "it", "she", "they", "we", "who", "you"];
+/// TODO: Remove the explicit `who` match once the curated dictionary
+/// marks `who` as a subject pronoun.
+fn is_subject_pronoun_like(token: &Token, source: &[char]) -> bool {
+    token.kind.is_subject_pronoun() || token.get_ch(source).eq_str("who")
+}
 
 /// Linter that corrects common noun/verb confusions
 pub(super) struct GeneralNounInsteadOfVerb {
@@ -24,7 +27,7 @@ impl Default for GeneralNounInsteadOfVerb {
         };
 
         let pre_context = FirstMatchOf::new(vec![
-            Box::new(WordSet::new(PRONOUNS)) as Box<dyn Expr>,
+            Box::new(is_subject_pronoun_like) as Box<dyn Expr>,
             Box::new(ModalVerb::with_common_errors()),
             Box::new(WordSet::new(&["do", "don't", "dont"])),
             Box::new(adverb_of_frequency),
