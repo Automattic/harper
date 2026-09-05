@@ -196,13 +196,10 @@ fn test_most_lints() {
         let dict = FstDictionary::curated();
         let document = Document::new_markdown_default(source, &dict);
 
-        let dialect = dialect_override
-            .map(|lang| match lang {
-                Language::English(d) => d,
-                #[allow(unreachable_patterns)]
-                _ => Dialect::American, // Non-English languages should not use new_curated, but for now use American as fallback
-            })
-            .unwrap_or(Dialect::American);
+        let dialect = match dialect_override {
+            Some(Language::English(d)) => d,
+            _ => Dialect::try_guess_from_document(&document).unwrap_or(Dialect::American),
+        };
 
         let mut linter = LintGroup::new_curated(dict, dialect);
 

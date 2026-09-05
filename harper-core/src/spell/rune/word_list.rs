@@ -11,9 +11,21 @@ pub struct AnnotatedWord {
 ///
 /// Returns [`None`] if the given string is invalid.
 pub fn parse_word_list(source: &str) -> Result<Vec<AnnotatedWord>, Error> {
+    let mut lines = source.lines().peekable();
+
+    // The curated dictionary historically began with a leading line
+    // containing an integer item count. Language dictionaries do not.
+    // Accept both formats by skipping the first line only when it is a
+    // bare integer.
+    if let Some(first) = lines.peek() {
+        if first.trim().parse::<usize>().is_ok() {
+            lines.next();
+        }
+    }
+
     let mut words = Vec::new();
 
-    for line in source.lines() {
+    for line in lines {
         // Ignore blank lines and full line comments.
         if line.is_empty() || line.starts_with('#') {
             continue;
