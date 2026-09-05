@@ -192,12 +192,7 @@ pub fn followed_by_hyphen(context: Option<(&[Token], &[Token])>) -> bool {
 /// Counterintuitively, a sentence includes the whitespace after
 /// the sentence-final punctuation.
 pub fn at_start_of_sentence(context: Option<(&[Token], &[Token])>) -> bool {
-    if let Some((before, _)) = context
-        && (before.is_empty() || (before.len() == 1 && before[0].kind.is_whitespace()))
-    {
-        return true;
-    }
-    false
+    matches!(context, Some((before, _)) if before.is_empty() || (before.len() == 1 && before[0].kind.is_whitespace()))
 }
 
 /// Check for sentence context immediately before a matched span.
@@ -241,6 +236,87 @@ pub fn surrounded_by_words(
         return predicate(word_before, word_after);
     }
     false
+}
+
+pub struct AfterContextIter<'a> {
+    toks: &'a [Token],
+    idx: usize,
+}
+
+pub struct BeforeContextIter<'a> {
+    toks: &'a [Token],
+    idx: usize,
+}
+
+pub struct ContextIterators<'a> {
+    pub before: BeforeContextIter<'a>,
+    pub after: AfterContextIter<'a>,
+}
+
+impl<'a> AfterContextIter<'a> {
+    pub fn new(toks: &'a [Token]) -> Self {
+        Self { toks, idx: 0 }
+    }
+}
+
+impl<'a> BeforeContextIter<'a> {
+    pub fn new(toks: &'a [Token]) -> Self {
+        Self {
+            toks,
+            idx: toks.len(),
+        }
+    }
+}
+
+impl<'a> ContextIterators<'a> {
+    pub fn new(ctx: Option<(&'a [Token], &'a [Token])>) -> Option<Self> {
+        let (before, after) = ctx?;
+        Some(Self {
+            before: BeforeContextIter::new(before),
+            after: AfterContextIter::new(after),
+        })
+    }
+}
+
+impl<'a> AfterContextIter<'a> {
+    pub fn next_tok(&mut self) -> Option<&'a Token> {
+        if self.idx < self.toks.len() {
+            let tok = &self.toks[self.idx];
+            self.idx += 1;
+            Some(tok)
+        } else {
+            None
+        }
+    }
+
+    pub fn next_word(&mut self) -> Option<&'a Token> {
+        let nt = self.next_tok()?;
+        if !nt.kind.is_whitespace() {
+            return None;
+        }
+        let nw = self.next_tok()?;
+        nw.kind.is_word().then_some(nw)
+    }
+}
+
+impl<'a> BeforeContextIter<'a> {
+    pub fn prev_tok(&mut self) -> Option<&'a Token> {
+        if self.idx > 0 {
+            self.idx -= 1;
+            Some(&self.toks[self.idx])
+        } else {
+            None
+        }
+    }
+
+    pub fn prev_word(&mut self) -> Option<&'a Token> {
+        let pt = self.prev_tok()?;
+        if !pt.kind.is_whitespace() {
+            return None;
+        }
+        let pw = self.prev_tok()?;
+        pw.kind.is_word().then_some(pw)
+    }
 }
 
 #[cfg(test)]
