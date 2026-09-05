@@ -3,7 +3,9 @@ use crate::linting::LintKind;
 use super::{LintGroup, MapPhraseSetLinter};
 
 #[cfg(test)]
-mod tests;
+mod many_to_many_tests;
+#[cfg(test)]
+mod one_to_one_tests;
 
 /// Produce a [`LintGroup`] that looks for errors in sets of common phrases.
 pub fn lint_group() -> LintGroup {
@@ -582,6 +584,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+        "Provocate" => (
+            &[
+                ("provocate", "provoke"),
+                ("provocated", "provoked"),
+                ("provocates", "provokes"),
+                ("provocating", "provoking"),
+            ],
+            "Did you mean `provoke`?",
+            "Corrects the misspelling `provocate` to `provoke`.",
+            LintKind::WordChoice
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -665,6 +678,18 @@ pub fn lint_group() -> LintGroup {
             "Use the subjunctive mood with `if only` or `I wish`. The correct form is `were`, not `was`.",
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
+        ),
+        "TakeControlOf" => (
+            &[
+                ("take control over", "take control of"),
+                ("taken control over", "taken control of"),
+                ("takes control over", "takes control of"),
+                ("taking control over", "taking control of"),
+                ("took control over", "took control of"),
+            ],
+            "Use `take control of` instead of `take control over`.",
+            "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
         ),
         "UseToUsedTo" => (
             &[
@@ -974,6 +999,20 @@ pub fn lint_group() -> LintGroup {
             "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
             "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
             LintKind::Spelling
+        ),
+        "PlayAFactor" => (
+            &[
+                // singular
+                (&["play a factor"], &["play a part", "play a role", "be a factor", "are a factor", "am a factor"]),
+                (&["plays a factor"], &["plays a part", "plays a role", "is a factor"]),
+                (&["played a factor"], &["played a part", "played a role", "was a factor", "were a factor", "were factors", "been a factor"]),
+                (&["playing a factor"], &["playing a part", "playing a role", "a factor","being a factor"]),
+                // plural - NOTE some lead to more false positives than true errors
+                (&["played factors"], &["played parts", "played roles", "played a part", "played a role", "were a factor", "were factors"]),
+            ],
+            "Use `play a part` or `be a factor` instead of `play a factor`.",
+            "Corrects `play a factor` to `play a part` or `be a factor`.",
+            LintKind::Usage
         ),
         "RiseTheQuestion" => (
             &[

@@ -35,6 +35,8 @@ pub struct DictWordMetadata {
     pub preposition: bool,
     /// Whether the word is an offensive word.
     pub swear: Option<bool>,
+    /// Whether the word is an abbreviation of any kind.
+    pub abbreviation: Option<bool>,
     /// The dialects this word belongs to.
     /// If no dialects are defined, it can be assumed that the word is
     /// valid in all dialects of English.
@@ -676,6 +678,11 @@ impl DictWordMetadata {
         matches!(self.swear, Some(true))
     }
 
+    /// Abbreviation is orthogonal to POS
+    pub fn is_abbreviation(&self) -> bool {
+        matches!(self.abbreviation, Some(true))
+    }
+
     // Orthographic queries
 
     /// Does the metadata for this word cover an all-lowercase variant? (e.g., "hello")
@@ -778,6 +785,7 @@ impl DictWordMetadata {
         self.dialects |= other.dialects;
         self.orth_info |= other.orth_info;
         self.swear = self.swear.or(other.swear);
+        self.abbreviation = self.abbreviation.or(other.abbreviation);
         self.common |= other.common;
         self.derived_from.extend(other.derived_from.iter());
         self.pos_tag = self.pos_tag.or(other.pos_tag);
