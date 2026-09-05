@@ -686,6 +686,8 @@ print-annotations:
     ...affixesData.properties || {}
   };
 
+  const PREFIX_CHAR = '+';
+
   // Calculate the maximum description length for alignment
   const entries = Object.entries(allEntries);
   const maxDescLength = entries.reduce((max, [flag, fields]) => {
@@ -704,125 +706,50 @@ print-annotations:
     }
   });
 
+  const keys = Object.keys(allEntries);
+  
+  // Base pools for single characters
+  const standardUsedChars = keys.filter(k => k.length === 1 && k !== PREFIX_CHAR);
+  standardUsedChars.push(PREFIX_CHAR); // Block the prefix itself from single use
+
+  // Prefixed pools (e.g., if "+A" exists, "A" is used in the prefixed context)
+  const prefixedUsedChars = keys
+    .filter(k => k.startsWith(PREFIX_CHAR) && k.length > PREFIX_CHAR.length)
+    .map(k => k.slice(PREFIX_CHAR.length));
+
+  console.log('\n--- SINGLE CHARACTER FLAGS ---');
   console.log('Available letters for new flags:', [...Array.from({length: 26}, (_, i) =>
     [String.fromCharCode(65 + i), String.fromCharCode(97 + i)]
-  ).flat()].filter(letter => !Object.keys(allEntries).includes(letter)).sort().join(' '));
+  ).flat()].filter(letter => !standardUsedChars.includes(letter)).sort().join(' '));
+  
   console.log('Available digits for new flags:', [...Array.from({length: 10}, (_, i) =>
     String(i)
-  )].filter(digit => !Object.keys(allEntries).includes(digit)).sort().join(' '));
+  )].filter(digit => !standardUsedChars.includes(digit)).sort().join(' '));
+  
   console.log('Available symbols for new flags:',
     [...Array.from('!"#$%&\'()*+,-./:;<=>?@\[\\\]\^_`{|}~')]
-  .filter(symbol => !Object.keys(allEntries).includes(symbol)).sort().join(' '));
+  .filter(symbol => !standardUsedChars.includes(symbol)).sort().join(' '));
+  
   console.log('Available Latin-1 characters for new flags:');
   [...Array.from({length: 256-160}, (_, i) => String.fromCharCode(160 + i))]
-    .filter(char => !Object.keys(allEntries).includes(char) && char.charCodeAt(0) !== 160 && char.charCodeAt(0) !== 173)
+    .filter(char => !standardUsedChars.includes(char) && char.charCodeAt(0) !== 160 && char.charCodeAt(0) !== 173)
     .sort()
     .join(' ')
     .match(/.{1,64}/g)
     .forEach(line => console.log('  ' + line));
 
-# Get the most recent changes to the curated dictionary. Includes an optional argument to specify the number of commits to look back. Defaults to 1.
-newest-dict-changes *numCommits:
-  #! /usr/bin/env node
+  console.log(`\n--- PREFIXED FLAGS (USING "${PREFIX_CHAR}") ---`);
+  console.log(`Available letters after "${PREFIX_CHAR}":`, [...Array.from({length: 26}, (_, i) =>
+    [String.fromCharCode(65 + i), String.fromCharCode(97 + i)]
+  ).flat()].filter(letter => !prefixedUsedChars.includes(letter)).sort().join(' '));
 
-  const { exec } = require('child_process');
+  console.log(`Available digits after "${PREFIX_CHAR}":`, [...Array.from({length: 10}, (_, i) =>
+    String(i)
+  )].filter(digit => !prefixedUsedChars.includes(digit)).sort().join(' '));
 
-  const DICT_FILE = 'harper-core/dictionary.dict';
-
-  const [RST, BOLD, DIM, ITAL, NORM] = [0, 1, 2, 3, 22].map(c => `\x1b[${c}m`);
-  const [RED, GRN, YLW, BLU, MGN, CYN, WHT] = [1, 2, 3, 4, 5, 6, 7].map(c => `\x1b[${30+c}m`);
-
-  const argv = [...process.argv];
-
-  const [showHashes, showDiff] = ["--show-hashes", "--show-diff"].map(flag => argv.includes(flag) && argv.splice(argv.indexOf(flag), 1));
-
-  // uncomment first line to use in justfile, comment out second line to use standalone
-  const numCommits = "{{numCommits}}" || 1;
-  // const numCommits = argv[2] || 1;
-
-  // Command to get the last commit hash that modified the specified file
-  const hashCommand = `git log --no-merges -n ${numCommits} --format="%H" -- ${DICT_FILE}`;
-  console.log(`${MGN}${BOLD}GET HASHES${NORM}: ${hashCommand}${RST}`);
-
-  // Execute the command to get the hash
-  exec(hashCommand, (error, hashString, stderr) => {
-    if (error) return console.error(`Error executing command: ${error.message}`);
-    if (stderr) return console.error(`stderr: ${stderr}`);
-
-    // avoid empty last line
-    const longHashes = hashString.trim().split('\n');
-    if (showHashes) console.log(longHashes.length, longHashes);
-
-    if (longHashes.length < 1) {
-      console.error('No hash(es) returned. Exiting.');
-      process.exit(1);
-    }
-
-    // keep the last line and second last if there's more than one hash
-    const [hash2, hash1] = longHashes.slice(-2).map((h) => h.substring(0, 7));
-
-    // Command to get the word-level diff using the retrieved hash, using either one or two hashes
-    const hashes = longHashes.length == 1 ? `${hash2}` : `${hash1} ${hash2}`;
-    const diffCommand = `git diff --word-diff --no-color --unified=0 ${hashes} -- ${DICT_FILE}`;
-    console.log(`${MGN}${BOLD}GET DIFF${NORM}: ${diffCommand}${RST}`);
-
-    // Execute the diff command with a large buffer to avoid failing to handle large diffs such as:
-    // git diff --word-diff --no-color --unified=0 0761702 baeb08e -- harper-core/dictionary.dict
-    exec(diffCommand, { maxBuffer: 2048 * 1024 }, (diffError, diffString, diffStderr) => {
-      if (diffError) {
-        console.error(`Error executing diff command: ${diffError.message}`);
-        return;
-      }
-      if (diffStderr) return console.error(`stderr: ${diffStderr}`);
-
-      if (showDiff) console.log(`DIFFSTART\n${diffString}\nDIFFEND`);
-
-      // uncomment first line to use in justfile, comment out second line to use standalone
-      const affixes = require('{{justfile_directory()}}/harper-core/annotations.json').affixes;
-      // const affixes = require('./harper-core/annotations.json').affixes;
-
-      diffString.split("\n").forEach(line => {
-        const match = line.match(/^(?:\[-(.*?)-\])?(?:\{\+(.*?)\+\})?$/);
-        if (match) {
-          let [, before, after] = match;
-
-          if (before && after) {
-            // An entry changed
-            const [[oldword, oldaff], [newword, newaff]] = [before, after].map(e => e.split('/'));
-            if (oldword === newword) {
-              if (oldaff !== newaff) {
-                const [oldRest, newRest] = [oldaff, newaff].map(aff => aff ? `${DIM}/${aff}${RST}`: '');
-                console.log(`${BOLD}${CYN}CHG${RST} # ${oldword}${oldRest} -> ${newRest}`);
-                const [oldNorm, newNorm] = [oldaff, newaff].map(a => a ? a.split(''): [])
-                                                           .map(a => new Set(a))
-                                                           .map(a => Array.from(a))
-                                                           .map(a => a.sort());
-                const removed = oldNorm.filter(o => !newNorm.includes(o));
-                const added = newNorm.filter(n => !oldNorm.includes(n));
-                const [addStr, remStr] = [added, removed]
-                  .map(a => a.map(a => `    ${BOLD}${ITAL}${a}${RST} -> ${ (affixes[a] && affixes[a]['#']) || '???' }`)
-                             .join('\n')
-                  );
-                if (removed.length > 0) console.log(`${RED}  ${BOLD}REMOVED${RST}:\n${remStr}`);
-                if (added.length > 0) console.log(`${GRN}  ${BOLD}ADDED${RST}:\n${addStr}`);
-              } else {
-                // should never happen
-                console.log(`${YLW} ?NO AFFIX CHG? '${oldaff}' -> '${newaff}'${RST}`);
-              }
-            } else {
-              // The word changed rather than its affixes
-              console.log(`${YLW}  ${BOLD}CHANGED${RST} ${RED}${oldword}${RST} -> ${GRN}${newword}${RST}`);
-            }
-          } else if (before || after) {
-            // An entry was added or removed
-            const [entry, symbol, action, colour] = before ? [before, "-", 'DEL', RED] : [after, "+", 'ADD', GRN];
-            const [word, affix] = entry.split('/');
-            console.log(`${colour}${BOLD}${action}${RST} ${symbol} ${word}${ affix ? `${DIM}/${affix}` : '' }${RST}`);
-          }
-        }
-      });
-    });
-  });
+  console.log(`Available symbols after "${PREFIX_CHAR}":`,
+    [...Array.from('!"#$%&\'()*+,-./:;<=>?@\[\\\]\^_`{|}~')]
+  .filter(symbol => !prefixedUsedChars.includes(symbol)).sort().join(' '));
 
 # Print the input string or file with nominal phrases highlighted. These are generated using Harper's chunker.
 alias get-nominal-phrases := get-nps
@@ -839,8 +766,18 @@ suggest-annotation input:
     ...affixesData.properties || {}
   };
 
-  // Get all used flags
-  const usedFlags = new Set(Object.keys(allEntries));
+  const PREFIX_CHAR = '+';
+
+  // Extract keys and split them by single vs prefixed
+  const keys = Object.keys(allEntries);
+  const usedSingleFlags = new Set(keys.filter(k => k.length === 1 && k !== PREFIX_CHAR));
+  usedSingleFlags.add(PREFIX_CHAR); // Block the prefix itself from single-character recommendations
+
+  const usedPrefixedFlags = new Set(
+    keys
+      .filter(k => k.startsWith(PREFIX_CHAR) && k.length > PREFIX_CHAR.length)
+      .map(k => k.slice(PREFIX_CHAR.length))
+  );
 
   // Process input string and check both cases
   const input = '{{input}}';
@@ -849,27 +786,38 @@ suggest-annotation input:
 
   console.log(`Checking input: "${input}"\n${'='.repeat(50)}`);
 
-  // Check each character in input
-  const availableChars = [...new Set(uniqueChars)]
-    .filter(char => !usedFlags.has(char));
+  // Check each character in input for single use
+  const availableSingleChars = [...new Set(uniqueChars)]
+    .filter(char => !usedSingleFlags.has(char));
 
-  if (availableChars.length > 0) {
-    console.log(`These characters of "${input}" are available to use for new annotations:`);
-    availableChars.forEach(char => console.log(`  '${char}' (${char.charCodeAt(0)})`));
+  // Check each character in input for prefixed use
+  const availablePrefixedChars = [...new Set(uniqueChars)]
+    .filter(char => !usedPrefixedFlags.has(char) && char !== PREFIX_CHAR);
+
+  if (availableSingleChars.length > 0) {
+    console.log(`These characters of "${input}" are available to use for new SINGLE annotations:`);
+    availableSingleChars.forEach(char => console.log(`  '${char}' (${char.charCodeAt(0)})`));
   } else {
+    // If no single chars are free, report on the rename candidates like before
     const inputChars = new Set(normalizedInput.toLowerCase() + normalizedInput.toUpperCase());
     const renamable = Object.entries(allEntries)
       .filter(([flag, entry]) => entry.rename_ok && inputChars.has(flag))
       .sort((a, b) => a[0].localeCompare(b[0]));
 
     if (renamable.length > 0) {
-      console.log(`None of the characters of "${input}" are available to use for new annotations, but these ones are OK to be moved to make way for new annotations:`);
+      console.log(`None of the characters of "${input}" are available to use for single annotations, but these ones are OK to be moved to make way:`);
       renamable.forEach(([flag, entry]) => {
         console.log(`  '${flag}': ${entry['#'] || 'No description'}${entry['//'] ? ` (${entry['//']})` : ''}`);
       });
     } else {
-      console.log(`None of the characters of "${input}" are available to use for new annotations, and none of them are OK to be moved to make way for new annotations.`);
+      console.log(`None of the characters of "${input}" are available to use for standard single annotations.`);
     }
+  }
+
+  // Always output the extension possibilities to show off your new system space!
+  if (availablePrefixedChars.length > 0) {
+    console.log(`\nAlternatively, these PREFIXED options are available using your "${PREFIX_CHAR}" extension:`);
+    availablePrefixedChars.forEach(char => console.log(`  '${PREFIX_CHAR}${char}' (Extension)`));
   }
 
 # Audit the curated dictionary for any issues.
