@@ -463,6 +463,11 @@ check-rust: audit-dictionary
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
+  # Clippy-check the multilingual language module. `--lib` is used instead of
+  # `--all-targets` because the multilingual test/example code still contains
+  # many `dbg!`/`needless_raw_string_hashes` lints that are not yet cleaned up.
+  cargo clippy -p harper-core --features multilingual --lib -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+
   cargo hack check --each-feature
 
 # Perform format and type checking.
@@ -529,8 +534,11 @@ dogfood:
 test-rust:
   echo Running all Rust tests
   # Test harper-core with default features first (without multilingual)
-  # to avoid German test timeouts
   cargo test -q -p harper-core
+  # Test harper-core with multilingual features (German, Portuguese, Slovak,
+  # Polish). The German integration tests complete in ~1.5s each and the full
+  # multilingual suite finishes in under a minute, so run it explicitly.
+  cargo test -q -p harper-core --features multilingual
   # Then test all other workspace members
   cargo test -q --workspace --exclude harper-core
 
