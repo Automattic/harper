@@ -2,6 +2,7 @@ use super::merge_linters::merge_linters;
 
 mod effect_affect;
 mod noun_instead_of_verb;
+mod sale_sell;
 mod verb_instead_of_noun;
 
 // Common noun-verb pairs that are often confused
@@ -14,6 +15,7 @@ pub(crate) const NOUN_VERB_PAIRS: &[(&str, &str)] = &[
     ("effect", "affect"), // "Effect" is also a verb meaning "to bring about". "Affect" is a noun in psychology.
     ("emphasis", "emphasize"), // TODO how to handle "emphasise" as well as "emphasize"?
     ("intent", "intend"),
+    ("sale", "sell"), // "Sell" is also a noun ("a hard sell"); "for sell" is handled by the `ForSell` Weir rule.
     // ("proof", "prove"),  // "Proof" is also a verb, a synonym of "proofread".
     ("weight", "weigh"),
     // Add more pairs here as needed
@@ -1442,12 +1444,32 @@ mod tests {
         );
     }
 
+    // `sale` mistakenly used as the verb `sell`.
+
+    #[test]
+    fn fix_sale_clothes() {
+        assert_suggestion_result(
+            "I sale clothes online.",
+            test_linter(),
+            "I sell clothes online.",
+        );
+    }
+
     #[test]
     fn fix_but_should_descent() {
         assert_suggestion_result(
             "But we need to calculate how fast we should descent to maintain the glideslope profile.",
             test_linter(),
             "But we need to calculate how fast we should descend to maintain the glideslope profile.",
+        );
+    }
+
+    #[test]
+    fn fix_sale_cars() {
+        assert_suggestion_result(
+            "She sale cars every weekend.",
+            test_linter(),
+            "She sell cars every weekend.",
         );
     }
 
@@ -1459,5 +1481,112 @@ mod tests {
             test_linter(),
             "But in case of low throttle margin you might not be able to stop a descent due to yaw control.",
         );
+    }
+
+    #[test]
+    fn fix_sale_phones() {
+        assert_suggestion_result(
+            "We sale phones at the mall.",
+            test_linter(),
+            "We sell phones at the mall.",
+        );
+    }
+
+    #[test]
+    fn fix_sale_my_car() {
+        assert_suggestion_result(
+            "I sale my car tomorrow.",
+            test_linter(),
+            "I sell my car tomorrow.",
+        );
+    }
+
+    #[test]
+    fn fix_will_sale_it() {
+        assert_suggestion_result("I will sale it.", test_linter(), "I will sell it.");
+    }
+
+    #[test]
+    fn fix_should_sale_the_house() {
+        assert_suggestion_result(
+            "You should sale the house.",
+            test_linter(),
+            "You should sell the house.",
+        );
+    }
+
+    #[test]
+    fn fix_dont_sale_your_guitar() {
+        assert_suggestion_result(
+            "Don't sale your guitar.",
+            test_linter(),
+            "Don't sell your guitar.",
+        );
+    }
+
+    #[test]
+    fn fix_who_sale_this() {
+        assert_suggestion_result("Who sale this?", test_linter(), "Who sell this?");
+    }
+
+    // "Hard sell", "soft sell", etc. are idioms where "sell" is a noun.
+
+    #[test]
+    fn dont_flag_hard_sell() {
+        assert_lint_count("It's a hard sell.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_tough_sell() {
+        assert_lint_count("The new policy is a tough sell.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_soft_sell() {
+        assert_lint_count("Their product is a soft sell.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_easy_sell() {
+        assert_lint_count("That car is an easy sell.", test_linter(), 0);
+    }
+
+    // Correct uses of "sale" and "sell".
+
+    #[test]
+    fn dont_flag_sale_records_after_object_pronoun() {
+        // "sale records" here is a noun phrase.
+        assert_lint_count("They will send you sale records.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_sale_items_as_question_subject() {
+        // "sale items" here is a noun phrase.
+        assert_lint_count("Should sale items be returned?", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_correct_sell() {
+        assert_lint_count("I want to sell my house.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_to_sell() {
+        assert_lint_count("Remember to sell quickly.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_correct_sale_noun() {
+        assert_lint_count("The sale ends on Friday.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_sale_as_noun_modifier() {
+        assert_lint_count("I bought sale clothes.", test_linter(), 0);
+    }
+
+    #[test]
+    fn dont_flag_for_sell_handled_by_weir_rule() {
+        assert_lint_count("This house is for sell.", test_linter(), 0);
     }
 }
