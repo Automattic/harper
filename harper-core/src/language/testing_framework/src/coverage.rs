@@ -1,9 +1,7 @@
-use std::fs;
 use std::io::{self, BufRead};
 use std::time::Instant;
 
-use harper_core::spell::{MutableDictionary, Dictionary};
-use harper_core::spell::rune::AttributeList;
+use harper_core::spell::Dictionary;
 
 
 /// Load expanded dictionary from gzip file and filter on-the-fly

@@ -1,5 +1,7 @@
 //! Integration tests for German compound checking implementation
 
+use harper_core::spell::Dictionary;
+
 #[cfg(all(feature = "de", feature = "multilingual"))]
 #[test]
 fn test_compound_checker_creation() {
@@ -110,4 +112,39 @@ fn test_compound_aware_dict_directly() {
         dict.contains_word_str("farbwunsch"),
         "farbwunsch should be recognized as compound"
     );
+}
+
+#[cfg(all(feature = "de", feature = "multilingual"))]
+#[test]
+fn test_dictionary_level_productive_compounds() {
+    use harper_core::language::german::spell::compound_aware_german_dictionary;
+
+    let dict = compound_aware_german_dictionary();
+
+    // Valid German compounds whose parts are plain dictionary words. The old
+    // flag-based engine only accepted parts that carried compound-formation
+    // annotations, so these were dictionary-level coverage gaps (the runtime
+    // linter accepted them via its fallback). They must now be recognized by
+    // the dictionary itself, so `get_word_metadata` and the coverage tool see
+    // them too.
+    for word in [
+        "Interaktionsgeschehen",
+        "Inspektionsaufgabe",
+        "Differenzenquotient",
+        "Eischnee",
+        "Hühnerei",
+    ] {
+        assert!(
+            dict.contains_word_str(word),
+            "{word} should be recognized as a German compound"
+        );
+    }
+
+    // Junk and misspelled compounds must remain rejected.
+    for word in ["xyzabc", "Gartenhous", "Arbeitsplaz"] {
+        assert!(
+            !dict.contains_word_str(word),
+            "{word} must not be accepted as a compound"
+        );
+    }
 }

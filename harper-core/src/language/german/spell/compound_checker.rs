@@ -4,16 +4,30 @@
 //! the O(n²) memory explosion of pre-generating all possible compound combinations.
 //! Instead, it stores only the base words with their compound flags and checks
 //! at lookup time whether a word can be decomposed into valid compound parts.
+//!
+//! The decomposition mirrors the productive semantics proven in
+//! `GermanSpellCheck`'s fallback: any dictionary word of at least
+//! [`MIN_COMPOUND_PART_LEN`] characters (or any dictionary word carrying
+//! compound-formation flags, regardless of length) may act as a compound
+//! element, and every standard German interfix (`""`, `s`, `n`, `en`, `er`,
+//! `es`) is attempted at each boundary. Membership is resolved against the
+//! base dictionary when one is injected via [`CompoundChecker::set_base_dictionary`],
+//! otherwise against a casing-tolerant set built from the word list.
+//!
+//! Subproblems are memoized by `(segment, depth)`, turning the previously
+//! exponential re-decomposition of long or misspelled words into a
+//! polynomial-time scan.
 
 use hashbrown::{HashMap, HashSet};
 use lru::LruCache;
 use std::num::NonZeroUsize;
-use std::sync::Mutex;
+use std::sync::{Arc, Mutex};
 use std::time::{Duration, Instant};
 
 use crate::CharString;
 use crate::dict_word_metadata::{AdjectiveData, DictWordMetadata, NounData};
 use crate::spell::rune::word_list::AnnotatedWord;
+use crate::spell::{Dictionary, FstDictionary};
 
 /// Compound word formation flags for German
 const COMPOUND_FLAG_NO_INTERFIX: char = 'h';
@@ -24,15 +38,16 @@ const COMPOUND_FLAG_ER_INTERFIX: char = 'm';
 const COMPOUND_FLAG_ES_INTERFIX: char = 'o';
 const COMPOUND_ADJ_FLAG: char = 'q';
 
-/// Interfix strings for each compound flag
-const INTERFIX_MAP: &[(char, &str)] = &[
-    (COMPOUND_FLAG_NO_INTERFIX, ""),
-    (COMPOUND_FLAG_S_INTERFIX, "s"),
-    (COMPOUND_FLAG_N_INTERFIX, "n"),
-    (COMPOUND_FLAG_EN_INTERFIX, "en"),
-    (COMPOUND_FLAG_ER_INTERFIX, "er"),
-    (COMPOUND_FLAG_ES_INTERFIX, "es"),
-];
+/// All standard German linking interfixes, tried at every compound boundary.
+const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
+
+/// The minimum length of a dictionary word that may act as a compound element
+/// without carrying explicit compound-formation flags.
+const MIN_COMPOUND_PART_LEN: usize = 3;
+
+/// The maximum nesting depth of a compound decomposition (mirrors the old
+/// engine's `depth > 10` cap).
+const MAX_COMPOUND_DEPTH: usize = 10;
 
 /// Check if a character is a compound formation flag (case-insensitive)
 fn is_compound_flag(c: char) -> bool {
@@ -49,21 +64,22 @@ fn is_compound_flag(c: char) -> bool {
     )
 }
 
-/// Get the interfix string for a compound flag
-fn get_interfix(flag: char) -> &'static str {
-    for &(f, interfix) in INTERFIX_MAP {
-        if f == flag {
-            return interfix;
-        }
-    }
-    "" // Default: no interfix
-}
-
 /// Compound checker that can determine if a word is a valid German compound
-#[derive(Debug)]
 pub struct CompoundChecker {
-    /// Words that can participate in compounds, mapped to their flags
+    /// Words that participate in compounds, mapped to their compound flags.
+    ///
+    /// This only contains words that carry compound-formation flags; it drives
+    /// the metadata distinction (adjective-vs-noun via the `q` flag) and the
+    /// short-part allowance.
     compound_words: HashMap<CharString, HashSet<char>>,
+    /// Every word from the word list in the casings needed for case-insensitive
+    /// membership lookups when no base dictionary has been injected.
+    members: HashSet<CharString>,
+    /// The base dictionary to resolve element membership against, when set.
+    ///
+    /// When present, membership queries use this dictionary (whose lookup is
+    /// case-insensitive) instead of the `members` set.
+    base_dict: Option<Arc<FstDictionary>>,
     /// All compound flags for quick lookup
     compound_flags: HashSet<char>,
     /// Cache for compound check results to avoid repeated decomposition
@@ -72,10 +88,24 @@ pub struct CompoundChecker {
     max_check_time: Duration,
 }
 
+impl std::fmt::Debug for CompoundChecker {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.debug_struct("CompoundChecker")
+            .field("flagged_words", &self.compound_words.len())
+            .field("members", &self.members.len())
+            .field("has_base_dict", &self.base_dict.is_some())
+            .field("compound_flags", &self.compound_flags)
+            .field("max_check_time", &self.max_check_time)
+            .finish()
+    }
+}
+
 impl Clone for CompoundChecker {
     fn clone(&self) -> Self {
         Self {
             compound_words: self.compound_words.clone(),
+            members: self.members.clone(),
+            base_dict: self.base_dict.clone(),
             compound_flags: self.compound_flags.clone(),
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
             max_check_time: self.max_check_time,
@@ -83,11 +113,35 @@ impl Clone for CompoundChecker {
     }
 }
 
+/// Insert `letters` (plus the first-letter-lowercased and first-letter-capitalized
+/// variants) into `members` so case-insensitive lookups always hit.
+fn insert_member_casings(members: &mut HashSet<CharString>, letters: &[char]) {
+    if letters.is_empty() {
+        return;
+    }
+
+    let exact: CharString = letters.iter().copied().collect();
+    members.insert(exact.clone());
+
+    let mut lowercased = exact.clone();
+    if let Some(first_char) = lowercased.first_mut() {
+        *first_char = first_char.to_lowercase().next().unwrap_or(*first_char);
+    }
+    members.insert(lowercased);
+
+    let mut capitalized = exact.clone();
+    if let Some(first_char) = capitalized.first_mut() {
+        *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
+    }
+    members.insert(capitalized);
+}
+
 impl CompoundChecker {
     /// Create a new CompoundChecker from a list of annotated words
     pub fn new(word_list: &[AnnotatedWord]) -> Self {
         // Build compound words map from words that have compound flags
         let mut compound_words = HashMap::new();
+        let mut members = HashSet::new();
 
         for word in word_list {
             let flags: HashSet<char> = word
@@ -96,6 +150,11 @@ impl CompoundChecker {
                 .filter(|&&c| is_compound_flag(c))
                 .map(|&c| c.to_ascii_lowercase())
                 .collect();
+
+            // Every dictionary word may act as a compound element, regardless of
+            // whether it carries compound-formation flags. Record the casings
+            // needed for case-insensitive membership lookups.
+            insert_member_casings(&mut members, &word.letters);
 
             if !flags.is_empty() {
                 // Insert the original word
@@ -115,6 +174,8 @@ impl CompoundChecker {
 
         Self {
             compound_words,
+            members,
+            base_dict: None,
             compound_flags: ['h', 'i', 'k', 'l', 'm', 'o', 'q']
                 .iter()
                 .copied()
@@ -124,45 +185,42 @@ impl CompoundChecker {
         }
     }
 
-    /// Check if a word is a valid German compound word
-    pub fn is_compound_word(&self, word: &[char]) -> bool {
-        let word_chars = CharString::from(word);
-
-        // Check cache first
-        {
-            let mut cache = self.cache.lock().unwrap();
-            if let Some(&result) = cache.get(&word_chars) {
-                return result;
-            }
-        }
-
-        // Check with timeout protection
-        let start = Instant::now();
-        let result = self.try_decompose_with_timeout(word, 0, &start, 0);
-
-        // Cache result
-        {
-            let mut cache = self.cache.lock().unwrap();
-            cache.put(word_chars, result);
-        }
-
-        result
+    /// Inject the base dictionary whose word membership drives compound
+    /// decomposition. When set, element membership is resolved through
+    /// `base.contains_word` (a case-insensitive lookup) instead of the word
+    /// list collected by [`CompoundChecker::new`].
+    pub fn set_base_dictionary(&mut self, base: Arc<FstDictionary>) {
+        self.base_dict = Some(base);
+        // Membership queries now go through the base dictionary, so the
+        // casing-tolerant word-list set is no longer needed.
+        self.members.clear();
+        // Membership semantics changed, so cached decomposition results are stale.
+        self.cache.lock().unwrap().clear();
     }
 
-    /// Try to decompose a word into valid compound parts
-    fn try_decompose(&self, word: &[char]) -> bool {
-        if word.is_empty() {
-            return false;
+    /// Whether `word` is a member of the underlying dictionary.
+    fn member_of(&self, word: &[char]) -> bool {
+        match &self.base_dict {
+            Some(base_dict) => base_dict.contains_word(word),
+            None => self.members.contains(word),
         }
+    }
 
-        // For very short words, they can't be compounds
-        if word.len() < 2 {
-            return false;
-        }
+    /// Whether `word` carries compound-formation flags in the word list.
+    fn has_compound_flags(&self, word: &[char]) -> bool {
+        self.get_compound_flags(word).is_some()
+    }
 
-        // Start decomposition with timeout
-        let start = Instant::now();
-        self.try_decompose_with_timeout(word, 0, &start, 0)
+    /// Whether a segment can participate in a compound as an element.
+    ///
+    /// A segment is usable iff it is a dictionary word AND it is either at
+    /// least [`MIN_COMPOUND_PART_LEN`] characters long or carries compound
+    /// flags. This keeps short real words such as `ei` or `öl` usable while
+    /// excluding short words without compound flags (for example the
+    /// preposition `zu`) and short garbage.
+    fn element_usable(&self, segment: &[char]) -> bool {
+        self.member_of(segment)
+            && (segment.len() >= MIN_COMPOUND_PART_LEN || self.has_compound_flags(segment))
     }
 
     /// Helper to get compound flags for a word, trying lowercase first if not found
@@ -185,119 +243,103 @@ impl CompoundChecker {
         }
     }
 
-    /// Recursive helper to try decomposition starting from a given position with timeout and depth limit
-    fn try_decompose_with_timeout(
+    /// Check if a word is a valid German compound word
+    pub fn is_compound_word(&self, word: &[char]) -> bool {
+        let word_chars = CharString::from(word);
+
+        // Check cache first
+        {
+            let mut cache = self.cache.lock().unwrap();
+            if let Some(&result) = cache.get(&word_chars) {
+                return result;
+            }
+        }
+
+        // A word that is itself a plain dictionary element is not a compound.
+        let result = if word.is_empty() || self.element_usable(word) {
+            false
+        } else {
+            let start = Instant::now();
+            let mut memo = HashMap::new();
+            self.is_valid_segment(word, 0, &start, &mut memo)
+        };
+
+        // Cache result
+        {
+            let mut cache = self.cache.lock().unwrap();
+            cache.put(word_chars, result);
+        }
+
+        result
+    }
+
+    /// Recursively check whether `segment` decomposes into usable compound
+    /// elements joined by standard German interfixes.
+    ///
+    /// The whole `segment` is accepted as an element only below the top level
+    /// (`depth > 0`); at the top level a plain dictionary word must first be
+    /// rejected by the `element_usable` guard in [`CompoundChecker::is_compound_word`].
+    /// Results are memoized by `(segment, depth)` so that overlapping
+    /// subproblems are evaluated at most once per top-level check.
+    fn is_valid_segment(
         &self,
-        word: &[char],
-        start_pos: usize,
-        start: &Instant,
+        segment: &[char],
         depth: usize,
+        start: &Instant,
+        memo: &mut HashMap<(Vec<char>, usize), bool>,
     ) -> bool {
         if start.elapsed() > self.max_check_time {
             return false; // Timeout exceeded
         }
 
-        // Prevent infinite recursion with a depth limit
-        if depth > 10 {
+        if depth > MAX_COMPOUND_DEPTH {
             return false;
         }
 
-        if start_pos >= word.len() {
+        // Below the top level, the whole sub-segment may itself be an element.
+        // This precedes the minimum-length guard so that short elements carrying
+        // compound flags (e.g. `ei`, `öl`) are accepted at any position.
+        if depth > 0 && self.element_usable(segment) {
+            return true;
+        }
+
+        if segment.len() < MIN_COMPOUND_PART_LEN {
             return false;
         }
 
-        // Try all possible split points from start_pos
-        for split_pos in (start_pos + 1)..word.len() {
-            let (first, rest) = word.split_at(split_pos);
+        if let Some(&cached) = memo.get(&(segment.to_vec(), depth)) {
+            return cached;
+        }
 
-            // Check if first part is a compound word (case-insensitive lookup)
-            let first_flags = self.get_compound_flags(first);
-            if let Some(first_flags) = first_flags {
-                // Check if this is an adjective compound (no interfix needed)
-                if first_flags.contains(&COMPOUND_ADJ_FLAG) {
-                    // For adjective compounds, the second part can be any compound word
-                    if split_pos < word.len() {
-                        let second = &word[split_pos..];
-                        // The second part can be a dictionary word OR a valid compound (recursive)
-                        if self.get_compound_flags(second).is_some()
-                            || self.try_decompose_with_timeout(second, 0, start, depth + 1)
-                        {
-                            return true;
-                        }
-                        // Or recursively try to decompose the rest
-                        if self.try_decompose_with_timeout(word, split_pos, start, depth) {
-                            return true;
-                        }
-                    }
-                }
+        let mut valid = false;
+        for split_pos in 1..segment.len() {
+            let (first, rest) = segment.split_at(split_pos);
 
-                // Try noun compounds with interfixes
-                // Get the first applicable interfix from the first word's flags
-                let applicable_interfixes: Vec<&str> = first_flags
-                    .iter()
-                    .filter(|&&flag| flag != COMPOUND_ADJ_FLAG)
-                    .filter_map(|&flag| {
-                        let interfix = get_interfix(flag);
-                        if interfix.is_empty() && flag != COMPOUND_FLAG_NO_INTERFIX {
-                            None
-                        } else {
-                            Some(interfix)
-                        }
-                    })
-                    .collect();
+            // The left part must itself be a usable element.
+            if !self.element_usable(first) {
+                continue;
+            }
 
-                // If no specific noun flags, try with no interfix
-                if applicable_interfixes.is_empty() && !first_flags.contains(&COMPOUND_ADJ_FLAG) {
-                    // No noun compound flags, so this word can't start a noun compound
-                    // But we can still try the recursive decomposition for adjective compounds
+            // Try every standard interfix at this boundary.
+            for interfix in STANDARD_INTERFIXES {
+                let interfix_chars: Vec<char> = interfix.chars().collect();
+                let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
                     continue;
+                };
+
+                if self.is_valid_segment(after, depth + 1, start, memo) {
+                    valid = true;
+                    break;
                 }
+            }
 
-                // Try each applicable interfix
-                for interfix in applicable_interfixes {
-                    let interfix_chars: Vec<char> = interfix.chars().collect();
-                    let interfix_len = interfix_chars.len();
-
-                    // Check if rest starts with this interfix
-                    if rest.len() >= interfix_len && rest.starts_with(&interfix_chars) {
-                        let second_start = split_pos + interfix_len;
-                        if second_start < word.len() {
-                            let second = &word[second_start..];
-
-                            // The second part can be a dictionary word OR a valid compound (recursive)
-                            if self.get_compound_flags(second).is_some()
-                                || self.try_decompose_with_timeout(second, 0, start, depth + 1)
-                            {
-                                return true;
-                            }
-
-                            // Or recursively try to decompose the rest after the interfix
-                            if self.try_decompose_with_timeout(word, second_start, start, depth) {
-                                return true;
-                            }
-                        }
-                    }
-                }
-
-                // Also try with no interfix for h flag
-                if first_flags.contains(&COMPOUND_FLAG_NO_INTERFIX) {
-                    let second = &word[split_pos..];
-                    if !second.is_empty() {
-                        // The second part can be a dictionary word OR a valid compound (recursive)
-                        if self.get_compound_flags(second).is_some()
-                            || self.try_decompose_with_timeout(second, 0, start, depth + 1)
-                        {
-                            return true;
-                        }
-                        if self.try_decompose_with_timeout(word, split_pos, start, depth) {
-                            return true;
-                        }
-                    }
-                }
+            if valid {
+                break;
             }
         }
 
-        false
+        memo.insert((segment.to_vec(), depth), valid);
+        valid
     }
 
     /// Get metadata for a compound word (for use in dictionary lookups)
@@ -348,87 +390,74 @@ impl CompoundChecker {
             return None;
         }
 
-        let mut parts = Vec::new();
-        if self.try_decompose_with_parts(word, 0, &mut parts) {
-            Some(parts)
-        } else {
-            None
-        }
+        let start = Instant::now();
+        let mut memo = HashMap::new();
+        self.collect_parts(word, 0, &start, &mut memo)
     }
 
-    /// Helper to try decomposition and collect parts
-    fn try_decompose_with_parts(
+    /// Collect the parts of the first successful decomposition of `segment`.
+    ///
+    /// Uses the same `element_usable` predicate and interfix probing as
+    /// [`CompoundChecker::is_valid_segment`]. The interfix string is emitted as
+    /// its own part (e.g. `arbeitsgeber` yields `["arbeit", "s", "geber"]`).
+    /// Failed suffixes are memoized to avoid re-exploration.
+    fn collect_parts(
         &self,
-        word: &[char],
-        start_pos: usize,
-        parts: &mut Vec<String>,
-    ) -> bool {
-        if start_pos >= word.len() {
-            return false;
+        segment: &[char],
+        depth: usize,
+        start: &Instant,
+        memo: &mut HashMap<(Vec<char>, usize), Option<Vec<String>>>,
+    ) -> Option<Vec<String>> {
+        if start.elapsed() > self.max_check_time {
+            return None;
         }
 
-        for split_pos in (start_pos + 1)..word.len() {
-            let (first, rest) = word.split_at(split_pos);
+        if depth > MAX_COMPOUND_DEPTH {
+            return None;
+        }
 
-            if let Some(first_flags) = self.get_compound_flags(first) {
-                // Check adjective compounds
-                if first_flags.contains(&COMPOUND_ADJ_FLAG) && split_pos < word.len() {
-                    let second = &word[split_pos..];
-                    if self.get_compound_flags(second).is_some() {
-                        parts.push(first.iter().collect());
-                        parts.push(second.iter().collect());
-                        return true;
-                    }
-                    if self.try_decompose_with_parts(word, split_pos, parts) {
-                        parts.insert(0, first.iter().collect());
-                        return true;
-                    }
-                }
+        // Mirror is_valid_segment: accept short flagged elements below the top
+        // level before applying the minimum-length guard.
+        if depth > 0 && self.element_usable(segment) {
+            return Some(vec![segment.iter().collect()]);
+        }
 
-                // Try noun compounds with interfixes
-                for interfix in INTERFIX_MAP
-                    .iter()
-                    .filter(|(flag, _)| first_flags.contains(flag))
-                {
-                    let interfix_chars: Vec<char> = interfix.1.chars().collect();
-                    let interfix_len = interfix_chars.len();
+        if segment.len() < MIN_COMPOUND_PART_LEN {
+            return None;
+        }
 
-                    if rest.len() >= interfix_len && rest.starts_with(&interfix_chars) {
-                        let second_start = split_pos + interfix_len;
-                        if second_start < word.len() {
-                            let second = &word[second_start..];
-                            if self.get_compound_flags(second).is_some() {
-                                parts.push(first.iter().collect());
-                                parts.push(interfix.1.to_string());
-                                parts.push(second.iter().collect());
-                                return true;
-                            }
-                            if self.try_decompose_with_parts(word, second_start, parts) {
-                                parts.insert(0, interfix.1.to_string());
-                                parts.insert(0, first.iter().collect());
-                                return true;
-                            }
-                        }
-                    }
-                }
+        if let Some(cached) = memo.get(&(segment.to_vec(), depth)) {
+            return cached.clone();
+        }
 
-                // Try with no interfix for h flag
-                if first_flags.contains(&COMPOUND_FLAG_NO_INTERFIX) && split_pos < word.len() {
-                    let second = &word[split_pos..];
-                    if self.get_compound_flags(second).is_some() {
-                        parts.push(first.iter().collect());
-                        parts.push(second.iter().collect());
-                        return true;
+        let mut result = None;
+        'search: for split_pos in 1..segment.len() {
+            let (first, rest) = segment.split_at(split_pos);
+
+            if !self.element_usable(first) {
+                continue;
+            }
+
+            for interfix in STANDARD_INTERFIXES {
+                let interfix_chars: Vec<char> = interfix.chars().collect();
+                let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
+                    continue;
+                };
+
+                if let Some(mut tail) = self.collect_parts(after, depth + 1, start, memo) {
+                    let mut parts = vec![first.iter().collect()];
+                    if !interfix.is_empty() {
+                        parts.push(interfix.to_string());
                     }
-                    if self.try_decompose_with_parts(word, split_pos, parts) {
-                        parts.insert(0, first.iter().collect());
-                        return true;
-                    }
+                    parts.append(&mut tail);
+                    result = Some(parts);
+                    break 'search;
                 }
             }
         }
 
-        false
+        memo.insert((segment.to_vec(), depth), result.clone());
+        result
     }
 
     /// Get the number of compound-eligible words
@@ -617,31 +646,55 @@ mod tests {
 
     #[test]
     fn test_recursive_compounding_deep() {
+        // Realistic deep-nesting fixture: every element is a full-length German-
+        // looking word (no single-character elements), and a 4-5 level compound
+        // must decompose recursively.
         let words = vec![
             AnnotatedWord {
-                letters: "a".chars().collect(),
+                letters: "dampf".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
             AnnotatedWord {
-                letters: "b".chars().collect(),
+                letters: "schiff".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
             AnnotatedWord {
-                letters: "c".chars().collect(),
+                letters: "fahrt".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
             AnnotatedWord {
-                letters: "d".chars().collect(),
+                letters: "kapitän".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
+            AnnotatedWord {
+                letters: "gesellschaft".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
         ];
 
         let checker = CompoundChecker::new(&words);
 
-        // ab, abc, abcd should all be recognized
-        assert!(checker.is_compound_word(&"ab".chars().collect::<Vec<_>>()));
-        assert!(checker.is_compound_word(&"abc".chars().collect::<Vec<_>>()));
-        assert!(checker.is_compound_word(&"abcd".chars().collect::<Vec<_>>()));
+        // 2-element compound
+        assert!(checker.is_compound_word(&"dampfschiff".chars().collect::<Vec<_>>()));
+
+        // 3-element compound
+        assert!(checker.is_compound_word(&"dampfschifffahrt".chars().collect::<Vec<_>>()));
+
+        // 4-element compound with an s-interfix
+        assert!(checker.is_compound_word(&"dampfschifffahrtskapitän".chars().collect::<Vec<_>>()));
+
+        // 5-element compound with an s-interfix
+        assert!(
+            checker.is_compound_word(&"dampfschifffahrtsgesellschaft".chars().collect::<Vec<_>>())
+        );
+
+        // Single fixture words are elements, not compounds.
+        for word in ["dampf", "schiff", "fahrt", "kapitän", "gesellschaft"] {
+            assert!(
+                !checker.is_compound_word(&word.chars().collect::<Vec<_>>()),
+                "{word}"
+            );
+        }
     }
 
     #[test]
@@ -713,24 +766,187 @@ mod tests {
 
     #[test]
     fn test_timeout_protection() {
-        // Create a checker with very short timeout
-        let words = vec![AnnotatedWord {
-            letters: "a".chars().collect(),
-            annotations: vec!['N', 'h'],
-        }];
+        // Fixture where every single letter is a usable (flagged) element, so a
+        // word like "aaaa..." is decomposable in principle. The depth cap (and
+        // the requirement that the final element be at least MIN_COMPOUND_PART_LEN
+        // characters) keeps it from ever succeeding. With subproblem memoization
+        // the check completes quickly instead of re-decomposing exponentially;
+        // the 1ms timeout guard is never the deciding factor, but must not
+        // change the outcome either.
+        let words: Vec<AnnotatedWord> = (b'a'..=b'z')
+            .map(|c| AnnotatedWord {
+                letters: vec![c as char].into(),
+                annotations: vec!['N', 'h'],
+            })
+            .collect();
 
         let mut checker = CompoundChecker::new(&words);
         checker.max_check_time = Duration::from_millis(1); // 1ms timeout
 
-        // Very long word that would cause combinatorial explosion
+        // Very long word that would cause combinatorial explosion without memoization
         let long_word: Vec<char> = "a".repeat(100).chars().collect();
 
-        // Should return false due to timeout, not hang
+        // Should return false quickly, not hang
         let start = Instant::now();
         let result = checker.is_compound_word(&long_word);
         let elapsed = start.elapsed();
 
         assert!(!result);
         assert!(elapsed < Duration::from_millis(100)); // Should complete quickly
+    }
+
+    // ==================== PRODUCTIVITY TESTS ====================
+
+    #[test]
+    fn test_head_without_compound_flags() {
+        // Core fix: a compound is accepted even when its head (final) element
+        // carries no compound-formation flags, as long as it is a dictionary word.
+        let words = vec![
+            AnnotatedWord {
+                letters: "haus".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
+            AnnotatedWord {
+                letters: "tor".chars().collect(),
+                annotations: vec!['N'],
+            },
+        ];
+
+        let checker = CompoundChecker::new(&words);
+
+        // "haustor" is haus + tor, and "tor" has no compound flags at all.
+        assert!(checker.is_compound_word(&"haustor".chars().collect::<Vec<_>>()));
+
+        // Plain words are elements, not compounds.
+        assert!(!checker.is_compound_word(&"haus".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"tor".chars().collect::<Vec<_>>()));
+    }
+
+    #[test]
+    fn test_compound_with_no_flags_anywhere() {
+        // All parts are in the word list but none carries compound flags.
+        let words = vec![
+            AnnotatedWord {
+                letters: "see".chars().collect(),
+                annotations: vec!['N'],
+            },
+            AnnotatedWord {
+                letters: "karte".chars().collect(),
+                annotations: vec!['N'],
+            },
+        ];
+
+        let checker = CompoundChecker::new(&words);
+
+        assert!(checker.is_compound_word(&"seekarte".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"see".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"karte".chars().collect::<Vec<_>>()));
+    }
+
+    #[test]
+    fn test_s_interfix_without_i_flag() {
+        // The old engine only allowed an s-interfix when the first element
+        // carried the 'i' flag. Any first element may now combine with an
+        // s-interfix if the result decomposes into dictionary words.
+        let words = vec![
+            AnnotatedWord {
+                letters: "arbeit".chars().collect(),
+                annotations: vec!['N'],
+            },
+            AnnotatedWord {
+                letters: "geber".chars().collect(),
+                annotations: vec!['N'],
+            },
+        ];
+
+        let checker = CompoundChecker::new(&words);
+
+        assert!(checker.is_compound_word(&"arbeitsgeber".chars().collect::<Vec<_>>()));
+    }
+
+    #[test]
+    fn test_short_flagged_element() {
+        // Two-character real words (like "ei") remain usable compound elements
+        // because they carry compound-formation flags.
+        let words = vec![
+            AnnotatedWord {
+                letters: "ei".chars().collect(),
+                annotations: vec!['N', 'h', 'i'],
+            },
+            AnnotatedWord {
+                letters: "schnee".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
+        ];
+
+        let checker = CompoundChecker::new(&words);
+
+        assert!(checker.is_compound_word(&"eischnee".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"ei".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"schnee".chars().collect::<Vec<_>>()));
+    }
+
+    #[test]
+    fn test_memoization_determinism_and_junk() {
+        let words = vec![
+            AnnotatedWord {
+                letters: "see".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
+            AnnotatedWord {
+                letters: "karte".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
+        ];
+
+        let checker = CompoundChecker::new(&words);
+
+        // Repeated checks must return the same result (top-level cache + memo).
+        let valid: Vec<char> = "seekarte".chars().collect();
+        assert_eq!(
+            checker.is_compound_word(&valid),
+            checker.is_compound_word(&valid)
+        );
+        assert!(checker.is_compound_word(&valid));
+
+        // A concatenation of two real words with a spurious inserted letter is
+        // not decomposable into exactly the dictionary elements and must stay
+        // rejected, deterministically.
+        let junk: Vec<char> = "seeekarte".chars().collect();
+        assert_eq!(
+            checker.is_compound_word(&junk),
+            checker.is_compound_word(&junk)
+        );
+        assert!(!checker.is_compound_word(&junk));
+    }
+
+    #[test]
+    fn test_base_dictionary_membership() {
+        use crate::spell::MutableDictionary;
+
+        // The word list only knows "schuh" (flagged). "hersteller" is provided
+        // through the injected base dictionary, as happens with the real German
+        // base dictionary.
+        let words = vec![AnnotatedWord {
+            letters: "schuh".chars().collect(),
+            annotations: vec!['N', 'h'],
+        }];
+
+        let mut checker = CompoundChecker::new(&words);
+
+        // Without a base dictionary, "hersteller" is not a member and the
+        // compound cannot be decomposed.
+        assert!(!checker.is_compound_word(&"schuhhersteller".chars().collect::<Vec<_>>()));
+
+        let mut base = MutableDictionary::new();
+        base.append_word("schuh".chars().collect::<CharString>(), Default::default());
+        base.append_word(
+            "hersteller".chars().collect::<CharString>(),
+            Default::default(),
+        );
+        checker.set_base_dictionary(Arc::new(base.into()));
+
+        // With the base dictionary injected, "schuh" + "hersteller" resolves.
+        assert!(checker.is_compound_word(&"schuhhersteller".chars().collect::<Vec<_>>()));
     }
 }

@@ -67,8 +67,8 @@ static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
 
 // Compound checker for lazy compound checking
 static GERMAN_COMPOUND_CHECKER: LazyLock<Arc<Mutex<CompoundChecker>>> = LazyLock::new(|| {
-    let word_list = &*GERMAN_WORD_LIST;
-    let checker = CompoundChecker::new(word_list);
+    let mut checker = CompoundChecker::new(&*GERMAN_WORD_LIST);
+    checker.set_base_dictionary(Arc::clone(&*GERMAN_BASE_DICT));
     Arc::new(Mutex::new(checker))
 });
 

@@ -73,7 +73,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     
     let annotations_path = match args.annotations {
         Some(path) => path,
-        None => PathBuf::from(format!("../../language/{}/annotations-{}.json", args.language, args.language)),
+        None => PathBuf::from(format!("../../language/{}/annotations.json", args.language)),
     };
     
     // Load dictionary file
@@ -99,11 +99,14 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         let word_list = parse_word_list(&dict_content)
             .map_err(|e| format!("❌ Failed to parse word list: {}", e))?;
         let compound_checker = CompoundChecker::new(&word_list);
-        
+
         // Create the base dictionary with affix expansion
-        let base_dict = Arc::new(MutableDictionary::from_rune_files(&dict_content, &annotations_content)
-            .map_err(|e| format!("❌ Failed to create base dictionary: {}", e))?);
-        
+        let base_dict: Arc<harper_core::spell::FstDictionary> = Arc::new(
+            MutableDictionary::from_rune_files(&dict_content, &annotations_content)
+                .map_err(|e| format!("❌ Failed to create base dictionary: {}", e))?
+                .into(),
+        );
+
         Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
     } else {
         // For other languages, use simple dictionary loading

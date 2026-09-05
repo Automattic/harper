@@ -27,7 +27,11 @@ pub struct CompoundAwareDictionary {
 
 impl CompoundAwareDictionary {
     /// Create a new CompoundAwareDictionary from a base dictionary and word list
-    pub fn new(base_dict: Arc<FstDictionary>, compound_checker: CompoundChecker) -> Self {
+    pub fn new(base_dict: Arc<FstDictionary>, mut compound_checker: CompoundChecker) -> Self {
+        // Element membership during compound decomposition is resolved against
+        // the base dictionary (case-insensitive), matching what GermanSpellCheck's
+        // fallback sees at runtime.
+        compound_checker.set_base_dictionary(Arc::clone(&base_dict));
         Self {
             base_dict,
             compound_checker: Arc::new(Mutex::new(compound_checker)),
@@ -196,6 +200,7 @@ mod tests {
             Default::default(),
         );
         dict.append_word("arbeit".chars().collect::<CharString>(), Default::default());
+        dict.append_word("geber".chars().collect::<CharString>(), Default::default());
 
         Arc::new(dict.into())
     }
