@@ -633,6 +633,26 @@ fn dont_fix_how_dose_false_positive() {
 }
 
 #[test]
+fn corrects_what_dose() {
+    assert_suggestion_result(
+        "What dose this mean?",
+        test_linter(),
+        "What does this mean?",
+    );
+}
+
+#[test]
+#[ignore = "false positive not yet detected"]
+fn dont_fix_what_dose_false_positive() {
+    assert_lint_count(
+        "What dose of vitamin d should I take?",
+        test_linter(),
+        0,
+    );
+}
+
+
+#[test]
 fn corrects_when_dose() {
     assert_suggestion_result(
         "When dose reusebale variable sync between device? #2634",
