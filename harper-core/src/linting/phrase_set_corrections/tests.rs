@@ -3575,6 +3575,80 @@ fn detect_arisen_the_question() {
     );
 }
 
+// ReverseEngineer
+
+#[test]
+fn fix_reversed_engineer_present() {
+    assert_suggestion_result(
+        "you will save a lot of time if you don't have to reversed engineer encryption and checksums",
+        test_linter(),
+        "you will save a lot of time if you don't have to reverse engineer encryption and checksums",
+    );
+}
+
+#[test]
+fn fix_reversed_engineer_past() {
+    assert_suggestion_result(
+        "The codes is taking the reversed engineer SEED value from GOZ family codes",
+        test_linter(),
+        "The codes is taking the reverse engineered SEED value from GOZ family codes",
+    )
+}
+
+#[test]
+fn fix_reversed_engineer_hyphen_past() {
+    assert_suggestion_result(
+        "We reversed-engineer and traced the reviews that were displayed at the time to each reviewer at the time each review was being composed.",
+        test_linter(),
+        "We reverse-engineered and traced the reviews that were displayed at the time to each reviewer at the time each review was being composed.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineered() {
+    assert_suggestion_result(
+        "I reversed engineered the TIDAL device authorization grant (RFC 8628) since the web flow (RFC 6749) is reCaptcha v3 secured.",
+        test_linter(),
+        "I reverse engineered the TIDAL device authorization grant (RFC 8628) since the web flow (RFC 6749) is reCaptcha v3 secured.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineered_hyphen() {
+    assert_suggestion_result(
+        "This is a reversed-engineered server for Card Wars Kingdom, designed for version 1.0.17",
+        test_linter(),
+        "This is a reverse-engineered server for Card Wars Kingdom, designed for version 1.0.17",
+    );
+}
+
+#[test]
+fn fix_reversed_engineering() {
+    assert_suggestion_result(
+        "Im not sure how this works but it is probably vulnerable to reversed engineering attack.",
+        test_linter(),
+        "Im not sure how this works but it is probably vulnerable to reverse engineering attack.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineers_verb() {
+    assert_suggestion_result(
+        "... managed to create a mini-arc reactor was because had blue prints for the original and kind of reversed engineers it",
+        test_linter(),
+        "... managed to create a mini-arc reactor was because had blue prints for the original and kind of reverse engineers it",
+    );
+}
+
+#[test]
+fn fix_reversed_engineers_noun() {
+    assert_suggestion_result(
+        "Expert reversed engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
+        test_linter(),
+        "Expert reverse engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
+    );
+}
+
 // SideTangent
 
 #[test]
