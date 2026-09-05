@@ -472,15 +472,6 @@ Suggest:
 
 
 
-Lint:    Miscellaneous (31 priority)
-Message: |
-     238 | puzzle!” And she began thinking over all the children she knew that were of the
-         |                                 ^~~~~~~~ Did you mean the closed compound `overall`?
-Suggest:
-  - Replace with: “overall”
-
-
-
 Lint:    Capitalization (31 priority)
 Message: |
      243 | all sorts of things, and she, oh! she knows such a very little! Besides, she’s
@@ -1700,16 +1691,6 @@ Message: |
          |                                     ^~~~~~~~ Use `find` instead of `find out` when you mean to discover something directly.
 Suggest:
   - Replace with: “find”
-
-
-
-Lint:    Miscellaneous (31 priority)
-Message: |
-    1415 | dropped, and the party sat silent for a minute, while Alice thought over all she
-         |                                                                     ^~~~~~~~ Did you mean the closed compound `overall`?
-    1416 | could remember about ravens and writing-desks, which wasn’t much.
-Suggest:
-  - Replace with: “overall”
 
 
 
