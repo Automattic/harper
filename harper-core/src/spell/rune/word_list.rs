@@ -17,10 +17,11 @@ pub fn parse_word_list(source: &str) -> Result<Vec<AnnotatedWord>, Error> {
     // containing an integer item count. Language dictionaries do not.
     // Accept both formats by skipping the first line only when it is a
     // bare integer.
-    if let Some(first) = lines.peek() {
-        if first.trim().parse::<usize>().is_ok() {
-            lines.next();
-        }
+    if lines
+        .peek()
+        .is_some_and(|first| first.trim().parse::<usize>().is_ok())
+    {
+        lines.next();
     }
 
     let mut words = Vec::new();
