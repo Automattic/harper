@@ -3975,6 +3975,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TryingToDoing",
+								"state": true,
+								"label": "Trying to Doing"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TryOnesHandAt",
 								"state": true,
 								"label": "Try Ones Hand At"

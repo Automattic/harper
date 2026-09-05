@@ -299,6 +299,7 @@ use super::touristic::Touristic;
 use super::transposed_space::TransposedSpace;
 use super::try_ones_hand_at::TryOnesHandAt;
 use super::try_ones_luck::TryOnesLuck;
+use super::trying_to_doing::TryingToDoing;
 use super::unclosed_quotes::UnclosedQuotes;
 use super::update_place_names::UpdatePlaceNames;
 use super::use_ellipsis_character::UseEllipsisCharacter;
@@ -906,6 +907,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(TransposedSpace);
         insert_expr_rule!(TryOnesHandAt);
         insert_expr_rule!(TryOnesLuck);
+        insert_expr_rule!(TryingToDoing);
         insert_struct_rule!(UnclosedQuotes);
         insert_expr_rule!(UpdatePlaceNames);
         insert_struct_rule!(UseEllipsisCharacter);
