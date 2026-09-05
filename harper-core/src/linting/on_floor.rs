@@ -69,7 +69,7 @@ impl ExprLinter for OnFloor {
         let span = matched_tokens[0..1].span()?;
 
         Some(Lint {
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::Preposition,
             span,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "on",
