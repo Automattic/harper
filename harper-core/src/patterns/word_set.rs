@@ -1,7 +1,7 @@
 use super::SingleTokenPattern;
 use smallvec::SmallVec;
 
-use crate::{CharString, Token, char_ext::CharExt};
+use crate::{CharString, CharStringExt, Token, char_ext::CharExt};
 
 /// A [`super::Pattern`] that matches against any of a set of provided words.
 /// For small sets of short words, it doesn't allocate.
@@ -14,21 +14,32 @@ pub struct WordSet {
 
 impl WordSet {
     pub fn add(&mut self, word: &str) {
-        let chars = word.chars().collect();
-
-        if !self.words.contains(&chars) {
-            self.words.push(chars);
+        if !self.contains(word) {
+            self.words.push(
+                word.chars()
+                    .map(|c| c.normalized().to_ascii_lowercase())
+                    .collect(),
+            );
         }
     }
 
     pub fn add_chars(&mut self, chars: &[char]) {
-        if !self.words.iter().any(|i| i.as_ref() == chars) {
-            self.words.push(chars.into());
+        if !self.contains_chars(chars) {
+            self.words.push(
+                chars
+                    .iter()
+                    .map(|c| c.normalized().to_ascii_lowercase())
+                    .collect(),
+            );
         }
     }
 
     pub fn contains(&self, word: &str) -> bool {
-        self.words.contains(&word.chars().collect())
+        self.words.iter().any(|w| w.as_ref().eq_str_lenient(word))
+    }
+
+    pub fn contains_chars(&self, chars: &[char]) -> bool {
+        self.words.iter().any(|w| w.as_ref().eq_ch_lenient(chars))
     }
 
     /// Create a new word set that matches against any word in the provided list.
@@ -58,9 +69,8 @@ impl SingleTokenPattern for WordSet {
 
             let partial_match = tok_chars
                 .iter()
-                .map(CharExt::normalized)
-                .zip(word.iter().map(CharExt::normalized))
-                .all(|(a, b)| a.eq_ignore_ascii_case(&b));
+                .zip(word.iter())
+                .all(|(a, b)| a.normalized().eq_ignore_ascii_case(&b.normalized()));
 
             if partial_match {
                 return true;
