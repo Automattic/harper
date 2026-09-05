@@ -48,22 +48,17 @@ impl UPOSFreqDict {
     /// Parse a `.conllu` file and use it to train a frequency dictionary.
     /// For error-handling purposes, this function should not be made accessible outside of training.
     pub fn inc_from_conllu_file(&mut self, path: impl AsRef<Path>) {
-        use super::np_extraction::locate_noun_phrases_in_sent;
-        use crate::conllu_utils::iter_sentences_in_conllu;
+        use crate::conllu_utils::{
+            TrainingRecord, iter_sentences_in_conllu, sentence_to_training_record,
+        };
 
         for sent in iter_sentences_in_conllu(path) {
-            use hashbrown::HashSet;
-
-            let noun_phrases = locate_noun_phrases_in_sent(&sent);
-
-            let flat = noun_phrases.into_iter().fold(HashSet::new(), |mut a, b| {
-                a.extend(b);
-                a
-            });
-
-            for (i, token) in sent.tokens.iter().enumerate() {
-                if let Some(upos) = token.upos.and_then(UPOS::from_conllu) {
-                    self.inc_is_np(upos, flat.contains(&i))
+            // Merged surface tokens' tags + NP mask — multiword-token and
+            // contraction aware (see `sentence_to_training_record`).
+            let TrainingRecord { tags, np_mask, .. } = sentence_to_training_record(&sent);
+            for (tag, is_np) in tags.into_iter().zip(np_mask) {
+                if let Some(upos) = tag {
+                    self.inc_is_np(upos, is_np);
                 }
             }
         }
