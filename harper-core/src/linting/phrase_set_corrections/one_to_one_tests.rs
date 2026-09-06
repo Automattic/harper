@@ -635,7 +635,7 @@ fn dont_fix_how_dose_false_positive() {
 #[test]
 fn corrects_what_dose_it() {
     assert_suggestion_result(
-        "what dose it mean when a cat wags its tail",
+        "What dose it mean when a cat wags its tail?",
         test_linter(),
         "What does it mean when a cat wags its tail?",
     );
