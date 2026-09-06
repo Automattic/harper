@@ -633,6 +633,24 @@ fn dont_fix_how_dose_false_positive() {
 }
 
 #[test]
+fn corrects_what_dose_a() {
+    assert_suggestion_result(
+        "What dose a business analyst do?",
+        test_linter(),
+        "What does a business analyst do?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_an() {
+    assert_suggestion_result(
+        "What dose an ear infection feel like?",
+        test_linter(),
+        "What does an ear infection feel like?",
+    );
+}
+
+#[test]
 fn corrects_what_dose_it() {
     assert_suggestion_result(
         "What dose it mean when a cat wags its tail?",

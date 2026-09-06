@@ -200,6 +200,8 @@ pub fn lint_group() -> LintGroup {
                 ("someone dose", "someone does"),
                 // Interrogatives
                 ("how dose", "how does"),
+                ("what dose a", "what does a"),
+                ("what dose an", "what does an"),
                 ("what dose it", "what does it"),
                 ("what dose this", "what does this"),
                 ("what dose that", "what does that"),
