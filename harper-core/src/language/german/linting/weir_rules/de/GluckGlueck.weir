@@ -1,0 +1,26 @@
+expr main [(Gluck Glück)]
+
+let message "Das Wort wird »Glück« geschrieben."
+let description "Corrects `Gluck` to `Glück` with the proper umlaut character."
+let kind "Spelling"
+let becomes "Glück"
+let strategy "MatchCase"
+
+test "Er hatte kein Gluck Glück." "Er hatte kein Glück."
+test "Das ist mein Gluck Glück." "Das ist mein Glück."
+test "Alles Gluck Glück!" "Alles Glück!"
+test "Zum Gluck Glück." "Zum Glück."
+test "Das ist reines Gluck Glück." "Das ist reines Glück."
+test "Kleines Gluck Glück." "Kleines Glück."
+test "Gluck Glück gehabt." "Glück gehabt."
+test "Das bringt Gluck Glück." "Das bringt Glück."
+test "Immer wieder Gluck Glück." "Immer wieder Glück."
+test "Gluck Glück für dich." "Glück für dich."
+test "Das ist echtes Gluck Glück." "Das ist echtes Glück."
+test "Gluck Glück im Spiel." "Glück im Spiel."
+test "Kein Gluck Glück mehr." "Kein Glück mehr."
+test "Viel Gluck Glück!" "Viel Glück!"
+test "Das ist großes Gluck Glück." "Das ist großes Glück."
+
+allows "Glück"
+allows "gluck"

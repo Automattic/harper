@@ -1,6 +1,7 @@
 import { mkdir, rm } from 'node:fs/promises';
-import path from 'node:path';
+import type { BrowserContext } from '@playwright/test';
 import { test as base, expect } from '@playwright/test';
+import path from 'path';
 import { withExtension } from 'playwright-webextext';
 
 const pathToExtension = path.join(import.meta.dirname, '../build');
@@ -34,4 +35,21 @@ const test = base.extend({
 	},
 });
 
+/** Get the background page for a context, used to access extension internals. */
+async function getBackground(context: BrowserContext): Promise<any> {
+	return (
+		context.serviceWorkers()[0] ??
+		context.backgroundPages()[0] ??
+		(await Promise.race([
+			context.waitForEvent('serviceworker', { timeout: 10000 }).catch(() => null),
+			context.waitForEvent('backgroundpage', { timeout: 10000 }).catch(() => null),
+		]))
+	);
+}
+
+// Increase timeout for Firefox tests to accommodate larger WASM file (25MB)
+// This needs to be set before any async operations in beforeEach
+test.setTimeout(90000);
+
 export { test, expect };
+export { getBackground };

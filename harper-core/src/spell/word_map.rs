@@ -86,6 +86,10 @@ impl WordMap {
         self.inner.len()
     }
 
+    pub fn is_empty(&self) -> bool {
+        self.inner.is_empty()
+    }
+
     pub fn with_capacity(capacity: usize) -> Self {
         Self {
             inner: HashMap::with_capacity(capacity),

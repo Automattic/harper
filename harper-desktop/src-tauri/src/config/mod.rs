@@ -2,20 +2,22 @@ mod error;
 mod integration;
 
 pub use error::Error;
+pub use integration::Integration;
+
+use harper_core::language::{new_curated_for_language, parse_language};
 use harper_core::{
-    Dialect, IgnoredLints,
+    Dialect, IgnoredLints, Language,
     linting::{FlatConfig, LintGroup},
-    spell::{FstDictionary, MergedDictionary, MutableDictionary},
+    spell::{MergedDictionary, MutableDictionary},
 };
 use harper_dictionary_wordlist::{load_dict, save_dict};
-pub use integration::Integration;
 use serde::de::{DeserializeOwned, Error as _};
 use std::{fs, io, path::PathBuf, sync::Arc};
 
 /// User-controlled app state needed by Tauri commands and the highlighter process.
 pub struct Config {
     pub mutable_dictionary: MutableDictionary,
-    pub dialect: Dialect,
+    pub dialect: Language,
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
@@ -24,6 +26,16 @@ pub struct Config {
     pub auto_update: bool,
     pub last_update_check: Option<u64>,
     pub highlighter_service_enabled: bool,
+}
+
+/// Extract Dialect from Language for use with dictionary loading.
+/// For non-English languages, returns default dialect (temporary limitation).
+#[allow(unreachable_patterns)]
+fn language_to_dialect(language: Language) -> Dialect {
+    match language {
+        Language::English(d) => d,
+        _ => Dialect::default(),
+    }
 }
 
 impl Config {
@@ -42,10 +54,10 @@ impl Config {
         }
     }
 
-    fn detect_system_dialect() -> Dialect {
+    fn detect_system_dialect() -> Language {
         tauri_plugin_os::locale()
-            .and_then(|bcp47| Dialect::try_from_bcp47(&bcp47))
-            .unwrap_or(Dialect::American)
+            .and_then(|bcp47| parse_language(&bcp47))
+            .unwrap_or_default()
     }
 
     pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
@@ -117,27 +129,29 @@ impl Config {
         let serialized = fs::read_to_string(main_path)?;
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
-        config.mutable_dictionary = load_dict(dictionary_path, config.dialect).await?;
+        config.mutable_dictionary =
+            load_dict(dictionary_path, language_to_dialect(config.dialect)).await?;
 
         Ok(config)
     }
 
     pub fn dictionary_from_user_dictionary(
+        language: Language,
         user_dictionary: MutableDictionary,
     ) -> Arc<MergedDictionary> {
         let mut dictionary = MergedDictionary::new();
-        dictionary.add_dictionary(FstDictionary::curated());
+        dictionary.add_dictionary(harper_core::language::dictionary(language));
         dictionary.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(dictionary)
     }
 
     fn create_dictionary(&self) -> Arc<MergedDictionary> {
-        Self::dictionary_from_user_dictionary(self.mutable_dictionary.clone())
+        Self::dictionary_from_user_dictionary(self.dialect, self.mutable_dictionary.clone())
     }
 
     pub fn create_linter(&self) -> LintGroup {
-        LintGroup::new_curated(self.create_dictionary(), self.dialect)
+        new_curated_for_language(self.create_dictionary(), self.dialect)
             .with_lint_config(self.lint_config.clone())
     }
 
@@ -180,7 +194,12 @@ impl Config {
 
         Ok(Self {
             mutable_dictionary: MutableDictionary::new(),
-            dialect: deserialize_field(object, "dialect")?,
+            dialect: {
+                let value = object
+                    .remove("dialect")
+                    .ok_or_else(|| serde_json::Error::custom("missing config field `dialect`"))?;
+                deserialize_language_compat(value)?
+            },
             ignored_lints: deserialize_field(object, "ignored_lints")?,
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
@@ -233,6 +252,26 @@ where
     serde_json::from_value(value).map(Some)
 }
 
+/// Deserialize the `dialect` config field, accepting both the current
+/// externally-tagged `Language` format and the legacy master format where the
+/// field was a plain `Dialect` string such as `"American"`.
+fn deserialize_language_compat(value: serde_json::Value) -> serde_json::Result<Language> {
+    if let Ok(language) = serde_json::from_value::<Language>(value.clone()) {
+        return Ok(language);
+    }
+
+    if value.is_string()
+        && let Ok(dialect) = serde_json::from_value::<Dialect>(value)
+    {
+        return Ok(Language::English(dialect));
+    }
+
+    Err(serde_json::Error::custom(
+        "invalid `dialect` field: expected a Language object like \
+         {\"English\": \"American\"} or a legacy dialect string like \"American\"",
+    ))
+}
+
 impl Default for Config {
     fn default() -> Self {
         Self::new()
@@ -242,7 +281,7 @@ impl Default for Config {
 #[cfg(test)]
 mod tests {
     use super::{Config, Integration};
-    use harper_core::DictWordMetadata;
+    use harper_core::{Dialect, DictWordMetadata, Language};
 
     #[test]
     fn serialize_main_excludes_dictionary_word_list() {
@@ -295,6 +334,36 @@ mod tests {
                 .unwrap(),
             serde_json::from_str::<serde_json::Value>(&serialized).unwrap()
         );
+    }
+
+    #[test]
+    fn deserialize_main_accepts_legacy_string_dialect() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().insert(
+            "dialect".to_string(),
+            serde_json::Value::String("American".to_string()),
+        );
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.dialect, Language::English(Dialect::American));
+    }
+
+    #[test]
+    fn deserialize_main_accepts_new_language_dialect() {
+        let config = Config::new();
+        let mut value =
+            serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();
+        value.as_object_mut().unwrap().insert(
+            "dialect".to_string(),
+            serde_json::json!({ "English": "British" }),
+        );
+
+        let deserialized = Config::deserialize_main(&value.to_string()).unwrap();
+
+        assert_eq!(deserialized.dialect, Language::English(Dialect::British));
     }
 
     #[test]
@@ -395,6 +464,20 @@ mod tests {
             path.parent().unwrap().file_name().unwrap(),
             "harper-desktop"
         );
+    }
+
+    #[cfg(feature = "de")]
+    #[test]
+    fn dictionary_for_german_contains_german_words() {
+        use harper_core::Language;
+        use harper_core::language::german::dialects::GermanDialect;
+        use harper_core::spell::{Dictionary, MutableDictionary};
+        let dict = Config::dictionary_from_user_dictionary(
+            Language::German(GermanDialect::Standard),
+            MutableDictionary::new(),
+        );
+        assert!(dict.contains_word("Haus".chars().collect::<Vec<_>>().as_slice()));
+        assert!(dict.contains_word("Freiheit".chars().collect::<Vec<_>>().as_slice()));
     }
 
     #[test]

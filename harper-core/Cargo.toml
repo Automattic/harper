@@ -35,8 +35,12 @@ harper-thesaurus = { path = "../harper-thesaurus", version = "2.0.0", optional =
 bitflags = { version = "2.11.0", features = ["serde"] }
 trie-rs = "0.4.2"
 zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
-regex = "1.12.3"
+regex = "1.13.1"
 boxcar = { version = "0.2.14", optional = true }
+flate2 = "1.1.9"
+
+[build-dependencies]
+toml = "1.1"
 
 [dev-dependencies]
 criterion = { version = "0.8.2", default-features = false }
@@ -57,3 +61,21 @@ harness = false
 default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
 thesaurus = ["dep:harper-thesaurus"]
+
+# Internal marker feature that gates the language module system itself.
+# English is always included when this is enabled. Each individual language
+# feature below enables it so that consumers can build "English + German only"
+# or "English only" without pulling in every language.
+language-module = []
+
+# Multilingual support (language module system with English + all new languages)
+multilingual = ["de", "pt", "sk", "pl"]
+
+# Individual language features
+de = ["language-module"]
+pt = ["language-module"]
+sk = ["language-module"]
+pl = ["language-module"]
+
+# Convenience feature to enable all supported languages
+all-languages = ["multilingual"]

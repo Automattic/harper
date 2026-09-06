@@ -1,0 +1,25 @@
+[language]
+name = "English"
+
+[metadata]
+confidence = 0.30
+
+[[dialects]]
+name = "US"
+aliases = ["us", "usa", "america", "american", "en-us", "en_us"]
+
+[[dialects]]
+name = "GB"
+aliases = ["uk", "gb", "british", "britain", "en-gb", "en_gb"]
+
+[[dialects]]
+name = "AU"
+aliases = ["au", "aus", "australia", "australian", "en-au", "en_au"]
+
+[[dialects]]
+name = "IN"
+aliases = ["in", "india", "indian", "bharat", "en-in", "en_in"]
+
+[[dialects]]
+name = "CA"
+aliases = ["ca", "canada", "canadian", "en-ca", "en_ca"]

@@ -210,10 +210,10 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
                 return true;
             }
 
-            !is_short_preposition
-                && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
-                && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
-                && !(chars.len() == 1 && chars[0] == 'x')
+            !(is_short_preposition
+                || chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
+                || chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+                || (chars.len() == 1 && chars[0] == 'x'))
         }
         _ => true,
     }

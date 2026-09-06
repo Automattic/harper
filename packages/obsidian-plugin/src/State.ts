@@ -35,6 +35,7 @@ export default class State {
 	private lintEnabled?: boolean;
 	private regexMask?: string;
 	private useWebStyleLints = false;
+	private lintConfigInitialized = false;
 
 	/** The CodeMirror extension objects that should be inserted by the host. */
 	private editorExtensions: Extension[];
@@ -102,6 +103,7 @@ export default class State {
 
 		await this.harper.setLintConfig(settings.lintSettings);
 		this.harper.setup();
+		this.lintConfigInitialized = true;
 
 		this.delay = settings.delay ?? DEFAULT_DELAY;
 		this.ignoredGlobs = settings.ignoredGlobs;
@@ -266,6 +268,17 @@ export default class State {
 
 		const userDictionary = await this.harper.exportWords();
 		userDictionary.sort();
+
+		// Lazily initialize the lint config with nulls for defaults if not already done
+		if (!this.lintConfigInitialized) {
+			const defaultConfig = await this.harper.getDefaultLintConfig();
+			const nullConfig: Record<string, null> = {};
+			for (const key of Object.keys(defaultConfig)) {
+				nullConfig[key] = null;
+			}
+			await this.harper.setLintConfig(nullConfig);
+			this.lintConfigInitialized = true;
+		}
 
 		return {
 			ignoredLints: await this.harper.exportIgnoredLints(),

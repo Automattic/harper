@@ -1,0 +1,26 @@
+expr main [(Im Anbetracht In Anbetracht)]
+
+let message "Die korrekte Präposition hier ist »in«."
+let description "Corrects `Im Anbetracht` to `In Anbetracht` for the phrase."
+let kind "Grammar"
+let becomes "In Anbetracht"
+let strategy "MatchCase"
+
+test "Im Anbetracht In Anbetracht der Tatsache dass..." "In Anbetracht der Tatsache dass..."
+test "Im Anbetracht In Anbetracht der Situation..." "In Anbetracht der Situation..."
+test "Im Anbetracht In Anbetracht der Umstände..." "In Anbetracht der Umstände..."
+test "Im Anbetracht In Anbetracht dessen..." "In Anbetracht dessen..."
+test "Im Anbetracht In Anbetracht der Schwierigkeiten..." "In Anbetracht der Schwierigkeiten..."
+test "Im Anbetracht In Anbetracht der finanziellen Lage..." "In Anbetracht der finanziellen Lage..."
+test "Im Anbetracht In Anbetracht des Problems..." "In Anbetracht des Problems..."
+test "Im Anbetracht In Anbetracht der Gegebenheiten..." "In Anbetracht der Gegebenheiten..."
+test "Im Anbetracht In Anbetracht der aktuellen Situation..." "In Anbetracht der aktuellen Situation..."
+test "Im Anbetracht In Anbetracht der Risiken..." "In Anbetracht der Risiken..."
+test "Im Anbetracht In Anbetracht der Bedeutung..." "In Anbetracht der Bedeutung..."
+test "Im Anbetracht In Anbetracht der Folgen..." "In Anbetracht der Folgen..."
+test "Im Anbetracht In Anbetracht der Konsequenzen..." "In Anbetracht der Konsequenzen..."
+test "Im Anbetracht In Anbetracht der Zeit..." "In Anbetracht der Zeit..."
+test "Im Anbetracht In Anbetracht der Umstände entscheiden wir..." "In Anbetracht der Umstände entscheiden wir..."
+
+allows "in Anbetracht"
+allows "In Anbetracht"

@@ -9,7 +9,7 @@ use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
-    Dialect, DictWordMetadata, Document, IgnoredLints,
+    DictWordMetadata, Document, IgnoredLints, Language,
     linting::{Lint, LintGroup},
     spell::MutableDictionary,
 };
@@ -244,6 +244,7 @@ pub fn run_highlighter(has_parent: bool) {
     let lint_linter = linter.clone();
     let lint_user_dictionary = user_dictionary.clone();
     let lint_debounce_ms = debounce_ms.clone();
+    let lint_dialect = dialect.clone();
     let lint_debounce_state = Rc::new(RefCell::new(DebounceState::default()));
 
     let ignore_client = client.clone();
@@ -279,8 +280,10 @@ pub fn run_highlighter(has_parent: bool) {
             DebounceStatus::Ready => {}
         }
 
-        let dictionary =
-            Config::dictionary_from_user_dictionary(lint_user_dictionary.borrow().clone());
+        let dictionary = Config::dictionary_from_user_dictionary(
+            *lint_dialect.borrow(),
+            lint_user_dictionary.borrow().clone(),
+        );
         let doc = Document::new_markdown_default(text, &dictionary);
         let mut organized_lints = lint_linter.borrow_mut().organized_lints(&doc);
 
@@ -409,7 +412,7 @@ fn apply_highlighter_config(
     config: Config,
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
-    dialect: &Rc<RefCell<Dialect>>,
+    dialect: &Rc<RefCell<Language>>,
     integrations: &Arc<StdMutex<Vec<Integration>>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
