@@ -189,7 +189,7 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   pnpm install
   pnpm check
 
-  cargo check --all-targets
+  cargo check --manifest-path "{{justfile_directory()}}/harper-desktop/src-tauri/Cargo.toml" --all-targets
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
@@ -504,9 +504,7 @@ dogfood:
 test-rust:
   echo Running all Rust tests
   cargo test -q
-  
-  cd "{{justfile_directory()}}/harper-desktop"
-  cargo test -q
+  cargo test -q --manifest-path "{{justfile_directory()}}/harper-desktop/src-tauri/Cargo.toml"
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
