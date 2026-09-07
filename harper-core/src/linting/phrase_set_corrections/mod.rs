@@ -3,7 +3,9 @@ use crate::linting::LintKind;
 use super::{LintGroup, MapPhraseSetLinter};
 
 #[cfg(test)]
-mod tests;
+mod many_to_many_tests;
+#[cfg(test)]
+mod one_to_one_tests;
 
 /// Produce a [`LintGroup`] that looks for errors in sets of common phrases.
 pub fn lint_group() -> LintGroup {
@@ -997,6 +999,20 @@ pub fn lint_group() -> LintGroup {
             "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
             "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
             LintKind::Spelling
+        ),
+        "PlayAFactor" => (
+            &[
+                // singular
+                (&["play a factor"], &["play a part", "play a role", "be a factor", "are a factor", "am a factor"]),
+                (&["plays a factor"], &["plays a part", "plays a role", "is a factor"]),
+                (&["played a factor"], &["played a part", "played a role", "was a factor", "were a factor", "were factors", "been a factor"]),
+                (&["playing a factor"], &["playing a part", "playing a role", "a factor","being a factor"]),
+                // plural - NOTE some lead to more false positives than true errors
+                (&["played factors"], &["played parts", "played roles", "played a part", "played a role", "were a factor", "were factors"]),
+            ],
+            "Use `play a part` or `be a factor` instead of `play a factor`.",
+            "Corrects `play a factor` to `play a part` or `be a factor`.",
+            LintKind::Usage
         ),
         "RiseTheQuestion" => (
             &[

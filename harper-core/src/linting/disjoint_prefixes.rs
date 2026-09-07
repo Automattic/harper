@@ -206,4 +206,12 @@ mod tests {
             "My hobby is de-extinction of the dinosaurs.",
         );
     }
+
+    #[test]
+    fn dont_join_hyphenated_re_execute_3954() {
+        assert_no_lints(
+            "I saw re-execute flagged with DisjointPrefixes.",
+            DisjointPrefixes::new(FstDictionary::curated()),
+        );
+    }
 }
