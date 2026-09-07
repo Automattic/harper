@@ -190,7 +190,6 @@ button {
 }
 
 .step-list,
-.list-card,
 .rule-group {
 	overflow: hidden;
 	border: 0.5px solid var(--settings-line-strong);
@@ -276,20 +275,10 @@ button {
 	gap: 22px;
 }
 
-.row,
 .inline-row {
 	display: flex;
 	align-items: center;
 	gap: 24px;
-}
-
-.row.top {
-	align-items: flex-start;
-}
-
-.row > div:first-child {
-	flex: 1;
-	min-width: 0;
 }
 
 .row strong,
@@ -377,59 +366,22 @@ button {
 	padding: 0 10px;
 }
 
-.checkbox {
-	width: 16px;
-	height: 16px;
-	flex: 0 0 16px;
-	display: grid;
-	place-items: center;
-	border-radius: 4px;
-	border: 1px solid rgba(0, 0, 0, 0.25);
-	background: #fff;
-	color: #fff;
-	padding: 0;
+.control-icon {
+	width: 13px;
+	height: 13px;
+	flex: 0 0 13px;
 }
 
-.checkbox.checked {
-	border-color: rgba(0, 0, 0, 0.15);
-	background: var(--settings-accent);
-}
-
-.checkbox .settings-icon {
-	width: 11px;
-	height: 11px;
-	flex-basis: 11px;
-}
-
-.toggle {
-	width: 34px;
+.big-mark .control-icon {
+	width: 20px;
 	height: 20px;
-	flex: 0 0 34px;
-	border: 0;
-	border-radius: 999px;
-	background: #d4cfc4;
-	padding: 2px;
-	box-shadow: inset 0 0.5px 1px rgba(0, 0, 0, 0.1);
+	flex-basis: 20px;
 }
 
-.toggle span {
-	display: block;
-	width: 16px;
-	height: 16px;
-	border-radius: 999px;
-	background: #fff;
-	box-shadow:
-		0 1px 2px rgba(0, 0, 0, 0.2),
-		0 0.5px 0 rgba(0, 0, 0, 0.1);
-	transition: transform 150ms ease;
-}
-
-.toggle.checked {
-	background: var(--settings-accent);
-}
-
-.toggle.checked span {
-	transform: translateX(14px);
+.success-banner .big-mark .control-icon {
+	width: 22px;
+	height: 22px;
+	flex-basis: 22px;
 }
 
 .add-row {
@@ -494,30 +446,10 @@ code {
 	font-size: 12px;
 }
 
-.icon-button {
-	width: 26px;
-	height: 26px;
-	flex: 0 0 26px;
-	display: grid;
-	place-items: center;
-	border: 0;
-	border-radius: 6px;
-	background: transparent;
-	color: var(--settings-ink-3);
-}
-
-.icon-button:hover {
-	background: rgba(0, 0, 0, 0.06);
-	color: var(--settings-ink);
-}
-
-.icon-button.danger:hover {
-	background: rgba(180, 35, 24, 0.08);
-	color: #b42318;
-}
-
 .list-row .icon-button .settings-icon,
-.rule-search .icon-button .settings-icon {
+.list-row .icon-button .control-icon,
+.rule-search .icon-button .settings-icon,
+.rule-search .icon-button .control-icon {
 	width: 10px;
 	height: 10px;
 	flex-basis: 10px;

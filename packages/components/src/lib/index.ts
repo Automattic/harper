@@ -1,6 +1,5 @@
 export {
 	Badge,
-	Checkbox,
 	Fileupload,
 	Label,
 	Radio,
@@ -11,26 +10,38 @@ export {
 	TableBodyRow,
 	TableHead,
 	TableHeadCell,
-	Toggle,
 } from 'flowbite-svelte';
 
 export { default as Arrow } from './Arrow.svelte';
 export { default as Button } from './Button.svelte';
 export { default as Card } from './Card.svelte';
+export { default as Checkbox } from './Checkbox.svelte';
 export { default as Collapsible } from './Collapsible.svelte';
 export { default as DelayedRender } from './DelayedRender.svelte';
 export { default as GutterCenter } from './GutterCenter.svelte';
+export { default as IconButton } from './IconButton.svelte';
 export { default as Input } from './Input.svelte';
 export { default as Isolate } from './Isolate.svelte';
+export { default as BookIcon } from './icons/BookIcon.svelte';
 export { default as CheckIcon } from './icons/CheckIcon.svelte';
+export { default as ChecklistIcon } from './icons/ChecklistIcon.svelte';
 export { default as ChevronLeftIcon } from './icons/ChevronLeftIcon.svelte';
 export { default as ChevronRightIcon } from './icons/ChevronRightIcon.svelte';
 export { default as CloseIcon } from './icons/CloseIcon.svelte';
 export { default as DownloadIcon } from './icons/DownloadIcon.svelte';
 export { default as EditIcon } from './icons/EditIcon.svelte';
+export { default as GearIcon } from './icons/GearIcon.svelte';
+export { default as GridIcon } from './icons/GridIcon.svelte';
+export { default as InfoIcon } from './icons/InfoIcon.svelte';
+export { default as KeyIcon } from './icons/KeyIcon.svelte';
+export { default as PackageIcon } from './icons/PackageIcon.svelte';
 export { default as PlayIcon } from './icons/PlayIcon.svelte';
 export { default as PlusIcon } from './icons/PlusIcon.svelte';
+export { default as QuillIcon } from './icons/QuillIcon.svelte';
+export { default as RocketIcon } from './icons/RocketIcon.svelte';
+export { default as SearchIcon } from './icons/SearchIcon.svelte';
 export { default as TrashIcon } from './icons/TrashIcon.svelte';
+export { default as UploadIcon } from './icons/UploadIcon.svelte';
 export { default as Link } from './Link.svelte';
 export { default as AutomatticLogo } from './logos/AutomatticLogo.svelte';
 export { default as ChromeLogo } from './logos/ChromeLogo.svelte';
@@ -57,8 +68,12 @@ export { default as ThingsLogo } from './logos/ThingsLogo.svelte';
 export { default as WhatsAppLogo } from './logos/WhatsAppLogo.svelte';
 export { default as WordPressLogo } from './logos/WordPressLogo.svelte';
 export { default as ZedLogo } from './logos/ZedLogo.svelte';
+export { default as Panel } from './Panel.svelte';
+export { default as SearchField } from './SearchField.svelte';
 export { default as Section } from './Section.svelte';
 export { default as Select } from './Select.svelte';
+export { default as SettingRow } from './SettingRow.svelte';
 export { default as Testimonial } from './Testimonial.svelte';
 export { default as TestimonialCollection } from './TestimonialCollection.svelte';
 export { default as Textarea } from './Textarea.svelte';
+export { default as Toggle } from './Toggle.svelte';

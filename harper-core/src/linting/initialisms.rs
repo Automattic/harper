@@ -17,6 +17,7 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
+        "AsFarAsICanTell"        => ("afaict", &["as far as I can tell"]),
         "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
         "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
         "BeRightBack"            => ("brb", &["be right back"]),
@@ -35,6 +36,7 @@ pub fn lint_group() -> LintGroup {
         "LetMeKnow"              => ("lmk", &["let me know"]),
         "NeverMind"              => ("nvm", &["never mind"]),
         "OhMyGod"                => ("omg", &["oh my god"]),
+        "OnTheOtherHand"         => ("otoh", &["on the other hand"]),
         "PleaseTakeALook"        => ("ptal", &["please take a look"]),
         "Really"                 => ("rly", &["really"]),
         "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
@@ -238,6 +240,24 @@ mod tests {
             "Lmk if you need any debug logs.",
             lint_group(),
             "Let me know if you need any debug logs.",
+        );
+    }
+
+    #[test]
+    fn corrects_afaict() {
+        assert_suggestion_result(
+            "AFAICT the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+            lint_group(),
+            "As far as i can tell the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+        );
+    }
+
+    #[test]
+    fn corrects_otoh() {
+        assert_suggestion_result(
+            "\"Actual consequences\", OTOH, most directly relates to the camp(s) focused on \"embodiment\"",
+            lint_group(),
+            "\"Actual consequences\", On the other hand, most directly relates to the camp(s) focused on \"embodiment\"",
         );
     }
 }

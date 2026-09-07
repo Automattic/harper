@@ -123,7 +123,7 @@ impl Default for ToTooDegreeWords {
         let at_end = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_word_set(&["many", "much", "few", "little"])
+            .then_word_set(["many", "much", "few", "little"])
             .then_any_of([
                 Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                     TokenKind::is_punctuation,
@@ -137,7 +137,7 @@ impl Default for ToTooDegreeWords {
         let before_noun = SequenceExpr::default()
             .t_aco("to")
             .t_ws()
-            .then_word_set(&["many", "much", "few", "little"])
+            .then_word_set(["many", "much", "few", "little"])
             .t_ws()
             .then_noun();
 

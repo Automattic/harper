@@ -12,7 +12,7 @@ impl Default for AccuseOf {
     fn default() -> Self {
         Self {
             expr: SequenceExpr::optional(SequenceExpr::any_word().t_ws())
-                .t_set(&["accuse", "accused", "accuses", "accusing"])
+                .t_set(["accuse", "accused", "accuses", "accusing"])
                 .then_optional(SequenceExpr::whitespace().then_object_pronoun())
                 .t_ws()
                 .t_aco("for")

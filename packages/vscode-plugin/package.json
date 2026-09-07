@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.8.0",
+	"version": "2.9.1",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -237,6 +237,12 @@
 					"default": true,
 					"description": "Enforces `awhile` after verbs and `a while` everywhere else."
 				},
+				"harper.linters.AWholeOther": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `a whole another`/`a whole 'nother` to `a whole other`."
+				},
 				"harper.linters.AccuseOf": {
 					"scope": "resource",
 					"type": "boolean",
@@ -332,6 +338,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Nobody means to write the two-word phrase `all though` when the single word `although` is intended."
+				},
+				"harper.linters.AllWellAndGood": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `all well in good` to `all well and good`."
 				},
 				"harper.linters.AllowTo": {
 					"scope": "resource",
@@ -645,6 +657,12 @@
 					"default": true,
 					"description": "Corrects `in the very least` to `at the very least`."
 				},
+				"harper.linters.Audible": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `hearable` to `audible`."
+				},
 				"harper.linters.Australia": {
 					"scope": "resource",
 					"type": "boolean",
@@ -692,6 +710,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "This linter flags instances of the nonstandard phrase `back in the days`. The correct, more accepted form is `back in the day`"
+				},
+				"harper.linters.BackhandedCompliment": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `backhand compliment` to `backhanded compliment`."
 				},
 				"harper.linters.Backplane": {
 					"scope": "resource",
@@ -818,6 +842,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Rewrites `better of` to `better off` in common comparative phrasing."
+				},
+				"harper.linters.BetterOffServed": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `better off served` to `better off` or `better served`."
 				},
 				"harper.linters.BetterOffWith": {
 					"scope": "resource",
@@ -999,6 +1029,12 @@
 					"default": true,
 					"description": "Corrects confusion between `tale` (story) and `tail` (appendage) in common phrases."
 				},
+				"harper.linters.CeaseTo": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects when `seize to` is likely a typo for `cease to`."
+				},
 				"harper.linters.Chalkboard": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1028,6 +1064,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags common soundalikes of \"chock-full\" and makes sure they're hyphenated."
+				},
+				"harper.linters.ClaimToFame": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `claim for fame` to the idiom `claim to fame`."
 				},
 				"harper.linters.ClicheAccent": {
 					"scope": "resource",
@@ -1059,11 +1101,29 @@
 					"default": true,
 					"description": "Corrects the wrong preposition `on` to `in` when referring to writing code."
 				},
+				"harper.linters.Codebase": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `codebase`."
+				},
+				"harper.linters.Codebases": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `codebases`."
+				},
 				"harper.linters.ColdModalTypo": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Rewrites `cold` to `could` when it appears in common subject-plus-verb modal contexts."
+				},
+				"harper.linters.Combinate": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests replacing the nonstandard verb `combinate` with the standard `combine`."
 				},
 				"harper.linters.CommaFixes": {
 					"scope": "resource",
@@ -1191,6 +1251,12 @@
 					"default": true,
 					"description": "Flags `cure against` and prefers the standard `cure for` pairing."
 				},
+				"harper.linters.CuriousAbout": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `curious of` and `curious on` to `curious about`."
+				},
 				"harper.linters.CurrencyPlacement": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1305,6 +1371,12 @@
 					"default": true,
 					"description": "Corrects `dint` to `didn't` after subject pronouns."
 				},
+				"harper.linters.DigUnderTheHood": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects the mixed metaphor of `digging under the hood/bonnet`."
+				},
 				"harper.linters.DigestiveTract": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1328,6 +1400,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Looks for words with their prefixes written with a space or hyphen between instead of joined."
+				},
+				"harper.linters.DissembleDisassemble": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Tries to detect `dissemble` used instead of `disassemble` by mistake."
 				},
 				"harper.linters.DoIAdjective": {
 					"scope": "resource",
@@ -1857,6 +1935,12 @@
 					"default": true,
 					"description": "Flags `find out` when a plain `find` is the better choice."
 				},
+				"harper.linters.FinishingTouches": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `finish touches` to `finishing touches`."
+				},
 				"harper.linters.FirstAidKit": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2013,6 +2097,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `furthermore`."
 				},
+				"harper.linters.GetPassGoPass": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `pass` to `past` after `get` and `go`."
+				},
 				"harper.linters.GetRidOf": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2031,11 +2121,23 @@
 					"default": true,
 					"description": "If referring to the period of economic prosperity, the correct term is `Gilded Age`."
 				},
+				"harper.linters.GoMissing": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `become missing` to `go missing`."
+				},
 				"harper.linters.GoSoFarAsTo": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Flags 'go so far to' when it should be 'go so far as to' to express going beyond expectations"
+				},
+				"harper.linters.GoToSleep": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `go into sleep` to `go to sleep`."
 				},
 				"harper.linters.GoToWar": {
 					"scope": "resource",
@@ -2463,6 +2565,18 @@
 					"default": true,
 					"description": "Detects and corrects a spacing error where `in the` is mistakenly written as `int he`. Proper spacing is essential for readability and grammatical correctness in common phrases."
 				},
+				"harper.linters.InTheGrandSchemeOfThings": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects nonstandard variants of `in the grand scheme of things`."
+				},
+				"harper.linters.InTheSameVein": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects wrong variants of `in the same vein`."
+				},
 				"harper.linters.InThisThatRegard": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2882,6 +2996,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Merges the split preposition when a look-verb is followed by a clause that starts with a question word."
+				},
+				"harper.linters.Lookalike": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `look-a-like` to `look alike` or `look-alike`."
 				},
 				"harper.linters.LookingForwardTo": {
 					"scope": "resource",
@@ -3398,6 +3518,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects common mistaken forms of `of course`, including `of curse`, `off course`, and `ofcourse`, while ignoring valid phrases like `kind of curse`."
+				},
+				"harper.linters.OffLimits": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `off-limit` to `off-limits`."
 				},
 				"harper.linters.OffTheCuff": {
 					"scope": "resource",
@@ -4299,6 +4425,18 @@
 					"default": true,
 					"description": "The phrase about resonating with someone is spelled with a chord, not a cord, so fix the typo and keep the idiom intact."
 				},
+				"harper.linters.StrikeOfGenius": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects incorrect usage of `strike of genius` and suggests `stroke of genius` as the correct phrase."
+				},
+				"harper.linters.StrikeOfLuck": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects incorrect usage of `strike of luck` and suggests `stroke of luck` as the correct phrase."
+				},
 				"harper.linters.SubjectPronoun": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4322,6 +4460,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Fixes `suppose to` to the correct `supposed to`."
+				},
+				"harper.linters.Surreality": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests changing `surrealness` to the more standard `surreality`."
 				},
 				"harper.linters.TakeALookTo": {
 					"scope": "resource",
@@ -4352,6 +4496,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Expands an initialism."
+				},
+				"harper.linters.Tenfold": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Looks for incorrect spacing inside the closed compound `tenfold`."
 				},
 				"harper.linters.ThanksALot": {
 					"scope": "resource",
@@ -4675,7 +4825,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos."
+					"description": "Corrects the typo `to to` by either removing the duplication or changing it to `to do`."
 				},
 				"harper.linters.ToTooIdioms": {
 					"scope": "resource",
@@ -4712,6 +4862,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `too` used instead of `to`."
+				},
+				"harper.linters.ToteTout": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Flags places where `tote` and `tout` may be confused."
 				},
 				"harper.linters.Touristic": {
 					"scope": "resource",
@@ -4797,6 +4953,12 @@
 					"default": true,
 					"description": "Looks for incorrect spacing inside the closed compound `underclock`."
 				},
+				"harper.linters.UnderneathOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `underneath of`."
+				},
 				"harper.linters.UnitedOrganizations": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4867,7 +5029,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects `very less`."
+					"description": "Corrects adverbs of degree (`too`, `very`, etc.) used with `less` mostly in the writing of native German speakers.`"
 				},
 				"harper.linters.VeryMuchSo": {
 					"scope": "resource",
@@ -5030,6 +5192,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Checks for `can` being used after `wish` when it should be `could`."
+				},
+				"harper.linters.WithOpenArms": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects wrong variants of the idiom `welcome/greet with open arms`."
 				},
 				"harper.linters.Without": {
 					"scope": "resource",

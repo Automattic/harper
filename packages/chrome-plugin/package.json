@@ -1,7 +1,7 @@
 {
 	"name": "chrome-plugin",
 	"displayName": "chrome-plugin",
-	"version": "2.8.0",
+	"version": "2.9.1",
 	"author": "no one",
 	"description": "The private grammar checker for 21st Century English",
 	"type": "module",
@@ -19,7 +19,6 @@
 		"dev": "vite",
 		"build": "vite build -l warn",
 		"preview": "vite preview",
-		"fmt": "prettier --write '**/*.{svelte,ts,json,css,scss,md}'",
 		"zip-for-chrome": "TARGET_BROWSER=chrome npm run build && node src/zip.js harper-chrome-plugin.zip",
 		"zip-for-firefox": "TARGET_BROWSER=firefox npm run build && node src/zip.js harper-firefox-plugin.zip",
 		"test": "playwright test --headed"
@@ -38,8 +37,6 @@
 		"http-server": "^14.1.1",
 		"playwright": "1.60.0",
 		"playwright-webextext": "^0.0.5",
-		"prettier": "^3.1.0",
-		"prettier-plugin-svelte": "^3.2.6",
 		"rollup-plugin-copy": "^3.5.0",
 		"svelte": "^5.0.0",
 		"svelte-preprocess": "^6.0.0",
