@@ -1,0 +1,19 @@
+expr main (in ideal world)
+
+let message "Use `in an ideal world`. The indefinite article `an` is required."
+let description "Corrects `in ideal world` to `in an ideal world`."
+let kind "Usage"
+let becomes "in an ideal world"
+
+test "In ideal world the society would make it an obligation for general computers to remain free (as in freedom) and accessible." "In an ideal world the society would make it an obligation for general computers to remain free (as in freedom) and accessible."
+
+# #[test]
+# fn corrects_in_ideal_world() {
+#     assert_suggestion_result(
+#         "In ideal world the society would make it an obligation for general computers to remain free (as in freedom) and accessible.",
+#         test_linter(),
+#         "In an ideal world the society would make it an obligation for general computers to remain free (as in freedom) and accessible.",
+#     );
+# }
+# 
+# 
