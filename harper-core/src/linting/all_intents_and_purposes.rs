@@ -1,12 +1,12 @@
-use crate::Token;
-use crate::char_string::CharStringExt;
-use crate::expr::{Expr, SequenceExpr};
-use crate::linting::expr_linter::Chunk;
-use crate::linting::{ExprLinter, Lint, LintKind, Suggestion};
-use crate::token_string_ext::TokenStringExt;
+use crate::{
+    CharStringExt, Token,
+    expr::{All, Expr, OwnedExprExt, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
+    token_string_ext::TokenStringExt,
+};
 
 pub struct AllIntentsAndPurposes {
-    expr: SequenceExpr,
+    expr: All,
 }
 
 impl Default for AllIntentsAndPurposes {
@@ -34,7 +34,12 @@ impl Default for AllIntentsAndPurposes {
                     ])),
                 ])
                 .t_ws()
-                .t_aco("purposes"),
+                .t_set(&["purposes", "purpose"])
+                .but_not(
+                    SequenceExpr::word_set(&["for", "to"])
+                        .t_ws()
+                        .then_word_seq(&["all", "intents", "and", "purposes"]),
+                ),
         }
     }
 }
@@ -48,41 +53,42 @@ impl ExprLinter for AllIntentsAndPurposes {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let whole_span = toks.span()?;
-        let whole_str = whole_span.get_content_string(src);
+        let prep_ch = toks.first()?.get_ch(src);
 
-        // "for" is first since "to" is listed as a UK variant in some dictionaries
-        const LEGIT: [&str; 2] = [
-            "for all intents and purposes",
-            "to all intents and purposes",
-        ];
+        let (rest_lo, rest_up) = (" all intents and purposes", " ALL INTENTS AND PURPOSES");
 
-        if LEGIT.iter().any(|s| s.eq_ignore_ascii_case(&whole_str)) {
-            return None;
+        let (for_prefix, to_prefix, rest) = match (prep_ch.first(), prep_ch.get(1)) {
+            (Some(f), Some(s)) if f.is_uppercase() && s.is_uppercase() => ("FOR", "TO", rest_up),
+            (Some(f), _) if f.is_uppercase() => ("For", "To", rest_lo),
+            _ => ("for", "to", rest_lo),
+        };
+
+        let is_to = prep_ch.starts_with_ignore_ascii_case_str("to");
+
+        let build_sugg =
+            |prefix: &str| -> Vec<char> { prefix.chars().chain(rest.chars()).collect() };
+
+        let suggestions = if is_to {
+            vec![build_sugg(to_prefix), build_sugg(for_prefix)]
+        } else {
+            vec![build_sugg(for_prefix), build_sugg(to_prefix)]
         }
-
-        let prep_text = toks.first().unwrap().get_ch(src);
-
-        let mut suggs = LEGIT.to_vec();
-
-        // Suggest "to" first if the text uses "to", otherwise "for" first
-        if prep_text.eq_ch(&['t', 'o']) {
-            suggs.swap(0, 1);
-        }
-
-        let suggs = suggs
-            .into_iter()
-            .map(|s| Suggestion::replace_with_match_case_str(s, whole_span.get_content(src)))
-            .collect::<Vec<_>>();
+        .into_iter()
+        .map(Suggestion::ReplaceWith)
+        .collect();
 
         let message = format!(
             "The correct form is '{} all intents and purposes'.",
-            prep_text.iter().collect::<String>().to_ascii_lowercase()
+            prep_ch
+                .iter()
+                .map(|c| c.to_ascii_lowercase())
+                .collect::<String>()
         );
 
         Some(Lint {
             span: whole_span,
             lint_kind: LintKind::Nonstandard,
-            suggestions: suggs,
+            suggestions,
             message,
             priority: 50,
         })
@@ -344,6 +350,24 @@ mod tests {
         assert_no_lints(
             "Amendments, which, in either Case, shall be valid to all Intents and\nPurposes, as Part of this Constitution",
             AllIntentsAndPurposes::default(),
+        );
+    }
+
+    #[test]
+    fn fix_all_intents_and_purpose() {
+        assert_suggestion_result(
+            "To all intents and purpose, the SEC no longer exists",
+            AllIntentsAndPurposes::default(),
+            "To all intents and purposes, the SEC no longer exists",
+        );
+    }
+
+    #[test]
+    fn dont_flag_constitution() {
+        assert_suggestion_result(
+            "Amendments, which, in either Case, shall be valid to all Intents and Purposes, as Part of this Constitution",
+            AllIntentsAndPurposes::default(),
+            "Amendments, which, in either Case, shall be valid to all Intents and Purposes, as Part of this Constitution",
         );
     }
 }
