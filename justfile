@@ -504,6 +504,9 @@ dogfood:
 test-rust:
   echo Running all Rust tests
   cargo test -q
+  
+  cd "{{justfile_directory()}}/harper-desktop"
+  cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
