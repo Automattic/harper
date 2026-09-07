@@ -189,8 +189,7 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   pnpm install
   pnpm check
 
-  cd "{{justfile_directory()}}"
-  cargo check -p harper-desktop --all-targets
+  cargo check --all-targets
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
