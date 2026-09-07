@@ -3683,18 +3683,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2467 | We passed a barrier of dark trees, and then the façade of Fifty-ninth Street, a
-         |                                                 ^~~~~~ Did you mean to spell `façade` this way?
-    2468 | block of delicate pale light, beamed down into the park. Unlike Gatsby and Tom
-Suggest:
-  - Replace with: “facade”
-  - Replace with: “fade”
-  - Replace with: “facades”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:
@@ -4537,26 +4525,6 @@ Suggest:
 
 
 
-Lint:    Spelling (63 priority)
-Message: |
-    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
-         |                               ^~~~~~~~~~ Did you mean to spell `inarguably` this way?
-Suggest:
-  - Replace with: “inarguable”
-  - Replace with: “unarguably”
-  - Replace with: “arguably”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    3349 | But the rest offended her—and inarguably, because it wasn’t a gesture but an
-         |                               ^~~~~~~~~~ `inarguably` should probably be written as `in arguably`.
-Suggest:
-  - Replace with: “in arguably”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
     3350 | emotion. She was appalled by West Egg, this unprecedented “place” that Broadway
@@ -4646,18 +4614,6 @@ Message: |
          |     ^~~~~~~~~~ Did you mean the closed compound noun “heartbeat”?
 Suggest:
   - Replace with: “heartbeat”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    3490 | them than a wisp of startled air. But they made no sound, and what I had almost
-    3491 | remembered was uncommunicable forever.
-         |                ^~~~~~~~~~~~~~ Did you mean to spell `uncommunicable` this way?
-Suggest:
-  - Replace with: “incommunicable”
-  - Replace with: “communicable”
-  - Replace with: “noncommunicable”
 
 
 

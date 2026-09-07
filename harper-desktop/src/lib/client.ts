@@ -100,6 +100,14 @@ export class Client {
 		await invoke('set_last_update_check', { lastUpdateCheck });
 	}
 
+	static async getOnboardingCompleted(): Promise<boolean> {
+		return await invoke<boolean>('get_onboarding_completed');
+	}
+
+	static async setOnboardingCompleted(onboardingCompleted: boolean): Promise<void> {
+		await invoke('set_onboarding_completed', { onboardingCompleted });
+	}
+
 	static async getLaunchAtStartup(): Promise<boolean> {
 		return await isEnabled();
 	}

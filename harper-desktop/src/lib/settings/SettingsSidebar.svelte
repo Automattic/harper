@@ -1,5 +1,28 @@
 <script lang="ts">
+import {
+	BookIcon,
+	ChecklistIcon,
+	GearIcon,
+	GridIcon,
+	InfoIcon,
+	KeyIcon,
+	PackageIcon,
+	QuillIcon,
+	RocketIcon,
+} from 'components';
 import { FOOTER_NAV_ITEMS, MAIN_NAV_ITEMS, type SectionId } from './settings-data';
+
+const SECTION_ICONS: Record<SectionId, typeof RocketIcon> = {
+	'getting-started': RocketIcon,
+	general: GearIcon,
+	writing: QuillIcon,
+	dictionary: BookIcon,
+	shortcuts: KeyIcon,
+	rules: ChecklistIcon,
+	weirpacks: PackageIcon,
+	integrations: GridIcon,
+	about: InfoIcon,
+};
 
 export let active: SectionId;
 export let hasSetupAlert = false;
@@ -15,7 +38,7 @@ export let hasSetupAlert = false;
         on:click={() => (active = item.id)}
       >
         <span class="tile" style={`--tile-gradient: ${item.gradient}`}>
-          <span class={`settings-icon ${item.id}`} aria-hidden="true"></span>
+          <svelte:component this={SECTION_ICONS[item.id]} className="settings-icon" />
         </span>
         <span class="label">{item.label}</span>
         {#if item.id === "getting-started" && hasSetupAlert}
@@ -36,7 +59,7 @@ export let hasSetupAlert = false;
         on:click={() => (active = item.id)}
       >
         <span class="tile" style={`--tile-gradient: ${item.gradient}`}>
-          <span class={`settings-icon ${item.id}`} aria-hidden="true"></span>
+          <svelte:component this={SECTION_ICONS[item.id]} className="settings-icon" />
         </span>
         <span class="label">{item.label}</span>
       </button>

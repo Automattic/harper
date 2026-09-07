@@ -14,6 +14,7 @@ enum RedundancyLevel {
 const VERBS: &[(&str, RedundancyLevel)] = &[
     ("coined", RedundancyLevel::Probable),
     ("discovered", RedundancyLevel::Probable),
+    ("founded", RedundancyLevel::Probable),
     ("introduced", RedundancyLevel::Possible),
     ("invented", RedundancyLevel::Probable),
     ("originated", RedundancyLevel::Probable),
@@ -170,6 +171,15 @@ mod tests {
             "I've just discovered Harper for the first time, but already struck a number of issues, which I have raised in GitHub",
             RedundantFirsts::default(),
             "I've just discovered Harper, but already struck a number of issues, which I have raised in GitHub",
+        );
+    }
+
+    #[test]
+    fn fix_first_founded() {
+        assert_suggestion_result(
+            "Gröna Lund (a name which translates to “Green Grove”) was first founded in 1883, when German showman Jacob Schultheis rented a patch of land on the waterfront in Stockholm.",
+            RedundantFirsts::default(),
+            "Gröna Lund (a name which translates to “Green Grove”) was founded in 1883, when German showman Jacob Schultheis rented a patch of land on the waterfront in Stockholm.",
         );
     }
 }

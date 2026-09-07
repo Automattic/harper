@@ -1,6 +1,6 @@
 [package]
 name = "harper-core"
-version = "2.7.0"
+version = "2.9.1"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -12,7 +12,7 @@ blanket = "0.4.0"
 fst = "0.4.7"
 hashbrown = { version = "0.16.1", features = ["serde"] }
 is-macro = "0.3.6"
-itertools = "0.14.0"
+itertools = "0.15.0"
 ordered-float = { version = "5.3.0", features = ["serde"] }
 paste = "1.0.14"
 pulldown-cmark = "0.13.3"
@@ -24,7 +24,7 @@ unicode-blocks = "0.1.9"
 unicode-script = "0.5.8"
 unicode-width = "0.2.2"
 levenshtein_automata = { version = "0.2.1", features = ["fst_automaton"] }
-cached = "0.59.0"
+cached = "2.0.2"
 lru = "0.18.0"
 foldhash = "0.2.0"
 strum_macros = "0.28.0"

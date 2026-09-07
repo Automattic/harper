@@ -4,7 +4,7 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, PlatformBroker, platform_broker};
+use crate::{IntegrationView, PlatformBroker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     Dialect, DictWordMetadata, IgnoredLints,
@@ -26,6 +26,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         set_auto_update,
         get_last_update_check,
         set_last_update_check,
+        get_onboarding_completed,
+        set_onboarding_completed,
         set_dialect,
         set_lint_config,
         get_dictionary,
@@ -117,6 +119,28 @@ async fn set_last_update_check(
         .save_to_system()
         .await
         .map_err(|error| error.to_string())?;
+
+    Ok(())
+}
+
+#[tauri::command]
+async fn get_onboarding_completed(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.onboarding_completed)
+}
+
+#[tauri::command]
+async fn set_onboarding_completed(
+    onboarding_completed: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let previous_value = config.onboarding_completed;
+    config.onboarding_completed = onboarding_completed;
+
+    if let Err(error) = config.save_to_system().await {
+        config.onboarding_completed = previous_value;
+        return Err(error.to_string());
+    }
 
     Ok(())
 }
@@ -312,13 +336,29 @@ async fn get_application_icon_data_url<R: Runtime>(
 }
 
 #[tauri::command]
-fn get_accessibility_permission_status() -> AccessibilityPermissionStatus {
-    platform_broker().accessibility_permission_status()
+fn get_accessibility_permission_status(
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.lock() {
+        Ok(broker) => broker.accessibility_permission_status(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
-fn request_accessibility_permission() -> AccessibilityPermissionStatus {
-    platform_broker().request_accessibility_permission()
+fn request_accessibility_permission(
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> AccessibilityPermissionStatus {
+    match broker.lock() {
+        Ok(broker) => broker.request_accessibility_permission(),
+        Err(error) => {
+            eprintln!("Failed to read platform broker: {error}");
+            AccessibilityPermissionStatus::Unsupported
+        }
+    }
 }
 
 #[tauri::command]
@@ -360,8 +400,14 @@ pub(crate) async fn stop_highlighter_service(
 }
 
 #[tauri::command]
-fn launch_app(bundle_id: String) -> Result<(), String> {
-    platform_broker().launch_app_bundle(&bundle_id)
+fn launch_app(
+    bundle_id: String,
+    broker: State<'_, StdMutex<PlatformBroker>>,
+) -> Result<(), String> {
+    broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .launch_app_bundle(&bundle_id)
 }
 
 #[tauri::command]

@@ -303,4 +303,30 @@ mod tests {
             DidPast::new(FstDictionary::curated()),
         );
     }
+
+    #[test]
+    fn issue_3916_didnt_understood() {
+        assert_suggestion_result(
+            "I didn't understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I didn't understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_did_understood() {
+        assert_suggestion_result(
+            "I did understood the problem.",
+            DidPast::new(FstDictionary::curated()),
+            "I did understand the problem.",
+        );
+    }
+
+    #[test]
+    fn issue_3916_correct_usage() {
+        assert_no_lints(
+            "I didn't understand the problem.",
+            DidPast::new(FstDictionary::curated()),
+        );
+    }
 }

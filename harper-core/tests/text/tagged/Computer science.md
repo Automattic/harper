@@ -162,8 +162,8 @@
 # VB/P   D+  #d    . P    D   N🅪Sg        P  NSg/J VB/C NPr/I/J/R/Dq J        Nᴹ/Vg/J+
 > machines such  as    the Atanasoff – Berry      computer and  ENIAC , the term      computer came
 # NPl/V3   NSg/I R/C/P D   ?         . NPr🅪Sg/VB+ NSg+     VB/C ?     . D   NSg/VB/J+ NSg+     NSg/VPt/P
-> to refer  to the machines rather     than their human    predecessors . As    it       became
-# P  NSg/VB P  D   NPl/V3+  NPr/VB/J/R C/P  D$+   NSg/VB/J NPl+         . R/C/P NPr/ISg+ VPt
+> to refer  to the machines rather than their human    predecessors . As    it       became
+# P  NSg/VB P  D   NPl/V3+  NPr/R  C/P  D$+   NSg/VB/J NPl+         . R/C/P NPr/ISg+ VPt
 > clear    that     computers could be       used for   more         than just mathematical calculations ,
 # NSg/VB/J I/C/Ddem NPl+      VXB   NSg/VLXB VP/J R/C/P NPr/I/J/R/Dq C/P  J/R  J+           +            .
 > the field  of computer science  broadened to study  computation in        general  . In

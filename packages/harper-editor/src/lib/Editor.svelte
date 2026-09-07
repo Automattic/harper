@@ -144,7 +144,7 @@ async function updateLintFrameworkElements() {
 
 	if (quill == null) {
 		let { default: Quill } = await import('quill');
-		quill = new Quill(editor, {});
+		quill = new Quill(editor, { placeholder: 'Start writing...' });
 		const container = quill.container ?? quill.root?.parentElement;
 		container?.classList.add('harper-editor-quill-container');
 
