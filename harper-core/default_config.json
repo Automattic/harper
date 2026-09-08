@@ -5615,6 +5615,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SimilarTo",
+								"state": true,
+								"label": "Similar To"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SimpleGrammatical",
 								"state": true,
 								"label": "Simple Grammatical"
