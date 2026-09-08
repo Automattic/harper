@@ -3,6 +3,13 @@
     import IntegrationTile from "$lib/marketing/IntegrationTile.svelte";
     import { onMount } from "svelte";
 
+let logoImg: HTMLImageElement | null = $state(null);
+
+onMount(() => {
+  logoImg = new Image();
+  logoImg.src="/android-chrome-512x512.png";
+})
+
 let canvasElement: HTMLCanvasElement | null = $state(null);
 
 $effect(() => {
@@ -26,6 +33,8 @@ type ParticleState = {
 }
 
 let particles: ParticleState[] = []
+let currentFacePosition = [0, 0];
+let nextFacePosition = [0, 0];
 
 /** Ensures that there are N number of particles by spawning new ones. */
 function spawnParticles(ctx: CanvasRenderingContext2D, n: number){
@@ -42,7 +51,7 @@ function spawnParticles(ctx: CanvasRenderingContext2D, n: number){
    for (let i = particles.length; i < n; i++){
     let angle = Math.random() * Math.PI * 2;
     let letterIndex = Math.random() * alphabet.length;
-let sampleRadius = baseRadius * (1 + Math.random() * 2);
+    let sampleRadius = baseRadius * (1 + Math.random() * 2);
 
     particles.push({
       x: Math.cos(angle) * sampleRadius + cx,
@@ -66,6 +75,8 @@ function render(ctx: CanvasRenderingContext2D) {
 
   updateParticles(ctx);
   renderParticles(ctx);
+  updateFacePosition();
+  renderFace(ctx);
   renderNotifText(ctx, w, h);
 }
 
@@ -139,6 +150,58 @@ function renderNotifText(ctx: CanvasRenderingContext2D, width: number, height: n
   ctx.font = getComputedStyle(ctx.canvas).font;
   ctx.fillText(`Downloading Harper${".".repeat(new Date().getSeconds() % 4)}`, width / 2, height * 2 / 3);
 }
+
+function lerp(from: number, to:number, t: number): number{
+  return from + t * (to - from);
+}
+
+function updateFacePosition(){
+  if (Math.sqrt((currentFacePosition[0] - nextFacePosition[0]) ** 2 + (currentFacePosition[1] - nextFacePosition[1]) ** 2) < 1){
+currentFacePosition = nextFacePosition;
+    nextFacePosition = [(Math.random() * 2 - 1) * 50, (Math.random() * 2 - 1) * 50]
+  }
+
+  let speed = 0.1;
+  currentFacePosition = [lerp(currentFacePosition[0], nextFacePosition[0], speed), lerp(currentFacePosition[1], nextFacePosition[1], speed)]
+}
+
+function renderFace(ctx: CanvasRenderingContext2D){
+  let w = ctx.canvas.width;
+  let h = ctx.canvas.height;
+
+  let cx = w / 2;
+  let cy = h / 2;
+
+  ctx.save();
+  ctx.translate(cx, cy);
+  applyFacingTransform(ctx, currentFacePosition[0], currentFacePosition[1],50 );
+
+  ctx.fillStyle = "#000";
+  if (logoImg)
+    ctx.drawImage(logoImg, -50, -50, 100, 100 )
+
+  ctx.restore();
+
+}
+
+function applyFacingTransform(
+  ctx: CanvasRenderingContext2D,
+  targetX: number,
+  targetY: number,
+  inset: number,
+) {
+  const dx = targetX;
+  const dy = targetY;
+  const length = Math.hypot(dx, dy, inset);
+  const denominator = length * (length + inset);
+
+  const xx = 1 - (dx * dx) / denominator;
+  const xy = -(dx * dy) / denominator;
+  const yy = 1 - (dy * dy) / denominator;
+
+  ctx.transform(xx, xy, xy, yy, 0, 0);
+}
+
 </script>
 
 <canvas class="w-full h-full font-serif text-lg" bind:this={canvasElement}>
