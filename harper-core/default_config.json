@@ -4089,6 +4089,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SlipperySlope",
+								"state": true,
+								"label": "Slippery Slope"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
 								"label": "Ahead and"
