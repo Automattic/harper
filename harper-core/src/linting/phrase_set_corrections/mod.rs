@@ -918,6 +918,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `in retaliation to` to `in retaliation for` or `in response to`.",
             LintKind::Usage
         ),
+        "Keystroke" => (
+            &[
+                (&["key stroke", "key stoke"], &["keystroke"]),
+                (&["key strokes", "key stokes"], &["keystrokes"]),
+            ],
+            "Did you mean the closed compound `keystroke`?",
+            "Looks for incorrect spacing inside the closed compound `keystroke`.",
+            LintKind::Usage
+        ),
         "LevelOfDetails" => (
             &[
                 (&["level of details"], &["level of detail", "levels of detail"]),

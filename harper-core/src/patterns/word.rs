@@ -24,7 +24,7 @@ pub struct Word {
 
 impl Word {
     /// Matches the provided word, ignoring case.
-    pub fn new(word: &'static str) -> Self {
+    pub fn new(word: &str) -> Self {
         Self {
             word: word.chars().collect(),
             case_mode: CaseMatchingMode::CaseInsensitive,

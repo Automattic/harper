@@ -532,13 +532,6 @@
 						},
 						{
 							"Bool": {
-								"name": "Keystrokes",
-								"state": true,
-								"label": "Keystrokes"
-							}
-						},
-						{
-							"Bool": {
 								"name": "Laptop",
 								"state": true,
 								"label": "Laptop"
