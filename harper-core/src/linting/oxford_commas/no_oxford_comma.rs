@@ -22,7 +22,7 @@ impl NoOxfordComma {
             }
             .then_comma()
             .then_whitespace()
-            .then_word_set(&["and", "or", "nor"]),
+            .then_word_set(["and", "or", "nor"]),
         }
     }
 

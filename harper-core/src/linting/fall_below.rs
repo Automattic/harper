@@ -15,14 +15,14 @@ pub struct FallBelow {
 impl Default for FallBelow {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["fall", "fallen", "falling", "falls", "fell"])
+            expr: SequenceExpr::word_set(["fall", "fallen", "falling", "falls", "fell"])
                 .t_ws()
                 .then_any_of([
                     Box::new(SequenceExpr::number()) as Box<dyn Expr>,
                     Box::new(SpelledNumberExpr),
                 ])
                 .t_ws()
-                .t_set(&["feet", "meters", "metres"])
+                .t_set(["feet", "meters", "metres"])
                 .t_ws()
                 .t_aco("below")
                 .then_any_of(vec![

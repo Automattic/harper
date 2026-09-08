@@ -40,7 +40,7 @@ impl Default for ChickenAndEgg {
             Box::new(SequenceExpr::whitespace().t_aco("and").t_ws().t_aco("egg")),
         ]);
 
-        let conj_word = Lrc::new(WordSet::new(&["and", "an", "or", "vs.", "versus"]));
+        let conj_word = Lrc::new(WordSet::new(["and", "an", "or", "vs.", "versus"]));
         let conj_sym = |t: &Token, _: &[char]| t.kind.is_ampersand() || t.kind.is_slash();
 
         let separated_conj = SequenceExpr::default()
@@ -68,12 +68,12 @@ impl Default for ChickenAndEgg {
         ]);
 
         Self {
-            expr: SequenceExpr::word_set(&["chicken", "chickens"])
+            expr: SequenceExpr::word_set(["chicken", "chickens"])
                 .then_optional(LongestMatchOf::new([
                     Box::new(conjunction) as Box<dyn Expr>,
                     Box::new(separated_conj_det),
                 ]))
-                .t_set(&["egg", "eggs"])
+                .t_set(["egg", "eggs"])
                 .t_ws()
                 .t_set(HEAD_NOUNS)
                 .but_not(standard_idiom),

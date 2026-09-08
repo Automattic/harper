@@ -1014,6 +1014,23 @@ pub fn lint_group() -> LintGroup {
             "Corrects `play a factor` to `play a part` or `be a factor`.",
             LintKind::Usage
         ),
+        "ReverseEngineer" => (
+            &[
+                // The past tense ending is put on 'reverse' instead of 'engineer'
+                // But sometimes it's just '-ed' on every tense
+                (&["reversed engineer"], &["reverse engineered", "reverse engineer"]),
+                (&["reversed-engineer"], &["reverse-engineered", "reverse-engineer"]),
+                (&["reversed engineered"], &["reverse engineered"]),
+                (&["reversed-engineered"], &["reverse-engineered"]),
+                (&["reversed engineering"], &["reverse engineering"]),
+                (&["reversed-engineering"], &["reverse-engineering"]),
+                (&["reversed engineers"], &["reverse engineers"]),
+                (&["reversed-engineers"], &["reverse-engineers"]),
+            ],
+            "The correct term is `reverse engineer`.",
+            "Corrects `reversed engineer` to `reverse engineer`.",
+            LintKind::Grammar
+        ),
         "RiseTheQuestion" => (
             &[
                 (&["rise the question", "arise the question"], &["raise the question"]),

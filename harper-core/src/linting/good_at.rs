@@ -13,7 +13,7 @@ impl Default for GoodAt {
     fn default() -> Self {
         let we_re_not_always_very_good_in_sth = SequenceExpr::any_of([
             Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
-            Box::new(WordSet::new(&[
+            Box::new(WordSet::new([
                 "I'm", "we're", "you're", "he's", "she's", "it's", "they're", "Im", "were",
                 "youre", "your", "hes", "shes", "its", "theyre",
             ])),
@@ -22,18 +22,18 @@ impl Default for GoodAt {
         .then_optional(SequenceExpr::aco("not").t_ws())
         .then_optional(SequenceExpr::default().then_frequency_adverb().t_ws())
         .then_optional(SequenceExpr::default().then_degree_adverb().t_ws())
-        .then_word_set(&["good", "bad", "great", "okay", "OK"])
+        .then_word_set(["good", "bad", "great", "okay", "OK"])
         .t_ws()
         .t_aco("in")
         .t_ws()
         .then_any_word();
 
         let good_in_skill_or_subject =
-            SequenceExpr::word_set(&["good", "bad", "great", "okay", "OK"])
+            SequenceExpr::word_set(["good", "bad", "great", "okay", "OK"])
                 .t_ws()
                 .t_aco("in")
                 .t_ws()
-                .then_word_set(&[
+                .then_word_set([
                     // sciences
                     "biology",
                     "chemistry",

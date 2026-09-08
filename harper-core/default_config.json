@@ -3034,6 +3034,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandFavourite",
+								"state": true,
+								"label": "Expand Favourite"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandForward",
 								"state": true,
 								"label": "Expand Forward"
@@ -3499,6 +3506,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ForSameReason",
+								"state": true,
+								"label": "For Same Reason"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
@@ -3824,6 +3838,12 @@
 								"name": "RelayOnForRely",
 								"state": true,
 								"label": "Relay On For Rely"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ReverseEngineer",
+								"state": true
 							}
 						},
 						{
