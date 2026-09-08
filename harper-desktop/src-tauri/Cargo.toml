@@ -84,4 +84,5 @@ tauri-plugin-updater = "=2.10.1"
 tauri-plugin-updater = "=2.10.1"
 
 [profile.release]
-debug = true
+opt-level = 3
+lto = "fat"
