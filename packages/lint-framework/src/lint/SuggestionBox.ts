@@ -83,6 +83,11 @@ FocusHook.prototype.hook = function (node: any, _propertyName: any, _previousVal
 	});
 };
 
+var RememberFocusHook: any = function () {};
+RememberFocusHook.prototype.hook = function () {
+	requestAnimationFrame(saveCursorState);
+};
+
 var CloseOnEscapeHook: any = function (this: any, onClose: () => void) {
 	this.onClose = onClose;
 };
@@ -244,12 +249,13 @@ function suggestions(
 	lintKind: LintKind,
 	suggestions: UnpackedSuggestion[],
 	apply: (s: UnpackedSuggestion) => void,
+	autofocusSuggestion: boolean,
 ): any {
 	return suggestions.map((s: UnpackedSuggestion, i: number) => {
 		const label =
 			s.replacement_text !== '' ? s.replacement_text : String(suggestionKindToLabel(s.kind));
 		const desc = `Replace with "${label}"`;
-		const props = i === 0 ? { hook: new FocusHook() } : {};
+		const props = i === 0 && autofocusSuggestion ? { hook: new FocusHook() } : {};
 		return button(
 			label,
 			{ background: lintKindColor(lintKind), color: lintKindTextColor(lintKind) },
@@ -501,6 +507,7 @@ export default function SuggestionBox(
 		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	},
 	hint: string | null,
+	autofocusSuggestion: boolean,
 	close: () => void,
 ) {
 	const top = box.y + box.height + 3;
@@ -531,6 +538,7 @@ export default function SuggestionBox(
 		{
 			className: 'harper-container fade-in',
 			style: positionStyle,
+			'harper-remember-focus': autofocusSuggestion ? undefined : new RememberFocusHook(),
 			'harper-close-on-escape': new CloseOnEscapeHook(refocusClose),
 		},
 		[
@@ -545,10 +553,15 @@ export default function SuggestionBox(
 			),
 			body(box.lint.message_html),
 			footer(
-				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
-					box.applySuggestion(v);
-					close();
-				}),
+				suggestions(
+					box.lint.lint_kind,
+					box.lint.suggestions,
+					(v) => {
+						box.applySuggestion(v);
+						close();
+					},
+					autofocusSuggestion,
+				),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary
 						? addToDictionary(box, actions.addToUserDictionary)
