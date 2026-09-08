@@ -202,7 +202,7 @@ onMount(() => {
 				>
 			</div>
 			<div class="h-[35rem] overflow-hidden rounded-[0.9rem] border-[0.5px] border-[rgba(28,26,22,0.16)] bg-[#fbfaf6] shadow-[0_30px_60px_-24px_rgba(28,26,22,0.22),0_6px_14px_rgba(28,26,22,0.06),0_0_0_0.5px_rgba(0,0,0,0.04)] dark:border-white/15 dark:bg-black max-[620px]:h-[40rem]">
-				{#if browser && linter && false}
+				{#if browser && linter}
 					<LazyEditor content={editorContent} {linter} />
 				{:else}
 					<div class='flex h-full items-center justify-center text-[0.82rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>

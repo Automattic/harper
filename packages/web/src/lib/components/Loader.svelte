@@ -77,7 +77,6 @@ function render(ctx: CanvasRenderingContext2D) {
   renderParticles(ctx);
   updateFacePosition();
   renderFace(ctx);
-  renderNotifText(ctx, w, h);
 }
 
 function renderParticles(ctx: CanvasRenderingContext2D){
@@ -143,14 +142,6 @@ function updateParticles(ctx: CanvasRenderingContext2D){
   }
 }
 
-function renderNotifText(ctx: CanvasRenderingContext2D, width: number, height: number){
-  ctx.textAlign = 'center';
-  ctx.fillStyle = "#000"
-   ctx.textBaseline = 'middle';
-  ctx.font = getComputedStyle(ctx.canvas).font;
-  ctx.fillText(`Downloading Harper${".".repeat(new Date().getSeconds() % 4)}`, width / 2, height * 2 / 3);
-}
-
 function lerp(from: number, to:number, t: number): number{
   return from + t * (to - from);
 }
@@ -178,7 +169,7 @@ function renderFace(ctx: CanvasRenderingContext2D){
 
   ctx.fillStyle = "#000";
   if (logoImg)
-    ctx.drawImage(logoImg, -50, -50, 100, 100 )
+    ctx.drawImage(logoImg, -100, -100, 200, 200 )
 
   ctx.restore();
 
@@ -204,6 +195,8 @@ function applyFacingTransform(
 
 </script>
 
-<canvas class="w-full h-full font-serif text-lg" bind:this={canvasElement}>
-
+<div class="w-full h-full relative">
+<canvas class="block w-full h-full font-serif text-lg" bind:this={canvasElement}>
 </canvas>
+<h2 class="bottom-1/4 z-10 w-full text-center absolute text-black">Downloading Harper To Your Browser</h2>
+  </div>
