@@ -4089,13 +4089,6 @@
 						},
 						{
 							"Bool": {
-								"name": "SlipperySlope",
-								"state": true,
-								"label": "Slippery Slope"
-							}
-						},
-						{
-							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
 								"label": "Ahead and"
@@ -4610,6 +4603,13 @@
 								"name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DependsBasedOn",
+								"state": true,
+								"label": "Depends Based On"
 							}
 						},
 						{
@@ -5618,6 +5618,13 @@
 								"name": "SimpleGrammatical",
 								"state": true,
 								"label": "Simple Grammatical"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SlipperySlope",
+								"state": true,
+								"label": "Slippery Slope"
 							}
 						},
 						{
