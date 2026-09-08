@@ -203,4 +203,13 @@ mod tests {
             "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce",
         );
     }
+
+    #[test]
+    fn fix_horsepowers() {
+        assert_suggestion_result(
+            "It's around about 60 horsepowers. So, you can't go in and say, \"Well, we got more horsepowers than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
+            MassPlurals::new(FstDictionary::curated()),
+            "It's around about 60 horsepower. So, you can't go in and say, \"Well, we got more horsepower than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
+        );
+    }
 }
