@@ -68,9 +68,6 @@ function render(ctx: CanvasRenderingContext2D) {
   ctx.canvas.width = rect.width;
   ctx.canvas.height = rect.height;
 
-  let w = ctx.canvas.width;
-  let h = ctx.canvas.height;
-
   spawnParticles(ctx, 50);
 
   updateParticles(ctx);
@@ -168,8 +165,9 @@ function renderFace(ctx: CanvasRenderingContext2D){
   applyFacingTransform(ctx, currentFacePosition[0], currentFacePosition[1],50 );
 
   ctx.fillStyle = "#000";
-  if (logoImg)
+  if (logoImg){
     ctx.drawImage(logoImg, -100, -100, 200, 200 )
+  }
 
   ctx.restore();
 
