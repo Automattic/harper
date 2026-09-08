@@ -19,9 +19,8 @@ impl Default for WereWhere {
         // "they/we" are unambiguous plural subject pronouns — "where" directly after
         // them is almost certainly a typo for "were".
         // e.g. "they where going" → "they were going"
-        let unambiguous_pronoun_where = SequenceExpr::word_set(&["they", "we"])
-            .t_ws()
-            .t_aco("where");
+        let unambiguous_pronoun_where =
+            SequenceExpr::word_set(["they", "we"]).t_ws().t_aco("where");
 
         // "you where" alone is ambiguous ("I'll show you where to go"), so only flag
         // it when followed by a verb, auxiliary, or adjective — confirming a verb slot.

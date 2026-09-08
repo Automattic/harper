@@ -11,7 +11,7 @@ pub struct CloseTightKnit {
 impl Default for CloseTightKnit {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["close", "closely", "tight", "tightly"])
+            expr: SequenceExpr::word_set(["close", "closely", "tight", "tightly"])
                 .t_ws_h()
                 .t_aco("nit"),
         }

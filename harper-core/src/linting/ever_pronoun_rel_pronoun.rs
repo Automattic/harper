@@ -12,7 +12,7 @@ pub struct EverPronounRelPronoun {
 impl Default for EverPronounRelPronoun {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "whatever",
                 "whenever",
                 "wherever",
@@ -23,11 +23,11 @@ impl Default for EverPronounRelPronoun {
             .then_any_of([
                 Box::new(SequenceExpr::aco("that").t_ws().then_any_of([
                     Box::new(SequenceExpr::default().then_subject_pronoun()) as Box<dyn Expr>,
-                    Box::new(WordSet::new(&[
+                    Box::new(WordSet::new([
                         "I've", "we've", "you've", "he's", "she's", "it's", "they've",
                     ])),
                 ])) as Box<dyn Expr>,
-                Box::new(WordSet::new(&["which", "who", "whom"])),
+                Box::new(WordSet::new(["which", "who", "whom"])),
             ]),
         }
     }
