@@ -1029,7 +1029,7 @@ blaubeurer/~~NY
 blauen/~~rIV # +verb reading (was noun-only)
 blautonne/~~r
 blauäugigkeit/~~P
-bleibe/~~NY
+bleibe/~~NYJ # +adjective reading (was noun-only)
 bleiben/~~NMZV # +verb reading (was noun-only)
 bleibtreu/~~NY
 blender/~~NY
@@ -3603,7 +3603,7 @@ absurdstem/~~NhY #noun
 absurdsten/~~Vdifj # verb
 absurdster/~~NhY #noun
 absurdstes/~~NhY #noun
-absurdum/~~NhY #noun
+absurdum/~~NhYr # noun; +adverb reading (was noun-only)
 abszedier/~~Vcej # REPLACES abszedieren
 abszedierende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abszedierendem/~~NhY #noun
@@ -4123,7 +4123,7 @@ abwasser/~~NhY #noun
 abwassers/~~NhY #noun
 abwechsele/~~FhY #feminine noun
 abwechseln/~~NhY #noun
-abwechselnd/~~NhY #noun
+abwechselnd/~~NhYr # noun; +adverb reading (was noun-only)
 abwechselnde/~~FhY #feminine noun
 abwechselndem/~~NhY #noun
 abwechselnden/~~Vdifj # verb
@@ -5885,7 +5885,7 @@ abzweigendes/~~NhY #noun
 abzweigens/~~NhY #noun
 abzweiges/~~NhY #noun
 abzweigs/~~NhY #noun
-abzweigt/~~NXh #noun
+abzweigt/~~NXhV # noun; +verb reading (was noun-only)
 abzweigtest/~~NhY #noun
 abzweigtet/~~NhY #noun
 abzweigung/~~FhY #feminine noun
@@ -6881,7 +6881,7 @@ abhängigsten/~~Vdifj # verb
 abhängigster/~~NhY #noun
 abhängigstes/~~NhY #noun
 abhängst/~~hV #noun
-abhängt/~~NXh #noun
+abhängt/~~NXhV # noun; +verb reading (was noun-only)
 abhängtest/~~NhY #noun
 abhängtet/~~NhY #noun
 abhärte/~~FhY #feminine noun
@@ -7728,7 +7728,7 @@ ablästertet/~~NhY #noun
 abläufe/~~FhY #feminine noun
 abläufen/~~Vdifj # verb
 abläufst/~~hV #noun
-abläuft/~~NhY #noun
+abläuft/~~NhYV # noun; +verb reading (was noun-only)
 ablösche/~~FhY #feminine noun
 ablösch/~~Vcej # REPLACES ablöschen
 ablöschende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
@@ -8655,7 +8655,7 @@ abrundetet/~~NhY #noun
 abrundung/~~FhY #feminine noun
 abrundungen/~~Vdifj # verb
 abrupfen/~~Vdifj # verb
-abrupt/~~NXh #noun
+abrupt/~~NXhV # noun; +verb reading (was noun-only)
 abruptem/~~NhY #noun
 abrupten/~~Vdifj # verb
 abrupter/~~NhY #noun
@@ -9591,7 +9591,7 @@ abseilendes/~~NhY #noun
 abseilt/~~NXh #noun
 abseiltest/~~NhY #noun
 abseiltet/~~NhY #noun
-abseits/~~NhY #noun
+abseits/~~NhYr # noun; +adverb reading (was noun-only)
 abseitsstand/~~NhY #noun
 abseitsstanden/~~Vdifj # verb
 abseitsstandest/~~hV #noun
@@ -10785,7 +10785,7 @@ abendelanger/~~NhY #noun
 abendelanges/~~NhY #noun
 abenden/~~Vdifj # verb
 abendfüllend/~~NhY #noun
-abendfüllende/~~FhY #feminine noun
+abendfüllende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abendfüllendem/~~NhY #noun
 abendfüllenden/~~Vdifj # verb
 abendfüllender/~~NhY #noun
@@ -11261,7 +11261,7 @@ abfälligsten/~~Vdifj # verb
 abfälligster/~~NhY #noun
 abfälligstes/~~NhY #noun
 abfällst/~~hV #noun
-abfällt/~~NhY #noun
+abfällt/~~NhYV # noun; +verb reading (was noun-only)
 abfälsche/~~FhY #feminine noun
 abfälsch/~~Vcej # REPLACES abfälschen
 abfälschende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
@@ -11383,7 +11383,7 @@ abgebaggertem/~~NhY #noun
 abgebaggerten/~~Vdifj # verb
 abgebaggerter/~~NhY #noun
 abgebaggertes/~~NhY #noun
-abgebaut/~~NXh #noun
+abgebaut/~~NXhV # noun; +verb reading (was noun-only)
 abgebautem/~~NhY #noun
 abgebauten/~~Vdifj # verb
 abgebauter/~~NhY #noun
@@ -11546,7 +11546,7 @@ abgedampftem/~~NhY #noun
 abgedampften/~~Vdifj # verb
 abgedampfter/~~NhY #noun
 abgedampftes/~~NhY #noun
-abgedankt/~~NXh #noun
+abgedankt/~~NXhV # noun; +verb reading (was noun-only)
 abgedanktem/~~NhY #noun
 abgedankten/~~Vdifj # verb
 abgedankter/~~NhY #noun
@@ -11588,7 +11588,7 @@ abgedrosseltem/~~NhY #noun
 abgedrosselten/~~Vdifj # verb
 abgedrosselter/~~NhY #noun
 abgedrosseltes/~~NhY #noun
-abgedruckt/~~NXh #noun
+abgedruckt/~~NXhV # noun; +verb reading (was noun-only)
 abgedrucktem/~~NhY #noun
 abgedruckten/~~Vdifj # verb
 abgedruckter/~~NhY #noun
@@ -11791,7 +11791,7 @@ abgefärbtem/~~NhY #noun
 abgefärbten/~~Vdifj # verb
 abgefärbter/~~NhY #noun
 abgefärbtes/~~NhY #noun
-abgeführt/~~NXh #noun
+abgeführt/~~NXhV # noun; +verb reading (was noun-only)
 abgeführtem/~~NhY #noun
 abgeführten/~~Vdifj # verb
 abgeführter/~~NhY #noun
@@ -11976,7 +11976,7 @@ abgehustetem/~~NhY #noun
 abgehusteten/~~Vdifj # verb
 abgehusteter/~~NhY #noun
 abgehustetes/~~NhY #noun
-abgehängt/~~NXh #noun
+abgehängt/~~NXhV # noun; +verb reading (was noun-only)
 abgehängtem/~~NhY #noun
 abgehängten/~~Vdifj # verb
 abgehängter/~~NhY #noun
@@ -12098,7 +12098,7 @@ abgeklungenem/~~NhY #noun
 abgeklungenen/~~Vdifj # verb
 abgeklungener/~~NhY #noun
 abgeklungenes/~~NhY #noun
-abgeklärt/~~NXh #noun
+abgeklärt/~~NXhV # noun; +verb reading (was noun-only)
 abgeklärtem/~~NhY #noun
 abgeklärten/~~Vdifj # verb
 abgeklärter/~~NhY #noun
@@ -12198,7 +12198,7 @@ abgekühlter/~~NhY #noun
 abgekühltes/~~NhY #noun
 abgekündigt/~~NhY #noun
 abgekündigten/~~Vdifj # verb
-abgekürzt/~~NXh #noun
+abgekürzt/~~NXhV # noun; +verb reading (was noun-only)
 abgekürztem/~~NhY #noun
 abgekürzten/~~Vdifj # verb
 abgekürzter/~~NhY #noun
@@ -12272,7 +12272,7 @@ abgelegtem/~~NhY #noun
 abgelegten/~~Vdifj # verb
 abgelegter/~~NhY #noun
 abgelegtes/~~NhY #noun
-abgelehnt/~~NXh #noun
+abgelehnt/~~NXhV # noun; +verb reading (was noun-only)
 abgelehntem/~~NhY #noun
 abgelehnten/~~Vdifj # verb
 abgelehnter/~~NhY #noun
@@ -12351,12 +12351,12 @@ abgelängter/~~NhY #noun
 abgelängtes/~~NhY #noun
 abgelästert/~~NhY #noun
 abgeläutet/~~NhY #noun
-abgelöscht/~~NXh #noun
+abgelöscht/~~NXhV # noun; +verb reading (was noun-only)
 abgelöschtem/~~NhY #noun
 abgelöschten/~~Vdifj # verb
 abgelöschter/~~NhY #noun
 abgelöschtes/~~NhY #noun
-abgelöst/~~NhY #noun
+abgelöst/~~NhYV # noun; +verb reading (was noun-only)
 abgelöste/~~FhY #feminine noun
 abgelöstem/~~NhY #noun
 abgelösten/~~Vdifj # verb
@@ -12640,7 +12640,7 @@ abgereichertem/~~NhY #noun
 abgereicherten/~~Vdifj # verb
 abgereicherter/~~NhY #noun
 abgereichertes/~~NhY #noun
-abgereist/~~NhY #noun
+abgereist/~~NhYV # noun; +verb reading (was noun-only)
 abgereiste/~~FhY #feminine noun
 abgereistem/~~NhY #noun
 abgereisten/~~Vdifj # verb
@@ -12726,7 +12726,7 @@ abgesacktem/~~NhY #noun
 abgesackten/~~Vdifj # verb
 abgesackter/~~NhY #noun
 abgesacktes/~~NhY #noun
-abgesagt/~~NXh #noun
+abgesagt/~~NXhV # noun; +verb reading (was noun-only)
 abgesagtem/~~NhY #noun
 abgesagten/~~Vdifj # verb
 abgesagter/~~NhY #noun
@@ -12860,7 +12860,7 @@ abgeschmacktem/~~NhY #noun
 abgeschmackten/~~Vdifj # verb
 abgeschmackter/~~NhY #noun
 abgeschmacktes/~~NhY #noun
-abgeschmeckt/~~NXh #noun
+abgeschmeckt/~~NXhV # noun; +verb reading (was noun-only)
 abgeschmecktem/~~NhY #noun
 abgeschmeckten/~~Vdifj # verb
 abgeschmeckter/~~NhY #noun
@@ -13090,7 +13090,7 @@ abgesessenem/~~NhY #noun
 abgesessenen/~~Vdifj # verb
 abgesessener/~~NhY #noun
 abgesessenes/~~NhY #noun
-abgesetzt/~~NXh #noun
+abgesetzt/~~NXhV # noun; +verb reading (was noun-only)
 abgesetztem/~~NhY #noun
 abgesetzten/~~Vdifj # verb
 abgesetzter/~~NhY #noun
@@ -13128,7 +13128,7 @@ abgesondertsten/~~Vdifj # verb
 abgesondertster/~~NhY #noun
 abgesondertstes/~~NhY #noun
 abgespalten/~~Vdifj # verb
-abgespaltene/~~FhY #feminine noun
+abgespaltene/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abgespaltenem/~~NhY #noun
 abgespaltenen/~~Vdifj # verb
 abgespaltener/~~NhY #noun
@@ -13244,7 +13244,7 @@ abgestecktem/~~NhY #noun
 abgesteckten/~~Vdifj # verb
 abgesteckter/~~NhY #noun
 abgestecktes/~~NhY #noun
-abgestellt/~~NXh #noun
+abgestellt/~~NXhV # noun; +verb reading (was noun-only)
 abgestelltem/~~NhY #noun
 abgestellten/~~Vdifj # verb
 abgestellter/~~NhY #noun
@@ -13451,7 +13451,7 @@ abgetorften/~~Vdifj # verb
 abgetorfter/~~NhY #noun
 abgetorftes/~~NhY #noun
 abgetragen/~~Vdifj # verb
-abgetragene/~~FhY #feminine noun
+abgetragene/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abgetragenem/~~NhY #noun
 abgetragenen/~~Vdifj # verb
 abgetragener/~~NhY #noun
@@ -14135,7 +14135,7 @@ gewinn/~NhpuvwY #frequency: 8
 glück/~NhpuvwY #frequency: 8
 grau/~~RJOQRSTUWqh #frequency: 8
 graupel/~NhpuvwY #frequency: 8
-griff/~NhpuvwY #frequency: 8
+griff/~~NhpuvwYr # frequency: 8; +adverb reading (was noun-only)
 hall/~NhpuvwY #frequency: 8
 heilig/~JqOQRSTUW #adjective root, frequency: 8
 heiter/~~RJOQRSTUWqh #frequency: 8
@@ -14172,7 +14172,7 @@ nötig/~JqOQRSTUW #adjective root, frequency: 8
 ober/~~RJOQRSTUWqh #frequency: 8
 pack/~NhpuvwY #frequency: 8
 passiv/~~RJOQRSTUWqh #frequency: 8
-pfiff/~NhpuvwY #frequency: 8
+pfiff/~~NhpuvwYr # frequency: 8; +adverb reading (was noun-only)
 pfleg/~NhpuvwY #frequency: 8
 pfusch/~NhpuvwY #frequency: 8
 plump/~~RJOQRSTUWqh #frequency: 8
@@ -14245,7 +14245,7 @@ verdächtig/~JqOQRSTUW #adjective root, frequency: 8
 vereinbar/~JqOQRSTUW #adjective root, frequency: 8
 vergleich/~NhpuvwY #frequency: 8
 verständig/~JqOQRSTUW #adjective root, frequency: 8
-vertrieb/~NhpuvwY #frequency: 8
+vertrieb/~~NhpuvwYr # frequency: 8; +adverb reading (was noun-only)
 veräußerlich/~JqOQRSTUW #adjective root, frequency: 8
 vokal/~~RJOQRSTUWqh #frequency: 8
 wall/~NhpuvwY #frequency: 8
@@ -14278,7 +14278,7 @@ abnormal/~~RJOQRSTUWqh #frequency: 7
 abprall/~NhpuvwY #frequency: 7
 abruf/~NhpuvwY #frequency: 7
 absonder/~NhpuvwY #frequency: 7
-abstieg/~NhpuvwY #frequency: 7
+abstieg/~~NhpuvwYV # frequency: 7; +verb reading (was noun-only)
 absurd/~~RJOQRSTUWqh #frequency: 7
 abtausch/~NhpuvwY #frequency: 7
 abteil/~NhpuvwY #frequency: 7
@@ -14333,7 +14333,7 @@ aufopferungsvoll/~~RJOQRSTUWqh #frequency: 7
 aufruf/~NhpuvwY #frequency: 7
 aufschlussreich/~~JOQRSTUWqh #frequency: 7
 aufstell/~NhpuvwY #frequency: 7
-aufstieg/~NhpuvwY #frequency: 7
+aufstieg/~~NhpuvwYV # frequency: 7; +verb reading (was noun-only)
 auftrag/~NhpuvwY #frequency: 7
 auftrieb/~NhpuvwY #frequency: 7
 ausbau/~NhpuvwY #frequency: 7
@@ -14795,7 +14795,7 @@ quengel/~NhpuvwY #frequency: 7
 radarhell/~~RJOQRSTUWqh #frequency: 7
 radioaktiv/~~RJOQRSTUWqh #frequency: 7
 ramsch/~NhpuvwY #frequency: 7
-rang/~NhpuvwY #frequency: 7
+rang/~~NhpuvwYr # frequency: 7; +adverb reading (was noun-only)
 rar/~~RJOQRSTUWqh #frequency: 7
 rasch/~~RJOQRSTUWqh #frequency: 7
 rational/~~RJOQRSTUWqh #frequency: 7
@@ -14888,7 +14888,7 @@ siegel/~NhpuvwY #frequency: 7
 siegreich/~~RJOQRSTUWqh #frequency: 7
 sinnvoll/~~RJOQRSTUWqh #frequency: 7
 skurril/~~RJOQRSTUWqh #frequency: 7
-sog/~NhpuvwY #frequency: 7
+sog/~~NhpuvwYr # frequency: 7; +adverb reading (was noun-only)
 solid/~~RJOQRSTUWqh #frequency: 7
 sozial/~~JOQRSTUWq # fixed from noun to adjective
 spachtel/~NhpuvwY #frequency: 7
@@ -15307,7 +15307,7 @@ anbetungsvoll/~NhY #frequency: 6
 anbieder/~NhY #frequency: 6
 anblick/~NhY #frequency: 6
 andachtsvoll/~NhY #frequency: 6
-anderthalb/~NhY #frequency: 6
+anderthalb/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 anderthalbfach/~NhY #frequency: 6
 andrang/~NhY #frequency: 6
 andruck/~NhY #frequency: 6
@@ -15326,7 +15326,7 @@ anfäng/~NhY #frequency: 6
 anführ/~NhY #frequency: 6
 angabegemäß/~NhY #frequency: 6
 angemessen/~Vdifj # verb root, frequency: 6
-angenehm/~NhY #frequency: 6
+angenehm/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 angesehen/~Vdifj # verb root, frequency: 6
 anglieder/~NhY #frequency: 6
 anglophil/~NhY #frequency: 6
@@ -15654,7 +15654,7 @@ ballaststofffrei/~NhY #frequency: 6
 ballnah/~NhY #frequency: 6
 baltendeutsch/~NhY #frequency: 6
 bananengelb/~NhY #frequency: 6
-band/~NhY #frequency: 6
+band/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 bankfremd/~NhY #frequency: 6
 banklebenslang/~NhY #frequency: 6
 bankrott/~NhY #frequency: 6
@@ -15690,7 +15690,7 @@ baumstark/~NhY #frequency: 6
 baureif/~NhY #frequency: 6
 beachtlich/~JqOQRSTUW #adjective root, frequency: 6
 beanstandungsfrei/~NhY #frequency: 6
-bedarf/~NhY #frequency: 6
+bedarf/~~NhYV # frequency: 6; +verb reading (was noun-only)
 bedarfsgemäß/~NhY #frequency: 6
 bedauer/~NhY #frequency: 6
 bedenkenfrei/~NhY #frequency: 6
@@ -15780,7 +15780,7 @@ bernsteingelb/~NhY #frequency: 6
 berufsfremd/~NhY #frequency: 6
 berufsnah/~NhY #frequency: 6
 beruhigend/~~NhYJ # frequency: 6; +adjective reading (was noun-only)
-berüchtigt/~NhY #frequency: 6
+berüchtigt/~~NhYV # frequency: 6; +verb reading (was noun-only)
 berührend/~~NhYJ # frequency: 6; +adjective reading (was noun-only)
 berührungsfrei/~NhY #frequency: 6
 berührungssensitiv/~~JOQRSTUWqh #frequency: 6
@@ -15818,7 +15818,7 @@ besteck/~NhY #frequency: 6
 bestellfix/~NhY #frequency: 6
 besteuer/~NhY #frequency: 6
 bestimmungsfremd/~NhY #frequency: 6
-bestimmungsgemäß/~NhY #frequency: 6
+bestimmungsgemäß/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 beständig/~JqOQRSTUW #adjective root, frequency: 6
 bestäub/~NhY #frequency: 6
 besucherintensiv/~~JOQRSTUWqh #frequency: 6
@@ -15840,7 +15840,7 @@ betriebsfunktional/~~JOQRSTUWqh #frequency: 6
 betriebsnah/~NhY #frequency: 6
 betriebssicher/~NhY #frequency: 6
 betroffen/~Vdifj # verb root, frequency: 6
-betrug/~NhY #frequency: 6
+betrug/~~NhYV # frequency: 6; +verb reading (was noun-only)
 betrugsfrei/~NhY #frequency: 6
 betrüblich/~JqOQRSTUW #adjective root, frequency: 6
 bettel/~NhY #frequency: 6
@@ -16150,7 +16150,7 @@ daunenweich/~NhY #frequency: 6
 davysch/~NhY #frequency: 6
 daytonagrau/~NhY #frequency: 6
 debil/~NhY #frequency: 6
-deckungsgleich/~NhY #frequency: 6
+deckungsgleich/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 deckungsreich/~NhY #frequency: 6
 deduktiv/~~JOQRSTUWqh #frequency: 6
 deeskalativ/~~JOQRSTUWqh #frequency: 6
@@ -16159,7 +16159,7 @@ defektiv/~~JOQRSTUWqh #frequency: 6
 defensivstark/~NhY #frequency: 6
 definitionsgemäß/~NhY #frequency: 6
 definitiv/~~JOQRSTUWqh #frequency: 6
-defizitär/~NhY #frequency: 6
+defizitär/~~NhYJ # frequency: 6; +adjective reading (was noun-only)
 deftig/~JqOQRSTUW #adjective root, frequency: 6
 degenerativ/~~JOQRSTUWqh #frequency: 6
 degressiv/~~JOQRSTUWqh #frequency: 6
@@ -16303,7 +16303,7 @@ dreiaxial/~~JOQRSTUWqh #frequency: 6
 dreidimensional/~~JOQRSTUWqh #frequency: 6
 dreieck/~NhY #frequency: 6
 dreieinhalbfach/~NhY #frequency: 6
-dreifach/~NhY #frequency: 6
+dreifach/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 dreifaktoriell/~~JOQRSTUWqh #frequency: 6
 dreihundertfach/~NhY #frequency: 6
 dreiteil/~NhY #frequency: 6
@@ -16331,7 +16331,7 @@ duftneutral/~~JOQRSTUWqh #frequency: 6
 duktal/~NhY #frequency: 6
 duktil/~NhY #frequency: 6
 dunkelblau/~NhY #frequency: 6
-dunkelgrau/~NhY #frequency: 6
+dunkelgrau/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 dunkeloliv/~~JOQRSTUWqh #frequency: 6
 dunstreich/~NhY #frequency: 6
 duodezimal/~~JOQRSTUWqh #frequency: 6
@@ -16395,7 +16395,7 @@ ehescheu/~NhY #frequency: 6
 ehrbar/~JqOQRSTUW #adjective root, frequency: 6
 ehr/~NhY #frequency: 6
 ehrenreich/~NhY #frequency: 6
-ehrenvoll/~NhY #frequency: 6
+ehrenvoll/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 ehrerbietig/~JqOQRSTUW #adjective root, frequency: 6
 ehrfahrungsreich/~NhY #frequency: 6
 ehrfurchtsvoll/~NhY #frequency: 6
@@ -16850,7 +16850,7 @@ feier/~NhY #frequency: 6
 feierlich/~JqOQRSTUW #adjective root, frequency: 6
 feindfrei/~NhY #frequency: 6
 feindlich/~JqOQRSTUW #adjective root, frequency: 6
-fein/~NhY #frequency: 6
+fein/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 feinfühlig/~JqOQRSTUW #adjective root, frequency: 6
 feinherb/~NhY #frequency: 6
 feinhörig/~JqOQRSTUW #adjective root, frequency: 6
@@ -16930,7 +16930,7 @@ flimmerfrei/~NhY #frequency: 6
 flink/~NhY #frequency: 6
 flipp/~NhY #frequency: 6
 flipper/~NhY #frequency: 6
-floh/~NhY #frequency: 6
+floh/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 floral/~NhY #frequency: 6
 flugfrei/~NhY #frequency: 6
 flugnah/~NhY #frequency: 6
@@ -17355,7 +17355,7 @@ glaub/~NhY #frequency: 6
 glaubensstark/~NhY #frequency: 6
 glaubensvoll/~NhY #frequency: 6
 glaubwürdig/~JqOQRSTUW #adjective root, frequency: 6
-gleichberechtigt/~NhY #frequency: 6
+gleichberechtigt/~~NhYV # frequency: 6; +verb reading (was noun-only)
 gleichgroß/~NhY #frequency: 6
 gleichlang/~NhY #frequency: 6
 gleichmäßig/~JqOQRSTUW #adjective root, frequency: 6
@@ -17408,7 +17408,7 @@ grauenerregend/~NhY #frequency: 6
 graugelb/~NhY #frequency: 6
 graugrün/~NhY #frequency: 6
 grausam/~JqOQRSTUW #adjective root, frequency: 6
-grauschwarz/~NhY #frequency: 6
+grauschwarz/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 grausig/~JqOQRSTUW #adjective root, frequency: 6
 grauweiß/~NhY #frequency: 6
 gravid/~NhY #frequency: 6
@@ -17489,7 +17489,7 @@ hader/~NhY #frequency: 6
 hafennah/~NhY #frequency: 6
 hager/~NhY #frequency: 6
 hai/~NhY #frequency: 6
-halb/~NhY #frequency: 6
+halb/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 halbformal/~~JOQRSTUWqh #frequency: 6
 halbfrei/~NhY #frequency: 6
 halbhegemonial/~~JOQRSTUWqh #frequency: 6
@@ -17974,7 +17974,7 @@ interventionell/~~JOQRSTUWqh #frequency: 6
 intervertebral/~~JOQRSTUWqh #frequency: 6
 interzonal/~~JOQRSTUWqh #frequency: 6
 intestinal/~~JOQRSTUWqh #frequency: 6
-intim/~NhY #frequency: 6
+intim/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 intonationsstabil/~NhY #frequency: 6
 intraabdominell/~~JOQRSTUWqh #frequency: 6
 intraduktal/~~JOQRSTUWqh #frequency: 6
@@ -18058,7 +18058,7 @@ jahresaktuell/~~JOQRSTUWqh #frequency: 6
 jahresgenau/~NhY #frequency: 6
 jahrhundertelang/~NhY #frequency: 6
 jahrtausendelang/~NhY #frequency: 6
-jahrzehntelang/~NhY #frequency: 6
+jahrzehntelang/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 jammer/~NhY #frequency: 6
 jammervoll/~NhY #frequency: 6
 jazz/~NhY #frequency: 6
@@ -18086,7 +18086,7 @@ jämmerlich/~JqOQRSTUW #adjective root, frequency: 6
 kackfrech/~NhY #frequency: 6
 kadmiumgelb/~NhY #frequency: 6
 kafkaesk/~~JOQRSTUWqh #frequency: 6
-kahl/~NhY #frequency: 6
+kahl/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 kaisertreu/~NhY #frequency: 6
 kaliumreich/~NhY #frequency: 6
 kalkfrei/~NhY #frequency: 6
@@ -18398,7 +18398,7 @@ konventionell/~~JOQRSTUWqh #frequency: 6
 konventionsgemäß/~NhY #frequency: 6
 konversationell/~~JOQRSTUWqh #frequency: 6
 konvertier/~NhY #frequency: 6
-konvex/~NhY #frequency: 6
+konvex/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 konzeptionell/~~JOQRSTUWqh #frequency: 6
 konzeptuell/~~JOQRSTUWqh #frequency: 6
 konzernfremd/~NhY #frequency: 6
@@ -18463,7 +18463,7 @@ kredenzt/~NhY #frequency: 6
 kreditfähig/~JqOQRSTUW #adjective root, frequency: 6
 kreditkartengroß/~NhY #frequency: 6
 kreditwürdig/~JqOQRSTUW #adjective root, frequency: 6
-kreidebleich/~NhY #frequency: 6
+kreidebleich/~~NhYr # frequency: 6; +adverb reading (was noun-only)
 kreidehaltig/~JqOQRSTUW #adjective root, frequency: 6
 kreideweiß/~NhY #frequency: 6
 kreisfrei/~NhY #frequency: 6
@@ -18517,7 +18517,7 @@ kupferblau/~NhY #frequency: 6
 kurativ/~~JOQRSTUWqh #frequency: 6
 kurbel/~NhY #frequency: 6
 kurial/~NhY #frequency: 6
-kursiv/~NhY #frequency: 6
+kursiv/~~NhYJ # frequency: 6; +adjective reading (was noun-only)
 kurvenreich/~NhY #frequency: 6
 kurvig/~JqOQRSTUW #adjective root, frequency: 6
 kurz/~~UNJOQRSTUWq #adjective and noun
@@ -18902,7 +18902,7 @@ aas/~~NhY
 abc/~~NhY
 abi/~~Nbh
 abt/~~NhY
-ach/~~NhY
+ach/~~NhYr # +adverb reading (was noun-only)
 act/~~NhY
 ada/~~NhY
 ade/~~NhY
@@ -18940,8 +18940,8 @@ adverb/~~NhY # auto-added
 adverbs/~~NhY
 advokat/~~NhY
 adygeja/~~Nbh
-adäquat/~~NXh
-aerobe/~~NhY
+adäquat/~~NXhV # +verb reading (was noun-only)
+aerobe/~~NhYJ # +adjective reading (was noun-only)
 aerobem/~~NhY
 aeroben/~~Vdifj # auto-added
 aerober/~~MhY
@@ -19056,7 +19056,7 @@ aktins/~~NhY
 aktion/~~NhY
 aktions/~~NhY
 aktiva/~~NhY
-aktive/~~NhY
+aktive/~~NhYJ # +adjective reading (was noun-only)
 aktivem/~~NhY
 aktiven/~~Vdifj # auto-added
 aktiver/~~MhY
@@ -19173,7 +19173,7 @@ allweil/~~NhY
 allwo/~~NhY
 allyl/~~NhY
 allzeit/~~NhY
-allzu/~~NhY
+allzu/~~NhYr # +adverb reading (was noun-only)
 allüre/~~NhY
 allüren/~~Vdifj # auto-added
 alm/~~NhY
@@ -19182,7 +19182,7 @@ almosen/~~Vdifj # auto-added
 aloha/~~NhY
 alp/~~NhY
 alpen/~~Vdifj # auto-added
-alpha/~~NhY
+alpha/~~NhYr # +adverb reading (was noun-only)
 alpin/~~NhY
 alpine/~~NhY
 alpinem/~~NhY
@@ -19191,7 +19191,7 @@ alpiner/~~MhY
 alpines/~~NhY
 als/~~h6
 alsbald/~~NhY
-alsdann/~~NhY
+alsdann/~~NhYr # +adverb reading (was noun-only)
 also/~~r # retag: adverb/verb, was noun (corpus-mined)
 alster/~~MhY
 altait/~~NhY
@@ -19209,7 +19209,7 @@ altasts/~~NhY
 altern/~~NhY
 alternd/~~NhY
 alterns/~~NhY
-alters/~~NhY # auto-added
+alters/~~NhYr # auto-added; +adverb reading (was noun-only)
 alterst/~~NhY
 altert/~~NXh
 altlast/~~NhY
@@ -19317,7 +19317,7 @@ anblast/~~NhY
 anblies/~~NhY
 anbläst/~~NhY
 anbohrt/~~NXh
-anbot/~~NhY
+anbot/~~NhYV # +verb reading (was noun-only)
 anboten/~~Vdifj # auto-added
 anbotet/~~NhY
 anbrach/~~NhY
@@ -19337,7 +19337,7 @@ andaure/~~NhY
 anden/~~Vdifj # auto-added
 andenke/~~NhY
 andenkt/~~NhY
-andere/~~NhY
+andere/~~NhYJ # +adjective reading (was noun-only)
 anderem/~~NhY
 anderen/~~Vdifj # auto-added
 anderer/~~MhY
@@ -19382,7 +19382,7 @@ anfeure/~~NhY
 anficht/~~NhY
 anfiel/~~NXh
 anfielt/~~NhY
-anfing/~~NhY
+anfing/~~NhYr # +adverb reading (was noun-only)
 anfinge/~~NhY
 anfingt/~~NhY
 anfix/~~Vcej # REPLACES anfixen
@@ -19438,9 +19438,9 @@ anger/~~MhY
 angern/~~rh # adverb gladly
 angers/~~NhY
 angesät/~~NXh
-angetan/~~NhY
+angetan/~~NhYr # +adverb reading (was noun-only)
 angibst/~~NhY
-angibt/~~NhY
+angibt/~~NhYV # +verb reading (was noun-only)
 angieße/~~NhY
 angießt/~~NXh
 angifte/~~NhY
@@ -19482,7 +19482,7 @@ anhat/~~NhY
 anhatte/~~NhY
 anheb/~~Vcj # REPLACES anheben
 anhefte/~~NhY
-anheim/~~NhY
+anheim/~~NhYr # +adverb reading (was noun-only)
 anheizt/~~NXh
 anheule/~~NhY
 anheult/~~NXh
@@ -19575,7 +19575,7 @@ anleckt/~~NXh
 anleg/~~Vcej # REPLACES anlegen
 anleger/~~MhY
 anlegt/~~NXh
-anlehnt/~~NXh
+anlehnt/~~NXhV # +verb reading (was noun-only)
 anleihe/~~NhY
 anleimt/~~NXh
 anleint/~~NXh
@@ -19829,9 +19829,9 @@ antrage/~~NhY
 antrags/~~NhY
 antragt/~~NhY
 antrank/~~NhY
-antrat/~~NhY
+antrat/~~NhYV # +verb reading (was noun-only)
 antrete/~~NhY
-antritt/~~NXh
+antritt/~~NXhV # +verb reading (was noun-only)
 antrug/~~NhY
 antrugt/~~NhY
 anträfe/~~NhY
@@ -19886,9 +19886,9 @@ anzahlt/~~NXh
 anzapft/~~NXh
 anzeigt/~~hV
 anziehe/~~NhY
-anzieht/~~NhY
+anzieht/~~NhYV # +verb reading (was noun-only)
 anzielt/~~NXh
-anzog/~~NhY
+anzog/~~NhYr # +adverb reading (was noun-only)
 anzogen/~~Vdifj # auto-added
 anzogt/~~NhY
 anzucht/~~NhY
@@ -20039,7 +20039,7 @@ arsenal/~~NXh
 arsenik/~~NhY
 arsenit/~~NXh
 arsens/~~NhY
-art/~~NXh # auto-added
+art/~~NXhr # auto-added; +adverb reading (was noun-only)
 arten/~~Vdifj # auto-added
 arterie/~~NhY
 artest/~~hV
@@ -20169,12 +20169,12 @@ aufesst/~~NhY
 auffand/~~NhY
 auffang/~~NhY
 auffegt/~~NXh
-auffiel/~~NXh
+auffiel/~~NXhV # +verb reading (was noun-only)
 auffing/~~NhY
 aufflog/~~NhY
 auffraß/~~NhY
 auffuhr/~~NhY
-aufgab/~~NXh
+aufgab/~~NXhV # +verb reading (was noun-only)
 aufgabt/~~NhY
 aufgang/~~NhY
 aufgebe/~~NhY
@@ -20229,10 +20229,10 @@ auflöse/~~NhY
 auflöst/~~NhY
 auflöte/~~NhY
 auflüde/~~NhY
-aufm/~~NhY
+aufm/~~NhYr # +adverb reading (was noun-only)
 aufmalt/~~NXh
 aufmaß/~~NXh
-aufnahm/~~NXh
+aufnahm/~~NXhV # +verb reading (was noun-only)
 aufnähe/~~NhY
 aufnäht/~~NXh
 aufputz/~~NXh
@@ -20242,7 +20242,7 @@ aufrebt/~~NXh
 aufregt/~~NXh
 aufrieb/~~NXh
 aufrief/~~NXh
-aufriss/~~NXh
+aufriss/~~NXhr # +adverb reading (was noun-only)
 aufritt/~~NXh
 aufrufe/~~NhY
 aufrufs/~~NhY
@@ -20264,7 +20264,7 @@ auftakt/~~NXh
 auftat/~~NhY
 auftaut/~~NXh
 auftraf/~~NhY
-auftrat/~~NhY
+auftrat/~~NhYV # +verb reading (was noun-only)
 auftrug/~~NhY
 auftue/~~NhY
 auftun/~~NhY
@@ -20331,9 +20331,9 @@ ausgast/~~NhY
 ausgebe/~~NhY
 ausgebt/~~NhY
 ausgeh/~~NXh
-ausgeht/~~NhY
+ausgeht/~~NhYV # +verb reading (was noun-only)
 ausgibt/~~NhY
-ausging/~~NhY
+ausging/~~NhYV # +verb reading (was noun-only)
 ausgoss/~~NhY
 ausgrub/~~NhY
 ausguck/~~NXh
@@ -20402,7 +20402,7 @@ ausrufs/~~NhY
 ausruft/~~NhY
 ausruht/~~NXh
 aussaat/~~NhY
-aussagt/~~NXh
+aussagt/~~NXhV # +verb reading (was noun-only)
 aussah/~~hV # retag: verb form, was noun (corpus-mined)
 aussaht/~~hV # retag: verb form, was noun (corpus-mined)
 aussamt/~~NXh
@@ -20459,7 +20459,7 @@ auto/~~Zb # auto-added
 autoarm/~~NXh
 autogen/~~Vdifj # auto-added
 automat/~~NhY
-autonom/~~NXh
+autonom/~~NXhr # +adverb reading (was noun-only)
 autonym/~~NXh
 autor/~~NhY
 autoren/~~Vdifj # auto-added
@@ -20509,7 +20509,7 @@ aßest/~~hV
 aßt/~~hV # retag: verb form, was noun (corpus-mined)
 babel/~~NhY
 babesie/~~NhY
-baby/~~NhY
+baby/~~NhYr # +adverb reading (was noun-only)
 babylon/~~NhY
 babys/~~NhY
 bach/~~NhXY
@@ -20832,7 +20832,7 @@ becirct/~~hV # retag: finite verb form, was noun (corpus-mined)
 becken/~~Vdifj # auto-added
 beckens/~~NhY
 bedache/~~NhY
-bedacht/~~NXh
+bedacht/~~NXhV # +verb reading (was noun-only)
 bedampf/~~NXh
 bedankt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bedarfe/~~NhY
@@ -20873,13 +20873,13 @@ beet/~~NXh
 beeten/~~Vdifj # auto-added
 beetes/~~NhY
 beets/~~NhY
-befahl/~~NhY
+befahl/~~NhYr # +adverb reading (was noun-only)
 befahlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 befahre/~~NhY
 befahrt/~~hV # retag: finite verb form, was noun (corpus-mined)
 befall/~~NhY # auto-added
 befalls/~~NhY
-befand/~~NhY
+befand/~~NhYV # +verb reading (was noun-only)
 befasst/~~hV
 befehde/~~NhY
 befehl/~~NXh
@@ -20909,7 +20909,7 @@ befunde/~~NhY
 befunds/~~NhY
 befährt/~~NhY
 befällt/~~NhY
-befände/~~NhY
+befände/~~NhYJ # +adjective reading (was noun-only)
 befühle/~~NhY
 befühlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 beführe/~~NhY
@@ -20967,7 +20967,7 @@ begäben/~~Vdifj # auto-added
 begäbet/~~hV # retag: finite verb form, was noun (corpus-mined)
 begänne/~~NhY
 begännt/~~hV # retag: finite verb form, was noun (corpus-mined)
-behaart/~~NXh # auto-added
+behaart/~~NXhV # auto-added; +verb reading (was noun-only)
 behag/~~Vcej # REPLACES behagen
 behagt/~~hV # retag: finite verb form, was noun (corpus-mined)
 behalf/~~NhY
@@ -21090,7 +21090,7 @@ bejah/~~Vcej # REPLACES bejahen
 bejahrt/~~NXh
 bejaht/~~hV # retag: finite verb form, was noun (corpus-mined)
 bejuble/~~NhY
-bekam/~~NhY
+bekam/~~NhYV # +verb reading (was noun-only)
 bekamen/~~Vdifj # auto-added
 bekamt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bekehrt/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21177,7 +21177,7 @@ belädst/~~NhY
 belädt/~~NhY
 beläge/~~NhY
 belägen/~~Vdifj # auto-added
-belässt/~~NhY
+belässt/~~NhYV # +verb reading (was noun-only)
 beläuft/~~hV # retag: verb form, was noun (corpus-mined)
 belüde/~~NhY
 belüden/~~Vdifj # auto-added
@@ -21319,7 +21319,7 @@ beryll/~~NhY
 berät/~~NhY
 beräume/~~NhY
 beräumt/~~hV # retag: finite verb form, was noun (corpus-mined)
-berühmt/~~NXh
+berühmt/~~NXhV # +verb reading (was noun-only)
 berühre/~~NhY
 berührt/~~hV # retag: finite verb form, was noun (corpus-mined)
 besag/~~Vcej # REPLACES besagen
@@ -21382,11 +21382,11 @@ bester/~~MhY
 bestes/~~NhY
 bestich/~~NhY
 bestie/~~NhY
-bestieg/~~NhY
+bestieg/~~NhYV # +verb reading (was noun-only)
 bestien/~~Vdifj # auto-added
 besuche/~~NhY
 besuchs/~~NhY
-besucht/~~NXh
+besucht/~~NXhV # +verb reading (was noun-only)
 besudle/~~NhY
 besähe/~~NhY
 besähen/~~Vdifj # auto-added
@@ -21418,13 +21418,13 @@ betitle/~~NhY
 beton/~~Vcej # REPLACES betonen
 betons/~~NhY
 betont/~~hV # retag: finite verb form, was noun (corpus-mined)
-betraf/~~NhY
+betraf/~~NhYr # +adverb reading (was noun-only)
 betraft/~~hV # retag: finite verb form, was noun (corpus-mined)
 betrage/~~NhY
 betrags/~~NhY
 betragt/~~hV # retag: finite verb form, was noun (corpus-mined)
 betrank/~~NhY
-betrat/~~NhY
+betrat/~~NhYV # +verb reading (was noun-only)
 betraut/~~hV # retag: finite verb form, was noun (corpus-mined)
 betreff/~~NXh
 betrete/~~NhY
@@ -21492,7 +21492,7 @@ bewacht/~~NXh
 bewahrt/~~hV
 bewalde/~~NhY
 bewandt/~~NhY
-bewarb/~~NhY
+bewarb/~~NhYr # +adverb reading (was noun-only)
 bewarbt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bewarf/~~NhY
 bewarft/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21505,7 +21505,7 @@ bewein/~~NhY # auto-added
 beweint/~~hV # retag: finite verb form, was noun (corpus-mined)
 beweis/~~NXh
 beweist/~~hV
-bewerbe/~~NhY
+bewerbe/~~NhYJ # +adjective reading (was noun-only)
 bewerbt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bewerfe/~~NhY
 bewerft/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21547,7 +21547,7 @@ bezopft/~~NXh
 bezug/~~NhY
 bezuges/~~NhY
 bezugs/~~NhY
-bezwang/~~NhY
+bezwang/~~NhYr # +adverb reading (was noun-only)
 bezöge/~~NhY
 bezögen/~~Vdifj # auto-added
 bezöget/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21630,7 +21630,7 @@ bimmele/~~NhY
 bimmeln/~~Vdifj # auto-added
 bimmelt/~~NXh
 bimmle/~~NhY
-bin/~~NhY
+bin/~~NhYr # +adverb reading (was noun-only)
 binary/~~NhY
 bind/~~Vcj # REPLACES binden
 bindens/~~NhY
@@ -21699,7 +21699,7 @@ bisses/~~NhY
 bissest/~~hV
 bissig/~~RJOQRSTUWqh
 bissmal/~~NXh
-bist/~~NhY
+bist/~~NhYr # +adverb reading (was noun-only)
 bistro/~~Nbh
 bistum/~~Zah  # preposition um # auto-added
 bistums/~~NhY
@@ -21780,7 +21780,7 @@ blicht/~~NhY
 blick/~~VcejX # REPLACES blicken
 blickes/~~NhY
 blicks/~~NhY
-blickt/~~NXh
+blickt/~~NXhV # +verb reading (was noun-only)
 blieb/~~hV
 blieben/~~Vdifj # auto-added
 bliebt/~~NhY
@@ -21788,7 +21788,7 @@ blies/~~NhY
 bliesen/~~Vdifj # auto-added
 blimp/~~NhY
 blimps/~~NhY
-blind/~~NhY
+blind/~~NhYr # +adverb reading (was noun-only)
 blinde/~~NhY
 blindem/~~NhY
 blinden/~~Vdifj # auto-added
@@ -22025,7 +22025,7 @@ borden/~~Vdifj # auto-added
 bordes/~~NhY
 bords/~~NhY
 bordüre/~~NhY
-boreale/~~NhY
+boreale/~~NhYJ # +adjective reading (was noun-only)
 borg/~~Vcej # REPLACES borgen
 borgt/~~NXh
 borgtet/~~NhY
@@ -22101,7 +22101,7 @@ bozener/~~MhY
 bozens/~~NhY
 brabant/~~NhY
 brabble/~~NhY
-brach/~~NXhY
+brach/~~NXhYr # +adverb reading (was noun-only)
 brachse/~~NhY
 bracht/~~NXh
 brackig/~~RJOQRSTUWqh
@@ -22184,7 +22184,7 @@ brevier/~~MhY
 brezel/~~NhY
 brezeln/~~Vdifj # auto-added
 brich/~~NhY
-bricht/~~NhY
+bricht/~~NhYV # +verb reading (was noun-only)
 bridge/~~NhY
 briefe/~~NhY
 briefen/~~Vdifj # auto-added
@@ -23105,7 +23105,7 @@ dampfig/~~RJOQRSTUWqh
 dampfs/~~NhY
 dampft/~~NXh
 damwild/~~NhY
-danach/~~NhY
+danach/~~NhYr # +adverb reading (was noun-only)
 dancing/~~NhY
 dandy/~~NhY
 dandys/~~NhY
@@ -23179,7 +23179,7 @@ datex/~~NhY
 datiert/~~hV
 dativ/~~NhY
 dativs/~~NhY
-dato/~~NhY
+dato/~~NhYr # +adverb reading (was noun-only)
 dattel/~~NhY
 datteln/~~Vdifj # auto-added
 datum/~~Zah  # preposition um #  auto-added
@@ -23190,14 +23190,14 @@ dauer/~~MhY
 dauere/~~NhY
 dauern/~~NhY
 dauernd/~~NhY
-dauert/~~NXh
+dauert/~~NXhV # +verb reading (was noun-only)
 daumen/~~Vdifj # auto-added
 daumens/~~NhY
 daune/~~NhY
 daunen/~~Vdifj # auto-added
 daure/~~NhY
 davon/~~hr
-davor/~~NhY
+davor/~~NhYr # +adverb reading (was noun-only)
 davos/~~NhY
 dawider/~~MhY
 dazu/~~hr
@@ -23251,7 +23251,7 @@ degens/~~NhY
 dehn/~~NhY
 dehn/~~Vcej # REPLACES dehnen
 dehnens/~~NhY
-dehnt/~~NXh
+dehnt/~~NXhV # +verb reading (was noun-only)
 dehntet/~~NhY
 dehnung/~~FhY
 deich/~~NXhY
@@ -23314,7 +23314,7 @@ denkern/~~NhY
 denkers/~~NhY
 denkmal/~~NXah
 denn/~~h6
-dennoch/~~NhY
+dennoch/~~NhYr # +adverb reading (was noun-only)
 dentale/~~NhY
 dentist/~~NhY
 deploye/~~NhY
@@ -23346,7 +23346,7 @@ derlei/~~NhY
 dermale/~~NhY
 dersim/~~NhY
 dersims/~~NhY
-derweil/~~NhY
+derweil/~~NhYr # +adverb reading (was noun-only)
 derzeit/~~r # retag: adverb, was noun (corpus-mined)
 deshalb/~~hr
 designs/~~NhY
@@ -23660,7 +23660,7 @@ dorsale/~~NhY
 dorsch/~~NXhY
 dorschs/~~NhY
 dorther/~~MhY
-dorthin/~~NhY
+dorthin/~~NhYr # +adverb reading (was noun-only)
 dortig/~~RJOQRSTUWqh
 dose/~~NhY
 dosen/~~Vdifj # auto-added
@@ -23678,7 +23678,7 @@ doubles/~~NhY
 doublt/~~NXh
 dover/~~MhY
 dovers/~~NhY
-down/~~NhY
+down/~~NhYr # +adverb reading (was noun-only)
 dozent/~~NhY
 doziert/~~NXh
 dpa/~~NhY
@@ -23703,7 +23703,7 @@ dralon/~~NhY
 dralons/~~NhY
 drama/~~Nbh
 dramen/~~Vdifj # auto-added
-dran/~~NhY
+dran/~~NhYr # +adverb reading (was noun-only)
 drange/~~NhY
 drangen/~~Vdifj # auto-added
 dranges/~~NhY
@@ -23767,7 +23767,7 @@ drohens/~~NhY
 drohn/~~NhY
 drohne/~~NhY
 drohnen/~~Vdifj # auto-added
-droht/~~NXh
+droht/~~NXhV # +verb reading (was noun-only)
 drohtet/~~NhY
 drohung/~~FhY
 drollig/~~RJOQRSTUWqh
@@ -23898,7 +23898,7 @@ dumping/~~NhY
 dunkel/~~NJOQRSTUWq #adjective and noun
 dunkeln/~~Vdifj # auto-added
 dunkelt/~~NXh
-dunkle/~~NhY
+dunkle/~~NhYJ # +adjective reading (was noun-only)
 dunklem/~~NhY
 dunklen/~~Vdifj # auto-added
 dunkler/~~MhY
@@ -24032,7 +24032,7 @@ dünk/~~Vej # REPLACES dünken
 dünkst/~~hV
 dünkt/~~NXh
 dünktet/~~NhY
-dünne/~~NhY
+dünne/~~NhYJ # +adjective reading (was noun-only)
 dünnem/~~NhY
 dünn/~~Vej # REPLACES dünnen
 dünner/~~MhY
@@ -24049,7 +24049,7 @@ dünung/~~FhY
 düpier/~~MhY
 düpiere/~~NhY
 düpiert/~~NXh
-dürfe/~~NhY
+dürfe/~~NhYJ # +adjective reading (was noun-only)
 dürft/~~NXh
 dürftet/~~NhY
 dürre/~~NhY
@@ -24076,7 +24076,7 @@ ebbt/~~NXh
 ebbtest/~~NhY
 ebbtet/~~NhY
 eben/~~Vdifj # auto-added
-ebenda/~~NhY
+ebenda/~~NhYr # +adverb reading (was noun-only)
 ebender/~~MhY
 ebene/~~NhY
 ebenem/~~NhY
@@ -24160,7 +24160,7 @@ eggen/~~Vdifj # auto-added
 ego/~~Nbh
 egoist/~~NhY
 egomane/~~NhY
-ehe/~~NhY
+ehe/~~NhYr # +adverb reading (was noun-only)
 ehec/~~NhY
 ehedem/~~NhY
 ehelos/~~NXh
@@ -24185,7 +24185,7 @@ ehrens/~~NhY
 ehrgeiz/~~NhY
 ehrlos/~~NXh
 ehrsam/~~JOQRSTUWqh
-ehrt/~~NXh
+ehrt/~~NXhV # +verb reading (was noun-only)
 ehrtest/~~NhY
 ehrtet/~~NhY
 ehrung/~~FhY
@@ -24225,12 +24225,12 @@ eifre/~~NhY
 eifrige/~~NhY
 eigelb/~~NXh
 eigelbs/~~NhY
-eigene/~~NhY
+eigene/~~NhYJ # +adjective reading (was noun-only)
 eigenem/~~NhY
 eigenen/~~Vdifj # auto-added
 eigener/~~MhY
 eigenes/~~NhY
-eigens/~~NhY
+eigens/~~NhYr # +adverb reading (was noun-only)
 eigentum/~~Zah  # preposition um # auto-added
 eign/~~Vcj # REPLACES eignen
 eignens/~~NhY
@@ -24301,7 +24301,7 @@ eingang/~~NhY
 eingebe/~~NhY
 eingebt/~~NhY
 eingehe/~~NhY
-eingeht/~~NhY
+eingeht/~~NhYV # +verb reading (was noun-only)
 eingibt/~~NhY
 einging/~~NhY
 eingoss/~~NhY
@@ -24321,7 +24321,7 @@ einhob/~~NhY
 einhobt/~~NhY
 einholt/~~NXh
 einhorn/~~NhY
-einhält/~~NhY
+einhält/~~NhYV # +verb reading (was noun-only)
 einhöbe/~~NhY
 einhöre/~~NhY
 einhört/~~NXh
@@ -24349,7 +24349,7 @@ einlese/~~NhY
 einlest/~~NhY
 einlief/~~NXh
 einließ/~~NXh
-einlud/~~NhY
+einlud/~~NhYV # +verb reading (was noun-only)
 einlädt/~~NhY
 einläse/~~NhY
 einlöse/~~NhY
@@ -24533,7 +24533,7 @@ elch/~~NXhY
 elches/~~NhY
 elchs/~~NhY
 elefant/~~NhY
-elegant/~~NXh
+elegant/~~NXhV # +verb reading (was noun-only)
 eleganz/~~NhY
 elegie/~~NhY
 elegien/~~Vdifj # auto-added
@@ -24690,7 +24690,7 @@ entere/~~NhY
 entern/~~NhY
 enternd/~~NhY
 entert/~~NXh
-entfiel/~~NXh
+entfiel/~~NXhV # +verb reading (was noun-only)
 entflog/~~NhY
 entfloh/~~NhY
 entfuhr/~~Nah
@@ -24716,7 +24716,7 @@ entlief/~~NXh
 entlieh/~~NhY
 entließ/~~NXh
 entlobt/~~hV # retag: finite verb form, was noun (corpus-mined)
-entlud/~~NhY
+entlud/~~NhYV # +verb reading (was noun-only)
 entlädt/~~NhY
 entlöte/~~NhY
 entlüde/~~NhY
@@ -24739,11 +24739,11 @@ entsann/~~NhY
 entsatz/~~NhY
 entschuldigung/~~FhY
 entwand/~~NhY
-entwarf/~~NhY
+entwarf/~~NhYr # +adverb reading (was noun-only)
 entwich/~~NXhY
 entwirf/~~NhY
 entwurf/~~NhY
-entzog/~~NhY
+entzog/~~NhYr # +adverb reading (was noun-only)
 entzogt/~~hV # retag: finite verb form, was noun (corpus-mined)
 entzug/~~NhY
 entzugs/~~NhY
@@ -24808,7 +24808,7 @@ erbaten/~~Vdifj # auto-added
 erbatet/~~hV # retag: finite verb form, was noun (corpus-mined)
 erbau/~~Vcej # REPLACES erbauen
 erbauer/~~MhY
-erbaut/~~NXh
+erbaut/~~NXhV # +verb reading (was noun-only)
 erbeb/~~Vcej # REPLACES erbeben
 erbebt/~~NXh
 erb/~~Vcej # REPLACES erben
@@ -24835,7 +24835,7 @@ erbrich/~~NhY
 erbrüte/~~NhY
 erbse/~~NhY
 erbsen/~~Vdifj # auto-added
-erbt/~~NXh
+erbt/~~NXhV # +verb reading (was noun-only)
 erbtest/~~NhY
 erbtet/~~NhY
 erbäte/~~NhY
@@ -24893,14 +24893,14 @@ erfuhr/~~hV # retag: verb form, was noun (corpus-mined)
 erfuhrt/~~hV # retag: verb form, was noun (corpus-mined)
 erfurt/~~NhY
 erfurts/~~NhY
-erfährt/~~NhY
+erfährt/~~NhYV # +verb reading (was noun-only)
 erfände/~~NhY
 erfühle/~~NhY
 erfühlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erführe/~~NhY
 erfülle/~~NhY
 erfüllt/~~NXhV # +verb reading (was noun-only)
-ergab/~~NhY
+ergab/~~NhYV # +verb reading (was noun-only)
 ergaben/~~Vdifj # auto-added
 ergabt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ergebe/~~NhY
@@ -24911,7 +24911,7 @@ ergib/~~NhY
 ergibt/~~hV
 ergieße/~~NhY
 ergießt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erging/~~NhY
+erging/~~NhYV # +verb reading (was noun-only)
 erginge/~~NhY
 ergingt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erglomm/~~NhY
@@ -24923,7 +24923,7 @@ ergosst/~~hV # retag: finite verb form, was noun (corpus-mined)
 ergrabe/~~NhY
 ergrabt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ergraut/~~hV # retag: finite verb form, was noun (corpus-mined)
-ergriff/~~NhY
+ergriff/~~NhYr # +adverb reading (was noun-only)
 ergrub/~~NhY
 ergrubt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ergräbt/~~NhY
@@ -24946,7 +24946,7 @@ erhebet/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhellt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhielt/~~hV
 erhitzt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erhob/~~NhY
+erhob/~~NhYr # +adverb reading (was noun-only)
 erhoben/~~Vdifj # auto-added
 erhobt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhofft/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -25020,13 +25020,13 @@ erlief/~~NXh
 erlieft/~~hV # retag: finite verb form, was noun (corpus-mined)
 erliege/~~NhY
 erliegt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erließ/~~NXh
+erließ/~~NXhV # +verb reading (was noun-only)
 erließt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erlitt/~~NhY
+erlitt/~~NhYV # +verb reading (was noun-only)
 erlog/~~NhY
 erlogen/~~Vdifj # auto-added
 erlogt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erlosch/~~NhY
+erlosch/~~NhYr # +adverb reading (was noun-only)
 erläge/~~NhY
 erlägen/~~Vdifj # auto-added
 erläget/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -25066,7 +25066,7 @@ ernannt/~~NXh
 ernenne/~~NhY
 ernennt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erneure/~~NhY
-erneut/~~NXh
+erneut/~~NXhV # +verb reading (was noun-only)
 ernste/~~NhY
 ernstem/~~NhY
 ernsten/~~Vdifj # auto-added
@@ -25091,7 +25091,7 @@ erpel/~~NhY
 erpels/~~NhY
 erpicht/~~NXh
 erprobt/~~hV # retag: finite verb form, was noun (corpus-mined)
-errang/~~NhY
+errang/~~NhYr # +adverb reading (was noun-only)
 errangt/~~hV # retag: finite verb form, was noun (corpus-mined)
 errate/~~NhY
 erraten/~~Vdifj # auto-added
@@ -25113,7 +25113,7 @@ ersannt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ersatz/~~NhY
 ersaufe/~~NhY
 ersauft/~~hV # retag: finite verb form, was noun (corpus-mined)
-erschuf/~~NhY
+erschuf/~~NhYV # +verb reading (was noun-only)
 ersegle/~~NhY
 ersehe/~~NhY
 ersehen/~~Vdifj # auto-added
@@ -25140,7 +25140,7 @@ erstem/~~NhY
 ersten/~~Vdifj # auto-added
 erstens/~~hJOQRSTUWq
 erster/~~JhOQRSTUWq # first (adjective)
-erstere/~~NhY
+erstere/~~NhYJ # +adjective reading (was noun-only)
 erstes/~~NhY
 erstich/~~NhY
 erstieg/~~NhY
@@ -25158,7 +25158,7 @@ erteilt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ertrage/~~NhY
 ertrags/~~NhY
 ertragt/~~hV # retag: finite verb form, was noun (corpus-mined)
-ertrank/~~NhY
+ertrank/~~NhYr # +adverb reading (was noun-only)
 ertrug/~~NhY
 ertrugt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erträge/~~NhY
@@ -25187,7 +25187,7 @@ erwies/~~NhY
 erwiese/~~NhY
 erwiest/~~hV # retag: finite verb form, was noun (corpus-mined)
 erwirb/~~NhY
-erwirbt/~~NhY
+erwirbt/~~NhYV # +verb reading (was noun-only)
 erwirkt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erwog/~~NhY
 erwogen/~~Vdifj # auto-added
@@ -25221,7 +25221,7 @@ erzielt/~~g # past participle of erzielen
 erzog/~~NhY
 erzogen/~~Vdifj # auto-added
 erzogt/~~hV # retag: finite verb form, was noun (corpus-mined)
-erzwang/~~NhY
+erzwang/~~NhYr # +adverb reading (was noun-only)
 erzähle/~~NhY
 erzählt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erzöge/~~NhY
@@ -25331,7 +25331,7 @@ ewigen/~~Vdifj # auto-added
 ewiger/~~MhY
 ewiges/~~NhY
 exabyte/~~NhY
-exakt/~~NXh
+exakt/~~NXhV # +verb reading (was noun-only)
 exaktem/~~NhY
 exakten/~~Vdifj # auto-added
 exakter/~~MhY
@@ -25552,7 +25552,7 @@ fass/~~Vcej # REPLACES fassen
 fassens/~~NhY
 fasses/~~NhY
 fasson/~~NhY
-fasst/~~NhY
+fasst/~~NhYV # +verb reading (was noun-only)
 fasste/~~NhY
 fasstet/~~NhY
 fassung/~~FhY
@@ -25629,7 +25629,7 @@ fehlens/~~NhY
 fehler/~~MhY
 fehlern/~~NhY
 fehlers/~~NhY
-fehlt/~~NXh
+fehlt/~~NXhV # +verb reading (was noun-only)
 fehltet/~~NhY
 fehmarn/~~NhY
 fei/~~Vej # REPLACES feien
@@ -25658,7 +25658,7 @@ feindes/~~NhY
 feindet/~~NXh
 feindin/~~NhY
 feinds/~~NhY
-feine/~~NhY
+feine/~~NhYJ # +adjective reading (was noun-only)
 feinem/~~NhY
 feinen/~~Vdifj # auto-added
 feiner/~~MhY
@@ -25834,7 +25834,7 @@ fiepste/~~NhY
 fiept/~~NXh
 fieptet/~~NhY
 fiepton/~~NhY
-fiese/~~NhY
+fiese/~~NhYJ # +adjective reading (was noun-only)
 fiesem/~~NhY
 fiesen/~~Vdifj # auto-added
 fieser/~~MhY
@@ -25846,7 +25846,7 @@ fights/~~NhY
 figur/~~NhY
 figuren/~~Vdifj # auto-added
 fiktion/~~NhY
-fiktive/~~NhY
+fiktive/~~NhYJ # +adjective reading (was noun-only)
 filamin/~~NhY
 file/~~NhY
 files/~~NhY
@@ -25873,7 +25873,7 @@ filztet/~~NhY
 fimbrin/~~NhY
 fimmel/~~NhY
 fimmels/~~NhY
-finale/~~NhY
+finale/~~NhYJ # +adjective reading (was noun-only)
 finalem/~~NhY
 finalen/~~Vdifj # auto-added
 finaler/~~MhY
@@ -25890,7 +25890,7 @@ findet/~~NhY
 findige/~~NhY
 findung/~~FhY
 finesse/~~NhY
-fing/~~NhY
+fing/~~NhYr # +adverb reading (was noun-only)
 fingen/~~Vdifj # auto-added
 fingere/~~NhY
 fingern/~~rh # adverb gladly
@@ -26138,7 +26138,7 @@ flurs/~~NhY
 fluse/~~NhY
 flusen/~~Vdifj # auto-added
 fluss/~~MhXY
-flussab/~~NhY
+flussab/~~NhYr # +adverb reading (was noun-only)
 flusses/~~NhY
 flut/~~NXh
 fluten/~~Vdifj # auto-added
@@ -26199,7 +26199,7 @@ flügel/~~NhY
 flügeln/~~Vdifj # auto-added
 flügels/~~NhY
 flügen/~~Vdifj # auto-added
-flügge/~~NhY
+flügge/~~NhYJ # +adjective reading (was noun-only)
 flüggem/~~NhY
 flüggen/~~Vdifj # auto-added
 flügger/~~MhY
@@ -26253,7 +26253,7 @@ foppt/~~NXh
 fopptet/~~NhY
 fordere/~~NhY
 fordern/~~NhY
-fordert/~~NXh
+fordert/~~NXhV # +verb reading (was noun-only)
 fordre/~~NhY
 forelle/~~NhY
 foren/~~Vdifj # auto-added
@@ -26274,14 +26274,14 @@ formtet/~~NhY
 formung/~~FhY
 forsa/~~NhY
 forsche/~~NhY
-forscht/~~NXh
+forscht/~~NXhV # +verb reading (was noun-only)
 forst/~~NhY
 forste/~~NhY
 forsten/~~Vdifj # auto-added
 forstes/~~NhY
 forstet/~~NXh
 fort/~~hr
-fortan/~~NhY
+fortan/~~NhYr # +adverb reading (was noun-only)
 fortkam/~~NhY
 fortran/~~NhY
 forts/~~NhY # auto-added
@@ -26640,14 +26640,14 @@ fänger/~~MhY
 fängern/~~rh # adverb gladly
 fängers/~~NhY
 fängig/~~NXh
-fängt/~~NhY
+fängt/~~NhYV # +verb reading (was noun-only)
 färbe/~~NhY
 färb/~~Vcej # REPLACES färben
 färbens/~~NhY
 färbern/~~NhY
 färbers/~~NhY
 färbst/~~hV
-färbt/~~NXh
+färbt/~~NXhV # +verb reading (was noun-only)
 färbtet/~~NhY
 färbung/~~FhY
 färse/~~NhY
@@ -26695,13 +26695,13 @@ fügt/~~NXh
 fügtest/~~NhY
 fügtet/~~NhY
 fügung/~~FhY
-fühle/~~NhY
+fühle/~~NhYJ # +adjective reading (was noun-only)
 fühl/~~Vcej # REPLACES fühlen
 fühler/~~MhY
 fühlern/~~NhY
 fühlers/~~NhY
 fühlst/~~hV
-fühlt/~~NXh
+fühlt/~~NXhV # +verb reading (was noun-only)
 fühltet/~~NhY
 führe/~~NhY
 führ/~~Vcej # REPLACES führen
@@ -26720,7 +26720,7 @@ füllern/~~NhY
 füllers/~~NhY
 füllig/~~RJOQRSTUWqh
 füllst/~~hV
-füllt/~~NXh
+füllt/~~NXhV # +verb reading (was noun-only)
 fülltet/~~NhY
 füllung/~~FhY
 fündig/~~JOQRSTUWqh
@@ -27084,7 +27084,7 @@ gefeit/~~JOQRSTUWVgdifj
 gefeixt/~~JOQRSTUWVgdifj
 gefetzt/~~JOQRSTUWVgdifj
 gefickt/~~JOQRSTUWVgdifj
-gefiel/~~NXh
+gefiel/~~NXhV # +verb reading (was noun-only)
 gefielt/~~JOQRSTUWVgdifj
 gefiert/~~JOQRSTUWVgdifj
 gefilde/~~NhY
@@ -27419,7 +27419,7 @@ gelotet/~~JOQRSTUWVgadifj
 gelotst/~~JOQRSTUWVgdifj
 gels/~~NhY
 gelte/~~NhY
-geltend/~~NhY
+geltend/~~NhYJ # +adjective reading (was noun-only)
 geltens/~~NhY
 geltet/~~JOQRSTUWVgdifj
 geltung/~~FhY
@@ -27534,7 +27534,7 @@ genomen/~~Vdifj # auto-added
 genoms/~~NhY
 genoppt/~~JOQRSTUWVgdifj
 genormt/~~JOQRSTUWVgdifj
-genoss/~~NXh
+genoss/~~NXhr # +adverb reading (was noun-only)
 genosst/~~JOQRSTUWVgdifj
 genotyp/~~NXh # auto-added
 genozid/~~NXh
@@ -27544,7 +27544,7 @@ gens/~~NhY
 gentest/~~JOQRSTUWVgdifj
 gentile/~~NhY
 genua/~~Nbh
-genug/~~NhY
+genug/~~NhYr # +adverb reading (was noun-only)
 genuin/~~NhY
 genuine/~~NhY
 genullt/~~JOQRSTUWVgdifj
@@ -27616,7 +27616,7 @@ gepäcks/~~NhY
 gequakt/~~JOQRSTUWVgdifj
 gequert/~~JOQRSTUWVgdifj
 gequält/~~JOQRSTUWVgdifj
-gerade/~~NhY
+gerade/~~NhYJ # +adjective reading (was noun-only)
 geradem/~~NhY
 geraden/~~Vdifj # auto-added
 gerader/~~MhY
@@ -27674,7 +27674,7 @@ gerippt/~~JOQRSTUWVgdifj
 geritzt/~~JOQRSTUWVgdifj
 germane/~~NhY
 gern/~~rh # adverb gladly
-gerne/~~NhY
+gerne/~~NhYJ # +adjective reading (was noun-only)
 gernhat/~~JOQRSTUWVgdifj
 gerobbt/~~JOQRSTUWVgdifj
 gerockt/~~JOQRSTUWVgdifj
@@ -27809,7 +27809,7 @@ gesülzt/~~JOQRSTUWVgdifj
 gesüßt/~~JOQRSTUWVgdifj
 getaggt/~~JOQRSTUWVgdifj
 getagt/~~JOQRSTUWVgdifj
-getan/~~NhY
+getan/~~NhYr # +adverb reading (was noun-only)
 getane/~~NhY
 getanem/~~NhY
 getanen/~~Vdifj # auto-added
@@ -27914,7 +27914,7 @@ gewippt/~~JOQRSTUWVgdifj
 gewirkt/~~JOQRSTUWVgdifj
 gewirr/~~NhY
 gewirrs/~~NhY
-gewisse/~~NhY
+gewisse/~~NhYJ # +adjective reading (was noun-only)
 gewitzt/~~JOQRSTUWVgdifj
 gewoben/~~Vdifj # auto-added
 gewogen/~~Vdifj # auto-added
@@ -28119,7 +28119,7 @@ glattes/~~NhY
 glatze/~~NhY
 glatzen/~~Vdifj # auto-added
 glaub/~~Vcej # REPLACES glauben
-glaubt/~~NXh
+glaubt/~~NXhV # +verb reading (was noun-only)
 glaukom/~~NXh
 gleiche/~~NhY
 gleicht/~~NhY
@@ -28772,7 +28772,7 @@ haktest/~~NhY
 haktet/~~NhY
 halal/~~NhY
 halbdot/~~NhY
-halbe/~~NhY
+halbe/~~NhYJ # +adjective reading (was noun-only)
 halbem/~~NhY
 halben/~~Vdifj # auto-added
 halber/~~MhY
@@ -28781,7 +28781,7 @@ halbgar/~~NXh
 halbtot/~~NXh
 halde/~~NhY
 halden/~~Vdifj # auto-added
-half/~~NhY
+half/~~NhYr # +adverb reading (was noun-only)
 halfen/~~Vdifj # auto-added
 halfest/~~hV
 halft/~~NhY
@@ -29127,7 +29127,7 @@ heller/~~MhY
 hellere/~~NhY
 helles/~~NhY
 helling/~~MhY
-hellrot/~~NXh
+hellrot/~~NXhV # +verb reading (was noun-only)
 hellste/~~NhY
 hellt/~~NXh
 helltet/~~NhY
@@ -29164,14 +29164,14 @@ heptan/~~NhY
 heptans/~~NhY
 her/~~r # retag: adverb/verb, was noun (corpus-mined)
 herab/~~hr
-heran/~~NhY
+heran/~~NhYr # +adverb reading (was noun-only)
 herat/~~NhY
 herats/~~NhY
 herauf/~~hr
 heraus/~~hr
 herbat/~~NhY
 herbe/~~NhY
-herbei/~~NhY
+herbei/~~NhYr # +adverb reading (was noun-only)
 herbem/~~NhY
 herben/~~Vdifj # auto-added
 herber/~~MhY
@@ -29243,7 +29243,7 @@ hersehe/~~NhY
 herseht/~~NhY
 hersähe/~~NhY
 hertrug/~~NhY
-herum/~~Zah  # preposition um #  auto-added
+herum/~~Zahr # preposition um #  auto-added; +adverb reading (was noun-only)
 hervor/~~hr
 herwagt/~~NXh
 herwarf/~~NhY
@@ -29280,7 +29280,7 @@ heuchle/~~NhY
 heuer/~~MhY
 heuere/~~NhY
 heuern/~~NhY
-heuert/~~NXh
+heuert/~~NXhV # +verb reading (was noun-only)
 heul/~~Vcej # REPLACES heulen
 heult/~~NXh
 heultet/~~NhY
@@ -29314,18 +29314,18 @@ hiebt/~~NhY
 hielt/~~hV
 hielten/~~Vdifj # auto-added
 hieltet/~~hV # retag: verb form, was noun (corpus-mined)
-hieran/~~NhY
+hieran/~~NhYr # +adverb reading (was noun-only)
 hierauf/~~NhY
 hieraus/~~NhY
-hierbei/~~NhY
+hierbei/~~NhYr # +adverb reading (was noun-only)
 hierein/~~NhY
 hierfür/~~hr
 hierher/~~MhY
 hierhin/~~NhY
 hierin/~~NhY
-hiermit/~~NhY
+hiermit/~~NhYV # +verb reading (was noun-only)
 hierum/~~Zah  # preposition um #  auto-added
-hiervon/~~NhY
+hiervon/~~NhYr # +adverb reading (was noun-only)
 hiervor/~~NhY
 hierzu/~~hr
 hiesig/~~RJOQRSTUWqh
@@ -29345,7 +29345,7 @@ hilfe/~~NhY
 hilfen/~~Vdifj # auto-added
 hilflos/~~NXh
 hilfs/~~NhY
-hilft/~~NhY
+hilft/~~NhYV # +verb reading (was noun-only)
 himbeer/~~MhY
 himmele/~~NhY
 himmeln/~~Vdifj # auto-added
@@ -29372,7 +29372,7 @@ hinfiel/~~NXh
 hinflog/~~NhY
 hinfort/~~NhY
 hinfuhr/~~NhY
-hing/~~NhY
+hing/~~NhYr # +adverb reading (was noun-only)
 hingab/~~NXh
 hingabt/~~NhY
 hingang/~~NhY
@@ -29475,7 +29475,7 @@ hits/~~NhY
 hitze/~~NhY
 hitzige/~~NhY
 hoare/~~NhY
-hob/~~NhY
+hob/~~NhYr # +adverb reading (was noun-only)
 hobby/~~NhY
 hobbys/~~NhY
 hobele/~~NhY
@@ -29513,7 +29513,7 @@ hofftet/~~NhY
 hofiert/~~NXh
 hofnahe/~~NhY
 hofs/~~NhY
-hohe/~~NhY
+hohe/~~NhYr # +adverb reading (was noun-only)
 hoheit/~~FhY
 hoheits/~~NhY
 hohem/~~NhY
@@ -29868,7 +29868,7 @@ häutung/~~FhY
 höbe/~~NhY
 höben/~~Vdifj # auto-added
 höbet/~~NhY
-höchst/~~NhY
+höchst/~~NhYV # +verb reading (was noun-only)
 höchste/~~NhY
 höcker/~~MhY
 höckern/~~NhY
@@ -30109,7 +30109,7 @@ indium/~~Zah  # preposition um #  auto-added
 indiums/~~NhY
 indiz/~~NhY
 indizes/~~NhY
-indoor/~~NhY
+indoor/~~NhYr # +adverb reading (was noun-only)
 indoxyl/~~NXh
 indus/~~NhY
 inert/~~NXh
@@ -30148,11 +30148,11 @@ inland/~~NhY
 inlands/~~NhY
 inlay/~~NhY
 inlays/~~NhY
-inne/~~NhY
+inne/~~NhYr # +adverb reading (was noun-only)
 innehab/~~NXh
 innehat/~~NhY
 innen/~~Vdifj # auto-added
-innere/~~NhY
+innere/~~NhYJ # +adjective reading (was noun-only)
 innerei/~~NhY
 innerem/~~NhY
 inneren/~~Vdifj # auto-added
@@ -30305,7 +30305,7 @@ isozyms/~~NhY
 israel/~~NhY
 israeli/~~Nbh
 israels/~~NhY
-iss/~~NhY
+iss/~~NhYr # +adverb reading (was noun-only)
 isst/~~Vtdifj # verb (3rd person singular of essen)
 ist/~~Vtdifj # verb (3rd person singular of sein)
 Ist/~~NhY # noun meaning "current" or "existing"
@@ -30400,12 +30400,12 @@ jeden/~~4u # auto-added
 jeder/~~4h
 jedes/~~h4
 jedoch/~~h6
-jedwede/~~NhY
+jedwede/~~NhYJ # +adjective reading (was noun-only)
 jeep/~~NhY
 jeeps/~~NhY
 jeher/~~MhY
 jein/~~NhY
-jemals/~~NhY
+jemals/~~NhYr # +adverb reading (was noun-only)
 jemand/~~hI
 jemen/~~Vdifj # auto-added
 jemenit/~~NhY
@@ -30433,7 +30433,7 @@ jette/~~NhY
 jetten/~~Vdifj # auto-added
 jettend/~~NhYJ # +adjective reading (was noun-only)
 jettet/~~NXh
-jetzige/~~NhY
+jetzige/~~NhYJ # +adjective reading (was noun-only)
 jeweils/~~hr
 job/~~NhY # auto-added
 jobb/~~Vcej # REPLACES jobben
@@ -30485,7 +30485,7 @@ johl/~~Vcej # REPLACES johlen
 johlt/~~NXh
 johltet/~~NhY
 join/~~Vcej # REPLACES joinen
-joint/~~NXh
+joint/~~NXhV # +verb reading (was noun-only)
 joints/~~NhY
 joker/~~MhY
 jokern/~~NhY
@@ -30805,7 +30805,7 @@ kapselt/~~NXh
 kapsid/~~NXh
 kapsids/~~NhY
 kapsle/~~NhY
-kaputt/~~NXh
+kaputt/~~NXhV # +verb reading (was noun-only)
 kapuze/~~NhY
 kapuzen/~~Vdifj # auto-added
 karaffe/~~NhY
@@ -30820,7 +30820,7 @@ karbon/~~NhY
 karbons/~~NhY
 kardone/~~NhY
 karenz/~~NhY
-karge/~~NhY
+karge/~~NhYJ # +adjective reading (was noun-only)
 kargem/~~NhY
 kargen/~~Vdifj # auto-added
 karger/~~MhY
@@ -30930,12 +30930,12 @@ kauert/~~NXh
 kauf/~~Vcej # REPLACES kaufen
 kaufes/~~NhY
 kaufs/~~NhY
-kauft/~~NXh
+kauft/~~NXhV # +verb reading (was noun-only)
 kauftet/~~NhY
 kaum/~~r #  auto-added
 kaure/~~NhY
 kauri/~~Nbh
-kausale/~~NhY
+kausale/~~NhYJ # +adjective reading (was noun-only)
 kaut/~~NXh
 kautest/~~NhY
 kautet/~~NhY
@@ -30982,7 +30982,7 @@ kehrens/~~NhY
 kehrer/~~MhY
 kehrern/~~NhY
 kehrers/~~NhY
-kehrt/~~NXh
+kehrt/~~NXhV # +verb reading (was noun-only)
 kehrtet/~~NhY
 kehrung/~~FhY
 keif/~~Vcej # REPLACES keifen
@@ -30995,7 +30995,7 @@ keilers/~~NhY
 keilit/~~NhY
 keilits/~~NhY
 keils/~~NhY
-keilt/~~NXh
+keilt/~~NXhV # +verb reading (was noun-only)
 keiltet/~~NhY
 keim/~~Vcej # REPLACES keimen
 keimens/~~NhY
@@ -31307,7 +31307,7 @@ klause/~~NhY
 klausel/~~NhY
 klausen/~~Vdifj # auto-added
 klausur/~~NhY
-klaut/~~NXh
+klaut/~~NXhV # +verb reading (was noun-only)
 klautet/~~NhY
 klavier/~~MhY
 kleb/~~Vcej # REPLACES kleben
@@ -31349,7 +31349,7 @@ klezmer/~~MhY
 klick/~~Vej # REPLACES klicken
 klickre/~~NhY
 klicks/~~NhY
-klickt/~~NXh
+klickt/~~NXhV # +verb reading (was noun-only)
 klient/~~NhY
 kliff/~~NXh
 kliffen/~~Vdifj # auto-added
@@ -31834,7 +31834,7 @@ koronar/~~NXh
 korps/~~NhY
 korpus/~~NhY
 korrekt/~~JOQRSTUWqh # retag: adjective, was noun/verb (corpus-mined)
-korrupt/~~NXh
+korrupt/~~NXhV # +verb reading (was noun-only)
 korsage/~~NhY
 korsak/~~NXh
 korsar/~~NhY
@@ -32116,7 +32116,7 @@ kröne/~~NhY
 krön/~~Vcej # REPLACES krönen
 krönens/~~NhY
 krönst/~~hV
-krönt/~~NXh
+krönt/~~NXhV # +verb reading (was noun-only)
 kröntet/~~NhY
 krönung/~~FhY
 kröpfe/~~NhY
@@ -32365,7 +32365,7 @@ könig/~~NXh
 königen/~~Vdifj # auto-added
 königin/~~NhY
 königs/~~NhY
-könne/~~NhY
+könne/~~NhYJ # +adjective reading (was noun-only)
 könnens/~~NhY
 könner/~~MhY
 könnern/~~NhY
@@ -32430,7 +32430,7 @@ kümmel/~~NhY
 kümmels/~~NhY
 kümmere/~~NhY
 kümmern/~~NhY
-kümmert/~~NXh
+kümmert/~~NXhV # +verb reading (was noun-only)
 kümmre/~~NhY
 künde/~~NhY
 künd/~~Vcj # REPLACES künden
@@ -32459,7 +32459,7 @@ kürz/~~Vcej # REPLACES kürzen
 kürzens/~~NhY
 kürzer/~~NJOQRSTUWq
 kürzere/~~NhYJ # +adjective reading (was noun-only)
-kürzt/~~NXh
+kürzt/~~NXhV # +verb reading (was noun-only)
 kürztet/~~NhY
 kürzung/~~FhY
 küss/~~NXh
@@ -32513,7 +32513,7 @@ lachs/~~NXh
 lachsei/~~NhY
 lachsen/~~Vdifj # auto-added
 lachses/~~NhY
-lacht/~~NXh
+lacht/~~NXhV # +verb reading (was noun-only)
 lach/~~Vcei # REPLACES lachten
 lachtet/~~NhY
 lack/~~NXh
@@ -32592,7 +32592,7 @@ lamee/~~NhY
 lamelle/~~NhY
 lamento/~~NhY
 lametta/~~NhY
-laminar/~~NXh
+laminar/~~NXhr # +adverb reading (was noun-only)
 laminat/~~NXh
 lamine/~~NhY
 laminen/~~Vdifj # auto-added
@@ -32864,7 +32864,7 @@ lehmes/~~NhY
 lehmig/~~RJOQRSTUWqh
 lehms/~~NhY
 lehn/~~Vcej # REPLACES lehnen
-lehnt/~~NXh
+lehnt/~~NXhV # +verb reading (was noun-only)
 lehntet/~~NhY
 lehr/~~Vcej # REPLACES lehren
 lehrens/~~NhY
@@ -32872,7 +32872,7 @@ lehrer/~~MhY
 lehrern/~~NhY
 lehrers/~~NhY
 lehrling/~~MhiY
-lehrt/~~NXh
+lehrt/~~NXhV # +verb reading (was noun-only)
 lehrtet/~~NhY
 leibe/~~NhY
 leiber/~~MhY
@@ -32946,7 +32946,7 @@ lenkens/~~NhY
 lenker/~~MhY
 lenkern/~~NhY
 lenkers/~~NhY
-lenkt/~~NXh
+lenkt/~~NXhV # +verb reading (was noun-only)
 lenktet/~~NhY
 lenkung/~~FhY
 lenz/~~NXh
@@ -33065,7 +33065,7 @@ liefe/~~NhY
 liefen/~~Vdifj # auto-added
 liefere/~~NhY
 liefern/~~NhY
-liefert/~~NXh
+liefert/~~NXhV # +verb reading (was noun-only)
 liefre/~~NhY
 lieft/~~NhY
 lieg/~~NXh
@@ -33139,7 +33139,7 @@ lindre/~~NhY
 lineage/~~NhY
 lineal/~~NXh
 lineals/~~NhY
-linear/~~NXh
+linear/~~NXhr # +adverb reading (was noun-only)
 linie/~~NhY
 linien/~~Vdifj # auto-added
 liniert/~~NXh
@@ -33147,7 +33147,7 @@ linkem/~~NhY
 link/~~Vceji # REPLACES linken
 linker/~~MhY
 linkes/~~NhY
-links/~~NhY
+links/~~NhYr # +adverb reading (was noun-only)
 linksum/~~Zah  # preposition um #  auto-added
 linkt/~~NXh
 linktet/~~NhY
@@ -33191,13 +33191,13 @@ litern/~~NhY
 liters/~~NhY
 lithium/~~Zah  # preposition um #  auto-added
 litowsk/~~NhY
-litt/~~NXh
+litt/~~NXhr # +adverb reading (was noun-only)
 litten/~~Vdifj # auto-added
 littest/~~hV
 littet/~~NhY
 litze/~~NhY
 litzen/~~Vdifj # auto-added
-live/~~NhY
+live/~~NhYr # +adverb reading (was noun-only)
 liveact/~~NhY
 livide/~~NhY
 lividem/~~NhY
@@ -33218,7 +33218,7 @@ lobes/~~NhY
 loblied/~~NhY
 lobs/~~NhY
 lobsang/~~NhY
-lobt/~~NXh
+lobt/~~NXhr # +adverb reading (was noun-only)
 lobtest/~~NhY
 lobtet/~~NhY
 lobulär/~~NXh
@@ -33325,7 +33325,7 @@ losmuss/~~Vtdifj # 3rd person singular of müssen
 losrast/~~NhY
 losriss/~~NXh
 lossagt/~~NXh
-lost/~~NhY
+lost/~~NhYV # +verb reading (was noun-only)
 loste/~~NhY
 lostet/~~NhY
 lostrat/~~NhY
@@ -33613,7 +33613,7 @@ lügner/~~MhY
 lügnern/~~NhY
 lügners/~~NhY
 lügst/~~hV
-lügt/~~NhY
+lügt/~~NhYV # +verb reading (was noun-only)
 lümmele/~~NhY
 lümmeln/~~Vdifj # auto-added
 lümmels/~~NhY
@@ -33870,7 +33870,7 @@ mariner/~~MhY
 marines/~~NhY
 mariske/~~NhY
 maritim/~~JOQRSTUWq # fixed from noun to adjective
-markant/~~NXh
+markant/~~NXhV # +verb reading (was noun-only)
 marke/~~NhY
 marken/~~Vdifj # auto-added
 markenname/~~MhY
@@ -33953,7 +33953,7 @@ matrone/~~NhY
 matrose/~~NhY
 matsche/~~NhY
 matscht/~~NXh
-matt/~~NXh
+matt/~~NXhr # +adverb reading (was noun-only)
 mattem/~~NhY
 matten/~~Vdifj # auto-added
 matter/~~MhY
@@ -34264,7 +34264,7 @@ milbe/~~NhY
 milben/~~Vdifj # auto-added
 milch/~~NhY
 milchig/~~RJOQRSTUWqh
-milde/~~NhY
+milde/~~NhYJ # +adjective reading (was noun-only)
 mildem/~~NhY
 milden/~~Vdifj # auto-added
 mildern/~~NhYV # +verb reading (was noun-only)
@@ -34331,7 +34331,7 @@ mische/~~NhY
 mischen/~~XZ #  auto-added
 mischer/~~MhY
 mischst/~~NhY
-mischt/~~NXh
+mischt/~~NXhV # +verb reading (was noun-only)
 misere/~~NhY
 miseren/~~Vdifj # auto-added
 misogyn/~~NhY
@@ -34377,7 +34377,7 @@ mitgebe/~~NhY
 mitgebt/~~NhY
 mitgehe/~~NhY
 mitgeht/~~NhY
-mitgibt/~~NhY
+mitgibt/~~NhYV # +verb reading (was noun-only)
 mitging/~~NhY
 mitgäbe/~~NhY
 mithabe/~~NhY
@@ -34469,7 +34469,7 @@ mobbers/~~NhY
 mobbing/~~NhY
 mobbt/~~NXh
 mobbtet/~~NhY
-mobile/~~NhY
+mobile/~~NhYJ # +adjective reading (was noun-only)
 mobilem/~~NhY
 mobilen/~~Vdifj # auto-added
 mobiler/~~MhY
@@ -34584,7 +34584,7 @@ monds/~~NhY
 mondän/~~NhY
 mondäne/~~NhY
 moneten/~~Vdifj # auto-added
-monetär/~~NXh
+monetär/~~NXhJ # +adjective reading (was noun-only)
 mongole/~~NhY
 moniert/~~NXh
 monitor/~~NXh
@@ -34989,7 +34989,7 @@ möwen/~~Vdifj # auto-added
 möwenei/~~Nbh
 mücke/~~NhY
 mücken/~~Vdifj # auto-added
-müde/~~NhY
+müde/~~NhYr # +adverb reading (was noun-only)
 müdem/~~NhY
 müden/~~Vdifj # auto-added
 müder/~~MhY
@@ -35037,7 +35037,7 @@ mündens/~~NhY
 münder/~~MhY
 mündern/~~NhY
 mündet/~~NXh
-mündig/~~NXh
+mündig/~~NXhJ # +adjective reading (was noun-only)
 mündung/~~FhY
 münster/~~MhY
 münz/~~NXh
@@ -35046,7 +35046,7 @@ münzer/~~MhY
 münzlos/~~NXh
 münzt/~~NXh
 münztet/~~NhY
-mürbe/~~NhY
+mürbe/~~NhYJ # +adjective reading (was noun-only)
 mürbem/~~NhY
 mürben/~~Vdifj # auto-added
 mürber/~~MhY
@@ -35252,7 +35252,7 @@ neigens/~~NhY
 neigt/~~NXh
 neigtet/~~NhY
 neigung/~~FhY
-nein/~~NhY
+nein/~~NhYr # +adverb reading (was noun-only)
 neins/~~NhY
 neiße/~~NhY
 nekrose/~~NhY
@@ -35359,7 +35359,7 @@ nibbelt/~~NXh
 nibble/~~NhY
 nichte/~~NhY
 nichtig/~~RJOQRSTUWqh
-nichts/~~NhY
+nichts/~~NhYr # +adverb reading (was noun-only)
 nickel/~~NhY
 nick/~~Vcej # REPLACES nicken
 nickens/~~NhY
@@ -35368,10 +35368,10 @@ nicktet/~~NhY
 nicotin/~~NhY
 nie/~~hr
 nieder/~~MhY
-niedere/~~NhY
+niedere/~~NhYJ # +adjective reading (was noun-only)
 niedrig/~~JOQRSTUWq #adjective and noun
 niemals/~~hr
-niemand/~~NhY
+niemand/~~NhYr # +adverb reading (was noun-only)
 niere/~~NhY
 nieren/~~Vdifj # auto-added
 niesele/~~NhY
@@ -35548,7 +35548,7 @@ nummert/~~NXh
 nummre/~~NhY
 nun/~~hr
 nunavut/~~NhY
-nunmehr/~~NhY
+nunmehr/~~NhYr # +adverb reading (was noun-only)
 nurmehr/~~NhY
 nuschle/~~NhY
 nuss/~~NhY
@@ -35572,7 +35572,7 @@ nylon/~~NhY
 nylons/~~NhY
 nymphe/~~NhY
 nymphen/~~Vdifj # auto-added
-nächst/~~NhY
+nächst/~~NhYV # +verb reading (was noun-only)
 nächste/~~NhY
 nächte/~~NhY
 nächten/~~Vdifj # auto-added
@@ -35646,7 +35646,7 @@ nüster/~~MhY
 nüstern/~~NhY
 nütze/~~NhY
 nütz/~~Vcej # REPLACES nützen
-nützt/~~NXh
+nützt/~~NXhV # +verb reading (was noun-only)
 nütztet/~~NhY
 oase/~~NhY
 oasen/~~Vdifj # auto-added
@@ -35689,7 +35689,7 @@ oblegen/~~Vdifj # auto-added
 obleute/~~NhY
 obliege/~~NhY
 obliegt/~~NhYV # +verb reading (was noun-only)
-obligat/~~NXh
+obligat/~~NXhV # +verb reading (was noun-only)
 obmann/~~NhY
 obmanns/~~NhY
 oboe/~~NhY
@@ -35768,7 +35768,7 @@ olefin/~~NhY
 olefine/~~NhY
 olefins/~~NhY
 oleftal/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
-oliv/~~NXh
+oliv/~~NXhr # +adverb reading (was noun-only)
 oliven/~~Vdifj # auto-added
 olivin/~~NhY
 olivine/~~NhY
@@ -35795,7 +35795,7 @@ onkel/~~NhY
 onkeln/~~Vdifj # auto-added
 onkels/~~NhY
 onkogen/~~Vdifj # auto-added
-online/~~NhY
+online/~~NhYJ # +adjective reading (was noun-only)
 onshore/~~NhY
 onyx/~~NXh
 onyxen/~~Vdifj # auto-added
@@ -35838,7 +35838,7 @@ optimum/~~Zah  # preposition um #  auto-added
 option/~~NhY
 options/~~NhY
 opulent/~~NXh
-opus/~~NhY
+opus/~~NhYr # +adverb reading (was noun-only)
 orakele/~~NhY
 orakeln/~~Vdifj # auto-added
 orakels/~~NhY
@@ -35946,7 +35946,7 @@ otalgie/~~NhY
 otter/~~MhY
 ottern/~~NhY
 otters/~~NhY
-out/~~NXh
+out/~~NXhr # +adverb reading (was noun-only)
 outdoor/~~NhY
 outen/~~Vdifj # auto-added
 outend/~~NhYJ # +adjective reading (was noun-only)
@@ -36015,7 +36015,7 @@ packer/~~MhY
 packern/~~NhY
 packers/~~NhY
 packs/~~NhY
-packt/~~NXh
+packt/~~NXhV # +verb reading (was noun-only)
 packtet/~~NhY
 packung/~~FhY
 paddele/~~NhY
@@ -36115,7 +36115,7 @@ parade/~~NhY
 paraden/~~Vdifj # auto-added
 paradox/~~NXh
 parasit/~~NhY
-parat/~~NhY
+parat/~~NhYV # +verb reading (was noun-only)
 pardon/~~NhY
 parfait/~~NhY
 parfum/~~Zah  # preposition um #  auto-added
@@ -36171,7 +36171,7 @@ passier/~~MhY
 passion/~~NhiY
 passiva/~~NhY
 passive/~~NhY
-passt/~~NhY
+passt/~~NhYV # +verb reading (was noun-only)
 passte/~~NhY
 passtet/~~NhY
 passung/~~FhY
@@ -36669,7 +36669,7 @@ planke/~~NhY
 planken/~~Vdifj # auto-added
 planlos/~~NXh
 plans/~~NhY
-plant/~~NXh
+plant/~~NXhV # +verb reading (was noun-only)
 plantet/~~NhY
 planung/~~FhY
 plapper/~~MhY
@@ -36941,9 +36941,9 @@ poster/~~MhY
 postern/~~NhY
 posters/~~NhY
 postet/~~NXh
-posthum/~~ZX # auto-added
+posthum/~~ZXr # auto-added; +adverb reading (was noun-only)
 posting/~~NhY
-postum/~~ZX # auto-added
+postum/~~ZXr # auto-added; +adverb reading (was noun-only)
 potent/~~NXh
 potenz/~~NhY
 potsdam/~~NhY
@@ -36990,7 +36990,7 @@ pratzen/~~Vdifj # auto-added
 praxen/~~Vdifj # auto-added
 praxis/~~NhY
 predigt/~~NXh
-preis/~~NXh
+preis/~~NXhr # +adverb reading (was noun-only)
 preisen/~~Vdifj # auto-added
 preises/~~NhY
 preist/~~NhY
@@ -37045,7 +37045,7 @@ prise/~~NhY
 prisen/~~Vdifj # auto-added
 prisma/~~Nbh
 prismen/~~Vdifj # auto-added
-privat/~~NXh
+privat/~~NXhV # +verb reading (was noun-only)
 pro/~~hP
 proband/~~NhY
 probat/~~NXh
@@ -37122,7 +37122,7 @@ prämie/~~NhY
 prämien/~~Vdifj # auto-added
 prärie/~~NhY
 prärien/~~Vdifj # auto-added
-präsent/~~NXh
+präsent/~~NXhV # +verb reading (was noun-only)
 präsenz/~~NhY
 präzis/~~NXh
 prüde/~~NhY
@@ -37348,7 +37348,7 @@ püriert/~~NXh
 pütt/~~NhY
 pütts/~~NhY
 qmm/~~NhY
-qua/~~NhY
+qua/~~NhYr # +adverb reading (was noun-only)
 quaddel/~~NhY
 quader/~~MhY
 quadern/~~NhY
@@ -37551,7 +37551,7 @@ rampen/~~Vdifj # auto-added
 ramsche/~~NhY
 ramschs/~~NhY
 ramscht/~~NXh
-ran/~~NhY
+ran/~~NhYr # +adverb reading (was noun-only)
 ranch/~~NhY
 rancher/~~MhY
 rand/~~NhY
@@ -37633,7 +37633,7 @@ rarsten/~~Vdifj # auto-added
 rarster/~~MhY
 rarstes/~~NhY
 rasa/~~NhY
-rasant/~~NXh
+rasant/~~NXhV # +verb reading (was noun-only)
 rasanz/~~NhY
 rasche/~~NhY
 raschel/~~NXh
@@ -37803,7 +37803,7 @@ rech/~~Vce # REPLACES rechten
 rechter/~~MhY
 rechtes/~~NhY
 rechtet/~~NhY
-rechts/~~NhY
+rechts/~~NhYr # +adverb reading (was noun-only)
 reck/~~NXh
 reck/~~Vcej # REPLACES recken
 reckt/~~NXh
@@ -37951,7 +37951,7 @@ reisens/~~NhY
 reises/~~NhY
 reisig/~~NhY
 reisigs/~~NhY
-reist/~~NhY
+reist/~~NhYV # +verb reading (was noun-only)
 reiste/~~NhY
 reistet/~~NhY
 reit/~~NXh
@@ -38152,8 +38152,8 @@ rieche/~~NhY
 riechen/~~XZ #  auto-added
 riecher/~~MhY
 riechst/~~NhY
-riecht/~~NhY
-rief/~~NXh
+riecht/~~NhYV # +verb reading (was noun-only)
+rief/~~NXhr # +adverb reading (was noun-only)
 riefen/~~Vdifj # auto-added
 riefest/~~hV
 rieft/~~NhY
@@ -38490,7 +38490,7 @@ ruhms/~~NhY
 ruhr/~~Nah
 ruhrgau/~~Nbh
 ruhrtal/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
-ruht/~~NXh
+ruht/~~NXhV # +verb reading (was noun-only)
 ruhtest/~~NhY
 ruhtet/~~NhY
 ruin/~~NhY
@@ -38638,7 +38638,7 @@ räum/~~ZX # auto-added
 räum/~~Vcej # REPLACES räumen
 räumens/~~NhY
 räumst/~~hV
-räumt/~~NXh
+räumt/~~NXhV # +verb reading (was noun-only)
 räumtet/~~NhY
 räumung/~~FhY
 räumweg/~~NXh
@@ -38830,7 +38830,7 @@ saisons/~~NhY
 saite/~~NhY
 saiten/~~Vdifj # auto-added
 sakko/~~Nbh
-sakral/~~NXh
+sakral/~~NXhJ # +adjective reading (was noun-only)
 salami/~~NhY
 salat/~~NXh
 salaten/~~Vdifj # auto-added
@@ -38913,12 +38913,12 @@ sanftem/~~NhY
 sanften/~~Vdifj # auto-added
 sanfter/~~MhY
 sanftes/~~NhY
-sang/~~NhY
+sang/~~NhYr # +adverb reading (was noun-only)
 sangen/~~Vdifj # auto-added
 sangt/~~NhY
 saniert/~~NXh
 sanitär/~~NXh
-sank/~~NhY
+sank/~~NhYr # +adverb reading (was noun-only)
 sanken/~~Vdifj # auto-added
 sankest/~~hV
 sankt/~~NhY
@@ -38948,7 +38948,7 @@ satin/~~NhY
 satins/~~NhY
 satire/~~NhY
 satiren/~~Vdifj # auto-added
-satt/~~NXh
+satt/~~NXhr # +adverb reading (was noun-only)
 sattele/~~NhY
 satteln/~~Vdifj # auto-added
 sattels/~~NhY
@@ -39001,7 +39001,7 @@ saumes/~~NhY
 saums/~~NhY
 sauna/~~Nbh
 saunen/~~Vdifj # auto-added
-saure/~~NhY
+saure/~~NhYJ # +adjective reading (was noun-only)
 saurem/~~NhY
 sauren/~~Vdifj # auto-added
 saurer/~~MhY
@@ -39017,7 +39017,7 @@ sautet/~~NhY
 sauwohl/~~NhY
 savanne/~~NhY
 saxofon/~~NhY
-saß/~~NhY
+saß/~~NhYr # +adverb reading (was noun-only)
 saßen/~~Vdifj # auto-added
 saßest/~~hV
 saßt/~~NhY
@@ -39039,7 +39039,7 @@ schaf/~~NXah
 schaf/~~Veji # REPLACES schafen
 schafes/~~NhY
 schaff/~~NXh
-schafft/~~NXh
+schafft/~~NXhV # +verb reading (was noun-only)
 schafs/~~NhY
 schaft/~~FXh
 schafts/~~NhY
@@ -39080,7 +39080,7 @@ scheel/~~NXh
 scheibe/~~NhY
 scheich/~~NXhY
 scheide/~~NhY
-schein/~~NhY
+schein/~~NhYr # +adverb reading (was noun-only)
 scheine/~~NhY
 scheins/~~NhY
 scheint/~~hV
@@ -39095,7 +39095,7 @@ schelte/~~NhY
 schema/~~Nbh
 schemel/~~NhY
 schemen/~~Vdifj # auto-added
-schenkt/~~NXh
+schenkt/~~NXhV # +verb reading (was noun-only)
 scherbe/~~NhY
 scher/~~Vej # REPLACES scheren
 scherer/~~MhY
@@ -39113,10 +39113,10 @@ scheut/~~NXh
 schi/~~Nbh
 schibob/~~NhY
 schicht/~~NXh
-schickt/~~NXh
+schickt/~~NXhV # +verb reading (was noun-only)
 schiebe/~~NhY
 schiebt/~~NhY
-schied/~~NhY
+schied/~~NhYr # +adverb reading (was noun-only)
 schieds/~~NhY
 schiefe/~~NhY
 schielt/~~NXh
@@ -39166,7 +39166,7 @@ schlitz/~~NXh
 schloss/~~hV
 schlot/~~NXh
 schlots/~~NhY
-schlug/~~NhY
+schlug/~~NhYr # +adverb reading (was noun-only)
 schlugt/~~NhY
 schlund/~~NhY
 schlupf/~~Nah
@@ -39209,7 +39209,7 @@ schnurz/~~NhY
 schnöd/~~NXh
 schnür/~~NXh
 schnürt/~~NXh
-schob/~~NhY
+schob/~~NhYr # +adverb reading (was noun-only)
 schoben/~~Vdifj # auto-added
 schober/~~MhY
 schobt/~~NhY
@@ -39259,7 +39259,7 @@ schuf/~~hV
 schuft/~~NXh
 schuh/~~NXh
 schuhs/~~NhY
-schuld/~~NXh
+schuld/~~NXhr # +adverb reading (was noun-only)
 schult/~~NXh
 schund/~~NhY
 schur/~~NhY
@@ -39272,7 +39272,7 @@ schwach/~~JOQRSTUWq
 schwan/~~NhY
 schwarz/~~JOQRSTUWq #adjective and noun
 schwester/~~FhY
-schwor/~~NhY
+schwor/~~NhYr # +adverb reading (was noun-only)
 schwur/~~NhY
 schäle/~~NhY
 schält/~~NXh
@@ -39586,8 +39586,8 @@ sockel/~~NhY
 socken/~~Vdifj # auto-added
 socket/~~NhY
 soda/~~Nbh
-sodann/~~NhY
-sodass/~~NhY
+sodann/~~NhYr # +adverb reading (was noun-only)
+sodass/~~NhYr # +adverb reading (was noun-only)
 sodom/~~NhY
 soeben/~~Vdifj # auto-added
 sofa/~~Nbh
@@ -39628,7 +39628,7 @@ solds/~~NhY
 sole/~~NhY
 solei/~~Nbh
 soli/~~NhY
-solide/~~NhY
+solide/~~NhYJ # +adjective reading (was noun-only)
 soll/~~Vh  # 3rd person singular of sollen
 sollt/~~NXh
 solo/~~Nbh
@@ -39655,7 +39655,7 @@ sorben/~~Vdifj # auto-added
 sorbet/~~NhY
 sorbit/~~NhY
 sorg/~~Vcej # REPLACES sorgen
-sorgt/~~NXh
+sorgt/~~NXhV # +verb reading (was noun-only)
 sorry/~~NhY
 sorte/~~NhY
 sorten/~~Vdifj # auto-added
@@ -39695,7 +39695,7 @@ spar/~~NXh
 spar/~~Vcej # REPLACES sparen
 sparer/~~MhY
 sparre/~~NhY
-spart/~~NXh # auto-added
+spart/~~NXhV # auto-added; +verb reading (was noun-only)
 sparta/~~Nbh
 spat/~~NXah
 spatel/~~NhY
@@ -39813,7 +39813,7 @@ spähst/~~hV
 späht/~~NXh
 späne/~~NhY
 spänen/~~Vdifj # auto-added
-spät/~~NXh
+spät/~~NXhr # +adverb reading (was noun-only)
 spätem/~~NhY
 späten/~~Vdifj # auto-added
 spätes/~~NhY
@@ -39827,7 +39827,7 @@ spült/~~NXh
 spür/~~NXh
 spür/~~Vcej # REPLACES spüren
 spürst/~~hV
-spürt/~~NXh
+spürt/~~NXhV # +verb reading (was noun-only)
 squash/~~NhY
 squaw/~~NhY
 squaws/~~NhY
@@ -39867,11 +39867,11 @@ stanzt/~~NXh
 stapft/~~NXh
 staple/~~NhY
 star/~~NXh
-starb/~~NhY
+starb/~~NhYr # +adverb reading (was noun-only)
 starbt/~~NhY
 star/~~Vej # REPLACES staren
 stark/~~JOQRSTUWq
-starrt/~~NXh
+starrt/~~NXhV # +verb reading (was noun-only)
 stars/~~NhY
 start/~~NXh # auto-added
 starts/~~NhY
@@ -39907,7 +39907,7 @@ stehlt/~~NhY
 steift/~~NXh
 steige/~~NhY
 steigs/~~NhY
-steigt/~~NhY
+steigt/~~NhYV # +verb reading (was noun-only)
 steile/~~NhY
 stein/~~NhY
 steine/~~NhY
@@ -39935,7 +39935,7 @@ stetem/~~NhY
 steten/~~Vdifj # auto-added
 steter/~~MhY
 stetes/~~NhY
-stetig/~~NXh
+stetig/~~NXhJ # +adjective reading (was noun-only)
 stets/~~hr
 steure/~~NhY
 stiche/~~NhY
@@ -39965,7 +39965,7 @@ stink/~~NXh
 stinkt/~~NhY
 stippt/~~NXh
 stirb/~~NhY
-stirbt/~~NhY
+stirbt/~~NhYV # +verb reading (was noun-only)
 stirn/~~NhY
 stirne/~~NhY
 stob/~~Nah
@@ -39979,7 +39979,7 @@ stola/~~NhY
 stolz/~~NJOQRSTUWq #adjective and noun
 stopft/~~NXh
 stopps/~~NhY
-stoppt/~~NXh
+stoppt/~~NXhV # +verb reading (was noun-only)
 storch/~~NhY
 storno/~~NhY
 story/~~NhY
@@ -40001,7 +40001,7 @@ strebt/~~NXhV # +verb reading (was noun-only)
 streit/~~NXh
 stress/~~NXh
 streut/~~NXh
-strikt/~~NXh
+strikt/~~NXhV # +verb reading (was noun-only)
 string/~~NhY
 strip/~~NhY
 stripp/~~NXh
@@ -40095,7 +40095,7 @@ stürzt/~~NXh
 stütz/~~NXh
 stützt/~~NXh
 sub/~~NhY
-sublim/~~NXh
+sublim/~~NXhr # +adverb reading (was noun-only)
 suchen/~~XZV # auto-added; +verb reading (was noun-only)
 sucher/~~MhY
 sucht/~~hV
@@ -40537,7 +40537,7 @@ therme/~~NhY
 thermo/~~NhY
 these/~~NhY
 thesen/~~Vdifj # auto-added
-theta/~~NhY
+theta/~~NhYr # +adverb reading (was noun-only)
 thiol/~~NXh
 thiols/~~NhY
 thor/~~NhY
@@ -40690,7 +40690,7 @@ toskin/~~NhY
 tost/~~NhY
 toste/~~NhY
 tostet/~~NhY
-tot/~~NXh
+tot/~~NXhr # +adverb reading (was noun-only)
 total/~~NXh
 totem/~~NhY
 toten/~~Vdifj # auto-added
@@ -40718,7 +40718,7 @@ trackt/~~NXh
 trade/~~NhY
 traden/~~Vdifj # auto-added
 tradet/~~NXh
-traf/~~NhY
+traf/~~NhYr # +adverb reading (was noun-only)
 trafen/~~Vdifj # auto-added
 trafo/~~Nbh
 traft/~~NhY
@@ -40764,7 +40764,7 @@ treffe/~~NhY
 treffs/~~NhY
 trefft/~~NhY
 treibe/~~NhY
-treibt/~~NhY
+treibt/~~NhYV # +verb reading (was noun-only)
 trekkt/~~NXh
 trend/~~NhY
 trende/~~NhY
@@ -40812,7 +40812,7 @@ triple/~~NhY
 trips/~~NhY
 trist/~~NhY
 triste/~~NhY
-tritt/~~NXh
+tritt/~~NXhV # +verb reading (was noun-only)
 tritts/~~NhY
 troff/~~NhY
 trog/~~NhY
@@ -40955,7 +40955,7 @@ turtel/~~NXh
 turtle/~~NhY
 tusch/~~NXhY
 tuscht/~~NXh
-tut/~~NXh
+tut/~~NXhr # +adverb reading (was noun-only)
 tu/~~Vce # REPLACES tuten
 tutend/~~NhYJ # +adjective reading (was noun-only)
 tutest/~~hV
@@ -41218,7 +41218,7 @@ unsrig/~~RJOQRSTUWqh
 unstet/~~NXh
 untat/~~NhY
 unten/~~Vdifj # auto-added
-untere/~~NhY
+untere/~~NhYJ # +adjective reading (was noun-only)
 unterm/~~NhY
 untern/~~NhY
 unters/~~hP4
@@ -41313,7 +41313,7 @@ vati/~~Nbh
 vegan/~~NhY
 vegane/~~NhY
 vektor/~~NhY
-velar/~~NXh
+velar/~~NXhr # +adverb reading (was noun-only)
 velin/~~NhY
 velins/~~NhY
 vene/~~NhY
@@ -41326,11 +41326,11 @@ verbat/~~NhY
 verben/~~Vdifj # auto-added
 verbis/~~NhY
 verbog/~~NhY
-verbot/~~NXh
+verbot/~~NXhV # +verb reading (was noun-only)
 verbs/~~NhY
 verbum/~~Zah  # preposition um #  auto-added
 verdun/~~NhY
-vergab/~~NXh
+vergab/~~NXhV # +verb reading (was noun-only)
 vergaß/~~NhY
 vergor/~~NhY
 verhob/~~NhY
@@ -41342,7 +41342,7 @@ vermin/~~NhY
 verona/~~Nbh
 vers/~~NXh
 versa/~~NhY
-versah/~~NhY
+versah/~~NhYV # +verb reading (was noun-only)
 vers/~~Vcj # REPLACES versen
 verses/~~NhY
 verstehen/~~Vdifj # auto-added
@@ -41360,7 +41360,7 @@ veröde/~~NhY
 veröle/~~NhY
 verölt/~~hV # retag: finite verb form, was noun (corpus-mined)
 verübe/~~NhY
-verübt/~~NXh
+verübt/~~NXhV # +verb reading (was noun-only)
 vespa/~~Nbh
 vesper/~~MhY
 vespre/~~NhY
@@ -41446,7 +41446,7 @@ Vorwissen/~~Nh # prior knowledge, from hunspell
 vorab/~~r # retag: adverb, was noun (corpus-mined)
 voran/~~hr
 vorauf/~~NhY
-voraus/~~NhY
+voraus/~~NhYr # +adverb reading (was noun-only)
 vorbei/~~hr
 vordem/~~NhY
 vorder/~~MhY
@@ -41462,7 +41462,7 @@ vorlud/~~NhY
 vorm/~~NhY
 vorne/~~NhYr # +adverb reading (was noun-only)
 vors/~~NhY
-vorsah/~~NhY
+vorsah/~~NhYV # +verb reading (was noun-only)
 vorsaß/~~NhY
 vortex/~~NXh
 vorweg/~~NhY
@@ -41580,12 +41580,12 @@ wanze/~~NhY
 wanzen/~~Vdifj # auto-added
 wappen/~~Vdifj # auto-added
 wappne/~~NhY
-warb/~~NhY
+warb/~~NhYr # +adverb reading (was noun-only)
 warben/~~Vdifj # auto-added
 warbt/~~NhY
 ward/~~Vdifj # retag: adverb/verb, was noun (corpus-mined)
 war/~~Vej # REPLACES waren
-warf/~~NhY
+warf/~~NhYr # +adverb reading (was noun-only)
 warfen/~~Vdifj # auto-added
 warft/~~NhY
 warm/~~NJOQRSTUWq #adjective and noun
@@ -41663,7 +41663,7 @@ wehtut/~~NhY
 weib/~~NXh
 weiber/~~MhY
 weibes/~~NhY
-weicht/~~NXh
+weicht/~~NXhV # +verb reading (was noun-only)
 weid/~~Vcj # REPLACES weiden
 weidet/~~NXh
 weiger/~~MhY
@@ -41708,7 +41708,7 @@ wellig/~~RJOQRSTUWqh
 wellt/~~NXh
 welpe/~~NhY
 welpen/~~Vdifj # auto-added
-welsch/~~NXhY
+welsch/~~NXhYr # +adverb reading (was noun-only)
 welt/~~FhXY
 weltweit/~~RJOQRSTUWqh
 welten/~~Vdifj # auto-added
@@ -41766,7 +41766,7 @@ wetzt/~~NXh
 whig/~~NhY
 whigs/~~NhY
 whisky/~~NhY
-wich/~~NXhY
+wich/~~NXhYr # +adverb reading (was noun-only)
 wichs/~~NXh
 wicht/~~NXh
 wicke/~~NhY
@@ -41835,20 +41835,20 @@ wipp/~~Vcej # REPLACES wippen
 wippt/~~NXh
 wirb/~~NhY
 wirble/~~NhY
-wirbt/~~NhY
+wirbt/~~NhYV # +verb reading (was noun-only)
 wird/~~Vtdifj # 3rd person singular of werden
 wirf/~~NhY
-wirft/~~NhY
+wirft/~~NhYV # +verb reading (was noun-only)
 wirk/~~Vcej # REPLACES wirken
 wirker/~~MhY
-wirkt/~~NXh
+wirkt/~~NXhV # +verb reading (was noun-only)
 wirrem/~~NhY
 wirr/~~Vcej # REPLACES wirren
 wirrer/~~MhY
 wirres/~~NhY
 wirrt/~~NXh
 wirsch/~~NXhY
-wirst/~~NhY
+wirst/~~NhYV # +verb reading (was noun-only)
 wirt/~~NXhi
 wirten/~~Vdifj # auto-added
 wirtes/~~NhY
@@ -41882,7 +41882,7 @@ woche/~~NhY
 wochen/~~XZ #  auto-added
 wodka/~~Nbh
 wofern/~~NhY
-wofür/~~NhY
+wofür/~~NhYr # +adverb reading (was noun-only)
 wog/~~NXh
 wog/~~Vcej # REPLACES wogen
 wogt/~~NXh
@@ -41898,7 +41898,7 @@ wohlig/~~NXh
 wohls/~~NhY
 wohn/~~NhY
 wohn/~~Vcej # REPLACES wohnen
-wohnt/~~NXh
+wohnt/~~NXhV # +verb reading (was noun-only)
 wolf/~~NhY
 wolfes/~~NhY
 wolfs/~~NhY
@@ -41907,16 +41907,16 @@ wolke/~~FhY
 wolken/~~Vdifj # auto-added
 wolkig/~~NXh
 woll/~~NXh
-wollig/~~NXh
-wollt/~~NXh
+wollig/~~NXhJ # +adjective reading (was noun-only)
+wollt/~~NXhV # +verb reading (was noun-only)
 wombat/~~NhY
 womit/~~hr
-wonach/~~NhY
+wonach/~~NhYr # +adverb reading (was noun-only)
 wonne/~~NhY
 wonnen/~~Vdifj # auto-added
 wonnig/~~NXh
 woran/~~NhY
-worauf/~~NhY
+worauf/~~NhYr # +adverb reading (was noun-only)
 woraus/~~hr
 word/~~NhY
 worden/~~Vdifj # auto-added
@@ -41929,7 +41929,7 @@ wortes/~~NhY
 worts/~~NhY # auto-added
 worum/~~Zah  # preposition um #  auto-added
 wotan/~~NhY
-wovon/~~NhY
+wovon/~~NhYr # +adverb reading (was noun-only)
 wovor/~~NhY
 wow/~~NhY
 wozu/~~NhY
@@ -42028,7 +42028,7 @@ wöget/~~NhY
 wölb/~~NXh
 wölb/~~Vcej # REPLACES wölben
 wölbst/~~hV
-wölbt/~~NXh
+wölbt/~~NXhV # +verb reading (was noun-only)
 wölfe/~~NhY
 wölfen/~~Vdifj # auto-added
 wölfin/~~NhY
@@ -42040,7 +42040,7 @@ wühlst/~~hV
 wühlt/~~NXh
 wülste/~~NhY
 wünsch/~~NXhY
-würde/~~NhY
+würde/~~NhYJ # +adjective reading (was noun-only)
 würden/~~Vdifj # auto-added
 würdet/~~NhY
 würfe/~~NhY
@@ -42057,7 +42057,7 @@ würmer/~~MhY
 würste/~~NhY
 würz/~~NXh
 würz/~~Vcej # REPLACES würzen
-würzig/~~NXh
+würzig/~~NXhJ # +adjective reading (was noun-only)
 würzt/~~NXh
 wüsche/~~NhY
 wüsste/~~NhY
@@ -42219,7 +42219,7 @@ ziep/~~Vcej # REPLACES ziepen
 ziept/~~NXh
 zierde/~~NhY
 zier/~~Vcej # REPLACES zieren
-ziert/~~NXh
+ziert/~~NXhV # +verb reading (was noun-only)
 ziffer/~~MhY
 zig/~~NhY
 zigmal/~~NhY
@@ -42251,7 +42251,7 @@ zippt/~~NXh
 zirbe/~~NhY
 zirbel/~~NhY
 zirben/~~Vdifj # auto-added
-zirka/~~NhY
+zirka/~~NhYr # +adverb reading (was noun-only)
 zirkle/~~NhY
 zirkon/~~NhY # auto-added
 zirkus/~~NhY
@@ -42280,7 +42280,7 @@ zoff/~~NXh
 zoff/~~Vej # REPLACES zoffen
 zoffs/~~NhY
 zoffte/~~NhY
-zog/~~NhY
+zog/~~NhYr # +adverb reading (was noun-only)
 zogen/~~Vdifj # auto-added
 zogt/~~NhY
 zoll/~~NXh # auto-added
@@ -42376,7 +42376,7 @@ zuluft/~~NhY
 zulädt/~~NhY
 zulöte/~~NhY
 zum/~~P #  auto-added
-zumal/~~NhY
+zumal/~~NhYV # +verb reading (was noun-only)
 zumaß/~~NhY
 zumaßt/~~NhY
 zumute/~~NhY
@@ -42417,7 +42417,7 @@ zuseht/~~NhY
 zusäge/~~NhY
 zusägt/~~NXh
 zusähe/~~NhY
-zutage/~~NhY
+zutage/~~NhYJ # +adjective reading (was noun-only)
 zutat/~~NhY
 zuteil/~~NXh
 zutraf/~~NhY
@@ -42442,18 +42442,18 @@ zuzöge/~~NhY
 zuzüge/~~NhY
 zwack/~~NXh
 zwackt/~~NXh
-zwang/~~NhiY
+zwang/~~NhiYr # +adverb reading (was noun-only)
 zwangs/~~NhY
 zwangt/~~NhY
 zwar/~~hr
 zweck/~~NXh
-zwecks/~~NhY
+zwecks/~~NhYr # +adverb reading (was noun-only)
 zwei/~~hJOQRSTUWq1
 zwei/~~Vej # REPLACES zweien
 zweier/~~MhY
 zweig/~~NXh
 zweigs/~~NhY
-zweigt/~~NXh
+zweigt/~~NXhV # +verb reading (was noun-only)
 zweit/~~RJOQRSTUWqh
 zwerg/~~NXh
 zwergs/~~NhY
@@ -42461,7 +42461,7 @@ zwick/~~NXh
 zwickt/~~NXh
 zwing/~~NhY
 zwinge/~~NhY
-zwingt/~~NhY
+zwingt/~~NhYV # +verb reading (was noun-only)
 zwirn/~~NhY
 zwirns/~~NhY
 zwirnt/~~NXh
@@ -42719,14 +42719,14 @@ zürnt/~~NXh
 übles/~~NhY
 übrig/~~RJOQRSTUWqh
 übst/~~NhY
-übt/~~NXh
+übt/~~NXhr # +adverb reading (was noun-only)
 übtest/~~hV
 übtet/~~NhY
 übung/~~FhY
 übungs/~~NhY
 üppig/~~NXh
 ab/~~hP
-ad/~~NhY
+ad/~~NhYr # +adverb reading (was noun-only)
 adernpaars/~~NhY
 aderreiche/~~NhY
 aderungen/~~Vdifj # auto-added
@@ -43161,7 +43161,7 @@ akutfällen/~~Vdifj # auto-added
 akzenten/~~Vdifj # auto-added
 akzentes/~~NhY
 akzeptabel/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-akzeptable/~~NhY
+akzeptable/~~NhYJ # +adjective reading (was noun-only)
 akzeptanz/~~NhY
 akzepten/~~Vdifj # auto-added
 akzeptes/~~NhY
@@ -43322,7 +43322,7 @@ allerseits/~~NhY
 allerweil/~~NhY
 allerwelts/~~NhY
 allerwärts/~~NhY
-allesamt/~~NhY
+allesamt/~~NhYV # +verb reading (was noun-only)
 alleweil/~~NhY
 allezeit/~~NhY
 allgemach/~~NhY
@@ -43664,7 +43664,7 @@ anadromem/~~NhY
 anadromen/~~Vdifj # auto-added
 anadromer/~~MhY
 anadromes/~~NhY
-anaerobe/~~NhY
+anaerobe/~~NhYJ # +adjective reading (was noun-only)
 anaerobem/~~NhY
 anaeroben/~~Vdifj # auto-added
 anaerober/~~MhY
@@ -43776,7 +43776,7 @@ anbeißende/~~NhYJ # +adjective reading (was noun-only)
 anbelange/~~NhY
 anbelangen/~~Vdifj # auto-added
 anbelangst/~~hV
-anbelangt/~~NXh
+anbelangt/~~NXhV # +verb reading (was noun-only)
 anbelfere/~~NhY
 anbelfern/~~Vdifj # auto-added
 anbelfernd/~~NhY
@@ -43974,7 +43974,7 @@ andentyp/~~NhY # auto-added
 andernorts/~~NhY # auto-added
 anderntags/~~NhY
 anderorts/~~NhY # auto-added
-anderseits/~~NhY
+anderseits/~~NhYr # +adverb reading (was noun-only)
 andersrum/~~Zah  # preposition um #  auto-added
 anderssein/~~NhY
 anderswie/~~NhY
@@ -44320,7 +44320,7 @@ angaffende/~~NhYJ # +adjective reading (was noun-only)
 angafftest/~~NhY
 angafftet/~~NhY
 angebahnt/~~NXh
-angebaut/~~NXh
+angebaut/~~NXhV # +verb reading (was noun-only)
 angebautem/~~NhY
 angebauten/~~Vdifj # auto-added
 angebauter/~~MhY
@@ -44343,12 +44343,12 @@ angeblinkt/~~NhY
 angeblitzt/~~NhY
 angebohrt/~~NXh
 angeboren/~~Vdifj # auto-added
-angeborene/~~NhY
+angeborene/~~NhYJ # +adjective reading (was noun-only)
 angeboten/~~Vdifj # auto-added
 angebotene/~~NhY
 angebotes/~~NhY
 angebots/~~NhY
-angebracht/~~NhY
+angebracht/~~NhYV # +verb reading (was noun-only)
 angebrannt/~~NhY
 angebraten/~~Vdifj # auto-added
 angebrummt/~~NhY
@@ -44398,7 +44398,7 @@ angefragt/~~NXh
 angefroren/~~Vdifj # auto-added
 angefunden/~~Vdifj # auto-added
 angefärbt/~~NXh
-angefügt/~~NXh
+angefügt/~~NXhV # +verb reading (was noun-only)
 angefügtem/~~NhY
 angefügten/~~Vdifj # auto-added
 angefügter/~~MhY
@@ -44445,12 +44445,12 @@ angehoben/~~Vdifj # auto-added
 angehobene/~~NhY
 angehustet/~~NhY
 angehängt/~~NXh
-angehäuft/~~NXh
+angehäuft/~~NXhV # +verb reading (was noun-only)
 angehöre/~~NhY
 angehör/~~Vej # REPLACES angehören
 angehörend/~~NhYJ # +adjective reading (was noun-only)
 angehörst/~~hV
-angehört/~~NXh
+angehört/~~NXhV # +verb reading (was noun-only)
 angehörtem/~~NhY
 angehörter/~~MhY
 angehörtes/~~NhY
@@ -44490,7 +44490,7 @@ angelegt/~~NXhV # +verb reading (was noun-only)
 angelegtem/~~NhY
 angelegter/~~MhY
 angelegtes/~~NhY
-angelehnt/~~NXh
+angelehnt/~~NXhV # +verb reading (was noun-only)
 angeleiert/~~NhY
 angeleimt/~~NXh
 angeleint/~~NXh
@@ -44555,7 +44555,7 @@ angenähtes/~~NhY
 angeordnet/~~NhY
 angepackt/~~NXh
 angepampt/~~NXh
-angepasst/~~NhY
+angepasst/~~NhYV # +verb reading (was noun-only)
 angepasste/~~NhY
 angepeilt/~~NXh
 angepiepst/~~NhY
@@ -44612,15 +44612,15 @@ angesagtes/~~NhY
 angesalbt/~~NXh
 angesaugt/~~NXh
 angeschaut/~~NhY
-angesehene/~~NhY
+angesehene/~~NhYJ # +adjective reading (was noun-only)
 angeseilt/~~NXh
 angesengt/~~NXh
 angesenkt/~~NXh
 angesessen/~~Vdifj # auto-added
-angesetzt/~~NXh
+angesetzt/~~NXhV # +verb reading (was noun-only)
 angeseufzt/~~NhY
 angesicht/~~NhY
-angesichts/~~NhY
+angesichts/~~NhYr # +adverb reading (was noun-only)
 angesogen/~~Vdifj # auto-added
 angesogene/~~NhY
 angespannt/~~NhY
@@ -44638,11 +44638,11 @@ angestarrt/~~NhY
 angestaubt/~~NhY
 angestaunt/~~NhY
 angestaut/~~NXh
-angesteckt/~~NhY
-angestellt/~~NhY
+angesteckt/~~NhYV # +verb reading (was noun-only)
+angestellt/~~NhYV # +verb reading (was noun-only)
 angestimmt/~~NhY
 angestoßen/~~Vdifj # auto-added
-angestrebt/~~NhY
+angestrebt/~~NhYV # +verb reading (was noun-only)
 angeströmt/~~NhY
 angestupst/~~NhY
 angestürmt/~~NhY
@@ -44699,10 +44699,10 @@ angewärmt/~~NXh
 angewöhne/~~NhY
 angewöhnen/~~Vdifj # auto-added
 angewöhnst/~~hV
-angewöhnt/~~NXh
+angewöhnt/~~NXhV # +verb reading (was noun-only)
 angezahlt/~~NXh
 angezapft/~~NXh
-angezeigt/~~NXh
+angezeigt/~~NXhV # +verb reading (was noun-only)
 angezickt/~~NhY
 angezielt/~~NXh
 angezischt/~~NhY
@@ -45014,7 +45014,7 @@ anklag/~~Vej # REPLACES anklagen
 anklagende/~~NhYJ # +adjective reading (was noun-only)
 anklagtest/~~NhY
 anklagtet/~~NhY
-anklammere/~~NhY
+anklammere/~~NhYJ # +adjective reading (was noun-only)
 anklammern/~~Vdifj # auto-added
 anklammert/~~NhY
 anklammre/~~NhY
@@ -45926,7 +45926,7 @@ anschließt/~~NhY
 anschliffe/~~NhY
 anschliffs/~~NhY
 anschlifft/~~NhY
-anschloss/~~NhY
+anschloss/~~NhYV # +verb reading (was noun-only)
 anschlosst/~~NhY
 anschlug/~~NhY
 anschlugen/~~Vdifj # auto-added
@@ -47581,7 +47581,7 @@ aubergine/~~NhY
 auberginen/~~Vdifj # auto-added
 audienzen/~~Vdifj # auto-added
 audioguide/~~NhY
-audiophile/~~NhY
+audiophile/~~NhYJ # +adjective reading (was noun-only)
 auditiere/~~NhY
 auditieren/~~Vdifj # auto-added
 auditiert/~~NhY
@@ -48042,7 +48042,7 @@ aufgedüngt/~~NhY
 aufgefasst/~~hV
 aufgefegt/~~NXh
 aufgeflext/~~NhY
-aufgeführt/~~NhY
+aufgeführt/~~NhYV # +verb reading (was noun-only)
 aufgefüllt/~~NhY
 aufgegeben/~~Vdifj # auto-added
 aufgegeilt/~~NhY
@@ -48061,22 +48061,22 @@ aufgeheult/~~NhY
 aufgehoben/~~Vdifj # auto-added
 aufgeholt/~~NXh
 aufgehst/~~hV
-aufgehängt/~~NhY
+aufgehängt/~~NhYV # +verb reading (was noun-only)
 aufgehäuft/~~NhY
 aufgehört/~~NhY
 aufgeil/~~Vej # REPLACES aufgeilen
 aufgeilt/~~NXh
 aufgeiltet/~~NhY
 aufgejault/~~NhY
-aufgekauft/~~NhY
+aufgekauft/~~NhYV # +verb reading (was noun-only)
 aufgekeimt/~~NhY
 aufgeklart/~~NhY # auto-added
 aufgeklebt/~~NhY
-aufgeklärt/~~NhY
+aufgeklärt/~~NhYV # +verb reading (was noun-only)
 aufgekocht/~~NhY
 aufgekohlt/~~NhY
 aufgekorkt/~~NhY
-aufgelacht/~~NhY
+aufgelacht/~~NhYV # +verb reading (was noun-only)
 aufgeladen/~~Vdifj # auto-added
 aufgelder/~~MhY
 aufgeldern/~~Vdifj # auto-added
@@ -48085,7 +48085,7 @@ aufgelds/~~NhY
 aufgelebt/~~NXh
 aufgeleckt/~~NhY
 aufgelegen/~~Vdifj # auto-added
-aufgelegt/~~NXh
+aufgelegt/~~NXhV # +verb reading (was noun-only)
 aufgelehnt/~~NhY
 aufgeleimt/~~NhY
 aufgelesen/~~Vdifj # auto-added
@@ -48093,7 +48093,7 @@ aufgelle/~~NhY
 aufgellen/~~Vdifj # auto-added
 aufgellst/~~hV
 aufgellt/~~NhY
-aufgelöst/~~NhY
+aufgelöst/~~NhYV # +verb reading (was noun-only)
 aufgelöste/~~NhY
 aufgelötet/~~NhY
 aufgemacht/~~NhY
@@ -48126,7 +48126,7 @@ aufgerührt/~~NhY
 aufgesagt/~~NXh
 aufgesaugt/~~NhY
 aufgesehen/~~Vdifj # auto-added
-aufgesetzt/~~NhY
+aufgesetzt/~~NhYV # +verb reading (was noun-only)
 aufgesogen/~~Vdifj # auto-added
 aufgespart/~~NhY # auto-added
 aufgespult/~~NhY
@@ -48140,7 +48140,7 @@ aufgesucht/~~NhY
 aufgetan/~~NhY
 aufgetankt/~~NhY
 aufgetaut/~~NXh
-aufgeteilt/~~NhY
+aufgeteilt/~~NhYV # +verb reading (was noun-only)
 aufgetupft/~~NhY
 aufgetusst/~~NhY
 aufgetürmt/~~NhY
@@ -48158,7 +48158,7 @@ aufgezehrt/~~NhY
 aufgezeigt/~~NhY
 aufgezogen/~~Vdifj # auto-added
 aufgezuckt/~~NhY
-aufgezählt/~~NhY
+aufgezählt/~~NhYV # +verb reading (was noun-only)
 aufgezäumt/~~NhY
 aufgibst/~~NhY
 aufgieße/~~NhY
@@ -48198,7 +48198,7 @@ aufgrabt/~~NhY
 aufgreife/~~NhY
 aufgreifen/~~Vdifj # auto-added
 aufgreifst/~~hV
-aufgreift/~~NhY
+aufgreift/~~NhYV # +verb reading (was noun-only)
 aufgriff/~~NXh
 aufgriffen/~~Vdifj # auto-added
 aufgrifft/~~NhY
@@ -48540,7 +48540,7 @@ aufliege/~~NhY
 aufliegen/~~Vdifj # auto-added
 aufliegend/~~NhYJ # +adjective reading (was noun-only)
 aufliegst/~~hV
-aufliegt/~~NhY
+aufliegt/~~NhYV # +verb reading (was noun-only)
 aufliest/~~NhY
 aufließen/~~Vdifj # auto-added
 aufließest/~~hV
@@ -49255,7 +49255,7 @@ auftriebs/~~NhY
 auftriebt/~~NhY
 auftriffst/~~NhY
 auftrifft/~~NhY
-auftritt/~~NXh
+auftritt/~~NXhV # +verb reading (was noun-only)
 auftritten/~~Vdifj # auto-added
 auftrittes/~~NhY
 auftritts/~~NhY
@@ -49390,7 +49390,7 @@ aufwischen/~~XZ #  auto-added
 aufwischst/~~NhY
 aufwischt/~~NXh
 aufwogen/~~Vdifj # auto-added
-aufwuchs/~~NhY
+aufwuchs/~~NhYV # +verb reading (was noun-only)
 aufwuchsen/~~Vdifj # auto-added
 aufwuchst/~~NhY
 aufwurfes/~~NhY
@@ -49775,7 +49775,7 @@ ausdrucks/~~NhY
 ausdruckt/~~NXh
 ausdrücke/~~NhY
 ausdrücken/~~Vdifj # auto-added
-ausdrückt/~~NXh
+ausdrückt/~~NXhV # +verb reading (was noun-only)
 ausdächte/~~NhY
 ausdächten/~~Vdifj # auto-added
 ausdächtet/~~NhY
@@ -49971,7 +49971,7 @@ ausgasung/~~FhY
 ausgeartet/~~NhY
 ausgeatmet/~~NhY
 ausgebadet/~~NhY
-ausgebaut/~~NXh
+ausgebaut/~~NXhV # +verb reading (was noun-only)
 ausgeben/~~Vdifj # auto-added
 ausgebend/~~NhYJ # +adjective reading (was noun-only)
 ausgebende/~~NhYJ # +adjective reading (was noun-only)
@@ -50007,8 +50007,8 @@ ausgefräst/~~NhY
 ausgefugt/~~NhY
 ausgefällt/~~NhY
 ausgefärbt/~~NhY
-ausgeführt/~~NhY
-ausgefüllt/~~NhY
+ausgeführt/~~NhYV # +verb reading (was noun-only)
+ausgefüllt/~~NhYV # +verb reading (was noun-only)
 ausgegeben/~~Vdifj # auto-added
 ausgeglüht/~~NhY
 ausgegoren/~~Vdifj # auto-added
@@ -50053,16 +50053,16 @@ ausgelebt/~~NXh
 ausgeleckt/~~NhY
 ausgeleert/~~NhY
 ausgelegen/~~Vdifj # auto-added
-ausgelegt/~~NXh
+ausgelegt/~~NXhV # +verb reading (was noun-only)
 ausgelenkt/~~NhY
 ausgelernt/~~NhY
 ausgelesen/~~Vdifj # auto-added
 ausgelobt/~~NXh
 ausgeloggt/~~NhY
-ausgelost/~~NhY
+ausgelost/~~NhYV # +verb reading (was noun-only)
 ausgeloste/~~NhY
 ausgelotet/~~NhY
-ausgelöst/~~NhY
+ausgelöst/~~NhYV # +verb reading (was noun-only)
 ausgelöste/~~NhY
 ausgelötet/~~NhY
 ausgemacht/~~NhY
@@ -50074,7 +50074,7 @@ ausgepackt/~~NhY
 ausgepellt/~~NhY
 ausgepicht/~~NhY
 ausgepickt/~~NhY
-ausgeprägt/~~NhY
+ausgeprägt/~~NhYV # +verb reading (was noun-only)
 ausgepumpt/~~NhY
 ausgeputzt/~~NhY
 ausgeraubt/~~NhY
@@ -50103,7 +50103,7 @@ ausgespien/~~Vdifj # auto-added
 ausgespäht/~~NhY
 ausgespänt/~~NhY
 ausgespült/~~NhY
-ausgesucht/~~NhY
+ausgesucht/~~NhYV # +verb reading (was noun-only)
 ausgesägt/~~NXh
 ausgesät/~~NXh
 ausgesätem/~~NhY
@@ -50113,18 +50113,18 @@ ausgesätes/~~NhY
 ausgesöhnt/~~NhY
 ausgeteilt/~~NhY
 ausgetickt/~~NhY
-ausgetilgt/~~NhY
+ausgetilgt/~~NhYV # +verb reading (was noun-only)
 ausgetobt/~~NhY
 ausgeufert/~~NhY
 ausgewalzt/~~NhY
 ausgeweint/~~NhY
 ausgewetzt/~~NhY
 ausgewirkt/~~NhY
-ausgewählt/~~NhY
+ausgewählt/~~NhYV # +verb reading (was noun-only)
 ausgewölbt/~~NhY
 ausgewürgt/~~NhY
 ausgezackt/~~NhY
-ausgezahlt/~~NhY
+ausgezahlt/~~NhYV # +verb reading (was noun-only)
 ausgezehrt/~~NhY
 ausgezogen/~~Vdifj # auto-added
 ausgezoomt/~~NhY
@@ -50881,7 +50881,7 @@ ausregnet/~~NXh
 ausreiche/~~NhY
 ausreichen/~~XZ #  auto-added
 ausreichst/~~NhY
-ausreicht/~~NXh
+ausreicht/~~NXhV # +verb reading (was noun-only)
 ausreif/~~Vej # REPLACES ausreifen
 ausreift/~~NXh
 ausreiftet/~~NhY
@@ -51022,7 +51022,7 @@ ausscherst/~~hV
 ausschert/~~NXh
 ausschicke/~~NhY
 ausschickt/~~NhY
-ausschied/~~NXh
+ausschied/~~NXhr # +adverb reading (was noun-only)
 ausschieße/~~NhY
 ausschießt/~~NhY
 ausschiffe/~~NhY
@@ -51142,7 +51142,7 @@ ausspielst/~~hV
 ausspielt/~~NXh
 ausspien/~~Vdifj # auto-added
 ausspiet/~~NhY
-aussprach/~~NXh
+aussprach/~~NXhV # +verb reading (was noun-only)
 ausspracht/~~NhY
 ausspreche/~~NhY
 aussprecht/~~NhY
@@ -51200,7 +51200,7 @@ aussteige/~~NhY
 aussteigen/~~Vdifj # auto-added
 aussteiger/~~MhY
 aussteigst/~~hV
-aussteigt/~~NhY
+aussteigt/~~NhYV # +verb reading (was noun-only)
 ausstelle/~~NhY
 ausstellen/~~Vdifj # auto-added
 aussteller/~~MhY
@@ -51477,10 +51477,10 @@ auswildern/~~Vdifj # auto-added
 auswildert/~~NhY
 auswildre/~~NhY
 auswirfst/~~NhY
-auswirft/~~NhY
+auswirft/~~NhYV # +verb reading (was noun-only)
 auswirk/~~Vej # REPLACES auswirken
 auswirkens/~~NhY
-auswirkt/~~NXh
+auswirkt/~~NXhV # +verb reading (was noun-only)
 auswirktet/~~NhY
 auswirkung/~~FhY
 Auswirkungen/~~F
@@ -51548,7 +51548,7 @@ ausziehe/~~NhY
 ausziehen/~~Vdifj # auto-added
 ausziehend/~~NhYJ # +adjective reading (was noun-only)
 ausziehst/~~hV
-auszieht/~~NhY
+auszieht/~~NhYV # +verb reading (was noun-only)
 auszische/~~NhY
 auszischen/~~XZ #  auto-added
 auszischst/~~NhY
@@ -52369,7 +52369,7 @@ beatniks/~~NhY
 beaufort/~~NhY
 beauforts/~~NhY # auto-added
 beauftrage/~~NhY
-beauftragt/~~NhY
+beauftragt/~~NhYV # +verb reading (was noun-only)
 beaujolais/~~NhY
 bebauende/~~NhYJ # +adjective reading (was noun-only)
 bebauendem/~~NhY
@@ -52585,7 +52585,7 @@ bedürfnis/~~NhY
 bedürfst/~~hV
 bedürftest/~~hV # retag: finite verb form, was noun (corpus-mined)
 bedürftet/~~hV # retag: finite verb form, was noun (corpus-mined)
-bedürftige/~~NhY
+bedürftige/~~NhYJ # +adjective reading (was noun-only)
 bedüsens/~~NhY
 bedüsung/~~FhY
 bedüsungen/~~Vdifj # auto-added
@@ -52692,7 +52692,7 @@ befahlen/~~Vdifj # auto-added
 befahren/~~Vdifj # auto-added
 befahrend/~~NhYJ # +adjective reading (was noun-only)
 befahrende/~~NhYJ # +adjective reading (was noun-only)
-befahrene/~~NhY
+befahrene/~~NhYJ # +adjective reading (was noun-only)
 befahrenem/~~NhY
 befahrenen/~~Vdifj # auto-added
 befahrener/~~MhY
@@ -53074,7 +53074,7 @@ beginnend/~~hJOQRSTUWq
 beginnende/~~NhYJ # +adjective reading (was noun-only)
 beginnzeit/~~NhY
 beglaubige/~~NhY
-beglaubigt/~~NhY
+beglaubigt/~~NhYV # +verb reading (was noun-only)
 begleiche/~~NhY
 begleichen/~~Vh  # to equal / same (inflected) #  auto-added
 begleichst/~~hV
@@ -53216,7 +53216,7 @@ begännen/~~Vdifj # auto-added
 begännet/~~hV # retag: finite verb form, was noun (corpus-mined)
 begännst/~~hV
 begünstige/~~NhY
-begünstigt/~~NhY
+begünstigt/~~NhYV # +verb reading (was noun-only)
 begütert/~~NXh
 begütertem/~~NhY
 begüterten/~~Vdifj # auto-added
@@ -53352,7 +53352,7 @@ behelmtes/~~NhY
 beherberge/~~hV # retag: verb form, was noun (corpus-mined)
 beherbergt/~~hV # retag: verb form, was noun (corpus-mined)
 beherrsche/~~NhY
-beherrscht/~~NhY
+beherrscht/~~NhYV # +verb reading (was noun-only)
 beherzige/~~NhY
 beherzigen/~~Vdifj # auto-added
 beherzigst/~~hV
@@ -53492,7 +53492,7 @@ beigemengt/~~NhY
 beigepackt/~~NhY
 beigeselle/~~NhY
 beigesellt/~~NhY
-beigesetzt/~~NhY
+beigesetzt/~~NhYV # +verb reading (was noun-only)
 beigewohnt/~~NhY
 beigezogen/~~Vdifj # auto-added
 beigibst/~~NhY
@@ -53909,7 +53909,7 @@ bekritzeln/~~Vdifj # auto-added
 bekritzelt/~~NhY
 bekritzle/~~NhY
 bekräftige/~~NhY
-bekräftigt/~~NhY
+bekräftigt/~~NhYV # +verb reading (was noun-only)
 bekränzt/~~NXh
 bekränztem/~~NhY
 bekränzten/~~Vdifj # auto-added
@@ -55121,7 +55121,7 @@ beschwöre/~~NhY
 beschwören/~~Vdifj # auto-added
 beschwört/~~hV # retag: finite verb form, was noun (corpus-mined)
 beschädige/~~NhY
-beschädigt/~~NhY
+beschädigt/~~NhYV # +verb reading (was noun-only)
 beschälen/~~Vdifj # auto-added
 beschäme/~~NhY
 beschäm/~~Vej # REPLACES beschämen
@@ -55183,7 +55183,7 @@ besenrauke/~~NhY
 besenrein/~~NhY
 besenreine/~~NhY
 besessen/~~Vdifj # auto-added
-besessene/~~NhY
+besessene/~~NhYJ # +adjective reading (was noun-only)
 besessenem/~~NhY
 besessenen/~~Vdifj # auto-added
 besessener/~~MhY
@@ -55209,7 +55209,7 @@ besicherst/~~hV
 besichert/~~NXh
 besichre/~~NhY
 besichtige/~~NhY
-besichtigt/~~NhY
+besichtigt/~~NhYV # +verb reading (was noun-only)
 besiedele/~~NhY
 besiedeln/~~Vdifj # auto-added
 besiedelnd/~~NhY
@@ -55278,7 +55278,7 @@ besoldetes/~~NhY
 besoldetet/~~hV # retag: finite verb form, was noun (corpus-mined)
 besoldung/~~FhY
 besoldungs/~~NhY
-besondere/~~NhY
+besondere/~~NhYJ # +adjective reading (was noun-only)
 besonderem/~~NhY
 besonderen/~~Vdifj # auto-added
 besonderer/~~MhY
@@ -55560,7 +55560,7 @@ bestricke/~~NhY
 bestricken/~~Vdifj # auto-added
 bestrickst/~~hV
 bestrickt/~~hV # retag: finite verb form, was noun (corpus-mined)
-bestritt/~~NhY
+bestritt/~~NhYV # +verb reading (was noun-only)
 bestritten/~~Vdifj # auto-added
 bestrittet/~~hV # retag: finite verb form, was noun (corpus-mined)
 bestrumpft/~~NhY
@@ -55870,7 +55870,7 @@ betriebes/~~NhY
 betriebs/~~MYh
 betriebt/~~hV # retag: finite verb form, was noun (corpus-mined)
 betriffst/~~NhY
-betrifft/~~NhY
+betrifft/~~NhYV # +verb reading (was noun-only)
 betrinke/~~NhY
 betrinken/~~Vdifj # auto-added
 betrinkend/~~NhYJ # +adjective reading (was noun-only)
@@ -57112,7 +57112,7 @@ blaugrauem/~~NhY
 blaugrauen/~~Vdifj # auto-added
 blaugrauer/~~MhY
 blaugraues/~~NhY
-blaugrün/~~NhY
+blaugrün/~~NhYr # +adverb reading (was noun-only)
 blaugrüne/~~NhY
 blaugrünem/~~NhY
 blaugrünen/~~Vdifj # auto-added
@@ -57701,7 +57701,7 @@ borcarbid/~~NhY
 borcarbids/~~NhY
 bordeaux/~~NhY
 bordeigen/~~Vdifj # auto-added
-bordeigene/~~NhY
+bordeigene/~~NhYJ # +adjective reading (was noun-only)
 bordellen/~~Vdifj # auto-added
 bordells/~~NhY
 borderline/~~NhY
@@ -58197,7 +58197,7 @@ bronchiale/~~NhY
 bronchie/~~NhY
 bronchien/~~Vdifj # auto-added
 bronchitis/~~NhY
-bronzene/~~NhY
+bronzene/~~NhYJ # +adjective reading (was noun-only)
 bronzenem/~~NhY
 bronzenen/~~Vdifj # auto-added
 bronzener/~~MhY
@@ -60081,7 +60081,7 @@ darbötet/~~NhY
 dareinfand/~~NhY
 dareinrede/~~NhY
 dargeboten/~~Vdifj # auto-added
-dargelegt/~~NXh
+dargelegt/~~NXhV # +verb reading (was noun-only)
 dargetan/~~NhY
 darinnen/~~Vdifj # auto-added
 darleg/~~Vej # REPLACES darlegen
@@ -60113,7 +60113,7 @@ darrmalz/~~NhY
 darrmalzes/~~NhY
 darrsucht/~~NhY
 darrtest/~~NhY
-darstelle/~~NhY
+darstelle/~~NhYJ # +adjective reading (was noun-only)
 darstellen/~~Vdifj # auto-added
 darsteller/~~MhY
 darstellt/~~hV
@@ -60154,7 +60154,7 @@ dasitzen/~~Vdifj # auto-added
 dasitzend/~~NhYJ # +adjective reading (was noun-only)
 dasitzende/~~NhYJ # +adjective reading (was noun-only)
 dasjenige/~~NhY
-dasselbe/~~NhY
+dasselbe/~~NhYJ # +adjective reading (was noun-only)
 dasselbige/~~NhY
 dasssatz/~~NXh
 dasssatzes/~~NhY
@@ -60743,7 +60743,7 @@ dementiere/~~NhY
 dementiert/~~NhY
 demenzen/~~Vdifj # auto-added
 demenzfall/~~NhY # auto-added
-demgemäß/~~NhY
+demgemäß/~~NhYr # +adverb reading (was noun-only)
 demission/~~NhY
 demjenigen/~~Vdifj # auto-added
 demnächst/~~NhY
@@ -60890,7 +60890,7 @@ derbysiegs/~~NhY
 deregulier/~~MhY
 dereinst/~~NhY
 deretwegen/~~Vdifj # auto-added
-dergestalt/~~NhY
+dergestalt/~~NhYV # +verb reading (was noun-only)
 derivaten/~~Vdifj # auto-added
 derivates/~~NhY
 derivation/~~NhY
@@ -61236,7 +61236,7 @@ dienstags/~~NhY
 diensten/~~Vdifj # auto-added
 dienstes/~~NhY
 dientest/~~NhY
-dieselbe/~~NhY
+dieselbe/~~NhYJ # +adjective reading (was noun-only)
 dieselben/~~Vdifj # auto-added
 diesellok/~~NhY
 dieselloks/~~NhY
@@ -61457,7 +61457,7 @@ discothek/~~NhY
 discount/~~NhY
 discounter/~~MhY
 discounts/~~NhY
-disjunkt/~~NXh
+disjunkt/~~NXhV # +verb reading (was noun-only)
 disjunktem/~~NhY
 disjunkten/~~Vdifj # auto-added
 disjunkter/~~MhY
@@ -62022,7 +62022,7 @@ dreiecken/~~Vdifj # auto-added
 dreieckes/~~NhY
 dreiecks/~~NhY
 dreierlei/~~NhY
-dreifache/~~NhY
+dreifache/~~NhYJ # +adjective reading (was noun-only)
 dreifachem/~~NhY
 dreifachen/~~XZ #  auto-added
 dreifacher/~~MhY
@@ -62474,7 +62474,7 @@ durchackre/~~NhY
 durchatme/~~NhY
 durchatmen/~~Vdifj # auto-added
 durchatmet/~~hV # retag: finite verb form, was noun (corpus-mined)
-durchaus/~~NhY
+durchaus/~~NhYr # +adverb reading (was noun-only)
 durchbebe/~~NhY
 durchbeben/~~Vdifj # auto-added
 durchbebst/~~hV
@@ -62734,7 +62734,7 @@ durchsehe/~~NhY
 durchsehen/~~Vdifj # auto-added
 durchseht/~~hV # retag: finite verb form, was noun (corpus-mined)
 durchsetze/~~NhY
-durchsetzt/~~NhY
+durchsetzt/~~NhYV # +verb reading (was noun-only)
 durchsicht/~~NhY
 durchsiebe/~~NhY
 durchsiebt/~~NhY
@@ -63339,7 +63339,7 @@ ehrfurcht/~~NhY
 ehrgefühl/~~NhY
 ehrgefühls/~~NhY
 ehrgeizes/~~NhY
-ehrgeizige/~~NhY
+ehrgeizige/~~NhYJ # +adjective reading (was noun-only)
 ehrliche/~~NhY
 ehrlichem/~~NhY
 ehrlichen/~~XZ #  auto-added
@@ -63677,7 +63677,7 @@ eindrillst/~~hV
 eindrillt/~~NXh
 eindringe/~~NhY
 eindringen/~~Vdifj # auto-added
-eindringt/~~NhY
+eindringt/~~NhYV # +verb reading (was noun-only)
 eindrischt/~~NhY
 eindrosch/~~NhY
 eindroscht/~~NhY
@@ -63715,7 +63715,7 @@ eineiigem/~~NhY
 eineiigen/~~Vdifj # auto-added
 eineiiger/~~MhY
 eineiiges/~~NhY
-eineinhalb/~~NhY
+eineinhalb/~~NhYr # +adverb reading (was noun-only)
 einendem/~~NhY
 einender/~~MhY
 einendes/~~NhY
@@ -63899,7 +63899,7 @@ eingaben/~~Vdifj # auto-added
 einganges/~~NhY
 eingangs/~~NhY
 eingeatmet/~~NhY
-eingebaut/~~NXh
+eingebaut/~~NXhV # +verb reading (was noun-only)
 eingeben/~~Vdifj # auto-added
 eingebend/~~NhYJ # +adjective reading (was noun-only)
 eingebende/~~NhYJ # +adjective reading (was noun-only)
@@ -63926,13 +63926,13 @@ eingedöst/~~NhY
 eingedöste/~~NhY
 eingeebnet/~~NhY
 eingeengt/~~NXh
-eingefasst/~~NhY
+eingefasst/~~NhYV # +verb reading (was noun-only)
 eingeflößt/~~NhY
 eingeformt/~~NhY
 eingefräst/~~NhY
 eingefugt/~~NXh
 eingefärbt/~~NhY
-eingefügt/~~NXh
+eingefügt/~~NXhV # +verb reading (was noun-only)
 eingefühlt/~~NhY
 eingeführt/~~hV
 eingefüllt/~~NhY
@@ -63959,7 +63959,7 @@ eingekauft/~~NhY
 eingekehrt/~~NhY
 eingekeilt/~~NhY
 eingekerbt/~~NhY
-eingeklagt/~~NhY
+eingeklagt/~~NhYV # +verb reading (was noun-only)
 eingeklebt/~~NhY
 eingekocht/~~NhY
 eingekotet/~~NhY
@@ -63994,7 +63994,7 @@ eingeplant/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 eingeprägt/~~NhY
 eingepumpt/~~NhY
 eingeputzt/~~NhY
-eingerahmt/~~NhY
+eingerahmt/~~NhYV # +verb reading (was noun-only)
 eingerammt/~~NhY
 eingerannt/~~NhY
 eingeredet/~~NhY
@@ -64003,7 +64003,7 @@ eingereist/~~NhY
 eingerenkt/~~NhY
 eingeritzt/~~NhY
 eingerollt/~~NhY
-eingeräumt/~~NhY
+eingeräumt/~~NhYV # +verb reading (was noun-only)
 eingerückt/~~NhY
 eingerührt/~~NhY
 eingesackt/~~NhY
@@ -64031,7 +64031,7 @@ eingesätes/~~NhY
 eingesäumt/~~NhY
 eingeteert/~~NhY
 eingeteilt/~~NhYV # +verb reading (was noun-only)
-eingetieft/~~NhY
+eingetieft/~~NhYV # +verb reading (was noun-only)
 eingetippt/~~NhY
 eingetopft/~~NhY
 eingetrübt/~~NhY
@@ -64041,14 +64041,14 @@ eingewandt/~~NhY
 eingewebt/~~NXh
 eingeweckt/~~NhY
 eingeweide/~~NhY
-eingeweiht/~~NhY
+eingeweiht/~~NhYV # +verb reading (was noun-only)
 eingewirkt/~~NhY
 eingewoben/~~Vdifj # auto-added
 eingewogen/~~Vdifj # auto-added
 eingewählt/~~NhY
 eingewöhne/~~NhY
 eingewöhnt/~~NhY
-eingewölbt/~~NhY
+eingewölbt/~~NhYV # +verb reading (was noun-only)
 eingezahlt/~~NhY
 eingezogen/~~Vdifj # auto-added
 eingezäunt/~~NhY
@@ -64991,7 +64991,7 @@ einsenkt/~~NXh
 einsenktet/~~NhY
 einsetz/~~Vej # REPLACES einsetzen
 einsetzens/~~NhY
-einsetzt/~~NXh
+einsetzt/~~NXhV # +verb reading (was noun-only)
 einsetztet/~~NhY
 einsetzung/~~FhY
 einsicht/~~NhY
@@ -65252,7 +65252,7 @@ eintrieb/~~NXh
 eintrieben/~~Vdifj # auto-added
 eintriebt/~~NhY
 eintriffst/~~NhY
-eintrifft/~~NhY
+eintrifft/~~NhYV # +verb reading (was noun-only)
 eintritt/~~NXh
 eintritten/~~Vdifj # auto-added
 eintrittes/~~NhY
@@ -66003,7 +66003,7 @@ empfehlens/~~NhY
 empfehlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 empfehlung/~~FY
 empfiehl/~~NhY
-empfiehlt/~~NhY
+empfiehlt/~~NhYV # +verb reading (was noun-only)
 empfinde/~~NhY
 empfinden/~~Vdifj # auto-added
 empfindend/~~NhYJ # +adjective reading (was noun-only)
@@ -67017,7 +67017,7 @@ entnervtet/~~hV # retag: finite verb form, was noun (corpus-mined)
 entnervung/~~FhY
 entnimmt/~~NhY
 entnommen/~~Vdifj # auto-added
-entnommene/~~NhY
+entnommene/~~NhYJ # +adjective reading (was noun-only)
 entnähme/~~NhY
 entnähmen/~~Vdifj # auto-added
 entnähmst/~~hV
@@ -67196,7 +67196,7 @@ entschied/~~hV
 entschlafe/~~NhY
 entschlaft/~~NhY
 entschlief/~~NhY
-entschloss/~~NhY
+entschloss/~~NhYV # +verb reading (was noun-only)
 entschluss/~~NhY
 entschläft/~~NhY
 entschulde/~~NhY
@@ -67273,7 +67273,7 @@ entspinnen/~~Vdifj # auto-added
 entspinnst/~~hV
 entspinnt/~~hV # retag: finite verb form, was noun (corpus-mined)
 entsponnen/~~Vdifj # auto-added
-entsprach/~~NhY
+entsprach/~~NhYV # +verb reading (was noun-only)
 entspracht/~~hV # retag: finite verb form, was noun (corpus-mined)
 entsprang/~~NhY
 entsprangt/~~NhY
@@ -67283,10 +67283,10 @@ entspricht/~~hV
 entsprieße/~~NhY
 entsprießt/~~NhY
 entspringe/~~NhY
-entspringt/~~NhY
+entspringt/~~NhYV # +verb reading (was noun-only)
 entspross/~~NhY
 entsprosst/~~NhY
-entspräche/~~NhY
+entspräche/~~NhYJ # +adjective reading (was noun-only)
 entsprächt/~~NhY
 entspränge/~~NhY
 entsprängt/~~NhY
@@ -67812,7 +67812,7 @@ erbotener/~~MhY
 erbotenes/~~NhY
 erbotest/~~hV
 erbrachest/~~NhY
-erbracht/~~NXh
+erbracht/~~NXhV # +verb reading (was noun-only)
 erbrachtem/~~NhY
 erbrachten/~~Vdifj # auto-added
 erbrachter/~~MhY
@@ -68334,7 +68334,7 @@ erhabenste/~~NhY
 erhall/~~Vej # REPLACES erhallen
 erhaltend/~~NhYJ # +adjective reading (was noun-only)
 erhaltende/~~NhYJ # +adjective reading (was noun-only)
-erhaltene/~~NhY
+erhaltene/~~NhYJ # +adjective reading (was noun-only)
 erhaltenem/~~NhY
 erhaltenen/~~Vdifj # auto-added
 erhaltener/~~MhY
@@ -68498,7 +68498,7 @@ erigiertes/~~NhY
 erikaweg/~~NhY
 erikaweges/~~NhY
 erikawegs/~~NhY
-erinnere/~~NhY
+erinnere/~~NhYJ # +adjective reading (was noun-only)
 erinnern/~~Vcej #  auto-added | remind, recall - needs conjugation
 erinnernd/~~NhY
 erinnernde/~~NhY
@@ -68910,7 +68910,7 @@ ermutigtes/~~NhY
 ermutigtet/~~NhY
 ermutigung/~~FhY
 ermächtige/~~NhY
-ermächtigt/~~NhY
+ermächtigt/~~NhYV # +verb reading (was noun-only)
 ermäßige/~~NhY
 ermäßig/~~Vej # REPLACES ermäßigen
 ermäßigend/~~NhYJ # +adjective reading (was noun-only)
@@ -69161,7 +69161,7 @@ erreichen/~~XZ #  auto-added
 erreichend/~~NhY
 erreichens/~~NhY
 erreichst/~~NhY
-erreicht/~~NXh
+erreicht/~~NXhV # +verb reading (was noun-only)
 erreichtem/~~NhY
 erreichten/~~Vdifj # auto-added
 erreichter/~~MhY
@@ -69261,7 +69261,7 @@ erschließe/~~NhY
 erschließt/~~NhY
 erschloss/~~NhY
 erschlosst/~~NhY
-erschlug/~~NhY
+erschlug/~~NhYr # +adverb reading (was noun-only)
 erschlugen/~~Vdifj # auto-added
 erschlugt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erschlägst/~~NhY
@@ -69404,7 +69404,7 @@ erstandet/~~hV # retag: finite verb form, was noun (corpus-mined)
 erstarben/~~Vdifj # auto-added
 erstarbt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erstarkens/~~NhY
-erstarkt/~~NXh
+erstarkt/~~NXhV # +verb reading (was noun-only)
 erstarktem/~~NhY
 erstarkter/~~MhY
 erstarktes/~~NhY
@@ -69689,7 +69689,7 @@ erwachens/~~NhY
 erwachse/~~NhY
 erwachsen/~~Vdifj # auto-added
 erwachsend/~~NhYJ # +adjective reading (was noun-only)
-erwachsene/~~NhY
+erwachsene/~~NhYJ # +adjective reading (was noun-only)
 erwachtem/~~NhY
 erwachten/~~Vdifj # auto-added
 erwachter/~~MhY
@@ -69949,7 +69949,7 @@ erzwingst/~~hV
 erzwingt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erzwingung/~~FhY
 erzwungen/~~Vdifj # auto-added
-erzwungene/~~NhY
+erzwungene/~~NhYJ # +adjective reading (was noun-only)
 erzwänge/~~NhY
 erzwängen/~~Vdifj # auto-added
 erzwänget/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -70282,7 +70282,7 @@ evoziertes/~~NhY
 evoziertet/~~NhY
 ewigkeit/~~FhiY
 ewigkeiten/~~Vdifj # auto-added
-ex/~~NhY
+ex/~~NhYr # +adverb reading (was noun-only)
 exabytes/~~NhY
 exakteste/~~NhY
 exaktestem/~~NhY
@@ -70348,7 +70348,7 @@ eximiertem/~~NhY
 eximierter/~~MhY
 eximiertes/~~NhY
 eximiertet/~~NhY
-existent/~~NXh
+existent/~~NXhV # +verb reading (was noun-only)
 existentem/~~NhY
 existenten/~~Vdifj # auto-added
 existenter/~~MhY
@@ -70419,7 +70419,7 @@ exorzisten/~~Vdifj # auto-added
 exorzistin/~~NhY
 exoskelett/~~NhY
 exotenfach/~~NhY # auto-added
-exotherm/~~NXh
+exotherm/~~NXhr # +adverb reading (was noun-only)
 exothermem/~~NhY
 exothermen/~~Vdifj # auto-added
 exothermer/~~MhY
@@ -71849,7 +71849,7 @@ festsitzen/~~Vdifj # auto-added
 festsitzt/~~NhY
 festspanne/~~NhY
 festspannt/~~NhY
-feststand/~~NhY
+feststand/~~NhYr # +adverb reading (was noun-only)
 feststecke/~~NhY
 feststeckt/~~NhY
 feststehe/~~NhY
@@ -72700,7 +72700,7 @@ flexendem/~~NhY
 flexender/~~MhY
 flexendes/~~NhY
 flexibel/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-flexible/~~NhY
+flexible/~~NhYJ # +adjective reading (was noun-only)
 flexiblem/~~NhY
 flexiblen/~~Vdifj # auto-added
 flexibler/~~MhY
@@ -73913,7 +73913,7 @@ freigebend/~~NhYJ # +adjective reading (was noun-only)
 freigebige/~~NhY
 freigebt/~~NhY
 freigehabt/~~NhY
-freigelegt/~~NhY
+freigelegt/~~NhYV # +verb reading (was noun-only)
 freigibst/~~NhY
 freigibt/~~NhY
 freigäbe/~~NhY
@@ -75662,7 +75662,7 @@ gebleicht/~~JOQRSTUWVgdifj
 geblendet/~~JOQRSTUWVgdifj
 geblickt/~~JOQRSTUWVgdifj
 geblieben/~~Vdifj # auto-added
-gebliebene/~~NhY
+gebliebene/~~NhYJ # +adjective reading (was noun-only)
 geblinkt/~~JOQRSTUWVgdifj
 geblinzelt/~~JOQRSTUWVgdifj
 geblitzt/~~JOQRSTUWVgdifj
@@ -75691,7 +75691,7 @@ geblümten/~~Vdifj # auto-added
 geblümter/~~MhY
 geblümtes/~~NhY
 geboardet/~~JOQRSTUWVgdifj
-gebogene/~~NhY
+gebogene/~~NhYJ # +adjective reading (was noun-only)
 gebogenem/~~NhY
 gebogenen/~~Vdifj # auto-added
 gebogener/~~MhY
@@ -75709,7 +75709,7 @@ gebombtes/~~NhY
 geboostert/~~JOQRSTUWVgdifj
 geboostet/~~JOQRSTUWVgdifj
 gebootet/~~JOQRSTUWVgdifj
-geborene/~~NhY
+geborene/~~NhYJ # +adjective reading (was noun-only)
 geborenem/~~NhY
 geborenen/~~Vdifj # auto-added
 geborener/~~MhY
@@ -75724,7 +75724,7 @@ geborgtem/~~NhY
 geborgter/~~MhY
 geborgtes/~~NhY
 geborsten/~~Vdifj # auto-added
-geborstene/~~NhY
+geborstene/~~NhYJ # +adjective reading (was noun-only)
 gebotene/~~NhY
 gebotenem/~~NhY
 gebotenen/~~Vdifj # auto-added
@@ -75830,7 +75830,7 @@ gebuffert/~~JOQRSTUWVgdifj
 gebummelt/~~JOQRSTUWVgdifj
 gebummert/~~JOQRSTUWVgdifj
 gebunden/~~Vdifj # auto-added
-gebundene/~~NhY
+gebundene/~~NhYJ # +adjective reading (was noun-only)
 gebundenem/~~NhY
 gebundenen/~~Vdifj # auto-added
 gebundener/~~MhY
@@ -76825,7 +76825,7 @@ gehadert/~~JOQRSTUWVgdifj
 gehaftet/~~JOQRSTUWVgdifj
 gehagelt/~~JOQRSTUWVgdifj
 gehalten/~~Vdifj # auto-added
-gehaltene/~~NhY
+gehaltene/~~NhYJ # +adjective reading (was noun-only)
 gehaltenem/~~NhY
 gehaltenen/~~Vdifj # auto-added
 gehaltener/~~MhY
@@ -77617,7 +77617,7 @@ gelabtem/~~NhY
 gelabten/~~Vdifj # auto-added
 gelabter/~~MhY
 gelabtes/~~NhY
-geladene/~~NhY
+geladene/~~NhYJ # +adjective reading (was noun-only)
 geladenem/~~NhY
 geladenen/~~Vdifj # auto-added
 geladener/~~MhY
@@ -77792,7 +77792,7 @@ geleertem/~~NhY
 geleerten/~~Vdifj # auto-added
 geleerter/~~MhY
 geleertes/~~NhY
-gelegene/~~NhY
+gelegene/~~NhYJ # +adjective reading (was noun-only)
 gelegenem/~~NhY
 gelegenen/~~Vdifj # auto-added
 gelegener/~~MhY
@@ -78143,7 +78143,7 @@ gemerkten/~~Vdifj # auto-added
 gemerkter/~~MhY
 gemerktes/~~NhY
 gemessen/~~Vdifj # auto-added
-gemessene/~~NhY
+gemessene/~~NhYJ # +adjective reading (was noun-only)
 gemessenem/~~NhY
 gemessenen/~~Vdifj # auto-added
 gemessener/~~MhY
@@ -79000,7 +79000,7 @@ gerechnet/~~JOQRSTUWVgdifj
 gerechtem/~~NhY
 gerechten/~~Vdifj # auto-added
 gerechter/~~MhY
-gerechtere/~~NhY
+gerechtere/~~NhYJ # +adjective reading (was noun-only)
 gerechtes/~~NhY
 gerechtest/~~JOQRSTUWVgdifj
 gerefftem/~~NhY
@@ -79610,7 +79610,7 @@ gesegnetem/~~NhY
 gesegneten/~~Vdifj # auto-added
 gesegneter/~~MhY
 gesegnetes/~~NhY
-gesehene/~~NhY
+gesehene/~~NhYJ # +adjective reading (was noun-only)
 gesehenem/~~NhY
 gesehenen/~~Vdifj # auto-added
 gesehener/~~MhY
@@ -80756,7 +80756,7 @@ gewertetem/~~NhY
 gewerteten/~~Vdifj # auto-added
 gewerteter/~~MhY
 gewertetes/~~NhY
-gewesene/~~NhY
+gewesene/~~NhYJ # +adjective reading (was noun-only)
 gewesenem/~~NhY
 gewesenen/~~Vdifj # auto-added
 gewesener/~~MhY
@@ -80921,7 +80921,7 @@ geworbenen/~~Vdifj # auto-added
 geworbener/~~MhY
 geworbenes/~~NhY
 geworden/~~Vdifj # auto-added
-gewordene/~~NhY
+gewordene/~~NhYJ # +adjective reading (was noun-only)
 gewordenem/~~NhY
 gewordenen/~~Vdifj # auto-added
 gewordener/~~MhY
@@ -81118,7 +81118,7 @@ gezischter/~~MhY
 gezischtes/~~NhY
 gezittert/~~JOQRSTUWVgdifj
 gezofften/~~Vdifj # auto-added
-gezogene/~~NhY
+gezogene/~~NhYJ # +adjective reading (was noun-only)
 gezogenem/~~NhY
 gezogenen/~~Vdifj # auto-added
 gezogener/~~MhY
@@ -82295,7 +82295,7 @@ graublauem/~~NhY
 graublauen/~~Vdifj # auto-added
 graublauer/~~MhY
 graublaues/~~NhY
-graubraun/~~NhY
+graubraun/~~NhYr # +adverb reading (was noun-only)
 graubraune/~~NhY
 graubrot/~~NXh
 graubroten/~~Vdifj # auto-added
@@ -82632,7 +82632,7 @@ großschots/~~NhY
 großtaten/~~Vdifj # auto-added
 großtatest/~~hV
 großtatet/~~NhY
-großteils/~~NhY
+großteils/~~NhYr # +adverb reading (was noun-only)
 großtrombe/~~NhY
 großtund/~~NhY
 großtunde/~~NhY
@@ -83436,7 +83436,7 @@ halbhellem/~~NhY
 halbhellen/~~Vdifj # auto-added
 halbheller/~~MhY
 halbhelles/~~NhY
-halbhoch/~~NhY # auto-added
+halbhoch/~~NhYr # auto-added; +adverb reading (was noun-only)
 halbhohe/~~NhY
 halbhohem/~~NhY
 halbhohen/~~Vdifj # auto-added
@@ -84325,7 +84325,7 @@ hellmache/~~NhY
 hellmacht/~~NhY
 hellraum/~~Zah  # preposition um #  auto-added
 hellraums/~~NhY
-hellrosa/~~NhY
+hellrosa/~~NhYr # +adverb reading (was noun-only)
 hellrotem/~~NhY
 hellroten/~~Vdifj # auto-added
 hellroter/~~MhY
@@ -84706,7 +84706,7 @@ herrische/~~NhY
 herritten/~~Vdifj # auto-added
 herrittet/~~NhY
 herrliche/~~NhY
-herrsche/~~NhY
+herrsche/~~NhYJ # +adjective reading (was noun-only)
 herrschen/~~XZ #  auto-added
 herrscher/~~MhY
 herrschst/~~NhY
@@ -85643,7 +85643,7 @@ hitzigste/~~NhY
 hitzkopf/~~NhY
 hitzkopfs/~~NhY
 hitzköpfe/~~NhY
-hl/~~NhY
+hl/~~NhYr # +adverb reading (was noun-only)
 hobbyist/~~NhY
 hobelnde/~~NhY
 hobelndem/~~NhY
@@ -86470,7 +86470,7 @@ hökertet/~~NhY
 hökerweib/~~NhY
 hölzchen/~~XZ #  auto-added
 hölzchens/~~NhY
-hölzerne/~~NhY
+hölzerne/~~NhYJ # +adjective reading (was noun-only)
 hölzernem/~~NhY
 hölzernen/~~Vdifj # auto-added
 hölzerner/~~MhY
@@ -86691,7 +86691,7 @@ immensen/~~Vdifj # auto-added
 immenser/~~MhY
 immenses/~~NhY
 immerdar/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
-immerfort/~~NhY
+immerfort/~~NhYV # +verb reading (was noun-only)
 immergrün/~~NhY
 immerhin/~~NhY
 immersive/~~NhY
@@ -86765,7 +86765,7 @@ indexiert/~~NhY
 indianer/~~MhY
 indianern/~~Vdifj # auto-added
 indianers/~~NhY
-indigene/~~NhY
+indigene/~~NhYJ # +adjective reading (was noun-only)
 indigenem/~~NhY
 indigenen/~~Vdifj # auto-added
 indigener/~~MhY
@@ -86884,7 +86884,7 @@ inkagrab/~~NhY
 inkagrabs/~~NhY
 inkareich/~~NhY
 inklusion/~~NhY
-inklusive/~~NhY
+inklusive/~~NhYJ # +adjective reading (was noun-only)
 inkognito/~~NhY
 inkorrekt/~~NhY
 inkreisen/~~Vdifj # auto-added
@@ -86974,7 +86974,7 @@ insomnie/~~NhY
 insomnien/~~Vdifj # auto-added
 insoweit/~~RJOQRSTUWqh
 inspektor/~~NhY
-instabile/~~NhY
+instabile/~~NhYJ # +adjective reading (was noun-only)
 instantan/~~NhY
 instanzen/~~Vdifj # auto-added
 instinkt/~~NXh
@@ -87115,7 +87115,7 @@ irgendwem/~~NhY
 irgendwen/~~Vdifj # auto-added
 irgendwer/~~MhY
 irgendwie/~~NhYr # +adverb reading (was noun-only)
-irgendwo/~~NhY
+irgendwo/~~NhYr # +adverb reading (was noun-only)
 iridiums/~~NhY
 irischem/~~NhY
 irischen/~~XZ #  auto-added
@@ -87357,7 +87357,7 @@ jeckester/~~MhY
 jeckestes/~~NhY
 jederart/~~NhY # auto-added
 jederlei/~~NhY
-jedermann/~~NhY
+jedermann/~~NhYr # +adverb reading (was noun-only)
 jederzeit/~~hr
 jedwedem/~~NhY
 jedweden/~~Vdifj # auto-added
@@ -89571,7 +89571,7 @@ kompetenz/~~NhY
 kompilat/~~NXh
 kompilats/~~NhY
 komplanar/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
-komplett/~~NXh
+komplett/~~NXhV # +verb reading (was noun-only)
 komplexe/~~NhY
 komplexem/~~NhY
 komplexen/~~Vdifj # auto-added
@@ -91729,7 +91729,7 @@ lettlands/~~NhY
 lettnern/~~Vdifj # auto-added
 lettners/~~NhY
 letztens/~~NhY
-letztere/~~NhY
+letztere/~~NhYJ # +adjective reading (was noun-only)
 letzterem/~~NhY
 letzteren/~~Vdifj # auto-added
 letzterer/~~MhY
@@ -91777,7 +91777,7 @@ libertär/~~NXh
 libidinös/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 libretto/~~Nbh
 libyerin/~~NhY
-libysche/~~NhY
+libysche/~~NhYJ # +adjective reading (was noun-only)
 libyschem/~~NhY
 libyschen/~~XZ #  auto-added
 libyscher/~~MhY
@@ -91876,7 +91876,7 @@ liedtitel/~~NhY
 liedzeile/~~NhY
 lieferant/~~NhY
 liefernd/~~NhY
-liefernde/~~NhY
+liefernde/~~NhYJ # +adjective reading (was noun-only)
 lieferns/~~NhY
 lieferten/~~Vdifj # auto-added
 liefertet/~~NhY
@@ -93102,7 +93102,7 @@ manganion/~~NhY
 manganit/~~NXh
 manganits/~~NhY
 mangelnd/~~NhY
-mangelnde/~~NhY
+mangelnde/~~NhYJ # +adjective reading (was noun-only)
 mangelten/~~Vdifj # auto-added
 mangeltet/~~NhY
 mangobaum/~~Zah  # preposition um #  auto-added
@@ -93554,7 +93554,7 @@ mehrendes/~~NhY
 mehreren/~~4 # auto-added
 mehrerer/~~MhY
 mehrerlei/~~NhY
-mehrfache/~~NhY
+mehrfache/~~NhYJ # +adjective reading (was noun-only)
 mehrheit/~~FhY
 mehrheits/~~NhY
 mehrling/~~MhY
@@ -93588,7 +93588,7 @@ meintaten/~~Vdifj # auto-added
 meintest/~~NhY
 meinungen/~~Vdifj # auto-added
 meinungs/~~NhY
-meistens/~~NhY
+meistens/~~NhYr # +adverb reading (was noun-only)
 meistere/~~NhY
 meisterin/~~NhY
 meistern/~~Vdifj # auto-added
@@ -94438,7 +94438,7 @@ mittigem/~~NhY
 mittigen/~~Vdifj # auto-added
 mittiger/~~MhY
 mittiges/~~NhY
-mittlere/~~NhY
+mittlere/~~NhYJ # +adjective reading (was noun-only)
 mittlerem/~~NhY
 mittleren/~~Vdifj # auto-added
 mittlerer/~~MhY
@@ -94567,7 +94567,7 @@ moderndes/~~NhY
 modernem/~~NhY
 modernen/~~Vdifj # auto-added
 moderner/~~MhY
-modernere/~~NhY
+modernere/~~NhYJ # +adjective reading (was noun-only)
 modernes/~~NhY
 modernste/~~NhY
 moderten/~~Vdifj # auto-added
@@ -94655,7 +94655,7 @@ molukkers/~~NhY
 molybdat/~~NXh
 molybdats/~~NhY
 molybdän/~~NhY
-momentan/~~NhY
+momentan/~~NhYr # +adverb reading (was noun-only)
 momentane/~~NhY
 momenten/~~Vdifj # auto-added
 momentes/~~NhY
@@ -94743,7 +94743,7 @@ monopolen/~~Vdifj # auto-added
 monopols/~~NhY
 monopoly/~~NhY
 monosomie/~~NhY
-monotone/~~NhY
+monotone/~~NhYJ # +adjective reading (was noun-only)
 monotonem/~~NhY
 monotonen/~~Vdifj # auto-added
 monotoner/~~MhY
@@ -95347,7 +95347,7 @@ müßiggang/~~NhY
 müßiggehe/~~NhY
 müßiggeht/~~NhY
 müßigging/~~NhY
-na/~~NhY
+na/~~NhYr # +adverb reading (was noun-only)
 naabtales/~~NhY
 naabtals/~~NhY
 naarntals/~~NhY
@@ -96177,7 +96177,7 @@ nobelsten/~~Vdifj # auto-added
 nobelster/~~MhY
 nobelstes/~~NhY
 noblesse/~~NhY
-nochmals/~~NhY
+nochmals/~~NhYr # +adverb reading (was noun-only)
 nockenrad/~~NhY
 nodulärem/~~NhY
 nodulären/~~Vdifj # auto-added
@@ -96471,7 +96471,7 @@ obduziere/~~NhY
 obduziert/~~NhY
 obelisken/~~Vdifj # auto-added
 obendrauf/~~NhY
-obendrein/~~NhY
+obendrein/~~NhYr # +adverb reading (was noun-only)
 obendurch/~~NhY
 obenherum/~~Zah  # preposition um #  auto-added
 oberaden/~~Vdifj # auto-added
@@ -96563,7 +96563,7 @@ obusfahrt/~~NhY
 obwalten/~~Vdifj # auto-added
 obwaltend/~~NhYJ # +adjective reading (was noun-only)
 obwaltet/~~NXh
-ockergelb/~~NhY
+ockergelb/~~NhYr # +adverb reading (was noun-only)
 ockerton/~~NhY
 ockertons/~~NhY
 ockertöne/~~NhY
@@ -97196,7 +97196,7 @@ paragraph/~~NhY
 paraguay/~~NhY
 paraguays/~~NhY
 parallaxe/~~NhY
-parallel/~~NXh
+parallel/~~NXhr # +adverb reading (was noun-only)
 paralyse/~~NhY
 parameter/~~MhY
 paranoia/~~NhY
@@ -97824,7 +97824,7 @@ phänotyp/~~NXh # auto-added
 phänotyps/~~NhY
 phönizien/~~Vdifj # auto-added
 phönizier/~~MhY
-pi/~~NhY
+pi/~~NhYr # +adverb reading (was noun-only)
 pianisten/~~Vdifj # auto-added
 pianistin/~~NhY
 pianolack/~~NhY
@@ -98029,7 +98029,7 @@ plagtest/~~NhY
 plakaten/~~Vdifj # auto-added
 plakates/~~NhY
 plakatier/~~MhY
-plakative/~~NhY
+plakative/~~NhYJ # +adjective reading (was noun-only)
 plakette/~~NhY
 plaketten/~~Vdifj # auto-added
 planarem/~~NhY
@@ -98925,7 +98925,7 @@ prävalenz/~~NhY
 präzisem/~~NhY
 präzisen/~~Vdifj # auto-added
 präziser/~~MhY
-präzisere/~~NhY
+präzisere/~~NhYJ # +adjective reading (was noun-only)
 präzises/~~NhY
 präzisest/~~hV
 präzision/~~NhY
@@ -100448,7 +100448,7 @@ releases/~~NhY
 releasten/~~Vdifj # auto-added
 relegiere/~~NhY
 relegiert/~~NhY
-relevant/~~NXh
+relevant/~~NXhV # +verb reading (was noun-only)
 relevanz/~~NhY
 reliabel/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 reliable/~~NhY
@@ -101914,7 +101914,7 @@ samplers/~~NhY
 sampltest/~~NhY
 sampltet/~~NhY
 samstagen/~~Vdifj # auto-added
-samstags/~~NhY
+samstags/~~NhYr # +adverb reading (was noun-only)
 samtanzug/~~NhY
 samtdecke/~~NhY
 samtenem/~~NhY
@@ -102621,7 +102621,7 @@ schleuser/~~MhY
 schleust/~~NhY
 schleuste/~~NhY
 schlichst/~~NhY
-schlicht/~~NXh
+schlicht/~~NXhV # +verb reading (was noun-only)
 schlicks/~~NhY
 schliefen/~~Vdifj # auto-added
 schlieft/~~hV # retag: verb form, was noun (corpus-mined)
@@ -102749,7 +102749,7 @@ schmauste/~~NhY
 schmecke/~~NhY
 schmecken/~~Vdifj # auto-added
 schmeckst/~~hV
-schmeckt/~~NXh
+schmeckt/~~NXhV # +verb reading (was noun-only)
 schmeißen/~~Vdifj # auto-added
 schmeißt/~~NhY
 schmelzen/~~Vdifj # auto-added
@@ -103005,7 +103005,7 @@ schrappt/~~NXh
 schraube/~~NhY
 schrauben/~~Vdifj # auto-added
 schrauber/~~MhY
-schraubt/~~NXh
+schraubt/~~NXhV # +verb reading (was noun-only)
 schrecke/~~NhY
 schrecken/~~Vdifj # auto-added
 schrecks/~~NhY
@@ -103195,7 +103195,7 @@ schwanger/~~MhY
 schwangt/~~NhY
 schwank/~~NXh
 schwanken/~~Vdifj # auto-added
-schwankt/~~NXh
+schwankt/~~NXhV # +verb reading (was noun-only)
 schwans/~~NhY
 schwant/~~NXh
 schwantet/~~NhY
@@ -103332,7 +103332,7 @@ schwäche/~~NhY
 schwächel/~~NhY
 schwächen/~~XZ #  auto-added
 schwächer/~~MhY
-schwächle/~~NhY
+schwächle/~~NhYJ # +adjective reading (was noun-only)
 schwächt/~~NXh
 schwämme/~~NhY
 schwämmen/~~Vdifj # auto-added
@@ -103353,7 +103353,7 @@ schwänze/~~NhY
 schwänzel/~~NhY
 schwänzen/~~Vdifj # auto-added
 schwänzle/~~NhY
-schwänzt/~~NXh
+schwänzt/~~NXhV # +verb reading (was noun-only)
 schwäre/~~NhY
 schwären/~~Vdifj # auto-added
 schwärend/~~NhYJ # +adjective reading (was noun-only)
@@ -103380,7 +103380,7 @@ schwöre/~~NhY
 schwören/~~Vdifj # auto-added
 schwörend/~~NhYJ # +adjective reading (was noun-only)
 schwörst/~~hV
-schwört/~~NhY
+schwört/~~NhYV # +verb reading (was noun-only)
 schwüle/~~NhY
 schwülem/~~NhY
 schwülen/~~Vdifj # auto-added
@@ -103464,7 +103464,7 @@ schätzend/~~NhYJ # +adjective reading (was noun-only)
 schätzens/~~NhY
 schätzern/~~Vdifj # auto-added
 schätzers/~~NhY
-schätzt/~~NXh
+schätzt/~~NXhV # +verb reading (was noun-only)
 schätztet/~~NhY
 schätzung/~~FhY
 schäume/~~NhY
@@ -103567,7 +103567,7 @@ schützend/~~NhYJ # +adjective reading (was noun-only)
 schützern/~~Vdifj # auto-added
 schützers/~~NhY
 schützin/~~NhY
-schützt/~~NXh
+schützt/~~NXhV # +verb reading (was noun-only)
 schütztet/~~NhY
 scouten/~~Vdifj # auto-added
 scoutet/~~NhY
@@ -103745,7 +103745,7 @@ seinsform/~~NhY
 seinsmodi/~~NhY
 seitdem/~~NhY
 seitenast/~~NhY
-seitens/~~NhY
+seitens/~~NhYr # +adverb reading (was noun-only)
 seither/~~MhY
 seitigem/~~NhY
 seitigen/~~Vdifj # auto-added
@@ -103806,7 +103806,7 @@ seligsten/~~Vdifj # auto-added
 seligster/~~MhY
 seligstes/~~NhY
 sellerie/~~NhY
-seltene/~~NhY
+seltene/~~NhYJ # +adjective reading (was noun-only)
 seltenem/~~NhY
 seltenen/~~Vdifj # auto-added
 seltener/~~MhY
@@ -103893,7 +103893,7 @@ senkendes/~~NhY
 senkens/~~NhY
 senkern/~~Vdifj # auto-added
 senkers/~~NhY
-senkrecht/~~NhY
+senkrecht/~~NhYV # +verb reading (was noun-only)
 senktest/~~NhY
 senktet/~~NhY
 senkung/~~FhY
@@ -104593,7 +104593,7 @@ softporno/~~NhY
 softrock/~~NhY
 software/~~NhY
 sogenannt/~~NhY
-sogleich/~~NhY
+sogleich/~~NhYr # +adverb reading (was noun-only)
 sohnemann/~~NhY
 soireen/~~Vdifj # auto-added
 sojafrei/~~NXh
@@ -104709,7 +104709,7 @@ sonnigste/~~NhY
 sonntag/~~NXh
 sonntagen/~~Vdifj # auto-added
 sonntages/~~NhY
-sonntags/~~NhY
+sonntags/~~NhYr # +adverb reading (was noun-only)
 sonntest/~~NhY
 sonntet/~~NhY
 sonnyboy/~~NhY
@@ -104775,8 +104775,8 @@ soutane/~~NhY
 soutanen/~~Vdifj # auto-added
 souvenir/~~NhY
 souvenirs/~~NhY
-souverän/~~NhY
-souveräne/~~NhY
+souverän/~~NhYr # +adverb reading (was noun-only)
+souveräne/~~NhYJ # +adjective reading (was noun-only)
 souveräns/~~NhY
 sovereign/~~NhY
 sowieso/~~NhY
@@ -105217,7 +105217,7 @@ springens/~~NhY
 springer/~~MhY
 springern/~~Vdifj # auto-added
 springers/~~NhY
-springt/~~NhY
+springt/~~NhYV # +verb reading (was noun-only)
 sprinten/~~Vdifj # auto-added
 sprintend/~~NhYJ # +adjective reading (was noun-only)
 sprinter/~~MhY
@@ -106926,7 +106926,7 @@ surrtest/~~NhY
 surrtet/~~NhY
 sushibars/~~NhY
 sushikoch/~~NhY
-suspekt/~~NXh
+suspekt/~~NXhV # +verb reading (was noun-only)
 suspektem/~~NhY
 suspekten/~~Vdifj # auto-added
 suspekter/~~MhY
@@ -107658,7 +107658,7 @@ tauscht/~~NXh
 tauschten/~~Vdifj # auto-added
 tauschtet/~~NhY
 tausend/~~NhY1
-tausende/~~NhY
+tausende/~~NhYJ # +adjective reading (was noun-only)
 tausendem/~~NhY
 tausenden/~~Vdifj # auto-added
 tausender/~~MhY
@@ -107802,7 +107802,7 @@ teilhabt/~~NhY
 teilhast/~~NhY
 teilhat/~~NhY
 teilhätte/~~NhY
-teilnahm/~~NXh
+teilnahm/~~NXhr # +adverb reading (was noun-only)
 teilnahmt/~~NhY
 teilnehme/~~NhY
 teilnehmt/~~NhY
@@ -108808,7 +108808,7 @@ trauere/~~NhY
 trauern/~~Vdifj # auto-added
 trauernd/~~NhY
 trauernde/~~NhY
-trauert/~~NXh
+trauert/~~NXhV # +verb reading (was noun-only)
 trauerten/~~Vdifj # auto-added
 trauertet/~~NhY
 traufen/~~Vdifj # auto-added
@@ -108844,7 +108844,7 @@ trautet/~~NhY
 trauung/~~FhY
 trauungen/~~Vdifj # auto-added
 trauzeuge/~~NhY
-travers/~~NXh
+travers/~~NXhr # +adverb reading (was noun-only)
 traversem/~~NhY
 traversen/~~Vdifj # auto-added
 traverser/~~MhY
@@ -109608,7 +109608,7 @@ täuschen/~~XZ #  auto-added
 täuschend/~~NhY
 täuschens/~~NhY
 täuschst/~~NhY
-täuscht/~~NXh
+täuscht/~~NXhV # +verb reading (was noun-only)
 täuschten/~~Vdifj # auto-added
 täuschtet/~~NhY
 täuschung/~~FhY
@@ -110055,11 +110055,11 @@ umgarntem/~~NhY
 umgarnter/~~MhY
 umgarntes/~~NhY
 umgarntet/~~NhY
-umgebaut/~~NXh
+umgebaut/~~NXhV # +verb reading (was noun-only)
 umgeben/~~Vdifj # auto-added
 umgebend/~~NhYJ # +adjective reading (was noun-only)
 umgebende/~~NhYJ # +adjective reading (was noun-only)
-umgebene/~~NhY
+umgebene/~~NhYJ # +adjective reading (was noun-only)
 umgebenem/~~NhY
 umgebenen/~~Vdifj # auto-added
 umgebener/~~MhY
@@ -110073,7 +110073,7 @@ umgedacht/~~NhY
 umgedreht/~~NhY
 umgeeicht/~~NhY
 umgefasst/~~NhY
-umgeformt/~~NhY
+umgeformt/~~NhYV # +verb reading (was noun-only)
 umgefärbt/~~NhY
 umgefüllt/~~NhY
 umgeguckt/~~NhY
@@ -110090,7 +110090,7 @@ umgehung/~~FhY
 umgehungs/~~NhY
 umgehängt/~~NhY
 umgehört/~~NhY
-umgekehrt/~~NhY
+umgekehrt/~~NhYV # +verb reading (was noun-only)
 umgekippt/~~NhY
 umgeklebt/~~NhY
 umgeladen/~~Vdifj # auto-added
@@ -110111,9 +110111,9 @@ umgerannt/~~NhY
 umgeräumt/~~NhY
 umgerührt/~~NhY
 umgesehen/~~Vdifj # auto-added
-umgesetzt/~~NhY
+umgesetzt/~~NhYV # +verb reading (was noun-only)
 umgespult/~~NhY
-umgespurt/~~NhY
+umgespurt/~~NhYV # +verb reading (was noun-only)
 umgespült/~~NhY
 umgestylt/~~NhY
 umgesägt/~~NXh
@@ -110566,7 +110566,7 @@ umsetzens/~~NhY
 umsetzer/~~MhY
 umsetzern/~~Vdifj # auto-added
 umsetzers/~~NhY
-umsetzt/~~NXh
+umsetzt/~~NXhV # +verb reading (was noun-only)
 umsetztet/~~NhY
 umsetzung/~~FhY
 umsicht/~~NhY
@@ -110582,7 +110582,7 @@ umsinken/~~Vdifj # auto-added
 umsinkend/~~NhYJ # +adjective reading (was noun-only)
 umsinkst/~~hV
 umsinkt/~~NhY
-umsonst/~~NhY
+umsonst/~~NhYV # +verb reading (was noun-only)
 umsorg/~~Vej # REPLACES umsorgen
 umsorgt/~~NXh
 umsorgtem/~~NhY
@@ -110956,7 +110956,7 @@ unbeladen/~~Vdifj # auto-added
 unbelebt/~~NXh
 unbeleckt/~~NhY
 unbelegt/~~NXh
-unbeliebt/~~NhY
+unbeliebt/~~NhYV # +verb reading (was noun-only)
 unbelohnt/~~NhY
 unbemalt/~~NhY
 unbemannt/~~NhY
@@ -110982,7 +110982,7 @@ unbewegt/~~NXh
 unbewehrt/~~NhY
 unbeweibt/~~NhY
 unbeweint/~~NhY
-unbewohnt/~~NhY
+unbewohnt/~~NhYV # +verb reading (was noun-only)
 unbewusst/~~hJOQRSTUWq
 unbewährt/~~NhY
 unbewölkt/~~NhY
@@ -111127,7 +111127,7 @@ ungelocht/~~NhY
 ungelogen/~~Vdifj # auto-added
 ungelöst/~~NhY
 ungemacht/~~NhY
-ungemein/~~NhY
+ungemein/~~NhYr # +adverb reading (was noun-only)
 ungenannt/~~NhY
 ungeniert/~~NhY
 ungenormt/~~NhY
@@ -111141,7 +111141,7 @@ ungeprüft/~~NhY
 ungerade/~~NhY
 ungerahmt/~~NhY
 ungeraten/~~Vdifj # auto-added
-ungerecht/~~NhY
+ungerecht/~~NhYV # +verb reading (was noun-only)
 ungereimt/~~NhY
 ungerufen/~~Vdifj # auto-added
 ungerächt/~~NhY
@@ -111291,7 +111291,7 @@ unruhen/~~Vdifj # auto-added
 unsachte/~~NhY
 unsanft/~~NhY
 unsaniert/~~NhY
-unscharf/~~NhY
+unscharf/~~NhYr # +adverb reading (was noun-only)
 unschuld/~~NhY
 unschärfe/~~NhY
 unschön/~~NhY
@@ -111349,14 +111349,14 @@ unterflog/~~NhY
 unterfuhr/~~NhY
 untergehe/~~NhY
 untergeht/~~NhY
-unterging/~~NhY
+unterging/~~NhYV # +verb reading (was noun-only)
 untergrub/~~NhY
 unterhalb/~~hP
 unterhebe/~~NhY
 unterhebt/~~NhY
 unterhob/~~NhY
 unterhobt/~~NhY
-unterhält/~~NhY
+unterhält/~~NhYV # +verb reading (was noun-only)
 unterhöbe/~~NhY
 unterkam/~~NhY
 unterkamt/~~NhY
@@ -111366,14 +111366,14 @@ unterlag/~~hV
 unterlagt/~~hV # retag: finite verb form, was noun (corpus-mined)
 unterlass/~~NhY
 unterlege/~~NhY
-unterlegt/~~NhY
+unterlegt/~~NhYV # +verb reading (was noun-only)
 unterlief/~~NhY
 unterließ/~~NhY
 unterläge/~~NhY
 unterlägt/~~NhY
 untermale/~~NhY
 untermalt/~~NhY
-unternahm/~~NhY
+unternahm/~~NhYV # +verb reading (was noun-only)
 unternimm/~~NhY
 unterperm/~~NhY
 unterrede/~~NhY
@@ -111392,7 +111392,7 @@ untertan/~~NhY
 untertann/~~NhY
 untertans/~~NhY
 unterwarf/~~NhY
-unterwegs/~~NhY
+unterwegs/~~NhYr # +adverb reading (was noun-only)
 unterwies/~~NhY
 unterzog/~~NhY
 unterzogt/~~NhY
@@ -111665,7 +111665,7 @@ vanillin/~~NhY
 vanilline/~~NhY
 vanillins/~~NhY
 variabel/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-variable/~~NhY
+variable/~~NhYJ # +adjective reading (was noun-only)
 variablem/~~NhY
 variablen/~~Vdifj # auto-added
 variabler/~~MhY
@@ -111811,7 +111811,7 @@ verbauere/~~NhY
 verbauern/~~Vdifj # auto-added
 verbauert/~~NhY
 verbaure/~~NhY
-verbaut/~~NXh
+verbaut/~~NXhV # +verb reading (was noun-only)
 verbautem/~~NhY
 verbauter/~~MhY
 verbautes/~~NhY
@@ -111842,7 +111842,7 @@ verblasst/~~hV
 verbleit/~~NXh
 verblende/~~NhY
 verblicht/~~NhY
-verblieb/~~NhY
+verblieb/~~NhYV # +verb reading (was noun-only)
 verbliebt/~~NhY
 verbloggt/~~NhY
 verblute/~~NhY
@@ -111971,7 +111971,7 @@ verdicke/~~NhY
 verdicken/~~Vdifj # auto-added
 verdickst/~~hV
 verdickt/~~hV # retag: finite verb form, was noun (corpus-mined)
-verdiene/~~NhY
+verdiene/~~NhYJ # +adjective reading (was noun-only)
 verdienen/~~Vdifj # auto-added
 verdiener/~~MhY
 verdienst/~~hV
@@ -112078,8 +112078,8 @@ vereidigt/~~NhY
 vereinens/~~NhY
 vereines/~~NhY
 vereinige/~~NhY
-vereinigt/~~NhY
-vereint/~~NXh
+vereinigt/~~NhYV # +verb reading (was noun-only)
+vereint/~~NXhV # +verb reading (was noun-only)
 vereintem/~~NhY
 vereinter/~~MhY
 vereintes/~~NhY
@@ -112236,7 +112236,7 @@ verfüge/~~NhY
 verfügend/~~NhY
 verfügens/~~NhY
 verfügst/~~NhY
-verfügt/~~NXh
+verfügt/~~NXhV # +verb reading (was noun-only)
 verfügtem/~~NhY
 verfügtes/~~NhY
 verfügtet/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -112276,7 +112276,7 @@ vergaßt/~~hV # retag: finite verb form, was noun (corpus-mined)
 vergebe/~~NhY
 vergeben/~~Vdifj # auto-added
 vergebend/~~NhYJ # +adjective reading (was noun-only)
-vergebene/~~NhY
+vergebene/~~NhYJ # +adjective reading (was noun-only)
 vergebens/~~hV
 vergeber/~~MhY
 vergebern/~~Vdifj # auto-added
@@ -112395,7 +112395,7 @@ verhaktem/~~NhY
 verhakter/~~MhY
 verhaktes/~~NhY
 verhaktet/~~hV # retag: finite verb form, was noun (corpus-mined)
-verhalf/~~NhY
+verhalf/~~NhYr # +adverb reading (was noun-only)
 verhalle/~~NhY
 verhallen/~~Vdifj # auto-added
 verhallst/~~hV
@@ -112634,7 +112634,7 @@ verknotet/~~NhY
 verknäule/~~NhY
 verknäult/~~NhY
 verknüpfe/~~NhY
-verknüpft/~~NhY
+verknüpft/~~NhYV # +verb reading (was noun-only)
 verkoche/~~NhY
 verkochen/~~XZ #  auto-added
 verkochst/~~NhY
@@ -112740,7 +112740,7 @@ verlegens/~~NhY
 verleger/~~MhY
 verlegern/~~Vdifj # auto-added
 verlegers/~~NhY
-verlegt/~~NXh
+verlegt/~~NXhV # +verb reading (was noun-only)
 verlegtem/~~NhY
 verlegter/~~MhY
 verlegtes/~~NhY
@@ -112772,7 +112772,7 @@ verlesen/~~Vdifj # auto-added
 verlesene/~~NhY
 verlesens/~~NhY
 verlesung/~~FhY
-verletze/~~NhY
+verletze/~~NhYJ # +adjective reading (was noun-only)
 verletzen/~~Vcej #  auto-added | injure, hurt - needs conjugation for Verletzung
 verletzer/~~MhY
 verletzt/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -112780,8 +112780,8 @@ verleugne/~~NhY
 verleumde/~~NhY
 verlieben/~~Vdifj # auto-added
 verliebt/~~hV
-verlief/~~NhY
-verlieh/~~NhY
+verlief/~~NhYV # +verb reading (was noun-only)
+verlieh/~~NhYr # +adverb reading (was noun-only)
 verlieht/~~NhY
 verlier/~~MhY
 verliere/~~NhY
@@ -112829,7 +112829,7 @@ verlusts/~~NhY
 verlädt/~~NhY
 verlänger/~~MhY
 verlängre/~~NhY
-verlässt/~~NhY
+verlässt/~~NhYV # +verb reading (was noun-only)
 verlästre/~~NhY
 verläufe/~~NhY
 verläuft/~~hV
@@ -112954,7 +112954,7 @@ vermöbel/~~NXh
 vermöbelt/~~NhY
 vermöble/~~NhY
 vermöchte/~~NhY
-vermöge/~~NhY
+vermöge/~~NhYJ # +adjective reading (was noun-only)
 vermögen/~~NhV # noun and verb
 vermögend/~~NhYJ # +adjective reading (was noun-only)
 vermögens/~~NhY
@@ -112988,7 +112988,7 @@ verneinen/~~Vdifj # auto-added
 verneinst/~~hV
 verneint/~~hV # retag: finite verb form, was noun (corpus-mined)
 vernetze/~~NhY
-vernetzt/~~NXh
+vernetzt/~~NXhV # +verb reading (was noun-only)
 vernichte/~~NhY
 vernickle/~~NhY
 verniete/~~NhY
@@ -113047,7 +113047,7 @@ verpetzen/~~Vdifj # auto-added
 verpetzt/~~hV # retag: finite verb form, was noun (corpus-mined)
 verpfiff/~~NhY
 verpflege/~~NhY
-verpflegt/~~NhY
+verpflegt/~~NhYV # +verb reading (was noun-only)
 verpfände/~~NhY
 verpissen/~~Vdifj # auto-added
 verpisst/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -113245,8 +113245,8 @@ verschlug/~~NhY
 verschob/~~NhY
 verschobt/~~hV # retag: finite verb form, was noun (corpus-mined)
 verschone/~~NhY
-verschont/~~NhY
-verschoss/~~NhY
+verschont/~~NhYV # +verb reading (was noun-only)
+verschoss/~~NhYr # +adverb reading (was noun-only)
 verschule/~~NhY
 verschult/~~NhY
 verschwor/~~NhY
@@ -113258,7 +113258,7 @@ versdrama/~~NhY
 versehe/~~NhY
 versehen/~~Vdifj # auto-added
 versehend/~~NhYJ # +adjective reading (was noun-only)
-versehene/~~NhY
+versehene/~~NhYJ # +adjective reading (was noun-only)
 versehens/~~NhY
 versehre/~~NhY
 versehren/~~Vdifj # auto-added
@@ -113365,7 +113365,7 @@ verspürt/~~hV # retag: finite verb form, was noun (corpus-mined)
 versroman/~~NhY
 verstand/~~hV
 verstands/~~NhY
-verstarb/~~NhY
+verstarb/~~NhYr # +adverb reading (was noun-only)
 verstarbt/~~NhY
 verstaube/~~NhY
 verstaubt/~~NhY
@@ -113402,7 +113402,7 @@ verstoßes/~~NhY
 verstrebe/~~NhY
 verstrebt/~~NhY
 verstreue/~~NhY
-verstreut/~~NhY
+verstreut/~~NhYV # +verb reading (was noun-only)
 verstrich/~~NhY
 verstrome/~~NhY
 verstromt/~~NhY
@@ -113412,7 +113412,7 @@ verstumme/~~NhY
 verstummt/~~hV # retag: finite verb form, was noun (corpus-mined)
 verstände/~~NhY
 verstärke/~~NhY
-verstärkt/~~NhY
+verstärkt/~~NhYV # +verb reading (was noun-only)
 verstöre/~~NhY
 verstören/~~Vdifj # auto-added
 verstörst/~~hV
@@ -113455,7 +113455,7 @@ versüßter/~~MhY
 versüßtes/~~NhY
 versüßtet/~~hV # retag: finite verb form, was noun (corpus-mined)
 vertagens/~~NhY
-vertagt/~~NXh
+vertagt/~~NXhV # +verb reading (was noun-only)
 vertagtem/~~NhY
 vertagter/~~MhY
 vertagtes/~~NhY
@@ -113532,7 +113532,7 @@ vertrimme/~~NhY
 vertrimmt/~~NhY
 vertrug/~~NhY
 verträge/~~NhY
-verträgt/~~NhY
+verträgt/~~NhYV # +verb reading (was noun-only)
 verträte/~~NhY
 verträume/~~NhY
 verträumt/~~NhY
@@ -113585,10 +113585,10 @@ verwalter/~~MhY
 verwaltet/~~hV # retag: finite verb form, was noun (corpus-mined)
 verwandel/~~NhY
 verwandle/~~NhY
-verwandt/~~NXh
+verwandt/~~NXhV # +verb reading (was noun-only)
 verwanze/~~NhY
 verwanzt/~~hV # retag: finite verb form, was noun (corpus-mined)
-verwarf/~~NhY
+verwarf/~~NhYr # +adverb reading (was noun-only)
 verwarne/~~NhY
 verwarnen/~~Vdifj # auto-added
 verwarnt/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -113738,7 +113738,7 @@ verzurre/~~NhY
 verzurren/~~Vdifj # auto-added
 verzurrst/~~hV
 verzurrt/~~hV # retag: finite verb form, was noun (corpus-mined)
-verzweigt/~~NhY
+verzweigt/~~NhYV # +verb reading (was noun-only)
 verzwerge/~~NhY
 verzwergt/~~hV # retag: finite verb form, was noun (corpus-mined)
 verzwickt/~~NhY
@@ -113867,7 +113867,7 @@ viehreich/~~NhY
 vieleck/~~NXh
 vielecken/~~Vdifj # auto-added
 vieleckes/~~NhY
-vielerlei/~~NhY
+vielerlei/~~NhYr # +adverb reading (was noun-only)
 vielfach/~~hr # auto-added
 vielfalt/~~NhY
 vielheit/~~FhY
@@ -114135,7 +114135,7 @@ volltanke/~~NhY
 volltankt/~~NhY
 volltrank/~~NhY
 vollzieh/~~NXh
-vollzieht/~~NhY
+vollzieht/~~NhYV # +verb reading (was noun-only)
 vollzog/~~hV
 vollzogen/~~Vdifj # auto-added
 vollzogt/~~NhY
@@ -114172,7 +114172,7 @@ voraussah/~~NhY
 vorbarock/~~NhY
 vorbehalt/~~NhY
 vorbehält/~~NhY
-vorbeikam/~~NhY
+vorbeikam/~~NhYV # +verb reading (was noun-only)
 vorbeisah/~~NhY
 vorbeizog/~~NhY
 vorbelege/~~NhY
@@ -114212,7 +114212,7 @@ voreilens/~~NhY
 voreilt/~~NXh
 voreiltet/~~NhY
 voreilung/~~FhY
-vorerst/~~NhY
+vorerst/~~NhYV # +verb reading (was noun-only)
 vorfahren/~~Vdifj # auto-added
 vorfahrt/~~NhY
 vorfallen/~~Vdifj # auto-added
@@ -114371,7 +114371,7 @@ vorlieft/~~NhY
 vorliege/~~NhY
 vorliegen/~~Vdifj # auto-added
 vorliegst/~~hV
-vorliegt/~~NhY
+vorliegt/~~NhYV # +verb reading (was noun-only)
 vorließt/~~NhY
 vorlogt/~~NhY
 vorludest/~~NhY
@@ -114415,7 +114415,7 @@ vormundes/~~NhY
 vormunds/~~NhY
 vormärz/~~NhY
 vormärzes/~~NhY
-vornahm/~~NhY
+vornahm/~~NhYV # +verb reading (was noun-only)
 vornahmt/~~NhY
 vornean/~~NhY
 vornedran/~~NhY
@@ -114523,7 +114523,7 @@ vorspule/~~NhY
 vorspulen/~~Vdifj # auto-added
 vorspulst/~~hV
 vorspult/~~NXh
-vorstand/~~NhY
+vorstand/~~NhYV # +verb reading (was noun-only)
 vorstands/~~NhY
 vorstecke/~~NhY
 vorsteckt/~~NhY
@@ -115168,7 +115168,7 @@ websites/~~NhY
 webtest/~~NhY
 wechsele/~~NhY
 wechseln/~~Vdifj # auto-added
-wechselnd/~~NhY
+wechselnd/~~NhYr # +adverb reading (was noun-only)
 wechsels/~~NhY
 wechselt/~~NXh
 wechsle/~~NhY
@@ -115473,7 +115473,7 @@ wegleitet/~~NhY
 weglief/~~NXh
 wegliefen/~~Vdifj # auto-added
 weglieft/~~NhY
-wegließ/~~NXh
+wegließ/~~NXhV # +verb reading (was noun-only)
 wegließen/~~Vdifj # auto-added
 wegließt/~~NhY
 weglob/~~Vej # REPLACES wegloben
@@ -115862,7 +115862,7 @@ weinendes/~~NhY
 weinlese/~~NhY
 weinranke/~~NhY
 weinreich/~~NhY
-weinrot/~~NXh
+weinrot/~~NXhV # +verb reading (was noun-only)
 weinrotem/~~NhY
 weinroten/~~Vdifj # auto-added
 weinroter/~~MhY
@@ -115898,7 +115898,7 @@ weissagt/~~NXh
 weisung/~~FhY
 weisungen/~~Vdifj # auto-added
 weisungs/~~NhY
-weitaus/~~NhY
+weitaus/~~NhYr # +adverb reading (was noun-only)
 weitblick/~~NhY
 weitchor/~~NhY
 weitchors/~~NhY
@@ -115911,7 +115911,7 @@ weitergab/~~NhY
 weiterhin/~~hr
 weiterkam/~~NhY
 weiterlas/~~NhY
-weiters/~~NhY
+weiters/~~NhYr # +adverb reading (was noun-only)
 weitersah/~~NhY
 weiterzog/~~NhY
 weitest/~~hV
@@ -115948,7 +115948,7 @@ weißfärbt/~~NhY
 weißgelb/~~NXh
 weißglühe/~~NhY
 weißglüht/~~NhY
-weißgrau/~~NXh
+weißgrau/~~NXhr # +adverb reading (was noun-only)
 weißkalke/~~NhY
 weißkalkt/~~NhY
 weißling/~~MhY
@@ -116609,7 +116609,7 @@ wobbelst/~~hV
 wobbelt/~~NXh
 wobbelten/~~Vdifj # auto-added
 wobbeltet/~~NhY
-wodurch/~~NhY
+wodurch/~~NhYr # +adverb reading (was noun-only)
 wogegen/~~Vdifj # auto-added
 wogende/~~NhYJ # +adjective reading (was noun-only)
 wogendem/~~NhY
@@ -116708,7 +116708,7 @@ wonniger/~~MhY
 wonnigere/~~NhY
 wonniges/~~NhY
 wonnigste/~~NhY
-woraufhin/~~NhY
+woraufhin/~~NhYr # +adverb reading (was noun-only)
 workout/~~NhY
 workouts/~~NhY
 workshop/~~NhY
@@ -116789,7 +116789,7 @@ wundern/~~Vdifj # auto-added
 wundernd/~~NhY
 wundernde/~~NhY
 wunders/~~NhY
-wundert/~~NXh
+wundert/~~NXhV # +verb reading (was noun-only)
 wundertet/~~NhY
 wundlag/~~NhY
 wundlagen/~~Vdifj # auto-added
@@ -117442,7 +117442,7 @@ zerbisst/~~hV # retag: finite verb form, was noun (corpus-mined)
 zerbomb/~~NXh
 zerbomben/~~Vdifj # auto-added
 zerbombt/~~hV # retag: finite verb form, was noun (corpus-mined)
-zerbrach/~~NhY
+zerbrach/~~NhYr # +adverb reading (was noun-only)
 zerbracht/~~NhY
 zerbreche/~~NhY
 zerbrecht/~~NhY
@@ -117675,7 +117675,7 @@ zerstoß/~~NXh
 zerstoßen/~~Vdifj # auto-added
 zerstoßt/~~hV # retag: finite verb form, was noun (corpus-mined)
 zerstreu/~~NXh
-zerstreut/~~NhY
+zerstreut/~~NhYV # +verb reading (was noun-only)
 zerstritt/~~NhY
 zerstäche/~~NhY
 zerstäube/~~NhY
@@ -118334,7 +118334,7 @@ zugedämmt/~~NhY
 zugeeilt/~~NXh
 zugefasst/~~NhY
 zugefaxt/~~NXh
-zugefügt/~~NXh
+zugefügt/~~NXhV # +verb reading (was noun-only)
 zugeführt/~~hV
 zugefüllt/~~NhY
 zugegeben/~~Vdifj # auto-added
@@ -118353,7 +118353,7 @@ zugehängt/~~NhY
 zugehöre/~~NhY
 zugehören/~~Vdifj # auto-added
 zugehörst/~~hV
-zugehört/~~NXh
+zugehört/~~NXhV # +verb reading (was noun-only)
 zugekauft/~~NhY
 zugekehrt/~~NhY
 zugeklebt/~~NhY
@@ -118369,7 +118369,7 @@ zugelötet/~~NhY
 zugemacht/~~NhY
 zugemutet/~~NhY
 zugemüllt/~~NhY
-zugeneigt/~~NhY
+zugeneigt/~~NhYV # +verb reading (was noun-only)
 zugenickt/~~NhY
 zugenäht/~~NXh
 zugepackt/~~NhY
@@ -118384,7 +118384,7 @@ zugereist/~~NhY
 zugerollt/~~NhY
 zugerufen/~~Vdifj # auto-added
 zugesagt/~~NXh
-zugesandt/~~NhY
+zugesandt/~~NhYV # +verb reading (was noun-only)
 zugesehen/~~Vdifj # auto-added
 zugeselle/~~NhY
 zugesellt/~~NhY
@@ -118399,9 +118399,9 @@ zugetanem/~~NhY
 zugetanen/~~Vdifj # auto-added
 zugetaner/~~MhY
 zugetanes/~~NhY
-zugeteilt/~~NhY
+zugeteilt/~~NhYV # +verb reading (was noun-only)
 zugetraut/~~NhY
-zugewandt/~~NhY
+zugewandt/~~NhYV # +verb reading (was noun-only)
 zugewann/~~NhY
 zugewannt/~~NhY
 zugeweht/~~NXh
@@ -118636,7 +118636,7 @@ zuleitend/~~NhYJ # +adjective reading (was noun-only)
 zuleitens/~~NhY
 zuleitet/~~NXh
 zuleitung/~~FhY
-zuletzt/~~NhY
+zuletzt/~~NhYV # +verb reading (was noun-only)
 zuliebe/~~NhY
 zuliefen/~~Vdifj # auto-added
 zuliefere/~~NhY
@@ -118861,8 +118861,8 @@ zurzeit/~~NhY
 zurückbog/~~NhY
 zurückgab/~~NhY
 zurückhat/~~NhY
-zurückkam/~~NhY
-zurücklag/~~NhY
+zurückkam/~~NhYV # +verb reading (was noun-only)
+zurücklag/~~NhYr # +adverb reading (was noun-only)
 zurücktun/~~NhY
 zurückzog/~~NhY
 zurüste/~~NhY
@@ -118994,7 +118994,7 @@ zusprüche/~~NhY
 zustach/~~NhY
 zustacht/~~NhY
 zustand/~~NhY
-zustande/~~NhY
+zustande/~~NhYJ # +adjective reading (was noun-only)
 zustanden/~~Vdifj # auto-added
 zustandes/~~NhY
 zustandet/~~NhY
@@ -119011,7 +119011,7 @@ zustehe/~~NhY
 zustehen/~~Vdifj # auto-added
 zustehend/~~NhYJ # +adjective reading (was noun-only)
 zustehst/~~hV
-zusteht/~~NhY
+zusteht/~~NhYV # +verb reading (was noun-only)
 zusteige/~~NhY
 zusteigen/~~Vdifj # auto-added
 zusteigst/~~hV
@@ -119414,7 +119414,7 @@ zwölftes/~~NhY
 zyankali/~~NhY
 zyanogen/~~Vdifj # auto-added
 zyanogene/~~NhY
-zygomorph/~~NhY
+zygomorph/~~NhYr # +adverb reading (was noun-only)
 zygoten/~~Vdifj # auto-added
 zygotän/~~NhY
 zygotäns/~~NhY
@@ -119938,10 +119938,10 @@ zürntet/~~NhY
 überdacht/~~NhY
 überdaure/~~NhY
 überdecke/~~NhY
-überdeckt/~~NhY
+überdeckt/~~NhYV # +verb reading (was noun-only)
 überdehn/~~NhY
 überdehne/~~NhY
-überdehnt/~~NhY
+überdehnt/~~NhYV # +verb reading (was noun-only)
 überdenke/~~NhY
 überdenkt/~~NhY
 überdies/~~NhY
@@ -119981,7 +119981,7 @@ zürntet/~~NhY
 überführt/~~hV # retag: verb form, was noun (corpus-mined)
 überfülle/~~NhY
 überfüllt/~~NhY
-übergab/~~NXh
+übergab/~~NXhV # +verb reading (was noun-only)
 übergaben/~~Vdifj # auto-added
 übergabt/~~hV # retag: finite verb form, was noun (corpus-mined)
 übergangs/~~NhY
@@ -119998,7 +119998,7 @@ zürntet/~~NhY
 übergibt/~~NhY
 übergieße/~~NhY
 übergießt/~~NhY
-überging/~~NhY
+überging/~~NhYV # +verb reading (was noun-only)
 überginge/~~NhY
 übergingt/~~NhY
 überglase/~~NhY
@@ -120059,7 +120059,7 @@ zürntet/~~NhY
 überkippe/~~NhY
 überkippt/~~NhY
 überklebe/~~NhY
-überklebt/~~NhY
+überklebt/~~NhYV # +verb reading (was noun-only)
 überkoche/~~NhY
 überkocht/~~NhY
 überkomme/~~NhY
@@ -120180,7 +120180,7 @@ zürntet/~~NhY
 überseht/~~hV # retag: finite verb form, was noun (corpus-mined)
 übersende/~~NhY
 übersetze/~~NhY
-übersetzt/~~NhY
+übersetzt/~~NhYV # +verb reading (was noun-only)
 übersieh/~~NhY
 übersieht/~~NhY
 überspitz/~~NhY
@@ -120209,7 +120209,7 @@ zürntet/~~NhY
 überteere/~~NhY
 überteert/~~NhY
 übertitle/~~NhY
-übertraf/~~NhY
+übertraf/~~NhYr # +adverb reading (was noun-only)
 übertraft/~~NhY
 übertrage/~~NhY
 übertrags/~~NhY
@@ -120220,11 +120220,11 @@ zürntet/~~NhY
 übertrieb/~~NhY
 übertriff/~~NhY
 übertritt/~~NhY
-übertrug/~~NhY
+übertrug/~~NhYV # +verb reading (was noun-only)
 übertrugt/~~NhY
 überträfe/~~NhY
 überträge/~~NhY
-überträgt/~~NhY
+überträgt/~~NhYV # +verb reading (was noun-only)
 überträte/~~NhY
 übertrüge/~~NhY
 übertöne/~~NhY
@@ -120248,7 +120248,7 @@ zürntet/~~NhY
 überwerfe/~~NhY
 überwerft/~~NhY
 überwiege/~~NhY
-überwiegt/~~NhY
+überwiegt/~~NhYV # +verb reading (was noun-only)
 überwies/~~NhY
 überwiest/~~NhY
 überwinde/~~NhY
@@ -120264,7 +120264,7 @@ zürntet/~~NhY
 überwögen/~~Vdifj # auto-added
 überwöget/~~hV # retag: finite verb form, was noun (corpus-mined)
 überwölbe/~~NhY
-überwölbt/~~NhY
+überwölbt/~~NhYV # +verb reading (was noun-only)
 überzahlt/~~NhY
 überzeuge/~~NhY
 überzeugt/~~hV
@@ -124514,7 +124514,7 @@ herumwüten/~~Nh
 hervorging/~~hV
 hervorhöbe/~~FhY
 hervorkäme/~~FhY
-hervorrief/~~NhY
+hervorrief/~~NhYr # +adverb reading (was noun-only)
 hervortrat/~~NhY
 hervortäte/~~FhY
 hervorzöge/~~FhY
@@ -124751,7 +124751,7 @@ hinstürzen/~~Nh
 hintendran/~~NhY
 hintenüber/~~NhY
 hinterging/~~NhY
-hinterließ/~~NhY
+hinterließ/~~NhYV # +verb reading (was noun-only)
 hinterzöge/~~FhY
 hintreiben/~~Nh
 hinträumen/~~Nh
@@ -125518,7 +125518,7 @@ kehrtwende/~~FhY
 keilförmig/~~RJOQRSTUWqh
 keimhaltig/~~NhY
 keimtötend/~~NhY
-keineswegs/~~NhY
+keineswegs/~~NhYr # +adverb reading (was noun-only)
 keksfabrik/~~NhY
 keksschale/~~FhY
 kelchartig/~~RJOQRSTUWqh
@@ -127030,7 +127030,7 @@ mitgegeben/~~Nh
 mitgehoben/~~Nh
 mitgehofft/~~NhY
 mitgekauft/~~NhY
-mitgekocht/~~NhY
+mitgekocht/~~NhYV # +verb reading (was noun-only)
 mitgekonnt/~~NhY
 mitgelacht/~~NhY
 mitgeladen/~~Nh
@@ -127043,7 +127043,7 @@ mitgemocht/~~NhY
 mitgemusst/~~NhY
 mitgenannt/~~NhY
 mitgenutzt/~~NhY
-mitgeprägt/~~NhY
+mitgeprägt/~~NhYV # +verb reading (was noun-only)
 mitgerannt/~~NhY
 mitgeredet/~~NhY
 mitgereist/~~NhY
@@ -127052,7 +127052,7 @@ mitgesucht/~~NhY
 mitgetanzt/~~NhY
 mitgeteilt/~~NhY
 mitgeturnt/~~NhY
-mitgewirkt/~~NhY
+mitgewirkt/~~NhYV # +verb reading (was noun-only)
 mitgewollt/~~NhY
 mitgewählt/~~NhY
 mitgezogen/~~Nh # auto-added
@@ -127484,7 +127484,7 @@ nacktszene/~~FhY
 nagelartig/~~RJOQRSTUWqh
 nagelklaue/~~FhY
 nahbereich/~~NhY
-nahegelegt/~~NhY
+nahegelegt/~~NhYV # +verb reading (was noun-only)
 nahekommen/~~Nh
 naheliegen/~~Nh # auto-added
 nahestehen/~~Nh
@@ -127535,7 +127535,7 @@ natronkalk/~~NhY
 naturalien/~~Nh
 naturblond/~~NhY
 naturferne/~~FhY
-naturgemäß/~~NhY
+naturgemäß/~~NhYr # +adverb reading (was noun-only)
 naturnäher/~~NhY
 naturrasen/~~Nh
 navigation/~~FhY
@@ -127661,7 +127661,7 @@ niederhieb/~~NhY
 niederhing/~~NhY
 niederkäme/~~FhY
 niederlage/~~FhY
-niederließ/~~NhY
+niederließ/~~NhYr # +adverb reading (was noun-only)
 niederrang/~~NhY
 niederriss/~~NhY
 niederritt/~~NhY
@@ -128912,7 +128912,7 @@ riechorgan/~~NhY
 riechstoff/~~NhY
 riedfläche/~~FhY
 riemannsch/~~NhY
-riesengroß/~~NhY
+riesengroß/~~NhYr # +adverb reading (was noun-only)
 riesenhaft/~~NhY
 riffbarsch/~~NhY
 riffelkamm/~~NhY
@@ -129387,7 +129387,7 @@ schlenkern/~~NhY
 schlepptau/~~NhY
 schlesisch/~~RJOQRSTUWqh
 schleudern/~~NhY
-schlichten/~~Nh
+schlichten/~~NhV # +verb reading (was noun-only)
 schlifftyp/~~NhY # auto-added
 schlingern/~~rh # adverb gladly
 schlittern/~~NhY
@@ -129576,7 +129576,7 @@ segensbuch/~~NhY
 segensvoll/~~NhY
 seglerpaar/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 sehenlässt/~~NhY
-sehenswert/~~NhY
+sehenswert/~~NhYV # +verb reading (was noun-only)
 seherblick/~~NhY
 sehergaben/~~Nh
 sehnsüchte/~~FhY
@@ -129951,7 +129951,7 @@ spundwände/~~FhY
 spurstabil/~~NhY
 spätabends/~~NhY
 spätbarock/~~NhY
-spätestens/~~NhY
+spätestens/~~NhYr # +adverb reading (was noun-only)
 spätfröste/~~FhY
 spätherbst/~~NhY
 spätnachts/~~NhY
@@ -130058,7 +130058,7 @@ steuerbord/~~NhY
 steuerbyte/~~FhY
 steuerfile/~~FhY
 steuerflag/~~NhY
-steuerfrei/~~NhY
+steuerfrei/~~NhYr # +adverb reading (was noun-only)
 steuerlich/~~JOQRSTUWqh
 steuerungs/~~NhY
 stewardess/~~NhY
@@ -130787,7 +130787,7 @@ umfänglich/~~JOQRSTUWqh
 umgebettet/~~NhY
 umgebildet/~~NhY
 umgeblickt/~~NhY
-umgebracht/~~NhY
+umgebracht/~~NhYV # +verb reading (was noun-only)
 umgebunden/~~Nh
 umgedeutet/~~NhY
 umgedruckt/~~NhY
@@ -131030,7 +131030,7 @@ unstillbar/~~JOQRSTUWqh
 untendurch/~~NhY
 untenherum/~~NhY
 unteraktiv/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-unterblieb/~~NhY
+unterblieb/~~NhYV # +verb reading (was noun-only)
 unterboten/~~Nh
 unterbrach/~~NhY
 unterbrich/~~NhY
@@ -131064,7 +131064,7 @@ unterschob/~~NhY
 unterseits/~~NhY
 untersetzt/~~NhY
 unterspree/~~FhY
-unterstand/~~NhY
+unterstand/~~NhYV # +verb reading (was noun-only)
 untersucht/~~hV
 untertrieb/~~NhY
 untertägig/~~NhY
@@ -131084,7 +131084,7 @@ unverkauft/~~NhY
 unverkürzt/~~NhY
 unverlangt/~~NhY
 unverlaust/~~NhY
-unverletzt/~~NhY
+unverletzt/~~NhYV # +verb reading (was noun-only)
 unverlinkt/~~NhY
 unvermerkt/~~NhY
 unvermutet/~~NhY
@@ -131390,7 +131390,7 @@ verstorben/~~Nh
 verstrahlt/~~NhY
 verstreben/~~Nh
 verstreuen/~~Nh
-verstrickt/~~NhY
+verstrickt/~~NhYV # +verb reading (was noun-only)
 verstromen/~~Nh
 verströmen/~~Nh
 verstärken/~~Nh
@@ -131436,7 +131436,7 @@ vielblütig/~~NhY
 vielbändig/~~NhY
 vielchörig/~~NhY
 vieldeutig/~~NhY
-vielerorts/~~NhY # auto-added
+vielerorts/~~NhYr # auto-added; +adverb reading (was noun-only)
 vielfarbig/~~JqOQRSTUW
 vielfältig/~~JOQRSTUWqh
 vieljährig/~~NhY
@@ -131611,7 +131611,7 @@ vorgebohrt/~~NhY
 vorgedehnt/~~NhY
 vorgefasst/~~NhY
 vorgeformt/~~NhY
-vorgeführt/~~NhY
+vorgeführt/~~NhYV # +verb reading (was noun-only)
 vorgegerbt/~~NhY
 vorgeheizt/~~NhY
 vorgehängt/~~NhY
@@ -131628,7 +131628,7 @@ vorgeprüft/~~NhY
 vorgeredet/~~NhY
 vorgerollt/~~NhY
 vorgerückt/~~NhY
-vorgesetzt/~~NhY
+vorgesetzt/~~NhYV # +verb reading (was noun-only)
 vorgesorgt/~~NhY
 vorgespült/~~NhY
 vorgestern/~~NhY
@@ -131639,7 +131639,7 @@ vorgeturnt/~~NhY
 vorgewarnt/~~NhY
 vorgewählt/~~NhY
 vorgewärmt/~~NhY
-vorgewölbt/~~NhY
+vorgewölbt/~~NhYV # +verb reading (was noun-only)
 vorgezeigt/~~NhY
 vorgezählt/~~NhY
 vorgreifen/~~Nh
@@ -132060,7 +132060,7 @@ whiskyglas/~~NhY
 widderfell/~~NhY
 widderhorn/~~NhY
 widderkopf/~~NhY
-widerfährt/~~NhY
+widerfährt/~~NhYV # +verb reading (was noun-only)
 widerführe/~~FhY
 widerhaken/~~Nh
 widerklage/~~FhY
@@ -132069,7 +132069,7 @@ widerlegen/~~Nh # auto-added
 widerraten/~~Nh
 widerrufen/~~Nh
 widersagst/~~NhY
-widerstand/~~NhY
+widerstand/~~NhYV # +verb reading (was noun-only)
 widerwille/~~FhY
 widrigkeit/~~FhY
 wiederfand/~~NhY
@@ -132265,8 +132265,8 @@ zeigerwerk/~~NhY
 zeilenfrei/~~NhY
 zeitgebend/~~NhY
 zeitgetreu/~~NhY
-zeitgleich/~~NhY
-zeitlebens/~~NhY
+zeitgleich/~~NhYr # +adverb reading (was noun-only)
+zeitlebens/~~NhYr # +adverb reading (was noun-only)
 zeitnormal/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 zeitraffer/~~NhY
 zeitstabil/~~NhY
@@ -132460,7 +132460,7 @@ zugesellen/~~Nh
 zugesendet/~~NhY
 zugesperrt/~~NhY
 zugespielt/~~NhY
-zugespitzt/~~NhY
+zugespitzt/~~NhYV # +verb reading (was noun-only)
 zugesteckt/~~NhY
 zugestehen/~~Nh
 zugestellt/~~NhY
@@ -132519,7 +132519,7 @@ zurechtkam/~~NhY
 zureichend/~~NhY
 zurückböge/~~FhY
 zurückfand/~~NhY
-zurückfiel/~~NhY
+zurückfiel/~~NhYV # +verb reading (was noun-only)
 zurückflog/~~NhY
 zurückfuhr/~~NhY
 zurückgabe/~~FhY
@@ -132869,7 +132869,7 @@ zürichberg/~~NhY
 Übersetzung/~~FhY
 übersetzer/~~NhY
 übersichts/~~NhY
-übersprang/~~NhY
+übersprang/~~NhYr # +adverb reading (was noun-only)
 überspülen/~~Nh
 überstehen/~~Nh
 überstäche/~~FhY
@@ -133110,9 +133110,9 @@ andenländer/~~NhY
 andenregion/~~FhY
 anderenorts/~~NhY # auto-added
 anderkonten/~~Nh
-andernfalls/~~NhY
+andernfalls/~~NhYr # +adverb reading (was noun-only)
 andersartig/~~NhY
-andersherum/~~NhY
+andersherum/~~NhYr # +adverb reading (was noun-only)
 anderswoher/~~NhY
 anderswohin/~~NhY
 anderweitig/~~NhY
@@ -133162,7 +133162,7 @@ angekreidet/~~NhY
 angekrochen/~~Nh
 angekuppelt/~~NhY
 angekurbelt/~~NhY
-angekündigt/~~NhY
+angekündigt/~~NhYV # +verb reading (was noun-only)
 angelatscht/~~NhY
 angeliefert/~~NhY
 angelnkönig/~~NhY
@@ -133172,7 +133172,7 @@ angemarkert/~~NhY
 angemeckert/~~NhY
 angemustert/~~NhY
 angepfiffen/~~Nh
-angepflanzt/~~NhY
+angepflanzt/~~NhYV # +verb reading (was noun-only)
 angepflaumt/~~NhY
 angepflockt/~~NhY
 angepriesen/~~Nh
@@ -133660,7 +133660,7 @@ aufgespießt/~~NhY
 aufgesprüht/~~NhY
 aufgestallt/~~NhY
 aufgesteckt/~~NhY
-aufgestellt/~~NhY
+aufgestellt/~~NhYV # +verb reading (was noun-only)
 aufgestemmt/~~NhY
 aufgesteppt/~~NhY
 aufgestickt/~~NhY
@@ -133913,7 +133913,7 @@ ausgebissen/~~Nh
 ausgeblasen/~~Nh
 ausgeblutet/~~NhY
 ausgebootet/~~NhY
-ausgebracht/~~NhY
+ausgebracht/~~NhYV # +verb reading (was noun-only)
 ausgebrannt/~~NhY
 ausgebraten/~~Nh
 ausgebremst/~~NhY
@@ -133965,7 +133965,7 @@ ausgeleitet/~~NhY
 ausgeliehen/~~Nh
 ausgelistet/~~NhY
 ausgelitten/~~Nh
-ausgelöscht/~~NhY
+ausgelöscht/~~NhYV # +verb reading (was noun-only)
 ausgelüftet/~~NhY
 ausgemagert/~~NhY
 ausgemauert/~~NhY
@@ -134003,7 +134003,7 @@ ausgespielt/~~NhY
 ausgespuckt/~~NhY
 ausgestanzt/~~NhY
 ausgesteift/~~NhY
-ausgestellt/~~NhY
+ausgestellt/~~NhYV # +verb reading (was noun-only)
 ausgestopft/~~NhY
 ausgestoppt/~~NhY
 ausgestoßen/~~Nh
@@ -134405,7 +134405,7 @@ bedenkenlos/~~NhY
 bedenkfrist/~~NhY
 bedienstete/~~FhY
 bedingtheit/~~FhY
-beeindruckt/~~NhY
+beeindruckt/~~NhYV # +verb reading (was noun-only)
 beerdigungs/~~NhY
 beerenartig/~~NhY
 beerenernte/~~FhY
@@ -134440,7 +134440,7 @@ beherrscher/~~NhY
 beherztheit/~~FhY
 behinderten/~~Nh
 behäbigkeit/~~FhY
-beiderseits/~~NhY
+beiderseits/~~NhYr # +adverb reading (was noun-only)
 beieinander/~~NhY
 beigabenlos/~~NhY
 beigebracht/~~NhY
@@ -135473,7 +135473,7 @@ drehflügler/~~NhY
 drehfreudig/~~NhY
 drehortwahl/~~NhY
 dreibändrig/~~NhY
-dreieinhalb/~~NhY
+dreieinhalb/~~NhYr # +adverb reading (was noun-only)
 dreifeldrig/~~NhY
 dreifigurig/~~NhY
 dreiflächig/~~NhY
@@ -135851,11 +135851,11 @@ eingenommen/~~Nh
 eingenordet/~~NhY
 eingeordnet/~~NhY
 eingepegelt/~~NhY
-eingepfarrt/~~NhY
+eingepfarrt/~~NhYV # +verb reading (was noun-only)
 eingepflegt/~~NhY
 eingeprallt/~~NhY
 eingepreist/~~NhY
-eingepresst/~~NhY
+eingepresst/~~NhYV # +verb reading (was noun-only)
 eingepudert/~~NhY
 eingepökelt/~~NhY
 eingeradelt/~~NhY
@@ -135878,14 +135878,14 @@ eingesessen/~~Nh
 eingesotten/~~Nh
 eingespannt/~~NhY
 eingespeist/~~NhY
-eingesperrt/~~NhY
+eingesperrt/~~NhYV # +verb reading (was noun-only)
 eingespielt/~~NhY
 eingesprüht/~~NhY
 eingestanzt/~~NhY
 eingestaubt/~~NhY
 eingesteckt/~~NhY
 eingestehen/~~Nh
-eingestellt/~~NhY
+eingestellt/~~NhYV # +verb reading (was noun-only)
 eingestimmt/~~NhY
 eingestoßen/~~Nh
 eingestreut/~~NhY
@@ -137057,7 +137057,7 @@ freigeistig/~~NhY
 freigekauft/~~NhY
 freigemacht/~~NhY
 freigeräumt/~~NhY
-freigesetzt/~~NhY
+freigesetzt/~~NhYV # +verb reading (was noun-only)
 freigewählt/~~NhY
 freikratzen/~~Nh
 freikämpfen/~~Nh
@@ -137183,7 +137183,7 @@ fühlerlehre/~~FhY
 führbarkeit/~~FhY
 führungslos/~~NhY
 füllertinte/~~FhY
-fünfeinhalb/~~NhY
+fünfeinhalb/~~NhYr # +adverb reading (was noun-only)
 fünferkette/~~FhY
 fünferreihe/~~FhY
 fünffingrig/~~NhY
@@ -137615,7 +137615,7 @@ glazialzeit/~~NhY
 glaziologie/~~FhY
 gleicharmig/~~NhY
 gleichartig/~~NhY
-gleichfalls/~~NhY
+gleichfalls/~~NhYr # +adverb reading (was noun-only)
 gleichgetan/~~NhY
 gleichheits/~~NhY
 gleichmütig/~~NhY
@@ -138043,7 +138043,7 @@ heimbrächte/~~FhY
 heimgeführt/~~NhY
 heimgekehrt/~~NhY
 heimgereist/~~NhY
-heimgesucht/~~NhY
+heimgesucht/~~NhYV # +verb reading (was noun-only)
 heimgezahlt/~~NhY
 heimgezogen/~~Nh # auto-added
 heimlichtun/~~NhY
@@ -138732,7 +138732,7 @@ hineinragen/~~Nh # auto-added
 hineinrasen/~~Nh
 hineinreden/~~Nh
 hineinrufen/~~Nh
-hineinschob/~~NhY
+hineinschob/~~NhYr # +adverb reading (was noun-only)
 hineinsehen/~~Nh
 hineinsieht/~~NhY
 hineinstach/~~NhY
@@ -138811,7 +138811,7 @@ hinterbacke/~~FhY
 hinterdrein/~~NhY
 hintergehen/~~Nh
 hinterlegen/~~Nh # auto-added
-hinterlässt/~~NhY
+hinterlässt/~~NhYV # +verb reading (was noun-only)
 hinterrücks/~~NhY
 hintersasse/~~FhY
 hintertrieb/~~NhY
@@ -138853,7 +138853,7 @@ hinzufinden/~~Nh
 hinzuführen/~~Nh
 hinzugebaut/~~NhY
 hinzugeeilt/~~NhY
-hinzugefügt/~~NhY
+hinzugefügt/~~NhYV # +verb reading (was noun-only)
 hinzugeholt/~~NhY
 hinzugemalt/~~NhY
 hinzugewann/~~NhY
@@ -144228,7 +144228,7 @@ schwemmsand/~~NhY
 schwemmungs/~~NhY
 schwerefeld/~~NhY
 schweregrad/~~NhY
-schwerfällt/~~NhY
+schwerfällt/~~NhYV # +verb reading (was noun-only)
 schwergetan/~~NhY
 schwerhörig/~~RJOQRSTUWqh
 schwerkrank/~~NhY
@@ -144885,7 +144885,7 @@ stilisieren/~~Nh
 stilistisch/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 stillarbeit/~~NhY
 stilldemenz/~~NhY
-stillgelegt/~~NhY
+stillgelegt/~~NhYV # +verb reading (was noun-only)
 stillhalten/~~Nh
 stillliegen/~~Nh # auto-added
 stillsetzen/~~Nh
@@ -146208,7 +146208,7 @@ vielstimmig/~~RJOQRSTUWqh
 vielstämmig/~~RJOQRSTUWqh
 vielstöckig/~~RJOQRSTUWqh
 vielzitiert/~~NhY
-viereinhalb/~~NhY
+viereinhalb/~~NhYr # +adverb reading (was noun-only)
 viererbande/~~FhY
 viererkajak/~~NhY
 viererkette/~~FhY
@@ -146387,7 +146387,7 @@ vorgespannt/~~NhY
 vorgespielt/~~NhY
 vorgestanzt/~~NhY
 vorgesteckt/~~NhY
-vorgestellt/~~NhY
+vorgestellt/~~NhYV # +verb reading (was noun-only)
 vorgestülpt/~~NhY
 vorgestürmt/~~NhY
 vorgeöffnet/~~NhY
@@ -147929,7 +147929,7 @@ angeschüttet/~~NhY
 angesprochen/~~Nh
 angesprungen/~~Nh # auto-added
 angestachelt/~~NhY
-angestellten/~~Nh
+angestellten/~~NhV # +verb reading (was noun-only)
 angestrichen/~~Nh
 angestückelt/~~NhY
 angetrocknet/~~NhY
@@ -148527,8 +148527,8 @@ ausgestiegen/~~Nh # auto-added
 ausgestochen/~~Nh
 ausgestorben/~~Nh
 ausgestrahlt/~~hV
-ausgestreckt/~~NhY
-ausgetauscht/~~NhY
+ausgestreckt/~~NhYV # +verb reading (was noun-only)
+ausgetauscht/~~NhYV # +verb reading (was noun-only)
 ausgetrickst/~~NhY
 ausgetrieben/~~Nh
 ausgetrunken/~~Nh
@@ -148851,7 +148851,7 @@ bayernherzog/~~NhY
 bayernkurier/~~NhY
 bayernpartei/~~NhY
 bayernstraße/~~FhY
-beabsichtigt/~~NhY
+beabsichtigt/~~NhYV # +verb reading (was noun-only)
 beaglehündin/~~NhY
 beanspruchen/~~Nh
 beantragungs/~~NhY
@@ -150010,7 +150010,7 @@ durchgerollt/~~NhY
 durchgerührt/~~NhY
 durchgesackt/~~NhY
 durchgesehen/~~Nh
-durchgesetzt/~~NhY
+durchgesetzt/~~NhYV # +verb reading (was noun-only)
 durchgesiebt/~~NhY
 durchgespült/~~NhY
 durchgestylt/~~NhY
@@ -150974,7 +150974,7 @@ festgenommen/~~Nh
 festgesessen/~~Nh
 festgespannt/~~NhY
 festgesteckt/~~NhY
-festgestellt/~~NhY
+festgestellt/~~NhYV # +verb reading (was noun-only)
 festgetreten/~~Nh
 festklammern/~~NhY
 festlichkeit/~~FhY
@@ -151358,7 +151358,7 @@ freigelaufen/~~Nh
 freigenommen/~~Nh
 freigepresst/~~NhY
 freigespielt/~~NhY
-freigestellt/~~NhY
+freigestellt/~~NhYV # +verb reading (was noun-only)
 freigeworden/~~Nh
 freiherrlich/~~JOQRSTUWqh
 freimaurerei/~~NhY
@@ -152171,7 +152171,7 @@ gräserpollen/~~Nh
 grätenmuster/~~NhY
 grönlandhund/~~NhY
 grönländisch/~~JOQRSTUWqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-größtenteils/~~NhY
+größtenteils/~~NhYr # +adverb reading (was noun-only)
 größtmöglich/~~JOQRSTUWqh
 größtrechner/~~NhY
 grünspanfraß/~~NhY
@@ -153974,7 +153974,7 @@ iodometrisch/~~RJOQRSTUWqh
 ionendünnung/~~FhY
 ionisierungs/~~NhY
 irgendeinmal/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
-irgendjemand/~~NhY
+irgendjemand/~~NhYr # +adverb reading (was noun-only)
 irgendwelche/~~FhY
 irisablösung/~~FhY
 irisdiagnose/~~FhY
@@ -154412,7 +154412,7 @@ klarakapelle/~~FhY
 klarblickend/~~NhY
 klargegangen/~~Nh # auto-added
 klargekommen/~~Nh
-klargestellt/~~NhY
+klargestellt/~~NhYV # +verb reading (was noun-only)
 klargeworden/~~Nh
 klarinettist/~~NhY
 klartonstufe/~~FhY
@@ -156693,7 +156693,7 @@ niederfahren/~~Nh
 niederfallen/~~Nh
 niederflurig/~~NhY
 niedergeholt/~~NhY
-niedergelegt/~~NhY
+niedergelegt/~~NhYV # +verb reading (was noun-only)
 niedergemäht/~~NhY
 niederhageln/~~NhY
 niederhalten/~~Nh
@@ -158949,7 +158949,7 @@ selbstgenäht/~~NhY
 selbstgewiss/~~NhY
 selbstredend/~~NhY
 selbstsicher/~~NhY
-selbständige/~~FhY
+selbständige/~~FhYJ # +adjective reading (was noun-only)
 selenografie/~~FhY
 selenspiegel/~~NhY
 seleukidisch/~~RJOQRSTUWqh
@@ -160529,7 +160529,7 @@ unterbesetzt/~~NhY
 unterbewusst/~~NhY
 unterbezahlt/~~NhY
 unterbleiben/~~Nh
-unterblieben/~~Nh
+unterblieben/~~NhV # +verb reading (was noun-only)
 unterbrachte/~~FhY
 unterbrechen/~~Nh
 unterbreiten/~~Nh
@@ -160630,7 +160630,7 @@ uraltschrott/~~NhY
 uranylnitrat/~~NhY
 uratmosphäre/~~FhY
 uraufführung/~~FhY
-uraufgeführt/~~NhY
+uraufgeführt/~~NhYV # +verb reading (was noun-only)
 urbanisation/~~FhY
 urbanisieren/~~Nh
 urbanistisch/~~RJOQRSTUWqh
@@ -161282,7 +161282,7 @@ wehrtauglich/~~JOQRSTUWqh
 weibchenhaft/~~NhY
 weiblichkeit/~~FhY
 weichenzunge/~~FhY
-weichgekocht/~~NhY
+weichgekocht/~~NhYV # +verb reading (was noun-only)
 weichgelötet/~~NhY
 weichgemacht/~~NhY
 weichgespült/~~NhY
@@ -161450,7 +161450,7 @@ widderköpfig/~~RJOQRSTUWqh
 widerborstig/~~NhY
 widergehallt/~~NhY
 widerruflich/~~JOQRSTUWqh
-widerspricht/~~NhY
+widerspricht/~~NhYV # +verb reading (was noun-only)
 widerspruchs/~~NhY
 widerspräche/~~FhY
 widersprüche/~~FhY
@@ -162729,7 +162729,7 @@ aufgeschminkt/~~NhY
 aufgeschnappt/~~NhY
 aufgeschnellt/~~NhY
 aufgeschossen/~~Nh
-aufgeschraubt/~~NhY
+aufgeschraubt/~~NhYV # +verb reading (was noun-only)
 aufgeschreckt/~~NhY
 aufgeschwatzt/~~NhY
 aufgeschweißt/~~NhY
@@ -163128,12 +163128,12 @@ bauzeitenplan/~~NhY
 bavariastatue/~~FhY
 bayernherzöge/~~FhY
 beabsichtigen/~~Nh # auto-added
-beachtenswert/~~NhY
+beachtenswert/~~NhYV # +verb reading (was noun-only)
 beaglezüchter/~~NhY
 beantwortungs/~~NhY
 beaufortskala/~~NhY
 beaufschlagen/~~Nh # auto-added
-beaufsichtigt/~~NhY
+beaufsichtigt/~~NhYV # +verb reading (was noun-only)
 bedauernswert/~~NhY
 bedenkenswert/~~NhY
 bedeutsamkeit/~~FhiY
@@ -164166,7 +164166,7 @@ durchgemogelt/~~NhY
 durchgenommen/~~Nh
 durchgenudelt/~~NhY
 durchgepowert/~~NhY
-durchgereicht/~~NhY
+durchgereicht/~~NhYV # +verb reading (was noun-only)
 durchgerieben/~~Nh
 durchgerissen/~~Nh
 durchgeritten/~~Nh
@@ -164439,7 +164439,7 @@ einprägsamste/~~FhY
 einquartieren/~~Nh
 einregulieren/~~Nh
 einreichfrist/~~NhY
-einsatzbereit/~~NhY
+einsatzbereit/~~NhYV # +verb reading (was noun-only)
 einsatzsicher/~~NhY
 einschleichen/~~Nh
 einschlummern/~~NhY
@@ -164799,7 +164799,7 @@ eruptivschlot/~~NhY
 erwachsensein/~~NhY
 erwerberseite/~~FhY
 erwerbswillig/~~RJOQRSTUWqh
-erwähnenswert/~~NhY
+erwähnenswert/~~NhYV # +verb reading (was noun-only)
 erzgebirgisch/~~RJOQRSTUWqh
 erzherzoglich/~~JOQRSTUWqh
 erzieherberuf/~~NhY
@@ -172603,7 +172603,7 @@ sekundengenau/~~NhY
 sekundschritt/~~NhY
 sekundärradar/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 selbstanklage/~~FhY
-selbstbewusst/~~NhY
+selbstbewusst/~~NhYV # +verb reading (was noun-only)
 selbstbezogen/~~Nh # auto-added
 selbstbräuner/~~NhY
 selbsterdacht/~~NhY
@@ -174171,7 +174171,7 @@ unterdrückbar/~~JOQRSTUWqh
 untereinander/~~NhY
 unterfertigen/~~Nh # auto-added
 untergangsort/~~NhY
-untergebracht/~~NhY
+untergebracht/~~NhYV # +verb reading (was noun-only)
 untergebunden/~~Nh
 untergegangen/~~Nh # auto-added
 untergejubelt/~~NhY
@@ -174950,7 +174950,7 @@ weiterfressen/~~Nh
 weitergeatmet/~~NhY
 weitergedacht/~~NhY
 weitergedreht/~~NhY
-weitergeführt/~~NhY
+weitergeführt/~~NhYV # +verb reading (was noun-only)
 weitergegeben/~~Nh
 weitergekonnt/~~NhY
 weitergelernt/~~NhY
@@ -175113,7 +175113,7 @@ wiedergegeben/~~Nh
 wiedergekehrt/~~NhY
 wiedergenesen/~~Nh
 wiedergesehen/~~Nh
-wiedergewählt/~~NhY
+wiedergewählt/~~NhYV # +verb reading (was noun-only)
 wiedergewänne/~~FhY
 wiedergewönne/~~FhY
 wiedergründen/~~Nh
@@ -176559,7 +176559,7 @@ berberverbände/~~FhY
 bereiterklären/~~Nh
 bereitgefunden/~~Nh
 bereitgehalten/~~Nh
-bereitgestellt/~~NhY
+bereitgestellt/~~NhYV # +verb reading (was noun-only)
 bereitzufinden/~~Nh
 bereitzuhalten/~~Nh
 bereitzuliegen/~~Nh # auto-added
@@ -178131,7 +178131,7 @@ ferrulendesign/~~NhY
 fersenendstück/~~NhY
 fertigbekommen/~~Nh
 fertiggebracht/~~NhY
-fertiggestellt/~~NhY
+fertiggestellt/~~NhYV # +verb reading (was noun-only)
 fertigzukochen/~~Nh
 fertigzumachen/~~Nh
 fertigzuwerden/~~Nh
@@ -178690,7 +178690,7 @@ gegenzuchecken/~~Nh
 gegenzurechnen/~~Nh
 gegenzusteuern/~~NhY
 gegenübersehen/~~Nh
-gegenüberstand/~~NhY
+gegenüberstand/~~NhYr # +adverb reading (was noun-only)
 gegenüberträte/~~FhY
 gehbehinderung/~~FhY
 gehegebewohner/~~NhY
@@ -183008,7 +183008,7 @@ niederfrequent/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 niedergebracht/~~NhY
 niedergebrannt/~~NhY
 niedergebrüllt/~~NhY
-niedergedrückt/~~NhY
+niedergedrückt/~~NhYV # +verb reading (was noun-only)
 niedergefahren/~~Nh
 niedergefallen/~~Nh
 niedergegangen/~~Nh # auto-added
@@ -185051,7 +185051,7 @@ shuttleverkehr/~~NhY
 siamkatzenpaar/~~JOQRSTUWqh # retag: adjective (was ~~Nh)
 sichbescheiden/~~Nh
 sichergegangen/~~Nh # auto-added
-sichergestellt/~~NhY
+sichergestellt/~~NhYV # +verb reading (was noun-only)
 sicherzumachen/~~Nh
 sichtbarmachen/~~Nh
 sichtgeschützt/~~NhY
@@ -199565,7 +199565,7 @@ eppendorfpipette/~~FhY
 erbarmungswürdig/~~NhY
 erbgutschädigend/~~NhY
 erbgutschädigung/~~FhY
-erbgutverändernd/~~NhY
+erbgutverändernd/~~NhYr # +adverb reading (was noun-only)
 erbprinzenpalais/~~NhY
 erbschaftsgründe/~~FhY
 erbschaftssteuer/~~NhY
@@ -204563,7 +204563,7 @@ spätkarolingisch/~~RJOQRSTUWqh
 spätmerowingisch/~~RJOQRSTUWqh
 spätrevolutionär/~~NhY
 staatennachfolge/~~FhY
-staatlicherseits/~~NhY
+staatlicherseits/~~NhYr # +adverb reading (was noun-only)
 staatsanwaltlich/~~JOQRSTUWqh
 staatsbürgerlich/~~JOQRSTUWqh
 staatsfreundlich/~~JOQRSTUWqh
@@ -205665,7 +205665,7 @@ vorzutemperieren/~~Nh
 vorübergeglitten/~~Nh
 vorüberzufliegen/~~Nh # auto-added
 vulgärsprachlich/~~JOQRSTUWqh
-väterlicherseits/~~NhY
+väterlicherseits/~~NhYr # +adverb reading (was noun-only)
 völkerbundmandat/~~NhY
 völkerverbindend/~~NhY
 wachsbeschichtet/~~NhY
@@ -206597,7 +206597,7 @@ ecke/~~NY
 ehre/~~NY
 elfe/~~NY
 ende/~~FY
-enge/~~NY
+enge/~~NYr # +adverb reading (was noun-only)
 erbe/~~FY
 erde/~~NY
 fakt/~~NY
@@ -211565,7 +211565,7 @@ tose/~~NY
 tote/~~NY
 ulme/~~NY
 unke/~~NY
-vorn/~~NY
+vorn/~~NYr # +adverb reading (was noun-only)
 ware/~~FhY
 wehe/~~NY
 woge/~~NY
@@ -215169,7 +215169,7 @@ sache/~~NY
 seife/~~NY
 seite/~~NY
 sense/~~NY
-sonne/~~FhY # feminine noun die Sonne
+sonne/~~FhYJ # feminine noun die Sonne; +adjective reading (was noun-only)
 sorge/~~NY
 spule/~~NY
 stufe/~~NY
@@ -215184,7 +215184,7 @@ welle/~~NY
 werft/~~NY
 wette/~~NY
 wille/~~NY
-wolle/~~FhY
+wolle/~~FhYJ # +adjective reading (was noun-only)
 zacke/~~NY
 zeche/~~NY
 zelle/~~NY
@@ -215255,14 +215255,14 @@ prost/~~NY
 pulst/~~V
 pulte/~~NY
 rucke/~~NY
-solle/~~NY
+solle/~~NYJ # +adjective reading (was noun-only)
 viere/~~NY
 verrat/~~NY
 glaser/~~FY
 statut/~~NY
 dragée/~~NY
 solist/~~FY
-stimme/~~NY
+stimme/~~NYJ # +adjective reading (was noun-only)
 übrige/~~NY
 double/~~NY
 dusche/~~NY
@@ -215299,7 +215299,7 @@ schere/~~NY
 sparte/~~NY
 spitze/~~NY
 statue/~~NY
-stelle/~~NY
+stelle/~~NYJ # +adjective reading (was noun-only)
 stiege/~~NY
 strafe/~~NY
 strome/~~NY
@@ -216659,7 +216659,7 @@ herumgeschnipselt/~~NY
 hineinschnüffelst/~~NY
 hinterherdackelst/~~NY
 montagnachmittags/~~NY
-mütterlicherseits/~~NY
+mütterlicherseits/~~NYr # +adverb reading (was noun-only)
 nachzuschärfendem/~~NY
 nachzuschärfender/~~NY
 nachzuschärfendes/~~NY
@@ -219718,18 +219718,18 @@ transmissionselektronenmikroskopie/~~NY
 quecksilberdampfgleichrichteranlage/~~NY
 hauptrefinanzierungsgeschäftszinssätze/~~NY
 restriktionsfragmentlängenpolymorphismus/~~NY
-neue/~~NY
+neue/~~NYr # +adverb reading (was noun-only)
 geht/~~Vtdifj
 nato/~~NY
 blob/~~NY
-from/~~NY
+from/~~NYr # +adverb reading (was noun-only)
 alte/~~NY
 oecd/~~NY
 psml/~~NY
 wrap/~~NY
 date/~~NY
 rote/~~NY
-with/~~NY
+with/~~NYr # +adverb reading (was noun-only)
 wikt/~~NY
 undp/~~NY
 true/~~NY
@@ -219753,7 +219753,7 @@ book/~~NY
 baer/~~NY
 core/~~NY
 eius/~~NY
-that/~~NY
+that/~~NYr # +adverb reading (was noun-only)
 eugh/~~NY
 bmwi/~~NY
 aspx/~~NY
@@ -219792,7 +219792,7 @@ bamf/~~NY
 site/~~NY
 pnas/~~NY
 homo/~~NY
-ruft/~~NY
+ruft/~~NYV # +verb reading (was noun-only)
 mrna/~~NY
 olaf/~~NY
 past/~~NY
@@ -219872,12 +219872,12 @@ work/~~NY
 xfel/~~NY
 vdek/~~NY
 liegt/~~Vdifj
-große/~~NY
+große/~~NYJ # +adjective reading (was noun-only)
 viele/~~4JOQRSTUWq # many (adjective)
 steht/~~Vdifj
 neuen/~~Vdifj
 siehe/~~Vh  # imperative of sehen
-lange/~~NY
+lange/~~NYJ # +adjective reading (was noun-only)
 kommt/~~Vdifj
 floor/~~NY
 neues/~~NY
@@ -219969,7 +219969,7 @@ trump/~~NY
 goods/~~NY
 lboro/~~NY
 rbevb/~~NY
-sinkt/~~NY
+sinkt/~~NYV # +verb reading (was noun-only)
 roads/~~NY
 helle/~~NY
 query/~~NY
@@ -220130,7 +220130,7 @@ machte/~~NY
 nowrap/~~NY
 dritte/~~NY
 lehnte/~~NY
-starke/~~NY
+starke/~~NYJ # +adjective reading (was noun-only)
 nowiki/~~NY
 bleibt/~~V # retag: verb form, was noun (corpus-mined)
 sollte/~~Vt
@@ -220166,7 +220166,7 @@ capita/~~NY
 grosse/~~NY
 future/~~NY
 living/~~NY
-survey/~~NY
+survey/~~NYr # +adverb reading (was noun-only)
 oldrbd/~~NY
 fuehrt/~~NY
 kununu/~~NY
@@ -220213,7 +220213,7 @@ laeuft/~~NY
 goethe/~~NY
 school/~~NY
 angeht/~~NY
-greift/~~NY
+greift/~~NYV # +verb reading (was noun-only)
 laesst/~~NY
 baeume/~~NY
 tigris/~~NY
@@ -220260,7 +220260,7 @@ tötete/~~NY
 hanser/~~NY
 yellow/~~NY
 dehnte/~~NY
-reiche/~~NY
+reiche/~~NYJ # +adjective reading (was noun-only)
 aerger/~~NY
 drehte/~~NY
 discos/~~NY
@@ -220283,8 +220283,8 @@ steiht/~~NY
 lander/~~NY
 invest/~~NY
 nassen/~~Vdifj
-einzige/~~NY
-soziale/~~NY
+einzige/~~NYJ # +adjective reading (was noun-only)
+soziale/~~NYJ # +adjective reading (was noun-only)
 belegte/~~V # retag: finite verb form, was noun (corpus-mined)
 kleinen/~~Vdifj
 jportal/~~JOQRSTUWq # retag: adjective (was ~~N)
@@ -220354,7 +220354,7 @@ strikte/~~NY
 stanzon/~~NY
 hoehlen/~~Vdifj
 imperii/~~NY
-diverse/~~NY
+diverse/~~NYJ # +adjective reading (was noun-only)
 stützte/~~NY
 erfolge/~~NY
 strebte/~~NY
@@ -220394,7 +220394,7 @@ radwege/~~NY
 sharing/~~NY
 mapping/~~NY
 charite/~~NY
-schools/~~NY
+schools/~~NYr # +adverb reading (was noun-only)
 artists/~~NY
 gemüsed/~~NY
 belebte/~~V # retag: finite verb form, was noun (corpus-mined)
@@ -220441,7 +220441,7 @@ lokalem/~~NY
 offenen/~~Vdifj
 compare/~~NY
 muenchen/~~Vdifj
-deutsche/~~NY
+deutsche/~~NYJ # +adjective reading (was noun-only)
 padright/~~NY
 erfolgte/~~V # retag: finite verb form, was noun (corpus-mined)
 sozialen/~~Vdifj
@@ -220466,9 +220466,9 @@ verfügte/~~NY
 amtliche/~~NY
 genutzte/~~NY
 beendete/~~V # retag: finite verb form, was noun (corpus-mined)
-vertritt/~~NY
+vertritt/~~NYV # +verb reading (was noun-only)
 gelangte/~~NY
-populäre/~~NY
+populäre/~~NYJ # +adjective reading (was noun-only)
 boroughs/~~NY
 geprägte/~~NY
 building/~~NY
@@ -220502,12 +220502,12 @@ research/~~NY
 mercedes/~~NY
 tägliche/~~NY
 typische/~~NY
-südliche/~~NY
+südliche/~~NYJ # +adjective reading (was noun-only)
 terrarum/~~NY
 verweist/~~NYV # +verb reading (was noun-only)
 einstige/~~NY
 staedten/~~Vdifj
-language/~~NY
+language/~~NYJ # +adjective reading (was noun-only)
 traveler/~~NY
 schwache/~~NY
 français/~~NY
@@ -220550,7 +220550,7 @@ ecolecon/~~NY
 products/~~NY
 taeglich/~~JOQRSTUWq
 beklagte/~~V # retag: finite verb form, was noun (corpus-mined)
-mellitus/~~NY
+mellitus/~~NYr # +adverb reading (was noun-only)
 ilibrary/~~NY
 gezielte/~~NY
 dominate/~~NY
@@ -220619,7 +220619,7 @@ terminis/~~NY3 # foreign etymology term (Latin/Greek), handled in GermanNounCapi
 infoline/~~NY
 worldcat/~~NY
 verlegte/~~NY
-ähnliche/~~NY
+ähnliche/~~NYJ # +adjective reading (was noun-only)
 bewährte/~~V # retag: finite verb form, was noun (corpus-mined)
 erfüllte/~~V # retag: finite verb form, was noun (corpus-mined)
 peperere/~~NY
@@ -220637,7 +220637,7 @@ erreichte/~~NY
 muenchner/~~NY
 dokumente/~~NY
 deutsches/~~NY
-ehemalige/~~NY
+ehemalige/~~NYJ # +adjective reading (was noun-only)
 regionale/~~NY
 documents/~~NY
 römischen/~~Vdifj
@@ -220652,7 +220652,7 @@ heimische/~~NY
 örtlichen/~~Vdifj
 districts/~~NY
 religiöse/~~NY
-orthodoxe/~~NY
+orthodoxe/~~NYJ # +adjective reading (was noun-only)
 nördliche/~~NY
 worldbank/~~NY
 niedriger/~~NY
@@ -220732,7 +220732,7 @@ einräumte/~~NY
 belastete/~~V # retag: finite verb form, was noun (corpus-mined)
 verfehlte/~~V # retag: finite verb form, was noun (corpus-mined)
 jüdisches/~~NY
-britische/~~NY
+britische/~~NYJ # +adjective reading (was noun-only)
 begegnete/~~V # retag: finite verb form, was noun (corpus-mined)
 verließen/~~Vdifj
 russische/~~NY
@@ -220876,12 +220876,12 @@ klassische/~~NY
 ethnischen/~~Vdifj
 britischen/~~Vdifj
 künstliche/~~NY
-natürliche/~~NY
+natürliche/~~NYJ # +adjective reading (was noun-only)
 restlichen/~~Vdifj
 religiösen/~~Vdifj
 kirchliche/~~NY
 türkischen/~~Vdifj
-königliche/~~NY
+königliche/~~NYJ # +adjective reading (was noun-only)
 verringert/~~NY
 veränderte/~~NY
 wehrdienst/~~NY
@@ -221059,7 +221059,7 @@ zuständige/~~NY
 riverbreak/~~NY
 vermittelt/~~Vdifj
 τεχνολογία/~~NY
-vergleiche/~~NY
+vergleiche/~~NYJ # +adjective reading (was noun-only)
 abgedeicht/~~NYV # +verb reading (was noun-only)
 gebändigte/~~NY
 slawischen/~~Vdifj
@@ -221096,7 +221096,7 @@ preußischen/~~Vdifj
 staatlichen/~~Vdifj
 historische/~~NY
 contentblob/~~NY
-katholische/~~NY
+katholische/~~NYJ # +adjective reading (was noun-only)
 bayerischen/~~Vdifj
 europäische/~~NY
 beschäftigt/~~Vdifj
@@ -221117,7 +221117,7 @@ zusätzliche/~~NY
 offiziellen/~~Vdifj
 beruflichen/~~Vdifj
 deaktiviert/~~NY
-sowjetische/~~NY
+sowjetische/~~NYJ # +adjective reading (was noun-only)
 umgestaltet/~~NY
 bürgerliche/~~NY
 ungeliebtes/~~NY
@@ -221156,10 +221156,10 @@ produzierte/~~NY
 akzeptierte/~~NY
 menschliche/~~NY
 friedlichen/~~Vdifj
-geschaffene/~~NY
+geschaffene/~~NYJ # +adjective reading (was noun-only)
 natürlichen/~~Vdifj
 nachfolgend/~~NY
-gesprochene/~~NY
+gesprochene/~~NYJ # +adjective reading (was noun-only)
 fränkischen/~~Vdifj
 anerkannten/~~Vdifj
 biologische/~~NY
@@ -221173,7 +221173,7 @@ stationiert/~~NY
 ordentliche/~~NY
 niedrigsten/~~Vdifj
 drastischen/~~Vdifj
-elektrische/~~NY
+elektrische/~~NYJ # +adjective reading (was noun-only)
 persönliche/~~NY
 vereinigten/~~Vdifj
 vierspurige/~~NY
@@ -221313,7 +221313,7 @@ latinisiert/~~Vdifj
 phönizische/~~NY
 akkadischen/~~Vdifj
 semitischen/~~Vdifj
-griechische/~~NY
+griechische/~~NYJ # +adjective reading (was noun-only)
 vorhandenen/~~Vdifj
 dudenonline/~~NY
 angenommene/~~NY
@@ -221371,7 +221371,7 @@ zugewiesene/~~NY
 beantwortet/~~NY
 vornehmlich/~~JOQRSTUWq
 vermischtes/~~NY
-verständigt/~~NY
+verständigt/~~NYV # +verb reading (was noun-only)
 unzerstörte/~~NY
 kombinierte/~~NY
 bevorzugten/~~Vdifj
@@ -221429,7 +221429,7 @@ gesetzlichen/~~Vdifj
 öffentlicher/~~NY
 medizinische/~~NY
 siemensstadt/~~NY
-veranschlagt/~~NY
+veranschlagt/~~NYV # +verb reading (was noun-only)
 verschuldung/~~FY
 muenchenwiki/~~NY
 menschlicher/~~NY
@@ -221468,7 +221468,7 @@ destinations/~~NY
 renommierten/~~Vdifj
 veranstaltet/~~NY
 inoffizielle/~~NY
-italienische/~~NY
+italienische/~~NYJ # +adjective reading (was noun-only)
 phönizischen/~~Vdifj
 interessante/~~NY
 umgestaltete/~~NY
@@ -221523,7 +221523,7 @@ verbesserten/~~Vdifj
 zurückwichen/~~Vdifj
 verschärften/~~Vdifj
 ungesetzlich/~~JOQRSTUWq
-gegenseitige/~~NY
+gegenseitige/~~NYJ # +adjective reading (was noun-only)
 westdeutsche/~~NY
 individuelle/~~NY
 konfrontiert/~~NY
@@ -221565,7 +221565,7 @@ stichworteag/~~NY
 griechischer/~~NY
 gestaffelten/~~Vdifj
 erschütterte/~~NY
-verwirklicht/~~NY
+verwirklicht/~~NYV # +verb reading (was noun-only)
 unbeschädigt/~~NY
 umstrittenen/~~Vdifj
 captionalign/~~NY
@@ -221574,7 +221574,7 @@ fluechtlinge/~~NY
 alevitischen/~~Vdifj
 auswaertiges/~~NY
 angeordneten/~~Vdifj
-geringfügige/~~NY
+geringfügige/~~NYJ # +adjective reading (was noun-only)
 europaeische/~~NY
 abwehrplaene/~~NY
 wealthreport/~~NY
@@ -221656,8 +221656,8 @@ bedeutendsten/~~Vdifj
 evangelischen/~~Vdifj
 bundeslaender/~~NY
 französischen/~~Vdifj
-demokratische/~~NY
-eigenständige/~~NY
+demokratische/~~NYJ # +adjective reading (was noun-only)
+eigenständige/~~NYJ # +adjective reading (was noun-only)
 unmittelbarer/~~NY
 aktualisierte/~~NY
 industriellen/~~Vdifj
@@ -221856,7 +221856,7 @@ tourismustaxe/~~NY
 internationale/~~NY
 überregionalen/~~Vdifj
 administrative/~~NY
-niederdeutsche/~~NY
+niederdeutsche/~~NYJ # +adjective reading (was noun-only)
 bundeshaushalt/~~NY
 bundeslaendern/~~NY
 radlhauptstadt/~~NY
@@ -221870,7 +221870,7 @@ erforderlichen/~~Vdifj
 documentarchiv/~~JOQRSTUWq # retag: adjective (was ~~N, corpus-mined as noun)
 geographischen/~~Vdifj
 demografischen/~~Vdifj
-vorherrschende/~~NY
+vorherrschende/~~NYJ # +adjective reading (was noun-only)
 revolutioniert/~~NY
 technologische/~~NY
 erwirtschaftet/~~NY
@@ -222053,7 +222053,7 @@ kerntechnischen/~~Vdifj
 verschiedensten/~~Vdifj
 renommiertesten/~~Vdifj
 dreizehnjährige/~~NY
-leistungsfähige/~~NY
+leistungsfähige/~~NYJ # +adjective reading (was noun-only)
 technologischen/~~Vdifj
 handwoerterbuch/~~NY
 innerstädtische/~~NY
@@ -222110,7 +222110,7 @@ welterbestaetten/~~Vdifj
 zweigeschossigen/~~Vdifj
 landesdenkmalamt/~~NY
 staatsrechtliche/~~NY
-mittelalterliche/~~NY
+mittelalterliche/~~NYJ # +adjective reading (was noun-only)
 hintergrundfarbe/~~NY
 pressemitteilung/~~FY
 joneslanglasalle/~~NY
@@ -222303,7 +222303,7 @@ sehenswuerdigkeiten/~~Vdifj
 gruenflaechengesamt/~~NY
 kunstgeschichtliche/~~NY
 schulartunabhängige/~~NY
-landwirtschaftliche/~~NY
+landwirtschaftliche/~~NYJ # +adjective reading (was noun-only)
 semiprofessionellen/~~Vdifj
 genossenschaftliche/~~NY
 hochschullandschaft/~~JOQRSTUWq
@@ -222334,7 +222334,7 @@ tschechoslowakischen/~~Vdifj
 tourismusstatistiken/~~Vdifj
 migrationshintergrund/~~NY
 deutschlandfunkkultur/~~NY
-verfassungsrechtliche/~~NY
+verfassungsrechtliche/~~NYJ # +adjective reading (was noun-only)
 außerparlamentarische/~~NY
 privatwirtschaftliche/~~NY
 mitgliederentwicklung/~~FY

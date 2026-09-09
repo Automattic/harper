@@ -532,23 +532,10 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
     "vorüber",
 ];
 
-/// Bare, uninflected language names. German etymology and loanword glosses put
-/// one in front of the quoted foreign form, which stays lower case however the
-/// foreign language spells it:
-///
-/// > *gleiches gilt für **englisch** economy, **französisch** économie,
-/// > **italienisch** economia*
-///
-/// > *… wie in vielen europäischen Sprachen **niederländisch** recht,
-/// > **französisch** droit, **spanisch** derecho*
-///
-/// Only the uninflected form is listed. The attributive adjective is inflected
-/// (*die englische Sprache*), so `englische` never triggers this and a genuine
-/// lower-case noun after it is still caught.
-///
-/// Kept in code rather than the dictionary for the same reason as
-/// [`NOUN_PHRASE_LICENSORS`]: it is a syntactic trigger the linter reasons
-/// over, not vocabulary.
+/// Words that join coordinated attributive adjectives inside one noun phrase:
+/// *"in britische, französische **und** niederländische Kolonien"*.
+const COORDINATORS: &[&str] = &["und", "oder", "sowie", "beziehungsweise", "bzw"];
+
 const LANGUAGE_GLOSS_MARKERS: &[&str] = &[
     "deutsch",
     "althochdeutsch",
@@ -746,6 +733,13 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
     /// Looking only at the token to the left, as this linter used to, flags
     /// `wesentliche` in the first phrase and both `große` and `schöne` in the
     /// second, while missing `hund` — the word that actually needs a capital.
+    ///
+    /// The head is always **last**: everything before it is an attributive
+    /// adjective, which German writes lower case, and the head itself is
+    /// capitalized unless it is the very error being looked for. So a
+    /// capitalized token ends the phrase — it *is* the head. Without that,
+    /// *"in Munitionsfabriken eingesetzt"* runs on past `Munitionsfabriken` and
+    /// makes the participle the head.
     fn noun_phrase_roles(tokens: &[&Token], document: &Document) -> Vec<NpRole> {
         let mut roles = vec![NpRole::Outside; tokens.len()];
 
@@ -757,8 +751,51 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             }
 
             let mut end = i + 1;
-            while end < tokens.len() && Self::continues_noun_phrase(tokens[end], document) {
+            loop {
+                if end >= tokens.len() {
+                    break;
+                }
+
+                // Coordinated attributive adjectives are joined by a comma or a
+                // conjunction: "eine neue, radikalere Welle", "in britische,
+                // französische und niederländische Kolonien". Step over the
+                // joiner so the adjectives stay modifiers instead of each
+                // becoming a phrase of its own.
+                let joins_coordination =
+                    matches!(tokens[end].kind, TokenKind::Punctuation(Punctuation::Comma))
+                        || COORDINATORS
+                            .contains(&Self::lowercase_of(tokens[end], document).as_str());
+                if joins_coordination
+                    && end > i + 1
+                    && end + 1 < tokens.len()
+                    && Self::continues_noun_phrase(tokens[end + 1], document)
+                {
+                    end += 1;
+                    continue;
+                }
+
+                if !Self::continues_noun_phrase(tokens[end], document) {
+                    break;
+                }
+
+                let capitalized = document
+                    .get_span_content(&tokens[end].span)
+                    .first()
+                    .is_some_and(|c| c.is_uppercase());
                 end += 1;
+                if capitalized {
+                    break;
+                }
+            }
+            // A trailing joiner is not part of the phrase.
+            while end > i + 1
+                && (matches!(
+                    tokens[end - 1].kind,
+                    TokenKind::Punctuation(Punctuation::Comma)
+                ) || COORDINATORS
+                    .contains(&Self::lowercase_of(tokens[end - 1], document).as_str()))
+            {
+                end -= 1;
             }
 
             if end > i + 1 {

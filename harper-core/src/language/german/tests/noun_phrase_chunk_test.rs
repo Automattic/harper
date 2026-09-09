@@ -109,6 +109,51 @@ mod tests {
         );
     }
 
+    /// The head is the *last* element, and it is capitalized. A lower-case word
+    /// after it belongs to the clause, not to the phrase — without that,
+    /// "in Munitionsfabriken eingesetzt" runs on and makes the participle the
+    /// head of the phrase "in Munitionsfabriken".
+    #[test]
+    fn a_capitalized_head_closes_the_phrase() {
+        for (text, word) in [
+            ("Sie wurden in Munitionsfabriken eingesetzt.", "eingesetzt"),
+            (
+                "Im folgenden Frühjahr befand sich das Regiment dort.",
+                "befand",
+            ),
+            (
+                "Bevor die Bucht erreicht wurde, verlor sie den Mast.",
+                "erreicht",
+            ),
+            (
+                "Das Regiment nahm an keinen Gefechtseinsätzen teil.",
+                "teil",
+            ),
+        ] {
+            let flagged = flagged(text);
+            assert!(
+                !flagged.iter().any(|w| w == word),
+                "{word:?} is outside the phrase in {text:?}; flagged: {flagged:?}"
+            );
+        }
+    }
+
+    /// ...but a lower-case head is still the head, however many adjectives
+    /// precede it.
+    #[test]
+    fn a_lowercase_head_is_still_found() {
+        for (text, word) in [
+            ("Der hund spielt im Garten.", "hund"),
+            ("Er sah die schöne blaue donau.", "donau"),
+        ] {
+            let flagged = flagged(text);
+            assert!(
+                flagged.iter().any(|w| w == word),
+                "{word:?} heads its phrase in {text:?}; flagged: {flagged:?}"
+            );
+        }
+    }
+
     /// Outside a noun phrase entirely, a noun/verb homograph stays a verb.
     #[test]
     fn homograph_outside_a_noun_phrase_is_left_alone() {

@@ -49,6 +49,11 @@ import sys
 import pathlib
 
 DICT = pathlib.Path("harper-core/src/language/german/dictionary.dict")
+# Words vouched for by LanguageTool on a German Wikipedia corpus: they appeared
+# lower case in edited prose and LanguageTool saw nothing wrong, so whatever
+# `dictionary.dict` says they are not unambiguous nouns. Regenerate with
+# `.archive/german-language/scripts/derive_pos_fixes.py`.
+POS_FIXES = pathlib.Path("scripts/german_pos_fixes.tsv")
 NOUN = set("NMFZz")
 VERB = set("Vjgtecxy")
 ADJ = set("JqAOQRSTUW")
@@ -95,6 +100,21 @@ def parse(line):
         return None
     w, fl = body.split("/", 1)
     return w, fl.strip().lstrip("~")
+
+
+def load_pos_fixes():
+    """word -> flag to append, from the LanguageTool-derived table."""
+    flag_for = {"verb": "V", "adjective": "J", "adverb": "r"}
+    fixes = {}
+    if not POS_FIXES.exists():
+        return fixes
+    for line in POS_FIXES.read_text(encoding="utf-8").splitlines():
+        if not line.strip() or line.startswith("#"):
+            continue
+        word, pos = line.split("\t")[:2]
+        if pos in flag_for:
+            fixes[word] = (flag_for[pos], pos)
+    return fixes
 
 
 def main():
@@ -284,8 +304,11 @@ def verb_evidence(lines):
 def add_missing_readings(lines, infinitives):
     counts = {"add_verb": 0, "add_adj": 0, "add_adv": 0}
 
+    pos_fixes = load_pos_fixes()
+
     # Mistagged infinitives first: the participle rule below needs them.
     known_verbs = verb_evidence(lines) | VERB_EXTRA
+    known_verbs |= {w for w, (_, pos) in pos_fixes.items() if pos == "verb"}
     staged = []
     for ln in lines:
         p = parse(ln)
@@ -320,6 +343,14 @@ def add_missing_readings(lines, infinitives):
             add, key, why = "JqOQRSTUW", "add_adj", "adjective"
         elif not (fs & ADV) and w in ADV_EXTRA:
             add, key, why = "r", "add_adv", "adverb"
+        elif w in pos_fixes:
+            flag, pos = pos_fixes[w]
+            missing = {"V": VERB, "J": ADJ, "r": ADV}[flag]
+            if not (fs & missing):
+                add = flag
+                key = {"verb": "add_verb", "adjective": "add_adj",
+                       "adverb": "add_adv"}[pos]
+                why = pos
 
         if add is None:
             out.append(ln)

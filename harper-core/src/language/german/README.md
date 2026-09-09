@@ -207,6 +207,35 @@ Use `aspell`, not `hunspell`: the shipped `de_DE` Hunspell dictionary is
 ISO-8859-1 and silently drops umlauts on UTF-8 input, so every word containing
 `ä ö ü ß` comes back "misspelled".
 
+`aspell` is a spell checker only — it has no grammar rules at all (its "modes"
+are input filters for markdown, HTML, TeX and so on). For a grammar-aware
+oracle, use **LanguageTool**, which is available as a local container:
+
+```bash
+docker run -d --name lt-de -p 8010:8010 -e Java_Xmx=4g erikvl87/languagetool:latest
+```
+
+It carries roughly **1168 German rules** (1035 XML rules in `grammar.xml`, 67 in
+`style.xml`, 18 in the AT/CH/simple variants, plus 48 Java rule classes) against
+Harper's **39** (9 Rust linters plus 30 Weir rules), so on German prose it is a
+strict superset and a good arbiter: a Harper lint that no LanguageTool match
+overlaps is a false positive.
+
+The scratch tooling for this lives in `.archive/german-language/scripts/`
+(untracked):
+
+```bash
+build_german_corpus.py --count 400        # fresh Wikipedia prose via the API
+compare_with_languagetool.py <corpus> --rule GermanNounCapitalization \
+    --json-out suspects.json              # triage Harper's lints
+derive_pos_fixes.py suspects.json         # -> scripts/german_pos_fixes.tsv
+scripts/fix_german_pos_flags.py --apply   # append the missing readings
+```
+
+`scripts/german_pos_fixes.tsv` **is** tracked — it is the record of which words
+LanguageTool vouched for and what reading each one was missing, so the
+dictionary change stays reproducible.
+
 The audit that motivated the current rules found 84% of flagged words accepted
 by `aspell`, in three recurring shapes:
 
