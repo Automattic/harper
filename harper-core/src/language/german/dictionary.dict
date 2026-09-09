@@ -20844,7 +20844,7 @@ bedenkt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bedeute/~~NhY
 bedient/~~hV
 bedingt/~~NXh
-bedroht/~~NXh
+bedroht/~~hV # retag: verb form, was noun (corpus-mined)
 beduine/~~NhY
 bedurft/~~NXh
 bedusle/~~NhY
@@ -20894,7 +20894,7 @@ befinde/~~NhY
 beflog/~~NhY
 beflogt/~~hV # retag: finite verb form, was noun (corpus-mined)
 beflöge/~~NhY
-befolgt/~~NXh
+befolgt/~~hV # retag: verb form, was noun (corpus-mined)
 befragt/~~NXh
 befraß/~~NhY
 befraßt/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21178,7 +21178,7 @@ belädt/~~NhY
 beläge/~~NhY
 belägen/~~Vdifj # auto-added
 belässt/~~NhY
-beläuft/~~NhY
+beläuft/~~hV # retag: verb form, was noun (corpus-mined)
 belüde/~~NhY
 belüden/~~Vdifj # auto-added
 belüdet/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -21525,7 +21525,7 @@ bewogt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bewohnt/~~hV # retag: finite verb form, was noun (corpus-mined)
 bewollt/~~NhY
 bewuchs/~~NhY
-bewusst/~~NhY
+bewusst/~~JOQRSTUWqh # retag: adjective, was noun/verb (corpus-mined)
 bewähre/~~NhY
 bewährt/~~NXh
 bewöge/~~NhY
@@ -23347,7 +23347,7 @@ dermale/~~NhY
 dersim/~~NhY
 dersims/~~NhY
 derweil/~~NhY
-derzeit/~~NhY
+derzeit/~~r # retag: adverb, was noun (corpus-mined)
 deshalb/~~hr
 designs/~~NhY
 designt/~~NXh
@@ -24878,7 +24878,7 @@ ererbte/~~NhY
 erfahre/~~NhY
 erfahrt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erfand/~~hV
-erfasst/~~NhY
+erfasst/~~hV # retag: verb form, was noun (corpus-mined)
 erfinde/~~NhY
 erfleht/~~hV # retag: finite verb form, was noun (corpus-mined)
 erfocht/~~NhY
@@ -24952,7 +24952,7 @@ erhobt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhofft/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhol/~~Vcej # REPLACES erholen
 erholt/~~NXh
-erhält/~~NhY
+erhält/~~hV # retag: verb form, was noun (corpus-mined)
 erhänge/~~NhY
 erhängt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erhärte/~~NhY
@@ -40917,7 +40917,7 @@ tummle/~~NhY
 tumor/~~NXh
 tumors/~~NhY
 tumult/~~NXh
-tun/~~NhY
+tun/~~hV # retag: verb form, was noun (corpus-mined)
 tundra/~~NhY
 tuner/~~MhY
 tunern/~~NhY
@@ -41185,7 +41185,7 @@ universität/~~NY
 universitäten/~~Fh
 unix/~~NhY
 unk/~~Vcej # REPLACES unken
-unklar/~~NXh
+unklar/~~JOQRSTUWqh # retag: adjective, was noun/verb (corpus-mined)
 unkt/~~NXh
 unktet/~~NhY
 unlieb/~~NhY
@@ -86437,7 +86437,7 @@ häutiges/~~NhY
 häutungen/~~Vdifj # auto-added
 höchstem/~~NhY
 höchsten/~~Vdifj # auto-added
-höchstens/~~NhY
+höchstens/~~r # retag: adverb, was noun (corpus-mined)
 höchster/~~MhY
 höchstes/~~NhY
 höckrigem/~~NhY
@@ -86773,7 +86773,7 @@ indigenes/~~NhY
 indigorot/~~NhY
 indikator/~~NhY
 indiofrau/~~NhY
-indirekt/~~NXh
+indirekt/~~JOQRSTUWqh # retag: adjective, was noun/verb (corpus-mined)
 indiskret/~~NhY
 indizien/~~Vdifj # auto-added
 indiziere/~~NhY
@@ -111081,7 +111081,7 @@ ungefickt/~~NhY
 ungeformt/~~NhY
 ungefragt/~~NhY
 ungeframt/~~NhY
-ungefähr/~~NXh
+ungefähr/~~r # retag: adverb, was noun (corpus-mined)
 ungefärbt/~~NhY
 ungefüge/~~NhY
 ungefügem/~~NhY
@@ -111180,7 +111180,7 @@ ungezähnt/~~NhY
 ungeübt/~~NhY
 unglaube/~~NhY
 unglauben/~~Vdifj # auto-added
-ungleich/~~NhY
+ungleich/~~JOQRSTUWqh # retag: adjective, was noun/verb (corpus-mined)
 unglück/~~NXh
 unglücken/~~Vdifj # auto-added
 unglückes/~~NhY
@@ -111875,7 +111875,7 @@ verborgen/~~Vdifj # auto-added
 verbotene/~~NhY
 verbotes/~~NhY
 verbots/~~NhY
-verbracht/~~NhY
+verbracht/~~hV # retag: verb form, was noun (corpus-mined)
 verbrannt/~~NhY
 verbreite/~~NhY
 verbrenne/~~NhY
@@ -112010,7 +112010,7 @@ verdrucke/~~NhY
 verdruckt/~~NhY
 verdruss/~~NXh
 verdränge/~~NhY
-verdrängt/~~NhY
+verdrängt/~~hV # retag: verb form, was noun (corpus-mined)
 verdrösse/~~NhY
 verdrücke/~~NhY
 verdrückt/~~NhY
@@ -118270,7 +118270,7 @@ zuflösset/~~NhY
 zuflüsse/~~NhY
 zuflüssen/~~Vdifj # auto-added
 zuflüstre/~~NhY
-zufolge/~~NhY
+zufolge/~~r # retag: adverb, was noun (corpus-mined)
 zufrieden/~~Vdifj # auto-added
 zufriere/~~NhY
 zufrieren/~~Vdifj # auto-added
@@ -119978,7 +119978,7 @@ zürntet/~~NhY
 überfährt/~~NhY
 überfällt/~~NhY
 überführe/~~NhY
-überführt/~~NhY
+überführt/~~hV # retag: verb form, was noun (corpus-mined)
 überfülle/~~NhY
 überfüllt/~~NhY
 übergab/~~NXh
@@ -221104,7 +221104,7 @@ showdoccase/~~NY
 zahlreicher/~~NY
 verzeichnet/~~NY
 städtischen/~~Vdifj
-beeinflusst/~~NY
+beeinflusst/~~V # retag: verb form, was noun (corpus-mined)
 vergangenen/~~Vdifj
 gegründeten/~~Vdifj
 christliche/~~NY
@@ -222818,3 +222818,8 @@ mrd/~~2
 mw/~~2
 psi/~~2
 sieben/~~1
+verbringen/~~Vdifj # to spend (time); the whole paradigm was missing
+verbringst/~~V # 2nd person singular of verbringen
+verbrachte/~~hV # preterite of verbringen (irregular, not affix-generated)
+verbrachten/~~V # preterite plural of verbringen
+unterliegt/~~hV # 3rd person singular of unterliegen (not affix-generated)

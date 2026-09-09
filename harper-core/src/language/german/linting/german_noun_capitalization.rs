@@ -587,51 +587,120 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         GERMAN_NON_NOUNS.contains(&s.as_str())
     }
 
-    /// Does the token immediately to the left mark this position as inside a
-    /// noun phrase (determiner / preposition / possessive / spelled-out
-    /// number)? This is what separates *"der **Fang**"* (capitalize) from
-    /// *"..., **fang** an"* (leave as verb).
-    fn is_licensed_by_context(&self, prev: Option<&Token>, document: &Document) -> bool {
-        let Some(prev) = prev else {
-            return false;
-        };
-        // Punctuation, numbers, whitespace, symbols to the left never license a
-        // noun. Only a genuine word can.
-        if !matches!(prev.kind, TokenKind::Word(_)) {
+    /// Does this token open a noun phrase — an article, another determiner, a
+    /// possessive, a preposition or a spelled-out number?
+    fn opens_noun_phrase(token: &Token, document: &Document) -> bool {
+        // Punctuation, numbers, whitespace and symbols never open a noun
+        // phrase. Only a genuine word can.
+        if !matches!(token.kind, TokenKind::Word(_)) {
             return false;
         }
 
-        if prev.kind.is_preposition() || prev.kind.is_determiner() {
+        if token.kind.is_preposition() || token.kind.is_determiner() {
             return true;
         }
 
-        let prev_chars = document.get_span_content(&prev.span);
-        let prev_lower: String = prev_chars
-            .iter()
-            .map(|c| c.to_lowercase().next().unwrap_or(*c))
-            .collect();
-
-        NOUN_PHRASE_LICENSORS.contains(&prev_lower.as_str()) || NUMERALS.contains(&prev_lower)
+        let lower = Self::lowercase_of(token, document);
+        NOUN_PHRASE_LICENSORS.contains(&lower.as_str()) || NUMERALS.contains(&lower)
     }
 
-    /// Is this candidate an attributive adjective rather than the head of the
-    /// noun phrase? German writes the head noun with a capital, so a candidate
-    /// immediately followed by a capitalized word is a modifier, not the noun:
-    /// *"die **wesentliche** Frage"*, *"eine **kleine** Katze"*. Standing at the
-    /// end of the phrase — *"das **Wesentliche**"*, *"nur für **Deutsche**"* —
-    /// the same word *is* the (nominalized) head. Only consulted for noun /
-    /// adjective homographs; a word with a clean noun reading is flagged anyway.
-    fn is_attributive_before_noun(next: Option<&Token>, document: &Document) -> bool {
-        let Some(next) = next else {
-            return false;
-        };
-        if !matches!(next.kind, TokenKind::Word(_)) {
+    /// Can this token sit *inside* a noun phrase — as an attributive adjective,
+    /// as the head noun, or as an unknown word standing in for one?
+    ///
+    /// Deliberately reads only the metadata already attached to the token by
+    /// `Document::parse`. Calling `Dictionary::get_word_metadata` once per token
+    /// would take `CompoundAwareDictionary`'s global mutex and attempt a
+    /// compound decomposition on every miss.
+    fn continues_noun_phrase(token: &Token, document: &Document) -> bool {
+        if !matches!(token.kind, TokenKind::Word(_)) {
             return false;
         }
+
+        let chars = document.get_span_content(&token.span);
+        if chars.is_empty() || !chars.iter().all(|c| c.is_alphabetic()) {
+            return false;
+        }
+
+        // Closed-class words close the phrase: "die Zeit **im** Büro" is two
+        // noun phrases, not one.
+        if token.kind.is_determiner()
+            || token.kind.is_preposition()
+            || token.kind.is_pronoun()
+            || token.kind.is_conjunction()
+        {
+            return false;
+        }
+
+        // A capital letter mid-sentence marks the head noun (or a proper name),
+        // and it wins over everything below. `GERMAN_NON_NOUNS` suppresses lints
+        // on *lowercase* verb forms, several of which are perfectly good nouns
+        // when written with a capital — "die Frage", "die Sage", "die Suche".
+        if chars.first().is_some_and(|c| c.is_uppercase()) {
+            return true;
+        }
+
+        let lower = Self::lowercase_of(token, document);
+        if GERMAN_NON_NOUNS.contains(&lower.as_str()) {
+            return false;
+        }
+
+        // An adjective reading marks an attributive modifier, a noun reading a
+        // (miscapitalized) head. An out-of-vocabulary word is most likely one of
+        // the two, and treating it as phrase-internal keeps the head from being
+        // mistaken for the word before it.
+        token.kind.is_noun() || token.kind.is_adjective() || token.kind.is_oov()
+    }
+
+    fn lowercase_of(token: &Token, document: &Document) -> String {
         document
-            .get_span_content(&next.span)
-            .first()
-            .is_some_and(|c| c.is_uppercase())
+            .get_span_content(&token.span)
+            .iter()
+            .map(|c| c.to_lowercase().next().unwrap_or(*c))
+            .collect()
+    }
+
+    /// Chunk a sentence into noun phrases and label each token's role.
+    ///
+    /// German noun phrases are rigid — determiner/preposition, then any number
+    /// of attributive adjectives, then the head noun — which is why a rule can
+    /// do here what English needs a trained chunker (`DictWordMetadata::np_member`)
+    /// for. Only the **head** of a phrase is a candidate for capitalization:
+    ///
+    /// ```text
+    /// die   wesentliche   Frage      der  große     schöne     hund
+    /// ^open ^modifier     ^head      ^open ^modifier ^modifier  ^head
+    /// ```
+    ///
+    /// Looking only at the token to the left, as this linter used to, flags
+    /// `wesentliche` in the first phrase and both `große` and `schöne` in the
+    /// second, while missing `hund` — the word that actually needs a capital.
+    fn noun_phrase_roles(tokens: &[&Token], document: &Document) -> Vec<NpRole> {
+        let mut roles = vec![NpRole::Outside; tokens.len()];
+
+        let mut i = 0;
+        while i < tokens.len() {
+            if !Self::opens_noun_phrase(tokens[i], document) {
+                i += 1;
+                continue;
+            }
+
+            let mut end = i + 1;
+            while end < tokens.len() && Self::continues_noun_phrase(tokens[end], document) {
+                end += 1;
+            }
+
+            if end > i + 1 {
+                for role in roles.iter_mut().take(end - 1).skip(i + 1) {
+                    *role = NpRole::Modifier;
+                }
+                roles[end - 1] = NpRole::Head;
+            }
+
+            // Resume at the phrase end; that token may itself open the next one.
+            i = end.max(i + 1);
+        }
+
+        roles
     }
 
     /// Decide whether a lowercase, alphabetic, non-sentence-initial word should
@@ -640,8 +709,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         &self,
         word_chars: &[char],
         prev: Option<&Token>,
-        next: Option<&Token>,
-        document: &Document,
+        np_role: NpRole,
     ) -> bool {
         let lower: Vec<char> = word_chars
             .iter()
@@ -782,12 +850,23 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         // Ambiguous noun / verb (or noun / adjective) homograph: a noun here
-        // only if the left context licenses a noun phrase *and* the word is not
-        // sitting in front of the capitalized head noun as an attributive
-        // adjective ("die wesentliche Frage" vs "das Wesentliche").
-        self.is_licensed_by_context(prev, document)
-            && !Self::is_attributive_before_noun(next, document)
+        // only if it is the *head* of a noun phrase. As a modifier it is the
+        // attributive adjective ("die wesentliche Frage"), and outside a noun
+        // phrase it is the verb ("..., fang an").
+        matches!(np_role, NpRole::Head)
     }
+}
+
+/// A token's position in a German noun phrase, as labelled by
+/// [`GermanNounCapitalization::noun_phrase_roles`].
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+enum NpRole {
+    /// The head of the phrase — the noun ("die wesentliche **Frage**").
+    Head,
+    /// An attributive modifier before the head ("die **wesentliche** Frage").
+    Modifier,
+    /// Not inside a noun phrase at all.
+    Outside,
 }
 
 impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
@@ -801,6 +880,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     .iter()
                     .filter(|t| !t.kind.is_whitespace())
                     .collect();
+                let np_roles = Self::noun_phrase_roles(&tokens, document);
 
                 for (i, token) in tokens.iter().enumerate() {
                     if !matches!(token.kind, TokenKind::Word(_)) {
@@ -809,7 +889,6 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
 
                     let word_chars = document.get_span_content(&token.span);
                     let prev = i.checked_sub(1).map(|j| tokens[j]);
-                    let next = tokens.get(i + 1).copied();
 
                     let already_capitalized = word_chars
                         .first()
@@ -823,7 +902,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     if !already_capitalized
                         && all_alphabetic
                         && !is_sentence_initial
-                        && self.check_if_word_is_noun(word_chars, prev, next, document)
+                        && self.check_if_word_is_noun(word_chars, prev, np_roles[i])
                     {
                         let mut replacement: Vec<char> = word_chars.to_vec();
                         if let Some(first_char) = replacement.first_mut() {

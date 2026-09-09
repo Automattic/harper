@@ -65,14 +65,16 @@ klingt klingst
 verließ verließt verließen
 aussah aussahst aussaht aussahen
 hält hältst
+verbracht verdrängt überführt erhält erfasst beläuft befolgt beeinflusst bedroht tun
 """.split())
 
-CURATED_ADVERBS = set("überall sofort anders bereits vorab zeitweise".split())
+CURATED_ADVERBS = set("überall sofort anders bereits vorab zeitweise derzeit "
+                      "höchstens ungefähr zufolge".split())
 
 # Very common adjectives whose base was noun/verb-only, so neither the base nor
 # any of its declined forms had an adjective reading.
 ADJ_BASE = set("ganz ander komplex besonder modern deutschsprachig weiter "
-               "einzeln gross korrekt".split())
+               "einzeln gross korrekt unklar ungleich indirekt bewusst".split())
 
 
 def parse(line):
