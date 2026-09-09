@@ -9,3 +9,4 @@ pub mod adjective_declension_test;
 pub mod compound_test;
 pub mod function_word_flags_test;
 pub mod german_annotations_test;
+pub mod verb_noun_flag_test;

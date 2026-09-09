@@ -10,31 +10,31 @@ language-build:
 # Test text for any language (without recompiling)
 # Usage: just language-test german "your text here"
 language-test language text:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{text}}"
 
 # Show metadata for a single word in any language
 # Usage: just language-meta german "word"
 language-meta language word:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}"
 
 # Check word against hunspell
 # Usage: just language-hunspell german "word"
 language-hunspell language word:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --text "{{word}}" --hunspell
 
 # Show metadata for all words in text
 # Usage: just language-meta-text german "text with multiple words"
 language-meta-text language text:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --metadata --text "{{text}}"
 
 # Run basic dictionary tests for a language
 # Usage: just language-dict-test german
 language-dict-test language:
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "harper-core/src/language/{{language}}/dictionary.dict" --annotations "harper-core/src/language/{{language}}/annotations.json" --test
 
 # Analyze language coverage against an expanded reference dictionary.
@@ -45,9 +45,9 @@ language-coverage language minimum="":
 	#!/usr/bin/env bash
 	set -eo pipefail
 
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then
-		just language-build
-	fi
+	# Always rebuild: `cargo build --release` is incremental, so a stale binary
+	# (edited dictionary, annotations, or harper-core code) can never be used.
+	just language-build
 	bin="harper-core/src/language/testing_framework/target/release/harper-lang-test"
 
 	# English is a special case: its dictionary lives at the crate root rather
@@ -79,7 +79,7 @@ language-coverage language minimum="":
 # Usage: just language-efficiency german
 language-efficiency language:
 	#!/usr/bin/env bash
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then just language-build; fi
+	just language-build   # always: `cargo build --release` is incremental, so this also picks up edits to harper-core / the framework
 	echo "📊 {{language}} Language Efficiency Analysis"
 	echo "==========================================="
 	
@@ -142,6 +142,59 @@ language-test-examples language:
 	fi
 	echo "======================================="
 
+# Run the *real* curated linter (harper-cli) over a language's test_sources/,
+# not just the spell checker. Surfaces grammar/capitalization false positives
+# the `language-test*` recipes cannot see. Builds harper-cli with the language
+# feature on first use.
+# Usage: just language-lint-sources german
+#        just language-lint-sources german .archive/german-language/test-sources
+language-lint-sources language dir="":
+	#!/usr/bin/env bash
+	set -euo pipefail
+	case "{{language}}" in
+		german) dialect=de ;; portuguese) dialect=pt ;;
+		slovak) dialect=sk ;; polish) dialect=pl ;;
+		*) echo "unknown language {{language}}"; exit 1 ;;
+	esac
+	cli="{{justfile_directory()}}/target/release/harper-cli"
+	echo "🔧 building harper-cli (feature harper-core/${dialect}) ..."
+	cargo build --release -q -p harper-cli --features "harper-core/${dialect}"
+	src_dir="{{dir}}"
+	[ -n "${src_dir}" ] || src_dir="harper-core/src/language/{{language}}/test_sources"
+	echo "📚 linting ${src_dir} as --dialect ${dialect}"
+	echo "==========================================================="
+	shopt -s nullglob
+	total=0
+	for f in "${src_dir}"/*.md "${src_dir}"/*.txt; do
+		out="$("${cli}" lint --dialect "${dialect}" --quiet --no-color "${f}" 2>/dev/null || true)"
+		n="$(printf '%s\n' "${out}" | grep -cE '\[(Capitalization|Style|Grammar|Miscellaneous|Spelling)::' || true)"
+		total=$((total + n))
+		printf '%-46s %3d lints\n' "$(basename "${f}")" "${n}"
+		printf '%s\n' "${out}" | grep -oE '\[[A-Za-z]+::[A-Za-z]+\]' | sort | uniq -c \
+			| sed 's/^/      /' || true
+	done
+	echo "==========================================================="
+	echo "TOTAL: ${total} lints"
+
+# Lint a single string or file with the curated linter for a language.
+# Usage: just language-lint german "Die stadt ist schoen."
+#        just language-lint german path/to/file.md
+language-lint language text:
+	#!/usr/bin/env bash
+	set -euo pipefail
+	case "{{language}}" in
+		german) dialect=de ;; portuguese) dialect=pt ;;
+		slovak) dialect=sk ;; polish) dialect=pl ;;
+		*) echo "unknown language {{language}}"; exit 1 ;;
+	esac
+	cargo build --release -q -p harper-cli --features "harper-core/${dialect}"
+	cli="{{justfile_directory()}}/target/release/harper-cli"
+	if [ -f "{{text}}" ]; then
+		"${cli}" lint --dialect "${dialect}" "{{text}}"
+	else
+		printf '%s' "{{text}}" | "${cli}" lint --dialect "${dialect}"
+	fi
+
 # Dictionary validation
 # Usage: just language-validate german
 language-validate language:
@@ -188,9 +241,9 @@ language-add-word language word flags *args:
 	fi
 	
 	# Build testing framework if needed
-	if [ ! -f "harper-core/src/language/testing_framework/target/release/harper-lang-test" ]; then
-		just language-build
-	fi
+	# Always rebuild: `cargo build --release` is incremental, so a stale binary
+	# (edited dictionary, annotations, or harper-core code) can never be used.
+	just language-build
 	
 	# Check if Harper already recognizes the word
 	META_OUTPUT=$(harper-core/src/language/testing_framework/target/release/harper-lang-test --language "{{language}}" --dict "$DICT_FILE" --annotations "harper-core/src/language/{{language}}/annotations.json" --word "{{word}}" 2>&1)

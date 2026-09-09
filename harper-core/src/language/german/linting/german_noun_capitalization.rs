@@ -614,12 +614,33 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         NOUN_PHRASE_LICENSORS.contains(&prev_lower.as_str()) || NUMERALS.contains(&prev_lower)
     }
 
+    /// Is this candidate an attributive adjective rather than the head of the
+    /// noun phrase? German writes the head noun with a capital, so a candidate
+    /// immediately followed by a capitalized word is a modifier, not the noun:
+    /// *"die **wesentliche** Frage"*, *"eine **kleine** Katze"*. Standing at the
+    /// end of the phrase — *"das **Wesentliche**"*, *"nur für **Deutsche**"* —
+    /// the same word *is* the (nominalized) head. Only consulted for noun /
+    /// adjective homographs; a word with a clean noun reading is flagged anyway.
+    fn is_attributive_before_noun(next: Option<&Token>, document: &Document) -> bool {
+        let Some(next) = next else {
+            return false;
+        };
+        if !matches!(next.kind, TokenKind::Word(_)) {
+            return false;
+        }
+        document
+            .get_span_content(&next.span)
+            .first()
+            .is_some_and(|c| c.is_uppercase())
+    }
+
     /// Decide whether a lowercase, alphabetic, non-sentence-initial word should
     /// be flagged as a miscapitalized noun.
     fn check_if_word_is_noun(
         &self,
         word_chars: &[char],
         prev: Option<&Token>,
+        next: Option<&Token>,
         document: &Document,
     ) -> bool {
         let lower: Vec<char> = word_chars
@@ -760,9 +781,12 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             return true;
         }
 
-        // Ambiguous noun / verb (or noun / adjective) homograph: only a noun
-        // here if the left context licenses a noun phrase.
+        // Ambiguous noun / verb (or noun / adjective) homograph: a noun here
+        // only if the left context licenses a noun phrase *and* the word is not
+        // sitting in front of the capitalized head noun as an attributive
+        // adjective ("die wesentliche Frage" vs "das Wesentliche").
         self.is_licensed_by_context(prev, document)
+            && !Self::is_attributive_before_noun(next, document)
     }
 }
 
@@ -773,50 +797,50 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
         for paragraph in document.iter_paragraphs() {
             for sentence in paragraph.iter_sentences() {
                 let first_word_span = sentence.first_non_whitespace().map(|t| t.span);
-                let mut prev: Option<&Token> = None;
+                let tokens: Vec<&Token> = sentence
+                    .iter()
+                    .filter(|t| !t.kind.is_whitespace())
+                    .collect();
 
-                for token in sentence.iter() {
-                    if token.kind.is_whitespace() {
+                for (i, token) in tokens.iter().enumerate() {
+                    if !matches!(token.kind, TokenKind::Word(_)) {
                         continue;
                     }
 
-                    if matches!(token.kind, TokenKind::Word(_)) {
-                        let word_chars = document.get_span_content(&token.span);
+                    let word_chars = document.get_span_content(&token.span);
+                    let prev = i.checked_sub(1).map(|j| tokens[j]);
+                    let next = tokens.get(i + 1).copied();
 
-                        let already_capitalized = word_chars
-                            .first()
-                            .is_some_and(|first_char| first_char.is_uppercase());
-                        let all_alphabetic = word_chars.iter().all(|c| c.is_alphabetic());
-                        // The first word of a sentence is handled by
-                        // `GermanSentenceCapitalization`; noun-vs-verb cannot be
-                        // told apart there anyway ("Fang an!").
-                        let is_sentence_initial = Some(token.span) == first_word_span;
+                    let already_capitalized = word_chars
+                        .first()
+                        .is_some_and(|first_char| first_char.is_uppercase());
+                    let all_alphabetic = word_chars.iter().all(|c| c.is_alphabetic());
+                    // The first word of a sentence is handled by
+                    // `GermanSentenceCapitalization`; noun-vs-verb cannot be
+                    // told apart there anyway ("Fang an!").
+                    let is_sentence_initial = Some(token.span) == first_word_span;
 
-                        if !already_capitalized
-                            && all_alphabetic
-                            && !is_sentence_initial
-                            && self.check_if_word_is_noun(word_chars, prev, document)
-                        {
-                            let mut replacement: Vec<char> = word_chars.to_vec();
-                            if let Some(first_char) = replacement.first_mut() {
-                                *first_char =
-                                    first_char.to_uppercase().next().unwrap_or(*first_char);
-                            }
-
-                            lints.push(Lint {
-                                span: token.span,
-                                lint_kind: LintKind::Capitalization,
-                                suggestions: vec![Suggestion::ReplaceWith(replacement)],
-                                priority: 25, // High priority for German
-                                message: format!(
-                                    "In German, all nouns must be capitalized. \"{}\" appears to be a noun.",
-                                    word_chars.iter().collect::<String>()
-                                ),
-                            });
+                    if !already_capitalized
+                        && all_alphabetic
+                        && !is_sentence_initial
+                        && self.check_if_word_is_noun(word_chars, prev, next, document)
+                    {
+                        let mut replacement: Vec<char> = word_chars.to_vec();
+                        if let Some(first_char) = replacement.first_mut() {
+                            *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
                         }
-                    }
 
-                    prev = Some(token);
+                        lints.push(Lint {
+                            span: token.span,
+                            lint_kind: LintKind::Capitalization,
+                            suggestions: vec![Suggestion::ReplaceWith(replacement)],
+                            priority: 25, // High priority for German
+                            message: format!(
+                                "In German, all nouns must be capitalized. \"{}\" appears to be a noun.",
+                                word_chars.iter().collect::<String>()
+                            ),
+                        });
+                    }
                 }
             }
         }
