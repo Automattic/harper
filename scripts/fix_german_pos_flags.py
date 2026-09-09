@@ -9,7 +9,12 @@ reading. A large slice of `dictionary.dict` was mechanically tagged `~~Nh` /
 verb forms and attributive adjectives get "corrected" mid-sentence.
 
 This is the same class of bug as commits 2b8e10af1, 6f0ea43f6, 483a7f0cb and
-556321ce9. It runs three high-precision passes:
+556321ce9. It runs several high-precision passes, iterated to a fixed point
+because they feed each other -- giving a mistagged infinitive its verb reading
+reveals the finite forms built on it, and those reveal more participles.
+
+The first three *replace* an entry's flags, which is only safe when the word has
+no other reading at all:
 
   1. prefix_verb_forms  -- inseparable / directional-prefix finite verb forms
      (be-/ver-/ent-/zer-/emp-/er-/miss-/über-/unter-/durch-/wider-/hinter- + a
@@ -25,15 +30,21 @@ This is the same class of bug as commits 2b8e10af1, 6f0ea43f6, 483a7f0cb and
      -> full ~~JOQRSTUWq declension. This restores the adjective reading of the
      base *and* of every declined form the affixes generate (`ganze`, `moderne`,
      ...), so those forms become proper noun/adjective homographs. The
-     capitalization linter then keeps "die ganze Zeit" (attributive) apart from
-     "das Ganze" (nominalised) by looking at the token to the right.
+     capitalization linter's noun-phrase chunker then keeps "die ganze Zeit"
+     (attributive) apart from "das Ganze" (nominalised).
 
 Bare "-e" forms are deliberately NOT stripped of their noun reading: "das Neue",
 "das Wesentliche", "das Ganze" are real nouns.
 
+The last pass (`add_missing_readings`) only ever *appends* a property flag, for
+words that genuinely have two readings -- "die Vorsitzende" and "die vorsitzende
+Richterin". It covers mistagged infinitives, present participles, comparatives
+and hand-audited adjectives/adverbs. See the comment above it.
+
 Run from the repo root.  `--apply` writes; the default is a dry run.
 Re-running is idempotent.
 """
+import re
 import sys
 import pathlib
 
@@ -41,6 +52,7 @@ DICT = pathlib.Path("harper-core/src/language/german/dictionary.dict")
 NOUN = set("NMFZz")
 VERB = set("Vjgtecxy")
 ADJ = set("JqAOQRSTUW")
+ADV = set("Rr")
 LOWER = "abcdefghijklmnopqrstuvwxyzäöüß"
 
 NOUN_SUFFIX = ("heit", "keit", "schaft", "ung", "tät", "ität", "tion", "sion",
@@ -89,6 +101,27 @@ def main():
     apply = "--apply" in sys.argv
     lines = DICT.read_text(encoding="utf-8").splitlines()
 
+    # The passes feed each other: giving a mistagged infinitive its verb reading
+    # reveals the finite forms built on it, and those reveal more participles.
+    # Iterate to a fixed point so one run is enough and re-running is a no-op.
+    totals = {}
+    for _ in range(10):
+        lines, counts = run_passes(lines)
+        for k, v in counts.items():
+            totals[k] = totals.get(k, 0) + v
+        if not any(counts.values()):
+            break
+
+    for k, v in totals.items():
+        print(f"{k:12}: {v}")
+    if apply:
+        DICT.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        print("written.")
+    else:
+        print("(dry run; pass --apply)")
+
+
+def run_passes(lines):
     infin = set()
     for ln in lines:
         p = parse(ln)
@@ -123,8 +156,10 @@ def main():
         keep_h = "h" if "h" in fl else ""
 
         if w in ADJ_BASE:
-            out.append(f"{w}/~~JOQRSTUWq{keep_h} # retag: adjective, was noun/verb (corpus-mined)")
-            counts["adj_base"] += 1
+            fixed = f"{w}/~~JOQRSTUWq{keep_h} # retag: adjective, was noun/verb (corpus-mined)"
+            out.append(fixed)
+            if fixed != ln:
+                counts["adj_base"] += 1
         elif w in CURATED_VERBS and (fs & NOUN) and not (fs & VERB):
             out.append(f"{w}/~~{keep_h}V # retag: verb form, was noun (corpus-mined)")
             counts["verb"] += 1
@@ -137,13 +172,174 @@ def main():
         else:
             out.append(ln)
 
-    for k, v in counts.items():
-        print(f"{k:10}: {v}")
-    if apply:
-        DICT.write_text("\n".join(out) + "\n", encoding="utf-8")
-        print("written.")
-    else:
-        print("(dry run; pass --apply)")
+    out, add_counts = add_missing_readings(out, infin)
+    counts.update(add_counts)
+    return out, counts
+
+
+# --------------------------------------------------------------------------
+# Additive pass
+# --------------------------------------------------------------------------
+# Everything above *replaces* an entry's flags, which is only safe for words
+# with no other reading at all. The words below genuinely have two: "die
+# Vorsitzende" and "die vorsitzende Richterin", "das Wochenende" and "die
+# endende Frist". Their entries carry the noun reading but not the adjective /
+# adverb / verb one, which makes GermanNounCapitalization treat them as
+# *unambiguous* nouns and flag them wherever they appear.
+#
+# So this pass only ever **appends** a property flag. The word becomes a proper
+# homograph and the noun-phrase chunker decides per occurrence. `J` (adjective),
+# `r` (adverb) and `V` (verb) are property-only -- none of them is also an affix
+# rule -- so nothing new is generated.
+
+# Present participles. Only the bare "-end" / "-ende" forms are worth touching:
+# "-endem/-enden/-ender/-endes" are already rejected by the linter's verb-shape
+# test. The infinitive has to exist, which is what keeps Legende, Dividende,
+# Wochenende, Torwartlegende and Tendenzwende out -- none of "torwartlegen",
+# "dividen" or "wochenen" is a verb.
+PARTICIPLE_SHAPE = re.compile(r"^([a-zäöüß]{3,}?)(end|ernd|elnd)e?$")
+PARTICIPLE_INFINITIVE = {"end": "en", "ernd": "ern", "elnd": "eln"}
+
+
+def is_present_participle(word, infinitives):
+    m = PARTICIPLE_SHAPE.fullmatch(word)
+    if not m:
+        return False
+    stem, suffix = m.group(1), m.group(2)
+    return stem + PARTICIPLE_INFINITIVE[suffix] in infinitives
+
+# Comparatives. The umlaut makes these hard to derive mechanically
+# (gross -> groesser), so they are listed.
+COMPARATIVES = set("""
+größere spätere frühere ältere stärkere höhere geringere längere kürzere
+kleinere neuere bessere jüngere niedrigere breitere engere tiefere weitere
+schwächere schnellere langsamere einfachere schwierigere
+""".split())
+
+# Adjective *bases* with no adjective reading at all. These get the declension
+# affixes as well, otherwise only the base is fixed and "mediale", "schärfere"
+# and friends stay noun-only.
+ADJ_EXTRA = set("""
+medial urban nachhaltig scharf kontrovers innerdeutsch gesamtdeutsch
+preisgünstig eigen bloß abstrakt effizient hilfreich real simultan mächtig
+geheimnisvoll planvoll verbindlich intuitiv mental antik westlich nordöstlich
+nationalsozialistisch handwerklich altgriechisch niederdeutsch althochdeutsch
+""".split())
+
+# Adverbs and particles.
+ADV_EXTRA = set("""
+demzufolge je anfangs oftmals mehrmals woanders irgendwie alleine darum vorne
+zugrunde infrage gegebenenfalls annähernd höchstens halt
+""".split())
+
+# Finite verb forms. Words with a common noun homograph are deliberately absent
+# -- macht/Macht, wacht/Wacht, würde/Würde, drang/Drang, halt/Halt.
+VERB_EXTRA = set("""
+erweist obliegt verweist regelt meint strebt lebt vorgibt handele einteilt
+sprach floss galt stieß fällt zulässt müsse einnahm beansprucht erlebt
+verdeutlicht besetzt angelegt eingesetzt eingestuft eingeteilt entlehnt
+abgegrenzt abgefasst abgestreift aufgestaut trockengelegt durchgeführt erfüllt
+erkämpft losgelöst eingedeicht abgedeicht ausgedehnt fördern fördert
+""".split())
+
+
+def verb_evidence(lines):
+    """Words the dictionary itself says are verb forms, one way or another.
+
+    - `<stem>/~~Vcej # REPLACES <infinitive>`: the infinitive was folded into a
+      verb root, so the name in the comment is a verb form by construction.
+    - a noun-only `-en`/`-ern`/`-eln` entry next to a sibling root that *does*
+      carry a verb flag (`bohren/~~NMZ` beside `bohr/~~Vcej`) is the infinitive
+      of that verb, not a plural noun.
+    """
+    roots, entries, replaced = set(), [], set()
+    for ln in lines:
+        p = parse(ln)
+        if not p:
+            continue
+        entries.append(p)
+        if set(p[1]) & VERB:
+            roots.add(p[0])
+        m = re.search(r"#.*\bREPLACES\s+([a-zäöüß]+)", ln)
+        if m:
+            replaced.add(m.group(1))
+
+    infinitives = set(replaced)
+    for w, fl in entries:
+        if not all(c in LOWER for c in w):
+            continue
+        fs = set(fl)
+        if not (fs & NOUN) or (fs & VERB) or (fs & ADJ):
+            continue
+        for suffix in ("en", "ern", "eln"):
+            if w.endswith(suffix) and len(w) > len(suffix) + 2:
+                stem = w[: -len(suffix)]
+                root = stem if suffix == "en" else stem + suffix[:-1]
+                if root in roots:
+                    infinitives.add(w)
+                break
+    return infinitives
+
+
+def add_missing_readings(lines, infinitives):
+    counts = {"add_verb": 0, "add_adj": 0, "add_adv": 0}
+
+    # Mistagged infinitives first: the participle rule below needs them.
+    known_verbs = verb_evidence(lines) | VERB_EXTRA
+    staged = []
+    for ln in lines:
+        p = parse(ln)
+        if p and all(c in LOWER for c in p[0]) and p[0] in known_verbs \
+                and not (set(p[1]) & VERB):
+            staged.append(rewrite(ln, p[0], p[1], "V", "verb"))
+            counts["add_verb"] += 1
+        else:
+            staged.append(ln)
+
+    infinitives = {w for w in known_verbs if w.endswith(("en", "ern", "eln"))}
+    infinitives |= {
+        p[0]
+        for p in (parse(ln) for ln in staged)
+        if p and p[0].endswith("en") and set(p[1]) & VERB
+    }
+
+    out = []
+    for ln in staged:
+        p = parse(ln)
+        if not p or not all(c in LOWER for c in p[0]):
+            out.append(ln)
+            continue
+        w, fl = p
+        fs = set(fl)
+
+        add, key, why = None, None, None
+        if not (fs & ADJ) and (is_present_participle(w, infinitives)
+                               or w in COMPARATIVES):
+            add, key, why = "J", "add_adj", "adjective"
+        elif not (fs & ADJ) and w in ADJ_EXTRA:
+            add, key, why = "JqOQRSTUW", "add_adj", "adjective"
+        elif not (fs & ADV) and w in ADV_EXTRA:
+            add, key, why = "r", "add_adv", "adverb"
+
+        if add is None:
+            out.append(ln)
+            continue
+
+        out.append(rewrite(ln, w, fl, add, why))
+        counts[key] += 1
+
+    return out, counts
+
+
+def rewrite(line, word, flags, add, why):
+    """Append `add` to an entry's flags, keeping any existing comment."""
+    comment = line.split("#", 1)[1].strip() if "#" in line else ""
+    note = f"+{why} reading (was noun-only)"
+    if comment and "reading (was noun-only)" not in comment:
+        note = f"{comment}; {note}"
+    elif comment:
+        note = comment
+    return f"{word}/~~{flags}{add} # {note}"
 
 
 if __name__ == "__main__":

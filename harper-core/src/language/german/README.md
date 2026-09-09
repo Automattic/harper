@@ -184,6 +184,44 @@ the two: in *der große schöne hund* it flagged `große` and never reached `hun
 a `Dictionary::get_word_metadata` call there — see the note in
 `../AGENTS.md` about `CompoundAwareDictionary`'s global mutex.
 
+### Auditing capitalization false positives
+
+Edited German prose should produce essentially **zero** `GermanNounCapitalization`
+lints. The 54 archived Wikipedia articles under `.archive/german-language/` are
+the working corpus for this; a lint there is a bug until proven otherwise.
+
+```bash
+just language-lint-sources german .archive/german-language/test-sources
+```
+
+To decide whether a flagged word is a real error, use `aspell` as an oracle. A
+German spelling dictionary lists nouns **only** capitalized, so it accepts a
+lower-case spelling exactly when the word is legitimately lower case:
+
+```bash
+$ echo hund        | aspell -d de -a --encoding=utf-8   # & hund … Hund  -> real error
+$ echo wesentliche | aspell -d de -a --encoding=utf-8   # + wesentlich   -> false positive
+```
+
+Use `aspell`, not `hunspell`: the shipped `de_DE` Hunspell dictionary is
+ISO-8859-1 and silently drops umlauts on UTF-8 input, so every word containing
+`ä ö ü ß` comes back "misspelled".
+
+The audit that motivated the current rules found 84% of flagged words accepted
+by `aspell`, in three recurring shapes:
+
+1. **Suspended hyphenation** — *"auf welt-, volks-, stadt- und
+   hauswirtschaftlicher Ebene"*, *"Konfliktverhütung und -lösung"*. Handled by
+   `is_hyphen_compound_fragment`.
+2. **Foreign-language glosses** — *"englisch economy, französisch économie"*,
+   *"althochdeutsch reht, recht, rehd"*. Handled by `follows_language_gloss`
+   with `LANGUAGE_GLOSS_MARKERS`.
+3. **Entries with a corpus-mined noun reading and nothing else**, which the
+   linter must treat as unambiguous nouns. Fixed in the dictionary by
+   `scripts/fix_german_pos_flags.py`, whose additive pass *appends* the missing
+   adjective/verb/adverb flag rather than replacing the entry — the word becomes
+   a homograph and the noun-phrase chunker decides per occurrence.
+
 ## Implementation Notes
 
 - Uses single annotated dictionary for both word coverage and metadata

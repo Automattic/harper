@@ -1,5 +1,5 @@
 use crate::{
-    Token, TokenKind, TokenStringExt,
+    Punctuation, Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::spell::lexical_classes::{FOREIGN_TERMS, NUMERALS, UNIT_ABBREVIATIONS},
     language::morphology::MorphologyExt,
@@ -532,6 +532,70 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
     "vorüber",
 ];
 
+/// Bare, uninflected language names. German etymology and loanword glosses put
+/// one in front of the quoted foreign form, which stays lower case however the
+/// foreign language spells it:
+///
+/// > *gleiches gilt für **englisch** economy, **französisch** économie,
+/// > **italienisch** economia*
+///
+/// > *… wie in vielen europäischen Sprachen **niederländisch** recht,
+/// > **französisch** droit, **spanisch** derecho*
+///
+/// Only the uninflected form is listed. The attributive adjective is inflected
+/// (*die englische Sprache*), so `englische` never triggers this and a genuine
+/// lower-case noun after it is still caught.
+///
+/// Kept in code rather than the dictionary for the same reason as
+/// [`NOUN_PHRASE_LICENSORS`]: it is a syntactic trigger the linter reasons
+/// over, not vocabulary.
+const LANGUAGE_GLOSS_MARKERS: &[&str] = &[
+    "deutsch",
+    "althochdeutsch",
+    "mittelhochdeutsch",
+    "niederdeutsch",
+    "hochdeutsch",
+    "altdeutsch",
+    "englisch",
+    "altenglisch",
+    "französisch",
+    "altfranzösisch",
+    "italienisch",
+    "spanisch",
+    "portugiesisch",
+    "niederländisch",
+    "lateinisch",
+    "mittellateinisch",
+    "spätlateinisch",
+    "neulateinisch",
+    "kirchenlateinisch",
+    "griechisch",
+    "altgriechisch",
+    "neugriechisch",
+    "dänisch",
+    "schwedisch",
+    "norwegisch",
+    "isländisch",
+    "russisch",
+    "polnisch",
+    "tschechisch",
+    "ungarisch",
+    "finnisch",
+    "türkisch",
+    "arabisch",
+    "hebräisch",
+    "persisch",
+    "japanisch",
+    "chinesisch",
+    "koreanisch",
+    "indogermanisch",
+    "urgermanisch",
+    "germanisch",
+    "gotisch",
+    "keltisch",
+    "sanskrit",
+];
+
 /// Adjective / adverb / participle final segments that a lowercase common noun
 /// essentially never ends with. Used to veto a noun reading even when the
 /// compound-aware dictionary hands one back — decomposable adjective compounds
@@ -631,6 +695,14 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             return false;
         }
 
+        // So do adverbs. Only adjectives stand between the determiner and the
+        // head, so "das Thema **oftmals** behandelt" ends the phrase at "Thema"
+        // instead of making the adverb its head. Words that are both — most
+        // German adjectives double as adverbs — keep going.
+        if token.kind.is_adverb() && !token.kind.is_adjective() {
+            return false;
+        }
+
         // A capital letter mid-sentence marks the head noun (or a proper name),
         // and it wins over everything below. `GERMAN_NON_NOUNS` suppresses lints
         // on *lowercase* verb forms, several of which are perfectly good nouns
@@ -701,6 +773,66 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         roles
+    }
+
+    /// Is the token glued to a hyphen on either side?
+    ///
+    /// German suspends the shared part of coordinated compounds and marks the
+    /// gap with a hyphen: *"auf **welt-**, **volks-**, **stadt-** und
+    /// hauswirtschaftlicher Ebene"*, *"Konfliktverhütung und **-lösung**"*.
+    /// Each fragment is a compound element, correctly lower case, and the
+    /// tokenizer hands them over as bare words. Requires the hyphen to be
+    /// directly adjacent so that a dash used as punctuation — set off by spaces
+    /// — does not suppress a real noun.
+    fn is_hyphen_compound_fragment(
+        token: &Token,
+        prev: Option<&Token>,
+        next: Option<&Token>,
+    ) -> bool {
+        let hyphen = |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::Hyphen));
+
+        prev.is_some_and(|p| hyphen(p) && p.span.end == token.span.start)
+            || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
+    }
+
+    /// Is this token inside a foreign-language gloss?
+    ///
+    /// Walks left over the comma-separated list a language name introduces —
+    /// *"althochdeutsch reht, recht, rehd, riht, reth"* — and stops at the first
+    /// token that cannot be part of one. Function words end the gloss, so
+    /// *"Er lernt englisch und geht in die stadt"* still flags `stadt`.
+    fn follows_language_gloss(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        let mut i = index;
+        for _ in 0..8 {
+            if i == 0 {
+                return false;
+            }
+            i -= 1;
+            let token = tokens[i];
+
+            if matches!(token.kind, TokenKind::Punctuation(Punctuation::Comma)) {
+                continue;
+            }
+            if !matches!(token.kind, TokenKind::Word(_)) {
+                return false;
+            }
+
+            let lower = Self::lowercase_of(token, document);
+            if LANGUAGE_GLOSS_MARKERS.contains(&lower.as_str()) {
+                return true;
+            }
+            // Only the quoted forms themselves may stand between the marker and
+            // this token; a determiner, preposition or conjunction ends it.
+            if token.kind.is_determiner()
+                || token.kind.is_preposition()
+                || token.kind.is_pronoun()
+                || token.kind.is_conjunction()
+                || GERMAN_NON_NOUNS.contains(&lower.as_str())
+            {
+                return false;
+            }
+        }
+        false
     }
 
     /// Decide whether a lowercase, alphabetic, non-sentence-initial word should
@@ -889,6 +1021,13 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
 
                     let word_chars = document.get_span_content(&token.span);
                     let prev = i.checked_sub(1).map(|j| tokens[j]);
+                    let next = tokens.get(i + 1).copied();
+
+                    if Self::is_hyphen_compound_fragment(token, prev, next)
+                        || Self::follows_language_gloss(&tokens, i, document)
+                    {
+                        continue;
+                    }
 
                     let already_capitalized = word_chars
                         .first()
