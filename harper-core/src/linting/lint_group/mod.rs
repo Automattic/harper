@@ -73,6 +73,7 @@ use super::cure_for::CureFor;
 use super::currency_placement::CurrencyPlacement;
 use super::damages::Damages;
 use super::day_and_age::DayAndAge;
+use super::deny_offer::DenyOffer;
 use super::despite_it_is::DespiteItIs;
 use super::despite_of::DespiteOf;
 use super::did_past::DidPast;
@@ -687,6 +688,7 @@ impl LintGroup {
         insert_struct_rule!(CurrencyPlacement);
         insert_expr_rule!(Dashes);
         insert_expr_rule!(DayAndAge);
+        insert_expr_rule!(DenyOffer);
         insert_expr_rule!(DespiteItIs);
         insert_expr_rule!(DespiteOf);
         insert_expr_rule_with_dict!(DidPast);

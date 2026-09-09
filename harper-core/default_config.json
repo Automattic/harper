@@ -4621,6 +4621,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DenyOffer",
+								"state": true,
+								"label": "Deny Offer"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
