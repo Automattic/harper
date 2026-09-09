@@ -35,6 +35,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         ignore_lint,
         add_to_dictionary,
         get_integrations,
+        get_auto_enable_new_apps,
+        set_auto_enable_new_apps,
         add_integration,
         remove_integration,
         set_integration_enabled,
@@ -268,6 +270,26 @@ async fn get_integrations(
             enabled: integration.enabled,
         })
         .collect())
+}
+
+#[tauri::command]
+async fn get_auto_enable_new_apps(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.auto_enable_new_apps)
+}
+
+#[tauri::command]
+async fn set_auto_enable_new_apps(
+    auto_enable_new_apps: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let previous = config.auto_enable_new_apps;
+    config.auto_enable_new_apps = auto_enable_new_apps;
+    if let Err(error) = config.save_to_system().await {
+        config.auto_enable_new_apps = previous;
+        return Err(error.to_string());
+    }
+    Ok(())
 }
 
 #[tauri::command]

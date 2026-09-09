@@ -1,6 +1,5 @@
 use crate::windows_broker::automation_service::AutomationService;
 use crate::{
-    config::Integration,
     os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker},
     rect::ActionableLint,
 };
@@ -32,24 +31,26 @@ mod automation_service;
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
-    integrations: Arc<Mutex<Vec<Integration>>>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
 }
 
 impl WindowsBroker {
-    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
+    /// Creates a broker with an app policy that may register newly encountered executable paths.
+    /// The policy is called before reading the app's text and may change as settings are refreshed.
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
-            integrations,
+            is_integration_enabled: Box::new(is_integration_enabled),
         }
     }
 
-    pub fn should_lint_focused_window(&self) -> Option<bool> {
+    pub fn should_lint_focused_window(&mut self) -> Option<bool> {
         let mut service = self.service.lock().ok()?;
         let focused_window = service.resolve_focused_window()?;
         let path = get_window_path(focused_window).ok()?;
-        let integrations = self.integrations.lock().ok()?;
+        drop(service);
 
-        if !Integration::is_integration_enabled_in(&integrations, &path.to_string_lossy()) {
+        if !(self.is_integration_enabled)(&path.to_string_lossy()) {
             return Some(false);
         }
 
