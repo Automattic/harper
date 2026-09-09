@@ -1,13 +1,11 @@
 <script lang="ts">
 import { onMount } from 'svelte';
-import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
-import IntegrationTile from '$lib/marketing/IntegrationTile.svelte';
 
 let logoImg: HTMLImageElement | null = $state(null);
 
 onMount(() => {
 	logoImg = new Image();
-	logoImg.src = '/android-chrome-512x512.png';
+	logoImg.src = '/harper-logo.svg';
 });
 
 let canvasElement: HTMLCanvasElement | null = $state(null);
@@ -174,7 +172,7 @@ function renderFace(ctx: CanvasRenderingContext2D) {
 
 	ctx.fillStyle = '#000';
 	if (logoImg) {
-		ctx.drawImage(logoImg, -100, -100, 200, 200);
+		ctx.drawImage(logoImg, -50, -50, 100, 100);
 	}
 
 	ctx.restore();
