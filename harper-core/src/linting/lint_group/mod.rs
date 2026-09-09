@@ -253,6 +253,7 @@ use super::safe_to_save::SafeToSave;
 use super::save_to_safe::SaveToSafe;
 use super::sentence_capitalization::SentenceCapitalization;
 use super::shoot_oneself_in_the_foot::ShootOneselfInTheFoot;
+use super::show_case::ShowCase;
 use super::simple_past_to_past_participle::SimplePastToPastParticiple;
 use super::since_duration::SinceDuration;
 use super::single_be::SingleBe;
@@ -866,6 +867,7 @@ impl LintGroup {
         insert_expr_rule!(SaveToSafe);
         insert_struct_rule_with_dict!(SentenceCapitalization);
         insert_expr_rule!(ShootOneselfInTheFoot);
+        insert_expr_rule!(ShowCase);
         insert_expr_rule!(SimplePastToPastParticiple);
         insert_expr_rule!(SinceDuration);
         insert_expr_rule!(SingleBe);
