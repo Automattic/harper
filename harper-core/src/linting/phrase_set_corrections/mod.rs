@@ -788,6 +788,24 @@ pub fn lint_group() -> LintGroup {
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
         ),
+        "BainBane" => (
+            &[
+                (&["bain of my existence","bain of my existance"], &["bane of my existence"]),
+                (&["bain of our existence","bain of our existance"], &["bane of our existence"]),
+                (&["bain of your existence","bain of your existance"], &["bane of your existence"]),
+                (&["bain of his existence","bain of his existance"], &["bane of his existence"]),
+                (&["bain of her existence","bain of her existance"], &["bane of her existence"]),
+                (&["bain of its existence","bain of its existance"], &["bane of its existence"]),
+                (&["bain of their existence","bain of their existance"], &["bane of their existence"]),
+                (&["bane marie"], &["bain marie"]),
+                (&["bane-marie"], &["bain-marie"]),
+                (&["bane maries", "banes marie"], &["bains marie", "bain maries"]),
+                (&["bane-maries", "banes-marie"], &["bains-marie", "bain-maries"]),
+            ],
+            "Don't confuse `bane` (source of misery) with `bain` in `bain-marie` (double boiler).",
+            "Detects mixing up `bain` and `bane`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),

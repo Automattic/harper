@@ -137,6 +137,58 @@ fn correct_back_hand_compliments_hyphen() {
     );
 }
 
+// BainBane
+
+#[test]
+fn fix_bain_of_my_existance() {
+    assert_suggestion_result(
+        "This is the bain of my existance, please help.",
+        test_linter(),
+        "This is the bane of my existence, please help.",
+    );
+}
+
+#[test]
+fn fix_bain_of_our() {
+    assert_suggestion_result(
+        "They are the bain of our existence on Apple hardware",
+        test_linter(),
+        "They are the bane of our existence on Apple hardware",
+    );
+}
+
+#[test]
+fn fix_bain_of_their() {
+    assert_suggestion_result(
+        "individual people in Apple might decide port scanning is the bain of their existence and send something",
+        test_linter(),
+        "individual people in Apple might decide port scanning is the bane of their existence and send something",
+    );
+}
+
+#[test]
+fn fix_bane_marie() {
+    assert_suggestion_result(
+        "The bane-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+        test_linter(),
+        "The bain-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+    );
+}
+
+#[test]
+fn fix_bane_maries() {
+    assert_good_and_bad_suggestions(
+        "They have bane Maries which is just a double broiler (water heated high under pans).",
+        test_linter(),
+        &[
+            // The way `replace_with_match_case` works by index breaks this
+            // "They have bains Marie which is just a double broiler (water heated high under pans).",
+            "They have bain Maries which is just a double broiler (water heated high under pans).",
+        ],
+        &[],
+    );
+}
+
 // CommitmentTo
 
 #[test]
