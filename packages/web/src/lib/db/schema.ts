@@ -25,6 +25,6 @@ export const domainReviewTable = mysqlTable('domain_review', {
 });
 
 export const updateCheckCountTable = mysqlTable('update_check_counts', {
-  date: date().primaryKey(),
-  count: int().notNull()
-})
+	date: date().primaryKey(),
+	count: int().notNull(),
+});

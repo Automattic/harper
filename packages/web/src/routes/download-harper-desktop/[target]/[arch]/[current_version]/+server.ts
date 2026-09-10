@@ -1,6 +1,6 @@
 import { json, type RequestEvent } from '@sveltejs/kit';
-import { type GitHubRelease, type GitHubReleaseAsset, GithubClient } from '$lib/GitHubClient';
 import UpdateCheckCounts from '$lib/db/models/UpdateCheckCounts';
+import { type GitHubRelease, type GitHubReleaseAsset, GithubClient } from '$lib/GitHubClient';
 
 const REPO_OWNER = 'automattic';
 const REPO_NAME = 'harper';
@@ -115,7 +115,7 @@ export const GET = async ({ params }: RequestEvent) => {
 		return noUpdate();
 	}
 
-  UpdateCheckCounts.incrementForToday();
+	UpdateCheckCounts.incrementForToday();
 
 	if (!supportsTarget(target, arch)) {
 		console.log(`No Harper Desktop update available for unsupported platform ${target}/${arch}.`);
