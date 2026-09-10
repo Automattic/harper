@@ -1,4 +1,4 @@
-import { boolean, int, mysqlTable, text, timestamp } from 'drizzle-orm/mysql-core';
+import { boolean, date, int, mysqlTable, text, timestamp } from 'drizzle-orm/mysql-core';
 
 export const uninstallFeedbackTable = mysqlTable('uninstall_feedback', {
 	id: int().autoincrement().primaryKey(),
@@ -23,3 +23,8 @@ export const domainReviewTable = mysqlTable('domain_review', {
 	domain: text().notNull(),
 	timestamp: timestamp().notNull().defaultNow(),
 });
+
+export const updateCheckCountTable = mysqlTable('update_check_counts', {
+  date: date().primaryKey(),
+  count: int().notNull()
+})
