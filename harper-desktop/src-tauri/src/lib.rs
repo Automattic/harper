@@ -426,6 +426,7 @@ struct IntegrationState {
 
 /// Builds the broker's policy callback. Known apps are checked locally; only unknown apps with
 /// automatic enablement on reach `resolve`, which persists registration in the parent process.
+/// Harper itself is excluded from discovery, but explicitly configured entries are respected.
 /// Standalone callers can approve registration locally without IPC.
 fn integration_callback(
     state: Arc<StdMutex<IntegrationState>>,
@@ -444,7 +445,7 @@ fn integration_callback(
         {
             return integration.enabled;
         }
-        if !state.auto_enable_new_apps {
+        if !state.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
             return false;
         }
         let enabled = resolve(bundle_id);

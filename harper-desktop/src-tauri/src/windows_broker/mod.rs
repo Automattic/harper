@@ -67,6 +67,19 @@ impl WindowsBroker {
 }
 
 impl OsBroker for WindowsBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        let Ok(executable) = std::env::current_exe()
+            .and_then(std::fs::canonicalize)
+            .inspect_err(|error| eprintln!("failed to identify Harper executable: {error}"))
+        else {
+            return false;
+        };
+        std::fs::canonicalize(app_id).is_ok_and(|path| {
+            path.to_string_lossy()
+                .eq_ignore_ascii_case(&executable.to_string_lossy())
+        })
+    }
+
     fn get_boxes(
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,

@@ -1,6 +1,7 @@
 mod error;
 mod integration;
 
+use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
 use harper_core::{
     Dialect, IgnoredLints,
@@ -59,6 +60,7 @@ impl Config {
 
     /// Resolves an app's enabled state, registering unknown apps when automatic enablement is on.
     /// Existing disabled entries are never re-enabled; removed entries can be discovered again.
+    /// Harper itself is excluded from discovery, but explicitly configured entries are respected.
     /// The caller is responsible for persisting any newly registered integration.
     pub fn resolve_integration(&mut self, bundle_id: &str) -> bool {
         let bundle_id = bundle_id.trim();
@@ -72,7 +74,7 @@ impl Config {
         {
             return integration.enabled;
         }
-        if !self.auto_enable_new_apps {
+        if !self.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
             return false;
         }
         self.add_integration(bundle_id.to_owned());

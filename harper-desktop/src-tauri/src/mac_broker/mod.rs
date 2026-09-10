@@ -46,6 +46,9 @@ use self::window_stability::{
     settled_window_state, window_frame_changed,
 };
 
+/// Must match `identifier` in `tauri.conf.json`.
+const BUNDLE_ID: &str = "com.elijahpotter.harper-desktop";
+
 /// macOS implementation of the OS data the highlighter needs.
 ///
 /// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
@@ -283,6 +286,10 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        app_id == BUNDLE_ID
+    }
+
     fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
