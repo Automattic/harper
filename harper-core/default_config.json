@@ -1193,6 +1193,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Hijack",
+								"state": true,
+								"lable": "Hijack"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HitTheNailOnTheHead",
 								"state": true,
 								"label": "Hit The Nail On The Head"

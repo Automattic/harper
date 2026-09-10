@@ -536,6 +536,116 @@ fn got_ride_of() {
     );
 }
 
+// Hijack
+
+#[test]
+fn fix_hi_hyphen_jacked() {
+    assert_suggestion_result(
+        "Empty message in hi-jacked POST from javascript to C# MVC",
+        test_linter(),
+        "Empty message in hijacked POST from javascript to C# MVC",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jackers() {
+    assert_suggestion_result(
+        "hi-jackers, including one with no experience at all, survived jumps",
+        test_linter(),
+        "hijackers, including one with no experience at all, survived jumps",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacking() {
+    assert_suggestion_result(
+        "should be thrown instead of hi-jacking the Error class to dynamically add a property to the object",
+        test_linter(),
+        "should be thrown instead of hijacking the Error class to dynamically add a property to the object",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacks() {
+    assert_suggestion_result(
+        "Instruments' UI Recorder hi-jacks my entire system",
+        test_linter(),
+        "Instruments' UI Recorder hijacks my entire system",
+    );
+}
+
+#[test]
+fn fix_high_space_jack() {
+    assert_suggestion_result(
+        "ISPs that high jack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+        test_linter(),
+        "ISPs that hijack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jack() {
+    assert_suggestion_result(
+        "because now we no longer high-jack the API calls",
+        test_linter(),
+        "because now we no longer hijack the API calls",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacked() {
+    assert_suggestion_result(
+        "not possible for the moment because the click event is high-jacked",
+        test_linter(),
+        "not possible for the moment because the click event is hijacked",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacker() {
+    assert_suggestion_result(
+        "Driving a #Polo will get you treated like some high-jacker or car thief on the road",
+        test_linter(),
+        "Driving a #Polo will get you treated like some hijacker or car thief on the road",
+    );
+}
+
+#[test]
+fn fix_high_space_jackers() {
+    assert_suggestion_result(
+        "America and the high jackers are both referring to the same act of terror.",
+        test_linter(),
+        "America and the hijackers are both referring to the same act of terror.",
+    );
+}
+
+#[test]
+fn fix_high_space_jacking() {
+    assert_suggestion_result(
+        "Security issue , Session high jacking prevention",
+        test_linter(),
+        "Security issue , Session hijacking prevention",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacks() {
+    assert_suggestion_result(
+        "Kotlin Compiler Plugin which high-jacks Kotlin assert function calls",
+        test_linter(),
+        "Kotlin Compiler Plugin which hijacks Kotlin assert function calls",
+    );
+}
+
+#[test]
+fn fix_high_space_jacks() {
+    assert_suggestion_result(
+        "This high jacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
+        test_linter(),
+        "This hijacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
+    );
+}
+
 // HolyWar
 
 #[test]

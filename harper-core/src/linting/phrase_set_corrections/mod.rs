@@ -896,6 +896,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "Hijack" => (
+            &[
+                // "hi jack" would result in false positives
+                (&["hi-jack", "high jack", "high-jack"], &["hijack"]),
+                (&["hi jacked", "hi-jacked", "high jacked", "high-jacked"], &["hijacked"]),
+                (&["hi jacker", "hi-jacker", "high jacker", "high-jacker"], &["hijacker"]),
+                (&["hi jackers", "hi-jackers", "high jackers", "high-jackers"], &["hijackers"]),
+                (&["hi jacking", "hi-jacking", "high jacking", "high-jacking"], &["hijacking"]),
+                (&["hi jackings", "hi-jackings", "high jackings", "high-jackings"], &["hijackings"]),
+                (&["hi jacks", "hi-jacks", "high jacks", "high-jacks"], &["hijacks"]),
+            ],
+            "The correct spelling is `hijack`.",
+            "Corrects misspellings of `hijack`.",
+            LintKind::Spelling
+        ),
         "HolyWar" => (
             &[
                 (&["holey war", "holly war"], &["holy war"]),
