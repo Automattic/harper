@@ -5790,6 +5790,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Themself",
+								"state": true,
+								"label": "Themself"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheWhetherWeather",
 								"state": true,
 								"label": "The Whether Weather"
