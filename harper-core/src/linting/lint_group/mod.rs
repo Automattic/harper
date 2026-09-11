@@ -270,6 +270,7 @@ use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
 use super::subject_pronoun::SubjectPronoun;
 use super::such_shame::SuchShame;
+use super::summary_summery::SummarySummery;
 use super::take_a_look_to::TakeALookTo;
 use super::take_care_of::TakeCareOf;
 use super::take_medicine::TakeMedicine;
@@ -884,6 +885,7 @@ impl LintGroup {
         insert_expr_rule!(SplitWords);
         insert_struct_rule!(SubjectPronoun);
         insert_expr_rule!(SuchShame);
+        insert_expr_rule!(SummarySummery);
         insert_expr_rule!(TakeALookTo);
         insert_expr_rule!(TakeCareOf);
         insert_expr_rule!(TakeMedicine);
