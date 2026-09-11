@@ -27,4 +27,8 @@ impl<E: Expr, S: Step> Step for UnlessStep<E, S> {
             None
         }
     }
+    fn step_rev(&self, _tokens: &[Token], _cursor: usize, _source: &[char]) -> Option<isize> {
+        eprintln!("🛑 UNLESS STEP");
+        None // Not implemented
+    }
 }

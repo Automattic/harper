@@ -48,6 +48,10 @@ impl Expr for Repeating {
             }
         }
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 REPEATING");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]
