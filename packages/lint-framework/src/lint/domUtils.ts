@@ -86,7 +86,7 @@ export function leafNodes(node: Node): Node[] {
 export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 	const children = leafNodes(target);
 
-	const range = document.createRange();
+	const range = target.ownerDocument.createRange();
 	let traversed = 0;
 
 	let startFound = false;
@@ -115,6 +115,92 @@ export function getRangeForTextSpan(target: Element, span: Span): Range | null {
 	}
 
 	return null;
+}
+
+function getPointInTextSpan(
+	target: Element,
+	offset: number,
+): { node: Node; offset: number } | null {
+	const children = leafNodes(target);
+	let traversed = 0;
+	let lastTextNode: Text | null = null;
+
+	for (const child of children) {
+		if (child.nodeName === 'BR') {
+			if (traversed === offset) {
+				return { node: child.parentElement ?? target, offset: 0 };
+			}
+			traversed += 1;
+			continue;
+		}
+
+		const childText = child.textContent ?? '';
+		if (child.nodeType === Node.TEXT_NODE) {
+			lastTextNode = child as Text;
+		}
+
+		if (traversed + childText.length >= offset) {
+			return { node: child, offset: offset - traversed };
+		}
+
+		traversed += childText.length;
+	}
+
+	if (lastTextNode != null) {
+		return { node: lastTextNode, offset: lastTextNode.textContent?.length ?? 0 };
+	}
+
+	return { node: target, offset: target.childNodes.length };
+}
+
+function getCodeMirrorLineAndColumn(
+	lines: HTMLElement[],
+	offset: number,
+): { line: HTMLElement; column: number } | null {
+	let remaining = offset;
+
+	for (const line of lines) {
+		const lineLength = line.textContent?.length ?? 0;
+
+		if (remaining <= lineLength) {
+			return { line, column: remaining };
+		}
+
+		remaining -= lineLength + 1;
+	}
+
+	const lastLine = lines[lines.length - 1];
+	if (lastLine == null) {
+		return null;
+	}
+
+	return { line: lastLine, column: lastLine.textContent?.length ?? 0 };
+}
+
+/**
+ * Given a CodeMirror `.cm-content` element and a span in the text produced by joining
+ * `.cm-line` contents with newlines, compute the equivalent DOM Range.
+ */
+export function getRangeForCodeMirrorTextSpan(target: Element, span: Span): Range | null {
+	const lines = Array.from(target.querySelectorAll<HTMLElement>('.cm-line'));
+	const start = getCodeMirrorLineAndColumn(lines, span.start);
+	const end = getCodeMirrorLineAndColumn(lines, span.end);
+
+	if (start == null || end == null) {
+		return null;
+	}
+
+	const startPoint = getPointInTextSpan(start.line, start.column);
+	const endPoint = getPointInTextSpan(end.line, end.column);
+
+	if (startPoint == null || endPoint == null) {
+		return null;
+	}
+
+	const range = target.ownerDocument.createRange();
+	range.setStart(startPoint.node, startPoint.offset);
+	range.setEnd(endPoint.node, endPoint.offset);
+	return range;
 }
 
 const sharedRange: Range | null = typeof document !== 'undefined' ? document.createRange() : null;
