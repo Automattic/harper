@@ -2,7 +2,7 @@ expr main similar like
 
 let message "Prefer 'similar to' instead of 'similar like'."
 let description "The adjective 'similar' pairs with the preposition 'to', so never follow it with 'like'."
-let kind "Usage"
+let kind "Preposition"
 let becomes "similar to"
 let strategy "MatchCase"
 

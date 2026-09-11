@@ -85,7 +85,7 @@ impl ExprLinter for CodeInWriteIn {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::Preposition,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "in",
                 span.get_content(source),

@@ -11,6 +11,7 @@ export const LINT_KIND_COLORS = {
 	Malapropism: '#C71585',
 	Miscellaneous: '#3BCEAC',
 	Nonstandard: '#008B8B',
+	Preposition: '#FF7F50',
 	Punctuation: '#D4850F',
 	Readability: '#2E8B57',
 	Redundancy: '#4682B4',
