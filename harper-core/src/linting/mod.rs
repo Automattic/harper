@@ -69,6 +69,7 @@ mod crave_for;
 mod criteria_phenomena;
 mod cure_for;
 mod currency_placement;
+mod dairy_diary;
 mod damages;
 mod dashes;
 mod day_and_age;
