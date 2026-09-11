@@ -61,7 +61,8 @@ impl ExprLinter for SummarySummery {
             span,
             lint_kind: LintKind::Spelling,
             suggestions,
-            message: "Fix this erorr".to_owned(),
+            message: "Did you mean `summery` (relating to summer) or `summary` (brief statement)?"
+                .to_owned(),
             ..Default::default()
         })
     }
@@ -71,7 +72,7 @@ impl ExprLinter for SummarySummery {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Checks for the common confusion between `summary` and `summery`."
     }
 }
 
