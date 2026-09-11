@@ -28,7 +28,7 @@ pub struct RedundantFirsts {
 impl Default for RedundantFirsts {
     fn default() -> Self {
         let verbs = Lrc::new(WordSet::new(
-            &VERBS.iter().map(|(v, _)| *v).collect::<Vec<_>>(),
+            VERBS.iter().map(|(v, _)| *v).collect::<Vec<_>>(),
         ));
 
         Self {

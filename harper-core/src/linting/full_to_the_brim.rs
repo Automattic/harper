@@ -14,7 +14,7 @@ pub struct FullToTheBrim {
 impl Default for FullToTheBrim {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["full", "filled"])
+            expr: SequenceExpr::word_set(["full", "filled"])
                 .t_ws()
                 .then_word_seq(&["to", "the", "brim", "of"])
                 .but_not(

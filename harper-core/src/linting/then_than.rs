@@ -26,7 +26,7 @@ impl ThenThan {
                 ),
                 // Positive form of adjective following "more" or "less"
                 Box::new(
-                    SequenceExpr::word_set(&["more", "less"])
+                    SequenceExpr::word_set(["more", "less"])
                         .t_ws()
                         .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb)
                         .t_ws()
@@ -36,7 +36,7 @@ impl ThenThan {
                 ),
             ])) as Box<dyn Expr>,
             // Exceptions to the rule.
-            Box::new(Invert::new(WordSet::new(&["back", "this", "so", "but"]))),
+            Box::new(Invert::new(WordSet::new(["back", "this", "so", "but"]))),
         ]);
 
         Self {

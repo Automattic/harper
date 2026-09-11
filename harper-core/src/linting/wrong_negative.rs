@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::Expr,
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, spell_check},
     spell::Dictionary,
 };
 
@@ -77,7 +77,7 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
             }
             .to_string(),
             suggestions,
-            ..Default::default()
+            priority: spell_check::SPELL_CHECK_PRIORITY - 1, // higher priority (lower number) than spell check
         })
     }
 
@@ -92,7 +92,13 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
 
 #[cfg(test)]
 mod tests {
-    use crate::{linting::tests::assert_suggestion_result, spell::FstDictionary};
+    use crate::{
+        Dialect,
+        document::Document,
+        linting::{LintGroup, Linter, spell_check, tests::assert_suggestion_result},
+        remove_overlaps,
+        spell::FstDictionary,
+    };
 
     use super::WrongNegative;
 
@@ -120,6 +126,45 @@ mod tests {
             "This System makes a individual design unpossible.",
             WrongNegative::new(FstDictionary::curated()),
             "This System makes a individual design impossible.",
+        );
+    }
+
+    #[test]
+    fn fix_unvisible() {
+        assert_suggestion_result(
+            "Sure, I'm using \"deleted\" here to mean a third state more unvisible than \"yanked\"",
+            WrongNegative::new(FstDictionary::curated()),
+            "Sure, I'm using \"deleted\" here to mean a third state more invisible than \"yanked\"",
+        );
+    }
+
+    #[test]
+    fn wrong_negative_wins_over_spell_check() {
+        let dict = FstDictionary::curated();
+        let mut lint_group = LintGroup::empty();
+
+        // Add both linters
+        lint_group.add(
+            "SpellCheck",
+            spell_check::SpellCheck::new(dict.clone(), Dialect::American),
+        );
+        lint_group.add_chunk_expr_linter("WrongNegative", WrongNegative::new(dict));
+
+        // Enable both linters in the config
+        lint_group.config.set_rule_enabled("SpellCheck", true);
+        lint_group.config.set_rule_enabled("WrongNegative", true);
+
+        let document = Document::new_plain_english_curated("unvisible");
+        let mut lints = lint_group.lint(&document);
+
+        // Remove overlapping lints - this should keep WrongNegative due to higher priority
+        remove_overlaps(&mut lints);
+
+        // Should only get one lint from WrongNegative, not SpellCheck
+        assert_eq!(lints.len(), 1);
+        assert_eq!(
+            lints[0].message,
+            "Could this be the negative word you intended?"
         );
     }
 }

@@ -26,9 +26,9 @@ impl<D: Dictionary> PossessiveNoun<D> {
         let exceptions =
             SequenceExpr::unless(|tok: &Token, _: &[char]| tok.kind.is_demonstrative_determiner())
                 .t_any()
-                .then_unless(WordSet::new(&["flags", "checks", "catches", "you"]))
+                .then_unless(WordSet::new(["flags", "checks", "catches", "you"]))
                 .t_any()
-                .then_unless(WordSet::new(&["form", "go"]));
+                .then_unless(WordSet::new(["form", "go"]));
 
         Self {
             expr: All::new(vec![

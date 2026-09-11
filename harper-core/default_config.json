@@ -200,6 +200,13 @@
 					"settings": [
 						{
 							"Bool": {
+								"name": "AsFarAsICanTell",
+								"state": true,
+								"label": "As Far As I Can Tell"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsFarAsIKnow",
 								"state": true,
 								"label": "As Far As I Know"
@@ -322,6 +329,13 @@
 								"name": "OhMyGod",
 								"state": true,
 								"label": "Oh My God"
+							}
+						},
+						{
+							"Bool": {
+								"name": "OnTheOtherHand",
+								"state": true,
+								"label": "On the Other Hand"
 							}
 						},
 						{
@@ -693,6 +707,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ShowCase",
+								"state": true,
+								"label": "Show Case"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Somebody",
 								"state": true,
 								"label": "Somebody"
@@ -717,6 +738,13 @@
 								"name": "Somewhere",
 								"state": true,
 								"label": "Somewhere"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Straightforward",
+								"state": true,
+								"label": "Straightforward"
 							}
 						},
 						{
@@ -839,6 +867,13 @@
 								"name": "AwaitFor",
 								"state": true,
 								"label": "Await For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BainBane",
+								"state": true,
+								"label": "Bain / Bane"
 							}
 						},
 						{
@@ -1165,6 +1200,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Hijack",
+								"state": true,
+								"lable": "Hijack"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HitTheNailOnTheHead",
 								"state": true,
 								"label": "Hit The Nail On The Head"
@@ -1259,6 +1301,13 @@
 								"name": "NervousWreck",
 								"state": true,
 								"label": "Nervous Wreck"
+							}
+						},
+						{
+							"Bool": {
+								"name": "NotForLackOf",
+								"state": true,
+								"label": "Not for Lack of"
 							}
 						},
 						{
@@ -2821,6 +2870,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SummarySummery",
+								"state": true,
+								"label": "Summary / Summery"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatThis",
 								"state": true,
 								"label": "That This"
@@ -3009,6 +3065,13 @@
 								"name": "ExpandControl",
 								"state": true,
 								"label": "Expand Control"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ExpandFavourite",
+								"state": true,
+								"label": "Expand Favourite"
 							}
 						},
 						{
@@ -3303,6 +3366,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AdvantageOf",
+								"state": true,
+								"label": "Advantage Of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AfterAll",
 								"state": true,
 								"label": "After All"
@@ -3467,6 +3537,13 @@
 								"name": "ForNoun",
 								"state": true,
 								"label": "For Noun"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ForSameReason",
+								"state": true,
+								"label": "For Same Reason"
 							}
 						},
 						{
@@ -3800,6 +3877,12 @@
 						},
 						{
 							"Bool": {
+								"name": "ReverseEngineer",
+								"state": true
+							}
+						},
+						{
+							"Bool": {
 								"name": "RulesOfThumb",
 								"state": true,
 								"label": "Rules Of Thumb"
@@ -4043,7 +4126,7 @@
 							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
-								"label": "Ahead And"
+								"label": "Ahead and"
 							}
 						},
 						{
@@ -4559,6 +4642,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DenyOffer",
+								"state": true,
+								"label": "Deny Offer"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
@@ -4902,6 +4992,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InAnIdealWorld",
+								"state": true,
+								"label": "In an Ideal World"
+							}
+						},
+						{
+							"Bool": {
 								"name": "IncidentReport",
 								"state": true,
 								"label": "Incident Report"
@@ -5161,6 +5258,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lots",
+								"state": true,
+								"label": "Lots"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LowHangingFruit",
 								"state": true,
 								"label": "Low Hanging Fruit"
@@ -5350,6 +5454,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OnTheFence",
+								"state": true,
+								"label": "On The Fence"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OnTheSpurOfTheMoment",
 								"state": true,
 								"label": "On The Spur Of The Moment"
@@ -5413,9 +5524,23 @@
 						},
 						{
 							"Bool": {
+								"name": "PlayAFactor",
+								"state": true,
+								"label": "Play a Factor"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PrayingMantis",
 								"state": true,
 								"label": "Praying Mantis"
+							}
+						},
+						{
+							"OneOfMany": {
+								"names": ["PreferPleaded", "PreferPled"],
+								"name": "PreferPleaded",
+								"labels": ["Prefer ‘Pleaded’", "Prefer ‘Pled’"]
 							}
 						},
 						{
@@ -5532,6 +5657,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SlipperySlope",
+								"state": true,
+								"label": "Slippery Slope"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SneakingSuspicion",
 								"state": true,
 								"label": "Sneaking Suspicion"
@@ -5584,6 +5716,13 @@
 								"name": "StatuteOfLimitations",
 								"state": true,
 								"label": "Statute Of Limitations"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SuchShame",
+								"state": true,
+								"label": "Such Shame"
 							}
 						},
 						{
@@ -5745,6 +5884,13 @@
 								"name": "ViceVersa",
 								"state": true,
 								"label": "Vice Versa"
+							}
+						},
+						{
+							"Bool": {
+								"name": "WaistWaste",
+								"state": true,
+								"label": "Waist / Waste"
 							}
 						},
 						{

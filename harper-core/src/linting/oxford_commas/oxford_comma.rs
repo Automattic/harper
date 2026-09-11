@@ -26,7 +26,7 @@ impl Default for OxfordComma {
             .then_one_or_more(item_chunk)
             .then(item.clone())
             .then_whitespace()
-            .then_word_set(&["and", "or", "nor"])
+            .then_word_set(["and", "or", "nor"])
             .then_whitespace()
             .then(item.clone());
 

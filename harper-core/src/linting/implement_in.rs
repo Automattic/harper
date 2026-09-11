@@ -11,7 +11,7 @@ pub struct ImplementIn {
 impl Default for ImplementIn {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "implement",
                 "implemented",
                 "implementing",
