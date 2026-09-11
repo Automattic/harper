@@ -24,9 +24,44 @@ impl Default for TeX {
 
 impl Parser for TeX {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let tokens = self.inner.parse(source);
+        let tokens = self
+            .inner
+            .parse(source)
+            .into_iter()
+            .filter(|token| should_retain_token(token, source))
+            .collect();
         collapse_tex_dashes(tokens)
     }
+}
+
+fn should_retain_token(token: &Token, source: &[char]) -> bool {
+    if !matches!(token.kind, TokenKind::ParagraphBreak) {
+        return true;
+    }
+
+    let Some(masked) = source.get(token.span.start..token.span.end) else {
+        return true;
+    };
+
+    if !masked.iter().all(|&c| matches!(c, ' ' | '\t' | '\n')) {
+        return true;
+    }
+
+    let start = source[..token.span.start]
+        .iter()
+        .rev()
+        .take_while(|&&c| matches!(c, ' ' | '\t' | '\n'))
+        .count();
+    let end = source[token.span.end..]
+        .iter()
+        .take_while(|&&c| matches!(c, ' ' | '\t' | '\n'))
+        .count();
+
+    source[token.span.start - start..token.span.end + end]
+        .iter()
+        .filter(|&&c| c == '\n')
+        .count()
+        >= 2
 }
 
 fn collapse_tex_dashes(tokens: Vec<Token>) -> Vec<Token> {
