@@ -201,6 +201,17 @@ build-desktop-linux: build-harperjs build-lint-framework build-components build-
   pnpm install
   pnpm tauri build -b deb,rpm,appimage
 
+# Build Harper Desktop Windows bundles.
+build-desktop-windows: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  rustup target add x86_64-pc-windows-msvc
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
+
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
@@ -602,7 +613,8 @@ bump-versions: update-vscode-linters
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo ws version --no-git-push --no-git-tag --force '*'
+  # Include private crates such as harper-desktop so their versions stay in sync.
+  cargo ws version --all --no-git-push --no-git-tag --force '*'
 
   HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 

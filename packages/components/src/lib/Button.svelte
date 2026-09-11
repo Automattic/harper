@@ -15,12 +15,13 @@ export let target: HTMLAnchorAttributes['target'] = undefined;
 export let rel: HTMLAnchorAttributes['rel'] = undefined;
 export let type: HTMLButtonAttributes['type'] = 'button';
 export let disabled: boolean | undefined = undefined;
+export let unstyled = false;
 // Alias for the `class` attribute since `class` is a reserved TS keyword
 export let className: string | undefined = undefined;
 
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};
-const dispatch = createEventDispatcher();
+const dispatch = createEventDispatcher<{ click: Event; dblclick: Event }>();
 
 const sizeClasses: Record<ButtonSize, string> = {
 	xs: 'px-3 py-2 text-xs',
@@ -46,11 +47,18 @@ $: toneClass = colorClasses[color as ButtonColor] ?? colorClasses.primary;
 $: shapeClass = pill ? 'rounded-full' : 'rounded-lg';
 $: sizeClass = sizeClasses[size] ?? sizeClasses.md;
 $: ({ class: restClass, ...restProps } = $$restProps);
-$: classes = [baseClasses, shapeClass, sizeClass, toneClass, restClass, className]
+$: classes = [
+	!unstyled && baseClasses,
+	!unstyled && shapeClass,
+	!unstyled && sizeClass,
+	!unstyled && toneClass,
+	restClass,
+	className,
+]
 	.filter(Boolean)
 	.join(' ');
 
-$: colorOverride = colorClasses[color as ButtonColor] == null ? color : undefined;
+$: colorOverride = !unstyled && colorClasses[color as ButtonColor] == null ? color : undefined;
 $: inlineStyle =
 	colorOverride || textColor
 		? [
@@ -83,6 +91,7 @@ function handleClick(event: Event) {
 		rel={rel}
 		target={target}
 		on:click={handleClick}
+		on:dblclick={(event) => dispatch('dblclick', event)}
 		{...restProps}
 	>
 		<slot />
@@ -95,6 +104,7 @@ function handleClick(event: Event) {
 		{...restProps}
 		style={inlineStyle}
 		on:click={handleClick}
+		on:dblclick={(event) => dispatch('dblclick', event)}
 	>
 		<slot />
 	</button>

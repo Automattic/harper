@@ -11,6 +11,8 @@ mod addicting;
 mod adjective_double_degree;
 mod adjective_of_a;
 mod after_later;
+mod ajar;
+mod akimbo;
 mod all_hell_break_loose;
 mod all_intents_and_purposes;
 mod allow_to;
@@ -50,6 +52,7 @@ mod catch_22;
 mod cautionary_tale;
 mod cease_to;
 mod change_tack;
+mod chicken_and_egg;
 mod chock_full;
 mod claim_to_fame;
 mod close_tight_knit;
@@ -69,6 +72,7 @@ mod currency_placement;
 mod damages;
 mod dashes;
 mod day_and_age;
+mod deny_offer;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
@@ -85,8 +89,10 @@ mod double_modal;
 mod ellipsis_length;
 mod else_possessive;
 mod ever_every;
+mod ever_pronoun_rel_pronoun;
 mod everyday;
 mod except_of;
+mod expand_favourite;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
@@ -106,6 +112,7 @@ mod flesh_out_vs_full_fledged;
 mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
+mod for_same_reason;
 mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
@@ -187,6 +194,7 @@ mod most_number;
 mod most_of_the_times;
 mod multiple_frequency_adverbs;
 mod multiple_sequential_pronouns;
+mod nail_in_coffin;
 mod nail_on_the_head;
 mod naked_eye;
 mod need_to_noun;
@@ -195,7 +203,6 @@ mod no_harm_no_foul;
 mod no_longer;
 mod no_longer_pronoun;
 mod no_match_for;
-mod no_oxford_comma;
 mod nobody;
 mod nominal_wants;
 mod nor_modal_pronoun;
@@ -208,6 +215,7 @@ mod of_course;
 mod off_limits;
 mod oldest_in_the_book;
 mod on_floor;
+mod on_the_fence;
 mod once_or_twice;
 mod one_and_the_same;
 mod one_of_the_singular;
@@ -219,7 +227,7 @@ mod ought_to_be;
 mod out_of_date;
 mod out_of_the_window;
 mod over_plus;
-mod oxford_comma;
+mod oxford_commas;
 mod oxymorons;
 mod pale_by_comparison;
 mod passionate_about;
@@ -227,6 +235,7 @@ mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod pleaded_pled;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod pooled_linter;
@@ -262,6 +271,7 @@ mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
+mod show_case;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
@@ -276,10 +286,13 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod such_shame;
 mod suggestion;
+mod summary_summery;
 mod take_a_look_to;
 mod take_care_of;
 mod take_medicine;
+mod take_pride_in;
 mod take_serious;
 mod that_than;
 mod that_which;
@@ -316,9 +329,11 @@ mod update_place_names;
 mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
+mod very_less;
 mod very_unique;
 mod vice_versa;
 mod vicious_loop;
+mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
@@ -331,6 +346,7 @@ mod widely_accepted;
 mod will_non_lemma;
 mod win_prize;
 mod wish_could;
+mod with_open_arms;
 mod wordpress_dotcom;
 mod worth_to_do;
 mod would_never_have;
@@ -911,13 +927,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+import { createEventDispatcher } from 'svelte';
 import type { HTMLSelectAttributes } from 'svelte/elements';
 
 type SelectSize = 'sm' | 'md' | 'lg';
@@ -14,9 +15,11 @@ export let size: SelectSize = 'md';
 export let items: SelectItem[] | undefined = undefined;
 export let className: string | undefined = undefined;
 export let value: HTMLSelectAttributes['value'] = undefined;
+export let unstyled = false;
 
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};
+const dispatch = createEventDispatcher<{ change: Event; click: MouseEvent }>();
 
 const baseClasses =
 	'rounded-lg border border-cream-200 bg-white shadow-sm outline-none transition focus:ring-2 focus:ring-primary-300 focus:border-cream-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:focus:border-cream-600 dark:focus:ring-primary-600 text-left';
@@ -27,12 +30,23 @@ const sizeClasses: Record<SelectSize, string> = {
 };
 
 $: ({ class: restClass, ...restProps } = $$restProps);
-$: classes = [baseClasses, sizeClasses[size] ?? sizeClasses.md, restClass, className]
+$: classes = [
+	!unstyled && baseClasses,
+	!unstyled && (sizeClasses[size] ?? sizeClasses.md),
+	restClass,
+	className,
+]
 	.filter(Boolean)
 	.join(' ');
 </script>
 
-<select class={classes} bind:value {...restProps}>
+<select
+	class={classes}
+	bind:value
+	{...restProps}
+	on:change={(event) => dispatch('change', event)}
+	on:click={(event) => dispatch('click', event)}
+>
 	{#if items?.length}
 		{#each items as item (item.value)}
 			<option value={item.value} disabled={item.disabled} selected={item.selected}>

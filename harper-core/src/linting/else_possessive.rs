@@ -14,7 +14,7 @@ pub struct ElsePossessive {
 
 impl Default for ElsePossessive {
     fn default() -> Self {
-        let pronouns = WordSet::new(&[
+        let pronouns = WordSet::new([
             "somebody",
             "someone",
             "anybody",

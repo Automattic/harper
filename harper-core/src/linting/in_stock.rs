@@ -19,8 +19,8 @@ impl Default for InStock {
             expr: SequenceExpr::any_of([
                 Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
                 Box::new(
-                    SequenceExpr::word_set(&["have", "had", "has", "having"]).then_optional(
-                        SequenceExpr::whitespace().t_set(&[
+                    SequenceExpr::word_set(["have", "had", "has", "having"]).then_optional(
+                        SequenceExpr::whitespace().t_set([
                             "it",
                             "one",
                             "some",

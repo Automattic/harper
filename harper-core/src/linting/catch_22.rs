@@ -12,7 +12,7 @@ pub struct Catch22 {
 impl Default for Catch22 {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["cache", "cash"]).then_any_of(vec![
+            expr: SequenceExpr::word_set(["cache", "cash"]).then_any_of(vec![
                 Box::new(
                     SequenceExpr::default()
                         .t_ws_h()
