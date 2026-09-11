@@ -151,6 +151,7 @@ use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::jump_the_gun::JumpTheGun;
+use super::lead_led::LeadLed;
 use super::lead_rise_to::LeadRiseTo;
 use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
@@ -766,6 +767,7 @@ impl LintGroup {
         insert_expr_rule!(JealousOf);
         insert_expr_rule!(JohnsHopkins);
         insert_expr_rule!(JumpTheGun);
+        insert_expr_rule!(LeadLed);
         insert_expr_rule!(LeadRiseTo);
         insert_expr_rule!(LeavingInDroves);
         insert_expr_rule!(LeftRightHand);
