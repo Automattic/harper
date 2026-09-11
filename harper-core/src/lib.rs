@@ -6,7 +6,6 @@ mod char_ext;
 mod char_string;
 mod currency;
 mod dict_word_metadata;
-mod dict_word_metadata_orthography;
 mod document;
 mod edit_distance;
 pub mod expr;
@@ -45,10 +44,14 @@ pub use case::{Case, CaseIterExt};
 pub use char_string::{CharString, CharStringExt};
 pub use currency::Currency;
 pub use dict_word_metadata::{
-    AdverbData, ConjunctionData, Degree, DeterminerData, Dialect, DialectFlags, DictWordMetadata,
-    NounData, PronounData, VerbData, VerbForm, VerbFormFlags,
+    AdverbData, ConjunctionData, DeterminerData, DictWordMetadata,
+    adjective::{AdjectiveData, Degree},
+    dialect,
+    dialect::{Dialect, DialectFlags},
+    nominal::{NounData, PronounData},
+    orthography::{OrthFlags, Orthography},
+    verb::{VerbData, VerbForm, VerbFormFlags},
 };
-pub use dict_word_metadata_orthography::{OrthFlags, Orthography};
 pub use document::Document;
 pub use fat_token::{FatStringToken, FatToken};
 pub use ignored_lints::{IgnoredLints, LintContext};
@@ -212,7 +215,8 @@ mod tests {
     use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document, Span,
+        Document, Span,
+        dialect::Dialect,
         expr::{AnchorStart, SequenceExpr},
         linting::{LintGroup, Linter},
         remove_lints_overlapping_expr, remove_overlaps,

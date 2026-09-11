@@ -3,7 +3,8 @@ use is_macro::Is;
 use serde::{Deserialize, Serialize};
 
 use crate::{
-    DictWordMetadata, Number, Punctuation, Quote, TokenKind::Word, dict_word_metadata::Person,
+    DictWordMetadata, Number, Punctuation, Quote, TokenKind::Word,
+    dict_word_metadata::nominal::Person,
 };
 
 /// Generate wrapper code to pass a function call to the inner [`DictWordMetadata`],  

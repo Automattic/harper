@@ -6,7 +6,7 @@ use crate::expr::SequenceExpr;
 use crate::linting::expr_linter::Chunk;
 use crate::{
     Token,
-    dict_word_metadata::Person,
+    dict_word_metadata::nominal::Person,
     linting::{ExprLinter, Lint, LintKind, Suggestion},
     patterns::WordSet,
 };

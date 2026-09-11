@@ -2,9 +2,10 @@ use std::borrow::Cow;
 
 use itertools::Itertools;
 
+use crate::CaseIterExt;
 use crate::case::Case::Upper;
 use crate::char_ext::CharExt;
-use crate::{CaseIterExt, Dialect};
+use crate::dialect::Dialect;
 
 #[derive(Debug, PartialEq)]
 pub enum InitialSound {

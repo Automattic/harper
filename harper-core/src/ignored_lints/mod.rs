@@ -64,7 +64,8 @@ mod tests {
     use crate::linting::create_test_pool;
     use crate::spell::FstDictionary;
     use crate::{
-        Dialect, Document,
+        Document,
+        dialect::Dialect,
         linting::{LintGroup, Linter},
     };
 

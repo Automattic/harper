@@ -1,6 +1,6 @@
 use crate::{
     Span, Token,
-    dict_word_metadata::VerbFormFlags,
+    dict_word_metadata::verb::VerbFormFlags,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{DerivedFrom, InflectionOfBe},
