@@ -24,9 +24,54 @@ impl Default for TeX {
 
 impl Parser for TeX {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let tokens = self.inner.parse(source);
+        let tokens = insert_inline_math_tokens(self.inner.parse(source), source);
         collapse_tex_dashes(tokens)
     }
+}
+
+fn insert_inline_math_tokens(tokens: Vec<Token>, source: &[char]) -> Vec<Token> {
+    let mut math_tokens = inline_math_spans(source)
+        .into_iter()
+        .map(|span| Token::new(span, TokenKind::Unlintable))
+        .peekable();
+
+    let mut out = Vec::with_capacity(tokens.len() + math_tokens.size_hint().0);
+    for token in tokens {
+        while math_tokens
+            .peek()
+            .is_some_and(|math_token| math_token.span.start < token.span.start)
+        {
+            out.push(math_tokens.next().unwrap());
+        }
+        out.push(token);
+    }
+    out.extend(math_tokens);
+    out
+}
+
+fn inline_math_spans(source: &[char]) -> Vec<Span<char>> {
+    let mut spans = Vec::new();
+    let mut cursor = 0;
+
+    while cursor < source.len() {
+        if source[cursor] != '$' || is_escaped(source, cursor) {
+            cursor += 1;
+            continue;
+        }
+
+        let Some(relative_end) = source[cursor + 1..].iter().position(|c| *c == '$') else {
+            break;
+        };
+        let end = cursor + 1 + relative_end + 1;
+        spans.push(Span::new(cursor, end));
+        cursor = end;
+    }
+
+    spans
+}
+
+fn is_escaped(source: &[char], cursor: usize) -> bool {
+    cursor > 0 && source[cursor - 1] == '\\'
 }
 
 fn collapse_tex_dashes(tokens: Vec<Token>) -> Vec<Token> {
