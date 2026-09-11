@@ -753,13 +753,24 @@ fn main() -> anyhow::Result<()> {
 
             let all_keys = affixes.keys().chain(properties.keys()).collect::<Vec<_>>();
 
+            // Convert raw JSON string keys into the internal char space mapping
+            let convert_key_string = |key: &str| -> Option<char> {
+                let mut chars = key.chars();
+                let first = chars.next()?;
+                if first == '+' {
+                    let second = chars.next()?;
+                    char::from_u32(second as u32 + 0xE000)
+                } else {
+                    Some(first)
+                }
+            };
+
             let mut annotation_flag_count: HashMap<char, u32> = all_keys
                 .iter()
-                .filter_map(|key| key.chars().next()) // Get first char of each key
+                .filter_map(|key| convert_key_string(key)) // Correctly map "+z" -> 0xE000 surrogate
                 .map(|c| (c, 0))
                 .collect();
 
-            // let mut duplicate_flag_total = 0;
             let mut duplicate_flags = std::collections::HashMap::new();
             let mut unknown_flags = std::collections::HashMap::new();
             let mut unused_flag_total = 0;
@@ -786,24 +797,53 @@ fn main() -> anyhow::Result<()> {
                     };
 
                     let mut seen_flags = hashbrown::HashSet::new();
+                    let mut standalone_prefixes = 0;
 
-                    for flag in annotation.chars() {
+                    let mut chars = annotation.chars().peekable();
+                    while let Some(c) = chars.next() {
+                        let flag = if c == '+' {
+                            if let Some(next_c) = chars.next() {
+                                char::from_u32(next_c as u32 + 0xE000).unwrap_or(c)
+                            } else {
+                                // Explicitly catch trailing/standalone prefix error
+                                eprintln!(
+                                    "Error: Line {}: Standalone prefix '{}' at end of entry: {}/{}",
+                                    line_num + 1,
+                                    c,
+                                    lexeme,
+                                    annotation
+                                );
+                                standalone_prefixes += 1;
+                                continue; // Skip treating it as a valid single-character flag
+                            }
+                        } else {
+                            c
+                        };
+
+                        let format_flag = |f: char| -> String {
+                            let val = f as u32;
+                            if (0xE000..=0xF8FF).contains(&val) {
+                                format!("+{}", char::from_u32(val - 0xE000).unwrap_or(f))
+                            } else {
+                                f.to_string()
+                            }
+                        };
+
                         if !seen_flags.insert(flag) {
                             eprintln!(
                                 "Warning: Line {}: Duplicate annotation flag '{}' in entry: {}/{}",
                                 line_num + 1,
-                                flag,
+                                format_flag(flag),
                                 lexeme,
                                 annotation
                             );
-                            // duplicate_flag_total += 1;
                             *duplicate_flags.entry(flag).or_insert(0) += 1;
                         }
                         if !annotation_flag_count.contains_key(&flag) {
                             eprintln!(
                                 "Warning: Line {}: Unknown annotation flag '{}' in entry: {}/{}",
                                 line_num + 1,
-                                flag,
+                                format_flag(flag),
                                 lexeme,
                                 annotation
                             );
@@ -812,12 +852,25 @@ fn main() -> anyhow::Result<()> {
                             *annotation_flag_count.get_mut(&flag).unwrap() += 1;
                         }
                     }
+
+                    // If a standalone prefix is found, treat it as a hard failure
+                    if standalone_prefixes > 0 {
+                        *unknown_flags.entry('+').or_insert(0) += standalone_prefixes;
+                    }
                 }
             }
 
             for (flag, count) in annotation_flag_count {
                 if count == 0 {
-                    eprintln!("Warning: Unused annotation flag '{}'", flag);
+                    let format_flag = |f: char| -> String {
+                        let val = f as u32;
+                        if (0xE000..=0xF8FF).contains(&val) {
+                            format!("+{}", char::from_u32(val - 0xE000).unwrap_or(f))
+                        } else {
+                            f.to_string()
+                        }
+                    };
+                    eprintln!("Warning: Unused annotation flag '{}'", format_flag(flag));
                     unused_flag_total += 1;
                 }
             }
