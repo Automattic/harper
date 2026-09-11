@@ -416,7 +416,7 @@ impl ExprLinter for MissingTo {
 
         Some(Lint {
             span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter(" to".chars().collect())],
             message: "Insert `to` to complete the infinitive (e.g., `need to talk`).".to_owned(),
             priority: 62,

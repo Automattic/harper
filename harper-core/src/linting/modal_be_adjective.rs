@@ -2,7 +2,7 @@ use crate::{
     CharStringExt, Lint, Token, TokenKind,
     expr::{Expr, SequenceExpr},
     linting::{
-        ExprLinter, Suggestion,
+        ExprLinter, LintKind, Suggestion,
         expr_linter::{Chunk, followed_by_hyphen, followed_by_word},
     },
     patterns::ModalVerb,
@@ -62,6 +62,7 @@ impl ExprLinter for ModalBeAdjective {
 
         Some(Lint {
             span: toks[0].span,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter(" be".chars().collect())],
             message: "You may be missing the word `be` between this modal verb and adjective."
                 .to_owned(),

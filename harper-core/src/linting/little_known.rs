@@ -28,22 +28,28 @@ impl ExprLinter for LittleKnown {
     type Unit = Chunk;
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        let (span, sugg, action) = match (
+        let (span, lint_kind, sugg, action) = match (
             toks.len(),
             toks.last()?.get_ch(src).first()?.to_ascii_lowercase(),
         ) {
             (7, 'f') => (
                 toks[0].span,
+                LintKind::MissingWord,
                 Suggestion::InsertAfter(vec![' ', 'a']),
                 "Insert",
             ),
-            (9, 't') => (toks[1..=2].span()?, Suggestion::Remove, "Remove"),
+            (9, 't') => (
+                toks[1..=2].span()?,
+                LintKind::Usage,
+                Suggestion::Remove,
+                "Remove",
+            ),
             _ => return None,
         };
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Usage,
+            lint_kind,
             suggestions: vec![sugg],
             message: format!("{} the indefinnite article `a`.", action),
             ..Default::default()

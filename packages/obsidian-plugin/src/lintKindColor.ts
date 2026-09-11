@@ -10,6 +10,7 @@ export const LINT_KIND_COLORS = {
 	Grammar: '#9B59B6',
 	Malapropism: '#C71585',
 	Miscellaneous: '#3BCEAC',
+	MissingWord: '#ADFF2F',
 	Nonstandard: '#008B8B',
 	Punctuation: '#D4850F',
 	Readability: '#2E8B57',

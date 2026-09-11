@@ -48,7 +48,7 @@ impl ExprLinter for TheLastDays {
 
         Some(Lint {
             span: toks[last_idx].span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::MissingWord,
             suggestions,
             message,
             ..Default::default()

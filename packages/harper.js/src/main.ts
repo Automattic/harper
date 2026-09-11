@@ -26,6 +26,7 @@ export type LintKind =
 	| 'Grammar'
 	| 'Malapropism'
 	| 'Miscellaneous'
+	| 'MissingWord'
 	| 'Nonstandard'
 	| 'Punctuation'
 	| 'Readability'

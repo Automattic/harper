@@ -38,7 +38,7 @@ impl ExprLinter for HaveAHardTime {
 
         Some(Lint {
             span: toks[first_space_idx].span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::MissingWord,
             suggestions: suggestions
                 .iter()
                 .map(|s| Suggestion::InsertAfter(s.to_vec()))
