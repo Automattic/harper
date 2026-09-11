@@ -184,6 +184,7 @@ use super::nail_in_coffin::NailInCoffin;
 use super::nail_on_the_head::NailOnTheHead;
 use super::naked_eye::NakedEye;
 use super::need_to_noun::NeedToNoun;
+use super::negative_modal_order::NegativeModalOrder;
 use super::no_french_spaces::NoFrenchSpaces;
 use super::no_harm_no_foul::NoHarmNoFoul;
 use super::no_longer::NoLonger;
@@ -798,6 +799,7 @@ impl LintGroup {
         insert_expr_rule!(NailOnTheHead);
         insert_expr_rule!(NakedEye);
         insert_expr_rule!(NeedToNoun);
+        insert_expr_rule!(NegativeModalOrder);
         insert_struct_rule!(NoFrenchSpaces);
         insert_expr_rule!(NoLonger);
         insert_expr_rule!(NoLongerPronoun);
