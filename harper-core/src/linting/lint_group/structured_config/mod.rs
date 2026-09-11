@@ -331,7 +331,7 @@ mod tests {
 
         assert!(
             missing_from_default_config.is_empty() && extra_in_default_config.is_empty(),
-            "default_config.json drifted from the registered rule set\nmissing from default_config.json: {:?}\nextra in default_config.json: {:?}\nDid you forget to add the missing rule(s) to default_config.json?",
+            "⚠️ default_config.json drifted from the registered rule set\nmissing from default_config.json: {:?}\nextra in default_config.json: {:?}\nDid you forget to add the missing rule(s) to default_config.json?\nOr are there any clashing linter names?",
             missing_from_default_config,
             extra_in_default_config,
         );
