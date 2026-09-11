@@ -6,7 +6,7 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
+use crate::{Token, TokenKind, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
@@ -26,7 +26,10 @@ impl Default for MissingPreposition {
         )
         .then(UPOSSet::new(&[UPOS::NOUN, UPOS::PRON, UPOS::PROPN]))
         .t_ws()
-        .then(UPOSSet::new(&[UPOS::AUX]))
+        // The missing-preposition construction is copular (subject + be-verb +
+        // adjective + object). Keep the original AUX constraint while excluding
+        // modal auxiliaries such as "can" and non-copular verbs such as "has".
+        .then_kind_both(|kind| kind.is_upos(UPOS::AUX), TokenKind::is_linking_verb)
         .t_ws()
         .then(UPOSSet::new(&[UPOS::ADJ]))
         .t_ws()
@@ -143,6 +146,27 @@ mod tests {
     fn allows_issue_1585() {
         assert_no_lints(
             "Each agent has specific tools and tasks orchestrated through a crew workflow.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_issue_1585_public_examples() {
+        // See https://github.com/Automattic/harper/issues/1585
+        assert_no_lints(
+            "Once the installation is done, you can open your project folder.",
+            MissingPreposition::default(),
+        );
+        assert_no_lints(
+            "It has several validation levels:",
+            MissingPreposition::default(),
+        );
+        assert_no_lints(
+            "You can close it if you prefer and if any of these show up again I'll reopen and for any new ones I'll open fresh issues.",
+            MissingPreposition::default(),
+        );
+        assert_no_lints(
+            "Her foot, that there was hardly room to open her mouth.",
             MissingPreposition::default(),
         );
     }
