@@ -5713,6 +5713,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SuchShame",
+								"state": true,
+								"label": "Such Shame"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SufficeItToSay",
 								"state": true,
 								"label": "Suffice It To Say"

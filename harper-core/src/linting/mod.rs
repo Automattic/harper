@@ -286,6 +286,7 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod such_shame;
 mod suggestion;
 mod take_a_look_to;
 mod take_care_of;
