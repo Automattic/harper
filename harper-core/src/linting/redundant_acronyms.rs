@@ -51,7 +51,10 @@ impl Default for RedundantAcronyms {
         let exprs: Vec<Box<dyn Expr>> = ACRONYMS
             .iter()
             .map(|&(acronym, _, last_str, _)| {
-                let last_string = last_str.to_string();
+                // `eq_str` only lowercases its receiver, so the argument has to
+                // arrive lowercase. `ACRONYMS` holds display casing ("Party"),
+                // which made this branch unmatchable for those entries.
+                let last_string = last_str.to_lowercase();
                 Box::new(SequenceExpr::aco(acronym).t_ws().then_any_of([
                     Box::new(Word::new(last_str)) as Box<dyn Expr>,
                     Box::new(move |t: &Token, src: &[char]| {
