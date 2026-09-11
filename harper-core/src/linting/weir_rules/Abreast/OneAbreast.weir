@@ -1,0 +1,18 @@
+expr main [(one a breast)]
+
+let message "Did you mean `one abreast`?"
+let description "Corrects wrong variants of `one abreast`."
+let kind "Spelling"
+let becomes "one abreast"
+
+test "When they're two a breast it often makes it unsafe to pass when it would have been safe one a breast." "When they're two a breast it often makes it unsafe to pass when it would have been safe one abreast."
+
+# False positives / edge cases not yet handled
+
+# Just looking at a few plans today one a breast boost and another an esophagus.
+# Four kindreds were breast cancer families, one a breast/ovarian cancer family, and the sixth an ovarian cancer family.
+# consider giving your loved one a breast cancer care package
+# Give your little one a breast milk bath!
+# The group was formed when two friends, one a breast cancer survivor, asked her friend to snowmobile across Saskatchewan
+# Anderson has recruited a team of dedicated women — each one a breast cancer survivor
+# Are you or a loved one a breast cancer survivor?
