@@ -90,8 +90,9 @@ pub enum Setting {
     /// Each alternative needs its own name in the [`LintGroup`](super::LintGroup), so rules
     /// collapsed behind a single name by `merge_linters!` cannot be used here.
     ///
-    /// [`StructuredConfig::to_flat_config`] enables only the chosen rule. The unchosen names
-    /// get no entry in the [`FlatConfig`] at all, which reads back as disabled.
+    /// [`StructuredConfig::to_flat_config`] writes an entry for every name in the set: the
+    /// chosen one enabled, the rest explicitly disabled. Writing the unchosen ones is what
+    /// stops an earlier selection surviving underneath a new one.
     OneOfMany {
         /// The names of the linters we can select from, in the order they should be presented.
         names: Vec<String>,

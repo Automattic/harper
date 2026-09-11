@@ -102,11 +102,11 @@ A rule that enforces the Oxford comma and a rule that enforces its absence will 
 
 #### What Flattening Produces
 
-Only the selected rule is written into the `FlatConfig`, and it is written as enabled.
-The rules that were not selected get no entry at all, which the engine reads as disabled.
+Every rule in `names` is written into the `FlatConfig`: the selected one as enabled, each of the others as explicitly disabled.
+Writing the unselected ones is what stops an earlier selection surviving underneath a new one.
 There is therefore no way to express "two of these three" with a single `OneOfMany`, and no way for an unselected alternative to fall back to some other default.
 
-When `name` is absent or `null`, nothing at all is written, so every rule in the set is off.
+When `name` is absent or `null`, every rule in the set is written as disabled, so the whole set is off.
 That is a legitimate state, so nothing downstream should assume a selection exists.
 
 Reading in the other direction, from a `FlatConfig` back into a `StructuredConfig`, the selection becomes the **first** name in `names` that is currently enabled.
