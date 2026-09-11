@@ -86,6 +86,7 @@ use super::do_mistake::DoMistake;
 use super::dot_initialisms::DotInitialisms;
 use super::double_click::DoubleClick;
 use super::double_modal::DoubleModal;
+use super::each::Each;
 use super::ellipsis_length::EllipsisLength;
 use super::else_possessive::ElsePossessive;
 use super::ever_every::EverEvery;
@@ -701,6 +702,7 @@ impl LintGroup {
         insert_expr_rule!(DotInitialisms);
         insert_expr_rule!(DoubleClick);
         insert_expr_rule!(DoubleModal);
+        insert_expr_rule!(Each);
         insert_struct_rule!(EllipsisLength);
         insert_expr_rule!(ElsePossessive);
         insert_expr_rule!(EverEvery);
