@@ -1,7 +1,6 @@
 use harper_core::Lrc;
-use harper_core::Span;
 use harper_core::Token;
-use harper_core::parsers::{MarkdownOptions, Parser};
+use harper_core::parsers::{LineClass, LineWise, MarkdownOptions, Parser};
 
 use super::jsdoc::JsDoc;
 use super::without_initiators;
@@ -23,59 +22,24 @@ impl Solidity {
 
 impl Parser for Solidity {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let mut tokens = Vec::new();
-
-        let mut chars_traversed = 0;
-
-        for line in source.split(|c| *c == '\n') {
-            let mut new_tokens = parse_line(line, self.inner.clone());
-
-            if chars_traversed + line.len() < source.len() {
-                new_tokens.push(Token::new(
-                    Span::new_with_len(line.len(), 1),
-                    harper_core::TokenKind::Newline(1),
-                ));
-            }
-
-            new_tokens
-                .iter_mut()
-                .for_each(|t| t.span.push_by(chars_traversed));
-
-            chars_traversed += line.len() + 1;
-            tokens.append(&mut new_tokens);
-        }
-
-        tokens
+        LineWise::new(self.inner.clone(), classify as fn(&[char]) -> LineClass).parse(source)
     }
 }
 
-fn parse_line(source: &[char], parser: Lrc<dyn Parser>) -> Vec<Token> {
-    let mut actual = without_initiators(source);
+fn classify(line: &[char]) -> LineClass {
+    let actual = without_initiators(line);
     if actual.is_empty() {
-        return Vec::new();
+        return LineClass::skip();
     }
-    let mut actual_source = actual.get_content(source);
 
-    // ignore the special SPDX-License-Identifier comment
+    let actual_source = actual.get_content(line);
+
+    // Ignore the special SPDX-License-Identifier comment. `line` has
+    // already been split on '\n' by `LineWise`, so it never contains
+    // one - this always swallows the whole line.
     if actual_source.starts_with(&['S', 'P', 'D', 'X', '-']) {
-        let Some(terminator) = source.iter().position(|c| *c == '\n') else {
-            return Vec::new();
-        };
-
-        actual.start += terminator;
-
-        let Some(new_source) = actual.try_get_content(actual_source) else {
-            return Vec::new();
-        };
-
-        actual_source = new_source
+        return LineClass::skip();
     }
 
-    let mut new_tokens = parser.parse(actual_source);
-
-    new_tokens
-        .iter_mut()
-        .for_each(|t| t.span.push_by(actual.start));
-
-    new_tokens
+    LineClass::parse(actual)
 }

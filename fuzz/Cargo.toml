@@ -15,6 +15,7 @@ harper-typst = { path = "../harper-typst" }
 harper-literate-haskell = { path = "../harper-literate-haskell" }
 harper-html = { path = "../harper-html" }
 harper-comments = { path = "../harper-comments" }
+harper-yaml = { path = "../harper-yaml" }
 
 [[bin]]
 name = "fuzz_harper_typst"
@@ -47,6 +48,13 @@ bench = false
 [[bin]]
 name = "fuzz_harper_core_markdown"
 path = "fuzz_targets/fuzz_harper_core_markdown.rs"
+test = false
+doc = false
+bench = false
+
+[[bin]]
+name = "fuzz_harper_yaml"
+path = "fuzz_targets/fuzz_harper_yaml.rs"
 test = false
 doc = false
 bench = false

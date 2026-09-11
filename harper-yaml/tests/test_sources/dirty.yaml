@@ -1,0 +1,5 @@
+# A configuration file with a single deliberate grammar mistake.
+name: example-service
+description: >
+  This service handles user authentication and session management
+  for the platform. They handles requests concurrently.
