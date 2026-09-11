@@ -27,8 +27,10 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
     let highlighter_service: State<HighlighterService> = app.state();
     let async_runtime: State<AsyncRuntime> = app.state();
 
+    let initial_is_running = highlighter_service.is_running();
+
     let tray_icon = TrayIconBuilder::new()
-        .icon(menu_bar_icon(highlighter_service.is_running())?)
+        .icon(menu_bar_icon(initial_is_running)?)
         .menu(&tray_menu(app)?)
         .on_menu_event(move |app, event| {
             let event_id = event.id().0.as_str();
@@ -58,21 +60,35 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
 
     let app = app.clone();
     async_runtime.spawn(async move {
+        let mut shown_is_running = initial_is_running;
+
         loop {
             sleep(Duration::from_millis(250)).await;
 
-            {
+            let is_running = {
                 let highlighter_service: State<HighlighterService> = app.state();
-                let is_running = highlighter_service.is_running();
+                highlighter_service.is_running()
+            };
 
-                let Ok(new_icon) = menu_bar_icon(is_running) else {
-                    error!("Unable to generate new menu bar icon.");
-                    continue;
-                };
+            // Only touch the tray when the service state actually changes.
+            // Re-decoding the icon and calling set_icon four times a second
+            // regardless is pure waste, and on Windows it eventually starts
+            // failing: after several days the shell began rejecting every
+            // update with ERROR_TIMEOUT, filling the log and leaving the tray
+            // icon unresponsive.
+            if is_running == shown_is_running {
+                continue;
+            }
 
-                let _ = tray_icon
-                    .set_icon(Some(new_icon))
-                    .inspect_err(|err| error!("Unable to set new icon: {err}"));
+            let Ok(new_icon) = menu_bar_icon(is_running) else {
+                error!("Unable to generate new menu bar icon.");
+                continue;
+            };
+
+            match tray_icon.set_icon(Some(new_icon)) {
+                Ok(()) => shown_is_running = is_running,
+                // Leave the remembered state alone so the next tick retries.
+                Err(err) => error!("Unable to set new icon: {err}"),
             }
         }
     });
