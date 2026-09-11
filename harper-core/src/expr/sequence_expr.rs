@@ -601,6 +601,7 @@ impl SequenceExpr {
     gen_then_from_is!(plural_noun);
     gen_then_from_is!(singular_noun_only);
     gen_then_from_is!(plural_noun_only);
+    gen_then_from_is!(mass_noun);
     gen_then_from_is!(mass_noun_only);
 
     // Pronouns

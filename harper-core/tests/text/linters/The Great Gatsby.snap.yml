@@ -1809,6 +1809,15 @@ Message: |
 
 
 
+Lint:    Usage (127 priority)
+Message: |
+    1581 | present occupied by two deplorably sober men and their highly indignant wives.
+         |                                                        ^~~~~~ `Highly` might not sound natural in this context.
+Suggest:
+  - Replace with: “very”
+
+
+
 Lint:    Formatting (63 priority)
 Message: |
     1612 | “It was . . . simply amazing,” she repeated abstractedly. “But I swore I
