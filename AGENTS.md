@@ -63,6 +63,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/harperjs/spans/+page.md`: Explains span objects and how to use them to locate/handle lint ranges.
 - `packages/web/src/routes/docs/harperjs/configurerules/+page.md`: How to programmatically read and set `LintConfig` to enable/disable rules.
 - `packages/web/src/routes/docs/harperjs/node/+page.md`: Node.js-specific usage notes, especially `LocalLinter` vs `WorkerLinter`.
+- `packages/web/src/routes/docs/harperjs/chrome-extension/+page.md`: Using `harper.js` inside a Chrome extension (CSP, bundling, popup demo).
 - `packages/web/src/routes/docs/harperjs/CDN/+page.md`: Browser/CDN usage via unpkg and ESM import patterns.
 - `packages/web/src/routes/docs/contributors/introduction/+page.md`: Contributor onboarding overview and links to architecture/testing/rule-authoring docs.
 - `packages/web/src/routes/docs/contributors/environment/+page.md`: Local development environment setup across Rust, Node/pnpm, and optional Nix shell.
