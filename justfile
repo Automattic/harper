@@ -613,7 +613,8 @@ bump-versions: update-vscode-linters
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo ws version --no-git-push --no-git-tag --force '*'
+  # Include private crates such as harper-desktop so their versions stay in sync.
+  cargo ws version --all --no-git-push --no-git-tag --force '*'
 
   HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 

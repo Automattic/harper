@@ -22,6 +22,7 @@ import type { Linter } from 'harper.js';
 import { isUpToDate, loadLiveVersions, liveVersions } from '$lib/marketing/versions';
 import { onMount } from 'svelte';
 import demoText from '../../../../demo.md?raw';
+    import Loader from '$lib/components/Loader.svelte';
 
 const editorContent = demoText.trim();
 let linter: Linter | null = null;
@@ -205,7 +206,7 @@ onMount(() => {
 					<LazyEditor content={editorContent} {linter} />
 				{:else}
 					<div class='flex h-full items-center justify-center text-[0.82rem] text-[#807a6e] dark:text-white/55 [font-family:"JetBrains_Mono",monospace]'>
-						Loading Harper’s grammar engine...
+            <Loader />
 					</div>
 				{/if}
 			</div>

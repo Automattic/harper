@@ -14,7 +14,7 @@ pub struct MissingTo {
 
 impl MissingTo {
     fn strict_controller_words() -> WordSet {
-        WordSet::new(&[
+        WordSet::new([
             "eager",
             "fail",
             "failed",
@@ -33,7 +33,7 @@ impl MissingTo {
     }
 
     fn permissive_controller_words() -> WordSet {
-        WordSet::new(&[
+        WordSet::new([
             "aim",
             "aimed",
             "aiming",

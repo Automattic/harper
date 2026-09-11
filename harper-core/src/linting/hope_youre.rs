@@ -12,7 +12,7 @@ pub struct HopeYoure {
 
 impl Default for HopeYoure {
     fn default() -> Self {
-        let loc = WordSet::new(&["here", "there"]);
+        let loc = WordSet::new(["here", "there"]);
 
         let prep = SequenceExpr::default().t_ws().then_preposition();
 

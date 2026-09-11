@@ -20,7 +20,7 @@ impl Default for WrongApostrophe {
                         Box::new(SequenceExpr::default().then_acute()),
                         Box::new(SequenceExpr::default().then_backtick()),
                     ])
-                    .then_word_set(&CONTRACTION_AND_POSSESSIVE_ENDINGS),
+                    .then_word_set(CONTRACTION_AND_POSSESSIVE_ENDINGS),
             )]),
         }
     }

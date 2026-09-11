@@ -3,6 +3,7 @@ export const marketingLinks = {
 	discord: 'https://discord.gg/invite/JBqcAaKrzQ',
 	chrome:
 		'https://chromewebstore.google.com/detail/private-grammar-checking/lodbfhdipoipcjmlebjbgmmgekckhpfb?utm_source=harper-website&utm_medium=referral',
+	edge: 'https://microsoftedge.microsoft.com/addons/detail/private-grammar-checker-/ihjkkjfembmnjldmdchmadigpmapkpdh',
 	firefox: 'https://addons.mozilla.org/en-US/firefox/addon/private-grammar-checker-harper/',
 	vscode: 'https://marketplace.visualstudio.com/items?itemName=elijah-potter.harper',
 	crates: 'https://crates.io/crates/harper-core',
@@ -81,11 +82,19 @@ export const integrationCategories: IntegrationCategory[] = [
 				name: 'Chrome',
 				desc: 'Chrome Web Store extension.',
 				href: marketingLinks.chrome,
-				platform: 'Chrome, Edge, Brave',
+				platform: 'Chrome, Brave',
 				cta: 'install',
 				color: '#4285f4',
 				fg: '#fff',
 				initial: 'C',
+			},
+			{
+				id: 'edge',
+				name: 'Microsoft Edge',
+				desc: 'Microsoft Edge Add-ons extension.',
+				href: marketingLinks.edge,
+				platform: 'Microsoft Edge',
+				cta: 'install',
 			},
 			{
 				id: 'firefox',
@@ -230,6 +239,7 @@ export const integrations: Integration[] = integrationCategories.flatMap((catego
 export const featuredIntegrationIds = [
 	'desktop',
 	'chrome',
+	'edge',
 	'vscode',
 	'obsidian',
 	'firefox',

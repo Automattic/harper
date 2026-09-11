@@ -29,7 +29,7 @@ where
     }
 }
 
-const DEGREE_ADVERB_BLACKLIST: &[&str] = &["comparably", "indeed", "notably", "really", "so"];
+const DEGREE_ADVERB_BLACKLIST: [&str; 5] = ["comparably", "indeed", "notably", "really", "so"];
 
 pub struct VeryLess {
     expr: All,

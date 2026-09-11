@@ -11,7 +11,7 @@ pub struct Akimbo {
 impl Default for Akimbo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "arm", "arms", "elbows", "all", "fingers", "hand", "hands", "legs", "limbs",
                 "stand", "standing", "stands", "stood",
             ])
@@ -26,7 +26,7 @@ impl Default for Akimbo {
                     .t_any()
                     .t_any()
                     .t_ws()
-                    .t_set(&["slice"]),
+                    .t_set(["slice"]),
             ),
         }
     }

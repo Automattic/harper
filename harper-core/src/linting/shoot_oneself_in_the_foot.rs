@@ -14,9 +14,9 @@ pub struct ShootOneselfInTheFoot {
 
 impl Default for ShootOneselfInTheFoot {
     fn default() -> Self {
-        let verb_forms = WordSet::new(&["shoot", "shooting", "shoots", "shot", "shooted"]);
+        let verb_forms = WordSet::new(["shoot", "shooting", "shoots", "shot", "shooted"]);
 
-        let body_parts = WordSet::new(&["foot", "feet", "leg", "legs"]);
+        let body_parts = WordSet::new(["foot", "feet", "leg", "legs"]);
 
         let pattern = SequenceExpr::with(verb_forms)
             .t_ws()

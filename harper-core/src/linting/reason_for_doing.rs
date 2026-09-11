@@ -14,7 +14,7 @@ pub struct ReasonForDoing {
 impl Default for ReasonForDoing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["reason", "reasons"])
+            expr: SequenceExpr::word_set(["reason", "reasons"])
                 .t_ws()
                 .t_aco("of")
                 .t_ws()

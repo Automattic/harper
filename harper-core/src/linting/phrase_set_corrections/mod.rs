@@ -200,6 +200,12 @@ pub fn lint_group() -> LintGroup {
                 ("someone dose", "someone does"),
                 // Interrogatives
                 ("how dose", "how does"),
+                ("what dose a", "what does a"),
+                ("what dose an", "what does an"),
+                ("what dose it", "what does it"),
+                ("what dose this", "what does this"),
+                ("what dose that", "what does that"),
+                ("what dose the", "what does the"),
                 ("when dose", "when does"),
                 ("where dose", "where does"),
                 ("who dose", "who does"),
@@ -782,6 +788,24 @@ pub fn lint_group() -> LintGroup {
             "Corrects `backhand compliment` to `backhanded compliment`.",
             LintKind::Spelling
         ),
+        "BainBane" => (
+            &[
+                (&["bain of my existence","bain of my existance"], &["bane of my existence"]),
+                (&["bain of our existence","bain of our existance"], &["bane of our existence"]),
+                (&["bain of your existence","bain of your existance"], &["bane of your existence"]),
+                (&["bain of his existence","bain of his existance"], &["bane of his existence"]),
+                (&["bain of her existence","bain of her existance"], &["bane of her existence"]),
+                (&["bain of its existence","bain of its existance"], &["bane of its existence"]),
+                (&["bain of their existence","bain of their existance"], &["bane of their existence"]),
+                (&["bane marie"], &["bain marie"]),
+                (&["bane-marie"], &["bain-marie"]),
+                (&["bane maries", "banes marie"], &["bains marie", "bain maries"]),
+                (&["bane-maries", "banes-marie"], &["bains-marie", "bain-maries"]),
+            ],
+            "Don't confuse `bane` (source of misery) with `bain` in `bain-marie` (double boiler).",
+            "Detects mixing up `bain` and `bane`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),
@@ -889,6 +913,21 @@ pub fn lint_group() -> LintGroup {
             "The idiom is `to get rid of`, not `off` or `ride`.",
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
+        ),
+        "Hijack" => (
+            &[
+                // "hi jack" would result in false positives
+                (&["hi-jack", "high jack", "high-jack"], &["hijack"]),
+                (&["hi jacked", "hi-jacked", "high jacked", "high-jacked"], &["hijacked"]),
+                (&["hi jacker", "hi-jacker", "high jacker", "high-jacker"], &["hijacker"]),
+                (&["hi jackers", "hi-jackers", "high jackers", "high-jackers"], &["hijackers"]),
+                (&["hi jacking", "hi-jacking", "high jacking", "high-jacking"], &["hijacking"]),
+                (&["hi jackings", "hi-jackings", "high jackings", "high-jackings"], &["hijackings"]),
+                (&["hi jacks", "hi-jacks", "high jacks", "high-jacks"], &["hijacks"]),
+            ],
+            "The correct spelling is `hijack`.",
+            "Corrects misspellings of `hijack`.",
+            LintKind::Spelling
         ),
         "HolyWar" => (
             &[
@@ -1013,6 +1052,23 @@ pub fn lint_group() -> LintGroup {
             "Use `play a part` or `be a factor` instead of `play a factor`.",
             "Corrects `play a factor` to `play a part` or `be a factor`.",
             LintKind::Usage
+        ),
+        "ReverseEngineer" => (
+            &[
+                // The past tense ending is put on 'reverse' instead of 'engineer'
+                // But sometimes it's just '-ed' on every tense
+                (&["reversed engineer"], &["reverse engineered", "reverse engineer"]),
+                (&["reversed-engineer"], &["reverse-engineered", "reverse-engineer"]),
+                (&["reversed engineered"], &["reverse engineered"]),
+                (&["reversed-engineered"], &["reverse-engineered"]),
+                (&["reversed engineering"], &["reverse engineering"]),
+                (&["reversed-engineering"], &["reverse-engineering"]),
+                (&["reversed engineers"], &["reverse engineers"]),
+                (&["reversed-engineers"], &["reverse-engineers"]),
+            ],
+            "The correct term is `reverse engineer`.",
+            "Corrects `reversed engineer` to `reverse engineer`.",
+            LintKind::Grammar
         ),
         "RiseTheQuestion" => (
             &[

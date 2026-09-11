@@ -14,7 +14,7 @@ pub struct CallItQuits {
 impl Default for CallItQuits {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["call", "calls", "called", "calling"])
+            expr: SequenceExpr::word_set(["call", "calls", "called", "calling"])
                 .t_ws()
                 .t_aco("it")
                 .t_ws()

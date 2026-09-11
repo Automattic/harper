@@ -2,6 +2,7 @@
 import {
 	ChromeLogo,
 	CodeLogo,
+	EdgeLogo,
 	EmacsLogo,
 	FirefoxLogo,
 	HelixLogo,
@@ -38,6 +39,10 @@ $: fontSize =
 {:else if integration.id === 'chrome'}
 	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
 		<ChromeLogo />
+	</span>
+{:else if integration.id === 'edge'}
+	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">
+		<EdgeLogo />
 	</span>
 {:else if integration.id === 'firefox'}
 	<span class={logoTileClasses} style={tileStyle} aria-hidden="true">

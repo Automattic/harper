@@ -72,6 +72,7 @@ pub fn lint_group() -> LintGroup {
         "Somehow"         => (&["some how"][..], "somehow"),
         "Someone"         => (&["some one"][..], "someone"),
         "Somewhere"       => (&["some where"][..], "somewhere"),
+        "Straightforward" => (&["straight forward"][..], "straightforward"),
         "Tenfold"         => (&["ten fold"][..], "tenfold"),
         "There"           => (&["the re"][..], "there"),
         "Therefore"       => (&["there fore"][..], "therefore"),
@@ -366,6 +367,15 @@ mod tests {
             "Tools to visualize large code bases in different ways.",
             lint_group(),
             "Tools to visualize large codebases in different ways.",
+        )
+    }
+
+    #[test]
+    fn straightforward() {
+        assert_suggestion_result(
+            "This new vulnerability has a somewhat straight forward path to exploitation and prints funds out of thin air.",
+            lint_group(),
+            "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
         )
     }
 }

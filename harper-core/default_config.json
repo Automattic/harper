@@ -707,6 +707,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ShowCase",
+								"state": true,
+								"label": "Show Case"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Somebody",
 								"state": true,
 								"label": "Somebody"
@@ -731,6 +738,13 @@
 								"name": "Somewhere",
 								"state": true,
 								"label": "Somewhere"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Straightforward",
+								"state": true,
+								"label": "Straightforward"
 							}
 						},
 						{
@@ -853,6 +867,13 @@
 								"name": "AwaitFor",
 								"state": true,
 								"label": "Await For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BainBane",
+								"state": true,
+								"label": "Bain / Bane"
 							}
 						},
 						{
@@ -1175,6 +1196,13 @@
 								"name": "HavePassed",
 								"state": true,
 								"label": "Have Passed"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hijack",
+								"state": true,
+								"lable": "Hijack"
 							}
 						},
 						{
@@ -3034,6 +3062,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ExpandFavourite",
+								"state": true,
+								"label": "Expand Favourite"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ExpandForward",
 								"state": true,
 								"label": "Expand Forward"
@@ -3499,6 +3534,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ForSameReason",
+								"state": true,
+								"label": "For Same Reason"
+							}
+						},
+						{
+							"Bool": {
 								"name": "FullToTheBrim",
 								"state": true,
 								"label": "Full to the Brim"
@@ -3824,6 +3866,12 @@
 								"name": "RelayOnForRely",
 								"state": true,
 								"label": "Relay On For Rely"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ReverseEngineer",
+								"state": true
 							}
 						},
 						{
@@ -4587,6 +4635,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DenyOffer",
+								"state": true,
+								"label": "Deny Offer"
+							}
+						},
+						{
+							"Bool": {
 								"name": "DigUnderTheHood",
 								"state": true,
 								"label": "Dig Under The Hood"
@@ -4926,6 +4981,13 @@
 								"name": "InAHurry",
 								"state": true,
 								"label": "In A Hurry"
+							}
+						},
+						{
+							"Bool": {
+								"name": "InAnIdealWorld",
+								"state": true,
+								"label": "In an Ideal World"
 							}
 						},
 						{
@@ -5588,6 +5650,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SlipperySlope",
+								"state": true,
+								"label": "Slippery Slope"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SneakingSuspicion",
 								"state": true,
 								"label": "Sneaking Suspicion"
@@ -5640,6 +5709,13 @@
 								"name": "StatuteOfLimitations",
 								"state": true,
 								"label": "Statute Of Limitations"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SuchShame",
+								"state": true,
+								"label": "Such Shame"
 							}
 						},
 						{
