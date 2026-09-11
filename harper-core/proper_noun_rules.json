@@ -528,6 +528,7 @@
 	},
 	"NotablePlaces": {
 		"canonical": [
+			"Baton Rouge",
 			"Big Sur",
 			"Bretton Woods",
 			"Coney Island",
@@ -549,7 +550,7 @@
 		"description": "Ensure proper capitalization of notable places that are significant regional centers, travel destinations, or have international importance."
 	},
 	"ProperNouns": {
-		"canonical": ["Bhagavad Gita", "Gilded Age", "Jim Crow", "Pax Americana"],
+		"canonical": ["Bhagavad Gita", "Gilded Age", "Jim Crow", "Khmer Rouge", "Pax Americana"],
 		"description": "Ensure proper capitalization of proper nouns."
 	},
 	"CompaniesProductsAndTrademarks": {
