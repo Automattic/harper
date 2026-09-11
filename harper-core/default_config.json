@@ -3160,6 +3160,20 @@
 						},
 						{
 							"Bool": {
+								"name": "Gonna",
+								"state": true,
+								"label": "Gonna"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Gotta",
+								"state": true,
+								"label": "Gotta"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Hedging",
 								"state": true,
 								"label": "Hedging"
@@ -3310,6 +3324,13 @@
 								"name": "VeryUnique",
 								"state": true,
 								"label": "Very Unique"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Wanna",
+								"state": true,
+								"label": "Wanna"
 							}
 						},
 						{
