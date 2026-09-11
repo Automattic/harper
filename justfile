@@ -188,7 +188,9 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm check
+  just check-desktop-rust
 
+check-desktop-rust:
   cargo check --manifest-path "{{justfile_directory()}}/harper-desktop/src-tauri/Cargo.toml" --all-targets
 
 # Build Harper Desktop Linux bundles.
@@ -452,6 +454,7 @@ check-rust: audit-dictionary
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
+  just check-desktop-rust
 
 # Perform format and type checking.
 check: check-rust check-js
