@@ -20,7 +20,9 @@ impl harper_core::Masker for Masker {
 
             let c = source[cursor];
 
-            if matches!(c, '%') {
+            if let Some(ws) = whitespace_before_comment_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(ws));
+            } else if matches!(c, '%') {
                 actions.push_back(CursorAction::PushMaskAndIncBy(1));
             } else if let Some(ws) = newline_whitespace_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(ws));
@@ -54,6 +56,24 @@ impl harper_core::Masker for Masker {
         }
 
         mask
+    }
+}
+
+/// If the cursor is at horizontal whitespace immediately followed by `%` on the same line,
+/// return the length of the whitespace run so it can be masked along with the comment.
+fn whitespace_before_comment_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    let c = *source.get(cursor)?;
+    if c == '\n' || !c.is_whitespace() {
+        return None;
+    }
+    let ws_len = source[cursor..]
+        .iter()
+        .take_while(|&&ch| ch.is_whitespace() && ch != '\n')
+        .count();
+    if source.get(cursor + ws_len) == Some(&'%') {
+        Some(ws_len)
+    } else {
+        None
     }
 }
 
@@ -289,6 +309,22 @@ mod tests {
             .flat_map(|(_, chars)| chars.iter().copied())
             .collect();
         assert_eq!(allowed, "word  word");
+    }
+
+    #[test]
+    fn masks_whitespace_before_comment() {
+        let source: Vec<_> = "some text   % aligned comment".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for span in &allowed {
+            assert!(
+                !span.ends_with(' '),
+                "Trailing space before comment leaked through: {span:?}"
+            );
+        }
     }
 
     #[test]
