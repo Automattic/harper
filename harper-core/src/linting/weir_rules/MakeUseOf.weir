@@ -1,0 +1,29 @@
+# Corrects the eggcorn `made us of` -> `made use of`.
+expr main <([make, makes, made, making] us of), us>
+
+let message "Did you mean `use`? The idiom is `make use of`."
+let description "Corrects the eggcorn `us of` to `use of` in the idiom `make use of`."
+let kind "Typo"
+let becomes "use"
+let strategy "MatchCase"
+
+# True positives
+
+test "It was made us of to duplicate pages." "It was made use of to duplicate pages."
+test "Making us of them is simple." "Making use of them is simple."
+test "He makes us of every resource." "He makes use of every resource."
+test "They make us of the tool." "They make use of the tool."
+test "The feature was made us of widely." "The feature was made use of widely."
+test "We are making us of caching." "We are making use of caching."
+test "She made us of a loophole." "She made use of a loophole."
+test "Made us of properly, it works." "Made use of properly, it works."
+test "Please make us of it." "Please make use of it."
+test "It makes us of good data." "It makes use of good data."
+
+# False positives / true negatives
+
+allows "Please make use of it."
+allows "He gave us of his time."
+allows "It made us proud of our work."
+allows "Some of us of that era recall it."
+allows "The gods gave us of their wisdom."
