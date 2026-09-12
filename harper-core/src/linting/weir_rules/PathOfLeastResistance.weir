@@ -1,0 +1,29 @@
+# Corrects the eggcorn `past of least resistance` -> `path of least resistance`.
+expr main <(past of least resistance), past>
+
+let message "The idiom is `path of least resistance`."
+let description "Corrects the eggcorn `past of least resistance` to `path of least resistance`."
+let kind "Grammar"
+let becomes "path"
+let strategy "MatchCase"
+
+# True positives
+
+test "It shifts the past of least resistance toward data attacks." "It shifts the path of least resistance toward data attacks."
+test "Attackers follow the past of least resistance." "Attackers follow the path of least resistance."
+test "Water takes the past of least resistance." "Water takes the path of least resistance."
+test "The past of least resistance is chosen." "The path of least resistance is chosen."
+test "They chose the past of least resistance." "They chose the path of least resistance."
+test "Past of least resistance wins." "Path of least resistance wins."
+test "Electricity follows the past of least resistance." "Electricity follows the path of least resistance."
+test "Consider the past of least resistance here." "Consider the path of least resistance here."
+test "Seeking the past of least resistance." "Seeking the path of least resistance."
+test "It was a past of least resistance approach." "It was a path of least resistance approach."
+
+# False positives / true negatives
+
+allows "They took the path of least resistance."
+allows "In the past, resistance was futile."
+allows "The line of least resistance is different."
+allows "His past of failures haunted him."
+allows "The past of the company is murky."
