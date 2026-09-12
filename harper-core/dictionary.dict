@@ -1,4 +1,4 @@
-54800
+54900
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -7612,6 +7612,7 @@ OK/NOSg4VdGJ        # US state (Oklahoma)
 OLED/Ng             # organic light-emitting diode
 OMB/Og
 OMG                 # exclamation
+OP/Ng               # internet slang: original poster
 OPEC/Og             # organization
 OR/CNO4             # Oregon
 OR gate/NgS
@@ -51303,6 +51304,7 @@ unicameral/~J
 unicellular/JN
 unicorn/~NSgVJ
 unicycle/NSgV
+unicyclist/NgS
 unidirectional/JN
 unification/~NwSgr
 unifier/NgS
@@ -54541,6 +54543,7 @@ Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9
 a8c/Sg
+abliterate/VSdGn    # AI: remove safety refusals
 aftertouch/Nmg      # MIDI feature
 ambitransitive/J    # verb which is both transitive and intransitive
 analyte/NgS
@@ -54661,6 +54664,7 @@ pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
+permalink/NgS
 plist/NgS           # Apple property list
 polysyntheses/N9    # linguistics
 polysynthesis/Nw0g  # linguistics
