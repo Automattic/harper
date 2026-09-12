@@ -17,7 +17,7 @@ impl Default for BeAllowed {
             SequenceExpr::default()
                 .t_aco("will")
                 .t_ws()
-                .then_word_set(&["not"])
+                .then_word_set(["not"])
                 .t_ws()
                 .t_aco("allowed")
                 .t_ws()

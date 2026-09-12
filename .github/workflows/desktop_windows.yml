@@ -46,7 +46,7 @@ jobs:
         with:
           cache-bin: "true"
           key: build-desktop-windows
-      - uses: cargo-bins/cargo-binstall@5aafaaca52423a22d83a812fa3ca77492e2895db # main
+      - uses: cargo-bins/cargo-binstall@b874e25ea559687bec77e281e9b271aa1367b624 # main
       - name: Install `wasm-pack`
         run: cargo binstall wasm-pack --force --no-confirm
       - name: Install `cargo-xwin`

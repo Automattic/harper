@@ -11,11 +11,11 @@ pub struct GoToWar {
 impl Default for GoToWar {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
+            expr: SequenceExpr::word_set(["go", "goes", "going", "gone", "went"])
                 .t_ws()
                 .then_preposition()
                 .t_ws()
-                .then_word_set(&["war"]),
+                .then_word_set(["war"]),
         }
     }
 }

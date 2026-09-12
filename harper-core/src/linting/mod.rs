@@ -32,6 +32,7 @@ mod aspire_to;
 mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
+mod bare_bones;
 mod barely_un;
 mod be_adjective_confusions;
 mod be_allowed;
@@ -72,6 +73,7 @@ mod currency_placement;
 mod damages;
 mod dashes;
 mod day_and_age;
+mod deny_offer;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
@@ -91,6 +93,7 @@ mod ever_every;
 mod ever_pronoun_rel_pronoun;
 mod everyday;
 mod except_of;
+mod expand_favourite;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
@@ -110,6 +113,7 @@ mod flesh_out_vs_full_fledged;
 mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
+mod for_same_reason;
 mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
@@ -268,6 +272,7 @@ mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
+mod show_case;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
@@ -282,7 +287,9 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod such_shame;
 mod suggestion;
+mod summary_summery;
 mod take_a_look_to;
 mod take_care_of;
 mod take_medicine;
@@ -327,6 +334,7 @@ mod very_less;
 mod very_unique;
 mod vice_versa;
 mod vicious_loop;
+mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
@@ -920,13 +928,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 }

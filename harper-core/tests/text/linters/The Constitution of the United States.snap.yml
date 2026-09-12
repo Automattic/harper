@@ -51,8 +51,8 @@ Message: |
          |             ^~ Did you mean to spell `I.` this way?
 Suggest:
   - Replace with: “I”
-  - Replace with: “I”
   - Replace with: “Id”
+  - Replace with: “If”
 
 
 
@@ -1621,8 +1621,8 @@ Message: |
          |    ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labor”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1633,8 +1633,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labor”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1645,8 +1645,8 @@ Message: |
          |            ^~~~~~ Did you mean to spell `Labour` this way?
 Suggest:
   - Replace with: “Labor”
-  - Replace with: “Labor”
   - Replace with: “Layout”
+  - Replace with: “Labium”
 
 
 
@@ -1732,7 +1732,7 @@ Message: |
 Suggest:
   - Replace with: “Vi”
   - Replace with: “VA”
-  - Replace with: “VI”
+  - Replace with: “Vb”
 
 
 
@@ -1763,15 +1763,12 @@ Message: |
 
 
 
-Lint:    Nonstandard (50 priority)
+Lint:    Capitalization (127 priority)
 Message: |
-     668 | proposing Amendments, which, in either Case, shall be valid to all Intents and
-         |                                                             ^~~~~~~~~~~~~~~~~~~
-     669 | Purposes, as Part of this Constitution, when ratified by the Legislatures of
-         | ~~~~~~~~ The correct form is 'to all intents and purposes'.
+     677 | ## Article. VI.
+         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
 Suggest:
-  - Replace with: “to all Intents and Purposes”
-  - Replace with: “for alL intents anD purposes”
+  - Replace with: “## Article. Vi.”
 
 
 

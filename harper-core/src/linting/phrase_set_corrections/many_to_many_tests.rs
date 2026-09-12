@@ -137,6 +137,58 @@ fn correct_back_hand_compliments_hyphen() {
     );
 }
 
+// BainBane
+
+#[test]
+fn fix_bain_of_my_existance() {
+    assert_suggestion_result(
+        "This is the bain of my existance, please help.",
+        test_linter(),
+        "This is the bane of my existence, please help.",
+    );
+}
+
+#[test]
+fn fix_bain_of_our() {
+    assert_suggestion_result(
+        "They are the bain of our existence on Apple hardware",
+        test_linter(),
+        "They are the bane of our existence on Apple hardware",
+    );
+}
+
+#[test]
+fn fix_bain_of_their() {
+    assert_suggestion_result(
+        "individual people in Apple might decide port scanning is the bain of their existence and send something",
+        test_linter(),
+        "individual people in Apple might decide port scanning is the bane of their existence and send something",
+    );
+}
+
+#[test]
+fn fix_bane_marie() {
+    assert_suggestion_result(
+        "The bane-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+        test_linter(),
+        "The bain-marie is a favorite metaphor in my life for adding 'heat' (usually stress) to any idea, process, or person",
+    );
+}
+
+#[test]
+fn fix_bane_maries() {
+    assert_good_and_bad_suggestions(
+        "They have bane Maries which is just a double broiler (water heated high under pans).",
+        test_linter(),
+        &[
+            // The way `replace_with_match_case` works by index breaks this
+            // "They have bains Marie which is just a double broiler (water heated high under pans).",
+            "They have bain Maries which is just a double broiler (water heated high under pans).",
+        ],
+        &[],
+    );
+}
+
 // CommitmentTo
 
 #[test]
@@ -533,6 +585,116 @@ fn got_ride_of() {
         "I had to adjust the labels on the free version because you guys got ride of ...",
         test_linter(),
         "I had to adjust the labels on the free version because you guys got rid of ...",
+    );
+}
+
+// Hijack
+
+#[test]
+fn fix_hi_hyphen_jacked() {
+    assert_suggestion_result(
+        "Empty message in hi-jacked POST from javascript to C# MVC",
+        test_linter(),
+        "Empty message in hijacked POST from javascript to C# MVC",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jackers() {
+    assert_suggestion_result(
+        "hi-jackers, including one with no experience at all, survived jumps",
+        test_linter(),
+        "hijackers, including one with no experience at all, survived jumps",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacking() {
+    assert_suggestion_result(
+        "should be thrown instead of hi-jacking the Error class to dynamically add a property to the object",
+        test_linter(),
+        "should be thrown instead of hijacking the Error class to dynamically add a property to the object",
+    );
+}
+
+#[test]
+fn fix_hi_hyphen_jacks() {
+    assert_suggestion_result(
+        "Instruments' UI Recorder hi-jacks my entire system",
+        test_linter(),
+        "Instruments' UI Recorder hijacks my entire system",
+    );
+}
+
+#[test]
+fn fix_high_space_jack() {
+    assert_suggestion_result(
+        "ISPs that high jack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+        test_linter(),
+        "ISPs that hijack the nxdomain result to send you sponsored results of vaguely similar sounding websites",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jack() {
+    assert_suggestion_result(
+        "because now we no longer high-jack the API calls",
+        test_linter(),
+        "because now we no longer hijack the API calls",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacked() {
+    assert_suggestion_result(
+        "not possible for the moment because the click event is high-jacked",
+        test_linter(),
+        "not possible for the moment because the click event is hijacked",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacker() {
+    assert_suggestion_result(
+        "Driving a #Polo will get you treated like some high-jacker or car thief on the road",
+        test_linter(),
+        "Driving a #Polo will get you treated like some hijacker or car thief on the road",
+    );
+}
+
+#[test]
+fn fix_high_space_jackers() {
+    assert_suggestion_result(
+        "America and the high jackers are both referring to the same act of terror.",
+        test_linter(),
+        "America and the hijackers are both referring to the same act of terror.",
+    );
+}
+
+#[test]
+fn fix_high_space_jacking() {
+    assert_suggestion_result(
+        "Security issue , Session high jacking prevention",
+        test_linter(),
+        "Security issue , Session hijacking prevention",
+    );
+}
+
+#[test]
+fn fix_high_hyphen_jacks() {
+    assert_suggestion_result(
+        "Kotlin Compiler Plugin which high-jacks Kotlin assert function calls",
+        test_linter(),
+        "Kotlin Compiler Plugin which hijacks Kotlin assert function calls",
+    );
+}
+
+#[test]
+fn fix_high_space_jacks() {
+    assert_suggestion_result(
+        "This high jacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
+        test_linter(),
+        "This hijacks the issue somewhat but, the Computation Scheduler only runs as many concurrent threads as there are cores",
     );
 }
 
@@ -1234,6 +1396,80 @@ fn detect_arisen_the_question() {
         "Some have arisen the question like how to use this wireless HD mini camera",
         test_linter(),
         "Some have raised the question like how to use this wireless HD mini camera",
+    );
+}
+
+// ReverseEngineer
+
+#[test]
+fn fix_reversed_engineer_present() {
+    assert_suggestion_result(
+        "you will save a lot of time if you don't have to reversed engineer encryption and checksums",
+        test_linter(),
+        "you will save a lot of time if you don't have to reverse engineer encryption and checksums",
+    );
+}
+
+#[test]
+fn fix_reversed_engineer_past() {
+    assert_suggestion_result(
+        "The codes is taking the reversed engineer SEED value from GOZ family codes",
+        test_linter(),
+        "The codes is taking the reverse engineered SEED value from GOZ family codes",
+    )
+}
+
+#[test]
+fn fix_reversed_engineer_hyphen_past() {
+    assert_suggestion_result(
+        "We reversed-engineer and traced the reviews that were displayed at the time to each reviewer at the time each review was being composed.",
+        test_linter(),
+        "We reverse-engineered and traced the reviews that were displayed at the time to each reviewer at the time each review was being composed.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineered() {
+    assert_suggestion_result(
+        "I reversed engineered the TIDAL device authorization grant (RFC 8628) since the web flow (RFC 6749) is reCaptcha v3 secured.",
+        test_linter(),
+        "I reverse engineered the TIDAL device authorization grant (RFC 8628) since the web flow (RFC 6749) is reCaptcha v3 secured.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineered_hyphen() {
+    assert_suggestion_result(
+        "This is a reversed-engineered server for Card Wars Kingdom, designed for version 1.0.17",
+        test_linter(),
+        "This is a reverse-engineered server for Card Wars Kingdom, designed for version 1.0.17",
+    );
+}
+
+#[test]
+fn fix_reversed_engineering() {
+    assert_suggestion_result(
+        "Im not sure how this works but it is probably vulnerable to reversed engineering attack.",
+        test_linter(),
+        "Im not sure how this works but it is probably vulnerable to reverse engineering attack.",
+    );
+}
+
+#[test]
+fn fix_reversed_engineers_verb() {
+    assert_suggestion_result(
+        "... managed to create a mini-arc reactor was because had blue prints for the original and kind of reversed engineers it",
+        test_linter(),
+        "... managed to create a mini-arc reactor was because had blue prints for the original and kind of reverse engineers it",
+    );
+}
+
+#[test]
+fn fix_reversed_engineers_noun() {
+    assert_suggestion_result(
+        "Expert reversed engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
+        test_linter(),
+        "Expert reverse engineers with 2-15 years of industrial experience at BlueSurf Technologies.",
     );
 }
 

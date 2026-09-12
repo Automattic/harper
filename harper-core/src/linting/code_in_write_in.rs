@@ -11,7 +11,7 @@ pub struct CodeInWriteIn {
 impl Default for CodeInWriteIn {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // "code" produces too many false positives
                 "coded",
                 "codes",
@@ -28,7 +28,7 @@ impl Default for CodeInWriteIn {
             .t_ws()
             .t_aco("on")
             .t_ws()
-            .then_word_set(&[
+            .then_word_set([
                 "ada",
                 "asm",
                 "assembler",
