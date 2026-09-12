@@ -53,12 +53,17 @@ pub enum HumanReadableSetting {
         #[serde(default, skip_serializing_if = "Option::is_none")]
         label: Option<String>,
     },
-    /// Selects one of many rules.
+    /// Selects at most one rule out of a set of mutually exclusive alternatives.
+    ///
+    /// This is the form written in `default_config.json`. `name` and `labels` may both be
+    /// omitted. See `Setting::OneOfMany` for what a selection means at runtime.
     OneOfMany {
-        /// The names of the linters we can select from.
+        /// The names of the linters we can select from, in the order they should be presented.
         names: Vec<String>,
-        /// The selected linter name, if any.
+        /// The selected linter name, if any. Must be one of `names`.
         name: Option<String>,
+        /// Display text, one entry per element of `names` and in the same order.
+        /// Defaults to `names`.
         #[serde(default, skip_serializing_if = "Option::is_none")]
         labels: Option<Vec<String>>,
     },
