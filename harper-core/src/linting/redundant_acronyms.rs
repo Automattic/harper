@@ -24,6 +24,8 @@ const ACRONYMS: &[(&str, &[&str], &str, Flag)] = &[
         "machine",
         None,
     ),
+    ("BWT", &["Burrows-Wheeler"], "transform", None),
+    ("FFT", &["Fast Fourier"], "transform", None),
     ("GOP", &["Grand Old"], "Party", None),
     ("GUI", &["graphical user"], "interface", None),
     ("LCD", &["liquid crystal"], "display", None),
@@ -451,6 +453,32 @@ mod tests {
             &[
                 "course project aimed to classify PCBs as defect or non-defect - ChethanaVaisali/PCB_Classification.",
                 "course project aimed to classify printed circuit boards as defect or non-defect - ChethanaVaisali/PCB_Classification.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_bwt_transform() {
+        assert_good_and_bad_suggestions(
+            "TSuffix Arrays: It turns out the way we generated the BWT transform above was quite inefficient.",
+            RedundantAcronyms::default(),
+            &[
+                "TSuffix Arrays: It turns out the way we generated the BWT above was quite inefficient.",
+                "TSuffix Arrays: It turns out the way we generated the Burrows-Wheeler transform above was quite inefficient.",
+            ],
+            &[],
+        );
+    }
+
+    #[test]
+    fn correct_fft_transform() {
+        assert_good_and_bad_suggestions(
+            "In fact, the FFT transform does not have to process functions of equally spaced time samples",
+            RedundantAcronyms::default(),
+            &[
+                "In fact, the FFT does not have to process functions of equally spaced time samples",
+                "In fact, the Fast Fourier transform does not have to process functions of equally spaced time samples",
             ],
             &[],
         );
