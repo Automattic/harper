@@ -115,7 +115,7 @@ impl ExprLinter for SplitWords {
                 continue;
             }
 
-            if is_anchor_split(&cand_meta, candidate) || is_anchor_split(&rem_meta, remainder) {
+            if is_anchor_split(&cand_meta) || is_anchor_split(&rem_meta) {
                 has_anchor_split = true;
             }
 
@@ -167,13 +167,21 @@ impl ExprLinter for SplitWords {
     }
 }
 
-fn is_anchor_split(meta: &crate::DictWordMetadata, word: &[char]) -> bool {
+/// Whether `meta` describes a genuine function word (preposition, determiner,
+/// conjunction, pronoun, or adverb) that should anchor a split even when the
+/// whole word also has a strong single-word spelling correction.
+///
+/// This intentionally does *not* fall back to a raw length check: short
+/// interjections and other non-function words (e.g. "ha") are common
+/// prefixes/suffixes of legitimate typos (e.g. "havent" -> "haven't") and
+/// must not be treated as anchors, or `should_defer_to_spellcheck` will
+/// wrongly prefer the split over the correct single-word suggestion.
+fn is_anchor_split(meta: &crate::DictWordMetadata) -> bool {
     meta.preposition
         || meta.is_determiner()
         || meta.is_conjunction()
         || meta.is_pronoun()
         || meta.is_adverb()
-        || word.len() <= 2
 }
 
 fn should_defer_to_spellcheck(
@@ -288,6 +296,30 @@ mod tests {
     #[test]
     fn ignores_single_word_misspelling_with_split_like_halves() {
         assert_no_lints("I love this extention!", SplitWords::default());
+    }
+
+    /// Regression test for the `havent` -> `ha vent` bug (issue #4130).
+    ///
+    /// `havent` is missing an apostrophe (`haven't`), but the trie dictionary
+    /// happens to contain `ha` and `vent` as valid, common split candidates.
+    /// Previously, `is_anchor_split` treated `ha` as an "anchor" purely
+    /// because it is two characters long, which stopped `SplitWords` from
+    /// deferring to `SpellCheck`'s much better `haven't` suggestion, even in
+    /// a nounish context (`they havent ...`).
+    #[test]
+    fn issue_4130_defers_havent_to_spellcheck() {
+        assert_no_lints("They havent reviewed it yet.", SplitWords::default());
+    }
+
+    /// Same as above, but confirms other short-but-real anchors (like the
+    /// preposition `at`) are still preferred over a single-word correction.
+    #[test]
+    fn issue_4130_does_not_regress_real_short_anchors() {
+        assert_suggestion_result(
+            "don't seem to support symbolic links atall.",
+            SplitWords::default(),
+            "don't seem to support symbolic links at all.",
+        );
     }
 
     #[test]
