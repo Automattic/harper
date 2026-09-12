@@ -29,11 +29,7 @@ impl Default for SinceDuration {
             expr: SequenceExpr::any_capitalization_of("since")
                 .then_whitespace()
                 .then(DurationExpr)
-                .then_optional(
-                    SequenceExpr::default()
-                        .t_ws()
-                        .then_word_set(&["ago", "old"]),
-                ),
+                .then_optional(SequenceExpr::default().t_ws().then_word_set(["ago", "old"])),
         }
     }
 }

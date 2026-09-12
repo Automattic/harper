@@ -12,7 +12,7 @@ impl Default for NakedEye {
     fn default() -> Self {
         Self {
             expr: SequenceExpr::optional(
-                SequenceExpr::word_set(&[
+                SequenceExpr::word_set([
                     "hide", "hides", "hid", "hidden", "hiding", "keep", "keeps", "kept", "keeping",
                 ])
                 .t_ws()
@@ -36,7 +36,7 @@ impl Default for NakedEye {
             .t_ws()
             .t_aco("naked")
             .t_ws()
-            .t_set(&["eye", "eyes"]),
+            .t_set(["eye", "eyes"]),
         }
     }
 }

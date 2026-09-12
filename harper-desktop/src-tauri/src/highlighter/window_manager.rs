@@ -157,8 +157,10 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
-        let rects = self.os_broker.get_boxes(self.lint_text.as_mut());
-        self.render_state.set_rects(rects);
+        let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
+        if let Some(lints) = lints {
+            self.render_state.set_lints(lints);
+        }
 
         for window in &self.windows {
             window.request_redraw();
@@ -177,6 +179,7 @@ impl WindowManagerApp {
         };
 
         let hit_target = self.render_state.hit_target_at_pos(cursor_pos);
+
         self.hovered_lint = match hit_target {
             HitTarget::Lint(index) => Some(index),
             HitTarget::Popup | HitTarget::None => None,

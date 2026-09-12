@@ -110,7 +110,6 @@ test('Lint keys can be enabled, then set to default.', async () => {
 	expect(settings.lintSettings.RepeatedWords).toBe(null);
 });
 
-// packages/obsidian-plugin/src/State.test.ts (use ref 5173e96f5c9f6fea80c2fabf7c2940672090ec5f)
 test('Lint settings and descriptions have the same keys', async () => {
 	const state = createEphemeralState();
 

@@ -11,7 +11,7 @@ pub struct ArriveTo {
 impl Default for ArriveTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["arrive", "arrived", "arrives", "arriving"])
+            expr: SequenceExpr::word_set(["arrive", "arrived", "arrives", "arriving"])
                 .t_ws()
                 .t_aco("to")
                 .but_not(

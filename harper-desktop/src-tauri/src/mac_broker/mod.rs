@@ -3,7 +3,6 @@ mod accessibility_activation;
 mod accessibility_text;
 mod app_catalog;
 mod app_icons;
-mod app_search_index;
 mod core_foundation_utilities;
 mod focused_window_pid;
 mod window_stability;
@@ -43,7 +42,6 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
-use self::app_search_index::AppSearchIndex;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -59,7 +57,6 @@ pub struct MacBroker {
     last_focused: Option<(pid_t, Instant)>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
-    installed_app_search_index: Mutex<AppSearchIndex>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -70,7 +67,6 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
-            installed_app_search_index: Mutex::new(AppSearchIndex::new()),
             window_movement: None,
             accessibility_activation: None,
         }
@@ -292,19 +288,19 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
+    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
         let pid = match self.target_pid() {
             Ok(Some(pid)) => pid,
             Ok(None) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
-                return Vec::new();
+                return Some(Vec::new());
             }
             Err(err) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused window: {err}");
-                return Vec::new();
+                return None;
             }
         };
 
@@ -313,13 +309,13 @@ impl OsBroker for MacBroker {
             Ok(None) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
-                return Vec::new();
+                return None;
             }
             Err(error) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused app bundle: {error}");
-                return Vec::new();
+                return None;
             }
         };
 
@@ -329,24 +325,24 @@ impl OsBroker for MacBroker {
             }
             Err(error) => {
                 eprintln!("Unable to read integrations: {error}");
-                false
+                return None;
             }
         };
 
         if !integration_enabled {
             self.window_movement = None;
             self.reset_accessibility_activation();
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         // Hide highlights while window is moving to avoid "sliding" behavior.
         if self.window_is_moving(pid) {
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         let el = AXUIElement::application(pid);
         if !self.ensure_accessibility_activation(pid, &bundle_identifier, &el) {
-            return Vec::new();
+            return None;
         }
 
         let walker = TreeWalker::new();
@@ -386,8 +382,13 @@ impl OsBroker for MacBroker {
         }
     }
 
-    fn system_integration_display_name(&self, bundle_id: &str) -> String {
-        app_catalog::system_integration_display_name(bundle_id)
+    fn integration_display_name(&self, bundle_id: &str) -> String {
+        app_catalog::integration_display_name(bundle_id)
+    }
+
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        let ids = app_catalog::installed_application_bundle_ids()?;
+        Ok(ids.iter().cloned().collect())
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
@@ -431,16 +432,31 @@ impl OsBroker for MacBroker {
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
-        let mut lock = self
-            .installed_app_search_index
-            .lock()
-            .map_err(|_| "Could not lock search index.".to_owned())?;
+        let list = app_catalog::installed_application_search_results()?;
 
-        if lock.is_empty() {
-            lock.populate()?;
+        let query = query.trim();
+
+        if query.is_empty() {
+            return Ok(list.to_vec());
         }
 
-        Ok(lock.search(query))
+        if let Some(result) = list
+            .iter()
+            .find(|result| result.bundle_id == query)
+            .cloned()
+        {
+            return Ok(vec![result]);
+        }
+
+        let lower_query = query.to_lowercase();
+        Ok(list
+            .iter()
+            .filter(|result| {
+                result.name.to_lowercase().contains(&lower_query)
+                    || result.bundle_id.to_lowercase().contains(&lower_query)
+            })
+            .cloned()
+            .collect())
     }
 }
 
