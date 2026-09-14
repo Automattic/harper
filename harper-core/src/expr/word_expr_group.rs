@@ -50,4 +50,8 @@ where
 
         inner_pattern.run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 WORD EXPR GROUP");
+        None // Not implemented
+    }
 }

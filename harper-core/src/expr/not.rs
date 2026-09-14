@@ -22,6 +22,10 @@ impl Expr for Not {
             .is_none()
             .then(|| Span::empty(cursor))
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 NOT");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]
