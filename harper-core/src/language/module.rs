@@ -9,7 +9,6 @@ use std::sync::Arc;
 use crate::Token;
 use crate::language::dialects::dialect_trait::Dialect;
 use crate::language::languages::Language;
-use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
 use crate::spell::Dictionary;
@@ -35,54 +34,35 @@ pub trait LanguageDetector: Debug + Send + Sync {
 /// - For English, use an adapter pattern to point to master's existing files
 /// - Associated types allow each language to use its own dialect and detector types
 pub trait LanguageModule: 'static {
-    /// Language variant enum
+    /// The language's dialect enum, e.g. `GermanDialect`.
     type Dialect: Clone + Copy + Debug + PartialEq + Eq + Send + Sync + 'static + Dialect;
 
-    /// Language identification implementation
+    /// The language's detector, used to guess the language of a document.
     type Detector: LanguageDetector + 'static;
 
-    /// Default dialect for this language
+    /// The dialect assumed when the caller does not name one.
     fn default_dialect() -> Self::Dialect;
 
-    /// Language identification detector instance
+    /// An instance of the detector.
     fn detector() -> Self::Detector;
 
-    /// Text tokenization implementation (low-level lexer)
-    fn lex_token(source: &[char]) -> FoundToken;
-
-    /// Plain text parser for this language
+    /// Parser for plain prose in this language. Every other prose format
+    /// (Markdown, Org) is built from it by the registry.
     fn plain_parser() -> impl Parser + 'static;
 
-    /// Access to the language's spell-checking dictionary
-    /// Returns FstDictionary for most languages, but CompoundAwareDictionary for German
+    /// The language's spell-checking dictionary.
     fn dictionary() -> Arc<dyn Dictionary>;
 
-    /// All language-specific Rust linting rules
+    /// Linters written in Rust that apply only to this language.
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup;
 
-    /// All language-specific Weir rule linters
+    /// Linters generated from this language's `.weir` rule files.
     fn weir_lint_group() -> LintGroup;
 
-    /// Create a complete curated lint group for this language with a custom dictionary
+    /// The lint group Harper runs by default on this language, with each
+    /// linter enabled or disabled as the language sees fit.
     fn curated_lint_group(
         dialect: Self::Dialect,
         dictionary: Arc<impl Dictionary + 'static>,
     ) -> LintGroup;
-
-    /// Serializes dialect flags for this language to JSON.
-    /// Each language provides its own serialization logic for dialect flags.
-    fn serialize_dialect_flags<S>(
-        flags: &<Self::Dialect as Dialect>::Flags,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer;
-
-    /// Deserializes dialect flags for this language from JSON.
-    /// Each language provides its own deserialization logic for dialect flags.
-    fn deserialize_dialect_flags<'de, D>(
-        deserializer: D,
-    ) -> Result<<Self::Dialect as Dialect>::Flags, D::Error>
-    where
-        D: serde::Deserializer<'de>;
 }

@@ -332,7 +332,10 @@ check-languages:
 
 	echo
 	echo "🔍 Validating language dictionaries"
-	for lang in german portuguese slovak polish; do
+	# Discovered, not listed: a new language directory is validated the moment
+	# it has a dictionary.dict.
+	for dict in "{{justfile_directory()}}"/harper-core/src/language/*/dictionary.dict; do
+		lang=$(basename "$(dirname "$dict")")
 		python3 "{{justfile_directory()}}/scripts/validate_language_dict.py" "$lang"
 	done
 
@@ -341,3 +344,13 @@ check-languages:
 	# Checks every word in the reference list (~258k, about 2s), so the figure is
 	# both representative and reproducible. Currently 95.1%.
 	just language-coverage german 94
+
+# Runs the harper-core suite with no language feature and again with every
+# language, then compares every test the two runs share. Not part of
+# `check-languages` because it compiles harper-core twice.
+#
+# Prove English is unaffected by the language module system.
+check-english-parity features="all-languages":
+	#!/usr/bin/env bash
+	set -eo pipefail
+	python3 "{{justfile_directory()}}/scripts/check_english_parity.py" --features "{{features}}"

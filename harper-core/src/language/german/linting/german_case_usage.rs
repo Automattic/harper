@@ -163,7 +163,7 @@ impl<T: Dictionary> Linter for GermanCaseUsage<T> {
         // For now, look for preposition + noun patterns
         let tokens = document.get_tokens();
 
-        for i in 0..tokens.len() - 1 {
+        for i in 0..tokens.len().saturating_sub(1) {
             let preposition_token = &tokens[i];
             let following_token = &tokens[i + 1];
 

@@ -13,6 +13,7 @@ use crate::{Span, Token, TokenKind, TokenStringExt, VecExt, offsets::build_byte_
 pub struct Markdown {
     options: MarkdownOptions,
     inline_parser: fn(&[char]) -> Vec<Token>,
+    english: bool,
 }
 
 impl Default for Markdown {
@@ -20,6 +21,7 @@ impl Default for Markdown {
         Self {
             options: MarkdownOptions::default(),
             inline_parser: |source| PlainEnglish.parse(source),
+            english: true,
         }
     }
 }
@@ -45,6 +47,7 @@ impl Markdown {
         Self {
             options,
             inline_parser: |source| PlainEnglish.parse(source),
+            english: true,
         }
     }
 
@@ -55,7 +58,16 @@ impl Markdown {
         Self {
             options,
             inline_parser,
+            english: true,
         }
+    }
+
+    /// Declare that the inline parser produces prose in a language other than
+    /// English. See [`Parser::is_english`].
+    #[must_use]
+    pub fn non_english(mut self) -> Self {
+        self.english = false;
+        self
     }
 
     /// Remove hidden Wikilink target text.
@@ -162,6 +174,10 @@ impl Markdown {
 }
 
 impl Parser for Markdown {
+    fn is_english(&self) -> bool {
+        self.english
+    }
+
     /// This implementation is quite gross to look at, but it works.
     /// If any issues arise, it would likely help to refactor this out first.
     fn parse(&self, source: &[char]) -> Vec<Token> {

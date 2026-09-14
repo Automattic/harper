@@ -1,157 +1,147 @@
-// Source-tree checks for Weir-rule build inputs.
-// These validate the expected rule layout and file structure; they do not
-// exercise Cargo's generated output directly.
+//! Source-tree checks on the inputs the build script consumes.
+//!
+//! Like `language_conformance.rs`, these walk whatever is in the tree rather
+//! than naming a language, so a new one is checked as soon as it is added.
+//! They validate file layout and rule structure, not generated output.
 
+use std::ffi::OsStr;
 use std::fs;
-use std::path::Path;
+use std::path::{Path, PathBuf};
 
-/// Verify that German Weir rule directory is configured
-#[test]
-fn verify_german_weir_rule_dir_exists() {
-    // Check that the German Weir rule directory exists and contains .weir files
-    let weir_dir = Path::new("src/language/german/linting/weir_rules/de");
+const LANGUAGE_DIR: &str = "src/language";
 
-    // Verify directory exists
-    assert!(
-        weir_dir.exists(),
-        "German Weir rules directory should exist at {:?}",
-        weir_dir
-    );
-
-    // Verify it contains .weir files
-    let entries = fs::read_dir(weir_dir).unwrap();
-    let weir_files: Vec<_> = entries
-        .filter_map(Result::ok)
-        .filter(|e| {
-            e.path()
-                .extension()
-                .map(|ext| ext == "weir")
-                .unwrap_or(false)
-        })
-        .collect();
-
-    assert!(
-        !weir_files.is_empty(),
-        "German Weir rules directory should contain at least one .weir file, found {}",
-        weir_files.len()
-    );
-
-    // Expected German Weir rules
-    let expected_rules = vec![
-        "BeimBei",
-        "EtwasDass",
-        "HerzlichenDank",
-        "VielenDank",
-        "WirHaben",
-        "ZumAnbeissen",
-        "ZurDer",
-    ];
-
-    for rule_name in expected_rules {
-        let rule_file = weir_dir.join(format!("{}.weir", rule_name));
-        assert!(
-            rule_file.exists(),
-            "Expected German Weir rule file {:?} should exist",
-            rule_file
-        );
-    }
-}
-
-/// Verify that English Weir rule directory exists
-#[test]
-fn verify_english_weir_rule_dir_exists() {
-    let weir_dir = Path::new("src/linting/weir_rules");
-
-    assert!(
-        weir_dir.exists(),
-        "English Weir rules directory should exist at {:?}",
-        weir_dir
-    );
-
-    // Verify it contains .weir files
-    let entries = fs::read_dir(weir_dir).unwrap();
-    let weir_files: Vec<_> = entries
-        .filter_map(Result::ok)
-        .filter(|e| {
-            e.path()
-                .extension()
-                .map(|ext| ext == "weir")
-                .unwrap_or(false)
-        })
-        .collect();
-
-    assert!(
-        weir_files.len() > 50,
-        "English Weir rules directory should contain many .weir files, found {}",
-        weir_files.len()
-    );
-}
-
-/// Verify each German Weir rule file has proper structure
-#[test]
-fn verify_german_weir_rules_structure() {
-    use std::ffi::OsStr;
-
-    let weir_dir = Path::new("src/language/german/linting/weir_rules/de");
-    let entries = fs::read_dir(weir_dir).unwrap();
+/// Every `linting/weir_rules` directory under `src/language/`, with the
+/// language directory it belongs to.
+fn language_weir_dirs() -> Vec<(String, PathBuf)> {
+    let mut found = Vec::new();
+    let Ok(entries) = fs::read_dir(LANGUAGE_DIR) else {
+        panic!("{LANGUAGE_DIR} should exist");
+    };
 
     for entry in entries.filter_map(Result::ok) {
         let path = entry.path();
-        if path.extension() != Some(OsStr::new("weir")) {
+        if !path.is_dir() {
             continue;
         }
+        let rules = path.join("linting/weir_rules");
+        if rules.is_dir() {
+            let name = entry.file_name().to_string_lossy().into_owned();
+            found.push((name, rules));
+        }
+    }
+    found.sort();
+    found
+}
 
-        let content = fs::read_to_string(&path).unwrap();
+/// `.weir` files sit either directly in `weir_rules/` or in the one
+/// subdirectory a language's `config.toml` names.
+fn weir_files(dir: &Path) -> Vec<PathBuf> {
+    let mut found = Vec::new();
+    let mut stack = vec![dir.to_path_buf()];
 
-        // Each Weir rule should have these components
-        assert!(
-            content.contains("expr main"),
-            "{:?} should define 'expr main' pattern",
-            path
-        );
-        assert!(
-            content.contains("let message"),
-            "{:?} should define error message",
-            path
-        );
-        assert!(
-            content.contains("let becomes") || content.contains("let strategy"),
-            "{:?} should define replacement or strategy",
-            path
-        );
+    while let Some(current) = stack.pop() {
+        for entry in fs::read_dir(&current).into_iter().flatten().flatten() {
+            let path = entry.path();
+            if path.is_dir() {
+                stack.push(path);
+            } else if path.extension() == Some(OsStr::new("weir")) {
+                found.push(path);
+            }
+        }
+    }
+    found.sort();
+    found
+}
 
-        // Should have at least one test or allows statement
-        assert!(
-            content.contains("test ") || content.contains("allows "),
-            "{:?} should have at least one test or allows statement",
-            path
-        );
+#[test]
+fn english_ships_the_bulk_of_the_weir_rules() {
+    let dir = Path::new("src/linting/weir_rules");
+    assert!(dir.is_dir(), "{} should exist", dir.display());
+    let count = weir_files(dir).len();
+    assert!(
+        count > 50,
+        "English should have many .weir rules, found {count}"
+    );
+}
+
+/// The shape `WeirLinter` needs to build a linter out of a rule file. Applied
+/// to the language modules only: English's rule set predates the convention
+/// that every rule carries its own examples.
+#[test]
+fn every_language_weir_rule_is_well_formed() {
+    for (language, dir) in language_weir_dirs() {
+        for path in weir_files(&dir) {
+            let content = fs::read_to_string(&path).unwrap();
+            let file = path.display();
+
+            assert!(
+                content.contains("expr main"),
+                "{language}: {file} defines no 'expr main' pattern"
+            );
+            assert!(
+                content.contains("let message"),
+                "{language}: {file} defines no message"
+            );
+            assert!(
+                content.contains("let becomes") || content.contains("let strategy"),
+                "{language}: {file} defines neither a replacement nor a strategy"
+            );
+            assert!(
+                content.contains("test ") || content.contains("allows "),
+                "{language}: {file} has no test or allows statement"
+            );
+        }
     }
 }
 
-/// Verify build.rs environment variables are documented
+/// The two files the build script needs in order to see a language at all.
+#[test]
+fn every_language_directory_has_a_config_and_a_module() {
+    let mut checked = 0;
+
+    for entry in fs::read_dir(LANGUAGE_DIR).unwrap().filter_map(Result::ok) {
+        let path = entry.path();
+        let name = entry.file_name().to_string_lossy().into_owned();
+        // Shared infrastructure, not languages.
+        if !path.is_dir() || matches!(name.as_str(), "dialects" | "testing_framework") {
+            continue;
+        }
+
+        let config = path.join("config.toml");
+        let module = path.join("module.rs");
+        assert_eq!(
+            config.exists(),
+            module.exists(),
+            "{name} has only one of config.toml and module.rs; the build script \
+             needs both and silently ignores the directory otherwise"
+        );
+
+        if config.exists() {
+            checked += 1;
+            assert!(
+                path.join("mod.rs").exists(),
+                "{name} has no mod.rs, so the generated `pub mod {name};` cannot resolve"
+            );
+            assert!(
+                path.join("dialects.rs").exists(),
+                "{name} has no dialects.rs, which languages.rs imports its dialect from"
+            );
+        }
+    }
+
+    assert!(checked > 0, "no language directories found");
+}
+
 #[test]
 fn verify_build_script_exists() {
-    let build_rs = Path::new("build.rs");
+    let content = fs::read_to_string("build.rs").expect("harper-core/build.rs should exist");
 
-    assert!(
-        build_rs.exists(),
-        "build.rs should exist in harper-core directory"
-    );
-
-    let content = fs::read_to_string(build_rs).unwrap();
-
-    // Verify build.rs imports build_lib and calls run_build
     assert!(
         content.contains("mod build_lib"),
-        "build.rs should import build_lib module"
+        "build.rs should import the build_lib module"
     );
     assert!(
         content.contains("build_lib::run_build()"),
         "build.rs should call build_lib::run_build()"
-    );
-    assert!(
-        content.contains("language"),
-        "build.rs should reference language in documentation"
     );
 }

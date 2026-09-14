@@ -75,7 +75,7 @@ impl Document {
         let tokens = parser.parse(&source);
 
         let mut document = Self { source, tokens };
-        document.parse(dictionary);
+        document.parse(dictionary, parser.is_english());
 
         document
     }
@@ -172,8 +172,18 @@ impl Document {
     /// Re-parse important language constructs.
     ///
     /// Should be run after every change to the underlying [`Self::source`].
-    fn parse(&mut self, dictionary: &impl Dictionary) {
+    ///
+    /// `english` decides whether the Brill tagger and the neural noun-phrase
+    /// chunker run. Both are English-only models and are the larger half of the
+    /// work here, so text in another language skips them and keeps whatever
+    /// `pos_tag` its dictionary supplies. See [`Parser::is_english`].
+    fn parse(&mut self, dictionary: &impl Dictionary, english: bool) {
         self.apply_fixups();
+
+        if !english {
+            self.annotate_from_dictionary(dictionary);
+            return;
+        }
 
         let chunker = burn_chunker();
         let tagger = brill_tagger();
@@ -215,6 +225,27 @@ impl Document {
                 } else if !token.kind.is_whitespace() {
                     ti += 1;
                 }
+            }
+        }
+    }
+
+    /// Attach dictionary metadata to every word, without consulting the
+    /// English part-of-speech models.
+    fn annotate_from_dictionary(&mut self, dictionary: &impl Dictionary) {
+        let word_sources: Vec<_> = self
+            .tokens
+            .iter()
+            .filter(|t| matches!(t.kind, TokenKind::Word(_)))
+            .map(|t| t.get_ch(&self.source))
+            .collect();
+
+        let mut wi = 0;
+        for token in &mut self.tokens {
+            if let TokenKind::Word(meta) = &mut token.kind {
+                *meta = dictionary
+                    .get_word_metadata(word_sources[wi])
+                    .map(|c| c.into_owned());
+                wi += 1;
             }
         }
     }

@@ -132,7 +132,7 @@ impl<T: Dictionary> Linter for GermanNounDeclension<T> {
         // For now, look for article + noun patterns
         let tokens = document.get_tokens();
 
-        for i in 0..tokens.len() - 1 {
+        for i in 0..tokens.len().saturating_sub(1) {
             let article_token = &tokens[i];
             let noun_token = &tokens[i + 1];
 

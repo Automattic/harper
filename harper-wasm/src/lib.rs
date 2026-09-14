@@ -458,21 +458,14 @@ impl Linter {
     pub fn import_words(&mut self, additional_words: Vec<String>) {
         let init_len = self.user_dictionary.word_count();
 
-        // Create dialect flags based on the language
+        // Only English carries legacy dialect flags on user-dictionary words;
+        // every other language leaves them empty, so no per-language arm is
+        // needed here when a language is added.
         #[allow(unreachable_patterns)]
         let dialect_flags = match self.ling_language {
             harper_core::language::languages::Language::English(dialect) => {
                 DialectFlags::from_dialect(dialect)
             }
-            #[cfg(feature = "de")]
-            harper_core::language::languages::Language::German(_) => DialectFlags::empty(), // German doesn't use legacy dialect flags yet
-            #[cfg(feature = "pl")]
-            harper_core::language::languages::Language::Polish(_) => DialectFlags::empty(),
-            #[cfg(feature = "pt")]
-            harper_core::language::languages::Language::Portuguese(_) => DialectFlags::empty(),
-            #[cfg(feature = "sk")]
-            harper_core::language::languages::Language::Slovak(_) => DialectFlags::empty(),
-            // Fallback for any other language variants (when features are enabled in harper-core but not in harper-wasm)
             _ => DialectFlags::empty(),
         };
 

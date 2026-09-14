@@ -1,19 +1,11 @@
-#![cfg(feature = "multilingual")]
-
 use std::{
     marker::Sync,
     path::{Path, PathBuf},
 };
 
 use harper_core::Dialect;
-use harper_core::language::languages::Language;
 use itertools::Itertools;
 use rayon::iter::{IntoParallelRefIterator, ParallelIterator};
-
-#[cfg(feature = "de")]
-use harper_core::language::german::dialects::GermanDialect;
-#[cfg(feature = "pt")]
-use harper_core::language::portuguese::dialects::PortugueseDialect;
 
 fn get_tests_dir() -> PathBuf {
     PathBuf::from(env!("CARGO_MANIFEST_DIR")).join("tests")
@@ -25,33 +17,11 @@ fn get_text_dir() -> PathBuf {
 /// Tries to find a dialect override from a given file path. Returns `None` if the number of
 /// dialect overrides found is not 1.
 #[must_use]
-fn try_get_dialect_override(path: &Path) -> Option<Language> {
+fn try_get_dialect_override(path: &Path) -> Option<Dialect> {
     path.file_stem()?
         .to_string_lossy()
         .split('.')
-        .filter_map(|abbr| {
-            let upper = abbr.to_ascii_uppercase();
-            match upper.as_str() {
-                "US" => Some(Language::English(Dialect::American)),
-                "CA" => Some(Language::English(Dialect::Canadian)),
-                "AU" => Some(Language::English(Dialect::Australian)),
-                "GB" => Some(Language::English(Dialect::British)),
-                "IN" => Some(Language::English(Dialect::Indian)),
-                #[cfg(feature = "de")]
-                "DE" => Some(Language::German(GermanDialect::Standard)),
-                #[cfg(feature = "de")]
-                "AT" => Some(Language::German(GermanDialect::Austrian)),
-                #[cfg(feature = "de")]
-                "CH" => Some(Language::German(GermanDialect::Swiss)),
-                #[cfg(feature = "pt")]
-                "PT" => Some(Language::Portuguese(PortugueseDialect::European)),
-                #[cfg(feature = "pt")]
-                "BR" => Some(Language::Portuguese(PortugueseDialect::Brazilian)),
-                #[cfg(feature = "pt")]
-                "AO" => Some(Language::Portuguese(PortugueseDialect::African)),
-                _ => None,
-            }
-        })
+        .filter_map(Dialect::try_from_abbr)
         .exactly_one() // If we find multiple overrides, it's unlikely that a dialect override is intended.
         .ok()
 }
@@ -78,7 +48,7 @@ pub fn get_text_files() -> Vec<PathBuf> {
 fn tag_file(
     text_file: &Path,
     snapshot_file: &Path,
-    create_snapshot: impl Fn(&str, Option<Language>) -> String,
+    create_snapshot: impl Fn(&str, Option<Dialect>) -> String,
 ) -> Result<(), Box<dyn std::error::Error>> {
     let source = std::fs::read_to_string(text_file)?.replace("\r\n", "\n");
     let dialect_override = try_get_dialect_override(text_file);
@@ -112,7 +82,7 @@ fn get_snapshot_file(text_file: &Path, snapshot_dir: &Path, ext: &str) -> PathBu
 pub fn snapshot_all_text_files(
     out_dir: &str,
     snapshot_ext: &str,
-    create_snapshot: impl Copy + Fn(&str, Option<Language>) -> String + 'static + Sync,
+    create_snapshot: impl Copy + Fn(&str, Option<Dialect>) -> String + 'static + Sync,
 ) {
     let snapshot_dir = get_text_dir().join(out_dir);
     std::fs::create_dir_all(&snapshot_dir).expect("Failed to create snapshot directory");

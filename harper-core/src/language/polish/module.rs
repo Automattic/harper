@@ -2,16 +2,11 @@
 
 use std::sync::Arc;
 
-use serde::{Deserialize, Serialize};
-
-use crate::language::dialects::dialect_trait::Dialect;
-use crate::language::polish::dialects::{PolishDialect, PolishDialectFlags};
+use crate::language::polish::dialects::PolishDialect;
 use crate::language::polish::language_detection::PolishDetector;
-use crate::language::polish::lexing::lex_polish_token;
 use crate::language::polish::linting::{new_curated_polish, weir_rules};
 use crate::language::polish::parsers::PlainPolish;
 use crate::language::polish::spell::polish_dictionary;
-use crate::lexing::FoundToken;
 use crate::linting::LintGroup;
 use crate::parsers::Parser;
 use crate::spell::Dictionary;
@@ -31,10 +26,6 @@ impl LanguageModule for PolishModule {
 
     fn detector() -> Self::Detector {
         PolishDetector
-    }
-
-    fn lex_token(source: &[char]) -> FoundToken {
-        lex_polish_token(source)
     }
 
     fn plain_parser() -> impl Parser + 'static {
@@ -65,24 +56,5 @@ impl LanguageModule for PolishModule {
         dictionary: Arc<impl Dictionary + 'static>,
     ) -> LintGroup {
         new_curated_polish(dialect, dictionary)
-    }
-
-    fn serialize_dialect_flags<S>(
-        flags: &<Self::Dialect as Dialect>::Flags,
-        serializer: S,
-    ) -> Result<S::Ok, S::Error>
-    where
-        S: serde::Serializer,
-    {
-        flags.serialize(serializer)
-    }
-
-    fn deserialize_dialect_flags<'de, D>(
-        deserializer: D,
-    ) -> Result<<Self::Dialect as Dialect>::Flags, D::Error>
-    where
-        D: serde::Deserializer<'de>,
-    {
-        PolishDialectFlags::deserialize(deserializer)
     }
 }

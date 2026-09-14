@@ -185,7 +185,7 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
         // For now, look for subject + verb patterns
         let tokens = document.get_tokens();
 
-        for i in 0..tokens.len() - 1 {
+        for i in 0..tokens.len().saturating_sub(1) {
             let subject_token = &tokens[i];
             let verb_token = &tokens[i + 1];
 

@@ -132,6 +132,59 @@ pub fn dictionary(language: Language) -> Arc<dyn Dictionary> {
     dictionary_for_language(language.family())
 }
 
+/// The language a family stands for when no dialect is named.
+pub fn default_language(family: LanguageFamily) -> Language {
+    match family {
+        LanguageFamily::English => Language::English(EnglishModule::default_dialect()),
+        #[cfg(feature = "de")]
+        LanguageFamily::German => Language::German(GermanModule::default_dialect()),
+        #[cfg(feature = "pl")]
+        LanguageFamily::Polish => Language::Polish(PolishModule::default_dialect()),
+        #[cfg(feature = "pt")]
+        LanguageFamily::Portuguese => Language::Portuguese(PortugueseModule::default_dialect()),
+        #[cfg(feature = "sk")]
+        LanguageFamily::Slovak => Language::Slovak(SlovakModule::default_dialect()),
+    }
+}
+
+/// Print dictionary statistics for the named language directory.
+///
+/// Returns `false` when the language is unknown or ships no `stats.rs`, so
+/// `lang_stats` needs no per-language arm of its own.
+pub fn language_stats(name: &str, detailed: bool) -> bool {
+    #[allow(clippy::match_single_binding)]
+    match name {
+        "english" => {
+            crate::language::english::stats::analyze(detailed);
+            true
+        }
+        #[cfg(feature = "de")]
+        "german" => {
+            crate::language::german::stats::analyze(detailed);
+            true
+        }
+        #[cfg(feature = "pt")]
+        "portuguese" => {
+            crate::language::portuguese::stats::analyze(detailed);
+            true
+        }
+        _ => false,
+    }
+}
+
+/// The language names [`language_stats`] accepts in this build.
+#[allow(clippy::vec_init_then_push)]
+pub fn languages_with_stats() -> Vec<&'static str> {
+    #[allow(unused_mut)]
+    let mut out: Vec<&'static str> = Vec::new();
+    out.push("english");
+    #[cfg(feature = "de")]
+    out.push("german");
+    #[cfg(feature = "pt")]
+    out.push("portuguese");
+    out
+}
+
 /// Get a parser for the given language ID and language.
 pub fn parser_for_prose(
     language_id: &str,
@@ -154,47 +207,53 @@ pub fn parser_for_prose(
         ("markdown" | "quarto", ProseLanguage::German) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 GermanModule::plain_parser().parse(source)
-            }),
+            })
+            .non_english(),
         )),
         #[cfg(feature = "pl")]
         ("markdown" | "quarto", ProseLanguage::Polish) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 PolishModule::plain_parser().parse(source)
-            }),
+            })
+            .non_english(),
         )),
         #[cfg(feature = "pt")]
         ("markdown" | "quarto", ProseLanguage::Portuguese) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 PortugueseModule::plain_parser().parse(source)
-            }),
+            })
+            .non_english(),
         )),
         #[cfg(feature = "sk")]
         ("markdown" | "quarto", ProseLanguage::Slovak) => Some(Box::new(
             Markdown::with_inline_parser(markdown_options, |source| {
                 SlovakModule::plain_parser().parse(source)
-            }),
+            })
+            .non_english(),
         )),
         ("markdown" | "quarto", _) => Some(Box::new(Markdown::new(markdown_options))),
 
         // Org mode format
         #[cfg(feature = "de")]
-        ("org", ProseLanguage::German) => Some(Box::new(OrgMode::with_inline_parser(|source| {
-            GermanModule::plain_parser().parse(source)
-        }))),
+        ("org", ProseLanguage::German) => Some(Box::new(
+            OrgMode::with_inline_parser(|source| GermanModule::plain_parser().parse(source))
+                .non_english(),
+        )),
         #[cfg(feature = "pl")]
-        ("org", ProseLanguage::Polish) => Some(Box::new(OrgMode::with_inline_parser(|source| {
-            PolishModule::plain_parser().parse(source)
-        }))),
+        ("org", ProseLanguage::Polish) => Some(Box::new(
+            OrgMode::with_inline_parser(|source| PolishModule::plain_parser().parse(source))
+                .non_english(),
+        )),
         #[cfg(feature = "pt")]
-        ("org", ProseLanguage::Portuguese) => {
-            Some(Box::new(OrgMode::with_inline_parser(|source| {
-                PortugueseModule::plain_parser().parse(source)
-            })))
-        }
+        ("org", ProseLanguage::Portuguese) => Some(Box::new(
+            OrgMode::with_inline_parser(|source| PortugueseModule::plain_parser().parse(source))
+                .non_english(),
+        )),
         #[cfg(feature = "sk")]
-        ("org", ProseLanguage::Slovak) => Some(Box::new(OrgMode::with_inline_parser(|source| {
-            SlovakModule::plain_parser().parse(source)
-        }))),
+        ("org", ProseLanguage::Slovak) => Some(Box::new(
+            OrgMode::with_inline_parser(|source| SlovakModule::plain_parser().parse(source))
+                .non_english(),
+        )),
         ("org", _) => Some(Box::new(OrgMode::default())),
 
         // Plain text format
@@ -304,4 +363,14 @@ pub fn new_curated_for_language(
             SlovakModule::curated_lint_group(dialect, dictionary)
         }
     }
+}
+
+/// The curated lint group for a language, using the dictionary this registry
+/// hands out for it.
+///
+/// [`new_curated_for_language`] needs a concrete dictionary type; this takes
+/// the erased `Arc<dyn Dictionary>` from [`dictionary`], which is what a caller
+/// that only knows a [`Language`] actually has.
+pub fn new_curated(language: Language) -> LintGroup {
+    new_curated_for_language(Arc::new(dictionary(language)), language)
 }

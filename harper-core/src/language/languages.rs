@@ -81,6 +81,339 @@ pub fn parse_language(s: &str) -> Option<Language> {
     }
 }
 
+/// Every string [`parse_language`] accepts, with the language it names.
+///
+/// Generated from the `[[dialects]]` entries of each language's `config.toml`.
+#[allow(clippy::vec_init_then_push)]
+pub fn language_aliases() -> Vec<(&'static str, Language)> {
+    #[allow(unused_mut)]
+    let mut out: Vec<(&'static str, Language)> = Vec::new();
+    out.push((
+        "us",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "usa",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "america",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "american",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "en-us",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "en_us",
+        Language::English(EnglishDialect::try_from_abbr("US").unwrap()),
+    ));
+    out.push((
+        "uk",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "gb",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "british",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "britain",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "en-gb",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "en_gb",
+        Language::English(EnglishDialect::try_from_abbr("GB").unwrap()),
+    ));
+    out.push((
+        "au",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "aus",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "australia",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "australian",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "en-au",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "en_au",
+        Language::English(EnglishDialect::try_from_abbr("AU").unwrap()),
+    ));
+    out.push((
+        "in",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "india",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "indian",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "bharat",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "en-in",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "en_in",
+        Language::English(EnglishDialect::try_from_abbr("IN").unwrap()),
+    ));
+    out.push((
+        "ca",
+        Language::English(EnglishDialect::try_from_abbr("CA").unwrap()),
+    ));
+    out.push((
+        "canada",
+        Language::English(EnglishDialect::try_from_abbr("CA").unwrap()),
+    ));
+    out.push((
+        "canadian",
+        Language::English(EnglishDialect::try_from_abbr("CA").unwrap()),
+    ));
+    out.push((
+        "en-ca",
+        Language::English(EnglishDialect::try_from_abbr("CA").unwrap()),
+    ));
+    out.push((
+        "en_ca",
+        Language::English(EnglishDialect::try_from_abbr("CA").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de",
+        Language::German(GermanDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "german",
+        Language::German(GermanDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "deutsch",
+        Language::German(GermanDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de-de",
+        Language::German(GermanDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de_de",
+        Language::German(GermanDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "at",
+        Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "austria",
+        Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "austrian",
+        Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de-at",
+        Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de_at",
+        Language::German(GermanDialect::try_from_abbr("Austrian").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "ch",
+        Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "switzerland",
+        Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "swiss",
+        Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de-ch",
+        Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()),
+    ));
+    #[cfg(feature = "de")]
+    out.push((
+        "de_ch",
+        Language::German(GermanDialect::try_from_abbr("Swiss").unwrap()),
+    ));
+    #[cfg(feature = "pl")]
+    out.push((
+        "pl",
+        Language::Polish(PolishDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "pl")]
+    out.push((
+        "polish",
+        Language::Polish(PolishDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "pl")]
+    out.push((
+        "polski",
+        Language::Polish(PolishDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "pl")]
+    out.push((
+        "pl-pl",
+        Language::Polish(PolishDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "pl")]
+    out.push((
+        "pl_pl",
+        Language::Polish(PolishDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "pt",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "pt-pt",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "pt_pt",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "portuguese",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "português",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("PT").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "br",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "brazil",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "portuguese-brazilian",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "portuguese_brazilian",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "pt-br",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "pt_br",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("BR").unwrap()),
+    ));
+    #[cfg(feature = "pt")]
+    out.push((
+        "ao",
+        Language::Portuguese(PortugueseDialect::try_from_abbr("AO").unwrap()),
+    ));
+    #[cfg(feature = "sk")]
+    out.push((
+        "sk",
+        Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "sk")]
+    out.push((
+        "slovak",
+        Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "sk")]
+    out.push((
+        "slovensko",
+        Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "sk")]
+    out.push((
+        "sk-sk",
+        Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    #[cfg(feature = "sk")]
+    out.push((
+        "sk_sk",
+        Language::Slovak(SlovakDialect::try_from_abbr("Standard").unwrap()),
+    ));
+    out
+}
+
+/// Every language this build supports, with every dialect of each.
+///
+/// The list shrinks with the enabled Cargo features, so a test that walks
+/// it covers exactly the languages the binary actually ships.
+#[allow(clippy::vec_init_then_push)]
+pub fn all_languages() -> Vec<Language> {
+    use strum::IntoEnumIterator;
+
+    #[allow(unused_mut)]
+    let mut out: Vec<Language> = Vec::new();
+    out.extend(EnglishDialect::iter().map(Language::English));
+    #[cfg(feature = "de")]
+    out.extend(GermanDialect::iter().map(Language::German));
+    #[cfg(feature = "pl")]
+    out.extend(PolishDialect::iter().map(Language::Polish));
+    #[cfg(feature = "pt")]
+    out.extend(PortugueseDialect::iter().map(Language::Portuguese));
+    #[cfg(feature = "sk")]
+    out.extend(SlovakDialect::iter().map(Language::Slovak));
+    out
+}
+
 /// A specific language with its dialects.
 #[derive(
     Debug, Clone, Copy, Serialize, Deserialize, PartialEq, PartialOrd, Eq, Hash, EnumCount, Display,

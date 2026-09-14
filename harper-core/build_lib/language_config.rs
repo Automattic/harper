@@ -23,6 +23,8 @@ pub struct LanguageConfig {
     pub dialect_alias_groups: Vec<(Vec<String>, String)>,
     /// Optional subdirectory for weir rules (e.g., "de" for German)
     pub weir_rules_subdirectory: Option<String>,
+    /// Whether the language ships a `stats.rs`, which `lang_stats` dispatches to
+    pub has_stats: bool,
 }
 
 /// Known non-language directories in src/language/ that should be skipped
@@ -175,6 +177,7 @@ pub fn load_language_config(dir_path: &Path, dir_name: &str) -> Option<LanguageC
         confidence,
         dialect_alias_groups,
         weir_rules_subdirectory,
+        has_stats: dir_path.join("stats.rs").exists(),
     })
 }
 

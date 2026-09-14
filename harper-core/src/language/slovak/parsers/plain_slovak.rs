@@ -16,4 +16,10 @@ impl Parser for PlainSlovak {
     fn parse(&self, source: &[char]) -> Vec<Token> {
         lex_with(source, lex_slovak_token)
     }
+
+    /// Not English, so [`Document`](crate::Document) skips the Brill
+    /// tagger and the neural chunker, which are English-only models.
+    fn is_english(&self) -> bool {
+        false
+    }
 }

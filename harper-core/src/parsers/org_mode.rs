@@ -126,19 +126,32 @@ fn find_line_start(chars: &[char], pos: usize) -> usize {
 #[derive(Clone, Debug, Copy)]
 pub struct OrgMode {
     inline_parser: fn(&[char]) -> Vec<Token>,
+    english: bool,
 }
 
 impl Default for OrgMode {
     fn default() -> Self {
         Self {
             inline_parser: |source| PlainEnglish.parse(source),
+            english: true,
         }
     }
 }
 
 impl OrgMode {
     pub fn with_inline_parser(inline_parser: fn(&[char]) -> Vec<Token>) -> Self {
-        Self { inline_parser }
+        Self {
+            inline_parser,
+            english: true,
+        }
+    }
+
+    /// Declare that the inline parser produces prose in a language other than
+    /// English. See [`Parser::is_english`].
+    #[must_use]
+    pub fn non_english(mut self) -> Self {
+        self.english = false;
+        self
     }
 
     fn parse_inline_text(&self, source: &[char]) -> Vec<Token> {
@@ -147,6 +160,10 @@ impl OrgMode {
 }
 
 impl Parser for OrgMode {
+    fn is_english(&self) -> bool {
+        self.english
+    }
+
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let mut tokens = Vec::new();
         let mut cursor = 0;

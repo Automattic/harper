@@ -4,12 +4,13 @@ use clap::Parser;
 /// Analyzes dictionary size, annotation coverage, and other metrics.
 ///
 /// The per-language statistics logic lives in each language module's
-/// `stats` module (e.g. `harper_core::language::german::stats`), keeping
-/// this binary a thin, language-agnostic dispatcher.
+/// `stats` module (e.g. `harper_core::language::german::stats`). The dispatch
+/// is generated from the languages present in harper-core, so adding a
+/// language with a `stats.rs` needs no change here.
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about = None)]
 struct Args {
-    /// Language to analyze (english, german, portuguese - depending on enabled features)
+    /// Language directory to analyze, e.g. `english` or `german`
     #[arg(required = true)]
     language: String,
 
@@ -21,12 +22,12 @@ struct Args {
 fn main() {
     let args = Args::parse();
 
-    match args.language.as_str() {
-        "english" => harper_core::language::english::stats::analyze(args.detailed),
-        #[cfg(feature = "de")]
-        "german" => harper_core::language::german::stats::analyze(args.detailed),
-        #[cfg(feature = "pt")]
-        "portuguese" => harper_core::language::portuguese::stats::analyze(args.detailed),
-        _ => eprintln!("Unknown language: {}", args.language),
+    if !harper_core::language::language_stats(&args.language, args.detailed) {
+        eprintln!(
+            "No statistics for {:?}. This build has: {}",
+            args.language,
+            harper_core::language::languages_with_stats().join(", ")
+        );
+        std::process::exit(1);
     }
 }

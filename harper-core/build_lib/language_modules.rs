@@ -148,16 +148,21 @@ pub fn generate_language_modules(_out_dir: &Path) {
     }
 
     // Re-exports
-    code.push_str("pub use languages::{Language, LanguageFamily, parse_language};\n");
+    code.push_str(
+        "pub use languages::{Language, LanguageFamily, all_languages, language_aliases, parse_language};\n",
+    );
     code.push_str("pub use module::{LanguageDetector, LanguageModule};\n");
     code.push_str(
         "pub use morphology::{Agreement, Case, Gender, Mood, Morphology, MorphologyExt, Number};\n",
     );
     code.push_str("pub use registry::{\n");
     code.push_str(
-        "    ProseLanguage, add_language_specific_linters, detect_language, dictionary,\n",
+        "    ProseLanguage, add_language_specific_linters, default_language, detect_language,\n",
     );
-    code.push_str("    dictionary_for_language, new_curated_for_language, parser_for_prose, prose_language,\n");
+    code.push_str(
+        "    dictionary, dictionary_for_language, language_stats, languages_with_stats,\n",
+    );
+    code.push_str("    new_curated, new_curated_for_language, parser_for_prose, prose_language,\n");
     code.push_str("    weir_rules_lint_group,\n");
     code.push_str("};\n");
 
@@ -172,6 +177,10 @@ pub fn generate_language_modules(_out_dir: &Path) {
     // Re-run the build when language configuration or module files change, not
     // when the files this build script writes change (that would cause a
     // rebuild loop).
+    // Watching the directory itself is what makes a *newly added* language
+    // directory trigger regeneration; the per-language entries catch edits to
+    // an existing one.
+    println!("cargo:rerun-if-changed=src/language");
     for lang in &languages {
         println!(
             "cargo:rerun-if-changed=src/language/{}/config.toml",
@@ -181,6 +190,12 @@ pub fn generate_language_modules(_out_dir: &Path) {
             "cargo:rerun-if-changed=src/language/{}/module.rs",
             lang.dir_name
         );
+        if lang.has_stats {
+            println!(
+                "cargo:rerun-if-changed=src/language/{}/stats.rs",
+                lang.dir_name
+            );
+        }
     }
     println!("cargo:rerun-if-changed=src/language/dialects");
     println!("cargo:rerun-if-changed=build_lib");
@@ -234,6 +249,55 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
 
     code.push_str("        _ => None,\n");
     code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // Every alias, paired with what it resolves to. Lets tests prove that the
+    // aliases in each `config.toml` and `parse_language` never drift apart.
+    code.push_str("/// Every string [`parse_language`] accepts, with the language it names.\n");
+    code.push_str("///\n");
+    code.push_str(
+        "/// Generated from the `[[dialects]]` entries of each language's `config.toml`.\n",
+    );
+    code.push_str("#[allow(clippy::vec_init_then_push)]\n");
+    code.push_str("pub fn language_aliases() -> Vec<(&'static str, Language)> {\n");
+    code.push_str("    #[allow(unused_mut)]\n");
+    code.push_str("    let mut out: Vec<(&'static str, Language)> = Vec::new();\n");
+    for lang in languages {
+        for (aliases, dialect_name) in &lang.dialect_alias_groups {
+            for alias in aliases {
+                if let Some(feature) = &lang.feature {
+                    code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
+                }
+                code.push_str(&format!(
+                    "    out.push((\"{0}\", Language::{1}({1}Dialect::try_from_abbr(\"{2}\").unwrap())));\n",
+                    alias, lang.name, dialect_name
+                ));
+            }
+        }
+    }
+    code.push_str("    out\n");
+    code.push_str("}\n\n");
+
+    // Every enabled language paired with every one of its dialects.
+    code.push_str("/// Every language this build supports, with every dialect of each.\n");
+    code.push_str("///\n");
+    code.push_str("/// The list shrinks with the enabled Cargo features, so a test that walks\n");
+    code.push_str("/// it covers exactly the languages the binary actually ships.\n");
+    code.push_str("#[allow(clippy::vec_init_then_push)]\n");
+    code.push_str("pub fn all_languages() -> Vec<Language> {\n");
+    code.push_str("    use strum::IntoEnumIterator;\n\n");
+    code.push_str("    #[allow(unused_mut)]\n");
+    code.push_str("    let mut out: Vec<Language> = Vec::new();\n");
+    for lang in languages {
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!(
+            "    out.extend({0}Dialect::iter().map(Language::{0}));\n",
+            lang.name
+        ));
+    }
+    code.push_str("    out\n");
     code.push_str("}\n\n");
 
     // Language enum
@@ -549,6 +613,64 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("    dictionary_for_language(language.family())\n");
     code.push_str("}\n\n");
 
+    // DEFAULT DIALECT
+    code.push_str("/// The language a family stands for when no dialect is named.\n");
+    code.push_str("pub fn default_language(family: LanguageFamily) -> Language {\n");
+    code.push_str("    match family {\n");
+    for lang in languages {
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!(
+            "        LanguageFamily::{0} => Language::{0}({0}Module::default_dialect()),\n",
+            lang.name
+        ));
+    }
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // STATISTICS
+    code.push_str("/// Print dictionary statistics for the named language directory.\n");
+    code.push_str("///\n");
+    code.push_str("/// Returns `false` when the language is unknown or ships no `stats.rs`, so\n");
+    code.push_str("/// `lang_stats` needs no per-language arm of its own.\n");
+    code.push_str("pub fn language_stats(name: &str, detailed: bool) -> bool {\n");
+    code.push_str("    #[allow(clippy::match_single_binding)]\n");
+    code.push_str("    match name {\n");
+    for lang in languages {
+        if !lang.has_stats {
+            continue;
+        }
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("        #[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!(
+            "        \"{0}\" => {{\n            crate::language::{0}::stats::analyze(detailed);\n            true\n        }}\n",
+            lang.dir_name
+        ));
+    }
+    code.push_str("        _ => false,\n");
+    code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    // The names `language_stats` understands, for a usable error message.
+    code.push_str("/// The language names [`language_stats`] accepts in this build.\n");
+    code.push_str("#[allow(clippy::vec_init_then_push)]\n");
+    code.push_str("pub fn languages_with_stats() -> Vec<&'static str> {\n");
+    code.push_str("    #[allow(unused_mut)]\n");
+    code.push_str("    let mut out: Vec<&'static str> = Vec::new();\n");
+    for lang in languages {
+        if !lang.has_stats {
+            continue;
+        }
+        if let Some(feature) = &lang.feature {
+            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", feature));
+        }
+        code.push_str(&format!("    out.push(\"{}\");\n", lang.dir_name));
+    }
+    code.push_str("    out\n");
+    code.push_str("}\n\n");
+
     // PARSERS
     code.push_str("/// Get a parser for the given language ID and language.\n");
     code.push_str("pub fn parser_for_prose(\n");
@@ -594,7 +716,8 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
             "                {}Module::plain_parser().parse(source)\n",
             lang.name
         ));
-        code.push_str("            }),\n");
+        code.push_str("            })\n");
+        code.push_str("            .non_english(),\n");
         code.push_str("        )),\n");
     }
     code.push_str("        (\"markdown\" | \"quarto\", _) => Some(Box::new(Markdown::new(markdown_options))),\n");
@@ -615,7 +738,7 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
             "            {}Module::plain_parser().parse(source)\n",
             lang.name
         ));
-        code.push_str("        }))),\n");
+        code.push_str("        }).non_english())),\n");
     }
     code.push_str("        (\"org\", _) => Some(Box::new(OrgMode::default())),\n");
     code.push('\n');
@@ -728,6 +851,22 @@ fn generate_registry_file(src_dir: &Path, languages: &[LanguageConfig]) {
         }
     }
     code.push_str("    }\n");
+    code.push_str("}\n\n");
+
+    code.push_str(
+        "/// The curated lint group for a language, using the dictionary this registry\n",
+    );
+    code.push_str("/// hands out for it.\n");
+    code.push_str("///\n");
+    code.push_str(
+        "/// [`new_curated_for_language`] needs a concrete dictionary type; this takes\n",
+    );
+    code.push_str(
+        "/// the erased `Arc<dyn Dictionary>` from [`dictionary`], which is what a caller\n",
+    );
+    code.push_str("/// that only knows a [`Language`] actually has.\n");
+    code.push_str("pub fn new_curated(language: Language) -> LintGroup {\n");
+    code.push_str("    new_curated_for_language(Arc::new(dictionary(language)), language)\n");
     code.push_str("}\n");
 
     let dest = src_dir.join("registry.rs");

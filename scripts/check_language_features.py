@@ -1,159 +1,123 @@
 #!/usr/bin/env python3
-"""
-Check language feature consistency across Cargo.toml files.
+"""Check that every language in harper-core is wired into every Cargo manifest.
 
-This script verifies that language features are consistently defined
-across all Cargo.toml files in the Harper project.
+The list of languages is *discovered*, not hard-coded: any directory under
+`harper-core/src/language/` that holds a `config.toml` with a `feature` key is a
+language, and every manifest below has to carry that feature. Adding a language
+therefore turns into a failing check that names the files still to edit, rather
+than into a silently half-wired build.
+
+English has no feature of its own — it is always compiled in — so it is skipped.
 """
 
-import os
 import sys
+import tomllib
 from pathlib import Path
 
-try:
-    import tomllib
-except ImportError:
-    import tomli as tomllib
+ROOT = Path(__file__).resolve().parent.parent
+CORE = ROOT / "harper-core/Cargo.toml"
+LANGUAGE_DIR = ROOT / "harper-core/src/language"
+
+# Crates that expose Harper to a user and therefore choose a language set.
+CONSUMERS = [
+    "harper-ls/Cargo.toml",
+    "harper-cli/Cargo.toml",
+    "harper-wasm/Cargo.toml",
+    "harper-desktop/src-tauri/Cargo.toml",
+]
 
 
-def find_cargo_toml_files(root_dir):
-    """Find all Cargo.toml files in the project."""
-    cargo_files = []
-    for root, dirs, files in os.walk(root_dir):
-        # Skip target directories
-        if 'target' in root:
-            continue
-        for file in files:
-            if file == 'Cargo.toml':
-                cargo_files.append(Path(root) / file)
-    return cargo_files
+def discover_features():
+    """Cargo feature name -> language directory name, for every language."""
+    found = {}
+    for config in sorted(LANGUAGE_DIR.glob("*/config.toml")):
+        data = tomllib.loads(config.read_text(encoding="utf-8"))
+        feature = data.get("language", {}).get("feature")
+        if feature:
+            found[feature] = config.parent.name
+    return found
 
 
-def extract_features(cargo_path):
-    """Extract feature definitions from a Cargo.toml file."""
-    features = {}
-    try:
-        with open(cargo_path, 'rb') as f:
-            content = f.read()
-        data = tomllib.loads(content.decode('utf-8'))
-        if 'features' in data:
-            # Handle both dict and list formats
-            features_data = data['features']
-            if isinstance(features_data, dict):
-                for feature_name, deps in features_data.items():
-                    # deps can be a list or None
-                    if deps is None:
-                        features[feature_name] = []
-                    elif isinstance(deps, list):
-                        features[feature_name] = deps
-                    else:
-                        features[feature_name] = []
-    except Exception as e:
-        print(f"Warning: Could not parse {cargo_path}: {e}")
-    
-    return features
+def features_of(manifest):
+    path = ROOT / manifest
+    if not path.exists():
+        return None
+    data = tomllib.loads(path.read_text(encoding="utf-8"))
+    return {
+        name: deps if isinstance(deps, list) else []
+        for name, deps in data.get("features", {}).items()
+    }
 
 
-def check_language_features(root_dir):
-    """Check that language features are consistently defined."""
-    cargo_files = find_cargo_toml_files(root_dir)
-    
-    if not cargo_files:
-        print("No Cargo.toml files found!")
-        return False
-    
-    print(f"Found {len(cargo_files)} Cargo.toml files")
-    print()
-    
-    # Collect all features from all files
-    all_features = {}
-    for cargo_path in cargo_files:
-        features = extract_features(cargo_path)
-        if features:
-            rel_path = str(cargo_path.relative_to(root_dir))
-            all_features[rel_path] = features
-            print(f"{rel_path}:")
-            for feat, deps in features.items():
-                print(f"  {feat} = {deps}")
-            print()
-    
-    # Check for language features
-    language_features = ['de', 'pt', 'sk', 'pl', 'multilingual', 'all-languages']
-    
+def check():
+    languages = discover_features()
+    if not languages:
+        return [f"No language config.toml found under {LANGUAGE_DIR}"]
+
     errors = []
-    warnings = []
-    
-    # Check harper-core features
-    core_features = all_features.get('harper-core/Cargo.toml', {})
-    if 'language-module' not in core_features:
-        errors.append("Feature 'language-module' not found in harper-core/Cargo.toml")
-    
-    for lang in ['de', 'pt', 'sk', 'pl']:
-        if lang not in core_features:
-            errors.append(f"Language feature '{lang}' not found in harper-core/Cargo.toml")
-        elif 'language-module' not in core_features[lang]:
+    core = features_of("harper-core/Cargo.toml")
+
+    if "language-module" not in core:
+        errors.append("harper-core: missing the 'language-module' feature")
+
+    for feature, directory in sorted(languages.items()):
+        if feature not in core:
             errors.append(
-                f"Feature '{lang}' in harper-core/Cargo.toml does not include 'language-module'"
+                f"harper-core: {directory} declares feature '{feature}', "
+                f"but Cargo.toml has no such feature"
             )
-    
-    if 'multilingual' not in core_features:
-        errors.append("Feature 'multilingual' not found in harper-core/Cargo.toml")
-    
-    if 'all-languages' not in core_features:
-        errors.append("Feature 'all-languages' not found in harper-core/Cargo.toml")
-    
-    # Check that multilingual includes all language features
-    if 'multilingual' in core_features:
-        multilingual_deps = core_features['multilingual']
-        for lang in ['de', 'pt', 'sk', 'pl']:
-            if lang not in multilingual_deps:
-                errors.append(f"Language '{lang}' not included in multilingual feature")
-    
-    # Check that all-languages includes multilingual
-    if 'all-languages' in core_features:
-        all_langs_deps = core_features['all-languages']
-        if 'multilingual' not in all_langs_deps:
-            errors.append("'multilingual' not included in all-languages feature")
-    
-    # Check consumer crates forward language features to harper-core.
-    # Consumers are optional, so missing features only produce warnings.
-    consumers = [
-        'harper-ls/Cargo.toml',
-        'harper-cli/Cargo.toml',
-        'harper-wasm/Cargo.toml',
-        'harper-desktop/src-tauri/Cargo.toml',
-    ]
-    for consumer in consumers:
-        features = all_features.get(consumer, {})
-        for lang in ['de', 'pt', 'sk', 'pl', 'multilingual']:
-            if lang not in features:
-                warnings.append(f"Feature '{lang}' not found in {consumer}")
-        if 'de' in features and 'harper-core/de' not in features['de']:
-            warnings.append(
-                f"Feature 'de' in {consumer} does not include 'harper-core/de'"
+        elif "language-module" not in core[feature]:
+            errors.append(
+                f"harper-core: feature '{feature}' must include 'language-module'"
             )
-    
-    if errors:
-        print("ERRORS:")
-        for error in errors:
-            print(f"  - {error}")
-        return False
-    else:
-        if warnings:
-            print("WARNINGS:")
-            for warning in warnings:
-                print(f"  - {warning}")
-            print()
-        print("✓ All language features are consistent!")
-        return True
+
+    for umbrella in ("multilingual", "all-languages"):
+        if umbrella not in core:
+            errors.append(f"harper-core: missing the '{umbrella}' feature")
+
+    if "multilingual" in core:
+        for feature in sorted(languages):
+            if feature not in core["multilingual"]:
+                errors.append(
+                    f"harper-core: '{feature}' is not part of the "
+                    f"'multilingual' feature"
+                )
+    if "all-languages" in core and "multilingual" not in core["all-languages"]:
+        errors.append("harper-core: 'all-languages' must include 'multilingual'")
+
+    for consumer in CONSUMERS:
+        features = features_of(consumer)
+        if features is None:
+            errors.append(f"{consumer}: not found")
+            continue
+        for feature in sorted(languages):
+            if feature not in features:
+                errors.append(f"{consumer}: missing feature '{feature}'")
+            elif f"harper-core/{feature}" not in features[feature]:
+                errors.append(
+                    f"{consumer}: feature '{feature}' must forward to "
+                    f"'harper-core/{feature}'"
+                )
+        if "multilingual" not in features:
+            errors.append(f"{consumer}: missing feature 'multilingual'")
+
+    return errors
 
 
 def main():
-    root_dir = Path(__file__).parent.parent
-    
-    if not check_language_features(root_dir):
+    languages = discover_features()
+    errors = check()
+
+    if errors:
+        print("Language feature wiring is incomplete:")
+        for error in errors:
+            print(f"  - {error}")
         sys.exit(1)
 
+    names = ", ".join(f"{d} ({f})" for f, d in sorted(languages.items()))
+    print(f"Language features consistent across {len(CONSUMERS) + 1} manifests.")
+    print(f"Optional languages: {names}")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

@@ -149,14 +149,17 @@ English linters read those, and where they cannot, they simply *back off*:
 `need_to_noun`, `oxford_comma`, `repeated_words` and others, which decline to
 fire rather than guess.
 
-**Neither signal is usable for German.** Both models are English-trained. They
-still run on German documents — `Document::parse` is language-agnostic — and
-produce almost all `None`, with the occasional outright error (`die` is tagged
-`VERB`, as in English *to die*). No German linter reads `pos_tag` or
-`np_member`, so this is wasted work rather than a source of bugs; making
-`Document::parse` skip the English models for non-English text would be a
-worthwhile performance fix, but it needs a language signal that `Document` does
-not currently have.
+**Neither signal is usable for German.** Both models are English-trained. On
+German they produce almost all `None`, with the occasional outright error (`die`
+is tagged `VERB`, as in English *to die*), and no German linter reads either.
+
+They used to run anyway, because `Document::parse` was language-agnostic, and
+they were the larger half of the cost of building a German document.
+`Parser::is_english` is now the signal that turns them off: `PlainGerman`
+answers `false`, and the Markdown and Org parsers the registry builds around it
+inherit that. On a 10,500-character article that takes `Document::new` from
+1.08 ms to 0.47 ms, and `pos_tag` keeps whatever `annotations.json` supplies for
+the word instead of being overwritten by an English guess.
 
 German therefore recovers the structure itself, in
 `german_noun_capitalization.rs`. It can afford to, because German noun phrases

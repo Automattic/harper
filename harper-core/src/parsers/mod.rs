@@ -23,6 +23,20 @@ use crate::{LSend, Token, TokenStringExt};
 #[cfg_attr(not(feature = "concurrent"), blanket(derive(Ref, Box, Rc)))]
 pub trait Parser: LSend {
     fn parse(&self, source: &[char]) -> Vec<Token>;
+
+    /// Whether the text this parser produces is English prose.
+    ///
+    /// [`Document`](crate::Document) runs the Brill part-of-speech tagger and
+    /// the neural noun-phrase chunker over every sentence it builds. Both are
+    /// trained on English alone, so on other languages they burn most of the
+    /// parse budget to produce tags that are absent or wrong. A parser that
+    /// answers `false` opts out of both.
+    ///
+    /// The default is `true`, so English and any parser written before this
+    /// existed keep their behaviour exactly.
+    fn is_english(&self) -> bool {
+        true
+    }
 }
 
 pub trait StrParser {
@@ -41,7 +55,7 @@ where
 
 #[cfg(test)]
 mod tests {
-    use super::{Markdown, OrgMode, Parser, PlainEnglish};
+    use super::{Markdown, MarkdownOptions, OrgMode, Parser, PlainEnglish};
     use crate::Punctuation;
     use crate::TokenKind::{self, *};
 
@@ -135,5 +149,52 @@ mod tests {
             "hello world",
             &[TokenKind::blank_word(), Space(1), TokenKind::blank_word()],
         );
+    }
+
+    /// Stands in for a language module's plain parser.
+    struct NotEnglish;
+
+    impl Parser for NotEnglish {
+        fn parse(&self, source: &[char]) -> Vec<crate::Token> {
+            PlainEnglish.parse(source)
+        }
+
+        fn is_english(&self) -> bool {
+            false
+        }
+    }
+
+    #[test]
+    fn english_is_the_default_answer() {
+        assert!(PlainEnglish.is_english());
+        assert!(Markdown::default().is_english());
+        assert!(OrgMode::default().is_english());
+    }
+
+    #[test]
+    fn markdown_and_org_take_the_language_of_their_inline_parser() {
+        let markdown =
+            Markdown::with_inline_parser(MarkdownOptions::default(), |s| NotEnglish.parse(s));
+        assert!(markdown.is_english());
+        assert!(!markdown.non_english().is_english());
+
+        let org = OrgMode::with_inline_parser(|s| NotEnglish.parse(s));
+        assert!(org.is_english());
+        assert!(!org.non_english().is_english());
+    }
+
+    /// Wrapping a parser changes what gets parsed, never which language it is
+    /// in, so the answer has to travel through the wrapper.
+    #[test]
+    fn wrapping_parsers_forward_the_language() {
+        use super::{Mask, OopsAllHeadings};
+        use crate::mask::RegexMasker;
+
+        assert!(!OopsAllHeadings::new(NotEnglish).is_english());
+        assert!(OopsAllHeadings::new(PlainEnglish).is_english());
+
+        let masker = || RegexMasker::new(".*", true).unwrap();
+        assert!(!Mask::new(masker(), NotEnglish).is_english());
+        assert!(Mask::new(masker(), PlainEnglish).is_english());
     }
 }
