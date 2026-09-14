@@ -1182,6 +1182,28 @@ mod tests {
     }
 
     #[test]
+    fn missing_space_preserves_uppercase_names() {
+        let group = test_linter();
+        for text in [
+            "Open report.PDF to read the results.",
+            "Visit WordPress.COM for details.",
+            "Remove the .DS_Store file before committing.",
+        ] {
+            for document in [
+                Document::new_plain_english_curated(text),
+                Document::new_markdown_default_curated(text),
+            ] {
+                let organized = group.run_with_inner(|l| l.organized_lints(&document));
+                assert_eq!(
+                    organized.get("MissingSpace").map(Vec::len),
+                    Some(0),
+                    "{text}"
+                );
+            }
+        }
+    }
+
+    #[test]
     fn corrects_extention() {
         let group = test_linter();
         let document = Document::new_plain_english_curated("I love this extention!");

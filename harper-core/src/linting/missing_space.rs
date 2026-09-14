@@ -26,13 +26,21 @@ impl Linter for MissingSpace {
             ]
             .contains(punct)
                 || !next.kind.is_word()
-                || (punct == &Punctuation::Period
-                    && !document
-                        .get_span_content(&next.span)
-                        .first()
-                        .is_some_and(|character| character.is_uppercase()))
             {
                 continue;
+            }
+
+            if punct == &Punctuation::Period {
+                let next_word = document.get_span_content(&next.span);
+                // All-caps suffixes can be filenames, domains, or dotfiles (PDF,
+                // COM, DS_Store). Prefer missing an ambiguous sentence boundary
+                // to inserting a space into a name. Single-letter words like I
+                // and A can still begin sentences.
+                if !next_word.first().is_some_and(|c| c.is_uppercase())
+                    || (next_word.len() > 1 && !next_word.iter().any(|c| c.is_lowercase()))
+                {
+                    continue;
+                }
             }
 
             let previous = document.get_token_offset(index, -1);
@@ -65,7 +73,11 @@ impl Linter for MissingSpace {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::Document;
+    use crate::linting::Linter;
+    use crate::linting::tests::{
+        assert_markdown_suggestion_result, assert_no_lints, assert_suggestion_result,
+    };
 
     use super::MissingSpace;
 
@@ -100,6 +112,59 @@ mod tests {
     #[test]
     fn allows_dotfiles() {
         assert_no_lints("Use the .harper file for configuration.", MissingSpace);
+    }
+
+    #[test]
+    fn allows_uppercase_names() {
+        for text in [
+            "Open report.PDF to read the results.",
+            "Open report.DOCX to edit the results.",
+            "The photograph is saved as holiday.JPEG.",
+            "Visit WordPress.COM for details.",
+            "Visit EXAMPLE.ORG for details.",
+            "Remove the .DS_Store file before committing.",
+        ] {
+            for document in [
+                Document::new_plain_english_curated(text),
+                Document::new_markdown_default_curated(text),
+            ] {
+                assert!(MissingSpace.lint(&document).is_empty(), "{text}");
+            }
+        }
+    }
+
+    #[test]
+    fn retains_sentence_spacing_corrections() {
+        for (text, expected) in [
+            (
+                "The door closed.I stayed outside.",
+                "The door closed. I stayed outside.",
+            ),
+            (
+                "The door closed.A key was missing.",
+                "The door closed. A key was missing.",
+            ),
+            (
+                "The door closed.I'm still outside.",
+                "The door closed. I'm still outside.",
+            ),
+            (
+                "The door closed .Once again, I was outside.",
+                "The door closed . Once again, I was outside.",
+            ),
+            ("Who called?NASA called.", "Who called? NASA called."),
+            (
+                "They called!NASA needs help.",
+                "They called! NASA needs help.",
+            ),
+            (
+                "They called;NASA needs help.",
+                "They called; NASA needs help.",
+            ),
+        ] {
+            assert_suggestion_result(text, MissingSpace, expected);
+            assert_markdown_suggestion_result(text, MissingSpace, expected);
+        }
     }
 
     #[test]
