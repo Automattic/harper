@@ -3925,6 +3925,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SleightOfHand",
+								"state": true,
+								"label": "Sleight Of Hand"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SomebodyElses",
 								"state": true,
 								"label": "Somebody Elses"
