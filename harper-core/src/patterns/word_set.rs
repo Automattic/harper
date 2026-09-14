@@ -32,11 +32,15 @@ impl WordSet {
     }
 
     /// Create a new word set that matches against any word in the provided list.
-    pub fn new(words: &[&'static str]) -> Self {
+    pub fn new<I, S>(words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         let mut set = Self::default();
 
         for str in words {
-            set.add(str);
+            set.add(str.as_ref());
         }
 
         set

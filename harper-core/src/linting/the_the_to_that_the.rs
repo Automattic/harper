@@ -11,7 +11,7 @@ pub struct TheTheToThatThe {
 impl Default for TheTheToThatThe {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "so", "fact", "found", "show", "say", "believe", "think", "said",
             ])
             .t_ws()

@@ -111,7 +111,11 @@ impl SequenceExpr {
     }
 
     /// Match any word from the given set of words, case-insensitive.
-    pub fn word_set(words: &'static [&'static str]) -> Self {
+    pub fn word_set<I, S>(words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         Self::default().then_word_set(words)
     }
 
@@ -210,12 +214,20 @@ impl SequenceExpr {
     }
 
     /// Pushes an expression that will match any word from the given set of words, case-insensitive.
-    pub fn then_word_set(self, words: &'static [&'static str]) -> Self {
+    pub fn then_word_set<I, S>(self, words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         self.then(WordSet::new(words))
     }
 
     /// Shorthand for [`Self::then_word_set`].
-    pub fn t_set(self, words: &'static [&'static str]) -> Self {
+    pub fn t_set<I, S>(self, words: I) -> Self
+    where
+        I: IntoIterator<Item = S>,
+        S: AsRef<str>,
+    {
         self.then_word_set(words)
     }
 
