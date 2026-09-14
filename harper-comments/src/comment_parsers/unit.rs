@@ -1,6 +1,8 @@
+use std::sync::atomic::{AtomicBool, Ordering};
+
 use harper_core::Lrc;
-use harper_core::parsers::{Markdown, MarkdownOptions, Parser};
-use harper_core::{Span, Token};
+use harper_core::Token;
+use harper_core::parsers::{LineClass, LineWise, Markdown, MarkdownOptions, Parser};
 
 use super::without_initiators;
 
@@ -27,58 +29,35 @@ impl Unit {
 
 impl Parser for Unit {
     fn parse(&self, source: &[char]) -> Vec<Token> {
-        let mut tokens = Vec::new();
+        // Tracks whether we're currently inside a fenced code block,
+        // toggled by `classify` as it walks the lines in order. Reset
+        // fresh on every `parse` call, since `AtomicBool` (rather than
+        // `Cell`) is needed only to satisfy `LineWise`'s `Send + Sync`
+        // bound - there's no real concurrency here.
+        let in_code_fence = AtomicBool::new(false);
 
-        let mut chars_traversed = 0;
-        let mut in_code_fence = false;
-
-        for line in source.split(|c| *c == '\n') {
+        let classify = move |line: &[char]| -> LineClass {
             if line_is_code_fence(line) {
-                in_code_fence = !in_code_fence;
+                in_code_fence.fetch_xor(true, Ordering::Relaxed);
             }
 
-            if in_code_fence {
-                chars_traversed += line.len() + 1;
-                continue;
+            if in_code_fence.load(Ordering::Relaxed) {
+                // Fully swallow lines inside (and the opening marker of)
+                // a fenced code block: no content, no separator token.
+                return LineClass::skip_silently();
             }
 
-            let mut new_tokens = parse_line(line, self.inner.clone());
+            let actual = without_initiators(line);
 
-            if chars_traversed + line.len() < source.len() {
-                new_tokens.push(Token::new(
-                    Span::new_with_len(line.len(), 1),
-                    harper_core::TokenKind::Newline(1),
-                ));
+            if actual.is_empty() {
+                return LineClass::skip();
             }
 
-            new_tokens
-                .iter_mut()
-                .for_each(|t| t.span.push_by(chars_traversed));
+            LineClass::parse(actual)
+        };
 
-            chars_traversed += line.len() + 1;
-            tokens.append(&mut new_tokens);
-        }
-
-        tokens
+        LineWise::new(self.inner.clone(), classify).parse(source)
     }
-}
-
-fn parse_line(source: &[char], parser: Lrc<dyn Parser>) -> Vec<Token> {
-    let actual = without_initiators(source);
-
-    if actual.is_empty() {
-        return Vec::new();
-    }
-
-    let source = actual.get_content(source);
-
-    let mut new_tokens = parser.parse(source);
-
-    new_tokens
-        .iter_mut()
-        .for_each(|t| t.span.push_by(actual.start));
-
-    new_tokens
 }
 
 fn line_is_code_fence(source: &[char]) -> bool {
