@@ -19,7 +19,7 @@ const UP_EXCEPTIONS: &[&str] = &["loading", "right", "state", "time", "trend"];
 impl<D: Dictionary> DisjointPrefixes<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 // These prefixes rarely cause false positives
                 "anti", "auto", "bi", "counter", "de", "dis", "extra", "fore", "hyper", "il", "im",
                 "inter", "ir", "macro", "mal", "micro", "mid", "mini", "mis", "mono", "multi",
@@ -42,7 +42,7 @@ impl<D: Dictionary> DisjointPrefixes<D> {
                 // No trailing hyphen. Ex: Custom patterns take precedence over built-in patterns -> overbuilt
                 Box::new(SequenceExpr::anything().t_any().t_any().then_hyphen()),
                 // Don't merge "co op" whether separated by space or hyphen.
-                Box::new(SequenceExpr::aco("co").t_any().t_set(&["op", "ops"])),
+                Box::new(SequenceExpr::aco("co").t_any().t_set(["op", "ops"])),
                 // Merge these if they're separated by hyphen, but not space.
                 Box::new(SequenceExpr::aco("out").t_ws().t_set(OUT_EXCEPTIONS)),
                 Box::new(SequenceExpr::aco("over").t_ws().t_set(OVER_EXCEPTIONS)),

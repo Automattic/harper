@@ -193,6 +193,7 @@ function button(
 			className: 'harper-btn',
 			style: extraStyle,
 			onclick: onClick,
+			onmousedown: (e: Event) => e.preventDefault(),
 			title: desc,
 			type: 'button',
 			'aria-label': desc,
@@ -546,8 +547,9 @@ export default function SuggestionBox(
 			body(box.lint.message_html),
 			footer(
 				suggestions(box.lint.lint_kind, box.lint.suggestions, (v) => {
-					box.applySuggestion(v);
-					close();
+					Promise.resolve(box.applySuggestion(v)).finally(() => {
+						close();
+					});
 				}),
 				[
 					box.lint.lint_kind === 'Spelling' && actions.addToUserDictionary

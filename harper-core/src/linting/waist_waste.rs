@@ -24,7 +24,7 @@ impl Default for WaistWaste {
                         .t_ws()
                         .then_word_seq(&["a", "waist", "of"]),
                 ),
-                Box::new(SequenceExpr::word_seq(&["waist", "of"]).t_ws().t_set(&[
+                Box::new(SequenceExpr::word_seq(&["waist", "of"]).t_ws().t_set([
                     "effort",
                     "money",
                     "resources",
@@ -32,7 +32,7 @@ impl Default for WaistWaste {
                     "time",
                 ])),
                 Box::new(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "complete",
                         "confusing",
                         "great",
@@ -51,7 +51,7 @@ impl Default for WaistWaste {
                         .then_possessive_determiner(),
                 ),
                 Box::new(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "definitely",
                         "just",
                         "mostly",

@@ -10,8 +10,9 @@ soft-clean:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  # Clean target + all harper-* directories as they all have a rust backend and build into target
+  # Clean both the root workspace and standalone Desktop build artifacts.
   cargo clean
+  (cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo clean)
 
   # Handle packages/*
 
@@ -43,6 +44,7 @@ hard-clean: soft-clean
 alias fmt := format
 format:
   cargo fmt
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo fmt
   pnpm format
 
 # Build the shared component library
@@ -183,7 +185,8 @@ dev-desktop-highlighter:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo run -p harper-desktop -- highlighter
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo run -- highlighter
 
 # Check Harper Desktop frontend and Rust targets.
 check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -193,9 +196,16 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm check
+  just check-desktop-rust
 
-  cd "{{justfile_directory()}}"
-  cargo check -p harper-desktop --all-targets
+# Check formatting and lint all standalone Desktop Rust targets.
+check-desktop-rust:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo fmt -- --check
+  cargo clippy --all-targets -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
@@ -469,6 +479,7 @@ check-rust: audit-dictionary
   cargo clippy -p harper-core --features multilingual --lib -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
+  just check-desktop-rust
 
   # Language module checks: feature consistency across manifests, per-language
   # test suites, the out-of-workspace testing framework, and the German coverage
@@ -546,6 +557,8 @@ test-rust:
   cargo test -q -p harper-core --features multilingual
   # Then test all other workspace members
   cargo test -q --workspace --exclude harper-core
+  # Harper Desktop is no longer a workspace member, so it needs its own run.
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
@@ -654,7 +667,8 @@ bump-versions: update-vscode-linters
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo ws version --no-git-push --no-git-tag --force '*'
+  # Include private workspace crates; standalone Desktop is updated below.
+  cargo ws version --all --no-git-push --no-git-tag --force '*'
 
   HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 
@@ -684,6 +698,10 @@ bump-versions: update-vscode-linters
   mv package.json.edited package.json
 
   cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  # Desktop is outside the workspace, so synchronize its crate and lockfile explicitly.
+  HARPER_VERSION="$HARPER_VERSION" perl -pi -e 's/^version = "[^"]+"$/version = "$ENV{HARPER_VERSION}"/' Cargo.toml
+  cargo update --workspace
 
   cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
   mv tauri.conf.json.edited tauri.conf.json

@@ -13,9 +13,9 @@ impl Default for NotOnlyInversion {
         Self {
             expr: SequenceExpr::word_seq(&["not", "only"])
                 .t_ws()
-                .then_word_set(&["I", "we", "you", "he", "she", "it", "they"])
+                .then_word_set(["I", "we", "you", "he", "she", "it", "they"])
                 .t_ws()
-                .then_word_set(&["am", "are", "is", "was", "were"]),
+                .then_word_set(["am", "are", "is", "was", "were"]),
         }
     }
 }

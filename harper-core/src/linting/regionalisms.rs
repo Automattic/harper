@@ -2,7 +2,7 @@ use crate::{
     Dialect::{self, American, Australian, British, Canadian, Indian},
     Token, TokenStringExt,
     expr::{Expr, FirstMatchOf, FixedPhrase},
-    linting::{Lint, LintKind, Suggestion},
+    linting::{Lint, LintKind, Suggestion, spell_check},
 };
 
 use super::ExprLinter;
@@ -746,7 +746,9 @@ impl ExprLinter for Regionalisms {
             lint_kind: LintKind::Regionalism,
             suggestions,
             message,
-            priority: 64,
+            // TODO is the priority below confusing the higher priority and higher number?
+            // TODO was 64 here vs 63 in spellcheck
+            priority: spell_check::SPELL_CHECK_PRIORITY + 1, // higher priority = lower number
         })
     }
 

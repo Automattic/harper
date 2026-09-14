@@ -17,24 +17,24 @@ impl Default for OnTheFence {
     fn default() -> Self {
         Self {
             expr: SequenceExpr::any_of([
-                Box::new(WordSet::new(&[
+                Box::new(WordSet::new([
                     // "it's" is intentionally omitted
                     "i'm", "we're", "you're", "he's", "she's", "they're",
                 ])) as Box<dyn Expr>,
-                Box::new(SequenceExpr::aco("i").t_ws().t_set(&["am", "was"])),
+                Box::new(SequenceExpr::aco("i").t_ws().t_set(["am", "was"])),
                 Box::new(
-                    SequenceExpr::word_set(&["we", "you", "they"])
+                    SequenceExpr::word_set(["we", "you", "they"])
                         .t_ws()
-                        .t_set(&["are", "were"]),
+                        .t_set(["are", "were"]),
                 ),
                 Box::new(
                     // "it" is intentionally omitted
-                    SequenceExpr::word_set(&["he", "she", "anybody", "anyone"])
+                    SequenceExpr::word_set(["he", "she", "anybody", "anyone"])
                         .t_ws()
-                        .t_set(&["is", "was"]),
+                        .t_set(["is", "was"]),
                 ),
             ])
-            .then_optional(SequenceExpr::whitespace().t_set(&["also", "still"]))
+            .then_optional(SequenceExpr::whitespace().t_set(["also", "still"]))
             .t_ws()
             .then_word_seq(&["on", "a", "fence"])
             .then_any_of([

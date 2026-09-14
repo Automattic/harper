@@ -14,7 +14,7 @@ impl Default for RedundantProgressiveComparative {
             expr: Box::new(
                 SequenceExpr::aco("increasingly")
                     .t_ws()
-                    .then_word_set(&["more", "less"])
+                    .then_word_set(["more", "less"])
                     .t_ws()
                     .then_kind_either(TokenKind::is_adjective, TokenKind::is_adverb),
             ),

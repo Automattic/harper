@@ -11,7 +11,7 @@ pub struct Ajar {
 impl Default for Ajar {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["door", "doors", "gate", "gates", "mouth", "slightly"])
+            expr: SequenceExpr::word_set(["door", "doors", "gate", "gates", "mouth", "slightly"])
                 .t_ws_h()
                 .t_aco("a")
                 .t_ws_h()
@@ -23,7 +23,7 @@ impl Default for Ajar {
                         .t_any()
                         .t_any()
                         .t_ws()
-                        .t_set(&["containing", "contains", "full", "of"]),
+                        .t_set(["containing", "contains", "full", "of"]),
                 ),
         }
     }

@@ -633,6 +633,80 @@ fn dont_fix_how_dose_false_positive() {
 }
 
 #[test]
+fn corrects_what_dose_a() {
+    assert_suggestion_result(
+        "What dose a business analyst do?",
+        test_linter(),
+        "What does a business analyst do?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_an() {
+    assert_suggestion_result(
+        "What dose an ear infection feel like?",
+        test_linter(),
+        "What does an ear infection feel like?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_it() {
+    assert_suggestion_result(
+        "What dose it mean when a cat wags its tail?",
+        test_linter(),
+        "What does it mean when a cat wags its tail?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_this() {
+    assert_suggestion_result(
+        "What dose this sign mean?",
+        test_linter(),
+        "What does this sign mean?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_that() {
+    assert_suggestion_result(
+        "What dose that mean?",
+        test_linter(),
+        "What does that mean?",
+    );
+}
+
+#[test]
+fn corrects_what_dose_the() {
+    assert_suggestion_result(
+        "What dose the term gaslighting mean",
+        test_linter(),
+        "What does the term gaslighting mean",
+    );
+}
+
+#[test]
+fn allows_what_dose_of() {
+    assert_lint_count("What dose of vitamin d should I take?", test_linter(), 0);
+}
+
+#[test]
+fn allows_what_dose_is() {
+    assert_lint_count("What dose is considered safe?", test_linter(), 0);
+}
+
+#[test]
+#[ignore = "false positive not yet detected"]
+fn dont_fix_what_dose_it_false_positive() {
+    assert_lint_count(
+        "I do not know what dose it takes to trip out, but I don't think I could stay awake to find out.",
+        test_linter(),
+        0,
+    );
+}
+
+#[test]
 fn corrects_when_dose() {
     assert_suggestion_result(
         "When dose reusebale variable sync between device? #2634",
