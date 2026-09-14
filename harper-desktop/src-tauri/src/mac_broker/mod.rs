@@ -10,7 +10,8 @@ mod window_stability;
 use accessibility::TreeWalker;
 use accessibility::ui_element::AXUIElement;
 use accessibility_sys::{
-    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXTrustedCheckOptionPrompt,
+    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXFocusedUIElementAttribute,
+    kAXTrustedCheckOptionPrompt,
 };
 use accessibility_sys::{error_string, pid_t};
 use core_foundation::base::TCFType;
@@ -42,6 +43,7 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
+use self::core_foundation_utilities::ax_element_attribute;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -92,7 +94,7 @@ impl MacBroker {
         }
     }
 
-    /// Check if the fronmost window for a given process is currently moving.
+    /// Check if the frontmost window for a given process is currently moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -348,7 +350,8 @@ impl OsBroker for MacBroker {
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
 
-        walker.walk(&el, &collector);
+        let focused = ax_element_attribute(&el, kAXFocusedUIElementAttribute).unwrap();
+        walker.walk(&focused, &collector);
 
         collector.unwrap_rects()
     }
