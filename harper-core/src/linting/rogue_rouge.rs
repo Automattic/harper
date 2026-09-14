@@ -41,7 +41,7 @@ impl Default for RogueRouge {
                 Box::new(
                     SequenceExpr::aco("rouge")
                         .then_hyphen()
-                        .t_set(&["like", "likes"]),
+                        .t_set(["like", "likes"]),
                 ),
             ]),
         }
