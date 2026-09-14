@@ -11,7 +11,7 @@ pub struct CeaseTo {
 impl Default for CeaseTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "seize", "seized", "seizes", "seizing", "sieze", "siezed", "siezes", "siezing",
             ])
             .t_ws()

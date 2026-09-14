@@ -1,0 +1,11 @@
+expr main (a lots)
+
+let message "Are you confusing `lot's` and `lots`? The contraction of `lot is` and `lot has` is `lot's`."
+let description "Corrects `a lots` to `a lot's`."
+let kind "Punctuation"
+let becomes "a lot's"
+
+# a lot has ...
+test "a lots changed overtime, add latest depends support" "a lot's changed overtime, add latest depends support"
+# a lot is ...
+test "A lots changing around here!" "A lot's changing around here!"
