@@ -394,4 +394,21 @@ mod tests {
     fn dont_flag_is_80_an_a_3715() {
         assert_no_lints("Is 80 an A in Malaysia?", AnA::new(Dialect::American));
     }
+
+    #[test]
+    fn dont_flag_an_npm_4139() {
+        assert_no_lints(
+            "Why lib/ or light-base/ alone forces an npm bump",
+            AnA::new(Dialect::American),
+        );
+    }
+
+    #[test]
+    fn correct_a_npm_4139() {
+        assert_suggestion_result(
+            "Why lib/ or light-base/ alone forces a npm bump",
+            AnA::new(Dialect::American),
+            "Why lib/ or light-base/ alone forces an npm bump",
+        );
+    }
 }

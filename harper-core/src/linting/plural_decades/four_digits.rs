@@ -90,6 +90,9 @@ pub fn match_to_lint_four_digits(
 
 #[cfg(test)]
 mod lints {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(PluralDecades, PluralDecades, PluralDecades::default());
     use super::super::PluralDecades;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
@@ -97,45 +100,33 @@ mod lints {
 
     #[test]
     fn eighties() {
-        assert_lint_count("in the 1980's", PluralDecades::default(), 1);
+        assert_lint_count("in the 1980's", test_linter(), 1);
     }
 
     #[test]
     #[ignore = "wip"]
     fn nineties() {
-        assert_lint_count("the 1990’s were a bit grungy", PluralDecades::default(), 1);
+        assert_lint_count("the 1990’s were a bit grungy", test_linter(), 1);
     }
 
     #[test]
     fn dont_flag_three_digits() {
-        assert_lint_count(
-            "200's doesn't look like a decade",
-            PluralDecades::default(),
-            0,
-        );
+        assert_lint_count("200's doesn't look like a decade", test_linter(), 0);
     }
 
     #[test]
     fn dont_flag_five_digits() {
-        assert_lint_count(
-            "20000's doesn't look like a decade",
-            PluralDecades::default(),
-            0,
-        );
+        assert_lint_count("20000's doesn't look like a decade", test_linter(), 0);
     }
 
     #[test]
     fn dont_flag_with_thousands_separator() {
-        assert_lint_count(
-            "Nobody says \"in the 1,950's\".",
-            PluralDecades::default(),
-            0,
-        );
+        assert_lint_count("Nobody says \"in the 1,950's\".", test_linter(), 0);
     }
 
     #[test]
     fn dont_flag_not_ending_with_0() {
-        assert_lint_count("1977's best month was October", PluralDecades::default(), 0);
+        assert_lint_count("1977's best month was October", test_linter(), 0);
     }
 
     // Real-world examples using sentences found on GitHub
@@ -148,7 +139,7 @@ mod lints {
     fn dont_flag_ambiguous_1900s_nppl() {
         assert_no_lints(
             "star and fork 1900's gists by creating an account on GitHub.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -157,7 +148,7 @@ mod lints {
     fn fix_in_1900s_npsg() {
         assert_suggestion_result(
             "Children Aged 0-4 in 1900's Norway.",
-            PluralDecades::default(),
+            test_linter(),
             "Children Aged 0-4 in 1900s Norway.",
         );
     }
@@ -167,7 +158,7 @@ mod lints {
     #[test]
     #[ignore = "Looks like a product name, not a decade"]
     fn ignore_hp_1910s() {
-        assert_no_lints("Add support for HP 1910's", PluralDecades::default());
+        assert_no_lints("Add support for HP 1910's", test_linter());
     }
 
     // 1920s (3 examples)
@@ -177,7 +168,7 @@ mod lints {
     fn fix_the_roaring_1920s() {
         assert_suggestion_result(
             "The \"Roaring 1920's\" wasn't just about the economy and technology.",
-            PluralDecades::default(),
+            test_linter(),
             "The \"Roaring 1920s\" wasn't just about the economy and technology.",
         );
     }
@@ -187,7 +178,7 @@ mod lints {
     fn fix_special_1920s_touch() {
         assert_suggestion_result(
             "It is beautiful and easily readable with that special 1920's touch.",
-            PluralDecades::default(),
+            test_linter(),
             "It is beautiful and easily readable with that special 1920s touch.",
         );
     }
@@ -196,7 +187,7 @@ mod lints {
     fn fix_in_the_1920s() {
         assert_suggestion_result(
             "Sir Josiah Stamp, president of the Bank of England and the second richest man in Britain in the 1920's, speaking at the University of Texas in 1927.",
-            PluralDecades::default(),
+            test_linter(),
             "Sir Josiah Stamp, president of the Bank of England and the second richest man in Britain in the 1920s, speaking at the University of Texas in 1927.",
         );
     }
@@ -208,7 +199,7 @@ mod lints {
     fn dont_flag_ambiguous_1950s_npsg() {
         assert_no_lints(
             "Simulator for 1950's MIT Whirlwind Computer.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -216,7 +207,7 @@ mod lints {
     fn fix_in_the_1950s() {
         assert_suggestion_result(
             "Using the sandbox on the right, write and execute a query to return people born in the 1950's (1950 - 1959)",
-            PluralDecades::default(),
+            test_linter(),
             "Using the sandbox on the right, write and execute a query to return people born in the 1950s (1950 - 1959)",
         );
     }
@@ -226,7 +217,7 @@ mod lints {
     fn fix_a_adj_1950s_npsg() {
         assert_suggestion_result(
             "Wave digital filter based emulation of a famous 1950's tube stereo limiter.",
-            PluralDecades::default(),
+            test_linter(),
             "Wave digital filter based emulation of a famous 1950s tube stereo limiter.",
         );
     }
@@ -236,7 +227,7 @@ mod lints {
     fn fix_1950s_npsg() {
         assert_suggestion_result(
             "1950's elevator randomly gets stuck",
-            PluralDecades::default(),
+            test_linter(),
             "1950s elevator randomly gets stuck",
         );
     }
@@ -246,7 +237,7 @@ mod lints {
     fn fix_from_1950s_npsg() {
         assert_suggestion_result(
             "documenting my family's camera business, from 1950's England, run by my father",
-            PluralDecades::default(),
+            test_linter(),
             "documenting my family's camera business, from 1950s England, run by my father",
         );
     }
@@ -255,7 +246,7 @@ mod lints {
     fn fix_from_1950() {
         assert_suggestion_result(
             "Plot the top ten most common baby names for New South Wales by year from the 1950's",
-            PluralDecades::default(),
+            test_linter(),
             "Plot the top ten most common baby names for New South Wales by year from the 1950s",
         );
     }
@@ -265,7 +256,7 @@ mod lints {
     fn fix_1950s_brick_built_house() {
         assert_suggestion_result(
             "We live in a 3 bedroom 1950's brick built house in the UK.",
-            PluralDecades::default(),
+            test_linter(),
             "We live in a 3 bedroom 1950s brick built house in the UK.",
         );
     }
@@ -277,7 +268,7 @@ mod lints {
     fn fix_a_adj_1960s_npsg() {
         assert_suggestion_result(
             "Emulating a rare 1960's educational computer.",
-            PluralDecades::default(),
+            test_linter(),
             "Emulating a rare 1960s educational computer.",
         );
     }
@@ -285,10 +276,7 @@ mod lints {
     #[test]
     #[ignore = "Ambiguous - could be referring to the specific year 1960 or the decade 1960s"]
     fn ignore_ambiguous_1960s_npsg() {
-        assert_no_lints(
-            "MyTheil - 1960's IP Sprint Hillarity.",
-            PluralDecades::default(),
-        );
+        assert_no_lints("MyTheil - 1960's IP Sprint Hillarity.", test_linter());
     }
 
     #[test]
@@ -296,7 +284,7 @@ mod lints {
     fn fix_1960s_npsg() {
         assert_suggestion_result(
             "Punchbag game inspired by 1960's TV Show Batman!",
-            PluralDecades::default(),
+            test_linter(),
             "Punchbag game inspired by 1960s TV Show Batman!",
         );
     }
@@ -306,7 +294,7 @@ mod lints {
     fn ignore_in_1960s_aperture() {
         assert_no_lints(
             "Several \"SP entrances\" in 1960's Aperture have visible nodraw around entrance door",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -317,7 +305,7 @@ mod lints {
     fn fix_1970s_npsg() {
         assert_suggestion_result(
             "1970's chess engine CHEKMO-II + UCI adapter.",
-            PluralDecades::default(),
+            test_linter(),
             "1970s chess engine CHEKMO-II + UCI adapter.",
         );
     }
@@ -327,7 +315,7 @@ mod lints {
     fn fix_vprog_1970s_nppl_dates() {
         assert_suggestion_result(
             "listsockets printing 1970's dates.",
-            PluralDecades::default(),
+            test_linter(),
             "listsockets printing 1970s dates.",
         );
     }
@@ -336,7 +324,7 @@ mod lints {
     fn fix_in_a_1970s_style_npsg() {
         assert_suggestion_result(
             "I tried to create some catwalk in a 1970's style level.",
-            PluralDecades::default(),
+            test_linter(),
             "I tried to create some catwalk in a 1970s style level.",
         );
     }
@@ -346,7 +334,7 @@ mod lints {
     fn fix_1970s_pong_game() {
         assert_suggestion_result(
             "1970's Pong game rewritten in C++.",
-            PluralDecades::default(),
+            test_linter(),
             "1970s Pong game rewritten in C++.",
         );
     }
@@ -356,7 +344,7 @@ mod lints {
     fn fix_1970s_in_parens() {
         assert_suggestion_result(
             "Convert a MIDI file to a record compatible with vintage (1970's) Fisher Price music box record players",
-            PluralDecades::default(),
+            test_linter(),
             "Convert a MIDI file to a record compatible with vintage (1970s) Fisher Price music box record players",
         );
     }
@@ -365,7 +353,7 @@ mod lints {
     fn fix_in_the_1970s() {
         assert_suggestion_result(
             "may have begun, depending on when you start counting, in the 1970's.",
-            PluralDecades::default(),
+            test_linter(),
             "may have begun, depending on when you start counting, in the 1970s.",
         );
     }
@@ -374,7 +362,7 @@ mod lints {
     fn ignore_username_hyphen_1970s_gists() {
         assert_no_lints(
             "GitHub Gist: star and fork ricardo-reis-1970's gists by creating an account on GitHub.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -383,7 +371,7 @@ mod lints {
     fn fix_after_1970s_nppl_minicomputers() {
         assert_suggestion_result(
             "I'm also working on extending it as my CPU is modelled after 1970's minicomputers",
-            PluralDecades::default(),
+            test_linter(),
             "I'm also working on extending it as my CPU is modelled after 1970s minicomputers",
         );
     }
@@ -392,7 +380,7 @@ mod lints {
     fn fix_of_the_1970s() {
         assert_suggestion_result(
             "I despise both as outdated, hard to use relics of the 1970's.",
-            PluralDecades::default(),
+            test_linter(),
             "I despise both as outdated, hard to use relics of the 1970s.",
         );
     }
@@ -401,7 +389,7 @@ mod lints {
     fn fix_couples_in_the_1970s() {
         assert_suggestion_result(
             "This visualization tracks a sample of couples in the 1970's to show how long they transition through relationship stages.",
-            PluralDecades::default(),
+            test_linter(),
             "This visualization tracks a sample of couples in the 1970s to show how long they transition through relationship stages.",
         );
     }
@@ -410,7 +398,7 @@ mod lints {
     fn fix_developed_in_early_1970s() {
         assert_suggestion_result(
             "GPS, originally developed in the early 1970's, is a unidirectional (broadcast only) system",
-            PluralDecades::default(),
+            test_linter(),
             "GPS, originally developed in the early 1970s, is a unidirectional (broadcast only) system",
         );
     }
@@ -421,7 +409,7 @@ mod lints {
     fn fix_from_the_1980s_like() {
         assert_suggestion_result(
             "Old Stern tables from the 1980's like Flight 2000, Catacomb, etc. are playing audio samples twice, it seems.",
-            PluralDecades::default(),
+            test_linter(),
             "Old Stern tables from the 1980s like Flight 2000, Catacomb, etc. are playing audio samples twice, it seems.",
         );
     }
@@ -431,7 +419,7 @@ mod lints {
     fn fix_its_the_1980s() {
         assert_suggestion_result(
             "Declarative Rapid Application Development like it's the 1980's again.",
-            PluralDecades::default(),
+            test_linter(),
             "Declarative Rapid Application Development like it's the 1980s again.",
         );
     }
@@ -440,7 +428,7 @@ mod lints {
     fn fix_from_the_1980s_end() {
         assert_suggestion_result(
             "Former countries from the 1980's",
-            PluralDecades::default(),
+            test_linter(),
             "Former countries from the 1980s",
         );
     }
@@ -450,7 +438,7 @@ mod lints {
     fn fix_a_1980s_npsg() {
         assert_suggestion_result(
             "A re-imiplementation of a classic 1980's DOS game, but in D.",
-            PluralDecades::default(),
+            test_linter(),
             "A re-imiplementation of a classic 1980s DOS game, but in D.",
         );
     }
@@ -459,7 +447,7 @@ mod lints {
     fn fix_of_the_1980s() {
         assert_suggestion_result(
             "The Pugputer is a little labor of love, made as a tribute to the early home computers of the 1980's.",
-            PluralDecades::default(),
+            test_linter(),
             "The Pugputer is a little labor of love, made as a tribute to the early home computers of the 1980s.",
         );
     }
@@ -468,7 +456,7 @@ mod lints {
     fn fix_of_the_1980s_npsg() {
         assert_suggestion_result(
             "FPGA implementation of the 1980's \"Music 5000\" wavetable synthesiser",
-            PluralDecades::default(),
+            test_linter(),
             "FPGA implementation of the 1980s \"Music 5000\" wavetable synthesiser",
         );
     }
@@ -477,7 +465,7 @@ mod lints {
     fn fix_based_off_of_the_1980s_npsg() {
         assert_suggestion_result(
             "Space Fortress is based off of the 1980's vector-based arcade game by Cinematronics called Star Castle.",
-            PluralDecades::default(),
+            test_linter(),
             "Space Fortress is based off of the 1980s vector-based arcade game by Cinematronics called Star Castle.",
         );
     }
@@ -487,7 +475,7 @@ mod lints {
     fn ignore_ambiguous_1980s() {
         assert_no_lints(
             "1980's Old aperture coop checkpoint uses the timer signage instead of checkmarks.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -496,7 +484,7 @@ mod lints {
     fn fix_1980s_nppl() {
         assert_suggestion_result(
             "A project resurrecting the classic 1980's Usborne Computer Guide books, for a new generation of programmers.",
-            PluralDecades::default(),
+            test_linter(),
             "A project resurrecting the classic 1980s Usborne Computer Guide books, for a new generation of programmers.",
         );
     }
@@ -506,7 +494,7 @@ mod lints {
     fn fix_the_end_of_missing_determiner_1980s() {
         assert_suggestion_result(
             "System software for TIM011, a school computer from the end of 1980's made in former Yugoslavia",
-            PluralDecades::default(),
+            test_linter(),
             "System software for TIM011, a school computer from the end of the 1980s made in former Yugoslavia",
         );
     }
@@ -515,7 +503,7 @@ mod lints {
     fn fix_in_the_1980s_for() {
         assert_suggestion_result(
             "HMSL was originally released in the 1980's for Mac Plus and Amiga",
-            PluralDecades::default(),
+            test_linter(),
             "HMSL was originally released in the 1980s for Mac Plus and Amiga",
         );
     }
@@ -525,7 +513,7 @@ mod lints {
     fn fix_the_adj_1980s_npsg() {
         assert_suggestion_result(
             "Modern remake of Pole Position, the classic 1980's arcade racing game from Atari.",
-            PluralDecades::default(),
+            test_linter(),
             "Modern remake of Pole Position, the classic 1980s arcade racing game from Atari.",
         );
     }
@@ -534,7 +522,7 @@ mod lints {
     fn fix_since_the_1980s() {
         assert_suggestion_result(
             "Since the 1980's the most common way to interact with a computer is via the graphical user interface (GUI)",
-            PluralDecades::default(),
+            test_linter(),
             "Since the 1980s the most common way to interact with a computer is via the graphical user interface (GUI)",
         );
     }
@@ -546,7 +534,7 @@ mod lints {
     fn fix_the_adj_1990s_npsg() {
         assert_suggestion_result(
             "42 3d Graphics Project, recreating the classic 1990's game Wolfienstien 3d",
-            PluralDecades::default(),
+            test_linter(),
             "42 3d Graphics Project, recreating the classic 1990s game Wolfienstien 3d",
         );
     }
@@ -556,7 +544,7 @@ mod lints {
     fn fix_a_1990s_npsg() {
         assert_suggestion_result(
             "A 1990's Retro linux-rice for Hyprland or Sway, based on Quickshell.",
-            PluralDecades::default(),
+            test_linter(),
             "A 1990s Retro linux-rice for Hyprland or Sway, based on Quickshell.",
         );
     }
@@ -566,7 +554,7 @@ mod lints {
     fn lacks_determiner_stuck_in_1990s() {
         assert_suggestion_result(
             "Docs are stuck in 1990's - need AWS or Azure example",
-            PluralDecades::default(),
+            test_linter(),
             "Docs are stuck in the 1990s - need AWS or Azure example",
         );
     }
@@ -576,7 +564,7 @@ mod lints {
     fn fix_the_1990s_npsg() {
         assert_suggestion_result(
             "This program recreates the 1990's arcade game \"Boulder Dash.\"",
-            PluralDecades::default(),
+            test_linter(),
             "This program recreates the 1990s arcade game \"Boulder Dash.\"",
         );
     }
@@ -585,7 +573,7 @@ mod lints {
     fn fix_in_the_1990s_comma() {
         assert_suggestion_result(
             "In the 1990's, Innovative Computer Solutions released multiple programs for the Newton MessagePad as shareware",
-            PluralDecades::default(),
+            test_linter(),
             "In the 1990s, Innovative Computer Solutions released multiple programs for the Newton MessagePad as shareware",
         );
     }
@@ -594,7 +582,7 @@ mod lints {
     fn fix_a_mid_1990s_npsg() {
         assert_suggestion_result(
             "This repository is a modernization of a mid 1990's implementation of the ZMODEM protocol called 'zmtx-zmrx'.",
-            PluralDecades::default(),
+            test_linter(),
             "This repository is a modernization of a mid 1990s implementation of the ZMODEM protocol called 'zmtx-zmrx'.",
         );
     }
@@ -604,7 +592,7 @@ mod lints {
     fn lacks_determiner_written_in_java_in_1990s() {
         assert_suggestion_result(
             "JMud, mud server written in Java in 1990's.",
-            PluralDecades::default(),
+            test_linter(),
             "JMud, mud server written in Java in the 1990s.",
         );
     }
@@ -614,7 +602,7 @@ mod lints {
     fn fix_a_adj_1990s_npsg() {
         assert_suggestion_result(
             "Port of a famous 1990's fighting game to MSX2.",
-            PluralDecades::default(),
+            test_linter(),
             "Port of a famous 1990s fighting game to MSX2.",
         );
     }
@@ -624,7 +612,7 @@ mod lints {
     fn fix_circa_1990s() {
         assert_suggestion_result(
             "Inspired by Digimon \"Digivices\" tamagotchis circa 1990's.",
-            PluralDecades::default(),
+            test_linter(),
             "Inspired by Digimon \"Digivices\" tamagotchis circa the 1990s.",
         );
     }
@@ -634,7 +622,7 @@ mod lints {
     fn fix_for_1990s_nppl() {
         assert_suggestion_result(
             "Daughter-board for reprogramming 1990's Toyota ECUs",
-            PluralDecades::default(),
+            test_linter(),
             "Daughter-board for reprogramming 1990s Toyota ECUs",
         );
     }
@@ -643,7 +631,7 @@ mod lints {
     fn fix_the_1990s_classic_mario_hit() {
         assert_suggestion_result(
             "A remake of the 1990's classic mario hit.",
-            PluralDecades::default(),
+            test_linter(),
             "A remake of the 1990s classic mario hit.",
         );
     }
@@ -652,7 +640,7 @@ mod lints {
     fn fix_developed_in_early_1990s() {
         assert_suggestion_result(
             "The code was originally developed in the early 1990's",
-            PluralDecades::default(),
+            test_linter(),
             "The code was originally developed in the early 1990s",
         );
     }
@@ -663,7 +651,7 @@ mod lints {
     fn fix_2000s_style() {
         assert_suggestion_result(
             "2000's-style media library for vintage cellphones (Nokia, etc.)",
-            PluralDecades::default(),
+            test_linter(),
             "2000s-style media library for vintage cellphones (Nokia, etc.)",
         );
     }
@@ -672,7 +660,7 @@ mod lints {
     fn ignore_fork_username_hyphen_2000s_nppl() {
         assert_no_lints(
             "star and fork vishal-2000's gists by creating an account on GitHub.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -680,7 +668,7 @@ mod lints {
     fn fix_in_the_2000s() {
         assert_suggestion_result(
             "Simulator engine for reproducing LCD games made by McDonald's in the 2000's.",
-            PluralDecades::default(),
+            test_linter(),
             "Simulator engine for reproducing LCD games made by McDonald's in the 2000s.",
         );
     }
@@ -690,24 +678,21 @@ mod lints {
     fn fix_in_the_early_2000s_missing_determiner() {
         assert_suggestion_result(
             "Silo was originally released in early 2000's using LLNL-home-grown license verbiage.",
-            PluralDecades::default(),
+            test_linter(),
             "Silo was originally released in the early 2000s using LLNL-home-grown license verbiage.",
         );
     }
 
     #[test]
     fn ignore_view_username_hyphen_2000s_npsg() {
-        assert_no_lints(
-            "View lxw-2000's full-sized avatar.",
-            PluralDecades::default(),
-        );
+        assert_no_lints("View lxw-2000's full-sized avatar.", test_linter());
     }
 
     #[test]
     fn fix_early_2000s_style_npsg() {
         assert_suggestion_result(
             "Early 2000's Style Personal Webpage.",
-            PluralDecades::default(),
+            test_linter(),
             "Early 2000s Style Personal Webpage.",
         );
     }
@@ -716,7 +701,7 @@ mod lints {
     fn fix_from_the_mid_2000s() {
         assert_suggestion_result(
             "Modeled after the now-defunct Geosense game from the mid 2000's",
-            PluralDecades::default(),
+            test_linter(),
             "Modeled after the now-defunct Geosense game from the mid 2000s",
         );
     }
@@ -725,7 +710,7 @@ mod lints {
     fn fix_for_the_early_2000s_games() {
         assert_suggestion_result(
             "GothicKit is a community-run organization hosting libraries and tools for the early 2000's games Gothic and Gothic II.",
-            PluralDecades::default(),
+            test_linter(),
             "GothicKit is a community-run organization hosting libraries and tools for the early 2000s games Gothic and Gothic II.",
         );
     }
@@ -734,7 +719,7 @@ mod lints {
     fn fix_back_in_the_2000s() {
         assert_suggestion_result(
             "A basic music player/organizer I created back in the 2000's - carderne/CAMO.",
-            PluralDecades::default(),
+            test_linter(),
             "A basic music player/organizer I created back in the 2000s - carderne/CAMO.",
         );
     }
@@ -743,7 +728,7 @@ mod lints {
     fn fix_mid_2000s() {
         assert_suggestion_result(
             "Things I wrote about RDF from the mid-2000's.",
-            PluralDecades::default(),
+            test_linter(),
             "Things I wrote about RDF from the mid-2000s.",
         );
     }
@@ -755,7 +740,7 @@ mod lints {
     fn ignore_author_2010s_publication_reference() {
         assert_no_lints(
             "CLDF version of Sinnemäki 2010's dataset on zero marking and word order",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -764,7 +749,7 @@ mod lints {
     fn ignore_bazel_calls_vs_2010s_cl() {
         assert_no_lints(
             "Bazel calls VS 2010's cl with /DEBUG:FASTLINK",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -772,7 +757,7 @@ mod lints {
     fn fix_since_the_early_2010s() {
         assert_suggestion_result(
             "the degree of drop-off of CouchDB online community activity since the early-2010's NoSQL craze faded",
-            PluralDecades::default(),
+            test_linter(),
             "the degree of drop-off of CouchDB online community activity since the early-2010s NoSQL craze faded",
         );
     }
@@ -781,7 +766,7 @@ mod lints {
     fn fix_blog_posts_of_the_2010s() {
         assert_suggestion_result(
             "It's jumped off the esoteric analytics blog posts of the 2010's and on to your television screens and into your video games",
-            PluralDecades::default(),
+            test_linter(),
             "It's jumped off the esoteric analytics blog posts of the 2010s and on to your television screens and into your video games",
         );
     }
@@ -793,7 +778,7 @@ mod lints {
     fn ignore_ambiguous_2020s() {
         assert_no_lints(
             "This is a bot for Legends of Code and Magic submitted to the IEEE CEC 2020's Strategy Card Game AI Competition.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -802,7 +787,7 @@ mod lints {
     fn ignore_ambiguous_2020s_2() {
         assert_no_lints(
             "CSSPI Fall 2020's frontend mobile web application utilizing React Native.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -811,7 +796,7 @@ mod lints {
     fn ignore_ambiguous_2020s_2024s() {
         assert_no_lints(
             "App that converts MSFS 2020's DDS texture format to MSFS 2024's KTX2 format",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -820,17 +805,14 @@ mod lints {
     fn ignore_erum_2020s() {
         assert_no_lints(
             "A repository for purposes of eRum 2020's workshop \"Image processing and computer vision with R\", held on Saturday, June 20, 2020.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
     #[test]
     #[ignore = "Ambiguous. Not sure what it means"]
     fn ignore_ambiguous_2020s_3() {
-        assert_no_lints(
-            "Crashing upon loading saved game in 2020's",
-            PluralDecades::default(),
-        );
+        assert_no_lints("Crashing upon loading saved game in 2020's", test_linter());
     }
 
     #[test]
@@ -838,31 +820,25 @@ mod lints {
     fn ignore_defcon_2020s_event() {
         assert_no_lints(
             "Reimplementation of DEF CON 2020's Pinboool Binary - pinboool.py.",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn ignore_username_hyphen_2020s_avatar() {
-        assert_no_lints(
-            "View theredpill-2020's full-sized avatar.",
-            PluralDecades::default(),
-        );
+        assert_no_lints("View theredpill-2020's full-sized avatar.", test_linter());
     }
 
     #[test]
     #[ignore = "Ambiguous. Not sure what it means"]
     fn ignore_ambiguous_2020s_scipy() {
-        assert_no_lints(
-            "No imread() in 2020's Scipy v1.5.x.",
-            PluralDecades::default(),
-        );
+        assert_no_lints("No imread() in 2020's Scipy v1.5.x.", test_linter());
     }
 
     #[test]
     #[ignore = "ambiguous"]
     fn ignore_pull_into_2020s() {
-        assert_no_lints("Pull into the 2020's.", PluralDecades::default());
+        assert_no_lints("Pull into the 2020's.", test_linter());
     }
 
     #[test]
@@ -870,7 +846,7 @@ mod lints {
     fn ignore_blasas_et_al_2020s() {
         assert_no_lints(
             "Scripts that were used to create figure 5 in Blasas et al. 2020's \"FUT9-driven programming of colon cancer cells towards a stem cell-like state\"",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -880,7 +856,7 @@ mod lints {
     fn fix_in_the_1990s_and_the_2000s() {
         assert_suggestion_result(
             "NTXShape, a converter I developed in the 1990's and maintained through the 2000's",
-            PluralDecades::default(),
+            test_linter(),
             "NTXShape, a converter I developed in the 1990s and maintained through the 2000s",
         );
     }
@@ -889,7 +865,7 @@ mod lints {
     fn fix_early_2000s_early_1990s_early_1980s() {
         assert_suggestion_result(
             "CDISC since 2005, XML since the early 2000's, @SAS since the early 1990's, Programming since the early 1980's.",
-            PluralDecades::default(),
+            test_linter(),
             "CDISC since 2005, XML since the early 2000s, @SAS since the early 1990s, Programming since the early 1980s.",
         );
     }
@@ -899,7 +875,7 @@ mod lints {
     fn fix_dates_in_the_1960s_comma_1950s_early_1900s() {
         assert_suggestion_result(
             "OK for dates in the 1960's, 1950's... Now... I expect 1939-12-31T23 ... Was Belgium ever not in UTC+1 timezone in early 1900's ?",
-            PluralDecades::default(),
+            test_linter(),
             "OK for dates in the 1960s, 1950s... Now... I expect 1939-12-31T23 ... Was Belgium ever not in UTC+1 timezone in early 1900s ?",
         );
     }
@@ -908,7 +884,7 @@ mod lints {
     fn fix_late_1970s_early_1980s() {
         assert_suggestion_result(
             "Late 1970's/Early 1980's Text Adventure Game from the Mainframe era",
-            PluralDecades::default(),
+            test_linter(),
             "Late 1970s/Early 1980s Text Adventure Game from the Mainframe era",
         );
     }
@@ -917,7 +893,7 @@ mod lints {
     fn fix_in_the_1970s_and_early_1980s() {
         assert_suggestion_result(
             "We modeled the gas mileage of 398 cars built in the 1970's and early 1980's",
-            PluralDecades::default(),
+            test_linter(),
             "We modeled the gas mileage of 398 cars built in the 1970s and early 1980s",
         );
     }
@@ -926,7 +902,7 @@ mod lints {
     fn fix_from_the_late_1970s_early_1980s() {
         assert_suggestion_result(
             "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970's / early 1980's.",
-            PluralDecades::default(),
+            test_linter(),
             "Europe Card Bus (ECB) is a Retro CPU Bus standard from the late 1970s / early 1980s.",
         );
     }
@@ -936,7 +912,7 @@ mod lints {
     fn ignore_on_80s_on_90s_on_2000s_on_2010s_on_2020s() {
         assert_no_lints(
             "Developer on 80's, software engineer on 90's, tech lead on 2000's, manager from 2010's on and CIO/CDO/CTO on 2020's",
-            PluralDecades::default(),
+            test_linter(),
         );
     }
 
@@ -945,7 +921,7 @@ mod lints {
     fn fix_in_the_80s_in_the_90s_2000s_2010s() {
         assert_suggestion_result(
             "UUCP BBS in the 80's Winternet / ABX Net Un Hacking in the 90's FOU 2000's CIS Inc. 2010's For Every Hacker there is an Equal and Opposite Hacker.",
-            PluralDecades::default(),
+            test_linter(),
             "UUCP BBS in the 80s Winternet / ABX Net Un Hacking in the 90s FOU 2000s CIS Inc. 2010s For Every Hacker there is an Equal and Opposite Hacker.",
         );
     }
@@ -955,7 +931,7 @@ mod lints {
     fn fix_in_the_1990s_and_2000s() {
         assert_suggestion_result(
             "Edelman and his colleagues in the 1990's and 2000's.",
-            PluralDecades::default(),
+            test_linter(),
             "Edelman and his colleagues in the 1990s and 2000s.",
         );
     }
@@ -965,7 +941,7 @@ mod lints {
     fn fix_1930s_ampersand_1940s() {
         assert_suggestion_result(
             "DJ and collector of quality tango music from the golden era (1930's & 1940's)",
-            PluralDecades::default(),
+            test_linter(),
             "DJ and collector of quality tango music from the golden era (1930s & 1940s)",
         );
     }
@@ -975,7 +951,7 @@ mod lints {
     fn fix_80s_90s_2000s_2020s() {
         assert_suggestion_result(
             "Nerdy coder-kid on ZX81 and Oric 1 in the 80's, nerdy teen-tech writer on PC in 90's, nerdy engineer in the 2000's, 2020's MongoDB addict, Databricks fan now!",
-            PluralDecades::default(),
+            test_linter(),
             "Nerdy coder-kid on ZX81 and Oric 1 in the 80s, nerdy teen-tech writer on PC in 90s, nerdy engineer in the 2000s, 2020s MongoDB addict, Databricks fan now!",
         );
     }

@@ -282,7 +282,9 @@ These configs are under the `markdown` key:
 | C#                  |           `csharp`            |            ✅ |
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
+| Elixir              |            `elixir`           |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |

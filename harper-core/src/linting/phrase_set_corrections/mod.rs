@@ -3,7 +3,9 @@ use crate::linting::LintKind;
 use super::{LintGroup, MapPhraseSetLinter};
 
 #[cfg(test)]
-mod tests;
+mod many_to_many_tests;
+#[cfg(test)]
+mod one_to_one_tests;
 
 /// Produce a [`LintGroup`] that looks for errors in sets of common phrases.
 pub fn lint_group() -> LintGroup {
@@ -111,6 +113,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects extraneous apostrophe in `client's side` and `server's side`.",
             LintKind::Punctuation
         ),
+        "Combinate" => (
+            &[
+                ("combinate", "combine"),
+                ("combinated", "combined"),
+                ("combinating", "combining"),
+                ("combinates", "combines"),
+            ],
+            "Did you mean `combine` rather than the nonstandard `combinate`?",
+            "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
+            LintKind::Nonstandard
+        ),
         "CompulseToCompel" => (
             &[
                 ("compulse", "compel"),
@@ -187,6 +200,12 @@ pub fn lint_group() -> LintGroup {
                 ("someone dose", "someone does"),
                 // Interrogatives
                 ("how dose", "how does"),
+                ("what dose a", "what does a"),
+                ("what dose an", "what does an"),
+                ("what dose it", "what does it"),
+                ("what dose this", "what does this"),
+                ("what dose that", "what does that"),
+                ("what dose the", "what does the"),
                 ("when dose", "when does"),
                 ("where dose", "where does"),
                 ("who dose", "who does"),
@@ -571,6 +590,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects the eggcorn `piggy bag` to `piggyback`, which is the proper term for riding on someone’s back or using an existing system.",
             LintKind::Eggcorn
         ),
+        "Provocate" => (
+            &[
+                ("provocate", "provoke"),
+                ("provocated", "provoked"),
+                ("provocates", "provokes"),
+                ("provocating", "provoking"),
+            ],
+            "Did you mean `provoke`?",
+            "Corrects the misspelling `provocate` to `provoke`.",
+            LintKind::WordChoice
+        ),
         // Redundant degree modifiers on positives (double positives) → base form
         "RedundantSuperlatives" => (
             &[
@@ -655,6 +685,18 @@ pub fn lint_group() -> LintGroup {
             "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`.",
             LintKind::Grammar
         ),
+        "TakeControlOf" => (
+            &[
+                ("take control over", "take control of"),
+                ("taken control over", "taken control of"),
+                ("takes control over", "takes control of"),
+                ("taking control over", "taking control of"),
+                ("took control over", "took control of"),
+            ],
+            "Use `take control of` instead of `take control over`.",
+            "Corrects `take control over` to `take control of`.",
+            LintKind::Usage
+        ),
         "UseToUsedTo" => (
             &[
                 // "be" verbs + "use to" -> "used to" (accustomed to)
@@ -737,6 +779,33 @@ pub fn lint_group() -> LintGroup {
             "Suggests using either `await` or `wait for` but not both, as they express the same meaning.",
             LintKind::Redundancy
         ),
+        "BackhandedCompliment" => (
+            &[
+                (&["backhand compliment", "back-hand compliment", "back hand compliment"], &["backhanded compliment"]),
+                (&["backhand compliments", "back-hand compliments", "back hand compliments"], &["backhanded compliments"]),
+            ],
+            "The correct spelling is `backhanded`.",
+            "Corrects `backhand compliment` to `backhanded compliment`.",
+            LintKind::Spelling
+        ),
+        "BainBane" => (
+            &[
+                (&["bain of my existence","bain of my existance"], &["bane of my existence"]),
+                (&["bain of our existence","bain of our existance"], &["bane of our existence"]),
+                (&["bain of your existence","bain of your existance"], &["bane of your existence"]),
+                (&["bain of his existence","bain of his existance"], &["bane of his existence"]),
+                (&["bain of her existence","bain of her existance"], &["bane of her existence"]),
+                (&["bain of its existence","bain of its existance"], &["bane of its existence"]),
+                (&["bain of their existence","bain of their existance"], &["bane of their existence"]),
+                (&["bane marie"], &["bain marie"]),
+                (&["bane-marie"], &["bain-marie"]),
+                (&["bane maries", "banes marie"], &["bains marie", "bain maries"]),
+                (&["bane-maries", "banes-marie"], &["bains-marie", "bain-maries"]),
+            ],
+            "Don't confuse `bane` (source of misery) with `bain` in `bain-marie` (double boiler).",
+            "Detects mixing up `bain` and `bane`.",
+            LintKind::Spelling
+        ),
         "CommitmentTo" => (
             &[
                 (&["commitment toward", "commitment towards"], &["commitment to"]),
@@ -756,15 +825,6 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `copyright`? `Copywrite` means to write copy (advertising text), while `copyright` is the legal right to control use of creative works.",
             "Corrects `copywrite` to `copyright`. `Copywrite` refers to writing copy, while `copyright` is the legal right to creative works.",
             LintKind::WordChoice
-        ),
-        "Payed" => (
-            &[
-                (&["payed"], &["paid"]),
-                (&["overpayed"], &["overpaid"]),
-            ],
-            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
-            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
-            LintKind::Spelling
         ),
         "DateBackFrom" => (
             &[
@@ -854,6 +914,21 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "Hijack" => (
+            &[
+                // "hi jack" would result in false positives
+                (&["hi-jack", "high jack", "high-jack"], &["hijack"]),
+                (&["hi jacked", "hi-jacked", "high jacked", "high-jacked"], &["hijacked"]),
+                (&["hi jacker", "hi-jacker", "high jacker", "high-jacker"], &["hijacker"]),
+                (&["hi jackers", "hi-jackers", "high jackers", "high-jackers"], &["hijackers"]),
+                (&["hi jacking", "hi-jacking", "high jacking", "high-jacking"], &["hijacking"]),
+                (&["hi jackings", "hi-jackings", "high jackings", "high-jackings"], &["hijackings"]),
+                (&["hi jacks", "hi-jacks", "high jacks", "high-jacks"], &["hijacks"]),
+            ],
+            "The correct spelling is `hijack`.",
+            "Corrects misspellings of `hijack`.",
+            LintKind::Spelling
+        ),
         "HolyWar" => (
             &[
                 (&["holey war", "holly war"], &["holy war"]),
@@ -891,6 +966,15 @@ pub fn lint_group() -> LintGroup {
             "For multiple levels, pluralize `level` instead of `detail`. `Detail` remains singular whether one or multiple levels.",
             "Corrects `level of details` to `level of detail` or `levels of detail`.",
             LintKind::Usage
+        ),
+        "Lookalike" => (
+            &[
+                (&["look-a-like"], &["lookalike", "look-alike"]),
+                (&["look-a-likes"], &["lookalikes", "look-alikes"])
+            ],
+            "Use `look alike` or `look-alike` instead of `look-a-like`.",
+            "Corrects `look-a-like` to `look alike` or `look-alike`.",
+            LintKind::Spelling
         ),
         "MakeItSeem" => (
             &[
@@ -945,6 +1029,46 @@ pub fn lint_group() -> LintGroup {
             "Use `nowadays` instead of common misspellings.",
             "Corrects common misspellings of `nowadays`.",
             LintKind::Usage
+        ),
+        "Payed" => (
+            &[
+                (&["payed"], &["paid"]),
+                (&["overpayed"], &["overpaid"]),
+            ],
+            "Use `paid` or `overpaid` here. `Payed` is a rare nautical spelling.",
+            "Corrects `payed` to `paid` and `overpayed` to `overpaid`.",
+            LintKind::Spelling
+        ),
+        "PlayAFactor" => (
+            &[
+                // singular
+                (&["play a factor"], &["play a part", "play a role", "be a factor", "are a factor", "am a factor"]),
+                (&["plays a factor"], &["plays a part", "plays a role", "is a factor"]),
+                (&["played a factor"], &["played a part", "played a role", "was a factor", "were a factor", "were factors", "been a factor"]),
+                (&["playing a factor"], &["playing a part", "playing a role", "a factor","being a factor"]),
+                // plural - NOTE some lead to more false positives than true errors
+                (&["played factors"], &["played parts", "played roles", "played a part", "played a role", "were a factor", "were factors"]),
+            ],
+            "Use `play a part` or `be a factor` instead of `play a factor`.",
+            "Corrects `play a factor` to `play a part` or `be a factor`.",
+            LintKind::Usage
+        ),
+        "ReverseEngineer" => (
+            &[
+                // The past tense ending is put on 'reverse' instead of 'engineer'
+                // But sometimes it's just '-ed' on every tense
+                (&["reversed engineer"], &["reverse engineered", "reverse engineer"]),
+                (&["reversed-engineer"], &["reverse-engineered", "reverse-engineer"]),
+                (&["reversed engineered"], &["reverse engineered"]),
+                (&["reversed-engineered"], &["reverse-engineered"]),
+                (&["reversed engineering"], &["reverse engineering"]),
+                (&["reversed-engineering"], &["reverse-engineering"]),
+                (&["reversed engineers"], &["reverse engineers"]),
+                (&["reversed-engineers"], &["reverse-engineers"]),
+            ],
+            "The correct term is `reverse engineer`.",
+            "Corrects `reversed engineer` to `reverse engineer`.",
+            LintKind::Grammar
         ),
         "RiseTheQuestion" => (
             &[
@@ -1060,15 +1184,6 @@ pub fn lint_group() -> LintGroup {
             "`Worse` is for comparing and `worst` is for the extreme case.",
             "Corrects `worse` and `worst` used in contexts where the other belongs.",
             LintKind::Agreement
-        ),
-        "ToTo" => (
-            &[
-                (&["to to"], &["to do"]),
-                (&["to-to"], &["to-do"]),
-            ],
-            "Did you mean to write `do` instead of a second `to`?",
-            "Corrects `to to` to `to do` and `to-to` to `to-do`, as they may be typos.",
-            LintKind::Typo
         ),
     });
 

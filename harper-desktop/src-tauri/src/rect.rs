@@ -18,6 +18,22 @@ impl Rect {
             height,
         }
     }
+
+    /// Constructs a copy of the Rect, with the given amount of padding around the original.
+    pub fn with_padding(&self, n: f64) -> Self {
+        Self {
+            x: self.x - n,
+            y: self.y - n,
+            width: self.width + 2.0 * n,
+            height: self.height + 2.0 * n,
+        }
+    }
+
+    /// Similar to [`Self::with_padding`], but preconfigured to a value that is forgiving to the
+    /// user.
+    pub fn with_friendly_padding(&self) -> Self {
+        self.with_padding(2.0)
+    }
 }
 
 #[derive(Debug, Clone, Copy, PartialEq)]

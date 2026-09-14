@@ -15,17 +15,17 @@ impl Default for AndTheLike {
             expr: All::new(vec![
                 Box::new(
                     // All known variants seen in the wild, good and bad
-                    SequenceExpr::word_set(&["and", "or", "an"])
+                    SequenceExpr::word_set(["and", "or", "an"])
                         .t_ws()
                         .then_optional(SequenceExpr::aco("the").t_ws())
-                        .then_word_set(&["alike", "alikes", "like", "likes"]),
+                        .then_word_set(["alike", "alikes", "like", "likes"]),
                 ),
                 Box::new(SequenceExpr::unless(
-                    SequenceExpr::word_set(&["and", "or"]).t_ws().then_any_of([
+                    SequenceExpr::word_set(["and", "or"]).t_ws().then_any_of([
                         // But not the correct variants
                         Box::new(FixedPhrase::from_phrase("the like")) as Box<dyn Expr>,
                         // And not the phrases that were coincidentally caught in the net
-                        Box::new(WordSet::new(&["like", "likes"])),
+                        Box::new(WordSet::new(["like", "likes"])),
                     ]),
                 )),
             ]),
