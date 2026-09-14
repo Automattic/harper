@@ -24,7 +24,7 @@ where
     pub fn new(dict: D) -> Self {
         Self {
             expr: Box::new(
-                SequenceExpr::word_set(&["will", "shall"])
+                SequenceExpr::word_set(["will", "shall"])
                     .t_ws()
                     .then_kind_where(|kind| {
                         kind.is_verb()

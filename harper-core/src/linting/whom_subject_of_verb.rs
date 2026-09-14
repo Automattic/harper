@@ -12,7 +12,7 @@ pub struct WhomSubjectOfVerb {
 impl Default for WhomSubjectOfVerb {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["whom", "whomever", "whomsoever"])
+            expr: SequenceExpr::word_set(["whom", "whomever", "whomsoever"])
                 .t_ws()
                 .then_any_of([
                     Box::new(SequenceExpr::default().then_kind_where(|k| {

@@ -28,7 +28,7 @@ pub struct NounCountability {
 
 impl Default for NounCountability {
     fn default() -> Self {
-        let quantifier = WordSet::new(&[
+        let quantifier = WordSet::new([
             "another", "both", "each", "every", "few", "fewer", "many", "multiple", "one",
             "several",
         ]);
