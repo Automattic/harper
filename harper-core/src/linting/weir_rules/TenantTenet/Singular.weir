@@ -1,0 +1,33 @@
+# Singular form of the rule; see the plural file for the reasoning.
+expr principle [core, central, fundamental, basic, guiding, cardinal, underlying, foundational, defining]
+expr place [building, mall, tower, complex, center, centre, property, estate, park, plaza, campus, facility, development, block, house, site, premises, office, floor, space, unit, airport, hotel, stadium, arena, shopping]
+expr main <(@principle tenant of !(DET @place)), tenant>
+
+let message "Did you mean `tenet`? A `tenant` rents a place; a `tenet` is a principle."
+let description "Flags `tenant` where `tenet` (a principle) is meant, after adjectives such as `core` or `fundamental`."
+let kind "Malapropism"
+let becomes "tenet"
+let strategy "MatchCase"
+
+test "This is a core tenant of good design." "This is a core tenet of good design."
+test "Simplicity is a fundamental tenant of the project." "Simplicity is a fundamental tenet of the project."
+test "That is the central tenant of the new security model." "That is the central tenet of the new security model."
+test "The fact that you understood this core tenant of React is great." "The fact that you understood this core tenet of React is great."
+test "Multi-site management is a core tenant of the product." "Multi-site management is a core tenet of the product."
+test "It opposed the basic tenant of classicism." "It opposed the basic tenet of classicism."
+test "Universal restoration was a core tenant of her beliefs." "Universal restoration was a core tenet of her beliefs."
+test "Am I misunderstanding some core tenant of the design?" "Am I misunderstanding some core tenet of the design?"
+test "That's the core tenant of the open source movement!" "That's the core tenet of the open source movement!"
+test "A CORE TENANT OF OUR WORK IS TRUST." "A CORE TENET OF OUR WORK IS TRUST."
+
+allows "The core tenant isolation logic lives here."
+allows "Our fundamental tenant model uses row-level security."
+allows "The basic tenant configuration is in config.yaml."
+allows "The fundamental tenant in this application is a Company."
+allows "For many years its core tenant was a hotel of more than 100 rooms."
+allows "Create the core tenant and membership schema."
+allows "Whether 5 x 16-core tenant nodes fit on one physical node."
+allows "The main tenant of the building left last year."
+allows "The department store entered as core tenant, competing with its neighbours."
+allows "Requests fall back to the core tenant holder."
+allows "The core tenant of the tower is a law firm."
