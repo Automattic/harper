@@ -132,7 +132,8 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
             lint_kind: LintKind::Grammar,
             suggestions,
             message,
-            ..Default::default()
+            // higher priority (lower number) than split words
+            priority: 30,
         })
     }
 
@@ -144,18 +145,31 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        Dialect,
+        linting::{
+            LintGroup,
+            tests::{assert_lint_count, assert_suggestion_result},
+        },
         spell::FstDictionary,
     };
 
     use super::MassPlurals;
 
     #[test]
-    fn flag_advicess() {
-        assert_lint_count(
+    fn fix_bad_advices() {
+        assert_suggestion_result(
             "You gave me bad advices.",
             MassPlurals::new(FstDictionary::curated()),
-            1,
+            "You gave me bad advice.",
+        );
+    }
+
+    #[test]
+    fn fix_kind_of_advices() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            LintGroup::new_curated(FstDictionary::curated(), Dialect::American),
+            "IMO these kind of advice never matters.",
         );
     }
 

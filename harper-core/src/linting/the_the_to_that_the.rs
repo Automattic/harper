@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
     expr::{Expr, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, repeated_words},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct TheTheToThatThe {
@@ -40,7 +40,8 @@ impl ExprLinter for TheTheToThatThe {
                 .map(|s| Suggestion::replace_with_match_case_str(s, ch))
                 .collect(),
             message: "Did you mean `that the` or just `the`?".to_owned(),
-            priority: repeated_words::REPEATED_WORDS_PRIORITY - 2, // Higher priority (lower number) than `RepeatedWords`
+            // Higher priority (lower number) than `RepeatedWords`
+            priority: 126,
         })
     }
 

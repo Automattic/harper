@@ -1378,4 +1378,13 @@ mod tests {
             }
         }
     }
+
+    #[test]
+    fn spellcheck_beats_split_words_for_advices_4346() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            test_linter(),
+            "IMO these kind of advice never matters.",
+        );
+    }
 }

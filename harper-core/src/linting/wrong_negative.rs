@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token,
     expr::Expr,
-    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk, spell_check},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
@@ -78,7 +78,8 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
             }
             .to_string(),
             suggestions,
-            priority: spell_check::SPELL_CHECK_PRIORITY - 1, // higher priority (lower number) than spell check
+            // higher priority (lower number) than spell check
+            priority: 62,
         })
     }
 
