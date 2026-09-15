@@ -232,9 +232,9 @@ fn check_roman_group<I: Iterator<Item = char>>(
 
 #[cfg(test)]
 mod tests {
+    use super::OrthFlags;
     use crate::CharString;
     use crate::dict_word_metadata::tests::md;
-    use crate::dict_word_metadata_orthography::OrthFlags;
 
     fn orth_flags(s: &str) -> OrthFlags {
         let letters: CharString = s.chars().collect();
