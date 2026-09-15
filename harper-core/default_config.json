@@ -5013,6 +5013,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InBetterShape",
+								"state": true,
+								"label": "In Better Shape"
+							}
+						},
+						{
+							"Bool": {
 								"name": "IncidentReport",
 								"state": true,
 								"label": "Incident Report"
