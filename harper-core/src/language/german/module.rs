@@ -1,0 +1,102 @@
+//! German language module implementation of LanguageModule trait.
+
+use std::sync::Arc;
+
+use crate::language::german::dialects::GermanDialect;
+use crate::language::german::language_detection::GermanDetector;
+use crate::language::german::linting::{new_curated_german, weir_rules};
+use crate::language::german::parsers::PlainGerman;
+
+use crate::linting::LintGroup;
+use crate::parsers::Parser;
+use crate::spell::Dictionary;
+
+use crate::language::module::LanguageModule;
+
+/// German language module implementing the LanguageModule trait.
+pub struct GermanModule;
+
+impl LanguageModule for GermanModule {
+    type Dialect = GermanDialect;
+    type Detector = GermanDetector;
+
+    fn default_dialect() -> Self::Dialect {
+        GermanDialect::default()
+    }
+
+    fn detector() -> Self::Detector {
+        GermanDetector
+    }
+
+    fn plain_parser() -> impl Parser + 'static {
+        PlainGerman
+    }
+
+    fn dictionary() -> Arc<dyn Dictionary> {
+        // Use compound-aware dictionary for German which provides comprehensive word coverage
+        // with lazy compound checking to avoid memory explosion from pre-generating all compounds
+        use crate::language::german::spell::compound_aware_german_dictionary;
+        compound_aware_german_dictionary()
+    }
+
+    fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
+        use crate::language::german::linting::{
+            german_absolute_superlative::GermanAbsoluteSuperlative,
+            german_adjective_agreement::GermanAdjectiveAgreement,
+            german_case_usage::GermanCaseUsage, german_filler_words::GermanFillerWords,
+            german_noun_capitalization::GermanNounCapitalization,
+            german_noun_declension::GermanNounDeclension,
+            german_pronoun_agreement::GermanPronounAgreement,
+            german_sentence_capitalization::GermanSentenceCapitalization,
+            german_spell_check::GermanSpellCheck,
+            german_subject_verb_agreement::GermanSubjectVerbAgreement,
+            german_wider_wieder::GermanWiderWieder,
+        };
+
+        let mut group = LintGroup::empty();
+        group.add(
+            "GermanSpellCheck",
+            GermanSpellCheck::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanAdjectiveAgreement",
+            GermanAdjectiveAgreement::new(dictionary.clone()),
+        );
+        group.add("GermanCaseUsage", GermanCaseUsage::new(dictionary.clone()));
+        group.add(
+            "GermanNounDeclension",
+            GermanNounDeclension::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanPronounAgreement",
+            GermanPronounAgreement::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanSubjectVerbAgreement",
+            GermanSubjectVerbAgreement::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanNounCapitalization",
+            GermanNounCapitalization::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanSentenceCapitalization",
+            GermanSentenceCapitalization::new(dictionary.clone()),
+        );
+        group.add("GermanFillerWords", GermanFillerWords::default());
+        group.add("GermanWiderWieder", GermanWiderWieder);
+        group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
+        group
+    }
+
+    fn weir_lint_group() -> LintGroup {
+        weir_rules::lint_group()
+    }
+
+    fn curated_lint_group(
+        dialect: Self::Dialect,
+        dictionary: Arc<impl Dictionary + 'static>,
+    ) -> LintGroup {
+        new_curated_german(dialect, dictionary)
+    }
+}

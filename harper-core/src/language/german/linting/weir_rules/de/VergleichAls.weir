@@ -1,0 +1,25 @@
+# A comparative takes "als", not "wie": "größer als", never "größer wie".
+# "wie" is only correct with the positive degree ("so groß wie").
+#
+# Weir rules are chunk-scoped, so a "wie" that opens its own clause after a
+# comma ("ein besserer Spieler, wie man sieht") is already out of reach.
+expr komparativ [größer, grösser, kleiner, besser, schlechter, schöner, schoener, älter, aelter, jünger, juenger, höher, hoeher, niedriger, tiefer, breiter, schmaler, länger, laenger, kürzer, kuerzer, schneller, langsamer, stärker, staerker, schwächer, schwaecher, weiter, näher, naeher, teurer, billiger, reicher, ärmer, aermer, dicker, dünner, duenner, härter, haerter, weicher, wärmer, waermer, kälter, kaelter, heller, dunkler, lauter, leiser, mehr, weniger, lieber, eher, anders]
+
+expr main <(@komparativ wie), wie>
+
+let message "Nach einem Komparativ steht »als«, nicht »wie«."
+let description "Ersetzt »wie« nach einem Komparativ durch »als« (»größer als«, nicht »größer wie«)."
+let kind "Grammar"
+let becomes "als"
+let strategy "MatchCase"
+
+test "Er ist größer wie sein Bruder." "Er ist größer als sein Bruder."
+test "Das war besser wie erwartet." "Das war besser als erwartet."
+test "Sie hat mehr wie genug Zeit." "Sie hat mehr als genug Zeit."
+test "Das Haus ist älter wie die Kirche." "Das Haus ist älter als die Kirche."
+test "Ich bleibe lieber wie dass ich gehe." "Ich bleibe lieber als dass ich gehe."
+
+allows "Er ist so groß wie sein Bruder."
+allows "Das sieht aus wie immer."
+allows "Sie ist größer als ihr Bruder."
+allows "Wie geht es dir?"
