@@ -806,7 +806,7 @@ mod tests {
         let mut linter = Linter::new(Dialect::American);
 
         linter.import_words(vec![text.clone()]);
-        dbg!(linter.dictionary.get_word_metadata_str(&text));
+        dbg!(linter.dictionary.get_word_str(&text).collect::<Vec<_>>());
 
         let lints = linter.lint(text, Language::Plain, false, None, true, false);
         assert!(lints.is_empty());
