@@ -5,13 +5,14 @@ use crate::{
     spell::Dictionary,
 };
 
-const NEGATIVE_PREFIXES: &[&str] = &["anti", "de", "dis", "dys", "il", "im", "in", "non", "un"];
+pub const NEGATIVE_PREFIXES: &[&str] = &["anti", "de", "dis", "dys", "il", "im", "in", "non", "un"];
 
 fn looks_negative_but_oov(token: &Token, source: &[char]) -> bool {
     token.kind.is_oov()
         && token
             .get_ch(source)
             .starts_with_any_ignore_ascii_case_str(NEGATIVE_PREFIXES)
+        && !token.get_ch(source).eq_ch(&['d', 'e', 'f', 'o'])
 }
 
 pub struct WrongNegative<D: Dictionary + 'static> {
@@ -95,7 +96,10 @@ mod tests {
     use crate::{
         Dialect,
         document::Document,
-        linting::{LintGroup, Linter, spell_check, tests::assert_suggestion_result},
+        linting::{
+            LintGroup, Linter, spell_check,
+            tests::{assert_no_lints, assert_suggestion_result},
+        },
         remove_overlaps,
         spell::FstDictionary,
     };
@@ -165,6 +169,14 @@ mod tests {
         assert_eq!(
             lints[0].message,
             "Could this be the negative word you intended?"
+        );
+    }
+
+    #[test]
+    fn dont_flag_defo() {
+        assert_no_lints(
+            "I defo used MSVC back then too",
+            WrongNegative::new(FstDictionary::curated()),
         );
     }
 }
