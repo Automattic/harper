@@ -551,15 +551,17 @@ async function handleOpenReportError(
 }
 
 async function handlePostFormData(req: PostFormDataRequest): Promise<PostFormDataResponse> {
-	const formData = new FormData();
-	for (const [key, value] of Object.entries(req.formData)) {
-		formData.append(key, value);
-	}
-
 	try {
+		// Sent as JSON rather than multipart/form-data: the server runs on SvelteKit,
+		// whose built-in CSRF protection rejects cross-origin form-content-type POSTs
+		// (form-urlencoded/multipart/text-plain) unless the origin is on a static
+		// allowlist. Firefox's moz-extension:// origin is randomized per install, so
+		// no such allowlist entry can ever cover it; JSON isn't a form content type,
+		// so it isn't subject to that check.
 		const response = await fetch(req.url, {
 			method: 'POST',
-			body: formData,
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify(req.formData),
 		});
 
 		return { kind: 'postFormData', success: response.ok };
