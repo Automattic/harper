@@ -3,7 +3,6 @@ use std::time::{Duration, Instant};
 use winit::application::ApplicationHandler;
 use winit::event::{ElementState, MouseButton, WindowEvent};
 use winit::event_loop::{ActiveEventLoop, ControlFlow, EventLoop};
-use winit::monitor::MonitorHandle;
 #[cfg(target_os = "macos")]
 use winit::platform::macos::{ActivationPolicy, EventLoopBuilderExtMacOS};
 use winit::window::WindowId;
@@ -18,7 +17,6 @@ use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
 
-const DEFAULT_READ_INTERVAL: Duration = Duration::from_nanos(16_666_667);
 const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
@@ -95,9 +93,8 @@ impl WindowManager {
             },
         );
 
-        self.event_loop.set_control_flow(ControlFlow::WaitUntil(
-            Instant::now() + DEFAULT_READ_INTERVAL,
-        ));
+        // Run continuously without a read timer; VSync presentation provides backpressure.
+        self.event_loop.set_control_flow(ControlFlow::Poll);
         let result = self.event_loop.run_app(&mut app);
 
         if let Some(error) = app.error {
@@ -114,8 +111,6 @@ struct WindowManagerApp {
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
-    read_interval: Duration,
-    last_read: Instant,
     last_config_poll: Instant,
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
@@ -132,7 +127,6 @@ impl WindowManagerApp {
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
     ) -> Self {
-        let read_interval = DEFAULT_READ_INTERVAL;
         Self {
             context,
             windows: Vec::new(),
@@ -144,8 +138,6 @@ impl WindowManagerApp {
             ),
             os_broker,
             lint_text: callbacks.lint_text,
-            read_interval,
-            last_read: Instant::now() - read_interval,
             last_config_poll: Instant::now(),
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
@@ -221,21 +213,11 @@ impl WindowManagerApp {
     }
 }
 
-fn monitor_refresh_interval(monitor: &MonitorHandle) -> Option<Duration> {
-    monitor
-        .refresh_rate_millihertz()
-        .filter(|refresh_rate| *refresh_rate > 0)
-        .map(|refresh_rate| Duration::from_nanos(1_000_000_000_000 / u64::from(refresh_rate)))
-}
-
 impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
 
-        if now.duration_since(self.last_read) >= self.read_interval {
-            self.read_rect_updates();
-            self.last_read = now;
-        }
+        self.read_rect_updates();
 
         if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
@@ -243,10 +225,6 @@ impl ApplicationHandler for WindowManagerApp {
         }
 
         self.update_cursor_hittest(event_loop);
-
-        let next_read = self.last_read + self.read_interval;
-        let next_config_poll = self.last_config_poll + CONFIG_POLL_INTERVAL;
-        event_loop.set_control_flow(ControlFlow::WaitUntil(next_read.min(next_config_poll)));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
@@ -255,10 +233,6 @@ impl ApplicationHandler for WindowManagerApp {
         }
 
         let monitors = event_loop.available_monitors().collect::<Vec<_>>();
-
-        if let Some(refresh_interval) = monitors.iter().filter_map(monitor_refresh_interval).min() {
-            self.read_interval = refresh_interval;
-        }
 
         for monitor in monitors {
             match pollster::block_on(Window::new(event_loop, monitor, self.context.clone())) {
