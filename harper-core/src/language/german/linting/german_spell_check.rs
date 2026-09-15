@@ -257,6 +257,44 @@ fn score_german_candidate(misspelled: &[char], candidate: &[char], edit_distance
     score
 }
 
+/// The longest run of letters still read as an initialism rather than a word.
+///
+/// Five covers the abbreviations German prose actually uses unspaced — ISBN,
+/// GmbH, DDR, SPD, ZDF, UNHCR — while leaving a genuinely misspelled word set
+/// in capitals ("HAUTPBAHNHOF") to the spell checker.
+const MAX_INITIALISM_LEN: usize = 5;
+
+/// Characters a Roman numeral is built from.
+const ROMAN_DIGITS: &[char] = &['I', 'V', 'X', 'L', 'C', 'D', 'M'];
+
+/// Returns true for tokens that are not German words at all, and so have no
+/// business being measured against a German dictionary.
+///
+/// Encyclopedic prose is full of these — "Ludwig XIV.", "S. 11", "ISBN", "5 m",
+/// "der FC Bayern" — and every one of them was previously reported as a
+/// misspelling, usually with an absurd suggestion ("II" → "in"). They account
+/// for a large share of the spelling lints on the German Wikipedia corpus.
+fn is_non_lexical_token(word: &[char]) -> bool {
+    // A single letter is an initial, a variable, or a unit ("A. Müller", "5 m").
+    if word.len() == 1 && word[0].is_alphabetic() {
+        return true;
+    }
+
+    // Anything with a digit in it is an identifier, not a word ("O2", "S12").
+    if word.iter().any(char::is_ascii_digit) {
+        return true;
+    }
+
+    // Roman numerals: regnal numbers, centuries, volume numbers. Checked before
+    // the length cap so "XVIII" and "MCMLXXXIV" are covered too.
+    if word.iter().all(|c| ROMAN_DIGITS.contains(c)) {
+        return true;
+    }
+
+    // Initialisms and acronyms.
+    word.len() <= MAX_INITIALISM_LEN && word.iter().all(|c| c.is_uppercase())
+}
+
 /// A spell checker for German text with compound word handling.
 pub struct GermanSpellCheck<T>
 where
@@ -424,6 +462,11 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
             for sentence in paragraph.iter_sentences() {
                 for word in sentence.iter_words() {
                     let word_chars = document.get_span_content(&word.span);
+
+                    // Skip initialisms, Roman numerals and single letters.
+                    if is_non_lexical_token(word_chars) {
+                        continue;
+                    }
 
                     // Skip words in dictionary
                     if self.dictionary.contains_word(word_chars) {

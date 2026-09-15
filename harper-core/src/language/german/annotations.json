@@ -607,9 +607,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "enden",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "enden",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "enden",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "enden",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -624,9 +654,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "te",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "te",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -643,9 +703,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "ten",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -662,9 +752,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "e",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "e",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "e",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "e",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -679,9 +799,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "st",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "st",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -694,9 +844,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "t",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "t",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],
@@ -709,9 +889,39 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "en",
+					"add": "en",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "n",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "n",
+					"condition": "eln"
+				},
+				{
 					"remove": "",
 					"add": "en",
-					"condition": "."
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^n]"
 				}
 			],
 			"target": [],

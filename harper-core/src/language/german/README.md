@@ -13,27 +13,41 @@ This approach is consistent with other languages like Portuguese and Slovak, usi
 ### What the dictionary costs
 
 Both files are `include_str!`-ed into the binary, exactly as the English
-dictionary is, so nothing is read from disk at runtime. Compiling German in adds
-about 5 MB to a release binary.
+dictionary is, so nothing is read from disk at runtime. Compiling German in grows
+a release binary by roughly the on-disk size of `dictionary.dict`.
 
 Everything after that is lazy. The word list is parsed and the affixes expanded
 on the first German lookup and never before, so an English-only run of a binary
-that has German compiled in pays nothing: `harper-cli lint` on 526 KB of English
-takes the same 10.0 s and the same 288 MB peak either way.
+that has German compiled in pays nothing — same wall time, same peak RSS, with or
+without `de`.
 
-The German side is not cheap, because expanding the affixes yields a little over
-a million entries against English's 135 thousand:
+The German side is not cheap. Affix expansion yields close to an order of
+magnitude more entries than English, and building them takes a couple of seconds
+and several hundred megabytes on first use. That cost is paid once per process.
 
-| First German lookup | |
-|---|---|
-| time | 1.7 s |
-| resident afterwards | 509 MB |
-| peak while building | 707 MB |
+Two consequences worth keeping in mind when touching `german_dict.rs`:
 
-Keep that in mind when touching `german_dict.rs`. The entries are large enough
-that a single stray copy of the dictionary is hundreds of megabytes, so the
-accessors there all share one of three `LazyLock`s and none of them builds
-anything.
+- Entries are numerous enough that **a single stray copy of the dictionary costs
+  hundreds of megabytes**. The accessors there are all `Arc` clones of one of
+  three `LazyLock`s, and none of them builds anything. Keep it that way, and use
+  `FstDictionary::as_mutable()` rather than converting, which copies.
+- `harper-cli` must not force `FstDictionary::curated()` before dispatching, or a
+  German lint loads the English dictionary it never consults.
+
+Linting German is *faster per byte* than English, because the Brill tagger and
+the neural chunker are skipped (see "Resolving part-of-speech ambiguity" below).
+
+To measure any of this rather than trust a number written down here:
+
+```bash
+just language-coverage german     # entry count, coverage, affix efficiency
+/usr/bin/time -f '%e s  %M KB peak' \
+    target/release/harper-cli lint --dialect de --quiet <file>
+```
+
+`/usr/bin/time -f %M` reports *peak* RSS. For the steady-state figure read
+`VmRSS` from `/proc/self/status`; the two differ by a wide margin here, so always
+say which one a number is.
 
 ### Noun Capitalization
 
@@ -60,6 +74,104 @@ The `annotations.json` file contains:
 - **Affix Rules**: Generate inflected forms from base words
 - **Properties**: Map POS flags to metadata (e.g., `N` → noun, `V` → verb)
 - **Morphological Patterns**: German-specific word formation
+
+#### Verb affixes build on the stem, whatever the entry looks like
+
+The conjugation affixes — `d` (-te), `e` (-ten), `f` (-e), `h` (-st), `i` (-t),
+`j` (-en), `c` (-enden) — attach to the verb **stem**: `lern` + `te`. But the
+dictionary stores most verbs as the **infinitive** (`lernen`, `wandern`,
+`sammeln`), and only a minority as the bare stem (`spiel/~~Vej`).
+
+Each of those rules therefore carries seven mutually exclusive, exhaustive
+replacements keyed on the end of the base:
+
+| base ends in | example | strip | stem |
+|---|---|---|---|
+| `en` | `studieren`, `sparen` | `en` | `studier`, `spar` |
+| `ern` | `wandern` | `n` | `wander` |
+| `eln` | `sammeln` | `n` | `sammel` |
+| anything else | `spiel`, `abtrockn` | — | unchanged |
+
+The remaining three patterns (`[^erl]n`, `[^e]rn`, `[^e]ln`) exist only to keep
+the "anything else" case from overlapping the first three: `Matcher` is
+fixed-length and end-anchored with no alternation, so one pattern cannot express
+"ends in n but not in en/ern/eln".
+
+`j` is the exception to the table: for `-ern`/`-eln` verbs the plural and the
+infinitive *are* the base (`wir wandern`), so it puts the `n` back.
+
+Before this, every affix simply appended to the entry, so the infinitive-shaped
+entries — the large majority — generated `studierenten` and `lernente` while
+`studierte` and `lernte` were reported as misspellings.
+
+A verb reading (`V`) does **not** imply conjugation: the forms only exist if the
+entry also carries `d`/`f`/`i`/`j`. `scripts/add_german_verb_conjugation_flags.py`
+adds the conventional `dfij` set to infinitives that carry `V` and nothing else.
+It deliberately skips entries that are already an inflected form (`brachte`,
+`berätst` — conjugating those yields `brachtete`) and hand-audited noun plurals
+mistagged `V` (`bären`, `kosten`).
+
+#### Rules that do not fire
+
+`k`, `l`, `m` and `n` (past participles) have conditions such as
+`(be|er|ver|zer|ent|emp|miss)[^t]` and `ge[^t]`. `Matcher` has no alternation or
+anchoring: it reads `(`, `b`, `e`, `|` … as literal characters and matches only
+against the **end** of the word. Those four rules are consequently dead or
+nonsense, and hardly any entry carries them. Participles are covered by explicit
+dictionary entries instead (`gelernt`, `geschrieben`). The same is true of the
+derivational suffixes `B`/`C`/`D`/`F`/`G` (`-heit`, `-keit`, `-ung`, `-chen`,
+`-lein`): `-ung` nouns are listed explicitly rather than derived.
+
+Do not assume a flag in `annotations.json` is productive. Count its users first:
+
+```bash
+just language-stats german
+grep -c '^[^#]*/[^ #]*D' dictionary.dict   # entries carrying the -ung flag
+```
+
+## The linters
+
+`module.rs` registers the Rust linters; the Weir rules are discovered from
+`linting/weir_rules/de/*.weir` by `build.rs`, which also generates one test per
+rule from its own `test` and `allows` lines. **Adding a `.weir` file is the whole
+edit** — no registration, no test module.
+
+Two of the Rust linters cover mix-ups the spell checker structurally cannot see,
+because the compound splitter reads the wrong spelling as a legal compound:
+
+| Linter | Catches | Why spell check misses it |
+|---|---|---|
+| `german_wider_wieder.rs` | `wiederspiegeln` → `widerspiegeln`, `widerholen` → `wiederholen` | splits as `wieder` + `spiegeln`; both are words |
+| `german_absolute_superlative.rs` | `einzigste` → `einzige` | the affix rules generate the superlative productively |
+
+Both consult closed stem lists only. `wider`/`wieder` is genuinely ambiguous for
+most stems (`widerhallen` and `wiederholen` are both correct), so anything not on
+a list is left alone.
+
+The Weir rules cover fixed misspellings in the same category — `garnicht`,
+`aufjedenfall`, `desweiteren`, `Vorraus`, `Standart` (read as `Stand` + `Art`),
+`Addresse`, `nähmlich`, `wiederrum` — plus `VergleichAls.weir`, which rewrites
+`wie` to `als` after a comparative.
+
+Two Weir traps worth knowing:
+
+- Word matching is **case-insensitive**, so a rule for `des weiteren` also fires
+  on the correct `des Weiteren`. Only match the unambiguous closed-up spelling.
+- `MatchCase` copies the source token's case onto the whole replacement, so a
+  one-token source such as `aufjedenfall` would produce `auf jeden fall`. Use
+  `Exact` whenever the replacement contains a word that must stay capitalised.
+
+### Tokens that are not words
+
+`GermanSpellCheck` skips single letters, tokens containing a digit, Roman
+numerals, and all-caps runs of up to five letters before it consults the
+dictionary. Encyclopedic German is full of these — "Ludwig XIV.", "S. 11",
+"ISBN", "der FC Bayern", "5 m" — and each one used to be reported, often with an
+absurd suggestion (`II` → `in`). On the `.archive` corpus they were the single
+largest class of false positive.
+
+The five-letter cap is what keeps a genuinely misspelled word set in capitals
+from being waved through.
 
 ## Development Guide
 
@@ -127,16 +239,16 @@ once per process; no Rust change is needed.
 Three lists remain in `german_noun_capitalization.rs` on purpose, because they
 are closed grammatical classes the linter reasons over rather than vocabulary:
 
-- `GERMAN_NON_NOUNS` — function words the dictionary actively mistags (94 of the
-  265 currently carry a noun flag), so the dictionary cannot be the source of
-  truth for them yet.
+- `GERMAN_NON_NOUNS` — function words the dictionary actively mistags (a large
+  fraction of them still carry a noun flag), so the dictionary cannot be the
+  source of truth for them yet.
 - `NOUN_PHRASE_LICENSORS` — the left-context test for "is this inside a noun
   phrase"; consulted only after the `is_preposition`/`is_determiner` metadata
   fast path fails.
 - `SEPARABLE_VERB_PREFIXES` — a *prefix* match (`herausrückt`), not a membership
   test, so it cannot be a dictionary lookup.
 
-**Note on flag characters**: 21 letters are simultaneously a property *and* an
+**Note on flag characters**: many letters are simultaneously a property *and* an
 affix rule, so adding a letter flag to a word can generate unintended forms
 (tagging `mein` with the determiner flag `D` would also produce `meinung`). Only
 digits and punctuation are free; new property flags should use digits.
@@ -182,9 +294,9 @@ They used to run anyway, because `Document::parse` was language-agnostic, and
 they were the larger half of the cost of building a German document.
 `Parser::is_english` is now the signal that turns them off: `PlainGerman`
 answers `false`, and the Markdown and Org parsers the registry builds around it
-inherit that. On a 10,500-character article that takes `Document::new` from
-1.08 ms to 0.47 ms, and `pos_tag` keeps whatever `annotations.json` supplies for
-the word instead of being overwritten by an English guess.
+inherit that. Skipping them roughly halves the cost of `Document::new` on German
+prose, and `pos_tag` keeps whatever `annotations.json` supplies for the word
+instead of being overwritten by an English guess.
 
 German therefore recovers the structure itself, in
 `german_noun_capitalization.rs`. It can afford to, because German noun phrases
@@ -243,11 +355,9 @@ oracle, use **LanguageTool**, which is available as a local container:
 docker run -d --name lt-de -p 8010:8010 -e Java_Xmx=4g erikvl87/languagetool:latest
 ```
 
-It carries roughly **1168 German rules** (1035 XML rules in `grammar.xml`, 67 in
-`style.xml`, 18 in the AT/CH/simple variants, plus 48 Java rule classes) against
-Harper's **39** (9 Rust linters plus 30 Weir rules), so on German prose it is a
-strict superset and a good arbiter: a Harper lint that no LanguageTool match
-overlaps is a false positive.
+Its German rule set is more than an order of magnitude larger than Harper's, so
+on German prose it is effectively a superset and a good arbiter: a Harper lint
+that no LanguageTool match overlaps is a false positive.
 
 The scratch tooling for this lives in `.archive/german-language/scripts/`
 (untracked):
@@ -264,8 +374,8 @@ scripts/fix_german_pos_flags.py --apply   # append the missing readings
 LanguageTool vouched for and what reading each one was missing, so the
 dictionary change stays reproducible.
 
-The audit that motivated the current rules found 84% of flagged words accepted
-by `aspell`, in three recurring shapes:
+The audit that motivated the current rules found the large majority of flagged
+words accepted by `aspell`, in three recurring shapes:
 
 1. **Suspended hyphenation** — *"auf welt-, volks-, stadt- und
    hauswirtschaftlicher Ebene"*, *"Konfliktverhütung und -lösung"*. Handled by
@@ -281,15 +391,32 @@ by `aspell`, in three recurring shapes:
 
 ## Implementation Notes
 
-- Uses single annotated dictionary for both word coverage and metadata
+- Uses a single annotated dictionary for both word coverage and metadata
 - Lookup speed is O(1) for most operations due to FST structure
+- Dictionary construction is lazy and happens once per process
 
-## Future Enhancements
+**No statistics in this file.** Entry counts, coverage percentages, lint totals
+and timings all change the moment someone improves the dictionary, and a stale
+number here is worse than no number. Record *how to measure* instead —
+`just language-coverage german`, `just language-lint-sources german`,
+`/usr/bin/time` — and let the tooling report the current value.
 
-- **Improved disambiguation**: Better handling of noun/verb ambiguities
-- **Grammar rules**: More sophisticated German grammar checking
-- **Dialect support**: Enhanced Austrian and Swiss German variants
-- **Performance optimization**: Lazy loading of dictionaries
+## Known Gaps
+
+- **Vocabulary holes**: common nouns are still missing outright (check with
+  `just language-lint-sources german .archive/german-language/corpus`), and the
+  `-ung` / `-in` derivations are listed explicitly rather than derived, so a
+  missing base means a missing family.
+- **Over-permissive compound splitting**: `is_valid_compound_segment` accepts any
+  chain of dictionary words, so misspellings that happen to decompose survive
+  (`Standart` = `Stand` + `Art`, `lernente` = `lern` + `Ente`). The Weir rules
+  patch the frequent cases one at a time; the splitter itself wants a
+  part-of-speech and a minimum-length constraint.
+- **Strong verbs**: `dfij` generates a weak preterite for every verb it is
+  applied to, so `berufte` is accepted alongside `berief`. Over-generation, not a
+  false positive.
+- **Dialect support**: Austrian and Swiss variants are declared but barely
+  populated.
 
 ## References
 
