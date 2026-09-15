@@ -105,11 +105,25 @@ entries — the large majority — generated `studierenten` and `lernente` while
 `studierte` and `lernte` were reported as misspellings.
 
 A verb reading (`V`) does **not** imply conjugation: the forms only exist if the
-entry also carries `d`/`f`/`i`/`j`. `scripts/add_german_verb_conjugation_flags.py`
-adds the conventional `dfij` set to infinitives that carry `V` and nothing else.
-It deliberately skips entries that are already an inflected form (`brachte`,
-`berätst` — conjugating those yields `brachtete`) and hand-audited noun plurals
-mistagged `V` (`bären`, `kosten`).
+entry also carries `d`/`f`/`i`/`j`. Nor is `V` a reliable way to *find* the verbs
+— it is missing from plenty of them (`promovieren/~~Nh`, `herrschen/~~XZ`) and
+wrongly present on plenty of nouns.
+
+`scripts/add_german_verb_conjugation_flags.py` therefore asks Hunspell instead:
+an entry gains `dfij` only when the expanded form list accepts *every* form the
+four flags would generate, matched case sensitively.
+
+```bash
+unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
+scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
+```
+
+The case sensitivity is what keeps noun plurals out, and the script still skips
+entries that are already an inflected form (`brachte`, `berätst` — conjugating
+those yields `brachtete`). Re-running it is idempotent. The effect is invisible
+to `just language-coverage german` in one direction and very visible in the
+other: missing conjugation flags cost coverage against the base list too, because
+several lemmas are only reachable through them.
 
 #### Rules that do not fire
 
@@ -320,6 +334,33 @@ This replaced a one-token lookback ("is the word to my left an article?"), which
 flagged every modifier and missed the head as soon as an adjective stood between
 the two: in *der große schöne hund* it flagged `große` and never reached `hund`.
 
+**Ending the phrase early is the expensive mistake.** Whatever token the walk
+stops on becomes the head, so anything that interrupts a phrase before the noun
+promotes the attributive adjective in front of it — and attributive adjectives
+are far and away the largest source of false positives this rule has. Four
+interruptions are stepped over rather than stopped on:
+
+| In the text | Would otherwise stop at |
+|---|---|
+| *eine neue, radikalere Welle* | the comma, or `und`/`oder` |
+| *der gerade oder **etwas** gekrümmte Griffel* | the degree word |
+| *das beginnende **19.** Jahrhundert* | the numeral |
+| *eine eigene **„**Baumnorm“*, *die deutsche **(**Wieder-)Besiedlung* | the quote or bracket |
+
+A capital letter also outranks every part-of-speech reading on the token, which
+it did not before: the dictionary hands out spurious adverb and verb readings
+freely (`Band` is tagged an adverb), and rejecting the head on one of those was
+enough to hand the role to the adjective before it.
+
+Outside head position, two morphological shapes are rejected outright, because
+neither is ever a noun and both arrive carrying a spurious noun reading:
+declined adjectives (*britische* → *britisch*) and present participles
+(*liegend* → *liegen*). Both are recognized from the stem the dictionary already
+knows, not from a suffix table — which is what keeps *Abend*, *Jugend* and
+*Tugend* out of the participle case. In head position the very same forms are
+genuine nominalizations (*auf das wesentliche*, *nur für deutsche*) and stay
+flagged, so the test is gated on the role.
+
 `continues_noun_phrase` reads only the metadata already on the token. Do not add
 a `Dictionary::get_word_metadata` call there — see the note in
 `../AGENTS.md` about `CompoundAwareDictionary`'s global mutex.
@@ -327,8 +368,8 @@ a `Dictionary::get_word_metadata` call there — see the note in
 ### Auditing capitalization false positives
 
 Edited German prose should produce essentially **zero** `GermanNounCapitalization`
-lints. The 54 archived Wikipedia articles under `.archive/german-language/` are
-the working corpus for this; a lint there is a bug until proven otherwise.
+lints. The archived Wikipedia articles under `.archive/german-language/` are the
+working corpus for this; a lint there is a bug until proven otherwise.
 
 ```bash
 just language-lint-sources german .archive/german-language/test-sources
@@ -343,9 +384,44 @@ $ echo hund        | aspell -d de -a --encoding=utf-8   # & hund … Hund  -> re
 $ echo wesentliche | aspell -d de -a --encoding=utf-8   # + wesentlich   -> false positive
 ```
 
-Use `aspell`, not `hunspell`: the shipped `de_DE` Hunspell dictionary is
-ISO-8859-1 and silently drops umlauts on UTF-8 input, so every word containing
-`ä ö ü ß` comes back "misspelled".
+`hunspell` works too, but only through `iconv` — the shipped `de_DE` dictionary
+is ISO-8859-1 and silently drops umlauts on UTF-8 input, so every word containing
+`ä ö ü ß` comes back "misspelled" unless you convert first:
+
+```bash
+$ echo lernente | iconv -f utf-8 -t iso-8859-1 | hunspell -d de_DE -a
+```
+
+#### The expanded form list is the better oracle
+
+Asking `aspell` or `hunspell` one word at a time answers "is this a word". For
+anything that needs a *set* — which forms are missing, which entries deserve a
+flag — expand the Hunspell dictionary once instead and compare against the
+result:
+
+```bash
+unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
+```
+
+This is the reference that matters. The list committed next to this README,
+`german_dictionary.dict.gz`, is the Hunspell **base** list: lemmas, no inflected
+forms. `just language-coverage german` measures against it, which is why it
+cannot see a broken conjugation rule — every lemma still resolves while every
+form built from it is wrong. The `unmunch` output contains the forms themselves
+and catches exactly that class.
+
+Match it **case sensitively**. German verbs are lower case and nouns are
+capitalized, so here the casing *is* the part of speech. That is what stops
+`bären` from being conjugated as though it were a verb: the form `bärte` would
+have to exist, and the list has only `Bärte`, the plural of `Bart`. Harper's own
+dictionary cannot make this distinction — see the note on lower-cased entries
+under [Known Gaps](#known-gaps).
+
+Strip the annotation lines `unmunch` emits alongside the words before using it:
+
+```bash
+grep -vE '[|/]' forms.txt | grep -E '^[A-Za-zÄÖÜäöüß-]+$' | sort -u > oracle.txt
+```
 
 `aspell` is a spell checker only — it has no grammar rules at all (its "modes"
 are input filters for markdown, HTML, TeX and so on). For a grammar-aware
@@ -407,11 +483,38 @@ number here is worse than no number. Record *how to measure* instead —
   `just language-lint-sources german .archive/german-language/corpus`), and the
   `-ung` / `-in` derivations are listed explicitly rather than derived, so a
   missing base means a missing family.
-- **Over-permissive compound splitting**: `is_valid_compound_segment` accepts any
-  chain of dictionary words, so misspellings that happen to decompose survive
-  (`Standart` = `Stand` + `Art`, `lernente` = `lern` + `Ente`). The Weir rules
-  patch the frequent cases one at a time; the splitter itself wants a
-  part-of-speech and a minimum-length constraint.
+- **Over-permissive compound splitting**: the splitter accepts any chain of
+  dictionary words, so misspellings that happen to decompose survive (`Standart`
+  = `Stand` + `Art`). The Weir rules patch the frequent cases one at a time; the
+  splitter itself wants a part-of-speech and a minimum-length constraint. Note
+  there are *two* splitters — `CompoundChecker`, which `CompoundAwareDictionary`
+  consults on every lookup miss, and `GermanSpellCheck::try_compound_word_check`.
+  The linter's copy is unreachable in the normal pipeline, because the dictionary
+  has already said yes.
+- **Lower-case compounds are not caught**: `lernente` is wrong and `Lernente` is
+  a (strange but well-formed) compound noun, and Hunspell draws exactly that
+  line. Harper cannot, for two compounding reasons, and an attempt to add the
+  rule was reverted after it produced false positives across the whole corpus and
+  essentially no true ones:
+  - the head of the decomposition decides the word class, but the heads that come
+    back are junk (`wiederholt` splits as `wie` + `derholt`), because any
+    affix-generated string of three or more characters is a usable element;
+  - a noun-only head cannot be told from a derivational suffix that is homographic
+    with a noun, so `dauerhaft` reads as `Dauer` + `Haft`.
+
+  Both would have to be fixed before the capitalization rule is worth revisiting.
+- **The dictionary is lower-cased**: almost every entry starts with a small
+  letter, where the Hunspell reference capitalizes a large fraction of them. In
+  German the capital *is* the noun marker, so `get_correct_capitalization_of` —
+  the mechanism English relies on — returns the wrong answer for every German
+  noun, and `GermanNounCapitalization` has to reconstruct from context what the
+  dictionary should have stored. Restoring the casing from the reference list is
+  the single largest structural improvement available.
+- **The noun flags overstate**: `N`, `M`, `X` and `Y` are the `-es`, `-er`, `-e`
+  and `-en` suffix rules, and each carries `base_metadata: {"noun": {}}`. Any
+  entry given one of them reads as a noun, which is how adjectives (`hellblau`)
+  and finite verb forms (`zeichnet`, `portiert`) end up with noun readings. Every
+  rule keyed on "is a noun" inherits the error.
 - **Strong verbs**: `dfij` generates a weak preterite for every verb it is
   applied to, so `berufte` is accepted alongside `berief`. Over-generation, not a
   false positive.

@@ -536,6 +536,34 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
 /// *"in britische, französische **und** niederländische Kolonien"*.
 const COORDINATORS: &[&str] = &["und", "oder", "sowie", "beziehungsweise", "bzw"];
 
+/// Degree words that grade the adjective following them. They stand inside a
+/// noun phrase without being a modifier or the head of it.
+const DEGREE_MODIFIERS: &[&str] = &[
+    "etwas",
+    "sehr",
+    "ziemlich",
+    "recht",
+    "besonders",
+    "eher",
+    "noch",
+    "weit",
+    "weitaus",
+    "deutlich",
+    "leicht",
+    "kaum",
+    "durchaus",
+    "überaus",
+    "äußerst",
+    "höchst",
+    "relativ",
+    "vergleichsweise",
+    "zunehmend",
+    "teilweise",
+    "meist",
+    "vorwiegend",
+    "überwiegend",
+];
+
 const LANGUAGE_GLOSS_MARKERS: &[&str] = &[
     "deutsch",
     "althochdeutsch",
@@ -682,20 +710,24 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             return false;
         }
 
-        // So do adverbs. Only adjectives stand between the determiner and the
-        // head, so "das Thema **oftmals** behandelt" ends the phrase at "Thema"
-        // instead of making the adverb its head. Words that are both — most
-        // German adjectives double as adverbs — keep going.
-        if token.kind.is_adverb() && !token.kind.is_adjective() {
-            return false;
-        }
-
         // A capital letter mid-sentence marks the head noun (or a proper name),
-        // and it wins over everything below. `GERMAN_NON_NOUNS` suppresses lints
-        // on *lowercase* verb forms, several of which are perfectly good nouns
-        // when written with a capital — "die Frage", "die Sage", "die Suche".
+        // and it wins over every part-of-speech reading below. The dictionary
+        // hands out spurious adverb and verb readings freely — "Band" is tagged
+        // an adverb — and rejecting the token on one of those truncates the
+        // phrase and promotes the attributive adjective before it to head.
+        // `GERMAN_NON_NOUNS` suppresses lints on *lowercase* verb forms, several
+        // of which are perfectly good nouns when written with a capital — "die
+        // Frage", "die Sage", "die Suche".
         if chars.first().is_some_and(|c| c.is_uppercase()) {
             return true;
+        }
+
+        // Adverbs close the phrase. Only adjectives stand between the determiner
+        // and the head, so "das Thema **oftmals** behandelt" ends the phrase at
+        // "Thema" instead of making the adverb its head. Words that are both —
+        // most German adjectives double as adverbs — keep going.
+        if token.kind.is_adverb() && !token.kind.is_adjective() {
+            return false;
         }
 
         let lower = Self::lowercase_of(token, document);
@@ -765,10 +797,32 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                     matches!(tokens[end].kind, TokenKind::Punctuation(Punctuation::Comma))
                         || COORDINATORS
                             .contains(&Self::lowercase_of(tokens[end], document).as_str());
-                if joins_coordination
+
+                // A degree word may sit in front of any of those adjectives:
+                // "der gerade oder **etwas** gekrümmte Griffel". It is neither a
+                // modifier nor the head, but stopping on it would leave the
+                // adjective before it standing as the head.
+                let grades_next_adjective =
+                    DEGREE_MODIFIERS.contains(&Self::lowercase_of(tokens[end], document).as_str());
+
+                // So can a numeral or an opening bracket or quote: "das
+                // beginnende **19.** Jahrhundert", "die britische
+                // **4x100-Meter-**Mannschaft", "eine eigene **„**Baumnorm“",
+                // "die deutsche **(**Wieder-)Besiedlung".
+                let interrupts_phrase = matches!(
+                    tokens[end].kind,
+                    TokenKind::Number(_)
+                        | TokenKind::Decade
+                        | TokenKind::Punctuation(
+                            Punctuation::Quote(_)
+                                | Punctuation::OpenRound
+                                | Punctuation::OpenSquare
+                        )
+                );
+
+                if (joins_coordination || grades_next_adjective || interrupts_phrase)
                     && end > i + 1
-                    && end + 1 < tokens.len()
-                    && Self::continues_noun_phrase(tokens[end + 1], document)
+                    && Self::phrase_resumes_after(tokens, end, document)
                 {
                     end += 1;
                     continue;
@@ -872,6 +926,88 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         false
     }
 
+    /// Does the phrase pick up again after the joiner or degree word at `index`?
+    ///
+    /// Several of them may stack — "eine große, aber **noch** **recht** junge
+    /// Sammlung" — so the skip repeats until a token either continues the phrase
+    /// or ends it.
+    fn phrase_resumes_after(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        let mut next = index + 1;
+
+        while next < tokens.len() {
+            if Self::continues_noun_phrase(tokens[next], document) {
+                return true;
+            }
+
+            if !DEGREE_MODIFIERS.contains(&Self::lowercase_of(tokens[next], document).as_str()) {
+                return false;
+            }
+
+            next += 1;
+        }
+
+        false
+    }
+
+    /// Does the dictionary know `word` as an adjective?
+    fn is_adjective(&self, word: &[char]) -> bool {
+        self.dictionary
+            .get_word_metadata(word)
+            .is_some_and(|m| m.adjective.is_some())
+    }
+
+    /// Is `lower` an adjective carrying a declension ending?
+    ///
+    /// Only the bare `-e` ending is handled here; `-en`, `-em`, `-er` and `-es`
+    /// are already rejected wholesale further up. Comparatives decline on top of
+    /// their own `-er` ("genau" → "genauer" → "genauere"), so that layer is
+    /// peeled off too.
+    ///
+    /// The cost is a handful of nominalized adjectives that really are nouns —
+    /// "die Breite", "die Tiefe" — which this no longer flags when written lower
+    /// case. Attributive adjectives outnumber them heavily, and a missed lint is
+    /// the cheaper mistake.
+    fn is_declined_adjective(&self, lower: &[char]) -> bool {
+        let Some(stem) = lower.strip_suffix(&['e']) else {
+            return false;
+        };
+
+        if stem.len() < 3 {
+            return false;
+        }
+
+        if self.is_adjective(stem) {
+            return true;
+        }
+
+        stem.strip_suffix(&['e', 'r'])
+            .is_some_and(|positive| positive.len() >= 3 && self.is_adjective(positive))
+    }
+
+    /// Is `lower` a present participle — a verb stem plus `-d`?
+    ///
+    /// German builds it from the infinitive: "liegen" → "liegend", "handeln" →
+    /// "handelnd", "fortdauern" → "fortdauernd". Asking the dictionary for the
+    /// infinitive keeps nouns that merely end the same way ("Abend", "Jugend",
+    /// "Tugend") out of it, which a bare suffix test cannot do.
+    fn is_present_participle(&self, lower: &[char]) -> bool {
+        let Some(infinitive) = lower.strip_suffix(&['d']) else {
+            return false;
+        };
+
+        if infinitive.len() < 4
+            || !(infinitive.ends_with(&['e', 'n'])
+                || infinitive.ends_with(&['e', 'l', 'n'])
+                || infinitive.ends_with(&['e', 'r', 'n']))
+        {
+            return false;
+        }
+
+        self.dictionary
+            .get_word_metadata(infinitive)
+            .is_some_and(|m| m.verb.is_some())
+    }
+
     /// Decide whether a lowercase, alphabetic, non-sentence-initial word should
     /// be flagged as a miscapitalized noun.
     fn check_if_word_is_noun(
@@ -921,6 +1057,22 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // Adjective / adverb / participle shape → not a noun, even if the
         // compound-aware dictionary decomposed it into one.
         if has_non_noun_ending(&s) {
+            return false;
+        }
+
+        // Declined adjectives ("die britische Krone") and present participles
+        // ("in Führung liegend ausgeschieden") are written lower case and sit in
+        // exactly the slot a noun would. Neither is in the dictionary as its own
+        // entry, so both arrive here carrying a spurious noun reading picked up
+        // from a plural or genitive flag. The stem gives them away, and the
+        // dictionary already knows it.
+        //
+        // Not in head position, though: there the very same forms are genuine
+        // nominalizations that *should* be flagged — "auf das wesentliche", "nur
+        // für deutsche". Head is decided below, on syntax rather than shape.
+        if np_role != NpRole::Head
+            && (self.is_declined_adjective(&lower) || self.is_present_participle(&lower))
+        {
             return false;
         }
 

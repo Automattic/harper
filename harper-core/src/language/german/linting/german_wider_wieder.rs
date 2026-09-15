@@ -40,12 +40,9 @@ impl GermanWiderWieder {
 
         // Check `wieder` first: it is the longer prefix, and every `wieder`
         // also starts with `wied`, never with `wider`.
-        let (right, rest, stems) = if let Some(rest) = lower.strip_prefix("wieder") {
-            ("wider", rest, WIDER_ONLY)
-        } else if let Some(rest) = lower.strip_prefix("wider") {
-            ("wieder", rest, WIEDER_ONLY)
-        } else {
-            return None;
+        let (right, rest, stems) = match lower.strip_prefix("wieder") {
+            Some(rest) => ("wider", rest, WIDER_ONLY),
+            None => ("wieder", lower.strip_prefix("wider")?, WIEDER_ONLY),
         };
 
         if rest.is_empty() || !stems.iter().any(|stem| rest.starts_with(stem)) {
