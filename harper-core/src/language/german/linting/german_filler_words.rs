@@ -13,7 +13,7 @@ pub struct GermanFillerWords {
 impl Default for GermanFillerWords {
     fn default() -> Self {
         // Keep this list conservative to avoid false positives on semantic words.
-        let filler_words = Lrc::new(WordSet::new(&[
+        let filler_words = Lrc::new(WordSet::new([
             "äh", "ähm", "öhm", "hm", "hmm", "aeh", "aehm", "oehm",
         ]));
 

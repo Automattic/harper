@@ -1,6 +1,5 @@
 target
 build
-!harper-core/build
 .idea
 .vscode
 .DS_Store

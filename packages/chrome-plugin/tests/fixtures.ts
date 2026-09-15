@@ -1,7 +1,7 @@
 import { mkdir, rm } from 'node:fs/promises';
+import path from 'node:path';
 import type { BrowserContext } from '@playwright/test';
 import { test as base, expect } from '@playwright/test';
-import path from 'path';
 import { withExtension } from 'playwright-webextext';
 
 const pathToExtension = path.join(import.meta.dirname, '../build');

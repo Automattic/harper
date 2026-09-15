@@ -10,6 +10,31 @@ German now uses a single unified dictionary system:
 
 This approach is consistent with other languages like Portuguese and Slovak, using only uncompressed dictionary files.
 
+### What the dictionary costs
+
+Both files are `include_str!`-ed into the binary, exactly as the English
+dictionary is, so nothing is read from disk at runtime. Compiling German in adds
+about 5 MB to a release binary.
+
+Everything after that is lazy. The word list is parsed and the affixes expanded
+on the first German lookup and never before, so an English-only run of a binary
+that has German compiled in pays nothing: `harper-cli lint` on 526 KB of English
+takes the same 10.0 s and the same 288 MB peak either way.
+
+The German side is not cheap, because expanding the affixes yields a little over
+a million entries against English's 135 thousand:
+
+| First German lookup | |
+|---|---|
+| time | 1.7 s |
+| resident afterwards | 509 MB |
+| peak while building | 707 MB |
+
+Keep that in mind when touching `german_dict.rs`. The entries are large enough
+that a single stray copy of the dictionary is hundreds of megabytes, so the
+accessors there all share one of three `LazyLock`s and none of them builds
+anything.
+
 ### Noun Capitalization
 
 German noun capitalization works differently from English:

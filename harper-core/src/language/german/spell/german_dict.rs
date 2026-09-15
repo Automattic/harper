@@ -5,21 +5,10 @@
 use crate::spell::rune::{AttributeList, parse_word_list};
 use crate::spell::word_map::WordMap;
 use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
-use std::sync::{Arc, LazyLock, Mutex};
+use std::sync::{Arc, LazyLock};
 
 use super::compound_aware_dict::CompoundAwareDictionary;
 use super::compound_checker::CompoundChecker;
-
-fn load_german_fst_dict() -> Arc<FstDictionary> {
-    // Convert the annotated dictionary to FST format for backward compatibility
-    Arc::new((*load_german_annotated_dict()).clone().into())
-}
-
-fn load_german_annotated_dict() -> Arc<MutableDictionary> {
-    // Delegate to base dict to avoid O(n^2) memory explosion from compound pre-generation
-    // Compound words are now checked lazily via compound_aware_german_dictionary()
-    load_german_base_dict_from_word_list(&GERMAN_WORD_LIST)
-}
 
 /// Load the German word list for lazy compound checking
 fn load_german_word_list() -> Vec<crate::spell::rune::word_list::AnnotatedWord> {
@@ -27,24 +16,27 @@ fn load_german_word_list() -> Vec<crate::spell::rune::word_list::AnnotatedWord> 
         .expect("Failed to parse German dictionary word list")
 }
 
-/// Load the base German dictionary without pre-generated compounds
-fn load_german_base_dict_from_word_list(
+/// Build the base German dictionary, without pre-generated compounds.
+///
+/// Expanding the affixes yields a little over a million entries, so this goes
+/// straight from the expanded [`WordMap`] into [`FstDictionary`]. Routing it
+/// through a [`MutableDictionary`] first would hold a second full copy of the
+/// dictionary at the same time, and `FstDictionary` keeps one internally anyway.
+fn build_german_base_dict(
     word_list: &[crate::spell::rune::word_list::AnnotatedWord],
-) -> Arc<MutableDictionary> {
+) -> FstDictionary {
     let attr_list = AttributeList::parse(include_str!("../annotations.json"))
         .expect("Failed to parse German dictionary attribute list");
 
-    // Create word map and expand annotated words (but don't generate compounds)
     let mut word_map = WordMap::default();
     attr_list.expand_annotated_words(word_list.iter().cloned(), &mut word_map);
 
-    // Create the MutableDictionary from the populated word map
-    let mut dict = MutableDictionary::new();
-    for entry in word_map.into_iter() {
-        dict.append_word(entry.canonical_spelling, entry.metadata);
-    }
-
-    Arc::new(dict)
+    FstDictionary::new(
+        word_map
+            .into_iter()
+            .map(|entry| (entry.canonical_spelling, entry.metadata))
+            .collect(),
+    )
 }
 
 // Word list for lazy compound checking (shared between all German dictionary components)
@@ -61,25 +53,9 @@ pub(super) fn german_word_list() -> &'static [crate::spell::rune::word_list::Ann
     &GERMAN_WORD_LIST
 }
 
-// Base dictionary without pre-generated compounds (FST for fast lookups)
-static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> = LazyLock::new(|| {
-    Arc::new(
-        (*load_german_base_dict_from_word_list(&GERMAN_WORD_LIST))
-            .clone()
-            .into(),
-    )
-});
-
-// Annotated dictionary using Rune format
-static GERMAN_ANNOTATED_DICT: LazyLock<Arc<MutableDictionary>> =
-    LazyLock::new(load_german_annotated_dict);
-
-// Compound checker for lazy compound checking
-static GERMAN_COMPOUND_CHECKER: LazyLock<Arc<Mutex<CompoundChecker>>> = LazyLock::new(|| {
-    let mut checker = CompoundChecker::new(&GERMAN_WORD_LIST);
-    checker.set_base_dictionary(Arc::clone(&GERMAN_BASE_DICT));
-    Arc::new(Mutex::new(checker))
-});
+// Base dictionary without pre-generated compounds (FST for fast lookups).
+static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
+    LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
 
 // Compound-aware dictionary using lazy compound checking
 static GERMAN_COMPOUND_AWARE_DICT: LazyLock<Arc<CompoundAwareDictionary>> = LazyLock::new(|| {
@@ -103,97 +79,68 @@ static GERMAN_COMBINED_DICT: LazyLock<Arc<MergedDictionary>> = LazyLock::new(|| 
     Arc::new(merged)
 });
 
-/// Returns a shared reference to the German FstDictionary.
-///
-/// The dictionary is loaded and built once on first access, then cached for the
-/// lifetime of the process. This provides fuzzy matching, prefix search, and
-/// all other `Dictionary` trait capabilities.
-///
-/// Note: This uses the compound-aware dictionary for memory efficiency.
-/// Compound words are checked lazily rather than pre-generated.
-pub fn german_dictionary() -> Arc<FstDictionary> {
-    compound_aware_german_fst_dictionary()
-}
+// There are only three German dictionaries, built once each and then shared:
+//
+//   `GERMAN_BASE_DICT`           the expanded word list, as an FST
+//   `GERMAN_COMPOUND_AWARE_DICT` the same, plus lazy compound decomposition
+//   `GERMAN_COMBINED_DICT`       the compound-aware one behind `MergedDictionary`
+//
+// The accessors below are the historical names callers already use. Each is an
+// `Arc` clone of one of those three; none of them builds anything.
 
-/// Returns a shared reference to the annotated German dictionary.
+/// The base German dictionary as an FST: fast lookups, fuzzy matching and prefix
+/// search over the expanded word list.
 ///
-/// This dictionary includes morphological annotations for German grammar analysis.
-/// Note: For memory efficiency, this now uses the base dictionary without
-/// pre-generating all compound combinations. Use compound_aware_german_dictionary()
-/// for full compound word support with lazy checking.
-pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
-    // Use base dictionary for memory efficiency - avoids O(n²) compound generation
-    base_german_dictionary_fst()
-}
-
-/// Returns the main curated German dictionary.
-///
-/// Uses the compound-aware dictionary which provides comprehensive word coverage
-/// with lazy compound checking to avoid memory explosion from pre-generating all compounds.
-/// This provides both word coverage and metadata in a memory-efficient way.
-pub fn curated_german_dictionary() -> Arc<FstDictionary> {
-    // Use the pre-built FST base dictionary directly
-    base_german_dictionary_fst()
-}
-
-/// Returns the compound-aware German FST dictionary using lazy compound checking.
-///
-/// This dictionary provides the base words in FST format for memory efficiency.
-/// Compound words are checked lazily through the compound-aware dictionary
-/// (accessible via compound_aware_german_dictionary() or combined_german_dictionary()).
-/// This avoids the O(n²) memory explosion of pre-generating all compound combinations.
-pub fn compound_aware_german_fst_dictionary() -> Arc<FstDictionary> {
-    // Return the base dictionary as FST format for memory efficiency
-    // Note: For full compound word support, use combined_german_dictionary()
-    // which uses CompoundAwareDictionary with lazy compound checking
-    base_german_dictionary_fst()
-}
-
-/// Returns the mutable German dictionary for annotation processing.
-///
-/// This is primarily used internally for annotation-based grammar checking.
-/// Uses the base dictionary without pre-generated compounds for memory efficiency.
-pub fn mutable_german_dictionary() -> Arc<MutableDictionary> {
-    // Use base dictionary directly - GERMAN_ANNOTATED_DICT now delegates to load_german_base_dict()
-    base_german_dictionary()
-}
-
-/// Returns the combined German dictionary with comprehensive word coverage and annotations.
-///
-/// This dictionary uses the compound-aware dictionary which provides base words
-/// with lazy compound checking. This maintains full compound word support while
-/// avoiding the O(n²) memory explosion of pre-generating all compound combinations.
-pub fn combined_german_dictionary() -> Arc<MergedDictionary> {
-    (*GERMAN_COMBINED_DICT).clone()
-}
-
-/// Returns the base German dictionary without pre-generated compounds.
-///
-/// This dictionary contains only the base words from the German dictionary
-/// without any compound word generation. It's used as the foundation for
-/// lazy compound checking.
-pub fn base_german_dictionary() -> Arc<MutableDictionary> {
-    // Convert FST back to MutableDictionary for API compatibility
-    // Note: base_german_dictionary_fst() returns the FST version directly
-    Arc::new((*base_german_dictionary_fst()).clone().into())
-}
-
-/// Returns the base German dictionary as FST format (fast lookups).
+/// Compound words are not in here. Use [`combined_german_dictionary`] when
+/// compounds have to be recognised.
 pub fn base_german_dictionary_fst() -> Arc<FstDictionary> {
     (*GERMAN_BASE_DICT).clone()
 }
 
-/// Returns the FST German dictionary (alias for base_german_dictionary_fst).
-pub fn german_dictionary_fst() -> Arc<FstDictionary> {
-    (*GERMAN_BASE_DICT).clone()
+/// Alias for [`base_german_dictionary_fst`].
+pub fn german_dictionary() -> Arc<FstDictionary> {
+    base_german_dictionary_fst()
 }
 
-/// Returns the compound checker for German dictionary.
+/// Alias for [`base_german_dictionary_fst`].
+pub fn german_dictionary_fst() -> Arc<FstDictionary> {
+    base_german_dictionary_fst()
+}
+
+/// Alias for [`base_german_dictionary_fst`].
+pub fn curated_german_dictionary() -> Arc<FstDictionary> {
+    base_german_dictionary_fst()
+}
+
+/// Alias for [`base_german_dictionary_fst`]. The morphological annotations live
+/// on the entries themselves, so there is no separate annotated dictionary.
+pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
+    base_german_dictionary_fst()
+}
+
+/// Alias for [`base_german_dictionary_fst`].
+pub fn compound_aware_german_fst_dictionary() -> Arc<FstDictionary> {
+    base_german_dictionary_fst()
+}
+
+/// The base German dictionary in mutable form, for bulk reads of the entries and
+/// their metadata.
 ///
-/// This provides lazy compound word checking functionality without
-/// pre-generating all possible compound combinations.
-pub fn german_compound_checker() -> Arc<Mutex<CompoundChecker>> {
-    (*GERMAN_COMPOUND_CHECKER).clone()
+/// [`FstDictionary`] already keeps a [`MutableDictionary`] next to its FST, so
+/// this shares that one. Converting instead would copy all million-odd entries.
+pub fn base_german_dictionary() -> Arc<MutableDictionary> {
+    base_german_dictionary_fst().as_mutable()
+}
+
+/// Alias for [`base_german_dictionary`].
+pub fn mutable_german_dictionary() -> Arc<MutableDictionary> {
+    base_german_dictionary()
+}
+
+/// The compound-aware dictionary behind a [`MergedDictionary`], which is the form
+/// the linters and `Document::new` take.
+pub fn combined_german_dictionary() -> Arc<MergedDictionary> {
+    (*GERMAN_COMBINED_DICT).clone()
 }
 
 /// Returns the compound-aware German dictionary using lazy compound checking.
