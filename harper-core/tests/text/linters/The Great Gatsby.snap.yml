@@ -3475,16 +3475,6 @@ Suggest:
 
 
 
-Lint:    Typo (31 priority)
-Message: |
-    2319 | That was nineteen-seventeen. By the next year I had a few beaux myself, and I
-         |                                                           ^~~~~ `beaux` should probably be written as `be aux`.
-    2320 | began to play in tournaments, so I didn’t see Daisy very often. She went with a
-Suggest:
-  - Replace with: “be aux”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2329 | By the next autumn she was gay again, gay as ever. She had a début after the
@@ -3781,16 +3771,6 @@ Suggest:
   - Replace with: “blared”
   - Replace with: “bleated”
   - Replace with: “beard”
-
-
-
-Lint:    Typo (31 priority)
-Message: |
-    2607 | Clay’s “Economics,” starting at the Finnish tread that shook the kitchen floor,
-    2608 | and peering toward the bleared windows from time to time as if a series of
-         |                        ^~~~~~~ `bleared` should probably be written as `bl eared`.
-Suggest:
-  - Replace with: “bl eared”
 
 
 
