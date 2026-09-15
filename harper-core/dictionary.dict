@@ -1,4 +1,4 @@
-54800
+54900
 
 # Start of original dictionary import
 # combined with dialect spelling dictionary import.
@@ -4831,7 +4831,7 @@ ISIS/O
 ISO/ONgSP           # standards organization, optical disk image format
 ISP/N
 ISS/NO
-IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
+IT/Ng4              # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
 IUD/N
 IV/JNSg
 IVF/N
@@ -4997,7 +4997,7 @@ Issachar/Og
 Istanbul/Og
 Istanbulite/NgSJ
 Isuzu/ONg           # car brand
-It/ON
+It/4                # abbreviation for Italy/Italian. "biological force", "Id", and "desirable quality" senses too marginal
 Itaipu/Og
 Ital/N
 Italian/JNwSg
@@ -7612,6 +7612,7 @@ OK/NOSg4VdGJ        # US state (Oklahoma)
 OLED/Ng             # organic light-emitting diode
 OMB/Og
 OMG                 # exclamation
+OP/Ng               # internet slang: original poster
 OPEC/Og             # organization
 OR/CNO4             # Oregon
 OR gate/NgS
@@ -29214,7 +29215,7 @@ hull/~NgSVd>GZ
 hullabaloo/NSgV
 huller/Ng
 hum/~NSgV
-human/~JY^>pNSgV
+human/~JY^>pNSg
 humane/~JYp
 humaneness/Nmg
 humanhood/Nmg
@@ -51303,6 +51304,7 @@ unicameral/~J
 unicellular/JN
 unicorn/~NSgVJ
 unicycle/NSgV
+unicyclist/NgS
 unidirectional/JN
 unification/~NwSgr
 unifier/NgS
@@ -54541,6 +54543,7 @@ Zuckerberg/OgS      # surname, Facebook founder
 a11n/N
 a12s/9
 a8c/Sg
+abliterate/VSdGn    # AI: remove safety refusals
 aftertouch/Nmg      # MIDI feature
 ambitransitive/J    # verb which is both transitive and intransitive
 analyte/NgS
@@ -54574,6 +54577,7 @@ corpo/NgS
 cronjob/NgS
 datagram/NgS
 datetime/NgS
+debloat/VSdG
 decomp/NgSVdG       # decompile/decompilation
 dedup/Ng            # not well covered by dictionaries. wiktionary has only singular noun. cf. dedupe
 dedupe/NSgVdG       # not well covered by dictionaries. wiktionary has noun and verb. cf. dedup
@@ -54661,6 +54665,7 @@ pdfTeX/Og           # Program, extension for TeX engine
 pentest/VSdG
 pentester/NSg       # penetration tester
 pentesting/NmgV6
+permalink/NgS
 plist/NgS           # Apple property list
 polysyntheses/N9    # linguistics
 polysynthesis/Nw0g  # linguistics
