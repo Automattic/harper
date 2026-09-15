@@ -350,7 +350,7 @@ impl OsBroker for MacBroker {
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
 
-        let focused = ax_element_attribute(&el, kAXFocusedUIElementAttribute).unwrap();
+        let focused = ax_element_attribute(&el, kAXFocusedUIElementAttribute).unwrap_or(el);
         walker.walk(&focused, &collector);
 
         collector.unwrap_rects()
