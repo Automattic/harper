@@ -2,7 +2,7 @@ use harper_core::linting::LintKind;
 
 use crate::color::Color;
 
-pub const LINT_KINDS: [LintKind; 20] = [
+pub const LINT_KINDS: [LintKind; 21] = [
     LintKind::Agreement,
     LintKind::BoundaryError,
     LintKind::Capitalization,
@@ -12,6 +12,7 @@ pub const LINT_KINDS: [LintKind; 20] = [
     LintKind::Grammar,
     LintKind::Malapropism,
     LintKind::Miscellaneous,
+    LintKind::MissingWord,
     LintKind::Nonstandard,
     LintKind::Punctuation,
     LintKind::Readability,
@@ -42,6 +43,7 @@ pub fn lint_kind_color(lint_kind: LintKind) -> Color {
         LintKind::Grammar => Color::new(0x9B, 0x59, 0xB6),
         LintKind::Malapropism => Color::new(0xC7, 0x15, 0x85),
         LintKind::Miscellaneous => Color::new(0x3B, 0xCE, 0xAC),
+        LintKind::MissingWord => Color::new(0xAD, 0xFF, 0x2F),
         LintKind::Nonstandard => Color::new(0x00, 0x8B, 0x8B),
         LintKind::Punctuation => Color::new(0xD4, 0x85, 0x0F),
         LintKind::Readability => Color::new(0x2E, 0x8B, 0x57),

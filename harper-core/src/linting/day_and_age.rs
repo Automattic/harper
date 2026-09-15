@@ -72,11 +72,11 @@ impl ExprLinter for DayAndAge {
 
         let good_main = !bads.iter().any(|&b| b);
 
-        let (span, replacement): (Span<char>, &str) = if prep_chars
+        let (span, lint_kind, replacement): (Span<char>, LintKind, &str) = if prep_chars
             .is_some_and(|p| p.eq_ch(&['s', 'i', 'n', 'c', 'e']))
         {
             // "since" is a preposition but it's also a conjunction, so keep it but add "in" after it
-            (main_span, "in this day and age")
+            (main_span, LintKind::MissingWord, "in this day and age")
         } else {
             match (prep_chars, good_main) {
                 // We have a preposition and the idiom is correct
@@ -86,23 +86,24 @@ impl ExprLinter for DayAndAge {
                         return None;
                     }
                     // Otherwise replace the preposition
-                    (prep_span.unwrap(), "in")
+                    (prep_span.unwrap(), LintKind::Usage, "in")
                 }
                 // We have a preposition but the idiom is wrong
                 (Some(_), false) => (
                     Span::new(prep_span.unwrap().start, main_span.end),
+                    LintKind::Usage,
                     "in this day and age",
                 ),
                 // We only need to insert "in" but since we have common Suggestion logic we'll replace the whole thing
-                (None, true) => (main_span, "in this day and age"),
+                (None, true) => (main_span, LintKind::MissingWord, "in this day and age"),
                 // The preposition is missing and the idiom is wrong, replace the whole thing
-                (None, false) => (main_span, "in this day and age"),
+                (None, false) => (main_span, LintKind::Usage, "in this day and age"),
             }
         };
 
         Some(Lint {
             span,
-            lint_kind: LintKind::Usage,
+            lint_kind,
             suggestions: vec![Suggestion::replace_with_match_case(
                 replacement.chars().collect(),
                 span.get_content(src),

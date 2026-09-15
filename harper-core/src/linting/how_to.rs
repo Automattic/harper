@@ -94,7 +94,7 @@ impl ExprLinter for HowTo {
 
         Some(Lint {
             span: toks[2].span,
-            lint_kind: LintKind::WordChoice,
+            lint_kind: LintKind::MissingWord,
             suggestions: vec![Suggestion::InsertAfter(fix)],
             message: "Insert `to` after `how` (e.g., `how to clone`).".into(),
             priority: 63,

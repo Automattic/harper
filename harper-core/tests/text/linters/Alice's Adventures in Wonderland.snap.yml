@@ -699,7 +699,7 @@ Message: |
 
 
 
-Lint:    Miscellaneous (31 priority)
+Lint:    MissingWord (31 priority)
 Message: |
      361 | It was high time to go, for the pool was getting quite crowded with the birds
          |    ^~~~ You may be missing a preposition here.
