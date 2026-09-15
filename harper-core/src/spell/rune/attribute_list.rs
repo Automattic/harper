@@ -25,13 +25,32 @@ pub struct AttributeList {
 
 impl AttributeList {
     fn into_human_readable(self) -> HumanReadableAttributeList {
+        // Helper to convert internal char flags back to strings for JSON serialization
+        let convert_char_to_string = |c: char| -> String {
+            let val = c as u32;
+            if (0xE000..=0xF8FF).contains(&val) {
+                // Recover the original character from the Private Use Area
+                if let Some(orig_char) = char::from_u32(val - 0xE000) {
+                    format!("+{}", orig_char)
+                } else {
+                    c.to_string()
+                }
+            } else {
+                c.to_string()
+            }
+        };
+
         HumanReadableAttributeList {
             affixes: self
                 .affixes
                 .into_iter()
-                .map(|(affix, exp)| (affix, exp.into_human_readable()))
+                .map(|(affix, exp)| (convert_char_to_string(affix), exp.into_human_readable()))
                 .collect(),
-            properties: self.properties,
+            properties: self
+                .properties
+                .into_iter()
+                .map(|(prop, val)| (convert_char_to_string(prop), val))
+                .collect(),
         }
     }
 
@@ -274,21 +293,41 @@ impl AttributeList {
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct HumanReadableAttributeList {
-    affixes: HashMap<char, HumanReadableExpansion>,
-    properties: HashMap<char, Property>,
+    affixes: HashMap<String, HumanReadableExpansion>,
+    properties: HashMap<String, Property>,
 }
 
 impl HumanReadableAttributeList {
     pub fn into_normal(self) -> Result<AttributeList, Error> {
-        let mut affixes = HashMap::with_capacity(self.affixes.len());
+        // Helper helper to convert multi-character strings into mapped chars
+        let convert_key = |key: String| -> Option<char> {
+            let mut chars = key.chars();
+            let first = chars.next()?;
+            if first == '+' {
+                let second = chars.next()?;
+                char::from_u32(second as u32 + 0xE000)
+            } else {
+                Some(first)
+            }
+        };
 
-        for (affix, expansion) in self.affixes.into_iter() {
-            affixes.insert(affix, expansion.into_normal()?);
+        let mut affixes = HashMap::with_capacity(self.affixes.len());
+        for (affix_str, expansion) in self.affixes.into_iter() {
+            if let Some(affix_char) = convert_key(affix_str) {
+                affixes.insert(affix_char, expansion.into_normal()?);
+            }
+        }
+
+        let mut properties = HashMap::with_capacity(self.properties.len());
+        for (prop_str, property) in self.properties.into_iter() {
+            if let Some(prop_char) = convert_key(prop_str) {
+                properties.insert(prop_char, property);
+            }
         }
 
         Ok(AttributeList {
             affixes,
-            properties: self.properties,
+            properties,
         })
     }
 }
