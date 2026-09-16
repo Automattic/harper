@@ -42,25 +42,90 @@
 			"rename_ok": true
 		},
 		"G": {
-			"#": "'-lein' neuter diminutive suffix (safe)",
+			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
-					"remove": "",
-					"add": "lein",
-					"condition": "[^l]"
+					"remove": "n",
+					"add": "st",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[dtw]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[^dimnÃstwzx]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "eien"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[^e]ien"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "chnen"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[^c]h[mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[^aÃ¤ehilmnoÃ¶uÃ¼r][mn]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[aÃ¤eilmnoÃ¶uÃ¼r][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "un"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[Ãsxz]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "ssen"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "schen"
+				},
+				{
+					"remove": "t",
+					"add": "st",
+					"condition": "[^sz]t"
+				},
+				{
+					"remove": "t",
+					"add": "est",
+					"condition": "zt"
 				}
 			],
 			"target": [
 				{
 					"metadata": {
-						"noun": {},
-						"morphology": {
-							"noun": {
-								"gender": "Neuter"
-							}
-						}
+						"verb": {}
 					}
 				}
 			],
@@ -142,29 +207,6 @@
 				{
 					"remove": "",
 					"add": "en",
-					"condition": "."
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {}
-					}
-				}
-			],
-			"base_metadata": {
-				"noun": {}
-			},
-			"rename_ok": true
-		},
-		"M": {
-			"#": "Compound word formation - noun + noun with 'er' interfix",
-			"kind": "suffix",
-			"cross_product": true,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "er",
 					"condition": "."
 				}
 			],
@@ -926,14 +968,24 @@
 			"rename_ok": true
 		},
 		"a": {
-			"#": "Noun plural -er + umlaut (Mann -> Männer)",
+			"#": "Noun plural -er, with the dative -ern (die Bilder, den Bildern). Mirrors hunspell de_DE SFX R. The umlauted stems are separate entries; the rule itself does not umlaut, which is why the old one-line version generated 'manner' for 'Mann'.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
 					"add": "er",
-					"condition": "."
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "ern",
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "r",
+					"condition": "e"
 				}
 			],
 			"target": [
@@ -1392,51 +1444,6 @@
 			"base_metadata": {
 				"verb": {}
 			},
-			"rename_ok": true
-		},
-		"h": {
-			"#": "Verb present -st (lern-st). NOTE: in the German dictionary 'h' is also the near-universal 'vetted / compound-capable' bookkeeping marker appended to ~96% of noun and many adjective entries, so it MUST NOT inject a part of speech. It only generates the -st surface form for spell checking; the verb reading comes from the 'V' property and the 'j'/'f'/'d'/'e' affixes.",
-			"kind": "suffix",
-			"cross_product": true,
-			"replacements": [
-				{
-					"remove": "en",
-					"add": "st",
-					"condition": "en"
-				},
-				{
-					"remove": "n",
-					"add": "st",
-					"condition": "ern"
-				},
-				{
-					"remove": "n",
-					"add": "st",
-					"condition": "eln"
-				},
-				{
-					"remove": "",
-					"add": "st",
-					"condition": "[^erl]n"
-				},
-				{
-					"remove": "",
-					"add": "st",
-					"condition": "[^e]rn"
-				},
-				{
-					"remove": "",
-					"add": "st",
-					"condition": "[^e]ln"
-				},
-				{
-					"remove": "",
-					"add": "st",
-					"condition": "[^n]"
-				}
-			],
-			"target": [],
-			"base_metadata": {},
 			"rename_ok": true
 		},
 		"i": {
@@ -2072,6 +2079,10 @@
 					}
 				}
 			}
+		},
+		"h": {
+			"#": "Compound-capability marker. Generates nothing — it is bookkeeping, appended to nearly every vetted noun entry, and `CompoundChecker` reads it to decide whether a short word may act as a compound element. The '-st' affix that used to live here moved to 'G'.",
+			"metadata": {}
 		}
 	}
 }

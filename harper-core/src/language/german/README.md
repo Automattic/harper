@@ -303,10 +303,16 @@ unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
 just language-coverage german     # reports Harper's expanded word count
 ```
 
-`h` is in the same bind for a different reason. It has no property twin, but it
-is both the `-st` verb affix (so every noun carrying it also generates
-`arzneist`) and the flag `CompoundChecker` reads as "may form compounds".
-Dropping it from the nouns would silently change what decomposes.
+`h` was in the same bind for a different reason, and was by a wide margin the
+worst of them. It has no property twin, but it was both the `-st` verb affix and
+the flag `CompoundChecker` reads as "may form compounds" — and as the second of
+those it sits on nearly every vetted noun, so every one of them also generated
+`arzneist`. It accounted for the largest single block of junk in the file.
+
+It is now split the same way `N` was, with one extra twist: the affix moved to
+`G` and `h` stayed behind as a **property with empty metadata**. It has to stay
+declared — `CompoundChecker` reads the raw flag characters, so the entries keep
+it — but it now generates nothing.
 
 ##### Splitting a colliding flag
 
@@ -324,10 +330,20 @@ it is:
 2. Re-establish membership from igerman98, which has the same rule on `T`:
    `mirror_hunspell_flag.py --from T --to 0`.
 
-`M` (compound `-er`) and `a` (umlaut plural, which has no umlaut in it) are the
-same shape of problem and have not been done. There is no free character left for
-them, so they need the other half of the idea: give the property a digit and free
-the letter for the affix.
+There is more room for this than it looks. A flag used as an *affix* only has to
+be free in `properties`, and several affix letters are defined but unused — `E`,
+`G` and the dead participle rules `k`, `l`, `m`, `n`. Repurposing one of those is
+cheaper than claiming a digit.
+
+Two of them are traps. `CompoundChecker::is_compound_flag` lower-cases before it
+looks, so `H`, `K`, `L` and `O` are read as the compound markers `h`, `k`, `l`,
+`o`: putting an affix on one of those silently changes what decomposes.
+
+`M` went the simpler route — the affix was deleted outright. Its `-er` was billed
+as a compound interfix, which `CompoundChecker` inserts at boundaries anyway, and
+the handful of forms hunspell accepted turned out to be coincidences
+(`Heiler` → `heilerer` is the comparative of *heil*, not a plural). `a`, the
+genuine `-er` plural, was retargeted at hunspell's `SFX R` in the same pass.
 
 ##### When igerman98 has no headword to ask about
 
