@@ -399,6 +399,23 @@ because the compound splitter reads the wrong spelling as a legal compound:
 | `german_wider_wieder.rs` | `wiederspiegeln` → `widerspiegeln`, `widerholen` → `wiederholen` | splits as `wieder` + `spiegeln`; both are words |
 | `german_absolute_superlative.rs` | `einzigste` → `einzige` | the affix rules generate the superlative productively |
 | `german_fixed_nominalization.rs` | `im übrigen` → `im Übrigen`, `des öfteren`, `auf dem laufenden` | every word is a real word, and the noun-phrase chunker sees an attributive adjective |
+| `german_subordinate_comma.rs` | the missing comma before `weil`, `obwohl`, `falls`, `bevor` | punctuation is not the spell checker's business |
+
+Comma placement is the most common mistake in written German and most of it needs
+a parser, but not this part: these conjunctions open a subordinate clause and
+nothing else. What the rule needs is a short list of exceptions, and the corpus
+found all of them:
+
+- a **capital letter** means it is a name — the corpus has *"im Kabinett Weil
+  III"*, the Minister-President;
+- an abbreviation's own full stop already separates the clauses — *"…, z. B.
+  weil …"*, where the tokenizer keeps the dot on the token;
+- a focus particle or coordinator carries the comma further left — *"Er kam, vor
+  allem weil …"*, *"…, und weil …"*;
+- a temporal modifier fuses with a *temporal* conjunction — *"noch bevor"*,
+  *"kurz nachdem"*, *"je nachdem"*. That list is kept separate on purpose:
+  *"Das Haus steht noch, obwohl es alt ist"* needs its comma, so `noch` cannot be
+  a particle everywhere.
 
 `german_fixed_nominalization.rs` is the one rule here that **cannot** be a Weir
 rule, and for an instructive reason: Weir matches words case-insensitively, so a

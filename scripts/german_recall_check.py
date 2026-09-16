@@ -51,6 +51,10 @@ INJECTIONS = [
     # Morphology the affix rules are responsible for
     ("missing epenthetic e", re.compile(r"\b(arbeit|red|öffn|rechn|arbeit)ete\b"), r"\1te"),
     ("wrong preterite", re.compile(r"\b(\w{3,})te\b"), r"\1ete"),
+    # Punctuation
+    # The span has to include the word before the conjunction: that is where the
+    # comma belongs, so that is what the linter marks.
+    ("missing comma", re.compile(r"(\w+), (weil|obwohl|falls|sobald|nachdem|bevor|sofern) "), r"\1 \2 "),
     # Capitalization
     ("fixed nominalization", re.compile(r"\b(im|des|ohne|bei|von) (Übrigen|Allgemeinen|Wesentlichen|Folgenden|Öfteren|Weiteren|Weiteres|Weitem|Neuem)\b"), lambda m: f"{m.group(1)} {m.group(2).lower()}"),
     ("lowercase noun", re.compile(r"\b(der|die|das) ([A-ZÄÖÜ])(\w{4,})\b"), None),

@@ -51,6 +51,7 @@ impl LanguageModule for GermanModule {
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
+            german_subordinate_comma::GermanSubordinateComma,
             german_wider_wieder::GermanWiderWieder,
         };
 
@@ -88,6 +89,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanWiderWieder", GermanWiderWieder);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
+        group.add("GermanSubordinateComma", GermanSubordinateComma);
         group
     }
 
