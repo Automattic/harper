@@ -7,6 +7,12 @@ use crate::{
     },
 };
 
+// Prepositions which work after "summary" but not after "summery". We can't use .then_preposition()
+// since some prepositions work after both.
+const POST_SUMMARY_PREPOSITIONS: &[&str] = &[
+    "about", "above", "below", "by", "for", "in", "into", "of", "to", "with",
+];
+
 pub struct SummarySummery {
     expr: FirstMatchOf,
 }
@@ -25,9 +31,13 @@ impl Default for SummarySummery {
                         .t_ws()
                         .t_aco("summery"),
                 ),
-                Box::new(SequenceExpr::aco("summery").t_ws().t_set([
-                    "about", "above", "below", "by", "for", "in", "into", "log", "of", "to", "with",
-                ])),
+                Box::new(SequenceExpr::aco("summery").t_ws_h().t_set(
+                    POST_SUMMARY_PREPOSITIONS.iter().copied().chain([
+                        "box", "boxes", "div", "control", "controls", "element", "elements",
+                        "field", "fields", "log", "logs", "object", "objects", "page", "pages",
+                        "row", "rows", "screen", "screens", "section", "sections", "tab", "tabs",
+                    ]),
+                )),
             ]),
         }
     }
@@ -43,17 +53,17 @@ impl ExprLinter for SummarySummery {
         })?
         .span;
 
-        let mut correction: Vec<char> = span.get_content(src).to_vec();
+        let mut correction = span.get_content(src).to_vec();
 
-        let swapped_a_e = match correction.get(4)? {
+        const AE_IDX: usize = 4;
+
+        *correction.get_mut(AE_IDX)? = match correction.get(AE_IDX)? {
             'a' => 'e',
             'A' => 'E',
             'e' => 'a',
             'E' => 'A',
             _ => return None,
         };
-
-        correction[4] = swapped_a_e;
 
         let suggestions = vec![Suggestion::ReplaceWith(correction)];
 
@@ -112,6 +122,8 @@ mod tests {
             "BOQs Financial Summary Application ADE 5838.",
         );
     }
+
+    // Prepositions that after "summery" indicate it should likely have been "summary"
 
     #[test]
     fn summery_about() {
@@ -177,15 +189,6 @@ mod tests {
     }
 
     #[test]
-    fn summery_log() {
-        assert_suggestion_result(
-            "Here is summery log: summary.log. Any advise please?",
-            SummarySummery::default(),
-            "Here is summary log: summary.log. Any advise please?",
-        );
-    }
-
-    #[test]
     fn summery_of() {
         assert_suggestion_result(
             "Summery of the contamination and progress.",
@@ -209,6 +212,143 @@ mod tests {
             "Yet not code-coverage summery with coverage percentage and missing lines",
             SummarySummery::default(),
             "Yet not code-coverage summary with coverage percentage and missing lines",
+        );
+    }
+
+    // Nouns that usually collocate after "summary"
+
+    #[test]
+    fn summery_box() {
+        assert_suggestion_result(
+            "How to remove summery box in magento review form",
+            SummarySummery::default(),
+            "How to remove summary box in magento review form",
+        );
+    }
+
+    #[test]
+    fn summery_boxes() {
+        assert_suggestion_result(
+            "those summery boxes are quite inviting because they do not only show the logo but also an example picture of the speaker/receiver",
+            SummarySummery::default(),
+            "those summary boxes are quite inviting because they do not only show the logo but also an example picture of the speaker/receiver",
+        );
+    }
+
+    #[test]
+    fn summery_control() {
+        assert_suggestion_result(
+            "have successfully implemented this for the Validation Summery control, input controls and ValidationToolTips",
+            SummarySummery::default(),
+            "have successfully implemented this for the Validation Summary control, input controls and ValidationToolTips",
+        );
+    }
+
+    #[test]
+    fn summery_div() {
+        assert_suggestion_result(
+            "does form and summery DIV in same view ?",
+            SummarySummery::default(),
+            "does form and summary DIV in same view ?",
+        );
+    }
+
+    #[test]
+    fn summery_element() {
+        assert_suggestion_result(
+            "How use summery element for label in cell of table view?",
+            SummarySummery::default(),
+            "How use summary element for label in cell of table view?",
+        );
+    }
+
+    #[test]
+    fn summery_field() {
+        assert_suggestion_result(
+            "Option without the summery field (if we can automate it via the description).",
+            SummarySummery::default(),
+            "Option without the summary field (if we can automate it via the description).",
+        );
+    }
+
+    #[test]
+    fn summery_fields() {
+        assert_suggestion_result(
+            "Add missing summery fields whenever is required",
+            SummarySummery::default(),
+            "Add missing summary fields whenever is required",
+        );
+    }
+
+    #[test]
+    fn summery_field_all_caps() {
+        assert_suggestion_result(
+            "The event with empty SUMMERY-field is not imported.",
+            SummarySummery::default(),
+            "The event with empty SUMMARY-field is not imported.",
+        );
+    }
+
+    #[test]
+    fn summery_log() {
+        assert_suggestion_result(
+            "Here is summery log: summary.log. Any advise please?",
+            SummarySummery::default(),
+            "Here is summary log: summary.log. Any advise please?",
+        );
+    }
+
+    #[test]
+    fn summery_object() {
+        assert_suggestion_result(
+            "I could print the filerev summery object between the filerev task and the usemin task",
+            SummarySummery::default(),
+            "I could print the filerev summary object between the filerev task and the usemin task",
+        );
+    }
+
+    #[test]
+    fn summery_hyphen_page() {
+        assert_suggestion_result(
+            "The heat-map on the summery-page in the month-overview (stats) ignores the first 10 days.",
+            SummarySummery::default(),
+            "The heat-map on the summary-page in the month-overview (stats) ignores the first 10 days.",
+        );
+    }
+
+    #[test]
+    fn summery_row() {
+        assert_suggestion_result(
+            "Automatically adding a month-summery row at the end of each month?",
+            SummarySummery::default(),
+            "Automatically adding a month-summery row at the end of each month?",
+        );
+    }
+
+    #[test]
+    fn summery_screen() {
+        assert_suggestion_result(
+            "On the summery screen the four graphs at the bottom (Energy, Thermals, Disk,Network) are constantly resizing",
+            SummarySummery::default(),
+            "On the summary screen the four graphs at the bottom (Energy, Thermals, Disk,Network) are constantly resizing",
+        );
+    }
+
+    #[test]
+    fn summery_section() {
+        assert_suggestion_result(
+            "How can I change WooCommerce checkout page order summery section style?",
+            SummarySummery::default(),
+            "How can I change WooCommerce checkout page order summary section style?",
+        );
+    }
+
+    #[test]
+    fn summery_tab() {
+        assert_suggestion_result(
+            "double click on that bar and it should give you more infomation in the Summery tab",
+            SummarySummery::default(),
+            "double click on that bar and it should give you more infomation in the Summary tab",
         );
     }
 }

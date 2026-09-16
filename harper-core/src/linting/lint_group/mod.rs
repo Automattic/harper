@@ -36,6 +36,7 @@ use super::aspire_to::AspireTo;
 use super::avoid_contractions::AvoidContractions;
 use super::avoid_curses::AvoidCurses;
 use super::back_in_the_day::BackInTheDay;
+use super::bare_bones::BareBones;
 use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
@@ -248,6 +249,7 @@ use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
+use super::rogue_rouge::RogueRouge;
 use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
@@ -654,6 +656,7 @@ impl LintGroup {
         insert_expr_rule!(AvoidContractions);
         insert_expr_rule!(AvoidCurses);
         insert_expr_rule!(BackInTheDay);
+        insert_expr_rule!(BareBones);
         insert_expr_rule_with_dict!(BarelyUn);
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
@@ -835,11 +838,11 @@ impl LintGroup {
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);
-        insert_struct_rule!(PreferPleaded);
-        insert_struct_rule!(PreferPled);
         insert_expr_rule!(PluralWrongWordOfPhrase);
         insert_struct_rule_with_dict!(PossessiveNoun);
         insert_expr_rule!(PossessiveYour);
+        insert_struct_rule!(PreferPleaded);
+        insert_struct_rule!(PreferPled);
         insert_struct_rule!(PreferSneaked);
         insert_struct_rule!(PreferSnuck);
         insert_expr_rule!(ProgressiveNeedsBe);
@@ -865,6 +868,7 @@ impl LintGroup {
         insert_expr_rule!(Respond);
         insert_expr_rule!(RightClick);
         insert_expr_rule!(RiseTheRanks);
+        insert_expr_rule!(RogueRouge);
         insert_expr_rule!(RollerSkated);
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
@@ -1373,5 +1377,14 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn spellcheck_beats_split_words_for_advices_4346() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            test_linter(),
+            "IMO these kind of advice never matters.",
+        );
     }
 }
