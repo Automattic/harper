@@ -308,9 +308,38 @@ is both the `-st` verb affix (so every noun carrying it also generates
 `arzneist`) and the flag `CompoundChecker` reads as "may form compounds".
 Dropping it from the nouns would silently change what decomposes.
 
-Pruning is therefore not simply a matter of dropping flags: `N`, `M`, `X`, `Y`
-and `a` are the colliding letters above, and `h` is load-bearing elsewhere.
-Separating the namespaces has to come first.
+##### Splitting a colliding flag
+
+`N` has been through this and is the worked example. Its affix and its property
+were the same letter, so the `-es` suffix reached every entry tagged a noun —
+the largest flag in the file — and generated `ergebnises` and `altertumes` for
+the great majority of them. Dropping the flag was not an option: that is the noun
+reading.
+
+The fix is to move the *affix* to a free character and leave the property where
+it is:
+
+1. Copy the affix definition from `N` to `0` and delete `N` from `affixes`.
+   `properties` is untouched, so every noun keeps its reading.
+2. Re-establish membership from igerman98, which has the same rule on `T`:
+   `mirror_hunspell_flag.py --from T --to 0`.
+
+`M` (compound `-er`) and `a` (umlaut plural, which has no umlaut in it) are the
+same shape of problem and have not been done. There is no free character left for
+them, so they need the other half of the idea: give the property a digit and free
+the letter for the affix.
+
+##### When igerman98 has no headword to ask about
+
+Harper stores plenty of entries igerman98 derives instead — `vergoldet` is an
+entry here and a generated form there — so membership cannot always be borrowed.
+`--all-entries` drops the membership gate and lets the form check decide alone.
+
+Use it with `--together`, which treats `--to` as one paradigm and adds all of the
+flags or none. Without that, each flag is judged alone and a noun picks up the
+single adjective-declension flag its plural happens to match: `Arznei` gains `R`
+on the strength of `arzneien`, and with it an adjective reading it should not
+have.
 
 ## The linters
 

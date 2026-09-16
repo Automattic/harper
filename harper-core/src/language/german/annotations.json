@@ -180,29 +180,6 @@
 			},
 			"rename_ok": true
 		},
-		"N": {
-			"#": "Compound word formation - noun + noun with 'es' interfix",
-			"kind": "suffix",
-			"cross_product": true,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "es",
-					"condition": "."
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {}
-					}
-				}
-			],
-			"base_metadata": {
-				"noun": {}
-			},
-			"rename_ok": true
-		},
 		"o": {
 			"#": "Compound word formation - noun + noun with 'es' interfix (lowercase alias)",
 			"kind": "suffix",
@@ -1771,6 +1748,29 @@
 			],
 			"target": [],
 			"base_metadata": {},
+			"rename_ok": true
+		},
+		"0": {
+			"#": "Noun genitive -es (des Hauses). Mirrors hunspell de_DE SFX T. Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
 			"rename_ok": true
 		}
 	},

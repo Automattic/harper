@@ -119,6 +119,20 @@ def main() -> int:
         help="the Harper flag(s) to act on, as one string (e.g. '78')",
     )
     parser.add_argument(
+        "--all-entries",
+        action="store_true",
+        help="consider every dictionary entry instead of only those igerman98 "
+        "marks, letting the form check alone decide. For flags Harper has "
+        "entries for that igerman98 has no headword for at all.",
+    )
+    parser.add_argument(
+        "--together",
+        action="store_true",
+        help="treat --to as one paradigm: add all of the flags or none. Without "
+        "it each flag is judged alone, which lets a noun pick up the single "
+        "adjective-declension flag its plural happens to match.",
+    )
+    parser.add_argument(
         "--prune",
         action="store_true",
         help="remove the flag(s) where hunspell rejects a generated form, "
@@ -127,8 +141,8 @@ def main() -> int:
     parser.add_argument("--dic", type=Path, default=DEFAULT_DIC)
     args = parser.parse_args()
 
-    if not args.prune and not args.source:
-        parser.error("--from is required unless --prune is given")
+    if not args.prune and not args.source and not args.all_entries:
+        parser.error("give --from, --all-entries or --prune")
 
     for path in (DICT, ANNOTATIONS, args.forms, args.dic):
         if not path.exists():
@@ -140,10 +154,16 @@ def main() -> int:
         for line in args.forms.read_text(encoding="utf-8", errors="replace").splitlines()
         if line.strip()
     }
-    members = set() if args.prune else lemmas_with(args.dic, args.source)
+    members = (
+        set()
+        if args.prune or args.all_entries
+        else lemmas_with(args.dic, args.source)
+    )
     rules = {flag: load_rule(flag) for flag in args.target}
     if args.prune:
         print(f"{len(forms)} hunspell forms, pruning '{args.target}'")
+    elif args.all_entries:
+        print(f"{len(forms)} hunspell forms, adding '{args.target}' wherever verified")
     else:
         print(
             f"{len(forms)} hunspell forms, {len(members)} lemmas carrying "
@@ -183,11 +203,20 @@ def main() -> int:
                 samples.append(f"{stripped}  ->  {word}/{kept}   (dropped {''.join(doomed)})")
             continue
 
-        if lower not in members:
+        if not args.all_entries and lower not in members:
             out.append(line)
             continue
 
-        missing = "".join(f for f in args.target if f not in flags and verified(f))
+        if args.together:
+            missing = (
+                args.target
+                if all(verified(f) for f in args.target)
+                and any(f not in flags for f in args.target)
+                else ""
+            )
+            missing = "".join(f for f in missing if f not in flags)
+        else:
+            missing = "".join(f for f in args.target if f not in flags and verified(f))
 
         if not missing:
             if any(flag not in flags for flag in args.target):
