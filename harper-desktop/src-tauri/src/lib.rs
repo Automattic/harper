@@ -201,8 +201,17 @@ pub fn run_tauri() {
 
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|_, event| {
+            // Keep the tray and service alive after the last window closes, but allow Quit.
+            if let tauri::RunEvent::ExitRequested {
+                code: None, api, ..
+            } = event
+            {
+                api.prevent_exit();
+            }
+        });
 }
 
 /// Run as a highlighter process.
