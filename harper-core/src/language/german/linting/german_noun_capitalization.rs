@@ -818,7 +818,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                                 | Punctuation::OpenRound
                                 | Punctuation::OpenSquare
                         )
-                );
+                ) || Self::is_opening_mark(tokens[end], document);
 
                 if (joins_coordination || grades_next_adjective || interrupts_phrase)
                     && end > i + 1
@@ -926,15 +926,42 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         false
     }
 
+    /// Is this token an opening quote or bracket, by its characters?
+    ///
+    /// The lexer is uneven about them: German's closing `“` arrives as
+    /// `Punctuation::Quote`, but the opening `„` as `Unlintable`. Reading the
+    /// character sidesteps the classification, and matching `Unlintable`
+    /// wholesale is not an option — it is also what inline code blocks get, and
+    /// those really do end a noun phrase.
+    fn is_opening_mark(token: &Token, document: &Document) -> bool {
+        let chars = document.get_span_content(&token.span);
+        chars.len() == 1 && matches!(chars[0], '„' | '“' | '»' | '«' | '‚' | '‘' | '›' | '‹')
+    }
+
     /// Does the phrase pick up again after the joiner or degree word at `index`?
     ///
     /// Several of them may stack — "eine große, aber **noch** **recht** junge
     /// Sammlung" — so the skip repeats until a token either continues the phrase
     /// or ends it.
     fn phrase_resumes_after(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        // Inside quotation marks a capitalized word is a title, whatever its
+        // part of speech: *das neue „**Wir**“* is a noun phrase, not a pronoun
+        // ending one.
+        let quoted = Self::is_opening_mark(tokens[index], document);
+
         let mut next = index + 1;
 
         while next < tokens.len() {
+            if quoted
+                && matches!(tokens[next].kind, TokenKind::Word(_))
+                && document
+                    .get_span_content(&tokens[next].span)
+                    .first()
+                    .is_some_and(|c| c.is_uppercase())
+            {
+                return true;
+            }
+
             if Self::continues_noun_phrase(tokens[next], document) {
                 return true;
             }

@@ -647,6 +647,38 @@ flagged, so the test is gated on the role.
 a `Dictionary::get_word_metadata` call there — see the note in
 `../AGENTS.md` about `CompoundAwareDictionary`'s global mutex.
 
+### How precise this rule actually is
+
+Measure it before trusting it. Classify every `GermanNounCapitalization` lint on
+the corpus by how hunspell knows the word: capitalized only means a noun and a
+probable true positive, lower case only means it is not a noun and the lint is
+wrong.
+
+On edited prose the ratio is bad, and improving the dictionary has not moved it.
+The overwhelming majority of the lints are **declined adjectives standing in for
+an elided noun** — *"die niedere und die hohe Gerichtsbarkeit"*, *"drei weitere,
+die …"*, *"gegen neue oder Schneegreifer"*, *"um andere zu unterrichten"*.
+German keeps those lower case, and they are structurally identical to the
+nominalizations that must be capitalized (*"auf das Wesentliche"*, *"nur für
+Deutsche"*). Part-of-speech tags and a shallow chunker cannot separate them;
+that distinction is semantic.
+
+Three attempts that did **not** pay off, so nobody repeats them:
+
+- Requiring a strong nominalizer (`das`, `alles`, `nichts`, `etwas`) to the left.
+  Only a fraction of the lints have one, and the rule's own tests demand that a
+  preposition license nominalization too — which is where most of the false
+  positives come from.
+- Stripping the `N` property from the entries hunspell knows only in lower case.
+  Correct in principle, and it changes nothing: the noun reading comes from the
+  plural affixes' `base_metadata` and from the compound decomposition, not from
+  `N`.
+- Reading the compound's word class off its head rather than defaulting to noun.
+  The words that need it are not compounds at all — `überschritt` is a prefixed
+  verb that decomposes as `über` + `Schritt`, and a head-driven rule still calls
+  that a noun. It needs typed elements, the same prerequisite as everything else
+  about the splitter.
+
 ### Auditing capitalization false positives
 
 Edited German prose should produce essentially **zero** `GermanNounCapitalization`
