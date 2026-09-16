@@ -704,6 +704,16 @@ Three attempts that did **not** pay off, so nobody repeats them:
   verb that decomposes as `über` + `Schritt`, and a head-driven rule still calls
   that a noun. It needs typed elements, the same prerequisite as everything else
   about the splitter.
+- Narrowing the blanket reject on `-en`/`-er`/`-es`/`-em` endings, which is what
+  costs the rule most of its recall (`Hauptquartier`, `Aussehen`, `Kloster` are
+  all waved through). Keeping only the unambiguously verbal endings buys eleven
+  points of recall and multiplies the lints on *correct* prose nearly sixfold.
+  The blanket reject is crude and it is earning its place.
+
+That last one is only knowable because both halves are measurable now. Run
+`just language-recall german` **and** `just language-lint-sources german` before
+and after any change here; one of them alone will tell you a change is an
+improvement when it is not.
 
 ### Auditing capitalization false positives
 
