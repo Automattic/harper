@@ -2,14 +2,16 @@ use std::sync::Arc;
 
 use hashbrown::HashSet;
 
-use crate::expr::Expr;
-use crate::linting::{
-    ExprLinter, LintKind, Suggestion,
-    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
-    informal_laughter::is_informal_laughter,
+use crate::{
+    Lint, Token,
+    expr::Expr,
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+        informal_laughter::is_informal_laughter,
+    },
+    spell::{Dictionary, FstDictionary, TrieDictionary},
 };
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
-use crate::{Lint, Token};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,

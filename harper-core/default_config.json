@@ -340,6 +340,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OutOfTheBox",
+								"state": true,
+								"label": "Out of the Box"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PleaseTakeALook",
 								"state": true,
 								"label": "Please Take A Look"
@@ -707,6 +714,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ShowCase",
+								"state": true,
+								"label": "Show Case"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Somebody",
 								"state": true,
 								"label": "Somebody"
@@ -731,6 +745,13 @@
 								"name": "Somewhere",
 								"state": true,
 								"label": "Somewhere"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Straightforward",
+								"state": true,
+								"label": "Straightforward"
 							}
 						},
 						{
@@ -853,6 +874,13 @@
 								"name": "AwaitFor",
 								"state": true,
 								"label": "Await For"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BainBane",
+								"state": true,
+								"label": "Bain / Bane"
 							}
 						},
 						{
@@ -1175,6 +1203,13 @@
 								"name": "HavePassed",
 								"state": true,
 								"label": "Have Passed"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hijack",
+								"state": true,
+								"lable": "Hijack"
 							}
 						},
 						{
@@ -2842,6 +2877,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SummarySummery",
+								"state": true,
+								"label": "Summary / Summery"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ThatThis",
 								"state": true,
 								"label": "That This"
@@ -4089,13 +4131,6 @@
 						},
 						{
 							"Bool": {
-								"name": "SlipperySlope",
-								"state": true,
-								"label": "Slippery Slope"
-							}
-						},
-						{
-							"Bool": {
 								"name": "AheadAnd",
 								"state": true,
 								"label": "Ahead and"
@@ -4330,6 +4365,13 @@
 								"name": "BanTogether",
 								"state": true,
 								"label": "Ban Together"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BareBones",
+								"state": true,
+								"label": "BareBones"
 							}
 						},
 						{
@@ -4610,6 +4652,13 @@
 								"name": "DampSquib",
 								"state": true,
 								"label": "Damp Squib"
+							}
+						},
+						{
+							"Bool": {
+								"name": "DenyOffer",
+								"state": true,
+								"label": "Deny Offer"
 							}
 						},
 						{
@@ -5573,6 +5622,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RogueRouge",
+								"state": true,
+								"label": "Rogue / Rouge"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RollerSkated",
 								"state": true,
 								"label": "Roller Skated"
@@ -5618,6 +5674,13 @@
 								"name": "SimpleGrammatical",
 								"state": true,
 								"label": "Simple Grammatical"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SlipperySlope",
+								"state": true,
+								"label": "Slippery Slope"
 							}
 						},
 						{
@@ -5674,6 +5737,13 @@
 								"name": "StatuteOfLimitations",
 								"state": true,
 								"label": "Statute Of Limitations"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SuchShame",
+								"state": true,
+								"label": "Such Shame"
 							}
 						},
 						{

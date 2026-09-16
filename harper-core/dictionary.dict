@@ -26140,7 +26140,8 @@ from/~P
 frond/NSg
 front/~NSJVdGW
 front-line/J
-front man/Ng
+front man/N0g♂
+front matter/Nmg
 front wheel/NgSJ
 front's/J
 frontage/~NgS
@@ -43005,6 +43006,8 @@ reversibly/Ry
 revert/~NSVGd
 revertible/J
 revetment/NSg
+review/VdGSBNg
+reviewer/NgS
 revile/Vd>GSNLZ
 revilement/Ng
 reviler/Ng
@@ -44556,7 +44559,7 @@ seismology/Nmg
 seize/~VGdSU
 seizure/~NgSV
 seldom/~R8          # removed `J` adjective sense is archaic
-select/~JVSGdev
+select/~JVSGdevB
 selection/~NwSg
 selective/~JY
 selectivity/Ng
@@ -47166,6 +47169,7 @@ statuesque/J
 statuette/~NgS
 stature/~NgSd
 status/~NgS
+status bar/NgS
 statute/~NgS
 statutorily/Ry
 statutory/~J
@@ -47778,7 +47782,8 @@ sublingual/JN
 submachine/VSNg
 submarginal/J
 submarine/~J>NgSVZ
-submariner/Ng
+submariner/NgS
+submenu/NgS
 submerge/VGdS
 submergence/Nmg
 submerse/VGdSJn
@@ -52126,7 +52131,7 @@ videophone/NgS
 videotape/~NwSgVdG
 videotex/Nmg
 vie/~VdSN
-view/~NgSVd>GrZ
+view/~NgSVd>GZ
 viewable/J
 viewer/~NgSr
 viewership/~Nmg
@@ -54722,6 +54727,7 @@ watchOS/Og
 webpack/Og
 whitespace/~NSg     # dictionaries prefer: white space
 wikilink/~NSg       # !! please check and comment !! elsewhere we have Wikilink
+worktree/NgS        # a git concept
 xkcd/Og
 z-buffer/NgS
 
