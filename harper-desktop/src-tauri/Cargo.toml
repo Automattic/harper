@@ -53,14 +53,18 @@ is-macro = "0.3.7"
 accessibility = "0.2.0"
 send_wrapper = "0.6.0"
 core-foundation = "0.10.1"
+objc2 = "0.6.4"
 objc2-app-kit = { version = "0.3.2", default-features = false, features = [
     "std",
     "libc",
+    "NSApplication",
+    "NSImage",
     "NSRunningApplication",
     "NSWorkspace",
 ] }
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "std",
+    "NSData",
     "NSGeometry",
     "objc2-core-foundation",
 ] }

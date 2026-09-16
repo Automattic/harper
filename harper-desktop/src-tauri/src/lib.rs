@@ -199,11 +199,25 @@ pub fn run_tauri() {
                 windows::show_settings_window(app.handle())?;
             }
 
+            #[cfg(target_os = "macos")]
+            windows::sync_dock_visibility(app.handle(), None)?;
+
             Ok(())
         })
         .build(tauri::generate_context!())
         .expect("error while building tauri application")
-        .run(|_, event| {
+        .run(|_app, event| {
+            #[cfg(target_os = "macos")]
+            if let tauri::RunEvent::WindowEvent {
+                label,
+                event: tauri::WindowEvent::Destroyed,
+                ..
+            } = &event
+            {
+                let _ = windows::sync_dock_visibility(_app, Some(label))
+                    .inspect_err(|err| error!("Could not update Dock visibility: {err}"));
+            }
+
             // Keep the tray and service alive after the last window closes, but allow Quit.
             if let tauri::RunEvent::ExitRequested {
                 code: None, api, ..
