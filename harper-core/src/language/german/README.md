@@ -870,12 +870,22 @@ number here is worse than no number. Record *how to measure* instead —
   yes; the two share `MIN_COMPOUND_PART_LEN` so they cannot drift apart on what
   an element is.
 
-  **A minimum length is not the fix.** Raising it from three to four was tried
-  and reverted: it catches `Diskusion` and `Vorraussetzung`, and costs several
-  hundred false positives on edited prose, because German builds just as freely
-  on short *prefixes* (`vor`, `aus`, `auf`, `neu`, `süd`) as on short nouns. Half
-  the new false positives were not explained by a short leading element at all.
-  The elements have to be typed — prefix vs. noun — before any threshold helps.
+  **A minimum length is not the fix**, and this has now been measured twice, the
+  second time on all three axes.
+
+  Raising it from three to four catches `Diskusion`, `Vorraussetzung` and the
+  doubled-letter typos the splitter waves through (`einemm` is `eine` + `mm`,
+  the millimetre). Recall and typo detection both improve slightly. It also
+  markedly increases the lower-case false positives — the ones that actually
+  interrupt a writer — because German builds just as freely on short *prefixes*:
+  every one of the new ones was a `vor-` verb (`vorgesehen`, `vorgeschlagen`,
+  `vorgenommen`).
+
+  Allowing a curated list of prefixes back in recovers most of that, and then the
+  list stops converging: the next round needs `-bar`, `rot`, `neo-`, `non-`, and
+  so on without end. A threshold that needs a hand-maintained exception list to
+  avoid regressions is a liability, not a fix. The elements have to be **typed** —
+  prefix vs. noun — before any threshold helps.
 - **Lower-case compounds are not caught**: `lernente` is wrong and `Lernente` is
   a (strange but well-formed) compound noun, and Hunspell draws exactly that
   line. Harper cannot, for two compounding reasons, and an attempt to add the
