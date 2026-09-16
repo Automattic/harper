@@ -325,6 +325,13 @@ largest class of false positive.
 The five-letter cap is what keeps a genuinely misspelled word set in capitals
 from being waved through.
 
+A **capital inside** a short token marks it the same way: `gGmbH`, `UdSSR`,
+`RoHS`, `VdS`, and the unit symbols `kV`, `dB`, `mA`, `CaO`. German orthography
+has no word-internal capital, so declining to spell-check these costs nothing,
+and each of them otherwise draws a suggestion list of pure noise. The length cap
+here is six — past that, a stray capital is likelier a typo in a real compound
+than an acronym.
+
 ## Development Guide
 
 ### Adding New Words
@@ -626,10 +633,17 @@ number here is worse than no number. Record *how to measure* instead —
 
 ## Known Gaps
 
-- **Vocabulary holes**: common nouns are still missing outright (check with
-  `just language-lint-sources german .archive/german-language/corpus`), and the
-  `-ung` / `-in` derivations are listed explicitly rather than derived, so a
-  missing base means a missing family.
+- **Vocabulary holes**: words are still missing outright — check with
+  `just language-lint-sources german .archive/german-language/corpus`, and read
+  the result against the expanded hunspell list rather than by eye.
+  `scripts/add_german_missing_verbs.py` closes the verb side of this; nouns have
+  no equivalent yet.
+
+  Do **not** size this gap by diffing the expanded hunspell list against
+  Harper's. That comparison says hundreds of thousands of words are missing and
+  it is wrong: Harper resolves compounds at lookup time, so a word absent from
+  the base expansion is usually still accepted. Only the corpus measures what a
+  reader would actually see.
 - **Over-permissive compound splitting**: the splitter accepts any chain of
   dictionary words, so misspellings that happen to decompose survive (`Standart`
   = `Stand` + `Art`, `Diskusion` = `Diskus` + `Ion`). The Weir rules patch the

@@ -266,6 +266,11 @@ fn score_german_candidate(misspelled: &[char], candidate: &[char], edit_distance
 /// in capitals ("HAUTPBAHNHOF") to the spell checker.
 const MAX_INITIALISM_LEN: usize = 5;
 
+/// The longest token a word-internal capital is allowed to mark as an
+/// abbreviation. Beyond this a stray capital is more likely a typo in a real
+/// compound than an acronym.
+const MAX_ABBREVIATION_LEN: usize = 6;
+
 /// Characters a Roman numeral is built from.
 const ROMAN_DIGITS: &[char] = &['I', 'V', 'X', 'L', 'C', 'D', 'M'];
 
@@ -294,7 +299,16 @@ fn is_non_lexical_token(word: &[char]) -> bool {
     }
 
     // Initialisms and acronyms.
-    word.len() <= MAX_INITIALISM_LEN && word.iter().all(|c| c.is_uppercase())
+    if word.len() <= MAX_INITIALISM_LEN && word.iter().all(|c| c.is_uppercase()) {
+        return true;
+    }
+
+    // A capital inside a short token marks it as an abbreviation, a legal form
+    // or a unit symbol rather than a German word: "gGmbH", "UdSSR", "RoHS",
+    // "kV", "dB", "mA", "CaO". German orthography has no word-internal capital,
+    // so nothing is lost by declining to spell-check these — and every one of
+    // them otherwise draws a suggestion list of pure noise.
+    word.len() <= MAX_ABBREVIATION_LEN && word[1..].iter().any(|c| c.is_uppercase())
 }
 
 /// A spell checker for German text with compound word handling.
@@ -522,7 +536,7 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
 #[cfg(test)]
 mod tests {
-    use super::GermanSpellCheck;
+    use super::{GermanSpellCheck, is_non_lexical_token};
     use crate::Document;
     use crate::language::german::dialects::GermanDialect;
     use crate::language::german::parsers::PlainGerman;
@@ -716,5 +730,28 @@ mod tests {
             Some("Wort"),
             "got {suggestions:?}"
         );
+    }
+
+    #[test]
+    fn word_internal_capital_marks_an_abbreviation() {
+        for token in ["gGmbH", "UdSSR", "RoHS", "kV", "dB", "mA", "CaO"] {
+            let chars: Vec<char> = token.chars().collect();
+            assert!(
+                is_non_lexical_token(&chars),
+                "{token} should not be spell-checked"
+            );
+        }
+    }
+
+    #[test]
+    fn ordinary_words_are_still_spell_checked() {
+        // No word-internal capital, or too long for the abbreviation rule.
+        for token in ["Wort", "wort", "Fußball", "Gebäudeversicherng"] {
+            let chars: Vec<char> = token.chars().collect();
+            assert!(
+                !is_non_lexical_token(&chars),
+                "{token} should be spell-checked"
+            );
+        }
     }
 }
