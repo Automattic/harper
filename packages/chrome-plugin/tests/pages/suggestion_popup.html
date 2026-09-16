@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Suggestion popup regression fixture</title>
+		<style>
+			body { margin: 24px; font-family: sans-serif; }
+			textarea, [contenteditable] {
+				display: block;
+				box-sizing: border-box;
+				width: min(700px, 100%);
+				height: 160px;
+				margin-bottom: 24px;
+				padding: 8px;
+				font: 16px/24px monospace;
+			}
+			[contenteditable] { border: 1px solid #888; }
+		</style>
+	</head>
+	<body>
+		<label for="first">First field</label>
+		<textarea id="first" spellcheck="false"></textarea>
+		<label for="second">Second field</label>
+		<textarea id="second" spellcheck="false"></textarea>
+		<div id="rich" contenteditable="true" role="textbox" aria-label="Rich text"></div>
+		<button type="button" id="outside">Outside the editor</button>
+	</body>
+</html>

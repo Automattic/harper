@@ -85,6 +85,11 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 	}
 }
 
+/** Locate replacement rows (including explicit empty states) inside Harper's suggestion popup. */
+export function getHarperSuggestionRows(page: Page): Locator {
+	return page.locator('.harper-container').getByRole('menuitem');
+}
+
 /** Locate the Harper highlights on a page. */
 export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
