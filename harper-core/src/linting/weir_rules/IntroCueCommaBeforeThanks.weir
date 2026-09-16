@@ -1,4 +1,4 @@
-expr main (no thanks)
+expr main <(no !(thanks to)), (no thanks)>
 
 let message "Set off `no` with a comma in the response phrase `no, thanks`."
 let description "Normalizes the common refusal phrase by inserting the missing comma."
@@ -31,3 +31,5 @@ allows "No thank you, I am good."
 allows "Yes thanks I am fine."
 allows "No-thanks messages are short."
 allows "Nothing to say, thanks."
+allows "The project shipped late, no thanks to the vendor."
+allows "We finished on time, no thanks to him."

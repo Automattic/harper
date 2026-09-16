@@ -7,8 +7,9 @@ soft-clean:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  # Clean target + all harper-* directories as they all have a rust backend and build into target
+  # Clean both the root workspace and standalone Desktop build artifacts.
   cargo clean
+  (cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo clean)
 
   # Handle packages/*
 
@@ -40,6 +41,7 @@ hard-clean: soft-clean
 alias fmt := format
 format:
   cargo fmt
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo fmt
   pnpm format
 
 # Build the shared component library
@@ -162,7 +164,7 @@ build-web: build-harperjs build-lint-framework build-components build-harper-edi
 
   cd "{{justfile_directory()}}/packages/web"
   pnpm install
-  pnpm build
+  ENABLE_ADMIN_ROUTES=false pnpm build
 
 # Start a development server for Harper Desktop.
 dev-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -178,7 +180,8 @@ dev-desktop-highlighter:
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo run -p harper-desktop -- highlighter
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo run -- highlighter
 
 # Check Harper Desktop frontend and Rust targets.
 check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
@@ -188,9 +191,16 @@ check-desktop: build-harperjs build-lint-framework build-components build-harper
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm check
+  just check-desktop-rust
 
-  cd "{{justfile_directory()}}"
-  cargo check -p harper-desktop --all-targets
+# Check formatting and lint all standalone Desktop Rust targets.
+check-desktop-rust:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo fmt -- --check
+  cargo clippy --all-targets -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
 # Build Harper Desktop Linux bundles.
 build-desktop-linux: build-harperjs build-lint-framework build-components build-harper-editor
@@ -200,6 +210,17 @@ build-desktop-linux: build-harperjs build-lint-framework build-components build-
   cd "{{justfile_directory()}}/harper-desktop"
   pnpm install
   pnpm tauri build -b deb,rpm,appimage
+
+# Build Harper Desktop Windows bundles.
+build-desktop-windows: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  rustup target add x86_64-pc-windows-msvc
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
 
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
@@ -442,11 +463,12 @@ check-rust: audit-dictionary
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
+  just check-desktop-rust
 
 # Perform format and type checking.
-check: check-rust check-js build-web
+check: check-rust check-js
 
-check-js: build-harperjs build-lint-framework build-components build-harper-editor
+check-js: build-harperjs build-lint-framework build-components build-harper-editor build-web
   #!/usr/bin/env bash
   set -eo pipefail
 
@@ -455,7 +477,7 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
 
   # Needed because Svelte has special linters
   cd "{{justfile_directory()}}/packages/web"
-  pnpm check
+  ENABLE_ADMIN_ROUTES=false pnpm check
 
 # Populate build caches and install necessary local tooling (tools callable via `pnpm run <tool>`).
 setup: build-harperjs test-harperjs test-vscode build-web build-wp build-obsidian build-chrome-plugin
@@ -494,6 +516,7 @@ dogfood:
 test-rust:
   echo Running all Rust tests
   cargo test -q
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo test -q
 
 # Test everything.
 test: test-rust test-harperjs test-vscode test-obsidian test-chrome-plugin test-firefox-plugin
@@ -602,7 +625,8 @@ bump-versions: update-vscode-linters
   #!/usr/bin/env bash
   set -eo pipefail
 
-  cargo ws version --no-git-push --no-git-tag --force '*'
+  # Include private workspace crates; standalone Desktop is updated below.
+  cargo ws version --all --no-git-push --no-git-tag --force '*'
 
   HARPER_VERSION=$(tq --raw --file harper-core/Cargo.toml .package.version)
 
@@ -632,6 +656,10 @@ bump-versions: update-vscode-linters
   mv package.json.edited package.json
 
   cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+
+  # Desktop is outside the workspace, so synchronize its crate and lockfile explicitly.
+  HARPER_VERSION="$HARPER_VERSION" perl -pi -e 's/^version = "[^"]+"$/version = "$ENV{HARPER_VERSION}"/' Cargo.toml
+  cargo update --workspace
 
   cat tauri.conf.json | jq ".version = \"$HARPER_VERSION\"" > tauri.conf.json.edited
   mv tauri.conf.json.edited tauri.conf.json
@@ -915,6 +943,30 @@ grep-config query:
   
   config.filter(g => g.Group.label.toLowerCase().includes(q) || g.Group.description.toLowerCase().includes(q))
         .forEach(g => console.log(`\x1b[1m${g.Group.label}\x1b[0m: \x1b[36m${g.Group.description}\x1b[0m`));
+
+# Run the native allocation profiler for spell-check operations.
+alias alloc-prof := alloc-profile
+alloc-profile:
+  cargo run --example alloc_profile -p harper-core --release
+
+# Run native benchmarks.
+bench:
+  cargo bench
+
+# Build harper-wasm with bench support and run the WASM benchmark harness.
+# Runs wasm-opt by default to match the shipping build; set DISABLE_WASM_OPT=1
+# to skip it (faster rebuilds, non-shipping numbers).
+bench-wasm:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-wasm"
+  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
+    wasm-pack build --target web --no-opt --out-dir pkg-bench --features bench
+  else
+    wasm-pack build --target web --out-dir pkg-bench --features bench
+  fi
+  node benches/wasm_bench.js
 
 # search configuration group settings for substring in name
 grep-config-settings query:

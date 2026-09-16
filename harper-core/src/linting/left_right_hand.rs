@@ -11,7 +11,7 @@ pub struct LeftRightHand {
 
 impl Default for LeftRightHand {
     fn default() -> Self {
-        let pattern = SequenceExpr::word_set(&["left", "right"])
+        let pattern = SequenceExpr::word_set(["left", "right"])
             .then_whitespace()
             .t_aco("hand")
             .then_whitespace()

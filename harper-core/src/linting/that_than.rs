@@ -62,7 +62,7 @@ impl ExprLinter for ThatThan {
 #[cfg(test)]
 mod tests {
     use super::ThatThan;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
 
     // adj-er that
 
@@ -77,28 +77,25 @@ mod tests {
 
     #[test]
     fn dont_flag_more_that() {
-        assert_lint_count(
+        assert_no_lints(
             "so it's probably more that Croatian had an easier test",
             ThatThan::default(),
-            0,
         );
     }
 
     #[test]
     fn dont_flag_easier_that_way() {
-        assert_lint_count(
+        assert_no_lints(
             "Given svelte now has signals, it might actually be easier that way.",
             ThatThan::default(),
-            0,
         );
     }
 
     #[test]
     fn dont_flag_better_that() {
-        assert_lint_count(
+        assert_no_lints(
             "So I am wondering if its better that I run SCENIC+ once on the integrated dataset or 3 times on the individual datasets",
             ThatThan::default(),
-            0,
         );
     }
 
@@ -171,19 +168,17 @@ mod tests {
     #[test]
 
     fn dont_fix_faster_that_way() {
-        assert_lint_count(
+        assert_no_lints(
             "You will get an answer quicker that way!",
             ThatThan::default(),
-            0,
         )
     }
 
     #[test]
     fn dont_fix_lighter_that() {
-        assert_lint_count(
+        assert_no_lints(
             "This is the code for Seed-Studio-based timer and desk lighter that I built as a gift for a good friend.",
             ThatThan::default(),
-            0,
         )
     }
 
@@ -191,19 +186,17 @@ mod tests {
 
     #[test]
     fn dont_flag_more_explicit_that() {
-        assert_lint_count(
+        assert_no_lints(
             "make it more explicit that those files are auto ...",
             ThatThan::default(),
-            0,
         );
     }
 
     #[test]
     fn dont_flag_more_clear_that() {
-        assert_lint_count(
+        assert_no_lints(
             "Make it more clear that users need to download the VS tooling installer for .NET Core in VS.",
             ThatThan::default(),
-            0,
         );
     }
 
@@ -211,28 +204,35 @@ mod tests {
 
     #[test]
     fn dont_flag_i_gathered_later_that() {
-        assert_lint_count(
+        assert_no_lints(
             "and I gathered later that he was a photographer",
             ThatThan::default(),
-            0,
         );
     }
 
     #[test]
     fn dont_flag_its_better_that() {
-        assert_lint_count(
+        assert_no_lints(
             "It’s better that the shock should all come at once.",
             ThatThan::default(),
-            0,
+        )
+    }
+
+    // GitHub issues
+
+    #[test]
+    fn dont_flag_number_that_1663() {
+        assert_no_lints(
+            " 455 │ `MAJOR.MINOR.PATCH` version number that increments with:",
+            ThatThan::default(),
         )
     }
 
     #[test]
-    fn dont_flag_number_that_1663() {
-        assert_lint_count(
-            " 455 │ `MAJOR.MINOR.PATCH` version number that increments with:",
+    fn issue_3902() {
+        assert_no_lints(
+            "A fish steamer that spans two burners is essential.",
             ThatThan::default(),
-            0,
-        )
+        );
     }
 }

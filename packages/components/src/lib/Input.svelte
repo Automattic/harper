@@ -9,10 +9,16 @@ export let value: HTMLInputAttributes['value'] = undefined;
 export let placeholder: HTMLInputAttributes['placeholder'] = undefined;
 export let className: string | undefined = undefined;
 export let size: InputSize = 'md';
+export let unstyled = false;
 
 let restClass: string | undefined;
 let restProps: Record<string, unknown> = {};
-const dispatch = createEventDispatcher<{ keydown: KeyboardEvent; blur: FocusEvent }>();
+const dispatch = createEventDispatcher<{
+	input: Event;
+	change: Event;
+	keydown: KeyboardEvent;
+	blur: FocusEvent;
+}>();
 
 const baseClasses =
 	'rounded-lg border border-cream-200 bg-white text-gray-900 placeholder-gray-500 shadow-sm outline-none transition focus:ring-2 focus:ring-primary-300 focus:border-cream-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:placeholder-cream-200 dark:focus:border-cream-600 dark:focus:ring-primary-600';
@@ -23,7 +29,12 @@ const sizeClasses: Record<InputSize, string> = {
 };
 
 $: ({ class: restClass, ...restProps } = $$restProps);
-$: classes = [baseClasses, sizeClasses[size] ?? sizeClasses.md, restClass, className]
+$: classes = [
+	!unstyled && baseClasses,
+	!unstyled && (sizeClasses[size] ?? sizeClasses.md),
+	restClass,
+	className,
+]
 	.filter(Boolean)
 	.join(' ');
 </script>
@@ -33,6 +44,8 @@ $: classes = [baseClasses, sizeClasses[size] ?? sizeClasses.md, restClass, class
 	type={type}
 	placeholder={placeholder}
 	bind:value
+	on:input={(event) => dispatch('input', event)}
+	on:change={(event) => dispatch('change', event)}
 	on:keydown={(event) => dispatch('keydown', event)}
 	on:blur={(event) => dispatch('blur', event)}
 	{...restProps}

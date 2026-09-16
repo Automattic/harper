@@ -42,7 +42,7 @@ impl Default for PronounKnew {
 
         let pronoun_adverb_then_new = SequenceExpr::with(pronoun_pattern)
             .then_whitespace()
-            .then_word_set(&["always", "never", "also", "often"])
+            .then_word_set(["always", "never", "also", "often"])
             .then_whitespace()
             .then_any_capitalization_of("new");
 

@@ -14,7 +14,7 @@ impl Default for ToHope {
         let pattern = SequenceExpr::default()
             .then_nominal()
             .then_whitespace()
-            .then_word_set(&["hop", "hopped"])
+            .then_word_set(["hop", "hopped"])
             .then_whitespace()
             .then_nominal();
 

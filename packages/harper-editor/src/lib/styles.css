@@ -4,6 +4,10 @@
 
 @source "./**/*.{svelte,ts}";
 
+@theme {
+	--font-serif: Domine, serif;
+}
+
 .harper-editor {
 	--harper-editor-font-size: inherit;
 }
@@ -48,6 +52,7 @@
 
 .harper-editor-surface,
 .harper-editor-surface.ql-editor {
+	position: relative;
 	padding: 0;
 	border: 0;
 	outline: 0;
@@ -63,6 +68,16 @@
 .harper-editor-surface:focus,
 .harper-editor-surface:focus-visible {
 	outline: 0;
+}
+
+.harper-editor-surface.ql-editor.ql-blank::before {
+	position: absolute;
+	top: 0;
+	right: 0;
+	left: 0;
+	color: var(--color-stone-500);
+	content: attr(data-placeholder);
+	pointer-events: none;
 }
 
 .harper-editor-surface p,

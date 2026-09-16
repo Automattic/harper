@@ -109,27 +109,30 @@ impl ExprLinter for HowTo {
 #[cfg(test)]
 mod tests {
     use super::HowTo;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
+
+    create_test_pool!(HowTo, HowTo, HowTo::default());
 
     #[test]
     fn flags_missing_to() {
         assert_suggestion_result(
             "Here's how clone the repository.",
-            HowTo::default(),
+            test_linter(),
             "Here's how to clone the repository.",
         );
     }
 
     #[test]
     fn ignores_correct_phrase() {
-        assert_lint_count("Here's how to clone the repository.", HowTo::default(), 0);
+        assert_lint_count("Here's how to clone the repository.", test_linter(), 0);
     }
 
     #[test]
     fn flags_other_verbs() {
         assert_suggestion_result(
             "Learn how install Rust.",
-            HowTo::default(),
+            test_linter(),
             "Learn how to install Rust.",
         );
     }
@@ -138,7 +141,7 @@ mod tests {
     fn ros_package_install() {
         assert_suggestion_result(
             "Can someone explain how install this ROS package on Humble?",
-            HowTo::default(),
+            test_linter(),
             "Can someone explain how to install this ROS package on Humble?",
         );
     }
@@ -147,7 +150,7 @@ mod tests {
     fn extract_and_install_app() {
         assert_suggestion_result(
             "Here’s a quick guide on how install an app you’ve extracted from a tarball.",
-            HowTo::default(),
+            test_linter(),
             "Here’s a quick guide on how to install an app you’ve extracted from a tarball.",
         );
     }
@@ -156,7 +159,7 @@ mod tests {
     fn dll_files() {
         assert_suggestion_result(
             "This video shows how fix missing DLL files on Windows.",
-            HowTo::default(),
+            test_linter(),
             "This video shows how to fix missing DLL files on Windows.",
         );
     }
@@ -165,7 +168,7 @@ mod tests {
     fn dofus_on_ubuntu() {
         assert_suggestion_result(
             "Full tutorial on how install Dofus under Ubuntu.",
-            HowTo::default(),
+            test_linter(),
             "Full tutorial on how to install Dofus under Ubuntu.",
         );
     }
@@ -174,7 +177,7 @@ mod tests {
     fn tar_gz_install() {
         assert_suggestion_result(
             "Find out how install software shipped as a .tar.gz archive.",
-            HowTo::default(),
+            test_linter(),
             "Find out how to install software shipped as a .tar.gz archive.",
         );
     }
@@ -183,7 +186,7 @@ mod tests {
     fn thrift_libraries() {
         assert_suggestion_result(
             "Anyone know how install the Thrift libraries from source?",
-            HowTo::default(),
+            test_linter(),
             "Anyone know how to install the Thrift libraries from source?",
         );
     }
@@ -192,7 +195,7 @@ mod tests {
     fn windows_adk() {
         assert_suggestion_result(
             "Lost the Windows ADK again—remind me how install it?",
-            HowTo::default(),
+            test_linter(),
             "Lost the Windows ADK again—remind me how to install it?",
         );
     }
@@ -201,7 +204,7 @@ mod tests {
     fn accounting_errors() {
         assert_suggestion_result(
             "Eight common accounting errors and how fix them.",
-            HowTo::default(),
+            test_linter(),
             "Eight common accounting errors and how to fix them.",
         );
     }
@@ -210,7 +213,7 @@ mod tests {
     fn sentence_fragments() {
         assert_suggestion_result(
             "Here’s what sentence fragments are and how fix them.",
-            HowTo::default(),
+            test_linter(),
             "Here’s what sentence fragments are and how to fix them.",
         );
     }
@@ -219,7 +222,7 @@ mod tests {
     fn zipper_slider() {
         assert_suggestion_result(
             "Quick demo on how fix a broken zipper slider.",
-            HowTo::default(),
+            test_linter(),
             "Quick demo on how to fix a broken zipper slider.",
         );
     }
@@ -228,91 +231,79 @@ mod tests {
     fn door_lock() {
         assert_suggestion_result(
             "Tips on how fix a door that won’t lock.",
-            HowTo::default(),
+            test_linter(),
             "Tips on how to fix a door that won’t lock.",
         );
     }
 
     #[test]
     fn already_correct_install() {
-        assert_lint_count(
-            "See how to install the package with apt.",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("See how to install the package with apt.", test_linter(), 0);
     }
 
     #[test]
     fn already_correct_fix() {
         assert_lint_count(
             "He showed me how to fix the zipper in ten minutes.",
-            HowTo::default(),
+            test_linter(),
             0,
         );
     }
 
     #[test]
     fn how_are_you() {
-        assert_lint_count("How are you?", HowTo::default(), 0);
+        assert_lint_count("How are you?", test_linter(), 0);
     }
 
     #[test]
     fn how_calm_you_are() {
-        assert_lint_count("I like how calm you are.", HowTo::default(), 0);
+        assert_lint_count("I like how calm you are.", test_linter(), 0);
     }
 
     #[test]
     fn how_will_you_make_up() {
-        assert_lint_count(
-            "How will you make up for your mistakes?",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("How will you make up for your mistakes?", test_linter(), 0);
     }
 
     #[test]
     fn storytelling_clause() {
         assert_lint_count(
             "I will tell about how leaving my husband led to my dog winning a Nobel Prize.",
-            HowTo::default(),
+            test_linter(),
             0,
         );
     }
 
     #[test]
     fn dont_flag_how_did_you() {
-        assert_lint_count("How did you get to school every day?", HowTo::default(), 0);
+        assert_lint_count("How did you get to school every day?", test_linter(), 0);
     }
 
     #[test]
     fn dont_flag_how_come() {
-        assert_lint_count(
-            "How come this has to be a special case?",
-            HowTo::default(),
-            0,
-        );
+        assert_lint_count("How come this has to be a special case?", test_linter(), 0);
     }
 
     #[test]
     fn allows_how_has() {
-        assert_lint_count("How Has This Been Tested?", HowTo::default(), 0);
+        assert_lint_count("How Has This Been Tested?", test_linter(), 0);
     }
 
     #[test]
     fn issue_1492() {
         assert_no_lints(
             "I hope to provide some insight into correct HTML formatting, in addition to how authors can avoid these issues.",
-            HowTo::default(),
+            test_linter(),
         );
 
-        assert_no_lints("But how does something like this...", HowTo::default());
+        assert_no_lints("But how does something like this...", test_linter());
     }
 
     #[test]
     fn allow_issue_1298() {
         assert_no_lints(
             "The story of how and why things came to this point.",
-            HowTo::default(),
+            test_linter(),
         );
     }
 
@@ -320,7 +311,7 @@ mod tests {
     fn dont_flag_false_positive_pr_1846() {
         assert_no_lints(
             "About how Microsoft, Google, and others are training people in Rust.",
-            HowTo::default(),
+            test_linter(),
         )
     }
 
@@ -328,20 +319,20 @@ mod tests {
     fn dont_flag_false_positives_1492_how_indexes() {
         assert_no_lints(
             "controls how indexes will be added to unwrapped keys of flat array-like objects",
-            HowTo::default(),
+            test_linter(),
         );
     }
 
     #[test]
     fn dont_flag_how_proper_noun_handles() {
-        assert_no_lints("rewrites how Wine handles file locking", HowTo::default());
+        assert_no_lints("rewrites how Wine handles file locking", test_linter());
     }
 
     #[test]
     fn dont_flag_how_work_is_structured() {
         assert_no_lints(
             "They need to rethink how work is structured and valued.",
-            HowTo::default(),
+            test_linter(),
         );
     }
 
@@ -349,7 +340,7 @@ mod tests {
     fn dont_flag_how_form_submissions_are_delivered() {
         assert_no_lints(
             "The Mail tab dictates how form submissions are delivered to you.",
-            HowTo::default(),
+            test_linter(),
         );
     }
 
@@ -357,7 +348,7 @@ mod tests {
     fn dont_flag_how_access_to_food_shaped_revolutions() {
         assert_no_lints(
             "We analyze how access to food shaped political ideologies.",
-            HowTo::default(),
+            test_linter(),
         );
     }
 
@@ -365,11 +356,11 @@ mod tests {
     fn issue_2124() {
         assert_no_lints(
             "I like how discord shows Spotify status on your profile.",
-            HowTo::default(),
+            test_linter(),
         );
         assert_no_lints(
             "To be determined based on how error handling is done in new paradigm.",
-            HowTo::default(),
+            test_linter(),
         );
     }
 }

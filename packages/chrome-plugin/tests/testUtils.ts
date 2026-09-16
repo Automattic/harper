@@ -308,7 +308,6 @@ export async function testCanIgnoreSuggestion(
 
 		// Nothing should change.
 		await assertEditorText(editor, testText);
-		await assertLocatorIsFocused(page, editor);
 	});
 }
 

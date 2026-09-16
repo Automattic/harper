@@ -65,6 +65,10 @@ let lfw = new LintFramework(
 		const entries = await Promise.all(
 			Object.entries(raw).map(async ([source, lintGroup]: [string, Lint[]]) => {
 				const unpacked = await Promise.all(lintGroup.map((lint) => unpackLint(text, lint, linter)));
+				lintGroup.forEach((l) => {
+					l.free();
+				});
+
 				return [source, unpacked] as const;
 			}),
 		);
@@ -140,7 +144,7 @@ async function updateLintFrameworkElements() {
 
 	if (quill == null) {
 		let { default: Quill } = await import('quill');
-		quill = new Quill(editor, {});
+		quill = new Quill(editor, { placeholder: 'Start writing...' });
 		const container = quill.container ?? quill.root?.parentElement;
 		container?.classList.add('harper-editor-quill-container');
 
