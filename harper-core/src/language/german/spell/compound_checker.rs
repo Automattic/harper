@@ -5,14 +5,16 @@
 //! Instead, it stores only the base words with their compound flags and checks
 //! at lookup time whether a word can be decomposed into valid compound parts.
 //!
-//! The decomposition mirrors the productive semantics proven in
-//! `GermanSpellCheck`'s fallback: any dictionary word of at least
-//! [`MIN_COMPOUND_PART_LEN`] characters (or any dictionary word carrying
-//! compound-formation flags, regardless of length) may act as a compound
+//! Any dictionary word of at least [`MIN_COMPOUND_PART_LEN`] characters — or a
+//! shorter one carrying compound-formation flags — may act as a compound
 //! element, and every standard German interfix (`""`, `s`, `n`, `en`, `er`,
 //! `es`) is attempted at each boundary. Membership is resolved against the
 //! base dictionary when one is injected via [`CompoundChecker::set_base_dictionary`],
 //! otherwise against a casing-tolerant set built from the word list.
+//!
+//! `GermanSpellCheck` has a second, weaker decomposition of its own. It shares
+//! these constants so the two cannot disagree about what an element is, but it
+//! is only reached when this one has already declined the word.
 //!
 //! Subproblems are memoized by `(segment, depth)`, turning the previously
 //! exponential re-decomposition of long or misspelled words into a
@@ -41,9 +43,16 @@ const COMPOUND_ADJ_FLAG: char = 'q';
 /// All standard German linking interfixes, tried at every compound boundary.
 const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 
-/// The minimum length of a dictionary word that may act as a compound element
-/// without carrying explicit compound-formation flags.
-const MIN_COMPOUND_PART_LEN: usize = 3;
+/// The minimum length of a dictionary word that may act as a compound element.
+///
+/// Three is too permissive — it is what lets `Diskusion` through as `Diskus` +
+/// `Ion` — but four is worse. Raising it costs several hundred false positives
+/// on edited prose, because German builds just as freely on short *prefixes*
+/// (`vor`, `aus`, `auf`, `neu`, `süd`) as on short nouns, and the decomposition
+/// has no way to tell a prefix from a noun. Fixing this needs typed elements,
+/// not a longer threshold; the frequent misspellings it lets through are caught
+/// by Weir rules instead.
+pub(crate) const MIN_COMPOUND_PART_LEN: usize = 3;
 
 /// The maximum nesting depth of a compound decomposition (mirrors the old
 /// engine's `depth > 10` cap).
@@ -216,8 +225,13 @@ impl CompoundChecker {
     /// A segment is usable iff it is a dictionary word AND it is either at
     /// least [`MIN_COMPOUND_PART_LEN`] characters long or carries compound
     /// flags. This keeps short real words such as `ei` or `öl` usable while
-    /// excluding short words without compound flags (for example the
-    /// preposition `zu`) and short garbage.
+    /// excluding short words without compound flags and short garbage.
+    ///
+    /// The flag exemption is weaker than it looks: `h`, the flag it mostly keys
+    /// on, is the near-universal bookkeeping marker that sits on almost every
+    /// noun entry. Replacing it with an explicit short-word list was tried and
+    /// reverted — it costs more false positives on edited prose than the junk
+    /// decompositions it prevents.
     fn element_usable(&self, segment: &[char]) -> bool {
         self.member_of(segment)
             && (segment.len() >= MIN_COMPOUND_PART_LEN || self.has_compound_flags(segment))

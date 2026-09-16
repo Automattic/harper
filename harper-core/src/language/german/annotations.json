@@ -1,20 +1,5 @@
 {
 	"affixes": {
-		"A": {
-			"#": "'be-' inseparable prefix (safe)",
-			"kind": "prefix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "be",
-					"condition": "[^b]"
-				}
-			],
-			"target": [],
-			"base_metadata": {},
-			"rename_ok": true
-		},
 		"B": {
 			"#": "'-heit' feminine noun suffix (safe)",
 			"kind": "suffix",
@@ -24,58 +9,6 @@
 					"remove": "",
 					"add": "heit",
 					"condition": "[^h]"
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {},
-						"morphology": {
-							"noun": {
-								"gender": "Feminine"
-							}
-						}
-					}
-				}
-			],
-			"base_metadata": {},
-			"rename_ok": true
-		},
-		"C": {
-			"#": "'-keit' feminine noun suffix (safe)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "keit",
-					"condition": "[^k]"
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {},
-						"morphology": {
-							"noun": {
-								"gender": "Feminine"
-							}
-						}
-					}
-				}
-			],
-			"base_metadata": {},
-			"rename_ok": true
-		},
-		"D": {
-			"#": "'-ung' feminine noun suffix (safe)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "ung",
-					"condition": "[^u]"
 				}
 			],
 			"target": [
@@ -105,32 +38,6 @@
 				}
 			],
 			"target": [],
-			"base_metadata": {},
-			"rename_ok": true
-		},
-		"F": {
-			"#": "'-chen' neuter diminutive suffix (safe)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "chen",
-					"condition": "[^c]"
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {},
-						"morphology": {
-							"noun": {
-								"gender": "Neuter"
-							}
-						}
-					}
-				}
-			],
 			"base_metadata": {},
 			"rename_ok": true
 		},
@@ -1009,6 +916,109 @@
 					"verb_form": "PAST_PARTICIPLE"
 				}
 			},
+			"rename_ok": true
+		},
+		"7": {
+			"#": "'-ung' nominalization of a verb. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). Pair with '8' for the plural.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "ung",
+					"condition": "[bgkpßsz]eln"
+				},
+				{
+					"remove": "eln",
+					"add": "lung",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ung",
+					"condition": "ern"
+				},
+				{
+					"remove": "en",
+					"add": "ung",
+					"condition": "en"
+				},
+				{
+					"remove": "",
+					"add": "ung",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "el",
+					"add": "lung",
+					"condition": "el"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"gender": "Feminine"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"8": {
+			"#": "'-ungen', the plural of the '7' nominalization. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). A separate flag because `target` metadata is per flag, not per replacement, and the plural has to be marked as one.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "ungen",
+					"condition": "[bgkpßsz]eln"
+				},
+				{
+					"remove": "eln",
+					"add": "lungen",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ungen",
+					"condition": "ern"
+				},
+				{
+					"remove": "en",
+					"add": "ungen",
+					"condition": "en"
+				},
+				{
+					"remove": "",
+					"add": "ungen",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "el",
+					"add": "lungen",
+					"condition": "el"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"gender": "Feminine",
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {},
 			"rename_ok": true
 		}
 	},

@@ -125,6 +125,42 @@ to `just language-coverage german` in one direction and very visible in the
 other: missing conjugation flags cost coverage against the base list too, because
 several lemmas are only reachable through them.
 
+#### Where the `-ung` nouns come from
+
+`Entscheidung` was missing from the dictionary, and so were `Bevölkerung`,
+`Veröffentlichung` and several thousand more. Not a regression — no revision of
+`dictionary.dict` ever had them, because igerman98 does not store them either.
+It stores the **verb**, `entscheiden`, with the suffix flag `J`, and derives both
+the noun and its plural from it.
+
+What igerman98 *does* store capitalized is `Entscheidungs/hij`, and that is a
+compounding stem carrying `NEEDAFFIX`: hunspell rejects it as a word on its own,
+and it exists only to build `Entscheidungsträger`. Harper's import kept that stem
+as an ordinary entry — which is why `entscheidungs` is in the dictionary and
+`entscheidung` was not — and dropped the derivation.
+
+Flags `7` (`-ung`) and `8` (`-ungen`) now mirror hunspell's `SFX J`. The suffix
+attaches to the stem, so the infinitive ending comes off first, and the
+conditions are all plain character classes that `Matcher` can express:
+
+| base ends in | strip | add | example |
+|---|---|---|---|
+| `en` | `en` | `ung` | entscheiden → Entscheidung |
+| `ern` | `n` | `ung` | ändern → Änderung |
+| `eln` | `eln` | `lung` | sammeln → Sammlung |
+| `[bgkpßsz]eln` | `n` | `ung` | wechseln → Wechselung |
+| `el` | `el` | `lung` | handel → Handlung |
+| anything but `n` | — | `ung` | zahl → Zahlung |
+
+`scripts/add_german_ung_derivation.py` hands the pair to the verbs igerman98
+marks with `J`, verifying every generated form against the expanded list first.
+
+One trap in that script is worth repeating: `de_DE.aff` declares
+`SET ISO8859-1`, but the `.dic` it ships next to is a symlink to the frami
+variant, which is UTF-8. Decoding on the declaration silently mangles every
+umlaut, and the script then reports no misses at all — because the entries never
+matched in the first place.
+
 #### Rules that do not fire
 
 `k`, `l`, `m` and `n` (past participles) have conditions such as
@@ -132,16 +168,61 @@ several lemmas are only reachable through them.
 anchoring: it reads `(`, `b`, `e`, `|` … as literal characters and matches only
 against the **end** of the word. Those four rules are consequently dead or
 nonsense, and hardly any entry carries them. Participles are covered by explicit
-dictionary entries instead (`gelernt`, `geschrieben`). The same is true of the
-derivational suffixes `B`/`C`/`D`/`F`/`G` (`-heit`, `-keit`, `-ung`, `-chen`,
-`-lein`): `-ung` nouns are listed explicitly rather than derived.
+dictionary entries instead (`gelernt`, `geschrieben`).
 
 Do not assume a flag in `annotations.json` is productive. Count its users first:
 
 ```bash
 just language-stats german
-grep -c '^[^#]*/[^ #]*D' dictionary.dict   # entries carrying the -ung flag
+grep -c '^[^#]*/[^ #]*7' dictionary.dict   # entries carrying the -ung flag
 ```
+
+#### Affixes and properties share one namespace
+
+`annotations.json` has two tables, `affixes` and `properties`, and a flag that
+appears in **both** is applied as both. Most of the overlaps are deliberate and
+say the same thing twice — `X` generates the `-e` plural and also marks the base
+a plural noun. Several do not, and those are traps:
+
+| flag | as an affix | as a property |
+|---|---|---|
+| `A` | `be-` prefix | adjective |
+| `C` | `-keit` | conjunction |
+| `D` | *(removed — see below)* | determiner |
+| `F` | `-chen` | feminine noun |
+| `I` | compound `-s` interfix | pronoun |
+
+`D` is the reason `-ung` is not on `D`: handing it to the verbs turned every one
+of them into an article, and the noun-phrase chunker then read half the corpus
+as a determiner sequence. The `-ung` derivation lives on `7` and `8` instead —
+digits, because they were the only characters free in both tables.
+
+The `A`, `C` and `F` *affixes* have been deleted. `F` was the expensive one: it
+sat on every feminine noun as a property, so the affix was appending `-chen` to
+all of them (`aufklärungchen`, `arzneichen`). The properties stay; only the affix
+definitions are gone. Check any new flag against both tables:
+
+```bash
+python3 -c "import json; d=json.load(open('annotations.json')); \
+  print(sorted(set(d['affixes']) & set(d['properties'])))"
+```
+
+#### The affixes over-generate
+
+A large share of the expanded word list is strings no German dictionary accepts:
+`N` appends `-es` to every noun it is on, `Y` tries both `-n` and `-en` so one is
+always wrong, `a` is meant to be the umlaut plural but has no umlaut in it
+(`mann` → `manner`). Measure it rather than guessing — expand hunspell, expand
+Harper, and subtract:
+
+```bash
+unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
+just language-coverage german     # reports Harper's expanded word count
+```
+
+Pruning is not simply a matter of dropping flags: `N`, `M`, `X`, `Y` and `a` are
+the colliding letters above, so removing one from an entry also removes its noun
+reading. Separating the namespaces has to come first.
 
 ## The linters
 
@@ -435,6 +516,15 @@ Its German rule set is more than an order of magnitude larger than Harper's, so
 on German prose it is effectively a superset and a good arbiter: a Harper lint
 that no LanguageTool match overlaps is a false positive.
 
+**Read its rules for the map, not for the content.** LanguageTool is LGPL and
+Harper is Apache-2.0, so its `grammar.xml`, `replace.txt` and the rest cannot be
+copied or transcribed into this directory — that would make Harper's German
+rules a derivative of LGPL data. What its rule set is legitimately good for is
+telling you *which error categories are worth having*: casing,
+Getrennt-/Zusammenschreibung, easily confused words, comma placement, typography.
+Pick a category, then write the rule here from the German grammar rather than
+from theirs, and verify it against the corpus.
+
 The scratch tooling for this lives in `.archive/german-language/scripts/`
 (untracked):
 
@@ -485,12 +575,20 @@ number here is worse than no number. Record *how to measure* instead —
   missing base means a missing family.
 - **Over-permissive compound splitting**: the splitter accepts any chain of
   dictionary words, so misspellings that happen to decompose survive (`Standart`
-  = `Stand` + `Art`). The Weir rules patch the frequent cases one at a time; the
-  splitter itself wants a part-of-speech and a minimum-length constraint. Note
-  there are *two* splitters — `CompoundChecker`, which `CompoundAwareDictionary`
-  consults on every lookup miss, and `GermanSpellCheck::try_compound_word_check`.
-  The linter's copy is unreachable in the normal pipeline, because the dictionary
-  has already said yes.
+  = `Stand` + `Art`, `Diskusion` = `Diskus` + `Ion`). The Weir rules patch the
+  frequent cases one at a time. Note there are *two* splitters —
+  `CompoundChecker`, which `CompoundAwareDictionary` consults on every lookup
+  miss, and `GermanSpellCheck::try_compound_word_check`. The linter's copy is
+  unreachable in the normal pipeline, because the dictionary has already said
+  yes; the two share `MIN_COMPOUND_PART_LEN` so they cannot drift apart on what
+  an element is.
+
+  **A minimum length is not the fix.** Raising it from three to four was tried
+  and reverted: it catches `Diskusion` and `Vorraussetzung`, and costs several
+  hundred false positives on edited prose, because German builds just as freely
+  on short *prefixes* (`vor`, `aus`, `auf`, `neu`, `süd`) as on short nouns. Half
+  the new false positives were not explained by a short leading element at all.
+  The elements have to be typed — prefix vs. noun — before any threshold helps.
 - **Lower-case compounds are not caught**: `lernente` is wrong and `Lernente` is
   a (strange but well-formed) compound noun, and Hunspell draws exactly that
   line. Harper cannot, for two compounding reasons, and an attempt to add the

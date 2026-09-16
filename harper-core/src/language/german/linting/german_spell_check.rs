@@ -1,10 +1,12 @@
 use hashbrown::HashMap;
 
+use crate::language::german::spell::compound_checker::MIN_COMPOUND_PART_LEN;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{CharStringExt, TokenStringExt, document::Document};
 
-const MIN_COMPOUND_PART_LEN: usize = 3;
+// `MIN_COMPOUND_PART_LEN` is imported rather than redeclared: this decomposition
+// and the dictionary's own must not disagree about what counts as an element.
 const MAX_COMPOUND_PARTS: usize = 5;
 const EMPTY_INTERFIX: &[char] = &[];
 const S_INTERFIX: &[char] = &['s'];
