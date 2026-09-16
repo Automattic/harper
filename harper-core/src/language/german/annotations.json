@@ -342,21 +342,219 @@
 			"rename_ok": true
 		},
 		"U": {
-			"#": "Adjective comparative -er",
+			"#": "Adjective comparative, declined (groß -> größere, teuer -> teurere). Mirrors hunspell de_DE SFX C.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
 					"remove": "",
-					"add": "er",
-					"condition": "."
+					"add": "ere",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "re",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "rer",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ren",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "rem",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "res",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ere",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "el",
+					"add": "lere",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "lerer",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "leren",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "lerem",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "leres",
+					"condition": "el"
+				},
+				{
+					"remove": "er",
+					"add": "rere",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "rerer",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "reren",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "rerem",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "reres",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "ere",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "lig",
+					"add": "eligere",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligerer",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligeren",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligerem",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligeres",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigere",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigerer",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigeren",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigerem",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigeres",
+					"condition": "[^hi]erig"
 				}
 			],
 			"target": [
 				{
 					"metadata": {
-						"adjective": {
-							"degree": "Comparative"
+						"adjective": {},
+						"morphology": {
+							"adjective": {
+								"degree": "Comparative"
+							}
 						}
 					}
 				}
@@ -367,21 +565,319 @@
 			"rename_ok": true
 		},
 		"W": {
-			"#": "Adjective superlative -sten",
+			"#": "Adjective superlative, declined (groß -> größte, komplex -> komplexesten). Mirrors hunspell de_DE SFX C.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "est",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "et"
+				},
+				{
+					"remove": "",
 					"add": "sten",
-					"condition": "."
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "lig",
+					"add": "eligst",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligste",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligster",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligsten",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligstem",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligstes",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigst",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigste",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigster",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigsten",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigstem",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigstes",
+					"condition": "[^hi]erig"
 				}
 			],
 			"target": [
 				{
 					"metadata": {
-						"adjective": {
-							"degree": "Superlative"
+						"adjective": {},
+						"morphology": {
+							"adjective": {
+								"degree": "Superlative"
+							}
 						}
 					}
 				}

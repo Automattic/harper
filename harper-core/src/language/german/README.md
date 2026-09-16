@@ -225,6 +225,29 @@ scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78 --apply
 | `U` | `9` | `un-` prefix, cross-product so the prefixed form still declines |
 | `A` | `O Q R S T` | adjective declension, including on participles |
 | `D` | `c` | present participle, declined |
+| `C` | `U`, `W` | comparative and superlative, declined |
+
+It also runs the other way. `--prune --to UW` **removes** a flag from every entry
+whose generated forms hunspell rejects, which is how a flag that was handed out
+too freely gets cleaned up:
+
+```bash
+scripts/mirror_hunspell_flag.py --forms forms.txt --to UW --prune --apply
+scripts/mirror_hunspell_flag.py --forms forms.txt --from C --to UW --apply
+```
+
+That pair is worth understanding, because the first half is what makes the second
+half affordable. Widening `U` and `W` from one form each to the full declined
+paradigm fixed `westlichste` and `komplexesten` — and, applied to every entry
+that happened to carry them, generated `aalartigere` and `aachtalster` by the
+hundred thousand. Pruning first removes the flag from the place names and
+non-gradable adjectives that should never have had it; only then is the wider
+rule a net gain. Measure both directions, not just the corpus:
+
+```bash
+just language-coverage german     # reports Harper's expanded word count
+# then compare that list against `forms.txt` to see what share it rejects
+```
 
 The script reads the rule out of `annotations.json` and applies it, so it cannot
 drift from what Harper will actually generate. It handles prefix rules too: their

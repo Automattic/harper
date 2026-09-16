@@ -110,17 +110,25 @@ def main() -> int:
     parser.add_argument(
         "--from",
         dest="source",
-        required=True,
-        help="the de_DE.dic flag whose membership to copy",
+        help="the de_DE.dic flag whose membership to copy (omit with --prune)",
     )
     parser.add_argument(
         "--to",
         dest="target",
         required=True,
-        help="the Harper flag(s) to add, as one string (e.g. '78')",
+        help="the Harper flag(s) to act on, as one string (e.g. '78')",
+    )
+    parser.add_argument(
+        "--prune",
+        action="store_true",
+        help="remove the flag(s) where hunspell rejects a generated form, "
+        "instead of adding them where it accepts every one",
     )
     parser.add_argument("--dic", type=Path, default=DEFAULT_DIC)
     args = parser.parse_args()
+
+    if not args.prune and not args.source:
+        parser.error("--from is required unless --prune is given")
 
     for path in (DICT, ANNOTATIONS, args.forms, args.dic):
         if not path.exists():
@@ -132,12 +140,15 @@ def main() -> int:
         for line in args.forms.read_text(encoding="utf-8", errors="replace").splitlines()
         if line.strip()
     }
-    members = lemmas_with(args.dic, args.source)
+    members = set() if args.prune else lemmas_with(args.dic, args.source)
     rules = {flag: load_rule(flag) for flag in args.target}
-    print(
-        f"{len(forms)} hunspell forms, {len(members)} lemmas carrying "
-        f"'{args.source}', adding '{args.target}'"
-    )
+    if args.prune:
+        print(f"{len(forms)} hunspell forms, pruning '{args.target}'")
+    else:
+        print(
+            f"{len(forms)} hunspell forms, {len(members)} lemmas carrying "
+            f"'{args.source}', adding '{args.target}'"
+        )
 
     out = []
     changed = 0
@@ -153,18 +164,30 @@ def main() -> int:
 
         word, _, flags = stripped.partition("/")
         lower = word.lower()
+
+        def verified(flag: str) -> bool:
+            kind, replacements = rules[flag]
+            produced = forms_for(lower, kind, replacements)
+            return bool(produced) and all(form in forms for form in produced)
+
+        if args.prune:
+            doomed = [f for f in args.target if f in flags and not verified(f)]
+            if not doomed:
+                out.append(line)
+                continue
+            kept = "".join(c for c in flags if c not in doomed)
+            trailing = body[len(body.rstrip()) :]
+            out.append(f"{word}/{kept}{trailing}{sep}{comment}")
+            changed += 1
+            if len(samples) < 12:
+                samples.append(f"{stripped}  ->  {word}/{kept}   (dropped {''.join(doomed)})")
+            continue
+
         if lower not in members:
             out.append(line)
             continue
 
-        missing = ""
-        for flag in args.target:
-            if flag in flags:
-                continue
-            kind, replacements = rules[flag]
-            produced = forms_for(lower, kind, replacements)
-            if produced and all(form in forms for form in produced):
-                missing += flag
+        missing = "".join(f for f in args.target if f not in flags and verified(f))
 
         if not missing:
             if any(flag not in flags for flag in args.target):
@@ -181,8 +204,11 @@ def main() -> int:
             shown = ", ".join(forms_for(lower, kind, replacements)[:3])
             samples.append(f"{stripped}  ->  {new_body}   ({shown})")
 
-    print(f"{changed} entries gain '{args.target}'")
-    print(f"{unverified} skipped: hunspell does not accept every generated form")
+    if args.prune:
+        print(f"{changed} entries lose one or more of '{args.target}'")
+    else:
+        print(f"{changed} entries gain '{args.target}'")
+        print(f"{unverified} skipped: hunspell does not accept every generated form")
     for s in samples:
         print(f"    {s}")
 
