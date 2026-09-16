@@ -82,20 +82,34 @@ The conjugation affixes — `d` (-te), `e` (-ten), `f` (-e), `h` (-st), `i` (-t)
 dictionary stores most verbs as the **infinitive** (`lernen`, `wandern`,
 `sammeln`), and only a minority as the bare stem (`spiel/~~Vej`).
 
-Each of those rules therefore carries seven mutually exclusive, exhaustive
-replacements keyed on the end of the base:
+Each of those rules therefore carries several mutually exclusive replacements
+keyed on the end of the base. The `t` endings — `d` (-te), `e` (-ten), `i` (-t) —
+carry hunspell de_DE's full set, because German inserts an **epenthetic `e`**
+between a stem ending in `d`, `t` or certain consonant clusters and the ending:
 
-| base ends in | example | strip | stem |
-|---|---|---|---|
-| `en` | `studieren`, `sparen` | `en` | `studier`, `spar` |
-| `ern` | `wandern` | `n` | `wander` |
-| `eln` | `sammeln` | `n` | `sammel` |
-| anything else | `spiel`, `abtrockn` | — | unchanged |
+| base ends in | strip | example |
+|---|---|---|
+| `e[lr]n` | `n` | wandern → wander**te**, sammeln → sammel**te** |
+| `[dtw]en` | `n` | arbeiten → arbeit**e**te, reden → red**e**te |
+| `[^dimntw]en` | `en` | machen → mach**te** |
+| `chnen` | `n` | rechnen → rechn**e**te |
+| `[^aäehilmnoöuür][mn]en` | `n` | öffnen → öffn**e**te, atmen → atm**e**te |
+| `[aäeilmnoöuür][mn]en` | `en` | lernen → lern**te**, entfernen → entfern**te** |
+| `un` | `n` | tun → tut |
+| anything not ending in `n` | — | the bare-stem entries |
 
-The remaining three patterns (`[^erl]n`, `[^e]rn`, `[^e]ln`) exist only to keep
-the "anything else" case from overlapping the first three: `Matcher` is
-fixed-length and end-anchored with no alternation, so one pattern cannot express
-"ends in n but not in en/ern/eln".
+The trick is that **how much is stripped decides whether the `e` appears**: leave
+the infinitive's own `e` in place (arbeit-e + te) or take it with the ending
+(mach + te). Without this the rules produced `arbeitte` and `errichtte`, and
+declined participles such as `verheiratet` and `vergoldete` were reported as
+misspellings.
+
+The verb endings that do not start with `t` need none of it: `f` (-e) *is* the
+epenthetic vowel, and `c` (-enden) and `j` (-en) attach after the whole `en` is
+stripped. Those three keep the simpler four-shape table (`en`/`ern`/`eln`/bare
+stem, plus the `[^erl]n`, `[^e]rn`, `[^e]ln` patterns that keep the bare-stem case
+from overlapping — `Matcher` is fixed-length and end-anchored with no
+alternation, so one pattern cannot express "ends in n but not in en/ern/eln").
 
 `j` is the exception to the table: for `-ern`/`-eln` verbs the plural and the
 infinitive *are* the base (`wir wandern`), so it puts the `n` back.
@@ -118,12 +132,26 @@ unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
 scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
 ```
 
-The case sensitivity is what keeps noun plurals out, and the script still skips
-entries that are already an inflected form (`brachte`, `berätst` — conjugating
-those yields `brachtete`). Re-running it is idempotent. The effect is invisible
-to `just language-coverage german` in one direction and very visible in the
-other: missing conjugation flags cost coverage against the base list too, because
-several lemmas are only reachable through them.
+It computes those forms by **reading the rules out of `annotations.json`** and
+applying them, rather than from a second hand-written copy of German verb
+morphology. Keep it that way. A paraphrase that missed the epenthetic `e` would
+silently skip every verb with a `d`- or `t`-final stem — the script would report
+no misses at all, because the forms it looked for were never the forms the rules
+produce.
+
+Two things the oracle alone does not settle:
+
+- `j` (-en) regenerates an `-en` entry unchanged, so hunspell accepts it for
+  every noun plural in the file. Only the `t` endings count as evidence of a
+  verb; `f` and `j` are taken along afterwards.
+- The form list carries lower-case *noun* forms too, because compounding needs
+  them. "Konzern" would otherwise be conjugated on the strength of `konzert` and
+  `konzerte`. A real verb form has no capitalized twin — at least one generated
+  form must be absent in capitalized shape.
+
+Re-running the script is idempotent. Its effect on `just language-coverage
+german` is easy to misread: missing conjugation flags cost coverage against the
+base list as well, because several lemmas are only reachable through them.
 
 #### Where the `-ung` nouns come from
 

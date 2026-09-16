@@ -561,34 +561,54 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "n",
+					"add": "te",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "[dtw]en"
+				},
+				{
 					"remove": "en",
 					"add": "te",
-					"condition": "en"
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "eien"
 				},
 				{
 					"remove": "n",
 					"add": "te",
-					"condition": "ern"
+					"condition": "[^e]ien"
 				},
 				{
 					"remove": "n",
 					"add": "te",
-					"condition": "eln"
+					"condition": "chnen"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "te",
-					"condition": "[^erl]n"
+					"condition": "[^c]h[mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "n",
 					"add": "te",
-					"condition": "[^e]rn"
+					"condition": "[^aäehilmnoöuür][mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "te",
-					"condition": "[^e]ln"
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "un"
 				},
 				{
 					"remove": "",
@@ -610,34 +630,54 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "[dtw]en"
+				},
+				{
 					"remove": "en",
 					"add": "ten",
-					"condition": "en"
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "eien"
 				},
 				{
 					"remove": "n",
 					"add": "ten",
-					"condition": "ern"
+					"condition": "[^e]ien"
 				},
 				{
 					"remove": "n",
 					"add": "ten",
-					"condition": "eln"
+					"condition": "chnen"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "ten",
-					"condition": "[^erl]n"
+					"condition": "[^c]h[mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "n",
 					"add": "ten",
-					"condition": "[^e]rn"
+					"condition": "[^aäehilmnoöuür][mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "ten",
-					"condition": "[^e]ln"
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "un"
 				},
 				{
 					"remove": "",
@@ -751,34 +791,54 @@
 			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "n",
+					"add": "t",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "[dtw]en"
+				},
+				{
 					"remove": "en",
 					"add": "t",
-					"condition": "en"
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "eien"
 				},
 				{
 					"remove": "n",
 					"add": "t",
-					"condition": "ern"
+					"condition": "[^e]ien"
 				},
 				{
 					"remove": "n",
 					"add": "t",
-					"condition": "eln"
+					"condition": "chnen"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "t",
-					"condition": "[^erl]n"
+					"condition": "[^c]h[mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "n",
 					"add": "t",
-					"condition": "[^e]rn"
+					"condition": "[^aäehilmnoöuür][mn]en"
 				},
 				{
-					"remove": "",
+					"remove": "en",
 					"add": "t",
-					"condition": "[^e]ln"
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "un"
 				},
 				{
 					"remove": "",
