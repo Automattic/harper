@@ -1,6 +1,7 @@
 import h from 'virtual-dom/h';
 import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
 import { getCaretPosition } from './editorUtils';
+import type { UnpackedLint } from './unpackLint';
 
 type ActivationKey = 'off' | 'shift' | 'control';
 
@@ -36,15 +37,21 @@ export default class PopupHandler {
 	private renderBox: RenderBox;
 	private pointerDownCallback: (e: PointerEvent) => void;
 	private activationKeyListener: (() => void) | undefined;
-	private readonly actions: Parameters<typeof SuggestionBox>[0]['actions'] & {
+	private readonly actions: {
 		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
 	};
 
-	constructor(
-		actions: Parameters<typeof SuggestionBox>[0]['actions'] & {
-			getActivationKey?: () => Promise<ActivationKey>;
-		},
-	) {
+	constructor(actions: {
+		getActivationKey?: () => Promise<ActivationKey>;
+		openOptions?: () => Promise<void>;
+		addToUserDictionary?: (words: string[]) => Promise<void>;
+		reportError?: (lint: UnpackedLint, ruleId: string) => Promise<void>;
+		setRuleEnabled?: (ruleId: string, enabled: boolean) => Promise<void> | void;
+	}) {
 		this.actions = actions;
 		this.currentLintBoxes = [];
 		this.currentHint = undefined;
