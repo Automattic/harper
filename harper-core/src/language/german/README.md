@@ -368,10 +368,21 @@ Adding and pruning are not symmetric for this reason. A missing form can only
 ever cost you an addition you did not make — harmless. The same missing form,
 read as grounds for pruning, deletes a word Harper had right.
 
-The verb tense flags `d`, `f` and `i` were taken through this and **left alone**:
-pruning them cut the junk share by barely a point and cost fifty-odd corpus false
-positives and a tenth of a point of reference coverage. Measure before you prune;
-the trade is not always there.
+The verb tense flags `d`, `f` and `i` were taken through this twice, and the
+second answer reversed the first.
+
+Judged on precision alone the prune looks bad: it costs sixty-odd false-positive
+occurrences on the corpus — almost all proper names — and a tenth of a point of
+reference coverage. That is what the first pass saw, and it left them alone.
+
+With the recall harness the same change reads differently. Those flags sit on
+entries that are already inflected forms, so `wurde` carried `f` and generated
+`wurdee`; the prune takes `wurdee`, `einemm` and thousands like them out of the
+dictionary. Injected-error recall rises by three points and typo detection by
+two — several hundred more real mistakes caught, for sixty false alarms on names.
+
+The lesson is the one in the section above: one metric will report an improvement
+that is not there, and will also hide one that is.
 
 ## The linters
 

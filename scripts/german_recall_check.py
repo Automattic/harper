@@ -13,6 +13,11 @@ class is a real error, not a random perturbation:
 
     scripts/german_recall_check.py .archive/german-language/corpus
 
+With `--forms` it also measures the other kind of miss: plausible typos of the
+words the corpus actually uses — a doubled letter, a dropped one from a pair, two
+letters swapped, `ss`/`ß` — kept only when hunspell rejects them, so every one is
+a real mistake. What Harper accepts there is a spell-check false negative.
+
 Recall alone is not the goal — a rule that flags everything would score 100% —
 so read it next to `just language-lint-sources german`, which is the precision
 side of the same coin.
@@ -99,10 +104,84 @@ def lints_by_file(paths: list[Path]) -> dict:
     }
 
 
+def typo_variants(word: str) -> set[str]:
+    """Plausible slips: a doubled letter, one dropped from a pair, a swap, ss/ß."""
+    out = set()
+    for i in range(len(word) - 1):
+        if word[i] == word[i + 1]:
+            out.add(word[:i] + word[i + 1 :])
+        elif word[i] != word[i + 1]:
+            out.add(word[:i] + word[i + 1] + word[i] + word[i + 2 :])
+    for i, ch in enumerate(word):
+        out.add(word[: i + 1] + ch + word[i + 1 :])
+    if "ss" in word:
+        out.add(word.replace("ss", "ß", 1))
+    if "ß" in word:
+        out.add(word.replace("ß", "ss", 1))
+    return {m for m in out if m != word}
+
+
+def report_typos(files: list[Path], forms_path: Path) -> None:
+    """How many real typos of frequent corpus words does Harper let through?"""
+    oracle = {
+        line.strip()
+        for line in forms_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if line.strip()
+    }
+
+    frequency: dict[str, int] = {}
+    for source in files:
+        for word in re.findall(r"\b[A-Za-zÄÖÜäöüß]{5,}\b", source.read_text(encoding="utf-8")):
+            frequency[word] = frequency.get(word, 0) + 1
+
+    ranked = sorted(frequency.items(), key=lambda kv: -kv[1])[:3000]
+    typos: dict[str, tuple[int, str]] = {}
+    for word, count in ranked:
+        if word not in oracle:
+            continue
+        for variant in typo_variants(word):
+            if variant in oracle or variant[:1].upper() + variant[1:] in oracle:
+                continue
+            typos.setdefault(variant, (count, word))
+
+    if not typos:
+        return
+
+    with tempfile.TemporaryDirectory() as tmp:
+        target = Path(tmp) / "typos.md"
+        target.write_text("\n\n".join(sorted(typos)), encoding="utf-8")
+        result = subprocess.run(
+            [str(CLI), "lint", "--dialect", "de", "--quiet", "--format", "json", str(target)],
+            capture_output=True,
+            text=True,
+        )
+        try:
+            flagged = {
+                l["matched_text"] for e in json.loads(result.stdout) for l in e["lints"]
+            }
+        except json.JSONDecodeError:
+            flagged = set()
+
+    missed = {t: v for t, v in typos.items() if t not in flagged}
+    caught = len(typos) - len(missed)
+    print(f"\n{'typos of frequent words':24} {len(typos):9} {caught:7} "
+          f"{caught / len(typos):7.0%}")
+    worst = sorted(missed.items(), key=lambda kv: -kv[1][0])[:10]
+    if worst:
+        print("  most frequent words whose typo slips through:")
+        for variant, (count, word) in worst:
+            print(f"    {word} -> {variant}")
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("corpus", type=Path, help="directory of clean .md prose")
     parser.add_argument("--limit", type=int, default=60, help="files to sample")
+    parser.add_argument(
+        "--forms",
+        type=Path,
+        help="hunspell form list from `unmunch`; enables the typo section",
+    )
     args = parser.parse_args()
 
     if not CLI.exists():
@@ -152,6 +231,9 @@ def main() -> int:
     if overall_injected:
         print(f"{'total':24} {overall_injected:9} {overall_caught:7} "
               f"{overall_caught / overall_injected:7.0%}")
+
+    if args.forms and args.forms.exists():
+        report_typos(files, args.forms)
     return 0
 
 
