@@ -128,9 +128,10 @@ def main() -> int:
     parser.add_argument(
         "--together",
         action="store_true",
-        help="treat --to as one paradigm: add all of the flags or none. Without "
-        "it each flag is judged alone, which lets a noun pick up the single "
-        "adjective-declension flag its plural happens to match.",
+        help="treat --to as one paradigm. When adding, add all of the flags or "
+        "none: judged alone, a noun picks up the single adjective-declension "
+        "flag its plural happens to match. When pruning, drop the set only if "
+        "none of it verifies, so one gap in igerman98 does not strip a tense.",
     )
     parser.add_argument(
         "--prune",
@@ -191,7 +192,15 @@ def main() -> int:
             return bool(produced) and all(form in forms for form in produced)
 
         if args.prune:
-            doomed = [f for f in args.target if f in flags and not verified(f)]
+            present = [f for f in args.target if f in flags]
+            if args.together:
+                # Drop the whole set only when none of it holds up. One failing
+                # tense is more often a gap in igerman98 than evidence the entry
+                # is not a verb: it lists the present for ~2000 verbs whose
+                # preterite it omits, and "bräunte" is a word either way.
+                doomed = present if present and not any(verified(f) for f in present) else []
+            else:
+                doomed = [f for f in present if not verified(f)]
             if not doomed:
                 out.append(line)
                 continue

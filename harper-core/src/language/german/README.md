@@ -357,6 +357,22 @@ single adjective-declension flag its plural happens to match: `Arznei` gains `R`
 on the strength of `arzneien`, and with it an adjective reading it should not
 have.
 
+##### The oracle has gaps, and pruning is where they bite
+
+`--together` matters just as much when pruning, where it drops the set only if
+*none* of it verifies. One failing form is weak evidence: igerman98 lists the
+present tense for around two thousand verbs whose preterite it simply omits, and
+`bräunte` is a German word whether or not `bräunen` carries hunspell's `Y`.
+
+Adding and pruning are not symmetric for this reason. A missing form can only
+ever cost you an addition you did not make — harmless. The same missing form,
+read as grounds for pruning, deletes a word Harper had right.
+
+The verb tense flags `d`, `f` and `i` were taken through this and **left alone**:
+pruning them cut the junk share by barely a point and cost fifty-odd corpus false
+positives and a tenth of a point of reference coverage. Measure before you prune;
+the trade is not always there.
+
 ## The linters
 
 `module.rs` registers the Rust linters; the Weir rules are discovered from
