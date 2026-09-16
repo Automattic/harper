@@ -180,8 +180,9 @@ conditions are all plain character classes that `Matcher` can express:
 | `el` | `el` | `lung` | handel → Handlung |
 | anything but `n` | — | `ung` | zahl → Zahlung |
 
-`scripts/add_german_ung_derivation.py` hands the pair to the verbs igerman98
-marks with `J`, verifying every generated form against the expanded list first.
+`scripts/mirror_hunspell_flag.py --from J --to 78` hands the pair to the verbs
+igerman98 marks with `J`, verifying every generated form against the expanded
+list first.
 
 One trap in that script is worth repeating: `de_DE.aff` declares
 `SET ISO8859-1`, but the `.dic` it ships next to is a symlink to the frami
@@ -205,6 +206,34 @@ just language-stats german
 grep -c '^[^#]*/[^ #]*7' dictionary.dict   # entries carrying the -ung flag
 ```
 
+#### Borrowing igerman98's flag membership
+
+Mirroring a hunspell rule into `annotations.json` is only half the job: the flag
+still has to reach the right entries. igerman98 already knows which words take
+it, so `scripts/mirror_hunspell_flag.py` copies that membership across and then
+*checks* the result — a Harper flag is added only when the expanded form list
+accepts every form the rule would generate for that entry.
+
+```bash
+unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
+scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78 --apply
+```
+
+| hunspell flag | Harper flag | what it is |
+|---|---|---|
+| `J` | `7`, `8` | `-ung` nominalization and its plural |
+| `U` | `9` | `un-` prefix, cross-product so the prefixed form still declines |
+| `A` | `O Q R S T` | adjective declension, including on participles |
+| `D` | `c` | present participle, declined |
+
+The script reads the rule out of `annotations.json` and applies it, so it cannot
+drift from what Harper will actually generate. It handles prefix rules too: their
+conditions describe the *start* of the word, not the end.
+
+Two flags left this way still had to be extended first — `c` used to emit a
+single `-enden` form, and now emits the whole declined participle. Extending an
+existing flag beats claiming a new character: the namespace is nearly exhausted.
+
 #### Affixes and properties share one namespace
 
 `annotations.json` has two tables, `affixes` and `properties`, and a flag that
@@ -222,8 +251,11 @@ a plural noun. Several do not, and those are traps:
 
 `D` is the reason `-ung` is not on `D`: handing it to the verbs turned every one
 of them into an article, and the noun-phrase chunker then read half the corpus
-as a determiner sequence. The `-ung` derivation lives on `7` and `8` instead —
-digits, because they were the only characters free in both tables.
+as a determiner sequence. The `-ung` derivation lives on `7` and `8` instead, and
+the `un-` prefix on `9` — digits, because they were the only characters free in
+both tables. Digits were already the established escape hatch here: `4`, `5` and
+`6` carry determiner, pronoun and conjunction for exactly the same reason. Only
+`0` is left, so prefer extending an existing flag to claiming it.
 
 The `A`, `C` and `F` *affixes* have been deleted. `F` was the expensive one: it
 sat on every feminine noun as a property, so the affix was appending `-chen` to

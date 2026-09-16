@@ -509,14 +509,54 @@
 			"rename_ok": true
 		},
 		"c": {
-			"#": "Verb present participle -enden (lern-enden)",
+			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Mirrors hunspell de_DE SFX D. Attaches to the stem like the other conjugation flags, so the infinitive ending comes off first.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "en",
+					"add": "end",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ende",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "endem",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
 					"add": "enden",
 					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ender",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "endes",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "end",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ende",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "endem",
+					"condition": "ern"
 				},
 				{
 					"remove": "n",
@@ -525,8 +565,58 @@
 				},
 				{
 					"remove": "n",
+					"add": "ender",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "endes",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "end",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ende",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "endem",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
 					"add": "enden",
 					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ender",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "endes",
+					"condition": "eln"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^erl]n"
 				},
 				{
 					"remove": "",
@@ -535,8 +625,58 @@
 				},
 				{
 					"remove": "",
+					"add": "ender",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
 					"add": "enden",
 					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^e]ln"
 				},
 				{
 					"remove": "",
@@ -545,11 +685,52 @@
 				},
 				{
 					"remove": "",
+					"add": "ender",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
 					"add": "enden",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "endes",
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {}
 			},
@@ -1078,6 +1259,21 @@
 					}
 				}
 			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"9": {
+			"#": "'un-' negating prefix (unangenehm, unbekannt). Mirrors hunspell de_DE PFX U. Cross-product so the prefixed form still takes the base's declension suffixes: un + bekannt -> unbekannt -> unbekannte. A digit because affixes and properties share one namespace and 'U' is already the adjective comparative.",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "un",
+					"condition": "."
+				}
+			],
+			"target": [],
 			"base_metadata": {},
 			"rename_ok": true
 		}
