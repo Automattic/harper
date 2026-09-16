@@ -441,6 +441,27 @@ largest class of false positive.
 The five-letter cap is what keeps a genuinely misspelled word set in capitals
 from being waved through.
 
+### Full stops that do not end a sentence
+
+`GermanSentenceCapitalization` reported the word after every abbreviation and
+every ordinal — *"Ludwig II. **von** Savoyen"*, *"und ggf. **die** Verstärkung"*,
+*"Bacteroides spec. **gehören**"*. On the archived corpus that was the **only**
+thing it ever fired on, so every one of its lints was a false positive.
+
+The period is not the rule's to judge: it belongs to the token before it. The
+linter now looks left before flagging and stays quiet after a numeral, a Roman
+numeral, or one of the abbreviations in `SENTENCE_INTERNAL_ABBREVIATIONS` —
+which is worth extending whenever a new one shows up, because German prose cites
+languages (`pol.`, `ahd.`), degrees (`Dr. theol.`) and taxonomy (`subsp.`)
+constantly. It also requires a space after the full stop, so a host name split at
+its own dot (`cassini.ehess`) is not read as a sentence break.
+
+What is left is markdown list and infobox fragments, where the source really does
+continue a line in lower case. That is a parsing artefact of the corpus, not a
+German rule.
+
+### Tokens that are not words, continued
+
 A **capital inside** a short token marks it the same way: `gGmbH`, `UdSSR`,
 `RoHS`, `VdS`, and the unit symbols `kV`, `dB`, `mA`, `CaO`. German orthography
 has no word-internal capital, so declining to spell-check these costs nothing,
