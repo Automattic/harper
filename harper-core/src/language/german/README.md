@@ -220,9 +220,14 @@ unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
 just language-coverage german     # reports Harper's expanded word count
 ```
 
-Pruning is not simply a matter of dropping flags: `N`, `M`, `X`, `Y` and `a` are
-the colliding letters above, so removing one from an entry also removes its noun
-reading. Separating the namespaces has to come first.
+`h` is in the same bind for a different reason. It has no property twin, but it
+is both the `-st` verb affix (so every noun carrying it also generates
+`arzneist`) and the flag `CompoundChecker` reads as "may form compounds".
+Dropping it from the nouns would silently change what decomposes.
+
+Pruning is therefore not simply a matter of dropping flags: `N`, `M`, `X`, `Y`
+and `a` are the colliding letters above, and `h` is load-bearing elsewhere.
+Separating the namespaces has to come first.
 
 ## The linters
 
@@ -243,10 +248,31 @@ Both consult closed stem lists only. `wider`/`wieder` is genuinely ambiguous for
 most stems (`widerhallen` and `wiederholen` are both correct), so anything not on
 a list is left alone.
 
-The Weir rules cover fixed misspellings in the same category — `garnicht`,
-`aufjedenfall`, `desweiteren`, `Vorraus`, `Standart` (read as `Stand` + `Art`),
-`Addresse`, `nähmlich`, `wiederrum` — plus `VergleichAls.weir`, which rewrites
-`wie` to `als` after a comparative.
+The Weir rules cover fixed misspellings in the same category — errors that stay
+invisible to the spell checker because the wrong spelling decomposes into real
+words. They fall into three groups:
+
+- **Closed up that should be split**: `garnicht`, `garkein`, `aufjedenfall`,
+  `desweiteren`, `wieviel` (two words since the 1996 reform).
+- **Split that should be closed up**: `irgend etwas`, `irgend jemand`,
+  `irgend wann`, `irgend wo`.
+- **Single misspellings**: `Standart` (reads as `Stand` + `Art`),
+  `Vorraussetzung` (`vor` + `raus` + `setzung`), `Diskusion` (`Diskus` + `Ion`),
+  `Addresse`, `nähmlich`, `wiederrum`, `Vorraus`.
+
+Two grammar rules sit alongside them: `VergleichAls.weir` rewrites `wie` to `als`
+after a comparative, and `SeidSeit.weir` corrects the verb `seid` to the
+preposition `seit` in front of a past or duration expression. The `seid`/`seit`
+pair is only decidable in that one direction — in *"ihr seit Jahren bestehender
+Betrieb"* the `seit` is correct — so the other direction is deliberately left
+alone.
+
+Every rule here is expected to be **silent on the archived corpus**. A firing
+there is a false positive until shown otherwise; check before committing one:
+
+```bash
+just language-lint-sources german .archive/german-language/corpus
+```
 
 Two Weir traps worth knowing:
 
@@ -255,6 +281,9 @@ Two Weir traps worth knowing:
 - `MatchCase` copies the source token's case onto the whole replacement, so a
   one-token source such as `aufjedenfall` would produce `auf jeden fall`. Use
   `Exact` whenever the replacement contains a word that must stay capitalised.
+- `becomes` is one string per rule, not per pattern, so a misspelling and its
+  plural need two files — `Diskussion.weir` and `Diskussionen.weir`. Folding them
+  into one alternation rewrites the plural to the singular.
 
 ### Tokens that are not words
 
