@@ -398,6 +398,19 @@ because the compound splitter reads the wrong spelling as a legal compound:
 |---|---|---|
 | `german_wider_wieder.rs` | `wiederspiegeln` → `widerspiegeln`, `widerholen` → `wiederholen` | splits as `wieder` + `spiegeln`; both are words |
 | `german_absolute_superlative.rs` | `einzigste` → `einzige` | the affix rules generate the superlative productively |
+| `german_fixed_nominalization.rs` | `im übrigen` → `im Übrigen`, `des öfteren`, `auf dem laufenden` | every word is a real word, and the noun-phrase chunker sees an attributive adjective |
+
+`german_fixed_nominalization.rs` is the one rule here that **cannot** be a Weir
+rule, and for an instructive reason: Weir matches words case-insensitively, so a
+rule for `im übrigen` would match the correct `Im Übrigen` too and rewrite it.
+The linter matches the nominalized word exactly and only the words before it
+case-insensitively, so a correct phrase is never touched.
+
+It also has to look *right*. These phrases are nominalizations only when no noun
+follows — *"im **Folgenden**"* against *"im folgenden **Jahr**"*, *"ohne
+**Weiteres**"* against *"ohne weiteres **Geld**"* — and reading the ending rather
+than the part of speech gets that wrong, because `werden` ends like a declined
+adjective and would hide *"im Folgenden werden Beispiele genannt"*.
 
 Both consult closed stem lists only. `wider`/`wieder` is genuinely ambiguous for
 most stems (`widerhallen` and `wiederholen` are both correct), so anything not on

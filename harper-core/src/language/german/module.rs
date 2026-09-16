@@ -44,6 +44,7 @@ impl LanguageModule for GermanModule {
             german_absolute_superlative::GermanAbsoluteSuperlative,
             german_adjective_agreement::GermanAdjectiveAgreement,
             german_case_usage::GermanCaseUsage, german_filler_words::GermanFillerWords,
+            german_fixed_nominalization::GermanFixedNominalization,
             german_noun_capitalization::GermanNounCapitalization,
             german_noun_declension::GermanNounDeclension,
             german_pronoun_agreement::GermanPronounAgreement,
@@ -86,6 +87,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanFillerWords", GermanFillerWords::default());
         group.add("GermanWiderWieder", GermanWiderWieder);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
+        group.add("GermanFixedNominalization", GermanFixedNominalization);
         group
     }
 

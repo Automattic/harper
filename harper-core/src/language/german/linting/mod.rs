@@ -4,6 +4,7 @@ pub mod german_absolute_superlative;
 pub mod german_adjective_agreement;
 pub mod german_case_usage;
 pub mod german_filler_words;
+pub mod german_fixed_nominalization;
 pub mod german_noun_capitalization;
 pub mod german_noun_declension;
 pub mod german_pronoun_agreement;

@@ -52,6 +52,7 @@ INJECTIONS = [
     ("missing epenthetic e", re.compile(r"\b(arbeit|red|öffn|rechn|arbeit)ete\b"), r"\1te"),
     ("wrong preterite", re.compile(r"\b(\w{3,})te\b"), r"\1ete"),
     # Capitalization
+    ("fixed nominalization", re.compile(r"\b(im|des|ohne|bei|von) (Übrigen|Allgemeinen|Wesentlichen|Folgenden|Öfteren|Weiteren|Weiteres|Weitem|Neuem)\b"), lambda m: f"{m.group(1)} {m.group(2).lower()}"),
     ("lowercase noun", re.compile(r"\b(der|die|das) ([A-ZÄÖÜ])(\w{4,})\b"), None),
 ]
 
@@ -65,6 +66,8 @@ def apply_injection(text: str, pattern: re.Pattern, replacement) -> tuple[str, l
         if replacement is None:
             # The capitalization case: lower-case the noun after the article.
             new = f"{match.group(1)} {match.group(2).lower()}{match.group(3)}"
+        elif callable(replacement):
+            new = replacement(match)
         else:
             new = match.expand(replacement)
         if new == match.group(0):
