@@ -45,24 +45,31 @@ test('Typst CodeMirror handles multiline suggestions distinctly', async ({ page 
 	await assertHighlightCount(page, initialHighlightCount - 1);
 });
 
-test('Typst CodeMirror can apply a suggestion after multiple preceding lines', async ({ page }) => {
-	test.setTimeout(120000);
-	await page.goto(TEST_PAGE_URL, { waitUntil: 'domcontentloaded' });
+for (const { name, precedingLines } of [
+	{
+		name: 'multiple preceding lines',
+		precedingLines: ['Clean first line', 'Clean second line', 'Clean third line'],
+	},
+	{
+		name: 'preceding blank lines',
+		precedingLines: ['', 'Clean first line', '', 'Clean second line', ''],
+	},
+]) {
+	test(`Typst CodeMirror can apply a suggestion after ${name}`, async ({ page }) => {
+		test.setTimeout(120000);
+		await page.goto(TEST_PAGE_URL, { waitUntil: 'domcontentloaded' });
 
-	const editor = page.locator('.cm-editor .cm-content[contenteditable="true"]').first();
-	await expect(editor).toBeVisible({ timeout: 30000 });
-	await replaceEditorContent(
-		editor,
-		'Clean first line\nClean second line\nClean third line\nThis is an test',
-	);
+		const editor = page.locator('.cm-editor .cm-content[contenteditable="true"]').first();
+		await expect(editor).toBeVisible({ timeout: 30000 });
+		const lines = [...precedingLines, 'This is an test'];
+		await replaceEditorContent(editor, lines.join('\n'));
+		await expect(editor.locator('.cm-line')).toHaveText(lines);
 
-	await assertHighlightCount(page, 1);
-	expect(await clickHarperHighlight(page)).toBe(true);
-	await page.getByTitle('Replace with "a"').click();
+		await assertHighlightCount(page, 1);
+		expect(await clickHarperHighlight(page)).toBe(true);
+		await page.getByTitle('Replace with "a"').click();
 
-	await expect(editor).toContainText('Clean first line');
-	await expect(editor).toContainText('Clean second line');
-	await expect(editor).toContainText('Clean third line');
-	await expect(editor).toContainText('This is a test');
-	await assertHighlightCount(page, 0);
-});
+		await expect(editor.locator('.cm-line')).toHaveText([...precedingLines, 'This is a test']);
+		await assertHighlightCount(page, 0);
+	});
+}
