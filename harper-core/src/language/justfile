@@ -354,3 +354,20 @@ check-english-parity features="all-languages":
 	#!/usr/bin/env bash
 	set -eo pipefail
 	python3 "{{justfile_directory()}}/scripts/check_english_parity.py" --features "{{features}}"
+
+# The other half of `language-lint-sources`: that one measures whether the rules
+# stay quiet on correct prose, this one whether they speak up on wrong prose.
+# A rule that never fires scores perfectly on precision alone.
+# Usage: just language-recall german
+#        just language-recall german .archive/german-language/corpus
+language-recall language dir="":
+	#!/usr/bin/env bash
+	set -euo pipefail
+	if [ "{{language}}" != "german" ]; then
+		echo "only german has an injection set so far"; exit 1
+	fi
+	echo "🔧 building harper-cli (feature harper-core/de) ..."
+	cargo build --release -q -p harper-cli --features harper-core/de
+	src_dir="{{dir}}"
+	[ -n "${src_dir}" ] || src_dir=".archive/german-language/corpus"
+	python3 scripts/german_recall_check.py "${src_dir}" --limit 300

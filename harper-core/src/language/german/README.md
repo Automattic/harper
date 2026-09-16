@@ -647,6 +647,28 @@ flagged, so the test is gated on the role.
 a `Dictionary::get_word_metadata` call there — see the note in
 `../AGENTS.md` about `CompoundAwareDictionary`'s global mutex.
 
+### Precision is only half of it
+
+The archived corpus is edited Wikipedia. It measures exactly one thing: whether
+Harper stays quiet on correct prose. It is silent about whether a rule fires when
+it should — and a rule that never fires at all scores perfectly by that measure.
+That is how the dead `k`/`l`/`m`/`n` participle affixes survived as long as they
+did.
+
+```bash
+just language-lint-sources german     # precision: does it stay quiet when right?
+just language-recall german           # recall: does it speak up when wrong?
+```
+
+The second injects the mistakes German writers actually make — `garnicht`,
+`seid Jahren`, `wiederspricht`, `größer wie`, `Standart`, a dropped epenthetic
+`e` — into that same clean prose at known offsets, and reports what fraction
+Harper flags. Read the two together: a rule that flags everything would score
+100% on recall alone.
+
+Add a class to `INJECTIONS` in `scripts/german_recall_check.py` whenever you add
+a rule. It is the cheapest way to find out that a rule has stopped working.
+
 ### How precise this rule actually is
 
 Measure it before trusting it. Classify every `GermanNounCapitalization` lint on
@@ -655,6 +677,10 @@ probable true positive, lower case only means it is not a noun and the lint is
 wrong.
 
 On edited prose the ratio is bad, and improving the dictionary has not moved it.
+The recall side is no better: `just language-recall german` lower-cases the nouns
+in that same prose, and the rule finds well under three quarters of them. Every
+other rule in the directory scores full marks on that harness, so this is not a
+measurement artefact — it is the one rule that is both noisy and incomplete.
 The overwhelming majority of the lints are **declined adjectives standing in for
 an elided noun** — *"die niedere und die hohe Gerichtsbarkeit"*, *"drei weitere,
 die …"*, *"gegen neue oder Schneegreifer"*, *"um andere zu unterrichten"*.
