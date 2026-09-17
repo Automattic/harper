@@ -3,15 +3,16 @@ mod accessibility_activation;
 mod accessibility_text;
 mod app_catalog;
 mod app_icons;
-mod app_search_index;
 mod core_foundation_utilities;
+mod focused_target;
 mod focused_window_pid;
 mod window_stability;
 
 use accessibility::TreeWalker;
 use accessibility::ui_element::AXUIElement;
 use accessibility_sys::{
-    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXTrustedCheckOptionPrompt,
+    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXFocusedUIElementAttribute,
+    kAXTrustedCheckOptionPrompt,
 };
 use accessibility_sys::{error_string, pid_t};
 use core_foundation::base::TCFType;
@@ -22,6 +23,7 @@ use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::Lint;
 use objc2_app_kit::NSRunningApplication;
+use send_wrapper::SendWrapper;
 use std::process::Command;
 use std::time::Duration;
 use std::{
@@ -43,7 +45,8 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
-use self::app_search_index::AppSearchIndex;
+use self::core_foundation_utilities::ax_element_attribute;
+use self::focused_target::FocusedTarget;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
@@ -52,14 +55,14 @@ use self::window_stability::{
 /// macOS implementation of the OS data the highlighter needs.
 ///
 /// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
-/// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
-/// targeting the app the user was reviewing.
+/// focused application. Remembering the last non-highlighter PID and exact UI element lets
+/// accessibility reads continue targeting the field the user was reviewing.
 pub struct MacBroker {
-    /// The PID of the most recently focused PID, along with the time the measurement was taken.
-    last_focused: Option<(pid_t, Instant)>,
+    /// Tauri requires a Send broker; retained AX handles must stay on their capturing thread.
+    /// The wrapper enforces that restriction for access and drop. Only the highlighter populates it.
+    last_focused: Option<SendWrapper<FocusedTarget>>,
     integrations: Arc<Mutex<Vec<Integration>>>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
-    installed_app_search_index: Mutex<AppSearchIndex>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
@@ -70,33 +73,31 @@ impl MacBroker {
             last_focused: None,
             integrations,
             application_icon_cache: Mutex::new(HashMap::new()),
-            installed_app_search_index: Mutex::new(AppSearchIndex::new()),
             window_movement: None,
             accessibility_activation: None,
         }
     }
 
-    /// The process ID of the currently focused window.
-    /// In the interest of performance, the returned value may be slightly stale.
-    fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
-        if let Some((last_focused, measurement_time)) = self.last_focused
-            && Instant::now().duration_since(measurement_time).as_secs() < 3
-        {
-            return Ok(Some(last_focused));
+    /// Refreshes the exact target during external focus and preserves it during overlay focus.
+    ///
+    /// The element lookup runs on every external-focus read, even within the same application.
+    /// A failed lookup clears the remembered element; it must not silently retain a different field.
+    fn resolve_target(
+        &mut self,
+        focused_pid: pid_t,
+        read_element: impl FnOnce(pid_t) -> Option<AXUIElement>,
+    ) -> Option<FocusedTarget> {
+        if focused_pid != std::process::id() as pid_t {
+            self.last_focused = Some(SendWrapper::new(FocusedTarget {
+                pid: focused_pid,
+                element: read_element(focused_pid),
+            }));
         }
 
-        let focused_pid = focused_window_pid::focused_window_pid()?;
-        let current_pid = std::process::id() as pid_t;
-
-        if focused_pid == current_pid {
-            Ok(self.last_focused.map(|v| v.0))
-        } else {
-            self.last_focused = Some((focused_pid, Instant::now()));
-            Ok(Some(focused_pid))
-        }
+        self.last_focused.as_deref().cloned()
     }
 
-    /// Check if the fronmost window for a given process is currently moving.
+    /// Check if the frontmost window for a given process is currently moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -292,34 +293,37 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
-    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Vec<ActionableLint> {
-        let pid = match self.target_pid() {
-            Ok(Some(pid)) => pid,
-            Ok(None) => {
-                self.window_movement = None;
-                self.reset_accessibility_activation();
-                return Vec::new();
-            }
+    fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
+        let focused_pid = match focused_window_pid::focused_window_pid() {
+            Ok(pid) => pid,
             Err(err) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused window: {err}");
-                return Vec::new();
+                return None;
             }
         };
+        let Some(target) = self.resolve_target(focused_pid, |pid| {
+            ax_element_attribute(&AXUIElement::application(pid), kAXFocusedUIElementAttribute).ok()
+        }) else {
+            self.window_movement = None;
+            self.reset_accessibility_activation();
+            return Some(Vec::new());
+        };
+        let pid = target.pid;
 
         let bundle_identifier = match bundle_identifier_for_pid(pid) {
             Ok(Some(bundle_identifier)) => bundle_identifier,
             Ok(None) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
-                return Vec::new();
+                return None;
             }
             Err(error) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
                 eprintln!("Unable to identify focused app bundle: {error}");
-                return Vec::new();
+                return None;
             }
         };
 
@@ -329,30 +333,35 @@ impl OsBroker for MacBroker {
             }
             Err(error) => {
                 eprintln!("Unable to read integrations: {error}");
-                false
+                return None;
             }
         };
 
         if !integration_enabled {
             self.window_movement = None;
             self.reset_accessibility_activation();
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         // Hide highlights while window is moving to avoid "sliding" behavior.
         if self.window_is_moving(pid) {
-            return Vec::new();
+            return Some(Vec::new());
         }
 
         let el = AXUIElement::application(pid);
         if !self.ensure_accessibility_activation(pid, &bundle_identifier, &el) {
-            return Vec::new();
+            return None;
         }
+
+        let Some(focused) = target.traversal_root(focused_pid == std::process::id() as pid_t)
+        else {
+            return Some(Vec::new());
+        };
 
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
 
-        walker.walk(&el, &collector);
+        walker.walk(&focused, &collector);
 
         collector.unwrap_rects()
     }
@@ -386,8 +395,13 @@ impl OsBroker for MacBroker {
         }
     }
 
-    fn system_integration_display_name(&self, bundle_id: &str) -> String {
-        app_catalog::system_integration_display_name(bundle_id)
+    fn integration_display_name(&self, bundle_id: &str) -> String {
+        app_catalog::integration_display_name(bundle_id)
+    }
+
+    fn installed_application_bundle_ids(&self) -> Result<Vec<String>, String> {
+        let ids = app_catalog::installed_application_bundle_ids()?;
+        Ok(ids.iter().cloned().collect())
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
@@ -431,16 +445,31 @@ impl OsBroker for MacBroker {
     }
 
     fn search_apps(&self, query: &str) -> Result<Vec<AppSearchResult>, String> {
-        let mut lock = self
-            .installed_app_search_index
-            .lock()
-            .map_err(|_| "Could not lock search index.".to_owned())?;
+        let list = app_catalog::installed_application_search_results()?;
 
-        if lock.is_empty() {
-            lock.populate()?;
+        let query = query.trim();
+
+        if query.is_empty() {
+            return Ok(list.to_vec());
         }
 
-        Ok(lock.search(query))
+        if let Some(result) = list
+            .iter()
+            .find(|result| result.bundle_id == query)
+            .cloned()
+        {
+            return Ok(vec![result]);
+        }
+
+        let lower_query = query.to_lowercase();
+        Ok(list
+            .iter()
+            .filter(|result| {
+                result.name.to_lowercase().contains(&lower_query)
+                    || result.bundle_id.to_lowercase().contains(&lower_query)
+            })
+            .cloned()
+            .collect())
     }
 }
 

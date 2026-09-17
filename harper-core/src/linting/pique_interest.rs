@@ -13,7 +13,7 @@ pub struct PiqueInterest {
 impl Default for PiqueInterest {
     fn default() -> Self {
         let pattern =
-            SequenceExpr::word_set(&["peak", "peaked", "peek", "peeked", "peeking", "peaking"])
+            SequenceExpr::word_set(["peak", "peaked", "peek", "peeked", "peeking", "peaking"])
                 .then_whitespace()
                 .then_kind_either(
                     TokenKind::is_non_plural_nominal,

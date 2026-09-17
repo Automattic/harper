@@ -1,4 +1,5 @@
 <script lang="ts">
+import { SearchIcon } from 'components';
 import { onMount } from 'svelte';
 import { type AppSearchResult, Client } from '$lib/client';
 import AppIcon from './AppIcon.svelte';
@@ -103,7 +104,7 @@ function submit() {
       <span>Enter the app bundle ID Harper should watch.</span>
     </div>
     <div class="modal-search">
-      <span class="settings-icon icon-search" aria-hidden="true"></span>
+      <SearchIcon className="settings-icon" />
       <input
         type="text"
         placeholder="Search for an app..."

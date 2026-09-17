@@ -58,9 +58,9 @@ export function maybeComputeGoogleDocsLintBoxes(
 				lint,
 				source: editor,
 				rule,
-				applySuggestion: (suggestion: UnpackedSuggestion) => {
+				applySuggestion: async (suggestion: UnpackedSuggestion) => {
 					const replacementText = suggestionToReplacementText(suggestion, resolvedSpan, source);
-					replaceGoogleDocsValue(resolvedSpan, replacementText, source);
+					await replaceGoogleDocsValue(resolvedSpan, replacementText, source);
 				},
 				ignoreLint: opts.ignoreLint ? () => opts.ignoreLint!(lint.context_hash) : undefined,
 			});
