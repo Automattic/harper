@@ -1,0 +1,15 @@
+# "dasselbe" is one word. Split, both halves are real words, so the spell checker
+# has nothing to object to. (The contracted forms — "im selben Moment" — are
+# correct written apart and are deliberately not matched.)
+expr main (das selbe)
+
+let message "»dasselbe« wird zusammengeschrieben."
+let description "Zieht »das selbe« zu »dasselbe« zusammen."
+let kind "Spelling"
+let becomes "dasselbe"
+let strategy "MatchCase"
+
+test "Das ist das selbe Problem wie letztes Jahr." "Das ist dasselbe Problem wie letztes Jahr."
+
+allows "Das ist dasselbe Problem wie letztes Jahr."
+allows "Wir trafen uns im selben Moment am Bahnhof."

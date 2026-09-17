@@ -1,0 +1,15 @@
+# "als wie" is a doubled comparison particle. Only one of the two belongs there,
+# and after a comparative it is "als".
+expr main (als wie)
+
+let message "»als wie« doppelt die Vergleichspartikel. Nach einem Komparativ steht »als«."
+let description "Streicht das überzählige »wie« in »größer als wie«."
+let kind "Grammar"
+let becomes "als"
+let strategy "MatchCase"
+
+test "Er ist größer als wie sein Bruder." "Er ist größer als sein Bruder."
+test "Das war besser als wie erwartet." "Das war besser als erwartet."
+
+allows "Er ist größer als sein Bruder."
+allows "Er ist so groß wie sein Bruder."

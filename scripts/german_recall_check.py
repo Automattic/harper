@@ -44,6 +44,9 @@ INJECTIONS = [
     ("seid/seit", re.compile(r"\bseit (Jahren|Jahrzehnten|Monaten|Wochen)\b"), r"seid \1"),
     ("wider/wieder", re.compile(r"\bwiderspr(icht|echen|ach)\b"), r"wiederspr\1"),
     ("wie/als", re.compile(r"\b(größer|kleiner|besser|älter|länger|höher) als\b"), r"\1 wie"),
+    ("als wie", re.compile(r"\b(größer|kleiner|besser|älter|länger|höher) als\b"), r"\1 als wie"),
+    ("derselbe split", re.compile(r"\b(d)(er|ie|as)selbe\b"), r"\1\2 selbe"),
+    ("in + year", re.compile(r"(?<![\w.])([12][0-9]{3}) (wurde|war|begann|erschien|folgte)\b"), r"in \1 \2"),
     # Fixed misspellings that decompose into real words
     ("Standart", re.compile(r"\bStandard\b"), "Standart"),
     ("Diskusion", re.compile(r"\bDiskussion\b"), "Diskusion"),

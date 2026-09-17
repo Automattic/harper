@@ -52,7 +52,7 @@ impl LanguageModule for GermanModule {
             german_spell_check::GermanSpellCheck,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
-            german_wider_wieder::GermanWiderWieder,
+            german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
         };
 
         let mut group = LintGroup::empty();
@@ -90,6 +90,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
+        group.add("GermanYearPreposition", GermanYearPreposition);
         group
     }
 

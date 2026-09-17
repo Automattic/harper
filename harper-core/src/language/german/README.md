@@ -400,6 +400,7 @@ because the compound splitter reads the wrong spelling as a legal compound:
 | `german_absolute_superlative.rs` | `einzigste` → `einzige` | the affix rules generate the superlative productively |
 | `german_fixed_nominalization.rs` | `im übrigen` → `im Übrigen`, `des öfteren`, `auf dem laufenden` | every word is a real word, and the noun-phrase chunker sees an attributive adjective |
 | `german_subordinate_comma.rs` | the missing comma before `weil`, `obwohl`, `falls`, `bevor` | punctuation is not the spell checker's business |
+| `german_year_preposition.rs` | `in 2024` → `2024` / `im Jahr 2024` | an anglicism made of two correct words |
 
 Comma placement is the most common mistake in written German and most of it needs
 a parser, but not this part: these conjunctions open a subordinate clause and
@@ -443,7 +444,13 @@ words. They fall into three groups:
   `irgend wann`, `irgend wo`.
 - **Single misspellings**: `Standart` (reads as `Stand` + `Art`),
   `Vorraussetzung` (`vor` + `raus` + `setzung`), `Diskusion` (`Diskus` + `Ion`),
-  `Addresse`, `nähmlich`, `wiederrum`, `Vorraus`.
+  `Addresse`, `nähmlich`, `wiederrum`, `Vorraus`, `der/die/das selbe`.
+- **Doubled particles**: `als wie` after a comparative.
+
+One family that needed no rule at all: the English genitive apostrophe
+(`Peter's`, `Auto's`, `auf's`). The spell checker already rejects every one of
+them and suggests the right form, and it leaves the genuinely correct `Hans'`
+alone. Check before writing a rule.
 
 Two grammar rules sit alongside them: `VergleichAls.weir` rewrites `wie` to `als`
 after a comparative, and `SeidSeit.weir` corrects the verb `seid` to the
