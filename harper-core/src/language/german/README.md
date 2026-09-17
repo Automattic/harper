@@ -239,6 +239,39 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### The headwords Harper could not reach
+
+`dictionary.dict` is a subset of igerman98's word list, and the compound checker
+papers over about half of the difference: a missing headword often decomposes
+into parts Harper does have. The other half were simply reported as
+misspellings — proper names (`Kalaschnikow`, `Caligula`, `Rijswijk`),
+place-name derivations (`Ihringshausener`), and ordinary vocabulary (`Styropor`,
+`Parataxe`, `Lokativ`, `Absonderlichkeit`).
+
+`scripts/add_german_missing_words.py` imports them. It asks **harper-cli itself**
+which words are unreachable rather than reimplementing the decomposition, because
+the decomposition is the thing being measured and a second copy would drift:
+
+```bash
+cargo build --release -p harper-cli --features harper-core/multilingual
+scripts/add_german_missing_words.py --apply
+```
+
+Entries are written with the bare noun property — no affix, no compound flag. A
+freshly imported name has no vouched plural, and `mirror_hunspell_flag.py` is the
+tool for adding one, with every generated form checked.
+
+Two limits are deliberate:
+
+- **Capitalized headwords only.** igerman98 also lists lower-case compounding
+  stems that hunspell itself rejects as words (`entscheidungs`), and those must
+  not become entries.
+- **`--min-length 5`.** Any entry of three characters or more becomes a compound
+  element, and a short one is also a plausible typo of a frequent word. Importing
+  `Aa`, `Ahr`, `Alf` and `Abo` along with the rest cost several hundred
+  detections in `just language-recall german`; dropping them keeps nine-tenths of
+  the reference coverage for a tenth of that.
+
 #### Abbreviations, and why the table is short
 
 `ggf.`, `engl.`, `hg.`, `op.`, `var.` are ordinary German and were reported as
