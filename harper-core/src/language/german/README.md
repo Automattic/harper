@@ -812,6 +812,39 @@ An ordinal is also where the **sentence segmenter** splits, so *das sowjetische
 followed only by a numeral and a full stop is that split, and the adjective is
 left uncrowned rather than made the head.
 
+#### Quoted foreign titles
+
+German prose names foreign works without translating them, and a bibliography is
+mostly that. Several of those words are in the German dictionary with a noun
+reading — `texts`, `model`, `period`, `zone`, `roman`, `charme` — so each is
+reported as a lower-case German noun:
+
+> The Modes of scepticism: ancient **texts** and modern **interpretations**
+> Galien et la **philosophie**
+> De la cave **au** grenier
+
+`in_foreign_stretch` reads the neighbourhood, three word tokens either side.
+`FOREIGN_FUNCTION_WORDS` lists function words of the languages German quotes —
+English, French, Italian, Spanish, Latin — chosen so that **none of them is also
+a German word**; `des`, `in`, `da`, `so` and `e` are left out for that reason
+alone. One of those has to be adjacent, plus a second point from another function
+word or an unknown word.
+
+Two guards earn their place, and both were found by measuring rather than by
+reading the rule:
+
+- **Unknown words alone do not count.** German Wikipedia is full of proper names
+  the dictionary lacks; letting two of them silence the rule cost a fifth of the
+  injected lower-case nouns in `just language-recall german`.
+- **A German determiner directly in front wins.** *"durch die Zeitschrift Le
+  Mercure Galant"*, *"an der University of Virginia"* are German sentences that
+  merely name something foreign. Without this the rule cost recall; with it, the
+  corpus loses twenty-odd false positives at **no** measurable recall cost.
+
+Latin and taxonomic runs carry no function words at all — *"Conspectus generum
+avium"*, *"Mellisuga minima vielloti"* — and stay flagged. Widening the rule to
+reach them is what the first guard above rules out.
+
 A capital letter also outranks every part-of-speech reading on the token, which
 it did not before: the dictionary hands out spurious adverb and verb readings
 freely (`Band` is tagged an adverb), and rejecting the head on one of those was

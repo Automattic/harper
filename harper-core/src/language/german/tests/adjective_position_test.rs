@@ -129,6 +129,30 @@ mod tests {
         );
     }
 
+    /// A quoted foreign title is not German, and several of its words are in the
+    /// German dictionary with a noun reading. The foreign function words around
+    /// them say which language this is.
+    #[test]
+    fn words_inside_a_quoted_foreign_title_are_not_german_nouns() {
+        assert_quiet(
+            "Sie schrieb The Modes of scepticism: ancient texts and modern interpretations.",
+            "texts",
+        );
+        assert_quiet("Er gab Galien et la philosophie heraus.", "philosophie");
+        assert_quiet("Vovelles Buch De la cave au grenier erschien 1997.", "au");
+    }
+
+    /// A German article in front outranks that: the sentence is German and only
+    /// names something foreign.
+    #[test]
+    fn a_german_article_keeps_the_noun_german() {
+        let lints = flagged("Er wirkte an der university of Virginia.");
+        assert!(
+            lints.iter().any(|l| l == "university"),
+            "an article makes this a German noun phrase; flagged: {lints:?}"
+        );
+    }
+
     /// The head of an ordinary phrase is still found and still flagged.
     #[test]
     fn the_head_of_a_phrase_is_still_flagged() {
