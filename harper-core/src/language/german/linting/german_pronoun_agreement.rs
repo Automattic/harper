@@ -1,3 +1,6 @@
+//! **Not registered in the lint group.** It emits nothing, including on the
+//! examples in the documentation below.
+//!
 //! German pronoun agreement linter.
 //!
 //! This linter checks for proper pronoun agreement in German text.

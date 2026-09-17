@@ -1,3 +1,10 @@
+//! **Not registered in the lint group.** It emits nothing — not on "Der großes
+//! Haus", not on "Die guten Mann", not on "Ein alte Frau". Its six tests pass
+//! because every one of them asserts that *correct* text produces no lints, or
+//! checks the description string; none asserts that a wrong phrase is caught, so
+//! they would pass against a linter that does nothing at all. Which is what
+//! there is.
+//!
 //! German adjective agreement linter.
 //!
 //! This linter checks for proper adjective declension (adjective agreement) in German text.

@@ -1,3 +1,15 @@
+//! **Not registered in the lint group.** Its own source calls it "a basic
+//! implementation that will be enhanced", and it is exactly that: it takes any
+//! word for a verb and forms the third person by appending `t`, so it proposes
+//! `ist` -> `istt`, `die` -> `diet`, `ein` -> `eint`. Registered and working it
+//! produced over twelve thousand lints on the archived corpus, every one of them
+//! wrong.
+//!
+//! It was dormant by accident rather than by design — the loop indexed adjacent
+//! tokens and so compared each word with the space after it. That is fixed here,
+//! which is why it must stay out of the group until the agreement logic itself
+//! is real.
+//!
 //! German subject-verb agreement linter.
 //!
 //! This linter checks for proper subject-verb agreement in German text.
@@ -183,7 +195,14 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
 
         // This is a basic implementation that will be enhanced
         // For now, look for subject + verb patterns
-        let tokens = document.get_tokens();
+        // Skip the whitespace between them. Indexing raw adjacent tokens made
+        // this loop compare a word with the space after it, so it never fired —
+        // not even on the examples in this file's own documentation.
+        let tokens: Vec<&crate::Token> = document
+            .get_tokens()
+            .iter()
+            .filter(|t| !t.kind.is_whitespace())
+            .collect();
 
         for i in 0..tokens.len().saturating_sub(1) {
             let subject_token = &tokens[i];

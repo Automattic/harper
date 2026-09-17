@@ -1,3 +1,8 @@
+//! **Not registered in the lint group.** It emits nothing, including on the
+//! examples in the documentation below: "Ich sehe der Mann" and "wegen dem
+//! Regen" both pass. The whitespace bug that kept it from ever comparing two
+//! words is fixed here; the rest of the logic still has to be written.
+//!
 //! German case usage linter.
 //!
 //! This linter checks for proper case usage in German text.
@@ -161,7 +166,14 @@ impl<T: Dictionary> Linter for GermanCaseUsage<T> {
 
         // This is a basic implementation that will be enhanced
         // For now, look for preposition + noun patterns
-        let tokens = document.get_tokens();
+        // Skip the whitespace between them. Indexing raw adjacent tokens made
+        // this loop compare a word with the space after it, so it never fired —
+        // not even on the examples in this file's own documentation.
+        let tokens: Vec<&crate::Token> = document
+            .get_tokens()
+            .iter()
+            .filter(|t| !t.kind.is_whitespace())
+            .collect();
 
         for i in 0..tokens.len().saturating_sub(1) {
             let preposition_token = &tokens[i];

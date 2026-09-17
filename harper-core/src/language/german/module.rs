@@ -42,16 +42,11 @@ impl LanguageModule for GermanModule {
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
         use crate::language::german::linting::{
             german_absolute_superlative::GermanAbsoluteSuperlative,
-            german_adjective_agreement::GermanAdjectiveAgreement,
-            german_case_usage::GermanCaseUsage, german_filler_words::GermanFillerWords,
+            german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
             german_noun_capitalization::GermanNounCapitalization,
-            german_noun_declension::GermanNounDeclension,
-            german_pronoun_agreement::GermanPronounAgreement,
             german_sentence_capitalization::GermanSentenceCapitalization,
-            german_spell_check::GermanSpellCheck,
-            german_subject_verb_agreement::GermanSubjectVerbAgreement,
-            german_subordinate_comma::GermanSubordinateComma,
+            german_spell_check::GermanSpellCheck, german_subordinate_comma::GermanSubordinateComma,
             german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
         };
 
@@ -59,23 +54,6 @@ impl LanguageModule for GermanModule {
         group.add(
             "GermanSpellCheck",
             GermanSpellCheck::new(dictionary.clone()),
-        );
-        group.add(
-            "GermanAdjectiveAgreement",
-            GermanAdjectiveAgreement::new(dictionary.clone()),
-        );
-        group.add("GermanCaseUsage", GermanCaseUsage::new(dictionary.clone()));
-        group.add(
-            "GermanNounDeclension",
-            GermanNounDeclension::new(dictionary.clone()),
-        );
-        group.add(
-            "GermanPronounAgreement",
-            GermanPronounAgreement::new(dictionary.clone()),
-        );
-        group.add(
-            "GermanSubjectVerbAgreement",
-            GermanSubjectVerbAgreement::new(dictionary.clone()),
         );
         group.add(
             "GermanNounCapitalization",
