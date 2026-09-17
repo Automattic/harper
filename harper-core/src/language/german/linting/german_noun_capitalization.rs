@@ -443,38 +443,50 @@ const NOUN_PHRASE_LICENSORS: &[&str] = &[
     "vielen",
     "wenige",
     "wenigen",
-    // prepositions (incl. contracted forms)
-    "in",
+    // prepositions fused with an article: these *are* a determiner ("im
+    // Freien", "zum Guten"), which is why they are on this side of the split.
     "im",
     "ins",
-    "an",
     "am",
     "ans",
-    "auf",
     "aufs",
+    "beim",
+    "vom",
+    "zum",
+    "zur",
+    "übers",
+    "unters",
+    "durchs",
+    "fürs",
+    "ums",
+];
+
+/// Prepositions that open a noun phrase without supplying a determiner.
+///
+/// German nominalizes an adjective only under a determiner, and the nominalized
+/// form always carries a declension ending: *das Braune*, *im Freien*, *ein
+/// Kahler*. A bare preposition in front of a **base-form** adjective is
+/// therefore never a nominalization — *"weiß bis braun"*, *"von gelb zu weiß"*
+/// are predicative. Kept apart from [`NOUN_PHRASE_LICENSORS`] for exactly that
+/// distinction; both open a phrase.
+const NP_BARE_PREPOSITIONS: &[&str] = &[
+    "in",
+    "an",
+    "auf",
     "aus",
     "bei",
-    "beim",
     "mit",
     "nach",
     "von",
-    "vom",
     "vor",
     "zu",
-    "zum",
-    "zur",
     "über",
-    "übers",
     "unter",
-    "unters",
     "durch",
-    "durchs",
     "für",
-    "fürs",
     "gegen",
     "ohne",
     "um",
-    "ums",
     "seit",
     "während",
     "wegen",
@@ -534,7 +546,27 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
 
 /// Words that join coordinated attributive adjectives inside one noun phrase:
 /// *"in britische, französische **und** niederländische Kolonien"*.
-const COORDINATORS: &[&str] = &["und", "oder", "sowie", "beziehungsweise", "bzw"];
+/// Forms that are a relative pronoun as readily as an article or determiner.
+/// Only [`GermanNounCapitalization::opens_relative_clause`] uses this, and only
+/// straight after a comma or an opening bracket.
+const RELATIVE_PRONOUNS: &[&str] = &[
+    "der", "die", "das", "dem", "den", "dessen", "deren", "denen", "welcher", "welche", "welches",
+    "welchen", "welchem", "wer", "wen", "wem", "was",
+];
+
+const COORDINATORS: &[&str] = &[
+    "und",
+    "oder",
+    "sowie",
+    "beziehungsweise",
+    "bzw",
+    // Contrastive: "der milde, **aber** wenig angenehme Pilz". They join two
+    // attributive adjectives exactly the way "und" does, and stopping on one
+    // promoted the adjective in front of it to head.
+    "aber",
+    "jedoch",
+    "sondern",
+];
 
 /// Degree words that grade the adjective following them. They stand inside a
 /// noun phrase without being a modifier or the head of it.
@@ -562,6 +594,14 @@ const DEGREE_MODIFIERS: &[&str] = &[
     "meist",
     "vorwiegend",
     "überwiegend",
+    // Quantity words used as degree: "der milde, aber **wenig** angenehme Pilz".
+    "wenig",
+    "viel",
+    "fast",
+    "nahezu",
+    "annähernd",
+    "ausgesprochen",
+    "vorwiegend",
 ];
 
 const LANGUAGE_GLOSS_MARKERS: &[&str] = &[
@@ -680,7 +720,44 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         let lower = Self::lowercase_of(token, document);
-        NOUN_PHRASE_LICENSORS.contains(&lower.as_str()) || NUMERALS.contains(&lower)
+        NOUN_PHRASE_LICENSORS.contains(&lower.as_str())
+            || NP_BARE_PREPOSITIONS.contains(&lower.as_str())
+            || NUMERALS.contains(&lower)
+    }
+
+    /// Does this token supply a **determiner**, rather than merely open a phrase?
+    ///
+    /// The distinction only matters for nominalized adjectives, which German
+    /// licenses with a determiner and writes with a declension ending: *das
+    /// Braune*, *im Freien*. A bare preposition or a numeral supplies neither, so
+    /// *"weiß bis braun"*, *"von gelb zu weiß"* and *"davon sind vier unbewohnt"*
+    /// are predicative adjectives — not noun phrases whose head happens to be
+    /// lower case.
+    /// Is this adjective in its undeclined base form?
+    ///
+    /// German nominalizes an adjective *with* a declension ending — "für
+    /// **Deutsche**", "das **Gute**", "im **Freien**" — so a declined form after
+    /// a bare preposition is a real nominalization and stays a candidate. The
+    /// base form never is one: "weiß bis **braun**" and "von **gelb** zu weiß"
+    /// are predicative, and the noun spelling would be a separate lexeme ("das
+    /// Braun") rather than this word.
+    fn is_base_form_adjective(token: &Token, document: &Document) -> bool {
+        let lower = Self::lowercase_of(token, document);
+        !(lower.ends_with('e')
+            || lower.ends_with("en")
+            || lower.ends_with("er")
+            || lower.ends_with("es")
+            || lower.ends_with("em"))
+    }
+
+    fn supplies_determiner(token: &Token, document: &Document) -> bool {
+        if !matches!(token.kind, TokenKind::Word(_)) {
+            return false;
+        }
+        if token.kind.is_determiner() {
+            return true;
+        }
+        NOUN_PHRASE_LICENSORS.contains(&Self::lowercase_of(token, document).as_str())
     }
 
     /// Can this token sit *inside* a noun phrase — as an attributive adjective,
@@ -738,8 +815,71 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // An adjective reading marks an attributive modifier, a noun reading a
         // (miscapitalized) head. An out-of-vocabulary word is most likely one of
         // the two, and treating it as phrase-internal keeps the head from being
-        // mistaken for the word before it.
-        token.kind.is_noun() || token.kind.is_adjective() || token.kind.is_oov()
+        // mistaken for the word before it. So is a word the dictionary lists
+        // with no part of speech at all — `diversifizierte` is in there carrying
+        // nothing, and ending the phrase on it made "eine **reiche** und
+        // diversifizierte Tierwelt" a capitalization error.
+        token.kind.is_noun()
+            || token.kind.is_adjective()
+            || token.kind.is_oov()
+            || Self::has_no_pos_reading(token)
+    }
+
+    /// Is the token a word the dictionary knows but gives no part of speech?
+    ///
+    /// Distinct from [`TokenKind::is_oov`], which is the *missing* entry. An
+    /// entry with every reading empty carries no evidence either way, and the
+    /// chunker has to treat it the same as an unknown word rather than as a
+    /// phrase boundary.
+    fn has_no_pos_reading(token: &Token) -> bool {
+        match &token.kind {
+            TokenKind::Word(Some(metadata)) => {
+                metadata.noun.is_none()
+                    && metadata.verb.is_none()
+                    && metadata.adjective.is_none()
+                    && metadata.adverb.is_none()
+                    && metadata.pronoun.is_none()
+                    && metadata.determiner.is_none()
+                    && metadata.conjunction.is_none()
+                    && !metadata.preposition
+            }
+            _ => false,
+        }
+    }
+
+    /// Is the token at `index` a relative pronoun rather than an article?
+    ///
+    /// German spells them the same — `der`, `die`, `das`, `dem`, `den` are both
+    /// — and the difference decides what follows: an article introduces a noun
+    /// phrase, a relative pronoun a verb-final clause. The comma is the reliable
+    /// surface signal, because German punctuates every relative clause:
+    ///
+    /// ```text
+    /// der SV Rödinghausen, der zuletzt 2019 den Pokal gewinnen konnte
+    ///                      ^relative pronoun — "zuletzt" is not its head noun
+    /// ```
+    ///
+    /// Reading it as an article crowns whatever comes next, which in a relative
+    /// clause is an adverb or a finite verb: `unterging`, `angibt`, `verstreut`
+    /// and `zuletzt` were all reported as miscapitalized nouns this way.
+    ///
+    /// The cost is a lint inside *"das Haus, das große fenster hat"* — a noun
+    /// phrase really does follow there. It stays unflagged, which is the same
+    /// trade the rule makes everywhere else: a missed lint over a false one.
+    fn opens_relative_clause(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        if !RELATIVE_PRONOUNS.contains(&Self::lowercase_of(tokens[index], document).as_str()) {
+            return false;
+        }
+
+        index
+            .checked_sub(1)
+            .map(|previous| tokens[previous])
+            .is_some_and(|previous| {
+                matches!(
+                    previous.kind,
+                    TokenKind::Punctuation(Punctuation::Comma | Punctuation::OpenRound)
+                )
+            })
     }
 
     fn lowercase_of(token: &Token, document: &Document) -> String {
@@ -777,7 +917,9 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
 
         let mut i = 0;
         while i < tokens.len() {
-            if !Self::opens_noun_phrase(tokens[i], document) {
+            if !Self::opens_noun_phrase(tokens[i], document)
+                || Self::opens_relative_clause(tokens, i, document)
+            {
                 i += 1;
                 continue;
             }
@@ -852,7 +994,37 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 end -= 1;
             }
 
-            if end > i + 1 {
+            // A lone adjective under something that is not a determiner is
+            // predicative, not a nominalization: "die Markzone ist weiß bis
+            // **braun**", "von **gelb** zu weiß", "davon sind vier
+            // **unbewohnt**". German needs a determiner for the nominal reading,
+            // and then writes the declension ending with it — "das Braune". The
+            // phrase is left headless rather than crowning the adjective.
+            let predicative = end == i + 2
+                && tokens[end - 1].kind.is_adjective()
+                && Self::is_base_form_adjective(tokens[end - 1], document)
+                && !Self::supplies_determiner(tokens[i], document);
+
+            // An ordinal ends the *sentence* as far as the segmenter is
+            // concerned, so "das sowjetische 170. | Regiment" arrives here cut in
+            // half and the adjective is the last thing left. Everything after the
+            // phrase being a numeral and a full stop is the signature of that
+            // split; the head is in the next sentence, not on the adjective.
+            let split_at_ordinal = tokens[end..].iter().all(|t| {
+                matches!(
+                    t.kind,
+                    TokenKind::Number(_)
+                        | TokenKind::Decade
+                        | TokenKind::Punctuation(Punctuation::Period)
+                )
+            }) && tokens[end..]
+                .iter()
+                .any(|t| matches!(t.kind, TokenKind::Number(_) | TokenKind::Decade));
+
+            if end > i + 1
+                && !predicative
+                && !(split_at_ordinal && tokens[end - 1].kind.is_adjective())
+            {
                 for role in roles.iter_mut().take(end - 1).skip(i + 1) {
                     *role = NpRole::Modifier;
                 }
@@ -966,7 +1138,8 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 return true;
             }
 
-            if !DEGREE_MODIFIERS.contains(&Self::lowercase_of(tokens[next], document).as_str()) {
+            if !Self::skippable_inside_phrase(tokens[next], tokens.get(next - 1).copied(), document)
+            {
                 return false;
             }
 
@@ -974,6 +1147,38 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         false
+    }
+
+    /// May this token stand between an attributive adjective and the head?
+    ///
+    /// German puts a surprising amount here: a grading adverb (*"eine große,
+    /// aber **noch** recht junge Sammlung"*), a numeral or an ordinal (*"die
+    /// ehemalige **84.** Oberschule"*, *"eine große, **1671** gefertigte Uhr"*,
+    /// *"der lange **0,9 m** breite Gang"*), and further joiners when several
+    /// stack (*"reich, **aber** **auch** vielfältig"*). None of them is a
+    /// modifier or the head; stopping on one crowns the adjective in front of it
+    /// and reports a capitalization error on a perfectly ordinary attributive.
+    fn skippable_inside_phrase(token: &Token, prev: Option<&Token>, document: &Document) -> bool {
+        if matches!(
+            token.kind,
+            TokenKind::Number(_) | TokenKind::Decade | TokenKind::Punctuation(Punctuation::Comma)
+        ) {
+            return true;
+        }
+
+        // The full stop of an ordinal, and only that one — a sentence-final
+        // period is followed by a capitalized word, which `continues_noun_phrase`
+        // accepts, so skipping it would run one phrase into the next sentence.
+        if matches!(token.kind, TokenKind::Punctuation(Punctuation::Period))
+            && prev.is_some_and(|p| matches!(p.kind, TokenKind::Number(_) | TokenKind::Decade))
+        {
+            return true;
+        }
+
+        let lower = Self::lowercase_of(token, document);
+        DEGREE_MODIFIERS.contains(&lower.as_str())
+            || COORDINATORS.contains(&lower.as_str())
+            || UNIT_ABBREVIATIONS.contains(&lower)
     }
 
     /// Does the dictionary know `word` as an adjective?

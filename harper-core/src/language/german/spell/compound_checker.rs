@@ -357,14 +357,20 @@ impl CompoundChecker {
     }
 
     /// Get metadata for a compound word (for use in dictionary lookups)
+    ///
+    /// A German *Determinativkompositum* is **right-headed**: the last element
+    /// decides the word class, and everything in front of it only modifies.
+    /// `Stickstoff` + `tolerant` is an adjective, `Haus` + `Tür` a noun.
     pub fn get_compound_metadata(&self, word: &[char]) -> Option<DictWordMetadata> {
         if !self.is_compound_word(word) {
             return None;
         }
 
-        // Try to determine if it's a noun or adjective compound by checking decomposition
-        // If the compound starts with an adjective (COMPOUND_ADJ_FLAG), it's likely an adjective
-        if self.is_adjective_compound(word) {
+        // The head decides. This used to ask whether the *first* element was an
+        // adjective, which is the opposite question: "stickstofftolerant" and
+        // "galleresistent" came back nouns, and `GermanNounCapitalization` saw
+        // an unambiguous noun reading and reported them as miscapitalized.
+        if self.head_is_adjective(word) || self.opens_with_adjective(word) {
             return Some(DictWordMetadata {
                 adjective: Some(AdjectiveData::default()),
                 ..Default::default()
@@ -378,13 +384,52 @@ impl CompoundChecker {
         })
     }
 
-    /// Check if a compound word is an adjective compound
-    fn is_adjective_compound(&self, word: &[char]) -> bool {
-        if word.is_empty() {
+    /// Is the compound's head — its **last** element — an adjective?
+    ///
+    /// Walks the split points from the left, so the first hit is the longest
+    /// tail that is both a known adjective and preceded by a usable compound
+    /// element. The element test is the one [`CompoundChecker::collect_parts`]
+    /// uses, so a head found here belongs to a decomposition the checker would
+    /// actually accept.
+    ///
+    /// A word that is *also* a noun is left alone: `-mann`, `-teil`, `-recht`
+    /// and friends carry an adjective reading in this dictionary, and treating
+    /// `Bürgerrecht` as an adjective would cost far more than the compound
+    /// adjectives gain.
+    fn head_is_adjective(&self, word: &[char]) -> bool {
+        let Some(base) = self.base_dict.as_ref() else {
             return false;
+        };
+
+        for split_pos in 1..word.len() {
+            let (first, rest) = word.split_at(split_pos);
+
+            if rest.len() < MIN_COMPOUND_PART_LEN {
+                break;
+            }
+            if !self.element_usable(first) {
+                continue;
+            }
+
+            if let Some(metadata) = base.get_word_metadata(rest)
+                && metadata.adjective.is_some()
+                && metadata.noun.is_none()
+            {
+                return true;
+            }
         }
 
-        // Check all possible split points to see if any start with an adjective
+        false
+    }
+
+    /// Does the compound start with an adjective?
+    ///
+    /// The head decides the word class, but when the head is a noun/adjective
+    /// homograph — `braun`, `recht`, `mal` — an adjective in front of it settles
+    /// which reading is meant: `purpur` + `braun` is a colour adjective,
+    /// `Bürger` + `recht` a noun. Kept as the second question precisely because
+    /// on its own it answers the wrong one.
+    fn opens_with_adjective(&self, word: &[char]) -> bool {
         for split_pos in 1..word.len() {
             let (first, _rest) = word.split_at(split_pos);
 

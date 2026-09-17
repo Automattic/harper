@@ -166,6 +166,12 @@ def main():
     if "--forms" in sys.argv:
         forms = pathlib.Path(sys.argv[sys.argv.index("--forms") + 1])
     nouns = capitalized_nouns(forms)
+    dic = pathlib.Path("/usr/share/hunspell/de_DE.dic")
+    if "--dic" in sys.argv:
+        dic = pathlib.Path(sys.argv[sys.argv.index("--dic") + 1])
+    hunspell_adj = hunspell_adjectives(dic if dic.exists() else None)
+    if not hunspell_adj:
+        print(f"{dic} not found: the adjective pass is skipped")
     if forms is None:
         print("no --forms: the preterite pass is skipped (it needs the oracle)")
     lines = DICT.read_text(encoding="utf-8").splitlines()
@@ -175,7 +181,7 @@ def main():
     # Iterate to a fixed point so one run is enough and re-running is a no-op.
     totals = {}
     for _ in range(10):
-        lines, counts = run_passes(lines, nouns, forms is not None)
+        lines, counts = run_passes(lines, nouns, forms is not None, hunspell_adj)
         for k, v in counts.items():
             totals[k] = totals.get(k, 0) + v
         if not any(counts.values()):
@@ -190,7 +196,7 @@ def main():
         print("(dry run; pass --apply)")
 
 
-def run_passes(lines, nouns=frozenset(), do_preterite=True):
+def run_passes(lines, nouns=frozenset(), do_preterite=True, hunspell_adj=frozenset()):
     infin = set()
     # Every surface form the strong-preterite rule builds. The stems are marked
     # by `mirror_hunspell_flag.py --from Z --to s`, so this is igerman98's own
@@ -222,6 +228,30 @@ def run_passes(lines, nouns=frozenset(), do_preterite=True):
                     return True
         return False
 
+    def is_base_form_adjective(w, fl):
+        """A lower-case base-form adjective mined as a noun.
+
+        igerman98 marks adjectives with `A`, and a German adjective is only
+        nominalized with a determiner *and* a declension ending -- "das Gute",
+        "im Freien". The **base** form therefore never is one, so a noun reading
+        on `tolerant/~~NXhOQRSTUW` or `kahl/~~NhYrOQRST` is the corpus-mining
+        error and nothing else depends on it.
+
+        The declined forms are deliberately left alone: "das Ganze", "das Neue"
+        and "das Wesentliche" are real nouns and the linter needs the reading to
+        flag them when they are written lower case.
+
+        `capitalized_nouns` still has the last word -- `gut`, `neu`, `braun` and
+        `weich` have capitalized twins in hunspell (`das Gut`, `das Braun`) and
+        keep everything.
+        """
+        fs = set(fl)
+        if w not in hunspell_adj or w.capitalize() in nouns:
+            return False
+        if w.endswith(("e", "en", "er", "es", "em")):
+            return False
+        return bool(fs & NOUN) or bool(fs & NOUN_AFFIX)
+
     def is_preterite_stem(w, fl):
         """A lower-case entry igerman98 inflects as a strong preterite stem.
 
@@ -250,7 +280,7 @@ def run_passes(lines, nouns=frozenset(), do_preterite=True):
             return False
         return "s" in fl or w in preterite_forms
 
-    counts = dict(prefix=0, verb=0, adverb=0, adj_base=0, preterite=0)
+    counts = dict(prefix=0, verb=0, adverb=0, adj_base=0, preterite=0, adjective=0)
     out = []
     for ln in lines:
         p = parse(ln)
@@ -276,6 +306,12 @@ def run_passes(lines, nouns=frozenset(), do_preterite=True):
             kept = "".join(c for c in fl if c in AFFIX)
             out.append(f"{w}/~~{kept}V # retag: finite verb form, was noun (corpus-mined)")
             counts["prefix"] += 1
+        elif is_base_form_adjective(w, fl):
+            kept = "".join(
+                c for c in fl if c not in NOUN and c not in NOUN_AFFIX and c != "J"
+            )
+            out.append(f"{w}/~~{kept}J # retag: adjective, was noun (igerman98 SFX A)")
+            counts["adjective"] += 1
         elif is_preterite_stem(w, fl):
             kept = "".join(c for c in fl if c not in NOUN and c not in NOUN_AFFIX)
             out.append(f"{w}/~~{kept}V # retag: preterite stem, was noun (hunspell SFX Z)")
@@ -283,7 +319,7 @@ def run_passes(lines, nouns=frozenset(), do_preterite=True):
         else:
             out.append(ln)
 
-    out, add_counts = add_missing_readings(out, infin)
+    out, add_counts = add_missing_readings(out, infin, hunspell_adj)
     counts.update(add_counts)
     return out, counts
 
@@ -392,7 +428,36 @@ def verb_evidence(lines):
     return infinitives
 
 
-def add_missing_readings(lines, infinitives):
+def hunspell_adjectives(dic):
+    """Lower-case `de_DE.dic` headwords carrying `A`, the adjective declension.
+
+    igerman98 puts `A` on adjectives and participles and nothing else, which
+    makes it a ready-made list of words that need an adjective reading. Ours are
+    missing it in bulk -- `tolerant/~~NXhOQRSTUW` has the declension *affixes*
+    but no adjective *property*, so `GermanNounCapitalization` sees an
+    unambiguous noun and flags "relativ stickstofftolerant".
+
+    The reading is only ever appended, never substituted: plenty of these are
+    genuine noun/adjective homographs ("das Ganze"), and appending turns them
+    into homographs the noun-phrase chunker can resolve per occurrence.
+    """
+    if dic is None:
+        return set()
+    raw = dic.read_bytes()
+    try:
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        text = raw.decode("iso-8859-1")
+    out = set()
+    for line in text.splitlines()[1:]:
+        word, _, flags = line.strip().partition("/")
+        word = word.strip()
+        if word and word.islower() and word.isalpha() and "A" in flags:
+            out.add(word)
+    return out
+
+
+def add_missing_readings(lines, infinitives, hunspell_adj=frozenset()):
     counts = {"add_verb": 0, "add_adj": 0, "add_adv": 0}
 
     pos_fixes = load_pos_fixes()
@@ -427,8 +492,10 @@ def add_missing_readings(lines, infinitives):
         fs = set(fl)
 
         add, key, why = None, None, None
-        if not (fs & ADJ) and (is_present_participle(w, infinitives)
-                               or w in COMPARATIVES):
+        if not (fs & ADJ) and w in hunspell_adj:
+            add, key, why = "J", "add_adj", "adjective (igerman98 SFX A)"
+        elif not (fs & ADJ) and (is_present_participle(w, infinitives)
+                                 or w in COMPARATIVES):
             add, key, why = "J", "add_adj", "adjective"
         elif not (fs & ADJ) and w in ADJ_EXTRA:
             add, key, why = "JqOQRSTUW", "add_adj", "adjective"

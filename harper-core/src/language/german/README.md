@@ -756,15 +756,61 @@ the two: in *der große schöne hund* it flagged `große` and never reached `hun
 **Ending the phrase early is the expensive mistake.** Whatever token the walk
 stops on becomes the head, so anything that interrupts a phrase before the noun
 promotes the attributive adjective in front of it — and attributive adjectives
-are far and away the largest source of false positives this rule has. Four
+are far and away the largest source of false positives this rule has. These
 interruptions are stepped over rather than stopped on:
 
 | In the text | Would otherwise stop at |
 |---|---|
 | *eine neue, radikalere Welle* | the comma, or `und`/`oder` |
+| *der milde, **aber** wenig angenehme Pilz* | the contrastive conjunction |
 | *der gerade oder **etwas** gekrümmte Griffel* | the degree word |
 | *das beginnende **19.** Jahrhundert* | the numeral |
+| *eine große, **1671** gefertigte Uhr*, *der lange **0,9 m** breite Gang* | the numeral, then the unit |
 | *eine eigene **„**Baumnorm“*, *die deutsche **(**Wieder-)Besiedlung* | the quote or bracket |
+| *eine reiche und **diversifizierte** Tierwelt* | an entry with no part of speech |
+
+That last row is a class of its own. `diversifizierte` **is** in the dictionary,
+carrying no reading at all — not a noun, not an adjective, nothing. It is not
+`is_oov` either, so the walk treated it as a phrase boundary. An entry with no
+part of speech is evidence of nothing and has to be passed over exactly like an
+unknown word.
+
+#### Where an adjective may be the head
+
+Three grammar facts decide this, and getting any of them wrong turns an ordinary
+adjective into a reported capitalization error:
+
+1. **A nominalized adjective needs a determiner and carries a declension
+   ending.** *das Gute*, *im Freien*, *für Deutsche*. So the **base** form under
+   something that supplies no determiner — a bare preposition, a numeral — is
+   predicative and never a noun: *weiß bis **braun***, *von **gelb** zu weiß*,
+   *davon sind vier **unbewohnt***. This is why `NOUN_PHRASE_LICENSORS` and
+   `NP_BARE_PREPOSITIONS` are two lists: `im`, `zum`, `zur` and the other fused
+   forms *are* a determiner and stay on the licensor side. The declined form
+   after a bare preposition is a real nominalization and keeps its head —
+   dropping that distinction breaks *"nur für deutsche"*.
+
+2. **German compounds are right-headed.** A *Determinativkompositum* takes its
+   word class from the **last** element: *Stickstoff* + *tolerant* is an
+   adjective. `CompoundChecker::get_compound_metadata` used to ask whether the
+   *first* element was an adjective, which is the opposite question, and
+   `stickstofftolerant` and `galleresistent` came back nouns. The first element
+   still gets a say, but only as the tie-breaker when the head is itself a
+   noun/adjective homograph: *purpur* + *braun* is a colour, *Bürger* + *recht*
+   a noun.
+
+3. **`der`/`die`/`das` after a comma is a relative pronoun.** German spells the
+   article and the relative pronoun identically and punctuates every relative
+   clause, so the comma is the signal. Read as an article it opens a phrase whose
+   "head" is whatever the clause starts with — an adverb or a finite verb:
+   *…, der **zuletzt** 2019…*, *…, die **angibt**, wie viele…*. The cost is a
+   missed lint in *"das Haus, das große fenster hat"*, which is the trade this
+   rule makes everywhere.
+
+An ordinal is also where the **sentence segmenter** splits, so *das sowjetische
+170. | Regiment* arrives here in two halves with the adjective last. A phrase
+followed only by a numeral and a full stop is that split, and the adjective is
+left uncrowned rather than made the head.
 
 A capital letter also outranks every part-of-speech reading on the token, which
 it did not before: the dictionary hands out spurious adverb and verb readings
