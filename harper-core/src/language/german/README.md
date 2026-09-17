@@ -190,6 +190,55 @@ variant, which is UTF-8. Decoding on the declaration silently mangles every
 umlaut, and the script then reports no misses at all — because the entries never
 matched in the first place.
 
+#### Strong verbs need a second entry, not a cleverer rule
+
+Every conjugation flag above builds on the infinitive, and for a strong verb
+that is a dead end: `ziehen` gives `zog`, not `ziehte`. The flags are withheld
+from those verbs on purpose — `scripts/add_german_verb_conjugation_flags.py`
+requires hunspell to accept *every* generated form, and `verbietete` is not a
+word — so a strong verb has a present tense and nothing else. `stattfanden`,
+`ausschieden`, `überließen` and `vorhielten` were misspellings.
+
+igerman98 does not try to derive them either. It lists the **preterite stem** as
+a headword of its own (`zog/VZ`, `schrieb/VZ`) and the participle as a third
+(`gezogen/AU`), and inflects the stem with `SFX Z`. Flag `s` mirrors that rule:
+
+| stem ends in | add | example |
+|---|---|---|
+| `[^hßsz]` | `st` | zog → zog**st** |
+| `[dfkstz]`, `ch`, `[au]ß`, `ieß`, `[io]ss` | `est` | hielt → hielt**est** |
+| `[^dt]` | `t` | zog → zog**t** |
+| `[dt]` | `et` | hielt → hielt**et** |
+| `e` | `n` | abspräche → abspräche**n** |
+| `[^e]`, `ie` | `en` | zog → zog**en** |
+
+`scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries
+igerman98 does. `s` was the **last character free in both namespaces** — see the
+collision table below; the next flag needs one of the digits back.
+
+Two things this pass turned up that any further POS work will hit again:
+
+- Nearly every one of those stems was mined as a **noun** (`zog/~~NhYr`), so the
+  personal forms "appear to be a noun" mid-sentence. Removing the `N` property is
+  not enough — the noun-plural affixes `X`/`Y` carry a plural noun reading of
+  their own, and `zogt` stayed a noun until they came off too.
+- The flag on `zog` does not reach `zogt`, because `zogt/~~NhYG` is an entry in
+  its own right. `scripts/fix_german_pos_flags.py` therefore expands the `s` rule
+  itself and retags every form it produces, not just the stems carrying the flag.
+
+And one thing that has to be left alone. German capitalizes its nouns, so a
+lower-case entry with a noun reading looks like a mining error — but a slice of
+`dictionary.dict` stores capitalized nouns in lower case and relies on the
+case-insensitive lookup. There is no `Maß` entry, only `maß/~~NXh0`, and `maß` is
+*also* the preterite of `messen`. Stripping its plural affix deletes `Maße`. The
+pass needs the expanded form list to tell the two apart:
+
+```bash
+scripts/fix_german_pos_flags.py --forms forms.txt --apply
+```
+
+Without `--forms` it skips the preterite pass rather than guessing.
+
 #### Rules that do not fire
 
 `k`, `l`, `m` and `n` (past participles) have conditions such as
@@ -277,8 +326,16 @@ of them into an article, and the noun-phrase chunker then read half the corpus
 as a determiner sequence. The `-ung` derivation lives on `7` and `8` instead, and
 the `un-` prefix on `9` — digits, because they were the only characters free in
 both tables. Digits were already the established escape hatch here: `4`, `5` and
-`6` carry determiner, pronoun and conjunction for exactly the same reason. Only
-`0` is left, so prefer extending an existing flag to claiming it.
+`6` carry determiner, pronoun and conjunction for exactly the same reason. `0`
+went to the `-es` genitive and `s` to the strong preterite, and with those two
+gone **the namespace is full**: no character is free in both tables any more.
+The next rule has to extend an existing flag, or start by freeing one.
+
+```bash
+python3 -c "import json, string; d=json.load(open('annotations.json')); \
+  u=set(d['affixes'])|set(d['properties']); \
+  print(''.join(c for c in string.digits+string.ascii_letters if c not in u) or 'none')"
+```
 
 The `A`, `C` and `F` *affixes* have been deleted. `F` was the expensive one: it
 sat on every feminine noun as a property, so the affix was appending `-chen` to

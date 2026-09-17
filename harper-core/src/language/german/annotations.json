@@ -245,6 +245,95 @@
 			},
 			"rename_ok": true
 		},
+		"s": {
+			"#": "Strong preterite personal endings on a preterite stem (zog -> zogst, zogt, zogen; hielt -> hieltest, hieltet). Mirrors hunspell de_DE SFX Z. Strong verbs ablaut, so the preterite stem cannot be derived from the infinitive: igerman98 lists 'zog' and 'schrieb' as headwords of their own and this flag inflects them. 's' was the last character free in both namespaces -- see the collision table in README.md.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^hßsz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^c]h"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^s]ch"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[dfkstz]"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "ch"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[au]ß"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "ieß"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[io]ss"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^dt]"
+				},
+				{
+					"remove": "",
+					"add": "et",
+					"condition": "[dt]"
+				},
+				{
+					"remove": "",
+					"add": "n",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "ie"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "iess"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[au]ss"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
 		"O": {
 			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
 			"kind": "suffix",

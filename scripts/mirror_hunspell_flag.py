@@ -150,11 +150,19 @@ def main() -> int:
             print(f"{path} not found -- run from the repo root", file=sys.stderr)
             return 1
 
-    forms = {
-        line.strip().lower()
+    # Two views of the same list. The lower-cased one is what a lower-case entry
+    # is checked against; the case-preserving one is what a capitalized entry is
+    # checked against, and it is the only thing that keeps a verb flag off a
+    # noun. `eingriff` is the preterite stem of `eingreifen` and carries SFX Z;
+    # our entry for the homograph is the noun `Eingriff`. Verified in lower case
+    # it passes on `eingriffst` and the noun starts generating `Eingriffst`.
+    raw_forms = [
+        line.strip()
         for line in args.forms.read_text(encoding="utf-8", errors="replace").splitlines()
         if line.strip()
-    }
+    ]
+    forms = {form.lower() for form in raw_forms}
+    forms_cased = set(raw_forms)
     members = (
         set()
         if args.prune or args.all_entries
@@ -188,8 +196,15 @@ def main() -> int:
 
         def verified(flag: str) -> bool:
             kind, replacements = rules[flag]
-            produced = forms_for(lower, kind, replacements)
-            return bool(produced) and all(form in forms for form in produced)
+            # Generate in the entry's own case, which is the case Harper will
+            # generate in, and check that exact spelling. Lower-case entries fall
+            # back to the lower-cased view: unmunch capitalizes sentence-initial
+            # variants unevenly, so demanding an exact match there loses real
+            # verbs for no reason.
+            produced = forms_for(word, kind, replacements)
+            if word.islower():
+                return bool(produced) and all(f.lower() in forms for f in produced)
+            return bool(produced) and all(f in forms_cased for f in produced)
 
         if args.prune:
             present = [f for f in args.target if f in flags]

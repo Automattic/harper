@@ -44,9 +44,17 @@ and hand-audited adjectives/adverbs. See the comment above it.
 Run from the repo root.  `--apply` writes; the default is a dry run.
 Re-running is idempotent.
 """
+import json
 import re
 import sys
 import pathlib
+
+sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent))
+
+from mirror_hunspell_flag import (  # noqa: E402
+    forms_for as affix_forms,
+    load_rule,
+)
 
 DICT = pathlib.Path("harper-core/src/language/german/dictionary.dict")
 # Words vouched for by LanguageTool on a German Wikipedia corpus: they appeared
@@ -54,6 +62,23 @@ DICT = pathlib.Path("harper-core/src/language/german/dictionary.dict")
 # `dictionary.dict` says they are not unambiguous nouns. Regenerate with
 # `.archive/german-language/scripts/derive_pos_fixes.py`.
 POS_FIXES = pathlib.Path("scripts/german_pos_fixes.tsv")
+# Every character `annotations.json` registers as an affix rule. The passes below
+# replace an entry's *properties*; dropping its affixes with them silently
+# deletes words. `verschalten/~~Nh78G` was rewritten to `~~hV`, which is the
+# right part of speech and also threw away the `-ung` rule, so `Verschaltung`
+# stopped being a word.
+AFFIX = set(
+    json.loads(
+        (DICT.parent / "annotations.json").read_text(encoding="utf-8")
+    )["affixes"]
+)
+
+# Affixes that only make sense on a noun: the plurals and the -es genitive.
+# Leaving one on an entry re-introduces the noun reading that the property flag
+# was just taken off -- `zog/~~hYrV` still came back `noun: Some(..)` because `Y`
+# carries a plural noun base_metadata of its own.
+NOUN_AFFIX = set("XYab0")
+
 NOUN = set("NMFZz")
 VERB = set("Vjgtecxy")
 ADJ = set("JqAOQRSTUW")
@@ -117,8 +142,32 @@ def load_pos_fixes():
     return fixes
 
 
+def capitalized_nouns(forms_path):
+    """Words whose *capitalized* spelling hunspell also accepts.
+
+    German stores its nouns capitalized, but a slice of `dictionary.dict` keeps
+    them lower case and relies on the case-insensitive lookup: there is no `Ma\u00df`
+    entry, only `ma\u00df/~~NXh0`, and `X` is what makes `Ma\u00dfe` a word. `ma\u00df` is
+    *also* the preterite of `messen`, so the preterite pass would strip that `X`
+    and delete the plural of a noun. This is the list that stops it.
+    """
+    if forms_path is None:
+        return set()
+    return {
+        line.strip()
+        for line in forms_path.read_text(encoding="utf-8", errors="replace").splitlines()
+        if line[:1].isupper()
+    }
+
+
 def main():
     apply = "--apply" in sys.argv
+    forms = None
+    if "--forms" in sys.argv:
+        forms = pathlib.Path(sys.argv[sys.argv.index("--forms") + 1])
+    nouns = capitalized_nouns(forms)
+    if forms is None:
+        print("no --forms: the preterite pass is skipped (it needs the oracle)")
     lines = DICT.read_text(encoding="utf-8").splitlines()
 
     # The passes feed each other: giving a mistagged infinitive its verb reading
@@ -126,7 +175,7 @@ def main():
     # Iterate to a fixed point so one run is enough and re-running is a no-op.
     totals = {}
     for _ in range(10):
-        lines, counts = run_passes(lines)
+        lines, counts = run_passes(lines, nouns, forms is not None)
         for k, v in counts.items():
             totals[k] = totals.get(k, 0) + v
         if not any(counts.values()):
@@ -141,12 +190,21 @@ def main():
         print("(dry run; pass --apply)")
 
 
-def run_passes(lines):
+def run_passes(lines, nouns=frozenset(), do_preterite=True):
     infin = set()
+    # Every surface form the strong-preterite rule builds. The stems are marked
+    # by `mirror_hunspell_flag.py --from Z --to s`, so this is igerman98's own
+    # judgement of what a preterite personal form is, and `zogt/~~NhYG` -- an
+    # entry of its own, mined as a noun -- is caught by it even though the flag
+    # sits on `zog`.
+    s_kind, s_rules = load_rule("s")
+    preterite_forms = set()
     for ln in lines:
         p = parse(ln)
         if p and ("j" in p[1] or "V" in p[1]) and p[0].endswith("en"):
             infin.add(p[0])
+        if p and "s" in p[1]:
+            preterite_forms.update(affix_forms(p[0], s_kind, s_rules))
 
     def is_prefix_verb_form(w, fl):
         fs = set(fl)
@@ -164,7 +222,35 @@ def run_passes(lines):
                     return True
         return False
 
-    counts = dict(prefix=0, verb=0, adverb=0, adj_base=0)
+    def is_preterite_stem(w, fl):
+        """A lower-case entry igerman98 inflects as a strong preterite stem.
+
+        `scripts/mirror_hunspell_flag.py --from Z --to s` put the `s` flag on
+        exactly the entries hunspell treats that way, so this needs no curated
+        list: `absprach`, `abstarb` and `abspräche` are verb forms, and a German
+        common noun is capitalized, so a lower-case noun reading here is the
+        corpus-mining mistake and not a homograph.
+
+        The noun *plurals* go with the property. `abspräche/~~FhY` was reaching
+        `absprächen` through the plural rule -- the right form by accident -- and
+        `s` now derives it, along with `absprächest` and `absprächet`, which the
+        plural rule never did. Leaving `Y` on would also put the noun reading
+        straight back: it carries a plural base_metadata of its own, which is why
+        `zogt` was still "appears to be a noun" after `N` came off.
+        """
+        fs = set(fl)
+        if not do_preterite or (fs & VERB) or (fs & ADJ):
+            return False
+        if not (fs & NOUN) and not (fs & NOUN_AFFIX):
+            return False
+        # A genuine homograph: `maß` is the preterite of `messen` *and* the entry
+        # standing in for the noun `Maß`. Leave it whole -- dropping `X` here
+        # deletes `Maße`.
+        if w.capitalize() in nouns:
+            return False
+        return "s" in fl or w in preterite_forms
+
+    counts = dict(prefix=0, verb=0, adverb=0, adj_base=0, preterite=0)
     out = []
     for ln in lines:
         p = parse(ln)
@@ -187,8 +273,13 @@ def run_passes(lines):
             out.append(f"{w}/~~r # retag: adverb, was noun (corpus-mined)")
             counts["adverb"] += 1
         elif is_prefix_verb_form(w, fl):
-            out.append(f"{w}/~~{keep_h}V # retag: finite verb form, was noun (corpus-mined)")
+            kept = "".join(c for c in fl if c in AFFIX)
+            out.append(f"{w}/~~{kept}V # retag: finite verb form, was noun (corpus-mined)")
             counts["prefix"] += 1
+        elif is_preterite_stem(w, fl):
+            kept = "".join(c for c in fl if c not in NOUN and c not in NOUN_AFFIX)
+            out.append(f"{w}/~~{kept}V # retag: preterite stem, was noun (hunspell SFX Z)")
+            counts["preterite"] += 1
         else:
             out.append(ln)
 
