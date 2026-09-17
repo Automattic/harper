@@ -13,10 +13,9 @@ here will pass there too.
 
 It is not sufficient on its own, though. Strong preterite plurals are shaped
 exactly like infinitives — `abbrachen`, `anlasen` — and their weak forms happen
-to be accepted too. Hunspell's own morphological analysis settles it: a lemma
-analyses to itself (`dienen  st:dienen`), an inflected form to something else
-(`abbrachen  st:abbrach fl:Z`). Candidates are put through `hunspell -m` and only
-the lemmas survive.
+to be accepted too. The headword list settles it: igerman98 lists infinitives and
+derives the rest, so `zählen` and `dienen` are headwords in `de_DE.dic` and
+`abbrachen` is not.
 
 The entry is written with the bare verb property. Run the conjugation script
 afterwards to fill in the affix flags:
@@ -29,7 +28,6 @@ afterwards to fill in the affix flags:
 """
 
 import argparse
-import subprocess
 import sys
 from pathlib import Path
 
@@ -47,42 +45,32 @@ from add_german_verb_conjugation_flags import (  # noqa: E402
 # The verb property. Collision-free: `V` is not also an affix flag.
 VERB_PROPERTY = "~~V"
 
-# The shipped de_DE dictionary declares ISO-8859-1 and hunspell believes it, so
-# both directions have to be converted even though the file itself is UTF-8.
-HUNSPELL_ENCODING = "iso-8859-1"
 
+def lemmas(dic: Path) -> set[str]:
+    """Every headword in `de_DE.dic`.
 
-def lemmas(words: list[str]) -> set[str]:
-    """Of `words`, the ones hunspell analyses as a lemma rather than a form.
+    This is the test for "is it a lemma": igerman98 lists infinitives as
+    headwords and derives the rest, so `zählen` and `dienen` are in here and
+    `abbrachen`, `anlasen` and `amen` are not.
 
-    `dienen  st:dienen` is a lemma; `abbrachen  st:abbrach fl:Z` is the preterite
-    plural of `abbrechen` wearing an infinitive's shape.
+    It used to shell out to `hunspell -m` and read the `st:` field, which cannot
+    work on this system: the shipped `de_DE.aff` declares `SET ISO8859-1` while
+    the `.dic` beside it is UTF-8, so `hunspell` mis-decodes every umlaut. Sent
+    as ISO-8859-1, `zählen` came back split into `z` and `hlen`; sent as UTF-8,
+    as `zÃ¤hlen`. Either way no `st:` matched, and every umlaut verb was dropped
+    in silence — which is why `zählen` was still missing after the first import.
     """
-    if not words:
-        return set()
-
-    payload = "\n".join(words).encode(HUNSPELL_ENCODING, errors="replace")
+    raw = dic.read_bytes()
     try:
-        result = subprocess.run(
-            ["hunspell", "-d", "de_DE", "-m"],
-            input=payload,
-            capture_output=True,
-            check=True,
-        )
-    except (OSError, subprocess.CalledProcessError) as err:
-        raise SystemExit(f"could not run hunspell -m: {err}") from err
+        text = raw.decode("utf-8")
+    except UnicodeDecodeError:
+        text = raw.decode("iso-8859-1")
 
-    out = result.stdout.decode(HUNSPELL_ENCODING, errors="replace")
-    keep = set()
-    for line in out.splitlines():
-        line = line.strip()
-        if not line or line.startswith("@(#)"):
-            continue
-        surface, _, analysis = line.partition("  ")
-        for field in analysis.split():
-            if field == f"st:{surface}":
-                keep.add(surface)
-    return keep
+    return {
+        line.split("/")[0].strip()
+        for line in text.splitlines()
+        if line.strip() and not line.startswith("#")
+    }
 
 
 def main() -> int:
@@ -94,9 +82,15 @@ def main() -> int:
         type=Path,
         help="hunspell form list from `unmunch` (see the module docstring)",
     )
+    parser.add_argument(
+        "--dic",
+        type=Path,
+        default=Path("/usr/share/hunspell/de_DE.dic"),
+        help="hunspell source dictionary, read for its headwords",
+    )
     args = parser.parse_args()
 
-    for path in (DICT, ANNOTATIONS, args.forms):
+    for path in (DICT, ANNOTATIONS, args.forms, args.dic):
         if not path.exists():
             print(f"{path} not found -- run from the repo root", file=sys.stderr)
             return 1
@@ -127,9 +121,9 @@ def main() -> int:
         candidates.append(word)
 
     before = len(candidates)
-    keep = lemmas(candidates)
-    candidates = [w for w in candidates if w in keep]
-    print(f"{before - len(candidates)} rejected by `hunspell -m`: inflected forms, not lemmas")
+    headwords = lemmas(args.dic)
+    candidates = [w for w in candidates if w in headwords]
+    print(f"{before - len(candidates)} rejected: inflected forms, not headwords")
 
     print(f"{len(candidates)} verbs missing from the dictionary")
     for word in candidates[:15]:
