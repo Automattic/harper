@@ -5,6 +5,7 @@
 //! - Dictionary tests
 //! - Grammar rule tests
 
+pub mod abbreviation_test;
 pub mod adjective_declension_test;
 pub mod adjective_position_test;
 pub mod capitalization_false_positive_test;

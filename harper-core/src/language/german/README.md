@@ -239,6 +239,43 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### Abbreviations, and why the table is short
+
+`ggf.`, `engl.`, `hg.`, `op.`, `var.` are ordinary German and were reported as
+misspellings: the tokenizer hands the linter the letters without the full stop,
+and `dictionary.dict` had no entry for them. igerman98 does not list them either,
+so `scripts/add_german_abbreviations.py` is a curated table carrying the
+expansion of every entry it writes. Flag `2` is the abbreviation property, and
+`GermanNounCapitalization` rejects anything holding it — `hg` must never be
+"corrected" to `Hg`.
+
+Adding one is not free, and two classes stay out:
+
+- **Words that are also a German noun.** `Alb`, `Pol`, `Port`, `Ungar`, `Finn`.
+  Giving the lower-case spelling the abbreviation flag silences a correct
+  capitalization lint.
+- **Words that are the start or the end of German words.** Any dictionary entry
+  of three characters or more may act as a compound element, so `versch`
+  (verschieden) made `verschwand` decompose into `versch` + `wand` — no longer a
+  misspelling, a compound noun with a capitalization lint on it. Check both ends
+  against the expanded word list before adding:
+
+```python
+a = "sen"
+sum(1 for w in words if w.startswith(a) and w[len(a):] in words)   # 22
+sum(1 for w in words if w.endswith(a) and w[:-len(a)] in words)    # 16641
+```
+
+`sen` (Senior) is the ending of every `-sen` plural and infinitive German has,
+and on its own it let most of a hundred generated typos through
+`just language-recall german`. `abb`, `geb`, `gest`, `anm`, `verh`, `aufl`,
+`syn` and `kap` are out for the same reason, not because they are rare.
+
+Excluding abbreviations from compounding outright was tried and is worse. The
+German dictionary leans on loose compounding for proper-name coverage: `Leitha`,
+`Omaha` and `Himmerland` are only words because `ha` is one, and the rule cost
+fifty-odd new spelling errors on the corpus.
+
 #### Rules that do not fire
 
 `k`, `l`, `m` and `n` (past participles) have conditions such as
