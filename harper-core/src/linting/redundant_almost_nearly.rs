@@ -1,9 +1,7 @@
-use crate::linting::expr_linter::Chunk;
 use crate::{
-    Lrc, Token, TokenStringExt,
-    expr::{Expr, FirstMatchOf, FixedPhrase, SequenceExpr},
-    linting::{ExprLinter, Lint, LintKind, Suggestion},
-    patterns::WordSet,
+    Token, TokenStringExt,
+    expr::{Expr, FirstMatchOf, SequenceExpr},
+    linting::{ExprLinter, Lint, LintKind, Suggestion, expr_linter::Chunk},
 };
 
 pub struct RedundantAlmostNearly {
