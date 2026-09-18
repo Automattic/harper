@@ -239,6 +239,40 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### What the dictionary costs, and what shrinking it buys
+
+`harper-core/tests/bench_german_dict.rs` reports it. Run that one test alone —
+another test in the same binary warms the `LazyLock` and it then reports zero:
+
+```bash
+cargo test -p harper-core --features multilingual \
+    --test bench_german_dict report_german_dict_memory -- --nocapture
+```
+
+Measured before and after this branch removed 173793 generated forms, one build
+per process:
+
+| words | build | resident | peak |
+|---|---|---|---|
+| 790823 | 1.50 s | +277 MB | 473 MB |
+| 617030 | 1.24 s | +249 MB | 422 MB |
+
+A 22% smaller word list buys 10% less memory. The footprint is **sub-linear in
+the vocabulary** — roughly 180 MB of it does not depend on the word count at
+all, which is the shape issue #3725 describes: the FST is small and the cost is
+what `FstDictionary` materializes alongside it for fuzzy matching. Shrinking the
+word list is worth doing and is not the lever. A language more inflected than
+German will not escape this by having fewer entries.
+
+Watch the gap between peak and resident too, 422 MB against 249 MB: a language
+server pays the peak at startup, not the steady state.
+
+For speed the picture is the other way round. On the same 3.3 MB of prose,
+`harper-cli lint` takes **26.9 s in German against 52.0 s in English** — German
+skips the English Brill tagger and the neural chunker, which `Plain<Name>`
+declines by overriding `Parser::is_english`. The language module is not the slow
+path; the dictionary is the expensive part, and it is a fixed cost paid once.
+
 #### The corpus decides which bugs you can see
 
 The archived corpus is 264 random German Wikipedia articles, which in practice
