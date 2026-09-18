@@ -3237,6 +3237,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RedundantAlmostNearly",
+								"state": true,
+								"label": "Redundant Almost Nearly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantIIRC",
 								"state": true,
 								"label": "Redundant IIRC"

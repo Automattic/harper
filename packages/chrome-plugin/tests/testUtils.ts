@@ -85,6 +85,11 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 	}
 }
 
+/** Locate replacement rows (including explicit empty states) inside Harper's suggestion popup. */
+export function getHarperSuggestionRows(page: Page): Locator {
+	return page.locator('.harper-container').getByRole('menuitem');
+}
+
 /** Locate the Harper highlights on a page. */
 export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
@@ -287,7 +292,7 @@ export async function testBasicSuggestion(
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await page.waitForTimeout(3000);
 
@@ -424,7 +429,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.waitForTimeout(4000);
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 		expect(await clickHarperHighlight(page)).toBe(true);
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 		await assertEditorContains(editor, 'test here');
 
@@ -443,7 +448,7 @@ export async function testMultipleSuggestionsAndUndo(
 			await editor.press('ArrowLeft');
 		}
 
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 
 		// Verify only second "tset" was corrected
