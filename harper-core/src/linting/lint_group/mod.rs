@@ -239,6 +239,7 @@ use super::quote_spacing::QuoteSpacing;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::redundant_almost_nearly::RedundantAlmostNearly;
 use super::redundant_firsts::RedundantFirsts;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
 use super::redundant_self::RedundantSelf;
@@ -858,6 +859,7 @@ impl LintGroup {
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
+        insert_expr_rule!(RedundantAlmostNearly);
         insert_expr_rule!(RedundantFirsts);
         insert_expr_rule!(RedundantProgressiveComparative);
         insert_expr_rule!(RedundantSelf);

@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.10.0",
+	"version": "2.11.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -753,11 +753,23 @@
 					"default": true,
 					"description": "Changes `bed rap` to the proper idiom `bad rap`."
 				},
+				"harper.linters.BainBane": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects mixing up `bain` and `bane`."
+				},
 				"harper.linters.BanTogether": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Detects and corrects the common error of using `ban together` instead of the idiom `band together`, which means to unite or join forces."
+				},
+				"harper.linters.BareBones": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `bare-bone` to `bare-bones`."
 				},
 				"harper.linters.BareInMind": {
 					"scope": "resource",
@@ -2355,6 +2367,12 @@
 					"default": true,
 					"description": "Corrects `hidden into` to `hidden in`."
 				},
+				"harper.linters.Hijack": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects misspellings of `hijack`."
+				},
 				"harper.linters.HitTheNailOnTheHead": {
 					"scope": "resource",
 					"type": "boolean",
@@ -2599,7 +2617,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
-					"description": "Corrects nonstandard `in of itself` to standard `in itself` or `in and of itself`."
+					"description": "A collection of linters that can be run as one."
 				},
 				"harper.linters.InOnTheCards": {
 					"scope": "resource",
@@ -3777,6 +3795,12 @@
 					"default": true,
 					"description": "Corrects `out of sink` to `out of sync` or `out of synch`."
 				},
+				"harper.linters.OutOfTheBox": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Expands an initialism."
+				},
 				"harper.linters.OutOfTheWindow": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4293,6 +4317,12 @@
 					"default": true,
 					"description": "Detects when `roadmap` is used instead of `road map`, prompting the correct spacing."
 				},
+				"harper.linters.RogueRouge": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects mixing up `rogue` and `rouge`."
+				},
 				"harper.linters.RollerSkated": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4605,11 +4635,23 @@
 					"default": true,
 					"description": "Ensures proper use of the subjunctive mood in counterfactual conditional statements starting with `if only` or `I wish`."
 				},
+				"harper.linters.SuchShame": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `such shame` to `such a shame`."
+				},
 				"harper.linters.SufficeItToSay": {
 					"scope": "resource",
 					"type": "boolean",
 					"default": true,
 					"description": "Corrects `suffice to say` to `suffice it to say`."
+				},
+				"harper.linters.SummarySummery": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for the common confusion between `summary` and `summery`."
 				},
 				"harper.linters.SupposedTo": {
 					"scope": "resource",
