@@ -280,17 +280,17 @@ mod tests {
         // If there are suggestions, they should be properly capitalized
         if !lints.is_empty() {
             for suggestion in &lints[0].suggestions {
-                if let Suggestion::ReplaceWith(sug_chars) = suggestion {
-                    if !sug_chars.is_empty() {
-                        let sug_str: String = sug_chars.iter().collect();
-                        // First character should be uppercase, rest lowercase
-                        if let Some(first_char) = sug_str.chars().next() {
-                            assert!(
-                                first_char.is_uppercase(),
-                                "First character of suggestion {} should be uppercase",
-                                sug_str
-                            );
-                        }
+                if let Suggestion::ReplaceWith(sug_chars) = suggestion
+                    && !sug_chars.is_empty()
+                {
+                    let sug_str: String = sug_chars.iter().collect();
+                    // First character should be uppercase, rest lowercase
+                    if let Some(first_char) = sug_str.chars().next() {
+                        assert!(
+                            first_char.is_uppercase(),
+                            "First character of suggestion {} should be uppercase",
+                            sug_str
+                        );
                     }
                 }
             }

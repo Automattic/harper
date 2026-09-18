@@ -1603,7 +1603,7 @@ mod tests {
 
         // "mondlandung" should be detected as a noun and flagged for capitalization
         assert!(
-            lints.len() > 0,
+            !lints.is_empty(),
             "Expected at least one lint for lowercase noun"
         );
         let lint = &lints[0];
@@ -1621,7 +1621,7 @@ mod tests {
 
         // "mond" should be detected as a noun and flagged for capitalization
         assert!(
-            lints.len() > 0,
+            !lints.is_empty(),
             "Expected at least one lint for lowercase noun 'mond'"
         );
         let lint = &lints[0];
@@ -1665,7 +1665,7 @@ mod tests {
 
         // "freiheit" and "menschheit" should be detected as nouns via suffix
         assert!(
-            lints.len() >= 1,
+            !lints.is_empty(),
             "Expected at least one lint for nouns with suffixes"
         );
     }

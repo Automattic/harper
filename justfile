@@ -473,10 +473,11 @@ check-rust: audit-dictionary
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
-  # Clippy-check the multilingual language module. `--lib` is used instead of
-  # `--all-targets` because the multilingual test/example code still contains
-  # many `dbg!`/`needless_raw_string_hashes` lints that are not yet cleaned up.
-  cargo clippy -p harper-core --features multilingual --lib -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+  # Clippy-check the multilingual language module, plus the two integration
+  # tests the language system owns. Not `--all-targets`: that pulls in the lib
+  # test target, where English test code predating the language module still
+  # warns, and those warnings are not this feature's to fix.
+  cargo clippy -p harper-core --features multilingual --lib --test language_conformance --test verify_build_output -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
   cargo hack check --each-feature
   just check-desktop-rust

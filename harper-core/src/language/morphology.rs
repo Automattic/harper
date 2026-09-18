@@ -246,8 +246,10 @@ mod tests {
     /// two and would never fire again.
     #[test]
     fn noun_features_do_not_leak_into_determiner() {
-        let mut meta = DictWordMetadata::default();
-        meta.morphology = Some(noun_gender(Gender::Masculine));
+        let meta = DictWordMetadata {
+            morphology: Some(noun_gender(Gender::Masculine)),
+            ..Default::default()
+        };
 
         assert_eq!(meta.get_noun_gender(), Some(Gender::Masculine));
         assert_eq!(meta.get_determiner_gender(), None);
@@ -284,14 +286,18 @@ mod tests {
 
     #[test]
     fn merge_unions_morphology_across_dictionary_lines() {
-        let mut a = DictWordMetadata::default();
-        a.morphology = Some(noun_gender(Gender::Neuter));
-
-        let mut b = DictWordMetadata::default();
-        b.morphology = Some(Morphology {
-            mood: Some(Mood::Imperative),
+        let mut a = DictWordMetadata {
+            morphology: Some(noun_gender(Gender::Neuter)),
             ..Default::default()
-        });
+        };
+
+        let b = DictWordMetadata {
+            morphology: Some(Morphology {
+                mood: Some(Mood::Imperative),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
 
         a.merge(&b);
         assert_eq!(a.get_noun_gender(), Some(Gender::Neuter));
@@ -301,8 +307,10 @@ mod tests {
     #[test]
     fn merge_keeps_morphology_from_either_side() {
         let mut none_side = DictWordMetadata::default();
-        let mut some_side = DictWordMetadata::default();
-        some_side.morphology = Some(noun_gender(Gender::Feminine));
+        let some_side = DictWordMetadata {
+            morphology: Some(noun_gender(Gender::Feminine)),
+            ..Default::default()
+        };
 
         none_side.merge(&some_side);
         assert_eq!(none_side.get_noun_gender(), Some(Gender::Feminine));

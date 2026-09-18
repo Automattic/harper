@@ -107,8 +107,7 @@ multilingual = [..., "<feature>"]
 <feature> = ["harper-core/<feature>"]
 ```
 
-This stays manual because different binaries ship different language sets — the
-CLI takes everything, the browser extension only English. Run
+This stays manual so that each binary can ship its own language set. Run
 
 ```bash
 just check-language-features
@@ -116,6 +115,32 @@ just check-language-features
 
 and it names every manifest still missing the feature. It discovers languages
 from the `config.toml` files, so a new one is checked from the moment it exists.
+
+### What the binaries actually ship
+
+All four — `harper-cli`, `harper-ls`, `harper-wasm` and `harper-desktop` — carry
+`default = ["multilingual"]`, so today every build contains every language. The
+per-language features are the mechanism, not yet the practice.
+
+That matters most for `harper-wasm`, because `just build-wasm` builds
+`harper_wasm` with default features and `packages/chrome-plugin/vite.config.ts`
+copies that binary into the extension. Every dictionary in the tree is therefore
+in the extension, the desktop app, the website and `harper.js`. The WASM API
+exposes the non-English dialects, but no front end in this repository offers
+them in its UI, so what the extension gains from them today is size alone.
+Measure it before changing anything here:
+
+```bash
+cd harper-wasm
+wasm-pack build --target web --no-opt --out-dir /tmp/pkg-all  --out-name w
+wasm-pack build --target web --no-opt --out-dir /tmp/pkg-en   --out-name w \
+    --no-default-features --features english,typst,thesaurus
+ls -l /tmp/pkg-all/w_bg.wasm /tmp/pkg-en/w_bg.wasm
+```
+
+The difference is data segments, not code, so it costs the extension memory and
+download size rather than WebAssembly compile time — time both before claiming
+either.
 
 ## 5. Check it
 

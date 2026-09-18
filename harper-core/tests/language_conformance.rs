@@ -11,7 +11,7 @@
 
 #![cfg(feature = "language-module")]
 
-use std::collections::{HashMap, HashSet};
+use std::collections::{BTreeMap, BTreeSet};
 
 use harper_core::language::{
     Language, LanguageFamily, all_languages, default_language, dictionary_for_language,
@@ -77,7 +77,7 @@ fn every_alias_parses_back_to_the_language_it_names() {
 /// easily claim the same one. The first match would silently win.
 #[test]
 fn no_two_languages_claim_the_same_alias() {
-    let mut owner: HashMap<&str, Language> = HashMap::new();
+    let mut owner: BTreeMap<&str, Language> = BTreeMap::new();
     for (alias, language) in language_aliases() {
         if let Some(previous) = owner.insert(alias, language)
             && previous != language
@@ -127,7 +127,7 @@ fn every_family_has_a_non_empty_dictionary() {
 /// or two languages would share a user-dictionary file on disk.
 #[test]
 fn dictionary_suffixes_are_unique() {
-    let mut seen: HashMap<&str, LanguageFamily> = HashMap::new();
+    let mut seen: BTreeMap<&str, LanguageFamily> = BTreeMap::new();
     for family in families() {
         let suffix = family.dict_suffix();
         if let Some(previous) = seen.insert(suffix, family) {
@@ -198,7 +198,7 @@ fn every_language_has_linters() {
 fn curated_lint_keys_are_unique_within_a_language() {
     for language in all_languages() {
         let group = new_curated(language);
-        let mut seen = HashSet::new();
+        let mut seen = BTreeSet::new();
         for key in group.iter_keys() {
             assert!(
                 seen.insert(key.to_string()),

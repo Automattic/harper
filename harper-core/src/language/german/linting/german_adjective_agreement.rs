@@ -321,7 +321,7 @@ mod tests {
         // The Brill POS tagger for German may need training data to recognize adjectives properly
         // This is a placeholder test that can be expanded once German POS tagging is improved
         assert!(
-            tokens.len() > 0,
+            !tokens.is_empty(),
             "Should find at least some tokens in 'Der gute Mann'"
         );
     }
@@ -341,7 +341,7 @@ mod tests {
         // For now, this test just verifies the infrastructure works
         // The Brill POS tagger for German may need training data to recognize nouns properly
         assert!(
-            tokens.len() > 0,
+            !tokens.is_empty(),
             "Should find at least some tokens in 'Der gute Mann'"
         );
     }
