@@ -963,22 +963,54 @@ To stop a word being flagged as a miscapitalized noun, add the appropriate flag
 to its dictionary entry. `spell/lexical_classes.rs` reads these back into sets
 once per process; no Rust change is needed.
 
-Three lists remain in `german_noun_capitalization.rs` on purpose, because they
-are closed grammatical classes the linter reasons over rather than vocabulary:
+### The word lists that are left, and why
 
-- `GERMAN_NON_NOUNS` — function words the dictionary actively mistags (a large
-  fraction of them still carry a noun flag), so the dictionary cannot be the
-  source of truth for them yet.
-- `NOUN_PHRASE_LICENSORS` — the left-context test for "is this inside a noun
-  phrase"; consulted only after the `is_preposition`/`is_determiner` metadata
-  fast path fails.
-- `SEPARABLE_VERB_PREFIXES` — a *prefix* match (`herausrückt`), not a membership
-  test, so it cannot be a dictionary lookup.
+A word list in a `const &[&str]` is almost always misplaced — it is vocabulary
+pretending to be logic, and the dictionary is where vocabulary belongs. Audit
+what is there before adding to it:
+
+```bash
+grep -rn 'const [A-Z_]*: &\[&str\]' linting/ spell/ | wc -l
+```
+
+`GERMAN_NON_NOUNS` was 265 words, justified on the grounds that "the dictionary
+actively mistags them". That stopped being true when
+`scripts/strip_german_noun_readings.py` took the noun reading off every
+lower-case entry igerman98 has no capitalized form for: 230 of those 265 words
+stopped reading as nouns, and deleting them from the list changed no lint on
+either corpus. It is 35 words now, and they are the part a dictionary cannot
+settle — each really *is* a noun capitalized (`die Frage`, `die Waren`, `das
+Gut`), so the entry is right and only the lower-case occurrence needs letting
+through.
+
+The rest stay, for three different reasons:
+
+- **Closed grammatical classes**, which are the linter's reasoning and not
+  vocabulary at all: `NOUN_PHRASE_LICENSORS` (the left-context test, consulted
+  only after the `is_preposition`/`is_determiner` metadata fast path fails),
+  `NP_BARE_PREPOSITIONS`, `RELATIVE_PRONOUNS`, `COORDINATORS`,
+  `DEGREE_MODIFIERS`, `SUBORDINATORS`, `FOCUS_PARTICLES`.
+- **Not German**: `FOREIGN_FUNCTION_WORDS` and `LANGUAGE_GLOSS_MARKERS` exist to
+  recognise that a stretch of text is *not* German. A German dictionary is the
+  wrong home for them by definition.
+- **Not a membership test**: `SEPARABLE_VERB_PREFIXES` is matched as a *prefix*
+  (`herausrückt`), which no dictionary lookup can do.
+
+`SENTENCE_INTERNAL_ABBREVIATIONS` is the borderline one. It is 134 abbreviations
+whose full stop does not end a sentence — arguably a property of each word, and
+a flag could carry it. But 104 of them are three characters or more, so making
+them entries would make them compound elements too, and the measured price of
+short entries is typo detection every time (see the `-s` genitive above, and the
+abbreviations that were kept out of `add_german_abbreviations.py` on the same
+grounds). It is also a tokenizer question rather than a lexical one: the linter
+asks it of the token before a period, not of a word in isolation.
 
 **Note on flag characters**: many letters are simultaneously a property *and* an
 affix rule, so adding a letter flag to a word can generate unintended forms
-(tagging `mein` with the determiner flag `D` would also produce `meinung`). Only
-digits and punctuation are free; new property flags should use digits.
+(tagging `mein` with the determiner flag `D` would also produce `meinung`). No
+character is free in both tables, but several are *defined and carried by
+nothing* — see "Affixes and properties share one namespace" for how to find
+them.
 
 ## Comparison with English
 
