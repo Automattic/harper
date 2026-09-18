@@ -342,8 +342,10 @@ check-languages:
 	echo
 	echo "📊 Checking German dictionary coverage"
 	# Checks every word in the reference list (~258k, about 2s), so the figure is
-	# both representative and reproducible. Currently 95.1%.
-	just language-coverage german 94
+	# both representative and reproducible. Run `just language-coverage german`
+	# for the current figure; the argument below is the floor, not the figure,
+	# and wants raising whenever an import leaves real headroom above it.
+	just language-coverage german 99
 
 # Runs the harper-core suite with no language feature and again with every
 # language, then compares every test the two runs share. Not part of
