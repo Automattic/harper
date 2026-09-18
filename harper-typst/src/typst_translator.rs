@@ -244,13 +244,25 @@ impl<'a> TypstTranslator<'a> {
             let mut buf = Vec::new();
             let exprs = exprs.collect_vec();
             let exprs = super::convert_parbreaks(&mut buf, &exprs);
-            Some(
-                exprs
-                    .into_iter()
-                    .filter_map(|e| recurse!(e))
-                    .flatten()
-                    .collect_vec(),
-            )
+
+            let mut tokens = Vec::new();
+            let mut index = 0;
+
+            while index < exprs.len() {
+                // Treat Text + apostrophe + Text as a single contraction token stream.
+                if let Some((mut parsed, consumed)) = self.parse_contraction(&exprs, index) {
+                    tokens.append(&mut parsed);
+                    index += consumed;
+                    continue;
+                }
+
+                if let Some(mut parsed) = recurse!(exprs[index]) {
+                    tokens.append(&mut parsed);
+                }
+                index += 1;
+            }
+
+            Some(tokens)
         };
 
         // Parse the parameters of a function or closure
