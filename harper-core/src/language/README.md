@@ -171,8 +171,14 @@ just check-english-parity   # English behaves the same with and without language
 every language the build contains rather than naming any, so a new language is
 covered by all of it as soon as it compiles: aliases resolve, the dictionary
 loads and is non-empty, every prose format has a parser, the curated group has
-uniquely named linters that describe themselves, lints land inside the document,
-and an empty document produces none.
+uniquely named linters that describe themselves, **every `.weir` file on disk
+reaches its lint group**, lints land inside the document, and an empty document
+produces none.
+
+That weir check counts two different conventions, so read it before adding
+rules. English keeps its at `src/linting/weir_rules`, where a *subdirectory* is
+one rule made of several files; a language module puts its in the subdirectory
+`config.toml` names under `rules_subdirectory`, where *every file* is a rule.
 
 ## What the build generates
 

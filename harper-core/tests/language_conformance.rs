@@ -221,11 +221,83 @@ fn every_linter_describes_itself() {
     }
 }
 
+/// A language with `.weir` files on disk must end up with that many rules in
+/// its group.
+///
+/// Calling `weir_rules_lint_group` and dropping the result -- which is what this
+/// test used to do -- passes for a language with no rules at all, and three of
+/// the five have none, so it never said anything about the one that does. It is
+/// the same failure mode the language README warns about for
+/// `curated_lint_group`: returning an empty group compiles, wires in cleanly and
+/// silently checks nothing.
 #[test]
-fn weir_rules_load_for_every_language() {
+fn every_weir_rule_on_disk_reaches_its_lint_group() {
     for language in all_languages() {
-        let _ = weir_rules_lint_group(language);
+        let group = weir_rules_lint_group(language);
+        let loaded = group.iter_keys().count();
+        let on_disk = weir_rules_on_disk(language);
+
+        assert_eq!(
+            loaded, on_disk,
+            "{language:?} has {on_disk} weir rules on disk but {loaded} in its group"
+        );
     }
+}
+
+/// How many weir *rules* the language's directory holds, counted from the
+/// source tree rather than from anything the build generated.
+///
+/// Two conventions, and they are not the same one:
+///
+/// - English keeps its rules at `src/linting/weir_rules` — not under
+///   `src/language/`, because its data predates the language module — and a
+///   **subdirectory there is one rule** made of several files (`InOfItself/`).
+/// - A language module puts its rules in a subdirectory named by
+///   `rules_subdirectory` in `config.toml` (`weir_rules/de/`), and **every file
+///   in it is a rule**.
+fn weir_rules_on_disk(language: Language) -> usize {
+    if matches!(language, Language::English(_)) {
+        let dir = std::path::Path::new("src/linting/weir_rules");
+        let Ok(entries) = std::fs::read_dir(dir) else {
+            return 0;
+        };
+        return entries
+            .filter_map(Result::ok)
+            .filter(|e| {
+                let path = e.path();
+                path.is_dir() || path.extension().is_some_and(|x| x == "weir")
+            })
+            .count();
+    }
+
+    let dir = std::path::Path::new("src/language")
+        .join(language_directory(language))
+        .join("linting/weir_rules");
+    let Ok(entries) = std::fs::read_dir(&dir) else {
+        return 0;
+    };
+
+    let mut count = 0;
+    for entry in entries.filter_map(Result::ok) {
+        let path = entry.path();
+        if path.is_dir() {
+            count += std::fs::read_dir(&path)
+                .into_iter()
+                .flatten()
+                .filter_map(Result::ok)
+                .filter(|e| e.path().extension().is_some_and(|x| x == "weir"))
+                .count();
+        } else if path.extension().is_some_and(|x| x == "weir") {
+            count += 1;
+        }
+    }
+    count
+}
+
+/// The directory a language lives in, lower-cased from its family name — the
+/// same convention `build.rs` uses to find it.
+fn language_directory(language: Language) -> String {
+    format!("{:?}", language.family()).to_lowercase()
 }
 
 /// The end-to-end path: registry parser, registry dictionary, registry lint
