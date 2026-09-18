@@ -27,18 +27,29 @@
 			"rename_ok": true
 		},
 		"E": {
-			"#": "'ver-' inseparable prefix (safe)",
-			"kind": "prefix",
-			"cross_product": false,
+			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
+			"kind": "suffix",
+			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
-					"add": "ver",
-					"condition": "[^v]"
+					"add": "n",
+					"condition": "."
 				}
 			],
-			"target": [],
-			"base_metadata": {},
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": { "number": "Plural" }
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
 			"rename_ok": true
 		},
 		"G": {
@@ -1191,15 +1202,10 @@
 			"rename_ok": true
 		},
 		"Y": {
-			"#": "Noun plural -n/-en (Hand -> Hände, Student -> Studenten)",
+			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See scripts/split_german_plural_n.py",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
-				{
-					"remove": "",
-					"add": "n",
-					"condition": "."
-				},
 				{
 					"remove": "",
 					"add": "en",
@@ -2199,8 +2205,19 @@
 				}
 			}
 		},
+		"E": {
+			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see scripts/split_german_plural_n.py",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
 		"Y": {
-			"#": "noun plural -n/-en (German)",
+			"#": "noun plural -en (German)",
 			"metadata": {
 				"noun": {},
 				"morphology": {

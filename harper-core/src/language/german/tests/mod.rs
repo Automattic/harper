@@ -17,6 +17,7 @@ pub mod function_word_flags_test;
 pub mod german_annotations_test;
 pub mod headword_import_test;
 pub mod noun_phrase_chunk_test;
+pub mod plural_split_test;
 pub mod proper_name_genitive_test;
 pub mod strong_preterite_test;
 pub mod verb_noun_flag_test;

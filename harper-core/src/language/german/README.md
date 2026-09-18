@@ -262,6 +262,45 @@ new; there had simply been no text in which to see them.
 Keep both. The Wikipedia corpus is the regression test for everything the
 dictionary covers; the prose corpus is where the rules get tested.
 
+#### One flag cannot be two plurals
+
+`Y` was documented as "Noun plural -n/-en" and meant it literally: every entry
+carrying it got **both** `word + "n"` and `word + "en"`. A German noun takes one
+or the other, so for nearly every one of the hundred thousand entries that
+carried it, one of the two was not a word — and many take neither, because the
+plural umlauts (`Arzt` → `Ärzte`), doubles an `s` (`Ergebnis` → `Ergebnisse`) or
+does not exist (`Chemie`).
+
+Against the unmunched igerman98 list, of the entries it can judge: 29065 take
+only `-n`, 23196 only `-en`, 31 both, 48550 neither.
+
+```bash
+scripts/split_german_plural_n.py --forms forms.txt --apply
+```
+
+`-n` moved to `E` and `Y` narrowed to `-en`, and each entry got whichever
+igerman98 says it takes. About 148000 generated non-words fewer, and typo
+detection went from 91% to 92% — this was the largest single source of junk in
+the dictionary.
+
+Two things to copy when splitting any other flag this way:
+
+- **A flag that is also a property has to be split in both tables.** `Y` carries
+  a plural-noun reading as well as generating forms, and
+  `GermanNounCapitalization` leans on it: for a word ending in `-e` it treats a
+  noun reading as real only when the entry carries gender or number, which is
+  what keeps `für deutsche` flagged and `die festigende Wirkung` quiet. `E` was
+  an affix only at first and four tests went red.
+- **An entry igerman98 does not list is not judged.** It keeps both forms, so
+  the compounds igerman98 composes rather than lists
+  (`skalierungstabelle`) are untouched.
+
+The cost is words that were only ever spelled correctly by accident.
+`Programmen` and `Subjunktionen` are real, and Harper accepted them because the
+compound checker could reach them through forms that were junk. Neither
+`Programm` nor `Subjunktion` is an entry; importing the headword is the fix, not
+keeping the junk.
+
 #### Words that are not nouns, tagged as nouns
 
 German capitalizes its nouns, so a lower-case entry whose **capitalized** form
