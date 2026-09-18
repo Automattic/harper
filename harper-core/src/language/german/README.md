@@ -239,6 +239,39 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### A missing derivation costs more than a missing word
+
+German derives the feminine personal noun from the masculine one with `-in`
+(*Movierung*), plural `-innen`. The rule is fully productive and it was absent
+from the model, so `Sprecherin`, `Ministerin`, `Politikerin`, `Regisseurin` and
+`Professorin` were all reported as misspellings while `sprecher`, `minister`,
+`politiker`, `regisseur` and `professor` sat in the dictionary.
+
+It is hunspell de_DE's `SFX F`, and it is split across two Harper flags the way
+`-ung`/`-ungen` is split across `7` and `8`: `K` builds the singular and `L` the
+plural, so the plural forms carry a plural reading of their own instead of
+borrowing the singular's.
+
+```bash
+scripts/mirror_hunspell_flag.py --forms forms.txt --from F --to KL --apply
+```
+
+4548 entries took the flags and two were refused, because a flag is added only
+when the expanded hunspell list accepts every form it would generate. Both flags
+also mark the derivation **feminine**, which the masculine entry cannot: `näher`
+carries no gender at all.
+
+What this does *not* reach is a masculine noun that is not an entry. `Nachfolger`
+is spelled correctly only because the compound checker takes it apart, and a flag
+has nothing to attach to there, so `Nachfolgerin` is still missing. Importing the
+headword is the lever for that — see the next section, and its cost.
+
+The interior-capital spelling (`LehrerIn`, `LehrerInnen`) comes along, because
+igerman98 lists it. Measured on all three axes it paid for itself: 71 corpus
+false positives gone, typo detection up rather than down, injected-error recall
+unchanged, and no new dictionary entries at all — 7833 more surface forms out of
+the same 234938 lines.
+
 #### Declining an already-declined form
 
 `OQRST` are the five adjective declension endings and they belong on the base:
@@ -427,14 +460,32 @@ the `un-` prefix on `9` — digits, because they were the only characters free i
 both tables. Digits were already the established escape hatch here: `4`, `5` and
 `6` carry determiner, pronoun and conjunction for exactly the same reason. `0`
 went to the `-es` genitive and `s` to the strong preterite, and with those two
-gone **the namespace is full**: no character is free in both tables any more.
-The next rule has to extend an existing flag, or start by freeing one.
+gone **no character is free in both tables** any more. The next rule has to
+extend an existing flag, or start by freeing one.
 
 ```bash
 python3 -c "import json, string; d=json.load(open('annotations.json')); \
   u=set(d['affixes'])|set(d['properties']); \
   print(''.join(c for c in string.digits+string.ascii_letters if c not in u) or 'none')"
 ```
+
+Freeing one is easier than it sounds, because several flags are defined and
+carried by nothing. Count what the dictionary actually uses before assuming a
+character is spoken for:
+
+```bash
+python3 -c "import collections; c=collections.Counter(ch \
+  for l in open('dictionary.dict', encoding='utf-8') if '/' in l.split('#')[0] \
+  for ch in l.split('#')[0].strip().split('/',1)[1]); \
+  print(sorted((n,ch) for ch,n in c.items())[:8])"
+```
+
+That is where the feminine derivation's `K` and `L` came from. Both were
+uppercase compound interfixes (`-n` and `-en`) that **no entry carried** and that
+the compound checker never read — it reads the lowercase `k` and `l`, as
+`compound_checker.rs` spells out. `E` (the `ver-` prefix), `H` (compound, no
+interfix) and `n` (separable-prefix participle) are still sitting there unused,
+so the next two rules have somewhere to go.
 
 The `A`, `C` and `F` *affixes* have been deleted. `F` was the expensive one: it
 sat on every feminine noun as a property, so the affix was appending `-chen` to

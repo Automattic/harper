@@ -177,49 +177,216 @@
 			"rename_ok": true
 		},
 		"K": {
-			"#": "Compound word formation - noun + noun with 'n' interfix",
+			"#": "Feminine derivation '-in' (Movierung): Lehrer -> Lehrerin, Biologe -> Biologin, Arzt -> Aerztin is irregular and stays a separate entry. Mirrors the singular half of hunspell de_DE SFX F, including the interior-capital spelling German writes as LehrerIn. The plural is on 'L'. 'K' previously held an uppercase compound '-n' interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'k' -- see the collision table in README.md.",
 			"kind": "suffix",
-			"cross_product": true,
+			"cross_product": false,
 			"replacements": [
 				{
+					"remove": "e",
+					"add": "in",
+					"condition": "e"
+				},
+				{
 					"remove": "",
-					"add": "n",
-					"condition": "."
+					"add": "in",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^enr]"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "in",
+					"condition": "[^i]erer"
+				},
+				{
+					"remove": "in",
+					"add": "In",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "In",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^en]"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "In",
+					"condition": "[^i]erer"
 				}
 			],
 			"target": [
 				{
 					"metadata": {
-						"noun": {}
+						"noun": {},
+						"morphology": {
+							"noun": { "gender": "Feminine" }
+						}
 					}
 				}
 			],
-			"base_metadata": {
-				"noun": {}
-			},
+			"base_metadata": {},
 			"rename_ok": true
 		},
 		"L": {
-			"#": "Compound word formation - noun + noun with 'en' interfix",
+			"#": "Feminine plural '-innen', the plural of the 'K' derivation (Lehrerinnen, Biologinnen, and LehrerInnen). Mirrors the plural half of hunspell de_DE SFX F. Split from 'K' for the same reason '8' is split from '7': the plural forms need a plural reading of their own. 'L' previously held an uppercase compound '-en' interfix that no entry carried.",
 			"kind": "suffix",
-			"cross_product": true,
+			"cross_product": false,
 			"replacements": [
 				{
 					"remove": "",
-					"add": "en",
-					"condition": "."
+					"add": "nen",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "innen",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^enr]"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "innen",
+					"condition": "[^i]erer"
+				},
+				{
+					"remove": "in",
+					"add": "Innen",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "Innen",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^en]"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "Innen",
+					"condition": "[^i]erer"
 				}
 			],
 			"target": [
 				{
 					"metadata": {
-						"noun": {}
+						"noun": {},
+						"morphology": {
+							"noun": { "gender": "Feminine", "number": "Plural" }
+						}
 					}
 				}
 			],
-			"base_metadata": {
-				"noun": {}
-			},
+			"base_metadata": {},
 			"rename_ok": true
 		},
 		"o": {
