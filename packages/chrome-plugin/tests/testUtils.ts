@@ -143,6 +143,16 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
 const POPUP_OPEN_TIMEOUT_MS = 2000;
 /** How many clicks to spend before reporting that the popup will not open. */
 const POPUP_OPEN_ATTEMPTS = 5;
+/**
+ * How long the popup has to stay open before the caller may reach for a button.
+ *
+ * `PopupHandler.updateLintBoxes` clears `popupLint` whenever a lint pass returns a
+ * different number of boxes, and `render` then hides the popup — so a pass landing just
+ * after it opens takes the button away again. Waiting out one debounce here is safe;
+ * retrying the button click afterwards would not be, because every button in that popup
+ * applies, ignores or disables something the first time it connects.
+ */
+const POPUP_SETTLE_MS = 400;
 
 /**
  * Locates the first Harper highlight on the page, clicks it, and waits for the popup.
@@ -155,9 +165,10 @@ const POPUP_OPEN_ATTEMPTS = 5;
  * Reporting success there left callers waiting on a suggestion button that would never
  * render, until the whole test timed out ninety seconds later.
  *
- * So each attempt re-measures before it clicks, and an attempt that produces no popup is
- * simply retried. Give-up is a `false` return within seconds, which fails the caller's
- * assertion with a screenshot instead of a timeout.
+ * So each attempt re-measures before it clicks, and an attempt that produces no popup —
+ * or one that produces a popup a lint pass immediately closes again — is simply retried.
+ * Opening a popup changes nothing, so a retry is free. Give-up is a `false` return within
+ * seconds, which fails the caller's assertion with a screenshot instead of a timeout.
  *
  * Expects no popup to be open on entry — every caller applies or dismisses a suggestion
  * before clicking again, which closes it.
@@ -173,7 +184,12 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
 
 		try {
 			await popup.waitFor({ state: 'visible', timeout: POPUP_OPEN_TIMEOUT_MS });
-			return true;
+			// Opening it is not enough: it has to still be there when the caller
+			// reaches for a button.
+			await page.waitForTimeout(POPUP_SETTLE_MS);
+			if (await popup.isVisible()) {
+				return true;
+			}
 		} catch {
 			// The click raced a re-render of the lint boxes. Measure again and retry.
 		}
