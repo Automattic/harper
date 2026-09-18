@@ -86,6 +86,15 @@ impl Expr for SequenceExpr {
 impl SequenceExpr {
     // Constructor methods
 
+    pub fn from_words(strs: Vec<&'static str>) -> Self {
+        let (first_word, rest) = strs.split_first().unwrap();
+        let mut seq = Self::aco(first_word);
+        for next_word in rest {
+            seq = seq.t_ws().t_aco(next_word);
+        }
+        seq
+    }
+
     // Match an [expression](Expr).
     pub fn with(expr: impl Expr + 'static) -> Self {
         Self::default().then(expr)
