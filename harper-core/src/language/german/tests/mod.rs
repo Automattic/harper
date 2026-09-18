@@ -10,6 +10,7 @@ pub mod adjective_declension_test;
 pub mod adjective_position_test;
 pub mod capitalization_false_positive_test;
 pub mod compound_test;
+pub mod declension_test;
 pub mod function_word_flags_test;
 pub mod german_annotations_test;
 pub mod headword_import_test;

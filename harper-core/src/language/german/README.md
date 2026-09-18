@@ -239,6 +239,35 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### Declining an already-declined form
+
+`OQRST` are the five adjective declension endings and they belong on the base:
+`klein` gives `kleine`, `kleinem`, `kleinen`, `kleiner`, `kleines`. Several
+hundred entries were themselves one of those five and carried the flags anyway,
+so they declined a second time and put `kleineree`, `vielee` and `höherere` into
+the dictionary — every one a plausible typo of the real form.
+
+Nine were worse. A comment had lost its `#`:
+
+```
+höherer/~~Jq - comprtve jectveOQRST
+```
+
+`c`, `e`, `j`, `m`, `o`, `p`, `r`, `t` and `v` are all real flags, so a
+comparative adjective read as a noun, a verb in two tenses, and an adverb.
+
+```bash
+scripts/fix_german_double_declension.py --forms forms.txt --apply
+```
+
+Two things make this safe to run. Most of what the doubled flags generate is not
+junk — `abstoßenderem` is a real comparative and `abstoßend` produces it too,
+through `U` — so the script expands the whole dictionary before and after and
+keeps an entry as it is whenever the change would take a *hunspell-known* form
+with it. And `OQRST` are in the properties table as well, so removing them
+removes a part of speech: `O`, `Q`, `S` and `T` each carry an adjective reading
+and `R` an adverb one. Those move to `J` and `r`, which generate nothing.
+
 #### The headwords Harper could not reach
 
 `dictionary.dict` is a subset of igerman98's word list, and the compound checker

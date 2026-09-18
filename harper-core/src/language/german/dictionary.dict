@@ -711,7 +711,7 @@ berti/~~NY
 bertolt/~~NY
 bertrada/~~NY
 bertram/~~NY
-berufen/~~rIXVfij9OQRSTcG # +verb reading (was noun-only)
+berufen/~~rIXVfij9cGJ # +verb reading (was noun-only)
 berufsunfähig/~~JOQRSTq
 beruhigen/~~NMZVdfij78ecG # +verb reading (was noun-only)
 berumerfehner/~~NY
@@ -2878,7 +2878,7 @@ achsenmächte/~~FhY
 achtgeben/~~rIVfijc # +verb reading (was noun-only)
 achthaben/~~rIVfijc # +verb reading (was noun-only)
 achtlinge/~~NY
-achtmonatige/~~JOQRSTq
+achtmonatige/~~Jqr
 achtrup/~~NY
 achtruper/~~NFY
 achämenide/~~NY
@@ -3359,7 +3359,7 @@ abstoße/~~FhY #feminine noun
 abstoß/~~Vcj780 # REPLACES abstoßen
 abstoßende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abstoßendem/~~NhY #noun
-abstoßender/~~NhYOQRST #noun
+abstoßender/~~NhYJr #noun
 abstoßendere/~~FhY #feminine noun
 abstoßenderem/~~NhY #noun
 abstoßenderen/~~Vfj # verb
@@ -3413,7 +3413,7 @@ abstrahlungen/~~Vj # verb
 abstrakt/~~hqOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abstraktem/~~NhY #noun
 abstrakten/~~VfjG # verb
-abstrakter/~~NhYOQRST #noun
+abstrakter/~~NhYJr #noun
 abstraktere/~~FhY #feminine noun
 abstrakterem/~~NhY #noun
 abstrakteren/~~Vfj # verb
@@ -3583,7 +3583,7 @@ absuds/~~NhY #noun
 absurde/~~FhY #feminine noun
 absurdem/~~NhY #noun
 absurden/~~VfjG # verb
-absurder/~~NhYOQRST #noun
+absurder/~~NhYJr #noun
 absurdere/~~FhY #feminine noun
 absurderem/~~NhY #noun
 absurderen/~~Vfj # verb
@@ -3902,7 +3902,7 @@ abtrugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 abträgliche/~~FhY #feminine noun
 abträglichem/~~NhY #noun
 abträglichen/~~VfjG # verb
-abträglicher/~~NhYOQRST #noun
+abträglicher/~~NhYJr #noun
 abträglichere/~~FhY #feminine noun
 abträglicherem/~~NhY #noun
 abträglicheren/~~Vfj # verb
@@ -4146,7 +4146,7 @@ abwegen/~~Vfj # verb
 abwegige/~~FhY #feminine noun
 abwegigem/~~NhY #noun
 abwegigen/~~VfjG # verb
-abwegiger/~~NhYOQRST #noun
+abwegiger/~~NhYJr #noun
 abwegigere/~~FhY #feminine noun
 abwegigerem/~~NhY #noun
 abwegigeren/~~Vfj # verb
@@ -6178,7 +6178,7 @@ achteres/~~NhY #noun
 achterliche/~~FhY #feminine noun
 achterlichem/~~NhY #noun
 achterlichen/~~VfjG # verb
-achterlicher/~~NhYOQRST #noun
+achterlicher/~~NhYJr #noun
 achterlichere/~~FhY #feminine noun
 achterlicherem/~~NhY #noun
 achterlicheren/~~Vfj # verb
@@ -6276,7 +6276,7 @@ achtle/~~FhY #feminine noun
 achtlos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 achtlosem/~~NhY #noun
 achtlosen/~~VfjG # verb
-achtloser/~~NhYOQRST #noun
+achtloser/~~NhYJr #noun
 achtlosere/~~FhY #feminine noun
 achtloserem/~~NhY #noun
 achtloseren/~~Vfj # verb
@@ -6329,7 +6329,7 @@ achtungs/~~NhY #noun
 achtungsvolle/~~FhY #feminine noun
 achtungsvollem/~~NhY #noun
 achtungsvollen/~~VfjG # verb
-achtungsvoller/~~NhYOQRST #noun
+achtungsvoller/~~NhYJr #noun
 achtungsvollere/~~FhY #feminine noun
 achtungsvolles/~~NhY #noun
 achtungsvollste/~~FhY #feminine noun
@@ -6864,7 +6864,7 @@ abhängendes/~~NhY #noun
 abhängige/~~FhY #feminine noun
 abhängigem/~~NhY #noun
 abhängigen/~~VfjG # verb
-abhängiger/~~NhYOQRST #noun
+abhängiger/~~NhYJr #noun
 abhängigere/~~FhY #feminine noun
 abhängigerem/~~NhY #noun
 abhängigeren/~~Vfj # verb
@@ -8080,7 +8080,7 @@ abnorm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 abnormale/~~FhY #feminine noun
 abnormalem/~~NhY #noun
 abnormalen/~~VfjG # verb
-abnormaler/~~NhYOQRST #noun
+abnormaler/~~NhYJr #noun
 abnormalere/~~FhY #feminine noun
 abnormalerem/~~NhY #noun
 abnormaleren/~~Vfj # verb
@@ -8555,7 +8555,7 @@ abriebfest/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abriebfeste/~~FhY #feminine noun
 abriebfestem/~~NhY #noun
 abriebfesten/~~VfjG # verb
-abriebfester/~~NhYOQRST #noun
+abriebfester/~~NhYJr #noun
 abriebfestere/~~FhY #feminine noun
 abriebfesterem/~~NhY #noun
 abriebfesteren/~~Vfj # verb
@@ -8658,7 +8658,7 @@ abrupfen/~~Vj # verb
 abrupt/~~hVOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abruptem/~~NhY #noun
 abrupten/~~VfjG # verb
-abrupter/~~NhYOQRST #noun
+abrupter/~~NhYJr #noun
 abruptere/~~FhY #feminine noun
 abrupterem/~~NhY #noun
 abrupteren/~~Vfj # verb
@@ -8915,7 +8915,7 @@ abscheuert/~~NhYG #noun
 abscheuliche/~~FhY #feminine noun
 abscheulichem/~~NhY #noun
 abscheulichen/~~VfjG # verb
-abscheulicher/~~NhYOQRST #noun
+abscheulicher/~~NhYJr #noun
 abscheulichere/~~FhY #feminine noun
 abscheulicherem/~~NhY #noun
 abscheulicheren/~~Vfj # verb
@@ -9278,7 +9278,7 @@ abschraubtet/~~NhYG #noun
 abschreck/~~Vcej # REPLACES abschrecken
 abschreckende/~~FhYJ # feminine noun; +adjective reading (was noun-only)
 abschreckendem/~~NhY #noun
-abschreckender/~~NhYOQRST #noun
+abschreckender/~~NhYJr #noun
 abschreckendere/~~FhY #feminine noun
 abschreckendes/~~NhY #noun
 abschreckendst/~~NhYOQRST #noun
@@ -9819,7 +9819,7 @@ absondere/~~FhY #feminine noun
 absonderliche/~~FhY #feminine noun
 absonderlichem/~~NhY #noun
 absonderlichen/~~VfjG # verb
-absonderlicher/~~NhYOQRST #noun
+absonderlicher/~~NhYJr #noun
 absonderlichere/~~FhY #feminine noun
 absonderliches/~~NhY #noun
 absonderlichst/~~hVOQRST #noun
@@ -10056,7 +10056,7 @@ abarten/~~Vj # verb
 abartige/~~FhY #feminine noun
 abartigem/~~NhY #noun
 abartigen/~~VfjG # verb
-abartiger/~~NhYOQRST #noun
+abartiger/~~NhYJr #noun
 abartigere/~~FhY #feminine noun
 abartigerem/~~NhY #noun
 abartigeren/~~Vfj # verb
@@ -10807,7 +10807,7 @@ abends/~~NhY #noun
 abenteuerliche/~~FhY #feminine noun
 abenteuerlichem/~~NhY #noun
 abenteuerlichen/~~VfjG # verb
-abenteuerlicher/~~NhYOQRST #noun
+abenteuerlicher/~~NhYJr #noun
 abenteuerliches/~~NhY #noun
 abenteuerlichst/~~hVOQRST #noun
 abenteuern/~~NhY #noun
@@ -11247,7 +11247,7 @@ abfällen/~~VifjG # verb
 abfällige/~~FhY #feminine noun
 abfälligem/~~NhY #noun
 abfälligen/~~VfjG # verb
-abfälliger/~~NhYOQRST #noun
+abfälliger/~~NhYJr #noun
 abfälligere/~~FhY #feminine noun
 abfälligerem/~~NhY #noun
 abfälligeren/~~Vfj # verb
@@ -11492,7 +11492,7 @@ abgebröckeltes/~~NhY #noun
 abgebrüht/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abgebrühtem/~~NhY #noun
 abgebrühten/~~VfjG # verb
-abgebrühter/~~NhYOQRST #noun
+abgebrühter/~~NhYJr #noun
 abgebrühtere/~~FhY #feminine noun
 abgebrühterem/~~NhY #noun
 abgebrühteren/~~Vfj # verb
@@ -11989,7 +11989,7 @@ abgehärmtes/~~NhY #noun
 abgehärtete/~~FhY #feminine noun
 abgehärtetem/~~NhY #noun
 abgehärteten/~~Vfj # verb
-abgehärteter/~~NhYOQRST #noun
+abgehärteter/~~NhYJr #noun
 abgehärtetere/~~FhY #feminine noun
 abgehärteterem/~~NhY #noun
 abgehärteteren/~~Vfj # verb
@@ -12143,7 +12143,7 @@ abgeknöpftes/~~NhY #noun
 abgekocht/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abgekochtem/~~NhY #noun
 abgekochten/~~VfjG # verb
-abgekochter/~~NhYOQRST #noun
+abgekochter/~~NhYJr #noun
 abgekochtere/~~FhY #feminine noun
 abgekochterem/~~NhY #noun
 abgekochteren/~~Vfj # verb
@@ -12253,7 +12253,7 @@ abgeledertes/~~NhY #noun
 abgelegene/~~FhY #feminine noun
 abgelegenem/~~NhY #noun
 abgelegenen/~~VfjG # verb
-abgelegener/~~NhYOQRST #noun
+abgelegener/~~NhYJr #noun
 abgelegenere/~~FhY #feminine noun
 abgelegenerem/~~NhY #noun
 abgelegeneren/~~Vfj # verb
@@ -12804,7 +12804,7 @@ abgeschicktes/~~NhY #noun
 abgeschiedene/~~FhY #feminine noun
 abgeschiedenem/~~NhY #noun
 abgeschiedenen/~~VfjG # verb
-abgeschiedener/~~NhYOQRST #noun
+abgeschiedener/~~NhYJr #noun
 abgeschiedenere/~~FhY #feminine noun
 abgeschiedenes/~~NhY #noun
 abgeschiedenst/~~hVOQRST #noun
@@ -13115,7 +13115,7 @@ abgesoffenes/~~NhY #noun
 abgesondert/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 abgesondertem/~~NhY #noun
 abgesonderten/~~Vfj # verb
-abgesonderter/~~NhYOQRST #noun
+abgesonderter/~~NhYJr #noun
 abgesondertere/~~FhY #feminine noun
 abgesonderterem/~~NhY #noun
 abgesonderteren/~~Vfj # verb
@@ -13350,7 +13350,7 @@ abgestuftes/~~NhY #noun
 abgestumpft/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 abgestumpftem/~~NhY #noun
 abgestumpften/~~VfjG # verb
-abgestumpfter/~~NhYOQRST #noun
+abgestumpfter/~~NhYJr #noun
 abgestumpftere/~~FhY #feminine noun
 abgestumpfterem/~~NhY #noun
 abgestumpfteren/~~Vfj # verb
@@ -13986,7 +13986,7 @@ näher/~~JOQRSTpuvw #frequency: 11 (adjective)
 reich/~~NJOQRSTUWqi #adjective and noun
 reif/~~NJOQRSTUWq9 #adjective and noun
 sicher/~~NJOQRSTUWq9 #adjective and noun
-wunder/~~NJOQRSTq #adjective and noun
+wunder/~~NJqr #adjective and noun
 Ährchen/~~Zh # from hunspell
 Ärzteschule/~~FhY # medical school
 Ärzteschulen/~~F # plural of Ärzteschule
@@ -14000,11 +14000,11 @@ besser/~~JOQRSTqh #frequency: 10 (adjective)
 ein/~4hOQRST #frequency: 10
 fach/~~JOQRSTqh0 #frequency: 10 (adjective)
 irr/~~JOQRSTUWqh #frequency: 10 (adjective)
-klammer/~~JOQRSTqh #frequency: 10 (adjective)
+klammer/~~Jqhr #frequency: 10 (adjective)
 lieb/~~JOQRSTUWqh9 #frequency: 10 (adjective)
 link/~~JOQRSTqh #frequency: 10 (adjective)
 locker/~~JOQRSTUWqh #frequency: 10 (adjective)
-milder/~~JOQRSTqh #frequency: 10 (adjective)
+milder/~~Jqhr #frequency: 10 (adjective)
 minder/~~JOQRSTqh #frequency: 10 (adjective)
 rau/~~JOQRSTUWqh #frequency: 10 (adjective)
 schal/~~JOQRSTUWqh78 #frequency: 10 (adjective)
@@ -14035,12 +14035,12 @@ gleich/~~JOQRSTUpuvw9 #frequency: 9 (adjective)
 grün/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 jung/~~JOQRSTpuvw #frequency: 9 (adjective)
 jung/~~JOQRSTq #adjective young
-kecker/~~JOQRSTpuvw #frequency: 9 (adjective)
+kecker/~~Jpuvwr #frequency: 9 (adjective)
 keim/~~JOQRSTpuvw0 #frequency: 9 (adjective)
 knall/~~JOQRSTpuvw0 #frequency: 9 (adjective)
 kühl/~~JOQRSTUWpuvw #frequency: 9 (adjective)
 lau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
-lauer/~~JOQRSTpuvw #frequency: 9 (adjective)
+lauer/~~Jpuvwr #frequency: 9 (adjective)
 leck/~~JOQRSTUpuvw #frequency: 9 (adjective)
 loch/~~NhY0a #frequency: 9
 mein/~~5JOQRSTqh #frequency: 9
@@ -14052,7 +14052,7 @@ rauch/~~NhY0 #frequency: 9
 reg/~~RJOQRSTUWqh #frequency: 9
 rock/~~NhY0 #frequency: 9
 rund/~~RJOQRSTUWqh9 #frequency: 9
-scheuer/~~RJOQRSTqh #frequency: 9
+scheuer/~~Jqhr #frequency: 9
 schrei/~~NhY0 #frequency: 9
 schwäch/~~JOQRSTUWqh #frequency: 9
 stich/~~NhY0 #frequency: 9
@@ -14070,12 +14070,12 @@ wahr/~~URJOQRSTUWqh9 #frequency: 9
 weiß/~~RJOQRSTqh #frequency: 9
 widerruf/~~MhY0 #frequency: 9
 wild/~~RJOQRSTUWqh0 #frequency: 9
-wilder/~~RJOQRSTqh #frequency: 9
+wilder/~~Jqhr #frequency: 9
 wohl/~~RJOQRSTUWqh #frequency: 9
 wucher/~~NhY #frequency: 9
 zink/~~NhY0 #frequency: 9
 überreich/~~RJOQRSTqh #frequency: 9
-achter/~~RJOQRSTqh #frequency: 8
+achter/~~Jqhr #frequency: 8
 aktiv/~~RJOQRSTUWqh #frequency: 8
 anbau/~~NhY0 #frequency: 8
 aufstau/~~NhY0 #frequency: 8
@@ -14105,7 +14105,7 @@ bündel/~NhpuvwY #frequency: 8
 deck/~NhpuvwY0 #frequency: 8
 deckel/~NhpuvwY #frequency: 8
 demütig/~JqOQRSTUW #adjective root, frequency: 8
-dichter/~~NJOQRSTq #frequency: 8
+dichter/~~NJqr #frequency: 8
 doppel/~NhpuvwY #frequency: 8
 druck/~NhpuvwY0 #frequency: 8
 ehelich/~JqOQRST9 #adjective root, frequency: 8
@@ -14120,7 +14120,7 @@ fest/~~RJOQRSTUWqh0 #frequency: 8
 finger/~NhpuvwY #frequency: 8
 fisch/~JqOQRST0 #adjective root, frequency: 8
 fluch/~NhpuvwY0 #frequency: 8
-forscher/~~RJOQRSTqh #frequency: 8
+forscher/~~Jqhr #frequency: 8
 früh/~~RJOQRSTUWqh #frequency: 8
 fummel/~NhpuvwY #frequency: 8
 funk/~NhpuvwY0 #frequency: 8
@@ -14188,7 +14188,7 @@ roh/~~JOQRSTqh #frequency: 8
 ruf/~NhpuvwY0 #frequency: 8
 rutsch/~NhpuvwY0 #frequency: 8
 scheu/~~JOQRSTUWqh #frequency: 8
-schiefer/~~NJOQRSTq #frequency: 8
+schiefer/~~NJqr #frequency: 8
 schiff/~NhpuvwY0 #frequency: 8
 schimmel/~NhpuvwY #frequency: 8
 schlag/~NhpuvwY0 #frequency: 8
@@ -14482,7 +14482,7 @@ fantasiereich/~~JOQRSTUWqh #frequency: 7
 fantasievoll/~~JOQRSTUWqh #frequency: 7
 fatal/~~JOQRSTUWqh #frequency: 7
 fei/~NhpuvwY #frequency: 7
-fertiger/~~NJOQRSTq #frequency: 7
+fertiger/~~NJqr #frequency: 7
 fesch/~~RJOQRSTUWqh #frequency: 7
 fessel/~NhpuvwY #frequency: 7
 fett/~~NJOQRSTUWq0 #frequency: 7
@@ -14551,7 +14551,7 @@ gipfel/~NhpuvwY #frequency: 7
 glatthobel/~NhpuvwY #frequency: 7
 glazial/~~NJOQRSTq #frequency: 7
 glorreich/~~JOQRSTUWqh #frequency: 7
-gläubiger/~~NJOQRSTq #frequency: 7
+gläubiger/~~NJqr #frequency: 7
 grab/~NhpuvwY780 #frequency: 7
 grauenvoll/~~JOQRSTUWqh #frequency: 7
 greif/~NhpuvwY #frequency: 7
@@ -14567,7 +14567,7 @@ harsch/~~JOQRSTqh #frequency: 7
 hau/~NhpuvwY #frequency: 7
 hebel/~NhpuvwY #frequency: 7
 heft/~NhpuvwY0a #frequency: 7
-heiler/~NhpuvwYOQRST #frequency: 7
+heiler/~NhpuvwYJr #frequency: 7
 heim/~NhpuvwY0 #frequency: 7
 heiß/~~NJOQRSTUq #frequency: 7
 heliotrop/~~JOQRSTqh #frequency: 7
@@ -14676,7 +14676,7 @@ kuppel/~NhpuvwY #frequency: 7
 kur/~Nhpuvw #frequency: 7
 kuschel/~NhpuvwY #frequency: 7
 körn/~NhpuvwY #frequency: 7
-kühler/~NhpuvwYOQRST #frequency: 7
+kühler/~NhpuvwYJr #frequency: 7
 label/~NhpuvwY #frequency: 7
 labil/~~JOQRSTUWqh #frequency: 7
 lach/~NhpuvwY #frequency: 7
@@ -14851,7 +14851,7 @@ schlau/~~RJOQRSTUWqh #frequency: 7
 schlauch/~NhpuvwY0 #frequency: 7
 schleim/~NhpuvwY0 #frequency: 7
 schlepp/~NhpuvwY #frequency: 7
-schlichter/~~NJOQRSTq #frequency: 7
+schlichter/~~NJqr #frequency: 7
 schließ/~NhpuvwY #frequency: 7
 schliff/~NhpuvwY0s #frequency: 7
 schmachvoll/~~RJOQRSTUWqh #frequency: 7
@@ -14978,7 +14978,7 @@ trivial/~~RJOQRSTUWqh #frequency: 7
 troll/~NhpuvwY0 #frequency: 7
 trostreich/~~RJOQRSTUWqh #frequency: 7
 trumpf/~NhpuvwY0 #frequency: 7
-träger/~NhpuvwYOQRST #frequency: 7
+träger/~NhpuvwYJr #frequency: 7
 trödel/~NhpuvwY #frequency: 7
 tugendreich/~~RJOQRSTUWqh #frequency: 7
 ulk/~NhpuvwY #frequency: 7
@@ -15032,7 +15032,7 @@ volatil/~~RJOQRSTUWqh #frequency: 7
 voll/~~RJOQRSTUWqh #frequency: 7
 wackel/~NhpuvwY #frequency: 7
 wahlfrei/~~RJOQRSTUWqh #frequency: 7
-wahrer/~~NJOQRSTq #frequency: 7
+wahrer/~~NJqr #frequency: 7
 wahrheitsgetreu/~~RJOQRSTUWqh #frequency: 7
 waldreich/~~RJOQRSTUWqh #frequency: 7
 wander/~NhpuvwY #frequency: 7
@@ -16552,7 +16552,7 @@ energievoll/~NhY #frequency: 6
 energisch/~JqOQRSTUW #adjective root, frequency: 6
 engelgleich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 engelsgleich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-enger/~NhYOQRST #frequency: 6
+enger/~NhYJr #frequency: 6
 englandtreu/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 englisch/~JqOQRSTUW9 #adjective root, frequency: 6
 enorm/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -17271,7 +17271,7 @@ gesamtaktiv/~~JOQRSTqh #frequency: 6
 gesamtdeutsch/~~hqOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 gesamtkulturell/~~JOQRSTqh #frequency: 6
 geschehen/~Vfj9OQRSTc # verb root, frequency: 6
-gescheiter/~NhYOQRST #frequency: 6
+gescheiter/~NhYJr #frequency: 6
 geschenk/~NhY0 #frequency: 6
 geschichtsreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 geschichtsträchtig/~JqOQRSTUW #adjective root, frequency: 6
@@ -18673,7 +18673,7 @@ libysch/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lichtblau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lichtdurchlässig/~JqOQRSTUW #adjective root, frequency: 6
 lichtempfindlich/~JqOQRSTUW #adjective root, frequency: 6
-lichter/~NhYOQRST #frequency: 6
+lichter/~NhYJr #frequency: 6
 lichterloh/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lichtgrau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lichthoffrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -18956,7 +18956,7 @@ affen/~~Vfj # auto-added
 affige/~~NhY
 affigem/~~NhY
 affigen/~~VfjG # auto-added
-affiger/~~MhYOQRST
+affiger/~~MhYJr
 affiges/~~NhY
 affigst/~~hVOQRST
 affin/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -18989,7 +18989,7 @@ agiert/~~NXhG
 agile/~~NhY
 agilem/~~NhY
 agilen/~~VfjG # auto-added
-agiler/~~MhYOQRST
+agiler/~~MhYJr
 agilere/~~NhY
 agiles/~~NhY
 agilste/~~NhY
@@ -19060,7 +19060,7 @@ aktiva/~~NhY
 aktive/~~NhYJ # +adjective reading (was noun-only)
 aktivem/~~NhY
 aktiven/~~VfjG # auto-added
-aktiver/~~MhYOQRST
+aktiver/~~MhYJr
 aktives/~~NhY
 aktor/~~NhY
 aktoren/~~Vj # auto-added
@@ -19072,7 +19072,7 @@ akustik/~~NhY
 akut/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 akutem/~~NhY
 akuten/~~VfjG # auto-added
-akuter/~~MhYOQRST
+akuter/~~MhYJr
 akutere/~~NhY
 akutes/~~NhY
 akutest/~~hVOQRST
@@ -19916,7 +19916,7 @@ apanage/~~NhY
 apart/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 apartem/~~NhY
 aparten/~~VfjG # auto-added
-aparter/~~MhYOQRST
+aparter/~~MhYJr
 apartes/~~NhY
 apathie/~~NhY
 apatit/~~NXh
@@ -20050,7 +20050,7 @@ artetet/~~NhYG
 artige/~~NhY
 artigem/~~NhY
 artigen/~~VfjG # auto-added
-artiger/~~MhYOQRST
+artiger/~~MhYJr
 artiges/~~NhY
 artigst/~~hVOQRST
 artikel/~~NhY # auto-added
@@ -20617,7 +20617,7 @@ bambus/~~NhY
 banale/~~NhY
 banalem/~~NhY
 banalen/~~VfjG # auto-added
-banaler/~~MhYOQRST
+banaler/~~MhYJr
 banales/~~NhY
 banane/~~NhY
 bananen/~~Vfj # auto-added
@@ -21739,7 +21739,7 @@ blasig/~~RJOQRSTqh
 blass/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 blassem/~~NhY
 blass/~~VejOQRSTUW # REPLACES blassen
-blasser/~~MhYOQRST
+blasser/~~MhYJr
 blasses/~~NhY
 blasste/~~NhY
 blast/~~NhY
@@ -21877,7 +21877,7 @@ blödeln/~~VdifjeG # auto-added
 blödelt/~~NXhG
 blödem/~~NhY
 blöden/~~VfjG # auto-added
-blöder/~~MhYOQRST
+blöder/~~MhYJr
 blödere/~~NhY
 blödes/~~NhY
 blödian/~~NhY
@@ -22142,7 +22142,7 @@ brautet/~~NhYG
 brave/~~NhY
 bravem/~~NhY
 braven/~~VfjG # auto-added
-braver/~~MhYOQRST
+braver/~~MhYJr
 bravere/~~NhY
 braves/~~NhY
 bravo/~~NhY
@@ -22406,7 +22406,7 @@ bunkre/~~NhY
 bunt/~~NXhOQRSTUW
 buntem/~~NhY
 bunten/~~VfjG # auto-added
-bunter/~~MhYOQRST
+bunter/~~MhYJr
 buntere/~~NhY
 buntes/~~NhY
 buntest/~~hVOQRST
@@ -22554,7 +22554,7 @@ böscht/~~NXhG
 böse/~~NhY
 bösem/~~NhY
 bösen/~~VfjG # auto-added
-böser/~~MhYOQRST
+böser/~~MhYJr
 bösere/~~NhY
 böserem/~~NhY
 böseren/~~Vfj # auto-added
@@ -22776,7 +22776,7 @@ chicago/~~Nbh
 chice/~~NhY
 chicem/~~NhY
 chicen/~~VfjG # auto-added
-chicer/~~MhYOQRST
+chicer/~~MhYJr
 chicere/~~NhY
 chices/~~NhY
 chicste/~~NhY
@@ -22857,7 +22857,7 @@ clausus/~~NhY
 cleane/~~NhY
 cleanem/~~NhY
 cleanen/~~VfjG # auto-added
-cleaner/~~MhYOQRST
+cleaner/~~MhYJr
 cleanes/~~NhY
 clevere/~~NhY
 client/~~NhY
@@ -22941,7 +22941,7 @@ cookies/~~NhY
 coole/~~NhY
 coolem/~~NhY
 coolen/~~VfjG # auto-added
-cooler/~~MhYOQRST
+cooler/~~MhYJr
 coolere/~~NhY
 cooles/~~NhY
 coolste/~~NhY
@@ -23334,7 +23334,7 @@ derart/~~NhY # auto-added
 derbe/~~NhY
 derbem/~~NhY
 derben/~~VfjG # auto-added
-derber/~~MhYOQRST
+derber/~~MhYJr
 derbere/~~NhY
 derbes/~~NhY
 derbste/~~NhY
@@ -23389,7 +23389,7 @@ devons/~~NhY
 devot/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 devotem/~~NhY
 devoten/~~VfjG # auto-added
-devoter/~~MhYOQRST
+devoter/~~MhYJr
 devotes/~~NhY
 dextrin/~~NhY
 dezent/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -23421,7 +23421,7 @@ dichtes/~~NhY
 dichtet/~~NXhG
 dickem/~~NhY
 dick/~~VejOQRSTUW # REPLACES dicken
-dicker/~~JhOQRSTq # comparative of dick (adjective)
+dicker/~~Jhqr # comparative of dick (adjective)
 dickere/~~NhY
 dickes/~~NhY
 dickste/~~NhYJ # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -23625,7 +23625,7 @@ doodle/~~NhY
 doofe/~~NhY
 doofem/~~NhY
 doofen/~~VfjG # auto-added
-doofer/~~MhYOQRST
+doofer/~~MhYJr
 doofere/~~NhY
 doofes/~~NhY
 doofste/~~NhY
@@ -24036,7 +24036,7 @@ dünktet/~~NhYG
 dünne/~~NhYJ # +adjective reading (was noun-only)
 dünnem/~~NhY
 dünn/~~VejOQRSTUW # REPLACES dünnen
-dünner/~~MhYOQRST
+dünner/~~MhYJr
 dünnere/~~NhY
 dünnes/~~NhY
 dünnst/~~hVOQRST
@@ -24056,7 +24056,7 @@ dürftet/~~NhYG
 dürre/~~NhY
 dürrem/~~NhY
 dürren/~~VfjG # auto-added
-dürrer/~~MhYOQRST
+dürrer/~~MhYJr
 dürrere/~~NhY
 dürres/~~NhY
 dürrste/~~NhY
@@ -24254,7 +24254,7 @@ eilends/~~NhY
 eilige/~~NhY
 eiligem/~~NhY
 eiligen/~~VfjG # auto-added
-eiliger/~~MhYOQRST
+eiliger/~~MhYJr
 eiliges/~~NhY
 eiligst/~~hVOQRST
 eilt/~~NXhG
@@ -24461,7 +24461,7 @@ eisfest/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 eisige/~~NhY
 eisigem/~~NhY
 eisigen/~~VfjG # auto-added
-eisiger/~~MhYOQRST
+eisiger/~~MhYJr
 eisiges/~~NhY
 eisigst/~~hVOQRST
 eiskalt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -24543,7 +24543,7 @@ element/~~NXh0
 elende/~~NhY
 elendem/~~NhY
 el/~~Vce # REPLACES elenden
-elender/~~MhYOQRST
+elender/~~MhYJr
 elendes/~~NhY
 elends/~~NhY
 elendst/~~NhYOQRST
@@ -24618,7 +24618,7 @@ emsgau/~~Nbh
 emsige/~~NhY
 emsigem/~~NhY
 emsigen/~~VfjG # auto-added
-emsiger/~~MhYOQRST
+emsiger/~~MhYJr
 emsiges/~~NhY
 emsigst/~~hVOQRST
 emsland/~~NhY0
@@ -24668,7 +24668,7 @@ ennepe/~~NhY
 enorme/~~NhY
 enormem/~~NhY
 enormen/~~VfjG # auto-added
-enormer/~~MhYOQRST
+enormer/~~MhYJr
 enormes/~~NhY
 enquete/~~NhY
 entarte/~~NhY
@@ -25071,7 +25071,7 @@ erneut/~~hVOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 ernste/~~NhY
 ernstem/~~NhY
 ernsten/~~VfjG # auto-added
-ernster/~~MhYOQRST
+ernster/~~MhYJr
 ernstes/~~NhY
 ernsts/~~NhY
 ernte/~~NhY
@@ -25140,7 +25140,7 @@ ersteht/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erstem/~~NhY
 ersten/~~Vfj # auto-added
 erstens/~~hJOQRSTq
-erster/~~JhOQRSTq # first (adjective)
+erster/~~Jhqr # first (adjective)
 erstere/~~NhYJ # +adjective reading (was noun-only)
 erstes/~~NhY
 erstich/~~NhY
@@ -25402,7 +25402,7 @@ fade/~~NhY
 fadem/~~NhY
 faden/~~VfjG # auto-added
 fadens/~~NhY
-fader/~~MhYOQRST
+fader/~~MhYJr
 fadere/~~NhY
 faderem/~~NhY
 faderen/~~Vfj # auto-added
@@ -25420,7 +25420,7 @@ fagotts/~~NhY
 fahle/~~NhY
 fahlem/~~NhY
 fahlen/~~VfjG # auto-added
-fahler/~~MhYOQRST
+fahler/~~MhYJr
 fahlere/~~NhY
 fahlerz/~~NXh0
 fahles/~~NhY
@@ -25444,7 +25444,7 @@ faibles/~~NhY
 faire/~~NhY
 fairem/~~NhY
 fairen/~~VfjG # auto-added
-fairer/~~MhYOQRST
+fairer/~~MhYJr
 fairere/~~NhY
 faires/~~NhY
 fairste/~~NhY
@@ -25491,7 +25491,7 @@ familie/~~FhY
 famos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 famosem/~~NhY
 famosen/~~VfjG # auto-added
-famoser/~~MhYOQRST
+famoser/~~MhYJr
 famoses/~~NhY
 fan/~~NhY
 fanal/~~NXh
@@ -25567,7 +25567,7 @@ fata/~~NhY
 fatale/~~NhY
 fatalem/~~NhY
 fatalen/~~VfjG # auto-added
-fataler/~~MhYOQRST
+fataler/~~MhYJr
 fatales/~~NhY
 fatum/~~Zh  # preposition um #  auto-added
 fatums/~~NhY
@@ -25575,7 +25575,7 @@ fauchen/~~XZVdfijecG # auto-added; +verb reading (was noun-only)
 faucht/~~NXhG
 faulem/~~NhY
 faul/~~VcejOQRSTUW # REPLACES faulen
-fauler/~~MhYOQRST
+fauler/~~MhYJr
 faulere/~~NhY
 faules/~~NhY
 faulgas/~~NXh0
@@ -25639,10 +25639,10 @@ feiern/~~NhYdfijeG
 feiernd/~~NhYOQRST
 feierns/~~NhY
 feiert/~~NXhG
-feige/~~NJOQRSTUq #adjective and noun
+feige/~~NJUqr #adjective and noun
 feigem/~~NhY
 feigen/~~VfjG # auto-added
-feiger/~~MhYOQRST
+feiger/~~MhYJr
 feigere/~~NhY
 feiges/~~NhY
 feigst/~~hVOQRST
@@ -25662,7 +25662,7 @@ feinds/~~NhY
 feine/~~NhYJ # +adjective reading (was noun-only)
 feinem/~~NhY
 feinen/~~VfjG # auto-added
-feiner/~~MhYOQRST
+feiner/~~MhYJr
 feinere/~~NhY
 feines/~~NhY
 feinste/~~NhY
@@ -25735,7 +25735,7 @@ fertile/~~NhY
 fesche/~~NhY
 feschem/~~NhY
 feschen/~~XZ #  auto-added
-fescher/~~MhYOQRST
+fescher/~~MhYJr
 fesches/~~NhY
 fessele/~~NhY
 fesseln/~~Vdifj78eG # auto-added
@@ -25744,7 +25744,7 @@ fessle/~~NhY
 feste/~~NhY
 festem/~~NhY
 festen/~~VfjG # auto-added
-fester/~~MhYOQRST
+fester/~~MhYJr
 festere/~~NhY
 festes/~~NhY
 festigt/~~NXhG
@@ -25767,7 +25767,7 @@ fette/~~NhY
 fettem/~~NhY
 fetten/~~VdifjeG # auto-added
 fettend/~~NhYJ # +adjective reading (was noun-only)
-fetter/~~MhYOQRST
+fetter/~~MhYJr
 fettere/~~NhY
 fettes/~~NhY
 fettet/~~NXhG
@@ -25838,7 +25838,7 @@ fiepton/~~NhY
 fiese/~~NhYJ # +adjective reading (was noun-only)
 fiesem/~~NhY
 fiesen/~~VfjG # auto-added
-fieser/~~MhYOQRST
+fieser/~~MhYJr
 fiesere/~~NhY
 fieses/~~NhY
 fight/~~NXh
@@ -25993,7 +25993,7 @@ flasht/~~NXh
 flattre/~~NhY
 flauem/~~NhY
 flau/~~VejOQRSTUW # REPLACES flauen
-flauer/~~MhYOQRST
+flauer/~~MhYJr
 flauere/~~NhY
 flaues/~~NhY
 flaum/~~Zh  # preposition um #  auto-added
@@ -26340,12 +26340,12 @@ freaks/~~NhY
 freche/~~NhY
 frechem/~~NhY
 frechen/~~XZG #  auto-added
-frecher/~~MhYOQRST
+frecher/~~MhYJr
 freches/~~NhY
 freenet/~~NhY
 freiem/~~NhY
 frei/~~Vcej9OQRSTUW # REPLACES freien
-freier/~~MhYOQRST
+freier/~~MhYJr
 freiere/~~NhY
 freies/~~NhY
 freigab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -26417,7 +26417,7 @@ frohste/~~NhY
 fromme/~~NhY
 frommem/~~NhY
 frommen/~~VifjG # auto-added
-frommer/~~MhYOQRST
+frommer/~~MhYJr
 frommes/~~NhY
 frommt/~~NhYG
 fron/~~NhY
@@ -26476,7 +26476,7 @@ früchte/~~NhY
 frühe/~~NhY
 frühem/~~NhY
 frühen/~~VfjG # auto-added
-früher/~~MhYOQRST
+früher/~~MhYJr
 frühere/~~NhYJ # +adjective reading (was noun-only)
 frühes/~~NhY
 frühling/~~MhY
@@ -27250,7 +27250,7 @@ geigt/~~JOQRSTVgfjG
 geigtet/~~JOQRSTVgjG
 geilem/~~NhY
 geil/~~VejOQRSTUW # REPLACES geilen
-geiler/~~MhYOQRST
+geiler/~~MhYJr
 geilere/~~NhY
 geiles/~~NhY
 geilste/~~NhY
@@ -28006,7 +28006,7 @@ geöltes/~~NhY
 geübt/~~JOQRSTUVgfj9
 geübtem/~~NhY
 geübten/~~Vfj # auto-added
-geübter/~~MhYOQRST
+geübter/~~MhYJr
 geübtes/~~NhY
 ghana/~~Nbh
 ghanaer/~~MhY
@@ -28115,7 +28115,7 @@ glasur/~~NhY
 glatt/~~hJOQRSTUWq
 glattem/~~NhY
 glatten/~~VfjG # auto-added
-glatter/~~MhYOQRST
+glatter/~~MhYJr
 glattes/~~NhY
 glatze/~~NhY
 glatzen/~~Vfj # auto-added
@@ -28371,7 +28371,7 @@ greisin/~~NhY
 grelle/~~NhY
 grellem/~~NhY
 grellen/~~VfjG # auto-added
-greller/~~MhYOQRST
+greller/~~MhYJr
 grelles/~~NhY
 gremien/~~Vj # auto-added
 gremium/~~Zh  # preposition um #  auto-added
@@ -28508,7 +28508,7 @@ gründle/~~NhY
 grüne/~~NhY
 grünem/~~NhY
 grün/~~VcejOQRSTUW # REPLACES grünen
-grüner/~~MhYOQRST
+grüner/~~MhYJr
 grünere/~~NhY
 grünes/~~NhY
 grünst/~~hVOQRST
@@ -28676,7 +28676,7 @@ gütern/~~NhY
 gütige/~~NhY
 gütigem/~~NhY
 gütigen/~~VfjG # auto-added
-gütiger/~~MhYOQRST
+gütiger/~~MhYJr
 gütiges/~~NhY
 gütigst/~~hVOQRST
 haag/~~NhY
@@ -28739,7 +28739,7 @@ hagens/~~NhY
 hagere/~~NhY
 hagerem/~~NhY
 hageren/~~VfjG # auto-added
-hagerer/~~MhYOQRST
+hagerer/~~MhYJr
 hageres/~~NhY
 hagle/~~NhY
 haha/~~NhY
@@ -29099,7 +29099,7 @@ heißa/~~NhY
 heiße/~~NhY
 heißem/~~NhY
 heiß/~~VcejOQRSTU # REPLACES heißen
-heißer/~~MhYOQRST
+heißer/~~MhYJr
 heißere/~~NhY
 heißes/~~NhY
 heißt/~~hV
@@ -29124,7 +29124,7 @@ hellauf/~~NhY
 hellem/~~NhY
 hell/~~VcejOQRSTUW # REPLACES hellen
 hellene/~~NhY
-heller/~~MhYOQRST
+heller/~~MhYJr
 hellere/~~NhY
 helles/~~NhY
 helling/~~MhY
@@ -29175,7 +29175,7 @@ herbe/~~NhY
 herbei/~~NhYr # +adverb reading (was noun-only)
 herbem/~~NhY
 herben/~~VfjG # auto-added
-herber/~~MhYOQRST
+herber/~~MhYJr
 herbere/~~NhY
 herbes/~~NhY
 herbste/~~NhY
@@ -29524,7 +29524,7 @@ hohes/~~NhY
 hohle/~~NhY
 hohlem/~~NhY
 hohlen/~~VfjG # auto-added
-hohler/~~MhYOQRST
+hohler/~~MhYJr
 hohlere/~~NhY
 hohles/~~NhY
 hohlste/~~NhY
@@ -29676,7 +29676,7 @@ huldigt/~~NXhG
 humane/~~NhY
 humanem/~~NhY
 humanen/~~VfjG # auto-added
-humaner/~~MhYOQRST
+humaner/~~MhYJr
 humanes/~~NhY
 humbug/~~NhY
 humide/~~NhY
@@ -29884,7 +29884,7 @@ höher/~~NJOQRSTq
 höhere/~~NhYJ # +adjective reading (was noun-only)
 höherem/~~NhY
 höheren/~~Vfj # auto-added
-höherer/~~Jq - comprtve jectveOQRST
+höherer/~~Jq # comparative adjective
 höheres/~~NhY
 höhle/~~NhY
 höhl/~~Vej # REPLACES höhlen
@@ -29993,7 +29993,7 @@ icons/~~NhY
 ideale/~~NhY
 idealem/~~NhY
 idealen/~~VfjG # auto-added
-idealer/~~MhYOQRST
+idealer/~~MhYJr
 ideales/~~NhY
 ideals/~~NhY
 idee/~~NhY
@@ -30122,7 +30122,7 @@ inexakt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 infame/~~NhY
 infamem/~~NhY
 infamen/~~VfjG # auto-added
-infamer/~~MhYOQRST
+infamer/~~MhYJr
 infames/~~NhY
 infamie/~~NhY
 infarkt/~~NXh
@@ -30163,7 +30163,7 @@ innern/~~NhY
 innige/~~NhY
 innigem/~~NhY
 innigen/~~VfjG # auto-added
-inniger/~~MhYOQRST
+inniger/~~MhYJr
 inniges/~~NhY
 innigst/~~hVOQRST
 inntal/~~NhY0
@@ -30194,7 +30194,7 @@ interne/~~NhY
 intime/~~NhY
 intimem/~~NhY
 intimen/~~VfjG # auto-added
-intimer/~~MhYOQRST
+intimer/~~MhYJr
 intimes/~~NhY
 intrige/~~NhY
 intus/~~NhY
@@ -30250,7 +30250,7 @@ irrem/~~NhY
 irr/~~VcejOQRSTUW # REPLACES irren
 irrende/~~NhYJ # +adjective reading (was noun-only)
 irrens/~~NhY
-irrer/~~MhYOQRST
+irrer/~~MhYJr
 irrere/~~NhY
 irrerem/~~NhY
 irreren/~~Vfj # auto-added
@@ -30392,7 +30392,7 @@ jeans/~~NhY
 jecke/~~NhY
 jeckem/~~NhY
 jecken/~~Vfj # auto-added
-jecker/~~MhYOQRST
+jecker/~~MhYJr
 jeckere/~~NhY
 jeckes/~~NhY
 jede/~~h4J # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -30824,7 +30824,7 @@ karenz/~~NhY
 karge/~~NhYJ # +adjective reading (was noun-only)
 kargem/~~NhY
 kargen/~~VfjG # auto-added
-karger/~~MhYOQRST
+karger/~~MhYJr
 kargere/~~NhY
 karges/~~NhY
 kargste/~~NhY
@@ -31087,7 +31087,7 @@ kessels/~~NhY
 kesselt/~~NXhG
 kessem/~~NhY
 kessen/~~VfjG # auto-added
-kesser/~~MhYOQRST
+kesser/~~MhYJr
 kessere/~~NhY
 kesses/~~NhY
 kessest/~~hVOQRST
@@ -31287,7 +31287,7 @@ klapses/~~NhY
 klareis/~~NXh0
 klarem/~~NhY
 klar/~~Vej9OQRSTUW # REPLACES klaren
-klarer/~~MhYOQRST
+klarer/~~MhYJr
 klarere/~~NhY
 klares/~~NhY
 klarkam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -31477,7 +31477,7 @@ knallt/~~NXhG
 knappe/~~NhY
 knappem/~~NhY
 knappen/~~VfjG # auto-added
-knapper/~~MhYOQRST
+knapper/~~MhYJr
 knappes/~~NhY
 knaps/~~NXh
 knaps/~~Vej # REPLACES knapsen
@@ -31930,7 +31930,7 @@ krapfen/~~Vj # auto-added
 krass/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 krassem/~~NhY
 krassen/~~VfjG # auto-added
-krasser/~~MhYOQRST
+krasser/~~MhYJr
 krasses/~~NhY
 krater/~~MhY
 kratern/~~NhY
@@ -31947,7 +31947,7 @@ krault/~~NXhG
 kraus/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 krausem/~~NhY
 kraus/~~VejOQRSTUW # REPLACES krausen
-krauser/~~MhYOQRST
+krauser/~~MhYJr
 krauses/~~NhY
 kraust/~~NhY
 krauste/~~NhY
@@ -32052,7 +32052,7 @@ kropfs/~~NhY
 kross/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 krossem/~~NhY
 krossen/~~VfjG # auto-added
-krosser/~~MhYOQRST
+krosser/~~MhYJr
 krosses/~~NhY
 krude/~~NhY
 krudem/~~NhY
@@ -32067,7 +32067,7 @@ krumen/~~Vfj # auto-added
 krumme/~~NhY
 krummem/~~NhY
 krummen/~~VfjG # auto-added
-krummer/~~MhYOQRST
+krummer/~~MhYJr
 krummes/~~NhY
 krumple/~~NhY
 kruste/~~NhY
@@ -32421,7 +32421,7 @@ kühlung/~~FhY
 kühne/~~NhY
 kühnem/~~NhY
 kühnen/~~VfjG # auto-added
-kühner/~~MhYOQRST
+kühner/~~MhYJr
 kühnere/~~NhY
 kühnes/~~NhY
 kühnste/~~NhY
@@ -32493,7 +32493,7 @@ labiale/~~NhY
 labile/~~NhY
 labilem/~~NhY
 labilen/~~VfjG # auto-added
-labiler/~~MhYOQRST
+labiler/~~MhYJr
 labiles/~~NhY
 lable/~~NhY
 labor/~~NXh
@@ -32557,7 +32557,7 @@ lagune/~~NhY
 lagunen/~~Vfj # auto-added
 lahmem/~~NhY
 lahm/~~VcejOQRSTUW # REPLACES lahmen
-lahmer/~~MhYOQRST
+lahmer/~~MhYJr
 lahmere/~~NhY
 lahmes/~~NhY
 lahmste/~~NhY
@@ -32646,7 +32646,7 @@ lasagne/~~NhY
 lasche/~~NhY
 laschem/~~NhY
 laschen/~~XZ #  auto-added
-lascher/~~MhYOQRST
+lascher/~~MhYJr
 lasches/~~NhY
 las/~~Vejs # REPLACES lasen
 lasere/~~NhY
@@ -32702,7 +32702,7 @@ laude/~~NhY3
 lauem/~~NhY
 lau/~~VejiOQRSTUW # REPLACES lauen
 lauerem/~~NhY
-lauer/~~VejOQRST # REPLACES laueren
+lauer/~~VejJr # REPLACES laueren
 lauerer/~~MhY
 laueres/~~NhY
 lauern/~~NhYVdfijeG # +verb reading (was noun-only)
@@ -32755,7 +32755,7 @@ lawinen/~~Vfj # auto-added
 laxe/~~NhY
 laxem/~~NhY
 laxen/~~VfjG # auto-added
-laxer/~~MhYOQRST
+laxer/~~MhYJr
 laxere/~~NhY
 laxerem/~~NhY
 laxeren/~~Vfj # auto-added
@@ -32789,7 +32789,7 @@ lechzt/~~NXhG
 leckem/~~NhY
 leck/~~VcejOQRST # REPLACES lecken
 leckens/~~NhY
-lecker/~~MhYOQRST
+lecker/~~MhYJr
 leckere/~~NhY
 leckes/~~NhY
 lecks/~~NhY
@@ -32815,7 +32815,7 @@ leeraßt/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 leerem/~~NhY
 leer/~~VcejOQRSTUW # REPLACES leeren
 leerens/~~NhY
-leerer/~~MhYOQRST
+leerer/~~MhYJr
 leerere/~~NhY
 leeres/~~NhY
 leerste/~~NhY
@@ -32829,7 +32829,7 @@ lefzen/~~Vfj # auto-added
 legale/~~NhY
 legalem/~~NhY
 legalen/~~VfjG # auto-added
-legaler/~~MhYOQRST
+legaler/~~MhYJr
 legales/~~NhY
 legat/~~NXh0
 legaten/~~Vfj # auto-added
@@ -32916,7 +32916,7 @@ leipzig/~~NhY
 leire/~~NhY
 leisem/~~NhY
 leis/~~VejOQRST # REPLACES leisen
-leiser/~~MhYOQRST
+leiser/~~MhYJr
 leisere/~~NhY
 leises/~~NhY
 leiste/~~NhY
@@ -32994,7 +32994,7 @@ lettner/~~MhY
 letzte/~~NhYJ # +adjective (igerman98 SFX A) reading (was noun-only)
 letztem/~~NhY
 letzten/~~Vfj # auto-added
-letzter/~~MhYOQRST
+letzter/~~MhYJr
 letztes/~~NhY
 leucht/~~NXh
 leugne/~~NhY
@@ -33048,7 +33048,7 @@ lidödem/~~NhY
 liebem/~~NhY
 lieb/~~Vcej9OQRSTUW # REPLACES lieben
 liebens/~~NhY
-lieber/~~MhYOQRST
+lieber/~~MhYJr
 liebere/~~NhY
 liebes/~~NhY
 liebhat/~~NhYG
@@ -33298,7 +33298,7 @@ loseist/~~NhY
 losem/~~NhY
 los/~~Vcej78OQRSTUW0 # REPLACES losen
 losende/~~NhYJ # +adjective reading (was noun-only)
-loser/~~MhYOQRST
+loser/~~MhYJr
 losere/~~NhY
 loserem/~~NhY
 loseren/~~Vfj # auto-added
@@ -33675,7 +33675,7 @@ magens/~~NhY
 magenta/~~NhY
 magerem/~~NhY
 mager/~~VejOQRSTUW # REPLACES mageren
-magerer/~~MhYOQRST
+magerer/~~MhYJr
 mageres/~~NhY
 magern/~~rhdfijeG # adverb gladly
 magert/~~NXhG
@@ -33957,7 +33957,7 @@ matscht/~~NXh
 matt/~~hrOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 mattem/~~NhY
 matten/~~VfjG # auto-added
-matter/~~MhYOQRST
+matter/~~MhYJr
 mattere/~~NhY
 mattes/~~NhY
 mattest/~~hVOQRST
@@ -34235,7 +34235,7 @@ mies/~~NhYOQRSTUW
 miese/~~NhY
 miesem/~~NhY
 miesen/~~VfjG # auto-added
-mieser/~~MhYOQRST
+mieser/~~MhYJr
 miesere/~~NhY
 mieses/~~NhY
 miet/~~NXh
@@ -34473,7 +34473,7 @@ mobbtet/~~NhYG
 mobile/~~NhYJ # +adjective reading (was noun-only)
 mobilem/~~NhY
 mobilen/~~VfjG # auto-added
-mobiler/~~MhYOQRST
+mobiler/~~MhYJr
 mobiles/~~NhY
 mobs/~~NhY
 moby/~~NhY
@@ -34953,7 +34953,7 @@ mäßet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 mäßige/~~NhY
 mäßigem/~~NhY
 mäßig/~~Vej9OQRSTUW # REPLACES mäßigen
-mäßiger/~~MhYOQRST
+mäßiger/~~MhYJr
 mäßiges/~~NhY
 mäßigst/~~hVOQRST
 mäßigt/~~NXhG
@@ -35112,7 +35112,7 @@ naglung/~~FhY
 nagt/~~NXhG
 nagtest/~~NhY
 nagtet/~~NhYG
-nahe/~~NJOQRSTq #adjective and noun
+nahe/~~NJqr #adjective and noun
 nahebei/~~NhY
 nahegau/~~Nbh0
 nahekam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -35139,7 +35139,7 @@ nairobi/~~Nbh
 naive/~~NhY
 naivem/~~NhY
 naiven/~~VfjG # auto-added
-naiver/~~MhYOQRST
+naiver/~~MhYJr
 naivere/~~NhY
 naives/~~NhY
 naivste/~~NhY
@@ -35314,7 +35314,7 @@ netbook/~~NhY
 nett/~~hJOQRSTUWq
 nettem/~~NhY
 netten/~~VfjG # auto-added
-netter/~~MhYOQRST
+netter/~~MhYJr
 nettere/~~NhY
 nettes/~~NhY
 nettest/~~hVOQRST
@@ -35325,7 +35325,7 @@ netzes/~~NhY
 netznah/~~NXh
 neuerem/~~NhY
 neueren/~~Vfj # auto-added
-neuerer/~~JhOQRSTq # newer (adjective)
+neuerer/~~Jhqr # newer (adjective)
 neueres/~~NhY
 neuest/~~hVOQRST
 neueste/~~NhY
@@ -35637,7 +35637,7 @@ nöten/~~Vfj # auto-added
 nötige/~~NhY
 nötigem/~~NhY
 nötig/~~Vej9OQRSTUW # REPLACES nötigen
-nötiger/~~MhYOQRST
+nötiger/~~MhYJr
 nötiges/~~NhY
 nötigst/~~hVOQRST
 nötigt/~~NXhG
@@ -35664,7 +35664,7 @@ oberau/~~Nbh
 obere/~~NhY
 oberem/~~NhY
 oberen/~~VfjG # auto-added
-oberer/~~MhYOQRST
+oberer/~~MhYJr
 oberere/~~NhY
 oberes/~~NhY
 oberin/~~NhY
@@ -35851,9 +35851,9 @@ oralen/~~Vfj # auto-added
 oraler/~~MhY
 orales/~~NhY
 orang/~~NhYOQRST
-orange/~~NJOQRSTq #adjective and noun
+orange/~~NJqr #adjective and noun
 orangem/~~NhY
-orangen/~~VfjOQRST # auto-added
+orangen/~~VfjJr # auto-added
 oranger/~~MhY
 oranges/~~NhY
 orbit/~~NhY
@@ -36736,7 +36736,7 @@ plumeau/~~Nbh
 plumpe/~~NhY
 plumpem/~~NhY
 plumpen/~~VfjG # auto-added
-plumper/~~MhYOQRST
+plumper/~~MhYJr
 plumpes/~~NhY
 plumps/~~NhY
 plunder/~~MhY
@@ -36924,7 +36924,7 @@ ports/~~NhY # auto-added
 porös/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 porösem/~~NhY
 porösen/~~VfjG # auto-added
-poröser/~~MhYOQRST
+poröser/~~MhYJr
 poröses/~~NhY
 pos/~~NXh
 posaun/~~NhY
@@ -36973,7 +36973,7 @@ prahlt/~~NXhG
 praline/~~NhY
 prallem/~~NhY
 prall/~~VejOQRSTUW # REPLACES prallen
-praller/~~MhYOQRST
+praller/~~MhYJr
 pralles/~~NhY
 prallt/~~NXhG
 prang/~~Vej # REPLACES prangen
@@ -37620,7 +37620,7 @@ rapsöls/~~NhY
 rare/~~NhY
 rarem/~~NhY
 raren/~~VfjG # auto-added
-rarer/~~MhYOQRST
+rarer/~~MhYJr
 rarere/~~NhY
 rarerem/~~NhY
 rareren/~~Vfj # auto-added
@@ -37639,7 +37639,7 @@ rasanz/~~NhY
 rasche/~~NhY
 raschel/~~NXh
 raschem/~~NhY
-rascher/~~MhYOQRST
+rascher/~~MhYJr
 rasches/~~NhY
 raschle/~~NhY
 ras/~~Vcej # REPLACES rasen
@@ -37716,7 +37716,7 @@ raudi/~~NhY
 rauem/~~NhY
 rau/~~VcejiOQRSTUW # REPLACES rauen
 rauende/~~NhYJ # +adjective reading (was noun-only)
-rauer/~~MhYOQRST
+rauer/~~MhYJr
 rauere/~~NhY
 rauerem/~~NhY
 raueren/~~Vfj # auto-added
@@ -37833,7 +37833,7 @@ reeders/~~NhY
 reelle/~~NhY
 reellem/~~NhY
 reellen/~~VfjG # auto-added
-reeller/~~MhYOQRST
+reeller/~~MhYJr
 reelles/~~NhY
 reet/~~NhY
 reets/~~NhY
@@ -37857,7 +37857,7 @@ reg/~~VcejOQRSTUW # REPLACES regen
 regende/~~NhYJ # +adjective reading (was noun-only)
 regens/~~NhY
 regent/~~NhY
-reger/~~MhYOQRST
+reger/~~MhYJr
 regere/~~NhY
 regerem/~~NhY
 regeren/~~Vfj # auto-added
@@ -37934,7 +37934,7 @@ reimtet/~~NhYG
 reine/~~NhY
 reinem/~~NhY
 reinen/~~VfjG # auto-added
-reiner/~~MhYOQRST
+reiner/~~MhYJr
 reinere/~~NhY
 reines/~~NhY
 reingab/~~NhY
@@ -38091,7 +38091,7 @@ reu/~~Vej # REPLACES reuen
 reuig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 reuigem/~~NhY
 reuigen/~~VfjG # auto-added
-reuiger/~~MhYOQRST
+reuiger/~~MhYJr
 reuiges/~~NhY
 reuse/~~NhY
 reusen/~~Vifj # auto-added
@@ -38375,7 +38375,7 @@ rosette/~~NhY
 rosig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 rosigem/~~NhY
 rosigen/~~VfjG # auto-added
-rosiger/~~MhYOQRST
+rosiger/~~MhYJr
 rosiges/~~NhY
 rosine/~~NhY
 rosinen/~~Vfj # auto-added
@@ -38531,7 +38531,7 @@ rumänin/~~NhY
 rundem/~~NhY
 rund/~~Vcj9OQRSTUW # REPLACES runden
 rundens/~~NhY
-runder/~~MhYOQRST
+runder/~~MhYJr
 rundere/~~NhY
 rundes/~~NhY
 rundet/~~NXhG
@@ -38912,7 +38912,7 @@ sandtet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 sanft/~~h9OQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 sanftem/~~NhY
 sanften/~~VfjG # auto-added
-sanfter/~~MhYOQRST
+sanfter/~~MhYJr
 sanftes/~~NhY
 sang/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 sangen/~~VijG # auto-added
@@ -38956,7 +38956,7 @@ sattels/~~NhY
 sattelt/~~NXhG
 sattem/~~NhY
 satten/~~VfjG # auto-added
-satter/~~MhYOQRST
+satter/~~MhYJr
 sattere/~~NhY
 sattes/~~NhY
 sattest/~~hVOQRST
@@ -39049,7 +39049,7 @@ schahs/~~NhY
 schakal/~~NXh
 schalem/~~NhY
 schal/~~Vej78OQRSTUW # REPLACES schalen
-schaler/~~MhYOQRST
+schaler/~~MhYJr
 schales/~~NhY
 schalk/~~NXh0
 schalks/~~NhY
@@ -40038,7 +40038,7 @@ stupst/~~NhY
 sture/~~NhY
 sturem/~~NhY
 sturen/~~VfjG # auto-added
-sturer/~~MhYOQRST
+sturer/~~MhYJr
 stures/~~NhY
 sturm/~~Nh0
 sturms/~~NhY
@@ -40268,7 +40268,7 @@ süße/~~NhY
 süßem/~~NhY
 süß/~~VcejOQRSTU # REPLACES süßen
 süßens/~~NhY
-süßer/~~MhYOQRST
+süßer/~~MhYJr
 süßere/~~NhY
 süßes/~~NhY
 süßt/~~NXh
@@ -40411,7 +40411,7 @@ tau/~~NXh
 taube/~~NhY
 taubem/~~NhY
 tauben/~~VfjG # auto-added
-tauber/~~MhYOQRST
+tauber/~~MhYJr
 taubes/~~NhY
 tauch/~~NXhY
 taucht/~~hVG
@@ -40631,7 +40631,7 @@ tokens/~~NhY
 tokio/~~Nbh
 tollem/~~NhY
 toll/~~VcejOQRSTUW # REPLACES tollen
-toller/~~MhYOQRST
+toller/~~MhYJr
 tolles/~~NhY
 tollt/~~NXhG
 toluol/~~NXh
@@ -40783,7 +40783,7 @@ tretet/~~NhY
 treue/~~NhY
 treuem/~~NhY
 treuen/~~VfjG # auto-added
-treuer/~~MhYOQRST
+treuer/~~MhYJr
 treues/~~NhY
 trias/~~NhY
 tribun/~~NhY
@@ -40881,7 +40881,7 @@ trötet/~~NXhG
 trübe/~~NhY
 trübem/~~NhY
 trüb/~~VcejOQRSTUW # REPLACES trüben
-trüber/~~MhYOQRST
+trüber/~~MhYJr
 trübes/~~NhY
 trübst/~~hVOQRST
 trübt/~~NXhG
@@ -41378,7 +41378,7 @@ viehs/~~NhY
 viel/~~XhOQRST
 vielem/~~NhY
 vielen/~~4 # auto-added
-vieler/~~JhOQRSTq # many (adjective genitive plural)
+vieler/~~Jhqr # many (adjective genitive plural)
 vieles/~~NhY
 vier/~~Vej1 # REPLACES vieren
 vierer/~~MhY
@@ -41437,7 +41437,7 @@ volks/~~NhY
 vollaß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vollem/~~NhY
 voll/~~VcjOQRSTUW # REPLACES vollen
-voller/~~MhYOQRST
+voller/~~MhYJr
 volles/~~NhY
 volley/~~NhY
 volt/~~NhY
@@ -41500,7 +41500,7 @@ wabert/~~NXhG
 wabre/~~NhY
 wachem/~~NhY
 wachen/~~XZVdfijecG # auto-added; +verb reading (was noun-only)
-wacher/~~MhYOQRST
+wacher/~~MhYJr
 waches/~~NhY
 wachs/~~NXh0
 wacht/~~NXhG
@@ -41684,7 +41684,7 @@ weint/~~NXhG
 weisel/~~NhY
 weisem/~~NhY
 weis/~~VcjOQRST # REPLACES weisen
-weiser/~~MhYOQRST
+weiser/~~MhYJr
 weises/~~NhY
 weist/~~hV
 weit/~~JOQRSTUWqG #adjective and noun
@@ -41694,13 +41694,13 @@ weizen/~~Vj # auto-added
 weiße/~~NhY
 weißem/~~NhY
 weiß/~~VcejOQRST # REPLACES weißen
-weißer/~~NJOQRSTq
+weißer/~~NJqr
 weißes/~~NhY
 weißt/~~NXh
 welch/~~4OQRST # retag: was YhI
 welkem/~~NhY
 welk/~~VcejOQRSTUW # REPLACES welken
-welker/~~MhYOQRST
+welker/~~MhYJr
 welkes/~~NhY
 welkt/~~NXhG
 well/~~NXh
@@ -41741,7 +41741,7 @@ wermut/~~NhY
 werte/~~NhY
 wertem/~~NhY
 werten/~~Vdifj78ecG # auto-added
-werter/~~MhYOQRST
+werter/~~MhYJr
 wertes/~~NhY
 wertet/~~NXhG
 wertig/~~NXh
@@ -41845,7 +41845,7 @@ wirker/~~MhY
 wirkt/~~NXhVG # +verb reading (was noun-only)
 wirrem/~~NhY
 wirr/~~VcejOQRSTUW # REPLACES wirren
-wirrer/~~MhYOQRST
+wirrer/~~MhYJr
 wirres/~~NhY
 wirrt/~~NXhG
 wirsch/~~NXhY
@@ -41893,7 +41893,7 @@ wohin/~~hr
 wohle/~~NhY
 wohlem/~~NhY
 wohlen/~~VfjG # auto-added
-wohler/~~MhYOQRST
+wohler/~~MhYJr
 wohles/~~NhY
 wohlig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 wohls/~~NhY
@@ -42065,7 +42065,7 @@ wüsste/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 wüste/~~NhY
 wüstem/~~NhY
 wüsten/~~VdifjecG # auto-added
-wüster/~~MhYOQRST
+wüster/~~MhYJr
 wüstes/~~NhY
 wüstet/~~NXhG
 wüte/~~NhY
@@ -42102,7 +42102,7 @@ zahlt/~~NXhG
 zahm/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zahmem/~~NhY
 zahmen/~~VfjG # auto-added
-zahmer/~~MhYOQRST
+zahmer/~~MhYJr
 zahmes/~~NhY
 zahn/~~NhY0
 zahnes/~~NhY
@@ -42124,7 +42124,7 @@ zar/~~Vej # REPLACES zaren
 zarin/~~NhY
 zart/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zartem/~~NhY
-zarter/~~MhYOQRST
+zarter/~~MhYJr
 zartes/~~NhY
 zaubre/~~NhY
 zauder/~~MhY
@@ -42489,7 +42489,7 @@ zytose/~~NhY
 zähe/~~NhY
 zähem/~~NhY
 zähen/~~VfjG # auto-added
-zäher/~~MhYOQRST
+zäher/~~MhYJr
 zähere/~~NhY
 zähes/~~NhY
 zähle/~~NhY
@@ -42657,7 +42657,7 @@ zürnt/~~NXhG
 ödemen/~~Vfj # auto-added
 ödems/~~NhY
 öden/~~VifjG # auto-added
-öder/~~MhYOQRST
+öder/~~MhYJr
 ödere/~~NhY
 öderem/~~NhY
 öderen/~~Vfj # auto-added
@@ -42690,7 +42690,7 @@ zürnt/~~NXhG
 ölige/~~NhY
 öligem/~~NhY
 öligen/~~VfjG # auto-added
-öliger/~~MhYOQRST
+öliger/~~MhYJr
 öliges/~~NhY
 öligst/~~hVOQRST
 öls/~~NhY
@@ -42806,7 +42806,7 @@ adressiere/~~NhY
 adressiert/~~NhYOQRSTG
 adrettem/~~NhY
 adretten/~~VfjG # auto-added
-adretter/~~MhYOQRST
+adretter/~~MhYJr
 adrettere/~~NhY
 adretterem/~~NhY
 adretteren/~~Vfj # auto-added
@@ -42848,7 +42848,7 @@ adygejern/~~Vj # auto-added
 adygejers/~~NhY
 adäquatem/~~NhY
 adäquaten/~~VfjG # auto-added
-adäquater/~~MhYOQRST
+adäquater/~~MhYJr
 adäquatere/~~NhY
 adäquates/~~NhY
 adäquatest/~~hVOQRST
@@ -43072,7 +43072,7 @@ akkultiere/~~NhY
 akkultiert/~~NhYOQRSTG
 akkuratem/~~NhY
 akkuraten/~~VfjG # auto-added
-akkurater/~~MhYOQRST
+akkurater/~~MhYJr
 akkuratere/~~NhY
 akkurates/~~NhY
 akkuratest/~~hVOQRST
@@ -43138,7 +43138,7 @@ aktuarin/~~NhY
 aktuelle/~~NhY
 aktuellem/~~NhY
 aktuellen/~~VfjG # auto-added
-aktueller/~~MhYOQRST
+aktueller/~~MhYJr
 aktuellere/~~NhY
 aktuelles/~~NhY
 aktuellste/~~NhY
@@ -43639,7 +43639,7 @@ amöboider/~~MhY
 amöboides/~~NhY
 amüsantem/~~NhY
 amüsanten/~~VfjG # auto-added
-amüsanter/~~MhYOQRST
+amüsanter/~~MhYJr
 amüsantere/~~NhY
 amüsantes/~~NhY
 amüsantest/~~hVOQRST
@@ -44263,7 +44263,7 @@ anfällen/~~VifjG # auto-added
 anfällige/~~NhY
 anfälligem/~~NhY
 anfälligen/~~VfjG # auto-added
-anfälliger/~~MhYOQRST
+anfälliger/~~MhYJr
 anfälliges/~~NhY
 anfälligst/~~hVOQRST
 anfällst/~~hV
@@ -44542,7 +44542,7 @@ angenagtes/~~NhY
 angenehme/~~NhY
 angenehmem/~~NhY
 angenehmen/~~VfjG # auto-added
-angenehmer/~~MhYOQRST
+angenehmer/~~MhYJr
 angenehmes/~~NhY
 angenervt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 angenietet/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -44608,7 +44608,7 @@ angerührt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 angesagt/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 angesagtem/~~NhY
 angesagten/~~VfjG # auto-added
-angesagter/~~MhYOQRST
+angesagter/~~MhYJr
 angesagtes/~~NhY
 angesalbt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 angesaugt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -45430,7 +45430,7 @@ anmutetet/~~NhYG
 anmutige/~~NhY
 anmutigem/~~NhY
 anmutigen/~~VfjG # auto-added
-anmutiger/~~MhYOQRST
+anmutiger/~~MhYJr
 anmutigere/~~NhY
 anmutiges/~~NhY
 anmutigst/~~hVOQRST
@@ -45512,7 +45512,7 @@ anodisiere/~~NhY
 anodisiert/~~NhYOQRSTG
 anomalem/~~NhY
 anomalen/~~VfjG # auto-added
-anomaler/~~MhYOQRST
+anomaler/~~MhYJr
 anomalere/~~NhY
 anomalerem/~~NhY
 anomaleren/~~Vfj # auto-added
@@ -45822,7 +45822,7 @@ anröstetet/~~NhYG
 anrüchige/~~NhY
 anrüchigem/~~NhY
 anrüchigen/~~VfjG # auto-added
-anrüchiger/~~MhYOQRST
+anrüchiger/~~MhYJr
 anrüchiges/~~NhY
 anrüchigst/~~hVOQRST
 anrück/~~Vej # REPLACES anrücken
@@ -46300,7 +46300,7 @@ anstößen/~~Vifj # auto-added
 anstößige/~~NhY
 anstößigem/~~NhY
 anstößigen/~~VfjG # auto-added
-anstößiger/~~MhYOQRST
+anstößiger/~~MhYJr
 anstößiges/~~NhY
 anstößigst/~~hVOQRST
 anstückele/~~NhY
@@ -47237,7 +47237,7 @@ armmachtet/~~NhYG
 armselige/~~NhY
 armseligem/~~NhY
 armseligen/~~VfjG # auto-added
-armseliger/~~MhYOQRST
+armseliger/~~MhYJr
 armseliges/~~NhY
 armseligst/~~hVOQRST
 armtragend/~~NhY
@@ -47264,7 +47264,7 @@ arriviert/~~NXhOQRSTG
 arrogant/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 arrogantem/~~NhY
 arroganten/~~VfjG # auto-added
-arroganter/~~MhYOQRST
+arroganter/~~MhYJr
 arrogantes/~~NhY
 arroganz/~~NhY
 arrondiere/~~NhY
@@ -47380,7 +47380,7 @@ asketismus/~~MhY
 asoziale/~~NhY
 asozialem/~~NhY
 asozialen/~~VfjG # auto-added
-asozialer/~~MhYOQRST
+asozialer/~~MhYJr
 asozialere/~~NhY
 asoziales/~~NhY
 asozialste/~~NhY
@@ -52089,7 +52089,7 @@ barrikade/~~NhY
 barrikaden/~~Vfj # auto-added
 barschem/~~NhY
 barschen/~~XZ #  auto-added
-barscher/~~MhYOQRST
+barscher/~~MhYJr
 barschere/~~NhY
 barscherem/~~NhY
 barscheren/~~Vfj # auto-added
@@ -52446,7 +52446,7 @@ bedachens/~~NhY
 bedachst/~~YV # retag: finite verb form, was noun (corpus-mined)
 bedachtem/~~NhY
 bedachten/~~VifjG # auto-added
-bedachter/~~MhYOQRST
+bedachter/~~MhYJr
 bedachtere/~~NhY
 bedachtes/~~NhY
 bedachtest/~~hVOQRST
@@ -52489,7 +52489,7 @@ bedenkende/~~NhYJ # +adjective reading (was noun-only)
 bedenkst/~~hV
 bedenkzeit/~~NhY
 bedeuten/~~Vdifj78ecG # auto-added
-bedeutende/~~JqOQRSTU
+bedeutende/~~JqUr
 bedeutens/~~NhY
 bedeutet/~~VhG  # 3rd person of bedeuten
 bedeuteten/~~VifjG # auto-added
@@ -52989,7 +52989,7 @@ befürchtet/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 befürworte/~~NhY
 begaauen/~~Vfj # auto-added
 begabtem/~~NhY
-begabter/~~MhYOQRST
+begabter/~~MhYJr
 begabtere/~~NhY
 begabterem/~~NhY
 begabteren/~~Vfj # auto-added
@@ -53221,7 +53221,7 @@ begünstigt/~~NhYVOQRSTG # +verb reading (was noun-only)
 begütert/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 begütertem/~~NhY
 begüterten/~~VfjG # auto-added
-begüterter/~~MhYOQRST
+begüterter/~~MhYJr
 begütertes/~~NhY
 begütige/~~NhY
 begütig/~~Vej # REPLACES begütigen
@@ -53360,7 +53360,7 @@ beherzigst/~~hV
 beherzigt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 beherztem/~~NhY
 beherzten/~~VfjG # auto-added
-beherzter/~~MhYOQRST
+beherzter/~~MhYJr
 beherztere/~~NhY
 beherztes/~~NhY
 beherztest/~~hVOQRST
@@ -53409,7 +53409,7 @@ behuftes/~~NhY
 behutsame/~~NhY
 behutsamem/~~NhY
 behutsamen/~~VfjG # auto-added
-behutsamer/~~MhYOQRST
+behutsamer/~~MhYJr
 behutsames/~~NhY
 behutsamst/~~hVOQRST
 behäbigem/~~NhY
@@ -54051,7 +54051,7 @@ belebender/~~MhY
 belebendes/~~NhY
 belebens/~~NhY
 belebtem/~~NhY
-belebter/~~MhYOQRST
+belebter/~~MhYJr
 belebtere/~~NhY
 belebterem/~~NhY
 belebteren/~~Vfj # auto-added
@@ -54154,7 +54154,7 @@ belichtet/~~hV9OQRSTG # retag: finite verb form, was noun (corpus-mined)
 belichtung/~~FhY
 belieb/~~Vej # REPLACES belieben
 beliebtem/~~NhY
-beliebter/~~MhYOQRST
+beliebter/~~MhYJr
 beliebtere/~~NhY
 beliebtes/~~NhY
 beliebtest/~~hVOQRST # retag: finite verb form, was noun (corpus-mined)
@@ -54558,7 +54558,7 @@ bequatscht/~~YGV # retag: finite verb form, was noun (corpus-mined)
 bequemem/~~NhY
 bequem/~~Vej9OQRSTUW # REPLACES bequemen
 bequemende/~~NhYJ # +adjective reading (was noun-only)
-bequemer/~~MhYOQRST
+bequemer/~~MhYJr
 bequemere/~~NhY
 bequemerem/~~NhY
 bequemeren/~~Vfj # auto-added
@@ -54652,7 +54652,7 @@ beredetes/~~NhY
 beredetest/~~hV
 beredetet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beredtem/~~NhY
-beredter/~~MhYOQRST
+beredter/~~MhYJr
 beredtere/~~NhY
 beredterem/~~NhY
 beredteren/~~Vfj # auto-added
@@ -54879,7 +54879,7 @@ berückter/~~MhY
 berücktes/~~NhY
 berühmtem/~~NhY
 berühmten/~~VfjG # auto-added
-berühmter/~~MhYOQRST
+berühmter/~~MhYJr
 berühmtere/~~NhY
 berühmtes/~~NhY
 berühmtest/~~hVOQRST
@@ -55290,7 +55290,7 @@ besonnende/~~NhYJ # +adjective reading (was noun-only)
 besonnene/~~NhY
 besonnenem/~~NhY
 besonnenen/~~VfjG # auto-added
-besonnener/~~MhYOQRST
+besonnener/~~MhYJr
 besonnenes/~~NhY
 besonnenst/~~hVOQRST
 besonnst/~~hV
@@ -55302,7 +55302,7 @@ besorgende/~~NhYJ # +adjective reading (was noun-only)
 besorgens/~~NhY
 besorgnis/~~NhY
 besorgtem/~~NhY
-besorgter/~~MhYOQRST
+besorgter/~~MhYJr
 besorgtere/~~NhY
 besorgtes/~~NhY
 besorgtest/~~hVOQRST # retag: finite verb form, was noun (corpus-mined)
@@ -55388,7 +55388,7 @@ bespöttelt/~~NhYOQRSTG
 bespöttle/~~NhY
 besserem/~~NhY
 besser/~~VejOQRST # REPLACES besseren
-besserer/~~Jq - comprtve jectveOQRST
+besserer/~~Jq # comparative adjective
 besseres/~~NhY
 bessergehe/~~NhY
 bessergeht/~~NhYG
@@ -55697,7 +55697,7 @@ besäumtest/~~NhY
 besönnen/~~Vj # auto-added
 betagtem/~~NhY
 betagten/~~VfjG # auto-added
-betagter/~~MhYOQRST
+betagter/~~MhYJr
 betagtere/~~NhY
 betagterem/~~NhY
 betagteren/~~Vfj # auto-added
@@ -56005,7 +56005,7 @@ betäubung/~~FhY
 betäubungs/~~NhY
 betörende/~~NhYJ # +adjective reading (was noun-only)
 betörendem/~~NhY
-betörender/~~MhYOQRST
+betörender/~~MhYJr
 betörendes/~~NhY
 betörendst/~~NhYOQRST
 betörens/~~NhY
@@ -56030,7 +56030,7 @@ beugendes/~~NhY
 beugsame/~~NhY
 beugsamem/~~NhY
 beugsamen/~~VfjG # auto-added
-beugsamer/~~MhYOQRST
+beugsamer/~~MhYJr
 beugsamere/~~NhY
 beugsames/~~NhY
 beugsamst/~~hVOQRST
@@ -56157,7 +56157,7 @@ bewarfen/~~VijG # auto-added
 bewarfest/~~hV
 bewegende/~~NhYJ # +adjective reading (was noun-only)
 bewegendem/~~NhY
-bewegender/~~MhYOQRST
+bewegender/~~MhYJr
 bewegendes/~~NhY
 bewegendst/~~NhYOQRST
 bewegens/~~NhY
@@ -56167,7 +56167,7 @@ beweggrund/~~NhY0
 bewegliche/~~NhY
 bewegtbild/~~NhY0a
 bewegtem/~~NhY
-bewegter/~~MhYOQRST
+bewegter/~~MhYJr
 bewegtere/~~NhY
 bewegterem/~~NhY
 bewegteren/~~Vfj # auto-added
@@ -56330,7 +56330,7 @@ bewurzle/~~NhY
 bewusste/~~NhY
 bewusstem/~~NhY
 bewussten/~~VfjG # auto-added
-bewusster/~~MhYOQRST
+bewusster/~~MhYJr
 bewusstere/~~NhY
 bewusstes/~~NhY
 bewähr/~~Vej # REPLACES bewähren
@@ -56563,7 +56563,7 @@ biestern/~~Vj # auto-added
 biestige/~~NhY
 biestigem/~~NhY
 biestigen/~~VfjG # auto-added
-biestiger/~~MhYOQRST
+biestiger/~~MhYJr
 biestigere/~~NhY
 biestiges/~~NhY
 biestigst/~~hVOQRST
@@ -56668,7 +56668,7 @@ billigem/~~NhY
 billig/~~VejOQRSTUW # REPLACES billigen
 billigende/~~NhYJ # +adjective reading (was noun-only)
 billigens/~~NhY
-billiger/~~MhYOQRST
+billiger/~~MhYJr
 billigere/~~NhY
 billigerem/~~NhY
 billigeren/~~Vfj # auto-added
@@ -56976,7 +56976,7 @@ biwaksacks/~~NhY
 biwaksäcke/~~NhY
 bizarrem/~~NhY
 bizarren/~~VfjG # auto-added
-bizarrer/~~MhYOQRST
+bizarrer/~~MhYJr
 bizarrere/~~NhY
 bizarrerem/~~NhY
 bizarreren/~~Vfj # auto-added
@@ -57351,7 +57351,7 @@ blumbergs/~~NhY
 blumenflor/~~NhY
 blumigem/~~NhY
 blumigen/~~VfjG # auto-added
-blumiger/~~MhYOQRST
+blumiger/~~MhYJr
 blumigere/~~NhY
 blumigerem/~~NhY
 blumigeren/~~Vfj # auto-added
@@ -57385,7 +57385,7 @@ blutharnen/~~Vj # auto-added
 bluthusten/~~Vj # auto-added
 blutigem/~~NhY
 blutigen/~~VfjG # auto-added
-blutiger/~~MhYOQRST
+blutiger/~~MhYJr
 blutigere/~~NhY
 blutigerem/~~NhY
 blutigeren/~~Vfj # auto-added
@@ -57567,7 +57567,7 @@ bodenlange/~~NhY
 bodennahe/~~NhY
 bodennahem/~~NhY
 bodennahen/~~VfjG # auto-added
-bodennaher/~~MhYOQRST
+bodennaher/~~MhYJr
 bodennahes/~~NhY
 bodennäher/~~MhYOQRST
 bodenritze/~~NhY
@@ -57756,7 +57756,7 @@ boschscher/~~MhY
 boschsches/~~NhY
 boshaftem/~~NhY
 boshaften/~~VfjG # auto-added
-boshafter/~~MhYOQRST
+boshafter/~~MhYJr
 boshaftere/~~NhY
 boshaftes/~~NhY
 boshaftest/~~hVOQRST
@@ -57785,7 +57785,7 @@ botinnen/~~Vj # auto-added
 botmäßige/~~NhY
 botmäßigem/~~NhY
 botmäßigen/~~VfjG # auto-added
-botmäßiger/~~MhYOQRST
+botmäßiger/~~MhYJr
 botmäßiges/~~NhY
 botmäßigst/~~hVOQRST
 botnetzen/~~Vfj # auto-added
@@ -58034,7 +58034,7 @@ breitendes/~~NhY
 breitere/~~NhYJ # +adjective reading (was noun-only)
 breiterem/~~NhY
 breiteren/~~Vfj # auto-added
-breiterer/~~Jq - comprtve jectveOQRST
+breiterer/~~Jq # comparative adjective
 breiteres/~~NhY
 breitest/~~NhYOQRST
 breiteste/~~NhY
@@ -58068,7 +58068,7 @@ bremsung/~~FhY
 bremsungen/~~Vj # auto-added
 brennende/~~NhYJ # +adjective reading (was noun-only)
 brennendem/~~NhY
-brennender/~~MhYOQRST
+brennender/~~MhYJr
 brennendes/~~NhY
 brennendst/~~NhYOQRST
 brennerei/~~NhY
@@ -58110,7 +58110,7 @@ briketts/~~NhY
 brillant/~~NXhOQRSTUW
 brillantem/~~NhY
 brillanten/~~VfjG # auto-added
-brillanter/~~MhYOQRST
+brillanter/~~MhYJr
 brillantes/~~NhY
 brillanz/~~NhY
 brilliere/~~NhY
@@ -58130,7 +58130,7 @@ bringung/~~FhY
 bringungen/~~Vj # auto-added
 brisantem/~~NhY
 brisanten/~~VfjG # auto-added
-brisanter/~~MhYOQRST
+brisanter/~~MhYJr
 brisantere/~~NhY
 brisantes/~~NhY
 brisantest/~~hVOQRST
@@ -58280,7 +58280,7 @@ brusttiefe/~~NhY
 brutablöse/~~NhY
 brutalem/~~NhY
 brutalen/~~VfjG # auto-added
-brutaler/~~MhYOQRST
+brutaler/~~MhYJr
 brutalere/~~NhY
 brutalerem/~~NhY
 brutaleren/~~Vfj # auto-added
@@ -58343,7 +58343,7 @@ brötchens/~~NhY
 brüchige/~~NhY
 brüchigem/~~NhY
 brüchigen/~~VfjG # auto-added
-brüchiger/~~MhYOQRST
+brüchiger/~~MhYJr
 brüchigere/~~NhY
 brüchiges/~~NhY
 brüchigst/~~hVOQRST
@@ -58447,7 +58447,7 @@ buchungs/~~NhY
 buckelige/~~NhY
 buckeligem/~~NhY
 buckeligen/~~VfjG # auto-added
-buckeliger/~~MhYOQRST
+buckeliger/~~MhYJr
 buckeliges/~~NhY
 buckeligst/~~hVOQRST
 buckelnd/~~NhYOQRST
@@ -58466,7 +58466,7 @@ buckingham/~~NhY
 bucklige/~~NhY
 buckligem/~~NhY
 buckligen/~~VfjG # auto-added
-buckliger/~~MhYOQRST
+buckliger/~~MhYJr
 buckligere/~~NhY
 buckliges/~~NhY
 buckligst/~~hVOQRST
@@ -58549,7 +58549,7 @@ bulletin/~~NhY
 bulletins/~~NhY
 bulligem/~~NhY
 bulligen/~~VfjG # auto-added
-bulliger/~~MhYOQRST
+bulliger/~~MhYJr
 bulligere/~~NhY
 bulligerem/~~NhY
 bulligeren/~~Vfj # auto-added
@@ -59143,7 +59143,7 @@ charleston/~~NhY
 charmant/~~h9OQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 charmantem/~~NhY
 charmanten/~~VfjG # auto-added
-charmanter/~~MhYOQRST
+charmanter/~~MhYJr
 charmantes/~~NhY
 charmeur/~~NXhY
 charmeuren/~~Vfj # auto-added
@@ -59425,7 +59425,7 @@ cleveland/~~NhY
 clevelands/~~NhY
 cleverem/~~NhY
 cleveren/~~VfjG # auto-added
-cleverer/~~MhYOQRST
+cleverer/~~MhYJr
 cleverere/~~NhY
 clevererem/~~NhY
 clevereren/~~Vfj # auto-added
@@ -59999,7 +59999,7 @@ danieder/~~MhY
 dankbare/~~NhY
 dankbarem/~~NhY
 dankbaren/~~VfjG # auto-added
-dankbarer/~~MhYOQRST
+dankbarer/~~MhYJr
 dankbarere/~~NhY
 dankbares/~~NhY
 dankbarst/~~hVOQRST
@@ -60538,7 +60538,7 @@ defensins/~~NhY
 defensive/~~NhY
 defensivem/~~NhY
 defensiven/~~VfjG # auto-added
-defensiver/~~MhYOQRST
+defensiver/~~MhYJr
 defensives/~~NhY
 defilees/~~NhY
 defilier/~~MhY
@@ -60570,7 +60570,7 @@ deformität/~~NhY
 defraudant/~~JOQRSTqh # retag: adjective (was ~~Nh)
 deftigem/~~NhY
 deftigen/~~VfjG # auto-added
-deftiger/~~MhYOQRST
+deftiger/~~MhYJr
 deftigere/~~NhY
 deftigerem/~~NhY
 deftigeren/~~Vfj # auto-added
@@ -60601,7 +60601,7 @@ degressive/~~NhY
 dehnbare/~~NhY
 dehnbarem/~~NhY
 dehnbaren/~~VfjG # auto-added
-dehnbarer/~~MhYOQRST
+dehnbarer/~~MhYJr
 dehnbarere/~~NhY
 dehnbares/~~NhY
 dehnbarst/~~hVOQRST
@@ -60632,7 +60632,7 @@ dejodasen/~~Vfj # auto-added
 dekadent/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 dekadentem/~~NhY
 dekadenten/~~VfjG # auto-added
-dekadenter/~~MhYOQRST
+dekadenter/~~MhYJr
 dekadentes/~~NhY
 dekadenz/~~NhY
 dekaeder/~~MhY
@@ -60700,7 +60700,7 @@ delfinart/~~NhY # auto-added
 delfinen/~~Vfj # auto-added
 delikatem/~~NhY
 delikaten/~~VfjG # auto-added
-delikater/~~MhYOQRST
+delikater/~~MhYJr
 delikatere/~~NhY
 delikates/~~NhY
 delikatest/~~hVOQRST
@@ -60777,7 +60777,7 @@ demütigem/~~NhY
 demütig/~~VejOQRSTUW # REPLACES demütigen
 demütigend/~~NhYJOQRST # +adjective reading (was noun-only)
 demütigens/~~NhY
-demütiger/~~MhYOQRST
+demütiger/~~MhYJr
 demütigere/~~NhY
 demütiges/~~NhY
 demütigst/~~hVOQRST
@@ -60946,7 +60946,7 @@ desmosomen/~~Vfj # auto-added
 desmosoms/~~NhY
 desolatem/~~NhY
 desolaten/~~VfjG # auto-added
-desolater/~~MhYOQRST
+desolater/~~MhYJr
 desolatere/~~NhY
 desolates/~~NhY
 desolatest/~~hVOQRST
@@ -61009,7 +61009,7 @@ deutetet/~~NhYG
 deutliche/~~NhY
 deutlichem/~~NhY
 deutlichen/~~XZG #  auto-added
-deutlicher/~~MhYOQRST
+deutlicher/~~MhYJr
 deutliches/~~NhY
 deutlichst/~~NhYOQRST
 deutungen/~~Vj # auto-added
@@ -61041,7 +61041,7 @@ dezember/~~MhY
 dezembers/~~NhY
 dezentem/~~NhY
 dezenten/~~VfjG # auto-added
-dezenter/~~MhYOQRST
+dezenter/~~MhYJr
 dezentere/~~NhY
 dezenterem/~~NhY
 dezenteren/~~Vfj # auto-added
@@ -61196,7 +61196,7 @@ dickichts/~~NhY
 dickliche/~~NhY
 dicklichem/~~NhY
 dicklichen/~~XZG #  auto-added
-dicklicher/~~MhYOQRST
+dicklicher/~~MhYJr
 dickliches/~~NhY
 dicklichst/~~NhYOQRST
 dickmache/~~NhY
@@ -61227,7 +61227,7 @@ dienerin/~~NhY
 dienliche/~~NhY
 dienlichem/~~NhY
 dienlichen/~~XZG #  auto-added
-dienlicher/~~MhYOQRST
+dienlicher/~~MhYJr
 dienliches/~~NhY
 dienlichst/~~NhYOQRST
 dienstag/~~NXh0
@@ -61265,7 +61265,7 @@ diffiziles/~~NhY
 diffundier/~~MhY
 diffusem/~~NhY
 diffusen/~~VfjG # auto-added
-diffuser/~~MhYOQRST
+diffuser/~~MhYJr
 diffusere/~~NhY
 diffuserem/~~NhY
 diffuseren/~~Vfj # auto-added
@@ -61412,7 +61412,7 @@ dipptest/~~NhY
 directory/~~NhY
 direktem/~~NhY
 direkten/~~VfjG # auto-added
-direkter/~~MhYOQRST
+direkter/~~MhYJr
 direktere/~~NhY
 direkterem/~~NhY
 direkteren/~~Vfj # auto-added
@@ -61503,7 +61503,7 @@ disloziert/~~NhYOQRSTG
 disparat/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 disparatem/~~NhY
 disparaten/~~VfjG # auto-added
-disparater/~~MhYOQRST
+disparater/~~MhYJr
 disparates/~~NhY
 disparität/~~NhY
 dispensen/~~Vj # auto-added
@@ -61684,7 +61684,7 @@ dolomits/~~NhY
 dominant/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 dominantem/~~NhY
 dominanten/~~VfjG # auto-added
-dominanter/~~MhYOQRST
+dominanter/~~MhYJr
 dominantes/~~NhY
 dominanz/~~NhY
 dominanzen/~~Vj # auto-added
@@ -61994,7 +61994,7 @@ drechslers/~~NhY
 dreckige/~~NhY
 dreckigem/~~NhY
 dreckigen/~~VfjG # auto-added
-dreckiger/~~MhYOQRST
+dreckiger/~~MhYJr
 dreckigere/~~NhY
 dreckiges/~~NhY
 dreckigst/~~hVOQRST
@@ -62035,7 +62035,7 @@ dreisatzes/~~NhY
 dreispitz/~~NXh0
 dreistem/~~NhY
 dreisten/~~VfjG # auto-added
-dreister/~~MhYOQRST
+dreister/~~MhYJr
 dreistere/~~NhY
 dreisterem/~~NhY
 dreisteren/~~Vfj # auto-added
@@ -62291,7 +62291,7 @@ dualzahlen/~~Vj # auto-added
 dualziffer/~~MhY
 dubiosem/~~NhY
 dubiosen/~~VfjG # auto-added
-dubioser/~~MhYOQRST
+dubioser/~~MhYJr
 dubiosere/~~NhY
 dubioserem/~~NhY
 dubioseren/~~Vfj # auto-added
@@ -62833,7 +62833,7 @@ durstetet/~~NhYG
 durstige/~~NhY
 durstigem/~~NhY
 durstigen/~~VfjG # auto-added
-durstiger/~~MhYOQRST
+durstiger/~~MhYJr
 durstigere/~~NhY
 durstiges/~~NhY
 durstigst/~~hVOQRST
@@ -62848,13 +62848,13 @@ duschtet/~~NhYG
 dusselige/~~NhY
 dusseligem/~~NhY
 dusseligen/~~VfjG # auto-added
-dusseliger/~~MhYOQRST
+dusseliger/~~MhYJr
 dusseliges/~~NhY
 dusseligst/~~hVOQRST
 dusslige/~~NhY
 dussligem/~~NhY
 dussligen/~~VfjG # auto-added
-dussliger/~~MhYOQRST
+dussliger/~~MhYJr
 dussligere/~~NhY
 dussliges/~~NhY
 dussligst/~~hVOQRST
@@ -62894,7 +62894,7 @@ dystrophin/~~NhY
 dämliche/~~NhY
 dämlichem/~~NhY
 dämlichen/~~XZG #  auto-added
-dämlicher/~~MhYOQRST
+dämlicher/~~MhYJr
 dämlichere/~~NhY
 dämliches/~~NhY
 dämlichst/~~NhYOQRST
@@ -63050,7 +63050,7 @@ dürftest/~~NhY
 dürftige/~~NhY
 dürftigem/~~NhY
 dürftigen/~~VfjG # auto-added
-dürftiger/~~MhYOQRST
+dürftiger/~~MhYJr
 dürftigere/~~NhY
 dürftiges/~~NhY
 dürftigst/~~hVOQRST
@@ -63086,7 +63086,7 @@ düsendes/~~NhY
 düsseldorf/~~NhY
 düsterem/~~NhY
 düsteren/~~VfjG # auto-added
-düsterer/~~MhYOQRST
+düsterer/~~MhYJr
 düsterere/~~NhY
 düstererem/~~NhY
 düstereren/~~Vfj # auto-added
@@ -63241,7 +63241,7 @@ effektes/~~NhY
 effektive/~~NhY
 effektivem/~~NhY
 effektiven/~~VfjG # auto-added
-effektiver/~~MhYOQRST
+effektiver/~~MhYJr
 effektives/~~NhY
 effektlack/~~NhY
 effektor/~~NhY
@@ -63313,7 +63313,7 @@ ehescheues/~~NhY
 ehestens/~~NhY
 ehrbarem/~~NhY
 ehrbaren/~~VfjG # auto-added
-ehrbarer/~~MhYOQRST
+ehrbarer/~~MhYJr
 ehrbarere/~~NhY
 ehrbarerem/~~NhY
 ehrbareren/~~Vfj # auto-added
@@ -63344,7 +63344,7 @@ ehrgeizige/~~NhYJ # +adjective reading (was noun-only)
 ehrliche/~~NhY
 ehrlichem/~~NhY
 ehrlichen/~~XZG #  auto-added
-ehrlicher/~~MhYOQRST
+ehrlicher/~~MhYJr
 ehrlichere/~~NhY
 ehrliches/~~NhY
 ehrlichst/~~NhYOQRST
@@ -63352,7 +63352,7 @@ ehrlichste/~~NhY
 ehrliebend/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 ehrlosem/~~NhY
 ehrlosen/~~VfjG # auto-added
-ehrloser/~~MhYOQRST
+ehrloser/~~MhYJr
 ehrlosere/~~NhY
 ehrloserem/~~NhY
 ehrloseren/~~Vfj # auto-added
@@ -63425,7 +63425,7 @@ eifertest/~~hV
 eifertet/~~NhYG
 eifrigem/~~NhY
 eifrigen/~~VfjG # auto-added
-eifriger/~~MhYOQRST
+eifriger/~~MhYJr
 eifrigere/~~NhY
 eifrigerem/~~NhY
 eifrigeren/~~Vfj # auto-added
@@ -64851,7 +64851,7 @@ einsalzt/~~NXhG
 einsalztet/~~NhYG
 einsamem/~~NhY
 einsamen/~~VfjG # auto-added
-einsamer/~~MhYOQRST
+einsamer/~~MhYJr
 einsamere/~~NhY
 einsamerem/~~NhY
 einsameren/~~Vfj # auto-added
@@ -65291,7 +65291,7 @@ eintunken/~~Vj # auto-added
 eintönige/~~NhY
 eintönigem/~~NhY
 eintönigen/~~VfjG # auto-added
-eintöniger/~~MhYOQRST
+eintöniger/~~MhYJr
 eintöniges/~~NhY
 eintönigst/~~hVOQRST
 eintüten/~~VdifjecG # auto-added
@@ -65697,7 +65697,7 @@ eklampsien/~~Vfj # auto-added
 eklatant/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 eklatantem/~~NhY
 eklatanten/~~VfjG # auto-added
-eklatanter/~~MhYOQRST
+eklatanter/~~MhYJr
 eklatantes/~~NhY
 eklipsen/~~Vfj # auto-added
 ekstasen/~~Vfj # auto-added
@@ -65807,7 +65807,7 @@ eldewasser/~~MhY
 elefanten/~~Vj # auto-added
 elegantem/~~NhY
 eleganten/~~VfjG # auto-added
-eleganter/~~MhYOQRST
+eleganter/~~MhYJr
 elegantere/~~NhY
 elegantes/~~NhY
 elegantest/~~hVOQRST
@@ -65891,7 +65891,7 @@ elongiert/~~NXh
 eloquent/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 eloquentem/~~NhY
 eloquenten/~~VfjG # auto-added
-eloquenter/~~MhYOQRST
+eloquenter/~~MhYJr
 eloquentes/~~NhY
 eloquenz/~~NhY
 eloxier/~~Vej # REPLACES eloxieren
@@ -66236,8 +66236,8 @@ enggemacht/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 englands/~~NhY
 englische/~~NhY
 englischem/~~NhY
-englischen/~~JhOQRSTq # English (adjective)
-englischer/~~MhYOQRST
+englischen/~~Jhqr # English (adjective)
+englischer/~~MhYJr
 englisches/~~NhY
 englischst/~~NhYOQRST
 engländer/~~MhY
@@ -66499,7 +66499,7 @@ entfernern/~~Vj # auto-added
 entferners/~~NhY
 entfernt/~~hVOQRSTUWG
 entferntem/~~NhY
-entfernter/~~MhYOQRST
+entfernter/~~MhYJr
 entferntes/~~NhY
 entferntet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 entfernung/~~FhY
@@ -66696,7 +66696,7 @@ entheiligt/~~NhYOQRSTG
 enthemm/~~Vej # REPLACES enthemmen
 enthemmt/~~hVOQRSTUWG # retag: finite verb form, was noun (corpus-mined)
 enthemmtem/~~NhY
-enthemmter/~~MhYOQRST
+enthemmter/~~MhYJr
 enthemmtes/~~NhY
 enthemmtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 entheogen/~~Vj # auto-added
@@ -66879,7 +66879,7 @@ entleerung/~~FhY
 entlegene/~~NhY
 entlegenem/~~NhY
 entlegenen/~~VfjG # auto-added
-entlegener/~~MhYOQRST
+entlegener/~~MhYJr
 entlegenes/~~NhY
 entlegenst/~~hVOQRST
 entlehn/~~Vej # REPLACES entlehnen
@@ -67890,7 +67890,7 @@ erdfarbene/~~NhY
 erdferne/~~NhY
 erdfernem/~~NhY
 erdfernen/~~VfjG # auto-added
-erdferner/~~MhYOQRST
+erdferner/~~MhYJr
 erdfernere/~~NhY
 erdfernes/~~NhY
 erdfernste/~~NhY
@@ -68012,7 +68012,7 @@ erfahrende/~~NhYJ # +adjective reading (was noun-only)
 erfahrene/~~NhY
 erfahrenem/~~NhY
 erfahrenen/~~VfjG # auto-added
-erfahrener/~~MhYOQRST
+erfahrener/~~MhYJr
 erfahrenes/~~NhY
 erfahrens/~~NhY
 erfahrenst/~~hVOQRST
@@ -68158,7 +68158,7 @@ erfüllende/~~NhYJ # +adjective reading (was noun-only)
 erfüllens/~~NhY
 erfüllst/~~hV
 erfülltem/~~NhY
-erfüllter/~~MhYOQRST
+erfüllter/~~MhYJr
 erfülltere/~~NhY
 erfülltes/~~NhY
 erfülltest/~~hVOQRST # retag: finite verb form, was noun (corpus-mined)
@@ -68206,7 +68206,7 @@ ergehendes/~~NhY
 ergiebige/~~NhY
 ergiebigem/~~NhY
 ergiebigen/~~VfjG # auto-added
-ergiebiger/~~MhYOQRST
+ergiebiger/~~MhYJr
 ergiebiges/~~NhY
 ergiebigst/~~hVOQRST
 ergießen/~~Vifjc # auto-added
@@ -68327,7 +68327,7 @@ ergüssen/~~Vfj # auto-added
 erhabene/~~NhY
 erhabenem/~~NhY
 erhabenen/~~VfjG # auto-added
-erhabener/~~MhYOQRST
+erhabener/~~MhYJr
 erhabenere/~~NhY
 erhabenes/~~NhY
 erhabenst/~~hVOQRST
@@ -68430,7 +68430,7 @@ erholens/~~NhY
 erholsame/~~NhY
 erholsamem/~~NhY
 erholsamen/~~VfjG # auto-added
-erholsamer/~~MhYOQRST
+erholsamer/~~MhYJr
 erholsames/~~NhY
 erholsamst/~~hVOQRST
 erholtem/~~NhY
@@ -68768,7 +68768,7 @@ erlerntet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erlesene/~~NhY
 erlesenem/~~NhY
 erlesenen/~~VfjG # auto-added
-erlesener/~~MhYOQRST
+erlesener/~~MhYJr
 erlesenere/~~NhY
 erlesenes/~~NhY
 erlesenst/~~hVOQRST
@@ -69047,7 +69047,7 @@ erodiertet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erodierung/~~FhY
 erogenem/~~NhY
 erogenen/~~VfjG # auto-added
-erogener/~~MhYOQRST
+erogener/~~MhYJr
 erogenere/~~NhY
 erogenerem/~~NhY
 erogeneren/~~Vfj # auto-added
@@ -69070,7 +69070,7 @@ erotikfilm/~~NhY
 erotische/~~NhY
 erotischem/~~NhY
 erotischen/~~XZ #  auto-added
-erotischer/~~MhYOQRST
+erotischer/~~MhYJr
 erotisches/~~NhY
 erotischst/~~NhYOQRST
 erotisiere/~~NhY
@@ -69135,7 +69135,7 @@ errechnung/~~FhY
 erregbare/~~NhY
 erregbarem/~~NhY
 erregbaren/~~VfjG # auto-added
-erregbarer/~~MhYOQRST
+erregbarer/~~MhYJr
 erregbares/~~NhY
 erregbarst/~~hVOQRST
 erregende/~~NhYJ # +adjective reading (was noun-only)
@@ -70376,7 +70376,7 @@ exklusion/~~NhY
 exklusive/~~NhY
 exklusivem/~~NhY
 exklusiven/~~VfjG # auto-added
-exklusiver/~~MhYOQRST
+exklusiver/~~MhYJr
 exklusives/~~NhY
 exkrement/~~NXh0
 exkrements/~~NhY
@@ -70429,7 +70429,7 @@ exotinnen/~~Vj # auto-added
 exotische/~~NhY
 exotischem/~~NhY
 exotischen/~~XZ #  auto-added
-exotischer/~~MhYOQRST
+exotischer/~~MhYJr
 exotisches/~~NhY
 exotischst/~~NhYOQRST
 exotisiere/~~NhY
@@ -70447,7 +70447,7 @@ expansions/~~NhY
 expansive/~~NhY
 expansivem/~~NhY
 expansiven/~~VfjG # auto-added
-expansiver/~~MhYOQRST
+expansiver/~~MhYJr
 expansives/~~NhY
 expediere/~~NhY
 expedieren/~~VdifjeG # auto-added
@@ -70477,7 +70477,7 @@ explosions/~~NhY
 explosive/~~NhY
 explosivem/~~NhY
 explosiven/~~VfjG # auto-added
-explosiver/~~MhYOQRST
+explosiver/~~MhYJr
 explosives/~~NhY
 exponaten/~~Vfj # auto-added
 exponates/~~NhY
@@ -70552,7 +70552,7 @@ extraorale/~~NhY
 extrasolar/~~JOQRSTqh # retag: adjective (was ~~Nh)
 extremem/~~NhY
 extremen/~~VfjG # auto-added
-extremer/~~MhYOQRST
+extremer/~~MhYJr
 extremere/~~NhY
 extremerem/~~NhY
 extremeren/~~Vfj # auto-added
@@ -70593,7 +70593,7 @@ exzesses/~~NhY
 exzessive/~~NhY
 exzessivem/~~NhY
 exzessiven/~~VfjG # auto-added
-exzessiver/~~MhYOQRST
+exzessiver/~~MhYJr
 exzessives/~~NhY
 exzesstat/~~NhY
 exzidiere/~~NhY
@@ -70649,7 +70649,7 @@ fachintern/~~VjOQRST # auto-added
 fachliche/~~NhY
 fachlichem/~~NhY
 fachlichen/~~XZG #  auto-added
-fachlicher/~~MhYOQRST
+fachlicher/~~MhYJr
 fachliches/~~NhY
 fachlichst/~~NhYOQRST
 fachnahem/~~NhY
@@ -70756,7 +70756,7 @@ fahndungs/~~NhY
 fahrbare/~~NhY
 fahrbarem/~~NhY
 fahrbaren/~~VfjG # auto-added
-fahrbarer/~~MhYOQRST
+fahrbarer/~~MhYJr
 fahrbarere/~~NhY
 fahrbares/~~NhY
 fahrbarst/~~hVOQRST
@@ -70771,7 +70771,7 @@ fahrenließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 fahrerin/~~NhY
 fahrigem/~~NhY
 fahrigen/~~VfjG # auto-added
-fahriger/~~MhYOQRST
+fahriger/~~MhYJr
 fahrigere/~~NhY
 fahrigerem/~~NhY
 fahrigeren/~~Vfj # auto-added
@@ -70874,7 +70874,7 @@ faltetest/~~hV
 faltetet/~~NhYG
 faltigem/~~NhY
 faltigen/~~VfjG # auto-added
-faltiger/~~MhYOQRST
+faltiger/~~MhYJr
 faltigere/~~NhY
 faltigerem/~~NhY
 faltigeren/~~Vfj # auto-added
@@ -70917,7 +70917,7 @@ familien/~~Vfj # auto-added
 familiäre/~~NhY
 familiärem/~~NhY
 familiären/~~VfjG # auto-added
-familiärer/~~MhYOQRST
+familiärer/~~MhYJr
 familiäres/~~NhY
 famosere/~~NhY
 famoserem/~~NhY
@@ -70976,7 +70976,7 @@ farbexakt/~~NXh
 farbgebend/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 farbigem/~~NhY
 farbigen/~~VfjG # auto-added
-farbiger/~~MhYOQRST
+farbiger/~~MhYJr
 farbigere/~~NhY
 farbigerem/~~NhY
 farbigeren/~~Vfj # auto-added
@@ -70992,7 +70992,7 @@ farbigster/~~MhY
 farbigstes/~~NhY
 farblosem/~~NhY
 farblosen/~~VfjG # auto-added
-farbloser/~~MhYOQRST
+farbloser/~~MhYJr
 farblosere/~~NhY
 farbloses/~~NhY
 farblosest/~~hVOQRST
@@ -71057,7 +71057,7 @@ faserfreie/~~Nh
 faserige/~~NhY
 faserigem/~~NhY
 faserigen/~~VfjG # auto-added
-faseriger/~~MhYOQRST
+faseriger/~~MhYJr
 faserigere/~~NhY
 faseriges/~~NhY
 faserigst/~~hVOQRST
@@ -71076,7 +71076,7 @@ fasertiefe/~~NhY
 faserzeug/~~NhY
 fasrigem/~~NhY
 fasrigen/~~VfjG # auto-added
-fasriger/~~MhYOQRST
+fasriger/~~MhYJr
 fasrigere/~~NhY
 fasrigerem/~~NhY
 fasrigeren/~~Vfj # auto-added
@@ -71469,7 +71469,7 @@ felsgrauer/~~MhY
 felsgraues/~~NhY
 felsigem/~~NhY
 felsigen/~~VfjG # auto-added
-felsiger/~~MhYOQRST
+felsiger/~~MhYJr
 felsigere/~~NhY
 felsigerem/~~NhY
 felsigeren/~~Vfj # auto-added
@@ -71642,7 +71642,7 @@ feschstes/~~NhY
 fesselnde/~~NhY
 fesselndem/~~NhY
 fesselnden/~~Vfj # auto-added
-fesselnder/~~MhYOQRST
+fesselnder/~~MhYJr
 fesselndes/~~NhY
 fesselns/~~NhY
 fesselten/~~VifjG # auto-added
@@ -71782,7 +71782,7 @@ festlegung/~~FhY
 festliche/~~NhY
 festlichem/~~NhY
 festlichen/~~XZG #  auto-added
-festlicher/~~MhYOQRST
+festlicher/~~MhYJr
 festliches/~~NhY
 festlichst/~~NhYOQRST
 festlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -71932,7 +71932,7 @@ fettfreier/~~MhY
 fettfreies/~~NhY
 fettigem/~~NhY
 fettigen/~~VfjG # auto-added
-fettiger/~~MhYOQRST
+fettiger/~~MhYJr
 fettigere/~~NhY
 fettigerem/~~NhY
 fettigeren/~~Vfj # auto-added
@@ -71963,7 +71963,7 @@ fetziges/~~NhY
 fetztest/~~NhY
 feuchtem/~~NhY
 feuchten/~~VfjG # auto-added
-feuchter/~~MhYOQRST
+feuchter/~~MhYJr
 feuchtere/~~NhY
 feuchterem/~~NhY
 feuchteren/~~Vfj # auto-added
@@ -71981,7 +71981,7 @@ feuchtzone/~~NhY
 feudaladel/~~NhY
 feudalem/~~NhY
 feudalen/~~VfjG # auto-added
-feudaler/~~MhYOQRST
+feudaler/~~MhYJr
 feudalere/~~NhY
 feudalerem/~~NhY
 feudaleren/~~Vfj # auto-added
@@ -72022,7 +72022,7 @@ feuerungen/~~Vj # auto-added
 feuilleton/~~NhY
 feurigem/~~NhY
 feurigen/~~VfjG # auto-added
-feuriger/~~MhYOQRST
+feuriger/~~MhYJr
 feurigere/~~NhY
 feurigerem/~~NhY
 feurigeren/~~Vfj # auto-added
@@ -72267,7 +72267,7 @@ finderin/~~NhY
 finderlohn/~~NhY
 findigem/~~NhY
 findigen/~~VfjG # auto-added
-findiger/~~MhYOQRST
+findiger/~~MhYJr
 findigere/~~NhY
 findigerem/~~NhY
 findigeren/~~Vfj # auto-added
@@ -72324,7 +72324,7 @@ finnwals/~~NhY
 finstere/~~NhY
 finsterem/~~NhY
 finsteren/~~VfjG # auto-added
-finsterer/~~MhYOQRST
+finsterer/~~MhYJr
 finsterere/~~NhY
 finsteres/~~NhY
 finstern/~~VfjG # auto-added
@@ -72559,7 +72559,7 @@ flanschtet/~~NhYG
 flapsige/~~NhY
 flapsigem/~~NhY
 flapsigen/~~VfjG # auto-added
-flapsiger/~~MhYOQRST
+flapsiger/~~MhYJr
 flapsigere/~~NhY
 flapsiges/~~NhY
 flapsigst/~~hVOQRST
@@ -72670,7 +72670,7 @@ fleischs/~~NhY
 fleißige/~~NhY
 fleißigem/~~NhY
 fleißigen/~~VfjG # auto-added
-fleißiger/~~MhYOQRST
+fleißiger/~~MhYJr
 fleißigere/~~NhY
 fleißiges/~~NhY
 fleißigst/~~hVOQRST
@@ -73071,7 +73071,7 @@ flüchtetet/~~NhYG
 flüchtige/~~NhY
 flüchtigem/~~NhY
 flüchtigen/~~VfjG # auto-added
-flüchtiger/~~MhYOQRST
+flüchtiger/~~MhYJr
 flüchtiges/~~NhY
 flüchtigst/~~hVOQRST
 flüchtling/~~MhY
@@ -73081,7 +73081,7 @@ flüsschens/~~NhY
 flüssige/~~NhY
 flüssigem/~~NhY
 flüssigen/~~VfjG # auto-added
-flüssiger/~~MhYOQRST
+flüssiger/~~MhYJr
 flüssigere/~~NhY
 flüssiges/~~NhY
 flüssigst/~~hVOQRST
@@ -73127,7 +73127,7 @@ folgerung/~~FhY
 folgsame/~~NhY
 folgsamem/~~NhY
 folgsamen/~~VfjG # auto-added
-folgsamer/~~MhYOQRST
+folgsamer/~~MhYJr
 folgsamere/~~NhY
 folgsames/~~NhY
 folgsamst/~~hVOQRST
@@ -73251,7 +73251,7 @@ formalakt/~~NXh0
 formalakts/~~NhY
 formalem/~~NhY
 formalen/~~VfjG # auto-added
-formaler/~~MhYOQRST
+formaler/~~MhYJr
 formalere/~~NhY
 formalerem/~~NhY
 formaleren/~~Vfj # auto-added
@@ -73286,7 +73286,7 @@ formazans/~~NhY
 formelle/~~NhY
 formellem/~~NhY
 formellen/~~VfjG # auto-added
-formeller/~~MhYOQRST
+formeller/~~MhYJr
 formellere/~~NhY
 formelles/~~NhY
 formellste/~~NhY
@@ -73322,7 +73322,7 @@ formiertes/~~NhY
 formiertet/~~NhYG
 formlosem/~~NhY
 formlosen/~~VfjG # auto-added
-formloser/~~MhYOQRST
+formloser/~~MhYJr
 formlosere/~~NhY
 formloses/~~NhY
 formlosest/~~hVOQRST
@@ -73699,7 +73699,7 @@ fotochrom/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 fotogene/~~NhY
 fotogenem/~~NhY
 fotogenen/~~VfjG # auto-added
-fotogener/~~MhYOQRST
+fotogener/~~MhYJr
 fotogenere/~~NhY
 fotogenes/~~NhY
 fotogenst/~~hVOQRST
@@ -73754,7 +73754,7 @@ fragendes/~~NhY
 fragerin/~~NhY
 fragilem/~~NhY
 fragilen/~~VfjG # auto-added
-fragiler/~~MhYOQRST
+fragiler/~~MhYJr
 fragilere/~~NhY
 fragilerem/~~NhY
 fragileren/~~Vfj # auto-added
@@ -73769,7 +73769,7 @@ fragilstes/~~NhY
 fragliche/~~NhY
 fraglichem/~~NhY
 fraglichen/~~XZG #  auto-added
-fraglicher/~~MhYOQRST
+fraglicher/~~MhYJr
 fragliches/~~NhY
 fraglichst/~~NhYOQRST
 fraglosem/~~NhY
@@ -73834,7 +73834,7 @@ frauenelf/~~NhY
 frauliche/~~NhY
 fraulichem/~~NhY
 fraulichen/~~XZG #  auto-added
-fraulicher/~~MhYOQRST
+fraulicher/~~MhYJr
 frauliches/~~NhY
 fraulichst/~~NhYOQRST
 fraustadts/~~NhY
@@ -74076,7 +74076,7 @@ freudenarm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 freudige/~~NhY
 freudigem/~~NhY
 freudigen/~~VfjG # auto-added
-freudiger/~~MhYOQRST
+freudiger/~~MhYJr
 freudigere/~~NhY
 freudiges/~~NhY
 freudigst/~~hVOQRST
@@ -74161,7 +74161,7 @@ frisbees/~~NhY
 frischauf/~~NhY
 frischem/~~NhY
 frischen/~~XZdfijeG #  auto-added
-frischer/~~MhYOQRST
+frischer/~~MhYJr
 frischere/~~NhY
 frischerem/~~NhY
 frischeren/~~Vfj # auto-added
@@ -74306,7 +74306,7 @@ frosthärte/~~NhY
 frostige/~~NhY
 frostigem/~~NhY
 frostigen/~~VfjG # auto-added
-frostiger/~~MhYOQRST
+frostiger/~~MhYJr
 frostigere/~~NhY
 frostiges/~~NhY
 frostigst/~~hVOQRST
@@ -74340,7 +74340,7 @@ fruchtetet/~~NhYG
 fruchtige/~~NhY
 fruchtigem/~~NhY
 fruchtigen/~~VfjG # auto-added
-fruchtiger/~~MhYOQRST
+fruchtiger/~~MhYJr
 fruchtiges/~~NhY
 fruchtigst/~~hVOQRST
 fructose/~~NhY
@@ -74378,7 +74378,7 @@ fräuleins/~~NhY
 fröhliche/~~NhY
 fröhlichem/~~NhY
 fröhlichen/~~XZG #  auto-added
-fröhlicher/~~MhYOQRST
+fröhlicher/~~MhYJr
 fröhliches/~~NhY
 fröhlichst/~~NhYOQRST
 frömmeln/~~Vj # auto-added
@@ -74432,7 +74432,7 @@ frühmodern/~~VjOQRST # auto-added
 frühreife/~~NhY
 frühreifem/~~NhY
 frühreifen/~~VfjG # auto-added
-frühreifer/~~MhYOQRST
+frühreifer/~~MhYJr
 frühreifes/~~NhY
 frühstem/~~NhY
 frühsten/~~Vfj # auto-added
@@ -74937,7 +74937,7 @@ förmiges/~~NhY
 förmliche/~~NhY
 förmlichem/~~NhY
 förmlichen/~~XZG #  auto-added
-förmlicher/~~MhYOQRST
+förmlicher/~~MhYJr
 förmliches/~~NhY
 förmlichst/~~NhYOQRST
 försterei/~~NhY
@@ -74951,7 +74951,7 @@ fügendes/~~NhY
 fügestelle/~~NhY
 fügsamem/~~NhY
 fügsamen/~~VfjG # auto-added
-fügsamer/~~MhYOQRST
+fügsamer/~~MhYJr
 fügsamere/~~NhY
 fügsamerem/~~NhY
 fügsameren/~~Vfj # auto-added
@@ -74987,7 +74987,7 @@ füllender/~~MhY
 füllendes/~~NhY
 fülligem/~~NhY
 fülligen/~~Vfj # auto-added
-fülliger/~~MhYOQRST
+fülliger/~~MhYJr
 fülligere/~~NhY
 fülligerem/~~NhY
 fülligeren/~~Vfj # auto-added
@@ -75132,7 +75132,7 @@ gafftest/~~NhY
 gaichtpass/~~NhY0
 galantem/~~NhY
 galanten/~~VfjG # auto-added
-galanter/~~MhYOQRST
+galanter/~~MhYJr
 galantere/~~NhY
 galanterem/~~NhY
 galanteren/~~Vfj # auto-added
@@ -75197,7 +75197,7 @@ gammawerts/~~NhY
 gammelige/~~NhY
 gammeligem/~~NhY
 gammeligen/~~VfjG # auto-added
-gammeliger/~~MhYOQRST
+gammeliger/~~MhYJr
 gammeliges/~~NhY
 gammeligst/~~hVOQRST
 gammelnd/~~NhYOQRST
@@ -75216,7 +75216,7 @@ gammlers/~~NhY
 gammlige/~~NhY
 gammligem/~~NhY
 gammligen/~~VfjG # auto-added
-gammliger/~~MhYOQRST
+gammliger/~~MhYJr
 gammligere/~~NhY
 gammliges/~~NhY
 gammligst/~~hVOQRST
@@ -75247,7 +75247,7 @@ gamswurzes/~~NhY
 gangbare/~~NhY
 gangbarem/~~NhY
 gangbaren/~~VfjG # auto-added
-gangbarer/~~MhYOQRST
+gangbarer/~~MhYJr
 gangbarere/~~NhY
 gangbares/~~NhY
 gangbarst/~~hVOQRST
@@ -75366,7 +75366,7 @@ garrotten/~~Vfj # auto-added
 garstige/~~NhY
 garstigem/~~NhY
 garstigen/~~VfjG # auto-added
-garstiger/~~MhYOQRST
+garstiger/~~MhYJr
 garstigere/~~NhY
 garstiges/~~NhY
 garstigst/~~hVOQRST
@@ -75409,7 +75409,7 @@ gastiertet/~~NhYG
 gastliche/~~NhY
 gastlichem/~~NhY
 gastlichen/~~XZG #  auto-added
-gastlicher/~~MhYOQRST
+gastlicher/~~MhYJr
 gastliches/~~NhY
 gastlichst/~~NhYOQRST
 gastmahl/~~NXh
@@ -75499,7 +75499,7 @@ geachtelt/~~JOQRSTVgj
 geachtete/~~NhY
 geachtetem/~~NhY
 geachteten/~~Vfj # auto-added
-geachteter/~~MhYOQRST
+geachteter/~~MhYJr
 geachtetes/~~NhY
 geackert/~~JOQRSTVgj
 geadeltem/~~NhY
@@ -75628,7 +75628,7 @@ gebildes/~~NhY
 gebildete/~~NhY
 gebildetem/~~NhY
 gebildeten/~~Vfj # auto-added
-gebildeter/~~MhYOQRST
+gebildeter/~~MhYJr
 gebildetes/~~NhY
 gebilligt/~~JOQRSTVgfj
 gebimmel/~~NhY
@@ -76010,7 +76010,7 @@ gedichts/~~NhY
 gediegene/~~NhY
 gediegenem/~~NhY
 gediegenen/~~VfjG # auto-added
-gediegener/~~MhYOQRST
+gediegener/~~MhYJr
 gediegenes/~~NhY
 gediegenst/~~JOQRSTVgfj
 gediehen/~~VijOQRSTG # auto-added
@@ -76106,7 +76106,7 @@ geduldetet/~~JOQRSTVgjG
 geduldige/~~NhY
 geduldigem/~~NhY
 geduldigen/~~VfjG # auto-added
-geduldiger/~~MhYOQRST
+geduldiger/~~MhYJr
 geduldiges/~~NhY
 geduldigst/~~JOQRSTVgfj
 gedungen/~~VjOQRST # auto-added
@@ -76183,7 +76183,7 @@ geeifertes/~~NhY
 geeignete/~~NhY
 geeignetem/~~NhY
 geeigneten/~~Vfj # auto-added
-geeigneter/~~MhYOQRST
+geeigneter/~~MhYJr
 geeignetes/~~NhY
 geeiltem/~~NhY
 geeilten/~~Vfj # auto-added
@@ -76546,7 +76546,7 @@ gefrästes/~~NhY
 gefräßige/~~NhY
 gefräßigem/~~NhY
 gefräßigen/~~VfjG # auto-added
-gefräßiger/~~MhYOQRST
+gefräßiger/~~MhYJr
 gefräßiges/~~NhY
 gefräßigst/~~JOQRSTVgfj
 gefugtem/~~NhY
@@ -76598,7 +76598,7 @@ gefälles/~~NhY
 gefällige/~~NhY
 gefälligem/~~NhY
 gefälligen/~~VfjG # auto-added
-gefälliger/~~MhYOQRST
+gefälliger/~~MhYJr
 gefälliges/~~NhY
 gefälligst/~~JOQRSTVgfj
 gefällst/~~JOQRSTVgj
@@ -76621,7 +76621,7 @@ gefördert/~~JOQRSTVgfj
 gefügige/~~NhY
 gefügigem/~~NhY
 gefügigen/~~VfjG # auto-added
-gefügiger/~~MhYOQRST
+gefügiger/~~MhYJr
 gefügigere/~~NhY
 gefügiges/~~NhY
 gefügigst/~~JOQRSTVgfj
@@ -76887,7 +76887,7 @@ geheilter/~~MhY
 geheiltes/~~NhY
 geheimem/~~NhY
 geheimen/~~VfjG # auto-added
-geheimer/~~MhYOQRST
+geheimer/~~MhYJr
 geheimere/~~NhY
 geheimerem/~~NhY
 geheimeren/~~Vfj # auto-added
@@ -76966,7 +76966,7 @@ gehobeltes/~~NhY
 gehobene/~~NhY
 gehobenem/~~NhY
 gehobenen/~~VfjG # auto-added
-gehobener/~~MhYOQRST
+gehobener/~~MhYJr
 gehobenere/~~NhY
 gehobenes/~~NhY
 gehobenst/~~JOQRSTVgfj
@@ -76995,7 +76995,7 @@ gehorchtet/~~JOQRSTVgjG
 gehorsame/~~NhY
 gehorsamem/~~NhY
 gehorsamen/~~VfjG # auto-added
-gehorsamer/~~MhYOQRST
+gehorsamer/~~MhYJr
 gehorsames/~~NhY
 gehorsams/~~NhY
 gehorsamst/~~JOQRSTVgfj
@@ -77052,7 +77052,7 @@ gehärtetes/~~NhY
 gehässige/~~NhY
 gehässigem/~~NhY
 gehässigen/~~VfjG # auto-added
-gehässiger/~~MhYOQRST
+gehässiger/~~MhYJr
 gehässiges/~~NhY
 gehässigst/~~JOQRSTVgfj
 gehäuftem/~~NhY
@@ -77160,7 +77160,7 @@ geizhälse/~~NhY
 geizhälsen/~~Vfj # auto-added
 geizigem/~~NhY
 geizigen/~~VfjG # auto-added
-geiziger/~~MhYOQRST
+geiziger/~~MhYJr
 geizigere/~~NhY
 geizigerem/~~NhY
 geizigeren/~~Vfj # auto-added
@@ -77653,7 +77653,7 @@ gelasertes/~~NhY
 gelassene/~~NhY
 gelassenem/~~NhY
 gelassenen/~~VfjG # auto-added
-gelassener/~~MhYOQRST
+gelassener/~~MhYJr
 gelassenes/~~NhY
 gelassenst/~~JOQRSTVgfj
 gelasses/~~NhY
@@ -77804,12 +77804,12 @@ gelegtes/~~NhY
 gelehrige/~~NhY
 gelehrigem/~~NhY
 gelehrigen/~~VfjG # auto-added
-gelehriger/~~MhYOQRST
+gelehriger/~~MhYJr
 gelehriges/~~NhY
 gelehrigst/~~JOQRSTVgfj
 gelehrtem/~~NhY
 gelehrten/~~VfjG # auto-added
-gelehrter/~~MhYOQRST
+gelehrter/~~MhYJr
 gelehrtere/~~NhY
 gelehrtes/~~NhY
 gelehrtest/~~JOQRSTVgfj
@@ -77841,7 +77841,7 @@ gelenkfern/~~VjOQRST # auto-added
 gelenkige/~~NhY
 gelenkigem/~~NhY
 gelenkigen/~~VfjG # auto-added
-gelenkiger/~~MhYOQRST
+gelenkiger/~~MhYJr
 gelenkiges/~~NhY
 gelenkigst/~~JOQRSTVgfj
 gelenknahe/~~NhY
@@ -77974,7 +77974,7 @@ geluncht/~~JOQRSTVgj
 gelungene/~~NhY
 gelungenem/~~NhY
 gelungenen/~~VfjG # auto-added
-gelungener/~~MhYOQRST
+gelungener/~~MhYJr
 gelungenes/~~NhY
 gelungenst/~~JOQRSTVgfj
 gelutscht/~~JOQRSTVgj
@@ -78003,7 +78003,7 @@ gelästert/~~JOQRSTVgj
 geläufige/~~NhY
 geläufigem/~~NhY
 geläufigen/~~VfjG # auto-added
-geläufiger/~~MhYOQRST
+geläufiger/~~MhYJr
 geläufiges/~~NhY
 geläufigst/~~JOQRSTVgfj
 geläutert/~~JOQRSTVgfj
@@ -78023,7 +78023,7 @@ gelöschter/~~MhY
 gelöschtes/~~NhY
 gelöstem/~~NhY
 gelösten/~~Vfj # auto-added
-gelöster/~~MhYOQRST
+gelöster/~~MhYJr
 gelöstere/~~NhY
 gelösterem/~~NhY
 gelösteren/~~Vfj # auto-added
@@ -78105,7 +78105,7 @@ gemeinden/~~VdifjeG # auto-added
 gemeindet/~~JOQRSTVgfjG
 gemeinem/~~NhY
 gemein/~~Vej9OQRSTUW # REPLACES gemeinen
-gemeiner/~~MhYOQRST
+gemeiner/~~MhYJr
 gemeinere/~~NhY
 gemeinerem/~~NhY
 gemeineren/~~Vfj # auto-added
@@ -78181,7 +78181,7 @@ gemischs/~~NhY
 gemischt/~~JOQRSTUWVgfj9
 gemischtem/~~NhY
 gemischten/~~VfjG # auto-added
-gemischter/~~MhYOQRST
+gemischter/~~MhYJr
 gemischtes/~~NhY
 gemisste/~~NhY
 gemisstem/~~NhY
@@ -78329,7 +78329,7 @@ geneckter/~~MhY
 genecktes/~~NhY
 genehmem/~~NhY
 genehmen/~~VfjG # auto-added
-genehmer/~~MhYOQRST
+genehmer/~~MhYJr
 genehmere/~~NhY
 genehmerem/~~NhY
 genehmeren/~~Vfj # auto-added
@@ -78363,7 +78363,7 @@ generators/~~NhY
 generelle/~~NhY
 generellem/~~NhY
 generellen/~~VfjG # auto-added
-genereller/~~MhYOQRST
+genereller/~~MhYJr
 generelles/~~NhY
 generiere/~~NhY
 generieren/~~Vdifj78ecG # auto-added
@@ -78406,7 +78406,7 @@ genfersee/~~NhY
 genfersees/~~NhY
 genialem/~~NhY
 genialen/~~VfjG # auto-added
-genialer/~~MhYOQRST
+genialer/~~MhYJr
 genialere/~~NhY
 genialerem/~~NhY
 genialeren/~~Vfj # auto-added
@@ -78560,7 +78560,7 @@ genügendst/~~JOQRSTVgfj
 genügsame/~~NhY
 genügsamem/~~NhY
 genügsamen/~~VfjG # auto-added
-genügsamer/~~MhYOQRST
+genügsamer/~~MhYJr
 genügsames/~~NhY
 genügsamst/~~JOQRSTVgfj
 genügtest/~~JOQRSTVgj
@@ -78677,7 +78677,7 @@ gepflanzt/~~JOQRSTVgfj
 gepflegt/~~JOQRSTUWVgfj9
 gepflegtem/~~NhY
 gepflegten/~~VfjG # auto-added
-gepflegter/~~MhYOQRST
+gepflegter/~~MhYJr
 gepflegtes/~~NhY
 gepflückt/~~JOQRSTVgfj
 gepflügt/~~JOQRSTVgfj
@@ -79000,7 +79000,7 @@ gerebeltes/~~NhY
 gerechnet/~~JOQRSTVgfj
 gerechtem/~~NhY
 gerechten/~~VfjG # auto-added
-gerechter/~~MhYOQRST
+gerechter/~~MhYJr
 gerechtere/~~NhYJ # +adjective reading (was noun-only)
 gerechtes/~~NhY
 gerechtest/~~JOQRSTVgfj
@@ -79044,7 +79044,7 @@ gereister/~~MhY
 gereistes/~~NhY
 gereiztem/~~NhY
 gereizten/~~VfjG # auto-added
-gereizter/~~MhYOQRST
+gereizter/~~MhYJr
 gereiztere/~~NhY
 gereiztes/~~NhY
 gereiztest/~~JOQRSTVgfj
@@ -79099,7 +79099,7 @@ gerilltes/~~NhY
 geringelt/~~JOQRSTVgfj
 geringem/~~NhY
 geringen/~~VfjG # auto-added
-geringer/~~MhYOQRST
+geringer/~~MhYJr
 geringere/~~NhYJ # +adjective reading (was noun-only)
 geringerem/~~NhY
 geringeren/~~Vfj # auto-added
@@ -79210,7 +79210,7 @@ geruhendes/~~NhY
 geruhsame/~~NhY
 geruhsamem/~~NhY
 geruhsamen/~~VfjG # auto-added
-geruhsamer/~~MhYOQRST
+geruhsamer/~~MhYJr
 geruhsames/~~NhY
 geruhsamst/~~JOQRSTVgfj
 geruhtest/~~JOQRSTVgj
@@ -79254,7 +79254,7 @@ geräuchert/~~JOQRSTVgfj9
 geräumige/~~NhY
 geräumigem/~~NhY
 geräumigen/~~VfjG # auto-added
-geräumiger/~~MhYOQRST
+geräumiger/~~MhYJr
 geräumiges/~~NhY
 geräumigst/~~JOQRSTVgfj
 geräumtem/~~NhY
@@ -79626,7 +79626,7 @@ gesellende/~~NhYJ # +adjective reading (was noun-only)
 gesellige/~~NhY
 geselligem/~~NhY
 geselligen/~~VfjG # auto-added
-geselliger/~~MhYOQRST
+geselliger/~~MhYJr
 geselliges/~~NhY
 geselligst/~~JOQRSTVgfj
 gesellin/~~NhY
@@ -79660,7 +79660,7 @@ gesetzbuch/~~NhY0
 gesetz/~~Vej0 # REPLACES gesetzen
 gesetzes/~~NhY
 gesetztem/~~NhY
-gesetzter/~~MhYOQRST
+gesetzter/~~MhYJr
 gesetztere/~~NhY
 gesetztes/~~NhY
 gesetztest/~~JOQRSTVgfj
@@ -79758,7 +79758,7 @@ gespannes/~~NhY
 gespanns/~~NhY
 gespannt/~~JOQRSTUWVgfj9
 gespanntem/~~NhY
-gespannter/~~MhYOQRST
+gespannter/~~MhYJr
 gespanntes/~~NhY
 gespartem/~~NhY
 gesparten/~~Vfj # auto-added
@@ -80174,7 +80174,7 @@ gesuchen/~~XZdfije #  auto-added
 gesuches/~~NhY
 gesuchtem/~~NhY
 gesuchten/~~VfjG # auto-added
-gesuchter/~~MhYOQRST
+gesuchter/~~MhYJr
 gesuchtere/~~NhY
 gesuchtes/~~NhY
 gesudelt/~~JOQRSTVgfj
@@ -80619,7 +80619,7 @@ gewackelt/~~JOQRSTVgfj
 gewaffnet/~~JOQRSTVgfj
 gewagtem/~~NhY
 gewagten/~~VfjG # auto-added
-gewagter/~~MhYOQRST
+gewagter/~~MhYJr
 gewagtere/~~NhY
 gewagterem/~~NhY
 gewagteren/~~Vfj # auto-added
@@ -80647,7 +80647,7 @@ gewaltet/~~JOQRSTVgj
 gewaltige/~~NhY
 gewaltigem/~~NhY
 gewaltigen/~~VfjG # auto-added
-gewaltiger/~~MhYOQRST
+gewaltiger/~~MhYJr
 gewaltiges/~~NhY
 gewaltigst/~~JOQRSTVgfj
 gewaltsame/~~NhY
@@ -80666,7 +80666,7 @@ gewandhaus/~~NhY0
 gewandteil/~~NhY
 gewandtem/~~NhY
 gewandten/~~VfjG # auto-added
-gewandter/~~MhYOQRST
+gewandter/~~MhYJr
 gewandtere/~~NhY
 gewandtes/~~NhY
 gewannen/~~VijG # auto-added
@@ -80770,7 +80770,7 @@ gewetteter/~~MhY
 gewettetes/~~NhY
 gewetztem/~~NhY
 gewetzten/~~VfjG # auto-added
-gewetzter/~~MhYOQRST
+gewetzter/~~MhYJr
 gewetztere/~~NhY
 gewetztes/~~NhY
 gewetztest/~~JOQRSTVgfj
@@ -80885,7 +80885,7 @@ gewittre/~~NhY
 gewitzelt/~~JOQRSTVgfj
 gewitztem/~~NhY
 gewitzten/~~VfjG # auto-added
-gewitzter/~~MhYOQRST
+gewitzter/~~MhYJr
 gewitztere/~~NhY
 gewitztes/~~NhY
 gewitztest/~~JOQRSTVgfj
@@ -80905,7 +80905,7 @@ gewohnten/~~Vfj # auto-added
 gewohntes/~~NhY
 gewolltem/~~NhY
 gewollten/~~VfjG # auto-added
-gewollter/~~MhYOQRST
+gewollter/~~MhYJr
 gewolltere/~~NhY
 gewolltes/~~NhY
 gewolltest/~~JOQRSTVgfj
@@ -80957,7 +80957,7 @@ gewächsen/~~Vfj # auto-added
 gewächses/~~NhY
 gewähltem/~~NhY
 gewählten/~~VfjG # auto-added
-gewählter/~~MhYOQRST
+gewählter/~~MhYJr
 gewähltere/~~NhY
 gewähltes/~~NhY
 gewähltest/~~JOQRSTVgfj
@@ -81009,7 +81009,7 @@ gewölb/~~Vej # REPLACES gewölben
 gewölbes/~~NhY
 gewölbetyp/~~NhY # auto-added
 gewölbtem/~~NhY
-gewölbter/~~MhYOQRST
+gewölbter/~~MhYJr
 gewölbtere/~~NhY
 gewölbtes/~~NhY
 gewölbtest/~~JOQRSTVgfj
@@ -81033,7 +81033,7 @@ gewürgtes/~~NhY
 gewürz/~~Vej0 # REPLACES gewürzen
 gewürzes/~~NhY
 gewürztem/~~NhY
-gewürzter/~~MhYOQRST
+gewürzter/~~MhYJr
 gewürztere/~~NhY
 gewürztes/~~NhY
 gewürztest/~~JOQRSTVgfj
@@ -81082,7 +81082,7 @@ gezeugtes/~~NhY
 geziehen/~~Vj # auto-added
 gezieltem/~~NhY
 gezielten/~~VfjG # auto-added
-gezielter/~~MhYOQRST
+gezielter/~~MhYJr
 gezieltere/~~NhY
 gezieltes/~~NhY
 gezieltest/~~JOQRSTVgfj
@@ -81288,7 +81288,7 @@ gierender/~~MhY
 gierendes/~~NhY
 gierigem/~~NhY
 gierigen/~~VfjG # auto-added
-gieriger/~~MhYOQRST
+gieriger/~~MhYJr
 gierigere/~~NhY
 gierigerem/~~NhY
 gierigeren/~~Vfj # auto-added
@@ -81345,7 +81345,7 @@ giftgrüner/~~MhY
 giftgrünes/~~NhY
 giftigem/~~NhY
 giftigen/~~VfjG # auto-added
-giftiger/~~MhYOQRST
+giftiger/~~MhYJr
 giftigere/~~NhY
 giftigerem/~~NhY
 giftigeren/~~Vfj # auto-added
@@ -81568,7 +81568,7 @@ gleichen/~~Vhfij78cG  # to equal / same (inflected) #  auto-added
 gleichend/~~NhYJOQRST # +adjective reading (was noun-only)
 gleichende/~~NhYJ # +adjective reading (was noun-only)
 gleichens/~~NhY
-gleicher/~~MhYOQRST
+gleicher/~~MhYJr
 gleichere/~~NhY
 gleicherem/~~NhY
 gleicheren/~~Vfj # auto-added
@@ -81892,7 +81892,7 @@ gnadenwegs/~~NhY
 gneismasse/~~NhY
 gnädigem/~~NhY
 gnädigen/~~VfjG # auto-added
-gnädiger/~~MhYOQRST
+gnädiger/~~MhYJr
 gnädigere/~~NhY
 gnädigerem/~~NhY
 gnädigeren/~~Vfj # auto-added
@@ -82187,7 +82187,7 @@ granivores/~~NhY
 grannige/~~NhY
 grannigem/~~NhY
 grannigen/~~VfjG # auto-added
-granniger/~~MhYOQRST
+granniger/~~MhYJr
 grannigere/~~NhY
 granniges/~~NhY
 grannigst/~~hVOQRST
@@ -82356,7 +82356,7 @@ graureiher/~~MhY
 grausame/~~NhY
 grausamem/~~NhY
 grausamen/~~VfjG # auto-added
-grausamer/~~MhYOQRST
+grausamer/~~MhYJr
 grausamere/~~NhY
 grausames/~~NhY
 grausamst/~~hVOQRST
@@ -82368,7 +82368,7 @@ grausendes/~~NhY
 grausige/~~NhY
 grausigem/~~NhY
 grausigen/~~VfjG # auto-added
-grausiger/~~MhYOQRST
+grausiger/~~MhYJr
 grausigere/~~NhY
 grausiges/~~NhY
 grausigst/~~hVOQRST
@@ -82442,7 +82442,7 @@ greenwichs/~~NhY
 greifbare/~~NhY
 greifbarem/~~NhY
 greifbaren/~~VfjG # auto-added
-greifbarer/~~MhYOQRST
+greifbarer/~~MhYJr
 greifbares/~~NhY
 greifbarst/~~hVOQRST
 greifende/~~NhYJ # +adjective reading (was noun-only)
@@ -82524,7 +82524,7 @@ grifffeste/~~NhY
 griffige/~~NhY
 griffigem/~~NhY
 griffigen/~~VfjG # auto-added
-griffiger/~~MhYOQRST
+griffiger/~~MhYJr
 griffigere/~~NhY
 griffiges/~~NhY
 griffigst/~~hVOQRST
@@ -82547,7 +82547,7 @@ grimmdärme/~~NhY
 grimmige/~~NhY
 grimmigem/~~NhY
 grimmigen/~~VfjG # auto-added
-grimmiger/~~MhYOQRST
+grimmiger/~~MhYJr
 grimmigere/~~NhY
 grimmiges/~~NhY
 grimmigst/~~hVOQRST
@@ -82608,7 +82608,7 @@ grossistin/~~NhY
 groteske/~~NhY
 groteskem/~~NhY
 grotesken/~~Vfj # auto-added
-grotesker/~~MhYOQRST
+grotesker/~~MhYJr
 groteskere/~~NhY
 groteskes/~~NhY
 grottenolm/~~NhY0
@@ -82733,7 +82733,7 @@ gräueltat/~~NhY
 gräuliche/~~NhY
 gräulichem/~~NhY
 gräulichen/~~XZG #  auto-added
-gräulicher/~~MhYOQRST
+gräulicher/~~MhYJr
 gräuliches/~~NhY
 gräulichst/~~NhYOQRST
 gräzisiere/~~NhY
@@ -82758,7 +82758,7 @@ grönlands/~~NhY
 grönländer/~~MhY
 größerem/~~NhY
 größeren/~~Vfj # auto-added
-größerer/~~Jq - comprtve jectveOQRST
+größerer/~~Jq # comparative adjective
 größeres/~~NhY
 größtmaß/~~NhY0
 größtmaßes/~~NhY
@@ -82972,7 +82972,7 @@ gutmensch/~~NhY
 gutmütige/~~NhY
 gutmütigem/~~NhY
 gutmütigen/~~VfjG # auto-added
-gutmütiger/~~MhYOQRST
+gutmütiger/~~MhYJr
 gutmütiges/~~NhY
 gutmütigst/~~hVOQRST
 gutschein/~~NhY0
@@ -83059,7 +83059,7 @@ gängelung/~~FhY
 gängerin/~~NhY
 gängigem/~~NhY
 gängigen/~~VfjG # auto-added
-gängiger/~~MhYOQRST
+gängiger/~~MhYJr
 gängigere/~~NhY
 gängigerem/~~NhY
 gängigeren/~~Vfj # auto-added
@@ -83163,7 +83163,7 @@ göttinnen/~~Vj # auto-added
 göttliche/~~NhY
 göttlichem/~~NhY
 göttlichen/~~XZG #  auto-added
-göttlicher/~~MhYOQRST
+göttlicher/~~MhYJr
 göttliches/~~NhY
 göttlichst/~~NhYOQRST
 götzzitat/~~NhY
@@ -83185,7 +83185,7 @@ gültigkeit/~~FhY
 günstige/~~NhY
 günstigem/~~NhY
 günstigen/~~VfjG # auto-added
-günstiger/~~MhYOQRST
+günstiger/~~MhYJr
 günstigere/~~NhY
 günstiges/~~NhY
 günstigst/~~hVOQRST
@@ -83229,7 +83229,7 @@ haarfeines/~~NhY
 haargenaue/~~NhY
 haarigem/~~NhY
 haarigen/~~VfjG # auto-added
-haariger/~~MhYOQRST
+haariger/~~MhYJr
 haarigere/~~NhY
 haarigerem/~~NhY
 haarigeren/~~Vfj # auto-added
@@ -83633,7 +83633,7 @@ halsstarre/~~NhY
 haltbare/~~NhY
 haltbarem/~~NhY
 haltbaren/~~VfjG # auto-added
-haltbarer/~~MhYOQRST
+haltbarer/~~MhYJr
 haltbarere/~~NhY
 haltbares/~~NhY
 haltbarst/~~hVOQRST
@@ -83648,7 +83648,7 @@ halterung/~~FhY
 halterungs/~~NhY
 haltlosem/~~NhY
 haltlosen/~~VfjG # auto-added
-haltloser/~~MhYOQRST
+haltloser/~~MhYJr
 haltlosere/~~NhY
 haltloses/~~NhY
 haltlosest/~~hVOQRST
@@ -83708,7 +83708,7 @@ handfest/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 handfeste/~~NhY
 handfestem/~~NhY
 handfesten/~~VfjG # auto-added
-handfester/~~MhYOQRST
+handfester/~~MhYJr
 handfestes/~~NhY
 handgebaut/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 handgemalt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -83808,7 +83808,7 @@ harktest/~~NhY
 harlekin/~~NhY
 harmlosem/~~NhY
 harmlosen/~~VfjG # auto-added
-harmloser/~~MhYOQRST
+harmloser/~~MhYJr
 harmloses/~~NhY
 harmonie/~~NhY
 harmonien/~~Vfj # auto-added
@@ -84074,7 +84074,7 @@ heftetest/~~hV
 heftetet/~~NhYG
 heftigem/~~NhY
 heftigen/~~VfjG # auto-added
-heftiger/~~MhYOQRST
+heftiger/~~MhYJr
 heftigere/~~NhY
 heftiges/~~NhY
 heftigst/~~hVOQRST
@@ -84137,7 +84137,7 @@ heilfrohe/~~NhY
 heiligem/~~NhY
 heilig/~~VejOQRSTUW # REPLACES heiligen
 heiligens/~~NhY
-heiliger/~~MhYOQRST
+heiliger/~~MhYJr
 heiligere/~~NhY
 heiliges/~~NhY
 heiligste/~~NhY
@@ -84151,7 +84151,7 @@ heilloses/~~NhY
 heilsame/~~NhY
 heilsamem/~~NhY
 heilsamen/~~VfjG # auto-added
-heilsamer/~~MhYOQRST
+heilsamer/~~MhYJr
 heilsames/~~NhY
 heilsamst/~~hVOQRST
 heilsplan/~~NhY0
@@ -84245,7 +84245,7 @@ heiserer/~~MhY
 heiseres/~~NhY
 heiterem/~~NhY
 heiter/~~VejOQRSTUW # REPLACES heiteren
-heiterer/~~MhYOQRST
+heiterer/~~MhYJr
 heiterere/~~NhY
 heiteres/~~NhY
 heiterste/~~NhY
@@ -84857,7 +84857,7 @@ herziehst/~~hV
 herzieht/~~NhYG
 herzigem/~~NhY
 herzigen/~~VfjG # auto-added
-herziger/~~MhYOQRST
+herziger/~~MhYJr
 herzigere/~~NhY
 herziges/~~NhY
 herzigst/~~hVOQRST
@@ -84866,7 +84866,7 @@ herzjagen/~~Vj # auto-added
 herzliche/~~NhY
 herzlosem/~~NhY
 herzlosen/~~VfjG # auto-added
-herzloser/~~MhYOQRST
+herzloser/~~MhYJr
 herzloses/~~NhY
 herznahe/~~NhY
 herznahem/~~NhY
@@ -85022,7 +85022,7 @@ highways/~~NhY
 hijack/~~Vej # REPLACES hijacken
 hilflosem/~~NhY
 hilflosen/~~VfjG # auto-added
-hilfloser/~~MhYOQRST
+hilfloser/~~MhYJr
 hilfloses/~~NhY
 hilfsmatt/~~NhY0
 himalaja/~~Nbh
@@ -85636,7 +85636,7 @@ hitzefest/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hitzefrei/~~NhY
 hitzigem/~~NhY
 hitzigen/~~VfjG # auto-added
-hitziger/~~MhYOQRST
+hitziger/~~MhYJr
 hitzigere/~~NhY
 hitziges/~~NhY
 hitzigst/~~hVOQRST
@@ -85922,7 +85922,7 @@ homogenat/~~NhY
 homogene/~~NhY
 homogenem/~~NhY
 homogenen/~~VfjG # auto-added
-homogener/~~MhYOQRST
+homogener/~~MhYJr
 homogenes/~~NhY
 homogenst/~~hVOQRST
 homograf/~~NhY
@@ -86162,7 +86162,7 @@ hungertet/~~NhYG
 hungrige/~~NhY
 hungrigem/~~NhY
 hungrigen/~~VfjG # auto-added
-hungriger/~~MhYOQRST
+hungriger/~~MhYJr
 hungriges/~~NhY
 hungrigst/~~hVOQRST
 hunnenhof/~~NhY
@@ -86185,7 +86185,7 @@ hurrikan/~~NhY
 hurrikans/~~NhY
 hurtigem/~~NhY
 hurtigen/~~VfjG # auto-added
-hurtiger/~~MhYOQRST
+hurtiger/~~MhYJr
 hurtigere/~~NhY
 hurtiges/~~NhY
 hurtigst/~~hVOQRST
@@ -86314,7 +86314,7 @@ hämgruppe/~~NhY
 hämische/~~NhY
 hämischem/~~NhY
 hämischen/~~XZ #  auto-added
-hämischer/~~MhYOQRST
+hämischer/~~MhYJr
 hämisches/~~NhY
 hämischst/~~NhYOQRST
 hämmernd/~~NhYOQRST
@@ -86407,7 +86407,7 @@ häufender/~~MhY
 häufendes/~~NhY
 häufigem/~~NhY
 häufigen/~~VfjG # auto-added
-häufiger/~~MhYOQRST
+häufiger/~~MhYJr
 häufigere/~~NhY
 häufiges/~~NhY
 häufigst/~~hVOQRST
@@ -86449,7 +86449,7 @@ höferecht/~~NhY0
 höfliche/~~NhY
 höflichem/~~NhY
 höflichen/~~XZG #  auto-added
-höflicher/~~MhYOQRST
+höflicher/~~MhYJr
 höfliches/~~NhY
 höflichst/~~NhYOQRST
 höflinge/~~NhY
@@ -86702,7 +86702,7 @@ immission/~~NhY
 immobile/~~NhY
 immobilem/~~NhY
 immobilen/~~VfjG # auto-added
-immobiler/~~MhYOQRST
+immobiler/~~MhYJr
 immobiles/~~NhY
 immobilie/~~NhY
 immunblot/~~NhY
@@ -86990,7 +86990,7 @@ insulares/~~NhY
 insulins/~~NhY
 intaktem/~~NhY
 intakten/~~VfjG # auto-added
-intakter/~~MhYOQRST
+intakter/~~MhYJr
 intaktere/~~NhY
 intaktes/~~NhY
 intaktest/~~hVOQRST
@@ -88276,7 +88276,7 @@ kavitöses/~~NhY
 kebsweib/~~NhY0a
 kebsweibs/~~NhY
 keckerem/~~NhY
-kecker/~~VejOQRST # REPLACES keckeren
+kecker/~~VejJr # REPLACES keckeren
 keckerer/~~MhY
 keckeres/~~NhY
 keckernd/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -88449,7 +88449,7 @@ kernfreie/~~Nh
 kernfäule/~~NhY
 kernigem/~~NhY
 kernigen/~~VfjG # auto-added
-kerniger/~~MhYOQRST
+kerniger/~~MhYJr
 kernigere/~~NhY
 kerniges/~~NhY
 kernigst/~~hVOQRST
@@ -88517,7 +88517,7 @@ keulchens/~~NhY
 keulungen/~~Vj # auto-added
 keuschem/~~NhY
 keuschen/~~XZ #  auto-added
-keuscher/~~MhYOQRST
+keuscher/~~MhYJr
 keuschere/~~NhY
 keusches/~~NhY
 keuschste/~~NhY
@@ -88855,7 +88855,7 @@ klebendes/~~NhY
 klebrige/~~NhY
 klebrigem/~~NhY
 klebrigen/~~VfjG # auto-added
-klebriger/~~MhYOQRST
+klebriger/~~MhYJr
 klebriges/~~NhY
 klebrigst/~~hVOQRST
 klebtest/~~NhY
@@ -88894,7 +88894,7 @@ kleidung/~~FhY
 kleidungs/~~NhY
 kleinerem/~~NhY
 kleineren/~~Vfj # auto-added
-kleinerer/~~Jq - comprtve jectveOQRST
+kleinerer/~~Jq # comparative adjective
 kleineres/~~NhY
 kleinheit/~~FhY
 kleinoden/~~Vfj # auto-added
@@ -89023,7 +89023,7 @@ klosters/~~NhY
 klotzige/~~NhY
 klotzigem/~~NhY
 klotzigen/~~VfjG # auto-added
-klotziger/~~MhYOQRST
+klotziger/~~MhYJr
 klotziges/~~NhY
 klotzigst/~~hVOQRST
 klotzkopf/~~NhY
@@ -89119,7 +89119,7 @@ knallhart/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 knallige/~~NhY
 knalligem/~~NhY
 knalligen/~~VfjG # auto-added
-knalliger/~~MhYOQRST
+knalliger/~~MhYJr
 knalliges/~~NhY
 knalligst/~~hVOQRST
 knallrot/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -89438,7 +89438,7 @@ kokeltest/~~hV
 kokereien/~~Vj # auto-added
 kokettem/~~NhY
 koketten/~~VfjG # auto-added
-koketter/~~MhYOQRST
+koketter/~~MhYJr
 kokettere/~~NhY
 kokettes/~~NhY
 kokettest/~~hVOQRST
@@ -89533,7 +89533,7 @@ komikers/~~NhY
 komische/~~NhY
 komischem/~~NhY
 komischen/~~XZ #  auto-added
-komischer/~~MhYOQRST
+komischer/~~MhYJr
 komisches/~~NhY
 komischst/~~NhYOQRST
 komitees/~~NhY
@@ -89560,7 +89560,7 @@ komorbide/~~NhY
 kompagnon/~~NhY
 kompaktem/~~NhY
 kompakten/~~VfjG # auto-added
-kompakter/~~MhYOQRST
+kompakter/~~MhYJr
 kompaktes/~~NhY
 kompanie/~~NhY
 kompanien/~~Vfj # auto-added
@@ -89576,7 +89576,7 @@ komplett/~~NXhVOQRSTUW # +verb reading (was noun-only)
 komplexe/~~NhY
 komplexem/~~NhY
 komplexen/~~VfjG # auto-added
-komplexer/~~MhYOQRST
+komplexer/~~MhYJr
 komplexes/~~NhY
 komplice/~~NhY
 komplicen/~~Vfj # auto-added
@@ -89628,7 +89628,7 @@ konformer/~~MhY
 konformes/~~NhY
 konfusem/~~NhY
 konfusen/~~VfjG # auto-added
-konfuser/~~MhYOQRST
+konfuser/~~MhYJr
 konfusere/~~NhY
 konfuses/~~NhY
 konfusest/~~hVOQRST
@@ -89753,7 +89753,7 @@ kopfgroße/~~NhY
 kopfkämme/~~NhY
 kopflosem/~~NhY
 kopflosen/~~VfjG # auto-added
-kopfloser/~~MhYOQRST
+kopfloser/~~MhYJr
 kopfloses/~~NhY
 kopfniet/~~NhY
 kopfried/~~NhY0
@@ -89842,7 +89842,7 @@ korpusfuß/~~NhY0
 korpusmaß/~~NhY0
 korrektem/~~NhY
 korrekten/~~VfjG # auto-added
-korrekter/~~MhYOQRST
+korrekter/~~MhYJr
 korrektes/~~NhY
 korrektor/~~NhY
 korrektur/~~NhY
@@ -89854,7 +89854,7 @@ korrosion/~~NhY
 korrosive/~~NhY
 korruptem/~~NhY
 korrupten/~~VfjG # auto-added
-korrupter/~~MhYOQRST
+korrupter/~~MhYJr
 korruptes/~~NhY
 korsagen/~~Vfj # auto-added
 korsaken/~~Vfj # auto-added
@@ -89901,7 +89901,7 @@ kostales/~~NhY
 kostbare/~~NhY
 kostbarem/~~NhY
 kostbaren/~~VfjG # auto-added
-kostbarer/~~MhYOQRST
+kostbarer/~~MhYJr
 kostbares/~~NhY
 kostbarst/~~hVOQRST
 kostenarm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -90028,7 +90028,7 @@ kratzfüße/~~NhY
 kratzige/~~NhY
 kratzigem/~~NhY
 kratzigen/~~VfjG # auto-added
-kratziger/~~MhYOQRST
+kratziger/~~MhYJr
 kratziges/~~NhY
 kratzigst/~~hVOQRST
 kratzspur/~~NhY
@@ -90079,7 +90079,7 @@ kreation/~~NhY
 kreative/~~NhY
 kreativem/~~NhY
 kreativen/~~VfjG # auto-added
-kreativer/~~MhYOQRST
+kreativer/~~MhYJr
 kreatives/~~NhY
 kreaturen/~~Vj # auto-added
 krebsende/~~NhYJ # +adjective reading (was noun-only)
@@ -90299,7 +90299,7 @@ kräckers/~~NhY
 kräftige/~~NhY
 kräftigem/~~NhY
 kräftigen/~~Vdifj78ecG # auto-added
-kräftiger/~~MhYOQRST
+kräftiger/~~MhYJr
 kräftiges/~~NhY
 kräftigst/~~hVOQRST
 kräftigt/~~NXhG
@@ -90602,7 +90602,7 @@ kurvender/~~MhY
 kurvendes/~~NhY
 kurvigem/~~NhY
 kurvigen/~~VfjG # auto-added
-kurviger/~~MhYOQRST
+kurviger/~~MhYJr
 kurvigere/~~NhY
 kurviges/~~NhY
 kurvigst/~~hVOQRST
@@ -90763,7 +90763,7 @@ körnender/~~MhY
 körnendes/~~NhY
 körnigem/~~NhY
 körnigen/~~VfjG # auto-added
-körniger/~~MhYOQRST
+körniger/~~MhYJr
 körnigere/~~NhY
 körniges/~~NhY
 körnigst/~~hVOQRST
@@ -90845,7 +90845,7 @@ kürzender/~~MhY
 kürzendes/~~NhY
 kürzerem/~~NhY
 kürzeren/~~Vfj # auto-added
-kürzerer/~~Jq - comprtve jectveOQRST
+kürzerer/~~Jq # comparative adjective
 kürzeres/~~NhY
 kürzeste/~~NhY
 kürzestem/~~NhY
@@ -91311,7 +91311,7 @@ lautiert/~~NXh
 lautlehre/~~NhY
 lautlosem/~~NhY
 lautlosen/~~VfjG # auto-added
-lautloser/~~MhYOQRST
+lautloser/~~MhYJr
 lautloses/~~NhY
 lautmale/~~NhY
 lautmalen/~~VdifjecG # auto-added
@@ -91387,7 +91387,7 @@ lebewesen/~~Vj # auto-added
 lebewohl/~~NhY
 lebhaftem/~~NhY
 lebhaften/~~VfjG # auto-added
-lebhafter/~~MhYOQRST
+lebhafter/~~MhYJr
 lebhaftes/~~NhY
 lebkuchen/~~XZ #  auto-added
 leblosem/~~NhY
@@ -91770,7 +91770,7 @@ libellen/~~Vfj # auto-added
 liberale/~~NhY
 liberalem/~~NhY
 liberalen/~~VfjG # auto-added
-liberaler/~~MhYOQRST
+liberaler/~~MhYJr
 liberales/~~NhY
 libertine/~~NhY
 libertins/~~NhY
@@ -91854,7 +91854,7 @@ lieblinge/~~NhY
 lieblings/~~NhY
 lieblosem/~~NhY
 lieblosen/~~VfjG # auto-added
-liebloser/~~MhYOQRST
+liebloser/~~MhYJr
 liebloses/~~NhY
 liebreiz/~~NhY0
 liebstem/~~NhY
@@ -92037,7 +92037,7 @@ listetest/~~hV
 listetet/~~NhYG
 listigem/~~NhY
 listigen/~~VfjG # auto-added
-listiger/~~MhYOQRST
+listiger/~~MhYJr
 listigere/~~NhY
 listiges/~~NhY
 listigst/~~hVOQRST
@@ -92119,7 +92119,7 @@ lockender/~~MhY
 lockendes/~~NhY
 lockerem/~~NhY
 locker/~~VejOQRSTUW # REPLACES lockeren
-lockerer/~~MhYOQRST
+lockerer/~~MhYJr
 lockerere/~~NhY
 lockeres/~~NhY
 lockernd/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -92465,7 +92465,7 @@ lufthalin/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 luftholen/~~Vj # auto-added
 luftigem/~~NhY
 luftigen/~~VfjG # auto-added
-luftiger/~~MhYOQRST
+luftiger/~~MhYJr
 luftigere/~~NhY
 luftiges/~~NhY
 luftigst/~~hVOQRST
@@ -92513,14 +92513,14 @@ lupfendes/~~NhY
 lupftest/~~NhY
 lustigem/~~NhY
 lustigen/~~VfjG # auto-added
-lustiger/~~MhYOQRST
+lustiger/~~MhYJr
 lustigere/~~NhY
 lustiges/~~NhY
 lustigst/~~hVOQRST
 lustigste/~~NhY
 lustlosem/~~NhY
 lustlosen/~~VfjG # auto-added
-lustloser/~~MhYOQRST
+lustloser/~~MhYJr
 lustloses/~~NhY
 lustreich/~~NhYUW
 lustvolle/~~NhY
@@ -92607,7 +92607,7 @@ ländliche/~~NhY
 längelang/~~NhY
 längerem/~~NhY
 längeren/~~Vfj # auto-added
-längerer/~~Jq - comprtve jectveOQRST
+längerer/~~Jq # comparative adjective
 längeres/~~NhY
 längliche/~~NhY
 längsdeck/~~NhY
@@ -92628,7 +92628,7 @@ lärmender/~~MhY
 lärmendes/~~NhY
 lärmigem/~~NhY
 lärmigen/~~VfjG # auto-added
-lärmiger/~~MhYOQRST
+lärmiger/~~MhYJr
 lärmigere/~~NhY
 lärmiges/~~NhY
 lärmigst/~~hVOQRST
@@ -92637,7 +92637,7 @@ lärmtest/~~NhY
 lärmvolle/~~NhY
 lässigem/~~NhY
 lässigen/~~VfjG # auto-added
-lässiger/~~MhYOQRST
+lässiger/~~MhYJr
 lässigere/~~NhY
 lässiges/~~NhY
 lässigst/~~hVOQRST
@@ -92653,7 +92653,7 @@ lästertet/~~NhYG
 lästerung/~~FhY
 lästigem/~~NhY
 lästigen/~~VfjG # auto-added
-lästiger/~~MhYOQRST
+lästiger/~~MhYJr
 lästigere/~~NhY
 lästiges/~~NhY
 lästigst/~~hVOQRST
@@ -92708,7 +92708,7 @@ löhntest/~~NhY
 löhnungen/~~Vj # auto-added
 lösbarem/~~NhY
 lösbaren/~~VfjG # auto-added
-lösbarer/~~MhYOQRST
+lösbarer/~~MhYJr
 lösbarere/~~NhY
 lösbares/~~NhY
 lösbarst/~~hVOQRST
@@ -92731,7 +92731,7 @@ lösezeit/~~NhY
 lösliche/~~NhY
 löslichem/~~NhY
 löslichen/~~XZG #  auto-added
-löslicher/~~MhYOQRST
+löslicher/~~MhYJr
 lösliches/~~NhY
 löslichst/~~NhYOQRST
 lössboden/~~Vj # auto-added
@@ -92789,7 +92789,7 @@ lüpftest/~~NhY
 lüsterne/~~NhY
 lüsternem/~~NhY
 lüsternen/~~VfjG # auto-added
-lüsterner/~~MhYOQRST
+lüsterner/~~MhYJr
 lüsternes/~~NhY
 lüttichs/~~NhY
 maasland/~~NhY0
@@ -92822,13 +92822,13 @@ mafiaboss/~~NhY0
 mafiasaga/~~NhY
 mafiosem/~~NhY
 mafiosen/~~VfjG # auto-added
-mafioser/~~MhYOQRST
+mafioser/~~MhYJr
 mafiosere/~~NhY
 mafioses/~~NhY
 mafiosest/~~hVOQRST
 mafiösem/~~NhY
 mafiösen/~~VfjG # auto-added
-mafiöser/~~MhYOQRST
+mafiöser/~~MhYJr
 mafiösere/~~NhY
 mafiöses/~~NhY
 mafiösest/~~hVOQRST
@@ -92983,7 +92983,7 @@ majorität/~~NhY
 makabere/~~NhY
 makaberem/~~NhY
 makaberen/~~VfjG # auto-added
-makaberer/~~MhYOQRST
+makaberer/~~MhYJr
 makaberes/~~NhY
 makabrem/~~NhY
 makabren/~~Vfj # auto-added
@@ -93182,7 +93182,7 @@ mariniert/~~NhYOQRSTG
 marisken/~~Vfj # auto-added
 markantem/~~NhY
 markanten/~~VfjG # auto-added
-markanter/~~MhYOQRST
+markanter/~~MhYJr
 markantes/~~NhY
 markbein/~~NhY
 markbeins/~~NhY
@@ -93312,7 +93312,7 @@ massiger/~~MhY
 massiges/~~NhY
 massivem/~~NhY
 massiven/~~VfjG # auto-added
-massiver/~~MhYOQRST
+massiver/~~MhYJr
 massivere/~~NhY
 massives/~~NhY
 massivste/~~NhY
@@ -93540,7 +93540,7 @@ megavolt/~~NhY
 megawatt/~~NhY
 mehligem/~~NhY
 mehligen/~~VfjG # auto-added
-mehliger/~~MhYOQRST
+mehliger/~~MhYJr
 mehligere/~~NhY
 mehliges/~~NhY
 mehligst/~~hVOQRST
@@ -93818,7 +93818,7 @@ michigan/~~NhY
 michigans/~~NhY
 mickrigem/~~NhY
 mickrigen/~~VfjG # auto-added
-mickriger/~~MhYOQRST
+mickriger/~~MhYJr
 mickriges/~~NhY
 miefbude/~~NhY
 miefbuden/~~Vfj # auto-added
@@ -93878,7 +93878,7 @@ milchiges/~~NhY
 milchling/~~MhY
 milchweiß/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 milderem/~~NhY
-milder/~~VejOQRST # REPLACES milderen
+milder/~~VejJr # REPLACES milderen
 milderer/~~MhY
 milderes/~~NhY
 mildernd/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -93923,7 +93923,7 @@ minarett/~~NhY
 mindanao/~~Nbh
 minderem/~~NhY
 minder/~~VejOQRST # REPLACES minderen
-minderer/~~Jq - comprtve jectveOQRST
+minderer/~~Jq # comparative adjective
 minderes/~~NhY
 mindernd/~~NhYJOQRST # +adjective reading (was noun-only)
 mindernde/~~NhYJ # +adjective reading (was noun-only)
@@ -94551,7 +94551,7 @@ modemtyp/~~NhY # auto-added
 modemtyps/~~NhY
 moderatem/~~NhY
 moderaten/~~VfjG # auto-added
-moderater/~~MhYOQRST
+moderater/~~MhYJr
 moderates/~~NhY
 moderator/~~NhY
 moderiere/~~NhY
@@ -94567,7 +94567,7 @@ modernder/~~MhY
 moderndes/~~NhY
 modernem/~~NhY
 modernen/~~VfjG # auto-added
-moderner/~~MhYOQRST
+moderner/~~MhYJr
 modernere/~~NhYJ # +adjective reading (was noun-only)
 modernes/~~NhY
 modernste/~~NhY
@@ -94640,7 +94640,7 @@ moleküls/~~NhY
 molkerei/~~NhY
 molligem/~~NhY
 molligen/~~VfjG # auto-added
-molliger/~~MhYOQRST
+molliger/~~MhYJr
 molligere/~~NhY
 molliges/~~NhY
 molligste/~~NhY
@@ -94834,7 +94834,7 @@ morasten/~~Vfj # auto-added
 morastes/~~NhY
 morbidem/~~NhY
 morbiden/~~VfjG # auto-added
-morbider/~~MhYOQRST
+morbider/~~MhYJr
 morbidere/~~NhY
 morbides/~~NhY
 morbidste/~~NhY
@@ -94956,7 +94956,7 @@ muffelten/~~VifjG # auto-added
 muffeltet/~~NhYG
 muffigem/~~NhY
 muffigen/~~VfjG # auto-added
-muffiger/~~MhYOQRST
+muffiger/~~MhYJr
 muffigere/~~NhY
 muffiges/~~NhY
 muffigste/~~NhY
@@ -95003,7 +95003,7 @@ munkelten/~~VifjG # auto-added
 munkeltet/~~NhYG
 munterem/~~NhY
 munter/~~VejOQRSTUW # REPLACES munteren
-munterer/~~MhYOQRST
+munterer/~~MhYJr
 munterere/~~NhY
 munteres/~~NhY
 munterste/~~NhY
@@ -95088,7 +95088,7 @@ mutigster/~~MhY
 mutigstes/~~NhY
 mutlosem/~~NhY
 mutlosen/~~VfjG # auto-added
-mutloser/~~MhYOQRST
+mutloser/~~MhYJr
 mutlosere/~~NhY
 mutloses/~~NhY
 mutlosest/~~hVOQRST
@@ -95140,7 +95140,7 @@ mäanders/~~NhY
 mäandert/~~NXhG
 mächtigem/~~NhY
 mächtigen/~~VfjG # auto-added
-mächtiger/~~MhYOQRST
+mächtiger/~~MhYJr
 mächtiges/~~NhY
 mädchens/~~NhY
 mähbalken/~~Vj # auto-added
@@ -95263,7 +95263,7 @@ müffelst/~~hV
 müffelten/~~Vj # auto-added
 mühelosem/~~NhY
 mühelosen/~~VfjG # auto-added
-müheloser/~~MhYOQRST
+müheloser/~~MhYJr
 müheloses/~~NhY
 mühendem/~~NhY
 mühender/~~MhY
@@ -95664,7 +95664,7 @@ namenvase/~~NhY
 namenwort/~~NhY0
 namhaftem/~~NhY
 namhaften/~~VfjG # auto-added
-namhafter/~~MhYOQRST
+namhafter/~~MhYJr
 namhaftes/~~NhY
 namibier/~~MhY
 namibiern/~~Vj # auto-added
@@ -95765,7 +95765,7 @@ nebelfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 nebelgrau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 nebeligem/~~NhY
 nebeligen/~~VfjG # auto-added
-nebeliger/~~MhYOQRST
+nebeliger/~~MhYJr
 nebeliges/~~NhY
 nebelten/~~VifjG # auto-added
 nebeltest/~~hV
@@ -95777,7 +95777,7 @@ nebenher/~~MhY
 nebenhin/~~NhY
 nebligem/~~NhY
 nebligen/~~VfjG # auto-added
-nebliger/~~MhYOQRST
+nebliger/~~MhYJr
 nebligere/~~NhY
 nebliges/~~NhY
 nebligste/~~NhY
@@ -95803,7 +95803,7 @@ negation/~~NhY
 negative/~~NhY
 negativem/~~NhY
 negativen/~~VfjG # auto-added
-negativer/~~MhYOQRST
+negativer/~~MhYJr
 negatives/~~NhY
 negativs/~~NhY
 negerlein/~~XZ #  auto-added
@@ -95903,14 +95903,14 @@ nervender/~~MhY
 nervendes/~~NhY
 nervigem/~~NhY
 nervigen/~~VfjG # auto-added
-nerviger/~~MhYOQRST
+nerviger/~~MhYJr
 nervigere/~~NhY
 nerviges/~~NhY
 nervigste/~~NhY
 nervtest/~~NhY
 nervösem/~~NhY
 nervösen/~~VfjG # auto-added
-nervöser/~~MhYOQRST
+nervöser/~~MhYJr
 nervösere/~~NhY
 nervöses/~~NhY
 nervösest/~~hVOQRST
@@ -96011,7 +96011,7 @@ neustens/~~NhY
 neutrale/~~NhY
 neutralem/~~NhY
 neutralen/~~VfjG # auto-added
-neutraler/~~MhYOQRST
+neutraler/~~MhYJr
 neutrales/~~NhY
 neutrino/~~Nbh
 neutronen/~~Vj # auto-added
@@ -96210,7 +96210,7 @@ nordrhein/~~NhY
 nordwärts/~~NhY
 normalem/~~NhY
 normalen/~~VfjG # auto-added
-normaler/~~MhYOQRST
+normaler/~~MhYJr
 normalere/~~NhY
 normales/~~NhY
 normalste/~~NhY
@@ -96370,7 +96370,7 @@ nutzendes/~~NhY
 nutzerin/~~NhY
 nutzlosem/~~NhY
 nutzlosen/~~VfjG # auto-added
-nutzloser/~~MhYOQRST
+nutzloser/~~MhYJr
 nutzloses/~~NhY
 nutznieße/~~NhY
 nutznießt/~~NhY
@@ -96556,7 +96556,7 @@ obsoletes/~~NhY
 obstinat/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 obszönem/~~NhY
 obszönen/~~Vfj # auto-added
-obszöner/~~MhYOQRST
+obszöner/~~MhYJr
 obszönere/~~NhY
 obszönes/~~NhY
 obszönste/~~NhY
@@ -96842,7 +96842,7 @@ ordiniere/~~NhY
 ordiniert/~~NhYOQRSTG
 ordinärem/~~NhY
 ordinären/~~VfjG # auto-added
-ordinärer/~~MhYOQRST
+ordinärer/~~MhYJr
 ordinäres/~~NhY
 ordnende/~~NhYJ # +adjective reading (was noun-only)
 ordnendem/~~NhY
@@ -97167,7 +97167,7 @@ pappender/~~MhY
 pappendes/~~NhY
 pappigem/~~NhY
 pappigen/~~VfjG # auto-added
-pappiger/~~MhYOQRST
+pappiger/~~MhYJr
 pappigere/~~NhY
 pappiges/~~NhY
 pappigste/~~NhY
@@ -97185,7 +97185,7 @@ paradiese/~~NhY
 paradigma/~~NhY
 paradoxem/~~NhY
 paradoxen/~~VfjG # auto-added
-paradoxer/~~MhYOQRST
+paradoxer/~~MhYJr
 paradoxes/~~NhY
 paradoxie/~~NhY
 paradoxon/~~NhY
@@ -97291,7 +97291,7 @@ passieren/~~VdifjecG # auto-added
 passiert/~~NXhG
 passivem/~~NhY
 passiven/~~VfjG # auto-added
-passiver/~~MhYOQRST
+passiver/~~MhYJr
 passivere/~~NhY
 passives/~~NhY
 passivste/~~NhY
@@ -97481,7 +97481,7 @@ pentoxyds/~~NhY
 peperoni/~~NhY
 peppigem/~~NhY
 peppigen/~~VfjG # auto-added
-peppiger/~~MhYOQRST
+peppiger/~~MhYJr
 peppigere/~~NhY
 peppiges/~~NhY
 peppigste/~~NhY
@@ -97491,11 +97491,11 @@ perborat/~~NXh
 perborats/~~NhY
 perfektem/~~NhY
 perfekten/~~VfjG # auto-added
-perfekter/~~MhYOQRST
+perfekter/~~MhYJr
 perfektes/~~NhY
 perfidem/~~NhY
 perfiden/~~VfjG # auto-added
-perfider/~~MhYOQRST
+perfider/~~MhYJr
 perfidere/~~NhY
 perfides/~~NhY
 perfidie/~~NhY
@@ -97580,7 +97580,7 @@ peruanern/~~Vj # auto-added
 peruaners/~~NhY
 perversem/~~NhY
 perversen/~~VfjG # auto-added
-perverser/~~MhYOQRST
+perverser/~~MhYJr
 perverses/~~NhY
 perücken/~~Vfj # auto-added
 pessaren/~~Vfj # auto-added
@@ -97878,7 +97878,7 @@ pigmentes/~~NhY
 pigments/~~NhY
 pikantem/~~NhY
 pikanten/~~VfjG # auto-added
-pikanter/~~MhYOQRST
+pikanter/~~MhYJr
 pikantere/~~NhY
 pikantes/~~NhY
 pikantest/~~hVOQRST
@@ -98057,7 +98057,7 @@ plankton/~~NhY
 planktons/~~NhY
 planlosem/~~NhY
 planlosen/~~VfjG # auto-added
-planloser/~~MhYOQRST
+planloser/~~MhYJr
 planloses/~~NhY
 plansche/~~NhY
 planschen/~~XZdfijecG #  auto-added
@@ -98439,7 +98439,7 @@ popsänger/~~MhY
 populist/~~NhY
 populärem/~~NhY
 populären/~~VfjG # auto-added
-populärer/~~MhYOQRST
+populärer/~~MhYJr
 populäres/~~NhY
 porenfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 porentief/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -98491,7 +98491,7 @@ positions/~~NhY
 positive/~~NhY
 positivem/~~NhY
 positiven/~~VfjG # auto-added
-positiver/~~MhYOQRST
+positiver/~~MhYJr
 positives/~~NhY
 positron/~~NhY
 positrone/~~NhY
@@ -98521,7 +98521,7 @@ postumes/~~NhY
 potentat/~~NhY
 potentem/~~NhY
 potenten/~~VfjG # auto-added
-potenter/~~MhYOQRST
+potenter/~~MhYJr
 potentere/~~NhY
 potentes/~~NhY
 potentest/~~hVOQRST
@@ -98682,7 +98682,7 @@ pritschst/~~NhY
 pritscht/~~NXhG
 privatem/~~NhY
 privaten/~~VfjG # auto-added
-privater/~~MhYOQRST
+privater/~~MhYJr
 privatere/~~NhY
 privates/~~NhY
 privatest/~~hVOQRST
@@ -98718,7 +98718,7 @@ produzent/~~NhY
 profanbau/~~NhY0
 profanem/~~NhY
 profanen/~~VfjG # auto-added
-profaner/~~MhYOQRST
+profaner/~~MhYJr
 profanere/~~NhY
 profanes/~~NhY
 profanste/~~NhY
@@ -98835,7 +98835,7 @@ protzbau/~~Nbh
 protzende/~~NhYJ # +adjective reading (was noun-only)
 protzigem/~~NhY
 protzigen/~~VfjG # auto-added
-protziger/~~MhYOQRST
+protziger/~~MhYJr
 protziges/~~NhY
 protztest/~~NhY
 protztet/~~NhYG
@@ -98925,7 +98925,7 @@ prävalent/~~JOQRSTqh # retag: adjective (was ~~Nh)
 prävalenz/~~NhY
 präzisem/~~NhY
 präzisen/~~VfjG # auto-added
-präziser/~~MhYOQRST
+präziser/~~MhYJr
 präzisere/~~NhYJ # +adjective reading (was noun-only)
 präzises/~~NhY
 präzisest/~~hVOQRST
@@ -99373,7 +99373,7 @@ rabbiners/~~NhY
 rabenbein/~~NhY0
 rabiatem/~~NhY
 rabiaten/~~VfjG # auto-added
-rabiater/~~MhYOQRST
+rabiater/~~MhYJr
 rabiatere/~~NhY
 rabiates/~~NhY
 rabiatest/~~hVOQRST
@@ -99421,7 +99421,7 @@ radierung/~~FhY
 radikale/~~NhY
 radikalem/~~NhY
 radikalen/~~VfjG # auto-added
-radikaler/~~MhYOQRST
+radikaler/~~MhYJr
 radikales/~~NhY
 radikals/~~NhY
 radikulär/~~NhY
@@ -99597,7 +99597,7 @@ rarmachst/~~NhY
 rarmacht/~~NXhG
 rasantem/~~NhY
 rasanten/~~VfjG # auto-added
-rasanter/~~MhYOQRST
+rasanter/~~MhYJr
 rasantere/~~NhY
 rasantes/~~NhY
 rasantest/~~hVOQRST
@@ -99640,7 +99640,7 @@ rasseltet/~~NhYG
 rasserein/~~NhY
 rassigem/~~NhY
 rassigen/~~VfjG # auto-added
-rassiger/~~MhYOQRST
+rassiger/~~MhYJr
 rassigere/~~NhY
 rassiges/~~NhY
 rassigste/~~NhY
@@ -100090,7 +100090,7 @@ regresses/~~NhY
 regressor/~~NhY
 regsamem/~~NhY
 regsamen/~~VfjG # auto-added
-regsamer/~~MhYOQRST
+regsamer/~~MhYJr
 regsamere/~~NhY
 regsames/~~NhY
 regsamste/~~NhY
@@ -100377,7 +100377,7 @@ reizkern/~~Vj # auto-added
 reizkers/~~NhY
 reizlosem/~~NhY
 reizlosen/~~VfjG # auto-added
-reizloser/~~MhYOQRST
+reizloser/~~MhYJr
 reizloses/~~NhY
 reizstark/~~NhY
 reiztest/~~NhY
@@ -100436,7 +100436,7 @@ relation/~~NhY
 relative/~~NhY
 relativem/~~NhY
 relativen/~~VfjG # auto-added
-relativer/~~MhYOQRST
+relativer/~~MhYJr
 relatives/~~NhY
 relaunche/~~NhY
 relauncht/~~NhY
@@ -100630,7 +100630,7 @@ retweeten/~~Vj # auto-added
 retweetet/~~NhY
 reuelosem/~~NhY
 reuelosen/~~VfjG # auto-added
-reueloser/~~MhYOQRST
+reueloser/~~MhYJr
 reueloses/~~NhY
 reuevolle/~~NhY
 reuigere/~~NhY
@@ -100755,7 +100755,7 @@ rieseltet/~~NhYG
 riesenalk/~~NhY
 riesigem/~~NhY
 riesigen/~~VfjG # auto-added
-riesiger/~~MhYOQRST
+riesiger/~~MhYJr
 riesigere/~~NhY
 riesiges/~~NhY
 riesigste/~~NhY
@@ -100806,7 +100806,7 @@ risalits/~~NhY
 risikoarm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 riskantem/~~NhY
 riskanten/~~VfjG # auto-added
-riskanter/~~MhYOQRST
+riskanter/~~MhYJr
 riskantes/~~NhY
 riskiere/~~NhY
 riskieren/~~VdifjecG # auto-added
@@ -100821,7 +100821,7 @@ rissfeste/~~NhY
 rissfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 rissigem/~~NhY
 rissigen/~~VfjG # auto-added
-rissiger/~~MhYOQRST
+rissiger/~~MhYJr
 rissigere/~~NhY
 rissiges/~~NhY
 rissigste/~~NhY
@@ -100861,7 +100861,7 @@ robotern/~~Vj # auto-added
 roboters/~~NhY
 robustem/~~NhY
 robusten/~~VfjG # auto-added
-robuster/~~MhYOQRST
+robuster/~~MhYJr
 robustere/~~NhY
 robustes/~~NhY
 rochaden/~~Vfj # auto-added
@@ -101003,7 +101003,7 @@ rostfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 rostgelb/~~NXh
 rostigem/~~NhY
 rostigen/~~VfjG # auto-added
-rostiger/~~MhYOQRST
+rostiger/~~MhYJr
 rostigere/~~NhY
 rostiges/~~NhY
 rostigste/~~NhY
@@ -101170,7 +101170,7 @@ rufendes/~~NhY
 rugbyfeld/~~NhY0a
 ruhelosem/~~NhY
 ruhelosen/~~VfjG # auto-added
-ruheloser/~~MhYOQRST
+ruheloser/~~MhYJr
 ruheloses/~~NhY
 ruhendem/~~NhY
 ruhender/~~MhY
@@ -101191,7 +101191,7 @@ ruhmestat/~~NhY
 ruhmgeil/~~NXh
 ruhmlosem/~~NhY
 ruhmlosen/~~VfjG # auto-added
-ruhmloser/~~MhYOQRST
+ruhmloser/~~MhYJr
 ruhmloses/~~NhY
 ruhmreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 ruhmsucht/~~NhY
@@ -101401,7 +101401,7 @@ rupfendes/~~NhY
 rupftest/~~NhY
 ruppigem/~~NhY
 ruppigen/~~VfjG # auto-added
-ruppiger/~~MhYOQRST
+ruppiger/~~MhYJr
 ruppigere/~~NhY
 ruppiges/~~NhY
 ruppigste/~~NhY
@@ -101653,7 +101653,7 @@ rüstetest/~~hV
 rüstetet/~~NhYG
 rüstigem/~~NhY
 rüstigen/~~VfjG # auto-added
-rüstiger/~~MhYOQRST
+rüstiger/~~MhYJr
 rüstigere/~~NhY
 rüstiges/~~NhY
 rüstigste/~~NhY
@@ -101839,7 +101839,7 @@ salonjury/~~NhY
 salonlöwe/~~NhY
 saloppem/~~NhY
 saloppen/~~VfjG # auto-added
-salopper/~~MhYOQRST
+salopper/~~MhYJr
 saloppere/~~NhY
 saloppes/~~NhY
 saloppste/~~NhY
@@ -101872,7 +101872,7 @@ salzions/~~NhY
 salzlauge/~~NhY
 salzlosem/~~NhY
 salzlosen/~~VfjG # auto-added
-salzloser/~~MhYOQRST
+salzloser/~~MhYJr
 salzloses/~~NhY
 salznass/~~NXh
 salzsauer/~~MhYJ # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -102406,7 +102406,7 @@ schichtet/~~NhYG
 schickem/~~NhY
 schick/~~VejOQRSTUW # REPLACES schicken
 schickens/~~NhY
-schicker/~~MhYOQRST
+schicker/~~MhYJr
 schickere/~~NhY
 schickes/~~NhY
 schicktet/~~NhYG
@@ -102538,7 +102538,7 @@ schlafend/~~NhYJOQRST # +adjective reading (was noun-only)
 schlafes/~~NhY
 schlaffe/~~NhY
 schlaffem/~~NhY
-schlaffer/~~MhYOQRST
+schlaffer/~~MhYJr
 schlaffes/~~NhY
 schlagen/~~Vifj78c # auto-added
 schlagend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -102559,12 +102559,12 @@ schlangen/~~VifjG # auto-added
 schlangt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 schlankem/~~NhY
 schlanken/~~Vfj # auto-added
-schlanker/~~MhYOQRST
+schlanker/~~MhYJr
 schlankes/~~NhY
 schlappe/~~NhY
 schlappem/~~NhY
 schlappen/~~VdifjecG # auto-added
-schlapper/~~MhYOQRST
+schlapper/~~MhYJr
 schlappes/~~NhY
 schlappt/~~NXhG
 schlauche/~~NhY
@@ -102572,7 +102572,7 @@ schlauchs/~~NhY
 schlaucht/~~NhYG
 schlauem/~~NhY
 schlauen/~~VfjG # auto-added
-schlauer/~~MhYOQRST
+schlauer/~~MhYJr
 schlauere/~~NhY
 schlaues/~~NhY
 schlaufe/~~NhY
@@ -102639,7 +102639,7 @@ schliffs/~~NhY
 schlifft/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 schlimmem/~~NhY
 schlimmen/~~VfjG # auto-added
-schlimmer/~~rhOQRST  # adverb always
+schlimmer/~~rhJ # adverb always
 schlimmes/~~NhY
 schlinge/~~NhY
 schlingel/~~NhY
@@ -102788,7 +102788,7 @@ schmortet/~~NhYG
 schmucke/~~NhY
 schmuckem/~~NhY
 schmucken/~~Vfj # auto-added
-schmucker/~~MhYOQRST
+schmucker/~~MhYJr
 schmuckes/~~NhY
 schmucks/~~NhY
 schmuddle/~~NhY
@@ -103034,7 +103034,7 @@ schriften/~~Vj # auto-added
 schrille/~~NhY
 schrillem/~~NhY
 schrillen/~~VdifjecG # auto-added
-schriller/~~MhYOQRST
+schriller/~~MhYJr
 schrilles/~~NhY
 schrillt/~~NXhG
 schrimp/~~NhY
@@ -103047,7 +103047,7 @@ schritts/~~NhY
 schroffe/~~NhY
 schroffem/~~NhY
 schroffen/~~VfjG # auto-added
-schroffer/~~MhYOQRST
+schroffer/~~MhYJr
 schroffes/~~NhY
 schroten/~~Vj # auto-added
 schrotes/~~NhY
@@ -103073,7 +103073,7 @@ schrunden/~~Vj # auto-added
 schräge/~~NhY
 schrägem/~~NhY
 schräg/~~VejOQRSTUW # REPLACES schrägen
-schräger/~~MhYOQRST
+schräger/~~MhYJr
 schrägere/~~NhY
 schräges/~~NhY
 schräghin/~~NhY
@@ -103311,7 +103311,7 @@ schwort/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 schwule/~~NhY
 schwulem/~~NhY
 schwulen/~~VfjG # auto-added
-schwuler/~~MhYOQRST
+schwuler/~~MhYJr
 schwulere/~~NhY
 schwules/~~NhY
 schwulste/~~NhY
@@ -103332,7 +103332,7 @@ schwäble/~~NhY
 schwäche/~~NhY
 schwächel/~~NhY
 schwächen/~~XZdfij78ecG #  auto-added
-schwächer/~~MhYOQRST
+schwächer/~~MhYJr
 schwächle/~~NhYJ # +adjective reading (was noun-only)
 schwächt/~~NXhG
 schwämme/~~NhYs
@@ -103385,7 +103385,7 @@ schwört/~~NhYVG # +verb reading (was noun-only)
 schwüle/~~NhY
 schwülem/~~NhY
 schwülen/~~VfjG # auto-added
-schwüler/~~MhYOQRST
+schwüler/~~MhYJr
 schwülere/~~NhY
 schwüles/~~NhY
 schwülste/~~NhY
@@ -103687,7 +103687,7 @@ sehntest/~~NhY
 sehntet/~~NhYG
 seichtem/~~NhY
 seichten/~~VfjG # auto-added
-seichter/~~MhYOQRST
+seichter/~~MhYJr
 seichtere/~~NhY
 seichtes/~~NhY
 seichtest/~~hVOQRST
@@ -103793,7 +103793,7 @@ selenwert/~~NhY0
 selfies/~~NhY
 seligem/~~NhY
 seligen/~~VfjG # auto-added
-seliger/~~MhYOQRST
+seliger/~~MhYJr
 seligere/~~NhY
 seligerem/~~NhY
 seligeren/~~Vfj # auto-added
@@ -103869,7 +103869,7 @@ sengtest/~~NhY
 sengtet/~~NhYG
 senilem/~~NhY
 senilen/~~VfjG # auto-added
-seniler/~~MhYOQRST
+seniler/~~MhYJr
 senilere/~~NhY
 senilerem/~~NhY
 senileren/~~Vfj # auto-added
@@ -103964,7 +103964,7 @@ serinen/~~Vfj # auto-added
 serinrest/~~NhY0
 seriösem/~~NhY
 seriösen/~~VfjG # auto-added
-seriöser/~~MhYOQRST
+seriöser/~~MhYJr
 seriösere/~~NhY
 seriöses/~~NhY
 seriösest/~~hVOQRST
@@ -103989,7 +103989,7 @@ serviette/~~NhY
 servile/~~NhY
 servilem/~~NhY
 servilen/~~VfjG # auto-added
-serviler/~~MhYOQRST
+serviler/~~MhYJr
 servilere/~~NhY
 serviles/~~NhY
 servilste/~~NhY
@@ -104235,7 +104235,7 @@ sieztest/~~NhY
 sieztet/~~NhYG
 siffigem/~~NhY
 siffigen/~~VfjG # auto-added
-siffiger/~~MhYOQRST
+siffiger/~~MhYJr
 siffigere/~~NhY
 siffiges/~~NhY
 siffigste/~~NhY
@@ -104367,7 +104367,7 @@ sinnierst/~~hV
 sinniert/~~NXhG
 sinnigem/~~NhY
 sinnigen/~~VfjG # auto-added
-sinniger/~~MhYOQRST
+sinniger/~~MhYJr
 sinnigere/~~NhY
 sinniges/~~NhY
 sinnigste/~~NhY
@@ -104513,7 +104513,7 @@ skulptur/~~NhY
 skurrile/~~NhY
 skurrilem/~~NhY
 skurrilen/~~VfjG # auto-added
-skurriler/~~MhYOQRST
+skurriler/~~MhYJr
 skurriles/~~NhY
 skyline/~~NhY
 skylines/~~NhY
@@ -104622,7 +104622,7 @@ solenoids/~~NhY
 solepumpe/~~NhY
 solidem/~~NhY
 soliden/~~VfjG # auto-added
-solider/~~MhYOQRST
+solider/~~MhYJr
 solidere/~~NhY
 soliderem/~~NhY
 solideren/~~Vfj # auto-added
@@ -104667,7 +104667,7 @@ solvens/~~NhY
 solvent/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 solventem/~~NhY
 solventen/~~VfjG # auto-added
-solventer/~~MhYOQRST
+solventer/~~MhYJr
 solventes/~~NhY
 solvenz/~~NhY
 solvenzen/~~Vj # auto-added
@@ -104705,7 +104705,7 @@ sonnenarm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 sonnennah/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 sonnigem/~~NhY
 sonnigen/~~VfjG # auto-added
-sonniger/~~MhYOQRST
+sonniger/~~MhYJr
 sonnigere/~~NhY
 sonniges/~~NhY
 sonnigste/~~NhY
@@ -104886,7 +104886,7 @@ spaßendes/~~NhY
 spaßest/~~hV
 spaßigem/~~NhY
 spaßigen/~~VfjG # auto-added
-spaßiger/~~MhYOQRST
+spaßiger/~~MhYJr
 spaßigere/~~NhY
 spaßiges/~~NhY
 spaßigste/~~NhY
@@ -105076,7 +105076,7 @@ spitzelt/~~NXhG
 spitzem/~~NhY
 spitz/~~VejOQRSTUW # REPLACES spitzen
 spitzende/~~NhYJ # +adjective reading (was noun-only)
-spitzer/~~MhYOQRST
+spitzer/~~MhYJr
 spitzere/~~NhY
 spitzerem/~~NhY
 spitzeren/~~Vfj # auto-added
@@ -105127,7 +105127,7 @@ spontan/~~hJOQRSTUWq
 spontane/~~NhY
 spontanem/~~NhY
 spontanen/~~VfjG # auto-added
-spontaner/~~MhYOQRST
+spontaner/~~MhYJr
 spontanes/~~NhY
 spooler/~~MhY
 spoolers/~~NhY
@@ -105259,7 +105259,7 @@ sprängen/~~Vfj # auto-added
 spränget/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 sprödem/~~NhY
 spröden/~~VfjG # auto-added
-spröder/~~MhYOQRST
+spröder/~~MhYJr
 sprödere/~~NhY
 spröderem/~~NhY
 spröderen/~~Vfj # auto-added
@@ -105407,7 +105407,7 @@ stabform/~~NhY
 stabile/~~NhY
 stabilem/~~NhY
 stabilen/~~VfjG # auto-added
-stabiler/~~MhYOQRST
+stabiler/~~MhYJr
 stabilere/~~NhY
 stabiles/~~NhY
 stabilste/~~NhY
@@ -105562,7 +105562,7 @@ starletts/~~NhY
 starrem/~~NhY
 starr/~~Vej9OQRSTUW # REPLACES starren
 starrende/~~NhYJ # +adjective reading (was noun-only)
-starrer/~~MhYOQRST
+starrer/~~MhYJr
 starrere/~~NhY
 starrerem/~~NhY
 starreren/~~Vfj # auto-added
@@ -105734,7 +105734,7 @@ stehlende/~~NhYJ # +adjective reading (was noun-only)
 steifem/~~NhY
 steif/~~VejOQRSTUW # REPLACES steifen
 steifende/~~NhYJ # +adjective reading (was noun-only)
-steifer/~~MhYOQRST
+steifer/~~MhYJr
 steifere/~~NhY
 steiferem/~~NhY
 steiferen/~~Vfj # auto-added
@@ -105766,7 +105766,7 @@ steigst/~~hV
 steigung/~~FhY
 steilem/~~NhY
 steilen/~~VfjG # auto-added
-steiler/~~MhYOQRST
+steiler/~~MhYJr
 steilere/~~NhY
 steilerem/~~NhY
 steileren/~~Vfj # auto-added
@@ -105792,7 +105792,7 @@ steinhart/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 steinige/~~NhY
 steinigem/~~NhY
 steinigen/~~Vdifj78ecG # auto-added
-steiniger/~~MhYOQRST
+steiniger/~~MhYJr
 steiniges/~~NhY
 steinigst/~~hVOQRST
 steinigt/~~NXhG
@@ -105860,7 +105860,7 @@ stereoton/~~NhY
 sterile/~~NhY
 sterilem/~~NhY
 sterilen/~~VfjG # auto-added
-steriler/~~MhYOQRST
+steriler/~~MhYJr
 sterilere/~~NhY
 steriles/~~NhY
 sterilste/~~NhY
@@ -105883,7 +105883,7 @@ sterzes/~~NhY
 sterzle/~~NhY
 stetigem/~~NhY
 stetigen/~~VfjG # auto-added
-stetiger/~~MhYOQRST
+stetiger/~~MhYJr
 stetigere/~~NhY
 stetiges/~~NhY
 stetigste/~~NhY
@@ -106001,7 +106001,7 @@ stillem/~~NhY
 still/~~VejOQRSTUW # REPLACES stillen
 stillende/~~NhYJ # +adjective reading (was noun-only)
 stillens/~~NhY
-stiller/~~MhYOQRST
+stiller/~~MhYJr
 stillere/~~NhY
 stillerem/~~NhY
 stilleren/~~Vfj # auto-added
@@ -106150,7 +106150,7 @@ strafende/~~NhYJ # +adjective reading (was noun-only)
 straffem/~~NhY
 straff/~~VejOQRSTUW # REPLACES straffen
 straffens/~~NhY
-straffer/~~MhYOQRST
+straffer/~~MhYJr
 straffere/~~NhY
 straffes/~~NhY
 straffrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -106263,7 +106263,7 @@ streitet/~~NhYG
 streits/~~NhY
 strengem/~~NhY
 streng/~~VejOQRSTUW # REPLACES strengen
-strenger/~~MhYOQRST
+strenger/~~MhYJr
 strengere/~~NhY
 strenges/~~NhY
 strengste/~~NhY
@@ -106321,7 +106321,7 @@ striez/~~Vej # REPLACES striezen
 striezt/~~NXh
 striktem/~~NhY
 strikten/~~VfjG # auto-added
-strikter/~~MhYOQRST
+strikter/~~MhYJr
 striktere/~~NhY
 striktes/~~NhY
 striktest/~~hVOQRST
@@ -106451,7 +106451,7 @@ stummeln/~~Vj # auto-added
 stummels/~~NhY
 stummem/~~NhY
 stummen/~~VfjG # auto-added
-stummer/~~MhYOQRST
+stummer/~~MhYJr
 stummere/~~NhY
 stummerem/~~NhY
 stummeren/~~Vfj # auto-added
@@ -106468,7 +106468,7 @@ stumpen/~~Vj # auto-added
 stumpens/~~NhY
 stumpfem/~~NhY
 stumpf/~~VejOQRSTUW # REPLACES stumpfen
-stumpfer/~~MhYOQRST
+stumpfer/~~MhYJr
 stumpfere/~~NhY
 stumpfes/~~NhY
 stumpfs/~~NhY
@@ -106494,7 +106494,7 @@ stupendes/~~NhY
 stupide/~~NhY
 stupidem/~~NhY
 stupiden/~~VfjG # auto-added
-stupider/~~MhYOQRST
+stupider/~~MhYJr
 stupidere/~~NhY
 stupides/~~NhY
 stupidste/~~NhY
@@ -106597,7 +106597,7 @@ stärker/~~MhYOQRST
 stärkere/~~NhYJ # +adjective reading (was noun-only)
 stärkerem/~~NhY
 stärkeren/~~Vfj # auto-added
-stärkerer/~~Jq - comprtve jectveOQRST
+stärkerer/~~Jq # comparative adjective
 stärkeres/~~NhY
 stärkst/~~hVOQRST
 stärkste/~~NhYJ # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -106766,7 +106766,7 @@ substrats/~~NhY
 subtile/~~NhY
 subtilem/~~NhY
 subtilen/~~VfjG # auto-added
-subtiler/~~MhYOQRST
+subtiler/~~MhYJr
 subtilere/~~NhY
 subtiles/~~NhY
 subtilste/~~NhY
@@ -107141,7 +107141,7 @@ säumender/~~MhY
 säumendes/~~NhY
 säumigem/~~NhY
 säumigen/~~VfjG # auto-added
-säumiger/~~MhYOQRST
+säumiger/~~MhYJr
 säumigere/~~NhY
 säumiges/~~NhY
 säumigste/~~NhY
@@ -107497,7 +107497,7 @@ tapeziert/~~NhYOQRSTG
 tapfere/~~NhY
 tapferem/~~NhY
 tapferen/~~VfjG # auto-added
-tapferer/~~MhYOQRST
+tapferer/~~MhYJr
 tapferere/~~NhY
 tapferes/~~NhY
 tapferste/~~NhY
@@ -107774,7 +107774,7 @@ teigfarbe/~~NhY
 teighülle/~~NhY
 teigigem/~~NhY
 teigigen/~~VfjG # auto-added
-teigiger/~~MhYOQRST
+teigiger/~~MhYJr
 teigigere/~~NhY
 teigiges/~~NhY
 teigigste/~~NhY
@@ -108438,7 +108438,7 @@ tonking/~~NhY
 tonkings/~~NhY
 tonlosem/~~NhY
 tonlosen/~~VfjG # auto-added
-tonloser/~~MhYOQRST
+tonloser/~~MhYJr
 tonlosere/~~NhY
 tonloses/~~NhY
 tonlosest/~~hVOQRST
@@ -108834,7 +108834,7 @@ trausaals/~~NhY
 trausäle/~~NhY
 trausälen/~~Vfj # auto-added
 trautem/~~NhY
-trauter/~~MhYOQRST
+trauter/~~MhYJr
 trautere/~~NhY
 trauterem/~~NhY
 trauteren/~~Vfj # auto-added
@@ -109056,7 +109056,7 @@ trisomie/~~NhY
 trisomien/~~Vfj # auto-added
 tristem/~~NhY
 tristen/~~VfjG # auto-added
-trister/~~MhYOQRST
+trister/~~MhYJr
 tristere/~~NhY
 tristerem/~~NhY
 tristeren/~~Vfj # auto-added
@@ -109076,7 +109076,7 @@ triumphs/~~NhY
 triviale/~~NhY
 trivialem/~~NhY
 trivialen/~~VfjG # auto-added
-trivialer/~~MhYOQRST
+trivialer/~~MhYJr
 triviales/~~NhY
 trizeps/~~NhY
 trochlea/~~NhY
@@ -109173,7 +109173,7 @@ trunken/~~VjOQRSTUW # auto-added
 trunkene/~~NhY
 trunkenem/~~NhY
 trunkenen/~~VfjG # auto-added
-trunkener/~~MhYOQRST
+trunkener/~~MhYJr
 trunkenes/~~NhY
 trunkenst/~~hVOQRST
 truppen/~~Vfj # auto-added
@@ -109409,7 +109409,7 @@ tunnelten/~~VifjG # auto-added
 tunneltet/~~NhYG
 tuntigem/~~NhY
 tuntigen/~~VfjG # auto-added
-tuntiger/~~MhYOQRST
+tuntiger/~~MhYJr
 tuntigere/~~NhY
 tuntiges/~~NhY
 tuntigste/~~NhY
@@ -109573,7 +109573,7 @@ tätig/~~Vej9OQRSTUW # REPLACES tätigen
 tätigend/~~NhYJOQRST # +adjective reading (was noun-only)
 tätigende/~~NhYJ # +adjective reading (was noun-only)
 tätigens/~~NhY
-tätiger/~~MhYOQRST
+tätiger/~~MhYJr
 tätigere/~~NhY
 tätigerem/~~NhY
 tätigeren/~~Vfj # auto-added
@@ -109647,7 +109647,7 @@ töpfertet/~~NhYG
 töricht/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 törichtem/~~NhY
 törichten/~~VfjG # auto-added
-törichter/~~MhYOQRST
+törichter/~~MhYJr
 törichtes/~~NhY
 törinnen/~~Vj # auto-added
 törtchen/~~XZ #  auto-added
@@ -109763,7 +109763,7 @@ ulkender/~~MhY
 ulkendes/~~NhY
 ulkigem/~~NhY
 ulkigen/~~VfjG # auto-added
-ulkiger/~~MhYOQRST
+ulkiger/~~MhYJr
 ulkigere/~~NhY
 ulkigerem/~~NhY
 ulkigeren/~~Vfj # auto-added
@@ -111042,7 +111042,7 @@ unerwähnt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 unerzogen/~~VjOQRST # auto-added
 unfairem/~~NhY
 unfairen/~~VfjG # auto-added
-unfairer/~~MhYOQRST
+unfairer/~~MhYJr
 unfairere/~~NhY
 unfaires/~~NhY
 unfairste/~~NhY
@@ -111340,7 +111340,7 @@ unterböte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterdes/~~NhY
 unterem/~~NhY
 unteren/~~VfjG # auto-added
-unterer/~~MhYOQRST
+unterer/~~MhYJr
 unterere/~~NhY
 untererem/~~NhY
 untereren/~~Vfj # auto-added
@@ -111777,7 +111777,7 @@ verarm/~~Vej # REPLACES verarmen
 verarmens/~~NhY
 verarmt/~~hVOQRSTUWG # retag: finite verb form, was noun (corpus-mined)
 verarmtem/~~NhY
-verarmter/~~MhYOQRST
+verarmter/~~MhYJr
 verarmtes/~~NhY
 verarmtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 verarmung/~~FhY
@@ -111796,7 +111796,7 @@ veratmend/~~NhYJ # +adjective reading (was noun-only)
 verbale/~~NhY
 verbalem/~~NhY
 verbalen/~~VfjG # auto-added
-verbaler/~~MhYOQRST
+verbaler/~~MhYJr
 verbalere/~~NhY
 verbales/~~NhY
 verballre/~~NhY
@@ -113097,7 +113097,7 @@ verpöne/~~NhY
 verpön/~~Vej # REPLACES verpönen
 verpönt/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 verpöntem/~~NhY
-verpönter/~~MhYOQRST
+verpönter/~~MhYJr
 verpöntes/~~NhY
 verqualme/~~NhY
 verqualmt/~~NhYOQRSTG
@@ -113954,7 +113954,7 @@ virologin/~~NhY
 virtuos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 virtuosem/~~NhY
 virtuosen/~~VfjG # auto-added
-virtuoser/~~MhYOQRST
+virtuoser/~~MhYJr
 virtuoses/~~NhY
 virtuosin/~~NhY
 virulent/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -113991,7 +113991,7 @@ visköses/~~NhY
 visumfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 vitalem/~~NhY
 vitalen/~~VfjG # auto-added
-vitaler/~~MhYOQRST
+vitaler/~~MhYJr
 vitalere/~~NhY
 vitalerem/~~NhY
 vitaleren/~~Vfj # auto-added
@@ -114038,7 +114038,7 @@ vokales/~~NhY
 volatile/~~NhY
 volatilem/~~NhY
 volatilen/~~VfjG # auto-added
-volatiler/~~MhYOQRST
+volatiler/~~MhYJr
 volatiles/~~NhY
 voliere/~~NhY
 volieren/~~Vfj # auto-added
@@ -114669,7 +114669,7 @@ voyeurin/~~NhY
 voyeurs/~~NhY
 vulgärem/~~NhY
 vulgären/~~VfjG # auto-added
-vulgärer/~~MhYOQRST
+vulgärer/~~MhYJr
 vulgärere/~~NhY
 vulgäres/~~NhY
 vulgärste/~~NhY
@@ -114782,7 +114782,7 @@ wackeltet/~~NhYG
 wackere/~~NhY
 wackerem/~~NhY
 wackeren/~~VfjG # auto-added
-wackerer/~~MhYOQRST
+wackerer/~~MhYJr
 wackerere/~~NhY
 wackeres/~~NhY
 wackerste/~~NhY
@@ -114891,7 +114891,7 @@ waldgrün/~~NhY
 waldgrüne/~~NhY
 waldigem/~~NhY
 waldigen/~~VfjG # auto-added
-waldiger/~~MhYOQRST
+waldiger/~~MhYJr
 waldigere/~~NhY
 waldiges/~~NhY
 waldigste/~~NhY
@@ -115908,7 +115908,7 @@ weitchors/~~NhY
 weitere/~~NhYJ # +adjective reading (was noun-only)
 weiterem/~~NhY
 weiteren/~~Vfj # auto-added
-weiterer/~~JhOQRSTq # further (adjective)
+weiterer/~~Jhqr # further (adjective)
 weiteres/~~NhY
 weitergab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 weiterhin/~~hr
@@ -116036,7 +116036,7 @@ wendezugs/~~NhY
 wendezüge/~~NhY
 wendigem/~~NhY
 wendigen/~~VfjG # auto-added
-wendiger/~~MhYOQRST
+wendiger/~~MhYJr
 wendigere/~~NhY
 wendiges/~~NhY
 wendigste/~~NhY
@@ -116270,7 +116270,7 @@ widmungen/~~Vj # auto-added
 widmungs/~~NhY
 widrigem/~~NhY
 widrigen/~~VfjG # auto-added
-widriger/~~MhYOQRST
+widriger/~~MhYJr
 widrigere/~~NhY
 widriges/~~NhY
 widrigste/~~NhY
@@ -116340,7 +116340,7 @@ wildbrets/~~NhY
 wildcard/~~NhY
 wildcards/~~NhY
 wilderem/~~NhY
-wilder/~~VejOQRST # REPLACES wilderen
+wilder/~~VejJr # REPLACES wilderen
 wilderer/~~MhY
 wilderern/~~Vj # auto-added
 wilderers/~~NhY
@@ -116377,7 +116377,7 @@ willfuhrt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 willführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 willigem/~~NhY
 willig/~~Vej9OQRSTUW # REPLACES willigen
-williger/~~MhYOQRST
+williger/~~MhYJr
 willigere/~~NhY
 williges/~~NhY
 willigste/~~NhY
@@ -116414,7 +116414,7 @@ windendes/~~NhY
 windfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 windigem/~~NhY
 windigen/~~VfjG # auto-added
-windiger/~~MhYOQRST
+windiger/~~MhYJr
 windigere/~~NhY
 windiges/~~NhY
 windigste/~~NhY
@@ -116455,7 +116455,7 @@ winzers/~~NhY
 winzerzug/~~NhY0
 winzigem/~~NhY
 winzigen/~~VfjG # auto-added
-winziger/~~MhYOQRST
+winziger/~~MhYJr
 winzigere/~~NhY
 winziges/~~NhY
 winzigste/~~NhY
@@ -116597,7 +116597,7 @@ witzeltet/~~NhYG
 witzfigur/~~NhY
 witzigem/~~NhY
 witzigen/~~VfjG # auto-added
-witziger/~~MhYOQRST
+witziger/~~MhYJr
 witzigere/~~NhY
 witziges/~~NhY
 witzigste/~~NhY
@@ -116637,7 +116637,7 @@ wohlgemut/~~NhY
 wohlgetan/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 wohligem/~~NhY
 wohligen/~~VfjG # auto-added
-wohliger/~~MhYOQRST
+wohliger/~~MhYJr
 wohligere/~~NhY
 wohliges/~~NhY
 wohligste/~~NhY
@@ -116677,7 +116677,7 @@ wolfsburg/~~NhY
 wolhynien/~~Vj # auto-added
 wolkigem/~~NhY
 wolkigen/~~VfjG # auto-added
-wolkiger/~~MhYOQRST
+wolkiger/~~MhYJr
 wolkigere/~~NhY
 wolkiges/~~NhY
 wolkigste/~~NhY
@@ -116693,7 +116693,7 @@ wollenes/~~NhY
 wollens/~~NhY
 wolligem/~~NhY
 wolligen/~~VfjG # auto-added
-wolliger/~~MhYOQRST
+wolliger/~~MhYJr
 wolligere/~~NhY
 wolliges/~~NhY
 wolligste/~~NhY
@@ -116707,7 +116707,7 @@ woneben/~~Vj # auto-added
 wonnevoll/~~NhY
 wonnigem/~~NhY
 wonnigen/~~VfjG # auto-added
-wonniger/~~MhYOQRST
+wonniger/~~MhYJr
 wonnigere/~~NhY
 wonniges/~~NhY
 wonnigste/~~NhY
@@ -116785,7 +116785,7 @@ wummert/~~NXhG
 wummerten/~~VifjG # auto-added
 wummertet/~~NhYG
 wunderem/~~NhY
-wunder/~~VejOQRST # REPLACES wunderen
+wunder/~~VejJr # REPLACES wunderen
 wunderer/~~MhY
 wunderes/~~NhY
 wundern/~~VdifjeG # auto-added
@@ -117007,7 +117007,7 @@ würdigem/~~NhY
 würdig/~~Vej9OQRSTUW # REPLACES würdigen
 würdigend/~~NhYJOQRST # +adjective reading (was noun-only)
 würdigens/~~NhY
-würdiger/~~MhYOQRST
+würdiger/~~MhYJr
 würdigere/~~NhY
 würdiges/~~NhY
 würdigst/~~hVOQRST
@@ -117047,7 +117047,7 @@ würzendes/~~NhY
 würzest/~~hV
 würzigem/~~NhY
 würzigen/~~VfjG # auto-added
-würziger/~~MhYOQRST
+würziger/~~MhYJr
 würzigere/~~NhY
 würziges/~~NhY
 würzigste/~~NhY
@@ -117090,7 +117090,7 @@ wüstungen/~~Vj # auto-added
 wütende/~~NhYJ # +adjective reading (was noun-only)
 wütendem/~~NhY
 wütenden/~~Vfj # auto-added
-wütender/~~MhYOQRST
+wütender/~~MhYJr
 wütendere/~~NhY
 wütendes/~~NhY
 wütendste/~~NhY
@@ -117409,7 +117409,7 @@ zentners/~~NhY
 zentrale/~~NhY
 zentralem/~~NhY
 zentralen/~~VfjG # auto-added
-zentraler/~~MhYOQRST
+zentraler/~~MhYJr
 zentrales/~~NhY
 zentren/~~Vj # auto-added
 zentrier/~~MhY
@@ -118070,7 +118070,7 @@ zopfnests/~~NhY
 zornesrot/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 zornigem/~~NhY
 zornigen/~~VfjG # auto-added
-zorniger/~~MhYOQRST
+zorniger/~~MhYJr
 zornigere/~~NhY
 zorniges/~~NhY
 zornigste/~~NhY
@@ -118400,7 +118400,7 @@ zugetan/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zugetane/~~NhY
 zugetanem/~~NhY
 zugetanen/~~VfjG # auto-added
-zugetaner/~~MhYOQRST
+zugetaner/~~MhYJr
 zugetanes/~~NhY
 zugeteilt/~~hVOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 zugetraut/~~NhY
@@ -119325,7 +119325,7 @@ zweiteile/~~NhY
 zweiteilt/~~NhYG
 zweitem/~~NhY
 zweitens/~~hJOQRSTq
-zweiter/~~MhYOQRST
+zweiter/~~MhYJr
 zweitere/~~NhYJ # +adjective (igerman98 SFX A) reading (was noun-only)
 zweiterem/~~NhY
 zweiteren/~~Vfj # auto-added
@@ -119506,7 +119506,7 @@ zögernd/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zögernde/~~NhY
 zögerndem/~~NhY
 zögernden/~~Vfj # auto-added
-zögernder/~~MhYOQRST
+zögernder/~~MhYJr
 zögerndes/~~NhY
 zögerns/~~NhY
 zögerten/~~VifjG # auto-added
@@ -119547,7 +119547,7 @@ züchtetet/~~NhYG
 züchtige/~~NhY
 züchtigem/~~NhY
 züchtigen/~~Vdifj78ecG # auto-added
-züchtiger/~~MhYOQRST
+züchtiger/~~MhYJr
 züchtiges/~~NhY
 züchtigst/~~hVOQRST
 züchtigt/~~NXhG
@@ -120291,7 +120291,7 @@ zürntet/~~NhYG
 übliche/~~NhY
 üblichem/~~NhY
 üblichen/~~XZG #  auto-added
-üblicher/~~MhYOQRST
+üblicher/~~MhYJr
 üblichere/~~NhY
 übliches/~~NhY
 üblichst/~~NhYOQRST
@@ -120309,7 +120309,7 @@ zürntet/~~NhYG
 übungen/~~Vj # auto-added
 üppigem/~~NhY
 üppigen/~~VfjG # auto-added
-üppiger/~~MhYOQRST
+üppiger/~~MhYJr
 üppigere/~~NhY
 üppigerem/~~NhY
 üppigeren/~~Vfj # auto-added
@@ -154710,7 +154710,7 @@ konzilspapst/~~NhY0
 konzilsvater/~~NhY
 konzilsväter/~~NhY
 kooperations/~~NhY
-kooperativer/~~NhYOQRST
+kooperativer/~~NhYJr
 koordination/~~FhY
 koordinieren/~~Nhdfij78ecG
 kopfzustehen/~~Nh
@@ -168964,7 +168964,7 @@ kurioserweise/~~FhY
 kursgesichert/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 kursivschrift/~~NhY
 kurzatmigkeit/~~FhY
-kurzfristiger/~~NhYOQRST
+kurzfristiger/~~NhYJr
 kurzgeschoren/~~NhOQRST
 kurzgriffelig/~~RJOQRSTqh
 kurzlebigkeit/~~FhY
@@ -206569,7 +206569,7 @@ Schuhunternehmen/~~Nh #compound noun
 wurde/~~Vijs # verb (past tense of werden)
 Rosenheim/~~NhY #proper noun, city
 Bayern/~~NhY #proper noun, state
-hochwertige/~~JOQRSTUq #adjective
+hochwertige/~~JUqr #adjective
 Damenschuhe/~~FhY #compound noun
 Schuhen/~~Nh #dative plural of Schuh
 Pumps/~~MhY #plural noun
@@ -215229,7 +215229,7 @@ weide/~~NY
 weise/~~NY9UW
 werbe/~~NY
 zeige/~~NY
-leise/~~JOQRSTUWq
+leise/~~JUWqr
 magst/~~V
 riete/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 rätst/~~V
@@ -215239,9 +215239,9 @@ ehest/~~JOQRSTq
 feist/~~JOQRSTq
 gipse/~~NY
 grade/~~NY
-linke/~~JOQRSTq
+linke/~~Jqr
 musst/~~V
-neuer/~~NYOQRST
+neuer/~~NYJr
 pimpe/~~NY
 safte/~~NY
 tagge/~~NY
@@ -215321,7 +215321,7 @@ presse/~~NY
 punkte/~~NY
 schule/~~NY
 stille/~~NY
-weiter/~~JOQRSTUWq # retag: adjective, was noun/verb (corpus-mined)
+weiter/~~JUWqr # retag: adjective, was noun/verb (corpus-mined)
 dreist/~~JOQRSTUWq
 dubios/~~JOQRSTUWq
 giltst/~~V
@@ -215330,19 +215330,19 @@ hältst/~~V # retag: verb form, was noun (corpus-mined)
 stieße/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 blaffe/~~NY
 cachte/~~NY
-greise/~~JOQRSTq
+greise/~~Jqr
 kackte/~~NY
 kannst/~~Vj
 kiekse/~~NY
 luchse/~~NY
 längst/~~JOQRSTq
 mampfe/~~NY
-nullte/~~JOQRSTq
+nullte/~~Jqr
 pimpte/~~NY
 ploppe/~~NY
 shoppe/~~NY
 spawne/~~NY
-valide/~~JOQRSTq
+valide/~~Jqr
 willst/~~V
 addest/~~V
 addete/~~NY
@@ -215395,7 +215395,7 @@ unwerte/~~NY
 vereins/~~NY
 vergabe/~~NY
 fichtst/~~V
-präzise/~~JOQRSTUWq9
+präzise/~~JUWq9r
 trittst/~~V
 abkalbe/~~NY
 bespare/~~NY
@@ -215468,7 +215468,7 @@ erkannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 ernannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 erzeigte/~~NY
 evidiere/~~NY
-falscher/~~JOQRSTq
+falscher/~~Jqr
 feintune/~~NY
 gedachte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 guthieße/~~NY
@@ -215537,7 +215537,7 @@ einkühlte/~~NY
 einlangte/~~NY
 enthältst/~~NY
 entsandte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-ethischer/~~JOQRSTq
+ethischer/~~Jqr
 evidierte/~~NY
 herhältst/~~NY
 hinhältst/~~NY
@@ -215626,8 +215626,8 @@ hochhältst/~~NY
 innehältst/~~NY
 kurzhältst/~~NY
 lostrittst/~~NY
-regionaler/~~JOQRSTq
-sachlicher/~~JOQRSTq
+regionaler/~~Jqr
+sachlicher/~~Jqr
 tottrittst/~~NY
 vortrittst/~~NY
 wachhältst/~~NY
@@ -215686,7 +215686,7 @@ standhältst/~~NY
 steifhältst/~~NY
 stillhältst/~~NY
 umhinkannst/~~V
-universaler/~~JOQRSTq
+universaler/~~Jqr
 unterhältst/~~NY
 abschrammst/~~V
 abschrammte/~~NY
@@ -216602,7 +216602,7 @@ lösungsorientiert/~~JOQRSTq
 meistbeschäftigte/~~JOQRSTq
 meisthergestellte/~~JOQRSTq
 meistillustrierte/~~JOQRSTq
-meistkommentierte/~~JOQRSTq
+meistkommentierte/~~Jqr
 niedrigstmögliche/~~JOQRSTq
 passwortgeschützt/~~JOQRSTq
 pflichtversichert/~~JOQRSTq
@@ -218029,7 +218029,7 @@ bandscheibenbedingt/~~JOQRSTq
 batterieunterstützt/~~JOQRSTq
 bedürfnisorientiert/~~JOQRSTq
 behinderungsbedingt/~~JOQRSTq
-beratungsintensiver/~~JOQRSTq
+beratungsintensiver/~~Jqr
 bewegungsorientiert/~~JOQRSTq
 computerunterstützt/~~JOQRSTq
 datenbankorientiert/~~JOQRSTq
@@ -219876,7 +219876,7 @@ xfel/~~NY
 vdek/~~NY
 liegt/~~VjG
 große/~~NYJ # +adjective reading (was noun-only)
-viele/~~4JOQRSTq # many (adjective)
+viele/~~4Jqr # many (adjective)
 steht/~~VjG
 neuen/~~VfjG
 siehe/~~Vh  # imperative of sehen
@@ -220119,7 +220119,7 @@ nnetz/~~NY
 about/~~NY
 großen/~~Vfj
 führte/~~NY
-später/~~NYOQRST
+später/~~NYJr
 zweite/~~NY
 kleine/~~NY
 cities/~~NY
@@ -220179,7 +220179,7 @@ anzwer/~~NY
 places/~~NY
 prägte/~~NY
 stattb/~~NY
-ferner/~~NYOQRST
+ferner/~~NYJr
 planck/~~NY
 tomtom/~~NY
 echtem/~~NY
@@ -220254,7 +220254,7 @@ dining/~~NY
 münich/~~NY
 münech/~~NY
 nhügel/~~NY
-tiefer/~~NYOQRST
+tiefer/~~NYJr
 gacher/~~NY
 maeuse/~~NY
 newsml/~~NY
@@ -220318,7 +220318,7 @@ english/~~NY
 daimler/~~NY
 äußeren/~~VdifjeG
 nytimes/~~NY
-kleiner/~~NYOQRST
+kleiner/~~NYJr
 religio/~~NY
 stärkte/~~NY
 feierte/~~NY
@@ -220456,7 +220456,7 @@ soziales/~~NY
 globalen/~~Vfj
 resource/~~NY
 niedrige/~~NY
-sozialer/~~NYOQRST
+sozialer/~~NYJr
 erklärte/~~V # retag: finite verb form, was noun (corpus-mined)
 erlangte/~~YV # retag: finite verb form, was noun (corpus-mined)
 newsroom/~~NY
@@ -220495,7 +220495,7 @@ airports/~~NY
 leistete/~~NY
 hoechste/~~NY
 östliche/~~NY
-unklarer/~~NYOQRST
+unklarer/~~NYJr
 maritime/~~NY
 besuchte/~~YV # retag: finite verb form, was noun (corpus-mined)
 ständige/~~NY
@@ -220658,7 +220658,7 @@ religiöse/~~NY
 orthodoxe/~~NYJ # +adjective reading (was noun-only)
 nördliche/~~NY
 worldbank/~~NY
-niedriger/~~NYOQRST
+niedriger/~~NYJr
 amtlichen/~~Vfj
 deutschem/~~NY
 dänischen/~~Vfj
@@ -220693,7 +220693,7 @@ confirmed/~~NY
 täglichen/~~Vfj
 education/~~FY
 collapsed/~~NY
-östlicher/~~NYOQRST
+östlicher/~~NYJr
 maritimen/~~Vfj
 typischen/~~Vfj
 verlegten/~~VifjG
@@ -220701,7 +220701,7 @@ tuerkisch/~~JOQRSTq
 statistic/~~NY
 erikpeter/~~NY
 hoechsten/~~Vj
-langsamer/~~NYOQRST
+langsamer/~~NYJr
 eroeffnet/~~NY
 nightlife/~~NY
 arabische/~~NY
@@ -220783,7 +220783,7 @@ ceuticals/~~NY
 standorte/~~NY
 tradegate/~~NY
 blueprint/~~NY
-südlicher/~~NYOQRST
+südlicher/~~NYJr
 ngebietes/~~NY
 knowledge/~~NY
 eliteunis/~~NY
@@ -220792,7 +220792,7 @@ schlechte/~~NY
 microfoon/~~NY
 entführte/~~V # retag: finite verb form, was noun (corpus-mined)
 geography/~~NY
-trockener/~~NYOQRST
+trockener/~~NYJr
 bairische/~~NY
 mitteilte/~~NY
 gewidmete/~~NY
@@ -220814,7 +220814,7 @@ geöffnete/~~NY
 schwabing/~~NY
 verrueckt/~~NY
 verrückte/~~V # retag: finite verb form, was noun (corpus-mined)
-bekannter/~~NYOQRST
+bekannter/~~NYJr
 geschaeft/~~NY
 magazines/~~NY
 schnelles/~~NY
@@ -220907,7 +220907,7 @@ verfassten/~~VifjG
 geschickte/~~NY
 vereinigte/~~YV # retag: finite verb form, was noun (corpus-mined)
 verkündete/~~V # retag: finite verb form, was noun (corpus-mined)
-schlechter/~~NYOQRST
+schlechter/~~NYJr
 darstellte/~~NY
 zeitlichen/~~Vfj
 kritisiert/~~VfjOQRSTG
@@ -220952,7 +220952,7 @@ sesshaften/~~VfjG
 geistliche/~~NY
 staufische/~~NY
 versuchten/~~VifjG
-männlicher/~~NYOQRST
+männlicher/~~NYJr
 päpstliche/~~NY
 verheerten/~~VifjG
 überredete/~~V # retag: finite verb form, was noun (corpus-mined)
@@ -221000,7 +221000,7 @@ liveticker/~~NY
 nominellen/~~Vfj
 thenextweb/~~NY
 länglichen/~~VfjG
-relevanter/~~NYOQRST
+relevanter/~~NYJr
 publishers/~~NY
 chemischen/~~Vfj
 spreeradio/~~NY
@@ -221026,7 +221026,7 @@ monographs/~~NY
 monacensis/~~NY
 zugehörige/~~NY
 sonnigsten/~~Vfj
-tauglicher/~~NYOQRST
+tauglicher/~~NYJr
 obdachlose/~~NY
 orthodoxem/~~NY
 zelebriert/~~NYOQRSTG
@@ -221104,7 +221104,7 @@ bayerischen/~~Vfj
 europäische/~~NY
 beschäftigt/~~VfjOQRSTG
 showdoccase/~~NY
-zahlreicher/~~NYOQRST
+zahlreicher/~~NYJr
 verzeichnet/~~NYOQRSTG
 städtischen/~~Vfj
 beeinflusst/~~VOQRST # retag: verb form, was noun (corpus-mined)
@@ -221182,7 +221182,7 @@ vereinigten/~~VifjG
 vierspurige/~~NY
 unverändert/~~NYOQRST
 urkundliche/~~NY
-kultureller/~~NYOQRST
+kultureller/~~NYJr
 umliegenden/~~Vfj
 lutherische/~~NY
 bereinigten/~~VifjG
@@ -221231,7 +221231,7 @@ dominierten/~~VifjG
 erstarkende/~~NYJ # +adjective reading (was noun-only)
 föderativen/~~Vfj
 angetragene/~~NY
-schwieriger/~~NYOQRST
+schwieriger/~~NYJr
 unbestimmte/~~NY
 totalitären/~~VfjG
 missliebige/~~NY
@@ -221345,7 +221345,7 @@ berühmteste/~~NY
 bedeutsamen/~~VfjG
 ökologische/~~NY
 tangentiale/~~NY
-erheblicher/~~NYOQRST
+erheblicher/~~NYJr
 befürchtete/~~V # retag: finite verb form, was noun (corpus-mined)
 fahrverbote/~~NY
 entwicklung/~~FY
@@ -221383,7 +221383,7 @@ zulassungen/~~Vj
 weiträumige/~~NY
 betroffenen/~~VfjG
 nabschnitte/~~NY
-attraktiver/~~NYOQRST
+attraktiver/~~NYJr
 überführten/~~VifjG
 rueckwaerts/~~NY
 schnellsten/~~Vfj
@@ -221392,7 +221392,7 @@ vermittlern/~~NY
 ausgelegten/~~Vfj
 sciencecity/~~NY
 populärsten/~~Vfj
-glücklicher/~~NYOQRST
+glücklicher/~~NYJr
 öffentlichen/~~VfjG
 europäischen/~~Vfj
 dokumentiert/~~VfjOQRSTG
@@ -221414,7 +221414,7 @@ wetterdienst/~~NY
 germanischen/~~Vfj
 gelegentlich/~~JOQRSTq
 vollständige/~~NY
-europäischer/~~NYOQRST
+europäischer/~~NYJr
 bürgerlichen/~~Vfj
 ausländische/~~NY
 publications/~~NY
@@ -221429,13 +221429,13 @@ anschließend/~~NYOQRST
 drittgrößten/~~Vfj
 wöchentliche/~~NY
 gesetzlichen/~~Vfj
-öffentlicher/~~NYOQRST
+öffentlicher/~~NYJr
 medizinische/~~NY
 siemensstadt/~~NY
 veranschlagt/~~NYVOQRSTG # +verb reading (was noun-only)
 verschuldung/~~FY
 muenchenwiki/~~NY
-menschlicher/~~NYOQRST
+menschlicher/~~NYJr
 methodischen/~~Vfj
 ungewöhnlich/~~JOQRSTUWq
 territoriale/~~NY
@@ -221454,10 +221454,10 @@ unterstützte/~~YV # retag: finite verb form, was noun (corpus-mined)
 ukrainischer/~~NY
 presidencies/~~NY
 langfristige/~~NY
-unabhängiger/~~NYOQRST
+unabhängiger/~~NYJr
 historisches/~~NY
 gewerblichen/~~Vfj
-wesentlicher/~~NYOQRST
+wesentlicher/~~NYJr
 oeffentliche/~~NY
 statistische/~~NY
 privatisiert/~~NYOQRSTG
@@ -221496,7 +221496,7 @@ tektonischen/~~Vfj
 geologischen/~~Vfj
 ungefalteten/~~Vfj
 mesozoischen/~~Vfj
-konsequenter/~~NYOQRST
+konsequenter/~~NYJr
 landschaften/~~Vj
 bodenflaeche/~~NY
 fotografiert/~~NYOQRSTG
@@ -221508,7 +221508,7 @@ plautdietsch/~~NY
 zersplittert/~~NYOQRSTG
 fakultatives/~~NY
 ordentliches/~~NY
-christlicher/~~NYOQRST
+christlicher/~~NYJr
 zugewanderte/~~NY
 verschwanden/~~VijG
 eiszeitkunst/~~NY
@@ -221651,7 +221651,7 @@ motorisierte/~~NY
 öffentlichem/~~NY
 großräumigen/~~Vfj
 schlechteste/~~NY
-renommierter/~~NYOQRST
+renommierter/~~NYJr
 beschäftigte/~~YV # retag: finite verb form, was noun (corpus-mined)
 aerztekammer/~~NY
 verschiedenen/~~VfjG
@@ -221712,7 +221712,7 @@ rekonstruiert/~~NYOQRSTG
 habsburgische/~~NY
 chabadhamburg/~~NY
 plattdeutsche/~~NY
-erfolgreicher/~~NYOQRST
+erfolgreicher/~~NYJr
 konstruierten/~~VifjG
 handwerkliche/~~NY
 wizzentschaft/~~JOQRSTq
@@ -221749,7 +221749,7 @@ ideologischen/~~Vfj
 provisorische/~~NY
 sowjetisierte/~~NY
 leninistische/~~NY
-konservativer/~~NYOQRST
+konservativer/~~NYJr
 unterstützten/~~VifjG
 verpflichtete/~~YV # retag: finite verb form, was noun (corpus-mined)
 mobilisierten/~~VifjG
@@ -221776,7 +221776,7 @@ mitversichert/~~NYG
 vorbildhaften/~~Vfj
 humboldtschen/~~Vfj
 universitären/~~Vfj
-individueller/~~NYOQRST
+individueller/~~NYJr
 medizinischen/~~Vfj
 europaeischen/~~Vj
 crossmediales/~~NY
@@ -221787,7 +221787,7 @@ vorstädtische/~~NY
 verabschiedet/~~NYOQRSTG
 vielbeachtete/~~NY
 statistisches/~~NY
-theoretischer/~~NYOQRST
+theoretischer/~~NYJr
 berlinerische/~~NY
 anglikanische/~~NY
 fünfblättrige/~~NY
@@ -221821,13 +221821,13 @@ preisgekrönte/~~NY
 kurfürstliche/~~NY
 renaturierten/~~VifjG
 hochkarätigen/~~VfjG
-musikalischer/~~NYOQRST
+musikalischer/~~NYJr
 organisiertes/~~NY
 regeneratives/~~NY
 beabsichtigte/~~YV # retag: finite verb form, was noun (corpus-mined)
 umfangreiches/~~NY
 einheitlichen/~~VfjG
-umfangreicher/~~NYOQRST
+umfangreicher/~~NYJr
 unattraktiver/~~NYOQRST
 kriminalitaet/~~NY
 künstlerische/~~NY
@@ -221897,7 +221897,7 @@ etymologischen/~~Vfj
 napoleonischen/~~Vfj
 konstituierten/~~VifjG
 konsolidierten/~~VifjG
-ausdrücklicher/~~NYOQRST
+ausdrücklicher/~~NYJr
 polyzentrische/~~NY
 untergeordnete/~~NY
 zurückreichend/~~NYOQRST
@@ -221979,13 +221979,13 @@ neulateinische/~~NY
 altsächsischen/~~Vfj
 selbstständige/~~NY
 eigenständiges/~~NY
-traditioneller/~~NYOQRST
+traditioneller/~~NYJr
 plattdeutscher/~~NY
 betriebsfähige/~~NY
 aufgebrochenen/~~Vfj
 ausgestalteten/~~VifjG
 zweitgroesster/~~NY
-vordringlicher/~~NYOQRST
+vordringlicher/~~NYJr
 ausgegliederte/~~NY
 beherbergungen/~~Vj
 synchronisiert/~~NYOQRSTG
@@ -222036,7 +222036,7 @@ philosophischen/~~Vfj
 ausgeschalteten/~~Vfj
 österreichische/~~NY
 mitteldeutscher/~~NY
-unvermeidlicher/~~NYOQRST
+unvermeidlicher/~~NYJr
 gesamtdeutschen/~~Vfj
 demographischen/~~Vfj
 unterzeichneten/~~VifjG
@@ -222079,7 +222079,7 @@ zurückgesetzten/~~Vfj
 veranschaulicht/~~NYOQRSTG
 landessportbund/~~NY
 allgegenwärtige/~~NY
-selbstständiger/~~NYOQRST
+selbstständiger/~~NYJr
 osteuropäischer/~~NY
 moerderzentrale/~~NY
 goldumränderter/~~NY
@@ -222141,7 +222141,7 @@ halbhegemonialer/~~NY
 innerparteiliche/~~NY
 wiedervereinigte/~~YV # retag: finite verb form, was noun (corpus-mined)
 uneingeschränkte/~~NY
-islamfeindlicher/~~NYOQRST
+islamfeindlicher/~~NYJr
 württembergische/~~NY
 veröffentlichten/~~VifjG
 visionofhumanity/~~NY
@@ -222462,7 +222462,7 @@ usw/~~r # abbreviation: und so weiter (etc.)
 zusammenhang/~~MhY # context, connection
 arbeitsvorbereiter/~~MhY # work preparer
 marxverständnis/~~NhY # understanding of Marx
-ausgebildeten/~~JOQRSTVgfj # trained, educated (past participle)
+ausgebildeten/~~JVgfjr # trained, educated (past participle)
 behandlungsverlauf/~~MhY # treatment course
 bewusstseinsverändernde/~~RJOQRSTqh # consciousness-altering (adjective)
 erkrankungen/~~F # diseases, plural of Erkrankung
@@ -222470,7 +222470,7 @@ ermöglichende/~~JOQRSTVgj # enabling (present participle)
 erscheinungen/~~F # phenomena, appearances, plural of Erscheinung
 europäischenglischen/~~RJOQRSTqh # European-English (adjective)
 fähigkeiten/~~F # abilities, plural of Fähigkeit
-gleichgesetzten/~~JOQRSTVgfj # equated (past participle)
+gleichgesetzten/~~JVgfjr # equated (past participle)
 handlungen/~~F # actions, plural of Handlung
 komplikationen/~~F # complications, plural of Komplikation
 lehrgebäuden/~~N # teaching buildings, dative plural of Lehrgebäude
@@ -222479,12 +222479,12 @@ nichtmateriellen/~~RJOQRSTqh # non-material (adjective)
 patientenakte/~~FhY # patient file
 patientenrechtegesetz/~~NhY # patient rights law
 pflanzenkrankheiten/~~F # plant diseases, plural
-physikalischen/~~RJOQRSTqh # physical (adjective)
+physikalischen/~~Jqhr # physical (adjective)
 plainsindianer/~~MhY # Plains Indian
 ratgeben/~~Vj # to advise
 schädlingen/~~M # pests, dative plural of Schädling
 situationen/~~F # situations, plural of Situation
-substantivierten/~~JOQRSTVgifjG # substantivated (past participle)
+substantivierten/~~JVgifjGr # substantivated (past participle)
 tabuverletzungen/~~F # taboo violations, plural of Tabuverletzung
 therapeuten/~~M # therapists, plural of Therapeut
 umfassenden/~~RJOQRSTqh # comprehensive (adjective)
@@ -222495,7 +222495,7 @@ ars/~~FhY3 # art (Latin, used in German) - handled in GermanNounCapitalization
 berufsordnungen/~~F # professional regulations, plural of Berufsordnung
 datenschutz/~~MhY # data protection
 patientarztbeziehung/~~FhY # patient-doctor relationship
-patientenbezogenen/~~RJOQRSTqh # patient-related (adjective)
+patientenbezogenen/~~Jqhr # patient-related (adjective)
 resultaten/~~N # results, dative plural of Resultat
 unterlagen/~~FVijG # documents, plural of Unterlage; +verb reading (was noun-only)
 einschließend/~~JOQRSTVgfj # including (present participle)
@@ -222796,11 +222796,11 @@ standardisiert/~~JOQRSTqVfjG
 weiterentwickelt/~~JOQRSTqVfjG
 
 # --- common comparative adjective stems (so they can decline: kleinere ...) ---
-kleinere/~~JOQRSTq
-neuere/~~JOQRSTq
-tiefere/~~JOQRSTq
-schwächere/~~JOQRSTq
-bessere/~~JOQRSTq
+kleinere/~~Jqr
+neuere/~~Jqr
+tiefere/~~Jqr
+schwächere/~~Jqr
+bessere/~~Jqr
 größten/~~JOQRSTq
 
 brennt/~~VG # verb form
