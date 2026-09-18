@@ -134,15 +134,47 @@ export async function assertLocatorsResolveEqually(page: Page, a: Locator, b: Lo
 	expect(areSame).toBe(true);
 }
 
-/** Locates the first Harper highlight on the page and clicks it.
- * It should result in the popup opening.
- * Returns whether the highlight was found. */
-export async function clickHarperHighlight(page: Page): Promise<boolean> {
-	const center = await waitForHarperHighlightCenter(page);
-	if (center == null) return false;
+/** How long a single click gets to produce a popup before we click again. */
+const POPUP_OPEN_TIMEOUT_MS = 2000;
+/** How many clicks to spend before reporting that the popup will not open. */
+const POPUP_OPEN_ATTEMPTS = 5;
 
-	await page.mouse.click(center.x, center.y);
-	return true;
+/**
+ * Locates the first Harper highlight on the page, clicks it, and waits for the popup.
+ *
+ * Returns whether the popup is open, not merely whether a highlight was found. The
+ * distinction matters: the highlight boxes have `pointerEvents: 'none'`, so the click
+ * reaches the editor and `PopupHandler.onPointerDown` hit-tests the coordinates against
+ * its *current* lint boxes. A lint pass that lands between measuring the highlight and
+ * clicking it replaces those boxes, the hit test misses, and the popup never opens.
+ * Reporting success there left callers waiting on a suggestion button that would never
+ * render, until the whole test timed out ninety seconds later.
+ *
+ * So each attempt re-measures before it clicks, and an attempt that produces no popup is
+ * simply retried. Give-up is a `false` return within seconds, which fails the caller's
+ * assertion with a screenshot instead of a timeout.
+ *
+ * Expects no popup to be open on entry — every caller applies or dismisses a suggestion
+ * before clicking again, which closes it.
+ */
+export async function clickHarperHighlight(page: Page): Promise<boolean> {
+	const popup = page.locator('.harper-container');
+
+	for (let attempt = 0; attempt < POPUP_OPEN_ATTEMPTS; attempt++) {
+		const center = await waitForHarperHighlightCenter(page);
+		if (center == null) return false;
+
+		await page.mouse.click(center.x, center.y);
+
+		try {
+			await popup.waitFor({ state: 'visible', timeout: POPUP_OPEN_TIMEOUT_MS });
+			return true;
+		} catch {
+			// The click raced a re-render of the lint boxes. Measure again and retry.
+		}
+	}
+
+	return false;
 }
 
 /**
@@ -153,34 +185,45 @@ export async function clickHarperHighlight(page: Page): Promise<boolean> {
  * parts of the DOM while the popup is opening, which can briefly disconnect and recreate
  * Harper's popup host. Tests for that behavior need to follow the same event path as a real
  * editor interaction.
+ *
+ * Retried for the same reason `clickHarperHighlight` is: the dispatched coordinates are
+ * hit-tested against whichever lint boxes are current when the event lands, so a pass
+ * arriving in between makes it miss. Opening a popup changes nothing, so trying again is
+ * free — unlike the suggestion buttons, which act the first time they connect.
  */
 export async function openHarperPopupFromEditorPointerDown(
 	page: Page,
 	editor: Locator,
 ): Promise<boolean> {
-	const center = await waitForHarperHighlightCenter(page);
-	if (center == null) {
-		return false;
+	const popup = page.locator('.harper-container');
+
+	for (let attempt = 0; attempt < POPUP_OPEN_ATTEMPTS; attempt++) {
+		const center = await waitForHarperHighlightCenter(page);
+		if (center == null) {
+			return false;
+		}
+
+		try {
+			await editor.dispatchEvent('pointerdown', {
+				bubbles: true,
+				composed: true,
+				button: 0,
+				buttons: 1,
+				clientX: center.x,
+				clientY: center.y,
+				pointerId: 1,
+				pointerType: 'mouse',
+				screenX: center.x,
+				screenY: center.y,
+			});
+			await popup.waitFor({ state: 'visible', timeout: POPUP_OPEN_TIMEOUT_MS });
+			return true;
+		} catch {
+			// The event raced a re-render of the lint boxes. Measure again and retry.
+		}
 	}
 
-	try {
-		await editor.dispatchEvent('pointerdown', {
-			bubbles: true,
-			composed: true,
-			button: 0,
-			buttons: 1,
-			clientX: center.x,
-			clientY: center.y,
-			pointerId: 1,
-			pointerType: 'mouse',
-			screenX: center.x,
-			screenY: center.y,
-		});
-		await page.locator('.harper-container').waitFor({ state: 'visible', timeout: 2000 });
-		return true;
-	} catch {
-		return false;
-	}
+	return false;
 }
 
 /** Grab the first `<textarea />` on a page. */

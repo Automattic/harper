@@ -25,7 +25,7 @@ test.describe('Lexical webcomponent regression', () => {
 		await page.waitForTimeout(6000);
 		await expect(mirror).toHaveText(initialText);
 
-		await clickHarperHighlight(page);
+		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Replace with "a"').click();
 
 		await page.waitForTimeout(3000);
@@ -34,7 +34,7 @@ test.describe('Lexical webcomponent regression', () => {
 		await expect(mirror).toHaveText(afterFirst);
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 
-		await clickHarperHighlight(page);
+		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Replace with "a"').click();
 
 		await page.waitForTimeout(3000);
