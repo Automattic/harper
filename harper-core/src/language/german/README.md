@@ -239,6 +239,74 @@ scripts/fix_german_pos_flags.py --forms forms.txt --apply
 
 Without `--forms` it skips the preterite pass rather than guessing.
 
+#### The corpus decides which bugs you can see
+
+The archived corpus is 264 random German Wikipedia articles, which in practice
+means biographies, places and events. It is good at one thing — proper names
+neither Harper nor igerman98 knows, which is a coverage question and a dull
+one — and it barely exercises the grammar, because its sentences are short and
+appositive.
+
+```bash
+scripts/fetch_german_corpus.py .archive/german-language/corpus-prose
+```
+
+fetches the other kind of article: grammar, law, philosophy, mathematics,
+medicine, economics. Abstract topics are written in long sentences with
+subordinate clauses, nominalizations, participial attributes and passive voice,
+and they name almost nobody. 101 whole articles, and
+`GermanNounCapitalization` went from 144 lints on the old corpus to 1574 on the
+new one — eleven times the density on twice the text. None of those bugs were
+new; there had simply been no text in which to see them.
+
+Keep both. The Wikipedia corpus is the regression test for everything the
+dictionary covers; the prose corpus is where the rules get tested.
+
+#### Words that are not nouns, tagged as nouns
+
+German capitalizes its nouns, so a lower-case entry whose **capitalized** form
+igerman98 does not list is not a noun, whatever corpus mining tagged it.
+`allenfalls`, `gleichwohl`, `wenngleich`, `mithin`, `desto`, `derart`,
+`hierdurch`, `diejenige` and tens of thousands of finite verb forms all carried
+`~~NhY` or `~~NXh`, and `GermanNounCapitalization` flags anything with an
+unambiguous noun reading. Taking the reading off the 35887 entries igerman98
+can vouch for removed 1001 of the prose corpus's 1574 lints.
+
+```bash
+scripts/strip_german_noun_readings.py --forms forms.txt --apply
+```
+
+Three things it has to get right, all learned the hard way:
+
+- **`N` alone is not the noun reading.** The noun-plural affixes `X`, `Y`, `a`,
+  `b` and `0` each carry a plural-noun reading of their own, so an entry stripped
+  of `N` is still a noun.
+- **Those affixes also generate forms**, and some are the only source of a real
+  word. `bedachte/~~YsV` builds `bedachten` through `Y`. The script expands the
+  whole dictionary before and after and puts an affix back rather than lose a
+  form igerman98 lists — case-insensitively, because a lower-case entry is what
+  makes a capitalized noun spell correctly.
+- **An affix that has to stay can still change its mind about what it means.**
+  `geh/~~Xh` was the only source of `gehe`, and `f` (verb present `-e`) builds
+  exactly the same string, so the entry becomes `geh/~~fh` and `gehe` stops
+  being a plural noun.
+
+Two further guards keep the rule from eating things it should not. An entry with
+an **adjective** reading is skipped entirely, and so is one that is a declined
+form of an adjective the dictionary has: German nominalizes adjectives freely —
+*das Gute*, *im Freien*, *für Deutsche* — and those really are nouns, but
+igerman98's expanded list does not carry their capitalized spellings, so the
+oracle would call every one of them "not a noun". `deutsche` and `wesentliche`
+are the cases that caught this. And the word itself has to be in igerman98 in
+*some* casing, or there is no basis for judging it at all: `university` is in the
+German dictionary as a borrowing and in igerman98 in neither casing, and without
+that guard the rule reads "never capitalized, therefore not a noun".
+
+What it does not reach is a word the dictionary never lists. `verbleibt` is
+spelled correctly only because the compound checker takes it apart, and
+`get_compound_metadata` calls what it cannot classify a noun. That is a
+`compound_checker.rs` question, not a data one.
+
 #### A missing derivation costs more than a missing word
 
 German derives the feminine personal noun from the masculine one with `-in`
