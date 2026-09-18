@@ -272,6 +272,42 @@ false positives gone, typo detection up rather than down, injected-error recall
 unchanged, and no new dictionary entries at all — 7833 more surface forms out of
 the same 234938 lines.
 
+#### The genitive of a name, and why it is capitalized only
+
+German puts a bare `-s` on a proper name to form the genitive — *Rembrandts
+Werke*, *Orwells Roman*, *Maximilians Nachfolge*. Harper had the names and not
+the genitives. The rule is hunspell de_DE's `SFX S`, and it lives on `H`, not on
+`b`: `b` is the same surface rule but declares both the result and the base a
+**plural** noun, which is true for `Autos` and wrong for `Maximilians`.
+
+```bash
+scripts/mirror_hunspell_flag.py --forms forms.txt --from S --to H \
+    --only-capitalized --apply
+```
+
+`--only-capitalized` is the whole reason this is affordable, and it is worth
+being precise about the cost, because the unrestricted version looked better on
+the corpus:
+
+| | entries | corpus lints | typo detection |
+|---|---|---|---|
+| without `H` | — | 12543 | 31575 |
+| `H` on everything hunspell marks | 45545 | 12259 | 31391 |
+| `H` on capitalized entries only | 6749 | 12448 | 31574 |
+
+The unrestricted version removes three times as many false positives and gives
+up 184 detections to do it — and they are not obscure. `anderen -> annderen`,
+`jeweils -> jeweills`, `Anfang -> Annfang`, `danach -> daanach`: typos of the
+most frequent words in the corpus. Every new surface form is also a compound
+element, so 45545 of them reopen that many decompositions. The lower-case
+entries are ordinary common nouns, `0` (`-es`) and `b` (`-s` plural) already
+serve them, and dropping them costs a third of the gain and one detection.
+
+The limit is the same one the feminine derivation has: a name that is not an
+entry has nothing for a flag to attach to. `Österreich`, `Goethe` and `Peter`
+are spelled correctly only because the compound checker takes them apart, so
+their genitives are still missing.
+
 #### Declining an already-declined form
 
 `OQRST` are the five adjective declension endings and they belong on the base:
@@ -483,9 +519,10 @@ python3 -c "import collections; c=collections.Counter(ch \
 That is where the feminine derivation's `K` and `L` came from. Both were
 uppercase compound interfixes (`-n` and `-en`) that **no entry carried** and that
 the compound checker never read — it reads the lowercase `k` and `l`, as
-`compound_checker.rs` spells out. `E` (the `ver-` prefix), `H` (compound, no
-interfix) and `n` (separable-prefix participle) are still sitting there unused,
-so the next two rules have somewhere to go.
+`compound_checker.rs` spells out. `H` (compound, no interfix) went the same way, to the
+proper-name genitive. `E` (the `ver-` prefix) and `n` (separable-prefix
+participle) are still sitting there unused, so the next two rules have somewhere
+to go.
 
 The `A`, `C` and `F` *affixes* have been deleted. `F` was the expensive one: it
 sat on every feminine noun as a property, so the affix was appending `-chen` to

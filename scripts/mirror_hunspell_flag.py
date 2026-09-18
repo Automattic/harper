@@ -139,6 +139,19 @@ def main() -> int:
         help="remove the flag(s) where hunspell rejects a generated form, "
         "instead of adding them where it accepts every one",
     )
+    parser.add_argument(
+        "--only-capitalized",
+        action="store_true",
+        help=(
+            "skip lower-case entries. A rule that reads as one thing on a proper "
+            "name and another on a common noun wants this: hunspell's bare-'-s' "
+            "SFX S is the genitive of a name (Goethes) but a plural on Autos, and "
+            "handing it to all 45545 matching entries cost 184 detections in "
+            "`just language-recall german` -- on `anderen -> annderen` and the "
+            "like -- for 284 corpus false positives. Capitalized entries alone "
+            "keep a third of the gain at a cost of one."
+        ),
+    )
     parser.add_argument("--dic", type=Path, default=DEFAULT_DIC)
     args = parser.parse_args()
 
@@ -228,6 +241,10 @@ def main() -> int:
             continue
 
         if not args.all_entries and lower not in members:
+            out.append(line)
+            continue
+
+        if args.only_capitalized and not word[:1].isupper():
             out.append(line)
             continue
 

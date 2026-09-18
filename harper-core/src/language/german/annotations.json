@@ -133,13 +133,13 @@
 			"rename_ok": true
 		},
 		"H": {
-			"#": "Compound word formation - noun + noun (no interfix)",
+			"#": "Bare '-s' on a noun that is not thereby a plural: the genitive of a proper name (Oesterreichs Hauptstadt, Goethes Werke, Peters Buch) and the '-s' of names that simply end in one. Mirrors hunspell de_DE SFX S. Deliberately not 'b', which is the same surface rule but declares the result a plural noun and the base one too -- true for 'Autos', wrong for 'Oesterreichs'. 'H' previously held an uppercase compound marker with no interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'h' -- see the collision table in README.md.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
-					"add": "",
+					"add": "s",
 					"condition": "."
 				}
 			],
