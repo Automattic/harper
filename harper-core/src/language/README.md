@@ -94,6 +94,23 @@ Two things the compiler cannot tell you:
 - **`curated_lint_group` must actually assemble the group.** Returning
   `LintGroup::empty()` compiles, wires in cleanly, and silently checks nothing.
 
+### One method you should not implement
+
+`DialectFlags::get_most_used_dialects_from_document` counts which dialect a
+document uses, and counting needs a per-word signal. English has one; no other
+language's dictionary carries dialect metadata, so there is nothing to count.
+
+It has a default that enables nothing, which `Dialect::try_guess_from_document`
+turns into `None`. **Leave it alone** until the dictionary can answer the
+question.
+
+The reason this is worth saying: German, Polish and Portuguese each wrote the
+counting loop out with its body commented off. That walks every word of every
+document to leave all the counters at zero — and a maximum over all-zero
+counters matches *every* dialect, so the stub returned "all dialects", the
+opposite of what its own comment claimed. It only looked harmless because
+`try_from` rejects more than one dialect and the caller reads that as `None`.
+
 ## 4. Declare the Cargo features
 
 Five manifests, one line each:

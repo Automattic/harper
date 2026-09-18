@@ -1,13 +1,11 @@
 //! German dialect support.
 
 use crate::language::dialects::dialect_trait::{Dialect, DialectFlags};
-use itertools::Itertools;
 use serde::{Deserialize, Serialize};
 use std::convert::TryFrom;
-use strum::{EnumCount as _, VariantArray as _};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
-use crate::{Document, TokenKind, TokenStringExt};
+use crate::Document;
 
 /// German dialects supported by Harper.
 #[derive(
@@ -127,49 +125,6 @@ impl DialectFlags<GermanDialect> for GermanDialectFlags {
             panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
         };
         out
-    }
-
-    /// Gets the most commonly used dialect(s) in the document.
-    fn get_most_used_dialects_from_document(document: &Document) -> Self {
-        // Initialize counters.
-        let dialect_counters: [(GermanDialect, usize); GermanDialect::COUNT] =
-            GermanDialect::VARIANTS
-                .iter()
-                .map(|d| (*d, 0))
-                .collect_array()
-                .unwrap();
-
-        // Count word dialects.
-        // Note: German dialect auto-detection is not yet implemented. The
-        // dictionary metadata does not currently carry German dialect
-        // information, so the counters below remain stubbed and we always
-        // return empty flags for now.
-        document.iter_words().for_each(|w| {
-            if let TokenKind::Word(Some(_lexeme_metadata)) = &w.kind {
-                // Since we can't extract German dialect info from the old DialectFlags,
-                // we skip counting for now. This means German dialect detection won't work
-                // until we migrate to the new system.
-                // dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                //     if lexeme_metadata.dialects.german.is_dialect_enabled(*dialect) {
-                //         *count += 1;
-                //     }
-                // });
-            }
-        });
-
-        // Find max counter.
-        let max_counter = dialect_counters
-            .iter()
-            .map(|(_, count)| count)
-            .max()
-            .unwrap();
-        // Get and convert the collection of most used dialects into a `DialectFlags`.
-        dialect_counters
-            .into_iter()
-            .filter(|(_, count)| count == max_counter)
-            .fold(GermanDialectFlags::empty(), |acc, dialect| {
-                acc | Self::from_dialect(dialect.0)
-            })
     }
 }
 

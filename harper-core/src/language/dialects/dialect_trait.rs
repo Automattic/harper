@@ -83,8 +83,24 @@ where
     /// If multiple dialects are used equally often, they will all be enabled in the returned
     /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
     /// will be the only one enabled.
+    ///
+    /// **Override this only when the dictionary carries dialect metadata for the language.**
+    /// Counting needs a per-word signal, and English is the only language that has one. The
+    /// default says "I cannot tell" by enabling nothing, which
+    /// `Dialect::try_guess_from_document` turns into `None`.
+    ///
+    /// Three languages previously wrote out the counting loop with the body commented out. That
+    /// walks every word of every document to leave all the counters at zero, and a maximum over
+    /// all-zero counters then matches *every* dialect -- so the stub returned "all dialects",
+    /// which is the opposite of what its own comment claimed, and `try_from` rejected it only
+    /// because more than one was set.
     #[must_use]
-    fn get_most_used_dialects_from_document(document: &Document) -> Self;
+    fn get_most_used_dialects_from_document(_document: &Document) -> Self
+    where
+        Self: Sized,
+    {
+        Self::default()
+    }
 
     fn get_most_used_dialects_from_document_language(
         document: &Document,

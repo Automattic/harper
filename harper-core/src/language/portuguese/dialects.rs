@@ -1,14 +1,12 @@
 //! Portuguese dialect support.
 
 use crate::language::dialects::dialect_trait::{Dialect, DialectFlags};
-use itertools::Itertools;
 use serde::{Deserialize, Serialize};
-use strum::{EnumCount as _, VariantArray as _};
 use strum_macros::{Display, EnumCount, EnumIter, EnumString, VariantArray};
 
 use std::convert::TryFrom;
 
-use crate::{Document, TokenKind, TokenStringExt};
+use crate::Document;
 
 /// A regional dialect.
 ///
@@ -151,56 +149,6 @@ impl DialectFlags<PortugueseDialect> for PortugueseDialectFlags {
             panic!("The '{dialect}' dialect isn't defined in DialectFlags!");
         };
         out
-    }
-
-    /// Gets the most commonly used dialect(s) in the document.
-    ///
-    /// If multiple dialects are used equally often, they will all be enabled in the returned
-    /// `DialectFlags`. On the other hand, if there is a single dialect that is used the most, it
-    /// will be the only one enabled.
-    fn get_most_used_dialects_from_document(document: &Document) -> Self {
-        // Initialize counters.
-        let dialect_counters: [(PortugueseDialect, usize); PortugueseDialect::COUNT] =
-            PortugueseDialect::VARIANTS
-                .iter()
-                .map(|d| (*d, 0))
-                .collect_array()
-                .unwrap();
-
-        // Count word dialects.
-        document.iter_words().for_each(|w| {
-            if let TokenKind::Word(Some(_lexeme_metadata)) = &w.kind {
-                // If the token is a word, iterate though the dialects in `dialect_counters` and
-                // increment those counters where the word has the respective dialect enabled.
-                // Since we can't extract Portuguese dialect info from the old DialectFlags,
-                // we skip counting for now. This means Portuguese dialect detection won't work
-                // until we migrate to the new system.
-                // dialect_counters.iter_mut().for_each(|(dialect, count)| {
-                //     if lexeme_metadata
-                //         .dialects
-                //         .portuguese
-                //         .is_dialect_enabled(*dialect)
-                //     {
-                //         *count += 1;
-                //     }
-                // });
-            }
-        });
-
-        // Find max counter.
-        let max_counter = dialect_counters
-            .iter()
-            .map(|(_, count)| count)
-            .max()
-            .unwrap();
-        // Get and convert the collection of most used dialects into a `DialectFlags`.
-        dialect_counters
-            .into_iter()
-            .filter(|(_, count)| count == max_counter)
-            .fold(PortugueseDialectFlags::empty(), |acc, dialect| {
-                // Fold most used dialects into `DialectFlags` via bitwise or.
-                acc | Self::from_dialect(dialect.0)
-            })
     }
 }
 
