@@ -52,6 +52,46 @@ const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 /// has no way to tell a prefix from a noun. Fixing this needs typed elements,
 /// not a longer threshold; the frequent misspellings it lets through are caught
 /// by Weir rules instead.
+///
+/// # Typed elements have been tried and the dictionary cannot carry them
+///
+/// Length is the whole gate, so `vieleicht` decomposes as `viel` + `eicht` —
+/// `eicht` being the third person singular of *eichen*. Hunspell rejects the
+/// same word without any blocklist entry, because its German dictionary marks
+/// compound participation explicitly and positionally (`COMPOUNDBEGIN`,
+/// `COMPOUNDMIDDLE`, `COMPOUNDEND`, `ONLYINCOMPOUND`) and only **3.0%** of its
+/// 258 216 entries may take part at all. Here it is effectively every entry of
+/// three characters or more.
+///
+/// Three ways of typing the elements from Harper's own metadata were measured
+/// on 1.44M words of edited German prose, against the 1271 single-word entries
+/// of `Wikipedia:Liste von Tippfehlern`:
+///
+/// | element must … | extra typos caught | extra lints on correct prose |
+/// |---|---|---|
+/// | be a noun, adjective or adverb | — | **+14 006** |
+/// | have any part of speech at all | +20 | **+1 576** |
+/// | …or its lemma be nominal | +3 | **+148** |
+///
+/// Each one loses, and for one reason: **9.4% of the 617 030 expanded forms
+/// carry no part of speech at all**, and that bucket is not the verb forms. It
+/// mixes `eicht`, `malt` and `agiert` with the ordinary noun plurals `zeuge`,
+/// `räume`, `garten`, `folger` and `verhalte`, so no query over it can separate
+/// them. The stronger rule fails even earlier, because particles are legitimate
+/// first elements and carry no nominal reading (`gegen`, `über`, `vor`,
+/// `zusammen`) and because plenty of ordinary nouns are tagged verb-only
+/// (`Tat`, `arten`, `gen`, `erd`).
+///
+/// Letter case carries nothing either: `WordId` lower-cases spellings, so
+/// `contains_exact_word` reports no capitalized form for `Zeuge` or `Garten`
+/// any more than for `Eicht`.
+///
+/// So the prerequisite is a dictionary question, not a checker one: the affix
+/// expansion has to give each generated form a part of speech. Until it does,
+/// the misspellings this lets through are caught by
+/// [`super::super::linting::german_common_typos::GermanCommonTypos`], which is
+/// also how hunspell handles the ones *its* decomposition cannot see — 394
+/// `FORBIDDENWORD` entries, `Landesprache` among them.
 pub(crate) const MIN_COMPOUND_PART_LEN: usize = 3;
 
 /// The maximum nesting depth of a compound decomposition (mirrors the old
@@ -1007,5 +1047,82 @@ mod tests {
 
         // With the base dictionary injected, "schuh" + "hersteller" resolves.
         assert!(checker.is_compound_word(&"schuhhersteller".chars().collect::<Vec<_>>()));
+    }
+
+    /// The element gate cannot be typed from the word list, and this is the
+    /// measurement that says so — see [`MIN_COMPOUND_PART_LEN`].
+    ///
+    /// `eicht` is a finite verb form and has no business inside a compound;
+    /// `zeuge` and `räume` are noun plurals and belong in every second one.
+    /// The dictionary describes all three identically: present, three or more
+    /// characters, and carrying no part of speech at all. As long as that
+    /// holds, `vieleicht` cannot be rejected by decomposition without taking
+    /// `Werkzeuge` and `Zeiträume` with it.
+    ///
+    /// When the affix expansion starts assigning a part of speech, this test
+    /// fails — and that is the moment to try the typed element gate again.
+    #[test]
+    fn expanded_forms_carry_no_part_of_speech_to_type_elements_with() {
+        use crate::language::german::spell::base_german_dictionary_fst;
+
+        let dictionary = base_german_dictionary_fst();
+
+        let word_class_of = |word: &str| {
+            let letters: Vec<char> = word.chars().collect();
+            let metadata = dictionary
+                .get_word_metadata(&letters)
+                .unwrap_or_else(|| panic!("{word} should be in the dictionary"));
+
+            metadata.noun.is_some()
+                || metadata.adjective.is_some()
+                || metadata.adverb.is_some()
+                || metadata.verb.is_some()
+                || metadata.pronoun.is_some()
+                || metadata.conjunction.is_some()
+                || metadata.determiner.is_some()
+                || metadata.affix.is_some()
+                || metadata.preposition
+        };
+
+        for (word, what) in [
+            ("eicht", "third person singular of 'eichen'"),
+            ("malt", "third person singular of 'malen'"),
+            ("agiert", "third person singular of 'agieren'"),
+            ("zeuge", "plural stem of 'Zeug'"),
+            ("räume", "plural of 'Raum'"),
+            ("garten", "lower-case 'Garten'"),
+        ] {
+            assert!(
+                !word_class_of(word),
+                "{word} ({what}) now carries a part of speech; \
+                 re-read MIN_COMPOUND_PART_LEN and try typing the element gate"
+            );
+        }
+    }
+
+    /// The consequence, pinned: the spell checker accepts `vieleicht`, and
+    /// [`super::super::super::linting::german_common_typos::GermanCommonTypos`]
+    /// is what catches it.
+    #[test]
+    fn the_decomposition_still_accepts_vieleicht() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        assert!(accepts("vieleicht"), "viel + eicht still decomposes");
+
+        // The compounds a tighter gate would have to keep, as a reminder of
+        // what the 1 576 lints were.
+        for word in [
+            "Werkzeuge",
+            "Zeiträume",
+            "Sachverhalte",
+            "Säugetiere",
+            "Kindergarten",
+            "Donaudampfschifffahrtsgesellschaft",
+        ] {
+            assert!(accepts(word), "{word} must stay a word");
+        }
     }
 }
