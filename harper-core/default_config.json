@@ -4600,6 +4600,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CommandLine",
+								"state": true,
+								"label": "Command Line"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ComprisesOf",
 								"state": true,
 								"label": "Comprises Of"
