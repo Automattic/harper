@@ -340,6 +340,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OutOfTheBox",
+								"state": true,
+								"label": "Out of the Box"
+							}
+						},
+						{
+							"Bool": {
 								"name": "PleaseTakeALook",
 								"state": true,
 								"label": "Please Take A Look"
@@ -3230,6 +3237,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RedundantAlmostNearly",
+								"state": true,
+								"label": "Redundant Almost Nearly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantIIRC",
 								"state": true,
 								"label": "Redundant IIRC"
@@ -5611,6 +5625,13 @@
 								"name": "RiseTheRanks",
 								"state": true,
 								"label": "Rise The Ranks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RogueRouge",
+								"state": true,
+								"label": "Rogue / Rouge"
 							}
 						},
 						{

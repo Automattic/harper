@@ -163,6 +163,7 @@ const defaultEnabledDomains = [
 	'ckeditor.com',
 	'app.slack.com',
 	'openrouter.ai',
+	'claude.ai',
 	'docs.google.com',
 	'typst.app',
 	'steamcommunity.com',

@@ -10,8 +10,6 @@ use crate::expr::{Filter, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
 use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
 
-pub const SPELL_CHECK_PRIORITY: u8 = 63;
-
 pub struct SpellCheck<T>
 where
     T: Dictionary,
@@ -154,7 +152,7 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 lint_kind: LintKind::Spelling,
                 suggestions,
                 message,
-                priority: SPELL_CHECK_PRIORITY,
+                priority: 63,
             })
         }
 

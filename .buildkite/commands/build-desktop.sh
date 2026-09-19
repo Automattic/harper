@@ -33,18 +33,24 @@ fi
 echo "Build target: $TAURI_TARGET (recipe: $JUST_RECIPE)"
 
 echo "--- :floppy_disk: Restore cargo caches"
-# Two cache layers, both keyed off Cargo.lock + rust-toolchain.toml so they
-# invalidate the moment any dep version moves.
+# Cache layers are keyed off both Cargo.lock files + rust-toolchain.toml so
+# they invalidate the moment any dep version moves.
 #   1. `~/.cargo/registry` + `~/.cargo/git/db` — downloaded crate sources / git
 #      deps. ~340MB compressed. Saves the crate-download phase on cold builds.
-#   2. `target/` — compiled artifacts. Several GB compressed. Lets cargo's
+#   2. `target/` and `harper-desktop/src-tauri/target/` — compiled artifacts,
+#      cached separately. Several GB compressed. Lets cargo's
 #      incremental compilation reuse object files across builds. The target
 #      cache also includes the Tauri target arch in its key, since universal
 #      and arm64-only builds produce disjoint object trees.
-CARGO_DEPS_KEY="$BUILDKITE_PIPELINE_SLUG-cargo-deps-darwin-arm64-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
-CARGO_TARGET_KEY="$BUILDKITE_PIPELINE_SLUG-target-darwin-arm64-$TAURI_TARGET-$(hash_file Cargo.lock)-$(hash_file rust-toolchain.toml)"
+DESKTOP_TARGET_DIR=harper-desktop/src-tauri/target
+BUNDLE_DIR="$DESKTOP_TARGET_DIR/$TAURI_TARGET/release/bundle"
+CARGO_CACHE_INPUTS="$(hash_file Cargo.lock)-$(hash_file harper-desktop/src-tauri/Cargo.lock)-$(hash_file rust-toolchain.toml)"
+CARGO_DEPS_KEY="$BUILDKITE_PIPELINE_SLUG-cargo-deps-darwin-arm64-$CARGO_CACHE_INPUTS"
+CARGO_TARGET_KEY="$BUILDKITE_PIPELINE_SLUG-target-darwin-arm64-$TAURI_TARGET-$CARGO_CACHE_INPUTS"
+DESKTOP_TARGET_KEY="$CARGO_TARGET_KEY-desktop"
 restore_cache "$CARGO_DEPS_KEY"
 restore_cache "$CARGO_TARGET_KEY"
+restore_cache "$DESKTOP_TARGET_KEY"
 
 echo "--- :package: Install build tools"
 # Without Rust pre-baked there's no `cargo-binstall` either. Use cargo-binstall's
@@ -92,12 +98,13 @@ echo "--- :floppy_disk: Save cargo caches"
 save_cache "$HOME/.cargo/registry" "$CARGO_DEPS_KEY"
 save_cache "$HOME/.cargo/git/db" "$CARGO_DEPS_KEY-git" || true
 save_cache target "$CARGO_TARGET_KEY"
+save_cache "$DESKTOP_TARGET_DIR" "$DESKTOP_TARGET_KEY"
 
 echo "--- :apple: Notarize and staple"
 # Tauri signs but does not notarize when only APPLE_SIGNING_IDENTITY is set.
 # Notarize the .app and .dmg ourselves so Gatekeeper accepts them with no warning.
-APP_BUNDLE=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app' -type d | head -1)
-DMG_FILE=$(find "target/$TAURI_TARGET/release/bundle/dmg" -maxdepth 1 -name '*.dmg' -type f | head -1)
+APP_BUNDLE=$(find "$BUNDLE_DIR/macos" -maxdepth 1 -name '*.app' -type d | head -1)
+DMG_FILE=$(find "$BUNDLE_DIR/dmg" -maxdepth 1 -name '*.dmg' -type f | head -1)
 
 [ -n "$APP_BUNDLE" ] || { echo "no .app produced"; exit 1; }
 [ -n "$DMG_FILE" ]   || { echo "no .dmg produced"; exit 1; }
@@ -107,8 +114,8 @@ bundle exec fastlane notarize_macos package:"$DMG_FILE"
 
 if [ -n "${BUILDKITE_TAG:-}" ]; then
 	echo "--- :rocket: Publish draft GitHub release"
-	APP_TARBALL=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app.tar.gz' -type f | head -1)
-	APP_SIG=$(find "target/$TAURI_TARGET/release/bundle/macos" -maxdepth 1 -name '*.app.tar.gz.sig' -type f | head -1)
+	APP_TARBALL=$(find "$BUNDLE_DIR/macos" -maxdepth 1 -name '*.app.tar.gz' -type f | head -1)
+	APP_SIG=$(find "$BUNDLE_DIR/macos" -maxdepth 1 -name '*.app.tar.gz.sig' -type f | head -1)
 	[ -n "$APP_TARBALL" ] || { echo "no .app.tar.gz produced"; exit 1; }
 	[ -n "$APP_SIG" ]     || { echo "no .app.tar.gz.sig produced"; exit 1; }
 	bundle exec fastlane create_desktop_github_release \
