@@ -3667,6 +3667,13 @@
 						},
 						{
 							"Bool": {
+								"name": "LeadLed",
+								"state": true,
+								"label": "Lead / Led"
+							}
+						},
+						{
+							"Bool": {
 								"name": "LetToDo",
 								"state": true,
 								"label": "Let To Do"
