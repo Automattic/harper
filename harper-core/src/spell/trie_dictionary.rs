@@ -4,7 +4,7 @@ use std::sync::{Arc, LazyLock};
 use trie_rs::Trie;
 use trie_rs::iter::{Keys, PrefixIter, SearchIter};
 
-use super::{Dictionary, FstDictionary, FuzzyMatchResult, WordMap};
+use super::{Dictionary, FstDictionary, WordMap};
 
 /// A [`Dictionary`] optimized for pre- and postfix search.
 /// Wraps another dictionary to implement other operations.
