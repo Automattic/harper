@@ -42,7 +42,7 @@ impl LanguageModule for GermanModule {
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
         use crate::language::german::linting::{
             german_absolute_superlative::GermanAbsoluteSuperlative,
-            german_filler_words::GermanFillerWords,
+            german_common_typos::GermanCommonTypos, german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
             german_noun_capitalization::GermanNounCapitalization,
             german_sentence_capitalization::GermanSentenceCapitalization,
@@ -65,6 +65,7 @@ impl LanguageModule for GermanModule {
         );
         group.add("GermanFillerWords", GermanFillerWords::default());
         group.add("GermanWiderWieder", GermanWiderWieder);
+        group.add("GermanCommonTypos", GermanCommonTypos);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
