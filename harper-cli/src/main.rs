@@ -37,6 +37,7 @@ mod annotate;
 use annotate::AnnotationType;
 
 mod lint;
+mod repl;
 use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
 
@@ -54,6 +55,15 @@ struct Cli {
 
 #[derive(clap::Subcommand)]
 enum Args {
+    /// Interactively lint one line of plain English at a time.
+    Repl {
+        /// Specify the dialect. Common synonyms, abbreviations, and codes are supported.
+        #[arg(short, long, default_value = "us")]
+        dialect: String,
+        /// Restrict linting to only a specific set of rules.
+        #[arg(long, value_delimiter = ',')]
+        only: Option<Vec<String>>,
+    },
     /// Lint provided documents.
     Lint {
         /// The text or file you wish to grammar check. If not provided, it will be read from
@@ -246,6 +256,11 @@ fn main() -> anyhow::Result<()> {
     let curated_dictionary = FstDictionary::curated();
 
     match cli.command {
+        Args::Repl { dialect, only } => {
+            let parsed_dialect = parse_dialect(&dialect)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect, e))?;
+            repl::repl(curated_dictionary, parsed_dialect, only, color)
+        }
         Args::Lint {
             inputs,
             count,
