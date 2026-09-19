@@ -4,7 +4,7 @@ I got there after him.
 
 Go back there after dinner and finish it.
 
-We've gotta go down right here.
+We've got to go down right here.
 
 I hereby state that I got here by way of the "issues" link.
 
