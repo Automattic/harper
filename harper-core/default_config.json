@@ -3653,6 +3653,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InversionAfterVerbhowAdj",
+								"state": true,
+								"label": "Inversion After Verb How Adjective"
+							}
+						},
+						{
+							"Bool": {
 								"name": "IsBeenAuxSequence",
 								"state": true,
 								"label": "Is Been Aux Sequence"
