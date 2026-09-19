@@ -842,10 +842,18 @@ The linter matches the nominalized word exactly and only the words before it
 case-insensitively, so a correct phrase is never touched.
 
 It also has to look *right*. These phrases are nominalizations only when no noun
-follows — *"im **Folgenden**"* against *"im folgenden **Jahr**"*, *"ohne
-**Weiteres**"* against *"ohne weiteres **Geld**"* — and reading the ending rather
+follows — *"im **Folgenden**"* against *"im folgenden **Jahr**"*, *"im
+**Einzelnen**"* against *"im einzelnen **Fall**"* — and reading the ending rather
 than the part of speech gets that wrong, because `werden` ends like a declined
 adjective and would hide *"im Folgenden werden Beispiele genannt"*.
+
+Its table holds only the phrases whose capital is **obligatory**. The 1996
+reform capitalized the family but left the small letter standing as an equal
+variant in a handful of them — `bei weitem`, `ohne weiteres`, `von neuem`,
+`aufs neue`, `zum besten` — and the line between the two groups is not one a
+reader can feel. The rule's doc comment carries the LanguageTool query that
+settles a candidate; a phrase LanguageTool accepts in *both* spellings does not
+belong in the table.
 
 Both consult closed stem lists only. `wider`/`wieder` is genuinely ambiguous for
 most stems (`widerhallen` and `wiederholen` are both correct), so anything not on

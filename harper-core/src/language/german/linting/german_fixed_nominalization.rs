@@ -11,6 +11,27 @@ use crate::{Token, TokenStringExt, document::Document};
 /// This is why the family cannot be Weir rules: Weir matches words
 /// case-insensitively, so a rule for `im übrigen` would also match the correct
 /// `Im Übrigen` and rewrite it.
+///
+/// **Only phrases where the capital is obligatory belong here.** The 1996
+/// reform capitalized this family, but for a handful of them it left the small
+/// letter standing as an equal variant — `bei weitem`, `ohne weiteres`, `von
+/// neuem`, `aufs neue`, `zum besten` are all still correct as written, and
+/// flagging them told writers that correct German was a mistake. They were in
+/// this table and are deliberately not any more.
+///
+/// The line between the two groups is not one a reader can feel, so check a
+/// candidate against LanguageTool, which encodes the official rules, before
+/// adding it — in both spellings:
+///
+/// ```bash
+/// docker start lt-bench   # erikvl87/languagetool, port 8010
+/// curl -s -X POST http://localhost:8010/v2/check -d language=de-DE \
+///     --data-urlencode "text=Das gilt im übrigen für alle." |
+///     python3 -c 'import json,sys; print([m["rule"]["id"] for m in json.load(sys.stdin)["matches"]])'
+/// ```
+///
+/// A phrase LanguageTool leaves alone in *both* spellings permits both and does
+/// not belong in this table.
 const FIXED_NOMINALIZATIONS: &[(&[&str], &str, &str)] = &[
     (&["im"], "übrigen", "Übrigen"),
     (&["im"], "allgemeinen", "Allgemeinen"),
@@ -24,14 +45,8 @@ const FIXED_NOMINALIZATIONS: &[(&[&str], &str, &str)] = &[
     (&["im"], "gegenteil", "Gegenteil"),
     (&["des"], "öfteren", "Öfteren"),
     (&["des"], "weiteren", "Weiteren"),
-    (&["ohne"], "weiteres", "Weiteres"),
-    (&["bei"], "weitem", "Weitem"),
-    (&["von"], "neuem", "Neuem"),
-    (&["aufs"], "neue", "Neue"),
-    (&["zum"], "besten", "Besten"),
     (&["fürs"], "erste", "Erste"),
     (&["auf", "dem"], "laufenden", "Laufenden"),
-    (&["auf", "das"], "neue", "Neue"),
     (&["seit", "geraumer"], "zeit", "Zeit"),
 ];
 
@@ -85,13 +100,20 @@ impl GermanFixedNominalization {
     ///
     /// The same words go both ways and only the noun tells them apart: *"im
     /// **Folgenden**"* is the nominalization, *"im folgenden **Jahr**"* is an
-    /// ordinary adjective. So is *"ohne weiteres **Geld**"* against *"ohne
-    /// **Weiteres**"*.
+    /// ordinary adjective. So is *"im einzelnen **Fall**"* against *"im
+    /// **Einzelnen**"*.
     ///
     /// A capital letter on the next word settles it. One adjective may stand in
     /// between — *"im übrigen deutschen **Sprachraum**"* — but only an adjective,
     /// so that a finite verb (*"im Folgenden **werden** Beispiele genannt"*) does
     /// not hide the nominalization behind the noun after it.
+    ///
+    /// And only an adjective that could really be in the *same* noun phrase.
+    /// *"im wesentlichen seinen **Höhepunkt**"* and *"im wesentlichen zwei
+    /// **Methoden**"* have a capitalized noun two words along and an adjective
+    /// reading in between, yet `wesentlichen` is the nominalization in both: the
+    /// noun phrase starts at `seinen` and at `zwei`, not before them.
+    /// [`opens_its_own_phrase`] is what tells them apart.
     fn modifies_a_following_noun(tokens: &[&Token], index: usize, document: &Document) -> bool {
         let capitalized = |offset: usize| -> bool {
             tokens
@@ -104,6 +126,13 @@ impl GermanFixedNominalization {
             return true;
         }
 
+        if tokens
+            .get(index + 1)
+            .is_some_and(|t| Self::opens_its_own_phrase(tokens[index], t, document))
+        {
+            return false;
+        }
+
         // Only an adjective may stand between the two. Testing the *ending*
         // instead would catch `werden` — *"im Folgenden werden Beispiele
         // genannt"* — and hide the nominalization behind the finite verb.
@@ -114,6 +143,36 @@ impl GermanFixedNominalization {
         let intervening_is_adjective = tokens.get(index + 1).is_some_and(|t| t.kind.is_adjective());
 
         intervening_is_adjective && capitalized(2)
+    }
+
+    /// Does `next` start a noun phrase of its own, rather than continue the one
+    /// the candidate would be in?
+    ///
+    /// Two signals, both grammatical rather than a list of words:
+    ///
+    /// - **A determiner.** German allows one per noun phrase and it comes
+    ///   first, so a determiner after the candidate means the candidate is not
+    ///   in the same phrase — *"im Wesentlichen **seinen** Höhepunkt"*.
+    /// - **A disagreeing ending.** Attributive adjectives in one phrase agree,
+    ///   and after `im` or `des` they are all weak: *"im übrigen deutschen
+    ///   Sprachraum"* is `-en` twice over. An adjective with a different ending,
+    ///   or none — *"im Wesentlichen **zwei** Methoden"* — belongs to something
+    ///   else. This is also why the cardinals need no list: `zwei`, `drei` and
+    ///   `vier` are uninflected and so can never agree.
+    fn opens_its_own_phrase(candidate: &Token, next: &Token, document: &Document) -> bool {
+        if next.kind.is_determiner() {
+            return true;
+        }
+
+        let ending = |token: &Token| {
+            let word: String = document.get_span_content(&token.span).iter().collect();
+            ["em", "en", "er", "es", "e"]
+                .into_iter()
+                .find(|suffix| word.ends_with(suffix))
+                .unwrap_or("")
+        };
+
+        ending(next) != ending(candidate)
     }
 }
 
@@ -179,8 +238,8 @@ mod tests {
             ("Das gilt im übrigen für alle.", "übrigen"),
             ("Er kommt des öfteren zu spät.", "öfteren"),
             ("Sie hielten ihn auf dem laufenden.", "laufenden"),
-            ("Das gelang ihm ohne weiteres.", "weiteres"),
-            ("Er war bei weitem der beste.", "weitem"),
+            ("Im einzelnen sind das drei Punkte.", "einzelnen"),
+            ("Fürs erste reicht das.", "erste"),
         ] {
             assert_eq!(flagged(text), vec![word.to_string()], "in {text:?}");
         }
@@ -203,9 +262,48 @@ mod tests {
         for text in [
             "Im folgenden Jahr hatte sie ein Konzert.",
             "Das gilt im allgemeinen Sinn für alle.",
-            "Der Automat wirft aus, ohne weiteres Geld zu fordern.",
+            "Im einzelnen Fall mag das anders sein.",
             "Das gilt im übrigen deutschen Sprachraum genauso.",
-            "Die Genese von neuem Wissen ist das Ideal.",
+        ] {
+            assert!(flagged(text).is_empty(), "should not fire on {text:?}");
+        }
+    }
+
+    /// A capitalized noun two words along does not make the candidate its
+    /// attribute: the noun phrase can start in between.
+    #[test]
+    fn a_new_noun_phrase_does_not_hide_the_nominalization() {
+        for (text, word) in [
+            (
+                "Der Idealismus erreichte im wesentlichen seinen Höhepunkt.",
+                "wesentlichen",
+            ),
+            (
+                "Man unterscheidet im wesentlichen zwei Methoden.",
+                "wesentlichen",
+            ),
+            (
+                "Das Buch ist im wesentlichen eine Ausarbeitung.",
+                "wesentlichen",
+            ),
+        ] {
+            assert_eq!(flagged(text), vec![word.to_string()], "in {text:?}");
+        }
+    }
+
+    /// The reform left the small letter standing as an equal variant in this
+    /// handful, so flagging them calls correct German a mistake.
+    ///
+    /// Verified against LanguageTool, which leaves every one of these alone in
+    /// both spellings; see the note on `FIXED_NOMINALIZATIONS`.
+    #[test]
+    fn leaves_the_phrases_that_permit_both_spellings_alone() {
+        for text in [
+            "Er war bei weitem der beste.",
+            "Das gelang ihm ohne weiteres.",
+            "Damit begann der Kreislauf von neuem.",
+            "Sie machten sich aufs neue an die Arbeit.",
+            "Er gab eine Geschichte zum besten.",
         ] {
             assert!(flagged(text).is_empty(), "should not fire on {text:?}");
         }

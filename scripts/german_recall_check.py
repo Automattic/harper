@@ -33,6 +33,20 @@ from pathlib import Path
 
 CLI = Path("target/release/harper-cli")
 
+# Fixed phrases whose nominalization *must* be capitalized, as whole phrases
+# rather than a preposition crossed with a word list: `des Allgemeinen` and `im
+# Weiteren` are not of this family, and injecting them scored the linter as
+# having missed something that was never an error.
+#
+# `bei Weitem`, `ohne Weiteres`, `von Neuem`, `aufs Neue` and `zum Besten` are
+# deliberately absent: the small letter is an equal variant in those, so
+# lower-casing them produces correct German. See `german_fixed_nominalization.rs`.
+FIXED_NOMINALIZATIONS = [
+    ("im", w) for w in
+    ("Übrigen", "Allgemeinen", "Wesentlichen", "Folgenden", "Besonderen", "Einzelnen",
+     "Klaren", "Geringsten", "Nachhinein")
+] + [("des", "Öfteren"), ("des", "Weiteren"), ("fürs", "Erste"), ("auf dem", "Laufenden")]
+
 # (name, pattern, replacement). The pattern matches correct German; the
 # replacement is the mistake. `\b` keeps them off the inside of longer words.
 INJECTIONS = [
@@ -59,7 +73,9 @@ INJECTIONS = [
     # comma belongs, so that is what the linter marks.
     ("missing comma", re.compile(r"(\w+), (weil|obwohl|falls|sobald|nachdem|bevor|sofern) "), r"\1 \2 "),
     # Capitalization
-    ("fixed nominalization", re.compile(r"\b(im|des|ohne|bei|von) (Übrigen|Allgemeinen|Wesentlichen|Folgenden|Öfteren|Weiteren|Weiteres|Weitem|Neuem)\b"), lambda m: f"{m.group(1)} {m.group(2).lower()}"),
+    ("fixed nominalization",
+     re.compile("|".join(rf"\b({p}) ({w})\b" for p, w in FIXED_NOMINALIZATIONS)),
+     lambda m: f"{m.group(m.lastindex - 1)} {m.group(m.lastindex).lower()}"),
     ("lowercase noun", re.compile(r"\b(der|die|das) ([A-ZÄÖÜ])(\w{4,})\b"), None),
 ]
 
