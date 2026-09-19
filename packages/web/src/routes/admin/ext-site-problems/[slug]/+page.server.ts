@@ -1,50 +1,26 @@
 import { redirect } from '@sveltejs/kit';
 import DomainReviews from '$lib/db/models/DomainReviews';
+import { computeDurationFromSlug, countOccurances } from '$lib/adminUtils';
 
 export const load = async ({ params }) => {
 	const slug = params.slug;
 
-	let date = null;
+  let duration = computeDurationFromSlug(slug);
 
-	switch (slug) {
-		case 'last30days':
-			date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-			break;
-		case 'lastday':
-			date = new Date(Date.now() - 24 * 60 * 60 * 1000);
-			break;
-		case 'lastweek':
-			date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 7);
-			break;
-		case 'all':
-			date = new Date(0);
-			break;
-	}
-
-	if (date == null) {
+	if (duration == null) {
 		redirect(302, '/admin/ext-site-problems/all');
 	}
 
-	const domainReviews = await DomainReviews.getAllSince(date);
+	const date = Date.now() - duration;
 
-	const counts: Record<string, number> = {};
+	const domainReviews = await DomainReviews.getAllSince(new Date(date));
+	const prevDomainReviews = await DomainReviews.getAllBetween(new Date(date - duration), new Date(date));
 
-	for (const item of domainReviews) {
-		const id = item.domain ?? 'OTHER';
-
-		// We are looking for _problematic_ domains, not ones that Harper already works on.
-		if (item.works) {
-			continue;
-		}
-
-		if (counts[id] === undefined) {
-			counts[id] = 1;
-		} else {
-			counts[id] += 1;
-		}
-	}
+	const counts: Record<string, number> = countOccurances(domainReviews.map(i => i.domain ?? "OTHER"));
+	const prevCounts: Record<string, number> = countOccurances(prevDomainReviews.map(i => i.domain ?? "OTHER"));
 
 	return {
 		counts,
+    prevCounts
 	};
 };

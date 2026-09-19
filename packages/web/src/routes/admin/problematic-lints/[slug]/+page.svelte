@@ -10,4 +10,4 @@ let links = {
 };
 </script>
 
-<AnalyticsPage data={data.counts} title="Most Reported Erroring Lint IDs" {links}/>
+<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Reported Erroring Lint IDs" {links}/>

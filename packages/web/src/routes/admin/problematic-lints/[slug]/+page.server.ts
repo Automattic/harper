@@ -1,45 +1,26 @@
 import { redirect } from '@sveltejs/kit';
 import ProblematicLints from '$lib/db/models/ProblematicLints';
+import { computeDurationFromSlug, countOccurances } from '$lib/adminUtils';
 
 export const load = async ({ params }) => {
 	const slug = params.slug;
 
-	let date = null;
+  let duration = computeDurationFromSlug(slug);
 
-	switch (slug) {
-		case 'last30days':
-			date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-			break;
-		case 'lastday':
-			date = new Date(Date.now() - 24 * 60 * 60 * 1000);
-			break;
-		case 'lastweek':
-			date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 7);
-			break;
-		case 'all':
-			date = new Date(0);
-			break;
-	}
-
-	if (date == null) {
+	if (duration == null) {
 		redirect(302, '/admin/problematic-lints/all');
 	}
 
-	const problematicLints = await ProblematicLints.getAllSince(date);
+	const date = Date.now() - duration;
 
-	const counts: Record<string, number> = {};
+	const problematicLints = await ProblematicLints.getAllSince(new Date(date));
+	const prevProblematicLints = await ProblematicLints.getAllBetween(new Date(date - duration), new Date(date));
 
-	for (const item of problematicLints) {
-		const id = item.rule_id ?? 'OTHER';
-
-		if (counts[id] === undefined) {
-			counts[id] = 1;
-		} else {
-			counts[id] += 1;
-		}
-	}
+	const counts: Record<string, number> = countOccurances(problematicLints.map(i => i.rule_id ?? "OTHER"));
+	const prevCounts: Record<string, number> = countOccurances(prevProblematicLints.map(i => i.rule_id ?? "OTHER"));
 
 	return {
 		counts,
+    prevCounts
 	};
 };
