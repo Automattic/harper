@@ -77,6 +77,10 @@ impl Expr for MergeableWords {
 
         None
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 MERGEABLE WORDS");
+        None // Not implemented
+    }
 }
 
 #[cfg(test)]

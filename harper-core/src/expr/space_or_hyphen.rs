@@ -16,4 +16,8 @@ impl Expr for SpaceOrHyphen {
         ])
         .run(cursor, tokens, source)
     }
+    fn run_rev(&self, _cursor: usize, _tokens: &[Token], _source: &[char]) -> Option<Span<Token>> {
+        eprintln!("🛑 SPACE/HYPHEN");
+        None // Not implemented
+    }
 }
