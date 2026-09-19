@@ -238,6 +238,7 @@ mod phrase_set_corrections;
 mod pique_interest;
 mod pleaded_pled;
 mod plural_decades;
+mod plural_noun_seems;
 mod plural_wrong_word_of_phrase;
 mod pooled_linter;
 mod possessive_noun;
