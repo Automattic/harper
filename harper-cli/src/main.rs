@@ -1,12 +1,13 @@
 #![doc = include_str!("../README.md")]
 
+use harper_core::language::{Language, parse_language};
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
-// use std::sync::Arc;
+use std::sync::Arc;
 use std::{fs, process};
 
 use anyhow::anyhow;
@@ -243,7 +244,10 @@ fn main() -> anyhow::Result<()> {
     }
 
     let markdown_options = MarkdownOptions::default();
-    let curated_dictionary = FstDictionary::curated();
+    // Deferred on purpose: `FstDictionary::curated()` forces a `LazyLock` that
+    // costs about 130 MB and 0.2 s. Subcommands that lint in another language
+    // never need the English dictionary, so let each arm ask for it.
+    let curated_dictionary = FstDictionary::curated;
 
     match cli.command {
         Args::Lint {
@@ -262,9 +266,15 @@ fn main() -> anyhow::Result<()> {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
 
+            // Use language-specific dictionary based on dialect
+            let lang_curated_dictionary: Arc<dyn Dictionary> = {
+                use harper_core::language::registry::dictionary;
+                dictionary(dialect)
+            };
+
             lint(
                 markdown_options,
-                curated_dictionary,
+                lang_curated_dictionary,
                 inputs,
                 LintOptions {
                     count,
@@ -287,7 +297,7 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
-            let (doc, _) = input.load(markdown_options, &curated_dictionary)?;
+            let (doc, _) = input.load(markdown_options, &curated_dictionary())?;
 
             for token in doc.tokens() {
                 let json = serde_json::to_string(&token)?;
@@ -304,7 +314,7 @@ fn main() -> anyhow::Result<()> {
             let input = input.unwrap_or_read_from_stdin();
 
             // Load the file/text.
-            let (doc, source) = input.load(markdown_options, &curated_dictionary)?;
+            let (doc, source) = input.load(markdown_options, &curated_dictionary())?;
 
             let primary_color = Color::Blue;
             let secondary_color = Color::Magenta;
@@ -352,17 +362,18 @@ fn main() -> anyhow::Result<()> {
             // Try to read from standard input if `input` was not provided.
             let input = input.unwrap_or_read_from_stdin();
 
+            let dictionary = curated_dictionary();
             let parser = if isolate_english {
                 Box::new(IsolateEnglish::new(
                     input.get_parser(markdown_options),
-                    &curated_dictionary,
+                    &dictionary,
                 ))
             } else {
                 input.get_parser(markdown_options)
             };
 
             // Load the file/text.
-            let (doc, source) = input.load_with_parser(&parser, &curated_dictionary)?;
+            let (doc, source) = input.load_with_parser(&parser, &dictionary)?;
 
             let input_identifier = input.get_identifier();
 
@@ -383,7 +394,7 @@ fn main() -> anyhow::Result<()> {
         Args::Words => {
             let mut word_str = String::new();
 
-            for word in curated_dictionary.words_iter() {
+            for word in curated_dictionary().words_iter() {
                 word_str.clear();
                 word_str.extend(word);
 
@@ -407,8 +418,9 @@ fn main() -> anyhow::Result<()> {
                 ("I👤", DictWordMetadata::is_pronoun),
             ];
 
+            let dictionary = curated_dictionary();
             for word in words {
-                let meta = curated_dictionary.get_word_metadata_str(&word);
+                let meta = dictionary.get_word_metadata_str(&word);
                 let (flags, emojis) = meta.as_ref().map_or_else(
                     || (String::new(), String::new()),
                     |md| {
@@ -516,7 +528,7 @@ fn main() -> anyhow::Result<()> {
                 description: String,
             }
 
-            let linter = LintGroup::new_curated(curated_dictionary, Dialect::American);
+            let linter = LintGroup::new_curated(curated_dictionary(), Dialect::American);
 
             let default_config: HashMap<String, bool> =
                 serde_json::from_str(&serde_json::to_string(&linter.config).unwrap()).unwrap();
@@ -539,7 +551,7 @@ fn main() -> anyhow::Result<()> {
         }
         Args::MineWords { input } => {
             let input = input.unwrap_or_read_from_stdin();
-            let (doc, _source) = input.load(MarkdownOptions::default(), &curated_dictionary)?;
+            let (doc, _source) = input.load(MarkdownOptions::default(), &curated_dictionary())?;
 
             let mut words = HashMap::new();
 
@@ -854,7 +866,7 @@ fn main() -> anyhow::Result<()> {
             let mut compound_map: HashMap<String, Vec<String>> = HashMap::new();
 
             // First pass: process open and hyphenated compounds
-            for word in curated_dictionary.words_iter() {
+            for word in curated_dictionary().words_iter() {
                 if !word.contains(&' ') && !word.contains(&'-') {
                     continue;
                 }
@@ -873,7 +885,7 @@ fn main() -> anyhow::Result<()> {
             }
 
             // Second pass: process closed compounds
-            for word in curated_dictionary.words_iter() {
+            for word in curated_dictionary().words_iter() {
                 if word.contains(&' ') || word.contains(&'-') {
                     continue;
                 }
@@ -910,8 +922,8 @@ fn main() -> anyhow::Result<()> {
                 | OrthFlags::UPPER_CAMEL;
             let mut processed_words = HashMap::new();
             let mut longest_word = 0;
-            for word in curated_dictionary.words_iter() {
-                if let Some(metadata) = curated_dictionary.get_word_metadata(word) {
+            for word in curated_dictionary().words_iter() {
+                if let Some(metadata) = curated_dictionary().get_word_metadata(word) {
                     let orth = metadata.orth_info;
                     let bits = orth.bits() & case_bitmask.bits();
 
@@ -937,7 +949,7 @@ fn main() -> anyhow::Result<()> {
             // Get input from either file or direct text
             let (doc, _) = input
                 .unwrap_or_read_from_stdin()
-                .load(MarkdownOptions::default(), &curated_dictionary)?;
+                .load(MarkdownOptions::default(), &curated_dictionary())?;
 
             let phrases: Vec<_> = doc
                 .iter_nominal_phrases()
@@ -1014,17 +1026,10 @@ fn main() -> anyhow::Result<()> {
     }
 }
 
-/// Parse a dialect string into a Dialect enum value.
+/// Parse a dialect string into a Language value.
 /// Supports common synonyms, abbreviations, and codes.
-fn parse_dialect(dialect: &str) -> anyhow::Result<Dialect> {
-    match dialect.to_lowercase().as_str() {
-        "us" | "usa" | "america" | "american" | "en-us" | "en_us" => Ok(Dialect::American),
-        "uk" | "gb" | "british" | "britain" | "en-gb" | "en_gb" => Ok(Dialect::British),
-        "au" | "aus" | "australia" | "australian" | "en-au" | "en_au" => Ok(Dialect::Australian),
-        "in" | "india" | "indian" | "bharat" | "en-in" | "en_in" => Ok(Dialect::Indian),
-        "ca" | "canada" | "canadian" | "en-ca" | "en_ca" => Ok(Dialect::Canadian),
-        _ => Err(anyhow!("Unknown dialect: {}", dialect)),
-    }
+fn parse_dialect(dialect: &str) -> anyhow::Result<Language> {
+    parse_language(dialect).ok_or_else(|| anyhow!("Unknown dialect: {}", dialect))
 }
 
 /// Split a dictionary line into its word and annotation segments

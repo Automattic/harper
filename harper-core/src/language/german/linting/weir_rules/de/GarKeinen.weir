@@ -1,0 +1,13 @@
+# "gar" is a free-standing particle, like in "gar nicht". Closed up, "garkeinen"
+# still decomposes into two real words, so the spell checker accepts it.
+expr main garkeinen
+
+let message "»gar keinen« wird getrennt geschrieben."
+let description "Trennt das fälschlich zusammengeschriebene »garkeinen« zu »gar keinen«."
+let kind "Spelling"
+let becomes "gar keinen"
+let strategy "MatchCase"
+
+test "Er hat garkeinen Zeit." "Er hat gar keinen Zeit."
+
+allows "Er hat gar keinen Zeit."

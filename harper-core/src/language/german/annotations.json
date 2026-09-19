@@ -1,0 +1,2361 @@
+{
+	"affixes": {
+		"B": {
+			"#": "'-heit' feminine noun suffix (safe)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "heit",
+					"condition": "[^h]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"gender": "Feminine"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"E": {
+			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "n",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": { "number": "Plural" }
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"G": {
+			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[dtw]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[^dimnÃstwzx]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "eien"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[^e]ien"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "chnen"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[^c]h[mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[^aÃ¤ehilmnoÃ¶uÃ¼r][mn]en"
+				},
+				{
+					"remove": "en",
+					"add": "st",
+					"condition": "[aÃ¤eilmnoÃ¶uÃ¼r][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "un"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "[Ãsxz]en"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "ssen"
+				},
+				{
+					"remove": "n",
+					"add": "st",
+					"condition": "schen"
+				},
+				{
+					"remove": "t",
+					"add": "st",
+					"condition": "[^sz]t"
+				},
+				{
+					"remove": "t",
+					"add": "est",
+					"condition": "zt"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"verb": {}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"H": {
+			"#": "Bare '-s' on a noun that is not thereby a plural: the genitive of a proper name (Oesterreichs Hauptstadt, Goethes Werke, Peters Buch) and the '-s' of names that simply end in one. Mirrors hunspell de_DE SFX S. Deliberately not 'b', which is the same surface rule but declares the result a plural noun and the base one too -- true for 'Autos', wrong for 'Oesterreichs'. 'H' previously held an uppercase compound marker with no interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'h' -- see the collision table in README.md.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"I": {
+			"#": "Compound word formation - noun + noun with 's' interfix",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"K": {
+			"#": "Feminine derivation '-in' (Movierung): Lehrer -> Lehrerin, Biologe -> Biologin, Arzt -> Aerztin is irregular and stays a separate entry. Mirrors the singular half of hunspell de_DE SFX F, including the interior-capital spelling German writes as LehrerIn. The plural is on 'L'. 'K' previously held an uppercase compound '-n' interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'k' -- see the collision table in README.md.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "e",
+					"add": "in",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^enr]"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "in",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "in",
+					"condition": "[^i]erer"
+				},
+				{
+					"remove": "in",
+					"add": "In",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "In",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^en]"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "In",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "In",
+					"condition": "[^i]erer"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": { "gender": "Feminine" }
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"L": {
+			"#": "Feminine plural '-innen', the plural of the 'K' derivation (Lehrerinnen, Biologinnen, and LehrerInnen). Mirrors the plural half of hunspell de_DE SFX F. Split from 'K' for the same reason '8' is split from '7': the plural forms need a plural reading of their own. 'L' previously held an uppercase compound '-en' interfix that no entry carried.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "nen",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "innen",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^enr]"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "innen",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "innen",
+					"condition": "[^i]erer"
+				},
+				{
+					"remove": "in",
+					"add": "Innen",
+					"condition": "in"
+				},
+				{
+					"remove": "e",
+					"add": "Innen",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^i]n"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^en]"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^e]r"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^r]er"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "[^e]rer"
+				},
+				{
+					"remove": "",
+					"add": "Innen",
+					"condition": "ierer"
+				},
+				{
+					"remove": "er",
+					"add": "Innen",
+					"condition": "[^i]erer"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": { "gender": "Feminine", "number": "Plural" }
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"o": {
+			"#": "Compound word formation - noun + noun with 'es' interfix (lowercase alias)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"s": {
+			"#": "Strong preterite personal endings on a preterite stem (zog -> zogst, zogt, zogen; hielt -> hieltest, hieltet). Mirrors hunspell de_DE SFX Z. Strong verbs ablaut, so the preterite stem cannot be derived from the infinitive: igerman98 lists 'zog' and 'schrieb' as headwords of their own and this flag inflects them. 's' was the last character free in both namespaces -- see the collision table in README.md.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^hßsz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^c]h"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^s]ch"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[dfkstz]"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "ch"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[au]ß"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "ieß"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[io]ss"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^dt]"
+				},
+				{
+					"remove": "",
+					"add": "et",
+					"condition": "[dt]"
+				},
+				{
+					"remove": "",
+					"add": "n",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "ie"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "iess"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[au]ss"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
+		"O": {
+			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"Q": {
+			"#": "Adjective declension -em (masculine/neuter dative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "em",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"R": {
+			"#": "Adjective declension -en (plural and masculine/neuter genitive singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"S": {
+			"#": "Adjective declension -er (masculine nominative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"T": {
+			"#": "Adjective declension -es (neuter nominative/accusative singular)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"U": {
+			"#": "Adjective comparative, declined (groß -> größere, teuer -> teurere). Mirrors hunspell de_DE SFX C.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "ere",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "re",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "rer",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ren",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "rem",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "res",
+					"condition": "e"
+				},
+				{
+					"remove": "",
+					"add": "ere",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^e][lr]"
+				},
+				{
+					"remove": "el",
+					"add": "lere",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "lerer",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "leren",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "lerem",
+					"condition": "el"
+				},
+				{
+					"remove": "el",
+					"add": "leres",
+					"condition": "el"
+				},
+				{
+					"remove": "er",
+					"add": "rere",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "rerer",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "reren",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "rerem",
+					"condition": "uer"
+				},
+				{
+					"remove": "er",
+					"add": "reres",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "ere",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "erer",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "eren",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "erem",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "",
+					"add": "eres",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "lig",
+					"add": "eligere",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligerer",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligeren",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligerem",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligeres",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigere",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigerer",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigeren",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigerem",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigeres",
+					"condition": "[^hi]erig"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {},
+						"morphology": {
+							"adjective": {
+								"degree": "Comparative"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"W": {
+			"#": "Adjective superlative, declined (groß -> größte, komplex -> komplexesten). Mirrors hunspell de_DE SFX C.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[kÃsuxz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "et"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "igt"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^i]gt"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^eg]t"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "[^kÃstxz]"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "ste",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "ster",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "sten",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "stem",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "stes",
+					"condition": "nd"
+				},
+				{
+					"remove": "",
+					"add": "est",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "este",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "ester",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "esten",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "estem",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "",
+					"add": "estes",
+					"condition": "[^n]d"
+				},
+				{
+					"remove": "lig",
+					"add": "eligst",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligste",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligster",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligsten",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligstem",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "lig",
+					"add": "eligstes",
+					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigst",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigste",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigster",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigsten",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigstem",
+					"condition": "[^hi]erig"
+				},
+				{
+					"remove": "erig",
+					"add": "rigstes",
+					"condition": "[^hi]erig"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {},
+						"morphology": {
+							"adjective": {
+								"degree": "Superlative"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"adjective": {}
+			},
+			"rename_ok": true
+		},
+		"X": {
+			"#": "Noun plural -e (Frau -> Frauen)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"Y": {
+			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See scripts/split_german_plural_n.py",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"a": {
+			"#": "Noun plural -er, with the dative -ern (die Bilder, den Bildern). Mirrors hunspell de_DE SFX R. The umlauted stems are separate entries; the rule itself does not umlaut, which is why the old one-line version generated 'manner' for 'Mann'.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "ern",
+					"condition": "[^e]"
+				},
+				{
+					"remove": "",
+					"add": "r",
+					"condition": "e"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"b": {
+			"#": "Noun plural -s (Auto -> Autos)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "s",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
+		"c": {
+			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Mirrors hunspell de_DE SFX D. Attaches to the stem like the other conjugation flags, so the infinitive ending comes off first.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "en",
+					"add": "end",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ende",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "endem",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "enden",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ender",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "endes",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "end",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ende",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "endem",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "enden",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ender",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "endes",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "end",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ende",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "endem",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "enden",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ender",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "endes",
+					"condition": "eln"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "end",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ende",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "endem",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "enden",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ender",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "endes",
+					"condition": "[^n]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"d": {
+			"#": "Verb preterite -te (lern-te)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "[dtw]en"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "eien"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "[^e]ien"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "chnen"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "[^c]h[mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "[^aäehilmnoöuür][mn]en"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "un"
+				},
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
+		"e": {
+			"#": "Verb preterite -ten (lern-ten)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "[dtw]en"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "eien"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "[^e]ien"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "chnen"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "[^c]h[mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "[^aäehilmnoöuür][mn]en"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "un"
+				},
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			},
+			"rename_ok": true
+		},
+		"f": {
+			"#": "Verb present -e (lern-e)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "en",
+					"add": "e",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "e",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "e",
+					"condition": "eln"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"i": {
+			"#": "Verb present -t (lern-t). NOTE: like 'h', 'i' is also used as a bookkeeping marker on noun entries, so it must not inject a part of speech. It only generates the -t surface form; the verb reading comes from 'V'/'j'/'f'/'d'/'e'.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "e[lr]n"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "[dtw]en"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "[^dimntw]en"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "eien"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "[^e]ien"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "chnen"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "[^c]h[mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "[^aäehilmnoöuür][mn]en"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "[aäeilmnoöuür][mn]en"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "un"
+				},
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"j": {
+			"#": "Verb present/plural -en (lern-en)",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "en",
+					"add": "en",
+					"condition": "en"
+				},
+				{
+					"remove": "n",
+					"add": "n",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "n",
+					"condition": "eln"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^erl]n"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]rn"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e]ln"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {}
+			},
+			"rename_ok": true
+		},
+		"k": {
+			"#": "Verb past participle -t (regular verbs: ge-macht, ge-lernt)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "ge[^t]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"l": {
+			"#": "Verb past participle -en (strong verbs: ge-schrieben, ge-laufen)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "ge[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"m": {
+			"#": "Verb past participle without ge- prefix (insep. prefixes: be-, er-, ver-, zer-, ent-, emp-)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "t",
+					"condition": "(be|er|ver|zer|ent|emp|miss)[^t]"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "(be|er|ver|zer|ent|emp|miss)[^n]"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"n": {
+			"#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen, fehl-geschlagen)",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "geschlagen",
+					"condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|fehl|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
+				}
+			],
+			"target": [],
+			"base_metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			},
+			"rename_ok": true
+		},
+		"7": {
+			"#": "'-ung' nominalization of a verb. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). Pair with '8' for the plural.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "ung",
+					"condition": "[bgkpßsz]eln"
+				},
+				{
+					"remove": "eln",
+					"add": "lung",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ung",
+					"condition": "ern"
+				},
+				{
+					"remove": "en",
+					"add": "ung",
+					"condition": "en"
+				},
+				{
+					"remove": "",
+					"add": "ung",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "el",
+					"add": "lung",
+					"condition": "el"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"gender": "Feminine"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"8": {
+			"#": "'-ungen', the plural of the '7' nominalization. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). A separate flag because `target` metadata is per flag, not per replacement, and the plural has to be marked as one.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "ungen",
+					"condition": "[bgkpßsz]eln"
+				},
+				{
+					"remove": "eln",
+					"add": "lungen",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ungen",
+					"condition": "ern"
+				},
+				{
+					"remove": "en",
+					"add": "ungen",
+					"condition": "en"
+				},
+				{
+					"remove": "",
+					"add": "ungen",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "el",
+					"add": "lungen",
+					"condition": "el"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": {
+								"gender": "Feminine",
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"9": {
+			"#": "'un-' negating prefix (unangenehm, unbekannt). Mirrors hunspell de_DE PFX U. Cross-product so the prefixed form still takes the base's declension suffixes: un + bekannt -> unbekannt -> unbekannte. A digit because affixes and properties share one namespace and 'U' is already the adjective comparative.",
+			"kind": "prefix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "un",
+					"condition": "."
+				}
+			],
+			"target": [],
+			"base_metadata": {},
+			"rename_ok": true
+		},
+		"0": {
+			"#": "Noun genitive -es (des Hauses). Mirrors hunspell de_DE SFX T. Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "."
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		}
+	},
+	"properties": {
+		"1": {
+			"#": "Spelled-out cardinal numeral (German). Lower case in running text; used attributively it licenses a following noun.",
+			"metadata": {
+				"pos_tag": "NUM"
+			}
+		},
+		"2": {
+			"#": "Unit abbreviation (German), e.g. km, kg, kWh. Written lower case and must never be 'corrected' to a capitalized noun.",
+			"metadata": {
+				"abbreviation": true
+			}
+		},
+		"3": {
+			"#": "Latin/Greek etymology term appearing lower case in German prose (de facto, Homo sapiens). Not a miscapitalized German noun.",
+			"metadata": {
+				"morphology": {
+					"is_foreign": true
+				}
+			}
+		},
+		"4": {
+			"#": "Determiner (German): articles and other determiners. Collision-free digit flag; the letter 'D' is also the -ung affix and would generate junk forms.",
+			"metadata": {
+				"determiner": {}
+			}
+		},
+		"5": {
+			"#": "Pronoun (German). Collision-free digit flag; the letter 'I' is also the noun+s compound interfix affix.",
+			"metadata": {
+				"pronoun": {}
+			}
+		},
+		"6": {
+			"#": "Conjunction (German). Collision-free digit flag; the letter 'C' is also the -keit suffix affix.",
+			"metadata": {
+				"conjunction": {}
+			}
+		},
+		"A": {
+			"#": "adjective property (German) - alias for J",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"C": {
+			"#": "conjunction property (German)",
+			"metadata": {
+				"conjunction": {}
+			}
+		},
+		"D": {
+			"#": "determiner property (German - articles)",
+			"metadata": {
+				"determiner": {}
+			}
+		},
+		"F": {
+			"#": "feminine noun property (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"gender": "Feminine"
+					}
+				}
+			}
+		},
+		"I": {
+			"#": "pronoun property (German)",
+			"metadata": {
+				"pronoun": {}
+			}
+		},
+		"J": {
+			"#": "adjective property (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"M": {
+			"#": "masculine noun property (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"gender": "Masculine"
+					}
+				}
+			}
+		},
+		"N": {
+			"#": "noun property (German)",
+			"metadata": {
+				"noun": {}
+			}
+		},
+		"O": {
+			"#": "adjective declension -e (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"P": {
+			"#": "preposition property (German)",
+			"metadata": {
+				"preposition": true
+			}
+		},
+		"Q": {
+			"#": "adjective declension -em (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"R": {
+			"#": "adverb property (German)",
+			"metadata": {
+				"adverb": {}
+			}
+		},
+		"S": {
+			"#": "adjective declension -er (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"T": {
+			"#": "adjective declension -es (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"U": {
+			"#": "adjective comparative -er (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"V": {
+			"#": "verb property (German)",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"W": {
+			"#": "adjective superlative -sten (German)",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"X": {
+			"#": "noun plural -e (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
+		"E": {
+			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see scripts/split_german_plural_n.py",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
+		"Y": {
+			"#": "noun plural -en (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
+		"Z": {
+			"#": "neuter noun property (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"gender": "Neuter"
+					}
+				}
+			}
+		},
+		"a": {
+			"#": "noun plural -er with umlaut (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
+		"b": {
+			"#": "noun plural -s (German)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Plural"
+					}
+				}
+			}
+		},
+		"c": {
+			"#": "verb present participle -enden (German)",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"e": {
+			"#": "verb preterite -ten (German)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
+		"g": {
+			"#": "verb past participle property (German: ge- prefix)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST_PARTICIPLE"
+				}
+			}
+		},
+		"j": {
+			"#": "verb infinitive/plural -en (German)",
+			"metadata": {
+				"verb": {}
+			}
+		},
+		"p": {
+			"#": "Nominative case flag (German)",
+			"metadata": {}
+		},
+		"q": {
+			"#": "Compound adjective flag - words with this flag can participate in adjective compound formation",
+			"metadata": {
+				"adjective": {}
+			}
+		},
+		"r": {
+			"#": "adverb property (German - lowercase)",
+			"metadata": {
+				"adverb": {}
+			}
+		},
+		"t": {
+			"#": "verb past tense property (German)",
+			"metadata": {
+				"verb": {
+					"verb_form": "PAST"
+				}
+			}
+		},
+		"u": {
+			"#": "Accusative case flag (German)",
+			"metadata": {}
+		},
+		"v": {
+			"#": "Dative case flag (German)",
+			"metadata": {}
+		},
+		"w": {
+			"#": "Genitive case flag (German)",
+			"metadata": {}
+		},
+		"x": {
+			"#": "Imperative mood flag (German)",
+			"metadata": {
+				"verb": {},
+				"morphology": {
+					"mood": "Imperative"
+				}
+			}
+		},
+		"y": {
+			"#": "Subjunctive I mood flag (German - Konjunktiv I)",
+			"metadata": {
+				"verb": {},
+				"morphology": {
+					"mood": "SubjunctiveI"
+				}
+			}
+		},
+		"z": {
+			"#": "neuter noun property (German - alternative)",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"gender": "Neuter"
+					}
+				}
+			}
+		},
+		"h": {
+			"#": "Compound-capability marker. Generates nothing — it is bookkeeping, appended to nearly every vetted noun entry, and `CompoundChecker` reads it to decide whether a short word may act as a compound element. The '-st' affix that used to live here moved to 'G'.",
+			"metadata": {}
+		}
+	}
+}

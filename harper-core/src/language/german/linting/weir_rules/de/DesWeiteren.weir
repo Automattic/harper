@@ -1,0 +1,17 @@
+# Since the 1996 reform the nominalised adjective is capitalised and separate:
+# "des Weiteren", not "desweiteren".
+#
+# Only the closed-up spelling is matched. Weir matches words case-insensitively,
+# so a pattern for "des weiteren" would fire on the correct "des Weiteren" too.
+expr main desweiteren
+
+let message "Es heißt »des Weiteren« – getrennt und großgeschrieben."
+let description "Korrigiert »desweiteren« zu »des Weiteren«."
+let kind "Spelling"
+let becomes "des Weiteren"
+let strategy "Exact"
+
+test "Es gilt desweiteren die Regel." "Es gilt des Weiteren die Regel."
+
+allows "Des Weiteren gilt die Regel."
+allows "Es gilt des Weiteren die Regel."

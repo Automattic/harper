@@ -1,0 +1,16 @@
+# "Voraussetzung" has one r: the prefix is "voraus-", not "vor-raus-". The spell
+# checker cannot see the error, because "vorraussetzung" decomposes into the real
+# words "vor" + "raus" + "setzung".
+expr main [vorraussetzung, vorrausetzung]
+
+let message "»Voraussetzung« wird mit einem »r« geschrieben."
+let description "Korrigiert die häufige Fehlschreibung »Vorraussetzung«."
+let kind "Spelling"
+let becomes "Voraussetzung"
+let strategy "Exact"
+
+test "Das ist eine Vorraussetzung." "Das ist eine Voraussetzung."
+test "Die Vorrausetzung fehlt." "Die Voraussetzung fehlt."
+
+allows "Das ist eine Voraussetzung."
+allows "Die Voraussetzungen sind erfüllt."
