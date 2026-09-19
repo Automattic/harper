@@ -61,6 +61,14 @@ impl ExprLinter for ExpandTimeShorthands {
 
         let offending_text = offending_span.get_content(source);
 
+        // In reading-time phrases, `min` is already the conventional noun
+        // abbreviation: "10 min read" should remain unchanged.
+        if offending_text.iter().collect::<String>() == "min"
+            && source[offending_span.end..].iter().collect::<String>().starts_with(" read")
+        {
+            return None;
+        }
+
         let replacement =
             Self::get_replacement(&offending_text.iter().collect::<String>(), implies_plural)?;
 
@@ -165,5 +173,10 @@ mod tests {
     #[test]
     fn handles_adjacent_number_second() {
         assert_suggestion_result("30sec", ExpandTimeShorthands::new(), "30 seconds");
+    }
+
+    #[test]
+    fn leaves_reading_time_abbreviation_unchanged() {
+        assert_suggestion_result("10 min read", ExpandTimeShorthands::new(), "10 min read");
     }
 }
