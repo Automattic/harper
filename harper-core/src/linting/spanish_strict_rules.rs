@@ -35,22 +35,27 @@ impl Linter for SpanishStrictRules {
 
         // 1. REGLAS DE PUNTUACIÓN DE LA RAE: No poner punto (.) después de '?' o '!' y obligatoriedad de '¿' y '¡'
         for chunk in document.iter_chunks() {
-            let has_closing_q = chunk.iter().any(|t| document.get_span_content_str(&t.span) == "?");
-            let has_opening_q = chunk.iter().any(|t| document.get_span_content_str(&t.span) == "¿");
+            let has_closing_q = chunk
+                .iter()
+                .any(|t| document.get_span_content_str(&t.span) == "?");
+            let has_opening_q = chunk
+                .iter()
+                .any(|t| document.get_span_content_str(&t.span) == "¿");
 
-            if has_closing_q && !has_opening_q {
-                if let Some(first_word) = chunk.iter_words().next() {
-                    let word_str = document.get_span_content_str(&first_word.span);
-                    lints.push(Lint {
-                        span: first_word.span,
-                        lint_kind: LintKind::Punctuation,
-                        message: "En español es obligatorio el uso del signo de apertura de interrogación ('¿') al inicio de la pregunta.".to_string(),
-                        suggestions: vec![Suggestion::ReplaceWith(
-                            format!("¿{}", word_str).chars().collect(),
-                        )],
-                        priority: 22,
-                    });
-                }
+            if has_closing_q
+                && !has_opening_q
+                && let Some(first_word) = chunk.iter_words().next()
+            {
+                let word_str = document.get_span_content_str(&first_word.span);
+                lints.push(Lint {
+                    span: first_word.span,
+                    lint_kind: LintKind::Punctuation,
+                    message: "En español es obligatorio el uso del signo de apertura de interrogación ('¿') al inicio de la pregunta.".to_string(),
+                    suggestions: vec![Suggestion::ReplaceWith(
+                        format!("¿{}", word_str).chars().collect(),
+                    )],
+                    priority: 22,
+                });
             }
         }
 
@@ -81,12 +86,17 @@ impl Linter for SpanishStrictRules {
                 let first_tok = &chunk[window[0]];
                 let second_tok = &chunk[window[1]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
 
                 // a) "el" + verbo -> "él" (ej: "el dijo", "el comió", "el fue", "el quiere", "el sabe")
                 const COMMON_VERBS: &[&str] = &[
-                    "dijo", "comió", "fue", "quiere", "sabe", "hizo", "habló", "vino", "está", "es", "tiene", "vuelve", "corrió", "ganó", "perdió"
+                    "dijo", "comió", "fue", "quiere", "sabe", "hizo", "habló", "vino", "está",
+                    "es", "tiene", "vuelve", "corrió", "ganó", "perdió",
                 ];
 
                 if first_str == "el" && COMMON_VERBS.contains(&second_str.as_str()) {
@@ -103,11 +113,19 @@ impl Linter for SpanishStrictRules {
                 }
 
                 // b) "tu" + verbo -> "tú" (ej: "tu eres", "tu sabes", "tu quieres", "tu dices")
-                if first_str == "tu" && (COMMON_VERBS.contains(&second_str.as_str()) || second_str == "eres" || second_str == "sabes" || second_str == "dices") {
+                if first_str == "tu"
+                    && (COMMON_VERBS.contains(&second_str.as_str())
+                        || second_str == "eres"
+                        || second_str == "sabes"
+                        || second_str == "dices")
+                {
                     lints.push(Lint {
                         span: first_tok.span,
                         lint_kind: LintKind::Grammar,
-                        message: format!("Pronombre personal: 'tú' se escribe con tilde ante el verbo '{}'.", second_str),
+                        message: format!(
+                            "Pronombre personal: 'tú' se escribe con tilde ante el verbo '{}'.",
+                            second_str
+                        ),
                         suggestions: vec![Suggestion::replace_with_match_case(
                             "tú".chars().collect(),
                             document.get_span_content(&first_tok.span),
@@ -149,7 +167,9 @@ impl Linter for SpanishStrictRules {
                     lints.push(Lint {
                         span: second_tok.span,
                         lint_kind: LintKind::Grammar,
-                        message: "Forma del verbo saber/ser: 'sé' lleva tilde diacrítica ('no sé').".to_string(),
+                        message:
+                            "Forma del verbo saber/ser: 'sé' lleva tilde diacrítica ('no sé')."
+                                .to_string(),
                         suggestions: vec![Suggestion::replace_with_match_case(
                             "sé".chars().collect(),
                             document.get_span_content(&second_tok.span),

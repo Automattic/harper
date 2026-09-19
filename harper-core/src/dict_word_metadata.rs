@@ -1156,6 +1156,7 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
                 df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
+                df if df.is_dialect_enabled_strict(Dialect::Spanish) => Ok(Dialect::Spanish),
                 _ => Err(()),
             }
         } else {

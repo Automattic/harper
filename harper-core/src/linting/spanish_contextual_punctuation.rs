@@ -27,8 +27,12 @@ impl Linter for SpanishContextualPunctuation {
                 let prev_token = &chunk[window[0]];
                 let curr_token = &chunk[window[1]];
 
-                let _prev_str = document.get_span_content_str(&prev_token.span).to_lowercase();
-                let curr_str = document.get_span_content_str(&curr_token.span).to_lowercase();
+                let _prev_str = document
+                    .get_span_content_str(&prev_token.span)
+                    .to_lowercase();
+                let curr_str = document
+                    .get_span_content_str(&curr_token.span)
+                    .to_lowercase();
 
                 // Caso 1: Coma requerida antes de "pero", "sino", "aunque" en oraciones compuestas
                 if ADVERSATIVE_CONJUNCTIONS.contains(&curr_str.as_str()) {
@@ -36,7 +40,10 @@ impl Linter for SpanishContextualPunctuation {
                     let span_between = crate::Span::new(prev_token.span.end, curr_token.span.start);
                     let text_between = document.get_span_content_str(&span_between);
 
-                    if !text_between.contains(',') && !text_between.contains(';') && !text_between.contains('.') {
+                    if !text_between.contains(',')
+                        && !text_between.contains(';')
+                        && !text_between.contains('.')
+                    {
                         lints.push(Lint {
                             span: curr_token.span,
                             lint_kind: LintKind::Punctuation,

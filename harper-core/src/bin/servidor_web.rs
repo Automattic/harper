@@ -18,7 +18,11 @@ struct LintResponse {
     suggestions: Vec<String>,
 }
 
-fn handle_client(mut stream: TcpStream, linter: &mut LintGroup, document_builder: &impl Fn(&str) -> Document) {
+fn handle_client(
+    mut stream: TcpStream,
+    linter: &mut LintGroup,
+    document_builder: &impl Fn(&str) -> Document,
+) {
     let mut reader = BufReader::new(stream.try_clone().unwrap());
     let mut request_line = String::new();
     if reader.read_line(&mut request_line).is_err() || request_line.is_empty() {
@@ -28,13 +32,16 @@ fn handle_client(mut stream: TcpStream, linter: &mut LintGroup, document_builder
     let mut content_length = 0;
     loop {
         let mut header_line = String::new();
-        if reader.read_line(&mut header_line).is_err() || header_line == "\r\n" || header_line.is_empty() {
+        if reader.read_line(&mut header_line).is_err()
+            || header_line == "\r\n"
+            || header_line.is_empty()
+        {
             break;
         }
-        if header_line.to_lowercase().starts_with("content-length:") {
-            if let Some(val) = header_line.split(':').nth(1) {
-                content_length = val.trim().parse::<usize>().unwrap_or(0);
-            }
+        if header_line.to_lowercase().starts_with("content-length:")
+            && let Some(val) = header_line.split(':').nth(1)
+        {
+            content_length = val.trim().parse::<usize>().unwrap_or(0);
         }
     }
 
@@ -84,7 +91,7 @@ fn handle_client(mut stream: TcpStream, linter: &mut LintGroup, document_builder
             let json_out = serde_json::to_string(&resp_lints).unwrap_or_else(|_| "[]".to_string());
             let http_resp = format!(
                 "HTTP/1.1 200 OK\r\nContent-Type: application/json; charset=utf-8\r\nAccess-Control-Allow-Origin: *\r\nContent-Length: {}\r\n\r\n{}",
-                json_out.as_bytes().len(),
+                json_out.len(),
                 json_out
             );
             let _ = stream.write_all(http_resp.as_bytes());
@@ -96,7 +103,7 @@ fn handle_client(mut stream: TcpStream, linter: &mut LintGroup, document_builder
     let html_content = include_str!("../../../static_demo.html");
     let http_resp = format!(
         "HTTP/1.1 200 OK\r\nContent-Type: text/html; charset=utf-8\r\nContent-Length: {}\r\n\r\n{}",
-        html_content.as_bytes().len(),
+        html_content.len(),
         html_content
     );
     let _ = stream.write_all(http_resp.as_bytes());
@@ -104,7 +111,8 @@ fn handle_client(mut stream: TcpStream, linter: &mut LintGroup, document_builder
 
 fn main() {
     let port = 3000;
-    let listener = TcpListener::bind(format!("127.0.0.1:{}", port)).expect("No se pudo iniciar el servidor web local");
+    let listener = TcpListener::bind(format!("127.0.0.1:{}", port))
+        .expect("No se pudo iniciar el servidor web local");
 
     println!("========================================================");
     println!("   🌐 HARPER ESPAÑOL - SERVIDOR WEB INTERACTIVO EN VIVO");
@@ -116,15 +124,13 @@ fn main() {
     let dict = Arc::new(harper_core::spell::FstDictionary::curated_spanish());
     let mut linter = LintGroup::new_curated(dict, Dialect::Spanish);
 
-    for stream in listener.incoming() {
-        if let Ok(stream) = stream {
-            handle_client(stream, &mut linter, &|t| {
-                Document::new(
-                    t,
-                    &harper_core::parsers::PlainEnglish,
-                    &harper_core::spell::FstDictionary::curated_spanish(),
-                )
-            });
-        }
+    for stream in listener.incoming().flatten() {
+        handle_client(stream, &mut linter, &|t| {
+            Document::new(
+                t,
+                &harper_core::parsers::PlainEnglish,
+                &harper_core::spell::FstDictionary::curated_spanish(),
+            )
+        });
     }
 }

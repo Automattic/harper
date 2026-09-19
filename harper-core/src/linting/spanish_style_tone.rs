@@ -24,13 +24,20 @@ impl Linter for SpanishStyleTone {
             // 1. Muletillas y expresiones de relleno
             // "un total de" + número (ej. "un total de 5 personas" -> "5 personas")
             for window in word_indices.windows(4) {
-                let w1 = document.get_span_content_str(&chunk[window[0]].span).to_lowercase();
-                let w2 = document.get_span_content_str(&chunk[window[1]].span).to_lowercase();
-                let w3 = document.get_span_content_str(&chunk[window[2]].span).to_lowercase();
+                let w1 = document
+                    .get_span_content_str(&chunk[window[0]].span)
+                    .to_lowercase();
+                let w2 = document
+                    .get_span_content_str(&chunk[window[1]].span)
+                    .to_lowercase();
+                let w3 = document
+                    .get_span_content_str(&chunk[window[2]].span)
+                    .to_lowercase();
                 let w4 = document.get_span_content_str(&chunk[window[3]].span);
 
                 if w1 == "un" && w2 == "total" && w3 == "de" && w4.chars().all(|c| c.is_numeric()) {
-                    let total_span = crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
+                    let total_span =
+                        crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
                     lints.push(Lint {
                         span: total_span,
                         lint_kind: LintKind::Style,
@@ -43,12 +50,19 @@ impl Linter for SpanishStyleTone {
 
             // "a nivel de" -> "en" / "con respecto a"
             for window in word_indices.windows(3) {
-                let w1 = document.get_span_content_str(&chunk[window[0]].span).to_lowercase();
-                let w2 = document.get_span_content_str(&chunk[window[1]].span).to_lowercase();
-                let w3 = document.get_span_content_str(&chunk[window[2]].span).to_lowercase();
+                let w1 = document
+                    .get_span_content_str(&chunk[window[0]].span)
+                    .to_lowercase();
+                let w2 = document
+                    .get_span_content_str(&chunk[window[1]].span)
+                    .to_lowercase();
+                let w3 = document
+                    .get_span_content_str(&chunk[window[2]].span)
+                    .to_lowercase();
 
                 if w1 == "a" && w2 == "nivel" && w3 == "de" {
-                    let span = crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
+                    let span =
+                        crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
                     lints.push(Lint {
                         span,
                         lint_kind: LintKind::Style,
@@ -64,12 +78,19 @@ impl Linter for SpanishStyleTone {
 
             // "por parte de" -> sustitución activa
             for window in word_indices.windows(3) {
-                let w1 = document.get_span_content_str(&chunk[window[0]].span).to_lowercase();
-                let w2 = document.get_span_content_str(&chunk[window[1]].span).to_lowercase();
-                let w3 = document.get_span_content_str(&chunk[window[2]].span).to_lowercase();
+                let w1 = document
+                    .get_span_content_str(&chunk[window[0]].span)
+                    .to_lowercase();
+                let w2 = document
+                    .get_span_content_str(&chunk[window[1]].span)
+                    .to_lowercase();
+                let w3 = document
+                    .get_span_content_str(&chunk[window[2]].span)
+                    .to_lowercase();
 
                 if w1 == "por" && w2 == "parte" && w3 == "de" {
-                    let span = crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
+                    let span =
+                        crate::Span::new(chunk[window[0]].span.start, chunk[window[2]].span.end);
                     lints.push(Lint {
                         span,
                         lint_kind: LintKind::Style,

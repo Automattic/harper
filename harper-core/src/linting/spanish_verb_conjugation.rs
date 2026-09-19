@@ -33,7 +33,10 @@ impl Linter for SpanishVerbConjugation {
                 let verb_str = document.get_span_content_str(&verb_tok.span).to_lowercase();
 
                 // Detectar verbo en infinitivo (-ar, -er, -ir)
-                let is_infinitive = (verb_str.ends_with("ar") || verb_str.ends_with("er") || verb_str.ends_with("ir")) && verb_str.len() > 3;
+                let is_infinitive = (verb_str.ends_with("ar")
+                    || verb_str.ends_with("er")
+                    || verb_str.ends_with("ir"))
+                    && verb_str.len() > 3;
 
                 if is_infinitive {
                     let mut suggestions = Vec::new();
@@ -54,19 +57,39 @@ impl Linter for SpanishVerbConjugation {
                             _ if verb_str.ends_with("ar") => format!("{}amos", stem),
                             _ => format!("{}imos", stem),
                         };
-                        let pres = if verb_str.ends_with("ar") { format!("{}amos", stem) } else { format!("{}emos", stem) };
-                        suggestions.push(Suggestion::replace_with_match_case(past.chars().collect(), document.get_span_content(&verb_tok.span)));
+                        let pres = if verb_str.ends_with("ar") {
+                            format!("{}amos", stem)
+                        } else {
+                            format!("{}emos", stem)
+                        };
+                        suggestions.push(Suggestion::replace_with_match_case(
+                            past.chars().collect(),
+                            document.get_span_content(&verb_tok.span),
+                        ));
                         if pres != past {
-                            suggestions.push(Suggestion::replace_with_match_case(pres.chars().collect(), document.get_span_content(&verb_tok.span)));
+                            suggestions.push(Suggestion::replace_with_match_case(
+                                pres.chars().collect(),
+                                document.get_span_content(&verb_tok.span),
+                            ));
                         }
                     } else if SUBJECT_PRONOUNS_PLURAL_3.contains(&pron_str.as_str()) {
                         let stem = &verb_str[..verb_str.len() - 2];
-                        let past = if verb_str.ends_with("ar") { format!("{}aron", stem) } else { format!("{}ieron", stem) };
-                        suggestions.push(Suggestion::replace_with_match_case(past.chars().collect(), document.get_span_content(&verb_tok.span)));
+                        let past = if verb_str.ends_with("ar") {
+                            format!("{}aron", stem)
+                        } else {
+                            format!("{}ieron", stem)
+                        };
+                        suggestions.push(Suggestion::replace_with_match_case(
+                            past.chars().collect(),
+                            document.get_span_content(&verb_tok.span),
+                        ));
                     } else if SUBJECT_PRONOUNS_SINGULAR_1.contains(&pron_str.as_str()) {
                         let stem = &verb_str[..verb_str.len() - 2];
-                        let pres = if verb_str.ends_with("ar") { format!("{}o", stem) } else { format!("{}o", stem) };
-                        suggestions.push(Suggestion::replace_with_match_case(pres.chars().collect(), document.get_span_content(&verb_tok.span)));
+                        let pres = format!("{}o", stem);
+                        suggestions.push(Suggestion::replace_with_match_case(
+                            pres.chars().collect(),
+                            document.get_span_content(&verb_tok.span),
+                        ));
                     }
 
                     if !suggestions.is_empty() {

@@ -27,8 +27,12 @@ impl Linter for SpanishDiacritics {
                 let first_tok = &chunk[window[0]];
                 let second_tok = &chunk[window[1]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
 
                 if (first_str == "el" || first_str == "un") && second_str == "porque" {
                     lints.push(Lint {
@@ -58,13 +62,41 @@ impl Linter for SpanishDiacritics {
                 }
 
                 // 3. Interrogativos genéricos (donde, como, cuando, que, quien, cual) en contexto interrogativo o seguidos de verbos
-                const INTERROGATIVE_WORDS: &[&str] = &["donde", "como", "cuando", "que", "quien", "cual"];
-                const INTERROGATIVE_TILDE: &[&str] = &["dónde", "cómo", "cuándo", "qué", "quién", "cuál"];
+                const INTERROGATIVE_WORDS: &[&str] =
+                    &["donde", "como", "cuando", "que", "quien", "cual"];
+                const INTERROGATIVE_TILDE: &[&str] =
+                    &["dónde", "cómo", "cuándo", "qué", "quién", "cuál"];
                 const COMMON_NEXT_VERBS: &[&str] = &[
-                    "esta", "está", "podria", "podría", "podemos", "puedo", "pueden", "podamos", "es", "son", "hacer", "ir", "fue", "sera", "será", "estaba", "estaban", "encontrar", "comprar", "haber", "hay", "tengo", "tiene", "tienen"
+                    "esta",
+                    "está",
+                    "podria",
+                    "podría",
+                    "podemos",
+                    "puedo",
+                    "pueden",
+                    "podamos",
+                    "es",
+                    "son",
+                    "hacer",
+                    "ir",
+                    "fue",
+                    "sera",
+                    "será",
+                    "estaba",
+                    "estaban",
+                    "encontrar",
+                    "comprar",
+                    "haber",
+                    "hay",
+                    "tengo",
+                    "tiene",
+                    "tienen",
                 ];
 
-                if let Some(pos) = INTERROGATIVE_WORDS.iter().position(|&w| w == first_str.as_str()) {
+                if let Some(pos) = INTERROGATIVE_WORDS
+                    .iter()
+                    .position(|&w| w == first_str.as_str())
+                {
                     let has_question_mark = chunk.iter().any(|t| {
                         let s = document.get_span_content_str(&t.span);
                         s == "?" || s == "¿"
@@ -72,7 +104,11 @@ impl Linter for SpanishDiacritics {
 
                     if has_question_mark || COMMON_NEXT_VERBS.contains(&second_str.as_str()) {
                         let tilde_word = INTERROGATIVE_TILDE[pos];
-                        let is_first_char_upper = first_tok.span.get_content(document.get_source()).first().map_or(false, |c| c.is_uppercase());
+                        let is_first_char_upper = first_tok
+                            .span
+                            .get_content(document.get_source())
+                            .first()
+                            .is_some_and(|c| c.is_uppercase());
                         let final_suggestion = if is_first_char_upper {
                             let mut chars = tilde_word.chars().collect::<Vec<_>>();
                             if let Some(c) = chars.first_mut() {
@@ -98,10 +134,15 @@ impl Linter for SpanishDiacritics {
             for &idx in &word_indices {
                 let tok = &chunk[idx];
                 let word_str = document.get_span_content_str(&tok.span).to_lowercase();
-                const INTERROGATIVE_WORDS: &[&str] = &["donde", "como", "cuando", "que", "quien", "cual"];
-                const INTERROGATIVE_TILDE: &[&str] = &["dónde", "cómo", "cuándo", "qué", "quién", "cuál"];
+                const INTERROGATIVE_WORDS: &[&str] =
+                    &["donde", "como", "cuando", "que", "quien", "cual"];
+                const INTERROGATIVE_TILDE: &[&str] =
+                    &["dónde", "cómo", "cuándo", "qué", "quién", "cuál"];
 
-                if let Some(pos) = INTERROGATIVE_WORDS.iter().position(|&w| w == word_str.as_str()) {
+                if let Some(pos) = INTERROGATIVE_WORDS
+                    .iter()
+                    .position(|&w| w == word_str.as_str())
+                {
                     let has_question_mark = chunk.iter().any(|t| {
                         let s = document.get_span_content_str(&t.span);
                         s == "?" || s == "¿"
@@ -109,7 +150,11 @@ impl Linter for SpanishDiacritics {
 
                     if has_question_mark {
                         let tilde_word = INTERROGATIVE_TILDE[pos];
-                        let is_first_char_upper = tok.span.get_content(document.get_source()).first().map_or(false, |c| c.is_uppercase());
+                        let is_first_char_upper = tok
+                            .span
+                            .get_content(document.get_source())
+                            .first()
+                            .is_some_and(|c| c.is_uppercase());
                         let final_suggestion = if is_first_char_upper {
                             let mut chars = tilde_word.chars().collect::<Vec<_>>();
                             if let Some(c) = chars.first_mut() {
@@ -135,8 +180,10 @@ impl Linter for SpanishDiacritics {
 
             // 5. Homógrafos sustantivo / verbo precedidos de determinantes (el, la, un, este, ese, aquel, su, mi, tu, etc.)
             const HOMOGRAPH_DETERMINERS: &[&str] = &[
-                "el", "la", "los", "las", "un", "una", "unos", "unas", "este", "esta", "estos", "estas",
-                "ese", "esa", "esos", "esas", "aquel", "aquella", "aquellos", "aquellas", "mi", "mis", "tu", "tus", "su", "sus", "nuestro", "nuestra", "un solo", "primer", "ultimo", "último"
+                "el", "la", "los", "las", "un", "una", "unos", "unas", "este", "esta", "estos",
+                "estas", "ese", "esa", "esos", "esas", "aquel", "aquella", "aquellos", "aquellas",
+                "mi", "mis", "tu", "tus", "su", "sus", "nuestro", "nuestra", "un solo", "primer",
+                "ultimo", "último",
             ];
 
             const HOMOGRAPHS: &[(&str, &str)] = &[
@@ -183,31 +230,41 @@ impl Linter for SpanishDiacritics {
                 let first_tok = &chunk[window[0]];
                 let second_tok = &chunk[window[1]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
 
-                if HOMOGRAPH_DETERMINERS.contains(&first_str.as_str()) {
-                    if let Some((_, tilde_form)) = HOMOGRAPHS.iter().find(|&&(wrong, _)| wrong == second_str.as_str()) {
-                        let is_first_char_upper = second_tok.span.get_content(document.get_source()).first().map_or(false, |c| c.is_uppercase());
-                        let final_suggestion = if is_first_char_upper {
-                            let mut chars = tilde_form.chars().collect::<Vec<_>>();
-                            if let Some(c) = chars.first_mut() {
-                                *c = c.to_uppercase().next().unwrap_or(*c);
-                            }
-                            chars
-                        } else {
-                            tilde_form.chars().collect()
-                        };
-
-                        if !lints.iter().any(|l| l.span.start == second_tok.span.start) {
-                            lints.push(Lint {
-                                span: second_tok.span,
-                                lint_kind: LintKind::Grammar,
-                                message: format!("Como sustantivo precedido de determinante ('{}'), debe escribirse con tilde: '{}'.", first_str, tilde_form),
-                                suggestions: vec![Suggestion::ReplaceWith(final_suggestion)],
-                                priority: 36,
-                            });
+                if HOMOGRAPH_DETERMINERS.contains(&first_str.as_str())
+                    && let Some((_, tilde_form)) = HOMOGRAPHS
+                        .iter()
+                        .find(|&&(wrong, _)| wrong == second_str.as_str())
+                {
+                    let is_first_char_upper = second_tok
+                        .span
+                        .get_content(document.get_source())
+                        .first()
+                        .is_some_and(|c| c.is_uppercase());
+                    let final_suggestion = if is_first_char_upper {
+                        let mut chars = tilde_form.chars().collect::<Vec<_>>();
+                        if let Some(c) = chars.first_mut() {
+                            *c = c.to_uppercase().next().unwrap_or(*c);
                         }
+                        chars
+                    } else {
+                        tilde_form.chars().collect()
+                    };
+
+                    if !lints.iter().any(|l| l.span.start == second_tok.span.start) {
+                        lints.push(Lint {
+                            span: second_tok.span,
+                            lint_kind: LintKind::Grammar,
+                            message: format!("Como sustantivo precedido de determinante ('{}'), debe escribirse con tilde: '{}'.", first_str, tilde_form),
+                            suggestions: vec![Suggestion::ReplaceWith(final_suggestion)],
+                            priority: 36,
+                        });
                     }
                 }
             }

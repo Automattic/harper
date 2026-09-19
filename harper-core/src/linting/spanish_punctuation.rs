@@ -29,8 +29,24 @@ impl Linter for SpanishPunctuation {
 
             // 1. Puntuación duplicada o adyacente (ej: ",," o ";;" o ",;" o ";," o ",:")
             let is_punc = |s: &str| s == "," || s == ";" || s == "." || s == ":";
-            if tok_str == ",," || tok_str == ";;" || tok_str == ".." || tok_str.contains(",,") || tok_str.contains(";;") || tok_str == ",;" || tok_str == ";," || tok_str == ",:" {
-                let single = if tok_str.contains(',') { "," } else if tok_str.contains(';') { ";" } else if tok_str.contains(':') { ":" } else { "." };
+            if tok_str == ",,"
+                || tok_str == ";;"
+                || tok_str == ".."
+                || tok_str.contains(",,")
+                || tok_str.contains(";;")
+                || tok_str == ",;"
+                || tok_str == ";,"
+                || tok_str == ",:"
+            {
+                let single = if tok_str.contains(',') {
+                    ","
+                } else if tok_str.contains(';') {
+                    ";"
+                } else if tok_str.contains(':') {
+                    ":"
+                } else {
+                    "."
+                };
                 lints.push(Lint {
                     span: tok.span,
                     lint_kind: LintKind::Punctuation,
@@ -70,11 +86,17 @@ impl Linter for SpanishPunctuation {
             // 3. Falta de espacio después de signo (ej: "hola,mundo" o "con :faltas")
             if is_punc(&tok_str) && i + 1 < vec_tokens.len() {
                 let next_tok = &vec_tokens[i + 1];
-                if !next_tok.kind.is_whitespace() && !next_tok.kind.is_newline() && next_tok.kind.is_word() {
+                if !next_tok.kind.is_whitespace()
+                    && !next_tok.kind.is_newline()
+                    && next_tok.kind.is_word()
+                {
                     lints.push(Lint {
                         span: tok.span,
                         lint_kind: LintKind::Punctuation,
-                        message: format!("Se debe incluir un espacio después del signo '{}'.", tok_str),
+                        message: format!(
+                            "Se debe incluir un espacio después del signo '{}'.",
+                            tok_str
+                        ),
                         suggestions: vec![Suggestion::ReplaceWith(
                             format!("{} ", tok_str).chars().collect(),
                         )],

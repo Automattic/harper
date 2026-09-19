@@ -31,17 +31,38 @@ impl Linter for SpanishStyleAndRedundancy {
                 let first_tok = &chunk[window[0]];
                 let second_tok = &chunk[window[1]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
 
                 // Pleonasmos de 2 palabras
                 let pleonasm_fix = match (first_str.as_str(), second_str.as_str()) {
-                    ("subir", "arriba") => Some(("subir", "Redundancia: 'subir' ya implica dirección hacia arriba.")),
-                    ("bajar", "abajo") => Some(("bajar", "Redundancia: 'bajar' ya implica dirección hacia abajo.")),
-                    ("entrar", "adentro") => Some(("entrar", "Redundancia: 'entrar' ya significa ir al interior.")),
-                    ("salir", "afuera") => Some(("salir", "Redundancia: 'salir' ya significa ir al exterior.")),
-                    ("regalo", "gratuito") => Some(("regalo", "Redundancia: Todo regalo es gratuito por definición.")),
-                    ("persona", "humana") => Some(("persona", "Redundancia: 'persona' ya implica la condición humana.")),
+                    ("subir", "arriba") => Some((
+                        "subir",
+                        "Redundancia: 'subir' ya implica dirección hacia arriba.",
+                    )),
+                    ("bajar", "abajo") => Some((
+                        "bajar",
+                        "Redundancia: 'bajar' ya implica dirección hacia abajo.",
+                    )),
+                    ("entrar", "adentro") => Some((
+                        "entrar",
+                        "Redundancia: 'entrar' ya significa ir al interior.",
+                    )),
+                    ("salir", "afuera") => {
+                        Some(("salir", "Redundancia: 'salir' ya significa ir al exterior."))
+                    }
+                    ("regalo", "gratuito") => Some((
+                        "regalo",
+                        "Redundancia: Todo regalo es gratuito por definición.",
+                    )),
+                    ("persona", "humana") => Some((
+                        "persona",
+                        "Redundancia: 'persona' ya implica la condición humana.",
+                    )),
                     _ => None,
                 };
 
@@ -64,7 +85,8 @@ impl Linter for SpanishStyleAndRedundancy {
                     lints.push(Lint {
                         span: second_tok.span,
                         lint_kind: LintKind::Style,
-                        message: "En español la forma adaptada recomendada es 'clic' (sin 'k').".to_string(),
+                        message: "En español la forma adaptada recomendada es 'clic' (sin 'k')."
+                            .to_string(),
                         suggestions: vec![Suggestion::replace_with_match_case(
                             "clic".chars().collect(),
                             document.get_span_content(&second_tok.span),
@@ -80,9 +102,15 @@ impl Linter for SpanishStyleAndRedundancy {
                 let second_tok = &chunk[window[1]];
                 let third_tok = &chunk[window[2]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
-                let third_str = document.get_span_content_str(&third_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
+                let third_str = document
+                    .get_span_content_str(&third_tok.span)
+                    .to_lowercase();
 
                 if first_str == "de" && second_str == "acuerdo" && third_str == "a" {
                     lints.push(Lint {
@@ -97,11 +125,16 @@ impl Linter for SpanishStyleAndRedundancy {
                     });
                 }
 
-                if first_str == "en" && (second_str == "relación" || second_str == "relacion") && third_str == "a" {
+                if first_str == "en"
+                    && (second_str == "relación" || second_str == "relacion")
+                    && third_str == "a"
+                {
                     lints.push(Lint {
                         span: third_tok.span,
                         lint_kind: LintKind::Style,
-                        message: "La RAE recomienda la locución 'en relación con' o 'con relación a'.".to_string(),
+                        message:
+                            "La RAE recomienda la locución 'en relación con' o 'con relación a'."
+                                .to_string(),
                         suggestions: vec![Suggestion::replace_with_match_case(
                             "con".chars().collect(),
                             document.get_span_content(&third_tok.span),
@@ -112,7 +145,10 @@ impl Linter for SpanishStyleAndRedundancy {
 
                 // 2b. Expresiones arcaicas o incorrectas (Fundéu / RAE)
                 // "tal es asi" -> "tanto es así"
-                if first_str == "tal" && second_str == "es" && (third_str == "así" || third_str == "asi") {
+                if first_str == "tal"
+                    && second_str == "es"
+                    && (third_str == "así" || third_str == "asi")
+                {
                     let span = crate::Span::new(first_tok.span.start, third_tok.span.end);
                     lints.push(Lint {
                         span,
@@ -141,7 +177,8 @@ impl Linter for SpanishStyleAndRedundancy {
                     lints.push(Lint {
                         span,
                         lint_kind: LintKind::Style,
-                        message: "Expresión incorrecta: se recomienda usar 'cuanto más'.".to_string(),
+                        message: "Expresión incorrecta: se recomienda usar 'cuanto más'."
+                            .to_string(),
                         suggestions: vec![Suggestion::ReplaceWith("cuanto más".chars().collect())],
                         priority: 25,
                     });
@@ -153,8 +190,12 @@ impl Linter for SpanishStyleAndRedundancy {
                 let first_tok = &chunk[window[0]];
                 let second_tok = &chunk[window[1]];
 
-                let first_str = document.get_span_content_str(&first_tok.span).to_lowercase();
-                let second_str = document.get_span_content_str(&second_tok.span).to_lowercase();
+                let first_str = document
+                    .get_span_content_str(&first_tok.span)
+                    .to_lowercase();
+                let second_str = document
+                    .get_span_content_str(&second_tok.span)
+                    .to_lowercase();
 
                 if first_str == "alta" && second_str == "cargo" {
                     lints.push(Lint {
@@ -166,8 +207,14 @@ impl Linter for SpanishStyleAndRedundancy {
                     });
                 }
 
-                if (first_str == "afrentar" || first_str == "afrentó") && (second_str.starts_with("dificultad") || second_str.starts_with("problema")) {
-                    let fix = if first_str == "afrentar" { "afrontar" } else { "afrontó" };
+                if (first_str == "afrentar" || first_str == "afrentó")
+                    && (second_str.starts_with("dificultad") || second_str.starts_with("problema"))
+                {
+                    let fix = if first_str == "afrentar" {
+                        "afrontar"
+                    } else {
+                        "afrontó"
+                    };
                     lints.push(Lint {
                         span: first_tok.span,
                         lint_kind: LintKind::Grammar,
@@ -177,7 +224,9 @@ impl Linter for SpanishStyleAndRedundancy {
                     });
                 }
 
-                if (first_str.starts_with("destornill") || first_str.starts_with("destornilló")) && second_str == "de" {
+                if (first_str.starts_with("destornill") || first_str.starts_with("destornilló"))
+                    && second_str == "de"
+                {
                     lints.push(Lint {
                         span: first_tok.span,
                         lint_kind: LintKind::Style,
@@ -218,25 +267,35 @@ impl Linter for SpanishStyleAndRedundancy {
 
             // 4. Concordancia Múltiple en Frases Nominales ("las rápidas y efectivas soluciones")
             for window in word_indices.windows(5) {
-                let tok1_str = document.get_span_content_str(&chunk[window[0]].span).to_lowercase();
-                let tok3_str = document.get_span_content_str(&chunk[window[2]].span).to_lowercase();
-                let tok5_str = document.get_span_content_str(&chunk[window[4]].span).to_lowercase();
+                let tok1_str = document
+                    .get_span_content_str(&chunk[window[0]].span)
+                    .to_lowercase();
+                let tok3_str = document
+                    .get_span_content_str(&chunk[window[2]].span)
+                    .to_lowercase();
+                let tok5_str = document
+                    .get_span_content_str(&chunk[window[4]].span)
+                    .to_lowercase();
 
-                let is_plural_det = tok1_str == "las" || tok1_str == "los" || tok1_str == "unos" || tok1_str == "unas" || tok1_str == "mis" || tok1_str == "tus" || tok1_str == "sus";
+                let is_plural_det = tok1_str == "las"
+                    || tok1_str == "los"
+                    || tok1_str == "unos"
+                    || tok1_str == "unas"
+                    || tok1_str == "mis"
+                    || tok1_str == "tus"
+                    || tok1_str == "sus";
                 let is_and = tok3_str == "y" || tok3_str == "e";
 
-                if is_plural_det && is_and {
-                    if !tok5_str.ends_with('s') && tok5_str.len() > 3 {
-                        lints.push(Lint {
-                            span: chunk[window[4]].span,
-                            lint_kind: LintKind::Grammar,
-                            message: format!("Falta de concordancia de número: el determinante plural ('{}') requiere un sustantivo en plural ('{}s').", tok1_str, tok5_str),
-                            suggestions: vec![Suggestion::ReplaceWith(
-                                format!("{}s", tok5_str).chars().collect(),
-                            )],
-                            priority: 32,
-                        });
-                    }
+                if is_plural_det && is_and && !tok5_str.ends_with('s') && tok5_str.len() > 3 {
+                    lints.push(Lint {
+                        span: chunk[window[4]].span,
+                        lint_kind: LintKind::Grammar,
+                        message: format!("Falta de concordancia de número: el determinante plural ('{}') requiere un sustantivo en plural ('{}s').", tok1_str, tok5_str),
+                        suggestions: vec![Suggestion::ReplaceWith(
+                            format!("{}s", tok5_str).chars().collect(),
+                        )],
+                        priority: 32,
+                    });
                 }
             }
         }

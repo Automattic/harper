@@ -2,7 +2,7 @@ use crate::{
     Document, TokenStringExt,
     linting::{Lint, LintKind, Linter, Suggestion},
 };
-use std::collections::HashMap;
+use hashbrown::HashMap;
 
 /// Motor de reglas automáticas de LanguageTool cargadas desde los patrones de grammar.xml / replace.txt
 pub struct LanguageToolRules {
@@ -15,23 +15,83 @@ impl Default for LanguageToolRules {
 
         // 1. Cargar parejas fijas de sustitución
         const REPLACEMENTS: &[(&str, &str, &str)] = &[
-            ("subir arriba", "subir", "Redundancia: 'subir' ya indica dirección hacia arriba."),
-            ("bajar abajo", "bajar", "Redundancia: 'bajar' ya indica dirección hacia abajo."),
-            ("entrar adentro", "entrar", "Redundancia: 'entrar' ya indica dirección hacia el interior."),
-            ("salir afuera", "salir", "Redundancia: 'salir' ya indica dirección hacia el exterior."),
-            ("lapso de tiempo", "lapso", "Redundancia: todo lapso es de tiempo."),
-            ("persona humana", "persona", "Redundancia: toda persona es humana por definición."),
-            ("regalo gratuito", "regalo", "Redundancia: todo regalo es gratuito."),
-            ("volar por el aire", "volar", "Redundancia: volar implica desplazarse por el aire."),
-            ("de acuerdo a", "de acuerdo con", "La RAE recomienda la locución 'de acuerdo con'."),
-            ("en relacion a", "en relación con", "La RAE recomienda la locución 'en relación con'."),
-            ("en relacion con", "en relación con", "Falta tilde en 'relación'."),
-            ("en funcion de", "en función de", "Falta tilde en 'función'."),
-            ("hacer click", "hacer clic", "En español la forma adaptada es 'clic' (sin 'k')."),
+            (
+                "subir arriba",
+                "subir",
+                "Redundancia: 'subir' ya indica dirección hacia arriba.",
+            ),
+            (
+                "bajar abajo",
+                "bajar",
+                "Redundancia: 'bajar' ya indica dirección hacia abajo.",
+            ),
+            (
+                "entrar adentro",
+                "entrar",
+                "Redundancia: 'entrar' ya indica dirección hacia el interior.",
+            ),
+            (
+                "salir afuera",
+                "salir",
+                "Redundancia: 'salir' ya indica dirección hacia el exterior.",
+            ),
+            (
+                "lapso de tiempo",
+                "lapso",
+                "Redundancia: todo lapso es de tiempo.",
+            ),
+            (
+                "persona humana",
+                "persona",
+                "Redundancia: toda persona es humana por definición.",
+            ),
+            (
+                "regalo gratuito",
+                "regalo",
+                "Redundancia: todo regalo es gratuito.",
+            ),
+            (
+                "volar por el aire",
+                "volar",
+                "Redundancia: volar implica desplazarse por el aire.",
+            ),
+            (
+                "de acuerdo a",
+                "de acuerdo con",
+                "La RAE recomienda la locución 'de acuerdo con'.",
+            ),
+            (
+                "en relacion a",
+                "en relación con",
+                "La RAE recomienda la locución 'en relación con'.",
+            ),
+            (
+                "en relacion con",
+                "en relación con",
+                "Falta tilde en 'relación'.",
+            ),
+            (
+                "en funcion de",
+                "en función de",
+                "Falta tilde en 'función'.",
+            ),
+            (
+                "hacer click",
+                "hacer clic",
+                "En español la forma adaptada es 'clic' (sin 'k').",
+            ),
             ("spanglish", "español", "Anglicismo."),
-            ("sponsor", "patrocinador", "Anglicismo no adaptado. Usa 'patrocinador'."),
+            (
+                "sponsor",
+                "patrocinador",
+                "Anglicismo no adaptado. Usa 'patrocinador'.",
+            ),
             ("link", "enlace", "Anglicismo. Se recomienda usar 'enlace'."),
-            ("post", "publicación", "Anglicismo. Se recomienda usar 'publicación'."),
+            (
+                "post",
+                "publicación",
+                "Anglicismo. Se recomienda usar 'publicación'.",
+            ),
         ];
 
         for (from, to, msg) in REPLACEMENTS {
@@ -39,7 +99,9 @@ impl Default for LanguageToolRules {
         }
 
         // 2. Parsear dinámicamente replace.txt descargado de LanguageTool
-        if let Ok(content) = std::fs::read_to_string("external_resources/languagetool/languagetool-language-modules/es/src/main/resources/org/languagetool/rules/es/replace.txt") {
+        if let Ok(content) = std::fs::read_to_string(
+            "external_resources/languagetool/languagetool-language-modules/es/src/main/resources/org/languagetool/rules/es/replace.txt",
+        ) {
             for line in content.lines() {
                 let line = line.trim();
                 if line.is_empty() || line.starts_with('#') {
@@ -54,7 +116,10 @@ impl Default for LanguageToolRules {
                                 wrong.clone(),
                                 (
                                     first_to.to_string(),
-                                    format!("Sustitución recomendada por LanguageTool: '{}' -> '{}'.", wrong, first_to),
+                                    format!(
+                                        "Sustitución recomendada por LanguageTool: '{}' -> '{}'.",
+                                        wrong, first_to
+                                    ),
                                 ),
                             );
                         }
@@ -64,13 +129,16 @@ impl Default for LanguageToolRules {
         }
 
         // 3. Parsear dinámicamente compounds.txt (palabras compuestas sin guion)
-        if let Ok(content) = std::fs::read_to_string("external_resources/languagetool/languagetool-language-modules/es/src/main/resources/org/languagetool/resource/es/compounds.txt") {
+        if let Ok(content) = std::fs::read_to_string(
+            "external_resources/languagetool/languagetool-language-modules/es/src/main/resources/org/languagetool/resource/es/compounds.txt",
+        ) {
             for line in content.lines() {
                 let line = line.trim();
                 if line.is_empty() || line.starts_with('#') {
                     continue;
                 }
-                let clean_line = line.trim_matches(|c| c == '+' || c == '*' || c == '?' || c == '$');
+                let clean_line =
+                    line.trim_matches(|c| c == '+' || c == '*' || c == '?' || c == '$');
                 if clean_line.contains('-') {
                     let joined = clean_line.replace('-', "");
                     replace_map.insert(
@@ -124,8 +192,12 @@ impl Linter for LanguageToolRules {
 
                 let phrase = format!(
                     "{} {}",
-                    document.get_span_content_str(&first_tok.span).to_lowercase(),
-                    document.get_span_content_str(&second_tok.span).to_lowercase()
+                    document
+                        .get_span_content_str(&first_tok.span)
+                        .to_lowercase(),
+                    document
+                        .get_span_content_str(&second_tok.span)
+                        .to_lowercase()
                 );
 
                 if let Some((fix, msg)) = self.replace_map.get(&phrase) {
@@ -151,9 +223,15 @@ impl Linter for LanguageToolRules {
 
                 let phrase = format!(
                     "{} {} {}",
-                    document.get_span_content_str(&first_tok.span).to_lowercase(),
-                    document.get_span_content_str(&second_tok.span).to_lowercase(),
-                    document.get_span_content_str(&third_tok.span).to_lowercase()
+                    document
+                        .get_span_content_str(&first_tok.span)
+                        .to_lowercase(),
+                    document
+                        .get_span_content_str(&second_tok.span)
+                        .to_lowercase(),
+                    document
+                        .get_span_content_str(&third_tok.span)
+                        .to_lowercase()
                 );
 
                 if let Some((fix, msg)) = self.replace_map.get(&phrase) {

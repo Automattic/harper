@@ -24,27 +24,28 @@ impl Linter for SpanishSentenceCapitalization {
                     }
 
                     let word_chars = document.get_span_content(&first_word.span);
-                    if let Some(first_char) = word_chars.first() {
-                        if first_char.is_alphabetic() && first_char.is_lowercase() {
-                            let mut cap_chars = word_chars.to_vec();
-                            if let Some(c) = cap_chars.first_mut() {
-                                *c = c.to_uppercase().next().unwrap_or(*c);
-                            }
-                            let capitalized_str: String = cap_chars.into_iter().collect();
-
-                            lints.push(Lint {
-                                span: first_word.span,
-                                lint_kind: LintKind::Capitalization,
-                                message: format!(
-                                    "La primera palabra de una oración debe comenzar con mayúscula inicial ('{}').",
-                                    capitalized_str
-                                ),
-                                suggestions: vec![Suggestion::ReplaceWith(
-                                    capitalized_str.chars().collect(),
-                                )],
-                                priority: 10,
-                            });
+                    if let Some(first_char) = word_chars.first()
+                        && first_char.is_alphabetic()
+                        && first_char.is_lowercase()
+                    {
+                        let mut cap_chars = word_chars.to_vec();
+                        if let Some(c) = cap_chars.first_mut() {
+                            *c = c.to_uppercase().next().unwrap_or(*c);
                         }
+                        let capitalized_str: String = cap_chars.into_iter().collect();
+
+                        lints.push(Lint {
+                            span: first_word.span,
+                            lint_kind: LintKind::Capitalization,
+                            message: format!(
+                                "La primera palabra de una oración debe comenzar con mayúscula inicial ('{}').",
+                                capitalized_str
+                            ),
+                            suggestions: vec![Suggestion::ReplaceWith(
+                                capitalized_str.chars().collect(),
+                            )],
+                            priority: 10,
+                        });
                     }
                 }
             }

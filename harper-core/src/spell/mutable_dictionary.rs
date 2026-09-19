@@ -38,9 +38,11 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
 
 fn uncached_inner_new_spanish() -> Arc<MutableDictionary> {
     let mut dict = MutableDictionary::new();
-    let mut metadata = DictWordMetadata::default();
-    metadata.dialects = crate::DictWordMetadata::default().dialects
-        | crate::dict_word_metadata::DialectFlags::SPANISH;
+    let metadata = DictWordMetadata {
+        dialects: crate::DictWordMetadata::default().dialects
+            | crate::dict_word_metadata::DialectFlags::SPANISH,
+        ..Default::default()
+    };
 
     // 1. Cargar las entradas base de es_ES.dic y generar afijos regulares (femenino -a/-as, plural -s/-es)
     let es_dic_str = include_str!("../../es_ES.dic");
@@ -51,9 +53,8 @@ fn uncached_inner_new_spanish() -> Arc<MutableDictionary> {
             dict.append_word_str(word, metadata.clone());
 
             // Expansión automática de género y número si la raíz termina en consonante o vocal
-            if word.ends_with('o') {
+            if let Some(stem) = word.strip_suffix('o') {
                 // ej. compuesto -> compuesta, compuestos, compuestas
-                let stem = &word[..word.len() - 1];
                 dict.append_word_str(&format!("{}a", stem), metadata.clone());
                 dict.append_word_str(&format!("{}os", stem), metadata.clone());
                 dict.append_word_str(&format!("{}as", stem), metadata.clone());
