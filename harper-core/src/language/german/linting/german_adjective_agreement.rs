@@ -1,9 +1,33 @@
 //! **Not registered in the lint group.** It emits nothing — not on "Der großes
-//! Haus", not on "Die guten Mann", not on "Ein alte Frau". Its six tests pass
-//! because every one of them asserts that *correct* text produces no lints, or
-//! checks the description string; none asserts that a wrong phrase is caught, so
-//! they would pass against a linter that does nothing at all. Which is what
-//! there is.
+//! Haus", not on "Die guten Mann", not on "Ein alte Frau". Its six tests passed
+//! because every one of them asserted that *correct* text produces no lints, or
+//! checked the description string; none asserted that a wrong phrase is caught,
+//! so they would have passed against a linter that does nothing at all. Which
+//! is what there is. The tests below now pin that instead.
+//!
+//! **The cause** is one line: `analyze_sentence` walks `DET ADJ NOUN` over a
+//! token slice that still contains the whitespace, so `tokens[i - 1]` is always
+//! a space and never a determiner. Nothing downstream of that ever runs.
+//!
+//! **What it would be worth.** LanguageTool reports 90 `DE_AGREEMENT` matches
+//! on the 101-article prose corpus, of which somewhat over half are genuine —
+//! "die hochdeutsche Dialekte", "bei den Weichtiere", "diese
+//! Anwendungsprogrammen". That is the largest class of real German errors
+//! Harper cannot see, well ahead of anything the registered rules miss:
+//!
+//! ```bash
+//! docker run -d --name lt-de -p 8010:8010 -e Java_Xmx=8g erikvl87/languagetool
+//! # then POST each corpus file to /v2/check with language=de-DE and count
+//! # matches whose rule id is DE_AGREEMENT
+//! ```
+//!
+//! **But do not simply delete the whitespace bug and register it.** The two
+//! heuristics underneath are wrong in opposite directions: `der` + a noun in
+//! `-ung` is the genitive/dative feminine, where the adjective *should* end in
+//! `-en` ("wegen der schnellen Entwicklung"), and `die` + a noun ending in `n`
+//! is far more often a correct singular ("die schnelle Bahn") than a plural.
+//! Agreement needs case, and the dictionary carries gender and number but not
+//! case, so this is a dictionary question before it is a linter question.
 //!
 //! German adjective agreement linter.
 //!
@@ -286,30 +310,43 @@ mod tests {
         Document::new(text, &PlainGerman, &combined_german_dictionary())
     }
 
+    /// What the linter actually does, so that the file cannot look tested
+    /// again.
+    ///
+    /// Every sentence here is a real agreement error lifted from the prose
+    /// corpus, and the linter finds none of them. When someone makes it work,
+    /// this test will fail, and the sentences are then the start of its real
+    /// test suite.
     #[test]
-    fn test_basic_functionality() {
+    fn finds_none_of_the_errors_it_is_named_for() {
         let mut linter = create_linter();
-        let text = "Der gute Mann ist hier.";
-        let document = create_document(text);
-        let lints = linter.lint(&document);
 
-        // This should not produce errors for correct text
-        // The basic implementation may not catch everything yet
-        // Just ensure no panics occur during linting
-        let _ = lints;
+        for text in [
+            "Die hochdeutsche Dialekte wurden von der Lautverschiebung erfasst.",
+            "Bei den Weichtiere haben Schnecken und Muscheln ein Herz.",
+            "Salzborn setzt den Beginn nach den Terroranschläge an.",
+            "Das Betriebssystem stellt diese Anwendungsprogrammen zur Verfügung.",
+            "Auslöser ist die Kritik an der moderne Architektur.",
+            "Das deckt sich mit dem personalem Erzähler.",
+            "Der großes Haus steht dort.",
+            "Ein alte Frau kam herein.",
+        ] {
+            let document = create_document(text);
+            assert!(
+                linter.lint(&document).is_empty(),
+                "this linter is not wired up and has never caught anything; \
+                 if it now catches {text:?}, delete this test and write real ones"
+            );
+        }
     }
 
+    /// And why: the pattern walks `DET ADJ NOUN` over a token slice that still
+    /// contains the spaces, so the token before an adjective is always
+    /// whitespace and never a determiner.
     #[test]
-    fn test_linter_description() {
+    fn the_pattern_never_sees_a_determiner() {
         let linter = create_linter();
-        assert!(linter.description().contains("adjective agreement"));
-    }
-
-    #[test]
-    fn test_detects_adjectives() {
-        let _linter = create_linter();
-        let text = "Der gute Mann";
-        let document = create_document(text);
+        let document = create_document("Der gute Mann ist hier.");
 
         let tokens: Vec<_> = document
             .iter_paragraphs()
@@ -317,32 +354,14 @@ mod tests {
             .flat_map(|s| s.tokens())
             .collect();
 
-        // For now, this test just verifies the infrastructure works
-        // The Brill POS tagger for German may need training data to recognize adjectives properly
-        // This is a placeholder test that can be expanded once German POS tagging is improved
+        let adjective = tokens
+            .iter()
+            .position(|token| linter.is_adjective(token, &document))
+            .expect("'gute' is an adjective");
+
         assert!(
-            !tokens.is_empty(),
-            "Should find at least some tokens in 'Der gute Mann'"
-        );
-    }
-
-    #[test]
-    fn test_detects_nouns() {
-        let _linter = create_linter();
-        let text = "Der gute Mann";
-        let document = create_document(text);
-
-        let tokens: Vec<_> = document
-            .iter_paragraphs()
-            .flat_map(|p| p.iter_sentences())
-            .flat_map(|s| s.tokens())
-            .collect();
-
-        // For now, this test just verifies the infrastructure works
-        // The Brill POS tagger for German may need training data to recognize nouns properly
-        assert!(
-            !tokens.is_empty(),
-            "Should find at least some tokens in 'Der gute Mann'"
+            !linter.is_noun_phrase_introducer(tokens[adjective - 1], &document),
+            "the token before the adjective is the space, not 'Der'"
         );
     }
 
@@ -354,20 +373,5 @@ mod tests {
         let lints = linter.lint(&document);
 
         assert_eq!(lints.len(), 0, "Empty text should produce no lints");
-    }
-
-    #[test]
-    fn test_text_without_adjectives() {
-        let mut linter = create_linter();
-        let text = "Der Mann geht.";
-        let document = create_document(text);
-        let lints = linter.lint(&document);
-
-        // Should not produce errors for text without adjectives
-        assert_eq!(
-            lints.len(),
-            0,
-            "Text without adjectives should produce no agreement errors"
-        );
     }
 }
