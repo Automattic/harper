@@ -1,32 +1,32 @@
-use std::borrow::Cow;
-use std::collections::BTreeMap;
-use std::fs;
-use std::path::{Component, Path, PathBuf};
-use std::sync::Arc;
+use std::{
+    borrow::Cow,
+    fs,
+    path::{Component, Path, PathBuf},
+    sync::Arc,
+};
 
 use anyhow::Context;
-use ariadne::{Color, Fmt, Label, Report, ReportKind, Source};
 use hashbrown::HashMap;
 use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    Dialect, DictWordMetadata, Document, Token, TokenKind,
-    linting::{FlatConfig, Lint, LintGroup, LintKind},
+    linting::{FlatConfig, LintKind},
     parsers::MarkdownOptions,
-    remove_overlaps_map,
     spell::{Dictionary, MergedDictionary, MutableDictionary},
     weirpack::Weirpack,
+    {Dialect, DictWordMetadata, Document},
 };
 
 use crate::input::{
     AnyInput, InputTrait,
     multi_input::MultiInput,
-    single_input::{SingleInput, SingleInputTrait, StdinInput},
+    single_input::{SingleInput, StdinInput},
 };
+use crate::lint_engine::lint_one_input;
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
-fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
+pub fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
@@ -59,7 +59,7 @@ fn load_weirpacks(inputs: &[SingleInput]) -> anyhow::Result<Vec<Weirpack>> {
 }
 
 /// Path version of harper-ls file dictionary name rewriting.
-fn file_dict_name(path: &Path) -> PathBuf {
+pub fn file_dict_name(path: &Path) -> PathBuf {
     let mut rewritten = String::new();
 
     for seg in path.components() {
@@ -96,7 +96,7 @@ pub struct LintOptions {
     pub quiet: bool,
 }
 
-enum ReportStyle {
+pub enum ReportStyle {
     FullAriadne,
     BriefCountsOnly,
     Json,
@@ -104,46 +104,38 @@ enum ReportStyle {
 }
 
 #[derive(Serialize)]
-struct JsonFileResult {
-    file: String,
-    lint_count: usize,
-    lints: Vec<JsonLint>,
+pub struct JsonFileResult {
+    pub file: String,
+    pub lint_count: usize,
+    pub lints: Vec<JsonLint>,
     #[serde(skip_serializing_if = "Option::is_none")]
-    error: Option<String>,
+    pub error: Option<String>,
 }
 
 #[derive(Serialize)]
-struct JsonLint {
-    rule: String,
-    kind: String,
-    span: JsonSpan,
-    line: usize,
-    column: usize,
-    message: String,
-    priority: u8,
-    suggestions: Vec<String>,
-    matched_text: String,
+pub struct JsonLint {
+    pub rule: String,
+    pub kind: String,
+    pub span: JsonSpan,
+    pub line: usize,
+    pub column: usize,
+    pub message: String,
+    pub priority: u8,
+    pub suggestions: Vec<String>,
+    pub matched_text: String,
 }
 
 /// Span offsets in characters (not bytes).
 #[derive(Serialize)]
-struct JsonSpan {
-    char_start: usize,
-    char_end: usize,
+pub struct JsonSpan {
+    pub char_start: usize,
+    pub char_end: usize,
 }
 
-/// Convert a character index into a 1-based (line, column) pair.
-fn char_index_to_line_col(source: &[char], index: usize) -> (usize, usize) {
-    let before = &source[..index.min(source.len())];
-    let line = before.iter().filter(|&&c| c == '\n').count() + 1;
-    let col = before.iter().rev().take_while(|&&c| c != '\n').count() + 1;
-    (line, col)
-}
-
-struct InputInfo<'a> {
-    parent_input_id: &'a str,
-    input: &'a AnyInput,
-    color: bool,
+pub struct InputInfo<'a> {
+    pub parent_input_id: &'a str,
+    pub input: &'a AnyInput,
+    pub color: bool,
 }
 
 struct InputJob {
@@ -154,7 +146,7 @@ struct InputJob {
 
 impl InputInfo<'_> {
     /// Path without ANSI escapes, for machine-readable output.
-    fn plain_path(&self) -> String {
+    pub fn plain_path(&self) -> String {
         let child = self.input.get_identifier();
         if self.parent_input_id.is_empty() {
             child.into_owned()
@@ -163,7 +155,7 @@ impl InputInfo<'_> {
         }
     }
 
-    fn format_path(&self) -> String {
+    pub fn format_path(&self) -> String {
         if self.color {
             let child = self.input.get_identifier();
             if self.parent_input_id.is_empty() {
@@ -370,430 +362,18 @@ pub fn lint(
     Ok(())
 }
 
-struct LintOneResult {
-    lint_kinds: HashMap<LintKind, usize>,
-    lint_rules: HashMap<String, usize>,
-    lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
-    spellos: HashMap<String, usize>,
-    json: Option<JsonFileResult>,
+pub struct LintOneResult {
+    pub lint_kinds: HashMap<LintKind, usize>,
+    pub lint_rules: HashMap<String, usize>,
+    pub lint_kind_rule_pairs: HashMap<(LintKind, String), usize>,
+    pub spellos: HashMap<String, usize>,
+    pub json: Option<JsonFileResult>,
 }
 
-struct FullInputInfo<'a> {
-    input: InputInfo<'a>,
-    doc: Document,
-    source: Cow<'a, str>,
-}
-
-#[allow(clippy::too_many_arguments)]
-fn lint_one_input(
-    // Common properties of harper-cli
-    markdown_options: MarkdownOptions,
-    curated_plus_user_dict: &MergedDictionary,
-    report_mode: &ReportStyle,
-    // Options passed from the user specific to the `lint` subcommand
-    lint_options: &LintOptions,
-    weirpacks: &[Weirpack],
-    file_dict_path: &Path,
-    // Are we linting multiple inputs?
-    batch_mode: bool,
-    // For the current input
-    current: InputInfo,
-) -> anyhow::Result<LintOneResult> {
-    let LintOptions {
-        count: _,
-        ignore,
-        only,
-        keep_overlapping_lints,
-        dialect,
-        weirpack_inputs: _,
-        color: _,
-        format: _,
-        quiet: _,
-    } = lint_options;
-
-    let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();
-    let mut lint_rules: HashMap<String, usize> = HashMap::new();
-    let mut lint_kind_rule_pairs: HashMap<(LintKind, String), usize> = HashMap::new();
-    let mut spellos: HashMap<String, usize> = HashMap::new();
-    let mut json: Option<JsonFileResult> = None;
-
-    if let Some(single_input) = current.input.try_as_single_ref() {
-        // Create a new merged dictionary for this input.
-        let mut merged_dictionary = curated_plus_user_dict.clone();
-
-        // If processing a file, try to load its per-file dictionary
-        if let Some(file) = single_input.try_as_file_ref() {
-            let dict_path = file_dict_path.join(file_dict_name(file.path()));
-            if let Ok(file_dictionary) = load_dict(&dict_path) {
-                merged_dictionary.add_dictionary(Arc::new(file_dictionary));
-                eprintln!(
-                    "{}: Note: Using per-file dictionary: {}",
-                    current.format_path(),
-                    dict_path.display()
-                );
-            }
-        }
-
-        match single_input.load(markdown_options, &merged_dictionary) {
-            Err(err) => {
-                eprintln!("{}", err);
-                if matches!(report_mode, ReportStyle::Json) {
-                    json = Some(JsonFileResult {
-                        file: current.plain_path(),
-                        lint_count: 0,
-                        lints: vec![],
-                        error: Some(err.to_string()),
-                    });
-                }
-            }
-            Ok((doc, source)) => {
-                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
-
-                for pack in weirpacks {
-                    let pack_group = pack.to_lint_group()?;
-                    lint_group.merge_from(pack_group);
-                }
-
-                // Turn specified rules on or off
-                configure_lint_group(&mut lint_group, only, ignore);
-
-                // Run the linter, getting back a map of rule name -> lints
-                let mut named_lints = lint_group.organized_lints(&doc);
-
-                // Lint counts, for brief reporting
-                let lint_count_before = named_lints.values().map(|v| v.len()).sum::<usize>();
-                if !keep_overlapping_lints {
-                    remove_overlaps_map(&mut named_lints);
-                }
-                let lint_count_after = named_lints.values().map(|v| v.len()).sum::<usize>();
-
-                // Extract the lint kinds and rules etc. for reporting
-                (lint_kinds, lint_rules) = count_lint_kinds_and_rules(&named_lints);
-                lint_kind_rule_pairs = collect_lint_kind_rule_pairs(&named_lints);
-                spellos = collect_spellos(&named_lints, doc.get_source());
-
-                // Build JSON result if in JSON mode
-                if matches!(report_mode, ReportStyle::Json) {
-                    let file = current.plain_path();
-                    let source_chars = doc.get_source();
-                    let mut lints = Vec::new();
-
-                    for (rule_name, rule_lints) in &named_lints {
-                        for lint in rule_lints {
-                            let (line, column) =
-                                char_index_to_line_col(source_chars, lint.span.start);
-                            let matched_text = lint.get_str(source_chars);
-                            let suggestions: Vec<String> =
-                                lint.suggestions.iter().map(|s| format!("{s}")).collect();
-                            lints.push(JsonLint {
-                                rule: rule_name.clone(),
-                                kind: lint.lint_kind.to_string(),
-                                span: JsonSpan {
-                                    char_start: lint.span.start,
-                                    char_end: lint.span.end,
-                                },
-                                line,
-                                column,
-                                message: lint.message.clone(),
-                                priority: lint.priority,
-                                suggestions,
-                                matched_text,
-                            });
-                        }
-                    }
-
-                    json = Some(JsonFileResult {
-                        file,
-                        lint_count: lint_count_after,
-                        lints,
-                        error: None,
-                    });
-                }
-
-                single_input_report(
-                    &FullInputInfo {
-                        input: InputInfo {
-                            parent_input_id: current.parent_input_id,
-                            input: current.input,
-                            color: current.color,
-                        },
-                        doc,
-                        source,
-                    },
-                    // Linting results of this input
-                    &named_lints,
-                    (lint_count_before, lint_count_after),
-                    &lint_kinds,
-                    &lint_rules,
-                    // Reporting arguments
-                    batch_mode,
-                    (report_mode, lint_options.quiet),
-                );
-            }
-        }
-    }
-
-    Ok(LintOneResult {
-        lint_kinds,
-        lint_rules,
-        lint_kind_rule_pairs,
-        spellos,
-        json,
-    })
-}
-
-fn configure_lint_group(
-    lint_group: &mut LintGroup,
-    only: &Option<Vec<String>>,
-    ignore: &Option<Vec<String>>,
-) {
-    if let Some(rules) = only {
-        lint_group.set_all_rules_to(Some(false));
-        rules
-            .iter()
-            .for_each(|rule| lint_group.config.set_rule_enabled(rule, true));
-    }
-
-    if let Some(rules) = ignore {
-        rules
-            .iter()
-            .for_each(|rule| lint_group.config.set_rule_enabled(rule, false));
-    }
-
-    // Have all rules been disabled somehow?
-    if !lint_group
-        .iter_keys()
-        .any(|rule| lint_group.config.is_rule_enabled(rule))
-    {
-        eprintln!("Warning: No rules are enabled.");
-    }
-}
-
-fn count_lint_kinds_and_rules(
-    named_lints: &BTreeMap<String, Vec<Lint>>,
-) -> (HashMap<LintKind, usize>, HashMap<String, usize>) {
-    let mut kinds = HashMap::new();
-    let mut rules = HashMap::new();
-
-    for (rule_name, lints) in named_lints {
-        lints
-            .iter()
-            .for_each(|lint| *kinds.entry(lint.lint_kind).or_insert(0) += 1);
-
-        if !lints.is_empty() {
-            *rules.entry(rule_name.to_string()).or_insert(0) += lints.len();
-        }
-    }
-
-    (kinds, rules)
-}
-
-fn collect_lint_kind_rule_pairs(
-    named_lints: &BTreeMap<String, Vec<Lint>>,
-) -> HashMap<(LintKind, String), usize> {
-    let mut pairs = HashMap::new();
-
-    for (rule_name, lints) in named_lints {
-        for lint in lints {
-            pairs
-                .entry((lint.lint_kind, rule_name.to_string()))
-                .and_modify(|count| *count += 1)
-                .or_insert(1);
-        }
-    }
-
-    pairs
-}
-
-fn collect_spellos(
-    named_lints: &BTreeMap<String, Vec<Lint>>,
-    source: &[char],
-) -> HashMap<String, usize> {
-    named_lints
-        .get("SpellCheck")
-        .into_iter()
-        .flatten()
-        .map(|lint| lint.get_str(source))
-        .fold(HashMap::new(), |mut acc, spello| {
-            *acc.entry(spello).or_insert(0) += 1;
-            acc
-        })
-}
-
-fn single_input_report(
-    // Properties of the current input
-    input_info: &FullInputInfo,
-    // Linting results of this input
-    named_lints: &BTreeMap<String, Vec<Lint>>,
-    lint_count: (usize, usize),
-    lint_kinds: &HashMap<LintKind, usize>,
-    lint_rules: &HashMap<String, usize>,
-    // Reporting parameters
-    batch_mode: bool, // If true, we are processing multiple files, which affects how we report
-    report_info: (&ReportStyle, bool),
-) {
-    let (report_mode, quiet) = report_info;
-
-    // JSON mode: all output is handled by the caller after collecting results
-    if matches!(report_mode, ReportStyle::Json) {
-        return;
-    }
-
-    let FullInputInfo { input, doc, source } = input_info;
-    let (lint_count_before, lint_count_after) = lint_count;
-
-    // Compact mode: one line per lint, GCC/grep-style
-    if matches!(report_mode, ReportStyle::Compact) {
-        let source_chars = doc.get_source();
-        for (rule_name, lints) in named_lints {
-            for lint in lints {
-                let (line, col) = char_index_to_line_col(source_chars, lint.span.start);
-                println!(
-                    "{}:{}:{}: {}::{}: {}",
-                    input.plain_path(),
-                    line,
-                    col,
-                    lint.lint_kind,
-                    rule_name,
-                    lint.message
-                );
-            }
-        }
-        return;
-    }
-
-    // The Ariadne report works poorly for files with very long lines, so suppress it unless only processing one file
-    const MAX_LINE_LEN: usize = 150;
-
-    let mut report_mode = report_mode;
-    let longest = find_longest_doc_line(doc.get_tokens());
-
-    if batch_mode && longest > MAX_LINE_LEN && matches!(report_mode, ReportStyle::FullAriadne) {
-        report_mode = &ReportStyle::BriefCountsOnly;
-        if !quiet {
-            println!(
-                "{}: Longest line: {longest} exceeds max line length: {MAX_LINE_LEN}",
-                input.format_path()
-            );
-        }
-    }
-
-    // Report the number of lints no matter what report mode we are in
-    if lint_count_before == 0 {
-        if !quiet {
-            println!("{}: No lints found", input.format_path());
-        }
-    } else {
-        println!(
-            "{}: {}",
-            input.format_path(),
-            match (lint_count_before, lint_count_after) {
-                (before, after) if before != after =>
-                    format!("{before} lints before overlap removal, {after} after"),
-                (before, _) => format!("{before} lints"),
-            }
-        );
-    }
-
-    // If we are in Ariadne mode, print the report
-    if matches!(report_mode, ReportStyle::FullAriadne) {
-        let primary_color = Color::Magenta;
-
-        let input_identifier = input.input.get_identifier();
-
-        if lint_count_after != 0 {
-            let mut report_builder = Report::build(ReportKind::Advice, (&input_identifier, 0..0));
-
-            for (rule_name, lints) in named_lints {
-                for lint in lints {
-                    let (r, g, b) = rgb_for_lint_kind(Some(&lint.lint_kind));
-                    report_builder = report_builder.with_label(
-                        Label::new((&input_identifier, lint.span.into()))
-                            .with_message(format!(
-                                "{} {}: {}",
-                                format_args!("[{}::{}]", lint.lint_kind, rule_name)
-                                    .fg(ariadne::Color::Rgb(r, g, b)),
-                                format_args!("(pri {})", lint.priority).fg(ariadne::Color::Rgb(
-                                    (r as f32 * 0.66) as u8,
-                                    (g as f32 * 0.66) as u8,
-                                    (b as f32 * 0.66) as u8
-                                )),
-                                lint.message
-                            ))
-                            .with_color(primary_color),
-                    );
-                }
-            }
-
-            let report = report_builder.finish();
-            report.print((&input_identifier, Source::from(source))).ok();
-        }
-    }
-
-    // Print the more detailed counts for the lint kinds and then for the rules
-    if !lint_kinds.is_empty() {
-        let mut lint_kinds_vec: Vec<_> = lint_kinds.iter().collect();
-        lint_kinds_vec.sort_by_key(|(lk, count)| (std::cmp::Reverse(**count), lk.to_string()));
-
-        let lk_vec: Vec<(Option<String>, String)> = lint_kinds_vec
-            .into_iter()
-            .map(|(lk, c)| {
-                let (r, g, b) = rgb_for_lint_kind(Some(lk));
-                (
-                    Some(format!("\x1b[38;2;{r};{g};{b}m")),
-                    format!("[{lk}: {c}]"),
-                )
-            })
-            .collect();
-
-        println!("lint kinds:");
-        print_formatted_items(lk_vec, input.color);
-    }
-
-    if !lint_rules.is_empty() {
-        let mut rules_vec: Vec<_> = lint_rules.iter().collect();
-        rules_vec.sort_by_key(|(rn, count)| (std::cmp::Reverse(**count), rn.to_string()));
-
-        let r_vec: Vec<(Option<String>, String)> = rules_vec
-            .into_iter()
-            .map(|(rn, c)| (None, format!("<{rn}: {c}>")))
-            .collect();
-
-        println!("rules:");
-        print_formatted_items(r_vec, input.color);
-    }
-}
-
-fn find_longest_doc_line(toks: &[Token]) -> usize {
-    let mut longest_len_chars = 0;
-    let mut curr_len_chars = 0;
-    let mut current_line_start_tok_idx = 0;
-
-    for (idx, tok) in toks.iter().enumerate() {
-        if matches!(tok.kind, TokenKind::Newline(_))
-            || matches!(tok.kind, TokenKind::ParagraphBreak)
-        {
-            if curr_len_chars > longest_len_chars {
-                longest_len_chars = curr_len_chars;
-            }
-            curr_len_chars = 0;
-            current_line_start_tok_idx = idx + 1;
-        } else if matches!(tok.kind, TokenKind::Unlintable) {
-            // TODO would be more accurate to scan for \n in the tok.get_ch(src)
-        } else {
-            curr_len_chars += tok.span.len();
-        }
-    }
-
-    if curr_len_chars > longest_len_chars
-        && !toks.is_empty()
-        && current_line_start_tok_idx < toks.len()
-    {
-        longest_len_chars = curr_len_chars;
-    }
-
-    longest_len_chars
+pub struct FullInputInfo<'a> {
+    pub input: InputInfo<'a>,
+    pub doc: Document,
+    pub source: Cow<'a, str>,
 }
 
 fn final_report(
@@ -952,7 +532,7 @@ fn lint_kind_to_rgb() -> &'static [(LintKind, (u8, u8, u8))] {
     ]
 }
 
-fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
+pub fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
     olk.and_then(|lk| {
         lint_kind_to_rgb()
             .iter()
@@ -962,7 +542,10 @@ fn rgb_for_lint_kind(olk: Option<&LintKind>) -> (u8, u8, u8) {
     .unwrap_or((0, 0, 0))
 }
 
-fn print_formatted_items(items: impl IntoIterator<Item = (Option<String>, String)>, color: bool) {
+pub fn print_formatted_items(
+    items: impl IntoIterator<Item = (Option<String>, String)>,
+    color: bool,
+) {
     let mut first_on_line = true;
     let mut len_so_far = 0;
 
