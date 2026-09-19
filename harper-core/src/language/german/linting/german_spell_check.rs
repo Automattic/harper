@@ -1,6 +1,8 @@
 use hashbrown::HashMap;
 
-use crate::language::german::spell::compound_checker::MIN_COMPOUND_PART_LEN;
+use crate::language::german::spell::compound_checker::{
+    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, lowercase,
+};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{CharStringExt, TokenStringExt, document::Document};
@@ -337,6 +339,7 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         word: &[char],
         depth: usize,
         memo: &mut HashMap<Vec<char>, bool>,
+        lowercase_whole: Option<&[char]>,
     ) -> bool {
         if word.len() < MIN_COMPOUND_PART_LEN {
             return false;
@@ -346,8 +349,13 @@ impl<T: Dictionary> GermanSpellCheck<T> {
             return false;
         }
 
+        // The whole remaining tail is one element, so this is the compound's
+        // last element. See `can_head_a_lowercase_compound`.
         if depth > 0 && self.dictionary.contains_word(word) {
-            return true;
+            return match lowercase_whole {
+                Some(whole) => can_head_a_lowercase_compound(&self.dictionary, whole, word),
+                None => true,
+            };
         }
 
         if let Some(cached) = memo.get(word) {
@@ -381,10 +389,22 @@ impl<T: Dictionary> GermanSpellCheck<T> {
                     *first_char = first_char.to_uppercase().next().unwrap_or(*first_char);
                 }
 
-                if self.dictionary.contains_word(next_part)
-                    || self.dictionary.contains_word(&capitalized_next_part)
-                    || self.is_valid_compound_segment(next_part, depth + 1, memo)
-                    || self.is_valid_compound_segment(&capitalized_next_part, depth + 1, memo)
+                let ends_here = |part: &[char]| {
+                    self.dictionary.contains_word(part)
+                        && lowercase_whole.is_none_or(|whole| {
+                            can_head_a_lowercase_compound(&self.dictionary, whole, part)
+                        })
+                };
+
+                if ends_here(next_part)
+                    || ends_here(&capitalized_next_part)
+                    || self.is_valid_compound_segment(next_part, depth + 1, memo, lowercase_whole)
+                    || self.is_valid_compound_segment(
+                        &capitalized_next_part,
+                        depth + 1,
+                        memo,
+                        lowercase_whole,
+                    )
                 {
                     valid = true;
                     break;
@@ -409,7 +429,7 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         }
 
         let mut memo = HashMap::new();
-        self.is_valid_compound_segment(word, 0, &mut memo)
+        self.is_valid_compound_segment(word, 0, &mut memo, lowercase(word).then_some(word))
     }
 
     /// Get spelling suggestions for a word.

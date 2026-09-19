@@ -12,6 +12,10 @@
 //! base dictionary when one is injected via [`CompoundChecker::set_base_dictionary`],
 //! otherwise against a casing-tolerant set built from the word list.
 //!
+//! The one restriction on top of that is
+//! [`can_head_a_lowercase_compound`], which is what keeps `vieleicht` from
+//! decomposing.
+//!
 //! `GermanSpellCheck` has a second, weaker decomposition of its own. It shares
 //! these constants so the two cannot disagree about what an element is, but it
 //! is only reached when this one has already declined the word.
@@ -53,7 +57,7 @@ const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 /// not a longer threshold; the frequent misspellings it lets through are caught
 /// by Weir rules instead.
 ///
-/// # Typed elements have been tried and the dictionary cannot carry them
+/// # Typing the elements from the word list does not work
 ///
 /// Length is the whole gate, so `vieleicht` decomposes as `viel` + `eicht` —
 /// `eicht` being the third person singular of *eichen*. Hunspell rejects the
@@ -63,9 +67,9 @@ const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 /// 258 216 entries may take part at all. Here it is effectively every entry of
 /// three characters or more.
 ///
-/// Three ways of typing the elements from Harper's own metadata were measured
-/// on 1.44M words of edited German prose, against the 1271 single-word entries
-/// of `Wikipedia:Liste von Tippfehlern`:
+/// The obvious repair is to ask what part of speech an element is. It was
+/// measured three ways on 1.44M words of edited German prose, against the 1271
+/// single-word entries of `Wikipedia:Liste von Tippfehlern`:
 ///
 /// | element must … | extra typos caught | extra lints on correct prose |
 /// |---|---|---|
@@ -73,30 +77,105 @@ const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 /// | have any part of speech at all | +20 | **+1 576** |
 /// | …or its lemma be nominal | +3 | **+148** |
 ///
-/// Each one loses, and for one reason: **9.4% of the 617 030 expanded forms
+/// All three lose, and for one reason: **9.4% of the 617 030 expanded forms
 /// carry no part of speech at all**, and that bucket is not the verb forms. It
-/// mixes `eicht`, `malt` and `agiert` with the ordinary noun plurals `zeuge`,
-/// `räume`, `garten`, `folger` and `verhalte`, so no query over it can separate
-/// them. The stronger rule fails even earlier, because particles are legitimate
-/// first elements and carry no nominal reading (`gegen`, `über`, `vor`,
-/// `zusammen`) and because plenty of ordinary nouns are tagged verb-only
-/// (`Tat`, `arten`, `gen`, `erd`).
+/// mixes `eicht`, `malt` and `agiert` with `zeuge`, `räume`, `garten` and
+/// `folger`, which is how `Werkzeuge` and `Zeiträume` reach the dictionary at
+/// all — `werkzeug/~~Nh` carries no plural flag and `säugetier/~~MhY` carries
+/// the wrong one. The strongest rule fails earlier still: particles are
+/// legitimate first elements and carry no nominal reading (`gegen`, `über`,
+/// `vor`, `zusammen`), and ordinary nouns are tagged verb-only (`Tat`,
+/// `arten`, `gen`, `erd`). Letter case carries nothing either, because
+/// `WordId` lower-cases spellings.
 ///
-/// Letter case carries nothing either: `WordId` lower-cases spellings, so
-/// `contains_exact_word` reports no capitalized form for `Zeuge` or `Garten`
-/// any more than for `Eicht`.
-///
-/// So the prerequisite is a dictionary question, not a checker one: the affix
-/// expansion has to give each generated form a part of speech. Until it does,
-/// the misspellings this lets through are caught by
-/// [`super::super::linting::german_common_typos::GermanCommonTypos`], which is
-/// also how hunspell handles the ones *its* decomposition cannot see — 394
-/// `FORBIDDENWORD` entries, `Landesprache` among them.
+/// What does work is [`can_head_a_lowercase_compound`], which asks a different
+/// question in the one place the answer is decidable. Fixing the rest is a
+/// dictionary question: the affix expansion has to give each generated form a
+/// part of speech, and thousands of verbs are missing their conjugation flags
+/// (`stattfinden/~~hc` cannot form `stattfindet`, and `denken` is not in the
+/// word list at all).
 pub(crate) const MIN_COMPOUND_PART_LEN: usize = 3;
 
 /// The maximum nesting depth of a compound decomposition (mirrors the old
 /// engine's `depth > 10` cap).
 const MAX_COMPOUND_DEPTH: usize = 10;
+
+/// Is the word written entirely in lower case?
+pub(crate) fn lowercase(word: &[char]) -> bool {
+    word.iter().all(|c| !c.is_uppercase())
+}
+
+/// May `tail` end the lower-case compound `whole`?
+///
+/// German compounds are right-headed: the last element decides what the whole
+/// word is. A lower-case compound therefore ends in an adjective
+/// (`umwelt|freundlich`), an adverb (`glücklicher|weise`) — or, when it is a
+/// separable-prefix verb, in a finite verb form (`statt|findet`,
+/// `zurück|geht`).
+///
+/// That last case is the problem. `viel` + `eicht` has exactly the shape of
+/// `statt` + `findet`: a particle in front, a third person singular behind.
+/// Nothing about the two *parts* tells them apart, and the word list does not
+/// help — `eicht` and `findet` are both listed with no part of speech at all.
+///
+/// What tells them apart is whether the verb they would make exists.
+/// `stattfinden` is a German verb and is in the dictionary; `vieleichen` is
+/// not. So when the last element has no word class of its own, the compound is
+/// accepted only if the prefix plus that element's **infinitive** is itself a
+/// word — which is the question hunspell answers with per-entry compound
+/// flags, asked the other way round.
+pub(crate) fn can_head_a_lowercase_compound(
+    dictionary: &impl Dictionary,
+    whole: &[char],
+    tail: &[char],
+) -> bool {
+    let Some(metadata) = dictionary.get_word_metadata(tail) else {
+        return false;
+    };
+
+    // Any word class of its own is enough: an adjective or adverb head needs
+    // no further argument, and a form the dictionary calls a verb was reached
+    // through a verb's own paradigm.
+    if metadata.noun.is_some()
+        || metadata.adjective.is_some()
+        || metadata.adverb.is_some()
+        || metadata.verb.is_some()
+        || metadata.pronoun.is_some()
+        || metadata.conjunction.is_some()
+        || metadata.determiner.is_some()
+        || metadata.affix.is_some()
+        || metadata.preposition
+    {
+        return true;
+    }
+
+    // No opinion at all. Reconstruct the verb and ask whether it exists.
+    //
+    // The recorded lemma is the best source, but roughly half of these forms
+    // have none, so the infinitive is also rebuilt from the ending: German
+    // makes it from the stem plus `-en`, or plus `-n` after an unstressed
+    // `-e`. `schreitet` gives `schreiten`, `mittle` gives `mitteln`.
+    let prefix = &whole[..whole.len() - tail.len()];
+    let mut stem: Vec<char> = tail.to_vec();
+    let without_t = tail.strip_suffix(&['t']).unwrap_or(tail).to_vec();
+
+    let mut infinitives: Vec<Vec<char>> = Vec::with_capacity(3);
+    if let Some(lemma) = metadata
+        .derived_from
+        .as_ref()
+        .and_then(|id| dictionary.get_word_from_id(id))
+    {
+        infinitives.push(lemma.to_vec());
+    }
+    stem.push('n');
+    infinitives.push(stem);
+    infinitives.push([without_t.as_slice(), &['e', 'n']].concat());
+
+    infinitives.into_iter().any(|infinitive| {
+        let candidate: Vec<char> = [prefix, infinitive.as_slice()].concat();
+        dictionary.contains_word(&candidate)
+    })
+}
 
 /// Check if a character is a compound formation flag (case-insensitive)
 fn is_compound_flag(c: char) -> bool {
@@ -255,6 +334,15 @@ impl CompoundChecker {
         }
     }
 
+    /// See the free function of the same name. Without a base dictionary there
+    /// is no metadata to consult; that path is only used by tests.
+    fn can_head_a_lowercase_compound(&self, whole: &[char], tail: &[char]) -> bool {
+        match self.base_dict.as_ref() {
+            Some(base) => can_head_a_lowercase_compound(base.as_ref(), whole, tail),
+            None => true,
+        }
+    }
+
     /// Whether `word` carries compound-formation flags in the word list.
     fn has_compound_flags(&self, word: &[char]) -> bool {
         self.get_compound_flags(word).is_some()
@@ -315,7 +403,7 @@ impl CompoundChecker {
         } else {
             let start = Instant::now();
             let mut memo = HashMap::new();
-            self.is_valid_segment(word, 0, &start, &mut memo)
+            self.is_valid_segment(word, 0, &start, &mut memo, lowercase(word).then_some(word))
         };
 
         // Cache result
@@ -341,6 +429,7 @@ impl CompoundChecker {
         depth: usize,
         start: &Instant,
         memo: &mut HashMap<(Vec<char>, usize), bool>,
+        lowercase_whole: Option<&[char]>,
     ) -> bool {
         if start.elapsed() > self.max_check_time {
             return false; // Timeout exceeded
@@ -353,8 +442,15 @@ impl CompoundChecker {
         // Below the top level, the whole sub-segment may itself be an element.
         // This precedes the minimum-length guard so that short elements carrying
         // compound flags (e.g. `ei`, `öl`) are accepted at any position.
+        //
+        // Reaching here means the whole remaining tail is one element, so this
+        // is the compound's last element — the one that decides what the word
+        // is. In a lower-case compound that decision is constrained.
         if depth > 0 && self.element_usable(segment) {
-            return true;
+            return match lowercase_whole {
+                Some(whole) => self.can_head_a_lowercase_compound(whole, segment),
+                None => true,
+            };
         }
 
         if segment.len() < MIN_COMPOUND_PART_LEN {
@@ -381,7 +477,7 @@ impl CompoundChecker {
                     continue;
                 };
 
-                if self.is_valid_segment(after, depth + 1, start, memo) {
+                if self.is_valid_segment(after, depth + 1, start, memo, lowercase_whole) {
                     valid = true;
                     break;
                 }
@@ -1037,12 +1133,15 @@ mod tests {
         // compound cannot be decomposed.
         assert!(!checker.is_compound_word(&"schuhhersteller".chars().collect::<Vec<_>>()));
 
+        // Both are nouns, and the base dictionary has to say so: a lower-case
+        // compound may only end in a word that has a word class.
+        let noun = DictWordMetadata {
+            noun: Some(Default::default()),
+            ..Default::default()
+        };
         let mut base = MutableDictionary::new();
-        base.append_word("schuh".chars().collect::<CharString>(), Default::default());
-        base.append_word(
-            "hersteller".chars().collect::<CharString>(),
-            Default::default(),
-        );
+        base.append_word("schuh".chars().collect::<CharString>(), noun.clone());
+        base.append_word("hersteller".chars().collect::<CharString>(), noun);
         checker.set_base_dictionary(Arc::new(base.into()));
 
         // With the base dictionary injected, "schuh" + "hersteller" resolves.
@@ -1100,26 +1199,46 @@ mod tests {
         }
     }
 
-    /// The consequence, pinned: the spell checker accepts `vieleicht`, and
-    /// [`super::super::super::linting::german_common_typos::GermanCommonTypos`]
-    /// is what catches it.
+    /// `vieleicht` is rejected, and every compound that has the same shape is
+    /// not.
+    ///
+    /// `viel` + `eicht` looks exactly like `statt` + `findet`: a particle, then
+    /// a third person singular. The parts cannot tell them apart — `eicht` and
+    /// `findet` are both listed with no part of speech. What tells them apart
+    /// is that `stattfinden` is a verb and `vieleichen` is not.
     #[test]
-    fn the_decomposition_still_accepts_vieleicht() {
+    fn a_lowercase_compound_must_make_a_word_that_exists() {
         use crate::language::german::spell::combined_german_dictionary;
 
         let dictionary = combined_german_dictionary();
         let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
 
-        assert!(accepts("vieleicht"), "viel + eicht still decomposes");
-
-        // The compounds a tighter gate would have to keep, as a reminder of
-        // what the 1 576 lints were.
         for word in [
+            "vieleicht",
+            "tischeicht",
+            "baumeicht",
+            "gartenmalt",
+            "wandmalt",
+            "vielagiert",
+        ] {
+            assert!(!accepts(word), "{word} must not decompose");
+        }
+
+        for word in [
+            // The same shape, but the verb exists.
+            "stattfindet",
+            "verbleibt",
+            "zurückgeht",
+            "teilnimmt",
+            // Ordinary lower-case compounds, whose head is an adjective or adverb.
+            "umweltfreundlich",
+            "wissenschaftlich",
+            "vielsagend",
+            "gleichzeitig",
+            // Capitalized compounds are not touched by the rule at all.
             "Werkzeuge",
             "Zeiträume",
-            "Sachverhalte",
             "Säugetiere",
-            "Kindergarten",
             "Donaudampfschifffahrtsgesellschaft",
         ] {
             assert!(accepts(word), "{word} must stay a word");

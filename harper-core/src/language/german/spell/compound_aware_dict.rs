@@ -191,16 +191,23 @@ mod tests {
     use crate::spell::MutableDictionary;
     use crate::spell::rune::word_list::AnnotatedWord;
 
+    /// Every one of these fixtures is a German noun, and the compound checker's
+    /// own word list says so with an `N`. The base dictionary has to agree:
+    /// a lower-case compound is only accepted if its last element has a word
+    /// class, so a noun with no metadata cannot end one.
+    fn noun() -> DictWordMetadata {
+        DictWordMetadata {
+            noun: Some(Default::default()),
+            ..Default::default()
+        }
+    }
+
     fn create_test_base_dict() -> Arc<FstDictionary> {
         let mut dict = MutableDictionary::new();
 
-        dict.append_word("schuh".chars().collect::<CharString>(), Default::default());
-        dict.append_word(
-            "hersteller".chars().collect::<CharString>(),
-            Default::default(),
-        );
-        dict.append_word("arbeit".chars().collect::<CharString>(), Default::default());
-        dict.append_word("geber".chars().collect::<CharString>(), Default::default());
+        for word in ["schuh", "hersteller", "arbeit", "geber"] {
+            dict.append_word(word.chars().collect::<CharString>(), noun());
+        }
 
         Arc::new(dict.into())
     }
@@ -268,9 +275,9 @@ mod tests {
         let compound_checker = create_test_compound_checker();
         let dict = CompoundAwareDictionary::new(base_dict, compound_checker);
 
-        // Base words return their own metadata (empty here) from the base dictionary.
+        // Base words return their own metadata from the base dictionary.
         let base_metadata = dict.get_word_metadata(&"schuh".chars().collect::<Vec<_>>());
-        assert_eq!(base_metadata.as_deref(), Some(&DictWordMetadata::default()));
+        assert_eq!(base_metadata.as_deref(), Some(&noun()));
 
         // Compound word should return compound metadata
         let compound_metadata =
