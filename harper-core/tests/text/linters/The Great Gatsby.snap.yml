@@ -4,8 +4,8 @@ Message: |
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
+  - Replace with: “FA”
   - Replace with: “Fe”
-  - Replace with: “Ft”
 
 
 
@@ -308,7 +308,7 @@ Message: |
 Suggest:
   - Replace with: “Vile”
   - Replace with: “Villa”
-  - Replace with: “Villi”
+  - Replace with: “Villa”
 
 
 
@@ -882,7 +882,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -967,7 +967,7 @@ Message: |
 Suggest:
   - Replace with: “Do”
   - Replace with: “DA”
-  - Replace with: “Di”
+  - Replace with: “DE”
 
 
 
@@ -983,9 +983,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      825 | “No, you don’t,” interposed Tom quickly. “Myrtle’ll be hurt if you don’t come up
-         |                                           ^~~~~~~~~ Did you mean `Myrtle's`?
+         |                                           ^~~~~~~~~ Did you mean to spell `Myrtle’ll` this way?
      826 | to the apartment. Won’t you, Myrtle?”
 Suggest:
+  - Replace with: “Myrtle's”
   - Replace with: “Myrtle's”
 
 
@@ -1133,7 +1134,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -1917,8 +1918,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1710 | “Wonder’ff tell me where there’s a gas’line station?”
-         |  ^~~~~~~~~ Did you mean `Wonder's`?
+         |  ^~~~~~~~~ Did you mean to spell `Wonder’ff` this way?
 Suggest:
+  - Replace with: “Wonder's”
   - Replace with: “Wonder's”
 
 
@@ -2215,7 +2217,7 @@ Message: |
 Suggest:
   - Replace with: “RI”
   - Replace with: “Ra”
-  - Replace with: “Ru”
+  - Replace with: “Re”
 
 
 
@@ -2226,7 +2228,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PE”
+  - Replace with: “PA”
 
 
 
@@ -2266,9 +2268,9 @@ Message: |
     1861 | the gravel drive that Mrs. Ulysses Swett’s automobile ran over his right hand.
          |                                    ^~~~~~~ Did you mean to spell `Swett’s` this way?
 Suggest:
+  - Replace with: “Sweet's”
   - Replace with: “Sweat's”
   - Replace with: “Sweet's”
-  - Replace with: “Seth's”
 
 
 
@@ -2290,7 +2292,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2301,7 +2303,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -2394,7 +2396,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2440,8 +2442,8 @@ Message: |
          |                              ^~ Did you mean to spell `G.` this way?
 Suggest:
   - Replace with: “Go”
-  - Replace with: “GI”
-  - Replace with: “GU”
+  - Replace with: “GA”
+  - Replace with: “GE”
 
 
 
@@ -2517,7 +2519,7 @@ Message: |
 Suggest:
   - Replace with: “Lear's”
   - Replace with: “Leger's”
-  - Replace with: “Leer's”
+  - Replace with: “Lego's”
 
 
 
@@ -2529,7 +2531,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -2541,7 +2543,7 @@ Message: |
 Suggest:
   - Replace with: “Jon's”
   - Replace with: “Jonas”
-  - Replace with: “Jogs”
+  - Replace with: “Jones”
 
 
 
@@ -2692,7 +2694,7 @@ Message: |
 Suggest:
   - Replace with: “So”
   - Replace with: “SA”
-  - Replace with: “Se”
+  - Replace with: “SE”
 
 
 
@@ -2748,9 +2750,9 @@ Message: |
     1882 | and Henry L. Palmetto, who killed himself by jumping in front of a subway train
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
+  - Replace with: “LA”
+  - Replace with: “La”
   - Replace with: “Le”
-  - Replace with: “Li”
-  - Replace with: “Lu”
 
 
 
@@ -2876,7 +2878,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PE”
+  - Replace with: “PA”
 
 
 
@@ -2886,8 +2888,8 @@ Message: |
          |                        ^~~~~~ Did you mean to spell `Jewett` this way?
 Suggest:
   - Replace with: “Jewel”
+  - Replace with: “Jewel”
   - Replace with: “Jewell”
-  - Replace with: “Jewess”
 
 
 
@@ -2924,8 +2926,8 @@ Message: |
     1982 | de Boulogne.
 Suggest:
   - Replace with: “Boss”
+  - Replace with: “Boas”
   - Replace with: “Boris”
-  - Replace with: “Bios”
 
 
 
@@ -2935,6 +2937,7 @@ Message: |
     1982 | de Boulogne.
          |    ^~~~~~~~ Did you mean to spell `Boulogne` this way?
 Suggest:
+  - Replace with: “Bologna”
   - Replace with: “Bologna”
   - Replace with: “Cologne”
 
@@ -2959,16 +2962,6 @@ Suggest:
   - Replace with: “Order”
   - Replace with: “Orders”
   - Replace with: “Order's”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    2006 | To my astonishment, the thing had an authentic look. “Orderi di Danilo,” ran the
-         |                                                              ^~ This word's canonical spelling is all-caps.
-    2007 | circular legend, “Montenegro, Nicolas Rex.”
-Suggest:
-  - Replace with: “DI”
 
 
 
@@ -3355,6 +3348,7 @@ Message: |
          |          ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Oxford”
   - Replace with: “Longsword”
 
 
@@ -3365,6 +3359,7 @@ Message: |
          |             ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
+  - Replace with: “Oxford”
   - Replace with: “Longsword”
 
 
@@ -3374,6 +3369,7 @@ Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
          |                                                   ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
+  - Replace with: “Oxford”
   - Replace with: “Oxford”
   - Replace with: “Longsword”
 
@@ -4072,15 +4068,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2905 | “Who’s this?”
-         |  ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4146,15 +4133,6 @@ Suggest:
   - Replace with: “prat”
   - Replace with: “pray”
   - Replace with: “pram”
-
-
-
-Lint:    Capitalization (127 priority)
-Message: |
-    3003 | ## CHAPTER VI
-         | ^~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## CHAPTER Vi”
 
 
 
@@ -5204,7 +5182,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5215,7 +5193,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5226,7 +5204,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5238,7 +5216,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5256,7 +5234,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5309,7 +5287,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5327,7 +5305,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5350,7 +5328,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5361,7 +5339,7 @@ Message: |
 Suggest:
   - Replace with: “Biko's”
   - Replace with: “Bilbo's”
-  - Replace with: “Biro's”
+  - Replace with: “Bill's”
 
 
 
@@ -5808,8 +5786,8 @@ Message: |
          |      ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -5819,8 +5797,8 @@ Message: |
          |                                    ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -5850,8 +5828,8 @@ Message: |
          |  ^ Did you mean to spell `r` this way?
 Suggest:
   - Replace with: “re”
+  - Replace with: “I”
   - Replace with: “a”
-  - Replace with: “i”
 
 
 
@@ -6313,8 +6291,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4943 | “I suppose Daisy’ll call too.” He looked at me anxiously, as if he hoped I’d
-         |            ^~~~~~~~ Did you mean `Daisy's`?
+         |            ^~~~~~~~ Did you mean to spell `Daisy’ll` this way?
 Suggest:
+  - Replace with: “Daisy's”
   - Replace with: “Daisy's”
 
 
@@ -6688,9 +6667,9 @@ Message: |
     5172 | Roosevelt and then to Gad’s Hill, where he bought a sandwich that he didn’t eat,
          |                       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -6700,9 +6679,9 @@ Message: |
     5174 | reach Gad’s Hill until noon. Thus far there was no difficulty in accounting for
          |       ^~~~~ Did you mean to spell `Gad’s` this way?
 Suggest:
-  - Replace with: “Gab's”
-  - Replace with: “Gag's”
-  - Replace with: “Gal's”
+  - Replace with: “Gap's”
+  - Replace with: “Gay's”
+  - Replace with: “God's”
 
 
 
@@ -6967,9 +6946,9 @@ Message: |
     5341 | “Young Parke’s in trouble,” he said rapidly. “They picked him up when he handed
          |        ^~~~~~~ Did you mean to spell `Parke’s` this way?
 Suggest:
+  - Replace with: “Park's”
   - Replace with: “Parker's”
   - Replace with: “Parks's”
-  - Replace with: “Park's”
 
 
 
@@ -7009,7 +6988,7 @@ Message: |
 Suggest:
   - Replace with: “Co”
   - Replace with: “Cu”
-  - Replace with: “CI”
+  - Replace with: “CA”
 
 
 
@@ -7157,7 +7136,7 @@ Message: |
 Suggest:
   - Replace with: “Be”
   - Replace with: “Bi”
-  - Replace with: “BO”
+  - Replace with: “BA”
 
 
 
@@ -7167,8 +7146,8 @@ Message: |
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
+  - Replace with: “FA”
   - Replace with: “Fe”
-  - Replace with: “Ft”
 
 
 
@@ -7254,9 +7233,10 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5507 | First time I saw him was when he come into Winebrenner’s poolroom at Forty-third
-         |                                            ^~~~~~~~~~~~~ Did you mean `Windbreaker's`?
+         |                                            ^~~~~~~~~~~~~ Did you mean to spell `Winebrenner’s` this way?
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
 Suggest:
+  - Replace with: “Windbreaker's”
   - Replace with: “Windbreaker's”
 
 
@@ -7289,6 +7269,7 @@ Message: |
     5520 | Oggsford I knew I could use him good. I got him to join up in the American
          | ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
+  - Replace with: “Oxford”
   - Replace with: “Oxford”
   - Replace with: “Longsword”
 
@@ -7361,8 +7342,8 @@ Message: |
          |                                            ^~~~~~~~ Did you mean to spell `Hopalong` this way?
 Suggest:
   - Replace with: “Hopping”
+  - Replace with: “Halon”
   - Replace with: “Haling”
-  - Replace with: “Haloing”
 
 
 
