@@ -14,7 +14,7 @@ pub struct AspireTo {
 impl Default for AspireTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["aspire", "aspired", "aspires", "aspiring"])
+            expr: SequenceExpr::word_set(["aspire", "aspired", "aspires", "aspiring"])
                 .t_ws()
                 .t_aco("for"),
         }

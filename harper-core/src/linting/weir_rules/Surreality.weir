@@ -1,0 +1,9 @@
+expr main (surrealness)
+
+let message "Did you mean `surreality`?"
+let description "Suggests changing `surrealness` to the more standard `surreality`."
+let kind "WordChoice"
+let becomes "surreality"
+
+test "I can make a version that is more realistic but I will always keep this because the surrealness is appealing to me." "I can make a version that is more realistic but I will always keep this because the surreality is appealing to me."
+test "A major element to the surrealness of Silent Hill 2's original PlayStation 2 FMVs was that they played at 60 frames per second." "A major element to the surreality of Silent Hill 2's original PlayStation 2 FMVs was that they played at 60 frames per second."

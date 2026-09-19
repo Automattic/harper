@@ -1,4 +1,5 @@
 <script lang="ts">
+import { Button, Checkbox, IconButton, Panel, SettingRow, Toggle, TrashIcon } from 'components';
 import { onMount } from 'svelte';
 import { Client, type Integration } from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
@@ -140,7 +141,7 @@ function closeAppPicker() {
       <p class="result-summary">Saving integrations...</p>
     {/if}
 
-    <div class="list-card">
+    <Panel>
       {#if !isIntegrationsLoading && integrationApps.length === 0}
         <div class="empty">No configured app integrations.</div>
       {:else}
@@ -151,39 +152,34 @@ function closeAppPicker() {
               <strong>{app.name}</strong>
               <p>{app.bundle_id}</p>
             </div>
-            <button
-              class="icon-button danger"
-              type="button"
+            <IconButton
+              danger
               disabled={isIntegrationsLoading || isIntegrationsSaving}
               aria-label={`Remove ${app.name}`}
               on:click={() => removeIntegration(app.bundle_id)}
             >
-              <span class="settings-icon icon-trash" aria-hidden="true"></span>
-            </button>
-            <button
-              class:checked={app.enabled}
-              class="toggle"
-              type="button"
-              role="switch"
+              <TrashIcon className="control-icon" />
+            </IconButton>
+            <Toggle
+              appearance="settings"
+              checked={app.enabled}
               disabled={isIntegrationsLoading || isIntegrationsSaving}
-              aria-checked={app.enabled}
               aria-label={`Toggle ${app.name}`}
               on:click={() => setIntegrationEnabled(app.bundle_id, !app.enabled)}
-            >
-              <span></span>
-            </button>
+            />
           </div>
         {/each}
       {/if}
-    </div>
+    </Panel>
 
     <div class="actions-row">
-      <button
+      <Button
+        unstyled
         class="button"
         type="button"
         disabled={isIntegrationsLoading || isIntegrationsSaving}
         on:click={() => (appPickerOpen = true)}
-      >Add application...</button>
+      >Add application...</Button>
       <span class="muted">Choose any app from your Applications folder.</span>
     </div>
   </div>
@@ -192,20 +188,17 @@ function closeAppPicker() {
 
   <div class="stanza">
     <div class="eyebrow">New apps</div>
-    <div class="row top">
-      <div>
-        <strong>Enable new apps automatically</strong>
-        <p>When you launch a supported app for the first time, turn integration on by default.</p>
-      </div>
-      <button
-        class="checkbox"
-        type="button"
-        role="checkbox"
-        aria-checked="false"
+    <SettingRow top>
+      <strong>Enable new apps automatically</strong>
+      <p>When you launch a supported app for the first time, turn integration on by default.</p>
+      <Checkbox
+        slot="control"
+        appearance="settings"
+        checked={false}
         disabled
         title="Not wired yet"
-      ></button>
-    </div>
+      />
+    </SettingRow>
   </div>
 </section>
 
