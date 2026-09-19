@@ -6,6 +6,7 @@ pub mod german_case_usage;
 pub mod german_common_typos;
 pub mod german_filler_words;
 pub mod german_fixed_nominalization;
+pub mod german_foreign_stretch;
 pub mod german_noun_capitalization;
 pub mod german_noun_declension;
 pub mod german_pronoun_agreement;

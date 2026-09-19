@@ -1,6 +1,7 @@
 use crate::{
     Punctuation, Token, TokenKind, TokenStringExt,
     document::Document,
+    language::german::linting::german_foreign_stretch,
     language::german::spell::lexical_classes::{FOREIGN_TERMS, NUMERALS, UNIT_ABBREVIATIONS},
     language::morphology::MorphologyExt,
     linting::{Lint, LintKind, Linter, Suggestion},
@@ -295,19 +296,6 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
 /// that **none of them is also a German word**. `des`, `in`, `da`, `so` and `e`
 /// are deliberately absent for that reason, even though they are frequent in
 /// French, Italian and Latin.
-const FOREIGN_FUNCTION_WORDS: &[&str] = &[
-    // English
-    "the", "of", "and", "for", "with", "from", "their", "its", "his", "her", "they", "these",
-    "those", "which", "that", "about", "into", "upon", "between", "among", "were", "been", "being",
-    "there", "when", "where", "would", "could", "should", // French
-    "la", "le", "les", "du", "de", "au", "aux", "et", "une", "dans", "sur", "pour", "avec", "sans",
-    "chez", "leur", "ses", "son", "sa", "cette", "ces", "qui", "que",
-    // Italian / Spanish / Portuguese
-    "della", "delle", "degli", "dei", "nel", "nella", "il", "lo", "gli", "una", "col", "por",
-    "para", "los", "las", "del", "el", "uma", "dos", // Latin
-    "apud", "atque", "quae", "quod", "cum", "sive", "seu", "ratione", "liber", "libri",
-];
-
 /// Forms that are a relative pronoun as readily as an article or determiner.
 /// Only [`GermanNounCapitalization::opens_relative_clause`] uses this, and only
 /// straight after a comma or an opening bracket.
@@ -802,72 +790,11 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
 
     /// Is this token inside a stretch of a foreign language?
     ///
-    /// German prose quotes foreign titles without translating them, and a
-    /// bibliography is mostly that: *"The Modes of scepticism: ancient **texts**
-    /// and modern interpretations"*, *"Galien et la **philosophie**"*, *"Memorie
-    /// della Reale Accademia **delle** Scienze"*. Several of those words are in
-    /// the German dictionary with a noun reading — `texts`, `model`, `period`,
-    /// `zone`, `roman` — so every one of them is reported as a lower-case German
-    /// noun.
-    ///
-    /// The neighbourhood settles it. Two kinds of evidence count, within three
-    /// word tokens on either side:
-    ///
-    /// * a function word no German sentence contains — `the`, `of`, `la`, `du`,
-    ///   `et`, `della`. These are the strongest signal and the most common.
-    /// * a word the dictionary does not know at all. Latin and taxonomic names
-    ///   carry no function words — *"Conspectus generum avium"*, *"Mellisuga
-    ///   minima vielloti"* — and are nothing but unknown words.
-    ///
-    /// At least one function word is **required**, and one more point has to
-    /// come from somewhere — a second function word, or an unknown word.
-    /// Unknown words alone are not enough and the difference is large: German
-    /// Wikipedia is full of proper names the dictionary does not have, and
-    /// letting two of those silence the rule cost a fifth of the injected
-    /// lower-case nouns in `just language-recall german`.
-    ///
-    /// The price is the Latin and taxonomic runs, which carry no function word
-    /// at all — *"Conspectus generum avium"* stays flagged. A handful of those
-    /// against several hundred real errors is the right way round.
+    /// See [`german_foreign_stretch`] for what counts as evidence and why.
     fn in_foreign_stretch(tokens: &[&Token], index: usize, document: &Document) -> bool {
-        const WINDOW: usize = 3;
-
-        // A German determiner directly in front settles it the other way: *"durch
-        // die Zeitschrift Le Mercure Galant"*, *"an der University of Virginia"*
-        // are German sentences that happen to name something foreign, and the
-        // word after the article is a German noun.
-        if index
-            .checked_sub(1)
-            .is_some_and(|previous| Self::supplies_determiner(tokens[previous], document))
-        {
-            return false;
-        }
-
-        let mut function_words = 0;
-        let mut unknown_words = 0;
-
-        let mut adjacent_function_word = false;
-
-        let mut visit = |token: &Token, distance: usize| {
-            if !matches!(token.kind, TokenKind::Word(_)) {
-                return;
-            }
-            if FOREIGN_FUNCTION_WORDS.contains(&Self::lowercase_of(token, document).as_str()) {
-                function_words += 1;
-                adjacent_function_word |= distance == 1;
-            } else if token.kind.is_oov() {
-                unknown_words += 1;
-            }
-        };
-
-        for (offset, token) in tokens[..index].iter().rev().take(WINDOW).enumerate() {
-            visit(token, offset + 1);
-        }
-        for (offset, token) in tokens.iter().skip(index + 1).take(WINDOW).enumerate() {
-            visit(token, offset + 1);
-        }
-
-        function_words >= 2 || (adjacent_function_word && function_words + unknown_words >= 2)
+        german_foreign_stretch::in_foreign_stretch(tokens, index, document, |token| {
+            Self::supplies_determiner(token, document)
+        })
     }
 
     /// Is the token glued to a hyphen on either side?

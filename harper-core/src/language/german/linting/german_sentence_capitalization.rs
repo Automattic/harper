@@ -1,3 +1,4 @@
+use crate::language::german::linting::german_foreign_stretch;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document, spell::Dictionary};
 
@@ -199,6 +200,30 @@ impl<T: Dictionary> GermanSentenceCapitalization<T> {
         Self::is_abbreviation_or_ordinal(before_period, document)
     }
 
+    /// Does the sentence that starts at `start` in fact start inside a quoted
+    /// foreign title?
+    ///
+    /// *"Is This What We Want? **als** Protest gegen …"* — the question mark
+    /// belongs to the English album title, so the German word after it is
+    /// mid-sentence and correctly lower case. The same evidence settles it as
+    /// for a lower-case noun, so the same detector decides.
+    ///
+    /// No determiner test is passed in: this candidate opens a sentence, so
+    /// what precedes it is punctuation rather than a German article.
+    fn starts_inside_foreign_text(document: &Document, start: usize) -> bool {
+        let tokens: Vec<&Token> = document
+            .get_tokens()
+            .iter()
+            .filter(|t| !t.kind.is_whitespace())
+            .collect();
+
+        let Some(index) = tokens.iter().position(|t| t.span.start == start) else {
+            return false;
+        };
+
+        german_foreign_stretch::in_foreign_stretch(&tokens, index, document, |_| false)
+    }
+
     /// Ordinals ("II.", "1905.") and the abbreviations listed above.
     fn is_abbreviation_or_ordinal(token: &Token, document: &Document) -> bool {
         if matches!(token.kind, TokenKind::Number(_) | TokenKind::Decade) {
@@ -260,6 +285,7 @@ impl<T: Dictionary> Linter for GermanSentenceCapitalization<T> {
                         && first_char.is_alphabetic()
                         && !first_char.is_uppercase()
                         && !Self::continues_previous_sentence(document, first_word.span.start)
+                        && !Self::starts_inside_foreign_text(document, first_word.span.start)
                     {
                         let target_span = first_word.span;
                         let mut replacement_chars =
