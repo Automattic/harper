@@ -5,7 +5,6 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
-// Individual Linters
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -152,6 +151,7 @@ use super::its_possessive::ItsPossessive;
 use super::jealous_of::JealousOf;
 use super::johns_hopkins::JohnsHopkins;
 use super::jump_the_gun::JumpTheGun;
+use super::languagetool_rules::LanguageToolRules;
 use super::lead_rise_to::LeadRiseTo;
 use super::leaving_in_droves::LeavingInDroves;
 use super::left_right_hand::LeftRightHand;
@@ -268,6 +268,21 @@ use super::somewhat_something::SomewhatSomething;
 use super::soon_to_be::SoonToBe;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
+use super::spanish_contextual_punctuation::SpanishContextualPunctuation;
+use super::spanish_dequeismo::SpanishDequeismo;
+use super::spanish_diacritics::SpanishDiacritics;
+use super::spanish_dialects::SpanishDialects;
+use super::spanish_gender_agreement::SpanishGenderAgreement;
+use super::spanish_homophones::SpanishHomophones;
+use super::spanish_plural_agreement::SpanishPluralAgreement;
+use super::spanish_punctuation::SpanishPunctuation;
+use super::spanish_sentence_capitalization::SpanishSentenceCapitalization;
+use super::spanish_strict_rules::SpanishStrictRules;
+use super::spanish_style_and_redundancy::SpanishStyleAndRedundancy;
+use super::spanish_style_tone::SpanishStyleTone;
+use super::spanish_subject_verb_agreement::SpanishSubjectVerbAgreement;
+use super::spanish_typography::SpanishTypography;
+use super::spanish_verb_conjugation::SpanishVerbConjugation;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
@@ -616,6 +631,28 @@ impl LintGroup {
             ($rule:ident) => {
                 out.add_chunk_expr_linter(stringify!($rule), $rule::new(dialect));
             };
+        }
+
+        if dialect.is_spanish() {
+            insert_struct_rule!(SpanishGenderAgreement);
+            insert_struct_rule!(SpanishHomophones);
+            insert_struct_rule!(SpanishDequeismo);
+            insert_struct_rule!(SpanishSubjectVerbAgreement);
+            insert_struct_rule!(SpanishPunctuation);
+            insert_struct_rule!(SpanishContextualPunctuation);
+            insert_struct_rule!(SpanishDiacritics);
+            insert_struct_rule!(SpanishStrictRules);
+            insert_struct_rule!(SpanishVerbConjugation);
+            insert_struct_rule!(SpanishSentenceCapitalization);
+            insert_struct_rule!(SpanishStyleAndRedundancy);
+            insert_struct_rule!(SpanishStyleTone);
+            insert_struct_rule!(SpanishDialects);
+            insert_struct_rule!(SpanishPluralAgreement);
+            insert_struct_rule!(SpanishTypography);
+            insert_struct_rule!(LanguageToolRules);
+            out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+            out.set_all_rules_to(Some(true));
+            return out;
         }
 
         out.merge_from(weir_rules::lint_group());
