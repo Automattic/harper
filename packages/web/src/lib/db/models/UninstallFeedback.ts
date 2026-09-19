@@ -1,4 +1,4 @@
-import { gte } from 'drizzle-orm';
+import { gte, lte, and } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { uninstallFeedbackTable } from '../schema';
@@ -24,5 +24,12 @@ export default class UninstallFeedback {
 			.select()
 			.from(uninstallFeedbackTable)
 			.where(gte(uninstallFeedbackTable.timestamp, date));
+	}
+
+	public static async getAllBetween(start: Date, end: Date) {
+		return await db
+			.select()
+			.from(uninstallFeedbackTable)
+			.where(and( gte(uninstallFeedbackTable.timestamp, start), lte(uninstallFeedbackTable.timestamp ,end)));
 	}
 }
