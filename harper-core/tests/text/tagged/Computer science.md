@@ -34,10 +34,10 @@
 # D   NSg        P  NPl/V3+ . Nᴹ/Vg/J+    N🅪Sg+    N🅪Sg+  V3        NSg/J     NPl+
 > to describe computational processes , and  database theory concerns the management
 # P  VB       J+            NPl/V3+   . VB/C NSg/VB+  N🅪Sg+  NPl/V3+  D   N🅪Sg
-> of repositories of data  . Human    – computer interaction investigates the interfaces
-# P  NPl          P  N🅪Pl+ . NSg/VB/J . NSg+     N🅪Sg+       V3           D+  NPl/V3+
+> of repositories of data  . Human – computer interaction investigates the interfaces
+# P  NPl          P  N🅪Pl+ . NSg/J . NSg+     N🅪Sg+       V3           D+  NPl/V3+
 > through which humans and  computers interact , and  software engineering focuses on
-# J/P     I/C+  NPl/V3 VB/C NPl+      NSg/VB   . VB/C Nᴹ+      Nᴹ/Vg/J+    NPl/V3  J/P
+# J/P     I/C+  NPl    VB/C NPl+      NSg/VB   . VB/C Nᴹ+      Nᴹ/Vg/J+    NPl/V3  J/P
 > the design   and  principles behind  developing software . Areas such  as    operating
 # D   N🅪Sg/VB+ VB/C NPl/V3+    NSg/J/P Nᴹ/Vg/J    Nᴹ+      . NPl+  NSg/I R/C/P Nᴹ/Vg/J
 > systems , networks and  embedded systems investigate the principles and  design
@@ -51,7 +51,7 @@
 > problem - solving , decision - making  , environmental adaptation , planning and
 # NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J . NSg/J         NSg+       . NSg/Vg   VB/C
 > learning found  in        humans and  animals . Within  artificial intelligence , computer
-# Nᴹ/Vg/J+ NSg/VP NPr/J/R/P NPl/V3 VB/C NPl+    . NSg/J/P J+         N🅪Sg+        . NSg+
+# Nᴹ/Vg/J+ NSg/VP NPr/J/R/P NPl    VB/C NPl+    . NSg/J/P J+         N🅪Sg+        . NSg+
 > vision   aims   to understand and  process image   and  video    data  , while      natural
 # N🅪Sg/VB+ NPl/V3 P  VB         VB/C NSg/VB+ N🅪Sg/VB VB/C N🅪Sg/VB+ N🅪Pl+ . NSg/VB/C/P NSg/J+
 > language processing aims   to understand and  process textual and  linguistic data  .
@@ -111,7 +111,7 @@
 > features of the modern computer " . " A    crucial step    was  the adoption of a   punched
 # NPl/V3   P  D   NSg/J  NSg+     . . . D/P+ J+      NSg/VB+ VLPt D   N🅪Sg     P  D/P VP/J
 > card     system derived from the Jacquard loom   " making  it       infinitely
-# N🅪Sg/VB+ NSg+   VP/J    P    D   NPr      NSg/VB . Nᴹ/Vg/J NPr/ISg+ R
+# N🅪Sg/VB+ NSg+   VP/J    P    D   NPr      NSg/VB . Nᴹ/Vg/J NSg/ISg+ R
 > programmable . [ note    2 ] In        1843 , during the translation of a   French      article on  the
 # NSg/J        . . NSg/VB+ # . NPr/J/R/P #    . VB/P   D   N🅪Sg        P  D/P NPr🅪Sg/VB/J NSg/VB+ J/P D
 > Analytical Engine  , Ada  Lovelace wrote , in        one     of the many       notes   she  included , an
@@ -155,15 +155,15 @@
 > cards  and  a   central computing unit . When    the machine was  finished , some     hailed
 # NPl/V3 VB/C D/P NPr/J   Nᴹ/Vg/J+  NSg+ . NSg/I/C D+  NSg/VB+ VLPt VP/J     . I/J/R/Dq VP/J
 > it       as    " Babbage's dream     come       true     " .
-# NPr/ISg+ R/C/P . NPr$      NSg/VB/J+ NSg/VBPp/P NSg/VB/J . .
+# NSg/ISg+ R/C/P . NPr$      NSg/VB/J+ NSg/VBPp/P NSg/VB/J . .
 >
 #
 > During the 1940s , with the development of new   and  more         powerful computing
 # VB/P   D+  #d    . P    D   N🅪Sg        P  NSg/J VB/C NPr/I/J/R/Dq J        Nᴹ/Vg/J+
 > machines such  as    the Atanasoff – Berry      computer and  ENIAC , the term      computer came
 # NPl/V3   NSg/I R/C/P D   ?         . NPr🅪Sg/VB+ NSg+     VB/C ?     . D   NSg/VB/J+ NSg+     NSg/VPt/P
-> to refer  to the machines rather than their human    predecessors . As    it       became
-# P  NSg/VB P  D   NPl/V3+  NPr/R  C/P  D$+   NSg/VB/J NPl+         . R/C/P NPr/ISg+ VPt
+> to refer  to the machines rather than their human predecessors . As    it       became
+# P  NSg/VB P  D   NPl/V3+  NPr/R  C/P  D$+   NSg/J NPl+         . R/C/P NSg/ISg+ VPt
 > clear    that     computers could be       used for   more         than just mathematical calculations ,
 # NSg/VB/J I/C/Ddem NPl+      VXB   NSg/VLXB VP/J R/C/P NPr/I/J/R/Dq C/P  J/R  J+           +            .
 > the field  of computer science  broadened to study  computation in        general  . In
@@ -363,7 +363,7 @@
 >
 #
 > Computer science  is  an  empirical discipline . We   would have    called it       an
-# NSg+     N🅪Sg/VB+ VL3 D/P NSg/J     NSg/VB     . IPl+ VXB   NSg/VXB VP/J   NPr/ISg+ D/P+
+# NSg+     N🅪Sg/VB+ VL3 D/P NSg/J     NSg/VB     . IPl+ VXB   NSg/VXB VP/J   NSg/ISg+ D/P+
 > experimental science  , but     like         astronomy , economics , and  geology , some     of its
 # NSg/J+       N🅪Sg/VB+ . NSg/C/P NSg/VB/J/C/P Nᴹ+       . Nᴹ+       . VB/C NSg     . I/J/R/Dq P  ISg/D$+
 > unique forms  of observation and  experience do  not     fit       a   narrow   stereotype of
@@ -375,13 +375,13 @@
 > question to nature  ; and  we   listen for   the answer  by observing the machine in
 # NSg/VB+  P  N🅪Sg/VB . VB/C IPl+ NSg/VB R/C/P D+  NSg/VB+ P  Nᴹ/Vg/J   D   NSg/VB+ NPr/J/R/P
 > operation and  analyzing it       by all          analytical and  measurement means  available .
-# N🅪Sg+     VB/C Nᴹ/Vg/J   NPr/ISg+ P  NSg/I/J/C/Dq J          VB/C N🅪Sg+       NPl/V3 J         .
+# N🅪Sg+     VB/C Nᴹ/Vg/J   NSg/ISg+ P  NSg/I/J/C/Dq J          VB/C N🅪Sg+       NPl/V3 J         .
 >
 #
 > It       has since been   argued that     computer science  can     be       classified as    an   empirical
-# NPr/ISg+ V3  C/P+  VLPp/B VP/J   I/C/Ddem NSg+     N🅪Sg/VB+ NPr/VXB NSg/VLXB NSg/VP/J   R/C/P D/P+ NSg/J+
+# NSg/ISg+ V3  C/P+  VLPp/B VP/J   I/C/Ddem NSg+     N🅪Sg/VB+ NPr/VXB NSg/VLXB NSg/VP/J   R/C/P D/P+ NSg/J+
 > science  since it       makes  use     of empirical testing  to evaluate the correctness of
-# N🅪Sg/VB+ C/P   NPr/ISg+ NPl/V3 N🅪Sg/VB P  NSg/J     Nᴹ/Vg/J+ P  VB       D   NSg         P
+# N🅪Sg/VB+ C/P   NSg/ISg+ NPl/V3 N🅪Sg/VB P  NSg/J     Nᴹ/Vg/J+ P  VB       D   NSg         P
 > programs  , but     a    problem remains in        defining the laws    and  theorems of computer
 # NPrPl/V3+ . NSg/C/P D/P+ NSg/J+  NPl/V3  NPr/J/R/P Nᴹ/Vg/J  D+  NPl/V3+ VB/C NPl/V3   P  NSg+
 > science  ( if    any    exist ) and  defining the nature  of experiments in        computer
@@ -397,7 +397,7 @@
 > science  observes what   is  possible to exist and  while      scientists discover  laws
 # N🅪Sg/VB+ NPl/V3   NSg/I+ VL3 NSg/J    P  VB    VB/C NSg/VB/C/P NPl+       N🅪Sg/VB/J NPl/V3
 > from observation , no        proper laws    have    been   found  in        computer science  and  it       is
-# P    N🅪Sg+       . NSg/Dq/P+ NSg/J+ NPl/V3+ NSg/VXB VLPp/B NSg/VP NPr/J/R/P NSg+     N🅪Sg/VB+ VB/C NPr/ISg+ VL3
+# P    N🅪Sg+       . NSg/Dq/P+ NSg/J+ NPl/V3+ NSg/VXB VLPp/B NSg/VP NPr/J/R/P NSg+     N🅪Sg/VB+ VB/C NSg/ISg+ VL3
 > instead concerned with creating phenomena .
 # R       VP/J      P    Nᴹ/Vg/J  NSg+      .
 >
@@ -444,8 +444,8 @@
 # J          N🅪Sg+        . . NSg+     N🅪Sg/VB+ NPl/V3  J/P NPl+    VP/J     NPr/J/R/P
 > design   , specification , programming , verification , implementation and  testing of
 # N🅪Sg/VB+ . NSg+          . Nᴹ/Vg/J     . N🅪Sg+        . N🅪Sg           VB/C Nᴹ/Vg/J P
-> human    - made computing systems .
-# NSg/VB/J . VP   Nᴹ/Vg/J+  NPl+    .
+> human - made computing systems .
+# NSg/J . VP   Nᴹ/Vg/J+  NPl+    .
 >
 #
 >              Fields
@@ -463,7 +463,7 @@
 > the Association for   Computing Machinery ( ACM ) , and  the IEEE Computer Society
 # D   N🅪Sg+       R/C/P Nᴹ/Vg/J+  Nᴹ+       . NSg . . VB/C D   NPr  NSg+     N🅪Sg+
 > ( IEEE CS     ) — identifies four areas that      it       considers crucial to the discipline of
-# . NPr  NPl/V3 . . V3         NSg  NPl+  I/C/Ddem+ NPr/ISg+ V3        J       P  D   NSg/VB     P
+# . NPr  NPl/V3 . . V3         NSg  NPl+  I/C/Ddem+ NSg/ISg+ V3        J       P  D   NSg/VB     P
 > computer science  : theory of computation , algorithms and  data  structures ,
 # NSg+     N🅪Sg/VB+ . N🅪Sg   P  NSg         . NPl        VB/C N🅪Pl+ NPl/V3+    .
 > programming methodology and  languages , and  computer elements and  architecture .
@@ -472,8 +472,8 @@
 # NPr/J/R/P NSg+     P  I/Ddem+ NSg+ NPl+  . ?    R/C  V3         NPrPl/V3+ NSg/I R/C/P Nᴹ+
 > engineering , artificial intelligence , computer networking and  communication ,
 # Nᴹ/Vg/J+    . J          N🅪Sg+        . NSg+     Nᴹ/Vg/J    VB/C N🅪Sg+         .
-> database systems , parallel computation , distributed computation , human    – computer
-# NSg/VB+  NPl+    . NSg/VB/J NSg         . VP/J        NSg         . NSg/VB/J . NSg+
+> database systems , parallel computation , distributed computation , human – computer
+# NSg/VB+  NPl+    . NSg/VB/J NSg         . VP/J        NSg         . NSg/J . NSg+
 > interaction , computer graphics , operating systems , and  numerical and  symbolic
 # N🅪Sg+       . NSg+     NSgPl+   . Nᴹ/Vg/J   NPl+    . VB/C J         VB/C J
 > computation as    being        important areas of computer science  .
@@ -485,9 +485,9 @@
 >
 #
 > Theoretical computer science  is  mathematical and  abstract in        spirit  , but     it
-# J+          NSg+     N🅪Sg/VB+ VL3 J            VB/C NSg/VB/J NPr/J/R/P NSg/VB+ . NSg/C/P NPr/ISg+
+# J+          NSg+     N🅪Sg/VB+ VL3 J            VB/C NSg/VB/J NPr/J/R/P NSg/VB+ . NSg/C/P NSg/ISg+
 > derives its     motivation from practical and  everyday computation . It       aims   to
-# NPl/V3  ISg/D$+ N🅪Sg+      P    NSg/J     VB/C NSg/J    NSg         . NPr/ISg+ NPl/V3 P
+# NPl/V3  ISg/D$+ N🅪Sg+      P    NSg/J     VB/C NSg/J    NSg         . NSg/ISg+ NPl/V3 P
 > understand the nature  of computation and  , as    a   consequence of this
 # VB         D   N🅪Sg/VB P  NSg         VB/C . R/C/P D/P NSg/VB      P  I/Ddem
 > understanding , provide more         efficient methodologies .
@@ -567,11 +567,11 @@
 > design   , implementation , analysis , characterization , and  classification of
 # N🅪Sg/VB+ . N🅪Sg+          . N🅪Sg+    . N🅪Sg             . VB/C N🅪Sg           P
 > programming languages and  their individual features . It       falls   within  the
-# Nᴹ/Vg/J+    NPl       VB/C D$+   NSg/J+     NPl/V3+  . NPr/ISg+ NPl/V3+ NSg/J/P D
+# Nᴹ/Vg/J+    NPl       VB/C D$+   NSg/J+     NPl/V3+  . NSg/ISg+ NPl/V3+ NSg/J/P D
 > discipline of computer science  , both   depending on  and  affecting mathematics ,
 # NSg/VB     P  NSg+     N🅪Sg/VB+ . I/C/Dq Nᴹ/Vg/J   J/P VB/C Nᴹ/Vg/J   Nᴹ+         .
 > software engineering , and  linguistics . It       is  an  active research area , with
-# Nᴹ+      Nᴹ/Vg/J+    . VB/C Nᴹ+         . NPr/ISg+ VL3 D/P NSg/J  Nᴹ/VB    N🅪Sg . P
+# Nᴹ+      Nᴹ/Vg/J+    . VB/C Nᴹ+         . NSg/ISg+ VL3 D/P NSg/J  Nᴹ/VB    N🅪Sg . P
 > numerous dedicated academic journals .
 # J+       VP/J+     NSg/J+   NPl/V3+  .
 >
@@ -643,7 +643,7 @@
 > processing algorithms independently of the type   of information carrier – whether
 # Nᴹ/Vg/J+   NPl+       R             P  D   NSg/VB P  Nᴹ+         NPr+    . I/C
 > it       is  electrical , mechanical or    biological . This    field   plays  important role in
-# NPr/ISg+ VL3 NSg/J      . NSg/J      NPr/C NSg/J      . I/Ddem+ NSg/VB+ NPl/V3 J         NSg  NPr/J/R/P
+# NSg/ISg+ VL3 NSg/J      . NSg/J      NPr/C NSg/J      . I/Ddem+ NSg/VB+ NPl/V3 J         NSg  NPr/J/R/P
 > information theory , telecommunications , information engineering and  has
 # Nᴹ+         N🅪Sg+  . Nᴹ+                . Nᴹ+         Nᴹ/Vg/J+    VB/C V3
 > applications in        medical image    computing and  speech   synthesis , among others  . What
@@ -682,16 +682,16 @@
 # NPl/V3   .
 >
 #
->              Human    – computer interaction
-# HeadingStart NSg/VB/J . NSg+     N🅪Sg+
+>              Human – computer interaction
+# HeadingStart NSg/J . NSg+     N🅪Sg+
 >
 #
-> Human    – computer interaction ( HCI ) is  the field  of study  and  research concerned
-# NSg/VB/J . NSg+     N🅪Sg+       . ?   . VL3 D   NSg/VB P  NSg/VB VB/C Nᴹ/VB+   VP/J
+> Human – computer interaction ( HCI ) is  the field  of study  and  research concerned
+# NSg/J . NSg+     N🅪Sg+       . ?   . VL3 D   NSg/VB P  NSg/VB VB/C Nᴹ/VB+   VP/J
 > with the design   and  use     of computer systems , mainly based on  the analysis of the
 # P    D   N🅪Sg/VB+ VB/C N🅪Sg/VB P  NSg+     NPl+    . R      VP/J  J/P D   N🅪Sg     P  D
 > interaction between humans and  computer interfaces . HCI has several subfields
-# N🅪Sg        NSg/P   NPl/V3 VB/C NSg+     NPl/V3+    . ?   V3  J/Dq    NPl
+# N🅪Sg        NSg/P   NPl    VB/C NSg+     NPl/V3+    . ?   V3  J/Dq    NPl
 > that     focus    on  the relationship between emotions , social behavior and  brain
 # I/C/Ddem N🅪Sg/VB+ J/P D   NSg          NSg/P   NPl+     . NSg/J  N🅪Sg/Am  VB/C NPr🅪Sg/VB+
 > activity with computers .
@@ -705,13 +705,13 @@
 > Software engineering is  the study  of designing , implementing , and  modifying the
 # Nᴹ+      Nᴹ/Vg/J+    VL3 D   NSg/VB P  Nᴹ/Vg/J+  . Nᴹ/Vg/J      . VB/C Nᴹ/Vg/J   D
 > software in        order    to ensure it       is  of high        quality , affordable , maintainable , and
-# Nᴹ+      NPr/J/R/P N🅪Sg/VB+ P  VB     NPr/ISg+ VL3 P  NSg/VB/J/R+ N🅪Sg/J+ . J          . J            . VB/C
+# Nᴹ+      NPr/J/R/P N🅪Sg/VB+ P  VB     NSg/ISg+ VL3 P  NSg/VB/J/R+ N🅪Sg/J+ . J          . J            . VB/C
 > fast       to build  . It       is  a   systematic approach to software design   , involving the
-# NSg/VB/J/R P  NSg/VB . NPr/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
+# NSg/VB/J/R P  NSg/VB . NSg/ISg+ VL3 D/P J          N🅪Sg/VB  P  Nᴹ       N🅪Sg/VB+ . Nᴹ/Vg/J   D
 > application of engineering practices to software . Software engineering deals
 # NSg         P  Nᴹ/Vg/J+    NPl/V3+   P  Nᴹ       . Nᴹ+      Nᴹ/Vg/J+    NPl/V3+
 > with the organizing and  analyzing of software — it       does    not     just deal     with the
-# P    D   Nᴹ/Vg/J    VB/C Nᴹ/Vg/J   P  Nᴹ+      . NPr/ISg+ NPl/VX3 NSg/R/C J/R  NSg/VB/J P    D+
+# P    D   Nᴹ/Vg/J    VB/C Nᴹ/Vg/J   P  Nᴹ+      . NSg/ISg+ NPl/VX3 NSg/R/C J/R  NSg/VB/J P    D+
 > creation or    manufacture of new    software , but     its     internal arrangement and
 # NSg+     NPr/C NSg/VB      P  NSg/J+ Nᴹ+      . NSg/C/P ISg/D$+ J        NSg         VB/C
 > maintenance . For   example software testing  , systems engineering , technical debt
@@ -729,7 +729,7 @@
 > goal    - orientated processes such  as    problem - solving , decision - making  ,
 # NSg/VB+ . VP/J       NPl/V3    NSg/I R/C/P NSg/J+  . Nᴹ/Vg/J . NSg/VB+  . Nᴹ/Vg/J .
 > environmental adaptation , learning , and  communication found  in        humans and
-# NSg/J         NSg+       . Nᴹ/Vg/J+ . VB/C N🅪Sg+         NSg/VP NPr/J/R/P NPl/V3 VB/C
+# NSg/J         NSg+       . Nᴹ/Vg/J+ . VB/C N🅪Sg+         NSg/VP NPr/J/R/P NPl    VB/C
 > animals . From its     origins in        cybernetics and  in        the Dartmouth Conference ( 1956 ) ,
 # NPl+    . P    ISg/D$+ NPl+    NPr/J/R/P Nᴹ          VB/C NPr/J/R/P D   NPr+      NSg/VB+    . #    . .
 > artificial intelligence research has been   necessarily cross       - disciplinary ,
@@ -750,10 +750,10 @@
 # . NPr/VXB NPl+      NSg/VB . . . VB/C D+  NSg/VB+  NPl/V3  R           J          .
 > although the Turing test    is  still      used to assess computer output    on  the scale   of
 # C        D   NPr    NSg/VB+ VL3 NSg/VB/J/R VP/J P  VB     NSg+     N🅪Sg/VBP+ J/P D   N🅪Sg/VB P
-> human    intelligence . But     the automation of evaluative and  predictive tasks   has
-# NSg/VB/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  J          VB/C J          NPl/V3+ V3
-> been   increasingly successful as    a   substitute for   human    monitoring and
-# VLPp/B R            J          R/C/P D/P NSg/VB+    R/C/P NSg/VB/J Nᴹ/Vg/J    VB/C
+> human intelligence . But     the automation of evaluative and  predictive tasks   has
+# NSg/J N🅪Sg+        . NSg/C/P D   N🅪Sg       P  J          VB/C J          NPl/V3+ V3
+> been   increasingly successful as    a   substitute for   human monitoring and
+# VLPp/B R            J          R/C/P D/P NSg/VB+    R/C/P NSg/J Nᴹ/Vg/J    VB/C
 > intervention in        domains of computer application involving complex  real  - world
 # NSg+         NPr/J/R/P NPl     P  NSg+     NSg+        Nᴹ/Vg/J   NSg/VB/J NSg/J . NSg/VB+
 > data  .
@@ -771,7 +771,7 @@
 > Computer architecture , or    digital computer organization , is  the conceptual
 # NSg+     N🅪Sg+        . NPr/C NSg/J+  NSg+     N🅪Sg+        . VL3 D   J
 > design   and  fundamental operational structure of a    computer system . It       focuses
-# N🅪Sg/VB+ VB/C NSg/J       J           N🅪Sg/VB   P  D/P+ NSg+     NSg+   . NPr/ISg+ NPl/V3
+# N🅪Sg/VB+ VB/C NSg/J       J           N🅪Sg/VB   P  D/P+ NSg+     NSg+   . NSg/ISg+ NPl/V3
 > largely on  the way    by which the central processing unit performs internally and
 # R       J/P D+  NSg/J+ P  I/C+  D+  NPr/J+  Nᴹ/Vg/J+   NSg+ V3       R          VB/C
 > accesses addresses in        memory . Computer engineers study   computational logic   and
@@ -969,7 +969,7 @@
 > Boehm's and  Jacopini's insight can     be       further simplified with the use      of
 # ?       VB/C ?          N🅪Sg+   NPr/VXB NSg/VLXB VB/JC   VP/J       P    D   N🅪Sg/VB+ P
 > goto ( which means  it       is  more         elementary than structured programming ) .
-# ?    . I/C+  NPl/V3 NPr/ISg+ VL3 NPr/I/J/R/Dq NSg/J      C/P  VP/J       Nᴹ/Vg/J+    . .
+# ?    . I/C+  NPl/V3 NSg/ISg+ VL3 NPr/I/J/R/Dq NSg/J      C/P  VP/J       Nᴹ/Vg/J+    . .
 >
 #
 >
@@ -995,7 +995,7 @@
 > computer programs  that      treats  computation as    the evaluation of mathematical
 # NSg+     NPrPl/V3+ I/C/Ddem+ NPl/V3+ NSg         R/C/P D   N🅪Sg       P  J
 > functions and  avoids state    and  mutable data  . It       is  a   declarative programming
-# NPl/V3+   VB/C V3     N🅪Sg/VB+ VB/C J       N🅪Pl+ . NPr/ISg+ VL3 D/P NSg/J       Nᴹ/Vg/J+
+# NPl/V3+   VB/C V3     N🅪Sg/VB+ VB/C J       N🅪Pl+ . NSg/ISg+ VL3 D/P NSg/J       Nᴹ/Vg/J+
 > paradigm , which means  programming is  done      with expressions or    declarations
 # NSg+     . I/C+  NPl/V3 Nᴹ/Vg/J+    VL3 NSg/VPp/J P    NPl         NPr/C NPl+
 > instead of statements .

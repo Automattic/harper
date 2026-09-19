@@ -586,8 +586,13 @@ pub mod tests {
         // dbg!(&lints);
         if lints.len() != count {
             panic!(
-                "Expected \"{text}\" to create {count} lints, but it created {}.",
-                lints.len()
+                "Expected \"{text}\" to create {count} lints, but it created {}.\n{}",
+                lints.len(),
+                lints
+                    .iter()
+                    .map(|l| l.message.clone())
+                    .collect::<Vec<_>>()
+                    .join("\n")
             );
         }
     }

@@ -1052,6 +1052,13 @@
 			"metadata": {
 				"abbreviation": true
 			}
+		},
+		"k": {
+			"#": "contraction property",
+			"//": "mnemonic: k sounds like C",
+			"metadata": {
+				"contraction": true
+			}
 		}
 	}
 }
