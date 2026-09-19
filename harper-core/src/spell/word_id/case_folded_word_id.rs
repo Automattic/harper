@@ -50,3 +50,15 @@ impl CaseFoldedWordId {
         Self::from_word_chars(chars)
     }
 }
+
+impl From<CaseFoldedWordId> for u64 {
+    fn from(val: CaseFoldedWordId) -> Self {
+        val.hash
+    }
+}
+
+impl From<u64> for CaseFoldedWordId {
+    fn from(value: u64) -> Self {
+        Self { hash: value }
+    }
+}

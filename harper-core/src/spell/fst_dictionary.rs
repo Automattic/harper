@@ -6,11 +6,10 @@ use std::{
 
 use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
-use itertools::Itertools;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
-use crate::CharStringExt;
+use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
+use crate::{CharString, CharStringExt, DictWordMetadata};
 
 /// An immutable dictionary allowing for very fast spellchecking.
 ///
@@ -19,7 +18,7 @@ use crate::CharStringExt;
 pub struct FstDictionary {
     /// Underlying [`super::MutableDictionary`] used for everything except fuzzy finding
     mutable_dict: Arc<MutableDictionary>,
-    /// Used for fuzzy-finding the index of words or metadata
+    /// Used for fuzzy-finding the WordId of words or metadata
     word_map: FstMap<Vec<u8>>,
 }
 
@@ -53,22 +52,22 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
-    /// Construct a new [`FstDictionary`] using a [`WordMap`] (or [`MutableDictionary`]) as
-    /// a source. This can be expensive, so only use this if fast fuzzy searches are worth it.
-    pub fn new(word_map: WordMap) -> Self {
-        let mut words = word_map.into_iter().collect_vec();
-
-        words.sort_unstable_by(|a, b| a.canonical_spelling.cmp(&b.canonical_spelling));
+    /// Construct a new [`FstDictionary`] using a wordlist as a source.
+    /// This can be expensive, so only use this if fast fuzzy searches are worth it.
+    pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
+        words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
+        words.dedup_by(|(a, _), (b, _)| a == b);
 
         let mut builder = fst::MapBuilder::memory();
-        for (index, wme) in words.iter().enumerate() {
-            let word = wme.canonical_spelling.to_string();
+        for (word_chars, _) in words.iter() {
+            let word = word_chars.iter().collect::<String>();
             builder
-                .insert(word, index as u64)
+                .insert(word, CanonicalWordId::from_word_chars(word_chars).into())
                 .expect("Insertion not in lexicographical order!");
         }
 
-        let mutable_dict = MutableDictionary::from_iter(words);
+        let mut mutable_dict = MutableDictionary::new();
+        mutable_dict.extend_words(words.iter().cloned());
 
         let fst_bytes = builder.into_inner().unwrap();
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
@@ -125,7 +124,7 @@ fn merge_best_distances(
 
 impl Dictionary for FstDictionary {
     fn get_word_map(&self) -> &WordMap {
-        &self.mutable_dict
+        self.mutable_dict.get_word_map()
     }
 
     fn fuzzy_match(
@@ -141,8 +140,8 @@ impl Dictionary for FstDictionary {
 
         // Actual FST search
         let dfa = build_dfa(max_distance, &misspelled_word_string);
-        let mut word_indexes_stream = self.word_map.search_with_state(&dfa).into_stream();
-        let upper_dists = stream_distances_vec(&mut word_indexes_stream, &dfa);
+        let mut word_ids_stream = self.word_map.search_with_state(&dfa).into_stream();
+        let upper_dists = stream_distances_vec(&mut word_ids_stream, &dfa);
 
         // Merge the two results, keeping the smallest distance when both DFAs match.
         // The uppercase and lowercase searches can return different result counts, so
@@ -154,23 +153,23 @@ impl Dictionary for FstDictionary {
         // Only build the lowercase DFA when the query is not already lowercase.
         if !is_already_lower {
             let dfa_lowercase = build_dfa(max_distance, &misspelled_lower);
-            let mut word_indexes_lowercase_stream = self
+            let mut word_ids_lowercase_stream = self
                 .word_map
                 .search_with_state(&dfa_lowercase)
                 .into_stream();
-            let lower_dists =
-                stream_distances_vec(&mut word_indexes_lowercase_stream, &dfa_lowercase);
+            let lower_dists = stream_distances_vec(&mut word_ids_lowercase_stream, &dfa_lowercase);
 
             merge_best_distances(&mut best_distances, lower_dists);
         }
 
         let mut merged = Vec::with_capacity(best_distances.len());
-        for (index, edit_distance) in best_distances {
-            let wme = &self.mutable_dict[index as usize];
+        for (word_id, edit_distance) in best_distances {
+            let word = self.mutable_dict.get_word_from_id(&word_id.into()).unwrap();
+            let metadata = self.mutable_dict.get_word_metadata_exact(word).unwrap();
             merged.push(FuzzyMatchResult {
-                word: &wme.canonical_spelling,
+                word,
                 edit_distance,
-                metadata: Cow::Borrowed(&wme.metadata),
+                metadata: Cow::Borrowed(metadata),
             });
         }
 

@@ -175,7 +175,12 @@ impl WordMap {
 
     /// Create an [`FstDictionary`] from this word map.
     pub fn to_fst(self) -> FstDictionary {
-        FstDictionary::new(self)
+        let words = self
+            .into_iter()
+            .map(|wme| (wme.canonical_spelling, wme.metadata))
+            .collect();
+
+        FstDictionary::new(words)
     }
 
     /// Get a [`WordMapEntry`] by its canonical ID.

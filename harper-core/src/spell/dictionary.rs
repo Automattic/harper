@@ -77,8 +77,7 @@ pub trait Dictionary: Send + Sync {
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>>
-    {
+    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
         let mut found_words = self.get_word_map().get_word(word);
 
         match found_words.len() {
@@ -106,11 +105,6 @@ pub trait Dictionary: Send + Sync {
             .contains_canonical(CanonicalWordId::from_word_chars(word))
     }
 
-    /// The number of words in the dictionary.
-    fn word_count(&self) -> usize {
-        self.get_word_map().len()
-    }
-
     /// Iterate over the words in the dictionary.
     fn words_iter(&self) -> impl ExactSizeIterator<Item = &[char]>
     where
@@ -118,6 +112,18 @@ pub trait Dictionary: Send + Sync {
     {
         self.get_word_map()
             .iter()
+            .map(|wme| wme.canonical_spelling.as_slice())
+    }
+
+    /// The number of words in the dictionary.
+    fn word_count(&self) -> usize {
+        self.get_word_map().len()
+    }
+
+    /// Returns the correct capitalization of the word with the given ID.
+    fn get_word_from_id(&self, id: &CanonicalWordId) -> Option<&[char]> {
+        self.get_word_map()
+            .get_canonical(*id)
             .map(|wme| wme.canonical_spelling.as_slice())
     }
 
@@ -182,8 +188,7 @@ pub trait Dictionary: Send + Sync {
 
     /// Search for a word's metadata case-insensitively, then merge all the results into one
     /// [`DictWordMetadata`].
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>>
-    {
+    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
         self.get_word_metadata(str_to_chars(word).as_ref())
     }
     // STRING FUNCTION VARIANTS END

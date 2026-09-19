@@ -37,3 +37,15 @@ impl CanonicalWordId {
         CaseFoldedWordId { hash: self.hash }
     }
 }
+
+impl From<CanonicalWordId> for u64 {
+    fn from(val: CanonicalWordId) -> Self {
+        val.hash
+    }
+}
+
+impl From<u64> for CanonicalWordId {
+    fn from(value: u64) -> Self {
+        Self { hash: value }
+    }
+}
