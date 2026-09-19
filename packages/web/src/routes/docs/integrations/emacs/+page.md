@@ -24,6 +24,14 @@ where `text-mode` can be set to any, some, or all major modes that correspond to
                '(markdown-mode . ("harper-ls" "--stdio"))))
 ```
 
+If you are on Emacs 31 or later, you can instead use the Tree-sitter `markdown-ts-mode`, which is built into Emacs and does not require installing an extra package:
+
+```elisp title=init.el
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs
+               '(markdown-ts-mode . ("harper-ls" "--stdio"))))
+```
+
 :::note
 
 A possible gotcha you may be encountering if you don't see any diagnostics is when Eglot automatically deduces the language ID being sent to `harper-ls` based on the major mode you used. In which case, you can set the language ID to one that is supported:
