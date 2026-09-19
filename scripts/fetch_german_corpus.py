@@ -20,10 +20,19 @@ is no HTML to strip and no citation markers to clean. Wikipedia content is
 CC BY-SA; the corpus is not committed (`.archive` is ignored), only this list.
 
 `--limit` caps the fetch for a quick run. Re-running skips what is already there.
+
+`--expand N` goes past the hand-written list. The 101 articles it produces are
+*not* enough: measured as a saturation curve, the last ten files still each
+contribute about four lint sites nobody had seen before, so the corpus is still
+on the straight part of the curve and more of it still buys false positives.
+Rather than guess at more titles, `--expand` asks Wikipedia which categories the
+known-good topics live in and takes their other members, then filters by year
+density — see `abstract`.
 """
 
 import argparse
 import pathlib
+import random
 import re
 import sys
 import time
@@ -120,6 +129,75 @@ def fetch(titles: list[str], session: requests.Session) -> dict[str, str]:
     return out
 
 
+YEAR = re.compile(r"\b(1[0-9]{3}|20[0-2][0-9])\b")
+# Prose articles carry a median 8 years per 1000 words, random ones 29. The
+# threshold keeps ~90% of the hand-picked corpus and turns away ~70% of what a
+# category walk drags in with it.
+MAX_YEARS_PER_1000 = 20.0
+
+
+def abstract(text: str) -> bool:
+    """Is this about something rather than about someone?
+
+    Dates are the cheapest tell there is. A biography, a battle or a football
+    season is a chain of years; an article on the dative case or on catalysis
+    has almost none. Counting them costs one regex and separates the two
+    populations better than anything involving the text itself.
+    """
+    words = len(text.split())
+    return bool(words) and len(YEAR.findall(text)) / words * 1000 <= MAX_YEARS_PER_1000
+
+
+def categories_of(titles: list[str], session: requests.Session) -> list[str]:
+    """The categories the known-good topics sit in, minus the housekeeping ones."""
+    found: dict[str, int] = {}
+    for start in range(0, len(titles), 20):
+        response = session.get(
+            API,
+            params={
+                "action": "query", "prop": "categories", "cllimit": "max",
+                "clshow": "!hidden", "titles": "|".join(titles[start : start + 20]),
+                "format": "json", "formatversion": "2",
+            },
+            timeout=60,
+        )
+        response.raise_for_status()
+        for page in response.json().get("query", {}).get("pages", []):
+            for category in page.get("categories", []):
+                found[category["title"]] = found.get(category["title"], 0) + 1
+        time.sleep(0.3)
+    # A category two seed topics share is on-topic; one only a single topic has
+    # is usually that topic's own container ("Kategorie:Immanuel Kant").
+    return sorted(name for name, count in found.items() if count >= 2)
+
+
+def members_of(categories: list[str], session: requests.Session) -> list[str]:
+    out: list[str] = []
+    for index, category in enumerate(categories, 1):
+        response = session.get(
+            API,
+            params={
+                "action": "query", "list": "categorymembers", "cmtitle": category,
+                "cmnamespace": "0", "cmlimit": "max", "format": "json",
+                "formatversion": "2",
+            },
+            timeout=60,
+        )
+        response.raise_for_status()
+        out += [
+            page["title"]
+            for page in response.json().get("query", {}).get("categorymembers", [])
+        ]
+        print(f"  categories {index}/{len(categories)}", file=sys.stderr)
+        time.sleep(0.3)
+    # Shuffled, not sorted: a category's alphabetical head is stubs and list
+    # articles, so taking the first N of a sorted list samples almost nothing
+    # `usable` will accept. A fixed seed keeps the corpus reproducible.
+    candidates = sorted(set(out))
+    random.Random(0).shuffle(candidates)
+    return candidates
+
+
 def usable(text: str) -> bool:
     """Skip stubs and anything that is mostly a list rather than prose."""
     if len(text) < 2000:
@@ -136,30 +214,50 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("output", type=pathlib.Path, help="directory to write into")
     parser.add_argument("--limit", type=int, help="fetch at most this many topics")
+    parser.add_argument(
+        "--expand", type=int, metavar="N",
+        help="go beyond TOPICS: take N candidates from the categories the "
+             "topics share, keeping only the ones that read as abstract prose",
+    )
     args = parser.parse_args()
 
     args.output.mkdir(parents=True, exist_ok=True)
-    wanted = [t for t in TOPICS if not (args.output / f"{slug(t)}.md").exists()]
-    if args.limit:
-        wanted = wanted[: args.limit]
+    session = requests.Session()
+    session.headers["User-Agent"] = UA
+
+    if args.expand:
+        categories = categories_of(TOPICS, session)
+        print(f"{len(categories)} shared categories", file=sys.stderr)
+        candidates = members_of(categories, session)
+        print(f"{len(candidates)} candidate articles", file=sys.stderr)
+        wanted = [
+            title for title in candidates
+            if title not in TOPICS and not (args.output / f"{slug(title)}.md").exists()
+        ][: args.expand]
+    else:
+        wanted = [t for t in TOPICS if not (args.output / f"{slug(t)}.md").exists()]
+        if args.limit:
+            wanted = wanted[: args.limit]
     if not wanted:
         print("nothing to fetch; every topic is already there")
         return 0
 
-    print(f"fetching {len(wanted)} of {len(TOPICS)} topics")
-    session = requests.Session()
-    session.headers["User-Agent"] = UA
+    print(f"fetching {len(wanted)} topics")
     articles = fetch(wanted, session)
 
-    written = skipped = 0
+    written = skipped = names = 0
     for title, text in articles.items():
         if not usable(text):
             skipped += 1
             continue
+        if args.expand and not abstract(text):
+            names += 1
+            continue
         (args.output / f"{slug(title)}.md").write_text(text, encoding="utf-8")
         written += 1
 
-    print(f"wrote {written}, skipped {skipped} as too short or list-shaped")
+    print(f"wrote {written}, skipped {skipped} as too short or list-shaped"
+          + (f", {names} as too date-heavy to be abstract prose" if args.expand else ""))
     missing = sorted(set(wanted) - set(articles))
     if missing:
         print(f"{len(missing)} titles returned nothing: {missing[:8]}")
