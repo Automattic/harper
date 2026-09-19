@@ -2,6 +2,7 @@
 //!
 //! See the [`Linter`] trait and the [documentation for authoring a rule](https://writewithharper.com/docs/contributors/author-a-rule) for more information.
 
+mod a_long_along;
 mod a_part;
 mod a_some_time;
 mod a_ways_to_go;
