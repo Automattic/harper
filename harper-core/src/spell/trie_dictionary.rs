@@ -37,15 +37,6 @@ impl<D: Dictionary> Dictionary for TrieDictionary<D> {
         self.inner.get_word_map()
     }
 
-    fn fuzzy_match(
-        &'_ self,
-        word: &[char],
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.inner.fuzzy_match(word, max_distance, max_results)
-    }
-
     fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
         let results: Keys<SearchIter<'_, char, (), Vec<char>, _>> =
             self.trie.predictive_search(prefix);

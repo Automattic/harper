@@ -184,14 +184,6 @@ impl Dictionary for FstDictionary {
 
         merged
     }
-
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_prefix(prefix)
-    }
-
-    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_common_prefix(word)
-    }
 }
 
 #[cfg(test)]

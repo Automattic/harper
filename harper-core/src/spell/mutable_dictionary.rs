@@ -1,10 +1,9 @@
 use super::{FstDictionary, rune, word_map::WordMap};
 use std::sync::Arc;
-use std::{borrow::Cow, sync::LazyLock};
+use std::sync::LazyLock;
 
 use crate::DictWordMetadata;
 
-use super::FuzzyMatchResult;
 use super::dictionary::Dictionary;
 
 /// A basic dictionary that allows words to be added after instantiating.
@@ -90,23 +89,6 @@ impl Default for MutableDictionary {
 impl Dictionary for MutableDictionary {
     fn get_word_map(&self) -> &WordMap {
         &self.word_map
-    }
-
-    fn fuzzy_match(
-        &'_ self,
-        word: &[char],
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.word_map.fuzzy_match(word, max_distance, max_results)
-    }
-
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_prefix(prefix)
-    }
-
-    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.word_map.find_words_with_common_prefix(word)
     }
 }
 
