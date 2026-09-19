@@ -3,9 +3,14 @@
 #
 # Weir rules are chunk-scoped, so a "wie" that opens its own clause after a
 # comma ("ein besserer Spieler, wie man sieht") is already out of reach.
-expr komparativ [größer, grösser, kleiner, besser, schlechter, schöner, schoener, älter, aelter, jünger, juenger, höher, hoeher, niedriger, tiefer, breiter, schmaler, länger, laenger, kürzer, kuerzer, schneller, langsamer, stärker, staerker, schwächer, schwaecher, weiter, näher, naeher, teurer, billiger, reicher, ärmer, aermer, dicker, dünner, duenner, härter, haerter, weicher, wärmer, waermer, kälter, kaelter, heller, dunkler, lauter, leiser, mehr, weniger, lieber, eher, anders]
+expr komparativ [größer, grösser, kleiner, besser, schlechter, schöner, schoener, älter, aelter, jünger, juenger, höher, hoeher, niedriger, tiefer, breiter, schmaler, länger, laenger, kürzer, kuerzer, schneller, langsamer, stärker, staerker, schwächer, schwaecher, weiter, näher, naeher, teurer, billiger, reicher, ärmer, aermer, dicker, dünner, duenner, härter, haerter, weicher, wärmer, waermer, kälter, kaelter, heller, dunkler, lauter, leiser, weniger, lieber, eher, anders]
 
-expr main <(@komparativ wie), wie>
+# "mehr" is the one comparative with a second life as a temporal negation:
+# "nicht mehr wie früher" is "no longer as before" and takes "wie" correctly.
+# So it is matched separately, and only where nothing negates it.
+expr verneinung [nicht, nichts, kein, keine, keiner, keinen, keinem, kaum, nie, niemals, nirgends]
+
+expr main <[(@komparativ wie), (!@verneinung mehr wie)], wie>
 
 let message "Nach einem Komparativ steht »als«, nicht »wie«."
 let description "Ersetzt »wie« nach einem Komparativ durch »als« (»größer als«, nicht »größer wie«)."
@@ -23,3 +28,14 @@ allows "Er ist so groß wie sein Bruder."
 allows "Das sieht aus wie immer."
 allows "Sie ist größer als ihr Bruder."
 allows "Wie geht es dir?"
+allows "Die Epidemiologie befasst sich nicht mehr wie früher nur mit Epidemien."
+allows "Wahrheit wird nicht mehr wie bei der Korrespondenztheorie bestimmt."
+allows "Es gibt kaum mehr wie damals Gelegenheit dazu."
+
+# Known false positive: "die Gestaltung kleiner wie großer Textmengen". Many
+# comparatives are spelled like the strong-declension positive — "kleiner Mann"
+# and "kleiner als" are the same form — and "A wie B" also coordinates two
+# attributes. Telling the two apart needs to see that "großer" is a parallel
+# attribute of "Textmengen", and German carries no part-of-speech tags into
+# Weir: the tagger and the chunker are English-only, so UPOS sets never match
+# here. Left standing rather than papered over with a word list.
