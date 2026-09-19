@@ -27,8 +27,6 @@ pub struct MutableDictionary {
     word_map: WordMap,
 }
 
-/// The uncached function that is used to produce the original copy of the
-/// curated dictionary.
 fn uncached_inner_new() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
         include_str!("../../dictionary.dict"),
@@ -38,7 +36,80 @@ fn uncached_inner_new() -> Arc<MutableDictionary> {
     .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
 }
 
+fn uncached_inner_new_spanish() -> Arc<MutableDictionary> {
+    let mut dict = MutableDictionary::new();
+    let mut metadata = DictWordMetadata::default();
+    metadata.dialects = crate::DictWordMetadata::default().dialects
+        | crate::dict_word_metadata::DialectFlags::SPANISH;
+
+    // 1. Cargar las entradas base de es_ES.dic y generar afijos regulares (femenino -a/-as, plural -s/-es)
+    let es_dic_str = include_str!("../../es_ES.dic");
+    for line in es_dic_str.lines().skip(1) {
+        let raw_word = line.split_whitespace().next().unwrap_or(line);
+        let word = raw_word.split('/').next().unwrap_or(raw_word);
+        if !word.is_empty() {
+            dict.append_word_str(word, metadata.clone());
+
+            // Expansión automática de género y número si la raíz termina en consonante o vocal
+            if word.ends_with('o') {
+                // ej. compuesto -> compuesta, compuestos, compuestas
+                let stem = &word[..word.len() - 1];
+                dict.append_word_str(&format!("{}a", stem), metadata.clone());
+                dict.append_word_str(&format!("{}os", stem), metadata.clone());
+                dict.append_word_str(&format!("{}as", stem), metadata.clone());
+            } else if word.ends_with('ó')
+                || word.ends_with("ón")
+                || word.ends_with("ión")
+                || word.ends_with("ción")
+            {
+                // ej. codificación -> codificacion, codificaciones
+                let clean_word = word
+                    .replace('ó', "o")
+                    .replace('á', "a")
+                    .replace('é', "e")
+                    .replace('í', "i")
+                    .replace('ú', "u");
+                dict.append_word_str(&clean_word, metadata.clone());
+                dict.append_word_str(&format!("{}es", clean_word), metadata.clone());
+            } else if !word.ends_with('s') {
+                dict.append_word_str(&format!("{}s", word), metadata.clone());
+                dict.append_word_str(&format!("{}es", word), metadata.clone());
+            }
+        }
+    }
+
+    // 2. Cargar las 50,000 palabras frecuenciales de Spanish FrequencyWords
+    let freq_words_str = include_str!("../../spanish_words.txt");
+    for line in freq_words_str.lines() {
+        let word = line.split_whitespace().next().unwrap_or(line);
+        if !word.is_empty() {
+            dict.append_word_str(word, metadata.clone());
+        }
+    }
+
+    // 3. Cargar regionalismos hispanohablantes (Colombia, Uruguay, México, Argentina, etc.)
+    let regionalismos_str = include_str!("../../regionalismos_espanol.txt");
+    for line in regionalismos_str.lines() {
+        let word = line.split_whitespace().next().unwrap_or(line);
+        if !word.is_empty() && !word.starts_with('#') {
+            dict.append_word_str(word, metadata.clone());
+        }
+    }
+
+    // 4. Cargar vocabulario técnico, académico y de software en español
+    let tecnico_str = include_str!("../../vocabulario_tecnico.txt");
+    for line in tecnico_str.lines() {
+        let word = line.split_whitespace().next().unwrap_or(line);
+        if !word.is_empty() && !word.starts_with('#') {
+            dict.append_word_str(word, metadata.clone());
+        }
+    }
+
+    Arc::new(dict)
+}
+
 static DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new);
+static SPANISH_DICT: LazyLock<Arc<MutableDictionary>> = LazyLock::new(uncached_inner_new_spanish);
 
 impl MutableDictionary {
     pub fn new() -> Self {
@@ -64,6 +135,10 @@ impl MutableDictionary {
     /// Consider using [`super::FstDictionary::curated()`] instead, as it is more performant for spellchecking.
     pub fn curated() -> Arc<Self> {
         (*DICT).clone()
+    }
+
+    pub fn curated_spanish() -> Arc<Self> {
+        (*SPANISH_DICT).clone()
     }
 
     /// Appends words to the dictionary.

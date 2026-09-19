@@ -97,10 +97,8 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
                 continue;
             }
 
-            if let Some(metadata) = word.kind.as_word().unwrap()
-                && metadata.dialects.is_dialect_enabled(self.dialect)
-                && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
+            if self.dictionary.contains_exact_word(word_chars)
+                || self.dictionary.contains_exact_word(&word_chars.to_lower())
             {
                 continue;
             };

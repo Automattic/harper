@@ -5,7 +5,6 @@ use std::{collections::BTreeMap, hash::BuildHasher, num::NonZero, sync::Arc};
 
 use {foldhash::quality::RandomState, hashbrown::HashMap, lru::LruCache};
 
-// Individual Linters
 use super::a_part::APart;
 use super::a_some_time::ASomeTime;
 use super::a_ways_to_go::AWaysToGo;
@@ -268,6 +267,19 @@ use super::somewhat_something::SomewhatSomething;
 use super::soon_to_be::SoonToBe;
 use super::sought_after::SoughtAfter;
 use super::spaces::Spaces;
+use super::languagetool_rules::LanguageToolRules;
+use super::spanish_contextual_punctuation::SpanishContextualPunctuation;
+use super::spanish_dequeismo::SpanishDequeismo;
+use super::spanish_diacritics::SpanishDiacritics;
+use super::spanish_gender_agreement::SpanishGenderAgreement;
+use super::spanish_homophones::SpanishHomophones;
+use super::spanish_punctuation::SpanishPunctuation;
+use super::spanish_sentence_capitalization::SpanishSentenceCapitalization;
+use super::spanish_strict_rules::SpanishStrictRules;
+use super::spanish_style_and_redundancy::SpanishStyleAndRedundancy;
+use super::spanish_style_tone::SpanishStyleTone;
+use super::spanish_subject_verb_agreement::SpanishSubjectVerbAgreement;
+use super::spanish_verb_conjugation::SpanishVerbConjugation;
 use super::spell_check::SpellCheck;
 use super::spelled_numbers::SpelledNumbers;
 use super::split_words::SplitWords;
@@ -618,6 +630,25 @@ impl LintGroup {
             };
         }
 
+        if dialect.is_spanish() {
+            insert_struct_rule!(SpanishGenderAgreement);
+            insert_struct_rule!(SpanishHomophones);
+            insert_struct_rule!(SpanishDequeismo);
+            insert_struct_rule!(SpanishSubjectVerbAgreement);
+            insert_struct_rule!(SpanishPunctuation);
+            insert_struct_rule!(SpanishContextualPunctuation);
+            insert_struct_rule!(SpanishDiacritics);
+            insert_struct_rule!(SpanishStrictRules);
+            insert_struct_rule!(SpanishVerbConjugation);
+            insert_struct_rule!(SpanishSentenceCapitalization);
+            insert_struct_rule!(SpanishStyleAndRedundancy);
+            insert_struct_rule!(SpanishStyleTone);
+            insert_struct_rule!(LanguageToolRules);
+            out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
+            out.set_all_rules_to(Some(true));
+            return out;
+        }
+
         out.merge_from(weir_rules::lint_group());
         out.merge_from(phrase_set_corrections::lint_group());
         out.merge_from(proper_noun_capitalization_linters::lint_group());
@@ -887,6 +918,9 @@ impl LintGroup {
         insert_expr_rule!(SoonToBe);
         insert_expr_rule!(SoughtAfter);
         insert_struct_rule!(Spaces);
+        insert_struct_rule!(SpanishGenderAgreement);
+        insert_struct_rule!(SpanishHomophones);
+        out.add("SpellCheck", SpellCheck::new(dictionary.clone(), dialect));
         insert_struct_rule!(SpelledNumbers);
         insert_expr_rule!(SplitWords);
         insert_struct_rule!(SubjectPronoun);
