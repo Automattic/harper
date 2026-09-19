@@ -13,6 +13,9 @@ export const load = async ({ params }) => {
 		case 'lastday':
 			date = new Date(Date.now() - 24 * 60 * 60 * 1000);
 			break;
+		case 'lastweek':
+			date = new Date(Date.now() - 24 * 60 * 60 * 1000 * 7);
+			break;
 		case 'all':
 			date = new Date(0);
 			break;
