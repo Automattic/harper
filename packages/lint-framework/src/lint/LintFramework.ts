@@ -169,32 +169,17 @@ export default class LintFramework {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
-					const { text, isCM, newLineIndices } = this.getTargetText(target);
+					const { text } = this.getTargetText(target);
 
 					if (!text || text.length > 120000) {
 						return { target: null as HTMLElement | null, lints: {} };
 					}
 
 					const language = getTargetLanguage(target);
-					let lintsBySource = await this.lintProvider(text, window.location.hostname, {
+					const lintsBySource = await this.lintProvider(text, window.location.hostname, {
 						forceAllHeadings: isHeading(target),
 						language,
 					});
-
-					if (isCM) {
-						// We're about to modify a reference, so let's work on a copy.
-						lintsBySource = window.structuredClone(lintsBySource);
-
-						for (const lints of Object.values(lintsBySource)) {
-							for (const lint of lints) {
-								const offset_start = newLineIndices.findIndex((i) => i > lint.span.start);
-								const offset_end = newLineIndices.findIndex((i) => i > lint.span.end);
-
-								lint.span.start -= offset_start;
-								lint.span.end -= offset_end;
-							}
-						}
-					}
 
 					return { target: target as HTMLElement, lints: lintsBySource };
 				}),
@@ -324,7 +309,6 @@ export default class LintFramework {
 	private getTargetText(target: Node): {
 		text: string | null;
 		isCM: boolean;
-		newLineIndices: number[];
 	} {
 		let text: string | null = null;
 
@@ -342,16 +326,7 @@ export default class LintFramework {
 					: (target as HTMLElement).innerText;
 		}
 
-		const newLineIndices: number[] = [];
-		let i = 0;
-		for (const c of text ?? '') {
-			if (c == '\n') {
-				newLineIndices.push(i);
-			}
-			i++;
-		}
-
-		return { text, isCM, newLineIndices };
+		return { text, isCM };
 	}
 
 	private requestRender() {
@@ -441,6 +416,7 @@ function getTargetLanguage(target: Node): LintOptions['language'] | undefined {
 		case 'plaintext':
 		case 'markdown':
 		case 'typst':
+		case 'latex':
 			return language;
 		default:
 			return undefined;
