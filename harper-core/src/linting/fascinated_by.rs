@@ -32,7 +32,7 @@ impl ExprLinter for FascinatedBy {
 
         Some(Lint {
             span: prep_span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::Preposition,
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("by", prep_chars),
                 Suggestion::replace_with_match_case_str("with", prep_chars),
