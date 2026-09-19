@@ -1,5 +1,6 @@
 use crate::{
-    Dialect, Lint, Token,
+    Lint, Token,
+    dialect::Dialect,
     expr::{Expr, SequenceExpr},
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
@@ -61,7 +62,7 @@ impl ExprLinter for HaveAHardTime {
 mod tests {
     use super::HaveAHardTime;
     use crate::{
-        Dialect,
+        dialect::Dialect,
         linting::tests::{assert_no_lints, assert_suggestion_result},
     };
 

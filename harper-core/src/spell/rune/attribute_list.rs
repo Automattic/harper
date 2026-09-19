@@ -2,19 +2,24 @@ use hashbrown::HashMap;
 use serde::{Deserialize, Serialize};
 use smallvec::ToSmallVec;
 
-use super::super::word_map::{WordMap, WordMapEntry};
-use super::Error;
-use super::affix_replacement::AffixReplacement;
-use super::expansion::Property;
-use super::expansion::{
-    AffixEntryKind,
-    AffixEntryKind::{Prefix, Suffix},
-    Expansion, HumanReadableExpansion,
+use crate::{
+    CharString, DictWordMetadata, Span,
+    dict_word_metadata::orthography::OrthFlags,
+    spell::{
+        WordId,
+        rune::{
+            Error,
+            affix_replacement::AffixReplacement,
+            expansion::{
+                AffixEntryKind,
+                AffixEntryKind::{Prefix, Suffix},
+                Expansion, HumanReadableExpansion, Property,
+            },
+            word_list::AnnotatedWord,
+        },
+        word_map::{WordMap, WordMapEntry},
+    },
 };
-use super::word_list::AnnotatedWord;
-use crate::dict_word_metadata_orthography::OrthFlags;
-use crate::spell::WordId;
-use crate::{CharString, DictWordMetadata, Span};
 
 #[derive(Debug, Clone)]
 pub struct AttributeList {
