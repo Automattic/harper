@@ -82,13 +82,24 @@ pub enum Setting {
         name: String,
         state: bool,
     },
-    /// Selects one of many rules.
+    /// Selects at most one rule out of a set of mutually exclusive alternatives.
     /// Think of it as a dropdown field, where you can select one or no of several options.
-    /// The labels are separate from the rule names, for readability.
+    ///
+    /// Reach for this when enabling two of the rules together would produce contradictory
+    /// lints, the way enforcing the Oxford comma and enforcing its absence would.
+    /// Each alternative needs its own name in the [`LintGroup`](super::LintGroup), so rules
+    /// collapsed behind a single name by `merge_linters!` cannot be used here.
+    ///
+    /// [`StructuredConfig::to_flat_config`] writes an entry for every name in the set: the
+    /// chosen one enabled, the rest explicitly disabled. Writing the unchosen ones is what
+    /// stops an earlier selection surviving underneath a new one.
     OneOfMany {
-        /// The names of the linters we can select from.
+        /// The names of the linters we can select from, in the order they should be presented.
         names: Vec<String>,
+        /// Display text, one entry per element of `names` and in the same order.
+        /// Kept separate from the rule names for readability.
         labels: Vec<String>,
+        /// An index into `names`, or `None` when nothing in the set is enabled.
         choice: Option<usize>,
     },
     Group {
