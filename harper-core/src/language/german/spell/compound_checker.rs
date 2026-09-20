@@ -385,18 +385,39 @@ impl CompoundChecker {
     /// Whether a segment can participate in a compound as an element.
     ///
     /// A segment is usable iff it is a dictionary word AND it is either at
-    /// least [`MIN_COMPOUND_PART_LEN`] characters long or carries compound
-    /// flags. This keeps short real words such as `ei` or `öl` usable while
-    /// excluding short words without compound flags and short garbage.
-    ///
-    /// The flag exemption is weaker than it looks: `h`, the flag it mostly keys
-    /// on, is the near-universal bookkeeping marker that sits on almost every
-    /// noun entry. Replacing it with an explicit short-word list was tried and
-    /// reverted — it costs more false positives on edited prose than the junk
-    /// decompositions it prevents.
+    /// least [`MIN_COMPOUND_PART_LEN`] characters long or one of the handful of
+    /// two-letter words German really does build on.
     fn element_usable(&self, segment: &[char]) -> bool {
         self.member_of(segment)
-            && (segment.len() >= MIN_COMPOUND_PART_LEN || self.has_compound_flags(segment))
+            && (segment.len() >= MIN_COMPOUND_PART_LEN || self.short_element_usable(segment))
+    }
+
+    /// May a word shorter than [`MIN_COMPOUND_PART_LEN`] be a compound element?
+    ///
+    /// Only if it is a noun or a preposition. German does build on two-letter
+    /// words, but on a closed handful of them: the nouns `Ei` and `Öl`
+    /// (`Eigelb`, `Ölgemälde`, `Rohöl`) and the particles `ab`, `an`, `um`,
+    /// `zu`, `im` (`Abbau`, `Umbau`). Everything else two letters long in the
+    /// word list is an interjection, an abbreviation or a fragment — `ah`,
+    /// `kt`, `mm`, `hl`, `äh` — and admitting those is how `Abau`, `Adahm` and
+    /// `Absiecht` pass as compounds.
+    ///
+    /// This used to key on the compound flags instead, which was no gate at
+    /// all: `h` is the bookkeeping marker that sits on nearly every entry. On
+    /// 1.44M words of prose, asking for a noun or a preposition catches 235
+    /// more misspellings and newly reports 670 words, of which 488 are ones
+    /// hunspell rejects as well (proper names and quoted English) and the rest
+    /// are almost all names too.
+    ///
+    /// Without a base dictionary there is no metadata to ask, and the flags are
+    /// all that is left; that path is only used by tests.
+    fn short_element_usable(&self, segment: &[char]) -> bool {
+        match self.base_dict.as_ref() {
+            Some(base) => base
+                .get_word_metadata(segment)
+                .is_some_and(|metadata| metadata.noun.is_some() || metadata.preposition),
+            None => self.has_compound_flags(segment),
+        }
     }
 
     /// Whether a segment can stand *in front of* a compound boundary.
@@ -1291,6 +1312,28 @@ mod tests {
                 accepts(imperative),
                 "{imperative} is a word in its own right"
             );
+        }
+    }
+
+    /// Two-letter elements are nouns and particles, not leftovers.
+    ///
+    /// German does build compounds on two-letter words, but only on `Ei`, `Öl`
+    /// and the particles. The word list also holds `ah`, `kt`, `mm`, `hl` and
+    /// `äh`, and while those counted as elements, `Abau`, `Adahm` and `Adehl`
+    /// all decomposed.
+    #[test]
+    fn a_two_letter_element_must_be_a_noun_or_a_preposition() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        for word in ["Adahm", "Adehl"] {
+            assert!(!accepts(word), "{word} must not decompose");
+        }
+
+        for word in ["Ölgemälde", "Rohöl", "Eigelb", "Abbau", "Umbau", "Eiweiß"] {
+            assert!(accepts(word), "{word} must stay a word");
         }
     }
 
