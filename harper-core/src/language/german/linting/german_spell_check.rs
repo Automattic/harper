@@ -1,9 +1,10 @@
 use hashbrown::HashMap;
 
 use crate::language::german::spell::compound_checker::{
-    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, interfix_fits, lowercase,
+    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, has_content_reading, interfix_fits,
+    lowercase,
 };
-use crate::language::german::spell::german_dict::GERMAN_STEMS;
+use crate::language::german::spell::german_dict::{GERMAN_FUNCTION_WORDS, GERMAN_STEMS};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{CharStringExt, TokenStringExt, document::Document};
@@ -343,6 +344,11 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         remainder.strip_prefix(interfix)
     }
 
+    /// May this element end a compound? See `function_word_set`.
+    fn may_close_a_compound(&self, element: &[char]) -> bool {
+        !GERMAN_FUNCTION_WORDS.contains(element) || has_content_reading(&self.dictionary, element)
+    }
+
     fn is_valid_compound_segment(
         &self,
         word: &[char],
@@ -359,8 +365,9 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         }
 
         // The whole remaining tail is one element, so this is the compound's
-        // last element. See `can_head_a_lowercase_compound`.
-        if depth > 0 && self.dictionary.contains_word(word) {
+        // last element. See `can_head_a_lowercase_compound` and
+        // `function_word_set`.
+        if depth > 0 && self.dictionary.contains_word(word) && self.may_close_a_compound(word) {
             return match lowercase_whole {
                 Some(whole) => can_head_a_lowercase_compound(&self.dictionary, whole, word),
                 None => true,
@@ -405,6 +412,7 @@ impl<T: Dictionary> GermanSpellCheck<T> {
 
                 let ends_here = |part: &[char]| {
                     self.dictionary.contains_word(part)
+                        && self.may_close_a_compound(part)
                         && lowercase_whole.is_none_or(|whole| {
                             can_head_a_lowercase_compound(&self.dictionary, whole, part)
                         })

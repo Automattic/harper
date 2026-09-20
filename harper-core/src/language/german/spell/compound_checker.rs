@@ -49,6 +49,22 @@ const COMPOUND_ADJ_FLAG: char = 'q';
 /// of the word list, so it has to be collected here separately.
 const STEM_ONLY_FLAG: char = '*';
 
+/// The flags that mark a closed-class word: determiner, pronoun, conjunction.
+///
+/// These are the collision-free digit flags from `annotations.json`. Their
+/// letter counterparts (`D`, `I`, `C`, `P`) share the namespace with affix
+/// letters and a bulk import spread them over several hundred ordinary nouns
+/// and verbs (`augur/~~P`, `abbinden/~~I`), so they cannot be trusted for this
+/// question.
+const FUNCTION_WORD_FLAGS: [char; 3] = ['4', '5', '6'];
+
+/// The flags that give an entry a word class of its own.
+///
+/// An entry carrying one of these is a content word, whatever else it also
+/// carries — that is what keeps the handful of genuinely ambiguous entries out
+/// of the function-word set.
+const CONTENT_WORD_FLAGS: [char; 8] = ['N', 'M', 'F', 'Z', 'z', 'V', 'J', 'A'];
+
 /// All standard German linking interfixes, tried at every compound boundary.
 const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 
@@ -202,6 +218,25 @@ pub(crate) fn can_head_a_lowercase_compound(
     })
 }
 
+/// Does the dictionary also read this string as a noun?
+///
+/// A string can be a function word *and* an inflected noun at the same time.
+/// `falls` is the conjunction and the genitive of `der Fall`, and the word list
+/// holds both (`falls/~~h6` and `fall/~~NhY0H`). [`function_word_set`] is built
+/// from the base entries and cannot see the second reading, because that one
+/// only exists after the affixes have been expanded. This asks the expanded
+/// dictionary, which can, and so keeps `Einzelfalls` and `Rückfalls` words.
+///
+/// Only the noun reading counts. Admitting an adjective or verb reading as well
+/// takes the exception far too wide — the declined determiners and possessives
+/// all carry one — and it cost 42 caught misspellings (`alle`, `allen`,
+/// `meine`, `deiner` back as compound heads) to save 18 lints.
+pub(crate) fn has_content_reading(dictionary: &impl Dictionary, segment: &[char]) -> bool {
+    dictionary
+        .get_word_metadata(segment)
+        .is_some_and(|metadata| metadata.noun.is_some())
+}
+
 /// Check if a character is a compound formation flag (case-insensitive)
 fn is_compound_flag(c: char) -> bool {
     let lower_c = c.to_ascii_lowercase();
@@ -238,6 +273,9 @@ pub struct CompoundChecker {
     /// and no word is an `absperr`. Membership here is therefore consulted only
     /// in front of a boundary; see [`CompoundChecker::opening_element_usable`].
     stems: HashSet<CharString>,
+    /// The articles, pronouns and conjunctions, which may open a compound but
+    /// never end one. See [`function_word_set`].
+    function_words: HashSet<CharString>,
     /// The base dictionary to resolve element membership against, when set.
     ///
     /// When present, membership queries use this dictionary (whose lookup is
@@ -257,6 +295,7 @@ impl std::fmt::Debug for CompoundChecker {
             .field("flagged_words", &self.compound_words.len())
             .field("members", &self.members.len())
             .field("stems", &self.stems.len())
+            .field("function_words", &self.function_words.len())
             .field("has_base_dict", &self.base_dict.is_some())
             .field("compound_flags", &self.compound_flags)
             .field("max_check_time", &self.max_check_time)
@@ -270,6 +309,7 @@ impl Clone for CompoundChecker {
             compound_words: self.compound_words.clone(),
             members: self.members.clone(),
             stems: self.stems.clone(),
+            function_words: self.function_words.clone(),
             base_dict: self.base_dict.clone(),
             compound_flags: self.compound_flags.clone(),
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
@@ -316,6 +356,39 @@ pub(crate) fn stem_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
     stems
 }
 
+/// The function words of a word list: articles, pronouns and conjunctions.
+///
+/// German builds compounds out of content words, and the last element is the
+/// one that says what the whole word is. A function word says nothing of the
+/// kind, so it never ends a compound: there is no word that ends in the
+/// article `den`, in `der`, in `alle` or in the pronoun `er`. Leaving this
+/// unchecked is what lets a doubled-letter typo split off a function word and
+/// escape unnoticed — `Badden` passes as `bad` + `den`, `Bildder` as `bild` +
+/// `der`, `Bewusstseinns` as `bewusst` + `sein` + `ns`.
+///
+/// The opening position stays open, and has to: `Ausbildung`, `Anfang` and
+/// `Nachteil` all begin with one.
+///
+/// Like [`stem_set`], this is read by `GermanSpellCheck` too, so the two
+/// decompositions cannot disagree about what a function word is.
+pub(crate) fn function_word_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
+    let mut function_words = HashSet::new();
+    for word in word_list {
+        let is_function = word
+            .annotations
+            .iter()
+            .any(|flag| FUNCTION_WORD_FLAGS.contains(flag));
+        let is_content = word
+            .annotations
+            .iter()
+            .any(|flag| CONTENT_WORD_FLAGS.contains(flag));
+        if is_function && !is_content {
+            insert_member_casings(&mut function_words, &word.letters);
+        }
+    }
+    function_words
+}
+
 impl CompoundChecker {
     /// Create a new CompoundChecker from a list of annotated words
     pub fn new(word_list: &[AnnotatedWord]) -> Self {
@@ -323,6 +396,7 @@ impl CompoundChecker {
         let mut compound_words = HashMap::new();
         let mut members = HashSet::new();
         let stems = stem_set(word_list);
+        let function_words = function_word_set(word_list);
 
         for word in word_list {
             let flags: HashSet<char> = word
@@ -357,6 +431,7 @@ impl CompoundChecker {
             compound_words,
             members,
             stems,
+            function_words,
             base_dict: None,
             compound_flags: ['h', 'i', 'k', 'l', 'm', 'o', 'q']
                 .iter()
@@ -452,6 +527,27 @@ impl CompoundChecker {
             || (segment.len() >= MIN_COMPOUND_PART_LEN && self.stems.contains(segment))
     }
 
+    /// Whether a segment can stand *at the end of* a compound.
+    ///
+    /// The mirror image of [`CompoundChecker::opening_element_usable`]: a stem
+    /// is excluded from the head position because it has no word class, and a
+    /// function word because the class it has is not one a compound can be.
+    /// See [`function_word_set`].
+    fn closing_element_usable(&self, segment: &[char]) -> bool {
+        self.element_usable(segment) && !self.is_function_word_only(segment)
+    }
+
+    /// Is this string a function word and nothing else? See
+    /// [`has_content_reading`], which is what rescues the strings that are
+    /// both.
+    fn is_function_word_only(&self, segment: &[char]) -> bool {
+        self.function_words.contains(segment)
+            && !self
+                .base_dict
+                .as_ref()
+                .is_some_and(|base| has_content_reading(base.as_ref(), segment))
+    }
+
     /// Helper to get compound flags for a word, trying lowercase first if not found
     fn get_compound_flags(&self, word: &[char]) -> Option<&HashSet<char>> {
         // First try exact match
@@ -533,7 +629,7 @@ impl CompoundChecker {
         // Reaching here means the whole remaining tail is one element, so this
         // is the compound's last element — the one that decides what the word
         // is. In a lower-case compound that decision is constrained.
-        if depth > 0 && self.element_usable(segment) {
+        if depth > 0 && self.closing_element_usable(segment) {
             return match lowercase_whole {
                 Some(whole) => self.can_head_a_lowercase_compound(whole, segment),
                 None => true,
@@ -1400,6 +1496,46 @@ mod tests {
             "Sonnenschein",
             "Kindergarten",
             "Bundesland",
+        ] {
+            assert!(accepts(word), "{word} must stay a word");
+        }
+    }
+
+    /// A compound is made of content words, so a function word cannot end one.
+    ///
+    /// Every rejected word here is a doubled-letter typo that used to split its
+    /// doubled letter off as an article or a pronoun.
+    #[test]
+    fn a_function_word_may_not_end_a_compound() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        for word in [
+            "Badden",      // bad + den
+            "Bildder",     // bild + der
+            "Lassalle",    // lass + alle
+            "anzuwendden", // an + zu + wend + den
+            "Herder",      // herd + er
+        ] {
+            assert!(!accepts(word), "{word} must not decompose");
+        }
+
+        // A function word in the *opening* position is ordinary German, and so
+        // is any compound that merely ends in the same letters.
+        for word in [
+            "Ausbildung",
+            "Anfang",
+            "Nachteil",
+            "Bundestagswahl",
+            "Arbeitsweg",
+            "Außenminister",
+            // Fixed entries, not decompositions -- they must not regress.
+            "hinaus",
+            "deswegen",
+            "trotzdem",
+            "infolgedessen",
         ] {
             assert!(accepts(word), "{word} must stay a word");
         }
