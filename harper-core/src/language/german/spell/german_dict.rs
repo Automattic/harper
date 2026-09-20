@@ -70,6 +70,13 @@ pub static GERMAN_STEMS: LazyLock<hashbrown::HashSet<crate::CharString>> =
 pub static GERMAN_FUNCTION_WORDS: LazyLock<hashbrown::HashSet<crate::CharString>> =
     LazyLock::new(|| super::compound_checker::function_word_set(&GERMAN_WORD_LIST));
 
+/// The derived feminine nouns of the German word list, which open a compound
+/// only with the `-s-` interfix.
+///
+/// See the `suffixed_element_set` documentation in [`super::compound_checker`].
+pub static GERMAN_SUFFIXED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| super::compound_checker::suffixed_element_set(&GERMAN_WORD_LIST));
+
 static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
     LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
 

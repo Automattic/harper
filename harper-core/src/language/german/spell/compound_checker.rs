@@ -65,6 +65,33 @@ const FUNCTION_WORD_FLAGS: [char; 3] = ['4', '5', '6'];
 /// of the function-word set.
 const CONTENT_WORD_FLAGS: [char; 8] = ['N', 'M', 'F', 'Z', 'z', 'V', 'J', 'A'];
 
+/// The feminine derivational suffixes that force the `-s-` interfix.
+///
+/// A noun built with one of these takes `-s-` in front of whatever follows it,
+/// without exception: `Bildungssystem`, `Gesundheitsamt`, `Möglichkeitsform`,
+/// `Gesellschaftsordnung`, `Revolutionsführer`, `Universitätsklinik`. See
+/// [`suffixed_element_set`].
+const S_INTERFIX_SUFFIXES: [&str; 6] = ["ung", "heit", "keit", "schaft", "ion", "tät"];
+
+/// Is `element` one of the derivational suffixes itself?
+///
+/// The suffix takes `-s-` after it and nothing at all in front of it: German
+/// writes `Bereitschaft`, `Möglichkeit`, `Schönheit`, never `*Bereitsschaft`
+/// or `*Eigensschaft`. That is the other half of [`suffixed_element_set`], and
+/// it is what stops a doubled `s` from hiding in the seam.
+pub(crate) fn is_derivational_suffix(element: &[char]) -> bool {
+    let spelling: String = element.iter().collect::<String>().to_lowercase();
+    S_INTERFIX_SUFFIXES.contains(&spelling.as_str())
+}
+
+/// Marks an entry as a feminine noun.
+const FEMININE_FLAG: char = 'F';
+
+/// The genitive endings. A German feminine noun has none, so an entry that
+/// carries both this and [`FEMININE_FLAG`] is mislabelled -- see
+/// [`suffixed_element_set`].
+const GENITIVE_FLAGS: [char; 2] = ['0', 'H'];
+
 /// All standard German linking interfixes, tried at every compound boundary.
 const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 
@@ -276,6 +303,9 @@ pub struct CompoundChecker {
     /// The articles, pronouns and conjunctions, which may open a compound but
     /// never end one. See [`function_word_set`].
     function_words: HashSet<CharString>,
+    /// The derived feminine nouns, which open a compound only with `-s-`.
+    /// See [`suffixed_element_set`].
+    suffixed_elements: HashSet<CharString>,
     /// The base dictionary to resolve element membership against, when set.
     ///
     /// When present, membership queries use this dictionary (whose lookup is
@@ -296,6 +326,7 @@ impl std::fmt::Debug for CompoundChecker {
             .field("members", &self.members.len())
             .field("stems", &self.stems.len())
             .field("function_words", &self.function_words.len())
+            .field("suffixed_elements", &self.suffixed_elements.len())
             .field("has_base_dict", &self.base_dict.is_some())
             .field("compound_flags", &self.compound_flags)
             .field("max_check_time", &self.max_check_time)
@@ -310,6 +341,7 @@ impl Clone for CompoundChecker {
             members: self.members.clone(),
             stems: self.stems.clone(),
             function_words: self.function_words.clone(),
+            suffixed_elements: self.suffixed_elements.clone(),
             base_dict: self.base_dict.clone(),
             compound_flags: self.compound_flags.clone(),
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
@@ -389,6 +421,48 @@ pub(crate) fn function_word_set(word_list: &[AnnotatedWord]) -> HashSet<CharStri
     function_words
 }
 
+/// The elements that may only be followed by the `-s-` interfix.
+///
+/// German derives feminine nouns with `-ung`, `-heit`, `-keit`, `-schaft`,
+/// `-ion` and `-tät`, and every one of them takes `-s-` when it opens a
+/// compound. Trying the other interfixes there is what lets a doubled-letter
+/// typo through: `Abbildunggen` decomposes as `abbildung` + `gen`,
+/// `Bereitsschaft` as `bereit` + `-s-` + `schaft`, `Eigensschaft` as `ei` +
+/// `gen` + `-s-` + `schaft`.
+///
+/// **The ending alone is not enough.** `Sprung`, `Schwung`, `Ursprung`, `Ion`
+/// and `Schaft` end the same way without being derivations, and they take no
+/// interfix at all (`Sprungbrett`, `Ursprungsland` is the exception that
+/// proves nothing). The word list marks them feminine anyway
+/// (`sprung/~~Fh0H`), so the flag on its own would catch them too.
+///
+/// What separates them is a second flag on the same entry: a German feminine
+/// noun has no genitive ending, so an entry that is marked feminine *and*
+/// carries a genitive is not feminine. That test takes 81 mislabelled entries
+/// out of 8768 and needs no list of exceptions.
+pub(crate) fn suffixed_element_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
+    let mut suffixed = HashSet::new();
+    for word in word_list {
+        let spelling: String = word.letters.iter().collect::<String>().to_lowercase();
+        if !S_INTERFIX_SUFFIXES
+            .iter()
+            .any(|suffix| spelling.ends_with(suffix))
+        {
+            continue;
+        }
+        if !word.annotations.contains(&FEMININE_FLAG)
+            || word
+                .annotations
+                .iter()
+                .any(|flag| GENITIVE_FLAGS.contains(flag))
+        {
+            continue;
+        }
+        insert_member_casings(&mut suffixed, &word.letters);
+    }
+    suffixed
+}
+
 impl CompoundChecker {
     /// Create a new CompoundChecker from a list of annotated words
     pub fn new(word_list: &[AnnotatedWord]) -> Self {
@@ -397,6 +471,7 @@ impl CompoundChecker {
         let mut members = HashSet::new();
         let stems = stem_set(word_list);
         let function_words = function_word_set(word_list);
+        let suffixed_elements = suffixed_element_set(word_list);
 
         for word in word_list {
             let flags: HashSet<char> = word
@@ -432,6 +507,7 @@ impl CompoundChecker {
             members,
             stems,
             function_words,
+            suffixed_elements,
             base_dict: None,
             compound_flags: ['h', 'i', 'k', 'l', 'm', 'o', 'q']
                 .iter()
@@ -655,7 +731,11 @@ impl CompoundChecker {
             }
 
             // Try every standard interfix at this boundary.
+            let only_s = self.suffixed_elements.contains(first);
             for interfix in STANDARD_INTERFIXES {
+                if only_s && interfix != "s" {
+                    continue;
+                }
                 let interfix_chars: Vec<char> = interfix.chars().collect();
                 if !interfix_fits(first, &interfix_chars) {
                     continue;
@@ -663,6 +743,9 @@ impl CompoundChecker {
                 let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
                     continue;
                 };
+                if !interfix.is_empty() && is_derivational_suffix(after) {
+                    continue;
+                }
 
                 if self.is_valid_segment(after, depth + 1, start, memo, lowercase_whole) {
                     valid = true;
@@ -820,7 +903,11 @@ impl CompoundChecker {
                 continue;
             }
 
+            let only_s = self.suffixed_elements.contains(first);
             for interfix in STANDARD_INTERFIXES {
+                if only_s && interfix != "s" {
+                    continue;
+                }
                 let interfix_chars: Vec<char> = interfix.chars().collect();
                 if !interfix_fits(first, &interfix_chars) {
                     continue;
@@ -828,6 +915,9 @@ impl CompoundChecker {
                 let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
                     continue;
                 };
+                if !interfix.is_empty() && is_derivational_suffix(after) {
+                    continue;
+                }
 
                 if let Some(mut tail) = self.collect_parts(after, depth + 1, start, memo) {
                     let mut parts = vec![first.iter().collect()];
@@ -1536,6 +1626,47 @@ mod tests {
             "deswegen",
             "trotzdem",
             "infolgedessen",
+        ] {
+            assert!(accepts(word), "{word} must stay a word");
+        }
+    }
+
+    /// A derived feminine noun opens a compound only with `-s-`, and the
+    /// suffix itself takes nothing in front of it.
+    #[test]
+    fn a_derivational_suffix_fixes_the_interfix() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        for word in [
+            "Abbildunggen", // abbildung + gen, with no -s- between them
+            "Abhandlunggen",
+            "Ablagerunggen",
+        ] {
+            assert!(!accepts(word), "{word} must not decompose");
+        }
+
+        // The `-s-` compounds themselves, and the words whose ending only
+        // looks like a suffix: `Sprung`, `Schwung`, `Ursprung`, `Ion` and
+        // `Schaft` are not derivations and take no interfix.
+        for word in [
+            "Bildungssystem",
+            "Gesundheitsamt",
+            "Gesellschaftsordnung",
+            "Revolutionsführer",
+            "Universitätsklinik",
+            "Sprungbrett",
+            "Ursprungsland",
+            "Ionenaustausch",
+            "Stadionbesuch",
+            "Schaftfräser",
+            // And the suffix attached directly, which is the normal case.
+            "Bereitschaft",
+            "Möglichkeit",
+            "Freundschaftsdienst",
+            "Arbeitsgemeinschaft",
         ] {
             assert!(accepts(word), "{word} must stay a word");
         }

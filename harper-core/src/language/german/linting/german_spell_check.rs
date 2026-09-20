@@ -2,9 +2,11 @@ use hashbrown::HashMap;
 
 use crate::language::german::spell::compound_checker::{
     MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, has_content_reading, interfix_fits,
-    lowercase,
+    is_derivational_suffix, lowercase,
 };
-use crate::language::german::spell::german_dict::{GERMAN_FUNCTION_WORDS, GERMAN_STEMS};
+use crate::language::german::spell::german_dict::{
+    GERMAN_FUNCTION_WORDS, GERMAN_STEMS, GERMAN_SUFFIXED_ELEMENTS,
+};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{CharStringExt, TokenStringExt, document::Document};
@@ -341,7 +343,17 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         if !interfix_fits(element, interfix) {
             return None;
         }
-        remainder.strip_prefix(interfix)
+        // A derived feminine noun takes `-s-` and nothing else; see
+        // `suffixed_element_set`.
+        if interfix != S_INTERFIX && GERMAN_SUFFIXED_ELEMENTS.contains(element) {
+            return None;
+        }
+        let rest = remainder.strip_prefix(interfix)?;
+        // And nothing at all stands in front of the suffix itself.
+        if !interfix.is_empty() && is_derivational_suffix(rest) {
+            return None;
+        }
+        Some(rest)
     }
 
     /// May this element end a compound? See `function_word_set`.
