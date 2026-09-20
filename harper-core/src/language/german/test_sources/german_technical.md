@@ -14,7 +14,8 @@ Sie können die Einstellungen mit einem Texteditor bearbeiten.
 
 ## Fehlerbehebung
 
-Wenn das Programm nicht startet, überprüfen Sie bitte:
+<!-- Absichtlicher Fehler: »das Programms« müsste »das Programm« heißen. GermanGenitiveAfterNominativeArticle findet ihn. --> 
+Wenn das Programms nicht startet, überprüfen Sie bitte:
 1. Die Systemvoraussetzungen
 2. Die Installation
 3. Die Konfiguration
