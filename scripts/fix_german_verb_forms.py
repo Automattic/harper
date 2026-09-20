@@ -86,10 +86,12 @@ ZU_INFINITIVE = re.compile(r".+zu[a-zäöüß]+en$")
 
 
 
-def candidates(flag, rules):
+def candidates(flag, rules, wanted=lambda word: True):
     """Entries that should carry `flag` and do not, with the forms it adds."""
     out = []
     for index, word, flags, comment in entries():
+        if not wanted(word):
+            continue
         flags_present = flagset(flags)
         if (
             flag in flags_present
@@ -119,7 +121,7 @@ def main():
 
     for flag in args.flags:
         rules = affix_rules(flag)
-        found = candidates(flag, rules)
+        found = candidates(flag, rules, entry_filter(args.matching))
         stems = analyse(
             (f for _, _, _, _, gen in found for f in gen), args.hunspell_dict
         )

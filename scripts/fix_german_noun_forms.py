@@ -51,6 +51,7 @@ from german_dictionary_oracle import (
     argument_parser,
     check_umlauts_survive,
     entries,
+    entry_filter,
     flagset,
     forms,
 )
@@ -94,10 +95,12 @@ NOUN_FLAGS = set("NMFZz")
 INFLECTED_FLAGS = set("OQRSTUW")
 
 
-def candidates(flag, rules):
+def candidates(flag, rules, wanted=lambda word: True):
     """Noun entries that should carry `flag` and do not, with the forms it adds."""
     out = []
     for index, word, flags, comment in entries():
+        if not wanted(word):
+            continue
         flags_present = flagset(flags)
         if flag in flags_present:
             continue
@@ -130,7 +133,7 @@ def main():
 
     for flag in args.flags:
         rules = affix_rules(flag)
-        found = candidates(flag, rules)
+        found = candidates(flag, rules, entry_filter(args.matching))
         nouns = noun_entries(found, args.hunspell_dict)
         found = [c for c in found if capitalized(c[1]) in nouns]
         stems = analyse(

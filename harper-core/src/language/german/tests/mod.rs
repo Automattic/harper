@@ -11,6 +11,7 @@ pub mod adjective_position_test;
 pub mod capitalization_false_positive_test;
 pub mod compound_test;
 pub mod declension_test;
+pub mod derivation_test;
 pub mod false_noun_reading_test;
 pub mod feminine_derivation_test;
 pub mod function_word_flags_test;

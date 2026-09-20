@@ -1174,14 +1174,29 @@
 			"rename_ok": true
 		},
 		"X": {
-			"#": "Noun plural -e (Frau -> Frauen)",
+			"#": "Noun plural -e (Frau -> Frauen) A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnisse`, never `*Ergebnise`. The three remaining conditions are the complement of `nis`, spelled out because the affix matcher has no alternation: `[^s]` is everything not ending in `s`, `[^i]s` and `[^n]is` are the words that do end in `s` without being a `-nis` (`Kreise`, `Hauses`).",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "se",
+					"condition": "nis"
+				},
+				{
+					"remove": "",
 					"add": "e",
-					"condition": "."
+					"condition": "[^s]"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^i]s"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^n]is"
 				}
 			],
 			"target": [
@@ -1202,14 +1217,29 @@
 			"rename_ok": true
 		},
 		"Y": {
-			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See scripts/split_german_plural_n.py",
+			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See scripts/split_german_plural_n.py A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnissen`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "sen",
+					"condition": "nis"
+				},
+				{
+					"remove": "",
 					"add": "en",
-					"condition": "."
+					"condition": "[^s]"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^i]s"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^n]is"
 				}
 			],
 			"target": [
@@ -1883,22 +1913,279 @@
 			"rename_ok": true
 		},
 		"n": {
-			"#": "Verb past participle with separable prefix (auf-geschlagen, zu-geschlagen, fehl-geschlagen)",
+			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what the oracle in scripts/add_german_verb_derivations.py confirms per entry. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
 			"kind": "suffix",
-			"cross_product": false,
+			"cross_product": true,
 			"replacements": [
 				{
+					"remove": "n",
+					"add": "t",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "tem",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "ter",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "tes",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "t",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "te",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "tem",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ten",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "ter",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "tes",
+					"condition": "eln"
+				},
+				{
+					"remove": "en",
+					"add": "t",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "te",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "tem",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ten",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "ter",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "tes",
+					"condition": "en"
+				},
+				{
 					"remove": "",
-					"add": "geschlagen",
-					"condition": "(ab|an|auf|aus|bei|da|durch|ein|entgegen|entlang|fehl|für|gegen|hinter|hin|hinaus|hinab|hinein|hinterher|lang|los|mit|nach|neben|über|um|unter|vor|voran|voraus|vorbei|verständlich|weg|weiter|zu|zurück|zusammen)"
+					"add": "t",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "te",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "tem",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ten",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "ter",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "tes",
+					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {
 					"verb_form": "PAST_PARTICIPLE"
 				}
 			},
+			"rename_ok": true
+		},
+		"x": {
+			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry by an oracle, see scripts/add_german_verb_derivations.py. `x` previously held an imperative-mood property that no entry carried.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "n",
+					"add": "bar",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "bare",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "barem",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "baren",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "barer",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "bares",
+					"condition": "ern"
+				},
+				{
+					"remove": "n",
+					"add": "bar",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "bare",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "barem",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "baren",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "barer",
+					"condition": "eln"
+				},
+				{
+					"remove": "n",
+					"add": "bares",
+					"condition": "eln"
+				},
+				{
+					"remove": "en",
+					"add": "bar",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "bare",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "barem",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "baren",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "barer",
+					"condition": "en"
+				},
+				{
+					"remove": "en",
+					"add": "bares",
+					"condition": "en"
+				},
+				{
+					"remove": "",
+					"add": "bar",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "bare",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "barem",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "baren",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "barer",
+					"condition": "[^n]"
+				},
+				{
+					"remove": "",
+					"add": "bares",
+					"condition": "[^n]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"adjective": {}
+					}
+				}
+			],
+			"base_metadata": {},
 			"rename_ok": true
 		},
 		"7": {
@@ -2020,14 +2307,29 @@
 			"rename_ok": true
 		},
 		"0": {
-			"#": "Noun genitive -es (des Hauses). Mirrors hunspell de_DE SFX T. Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them.",
+			"#": "Noun genitive -es (des Hauses). Mirrors hunspell de_DE SFX T. Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them. A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnisses`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "ses",
+					"condition": "nis"
+				},
+				{
+					"remove": "",
 					"add": "es",
-					"condition": "."
+					"condition": "[^s]"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[^i]s"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[^n]is"
 				}
 			],
 			"target": [
@@ -2323,15 +2625,6 @@
 		"w": {
 			"#": "Genitive case flag (German)",
 			"metadata": {}
-		},
-		"x": {
-			"#": "Imperative mood flag (German)",
-			"metadata": {
-				"verb": {},
-				"morphology": {
-					"mood": "Imperative"
-				}
-			}
 		},
 		"y": {
 			"#": "Subjunctive I mood flag (German - Konjunktiv I)",

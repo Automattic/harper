@@ -150,7 +150,21 @@ def argument_parser(description, default_flags):
         "the system one is ISO-8859-1",
     )
     parser.add_argument("--flags", default=default_flags, help="which endings to restore")
+    parser.add_argument(
+        "--matching",
+        default=None,
+        help="only consider entries whose headword matches this regular "
+        "expression, e.g. 'nis$' for the nouns that double their s",
+    )
     return parser
+
+
+def entry_filter(pattern):
+    """A predicate over headwords, from the `--matching` option."""
+    if pattern is None:
+        return lambda word: True
+    compiled = re.compile(pattern)
+    return lambda word: compiled.search(word) is not None
 
 
 def apply_additions(additions):
