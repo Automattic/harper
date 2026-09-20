@@ -2389,68 +2389,6 @@ fn fix_wrecks_havoc() {
     );
 }
 
-// VerseAsVerb
-
-#[test]
-fn corrects_verse_against() {
-    assert_suggestion_result(
-        "A game of Morra, with 3 different AI you can verse against.",
-        test_linter(),
-        "A game of Morra, with 3 different AI you can play against.",
-    );
-}
-
-#[test]
-fn corrects_versing_against() {
-    assert_suggestion_result(
-        "This will help when you are versing against a particular boss.",
-        test_linter(),
-        "This will help when you are playing against a particular boss.",
-    );
-}
-
-#[test]
-fn corrects_verse_me() {
-    assert_suggestion_result(
-        "Come verse me in this game.",
-        test_linter(),
-        "Come play me in this game.",
-    );
-}
-
-#[test]
-fn allows_versus() {
-    assert_no_lints("It was red versus blue in the finals.", test_linter());
-}
-
-#[test]
-fn corrects_verse_between_competitors() {
-    assert_suggestion_result(
-        "Today it's all-wheel drive Civic verse twin turbo Lamborghini.",
-        test_linter(),
-        "Today it's all-wheel drive Civic versus twin turbo Lamborghini.",
-    );
-}
-
-#[test]
-fn corrects_verse_between_other_competitors() {
-    assert_suggestion_result(
-        "Mustang verse twin turbo Ferrari.",
-        test_linter(),
-        "Mustang versus twin turbo Ferrari.",
-    );
-}
-
-#[test]
-fn allows_lowercase_noun_verse_context() {
-    assert_no_lints("A verse twin poets remember.", test_linter());
-}
-
-#[test]
-fn allows_verse_with_non_proper_noun_tail() {
-    assert_no_lints("Civic verse twin turbo engines.", test_linter());
-}
-
 // WroteToRote
 
 #[test]

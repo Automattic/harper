@@ -1,13 +1,11 @@
 use crate::linting::LintKind;
 
 use super::{LintGroup, MapPhraseSetLinter};
-use verse_as_verb::VerseAsVerb;
 
 #[cfg(test)]
 mod many_to_many_tests;
 #[cfg(test)]
 mod one_to_one_tests;
-mod verse_as_verb;
 
 /// Produce a [`LintGroup`] that looks for errors in sets of common phrases.
 pub fn lint_group() -> LintGroup {
@@ -752,8 +750,6 @@ pub fn lint_group() -> LintGroup {
             LintKind::Eggcorn
         )
     });
-
-    group.add_chunk_expr_linter("VerseAsVerb", VerseAsVerb::default());
 
     add_many_to_many_mappings!(group, {
         "AwaitFor" => (

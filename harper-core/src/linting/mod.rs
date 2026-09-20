@@ -332,6 +332,7 @@ mod update_place_names;
 mod use_ellipsis_character;
 mod use_title_case;
 mod verb_to_adjective;
+mod verse_as_verb;
 mod very_less;
 mod very_unique;
 mod vice_versa;
