@@ -54,6 +54,14 @@ pub(super) fn german_word_list() -> &'static [crate::spell::rune::word_list::Ann
 }
 
 // Base dictionary without pre-generated compounds (FST for fast lookups).
+/// The bare stems of the German word list: elements that are not words.
+///
+/// See the `stem_only` property in `annotations.json`. `GermanSpellCheck`
+/// reads this when it decomposes a compound, so that `Messkabel` still works
+/// although `mess` is not a word.
+pub static GERMAN_STEMS: LazyLock<hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| super::compound_checker::stem_set(&GERMAN_WORD_LIST));
+
 static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
     LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
 

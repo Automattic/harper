@@ -3,6 +3,7 @@ use hashbrown::HashMap;
 use crate::language::german::spell::compound_checker::{
     MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, lowercase,
 };
+use crate::language::german::spell::german_dict::GERMAN_STEMS;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{CharStringExt, TokenStringExt, document::Document};
@@ -367,7 +368,11 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         for split_pos in MIN_COMPOUND_PART_LEN..=word.len() - MIN_COMPOUND_PART_LEN {
             let first_part = &word[..split_pos];
 
-            if !self.dictionary.contains_word(first_part) {
+            // A bare verb stem opens a compound without being a word:
+            // `Messkabel` is `mess` plus `Kabel`, and `mess` alone is not
+            // German. It may not *end* one, which is why this is the only
+            // place the stems are consulted.
+            if !self.dictionary.contains_word(first_part) && !GERMAN_STEMS.contains(first_part) {
                 continue;
             }
 

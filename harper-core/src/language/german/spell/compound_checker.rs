@@ -44,6 +44,11 @@ const COMPOUND_FLAG_ER_INTERFIX: char = 'm';
 const COMPOUND_FLAG_ES_INTERFIX: char = 'o';
 const COMPOUND_ADJ_FLAG: char = 'q';
 
+/// Marks an entry that is a bare stem rather than a word (see the `stem_only`
+/// property in `annotations.json`). The affix expansion keeps such an entry out
+/// of the word list, so it has to be collected here separately.
+const STEM_ONLY_FLAG: char = '*';
+
 /// All standard German linking interfixes, tried at every compound boundary.
 const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 
@@ -203,6 +208,16 @@ pub struct CompoundChecker {
     /// Every word from the word list in the casings needed for case-insensitive
     /// membership lookups when no base dictionary has been injected.
     members: HashSet<CharString>,
+    /// The bare stems, which are elements but not words.
+    ///
+    /// `absperr` is not a German word, and the affix expansion leaves it out of
+    /// the word list for that reason. It is still a legitimate piece of
+    /// `Absperrband`, as `schreib` is of `Schreibtisch` and `erd` of
+    /// `Erdgeschichte`: German builds compounds on the bare verb stem. What a
+    /// stem may not be is the *head* — the head says what the whole word is,
+    /// and no word is an `absperr`. Membership here is therefore consulted only
+    /// in front of a boundary; see [`CompoundChecker::opening_element_usable`].
+    stems: HashSet<CharString>,
     /// The base dictionary to resolve element membership against, when set.
     ///
     /// When present, membership queries use this dictionary (whose lookup is
@@ -221,6 +236,7 @@ impl std::fmt::Debug for CompoundChecker {
         f.debug_struct("CompoundChecker")
             .field("flagged_words", &self.compound_words.len())
             .field("members", &self.members.len())
+            .field("stems", &self.stems.len())
             .field("has_base_dict", &self.base_dict.is_some())
             .field("compound_flags", &self.compound_flags)
             .field("max_check_time", &self.max_check_time)
@@ -233,6 +249,7 @@ impl Clone for CompoundChecker {
         Self {
             compound_words: self.compound_words.clone(),
             members: self.members.clone(),
+            stems: self.stems.clone(),
             base_dict: self.base_dict.clone(),
             compound_flags: self.compound_flags.clone(),
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
@@ -264,12 +281,28 @@ fn insert_member_casings(members: &mut HashSet<CharString>, letters: &[char]) {
     members.insert(capitalized);
 }
 
+/// The bare stems of a word list: compound elements that are not words.
+///
+/// `GermanSpellCheck` has a decomposition of its own and only a [`Dictionary`]
+/// to consult, so it reads the same set from here rather than keeping a second
+/// idea of what a stem is.
+pub(crate) fn stem_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
+    let mut stems = HashSet::new();
+    for word in word_list {
+        if word.annotations.contains(&STEM_ONLY_FLAG) {
+            insert_member_casings(&mut stems, &word.letters);
+        }
+    }
+    stems
+}
+
 impl CompoundChecker {
     /// Create a new CompoundChecker from a list of annotated words
     pub fn new(word_list: &[AnnotatedWord]) -> Self {
         // Build compound words map from words that have compound flags
         let mut compound_words = HashMap::new();
         let mut members = HashSet::new();
+        let stems = stem_set(word_list);
 
         for word in word_list {
             let flags: HashSet<char> = word
@@ -303,6 +336,7 @@ impl CompoundChecker {
         Self {
             compound_words,
             members,
+            stems,
             base_dict: None,
             compound_flags: ['h', 'i', 'k', 'l', 'm', 'o', 'q']
                 .iter()
@@ -363,6 +397,18 @@ impl CompoundChecker {
     fn element_usable(&self, segment: &[char]) -> bool {
         self.member_of(segment)
             && (segment.len() >= MIN_COMPOUND_PART_LEN || self.has_compound_flags(segment))
+    }
+
+    /// Whether a segment can stand *in front of* a compound boundary.
+    ///
+    /// Wider than [`CompoundChecker::element_usable`] by the bare stems, which
+    /// are compound elements without being words. `Erdgeschichte`,
+    /// `Schreibtisch` and `Absperrband` all open on one. They are excluded from
+    /// the head position, where the word class of the whole compound is
+    /// decided, because a stem has none.
+    fn opening_element_usable(&self, segment: &[char]) -> bool {
+        self.element_usable(segment)
+            || (segment.len() >= MIN_COMPOUND_PART_LEN && self.stems.contains(segment))
     }
 
     /// Helper to get compound flags for a word, trying lowercase first if not found
@@ -465,8 +511,9 @@ impl CompoundChecker {
         for split_pos in 1..segment.len() {
             let (first, rest) = segment.split_at(split_pos);
 
-            // The left part must itself be a usable element.
-            if !self.element_usable(first) {
+            // The left part must itself be a usable element. A bare stem
+            // counts here and nowhere else.
+            if !self.opening_element_usable(first) {
                 continue;
             }
 
@@ -1152,14 +1199,22 @@ mod tests {
     /// measurement that says so — see [`MIN_COMPOUND_PART_LEN`].
     ///
     /// `eicht` is a finite verb form and has no business inside a compound;
-    /// `zeuge` and `räume` are noun plurals and belong in every second one.
-    /// The dictionary describes all three identically: present, three or more
+    /// `räume` is a noun plural and belongs in every second one. The
+    /// dictionary describes both identically: present, three or more
     /// characters, and carrying no part of speech at all. As long as that
     /// holds, `vieleicht` cannot be rejected by decomposition without taking
-    /// `Werkzeuge` and `Zeiträume` with it.
+    /// `Zeiträume` with it.
     ///
-    /// When the affix expansion starts assigning a part of speech, this test
-    /// fails — and that is the moment to try the typed element gate again.
+    /// `zeuge` used to be on this list and is not any more:
+    /// `fix_german_noun_forms.py` gave `Zeug` its plural, so `zeuge` is now a
+    /// noun and `Werkzeuge` no longer needs the gate to stay open. The ones
+    /// left are the umlaut plurals, which no affix class can build — there is
+    /// no rule in `annotations.json` that turns `Raum` into `Räume` — and the
+    /// verb forms.
+    ///
+    /// When the affix expansion starts assigning a part of speech to those
+    /// too, this test fails, and that is the moment to try the typed element
+    /// gate again.
     #[test]
     fn expanded_forms_carry_no_part_of_speech_to_type_elements_with() {
         use crate::language::german::spell::base_german_dictionary_fst;
@@ -1187,14 +1242,54 @@ mod tests {
             ("eicht", "third person singular of 'eichen'"),
             ("malt", "third person singular of 'malen'"),
             ("agiert", "third person singular of 'agieren'"),
-            ("zeuge", "plural stem of 'Zeug'"),
-            ("räume", "plural of 'Raum'"),
+            ("räume", "umlaut plural of 'Raum'"),
             ("garten", "lower-case 'Garten'"),
         ] {
             assert!(
                 !word_class_of(word),
                 "{word} ({what}) now carries a part of speech; \
                  re-read MIN_COMPOUND_PART_LEN and try typing the element gate"
+            );
+        }
+    }
+
+    /// A bare verb stem is a piece of a compound, never a word.
+    ///
+    /// `absperr` exists in the word list so the conjugation affixes have
+    /// something to attach to. Writing it on its own is a spelling mistake,
+    /// and it used to pass — along with `geg`, `bes`, `erd` and two thousand
+    /// others. Building on it is ordinary German.
+    #[test]
+    fn a_verb_stem_is_an_element_but_not_a_word() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        // Stems whose own pieces are not words either, so the decomposition
+        // cannot put them back: `abspreiz` still passes as `ab` + `spreiz`.
+        for stem in ["geg", "erd", "ahm", "bes"] {
+            assert!(!accepts(stem), "{stem} is a stem, not a word");
+        }
+
+        for compound in [
+            "Absperrband",
+            "Erdgeschichte",
+            "Schreibtisch",
+            "Abspielgerät",
+        ] {
+            assert!(
+                accepts(compound),
+                "{compound} is built on a stem and must stay a word"
+            );
+        }
+
+        // Still a word: hunspell reads these as imperatives, so
+        // `mark_german_stems.py` leaves them alone.
+        for imperative in ["hab", "werd", "soll", "quer", "vier", "paar"] {
+            assert!(
+                accepts(imperative),
+                "{imperative} is a word in its own right"
             );
         }
     }
