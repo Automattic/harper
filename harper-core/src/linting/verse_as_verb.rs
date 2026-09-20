@@ -73,9 +73,11 @@ impl Default for VerseComparison {
                 .t_ws()
                 .t_aco("verse")
                 .t_ws()
-                .then_kind_where(|kind| kind.is_adjective() || kind.is_noun())
+                .then_kind_where(|kind| kind.is_adjective() && !kind.is_proper_noun())
                 .t_ws()
-                .then_kind_where(|kind| kind.is_adjective() || kind.is_noun())
+                .then_kind_where(|kind| {
+                    (kind.is_adjective() || kind.is_noun()) && !kind.is_proper_noun()
+                })
                 .t_ws()
                 .then_kind_where(|kind| kind.is_proper_noun()),
         }
@@ -90,7 +92,9 @@ impl ExprLinter for VerseComparison {
     }
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
-        if !toks.first()?.get_ch(src).first()?.is_uppercase() {
+        let first = toks.first()?.get_ch(src);
+        // These are established names for forms of poetry, not competitors.
+        if !first.first()?.is_uppercase() || first.eq_str("free") || first.eq_str("blank") {
             return None;
         }
         let verse =
@@ -222,6 +226,9 @@ mod tests {
             "Blank verse was what Shakespeare preferred.",
             "English verse is what Shakespeare wrote.",
             "A verse was by Shakespeare.",
+            "Free verse poet Walt Whitman was born in 1819.",
+            "Blank verse poet William Shakespeare wrote plays.",
+            "Free verse modernist poet Eliot popularized remains influential.",
         ] {
             assert_no_lints(text, single_lint("VerseAsVerb"));
         }
