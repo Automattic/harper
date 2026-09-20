@@ -56,6 +56,10 @@ CONJUGATION = {
     "j": "wir lernen",
     "d": "er lernte",
     "G": "du lernst",
+    # The declined present participle. Not in the default `--flags`, because it
+    # is an adjective paradigm rather than a conjugation, but it is missing from
+    # the same entries and the oracle decides it the same way.
+    "c": "der lernende",
 }
 
 # Flags that mean "verb" and cannot mean anything else. `V` is included even

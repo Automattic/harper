@@ -1296,7 +1296,7 @@
 			"rename_ok": true
 		},
 		"c": {
-			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Mirrors hunspell de_DE SFX D. Attaches to the stem like the other conjugation flags, so the infinitive ending comes off first.",
+			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Mirrors hunspell de_DE SFX D, which simply hangs `d`, `de`, `dem`, `den`, `der`, `des` on any word ending in `n`. Here it attaches to the stem like the other conjugation flags, so `-en` comes off first. Verbs in `-ern` and `-eln` are the exception and keep their `n`: the participle of `entwickeln` is `entwickelnd`, not `entwickelend`, and of `speichern` `speichernd`, not `speicherend`. Getting that wrong put the non-words in the dictionary and left the real forms out of it.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1331,63 +1331,63 @@
 					"condition": "en"
 				},
 				{
-					"remove": "n",
-					"add": "end",
+					"remove": "",
+					"add": "d",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "ende",
+					"remove": "",
+					"add": "de",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "endem",
+					"remove": "",
+					"add": "dem",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "enden",
+					"remove": "",
+					"add": "den",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "ender",
+					"remove": "",
+					"add": "der",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "endes",
+					"remove": "",
+					"add": "des",
 					"condition": "ern"
 				},
 				{
-					"remove": "n",
-					"add": "end",
+					"remove": "",
+					"add": "d",
 					"condition": "eln"
 				},
 				{
-					"remove": "n",
-					"add": "ende",
+					"remove": "",
+					"add": "de",
 					"condition": "eln"
 				},
 				{
-					"remove": "n",
-					"add": "endem",
+					"remove": "",
+					"add": "dem",
 					"condition": "eln"
 				},
 				{
-					"remove": "n",
-					"add": "enden",
+					"remove": "",
+					"add": "den",
 					"condition": "eln"
 				},
 				{
-					"remove": "n",
-					"add": "ender",
+					"remove": "",
+					"add": "der",
 					"condition": "eln"
 				},
 				{
-					"remove": "n",
-					"add": "endes",
+					"remove": "",
+					"add": "des",
 					"condition": "eln"
 				},
 				{
