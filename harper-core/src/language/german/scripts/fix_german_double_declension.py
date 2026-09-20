@@ -26,8 +26,8 @@ an entry as it is whenever it would take a **hunspell-known** form with it, so
 the only forms that disappear are ones igerman98 does not consider words.
 
     unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-    scripts/fix_german_double_declension.py --forms forms.txt
-    scripts/fix_german_double_declension.py --forms forms.txt --apply
+    harper-core/src/language/german/scripts/fix_german_double_declension.py --forms forms.txt
+    harper-core/src/language/german/scripts/fix_german_double_declension.py --forms forms.txt --apply
 
 Run `just language-lint-sources german` and `just language-recall german`
 afterwards: this trades dictionary size for typo detection, and both move.

@@ -4,7 +4,7 @@
 //! as misspellings: the tokenizer hands the linter the letters without the stop,
 //! and `dictionary.dict` had no entry for them. igerman98 does not list them
 //! either, so they come from the curated table in
-//! `scripts/add_german_abbreviations.py`, which carries the reasoning about
+//! `harper-core/src/language/german/scripts/add_german_abbreviations.py`, which carries the reasoning about
 //! which ones are safe to add.
 //!
 //! Flag `2` is the abbreviation property, and `GermanNounCapitalization` rejects

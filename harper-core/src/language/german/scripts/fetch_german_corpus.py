@@ -13,7 +13,7 @@ subordinate clauses, nominalizations, participial attributes and passive voice â
 the constructions the German linters actually model â€” and they name almost
 nobody.
 
-    scripts/fetch_german_corpus.py .archive/german-language/corpus-prose
+    harper-core/src/language/german/scripts/fetch_german_corpus.py .archive/german-language/corpus-prose
 
 Whole articles, not just the lead: `prop=extracts` with `explaintext`, so there
 is no HTML to strip and no citation markers to clean. Wikipedia content is

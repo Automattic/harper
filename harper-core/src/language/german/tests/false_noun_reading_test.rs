@@ -8,11 +8,11 @@
 //! The archived Wikipedia corpus barely shows this: it is biographies and
 //! places, where such words hardly occur. On a corpus of abstract German prose —
 //! grammar, law, philosophy, mathematics — taking the reading off the entries
-//! igerman98 can vouch for removed 1001 of 1574 capitalization lints. `scripts/fetch_german_corpus.py` is what fetches that text.
+//! igerman98 can vouch for removed 1001 of 1574 capitalization lints. `harper-core/src/language/german/scripts/fetch_german_corpus.py` is what fetches that text.
 //!
 //! Removing `N` is not enough: the noun-plural affixes `X`, `Y`, `a`, `b` and
 //! `0` each carry a plural-noun reading of their own.
-//! `scripts/strip_german_noun_readings.py` removes those too, but only where
+//! `harper-core/src/language/german/scripts/strip_german_noun_readings.py` removes those too, but only where
 //! every hunspell-known form they build survives elsewhere — and where one does
 //! not, it hands the job to the verb affix that builds the same strings, so
 //! `geh/~~Xh` becomes `geh/~~fh` and still makes `gehe`.

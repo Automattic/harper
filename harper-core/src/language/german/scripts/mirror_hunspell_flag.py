@@ -9,10 +9,10 @@ flag is added only when the expanded hunspell form list accepts every form the
 rule would generate for that entry.
 
     # -ung nominalization: hunspell's J, Harper's 7 (singular) and 8 (plural)
-    scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78
+    harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78
 
     # un- prefix: hunspell's U, Harper's 9
-    scripts/mirror_hunspell_flag.py --forms forms.txt --from U --to 9
+    harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from U --to 9
 
 The forms are computed by reading the rule out of `annotations.json` and applying
 it here, so this cannot drift from what Harper will actually generate.

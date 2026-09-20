@@ -33,8 +33,8 @@ entry is one, and the entry plus `-en`/`-n` when the entry is a bare stem.
 Nothing looser: matching on a shared ending would accept `stell` for
 `Bestellung`.
 
-    scripts/add_german_verb_derivations.py              # report only
-    scripts/add_german_verb_derivations.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/add_german_verb_derivations.py              # report only
+    harper-core/src/language/german/scripts/add_german_verb_derivations.py --apply      # write dictionary.dict
 
 Shares its oracle with `fix_german_verb_forms.py`; see
 `german_dictionary_oracle.py` for the ISO-8859-1 trap it guards against.

@@ -10,7 +10,7 @@
 //! `r`, `t` and `v` are all real flags, a comparative adjective read as a noun, a
 //! verb in two tenses, and an adverb.
 //!
-//! `scripts/fix_german_double_declension.py` took the flags off wherever the
+//! `harper-core/src/language/german/scripts/fix_german_double_declension.py` took the flags off wherever the
 //! forms survive elsewhere, moving the readings they carried onto `J` and `r`,
 //! which generate nothing.
 

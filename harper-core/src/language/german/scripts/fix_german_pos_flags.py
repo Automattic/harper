@@ -61,7 +61,7 @@ DICT = pathlib.Path("harper-core/src/language/german/dictionary.dict")
 # lower case in edited prose and LanguageTool saw nothing wrong, so whatever
 # `dictionary.dict` says they are not unambiguous nouns. Regenerate with
 # `.archive/german-language/scripts/derive_pos_fixes.py`.
-POS_FIXES = pathlib.Path("scripts/german_pos_fixes.tsv")
+POS_FIXES = pathlib.Path("harper-core/src/language/german/scripts/german_pos_fixes.tsv")
 # Every character `annotations.json` registers as an affix rule. The passes below
 # replace an entry's *properties*; dropping its affixes with them silently
 # deletes words. `verschalten/~~Nh78G` was rewritten to `~~hV`, which is the
@@ -255,7 +255,7 @@ def run_passes(lines, nouns=frozenset(), do_preterite=True, hunspell_adj=frozens
     def is_preterite_stem(w, fl):
         """A lower-case entry igerman98 inflects as a strong preterite stem.
 
-        `scripts/mirror_hunspell_flag.py --from Z --to s` put the `s` flag on
+        `harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from Z --to s` put the `s` flag on
         exactly the entries hunspell treats that way, so this needs no curated
         list: `absprach`, `abstarb` and `abspräche` are verb forms, and a German
         common noun is capitalized, so a lower-case noun reading here is the

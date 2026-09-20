@@ -17,8 +17,8 @@ So `-n` moves to its own flag and `Y` narrows to `-en`, and each entry is then
 given whichever igerman98 says it takes:
 
     unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-    scripts/split_german_plural_n.py --forms forms.txt
-    scripts/split_german_plural_n.py --forms forms.txt --apply
+    harper-core/src/language/german/scripts/split_german_plural_n.py --forms forms.txt
+    harper-core/src/language/german/scripts/split_german_plural_n.py --forms forms.txt --apply
 
 An entry whose base igerman98 does not list at all is not judged — it keeps both
 forms, so compounds igerman98 composes rather than lists (`skalierungstabelle`)

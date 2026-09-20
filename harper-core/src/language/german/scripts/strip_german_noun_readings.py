@@ -23,11 +23,11 @@ the dictionary. The script expands the whole dictionary before and after to
 check, exactly as `fix_german_double_declension.py` does.
 
     unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-    scripts/strip_german_noun_readings.py --forms forms.txt
-    scripts/strip_german_noun_readings.py --forms forms.txt --apply
+    harper-core/src/language/german/scripts/strip_german_noun_readings.py --forms forms.txt
+    harper-core/src/language/german/scripts/strip_german_noun_readings.py --forms forms.txt --apply
 
 Adding readings that are missing is the other half of this and lives in
-`scripts/fix_german_pos_flags.py`; this one only ever removes.
+`harper-core/src/language/german/scripts/fix_german_pos_flags.py`; this one only ever removes.
 """
 
 import argparse

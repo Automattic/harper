@@ -25,8 +25,8 @@ The entries hunspell does not know at all are left alone too. Several are
 import typos (`brandwein`, `besenstil`, `bindestich`) and deleting or retagging
 them is a separate question.
 
-    scripts/fix_german_preposition_flag.py              # report only
-    scripts/fix_german_preposition_flag.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/fix_german_preposition_flag.py              # report only
+    harper-core/src/language/german/scripts/fix_german_preposition_flag.py --apply      # write dictionary.dict
 """
 
 import sys

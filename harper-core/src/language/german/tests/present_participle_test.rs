@@ -11,7 +11,7 @@
 //! the compound decomposition splitting off the article `den`.
 //!
 //! The flag was also missing from roughly fifteen hundred verbs that do have
-//! the form. `scripts/fix_german_verb_forms.py --flags c` restores it, deciding
+//! the form. `harper-core/src/language/german/scripts/fix_german_verb_forms.py --flags c` restores it, deciding
 //! each entry with `hunspell -m`.
 
 #[cfg(test)]

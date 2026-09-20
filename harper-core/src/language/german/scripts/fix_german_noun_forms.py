@@ -34,8 +34,8 @@ dictionary, which is what makes the question askable:
 The lower-case stem is how hunspell reports a word that is only capitalized
 because a sentence began with it.
 
-    scripts/fix_german_noun_forms.py              # report only
-    scripts/fix_german_noun_forms.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/fix_german_noun_forms.py              # report only
+    harper-core/src/language/german/scripts/fix_german_noun_forms.py --apply      # write dictionary.dict
 
 Shares its oracle with `fix_german_verb_forms.py`; see
 `german_dictionary_oracle.py` for the ISO-8859-1 trap it guards against.

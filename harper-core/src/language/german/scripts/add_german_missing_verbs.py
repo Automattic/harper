@@ -8,7 +8,7 @@ stems `diensts` and `zahl` are — so Harper reports "dienen", "diente" and
 A word is added only if hunspell's expanded form list accepts the infinitive
 *and* every finite form the conjugation rules would build from it. That is a
 deliberately strict test: it is the same one
-`scripts/add_german_verb_conjugation_flags.py` applies, so a verb that passes
+`harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py` applies, so a verb that passes
 here will pass there too.
 
 It is not sufficient on its own, though. Strong preterite plurals are shaped
@@ -21,8 +21,8 @@ The entry is written with the bare verb property. Run the conjugation script
 afterwards to fill in the affix flags:
 
     unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-    scripts/add_german_missing_verbs.py --forms forms.txt --apply
-    scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
+    harper-core/src/language/german/scripts/add_german_missing_verbs.py --forms forms.txt --apply
+    harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
 
 `--apply` writes; the default is a dry run. Re-running is idempotent.
 """
@@ -137,7 +137,7 @@ def main() -> int:
             for word in candidates:
                 f.write(f"{word}/{VERB_PROPERTY}\n")
         print(f"appended {len(candidates)} entries to {DICT}")
-        print("now run scripts/add_german_verb_conjugation_flags.py --apply")
+        print("now run harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py --apply")
     else:
         print("dry run; pass --apply to write")
     return 0

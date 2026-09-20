@@ -42,7 +42,7 @@ where
 ///
 /// This used to be 265 words, and the reason given was that "the dictionary
 /// actively mistags them". That is no longer true:
-/// `scripts/strip_german_noun_readings.py` took the noun reading off every
+/// `harper-core/src/language/german/scripts/strip_german_noun_readings.py` took the noun reading off every
 /// lower-case entry igerman98 has no capitalized form for, and 230 of these
 /// words stopped reading as nouns with it.
 ///

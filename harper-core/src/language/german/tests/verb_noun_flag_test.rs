@@ -8,7 +8,7 @@
 //! failure the function-word and adjective-declension fixes addressed; these
 //! tests pin the follow-up pass over finite verb forms and common adjectives.
 //!
-//! `scripts/fix_german_pos_flags.py` is the reproducible source of the retags.
+//! `harper-core/src/language/german/scripts/fix_german_pos_flags.py` is the reproducible source of the retags.
 
 #[cfg(test)]
 mod tests {

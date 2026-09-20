@@ -32,7 +32,7 @@ import pathlib
 import re
 import subprocess
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+ROOT = pathlib.Path(__file__).resolve().parents[5]
 DICT = ROOT / "harper-core/src/language/german/dictionary.dict"
 ANNOTATIONS = ROOT / "harper-core/src/language/german/annotations.json"
 

@@ -6,7 +6,7 @@
 //! `Rijswijk`), place-name derivations, and ordinary vocabulary (`Styropor`,
 //! `Parataxe`, `Lokativ`, `Absonderlichkeit`).
 //!
-//! `scripts/add_german_missing_words.py` imports them, asking `harper-cli`
+//! `harper-core/src/language/german/scripts/add_german_missing_words.py` imports them, asking `harper-cli`
 //! itself which words it cannot reach rather than reimplementing the compound
 //! decomposition. Short headwords stay out: any entry of three characters or
 //! more becomes a compound element, and a short one is also a plausible typo of

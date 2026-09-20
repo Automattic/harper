@@ -8,7 +8,7 @@
 //! The rule is hunspell de_DE's `SFX F`, split across two Harper flags the way
 //! `-ung`/`-ungen` are split across `7` and `8`: `K` builds the singular and `L`
 //! the plural, so the plural forms carry a plural reading rather than borrowing
-//! the singular's. `scripts/mirror_hunspell_flag.py --from F --to KL` puts them
+//! the singular's. `harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from F --to KL` puts them
 //! on the entries igerman98 marks, verifying every generated form first.
 //!
 //! `K` and `L` were previously an uppercase compound `-n` and `-en` interfix.

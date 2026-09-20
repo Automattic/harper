@@ -25,8 +25,8 @@ letting `ausscheiden -> ausscheidet` and `aufschreiben -> aufschreibt` in. The
 an*) rather than the third singular with its vowel change (*er bricht an*);
 both are German, and the umlauted form is a separate gap this cannot fill.
 
-    scripts/fix_german_verb_forms.py              # report only
-    scripts/fix_german_verb_forms.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/fix_german_verb_forms.py              # report only
+    harper-core/src/language/german/scripts/fix_german_verb_forms.py --apply      # write dictionary.dict
 
 Shares its oracle with `fix_german_noun_forms.py`; see
 `german_dictionary_oracle.py`, which also guards against the ISO-8859-1

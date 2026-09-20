@@ -30,7 +30,7 @@ Generate the form list once (it is large, and not committed):
 
 Run from the repo root:
 
-    scripts/add_german_verb_conjugation_flags.py --forms forms.txt [--apply]
+    harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py --forms forms.txt [--apply]
 
 `--apply` writes; the default is a dry run. Re-running is idempotent.
 """

@@ -49,8 +49,8 @@ Every line for a marked spelling is marked, not only the one with the
 `absperr/~~NXh #noun`, from a pass that mined parts of speech out of a corpus,
 and one unmarked line is enough to put the spelling back.
 
-    scripts/mark_german_stems.py              # report only
-    scripts/mark_german_stems.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/mark_german_stems.py              # report only
+    harper-core/src/language/german/scripts/mark_german_stems.py --apply      # write dictionary.dict
 
 Needs a **UTF-8** German hunspell dictionary; the one in `/usr/share` is
 ISO-8859-1 and loses every umlaut, so the script checks and refuses.
@@ -62,7 +62,7 @@ import re
 import subprocess
 import sys
 
-ROOT = pathlib.Path(__file__).resolve().parent.parent
+ROOT = pathlib.Path(__file__).resolve().parents[5]
 DICT = ROOT / "harper-core/src/language/german/dictionary.dict"
 
 STEM_FLAG = "*"

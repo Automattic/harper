@@ -27,7 +27,7 @@
 			"rename_ok": true
 		},
 		"E": {
-			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
+			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1362,7 +1362,7 @@
 			"rename_ok": true
 		},
 		"Y": {
-			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See scripts/split_german_plural_n.py A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnissen`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
+			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See harper-core/src/language/german/scripts/split_german_plural_n.py A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnissen`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2058,7 +2058,7 @@
 			"rename_ok": true
 		},
 		"n": {
-			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what the oracle in scripts/add_german_verb_derivations.py confirms per entry. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
+			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what the oracle in harper-core/src/language/german/scripts/add_german_verb_derivations.py confirms per entry. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2269,7 +2269,7 @@
 			"rename_ok": true
 		},
 		"x": {
-			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry by an oracle, see scripts/add_german_verb_derivations.py. `x` previously held an imperative-mood property that no entry carried.",
+			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry by an oracle, see harper-core/src/language/german/scripts/add_german_verb_derivations.py. `x` previously held an imperative-mood property that no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2724,7 +2724,7 @@
 			}
 		},
 		"E": {
-			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see scripts/split_german_plural_n.py",
+			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see harper-core/src/language/german/scripts/split_german_plural_n.py",
 			"metadata": {
 				"noun": {},
 				"morphology": {

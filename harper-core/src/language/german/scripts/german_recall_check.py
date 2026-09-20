@@ -11,7 +11,7 @@ This injects the mistakes German writers actually make into that same clean
 prose, at known offsets, and reports what fraction of them Harper flags. Each
 class is a real error, not a random perturbation:
 
-    scripts/german_recall_check.py .archive/german-language/corpus
+    harper-core/src/language/german/scripts/german_recall_check.py .archive/german-language/corpus
 
 With `--forms` it also measures the other kind of miss: plausible typos of the
 words the corpus actually uses — a doubled letter, a dropped one from a pair, two

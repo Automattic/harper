@@ -13,10 +13,10 @@ compound decomposition is the thing being measured and a second implementation
 of it would drift:
 
     cargo build --release -p harper-cli --features harper-core/multilingual
-    scripts/add_german_missing_words.py --apply
+    harper-core/src/language/german/scripts/add_german_missing_words.py --apply
 
 Entries are written with the bare noun property. No affix and no compound flag:
-a freshly imported name has no vouched plural, and `scripts/mirror_hunspell_flag.py`
+a freshly imported name has no vouched plural, and `harper-core/src/language/german/scripts/mirror_hunspell_flag.py`
 is the tool for adding one afterwards, with every generated form checked against
 the expanded form list.
 

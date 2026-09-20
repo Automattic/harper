@@ -9,10 +9,10 @@
 //! Three repairs, all decided per entry by `hunspell -m`:
 //!
 //! * `-nis` doubles its `s` before an ending (`X`, `Y` and `0` grew a rule),
-//!   see `scripts/fix_german_noun_forms.py --matching 'nis$'`.
+//!   see `harper-core/src/language/german/scripts/fix_german_noun_forms.py --matching 'nis$'`.
 //! * `-ung` nouns, the declined past participle (`n`) and the `-bar` adjective
-//!   (`x`) come from `scripts/add_german_verb_derivations.py`.
-//! * The genitive `-s` from `scripts/fix_german_noun_forms.py --flags H`.
+//!   (`x`) come from `harper-core/src/language/german/scripts/add_german_verb_derivations.py`.
+//! * The genitive `-s` from `harper-core/src/language/german/scripts/fix_german_noun_forms.py --flags H`.
 
 #[cfg(test)]
 mod tests {

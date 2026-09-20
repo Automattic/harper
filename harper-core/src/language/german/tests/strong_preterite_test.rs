@@ -5,12 +5,12 @@
 //!
 //! igerman98 solves this by listing the preterite stem as a headword of its own
 //! and inflecting it with `SFX Z`. Harper's `s` flag mirrors that rule, and
-//! `scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries.
+//! `harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries.
 //!
 //! The stems were also mined as nouns (`zog/~~NhYr`), which made the personal
 //! forms "appear to be a noun" mid-sentence. Stripping the noun property is not
 //! enough on its own: the noun-plural affixes carry a plural reading of their
-//! own, so those go too — see `scripts/fix_german_pos_flags.py`.
+//! own, so those go too — see `harper-core/src/language/german/scripts/fix_german_pos_flags.py`.
 
 #[cfg(test)]
 mod tests {

@@ -22,8 +22,8 @@ checked the usual way:
 That second line is why the hunspell headword list alone is not enough: Harper
 and hunspell disagree about what is one entry often enough to matter.
 
-    scripts/fix_german_adjective_forms.py              # report only
-    scripts/fix_german_adjective_forms.py --apply      # write dictionary.dict
+    harper-core/src/language/german/scripts/fix_german_adjective_forms.py              # report only
+    harper-core/src/language/german/scripts/fix_german_adjective_forms.py --apply      # write dictionary.dict
 
 Shares its oracle with `fix_german_noun_forms.py`; see
 `german_dictionary_oracle.py` for the ISO-8859-1 trap it guards against.
@@ -62,7 +62,7 @@ HUNSPELL_ADJECTIVE_FLAG = "A"
 # `absatzrelevant`); filtering those out drops the run from 2238 entries to 187,
 # which is to say it filters out the problem. The endings are added on top of
 # whatever the entry already carries -- taking the wrong noun reading away is a
-# separate repair, see scripts/fix_german_pos_flags.py.
+# separate repair, see harper-core/src/language/german/scripts/fix_german_pos_flags.py.
 
 
 def adjective_headwords(dictionary):
