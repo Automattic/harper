@@ -32,7 +32,7 @@ Harper is even small enough to load via [WebAssembly.](https://writewithharper.c
 
 ## Language Support
 
-Harper supports English out of the box. Other languages are built on top of the same core and are compiled in behind the `multilingual` feature; German is the furthest along. See [`harper-core/src/language/README.md`](harper-core/src/language/README.md) for how a language is put together, and [`harper-core/src/language/german/README.md`](harper-core/src/language/german/README.md) for the German implementation in particular. Contributions for further languages are welcome.
+Harper supports English out of the box. Other languages are built on top of the same core and are compiled in behind the `multilingual` feature; See [`harper-core/src/language/README.md`](harper-core/src/language/README.md) for how a language is put together. 
 
 ## Performance Issues
 

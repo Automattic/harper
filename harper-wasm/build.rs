@@ -12,6 +12,12 @@ use std::{env, fs};
 ///
 /// If `rustfmt` is unavailable or fails, the original content is returned
 /// unformatted so that a real change is still persisted.
+///
+/// Formatting is purely cosmetic: the output is only `include!`d into the
+/// crate, so a machine without `rustfmt` (for example a minimal toolchain
+/// profile) builds fine. The binary is invoked directly rather than through a
+/// crate because the build must not gain a dependency just for prettier
+/// generated code.
 fn format_rust_content(content: &str) -> String {
     let mut child = match Command::new("rustfmt")
         .arg("--edition")
@@ -49,34 +55,24 @@ fn format_rust_content(content: &str) -> String {
     }
 }
 
-/// Convert a string to PascalCase.
-fn to_pascal_case(s: &str) -> String {
-    s.split('_')
+/// Convert a dialect name from `config.toml` into an enum variant suffix.
+///
+/// One rule for every language: the name is used as written, with the first
+/// letter of each `_`-separated part capitalized. `Austrian` stays `Austrian`,
+/// `PT` stays `PT` and `new_zealand` becomes `NewZealand`. The name in
+/// `config.toml` is therefore the source of truth for how a variant is spelled;
+/// spell an abbreviation in capitals there if it should read as one.
+fn to_dialect_variant(dialect_name: &str) -> String {
+    dialect_name
+        .split('_')
         .map(|part| {
             let mut chars = part.chars();
             match chars.next() {
                 None => String::new(),
-                Some(first) => {
-                    let mut result = first.to_ascii_uppercase().to_string();
-                    result.extend(chars.map(|c| c.to_ascii_lowercase()));
-                    result
-                }
+                Some(first) => first.to_ascii_uppercase().to_string() + chars.as_str(),
             }
         })
         .collect()
-}
-
-/// Convert a dialect name for use in the Dialect enum variant.
-/// Preserves uppercase for short codes (like PT, BR, AO) and converts others
-/// to PascalCase.
-fn to_dialect_variant(dialect_name: &str) -> String {
-    // If the dialect name is all uppercase (like PT, BR, AO), keep it as-is.
-    if dialect_name.chars().all(|c| c.is_ascii_uppercase()) {
-        dialect_name.to_string()
-    } else {
-        // Otherwise convert to PascalCase.
-        to_pascal_case(dialect_name)
-    }
 }
 
 /// Known non-language directories in harper-core's src/language/ directory.

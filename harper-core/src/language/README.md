@@ -222,7 +222,7 @@ just --list | grep language-
 ```
 
 They cover spell-checking arbitrary text, inspecting word metadata, dictionary
-validation and statistics, coverage and affix-efficiency analysis, Hunspell
+validation and statistics, coverage, and affix-efficiency analysis, Hunspell
 comparison, test-template generation, and the per-language test suites. Each
 recipe documents its own usage; the justfile is the source of truth, not this
 file.

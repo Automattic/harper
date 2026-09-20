@@ -28,6 +28,11 @@ use weir_rules::{process_language_weir_rules, write_grouped_weir_boilerplate};
 
 pub fn run_build() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
+    // Cargo sets `OUT_DIR` for every build script: it is the per-crate, per-profile
+    // directory under `target/` where generated sources must go, so they never touch
+    // the source tree. It is not a project setting. The files written there are
+    // exposed to the crate through `cargo:rustc-env` variables (e.g. `WEIR_RULE_LIST`)
+    // and pulled in with `include!(env!(...))`.
     let out_dir = Path::new(&env::var("OUT_DIR").unwrap()).to_path_buf();
 
     // Main English weir rules (in linting/weir_rules/)

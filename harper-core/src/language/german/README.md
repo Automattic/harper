@@ -123,13 +123,13 @@ entry also carries `d`/`f`/`i`/`j`. Nor is `V` a reliable way to *find* the verb
 — it is missing from plenty of them (`promovieren/~~Nh`, `herrschen/~~XZ`) and
 wrongly present on plenty of nouns.
 
-`scripts/add_german_verb_conjugation_flags.py` therefore asks Hunspell instead:
+`harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py` therefore asks Hunspell instead:
 an entry gains `dfij` only when the expanded form list accepts *every* form the
 four flags would generate, matched case sensitively.
 
 ```bash
 unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
+harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py --forms forms.txt --apply
 ```
 
 It computes those forms by **reading the rules out of `annotations.json`** and
@@ -180,7 +180,7 @@ conditions are all plain character classes that `Matcher` can express:
 | `el` | `el` | `lung` | handel → Handlung |
 | anything but `n` | — | `ung` | zahl → Zahlung |
 
-`scripts/mirror_hunspell_flag.py --from J --to 78` hands the pair to the verbs
+`harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from J --to 78` hands the pair to the verbs
 igerman98 marks with `J`, verifying every generated form against the expanded
 list first.
 
@@ -194,7 +194,7 @@ matched in the first place.
 
 Every conjugation flag above builds on the infinitive, and for a strong verb
 that is a dead end: `ziehen` gives `zog`, not `ziehte`. The flags are withheld
-from those verbs on purpose — `scripts/add_german_verb_conjugation_flags.py`
+from those verbs on purpose — `harper-core/src/language/german/scripts/add_german_verb_conjugation_flags.py`
 requires hunspell to accept *every* generated form, and `verbietete` is not a
 word — so a strong verb has a present tense and nothing else. `stattfanden`,
 `ausschieden`, `überließen` and `vorhielten` were misspellings.
@@ -212,7 +212,7 @@ a headword of its own (`zog/VZ`, `schrieb/VZ`) and the participle as a third
 | `e` | `n` | abspräche → abspräche**n** |
 | `[^e]`, `ie` | `en` | zog → zog**en** |
 
-`scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries
+`harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries
 igerman98 does. `s` was the **last character free in both namespaces** — see the
 collision table below; the next flag needs one of the digits back.
 
@@ -223,7 +223,7 @@ Two things this pass turned up that any further POS work will hit again:
   not enough — the noun-plural affixes `X`/`Y` carry a plural noun reading of
   their own, and `zogt` stayed a noun until they came off too.
 - The flag on `zog` does not reach `zogt`, because `zogt/~~NhYG` is an entry in
-  its own right. `scripts/fix_german_pos_flags.py` therefore expands the `s` rule
+  its own right. `harper-core/src/language/german/scripts/fix_german_pos_flags.py` therefore expands the `s` rule
   itself and retags every form it produces, not just the stems carrying the flag.
 
 And one thing that has to be left alone. German capitalizes its nouns, so a
@@ -234,7 +234,7 @@ case-insensitive lookup. There is no `Maß` entry, only `maß/~~NXh0`, and `maß
 pass needs the expanded form list to tell the two apart:
 
 ```bash
-scripts/fix_german_pos_flags.py --forms forms.txt --apply
+harper-core/src/language/german/scripts/fix_german_pos_flags.py --forms forms.txt --apply
 ```
 
 Without `--forms` it skips the preterite pass rather than guessing.
@@ -282,7 +282,7 @@ one — and it barely exercises the grammar, because its sentences are short and
 appositive.
 
 ```bash
-scripts/fetch_german_corpus.py .archive/german-language/corpus-prose
+harper-core/src/language/german/scripts/fetch_german_corpus.py .archive/german-language/corpus-prose
 ```
 
 fetches the other kind of article: grammar, law, philosophy, mathematics,
@@ -309,7 +309,7 @@ Against the unmunched igerman98 list, of the entries it can judge: 29065 take
 only `-n`, 23196 only `-en`, 31 both, 48550 neither.
 
 ```bash
-scripts/split_german_plural_n.py --forms forms.txt --apply
+harper-core/src/language/german/scripts/split_german_plural_n.py --forms forms.txt --apply
 ```
 
 `-n` moved to `E` and `Y` narrowed to `-en`, and each entry got whichever
@@ -346,7 +346,7 @@ unambiguous noun reading. Taking the reading off the 35887 entries igerman98
 can vouch for removed 1001 of the prose corpus's 1574 lints.
 
 ```bash
-scripts/strip_german_noun_readings.py --forms forms.txt --apply
+harper-core/src/language/german/scripts/strip_german_noun_readings.py --forms forms.txt --apply
 ```
 
 Three things it has to get right, all learned the hard way:
@@ -394,7 +394,7 @@ plural, so the plural forms carry a plural reading of their own instead of
 borrowing the singular's.
 
 ```bash
-scripts/mirror_hunspell_flag.py --forms forms.txt --from F --to KL --apply
+harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from F --to KL --apply
 ```
 
 4548 entries took the flags and two were refused, because a flag is added only
@@ -422,7 +422,7 @@ the genitives. The rule is hunspell de_DE's `SFX S`, and it lives on `H`, not on
 **plural** noun, which is true for `Autos` and wrong for `Maximilians`.
 
 ```bash
-scripts/mirror_hunspell_flag.py --forms forms.txt --from S --to H \
+harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from S --to H \
     --only-capitalized --apply
 ```
 
@@ -467,7 +467,7 @@ höherer/~~Jq - comprtve jectveOQRST
 comparative adjective read as a noun, a verb in two tenses, and an adverb.
 
 ```bash
-scripts/fix_german_double_declension.py --forms forms.txt --apply
+harper-core/src/language/german/scripts/fix_german_double_declension.py --forms forms.txt --apply
 ```
 
 Two things make this safe to run. Most of what the doubled flags generate is not
@@ -487,13 +487,13 @@ misspellings — proper names (`Kalaschnikow`, `Caligula`, `Rijswijk`),
 place-name derivations (`Ihringshausener`), and ordinary vocabulary (`Styropor`,
 `Parataxe`, `Lokativ`, `Absonderlichkeit`).
 
-`scripts/add_german_missing_words.py` imports them. It asks **harper-cli itself**
+`harper-core/src/language/german/scripts/add_german_missing_words.py` imports them. It asks **harper-cli itself**
 which words are unreachable rather than reimplementing the decomposition, because
 the decomposition is the thing being measured and a second copy would drift:
 
 ```bash
 cargo build --release -p harper-cli --features harper-core/multilingual
-scripts/add_german_missing_words.py --apply
+harper-core/src/language/german/scripts/add_german_missing_words.py --apply
 ```
 
 Entries are written with the bare noun property — no affix, no compound flag. A
@@ -516,7 +516,7 @@ Two limits are deliberate:
 `ggf.`, `engl.`, `hg.`, `op.`, `var.` are ordinary German and were reported as
 misspellings: the tokenizer hands the linter the letters without the full stop,
 and `dictionary.dict` had no entry for them. igerman98 does not list them either,
-so `scripts/add_german_abbreviations.py` is a curated table carrying the
+so `harper-core/src/language/german/scripts/add_german_abbreviations.py` is a curated table carrying the
 expansion of every entry it writes. Flag `2` is the abbreviation property, and
 `GermanNounCapitalization` rejects anything holding it — `hg` must never be
 "corrected" to `Hg`.
@@ -568,13 +568,13 @@ grep -c '^[^#]*/[^ #]*7' dictionary.dict   # entries carrying the -ung flag
 
 Mirroring a hunspell rule into `annotations.json` is only half the job: the flag
 still has to reach the right entries. igerman98 already knows which words take
-it, so `scripts/mirror_hunspell_flag.py` copies that membership across and then
+it, so `harper-core/src/language/german/scripts/mirror_hunspell_flag.py` copies that membership across and then
 *checks* the result — a Harper flag is added only when the expanded form list
 accepts every form the rule would generate for that entry.
 
 ```bash
 unmunch /usr/share/hunspell/de_DE.dic /usr/share/hunspell/de_DE.aff > forms.txt
-scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78 --apply
+harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from J --to 78 --apply
 ```
 
 | hunspell flag | Harper flag | what it is |
@@ -590,8 +590,8 @@ whose generated forms hunspell rejects, which is how a flag that was handed out
 too freely gets cleaned up:
 
 ```bash
-scripts/mirror_hunspell_flag.py --forms forms.txt --to UW --prune --apply
-scripts/mirror_hunspell_flag.py --forms forms.txt --from C --to UW --apply
+harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --to UW --prune --apply
+harper-core/src/language/german/scripts/mirror_hunspell_flag.py --forms forms.txt --from C --to UW --apply
 ```
 
 That pair is worth understanding, because the first half is what makes the second
@@ -1019,7 +1019,7 @@ grep -rn 'const [A-Z_]*: &\[&str\]' linting/ spell/ | wc -l
 
 `GERMAN_NON_NOUNS` was 265 words, justified on the grounds that "the dictionary
 actively mistags them". That stopped being true when
-`scripts/strip_german_noun_readings.py` took the noun reading off every
+`harper-core/src/language/german/scripts/strip_german_noun_readings.py` took the noun reading off every
 lower-case entry igerman98 has no capitalized form for: 230 of those 265 words
 stopped reading as nouns, and deleting them from the list changed no lint on
 either corpus. It is 35 words now, and they are the part a dictionary cannot
@@ -1252,7 +1252,7 @@ The second injects the mistakes German writers actually make — `garnicht`,
 Harper flags. Read the two together: a rule that flags everything would score
 100% on recall alone.
 
-Add a class to `INJECTIONS` in `scripts/german_recall_check.py` whenever you add
+Add a class to `INJECTIONS` in `harper-core/src/language/german/scripts/german_recall_check.py` whenever you add
 a rule. It is the cheapest way to find out that a rule has stopped working.
 
 ### How precise this rule actually is
@@ -1387,11 +1387,11 @@ The scratch tooling for this lives in `.archive/german-language/scripts/`
 build_german_corpus.py --count 400        # fresh Wikipedia prose via the API
 compare_with_languagetool.py <corpus> --rule GermanNounCapitalization \
     --json-out suspects.json              # triage Harper's lints
-derive_pos_fixes.py suspects.json         # -> scripts/german_pos_fixes.tsv
-scripts/fix_german_pos_flags.py --apply   # append the missing readings
+derive_pos_fixes.py suspects.json         # -> harper-core/src/language/german/scripts/german_pos_fixes.tsv
+harper-core/src/language/german/scripts/fix_german_pos_flags.py --apply   # append the missing readings
 ```
 
-`scripts/german_pos_fixes.tsv` **is** tracked — it is the record of which words
+`harper-core/src/language/german/scripts/german_pos_fixes.tsv` **is** tracked — it is the record of which words
 LanguageTool vouched for and what reading each one was missing, so the
 dictionary change stays reproducible.
 
@@ -1406,7 +1406,7 @@ words accepted by `aspell`, in three recurring shapes:
    with `LANGUAGE_GLOSS_MARKERS`.
 3. **Entries with a corpus-mined noun reading and nothing else**, which the
    linter must treat as unambiguous nouns. Fixed in the dictionary by
-   `scripts/fix_german_pos_flags.py`, whose additive pass *appends* the missing
+   `harper-core/src/language/german/scripts/fix_german_pos_flags.py`, whose additive pass *appends* the missing
    adjective/verb/adverb flag rather than replacing the entry — the word becomes
    a homograph and the noun-phrase chunker decides per occurrence.
 
@@ -1427,7 +1427,7 @@ number here is worse than no number. Record *how to measure* instead —
 - **Vocabulary holes**: words are still missing outright — check with
   `just language-lint-sources german .archive/german-language/corpus`, and read
   the result against the expanded hunspell list rather than by eye.
-  `scripts/add_german_missing_verbs.py` closes the verb side of this; nouns have
+  `harper-core/src/language/german/scripts/add_german_missing_verbs.py` closes the verb side of this; nouns have
   no equivalent yet.
 
   Do **not** size this gap by diffing the expanded hunspell list against
