@@ -70,7 +70,7 @@
 				{
 					"remove": "en",
 					"add": "st",
-					"condition": "[^dimnÃstwzx]en"
+					"condition": "[^dimnßstwzx]en"
 				},
 				{
 					"remove": "en",
@@ -95,12 +95,12 @@
 				{
 					"remove": "n",
 					"add": "st",
-					"condition": "[^aÃ¤ehilmnoÃ¶uÃ¼r][mn]en"
+					"condition": "[^aäehilmnoöuür][mn]en"
 				},
 				{
 					"remove": "en",
 					"add": "st",
-					"condition": "[aÃ¤eilmnoÃ¶uÃ¼r][mn]en"
+					"condition": "[aäeilmnoöuür][mn]en"
 				},
 				{
 					"remove": "n",
@@ -110,7 +110,7 @@
 				{
 					"remove": "n",
 					"add": "st",
-					"condition": "[Ãsxz]en"
+					"condition": "[ßsxz]en"
 				},
 				{
 					"remove": "n",
@@ -785,27 +785,27 @@
 				{
 					"remove": "lig",
 					"add": "eligere",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligerer",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligeren",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligerem",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligeres",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "erig",
@@ -858,32 +858,32 @@
 				{
 					"remove": "",
 					"add": "est",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
 					"add": "este",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
 					"add": "ester",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
 					"add": "esten",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
 					"add": "estem",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
 					"add": "estes",
-					"condition": "[kÃsuxz]"
+					"condition": "[kßsuxz]"
 				},
 				{
 					"remove": "",
@@ -1008,32 +1008,32 @@
 				{
 					"remove": "",
 					"add": "st",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
 					"add": "ste",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
 					"add": "ster",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
 					"add": "sten",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
 					"add": "stem",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
 					"add": "stes",
-					"condition": "[^kÃstxz]"
+					"condition": "[^kßstxz]"
 				},
 				{
 					"remove": "",
@@ -1098,32 +1098,32 @@
 				{
 					"remove": "lig",
 					"add": "eligst",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligste",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligster",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligsten",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligstem",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "lig",
 					"add": "eligstes",
-					"condition": "[^aeiouhlrÃ¤Ã¼Ã¶]lig"
+					"condition": "[^aeiouhlräüö]lig"
 				},
 				{
 					"remove": "erig",
