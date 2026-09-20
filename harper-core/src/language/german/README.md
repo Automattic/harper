@@ -772,31 +772,33 @@ that is not there, and will also hide one that is.
 ## Five linters that were registered and did nothing
 
 `german_adjective_agreement`, `german_case_usage`, `german_noun_declension`,
-`german_pronoun_agreement` and `german_subject_verb_agreement` are in this
-directory, were in the lint group, and emitted **nothing** — not on the archived
-corpus, and not on the examples in their own module documentation. Removing them
-from the group left the corpus output byte-identical.
+`german_pronoun_agreement` and `german_subject_verb_agreement` were in the lint
+group and emitted **nothing** — not on the archived corpus, and not on the
+examples in their own module documentation. Removing them from the group left the
+corpus output byte-identical, and they have since been deleted; `git log` still
+has them.
 
 Two things kept that hidden.
 
-The first is a shared bug: four of them walked `document.get_tokens()` and
+The first was a shared bug: four of them walked `document.get_tokens()` and
 compared `tokens[i]` with `tokens[i + 1]`, which is a word and the *space* after
-it. They never saw two words at once. That is fixed in each file, and it changes
-nothing, because fixing it only revealed the second problem.
+it. They never saw two words at once. Fixing that only revealed the second
+problem.
 
-The second is that the logic underneath was never finished.
-`german_subject_verb_agreement` says so in its own source — "a basic
-implementation that will be enhanced" — and once it could see two words it
-produced over twelve thousand lints on edited prose, proposing `ist` → `istt`,
-`die` → `diet`, `ein` → `eint`. The other four stayed silent even with the bug
-fixed.
+The second was that the logic underneath was never finished. Once
+`german_subject_verb_agreement` could see two words it produced over twelve
+thousand lints on edited prose, proposing `ist` → `istt`, `die` → `diet`,
+`ein` → `eint`. The other four stayed silent even with the bug fixed.
 
 `german_adjective_agreement` had six passing tests, which is the part worth
-remembering: every one of them asserts that *correct* text produces no lints, or
-checks the description string. None asserts that a wrong phrase is caught, so
-they pass against a linter that does nothing at all.
+remembering: every one of them asserted that *correct* text produces no lints, or
+checked the description string. None asserted that a wrong phrase is caught, so
+they passed against a linter that did nothing at all.
 
 > A test that only proves a rule is quiet proves nothing. Assert a firing.
+
+Real agreement checking needs *case*, which the dictionary does not carry yet (it
+has gender and number). That is the prerequisite for writing any of these again.
 
 All five are annotated in place and left out of the group. Fixing one means
 writing the agreement logic, not re-registering it.

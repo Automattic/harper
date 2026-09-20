@@ -28,16 +28,6 @@ pub struct Config {
     pub highlighter_service_enabled: bool,
 }
 
-/// Extract Dialect from Language for use with dictionary loading.
-/// For non-English languages, returns default dialect (temporary limitation).
-#[allow(unreachable_patterns)]
-fn language_to_dialect(language: Language) -> Dialect {
-    match language {
-        Language::English(d) => d,
-        _ => Dialect::default(),
-    }
-}
-
 impl Config {
     pub fn new() -> Self {
         Self {
@@ -130,7 +120,7 @@ impl Config {
         let mut config = Self::deserialize_main(&serialized)?;
         config.lint_config.fill_with_curated();
         config.mutable_dictionary =
-            load_dict(dictionary_path, language_to_dialect(config.dialect)).await?;
+            load_dict(dictionary_path, config.dialect.dictionary_dialect_flags()).await?;
 
         Ok(config)
     }
@@ -253,8 +243,8 @@ where
 }
 
 /// Deserialize the `dialect` config field, accepting both the current
-/// externally-tagged `Language` format and the legacy master format where the
-/// field was a plain `Dialect` string such as `"American"`.
+/// externally-tagged `Language` format and a plain `Dialect` string such as
+/// `"American"`, which is what the setting held before it became a `Language`.
 fn deserialize_language_compat(value: serde_json::Value) -> serde_json::Result<Language> {
     if let Ok(language) = serde_json::from_value::<Language>(value.clone()) {
         return Ok(language);
@@ -268,7 +258,7 @@ fn deserialize_language_compat(value: serde_json::Value) -> serde_json::Result<L
 
     Err(serde_json::Error::custom(
         "invalid `dialect` field: expected a Language object like \
-         {\"English\": \"American\"} or a legacy dialect string like \"American\"",
+         {\"English\": \"American\"} or a plain dialect string like \"American\"",
     ))
 }
 
@@ -337,7 +327,7 @@ mod tests {
     }
 
     #[test]
-    fn deserialize_main_accepts_legacy_string_dialect() {
+    fn deserialize_main_accepts_plain_dialect_string() {
         let config = Config::new();
         let mut value =
             serde_json::from_str::<serde_json::Value>(&config.serialize_main().unwrap()).unwrap();

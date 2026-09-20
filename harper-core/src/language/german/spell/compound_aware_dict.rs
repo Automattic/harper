@@ -111,8 +111,8 @@ impl Dictionary for CompoundAwareDictionary {
         max_distance: u8,
         max_results: usize,
     ) -> Vec<crate::spell::FuzzyMatchResult<'_>> {
-        // For now, delegate to base dictionary for fuzzy matching
-        // Compound words are checked exactly, not fuzzily
+        // Compound words are checked exactly, never fuzzily, so suggestions come from the
+        // base dictionary alone.
         self.base_dict.fuzzy_match(word, max_distance, max_results)
     }
 

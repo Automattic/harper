@@ -12,7 +12,6 @@ use crate::io_utils::fileify_path;
 use anyhow::{Context, Result, anyhow};
 use harper_asciidoc::AsciidocParser;
 use harper_comments::CommentParser;
-use harper_core::Dialect;
 use harper_core::language::{
     Language, detect_language, dictionary, new_curated_for_language, parser_for_prose,
 };
@@ -64,16 +63,6 @@ pub struct Backend {
 
 const MIN_WORDS_FOR_LANGUAGE_DETECTION: usize = 10;
 
-/// Extract Dialect from Language for use with dictionary loading.
-/// For non-English languages, returns default dialect (temporary limitation).
-#[allow(unreachable_patterns)]
-fn language_to_dialect(language: Language) -> Dialect {
-    match language {
-        Language::English(d) => d,
-        _ => Dialect::default(),
-    }
-}
-
 impl Backend {
     pub fn new(client: Client, config: Config) -> Self {
         Self {
@@ -104,7 +93,7 @@ impl Backend {
             .await
             .context("Unable to get the file path.")?;
 
-        load_dict(path, language_to_dialect(language))
+        load_dict(path, language.dictionary_dialect_flags())
             .await
             .map_err(|err| info!("{err}"))
             .or(Ok(MutableDictionary::new()))
@@ -190,7 +179,7 @@ impl Backend {
         let config = self.config.read().await;
         let path = Self::dialect_path(&config.user_dict_path, language);
 
-        load_dict(path, language_to_dialect(language))
+        load_dict(path, language.dictionary_dialect_flags())
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())
@@ -209,7 +198,7 @@ impl Backend {
         let config = self.config.read().await;
         let path = Self::dialect_path(&config.workspace_dict_path, language);
 
-        load_dict(path, language_to_dialect(language))
+        load_dict(path, language.dictionary_dialect_flags())
             .await
             .map_err(|err| info!("{err}"))
             .unwrap_or(MutableDictionary::new())

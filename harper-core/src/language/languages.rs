@@ -501,6 +501,18 @@ impl Language {
     pub fn family(&self) -> LanguageFamily {
         (*self).into()
     }
+
+    /// The dialect flags to stamp on words loaded into a user, workspace or file dictionary.
+    ///
+    /// Only English carries per-word dialect flags; every other language leaves them empty,
+    /// which means "valid in every dialect".
+    #[allow(unreachable_patterns)]
+    pub fn dictionary_dialect_flags(&self) -> crate::DialectFlags {
+        match self {
+            Self::English(dialect) => crate::DialectFlags::from_dialect(*dialect),
+            _ => crate::DialectFlags::empty(),
+        }
+    }
 }
 
 impl Default for Language {

@@ -1,18 +1,13 @@
 //! German linting rules and checkers.
 
 pub mod german_absolute_superlative;
-pub mod german_adjective_agreement;
-pub mod german_case_usage;
 pub mod german_common_typos;
 pub mod german_filler_words;
 pub mod german_fixed_nominalization;
 pub mod german_foreign_stretch;
 pub mod german_noun_capitalization;
-pub mod german_noun_declension;
-pub mod german_pronoun_agreement;
 pub mod german_sentence_capitalization;
 pub mod german_spell_check;
-pub mod german_subject_verb_agreement;
 pub mod german_subordinate_comma;
 pub mod german_wider_wieder;
 pub mod german_year_preposition;

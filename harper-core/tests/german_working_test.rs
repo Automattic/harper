@@ -124,7 +124,6 @@ mod tests {
         let parser = Markdown::new(MarkdownOptions::default());
         let doc = Document::new(&text, &parser, &dict);
 
-        // TODO: fill_with_curated_for_language is not implemented
         let lints_map = linter.organized_lints(&doc);
 
         let total: usize = lints_map.values().map(|v| v.len()).sum();
@@ -149,7 +148,6 @@ mod tests {
         let text = "Die Übergabe hat unmittelbar an die neue Verwaltung zu erfolgen.";
         let document = Document::new(text, &PlainGerman, &dict);
 
-        // TODO: fill_with_curated_for_language is not implemented
         let lints_map = linter.organized_lints(&document);
 
         let all_lints: Vec<_> = lints_map.values().flat_map(|lints| lints.iter()).collect();

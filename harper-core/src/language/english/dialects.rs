@@ -30,7 +30,7 @@ impl Default for Dialect {
     }
 }
 
-// Implement the Dialect trait from dialect_trait.rs for the legacy Dialect type
+// Implement the Dialect trait from dialect_trait.rs for the crate-root `Dialect`, which predates the language module
 // This allows English to work with the LanguageModule system
 impl DialectTrait for Dialect {
     type Flags = DialectFlags;
@@ -44,7 +44,7 @@ impl DialectTrait for Dialect {
     }
 }
 
-// Implement the DialectFlags trait for the legacy DialectFlags type
+// Implement the DialectFlags trait for the crate-root `DialectFlags`, which predates the language module
 impl DialectFlagsTrait<Dialect> for DialectFlags {
     fn is_dialect_enabled(&self, dialect: Dialect) -> bool {
         DialectFlags::is_dialect_enabled(*self, dialect)

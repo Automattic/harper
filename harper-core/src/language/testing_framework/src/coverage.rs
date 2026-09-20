@@ -70,10 +70,8 @@ fn load_and_filter_expanded_dictionary(
         if clean_word.starts_with('-') {
             continue;
         }
-        // Allow uppercase words (proper nouns) but filter them later if needed
-        // Actually, for German, many nouns are capitalized, so we should allow them
-        // But filter out words that start with uppercase followed by lowercase (typical sentence start)
-        // For now, just check if it's all uppercase (abbreviations)
+        // Capitalised words are kept, since every German noun is capitalised. Only
+        // all-uppercase words (abbreviations) are skipped.
         if clean_word == clean_word.to_uppercase() && clean_word.len() > 2 {
             continue;
         }
@@ -273,12 +271,9 @@ pub fn run_coverage_analysis_with_dict(
     if base_entries > 0 && coverage_percentage < 80.0 {
         // To improve coverage, we can either add more base entries or improve affix rules
         // Coverage is based on sample testing against expanded dictionary
-        // To reach 80% coverage of the expanded dictionary, we need more base entries
+        // Below the target coverage, report the affix efficiency (expanded words per base
+        // entry): raising it is the way to cover more words without adding entries.
         let target_coverage = 80.0;
-        // If we currently recognize coverage_percentage of the sample,
-        // to reach target_coverage we need to cover (target - current) more
-        // At current efficiency (expanded/base), each base entry gives us efficiency expanded words
-        // But this is complex - for now just show what efficiency we have
         if coverage_percentage < target_coverage {
             println!("   🎯 Current efficiency: {:.2} - add more base entries or improve affix rules to increase this", efficiency);
         }

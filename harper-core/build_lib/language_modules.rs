@@ -410,6 +410,23 @@ fn generate_languages_file(src_dir: &Path, languages: &[LanguageConfig]) {
     code.push_str("impl Language {\n");
     code.push_str("    pub fn family(&self) -> LanguageFamily {\n");
     code.push_str("        (*self).into()\n");
+    code.push_str("    }\n\n");
+    code.push_str(
+        "    /// The dialect flags to stamp on words loaded into a user, workspace or file dictionary.\n",
+    );
+    code.push_str("    ///\n");
+    code.push_str(
+        "    /// Only English carries per-word dialect flags; every other language leaves them empty,\n",
+    );
+    code.push_str("    /// which means \"valid in every dialect\".\n");
+    code.push_str("    #[allow(unreachable_patterns)]\n");
+    code.push_str("    pub fn dictionary_dialect_flags(&self) -> crate::DialectFlags {\n");
+    code.push_str("        match self {\n");
+    code.push_str(
+        "            Self::English(dialect) => crate::DialectFlags::from_dialect(*dialect),\n",
+    );
+    code.push_str("            _ => crate::DialectFlags::empty(),\n");
+    code.push_str("        }\n");
     code.push_str("    }\n");
     code.push_str("}\n\n");
 

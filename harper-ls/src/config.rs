@@ -168,15 +168,16 @@ impl Config {
         if let Some(v) = value.get("language") {
             base.language = serde_json::from_value(v.clone())?;
         } else if let Some(v) = value.get("dialect") {
-            // Legacy support for old "dialect" config key
+            // `dialect` is the English-only spelling of this setting, kept because it is the
+            // documented key. `language` wins when both are given.
             if let Some(s) = v.as_str() {
                 if let Some(language) = parse_language(s) {
                     base.language = language;
                 } else {
-                    bail!("unsupported legacy dialect value: {s}");
+                    bail!("unsupported dialect value: {s}");
                 }
             } else {
-                bail!("unsupported legacy dialect value");
+                bail!("dialect must be a string.");
             }
         }
 
@@ -255,6 +256,45 @@ mod tests {
     use serde_json::json;
 
     use super::Config;
+
+    #[test]
+    fn dialect_key_selects_an_english_dialect() {
+        let config = Config::from_lsp_config(
+            std::path::Path::new("."),
+            json!({ "harper-ls": { "dialect": "British" } }),
+        )
+        .unwrap();
+
+        assert_eq!(
+            config.language,
+            harper_core::language::parse_language("British").unwrap()
+        );
+    }
+
+    #[test]
+    fn language_key_wins_over_dialect_key() {
+        let config = Config::from_lsp_config(
+            std::path::Path::new("."),
+            json!({ "harper-ls": { "dialect": "British", "language": { "English": "Canadian" } } }),
+        )
+        .unwrap();
+
+        assert_eq!(
+            config.language,
+            harper_core::language::parse_language("Canadian").unwrap()
+        );
+    }
+
+    #[test]
+    fn unknown_dialect_value_is_rejected() {
+        assert!(
+            Config::from_lsp_config(
+                std::path::Path::new("."),
+                json!({ "harper-ls": { "dialect": "Klingon" } }),
+            )
+            .is_err()
+        );
+    }
 
     #[test]
     fn parses_diagnostic_delay() {

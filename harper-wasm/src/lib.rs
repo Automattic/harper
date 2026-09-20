@@ -8,6 +8,7 @@ use std::convert::Into;
 use std::io::Cursor;
 use std::sync::Arc;
 
+use harper_core::RegexMasker;
 use harper_core::language_detection::is_doc_likely_english;
 use harper_core::linting::{HumanReadableStructuredConfig, StructuredConfig};
 use harper_core::linting::{LintGroup, Linter as _};
@@ -18,7 +19,6 @@ use harper_core::{
     CharString, DictWordMetadata, Document, IgnoredLints, LintContext, Lrc, remove_overlaps,
     spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary},
 };
-use harper_core::{DialectFlags, RegexMasker};
 
 // Import language module types
 use harper_core::language::english::dialects::EnglishDialect;
@@ -458,16 +458,7 @@ impl Linter {
     pub fn import_words(&mut self, additional_words: Vec<String>) {
         let init_len = self.user_dictionary.word_count();
 
-        // Only English carries legacy dialect flags on user-dictionary words;
-        // every other language leaves them empty, so no per-language arm is
-        // needed here when a language is added.
-        #[allow(unreachable_patterns)]
-        let dialect_flags = match self.ling_language {
-            harper_core::language::languages::Language::English(dialect) => {
-                DialectFlags::from_dialect(dialect)
-            }
-            _ => DialectFlags::empty(),
-        };
+        let dialect_flags = self.ling_language.dictionary_dialect_flags();
 
         self.user_dictionary
             .extend_words(additional_words.iter().map(|word| {
