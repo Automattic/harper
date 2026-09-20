@@ -2354,9 +2354,9 @@
 			}
 		},
 		"*": {
-		  "#": "Stem-only marker. The entry is not a word: it exists so the conjugation affixes have something to attach to (`absperr/~~*Vcej` builds `absperrt`, `absperrte`, `absperren`). Without it the bare stem lands in the word list, is accepted as a spelling, and — because every list member may be a compound element — turns up inside misspellings such as `Absiecht` = `ab` + `siecht`. Hunspell calls this `NEEDAFFIX`.",
-		  "stem_only": true,
-		  "metadata": {}
+			"#": "Stem-only marker. The entry is not a word: it exists so the conjugation affixes have something to attach to (`absperr/~~*Vcej` builds `absperrt`, `absperrte`, `absperren`). Without it the bare stem lands in the word list, is accepted as a spelling, and — because every list member may be a compound element — turns up inside misspellings such as `Absiecht` = `ab` + `siecht`. Hunspell calls this `NEEDAFFIX`.",
+			"stem_only": true,
+			"metadata": {}
 		},
 		"h": {
 			"#": "Compound-capability marker. Generates nothing — it is bookkeeping, appended to nearly every vetted noun entry, and `CompoundChecker` reads it to decide whether a short word may act as a compound element. The '-st' affix that used to live here moved to 'G'.",
