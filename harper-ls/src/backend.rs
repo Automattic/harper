@@ -404,7 +404,28 @@ impl Backend {
             is_prose, effective_language_id
         );
 
-        let config = self.config.read().await;
+        // Copy what we need and release the lock immediately. Holding a read guard across the
+        // awaits below deadlocks: the dictionary loaders re-acquire it, and a queued
+        // `pull_config` writer from a concurrent `did_change` blocks that second read.
+        let (
+            lint_config,
+            markdown_options,
+            isolate_english,
+            language, // Configured language (used as fallback)
+            max_file_length,
+            exclude_patterns,
+        ) = {
+            let config = self.config.read().await;
+            (
+                config.lint_config.clone(),
+                config.markdown_options,
+                config.isolate_english,
+                config.language,
+                config.max_file_length,
+                config.exclude_patterns.clone(),
+            )
+        };
+
         let detected_language: Language = if is_prose {
             let word_count = text.split_whitespace().count();
             info!("Word count: {}", word_count);
@@ -418,7 +439,7 @@ impl Backend {
                 // Re-run detection when we have enough content so that e.g. an
                 // empty-then-typed document can switch from English to German.
                 let dict = FstDictionary::curated();
-                let detected = detect_language(text, &dict, config.language);
+                let detected = detect_language(text, &dict, language);
                 debug!(
                     "harper-ls language detect: {:?} for {:?} ({} words)",
                     detected, uri, word_count
@@ -448,29 +469,12 @@ impl Backend {
                     "Insufficient content for detection ({} words), using configured language",
                     word_count
                 );
-                config.language
+                language
             }
         } else {
             // For non-prose files (code, etc.) use the configured language.
-            config.language
+            language
         };
-
-        // Copy necessary configuration to avoid holding lock.
-        let (
-            lint_config,
-            markdown_options,
-            isolate_english,
-            language, // Configured language (used as fallback)
-            max_file_length,
-            exclude_patterns,
-        ) = (
-            config.lint_config.clone(),
-            config.markdown_options,
-            config.isolate_english,
-            config.language,
-            config.max_file_length,
-            config.exclude_patterns.clone(),
-        );
 
         if !exclude_patterns.is_empty()
             && exclude_patterns.is_match(
@@ -1449,6 +1453,49 @@ mod tests {
             }),
             "expected German spellcheck diagnostics after language switch: {:?}",
             diagnostics
+        );
+    }
+
+    /// Editors send the next `did_change` while the previous one is still loading the German
+    /// dictionary. Each update pulls the config (a config write), so holding the config read lock
+    /// across the dictionary loaders deadlocked the server for good.
+    #[tokio::test(flavor = "multi_thread", worker_threads = 4)]
+    #[cfg(feature = "de")]
+    async fn concurrent_edits_while_switching_to_german_do_not_deadlock() {
+        let harness = TestHarness::new().await;
+        let uri = harness.file_uri("typing-german.md");
+        harness.open_document(&uri, "markdown", "").await;
+
+        let text = german_text_with_errors();
+        let edits = text.split(' ').scan(String::new(), |acc, word| {
+            if !acc.is_empty() {
+                acc.push(' ');
+            }
+            acc.push_str(word);
+            Some(acc.clone())
+        });
+
+        let all_edits = futures::future::join_all(
+            edits
+                .enumerate()
+                .map(|(i, partial)| {
+                    let (harness, uri) = (&harness, &uri);
+                    async move { harness.change_document(uri, i as i32 + 2, &partial).await }
+                })
+                .collect::<Vec<_>>(),
+        );
+
+        tokio::time::timeout(Duration::from_secs(60), all_edits)
+            .await
+            .expect("concurrent did_change calls deadlocked");
+
+        assert!(
+            !harness
+                .backend()
+                .generate_diagnostics(&uri)
+                .await
+                .is_empty(),
+            "expected German diagnostics once all edits were applied"
         );
     }
 
