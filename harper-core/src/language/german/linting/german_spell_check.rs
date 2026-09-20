@@ -1,7 +1,7 @@
 use hashbrown::HashMap;
 
 use crate::language::german::spell::compound_checker::{
-    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, lowercase,
+    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, interfix_fits, lowercase,
 };
 use crate::language::german::spell::german_dict::GERMAN_STEMS;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
@@ -327,11 +327,19 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         Self { dictionary }
     }
 
+    /// Take `interfix` off the front of `remainder`, if it may stand there.
+    ///
+    /// `element` is what precedes the seam, because an interfix may not repeat
+    /// the letter it follows — see [`interfix_fits`].
     fn strip_compound_interfix<'a>(
         &self,
+        element: &[char],
         remainder: &'a [char],
         interfix: &[char],
     ) -> Option<&'a [char]> {
+        if !interfix_fits(element, interfix) {
+            return None;
+        }
         remainder.strip_prefix(interfix)
     }
 
@@ -379,7 +387,8 @@ impl<T: Dictionary> GermanSpellCheck<T> {
             let remainder = &word[split_pos..];
 
             for interfix in GERMAN_COMPOUND_INTERFIXES {
-                let Some(next_part) = self.strip_compound_interfix(remainder, interfix) else {
+                let Some(next_part) = self.strip_compound_interfix(first_part, remainder, interfix)
+                else {
                     continue;
                 };
 

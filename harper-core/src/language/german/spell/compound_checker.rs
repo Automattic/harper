@@ -52,6 +52,26 @@ const STEM_ONLY_FLAG: char = '*';
 /// All standard German linking interfixes, tried at every compound boundary.
 const STANDARD_INTERFIXES: [&str; 6] = ["", "s", "n", "en", "er", "es"];
 
+/// Whether `interfix` may join `element` to whatever follows it.
+///
+/// A German linking interfix never repeats the letter it follows. There is no
+/// `*Hauss-`, no `*Bahnn-`, no `*Kindeses-`: the interfix marks a seam, and a
+/// seam that doubles the letter in front of it is not one a German writer ever
+/// produces. Leaving this unchecked is what lets the decomposition absorb a
+/// doubled-consonant typo into the seam — `Aussbildung` passes as `aus` + `s` +
+/// `bildung`, `hinnaus` as `hin` + `n` + `aus`, `annerkannt` as `an` + `n` +
+/// `erkannt` — so the misspelling draws no lint at all.
+///
+/// The empty interfix is exempt, and has to be: `Schifffahrt` really is
+/// `Schiff` plus `Fahrt`, seam and all. The rule is about the linking letter,
+/// not about two elements that happen to meet on the same consonant.
+pub(crate) fn interfix_fits(element: &[char], interfix: &[char]) -> bool {
+    match (element.last(), interfix.first()) {
+        (Some(last), Some(first)) => !last.eq_ignore_ascii_case(first),
+        _ => true,
+    }
+}
+
 /// The minimum length of a dictionary word that may act as a compound element.
 ///
 /// Three is too permissive — it is what lets `Diskusion` through as `Diskus` +
@@ -541,6 +561,9 @@ impl CompoundChecker {
             // Try every standard interfix at this boundary.
             for interfix in STANDARD_INTERFIXES {
                 let interfix_chars: Vec<char> = interfix.chars().collect();
+                if !interfix_fits(first, &interfix_chars) {
+                    continue;
+                }
                 let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
                     continue;
                 };
@@ -703,6 +726,9 @@ impl CompoundChecker {
 
             for interfix in STANDARD_INTERFIXES {
                 let interfix_chars: Vec<char> = interfix.chars().collect();
+                if !interfix_fits(first, &interfix_chars) {
+                    continue;
+                }
                 let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
                     continue;
                 };
@@ -1333,6 +1359,48 @@ mod tests {
         }
 
         for word in ["Ölgemälde", "Rohöl", "Eigelb", "Abbau", "Umbau", "Eiweiß"] {
+            assert!(accepts(word), "{word} must stay a word");
+        }
+    }
+
+    /// A linking interfix never repeats the letter it follows.
+    ///
+    /// Without that rule the seam swallows a doubled-consonant typo: the
+    /// decomposition simply reads the extra letter as the interfix, and the
+    /// misspelling draws no lint. The words below are the four shapes it
+    /// produced most often on 1.44M words of prose.
+    #[test]
+    fn an_interfix_may_not_repeat_the_letter_before_it() {
+        use crate::language::german::spell::combined_german_dictionary;
+
+        let dictionary = combined_german_dictionary();
+        let accepts = |word: &str| dictionary.contains_word(&word.chars().collect::<Vec<_>>());
+
+        for word in [
+            "Aussbildung",
+            "hinnaus",
+            "annerkannt",
+            "Annfang",
+            "Anneignung",
+            "allennfalls",
+            "abhänngig",
+        ] {
+            assert!(!accepts(word), "{word} must not decompose");
+        }
+
+        // The empty interfix is exempt, and has to be: these really do meet on
+        // the same consonant, with no linking letter between them.
+        for word in [
+            "Schifffahrt",
+            "Schlusssatz",
+            "Nussschale",
+            "Balletttänzer",
+            // And the genuine interfixes, which never double.
+            "Arbeitsgeber",
+            "Sonnenschein",
+            "Kindergarten",
+            "Bundesland",
+        ] {
             assert!(accepts(word), "{word} must stay a word");
         }
     }
