@@ -134,7 +134,11 @@ enum Args {
         lines: Vec<String>,
     },
     /// Emit a decompressed, line-separated list of the words in Harper's dictionary.
-    Words,
+    Words {
+        /// Specify the dialect whose dictionary to dump.
+        #[arg(short, long, default_value = "American")]
+        dialect: String,
+    },
     /// Summarize a lint record
     SummarizeLintRecord {
         #[arg(value_hint = ValueHint::FilePath)]
@@ -391,10 +395,14 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Words => {
+        Args::Words { dialect } => {
+            let dialect = parse_dialect(&dialect)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect, e))?;
+            let dictionary = harper_core::language::registry::dictionary(dialect);
+
             let mut word_str = String::new();
 
-            for word in curated_dictionary().words_iter() {
+            for word in dictionary.words_iter() {
                 word_str.clear();
                 word_str.extend(word);
 
