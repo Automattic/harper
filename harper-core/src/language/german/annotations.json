@@ -513,14 +513,39 @@
 			"rename_ok": true
 		},
 		"O": {
-			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular)",
+			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
 					"add": "e",
-					"condition": "."
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^e][rl]"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "er",
+					"add": "re",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[eil]el"
+				},
+				{
+					"remove": "el",
+					"add": "le",
+					"condition": "[^eil]el"
 				}
 			],
 			"target": [
@@ -536,14 +561,44 @@
 			"rename_ok": true
 		},
 		"Q": {
-			"#": "Adjective declension -em (masculine/neuter dative singular)",
+			"#": "Adjective declension -em (masculine/neuter dative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "m",
+					"condition": "e"
+				},
+				{
+					"remove": "",
 					"add": "em",
-					"condition": "."
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "em",
+					"condition": "[^e][rl]"
+				},
+				{
+					"remove": "",
+					"add": "em",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "er",
+					"add": "rem",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "em",
+					"condition": "[eil]el"
+				},
+				{
+					"remove": "el",
+					"add": "lem",
+					"condition": "[^eil]el"
 				}
 			],
 			"target": [
@@ -559,14 +614,44 @@
 			"rename_ok": true
 		},
 		"R": {
-			"#": "Adjective declension -en (plural and masculine/neuter genitive singular)",
+			"#": "Adjective declension -en (plural and masculine/neuter genitive singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "n",
+					"condition": "e"
+				},
+				{
+					"remove": "",
 					"add": "en",
-					"condition": "."
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^e][rl]"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "er",
+					"add": "ren",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "en",
+					"condition": "[eil]el"
+				},
+				{
+					"remove": "el",
+					"add": "len",
+					"condition": "[^eil]el"
 				}
 			],
 			"target": [
@@ -582,14 +667,44 @@
 			"rename_ok": true
 		},
 		"S": {
-			"#": "Adjective declension -er (masculine nominative singular)",
+			"#": "Adjective declension -er (masculine nominative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "r",
+					"condition": "e"
+				},
+				{
+					"remove": "",
 					"add": "er",
-					"condition": "."
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[^e][rl]"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "er",
+					"add": "rer",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "er",
+					"condition": "[eil]el"
+				},
+				{
+					"remove": "el",
+					"add": "ler",
+					"condition": "[^eil]el"
 				}
 			],
 			"target": [
@@ -605,14 +720,44 @@
 			"rename_ok": true
 		},
 		"T": {
-			"#": "Adjective declension -es (neuter nominative/accusative singular)",
+			"#": "Adjective declension -es (neuter nominative/accusative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
 				{
 					"remove": "",
+					"add": "s",
+					"condition": "e"
+				},
+				{
+					"remove": "",
 					"add": "es",
-					"condition": "."
+					"condition": "[^elr]"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[^e][rl]"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[^u]er"
+				},
+				{
+					"remove": "er",
+					"add": "res",
+					"condition": "uer"
+				},
+				{
+					"remove": "",
+					"add": "es",
+					"condition": "[eil]el"
+				},
+				{
+					"remove": "el",
+					"add": "les",
+					"condition": "[^eil]el"
 				}
 			],
 			"target": [
@@ -2052,6 +2197,77 @@
 			},
 			"rename_ok": true
 		},
+		"z": {
+			"#": "'-chen' diminutive (das Körperchen, das Röhrchen, des Röhrchens). Mirrors hunspell de_DE SFX M, including the three stems that umlaut before the doubled s (Fass -> Fässchen, Schloss -> Schlösschen, Kuss -> Küsschen). A diminutive is always neuter, whatever the base noun is, which is why the class sets the gender. `z` previously held a neuter-noun property that duplicated `Z` and that no entry carried.",
+			"kind": "suffix",
+			"cross_product": true,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "chen",
+					"condition": "[^se]"
+				},
+				{
+					"remove": "",
+					"add": "chens",
+					"condition": "[^se]"
+				},
+				{
+					"remove": "ass",
+					"add": "ässchen",
+					"condition": "ass"
+				},
+				{
+					"remove": "ass",
+					"add": "ässchens",
+					"condition": "ass"
+				},
+				{
+					"remove": "oss",
+					"add": "össchen",
+					"condition": "oss"
+				},
+				{
+					"remove": "oss",
+					"add": "össchens",
+					"condition": "oss"
+				},
+				{
+					"remove": "uss",
+					"add": "üsschen",
+					"condition": "uss"
+				},
+				{
+					"remove": "uss",
+					"add": "üsschens",
+					"condition": "uss"
+				},
+				{
+					"remove": "e",
+					"add": "chen",
+					"condition": "e"
+				},
+				{
+					"remove": "e",
+					"add": "chens",
+					"condition": "e"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {},
+						"morphology": {
+							"noun": { "gender": "Neuter" }
+						}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
 		"x": {
 			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry by an oracle, see scripts/add_german_verb_derivations.py. `x` previously held an imperative-mood property that no entry carried.",
 			"kind": "suffix",
@@ -2632,17 +2848,6 @@
 				"verb": {},
 				"morphology": {
 					"mood": "SubjunctiveI"
-				}
-			}
-		},
-		"z": {
-			"#": "neuter noun property (German - alternative)",
-			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"gender": "Neuter"
-					}
 				}
 			}
 		},

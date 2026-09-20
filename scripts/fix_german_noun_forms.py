@@ -68,9 +68,22 @@ def is_form_of(entry, form, stems):
     a lower-case one an adjective or a verb that happened to be capitalized.
     The stem may also be the entry's unprefixed core, the way hunspell
     analyses `Bundesministeriums` under `Ministerium`.
+
+    The third case is the awkward one. igerman98 lists many plurals as
+    headwords of their own, so `Quantitäten` analyses as `st:Quantitäten`
+    rather than as a form of `Quantität`, and the strict test refuses every
+    `-tät`, `-ion` and `-keit` plural there is. Such a stem counts when it is
+    the generated form itself *and* it is built straight on this entry. That
+    stays safe because the capitalization test comes first: `dien` proposing
+    `Dienen` is still refused, hunspell calling it `st:dienen`.
     """
     return any(
-        stem[:1].isupper() and (stem == entry or entry.endswith(stem))
+        stem[:1].isupper()
+        and (
+            stem == entry
+            or entry.endswith(stem)
+            or (stem == form and form.startswith(entry))
+        )
         for stem in stems.get(form, ())
     )
 
@@ -82,6 +95,8 @@ DECLENSION = {
     "a": "die Bilder",
     "H": "des Christentums",
     "0": "des Hauses",
+    # Not a declension but built the same way and decided by the same oracle.
+    "z": "das Röhrchen",
 }
 
 # Flags that say "this entry is a noun".

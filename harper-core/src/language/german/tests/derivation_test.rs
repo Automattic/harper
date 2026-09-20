@@ -125,4 +125,72 @@ mod tests {
             assert!(known(word), "'{word}' is a -bar adjective");
         }
     }
+
+    /// The `-chen` diminutive, flag `z`, including the stems that umlaut.
+    #[test]
+    fn nouns_have_their_diminutive() {
+        for word in [
+            "Röhrchen",
+            "Körperchen",
+            "Körperchens",
+            "Fässchen",
+            "Küsschen",
+        ] {
+            assert!(known(word), "'{word}' is a diminutive");
+        }
+    }
+
+    /// An adjective declines, and the `-el` and `-uer` endings contract when
+    /// it does. The single `.` rule this replaced built the forms on the right.
+    #[test]
+    fn adjectives_decline_with_their_syncope() {
+        for word in [
+            "akzeptable",
+            "akzeptabler",
+            "akzeptables",
+            "irreversibler",
+            "edler",
+            "teure",
+            "böses",
+            "helle",
+            "klare",
+        ] {
+            assert!(known(word), "'{word}' is a declined adjective");
+        }
+
+        for word in ["akzeptabele", "teuere", "irreversibeles"] {
+            assert!(!known(word), "'{word}' is not German");
+        }
+    }
+
+    /// The adjectives that hunspell declines and Harper could not: the entries
+    /// were there, the declension flags were not.
+    #[test]
+    fn corpus_mined_adjectives_decline_too() {
+        for word in [
+            "abundanter",
+            "abwechslungsarmes",
+            "berufener",
+            "achtmonatiger",
+        ] {
+            assert!(known(word), "'{word}' is a declined adjective");
+        }
+    }
+
+    /// The plurals that igerman98 lists as headwords of their own, which the
+    /// strict form of the oracle refused for every `-tät`, `-ion` and `-keit`.
+    #[test]
+    fn derived_feminines_have_their_plural() {
+        for word in [
+            "Quantitäten",
+            "Kontinuitäten",
+            "Komorbiditäten",
+            "Gesetzlichkeiten",
+            "Vergangenheiten",
+            "Adaptationen",
+            "Appositionen",
+        ] {
+            assert!(known(word), "'{word}' is the plural of a derived feminine");
+        }
+    }
 }
