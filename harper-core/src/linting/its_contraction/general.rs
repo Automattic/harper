@@ -115,6 +115,15 @@ impl General {
             "had", "been", "got", "called", "named", "known", "termed", "titled",
         ];
 
+        // A possessive `its` introduced by a preposition is part of a noun phrase, even
+        // when the next word is tagged as a verb: "in its reading", "of its making".
+        if modifier.kind.is_upos(UPOS::VERB)
+            && !strong_predicative_verbs.contains(&modifier_lower.as_str())
+            && preceding_word(source, offender.span.start).is_some_and(|word| is_preposition(&word))
+        {
+            return None;
+        }
+
         let should_consider = if exact_contraction_words.contains(&modifier_lower.as_str())
             || determiner_like_words.contains(&modifier_lower.as_str())
         {
@@ -246,5 +255,27 @@ fn next_non_whitespace_word(source: &[char], offset: usize) -> Option<String> {
             .iter()
             .collect::<String>()
             .to_ascii_lowercase(),
+    )
+}
+
+fn is_preposition(word: &str) -> bool {
+    matches!(
+        word,
+        "at" | "by"
+            | "for"
+            | "from"
+            | "in"
+            | "into"
+            | "of"
+            | "on"
+            | "onto"
+            | "over"
+            | "through"
+            | "to"
+            | "under"
+            | "upon"
+            | "with"
+            | "within"
+            | "without"
     )
 }
