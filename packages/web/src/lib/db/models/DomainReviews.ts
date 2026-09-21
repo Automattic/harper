@@ -1,4 +1,4 @@
-import { gte, lte, and } from 'drizzle-orm';
+import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { domainReviewTable } from '../schema';
@@ -27,6 +27,6 @@ export default class DomainReviews {
 		return await db
 			.select()
 			.from(domainReviewTable)
-			.where(and( gte(domainReviewTable.timestamp, start), lte(domainReviewTable.timestamp ,end)));
+			.where(and(gte(domainReviewTable.timestamp, start), lte(domainReviewTable.timestamp, end)));
 	}
 }

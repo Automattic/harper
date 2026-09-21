@@ -1,4 +1,4 @@
-import { gte, lte, and } from 'drizzle-orm';
+import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { uninstallFeedbackTable } from '../schema';
@@ -30,6 +30,11 @@ export default class UninstallFeedback {
 		return await db
 			.select()
 			.from(uninstallFeedbackTable)
-			.where(and( gte(uninstallFeedbackTable.timestamp, start), lte(uninstallFeedbackTable.timestamp ,end)));
+			.where(
+				and(
+					gte(uninstallFeedbackTable.timestamp, start),
+					lte(uninstallFeedbackTable.timestamp, end),
+				),
+			);
 	}
 }

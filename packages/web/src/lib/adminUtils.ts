@@ -2,7 +2,7 @@
 export function computeDurationFromSlug(slug: string): number | null {
 	switch (slug) {
 		case 'last30days':
-			return  30 * 24 * 60 * 60 * 1000;
+			return 30 * 24 * 60 * 60 * 1000;
 		case 'lastday':
 			return 24 * 60 * 60 * 1000;
 		case 'lastweek':
@@ -13,7 +13,7 @@ export function computeDurationFromSlug(slug: string): number | null {
 }
 
 /** Count the occurances of unique strings in an array. */
-export function countOccurances(arr: string[]): Record<string, number>{
+export function countOccurances(arr: string[]): Record<string, number> {
 	const counts: Record<string, number> = {};
 
 	for (const item of arr) {
@@ -24,5 +24,5 @@ export function countOccurances(arr: string[]): Record<string, number>{
 		}
 	}
 
-  return counts;
+	return counts;
 }

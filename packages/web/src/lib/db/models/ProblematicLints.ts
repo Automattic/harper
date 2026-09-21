@@ -1,4 +1,4 @@
-import { gte, lte, and } from 'drizzle-orm';
+import { and, gte, lte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { problematicLintTable } from '../schema';
@@ -34,6 +34,8 @@ export default class ProblematicLints {
 		return await db
 			.select()
 			.from(problematicLintTable)
-			.where(and( gte(problematicLintTable.timestamp, start), lte(problematicLintTable.timestamp ,end)));
+			.where(
+				and(gte(problematicLintTable.timestamp, start), lte(problematicLintTable.timestamp, end)),
+			);
 	}
 }

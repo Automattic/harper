@@ -6,9 +6,9 @@ import { updateCheckCountTable } from '../schema';
 export type UpdateCheckCountRow = typeof updateCheckCountTable.$inferSelect;
 const UpdateCheckCountRowParser = createSelectSchema(updateCheckCountTable);
 
-export default class DomainReviews {
+export default class UpdateCheckCounts {
 	public static async incrementForToday() {
-		DomainReviews.incrementForDate(new Date());
+		UpdateCheckCounts.incrementForDate(new Date());
 	}
 
 	public static async incrementForDate(date: Date) {
@@ -38,5 +38,9 @@ export default class DomainReviews {
 		} else {
 			return first.count;
 		}
+	}
+
+	public static async getAll(): Promise<UpdateCheckCountRow[]> {
+		return await db.select().from(updateCheckCountTable);
 	}
 }
