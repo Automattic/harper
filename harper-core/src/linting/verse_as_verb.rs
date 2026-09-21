@@ -79,7 +79,7 @@ impl Default for VerseComparison {
                     (kind.is_adjective() || kind.is_noun()) && !kind.is_proper_noun()
                 })
                 .t_ws()
-                .then_kind_where(|kind| kind.is_proper_noun()),
+                .then_proper_noun(),
         }
     }
 }
@@ -106,7 +106,7 @@ impl ExprLinter for VerseComparison {
                 "versus",
                 verse.get_ch(src),
             )],
-            message: "Use `versus` to compare the two competitors.".to_owned(),
+            message: "Use `versus` for matchups and comparisons.".to_owned(),
             priority: 31,
         })
     }
