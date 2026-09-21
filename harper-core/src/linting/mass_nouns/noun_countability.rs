@@ -200,28 +200,12 @@ fn followed_by_nominal_head(ctx: Option<(&[Token], &[Token])>, src: &[char]) -> 
         || follows_slash_separated_ing_modifiers_then_noun(after, src)
 }
 
-/// Whether the matched quantifier is the pronoun `one` followed by a participle.
-///
-/// Issue #3819 reports `the scaling of one affecting the other`. Here `one` is a
-/// pronoun standing for a thing, `of` takes it as its object, and `affecting the
-/// other` is a participial phrase modifying it. Nothing in that is a count
-/// quantifier before a mass noun, which is the only shape this rule targets.
-///
-/// Deliberately narrow, and worth saying why. Two wider rules were tried and
-/// both silence real errors:
-///
-/// * "a determiner after an `-ing` form means the form is verbal" is wrong,
-///   because the determiner may open a relative clause modifying the `-ing`
-///   word instead of an object. `Every training the company offers is mandatory`
-///   is a genuine error, and that rule hides it.
-/// * "`one` after `of` is a pronoun" is wrong, because `of one` also occurs with
-///   a real quantifier. `The cost of one advice` is a genuine error, and that
-///   rule hides it too.
-///
-/// Requiring both the `of` and the participle keeps the fix to the construction
-/// actually reported. A gerund can still head a noun phrase and take an object,
-/// as in `Some people do not like eating peas`, so this says nothing about
-/// `-ing` words in general; it only declines to read `one` as a count.
+/// Issue #3819: in `the scaling of one affecting the other`, `one` is a pronoun
+/// whose object is `of` and which a participle modifies, so it is not a count
+/// before a mass noun. Deliberately narrow, because the two wider rules hide
+/// real errors: `Every training the company offers is mandatory` and
+/// `The cost of one advice` are both genuine, and keying on the determiner
+/// alone or on `of` alone would silence them.
 fn is_pronoun_one_before_participle(
     toks: &[Token],
     src: &[char],
@@ -314,10 +298,7 @@ mod tests {
     use super::NounCountability;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
-    // Issue #3819. "affecting" is the participle of "affect" and carries mass
-    // noun metadata, so "one" before it matched. But "one" here is a pronoun,
-    // the object of "of", not a count, and the suggestion was "one piece of
-    // affecting".
+    // Issue #3819: the old suggestion was "one piece of affecting".
     #[test]
     fn dont_flag_pronoun_one_before_a_participle_issue_3819() {
         assert_no_lints(
@@ -326,9 +307,7 @@ mod tests {
         );
     }
 
-    // A gerund can head a noun phrase and still take an object, so an -ing word
-    // with an object says nothing on its own about whether it is nominal.
-    // Raised in review of #3889.
+    // Raised in review of #3889: a gerund can take an object and still be nominal.
     #[test]
     fn dont_flag_a_gerund_taking_an_object() {
         assert_no_lints(
@@ -337,9 +316,7 @@ mod tests {
         );
     }
 
-    // A determiner after an -ing mass noun may open a relative clause modifying
-    // it rather than an object of it. These are real errors and must survive the
-    // fix above.
+    // A determiner after an -ing mass noun may open a relative clause, not an object.
     #[test]
     fn still_flag_an_ing_mass_noun_followed_by_a_relative_clause() {
         assert_lint_count(
@@ -358,8 +335,7 @@ mod tests {
         );
     }
 
-    // `of one` also occurs with a genuine count quantifier, so the fix must not
-    // key on `of` alone.
+    // `of one` also occurs with a genuine count quantifier, so `of` alone is not enough.
     #[test]
     fn still_flag_of_one_before_a_plain_mass_noun() {
         assert_lint_count(
@@ -371,8 +347,7 @@ mod tests {
 
     #[test]
     fn still_flag_a_mass_noun_before_a_determiner() {
-        // The new guard keys on the -ing form, so a plain mass noun followed by
-        // a determiner must still be caught.
+        // The guard keys on the -ing form, so a plain mass noun is still caught.
         assert_lint_count(
             "He gave me one advice the other day.",
             NounCountability::default(),
