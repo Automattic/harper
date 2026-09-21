@@ -16,6 +16,7 @@ impl Integration {
             "com.apple.Notes",
             "com.tinyspeck.slackmacgap",
             "com.hnc.Discord",
+            "com.bloombuilt.dayone-mac",
         ];
 
         #[cfg(target_os = "windows")]

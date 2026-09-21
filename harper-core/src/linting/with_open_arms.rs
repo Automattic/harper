@@ -1,7 +1,7 @@
 use crate::{
     CharStringExt, Lint, Token, TokenStringExt,
     expr::{All, Expr, OwnedExprExt, SequenceExpr},
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     patterns::{InflectionOfBe, WordSet},
 };
 
@@ -14,18 +14,18 @@ impl Default for WithOpenArms {
         Self {
             expr: SequenceExpr::any_of([
                 Box::new(InflectionOfBe::default()) as Box<dyn Expr>,
-                Box::new(WordSet::new(&["get", "gets", "getting", "got", "gotten"])),
+                Box::new(WordSet::new(["get", "gets", "getting", "got", "gotten"])),
             ])
             .t_ws()
-            .t_set(&["greet", "greeted", "welcome", "welcomed"])
+            .t_set(["greet", "greeted", "welcome", "welcomed"])
             .t_ws()
             .t_aco("with")
             .t_ws()
-            .t_set(&["open", "opened"])
+            .t_set(["open", "opened"])
             .t_ws()
-            .t_set(&["arm", "arms"])
+            .t_set(["arm", "arms"])
             .but_not(
-                SequenceExpr::word_set(&["greeted", "welcomed"])
+                SequenceExpr::word_set(["greeted", "welcomed"])
                     .t_any()
                     .t_any()
                     .t_any()
@@ -40,13 +40,7 @@ impl Default for WithOpenArms {
 impl ExprLinter for WithOpenArms {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, ctx, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let [verb, ws_with_ws @ .., open, ws4, arms] = &toks[2..] else {
             return None;
         };

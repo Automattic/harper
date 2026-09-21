@@ -213,6 +213,7 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
             !is_short_preposition
                 && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
                 && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+                && !(chars.len() == 1 && chars[0] == 'x')
         }
         _ => true,
     }
@@ -668,6 +669,34 @@ mod tests {
                 &FstDictionary::curated()
             ),
             "# Meeting at 9:05am"
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_between_words() {
+        assert_eq!(
+            make_title_case_str(
+                "Project 1 x Project 2",
+                &PlainEnglish,
+                &FstDictionary::curated()
+            ),
+            "Project 1 x Project 2",
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_at_start_is_capitalized() {
+        assert_eq!(
+            make_title_case_str("x marks the spot", &PlainEnglish, &FstDictionary::curated()),
+            "X Marks the Spot",
+        );
+    }
+
+    #[test]
+    fn standalone_x_stays_lowercase_as_last_word_is_capitalized() {
+        assert_eq!(
+            make_title_case_str("project x", &PlainEnglish, &FstDictionary::curated()),
+            "Project X",
         );
     }
 }

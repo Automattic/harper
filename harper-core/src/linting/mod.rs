@@ -32,6 +32,7 @@ mod aspire_to;
 mod avoid_contractions;
 mod avoid_curses;
 mod back_in_the_day;
+mod bare_bones;
 mod barely_un;
 mod be_adjective_confusions;
 mod be_allowed;
@@ -52,6 +53,7 @@ mod catch_22;
 mod cautionary_tale;
 mod cease_to;
 mod change_tack;
+mod chicken_and_egg;
 mod chock_full;
 mod claim_to_fame;
 mod close_tight_knit;
@@ -71,6 +73,7 @@ mod currency_placement;
 mod damages;
 mod dashes;
 mod day_and_age;
+mod deny_offer;
 mod despite_it_is;
 mod despite_of;
 mod determiner_without_noun;
@@ -90,6 +93,7 @@ mod ever_every;
 mod ever_pronoun_rel_pronoun;
 mod everyday;
 mod except_of;
+mod expand_favourite;
 mod expand_memory_shorthands;
 mod expand_people;
 mod expand_time_shorthands;
@@ -109,6 +113,7 @@ mod flesh_out_vs_full_fledged;
 mod foot_inch_minute_second_symbols;
 mod for_free_of_charge;
 mod for_noun;
+mod for_same_reason;
 mod for_the_nth_time;
 mod free_predicate;
 mod friend_of_me;
@@ -211,6 +216,7 @@ mod of_course;
 mod off_limits;
 mod oldest_in_the_book;
 mod on_floor;
+mod on_the_fence;
 mod once_or_twice;
 mod one_and_the_same;
 mod one_of_the_singular;
@@ -230,6 +236,7 @@ mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
 mod pique_interest;
+mod pleaded_pled;
 mod plural_decades;
 mod plural_wrong_word_of_phrase;
 mod pooled_linter;
@@ -249,6 +256,7 @@ mod quote_spacing;
 mod reason_for_doing;
 mod redundant_acronyms;
 mod redundant_additive_adverbs;
+mod redundant_almost_nearly;
 mod redundant_firsts;
 mod redundant_progressive_comparative;
 mod redundant_self;
@@ -259,12 +267,14 @@ mod repeated_words;
 mod respond;
 mod right_click;
 mod rise_the_ranks;
+mod rogue_rouge;
 mod roller_skated;
 mod run_into_problems_or_trouble;
 mod safe_to_save;
 mod save_to_safe;
 mod sentence_capitalization;
 mod shoot_oneself_in_the_foot;
+mod show_case;
 mod simple_past_to_past_participle;
 mod since_duration;
 mod single_be;
@@ -279,10 +289,13 @@ mod spell_check;
 mod spelled_numbers;
 mod split_words;
 mod subject_pronoun;
+mod such_shame;
 mod suggestion;
+mod summary_summery;
 mod take_a_look_to;
 mod take_care_of;
 mod take_medicine;
+mod take_pride_in;
 mod take_serious;
 mod that_than;
 mod that_which;
@@ -323,6 +336,7 @@ mod very_less;
 mod very_unique;
 mod vice_versa;
 mod vicious_loop;
+mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
@@ -916,13 +930,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 }

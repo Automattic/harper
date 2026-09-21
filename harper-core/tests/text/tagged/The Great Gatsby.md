@@ -4931,7 +4931,7 @@
 >
 #
 > We   passed a   barrier of dark      trees   , and  then      the façade of Fifty - ninth    Street   , a
-# IPl+ VP/J   D/P NSg/VB  P  NSg/VB/J+ NPl/V3+ . VB/C NSg/J/R/C D   ?      P  NSg   . NSg/VB/J NSg/VB/J . D/P
+# IPl+ VP/J   D/P NSg/VB  P  NSg/VB/J+ NPl/V3+ . VB/C NSg/J/R/C D   NSg    P  NSg   . NSg/VB/J NSg/VB/J . D/P
 > block  of delicate pale      light      , beamed down        into the park    . Unlike     Gatsby and  Tom
 # NSg/VB P  NSg/J+   NSg/VB/J+ N🅪Sg/VB/J+ . VP/J   N🅪Sg/VB/J/P P    D   NPr/VB+ . NSg/VB/J/P NPr    VB/C NPr/VB+
 > Buchanan , I       had no       girl    whose disembodied face    floated along the dark     cornices

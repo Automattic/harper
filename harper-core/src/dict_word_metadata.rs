@@ -582,6 +582,28 @@ impl DictWordMetadata {
         }
     }
 
+    pub fn is_singular_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (Some(true), None | Some(false))
+            )
+        } else {
+            false
+        }
+    }
+
+    pub fn is_plural_noun_only(&self) -> bool {
+        if let Some(noun) = self.noun {
+            matches!(
+                (noun.is_singular, noun.is_plural),
+                (None | Some(false), Some(true))
+            )
+        } else {
+            false
+        }
+    }
+
     // Most mass nouns also have countable senses. Match those that are only mass nouns.
     pub fn is_mass_noun_only(&self) -> bool {
         if let Some(noun) = self.noun {
@@ -1972,6 +1994,36 @@ pub mod tests {
     #[test]
     fn equipment_isnt_countable_noun() {
         assert!(!md("equipment").is_countable_noun());
+    }
+
+    #[test]
+    fn infrastructure_is_mass_noun_only() {
+        assert!(md("infrastructure").is_mass_noun_only());
+    }
+
+    #[test]
+    fn beer_is_not_mass_noun_only() {
+        assert!(!md("beer").is_mass_noun_only());
+    }
+
+    #[test]
+    fn sheep_is_not_singular_only() {
+        assert!(!md("sheep").is_singular_noun_only());
+    }
+
+    #[test]
+    fn sheep_is_not_plural_only() {
+        assert!(!md("sheep").is_plural_noun_only());
+    }
+
+    #[test]
+    fn ox_is_singular_only() {
+        assert!(md("ox").is_singular_noun_only());
+    }
+
+    #[test]
+    fn oxen_is_plural_only() {
+        assert!(md("oxen").is_plural_noun_only());
     }
 
     mod verb {
