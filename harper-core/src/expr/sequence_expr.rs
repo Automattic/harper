@@ -705,7 +705,7 @@ impl SequenceExpr {
     ///
     /// [`Expr`] set before this point will be required for a match, but will not be captured in
     /// the result.
-    pub(crate) fn start_capture(mut self) -> Self {
+    pub fn start_capture(mut self) -> Self {
         self.capture_range.start = self.exprs.len();
         self
     }
@@ -714,7 +714,7 @@ impl SequenceExpr {
     ///
     /// [`Expr`] set after this point will be required for a match, but will not be captured in the
     /// result.
-    pub(crate) fn end_capture(mut self) -> Self {
+    pub fn end_capture(mut self) -> Self {
         self.capture_range.end = self.exprs.len();
         self
     }
