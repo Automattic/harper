@@ -1,5 +1,5 @@
 import { redirect } from '@sveltejs/kit';
-import { countOccurances } from '$lib/adminUtils';
+import { computeDurationFromSlug, countOccurances } from '$lib/adminUtils';
 import UninstallFeedback from '$lib/db/models/UninstallFeedback';
 
 export const load = async ({ params }) => {

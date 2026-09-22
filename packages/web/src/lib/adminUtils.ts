@@ -9,6 +9,8 @@ export function computeDurationFromSlug(slug: string): number | null {
 			return 24 * 60 * 60 * 1000 * 7;
 		case 'all':
 			return Date.now();
+		default:
+			return null;
 	}
 }
 
