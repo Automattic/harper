@@ -1,11 +1,14 @@
 <script lang="ts">
-import { Button, Input } from 'components';
-import CheckIcon from '$lib/components/icons/CheckIcon.svelte';
-import ChevronLeftIcon from '$lib/components/icons/ChevronLeftIcon.svelte';
-import EditIcon from '$lib/components/icons/EditIcon.svelte';
-import PlusIcon from '$lib/components/icons/PlusIcon.svelte';
-import TrashIcon from '$lib/components/icons/TrashIcon.svelte';
-import ChevronRightIcon from './icons/ChevronRightIcon.svelte';
+import {
+	Button,
+	CheckIcon,
+	ChevronLeftIcon,
+	ChevronRightIcon,
+	EditIcon,
+	Input,
+	PlusIcon,
+	TrashIcon,
+} from 'components';
 
 /** Whether to render the file explorer as a closed drawer or an open one. */
 export let drawerOpen = true;

@@ -38,7 +38,7 @@ impl ExprLinter for ThesesThese {
             span: theses_token.span,
             lint_kind: LintKind::Spelling,
             suggestions,
-            message: "Did you mean `these`?".to_string(),
+            message: "Did you mean `these`?".to_owned(),
             priority: 1,
         })
     }

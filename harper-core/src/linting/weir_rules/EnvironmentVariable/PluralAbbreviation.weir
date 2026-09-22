@@ -1,0 +1,8 @@
+expr main (environmental vars)
+
+let message "Did you mean `environment vars`?"
+let description "Ensures `environment vars` is used correctly instead of `environmental vars`."
+let kind "Usage"
+let becomes "environment vars"
+
+test "environmental vars are ignored if an experimental setting is set" "environment vars are ignored if an experimental setting is set"

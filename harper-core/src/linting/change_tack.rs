@@ -20,8 +20,9 @@ impl Default for ChangeTack {
                 Box::new(
                     SequenceExpr::longest_of(vec![
                         Box::new(SequenceExpr::word_set(verb_forms).then_optional(
-                            SequenceExpr::default().t_ws().then_any_of(vec![
-                                Box::new(SequenceExpr::default().then_possessive_determiner()),
+                            SequenceExpr::default().t_ws().then_any_of([
+                                Box::new(SequenceExpr::default().then_possessive_determiner())
+                                    as Box<dyn Expr>,
                                 Box::new(Word::new("it's")),
                             ]),
                         )),
@@ -30,7 +31,7 @@ impl Default for ChangeTack {
                     .t_ws()
                     .then_word_set(eggcorns),
                 ),
-                Box::new(SequenceExpr::aco("different").t_ws().t_aco("tact")),
+                Box::new(SequenceExpr::word_seq(&["different", "tact"])),
             ]),
         }
     }

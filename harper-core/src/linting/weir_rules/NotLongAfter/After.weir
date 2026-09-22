@@ -1,0 +1,9 @@
+expr main (not along after)
+
+let message "Did you mean `not long after`?"
+let description "Corrects `not along after` to `not long after`."
+let kind "Typo"
+let becomes "not long after"
+
+test "Not along after the incident, one Islamic militant group called the strike a \"jihadi operation\"" "Not long after the incident, one Islamic militant group called the strike a \"jihadi operation\""
+test "Not along after the final vote, a Wikipedia admin deleted the article." "Not long after the final vote, a Wikipedia admin deleted the article."

@@ -12,13 +12,11 @@ pub struct HopeYoure {
 
 impl Default for HopeYoure {
     fn default() -> Self {
-        let loc = WordSet::new(&["here", "there"]);
+        let loc = WordSet::new(["here", "there"]);
 
         let prep = SequenceExpr::default().t_ws().then_preposition();
 
-        let expr = SequenceExpr::aco("hope")
-            .t_ws()
-            .t_aco("your")
+        let expr = SequenceExpr::word_seq(&["hope", "your"])
             .t_ws()
             .then_adjective()
             .then_optional(prep)

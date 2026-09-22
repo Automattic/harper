@@ -15,7 +15,7 @@ pub struct OnFloor {
 
 impl Default for OnFloor {
     fn default() -> Self {
-        let preposition = WordSet::new(&["in", "at"]);
+        let preposition = WordSet::new(["in", "at"]);
 
         let on_the_floor = Lrc::new(
             SequenceExpr::with(preposition)
@@ -28,19 +28,19 @@ impl Default for OnFloor {
         );
 
         let look_up_phrase = Lrc::new(
-            SequenceExpr::word_set(&["look", "looking", "looks", "looked"])
+            SequenceExpr::word_set(["look", "looking", "looks", "looked"])
                 .t_ws()
                 .t_aco("up"),
         );
 
-        let stop = Lrc::new(WordSet::new(&["stop", "stopping", "stops", "stopped"]));
+        let stop = Lrc::new(WordSet::new(["stop", "stopping", "stops", "stopped"]));
         let exceptions = Lrc::new(LongestMatchOf::new(vec![
             Box::new(SequenceExpr::with(look_up_phrase.clone())),
             Box::new(SequenceExpr::with(stop.clone())),
         ]));
 
         let pattern = LongestMatchOf::new(vec![
-            Box::new(on_the_floor.clone()),
+            Box::new(on_the_floor.clone()) as Box<dyn Expr>,
             Box::new(
                 SequenceExpr::with(exceptions.clone())
                     .t_ws()
@@ -78,7 +78,7 @@ impl ExprLinter for OnFloor {
             message: format!(
                 "Corrects `{incorrect_preposition}` to `on` when talking about position inside a building",
             )
-            .to_string(),
+            .to_owned(),
             priority: 63,
         })
     }

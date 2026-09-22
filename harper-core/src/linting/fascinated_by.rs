@@ -38,7 +38,7 @@ impl ExprLinter for FascinatedBy {
                 Suggestion::replace_with_match_case_str("with", prep_chars),
             ],
             message: "The correct prepositions to use with `fascinated` are `by` or `with`."
-                .to_string(),
+                .to_owned(),
             ..Default::default()
         })
     }

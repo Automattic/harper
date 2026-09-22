@@ -13,7 +13,7 @@ pub struct AnotherThinkComing {
 impl Default for AnotherThinkComing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["had", "has", "have", "got"])
+            expr: SequenceExpr::word_set(["had", "has", "have", "got"])
                 .then_fixed_phrase(" another thing coming"),
         }
     }
@@ -34,7 +34,7 @@ impl ExprLinter for AnotherThinkComing {
                 "another think coming",
                 toks.span()?.get_content(src),
             )],
-            message: "Corrects `another thing coming` to `another think coming`".to_string(),
+            message: "Corrects `another thing coming` to `another think coming`".to_owned(),
             priority: 63,
         })
     }

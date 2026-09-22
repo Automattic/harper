@@ -33,8 +33,7 @@ impl ExprLinter for DeterminerWithoutNoun {
             span,
             lint_kind: LintKind::Miscellaneous,
             suggestions: Vec::<Suggestion>::new(),
-            message: "A determiner should not be immediately followed by a conjunction."
-                .to_string(),
+            message: "A determiner should not be immediately followed by a conjunction.".to_owned(),
             priority: 32,
         })
     }

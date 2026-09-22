@@ -1,8 +1,10 @@
-expr main (aslong as)
+expr main [(aslong as), (as long that)]
 
-let message "`As long` should be written as two words."
-let description "Corrects `aslong as` to `as long as`."
-let kind "BoundaryError"
+let message "`As long` is two words and the last word should be `as`."
+let description "Corrects `aslong as` and `as long that` to `as long as`."
+let kind "Usage"
 let becomes "as long as"
 
 test "server loads up fine but cant log on client side aslong as the plugin is installed" "server loads up fine but cant log on client side as long as the plugin is installed"
+test "Allow creation of assets with a replicas > current cluster size as long that there is quorum." "Allow creation of assets with a replicas > current cluster size as long as there is quorum."
+test "As long that it has the right symbols" "As long as it has the right symbols"

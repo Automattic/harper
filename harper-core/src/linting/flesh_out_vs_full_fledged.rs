@@ -11,8 +11,8 @@ pub struct FleshOutVsFullFledged {
 impl Default for FleshOutVsFullFledged {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::optional(SequenceExpr::word_set(&["full", "fully"]).t_ws_h())
-                .then_word_set(&[
+            expr: SequenceExpr::optional(SequenceExpr::word_set(["full", "fully"]).t_ws_h())
+                .then_word_set([
                     "fledge", "fledged", "fledged", "fledges", "fledging", "flesh", "fleshed",
                     "fleshed", "fleshes", "fleshing", "pledge", "pledged", "pledged", "pledges",
                     "pledging",
@@ -132,7 +132,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                             .collect(),
                         verb_and_sep_span.get_content(src),
                     )],
-                    message: "This idiom uses the word `fledged`.".to_string(),
+                    message: "This idiom uses the word `fledged`.".to_owned(),
                     ..Default::default()
                 })
             }
@@ -149,7 +149,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                     },
                     vtok_chars,
                 )],
-                message: "This idiom uses the word `flesh`.".to_string(),
+                message: "This idiom uses the word `flesh`.".to_owned(),
                 ..Default::default()
             }),
             // TODO: only with "fully" and not "full"?
@@ -168,7 +168,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                         vtok_chars,
                     ),
                 ],
-                message: "Perhaps you're confusing `fully fledged` and `fleshed out`?".to_string(),
+                message: "Perhaps you're confusing `fully fledged` and `fleshed out`?".to_owned(),
                 ..Default::default()
             }),
             _ => None,

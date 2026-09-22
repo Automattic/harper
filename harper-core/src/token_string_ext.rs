@@ -188,6 +188,15 @@ pub trait TokenStringExt: private::Sealed {
         Some(&slice[start_idx..end_idx_plus_one])
     }
 
+    // delegate to span
+    fn get_ch<'a>(&self, src: &'a [char]) -> Option<&'a [char]> {
+        self.span().map(|s| s.get_content(src))
+    }
+
+    fn get_str(&self, src: &[char]) -> Option<String> {
+        self.span().map(|s| s.get_content_string(src))
+    }
+
     fn iter_linking_verb_indices(&self) -> impl Iterator<Item = usize> + '_ {
         let tokens = self.tokens();
 
@@ -291,5 +300,30 @@ impl TokenStringExt for [Token] {
 
     fn tokens_mut(&mut self) -> &mut [Token] {
         self
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use crate::{Document, TokenStringExt};
+
+    fn chunk_strings(source: &str) -> Vec<String> {
+        let source_chars = source.chars().collect::<Vec<_>>();
+        let document = Document::new_markdown_default_curated(source);
+
+        document
+            .iter_chunks()
+            .map(|chunk| chunk.span().unwrap().get_content_string(&source_chars))
+            .collect()
+    }
+
+    #[test]
+    fn comma_separates_chunks() {
+        assert_eq!(chunk_strings("foo bar, baz"), vec!["foo bar,", " baz"]);
+    }
+
+    #[test]
+    fn semicolon_separates_chunks() {
+        assert_eq!(chunk_strings("foo bar; baz"), vec!["foo bar;", " baz"]);
     }
 }

@@ -1,6 +1,5 @@
 /// <reference types="vitest" />
 import { playwright } from '@vitest/browser-playwright';
-import { resolve } from 'path';
 import { defineConfig, type Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
 import apiExtractorConfig from './api-extractor.json';

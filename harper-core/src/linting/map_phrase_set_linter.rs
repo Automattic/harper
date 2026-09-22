@@ -23,15 +23,12 @@ impl<'a> MapPhraseSetLinter<'a> {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let expr = LongestMatchOf::new(
-            wrong_forms_to_correct_forms
-                .iter()
-                .map(|(wrong_form, _correct_form)| {
-                    let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(wrong_form));
-                    expr
-                })
-                .collect(),
-        );
+        let expr = LongestMatchOf::new(wrong_forms_to_correct_forms.iter().map(
+            |(wrong_form, _correct_form)| {
+                let expr: Box<dyn Expr> = Box::new(FixedPhrase::from_phrase(wrong_form));
+                expr
+            },
+        ));
 
         Self {
             description: description.to_string(),
@@ -49,7 +46,7 @@ impl<'a> MapPhraseSetLinter<'a> {
         description: impl ToString,
         lint_kind: Option<LintKind>,
     ) -> Self {
-        let mut lmo = LongestMatchOf::new(Vec::new());
+        let mut lmo = LongestMatchOf::new(Vec::<Box<dyn Expr>>::new());
         for (wrong_forms, _correct_forms) in multi_wrong_forms_to_multi_correct_forms {
             for wrong_form in wrong_forms.iter() {
                 lmo.add(FixedPhrase::from_phrase(wrong_form));
@@ -116,7 +113,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             span,
             lint_kind: self.lint_kind,
             suggestions,
-            message: self.message.to_string(),
+            message: self.message.to_owned(),
             priority: 31,
         })
     }

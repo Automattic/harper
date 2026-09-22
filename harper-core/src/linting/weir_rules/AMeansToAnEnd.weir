@@ -1,0 +1,9 @@
+expr main (a mean to an end)
+
+let message "The correct idiom is `a means to an end`."
+let description "Corrects `a mean to an end` to `a means to an end`"
+let kind "Usage"
+let becomes "a means to an end"
+
+test "coding, programming, anything really is a mean to an end, to get money" "coding, programming, anything really is a means to an end, to get money"
+test "It's a mean to an end, not the end itself." "It's a means to an end, not the end itself."

@@ -1,0 +1,9 @@
+expr main (as compare to)
+
+let message "Did you mean `as compared to`?"
+let description "Corrects `as compare to` to `as compared to`."
+let kind "Usage"
+let becomes "as compared to"
+
+test "Latency in the live media as compare to Shaka Player" "Latency in the live media as compared to Shaka Player"
+test "facet_nested have a different behaviour as compare to facet_grid when combining character and numeric" "facet_nested have a different behaviour as compared to facet_grid when combining character and numeric"

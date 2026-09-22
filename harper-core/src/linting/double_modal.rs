@@ -39,7 +39,7 @@ impl ExprLinter for DoubleModal {
                 Suggestion::ReplaceWith(first_chars.into()),
                 Suggestion::ReplaceWith(second_chars.into()),
             ],
-            message: "Two modal verbs in a row are rarely grammatical; remove one.".to_string(),
+            message: "Two modal verbs in a row are rarely grammatical; remove one.".to_owned(),
             priority: 31,
         })
     }

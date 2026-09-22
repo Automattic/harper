@@ -12,7 +12,18 @@ use super::Expr;
 /// Matches possessive forms (which are also common misspellings for the plurals).
 /// Matches abbreviations.
 #[derive(Default)]
-pub struct TimeUnitExpr;
+pub struct TimeUnitExpr {
+    include_plurals_only: bool,
+}
+
+impl TimeUnitExpr {
+    /// Creates a TimeUnitExpr that only matches plural time units
+    pub fn plurals_only() -> Self {
+        Self {
+            include_plurals_only: true,
+        }
+    }
+}
 
 impl Expr for TimeUnitExpr {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
@@ -20,7 +31,7 @@ impl Expr for TimeUnitExpr {
             return None;
         }
 
-        let units_definite_singular = WordSet::new(&[
+        let units_definite_singular = WordSet::new([
             "microsecond",
             "millisecond",
             "second",
@@ -33,7 +44,7 @@ impl Expr for TimeUnitExpr {
             "decade",
         ]);
 
-        let units_definite_plural = WordSet::new(&[
+        let units_definite_plural = WordSet::new([
             "microseconds",
             "milliseconds",
             "seconds",
@@ -46,7 +57,7 @@ impl Expr for TimeUnitExpr {
             "decades",
         ]);
 
-        let units_definite_apos = WordSet::new(&[
+        let units_definite_apos = WordSet::new([
             "microsecond's",
             "millisecond's",
             "second's",
@@ -60,21 +71,28 @@ impl Expr for TimeUnitExpr {
         ]);
 
         // ms
-        let units_definite_abbrev = WordSet::new(&["ms"]);
+        let units_definite_abbrev = WordSet::new(["ms"]);
 
-        let units_other_singular = WordSet::new(&["moment", "night", "weekend"]);
-        let units_other_plural = WordSet::new(&["moments", "nights", "weekends"]);
-        let units_other_apos = WordSet::new(&["moment's", "night's", "weekend's"]);
+        let units_other_singular = WordSet::new(["moment", "night", "weekend"]);
+        let units_other_plural = WordSet::new(["moments", "nights", "weekends"]);
+        let units_other_apos = WordSet::new(["moment's", "night's", "weekend's"]);
 
-        let units = LongestMatchOf::new(vec![
-            Box::new(units_definite_singular),
-            Box::new(units_definite_plural),
-            Box::new(units_other_singular),
-            Box::new(units_other_plural),
-            Box::new(units_definite_abbrev),
-            Box::new(units_definite_apos),
-            Box::new(units_other_apos),
-        ]);
+        let units = if self.include_plurals_only {
+            LongestMatchOf::new([
+                Box::new(units_definite_plural) as Box<dyn Expr>,
+                Box::new(units_other_plural),
+            ])
+        } else {
+            LongestMatchOf::new([
+                Box::new(units_definite_singular) as Box<dyn Expr>,
+                Box::new(units_definite_plural),
+                Box::new(units_other_singular),
+                Box::new(units_other_plural),
+                Box::new(units_definite_abbrev),
+                Box::new(units_definite_apos),
+                Box::new(units_other_apos),
+            ])
+        };
 
         units.run(cursor, tokens, source)
     }

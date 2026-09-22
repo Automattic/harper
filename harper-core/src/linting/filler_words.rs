@@ -13,7 +13,7 @@ pub struct FillerWords {
 impl Default for FillerWords {
     // A filler is unlikely to be completely on its own, so check for and remove with whitespace either before or after.
     fn default() -> Self {
-        let filler_words = Lrc::new(WordSet::new(&["uh", "um"]));
+        let filler_words = Lrc::new(WordSet::new(["uh", "um"]));
 
         let pattern = SequenceExpr::any_of(vec![
             Box::new(SequenceExpr::with(filler_words.clone()).then_whitespace()),
@@ -37,7 +37,7 @@ impl ExprLinter for FillerWords {
             span: toks.span()?,
             lint_kind: LintKind::Miscellaneous,
             suggestions: vec![Suggestion::Remove],
-            message: "Remove this unnecessary filler word.".to_string(),
+            message: "Remove this unnecessary filler word.".to_owned(),
             priority: 31,
         })
     }

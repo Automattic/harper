@@ -24,29 +24,29 @@ pub struct ViciousCircleOrCycle {
 // The Expr must have all three tokens because they should only be flagged when used together.
 // But we don't want to flag the legitimate combinations, and which those are depends on the user's preferences.
 fn build_expr(flag: Prefer) -> Box<dyn Expr> {
-    let seq = SequenceExpr::word_set(&["vicious", "virtuous", "viscous"])
+    let seq = SequenceExpr::word_set(["vicious", "virtuous", "viscous"])
         .t_ws()
-        .then_word_set(&["circle", "circles", "cycle", "cycles"]);
+        .then_word_set(["circle", "circles", "cycle", "cycles"]);
 
     match flag {
         Prefer::Circle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
-                    .then_word_set(&["circle", "circles"]),
+                    .then_word_set(["circle", "circles"]),
             ),
         ),
         Prefer::Cycle => Box::new(
-            seq.and_not(
+            seq.but_not(
                 SequenceExpr::default()
                     .then_word_except(&["viscous"])
                     .t_ws()
-                    .then_word_set(&["cycle", "cycles"]),
+                    .then_word_set(["cycle", "cycles"]),
             ),
         ),
         Prefer::DontCare => {
-            Box::new(seq.and_not(SequenceExpr::default().then_word_except(&["viscous"])))
+            Box::new(seq.but_not(SequenceExpr::default().then_word_except(&["viscous"])))
         }
     }
 }
@@ -87,9 +87,9 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
                 nountok.get_ch(src),
             )],
             message: if pref == Prefer::Circle {
-                "This idiom originally used `circle`, not `cycle`".to_string()
+                "This idiom originally used `circle`, not `cycle`".to_owned()
             } else {
-                "Though this idiom originally used `circle`, `cycle` is preferred.".to_string()
+                "Though this idiom originally used `circle`, `cycle` is preferred.".to_owned()
             },
             ..Default::default()
         });
@@ -139,7 +139,7 @@ fn to_lint(toks: &[Token], src: &[char], pref: Prefer) -> Option<Lint> {
             )],
             message:
                 "The idiom uses the word `vicious`, not `viscous`, which describes thick liquids."
-                    .to_string(),
+                    .to_owned(),
             ..Default::default()
         });
     }

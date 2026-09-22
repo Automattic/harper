@@ -23,9 +23,10 @@ impl Matcher {
 
             match c {
                 '[' => {
-                    let close_idx = source[idx..]
-                        .find(']')
-                        .ok_or(Error::UnmatchedBracket { index: idx })?;
+                    let close_idx = idx
+                        + source[idx..]
+                            .find(']')
+                            .ok_or(Error::UnmatchedBracket { index: idx })?;
 
                     let bracket_contents = &source[idx + 1..close_idx];
 
@@ -145,6 +146,20 @@ mod tests {
     }
 
     #[test]
+    fn parses_multi_brackets() {
+        let matcher = Matcher::parse("u[xy]a[^z]").unwrap();
+        assert_eq!(
+            matcher.operators,
+            vec![
+                Operator::Literal('u'),
+                Operator::MatchOne(vec!['x', 'y']),
+                Operator::Literal('a'),
+                Operator::MatchNone(vec!['z']),
+            ]
+        );
+    }
+
+    #[test]
     fn matches_vowels() {
         let matcher = Matcher::parse("[aeiou]").unwrap();
 
@@ -156,10 +171,27 @@ mod tests {
     }
 
     #[test]
+    fn matches_multiple_bracket_vowels() {
+        let matcher = Matcher::parse("u[xy]a[^z]").unwrap();
+
+        assert!(matcher.matches(&['u', 'x', 'a', 'q']));
+        assert!(matcher.matches(&['u', 'y', 'a', 'y']));
+        assert!(!matcher.matches(&['u', 'e', 'a', 'e']));
+        assert!(!matcher.matches(&['u', 'x', 'a', 'z']));
+    }
+
+    #[test]
     fn round_trip() {
         let source = "[^aeiou]a.s";
         let matcher = Matcher::parse(source).unwrap();
 
+        assert_eq!(matcher.to_string(), source);
+    }
+
+    #[test]
+    fn round_trip_multiple_brackets() {
+        let source = "über[^e]gegen[^eü]";
+        let matcher = Matcher::parse(source).unwrap();
         assert_eq!(matcher.to_string(), source);
     }
 }

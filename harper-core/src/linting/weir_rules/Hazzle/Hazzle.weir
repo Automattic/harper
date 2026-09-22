@@ -1,0 +1,10 @@
+
+expr main hazzle
+
+let message "Did you mean `hassle`?"
+let description "Corrects `hazzle` to `hassle`."
+let kind "Spelling"
+let becomes "hassle"
+
+test "Also, it is a hazzle that these 3 pics remain in the burst folder" "Also, it is a hassle that these 3 pics remain in the burst folder"
+test "A bare minimum set of tools to get your Transformice script started hazzle-free." "A bare minimum set of tools to get your Transformice script started hassle-free."

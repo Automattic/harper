@@ -1,0 +1,9 @@
+expr main (into a different direction)
+
+let message "Did you mean `in a different direction`?"
+let description "Detects the incorrect use of the preposition `into` when describing a change in path, strategy, or orientation. A direction is abstract, requiring `in` rather than `into`."
+let kind "Typo"
+let becomes "in a different direction"
+
+test "while humans need to redirect the momentum into a different direction by steering the movement vector" "while humans need to redirect the momentum in a different direction by steering the movement vector"
+test "Right now, although I look into a different direction, I am following the previous path while moving (going forward or backward)." "Right now, although I look in a different direction, I am following the previous path while moving (going forward or backward)."

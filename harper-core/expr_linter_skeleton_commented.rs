@@ -91,7 +91,7 @@ impl ExprLinter for ExprLinterSkeleton {
         // EDIT   your message should allow for both possibilities.
         // EDIT Likewise, if two or more suggestions are very different, as happens with
         // EDIT   confusable words, it's a good idea to guide the user with concise definitions.
-        let message = "Fix this erorr".to_string();
+        let message = "Fix this erorr".to_owned();
 
         // EDIT You can return different `Lint`s from different places in your logic.
         Some(Lint {

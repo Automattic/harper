@@ -1,0 +1,9 @@
+expr main hazzled
+
+let message "Did you mean `hassled`?"
+let description "Corrects `hazzled` to `hassled`."
+let kind "Spelling"
+let becomes "hassled"
+
+test "I've hazzled with syncthing before and i'd use that solution on my portable folders too." "I've hassled with syncthing before and i'd use that solution on my portable folders too."
+test "This lift and shift approach ensures, the developers and the end user community do not get hazzled by new ways of doing things." "This lift and shift approach ensures, the developers and the end user community do not get hassled by new ways of doing things."

@@ -2,7 +2,6 @@ use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{AnchorEnd, AnchorStart, Expr, SequenceExpr},
-    patterns::WhitespacePattern,
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -25,18 +24,18 @@ impl Default for ToTooPronounEnd {
                         |_| false,
                         &["`", "\"", "'", "“", "”", "‘", "’"],
                     )
-                    .then_optional(WhitespacePattern),
+                    .then_optional_whitespace(),
             ),
         ])
         .then_pronoun()
         .t_ws()
         .t_aco("to")
-        .then_any_of(vec![
+        .then_any_of([
             Box::new(SequenceExpr::default().then_kind_is_but_is_not_except(
                 TokenKind::is_punctuation,
                 |_| false,
                 &["`", "\"", "'", "“", "”", "‘", "’"],
-            )),
+            )) as Box<dyn Expr>,
             Box::new(AnchorEnd),
         ]);
 
@@ -65,7 +64,7 @@ impl ExprLinter for ToTooPronounEnd {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

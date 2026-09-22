@@ -11,8 +11,8 @@ pub struct MostOfTheTimes {
 impl Default for MostOfTheTimes {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_of(vec![
-                Box::new(FixedPhrase::from_phrase("a lot")),
+            expr: SequenceExpr::any_of([
+                Box::new(FixedPhrase::from_phrase("a lot")) as Box<dyn Expr>,
                 Box::new(Word::new("most")),
             ])
             .t_ws()
@@ -37,7 +37,7 @@ impl ExprLinter for MostOfTheTimes {
                 "time".chars().collect(),
                 span.get_content(src),
             )],
-            message: "Singular `time` is usually the correct form in this context.".to_string(),
+            message: "Singular `time` is usually the correct form in this context.".to_owned(),
             priority: 32,
         })
     }

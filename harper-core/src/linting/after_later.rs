@@ -14,7 +14,7 @@ impl Default for AfterLater {
             expr: SequenceExpr::aco("after")
                 .t_ws()
                 .then_optional(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "about",
                         "almost",
                         "approximately",
@@ -55,7 +55,7 @@ impl ExprLinter for AfterLater {
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::Redundancy,
-            message: "Don't use `later` following `after [a period of time]`".to_string(),
+            message: "Don't use `later` following `after [a period of time]`".to_owned(),
             suggestions: vec![
                 Suggestion::replace_with_match_case(without_after, template_chars),
                 Suggestion::replace_with_match_case(without_later, template_chars),

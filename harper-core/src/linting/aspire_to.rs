@@ -14,7 +14,7 @@ pub struct AspireTo {
 impl Default for AspireTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["aspire", "aspired", "aspires", "aspiring"])
+            expr: SequenceExpr::word_set(["aspire", "aspired", "aspires", "aspiring"])
                 .t_ws()
                 .t_aco("for"),
         }
@@ -74,7 +74,7 @@ impl ExprLinter for AspireTo {
                 "to",
                 prep_s.get_content(src),
             )],
-            message: "Use `aspire to` instead of `aspire for`.".to_string(),
+            message: "Use `aspire to` instead of `aspire for`.".to_owned(),
             ..Default::default()
         })
     }

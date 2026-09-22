@@ -42,7 +42,6 @@ impl ExprLinter for PluralDecades {
         src: &[char],
         ctx: Option<(&[Token], &[Token])>,
     ) -> Option<Lint> {
-        // eprintln!("📅 {}", crate::linting::debug::format_lint_match(toks, ctx, src));
         if toks.len() != 3 {
             return None;
         }

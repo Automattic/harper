@@ -1,0 +1,9 @@
+expr main hazzles
+
+let message "Did you mean `hassles`?"
+let description "Corrects `hazzles` to `hassles`."
+let kind "Spelling"
+let becomes "hassles"
+
+test "No more hazzles with configuration files." "No more hassles with configuration files."
+test "For your logistics and delivery hazzles ." "For your logistics and delivery hassles ."

@@ -10,11 +10,11 @@ pub struct WishCould {
 impl Default for WishCould {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["wish", "wished", "wishes", "wishing"])
+            expr: SequenceExpr::word_set(["wish", "wished", "wishes", "wishing"])
                 .t_ws()
                 .then_any_of(vec![
                     Box::new(SequenceExpr::default().then_subject_pronoun()),
-                    Box::new(SequenceExpr::word_set(&[
+                    Box::new(SequenceExpr::word_set([
                         // Elective existential indefinite pronouns
                         "anybody",
                         "anyone",
@@ -58,7 +58,7 @@ impl ExprLinter for WishCould {
                 "could",
                 can_span.get_content(src),
             )],
-            message: "Use 'could' instead of 'can' after 'wish'.".to_string(),
+            message: "Use 'could' instead of 'can' after 'wish'.".to_owned(),
             ..Default::default()
         })
     }

@@ -98,7 +98,7 @@ impl ExprLinter for TakeMedicine {
             lint_kind: LintKind::Usage,
             suggestions,
             message: "Use a verb like `take` or `swallow` with medicine instead of `eat`."
-                .to_string(),
+                .to_owned(),
             priority: 63,
         })
     }

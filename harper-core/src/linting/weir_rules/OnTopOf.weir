@@ -1,4 +1,4 @@
-expr main [(ontop of), (in top of)]
+expr main [(ontop of), (in top of), (on top off), (ontop off), (on topof)]
 
 let message "Did you mean `on top of`?"
 let description "Corrects `ontop of` and `in top of` to `on top of`."
@@ -7,3 +7,6 @@ let becomes "on top of"
 
 test "Initcpio hooks for overlayfs ontop of root." "Initcpio hooks for overlayfs on top of root."
 test "This project is a proof of concept to enable all the awesome features of BrowserSync in top of a Play Framework server." "This project is a proof of concept to enable all the awesome features of BrowserSync on top of a Play Framework server."
+test "Add z-index on notification to be on top off user name" "Add z-index on notification to be on top of user name"
+test "your changes should go ontop off the new master" "your changes should go on top of the new master"
+test "... to make it easier for developers to build reactive components on topof" "... to make it easier for developers to build reactive components on top of"

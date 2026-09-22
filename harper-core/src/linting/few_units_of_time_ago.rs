@@ -13,7 +13,7 @@ pub struct FewUnitsOfTimeAgo {
 
 impl Default for FewUnitsOfTimeAgo {
     fn default() -> Self {
-        let units = TimeUnitExpr;
+        let units = TimeUnitExpr::default();
 
         let start = SequenceExpr::default().then_word_except(&["a"]).t_ws();
 
@@ -50,7 +50,7 @@ impl ExprLinter for FewUnitsOfTimeAgo {
         Some(Lint {
             span: span.unwrap(),
             message: "In this construction you need to use `a few` instead of just `few`."
-                .to_string(),
+                .to_owned(),
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "a few",
                 span.unwrap().get_content(src),

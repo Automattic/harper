@@ -130,4 +130,13 @@ mod tests {
         assert_lint_count("Leaving S and K alone.", MergeWords::default(), 0);
         assert_lint_count("Similarly an S with a line.", MergeWords::default(), 0);
     }
+
+    #[test]
+    fn checks_weirdly() {
+        assert_suggestion_result(
+            "This is wrapped around the line weirdl y.",
+            MergeWords::default(),
+            "This is wrapped around the line weirdly.",
+        );
+    }
 }

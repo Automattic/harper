@@ -175,7 +175,7 @@ impl ExprLinter for Touristic {
                 .into_iter()
                 .map(|s| Suggestion::replace_with_match_case_str(s, span.get_content(src)))
                 .collect(),
-            message: "The word `touristic` is rarely used by native speakers.".to_string(),
+            message: "The word `touristic` is rarely used by native speakers.".to_owned(),
             priority: 31,
         })
     }

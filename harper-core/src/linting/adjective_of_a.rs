@@ -146,7 +146,7 @@ impl Linter for AdjectiveOfA {
                 span: Span::new(adjective.span.start, a_or_an.span.end),
                 lint_kind: LintKind::Style,
                 suggestions,
-                message: "The word `of` is not needed here.".to_string(),
+                message: "The word `of` is not needed here.".to_owned(),
                 priority: 63,
             });
         }

@@ -12,7 +12,7 @@ impl Default for AllowTo {
     fn default() -> Self {
         Self {
             // Note: Does not include "allowed to", which is a legitimate usage in its own right.
-            exp: SequenceExpr::word_set(&["allow", "allowing", "allows"])
+            exp: SequenceExpr::word_set(["allow", "allowing", "allows"])
                 .t_ws()
                 .t_aco("to")
                 .then_optional(SequenceExpr::default().t_ws().then_adverb())

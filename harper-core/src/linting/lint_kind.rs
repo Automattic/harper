@@ -52,6 +52,9 @@ pub enum LintKind {
     Usage,
     /// For choosing between different words or phrases in a given context
     WordChoice,
+    /// For errors where words are in an unnatural sequence or incorrect syntactic position
+    /// (e.g., "no longer I" vs. "I no longer")
+    WordOrder,
 }
 
 impl LintKind {
@@ -105,6 +108,7 @@ impl LintKind {
             LintKind::Typo => "Typo",
             LintKind::Usage => "Usage",
             LintKind::WordChoice => "WordChoice",
+            LintKind::WordOrder => "WordOrder",
         }
         .to_owned()
     }
@@ -133,6 +137,7 @@ impl Display for LintKind {
             LintKind::Typo => "Typo",
             LintKind::Usage => "Usage",
             LintKind::WordChoice => "Word Choice",
+            LintKind::WordOrder => "Word Order",
         };
 
         write!(f, "{s}")

@@ -14,23 +14,24 @@ impl Oxymorons {
     pub fn new() -> Self {
         // List of phrases that are considered oxymoronic.
         let phrases = vec![
-            "amateur expert",
-            "increasingly less",
-            "advancing backwards?",
+            "advancing backwards",
             "alludes explicitly to",
-            "explicitly alludes to",
-            "totally obsolescent",
-            "completely obsolescent",
-            "generally always",
-            "usually always",
+            "amateur expert",
             "build down",
+            "completely obsolescent",
             "conspicuous absence",
             "exact estimate",
+            "explicitly alludes to",
             "found missing",
+            "generally always",
+            "increasingly less",
             "intense apathy",
             "mandatory choice",
             "nonworking mother",
             "organized mess",
+            "standard Option",
+            "totally obsolescent",
+            "usually always",
         ];
 
         // Build a vector of exact-match patterns for each oxymoron.
@@ -141,6 +142,15 @@ mod tests {
     fn phrase_split_by_line_break() {
         assert_lint_count(
             "nonworking\nmother is not a term to be used.",
+            Oxymorons::new(),
+            1,
+        );
+    }
+
+    #[test]
+    fn detects_standard_option() {
+        assert_lint_count(
+            "and that probably correlates with CD players becoming a standard option in cars",
             Oxymorons::new(),
             1,
         );

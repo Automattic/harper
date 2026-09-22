@@ -14,7 +14,7 @@ pub struct ReasonForDoing {
 impl Default for ReasonForDoing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["reason", "reasons"])
+            expr: SequenceExpr::word_set(["reason", "reasons"])
                 .t_ws()
                 .t_aco("of")
                 .t_ws()
@@ -66,7 +66,7 @@ impl ExprLinter for ReasonForDoing {
                 "for",
                 ofspan.get_content(src),
             )],
-            message: "Use 'for' instead of 'of' with 'reason' and progressive verbs.".to_string(),
+            message: "Use 'for' instead of 'of' with 'reason' and progressive verbs.".to_owned(),
             ..Default::default()
         })
     }

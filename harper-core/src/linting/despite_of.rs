@@ -37,7 +37,7 @@ impl ExprLinter for DespiteOf {
                 Suggestion::replace_with_match_case_str("despite", matched),
                 Suggestion::replace_with_match_case_str("in spite of", matched)
             ],
-            message: "The phrase “despite of” is incorrect. Please use either “despite” or “in spite of” instead.".to_string(),
+            message: "The phrase “despite of” is incorrect. Please use either “despite” or “in spite of” instead.".to_owned(),
             priority: 126,
         })
     }

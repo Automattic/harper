@@ -72,7 +72,7 @@ impl ExprLinter for OughtToBe {
                 original,
             )],
             message: "Did you mean `ought to be` (expressing expectation or obligation)?"
-                .to_string(),
+                .to_owned(),
             priority: 31,
         })
     }

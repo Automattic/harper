@@ -1,0 +1,10 @@
+expr main <([(at lest)]), lest>
+
+let message "Use the standard phrase with `least` here."
+let description "Fixes the mistake `at lest` when the intended expression is `at least`."
+let kind "Usage"
+let becomes "least"
+let strategy "MatchCase"
+
+test "Import of the unedited (at lest not intentional) original cvs repo of vtun.sourceforge.net." "Import of the unedited (at least not intentional) original cvs repo of vtun.sourceforge.net."
+test "if at lest 1 of the packages matching our filter have the script, carry on." "if at least 1 of the packages matching our filter have the script, carry on."

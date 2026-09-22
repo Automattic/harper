@@ -13,7 +13,7 @@ pub struct FirstAidKit {
 
 impl Default for FirstAidKit {
     fn default() -> Self {
-        let supply_words = WordSet::new(&["aid", "starter", "travel", "tool"]);
+        let supply_words = WordSet::new(["aid", "starter", "travel", "tool"]);
         let pattern = SequenceExpr::with(supply_words)
             .then_whitespace()
             .then_any_capitalization_of("kid");
@@ -39,7 +39,7 @@ impl ExprLinter for FirstAidKit {
                 "kit".chars().collect(),
                 typo_text,
             )],
-            message: "Did you mean `kit` (a set of items) instead of “kid”?".to_string(),
+            message: "Did you mean `kit` (a set of items) instead of “kid”?".to_owned(),
             priority: 31,
         })
     }

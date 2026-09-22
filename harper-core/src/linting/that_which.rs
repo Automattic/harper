@@ -17,11 +17,7 @@ impl Default for ThatWhich {
     fn default() -> Self {
         let mut pattern = WordExprGroup::default();
 
-        let matching_pattern = Lrc::new(
-            SequenceExpr::any_capitalization_of("that")
-                .then_whitespace()
-                .then_any_capitalization_of("that"),
-        );
+        let matching_pattern = Lrc::new(SequenceExpr::word_seq(&["that", "that"]));
 
         pattern.add("that", matching_pattern.clone());
         pattern.add("That", matching_pattern);
@@ -53,7 +49,7 @@ impl ExprLinter for ThatWhich {
             span: matched_tokens.span()?,
             lint_kind: LintKind::Repetition,
             suggestions: vec![Suggestion::ReplaceWith(suggestion)],
-            message: "“that that” sometimes means “that which”, which is clearer.".to_string(),
+            message: "“that that” sometimes means “that which”, which is clearer.".to_owned(),
             priority: 126,
         })
     }

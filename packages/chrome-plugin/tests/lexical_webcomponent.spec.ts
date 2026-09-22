@@ -14,6 +14,7 @@ test.describe('Lexical webcomponent regression', () => {
 		'Firefox extension build lacks background scripts',
 	);
 	test('Applying a suggestion does not duplicate text', async ({ page }) => {
+		test.slow();
 		await page.goto(TEST_PAGE_URL);
 
 		const lexical = getLexicalEditor(page);
@@ -25,7 +26,7 @@ test.describe('Lexical webcomponent regression', () => {
 		await expect(mirror).toHaveText(initialText);
 
 		await clickHarperHighlight(page);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await page.waitForTimeout(3000);
 		const afterFirst = 'This is a test. This is an test again.';
@@ -34,7 +35,7 @@ test.describe('Lexical webcomponent regression', () => {
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 
 		await clickHarperHighlight(page);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await page.waitForTimeout(3000);
 		const finalText = 'This is a test. This is a test again.';

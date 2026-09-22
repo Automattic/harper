@@ -1,8 +1,10 @@
+use harper_brill::UPOS;
+
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
     expr::{Expr, SequenceExpr},
-    patterns::{SingleTokenPattern, WhitespacePattern, prepositional_preceder},
+    patterns::{SingleTokenPattern, prepositional_preceder},
 };
 
 use super::{ExprLinter, Lint, LintKind, Suggestion};
@@ -22,7 +24,7 @@ impl Default for ToTooAdjectivePunct {
                 TokenKind::is_verb,
                 &["standard", "only"],
             )
-            .then_optional(WhitespacePattern)
+            .then_optional_whitespace()
             .then_sentence_terminator();
 
         Self {
@@ -51,7 +53,10 @@ impl ExprLinter for ToTooAdjectivePunct {
             return None;
         }
         let adjective = &tokens[idx];
-        if !adjective.kind.is_adjective() || !adjective.kind.is_positive_adjective() {
+        if !adjective.kind.is_adjective()
+            || !adjective.kind.is_positive_adjective()
+            || !adjective.kind.is_upos(UPOS::ADJ)
+        {
             return None;
         }
         if adjective.kind.is_preposition() {
@@ -74,7 +79,7 @@ impl ExprLinter for ToTooAdjectivePunct {
                 "too",
                 to_tok.get_ch(source),
             )],
-            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_string(),
+            message: "Use `too` here to mean ‘also’ or an excessive degree.".to_owned(),
             ..Default::default()
         })
     }

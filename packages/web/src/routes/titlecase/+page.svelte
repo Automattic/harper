@@ -73,7 +73,7 @@ $: if (linter) {
 			<article class="mb-8">
 				<Textarea
 					bind:value={text}
-					rows="1"
+					rows={1}
 					class="heading-textarea w-full font-serif text-2xl md:text-3xl font-bold border-none focus:ring-2 focus:ring-blue-200 bg-transparent p-0 resize-none overflow-hidden"
 					id="titleCaseInputField"
 				/>

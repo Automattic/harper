@@ -68,7 +68,9 @@ impl TokenKind {
         is_possessive_nominal,
         is_non_plural_nominal,
         is_singular_noun,
+        is_singular_noun_only,
         is_plural_noun,
+        is_plural_noun_only,
         is_non_plural_noun,
         is_non_possessive_noun,
         is_countable_noun,
@@ -99,8 +101,11 @@ impl TokenKind {
         is_linking_verb,
         is_verb_lemma,
         is_verb_past_form,
+        is_verb_regular_past_form,
         is_verb_simple_past_form,
         is_verb_past_participle_form,
+        is_verb_simple_past_only,
+        is_verb_past_participle_only,
         is_verb_progressive_form,
         is_verb_third_person_singular_present_form,
 
@@ -129,6 +134,7 @@ impl TokenKind {
 
         // Generic word methods
         is_swear,
+        is_abbreviation,
         is_likely_homograph,
 
         // Orthography methods
@@ -289,6 +295,26 @@ impl TokenKind {
         matches!(self, TokenKind::Punctuation(Punctuation::Percent))
     }
 
+    pub fn is_degree(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Degree))
+    }
+
+    pub fn is_open_single(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::OpenSingle))
+    }
+
+    pub fn is_single_prime(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::SinglePrime))
+    }
+
+    pub fn is_double_prime(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::DoublePrime))
+    }
+
+    pub fn is_backtick(&self) -> bool {
+        matches!(self, TokenKind::Punctuation(Punctuation::Backtick))
+    }
+
     // Miscellaneous is-methods
 
     /// Checks whether a token is word-like--meaning it is more complex than punctuation and can
@@ -313,7 +339,10 @@ impl TokenKind {
             TokenKind::Punctuation(punct) => {
                 matches!(
                     punct,
-                    Punctuation::Comma | Punctuation::Quote { .. } | Punctuation::Colon
+                    Punctuation::Comma
+                        | Punctuation::Semicolon
+                        | Punctuation::Quote { .. }
+                        | Punctuation::Colon
                 )
             }
             _ => false,
@@ -429,6 +458,29 @@ mod tests {
         let doc = Document::new_plain_english_curated("equipment");
         let tk = &doc.tokens().next().unwrap().kind;
         assert!(!tk.is_countable_noun());
+    }
+
+    #[test]
+    fn ate_is_simple_past_only() {
+        let doc = Document::new_plain_english_curated("ate");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_simple_past_only());
+        assert!(!tk.is_verb_past_participle_only());
+    }
+
+    #[test]
+    fn eaten_is_past_participle_only() {
+        let doc = Document::new_plain_english_curated("eaten");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_past_participle_only());
+        assert!(!tk.is_verb_simple_past_only());
+    }
+
+    #[test]
+    fn thought_is_regular_past_form() {
+        let doc = Document::new_plain_english_curated("thought");
+        let tk = &doc.tokens().next().unwrap().kind;
+        assert!(tk.is_verb_regular_past_form());
     }
 
     #[test]

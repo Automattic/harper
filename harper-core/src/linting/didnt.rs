@@ -35,7 +35,7 @@ impl ExprLinter for Didnt {
                 "didn't",
                 suspect.get_ch(src),
             )],
-            message: "Consider using `didn't` here.".to_string(),
+            message: "Consider using `didn't` here.".to_owned(),
             priority: 63,
         })
     }

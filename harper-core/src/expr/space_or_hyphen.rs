@@ -10,8 +10,8 @@ pub struct SpaceOrHyphen;
 
 impl Expr for SpaceOrHyphen {
     fn run(&self, cursor: usize, tokens: &[Token], source: &[char]) -> Option<Span<Token>> {
-        FirstMatchOf::new(vec![
-            Box::new(WhitespacePattern),
+        FirstMatchOf::new([
+            Box::new(WhitespacePattern) as Box<dyn Expr>,
             Box::new(|tok: &Token, _source: &[char]| tok.kind.is_hyphen()),
         ])
         .run(cursor, tokens, source)

@@ -15,7 +15,7 @@ impl Default for InTimeFromNow {
             expr: SequenceExpr::aco("in")
                 .t_ws()
                 .then_optional(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "about",
                         "almost",
                         "approximately",
@@ -58,7 +58,7 @@ impl ExprLinter for InTimeFromNow {
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::Redundancy,
-            message: "Avoid redundancy by using either `in [period of time]` or `[period of time] from now`, but not both together.".to_string(),
+            message: "Avoid redundancy by using either `in [period of time]` or `[period of time] from now`, but not both together.".to_owned(),
             suggestions: vec![
                 Suggestion::replace_with_match_case(without_in, template_chars),
                 Suggestion::replace_with_match_case(without_from_now, template_chars),

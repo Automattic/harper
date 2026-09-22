@@ -47,7 +47,7 @@ impl Default for OpenTheLight {
             .then_noun();
 
         let expr = LongestMatchOf::new(vec![
-            Box::new(open_the_device),
+            Box::new(open_the_device) as Box<dyn Expr>,
             Box::new(open_the_device_then_noun),
         ]);
 

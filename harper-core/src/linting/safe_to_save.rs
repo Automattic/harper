@@ -23,13 +23,13 @@ impl Default for SafeToSave {
             .then_whitespace()
             .t_aco("safe")
             .then_whitespace()
-            .then_unless(WordSet::new(&["to"]));
+            .then_unless(WordSet::new(["to"]));
 
         let without_adv = SequenceExpr::with(ModalVerb::default())
             .then_whitespace()
             .t_aco("safe")
             .then_whitespace()
-            .then_unless(WordSet::new(&["to"]));
+            .then_unless(WordSet::new(["to"]));
 
         let pattern = with_adv.or_longest(without_adv);
 
@@ -55,7 +55,7 @@ impl ExprLinter for SafeToSave {
             span: safe_tok.span,
             lint_kind: LintKind::WordChoice,
             suggestions: vec![Suggestion::ReplaceWith("save".chars().collect())],
-            message: "The word `safe` is an adjective. Did you mean the verb `save`?".to_string(),
+            message: "The word `safe` is an adjective. Did you mean the verb `save`?".to_owned(),
             priority: 57,
         })
     }

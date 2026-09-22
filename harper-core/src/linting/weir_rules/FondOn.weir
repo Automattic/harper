@@ -1,0 +1,9 @@
+expr main (fond on)
+
+let message "Use `found on` or `fond of` instead of `fond on`."
+let description "Flags `fond on` and suggests `found on` or `fond of`."
+let kind "Miscellaneous"
+let becomes ["found on", "fond of"]
+
+test "The only answer I fond on the question seems to imply that the 10s value was never discussed." "The only answer I found on the question seems to imply that the 10s value was never discussed."
+test "I'm not necessarily too fond on such a tool but I can see how this would be hugely useful in practice..." "I'm not necessarily too fond of such a tool but I can see how this would be hugely useful in practice..."

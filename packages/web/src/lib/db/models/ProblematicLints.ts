@@ -1,3 +1,4 @@
+import { gte } from 'drizzle-orm';
 import { createInsertSchema, createSelectSchema } from 'drizzle-zod';
 import { db } from '..';
 import { problematicLintTable } from '../schema';
@@ -16,5 +17,16 @@ export default class ProblematicLints {
 
 	public static async create(rec: ProblematicLintSubmission) {
 		await db.insert(problematicLintTable).values(rec);
+	}
+
+	public static async getAll(): Promise<ProblematicLintRow[]> {
+		return await db.select().from(problematicLintTable);
+	}
+
+	public static async getAllSince(date: Date) {
+		return await db
+			.select()
+			.from(problematicLintTable)
+			.where(gte(problematicLintTable.timestamp, date));
 	}
 }

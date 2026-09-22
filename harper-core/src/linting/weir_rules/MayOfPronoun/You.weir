@@ -1,0 +1,8 @@
+expr main (may of you)
+let message "Did you mean `many of you`?"
+let description "Corrects the typo `may of you` to `many of you`"
+let kind "Typo"
+let becomes "many of you"
+
+test "I, like may of you guys, have followed this thing for years, for many others, decades." "I, like many of you guys, have followed this thing for years, for many others, decades."
+test "How may of you are going? I will be there for sure!" "How many of you are going? I will be there for sure!"

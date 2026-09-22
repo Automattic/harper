@@ -1,0 +1,8 @@
+expr main prefs
+
+let message "Use `preferences` instead of `prefs`"
+let description "Expands the abbreviation `prefs` to the full word `preferences` for clarity."
+let kind "Style"
+let becomes "preferences"
+
+test "This tool is intended to simplify the use and tracking of prefs used by our fuzzing tools." "This tool is intended to simplify the use and tracking of preferences used by our fuzzing tools."

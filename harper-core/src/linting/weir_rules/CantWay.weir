@@ -1,0 +1,36 @@
+expr waitToVerb [be, check, come, experience, get, go, have, hear, learn, meet, play, read, see, start, test, try, use, watch, work]
+expr cantAux [can't, cant, cannot, (can not), couldn't]
+expr doesntAux [doesn't, (does not)]
+
+expr main <([(@cantAux way to @waitToVerb), (@cantAux way [for, until]), (@doesntAux way [for, until])]), way>
+
+let message "Did you mean `wait`?"
+let description "Corrects `way` to `wait` in high-confidence contexts such as `can't way to` and `doesn't way for`."
+let kind "Typo"
+let becomes "wait"
+let strategy "MatchCase"
+
+# True positives
+test "I can't way for something better to be released." "I can't wait for something better to be released."
+test "It doesn't way until completion though." "It doesn't wait until completion though."
+test "Wow, incredible, can't way to try it." "Wow, incredible, can't wait to try it."
+test "Can't way to see things like this come into the project." "Can't wait to see things like this come into the project."
+test "saveTransactionToDb doesn't way for transactions to complete." "saveTransactionToDb doesn't wait for transactions to complete."
+test "If you can't way for 2.10.16, go back to 2.10.12." "If you can't wait for 2.10.16, go back to 2.10.12."
+test "Hehe I can't way for a bevel node to be available." "Hehe I can't wait for a bevel node to be available."
+test "I cannot way to hear the announcement." "I cannot wait to hear the announcement."
+test "We can not way until the migration finishes." "We can not wait until the migration finishes."
+test "They cant way to use the new editor." "They cant wait to use the new editor."
+test "She couldn't way for the build to finish." "She couldn't wait for the build to finish."
+test "The runner does not way for child processes." "The runner does not wait for child processes."
+
+# Guardrails / false positives
+allows "The RFC does not say to ignore it."
+allows "The RFC doesn't say what to do with it."
+allows "I tried create+modify below file but that doesn't work."
+allows "I can't say whether this is simply a way to modify the sleep time."
+allows "I cannot find a way to pass login information via a cookie."
+allows "I can't way to proxy the Strapi URL to the URL where Nuxt is running."
+allows "The potential gain doesn't weigh up against the pain."
+allows "The object doesn't weigh half a ton."
+allows "This is a real way to proxy the URL."

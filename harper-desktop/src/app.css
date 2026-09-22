@@ -1,0 +1,23 @@
+@import "tailwindcss";
+@import "components/components.css";
+
+@layer base {
+	html,
+	body {
+		height: 100%;
+		margin: 0;
+	}
+
+	body {
+		overflow: hidden;
+	}
+}
+
+@layer components {
+	.settings-icon {
+		width: 16px;
+		height: 16px;
+		flex: 0 0 16px;
+		display: inline-block;
+	}
+}
