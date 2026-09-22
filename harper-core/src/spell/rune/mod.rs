@@ -6,9 +6,7 @@ mod matcher;
 pub mod word_list;
 
 pub use attribute_list::AttributeList;
-pub use attribute_list::{ProvenanceKind, ProvenanceRecord};
 pub use error::Error;
-pub use expansion::AffixEntryKind;
 
 pub use self::word_list::parse_word_list;
 

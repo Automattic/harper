@@ -1,9 +1,9 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::rune::{AttributeList, ProvenanceKind, ProvenanceRecord, parse_word_list};
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
+use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
@@ -227,14 +227,11 @@ enum Args {
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
     },
-    /// Trace the provenance of a word: is it in the dictionary directly, generated
-    /// by affix rules, or produced via cross-product interaction?
+    /// Find the `dictionary.dict` entries a word comes from, and the annotation
+    /// flags that produce it.
     WordProvenance {
-        /// The words whose provenance you want to trace.
+        /// The words to trace.
         words: Vec<String>,
-        /// Print results as JSON instead of human-readable text.
-        #[arg(long)]
-        json: bool,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -1012,137 +1009,24 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
-        Args::WordProvenance { words, json } => {
-            let curated_word_list = include_str!("../../harper-core/dictionary.dict");
-            let curated_annotations = include_str!("../../harper-core/annotations.json");
+        Args::WordProvenance { words } => {
+            let entries = dictionary_entries(include_str!("../../harper-core/dictionary.dict"));
+            let annotations = include_str!("../../harper-core/annotations.json");
 
-            let parsed_words = parse_word_list(curated_word_list)
-                .map_err(|e| anyhow!("Failed to parse dictionary: {e}"))?;
-            let attributes = AttributeList::parse(curated_annotations)
-                .map_err(|e| anyhow!("Failed to parse annotations: {e}"))?;
+            for word in &words {
+                let sources = entries_producing(word, &entries, annotations)?;
 
-            // Build case-folding collision map from parsed words before expansion
-            // consumes the iterator. Words that only differ by case will share
-            // the same WordId in Harper's dictionary.
-            let mut case_variants: HashMap<String, Vec<String>> = HashMap::new();
-            for w in &parsed_words {
-                let word_str: String = w.letters.iter().collect();
-                let lower = word_str.to_lowercase();
-                case_variants.entry(lower).or_default().push(word_str);
-            }
+                if sources.is_empty() {
+                    println!("'{word}' is not in Harper's dictionary.");
+                    continue;
+                }
 
-            // Expand all dictionary entries with provenance tracking
-            let all_records = attributes.expand_all_with_provenance(parsed_words);
+                println!("'{word}' comes from:");
 
-            for target_word in &words {
-                let target_lower = target_word.to_lowercase();
-
-                // Find all provenance records matching this word (case-insensitive)
-                let matching: Vec<&ProvenanceRecord> = all_records
-                    .iter()
-                    .filter(|r| r.word.to_lowercase() == target_lower)
-                    .collect();
-
-                if json {
-                    // JSON output
-                    let json_records: Vec<serde_json::Value> = matching
-                        .iter()
-                        .map(|r| {
-                            let kind_str = match &r.kind {
-                                ProvenanceKind::Direct => serde_json::json!({
-                                    "type": "direct"
-                                }),
-                                ProvenanceKind::AffixGenerated { flag, kind } => {
-                                    serde_json::json!({
-                                        "type": "affix_generated",
-                                        "flag": flag.to_string(),
-                                        "affix_kind": format!("{:?}", kind).to_lowercase()
-                                    })
-                                }
-                                ProvenanceKind::CrossProduct {
-                                    first_flag,
-                                    second_flag,
-                                } => serde_json::json!({
-                                    "type": "cross_product",
-                                    "first_flag": first_flag.to_string(),
-                                    "second_flag": second_flag.to_string()
-                                }),
-                            };
-                            serde_json::json!({
-                                "word": r.word,
-                                "base_entry": r.base_word,
-                                "base_annotations": r.base_annotations,
-                                "provenance": kind_str
-                            })
-                        })
-                        .collect();
-
-                    let output = serde_json::json!({
-                        "query": target_word,
-                        "routes": json_records
-                    });
-                    println!("{}", serde_json::to_string_pretty(&output).unwrap());
-                } else {
-                    // Human-readable output
-                    if matching.is_empty() {
-                        println!("'{}': not found in the expanded dictionary.", target_word);
-                    } else {
-                        println!(
-                            "'{}': found via {} route(s):\n",
-                            target_word,
-                            matching.len()
-                        );
-                        for (i, record) in matching.iter().enumerate() {
-                            let route_desc = match &record.kind {
-                                ProvenanceKind::Direct => {
-                                    "DIRECT — appears as a base entry in dictionary.dict"
-                                        .to_string()
-                                }
-                                ProvenanceKind::AffixGenerated { flag, kind } => {
-                                    let kind_str = match kind {
-                                        harper_core::spell::rune::AffixEntryKind::Prefix => {
-                                            "prefix"
-                                        }
-                                        harper_core::spell::rune::AffixEntryKind::Suffix => {
-                                            "suffix"
-                                        }
-                                    };
-                                    format!(
-                                        "AFFIX — generated by {} flag '{}' from base",
-                                        kind_str, flag
-                                    )
-                                }
-                                ProvenanceKind::CrossProduct {
-                                    first_flag,
-                                    second_flag,
-                                } => {
-                                    format!(
-                                        "CROSS-PRODUCT — flag '{}' then flag '{}' from base",
-                                        first_flag, second_flag
-                                    )
-                                }
-                            };
-                            println!("  {}. {}", i + 1, route_desc);
-                            println!(
-                                "     base: {}/{}",
-                                record.base_word, record.base_annotations
-                            );
-                        }
-
-                        // Check for case-folding collisions
-                        if let Some(variants) = case_variants.get(&target_lower)
-                            && variants.len() > 1
-                        {
-                            println!();
-                            println!(
-                                "  ⚠ CASE VARIANTS — the following entries share the same case-folded form:"
-                            );
-                            for v in variants {
-                                println!("     - {}", v);
-                            }
-                        }
+                for entry in sources {
+                    for route in routes_from_entry(word, entry, annotations)? {
+                        println!(" - {entry:<24} {route}");
                     }
-                    println!();
                 }
             }
 
@@ -1197,4 +1081,121 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         let child_str: String = child.iter().collect();
         println!(" - {child_str}");
     }
+}
+
+/// One way a word can end up in Harper's dictionary.
+enum Route {
+    /// The entry is the word itself.
+    Direct,
+    /// A single annotation flag on the entry produces the word.
+    Flag(char),
+    /// Two flags produce the word between them, though neither does alone.
+    CrossProduct(char, char),
+}
+
+impl Display for Route {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Route::Direct => write!(f, "the entry itself"),
+            Route::Flag(flag) => write!(f, "flag {flag}"),
+            Route::CrossProduct(first, second) => {
+                write!(f, "flags {first} and {second} combined")
+            }
+        }
+    }
+}
+
+/// The entries of a `dictionary.dict` file, with the count header, comments and
+/// blank lines removed.
+fn dictionary_entries(dictionary: &str) -> Vec<&str> {
+    dictionary
+        .lines()
+        .skip(1)
+        .map(|line| {
+            line.split_once('#')
+                .map_or(line, |(entry, _comment)| entry)
+                .trim_end()
+        })
+        .filter(|entry| !entry.is_empty())
+        .collect()
+}
+
+/// Expand some `dictionary.dict` entries in isolation from the rest of the
+/// dictionary, the same way the `forms` subcommand expands a line you hand it.
+fn expand_entries(entries: &[&str], annotations: &str) -> anyhow::Result<MutableDictionary> {
+    let word_list = format!(
+        "{}
+{}",
+        entries.len(),
+        entries.join(
+            "
+"
+        )
+    );
+
+    Ok(MutableDictionary::from_rune_files(&word_list, annotations)?)
+}
+
+/// Find the entries whose expansion contains `word`.
+fn entries_producing<'a>(
+    word: &str,
+    entries: &[&'a str],
+    annotations: &str,
+) -> anyhow::Result<Vec<&'a str>> {
+    let mut producers = Vec::new();
+
+    // Expanding fifty thousand entries one at a time takes a few seconds, so
+    // rule them out in batches first: if a batch never produces the word, none
+    // of the entries in it did either.
+    for batch in entries.chunks(256) {
+        if !expand_entries(batch, annotations)?.contains_word_str(word) {
+            continue;
+        }
+
+        for entry in batch {
+            if expand_entries(&[entry], annotations)?.contains_word_str(word) {
+                producers.push(*entry);
+            }
+        }
+    }
+
+    Ok(producers)
+}
+
+/// Work out which of an entry's annotation flags are responsible for producing
+/// `word`.
+fn routes_from_entry(word: &str, entry: &str, annotations: &str) -> anyhow::Result<Vec<Route>> {
+    let (lexeme, flags) = line_to_parts(entry);
+
+    // Harper folds case when it identifies a word, so an entry that differs only
+    // in capitalization is still an entry for it.
+    if WordId::from_word_str(&lexeme) == WordId::from_word_str(word) {
+        return Ok(vec![Route::Direct]);
+    }
+
+    let mut routes = Vec::new();
+    let mut remaining = Vec::new();
+
+    for flag in flags.chars() {
+        if expand_entries(&[&format!("{lexeme}/{flag}")], annotations)?.contains_word_str(word) {
+            routes.push(Route::Flag(flag));
+        } else {
+            remaining.push(flag);
+        }
+    }
+
+    // Affixes marked `cross_product` in `annotations.json` compose, so a prefix
+    // and a suffix on the same entry can produce a form that neither of them
+    // reaches on its own.
+    for (i, first) in remaining.iter().enumerate() {
+        for second in &remaining[i + 1..] {
+            if expand_entries(&[&format!("{lexeme}/{first}{second}")], annotations)?
+                .contains_word_str(word)
+            {
+                routes.push(Route::CrossProduct(*first, *second));
+            }
+        }
+    }
+
+    Ok(routes)
 }
