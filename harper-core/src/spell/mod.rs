@@ -313,12 +313,19 @@ fn score_suggestion(misspelled_word: &[char], sug: &FuzzyMatchResult) -> i32 {
         score -= 5;
     }
 
-    // Promote suggestions that differ only by an apostrophe
+    // Promote suggestions that differ only by an apostrophe.
+    // Case-insensitive so lowercase forms like "im" still map to "I'm".
+    let eq_ignore_case = |a: &[char], b: &[char]| -> bool {
+        a.len() == b.len()
+            && a.iter()
+                .zip(b.iter())
+                .all(|(x, y)| x.eq_ignore_ascii_case(y))
+    };
     let check_apostrophe_diff = |longer: &[char], shorter: &[char]| -> bool {
         if let Some(pos) = longer.iter().position(|&c| c == '\'' || c == '’') {
             longer.len() - 1 == shorter.len()
-                && longer.starts_with(&shorter[..pos])
-                && longer.ends_with(&shorter[pos..])
+                && eq_ignore_case(&longer[..pos], &shorter[..pos])
+                && eq_ignore_case(&longer[pos + 1..], &shorter[pos..])
         } else {
             false
         }
@@ -486,6 +493,11 @@ mod tests {
     #[test]
     fn issue_182() {
         assert_suggests_correction("Im", "I'm");
+    }
+
+    #[test]
+    fn lowercase_im_suggests_im_contraction() {
+        assert_suggests_correction("im", "I'm");
     }
 
     #[test]
