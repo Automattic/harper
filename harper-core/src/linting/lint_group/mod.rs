@@ -239,6 +239,7 @@ use super::quote_spacing::QuoteSpacing;
 use super::reason_for_doing::ReasonForDoing;
 use super::redundant_acronyms::RedundantAcronyms;
 use super::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::redundant_almost_nearly::RedundantAlmostNearly;
 use super::redundant_firsts::RedundantFirsts;
 use super::redundant_progressive_comparative::RedundantProgressiveComparative;
 use super::redundant_self::RedundantSelf;
@@ -249,6 +250,7 @@ use super::repeated_words::RepeatedWords;
 use super::respond::Respond;
 use super::right_click::RightClick;
 use super::rise_the_ranks::RiseTheRanks;
+use super::rogue_rouge::RogueRouge;
 use super::roller_skated::RollerSkated;
 use super::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::safe_to_save::SafeToSave;
@@ -371,7 +373,7 @@ pub struct LintGroup {
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
     ///
-    /// Since the expr linter results also depend on the config, we hash it and pass it as part
+    /// Since the expr linter results also depend on the configuration, we hash it and pass it as part
     /// of the key.
     chunk_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     sentence_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
@@ -857,6 +859,7 @@ impl LintGroup {
         insert_expr_rule!(ReasonForDoing);
         insert_expr_rule!(RedundantAcronyms);
         insert_expr_rule!(RedundantAdditiveAdverbs);
+        insert_expr_rule!(RedundantAlmostNearly);
         insert_expr_rule!(RedundantFirsts);
         insert_expr_rule!(RedundantProgressiveComparative);
         insert_expr_rule!(RedundantSelf);
@@ -867,6 +870,7 @@ impl LintGroup {
         insert_expr_rule!(Respond);
         insert_expr_rule!(RightClick);
         insert_expr_rule!(RiseTheRanks);
+        insert_expr_rule!(RogueRouge);
         insert_expr_rule!(RollerSkated);
         insert_expr_rule!(RunIntoProblemsOrTrouble);
         insert_expr_rule!(SafeToSave);
@@ -957,7 +961,7 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
 
-        // Uses Sentence rather than CHunk
+        // Uses Sentence rather than Chunk
         out.add("DissembleDisassemble", DissembleDisassemble::default());
 
         // Uses Sentence rather than Chunk
@@ -1375,5 +1379,14 @@ mod tests {
                 );
             }
         }
+    }
+
+    #[test]
+    fn spellcheck_beats_split_words_for_advices_4346() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            test_linter(),
+            "IMO these kind of advice never matters.",
+        );
     }
 }

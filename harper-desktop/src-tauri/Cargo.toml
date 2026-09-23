@@ -1,6 +1,6 @@
 [package]
 name = "harper-desktop"
-version = "2.10.0"
+version = "2.11.0"
 description = "The language checker for developers."
 edition = "2024"
 publish = false
@@ -51,15 +51,20 @@ is-macro = "0.3.7"
 
 [target.'cfg(target_os = "macos")'.dependencies]
 accessibility = "0.2.0"
+send_wrapper = "0.6.0"
 core-foundation = "0.10.1"
+objc2 = "0.6.4"
 objc2-app-kit = { version = "0.3.2", default-features = false, features = [
     "std",
     "libc",
+    "NSApplication",
+    "NSImage",
     "NSRunningApplication",
     "NSWorkspace",
 ] }
 objc2-foundation = { version = "0.3.2", default-features = false, features = [
     "std",
+    "NSData",
     "NSGeometry",
     "objc2-core-foundation",
 ] }
@@ -78,10 +83,11 @@ wintheon = "0.1.0"
 
 [target.'cfg(any(target_os = "macos", windows, target_os = "linux"))'.dependencies]
 tauri-plugin-autostart = "2.5.1"
-tauri-plugin-updater = "2"
+tauri-plugin-updater = "=2.10.1"
 
 [target.'cfg(not(any(target_os = "android", target_os = "ios")))'.dependencies]
-tauri-plugin-updater = "2"
+tauri-plugin-updater = "=2.10.1"
 
 [profile.release]
-debug = true
+opt-level = 3
+lto = "fat"

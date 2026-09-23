@@ -3237,6 +3237,13 @@
 						},
 						{
 							"Bool": {
+								"name": "RedundantAlmostNearly",
+								"state": true,
+								"label": "Redundant Almost Nearly"
+							}
+						},
+						{
+							"Bool": {
 								"name": "RedundantIIRC",
 								"state": true,
 								"label": "Redundant IIRC"
@@ -4600,6 +4607,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CondensateVerb",
+								"state": true,
+								"label": "Condensate Verb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Confident",
 								"state": true,
 								"label": "Confident"
@@ -5618,6 +5632,13 @@
 								"name": "RiseTheRanks",
 								"state": true,
 								"label": "Rise The Ranks"
+							}
+						},
+						{
+							"Bool": {
+								"name": "RogueRouge",
+								"state": true,
+								"label": "Rogue / Rouge"
 							}
 						},
 						{
