@@ -172,6 +172,12 @@ impl RenderState {
                         actionable_lint.apply_suggestion(suggestion);
                     }
 
+                    if let Some(lints) = self.last_lints.as_mut() {
+                        if index < lints.len() {
+                            lints.remove(index);
+                        }
+                    }
+
                     self.close_popup();
                 }
                 Some(LintCardAction::IgnoreLint) => {
@@ -185,6 +191,12 @@ impl RenderState {
                     {
                         let document = Document::new_markdown_default_curated(&source_text);
                         (self.ignore_lint)(&lint, &document);
+                    }
+
+                    if let Some(lints) = self.last_lints.as_mut() {
+                        if index < lints.len() {
+                            lints.remove(index);
+                        }
                     }
 
                     self.close_popup();
@@ -203,6 +215,12 @@ impl RenderState {
                         (self.add_to_dictionary)(&word);
                     }
 
+                    if let Some(lints) = self.last_lints.as_mut() {
+                        if index < lints.len() {
+                            lints.remove(index);
+                        }
+                    }
+
                     self.close_popup();
                 }
                 Some(LintCardAction::DisableRule) => {
@@ -212,6 +230,12 @@ impl RenderState {
                         .map(|actionable_lint| actionable_lint.rule_name.clone())
                     {
                         (self.disable_rule)(&rule_name);
+                    }
+
+                    if let Some(lints) = self.last_lints.as_mut() {
+                        if index < lints.len() {
+                            lints.remove(index);
+                        }
                     }
 
                     self.close_popup();

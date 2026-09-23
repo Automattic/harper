@@ -15,7 +15,13 @@ use uiautomation::{
 };
 use windows::Win32::Foundation::HWND;
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
+use windows::Win32::UI::Input::KeyboardAndMouse::{
+    INPUT, INPUT_0, INPUT_KEYBOARD, KEYBD_EVENT_FLAGS, KEYBDINPUT, KEYEVENTF_KEYUP,
+    KEYEVENTF_UNICODE, SendInput, VIRTUAL_KEY, VK_BACK, VK_RETURN, VK_RIGHT,
+};
+use windows::Win32::UI::WindowsAndMessaging::{
+    GetForegroundWindow, GetWindowThreadProcessId, SetForegroundWindow,
+};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -78,7 +84,9 @@ impl AutomationService {
         let (result_sender, result_receiver) = sync_channel(1);
 
         std::thread::spawn(move || {
-            let automation = UIAutomation::new().unwrap();
+            let Ok(automation) = UIAutomation::new() else {
+                return;
+            };
 
             loop {
                 // Stop the thread if the other side of the channel has been closed (or dropped).
@@ -118,8 +126,8 @@ impl AutomationService {
     /// Attempts to run a worker job on the worker thread. Returns `None` if the worker thread does not exist.
     fn run_worker_job(&self, job: WorkerJob, arguments: Vec<JobArgument>) -> Option<JobResult> {
         let worker_data = self.worker_data.as_ref()?;
-        worker_data.sender.send((job, arguments)).unwrap();
-        Some(worker_data.receiver.recv().unwrap())
+        worker_data.sender.send((job, arguments)).ok()?;
+        worker_data.receiver.recv().ok()
     }
 
     /// Grab text from the worker.
@@ -202,6 +210,135 @@ impl Drop for AutomationService {
     }
 }
 
+fn send_unicode_string(text: &str) {
+    let mut inputs = Vec::with_capacity(text.encode_utf16().count() * 2);
+
+    for code in text.encode_utf16() {
+        if code == 0x000A {
+            send_vk_key(VK_RETURN);
+            continue;
+        }
+
+        inputs.push(INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: VIRTUAL_KEY(0),
+                    wScan: code,
+                    dwFlags: KEYEVENTF_UNICODE,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        });
+        inputs.push(INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: VIRTUAL_KEY(0),
+                    wScan: code,
+                    dwFlags: KEYEVENTF_UNICODE | KEYEVENTF_KEYUP,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        });
+    }
+
+    if !inputs.is_empty() {
+        unsafe {
+            SendInput(&inputs, size_of::<INPUT>() as i32);
+        }
+    }
+}
+
+fn send_vk_key(vk: VIRTUAL_KEY) {
+    let inputs = [
+        INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: vk,
+                    wScan: 0,
+                    dwFlags: KEYBD_EVENT_FLAGS(0),
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        },
+        INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: vk,
+                    wScan: 0,
+                    dwFlags: KEYEVENTF_KEYUP,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        },
+    ];
+
+    unsafe {
+        SendInput(&inputs, size_of::<INPUT>() as i32);
+    }
+}
+
+fn apply_suggestion_via_selection(
+    element: &UIElement,
+    span: Span<char>,
+    suggestion: &Suggestion,
+) -> uiautomation::Result<()> {
+    let pattern: UITextPattern = element.get_pattern()?;
+    let range = pattern.get_document_range()?;
+
+    range.move_endpoint_by_range(
+        TextPatternRangeEndpoint::End,
+        &range,
+        TextPatternRangeEndpoint::Start,
+    )?;
+
+    range.move_endpoint_by_unit(
+        TextPatternRangeEndpoint::Start,
+        TextUnit::Character,
+        span.start as i32,
+    )?;
+
+    range.move_endpoint_by_range(
+        TextPatternRangeEndpoint::End,
+        &range,
+        TextPatternRangeEndpoint::Start,
+    )?;
+
+    range.move_endpoint_by_unit(
+        TextPatternRangeEndpoint::End,
+        TextUnit::Character,
+        span.len() as i32,
+    )?;
+
+    range.select()?;
+
+    std::thread::sleep(Duration::from_millis(25));
+
+    match suggestion {
+        Suggestion::ReplaceWith(chars) => {
+            let text: String = chars.iter().collect();
+            send_unicode_string(&text);
+        }
+        Suggestion::Remove => {
+            send_vk_key(VK_BACK);
+        }
+        Suggestion::InsertAfter(chars) => {
+            send_vk_key(VK_RIGHT);
+            let text: String = chars.iter().collect();
+            send_unicode_string(&text);
+        }
+    }
+
+    Ok(())
+}
+
 fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::ApplySuggestion(request)) = arguments.pop() else {
         return JobResult::Err;
@@ -220,6 +357,19 @@ fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgumen
         return JobResult::None;
     };
 
+    // Bring target window and element to the foreground so keystrokes / selection are received
+    let hwnd = HWND(request.window as *mut _);
+    unsafe {
+        let _ = SetForegroundWindow(hwnd);
+    }
+    let _ = element.set_focus();
+
+    // Primary replacement method: Text pattern selection + SendInput (works across Notepad, VS Code, Word, Chrome, etc.)
+    if apply_suggestion_via_selection(&element, request.span, &request.suggestion).is_ok() {
+        return JobResult::None;
+    }
+
+    // Fallback replacement method: ValuePattern (for controls that support UIValuePattern)
     let Ok(current_text) = get_text(&element) else {
         eprintln!("Unable to apply Windows suggestion: the source text can no longer be read");
         return JobResult::None;
@@ -287,6 +437,11 @@ fn get_text(element: &UIElement) -> uiautomation::Result<String> {
     range.get_text(-1)
 }
 
+fn text_matches(current: &str, expected: &str) -> bool {
+    current == expected
+        || current.trim_end_matches(['\r', '\n']) == expected.trim_end_matches(['\r', '\n'])
+}
+
 /// Finds the focused text element below `window`.
 ///
 /// When `expected_text` is provided, unrelated text providers are excluded.
@@ -301,27 +456,63 @@ fn text_element_for_window(
         Variant::from(true),
         None,
     )?;
+
+    // If expected_text is provided, search without requiring keyboard focus
+    // because clicking the Harper overlay may have transferred focus away from the editor.
+    if let Some(expected) = expected_text {
+        if let Ok(text) = get_text(&root) {
+            if text_matches(&text, expected) {
+                return Ok(root);
+            }
+        }
+
+        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition) {
+            for element in elements {
+                if let Ok(text) = get_text(&element) {
+                    if text_matches(&text, expected) {
+                        return Ok(element);
+                    }
+                }
+            }
+        }
+    }
+
+    // Try finding a focused text element
     let keyboard_condition = automation.create_property_condition(
         UIProperty::HasKeyboardFocus,
         Variant::from(true),
         None,
     )?;
-    let condition = automation.create_and_condition(text_condition, keyboard_condition)?;
+    let focused_condition =
+        automation.create_and_condition(text_condition.clone(), keyboard_condition)?;
 
-    for element in root.find_all(TreeScope::Subtree, &condition)? {
-        if let Some(expected) = expected_text {
-            let text = get_text(&element);
+    if let Ok(elements) = root.find_all(TreeScope::Subtree, &focused_condition) {
+        for element in elements {
+            if let Some(expected) = expected_text {
+                if let Ok(text) = get_text(&element) {
+                    if !text_matches(&text, expected) {
+                        continue;
+                    }
+                } else {
+                    continue;
+                }
+            }
+            return Ok(element);
+        }
+    }
 
-            let Ok(text) = text else {
-                continue;
-            };
-
-            if expected != text {
-                continue;
+    // Fallback when expected_text is None: return the first available text element
+    if expected_text.is_none() {
+        if let Ok(text) = get_text(&root) {
+            if !text.is_empty() {
+                return Ok(root);
             }
         }
-
-        return Ok(element);
+        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition) {
+            if let Some(first) = elements.into_iter().next() {
+                return Ok(first);
+            }
+        }
     }
 
     Err(Error::new(

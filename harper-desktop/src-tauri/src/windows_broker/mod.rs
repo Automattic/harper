@@ -125,7 +125,9 @@ impl OsBroker for WindowsBroker {
         let mut point = POINT::default();
 
         unsafe {
-            GetCursorPos(&mut point).unwrap();
+            if GetCursorPos(&mut point).is_err() {
+                return None;
+            }
         }
 
         let monitor_scale = get_focused_monitor_scale();

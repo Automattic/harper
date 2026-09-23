@@ -272,6 +272,7 @@ pub fn run_highlighter(has_parent: bool) {
     let ignore_client = client.clone();
     let ignore_runtime = sync_runtime.clone();
     let ignore_ignored_lints = ignored_lints.clone();
+    let ignore_debounce_state = lint_debounce_state.clone();
 
     let dictionary_client = client.clone();
     let dictionary_runtime = sync_runtime.clone();
@@ -279,10 +280,12 @@ pub fn run_highlighter(has_parent: bool) {
     let dictionary_linter = linter.clone();
     let dictionary_dialect = dialect.clone();
     let dictionary_debounce_ms = debounce_ms.clone();
+    let dictionary_debounce_state = lint_debounce_state.clone();
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
     let disable_linter = linter.clone();
+    let disable_debounce_state = lint_debounce_state.clone();
 
     let refresh_client = client.clone();
     let refresh_runtime = sync_runtime.clone();
@@ -292,6 +295,7 @@ pub fn run_highlighter(has_parent: bool) {
     let refresh_integrations = integrations.clone();
     let refresh_debounce_ms = debounce_ms.clone();
     let refresh_linter = linter.clone();
+    let refresh_debounce_state = lint_debounce_state.clone();
 
     let lint_text = move |text: &str| {
         let debounce_ms = *lint_debounce_ms.borrow();
@@ -317,6 +321,7 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let ignore_lint = move |lint: &Lint, document: &Document| {
+        ignore_debounce_state.borrow_mut().clear();
         {
             ignore_ignored_lints
                 .borrow_mut()
@@ -332,6 +337,7 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let add_to_dictionary = move |word: &str| {
+        dictionary_debounce_state.borrow_mut().clear();
         dictionary_user_dictionary
             .borrow_mut()
             .append_word_str(word, DictWordMetadata::default());
@@ -358,14 +364,16 @@ pub fn run_highlighter(has_parent: bool) {
         }
     };
 
-    let disable_rule = move |rule_name: &str| match disable_runtime
-        .block_on(disable_client.borrow_mut().disable_rule(rule_name))
-    {
-        Ok(config) => disable_linter.borrow_mut().config = config,
-        Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
+    let disable_rule = move |rule_name: &str| {
+        disable_debounce_state.borrow_mut().clear();
+        match disable_runtime.block_on(disable_client.borrow_mut().disable_rule(rule_name)) {
+            Ok(config) => disable_linter.borrow_mut().config = config,
+            Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
+        }
     };
 
     let refresh_config = move || {
+        refresh_debounce_state.borrow_mut().clear();
         if !has_parent {
             return;
         }

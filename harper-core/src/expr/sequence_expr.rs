@@ -516,32 +516,23 @@ impl SequenceExpr {
 
     /// Match a token where any of the token kind predicates returns true.
     /// Like `then_kind_either` but for more than two predicates.
-    pub fn then_kind_any<F>(self, preds_is: &'static [F]) -> Self
-    where
-        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
+    pub fn then_kind_any(self, preds_is: &'static [fn(&TokenKind) -> bool]) -> Self {
         self.then_kind_where(move |k| preds_is.iter().any(|pred| pred(k)))
     }
 
     /// Match a token where none of the token kind predicates returns true.
     /// Like `then_kind_neither` but for more than two predicates.
-    pub fn then_kind_none_of<F>(self, preds_isnt: &'static [F]) -> Self
-    where
-        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
+    pub fn then_kind_none_of(self, preds_isnt: &'static [fn(&TokenKind) -> bool]) -> Self {
         self.then_kind_where(move |k| preds_isnt.iter().all(|pred| !pred(k)))
     }
 
     /// Match a token where any of the token kind predicates returns true,
     /// and the word is not in the list of exceptions.
-    pub fn then_kind_any_except<F>(
+    pub fn then_kind_any_except(
         self,
-        preds_is: &'static [F],
+        preds_is: &'static [fn(&TokenKind) -> bool],
         ex: &'static [&'static str],
-    ) -> Self
-    where
-        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
+    ) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
                 && !ex.iter().any(|&word| tok.get_ch(src).eq_str(word))
@@ -550,14 +541,11 @@ impl SequenceExpr {
 
     /// Match a token where any of the token kind predicates returns true,
     /// or the token is in the list of words.
-    pub fn then_kind_any_or_words<F>(
+    pub fn then_kind_any_or_words(
         self,
-        preds: &'static [F],
+        preds: &'static [fn(&TokenKind) -> bool],
         words: &'static [&'static str],
-    ) -> Self
-    where
-        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-    {
+    ) -> Self {
         self.then(move |tok: &Token, src: &[char]| {
             preds.iter().any(|pred| pred(&tok.kind))
                 || words.iter().any(|&word| tok.get_ch(src).eq_str(word))
@@ -566,10 +554,13 @@ impl SequenceExpr {
 
     /// Match a token where any of the first token kind predicates returns true
     /// and the second returns false.
-    pub fn then_kind_any_but_not<F1, F2>(self, preds_is: &'static [F1], pred_not: F2) -> Self
+    pub fn then_kind_any_but_not<F>(
+        self,
+        preds_is: &'static [fn(&TokenKind) -> bool],
+        pred_not: F,
+    ) -> Self
     where
-        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, _src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind)) && !pred_not(&tok.kind)
@@ -578,15 +569,14 @@ impl SequenceExpr {
 
     /// Match a token where any of the first token kind predicates returns true,
     /// the second returns false, and the token is not in the list of exceptions.    
-    pub fn then_kind_any_but_not_except<F1, F2>(
+    pub fn then_kind_any_but_not_except<F>(
         self,
-        preds_is: &'static [F1],
-        pred_not: F2,
+        preds_is: &'static [fn(&TokenKind) -> bool],
+        pred_not: F,
         ex: &'static [&'static str],
     ) -> Self
     where
-        F1: Fn(&TokenKind) -> bool + Send + Sync + 'static,
-        F2: Fn(&TokenKind) -> bool + Send + Sync + 'static,
+        F: Fn(&TokenKind) -> bool + Send + Sync + 'static,
     {
         self.then(move |tok: &Token, src: &[char]| {
             preds_is.iter().any(|pred| pred(&tok.kind))
