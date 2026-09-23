@@ -137,6 +137,20 @@ mod tests {
     }
 
     #[test]
+    fn yen_allows_correct() {
+        assert_lint_count("It cost ¥380.", CurrencyPlacement::default(), 0);
+    }
+
+    #[test]
+    fn multiple_yen() {
+        assert_suggestion_result(
+            "They were either 380¥ 24¥ or 23¥.",
+            CurrencyPlacement::default(),
+            "They were either ¥380 ¥24 or ¥23.",
+        );
+    }
+
+    #[test]
     fn suffix() {
         assert_suggestion_result(
             "It was my 20th$.",
