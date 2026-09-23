@@ -1,6 +1,7 @@
 mod error;
 mod integration;
 
+use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
 pub use integration::Integration;
 
@@ -21,6 +22,7 @@ pub struct Config {
     pub ignored_lints: IgnoredLints,
     pub lint_config: FlatConfig,
     pub integrations: Vec<Integration>,
+    pub auto_enable_new_apps: bool,
     pub onboarding_completed: bool,
     pub debounce_ms: u64,
     pub auto_update: bool,
@@ -36,6 +38,7 @@ impl Config {
             ignored_lints: IgnoredLints::new(),
             lint_config: FlatConfig::new_curated(),
             integrations: Integration::curated_integrations(),
+            auto_enable_new_apps: false,
             onboarding_completed: false,
             debounce_ms: 0,
             auto_update: true,
@@ -55,6 +58,29 @@ impl Config {
         integrations
             .iter()
             .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
+    }
+
+    /// Resolves an app's enabled state, registering unknown apps when automatic enablement is on.
+    /// Existing disabled entries are never re-enabled; removed entries can be discovered again.
+    /// Harper itself is excluded from discovery, but explicitly configured entries are respected.
+    /// The caller is responsible for persisting any newly registered integration.
+    pub fn resolve_integration(&mut self, bundle_id: &str) -> bool {
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty() {
+            return false;
+        }
+        if let Some(integration) = self
+            .integrations
+            .iter()
+            .find(|item| item.bundle_id == bundle_id)
+        {
+            return integration.enabled;
+        }
+        if !self.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
+            return false;
+        }
+        self.add_integration(bundle_id.to_owned());
+        true
     }
 
     pub fn add_integration(&mut self, bundle_id: String) {
@@ -167,6 +193,7 @@ impl Config {
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
+            "auto_enable_new_apps": self.auto_enable_new_apps,
             "onboarding_completed": self.onboarding_completed,
             "debounce_ms": self.debounce_ms,
             "auto_update": self.auto_update,
@@ -194,6 +221,8 @@ impl Config {
             lint_config: deserialize_field(object, "lint_config")?,
             integrations: deserialize_optional_field(object, "integrations")?
                 .unwrap_or_else(Integration::curated_integrations),
+            auto_enable_new_apps: deserialize_optional_field(object, "auto_enable_new_apps")?
+                .unwrap_or(false),
             onboarding_completed: deserialize_optional_field(object, "onboarding_completed")?
                 .unwrap_or(true),
             debounce_ms: deserialize_optional_field(object, "debounce_ms")?.unwrap_or(0),

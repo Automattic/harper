@@ -4607,6 +4607,13 @@
 						},
 						{
 							"Bool": {
+								"name": "CondensateVerb",
+								"state": true,
+								"label": "Condensate Verb"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Confident",
 								"state": true,
 								"label": "Confident"

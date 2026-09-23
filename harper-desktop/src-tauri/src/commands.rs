@@ -35,6 +35,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         ignore_lint,
         add_to_dictionary,
         get_integrations,
+        get_auto_enable_new_apps,
+        set_auto_enable_new_apps,
         add_integration,
         remove_integration,
         set_integration_enabled,
@@ -255,7 +257,7 @@ async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker(Arc::new(StdMutex::new(integrations.clone())));
+    let broker = platform_broker(|_| false);
 
     Ok(integrations
         .into_iter()
@@ -265,6 +267,26 @@ async fn get_integrations(
             enabled: integration.enabled,
         })
         .collect())
+}
+
+#[tauri::command]
+async fn get_auto_enable_new_apps(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.auto_enable_new_apps)
+}
+
+#[tauri::command]
+async fn set_auto_enable_new_apps(
+    auto_enable_new_apps: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let previous = config.auto_enable_new_apps;
+    config.auto_enable_new_apps = auto_enable_new_apps;
+    if let Err(error) = config.save_to_system().await {
+        config.auto_enable_new_apps = previous;
+        return Err(error.to_string());
+    }
+    Ok(())
 }
 
 #[tauri::command]
@@ -316,10 +338,9 @@ async fn set_integration_enabled(
 #[tauri::command]
 async fn get_application_icon_data_url(
     bundle_id: String,
-    config: State<'_, Arc<Mutex<Config>>>,
+    _config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<String, String> {
-    let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker(Arc::new(StdMutex::new(integrations)));
+    let broker = platform_broker(|_| false);
     let icon_png = broker.application_icon_png(&bundle_id)?;
     let encoded = general_purpose::STANDARD.encode(&icon_png);
 
@@ -404,9 +425,8 @@ fn launch_app(
 #[tauri::command]
 fn search_apps(
     query: String,
-    config: State<'_, Arc<Mutex<Config>>>,
+    _config: State<'_, Arc<Mutex<Config>>>,
 ) -> Result<Vec<AppSearchResult>, String> {
-    let integrations = config.blocking_lock().integrations.clone();
-    let broker = platform_broker(Arc::new(StdMutex::new(integrations)));
+    let broker = platform_broker(|_| false);
     broker.search_apps(&query)
 }
