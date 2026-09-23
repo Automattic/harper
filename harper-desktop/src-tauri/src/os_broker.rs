@@ -43,7 +43,7 @@ pub trait OsBroker {
     fn cursor_position(&self) -> Option<egui::Pos2>;
 
     /// Checks whether the target application is still focused, without doing a full accessibility scan.
-    fn is_target_still_focused(&self) -> bool {
+    fn is_target_still_focused(&mut self) -> bool {
         true
     }
 

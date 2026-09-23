@@ -354,13 +354,13 @@ pub fn run_highlighter(has_parent: bool) {
                 .ignore_lint(lint, document);
         }
 
+        if !has_parent {
+            return;
+        }
+
         let snapshot = ignore_ignored_lints.borrow().clone();
-        if let Err(error) = ignore_runtime.block_on(
-            ignore_client
-                .lock()
-                .expect("IPC client lock poisoned")
-                .ignore_lint(&snapshot),
-        ) {
+        let mut client = ignore_client.lock().expect("IPC client lock poisoned");
+        if let Err(error) = ignore_runtime.block_on(client.ignore_lint(&snapshot)) {
             eprintln!("failed to sync ignored lints: {error}");
         }
     };
@@ -387,19 +387,24 @@ pub fn run_highlighter(has_parent: bool) {
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
-        if let Err(error) = dictionary_runtime.block_on(
-            dictionary_client
-                .lock()
-                .expect("IPC client lock poisoned")
-                .add_to_dictionary(word),
-        ) {
+        if !has_parent {
+            return;
+        }
+
+        let mut client = dictionary_client.lock().expect("IPC client lock poisoned");
+        if let Err(error) = dictionary_runtime.block_on(client.add_to_dictionary(word)) {
             eprintln!("failed to sync dictionary update: {error}");
         }
     };
 
     let disable_rule = move |rule_name: &str| {
         disable_debounce_state.borrow_mut().clear();
-        match disable_runtime.block_on(disable_client.borrow_mut().disable_rule(rule_name)) {
+        if !has_parent {
+            return;
+        }
+
+        let mut client = disable_client.lock().expect("IPC client lock poisoned");
+        match disable_runtime.block_on(client.disable_rule(rule_name)) {
             Ok(config) => disable_linter.borrow_mut().config = config,
             Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
         }
