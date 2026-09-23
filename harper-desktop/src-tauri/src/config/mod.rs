@@ -189,7 +189,7 @@ impl Config {
     #[allow(dead_code)]
     fn serialize_main(&self) -> serde_json::Result<String> {
         serde_json::to_string(&serde_json::json!({
-            "dialect": &self.dialect,
+            "dialect": serialize_language_compat(self.dialect),
             "ignored_lints": &self.ignored_lints,
             "lint_config": &self.lint_config,
             "integrations": &self.integrations,
@@ -271,6 +271,21 @@ where
     serde_json::from_value(value).map(Some)
 }
 
+/// Serialize the `dialect` config field. English is written as a plain dialect
+/// string, which is what released builds read; the other languages use the
+/// externally-tagged `Language` form.
+///
+/// Writing the released format for English keeps the file loadable by a build
+/// that predates `Language`. Such a build parses `dialect` as a bare `Dialect`
+/// and fails the whole document if it cannot, which silently resets the
+/// ignored lints, rule config and integrations along with it.
+fn serialize_language_compat(language: Language) -> serde_json::Value {
+    match language {
+        Language::English(dialect) => serde_json::json!(dialect),
+        other => serde_json::json!(other),
+    }
+}
+
 /// Deserialize the `dialect` config field, accepting both the current
 /// externally-tagged `Language` format and a plain `Dialect` string such as
 /// `"American"`, which is what the setting held before it became a `Language`.
@@ -322,6 +337,46 @@ mod tests {
         assert!(serialized.contains("auto_update"));
         assert!(serialized.contains("last_update_check"));
         assert!(serialized.contains("highlighter_service_enabled"));
+    }
+
+    #[test]
+    fn serialize_main_writes_english_as_a_plain_dialect_string() {
+        let mut config = Config::new();
+        config.dialect = Language::English(Dialect::British);
+
+        let serialized = config.serialize_main().unwrap();
+
+        // The format released builds read. Writing the tagged form here makes
+        // them fail the whole document and reset every other setting.
+        assert!(
+            serialized.contains(r#""dialect":"British""#),
+            "{serialized}"
+        );
+
+        assert_eq!(
+            Config::deserialize_main(&serialized).unwrap().dialect,
+            Language::English(Dialect::British)
+        );
+    }
+
+    #[cfg(feature = "de")]
+    #[test]
+    fn serialize_main_round_trips_a_non_english_language() {
+        use harper_core::language::german::dialects::GermanDialect;
+
+        let mut config = Config::new();
+        config.dialect = Language::German(GermanDialect::Standard);
+
+        let serialized = config.serialize_main().unwrap();
+
+        assert!(
+            serialized.contains(r#""dialect":{"German":"#),
+            "{serialized}"
+        );
+        assert_eq!(
+            Config::deserialize_main(&serialized).unwrap().dialect,
+            Language::German(GermanDialect::Standard)
+        );
     }
 
     #[test]
