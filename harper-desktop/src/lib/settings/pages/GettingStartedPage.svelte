@@ -2,6 +2,13 @@
 import { Button, CheckIcon } from 'components';
 import { onMount } from 'svelte';
 import { type AccessibilityPermissionStatus, Client, type Integration } from '$lib/client';
+import {
+	isWindows,
+	platformAccessibilityName,
+	platformAppId,
+	platformAppName,
+	platformPrivacyText,
+} from '$lib/platform';
 import AppIcon from '../components/AppIcon.svelte';
 import type { SectionId } from '../settings-data';
 
@@ -28,24 +35,28 @@ let hasRequestedAccessibility = false;
 let integrations: Integration[] = [];
 let integrationsError = '';
 let isLoadingIntegrations = true;
-let isEnablingTextEdit = false;
-let isLaunchingTextEdit = false;
+let isEnablingStarterApp = false;
+let isLaunchingStarterApp = false;
 let testDriveError = '';
 let isCompletingOnboarding = false;
 let onboardingError = '';
 
-$: textEditIntegration = integrations.find((item) => item.bundle_id === 'com.apple.TextEdit');
-$: isTextEditEnabled = textEditIntegration?.enabled === true;
+$: starterIntegration = integrations.find(
+	(item) =>
+		item.bundle_id === platformAppId ||
+		(isWindows && item.bundle_id.toLowerCase().includes('notepad')),
+);
+$: isStarterAppEnabled = starterIntegration?.enabled === true;
 
 $: setupSteps = buildSetupSteps(
 	accessibilityStatus,
 	isCheckingAccessibility,
 	isRequestingAccessibility,
 	hasRequestedAccessibility,
-	isTextEditEnabled,
+	isStarterAppEnabled,
 	isLoadingIntegrations,
-	isEnablingTextEdit,
-	isLaunchingTextEdit,
+	isEnablingStarterApp,
+	isLaunchingStarterApp,
 );
 $: requiredSetupSteps = setupSteps.filter((step) => step.required);
 $: setupCompletedCount = requiredSetupSteps.filter((step) => step.done).length;
@@ -72,42 +83,42 @@ async function loadIntegrations() {
 	}
 }
 
-async function enableTextEditForSetup() {
-	isEnablingTextEdit = true;
+async function enableStarterAppForSetup() {
+	isEnablingStarterApp = true;
 	integrationsError = '';
 
 	try {
-		if (textEditIntegration) {
-			await Client.setIntegrationEnabled('com.apple.TextEdit', true);
+		if (starterIntegration) {
+			await Client.setIntegrationEnabled(starterIntegration.bundle_id, true);
 			integrations = integrations.map((integration) =>
-				integration.bundle_id === 'com.apple.TextEdit'
+				integration.bundle_id === starterIntegration.bundle_id
 					? { ...integration, enabled: true }
 					: integration,
 			);
 		} else {
-			await Client.addIntegration('com.apple.TextEdit');
+			await Client.addIntegration(platformAppId);
 			integrations = [
 				...integrations,
-				{ bundle_id: 'com.apple.TextEdit', enabled: true, display_name: 'TextEdit' },
+				{ bundle_id: platformAppId, enabled: true, display_name: platformAppName },
 			];
 		}
 	} catch (error) {
-		integrationsError = `Unable to enable TextEdit: ${error}`;
+		integrationsError = `Unable to enable ${platformAppName}: ${error}`;
 	} finally {
-		isEnablingTextEdit = false;
+		isEnablingStarterApp = false;
 	}
 }
 
-async function launchTextEditForTestDrive() {
-	isLaunchingTextEdit = true;
+async function launchStarterAppForTestDrive() {
+	isLaunchingStarterApp = true;
 	testDriveError = '';
 
 	try {
-		await Client.launchApp('com.apple.TextEdit');
+		await Client.launchApp(starterIntegration?.bundle_id || platformAppId);
 	} catch (error) {
-		testDriveError = `Unable to launch TextEdit: ${error}`;
+		testDriveError = `Unable to launch ${platformAppName}: ${error}`;
 	} finally {
-		isLaunchingTextEdit = false;
+		isLaunchingStarterApp = false;
 	}
 }
 
@@ -167,14 +178,16 @@ async function requestAccessibilityPermission() {
 
 function accessibilityDescription(status: AccessibilityPermissionStatus | null) {
 	if (status === 'Granted') {
-		return 'Harper can access text through the macOS Accessibility system.';
+		return `Harper can access text through ${platformAccessibilityName}.`;
 	}
 
 	if (status === 'Unsupported') {
-		return 'Accessibility setup is only available on macOS right now.';
+		return 'Accessibility setup is only available on desktop right now.';
 	}
 
-	return 'Open system settings and grant Harper access to the Accessibility system.';
+	return isWindows
+		? 'Harper can access text through Windows UI Automation.'
+		: 'Open system settings and grant Harper access to the Accessibility system.';
 }
 
 function accessibilityActionLabel(
@@ -203,7 +216,7 @@ function accessibilityActionLabel(
 		return 'Recheck Permission';
 	}
 
-	return 'Open System Settings';
+	return isWindows ? 'Check Permission' : 'Open System Settings';
 }
 
 function buildSetupSteps(
@@ -211,14 +224,14 @@ function buildSetupSteps(
 	currentIsCheckingAccessibility: boolean,
 	currentIsRequestingAccessibility: boolean,
 	currentHasRequestedAccessibility: boolean,
-	currentIsTextEditEnabled: boolean,
+	currentIsStarterAppEnabled: boolean,
 	currentIsLoadingIntegrations: boolean,
-	currentIsEnablingTextEdit: boolean,
-	currentIsLaunchingTextEdit: boolean,
+	currentIsEnablingStarterApp: boolean,
+	currentIsLaunchingStarterApp: boolean,
 ): SetupStep[] {
 	const accessibilityDone = currentAccessibilityStatus === 'Granted';
 	const accessibilityReady = accessibilityDone || currentAccessibilityStatus === 'Unsupported';
-	const integrationDone = currentIsTextEditEnabled;
+	const integrationDone = currentIsStarterAppEnabled;
 	const accessibilityActionDisabled =
 		currentIsCheckingAccessibility ||
 		currentIsRequestingAccessibility ||
@@ -246,26 +259,26 @@ function buildSetupSteps(
 		{
 			id: 'integration',
 			title: 'Pick an app to test',
-			desc: 'Start with TextEdit, then add more apps from Integrations when you are ready.',
+			desc: `Start with ${platformAppName}, then add more apps from Integrations when you are ready.`,
 			required: true,
 			done: integrationDone,
 			locked: !accessibilityReady,
 			actionLabel: integrationDone ? 'Manage' : 'Browse apps',
 			actionVariant: 'default',
 			action: () => navigateToSection('integrations'),
-			actionDisabled: currentIsLoadingIntegrations || currentIsEnablingTextEdit,
+			actionDisabled: currentIsLoadingIntegrations || currentIsEnablingStarterApp,
 		},
 		{
 			id: 'test-drive',
 			title: 'Take a test drive',
-			desc: 'Open TextEdit, type "its not alot of fun", and watch Harper underline the mistakes.',
+			desc: `Open ${platformAppName}, type "its not alot of fun", and watch Harper underline the mistakes.`,
 			required: false,
 			done: false,
 			locked: !accessibilityReady || !integrationDone,
-			actionLabel: currentIsLaunchingTextEdit ? 'Launching...' : 'Launch TextEdit',
+			actionLabel: currentIsLaunchingStarterApp ? 'Launching...' : `Launch ${platformAppName}`,
 			actionVariant: 'primary',
-			action: launchTextEditForTestDrive,
-			actionDisabled: currentIsLaunchingTextEdit,
+			action: launchStarterAppForTestDrive,
+			actionDisabled: currentIsLaunchingStarterApp,
 		},
 	];
 }
@@ -353,8 +366,8 @@ function buildSetupSteps(
                   <div class="detected-app">
                     <div class="app-tile" style="--app-tint: #b06a1b">A</div>
                     <div class="grow">
-                      <strong>Waiting for macOS</strong>
-                      <p>After granting access in System Settings, return here and recheck permission.</p>
+                      <strong>Waiting for {isWindows ? 'Windows' : 'macOS'}</strong>
+                      <p>After granting access in settings, return here and recheck permission.</p>
                     </div>
                   </div>
                 {/if}
@@ -363,7 +376,7 @@ function buildSetupSteps(
                   <div class="detected-app">
                     <div class="big-mark amber">!</div>
                     <div class="grow">
-                      <strong>TextEdit launch failed</strong>
+                      <strong>{platformAppName} launch failed</strong>
                       <p>{testDriveError}</p>
                     </div>
                   </div>
@@ -379,29 +392,29 @@ function buildSetupSteps(
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted" && isLoadingIntegrations}
                   <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
+                    <AppIcon bundleId={platformAppId} name={platformAppName} />
                     <div class="grow">
-                      <strong>Checking TextEdit</strong>
+                      <strong>Checking {platformAppName}</strong>
                       <p>Loading integration state...</p>
                     </div>
                   </div>
-                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isTextEditEnabled}
+                {:else if step.id === "integration" && accessibilityStatus === "Granted" && isStarterAppEnabled}
                   <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
+                    <AppIcon bundleId={platformAppId} name={platformAppName} />
                     <div class="grow">
-                      <strong>TextEdit enabled</strong>
-                      <p>Harper is configured to check TextEdit.</p>
+                      <strong>{platformAppName} enabled</strong>
+                      <p>Harper is configured to check {platformAppName}.</p>
                     </div>
                   </div>
                 {:else if step.id === "integration" && accessibilityStatus === "Granted"}
                   <div class="detected-app">
-                    <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
+                    <AppIcon bundleId={platformAppId} name={platformAppName} />
                     <div class="grow">
-                      <strong>TextEdit detected</strong>
+                      <strong>{platformAppName} detected</strong>
                       <p>A good starter app for trying Harper.</p>
                     </div>
-                    <Button unstyled class="button primary" type="button" disabled={isEnablingTextEdit} on:click={enableTextEditForSetup}>
-                      {isEnablingTextEdit ? "Enabling..." : "Enable"}
+                    <Button unstyled class="button primary" type="button" disabled={isEnablingStarterApp} on:click={enableStarterAppForSetup}>
+                      {isEnablingStarterApp ? "Enabling..." : "Enable"}
                     </Button>
                   </div>
                 {/if}
@@ -421,6 +434,6 @@ function buildSetupSteps(
 
         <div class="note-strip">
           <strong>On-device by default.</strong>
-          <span>Your writing stays on this Mac in this demo surface.</span>
+          <span>Your writing stays on {platformPrivacyText} in this demo surface.</span>
         </div>
       </section>

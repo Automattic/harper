@@ -2,6 +2,7 @@
 import { SearchIcon } from 'components';
 import { onMount } from 'svelte';
 import { type AppSearchResult, Client } from '$lib/client';
+import { isWindows } from '$lib/platform';
 import AppIcon from './AppIcon.svelte';
 
 export let bundleId = '';
@@ -101,7 +102,7 @@ function submit() {
   >
     <div class="modal-head">
       <strong>Add application</strong>
-      <span>Enter the app bundle ID Harper should watch.</span>
+      <span>{isWindows ? 'Enter the app name or executable path Harper should watch.' : 'Enter the app bundle ID Harper should watch.'}</span>
     </div>
     <div class="modal-search">
       <SearchIcon className="settings-icon" />
@@ -145,10 +146,10 @@ function submit() {
         {#if isDuplicate}
           <div class="empty">That application is already configured.</div>
         {:else}
-          <div class="empty">No matching apps found. Try typing the bundle ID directly (e.g., com.apple.TextEdit)</div>
+          <div class="empty">No matching apps found. Try typing the {isWindows ? 'app executable directly (e.g., notepad.exe)' : 'bundle ID directly (e.g., com.apple.TextEdit)'}</div>
         {/if}
       {:else}
-        <div class="empty">Search for an app by name, or enter the bundle ID directly.</div>
+        <div class="empty">{isWindows ? 'Search for an app by name, or enter the executable path directly.' : 'Search for an app by name, or enter the bundle ID directly.'}</div>
       {/if}
     </div>
     <div class="modal-actions">

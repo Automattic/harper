@@ -1,9 +1,18 @@
 <script lang="ts">
 import { Button, Checkbox, CheckIcon, Select, SettingRow } from 'components';
+import { isWindows } from '$lib/platform';
 
 const shortcutItems = [
-	{ id: 'show-menu', label: 'Show Harper menu', keys: ['Shift', 'Cmd', 'H'] },
-	{ id: 'quick-review', label: 'Open quick review', keys: ['Ctrl', 'Cmd', 'Space'] },
+	{
+		id: 'show-menu',
+		label: 'Show Harper menu',
+		keys: isWindows ? ['Ctrl', 'Shift', 'H'] : ['Shift', 'Cmd', 'H'],
+	},
+	{
+		id: 'quick-review',
+		label: 'Open quick review',
+		keys: isWindows ? ['Ctrl', 'Alt', 'Space'] : ['Ctrl', 'Cmd', 'Space'],
+	},
 	{ id: 'accept-last', label: 'Apply last suggestion', keys: ['Ctrl', 'E'] },
 	{ id: 'dismiss-last', label: 'Dismiss last suggestion', keys: ['Ctrl', 'D'] },
 	{ id: 'toggle-pause', label: 'Pause or resume checking', keys: ['Ctrl', 'Shift', 'P'] },
@@ -19,7 +28,7 @@ let activationKey = 'off';
         <div class="stanza">
           <div class="eyebrow">Keyboard Shortcuts</div>
           <p class="section-copy">
-            Global shortcuts work from anywhere on macOS. Click a shortcut to preview recording.
+            Global shortcuts work from anywhere on {isWindows ? 'Windows' : 'macOS'}. Click a shortcut to preview recording.
           </p>
 
           <div class="shortcut-list">
@@ -70,7 +79,7 @@ let activationKey = 'off';
               bind:value={activationKey}
             >
               <option value="off">Off</option>
-              <option value="option">Option</option>
+              <option value="option">{isWindows ? 'Alt' : 'Option'}</option>
               <option value="control">Control</option>
               <option value="shift">Shift</option>
             </Select>

@@ -2,6 +2,7 @@
 import { Button, Checkbox, IconButton, Panel, SettingRow, Toggle, TrashIcon } from 'components';
 import { onMount } from 'svelte';
 import { Client, type Integration } from '$lib/client';
+import { isWindows } from '$lib/platform';
 import AppIcon from '../components/AppIcon.svelte';
 import AppPickerModal from '../components/AppPickerModal.svelte';
 
@@ -180,7 +181,7 @@ function closeAppPicker() {
         disabled={isIntegrationsLoading || isIntegrationsSaving}
         on:click={() => (appPickerOpen = true)}
       >Add application...</Button>
-      <span class="muted">Choose any app from your Applications folder.</span>
+      <span class="muted">{isWindows ? 'Choose any installed application on your PC.' : 'Choose any app from your Applications folder.'}</span>
     </div>
   </div>
 
