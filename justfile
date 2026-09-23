@@ -475,7 +475,15 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
   pnpm install
   pnpm check
 
-  # Needed because Svelte has special linters
+  cd "{{justfile_directory()}}/packages/chrome-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/components"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/harper-editor"
+  pnpm check
+
   cd "{{justfile_directory()}}/packages/web"
   ENABLE_ADMIN_ROUTES=false pnpm check
 
