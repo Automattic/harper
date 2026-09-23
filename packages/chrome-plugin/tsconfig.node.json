@@ -1,8 +1,11 @@
 {
 	"compilerOptions": {
-		"composite": true,
+		"target": "ESNext",
 		"module": "ESNext",
-		"moduleResolution": "Node"
+		"moduleResolution": "bundler",
+		"allowSyntheticDefaultImports": true,
+		"resolveJsonModule": true,
+		"skipLibCheck": true
 	},
-	"include": ["vite.config.ts"]
+	"include": ["vite.config.ts", "src/manifest.ts"]
 }
