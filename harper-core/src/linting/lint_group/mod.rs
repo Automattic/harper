@@ -373,7 +373,7 @@ pub struct LintGroup {
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
     ///
-    /// Since the expr linter results also depend on the config, we hash it and pass it as part
+    /// Since the expr linter results also depend on the configuration, we hash it and pass it as part
     /// of the key.
     chunk_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     sentence_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
@@ -961,7 +961,7 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
 
-        // Uses Sentence rather than CHunk
+        // Uses Sentence rather than Chunk
         out.add("DissembleDisassemble", DissembleDisassemble::default());
 
         // Uses Sentence rather than Chunk
