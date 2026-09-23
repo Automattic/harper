@@ -3,23 +3,15 @@ import { openUrl } from '@tauri-apps/plugin-opener';
 import { Button } from 'components';
 import { onMount } from 'svelte';
 import { DesktopUpdater } from '$lib/DesktopUpdater';
+import { isWindows } from '$lib/platform';
 
 const SOURCE_URL = 'https://github.com/Automattic/harper';
 const ISSUE_URL = 'https://github.com/Automattic/harper/issues/new/choose';
 
 let currentVersion = '';
-let isWindows =
-	typeof navigator !== 'undefined' &&
-	(/win/i.test((navigator as any).userAgentData?.platform || navigator.platform || '') ||
-		/windows/i.test(navigator.userAgent || ''));
 
 onMount(() => {
 	void loadCurrentVersion();
-	if (typeof navigator !== 'undefined') {
-		isWindows =
-			/win/i.test((navigator as any).userAgentData?.platform || navigator.platform || '') ||
-			/windows/i.test(navigator.userAgent || '');
-	}
 });
 
 async function loadCurrentVersion() {

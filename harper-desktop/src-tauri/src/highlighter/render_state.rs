@@ -125,6 +125,22 @@ impl RenderState {
         self.highlighted_lint = None;
     }
 
+    /// Removes the lint at `index` from the cached lint list, if present.
+    fn remove_lint_at(&mut self, index: usize) {
+        let Some(lints) = self.last_lints.as_mut() else {
+            return;
+        };
+        if index < lints.len() {
+            lints.remove(index);
+        }
+    }
+
+    /// Clears all cached lints and closes any active popup.
+    pub fn clear_lints(&mut self) {
+        self.last_lints = Some(Vec::new());
+        self.close_popup();
+    }
+
     /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
         if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
@@ -172,12 +188,7 @@ impl RenderState {
                         actionable_lint.apply_suggestion(suggestion);
                     }
 
-                    if let Some(lints) = self.last_lints.as_mut() {
-                        if index < lints.len() {
-                            lints.remove(index);
-                        }
-                    }
-
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::IgnoreLint) => {
@@ -193,12 +204,7 @@ impl RenderState {
                         (self.ignore_lint)(&lint, &document);
                     }
 
-                    if let Some(lints) = self.last_lints.as_mut() {
-                        if index < lints.len() {
-                            lints.remove(index);
-                        }
-                    }
-
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::AddToDictionary) => {
@@ -215,12 +221,7 @@ impl RenderState {
                         (self.add_to_dictionary)(&word);
                     }
 
-                    if let Some(lints) = self.last_lints.as_mut() {
-                        if index < lints.len() {
-                            lints.remove(index);
-                        }
-                    }
-
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::DisableRule) => {
@@ -232,12 +233,7 @@ impl RenderState {
                         (self.disable_rule)(&rule_name);
                     }
 
-                    if let Some(lints) = self.last_lints.as_mut() {
-                        if index < lints.len() {
-                            lints.remove(index);
-                        }
-                    }
-
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 None => {}
@@ -248,18 +244,35 @@ impl RenderState {
 
 /// Draws the always-visible lint marker without making the renderer responsible for popup state.
 fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
+    let anim_id = egui::Id::new("lint-highlight-anim")
+        .with(rect.x.to_bits())
+        .with(rect.y.to_bits())
+        .with(rect.width.to_bits())
+        .with(rect.height.to_bits());
+    let anim_progress = ui.ctx().animate_bool_with_time(anim_id, true, 0.20);
+    // Smooth quadratic ease-out
+    let t = 1.0 - (1.0 - anim_progress).powi(2);
+
     let rect_bounds = rect_bounds(rect);
     let color = lint_color(lint);
     let [r, g, b, _] = color.to_array();
-    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 24);
-    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 255);
+    let fill_alpha = (24.0 * t) as u8;
+    let underline_alpha = (255.0 * t) as u8;
+    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, fill_alpha);
+    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, underline_alpha);
     let underline_height = rect_bounds.height().min(2.0);
 
-    ui.painter().rect_filled(rect_bounds, 0.0, fill_color);
+    let animated_right = rect_bounds.left() + rect_bounds.width() * t;
+    let animated_bounds = egui::Rect::from_min_max(
+        rect_bounds.left_top(),
+        egui::pos2(animated_right, rect_bounds.bottom()),
+    );
+
+    ui.painter().rect_filled(animated_bounds, 0.0, fill_color);
     ui.painter().rect_filled(
         egui::Rect::from_min_max(
             egui::pos2(rect_bounds.left(), rect_bounds.bottom() - underline_height),
-            rect_bounds.right_bottom(),
+            egui::pos2(animated_right, rect_bounds.bottom()),
         ),
         0.0,
         underline_color,
@@ -274,11 +287,21 @@ fn render_lint_card(
     source_text: &str,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
-    let popup_rect = popup_rect_for_lint(rect);
+    let card_id = egui::Id::new("harper-lint-card-entrance")
+        .with(rect.x.to_bits())
+        .with(rect.y.to_bits());
+    let anim = ui.ctx().animate_bool_with_time(card_id, true, 0.22);
+    // Stretchy, sleek spring-like ease-out curve with subtle overshoot:
+    let p = anim - 1.0;
+    let spring_t = 1.0 + p * p * (2.7 * p + 1.7);
+    let y_offset = (1.0 - spring_t.clamp(0.0, 1.05)) * 10.0;
+
+    let base_rect = popup_rect_for_lint(rect);
+    let animated_pos = egui::pos2(base_rect.min.x, base_rect.min.y + y_offset);
 
     egui::Area::new(egui::Id::new("harper-lint-card"))
         .order(egui::Order::Foreground)
-        .fixed_pos(popup_rect.min)
+        .fixed_pos(animated_pos)
         .show(ui.ctx(), |ui| {
             let mut action = None;
 

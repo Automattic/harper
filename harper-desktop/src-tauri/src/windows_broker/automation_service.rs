@@ -417,9 +417,23 @@ fn apply_suggestion_to_text(
 }
 
 fn get_text(element: &UIElement) -> uiautomation::Result<String> {
-    let pattern: UITextPattern = element.get_pattern()?;
-    let range = pattern.get_document_range()?;
-    range.get_text(-1)
+    if let Ok(pattern) = element.get_pattern::<UITextPattern>()
+        && let Ok(range) = pattern.get_document_range()
+        && let Ok(text) = range.get_text(-1)
+    {
+        return Ok(text);
+    }
+
+    if let Ok(pattern) = element.get_pattern::<UIValuePattern>()
+        && let Ok(value) = pattern.get_value()
+    {
+        return Ok(value);
+    }
+
+    Err(Error::new(
+        uiautomation::errors::ERR_NOTFOUND,
+        "no text or value pattern found",
+    ))
 }
 
 fn text_matches(current: &str, expected: &str) -> bool {
@@ -435,6 +449,21 @@ fn text_element_for_window(
     window: isize,
     expected_text: Option<&str>,
 ) -> uiautomation::Result<UIElement> {
+    // First, check if the system-focused element directly provides text.
+    // In complex applications like MS Word 2016, the document editing surface (_WwG) is often the focused element,
+    // which avoids an expensive Subtree traversal of Word's massive ribbon and task-pane hierarchy.
+    if let Ok(focused) = automation.get_focused_element()
+        && let Ok(text) = get_text(&focused)
+    {
+        if let Some(expected) = expected_text {
+            if text_matches(&text, expected) {
+                return Ok(focused);
+            }
+        } else if !text.is_empty() {
+            return Ok(focused);
+        }
+    }
+
     let root = automation.element_from_handle(Handle::from(window))?;
     let text_condition = automation.create_property_condition(
         UIProperty::IsTextPatternAvailable,
@@ -445,18 +474,18 @@ fn text_element_for_window(
     // If expected_text is provided, search without requiring keyboard focus
     // because clicking the Harper overlay may have transferred focus away from the editor.
     if let Some(expected) = expected_text {
-        if let Ok(text) = get_text(&root) {
-            if text_matches(&text, expected) {
-                return Ok(root);
-            }
+        if let Ok(text) = get_text(&root)
+            && text_matches(&text, expected)
+        {
+            return Ok(root);
         }
 
         if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition) {
             for element in elements {
-                if let Ok(text) = get_text(&element) {
-                    if text_matches(&text, expected) {
-                        return Ok(element);
-                    }
+                if let Ok(text) = get_text(&element)
+                    && text_matches(&text, expected)
+                {
+                    return Ok(element);
                 }
             }
         }
@@ -488,15 +517,15 @@ fn text_element_for_window(
 
     // Fallback when expected_text is None: return the first available text element
     if expected_text.is_none() {
-        if let Ok(text) = get_text(&root) {
-            if !text.is_empty() {
-                return Ok(root);
-            }
+        if let Ok(text) = get_text(&root)
+            && !text.is_empty()
+        {
+            return Ok(root);
         }
-        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition) {
-            if let Some(first) = elements.into_iter().next() {
-                return Ok(first);
-            }
+        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition)
+            && let Some(first) = elements.into_iter().next()
+        {
+            return Ok(first);
         }
     }
 

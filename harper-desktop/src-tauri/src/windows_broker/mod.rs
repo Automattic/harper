@@ -15,7 +15,7 @@ use std::{
     path::PathBuf,
     sync::{Arc, Mutex},
 };
-use windows::Win32::Foundation::{CloseHandle, HWND, POINT};
+use windows::Win32::Foundation::{CloseHandle, HWND, POINT, RECT};
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::System::Threading::{
     OpenProcess, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION, QueryFullProcessImageNameW,
@@ -23,7 +23,7 @@ use windows::Win32::System::Threading::{
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{
     GUI_INMOVESIZE, GUITHREADINFO, GetCursorPos, GetForegroundWindow, GetGUIThreadInfo,
-    GetWindowThreadProcessId,
+    GetWindowRect, GetWindowThreadProcessId,
 };
 use windows::core::{PWSTR, Result as WindowsResult};
 use wintheon::file::{IconSize, Priority};
@@ -33,6 +33,7 @@ mod automation_service;
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
     integrations: Arc<Mutex<Vec<Integration>>>,
+    last_window_rect: Arc<Mutex<Option<(isize, RECT)>>>,
 }
 
 impl WindowsBroker {
@@ -40,6 +41,7 @@ impl WindowsBroker {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             integrations,
+            last_window_rect: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -53,19 +55,41 @@ impl WindowsBroker {
             return Some(false);
         }
 
-        match window_is_moving(HWND(focused_window as *mut c_void)) {
-            Ok(is_moving) => Some(!is_moving),
+        let hwnd = HWND(focused_window as *mut c_void);
+        match window_is_moving(hwnd) {
+            Ok(true) => return Some(false),
+            Ok(false) => {}
             Err(error) => {
                 eprintln!(
                     "Unable to determine whether the focused Windows window is moving: {error}"
                 );
-                None
             }
         }
+
+        // Also check if the window position moved since the previous tick (covers custom titlebar drags)
+        let mut current_rect = RECT::default();
+        if unsafe { GetWindowRect(hwnd, &mut current_rect) }.is_ok()
+            && let Ok(mut last_rect) = self.last_window_rect.lock()
+        {
+            if let Some((last_hwnd, prev_rect)) = *last_rect
+                && last_hwnd == focused_window
+                && prev_rect != current_rect
+            {
+                *last_rect = Some((focused_window, current_rect));
+                return Some(false);
+            }
+            *last_rect = Some((focused_window, current_rect));
+        }
+
+        Some(true)
     }
 }
 
 impl OsBroker for WindowsBroker {
+    fn is_target_still_focused(&self) -> bool {
+        self.should_lint_focused_window().unwrap_or(false)
+    }
+
     fn get_boxes(
         &mut self,
         lint_text: &mut dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>>,
@@ -165,15 +189,11 @@ impl OsBroker for WindowsBroker {
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
-        if let Some(entry) = look_up_application(bundle_id) {
-            if let Some(png) = entry.icon_png {
-                return Ok(png);
-            } else {
-                return Err("Found application but it was missing an icon.".to_string());
-            }
-        } else {
-            return Err("Unable to locate application.".to_string());
-        }
+        let entry = look_up_application(bundle_id)
+            .ok_or_else(|| "Unable to locate application.".to_string())?;
+        entry
+            .icon_png
+            .ok_or_else(|| "Found application but it was missing an icon.".to_string())
     }
 
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
@@ -211,7 +231,6 @@ impl OsBroker for WindowsBroker {
                         .to_lowercase()
                         .contains(&lower_query)
             })
-            .cloned()
             .map(|entry| entry.to_search_result())
             .collect())
     }
@@ -248,8 +267,7 @@ fn get_focused_monitor_scale() -> f64 {
 
         let _ = GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
 
-        let effective_scale = x as f64 / 96.;
-        effective_scale
+        x as f64 / 96.
     }
 }
 
@@ -265,7 +283,7 @@ impl ApplicationListEntry {
     fn to_search_result(&self) -> AppSearchResult {
         AppSearchResult {
             name: self.display_name.clone(),
-            bundle_id: self.path.to_string_lossy().to_owned().to_string(),
+            bundle_id: self.path.to_string_lossy().into_owned(),
         }
     }
 }
@@ -273,34 +291,27 @@ impl ApplicationListEntry {
 fn look_up_application(bundle_id: &str) -> Option<ApplicationListEntry> {
     // In Windows, the application path is the bundle ID.
     let list = installed_applications_list();
-    if let Some(entry) = list
-        .iter()
+    list.iter()
         .find(|entry| entry.path.to_string_lossy() == bundle_id)
-    {
-        Some(entry.clone())
-    } else {
-        None
-    }
+        .cloned()
 }
 
 #[cached]
 fn installed_applications_list() -> Arc<Vec<ApplicationListEntry>> {
     let mut list = Vec::new();
 
-    for res in gatherer().scan() {
-        if let Ok(app) = res {
-            let icon = if let Ok(icon) = app.entry.icon() {
-                icon.extract_icon_as_png_at(IconSize::Jumbo)
-            } else {
-                None
-            };
+    for app in gatherer().scan().flatten() {
+        let icon = if let Ok(icon) = app.entry.icon() {
+            icon.extract_icon_as_png_at(IconSize::Jumbo)
+        } else {
+            None
+        };
 
-            list.push(ApplicationListEntry {
-                path: app.entry.path().to_owned(),
-                icon_png: icon,
-                display_name: app.entry.display_name(),
-            })
-        }
+        list.push(ApplicationListEntry {
+            path: app.entry.path().to_owned(),
+            icon_png: icon,
+            display_name: app.entry.display_name(),
+        });
     }
 
     Arc::new(list)

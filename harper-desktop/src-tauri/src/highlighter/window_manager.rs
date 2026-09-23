@@ -119,6 +119,7 @@ struct WindowManagerApp {
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
+    consecutive_none_reads: usize,
     error: Option<Error>,
 }
 
@@ -148,6 +149,7 @@ impl WindowManagerApp {
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
+            consecutive_none_reads: 0,
             error: None,
         }
     }
@@ -155,17 +157,36 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
-        // While the user is interacting with the suggestion popup, pause background accessibility reads.
-        // This frees the UI thread from blocking COM queries, keeping hover animations and clicks at 144Hz.
+        // While the user is interacting with the suggestion popup, pause background accessibility reads,
+        // but verify whether the target app is still focused so stale popups do not linger on unfocused apps.
         if self.render_state.popup_rect().is_some() {
+            if !self.os_broker.is_target_still_focused() {
+                self.render_state.clear_lints();
+                for window in &self.windows {
+                    window.request_redraw();
+                }
+            }
             return;
         }
 
         let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
-        if let Some(lints) = lints {
-            self.render_state.set_lints(lints);
-            for window in &self.windows {
-                window.request_redraw();
+        match lints {
+            Some(lints) => {
+                self.consecutive_none_reads = 0;
+                self.render_state.set_lints(lints);
+                for window in &self.windows {
+                    window.request_redraw();
+                }
+            }
+            None => {
+                self.consecutive_none_reads += 1;
+                // If reads fail consecutively (app switched, closed, or unfocused), clear stale highlights.
+                if self.consecutive_none_reads >= 2 {
+                    self.render_state.clear_lints();
+                    for window in &self.windows {
+                        window.request_redraw();
+                    }
+                }
             }
         }
     }
