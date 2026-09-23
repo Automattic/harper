@@ -1,6 +1,5 @@
 <script lang="ts">
-import { ChevronRightIcon, Link, Textarea } from 'components';
-import SlideDeck from '$lib/components/SlideDeck.svelte';
+import { ChevronRightIcon, Link, SlideDeck, Textarea } from 'components';
 import AppLogoTile from '$lib/marketing/AppLogoTile.svelte';
 import { marketingLinks } from '$lib/marketing/data';
 

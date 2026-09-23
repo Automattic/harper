@@ -1,6 +1,9 @@
 <script lang="ts">
-import { Button, ChevronLeftIcon, ChevronRightIcon, Panel } from 'components';
 import { onMount, tick } from 'svelte';
+import Button from './Button.svelte';
+import ChevronLeftIcon from './icons/ChevronLeftIcon.svelte';
+import ChevronRightIcon from './icons/ChevronRightIcon.svelte';
+import Panel from './Panel.svelte';
 
 /**
  * Slide deck shell: `slideProgress` runs from 0 (first slide) to 1 (last slide)
