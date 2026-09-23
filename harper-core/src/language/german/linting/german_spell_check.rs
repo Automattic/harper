@@ -558,12 +558,12 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
                             .map(|s| s.iter().collect::<String>())
                             .collect();
                         format!(
-                            "Possible spelling error: \"{}\". Did you mean: {}?",
+                            "»{}« könnte falsch geschrieben sein. Meinten Sie: {}?",
                             word_str,
                             suggestions_str.join(", ")
                         )
                     } else {
-                        format!("Unknown word: \"{}\".", word_str)
+                        format!("»{}« ist kein bekanntes Wort.", word_str)
                     };
 
                     lints.push(Lint {
@@ -584,7 +584,7 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
     }
 
     fn description(&self) -> &str {
-        "Checks for spelling errors in German text"
+        "Prüft die Rechtschreibung deutscher Wörter."
     }
 }
 

@@ -145,10 +145,11 @@ mod german_tests {
             lints.len()
         );
 
-        // Verify we have suggestions for the misspellings
+        // Verify we have suggestions for the misspellings. Match on the lint
+        // kind, not on the message text: the German rules report in German.
         let spelling_lints: Vec<_> = lints
             .iter()
-            .filter(|l| l.message.contains("spelling") || l.message.contains("Spelling"))
+            .filter(|l| l.lint_kind == harper_core::linting::LintKind::Spelling)
             .collect();
 
         assert!(

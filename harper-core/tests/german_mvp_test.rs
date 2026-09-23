@@ -10,7 +10,7 @@ mod tests {
     use harper_core::language::german::linting::new_curated_german;
     use harper_core::language::german::parsers::PlainGerman;
     use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::linting::Linter;
+    use harper_core::linting::{LintKind, Linter};
     use harper_core::parsers::Parser;
 
     /// Test 1: German parser functionality
@@ -72,9 +72,11 @@ mod tests {
         let document = Document::new(text, &PlainGerman, &dict);
         let lints = linter.lint(&document);
 
+        // Match on the lint kind, not on the message text: the German rules
+        // report in German.
         let spelling_lints: Vec<_> = lints
             .iter()
-            .filter(|l| l.message.contains("spelling") || l.message.contains("Spelling"))
+            .filter(|l| l.lint_kind == LintKind::Spelling)
             .collect();
 
         assert!(
