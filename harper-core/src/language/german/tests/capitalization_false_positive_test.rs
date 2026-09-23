@@ -54,6 +54,41 @@ mod tests {
         }
     }
 
+    /// A German main clause puts the finite verb second, so the word after a
+    /// subject pronoun is that verb. The first-person singular ending `-e` has
+    /// the shape of a noun singular or plural (*die Rede*, *die Spiele*), and
+    /// the compound-aware dictionary hands back a noun reading for it.
+    ///
+    /// The audit corpus this file comes from is encyclopedic third-person
+    /// prose: it contains the word *Ich* exactly zero times, so this whole
+    /// class was invisible to it while being the commonest shape in everyday
+    /// writing.
+    #[test]
+    fn a_verb_after_a_subject_pronoun_is_not_flagged() {
+        for text in [
+            "Ich fahre mit dem Auto zur Schule.",
+            "Ich spiele am Abend Klavier.",
+            "Ich trinke gern Tee.",
+            "Ich rede nicht gern darüber.",
+            "Ich zeige dir den Weg.",
+            "Er fährt, sie spielt, wir reden.",
+            "Du spielst gut und er redet viel.",
+        ] {
+            assert_clean(text);
+        }
+    }
+
+    /// The gate above must not swallow the possessive `ihr`, which really does
+    /// open a noun phrase.
+    #[test]
+    fn a_noun_after_the_possessive_ihr_is_still_flagged() {
+        let flagged = flagged("Sie zeigte mir ihr haus in der Stadt.");
+        assert!(
+            flagged.iter().any(|w| w == "haus"),
+            "'haus' after the possessive 'ihr' is a miscapitalized noun; flagged: {flagged:?}"
+        );
+    }
+
     /// A dash used as punctuation is set off by spaces and must not suppress a
     /// real lower-case noun next to it.
     #[test]

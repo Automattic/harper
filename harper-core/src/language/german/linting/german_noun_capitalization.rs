@@ -304,6 +304,22 @@ const RELATIVE_PRONOUNS: &[&str] = &[
     "welchen", "welchem", "wer", "wen", "wem", "was",
 ];
 
+/// Personal pronouns that stand alone as the subject of a clause. A German main
+/// clause puts the finite verb second, so a lowercase word straight after one of
+/// these is that verb — never a miscapitalized noun.
+///
+/// This matters because the first-person singular ending `-e` has exactly the
+/// shape of a noun singular or plural: *die Rede*, *die Spiele*, *die Fahre*.
+/// Without this gate the compound-aware dictionary hands back a noun reading for
+/// *rede*, *spiele*, *trinke*, *zeige* and *fahre*, and `Ich fahre nach Berlin`
+/// is reported as a capitalization error.
+///
+/// `ihr` is deliberately absent: it is also the possessive determiner, so *ihr
+/// haus* really is a miscapitalized noun. The apposition the rest of the list
+/// gives up on — *wir Deutschen*, *du Dummkopf* — needs a capital anyway, and is
+/// far rarer than a first-person sentence.
+const SUBJECT_PRONOUNS: &[&str] = &["ich", "du", "er", "sie", "es", "wir"];
+
 const COORDINATORS: &[&str] = &[
     "und",
     "oder",
@@ -573,6 +589,17 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             || token.kind.is_adjective()
             || token.kind.is_oov()
             || Self::has_no_pos_reading(token)
+    }
+
+    /// Does `prev` end a clause subject, making this token the finite verb?
+    ///
+    /// See [`SUBJECT_PRONOUNS`]. The pronoun has to be the written word itself,
+    /// so a capitalized *Sie* counts and so does a sentence-initial *Ich*.
+    fn follows_subject_pronoun(prev: Option<&Token>, document: &Document) -> bool {
+        prev.is_some_and(|p| {
+            matches!(p.kind, TokenKind::Word(_))
+                && SUBJECT_PRONOUNS.contains(&Self::lowercase_of(p, document).as_str())
+        })
     }
 
     /// Is the token a word the dictionary knows but gives no part of speech?
@@ -1206,6 +1233,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     if Self::is_hyphen_compound_fragment(token, prev, next)
                         || Self::follows_language_gloss(&tokens, i, document)
                         || Self::in_foreign_stretch(&tokens, i, document)
+                        || Self::follows_subject_pronoun(prev, document)
                     {
                         continue;
                     }
@@ -1235,7 +1263,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                             suggestions: vec![Suggestion::ReplaceWith(replacement)],
                             priority: 25, // High priority for German
                             message: format!(
-                                "In German, all nouns must be capitalized. \"{}\" appears to be a noun.",
+                                "Nomen werden im Deutschen großgeschrieben. »{}« ist offenbar ein Nomen.",
                                 word_chars.iter().collect::<String>()
                             ),
                         });
@@ -1248,7 +1276,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
     }
 
     fn description(&self) -> &str {
-        "Ensures German nouns are properly capitalized"
+        "Achtet darauf, dass Nomen großgeschrieben werden."
     }
 }
 
@@ -1281,7 +1309,7 @@ mod tests {
         let lint = &lints[0];
         let word: String = document.get_span_content(&lint.span).iter().collect();
         assert_eq!(word, "mondlandung");
-        assert!(lint.message.contains("noun"));
+        assert!(lint.message.contains("Nomen"));
     }
 
     #[test]
@@ -1299,7 +1327,7 @@ mod tests {
         let lint = &lints[0];
         let word: String = document.get_span_content(&lint.span).iter().collect();
         assert_eq!(word, "mond");
-        assert!(lint.message.contains("noun"));
+        assert!(lint.message.contains("Nomen"));
     }
 
     #[test]
