@@ -429,7 +429,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "The correct preposition in this idiom is `on`.",
             "Corrects the eggcorn `hit the nail in the head` to the standard `hit the nail on the head`.",
-            LintKind::Eggcorn
+            LintKind::Preposition
         ),
         "HomeInOn" => (
             &[
@@ -482,7 +482,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "Traditionally `invest` uses the preposition `in`.",
             "`Invest` is traditionally followed by 'in,' not `into.`",
-            LintKind::Usage
+            LintKind::Preposition
         ),
         "LayoutVerb" => (
             &[
@@ -530,7 +530,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "The correct preposition in this phrase is `to`.",
             "Corrects `look forward for` to `look forward to`.",
-            LintKind::Usage
+            LintKind::Preposition
         ),
         "MakeDoWith" => (
             &[
@@ -642,7 +642,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "The correct preposition is `for`, not `of`.",
             "Corrects `take/assume/claim responsibility of` to `take/assume/claim responsibility for`.",
-            LintKind::Usage
+            LintKind::Preposition
         ),
         "ScapeGoat" => (
             &[
@@ -824,7 +824,7 @@ pub fn lint_group() -> LintGroup {
             ],
             "The correct preposition to use with `commitment` is `to`, not `toward` or `towards`.",
             "Corrects `commitment toward/towards` to `commitment to`.",
-            LintKind::Usage
+            LintKind::Preposition
         ),
         "Copyright" => (
             &[
