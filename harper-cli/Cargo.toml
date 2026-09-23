@@ -43,8 +43,11 @@ english = ["harper-core/language-module"]
 training = ["harper-pos-utils/training"]
 thesaurus = ["harper-core/thesaurus"]
 
-# Multilingual support (language module system)
-multilingual = ["harper-core/multilingual"]
+# Multilingual support (language module system). This enables this crate's own
+# language features rather than forwarding straight to `harper-core`, so that
+# `cfg(feature = "de")` code and tests here are active whenever the language is
+# actually compiled in.
+multilingual = ["de", "pt", "sk", "pl"]
 
 # Individual language features (forward to harper-core)
 de = ["harper-core/de"]

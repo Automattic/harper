@@ -99,5 +99,8 @@ de = ["harper-core/de"]
 pt = ["harper-core/pt"]
 sk = ["harper-core/sk"]
 pl = ["harper-core/pl"]
-multilingual = ["harper-core/multilingual"]
-all-languages = ["harper-core/all-languages"]
+# Enable this crate's own language features rather than forwarding straight to
+# `harper-core`, so that `cfg(feature = "de")` code and tests here are active
+# whenever the language is actually compiled in.
+multilingual = ["de", "pt", "sk", "pl"]
+all-languages = ["multilingual"]
