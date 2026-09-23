@@ -145,10 +145,14 @@ impl AutomationService {
             suggestion,
         };
 
-        let _ = self.run_worker_job(
-            apply_suggestion_job,
-            vec![JobArgument::ApplySuggestion(request)],
-        );
+        // Run suggestion replacement in a separate thread so UI Automation selection
+        // and SendInput keystrokes never block the winit/egui UI rendering thread.
+        std::thread::spawn(move || {
+            let Ok(automation) = UIAutomation::new() else {
+                return;
+            };
+            let _ = apply_suggestion_job(&automation, vec![JobArgument::ApplySuggestion(request)]);
+        });
     }
 
     /// Pass a collection of text spans to the worker and have it compute the associated bounding boxes for each span.

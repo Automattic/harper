@@ -31,7 +31,7 @@ mod automation_service;
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
-    integrations: Arc<Mutex<Vec<Integration>>>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
     last_window_rect: Arc<Mutex<Option<(isize, RECT)>>>,
 }
 
@@ -41,7 +41,7 @@ impl WindowsBroker {
     pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
-            integrations,
+            is_integration_enabled: Box::new(is_integration_enabled),
             last_window_rect: Arc::new(Mutex::new(None)),
         }
     }
@@ -87,7 +87,7 @@ impl WindowsBroker {
 }
 
 impl OsBroker for WindowsBroker {
-    fn is_target_still_focused(&self) -> bool {
+    fn is_target_still_focused(&mut self) -> bool {
         self.should_lint_focused_window().unwrap_or(false)
     }
 
