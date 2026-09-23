@@ -17,6 +17,7 @@ use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
 
+const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(40);
 const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
@@ -93,8 +94,9 @@ impl WindowManager {
             },
         );
 
-        // Run continuously without a read timer; VSync presentation provides backpressure.
-        self.event_loop.set_control_flow(ControlFlow::Poll);
+        self.event_loop.set_control_flow(ControlFlow::WaitUntil(
+            Instant::now() + DEFAULT_READ_INTERVAL,
+        ));
         let result = self.event_loop.run_app(&mut app);
 
         if let Some(error) = app.error {
@@ -111,6 +113,8 @@ struct WindowManagerApp {
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
+    read_interval: Duration,
+    last_read: Instant,
     last_config_poll: Instant,
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
@@ -138,6 +142,8 @@ impl WindowManagerApp {
             ),
             os_broker,
             lint_text: callbacks.lint_text,
+            read_interval: DEFAULT_READ_INTERVAL,
+            last_read: Instant::now() - DEFAULT_READ_INTERVAL,
             last_config_poll: Instant::now(),
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
@@ -149,13 +155,18 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
+        // While the user is interacting with the suggestion popup, pause background accessibility reads.
+        // This frees the UI thread from blocking COM queries, keeping hover animations and clicks at 144Hz.
+        if self.render_state.popup_rect().is_some() {
+            return;
+        }
+
         let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
         if let Some(lints) = lints {
             self.render_state.set_lints(lints);
-        }
-
-        for window in &self.windows {
-            window.request_redraw();
+            for window in &self.windows {
+                window.request_redraw();
+            }
         }
     }
 
@@ -217,7 +228,12 @@ impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
 
-        self.read_rect_updates();
+        if self.render_state.popup_rect().is_none()
+            && now.duration_since(self.last_read) >= self.read_interval
+        {
+            self.read_rect_updates();
+            self.last_read = now;
+        }
 
         if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
@@ -225,6 +241,15 @@ impl ApplicationHandler for WindowManagerApp {
         }
 
         self.update_cursor_hittest(event_loop);
+
+        let next_config_poll = self.last_config_poll + CONFIG_POLL_INTERVAL;
+        let wake_at = if self.render_state.popup_rect().is_some() {
+            now + Duration::from_millis(16)
+        } else {
+            let next_read = self.last_read + self.read_interval;
+            next_read.min(next_config_poll)
+        };
+        event_loop.set_control_flow(ControlFlow::WaitUntil(wake_at));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {

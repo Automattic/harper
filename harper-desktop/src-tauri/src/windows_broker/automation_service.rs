@@ -1,6 +1,5 @@
 use std::iter::once;
-use std::sync::mpsc::{Receiver, SyncSender, TryRecvError, TrySendError, sync_channel};
-use std::thread::sleep;
+use std::sync::mpsc::{Receiver, SyncSender, sync_channel};
 use std::time::Duration;
 
 use crate::rect::Rect;
@@ -88,26 +87,12 @@ impl AutomationService {
                 return;
             };
 
-            loop {
-                // Stop the thread if the other side of the channel has been closed (or dropped).
-                let job = match job_receiver.try_recv() {
-                    Err(TryRecvError::Disconnected) => break,
-                    Err(TryRecvError::Empty) => None,
-                    Ok(job) => Some(job),
-                };
+            while let Ok((job, arguments)) = job_receiver.recv() {
+                let result = job(&automation, arguments);
 
-                if let Some((job, arguments)) = job {
-                    let result = job(&automation, arguments);
-
-                    // Stop the thread if the other side of the channel has been closed (or dropped).
-                    if let Err(err) = result_sender.try_send(result) {
-                        if let TrySendError::Disconnected(_) = err {
-                            break;
-                        }
-                    }
+                if result_sender.send(result).is_err() {
+                    break;
                 }
-
-                sleep(Duration::from_millis(16));
             }
         });
 

@@ -291,10 +291,10 @@ fn render_lint_card(
                 .corner_radius(egui::CornerRadius::same(12))
                 .inner_margin(egui::Margin::same(0))
                 .shadow(egui::Shadow {
-                    offset: [0, 14],
-                    blur: 32,
+                    offset: [0, 8],
+                    blur: 16,
                     spread: 0,
-                    color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 56),
+                    color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 40),
                 })
                 .show(ui, |ui| {
                     ui.set_width(CARD_WIDTH);
