@@ -4,7 +4,7 @@
 use crate::config::Config;
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
-use crate::{IntegrationView, PlatformBroker, platform_broker};
+use crate::{IntegrationView, PlatformBroker};
 use base64::{Engine as _, engine::general_purpose};
 use harper_core::{
     DictWordMetadata, IgnoredLints, Language,
@@ -13,7 +13,7 @@ use harper_core::{
 };
 use std::sync::{Arc, Mutex as StdMutex};
 use tauri::ipc::Invoke;
-use tauri::{Runtime, State};
+use tauri::{Manager, Runtime, State};
 use tokio::sync::Mutex;
 
 pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
@@ -255,9 +255,12 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
+    broker: State<'_, StdMutex<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
-    let broker = platform_broker(|_| false);
+    let broker = broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?;
 
     Ok(integrations
         .into_iter()
@@ -336,15 +339,22 @@ async fn set_integration_enabled(
 }
 
 #[tauri::command]
-async fn get_application_icon_data_url(
+async fn get_application_icon_data_url<R: Runtime>(
     bundle_id: String,
-    _config: State<'_, Arc<Mutex<Config>>>,
+    app_handle: tauri::AppHandle<R>,
 ) -> Result<String, String> {
-    let broker = platform_broker(|_| false);
-    let icon_png = broker.application_icon_png(&bundle_id)?;
-    let encoded = general_purpose::STANDARD.encode(&icon_png);
+    tauri::async_runtime::spawn_blocking(move || {
+        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
+        let icon_png = broker
+            .lock()
+            .map_err(|error| format!("Failed to read platform broker: {error}"))?
+            .application_icon_png(&bundle_id)?;
+        let encoded = general_purpose::STANDARD.encode(icon_png);
 
-    Ok(format!("data:image/png;base64,{encoded}"))
+        Ok(format!("data:image/png;base64,{encoded}"))
+    })
+    .await
+    .map_err(|error| format!("Failed to load application icon: {error}"))?
 }
 
 #[tauri::command]
@@ -425,8 +435,10 @@ fn launch_app(
 #[tauri::command]
 fn search_apps(
     query: String,
-    _config: State<'_, Arc<Mutex<Config>>>,
+    broker: State<'_, StdMutex<PlatformBroker>>,
 ) -> Result<Vec<AppSearchResult>, String> {
-    let broker = platform_broker(|_| false);
-    broker.search_apps(&query)
+    broker
+        .lock()
+        .map_err(|error| format!("Failed to read platform broker: {error}"))?
+        .search_apps(&query)
 }
