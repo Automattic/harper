@@ -759,6 +759,11 @@ pub mod tests {
 
         // Check if we've reached the expected result
         if text == needle {
+            // When tests are made via cut & paste it's easy to miss editing some of the corrections
+            // and the test will silently pass
+            if depth == 0 {
+                eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
+            }
             return true;
         }
 
