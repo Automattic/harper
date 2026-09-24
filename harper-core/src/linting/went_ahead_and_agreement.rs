@@ -1,9 +1,9 @@
 use crate::{
-    Lint, Token,
+    DictWordMetadata, Lint, Token,
     char_ext::CharExt,
     expr::{Expr, SequenceExpr},
     irregular_verbs::IrregularVerbs,
-    linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
     spell::Dictionary,
 };
 
@@ -21,9 +21,9 @@ impl<D: Dictionary> WentAheadAndAgreement<D> {
                 .t_ws()
                 .then_kind_where(|k| {
                     k.is_verb_lemma()
-                        && !k.is_verb_past_form() // looked
-                        && !k.is_verb_simple_past_form() // saw
-                        && !k.is_verb_past_participle_form() // seen
+                        && !k.is_verb_past_form()
+                        && !k.is_verb_simple_past_form()
+                        && !k.is_verb_past_participle_form()
                 }),
             dict,
         }
@@ -33,82 +33,65 @@ impl<D: Dictionary> WentAheadAndAgreement<D> {
 impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
     type Unit = Chunk;
 
-    fn match_to_lint_with_context(
-        &self,
-        toks: &[Token],
-        src: &[char],
-        ctx: Option<(&[Token], &[Token])>,
-    ) -> Option<Lint> {
-        eprintln!("🚨 {}", format_lint_match(toks, ctx, src));
+    fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
+        let go_tok = toks.first()?;
+        let verb2_tok = toks.last()?;
 
-        let (go_tok, verb2_tok) = (toks.first()?, toks.last()?);
-
-        enum Go {
-            Went,
-            Gone,
-        }
-        use Go::*;
-
-        let go: Go = if go_tok.kind.is_verb_simple_past_form() {
-            Went
-        } else if go_tok.kind.is_verb_past_participle_form() {
-            Gone
-        } else {
+        // Determine which irregular lookup method to use based on the token form
+        let is_went = go_tok.kind.is_verb_simple_past_form();
+        let is_gone = go_tok.kind.is_verb_past_participle_form();
+        if !is_went && !is_gone {
             return None;
-        };
+        }
 
         let mut past_verbs: Vec<Vec<char>> = Vec::new();
-
         let verb2_str = verb2_tok.get_str(src);
 
+        // Handle irregular verbs
         let irreg = IrregularVerbs::curated();
-        if let Some(irregular_past) = match go {
-            Went => irreg.get_preterite_for_lemma(&verb2_str),
-            Gone => irreg.get_past_participle_for_lemma(&verb2_str),
-        } {
-            past_verbs.push(irregular_past.chars().collect());
+        let irregular_past = if is_went {
+            irreg.get_preterite_for_lemma(&verb2_str)
+        } else {
+            irreg.get_past_participle_for_lemma(&verb2_str)
+        };
+
+        if let Some(past) = irregular_past {
+            past_verbs.push(past.chars().collect());
         }
 
+        // Handle regular verb suffix variations
         let verb2_ch = verb2_tok.get_ch(src);
 
-        let mut verb2_plus_d = verb2_ch.to_vec();
-        verb2_plus_d.push('d');
+        let mut candidates = vec![
+            [verb2_ch, &['d']].concat(),
+            [verb2_ch, &['e', 'd']].concat(),
+        ];
 
-        if let Some(md) = self.dict.get_word_metadata(&verb2_plus_d)
-            && md.is_verb_past_form()
-        {
-            past_verbs.push(verb2_plus_d);
+        if let Some(&last) = verb2_ch.last() {
+            if !last.is_vowel() {
+                candidates.push([verb2_ch, &[last, 'e', 'd']].concat());
+            }
         }
 
-        let mut verb2_plus_ed = verb2_ch.to_vec();
-        verb2_plus_ed.extend(['e', 'd']);
+        let is_valid_tense = |md: &DictWordMetadata| {
+            md.is_verb_past_form()
+                || (is_went && md.is_verb_simple_past_form())
+                || (is_gone && md.is_verb_past_participle_form())
+        };
 
-        if let Some(md) = self.dict.get_word_metadata(&verb2_plus_ed)
-            && md.is_verb_past_form()
-        {
-            past_verbs.push(verb2_plus_ed);
-        }
-
-        if let Some(last) = verb2_ch.last()
-            && !last.is_vowel()
-        {
-            let mut verb2_plus_dd = verb2_ch.to_vec();
-            verb2_plus_dd.extend([*last, 'e', 'd']);
-
-            if let Some(md) = self.dict.get_word_metadata(&verb2_plus_dd)
-                && (md.is_verb_past_form()
-                    || md.is_verb_simple_past_form()
-                    || md.is_verb_past_participle_form())
-            {
-                past_verbs.push(verb2_plus_dd);
+        for candidate in candidates {
+            if let Some(md) = self.dict.get_word_metadata(&candidate) {
+                if is_valid_tense(&md) {
+                    past_verbs.push(candidate);
+                }
             }
         }
 
         let verb2_span = verb2_tok.span;
-
+        let original_content = verb2_span.get_content(src);
         let suggestions = past_verbs
-            .iter()
-            .map(|pv| Suggestion::replace_with_match_case(pv.to_vec(), verb2_span.get_content(src)))
+            .into_iter()
+            .map(|pv| Suggestion::replace_with_match_case(pv, original_content))
             .collect();
 
         Some(Lint {
