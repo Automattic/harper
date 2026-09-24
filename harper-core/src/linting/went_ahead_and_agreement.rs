@@ -67,10 +67,10 @@ impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
             [verb2_ch, &['e', 'd']].concat(),
         ];
 
-        if let Some(&last) = verb2_ch.last() {
-            if !last.is_vowel() {
-                candidates.push([verb2_ch, &[last, 'e', 'd']].concat());
-            }
+        if let Some(&last) = verb2_ch.last()
+            && !last.is_vowel()
+        {
+            candidates.push([verb2_ch, &[last, 'e', 'd']].concat());
         }
 
         let is_valid_tense = |md: &DictWordMetadata| {
@@ -80,10 +80,10 @@ impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
         };
 
         for candidate in candidates {
-            if let Some(md) = self.dict.get_word_metadata(&candidate) {
-                if is_valid_tense(&md) {
-                    past_verbs.push(candidate);
-                }
+            if let Some(md) = self.dict.get_word_metadata(&candidate)
+                && is_valid_tense(&md)
+            {
+                past_verbs.push(candidate);
             }
         }
 
