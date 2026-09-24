@@ -151,6 +151,24 @@ mod tests {
     }
 
     #[test]
+    fn yen_with_space() {
+        assert_suggestion_result(
+            "It cost ¥ 380.",
+            CurrencyPlacement::default(),
+            "It cost ¥380.",
+        );
+    }
+
+    #[test]
+    fn yen_after_with_space() {
+        assert_suggestion_result(
+            "It cost 380 ¥.",
+            CurrencyPlacement::default(),
+            "It cost ¥380.",
+        );
+    }
+
+    #[test]
     fn suffix() {
         assert_suggestion_result(
             "It was my 20th$.",
