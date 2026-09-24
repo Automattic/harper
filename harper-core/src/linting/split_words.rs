@@ -167,15 +167,8 @@ impl ExprLinter for SplitWords {
     }
 }
 
-/// Whether `meta` describes a genuine function word (preposition, determiner,
-/// conjunction, pronoun, or adverb) that should anchor a split even when the
-/// whole word also has a strong single-word spelling correction.
-///
-/// This intentionally does *not* fall back to a raw length check: short
-/// interjections and other non-function words (e.g. "ha") are common
-/// prefixes/suffixes of legitimate typos (e.g. "havent" -> "haven't") and
-/// must not be treated as anchors, or `should_defer_to_spellcheck` will
-/// wrongly prefer the split over the correct single-word suggestion.
+/// Only tagged function words anchor splits; short non-function words like
+/// "ha" must not block spelling corrections such as `havent` → `haven't`.
 fn is_anchor_split(meta: &crate::DictWordMetadata) -> bool {
     meta.preposition
         || meta.is_determiner()
@@ -298,21 +291,14 @@ mod tests {
         assert_no_lints("I love this extention!", SplitWords::default());
     }
 
-    /// Regression test for the `havent` -> `ha vent` bug (issue #4130).
-    ///
-    /// `havent` is missing an apostrophe (`haven't`), but the trie dictionary
-    /// happens to contain `ha` and `vent` as valid, common split candidates.
-    /// Previously, `is_anchor_split` treated `ha` as an "anchor" purely
-    /// because it is two characters long, which stopped `SplitWords` from
-    /// deferring to `SpellCheck`'s much better `haven't` suggestion, even in
-    /// a nounish context (`they havent ...`).
+    /// Regression: `havent` should defer to SpellCheck's `haven't` suggestion,
+    /// not split into `ha vent` (issue #4130).
     #[test]
     fn issue_4130_defers_havent_to_spellcheck() {
         assert_no_lints("They havent reviewed it yet.", SplitWords::default());
     }
 
-    /// Same as above, but confirms other short-but-real anchors (like the
-    /// preposition `at`) are still preferred over a single-word correction.
+    /// Genuine short anchors like `at` should still produce splits.
     #[test]
     fn issue_4130_does_not_regress_real_short_anchors() {
         assert_suggestion_result(
