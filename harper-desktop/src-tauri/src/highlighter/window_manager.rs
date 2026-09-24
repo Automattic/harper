@@ -260,10 +260,7 @@ impl ApplicationHandler for WindowManagerApp {
             self.read_pause_until = None;
         }
 
-        if !is_paused
-            && self.render_state.popup_rect().is_none()
-            && now.duration_since(self.last_read) >= self.read_interval
-        {
+        if !is_paused && now.duration_since(self.last_read) >= self.read_interval {
             self.read_rect_updates();
             self.last_read = now;
         }

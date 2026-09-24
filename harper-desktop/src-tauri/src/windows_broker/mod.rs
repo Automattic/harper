@@ -9,6 +9,7 @@ use harper_core::linting::Lint;
 use std::ffi::{OsString, c_void};
 use std::os::windows::ffi::OsStringExt;
 use std::process::Command;
+use std::time::{Duration, Instant};
 use std::{
     collections::BTreeMap,
     path::PathBuf,
@@ -29,10 +30,18 @@ use wintheon::file::{IconSize, Priority};
 use wintheon::gather::Gatherer;
 mod automation_service;
 
+pub const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+
+struct WindowMovementState {
+    hwnd: isize,
+    rect: RECT,
+    last_changed_at: Instant,
+}
+
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
     is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
-    last_window_rect: Arc<Mutex<Option<(isize, RECT)>>>,
+    movement_state: Arc<Mutex<Option<WindowMovementState>>>,
 }
 
 impl WindowsBroker {
@@ -42,7 +51,7 @@ impl WindowsBroker {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             is_integration_enabled: Box::new(is_integration_enabled),
-            last_window_rect: Arc::new(Mutex::new(None)),
+            movement_state: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -57,8 +66,9 @@ impl WindowsBroker {
         }
 
         let hwnd = HWND(focused_window as *mut c_void);
+        let mut is_moving = false;
         match window_is_moving(hwnd) {
-            Ok(true) => return Some(false),
+            Ok(true) => is_moving = true,
             Ok(false) => {}
             Err(error) => {
                 eprintln!(
@@ -67,19 +77,41 @@ impl WindowsBroker {
             }
         }
 
-        // Also check if the window position moved since the previous tick (covers custom titlebar drags)
         let mut current_rect = RECT::default();
-        if unsafe { GetWindowRect(hwnd, &mut current_rect) }.is_ok()
-            && let Ok(mut last_rect) = self.last_window_rect.lock()
-        {
-            if let Some((last_hwnd, prev_rect)) = *last_rect
-                && last_hwnd == focused_window
-                && prev_rect != current_rect
-            {
-                *last_rect = Some((focused_window, current_rect));
-                return Some(false);
+        let got_rect = unsafe { GetWindowRect(hwnd, &mut current_rect) }.is_ok();
+
+        if let Ok(mut movement_state) = self.movement_state.lock() {
+            let now = Instant::now();
+            match movement_state.as_mut() {
+                Some(state) if state.hwnd == focused_window => {
+                    if is_moving || (got_rect && state.rect != current_rect) {
+                        if got_rect {
+                            state.rect = current_rect;
+                        }
+                        state.last_changed_at = now;
+                        let _ = self.service.lock().map(|mut s| s.clear_cache());
+                        return Some(false);
+                    }
+
+                    if now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION {
+                        return Some(false);
+                    }
+                }
+                _ => {
+                    *movement_state = Some(WindowMovementState {
+                        hwnd: focused_window,
+                        rect: current_rect,
+                        last_changed_at: now
+                            .checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+                            .unwrap_or(now),
+                    });
+                    if is_moving {
+                        return Some(false);
+                    }
+                }
             }
-            *last_rect = Some((focused_window, current_rect));
+        } else if is_moving {
+            return Some(false);
         }
 
         Some(true)

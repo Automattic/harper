@@ -398,6 +398,9 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let disable_rule = move |rule_name: &str| {
+        if rule_name == "SpellCheck" {
+            return;
+        }
         disable_debounce_state.borrow_mut().clear();
         if !has_parent {
             return;

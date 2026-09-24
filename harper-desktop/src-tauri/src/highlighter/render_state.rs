@@ -378,7 +378,9 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
                         *action = Some(LintCardAction::Close);
                     }
                     icon_button(ui, Glyph::Settings, "Open Harper settings.");
-                    if icon_button(ui, Glyph::Disable, "Disable this rule.").clicked() {
+                    if !is_spelling_kind(lint.lint_kind)
+                        && icon_button(ui, Glyph::Disable, "Disable this rule.").clicked()
+                    {
                         *action = Some(LintCardAction::DisableRule);
                     }
                 });
