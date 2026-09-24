@@ -471,11 +471,7 @@ fn integration_callback(
             return false;
         }
         let mut state = state.lock().expect("integration state lock poisoned");
-        if let Some(integration) = state
-            .integrations
-            .iter()
-            .find(|item| item.bundle_id == bundle_id)
-        {
+        if let Some(integration) = Integration::find_integration(&state.integrations, bundle_id) {
             return integration.enabled;
         }
         if !state.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
