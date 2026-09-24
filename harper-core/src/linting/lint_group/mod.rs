@@ -941,7 +941,7 @@ impl LintGroup {
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
         insert_expr_rule!(WellEducated);
-        insert_expr_rule!(WentAheadAndAgreement);
+        insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
         insert_expr_rule!(WhomSubjectOfVerb);
         insert_expr_rule!(WidelyAccepted);

@@ -4,14 +4,16 @@ use crate::{
     expr::{Expr, SequenceExpr},
     irregular_verbs::IrregularVerbs,
     linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
+    spell::Dictionary,
 };
 
-pub struct WentAheadAndAgreement {
+pub struct WentAheadAndAgreement<D: Dictionary> {
     expr: SequenceExpr,
+    dict: D,
 }
 
-impl Default for WentAheadAndAgreement {
-    fn default() -> Self {
+impl<D: Dictionary> WentAheadAndAgreement<D> {
+    pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::word_set(["went", "gone"])
                 .t_ws()
@@ -23,11 +25,12 @@ impl Default for WentAheadAndAgreement {
                         && !k.is_verb_simple_past_form() // saw
                         && !k.is_verb_past_participle_form() // seen
                 }),
+            dict,
         }
     }
 }
 
-impl ExprLinter for WentAheadAndAgreement {
+impl<D: Dictionary> ExprLinter for WentAheadAndAgreement<D> {
     type Unit = Chunk;
 
     fn match_to_lint_with_context(
@@ -68,24 +71,37 @@ impl ExprLinter for WentAheadAndAgreement {
 
         let verb2_ch = verb2_tok.get_ch(src);
 
-        // 1. try adding -d
         let mut verb2_plus_d = verb2_ch.to_vec();
         verb2_plus_d.push('d');
-        past_verbs.push(verb2_plus_d);
-        // 2. try adding -ed
+
+        if let Some(md) = self.dict.get_word_metadata(&verb2_plus_d)
+            && md.is_verb_past_form()
+        {
+            past_verbs.push(verb2_plus_d);
+        }
+
         let mut verb2_plus_ed = verb2_ch.to_vec();
-        verb2_plus_ed.push('e');
-        verb2_plus_ed.push('d');
-        past_verbs.push(verb2_plus_ed);
-        // 3. try double last consonant then adding =ed
-        if let Some(last) = verb2_ch.last() 
-            && !last.is_vowel() {
-                let mut verb2_plus_dd = verb2_ch.to_vec();
-                verb2_plus_dd.push(*last);
-                verb2_plus_dd.push('e');
-                verb2_plus_dd.push('d');
+        verb2_plus_ed.extend(['e', 'd']);
+
+        if let Some(md) = self.dict.get_word_metadata(&verb2_plus_ed)
+            && md.is_verb_past_form()
+        {
+            past_verbs.push(verb2_plus_ed);
+        }
+
+        if let Some(last) = verb2_ch.last()
+            && !last.is_vowel()
+        {
+            let mut verb2_plus_dd = verb2_ch.to_vec();
+            verb2_plus_dd.extend([*last, 'e', 'd']);
+
+            if let Some(md) = self.dict.get_word_metadata(&verb2_plus_dd)
+                && (md.is_verb_past_form()
+                    || md.is_verb_simple_past_form()
+                    || md.is_verb_past_participle_form())
+            {
                 past_verbs.push(verb2_plus_dd);
-            
+            }
         }
 
         let verb2_span = verb2_tok.span;
@@ -115,15 +131,31 @@ impl ExprLinter for WentAheadAndAgreement {
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+    use crate::{
+        linting::tests::{assert_no_lints, assert_suggestion_result},
+        spell::FstDictionary,
+    };
 
     use super::WentAheadAndAgreement;
+
+    // Contrived test for doubled-consonant ending
+
+    #[test]
+    fn went_ban() {
+        assert_suggestion_result(
+            "He went ahead and spam the Discord so I've gone ahead and ban him.",
+            WentAheadAndAgreement::new(FstDictionary::curated()),
+            "He went ahead and spammed the Discord so I've gone ahead and banned him.",
+        )
+    }
+
+    // Real-world tests for regular and irregular preterite and past participles
 
     #[test]
     fn went_add() {
         assert_suggestion_result(
             "I went ahead and add a note to it's javadocs that the reason argument doesn't impact it's equality",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "I went ahead and added a note to it's javadocs that the reason argument doesn't impact it's equality",
         );
     }
@@ -132,7 +164,7 @@ mod tests {
     fn went_build() {
         assert_suggestion_result(
             "I went ahead and build out creating a shiny input from a json schema as as separate package using reactR and react-jsonschema-form",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "I went ahead and build out creating a shiny input from a json schema as as separate package using reactR and react-jsonschema-form",
         );
     }
@@ -141,7 +173,7 @@ mod tests {
     fn went_change() {
         assert_suggestion_result(
             "So I went ahead and change the behavior to explicitly fills the default domain into the domain field if no domain is specified.",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "So I went ahead and changed the behavior to explicitly fills the default domain into the domain field if no domain is specified.",
         );
     }
@@ -150,7 +182,7 @@ mod tests {
     fn went_do() {
         assert_suggestion_result(
             "compiler automatically identified vectorization opportunities and went ahead and do vectorization",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "compiler automatically identified vectorization opportunities and went ahead and did vectorization",
         )
     }
@@ -159,7 +191,7 @@ mod tests {
     fn went_enable() {
         assert_suggestion_result(
             "I went ahead and enable it for those systems and fixed the resulting errors that were previously unsurfaced.",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "I went ahead and enabled it for those systems and fixed the resulting errors that were previously unsurfaced.",
         )
     }
@@ -168,7 +200,7 @@ mod tests {
     fn gone_make() {
         assert_suggestion_result(
             "Hi - I've gone ahead and make a conda package for UMICollapse",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "Hi - I've gone ahead and made a conda package for UMICollapse",
         )
     }
@@ -177,7 +209,7 @@ mod tests {
     fn gone_open() {
         assert_suggestion_result(
             "I would've gone ahead and open a PR in this project for the style guide",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
             "I would've gone ahead and opened a PR in this project for the style guide",
         )
     }
@@ -187,7 +219,7 @@ mod tests {
     fn dont_flag_have_gone_ahead_and_have_added() {
         assert_no_lints(
             "I have gone ahead and have added a +1 and have added your case to the request in support of it.",
-            WentAheadAndAgreement::default(),
+            WentAheadAndAgreement::new(FstDictionary::curated()),
         )
     }
 }
