@@ -123,11 +123,16 @@ impl AutomationService {
     fn run_worker_job(&self, job: WorkerJob, arguments: Vec<JobArgument>) -> Option<JobResult> {
         let worker_data = self.worker_data.as_ref()?;
         while worker_data.receiver.try_recv().is_ok() {}
-        worker_data.sender.send((job, arguments)).ok()?;
+        worker_data.sender.try_send((job, arguments)).ok()?;
         worker_data
             .receiver
             .recv_timeout(Duration::from_millis(80))
             .ok()
+    }
+
+    /// Clears any cached UIElement to ensure fresh resolution after window movements.
+    pub fn clear_cache(&mut self) {
+        self.run_worker_job(clear_cache_job, Vec::new());
     }
 
     /// Grab text from the worker.
@@ -365,13 +370,21 @@ fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgumen
     }
     std::thread::sleep(Duration::from_millis(30));
 
-    let Ok(element) =
-        text_element_for_window(automation, request.window, Some(&request.expected_text))
-    else {
-        eprintln!(
-            "Unable to apply Windows suggestion: the source text element is no longer available"
-        );
-        return JobResult::None;
+    let element = if let Ok(focused) = automation.get_focused_element()
+        && let Ok(text) = get_text(&focused)
+        && text_is_suitable(&text, Some(&request.expected_text))
+    {
+        focused
+    } else {
+        let Ok(elem) =
+            text_element_for_window(automation, request.window, Some(&request.expected_text))
+        else {
+            eprintln!(
+                "Unable to apply Windows suggestion: the source text element is no longer available"
+            );
+            return JobResult::None;
+        };
+        elem
     };
 
     let _ = element.set_focus();
@@ -536,7 +549,28 @@ fn text_element_for_window(
         return Ok(focused_element);
     }
 
-    // 5. Fallback traversal:
+    // 5. Fast check: common editor control types before fallback traversal.
+    // In Word and VS Code, the main editor is a Document control (50030).
+    // In Notepad and standard textboxes, the main editor is an Edit control (50004).
+    if let Ok(doc_condition) =
+        automation.create_property_condition(UIProperty::ControlType, Variant::from(50030), None)
+        && let Ok(doc_element) = root.find_first(TreeScope::Descendants, &doc_condition)
+        && let Ok(text) = get_text(&doc_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(doc_element);
+    }
+
+    if let Ok(edit_condition) =
+        automation.create_property_condition(UIProperty::ControlType, Variant::from(50004), None)
+        && let Ok(edit_element) = root.find_first(TreeScope::Descendants, &edit_condition)
+        && let Ok(text) = get_text(&edit_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(edit_element);
+    }
+
+    // 6. Fallback traversal:
     if let Some(expected) = expected_text {
         // Find among descendants matching expected text
         if let Ok(elements) = root.find_all(TreeScope::Descendants, &text_condition) {
@@ -556,6 +590,11 @@ fn text_element_for_window(
         uiautomation::errors::ERR_NOTFOUND,
         "no text element found",
     ))
+}
+
+fn clear_cache_job(context: &mut WorkerContext, _args: Vec<JobArgument>) -> JobResult {
+    context.cached_element = None;
+    JobResult::None
 }
 
 fn get_text_job(context: &mut WorkerContext, args: Vec<JobArgument>) -> JobResult {
