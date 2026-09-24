@@ -53,8 +53,14 @@ enum JobResult {
     Err,
 }
 
+/// Worker thread context caching the active text element across ticks to eliminate repetitive UI Automation tree searches.
+struct WorkerContext {
+    automation: UIAutomation,
+    cached_element: Option<(isize, UIElement)>,
+}
+
 /// An actual function pointer to be run by the worker thread.
-type WorkerJob = fn(&UIAutomation, Vec<JobArgument>) -> JobResult;
+type WorkerJob = fn(&mut WorkerContext, Vec<JobArgument>) -> JobResult;
 
 /// Runs and communicates with a worker thread to interact with the Win32 Automation API to query the accessibility tree.
 /// Necessary because the API has very specific thread setting requirements to work.
@@ -87,8 +93,13 @@ impl AutomationService {
                 return;
             };
 
+            let mut context = WorkerContext {
+                automation,
+                cached_element: None,
+            };
+
             while let Ok((job, arguments)) = job_receiver.recv() {
-                let result = job(&automation, arguments);
+                let result = job(&mut context, arguments);
 
                 if result_sender.send(result).is_err() {
                     break;
@@ -111,8 +122,12 @@ impl AutomationService {
     /// Attempts to run a worker job on the worker thread. Returns `None` if the worker thread does not exist.
     fn run_worker_job(&self, job: WorkerJob, arguments: Vec<JobArgument>) -> Option<JobResult> {
         let worker_data = self.worker_data.as_ref()?;
+        while worker_data.receiver.try_recv().is_ok() {}
         worker_data.sender.send((job, arguments)).ok()?;
-        worker_data.receiver.recv().ok()
+        worker_data
+            .receiver
+            .recv_timeout(Duration::from_millis(80))
+            .ok()
     }
 
     /// Grab text from the worker.
@@ -144,6 +159,12 @@ impl AutomationService {
             span,
             suggestion,
         };
+
+        // Immediately transfer foreground focus from Harper overlay to the target window
+        let hwnd = HWND(window as *mut _);
+        unsafe {
+            let _ = SetForegroundWindow(hwnd);
+        }
 
         // Run suggestion replacement in a separate thread so UI Automation selection
         // and SendInput keystrokes never block the winit/egui UI rendering thread.
@@ -337,6 +358,13 @@ fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgumen
         return JobResult::Err;
     }
 
+    // Bring target window to the foreground so focus is restored before querying the element
+    let hwnd = HWND(request.window as *mut _);
+    unsafe {
+        let _ = SetForegroundWindow(hwnd);
+    }
+    std::thread::sleep(Duration::from_millis(30));
+
     let Ok(element) =
         text_element_for_window(automation, request.window, Some(&request.expected_text))
     else {
@@ -346,11 +374,6 @@ fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgumen
         return JobResult::None;
     };
 
-    // Bring target window and element to the foreground so keystrokes / selection are received
-    let hwnd = HWND(request.window as *mut _);
-    unsafe {
-        let _ = SetForegroundWindow(hwnd);
-    }
     let _ = element.set_focus();
 
     // Primary replacement method: Text pattern selection + SendInput (works across Notepad, VS Code, Word, Chrome, etc.)
@@ -445,6 +468,13 @@ fn text_matches(current: &str, expected: &str) -> bool {
         || current.trim_end_matches(['\r', '\n']) == expected.trim_end_matches(['\r', '\n'])
 }
 
+fn text_is_suitable(text: &str, expected_text: Option<&str>) -> bool {
+    match expected_text {
+        Some(expected) => text_matches(text, expected),
+        None => !text.is_empty(),
+    }
+}
+
 /// Finds the focused text element below `window`.
 ///
 /// When `expected_text` is provided, unrelated text providers are excluded.
@@ -453,49 +483,44 @@ fn text_element_for_window(
     window: isize,
     expected_text: Option<&str>,
 ) -> uiautomation::Result<UIElement> {
-    // First, check if the system-focused element directly provides text.
-    // In complex applications like MS Word 2016, the document editing surface (_WwG) is often the focused element,
-    // which avoids an expensive Subtree traversal of Word's massive ribbon and task-pane hierarchy.
+    // 1. Check if the system-focused element directly provides text.
+    // In complex applications like MS Word, the document editing surface (_WwG) is often the focused element,
+    // which avoids an expensive traversal of Word's massive ribbon and task-pane hierarchy.
     if let Ok(focused) = automation.get_focused_element()
         && let Ok(text) = get_text(&focused)
+        && text_is_suitable(&text, expected_text)
     {
-        if let Some(expected) = expected_text {
-            if text_matches(&text, expected) {
-                return Ok(focused);
-            }
-        } else if !text.is_empty() {
-            return Ok(focused);
-        }
+        return Ok(focused);
     }
 
     let root = automation.element_from_handle(Handle::from(window))?;
+
+    // 2. Check if the root window itself provides text.
+    if let Ok(text) = get_text(&root)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(root);
+    }
+
     let text_condition = automation.create_property_condition(
         UIProperty::IsTextPatternAvailable,
         Variant::from(true),
         None,
     )?;
 
-    // If expected_text is provided, search without requiring keyboard focus
-    // because clicking the Harper overlay may have transferred focus away from the editor.
-    if let Some(expected) = expected_text {
-        if let Ok(text) = get_text(&root)
-            && text_matches(&text, expected)
-        {
-            return Ok(root);
-        }
-
-        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition) {
-            for element in elements {
-                if let Ok(text) = get_text(&element)
-                    && text_matches(&text, expected)
-                {
-                    return Ok(element);
-                }
+    // 3. Fast check: immediate children of the root window.
+    // In standard editors like Notepad, the main edit control is an immediate child.
+    if let Ok(children) = root.find_all(TreeScope::Children, &text_condition) {
+        for child in children {
+            if let Ok(text) = get_text(&child)
+                && text_is_suitable(&text, expected_text)
+            {
+                return Ok(child);
             }
         }
     }
 
-    // Try finding a focused text element
+    // 4. Check for an element within the window that has keyboard focus.
     let keyboard_condition = automation.create_property_condition(
         UIProperty::HasKeyboardFocus,
         Variant::from(true),
@@ -504,33 +529,27 @@ fn text_element_for_window(
     let focused_condition =
         automation.create_and_condition(text_condition.clone(), keyboard_condition)?;
 
-    if let Ok(elements) = root.find_all(TreeScope::Subtree, &focused_condition) {
-        for element in elements {
-            if let Some(expected) = expected_text {
-                if let Ok(text) = get_text(&element) {
-                    if !text_matches(&text, expected) {
-                        continue;
-                    }
-                } else {
-                    continue;
-                }
-            }
-            return Ok(element);
-        }
+    if let Ok(focused_element) = root.find_first(TreeScope::Descendants, &focused_condition)
+        && let Ok(text) = get_text(&focused_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(focused_element);
     }
 
-    // Fallback when expected_text is None: return the first available text element
-    if expected_text.is_none() {
-        if let Ok(text) = get_text(&root)
-            && !text.is_empty()
-        {
-            return Ok(root);
+    // 5. Fallback traversal:
+    if let Some(expected) = expected_text {
+        // Find among descendants matching expected text
+        if let Ok(elements) = root.find_all(TreeScope::Descendants, &text_condition) {
+            for element in elements {
+                if let Ok(text) = get_text(&element)
+                    && text_matches(&text, expected)
+                {
+                    return Ok(element);
+                }
+            }
         }
-        if let Ok(elements) = root.find_all(TreeScope::Subtree, &text_condition)
-            && let Some(first) = elements.into_iter().next()
-        {
-            return Ok(first);
-        }
+    } else if let Ok(first) = root.find_first(TreeScope::Descendants, &text_condition) {
+        return Ok(first);
     }
 
     Err(Error::new(
@@ -539,15 +558,32 @@ fn text_element_for_window(
     ))
 }
 
-fn get_text_job(automation: &UIAutomation, args: Vec<JobArgument>) -> JobResult {
+fn get_text_job(context: &mut WorkerContext, args: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::Window(window)) = args.first() else {
         return JobResult::Err;
     };
-    let Ok(element) = text_element_for_window(automation, *window, None) else {
+
+    // Fast check: if the cached element is still valid for this window and contains text
+    if let Some((cached_window, ref element)) = context.cached_element
+        && cached_window == *window
+        && let Ok(text) = get_text(element)
+        && !text.is_empty()
+    {
+        return JobResult::String(text);
+    }
+
+    let Ok(element) = text_element_for_window(&context.automation, *window, None) else {
+        context.cached_element = None;
         return JobResult::Err;
     };
 
-    get_text(&element).map_or(JobResult::Err, JobResult::String)
+    let Ok(text) = get_text(&element) else {
+        context.cached_element = None;
+        return JobResult::Err;
+    };
+
+    context.cached_element = Some((*window, element));
+    JobResult::String(text)
 }
 
 use std::{ffi::c_void, mem::size_of};
@@ -574,7 +610,7 @@ impl Drop for OwnedSafeArray {
 }
 
 fn bounding_rectangles_for_span(
-    element: &UIElement,
+    pattern: &UITextPattern,
     start: i32,
     len: i32,
 ) -> Result<Vec<(f64, f64, f64, f64)>> {
@@ -585,7 +621,6 @@ fn bounding_rectangles_for_span(
         ));
     }
 
-    let pattern: UITextPattern = element.get_pattern()?;
     let range = pattern.get_document_range()?;
 
     range.move_endpoint_by_range(
@@ -679,18 +714,33 @@ fn bounding_rectangles_for_span(
     Ok(result)
 }
 
-fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>) -> JobResult {
+fn get_bounding_rect_job(context: &mut WorkerContext, arguments: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::Window(window)) = arguments.first() else {
         return JobResult::Err;
     };
     let Some(JobArgument::Text(expected_text)) = arguments.get(1) else {
         return JobResult::Err;
     };
-    let Ok(text_element) = text_element_for_window(automation, *window, Some(expected_text)) else {
-        return JobResult::Err;
+
+    let text_element = if let Some((cached_window, ref element)) = context.cached_element
+        && cached_window == *window
+        && let Ok(text) = get_text(element)
+        && text_matches(&text, expected_text)
+    {
+        element.clone()
+    } else {
+        let Ok(elem) = text_element_for_window(&context.automation, *window, Some(expected_text))
+        else {
+            return JobResult::Err;
+        };
+        context.cached_element = Some((*window, elem.clone()));
+        elem
     };
 
     let effective_monitor_scale = get_focused_monitor_scale();
+    let Ok(pattern) = text_element.get_pattern::<UITextPattern>() else {
+        return JobResult::Err;
+    };
 
     let mut rects = Vec::with_capacity(arguments.len().saturating_sub(2));
 
@@ -698,7 +748,7 @@ fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>)
         let span = span.expect_span();
 
         let Ok(found_rects) =
-            bounding_rectangles_for_span(&text_element, span.start as i32, span.len() as i32)
+            bounding_rectangles_for_span(&pattern, span.start as i32, span.len() as i32)
         else {
             return JobResult::Err;
         };
