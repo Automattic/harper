@@ -91,8 +91,9 @@ impl Config {
     }
 
     pub fn remove_integration(&mut self, bundle_id: &str) {
-        self.integrations
-            .retain(|integration| !Integration::matches_bundle_id(&integration.bundle_id, bundle_id));
+        self.integrations.retain(|integration| {
+            !Integration::matches_bundle_id(&integration.bundle_id, bundle_id)
+        });
     }
 
     pub fn set_integration_enabled(&mut self, bundle_id: &str, enabled: bool) {
