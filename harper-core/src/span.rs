@@ -32,6 +32,13 @@ impl<T> Span<T> {
     /// A [`Span`] with a start and end index of 0.
     pub const ZERO: Self = Self::empty(0);
 
+    /// A [`Span`] of `usize::MIN..usize::MAX`.
+    pub(crate) const FULL: Self = Self {
+        start: usize::MIN,
+        end: usize::MAX,
+        span_type: PhantomData,
+    };
+
     /// Creates a new [`Span`] with the provided start and end indices.
     ///
     /// # Panics

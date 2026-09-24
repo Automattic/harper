@@ -73,39 +73,54 @@ impl<'a> TypstTranslator<'a> {
     }
 
     fn parse_contraction(self, exprs: &[Expr], index: usize) -> Option<(Vec<Token>, usize)> {
-        let exprs = exprs.get(index..index + 3)?;
-        let [expr1, expr2, expr3] = exprs else {
-            return None;
-        };
+        // Check consecutive chunks of (Text, Quote, Text) to see if they're contractions.
+        // That last text can *also* be part of another contraction after it so shift the window forward until it's not.
+        let (count_minus_one, (left, left_range, right_range)) = exprs[index..]
+            .windows(3)
+            .step_by(2)
+            .map_while(|exprs| {
+                let [expr1, expr2, expr3] = exprs else {
+                    return None;
+                };
 
-        let (Expr::Text(left), Expr::SmartQuote(quote), Expr::Text(right)) =
-            (*expr1, *expr2, *expr3)
-        else {
-            return None;
-        };
+                let (Expr::Text(left), Expr::SmartQuote(quote), Expr::Text(right)) =
+                    (*expr1, *expr2, *expr3)
+                else {
+                    return None;
+                };
 
-        if quote.double() {
-            return None;
-        }
+                if quote.double() {
+                    return None;
+                }
 
-        let left_char = left.get().chars().last()?;
-        let right_char = right.get().chars().next()?;
-        if !left_char.is_alphabetic() || !right_char.is_alphabetic() {
-            return None;
-        }
+                let left_char = left.get().chars().last()?;
+                let right_char = right.get().chars().next()?;
+                if !left_char.is_alphabetic() || !right_char.is_alphabetic() {
+                    return None;
+                }
 
-        let left_range = self.doc.range(left.span())?;
-        let quote_range = self.doc.range(quote.span())?;
-        let right_range = self.doc.range(right.span())?;
-        if left_range.end != quote_range.start || quote_range.end != right_range.start {
-            return None;
-        }
+                let left_range = self.doc.range(left.span())?;
+                let quote_range = self.doc.range(quote.span())?;
+                let right_range = self.doc.range(right.span())?;
+                if left_range.end != quote_range.start || quote_range.end != right_range.start {
+                    return None;
+                }
+
+                Some((left, left_range, right_range))
+            })
+            .enumerate()
+            // Grab the start text and range, and the final range and count.
+            // count_minus_one because enumerate starts at 0.
+            .reduce(|(_, (left, l, _)), (count_minus_one, (_, _, r))| {
+                (count_minus_one, (left, l, r))
+            })?;
 
         let joined = self.doc.text().get(left_range.start..right_range.end)?;
         let offset = OffsetCursor::new(self.doc).push_to_span(left.span())?;
         let parsed = self.parse_english(joined, offset)?;
 
-        Some((parsed, 3))
+        // The first Text, plus (Quote, Text) expressions count times.
+        Some((parsed, 1 + (count_minus_one + 1) * 2))
     }
 
     /// Use the [`PlainEnglish`] parser to parse plain text from a Typst expression.
@@ -229,13 +244,25 @@ impl<'a> TypstTranslator<'a> {
             let mut buf = Vec::new();
             let exprs = exprs.collect_vec();
             let exprs = super::convert_parbreaks(&mut buf, &exprs);
-            Some(
-                exprs
-                    .into_iter()
-                    .filter_map(|e| recurse!(e))
-                    .flatten()
-                    .collect_vec(),
-            )
+
+            let mut tokens = Vec::new();
+            let mut index = 0;
+
+            while index < exprs.len() {
+                // Treat Text + apostrophe + Text as a single contraction token stream.
+                if let Some((mut parsed, consumed)) = self.parse_contraction(&exprs, index) {
+                    tokens.append(&mut parsed);
+                    index += consumed;
+                    continue;
+                }
+
+                if let Some(mut parsed) = recurse!(exprs[index]) {
+                    tokens.append(&mut parsed);
+                }
+                index += 1;
+            }
+
+            Some(tokens)
         };
 
         // Parse the parameters of a function or closure

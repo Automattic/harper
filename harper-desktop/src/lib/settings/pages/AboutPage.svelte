@@ -1,5 +1,6 @@
 <script lang="ts">
 import { openUrl } from '@tauri-apps/plugin-opener';
+import { Button } from 'components';
 import { onMount } from 'svelte';
 import { DesktopUpdater } from '$lib/DesktopUpdater';
 
@@ -30,13 +31,14 @@ async function loadCurrentVersion() {
           telemetry, no cloud.
         </p>
         <div class="actions-row center">
-          <button
+          <Button
+            unstyled
             class="button"
             type="button"
             on:click={() => void openUrl('https://github.com/Automattic/harper/releases/latest')}
-          >Release notes</button>
-          <button class="button" type="button" on:click={() => void openUrl(SOURCE_URL)}>Source on GitHub</button>
-          <button class="button" type="button" on:click={() => void openUrl(ISSUE_URL)}>Report an issue</button>
+          >Release notes</Button>
+          <Button unstyled class="button" type="button" on:click={() => void openUrl(SOURCE_URL)}>Source on GitHub</Button>
+          <Button unstyled class="button" type="button" on:click={() => void openUrl(ISSUE_URL)}>Report an issue</Button>
         </div>
         <div class="about-footer">
           Harper is free software released under the Apache 2.0 license.

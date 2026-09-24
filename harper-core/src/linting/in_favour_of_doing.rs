@@ -13,7 +13,7 @@ impl Default for InFavourOfDoing {
         Self {
             expr: SequenceExpr::aco("in")
                 .t_ws()
-                .t_set(&["favour", "favor"])
+                .t_set(["favour", "favor"])
                 .t_ws()
                 .then_verb_progressive_form(),
         }

@@ -3683,18 +3683,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    2467 | We passed a barrier of dark trees, and then the façade of Fifty-ninth Street, a
-         |                                                 ^~~~~~ Did you mean to spell `façade` this way?
-    2468 | block of delicate pale light, beamed down into the park. Unlike Gatsby and Tom
-Suggest:
-  - Replace with: “facade”
-  - Replace with: “fade”
-  - Replace with: “facades”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     2492 | some of the rooms. Let’s go to Coney Island, old sport. In my car.”
          |                                ^~~~~ Did you mean to spell `Coney` this way?
 Suggest:

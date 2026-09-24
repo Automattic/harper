@@ -45,6 +45,9 @@ pub mod rect;
 #[cfg(target_os = "macos")]
 mod mac_broker;
 
+#[cfg(target_os = "windows")]
+mod windows_broker;
+
 #[derive(Parser)]
 struct Args {
     #[command(subcommand)]
@@ -69,11 +72,29 @@ struct IntegrationView {
 #[cfg(target_os = "macos")]
 pub(crate) type PlatformBroker = mac_broker::MacBroker;
 
-#[cfg(not(target_os = "macos"))]
+#[cfg(target_os = "windows")]
+pub(crate) type PlatformBroker = windows_broker::WindowsBroker;
+
+#[cfg(not(any(target_os = "macos", target_os = "windows")))]
 pub(crate) type PlatformBroker = os_broker::NoopBroker;
 
-fn platform_broker() -> PlatformBroker {
-    PlatformBroker::default()
+/// Creates the process-local platform broker.
+///
+/// The Tauri process stores its single broker as managed state, while the highlighter subprocess
+/// creates its own broker because it is a separate process.
+fn platform_broker(
+    is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static,
+) -> PlatformBroker {
+    #[cfg(any(target_os = "macos", target_os = "windows"))]
+    {
+        PlatformBroker::new(is_integration_enabled)
+    }
+
+    #[cfg(not(any(target_os = "macos", target_os = "windows")))]
+    {
+        let _ = is_integration_enabled;
+        PlatformBroker::default()
+    }
 }
 
 fn warm_app_search_cache(app: tauri::AppHandle) {
@@ -142,11 +163,13 @@ pub fn run_tauri() {
         }
     };
 
+    let broker = platform_broker(|_| false);
+
     let highlighter_service_enabled = config.highlighter_service_enabled;
     let config = Arc::new(Mutex::new(config));
 
     let highlighter_service = HighlighterService::new(config.clone());
-    if platform_broker().accessibility_permission_status() == AccessibilityPermissionStatus::Granted
+    if broker.accessibility_permission_status() == AccessibilityPermissionStatus::Granted
         && highlighter_service_enabled
     {
         let _ = highlighter_service
@@ -157,7 +180,7 @@ pub fn run_tauri() {
     tauri::Builder::default()
         .manage(config)
         .manage(highlighter_service)
-        .manage(StdMutex::new(platform_broker()))
+        .manage(StdMutex::new(broker))
         .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
@@ -177,17 +200,40 @@ pub fn run_tauri() {
                 windows::show_settings_window(app.handle())?;
             }
 
+            #[cfg(target_os = "macos")]
+            windows::sync_dock_visibility(app.handle(), None)?;
+
             Ok(())
         })
-        .run(tauri::generate_context!())
-        .expect("error while running tauri application");
+        .build(tauri::generate_context!())
+        .expect("error while building tauri application")
+        .run(|_app, event| {
+            #[cfg(target_os = "macos")]
+            if let tauri::RunEvent::WindowEvent {
+                label,
+                event: tauri::WindowEvent::Destroyed,
+                ..
+            } = &event
+            {
+                let _ = windows::sync_dock_visibility(_app, Some(label))
+                    .inspect_err(|err| error!("Could not update Dock visibility: {err}"));
+            }
+
+            // Keep the tray and service alive after the last window closes, but allow Quit.
+            if let tauri::RunEvent::ExitRequested {
+                code: None, api, ..
+            } = event
+            {
+                api.prevent_exit();
+            }
+        });
 }
 
 /// Run as a highlighter process.
 /// Can configure whether to run standalone, or with a parent Tauri process
 pub fn run_highlighter(has_parent: bool) {
-    let client = Rc::new(RefCell::new(Client::current_process()));
-    let sync_runtime = Rc::new(
+    let client = Arc::new(StdMutex::new(Client::current_process()));
+    let sync_runtime = Arc::new(
         Builder::new_current_thread()
             .enable_all()
             .build()
@@ -195,7 +241,10 @@ pub fn run_highlighter(has_parent: bool) {
     );
 
     let startup_config = if has_parent {
-        fetch_highlighter_config(&mut client.borrow_mut(), &sync_runtime)
+        fetch_highlighter_config(
+            &mut client.lock().expect("IPC client lock poisoned"),
+            &sync_runtime,
+        )
     } else {
         Ok(Config::default())
     };
@@ -212,9 +261,33 @@ pub fn run_highlighter(has_parent: bool) {
     let ignored_lints = Rc::new(RefCell::new(startup_config.ignored_lints));
     let user_dictionary = Rc::new(RefCell::new(startup_config.mutable_dictionary));
     let dialect = Rc::new(RefCell::new(startup_config.dialect));
-    let integrations = Arc::new(StdMutex::new(startup_config.integrations));
+    let integrations = Arc::new(StdMutex::new(IntegrationState {
+        integrations: startup_config.integrations,
+        auto_enable_new_apps: startup_config.auto_enable_new_apps,
+    }));
     let debounce_ms = Rc::new(RefCell::new(startup_config.debounce_ms));
     let linter = Rc::new(RefCell::new(startup_linter));
+
+    let integration_client = client.clone();
+    let integration_runtime = sync_runtime.clone();
+    let is_integration_enabled = integration_callback(integrations.clone(), move |bundle_id| {
+        if !has_parent {
+            return true;
+        }
+        match integration_runtime.block_on(
+            integration_client
+                .lock()
+                .expect("IPC client lock poisoned")
+                .resolve_integration(bundle_id),
+        ) {
+            Ok(enabled) => enabled,
+            Err(error) => {
+                eprintln!("failed to register integration: {error}");
+                false
+            }
+        }
+    });
+    let broker = platform_broker(is_integration_enabled);
 
     let lint_ignored_lints = ignored_lints.clone();
     let lint_linter = linter.clone();
@@ -277,9 +350,12 @@ pub fn run_highlighter(has_parent: bool) {
         }
 
         let snapshot = ignore_ignored_lints.borrow().clone();
-        if let Err(error) =
-            ignore_runtime.block_on(ignore_client.borrow_mut().ignore_lint(&snapshot))
-        {
+        if let Err(error) = ignore_runtime.block_on(
+            ignore_client
+                .lock()
+                .expect("IPC client lock poisoned")
+                .ignore_lint(&snapshot),
+        ) {
             eprintln!("failed to sync ignored lints: {error}");
         }
     };
@@ -296,6 +372,7 @@ pub fn run_highlighter(has_parent: bool) {
             ignored_lints: IgnoredLints::new(),
             lint_config,
             integrations: Vec::new(),
+            auto_enable_new_apps: false,
             onboarding_completed: false,
             debounce_ms: *dictionary_debounce_ms.borrow(),
             auto_update: true,
@@ -304,16 +381,22 @@ pub fn run_highlighter(has_parent: bool) {
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
-        if let Err(error) =
-            dictionary_runtime.block_on(dictionary_client.borrow_mut().add_to_dictionary(word))
-        {
+        if let Err(error) = dictionary_runtime.block_on(
+            dictionary_client
+                .lock()
+                .expect("IPC client lock poisoned")
+                .add_to_dictionary(word),
+        ) {
             eprintln!("failed to sync dictionary update: {error}");
         }
     };
 
-    let disable_rule = move |rule_name: &str| match disable_runtime
-        .block_on(disable_client.borrow_mut().disable_rule(rule_name))
-    {
+    let disable_rule = move |rule_name: &str| match disable_runtime.block_on(
+        disable_client
+            .lock()
+            .expect("IPC client lock poisoned")
+            .disable_rule(rule_name),
+    ) {
         Ok(config) => disable_linter.borrow_mut().config = config,
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
@@ -323,7 +406,10 @@ pub fn run_highlighter(has_parent: bool) {
             return;
         }
 
-        match fetch_highlighter_config(&mut refresh_client.borrow_mut(), &refresh_runtime) {
+        match fetch_highlighter_config(
+            &mut refresh_client.lock().expect("IPC client lock poisoned"),
+            &refresh_runtime,
+        ) {
             Ok(config) => apply_highlighter_config(
                 config,
                 &refresh_ignored_lints,
@@ -340,12 +426,6 @@ pub fn run_highlighter(has_parent: bool) {
         }
     };
 
-    #[cfg(target_os = "macos")]
-    let broker = mac_broker::MacBroker::new(integrations);
-
-    #[cfg(not(target_os = "macos"))]
-    let broker = os_broker::NoopBroker;
-
     if let Err(error) = Highlighter::new(
         broker,
         lint_text,
@@ -360,6 +440,46 @@ pub fn run_highlighter(has_parent: bool) {
     }
 }
 
+/// Highlighter-local app policy snapshot, replaced on each config poll.
+/// Also caches discovery decisions (including denials) until the next poll to avoid per-frame IPC.
+struct IntegrationState {
+    integrations: Vec<Integration>,
+    auto_enable_new_apps: bool,
+}
+
+/// Builds the broker's policy callback. Known apps are checked locally; only unknown apps with
+/// automatic enablement on reach `resolve`, which persists registration in the parent process.
+/// Harper itself is excluded from discovery, but explicitly configured entries are respected.
+/// Standalone callers can approve registration locally without IPC.
+fn integration_callback(
+    state: Arc<StdMutex<IntegrationState>>,
+    mut resolve: impl FnMut(&str) -> bool + Send + 'static,
+) -> impl FnMut(&str) -> bool + Send + 'static {
+    move |bundle_id| {
+        let bundle_id = bundle_id.trim();
+        if bundle_id.is_empty() {
+            return false;
+        }
+        let mut state = state.lock().expect("integration state lock poisoned");
+        if let Some(integration) = state
+            .integrations
+            .iter()
+            .find(|item| item.bundle_id == bundle_id)
+        {
+            return integration.enabled;
+        }
+        if !state.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
+            return false;
+        }
+        let enabled = resolve(bundle_id);
+        state.integrations.push(Integration {
+            bundle_id: bundle_id.to_owned(),
+            enabled,
+        });
+        enabled
+    }
+}
+
 fn fetch_highlighter_config(
     client: &mut Client<Stdin, Stdout>,
     runtime: &Runtime,
@@ -370,6 +490,7 @@ fn fetch_highlighter_config(
         let ignored_lints = client.get_ignored_lints().await?;
         let lint_config = client.get_lint_config().await?;
         let integrations = client.get_integrations().await?;
+        let auto_enable_new_apps = client.get_auto_enable_new_apps().await?;
         let debounce_ms = client.get_debounce_ms().await?;
 
         Ok(Config {
@@ -378,6 +499,7 @@ fn fetch_highlighter_config(
             ignored_lints,
             lint_config,
             integrations,
+            auto_enable_new_apps,
             onboarding_completed: false,
             debounce_ms,
             auto_update: true,
@@ -392,7 +514,7 @@ fn apply_highlighter_config(
     ignored_lints: &Rc<RefCell<IgnoredLints>>,
     user_dictionary: &Rc<RefCell<MutableDictionary>>,
     dialect: &Rc<RefCell<Dialect>>,
-    integrations: &Arc<StdMutex<Vec<Integration>>>,
+    integrations: &Arc<StdMutex<IntegrationState>>,
     debounce_ms: &Rc<RefCell<u64>>,
     linter: &Rc<RefCell<LintGroup>>,
 ) {
@@ -401,7 +523,12 @@ fn apply_highlighter_config(
     *user_dictionary.borrow_mut() = config.mutable_dictionary;
     *dialect.borrow_mut() = config.dialect;
     match integrations.lock() {
-        Ok(mut integrations) => *integrations = config.integrations,
+        Ok(mut integrations) => {
+            *integrations = IntegrationState {
+                integrations: config.integrations,
+                auto_enable_new_apps: config.auto_enable_new_apps,
+            }
+        }
         Err(error) => eprintln!("failed to update integrations: {error}"),
     }
     *debounce_ms.borrow_mut() = config.debounce_ms;
