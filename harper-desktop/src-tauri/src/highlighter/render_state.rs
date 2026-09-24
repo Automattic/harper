@@ -72,6 +72,9 @@ pub struct RenderState {
 
     /// Called when the user disables the rule that produced the selected lint.
     disable_rule: DisableRule,
+
+    /// Tracks whether a user action (e.g. apply suggestion, close popup, dismiss lint) just occurred.
+    action_occurred: bool,
 }
 
 impl RenderState {
@@ -90,6 +93,7 @@ impl RenderState {
             ignore_lint,
             add_to_dictionary,
             disable_rule,
+            action_occurred: false,
         };
         state.set_lints(rects);
         state
@@ -163,6 +167,13 @@ impl RenderState {
             .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
     }
 
+    /// Returns true if an interactive action was triggered since the last check, resetting the flag.
+    pub fn take_action_occurred(&mut self) -> bool {
+        let occurred = self.action_occurred;
+        self.action_occurred = false;
+        occurred
+    }
+
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     pub fn render(&mut self, ui: &mut egui::Ui) {
@@ -178,8 +189,12 @@ impl RenderState {
             let source_text = positioned_lint.source_text.clone();
 
             match render_lint_card(ui, &rect, &lint, &source_text, &mut self.markdown_cache) {
-                Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::Close) => {
+                    self.action_occurred = true;
+                    self.close_popup();
+                }
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
+                    self.action_occurred = true;
                     if let Some(actionable_lint) = self
                         .last_lints
                         .as_mut()
@@ -192,6 +207,7 @@ impl RenderState {
                     self.close_popup();
                 }
                 Some(LintCardAction::IgnoreLint) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -208,6 +224,7 @@ impl RenderState {
                     self.close_popup();
                 }
                 Some(LintCardAction::AddToDictionary) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -225,6 +242,7 @@ impl RenderState {
                     self.close_popup();
                 }
                 Some(LintCardAction::DisableRule) => {
+                    self.action_occurred = true;
                     if let Some(rule_name) = self
                         .lints()
                         .get(index)

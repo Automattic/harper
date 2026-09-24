@@ -120,6 +120,7 @@ struct WindowManagerApp {
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
     consecutive_none_reads: usize,
+    read_pause_until: Option<Instant>,
     error: Option<Error>,
 }
 
@@ -150,6 +151,7 @@ impl WindowManagerApp {
             hovered_lint: None,
             cursor_hittest_enabled: false,
             consecutive_none_reads: 0,
+            read_pause_until: None,
             error: None,
         }
     }
@@ -249,7 +251,17 @@ impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
 
-        if self.render_state.popup_rect().is_none()
+        if self.render_state.take_action_occurred() {
+            self.read_pause_until = Some(now + Duration::from_millis(400));
+        }
+
+        let is_paused = self.read_pause_until.is_some_and(|until| now < until);
+        if !is_paused {
+            self.read_pause_until = None;
+        }
+
+        if !is_paused
+            && self.render_state.popup_rect().is_none()
             && now.duration_since(self.last_read) >= self.read_interval
         {
             self.read_rect_updates();
