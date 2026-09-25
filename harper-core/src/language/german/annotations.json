@@ -27,7 +27,7 @@
 			"rename_ok": true
 		},
 		"E": {
-			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
+			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Alone among the five plural affixes it does **not** mark its base singular, but singular *or* plural. It is carried by two kinds of entry: a singular that forms its plural in '-n' (Diagnose -> Diagnosen), and a form that is already plural and only adds the dative '-n' (die Lehrer -> den Lehrern, die Befunde -> den Befunden). Against the igerman98 hunspell dictionary as an oracle, 995 of the 10295 recognized entries carrying it are of the second kind -- and for the '-er' and '-el' nouns the base form is genuinely both numbers at once (die Lehrer, der Lehrer), so no single answer is right. A set holding both says exactly that: an inflecting noun whose number this flag does not decide. It constrains nothing in an agreement check, which is the honest outcome, and it still tells the capitalization linter that a bare '-e' word is a real noun rather than a verb form. Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -48,7 +48,12 @@
 				}
 			],
 			"base_metadata": {
-				"noun": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": ["Singular", "Plural"]
+					}
+				}
 			},
 			"rename_ok": true
 		},
@@ -1357,7 +1362,12 @@
 				}
 			],
 			"base_metadata": {
-				"noun": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Singular"
+					}
+				}
 			},
 			"rename_ok": true
 		},
@@ -1400,7 +1410,12 @@
 				}
 			],
 			"base_metadata": {
-				"noun": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Singular"
+					}
+				}
 			},
 			"rename_ok": true
 		},
@@ -1438,7 +1453,12 @@
 				}
 			],
 			"base_metadata": {
-				"noun": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Singular"
+					}
+				}
 			},
 			"rename_ok": true
 		},
@@ -1466,7 +1486,12 @@
 				}
 			],
 			"base_metadata": {
-				"noun": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Singular"
+					}
+				}
 			},
 			"rename_ok": true
 		},
@@ -2713,36 +2738,21 @@
 			}
 		},
 		"X": {
-			"#": "noun plural -e (German)",
+			"#": "noun plural -e (German). This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"number": "Plural"
-					}
-				}
+				"noun": {}
 			}
 		},
 		"E": {
-			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see harper-core/src/language/german/scripts/split_german_plural_n.py",
+			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see harper-core/src/language/german/scripts/split_german_plural_n.py. This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"number": "Plural"
-					}
-				}
+				"noun": {}
 			}
 		},
 		"Y": {
-			"#": "noun plural -en (German)",
+			"#": "noun plural -en (German). This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"number": "Plural"
-					}
-				}
+				"noun": {}
 			}
 		},
 		"Z": {
@@ -2757,25 +2767,15 @@
 			}
 		},
 		"a": {
-			"#": "noun plural -er with umlaut (German)",
+			"#": "noun plural -er with umlaut (German). This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"number": "Plural"
-					}
-				}
+				"noun": {}
 			}
 		},
 		"b": {
-			"#": "noun plural -s (German)",
+			"#": "noun plural -s (German). This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
-				"noun": {},
-				"morphology": {
-					"noun": {
-						"number": "Plural"
-					}
-				}
+				"noun": {}
 			}
 		},
 		"c": {

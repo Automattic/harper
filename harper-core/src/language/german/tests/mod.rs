@@ -17,6 +17,7 @@ pub mod feminine_derivation_test;
 pub mod function_word_flags_test;
 pub mod german_annotations_test;
 pub mod headword_import_test;
+pub mod noun_number_test;
 pub mod noun_phrase_chunk_test;
 pub mod plural_split_test;
 pub mod present_participle_test;

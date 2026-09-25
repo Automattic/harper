@@ -335,6 +335,49 @@ compound checker could reach them through forms that were junk. Neither
 `Programm` nor `Subjunktion` is an entry; importing the headword is the fix, not
 keeping the junk.
 
+#### A plural flag said the opposite of what it meant
+
+`X`, `Y`, `a`, `b` and `E` are each an affix *and* a property, and the two said
+opposite things. The affix marks the form it **builds**: `Frau` plus `Y` gives
+`Frauen`, a plural. The property marked the entry it **sits on**, so `Frau` was
+a plural too — and so was every other singular noun that can form one. **67268
+of 67269.**
+
+That is not a cosmetic mislabel. `den` is accusative masculine singular *or*
+dative plural, and only the noun can say which. A noun claiming to be plural
+keeps the dative plural reading alive, which is exactly what made
+*"mit **den** Freund"* look acceptable. The whole class of case errors that only
+the noun reveals was invisible because of it.
+
+The number now lives on the affix alone, and four of the five mark their base
+singular in return. `E` does not: it is carried both by a singular whose plural
+is `-n` (`Diagnose` → `Diagnosen`) and by a form that is already plural and only
+adds the dative `-n` (`die Lehrer` → `den Lehrern`, `die Befunde` → `den
+Befunden`). For the `-er` and `-el` nouns the base really is both numbers at
+once, so `E` marks its base `["Singular", "Plural"]` — a set that constrains
+nothing, which is the honest answer, and which still tells
+`GermanNounCapitalization` that a bare `-e` word is a noun rather than a verb
+form.
+
+Measured against the igerman98 hunspell dictionary as an oracle, over the 4000
+most frequent nouns of the prose corpus:
+
+| | before | after |
+|---|---|---|
+| number agrees with the oracle | 553 | **1670** |
+| base form wrongly marked plural | 1174 | **56** |
+| plural form wrongly marked singular | 0 | **1** |
+
+The oracle needs care. `de_DE.aff` on this machine declares `SET ISO8859-1`
+while `de_DE.dic` beside it is UTF-8, so every word with an umlaut silently
+fails to analyse — half the German language. Copy the `.aff`, rewrite that one
+line to `SET UTF-8`, and leave the `.dic` alone.
+
+The one remaining conflict is `Fischen`, and it points at the next gap: the
+dative plural of an `-e` plural (`Fisch` → `Fische` → `Fischen`) is not
+generated at all. Where it exists it is an accident of a noun carrying `Y` as
+well, and where it does not, the only entry is a lower-case compound element.
+
 #### Words that are not nouns, tagged as nouns
 
 German capitalizes its nouns, so a lower-case entry whose **capitalized** form

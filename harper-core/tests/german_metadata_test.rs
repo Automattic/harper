@@ -24,13 +24,17 @@ mod tests {
         let metadata = metadata.unwrap();
         assert!(metadata.is_noun(), "'Mann' should have a noun reading");
 
-        // `Mann/~~MhY`: the M flag carries masculine gender, Y carries plural.
+        // `Mann/~~MhY0HX`: the M flag carries masculine gender. The plural
+        // flags say that *Mann* forms a plural, which makes the entry itself
+        // singular — the plural marking belongs on *Männer*, not here. This
+        // test asserted `Plural` until the flag collision behind that was
+        // found; see `language::german::tests::noun_number_test`.
         assert_eq!(
             metadata.get_noun_gender(),
             Some(Gender::Masculine),
             "the M flag should give 'Mann' masculine noun gender"
         );
-        assert_eq!(metadata.get_noun_number(), Some(Number::Plural));
+        assert_eq!(metadata.get_noun_number(), Some(Number::Singular));
 
         // The case flags (p/u/v/w) carry no metadata yet, so case stays unset.
         assert_eq!(metadata.get_noun_case(), None);
