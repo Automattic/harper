@@ -1081,8 +1081,18 @@ pub enum Dialect {
     Australian = 1 << 2,
     British = 1 << 3,
     Indian = 1 << 4,
+    Spanish = 1 << 5,
 }
 impl Dialect {
+    #[must_use]
+    pub fn is_spanish(&self) -> bool {
+        matches!(self, Self::Spanish)
+    }
+
+    #[must_use]
+    pub fn is_english(&self) -> bool {
+        !self.is_spanish()
+    }
     /// Tries to guess the dialect used in the document by finding which dialect is used the most.
     /// Returns `None` if it fails to find a single dialect that is used the most.
     #[must_use]
@@ -1098,7 +1108,7 @@ impl Dialect {
     /// ```
     /// use harper_core::Dialect;
     ///
-    /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
+    /// let abbrs = ["US", "CA", "AU", "GB", "IN", "ES"];
     /// let mut dialects = abbrs.iter().map(|abbr| Dialect::try_from_abbr(abbr));
     ///
     /// assert_eq!(Some(Dialect::American), dialects.next().unwrap()); // US
@@ -1106,6 +1116,7 @@ impl Dialect {
     /// assert_eq!(Some(Dialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(Dialect::British), dialects.next().unwrap()); // GB
     /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
+    /// assert_eq!(Some(Dialect::Spanish), dialects.next().unwrap()); // ES
     /// ```
     #[must_use]
     pub fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -1115,11 +1126,15 @@ impl Dialect {
             "AU" => Some(Self::Australian),
             "GB" => Some(Self::British),
             "IN" => Some(Self::Indian),
+            "ES" => Some(Self::Spanish),
             _ => None,
         }
     }
     // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
     pub fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        if bcp47 == "es" || bcp47.starts_with("es-") {
+            return Some(Self::Spanish);
+        }
         bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
     }
 }
@@ -1141,6 +1156,7 @@ impl TryFrom<DialectFlags> for Dialect {
                 df if df.is_dialect_enabled_strict(Dialect::Australian) => Ok(Dialect::Australian),
                 df if df.is_dialect_enabled_strict(Dialect::British) => Ok(Dialect::British),
                 df if df.is_dialect_enabled_strict(Dialect::Indian) => Ok(Dialect::Indian),
+                df if df.is_dialect_enabled_strict(Dialect::Spanish) => Ok(Dialect::Spanish),
                 _ => Err(()),
             }
         } else {
@@ -1167,6 +1183,7 @@ bitflags::bitflags! {
         const AUSTRALIAN = Dialect::Australian as DialectFlagsUnderlyingType;
         const BRITISH = Dialect::British as DialectFlagsUnderlyingType;
         const INDIAN = Dialect::Indian as DialectFlagsUnderlyingType;
+        const SPANISH = Dialect::Spanish as DialectFlagsUnderlyingType;
     }
 }
 impl DialectFlags {

@@ -92,6 +92,14 @@ impl Document {
         Self::new(text, &PlainEnglish, &FstDictionary::curated())
     }
 
+    pub fn new_plain_english_curated_spanish(text: &str) -> Self {
+        Self::new(
+            text,
+            &PlainEnglish,
+            &crate::spell::MergedDictionary::curated_spanish_multilingual(),
+        )
+    }
+
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The
     /// contained words will not contain any metadata.
     ///
