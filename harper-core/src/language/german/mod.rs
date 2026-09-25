@@ -7,6 +7,7 @@
 //! - German dictionary
 
 pub mod dialects;
+pub mod grammar;
 pub mod language_detection;
 pub mod lexing;
 pub mod linting;

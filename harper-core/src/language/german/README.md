@@ -797,8 +797,10 @@ they passed against a linter that did nothing at all.
 
 > A test that only proves a rule is quiet proves nothing. Assert a firing.
 
-Real agreement checking needs *case*, which the dictionary does not carry yet (it
-has gender and number). That is the prerequisite for writing any of these again.
+Real agreement checking needs *case*. The dictionary still carries none, and
+`german_preposition_case.rs` works around that rather than fixing it — see
+[Case without a case-marked dictionary](#case-without-a-case-marked-dictionary).
+Anything that has to know the *noun's* case still waits on the dictionary.
 
 All five are annotated in place and left out of the group. Fixing one means
 writing the agreement logic, not re-registering it.
@@ -821,6 +823,8 @@ because the compound splitter reads the wrong spelling as a legal compound:
 | `german_subordinate_comma.rs` | the missing comma before `weil`, `obwohl`, `falls`, `bevor` | punctuation is not the spell checker's business |
 | `german_year_preposition.rs` | `in 2024` → `2024` / `im Jahr 2024` | an anglicism made of two correct words |
 
+| `german_preposition_case.rs` | `wegen dem Wetter` → `wegen des Wetters`, `für dem Kind`, `mit das Auto` | the words are all correct, and the case is a relation between two of them |
+
 Comma placement is the most common mistake in written German and most of it needs
 a parser, but not this part: these conjunctions open a subordinate clause and
 nothing else. What the rule needs is a short list of exceptions, and the corpus
@@ -836,6 +840,54 @@ found all of them:
   *"kurz nachdem"*, *"je nachdem"*. That list is kept separate on purpose:
   *"Das Haus steht noch, obwohl es alt ist"* needs its comma, so `noch` cannot be
   a particle everywhere.
+
+## Case without a case-marked dictionary
+
+Of 109,557 German noun entries, 99.6% carry no gender and **none** carries a
+case. That is why the five agreement linters above never worked, and it is not a
+gap that can be closed cheaply. `german_preposition_case.rs` gets a large part of
+the value anyway, by never asking the noun anything.
+
+Both sides of the check come from `grammar/`, written out in Rust:
+
+- `grammar/determiners.rs` — the determiner paradigms, about 200 forms over 18
+  stems, generated from two ending tables.
+- `grammar/prepositions.rs` — what each of ~100 prepositions governs.
+
+The check is then LanguageTool's `retainAll`: the preposition names the cases it
+allows, the determiner carries every case it can be read in, and an empty
+intersection is the error. On a 572-article prose corpus it reports 15 times, of
+which 3 are false positives; on a battery of 28 preposition-case errors it finds
+24 against LanguageTool's 18, with neither reporting anything on 28 matched
+correct sentences.
+
+**Why the data is in Rust and not in `dictionary.dict`.** A dictionary entry
+carries an `Agreement`, whose case, gender and number are three independent sets.
+A determiner cannot be written that way: *der* is nominative masculine, dative
+feminine, genitive feminine and genitive plural, but never *nominative feminine*,
+and `case = {NOM, DAT, GEN}` beside `gender = {M, F}` claims exactly that
+combination. What is needed is a list of fully specified readings. The flags
+`p`, `u`, `v`, `w` in `annotations.json` are declared as case flags and set no
+metadata; they are the shape that does not work.
+
+**What it cannot see.** The rule reads the determiner alone, so a mistake the
+determiner survives is invisible: *mit den Freund* is wrong, but *den* is a good
+dative plural and only the singular *Freund* says otherwise. Roughly the same
+limit applies to *mit seinen Bruder*. Closing it means gender on the nouns.
+
+**Where the false positives came from.** All of them were homography, and the
+corpus found each class. They are worth listing because every one is a trap for
+the next rule that reads a closed word list:
+
+| Class | Example | Fix |
+|---|---|---|
+| noun and acronym homographs | *für kurze **Zeit** den Thron*, *am **MIT** das*, *Liu **Bei** die Provinz* | a preposition is lower case unless it opens the sentence; `zeit`, `bar`, `je`, `ausschließlich`, `entsprechend`, `inklusive` are out of the table entirely |
+| infinitive clauses | *um **dem** Leser … zu bieten* | the case belongs to the infinitive. `zu` is written *inside* a separable verb — *entgegenzuwirken* — so searching for it as a token catches barely half |
+| postpositions | *seiner Ansicht **nach** eine*, *ihm **zufolge** das*, *von dort **aus** eine* | what follows starts a new phrase; recognized from the word in front |
+| subordinating conjunctions | *während **das** Kind schlief* | the subject is nominative, so only a dative is reported after these |
+| verb and pronoun homographs | *zu **sein***, *mit **ihr*** | bare *sein* and *ihr* are not in the determiner table |
+| fixed coordinations | *von **ein** und demselben* | the determiner is uninflected before *und*, *oder*, *bis* |
+| prenominal genitive | *in **des** Kaisers Namen* | correct after any preposition |
 
 `german_fixed_nominalization.rs` is the one rule here that **cannot** be a Weir
 rule, and for an instructive reason: Weir matches words case-insensitively, so a

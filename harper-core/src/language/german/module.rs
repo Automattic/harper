@@ -46,6 +46,7 @@ impl LanguageModule for GermanModule {
             german_fixed_nominalization::GermanFixedNominalization,
             german_genitive_after_nominative_article::GermanGenitiveAfterNominativeArticle,
             german_noun_capitalization::GermanNounCapitalization,
+            german_preposition_case::GermanPrepositionCase,
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck, german_subordinate_comma::GermanSubordinateComma,
             german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
@@ -71,6 +72,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanFixedNominalization", GermanFixedNominalization);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
         group.add("GermanYearPreposition", GermanYearPreposition);
+        group.add("GermanPrepositionCase", GermanPrepositionCase);
         group.add(
             "GermanGenitiveAfterNominativeArticle",
             GermanGenitiveAfterNominativeArticle::new(),

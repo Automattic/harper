@@ -209,8 +209,21 @@ pub fn lint(
     let weirpacks = load_weirpacks(weirpack_inputs)?;
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
-    // Uses a cached config to avoid expensive linter initialization
     let mut config = FlatConfig::new_curated();
+    // `new_curated` is English. A language module registers rules of its own,
+    // and without them here every `--only GermanNounCapitalization` was
+    // rejected as an unknown rule and left nothing enabled. Building a group
+    // costs a linter initialization, so it is done only when the language
+    // actually has rules the curated config does not know.
+    if !matches!(dialect, harper_core::Language::English(_)) {
+        let mut probe = MergedDictionary::new();
+        probe.add_dictionary(curated_dictionary.clone());
+        for rule in
+            harper_core::language::new_curated_for_language(Arc::new(probe), dialect).iter_keys()
+        {
+            config.set_rule_enabled(rule, true);
+        }
+    }
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);
