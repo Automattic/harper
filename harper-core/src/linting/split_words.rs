@@ -2,14 +2,16 @@ use std::sync::Arc;
 
 use hashbrown::HashSet;
 
-use crate::expr::Expr;
-use crate::linting::{
-    ExprLinter, LintKind, Suggestion,
-    expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
-    informal_laughter::is_informal_laughter,
+use crate::{
+    Lint, Token,
+    expr::Expr,
+    linting::{
+        ExprLinter, LintKind, Suggestion,
+        expr_linter::{Chunk, at_start_of_sentence, preceded_by_word},
+        informal_laughter::is_informal_laughter,
+    },
+    spell::{Dictionary, FstDictionary, TrieDictionary},
 };
-use crate::spell::{Dictionary, FstDictionary, TrieDictionary};
-use crate::{Lint, Token};
 
 pub struct SplitWords {
     dict: Arc<TrieDictionary<Arc<FstDictionary>>>,
@@ -365,15 +367,6 @@ mod tests {
     }
 
     #[test]
-    fn not_confident_proc_should_be_pro_c() {
-        assert_lint_message(
-            "proc",
-            SplitWords::default(),
-            "`proc` should possibly be written as `pro c`.",
-        );
-    }
-
-    #[test]
     fn confident_thankyou_should_be_thank_you() {
         assert_lint_message(
             "thankyou",
@@ -402,7 +395,7 @@ mod tests {
     fn never_corrects_to_invalid_single_letter_words() {
         let triggers = [
             "comitted", "testc", "testh", "testb", "testq", "testx", "testg", "teste", "testj",
-            "shes",
+            "shes", "proc",
         ];
         let relevant_letters = ['c', 'd', 't', 'h', 'b', 'x', 'e', 'j', 's'];
 

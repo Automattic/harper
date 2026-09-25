@@ -1,42 +1,33 @@
 import { redirect } from '@sveltejs/kit';
+import { computeDurationFromSlug, countOccurances } from '$lib/adminUtils';
 import UninstallFeedback from '$lib/db/models/UninstallFeedback';
 
 export const load = async ({ params }) => {
 	const slug = params.slug;
 
-	let date = null;
+	const duration = computeDurationFromSlug(slug);
 
-	switch (slug) {
-		case 'last30days':
-			date = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000);
-			break;
-		case 'lastday':
-			date = new Date(Date.now() - 24 * 60 * 60 * 1000);
-			break;
-		case 'all':
-			date = new Date(0);
-			break;
-	}
-
-	if (date == null) {
+	if (duration == null) {
 		redirect(302, '/admin/ext-uninstall-reasons/all');
 	}
 
-	const problematicLints = await UninstallFeedback.getAllSince(date);
+	const date = Date.now() - duration;
 
-	const counts: Record<string, number> = {};
+	const uninstallFeedback = await UninstallFeedback.getAllSince(new Date(date));
+	const prevUninstallFeedback = await UninstallFeedback.getAllBetween(
+		new Date(date - duration),
+		new Date(date),
+	);
 
-	for (const item of problematicLints) {
-		const id = item.feedback ?? 'OTHER';
-
-		if (counts[id] === undefined) {
-			counts[id] = 1;
-		} else {
-			counts[id] += 1;
-		}
-	}
+	const counts: Record<string, number> = countOccurances(
+		uninstallFeedback.map((i) => i.feedback ?? 'OTHER'),
+	);
+	const prevCounts: Record<string, number> = countOccurances(
+		prevUninstallFeedback.map((i) => i.feedback ?? 'OTHER'),
+	);
 
 	return {
 		counts,
+		prevCounts,
 	};
 };

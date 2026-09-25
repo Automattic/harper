@@ -6,8 +6,9 @@ let { data }: PageProps = $props();
 let links = {
 	All: '/admin/ext-uninstall-reasons/all',
 	'Last 30 Days': '/admin/ext-uninstall-reasons/last30days',
+	'Last week': '/admin/ext-uninstall-reasons/lastweek',
 	'Last Day': '/admin/ext-uninstall-reasons/lastday',
 };
 </script>
 
-<AnalyticsPage data={data.counts} title="Most Common Reasons to Uninstall the Chrome Ext" {links}/>
+<AnalyticsPage data={data.counts} prevPeriodData={data.prevCounts} title="Most Common Reasons to Uninstall the Chrome Ext" {links}/>

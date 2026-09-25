@@ -1,4 +1,14 @@
 <script lang="ts">
+import {
+	Button,
+	Checkbox,
+	CheckIcon,
+	IconButton,
+	Panel,
+	SettingRow,
+	Toggle,
+	TrashIcon,
+} from 'components';
 import { onMount } from 'svelte';
 import { Client, type Integration } from '$lib/client';
 import AppIcon from '../components/AppIcon.svelte';
@@ -13,14 +23,51 @@ let integrationApps: IntegrationRow[] = [];
 let integrationsError = '';
 let isIntegrationsLoading = true;
 let isIntegrationsSaving = false;
+let autoEnableNewApps = false;
+let isAutoEnableLoading = true;
+let isAutoEnableSaving = false;
+let autoEnableError = '';
 let appPickerOpen = false;
 let newBundleId = '';
 
 $: existingBundleIds = integrations.map((integration) => integration.bundle_id);
 
 onMount(() => {
-	void loadIntegrations();
+	const refresh = () => {
+		if (!isIntegrationsSaving) void loadIntegrations();
+		if (!isAutoEnableSaving) void loadAutoEnableNewApps();
+	};
+	refresh();
+	window.addEventListener('focus', refresh);
+	return () => window.removeEventListener('focus', refresh);
 });
+
+async function loadAutoEnableNewApps() {
+	isAutoEnableLoading = true;
+	autoEnableError = '';
+	try {
+		autoEnableNewApps = await Client.getAutoEnableNewApps();
+	} catch (error) {
+		autoEnableError = `Unable to load automatic app enablement: ${error}`;
+	} finally {
+		isAutoEnableLoading = false;
+	}
+}
+
+async function setAutoEnableNewApps(enabled: boolean) {
+	const previous = autoEnableNewApps;
+	autoEnableNewApps = enabled;
+	isAutoEnableSaving = true;
+	autoEnableError = '';
+	try {
+		await Client.setAutoEnableNewApps(enabled);
+	} catch (error) {
+		autoEnableNewApps = previous;
+		autoEnableError = `Unable to save automatic app enablement: ${error}`;
+	} finally {
+		isAutoEnableSaving = false;
+	}
+}
 
 async function loadIntegrations() {
 	isIntegrationsLoading = true;
@@ -140,7 +187,7 @@ function closeAppPicker() {
       <p class="result-summary">Saving integrations...</p>
     {/if}
 
-    <div class="list-card">
+    <Panel>
       {#if !isIntegrationsLoading && integrationApps.length === 0}
         <div class="empty">No configured app integrations.</div>
       {:else}
@@ -151,39 +198,34 @@ function closeAppPicker() {
               <strong>{app.name}</strong>
               <p>{app.bundle_id}</p>
             </div>
-            <button
-              class="icon-button danger"
-              type="button"
+            <IconButton
+              danger
               disabled={isIntegrationsLoading || isIntegrationsSaving}
               aria-label={`Remove ${app.name}`}
               on:click={() => removeIntegration(app.bundle_id)}
             >
-              <span class="settings-icon icon-trash" aria-hidden="true"></span>
-            </button>
-            <button
-              class:checked={app.enabled}
-              class="toggle"
-              type="button"
-              role="switch"
+              <TrashIcon className="control-icon" />
+            </IconButton>
+            <Toggle
+              appearance="settings"
+              checked={app.enabled}
               disabled={isIntegrationsLoading || isIntegrationsSaving}
-              aria-checked={app.enabled}
               aria-label={`Toggle ${app.name}`}
               on:click={() => setIntegrationEnabled(app.bundle_id, !app.enabled)}
-            >
-              <span></span>
-            </button>
+            />
           </div>
         {/each}
       {/if}
-    </div>
+    </Panel>
 
     <div class="actions-row">
-      <button
+      <Button
+        unstyled
         class="button"
         type="button"
         disabled={isIntegrationsLoading || isIntegrationsSaving}
         on:click={() => (appPickerOpen = true)}
-      >Add application...</button>
+      >Add application...</Button>
       <span class="muted">Choose any app from your Applications folder.</span>
     </div>
   </div>
@@ -192,20 +234,27 @@ function closeAppPicker() {
 
   <div class="stanza">
     <div class="eyebrow">New apps</div>
-    <div class="row top">
-      <div>
-        <strong>Enable new apps automatically</strong>
-        <p>When you launch a supported app for the first time, turn integration on by default.</p>
-      </div>
-      <button
-        class="checkbox"
-        type="button"
-        role="checkbox"
-        aria-checked="false"
-        disabled
-        title="Not wired yet"
-      ></button>
-    </div>
+    <SettingRow top>
+      <strong>Enable new apps automatically</strong>
+      <p>Automatically add and enable new apps when Harper encounters them. Disabled apps stay disabled; removed apps can be added again.</p>
+      <Checkbox
+        slot="control"
+        appearance="settings"
+        checked={autoEnableNewApps}
+        disabled={isAutoEnableLoading || isAutoEnableSaving}
+        aria-label="Enable new apps automatically"
+        on:click={() => setAutoEnableNewApps(!autoEnableNewApps)}
+      >
+        {#if autoEnableNewApps}<CheckIcon className="control-icon" />{/if}
+      </Checkbox>
+    </SettingRow>
+    {#if autoEnableError}
+      <p class="result-summary" role="alert">{autoEnableError}</p>
+    {:else if isAutoEnableLoading}
+      <p class="result-summary">Loading automatic app enablement...</p>
+    {:else if isAutoEnableSaving}
+      <p class="result-summary">Saving automatic app enablement...</p>
+    {/if}
   </div>
 </section>
 
