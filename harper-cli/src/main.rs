@@ -1,43 +1,45 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
-use hashbrown::HashMap;
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{self, BufReader};
-use std::path::PathBuf;
-// use std::sync::Arc;
-use std::{fs, process};
+use std::{
+    collections::BTreeMap,
+    fs::{self, File},
+    io::{self, BufReader},
+    path::PathBuf,
+    process,
+};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
-use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
-use harper_core::weir::WeirLinter;
-use harper_core::{
-    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
-};
-#[cfg(feature = "training")]
-use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-
-use harper_stats::Stats;
+use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+use harper_core::{
+    CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    linting::LintGroup,
+    parsers::{IsolateEnglish, MarkdownOptions},
+    spell::{Dictionary, FstDictionary, MutableDictionary, WordId},
+    weir::WeirLinter,
+};
+#[cfg(feature = "training")]
+use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
+use harper_stats::Stats;
+
+mod annotate;
 mod input;
+mod lint;
+mod lint_engine;
+mod lint_reporter;
+
+use crate::lint::{OutputFormat, lint};
+use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
-
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
-use crate::lint::{OutputFormat, lint};
 use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
