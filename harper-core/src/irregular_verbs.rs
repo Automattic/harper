@@ -71,6 +71,20 @@ impl IrregularVerbs {
             .map(|(lemma, _, _)| lemma.as_str())
     }
 
+    pub fn get_preterite_for_lemma(&self, lemma: &str) -> Option<&str> {
+        self.verbs
+            .iter()
+            .find(|(l, _, _)| l.eq_ignore_ascii_case(lemma))
+            .map(|(_, pt, _)| pt.as_str())
+    }
+
+    pub fn get_past_participle_for_lemma(&self, lemma: &str) -> Option<&str> {
+        self.verbs
+            .iter()
+            .find(|(l, _, _)| l.eq_ignore_ascii_case(lemma))
+            .map(|(_, _, pp)| pp.as_str())
+    }
+
     pub fn get_pasts_for_lemma(&self, lemma: &str) -> Option<(&str, &str)> {
         self.verbs
             .iter()
