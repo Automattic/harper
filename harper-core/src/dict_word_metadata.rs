@@ -380,6 +380,9 @@ impl DictWordMetadata {
         }
     }
 
+    // Generates boolean query methods for word metadata fields.
+    //
+    // Note: `singular` and `countable` default to true and are skipped here.
     generate_metadata_queries!(
         // Singular and countable default to true, so their metadata queries are not generated.
         noun has proper, plural, mass, possessive.
@@ -395,10 +398,12 @@ impl DictWordMetadata {
 
     // Pronoun metadata queries
 
+    /// Returns the grammatical person for personal pronouns.
     pub fn get_person(&self) -> Option<Person> {
         self.pronoun.as_ref().and_then(|p| p.person)
     }
 
+    /// Checks if the pronoun is both first-person and plural (we/us).
     pub fn is_first_person_plural_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -410,6 +415,7 @@ impl DictWordMetadata {
         )
     }
 
+    /// Checks if the pronoun is both first-person and singular (I/me).
     pub fn is_first_person_singular_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -421,6 +427,7 @@ impl DictWordMetadata {
         )
     }
 
+    /// Checks if the pronoun is both third-person and plural (they/them).
     pub fn is_third_person_plural_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -432,6 +439,7 @@ impl DictWordMetadata {
         )
     }
 
+    /// Checks if the pronoun is both third-person and singular (he/him/she/her/it).
     pub fn is_third_person_singular_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -443,6 +451,7 @@ impl DictWordMetadata {
         )
     }
 
+    /// Checks if the pronoun is third-person (he/him/she/her/it/they/them).
     pub fn is_third_person_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -453,6 +462,7 @@ impl DictWordMetadata {
         )
     }
 
+    /// Checks if the pronoun is second-person (you).
     pub fn is_second_person_pronoun(&self) -> bool {
         matches!(
             self.pronoun,
@@ -463,7 +473,7 @@ impl DictWordMetadata {
         )
     }
 
-    // Lemma is default if no verb form is specified in the dictionary
+    /// Lemma is default if no verb form is specified in the dictionary
     pub fn is_verb_lemma(&self) -> bool {
         if let Some(verb) = self.verb {
             if let Some(forms) = verb.verb_forms {
@@ -475,6 +485,10 @@ impl DictWordMetadata {
         false
     }
 
+    /// WARNING! This is intended for regular verb past form used for both preterite and past participle.
+    /// WARNING! But for now it's a bit fuzzy and may be missing from some regular verbs and may be
+    /// WARNING! misapplied to some irregular verbs that happen to have the same form for preterite and
+    /// WARNING! past participle such as "bought", "caught",
     pub fn is_verb_past_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -482,7 +496,11 @@ impl DictWordMetadata {
         })
     }
 
-    pub fn is_verb_regular_past_form(&self) -> bool {
+    /// WARNING! This method was formerly named `is_verb_regular_past_form` and seems to have been an
+    /// WARNING! attempt to make a new method that achieved what `is_verb_past_form` above was intended
+    /// WARNING! to to achieve. But it fell into the trap mentioned above of assuming that only regular
+    /// WARNING! verbs had the same form for preterite and past participle, overlooking "bought", "caught", etc.
+    pub fn is_verb_preterite_and_participle_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms.is_some_and(|vf| {
                 vf.contains(VerbFormFlags::PRETERITE) && vf.contains(VerbFormFlags::PAST_PARTICIPLE)
@@ -490,6 +508,9 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is a simple past form, technically known as the "preterite" form.
+    /// WARNING! This should be working for irregular verbs but may not be working for regular verbs.
+    /// WARNING! e.g., it is more likely to match `ate` than `walked` for now.
     pub fn is_verb_simple_past_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -497,6 +518,9 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is a past participle form.
+    /// WARNING! This should be working for irregular verbs but may not be working for regular verbs.
+    /// WARNING! e.g., it is more likely to match `eaten` than `walked` for now.
     pub fn is_verb_past_participle_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -504,6 +528,8 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is only the simple past aka preterite form and not also marked as
+    /// `past` or `past participle`.
     pub fn is_verb_simple_past_only(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms.is_some_and(|vf| {
@@ -513,6 +539,8 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is only the past participle form and not also marked as
+    /// `past` or `preterite` (aka simple past).
     pub fn is_verb_past_participle_only(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms.is_some_and(|vf| {
@@ -522,6 +550,7 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is a progressive/continuous form (e.g., ends in "-ing").
     pub fn is_verb_progressive_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -529,6 +558,7 @@ impl DictWordMetadata {
         })
     }
 
+    /// Checks if the verb is a third-person singular present form (e.g., "walks").
     pub fn is_verb_third_person_singular_present_form(&self) -> bool {
         self.verb.is_some_and(|v| {
             v.verb_forms
@@ -538,7 +568,9 @@ impl DictWordMetadata {
 
     // Noun metadata queries
 
-    // Singular is default if number is not marked in the dictionary.
+    /// Matches a noun either specifically marked as singular or not marked for number
+    /// since singular is the default. Note that this will also match nouns which are
+    /// both singular and plural such as "aircraft" or "sheep".
     pub fn is_singular_noun(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
@@ -549,6 +581,10 @@ impl DictWordMetadata {
             false
         }
     }
+
+    /// Matches a noun that is neither specifically marked as singular nor unmarked for
+    /// number since singular is the default. This will not match nouns which are both plural
+    /// and singular such as "aircraft" or "sheep".
     pub fn is_non_singular_noun(&self) -> bool {
         if let Some(noun) = self.noun {
             !matches!(
@@ -560,7 +596,9 @@ impl DictWordMetadata {
         }
     }
 
-    // Countable is default if countability is not marked in the dictionary.
+    /// Matches a noun either specifically marked as a count noun or not marked for countability
+    /// since count is the default. This will match nouns which are both count and mass nouns
+    /// such as "beer" and "property".
     pub fn is_countable_noun(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
@@ -571,6 +609,10 @@ impl DictWordMetadata {
             false
         }
     }
+
+    /// Matches a noun that is neither specifically marked as a count noun nor unmarked for
+    /// countability since countable is the default. This will not match nouns which are both count
+    /// nouns and mass nouns such as "beer" or "property".
     pub fn is_non_countable_noun(&self) -> bool {
         if let Some(noun) = self.noun {
             !matches!(
@@ -582,6 +624,10 @@ impl DictWordMetadata {
         }
     }
 
+    /// Matches a noun either specifically marked as singular or not marked for number
+    /// since singular is the default, but only if it is not also marked as plural.
+    /// This will match nouns which are singular only like "balloon" or "cow"
+    /// but not both singular and plural such as "aircraft" or "sheep".
     pub fn is_singular_noun_only(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
@@ -593,6 +639,10 @@ impl DictWordMetadata {
         }
     }
 
+    /// Matches a noun specifically marked as plural, but only if it is not also
+    /// marked as singular.
+    /// This will match nouns which are plural only like "cars" or "men"
+    /// but not both singular and plural such as "aircraft" or "sheep".
     pub fn is_plural_noun_only(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
@@ -604,7 +654,8 @@ impl DictWordMetadata {
         }
     }
 
-    // Most mass nouns also have countable senses. Match those that are only mass nouns.
+    /// Most mass nouns also have countable senses. Match those that are only mass nouns.
+    /// This will match nouns like "information" and "furniture" but not ones like "beer" or "property".
     pub fn is_mass_noun_only(&self) -> bool {
         if let Some(noun) = self.noun {
             matches!(
@@ -2056,7 +2107,7 @@ pub mod tests {
         #[test]
         fn regular_past_thought() {
             let md = md("thought");
-            assert!(md.is_verb_regular_past_form())
+            assert!(md.is_verb_preterite_and_participle_form())
         }
 
         #[test]
@@ -2097,14 +2148,14 @@ pub mod tests {
             let md = md("thought");
             assert!(!md.is_verb_simple_past_only());
             assert!(!md.is_verb_past_participle_only());
-            assert!(md.is_verb_regular_past_form());
+            assert!(md.is_verb_preterite_and_participle_form());
         }
 
         #[test]
         fn distinct_past_forms_are_not_regular_past() {
-            assert!(!md("ate").is_verb_regular_past_form());
-            assert!(!md("eaten").is_verb_regular_past_form());
-            assert!(!md("walked").is_verb_regular_past_form());
+            assert!(!md("ate").is_verb_preterite_and_participle_form());
+            assert!(!md("eaten").is_verb_preterite_and_participle_form());
+            assert!(!md("walked").is_verb_preterite_and_participle_form());
         }
 
         #[test]
