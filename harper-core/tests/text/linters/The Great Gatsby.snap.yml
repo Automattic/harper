@@ -4072,15 +4072,6 @@ Message: |
 
 
 
-Lint:    Capitalization (31 priority)
-Message: |
-    2905 | “Who’s this?”
-         |  ^~~~~ The canonical dictionary spelling is `who's`.
-Suggest:
-  - Replace with: “who's”
-
-
-
 Lint:    Spelling (63 priority)
 Message: |
     2940 | “I know what we'll do,” said Gatsby, “we'll have Klipspringer play the piano.”
@@ -4546,16 +4537,6 @@ Message: |
 Suggest:
   - Replace with: “rhythmic”
   - Replace with: “mythic”
-
-
-
-Lint:    Capitalization (31 priority)
-Message: |
-    3409 | Her glance left me and sought the lighted top of the steps, where “Three o’Clock
-         |                                                                          ^~~~~~~ The canonical dictionary spelling is `o'clock`.
-    3410 | in the Morning,” a neat, sad little waltz of that year, was drifting out the
-Suggest:
-  - Replace with: “o'clock”
 
 
 
@@ -5408,17 +5389,6 @@ Suggest:
   - Replace with: “Kaitlin”
   - Replace with: “Kaposi”
   - Replace with: “Kaolin”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
-    4265 | Why—there’re things between Daisy and me that you’ll never know, things that
-         |     ^~~~~~~~ Did you mean to spell `there’re` this way?
-Suggest:
-  - Replace with: “there's”
-  - Replace with: “there'd”
-  - Replace with: “there'll”
 
 
 
