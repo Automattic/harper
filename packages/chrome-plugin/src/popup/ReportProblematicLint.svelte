@@ -31,7 +31,7 @@ async function handleSubmit(event: SubmitEvent) {
 
 	if (success) {
 		onSubmit();
-    successful = true;
+		successful = true;
 	}
 }
 </script>
