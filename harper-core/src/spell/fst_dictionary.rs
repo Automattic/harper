@@ -8,7 +8,7 @@ use fst::{IntoStreamer, Map as FstMap, Streamer, map::StreamWithState};
 use hashbrown::HashMap;
 use levenshtein_automata::{DFA, LevenshteinAutomatonBuilder};
 
-use super::{Dictionary, FuzzyMatchResult, MutableDictionary, WordId};
+use super::{CanonicalWordId, Dictionary, FuzzyMatchResult, MutableDictionary, WordMap};
 use crate::{CharString, CharStringExt, DictWordMetadata};
 
 /// An immutable dictionary allowing for very fast spellchecking.
@@ -62,7 +62,7 @@ impl FstDictionary {
         for (word_chars, _) in words.iter() {
             let word = word_chars.iter().collect::<String>();
             builder
-                .insert(word, WordId::from_word_chars(word_chars).into())
+                .insert(word, CanonicalWordId::from_word_chars(word_chars).into())
                 .expect("Insertion not in lexicographical order!");
         }
 
@@ -123,20 +123,8 @@ fn merge_best_distances(
 }
 
 impl Dictionary for FstDictionary {
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_word(word)
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_word_str(word)
-    }
-
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata(word)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        self.mutable_dict.get_word_metadata_str(word)
+    fn get_word_map(&self) -> &WordMap {
+        self.mutable_dict.get_word_map()
     }
 
     fn fuzzy_match(
@@ -177,11 +165,11 @@ impl Dictionary for FstDictionary {
         let mut merged = Vec::with_capacity(best_distances.len());
         for (word_id, edit_distance) in best_distances {
             let word = self.mutable_dict.get_word_from_id(&word_id.into()).unwrap();
-            let metadata = self.mutable_dict.get_word_metadata(word).unwrap();
+            let metadata = self.mutable_dict.get_word_metadata_exact(word).unwrap();
             merged.push(FuzzyMatchResult {
                 word,
                 edit_distance,
-                metadata,
+                metadata: Cow::Borrowed(metadata),
             });
         }
 
@@ -196,51 +184,6 @@ impl Dictionary for FstDictionary {
 
         merged
     }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        self.fuzzy_match(
-            word.chars().collect::<Vec<_>>().as_slice(),
-            max_distance,
-            max_results,
-        )
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        self.mutable_dict.words_iter()
-    }
-
-    fn word_count(&self) -> usize {
-        self.mutable_dict.word_count()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        self.mutable_dict.contains_exact_word(word)
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        self.mutable_dict.contains_exact_word_str(word)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.mutable_dict.get_correct_capitalization_of(word)
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.mutable_dict.get_word_from_id(id)
-    }
-
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_prefix(prefix)
-    }
-
-    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        self.mutable_dict.find_words_with_common_prefix(word)
-    }
 }
 
 #[cfg(test)]
@@ -249,7 +192,7 @@ mod tests {
 
     use crate::CharStringExt;
     use crate::DictWordMetadata;
-    use crate::spell::{Dictionary, MutableDictionary, WordId};
+    use crate::spell::{CanonicalWordId, Dictionary, MutableDictionary};
 
     use super::FstDictionary;
 
@@ -387,12 +330,11 @@ mod tests {
     fn plural_llamas_derived_from_llama() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("llamas")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("llama")
+                .contains(CanonicalWordId::from_word_str("llama"))
         )
     }
 
@@ -400,12 +342,11 @@ mod tests {
     fn plural_cats_derived_from_cat() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("cats")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("cat")
+                .contains(CanonicalWordId::from_word_str("cat"))
         );
     }
 
@@ -413,12 +354,11 @@ mod tests {
     fn unhappy_derived_from_happy() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("unhappy")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("happy")
+                .contains(CanonicalWordId::from_word_str("happy"))
         );
     }
 
@@ -426,12 +366,11 @@ mod tests {
     fn quickly_derived_from_quick() {
         let dict = FstDictionary::curated();
 
-        assert_eq!(
+        assert!(
             dict.get_word_metadata_str("quickly")
                 .unwrap()
                 .derived_from
-                .unwrap(),
-            WordId::from_word_str("quick")
+                .contains(CanonicalWordId::from_word_str("quick"))
         );
     }
 
