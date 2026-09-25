@@ -602,6 +602,11 @@ get-metadata-brief *words:
 get-forms +words:
   cargo run --bin harper-cli -- forms {{words}}
 
+# Find the dictionary entries and annotation flags that produce one or more words.
+alias provenance := word-provenance
+word-provenance +words:
+  cargo run --bin harper-cli -- word-provenance {{words}}
+
 # Get a random sample of words from Harper's dictionary and list all forms of each.
 sample-forms count:
   #!/usr/bin/env bash
