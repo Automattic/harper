@@ -1,5 +1,6 @@
 use crate::{
-    CharStringExt, Dialect, Lint, Token,
+    CharStringExt, Lint, Token,
+    dialect::Dialect,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
@@ -90,7 +91,7 @@ impl ExprLinter for TillDate {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        dialect::Dialect,
         linting::tests::{assert_no_lints, assert_suggestion_result},
     };
 
