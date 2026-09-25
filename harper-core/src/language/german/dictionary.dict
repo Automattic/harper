@@ -161,7 +161,7 @@ bolzen/~~NMZVjH # +verb reading (was noun-only)
 bolzerei/~~N
 bombardier/~~NYH78n
 bombast/~~N
-bombe/~~MZE
+bombe/~~EF
 bommerlunder/~~NEH
 bommern/~~NH
 bomst/~~NH
@@ -299,7 +299,7 @@ breinig/~~NH
 breinigerberg/~~NH
 breisacher/~~NFEKLH
 breisgauer/~~NFEKLH
-breite/~~MZE
+breite/~~EF
 breitenbrunn/~~NH
 breitenwang/~~NH
 breitling/~~NH
@@ -23187,7 +23187,7 @@ datum/~~ZhH # preposition um #  auto-added
 datums/~~Nh
 daube/~~NhE
 dauben/~~Nh # auto-added
-dauer/~~MhE
+dauer/~~hEF
 dauere/~~h # not a noun: no capitalized form
 dauern/~~NhdfijeGHc
 dauernd/~~NhYOQRST
@@ -25706,7 +25706,7 @@ feluken/~~Nh # auto-added
 feminin/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 femto/~~NhYE
 fenchel/~~NhH
-fenster/~~MhEHz
+fenster/~~hEHzZ
 ferien/~~Vj # auto-added
 ferkele/~~h # not a noun: no capitalized form
 ferkeln/~~VdifjeG # auto-added
@@ -29007,7 +29007,7 @@ heck/~~Vej # REPLACES hecken
 hecks/~~Nh
 heckt/~~hG # not a noun: no capitalized form
 hecktet/~~hG # not a noun: no capitalized form
-heer/~~MhY0HX
+heer/~~hY0HXZ
 heere/~~NhE
 heeren/~~Nh # auto-added
 heeres/~~Nh
@@ -30271,7 +30271,7 @@ irrstes/~~h # not a noun: no capitalized form
 irrt/~~hG # not a noun: no capitalized form
 irrtest/~~h # not a noun: no capitalized form
 irrtet/~~hG # not a noun: no capitalized form
-irrtum/~~ZhH # preposition um # auto-added
+irrtum/~~hHM # preposition um # auto-added
 irrtums/~~Nh
 irrung/~~FhY
 irrweg/~~NXh0HY
@@ -30716,7 +30716,7 @@ kamine/~~NhE
 kaminen/~~Nh # auto-added
 kamins/~~Nh
 kamm/~~Nh0H
-kammer/~~MhE
+kammer/~~hEF
 kammern/~~Nh
 kammes/~~Nh
 kammrad/~~Nh0
@@ -34025,7 +34025,7 @@ medina/~~Nh
 medium/~~ZhH # preposition um #  auto-added
 mediums/~~Nh
 medizin/~~Nh
-meer/~~MhXY0H
+meer/~~hXY0HZ
 meere/~~NhE
 meereis/~~Nh0
 meeren/~~Nh # auto-added
@@ -36095,7 +36095,7 @@ papagei/~~NbhHY
 paper/~~MhH
 papers/~~Nh
 papi/~~Nh
-papier/~~MhYHX
+papier/~~hYHXZ
 papiere/~~NhE
 papiers/~~Nh
 papille/~~NhE
@@ -37729,7 +37729,7 @@ rauf/~~Vcej # REPLACES raufen
 rauft/~~hG # not a noun: no capitalized form
 rauftet/~~hG # not a noun: no capitalized form
 rauheit/~~FhY
-raum/~~ZX0H # auto-added
+raum/~~X0HM # auto-added
 raumes/~~Nh
 raumlos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 raums/~~Nh
@@ -40561,7 +40561,7 @@ tiefs/~~Nh
 tiefst/~~hVOQRST
 tiefte/~~h # not a noun: no capitalized form
 tiegel/~~NhEH
-tier/~~MhY0HXz
+tier/~~hY0HXzZ
 tiere/~~NhE
 tieren/~~Nh # auto-added
 tieres/~~Nh
@@ -41759,7 +41759,7 @@ west/~~NhYX # auto-added
 weste/~~NhE
 wett/~~NXh
 wetten/~~VdifjecG # auto-added
-wetter/~~MhEH
+wetter/~~hEHZ
 wettet/~~hG # not a noun: no capitalized form
 wettre/~~h # not a noun: no capitalized form
 wetz/~~NXh
@@ -42222,7 +42222,7 @@ ziept/~~hG # not a noun: no capitalized form
 zierde/~~NhE
 zier/~~Vcej # REPLACES zieren
 ziert/~~hVG # +verb reading (was noun-only)
-ziffer/~~MhE
+ziffer/~~hEF
 zig/~~h # not a noun: no capitalized form
 zigmal/~~h # not a noun: no capitalized form
 zigste/~~NhEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -80877,7 +80877,7 @@ gewissens/~~Nh
 gewisser/~~Mh
 gewisses/~~Nh
 gewissheit/~~FhY
-gewitter/~~MhEH
+gewitter/~~hEHZ
 gewittere/~~h # not a noun: no capitalized form
 gewittern/~~Vdifje # auto-added
 gewitters/~~Nh
@@ -93743,7 +93743,7 @@ metalloid/~~JOQRSTqh # retag: adjective (was ~~Nh)
 metalogik/~~Nh
 metamorph/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 metaphase/~~NhE
-metapher/~~MhE
+metapher/~~hEF
 metaphern/~~Nh # auto-added
 metastase/~~NhE
 meteoren/~~Nh # auto-added
@@ -111565,7 +111565,7 @@ urologin/~~Nh
 urotropin/~~NhH
 ursache/~~NhE
 ursachen/~~XZ #  auto-added
-ursprung/~~Fh0H
+ursprung/~~h0HMZ
 ursprungs/~~Nh
 ursprünge/~~NhE
 urstoff/~~NXh0HY
@@ -206602,7 +206602,7 @@ ehre/~~NE
 elfe/~~NE
 ende/~~FEH
 enge/~~NEr # +adverb reading (was noun-only)
-erbe/~~FEKLH
+erbe/~~EKLHZ
 erde/~~NE
 fakt/~~NY0H
 gabe/~~NE

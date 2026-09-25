@@ -335,6 +335,57 @@ compound checker could reach them through forms that were junk. Neither
 `Programm` nor `Subjunktion` is an entry; importing the headword is the fix, not
 keeping the junk.
 
+#### Gender is wrong often enough to be unusable
+
+Of the 4000 most frequent nouns of the prose corpus, roughly one entry in
+fourteen that carries a gender carries the wrong one, and the mistakes are
+systematic. An `-er` read as an agent-noun suffix made `Leber`, `Mauer`,
+`Dauer`, `Nummer`, `Ziffer`, `Metapher` and `Kammer` masculine, and `Fenster`,
+`Gewitter`, `Kloster`, `Theater` and `Wetter` too. `Tier`, `Meer`, `Papier` and
+`Heer` are neuter and were masculine; `Raum` and `Irrtum` are masculine and were
+neuter; `Bombe` and `Breite` carried masculine *and* neuter at once.
+
+That is why `german_preposition_case.rs` narrows a determiner by number only.
+
+**The oracle is the text, not another dictionary.** A German article names the
+gender of the noun it introduces, and a few article forms do so with no
+competing reading at all:
+
+| cue | says |
+|---|---|
+| `eine`, `einer` | feminine |
+| `einen` | masculine |
+| `das` | neuter |
+| `dem`, `des`, `einem`, `eines`, `diesem`, `dieses`, `keinem`, `keines`, `meinem`, `meines`, `seinem`, `seines`, `ihrem`, `ihres`, `jedem`, `jedes` | masculine or neuter, never feminine |
+
+Everything else is ambiguous and stays out. `dieser` is nominative masculine
+*and* dative feminine; `keine` is feminine singular *and* plural; `keinen` is
+accusative singular *and* dative plural. Including `dieser` alone was enough to
+make *Zeit* come out masculine, on 129 votes.
+
+Two things in running text look like the pattern and are not, and both were
+found by reading the disagreements rather than by thinking about it:
+
+- a **hyphenated compound** — *das Kaiser-Wilhelm-Denkmal* votes for `Kaiser`;
+- an **indeclinable attributive adjective** — *das Londoner Abkommen* votes for
+  `Londoner`, and *der Schweizer Musik* makes `Schweizer` a masculine noun.
+
+```bash
+harper-core/src/language/german/scripts/audit_german_gender.py --corpus .archive/german-language/corpus-prose [--apply]
+```
+
+With both guards and at least five unanimous votes, the corpus agrees with 192
+entries and contradicts 17, and all 17 were genuine mistakes. Those are applied;
+`tests/noun_gender_test.rs` holds them.
+
+What is **not** applied is the other side of the same measurement: 1264 nouns
+that carry no gender at all and that the corpus could give one. Adding a gender
+has its own error rate and no behaviour depends on it yet, so it wants its own
+pass and its own validation. The same is true of the igerman98 route — a
+headword with the genitive `-es` flag `T` is never feminine, and one that
+derives an `-in` form is masculine — which is sharp for `-er` nouns and noisy
+elsewhere.
+
 #### A plural flag said the opposite of what it meant
 
 `X`, `Y`, `a`, `b` and `E` are each an affix *and* a property, and the two said
