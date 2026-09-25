@@ -765,6 +765,8 @@ pub mod tests {
                 eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
             }
             return true;
+        } else if cfg!(debug_assertions) {
+            eprintln!(" 🔎 Checking... \"{text}\"");
         }
 
         // Lint current text and try each suggestion branch
