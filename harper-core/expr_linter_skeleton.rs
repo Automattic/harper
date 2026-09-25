@@ -4,19 +4,19 @@ use crate::{
     linting::{ExprLinter, LintKind, Suggestion, debug::format_lint_match, expr_linter::Chunk},
 };
 
-pub struct ExprLinterSkeleton {
+pub struct ByNow {
     expr: SequenceExpr,
 }
 
-impl Default for ExprLinterSkeleton {
+impl Default for ByNow {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::any_capitalization_of("erorr"),
+            expr: SequenceExpr::word_seq(&["by", "now"]),
         }
     }
 }
 
-impl ExprLinter for ExprLinterSkeleton {
+impl ExprLinter for ByNow {
     type Unit = Chunk;
 
     fn match_to_lint_with_context(
@@ -55,10 +55,10 @@ impl ExprLinter for ExprLinterSkeleton {
 mod tests {
     use crate::linting::tests::assert_suggestion_result;
 
-    use super::ExprLinterSkeleton;
+    use super::ByNow;
 
     #[test]
     fn test_skeleton() {
-        assert_suggestion_result("erorr", ExprLinterSkeleton::default(), "correction");
+        assert_suggestion_result("erorr", ByNow::default(), "correction");
     }
 }
