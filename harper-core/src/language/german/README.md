@@ -913,10 +913,39 @@ combination. What is needed is a list of fully specified readings. The flags
 `p`, `u`, `v`, `w` in `annotations.json` are declared as case flags and set no
 metadata; they are the shape that does not work.
 
-**What it cannot see.** The rule reads the determiner alone, so a mistake the
-determiner survives is invisible: *mit den Freund* is wrong, but *den* is a good
-dative plural and only the singular *Freund* says otherwise. Roughly the same
-limit applies to *mit seinen Bruder*. Closing it means gender on the nouns.
+**Reading the noun.** The noun narrows the determiner before the intersection is
+taken: *den* is accusative masculine singular or dative plural, and *Freund* is
+a singular, so *mit den Freund* has no dative left. Two restrictions were forced
+by measurement, and both are about the data rather than the method:
+
+* **Only the number is read, never the gender.** `Leber`, `Mauer`, `Dauer`,
+  `Nummer` and `Schulter` are feminine and recorded masculine; `Tier` and `Heer`
+  are neuter and recorded masculine. Narrowing by gender made *"in der Leber"*
+  an error, 310 reports where there had been 15.
+* **Only a singular narrows anything.** German weak masculines — *Mensch*,
+  *Philosoph*, *Patient*, *Laie*, *Gedanke* — spell the oblique singular exactly
+  like the plural, and the dictionary records `Menschen` as a plural only.
+  Trusting that reported *"für den Menschen"* 44 times in one corpus.
+
+Finding the head is its own problem, and three guards came out of the corpus.
+A candidate is rejected when it **touches a hyphen** (*aus den Natur- und
+Geisteswissenschaften*), when it **ends in `-n` or `-s`** — every German dative
+plural ends in `-n`, and most of them are missing from the dictionary, so
+*Fischen* and *Berufen* resolve to entries recorded as singulars — and when the
+**phrase does not end there**, which a following capitalized word (*mit den
+Florida Keys*) or a following adjective (*bei den lange Zeit allein bekannten
+Verfahren*) both show. The scan also stops at a second determiner, a preposition
+or a conjunction, because *mit diesen in Konkurrenz* has no noun of its own.
+
+With all of that, the corpus reports the same 15 times as before the noun was
+read at all.
+
+**What it still cannot see.** *mit den Lehrer* is wrong, but *Lehrer* is one
+form for the singular and the plural; only the missing dative plural `-n` of
+*Lehrern* gives it away, and the dictionary carries no case for nouns. *mit
+seinen Bruder* and *mit den Zug* fail for a duller reason: `bruder` and `zug`
+carry no plural flag at all, so they have no number. Closing these means gender
+that can be trusted and case on the nouns.
 
 **Where the false positives came from.** All of them were homography, and the
 corpus found each class. They are worth listing because every one is a trap for

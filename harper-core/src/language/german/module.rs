@@ -72,7 +72,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanFixedNominalization", GermanFixedNominalization);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
         group.add("GermanYearPreposition", GermanYearPreposition);
-        group.add("GermanPrepositionCase", GermanPrepositionCase);
+        group.add("GermanPrepositionCase", GermanPrepositionCase::new());
         group.add(
             "GermanGenitiveAfterNominativeArticle",
             GermanGenitiveAfterNominativeArticle::new(),

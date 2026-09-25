@@ -16,7 +16,7 @@
 use hashbrown::HashMap;
 use std::sync::LazyLock;
 
-use crate::language::morphology::{Case, CaseSet, Gender, Number};
+use crate::language::morphology::{Agreement, Case, CaseSet, Gender, GenderSet, Number, NumberSet};
 
 /// One fully specified reading of a determiner form.
 ///
@@ -37,6 +37,19 @@ impl DeterminerReading {
         match self.gender {
             Some(_) => Number::Singular,
             None => Number::Plural,
+        }
+    }
+
+    /// The reading as an [`Agreement`], for comparison with a dictionary entry.
+    ///
+    /// A plural reading gets every gender rather than none: German draws no
+    /// gender distinction in the plural, so *die Männer* and *die Frauen* are
+    /// the same form, and an empty set would read as "unknown" instead.
+    pub fn agreement(&self) -> Agreement {
+        Agreement {
+            case: self.case.into(),
+            gender: self.gender.map(GenderSet::from).unwrap_or(GenderSet::all()),
+            number: self.number().into(),
         }
     }
 }
@@ -356,10 +369,63 @@ pub fn determiner_cases(word: &str) -> Option<CaseSet> {
 /// masculine or neuter singular, so in the genitive it becomes *des* — and only
 /// *des*, because the gender and number have to survive the change.
 pub fn forms_in_case(word: &str, wanted: CaseSet) -> Vec<&'static str> {
-    let Some(readings) = determiner_readings(word) else {
-        return Vec::new();
-    };
+    match determiner_readings(word) {
+        Some(readings) => forms_for_readings(readings, wanted),
+        None => Vec::new(),
+    }
+}
 
+/// The readings of a determiner that the noun after it allows.
+///
+/// This is the step that makes the noun worth reading at all. *den* is
+/// accusative masculine singular or dative plural, and nothing about the word
+/// itself says which; *Freund* is a singular, so the dative plural reading
+/// cannot stand and *mit den Freund* has no dative left.
+///
+/// **Only a singular noun narrows anything, and only the number is read.** Both
+/// restrictions were forced by measurement, and each has a reason:
+///
+/// * *Gender is not trustworthy.* `Leber`, `Mauer`, `Dauer`, `Nummer` and
+///   `Schulter` are all feminine and all recorded masculine, and `Tier` and
+///   `Heer` are neuter and recorded masculine. Narrowing by gender turned
+///   *"in der Leber"* into an error. Reading gender here again is the last step
+///   of the gender audit, not the first.
+/// * *A plural marking does not rule out the singular.* German weak masculines
+///   — `Mensch`, `Philosoph`, `Patient`, `Laie`, `Gedanke` — spell the
+///   accusative, dative and genitive singular exactly like the plural, and the
+///   dictionary records `Menschen` as a plural only. Narrowing by it reported
+///   *"für den Menschen"*, 44 times in one corpus.
+///
+/// A singular marking has neither problem: it comes from a base entry, which is
+/// a nominative singular by construction.
+pub fn readings_allowed_by(
+    readings: &[DeterminerReading],
+    noun: &Agreement,
+) -> Vec<DeterminerReading> {
+    if noun.number != NumberSet::SINGULAR {
+        return readings.to_vec();
+    }
+
+    let narrowed: Vec<DeterminerReading> = readings
+        .iter()
+        .copied()
+        .filter(|reading| reading.number() == Number::Singular)
+        .collect();
+
+    if narrowed.is_empty() {
+        readings.to_vec()
+    } else {
+        narrowed
+    }
+}
+
+/// The same, for readings that have already been narrowed by the noun.
+///
+/// *mit den Freund* leaves `den` with only its accusative masculine singular
+/// reading, because *Freund* is singular. Correcting from that one reading gives
+/// *dem* and nothing else; correcting from every reading `den` has would also
+/// offer the plural *denen*.
+pub fn forms_for_readings(readings: &[DeterminerReading], wanted: CaseSet) -> Vec<&'static str> {
     let mut out: Vec<&'static str> = Vec::new();
     for (candidate, candidate_readings) in FORMS.iter() {
         if PRONOUN_ONLY.contains(&candidate.as_str()) {
@@ -494,6 +560,99 @@ mod tests {
         );
         assert_eq!(forms_in_case("diesem", CaseSet::GENITIVE), ["dieses"]);
         assert_eq!(forms_in_case("denen", CaseSet::ACCUSATIVE), ["die"]);
+    }
+
+    /// The whole point of reading the noun: *den* keeps only its accusative
+    /// singular reading beside a singular noun.
+    #[test]
+    fn a_singular_noun_narrows_the_readings() {
+        let den = determiner_readings("den").unwrap();
+        let singular = Agreement {
+            number: Number::Singular.into(),
+            ..Default::default()
+        };
+
+        let allowed = readings_allowed_by(den, &singular);
+        assert_eq!(allowed.len(), 1);
+        assert_eq!(allowed[0].case, Case::Accusative);
+    }
+
+    /// A plural marking narrows nothing, deliberately. German weak masculines
+    /// spell the oblique singular exactly like the plural — *den Menschen* is
+    /// both — and the dictionary records only the plural, so trusting it turns
+    /// *"für den Menschen"* into an error.
+    #[test]
+    fn a_plural_noun_narrows_nothing() {
+        let den = determiner_readings("den").unwrap();
+        let plural = Agreement {
+            number: Number::Plural.into(),
+            ..Default::default()
+        };
+
+        assert_eq!(readings_allowed_by(den, &plural).len(), den.len());
+    }
+
+    /// Gender is not read at all. Too much of it is wrong: *Leber*, *Mauer* and
+    /// *Nummer* are feminine and recorded masculine, and narrowing by that made
+    /// *"in der Leber"* an error.
+    #[test]
+    fn gender_is_not_read() {
+        let der = determiner_readings("der").unwrap();
+        let masculine_singular = Agreement {
+            gender: Gender::Masculine.into(),
+            number: Number::Singular.into(),
+            ..Default::default()
+        };
+
+        // Only the plural reading goes; the feminine singular ones survive.
+        let allowed = readings_allowed_by(der, &masculine_singular);
+        assert_eq!(allowed.len(), 3);
+        assert!(allowed.iter().all(|r| r.number() == Number::Singular));
+    }
+
+    /// A noun the dictionary says nothing about narrows nothing.
+    #[test]
+    fn a_noun_without_features_narrows_nothing() {
+        let der = determiner_readings("der").unwrap();
+        assert_eq!(
+            readings_allowed_by(der, &Agreement::default()).len(),
+            der.len()
+        );
+    }
+
+    /// *dem* is singular in both its readings, so a singular noun leaves both
+    /// and the correction still offers each gender.
+    #[test]
+    fn narrowing_that_removes_nothing_keeps_every_correction() {
+        let dem = determiner_readings("dem").unwrap();
+        let singular = Agreement {
+            number: Number::Singular.into(),
+            ..Default::default()
+        };
+
+        let allowed = readings_allowed_by(dem, &singular);
+        assert_eq!(allowed.len(), dem.len());
+        assert_eq!(
+            forms_for_readings(&allowed, CaseSet::ACCUSATIVE),
+            ["das", "den"]
+        );
+    }
+
+    /// A correction built from the narrowed readings offers one form, not the
+    /// whole paradigm.
+    #[test]
+    fn corrections_follow_the_narrowed_readings() {
+        let den = determiner_readings("den").unwrap();
+        let singular = Agreement {
+            number: Number::Singular.into(),
+            ..Default::default()
+        };
+
+        let narrowed = readings_allowed_by(den, &singular);
+        assert_eq!(forms_for_readings(&narrowed, CaseSet::DATIVE), ["dem"]);
+        // Without the noun, the dative plural reading survives and `den` is
+        // offered as a correction of itself.
+        assert_eq!(forms_in_case("den", CaseSet::DATIVE), ["dem", "den"]);
     }
 
     #[test]

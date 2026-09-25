@@ -1,15 +1,25 @@
 //! Checks the case of a determiner directly after a preposition.
 
+use std::sync::Arc;
+
 use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::grammar::determiners::{
-        determiner_cases, determiner_readings, forms_in_case,
+        DeterminerReading, determiner_readings, forms_for_readings, readings_allowed_by,
     },
     language::german::grammar::prepositions::preposition_government,
-    language::morphology::CaseSet,
+    language::german::spell::curated_german_dictionary,
+    language::morphology::{Agreement, CaseSet, MorphologyExt},
     linting::{Lint, LintKind, Linter, Suggestion},
+    spell::{Dictionary, FstDictionary},
 };
+
+/// How many words may stand between the determiner and its noun.
+///
+/// *mit dem sehr alten Haus* is three; beyond that the phrase has almost
+/// certainly ended and the capitalized word belongs to something else.
+const MAX_ADJECTIVES: usize = 3;
 
 /// Determiners that stand in a fixed expression and are correct there whatever
 /// the preposition in front of them: *trotz allem*, *trotz alledem*, *von alles
@@ -26,10 +36,16 @@ const FIXED_PHRASE_DETERMINERS: &[&str] = &["allem", "alledem", "alles"];
 /// the 109,000 noun entries — of which 99.6% carry no gender and none carries a
 /// case.
 ///
-/// That is also the limit of the rule. It sees the determiner alone, so it
-/// cannot catch a mistake that the determiner survives: *mit den Freund* is
-/// wrong, but *den* is a perfectly good dative plural and only the singular
-/// *Freund* gives it away. Catching those needs gender on the nouns.
+/// The noun narrows the determiner before the intersection is taken. *den* is
+/// accusative masculine singular or dative plural, and nothing about the word
+/// says which; *Freund* is singular, so the dative plural reading cannot stand
+/// and *mit den Freund* has no dative left. An axis the dictionary is silent
+/// about narrows nothing, so this only ever adds catches.
+///
+/// What is still out of reach is a mistake that survives both: *mit den Lehrer*
+/// is wrong, but *Lehrer* is one form for the singular and the plural, and only
+/// its missing dative plural `-n` gives it away. That needs case on the nouns,
+/// which the dictionary does not carry.
 ///
 /// Four things look like the pattern and are not, and each is turned away:
 ///
@@ -40,9 +56,27 @@ const FIXED_PHRASE_DETERMINERS: &[&str] = &["allem", "alledem", "alles"];
 /// * *"um **der** Sache **willen**"* — a circumposition, where the case belongs
 ///   to *willen* and not to *um*.
 /// * *"von **Der** Spiegel"* — a capitalized determiner is part of a name.
-pub struct GermanPrepositionCase;
+pub struct GermanPrepositionCase {
+    /// The base dictionary, deliberately not the compound-aware one: a
+    /// compound decomposition invents readings, and a wrong gender on the noun
+    /// would rule out a reading the determiner really has and turn a correct
+    /// phrase into a lint.
+    dictionary: Arc<FstDictionary>,
+}
+
+impl Default for GermanPrepositionCase {
+    fn default() -> Self {
+        Self::new()
+    }
+}
 
 impl GermanPrepositionCase {
+    pub fn new() -> Self {
+        Self {
+            dictionary: curated_german_dictionary(),
+        }
+    }
+
     /// German names of a set of cases, joined for the message. `article` is
     /// prefixed to each: *verlangt **den** Genitiv*, but *steht **im** Dativ*.
     fn label(cases: CaseSet, article: &str) -> String {
@@ -65,6 +99,123 @@ impl GermanPrepositionCase {
             None => String::new(),
         }
     }
+}
+
+impl GermanPrepositionCase {
+    /// The agreement features of the noun this determiner introduces, when the
+    /// noun can be identified with confidence.
+    ///
+    /// German capitalizes its nouns, which makes the head of a phrase easy to
+    /// find in the ordinary case: skip the lower-case adjectives and take the
+    /// first capitalized word. Three things spoil that, and each cost false
+    /// positives on the prose corpus before it was turned away:
+    ///
+    /// * **A hyphen.** In *aus den Natur- und Geisteswissenschaften* and *zu
+    ///   den Absinth-Trinkern* the first capitalized word is half of a compound
+    ///   and carries none of the phrase's features.
+    /// * **A following declined adjective.** In *mit den ihr zur Verfügung
+    ///   stehenden Mitteln*, *Verfügung* is inside a participial attribute and
+    ///   the head is *Mitteln*. A lower-case word in `-e`, `-en`, `-er`, `-es`
+    ///   or `-em` after the candidate means the phrase has not ended.
+    /// * **A form that could be a dative plural.** Every German dative plural
+    ///   ends in `-n`, and the dictionary is missing most of them — *Fischen*,
+    ///   *Berufen*, *Zeichen*, *Männchen* all resolve to an entry recorded as a
+    ///   singular. A candidate in `-n` or `-s` is therefore not trusted to rule
+    ///   the plural out.
+    ///
+    /// When any of them applies the answer is an empty [`Agreement`], which
+    /// narrows nothing and leaves the rule exactly as strong as it was without
+    /// the noun.
+    fn noun_agreement_after(
+        &self,
+        document: &Document,
+        tokens: &[&Token],
+        determiner_at: usize,
+    ) -> Agreement {
+        debug_assert!(
+            matches!(tokens[determiner_at].kind, TokenKind::Word(_)),
+            "the index is the determiner's own, not the preposition's"
+        );
+        let content = document.get_full_content();
+        let word_at = |at: usize| -> Option<String> {
+            tokens
+                .get(at)
+                .filter(|token| matches!(token.kind, TokenKind::Word(_)))
+                .map(|token| document.get_span_content(&token.span).iter().collect())
+        };
+
+        let mut at = determiner_at + 2;
+        for _ in 0..=MAX_ADJECTIVES {
+            let Some(word) = word_at(at) else {
+                return Agreement::default();
+            };
+
+            if !is_capitalized(&word) {
+                // A second determiner, a preposition or a conjunction ends this
+                // phrase: in *mit diesen in Konkurrenz* and *mit jenen der
+                // Gattung* the determiner stands alone and the capitalized word
+                // further on belongs to something else.
+                if closes_the_phrase(&word) {
+                    return Agreement::default();
+                }
+                at += 2;
+                continue;
+            }
+
+            let token = tokens[at];
+            let touches_hyphen = content.get(token.span.end) == Some(&'-')
+                || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
+            if touches_hyphen {
+                return Agreement::default();
+            }
+
+            if word.ends_with(['n', 's']) {
+                return Agreement::default();
+            }
+
+            // The phrase has to end here for this word to be its head. In *mit
+            // den Florida Keys* and *bei den lange Zeit allein bekannten
+            // Verfahren* it does not.
+            let ends_here = match word_at(at + 2) {
+                None => tokens
+                    .get(at + 2)
+                    .is_none_or(|next| !matches!(next.kind, TokenKind::Word(_))),
+                Some(next) => !is_capitalized(&next) && closes_the_phrase(&next),
+            };
+            if !ends_here {
+                return Agreement::default();
+            }
+
+            let chars: Vec<char> = word.chars().collect();
+            return self
+                .dictionary
+                .get_word_metadata(&chars)
+                .filter(|metadata| metadata.is_noun())
+                .map(|metadata| metadata.noun_agreement())
+                .unwrap_or_default();
+        }
+
+        Agreement::default()
+    }
+}
+
+/// Contractions of a preposition and an article, which the tokenizer keeps
+/// whole and which therefore never reach the preposition table.
+const CONTRACTIONS: &[&str] = &[
+    "im", "am", "zum", "zur", "beim", "vom", "ins", "ans", "aufs", "durchs", "fürs", "ums",
+    "übers", "unters", "hinters", "vors",
+];
+
+/// Whether `word` ends the noun phrase in front of it rather than continuing
+/// it. A determiner opens a new one, a preposition or a conjunction closes the
+/// old one, and an adjective does neither.
+fn closes_the_phrase(word: &str) -> bool {
+    const CONJUNCTIONS: &[&str] = &["und", "oder", "sowie", "aber", "denn", "sondern", "als"];
+
+    determiner_readings(word).is_some()
+        || preposition_government(word).is_some()
+        || CONTRACTIONS.contains(&word)
+        || CONJUNCTIONS.contains(&word)
 }
 
 impl Linter for GermanPrepositionCase {
@@ -112,9 +263,18 @@ impl Linter for GermanPrepositionCase {
                     continue;
                 }
 
-                let Some(cases) = determiner_cases(&determiner_text) else {
+                let Some(all_readings) = determiner_readings(&determiner_text) else {
                     continue;
                 };
+
+                // The noun rules out the readings it cannot stand beside. This
+                // is where *mit den Freund* becomes visible: *Freund* is
+                // singular, so the dative plural reading of *den* goes.
+                let noun = self.noun_agreement_after(document, &tokens, index + 2);
+                let readings: Vec<DeterminerReading> = readings_allowed_by(all_readings, &noun);
+                let cases = readings
+                    .iter()
+                    .fold(CaseSet::empty(), |set, reading| set | reading.case.into());
 
                 if cases.intersects(government.cases) {
                     continue;
@@ -198,11 +358,11 @@ impl Linter for GermanPrepositionCase {
                     }
                 }
 
-                let suggestions: Vec<Suggestion> =
-                    forms_in_case(&determiner_text, government.cases)
-                        .into_iter()
-                        .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
-                        .collect();
+                let suggestions: Vec<Suggestion> = forms_for_readings(&readings, government.cases)
+                    .into_iter()
+                    .filter(|form| *form != determiner_text)
+                    .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
+                    .collect();
 
                 if suggestions.is_empty() {
                     continue;
@@ -275,7 +435,7 @@ mod tests {
     fn lint(text: &str) -> Vec<Lint> {
         let dictionary = combined_german_dictionary();
         let document = Document::new_markdown_default(text, &dictionary);
-        GermanPrepositionCase.lint(&document)
+        GermanPrepositionCase::new().lint(&document)
     }
 
     fn fixes(text: &str) -> Vec<String> {
@@ -313,21 +473,26 @@ mod tests {
 
     #[test]
     fn catches_the_dative_after_an_accusative_preposition() {
+        // *dem* is singular in both its readings, so the noun rules nothing
+        // out and both genders are offered. Narrowing to the masculine would
+        // need gender, which the dictionary gets wrong too often to use.
         assert_eq!(fixes("Das Geschenk ist für dem Kind."), ["das", "den"]);
         assert_eq!(fixes("Wir gingen ohne dem Hund los."), ["das", "den"]);
     }
 
     #[test]
     fn catches_the_nominative_after_an_accusative_preposition() {
-        // *der* is masculine singular, feminine singular or plural, so the
-        // accusative it should have been is *den* or *die*.
+        // *Wald* is singular, which drops the genitive plural reading of
+        // *der*; the two singular genders remain.
         assert_eq!(fixes("Er lief durch der Wald."), ["den", "die"]);
     }
 
     #[test]
     fn catches_the_accusative_after_a_dative_preposition() {
         assert_eq!(fixes("Sie fuhr mit das Auto zur Arbeit."), ["dem"]);
-        assert_eq!(fixes("Wir kommen aus die Stadt."), ["den", "der"]);
+        // *Stadt* is a feminine singular, so the dative plural *den* is not
+        // offered.
+        assert_eq!(fixes("Wir kommen aus die Stadt."), ["der"]);
     }
 
     #[test]
@@ -490,18 +655,23 @@ mod tests {
         ]);
     }
 
-    /// The rule sees the determiner alone, so a form that is right in some
-    /// reading passes even when the noun proves it wrong. Recorded so the
-    /// limit is not mistaken for a bug.
+    /// The determiner alone says nothing here — *den* is a perfectly good
+    /// dative plural. The noun is what settles it.
     #[test]
-    fn misses_what_the_determiner_alone_does_not_reveal() {
-        assert_clean(&[
-            // *den* is a perfectly good dative plural, and only the singular
-            // *Freund* gives the mistake away.
-            "Ich gehe mit den Freund ins Kino.",
-            // *seinen* likewise: accusative singular, but also dative plural.
-            "Er kam mit seinen Bruder.",
-        ]);
+    fn the_noun_reveals_what_the_determiner_hides() {
+        assert_eq!(fixes("Ich gehe mit den Freund ins Kino."), ["dem"]);
+        assert_eq!(fixes("Sie spielt mit den Hund im Garten."), ["dem"]);
+        // A two-way preposition governs the accusative too, so this is right.
+        assert_clean(&["Er antwortet auf den Brief nicht."]);
+    }
+
+    /// And where the noun cannot settle it either, nothing is reported. An
+    /// `-er` noun has one form for both numbers, so *den Lehrer* keeps its
+    /// dative plural reading; only the missing dative `-n` of *Lehrern* would
+    /// give it away, and the dictionary carries no case for nouns.
+    #[test]
+    fn a_noun_of_both_numbers_still_hides_the_mistake() {
+        assert_clean(&["Ich spreche mit den Lehrer über die Note."]);
     }
 
     #[test]
