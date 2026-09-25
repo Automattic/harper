@@ -146,6 +146,7 @@ use super::in_stock::InStock;
 use super::in_time_from_now::InTimeFromNow;
 use super::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::interested_in::InterestedIn;
+use super::inversion_after_verb_how_adj::InversionAfterVerbhowAdj;
 use super::it_looks_like_that::ItLooksLikeThat;
 use super::its_contraction::ItsContraction;
 use super::its_possessive::ItsPossessive;
@@ -766,6 +767,7 @@ impl LintGroup {
         insert_expr_rule!(InTimeFromNow);
         insert_struct_rule_with_dict!(InflectedVerbAfterTo);
         insert_expr_rule!(InterestedIn);
+        insert_expr_rule!(InversionAfterVerbhowAdj);
         insert_expr_rule!(ItLooksLikeThat);
         insert_struct_rule!(ItsContraction);
         insert_expr_rule!(ItsPossessive);
