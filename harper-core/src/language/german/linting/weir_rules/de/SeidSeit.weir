@@ -1,0 +1,27 @@
+# "seid" is the verb (ihr seid), "seit" the preposition of time. Only one
+# direction is safely decidable without parsing: "seid" cannot be followed by a
+# past or duration expression. The other direction is genuinely ambiguous — in
+# "ihr seit Jahren bestehender Betrieb" the "seit" is correct — so it is left
+# alone.
+#
+# Present-time words are deliberately absent: "Seid heute pünktlich!" is a
+# perfectly good imperative.
+expr zeitangabe [gestern, vorgestern, damals, langem, kurzem, jeher, neuestem, geraumer, jahren, monaten, wochen, tagen, jahrzehnten, jahrhunderten, generationen, menschengedenken, urzeiten]
+
+expr main <(seid @zeitangabe), seid>
+
+let message "»seid« ist die Verbform (»ihr seid«). Vor einer Zeitangabe steht die Präposition »seit«."
+let description "Ersetzt das Verb »seid« vor einer Zeitangabe durch die Präposition »seit«."
+let kind "Grammar"
+let becomes "seit"
+let strategy "MatchCase"
+
+test "Er wohnt seid gestern hier." "Er wohnt seit gestern hier."
+test "Das Haus steht seid Jahren leer." "Das Haus steht seit Jahren leer."
+test "Wir kennen uns seid Jahrzehnten." "Wir kennen uns seit Jahrzehnten."
+test "Sie arbeitet dort seid langem." "Sie arbeitet dort seit langem."
+
+allows "Ihr seid pünktlich gekommen."
+allows "Seid heute bitte pünktlich."
+allows "Das Haus steht seit Jahren leer."
+allows "Seid ihr schon da?"

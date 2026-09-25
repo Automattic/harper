@@ -1,0 +1,13 @@
+# The plural of the misspelling handled in `Diskussion.weir`. It needs its own
+# file because `becomes` is per rule, not per pattern.
+expr main diskusionen
+
+let message "»Diskussionen« wird mit doppeltem »s« geschrieben."
+let description "Korrigiert die häufige Fehlschreibung »Diskusionen«."
+let kind "Spelling"
+let becomes "Diskussionen"
+let strategy "Exact"
+
+test "Die Diskusionen dauerten an." "Die Diskussionen dauerten an."
+
+allows "Die Diskussionen dauerten an."

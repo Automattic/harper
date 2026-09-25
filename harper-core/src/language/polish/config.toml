@@ -1,0 +1,10 @@
+[language]
+name = "Polish"
+feature = "pl"
+
+[metadata]
+confidence = 0.90
+
+[[dialects]]
+name = "Standard"
+aliases = ["pl", "polish", "polski", "pl-pl", "pl_pl"]

@@ -16,10 +16,17 @@ mod dictionary;
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;
-mod rune;
+// Private on the English-only path, exactly as upstream. The language module
+// system and the `harper-lang-test` development tool need `parse_word_list` and
+// `AttributeList` to build a dictionary from arbitrary files, so the module is
+// public only when a language module is compiled in.
+#[cfg(not(feature = "language-module"))]
+pub(crate) mod rune;
+#[cfg(feature = "language-module")]
+pub mod rune;
 mod trie_dictionary;
 mod word_id;
-mod word_map;
+pub(crate) mod word_map;
 
 #[derive(PartialEq, Debug, Hash, Eq)]
 pub struct FuzzyMatchResult<'a> {

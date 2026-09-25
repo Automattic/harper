@@ -1,0 +1,21 @@
+[language]
+name = "German"
+feature = "de"
+
+[metadata]
+confidence = 0.95
+
+[[dialects]]
+name = "Standard"
+aliases = ["de", "german", "deutsch", "de-de", "de_de"]
+
+[[dialects]]
+name = "Austrian"
+aliases = ["at", "austria", "austrian", "de-at", "de_at"]
+
+[[dialects]]
+name = "Swiss"
+aliases = ["ch", "switzerland", "swiss", "de-ch", "de_ch"]
+
+[weir]
+rules_subdirectory = "de"

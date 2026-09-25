@@ -68,10 +68,12 @@ impl AttributeList {
 
         // First pass: Process all properties to build the base metadata
         // Properties directly modify the word's metadata (e.g., part of speech, usage)
+        let mut stem_only = false;
         for attr in &annotated_word.annotations {
             let Some(property) = self.properties.get(attr) else {
                 continue;
             };
+            stem_only |= property.stem_only;
             base_metadata.merge(&property.metadata);
         }
 
@@ -123,6 +125,12 @@ impl AttributeList {
                     let Some(property) = self.properties.get(attr) else {
                         continue;
                     };
+                    // Never carried into the recursion: it describes this entry,
+                    // not the forms built from it, and the recursive call is
+                    // expected to put its result in the map.
+                    if property.stem_only {
+                        continue;
+                    }
                     if expansion.kind == Prefix || property.propagate {
                         opposite_attributes.push(*attr);
                     }
@@ -181,11 +189,14 @@ impl AttributeList {
             full_metadata.merge(&existing_metadata.metadata);
         }
 
-        // Store the final metadata for the base word
-        word_map.insert(WordMapEntry {
-            metadata: full_metadata.clone(),
-            canonical_spelling: annotated_word.letters,
-        });
+        // Store the final metadata for the base word, unless the entry is a
+        // bare stem that only exists to carry affixes.
+        if !stem_only {
+            word_map.insert(WordMapEntry {
+                metadata: full_metadata.clone(),
+                canonical_spelling: annotated_word.letters,
+            });
+        }
 
         // Process any conditional expansions
         for (letters, metadata, condition) in conditional_expansion_metadata {
@@ -296,6 +307,52 @@ impl HumanReadableAttributeList {
 #[cfg(test)]
 mod tests {
     use crate::spell::{Dictionary, FstDictionary};
+
+    /// A `stem_only` entry contributes its affix forms and not itself.
+    ///
+    /// This is hunspell's `NEEDAFFIX`. German needs it because it stores the
+    /// stem a conjugation attaches to (`absperr` for *absperren*), and those
+    /// stems are not words.
+    #[test]
+    fn a_stem_only_entry_gives_its_forms_but_not_itself() {
+        use super::super::word_list::parse_word_list;
+        use super::AttributeList;
+        use crate::spell::word_map::WordMap;
+
+        let attributes = AttributeList::parse(
+            r#"{
+                "affixes": {
+                    "A": {
+                        "kind": "suffix",
+                        "cross_product": false,
+                        "target": [{"metadata": {}}],
+                        "base_metadata": {},
+                        "replacements": [{"remove": "", "add": "en", "condition": "."}]
+                    }
+                },
+                "properties": {
+                    "S": {"stem_only": true, "metadata": {}},
+                    "P": {"metadata": {}}
+                }
+            }"#,
+        )
+        .unwrap();
+
+        let mut map = WordMap::default();
+        for word in parse_word_list("absperr/SA\nplain/PA\n").unwrap() {
+            attributes.expand_annotated_word(word, &mut map);
+        }
+
+        let known = |word: &str| {
+            map.get_with_chars(&word.chars().collect::<Vec<_>>())
+                .is_some()
+        };
+
+        assert!(!known("absperr"), "the bare stem must not be a word");
+        assert!(known("absperren"), "its affix form must be");
+        assert!(known("plain"), "an ordinary entry is unaffected");
+        assert!(known("plainen"));
+    }
 
     #[test]
     fn proper_noun_property_propagates_to_plurals() {

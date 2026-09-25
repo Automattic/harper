@@ -1,0 +1,15 @@
+# "wieviel" was written closed up before the 1996 reform; it is two words now.
+# The closed form survives in a lot of older prose and in habit.
+expr main [wieviel, wievielen, wievieler]
+
+let message "»wie viel« wird seit 1996 getrennt geschrieben."
+let description "Trennt das veraltete »wieviel« zu »wie viel«."
+let kind "Spelling"
+let becomes "wie viel"
+let strategy "MatchCase"
+
+test "Wieviel kostet das?" "Wie viel kostet das?"
+test "Ich weiß nicht, wieviel es ist." "Ich weiß nicht, wie viel es ist."
+
+allows "Wie viel kostet das?"
+allows "Der wievielte Tag ist heute?"

@@ -11,7 +11,8 @@ use rayon::prelude::*;
 use serde::Serialize;
 
 use harper_core::{
-    Dialect, DictWordMetadata, Document, Token, TokenKind,
+    DialectFlags, DictWordMetadata, Document, Token, TokenKind,
+    language::languages::Language,
     linting::{FlatConfig, Lint, LintGroup, LintKind},
     parsers::MarkdownOptions,
     remove_overlaps_map,
@@ -26,14 +27,19 @@ use crate::input::{
 };
 
 /// Sync version of harper_dictionary_wordlist::load_dict.
-fn load_dict(path: &Path) -> anyhow::Result<MutableDictionary> {
+fn load_dict(path: &Path, dialects: DialectFlags) -> anyhow::Result<MutableDictionary> {
     let str = fs::read_to_string(path)?;
 
     let mut dict = MutableDictionary::new();
-    dict.extend_words(
-        str.lines()
-            .map(|l| (l.chars().collect::<Vec<_>>(), DictWordMetadata::default())),
-    );
+    dict.extend_words(str.lines().map(|l| {
+        (
+            l.chars().collect::<Vec<_>>(),
+            DictWordMetadata {
+                dialects,
+                ..Default::default()
+            },
+        )
+    }));
 
     Ok(dict)
 }
@@ -89,7 +95,7 @@ pub struct LintOptions {
     pub ignore: Option<Vec<String>>,
     pub only: Option<Vec<String>>,
     pub keep_overlapping_lints: bool,
-    pub dialect: Dialect,
+    pub dialect: Language,
     pub weirpack_inputs: Vec<SingleInput>,
     pub color: bool,
     pub format: OutputFormat,
@@ -203,8 +209,21 @@ pub fn lint(
     let weirpacks = load_weirpacks(weirpack_inputs)?;
 
     // Filter out any rules from ignore/only lists that don't exist in the current config
-    // Uses a cached config to avoid expensive linter initialization
     let mut config = FlatConfig::new_curated();
+    // `new_curated` is English. A language module registers rules of its own,
+    // and without them here every `--only GermanNounCapitalization` was
+    // rejected as an unknown rule and left nothing enabled. Building a group
+    // costs a linter initialization, so it is done only when the language
+    // actually has rules the curated config does not know.
+    if !matches!(dialect, harper_core::Language::English(_)) {
+        let mut probe = MergedDictionary::new();
+        probe.add_dictionary(curated_dictionary.clone());
+        for rule in
+            harper_core::language::new_curated_for_language(Arc::new(probe), dialect).iter_keys()
+        {
+            config.set_rule_enabled(rule, true);
+        }
+    }
     for pack in &weirpacks {
         for rule in pack.rules.keys() {
             config.set_rule_enabled(rule, true);
@@ -235,7 +254,8 @@ pub fn lint(
     let mut curated_plus_user_dict = MergedDictionary::new();
     curated_plus_user_dict.add_dictionary(Arc::new(curated_dictionary));
 
-    let user_dict_msg = match load_dict(&user_dict_path) {
+    let dictionary_dialects = dialect.dictionary_dialect_flags();
+    let user_dict_msg = match load_dict(&user_dict_path, dictionary_dialects) {
         Ok(user_dict) => {
             curated_plus_user_dict.add_dictionary(Arc::new(user_dict));
             "Using"
@@ -424,7 +444,8 @@ fn lint_one_input(
         // If processing a file, try to load its per-file dictionary
         if let Some(file) = single_input.try_as_file_ref() {
             let dict_path = file_dict_path.join(file_dict_name(file.path()));
-            if let Ok(file_dictionary) = load_dict(&dict_path) {
+            let dictionary_dialects = dialect.dictionary_dialect_flags();
+            if let Ok(file_dictionary) = load_dict(&dict_path, dictionary_dialects) {
                 merged_dictionary.add_dictionary(Arc::new(file_dictionary));
                 eprintln!(
                     "{}: Note: Using per-file dictionary: {}",
@@ -447,8 +468,11 @@ fn lint_one_input(
                 }
             }
             Ok((doc, source)) => {
-                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified language
+                let mut lint_group = harper_core::language::new_curated_for_language(
+                    merged_dictionary.into(),
+                    *dialect,
+                );
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;
@@ -797,7 +821,7 @@ fn find_longest_doc_line(toks: &[Token]) -> usize {
 }
 
 fn final_report(
-    dialect: Dialect,
+    dialect: Language,
     batch_mode: bool,
     all_lint_kinds: HashMap<LintKind, usize>,
     all_rules: HashMap<String, usize>,

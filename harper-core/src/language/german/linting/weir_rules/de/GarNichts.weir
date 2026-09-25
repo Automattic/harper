@@ -1,0 +1,13 @@
+# Like "gar nicht", the particle "gar" stays separate before "nichts".
+expr main garnichts
+
+let message "»gar nichts« wird getrennt geschrieben."
+let description "Trennt das fälschlich zusammengeschriebene »garnichts« zu »gar nichts«."
+let kind "Spelling"
+let becomes "gar nichts"
+let strategy "MatchCase"
+
+test "Er weiß garnichts davon." "Er weiß gar nichts davon."
+test "Garnichts ist passiert." "Gar nichts ist passiert."
+
+allows "Er weiß gar nichts davon."

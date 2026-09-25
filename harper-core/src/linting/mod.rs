@@ -340,7 +340,7 @@ mod waist_waste;
 mod was_aloud;
 mod way_too_adjective;
 mod web_scraping;
-mod weir_rules;
+pub(crate) mod weir_rules;
 mod well_educated;
 mod went_ahead_and_agreement;
 mod were_where;
