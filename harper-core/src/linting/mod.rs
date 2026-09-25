@@ -87,6 +87,7 @@ mod do_mistake;
 mod dot_initialisms;
 mod double_click;
 mod double_modal;
+mod each;
 mod ellipsis_length;
 mod else_possessive;
 mod ever_every;
