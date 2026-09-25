@@ -37,14 +37,36 @@ reading the disagreements:
   `Londoner`, which is not the noun. A second capitalized word after the
   candidate rules it out.
 
+**A second source, for the words the corpus cannot reach.** A few derivational
+suffixes settle the gender on their own, and they were measured against the
+corpus rather than assumed:
+
+    -ung 99.5%   -tion -sion -ie -ismus -nis -ment 100%   -chen 92%   -um 90%
+
+    -e 65%   -er 61%   -el 45%
+
+Only the first row is used. The second is the rule that produced the damage in
+the first place: an `-er` read as an agent-noun suffix is what made `Leber`,
+`Mauer`, `Ziffer` and `Metapher` masculine.
+
+**A third opinion, for validation only.** In igerman98 a headword with the
+genitive `-es` flag `T` is never feminine, and one carrying `F` or `g` — the
+`-in` derivation — is masculine, since a feminine does not derive a feminine.
+That is sharp enough to contradict, not sharp enough to decide: it mislabels
+`-ismus` nouns, whose genitive is uninflected, and umlaut-plural compound
+elements. Disagreements are printed; nothing is written from it.
+
+Note the trap in the dictionary itself: `de_DE.aff` declares `SET ISO8859-1`
+while the `.dic` beside it is UTF-8, so every word with an umlaut fails to
+analyse *quietly*. Copy the `.aff`, rewrite that one line, leave the `.dic`.
+
 Usage:
 
     audit_german_gender.py --corpus .archive/german-language/corpus-prose
-    audit_german_gender.py --corpus <dir> --apply
+    audit_german_gender.py --corpus <dir> --apply   # fix contradicted genders
+    audit_german_gender.py --corpus <dir> --add     # fill in missing ones
 
-Without `--apply` nothing is written. With it, only entries whose recorded
-gender the corpus *contradicts* are rewritten; entries with no gender are left
-alone, because adding one is a separate question with a separate error rate.
+Without `--apply` or `--add` nothing is written.
 """
 
 import argparse
@@ -64,6 +86,15 @@ CUES = FEMININE | MASCULINE | NEUTER | NOT_FEMININE
 
 FLAG_OF = {"M": "M", "F": "F", "Z": "N"}
 GENDER_FLAG = {"M": "M", "F": "F", "N": "Z"}
+
+# Only the suffixes that scored at least 90% against the corpus. `-e`, `-er` and
+# `-el` are left out on purpose; see the module docstring.
+SUFFIX_GENDER = [
+    ("ung", "F"), ("heit", "F"), ("keit", "F"), ("schaft", "F"), ("ität", "F"),
+    ("tion", "F"), ("sion", "F"), ("ie", "F"),
+    ("ismus", "M"),
+    ("chen", "N"), ("lein", "N"), ("ment", "N"), ("nis", "N"), ("tum", "N"),
+]
 
 # cue, noun, and enough of what follows to see a hyphen or a second capital
 PHRASE = re.compile(
@@ -92,7 +123,14 @@ def collect_votes(corpus: pathlib.Path) -> dict[str, collections.Counter]:
 
 
 def verdict(counts: collections.Counter, minimum: int) -> set[str] | None:
-    """The gender the corpus agrees on, or `None` if it does not agree."""
+    """The gender the corpus agrees on, or `None` if it does not agree.
+
+    A *specific* gender needs that many votes of its own. Most of the evidence
+    is `dem`/`des`/`einem`, which says only "not feminine", and letting one
+    stray `das` outvote three of those made *Nutzer* neuter. Where the specific
+    evidence is thin the answer is the weaker one, which is still worth having:
+    ruling out the feminine rules out a third of the possibilities.
+    """
     if sum(counts.values()) < minimum:
         return None
     feminine = counts.get("F", 0)
@@ -103,13 +141,60 @@ def verdict(counts: collections.Counter, minimum: int) -> set[str] | None:
         return {"F"}
     if feminine:
         return None
-    if neuter and not masculine:
+    if neuter >= minimum and not masculine:
         return {"N"}
-    if masculine and not neuter:
+    if masculine >= minimum and not neuter:
         return {"M"}
-    if either:
-        return {"M", "N"}
+    if masculine and neuter:
+        return None
+    return {"M", "N"}
+
+
+def suffix_gender(word: str) -> str | None:
+    """The gender a reliable derivational suffix settles, if any."""
+    lower = word.lower()
+    for suffix, gender in sorted(SUFFIX_GENDER, key=lambda pair: -len(pair[0])):
+        if lower.endswith(suffix) and len(lower) > len(suffix) + 2:
+            return gender
     return None
+
+
+def igerman98_flags(path: pathlib.Path) -> dict[str, set[str]]:
+    """Headword -> affix flags, from a hunspell `.dic`."""
+    flags: dict[str, set[str]] = {}
+    with path.open(encoding="utf-8") as handle:
+        next(handle, None)
+        for line in handle:
+            word, _, rest = line.strip().partition("/")
+            if word and word[:1].isalpha():
+                flags.setdefault(word, set()).update(rest)
+    return flags
+
+
+def igerman98_objects(flags: set[str], found: set[str]) -> str | None:
+    """Why igerman98 disagrees with `found`, or `None` if it does not."""
+    if "T" in flags and found == {"F"}:
+        return "genitive -es, so not feminine"
+    if flags & {"F", "g"} and found == {"F"}:
+        return "derives an -in form, so masculine"
+    return None
+
+
+def report_independent_check(votes, minimum: int) -> None:
+    """Corpus against the suffixes, which are an independent source."""
+    checked = correct = 0
+    for word, counts in votes.items():
+        expected = suffix_gender(word)
+        found = verdict(counts, minimum)
+        if expected is None or found is None:
+            continue
+        checked += 1
+        correct += expected in found
+    if checked:
+        print(
+            f"corpus against the derivational suffixes: {correct}/{checked} "
+            f"({correct / checked:.1%})"
+        )
 
 
 def main() -> int:
@@ -120,59 +205,112 @@ def main() -> int:
         type=pathlib.Path,
         default=pathlib.Path(__file__).resolve().parents[1] / "dictionary.dict",
     )
-    parser.add_argument("--min-votes", type=int, default=5)
-    parser.add_argument("--apply", action="store_true")
+    parser.add_argument(
+        "--igerman98",
+        type=pathlib.Path,
+        help="a hunspell .dic to cross-check against; disagreements are "
+             "reported and nothing is written from it",
+    )
+    parser.add_argument("--min-votes", type=int, default=3)
+    parser.add_argument(
+        "--apply", action="store_true", help="rewrite contradicted genders"
+    )
+    parser.add_argument(
+        "--add", action="store_true", help="fill in genders that are missing"
+    )
     args = parser.parse_args()
 
     votes = collect_votes(args.corpus)
+    print(f"{len(votes)} words carry at least one article vote")
+    report_independent_check(votes, args.min_votes)
+
+    foreign = igerman98_flags(args.igerman98) if args.igerman98 else {}
     lines = args.dictionary.read_text(encoding="utf-8").splitlines(keepends=True)
 
     agreed = 0
     conflicts: list[tuple[int, str, set[str], set[str], int]] = []
+    additions: list[tuple[int, str, set[str], str]] = []
+    objections: list[tuple[str, set[str], str]] = []
+    added_words: set[str] = set()
+
     for number, line in enumerate(lines):
         body = line.split("#", 1)[0].strip()
         if "/" not in body:
             continue
         word, flags = body.split("/", 1)
         recorded = {FLAG_OF[c] for c in flags if c in FLAG_OF}
-        if not recorded:
-            continue
-        counts = votes.get(word[:1].upper() + word[1:])
-        if counts is None:
-            continue
-        found = verdict(counts, args.min_votes)
-        if found is None:
-            continue
-        if recorded & found:
-            agreed += 1
-        else:
-            conflicts.append((number, word, recorded, found, sum(counts.values())))
+        headword = word[:1].upper() + word[1:]
+        counts = votes.get(headword)
+        found = verdict(counts, args.min_votes) if counts else None
 
-    print(f"corpus agrees with {agreed} entries and contradicts {len(conflicts)}")
+        if recorded:
+            if found is None:
+                continue
+            if recorded & found:
+                agreed += 1
+            else:
+                conflicts.append((number, word, recorded, found, sum(counts.values())))
+            continue
+
+        # No gender yet. Only a plain noun entry gets one; a verb or an
+        # adjective that merely shares the spelling must not.
+        if "N" not in flags:
+            continue
+        source = "corpus"
+        if found is None:
+            suffix = suffix_gender(word)
+            if suffix is None:
+                continue
+            found, source = {suffix}, "suffix"
+        if objection := igerman98_objects(foreign.get(headword, set()), found):
+            objections.append((word, found, objection))
+            continue
+        additions.append((number, word, found, source))
+        added_words.add(word)
+
+    print(f"\ncorpus agrees with {agreed} entries and contradicts {len(conflicts)}")
     for _, word, recorded, found, total in sorted(conflicts, key=lambda c: -c[4]):
         print(
             f"  {word:24} recorded {''.join(sorted(recorded)):3} "
             f"corpus {''.join(sorted(found)):3} ({total} votes)"
         )
 
-    if not args.apply:
-        print("\nnothing written; pass --apply to rewrite the contradicted entries")
+    from_corpus = sum(1 for _, _, _, source in additions if source == "corpus")
+    print(
+        f"\n{len(additions)} entries ({len(added_words)} words) could be given a "
+        f"gender: {from_corpus} from the corpus, "
+        f"{len(additions) - from_corpus} from a suffix"
+    )
+    if objections:
+        print(f"{len(objections)} of them igerman98 objects to, and they are skipped:")
+        for word, found, why in objections[:20]:
+            print(f"  {word:24} corpus says {''.join(sorted(found)):3} but {why}")
+
+    if not (args.apply or args.add):
+        print("\nnothing written; pass --apply or --add")
         return 0
 
-    for number, _, recorded, found, _ in conflicts:
-        line = lines[number]
-        body, hash_, comment = line.partition("#")
+    def rewrite(number: int, drop: set[str], add: set[str]) -> None:
+        body, hash_, comment = lines[number].partition("#")
         word, flags = body.rstrip().split("/", 1)
-        for gender in recorded:
+        for gender in drop:
             flags = flags.replace(GENDER_FLAG[gender], "", 1)
-        flags += "".join(GENDER_FLAG[g] for g in sorted(found))
+        flags += "".join(GENDER_FLAG[g] for g in sorted(add))
         rebuilt = f"{word}/{flags}"
-        lines[number] = (
-            f"{rebuilt} {hash_}{comment}" if hash_ else f"{rebuilt}\n"
-        )
+        lines[number] = f"{rebuilt} {hash_}{comment}" if hash_ else f"{rebuilt}\n"
+
+    written = 0
+    if args.apply:
+        for number, _, recorded, found, _ in conflicts:
+            rewrite(number, recorded, found)
+            written += 1
+    if args.add:
+        for number, _, found, _ in additions:
+            rewrite(number, set(), found)
+            written += 1
 
     args.dictionary.write_text("".join(lines), encoding="utf-8")
-    print(f"\nrewrote {len(conflicts)} entries in {args.dictionary}")
+    print(f"\nrewrote {written} entries in {args.dictionary}")
     return 0
 
 

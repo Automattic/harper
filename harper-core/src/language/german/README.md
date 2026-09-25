@@ -374,17 +374,45 @@ found by reading the disagreements rather than by thinking about it:
 harper-core/src/language/german/scripts/audit_german_gender.py --corpus .archive/german-language/corpus-prose [--apply]
 ```
 
-With both guards and at least five unanimous votes, the corpus agrees with 192
-entries and contradicts 17, and all 17 were genuine mistakes. Those are applied;
-`tests/noun_gender_test.rs` holds them.
+With both guards, the corpus agrees with 471 entries and contradicts 9, and
+every contradiction was a genuine mistake. Checked the other way round — against
+the derivational suffixes, which are an independent source — the corpus is right
+99.7 % of the time. `tests/noun_gender_test.rs` holds the corrections.
 
-What is **not** applied is the other side of the same measurement: 1264 nouns
-that carry no gender at all and that the corpus could give one. Adding a gender
-has its own error rate and no behaviour depends on it yet, so it wants its own
-pass and its own validation. The same is true of the igerman98 route — a
-headword with the genitive `-es` flag `T` is never feminine, and one that
-derives an `-in` form is masculine — which is sharp for `-er` nouns and noisy
-elsewhere.
+**Filling the gaps.** The same script writes a gender where an entry has none,
+from two sources. The corpus settles what it sees often enough; for the rest, a
+few derivational suffixes settle it on their own, and those were measured
+against the corpus rather than assumed:
+
+| | |
+|---|---|
+| used | `-ung` 99.5 %, `-tion`/`-sion`/`-ie`/`-ismus`/`-nis`/`-ment` 100 %, `-chen` 92 %, `-um` 90 % |
+| **not** used | `-e` 65 %, `-er` 61 %, `-el` 45 % |
+
+The second row is the rule that caused the damage in the first place.
+
+Most of the corpus evidence is `dem`/`des`/`einem`, which says only *not
+feminine*. That is recorded as such rather than guessed further: a specific
+gender needs that many votes of its own, because one stray `das` outvoting
+three `dem`s made *Nutzer* neuter. A set of two genders still rules out a third
+of the possibilities, which is what an intersection needs.
+
+igerman98 is used to contradict, never to decide. A headword with the genitive
+`-es` flag `T` is never feminine and one deriving an `-in` form is masculine,
+which is sharp for `-er` nouns and noisy elsewhere — it mislabels `-ismus`,
+whose genitive is uninflected, and umlaut-plural compound elements.
+
+**A compound takes the gender of its head.** `CompoundChecker::get_compound_metadata`
+already knew that a *Determinativkompositum* is right-headed and already found
+the head for its adjective test; it now copies the head's gender onto the
+compound. No dictionary lines, and it reaches the compounds that have no entry
+at all — which is most of them, since German builds them faster than any word
+list records them. The **number** is deliberately not inherited: *Schlüssel* is
+a singular but *Hausschlüsseln* is a dative plural, and only the compound's own
+ending says which.
+
+Over the 4000 most frequent nouns of the prose corpus, gender coverage went
+from 28.7 % to 53.7 %.
 
 #### A plural flag said the opposite of what it meant
 

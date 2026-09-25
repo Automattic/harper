@@ -32,6 +32,7 @@ use std::time::{Duration, Instant};
 
 use crate::CharString;
 use crate::dict_word_metadata::{AdjectiveData, DictWordMetadata, NounData};
+use crate::language::morphology::{Agreement, Morphology, MorphologyExt};
 use crate::spell::rune::word_list::AnnotatedWord;
 use crate::spell::{Dictionary, FstDictionary};
 
@@ -784,10 +785,63 @@ impl CompoundChecker {
         }
 
         // Default to noun metadata for other compounds (most German compounds are nouns)
+        //
+        // The head decides the features too, not just the word class: a
+        // *Hausschlüssel* is masculine because a *Schlüssel* is, and a *Haustür*
+        // feminine because a *Tür* is. Taking the head's agreement here gives a
+        // gender to compounds that have no dictionary entry at all, which is
+        // most of them — German builds compounds faster than any word list can
+        // record them.
+        let agreement = self.head_noun_agreement(word);
         Some(DictWordMetadata {
             noun: Some(NounData::default()),
+            morphology: (!agreement.is_unknown()).then(|| Morphology {
+                noun: Some(agreement),
+                ..Default::default()
+            }),
             ..Default::default()
         })
+    }
+
+    /// The agreement features of the compound's head.
+    ///
+    /// Finds the head the same way [`CompoundChecker::head_is_adjective`] does,
+    /// so the two cannot disagree about where the word splits: walk the split
+    /// points from the left, take the first tail that is a usable element's
+    /// remainder and a known noun. Empty when there is no such split, or when
+    /// the head itself carries no features.
+    ///
+    /// The **number** is deliberately dropped. *Schlüssel* is a singular, but
+    /// *Hausschlüsseln* is the dative plural of the compound and the head looks
+    /// exactly the same; only the compound's own ending says which, and that is
+    /// not what this reads. Gender survives because it is a property of the
+    /// lexeme rather than of the form.
+    fn head_noun_agreement(&self, word: &[char]) -> Agreement {
+        let Some(base) = self.base_dict.as_ref() else {
+            return Agreement::default();
+        };
+
+        for split_pos in 1..word.len() {
+            let (first, rest) = word.split_at(split_pos);
+
+            if rest.len() < MIN_COMPOUND_PART_LEN {
+                break;
+            }
+            if !self.element_usable(first) {
+                continue;
+            }
+
+            if let Some(metadata) = base.get_word_metadata(rest)
+                && metadata.noun.is_some()
+            {
+                return Agreement {
+                    gender: metadata.noun_agreement().gender,
+                    ..Default::default()
+                };
+            }
+        }
+
+        Agreement::default()
     }
 
     /// Is the compound's head — its **last** element — an adjective?
