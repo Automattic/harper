@@ -78,10 +78,25 @@ impl CharStringExt for [char] {
         }
 
         let mut out = CharString::with_capacity(self.len());
+        let mut changed = false;
 
-        out.extend(self.iter().flat_map(|v| v.to_lowercase()));
+        for &c in self {
+            if c.is_ascii_alphabetic() {
+                let lowered = c.to_ascii_lowercase();
+                changed |= lowered != c;
+                out.push(lowered);
+            } else {
+                let lowered: Vec<_> = c.to_lowercase().collect();
+                changed |= lowered != vec![c];
+                out.extend(lowered);
+            }
+        }
 
-        Cow::Owned(out.to_vec())
+        if !changed {
+            Cow::Borrowed(self)
+        } else {
+            Cow::Owned(out.into_vec())
+        }
     }
 
     fn to_string(&self) -> String {
@@ -274,6 +289,16 @@ mod tests {
     #[test]
     fn ends_with_ignore_ascii_case_str_does_not_match_different_suffix() {
         assert!(!['H', 'e', 'l', 'l', 'o'].ends_with_ignore_ascii_case_str("world"));
+    }
+
+    #[test]
+    fn to_lower_handles_ascii_uppercase() {
+        assert_eq!(['H', 'e', 'l', 'l', 'o'].to_lower().as_ref(), &['h', 'e', 'l', 'l', 'o']);
+    }
+
+    #[test]
+    fn to_lower_handles_unicode_uppercase() {
+        assert_eq!(['Ä', 'B'].to_lower().as_ref(), &['ä', 'b']);
     }
 
     #[test]
