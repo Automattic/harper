@@ -138,6 +138,99 @@ module.
 Integration tests that remain in `harper-core/tests/` must be feature-gated with
 `#![cfg(feature = "<lang>")]` at the top of the file.
 
+## Measuring whether a rule is any good
+
+A lint count on its own says nothing. A guard that deletes a thousand reports
+and a rule that fires on every sentence each look perfect on one axis and
+terrible on the other, and both mistakes have been made in this repository.
+**Three measurements, always together:**
+
+| | asks | how |
+|---|---|---|
+| **Precision** | does it stay quiet on correct text? | lint an edited-prose corpus; every report is a false positive |
+| **Recall** | does it fire when it should? | inject the mistakes the rule targets at known offsets |
+| **Per class** | which kinds of error does it reach at all? | a hand-built battery, compared against another checker |
+
+```bash
+cargo build --release --bin harper-cli --features de
+# Precision — the corpus is edited prose, so the target is zero
+./target/release/harper-cli lint --dialect de --only <Rule> --format compact \
+    .archive/german-language/corpus-prose/*.md | wc -l
+# Recall — see german/scripts/german_recall_check.py for what it injects
+just language-recall german .archive/german-language/corpus-prose
+# Precision on the committed sample, per rule
+just language-lint-sources german
+```
+
+Only German has an injection set so far. A new language needs its own before
+any recall claim means anything; copy the shape of `german_recall_check.py`,
+which injects one real error class per row rather than random perturbations.
+
+**Read the reports a change removes before believing the count.** Every useful
+finding this repository has about German capitalization came from reading forty
+lines of context, not from a total. Twelve reports that all turn out to be the
+same construction are one bug, and the fix is usually to take something out of a
+list rather than to add a guard.
+
+### Comparing against LanguageTool
+
+LanguageTool is the practical oracle for the non-English languages: it is open,
+it runs headless, and it names its rules, which a diff of two counts cannot.
+
+```bash
+docker start lt-bench        # port 8010; see german/README.md for the image
+curl -s -X POST http://localhost:8010/v2/check \
+     -d "language=de-DE" --data-urlencode "text@some-article.md"
+```
+
+To compare over a corpus: POST each file, chunk it at ~15 000 characters and add
+the chunk offset back to every match, then align against
+`harper-cli lint --dialect de --format json`, whose lints carry
+`span.char_start` and `span.char_end`. Two spans that overlap are the same
+finding.
+
+**Two traps, both of which have already cost a wrong conclusion here:**
+
+1. **Send the file exactly as Harper sees it.** Stripping markdown headings
+   before the POST shifts every offset, and it also makes LanguageTool's
+   `DE_CASE` fire three hundred times — the heading runs into the next sentence,
+   so every sentence opener looks like a capitalized word mid-sentence. That is
+   an artefact of the preprocessing, not a finding.
+2. **Key the diff on `(file, line, column, flagged word)`, never on the whole
+   message.** Harper's suggestion lists are not reproducible between runs:
+   `fuzzy_match` caps its candidate set and which candidates survive depends on
+   hash order. A line-based diff of two corpus runs of the *same binary* invents
+   hundreds of differences.
+
+**How to read the result.** Split the findings three ways:
+
+- **both** — the shared floor, and usually the least interesting.
+- **only Harper** — a precision problem. Group by our rule name, then look at
+  the flagged words: they name the class. On German this pile was 2 000 reports
+  and reading twenty of them showed it was bibliographies, not a dictionary gap.
+- **only LanguageTool** — the missing-rule backlog. Group by *their* rule id,
+  because the id says what kind of rule is missing, which a count never does.
+  Ignore the raw total: a large share of it is their spell checker disagreeing
+  with ours about proper names.
+
+### The battery
+
+For the per-class picture, write sentences rather than mining a corpus: edited
+prose contains almost no grammar errors, so it can only ever measure precision.
+
+A battery is N error classes × (5 wrong + 5 correct) in a TSV of
+`class<TAB>err|ok<TAB>sentence`. Put one sentence per paragraph in a single
+markdown file so one `harper-cli` invocation covers all of them — the German
+dictionary costs about 1.5 s to load, so a sentence-per-process loop takes
+minutes instead of seconds. Send the identical file to LanguageTool and map its
+offsets back to sentences.
+
+Score detection **and** false alarms together and report both; a class scored
+without its correct sentences is not scored. And check *why* each hit fired: in
+the first German run one apparent das/dass hit was a capitalization false
+positive that happened to land on the right sentence, and it fired on the
+correct sentence too.
+
 ## Before handing back
 
 ```bash
