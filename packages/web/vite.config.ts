@@ -188,6 +188,10 @@ export default defineConfig(async () => {
 											to: '/docs/contributors/author-a-rule',
 										},
 										{
+											title: 'Default Configuration',
+											to: '/docs/contributors/default-configuration',
+										},
+										{
 											title: 'Visual Studio Code',
 											to: '/docs/contributors/visual-studio-code',
 										},
