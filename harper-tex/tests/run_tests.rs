@@ -44,3 +44,4 @@ create_test!(many_tags.tex, 6);
 create_test!(many_more_tags.tex, 11);
 create_test!(em_dash.tex, 0);
 create_test!(issue_2835.tex, 3);
+create_test!(issue_3791.tex, 2);
