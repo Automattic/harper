@@ -9,12 +9,13 @@ use harper_core::linting::Lint;
 use std::ffi::{OsString, c_void};
 use std::os::windows::ffi::OsStringExt;
 use std::process::Command;
+use std::time::{Duration, Instant};
 use std::{
     collections::BTreeMap,
     path::PathBuf,
     sync::{Arc, Mutex},
 };
-use windows::Win32::Foundation::{CloseHandle, HWND, POINT};
+use windows::Win32::Foundation::{CloseHandle, HWND, POINT, RECT};
 use windows::Win32::Graphics::Gdi::{MONITOR_DEFAULTTONEAREST, MonitorFromWindow};
 use windows::Win32::System::Threading::{
     OpenProcess, PROCESS_NAME_WIN32, PROCESS_QUERY_LIMITED_INFORMATION, QueryFullProcessImageNameW,
@@ -22,16 +23,25 @@ use windows::Win32::System::Threading::{
 use windows::Win32::UI::HiDpi::{GetDpiForMonitor, MDT_EFFECTIVE_DPI};
 use windows::Win32::UI::WindowsAndMessaging::{
     GUI_INMOVESIZE, GUITHREADINFO, GetCursorPos, GetForegroundWindow, GetGUIThreadInfo,
-    GetWindowThreadProcessId,
+    GetWindowRect, GetWindowThreadProcessId,
 };
 use windows::core::{PWSTR, Result as WindowsResult};
 use wintheon::file::{IconSize, Priority};
 use wintheon::gather::Gatherer;
 mod automation_service;
 
+pub const WINDOW_MOVEMENT_SETTLE_DURATION: Duration = Duration::from_millis(150);
+
+struct WindowMovementState {
+    hwnd: isize,
+    rect: RECT,
+    last_changed_at: Instant,
+}
+
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
     is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
+    movement_state: Arc<Mutex<Option<WindowMovementState>>>,
 }
 
 impl WindowsBroker {
@@ -41,6 +51,7 @@ impl WindowsBroker {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             is_integration_enabled: Box::new(is_integration_enabled),
+            movement_state: Arc::new(Mutex::new(None)),
         }
     }
 
@@ -54,30 +65,62 @@ impl WindowsBroker {
             return Some(false);
         }
 
-        match window_is_moving(HWND(focused_window as *mut c_void)) {
-            Ok(is_moving) => Some(!is_moving),
+        let hwnd = HWND(focused_window as *mut c_void);
+        let mut is_moving = false;
+        match window_is_moving(hwnd) {
+            Ok(true) => is_moving = true,
+            Ok(false) => {}
             Err(error) => {
                 eprintln!(
                     "Unable to determine whether the focused Windows window is moving: {error}"
                 );
-                None
             }
         }
+
+        let mut current_rect = RECT::default();
+        let got_rect = unsafe { GetWindowRect(hwnd, &mut current_rect) }.is_ok();
+
+        if let Ok(mut movement_state) = self.movement_state.lock() {
+            let now = Instant::now();
+            match movement_state.as_mut() {
+                Some(state) if state.hwnd == focused_window => {
+                    if is_moving || (got_rect && state.rect != current_rect) {
+                        if got_rect {
+                            state.rect = current_rect;
+                        }
+                        state.last_changed_at = now;
+                        let _ = self.service.lock().map(|mut s| s.clear_cache());
+                        return Some(false);
+                    }
+
+                    if now.duration_since(state.last_changed_at) < WINDOW_MOVEMENT_SETTLE_DURATION {
+                        return Some(false);
+                    }
+                }
+                _ => {
+                    *movement_state = Some(WindowMovementState {
+                        hwnd: focused_window,
+                        rect: current_rect,
+                        last_changed_at: now
+                            .checked_sub(WINDOW_MOVEMENT_SETTLE_DURATION)
+                            .unwrap_or(now),
+                    });
+                    if is_moving {
+                        return Some(false);
+                    }
+                }
+            }
+        } else if is_moving {
+            return Some(false);
+        }
+
+        Some(true)
     }
 }
 
 impl OsBroker for WindowsBroker {
-    fn is_harper_desktop(app_id: &str) -> bool {
-        let Ok(executable) = std::env::current_exe()
-            .and_then(std::fs::canonicalize)
-            .inspect_err(|error| eprintln!("failed to identify Harper executable: {error}"))
-        else {
-            return false;
-        };
-        std::fs::canonicalize(app_id).is_ok_and(|path| {
-            path.to_string_lossy()
-                .eq_ignore_ascii_case(&executable.to_string_lossy())
-        })
+    fn is_target_still_focused(&mut self) -> bool {
+        self.should_lint_focused_window().unwrap_or(false)
     }
 
     fn get_boxes(
@@ -139,7 +182,9 @@ impl OsBroker for WindowsBroker {
         let mut point = POINT::default();
 
         unsafe {
-            GetCursorPos(&mut point).unwrap();
+            if GetCursorPos(&mut point).is_err() {
+                return None;
+            }
         }
 
         let monitor_scale = get_focused_monitor_scale();
@@ -177,15 +222,11 @@ impl OsBroker for WindowsBroker {
     }
 
     fn application_icon_png(&self, bundle_id: &str) -> Result<Vec<u8>, String> {
-        if let Some(entry) = look_up_application(bundle_id) {
-            if let Some(png) = entry.icon_png {
-                return Ok(png);
-            } else {
-                return Err("Found application but it was missing an icon.".to_string());
-            }
-        } else {
-            return Err("Unable to locate application.".to_string());
-        }
+        let entry = look_up_application(bundle_id)
+            .ok_or_else(|| "Unable to locate application.".to_string())?;
+        entry
+            .icon_png
+            .ok_or_else(|| "Found application but it was missing an icon.".to_string())
     }
 
     fn launch_app_bundle(&self, bundle_id: &str) -> Result<(), String> {
@@ -223,7 +264,6 @@ impl OsBroker for WindowsBroker {
                         .to_lowercase()
                         .contains(&lower_query)
             })
-            .cloned()
             .map(|entry| entry.to_search_result())
             .collect())
     }
@@ -260,8 +300,7 @@ fn get_focused_monitor_scale() -> f64 {
 
         let _ = GetDpiForMonitor(monitor, MDT_EFFECTIVE_DPI, &mut x, &mut y);
 
-        let effective_scale = x as f64 / 96.;
-        effective_scale
+        x as f64 / 96.
     }
 }
 
@@ -277,7 +316,7 @@ impl ApplicationListEntry {
     fn to_search_result(&self) -> AppSearchResult {
         AppSearchResult {
             name: self.display_name.clone(),
-            bundle_id: self.path.to_string_lossy().to_owned().to_string(),
+            bundle_id: self.path.to_string_lossy().into_owned(),
         }
     }
 }
@@ -285,34 +324,27 @@ impl ApplicationListEntry {
 fn look_up_application(bundle_id: &str) -> Option<ApplicationListEntry> {
     // In Windows, the application path is the bundle ID.
     let list = installed_applications_list();
-    if let Some(entry) = list
-        .iter()
+    list.iter()
         .find(|entry| entry.path.to_string_lossy() == bundle_id)
-    {
-        Some(entry.clone())
-    } else {
-        None
-    }
+        .cloned()
 }
 
 #[cached]
 fn installed_applications_list() -> Arc<Vec<ApplicationListEntry>> {
     let mut list = Vec::new();
 
-    for res in gatherer().scan() {
-        if let Ok(app) = res {
-            let icon = if let Ok(icon) = app.entry.icon() {
-                icon.extract_icon_as_png_at(IconSize::Jumbo)
-            } else {
-                None
-            };
+    for app in gatherer().scan().flatten() {
+        let icon = if let Ok(icon) = app.entry.icon() {
+            icon.extract_icon_as_png_at(IconSize::Jumbo)
+        } else {
+            None
+        };
 
-            list.push(ApplicationListEntry {
-                path: app.entry.path().to_owned(),
-                icon_png: icon,
-                display_name: app.entry.display_name(),
-            })
-        }
+        list.push(ApplicationListEntry {
+            path: app.entry.path().to_owned(),
+            icon_png: icon,
+            display_name: app.entry.display_name(),
+        });
     }
 
     Arc::new(list)

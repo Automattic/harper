@@ -17,6 +17,7 @@ use super::window::Window;
 use crate::os_broker::{LintText, OsBroker};
 use crate::rect::ActionableLint;
 
+const DEFAULT_READ_INTERVAL: Duration = Duration::from_millis(40);
 const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 
 /// Owns the winit event loop and the overlay windows created for each monitor.
@@ -93,8 +94,9 @@ impl WindowManager {
             },
         );
 
-        // Run continuously without a read timer; VSync presentation provides backpressure.
-        self.event_loop.set_control_flow(ControlFlow::Poll);
+        self.event_loop.set_control_flow(ControlFlow::WaitUntil(
+            Instant::now() + DEFAULT_READ_INTERVAL,
+        ));
         let result = self.event_loop.run_app(&mut app);
 
         if let Some(error) = app.error {
@@ -111,10 +113,14 @@ struct WindowManagerApp {
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
+    read_interval: Duration,
+    last_read: Instant,
     last_config_poll: Instant,
     refresh_config: RefreshConfig,
     hovered_lint: Option<usize>,
     cursor_hittest_enabled: bool,
+    consecutive_none_reads: usize,
+    read_pause_until: Option<Instant>,
     error: Option<Error>,
 }
 
@@ -138,10 +144,14 @@ impl WindowManagerApp {
             ),
             os_broker,
             lint_text: callbacks.lint_text,
+            read_interval: DEFAULT_READ_INTERVAL,
+            last_read: Instant::now() - DEFAULT_READ_INTERVAL,
             last_config_poll: Instant::now(),
             refresh_config: callbacks.refresh_config,
             hovered_lint: None,
             cursor_hittest_enabled: false,
+            consecutive_none_reads: 0,
+            read_pause_until: None,
             error: None,
         }
     }
@@ -149,13 +159,37 @@ impl WindowManagerApp {
     /// Refreshes lint geometry from the OS broker inside the event loop so repaint requests happen on
     /// the same thread that owns the overlay windows.
     fn read_rect_updates(&mut self) {
-        let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
-        if let Some(lints) = lints {
-            self.render_state.set_lints(lints);
+        // While the user is interacting with the suggestion popup, pause background accessibility reads,
+        // but verify whether the target app is still focused so stale popups do not linger on unfocused apps.
+        if self.render_state.popup_rect().is_some() {
+            if !self.os_broker.is_target_still_focused() {
+                self.render_state.clear_lints();
+                for window in &self.windows {
+                    window.request_redraw();
+                }
+            }
+            return;
         }
 
-        for window in &self.windows {
-            window.request_redraw();
+        let lints = self.os_broker.get_boxes(self.lint_text.as_mut());
+        match lints {
+            Some(lints) => {
+                self.consecutive_none_reads = 0;
+                self.render_state.set_lints(lints);
+                for window in &self.windows {
+                    window.request_redraw();
+                }
+            }
+            None => {
+                self.consecutive_none_reads += 1;
+                // If reads fail consecutively (app switched, closed, or unfocused), clear stale highlights.
+                if self.consecutive_none_reads >= 2 {
+                    self.render_state.clear_lints();
+                    for window in &self.windows {
+                        window.request_redraw();
+                    }
+                }
+            }
         }
     }
 
@@ -217,7 +251,19 @@ impl ApplicationHandler for WindowManagerApp {
     fn about_to_wait(&mut self, event_loop: &ActiveEventLoop) {
         let now = Instant::now();
 
-        self.read_rect_updates();
+        if self.render_state.take_action_occurred() {
+            self.read_pause_until = Some(now + Duration::from_millis(400));
+        }
+
+        let is_paused = self.read_pause_until.is_some_and(|until| now < until);
+        if !is_paused {
+            self.read_pause_until = None;
+        }
+
+        if !is_paused && now.duration_since(self.last_read) >= self.read_interval {
+            self.read_rect_updates();
+            self.last_read = now;
+        }
 
         if now.duration_since(self.last_config_poll) >= CONFIG_POLL_INTERVAL {
             self.refresh_config();
@@ -225,6 +271,15 @@ impl ApplicationHandler for WindowManagerApp {
         }
 
         self.update_cursor_hittest(event_loop);
+
+        let next_config_poll = self.last_config_poll + CONFIG_POLL_INTERVAL;
+        let wake_at = if self.render_state.popup_rect().is_some() {
+            now + Duration::from_millis(16)
+        } else {
+            let next_read = self.last_read + self.read_interval;
+            next_read.min(next_config_poll)
+        };
+        event_loop.set_control_flow(ControlFlow::WaitUntil(wake_at));
     }
 
     fn resumed(&mut self, event_loop: &ActiveEventLoop) {
