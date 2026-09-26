@@ -47,6 +47,7 @@ impl LanguageModule for GermanModule {
             german_genitive_after_nominative_article::GermanGenitiveAfterNominativeArticle,
             german_noun_capitalization::GermanNounCapitalization,
             german_preposition_case::GermanPrepositionCase,
+            german_recommended_fusion::GermanRecommendedFusion,
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
@@ -72,6 +73,10 @@ impl LanguageModule for GermanModule {
             GermanSubjectVerbAgreement::new(dictionary.clone()),
         );
         group.add("GermanFillerWords", GermanFillerWords::default());
+        group.add(
+            "GermanRecommendedFusion",
+            GermanRecommendedFusion::default(),
+        );
         group.add("GermanWiderWieder", GermanWiderWieder);
         group.add("GermanCommonTypos", GermanCommonTypos);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);

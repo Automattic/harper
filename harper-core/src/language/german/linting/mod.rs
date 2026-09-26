@@ -8,6 +8,7 @@ pub mod german_foreign_stretch;
 pub mod german_genitive_after_nominative_article;
 pub mod german_noun_capitalization;
 pub mod german_preposition_case;
+pub mod german_recommended_fusion;
 pub mod german_sentence_capitalization;
 pub mod german_spell_check;
 pub mod german_subject_verb_agreement;

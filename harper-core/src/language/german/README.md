@@ -1216,6 +1216,26 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## The fused spellings the reform allows
+
+*in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both
+spellings have been correct since 1996 and Duden recommends the fused one, so
+`GermanRecommendedFusion` is a `Style` rule, not a grammar one. It is the class
+LanguageTool reports most often on German prose that Harper had nothing for.
+
+**The guard is the rule.** Every one of these pairs has a literal reading in
+which the separated spelling is the only correct one — a ship runs *auf Grund*,
+the answer is in *Frage 3*, someone lays a hand *auf den Grund des Beckens* —
+and the word behind the pair is what tells them apart: the genitive article,
+possessive or *von* that a fused preposition governs, or the fixed verb the
+idiom takes (*in Frage kommen*, *zu Grunde legen*). A lower-case second word
+also disqualifies it: in the separated spelling that word is a noun.
+
+It is a Rust rule rather than eight Weir files because Weir has one `becomes`
+per rule and these need eight different ones, each with the sentence capital
+carried from the *first* word rather than the noun — *Auf Grund* becomes
+*Aufgrund*, not *AufGrund*.
+
 ## Subject–verb agreement, and why it needed no new data
 
 The one agreement class German can decide without gender. The features were
