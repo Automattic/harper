@@ -176,7 +176,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
     }
 
     fn description(&self) -> &str {
-        "Looks for comparative adjective constructions with `more` than could use inflected forms."
+        "Looks for comparative adjective constructions with `more` that could use inflected forms."
     }
 }
 
