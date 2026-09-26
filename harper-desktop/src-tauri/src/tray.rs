@@ -61,6 +61,7 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
     let app = app.clone();
     async_runtime.spawn(async move {
         let mut shown_is_running = initial_is_running;
+        let mut last_error_logged = false;
 
         loop {
             sleep(Duration::from_millis(250)).await;
@@ -77,18 +78,32 @@ pub fn set_up_tray_menu(app: &AppHandle) -> tauri::Result<()> {
             // update with ERROR_TIMEOUT, filling the log and leaving the tray
             // icon unresponsive.
             if is_running == shown_is_running {
+                last_error_logged = false;
                 continue;
             }
 
             let Ok(new_icon) = menu_bar_icon(is_running) else {
-                error!("Unable to generate new menu bar icon.");
+                if !last_error_logged {
+                    error!("Unable to generate new menu bar icon.");
+                    last_error_logged = true;
+                }
                 continue;
             };
 
             match tray_icon.set_icon(Some(new_icon)) {
-                Ok(()) => shown_is_running = is_running,
-                // Leave the remembered state alone so the next tick retries.
-                Err(err) => error!("Unable to set new icon: {err}"),
+                Ok(()) => {
+                    shown_is_running = is_running;
+                    last_error_logged = false;
+                }
+                // Leave the remembered state alone so the next tick retries,
+                // but back off and only log once so we don't spam the log or shell.
+                Err(err) => {
+                    if !last_error_logged {
+                        error!("Unable to set new icon: {err}");
+                        last_error_logged = true;
+                    }
+                    sleep(Duration::from_secs(2)).await;
+                }
             }
         }
     });
@@ -104,6 +119,9 @@ fn service_status_color(is_running: bool) -> [u8; 4] {
 }
 
 pub fn menu_bar_icon(is_running: bool) -> tauri::Result<Image<'static>> {
+    #[cfg(target_os = "windows")]
+    let icon = Image::from_bytes(include_bytes!("../icons/32x32.png"))?;
+    #[cfg(not(target_os = "windows"))]
     let icon = Image::from_bytes(include_bytes!("../icons/menu-bar-icon.png"))?;
     let width = icon.width();
     let height = icon.height();

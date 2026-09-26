@@ -57,6 +57,13 @@ impl DebounceState {
         self.last_linted_text = Some(text.to_string());
         self.last_lints = lints.clone();
     }
+
+    pub(crate) fn clear(&mut self) {
+        self.last_observed_text = None;
+        self.last_text_change = None;
+        self.last_linted_text = None;
+        self.last_lints.clear();
+    }
 }
 
 pub(crate) enum DebounceStatus {
