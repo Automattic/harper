@@ -79,7 +79,7 @@ impl Currency {
             Currency::Ruble => format!("{amount} {c}"),
             Currency::Lira => format!("{amount} {c}"),
             Currency::Pound => format!("{c}{amount}"),
-            Currency::Yen => format!("{c} {amount}"),
+            Currency::Yen => format!("{c}{amount}"),
             Currency::Baht => format!("{amount} {c}"),
             Currency::Won => format!("{c} {amount}"),
             Currency::Kip => format!("{c}{amount}"),
