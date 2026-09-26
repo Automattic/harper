@@ -398,6 +398,9 @@ pub fn forms_in_case(word: &str, wanted: CaseSet) -> Vec<&'static str> {
 ///
 /// A singular marking has neither problem: it comes from a base entry, which is
 /// a nominative singular by construction.
+///
+/// The noun's *spelling* says more than its entry does; see
+/// [`readings_allowed_by_spelling`].
 pub fn readings_allowed_by(
     readings: &[DeterminerReading],
     noun: &Agreement,
@@ -406,10 +409,83 @@ pub fn readings_allowed_by(
         return readings.to_vec();
     }
 
+    keep(readings, |reading| reading.number() == Number::Singular)
+}
+
+/// The readings that survive the **spelling** of the noun after them.
+///
+/// German has one inflectional ending left that is exceptionless: the dative
+/// plural takes `-n`. *den Freunden*, *den Kindern*, *den Lehrern* — every
+/// dative plural in the language ends in `-n`, and the only nouns exempt are
+/// those whose plural is `-s` (*den Autos*) or a Latin or Greek form (*den
+/// Korpora*, *den Termini*).
+///
+/// So a noun that ends in none of those cannot be a dative plural, whatever the
+/// dictionary does or does not know about it. That is what makes *mit den
+/// Freund*, *mit den Lehrer* and *bei den Bäcker* reportable: `den` is
+/// accusative singular or dative plural, the noun rules the second out, and
+/// *mit* wants a dative. No entry has to carry a number, a gender or a case —
+/// which is as well, since `bruder` and `zug` carry none of the three.
+pub fn readings_allowed_by_spelling(
+    readings: &[DeterminerReading],
+    noun: &str,
+) -> Vec<DeterminerReading> {
+    if could_be_a_dative_plural(noun) {
+        return readings.to_vec();
+    }
+
+    keep(readings, |reading| {
+        !(reading.case == Case::Dative && reading.number() == Number::Plural)
+    })
+}
+
+/// Whether `noun` is spelled the way a German dative plural has to be.
+pub fn could_be_a_dative_plural(noun: &str) -> bool {
+    // An acronym inflects for nothing: *bei den NSAR*, *mit den AGB*.
+    if noun.chars().all(|c| !c.is_lowercase()) {
+        return true;
+    }
+
+    let lower = noun.to_lowercase();
+
+    // A Latin plural in `-ae`: *bei den Mimiviridae*. Spelled out because `-e`
+    // on its own is one of the commonest German singular endings.
+    if lower.ends_with("ae") {
+        return true;
+    }
+
+    // `-n` is the ending itself; `-s` is the `-s` plural, which takes none; and
+    // `-a` and `-i` are the Latin and Greek plurals, which take none either.
+    lower.ends_with(['n', 's', 'a', 'i'])
+}
+
+/// Determiner forms that stand on their own as freely as they introduce a noun.
+///
+/// *Zu diesen zählen Annegray, Luxeuil und St. Gallen* — `diesen` is the whole
+/// phrase, and the capitalized word after it belongs to what follows. The
+/// article forms are not like this: `den` and `dem` are pronouns only in a
+/// relative clause, which a comma announces. Reading a noun after one of these
+/// is guesswork, so the spelling rule is not applied to them.
+const STANDS_ALONE: &[&str] = &["diesen", "jenen", "welchen", "solchen", "manchen"];
+
+/// Whether `word` is one of the freely pronominal forms. See [`STANDS_ALONE`].
+pub fn stands_alone(word: &str) -> bool {
+    STANDS_ALONE.contains(&word.to_lowercase().as_str())
+}
+
+/// Filter, but never down to nothing.
+///
+/// An empty result means the determiner and the noun disagree outright — *mit
+/// die Mann* — which is a different mistake, and narrowing to nothing would
+/// make the caller describe it wrongly.
+fn keep(
+    readings: &[DeterminerReading],
+    allowed: impl Fn(&DeterminerReading) -> bool,
+) -> Vec<DeterminerReading> {
     let narrowed: Vec<DeterminerReading> = readings
         .iter()
         .copied()
-        .filter(|reading| reading.number() == Number::Singular)
+        .filter(|reading| allowed(reading))
         .collect();
 
     if narrowed.is_empty() {
@@ -653,6 +729,49 @@ mod tests {
         // Without the noun, the dative plural reading survives and `den` is
         // offered as a correction of itself.
         assert_eq!(forms_in_case("den", CaseSet::DATIVE), ["dem", "den"]);
+    }
+
+    /// German has one inflectional ending left that is exceptionless: the
+    /// dative plural takes `-n`. A noun without it cannot be one, and no
+    /// dictionary entry is needed to see that.
+    #[test]
+    fn the_spelling_rules_out_a_dative_plural() {
+        let den = determiner_readings("den").unwrap();
+
+        let beside_freund = readings_allowed_by_spelling(den, "Freund");
+        assert_eq!(beside_freund.len(), 1);
+        assert_eq!(beside_freund[0].case, Case::Accusative);
+
+        // *Freunden* could be one, so nothing is ruled out.
+        assert_eq!(
+            readings_allowed_by_spelling(den, "Freunden").len(),
+            den.len()
+        );
+    }
+
+    #[test]
+    fn the_endings_a_dative_plural_may_have() {
+        for word in [
+            "Freunden",
+            "Autos",
+            "Korpora",
+            "Termini",
+            "Mimiviridae",
+            "NSAR",
+        ] {
+            assert!(could_be_a_dative_plural(word), "{word}");
+        }
+        for word in ["Freund", "Lehrer", "Bruder", "Zug", "Bäcker", "Worte"] {
+            assert!(!could_be_a_dative_plural(word), "{word}");
+        }
+    }
+
+    #[test]
+    fn the_freely_pronominal_forms_are_named() {
+        assert!(stands_alone("diesen"));
+        assert!(stands_alone("Jenen"));
+        assert!(!stands_alone("den"));
+        assert!(!stands_alone("dem"));
     }
 
     #[test]

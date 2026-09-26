@@ -1042,10 +1042,13 @@ taken: *den* is accusative masculine singular or dative plural, and *Freund* is
 a singular, so *mit den Freund* has no dative left. Two restrictions were forced
 by measurement, and both are about the data rather than the method:
 
-* **Only the number is read, never the gender.** `Leber`, `Mauer`, `Dauer`,
-  `Nummer` and `Schulter` are feminine and recorded masculine; `Tier` and `Heer`
-  are neuter and recorded masculine. Narrowing by gender made *"in der Leber"*
-  an error, 310 reports where there had been 15.
+* **Only the number is read, never the gender.** Too much of the gender is
+  still wrong. Switching it on after the gender pass above still reported *in
+  der Leber* five times, *bei der Angabe* three, *bei der Aussprache* three —
+  27 new false positives, every one a noun whose recorded gender the corpus
+  could not reach. The igerman98 route does not close it either: restricted to
+  `-er` and `-el`, where it is sharpest, it proposes 77 corrections at about
+  69% precision, which would inject two dozen fresh errors of the same kind.
 * **Only a singular narrows anything.** German weak masculines — *Mensch*,
   *Philosoph*, *Patient*, *Laie*, *Gedanke* — spell the oblique singular exactly
   like the plural, and the dictionary records `Menschen` as a plural only.
@@ -1064,12 +1067,33 @@ or a conjunction, because *mit diesen in Konkurrenz* has no noun of its own.
 With all of that, the corpus reports the same 15 times as before the noun was
 read at all.
 
-**What it still cannot see.** *mit den Lehrer* is wrong, but *Lehrer* is one
-form for the singular and the plural; only the missing dative plural `-n` of
-*Lehrern* gives it away, and the dictionary carries no case for nouns. *mit
-seinen Bruder* and *mit den Zug* fail for a duller reason: `bruder` and `zug`
-carry no plural flag at all, so they have no number. Closing these means gender
-that can be trusted and case on the nouns.
+**The spelling says more than the entry.** German has one inflectional ending
+left that is exceptionless: **the dative plural takes `-n`**. *den Freunden*,
+*den Kindern*, *den Lehrern*. The only nouns exempt are those whose plural is
+`-s` (*den Autos*), a Latin or Greek form (*den Korpora*, *den Termini*, *den
+Mimiviridae*), or an acronym (*den NSAR*).
+
+So a noun ending in none of those cannot be a dative plural, whatever the
+dictionary knows. That is what makes *mit den Freund*, *mit den Lehrer*, *mit
+seinen Bruder*, *mit den Zug* and *bei den Bäcker* reportable — all five of the
+cases LanguageTool catches in this class — without any entry carrying a number,
+a gender or a case. `bruder` and `zug` carry none of the three.
+
+Five determiner forms are held back from it. *Zu diesen zählen Annegray,
+Luxeuil und St. Gallen* — `diesen` is the whole phrase and the capitalized word
+belongs to what follows. `diesen`, `jenen`, `welchen`, `solchen` and `manchen`
+stand alone as freely as they introduce a noun; the article forms are pronouns
+only in a relative clause, which a comma announces.
+
+On the prose corpus the rule adds five reports, every one of them a real
+mistake: *zu den Ameisenbäume*, *mit den Worte*, *zu den niederländischen
+Notfallpläne*, *zu den bekanntesten Vertreter*, *zu den sultanistischen Regime*.
+One false positive comes with them, and one older one goes.
+
+**What it still cannot see.** *in den Haus*, *wir haben den Auto*, *Ein Frau
+steht an der Tür* — all of these need gender on the noun, and half the frequent
+nouns still have none. Verb rection (*Ich danke den Mann*) and direction after a
+two-way preposition (*auf den Tisch*) are out of reach for LanguageTool too.
 
 **Where the false positives came from.** All of them were homography, and the
 corpus found each class. They are worth listing because every one is a trap for

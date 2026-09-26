@@ -6,7 +6,8 @@ use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::grammar::determiners::{
-        DeterminerReading, determiner_readings, forms_for_readings, readings_allowed_by,
+        DeterminerReading, could_be_a_dative_plural, determiner_readings, forms_for_readings,
+        readings_allowed_by, readings_allowed_by_spelling, stands_alone,
     },
     language::german::grammar::prepositions::preposition_government,
     language::german::spell::curated_german_dictionary,
@@ -102,40 +103,29 @@ impl GermanPrepositionCase {
 }
 
 impl GermanPrepositionCase {
-    /// The agreement features of the noun this determiner introduces, when the
-    /// noun can be identified with confidence.
+    /// The head of the noun phrase this determiner introduces, if it can be
+    /// identified with confidence.
     ///
-    /// German capitalizes its nouns, which makes the head of a phrase easy to
-    /// find in the ordinary case: skip the lower-case adjectives and take the
-    /// first capitalized word. Three things spoil that, and each cost false
-    /// positives on the prose corpus before it was turned away:
+    /// German capitalizes its nouns, which makes the head easy to find in the
+    /// ordinary case: skip the lower-case adjectives and take the first
+    /// capitalized word. Three things spoil that, and each cost false positives
+    /// on the prose corpus before it was turned away:
     ///
     /// * **A hyphen.** In *aus den Natur- und Geisteswissenschaften* and *zu
     ///   den Absinth-Trinkern* the first capitalized word is half of a compound
     ///   and carries none of the phrase's features.
-    /// * **A following declined adjective.** In *mit den ihr zur Verfügung
-    ///   stehenden Mitteln*, *Verfügung* is inside a participial attribute and
-    ///   the head is *Mitteln*. A lower-case word in `-e`, `-en`, `-er`, `-es`
-    ///   or `-em` after the candidate means the phrase has not ended.
-    /// * **A form that could be a dative plural.** Every German dative plural
-    ///   ends in `-n`, and the dictionary is missing most of them — *Fischen*,
-    ///   *Berufen*, *Zeichen*, *Männchen* all resolve to an entry recorded as a
-    ///   singular. A candidate in `-n` or `-s` is therefore not trusted to rule
-    ///   the plural out.
-    ///
-    /// When any of them applies the answer is an empty [`Agreement`], which
-    /// narrows nothing and leaves the rule exactly as strong as it was without
-    /// the noun.
-    fn noun_agreement_after(
+    /// * **A phrase that has not ended.** A following capitalized word (*mit
+    ///   den Florida Keys*) or a following adjective (*bei den lange Zeit
+    ///   allein bekannten Verfahren*) both say the head is further on.
+    /// * **A determiner, preposition or conjunction along the way.** *mit
+    ///   diesen in Konkurrenz* has no noun of its own; the determiner is a
+    ///   pronoun and the capitalized word belongs to what follows.
+    fn head_noun_after(
         &self,
         document: &Document,
         tokens: &[&Token],
         determiner_at: usize,
-    ) -> Agreement {
-        debug_assert!(
-            matches!(tokens[determiner_at].kind, TokenKind::Word(_)),
-            "the index is the determiner's own, not the preposition's"
-        );
+    ) -> Option<String> {
         let content = document.get_full_content();
         let word_at = |at: usize| -> Option<String> {
             tokens
@@ -146,17 +136,11 @@ impl GermanPrepositionCase {
 
         let mut at = determiner_at + 2;
         for _ in 0..=MAX_ADJECTIVES {
-            let Some(word) = word_at(at) else {
-                return Agreement::default();
-            };
+            let word = word_at(at)?;
 
             if !is_capitalized(&word) {
-                // A second determiner, a preposition or a conjunction ends this
-                // phrase: in *mit diesen in Konkurrenz* and *mit jenen der
-                // Gattung* the determiner stands alone and the capitalized word
-                // further on belongs to something else.
                 if closes_the_phrase(&word) {
-                    return Agreement::default();
+                    return None;
                 }
                 at += 2;
                 continue;
@@ -166,36 +150,41 @@ impl GermanPrepositionCase {
             let touches_hyphen = content.get(token.span.end) == Some(&'-')
                 || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
             if touches_hyphen {
-                return Agreement::default();
+                return None;
             }
 
-            if word.ends_with(['n', 's']) {
-                return Agreement::default();
-            }
-
-            // The phrase has to end here for this word to be its head. In *mit
-            // den Florida Keys* and *bei den lange Zeit allein bekannten
-            // Verfahren* it does not.
             let ends_here = match word_at(at + 2) {
                 None => tokens
                     .get(at + 2)
                     .is_none_or(|next| !matches!(next.kind, TokenKind::Word(_))),
                 Some(next) => !is_capitalized(&next) && closes_the_phrase(&next),
             };
-            if !ends_here {
-                return Agreement::default();
-            }
-
-            let chars: Vec<char> = word.chars().collect();
-            return self
-                .dictionary
-                .get_word_metadata(&chars)
-                .filter(|metadata| metadata.is_noun())
-                .map(|metadata| metadata.noun_agreement())
-                .unwrap_or_default();
+            return ends_here.then_some(word);
         }
 
-        Agreement::default()
+        None
+    }
+
+    /// What the dictionary says about `head`, when that is worth reading.
+    ///
+    /// A form ending in `-n` or `-s` is held back. Every German dative plural
+    /// ends in `-n`, and most of them are missing from the dictionary —
+    /// *Fischen*, *Berufen*, *Zeichen*, *Männchen* all resolve to an entry
+    /// recorded as a singular, and narrowing by that would invent errors. The
+    /// spelling of those forms is read instead, by
+    /// [`readings_allowed_by_spelling`], which asks the opposite question and
+    /// needs no entry at all.
+    fn agreement_of(&self, head: &str) -> Agreement {
+        if could_be_a_dative_plural(head) {
+            return Agreement::default();
+        }
+
+        let chars: Vec<char> = head.chars().collect();
+        self.dictionary
+            .get_word_metadata(&chars)
+            .filter(|metadata| metadata.is_noun())
+            .map(|metadata| metadata.noun_agreement())
+            .unwrap_or_default()
     }
 }
 
@@ -267,11 +256,23 @@ impl Linter for GermanPrepositionCase {
                     continue;
                 };
 
-                // The noun rules out the readings it cannot stand beside. This
-                // is where *mit den Freund* becomes visible: *Freund* is
-                // singular, so the dative plural reading of *den* goes.
-                let noun = self.noun_agreement_after(document, &tokens, index + 2);
-                let readings: Vec<DeterminerReading> = readings_allowed_by(all_readings, &noun);
+                // The noun rules out the readings it cannot stand beside. Its
+                // spelling does most of the work — a German dative plural ends
+                // in `-n`, so *mit den Freund* has no dative left whatever the
+                // dictionary knows — and its entry adds what it can.
+                // A head that cannot be identified narrows nothing; the check
+                // still runs on the determiner alone, which is what it did
+                // before the noun was read at all.
+                let head = self
+                    .head_noun_after(document, &tokens, index + 2)
+                    .filter(|_| !stands_alone(&determiner_text));
+                let readings: Vec<DeterminerReading> = match &head {
+                    None => all_readings.to_vec(),
+                    Some(head) => readings_allowed_by(
+                        &readings_allowed_by_spelling(all_readings, head),
+                        &self.agreement_of(head),
+                    ),
+                };
                 let cases = readings
                     .iter()
                     .fold(CaseSet::empty(), |set, reading| set | reading.case.into());
@@ -665,13 +666,44 @@ mod tests {
         assert_clean(&["Er antwortet auf den Brief nicht."]);
     }
 
-    /// And where the noun cannot settle it either, nothing is reported. An
-    /// `-er` noun has one form for both numbers, so *den Lehrer* keeps its
-    /// dative plural reading; only the missing dative `-n` of *Lehrern* would
-    /// give it away, and the dictionary carries no case for nouns.
+    /// The noun's *spelling* settles what its entry cannot. *Lehrer* is one
+    /// form for the singular and the plural, so its number says nothing — but
+    /// every German dative plural ends in `-n`, and *Lehrern* is the one that
+    /// would. No entry has to carry a number, a gender or a case for this,
+    /// which is as well: `bruder` and `zug` carry none of the three.
     #[test]
-    fn a_noun_of_both_numbers_still_hides_the_mistake() {
-        assert_clean(&["Ich spreche mit den Lehrer über die Note."]);
+    fn the_spelling_of_the_noun_rules_out_a_dative_plural() {
+        assert_eq!(fixes("Ich spreche mit den Lehrer über die Note."), ["dem"]);
+        assert_eq!(fixes("Er kam mit seinen Bruder zum Essen."), ["seinem"]);
+        assert_eq!(fixes("Wir fahren mit den Zug nach Berlin."), ["dem"]);
+        assert_eq!(fixes("Er arbeitet bei den Bäcker."), ["dem"]);
+    }
+
+    /// And a noun that really could be a dative plural keeps the reading.
+    #[test]
+    fn a_noun_that_could_be_a_dative_plural_is_left_alone() {
+        assert_clean(&[
+            "Ich spreche mit den Lehrern über die Note.",
+            "Er kam mit seinen Brüdern zum Essen.",
+            "Wir fahren mit den Autos nach Berlin.",
+            // A Latin plural takes no `-n`: *den Korpora*, *den Termini*.
+            "Zu den Korpora des Altenglischen gehört dieser Bestand.",
+            "Im Vergleich zu den Termini der Logik ist das einfach.",
+            // An acronym inflects for nothing.
+            "Bei den NSAR ist die Wirkung entzündungsmindernd.",
+        ]);
+    }
+
+    /// *Zu diesen zählen Annegray und Luxeuil*: the determiner is the whole
+    /// phrase and the capitalized word belongs to what follows. The article
+    /// forms are not like this, so only these five are held back.
+    #[test]
+    fn a_freely_pronominal_determiner_is_not_given_a_noun() {
+        assert_clean(&[
+            "Zu diesen zählen Annegray, Luxeuil und St. Gallen.",
+            "Im Vergleich zu jenen künstlicher Texte ist das anders.",
+            "Bei welchen Hinweise vorhanden sind, ist unklar.",
+        ]);
     }
 
     #[test]
