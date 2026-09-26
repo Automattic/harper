@@ -14,6 +14,7 @@ pub mod declension_test;
 pub mod derivation_test;
 pub mod false_noun_reading_test;
 pub mod feminine_derivation_test;
+pub mod foreign_stretch_spelling_test;
 pub mod function_word_flags_test;
 pub mod german_annotations_test;
 pub mod headword_import_test;

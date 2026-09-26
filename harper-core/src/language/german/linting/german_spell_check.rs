@@ -1,5 +1,6 @@
 use hashbrown::HashMap;
 
+use crate::language::german::linting::german_foreign_stretch;
 use crate::language::german::spell::compound_checker::{
     MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, has_content_reading, interfix_fits,
     is_derivational_suffix, lowercase,
@@ -9,7 +10,7 @@ use crate::language::german::spell::german_dict::{
 };
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
-use crate::{CharStringExt, TokenStringExt, document::Document};
+use crate::{CharStringExt, Token, TokenKind, TokenStringExt, document::Document};
 
 // `MIN_COMPOUND_PART_LEN` is imported rather than redeclared: this decomposition
 // and the dictionary's own must not disagree about what counts as an element.
@@ -530,7 +531,15 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
         for paragraph in document.iter_paragraphs() {
             for sentence in paragraph.iter_sentences() {
-                for word in sentence.iter_words() {
+                let tokens: Vec<&Token> = sentence
+                    .iter()
+                    .filter(|t| !t.kind.is_whitespace())
+                    .collect();
+
+                for (index, word) in tokens.iter().enumerate() {
+                    if !matches!(word.kind, TokenKind::Word(_)) {
+                        continue;
+                    }
                     let word_chars = document.get_span_content(&word.span);
 
                     // Skip initialisms, Roman numerals and single letters.
@@ -545,6 +554,18 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
                     // Try compound word splitting
                     if self.try_compound_word_check(word_chars) {
+                        continue;
+                    }
+
+                    // A German dictionary has nothing to say about a sentence
+                    // that has stopped being German. See
+                    // [`german_foreign_stretch`] for the evidence it asks for.
+                    if german_foreign_stretch::in_foreign_stretch(
+                        &tokens,
+                        index,
+                        document,
+                        |token| token.kind.is_determiner(),
+                    ) {
                         continue;
                     }
 

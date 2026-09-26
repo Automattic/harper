@@ -1216,6 +1216,83 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## Quoted English is the largest false-positive class
+
+Measured against LanguageTool on the same prose: on a German Wikipedia article
+Harper reports far more spelling mistakes than LanguageTool does, and the
+difference is not a smaller dictionary. It is the bibliography. German academic
+prose quotes constantly and mostly not in German, and a German dictionary has
+nothing useful to say about *Molecular biology of the cell* or *Le marquage
+différentiel de l'objet*.
+
+`german_foreign_stretch` was written for the capitalization rules and asks for
+evidence a dictionary lookup cannot give — function words the other language has
+and German does not, counted in a window either side. `GermanSpellCheck` now
+asks it too, before reporting anything.
+
+Two things to know before touching it:
+
+* **The window counts word tokens.** It used to count tokens, and a
+  bibliography line is half punctuation — a colon, a comma, two brackets — so
+  five tokens reached three words of English and the evidence fell short. The
+  doc comment always said word tokens; the code did not.
+* **The cost is stated in the tests.** A German misspelling standing *inside* an
+  English run is no longer reported;
+  `a_german_typo_inside_an_english_run_is_missed` says so on purpose. Measured
+  against the injection harness the exchange is heavily one-sided, but it is an
+  exchange.
+
+### How to check whether a change here pays
+
+```bash
+cargo build --release --bin harper-cli --features de
+./target/release/harper-cli lint --dialect de --only GermanSpellCheck \
+    --format compact .archive/german-language/corpus-prose/*.md | wc -l
+just language-recall german .archive/german-language/corpus-prose
+```
+
+Read a sample of the reports a change removes before believing the first number.
+Roughly one report in eight on that corpus sits in a stretch with two or more
+foreign function words nearby; the rest are proper names and technical
+vocabulary that neither Harper nor LanguageTool knows, and no guard reaches
+them.
+
+### Comparing against LanguageTool
+
+`docker start lt-bench`, then POST to `http://localhost:8010/v2/check` with
+`language=de-DE`. Send the file **unpreprocessed** so its character offsets line
+up with `harper-cli lint --format json`, and align the two by span overlap.
+Stripping markdown headings first is what makes LanguageTool's `DE_CASE` fire
+three hundred times: the heading runs into the next sentence and every sentence
+opener looks like a capitalized word mid-sentence.
+
+What the comparison turns up beyond spelling, in descending order of how often
+it fires on clean prose:
+
+* `EMPFOHLENE_ZUSAMMENSCHREIBUNG` — *in Frage* → *infrage*, *mit Hilfe* →
+  *mithilfe*, *auf Grund* → *aufgrund*, *so genannt* → *sogenannt*. Harper has
+  nothing for this class. Both spellings are allowed, so it belongs with the
+  style rules, not the grammar ones.
+* `DE_AGREEMENT` — *des Protein*, *zur Aufenthaltsbestimmungen*, *der
+  Sachverständigenausschusses*. Real errors in edited text, and still blocked on
+  the same gender data as everything else that reads the noun.
+* `WHITESPACE_RULE`, `DOPPELTES_LEERZEICHEN`, `COMMA_PARENTHESIS_WHITESPACE` —
+  typography, cheap, and absent.
+
+### A measurement trap
+
+German spelling suggestions are **not reproducible between runs**. `fuzzy_match`
+returns at most a hundred candidates and which hundred depends on hash order, so
+a candidate that would rank fourth is sometimes outside the set:
+
+```bash
+for i in 1 2 3; do ./target/release/harper-cli lint --dialect de \
+    --only GermanSpellCheck "Reserpin" ; done
+```
+
+Diff two corpus runs on `file:line:column` and the flagged word, never on the
+whole message, or the suggestion lists alone will invent hundreds of differences.
+
 ## The attribute that grows a phrase of its own
 
 `GermanNounCapitalization` finds the head of a noun phrase by walking right from

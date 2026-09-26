@@ -52,7 +52,7 @@ const FOREIGN_FUNCTION_WORDS: &[&str] = &[
     "apud", "atque", "quae", "quod", "cum", "sive", "seu", "ratione", "liber", "libri",
 ];
 
-/// How many tokens either side of the candidate are consulted.
+/// How many **word** tokens either side of the candidate are consulted.
 const WINDOW: usize = 5;
 
 /// The lower-case spelling of a token.
@@ -129,12 +129,17 @@ pub fn in_foreign_stretch(
         }
     };
 
-    for (offset, token) in tokens[..index].iter().rev().take(WINDOW).enumerate() {
-        visit(token, offset + 1);
-    }
-    for (offset, token) in tokens.iter().skip(index + 1).take(WINDOW).enumerate() {
-        visit(token, offset + 1);
-    }
+    // Word tokens, counted as the doc comment says: a colon, a comma and a
+    // pair of brackets are most of a bibliography line, and letting them eat
+    // the window leaves three words of English to be judged on one.
+    let mut words = |side: &mut dyn Iterator<Item = &&Token>| {
+        side.filter(|token| matches!(token.kind, TokenKind::Word(_)))
+            .take(WINDOW)
+            .enumerate()
+            .for_each(|(offset, token)| visit(token, offset + 1));
+    };
+    words(&mut tokens[..index].iter().rev());
+    words(&mut tokens.iter().skip(index + 1));
 
     function_words >= 2 || (adjacent_function_word && function_words + unknown_words >= 2)
 }
