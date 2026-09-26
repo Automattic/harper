@@ -175,4 +175,208 @@ mod tests {
             "'fang' heads the phrase 'der fang' and must be flagged; flagged: {flagged:?}"
         );
     }
+
+    // --- Erweitertes Attribut -------------------------------------------
+    //
+    // German may hang a phrase of its own in front of the adjective that
+    // modifies the head: "die **in Mitteleuropa** heimische Pflanzenart". The
+    // chunker used to stop at the preposition, crown the adjective in front of
+    // it, and report a perfectly ordinary attributive as a noun that had lost
+    // its capital. It carries on now — but only when the word in front of the
+    // preposition is an adjective and the attribute closes on an adjective
+    // with a capitalized word behind it, because a preposition otherwise
+    // really does end the phrase.
+
+    /// The construction the change is about.
+    #[test]
+    fn extended_attribute_keeps_the_adjective_a_modifier() {
+        let flagged = flagged("Er kennt die einzige in Mitteleuropa heimische Pflanzenart.");
+
+        assert!(
+            flagged.is_empty(),
+            "the phrase runs on to 'Pflanzenart'; flagged: {flagged:?}"
+        );
+    }
+
+    /// The attribute may be a bare directional phrase with no noun of its own.
+    #[test]
+    fn extended_attribute_may_be_directional() {
+        let flagged = flagged("Die ganze nach links hinten verlagerte Last drückt auf das Rad.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "ganze"),
+            "'ganze' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// A participle is the usual close of one.
+    #[test]
+    fn extended_attribute_closing_on_a_participle() {
+        let flagged = flagged("Das lange von Hand geschriebene Manuskript liegt dort.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "lange"),
+            "'lange' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// Two prepositions inside one attribute still close on the same adjective.
+    #[test]
+    fn extended_attribute_with_two_prepositions() {
+        let flagged =
+            flagged("Er sah die rote in der Mitte des Raumes auf dem Tisch stehende Vase.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "rote"),
+            "'rote' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// An adverb inside the attribute does not end it either.
+    #[test]
+    fn extended_attribute_with_an_adverb_inside() {
+        let flagged =
+            flagged("Die hohe in den letzten Jahren stark gestiegene Miete belastet ihn.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "hohe"),
+            "'hohe' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// The attribute may govern a determiner of its own.
+    #[test]
+    fn extended_attribute_with_its_own_determiner() {
+        let flagged = flagged("Die grüne für den Winter geeignete Jacke hängt dort.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "grüne"),
+            "'grüne' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// A masculine determiner behaves the same way.
+    #[test]
+    fn extended_attribute_after_a_masculine_determiner() {
+        let flagged = flagged("Der kluge mit vielen Büchern ausgestattete Raum gefiel ihm.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "kluge"),
+            "'kluge' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// Eight tokens of attribute are still read as one.
+    #[test]
+    fn extended_attribute_at_full_reach() {
+        let flagged =
+            flagged("Er sah die rote mit sehr viel Mühe von einem alten Meister gemalte Vase.");
+
+        assert!(
+            !flagged.iter().any(|w| w == "rote"),
+            "'rote' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// The head after an attribute is still the head, and still flagged.
+    #[test]
+    fn head_after_an_extended_attribute_is_flagged() {
+        let flagged = flagged("Die junge in Berlin geborene Ärztin behandelt die wunde.");
+
+        assert!(
+            flagged.iter().any(|w| w == "wunde"),
+            "'wunde' is a head and must be flagged; flagged: {flagged:?}"
+        );
+        assert!(
+            !flagged.iter().any(|w| w == "junge"),
+            "'junge' is attributive; flagged: {flagged:?}"
+        );
+    }
+
+    /// A lower-case head leaves the attribute unrecognised — and that is the
+    /// safe direction: the error is reported rather than explained away.
+    #[test]
+    fn a_lowercase_head_after_an_attribute_is_still_reported() {
+        let flagged = flagged("Der hohe in der Stadt stehende turm ist alt.");
+
+        assert!(
+            flagged.iter().any(|w| w == "turm"),
+            "'turm' is a lower-case head and must be flagged; flagged: {flagged:?}"
+        );
+    }
+
+    /// The difference that makes the walk safe: after a **noun** the
+    /// prepositional phrase is a postmodifier and the phrase is finished.
+    #[test]
+    fn a_postmodifier_is_not_an_extended_attribute() {
+        let flagged = flagged("Er sah die blume in dem großen Garten.");
+
+        assert!(
+            flagged.iter().any(|w| w == "blume"),
+            "'blume' is the head of its phrase; flagged: {flagged:?}"
+        );
+    }
+
+    /// Same with a proper name behind the preposition.
+    #[test]
+    fn a_postmodifier_naming_a_place_is_not_an_attribute() {
+        let flagged = flagged("Er sah die blume in Berlin.");
+
+        assert!(
+            flagged.iter().any(|w| w == "blume"),
+            "'blume' is the head of its phrase; flagged: {flagged:?}"
+        );
+    }
+
+    /// A contracted preposition ends the phrase as it always did.
+    #[test]
+    fn a_contraction_still_ends_the_phrase() {
+        let flagged = flagged("Die zeit im Büro war lang.");
+
+        assert!(
+            flagged.iter().any(|w| w == "zeit"),
+            "'zeit' is the head of its phrase; flagged: {flagged:?}"
+        );
+    }
+
+    /// Two postmodified phrases in one sentence, both heads reported.
+    #[test]
+    fn two_postmodified_phrases_keep_both_heads() {
+        let flagged = flagged("Er kaufte die blume in Berlin und die vase in Rom.");
+
+        for head in ["blume", "vase"] {
+            assert!(
+                flagged.iter().any(|w| w == head),
+                "{head:?} is a head and must be flagged; flagged: {flagged:?}"
+            );
+        }
+    }
+
+    /// An ordinary adjective chain is untouched by any of this.
+    #[test]
+    fn a_plain_adjective_chain_is_unchanged() {
+        let flagged = flagged("Er kannte die schöne alte stadt.");
+
+        assert!(
+            flagged.iter().any(|w| w == "stadt"),
+            "'stadt' is the head; flagged: {flagged:?}"
+        );
+        for modifier in ["schöne", "alte"] {
+            assert!(
+                !flagged.iter().any(|w| w == modifier),
+                "{modifier:?} is attributive; flagged: {flagged:?}"
+            );
+        }
+    }
+
+    /// The search for the attribute's close stops at the end of the sentence.
+    #[test]
+    fn the_attribute_search_stops_at_the_sentence_end() {
+        let flagged = flagged("Er kannte die alte stadt. In Berlin gebaute Hallen sind selten.");
+
+        assert!(
+            flagged.iter().any(|w| w == "stadt"),
+            "'stadt' is the head of the first sentence; flagged: {flagged:?}"
+        );
+    }
 }

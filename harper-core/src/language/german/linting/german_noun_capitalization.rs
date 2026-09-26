@@ -747,6 +747,22 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                     continue;
                 }
 
+                // German hangs a whole phrase in front of the adjective it
+                // modifies — the *erweitertes Attribut*: "die **in
+                // Mitteleuropa** heimische Pflanzenart", "die ganze **nach
+                // links hinten** verlagerte Last". Its preposition looks like
+                // the end of the noun phrase and is the middle of it.
+                let opens_extended_attribute = end > i + 1
+                    && tokens[end].kind.is_preposition()
+                    && tokens[end - 1].kind.is_adjective();
+                if let Some(resumes_at) = opens_extended_attribute
+                    .then(|| Self::extended_attribute_before_head(tokens, end, document))
+                    .flatten()
+                {
+                    end = resumes_at;
+                    continue;
+                }
+
                 if !Self::continues_noun_phrase(tokens[end], document) {
                     break;
                 }
@@ -896,6 +912,67 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         chars.len() == 1 && matches!(chars[0], '„' | '“' | '»' | '«' | '‚' | '‘' | '›' | '‹')
     }
 
+    /// How far an extended attribute reaches, when the preposition at `index`
+    /// opens one.
+    ///
+    /// German lets an attribute grow a phrase of its own in front of the
+    /// adjective: *die **in Mitteleuropa** heimische Pflanzenart*, *die ganze
+    /// **nach links hinten** verlagerte Last*, *die medizinische und **in der
+    /// Regel** laienhafte Beurteilung*. Stopping at the preposition crowns the
+    /// adjective in front of it and reports *einzige*, *ganze*, *medizinische*
+    /// as nouns that lost their capital.
+    ///
+    /// Returning the index of the adjective the attribute ends on rather than a
+    /// bare yes keeps the head where it belongs: skipping one token at a time
+    /// would stop at the capitalized *Mitteleuropa* inside the attribute and
+    /// make that the head.
+    ///
+    /// **Two things keep this safe**, and both are needed. The word in front of
+    /// the preposition has to be an adjective, because that is the whole
+    /// difference between an attribute and a postmodifier: *die einzige **in
+    /// Mitteleuropa** heimische Pflanzenart* carries on to its head, *die Blume
+    /// **in dem großen Garten*** is finished, and the two are the same shape
+    /// from here on. And the attribute has to close the way an attribute must —
+    /// a lower-case adjective with a capitalized word directly behind it.
+    /// Without either of them the phrase ends at the preposition, as before.
+    fn extended_attribute_before_head(
+        tokens: &[&Token],
+        index: usize,
+        document: &Document,
+    ) -> Option<usize> {
+        /// How far past the preposition the closing adjective may sit.
+        const REACH: usize = 8;
+
+        let capitalized = |token: &Token| {
+            matches!(token.kind, TokenKind::Word(_))
+                && document
+                    .get_span_content(&token.span)
+                    .first()
+                    .is_some_and(|c| c.is_uppercase())
+        };
+
+        for at in index + 1..(index + 1 + REACH).min(tokens.len().saturating_sub(1)) {
+            // A clause boundary is the end of the attribute and of the search.
+            if matches!(
+                tokens[at].kind,
+                TokenKind::Punctuation(
+                    Punctuation::Period | Punctuation::Semicolon | Punctuation::Colon
+                )
+            ) {
+                return None;
+            }
+
+            if !capitalized(tokens[at])
+                && Self::continues_noun_phrase(tokens[at], document)
+                && capitalized(tokens[at + 1])
+            {
+                return Some(at);
+            }
+        }
+
+        None
+    }
+
     /// Does the phrase pick up again after the joiner or degree word at `index`?
     ///
     /// Several of them may stack — "eine große, aber **noch** **recht** junge
@@ -921,6 +998,18 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             }
 
             if Self::continues_noun_phrase(tokens[next], document) {
+                return true;
+            }
+
+            // The joiner may be followed by an extended attribute rather than
+            // by the adjective itself: *die medizinische und **in der Regel**
+            // laienhafte Beurteilung*. The preposition is the start of one, not
+            // the end of the phrase, whenever the attribute closes on an
+            // adjective in front of the head.
+            if tokens[next].kind.is_preposition()
+                && tokens[index - 1].kind.is_adjective()
+                && Self::extended_attribute_before_head(tokens, next, document).is_some()
+            {
                 return true;
             }
 

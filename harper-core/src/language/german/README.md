@@ -1216,6 +1216,80 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## The attribute that grows a phrase of its own
+
+`GermanNounCapitalization` finds the head of a noun phrase by walking right from
+the determiner over the attributive adjectives. A preposition ends that walk,
+because a preposition really does end most noun phrases — *die Blume in dem
+großen Garten* is finished at *Blume*.
+
+German has one construction where it does not. The *erweitertes Attribut* hangs
+a phrase in front of the adjective that modifies the head:
+
+> die einzige **in Mitteleuropa** heimische Pflanzenart
+> die ganze **nach links hinten** verlagerte Last
+> eine weitere **von First Star Software** lizenzierte Spielausgabe
+
+Stopping at the preposition crowns *einzige*, *ganze*, *weitere* and reports an
+ordinary attributive adjective as a noun that lost its capital. Academic prose
+is full of these, and they were the largest single class of capitalization false
+positives with a describable cause.
+
+Two conditions let the walk through, and both are needed, because an attribute
+and a postmodifier look identical from the preposition onwards:
+
+* the word in front of the preposition is an **adjective**. That is the whole
+  difference: *die einzige in …* carries on to its head, *die Blume in …* does
+  not.
+* the attribute **closes the way an attribute must** — a lower-case adjective
+  with a capitalized word directly behind it, within eight tokens and inside the
+  sentence. The walk then resumes at that adjective rather than a token at a
+  time, so the capitalized word *inside* the attribute (*Mitteleuropa*) does not
+  become the head.
+
+A lower-case head leaves the attribute unrecognised, because the second
+condition cannot be met. That is the safe direction: *der hohe in der Stadt
+stehende turm* still reports `turm`.
+
+### Measuring a change to the chunker
+
+Both directions have to be measured, and this change is a good illustration of
+why: the reports it removes and the injected errors it stops catching came out
+at the same count. They are not worth the same — the removals are on edited
+prose a user would actually write, the losses are on synthetic injections — but
+a change that only reports one of the two numbers is not measured.
+
+```bash
+cargo build --release --bin harper-cli --features de
+# precision: every report on clean prose is a false positive
+./target/release/harper-cli lint --dialect de --only GermanNounCapitalization \
+    --format compact .archive/german-language/corpus-prose/*.md | wc -l
+# recall: lower-case nouns injected into the same prose
+just language-recall german .archive/german-language/corpus-prose
+```
+
+Read the reports the change removes before believing the first number. The
+classes behind the remainder, counted on the same corpus: four in five sit
+inside an ordinary German sentence, and the rest inside quoted English or a
+bibliography, which `german_foreign_stretch` is for. Within the German ones the
+recurring shapes are a finite verb whose entry is noun-only (*Dies würde*, *…
+des Gehirns eintritt*), a preposition that is also a noun (*kraft*, *mangels*,
+*samt*), and an indefinite pronoun German writes lower case (*die andere*, *eine
+weitere*).
+
+### Two levers that were measured and left alone
+
+* **Widening `german_foreign_stretch`.** Only a small share of the remaining
+  reports have even one foreign function word within five tokens, so the lever
+  is close to exhausted; letting unknown words stand in for the second function
+  word barely moves it, because the compound splitter makes English words known.
+* **Giving declined adjectives their adjective reading in bulk.** `hunspell -m`
+  names the rule it used, so every form igerman98 builds with `SFX A` can be
+  found and the reading appended — around eleven thousand entries, and the
+  sample reads perfectly. It removes very few reports, because the words that
+  actually recur already have the reading, and it costs several times that many
+  injected detections. The gap is real; closing it this way is not worth it.
+
 ## Development Guide
 
 ### Adding New Words
