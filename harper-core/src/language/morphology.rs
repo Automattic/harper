@@ -39,6 +39,14 @@ pub enum Gender {
     Neuter,
 }
 
+/// Grammatical person, for the agreement between a subject and its verb.
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Person {
+    First,
+    Second,
+    Third,
+}
+
 /// Verb mood.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
 pub enum Mood {
@@ -76,6 +84,19 @@ bitflags::bitflags! {
     pub struct NumberSet: u8 {
         const SINGULAR = 1 << 0;
         const PLURAL   = 1 << 1;
+    }
+
+    /// The persons a form can be read as. See [`CaseSet`].
+    ///
+    /// German needs the set as badly here as anywhere: the present `-t` ending
+    /// is third person singular and second person plural at once (*er lernt*,
+    /// *ihr lernt*), and `-en` is first person plural, third person plural and
+    /// the infinitive.
+    #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, PartialOrd, Serialize, Deserialize, Default)]
+    pub struct PersonSet: u8 {
+        const FIRST  = 1 << 0;
+        const SECOND = 1 << 1;
+        const THIRD  = 1 << 2;
     }
 }
 
@@ -176,6 +197,11 @@ feature_set!(NumberSet, Number, de_number_set,
     Singular => SINGULAR,
     Plural => PLURAL,
 );
+feature_set!(PersonSet, Person, de_person_set,
+    First => FIRST,
+    Second => SECOND,
+    Third => THIRD,
+);
 
 /// The case/gender/number features carried by one part of speech.
 ///
@@ -207,6 +233,14 @@ pub struct Agreement {
         skip_serializing_if = "NumberSet::is_empty"
     )]
     pub number: NumberSet,
+    /// Only a verb and a subject carry this; every other part of speech leaves
+    /// it empty, which the agreement helpers read as "says nothing".
+    #[serde(
+        default,
+        deserialize_with = "de_person_set",
+        skip_serializing_if = "PersonSet::is_empty"
+    )]
+    pub person: PersonSet,
 }
 
 impl Agreement {
@@ -222,6 +256,7 @@ impl Agreement {
             case: self.case | other.case,
             gender: self.gender | other.gender,
             number: self.number | other.number,
+            person: self.person | other.person,
         }
     }
 
@@ -230,6 +265,7 @@ impl Agreement {
         self.case.agrees_with(other.case)
             && self.gender.agrees_with(other.gender)
             && self.number.agrees_with(other.number)
+            && self.person.agrees_with(other.person)
     }
 
     /// The features both readings allow, per axis.
@@ -243,12 +279,16 @@ impl Agreement {
             case: self.case & other.case,
             gender: self.gender & other.gender,
             number: self.number & other.number,
+            person: self.person & other.person,
         }
     }
 
     /// Nothing is known about any axis.
     pub fn is_unknown(&self) -> bool {
-        self.case.is_empty() && self.gender.is_empty() && self.number.is_empty()
+        self.case.is_empty()
+            && self.gender.is_empty()
+            && self.number.is_empty()
+            && self.person.is_empty()
     }
 }
 
@@ -267,6 +307,11 @@ pub struct Morphology {
     pub pronoun: Option<Agreement>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub determiner: Option<Agreement>,
+    /// A finite verb's person and number. The conjugation affixes each build
+    /// exactly one combination, so this comes off the affix rather than the
+    /// entry — see `german/annotations.json`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub verb: Option<Agreement>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub mood: Option<Mood>,
     /// A word of foreign origin that appears lower case in running text
@@ -295,6 +340,7 @@ impl Morphology {
             noun: or_agreement(self.noun, other.noun),
             pronoun: or_agreement(self.pronoun, other.pronoun),
             determiner: or_agreement(self.determiner, other.determiner),
+            verb: or_agreement(self.verb, other.verb),
             mood: self.mood.or(other.mood),
             is_foreign: self.is_foreign.or(other.is_foreign),
         }
@@ -459,6 +505,7 @@ mod tests {
             case: CaseSet::all(),
             gender: Gender::Feminine.into(),
             number: Number::Singular.into(),
+            ..Agreement::default()
         };
 
         assert!(frau.case.contains(CaseSet::DATIVE));
@@ -627,5 +674,83 @@ mod tests {
 
         none_side.merge(&some_side);
         assert_eq!(none_side.get_noun_gender(), Some(Gender::Feminine));
+    }
+
+    /// The German present `-t` ending is third person singular and second
+    /// person plural at once, which is the reason this axis is a set.
+    #[test]
+    fn one_ending_can_hold_two_persons() {
+        let lernt = Agreement {
+            number: NumberSet::SINGULAR | NumberSet::PLURAL,
+            person: PersonSet::SECOND | PersonSet::THIRD,
+            ..Agreement::default()
+        };
+
+        assert_eq!(lernt.person.unique(), None);
+        assert!(lernt.person.contains(PersonSet::THIRD));
+        assert!(!lernt.person.contains(PersonSet::FIRST));
+    }
+
+    /// A subject and a verb agree when their persons intersect.
+    #[test]
+    fn a_subject_and_a_verb_have_to_share_a_person() {
+        let du = Agreement {
+            number: Number::Singular.into(),
+            person: Person::Second.into(),
+            ..Agreement::default()
+        };
+        let lernst = Agreement {
+            number: Number::Singular.into(),
+            person: Person::Second.into(),
+            ..Agreement::default()
+        };
+        let lernt = Agreement {
+            number: NumberSet::SINGULAR | NumberSet::PLURAL,
+            person: PersonSet::SECOND | PersonSet::THIRD,
+            ..Agreement::default()
+        };
+        let lerne = Agreement {
+            number: Number::Singular.into(),
+            person: Person::First.into(),
+            ..Agreement::default()
+        };
+
+        assert!(du.agrees_with(&lernst));
+        assert!(
+            du.agrees_with(&lernt),
+            "*du lernt* is wrong but not by person"
+        );
+        assert!(!du.agrees_with(&lerne), "*du lerne* shares no person");
+    }
+
+    /// An empty person set says nothing, so it agrees with everything. Every
+    /// noun, determiner and adjective in the dictionary is in that state.
+    #[test]
+    fn an_unknown_person_constrains_nothing() {
+        let silent = Agreement::default();
+        let ich = Agreement {
+            person: Person::First.into(),
+            ..Agreement::default()
+        };
+
+        assert!(silent.agrees_with(&ich));
+        assert!(ich.agrees_with(&silent));
+        assert!(silent.is_unknown());
+    }
+
+    /// Intersecting does not treat the unknown side as permissive, so chaining
+    /// it across a phrase narrows rather than widens.
+    #[test]
+    fn intersecting_persons_narrows() {
+        let both = Agreement {
+            person: PersonSet::SECOND | PersonSet::THIRD,
+            ..Agreement::default()
+        };
+        let third = Agreement {
+            person: Person::Third.into(),
+            ..Agreement::default()
+        };
+
+        assert_eq!(both.intersect(&third).person, PersonSet::THIRD);
     }
 }

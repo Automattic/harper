@@ -16,7 +16,9 @@
 use hashbrown::HashMap;
 use std::sync::LazyLock;
 
-use crate::language::morphology::{Agreement, Case, CaseSet, Gender, GenderSet, Number, NumberSet};
+use crate::language::morphology::{
+    Agreement, Case, CaseSet, Gender, GenderSet, Number, NumberSet, PersonSet,
+};
 
 /// One fully specified reading of a determiner form.
 ///
@@ -50,6 +52,10 @@ impl DeterminerReading {
             case: self.case.into(),
             gender: self.gender.map(GenderSet::from).unwrap_or(GenderSet::all()),
             number: self.number().into(),
+            // A determiner has no person of its own; the noun phrase it heads
+            // is third person, and the verb rule reads that from the phrase
+            // rather than from here.
+            person: PersonSet::empty(),
         }
     }
 }
