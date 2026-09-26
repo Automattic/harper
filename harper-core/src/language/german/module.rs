@@ -48,7 +48,9 @@ impl LanguageModule for GermanModule {
             german_noun_capitalization::GermanNounCapitalization,
             german_preposition_case::GermanPrepositionCase,
             german_sentence_capitalization::GermanSentenceCapitalization,
-            german_spell_check::GermanSpellCheck, german_subordinate_comma::GermanSubordinateComma,
+            german_spell_check::GermanSpellCheck,
+            german_subject_verb_agreement::GermanSubjectVerbAgreement,
+            german_subordinate_comma::GermanSubordinateComma,
             german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
         };
 
@@ -64,6 +66,10 @@ impl LanguageModule for GermanModule {
         group.add(
             "GermanSentenceCapitalization",
             GermanSentenceCapitalization::new(dictionary.clone()),
+        );
+        group.add(
+            "GermanSubjectVerbAgreement",
+            GermanSubjectVerbAgreement::new(dictionary.clone()),
         );
         group.add("GermanFillerWords", GermanFillerWords::default());
         group.add("GermanWiderWieder", GermanWiderWieder);

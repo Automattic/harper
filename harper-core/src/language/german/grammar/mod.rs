@@ -10,3 +10,4 @@
 
 pub mod determiners;
 pub mod prepositions;
+pub mod subjects;

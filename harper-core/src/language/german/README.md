@@ -1216,6 +1216,67 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## Subject–verb agreement, and why it needed no new data
+
+The one agreement class German can decide without gender. The features were
+already in the dictionary in the sense that matters: conjugation is **one affix
+per ending**, and each ending names its person and number. The six flags simply
+carried no morphology, so `annotations.json` was the whole data change.
+
+    f  -e    1st singular, and 1st/3rd in Konjunktiv I
+    G  -st   2nd singular
+    i  -t    3rd singular and 2nd plural
+    j  -en   1st and 3rd plural
+    d  -te   1st and 3rd singular preterite
+    e  -ten  1st and 3rd plural preterite
+
+`s`, the strong preterite endings, stays empty: one flag builds `-st`, `-t`,
+`-est` and `-et`, an affix rule has no metadata slot per replacement, and the
+union of its persons says nothing.
+
+The **subjects** and the **auxiliaries** are in `grammar/subjects.rs`, beside
+the determiner and preposition tables and for the same reason. Personal
+pronouns are a closed class of six forms. *sein*, *haben*, *werden*, the six
+modals and *wissen* are irregular enough that the dictionary stores each form as
+its own word, which means no affix and so no person — and they are the most
+frequent verbs in the language.
+
+### Four guards, each of which the corpus demanded
+
+The first version reported **863 times** on 19 MB of edited prose. Every one was
+a false positive and they came in four kinds. The rule reports none now.
+
+* **Only the front field.** The pronoun has to open its clause — sentence start,
+  or directly behind a comma or a coordinator. German is verb-second, so that is
+  the one position where the finite verb is guaranteed to be the next word. In
+  *das er vergessen hat* and *weil er gehen muss* the word behind the pronoun is
+  a participle or an infinitive and the finite verb is at the end. This guard
+  alone removed 846 of the 863.
+* **No `es`.** German puts it in the front field as a placeholder while the real
+  subject follows the verb: *Es werden fünf Klassen gebildet*, *Es existieren
+  zahlreiche Ansätze*. Two hundred reports were this one word.
+* **No adverb.** The `-st` affix is applied to adjective and pronoun roots too,
+  so `selbst` and `möglichst` arrive carrying a second person singular. Sixteen
+  of the last seventeen reports were that ending.
+* **No capital.** A finite verb is never capitalized mid-sentence; what a
+  capital marks behind a pronoun is an apposition — *wir Arbeiter*, *wir
+  Deutsche*.
+
+`ihr` is out of the pronoun table as well: it is a possessive and a dative far
+more often than it is a subject.
+
+### What it cannot see
+
+*Du lernt* goes unreported. The `-t` ending is third singular and second plural,
+the two axes are independent, and so the pair also admits second person
+singular. Expressing that would need the list of fully specified readings the
+determiner table uses; the ending is not worth one.
+
+A noun-phrase subject — *Die Kinder spielt im Garten* — is not checked yet. The
+number is available (the determiner table has it, and 28 000 noun entries gained
+one), but the front-field test is not enough on its own: *Die Kinder sehe ich
+jeden Tag* is an inversion where the noun phrase is the object.
+
 ## das / dass, and why only one direction of it
 
 The most taught mistake in German writing, and the one where the two words are
