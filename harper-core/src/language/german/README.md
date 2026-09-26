@@ -1265,17 +1265,37 @@ a false positive and they came in four kinds. The rule reports none now.
 `ihr` is out of the pronoun table as well: it is a possessive and a dative far
 more often than it is a subject.
 
+### The readings have to be joint
+
+`Agreement` keeps person and number as two independent sets, and for the `-t`
+ending that is not enough: it is third singular *or* second plural, and two
+independent axes also admit third plural, which is exactly the reading *die
+Kinder spielt* needs ruled out. The rule therefore turns the ending back into a
+list of person/number pairs, the same shape the determiner table uses.
+
+The dictionary says *whether* a word is a finite form and roughly which features
+it has; the ending says how they pair up. Nothing else can — an affix rule
+carries one metadata block for all its replacements, so the joint information
+cannot survive the trip through `annotations.json`.
+
+One ending is wider than it looks. A verb whose stem ends in a sibilant spells
+the second and third person alike — *du weist* and *er weist*, *du misst* and
+*er misst*, *du liest* and *er liest* — and nothing on the surface separates
+`weis` + `t` from `lern` + `st`. `-st` therefore keeps both persons. *Er lernst*
+goes unreported for it, and twenty-five reports on `weist`, `verweist`, `misst`
+and `fasst` go away.
+
 ### What it cannot see
 
-*Du lernt* goes unreported. The `-t` ending is third singular and second plural,
-the two axes are independent, and so the pair also admits second person
-singular. Expressing that would need the list of fully specified readings the
-determiner table uses; the ending is not worth one.
-
-A noun-phrase subject — *Die Kinder spielt im Garten* — is not checked yet. The
-number is available (the determiner table has it, and 28 000 noun entries gained
-one), but the front-field test is not enough on its own: *Die Kinder sehe ich
-jeden Tag* is an inversion where the noun phrase is the object.
+A noun-phrase subject — *die Kinder spielt im Garten*. The number is available
+(the determiner table has it, and 28 000 noun entries gained one), and the
+attempt is worth recording: it reported **1229 times** on the same prose. The
+front field is not the problem; finding the verb is. The word behind the head is
+not reliably it — *die Gesellschaft bürgerlichen Rechts* and *die Arten hohler
+Stängel* put an adjective there — and a relative clause behind a comma
+(*…, welches Sittenwidrigkeit impliziert*) passes the front-field test while
+being verb-final. It needs the noun-phrase chunker the capitalization rule has,
+not another guard.
 
 ## das / dass, and why only one direction of it
 

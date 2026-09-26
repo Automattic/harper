@@ -35,7 +35,7 @@ pub struct Features {
 }
 
 impl Features {
-    const fn new(person: PersonSet, number: NumberSet) -> Self {
+    pub const fn new(person: PersonSet, number: NumberSet) -> Self {
         Self { person, number }
     }
 

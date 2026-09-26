@@ -5,7 +5,7 @@ use std::sync::Arc;
 use crate::language::german::grammar::subjects::{
     Features, irregular_finite_verb, subject_pronoun,
 };
-use crate::language::morphology::MorphologyExt;
+use crate::language::morphology::{MorphologyExt, NumberSet, PersonSet};
 use crate::linting::{Lint, LintKind, Linter};
 use crate::spell::Dictionary;
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
@@ -31,6 +31,15 @@ use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 /// participle or an infinitive and the finite verb is at the end of the clause.
 /// Checking those pairs reported eight hundred times on edited prose and was
 /// wrong every time.
+///
+/// A **noun-phrase subject** — *die Kinder spielt* — is not checked, and the
+/// attempt is worth recording. Finding the head is easy enough, but the word
+/// behind it is not reliably the verb: *die Gesellschaft bürgerlichen Rechts*
+/// and *die Arten hohler Stängel* put an adjective there, and a relative clause
+/// behind a comma (*…, welches Sittenwidrigkeit impliziert*) passes the
+/// front-field test while being verb-final. That version reported 1229 times on
+/// the same prose. It needs the noun-phrase chunker the capitalization rule
+/// has, not another guard.
 pub struct GermanSubjectVerbAgreement<T>
 where
     T: Dictionary,
@@ -43,15 +52,25 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         Self { dictionary }
     }
 
-    /// The person and number of a finite verb form, if it has any.
+    /// The readings of a finite verb form, as *joint* person/number pairs.
+    ///
+    /// A list rather than two sets, and the reason is the `-t` ending: it is
+    /// third person singular and second person plural, and independent axes
+    /// would also admit third person plural, which is exactly the reading *die
+    /// Kinder spielt* needs ruled out. The determiner table next door keeps its
+    /// readings joint for the same reason.
+    ///
+    /// The dictionary says *whether* the word is a finite form and roughly
+    /// which features it has; the ending says how they pair up. Nothing else
+    /// can: an affix rule carries one metadata block for all its replacements.
     ///
     /// The irregular table wins over the dictionary: *ist*, *hat* and *sind*
     /// exist as entries of their own and carry generic verb flags, some of
     /// which are also affixes and would hand back a reading built for a
     /// different word.
-    fn verb_features(&self, word: &str, token: &Token) -> Option<Features> {
+    fn verb_features(&self, word: &str, token: &Token) -> Vec<Features> {
         if let Some(features) = irregular_finite_verb(word) {
-            return Some(features);
+            return vec![features];
         }
 
         // The affix-built forms. What identifies them is the person and number
@@ -66,7 +85,7 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // `-st` affix turns `selb` into `selbst`. A determiner, a pronoun or an
         // adverb is not the finite verb of the clause.
         if token.kind.is_determiner() || token.kind.is_pronoun() {
-            return None;
+            return Vec::new();
         }
 
         // A finite verb is never capitalized mid-sentence, and the pronoun in
@@ -74,11 +93,13 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // marks here is an apposition — *wir Arbeiter*, *wir Deutsche* — whose
         // head is a noun that happens to carry a conjugation affix.
         if word.chars().next().is_some_and(char::is_uppercase) {
-            return None;
+            return Vec::new();
         }
 
         let chars: Vec<char> = word.chars().collect();
-        let metadata = self.dictionary.get_word_metadata(&chars)?;
+        let Some(metadata) = self.dictionary.get_word_metadata(&chars) else {
+            return Vec::new();
+        };
 
         // An adverb is not the finite verb, whatever else the entry says. The
         // `-st` affix is applied to adjective and pronoun roots as well as to
@@ -86,14 +107,15 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // person singular; sixteen of the seventeen reports left on the prose
         // corpus were that one ending.
         if metadata.is_adverb() {
-            return None;
+            return Vec::new();
         }
 
         let agreement = metadata.verb_agreement();
-        (!agreement.person.is_empty() && !agreement.number.is_empty()).then_some(Features {
-            person: agreement.person,
-            number: agreement.number,
-        })
+        if agreement.person.is_empty() || agreement.number.is_empty() {
+            return Vec::new();
+        }
+
+        readings_of_ending(word)
     }
 
     /// Does the token at `index` stand in the front field of its clause?
@@ -173,11 +195,8 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
 
                 let verb_text: String =
                     document.get_span_content(&verb_token.span).iter().collect();
-                let Some(verb) = self.verb_features(&verb_text, verb_token) else {
-                    continue;
-                };
-
-                if subject.agrees_with(&verb) {
+                let verb = self.verb_features(&verb_text, verb_token);
+                if verb.is_empty() || verb.iter().any(|reading| subject.agrees_with(reading)) {
                     continue;
                 }
 
@@ -199,6 +218,44 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
 
     fn description(&self) -> &str {
         "Prüft, ob das Verb in Person und Numerus zum Subjekt passt."
+    }
+}
+
+/// How a conjugation ending pairs person with number.
+///
+/// The endings are checked longest first, because `-ten` is an `-en` and `-st`
+/// is not a `-t`. Every pair here is a reading the ending genuinely has; the
+/// caller has already established from the affix metadata that the word is a
+/// finite form at all, which is what keeps a noun ending in `-t` out.
+fn readings_of_ending(word: &str) -> Vec<Features> {
+    let first_singular = Features::new(PersonSet::FIRST, NumberSet::SINGULAR);
+    let third_singular = Features::new(PersonSet::THIRD, NumberSet::SINGULAR);
+    let second_singular = Features::new(PersonSet::SECOND, NumberSet::SINGULAR);
+    let first_plural = Features::new(PersonSet::FIRST, NumberSet::PLURAL);
+    let second_plural = Features::new(PersonSet::SECOND, NumberSet::PLURAL);
+    let third_plural = Features::new(PersonSet::THIRD, NumberSet::PLURAL);
+
+    if word.ends_with("st") {
+        // du lernst, du arbeitest — and the third person as well, because a
+        // verb whose stem ends in a sibilant spells both the same way: *du
+        // weist* and *er weist*, *du misst* and *er misst*, *du liest* and *er
+        // liest*. Nothing on the surface separates `weis` + `t` from `lern` +
+        // `st`, so the third person stays in. The cost is that *er lernst* goes
+        // unreported; the gain is the twenty-five reports that `weist`,
+        // `verweist`, `misst`, `fasst` and `liest` produced on edited prose.
+        vec![second_singular, third_singular]
+    } else if word.ends_with("en") {
+        // wir/sie lernen, wir/sie lernten — and the infinitive, which has no
+        // person at all and is why only the front field is checked.
+        vec![first_plural, third_plural]
+    } else if word.ends_with('t') {
+        // er lernt, ihr lernt
+        vec![third_singular, second_plural]
+    } else if word.ends_with('e') {
+        // ich lerne, er lerne (Konjunktiv I), ich/er lernte
+        vec![first_singular, third_singular]
+    } else {
+        Vec::new()
     }
 }
 
@@ -375,14 +432,31 @@ mod tests {
         assert_eq!(lint_count("Ich lernte Deutsch."), 0);
     }
 
-    /// The documented miss: the two axes are independent, so the `-t` ending's
-    /// pair of readings also admits a second person singular.
+    /// The readings are joint pairs, not two independent sets, so the `-t`
+    /// ending's two readings exclude the second person singular between them.
     #[test]
-    fn du_plus_the_t_ending_is_a_known_miss() {
+    fn the_endings_readings_are_joint() {
+        assert_eq!(lint_count("Du lernt Deutsch."), 1, "-t is 3rd sg or 2nd pl");
+        assert_eq!(lint_count("Ihr lernt Deutsch."), 0);
+        assert_eq!(lint_count("Er lernt Deutsch."), 0);
+    }
+
+    /// A stem ending in a sibilant spells the second and third person alike,
+    /// and nothing on the surface separates `weis` + `t` from `lern` + `st`.
+    #[test]
+    fn a_sibilant_stem_keeps_both_persons() {
+        for text in [
+            "Er weist darauf hin.",
+            "Sie misst die Strecke.",
+            "Er liest ein Buch.",
+            "Du liest ein Buch.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
+        }
         assert_eq!(
-            lint_count("Du lernt Deutsch."),
-            0,
-            "known miss: -t is 3rd singular and 2nd plural, and the axes cannot              say that 2nd singular is excluded"
+            lint_count("Wir lernst Deutsch."),
+            1,
+            "the number still separates them"
         );
     }
 
