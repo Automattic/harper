@@ -1216,6 +1216,77 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## das / dass, and why only one direction of it
+
+The most taught mistake in German writing, and the one where the two words are
+structurally identical. `das` is an article, a demonstrative and a relative
+pronoun; `dass` is a conjunction. Both are followed by a subject with the finite
+verb at the end of the clause, so what follows can never settle it on its own.
+
+`DasDass.weir` asks two questions at once:
+
+* **What stands in front of the comma?** A verb of saying or thinking, a
+  predicate adjective, or one of a short list of abstract nouns opens a content
+  clause, which takes `dass`. A concrete noun opens a relative clause, which
+  takes `das` — *das Buch, das er gelesen hat* stays as it is, because *Buch* is
+  in none of the lists.
+* **What follows?** Only a personal pronoun counts. A finite verb there (*ich
+  glaube, das ist richtig*) or a capitalized noun (*ich glaube, das Buch ist
+  gut*) means the demonstrative or the article, and both are left alone.
+
+**Infinitives, participles and plural finite forms are not triggers**, and
+leaving them in is what the first draft got wrong. German puts the verb last in
+a subordinate clause, so *um das Erscheinungsbild zu verstehen, das sich …*,
+*haben das Heil gesehen, das du …* and *auf ein Brötchen zeigt, das er kaufen
+möchte* all put a verb of perceiving directly in front of a comma with a
+relative clause behind it. That draft reported twelve times on the prose corpus
+and was wrong every time. Only the singular finite forms, which stand in second
+position, are safe. The price is that *ich habe gehört, dass …* goes unreported.
+
+The reverse direction — `dass` written for the relative pronoun, *das Buch, dass
+ich gelesen habe* — needs the antecedent's gender, because only a neuter noun
+takes `das`. It is deliberately absent.
+
+### Comma before `dass`
+
+`dass` now sits in `GermanSubordinateComma`'s `SUBORDINATORS`, where it belongs:
+it is the one conjunction in German with no second reading at all. Two things
+had to come with it.
+
+`DASS_MODIFIERS` holds the words that fuse with it into a two-part conjunction —
+*ohne dass*, *statt dass*, *so dass*, *als dass*, *kaum dass*. The comma goes in
+front of the pair; suggesting one after the first half produces *"ging ohne,
+dass"*, which is wrong.
+
+`is_bare_mention` covers the conjunction being named rather than used, which a
+grammar article does constantly: *Subjunktionen sind vor allem dass und ob*,
+*Inhaltssätze mit dass oder ob*. A conjunction in use is followed by the clause
+it opens, so a coordinator or a bracket behind it means the word is one item in
+a list of words. A second conjunction in front of it says the same — *wogegen
+dass vor allem Aussagen markiert* has two in a row, which no German clause does.
+The guard is not specific to `dass`: it also removed five standing false
+positives on *weil* and *solange*. It costs six of the 515 injected missing
+commas in `just language-recall german` — a comma directly behind the
+conjunction reads as a list of words to it, and *weil, wie er sagte, …* is a
+parenthesis rather than a list. Five wrong reports on edited prose against six
+synthetic ones is close, and the narrower version that keeps only brackets and
+coordinators was measured too: it saves the six and lets three of the five
+back in.
+
+### Measuring a new rule of this kind
+
+```bash
+./target/release/harper-cli test <path to the .weir file>     # its own tests
+cargo build --release --bin harper-cli --features de
+./target/release/harper-cli lint --dialect de --only DasDass \
+    --format compact .archive/german-language/corpus-prose/*.md
+```
+
+The corpus is edited prose, so **every report it produces is a false positive**
+and the target is zero. Read each one before changing anything: all twelve from
+the first draft were the same construction, and the fix was to take three word
+classes out of one list rather than to add a guard.
+
 ## Quoted English is the largest false-positive class
 
 Measured against LanguageTool on the same prose: on a German Wikipedia article

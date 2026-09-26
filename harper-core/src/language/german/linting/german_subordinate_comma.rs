@@ -9,6 +9,11 @@ use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 /// comparison, a pronominal adverb — and telling them apart needs more than the
 /// word itself.
 const SUBORDINATORS: &[&str] = &[
+    // `dass` is the least ambiguous of them all: unlike `das` it is never a
+    // pronoun and never an article, so it opens a subordinate clause every
+    // time it appears. Comma before `dass` is also the most common comma
+    // mistake in written German.
+    "dass",
     "weil",
     "obwohl",
     "obgleich",
@@ -81,6 +86,27 @@ const TEMPORAL_MODIFIERS: &[&str] = &[
 
 /// The conjunctions [`TEMPORAL_MODIFIERS`] may attach to.
 const TEMPORAL_SUBORDINATORS: &[&str] = &["bevor", "nachdem", "sobald", "solange"];
+
+/// Words that fuse with `dass` into a two-part conjunction — *ohne dass*,
+/// *statt dass*, *auf dass*, *als dass*, *kaum dass*, *so dass*.
+///
+/// The comma goes in front of the pair, and the pair is what governs the
+/// clause. Suggesting one after the first half would produce *"ging ohne, dass
+/// jemand es merkte"*, which is wrong; the sentence wants *"ging, ohne dass"*.
+const DASS_MODIFIERS: &[&str] = &[
+    "ohne",
+    "statt",
+    "anstatt",
+    "außer",
+    "auf",
+    "als",
+    "kaum",
+    "so",
+    "angenommen",
+    "vorausgesetzt",
+    "gesetzt",
+    "geschweige",
+];
 
 /// Requires the comma German grammar requires in front of a subordinate clause.
 ///
@@ -178,6 +204,34 @@ impl GermanSubordinateComma {
             .is_some_and(|next| matches!(next.kind, TokenKind::Punctuation(Punctuation::Hyphen)))
     }
 
+    /// Is the conjunction named rather than used, without a hyphen to show it?
+    ///
+    /// A grammar article lists them: *»Subjunktionen sind vor allem dass
+    /// (früher daß geschrieben)«*, *»können dass und ob nur mit finiten
+    /// Nebensätzen«*, *»Inhaltssätze mit dass oder ob«*. A conjunction in use
+    /// is followed by the clause it opens, so what follows settles it — a
+    /// coordinator or a bracket means the word is one item in a list of words,
+    /// not the start of a sentence. A second conjunction in front of it says
+    /// the same: *»wogegen dass vor allem Aussagen markiert«* has two of them
+    /// in a row, which no German clause does.
+    fn is_bare_mention(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const WORD_LIST_JOINERS: &[&str] = &["und", "oder", "bzw", "beziehungsweise", "sowie"];
+        const OTHER_CONJUNCTIONS: &[&str] = &[
+            "ob", "wogegen", "während", "wenn", "wie", "wo", "wobei", "womit", "wodurch",
+        ];
+
+        let next_is_a_joiner = tokens.get(index + 1).is_some_and(|next| {
+            !matches!(next.kind, TokenKind::Word(_))
+                || Self::word_in(next, document, WORD_LIST_JOINERS)
+        });
+        let previous_is_a_conjunction = index.checked_sub(1).is_some_and(|i| {
+            Self::word_in(tokens[i], document, OTHER_CONJUNCTIONS)
+                || Self::word_in(tokens[i], document, SUBORDINATORS)
+        });
+
+        next_is_a_joiner || previous_is_a_conjunction
+    }
+
     fn word_in(token: &Token, document: &Document, set: &[&str]) -> bool {
         let word: String = document
             .get_span_content(&token.span)
@@ -228,7 +282,9 @@ impl Linter for GermanSubordinateComma {
                 }
 
                 // The conjunction as a word, not as a conjunction.
-                if Self::is_hyphenated_mention(&tokens, index) {
+                if Self::is_hyphenated_mention(&tokens, index)
+                    || Self::is_bare_mention(&tokens, index, document)
+                {
                     continue;
                 }
 
@@ -251,6 +307,10 @@ impl Linter for GermanSubordinateComma {
                 if TEMPORAL_SUBORDINATORS.contains(&conjunction.as_str())
                     && Self::word_in(previous, document, TEMPORAL_MODIFIERS)
                 {
+                    continue;
+                }
+
+                if conjunction == "dass" && Self::word_in(previous, document, DASS_MODIFIERS) {
                     continue;
                 }
 
@@ -361,6 +421,82 @@ mod tests {
             "Er untersucht die weil-Konstruktion im Neuhochdeutschen.",
         ] {
             assert_eq!(lint_count(text), 0, "should not fire on {text:?}");
+        }
+    }
+
+    /// `dass` is the most common missing comma in written German.
+    #[test]
+    fn requires_the_comma_before_dass() {
+        for text in [
+            "Ich weiß dass du recht hast.",
+            "Wir hoffen dass alles gut geht.",
+            "Er glaubt dass er alles versteht.",
+            "Sie hat gesagt dass sie kommt.",
+            "Es ist bekannt dass Wasser bei 100 Grad siedet.",
+            "Mit dem Ergebnis dass zunehmend Söldner auftraten.",
+        ] {
+            assert_eq!(lint_count(text), 1, "should fire on {text:?}");
+        }
+    }
+
+    #[test]
+    fn accepts_the_comma_before_dass() {
+        for text in [
+            "Ich weiß, dass du recht hast.",
+            "Wir hoffen, dass alles gut geht.",
+            "Dass er kam, war überraschend.",
+            "Er sagte, und dass ist wichtig, nichts dazu.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
+        }
+    }
+
+    /// The comma goes in front of the pair, not between its halves.
+    #[test]
+    fn a_two_part_conjunction_keeps_its_comma_on_the_left() {
+        for text in [
+            "Er ging ohne dass jemand es merkte.",
+            "Sie half statt dass sie zusah.",
+            "Er lief so dass er rechtzeitig ankam.",
+            "Das ist zu teuer als dass wir es kaufen.",
+            "Kaum dass er saß, klingelte es.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
+        }
+    }
+
+    /// A grammar article names its conjunctions instead of using them.
+    #[test]
+    fn a_named_conjunction_is_not_a_clause() {
+        for text in [
+            "Subjunktionen sind vor allem dass und ob.",
+            "Inhaltssätze mit dass oder ob sind häufig.",
+            "Häufige Konjunktionen sind dabei weil, da und zumal.",
+            "Die Subjunktionen weil und da werden gleich verwendet.",
+            "Hingegen können dass und ob nur mit finiten Nebensätzen stehen.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
+        }
+    }
+
+    /// Two conjunctions in a row is a mention, not a clause.
+    #[test]
+    fn a_conjunction_behind_a_conjunction_is_a_mention() {
+        assert_eq!(
+            lint_count("Es markiert, wogegen dass vor allem Aussagen markiert."),
+            0
+        );
+    }
+
+    /// The additions must not silence what the rule already caught.
+    #[test]
+    fn the_older_conjunctions_still_fire() {
+        for text in [
+            "Er blieb zu Hause weil er krank war.",
+            "Wir gehen los sobald der Regen aufhört.",
+            "Sie ging nach Hause weil es regnete.",
+        ] {
+            assert_eq!(lint_count(text), 1, "should fire on {text:?}");
         }
     }
 }
