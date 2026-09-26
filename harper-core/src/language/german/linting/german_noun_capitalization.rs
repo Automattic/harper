@@ -3,7 +3,7 @@ use crate::{
     document::Document,
     language::german::linting::german_foreign_stretch,
     language::german::spell::lexical_classes::{FOREIGN_TERMS, NUMERALS, UNIT_ABBREVIATIONS},
-    language::morphology::MorphologyExt,
+    language::morphology::{MorphologyExt, NumberSet},
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::Dictionary,
 };
@@ -1171,10 +1171,21 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         }
 
         // Bare "-e": genuine feminine/neuter nouns (Blume, Sonne, Frage) carry
-        // gender or number metadata; 1st-person verb forms and inflected
-        // adjectives do not.
+        // gender, or form a plural and say so; 1st-person verb forms and
+        // inflected adjectives do neither.
+        //
+        // The plural is the half that has to be named explicitly. This asked
+        // for any agreement feature at all until nouns whose plural this
+        // dictionary cannot build started carrying a bare singular, at which
+        // point `file`, `single`, `hardware`, `grace` and `zuhause` all passed
+        // it. A singular on its own says only "this is a noun somewhere", which
+        // was never the question.
         if s.ends_with('e') {
-            let gendered = any(&|m| m.is_noun() && m.has_noun_agreement());
+            let gendered = any(&|m| {
+                m.is_noun()
+                    && (!m.noun_agreement().gender.is_empty()
+                        || m.noun_agreement().number.contains(NumberSet::PLURAL))
+            });
             if !gendered {
                 return false;
             }

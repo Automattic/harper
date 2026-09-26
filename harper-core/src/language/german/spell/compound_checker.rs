@@ -85,6 +85,28 @@ pub(crate) fn is_derivational_suffix(element: &[char]) -> bool {
     S_INTERFIX_SUFFIXES.contains(&spelling.as_str())
 }
 
+/// The adjective-forming suffixes that attach to a noun with no interfix at
+/// all: `Wissenschaft` + `lich`, `Konformation` + `ell`, `Nation` + `al`.
+///
+/// They are the one exception to [`suffixed_element_set`]'s rule that such an
+/// element may only be followed by `-s-`. That rule is about a *compound*
+/// seam; a derivation has no seam, and blocking it reported
+/// `neurowissenschaftliche` and `konformationelle` as misspellings.
+const DERIVATIONAL_ADJECTIVE_SUFFIXES: [&str; 11] = [
+    "lich", "ell", "al", "isch", "iv", "ös", "haft", "bar", "los", "sam", "är",
+];
+
+/// Does `rest` begin a derivation rather than a second compound element?
+///
+/// Only the suffix itself is matched, not its ending, because the derived
+/// adjective is declined: `lich` covers `liche`, `lichen` and `licher` alike.
+fn opens_a_derivation(rest: &[char]) -> bool {
+    let spelling: String = rest.iter().collect::<String>().to_lowercase();
+    DERIVATIONAL_ADJECTIVE_SUFFIXES
+        .iter()
+        .any(|suffix| spelling.starts_with(suffix))
+}
+
 /// Marks an entry as a feminine noun.
 const FEMININE_FLAG: char = 'F';
 
@@ -732,7 +754,7 @@ impl CompoundChecker {
             }
 
             // Try every standard interfix at this boundary.
-            let only_s = self.suffixed_elements.contains(first);
+            let only_s = self.suffixed_elements.contains(first) && !opens_a_derivation(rest);
             for interfix in STANDARD_INTERFIXES {
                 if only_s && interfix != "s" {
                     continue;
@@ -957,7 +979,7 @@ impl CompoundChecker {
                 continue;
             }
 
-            let only_s = self.suffixed_elements.contains(first);
+            let only_s = self.suffixed_elements.contains(first) && !opens_a_derivation(rest);
             for interfix in STANDARD_INTERFIXES {
                 if only_s && interfix != "s" {
                     continue;

@@ -72,6 +72,33 @@ mod tests {
         }
     }
 
+    /// A noun whose plural this dictionary cannot build carries no plural flag,
+    /// and so had no number at all — 28266 entries of them. The `A` flag says
+    /// singular outright.
+    #[test]
+    fn a_noun_with_no_plural_flag_is_still_singular() {
+        for word in ["Arzt", "Chemie", "Kunst", "Altertum", "Gesundheit"] {
+            assert_eq!(number(word), NumberSet::SINGULAR, "{word}");
+        }
+    }
+
+    /// Three classes are held back from it, each because the oracle calls them
+    /// base forms and each because they are not singulars.
+    #[test]
+    fn the_classes_that_are_not_singular_stay_unmarked() {
+        // Spelled alike in both numbers: der Lehrer, die Lehrer.
+        assert!(
+            !number("Bäcker").contains(NumberSet::SINGULAR)
+                || number("Bäcker").contains(NumberSet::PLURAL)
+        );
+        // A plurale tantum.
+        assert_ne!(number("Eltern"), NumberSet::SINGULAR);
+        // A Latin plural. Marking these reported *zu den Korpora* and six more.
+        for word in ["Korpora", "Charakteristika", "Pronomina", "Termini", "Visa"] {
+            assert_ne!(number(word), NumberSet::SINGULAR, "{word}");
+        }
+    }
+
     /// `den` is accusative masculine singular or dative plural. Only the noun
     /// can say which, and it can only say so if its own number is right.
     #[test]

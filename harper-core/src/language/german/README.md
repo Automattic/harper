@@ -414,6 +414,51 @@ ending says which.
 Over the 4000 most frequent nouns of the prose corpus, gender coverage went
 from 28.7 % to 53.7 %.
 
+#### A noun that cannot form its plural had no number at all
+
+A noun gets its number from the plural affix it carries. A noun whose plural
+this dictionary cannot build carries none — `bruder`, `vater`, and 28266
+others — so it said nothing, and *mit den Bruder* passed because the dative
+plural reading of `den` stood unchallenged.
+
+The `A` flag, previously an unused alias of the adjective property `J`, now
+marks a singular noun. The flag namespace is full at 63 of 63, so a new flag has
+to come from a retired one; `o` and `y` are the two still free.
+
+```bash
+harper-core/src/language/german/scripts/mark_german_singular_nouns.py --hunspell <dir>/de_utf [--apply]
+```
+
+The oracle is igerman98 through `hunspell -m`: a word it analyses as `st:<the
+word itself>` with no plural flag is a base form, and a noun's base form is a
+singular. Three classes are held back even so, and the third was found by
+measurement rather than thought:
+
+| held back | because | example |
+|---|---|---|
+| `-er`, `-el`, `-en` | spelled alike in both numbers | *der Lehrer*, *die Lehrer* |
+| pluralia tantum | nothing in the morphology says so, so they are listed | *Eltern*, *Masern*, *Jeans* |
+| `-a`, `-i` | a Latin or Greek plural, which hunspell reads as a base form because that is what it is | *Korpora*, *Charakteristika*, *Termini*, *Visa* |
+
+Skipping the third cost the singulars that end the same way — *Kamera*, *Pizza*,
+*Oma* keep no number — and reporting *zu den Korpora* six times was the
+alternative.
+
+Two other rules were leaning on the old silence and had to be told what they
+actually meant:
+
+- `GermanNounCapitalization` accepted a bare `-e` word as a noun when the entry
+  carried **any** agreement feature. Once a bare singular counted, `file`,
+  `single`, `hardware`, `grace` and `zuhause` all passed. It now asks for gender
+  or a plural, which is the question it was reaching for.
+- `suffixed_element_set` reads the feminine flag to decide that an element takes
+  only the `-s-` interfix. Giving 1641 `-ung`/`-ion`/`-keit` nouns their correct
+  gender therefore made `neurowissenschaftliche` and `konformationelle`
+  misspellings. A derivational suffix is not a compound seam, so an element may
+  now be followed directly by `-lich`, `-ell`, `-al` and the rest of that closed
+  list. `Nationaal` and `Attraktivitätbeurteilungsskala` stay caught, which is
+  the half of the change that was right.
+
 #### A plural flag said the opposite of what it meant
 
 `X`, `Y`, `a`, `b` and `E` are each an affix *and* a property, and the two said

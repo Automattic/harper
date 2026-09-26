@@ -2626,9 +2626,14 @@
 			}
 		},
 		"A": {
-			"#": "adjective property (German) - alias for J",
+			"#": "Singular noun (German). For a noun whose plural this dictionary cannot generate -- Bruder/Brueder, Vater/Vaeter and the rest of the umlaut plurals -- so that it carries no plural flag and would otherwise have no number at all. Without it 'mit den Bruder' is invisible, because the dative plural reading of 'den' survives unchallenged. Not given to a noun whose singular and plural are spelled alike ('-er', '-el', '-en'), nor to a plurale tantum. 'A' previously held an unused alias of the adjective property 'J'; the flag namespace is full, so a new flag has to come from a retired one.",
 			"metadata": {
-				"adjective": {}
+				"noun": {},
+				"morphology": {
+					"noun": {
+						"number": "Singular"
+					}
+				}
 			}
 		},
 		"C": {
