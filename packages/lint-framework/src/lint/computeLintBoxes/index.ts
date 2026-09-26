@@ -1,6 +1,6 @@
 import { type Span, SuggestionKind } from 'harper.js';
 import { domRectToBox, type IgnorableLintBox, isBottomEdgeInBox, shrinkBoxToFit } from '../Box';
-import { getRangeForTextSpan } from '../domUtils';
+import { getRangeForCodeMirrorTextSpan, getRangeForTextSpan } from '../domUtils';
 import {
 	getCkEditorRoot,
 	getCMRoot,
@@ -41,6 +41,8 @@ export default function computeLintBoxes(
 
 		if (isFormEl(el)) {
 			range = new TextFieldRange(el, lint.span.start, lint.span.end);
+		} else if (getCMRoot(el) != null) {
+			range = getRangeForCodeMirrorTextSpan(el, lint.span as Span);
 		} else {
 			range = getRangeForTextSpan(el, lint.span as Span);
 		}
@@ -203,7 +205,10 @@ function selectSpanInEditor(el: HTMLElement, span: { start: number; end: number 
 
 	el.focus();
 
-	const range = getRangeForTextSpan(el, span as Span);
+	const range =
+		getCMRoot(el) != null
+			? getRangeForCodeMirrorTextSpan(el, span as Span)
+			: getRangeForTextSpan(el, span as Span);
 	if (!range) {
 		return null;
 	}

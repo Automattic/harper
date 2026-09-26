@@ -44,26 +44,7 @@ export function isPointInBox(point: [number, number], box: Box) {
 
 /** Check if a box would be visible on the screen if drawn. */
 export function isBoxInScreen(box: Box): boolean {
-	const screen = screenBox();
-
-	// If any corner is in the screen, the box is visible.
-	if (isPointInBox([box.x, box.y], screen)) {
-		return true;
-	}
-
-	if (isPointInBox([box.x + box.width, box.y], screen)) {
-		return true;
-	}
-
-	if (isPointInBox([box.x + box.width, box.y + box.height], screen)) {
-		return true;
-	}
-
-	if (isPointInBox([box.x, box.y + box.height], screen)) {
-		return true;
-	}
-
-	return false;
+	return boxesOverlap(box, screenBox());
 }
 
 export function boxesOverlap(a: Box, b: Box): boolean {

@@ -166,6 +166,8 @@ const defaultEnabledDomains = [
 	'claude.ai',
 	'docs.google.com',
 	'typst.app',
+	'overleaf.com',
+	'www.overleaf.com',
 	'steamcommunity.com',
 	'store.steampowered.com',
 	'steampowered.com',

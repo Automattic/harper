@@ -75,7 +75,7 @@ export interface StructuredLintGroupSetting {
 /**  Options available to configure Harper's parser for an individual linting operation. */
 export interface LintOptions {
 	/** The markup language that is being passed. Defaults to `markdown`. */
-	language?: 'plaintext' | 'markdown' | 'typst';
+	language?: 'plaintext' | 'markdown' | 'typst' | 'latex';
 	regex_mask?: string;
 
 	/** Force the entirety of the document to be composed of headings. An undefined value is assumed to be false.*/
