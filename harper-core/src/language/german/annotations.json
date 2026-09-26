@@ -58,7 +58,7 @@
 			"rename_ok": true
 		},
 		"G": {
-			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'.",
+			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'. Person and number: second person singular, the one unambiguous present ending German has.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -141,7 +141,13 @@
 			"target": [
 				{
 					"metadata": {
-						"verb": {}
+						"verb": {},
+						"morphology": {
+							"verb": {
+								"person": ["Second"],
+								"number": "Singular"
+							}
+						}
 					}
 				}
 			],
@@ -1724,7 +1730,7 @@
 			"rename_ok": true
 		},
 		"d": {
-			"#": "Verb preterite -te (lern-te)",
+			"#": "Verb preterite -te (lern-te) Person and number: first and third person singular preterite (ich lernte, er lernte).",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1784,7 +1790,18 @@
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"morphology": {
+							"verb": {
+								"person": ["First", "Third"],
+								"number": "Singular"
+							}
+						}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {
 					"verb_form": "PAST"
@@ -1793,7 +1810,7 @@
 			"rename_ok": true
 		},
 		"e": {
-			"#": "Verb preterite -ten (lern-ten)",
+			"#": "Verb preterite -ten (lern-ten) Person and number: first and third person plural preterite (wir lernten, sie lernten).",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1853,7 +1870,18 @@
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"morphology": {
+							"verb": {
+								"person": ["First", "Third"],
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {
 					"verb_form": "PAST"
@@ -1862,7 +1890,7 @@
 			"rename_ok": true
 		},
 		"f": {
-			"#": "Verb present -e (lern-e)",
+			"#": "Verb present -e (lern-e) Person and number: first person singular in the indicative (ich lerne) and first or third person singular in Konjunktiv I (er lerne). The third person is in there for the second of those -- without it the agreement rule reports every line of reported speech.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1902,14 +1930,25 @@
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"morphology": {
+							"verb": {
+								"person": ["First", "Third"],
+								"number": "Singular"
+							}
+						}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {}
 			},
 			"rename_ok": true
 		},
 		"i": {
-			"#": "Verb present -t (lern-t). NOTE: like 'h', 'i' is also used as a bookkeeping marker on noun entries, so it must not inject a part of speech. It only generates the -t surface form; the verb reading comes from 'V'/'j'/'f'/'d'/'e'.",
+			"#": "Verb present -t (lern-t). NOTE: like 'h', 'i' is also used as a bookkeeping marker on noun entries, so it must not inject a part of speech. It only generates the -t surface form; the verb reading comes from 'V'/'j'/'f'/'d'/'e'. Person and number: third person singular and second person plural (er lernt, ihr lernt). The axes are independent, so the pair also admits 'second person singular' and 'du lernt' goes unreported -- a miss, not a false positive.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1969,12 +2008,23 @@
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"morphology": {
+							"verb": {
+								"person": ["Second", "Third"],
+								"number": ["Singular", "Plural"]
+							}
+						}
+					}
+				}
+			],
 			"base_metadata": {},
 			"rename_ok": true
 		},
 		"j": {
-			"#": "Verb present/plural -en (lern-en)",
+			"#": "Verb present/plural -en (lern-en) Person and number: first and third person plural. The same ending builds the infinitive, which has no person at all, so the agreement rule only ever looks at the finite verb of the clause.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2014,7 +2064,18 @@
 					"condition": "[^n]"
 				}
 			],
-			"target": [],
+			"target": [
+				{
+					"metadata": {
+						"morphology": {
+							"verb": {
+								"person": ["First", "Third"],
+								"number": "Plural"
+							}
+						}
+					}
+				}
+			],
 			"base_metadata": {
 				"verb": {}
 			},

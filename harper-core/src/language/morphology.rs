@@ -380,6 +380,11 @@ pub trait MorphologyExt {
             .unwrap_or_default()
     }
 
+    /// The finite verb's person and number, empty when the entry has none.
+    fn verb_agreement(&self) -> Agreement {
+        self.morphology().and_then(|m| m.verb).unwrap_or_default()
+    }
+
     // The `get_*` accessors below answer "which single feature is this?" and so
     // return `None` for an ambiguous form as well as for an unknown one. Use
     // the `*_agreement` accessors above when checking agreement, where the two

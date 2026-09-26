@@ -26,3 +26,4 @@ pub mod present_participle_test;
 pub mod proper_name_genitive_test;
 pub mod strong_preterite_test;
 pub mod verb_noun_flag_test;
+pub mod verb_person_test;
