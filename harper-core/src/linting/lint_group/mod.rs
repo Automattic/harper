@@ -280,6 +280,7 @@ use super::take_medicine::TakeMedicine;
 use super::take_pride_in::TakePrideIn;
 use super::that_than::ThatThan;
 use super::that_which::ThatWhich;
+use super::the_highlight_of::TheHighlightOf;
 use super::the_how_why::TheHowWhy;
 use super::the_last_days::TheLastDays;
 use super::the_my::TheMy;
@@ -899,6 +900,7 @@ impl LintGroup {
         insert_expr_rule!(TakePrideIn);
         insert_expr_rule!(ThatThan);
         insert_expr_rule!(ThatWhich);
+        insert_expr_rule!(TheHighlightOf);
         insert_expr_rule!(TheHowWhy);
         insert_expr_rule!(TheLastDays);
         insert_expr_rule!(TheMy);

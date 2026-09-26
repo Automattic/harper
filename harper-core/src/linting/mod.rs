@@ -299,6 +299,7 @@ mod take_pride_in;
 mod take_serious;
 mod that_than;
 mod that_which;
+mod the_highlight_of;
 mod the_how_why;
 mod the_last_days;
 mod the_my;
