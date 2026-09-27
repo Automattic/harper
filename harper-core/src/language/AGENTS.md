@@ -172,6 +172,17 @@ lines of context, not from a total. Twelve reports that all turn out to be the
 same construction are one bug, and the fix is usually to take something out of a
 list rather than to add a guard.
 
+**Never compare an `--only` count with a whole-group count.** They measure
+different things: a lint group drops overlapping reports by priority, so
+`GermanNounCapitalization` gives 2772 on its own and 2550 inside the curated
+group on the same corpus. Mixing the two makes a pure refactor look like a
+222-report regression. Pick one and use it for both sides of every comparison —
+`--only` for a rule under development, the whole group for what a user sees.
+
+**Diff sorted output.** Files are linted in parallel, so the report order varies
+between runs of the same binary; an unsorted `diff` shows hundreds of moved
+lines and no real change.
+
 ### Comparing against LanguageTool
 
 LanguageTool is the practical oracle for the non-English languages: it is open,
