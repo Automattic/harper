@@ -231,6 +231,33 @@ the first German run one apparent das/dass hit was a capitalization false
 positive that happened to land on the right sentence, and it fired on the
 correct sentence too.
 
+German has a runner and its batteries checked in, and they are worth copying
+rather than rewriting:
+
+```bash
+docker start lt-bench
+cargo build --release --bin harper-cli --features de
+python3 harper-core/src/language/german/scripts/german_battery.py \
+    harper-core/src/language/german/tests/batteries/grammar.tsv
+#   --per-sentence  to see what each tool said about each sentence
+```
+
+Two traps are baked into it, both of which cost a rewrite an hour:
+
+* **Exclude typography by rule name, never by lint kind.** Filtering out the
+  whole `Punctuation` kind to keep `CommaFixes` from scoring also removes
+  `GermanSubordinateComma`, which is the comma class's own rule, and the class
+  silently drops to zero. LanguageTool has the same shape: its comma rules are
+  `issueType: typographical`.
+* **`--format compact` prints basenames**, not the paths it was handed, so
+  recover the sentence from `NNN.md`.
+
+Keep an existing battery fixed once it has a recorded score — it is the only
+comparable baseline. A new position or class gets a **new** file beside it, the
+way `verb_final_agreement.tsv` sits next to `grammar.tsv`. A change that scores
+the same on the old battery has not necessarily done nothing; it may have
+improved something the old battery never contained.
+
 ## Before handing back
 
 ```bash
