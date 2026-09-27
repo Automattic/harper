@@ -357,13 +357,31 @@ async function removeWeirpack(id: string) {
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm">English Dialect</h3>
+          <h3 class="text-sm">Language</h3>
           <Select size="sm" class="w-44" bind:value={dialect}>
-            <option value={Dialect.American}>🇺🇸 American</option>
-            <option value={Dialect.British}>🇬🇧 British</option>
-            <option value={Dialect.Australian}>🇦🇺 Australian</option>
-            <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
-            <option value={Dialect.Indian}>🇮🇳 Indian</option>
+            <optgroup label="English">
+              <option value={Dialect.American}>🇺🇸 American</option>
+              <option value={Dialect.British}>🇬🇧 British</option>
+              <option value={Dialect.Australian}>🇦🇺 Australian</option>
+              <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
+              <option value={Dialect.Indian}>🇮🇳 Indian</option>
+            </optgroup>
+            <optgroup label="Deutsch">
+              <option value={Dialect.GermanStandard}>🇩🇪 Deutschland</option>
+              <option value={Dialect.GermanAustrian}>🇦🇹 Österreich</option>
+              <option value={Dialect.GermanSwiss}>🇨🇭 Schweiz</option>
+            </optgroup>
+            <optgroup label="Polski">
+              <option value={Dialect.PolishStandard}>🇵🇱 Polski</option>
+            </optgroup>
+            <optgroup label="Português">
+              <option value={Dialect.PortuguesePT}>🇵🇹 Portugal</option>
+              <option value={Dialect.PortugueseBR}>🇧🇷 Brasil</option>
+              <option value={Dialect.PortugueseAO}>🇦🇴 Angola</option>
+            </optgroup>
+            <optgroup label="Slovenčina">
+              <option value={Dialect.SlovakStandard}>🇸🇰 Slovenčina</option>
+            </optgroup>
           </Select>
         </div>
       </div>
