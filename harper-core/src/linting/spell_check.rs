@@ -1,5 +1,6 @@
 use std::num::NonZero;
 
+use itertools::Itertools;
 use lru::LruCache;
 use smallvec::ToSmallVec;
 
@@ -53,6 +54,7 @@ impl<T: Dictionary> SpellCheck<T> {
                             .dialects
                             .is_dialect_enabled(self.dialect)
                     })
+                    .unique_by(|v| v.to_lower())
                     .map(|v| v.to_smallvec())
                     .take(Self::MAX_SUGGESTIONS)
                     .collect();

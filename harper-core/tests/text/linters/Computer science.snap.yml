@@ -568,8 +568,8 @@ Message: |
          |                    ^~~~~ Did you mean to spell `Péter` this way?
 Suggest:
   - Replace with: “Peter”
-  - Replace with: “Peter”
   - Replace with: “Pother”
+  - Replace with: “Paper”
 
 
 
@@ -1040,8 +1040,8 @@ Message: |
          |                             ^~~ Did you mean to spell `HCI` this way?
 Suggest:
   - Replace with: “Hi”
-  - Replace with: “HI”
   - Replace with: “Chi”
+  - Replace with: “Sci”
 
 
 
@@ -1052,8 +1052,8 @@ Message: |
      349 | that focus on the relationship between emotions, social behavior and brain
 Suggest:
   - Replace with: “Hi”
-  - Replace with: “HI”
   - Replace with: “Chi”
+  - Replace with: “Sci”
 
 
 
@@ -1120,7 +1120,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PA”
+  - Replace with: “PE”
 
 
 

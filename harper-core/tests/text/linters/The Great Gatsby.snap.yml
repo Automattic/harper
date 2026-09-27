@@ -4,8 +4,8 @@ Message: |
          |    ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
-  - Replace with: “FA”
   - Replace with: “Fe”
+  - Replace with: “Ft”
 
 
 
@@ -308,7 +308,7 @@ Message: |
 Suggest:
   - Replace with: “Vile”
   - Replace with: “Villa”
-  - Replace with: “Villa”
+  - Replace with: “Villi”
 
 
 
@@ -983,10 +983,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
      825 | “No, you don’t,” interposed Tom quickly. “Myrtle’ll be hurt if you don’t come up
-         |                                           ^~~~~~~~~ Did you mean to spell `Myrtle’ll` this way?
+         |                                           ^~~~~~~~~ Did you mean `Myrtle's`?
      826 | to the apartment. Won’t you, Myrtle?”
 Suggest:
-  - Replace with: “Myrtle's”
   - Replace with: “Myrtle's”
 
 
@@ -1918,9 +1917,8 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     1710 | “Wonder’ff tell me where there’s a gas’line station?”
-         |  ^~~~~~~~~ Did you mean to spell `Wonder’ff` this way?
+         |  ^~~~~~~~~ Did you mean `Wonder's`?
 Suggest:
-  - Replace with: “Wonder's”
   - Replace with: “Wonder's”
 
 
@@ -2228,7 +2226,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PA”
+  - Replace with: “PE”
 
 
 
@@ -2270,7 +2268,7 @@ Message: |
 Suggest:
   - Replace with: “Sweet's”
   - Replace with: “Sweat's”
-  - Replace with: “Sweet's”
+  - Replace with: “Seth's”
 
 
 
@@ -2751,8 +2749,8 @@ Message: |
          |           ^~ Did you mean to spell `L.` this way?
 Suggest:
   - Replace with: “LA”
-  - Replace with: “La”
   - Replace with: “Le”
+  - Replace with: “Li”
 
 
 
@@ -2878,7 +2876,7 @@ Message: |
 Suggest:
   - Replace with: “Pa”
   - Replace with: “Pi”
-  - Replace with: “PA”
+  - Replace with: “PE”
 
 
 
@@ -2888,8 +2886,8 @@ Message: |
          |                        ^~~~~~ Did you mean to spell `Jewett` this way?
 Suggest:
   - Replace with: “Jewel”
-  - Replace with: “Jewel”
   - Replace with: “Jewell”
+  - Replace with: “Jewess”
 
 
 
@@ -2937,7 +2935,6 @@ Message: |
     1982 | de Boulogne.
          |    ^~~~~~~~ Did you mean to spell `Boulogne` this way?
 Suggest:
-  - Replace with: “Bologna”
   - Replace with: “Bologna”
   - Replace with: “Cologne”
 
@@ -3348,7 +3345,6 @@ Message: |
          |          ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Oxford”
   - Replace with: “Longsword”
 
 
@@ -3359,7 +3355,6 @@ Message: |
          |             ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
   - Replace with: “Oxford”
-  - Replace with: “Oxford”
   - Replace with: “Longsword”
 
 
@@ -3369,7 +3364,6 @@ Message: |
     2192 | “He went to Oggsford College in England. You know Oggsford College?”
          |                                                   ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
-  - Replace with: “Oxford”
   - Replace with: “Oxford”
   - Replace with: “Longsword”
 
@@ -6271,9 +6265,8 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     4943 | “I suppose Daisy’ll call too.” He looked at me anxiously, as if he hoped I’d
-         |            ^~~~~~~~ Did you mean to spell `Daisy’ll` this way?
+         |            ^~~~~~~~ Did you mean `Daisy's`?
 Suggest:
-  - Replace with: “Daisy's”
   - Replace with: “Daisy's”
 
 
@@ -7126,8 +7119,8 @@ Message: |
          |                                                                 ^~ Did you mean to spell `F.` this way?
 Suggest:
   - Replace with: “Fa”
-  - Replace with: “FA”
   - Replace with: “Fe”
+  - Replace with: “Ft”
 
 
 
@@ -7213,10 +7206,9 @@ Suggest:
 Lint:    Spelling (63 priority)
 Message: |
     5507 | First time I saw him was when he come into Winebrenner’s poolroom at Forty-third
-         |                                            ^~~~~~~~~~~~~ Did you mean to spell `Winebrenner’s` this way?
+         |                                            ^~~~~~~~~~~~~ Did you mean `Windbreaker's`?
     5508 | Street and asked for a job. He hadn’t eat anything for a couple of days. ‘Come
 Suggest:
-  - Replace with: “Windbreaker's”
   - Replace with: “Windbreaker's”
 
 
@@ -7249,7 +7241,6 @@ Message: |
     5520 | Oggsford I knew I could use him good. I got him to join up in the American
          | ^~~~~~~~ Did you mean to spell `Oggsford` this way?
 Suggest:
-  - Replace with: “Oxford”
   - Replace with: “Oxford”
   - Replace with: “Longsword”
 
