@@ -9,7 +9,7 @@ use indexmap::IndexMap;
 use crate::{
     DictWordMetadata,
     spell::{
-        Dictionary, FstDictionary,
+        Dictionary,
         dictionary::{ANNOTATIONS_STR, CURATED_DICT_STR},
         rune::{self, AttributeList, parse_word_list},
         word_id::{CanonicalWordId, CaseFoldedWordId},
@@ -168,16 +168,6 @@ impl WordMap {
         attr_list.expand_annotated_words(word_list, &mut word_map);
 
         Ok(word_map)
-    }
-
-    /// Create an [`FstDictionary`] from this word map.
-    pub fn to_fst(self) -> FstDictionary {
-        let words = self
-            .into_iter()
-            .map(|wme| (wme.canonical_spelling, wme.metadata))
-            .collect();
-
-        FstDictionary::new(words)
     }
 
     /// Get a [`WordMapEntry`] by its canonical ID.
