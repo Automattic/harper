@@ -721,7 +721,7 @@
 >
 #
 > “ You    make   me       feel     uncivilized , Daisy , ” I       confessed on  my  second   glass      of corky
-# . ISgPl+ NSg/VB NPr/ISg+ NSg/I/VB VB/J        . NPr+  . . ISg/#r+ VP/J      J/P D$+ NSg/VB/J NPr🅪Sg/VB+ P  J
+# . ISgPl+ NSg/VB NPr/ISg+ NSg/I/VB VP/J        . NPr+  . . ISg/#r+ VP/J      J/P D$+ NSg/VB/J NPr🅪Sg/VB+ P  J
 > but     rather impressive claret  . “ Can’t you    talk    about crops   or    something ? ”
 # NSg/C/P NPr/R  J          Nᴹ/VB/J . . VXB   ISgPl+ N🅪Sg/VB J/P   NPl/V3+ NPr/C NSg/I/J+  . .
 >

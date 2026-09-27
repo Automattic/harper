@@ -12970,7 +12970,7 @@ application/~NgSr
 applicator/NSg
 applier/NgS
 applique/NSgVd
-appliqueing/V
+appliqueing/V6
 apply/~VGdSJrnX
 appoint/~VSGdrELv
 appointee/~NSg
@@ -13218,7 +13218,7 @@ arsed/VJ
 arsehole/NSg!@₹x_
 arsenal/~NgS
 arsenic/~NmgJ
-arsing/V
+arsing/V6
 arson/~NmgV
 arsonist/NSg
 art/~NwSgV
@@ -15108,7 +15108,7 @@ bliss/~Ng
 blissful/JYp
 blissfulness/Ng
 blister/~NgSVGd
-blistering/VJYN
+blistering/VJYN6
 blistery/J
 blithe/JY^>p
 blitheness/Ng
@@ -17816,12 +17816,12 @@ civil/~JYU
 civilian/~NgSJ
 civilisation/NSg!_₹
 civilise/VGdS!_₹
-civilised/VJU!_₹
+civilised/VJU!_₹tT
 civility/~Nmgi
 civilization/~NOwSg
 civilizational/J
 civilize/VGdS
-civilized/~JVU
+civilized/~JVUtT
 civvies/Ng
 ck/~
 cl/~
@@ -21552,7 +21552,7 @@ diffusivity/N
 dig/~VSNg
 digerati/Ng
 digest/~VdGSNgv
-digested/VU
+digested/VtTU
 digestibility/Ng
 digestible/Ji
 digestion/~Nw0gi
@@ -42443,7 +42443,7 @@ regicidal/J
 regicide/~NwgS
 regime/~NSg
 regimen/~NSg
-regiment/~NgSVdG
+regiment/~NgSVdGQ
 regimental/~J
 regimentation/Nmg
 region/~NSg
@@ -48301,11 +48301,13 @@ surrey/~NgS
 surrogacy/Ng
 surrogate/~NSgJV
 surround/~VGdSNz
-surrounding/~VNg
-surroundings/~Ng
+surrounding/~VNg6
+surroundings/~N9g
 surtax/NgSVdG
 surtitle/NSV
-surveil/VGdS
+surveil/VS
+surveilled/VtT
+surveilling/V6
 surveillance/~Ng
 survey/~NSVdGr
 survey's
@@ -50410,8 +50412,8 @@ triad/~NSg
 triage/NmgVd
 triager/NSg
 trial/~NSgJVr
-trialed/V
-trialing/VN
+trialed/VtT
+trialing/VN6
 trialled/VtT!@_₹
 trialling/V6N!@_₹
 triangle/~NSg
@@ -50471,6 +50473,7 @@ trigonometry/~Ng
 trike/NSgV
 trilateral/~JS
 trilby/NSg
+trilemma/NSg
 trill/NSgVGdJ
 trillion/~NSgH
 trillionaire/NSg
@@ -52610,7 +52613,7 @@ warmheartedness/Ng
 warmish/J
 warmness/Nmg
 warmonger/NSgVG
-warmongering/VNg
+warmongering/VNg6
 warmth/~Nmg
 warn/~VdGSz
 warning/~V6SNwg
