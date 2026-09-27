@@ -771,7 +771,11 @@ async function initializeLinter(dialect: Dialect) {
 	await Promise.all([
 		getIgnoredLints().then((i) => linter.importIgnoredLints(i)),
 		getUserDictionary().then((u) => linter.importWords(u)),
-		getLintConfig().then((c) => linter.setLintConfig(c)),
+		// The stored config may come from another language's linter, so layer it over this
+		// linter's own defaults instead of replacing them (otherwise e.g. SlovakSpellCheck is lost).
+		Promise.all([linter.getLintConfig(), getLintConfig()]).then(([current, stored]) =>
+			linter.setLintConfig({ ...current, ...stored }),
+		),
 		loadStoredWeirpacksIntoLinter(),
 	]);
 
