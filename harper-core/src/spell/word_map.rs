@@ -80,7 +80,7 @@ impl WordMap {
     ) -> impl ExactSizeIterator<Item = &WordMapEntry> {
         self.get_canonical_indices_from_case_folded(id)
             .iter()
-            .map(|canonical_index| self.get_by_canonical_index(*canonical_index).unwrap())
+            .map(|canonical_index| &self[*canonical_index])
     }
 
     /// Convenience wrapper for [`Self::get_case_folded`].
@@ -168,13 +168,6 @@ impl WordMap {
         attr_list.expand_annotated_words(word_list, &mut word_map);
 
         Ok(word_map)
-    }
-
-    /// Get a [`WordMapEntry`] by its canonical ID.
-    fn get_by_canonical_index(&self, index: usize) -> Option<&WordMapEntry> {
-        self.canonical
-            .get_index(index)
-            .map(|(_, word_map_entry)| word_map_entry)
     }
 
     /// Get indices into [`Self::canonical`] using the provided [`CaseFoldedWordId`].
