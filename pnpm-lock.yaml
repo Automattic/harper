@@ -171,6 +171,9 @@ importers:
       svelte:
         specifier: ^5.0.0
         version: 5.43.12
+      svelte-check:
+        specifier: ^4.3.3
+        version: 4.3.4(picomatch@4.0.3)(svelte@5.43.12)(typescript@5.6.3)
       svelte-preprocess:
         specifier: ^6.0.0
         version: 6.0.3(@babel/core@7.26.10)(postcss-load-config@4.0.2(postcss@8.5.6))(postcss@8.5.6)(sass@1.85.1)(svelte@5.43.12)(typescript@5.6.3)

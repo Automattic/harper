@@ -19,6 +19,18 @@ pub enum AccessibilityPermissionStatus {
 /// those APIs are platform-specific. This trait keeps the event loop and renderer independent from
 /// macOS accessibility and pointer APIs.
 pub trait OsBroker {
+    /// Identifies Harper for automatic-discovery exclusion, not for manual integration policy.
+    ///
+    /// Uses the configured bundle ID on macOS and the current executable path on Windows.
+    /// Unsupported platforms return `false`. No broker instance is needed; `Self: Sized` keeps
+    /// the trait usable as `dyn OsBroker`.
+    fn is_harper_desktop(_app_id: &str) -> bool
+    where
+        Self: Sized,
+    {
+        false
+    }
+
     /// Get the actionable lint boxes from the OS, provided a linting source.
     ///
     /// `None` means the accessibility read failed and the last successful result should be retained.
