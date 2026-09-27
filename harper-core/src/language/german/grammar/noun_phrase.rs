@@ -543,15 +543,31 @@ pub(crate) fn opens_relative_clause(tokens: &[&Token], index: usize, document: &
         return false;
     }
 
-    index
+    let opens_a_clause = |at: usize| {
+        matches!(
+            tokens[at].kind,
+            TokenKind::Punctuation(Punctuation::Comma | Punctuation::OpenRound)
+        )
+    };
+
+    let Some(previous) = index.checked_sub(1) else {
+        return false;
+    };
+    if opens_a_clause(previous) {
+        return true;
+    }
+
+    // German relativizes a prepositional phrase by putting the preposition in
+    // front of the relative pronoun: *eine Welt, **in der** Roboter die
+    // Menschen ersetzen*, *die Sage, **nach der** Trier gegründet wurde*, *ein
+    // Verband, **bei dem** Antrag auf Zulassung gestellt wird*. The pronoun is
+    // spelled like an article and is followed by the subject of its own clause,
+    // so reading it as one pairs the determiner with a noun from the wrong
+    // clause. The comma is one token further left than usual, which is the only
+    // thing that distinguishes this from an ordinary *in der Küche*.
+    previous
         .checked_sub(1)
-        .map(|previous| tokens[previous])
-        .is_some_and(|previous| {
-            matches!(
-                previous.kind,
-                TokenKind::Punctuation(Punctuation::Comma | Punctuation::OpenRound)
-            )
-        })
+        .is_some_and(|before| tokens[previous].kind.is_preposition() && opens_a_clause(before))
 }
 
 pub(crate) fn lowercase_of(token: &Token, document: &Document) -> String {
@@ -958,6 +974,35 @@ mod tests {
         // mistake the comma test exists to prevent.
         let found = heads("Der Verein, der zuletzt gewann, spielt heute.");
         assert!(!found.iter().any(|head| head == "zuletzt"), "{found:?}");
+    }
+
+    /// German relativizes a prepositional phrase by putting the preposition in
+    /// front of the relative pronoun, which moves the comma one token further
+    /// left than the plain case. Reading *der* as an article there pairs it
+    /// with the subject of the relative clause.
+    #[test]
+    fn a_preposition_before_a_relative_pronoun_opens_no_phrase() {
+        for text in [
+            "Eine Welt, in der Roboter die Menschen ersetzen.",
+            "Die Sage, nach der Trier gegründet wurde.",
+            "Ein Verband, bei dem Antrag auf Zulassung gestellt wird.",
+        ] {
+            let found = heads(text);
+            assert!(
+                !found
+                    .iter()
+                    .any(|h| h == "Roboter" || h == "Trier" || h == "Antrag"),
+                "{text}: {found:?}"
+            );
+        }
+    }
+
+    /// …but an ordinary prepositional phrase in the same shape still chunks.
+    /// The comma is what separates them.
+    #[test]
+    fn an_ordinary_prepositional_phrase_still_chunks() {
+        assert_eq!(heads("Sie stand in der Küche."), vec!["Küche"]);
+        assert_eq!(heads("Er wartete bei dem Haus."), vec!["Haus"]);
     }
 
     #[test]

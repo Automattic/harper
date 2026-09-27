@@ -1216,6 +1216,37 @@ and each of them otherwise draws a suggestion list of pure noise. The length cap
 here is six — past that, a stray capital is likelier a typo in a real compound
 than an acronym.
 
+## The noun-phrase chunker, and the two rules it unblocked
+
+`grammar/noun_phrase.rs` chunks a sentence into determiner–adjectives–head and
+answers one question: which token is the head of this phrase. Three linters ask
+it, and until it was lifted out of the capitalization rule each of them guessed
+separately. Only the capitalization rule's guess was any good — it had been
+ground against a corpus for several passes — and the other two paid for theirs:
+the preposition rule crossed a clause boundary, the agreement rule reported 1229
+times.
+
+Two things about it are worth knowing before using it.
+
+**The head is the last word of the phrase, and a capital ends it.** That is
+right for capitalization, where the candidate is a lower-case word that ought to
+have a capital. It is *not* right for a correctly written phrase, where a
+capitalized modifier can precede the head: *den **Berliner** Philharmonikern*
+hands back `Berliner`. Extending the phrase through a run of capitals was tried
+and is equally wrong the other way — *den **Wortarten** Adjektiv* is head plus
+apposition, and nothing on the surface tells the two apart. So a caller that
+needs a *correct* head, as the preposition rule does, checks for itself that the
+phrase has visibly ended and gives up otherwise.
+
+**A preposition in front of a relative pronoun opens no phrase.** German
+relativizes a prepositional phrase by fronting the preposition — *eine Welt, in
+der Roboter die Menschen ersetzen* — so the pronoun is spelled like an article
+and is followed by the subject of its own clause. The comma is one token further
+left than in the plain case, which is the only surface difference from *in der
+Küche*. Teaching the chunker this removed three capitalization false positives
+(*gerade*, *verschiedene*, *wesentliche*, all inside relative clauses) and four
+in the preposition rule.
+
 ## Gender: how far the corpus oracle actually reaches
 
 The article-cue oracle in `audit_german_gender.py` is sound — it measures 99.4 %
@@ -1239,26 +1270,34 @@ occurrences** in the prose corpus have a gender, against 32 % of the distinct
 forms and 26 % of the entries. Measure it token-weighted or the number will
 frighten you off work that is nearly done.
 
-### What switching the narrowing on costs today
+### The narrowing is on, and what it took
 
-Restoring the gender axis in `readings_allowed_by` takes `GermanPrepositionCase`
-from 38 reports to 75 over 19 MB of prose. That is eight times better than the
-last time this was tried — it was 310 — and still not good enough, because all
-37 of the new reports are wrong. Read them and they are two classes of roughly
-equal size:
+Restoring the gender axis in `readings_allowed_by` once took
+`GermanPrepositionCase` from 38 reports to 75 over 19 MB of prose, all 37 new
+ones wrong. It is on now and costs **four**. The path from 37 to 4 is worth
+recording, because only the first third of it was about gender:
 
-* **wrong recorded gender**, a dozen words: *Leber*, *Aussprache*, *Angabe*,
-  *Ansage*, *Nummer*, *Schulter*, *Weser* recorded masculine and feminine;
-  *Kloster*, *Gewässer*, *Register* recorded masculine and neuter. Every one is
-  an `-er` or `-e` read as an agent noun, and they are fixed now.
-* **the head-finder reaching across a clause**: *bei der Antrag auf Zulassung
-  gestellt wird*, *ist nach wie vor der Arzt*, *nach der Kinder mit 12 Jahren*.
-  The recorded gender is right in all of these; what is wrong is which noun the
-  rule paired with the determiner. Gender did not cause it, only exposed it.
+* **A dozen wrong recorded genders**: *Leber*, *Aussprache*, *Angabe*, *Ansage*,
+  *Nummer*, *Schulter*, *Weser* recorded masculine and feminine; *Kloster*,
+  *Gewässer*, *Register* recorded masculine and neuter; later *Mauser*. Every
+  one is an `-er` or `-e` read as an agent noun. Corrected by hand.
+* **The head-finder reaching across a clause** — *bei der Antrag auf Zulassung
+  gestellt wird*, *nach der Kinder mit 12 Jahren*. The recorded gender is right
+  in all of these; what was wrong is which noun the rule paired with the
+  determiner. Gender did not cause it, only exposed it. This is what the
+  chunker fixed, and specifically its rule that a preposition in front of a
+  relative pronoun opens no phrase.
+* **One fixed adverbial**: *ist nach wie vor der Arzt* is a predicate
+  nominative, and *vor* governs nothing there.
 
-The second class is the same finding as the noun-phrase subject in
-`GermanSubjectVerbAgreement`: two rules now want a real noun-phrase chunker
-rather than another guard, and that is the next thing worth building.
+What is left is four reports: two garbled sources, one English loan (*auf ein
+Tag*, where German *der Tag* supplies the wrong gender), and one relative
+pronoun behind *und* rather than behind a comma.
+
+Against that, on an eight-sentence battery of gender-dependent case errors the
+narrowing scores 3/8 where nothing was scored before, against LanguageTool's
+2/8, both with no false alarm. The five misses are nouns with no recorded
+gender, which is the 41 % the oracle has not reached.
 
 There is no bulk fix for the first class either. Of the entries recorded
 masculine, 7029 end in `-er` and most of them are correct agent nouns; 49 end in

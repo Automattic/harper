@@ -411,14 +411,22 @@ pub fn forms_in_case(word: &str, wanted: CaseSet) -> Vec<&'static str> {
 /// itself says which; *Freund* is a singular, so the dative plural reading
 /// cannot stand and *mit den Freund* has no dative left.
 ///
-/// **Only a singular noun narrows anything, and only the number is read.** Both
-/// restrictions were forced by measurement, and each has a reason:
+/// **Number narrows only from the singular, and gender only when the entry
+/// records exactly one.** Both restrictions were forced by measurement:
 ///
-/// * *Gender is not trustworthy.* `Leber`, `Mauer`, `Dauer`, `Nummer` and
-///   `Schulter` are all feminine and all recorded masculine, and `Tier` and
-///   `Heer` are neuter and recorded masculine. Narrowing by gender turned
-///   *"in der Leber"* into an error. Reading gender here again is the last step
-///   of the gender audit, not the first.
+/// * *Gender is read, but it took three tries.* `Leber`, `Mauer`, `Nummer` and
+///   `Schulter` are feminine and were all recorded masculine, and narrowing by
+///   gender turned *in der Leber* into an error. Those are corrected now, and
+///   the audit in `scripts/audit_german_gender.py` is what keeps them so. The
+///   second obstacle was not the data at all: the head-finder crossed a clause
+///   boundary and paired *bei der* with the subject of the relative clause
+///   behind it. With the chunker in `grammar/noun_phrase.rs` doing that job,
+///   switching gender on costs four reports over a 19 MB corpus of edited
+///   prose, against thirty-seven before, and buys *bei der Vater*, *mit der
+///   Bruder*, *auf der Tisch* — a class nothing else in Harper can see.
+///
+///   An entry with two genders recorded narrows nothing, which is the usual
+///   rule here: ambiguity is permissive.
 /// * *A plural marking does not rule out the singular.* German weak masculines
 ///   — `Mensch`, `Philosoph`, `Patient`, `Laie`, `Gedanke` — spell the
 ///   accusative, dative and genitive singular exactly like the plural, and the
@@ -434,11 +442,21 @@ pub fn readings_allowed_by(
     readings: &[DeterminerReading],
     noun: &Agreement,
 ) -> Vec<DeterminerReading> {
-    if noun.number != NumberSet::SINGULAR {
-        return readings.to_vec();
+    let by_number = if noun.number == NumberSet::SINGULAR {
+        keep(readings, |reading| reading.number() == Number::Singular)
+    } else {
+        readings.to_vec()
+    };
+
+    let wanted = noun.gender;
+    if wanted.is_empty() || wanted.bits().count_ones() != 1 {
+        return by_number;
     }
 
-    keep(readings, |reading| reading.number() == Number::Singular)
+    keep(&by_number, |reading| match reading.gender {
+        None => true,
+        Some(gender) => wanted.contains(GenderSet::from(gender)),
+    })
 }
 
 /// The readings that survive the **spelling** of the noun after them.
@@ -697,11 +715,11 @@ mod tests {
         assert_eq!(readings_allowed_by(den, &plural).len(), den.len());
     }
 
-    /// Gender is not read at all. Too much of it is wrong: *Leber*, *Mauer* and
-    /// *Nummer* are feminine and recorded masculine, and narrowing by that made
-    /// *"in der Leber"* an error.
+    /// A single recorded gender narrows, which is what makes *bei der Vater*
+    /// reportable: without it the feminine dative reading of *der* survives
+    /// and the preposition is satisfied.
     #[test]
-    fn gender_is_not_read() {
+    fn a_single_gender_narrows() {
         let der = determiner_readings("der").unwrap();
         let masculine_singular = Agreement {
             gender: Gender::Masculine.into(),
@@ -709,8 +727,25 @@ mod tests {
             ..Default::default()
         };
 
-        // Only the plural reading goes; the feminine singular ones survive.
         let allowed = readings_allowed_by(der, &masculine_singular);
+        assert_eq!(allowed.len(), 1);
+        assert_eq!(allowed[0].case, Case::Nominative);
+    }
+
+    /// Two recorded genders narrow nothing. Ambiguity is permissive
+    /// everywhere in this module, and an entry carrying both is the dictionary
+    /// saying it does not know.
+    #[test]
+    fn two_genders_narrow_nothing() {
+        let der = determiner_readings("der").unwrap();
+        let either = Agreement {
+            gender: GenderSet::MASCULINE | GenderSet::NEUTER,
+            number: Number::Singular.into(),
+            ..Default::default()
+        };
+
+        // Only the plural reading goes, on the number alone.
+        let allowed = readings_allowed_by(der, &either);
         assert_eq!(allowed.len(), 3);
         assert!(allowed.iter().all(|r| r.number() == Number::Singular));
     }

@@ -9,6 +9,7 @@ use crate::{
         DeterminerReading, could_be_a_dative_plural, determiner_readings, forms_for_readings,
         readings_allowed_by, readings_allowed_by_spelling, stands_alone,
     },
+    language::german::grammar::noun_phrase::{self, Phrase},
     language::german::grammar::prepositions::preposition_government,
     language::german::spell::curated_german_dictionary,
     language::morphology::{Agreement, CaseSet, MorphologyExt},
@@ -26,6 +27,12 @@ const MAX_ADJECTIVES: usize = 3;
 /// the preposition in front of them: *trotz allem*, *trotz alledem*, *von alles
 /// entscheidender Bedeutung*.
 const FIXED_PHRASE_DETERMINERS: &[&str] = &["allem", "alledem", "alles"];
+
+/// Adverbial phrases that end in something spelled like a preposition but
+/// govern nothing: *ist nach wie **vor** der Arzt* is a predicate nominative,
+/// not a dative after *vor*. Each entry is the preposition and the words that
+/// have to stand in front of it, nearest first.
+const FIXED_ADVERBIALS: &[(&str, &[&str])] = &[("vor", &["wie", "nach"])];
 
 /// Catches a determiner in the wrong case after a preposition: *"**wegen dem**
 /// Wetter"* needs the genitive, *"**für dem** Kind"* the accusative.
@@ -106,63 +113,68 @@ impl GermanPrepositionCase {
     /// The head of the noun phrase this determiner introduces, if it can be
     /// identified with confidence.
     ///
-    /// German capitalizes its nouns, which makes the head easy to find in the
-    /// ordinary case: skip the lower-case adjectives and take the first
-    /// capitalized word. Three things spoil that, and each cost false positives
-    /// on the prose corpus before it was turned away:
+    /// The chunker in `grammar/noun_phrase.rs` answers this, and the reason it
+    /// is worth the indirection is what the local version used to get wrong:
+    /// scanning forward for the first capitalized word crossed a clause
+    /// boundary, so *bei der* in *bei der Antrag auf Zulassung gestellt wird*
+    /// was paired with *Antrag* from the clause behind it. That was half of
+    /// the thirty-seven false reports the last attempt at gender narrowing
+    /// produced, and no guard local to this rule could see it.
     ///
-    /// * **A hyphen.** In *aus den Natur- und Geisteswissenschaften* and *zu
-    ///   den Absinth-Trinkern* the first capitalized word is half of a compound
-    ///   and carries none of the phrase's features.
-    /// * **A phrase that has not ended.** A following capitalized word (*mit
-    ///   den Florida Keys*) or a following adjective (*bei den lange Zeit
-    ///   allein bekannten Verfahren*) both say the head is further on.
-    /// * **A determiner, preposition or conjunction along the way.** *mit
-    ///   diesen in Konkurrenz* has no noun of its own; the determiner is a
-    ///   pronoun and the capitalized word belongs to what follows.
+    /// One check stays here, because it is about the *word* rather than the
+    /// phrase: a head that touches a hyphen is half of a compound. In *aus den
+    /// Natur- und Geisteswissenschaften* and *zu den Absinth-Trinkern* the
+    /// chunker's head carries none of the phrase's features.
     fn head_noun_after(
         &self,
         document: &Document,
-        tokens: &[&Token],
+        words: &[&Token],
+        phrases: &[Phrase],
         determiner_at: usize,
     ) -> Option<String> {
+        let phrase = noun_phrase::phrase_opened_by(phrases, determiner_at)?;
+        let token = words[phrase.head];
+
         let content = document.get_full_content();
-        let word_at = |at: usize| -> Option<String> {
-            tokens
-                .get(at)
-                .filter(|token| matches!(token.kind, TokenKind::Word(_)))
-                .map(|token| document.get_span_content(&token.span).iter().collect())
-        };
-
-        let mut at = determiner_at + 2;
-        for _ in 0..=MAX_ADJECTIVES {
-            let word = word_at(at)?;
-
-            if !is_capitalized(&word) {
-                if closes_the_phrase(&word) {
-                    return None;
-                }
-                at += 2;
-                continue;
-            }
-
-            let token = tokens[at];
-            let touches_hyphen = content.get(token.span.end) == Some(&'-')
-                || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
-            if touches_hyphen {
-                return None;
-            }
-
-            let ends_here = match word_at(at + 2) {
-                None => tokens
-                    .get(at + 2)
-                    .is_none_or(|next| !matches!(next.kind, TokenKind::Word(_))),
-                Some(next) => !is_capitalized(&next) && closes_the_phrase(&next),
-            };
-            return ends_here.then_some(word);
+        let touches_hyphen = content.get(token.span.end) == Some(&'-')
+            || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
+        if touches_hyphen {
+            return None;
         }
 
-        None
+        // The chunker names a head; this rule only accepts one when the
+        // phrase can be *shown* to have ended, which is a stricter bar and the
+        // one the local scan used to apply. Two things can make the chunker's
+        // stop artificial here:
+        //
+        // * **A capitalized word behind it.** *den **Berliner**
+        //   Philharmonikern* is modifier plus head and *den **Wortarten**
+        //   Adjektiv* is head plus apposition, and both are two capitals in a
+        //   row with nothing on the surface to tell them apart.
+        // * **Anything else that is not a phrase boundary.** *bei den lange
+        //   **Zeit** allein bekannten symmetrischen Verfahren* stops on the
+        //   first capital in the middle of an adverbial insert; the head is
+        //   five words further on. Only a determiner, preposition or
+        //   conjunction behind the head proves there is no more phrase.
+        //
+        // Getting this wrong is cheap in one direction and expensive in the
+        // other: an unidentified head narrows nothing and the check still runs
+        // on the determiner alone, while a wrong head invents a case error.
+        let next = words.get(phrase.head + 1);
+        let ends_here = match next {
+            None => true,
+            Some(next) if !matches!(next.kind, TokenKind::Word(_)) => true,
+            Some(next) => {
+                let word: String = document.get_span_content(&next.span).iter().collect();
+                !is_capitalized(&word) && closes_the_phrase(&word)
+            }
+        };
+        if !ends_here {
+            return None;
+        }
+
+        let head: String = document.get_span_content(&token.span).iter().collect();
+        is_capitalized(&head).then_some(head)
     }
 
     /// What the dictionary says about `head`, when that is worth reading.
@@ -214,6 +226,23 @@ impl Linter for GermanPrepositionCase {
         for sentence in document.iter_sentences() {
             let tokens: Vec<&Token> = sentence.iter().collect();
 
+            // The chunker indexes a whitespace-free slice; this rule steps by
+            // two over the raw one. `filtered_of` bridges them.
+            let words: Vec<&Token> = tokens
+                .iter()
+                .copied()
+                .filter(|token| !token.kind.is_whitespace())
+                .collect();
+            let mut filtered_of = vec![None; tokens.len()];
+            let mut seen = 0;
+            for (raw, token) in tokens.iter().enumerate() {
+                if !token.kind.is_whitespace() {
+                    filtered_of[raw] = Some(seen);
+                    seen += 1;
+                }
+            }
+            let phrases = noun_phrase::phrases(&words, document);
+
             let word_at = |index: usize| -> Option<String> {
                 tokens
                     .get(index)
@@ -237,6 +266,20 @@ impl Linter for GermanPrepositionCase {
                 let Some(government) = preposition_government(&preposition_text) else {
                     continue;
                 };
+
+                // *nach wie vor*: the preposition closes an adverbial and the
+                // determiner behind it belongs to the clause, not to it.
+                if FIXED_ADVERBIALS.iter().any(|(last, before)| {
+                    *last == preposition_text.to_lowercase()
+                        && before.iter().enumerate().all(|(step, expected)| {
+                            index
+                                .checked_sub(2 + step * 2)
+                                .and_then(word_at)
+                                .is_some_and(|word| word.eq_ignore_ascii_case(expected))
+                        })
+                }) {
+                    continue;
+                }
 
                 // `MIT` the institute, `Bei` the warlord, `Bar` the room. A
                 // German preposition is lower case unless it opens the
@@ -263,8 +306,8 @@ impl Linter for GermanPrepositionCase {
                 // A head that cannot be identified narrows nothing; the check
                 // still runs on the determiner alone, which is what it did
                 // before the noun was read at all.
-                let head = self
-                    .head_noun_after(document, &tokens, index + 2)
+                let head = filtered_of[index + 2]
+                    .and_then(|at| self.head_noun_after(document, &words, &phrases, at))
                     .filter(|_| !stands_alone(&determiner_text));
                 let readings: Vec<DeterminerReading> = match &head {
                     None => all_readings.to_vec(),
@@ -474,18 +517,24 @@ mod tests {
 
     #[test]
     fn catches_the_dative_after_an_accusative_preposition() {
-        // *dem* is singular in both its readings, so the noun rules nothing
-        // out and both genders are offered. Narrowing to the masculine would
-        // need gender, which the dictionary gets wrong too often to use.
-        assert_eq!(fixes("Das Geschenk ist für dem Kind."), ["das", "den"]);
+        // *dem* is singular in both its readings, and the noun's gender picks
+        // which: *Kind* is neuter and *Hund* masculine, so one form is offered
+        // rather than both. Before gender was read here, each of these offered
+        // "das" and "den" together.
+        assert_eq!(fixes("Das Geschenk ist für dem Kind."), ["das"]);
+        assert_eq!(fixes("Wir gingen ohne dem Hund."), ["den"]);
+        // …but only when the phrase can be shown to have ended. *los* is
+        // neither a phrase boundary nor a capital, so the head is not read at
+        // all and both genders are offered again. An unread head narrows
+        // nothing, which is the safe direction.
         assert_eq!(fixes("Wir gingen ohne dem Hund los."), ["das", "den"]);
     }
 
     #[test]
     fn catches_the_nominative_after_an_accusative_preposition() {
-        // *Wald* is singular, which drops the genitive plural reading of
-        // *der*; the two singular genders remain.
-        assert_eq!(fixes("Er lief durch der Wald."), ["den", "die"]);
+        // *Wald* is a masculine singular: the number drops the genitive
+        // plural reading of *der* and the gender drops the feminine ones.
+        assert_eq!(fixes("Er lief durch der Wald."), ["den"]);
     }
 
     #[test]
@@ -499,7 +548,8 @@ mod tests {
     #[test]
     fn catches_a_wrong_indefinite_article() {
         assert_eq!(fixes("Ich spreche mit eine Frau."), ["einer"]);
-        assert_eq!(fixes("Das ist für einem Freund."), ["ein", "einen"]);
+        // *Freund* is masculine, so the neuter *ein* is not offered.
+        assert_eq!(fixes("Das ist für einem Freund."), ["einen"]);
     }
 
     #[test]
