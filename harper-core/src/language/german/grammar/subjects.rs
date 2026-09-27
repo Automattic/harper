@@ -201,6 +201,27 @@ pub fn subject_pronoun(word: &str) -> Option<Features> {
     PRONOUN_MAP.get(word.to_lowercase().as_str()).copied()
 }
 
+/// The features of `word` read as the subject of a **subordinate** clause.
+///
+/// The same table, plus `es`, and the addition is a point of German syntax
+/// rather than a loosened guard. The reason `es` is not a subject pronoun in
+/// [`subject_pronoun`] is the placeholder use — *Es werden fünf Klassen
+/// gebildet* — where the verb agrees with the noun behind it. That placeholder
+/// lives in the **front field** and nowhere else: German allows exactly one
+/// constituent before the finite verb, and *es* is what fills the slot when
+/// nothing else does. A subordinate clause has no front field, so *dass es*,
+/// *weil es* and *wie es* can only be the real pronoun, third person singular.
+///
+/// The copula survives this — *weil es meine Freunde sind* takes its number
+/// from the predicate — so the caller checks person only for `es`. See
+/// `german_subject_verb_agreement.rs`.
+pub fn subordinate_subject_pronoun(word: &str) -> Option<Features> {
+    if word.eq_ignore_ascii_case("es") {
+        return Some(Features::new(P3, SG));
+    }
+    subject_pronoun(word)
+}
+
 /// The features of `word` read as a finite verb the affixes do not build.
 pub fn irregular_finite_verb(word: &str) -> Option<Features> {
     FINITE_VERB_MAP.get(word.to_lowercase().as_str()).copied()

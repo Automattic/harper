@@ -1355,6 +1355,56 @@ the second and third person alike — *du weist* and *er weist*, *du misst* and
 goes unreported for it, and twenty-five reports on `weist`, `verweist`, `misst`
 and `fasst` go away.
 
+### The second position: the end of a subordinate clause
+
+German is verb-second in a main clause and verb-**final** in a subordinate one,
+and both facts locate the finite verb by counting rather than by parsing. The
+front field gives *du lernt*; the clause end gives *dass du kommen sollt*, where
+the two words are four apart.
+
+This is a position neither tool had. LanguageTool's `DE_VERBAGREEMENT` wants the
+pronoun and the verb adjacent, so on a twenty-sentence battery of verb-final
+clauses — ten wrong, ten correct — it scores 6/10 while this scores 9/10, both
+without a false alarm. The misses are complementary and say exactly what each
+tool is missing: LanguageTool cannot reach past an intervening infinitive, and
+the one sentence it catches and this does not has a noun phrase as its subject,
+which is the gap the section below describes.
+
+Three things had to be given up to get there, all of them found by reading
+reports rather than by reasoning:
+
+* **`-en` is not trusted at all in this position.** It is the infinitive, the
+  first and third person plural, and the declined adjective at once, and a
+  clause end uses every one of them: *dass er versucht zu schlafen* extraposes
+  an infinitive past the finite verb, and *da er es in einem konkreten,
+  empirischen Zusammenhang sieht* can leave the scan standing on an adjective.
+  All twenty reports the first version produced on the prose corpus ended in
+  `-en`. What survives the ban is the irregular auxiliaries and modals, which is
+  where the frequency is anyway.
+* **A coordinating conjunction ends the clause.** *da ich keine Beweise hätte
+  und der Dieb es nicht zurückgibt* has a second subject behind the *und*, and
+  the verb at the end belongs to that one. Stopping early can only cost a
+  detection, never cause a report.
+* **An adjective is never the verb.** The `-e` affix builds *positive* as
+  readily as *lerne*, and unlike the front field, this position has no pronoun
+  in front to rule one out.
+
+### `es` is a real pronoun here, and only here
+
+`es` is excluded from the front-field check because German uses it as a
+placeholder while the true subject follows the verb: *Es werden fünf Klassen
+gebildet*. That placeholder exists **because** there is a front field to fill —
+German allows exactly one constituent before the finite verb — and a subordinate
+clause has none. So *dass es*, *weil es* and *wie es* can only be the pronoun,
+third person singular, and the two hundred false reports the form caused in the
+front field cannot recur.
+
+Only its **person** is checked, though. The copula takes its number from the
+predicate — *weil es meine Freunde sind* is correct — so a third-person reading
+is never wrong after *es*. What is left is the second person, which *es* can
+never take under any analysis, and that is the sentence this started from:
+*Es ist nicht so wie es sein sollt*.
+
 ### What it cannot see
 
 A noun-phrase subject — *die Kinder spielt im Garten*. The number is available
