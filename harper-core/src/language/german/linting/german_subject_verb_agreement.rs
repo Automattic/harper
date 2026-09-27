@@ -2,10 +2,14 @@
 
 use std::sync::Arc;
 
+use crate::language::german::grammar::determiners::{
+    determiner_readings, is_plural_only_quantifier,
+};
+use crate::language::german::grammar::noun_phrase::{self, Phrase};
 use crate::language::german::grammar::subjects::{
     Features, irregular_finite_verb, subject_pronoun, subordinate_subject_pronoun,
 };
-use crate::language::morphology::{MorphologyExt, NumberSet, PersonSet};
+use crate::language::morphology::{Case, MorphologyExt, Number, NumberSet, PersonSet};
 use crate::linting::{Lint, LintKind, Linter};
 use crate::spell::Dictionary;
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
@@ -140,7 +144,11 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // pronoun or an adverb is not the finite verb of the clause. The
         // article `die` used to need this too, until the root that built it
         // lost the flag — see `tests/verb_person_test.rs`.
-        if token.kind.is_determiner() || token.kind.is_pronoun() {
+        if token.kind.is_determiner()
+            || token.kind.is_pronoun()
+            || token.kind.is_preposition()
+            || token.kind.is_conjunction()
+        {
             return Vec::new();
         }
 
@@ -277,6 +285,165 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
 
     fn word_ends_clause(tokens: &[&Token], index: usize, document: &Document) -> bool {
         COORDINATORS.contains(&Self::word_at(tokens, index, document).as_str())
+    }
+
+    /// The number a noun-phrase subject imposes, when its determiner fixes it.
+    ///
+    /// The **determiner** decides this, not the noun. German spells most
+    /// masculine and neuter nouns the same in the nominative singular and
+    /// plural — *der Lehrer* and *die Lehrer*, *das Fenster* and *die Fenster*
+    /// — so the noun entry cannot tell them apart and the article always can.
+    /// Reading the noun instead is how the earlier attempt invented errors.
+    ///
+    /// Only the **nominative** readings count, because only a nominative noun
+    /// phrase is a subject. That is also what keeps *die* honest: it is
+    /// feminine singular or plural in the nominative, so *die Lehrer* stays
+    /// ambiguous and is not checked, while *der Lehrer* is singular and *diese
+    /// Lehrer* plural.
+    ///
+    /// `None` means the determiner allows both numbers, or is not in the table
+    /// at all. Nothing is checked then — an unknown subject narrows nothing.
+    fn subject_number(
+        tokens: &[&Token],
+        document: &Document,
+        phrase: &Phrase,
+    ) -> Option<NumberSet> {
+        let determiner = Self::word_at(tokens, phrase.open, document);
+        if is_plural_only_quantifier(&determiner) {
+            return Some(NumberSet::PLURAL);
+        }
+
+        let readings = determiner_readings(&determiner)?;
+
+        let mut number = NumberSet::empty();
+        for reading in readings.iter().filter(|r| r.case == Case::Nominative) {
+            number |= match reading.number() {
+                Number::Singular => NumberSet::SINGULAR,
+                Number::Plural => NumberSet::PLURAL,
+            };
+        }
+
+        // `die` is where this stops, and it is the most common determiner in
+        // the language: in the nominative it is feminine singular *and*
+        // plural. The noun cannot break the tie — `Kinder`, `Bücher` and
+        // `Kirche` all carry `SINGULAR | PLURAL` in the dictionary, because an
+        // entry describes a lemma and the plural affix hangs off the same one.
+        // Narrowing by it was tried and produced seven reports on edited
+        // prose, five of them from a wrong recorded number. So *die* phrases
+        // are not checked.
+        (number == NumberSet::SINGULAR || number == NumberSet::PLURAL).then_some(number)
+    }
+
+    /// The third position: a noun phrase in the front field.
+    ///
+    /// *Die Kinder spielt im Garten*. German is verb-second, so the finite verb
+    /// stands directly behind the subject phrase — and with the chunker,
+    /// "directly behind the phrase" is a token index rather than a guess.
+    ///
+    /// The guess is what the earlier attempt got wrong, to the tune of 1229
+    /// reports on edited prose. Taking the word behind the head noun put it on
+    /// an adjective in *die Gesellschaft bürgerlichen Rechts* and *die Arten
+    /// hohler Stängel*; the chunker keeps those inside the phrase. And a
+    /// relative clause behind a comma — *…, welches Sittenwidrigkeit
+    /// impliziert* — passed the front-field test while being verb-final; the
+    /// chunker refuses to open a phrase on a relative pronoun.
+    fn lint_noun_phrase_subjects(
+        &self,
+        tokens: &[&Token],
+        document: &Document,
+        lints: &mut Vec<Lint>,
+    ) {
+        for phrase in noun_phrase::phrases(tokens, document) {
+            if !Self::opens_a_clause(tokens, phrase.open, document) {
+                continue;
+            }
+
+            // A coordinator in front of the phrase joins it to the one before
+            // rather than starting a clause, and two coordinated noun phrases
+            // are a *plural* subject however singular each half is: *die
+            // Kodierung und das Format hängen*, *andere Tiere und der Mensch
+            // sind*. The front-field test accepts a coordinator because a
+            // pronoun behind one really does open a clause; a noun phrase
+            // behind one usually does not.
+            if index_of_coordinator_before(tokens, phrase.open, document) {
+                continue;
+            }
+
+            let Some(number) = Self::subject_number(tokens, document, &phrase) else {
+                continue;
+            };
+            let subject = Features::new(PersonSet::THIRD, number);
+
+            let Some(verb_token) = tokens.get(phrase.end) else {
+                continue;
+            };
+            if !matches!(verb_token.kind, TokenKind::Word(_)) {
+                continue;
+            }
+
+            // A postposed genitive attribute leaves an adjective in the verb's
+            // place: *der Brennwert **reinen** Fettes beträgt*, *die Arten
+            // **hohler** Stängel*. The chunker ends the phrase at the
+            // capitalized head, so the attribute behind it lands here.
+            if verb_token.kind.is_adjective() {
+                continue;
+            }
+
+            // And `-en` is refused here too, for the third time and a third
+            // reason. Behind a noun phrase it is the infinitive a modal or a
+            // *zu* governs, with the phrase as its **object**: *eine Pandemie
+            // auszulösen*, *ein Glas trinken*, *ein Haustier halten*. Every one
+            // of the forty-five reports left at this point ended in `-en`, and
+            // every one of them was this.
+            //
+            // The pattern across all three positions is one fact: `-en` is the
+            // infinitive, the plural and the declined adjective, and only
+            // directly behind a personal pronoun does verb-second guarantee
+            // which of them it is. The cost is the *singular subject, plural
+            // verb* direction — *das Kind spielen* goes unreported — and what
+            // is kept is *die Kinder spielt*.
+            if Self::word_at(tokens, phrase.end, document).ends_with("en") {
+                continue;
+            }
+
+            let verb_text: String = document.get_span_content(&verb_token.span).iter().collect();
+            if another_subject_follows(tokens, document, phrase.end) {
+                continue;
+            }
+
+            let readings = self.verb_features(&verb_text, verb_token);
+            if readings.is_empty() || readings.iter().any(|r| subject.agrees_with(r)) {
+                continue;
+            }
+
+            // The copula lets the **predicate** carry the number, but only in
+            // one direction: *ein weiteres Problem sind die langen Wege* is
+            // correct German, while *viele Leute ist müde* is not. A singular
+            // subject with a plural copula is therefore left alone, and the
+            // reverse stays reportable.
+            if number == NumberSet::SINGULAR
+                && is_copula(&verb_text)
+                && readings.iter().any(|r| r.number == NumberSet::PLURAL)
+            {
+                continue;
+            }
+
+            let subject_text: String = (phrase.open..=phrase.head)
+                .map(|at| {
+                    document
+                        .get_span_content(&tokens[at].span)
+                        .iter()
+                        .collect::<String>()
+                })
+                .collect::<Vec<_>>()
+                .join(" ");
+            lints.push(Self::report(
+                &subject_text,
+                &subject,
+                &verb_text,
+                verb_token,
+            ));
+        }
     }
 
     fn report(subject_text: &str, subject: &Features, verb_text: &str, verb: &Token) -> Lint {
@@ -425,6 +592,7 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
             }
 
             self.lint_subordinate_clauses(&tokens, document, &mut lints);
+            self.lint_noun_phrase_subjects(&tokens, document, &mut lints);
         }
 
         lints
@@ -433,6 +601,181 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
     fn description(&self) -> &str {
         "Prüft, ob das Verb in Person und Numerus zum Subjekt passt."
     }
+}
+
+/// Is this a copula, whose number may come from the predicate rather than the
+/// subject?
+///
+/// *Ein Beispiel sind die Streuobstwiesen* is correct German: with *sein*,
+/// *werden* and *bleiben* the predicate nominative can carry the number, so a
+/// singular subject and a plural verb is not an error. This is the same
+/// concession `es` gets in a subordinate clause, for the same reason — and it
+/// is only needed where the subject is a noun phrase, because a personal
+/// pronoun never yields the number this way.
+fn is_copula(word: &str) -> bool {
+    const COPULAS: &[&str] = &[
+        "ist", "sind", "war", "waren", "sei", "seien", "wäre", "wären", "bin", "bist", "seid",
+        "wird", "werden", "wurde", "wurden", "würde", "würden", "bleibt", "bleiben", "blieb",
+        "blieben",
+    ];
+    COPULAS.contains(&word.to_lowercase().as_str())
+}
+
+/// Prepositions and preposition–article contractions, which mark the phrase
+/// behind them as governed and therefore never the subject.
+const GOVERNORS: &[&str] = &[
+    "in",
+    "an",
+    "auf",
+    "aus",
+    "bei",
+    "mit",
+    "nach",
+    "von",
+    "vor",
+    "zu",
+    "über",
+    "unter",
+    "durch",
+    "für",
+    "gegen",
+    "ohne",
+    "um",
+    "seit",
+    "während",
+    "wegen",
+    "trotz",
+    "innerhalb",
+    "außerhalb",
+    "gegenüber",
+    "neben",
+    "zwischen",
+    "hinter",
+    "im",
+    "am",
+    "zum",
+    "zur",
+    "beim",
+    "vom",
+    "ins",
+    "ans",
+    "aufs",
+    "durchs",
+    "fürs",
+    "ums",
+    "übers",
+    "unters",
+    "hinters",
+    "vors",
+];
+
+/// Could something behind the verb be the clause's real subject?
+///
+/// German's front field takes **any** one constituent, not just the subject,
+/// and when it takes an object the subject moves in behind the verb: *Eine
+/// Rolle spielen auch regionale Unterschiede*, *Eine Ausnahme stellen einige
+/// Mundarten*, *Dieser Verfolgung fielen 100.000 Frauen zum Opfer*. All three
+/// are correct, and all three look exactly like a singular subject with a
+/// plural verb.
+///
+/// Nothing on the fronted phrase itself distinguishes the two readings —
+/// *eine*, *der* and *das* are each nominative *and* something else, so the
+/// determiner cannot say whether the phrase is a subject. What does say so is
+/// the rest of the clause: if no other word behind the verb could be the
+/// subject, the fronted phrase has to be it.
+///
+/// A phrase behind a preposition does not count, which is what keeps *die
+/// Kinder spielt im Garten* reportable: *Garten* is capitalized but governed.
+fn another_subject_follows(tokens: &[&Token], document: &Document, verb_at: usize) -> bool {
+    let word_at = |at: usize| -> String {
+        document
+            .get_span_content(&tokens[at].span)
+            .iter()
+            .flat_map(|c| c.to_lowercase())
+            .collect()
+    };
+    let capitalized = |at: usize| {
+        document
+            .get_span_content(&tokens[at].span)
+            .first()
+            .is_some_and(|c| c.is_uppercase())
+    };
+
+    let mut at = verb_at + 1;
+    while at < tokens.len() {
+        match tokens[at].kind {
+            // The clause ends; nothing further belongs to this verb.
+            TokenKind::Punctuation(
+                Punctuation::Comma
+                | Punctuation::Semicolon
+                | Punctuation::Colon
+                | Punctuation::Period,
+            ) => return false,
+            // A bare numeral is a quantity, and a quantity can be a subject:
+            // *Dieser Verfolgung fielen 100.000 Frauen zum Opfer*.
+            TokenKind::Number(_) => return true,
+            TokenKind::Word(_) => {
+                if GOVERNORS.contains(&word_at(at).as_str()) {
+                    // Skip what the preposition governs, head included. The
+                    // determiner and the adjectives in between are lower case
+                    // and the head is capitalized, which is enough to find the
+                    // end — `continues_noun_phrase` is not, because it
+                    // deliberately stops at a determiner so that *die Zeit im
+                    // Büro* chunks as two phrases.
+                    at += 1;
+                    while at < tokens.len() && matches!(tokens[at].kind, TokenKind::Word(_)) {
+                        let head = capitalized(at);
+                        at += 1;
+                        if head {
+                            break;
+                        }
+                    }
+                    continue;
+                }
+
+                // A determiner with no nominative reading opens an object,
+                // not a subject: *einen klaren Zusammenhang*, *dem Vorfall*,
+                // *des Verfahrens*. Skip what it introduces, the same way a
+                // preposition's phrase is skipped.
+                if let Some(readings) = determiner_readings(&word_at(at))
+                    && !readings.iter().any(|r| r.case == Case::Nominative)
+                {
+                    at += 1;
+                    while at < tokens.len() && matches!(tokens[at].kind, TokenKind::Word(_)) {
+                        let head = capitalized(at);
+                        at += 1;
+                        if head {
+                            break;
+                        }
+                    }
+                    continue;
+                }
+
+                if subject_pronoun(&word_at(at)).is_some() || capitalized(at) {
+                    return true;
+                }
+            }
+            _ => {}
+        }
+        at += 1;
+    }
+
+    false
+}
+
+/// Does a coordinating conjunction sit directly in front of `index`?
+fn index_of_coordinator_before(tokens: &[&Token], index: usize, document: &Document) -> bool {
+    index.checked_sub(1).is_some_and(|previous| {
+        matches!(tokens[previous].kind, TokenKind::Word(_))
+            && COORDINATORS.contains(
+                &document
+                    .get_span_content(&tokens[previous].span)
+                    .iter()
+                    .flat_map(|c| c.to_lowercase())
+                    .collect::<String>()
+                    .as_str(),
+            )
+    })
 }
 
 /// How a conjugation ending pairs person with number.
@@ -487,6 +830,129 @@ mod tests {
         GermanSubjectVerbAgreement::new(dictionary.clone())
             .lint(&document)
             .len()
+    }
+
+    /// A noun phrase can be the subject too, and the chunker is what makes the
+    /// verb findable: it stands directly behind the phrase, not behind the head
+    /// noun.
+    #[test]
+    fn a_plural_noun_phrase_has_to_agree() {
+        for text in [
+            "Alle Kinder spielt im Garten.",
+            "Viele Menschen ist unzufrieden.",
+            "Beide Männer arbeitet dort.",
+            "Mehrere Studien zeigt das.",
+            "Sämtliche Akten fehlt.",
+            "Wenige Leute glaubt das.",
+        ] {
+            assert_eq!(lint_count(text), 1, "{text}");
+        }
+    }
+
+    #[test]
+    fn a_correct_noun_phrase_subject_is_quiet() {
+        for text in [
+            "Alle Kinder spielen im Garten.",
+            "Viele Menschen sind unzufrieden.",
+            "Beide Männer arbeiten dort.",
+            "Mehrere Studien zeigen das.",
+            "Alle Teilnehmer erhalten eine Urkunde.",
+            "Der Hund spielt im Garten.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
+    /// The front field holds any one constituent, not only the subject. When
+    /// it holds an object the subject follows the verb, and that is what the
+    /// rest of the clause is read for.
+    #[test]
+    fn a_fronted_object_is_not_the_subject() {
+        for text in [
+            "Eine Rolle spielen auch regionale Unterschiede.",
+            "Eine Ausnahme stellen einige Mundarten dar.",
+            "Dieser Verfolgung fielen 100.000 Frauen zum Opfer.",
+            "Der Flexion stehen die Komparation und die Derivation gegenüber.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
+    /// A phrase governed by a preposition cannot be the subject, which is what
+    /// keeps a fronted subject reportable although a capitalized noun follows
+    /// the verb.
+    #[test]
+    fn a_governed_phrase_does_not_count_as_a_following_subject() {
+        assert_eq!(lint_count("Alle Kinder spielt in dem großen Garten."), 1);
+        assert_eq!(lint_count("Viele Gäste wartet vor dem Haus."), 1);
+    }
+
+    /// A determiner with no nominative reading opens an object, so what
+    /// follows the verb there is not a competing subject.
+    #[test]
+    fn an_accusative_object_behind_the_verb_is_not_a_subject() {
+        assert_eq!(
+            lint_count("Mehrere Studien zeigt einen klaren Zusammenhang."),
+            1
+        );
+        assert_eq!(lint_count("Mehrere Länder plant den Ausstieg."), 1);
+        assert_eq!(lint_count("Viele Firmen meldet einen Rückgang."), 1);
+        // …but an ambiguous one still stops the check, because *die Kommission*
+        // really could be the subject of a fronted-object reading.
+        assert_eq!(
+            lint_count("Beide Vorschläge überzeugt die Kommission nicht."),
+            0
+        );
+    }
+
+    /// Two coordinated noun phrases are one plural subject, however singular
+    /// each half is.
+    #[test]
+    fn a_coordinated_noun_phrase_is_not_checked_alone() {
+        for text in [
+            "Die Kodierung und das Format hängen von der Art ab.",
+            "Andere Tiere und der Mensch sind nicht empfänglich.",
+            "Das erste und das letzte Komma fehlen.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
+    /// `die` is feminine singular and plural in the nominative, and the noun
+    /// cannot break the tie, so those phrases are left alone in both
+    /// directions.
+    #[test]
+    fn an_ambiguous_determiner_is_not_checked() {
+        assert_eq!(lint_count("Die Kinder spielt im Garten."), 0);
+        assert_eq!(lint_count("Die Bücher ist teuer."), 0);
+        assert_eq!(lint_count("Diese Regeln gilt überall."), 0);
+    }
+
+    /// The copula lets the predicate carry the number, but only one way round.
+    #[test]
+    fn the_copula_carries_the_number_in_one_direction_only() {
+        assert_eq!(lint_count("Ein weiteres Problem sind die langen Wege."), 0);
+        assert_eq!(lint_count("Viele Leute ist unzufrieden."), 1);
+    }
+
+    /// Behind a noun phrase, `-en` is the infinitive a modal or a *zu*
+    /// governs, and the phrase is its object.
+    #[test]
+    fn an_infinitive_behind_a_phrase_is_not_its_verb() {
+        for text in [
+            "Er versucht, ein Glas zu trinken.",
+            "Sie wollte eine Pandemie auslösen.",
+            "Man darf hier ein Haustier halten.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
+    /// A postposed genitive attribute stands where the verb would.
+    #[test]
+    fn a_postposed_attribute_is_not_the_verb() {
+        assert_eq!(lint_count("Der Brennwert reinen Fettes beträgt 39 kJ."), 0);
+        assert_eq!(lint_count("Die Arten hohler Stängel sind selten."), 0);
     }
 
     /// The auxiliaries, which carry most of the German verb system and are the

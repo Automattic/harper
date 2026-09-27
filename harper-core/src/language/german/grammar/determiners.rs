@@ -350,6 +350,29 @@ static FORMS: LazyLock<HashMap<String, Vec<DeterminerReading>>> = LazyLock::new(
     forms
 });
 
+/// Determiner-like quantifiers that exist only in the plural.
+///
+/// Deliberately **not** in [`FORMS`]: they decline like adjectives rather than
+/// like an article paradigm, so they have no case readings to offer and
+/// nothing to correct a wrong case *to*. What they do have is an
+/// unambiguous number, which is the one thing the article paradigms cannot
+/// supply — nominative *die*, *diese*, *meine* are feminine singular and
+/// plural at once, and that ambiguity is what stops subject–verb agreement
+/// from reading most noun phrases at all.
+///
+/// Only the forms with no singular reading are here. *einige* and *manche*
+/// are left out because *einige Zeit* and *manche Frau* are singular, and
+/// *diese* because it is the ambiguity this list exists to work around.
+const PLURAL_ONLY: &[&str] = &["alle", "beide", "mehrere", "viele", "wenige", "sämtliche"];
+
+/// Is `word` a quantifier that can only introduce a plural noun phrase?
+///
+/// See [`PLURAL_ONLY`]. Matching is case-insensitive, for a sentence-initial
+/// *Alle*.
+pub fn is_plural_only_quantifier(word: &str) -> bool {
+    PLURAL_ONLY.contains(&word.to_lowercase().as_str())
+}
+
 /// Every reading of `word` as a determiner, or `None` if it is not one.
 ///
 /// Matching is case-insensitive, so a sentence-initial *Der* is found.

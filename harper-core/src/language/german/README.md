@@ -1405,17 +1405,73 @@ is never wrong after *es*. What is left is the second person, which *es* can
 never take under any analysis, and that is the sentence this started from:
 *Es ist nicht so wie es sein sollt*.
 
-### What it cannot see
+### The third position: a noun phrase in the front field
 
-A noun-phrase subject — *die Kinder spielt im Garten*. The number is available
-(the determiner table has it, and 28 000 noun entries gained one), and the
-attempt is worth recording: it reported **1229 times** on the same prose. The
-front field is not the problem; finding the verb is. The word behind the head is
-not reliably it — *die Gesellschaft bürgerlichen Rechts* and *die Arten hohler
-Stängel* put an adjective there — and a relative clause behind a comma
-(*…, welches Sittenwidrigkeit impliziert*) passes the front-field test while
-being verb-final. It needs the noun-phrase chunker the capitalization rule has,
-not another guard.
+*Alle Kinder spielt im Garten*. This is what the chunker in
+`grammar/noun_phrase.rs` was lifted out for: with it, "the word directly behind
+the subject phrase" is a token index rather than a guess, and the guess is what
+the first attempt got wrong — 1229 reports on edited prose, from taking the word
+behind the *head noun* and landing on an adjective in *die Gesellschaft
+bürgerlichen Rechts*.
+
+The chunker alone took that to 402. Getting to zero took four more passes, and
+each one is a fact about German rather than a patch:
+
+* **The front field is not the subject position.** It holds any *one*
+  constituent, and when it holds an object the subject moves in behind the verb:
+  *Eine Rolle spielen auch regionale Unterschiede*, *Eine Ausnahme stellen
+  einige Mundarten*, *Dieser Verfolgung fielen 100 000 Frauen zum Opfer*. All
+  three look exactly like a singular subject with a plural verb. Nothing on the
+  fronted phrase separates the readings — *eine*, *der* and *das* are each
+  nominative *and* something else — so what decides it is the rest of the
+  clause: the phrase is the subject only when nothing behind the verb could be.
+  A phrase governed by a preposition does not count, nor one opened by a
+  determiner with no nominative reading (*einen klaren Zusammenhang*), which is
+  what keeps *Alle Kinder spielt in dem großen Garten* reportable.
+* **Two coordinated phrases are one plural subject**, however singular each
+  half is: *die Kodierung und das Format hängen*, *andere Tiere und der Mensch
+  sind*. A coordinator in front of a noun phrase joins it to the one before
+  rather than opening a clause.
+* **`-en` again**, for the third position and a third reason. Behind a noun
+  phrase it is the infinitive a modal or a *zu* governs, and the phrase is its
+  **object**: *eine Pandemie auszulösen*, *ein Glas trinken*, *ein Haustier
+  halten*. All forty-five reports left at that point ended in `-en` and every
+  one was this.
+* **The copula, in one direction only.** *Ein weiteres Problem sind die langen
+  Wege* is correct, because the predicate may carry the number. *Viele Leute ist
+  unzufrieden* is not. So a singular subject with a plural copula is left alone
+  and the reverse stays reportable.
+
+### Why only the plural quantifiers
+
+The number has to come from the **determiner**, and for most of them it is
+there: *der*, *das*, *ein*, *dieser* are singular in the nominative and nothing
+else. The exception is the biggest one — nominative *die* is feminine singular
+*and* plural, and so are *keine*, *meine*, *diese*.
+
+The noun cannot break that tie. `Kinder`, `Bücher` and `Kirche` all carry
+`SINGULAR | PLURAL`, because a dictionary entry describes a lemma and the plural
+affix hangs off the same one. Narrowing by it was tried and produced seven
+reports, five of them from a number recorded wrongly — *Kirche*, *Note* and
+*Region* as plural, *Männchen* as singular. It is the same wall as gender, and
+the same answer: leave it.
+
+What is left is the quantifiers that exist only in the plural — *alle*, *beide*,
+*mehrere*, *viele*, *wenige*, *sämtliche*. They are in `grammar/determiners.rs`
+but deliberately **not** in the article paradigms: they decline like adjectives
+and have no case reading to offer, so they cannot be corrected *to* anything.
+What they have is an unambiguous number, which is exactly what the articles lack.
+
+On a twenty-sentence battery of noun-phrase subjects this scores 6/10 against
+LanguageTool's 1/10, both with no false alarm. The four misses are the
+fronted-object guard refusing a sentence whose object is itself ambiguous, which
+is the price of not knowing case.
+
+### What it still cannot see
+
+A subject under *die*, in either direction, for the reason above. And *die
+Kinder spielt* specifically — the most natural example of the error this rule is
+named for — is exactly the case the data cannot reach.
 
 ## das / dass, and why only one direction of it
 

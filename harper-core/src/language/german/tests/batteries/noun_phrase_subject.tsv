@@ -1,0 +1,20 @@
+NP-Subjekt	err	Alle Kinder spielt im Garten.
+NP-Subjekt	err	Viele Menschen ist mit dem Ergebnis unzufrieden.
+NP-Subjekt	err	Beide Männer arbeitet seit Jahren dort.
+NP-Subjekt	err	Mehrere Studien zeigt einen klaren Zusammenhang.
+NP-Subjekt	err	Sämtliche Akten fehlt seit dem Umzug.
+NP-Subjekt	err	Wenige Leute glaubt diese Geschichte.
+NP-Subjekt	err	Viele Gäste wartet vor dem Haus.
+NP-Subjekt	err	Alle Teilnehmer bekommt am Ende eine Urkunde.
+NP-Subjekt	err	Beide Vorschläge überzeugt die Kommission nicht.
+NP-Subjekt	err	Mehrere Zeugen berichtet von dem Vorfall.
+NP-Subjekt	ok	Alle Kinder spielen im Garten.
+NP-Subjekt	ok	Viele Menschen sind mit dem Ergebnis unzufrieden.
+NP-Subjekt	ok	Beide Männer arbeiten seit Jahren dort.
+NP-Subjekt	ok	Mehrere Studien zeigen einen klaren Zusammenhang.
+NP-Subjekt	ok	Eine Rolle spielen auch regionale Unterschiede.
+NP-Subjekt	ok	Eine Ausnahme stellen einige Mundarten des Westens dar.
+NP-Subjekt	ok	Die Kodierung und das Format hängen von der Art ab.
+NP-Subjekt	ok	Der Brennwert reinen Fettes beträgt 39 kJ pro Gramm.
+NP-Subjekt	ok	Ein weiteres Problem sind die langen Wege.
+NP-Subjekt	ok	Er versucht, ein neues Vermögen aufzubauen.
