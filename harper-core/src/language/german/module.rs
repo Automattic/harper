@@ -56,6 +56,16 @@ impl LanguageModule for GermanModule {
         };
 
         let mut group = LintGroup::empty();
+
+        // Typography, borrowed whole from the shared core. Spacing around a
+        // comma and doubled spaces are the same mistake in every language that
+        // uses the Latin script, so German gets the two rules as they stand
+        // rather than a copy of them. Their messages are English and stay
+        // English: the suggestion is what the user acts on, and it is a
+        // character, not a sentence. See `language/AGENTS.md` on reuse.
+        group.add("Spaces", crate::linting::spaces::Spaces);
+        group.add("CommaFixes", crate::linting::comma_fixes::CommaFixes);
+
         group.add(
             "GermanSpellCheck",
             GermanSpellCheck::new(dictionary.clone()),
