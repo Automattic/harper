@@ -94,12 +94,7 @@ impl ExprLinter for OrthographicConsistency {
 
         if flags_to_check
             .into_iter()
-            .filter(|flag| {
-                canonical_flags.contains(*flag) != cur_flags.contains(*flag)
-                    && ([OrthFlags::UPPER_CAMEL, OrthFlags::LOWER_CAMEL].contains(flag))
-                    && !canonical_flags.contains(OrthFlags::LOWERCASE)
-                    && !canonical_flags.contains(OrthFlags::TITLECASE)
-            })
+            .filter(|flag| canonical_flags.contains(*flag) != cur_flags.contains(*flag))
             .count()
             == 1
             && let Some(canonical) = self.dict.get_correct_capitalization_of(chars)
@@ -451,13 +446,5 @@ mod tests {
             "The post’s problem was not in its complexity.",
             OrthographicConsistency::default(),
         );
-    }
-
-    #[test]
-    fn lets_confusion_description() {
-        assert_no_lints(
-            "It's often hard to determine where the subject should go with the word `let`. This rule attempts to find common errors with redundancy and contractions that may lead to confusion for readers.",
-            OrthographicConsistency::default(),
-        )
     }
 }
