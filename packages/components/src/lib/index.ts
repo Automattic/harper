@@ -73,6 +73,7 @@ export { default as SearchField } from './SearchField.svelte';
 export { default as Section } from './Section.svelte';
 export { default as Select } from './Select.svelte';
 export { default as SettingRow } from './SettingRow.svelte';
+export { default as SlideDeck } from './SlideDeck.svelte';
 export { default as Testimonial } from './Testimonial.svelte';
 export { default as TestimonialCollection } from './TestimonialCollection.svelte';
 export { default as Textarea } from './Textarea.svelte';

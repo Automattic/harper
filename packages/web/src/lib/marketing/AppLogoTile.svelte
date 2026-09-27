@@ -13,6 +13,7 @@ import {
 	TelegramLogo,
 	ThingsLogo,
 	WhatsAppLogo,
+	WordPressLogo,
 } from 'components';
 
 export let id: string;
@@ -51,5 +52,7 @@ $: tileStyle = `width: ${size}px; height: ${size}px; border-radius: ${Math.round
 		<ScrivenerLogo />
 	{:else if id === 'reddit'}
 		<RedditLogo />
+	{:else if id === 'wordpress'}
+		<WordPressLogo />
 	{/if}
 </span>

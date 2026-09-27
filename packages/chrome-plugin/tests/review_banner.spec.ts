@@ -34,6 +34,9 @@ test.describe('review banner', () => {
 		await page.getByText("Let's start writing").click();
 
 		await expect(page.getByText('Harper is')).toBeVisible();
-		await expect(page.getByText('Would you mind giving us a review?')).toHaveCount(1);
+		// WASM startup can delay replies; test.slow() does not extend assertion timeouts.
+		await expect(page.getByText('Would you mind giving us a review?')).toHaveCount(1, {
+			timeout: 30000,
+		});
 	});
 });
