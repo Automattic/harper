@@ -113,12 +113,7 @@ impl Default for GetAccessTo {
     fn default() -> Self {
         let access_verbs = SequenceExpr::word_set(ACCESS_VERBS);
 
-        let optional_modifiers = SequenceExpr::any_of(vec![
-            Box::new(SequenceExpr::default().then_determiner()),
-            Box::new(SequenceExpr::default().then_possessive_determiner()),
-            Box::new(SequenceExpr::default().then_quantifier()),
-        ])
-        .t_ws();
+        let optional_modifiers = SequenceExpr::default().then_determiner().t_ws();
 
         let optional_adjectives = SequenceExpr::default().then_one_or_more_adjectives().t_ws();
 
@@ -306,6 +301,24 @@ mod tests {
             "They need to get full access at the database.",
             GetAccessTo::default(),
             "They need to get full access to the database.",
+        );
+    }
+
+    #[test]
+    fn test_with_possessive_determiner() {
+        assert_suggestion_result(
+            "They need to get their access at the database.",
+            GetAccessTo::default(),
+            "They need to get their access to the database.",
+        );
+    }
+
+    #[test]
+    fn test_with_quantifier() {
+        assert_suggestion_result(
+            "They need to get some access at the database.",
+            GetAccessTo::default(),
+            "They need to get some access to the database.",
         );
     }
 
