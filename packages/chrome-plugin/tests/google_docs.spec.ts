@@ -1,5 +1,6 @@
 import type { Page } from '@playwright/test';
 import { expect, test } from './fixtures';
+import { getBackground } from './testUtils';
 
 type MockGoogleDocsRect = {
 	label: string;
@@ -429,16 +430,21 @@ async function installMockGoogleDocsGeometry(
 						getSelection: () => Array<{ start: number; end: number }>;
 					}>;
 				}
-			)._docs_annotate_getAnnotatedText = async () => ({
-				getText: () =>
-					(
-						window as Window & {
-							__harperMockGoogleDocsText?: string;
-						}
-					).__harperMockGoogleDocsText ?? '',
-				setSelection: () => {},
-				getSelection: () => [{ start: 0, end: 0 }],
-			});
+			)._docs_annotate_getAnnotatedText = async (extensionId?: string) => {
+				if (!extensionId) {
+					throw new Error('Google Docs requires an extension identifier');
+				}
+				return {
+					getText: () =>
+						(
+							window as Window & {
+								__harperMockGoogleDocsText?: string;
+							}
+						).__harperMockGoogleDocsText ?? '',
+					setSelection: () => {},
+					getSelection: () => [{ start: 0, end: 0 }],
+				};
+			};
 		},
 		{ pageText: annotatedText },
 	);
@@ -477,6 +483,35 @@ async function getBridgeSource(page: Page) {
 }
 
 test.describe('Google Docs support', () => {
+	test('lints the logical text across positioned formatting spans', async ({ page, context }) => {
+		const background = await getBackground(context);
+		await background.evaluate(() => {
+			const state = globalThis as typeof globalThis & { googleDocsLintTexts: string[] };
+			state.googleDocsLintTexts = [];
+			chrome.runtime.onMessage.addListener((request) => {
+				if (request.kind === 'lint' && request.domain === 'docs.google.com') {
+					state.googleDocsLintTexts.push(request.text);
+				}
+			});
+		});
+
+		await openMockGoogleDocsPage(
+			page,
+			ITALIC_SHIFTED_RECTS.map((rect) => ({ ...rect, label: rect.label.trimEnd() })),
+			'This is an test.',
+		);
+		await expect.poll(() => getBridgeSource(page)).toBe('logical');
+		await expect
+			.poll(() =>
+				background.evaluate(
+					() =>
+						(globalThis as typeof globalThis & { googleDocsLintTexts: string[] })
+							.googleDocsLintTexts,
+				),
+			)
+			.toContain('This is an test.');
+	});
+
 	test('Google Docs restores spaces around formatted inline words', async ({ page }) => {
 		await openMockGoogleDocsPage(page, FORMATTED_WORD_GAP_RECTS, 'not smart enough.');
 
