@@ -10,7 +10,7 @@ const wrapperPath = path.resolve(__dirname, './vglrunWrapper.js');
  */
 export default defineConfig({
 	testDir: './tests',
-	testIgnore: ['**/google_docs_*.spec.ts', '**/googleDocs*.spec.ts'],
+	testIgnore: ['**/google_docs*.spec.ts', '**/googleDocs*.spec.ts'],
 	fullyParallel: true,
 	/* Fail the build on CI if you accidentally left test.only in the source code. */
 	forbidOnly: !!process.env.CI,
