@@ -52,10 +52,7 @@ impl Config {
     }
 
     pub fn is_integration_enabled(&self, bundle_id: &str) -> bool {
-        let integrations: &[Integration] = &self.integrations;
-        integrations
-            .iter()
-            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
+        Integration::is_integration_enabled_in(&self.integrations, bundle_id)
     }
 
     /// Resolves an app's enabled state, registering unknown apps when automatic enablement is on.
@@ -67,11 +64,7 @@ impl Config {
         if bundle_id.is_empty() {
             return false;
         }
-        if let Some(integration) = self
-            .integrations
-            .iter()
-            .find(|item| item.bundle_id == bundle_id)
-        {
+        if let Some(integration) = Integration::find_integration(&self.integrations, bundle_id) {
             return integration.enabled;
         }
         if !self.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {
@@ -84,10 +77,7 @@ impl Config {
     pub fn add_integration(&mut self, bundle_id: String) {
         let bundle_id = bundle_id.trim();
         if bundle_id.is_empty()
-            || self
-                .integrations
-                .iter()
-                .any(|item| item.bundle_id == bundle_id)
+            || Integration::find_integration(&self.integrations, bundle_id).is_some()
         {
             return;
         }
@@ -101,15 +91,14 @@ impl Config {
     }
 
     pub fn remove_integration(&mut self, bundle_id: &str) {
-        self.integrations
-            .retain(|integration| integration.bundle_id != bundle_id);
+        self.integrations.retain(|integration| {
+            !Integration::matches_bundle_id(&integration.bundle_id, bundle_id)
+        });
     }
 
     pub fn set_integration_enabled(&mut self, bundle_id: &str, enabled: bool) {
-        if let Some(integration) = self
-            .integrations
-            .iter_mut()
-            .find(|integration| integration.bundle_id == bundle_id)
+        if let Some(integration) =
+            Integration::find_integration_mut(&mut self.integrations, bundle_id)
         {
             integration.enabled = enabled;
         }

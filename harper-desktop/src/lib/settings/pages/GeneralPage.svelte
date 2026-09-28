@@ -4,6 +4,7 @@ import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 import { DesktopUpdater } from '$lib/DesktopUpdater';
+import { platformTrayName } from '$lib/platform';
 import { DIALECT_OPTIONS } from '../settings-data';
 
 const DialectValue = {
@@ -276,7 +277,7 @@ function settingsValueToDialect(value: string): Dialect {
           <div class="eyebrow">General</div>
           <div class="rows">
             <SettingRow top>
-              <strong>Keep Harper in the menu bar</strong>
+              <strong>Keep Harper in the {platformTrayName}</strong>
               <p>Shows the Harper icon so you can open settings without opening the main app.</p>
               <Checkbox
                 slot="control"
