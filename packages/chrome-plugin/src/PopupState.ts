@@ -10,6 +10,12 @@ export type PopupState =
 			feedback: string;
 			example: string;
 			rule_id: string;
+	  }
+	| {
+			page: 'domain-review';
+			works: boolean;
+			domain: string;
+			feedback: string;
 	  };
 
 export function main(): PopupState {

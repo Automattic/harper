@@ -1,0 +1,11 @@
+expr main [(curious of), (curious on)]
+
+let message "Did you mean `curious about`?"
+let description "Corrects `curious of` and `curious on` to `curious about`."
+let kind "Usage"
+let becomes ["curious about"]
+
+test "we are working on in Docker in AWS but curious on recommended requirements" "we are working on in Docker in AWS but curious about recommended requirements"
+test "Curious on why QUIC works on 3.2 but not 3.3 in PUT on NonStop." "Curious about why QUIC works on 3.2 but not 3.3 in PUT on NonStop."
+test "started to get curious of how small a purpose trained LLM could be for the task" "started to get curious about how small a purpose trained LLM could be for the task"
+test "I'm curious of why this is a major performance problem for you." "I'm curious about why this is a major performance problem for you."

@@ -13,7 +13,7 @@ pub struct ThereOwn {
 
 impl Default for ThereOwn {
     fn default() -> Self {
-        let expr = SequenceExpr::word_set(&["there", "they're", "theyre"])
+        let expr = SequenceExpr::word_set(["there", "they're", "theyre"])
             .t_ws()
             .t_aco("own");
 

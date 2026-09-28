@@ -100,6 +100,14 @@ export class Client {
 		await invoke('set_last_update_check', { lastUpdateCheck });
 	}
 
+	static async getOnboardingCompleted(): Promise<boolean> {
+		return await invoke<boolean>('get_onboarding_completed');
+	}
+
+	static async setOnboardingCompleted(onboardingCompleted: boolean): Promise<void> {
+		await invoke('set_onboarding_completed', { onboardingCompleted });
+	}
+
 	static async getLaunchAtStartup(): Promise<boolean> {
 		return await isEnabled();
 	}
@@ -146,6 +154,14 @@ export class Client {
 
 	static async getIntegrations(): Promise<Integration[]> {
 		return await invoke<Integration[]>('get_integrations');
+	}
+
+	static async getAutoEnableNewApps(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_enable_new_apps');
+	}
+
+	static async setAutoEnableNewApps(autoEnableNewApps: boolean): Promise<void> {
+		await invoke('set_auto_enable_new_apps', { autoEnableNewApps });
 	}
 
 	static async addIntegration(bundleId: string): Promise<void> {

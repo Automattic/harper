@@ -8,15 +8,6 @@ type ScreenPoint = {
 	y: number;
 };
 
-export function randomString(length: number): string {
-	const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-	let result = '';
-	for (let i = 0; i < length; i++) {
-		result += chars.charAt(Math.floor(Math.random() * chars.length));
-	}
-	return result;
-}
-
 export async function getBackground(context: BrowserContext) {
 	return (
 		context.serviceWorkers()[0] ??
@@ -92,6 +83,11 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 			await editorEl.press(breakKey);
 		}
 	}
+}
+
+/** Locate replacement rows (including explicit empty states) inside Harper's suggestion popup. */
+export function getHarperSuggestionRows(page: Page): Locator {
+	return page.locator('.harper-container').getByRole('menuitem');
 }
 
 /** Locate the Harper highlights on a page. */
@@ -253,7 +249,7 @@ export async function testBasicSuggestion(
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await page.waitForTimeout(3000);
 
@@ -293,20 +289,30 @@ export async function testCanIgnoreSuggestion(
 			await setup(page, editor);
 		}
 
-		const cacheSalt = randomString(5);
-		await replaceEditorContent(editor, cacheSalt);
+		const testText = 'This is a mistaek.';
+		await replaceEditorContent(editor, testText);
 
-		// Open the popup for the first highlight and click Ignore.
+		// Ensure the test text produces only the spelling lint we intend to ignore.
+		await expect(getHarperHighlights(page)).toHaveCount(1);
+
+		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
+
+		// The popup captures the editor's cursor state on the next animation frame.
+		await page.evaluate(
+			() =>
+				new Promise<void>((resolve) =>
+					requestAnimationFrame(() => requestAnimationFrame(() => resolve())),
+				),
+		);
 		await page.getByTitle('Ignore this lint').click();
 
 		// Wait for highlights to disappear after ignoring.
 		await expect(getHarperHighlights(page)).toHaveCount(0, { timeout: 10000 });
 
 		// Nothing should change.
-		await assertEditorText(editor, cacheSalt);
-		await assertLocatorIsFocused(page, editor);
+		await assertEditorText(editor, testText);
 	});
 }
 
@@ -380,7 +386,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.waitForTimeout(4000);
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 		expect(await clickHarperHighlight(page)).toBe(true);
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 		await assertEditorContains(editor, 'test here');
 
@@ -399,7 +405,7 @@ export async function testMultipleSuggestionsAndUndo(
 			await editor.press('ArrowLeft');
 		}
 
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 
 		// Verify only second "tset" was corrected

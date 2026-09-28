@@ -66,6 +66,9 @@ pub trait CharStringExt: private::Sealed {
 
     /// Check if the string contains any vowels
     fn contains_vowel(&self) -> bool;
+
+    /// Strip a prefix from the string, case-insensitively
+    fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]>;
 }
 
 impl CharStringExt for [char] {
@@ -204,6 +207,15 @@ impl CharStringExt for [char] {
 
     fn contains_vowel(&self) -> bool {
         self.iter().any(|c| c.is_vowel())
+    }
+
+    fn strip_prefix_ignore_ascii_case_chars(&self, prefix: &[char]) -> Option<&[char]> {
+        (self.len() >= prefix.len()
+            && self
+                .iter()
+                .zip(prefix)
+                .all(|(a, b)| a.eq_ignore_ascii_case(b)))
+        .then_some(&self[prefix.len()..])
     }
 }
 

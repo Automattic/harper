@@ -746,6 +746,9 @@ impl ExprLinter for Regionalisms {
             lint_kind: LintKind::Regionalism,
             suggestions,
             message,
+            // TODO is the priority below confusing the higher priority and higher number?
+            // TODO spellcheck is 63
+            // higher priority = lower number
             priority: 64,
         })
     }

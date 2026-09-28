@@ -376,7 +376,7 @@ fn main() -> anyhow::Result<()> {
                         &[]
                     }),
                 )
-                .print((&*input_identifier, Source::from(source)))?;
+                .print((input_identifier.as_ref(), Source::from(source)))?;
 
             Ok(())
         }

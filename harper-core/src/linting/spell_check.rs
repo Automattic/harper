@@ -168,6 +168,7 @@ mod tests {
     use super::SpellCheck;
     use crate::dict_word_metadata::DialectFlags;
     use crate::linting::Linter;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{
@@ -175,6 +176,13 @@ mod tests {
         linting::tests::{assert_lint_count, assert_suggestion_result},
     };
     use crate::{DictWordMetadata, Document};
+    use std::sync::Arc;
+
+    create_test_pool!(
+        SpellCheck,
+        SpellCheck<Arc<FstDictionary>>,
+        SpellCheck::new(FstDictionary::curated(), Dialect::American)
+    );
 
     // Capitalization tests
 
@@ -182,7 +190,7 @@ mod tests {
     fn america_capitalized() {
         assert_suggestion_result(
             "The word america should be capitalized.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             "The word America should be capitalized.",
         );
     }
@@ -191,11 +199,7 @@ mod tests {
 
     #[test]
     fn harper_automattic_capitalized() {
-        assert_lint_count(
-            "So should harper and automattic.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            2,
-        );
+        assert_lint_count("So should harper and automattic.", test_linter(), 2);
     }
 
     #[test]
@@ -229,7 +233,7 @@ mod tests {
     fn mum_and_mummy_not_just_commonwealth() {
         assert_lint_count(
             "Mum's the word about that Egyptian mummy.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             0,
         );
     }
@@ -245,11 +249,7 @@ mod tests {
 
     #[test]
     fn australian_verandah_in_american_dialect() {
-        assert_lint_count(
-            "Our house has a verandah.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("Our house has a verandah.", test_linter(), 1);
     }
 
     #[test]
@@ -292,7 +292,7 @@ mod tests {
     fn australian_and_canadian_spellings_that_are_not_american() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             2,
         );
     }
@@ -319,7 +319,7 @@ mod tests {
     fn australian_words_flagged_for_american_english() {
         assert_lint_count(
             "There's an esky full of beers in the back of the ute.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             2,
         );
     }
@@ -349,27 +349,19 @@ mod tests {
         // assert_suggestion_result(
         assert_suggestion_result(
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
         );
     }
 
     #[test]
     fn afterwards_not_us() {
-        assert_lint_count(
-            "afterwards",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("afterwards", test_linter(), 1);
     }
 
     #[test]
     fn afterward_is_us() {
-        assert_lint_count(
-            "afterward",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            0,
-        );
+        assert_lint_count("afterward", test_linter(), 0);
     }
 
     #[test]
@@ -523,11 +515,7 @@ mod tests {
 
     #[test]
     fn flag_prepone_in_non_indian_english() {
-        assert_lint_count(
-            "We had to prepone the meeting",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("We had to prepone the meeting", test_linter(), 1);
     }
 
     #[test]
@@ -540,80 +528,47 @@ mod tests {
 
     #[test]
     fn dont_flag_pr() {
-        assert_no_lints(
-            "PR",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
+        assert_no_lints("PR", test_linter());
     }
 
     #[test]
     fn no_improper_suggestion_for_macos() {
-        assert_good_and_bad_suggestions(
-            "MacOS",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            &["macOS"],
-            &["MacOS"],
-        );
+        assert_good_and_bad_suggestions("MacOS", test_linter(), &["macOS"], &["MacOS"]);
     }
 
     #[test]
     fn allows_parenthetical_plural_s() {
-        assert_no_lints(
-            "Please ask each person(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
+        assert_no_lints("Please ask each person(s) to sign.", test_linter());
     }
 
     #[test]
     fn allows_multiple_parenthetical_plural_s_markers() {
-        assert_no_lints(
-            "Review the person(s) and document(s).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
+        assert_no_lints("Review the person(s) and document(s).", test_linter());
     }
 
     #[test]
     fn allows_uppercase_parenthetical_plural_s() {
-        assert_no_lints(
-            "CONTACT THE PERSON(S).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-        );
+        assert_no_lints("CONTACT THE PERSON(S).", test_linter());
     }
 
     #[test]
     fn still_flags_misspelled_word_before_parenthetical_plural_s() {
-        assert_lint_count(
-            "Please ask each persson(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("Please ask each persson(s) to sign.", test_linter(), 1);
     }
 
     #[test]
     fn still_flags_parenthetical_s_without_preceding_word() {
-        assert_lint_count(
-            "Please mark (s) on the form.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("Please mark (s) on the form.", test_linter(), 1);
     }
 
     #[test]
     fn still_flags_spaced_parenthetical_s() {
-        assert_lint_count(
-            "Please ask each person (s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("Please ask each person (s) to sign.", test_linter(), 1);
     }
 
     #[test]
     fn still_flags_longer_parenthetical_marker() {
-        assert_lint_count(
-            "Please ask each person(ss) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            1,
-        );
+        assert_lint_count("Please ask each person(ss) to sign.", test_linter(), 1);
     }
 
     // Tests that were previously in `spell/mod.rs`
@@ -623,11 +578,7 @@ mod tests {
     // is_ou_misspelling
     #[test]
     fn suggest_color_for_colour_lowercase() {
-        assert_suggestion_result(
-            "colour",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "color",
-        );
+        assert_suggestion_result("colour", test_linter(), "color");
     }
 
     #[test]
@@ -642,11 +593,7 @@ mod tests {
     // titlecase
     #[test]
     fn suggest_color_for_colour_titlecase() {
-        assert_suggestion_result(
-            "Colour",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Color",
-        );
+        assert_suggestion_result("Colour", test_linter(), "Color");
     }
 
     #[test]
@@ -663,11 +610,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_color_for_colour_all_caps() {
-        assert_suggestion_result(
-            "COLOUR",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "COLOR",
-        );
+        assert_suggestion_result("COLOUR", test_linter(), "COLOR");
     }
 
     #[test]
@@ -695,11 +638,7 @@ mod tests {
 
     #[test]
     fn suggest_realize_for_realise() {
-        assert_suggestion_result(
-            "realise",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "realize",
-        );
+        assert_suggestion_result("realise", test_linter(), "realize");
     }
 
     #[test]
@@ -715,11 +654,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_titlecase() {
-        assert_suggestion_result(
-            "Realise",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Realize",
-        );
+        assert_suggestion_result("Realise", test_linter(), "Realize");
     }
 
     #[test]
@@ -735,11 +670,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_all_caps() {
-        assert_suggestion_result(
-            "REALISE",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "REALIZE",
-        );
+        assert_suggestion_result("REALISE", test_linter(), "REALIZE");
     }
 
     // s/c as in defense/defence
@@ -754,11 +685,7 @@ mod tests {
 
     #[test]
     fn suggest_defense_for_defence() {
-        assert_suggestion_result(
-            "defence",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "defense",
-        );
+        assert_suggestion_result("defence", test_linter(), "defense");
     }
 
     #[test]
@@ -772,11 +699,7 @@ mod tests {
 
     #[test]
     fn suggest_defence_for_defense_titlecase() {
-        assert_suggestion_result(
-            "Defence",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Defense",
-        );
+        assert_suggestion_result("Defence", test_linter(), "Defense");
     }
 
     #[test]
@@ -792,11 +715,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_defence_for_defense_all_caps() {
-        assert_suggestion_result(
-            "DEFENCE",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "DEFENSE",
-        );
+        assert_suggestion_result("DEFENCE", test_linter(), "DEFENSE");
     }
 
     // k/c as in skeptic/sceptic
@@ -811,11 +730,7 @@ mod tests {
 
     #[test]
     fn suggest_skeptic_for_sceptic() {
-        assert_suggestion_result(
-            "sceptic",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "skeptic",
-        );
+        assert_suggestion_result("sceptic", test_linter(), "skeptic");
     }
 
     #[test]
@@ -830,11 +745,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_skeptic_for_sceptic_titlecase() {
-        assert_suggestion_result(
-            "Sceptic",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Skeptic",
-        );
+        assert_suggestion_result("Sceptic", test_linter(), "Skeptic");
     }
 
     #[test]
@@ -850,22 +761,14 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_sceptic_for_skeptic_all_caps() {
-        assert_suggestion_result(
-            "SCEPTIC",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "SKEPTIC",
-        );
+        assert_suggestion_result("SCEPTIC", test_linter(), "SKEPTIC");
     }
 
     // is_er_misspelling
     // as in meter/metre
     #[test]
     fn suggest_centimeter_for_centimetre() {
-        assert_suggestion_result(
-            "centimetre",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "centimeter",
-        );
+        assert_suggestion_result("centimetre", test_linter(), "centimeter");
     }
 
     #[test]
@@ -879,11 +782,7 @@ mod tests {
 
     #[test]
     fn suggest_centimeter_for_centimetre_titlecase() {
-        assert_suggestion_result(
-            "Centimetre",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Centimeter",
-        );
+        assert_suggestion_result("Centimetre", test_linter(), "Centimeter");
     }
 
     #[test]
@@ -899,11 +798,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_centimeter_for_centimetre_all_caps() {
-        assert_suggestion_result(
-            "CENTIMETRE",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "CENTIMETER",
-        );
+        assert_suggestion_result("CENTIMETRE", test_linter(), "CENTIMETER");
     }
 
     #[test]
@@ -920,11 +815,7 @@ mod tests {
     // as in traveller/traveler
     #[test]
     fn suggest_traveler_for_traveller() {
-        assert_suggestion_result(
-            "traveller",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "traveler",
-        );
+        assert_suggestion_result("traveller", test_linter(), "traveler");
     }
 
     #[test]
@@ -938,11 +829,7 @@ mod tests {
 
     #[test]
     fn suggest_traveler_for_traveller_titlecase() {
-        assert_suggestion_result(
-            "Traveller",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "Traveler",
-        );
+        assert_suggestion_result("Traveller", test_linter(), "Traveler");
     }
 
     #[test]
@@ -958,11 +845,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_traveler_for_traveller_all_caps() {
-        assert_suggestion_result(
-            "TRAVELLER",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "TRAVELER",
-        );
+        assert_suggestion_result("TRAVELLER", test_linter(), "TRAVELER");
     }
 
     #[test]
@@ -991,7 +874,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american() {
         assert_suggestion_result(
             "It's a greyscale photo.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             "It's a grayscale photo.",
         );
     }
@@ -1010,7 +893,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american_titlecase() {
         assert_suggestion_result(
             "It's a Greyscale Photo.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            test_linter(),
             "It's a Grayscale Photo.",
         );
     }
@@ -1028,11 +911,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_gray_for_grey_in_american_all_caps() {
-        assert_suggestion_result(
-            "GREY",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            "GRAY",
-        );
+        assert_suggestion_result("GREY", test_linter(), "GRAY");
     }
 
     // Tests for non-dialectal misspelling patterns
@@ -1097,10 +976,7 @@ mod tests {
     #[test]
     fn allows_informal_laughter() {
         for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
-            assert_no_lints(
-                source,
-                SpellCheck::new(FstDictionary::curated(), Dialect::American),
-            );
+            assert_no_lints(source, test_linter());
         }
     }
 }

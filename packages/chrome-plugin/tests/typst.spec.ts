@@ -19,7 +19,7 @@ test('Typst CodeMirror editor can apply a suggestion', async ({ page }) => {
 	await assertHighlightCount(page, 1);
 
 	expect(await clickHarperHighlight(page)).toBe(true);
-	await page.getByTitle('Replace with "a"').click();
+	await page.getByTitle('Click to replace "an" with "a"').click();
 
 	await expect(editor).toContainText('This is a test');
 });
@@ -37,7 +37,7 @@ test('Typst CodeMirror handles multiline suggestions distinctly', async ({ page 
 	await assertHighlightCount(page, 2);
 	const initialHighlightCount = 2;
 	expect(await clickHarperHighlight(page)).toBe(true);
-	await page.getByTitle('Replace with "a"').click();
+	await page.getByTitle('Click to replace "an" with "a"').click();
 
 	const editorText = await editor.innerText();
 	expect((editorText.match(/an test/g) ?? []).length).toBe(1);

@@ -407,6 +407,11 @@ mod tests {
     }
 
     #[test]
+    fn contains_inexperienced() {
+        assert!(MutableDictionary::curated().contains_word_str("inexperienced"))
+    }
+
+    #[test]
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 

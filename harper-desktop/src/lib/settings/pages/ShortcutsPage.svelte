@@ -1,4 +1,6 @@
 <script lang="ts">
+import { Button, Checkbox, CheckIcon, Select, SettingRow } from 'components';
+
 const shortcutItems = [
 	{ id: 'show-menu', label: 'Show Harper menu', keys: ['Shift', 'Cmd', 'H'] },
 	{ id: 'quick-review', label: 'Open quick review', keys: ['Ctrl', 'Cmd', 'Space'] },
@@ -22,7 +24,7 @@ let activationKey = 'off';
 
           <div class="shortcut-list">
             {#each shortcutItems as item}
-              <button class="shortcut-row" type="button" disabled title="Not wired yet">
+              <Button unstyled class="shortcut-row" type="button" disabled title="Not wired yet">
                 <span>{item.label}</span>
                 {#if item.keys.length > 0}
                   <span class="kbd-group">
@@ -33,39 +35,35 @@ let activationKey = 'off';
                 {:else}
                   <em>Click to record...</em>
                 {/if}
-              </button>
+              </Button>
             {/each}
           </div>
 
-          <div class="row top">
-            <div>
-              <strong>Allow shortcuts while other apps are focused</strong>
-              <p>When off, Harper shortcuts only work while the Harper window is active.</p>
-            </div>
-            <button
-              class:checked={globalShortcuts}
-              class="checkbox"
-              type="button"
-              role="checkbox"
+          <SettingRow top>
+            <strong>Allow shortcuts while other apps are focused</strong>
+            <p>When off, Harper shortcuts only work while the Harper window is active.</p>
+            <Checkbox
+              slot="control"
+              appearance="settings"
+              checked={globalShortcuts}
               disabled
               title="Not wired yet"
-              aria-checked={globalShortcuts}
             >
-              {#if globalShortcuts}<span class="settings-icon icon-check" aria-hidden="true"></span>{/if}
-            </button>
-          </div>
+              {#if globalShortcuts}<CheckIcon className="control-icon" />{/if}
+            </Checkbox>
+          </SettingRow>
         </div>
 
         <div class="divider"></div>
 
         <div class="stanza">
           <div class="eyebrow">Activation</div>
-          <div class="row top">
-            <div>
-              <strong>Activation key</strong>
-              <p>Require a modifier key to enable Harper checking in a window.</p>
-            </div>
-            <select
+          <SettingRow top>
+            <strong>Activation key</strong>
+            <p>Require a modifier key to enable Harper checking in a window.</p>
+            <Select
+              slot="control"
+              unstyled
               class="select"
               disabled
               title="Not wired yet"
@@ -75,7 +73,7 @@ let activationKey = 'off';
               <option value="option">Option</option>
               <option value="control">Control</option>
               <option value="shift">Shift</option>
-            </select>
-          </div>
+            </Select>
+          </SettingRow>
         </div>
       </section>

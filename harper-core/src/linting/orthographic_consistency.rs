@@ -292,6 +292,51 @@ mod tests {
     }
 
     #[test]
+    fn iphone_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She bought a new iphone last week.",
+            OrthographicConsistency::default(),
+            "She bought a new iPhone last week.",
+        );
+    }
+
+    #[test]
+    fn ipad_should_use_canonical_case() {
+        assert_suggestion_result(
+            "He reads on his ipad every morning.",
+            OrthographicConsistency::default(),
+            "He reads on his iPad every morning.",
+        );
+    }
+
+    #[test]
+    fn ipod_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She still listens to her ipod on long flights.",
+            OrthographicConsistency::default(),
+            "She still listens to her iPod on long flights.",
+        );
+    }
+
+    #[test]
+    fn imac_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She edits photos on her imac at home.",
+            OrthographicConsistency::default(),
+            "She edits photos on her iMac at home.",
+        );
+    }
+
+    #[test]
+    fn itunes_should_use_canonical_case() {
+        assert_suggestion_result(
+            "She bought the album on itunes years ago.",
+            OrthographicConsistency::default(),
+            "She bought the album on iTunes years ago.",
+        );
+    }
+
+    #[test]
     fn pdf_should_be_all_caps() {
         assert_suggestion_result(
             "Pdf preserves formatting.",

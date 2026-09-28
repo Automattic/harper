@@ -60,6 +60,12 @@ or if you have the `nix-command` and `flakes` experimental features enabled:
 nix shell 'nixpkgs#harper'
 ```
 
+### Termux
+You can install Harper on Termux using the built-in package manager:
+```bash
+apt install harper
+```
+
 ### Cargo
 
 If you have Rust installed, `harper-ls` is on [crates.io](https://crates.io/crates/harper-ls), so you can simply run:
@@ -276,7 +282,9 @@ These configs are under the `markdown` key:
 | C#                  |           `csharp`            |            ✅ |
 | DAML                |            `daml`             |            ✅ |
 | Dart                |            `dart`             |            ✅ |
+| Elixir              |            `elixir`           |            ✅ |
 | Git Commit          |   `git-commit`/`gitcommit`    |               |
+| Gleam               |            `gleam`            |            ✅ |
 | Go                  |             `go`              |            ✅ |
 | Groovy              |           `groovy`            |            ✅ |
 | Haskell             |           `haskell`           |            ✅ |

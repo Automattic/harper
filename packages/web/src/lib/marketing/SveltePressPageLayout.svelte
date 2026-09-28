@@ -4,7 +4,7 @@ import { page } from '$app/stores';
 
 const { fm, children, heroImage, ...rest } = $props();
 
-const marketingRoutes = new Set(['/', '/get', '/desktop']);
+const marketingRoutes = new Set(['/', '/get', '/desktop', '/install-browser-extension']);
 const isMarketingRoute = $derived(
 	marketingRoutes.has($page.url.pathname.replace(/\/$/, '') || '/'),
 );

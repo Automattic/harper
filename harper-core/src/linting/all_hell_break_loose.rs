@@ -13,7 +13,7 @@ impl Default for AllHellBreakLoose {
         Self {
             expr: SequenceExpr::word_seq(&["all", "hell"])
                 .t_ws()
-                .then_word_set(&["break", "breaking", "breaks", "broke", "broken"])
+                .then_word_set(["break", "breaking", "breaks", "broke", "broken"])
                 .t_ws()
                 .t_aco("out"),
         }

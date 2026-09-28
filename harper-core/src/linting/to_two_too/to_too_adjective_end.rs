@@ -1,3 +1,5 @@
+use harper_brill::UPOS;
+
 use crate::{
     Token, TokenKind,
     char_string::CharStringExt,
@@ -54,6 +56,7 @@ impl ExprLinter for ToTooAdjectiveEnd {
         if idx >= tokens.len()
             || !tokens[idx].kind.is_adjective()
             || !tokens[idx].kind.is_positive_adjective()
+            || !tokens[idx].kind.is_upos(UPOS::ADJ)
         {
             return None;
         }

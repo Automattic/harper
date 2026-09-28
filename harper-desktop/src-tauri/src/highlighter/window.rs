@@ -1,6 +1,7 @@
 use std::num::NonZeroU32;
 use std::sync::Arc;
 
+use egui_wgpu::wgpu::PresentMode;
 use egui_wgpu::winit::Painter;
 use egui_wgpu::{RendererOptions, WgpuConfiguration, WgpuSetup};
 use winit::dpi::{PhysicalPosition, PhysicalSize};
@@ -64,6 +65,7 @@ impl Window {
         let mut painter = Painter::new(
             context,
             WgpuConfiguration {
+                present_mode: PresentMode::Fifo,
                 wgpu_setup: WgpuSetup::from_display_handle(event_loop.owned_display_handle()),
                 ..Default::default()
             },

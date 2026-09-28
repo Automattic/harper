@@ -31,7 +31,7 @@ impl Expr for TimeUnitExpr {
             return None;
         }
 
-        let units_definite_singular = WordSet::new(&[
+        let units_definite_singular = WordSet::new([
             "microsecond",
             "millisecond",
             "second",
@@ -44,7 +44,7 @@ impl Expr for TimeUnitExpr {
             "decade",
         ]);
 
-        let units_definite_plural = WordSet::new(&[
+        let units_definite_plural = WordSet::new([
             "microseconds",
             "milliseconds",
             "seconds",
@@ -57,7 +57,7 @@ impl Expr for TimeUnitExpr {
             "decades",
         ]);
 
-        let units_definite_apos = WordSet::new(&[
+        let units_definite_apos = WordSet::new([
             "microsecond's",
             "millisecond's",
             "second's",
@@ -71,11 +71,11 @@ impl Expr for TimeUnitExpr {
         ]);
 
         // ms
-        let units_definite_abbrev = WordSet::new(&["ms"]);
+        let units_definite_abbrev = WordSet::new(["ms"]);
 
-        let units_other_singular = WordSet::new(&["moment", "night", "weekend"]);
-        let units_other_plural = WordSet::new(&["moments", "nights", "weekends"]);
-        let units_other_apos = WordSet::new(&["moment's", "night's", "weekend's"]);
+        let units_other_singular = WordSet::new(["moment", "night", "weekend"]);
+        let units_other_plural = WordSet::new(["moments", "nights", "weekends"]);
+        let units_other_apos = WordSet::new(["moment's", "night's", "weekend's"]);
 
         let units = if self.include_plurals_only {
             LongestMatchOf::new([

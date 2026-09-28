@@ -21,19 +21,19 @@ pub struct ShouldContract {
 impl Default for ShouldContract {
     fn default() -> Self {
         let cap = Lrc::new(
-            SequenceExpr::word_set(&["your", "were"])
+            SequenceExpr::word_set(["your", "were"])
                 .then_whitespace()
                 .then_non_quantifier_determiner()
                 .then_whitespace()
                 .then(
                     SequenceExpr::default()
                         .then_adjective()
-                        .or(SequenceExpr::word_set(&["man", "boss"])),
+                        .or(SequenceExpr::word_set(["man", "boss"])),
                 ),
         );
 
         let start = SequenceExpr::with(AnchorStart).then(cap.clone());
-        let mid = SequenceExpr::unless(WordSet::new(&["what"]))
+        let mid = SequenceExpr::unless(WordSet::new(["what"]))
             .t_ws()
             .then(cap);
 
