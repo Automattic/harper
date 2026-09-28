@@ -370,7 +370,6 @@ function buildMockGoogleDocsHtml(rects: MockGoogleDocsRect[]): string {
 				height: 240px;
 				margin: 32px auto;
 				background: white;
-				border: 1px solid #d1d5db;
 			}
 
 			svg {
@@ -483,6 +482,42 @@ async function getBridgeSource(page: Page) {
 }
 
 test.describe('Google Docs support', () => {
+	test('scales highlight offsets and widths with Google Docs zoom', async ({ page }) => {
+		await openMockGoogleDocsPage(page, [
+			{
+				label: 'This is an test.',
+				left: 48,
+				top: 48,
+				width: 144,
+				height: 18,
+				fontCss: '16px Arial',
+			},
+		]);
+		const highlight = page.locator('#harper-highlight').first();
+		await highlight.waitFor({ state: 'visible' });
+		const baseline = (await highlight.boundingBox())!;
+		const rect = page.locator('rect[aria-label]').first();
+		const baselineRect = (await rect.boundingBox())!;
+
+		for (const scale of [1.5, 0.75, 2, 1]) {
+			await page.locator('svg').evaluate((svg, scale) => {
+				svg.style.transformOrigin = '0 0';
+				svg.style.transform = `scale(${scale})`;
+			}, scale);
+			await expect
+				.poll(async () => {
+					const box = await highlight.boundingBox();
+					const source = await rect.boundingBox();
+					if (!box || !source) return Number.POSITIVE_INFINITY;
+					return Math.max(
+						Math.abs(box.width - baseline.width * scale),
+						Math.abs(box.x - source.x - (baseline.x - baselineRect.x) * scale),
+					);
+				})
+				.toBeLessThan(1);
+		}
+	});
+
 	test('lints the logical text across positioned formatting spans', async ({ page, context }) => {
 		const background = await getBackground(context);
 		await background.evaluate(() => {

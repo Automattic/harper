@@ -192,6 +192,13 @@ export function createGoogleDocsBridgeSync(fw: LintFramework): () => Promise<voi
 		const fontCss = segment.rectNode.getAttribute('data-font-css');
 		if (fontCss) {
 			span.style.font = fontCss;
+			// Docs zooms the SVG, but data-font-css remains in unscaled SVG units.
+			// The mirror uses screen-space geometry, so its font must use the same scale.
+			const svgWidth = segment.rectNode.width.baseVal.value;
+			const fontSize = Number.parseFloat(span.style.fontSize);
+			if (svgWidth > 0 && Number.isFinite(fontSize)) {
+				span.style.fontSize = `${fontSize * (segment.rect.width / svgWidth)}px`;
+			}
 		}
 
 		return span;
