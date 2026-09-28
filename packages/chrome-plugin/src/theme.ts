@@ -21,9 +21,5 @@ export function setupTheme() {
 		applyDarkTheme(event.matches);
 	};
 
-	if ('addEventListener' in mediaQuery) {
-		mediaQuery.addEventListener('change', listener);
-	} else {
-		mediaQuery.addListener(listener);
-	}
+	mediaQuery.addEventListener('change', listener);
 }

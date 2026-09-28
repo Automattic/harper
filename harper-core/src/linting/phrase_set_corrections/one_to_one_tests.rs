@@ -288,6 +288,26 @@ fn correct_combinating() {
     );
 }
 
+// CondensateVerb
+
+#[test]
+fn correct_condensated() {
+    assert_suggestion_result(
+        "Having this info condensated in the package list would help to draw conclusions whether some packages need upgrade.",
+        test_linter(),
+        "Having this info condensed in the package list would help to draw conclusions whether some packages need upgrade.",
+    )
+}
+
+#[test]
+fn correct_condensating() {
+    assert_suggestion_result(
+        "Apparently this is needed to minimize the risk of having water condensating.",
+        test_linter(),
+        "Apparently this is needed to minimize the risk of having water condensing.",
+    )
+}
+
 // CompulseToCompel
 
 #[test]

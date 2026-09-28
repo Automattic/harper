@@ -33,9 +33,4 @@ impl Integration {
             })
             .collect()
     }
-    pub fn is_integration_enabled_in(integrations: &[Self], bundle_id: &str) -> bool {
-        integrations
-            .iter()
-            .any(|integration| integration.bundle_id == bundle_id && integration.enabled)
-    }
 }
