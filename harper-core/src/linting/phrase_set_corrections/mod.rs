@@ -124,6 +124,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
             LintKind::Nonstandard
         ),
+        "CondensateVerb" => (
+            &[
+                // "condensate" is a legitimate noun but a mistake when used as a verb.
+                ("condensated", "condensed"),
+                ("condensating", "condensing"),
+                // "condensates" is a legitimate plural but a mistake when used as a 3rd person singular present verb.
+            ],
+            "Did you mean `condense` rather than the nonstandard `condensate`?",
+            "Suggests replacing the nonstandard verb `condensate` with the standard `condense`.",
+            LintKind::Nonstandard
+        ),
         "CompulseToCompel" => (
             &[
                 ("compulse", "compel"),
