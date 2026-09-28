@@ -71,6 +71,13 @@ export function getDraftEditor(page: Page): Locator {
 
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
+	// Seed form controls in one update so popup tests cannot click lints for partial words.
+	// Rich editors still need their keyboard-driven editing behavior.
+	if (await isFormElement(editorEl)) {
+		await editorEl.fill(text);
+		return;
+	}
+
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
 
@@ -292,8 +299,8 @@ export async function testCanIgnoreSuggestion(
 		const testText = 'This is a mistaek.';
 		await replaceEditorContent(editor, testText);
 
-		// Ensure the test text produces only the spelling lint we intend to ignore.
-		await expect(getHarperHighlights(page)).toHaveCount(1);
+		// test.slow() does not extend assertion timeouts during linter startup.
+		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 
 		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
