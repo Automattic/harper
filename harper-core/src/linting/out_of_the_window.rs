@@ -1,5 +1,6 @@
 use crate::{
-    Dialect, Lint, Token, TokenStringExt,
+    Lint, Token, TokenStringExt,
+    dialect::Dialect,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
 };
@@ -66,7 +67,7 @@ impl ExprLinter for OutOfTheWindow {
 #[cfg(test)]
 mod tests {
     use crate::{
-        Dialect,
+        dialect::Dialect,
         linting::tests::{assert_lint_message, assert_no_lints, assert_suggestion_result},
     };
 

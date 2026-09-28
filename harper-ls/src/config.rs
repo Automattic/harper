@@ -3,7 +3,7 @@ use std::path::{Path, PathBuf};
 use anyhow::{Result, bail};
 use dirs::{config_dir, data_local_dir};
 use globset::{Glob, GlobSet};
-use harper_core::{Dialect, linting::FlatConfig, parsers::MarkdownOptions};
+use harper_core::{dialect::Dialect, linting::FlatConfig, parsers::MarkdownOptions};
 use resolve_path::PathResolveExt;
 use serde::{Deserialize, Serialize};
 use serde_json::Value;

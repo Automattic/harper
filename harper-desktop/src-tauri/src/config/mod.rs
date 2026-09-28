@@ -4,7 +4,8 @@ mod integration;
 use crate::{PlatformBroker, os_broker::OsBroker};
 pub use error::Error;
 use harper_core::{
-    Dialect, IgnoredLints,
+    IgnoredLints,
+    dialect::Dialect,
     linting::{FlatConfig, LintGroup},
     spell::{FstDictionary, MergedDictionary, MutableDictionary},
 };

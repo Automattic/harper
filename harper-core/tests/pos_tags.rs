@@ -80,10 +80,9 @@
 //! - All other token kinds are denoted by their variant name.
 use std::borrow::Cow;
 
+use harper_core::dialect::Dialect;
 use harper_core::spell::FstDictionary;
-use harper_core::{
-    Degree, Dialect, DictWordMetadata, Document, OrthFlags, TokenKind, VerbFormFlags,
-};
+use harper_core::{Degree, DictWordMetadata, Document, OrthFlags, TokenKind, VerbFormFlags};
 
 mod snapshot;
 

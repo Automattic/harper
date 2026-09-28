@@ -17,8 +17,8 @@ mod tests {
     use super::*;
     use crate::config::Config;
     use harper_core::{
-        Dialect, DictWordMetadata, Document, IgnoredLints, linting::FlatConfig, linting::Lint,
-        spell::Dictionary,
+        DictWordMetadata, Document, IgnoredLints, dialect::Dialect, linting::FlatConfig,
+        linting::Lint, spell::Dictionary,
     };
     use std::sync::Arc;
     use tokio::io::{duplex, empty, sink};
