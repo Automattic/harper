@@ -5692,6 +5692,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SetABadExample",
+								"state": true,
+								"label": "Set a Bad Example"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SimilarLike",
 								"state": true,
 								"label": "Similar Like"
