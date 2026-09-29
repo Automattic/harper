@@ -32,7 +32,7 @@ const allSlides: OnboardingSlide[] = [
 	{
 		id: 'test-drive',
 		title: 'Try Harper',
-		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it and write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
+		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it. Write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
 	},
 	{
 		id: 'ready',
