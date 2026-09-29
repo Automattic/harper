@@ -257,9 +257,9 @@
 > been   suggested . In        Europe , terms   derived from contracted translations of the
 # VLPp/B VP/J      . NPr/J/R/P NPr+   . NPl/V3+ VP/J    P    VP/J       NPl          P  D+
 > expression " automatic information " ( e.g. " informazione automatica " in        Italian )
-# N🅪Sg+      . NSg/J+    Nᴹ+         . . NSg  . ?            ?          . NPr/J/R/P N🅪Sg/J  .
+# N🅪Sg+      . NSg/J+    Nᴹ+         . . W?   . ?            ?          . NPr/J/R/P N🅪Sg/J  .
 > or    " information and  mathematics " are often used , e.g. informatique ( French      ) ,
-# NPr/C . Nᴹ          VB/C Nᴹ+         . VLB R     VP/J . NSg  ?            . NPr🅪Sg/VB/J . .
+# NPr/C . Nᴹ          VB/C Nᴹ+         . VLB R     VP/J . W?   ?            . NPr🅪Sg/VB/J . .
 > Informatik ( German   ) , informatica ( Italian , Dutch     ) , informática ( Spanish ,
 # ?          . NPr🅪Sg/J . . ?           . N🅪Sg/J  . NPrᴹ/VB/J . . ?           . NPrᴹ/J  .
 > Portuguese ) , informatika ( Slavic languages and  Hungarian ) or    pliroforiki
