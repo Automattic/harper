@@ -54,7 +54,11 @@ impl Linter for General {
                 self.expr
                     .iter_matches(chunk, source)
                     .filter_map(|match_span| {
-                        self.match_to_lint(&chunk[match_span.start..], source)
+                        let preceding_token = chunk[..match_span.start]
+                            .iter()
+                            .rev()
+                            .find(|tok| !tok.kind.is_whitespace());
+                        self.match_to_lint(&chunk[match_span.start..], preceding_token, source)
                     }),
             );
         }
@@ -68,7 +72,12 @@ impl Linter for General {
 }
 
 impl General {
-    fn match_to_lint(&self, toks: &[Token], source: &[char]) -> Option<Lint> {
+    fn match_to_lint(
+        &self,
+        toks: &[Token],
+        preceding_token: Option<&Token>,
+        source: &[char],
+    ) -> Option<Lint> {
         let offender = toks.first()?;
         let offender_chars = offender.get_ch(source);
 
@@ -119,7 +128,7 @@ impl General {
         // when the next word is tagged as a verb: "in its reading", "of its making".
         if modifier.kind.is_upos(UPOS::VERB)
             && !strong_predicative_verbs.contains(&modifier_lower.as_str())
-            && preceding_word(source, offender.span.start).is_some_and(|word| is_preposition(&word))
+            && preceding_token.is_some_and(|tok| tok.kind.is_preposition())
         {
             return None;
         }
@@ -255,27 +264,5 @@ fn next_non_whitespace_word(source: &[char], offset: usize) -> Option<String> {
             .iter()
             .collect::<String>()
             .to_ascii_lowercase(),
-    )
-}
-
-fn is_preposition(word: &str) -> bool {
-    matches!(
-        word,
-        "at" | "by"
-            | "for"
-            | "from"
-            | "in"
-            | "into"
-            | "of"
-            | "on"
-            | "onto"
-            | "over"
-            | "through"
-            | "to"
-            | "under"
-            | "upon"
-            | "with"
-            | "within"
-            | "without"
     )
 }

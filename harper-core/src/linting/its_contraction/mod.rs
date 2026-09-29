@@ -478,4 +478,12 @@ mod tests {
             test_linter(),
         );
     }
+
+    #[test]
+    fn allows_its_gerund_after_unlisted_preposition() {
+        assert_no_lints(
+            "I spent more effort during its reading than he did during its creation.",
+            test_linter(),
+        );
+    }
 }
