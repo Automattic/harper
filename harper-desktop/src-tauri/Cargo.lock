@@ -3829,6 +3829,7 @@ dependencies = [
  "objc2-app-kit 0.3.2",
  "objc2-foundation 0.3.2",
  "pollster",
+ "reqwest 0.12.28",
  "send_wrapper",
  "serde",
  "serde_json",
