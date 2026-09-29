@@ -32,7 +32,7 @@ const allSlides: OnboardingSlide[] = [
 	{
 		id: 'test-drive',
 		title: 'Try Harper',
-		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it and write something like, "This is an test."\n\nYou should see Harper jumping in to fix that mistake.',
+		lede: 'Now that you\'ve enabled TextEdit, go ahead and open it and write something like, "This is an test."\n\nYou should see Harper jump in to fix that mistake.',
 	},
 	{
 		id: 'ready',
@@ -235,10 +235,6 @@ async function prepareService(request = false) {
       </div>
     {:else if slides[step].id === 'integration'}
       <div class="onboarding-actions">
-        <div class="onboarding-app">
-          <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
-          <strong>TextEdit</strong>
-        </div>
         <p role="status">
           {#if isLoadingIntegrations}
             Loading integration state...
@@ -254,12 +250,16 @@ async function prepareService(request = false) {
             Retry Loading Integrations
           </Button>
         {/if}
-        <Button
-          disabled={!accessibilityReady || isLoadingIntegrations || isEnablingTextEdit || isTextEditEnabled || !!integrationsError}
-          on:click={enableTextEditForSetup}
-        >
-          {isEnablingTextEdit ? 'Enabling...' : isTextEditEnabled ? 'Enabled' : 'Enable TextEdit'}
-        </Button>
+        <div class="onboarding-app">
+          <Button
+            disabled={!accessibilityReady || isLoadingIntegrations || isEnablingTextEdit || isTextEditEnabled || !!integrationsError}
+            on:click={enableTextEditForSetup}
+          >
+            {isEnablingTextEdit ? 'Enabling...' : isTextEditEnabled ? 'Enabled' : 'Enable TextEdit'}
+          </Button>
+          <AppIcon bundleId="com.apple.TextEdit" name="TextEdit" />
+          <strong>TextEdit</strong>
+        </div>
       </div>
     {:else if slides[step].id === 'test-drive'}
       <div class="onboarding-actions">
