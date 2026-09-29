@@ -298,6 +298,7 @@ pub fn run_highlighter(has_parent: bool) {
     let ignore_client = client.clone();
     let ignore_runtime = sync_runtime.clone();
     let ignore_ignored_lints = ignored_lints.clone();
+    let ignore_debounce_state = lint_debounce_state.clone();
 
     let dictionary_client = client.clone();
     let dictionary_runtime = sync_runtime.clone();
@@ -305,10 +306,12 @@ pub fn run_highlighter(has_parent: bool) {
     let dictionary_linter = linter.clone();
     let dictionary_dialect = dialect.clone();
     let dictionary_debounce_ms = debounce_ms.clone();
+    let dictionary_debounce_state = lint_debounce_state.clone();
 
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
     let disable_linter = linter.clone();
+    let disable_debounce_state = lint_debounce_state.clone();
 
     let refresh_client = client.clone();
     let refresh_runtime = sync_runtime.clone();
@@ -318,6 +321,7 @@ pub fn run_highlighter(has_parent: bool) {
     let refresh_integrations = integrations.clone();
     let refresh_debounce_ms = debounce_ms.clone();
     let refresh_linter = linter.clone();
+    let refresh_debounce_state = lint_debounce_state.clone();
 
     let lint_text = move |text: &str| {
         let debounce_ms = *lint_debounce_ms.borrow();
@@ -343,24 +347,26 @@ pub fn run_highlighter(has_parent: bool) {
     };
 
     let ignore_lint = move |lint: &Lint, document: &Document| {
+        ignore_debounce_state.borrow_mut().clear();
         {
             ignore_ignored_lints
                 .borrow_mut()
                 .ignore_lint(lint, document);
         }
 
+        if !has_parent {
+            return;
+        }
+
         let snapshot = ignore_ignored_lints.borrow().clone();
-        if let Err(error) = ignore_runtime.block_on(
-            ignore_client
-                .lock()
-                .expect("IPC client lock poisoned")
-                .ignore_lint(&snapshot),
-        ) {
+        let mut client = ignore_client.lock().expect("IPC client lock poisoned");
+        if let Err(error) = ignore_runtime.block_on(client.ignore_lint(&snapshot)) {
             eprintln!("failed to sync ignored lints: {error}");
         }
     };
 
     let add_to_dictionary = move |word: &str| {
+        dictionary_debounce_state.borrow_mut().clear();
         dictionary_user_dictionary
             .borrow_mut()
             .append_word_str(word, DictWordMetadata::default());
@@ -381,27 +387,34 @@ pub fn run_highlighter(has_parent: bool) {
         };
         *dictionary_linter.borrow_mut() = config.create_linter();
 
-        if let Err(error) = dictionary_runtime.block_on(
-            dictionary_client
-                .lock()
-                .expect("IPC client lock poisoned")
-                .add_to_dictionary(word),
-        ) {
+        if !has_parent {
+            return;
+        }
+
+        let mut client = dictionary_client.lock().expect("IPC client lock poisoned");
+        if let Err(error) = dictionary_runtime.block_on(client.add_to_dictionary(word)) {
             eprintln!("failed to sync dictionary update: {error}");
         }
     };
 
-    let disable_rule = move |rule_name: &str| match disable_runtime.block_on(
-        disable_client
-            .lock()
-            .expect("IPC client lock poisoned")
-            .disable_rule(rule_name),
-    ) {
-        Ok(config) => disable_linter.borrow_mut().config = config,
-        Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
+    let disable_rule = move |rule_name: &str| {
+        if rule_name == "SpellCheck" {
+            return;
+        }
+        disable_debounce_state.borrow_mut().clear();
+        if !has_parent {
+            return;
+        }
+
+        let mut client = disable_client.lock().expect("IPC client lock poisoned");
+        match disable_runtime.block_on(client.disable_rule(rule_name)) {
+            Ok(config) => disable_linter.borrow_mut().config = config,
+            Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
+        }
     };
 
     let refresh_config = move || {
+        refresh_debounce_state.borrow_mut().clear();
         if !has_parent {
             return;
         }
@@ -461,11 +474,7 @@ fn integration_callback(
             return false;
         }
         let mut state = state.lock().expect("integration state lock poisoned");
-        if let Some(integration) = state
-            .integrations
-            .iter()
-            .find(|item| item.bundle_id == bundle_id)
-        {
+        if let Some(integration) = Integration::find_integration(&state.integrations, bundle_id) {
             return integration.enabled;
         }
         if !state.auto_enable_new_apps || PlatformBroker::is_harper_desktop(bundle_id) {

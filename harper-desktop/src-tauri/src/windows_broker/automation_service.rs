@@ -1,6 +1,5 @@
 use std::iter::once;
-use std::sync::mpsc::{Receiver, SyncSender, TryRecvError, TrySendError, sync_channel};
-use std::thread::sleep;
+use std::sync::mpsc::{Receiver, SyncSender, sync_channel};
 use std::time::Duration;
 
 use crate::rect::Rect;
@@ -15,7 +14,13 @@ use uiautomation::{
 };
 use windows::Win32::Foundation::HWND;
 use windows::Win32::UI::Accessibility::IUIAutomationTextRange;
-use windows::Win32::UI::WindowsAndMessaging::{GetForegroundWindow, GetWindowThreadProcessId};
+use windows::Win32::UI::Input::KeyboardAndMouse::{
+    INPUT, INPUT_0, INPUT_KEYBOARD, KEYBD_EVENT_FLAGS, KEYBDINPUT, KEYEVENTF_KEYUP,
+    KEYEVENTF_UNICODE, SendInput, VIRTUAL_KEY, VK_BACK, VK_RETURN, VK_RIGHT,
+};
+use windows::Win32::UI::WindowsAndMessaging::{
+    GetForegroundWindow, GetWindowThreadProcessId, SetForegroundWindow,
+};
 
 /// Information about a worker thread.
 struct WorkerData {
@@ -48,8 +53,14 @@ enum JobResult {
     Err,
 }
 
+/// Worker thread context caching the active text element across ticks to eliminate repetitive UI Automation tree searches.
+struct WorkerContext {
+    automation: UIAutomation,
+    cached_element: Option<(isize, UIElement)>,
+}
+
 /// An actual function pointer to be run by the worker thread.
-type WorkerJob = fn(&UIAutomation, Vec<JobArgument>) -> JobResult;
+type WorkerJob = fn(&mut WorkerContext, Vec<JobArgument>) -> JobResult;
 
 /// Runs and communicates with a worker thread to interact with the Win32 Automation API to query the accessibility tree.
 /// Necessary because the API has very specific thread setting requirements to work.
@@ -78,28 +89,21 @@ impl AutomationService {
         let (result_sender, result_receiver) = sync_channel(1);
 
         std::thread::spawn(move || {
-            let automation = UIAutomation::new().unwrap();
+            let Ok(automation) = UIAutomation::new() else {
+                return;
+            };
 
-            loop {
-                // Stop the thread if the other side of the channel has been closed (or dropped).
-                let job = match job_receiver.try_recv() {
-                    Err(TryRecvError::Disconnected) => break,
-                    Err(TryRecvError::Empty) => None,
-                    Ok(job) => Some(job),
-                };
+            let mut context = WorkerContext {
+                automation,
+                cached_element: None,
+            };
 
-                if let Some((job, arguments)) = job {
-                    let result = job(&automation, arguments);
+            while let Ok((job, arguments)) = job_receiver.recv() {
+                let result = job(&mut context, arguments);
 
-                    // Stop the thread if the other side of the channel has been closed (or dropped).
-                    if let Err(err) = result_sender.try_send(result) {
-                        if let TrySendError::Disconnected(_) = err {
-                            break;
-                        }
-                    }
+                if result_sender.send(result).is_err() {
+                    break;
                 }
-
-                sleep(Duration::from_millis(16));
             }
         });
 
@@ -118,8 +122,17 @@ impl AutomationService {
     /// Attempts to run a worker job on the worker thread. Returns `None` if the worker thread does not exist.
     fn run_worker_job(&self, job: WorkerJob, arguments: Vec<JobArgument>) -> Option<JobResult> {
         let worker_data = self.worker_data.as_ref()?;
-        worker_data.sender.send((job, arguments)).unwrap();
-        Some(worker_data.receiver.recv().unwrap())
+        while worker_data.receiver.try_recv().is_ok() {}
+        worker_data.sender.try_send((job, arguments)).ok()?;
+        worker_data
+            .receiver
+            .recv_timeout(Duration::from_millis(80))
+            .ok()
+    }
+
+    /// Clears any cached UIElement to ensure fresh resolution after window movements.
+    pub fn clear_cache(&mut self) {
+        self.run_worker_job(clear_cache_job, Vec::new());
     }
 
     /// Grab text from the worker.
@@ -152,10 +165,20 @@ impl AutomationService {
             suggestion,
         };
 
-        let _ = self.run_worker_job(
-            apply_suggestion_job,
-            vec![JobArgument::ApplySuggestion(request)],
-        );
+        // Immediately transfer foreground focus from Harper overlay to the target window
+        let hwnd = HWND(window as *mut _);
+        unsafe {
+            let _ = SetForegroundWindow(hwnd);
+        }
+
+        // Run suggestion replacement in a separate thread so UI Automation selection
+        // and SendInput keystrokes never block the winit/egui UI rendering thread.
+        std::thread::spawn(move || {
+            let Ok(automation) = UIAutomation::new() else {
+                return;
+            };
+            let _ = apply_suggestion_job(&automation, vec![JobArgument::ApplySuggestion(request)]);
+        });
     }
 
     /// Pass a collection of text spans to the worker and have it compute the associated bounding boxes for each span.
@@ -202,6 +225,135 @@ impl Drop for AutomationService {
     }
 }
 
+fn send_unicode_string(text: &str) {
+    let mut inputs = Vec::with_capacity(text.encode_utf16().count() * 2);
+
+    for code in text.encode_utf16() {
+        if code == 0x000A {
+            send_vk_key(VK_RETURN);
+            continue;
+        }
+
+        inputs.push(INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: VIRTUAL_KEY(0),
+                    wScan: code,
+                    dwFlags: KEYEVENTF_UNICODE,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        });
+        inputs.push(INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: VIRTUAL_KEY(0),
+                    wScan: code,
+                    dwFlags: KEYEVENTF_UNICODE | KEYEVENTF_KEYUP,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        });
+    }
+
+    if !inputs.is_empty() {
+        unsafe {
+            SendInput(&inputs, size_of::<INPUT>() as i32);
+        }
+    }
+}
+
+fn send_vk_key(vk: VIRTUAL_KEY) {
+    let inputs = [
+        INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: vk,
+                    wScan: 0,
+                    dwFlags: KEYBD_EVENT_FLAGS(0),
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        },
+        INPUT {
+            r#type: INPUT_KEYBOARD,
+            Anonymous: INPUT_0 {
+                ki: KEYBDINPUT {
+                    wVk: vk,
+                    wScan: 0,
+                    dwFlags: KEYEVENTF_KEYUP,
+                    time: 0,
+                    dwExtraInfo: 0,
+                },
+            },
+        },
+    ];
+
+    unsafe {
+        SendInput(&inputs, size_of::<INPUT>() as i32);
+    }
+}
+
+fn apply_suggestion_via_selection(
+    element: &UIElement,
+    span: Span<char>,
+    suggestion: &Suggestion,
+) -> uiautomation::Result<()> {
+    let pattern: UITextPattern = element.get_pattern()?;
+    let range = pattern.get_document_range()?;
+
+    range.move_endpoint_by_range(
+        TextPatternRangeEndpoint::End,
+        &range,
+        TextPatternRangeEndpoint::Start,
+    )?;
+
+    range.move_endpoint_by_unit(
+        TextPatternRangeEndpoint::Start,
+        TextUnit::Character,
+        span.start as i32,
+    )?;
+
+    range.move_endpoint_by_range(
+        TextPatternRangeEndpoint::End,
+        &range,
+        TextPatternRangeEndpoint::Start,
+    )?;
+
+    range.move_endpoint_by_unit(
+        TextPatternRangeEndpoint::End,
+        TextUnit::Character,
+        span.len() as i32,
+    )?;
+
+    range.select()?;
+
+    std::thread::sleep(Duration::from_millis(25));
+
+    match suggestion {
+        Suggestion::ReplaceWith(chars) => {
+            let text: String = chars.iter().collect();
+            send_unicode_string(&text);
+        }
+        Suggestion::Remove => {
+            send_vk_key(VK_BACK);
+        }
+        Suggestion::InsertAfter(chars) => {
+            send_vk_key(VK_RIGHT);
+            let text: String = chars.iter().collect();
+            send_unicode_string(&text);
+        }
+    }
+
+    Ok(())
+}
+
 fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::ApplySuggestion(request)) = arguments.pop() else {
         return JobResult::Err;
@@ -211,15 +363,38 @@ fn apply_suggestion_job(automation: &UIAutomation, mut arguments: Vec<JobArgumen
         return JobResult::Err;
     }
 
-    let Ok(element) =
-        text_element_for_window(automation, request.window, Some(&request.expected_text))
-    else {
-        eprintln!(
-            "Unable to apply Windows suggestion: the source text element is no longer available"
-        );
-        return JobResult::None;
+    // Bring target window to the foreground so focus is restored before querying the element
+    let hwnd = HWND(request.window as *mut _);
+    unsafe {
+        let _ = SetForegroundWindow(hwnd);
+    }
+    std::thread::sleep(Duration::from_millis(30));
+
+    let element = if let Ok(focused) = automation.get_focused_element()
+        && let Ok(text) = get_text(&focused)
+        && text_is_suitable(&text, Some(&request.expected_text))
+    {
+        focused
+    } else {
+        let Ok(elem) =
+            text_element_for_window(automation, request.window, Some(&request.expected_text))
+        else {
+            eprintln!(
+                "Unable to apply Windows suggestion: the source text element is no longer available"
+            );
+            return JobResult::None;
+        };
+        elem
     };
 
+    let _ = element.set_focus();
+
+    // Primary replacement method: Text pattern selection + SendInput (works across Notepad, VS Code, Word, Chrome, etc.)
+    if apply_suggestion_via_selection(&element, request.span, &request.suggestion).is_ok() {
+        return JobResult::None;
+    }
+
+    // Fallback replacement method: ValuePattern (for controls that support UIValuePattern)
     let Ok(current_text) = get_text(&element) else {
         eprintln!("Unable to apply Windows suggestion: the source text can no longer be read");
         return JobResult::None;
@@ -282,9 +457,35 @@ fn apply_suggestion_to_text(
 }
 
 fn get_text(element: &UIElement) -> uiautomation::Result<String> {
-    let pattern: UITextPattern = element.get_pattern()?;
-    let range = pattern.get_document_range()?;
-    range.get_text(-1)
+    if let Ok(pattern) = element.get_pattern::<UITextPattern>()
+        && let Ok(range) = pattern.get_document_range()
+        && let Ok(text) = range.get_text(-1)
+    {
+        return Ok(text);
+    }
+
+    if let Ok(pattern) = element.get_pattern::<UIValuePattern>()
+        && let Ok(value) = pattern.get_value()
+    {
+        return Ok(value);
+    }
+
+    Err(Error::new(
+        uiautomation::errors::ERR_NOTFOUND,
+        "no text or value pattern found",
+    ))
+}
+
+fn text_matches(current: &str, expected: &str) -> bool {
+    current == expected
+        || current.trim_end_matches(['\r', '\n']) == expected.trim_end_matches(['\r', '\n'])
+}
+
+fn text_is_suitable(text: &str, expected_text: Option<&str>) -> bool {
+    match expected_text {
+        Some(expected) => text_matches(text, expected),
+        None => !text.is_empty(),
+    }
 }
 
 /// Finds the focused text element below `window`.
@@ -295,33 +496,94 @@ fn text_element_for_window(
     window: isize,
     expected_text: Option<&str>,
 ) -> uiautomation::Result<UIElement> {
+    // 1. Check if the system-focused element directly provides text.
+    // In complex applications like MS Word, the document editing surface (_WwG) is often the focused element,
+    // which avoids an expensive traversal of Word's massive ribbon and task-pane hierarchy.
+    if let Ok(focused) = automation.get_focused_element()
+        && let Ok(text) = get_text(&focused)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(focused);
+    }
+
     let root = automation.element_from_handle(Handle::from(window))?;
+
+    // 2. Check if the root window itself provides text.
+    if let Ok(text) = get_text(&root)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(root);
+    }
+
     let text_condition = automation.create_property_condition(
         UIProperty::IsTextPatternAvailable,
         Variant::from(true),
         None,
     )?;
+
+    // 3. Fast check: immediate children of the root window.
+    // In standard editors like Notepad, the main edit control is an immediate child.
+    if let Ok(children) = root.find_all(TreeScope::Children, &text_condition) {
+        for child in children {
+            if let Ok(text) = get_text(&child)
+                && text_is_suitable(&text, expected_text)
+            {
+                return Ok(child);
+            }
+        }
+    }
+
+    // 4. Check for an element within the window that has keyboard focus.
     let keyboard_condition = automation.create_property_condition(
         UIProperty::HasKeyboardFocus,
         Variant::from(true),
         None,
     )?;
-    let condition = automation.create_and_condition(text_condition, keyboard_condition)?;
+    let focused_condition =
+        automation.create_and_condition(text_condition.clone(), keyboard_condition)?;
 
-    for element in root.find_all(TreeScope::Subtree, &condition)? {
-        if let Some(expected) = expected_text {
-            let text = get_text(&element);
+    if let Ok(focused_element) = root.find_first(TreeScope::Descendants, &focused_condition)
+        && let Ok(text) = get_text(&focused_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(focused_element);
+    }
 
-            let Ok(text) = text else {
-                continue;
-            };
+    // 5. Fast check: common editor control types before fallback traversal.
+    // In Word and VS Code, the main editor is a Document control (50030).
+    // In Notepad and standard textboxes, the main editor is an Edit control (50004).
+    if let Ok(doc_condition) =
+        automation.create_property_condition(UIProperty::ControlType, Variant::from(50030), None)
+        && let Ok(doc_element) = root.find_first(TreeScope::Descendants, &doc_condition)
+        && let Ok(text) = get_text(&doc_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(doc_element);
+    }
 
-            if expected != text {
-                continue;
+    if let Ok(edit_condition) =
+        automation.create_property_condition(UIProperty::ControlType, Variant::from(50004), None)
+        && let Ok(edit_element) = root.find_first(TreeScope::Descendants, &edit_condition)
+        && let Ok(text) = get_text(&edit_element)
+        && text_is_suitable(&text, expected_text)
+    {
+        return Ok(edit_element);
+    }
+
+    // 6. Fallback traversal:
+    if let Some(expected) = expected_text {
+        // Find among descendants matching expected text
+        if let Ok(elements) = root.find_all(TreeScope::Descendants, &text_condition) {
+            for element in elements {
+                if let Ok(text) = get_text(&element)
+                    && text_matches(&text, expected)
+                {
+                    return Ok(element);
+                }
             }
         }
-
-        return Ok(element);
+    } else if let Ok(first) = root.find_first(TreeScope::Descendants, &text_condition) {
+        return Ok(first);
     }
 
     Err(Error::new(
@@ -330,15 +592,37 @@ fn text_element_for_window(
     ))
 }
 
-fn get_text_job(automation: &UIAutomation, args: Vec<JobArgument>) -> JobResult {
+fn clear_cache_job(context: &mut WorkerContext, _args: Vec<JobArgument>) -> JobResult {
+    context.cached_element = None;
+    JobResult::None
+}
+
+fn get_text_job(context: &mut WorkerContext, args: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::Window(window)) = args.first() else {
         return JobResult::Err;
     };
-    let Ok(element) = text_element_for_window(automation, *window, None) else {
+
+    // Fast check: if the cached element is still valid for this window and contains text
+    if let Some((cached_window, ref element)) = context.cached_element
+        && cached_window == *window
+        && let Ok(text) = get_text(element)
+        && !text.is_empty()
+    {
+        return JobResult::String(text);
+    }
+
+    let Ok(element) = text_element_for_window(&context.automation, *window, None) else {
+        context.cached_element = None;
         return JobResult::Err;
     };
 
-    get_text(&element).map_or(JobResult::Err, JobResult::String)
+    let Ok(text) = get_text(&element) else {
+        context.cached_element = None;
+        return JobResult::Err;
+    };
+
+    context.cached_element = Some((*window, element));
+    JobResult::String(text)
 }
 
 use std::{ffi::c_void, mem::size_of};
@@ -365,7 +649,7 @@ impl Drop for OwnedSafeArray {
 }
 
 fn bounding_rectangles_for_span(
-    element: &UIElement,
+    pattern: &UITextPattern,
     start: i32,
     len: i32,
 ) -> Result<Vec<(f64, f64, f64, f64)>> {
@@ -376,7 +660,6 @@ fn bounding_rectangles_for_span(
         ));
     }
 
-    let pattern: UITextPattern = element.get_pattern()?;
     let range = pattern.get_document_range()?;
 
     range.move_endpoint_by_range(
@@ -470,18 +753,33 @@ fn bounding_rectangles_for_span(
     Ok(result)
 }
 
-fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>) -> JobResult {
+fn get_bounding_rect_job(context: &mut WorkerContext, arguments: Vec<JobArgument>) -> JobResult {
     let Some(JobArgument::Window(window)) = arguments.first() else {
         return JobResult::Err;
     };
     let Some(JobArgument::Text(expected_text)) = arguments.get(1) else {
         return JobResult::Err;
     };
-    let Ok(text_element) = text_element_for_window(automation, *window, Some(expected_text)) else {
-        return JobResult::Err;
+
+    let text_element = if let Some((cached_window, ref element)) = context.cached_element
+        && cached_window == *window
+        && let Ok(text) = get_text(element)
+        && text_matches(&text, expected_text)
+    {
+        element.clone()
+    } else {
+        let Ok(elem) = text_element_for_window(&context.automation, *window, Some(expected_text))
+        else {
+            return JobResult::Err;
+        };
+        context.cached_element = Some((*window, elem.clone()));
+        elem
     };
 
     let effective_monitor_scale = get_focused_monitor_scale();
+    let Ok(pattern) = text_element.get_pattern::<UITextPattern>() else {
+        return JobResult::Err;
+    };
 
     let mut rects = Vec::with_capacity(arguments.len().saturating_sub(2));
 
@@ -489,7 +787,7 @@ fn get_bounding_rect_job(automation: &UIAutomation, arguments: Vec<JobArgument>)
         let span = span.expect_span();
 
         let Ok(found_rects) =
-            bounding_rectangles_for_span(&text_element, span.start as i32, span.len() as i32)
+            bounding_rectangles_for_span(&pattern, span.start as i32, span.len() as i32)
         else {
             return JobResult::Err;
         };

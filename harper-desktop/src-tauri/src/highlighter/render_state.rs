@@ -72,6 +72,9 @@ pub struct RenderState {
 
     /// Called when the user disables the rule that produced the selected lint.
     disable_rule: DisableRule,
+
+    /// Tracks whether a user action (e.g. apply suggestion, close popup, dismiss lint) just occurred.
+    action_occurred: bool,
 }
 
 impl RenderState {
@@ -90,6 +93,7 @@ impl RenderState {
             ignore_lint,
             add_to_dictionary,
             disable_rule,
+            action_occurred: false,
         };
         state.set_lints(rects);
         state
@@ -125,6 +129,22 @@ impl RenderState {
         self.highlighted_lint = None;
     }
 
+    /// Removes the lint at `index` from the cached lint list, if present.
+    fn remove_lint_at(&mut self, index: usize) {
+        let Some(lints) = self.last_lints.as_mut() else {
+            return;
+        };
+        if index < lints.len() {
+            lints.remove(index);
+        }
+    }
+
+    /// Clears all cached lints and closes any active popup.
+    pub fn clear_lints(&mut self) {
+        self.last_lints = Some(Vec::new());
+        self.close_popup();
+    }
+
     /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
         if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
@@ -147,6 +167,13 @@ impl RenderState {
             .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
     }
 
+    /// Returns true if an interactive action was triggered since the last check, resetting the flag.
+    pub fn take_action_occurred(&mut self) -> bool {
+        let occurred = self.action_occurred;
+        self.action_occurred = false;
+        occurred
+    }
+
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
     pub fn render(&mut self, ui: &mut egui::Ui) {
@@ -162,8 +189,12 @@ impl RenderState {
             let source_text = positioned_lint.source_text.clone();
 
             match render_lint_card(ui, &rect, &lint, &source_text, &mut self.markdown_cache) {
-                Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::Close) => {
+                    self.action_occurred = true;
+                    self.close_popup();
+                }
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
+                    self.action_occurred = true;
                     if let Some(actionable_lint) = self
                         .last_lints
                         .as_mut()
@@ -172,9 +203,11 @@ impl RenderState {
                         actionable_lint.apply_suggestion(suggestion);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::IgnoreLint) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -187,9 +220,11 @@ impl RenderState {
                         (self.ignore_lint)(&lint, &document);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::AddToDictionary) => {
+                    self.action_occurred = true;
                     if let Some((lint, source_text)) =
                         self.lints().get(index).map(|actionable_lint| {
                             (
@@ -203,9 +238,11 @@ impl RenderState {
                         (self.add_to_dictionary)(&word);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 Some(LintCardAction::DisableRule) => {
+                    self.action_occurred = true;
                     if let Some(rule_name) = self
                         .lints()
                         .get(index)
@@ -214,6 +251,7 @@ impl RenderState {
                         (self.disable_rule)(&rule_name);
                     }
 
+                    self.remove_lint_at(index);
                     self.close_popup();
                 }
                 None => {}
@@ -224,18 +262,35 @@ impl RenderState {
 
 /// Draws the always-visible lint marker without making the renderer responsible for popup state.
 fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
+    let anim_id = egui::Id::new("lint-highlight-anim")
+        .with(rect.x.to_bits())
+        .with(rect.y.to_bits())
+        .with(rect.width.to_bits())
+        .with(rect.height.to_bits());
+    let anim_progress = ui.ctx().animate_bool_with_time(anim_id, true, 0.20);
+    // Smooth quadratic ease-out
+    let t = 1.0 - (1.0 - anim_progress).powi(2);
+
     let rect_bounds = rect_bounds(rect);
     let color = lint_color(lint);
     let [r, g, b, _] = color.to_array();
-    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 24);
-    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 255);
+    let fill_alpha = (24.0 * t) as u8;
+    let underline_alpha = (255.0 * t) as u8;
+    let fill_color = egui::Color32::from_rgba_unmultiplied(r, g, b, fill_alpha);
+    let underline_color = egui::Color32::from_rgba_unmultiplied(r, g, b, underline_alpha);
     let underline_height = rect_bounds.height().min(2.0);
 
-    ui.painter().rect_filled(rect_bounds, 0.0, fill_color);
+    let animated_right = rect_bounds.left() + rect_bounds.width() * t;
+    let animated_bounds = egui::Rect::from_min_max(
+        rect_bounds.left_top(),
+        egui::pos2(animated_right, rect_bounds.bottom()),
+    );
+
+    ui.painter().rect_filled(animated_bounds, 0.0, fill_color);
     ui.painter().rect_filled(
         egui::Rect::from_min_max(
             egui::pos2(rect_bounds.left(), rect_bounds.bottom() - underline_height),
-            rect_bounds.right_bottom(),
+            egui::pos2(animated_right, rect_bounds.bottom()),
         ),
         0.0,
         underline_color,
@@ -250,11 +305,21 @@ fn render_lint_card(
     source_text: &str,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
-    let popup_rect = popup_rect_for_lint(rect);
+    let card_id = egui::Id::new("harper-lint-card-entrance")
+        .with(rect.x.to_bits())
+        .with(rect.y.to_bits());
+    let anim = ui.ctx().animate_bool_with_time(card_id, true, 0.22);
+    // Stretchy, sleek spring-like ease-out curve with subtle overshoot:
+    let p = anim - 1.0;
+    let spring_t = 1.0 + p * p * (2.7 * p + 1.7);
+    let y_offset = (1.0 - spring_t.clamp(0.0, 1.05)) * 10.0;
+
+    let base_rect = popup_rect_for_lint(rect);
+    let animated_pos = egui::pos2(base_rect.min.x, base_rect.min.y + y_offset);
 
     egui::Area::new(egui::Id::new("harper-lint-card"))
         .order(egui::Order::Foreground)
-        .fixed_pos(popup_rect.min)
+        .fixed_pos(animated_pos)
         .show(ui.ctx(), |ui| {
             let mut action = None;
 
@@ -267,10 +332,10 @@ fn render_lint_card(
                 .corner_radius(egui::CornerRadius::same(12))
                 .inner_margin(egui::Margin::same(0))
                 .shadow(egui::Shadow {
-                    offset: [0, 14],
-                    blur: 32,
+                    offset: [0, 8],
+                    blur: 16,
                     spread: 0,
-                    color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 56),
+                    color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 40),
                 })
                 .show(ui, |ui| {
                     ui.set_width(CARD_WIDTH);
@@ -313,7 +378,9 @@ fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<Lin
                         *action = Some(LintCardAction::Close);
                     }
                     icon_button(ui, Glyph::Settings, "Open Harper settings.");
-                    if icon_button(ui, Glyph::Disable, "Disable this rule.").clicked() {
+                    if !is_spelling_kind(lint.lint_kind)
+                        && icon_button(ui, Glyph::Disable, "Disable this rule.").clicked()
+                    {
                         *action = Some(LintCardAction::DisableRule);
                     }
                 });
