@@ -4831,7 +4831,7 @@ ISIS/O
 ISO/ONgSP           # standards organization, optical disk image format
 ISP/N
 ISS/NO
-IT/N.               # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
+IT/N                # removed `5`. nouns can qualify nouns. makes `it` an adjective which interferes with heuristics
 IUD/N
 IV/JNSg
 IVF/N
