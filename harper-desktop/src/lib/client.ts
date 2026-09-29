@@ -156,6 +156,14 @@ export class Client {
 		return await invoke<Integration[]>('get_integrations');
 	}
 
+	static async getAutoEnableNewApps(): Promise<boolean> {
+		return await invoke<boolean>('get_auto_enable_new_apps');
+	}
+
+	static async setAutoEnableNewApps(autoEnableNewApps: boolean): Promise<void> {
+		await invoke('set_auto_enable_new_apps', { autoEnableNewApps });
+	}
+
 	static async addIntegration(bundleId: string): Promise<void> {
 		await invoke('add_integration', { bundleId });
 	}

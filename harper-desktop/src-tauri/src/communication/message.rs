@@ -11,6 +11,8 @@ pub enum Request {
     GetDebounceMs,
     GetIgnoredLints,
     GetIntegrations,
+    GetAutoEnableNewApps,
+    ResolveIntegration { bundle_id: String },
     SetLintConfig { config: FlatConfig },
     IgnoreLint { ignored_lints: IgnoredLints },
     AddToDictionary { word: String },
@@ -28,6 +30,8 @@ pub enum Response {
     GetDebounceMs { debounce_ms: u64 },
     GetIgnoredLints { ignored_lints: IgnoredLints },
     GetIntegrations { integrations: Vec<Integration> },
+    GetAutoEnableNewApps { enabled: bool },
+    ResolveIntegration { enabled: bool },
     Ack,
 }
 
