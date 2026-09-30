@@ -218,6 +218,7 @@ use super::oxford_commas::{NoOxfordComma, OxfordComma};
 use super::oxymorons::Oxymorons;
 use super::pale_by_comparison::PaleByComparison;
 use super::passionate_about::PassionateAbout;
+use super::passive_voice::PassiveVoice;
 use super::pay_for_price::PayForPrice;
 use super::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::pique_interest::PiqueInterest;
@@ -837,6 +838,7 @@ impl LintGroup {
         insert_expr_rule!(Oxymorons);
         insert_expr_rule!(PaleByComparison);
         insert_expr_rule!(PassionateAbout);
+        insert_struct_rule!(PassiveVoice);
         insert_expr_rule!(PayForPrice);
         insert_struct_rule!(PhrasalVerbAsCompoundNoun);
         insert_expr_rule!(PiqueInterest);

@@ -232,6 +232,7 @@ mod oxford_commas;
 mod oxymorons;
 mod pale_by_comparison;
 mod passionate_about;
+mod passive_voice;
 mod pay_for_price;
 mod phrasal_verb_as_compound_noun;
 mod phrase_set_corrections;
