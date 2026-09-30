@@ -679,6 +679,16 @@ pub fn lint_group() -> LintGroup {
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
         ),
+        "SetABadExample" => (
+            &[
+                ("set up a bad example", "set a bad example"),
+                ("sets up a bad example", "sets a bad example"),
+                ("setting up a bad example", "setting a bad example"),
+            ],
+            "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
+            "Corrects `set up a bad example` to `set a bad example`.",
+            LintKind::Usage
+        ),
         "SubjunctiveWasToWere" => (
             &[
                 ("if only there was", "if only there were"),

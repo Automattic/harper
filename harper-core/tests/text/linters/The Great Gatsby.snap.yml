@@ -5393,17 +5393,6 @@ Suggest:
 
 Lint:    Spelling (63 priority)
 Message: |
-    4265 | Why—there’re things between Daisy and me that you’ll never know, things that
-         |     ^~~~~~~~ Did you mean to spell `there’re` this way?
-Suggest:
-  - Replace with: “there's”
-  - Replace with: “there'd”
-  - Replace with: “there'll”
-
-
-
-Lint:    Spelling (63 priority)
-Message: |
     4300 | “Who are you, anyhow?” broke out Tom. “You’re one of that bunch that hangs
     4301 | around with Meyer Wolfshiem—that much I happen to know. I’ve made a little
          |                   ^~~~~~~~~ Did you mean `Bolshie`?
