@@ -163,4 +163,13 @@ mod tests {
             "One, two and three. But four, five and six.",
         );
     }
+
+    #[test]
+    fn allow_eg_conjunction() {
+        assert_lint_count(
+            "Memory is used for different tasks in embedded systems, e.g., storage or communication with sensors and actuators.",
+            NoOxfordComma::default(),
+            0,
+        );
+    }
 }

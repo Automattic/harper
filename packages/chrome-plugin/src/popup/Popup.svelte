@@ -71,12 +71,12 @@ function openUpdateHelpPage() {
           popupState = main();
        }}><Fa icon={faArrowLeft}/></Button>
     {:else}
-      <div onclick={openUpdateHelpPage}>
+      <button type="button" class="cursor-pointer" onclick={openUpdateHelpPage}>
         {#if versionMismatch}
           <span class="ml-1" title={`Newer version available: ${latestVersion ?? ''}. Click to find out more.`}>⚠️</span>
         {/if}
         <span class="text-sm font-mono">{version}</span>
-      </div>
+      </button>
     {/if}
   </header>
 

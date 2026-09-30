@@ -225,6 +225,125 @@ impl MissingTo {
 
         false
     }
+
+    fn preposition_or_determiner_within_four(
+        context: Option<(&[Token], &[Token])>,
+        source: &[char],
+        controller_span_start: usize,
+    ) -> bool {
+        if let Some((before, _)) = context {
+            let mut words_checked = 0;
+            for tok in before.iter().rev() {
+                if tok.kind.is_space() || tok.kind.is_newline() {
+                    continue;
+                }
+                words_checked += 1;
+                if words_checked > 4 {
+                    break;
+                }
+
+                if tok.kind.is_punctuation() {
+                    break;
+                }
+
+                let word = tok.get_str(source).to_lowercase();
+                let word = word.as_str();
+
+                if tok.kind.is_upos(UPOS::ADP)
+                    || matches!(
+                        word,
+                        "of" | "for"
+                            | "in"
+                            | "with"
+                            | "without"
+                            | "during"
+                            | "after"
+                            | "before"
+                            | "by"
+                            | "about"
+                            | "against"
+                            | "from"
+                            | "on"
+                            | "at"
+                            | "into"
+                            | "through"
+                    )
+                {
+                    return true;
+                }
+
+                if words_checked == 1
+                    && (tok.kind.is_determiner()
+                        || matches!(
+                            word,
+                            "a" | "an" | "the" | "this" | "that" | "these" | "those"
+                        ))
+                {
+                    return true;
+                }
+
+                if tok.kind.is_conjunction()
+                    || matches!(word, "and" | "or" | "but" | "nor")
+                    || tok.kind.is_verb_progressive_form()
+                    || tok.kind.is_noun()
+                    || tok.kind.is_adjective()
+                {
+                    continue;
+                }
+
+                if tok.kind.is_verb() {
+                    break;
+                }
+            }
+            return false;
+        }
+
+        let mut scan_cursor = controller_span_start;
+
+        for _ in 0..4 {
+            let Some((word, start)) = Self::previous_word_with_span(source, scan_cursor) else {
+                break;
+            };
+            let word = word.as_str();
+
+            if matches!(word, "and" | "or" | "but" | "nor") {
+                scan_cursor = start;
+                continue;
+            }
+
+            if matches!(
+                word,
+                "a" | "an"
+                    | "the"
+                    | "this"
+                    | "that"
+                    | "these"
+                    | "those"
+                    | "of"
+                    | "for"
+                    | "in"
+                    | "with"
+                    | "without"
+                    | "during"
+                    | "after"
+                    | "before"
+                    | "by"
+                    | "about"
+                    | "against"
+                    | "from"
+                    | "on"
+                    | "at"
+                    | "into"
+                    | "through"
+            ) {
+                return true;
+            }
+
+            scan_cursor = start;
+        }
+
+        false
+    }
 }
 
 impl Default for MissingTo {
@@ -299,7 +418,9 @@ impl ExprLinter for MissingTo {
         let controller_text_ends_with_d_or_en =
             controller_text.ends_with('d') || controller_text.ends_with("en");
 
-        if previous_word == Some("of") && controller_text_ends_with_d_or_en {
+        if controller_text_ends_with_d_or_en
+            && Self::preposition_or_determiner_within_four(context, source, span.start)
+        {
             return None;
         }
 
@@ -728,6 +849,37 @@ mod tests {
         assert_no_lints(
             "Sometimes too much or too little to do. If too much, might be serious about wanting distance from others.",
             test_linter(),
+        );
+    }
+
+    #[test]
+    fn no_lint_attempted_murder() {
+        assert_no_lints(
+            "You’re under arrest for racketeering and attempted murder of Alek Suvor.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn no_lint_attempted_robbery() {
+        assert_no_lints("He was convicted of attempted robbery.", test_linter());
+    }
+
+    #[test]
+    fn inserts_to_after_attempted() {
+        assert_suggestion_result(
+            "They attempted solve the problem without assistance.",
+            test_linter(),
+            "They attempted to solve the problem without assistance.",
+        );
+    }
+
+    #[test]
+    fn inserts_to_after_attempted_with_preceding_thing() {
+        assert_suggestion_result(
+            "He found the thing and attempted solve it.",
+            test_linter(),
+            "He found the thing and attempted to solve it.",
         );
     }
 }

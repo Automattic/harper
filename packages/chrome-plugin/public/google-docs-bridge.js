@@ -145,7 +145,7 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 
 	function getAnnotatedTextApi() {
 		return typeof window._docs_annotate_getAnnotatedText === 'function'
-			? window._docs_annotate_getAnnotatedText
+			? () => window._docs_annotate_getAnnotatedText(window._docs_annotate_canvas_by_ext)
 			: null;
 	}
 
@@ -672,16 +672,15 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 		const rawStart = normalizedToRawOffset(rawText, resolvedRange.start);
 		const rawEnd = normalizedToRawOffset(rawText, resolvedRange.end);
 
-		annotated.setSelection(rawStart, rawEnd);
-
 		const iframe = document.querySelector(TEXT_EVENT_IFRAME_SELECTOR);
 		const targetDocument = iframe?.contentDocument;
-		const target = targetDocument?.activeElement;
+		const target = targetDocument?.querySelector('[contenteditable="true"]');
 		if (!target) {
 			return { kind: 'replaceText', applied: false };
 		}
 
 		target.focus?.();
+		annotated.setSelection(rawStart, rawEnd);
 
 		const expectedNextText =
 			currentText.slice(0, resolvedRange.start) +
@@ -692,16 +691,6 @@ import { GoogleDocsBridgeRequestHandler } from './google-docs-bridge-request-han
 			const nextAnnotated = await getAnnotatedText();
 			return normalizeGoogleDocsText(nextAnnotated?.getText?.()) === expectedNextText;
 		};
-
-		if (targetDocument?.execCommand?.('insertText', false, replacementText)) {
-			await new Promise((resolve) => setTimeout(resolve, 0));
-			if (await didApplyReplacement()) {
-				queueMicrotask(() => {
-					void syncText();
-				});
-				return { kind: 'replaceText', applied: true };
-			}
-		}
 
 		const dataTransfer = new DataTransfer();
 		dataTransfer.setData('text/plain', replacementText);

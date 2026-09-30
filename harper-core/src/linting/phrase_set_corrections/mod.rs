@@ -124,6 +124,17 @@ pub fn lint_group() -> LintGroup {
             "Suggests replacing the nonstandard verb `combinate` with the standard `combine`.",
             LintKind::Nonstandard
         ),
+        "CondensateVerb" => (
+            &[
+                // "condensate" is a legitimate noun but a mistake when used as a verb.
+                ("condensated", "condensed"),
+                ("condensating", "condensing"),
+                // "condensates" is a legitimate plural but a mistake when used as a 3rd person singular present verb.
+            ],
+            "Did you mean `condense` rather than the nonstandard `condensate`?",
+            "Suggests replacing the nonstandard verb `condensate` with the standard `condense`.",
+            LintKind::Nonstandard
+        ),
         "CompulseToCompel" => (
             &[
                 ("compulse", "compel"),
@@ -667,6 +678,16 @@ pub fn lint_group() -> LintGroup {
             "Did you mean `seem`? `Seam` refers to a line where two pieces of material are sewn together.",
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
+        ),
+        "SetABadExample" => (
+            &[
+                ("set up a bad example", "set a bad example"),
+                ("sets up a bad example", "sets a bad example"),
+                ("setting up a bad example", "setting a bad example"),
+            ],
+            "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
+            "Corrects `set up a bad example` to `set a bad example`.",
+            LintKind::Usage
         ),
         "SubjunctiveWasToWere" => (
             &[
