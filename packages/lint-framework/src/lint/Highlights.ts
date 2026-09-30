@@ -258,8 +258,21 @@ export default class Highlights {
 			}
 		}
 
-		return el.parentElement!;
+		return nonEditableAncestor(el.parentElement!);
 	}
+}
+
+/** Walk up from `el` to the first element that is not editable, so render boxes are never
+ * inserted into the edited content itself (e.g. a designMode or contenteditable `<body>`),
+ * where they would be serialized with it and trigger mutation observers watching it. */
+function nonEditableAncestor(el: HTMLElement): HTMLElement {
+	let node: HTMLElement | null = el;
+
+	while (node?.isContentEditable) {
+		node = node.parentElement;
+	}
+
+	return node ?? el.ownerDocument.documentElement;
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {
