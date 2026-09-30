@@ -32,6 +32,8 @@ import type { UnpackedLint } from './unpackLint';
 export default class Highlights {
 	renderBoxes: Map<SourceElement, RenderBox>;
 	highlights: Map<LintKind, Highlight> | null;
+	/** The `<style>` elements this instance inserted for each highlight, by element id. */
+	private highlightStyles: Map<string, HTMLStyleElement> = new Map();
 
 	constructor() {
 		this.renderBoxes = new Map();
@@ -45,7 +47,10 @@ export default class Highlights {
 		const backgroundColor = `${color}22`;
 
 		const styleId = `harper-highlight-style-${lint.lint_kind}`;
-		if (document.getElementById(styleId)) return;
+		// Check for our own element rather than the id: edited content can carry an element with the
+		// same id (e.g. a reply quoting a message that was sent with Harper's markup), which would
+		// otherwise leave the highlight without any style.
+		if (this.highlightStyles.get(styleId)?.isConnected) return;
 
 		const style = document.createElement('style');
 		style.id = styleId;
@@ -56,6 +61,7 @@ export default class Highlights {
       }
     `;
 		document.head.appendChild(style);
+		this.highlightStyles.set(styleId, style);
 	}
 
 	public renderLintBoxes(boxes: LintBox[]) {
@@ -74,6 +80,7 @@ export default class Highlights {
 				let highlight = this.highlights.get(box.lint.lint_kind);
 
 				if (highlight != null) {
+					this.insertHighlightStyle(`harper-${box.lint.lint_kind}`, box.lint);
 					highlight.add(box.range);
 				} else {
 					highlight = new Highlight();
