@@ -38,22 +38,22 @@ impl ExprLinter for SingularCriteriaPhenomena {
     }
 
     fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
-        let mut second_word: String = matched_tokens[2]
-            .span
-            .get_content(source)
-            .iter()
-            .copied()
-            .collect();
+        // The plural word is the last token of the match, not the third. A
+        // `then_whitespace()` step consumes a whole run, and a run spanning a line
+        // break is several tokens because `Space` and `Newline` never merge.
+        let plural = matched_tokens.last()?;
+
+        let mut second_word: String = plural.span.get_content(source).iter().copied().collect();
         second_word.make_ascii_lowercase();
 
         let suggestions = match second_word.as_str() {
             "criteria" => vec![Suggestion::ReplaceWith("criterion".chars().collect())],
             "phenomena" => vec![Suggestion::ReplaceWith("phenomenon".chars().collect())],
-            _ => panic!("Don't know what to say about '{second_word}'!"),
+            _ => return None,
         };
 
         Some(Lint {
-            span: matched_tokens[2].span,
+            span: plural.span,
             lint_kind: LintKind::Repetition,
             message: "You used a plural noun as singular.".to_owned(),
             priority: 63,
