@@ -59,8 +59,10 @@ test('Positions highlights inside a scaled and zoomed ancestor.', async ({ page 
 	expect(scaled).not.toBeNull();
 
 	// Both textareas have the same layout size, so the scaled one should show the same
-	// highlight, just scaled by the ratio of their on-screen widths.
-	const ratio = scaled.editorBox.width / reference.editorBox.width;
+	// highlight, just scaled by `scale: 0.9` times `zoom: 1.2` from css_scale.html. The ratio
+	// of the textareas' on-screen widths is not exact, because their borders snap to device
+	// pixels.
+	const ratio = 0.9 * 1.2;
 	expect(Math.abs(scaled.x / ratio - reference.x)).toBeLessThan(2);
 	expect(Math.abs(scaled.y / ratio - reference.y)).toBeLessThan(2);
 	expect(Math.abs(scaled.width / ratio - reference.width)).toBeLessThan(2);
