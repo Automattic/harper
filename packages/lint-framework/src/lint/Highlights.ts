@@ -1,6 +1,7 @@
 import type { VNode } from 'virtual-dom';
 import h from 'virtual-dom/h';
 import type { LintBox } from './Box';
+import { nonEditableAncestor } from './domUtils';
 import {
 	getCMRoot,
 	getDraftRoot,
@@ -260,19 +261,6 @@ export default class Highlights {
 
 		return nonEditableAncestor(el.parentElement!);
 	}
-}
-
-/** Walk up from `el` to the first element that is not editable, so render boxes are never
- * inserted into the edited content itself (e.g. a designMode or contenteditable `<body>`),
- * where they would be serialized with it and trigger mutation observers watching it. */
-function nonEditableAncestor(el: HTMLElement): HTMLElement {
-	let node: HTMLElement | null = el;
-
-	while (node?.isContentEditable) {
-		node = node.parentElement;
-	}
-
-	return node ?? el.ownerDocument.documentElement;
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {

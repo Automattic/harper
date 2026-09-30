@@ -55,6 +55,21 @@ export function getClosestBlockAncestor(leaf: Node, root: Element): Element | nu
 }
 
 /**
+ * Walk up from `el` to the first element that is not editable, so render boxes are never inserted
+ * into the edited content itself (e.g. a designMode or contenteditable `<body>`), where they would
+ * be serialized with it and trigger mutation observers watching it.
+ */
+export function nonEditableAncestor(el: HTMLElement): HTMLElement {
+	let node: HTMLElement | null = el;
+
+	while (node?.isContentEditable) {
+		node = node.parentElement;
+	}
+
+	return node ?? el.ownerDocument.documentElement;
+}
+
+/**
  * Flatten a provided node, and its children into a single array.
  * @param node
  */
