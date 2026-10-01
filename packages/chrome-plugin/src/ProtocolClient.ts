@@ -44,6 +44,11 @@ export default class ProtocolClient {
 		return p;
 	}
 
+	/** Forget cached lint results, e.g. because the language changed and the text did not. */
+	public static clearLintCache(): void {
+		this.lintCache.clear();
+	}
+
 	public static async getLintConfig(): Promise<LintConfig> {
 		return (await chrome.runtime.sendMessage({ kind: 'getConfig' })).config;
 	}

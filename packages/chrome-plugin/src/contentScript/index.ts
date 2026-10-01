@@ -47,6 +47,8 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 	}
 
 	if (changes.dialect != null) {
+		// Cached results are keyed by text, not language, so they would bring back the old lints.
+		ProtocolClient.clearLintCache();
 		fw.update();
 	}
 
