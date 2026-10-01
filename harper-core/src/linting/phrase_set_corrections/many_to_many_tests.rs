@@ -595,7 +595,7 @@ fn fix_hallucinisation() {
     assert_suggestion_result(
         "candybar left over from halloween [mmm moldy hallucinisation goodness! >_>]",
         test_linter(),
-        "candybar left over from halloween [mmm moldy hallucination goodness! >_>]ar",
+        "candybar left over from halloween [mmm moldy hallucination goodness! >_>]",
     )
 }
 
