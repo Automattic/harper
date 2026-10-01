@@ -1,14 +1,21 @@
 <script lang="ts">
 import { Button, Card, Input, Select, Textarea } from 'components';
 import {
-	Dialect,
+	type Dialect,
 	type DialectInfo,
 	type LintConfig,
 	type StructuredLintConfig,
 	type StructuredLintSetting,
 } from 'harper.js';
 import logo from '/logo.png';
-import { codeFlag, groupByLanguage } from '../languages';
+import { CYCLE_LANGUAGE_COMMAND, DEFAULT_CYCLE_SHORTCUT } from '../commands';
+import {
+	codeFlag,
+	dialectInfo,
+	groupByLanguage,
+	languageLabel,
+	MAX_LANGUAGE_CYCLE,
+} from '../languages';
 import ProtocolClient from '../ProtocolClient';
 import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
@@ -20,8 +27,21 @@ let lintDescriptions: Record<string, string> = $state({});
 let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
-let dialect = $state(Dialect.American);
 let dialectCatalog: DialectInfo[] = $state([]);
+let languageCycle: Dialect[] = $state([]);
+let languageToAdd: Dialect | '' = $state('');
+let availableLanguages = $derived(
+	dialectCatalog.filter((info) => !languageCycle.includes(info.dialect)),
+);
+let cycleShortcut = $state('');
+let cycleShortcutLoaded = $state(false);
+/** `commands.update` exists in Firefox and Thunderbird; Chrome changes shortcuts on its own page. */
+const commandsApi = chrome.commands as typeof chrome.commands & {
+	update?: (detail: { name: string; shortcut: string }) => Promise<void>;
+};
+let cycleShortcutEditable = typeof commandsApi?.update === 'function';
+let capturingCycleShortcut = $state(false);
+let cycleShortcutError = $state('');
 let isolateEnglish = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
@@ -37,10 +57,6 @@ let weirpackError = $state('');
 
 $effect(() => {
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
-});
-
-$effect(() => {
-	ProtocolClient.setDialect(dialect);
 });
 
 $effect(() => {
@@ -71,13 +87,15 @@ Promise.all([
 	lintDescriptions = nextLintDescriptions;
 });
 
-ProtocolClient.getDialect().then((d) => {
-	dialect = d;
-});
-
 ProtocolClient.getDialectCatalog().then((catalog) => {
 	dialectCatalog = catalog;
 });
+
+ProtocolClient.getLanguageCycle().then((cycle) => {
+	languageCycle = cycle;
+});
+
+refreshCycleShortcut();
 
 ProtocolClient.getIsolateEnglish().then((value) => {
 	isolateEnglish = value;
@@ -299,6 +317,132 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
 	window.addEventListener('keydown', handleKeydown);
 }
 
+function saveLanguageCycle(next: Dialect[]): void {
+	languageCycle = next;
+	ProtocolClient.setLanguageCycle(next);
+}
+
+function addLanguage(): void {
+	if (languageToAdd === '' || languageCycle.length >= MAX_LANGUAGE_CYCLE) {
+		return;
+	}
+
+	saveLanguageCycle([...languageCycle, languageToAdd]);
+	languageToAdd = '';
+}
+
+function moveLanguage(index: number, by: number): void {
+	const target = index + by;
+	if (target < 0 || target >= languageCycle.length) {
+		return;
+	}
+
+	const next = [...languageCycle];
+	[next[index], next[target]] = [next[target], next[index]];
+	saveLanguageCycle(next);
+}
+
+function removeLanguage(index: number): void {
+	if (languageCycle.length <= 1) {
+		return;
+	}
+
+	saveLanguageCycle(languageCycle.filter((_, i) => i !== index));
+}
+
+async function refreshCycleShortcut(): Promise<void> {
+	const commands = (await chrome.commands?.getAll?.()) ?? [];
+	const command = commands.find((c) => c.name === CYCLE_LANGUAGE_COMMAND);
+	cycleShortcut = command?.shortcut ?? '';
+	cycleShortcutLoaded = true;
+}
+
+/** Keys the WebExtension `commands` API accepts, by `KeyboardEvent.code`. */
+function commandKey(code: string): string | null {
+	if (/^Key[A-Z]$/.test(code)) return code.slice(3);
+	if (/^Digit[0-9]$/.test(code)) return code.slice(5);
+	if (/^F([1-9]|1[0-2])$/.test(code)) return code;
+
+	const named: Record<string, string> = {
+		Space: 'Space',
+		Comma: 'Comma',
+		Period: 'Period',
+		Home: 'Home',
+		End: 'End',
+		PageUp: 'PageUp',
+		PageDown: 'PageDown',
+		Insert: 'Insert',
+		Delete: 'Delete',
+		ArrowUp: 'Up',
+		ArrowDown: 'Down',
+		ArrowLeft: 'Left',
+		ArrowRight: 'Right',
+	};
+	return named[code] ?? null;
+}
+
+function startCycleShortcutCapture(): void {
+	capturingCycleShortcut = true;
+	cycleShortcutError = '';
+
+	const handleKeydown = async (event: KeyboardEvent) => {
+		event.preventDefault();
+
+		if (event.key === 'Escape') {
+			stop();
+			return;
+		}
+
+		const key = commandKey(event.code);
+		if (key == null) {
+			return; // a modifier on its own, or a key the browser does not allow
+		}
+
+		if (event.getModifierState('AltGraph')) {
+			cycleShortcutError = 'AltGr types characters, use Ctrl or Alt instead.';
+			return;
+		}
+
+		const modifiers: string[] = [];
+		if (event.ctrlKey) modifiers.push('Ctrl');
+		if (event.altKey) modifiers.push('Alt');
+		if (event.shiftKey) modifiers.push('Shift');
+
+		if (!event.ctrlKey && !event.altKey) {
+			cycleShortcutError = 'The shortcut needs Ctrl or Alt.';
+			return;
+		}
+
+		try {
+			await commandsApi.update?.({
+				name: CYCLE_LANGUAGE_COMMAND,
+				shortcut: [...modifiers, key].join('+'),
+			});
+			stop();
+		} catch (error) {
+			cycleShortcutError = error instanceof Error ? error.message : String(error);
+		}
+	};
+
+	const stop = () => {
+		window.removeEventListener('keydown', handleKeydown, true);
+		capturingCycleShortcut = false;
+		refreshCycleShortcut();
+	};
+
+	window.addEventListener('keydown', handleKeydown, true);
+}
+
+async function resetCycleShortcut(): Promise<void> {
+	cycleShortcutError = '';
+	await commandsApi.update?.({ name: CYCLE_LANGUAGE_COMMAND, shortcut: DEFAULT_CYCLE_SHORTCUT });
+	await refreshCycleShortcut();
+}
+
+function openBrowserShortcuts(): void {
+	chrome.tabs.create({ url: 'chrome://extensions/shortcuts' });
+}
+
 async function refreshWeirpacks() {
 	const stored = await ProtocolClient.getWeirpacks();
 	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
@@ -363,20 +507,76 @@ async function removeWeirpack(id: string) {
       <h2 class="pb-1 text-xs uppercase tracking-wider">General</h2>
 
       <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm">Language</h3>
-          {#if dialectCatalog.length > 0}
-            <!-- Rendered once the catalog is in, so the select never sees a value without options. -->
-            <Select size="sm" class="w-44" bind:value={dialect} data-testid="language-select">
-              {#each groupByLanguage(dialectCatalog) as [language, dialects] (language)}
-                <optgroup label={language}>
-                  {#each dialects as info (info.dialect)}
-                    <option value={info.dialect}>{codeFlag(info.code)} {info.region}</option>
-                  {/each}
-                </optgroup>
+        <div class="flex items-start justify-between gap-4">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Languages</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              The keyboard shortcut switches between these languages, in this order.
+            </p>
+          </div>
+          <div class="flex w-72 flex-col gap-2">
+            <ol class="space-y-1" data-testid="language-cycle">
+              {#each languageCycle as dialect, index (dialect)}
+                {@const info = dialectInfo(dialectCatalog, dialect)}
+                <li class="flex items-center justify-between gap-2 text-sm">
+                  <span>{codeFlag(info?.code ?? '')} {languageLabel(info)}</span>
+                  <span class="flex gap-1">
+                    <Button size="sm" color="light" title="Move up" disabled={index === 0} on:click={() => moveLanguage(index, -1)}>↑</Button>
+                    <Button size="sm" color="light" title="Move down" disabled={index === languageCycle.length - 1} on:click={() => moveLanguage(index, 1)}>↓</Button>
+                    <Button size="sm" color="light" title="Remove" disabled={languageCycle.length <= 1} on:click={() => removeLanguage(index)}>✕</Button>
+                  </span>
+                </li>
               {/each}
-            </Select>
-          {/if}
+            </ol>
+            {#if languageCycle.length < MAX_LANGUAGE_CYCLE}
+              <Select size="sm" bind:value={languageToAdd} on:change={addLanguage} data-testid="language-add">
+                <option value="">Add a language…</option>
+                {#each groupByLanguage(availableLanguages) as [language, dialects] (language)}
+                  <optgroup label={language}>
+                    {#each dialects as info (info.dialect)}
+                      <option value={info.dialect}>{codeFlag(info.code)} {info.region}</option>
+                    {/each}
+                  </optgroup>
+                {/each}
+              </Select>
+            {:else}
+              <p class="text-xs text-gray-600 dark:text-gray-400">
+                At most {MAX_LANGUAGE_CYCLE} languages.
+              </p>
+            {/if}
+          </div>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between gap-4">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Switch Language Shortcut</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Switches to the next language in the list above. If it does nothing, another
+              extension probably uses the same shortcut.
+            </p>
+            {#if cycleShortcutLoaded && !cycleShortcut && !capturingCycleShortcut}
+              <p class="text-xs text-red-600" data-testid="cycle-shortcut-missing">
+                No shortcut is assigned. The browser leaves it out when another extension already
+                uses it, so choose a different one.
+              </p>
+            {/if}
+            {#if cycleShortcutError}
+              <p class="text-xs text-red-600">{cycleShortcutError}</p>
+            {/if}
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-sm" data-testid="cycle-shortcut">
+              {capturingCycleShortcut ? 'Press the new shortcut (Esc cancels)' : cycleShortcut || 'Not set'}
+            </span>
+            {#if cycleShortcutEditable}
+              <Button size="sm" color="light" disabled={capturingCycleShortcut} on:click={startCycleShortcutCapture}>Change</Button>
+              <Button size="sm" color="light" disabled={capturingCycleShortcut} on:click={resetCycleShortcut}>Default</Button>
+            {:else}
+              <Button size="sm" color="light" on:click={openBrowserShortcuts}>Change</Button>
+            {/if}
+          </div>
         </div>
       </div>
 

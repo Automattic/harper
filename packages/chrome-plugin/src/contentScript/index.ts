@@ -10,6 +10,7 @@ import isSubstack from '../isSubstack';
 import isWordPress from '../isWordPress';
 import ProtocolClient from '../ProtocolClient';
 import { createGoogleDocsBridgeSync, isGoogleDocsPage } from './googleDocs';
+import { frameHasFocus, showLanguageNotice } from './languageNotice';
 
 if (isWordPress() || isSubstack()) {
 	ProtocolClient.setDomainEnabled(window.location.hostname, true, false);
@@ -38,6 +39,21 @@ const fw = new LintFramework(
 );
 
 const syncGoogleDocsBridge = createGoogleDocsBridgeSync(fw);
+
+// Check the text again in the new language right away, instead of waiting for the next edit.
+chrome.storage.onChanged.addListener((changes, areaName) => {
+	if (areaName !== 'local') {
+		return;
+	}
+
+	if (changes.dialect != null) {
+		fw.update();
+	}
+
+	if (changes.languageSwitchedAt != null && frameHasFocus()) {
+		ProtocolClient.getActiveLanguage().then(({ label }) => showLanguageNotice(`Harper: ${label}`));
+	}
+});
 
 function padWithContext(source: string, start: number, end: number, contextLength: number): string {
 	const normalizedStart = Math.max(0, Math.min(start, source.length));
