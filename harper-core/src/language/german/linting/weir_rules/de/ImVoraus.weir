@@ -1,0 +1,14 @@
+# "Voraus" has one r: vor + aus. "Vorraus" is a very common doubling error and
+# the compound splitter accepts it as Vor+raus.
+expr main [vorraus, vorrraus]
+
+let message "»Voraus« schreibt sich mit einem r."
+let description "Korrigiert die Verdopplung in »Vorraus« zu »Voraus«."
+let kind "Spelling"
+let becomes "Voraus"
+let strategy "MatchCase"
+
+test "Vielen Dank im Vorraus." "Vielen Dank im Voraus."
+test "Das war im Vorraus bekannt." "Das war im Voraus bekannt."
+
+allows "Vielen Dank im Voraus."

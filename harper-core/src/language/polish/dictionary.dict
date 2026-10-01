@@ -1,0 +1,60 @@
+# Polish dictionary - basic words for testing
+# Format: word/flags
+
+# Common words
+i/~C
+w/~I
+na/~I
+z/~I
+do/~I
+że/~C
+jest/~Z
+nie/~R
+tak/~R
+
+# Polish-specific words with diacritics
+ą/~I
+ć/~I
+ę/~I
+ł/~I
+ń/~I
+ó/~I
+ś/~I
+ź/~I
+ż/~I
+
+# Basic nouns
+człowiek/~N
+dom/~N
+książka/~N
+miasto/~N
+kobieta/~N
+mężczyzna/~N
+dziecko/~N
+
+# Basic verbs
+być/~V
+mieć/~V
+robić/~V
+iść/~V
+mówić/~V
+pisać/~V
+czytać/~V
+
+# Basic adjectives
+dobry/~J
+zły/~J
+duży/~J
+mały/~J
+nowy/~J
+stary/~J
+piękny/~J
+
+# Basic pronouns
+ja/~P
+ty/~P
+on/~P
+ona/~P
+my/~P
+wy/~P
+oni/~P

@@ -1,0 +1,12 @@
+# German "Adresse" has one d, unlike English "address".
+expr main [addresse, addressen]
+
+let message "»Adresse« schreibt sich im Deutschen mit einem d."
+let description "Korrigiert die englische Schreibung »Addresse« zu »Adresse«."
+let kind "Spelling"
+let becomes "Adresse"
+let strategy "MatchCase"
+
+test "Seine Addresse ist bekannt." "Seine Adresse ist bekannt."
+
+allows "Seine Adresse ist bekannt."

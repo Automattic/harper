@@ -1,0 +1,34 @@
+# The doubled contraction, and the same relative-pronoun trap as `InDemIm`:
+# "ein Ziel, zu dem zum Glück alle beitragen" is correct German, and collapsing
+# the three words to `zum` destroys it. A relative clause always has a comma in
+# front of it and a comma ends a chunk, so requiring a word before the phrase
+# rules the reading out.
+expr main <(* zu dem zum), (zu dem zum)>
+
+let message "»zu dem« und »zum« stehen doppelt – behalten Sie nur eines."
+let description "Removes the doubled contraction in `zu dem zum`."
+let kind "Miscellaneous"
+let becomes "zum"
+let strategy "MatchCase"
+
+test "Er geht zu dem zum Arzt." "Er geht zum Arzt."
+test "Wir fahren zu dem zum Bahnhof." "Wir fahren zum Bahnhof."
+test "Das führt zu dem zum Ziel." "Das führt zum Ziel."
+test "Das geschah zu dem zum ersten Mal." "Das geschah zum ersten Mal."
+test "Er sagte zu dem zum Schluss nichts." "Er sagte zum Schluss nichts."
+test "Es kam zu dem zum Ende." "Es kam zum Ende."
+test "Das gilt zu dem zum Beispiel hier." "Das gilt zum Beispiel hier."
+test "Es stimmt zu dem zum Teil." "Es stimmt zum Teil."
+test "Das trifft zu dem zum größten Teil zu." "Das trifft zum größten Teil zu."
+test "Das gilt zu dem zum einen." "Das gilt zum einen."
+test "Es zählt zu dem zum anderen." "Es zählt zum anderen."
+test "Er schrieb zu dem zum besseren Verständnis nichts." "Er schrieb zum besseren Verständnis nichts."
+test "Es kam zu dem zum Anbruch." "Es kam zum Anbruch."
+test "Das galt zu dem zum damaligen Zeitpunkt." "Das galt zum damaligen Zeitpunkt."
+
+allows "zu dem Zeitpunkt"
+allows "zu dem Zweck"
+allows "zu dem Grund"
+allows "zu dem Ergebnis"
+allows "Das ist ein Ziel, zu dem zum Glück alle beitragen."
+allows "Er nannte einen Punkt, zu dem zum Schluss noch etwas gesagt wurde."

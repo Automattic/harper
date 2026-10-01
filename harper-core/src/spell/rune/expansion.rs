@@ -80,6 +80,20 @@ pub struct Property {
     /// Whether the metadata will propagate to all derived words.
     #[serde(default)]
     pub propagate: bool,
+    /// Whether the entry is a bare stem rather than a word.
+    ///
+    /// Some entries exist only to hang affixes on. German stores the stem of a
+    /// verb so the conjugation rules have something to attach to
+    /// (`absperr/~~Vcej` builds *absperrt*, *absperrte*, *absperren*), but
+    /// `absperr` is not itself a German word. Without this the stem lands in
+    /// the word list and is accepted both as a spelling and — worse, because
+    /// any member of the list may be a compound element — as a piece of a
+    /// compound, which is how `Absiecht` gets in as `ab` + `siecht`.
+    ///
+    /// Hunspell spells the same idea `NEEDAFFIX`. When set, the affix forms are
+    /// generated as usual and the base form is left out.
+    #[serde(default)]
+    pub stem_only: bool,
     /// The metadata applied to the word.
     pub metadata: DictWordMetadata,
 }

@@ -27,6 +27,12 @@ where
     M: Masker,
     P: Parser,
 {
+    /// Masking selects which parts of the source to parse; it does not change
+    /// the language of what comes out.
+    fn is_english(&self) -> bool {
+        self.parser.is_english()
+    }
+
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let mask = self.masker.create_mask(source);
 

@@ -52,6 +52,16 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
+    /// The dictionary's entries in mutable form.
+    ///
+    /// An [`FstDictionary`] already keeps a [`MutableDictionary`] beside its FST
+    /// for everything but fuzzy finding, so this shares that one rather than
+    /// building a second. Callers that want to read every entry and its metadata
+    /// should use this; a large dictionary is expensive to copy.
+    pub fn as_mutable(&self) -> Arc<MutableDictionary> {
+        Arc::clone(&self.mutable_dict)
+    }
+
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {

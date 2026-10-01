@@ -1,0 +1,17 @@
+# "auf jeden Fall" is three words; the closed-up spelling is a frequent slip
+# that the compound splitter would otherwise wave through as auf+jeden+fall.
+#
+# The strategy is Exact rather than MatchCase: the source is a single
+# all-lowercase token, so MatchCase would carry that case onto "Fall".
+expr main [aufjedenfall, aufjedenfalls]
+
+let message "»auf jeden Fall« wird in drei Wörtern geschrieben."
+let description "Trennt das zusammengeschriebene »aufjedenfall« zu »auf jeden Fall«."
+let kind "Spelling"
+let becomes "auf jeden Fall"
+let strategy "Exact"
+
+test "Wir kommen aufjedenfall vorbei." "Wir kommen auf jeden Fall vorbei."
+test "Das gilt aufjedenfalls für alle." "Das gilt auf jeden Fall für alle."
+
+allows "Wir kommen auf jeden Fall vorbei."
