@@ -1410,6 +1410,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SeizeControlOf",
+								"state": true,
+								"label": "Seize Control of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SubjunctiveWasToWere",
 								"state": true,
 								"label": "Subjunctive Was To Were"

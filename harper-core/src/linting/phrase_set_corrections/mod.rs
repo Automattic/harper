@@ -1108,6 +1108,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
         ),
+        "SeizeControlOf" => (
+            &[
+                (&["seize control over", "sieze control over"], &["seize control of"]),
+                (&["seized control over", "siezed control over"], &["seized control of"]),
+                (&["seizes control over", "siezes control over"], &["seizes control of"]),
+                (&["seizing control over", "siezing control over"], &["seizing control of"]),
+            ],
+            "The standard preposition with the verb `seize` is `of`.",
+            "Corrects `seize control over` to `seize control of`.",
+            LintKind::Usage
+        ),
         "SideTangent" => (
             &[
                 (&["a side tangent"], &["a tangent", "an aside"]),
