@@ -588,6 +588,44 @@ fn got_ride_of() {
     );
 }
 
+// Hallucination
+
+#[test]
+fn fix_hallucinisation() {
+    assert_suggestion_result(
+        "candybar left over from halloween [mmm moldy hallucinisation goodness! >_>]",
+        test_linter(),
+        "candybar left over from halloween [mmm moldy hallucination goodness! >_>]ar",
+    )
+}
+
+#[test]
+fn fix_hallucinisations() {
+    assert_suggestion_result(
+        "I havent really experienced hallucinisations or delusions, but this interpertation of movie is extremely intriguing",
+        test_linter(),
+        "I havent really experienced hallucinations or delusions, but this interpertation of movie is extremely intriguing",
+    )
+}
+
+#[test]
+fn fix_hallucinization() {
+    assert_suggestion_result(
+        "The hallucinization machine makers will be long gone to their retirement homes on private islands",
+        test_linter(),
+        "The hallucination machine makers will be long gone to their retirement homes on private islands",
+    )
+}
+
+#[test]
+fn fix_hallucinizations() {
+    assert_suggestion_result(
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinizations.",
+        test_linter(),
+        "He was treated for schizophrenia so I think the meds helped him with the voices and hallucinations.",
+    )
+}
+
 // Hijack
 
 #[test]

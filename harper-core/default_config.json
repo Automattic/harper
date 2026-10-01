@@ -2618,6 +2618,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Hallucination",
+								"state": true,
+								"label": "Hallucination"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Hazzle",
 								"state": true,
 								"label": "Hazzle"

@@ -935,6 +935,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "Hallucination" => (
+            &[
+                (&["hallucinisation", "hallucinization"], &["hallucination"]),
+                (&["hallucinisations", "hallucinizations"], &["hallucinations"]),
+            ],
+            "The correct spelling is `hallucination`.",
+            "Corrects the misspelling `hallucinization`/`hallucinisation`.",
+            LintKind::Spelling
+        ),
         "Hijack" => (
             &[
                 // "hi jack" would result in false positives
