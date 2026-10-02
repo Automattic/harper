@@ -863,6 +863,7 @@ fn has_state_complement(
         .map(|&idx| normalized_word(&sentence[idx], source));
     match (lower.as_str(), next.as_deref()) {
         ("meant" | "supposed" | "expected" | "designed", Some("to")) => true,
+        ("made", Some("possible")) => true,
         ("damned", Some("if")) => true,
         // Postnominal availability idioms: "no time to be lost" and
         // "not a single pro to be found". Keep ordinary passive infinitives.
@@ -969,14 +970,7 @@ fn has_event_evidence(sentence: &[Token], indices: &[usize], pos: usize, source:
         let lower = normalized_word(&sentence[idx], source);
         if matches!(
             lower.as_str(),
-            "being"
-                | "be"
-                | "getting"
-                | "recently"
-                | "deliberately"
-                | "intentionally"
-                | "newly"
-                | "just"
+            "being" | "getting" | "recently" | "deliberately" | "intentionally" | "newly" | "just"
         ) {
             return true;
         }
@@ -1141,6 +1135,14 @@ fn should_suppress_adjectival(
     // A VERB tag alone cannot distinguish an event from a result state. Require
     // additional event evidence for the broader ambiguity list.
     if likely_participial_adjective(&lower) && !event_evidence {
+        return true;
+    }
+
+    // Documentation commonly describes configurations, capabilities, and
+    // states with agentless passives ("the feature is enabled", "files can be
+    // found"). These read as result states rather than dynamic events, so keep
+    // them out of the style warning unless an event or agent is present.
+    if technical_state_participle(&lower) && !event_evidence {
         return true;
     }
 
@@ -1351,6 +1353,18 @@ fn by_phrase_is_nonagentive(sentence: &[Token], by_idx: usize, source: &[char]) 
     ) {
         return true;
     }
+    // "by <gerund>" almost always names a means or method rather than an actor:
+    // "disabled by setting a flag", "found by searching", "ranked by counting".
+    // Proper nouns and a few ordinary nouns that merely end in -ing are excluded.
+    if lower.ends_with("ing")
+        && !next.kind.is_proper_noun()
+        && !matches!(
+            lower.as_str(),
+            "king" | "thing" | "string" | "spring" | "ring" | "morning" | "evening"
+        )
+    {
+        return true;
+    }
     if matches!(lower.as_str(), "the" | "a" | "an") {
         let Some(after_determiner) = iter.find(|tok| tok.kind.is_word_like()) else {
             return false;
@@ -1486,6 +1500,47 @@ fn passivepy_ambiguous_participle(lower: &str) -> bool {
 
 fn lexicalized_nonpassive_state(lower: &str) -> bool {
     matches!(lower, "gone" | "done" | "drunk" | "fainted")
+}
+
+/// Participles that overwhelmingly describe technical configuration, capability,
+/// or documentation states in ordinary prose. Agentive or eventive uses stay in
+/// scope because this list is only consulted without either.
+fn technical_state_participle(lower: &str) -> bool {
+    matches!(
+        lower,
+        "enabled"
+            | "disabled"
+            | "configured"
+            | "installed"
+            | "provided"
+            | "included"
+            | "recorded"
+            | "tagged"
+            | "listed"
+            | "supported"
+            | "required"
+            | "generated"
+            | "shared"
+            | "documented"
+            | "stored"
+            | "deprecated"
+            | "noted"
+            | "mentioned"
+            | "derived"
+            | "allowed"
+            | "permitted"
+            | "printed"
+            | "used"
+            | "stopped"
+            | "rotated"
+            | "specified"
+            | "described"
+            | "defined"
+            | "shown"
+            | "displayed"
+            | "found"
+            | "built"
+    )
 }
 
 fn likely_participial_adjective(lower: &str) -> bool {
@@ -1831,7 +1886,7 @@ mod tests {
             ("He got written permission from his manager.", 0),
             ("Was the written report useful?", 0),
             ("Was the report that Alice wrote published?", 1),
-            ("The file was deleted and the report was printed.", 2),
+            ("The file was deleted and the report was printed.", 1),
             ("The file was reviewed, approved, and published.", 1),
             ("The file was reviewed but later rejected.", 1),
             ("The candidate was interviewed but rejected the offer.", 1),
@@ -1850,7 +1905,7 @@ mod tests {
             ("She is exhausted by now.", 0),
             ("She was exhausted by Friday morning.", 0),
             ("She was exhausted by the next day.", 0),
-            ("She was exhausted by running.", 1),
+            ("She was exhausted by running.", 0),
             ("The room was filled by the time we arrived.", 0),
             ("The proposal was approved by three judges.", 1),
             ("He was bored by 5:30.", 0),
@@ -1914,8 +1969,8 @@ mod tests {
             ("I'm grown up now.", 0),
             ("I'm used to it.", 0),
             ("I'm used to cold weather.", 0),
-            ("The tool is used to cut paper.", 1),
-            ("The things get used up.", 1),
+            ("The tool is used to cut paper.", 0),
+            ("The things get used up.", 0),
             ("She got used to the noise.", 0),
             ("She was seated on the throne.", 0),
             ("We're descended from that family.", 0),
@@ -2015,19 +2070,30 @@ mod tests {
     fn preserves_passives_that_can_be_appropriate_in_context() {
         for text in [
             "The video game industry is being sucked into a crisis.",
-            "The script is stopped and run again.",
             "The project is being actively developed.",
             "He got fired illegally.",
             "Some of the words have got altered.",
+            "The trend isn't really driven by consumers.",
+        ] {
+            passive(text);
+        }
+    }
+
+    #[test]
+    fn suppresses_agentless_technical_states() {
+        for text in [
+            "The script is stopped and run again.",
             "Patterns get documented.",
             "The list is generated using a script.",
             "The feature can be disabled by setting a flag.",
             "Docker must be installed.",
             "The feature is enabled by default.",
-            "The trend isn't really driven by consumers.",
         ] {
-            passive(text);
+            active(text);
         }
+        // An agent or a dated event brings the same verbs back into scope.
+        passive("The feature was enabled by the administrator.");
+        passive("The document was generated yesterday.");
     }
 
     #[test]

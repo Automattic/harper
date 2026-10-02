@@ -21,10 +21,12 @@ TSVs contain AI-authored synthetic cases, alongside the issue #1500 examples;
 they are not a real-world corpus.
 
 The review's generated classifications are not the test oracle. Get-passives,
-continuous passives, and passive technical instructions remain grammatically
-passive even when they are appropriate stylistically. The rule is optional,
-offers no rewrites, and asks whether a change would help. Those examples retain
-warnings. Reduced relatives and standalone participial labels are outside its
-scope. Local exceptions suppress conventional license declarations and common
-state, intention, and availability readings. Other diagnostics in the same
-document remain eligible.
+continuous passives, agentive passives, and passive technical instructions with
+an explicit event remain grammatically passive even when they are appropriate
+stylistically. The rule is optional, offers no rewrites, and asks whether a
+change would help. Those examples retain warnings. Reduced relatives and
+standalone participial labels are outside its scope. Local exceptions suppress
+conventional license declarations and common state, intention, availability,
+and agentless technical-configuration readings. Suppression is local: an explicit
+agent or a dated event brings the same participles back into scope, and other
+diagnostics in the same document remain eligible.
