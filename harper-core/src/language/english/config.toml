@@ -1,25 +1,36 @@
 [language]
 name = "English"
+native_name = "English"
 
 [metadata]
 confidence = 0.30
 
 [[dialects]]
 name = "US"
+native_name = "American"
+code = "US"
 aliases = ["us", "usa", "america", "american", "en-us", "en_us"]
 
 [[dialects]]
 name = "GB"
+native_name = "British"
+code = "GB"
 aliases = ["uk", "gb", "british", "britain", "en-gb", "en_gb"]
 
 [[dialects]]
 name = "AU"
+native_name = "Australian"
+code = "AU"
 aliases = ["au", "aus", "australia", "australian", "en-au", "en_au"]
 
 [[dialects]]
 name = "IN"
+native_name = "Indian"
+code = "IN"
 aliases = ["in", "india", "indian", "bharat", "en-in", "en_in"]
 
 [[dialects]]
 name = "CA"
+native_name = "Canadian"
+code = "CA"
 aliases = ["ca", "canada", "canadian", "en-ca", "en_ca"]

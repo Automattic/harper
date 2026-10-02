@@ -1,5 +1,6 @@
 [language]
 name = "Slovak"
+native_name = "Slovenčina"
 feature = "sk"
 
 [metadata]
@@ -7,4 +8,5 @@ confidence = 0.90
 
 [[dialects]]
 name = "Standard"
+code = "SK"
 aliases = ["sk", "slovak", "slovensko", "sk-sk", "sk_sk"]

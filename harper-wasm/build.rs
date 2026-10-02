@@ -89,6 +89,77 @@ struct LanguageConfig {
     /// Dialect names as written in `config.toml`. These are also the
     /// abbreviations accepted by the language's `Dialect::try_from_abbr`.
     dialects: Vec<String>,
+    /// The language's name in that language, e.g. `Deutsch`.
+    native_name: String,
+    /// Display metadata of each dialect, in the order of `dialects`.
+    dialect_meta: Vec<DialectMeta>,
+}
+
+/// How a dialect is presented to users, from its `[[dialects]]` entry.
+struct DialectMeta {
+    /// Region name in the dialect's language, e.g. `Österreich`. Falls back to the
+    /// language's native name, which suits languages with a single dialect.
+    native_name: Option<String>,
+    /// Short code for a badge, usually the ISO 3166 country code, e.g. `AT`.
+    code: Option<String>,
+}
+
+/// Read the display metadata of every `[[dialects]]` entry in a config table.
+fn dialect_meta(table: &toml::Table) -> Vec<DialectMeta> {
+    let Some(toml::Value::Array(dialects)) = table.get("dialects") else {
+        return Vec::new();
+    };
+
+    dialects
+        .iter()
+        .filter_map(|dialect| dialect.as_table())
+        .filter(|dialect| dialect.get("name").is_some())
+        .map(|dialect| DialectMeta {
+            native_name: dialect
+                .get("native_name")
+                .and_then(|v| v.as_str())
+                .map(str::to_string),
+            code: dialect
+                .get("code")
+                .and_then(|v| v.as_str())
+                .map(str::to_string),
+        })
+        .collect()
+}
+
+/// The `[language] native_name` of a config table, or `fallback` when it is missing.
+fn language_native_name(table: &toml::Table, fallback: &str) -> String {
+    table
+        .get("language")
+        .and_then(|language| language.get("native_name"))
+        .and_then(|v| v.as_str())
+        .unwrap_or(fallback)
+        .to_string()
+}
+
+/// Read English's config.toml. English is not part of `discover_languages`, because its
+/// enum variants are fixed, but its display metadata still comes from config.toml.
+fn english_meta(language_dir: &Path) -> (String, Vec<(String, DialectMeta)>) {
+    let config_path = language_dir.join("english/config.toml");
+    println!("cargo:rerun-if-changed={}", config_path.display());
+
+    let table = fs::read_to_string(&config_path)
+        .ok()
+        .and_then(|content| content.parse::<toml::Table>().ok())
+        .unwrap_or_default();
+
+    let names = match table.get("dialects") {
+        Some(toml::Value::Array(dialects)) => dialects
+            .iter()
+            .filter_map(|d| d.get("name").and_then(|v| v.as_str()).map(str::to_string))
+            .collect(),
+        _ => Vec::new(),
+    };
+
+    (
+        language_native_name(&table, "English"),
+        names.into_iter().zip(dialect_meta(&table)).collect(),
+    )
 }
 
 /// Discover non-English languages from harper-core's language config files.
@@ -187,6 +258,8 @@ fn discover_languages(language_dir: &Path) -> Vec<LanguageConfig> {
             name: name.to_string(),
             feature: feature.to_string(),
             dialects,
+            native_name: language_native_name(&table, name),
+            dialect_meta: dialect_meta(&table),
         });
     }
 
@@ -276,6 +349,78 @@ fn generate_language_conversion(code: &mut String, languages: &[LanguageConfig])
     code.push_str("}\n");
 }
 
+/// The `Dialect` variant of each English dialect, by its name in english/config.toml.
+const ENGLISH_VARIANTS: [(&str, &str); 5] = [
+    ("US", "American"),
+    ("GB", "British"),
+    ("AU", "Australian"),
+    ("CA", "Canadian"),
+    ("IN", "Indian"),
+];
+
+/// Generate `get_dialect_catalog()`, which lists every dialect compiled into this
+/// build with its names in its own language, so that user interfaces can offer
+/// the languages without keeping their own list.
+fn generate_dialect_catalog(code: &mut String, languages: &[LanguageConfig], language_dir: &Path) {
+    code.push_str("/// A dialect compiled into this build, as it should be shown to users.\n");
+    code.push_str("#[derive(Serialize)]\n");
+    code.push_str("struct DialectInfo {\n");
+    code.push_str("    /// The `Dialect` value.\n");
+    code.push_str("    dialect: u32,\n");
+    code.push_str("    /// The language's name in that language, e.g. `Deutsch`.\n");
+    code.push_str("    language: &'static str,\n");
+    code.push_str("    /// The dialect's name in that language, e.g. `Österreich`.\n");
+    code.push_str("    region: &'static str,\n");
+    code.push_str("    /// A short code, usually the ISO 3166 country code, e.g. `AT`.\n");
+    code.push_str("    code: &'static str,\n");
+    code.push_str("}\n\n");
+
+    code.push_str(
+        "/// Every dialect compiled into this build, in a stable order, with its names\n",
+    );
+    code.push_str("/// in its own language. Generated from each language's config.toml.\n");
+    code.push_str("#[wasm_bindgen]\n");
+    code.push_str("pub fn get_dialect_catalog() -> JsValue {\n");
+    code.push_str("    #[allow(unused_mut)]\n");
+    code.push_str("    let mut catalog: Vec<DialectInfo> = Vec::new();\n");
+
+    let push = |code: &mut String, variant: &str, language: &str, region: &str, short: &str| {
+        code.push_str(&format!(
+            "    catalog.push(DialectInfo {{ dialect: Dialect::{} as u32, language: {:?}, \
+             region: {:?}, code: {:?} }});\n",
+            variant, language, region, short
+        ));
+    };
+
+    let (english_name, english_dialects) = english_meta(language_dir);
+    for (variant_name, variant) in ENGLISH_VARIANTS {
+        let meta = english_dialects
+            .iter()
+            .find(|(name, _)| name == variant_name)
+            .map(|(_, meta)| meta);
+        let region = meta
+            .and_then(|m| m.native_name.clone())
+            .unwrap_or(variant.to_string());
+        let short = meta
+            .and_then(|m| m.code.clone())
+            .unwrap_or(variant_name.to_string());
+        push(code, variant, &english_name, &region, &short);
+    }
+
+    for lang in languages {
+        for (dialect_name, meta) in lang.dialects.iter().zip(&lang.dialect_meta) {
+            let variant = format!("{}{}", lang.name, to_dialect_variant(dialect_name));
+            let region = meta.native_name.clone().unwrap_or(lang.native_name.clone());
+            let short = meta.code.clone().unwrap_or(dialect_name.to_uppercase());
+            code.push_str(&format!("    #[cfg(feature = \"{}\")]\n", lang.feature));
+            push(code, &variant, &lang.native_name, &region, &short);
+        }
+    }
+
+    code.push_str("    serde_wasm_bindgen::to_value(&catalog).unwrap()\n");
+    code.push_str("}\n");
+}
+
 fn main() {
     let manifest_dir = Path::new(env!("CARGO_MANIFEST_DIR"));
     let out_dir = env::var("OUT_DIR").unwrap();
@@ -325,6 +470,8 @@ fn main() {
     code.push_str("}\n\n");
 
     generate_language_conversion(&mut code, &languages);
+    code.push('\n');
+    generate_dialect_catalog(&mut code, &languages, &language_dir);
 
     let formatted = format_rust_content(&code);
 
