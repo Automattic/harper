@@ -19,7 +19,7 @@ enum PassiveSource {
     Be,
     Get,
     Become,
-    Reduced,
+    Coordinated,
 }
 
 impl Linter for PassiveVoice {
@@ -57,7 +57,8 @@ impl Linter for PassiveVoice {
                     continue;
                 };
 
-                if has_state_complement(sentence, &word_indices, word_pos, source, by_agent)
+                if is_license_notice(sentence, &word_indices, word_pos, source)
+                    || has_state_complement(sentence, &word_indices, word_pos, source, by_agent)
                     || is_attributive_after_get(
                         sentence,
                         &word_indices,
@@ -106,7 +107,7 @@ impl Linter for PassiveVoice {
     }
 
     fn description(&self) -> &str {
-        "Detects likely passive-voice constructions while avoiding common participial-adjective false positives."
+        "Detects likely passive predicates, excluding reduced relatives, licensing declarations, and common state or intention phrases."
     }
 }
 
@@ -155,132 +156,61 @@ fn is_contextual_noun(token: &Token) -> bool {
             .is_some_and(|m| m.pos_tag.is_none() && (m.is_noun() || m.is_proper_noun()))
 }
 
-fn can_be_reduced_passive(
+/// Recover a shared auxiliary across a preceding agent phrase, but never
+/// classify an isolated noun modifier ("software written by Alice") as a lint.
+fn preceding_coordinated_passive(
     sentence: &[Token],
-    word_indices: &[usize],
-    word_pos: usize,
+    indices: &[usize],
+    pos: usize,
     source: &[char],
 ) -> bool {
-    let candidate_idx = word_indices[word_pos];
-    // "got" ordinarily heads the get-passive rather than serving as its
-    // lexical participle ("the employees got fired by the manager").
-    if matches!(
-        normalized_word(&sentence[candidate_idx], source).as_str(),
-        "got" | "come" | "become"
-    ) {
-        return false;
-    }
-    // Reject active perfects before considering reduced clauses.
-    for &idx in word_indices[..word_pos].iter().rev().take(6) {
-        if has_hard_boundary(&sentence[idx + 1..candidate_idx]) {
-            break;
+    let mut current_pos = pos;
+    // Each step crosses just one agent phrase. Bound the number of shared
+    // predicates, and require an explicit auxiliary at the head of the chain.
+    for _ in 0..4 {
+        let candidate = indices[current_pos];
+        let Some(earlier) = (0..current_pos)
+            .rev()
+            .take(12)
+            .find(|&earlier| is_participle_candidate(&sentence[indices[earlier]], source))
+        else {
+            return false;
+        };
+        let idx = indices[earlier];
+        if sentence[idx + 1..candidate].iter().any(|token| {
+            (token.kind.is_chunk_terminator() && !token.kind.is_comma())
+                || token.kind.is_unlintable()
+                || (token.kind.is_punctuation() && !token.kind.is_comma())
+        }) {
+            return false;
         }
-        let token = &sentence[idx];
-        let lower = normalized_word(token, source);
-        if matches!(
-            lower.as_str(),
-            "have" | "has" | "had" | "having" | "i've" | "you've" | "we've" | "they've"
-        ) || lower.ends_with("'d")
+        let tail = &indices[earlier + 1..current_pos];
+        let separator = sentence[..candidate]
+            .iter()
+            .rev()
+            .find(|t| !t.kind.is_whitespace());
+        if !tail
+            .first()
+            .is_some_and(|&i| normalized_word(&sentence[i], source) == "by")
+            || !(tail.last().is_some_and(|&i| {
+                matches!(
+                    normalized_word(&sentence[i], source).as_str(),
+                    "and" | "or" | "but" | "yet"
+                )
+            }) || separator.is_some_and(|t| t.kind.is_comma()))
+            || tail.iter().any(|&i| {
+                let token = &sentence[i];
+                token.kind.is_upos(UPOS::VERB) || token.kind.is_upos(UPOS::AUX)
+            })
         {
             return false;
         }
-        if !is_gap_modifier(token, &lower) {
-            break;
-        }
-    }
-    // A second participle can share the first passive's subject even when
-    // each verb has its own agent: "was signed by Alice and filed by Bob".
-    if word_pos >= 3
-        && matches!(
-            normalized_word(&sentence[word_indices[word_pos - 1]], source).as_str(),
-            "and" | "or" | "but" | "yet"
-        )
-    {
-        for by_pos in (1..word_pos - 1).rev().take(6) {
-            let by_idx = word_indices[by_pos];
-            if sentence[by_idx + 1..candidate_idx].iter().any(|token| {
-                (token.kind.is_chunk_terminator() && !token.kind.is_comma())
-                    || token.kind.is_unlintable()
-                    || (token.kind.is_punctuation()
-                        && !token.kind.is_hyphen()
-                        && !token.kind.is_comma())
-            }) {
-                break;
-            }
-            if normalized_word(&sentence[by_idx], source) == "by"
-                && is_participle_candidate(&sentence[word_indices[by_pos - 1]], source)
-            {
-                return true;
-            }
-        }
-    }
-    let Some(mut previous_pos) = word_pos.checked_sub(1) else {
-        return true;
-    };
-    for _ in 0..5 {
-        let idx = word_indices[previous_pos];
-        if has_hard_boundary(&sentence[idx + 1..candidate_idx]) {
+        if preceding_passive_aux(sentence, indices, earlier, source).is_some() {
             return true;
         }
-        if !is_gap_modifier(&sentence[idx], &normalized_word(&sentence[idx], source)) {
-            break;
-        }
-        let Some(pos) = previous_pos.checked_sub(1) else {
-            return true;
-        };
-        previous_pos = pos;
+        current_pos = earlier;
     }
-    let previous_idx = word_indices[previous_pos];
-    if has_hard_boundary(&sentence[previous_idx + 1..candidate_idx]) {
-        return true;
-    }
-    let previous = &sentence[previous_idx];
-    let lower = normalized_word(previous, source);
-    // 's can mean either is or has; only recover it with a local explicit agent.
-    if lower.ends_with("'s") {
-        return true;
-    }
-    if has_measure_by_after(sentence, candidate_idx, source) {
-        return false;
-    }
-    is_contextual_noun(previous)
-}
-
-fn has_measure_by_after(sentence: &[Token], candidate_idx: usize, source: &[char]) -> bool {
-    let tail = &sentence[candidate_idx + 1..];
-    let Some(by_pos) = tail
-        .iter()
-        .take(32)
-        .take_while(|t| !t.kind.is_chunk_terminator())
-        .position(|t| normalized_word(t, source) == "by")
-    else {
-        return false;
-    };
-    tail[by_pos + 1..]
-        .iter()
-        .filter(|t| !t.kind.is_whitespace())
-        .take(5)
-        .take_while(|t| !t.kind.is_chunk_terminator())
-        .any(|t| {
-            matches!(
-                normalized_word(t, source).as_str(),
-                "%" | "percent"
-                    | "percentage"
-                    | "points"
-                    | "margin"
-                    | "vote"
-                    | "votes"
-                    | "degrees"
-                    | "inches"
-                    | "miles"
-                    | "centimeters"
-                    | "cm"
-                    | "mm"
-                    | "m"
-                    | "ft"
-                    | "in"
-            )
-        })
+    false
 }
 
 fn classify_passive(
@@ -304,27 +234,10 @@ fn classify_passive(
         return Some((kind, aux_idx));
     }
 
-    // Perfect auxiliaries are not lexical reduced participles, even when the
-    // dictionary also marks their surface form as a participle ("had").
-    if sentence[word_indices[word_pos]].kind.is_upos(UPOS::AUX) {
-        return None;
-    }
-
-    if by_agent && can_be_reduced_passive(sentence, word_indices, word_pos, source) {
-        return Some((PassiveSource::Reduced, word_indices[word_pos]));
-    }
-
-    if is_existential_reduced_passive(sentence, word_indices, word_pos, source)
-        || is_temporal_reduced_passive(sentence, word_indices, word_pos, source)
-        || is_strong_irregular_reduced_passive(
-            sentence,
-            word_indices,
-            word_pos,
-            source,
-            is_question,
-        )
-    {
-        return Some((PassiveSource::Reduced, word_indices[word_pos]));
+    // Reduced relatives and standalone participial labels are deliberately
+    // outside this style rule's scope: they seldom benefit from active rewrites.
+    if by_agent && preceding_coordinated_passive(sentence, word_indices, word_pos, source) {
+        return Some((PassiveSource::Coordinated, word_indices[word_pos]));
     }
 
     None
@@ -353,6 +266,7 @@ fn preceding_passive_aux(
         if (is_contextual_noun(token)
             || (idx > 0 && sentence[idx - 1].kind.is_hyphen())
             || sentence.get(idx + 1).is_some_and(|t| t.kind.is_hyphen()))
+            && !lower.ends_with("n't")
             && (is_be_form(&lower) || is_get_form(&lower) || is_become_form(&lower))
         {
             break;
@@ -785,6 +699,14 @@ fn coordinated_tail(
                 .any(|t| !t.kind.is_word() && !t.kind.is_whitespace())
             || is_descriptive_compound(sentence, idx, source)
             || !is_participle_candidate(token, source)
+            || is_license_notice(sentence, word_indices, pos, source)
+            || has_state_complement(
+                sentence,
+                word_indices,
+                pos,
+                source,
+                has_agentive_by(sentence, word_indices, pos, source),
+            )
             || should_suppress_adjectival(
                 token,
                 source,
@@ -799,210 +721,6 @@ fn coordinated_tail(
         pos += 1;
     }
     end_idx
-}
-
-fn is_existential_reduced_passive(
-    sentence: &[Token],
-    word_indices: &[usize],
-    word_pos: usize,
-    source: &[char],
-) -> bool {
-    if word_pos < 3 {
-        return false;
-    }
-
-    let candidate_idx = word_indices[word_pos];
-    if let Some(&next_idx) = word_indices.get(word_pos + 1)
-        && !has_hard_boundary(&sentence[candidate_idx + 1..next_idx])
-        && (is_contextual_noun(&sentence[next_idx])
-            || (normalized_word(&sentence[next_idx], source).ends_with("ing")
-                && !sentence[candidate_idx].kind.is_verb_past_participle_form()))
-    {
-        // "There was a light dignified knocking" contains an attributive
-        // adjective; the nominal before it is not its passive subject.
-        return false;
-    }
-    let mut nominal_pos = word_pos - 1;
-    while nominal_pos > 0
-        && is_gap_modifier(
-            &sentence[word_indices[nominal_pos]],
-            &normalized_word(&sentence[word_indices[nominal_pos]], source),
-        )
-    {
-        nominal_pos -= 1;
-    }
-    if !is_contextual_noun(&sentence[word_indices[nominal_pos]]) {
-        return false;
-    }
-    let mut saw_nominal = false;
-
-    for pos in (0..word_pos).rev().take(7) {
-        let idx = word_indices[pos];
-        if has_hard_boundary(&sentence[idx + 1..candidate_idx]) {
-            break;
-        }
-
-        let token = &sentence[idx];
-        if token.kind.is_upos(UPOS::SCONJ)
-            || matches!(
-                normalized_word(token, source).as_str(),
-                "who" | "whom" | "whose" | "which" | "that" | "where" | "when" | "as"
-            )
-        {
-            return false;
-        }
-        if is_contextual_noun(token) {
-            saw_nominal = true;
-        }
-        if (token.kind.is_upos(UPOS::VERB) || token.kind.is_upos(UPOS::AUX))
-            && !is_be_form(&normalized_word(token, source))
-        {
-            return false;
-        }
-
-        let text = token.get_str(source);
-        if is_be_form(&text.to_ascii_lowercase()) && pos > 0 && saw_nominal {
-            let previous = sentence[word_indices[pos - 1]].get_str(source);
-            return previous.eq_ignore_ascii_case("there");
-        }
-    }
-
-    false
-}
-
-/// A noun followed by a participle, a time modifier, and a separate finite
-/// predicate has the shape of a reduced relative, even for forms shared with
-/// the simple past: "the package sent yesterday arrived".
-fn is_temporal_reduced_passive(
-    sentence: &[Token],
-    word_indices: &[usize],
-    word_pos: usize,
-    source: &[char],
-) -> bool {
-    let Some(previous_pos) = word_pos.checked_sub(1) else {
-        return false;
-    };
-    let Some(&time_idx) = word_indices.get(word_pos + 1) else {
-        return false;
-    };
-    let Some(&predicate_idx) = word_indices.get(word_pos + 2) else {
-        return false;
-    };
-    let previous_idx = word_indices[previous_pos];
-    let candidate_idx = word_indices[word_pos];
-    // Many verbs are also intransitive ("the door closed yesterday remains
-    // shut"). Only recover common transitive forms in this ambiguous shape.
-    let lower = normalized_word(&sentence[candidate_idx], source);
-    matches!(
-        lower.as_str(),
-        "sent"
-            | "read"
-            | "written"
-            | "seen"
-            | "found"
-            | "given"
-            | "taken"
-            | "built"
-            | "chosen"
-            | "reviewed"
-            | "approved"
-            | "published"
-            | "reported"
-            | "filed"
-            | "signed"
-    ) && is_contextual_noun(&sentence[previous_idx])
-        && sentence[candidate_idx].kind.is_upos(UPOS::VERB)
-        && matches!(
-            normalized_word(&sentence[time_idx], source).as_str(),
-            "yesterday" | "today" | "recently"
-        )
-        && (sentence[predicate_idx].kind.is_upos(UPOS::VERB)
-            || sentence[predicate_idx].kind.is_upos(UPOS::AUX))
-        && !has_hard_boundary(&sentence[previous_idx + 1..predicate_idx])
-}
-
-fn is_strong_irregular_reduced_passive(
-    sentence: &[Token],
-    word_indices: &[usize],
-    word_pos: usize,
-    source: &[char],
-    is_question: bool,
-) -> bool {
-    let candidate_idx = word_indices[word_pos];
-    let candidate = &sentence[candidate_idx];
-
-    // In a question, the finite perfect auxiliary can precede the subject:
-    // "Has Alice written the report?" is active, not a reduced relative.
-    if is_question
-        && word_indices[..word_pos].iter().take(3).any(|&idx| {
-            matches!(
-                normalized_word(&sentence[idx], source).as_str(),
-                "have" | "has" | "had" | "haven't" | "hasn't" | "hadn't"
-            )
-        })
-        && !word_indices[..word_pos]
-            .iter()
-            .any(|&idx| is_be_form(&normalized_word(&sentence[idx], source)))
-    {
-        return false;
-    }
-
-    // For regular verbs the preterite and past participle are identical, so without
-    // a dependency parser "the door closed" cannot safely be distinguished from
-    // "the data collected". Restrict agentless reduced passives to participle-only
-    // forms such as "the report written yesterday".
-    // Lemma/participle homographs are not high-confidence reduced passives;
-    // dictionary merges can retain the participle flag without the lemma flag.
-    if matches!(
-        normalized_word(candidate, source).as_str(),
-        "come"
-            | "become"
-            | "run"
-            | "read"
-            | "cut"
-            | "hit"
-            | "set"
-            | "put"
-            | "shut"
-            | "split"
-            | "cost"
-            | "hurt"
-            | "let"
-            | "spread"
-            | "burst"
-            | "cast"
-            | "quit"
-    ) {
-        return false;
-    }
-    if !candidate.kind.is_verb_past_participle_only()
-        || candidate.kind.is_upos(UPOS::ADJ)
-        || candidate.kind.is_verb_lemma()
-        || normalized_word(candidate, source).ends_with("ed")
-    {
-        return false;
-    }
-
-    if word_pos == 0 {
-        return false;
-    }
-    let previous_idx = word_indices[word_pos - 1];
-
-    if has_hard_boundary(&sentence[previous_idx + 1..candidate_idx]) {
-        return false;
-    }
-
-    let previous = &sentence[previous_idx];
-    let previous_lower = previous.get_str(source).to_ascii_lowercase();
-
-    // A reduced relative normally modifies a noun phrase, not a personal pronoun.
-    // This also prevents contractions/possessives such as `it's broken` or
-    // `John's written report` from being mistaken for agentless reduced passives.
-    if previous_lower.ends_with("'s") || previous_lower.ends_with("’s") {
-        return false;
-    }
-
-    is_contextual_noun(previous)
 }
 
 fn is_participle_candidate(token: &Token, source: &[char]) -> bool {
@@ -1093,6 +811,42 @@ fn has_personal_subject(
     false
 }
 
+/// Conventional license declarations are not useful targets for style advice.
+/// Keep this local to the declaration, rather than skipping whole documents.
+fn is_license_notice(sentence: &[Token], indices: &[usize], pos: usize, source: &[char]) -> bool {
+    let word = |offset| {
+        indices.get(pos + offset).and_then(|&idx| {
+            (!has_hard_boundary(&sentence[indices[pos] + 1..idx]))
+                .then(|| normalized_word(&sentence[idx], source))
+        })
+    };
+    let lower = normalized_word(&sentence[indices[pos]], source);
+    if lower == "licensed" && matches!(word(1).as_deref(), Some("under")) {
+        return true;
+    }
+    let under = match lower.as_str() {
+        "released" | "distributed" => word(1).as_deref() == Some("under"),
+        "made" => word(1).as_deref() == Some("available") && word(2).as_deref() == Some("under"),
+        "governed" => word(1).as_deref() == Some("by"),
+        _ => false,
+    };
+    under
+        && (1..=8).filter_map(word).any(|word| {
+            matches!(
+                word.as_str(),
+                "license"
+                    | "licence"
+                    | "licenses"
+                    | "licences"
+                    | "mit"
+                    | "apache"
+                    | "gpl"
+                    | "bsd"
+                    | "terms"
+            )
+        })
+}
+
 fn has_state_complement(
     sentence: &[Token],
     indices: &[usize],
@@ -1108,6 +862,26 @@ fn has_state_complement(
         .get(pos + 1)
         .map(|&idx| normalized_word(&sentence[idx], source));
     match (lower.as_str(), next.as_deref()) {
+        ("meant" | "supposed" | "expected" | "designed", Some("to")) => true,
+        ("damned", Some("if")) => true,
+        // Postnominal availability idioms: "no time to be lost" and
+        // "not a single pro to be found". Keep ordinary passive infinitives.
+        ("lost" | "found", _) if pos >= 3 => {
+            let be = indices[pos - 1];
+            let to = indices[pos - 2];
+            let noun = indices[pos - 3];
+            normalized_word(&sentence[be], source) == "be"
+                && normalized_word(&sentence[to], source) == "to"
+                && is_contextual_noun(&sentence[noun])
+                && !has_hard_boundary(&sentence[noun + 1..indices[pos]])
+        }
+        ("intended", Some("for" | "to")) => true,
+        ("left", Some("alone" | "to")) => true,
+        ("located" | "situated", _) => !indices[..pos]
+            .iter()
+            .rev()
+            .take(3)
+            .any(|&idx| normalized_word(&sentence[idx], source) == "being"),
         ("grown" | "fed", Some("up")) => true,
         ("worn", Some("out")) => true,
         ("relieved", next) => next != Some("of"),
@@ -1220,7 +994,8 @@ fn has_event_evidence(sentence: &[Token], indices: &[usize], pos: usize, source:
         if matches!(
             lower.as_str(),
             "yesterday" | "recently" | "earlier" | "every"
-        ) || (matches!(previous.as_str(), "in" | "on" | "at" | "last") && is_time_word(&lower))
+        ) || (previous == "on" && lower == "election")
+            || (matches!(previous.as_str(), "in" | "on" | "at" | "last") && is_time_word(&lower))
         {
             return true;
         }
@@ -1715,8 +1490,7 @@ fn lexicalized_nonpassive_state(lower: &str) -> bool {
 
 fn likely_participial_adjective(lower: &str) -> bool {
     // Additional high-frequency result/state participles. Unlike the PassivePy
-    // ambiguity set above, these are only suppressors when Harper does not give
-    // the token a contextual VERB tag.
+    // ambiguity set above, these require additional event or agent evidence.
     matches!(
         lower,
         "tired"
@@ -1750,6 +1524,16 @@ fn likely_participial_adjective(lower: &str) -> bool {
             | "descended"
             | "fit"
             | "ready"
+            | "set"
+            | "left"
+            | "lost"
+            | "shut"
+            | "thatched"
+            | "stained"
+            | "marked"
+            | "forgotten"
+            | "ornamented"
+            | "haunted"
     )
 }
 
@@ -1912,17 +1696,17 @@ mod tests {
     }
 
     #[test]
-    fn detects_reduced_passives_with_agents() {
-        passive("Arrested by the police, he never thought this would be his end.");
-        passive("The report written by Alice was useful.");
-        passive("Resources exhausted by humans can recover slowly.");
+    fn ignores_reduced_relatives_with_agents() {
+        active("Arrested by the police, he never thought this would be his end.");
+        active("The report written by Alice was useful.");
+        active("Resources exhausted by humans can recover slowly.");
     }
 
     #[test]
-    fn detects_high_confidence_agentless_reduced_passives() {
-        passive("The report written yesterday contains several errors.");
-        passive("The man seen near the station called police.");
-        passive("There was no change detected in her behavior.");
+    fn ignores_agentless_reduced_relatives() {
+        active("The report written yesterday contains several errors.");
+        active("The man seen near the station called police.");
+        active("There was no change detected in her behavior.");
     }
 
     #[test]
@@ -2001,7 +1785,7 @@ mod tests {
     #[test]
     fn by_number_can_be_agent_or_measure() {
         passive("The proposal was reviewed by 3 judges.");
-        passive("Reduced by 10 percent, the rate became manageable.");
+        active("Reduced by 10 percent, the rate became manageable.");
         active("He was tired by 5 pm.");
     }
 
@@ -2033,7 +1817,7 @@ mod tests {
                 0,
             ),
             ("There was a beautifully painted door.", 0),
-            ("There were people caught stealing.", 1),
+            ("There were people caught stealing.", 0),
             ("She has written the report by hand.", 0),
             ("They had completed the task by noon.", 0),
             ("He walked by the river.", 0),
@@ -2043,7 +1827,7 @@ mod tests {
             ("She read by the window.", 0),
             ("He is tired and walks by the river.", 0),
             ("The exhausted hikers walked by the lake.", 0),
-            ("The report written by Alice was published by Bob.", 2),
+            ("The report written by Alice was published by Bob.", 1),
             ("He got written permission from his manager.", 0),
             ("Was the written report useful?", 0),
             ("Was the report that Alice wrote published?", 1),
@@ -2091,8 +1875,8 @@ mod tests {
             ("The floor is open by noon.", 0),
             ("She was left-handed.", 0),
             ("He got signed copies of the book.", 0),
-            ("The issues discussed by the team are complex.", 1),
-            ("The report carefully reviewed by Alice was published.", 2),
+            ("The issues discussed by the team are complex.", 0),
+            ("The report carefully reviewed by Alice was published.", 1),
             ("He got paid overtime.", 1),
             ("She got tired.", 0),
             ("He became interested.", 0),
@@ -2142,11 +1926,11 @@ mod tests {
             ("Some words have got altered.", 1),
             ("The company was headed by Alice.", 1),
             ("I was surprised by the announcement.", 1),
-            ("There were files detected on the disk.", 1),
+            ("There were files detected on the disk.", 0),
             ("The runners run fast.", 0),
             ("Several cars come quickly.", 0),
             ("Reports read well.", 0),
-            ("The company run by Alice was successful.", 1),
+            ("The company run by Alice was successful.", 0),
             ("A feeling of well-being radiated from him.", 0),
             ("He was determined to win.", 0),
             ("The method was determined to be safe.", 1),
@@ -2224,6 +2008,80 @@ mod tests {
                 expected,
                 "{text}"
             );
+        }
+    }
+
+    #[test]
+    fn preserves_passives_that_can_be_appropriate_in_context() {
+        for text in [
+            "The video game industry is being sucked into a crisis.",
+            "The script is stopped and run again.",
+            "The project is being actively developed.",
+            "He got fired illegally.",
+            "Some of the words have got altered.",
+            "Patterns get documented.",
+            "The list is generated using a script.",
+            "The feature can be disabled by setting a flag.",
+            "Docker must be installed.",
+            "The feature is enabled by default.",
+            "The trend isn't really driven by consumers.",
+        ] {
+            passive(text);
+        }
+    }
+
+    #[test]
+    fn avoids_review_reported_states_and_intention_phrases() {
+        for text in [
+            "If just one of those is set incorrectly, the program fails.",
+            "MockAPI is meant to be a test service.",
+            "This tool is intended for use with audio files.",
+            "Who is left to save us?",
+            "All hope is not lost.",
+            "Alice was soon left alone.",
+            "There was a table set out under a tree.",
+            "The roof was thatched with fur.",
+            "The achievement was forgotten.",
+            "The work bench was stained where he stood.",
+            "I'd be damned if I'd go in; I'd had enough of all of them.",
+            "There is an error flagged at this location.",
+            "There's not a single pro to be found.",
+            "There was not a moment to be lost.",
+            "The releases will also be located in this directory.",
+        ] {
+            active(text);
+        }
+    }
+
+    #[test]
+    fn excludes_licensing_declarations_locally() {
+        for text in [
+            "This project is licensed under MIT.",
+            "The packages are licensed under Apache-2.0.",
+            "The project is released under the BSD license.",
+            "This software can be made available under the GPL license.",
+            "Use of the SDK is governed by the terms of service.",
+        ] {
+            active(text);
+        }
+        passive("The prisoner was released under police supervision.");
+        passive("The files were made available under the counter.");
+        passive("The project is licensed under MIT. The report was reviewed.");
+    }
+
+    #[test]
+    fn does_not_infer_an_auxiliary_from_chains_of_modifiers() {
+        for text in [
+            "The report written by Alice and published by Bob arrived.",
+            "The file reviewed by Ana, translated by Bo, and posted by Cy is here.",
+            "Curated by Numman Ali.",
+            "Run by wasmer.",
+            "An application written in Rust.",
+            "Instant reloading powered by Vite.",
+            "He'd written the report by hand.",
+            "He’s written the report by hand.",
+        ] {
+            active(text);
         }
     }
 

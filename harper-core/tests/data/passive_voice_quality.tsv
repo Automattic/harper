@@ -1,4 +1,4 @@
-# Hand-labeled challenge cases. Columns: category, text, expected lint spans (| separated, or -).
+# AI-authored synthetic cases and examples from issue #1500. Columns: category, text, expected lint spans (| separated, or -).
 issue-1500	Termination is guaranteed on any input.	is guaranteed
 issue-1500	Termination is guaranteed on any input by a finite state-space.	is guaranteed
 issue-1500	A finite state-space guarantees termination on any input.	-
@@ -35,7 +35,7 @@ auxiliary	The files are getting deleted.	are getting deleted
 auxiliary	The records have got altered.	have got altered
 auxiliary	The plan was going to be abandoned.	was going to be abandoned
 auxiliary	The work needs to be done.	to be done
-auxiliary	The report is expected to be published.	is expected|to be published
+auxiliary	The report is expected to be published.	to be published
 question	Was the report signed by Alice?	Was the report signed
 question	Why was the report rejected?	was the report rejected
 question	Has the report been reviewed?	Has the report been reviewed
@@ -52,16 +52,16 @@ question	Why did Alice say the report was rejected?	was rejected
 question	Was the written report useful?	-
 question	Has Alice written the report?	-
 question	Was Alice tired after the meeting?	-
-reduced	The report written by Alice was published by Bob.	written|was published
-reduced	The package sent yesterday arrived today.	sent
-reduced	The package sent by Alice arrived today.	sent
-reduced	Arrested by police, the man was questioned.	Arrested|was questioned
-reduced	The results obtained by the team were surprising.	obtained
+reduced	The report written by Alice was published by Bob.	was published
+reduced	The package sent yesterday arrived today.	-
+reduced	The package sent by Alice arrived today.	-
+reduced	Arrested by police, the man was questioned.	was questioned
+reduced	The results obtained by the team were surprising.	-
 reduced	The team obtained the results by hand.	-
-reduced	The man seen near the station left quickly.	seen
+reduced	The man seen near the station left quickly.	-
 reduced	The door closed yesterday remains shut.	-
-reduced	The books read by children can be returned.	read|can be returned
-reduced	The book read yesterday was useful.	read
+reduced	The books read by children can be returned.	can be returned
+reduced	The book read yesterday was useful.	-
 reduced	The retired teacher wrote a book.	-
 state	She was interested in the proposal.	-
 state	She was interested by the proposal.	was interested

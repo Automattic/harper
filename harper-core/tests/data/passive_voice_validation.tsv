@@ -1,4 +1,4 @@
-# Independently authored validation cases. Columns: category, text, expected lint spans (| separated, or -).
+# AI-authored synthetic cases. Columns: category, text, expected lint spans (| separated, or -).
 coordination	The memo was drafted by Kim and approved by Lee.	was drafted|approved
 coordination	The page was drafted by Ana, translated by Bo, and posted by Cy.	was drafted|translated|posted
 coordination	The account was opened by staff but closed by the manager.	was opened|closed
@@ -26,13 +26,13 @@ question	Was the invoice approved by finance?	Was the invoice approved
 question	Why was the invoice refused?	was the invoice refused
 question	Did the workers get paid?	Did the workers get paid
 question	Was she worried about the decision?	-
-reduced	The email sent yesterday arrived late.	sent
-reduced	The report published today cites new data.	published
+reduced	The email sent yesterday arrived late.	-
+reduced	The report published today cites new data.	-
 reduced	The gate opened yesterday remains closed.	-
 reduced	The window closed yesterday remains locked.	-
-reduced	The painting found yesterday was returned.	found|was returned
-reduced	The file reviewed by Ana was approved.	reviewed|was approved
-reduced	The actor seen by witnesses left town.	seen
+reduced	The painting found yesterday was returned.	was returned
+reduced	The file reviewed by Ana was approved.	was approved
+reduced	The actor seen by witnesses left town.	-
 state	The room was filled with music.	-
 state	The room was filled by volunteers.	was filled
 state	The announcement was made by noon.	was made
