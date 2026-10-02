@@ -462,4 +462,28 @@ mod tests {
     fn allows_its_starting_level() {
         assert_no_lints("Reduce the tracker to its starting level.", test_linter());
     }
+
+    #[test]
+    fn issue_4435() {
+        assert_no_lints(
+            "I spent more effort in its reading than he did in its creation.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn allows_its_gerund_after_preposition() {
+        assert_no_lints(
+            "The value comes from its measuring of the output.",
+            test_linter(),
+        );
+    }
+
+    #[test]
+    fn allows_its_gerund_after_unlisted_preposition() {
+        assert_no_lints(
+            "I spent more effort during its reading than he did during its creation.",
+            test_linter(),
+        );
+    }
 }

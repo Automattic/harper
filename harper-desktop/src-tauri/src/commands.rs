@@ -2,6 +2,7 @@
 //! environment. Use [`application_message_handler`] to load them into the Tauri runtime.
 
 use crate::config::Config;
+use crate::desktop_updater::{DesktopUpdater, UpdateResult};
 use crate::highlighter_service::HighlighterService;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::{IntegrationView, PlatformBroker};
@@ -24,8 +25,9 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         set_debounce_ms,
         get_auto_update,
         set_auto_update,
-        get_last_update_check,
-        set_last_update_check,
+        get_current_version,
+        get_latest_version,
+        update_to_latest,
         get_onboarding_completed,
         set_onboarding_completed,
         set_dialect,
@@ -35,6 +37,8 @@ pub fn application_message_handler<R: Runtime>() -> impl Fn(Invoke<R>) -> bool {
         ignore_lint,
         add_to_dictionary,
         get_integrations,
+        get_auto_enable_new_apps,
+        set_auto_enable_new_apps,
         add_integration,
         remove_integration,
         set_integration_enabled,
@@ -102,25 +106,24 @@ async fn set_auto_update(
 }
 
 #[tauri::command]
-async fn get_last_update_check(
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<Option<u64>, String> {
-    Ok(config.lock().await.last_update_check)
+fn get_current_version<R: Runtime>(app: tauri::AppHandle<R>) -> String {
+    DesktopUpdater::current_version(&app)
 }
 
 #[tauri::command]
-async fn set_last_update_check(
-    last_update_check: Option<u64>,
-    config: State<'_, Arc<Mutex<Config>>>,
-) -> Result<(), String> {
-    let mut config = config.lock().await;
-    config.last_update_check = last_update_check;
-    config
-        .save_to_system()
-        .await
-        .map_err(|error| error.to_string())?;
+async fn get_latest_version() -> Result<String, String> {
+    DesktopUpdater::latest_version().await
+}
 
-    Ok(())
+#[tauri::command]
+async fn update_to_latest<R: Runtime>(
+    app: tauri::AppHandle<R>,
+    updater: State<'_, DesktopUpdater>,
+) -> Result<UpdateResult, String> {
+    updater
+        .update_to_latest(&app, false)
+        .await
+        .ok_or_else(|| "Manual update check was unexpectedly skipped.".into())
 }
 
 #[tauri::command]
@@ -268,6 +271,26 @@ async fn get_integrations(
             enabled: integration.enabled,
         })
         .collect())
+}
+
+#[tauri::command]
+async fn get_auto_enable_new_apps(config: State<'_, Arc<Mutex<Config>>>) -> Result<bool, String> {
+    Ok(config.lock().await.auto_enable_new_apps)
+}
+
+#[tauri::command]
+async fn set_auto_enable_new_apps(
+    auto_enable_new_apps: bool,
+    config: State<'_, Arc<Mutex<Config>>>,
+) -> Result<(), String> {
+    let mut config = config.lock().await;
+    let previous = config.auto_enable_new_apps;
+    config.auto_enable_new_apps = auto_enable_new_apps;
+    if let Err(error) = config.save_to_system().await {
+        config.auto_enable_new_apps = previous;
+        return Err(error.to_string());
+    }
+    Ok(())
 }
 
 #[tauri::command]
