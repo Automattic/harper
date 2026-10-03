@@ -1,16 +1,9 @@
-use super::{
-    FstDictionary, WordId,
-    rune::{self, AttributeList, parse_word_list},
-    word_map::{WordMap, WordMapEntry},
-};
-use crate::edit_distance::edit_distance_min_alloc;
-use itertools::Itertools;
+use super::{FstDictionary, rune, word_map::WordMap};
 use std::sync::Arc;
-use std::{borrow::Cow, sync::LazyLock};
+use std::sync::LazyLock;
 
-use crate::{CharString, CharStringExt, DictWordMetadata};
+use crate::DictWordMetadata;
 
-use super::FuzzyMatchResult;
 use super::dictionary::Dictionary;
 
 /// A basic dictionary that allows words to be added after instantiating.
@@ -31,8 +24,8 @@ pub struct MutableDictionary {
 /// curated dictionary.
 fn uncached_inner_new() -> Arc<MutableDictionary> {
     MutableDictionary::from_rune_files(
-        include_str!("../../dictionary.dict"),
-        include_str!("../../annotations.json"),
+        super::dictionary::CURATED_DICT_STR,
+        super::dictionary::ANNOTATIONS_STR,
     )
     .map(Arc::new)
     .unwrap_or_else(|e| panic!("Failed to load curated dictionary: {}", e))
@@ -48,15 +41,9 @@ impl MutableDictionary {
     }
 
     pub fn from_rune_files(word_list: &str, attr_list: &str) -> Result<Self, rune::Error> {
-        let word_list = parse_word_list(word_list)?;
-        let attr_list = AttributeList::parse(attr_list)?;
-
-        // There will be at _least_ this number of words
-        let mut word_map = WordMap::default();
-
-        attr_list.expand_annotated_words(word_list, &mut word_map);
-
-        Ok(Self { word_map })
+        Ok(Self {
+            word_map: WordMap::from_rune_files(word_list, attr_list)?,
+        })
     }
 
     /// Create a dictionary from the curated dictionary included
@@ -73,12 +60,7 @@ impl MutableDictionary {
         &mut self,
         words: impl IntoIterator<Item = (impl AsRef<[char]>, DictWordMetadata)>,
     ) {
-        for (chars, metadata) in words.into_iter() {
-            self.word_map.insert(WordMapEntry {
-                metadata,
-                canonical_spelling: chars.as_ref().into(),
-            })
-        }
+        self.word_map.extend_words(words);
     }
 
     /// Append a single word to the dictionary.
@@ -105,160 +87,8 @@ impl Default for MutableDictionary {
 }
 
 impl Dictionary for MutableDictionary {
-    fn get_word_metadata(&self, word: &[char]) -> Option<Cow<'_, DictWordMetadata>> {
-        self.word_map
-            .get_with_chars(word)
-            .map(|v| Cow::Borrowed(&v.metadata))
-    }
-
-    fn contains_word(&self, word: &[char]) -> bool {
-        self.word_map.contains_chars(word)
-    }
-
-    fn contains_word_str(&self, word: &str) -> bool {
-        let chars: CharString = word.chars().collect();
-        self.contains_word(&chars)
-    }
-
-    fn get_word_metadata_str(&self, word: &str) -> Option<Cow<'_, DictWordMetadata>> {
-        let chars: CharString = word.chars().collect();
-        self.get_word_metadata(&chars)
-    }
-
-    fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
-        self.word_map
-            .get_with_chars(word)
-            .map(|v| v.canonical_spelling.as_slice())
-    }
-
-    /// Suggest a correct spelling for a given misspelled word.
-    /// `Self::word` is assumed to be quite small (n < 100).
-    /// `max_distance` relates to an optimization that allows the search
-    /// algorithm to prune large portions of the search.
-    fn fuzzy_match(
-        &'_ self,
-        word: &[char],
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        let misspelled_charslice = word.normalized();
-        let misspelled_charslice_lower = misspelled_charslice.to_lower();
-
-        let shortest_word_len = if misspelled_charslice.len() <= max_distance as usize {
-            1
-        } else {
-            misspelled_charslice.len() - max_distance as usize
-        };
-        let longest_word_len = misspelled_charslice.len() + max_distance as usize;
-
-        // Get candidate words
-        let words_to_search = self
-            .words_iter()
-            .filter(|word| (shortest_word_len..=longest_word_len).contains(&word.len()));
-
-        // Pre-allocated vectors for the edit-distance calculation
-        // 53 is the length of the longest word.
-        let mut buf_a = Vec::with_capacity(53);
-        let mut buf_b = Vec::with_capacity(53);
-
-        // Sort by edit-distance
-        words_to_search
-            .filter_map(|word| {
-                let dist =
-                    edit_distance_min_alloc(&misspelled_charslice, word, &mut buf_a, &mut buf_b);
-                let lowercase_dist = edit_distance_min_alloc(
-                    &misspelled_charslice_lower,
-                    word,
-                    &mut buf_a,
-                    &mut buf_b,
-                );
-
-                let smaller_dist = dist.min(lowercase_dist);
-                if smaller_dist <= max_distance {
-                    Some((word, smaller_dist))
-                } else {
-                    None
-                }
-            })
-            .sorted_unstable_by_key(|a| a.1)
-            .take(max_results)
-            .map(|(word, edit_distance)| FuzzyMatchResult {
-                word,
-                edit_distance,
-                metadata: self.get_word_metadata(word).unwrap(),
-            })
-            .collect()
-    }
-
-    fn fuzzy_match_str(
-        &'_ self,
-        word: &str,
-        max_distance: u8,
-        max_results: usize,
-    ) -> Vec<FuzzyMatchResult<'_>> {
-        let word: Vec<_> = word.chars().collect();
-        self.fuzzy_match(&word, max_distance, max_results)
-    }
-
-    fn words_iter(&self) -> Box<dyn Iterator<Item = &'_ [char]> + Send + '_> {
-        Box::new(
-            self.word_map
-                .iter()
-                .map(|v| v.canonical_spelling.as_slice()),
-        )
-    }
-
-    fn word_count(&self) -> usize {
-        self.word_map.len()
-    }
-
-    fn contains_exact_word(&self, word: &[char]) -> bool {
-        let normalized = word.normalized();
-
-        if let Some(found) = self.word_map.get_with_chars(normalized.as_ref())
-            && found.canonical_spelling.as_ref() == normalized.as_ref()
-        {
-            return true;
-        }
-
-        false
-    }
-
-    fn contains_exact_word_str(&self, word: &str) -> bool {
-        let word: CharString = word.chars().collect();
-        self.contains_exact_word(word.as_ref())
-    }
-
-    fn get_word_from_id(&self, id: &WordId) -> Option<&[char]> {
-        self.word_map.get(id).map(|w| w.canonical_spelling.as_ref())
-    }
-
-    fn find_words_with_prefix(&self, prefix: &[char]) -> Vec<Cow<'_, [char]>> {
-        let mut found = Vec::new();
-
-        for word in self.words_iter() {
-            if let Some(item_prefix) = word.get(0..prefix.len())
-                && item_prefix == prefix
-            {
-                found.push(Cow::Borrowed(word));
-            }
-        }
-
-        found
-    }
-
-    fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>> {
-        let mut found = Vec::new();
-
-        for item in self.words_iter() {
-            if let Some(item_prefix) = word.get(0..item.len())
-                && item_prefix == item
-            {
-                found.push(Cow::Borrowed(item));
-            }
-        }
-
-        found
+    fn get_word_map(&self) -> &WordMap {
+        &self.word_map
     }
 }
 

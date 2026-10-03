@@ -1763,15 +1763,6 @@ Message: |
 
 
 
-Lint:    Capitalization (127 priority)
-Message: |
-     677 | ## Article. VI.
-         | ^~~~~~~~~~~~~~~ Try to use title case in headings.
-Suggest:
-  - Replace with: “## Article. Vi.”
-
-
-
 Lint:    Readability (127 priority)
 Message: |
      683 | This Constitution, and the Laws of the United States which shall be made in
