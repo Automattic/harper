@@ -26,7 +26,13 @@ impl harper_core::Masker for Masker {
                 actions.push_back(CursorAction::PushMaskAndIncBy(1));
             } else if let Some(ws) = newline_whitespace_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(ws));
-            } else if let Some(s) = math_mode_at_cursor(cursor, source) {
+            } else if let Some(s) = display_math_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(s));
+            } else if let Some(s) = inline_math_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(s));
+            } else if let Some(s) = paren_math_at_cursor(cursor, source) {
+                actions.push_back(CursorAction::PushMaskAndIncBy(s));
+            } else if let Some(s) = bracket_math_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
             } else if let Some(s) = equation_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
@@ -92,20 +98,94 @@ fn newline_whitespace_at_cursor(cursor: usize, source: &[char]) -> Option<usize>
     if ws_len > 1 { Some(ws_len) } else { None }
 }
 
-/// Check whether there is a math mode block at the current cursor. If so, this function will return the amount cursor needs to be incremented by in order to escape the block.
-fn math_mode_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
-    if *source.get(cursor)? != '$' {
+/// Display math `$$ ... $$`. Only a contiguous, unescaped `$$` closes.
+/// A single `$` inside does NOT close. Unclosed runs mask to EOF.
+fn display_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    if source.get(cursor) != Some(&'$') || source.get(cursor + 1) != Some(&'$') {
         return None;
     }
 
-    Some(
-        source
-            .iter()
-            .skip(cursor + 1)
-            .take_while(|t| **t != '$')
-            .count()
-            + 2,
-    )
+    let mut i = cursor + 2;
+    while i + 1 < source.len() {
+        if source[i] == '\\' {
+            i += 2;
+            continue;
+        }
+        if source[i] == '$' && source[i + 1] == '$' {
+            return Some(i + 2 - cursor);
+        }
+        i += 1;
+    }
+
+    Some(source.len() - cursor)
+}
+
+/// Inline math `$ ... $`. Closer is the next unescaped `$`, even if it is
+/// part of a `$$` run (TeX `$`-closes-`$`). Unclosed runs mask to EOF.
+fn inline_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    if source.get(cursor) != Some(&'$') {
+        return None;
+    }
+    // Display takes precedence; callers check it first, but guard anyway.
+    if source.get(cursor + 1) == Some(&'$') {
+        return None;
+    }
+
+    let mut i = cursor + 1;
+    while i < source.len() {
+        if source[i] == '\\' {
+            i += 2;
+            continue;
+        }
+        if source[i] == '$' {
+            return Some(i + 1 - cursor);
+        }
+        i += 1;
+    }
+
+    Some(source.len() - cursor)
+}
+
+/// Inline math `\( ... \)`. Unclosed runs mask to EOF.
+fn paren_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    if source.get(cursor) != Some(&'\\') || source.get(cursor + 1) != Some(&'(') {
+        return None;
+    }
+
+    let mut i = cursor + 2;
+    while i + 1 < source.len() {
+        if source[i] == '\\' && source[i + 1] == ')' {
+            return Some(i + 2 - cursor);
+        }
+        if source[i] == '\\' {
+            i += 2;
+            continue;
+        }
+        i += 1;
+    }
+
+    Some(source.len() - cursor)
+}
+
+/// Display math `\[ ... \]`. Unclosed runs mask to EOF.
+fn bracket_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
+    if source.get(cursor) != Some(&'\\') || source.get(cursor + 1) != Some(&'[') {
+        return None;
+    }
+
+    let mut i = cursor + 2;
+    while i + 1 < source.len() {
+        if source[i] == '\\' && source[i + 1] == ']' {
+            return Some(i + 2 - cursor);
+        }
+        if source[i] == '\\' {
+            i += 2;
+            continue;
+        }
+        i += 1;
+    }
+
+    Some(source.len() - cursor)
 }
 
 /// Check whether there is a command at the current cursor. If so, this function will update the action queue to mask out the hidden elements.
@@ -243,6 +323,43 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
     // leading backslash; otherwise a trailing `\` is malformed rather than a
     // command.
     source.get(cursor)?;
+    // In (La)TeX, `\` + non-letter is a single-char command (e.g. `\(`, `\$`).
+    // It must NOT swallow following letters into the name.
+    let first = source[cursor];
+    if !first.is_alphabetic() {
+        let name = source.get(cursor..cursor + 1)?;
+        cursor += 1;
+
+        // The optional square braces
+        let square_content = if source.get(cursor) == Some(&'[') {
+            cursor += 1;
+
+            let brace_len = source.iter().skip(cursor).position(|t| *t == ']')?;
+            let content = source.get(cursor..cursor + brace_len)?;
+
+            cursor += brace_len + 1;
+            Some(content)
+        } else {
+            None
+        };
+
+        // The optional curly braces
+        let curly_content = if source.get(cursor) == Some(&'{') {
+            cursor += 1;
+
+            let brace_len = source.iter().skip(cursor).position(|t| *t == '}')?;
+            let content = source.get(cursor..cursor + brace_len)?;
+            Some(content)
+        } else {
+            None
+        };
+
+        return Some(CommandComponents {
+            name,
+            square_content,
+            curly_content,
+        });
+    }
     let name_len = source
         .iter()
         .skip(cursor + 1)
@@ -385,6 +502,102 @@ mod tests {
     #[test]
     fn masks_align_env() {
         masks_math_env("align");
+    }
+
+    #[test]
+    fn masks_display_double_dollar_math() {
+        // Goal 1: `$$ ... $$` should be ignored.
+        // Use a distinctive marker so surrounding "text" (which contains 'x')
+        // cannot cause false passes.
+        let source: Vec<_> = "Hello world. $$QQQZZZ$$ Goodbye world.".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for chunk in &allowed {
+            assert!(
+                !chunk.contains("QQQZZZ"),
+                "Display math content leaked through: {chunk:?} (all={allowed:?})"
+            );
+        }
+    }
+
+    #[test]
+    fn masks_paren_inline_math() {
+        // Goal 1: `\( ... \)` should be ignored.
+        // NOTE: leading space avoids `deconstruct_command()` swallowing
+        // the first word into the command name (separate bug, also fixed in PR1).
+        let source: Vec<_> = "Hello world. \\( QQQZZZ \\) Goodbye world."
+            .chars()
+            .collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for chunk in &allowed {
+            assert!(
+                !chunk.contains("QQQZZZ"),
+                "Paren math content leaked through: {chunk:?} (all={allowed:?})"
+            );
+        }
+    }
+
+    #[test]
+    fn masks_bracket_display_math() {
+        // Goal 1: `\[ ... \]` should be ignored.
+        // NOTE: leading space avoids `deconstruct_command()` swallowing
+        // the first word into the command name (separate bug, also fixed in PR1).
+        let source: Vec<_> = "Hello world. \\[ QQQZZZ \\] Goodbye world."
+            .chars()
+            .collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: Vec<String> = mask
+            .iter_allowed(&source)
+            .map(|(_, chars)| chars.iter().collect::<String>())
+            .collect();
+        for chunk in &allowed {
+            assert!(
+                !chunk.contains("QQQZZZ"),
+                "Bracket math content leaked through: {chunk:?} (all={allowed:?})"
+            );
+        }
+    }
+
+    #[test]
+    fn empty_display_dollars_mask_all() {
+        // `$$$$` = empty display math: all 4 masked, prose preserved.
+        let source: Vec<_> = "Hello $$$$ World".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: String = mask
+            .iter_allowed(&source)
+            .flat_map(|(_, chars)| chars.iter().copied())
+            .collect();
+        assert_eq!(allowed, "Hello  World");
+    }
+
+    #[test]
+    fn five_dollars_mask_all() {
+        // `$$$$$` alone: greedy `$$`+`$$` pair + dangling `$`->EOF, all masked.
+        let source: Vec<_> = "$$$$$".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        assert_eq!(mask.iter_allowed(&source).next(), None);
+    }
+
+    #[test]
+    fn escaped_dollar_does_not_start_math() {
+        // `\$` is a command, not math: content must stay visible.
+        let source: Vec<_> = "Price \\$QQQZZZ\\$ end".chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        let allowed: String = mask
+            .iter_allowed(&source)
+            .flat_map(|(_, chars)| chars.iter().copied())
+            .collect();
+        assert!(
+            allowed.contains("QQQZZZ"),
+            "Escaped dollars hid content: {allowed:?}"
+        );
     }
 
     #[test]
