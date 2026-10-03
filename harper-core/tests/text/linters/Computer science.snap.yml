@@ -937,6 +937,16 @@ Suggest:
 
 
 
+Lint:    Typo (127 priority)
+Message: |
+     287 | discipline of computer science, both depending on and affecting mathematics,
+         |                                                   ^~~ Is this a typo for `an`?
+     288 | software engineering, and linguistics. It is an active research area, with
+Suggest:
+  - Replace with: “an”
+
+
+
 Lint:    Style (31 priority)
 Message: |
      291 | Formal methods are a particular kind of mathematically based technique for the
