@@ -226,6 +226,11 @@ enum Args {
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
     },
+    /// Get the correct capitalization of a word.
+    GetCorrectCapitalizationOf {
+        /// The word to get the correct capitalization for.
+        word: String,
+    },
     /// Generate shell completions.
     #[command(hide = true)]
     Completion {
@@ -1001,6 +1006,19 @@ fn main() -> anyhow::Result<()> {
                 eprintln!("{:?}", failing_tests);
                 process::exit(1);
             }
+        }
+        Args::GetCorrectCapitalizationOf { word } => {
+            let word_chars: Vec<char> = word.chars().collect();
+            if let Some(correct_capitalization) =
+                curated_dictionary.get_correct_capitalization_of(&word_chars)
+            {
+                let correct_word: String = correct_capitalization.iter().collect();
+                println!("{correct_word}");
+            } else {
+                eprintln!("No correct capitalization found for '{word}'");
+                process::exit(1);
+            }
+            Ok(())
         }
         Args::Completion { shell } => {
             generate(
