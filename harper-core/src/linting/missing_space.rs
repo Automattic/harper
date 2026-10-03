@@ -1,48 +1,83 @@
-use itertools::Itertools;
-
 use crate::{Document, Punctuation};
 
 use super::{Lint, LintKind, Linter, Suggestion};
 
+#[derive(Debug, Default)]
 pub struct MissingSpace;
 
 impl Linter for MissingSpace {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
 
-        for (a, b, c) in document.tokens().tuple_windows() {
-            if let Some(punct) = b.kind.as_punctuation()
-                && [
-                    Punctuation::Period,
-                    Punctuation::Bang,
-                    Punctuation::Question,
-                    Punctuation::Semicolon,
-                ]
-                .contains(punct)
-                && a.kind.is_word()
-                && c.kind.is_word()
+        for (index, token) in document.tokens().enumerate() {
+            let Some(punct) = token.kind.as_punctuation() else {
+                continue;
+            };
+
+            let Some(next) = document.get_token_offset(index, 1) else {
+                continue;
+            };
+
+            if ![
+                Punctuation::Period,
+                Punctuation::Bang,
+                Punctuation::Question,
+                Punctuation::Semicolon,
+            ]
+            .contains(punct)
+                || !next.kind.is_word()
             {
-                lints.push(Lint {
-                    span: b.span,
-                    lint_kind: LintKind::Formatting,
-                    suggestions: vec![Suggestion::InsertAfter(vec![' '])],
-                    message: "It looks like you're missing a space here.".to_owned(),
-                    priority: 31,
-                });
+                continue;
             }
+
+            if punct == &Punctuation::Period {
+                let next_word = document.get_span_content(&next.span);
+                // All-caps suffixes can be filenames, domains, or dotfiles (PDF,
+                // COM, DS_Store). Prefer missing an ambiguous sentence boundary
+                // to inserting a space into a name. Single-letter words like I
+                // and A can still begin sentences.
+                if !next_word.first().is_some_and(|c| c.is_uppercase())
+                    || (next_word.len() > 1 && !next_word.iter().any(|c| c.is_lowercase()))
+                {
+                    continue;
+                }
+            }
+
+            let previous = document.get_token_offset(index, -1);
+            let has_word_before = previous.is_some_and(|previous| previous.kind.is_word())
+                || (previous.is_some_and(|previous| previous.kind.is_space())
+                    && document
+                        .get_token_offset(index, -2)
+                        .is_some_and(|previous| previous.kind.is_word()));
+
+            if !has_word_before {
+                continue;
+            }
+
+            lints.push(Lint {
+                span: token.span,
+                lint_kind: LintKind::Formatting,
+                suggestions: vec![Suggestion::InsertAfter(vec![' '])],
+                message: "It looks like you're missing a space here.".to_owned(),
+                priority: 31,
+            });
         }
 
         lints
     }
 
     fn description(&self) -> &str {
-        "Looks for missing spaces after a comma or period."
+        "Looks for missing spaces after periods, exclamation points, question marks, and semicolons."
     }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::linting::tests::assert_suggestion_result;
+    use crate::Document;
+    use crate::linting::Linter;
+    use crate::linting::tests::{
+        assert_markdown_suggestion_result, assert_no_lints, assert_suggestion_result,
+    };
 
     use super::MissingSpace;
 
@@ -53,6 +88,83 @@ mod tests {
             MissingSpace,
             "people that can help us. So I feel like there",
         );
+    }
+
+    #[test]
+    fn issue_3800() {
+        assert_suggestion_result(
+            "The government .Once the policy changed, the program ended.",
+            MissingSpace,
+            "The government . Once the policy changed, the program ended.",
+        );
+    }
+
+    #[test]
+    fn allows_domain_names() {
+        assert_no_lints("WordPress.com is a managed hosting provider.", MissingSpace);
+    }
+
+    #[test]
+    fn allows_file_names() {
+        assert_no_lints("Open composer.json to edit the dependencies.", MissingSpace);
+    }
+
+    #[test]
+    fn allows_dotfiles() {
+        assert_no_lints("Use the .harper file for configuration.", MissingSpace);
+    }
+
+    #[test]
+    fn allows_uppercase_names() {
+        for text in [
+            "Open report.PDF to read the results.",
+            "Open report.DOCX to edit the results.",
+            "The photograph is saved as holiday.JPEG.",
+            "Visit WordPress.COM for details.",
+            "Visit EXAMPLE.ORG for details.",
+            "Remove the .DS_Store file before committing.",
+        ] {
+            for document in [
+                Document::new_plain_english_curated(text),
+                Document::new_markdown_default_curated(text),
+            ] {
+                assert!(MissingSpace.lint(&document).is_empty(), "{text}");
+            }
+        }
+    }
+
+    #[test]
+    fn retains_sentence_spacing_corrections() {
+        for (text, expected) in [
+            (
+                "The door closed.I stayed outside.",
+                "The door closed. I stayed outside.",
+            ),
+            (
+                "The door closed.A key was missing.",
+                "The door closed. A key was missing.",
+            ),
+            (
+                "The door closed.I'm still outside.",
+                "The door closed. I'm still outside.",
+            ),
+            (
+                "The door closed .Once again, I was outside.",
+                "The door closed . Once again, I was outside.",
+            ),
+            ("Who called?NASA called.", "Who called? NASA called."),
+            (
+                "They called!NASA needs help.",
+                "They called! NASA needs help.",
+            ),
+            (
+                "They called;NASA needs help.",
+                "They called; NASA needs help.",
+            ),
+        ] {
+            assert_suggestion_result(text, MissingSpace, expected);
+            assert_markdown_suggestion_result(text, MissingSpace, expected);
+        }
     }
 
     #[test]
