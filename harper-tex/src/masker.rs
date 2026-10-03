@@ -320,7 +320,7 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
             let brace_len = source.iter().skip(cursor).position(|t| *t == ']')?;
             let content = source.get(cursor..cursor + brace_len)?;
 
-            cursor += brace_len + 1;
+            //cursor += brace_len + 1;
             Some(content)
         } else {
             None
