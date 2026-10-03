@@ -27,6 +27,7 @@ pub enum LintKind {
     /// For any other lint that doesn't fit neatly into the other categories
     #[default]
     Miscellaneous,
+    MissingWord,
     Nonstandard,
     /// For issues with punctuation, including hyphenation in compound adjectives
     /// (e.g., "face first" vs. "face-first" when used before a noun)
@@ -70,6 +71,7 @@ impl LintKind {
             "Grammar" => Some(LintKind::Grammar),
             "Malapropism" => Some(LintKind::Malapropism),
             "Miscellaneous" => Some(LintKind::Miscellaneous),
+            "MissingWord" => Some(LintKind::MissingWord),
             "Nonstandard" => Some(LintKind::Nonstandard),
             "Punctuation" => Some(LintKind::Punctuation),
             "Readability" => Some(LintKind::Readability),
@@ -81,6 +83,7 @@ impl LintKind {
             "Typo" => Some(LintKind::Typo),
             "Usage" => Some(LintKind::Usage),
             "WordChoice" => Some(LintKind::WordChoice),
+            "WordOrder" => Some(LintKind::WordOrder),
             _ => None,
         }
     }
@@ -97,6 +100,7 @@ impl LintKind {
             LintKind::Grammar => "Grammar",
             LintKind::Malapropism => "Malapropism",
             LintKind::Miscellaneous => "Miscellaneous",
+            LintKind::MissingWord => "MissingWord",
             LintKind::Nonstandard => "Nonstandard",
             LintKind::Punctuation => "Punctuation",
             LintKind::Readability => "Readability",
@@ -116,30 +120,6 @@ impl LintKind {
 
 impl Display for LintKind {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        let s = match self {
-            LintKind::Agreement => "Agreement",
-            LintKind::BoundaryError => "BoundaryError",
-            LintKind::Capitalization => "Capitalization",
-            LintKind::Eggcorn => "Eggcorn",
-            LintKind::Enhancement => "Enhancement",
-            LintKind::Formatting => "Formatting",
-            LintKind::Grammar => "Grammar",
-            LintKind::Malapropism => "Malapropism",
-            LintKind::Miscellaneous => "Miscellaneous",
-            LintKind::Nonstandard => "Nonstandard",
-            LintKind::Punctuation => "Punctuation",
-            LintKind::Readability => "Readability",
-            LintKind::Redundancy => "Redundancy",
-            LintKind::Regionalism => "Regionalism",
-            LintKind::Repetition => "Repetition",
-            LintKind::Spelling => "Spelling",
-            LintKind::Style => "Style",
-            LintKind::Typo => "Typo",
-            LintKind::Usage => "Usage",
-            LintKind::WordChoice => "Word Choice",
-            LintKind::WordOrder => "Word Order",
-        };
-
-        write!(f, "{s}")
+        write!(f, "{}", self.to_string_key())
     }
 }
