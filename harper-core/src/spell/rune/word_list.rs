@@ -7,6 +7,8 @@ pub struct AnnotatedWord {
     pub annotations: Vec<char>,
 }
 
+const PREFIX_CHAR: char = '+';
+
 /// Parse a Rune word list
 ///
 /// Returns [`None`] if the given string is invalid.
@@ -44,9 +46,31 @@ pub fn parse_word_list(source: &str) -> Result<Vec<AnnotatedWord>, Error> {
             attr = None;
         }
 
+        let annotations = if let Some(attr_part) = attr {
+            let mut chars = attr_part.chars().peekable();
+            let mut collected = Vec::new();
+
+            while let Some(c) = chars.next() {
+                if c == PREFIX_CHAR {
+                    if let Some(next_c) = chars.next() {
+                        // Offset the char into a safe Unicode space to keep it as a
+                        // single 'char' without changing Vec<char> to Vec<String>
+                        if let Some(extended_c) = char::from_u32(next_c as u32 + 0xE000) {
+                            collected.push(extended_c);
+                        }
+                    }
+                } else {
+                    collected.push(c);
+                }
+            }
+            collected
+        } else {
+            Vec::new()
+        };
+
         words.push(AnnotatedWord {
             letters: word.chars().collect(),
-            annotations: attr.unwrap_or_default().chars().collect(),
+            annotations,
         })
     }
 
