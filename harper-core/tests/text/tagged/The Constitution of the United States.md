@@ -341,19 +341,19 @@
 > Every Bill    which shall have    passed the House  of Representatives and  the Senate ,
 # Dq+   NPr/VB+ I/C+  VXB   NSg/VXB VP/J   D   NPr/VB P  NPl             VB/C D+  NPr+   .
 > shall , before it       become a    Law      , be       presented to the President of the United
-# VXB   . C/P    NPr/ISg+ VBPp   D/P+ N🅪Sg/VB+ . NSg/VLXB VP/J      P  D   NSg       P  D+  VP/J
+# VXB   . C/P    NSg/ISg+ VBPp   D/P+ N🅪Sg/VB+ . NSg/VLXB VP/J      P  D   NSg       P  D+  VP/J
 > States    ; If    he       approve he       shall sign   it       , but     if    not     he       shall return it       , with his
-# NPrPl/V3+ . NSg/C NPr/ISg+ VB      NPr/ISg+ VXB   NSg/VB NPr/ISg+ . NSg/C/P NSg/C NSg/R/C NPr/ISg+ VXB   NSg/VB NPr/ISg+ . P    ISg/D$+
+# NPrPl/V3+ . NSg/C NPr/ISg+ VB      NPr/ISg+ VXB   NSg/VB NSg/ISg+ . NSg/C/P NSg/C NSg/R/C NPr/ISg+ VXB   NSg/VB NSg/ISg+ . P    ISg/D$+
 > Objections to that      House   in        which it       shall have    originated , who    shall enter  the
-# NPl+       P  I/C/Ddem+ NPr/VB+ NPr/J/R/P I/C+  NPr/ISg+ VXB   NSg/VXB VP/J       . NPr/I+ VXB   NSg/VB D+
+# NPl+       P  I/C/Ddem+ NPr/VB+ NPr/J/R/P I/C+  NSg/ISg+ VXB   NSg/VXB VP/J       . NPr/I+ VXB   NSg/VB D+
 > Objections at    large on  their Journal   , and  proceed to reconsider it       . If    after
-# NPl+       NSg/P NSg/J J/P D$+   NSg/VB/J+ . VB/C VB      P  VB         NPr/ISg+ . NSg/C P
+# NPl+       NSg/P NSg/J J/P D$+   NSg/VB/J+ . VB/C VB      P  VB         NSg/ISg+ . NSg/C P
 > such  Reconsideration two thirds of that     House   shall agree to pass   the Bill    , it
-# NSg/I N🅪Sg            NSg NPl/V3 P  I/C/Ddem NPr/VB+ VXB   VB    P  NSg/VB D   NPr/VB+ . NPr/ISg+
+# NSg/I N🅪Sg            NSg NPl/V3 P  I/C/Ddem NPr/VB+ VXB   VB    P  NSg/VB D   NPr/VB+ . NSg/ISg+
 > shall be       sent   , together with the Objections , to the other    House   , by which it
-# VXB   NSg/VLXB NSg/VP . J        P    D   NPl+       . P  D   NSg/VB/J NPr/VB+ . P  I/C+  NPr/ISg+
+# VXB   NSg/VLXB NSg/VP . J        P    D   NPl+       . P  D   NSg/VB/J NPr/VB+ . P  I/C+  NSg/ISg+
 > shall likewise be       reconsidered , and  if    approved by two thirds of that     House   , it
-# VXB   R        NSg/VLXB VP/J         . VB/C NSg/C VP/J     P  NSg NPl/V3 P  I/C/Ddem NPr/VB+ . NPr/ISg+
+# VXB   R        NSg/VLXB VP/J         . VB/C NSg/C VP/J     P  NSg NPl/V3 P  I/C/Ddem NPr/VB+ . NSg/ISg+
 > shall become a   Law      . But     in        all          such  Cases   the Votes  of both   Houses  shall be
 # VXB   VBPp   D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/I/J/C/Dq NSg/I NPl/V3+ D   NPl/V3 P  I/C/Dq NPl/V3+ VXB   NSg/VLXB
 > determined by yeas and  Nays   , and  the Names  of the Persons voting   for   and
@@ -363,11 +363,11 @@
 > any     Bill    shall not     be       returned by the President within  ten Days ( Sundays
 # I/R/Dq+ NPr/VB+ VXB   NSg/R/C NSg/VLXB VP/J     P  D   NSg       NSg/J/P NSg NPl  . NPl/V3+
 > excepted ) after it       shall have    been   presented to him  , the Same shall be       a   Law     ,
-# VP/J     . P     NPr/ISg+ VXB   NSg/VXB VLPp/B VP/J      P  ISg+ . D   I/J  VXB   NSg/VLXB D/P N🅪Sg/VB .
+# VP/J     . P     NSg/ISg+ VXB   NSg/VXB VLPp/B VP/J      P  ISg+ . D   I/J  VXB   NSg/VLXB D/P N🅪Sg/VB .
 > in        like         Manner as    if    he       had signed it       , unless the Congress by their Adjournment
-# NPr/J/R/P NSg/VB/J/C/P NSg+   R/C/P NSg/C NPr/ISg+ VP  VP/J   NPr/ISg+ . C      D+  NPr+     P  D$+   NSg
+# NPr/J/R/P NSg/VB/J/C/P NSg+   R/C/P NSg/C NPr/ISg+ VP  VP/J   NSg/ISg+ . C      D+  NPr+     P  D$+   NSg
 > prevent its     Return , in        which Case       it       shall not     be       a   Law      .
-# VB      ISg/D$+ NSg/VB . NPr/J/R/P I/C+  NPr🅪Sg/VB+ NPr/ISg+ VXB   NSg/R/C NSg/VLXB D/P N🅪Sg/VB+ .
+# VB      ISg/D$+ NSg/VB . NPr/J/R/P I/C+  NPr🅪Sg/VB+ NSg/ISg+ VXB   NSg/R/C NSg/VLXB D/P N🅪Sg/VB+ .
 >
 #
 > Every Order    , Resolution , or    Vote    to which the Concurrence of the Senate and
@@ -601,7 +601,7 @@
 > The Privilege of the Writ   of Habeas Corpus shall not     be       suspended , unless when
 # D   NSg/VB    P  D   NSg/VB P  ?      NSg+   VXB   NSg/R/C NSg/VLXB VP/J      . C      NSg/I/C
 > in        Cases  of Rebellion or    Invasion the public  Safety   may     require it       .
-# NPr/J/R/P NPl/V3 P  N🅪Sg+     NPr/C NSg      D   Nᴹ/VB/J N🅪Sg/VB+ NPr/VXB NSg/VB  NPr/ISg+ .
+# NPr/J/R/P NPl/V3 P  N🅪Sg+     NPr/C NSg      D   Nᴹ/VB/J N🅪Sg/VB+ NPr/VXB NSg/VB  NSg/ISg+ .
 >
 #
 > No       Bill   of Attainder or    ex        post         facto Law      shall be       passed .
@@ -682,8 +682,8 @@
 # NSg/Dq/P+ N🅪Sg/VB+ VXB   . C/P     D   N🅪Sg/VP P  D+  NPr+     . NSg/VBPt/J I/R/Dq NPl     NPr/C NPl+
 > on  Imports or    Exports , except what   may     be       absolutely necessary for   executing
 # J/P NPl/V3  NPr/C NPl/V3+ . VB/C/P NSg/I+ NPr/VXB NSg/VLXB R          NSg/J     R/C/P Nᴹ/Vg/J
-> it's inspection Laws    : and  the net       Produce of all          Duties and  Imposts , laid by
-# +    N🅪Sg+      NPl/V3+ . VB/C D   NSg/VB/J+ Nᴹ/VB   P  NSg/I/J/C/Dq NPl+   VB/C NPl     . VP/J P
+> it's  inspection Laws    : and  the net       Produce of all          Duties and  Imposts , laid by
+# NSg$+ N🅪Sg+      NPl/V3+ . VB/C D   NSg/VB/J+ Nᴹ/VB   P  NSg/I/J/C/Dq NPl+   VB/C NPl     . VP/J P
 > any    State    on  Imports or    Exports , shall be       for   the Use     of the Treasury of the
 # I/R/Dq N🅪Sg/VB+ J/P NPl/V3  NPr/C NPl/V3+ . VXB   NSg/VLXB R/C/P D   N🅪Sg/VB P  D   NPr      P  D
 > United States    ; and  all          such  Laws    shall be       subject  to the Revision and  Controul
@@ -985,7 +985,7 @@
 > of Senators and  Representatives in        Congress to which the District  would be
 # P  NPl+     VB/C NPl+            NPr/J/R/P NPr+     P  I/C+  D   NSg/VB/J+ VXB   NSg/VLXB
 > entitled if    it       were a   State    , but     in        no       event   more         than the least    populous
-# VP/J     NSg/C NPr/ISg+ VLPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/Dq/P NSg/VB+ NPr/I/J/R/Dq C/P  D   NSg/J/Dq J
+# VP/J     NSg/C NSg/ISg+ VLPt D/P N🅪Sg/VB+ . NSg/C/P NPr/J/R/P NSg/Dq/P NSg/VB+ NPr/I/J/R/Dq C/P  D   NSg/J/Dq J
 > State    ; they shall be       in        addition to those  appointed by the States    , but     they
 # N🅪Sg/VB+ . IPl+ VXB   NSg/VLXB NPr/J/R/P NSg+     P  I/Ddem VP/J+     P  D   NPrPl/V3+ . NSg/C/P IPl+
 > shall be       considered , for   the purposes of the election of President and  Vice
@@ -1379,7 +1379,7 @@
 >
 #
 > The Congress , whenever two thirds of both   Houses  shall deem   it       necessary , shall
-# D+  NPr+     . C        NSg NPl/V3 P  I/C/Dq NPl/V3+ VXB   NSg/VB NPr/ISg+ NSg/J     . VXB
+# D+  NPr+     . C        NSg NPl/V3 P  I/C/Dq NPl/V3+ VXB   NSg/VB NSg/ISg+ NSg/J     . VXB
 > propose Amendments to this    Constitution , or    , on  the Application of the
 # NSg/VB  NPl+       P  I/Ddem+ NPr+         . NPr/C . J/P D   NSg         P  D
 > Legislatures of two thirds of the several States    , shall call   a   Convention for
@@ -1459,7 +1459,7 @@
 > The powers    not     delegated to the United States    by the Constitution , nor
 # D+  NPrPl/V3+ NSg/R/C VP/J      P  D   VP/J   NPrPl/V3+ P  D   NPr+         . NSg/C
 > prohibited by it       to the states    , are reserved to the states    respectively , or    to
-# VP/J       P  NPr/ISg+ P  D   NPrPl/V3+ . VLB VP/J     P  D   NPrPl/V3+ R            . NPr/C P
+# VP/J       P  NSg/ISg+ P  D   NPrPl/V3+ . VLB VP/J     P  D   NPrPl/V3+ R            . NPr/C P
 > the people  .
 # D   NPl/VB+ .
 >

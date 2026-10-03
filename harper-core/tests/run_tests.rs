@@ -73,7 +73,7 @@ create_test!(issue_109_ext.md, 0, Dialect::American);
 create_test!(chinese_lorem_ipsum.md, 2, Dialect::American);
 create_test!(obsidian_links.md, 2, Dialect::American);
 create_test!(issue_267.md, 0, Dialect::American);
-create_test!(proper_noun_capitalization.md, 3, Dialect::American);
+create_test!(proper_noun_capitalization.md, 2, Dialect::American);
 create_test!(amazon_hostname.md, 0, Dialect::American);
 create_test!(issue_159.md, 1, Dialect::American);
 create_test!(issue_358.md, 0, Dialect::American);
@@ -99,7 +99,7 @@ create_test!(issue_2233.md, 0, Dialect::American);
 create_test!(issue_2240.md, 0, Dialect::American);
 create_test!(allows_domain_extensions.md, 0, Dialect::American);
 // It just matters that it is > 1
-create_test!(issue_2151.md, 4, Dialect::British);
+create_test!(issue_2151.md, 3, Dialect::British);
 
 // Make sure it doesn't panic
 create_test!(lukas_homework.md, 4, Dialect::American);

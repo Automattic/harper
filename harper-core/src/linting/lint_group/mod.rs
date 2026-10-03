@@ -1363,8 +1363,7 @@ mod tests {
                 lints.retain(|l| l.lint_kind != LintKind::Style);
 
                 if !lints.is_empty() {
-                    dbg!(lints);
-                    panic!();
+                    panic!("🚨 Lint description for '{}' contains errors", lint_name);
                 }
             });
     }
