@@ -3,6 +3,7 @@
 use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
 use hashbrown::HashMap;
 use std::collections::BTreeMap;
+use std::fmt::{Display, Formatter};
 use std::fs::File;
 use std::io::{self, BufReader};
 use std::path::PathBuf;
@@ -225,6 +226,12 @@ enum Args {
         /// The location of the Weir file to test
         #[arg(value_hint = ValueHint::FilePath)]
         input: PathBuf,
+    },
+    /// Find the `dictionary.dict` entries a word comes from, and the annotation
+    /// flags that produce it.
+    WordProvenance {
+        /// The words to trace.
+        words: Vec<String>,
     },
     /// Generate shell completions.
     #[command(hide = true)]
@@ -1002,6 +1009,29 @@ fn main() -> anyhow::Result<()> {
                 process::exit(1);
             }
         }
+        Args::WordProvenance { words } => {
+            let entries = dictionary_entries(include_str!("../../harper-core/dictionary.dict"));
+            let annotations = include_str!("../../harper-core/annotations.json");
+
+            for word in &words {
+                let sources = entries_producing(word, &entries, annotations)?;
+
+                if sources.is_empty() {
+                    println!("'{word}' is not in Harper's dictionary.");
+                    continue;
+                }
+
+                println!("'{word}' comes from:");
+
+                for entry in sources {
+                    for route in routes_from_entry(word, entry, annotations)? {
+                        println!(" - {entry:<24} {route}");
+                    }
+                }
+            }
+
+            Ok(())
+        }
         Args::Completion { shell } => {
             generate(
                 shell,
@@ -1051,4 +1081,121 @@ fn print_word_derivations(word: &str, annot: &str, dictionary: &impl Dictionary)
         let child_str: String = child.iter().collect();
         println!(" - {child_str}");
     }
+}
+
+/// One way a word can end up in Harper's dictionary.
+enum Route {
+    /// The entry is the word itself.
+    Direct,
+    /// A single annotation flag on the entry produces the word.
+    Flag(char),
+    /// Two flags produce the word between them, though neither does alone.
+    CrossProduct(char, char),
+}
+
+impl Display for Route {
+    fn fmt(&self, f: &mut Formatter<'_>) -> std::fmt::Result {
+        match self {
+            Route::Direct => write!(f, "the entry itself"),
+            Route::Flag(flag) => write!(f, "flag {flag}"),
+            Route::CrossProduct(first, second) => {
+                write!(f, "flags {first} and {second} combined")
+            }
+        }
+    }
+}
+
+/// The entries of a `dictionary.dict` file, with the count header, comments and
+/// blank lines removed.
+fn dictionary_entries(dictionary: &str) -> Vec<&str> {
+    dictionary
+        .lines()
+        .skip(1)
+        .map(|line| {
+            line.split_once('#')
+                .map_or(line, |(entry, _comment)| entry)
+                .trim_end()
+        })
+        .filter(|entry| !entry.is_empty())
+        .collect()
+}
+
+/// Expand some `dictionary.dict` entries in isolation from the rest of the
+/// dictionary, the same way the `forms` subcommand expands a line you hand it.
+fn expand_entries(entries: &[&str], annotations: &str) -> anyhow::Result<MutableDictionary> {
+    let word_list = format!(
+        "{}
+{}",
+        entries.len(),
+        entries.join(
+            "
+"
+        )
+    );
+
+    Ok(MutableDictionary::from_rune_files(&word_list, annotations)?)
+}
+
+/// Find the entries whose expansion contains `word`.
+fn entries_producing<'a>(
+    word: &str,
+    entries: &[&'a str],
+    annotations: &str,
+) -> anyhow::Result<Vec<&'a str>> {
+    let mut producers = Vec::new();
+
+    // Expanding fifty thousand entries one at a time takes a few seconds, so
+    // rule them out in batches first: if a batch never produces the word, none
+    // of the entries in it did either.
+    for batch in entries.chunks(256) {
+        if !expand_entries(batch, annotations)?.contains_word_str(word) {
+            continue;
+        }
+
+        for entry in batch {
+            if expand_entries(&[entry], annotations)?.contains_word_str(word) {
+                producers.push(*entry);
+            }
+        }
+    }
+
+    Ok(producers)
+}
+
+/// Work out which of an entry's annotation flags are responsible for producing
+/// `word`.
+fn routes_from_entry(word: &str, entry: &str, annotations: &str) -> anyhow::Result<Vec<Route>> {
+    let (lexeme, flags) = line_to_parts(entry);
+
+    // Harper folds case when it identifies a word, so an entry that differs only
+    // in capitalization is still an entry for it.
+    if WordId::from_word_str(&lexeme) == WordId::from_word_str(word) {
+        return Ok(vec![Route::Direct]);
+    }
+
+    let mut routes = Vec::new();
+    let mut remaining = Vec::new();
+
+    for flag in flags.chars() {
+        if expand_entries(&[&format!("{lexeme}/{flag}")], annotations)?.contains_word_str(word) {
+            routes.push(Route::Flag(flag));
+        } else {
+            remaining.push(flag);
+        }
+    }
+
+    // Affixes marked `cross_product` in `annotations.json` compose, so a prefix
+    // and a suffix on the same entry can produce a form that neither of them
+    // reaches on its own.
+    for (i, first) in remaining.iter().enumerate() {
+        for second in &remaining[i + 1..] {
+            if expand_entries(&[&format!("{lexeme}/{first}{second}")], annotations)?
+                .contains_word_str(word)
+            {
+                routes.push(Route::CrossProduct(*first, *second));
+            }
+        }
+    }
+
+    Ok(routes)
 }
