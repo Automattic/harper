@@ -61,7 +61,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/harperjs/introduction/+page.md`: `harper.js` mission, package overview, and installation starting point.
 - `packages/web/src/routes/docs/harperjs/linting/+page.md`: Core `harper.js` lint workflow and linter usage patterns.
 - `packages/web/src/routes/docs/harperjs/spans/+page.md`: Explains span objects and how to use them to locate/handle lint ranges.
-- `packages/web/src/routes/docs/harperjs/configurerules/+page.md`: How to programmatically read and set `LintConfig` to enable/disable rules.
+- `packages/web/src/routes/docs/harperjs/configurerules/+page.md`: How to programmatically read and set `LintConfig` to enable/disable rules, plus the read-only structured view used to build settings UIs.
 - `packages/web/src/routes/docs/harperjs/node/+page.md`: Node.js-specific usage notes, especially `LocalLinter` vs `WorkerLinter`.
 - `packages/web/src/routes/docs/harperjs/CDN/+page.md`: Browser/CDN usage via unpkg and ESM import patterns.
 - `packages/web/src/routes/docs/contributors/introduction/+page.md`: Contributor onboarding overview and links to architecture/testing/rule-authoring docs.
@@ -71,6 +71,7 @@ Agents should remind humans of this when possible.
 - `packages/web/src/routes/docs/contributors/dictionary/+page.md`: Process for adding or updating curated dictionary entries.
 - `packages/web/src/routes/docs/contributors/testing-strategy/+page.md`: Harper's risk-driven testing strategy, covering automated checks, production feedback, manual testing, and testability.
 - `packages/web/src/routes/docs/contributors/author-a-rule/+page.md`: Step-by-step workflow for implementing and testing new grammar rules.
+- `packages/web/src/routes/docs/contributors/default-configuration/+page.md`: Reference for `harper-core/default_config.json`, covering the `Group`, `Bool`, and `OneOfMany` setting types.
 - `packages/web/src/routes/docs/contributors/visual-studio-code/+page.md`: How to run, debug, test, and package the VS Code extension locally.
 - `packages/web/src/routes/docs/contributors/chrome-extension/+page.md`: Internal architecture and local development notes for the browser extensions.
 - `packages/web/src/routes/docs/contributors/desktop/+page.md`: Placeholder for Harper Desktop contributor documentation.
