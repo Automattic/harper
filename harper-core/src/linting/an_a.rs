@@ -1,7 +1,7 @@
 use itertools::Itertools;
 
 use crate::{
-    CharStringExt, Dialect, Document, TokenStringExt,
+    CharStringExt, Dialect, Document, OrthFlags, TokenStringExt,
     indefinite_article::{InitialSound, starts_with_vowel},
     linting::{Lint, LintKind, Linter, Suggestion},
 };
@@ -75,6 +75,28 @@ impl Linter for AnA {
 
                 let Some(a_an) = is_a_an else {
                     continue;
+                };
+
+                // An all-caps token whose entry licenses a lowercase spelling but no
+                // all-caps one is an ordinary word written for emphasis ("a FREE event"),
+                // not an initialism. Read it as the lowercase word. Entries that do
+                // license all-caps (`LAN`, `NAT`, `MA`) keep the initialism handling, as
+                // do Roman numerals, which are numbers rather than words.
+                let lowered;
+                let chars_second = match second.kind.as_word() {
+                    Some(Some(meta))
+                        if chars_second.len() > 1
+                            && chars_second
+                                .iter()
+                                .all(|c| !c.is_alphabetic() || c.is_uppercase())
+                            && meta.orth_info.contains(OrthFlags::LOWERCASE)
+                            && !meta.orth_info.contains(OrthFlags::ALLCAPS)
+                            && !meta.orth_info.contains(OrthFlags::ROMAN_NUMERALS) =>
+                    {
+                        lowered = chars_second.to_lower();
+                        lowered.as_ref()
+                    }
+                    _ => chars_second,
                 };
 
                 let should_be_a_an = match starts_with_vowel(chars_second, self.dialect)
@@ -276,6 +298,40 @@ mod tests {
             0,
         );
         assert_lint_count("a AM transmitter", AnA::new(Dialect::American), 1);
+    }
+
+    /// Issue #3921: an all-caps token whose entry has no all-caps spelling of its
+    /// own is an ordinary word written for emphasis, not an initialism.
+    #[test]
+    fn reads_emphasis_caps_as_words() {
+        assert_lint_count("a FREE event", AnA::new(Dialect::American), 0);
+        assert_lint_count(
+            "James Bond deals with a SPECTRE agent",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count(
+            "a FLASH based filing system",
+            AnA::new(Dialect::American),
+            0,
+        );
+        assert_lint_count("a SYN flood attack", AnA::new(Dialect::American), 0);
+        assert_lint_count("a STUN server", AnA::new(Dialect::American), 0);
+    }
+
+    /// The same guard must not swallow initialisms whose entries do license an
+    /// all-caps spelling, nor Roman numerals, which are numbers rather than words.
+    #[test]
+    fn keeps_initialisms_and_roman_numerals() {
+        assert_lint_count("an SSH tunnel", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FTP server", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FTPS connection", AnA::new(Dialect::American), 0);
+        assert_lint_count("an FPS multiplayer game", AnA::new(Dialect::American), 0);
+        assert_lint_count("an MPG figure", AnA::new(Dialect::American), 0);
+        assert_lint_count("an ML research project", AnA::new(Dialect::American), 0);
+        assert_lint_count("an XVI century painting", AnA::new(Dialect::American), 0);
+        // Still wrong, and still caught.
+        assert_lint_count("a SSH and Telnet connector", AnA::new(Dialect::American), 1);
     }
 
     #[test]
