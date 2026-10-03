@@ -232,6 +232,8 @@ enum Args {
         /// Generate completions for this shell.
         shell: Shell,
     },
+    /// List words with negative prefixes
+    ListNegatives,
 }
 
 fn main() -> anyhow::Result<()> {
@@ -1009,6 +1011,43 @@ fn main() -> anyhow::Result<()> {
                 env!("CARGO_BIN_NAME"),
                 &mut io::stdout(),
             );
+            Ok(())
+        }
+        Args::ListNegatives => {
+            use harper_core::linting::wrong_negative;
+            let prefixes = wrong_negative::NEGATIVE_PREFIXES;
+
+            for word in curated_dictionary.words_iter() {
+                if word.starts_with_any_ignore_ascii_case_str(prefixes)
+                    && !word.eq_any_ignore_ascii_case_str(prefixes)
+                {
+                    for prefix in prefixes.iter() {
+                        if let Some(core_ch) = word.strip_prefix_ignore_ascii_case_chars(
+                            &prefix.chars().collect::<Vec<char>>(),
+                        ) {
+                            for other_prefix in prefixes.iter().filter(|p| p != &prefix) {
+                                let new_word = other_prefix
+                                    .chars()
+                                    .chain(core_ch.iter().copied())
+                                    .collect::<Vec<char>>();
+                                if curated_dictionary.contains_word(&new_word) {
+                                    println!(
+                                        "{} 👉 {}{}\x1b[0m 👉 {}",
+                                        word.iter().collect::<String>(),
+                                        if curated_dictionary.contains_word(core_ch) {
+                                            "✅ \x1b[32m".to_string()
+                                        } else {
+                                            "❌ \x1b[31m".to_string()
+                                        },
+                                        core_ch.iter().collect::<String>(),
+                                        new_word.iter().collect::<String>()
+                                    );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
             Ok(())
         }
     }

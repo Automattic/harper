@@ -5,7 +5,7 @@ use crate::{
     spell::Dictionary,
 };
 
-const NEGATIVE_PREFIXES: &[&str] = &["anti", "de", "dis", "dys", "il", "im", "in", "non", "un"];
+pub const NEGATIVE_PREFIXES: &[&str] = &["anti", "de", "dis", "dys", "il", "im", "in", "non", "un"];
 
 fn looks_negative_but_oov(token: &Token, source: &[char]) -> bool {
     token.kind.is_oov()
