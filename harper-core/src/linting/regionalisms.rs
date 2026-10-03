@@ -710,6 +710,7 @@ impl ExprLinter for Regionalisms {
             return None;
         }
 
+        // No matching term found, so nothing to lint.
         let concept = REGIONAL_TERMS
             .iter()
             .find(|row| row.term == flagged_term_string)?
