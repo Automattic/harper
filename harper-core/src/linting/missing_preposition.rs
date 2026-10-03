@@ -6,7 +6,7 @@ use crate::expr::OwnedExprExt;
 use crate::expr::SequenceExpr;
 use crate::patterns::AnyPattern;
 use crate::patterns::UPOSSet;
-use crate::{Token, TokenStringExt};
+use crate::{CharStringExt, Token, TokenStringExt};
 
 use super::{ExprLinter, Lint, LintKind};
 use crate::linting::expr_linter::Chunk;
@@ -45,8 +45,32 @@ impl ExprLinter for MissingPreposition {
         &self.expr
     }
 
-    fn match_to_lint(&self, matched_tokens: &[Token], _source: &[char]) -> Option<Lint> {
+    fn match_to_lint(&self, matched_tokens: &[Token], source: &[char]) -> Option<Lint> {
         if matched_tokens.last()?.kind.is_upos(UPOS::ADP) {
+            return None;
+        }
+
+        // Skip when the AUX slot is a form of "have" acting as a main verb
+        // taking a direct object (e.g. "children has dual citizenship",
+        // "she has big dreams"). The AUX tagger can't disambiguate main
+        // "have" from auxiliary "have", so we do it here lexically.
+        // Locate the AUX token in the matched sequence (the expression's
+        // trailing AnyPattern optionals can push the AUX away from a
+        // fixed offset, so search by UPOS rather than rely on an index).
+        let aux_tok = matched_tokens.iter().find(|t| t.kind.is_upos(UPOS::AUX))?;
+        if aux_tok.get_ch(source).eq_any_ignore_ascii_case_str(&[
+            "has",
+            "have",
+            "had",
+            "having",
+            "hasn't",
+            "haven't",
+            "hadn't",
+            // Typographical / curly apostrophe variants.
+            "hasn\u{2019}t",
+            "haven\u{2019}t",
+            "hadn\u{2019}t",
+        ]) {
             return None;
         }
 
@@ -143,6 +167,36 @@ mod tests {
     fn allows_issue_1585() {
         assert_no_lints(
             "Each agent has specific tools and tasks orchestrated through a crew workflow.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_one_of_my_children_has_dual_citizenship() {
+        // Regression for the issue: main-verb "has" + adj + noun should
+        // not be flagged. The AUX slot here is "has" acting as a main
+        // verb taking the noun phrase "dual citizenship" as its object.
+        assert_no_lints(
+            "I am Australian, and one of my children has dual citizenship.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_main_verb_haven_t_with_straight_apostrophe() {
+        // Negated main verb "haven't" still takes a direct object.
+        assert_no_lints(
+            "Most of the new tickets haven't full coverage.",
+            MissingPreposition::default(),
+        );
+    }
+
+    #[test]
+    fn allows_main_verb_haven_t_with_curly_apostrophe() {
+        // Same case but with the U+2019 right single quotation mark,
+        // which most editors and macOS smart-quote substitution produce.
+        assert_no_lints(
+            "Most of the new tickets haven\u{2019}t full coverage.",
             MissingPreposition::default(),
         );
     }
