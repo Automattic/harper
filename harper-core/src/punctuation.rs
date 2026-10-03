@@ -86,6 +86,10 @@ pub enum Punctuation {
     SinglePrime,
     /// `″`
     DoublePrime,
+    /// `¡`
+    InvertedBang,
+    /// `¿`
+    InvertedQuestion,
     /// `\``,
     Backtick,
 }
@@ -100,6 +104,7 @@ impl Punctuation {
             '@' => Punctuation::At,
             '\\' => Punctuation::Backslash,
             '!' => Punctuation::Bang,
+            '¡' => Punctuation::InvertedBang,
             '^' => Punctuation::Caret,
             ':' => Punctuation::Colon,
             ',' => Punctuation::Comma,
@@ -121,6 +126,7 @@ impl Punctuation {
             '|' => Punctuation::Pipe,
             '+' => Punctuation::Plus,
             '?' => Punctuation::Question,
+            '¿' => Punctuation::InvertedQuestion,
             '.' => Punctuation::Period,
             ';' => Punctuation::Semicolon,
             '′' => Punctuation::SinglePrime,
