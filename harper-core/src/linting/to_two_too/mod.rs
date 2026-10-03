@@ -463,4 +463,155 @@ mod tests {
     fn no_lint_to_only_at_end() {
         assert_no_lints("limited to only", test_linter());
     }
+
+    // --- Degree words + noun (mid-sentence) ---
+
+    #[test]
+    fn fixes_to_many_cookies() {
+        assert_suggestion_result(
+            "I ate to many cookies.",
+            ToTwoToo::default(),
+            "I ate too many cookies.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_much_water() {
+        assert_suggestion_result(
+            "There is to much water.",
+            ToTwoToo::default(),
+            "There is too much water.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_few_options() {
+        assert_suggestion_result(
+            "We have to few options.",
+            ToTwoToo::default(),
+            "We have too few options.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_little_time() {
+        assert_suggestion_result(
+            "There is to little time.",
+            ToTwoToo::default(),
+            "There is too little time.",
+        );
+    }
+
+    #[test]
+    fn fixes_to_many_bugs_mid_sentence() {
+        assert_suggestion_result(
+            "There are to many bugs in this project.",
+            ToTwoToo::default(),
+            "There are too many bugs in this project.",
+        );
+    }
+
+    // --- Degree words + noun: false positive guards ---
+
+    #[test]
+    fn no_lint_give_to_many_charities() {
+        assert_no_lints("She likes to give to many charities.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_listen_to_many_podcasts() {
+        assert_no_lints("I listen to many podcasts.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_talk_to_many_people() {
+        assert_no_lints("We talk to many people.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_donate_to_many_causes() {
+        assert_no_lints("They donate to many causes.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_connected_to_many_servers() {
+        assert_no_lints("The app is connected to many servers.", ToTwoToo::default());
+    }
+
+    #[test]
+    fn no_lint_appeals_to_many_developers() {
+        assert_no_lints(
+            "SemVer is a false promise that appeals to many developers.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    fn no_lint_to_many_after_verb_with_trailing_whitespace() {
+        assert_no_lints("give \nto many charities", ToTwoToo::default());
+    }
+
+    // --- Known limitations (each reason explains why it's left failing) ---
+
+    #[test]
+    #[ignore = "false positive: 'expired' is an adjective/verb ending in 'ed', matched by ToTooAdjVerbEdPunct; full runs hide it via overlap with InflectedVerbAfterTo"]
+    fn no_lint_going_to_expired() {
+        assert_no_lints(
+            "I didn't know it was going to expired.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false negative: the parenthetical after the degree word breaks the pattern"]
+    fn correct_to_few_in_parenthetical() {
+        assert_suggestion_result(
+            "Possibly to few (unique) data points / predictions.",
+            ToTwoToo::default(),
+            "Possibly too few (unique) data points / predictions.",
+        );
+    }
+
+    #[test]
+    #[ignore = "false negative: a degree word followed by 'of' isn't handled yet"]
+    fn correct_to_much_of_regression() {
+        assert_suggestion_result(
+            "Question for checking python import times and warning if to much of regression.",
+            ToTwoToo::default(),
+            "Question for checking python import times and warning if too much of regression.",
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: only the token directly before 'to' is checked, so the noun between the verb and 'to' isn't recognized"]
+    fn no_lint_copy_files_to_many_hosts() {
+        assert_no_lints("Copy files to many hosts in parallel", ToTwoToo::default());
+    }
+
+    #[test]
+    #[ignore = "false positive: 'little endian' is a technical term, not an excess degree"]
+    fn no_lint_convert_opcode_to_little_endian() {
+        assert_no_lints(
+            "Small script to convert opcode to little endian format",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: 'little endian' is a technical term, not an excess degree"]
+    fn no_lint_conversion_to_little_endian() {
+        assert_no_lints(
+            "I was working on gpt package in go and I didn't realize that the author had handled conversion to little endian when writing header.",
+            ToTwoToo::default(),
+        );
+    }
+
+    #[test]
+    #[ignore = "false positive: the compound splits into tokens, 'theme' reads as a noun and TooTo misfires on the valid 'too'"]
+    fn no_lint_too_theme_happy() {
+        assert_no_lints(
+            "2018: we may have gotten a bit too theme-happy.",
+            ToTwoToo::default(),
+        );
+    }
 }
