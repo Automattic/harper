@@ -3,7 +3,7 @@ expr main <([(@cue off ![hand, the, of]), (@cue ADV off ![hand, the, of])]), off
 
 let message "This collocation usually takes `of` rather than `off`."
 let description "Fixes the common preposition mix-up after verbs like `know` and `think` in phrases such as `know off` and `thought off` when a following token indicates the intended meaning is `of`."
-let kind "Grammar"
+let kind "Preposition"
 let becomes "of"
 
 # True positives

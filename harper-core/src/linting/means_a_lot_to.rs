@@ -49,7 +49,7 @@ impl ExprLinter for MeansALotTo {
         };
         Some(Lint {
             span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::Preposition,
             suggestions: vec![Suggestion::replace_with_match_case(
                 sug.chars().collect(),
                 span.get_content(src),
