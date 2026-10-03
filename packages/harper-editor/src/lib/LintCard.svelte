@@ -56,8 +56,10 @@ function handleFocus() {
 <div
 	bind:this={cardEl}
 	role="group"
-	class={`shrink-0 overflow-hidden rounded-[10px] border-[0.5px] bg-white shadow-sm shadow-stone-950/5 transition-[box-shadow,border-color] duration-150 ${
-		active ? lintKindStyle.activeClass : 'border-[rgba(28,26,22,0.14)]'
+	class={`shrink-0 overflow-hidden rounded-[10px] border-[0.5px] bg-white dark:bg-[#262119] shadow-sm shadow-stone-950/5 transition-[box-shadow,border-color] duration-150 ${
+		active
+			? `border-[rgba(28,26,22,0.14)] dark:border-[rgba(236,231,221,0.14)] ${lintKindStyle.activeClass}`
+			: 'border-[rgba(28,26,22,0.14)] dark:border-[rgba(236,231,221,0.14)]'
 	}`}
 	on:mouseenter={onActivate}
 >
@@ -72,11 +74,11 @@ function handleFocus() {
 		>
 			<span class={`h-[7px] w-[7px] rounded-full ${lintKindStyle.dotClass}`}></span>
 		</span>
-		<span class="text-[12.5px] leading-[1.1] font-semibold text-stone-950">
+		<span class="text-[12.5px] leading-[1.1] font-semibold text-stone-950 dark:text-stone-100">
 			{lintKindStyle.label}
 		</span>
 		<span
-			class={`ml-auto inline-flex shrink-0 text-stone-500 transition-transform duration-150 ${
+			class={`ml-auto inline-flex shrink-0 text-stone-500 dark:text-stone-400 transition-transform duration-150 ${
 				open ? 'rotate-180' : ''
 			}`}
 		>
@@ -90,7 +92,7 @@ function handleFocus() {
 		<div class="flex flex-col gap-2.5 px-3 pt-0.5 pb-3" in:slide={{ duration: 130 }} out:slide={{ duration: 130 }}>
 			<button
 				type="button"
-				class="m-0 flex w-full flex-col border-0 bg-transparent p-0 text-left text-[13px] leading-[1.4] font-medium text-stone-950"
+				class="m-0 flex w-full flex-col border-0 bg-transparent p-0 text-left text-[13px] leading-[1.4] font-medium text-stone-950 dark:text-stone-100"
 				on:click={handleFocus}
 			>
 				<span>{@html lint.message_html}</span>
@@ -98,18 +100,18 @@ function handleFocus() {
 
 			<button
 				type="button"
-				class="m-0 block max-h-[84px] w-full overflow-hidden rounded-[7px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fbfaf6] px-3 py-2.5 text-left text-xs leading-[1.45] text-stone-700"
+				class="m-0 block max-h-[84px] w-full overflow-hidden rounded-[7px] border-[0.5px] border-[rgba(28,26,22,0.09)] bg-[#fbfaf6] dark:border-[rgba(236,231,221,0.09)] dark:bg-[#1e1a14] px-3 py-2.5 text-left text-xs leading-[1.45] text-stone-700 dark:text-stone-300"
 				on:click={handleFocus}
 				aria-label="Focus problem in editor"
 			>
-				<span class="text-stone-500">
+				<span class="text-stone-500 dark:text-stone-400">
 					{snippet.prefixEllipsis ? '...' : ''}{snippet.prefix}
 				</span>
 				<mark
 					class={`rounded-[3px] px-0.5 font-semibold ${lintKindStyle.softClass} ${lintKindStyle.textClass}`}
 					>{snippet.problem}</mark
 				>
-				<span class="text-stone-500">
+				<span class="text-stone-500 dark:text-stone-400">
 					{snippet.suffix}{snippet.suffixEllipsis ? '...' : ''}
 				</span>
 			</button>
@@ -123,7 +125,7 @@ function handleFocus() {
 								class={`${baseSuggestionClass} ${
 									i === 0
 										? `border-transparent ${lintKindStyle.softClass} ${lintKindStyle.textClass} shadow-none`
-										: 'border-[0.5px] border-stone-300 bg-linear-to-b from-white to-stone-50 text-stone-950 shadow-sm shadow-stone-950/5'
+										: 'border-[0.5px] border-stone-300 dark:border-stone-600 bg-linear-to-b from-white to-stone-50 dark:from-stone-700 dark:to-stone-800 text-stone-950 dark:text-stone-100 shadow-sm shadow-stone-950/5'
 								}`}
 								title={`Replace with "${suggestionText(suggestion)}"`}
 								on:click={(event) => {
@@ -136,12 +138,12 @@ function handleFocus() {
 						{/each}
 					</div>
 				{:else}
-					<span class="mr-auto text-xs text-stone-400">No suggestions available.</span>
+					<span class="mr-auto text-xs text-stone-400 dark:text-stone-500">No suggestions available.</span>
 				{/if}
 
 				<button
 					type="button"
-					class="h-[26px] shrink-0 border-0 bg-transparent px-1 text-[12.5px] font-medium text-stone-500 shadow-none"
+					class="h-[26px] shrink-0 border-0 bg-transparent px-1 text-[12.5px] font-medium text-stone-500 dark:text-stone-400 shadow-none"
 					on:click={(event) => {
 						event.stopPropagation();
 						onIgnore();
