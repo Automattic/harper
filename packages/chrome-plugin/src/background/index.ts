@@ -29,6 +29,7 @@ import {
 	type GetIsolateEnglishResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
+	type GetRegexMaskResponse,
 	type GetReviewedRequest,
 	type GetReviewedResponse,
 	type GetStructuredConfigResponse,
@@ -52,6 +53,7 @@ import {
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
 	type SetIsolateEnglishRequest,
+	type SetRegexMaskRequest,
 	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
@@ -235,6 +237,10 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleGetIsolateEnglish();
 		case 'setIsolateEnglish':
 			return handleSetIsolateEnglish(message);
+		case 'getRegexMask':
+			return handleGetRegexMask();
+		case 'setRegexMask':
+			return handleSetRegexMask(message);
 		case 'getDelay':
 			return handleGetDelay(message);
 		case 'setDelay':
@@ -305,7 +311,22 @@ async function handleLint(
 	}
 
 	const isolateEnglish = req.options?.isolateEnglish === true || (await getIsolateEnglish());
-	const grouped = await linter.organizedLints(req.text, { ...req.options, isolateEnglish });
+	const storedRegexMask = (await getRegexMask()).trim();
+	let validStoredMask: string | undefined;
+	if (storedRegexMask.length > 0) {
+		try {
+			new RegExp(storedRegexMask);
+			validStoredMask = storedRegexMask;
+		} catch {
+			console.warn(`Invalid regex mask in storage: ${storedRegexMask}`);
+		}
+	}
+	const regex_mask = req.options?.regex_mask ?? validStoredMask;
+	const grouped = await linter.organizedLints(req.text, {
+		...req.options,
+		isolateEnglish,
+		regex_mask,
+	});
 	const unpackedEntries = await Promise.all(
 		Object.entries(grouped).map(async ([source, lints]) => {
 			const unpacked = await Promise.all(lints.map((lint) => unpackLint(req.text, lint, linter)));
@@ -404,6 +425,16 @@ async function handleGetIsolateEnglish(): Promise<GetIsolateEnglishResponse> {
 
 async function handleSetIsolateEnglish(req: SetIsolateEnglishRequest): Promise<UnitResponse> {
 	await setIsolateEnglish(req.isolateEnglish);
+
+	return createUnitResponse();
+}
+
+async function handleGetRegexMask(): Promise<GetRegexMaskResponse> {
+	return { kind: 'getRegexMask', regexMask: await getRegexMask() };
+}
+
+async function handleSetRegexMask(req: SetRegexMaskRequest): Promise<UnitResponse> {
+	await setRegexMask(req.regexMask);
 
 	return createUnitResponse();
 }
@@ -697,6 +728,15 @@ async function getIsolateEnglish(): Promise<boolean> {
 
 async function setIsolateEnglish(isolateEnglish: boolean): Promise<void> {
 	await chrome.storage.local.set({ isolateEnglish });
+}
+
+async function getRegexMask(): Promise<string> {
+	const resp = await chrome.storage.local.get({ regexMask: '' });
+	return resp.regexMask ?? '';
+}
+
+async function setRegexMask(regexMask: string): Promise<void> {
+	await chrome.storage.local.set({ regexMask });
 }
 
 async function getActivationKey(): Promise<ActivationKey> {
