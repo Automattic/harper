@@ -1,0 +1,91 @@
+# Verbatim excerpts reported in PR #4502, comment 5923253696.
+# Only outer editorial ellipses removed; source names/line numbers are the reviewer's.
+# These are targeted regressions, not a representative accuracy benchmark.
+# Columns: source, excerpt, expected warning count.
+then-than.md:1	if just one of those is set incorrectly	0
+to-verbed.md:10	is expected to exists.	0
+untitled.md:13	MockAPI is meant to be	0
+huge-hunger-pang.md:1	there is an error flagged at	0
+all-of-the.md:3	security measures applied by the module.	0
+asian-commas.md:6 & untitled.md:24	is rotated to	0
+untitled.md:20	will have been built	0
+RezaSi_go-interview-practice.md:56	developers, ranked by number of challenges	0
+RezaSi_go-interview-practice.md:77	challenges shown in two rows	0
+Alice's Adventures in Wonderland.md:90	moment to be lost	0
+news.md:3	too many news loaded	0
+revanced-patches.md:102 & go-interview-practice.md:256	is licensed under	0
+youtube-transcript.md:3	The video game industry is being sucked into	1
+youtube-transcript.md:4	Who is left to save us?	0
+youtube-transcript.md:30	All hope is not lost	0
+news.md:3, 9, 19	news loaded	0
+neovim_neovim.md	a Makefile is provided as a conveni	0
+51 (unnamed file)	There's not a single pro to be found	0
+59 (unnamed file)	or get sued.	1
+Alice (Interleaved Line)	the door was shut again	0
+os.md:1	library-monotasking operative system... mostly written in	0
+os.md:95	is being actively developed	1
+facebook_pyrefly.md:1	are licensed under	0
+DigitalPlatDev_FreeDomain.md:102 & 108	Run by wasmer	0
+RustPython_RustPython.md:156	an application written in Rust	0
+junegunn_fzf.md:376	search terms delimited by spaces	0
+junegunn_fzf.md (Interleaved text block)	when --exact is set	0
+RustPython_RustPython.md:87	feature is enabled by default	0
+RustPython_RustPython.md:139	to be installed.	0
+facebookresearch_detectron2.md:38	projects that are built on top	0
+Alice (Interleaved Line)	Alice was soon left alone.	0
+Claude-Code-Game-Studios.md (Interleaved)	loot dropped by chests	0
+Claude-Code-Game-Studios.md:173	All that was left was to write	0
+Claude-Code-Game-Studios.md:187	currency being thrown around by tech companies	1
+sam-audio.md:182	a game engine written in	0
+sam-audio.md:207	can then be found in	0
+Claude-Code-Game-Studios.md:424	are described later	0
+junegunn_fzf.md:499 & 525	The list is generated using	0
+junegunn_fzf.md:510 & 535	Can be disabled by setting	0
+Alice (Interleaved Line)	from being broken.	1
+junegunn_fzf.md:538, 542, 549, 578, 587	can be separately configured	0
+claude-code-best-practice.md:221 & 245	tasks are listed	0
+claude-code-best-practice.md:265	is licensed under	0
+ebook2audiobook.md:5	This tool is intended for use with	0
+ebook2audiobook.md:185	If the script is stopped and run again	0
+junegunn_fzf.md:831	query string denoted by the placeholder	0
+nextjs_saas-starter.md:268	is licensed under	0
+junegunn_fzf.md:652, 722	is enabled only for	0
+junegunn_fzf.md:228	when the --preview option is set	0
+claude-code-game-studios.md:241	then got fired illegally.	1
+full-stack-fastapi-template.md:10	[Pydantic], used by FastAPI	0
+ebook2audiobook.md:447	Arguments can be easily added like this	1
+ebook2audiobook.md:499 & 520	Releases can be found	0
+junegunn_fzf.md:855	Your $SHELL is used to execute	0
+Alice:907	some of the words have got altered.	1
+full-stack-fastapi-template.md:239 & simstudioai_sim.md:153	is licensed under	0
+simstudioai_sim.md:45	Docker must be installed	0
+fastfetch-cli_fastfetch.md (Interleaved)	can be found	0
+sindresorhus_awesome.md:85	followed by the UTC date	0
+Alice:1356	There was a table set out under a tree	0
+Alice:1348	and the roof was thatched with fur.	0
+sindresorhus_awesome.md:10	Contributors are expected to act	0
+junegunn_fzf.md:885	examples can be found	0
+firebase-ios-sdk.md:59	its pre-compiled binaries are included when installing	0
+EveryInc_compound-engineering-plugin.md:25	patterns get documented.	0
+Alice:1532	as the things get used up.	0
+firebase-ios-sdk.md:174	exceptions and signal crashes are not recorded.	0
+claude-code-game-studios.md:285	blueprint pioneered by Bungie	0
+firebase-ios-sdk.md:101	All official releases are tagged in this repo	0
+firebase-ios-sdk.md:146	where it is required to use	0
+numman-ali_opencode-openai-codex-auth.md:4	Curated by Numman Ali	0
+numman-ali_opencode-openai-codex-auth.md:52	Minimal configs are not supported for GPT‑5.x	0
+Alice:1710	these were ornamented all over	0
+slidevjs_slidev.md:52	instant reloading powered by Vite	0
+slidevjs_slidev.md:41	theme can be shared and used	0
+slidevjs_slidev.md:93	This project is made possible by	0
+5587	fly-leaf was printed the word SCHEDULE	0
+5680	shadows of holly wreaths thrown by lighted [windows]	0
+5700	the East was haunted for me	0
+5806	an obscene word, scrawled by some boy	0
+5349	a long silence... followed by an	0
+5466	was marked “The Swastika Holding Company,”	0
+5247	a man “deranged by grief”	0
+5020	achievement was forgotten.	0
+5060	the work bench was stained where	0
+4853	rose petals blown by	0
+4623	phone taken up inside	0

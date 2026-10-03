@@ -3230,6 +3230,13 @@
 						},
 						{
 							"Bool": {
+								"name": "PassiveVoice",
+								"state": false,
+								"label": "Passive Voice"
+							}
+						},
+						{
+							"Bool": {
 								"name": "QuiteQuiet",
 								"state": true,
 								"label": "Quite Quiet"

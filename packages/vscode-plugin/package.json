@@ -3909,6 +3909,12 @@
 					"default": true,
 					"description": "Keeps the compound adjective together before nouns like folders, files, or web pages so the dependency between them is clear."
 				},
+				"harper.linters.PassiveVoice": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": false,
+					"description": "Optionally highlights possible passive voice for review; some passive constructions are appropriate."
+				},
 				"harper.linters.PayForPrice": {
 					"scope": "resource",
 					"type": "boolean",
