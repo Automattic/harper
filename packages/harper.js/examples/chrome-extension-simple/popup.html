@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<title>harper.js example</title>
+		<style>
+			body {
+				font-family: system-ui, sans-serif;
+				margin: 12px;
+				min-width: 280px;
+			}
+			code {
+				font-size: 0.9em;
+			}
+			#status {
+				color: #555;
+			}
+			ul {
+				padding-left: 1.2em;
+			}
+		</style>
+	</head>
+	<body>
+		<h1>harper.js</h1>
+		<p id="status">Loading…</p>
+		<p>Package version: <code id="version">…</code></p>
+		<p>Sample lint of <code>This is an test</code>:</p>
+		<ul id="lints"></ul>
+		<script type="module" src="popup.js"></script>
+	</body>
+</html>

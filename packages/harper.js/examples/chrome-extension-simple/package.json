@@ -1,0 +1,11 @@
+{
+	"name": "chrome-extension-simple",
+	"version": "0.0.1",
+	"private": true,
+	"scripts": {
+		"prepare-extension": "node ./prepare-extension.mjs"
+	},
+	"dependencies": {
+		"harper.js": "workspace:*"
+	}
+}
