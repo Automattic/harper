@@ -543,7 +543,7 @@ fn lint_one_input(
     })
 }
 
-fn configure_lint_group(
+pub(super) fn configure_lint_group(
     lint_group: &mut LintGroup,
     only: &Option<Vec<String>>,
     ignore: &Option<Vec<String>>,
