@@ -27,7 +27,7 @@
 use hashbrown::{HashMap, HashSet};
 use lru::LruCache;
 use std::num::NonZeroUsize;
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, LazyLock, Mutex};
 use std::time::{Duration, Instant};
 
 use crate::CharString;
@@ -49,6 +49,10 @@ const COMPOUND_ADJ_FLAG: char = 'q';
 /// property in `annotations.json`). The affix expansion keeps such an entry out
 /// of the word list, so it has to be collected here separately.
 const STEM_ONLY_FLAG: char = '*';
+
+/// Marks an entry that is a word but never a compound element (see the `!`
+/// property in `annotations.json`).
+const NO_COMPOUND_FLAG: char = '!';
 
 /// The flags that mark a closed-class word: determiner, pronoun, conjunction.
 ///
@@ -268,6 +272,189 @@ pub(crate) fn can_head_a_lowercase_compound(
     })
 }
 
+/// May `tail` end a capitalized compound?
+///
+/// A capitalized compound is a noun, and a noun ends in a noun — or in an
+/// adjective, when it is nominalized (`die Hochdeutsche`), or in an
+/// infinitive (`das Autofahren`). It never ends in a finite verb form:
+/// `Bett` + `rieb` (*reiben*) and `Ab` + `reit` (*reiten*) are typos for
+/// `Betrieb` and `Arbeit`. The mirror image of [`may_open_a_compound`], and
+/// of [`can_head_a_lowercase_compound`] for the other case.
+///
+/// A form the dictionary knows nothing about stays allowed: this rejects only
+/// what is positively a verb form, a form with a verb reading of its own or one
+/// whose recorded lemma is a verb.
+pub(crate) fn can_head_a_capitalized_compound(dictionary: &impl Dictionary, tail: &[char]) -> bool {
+    let Some(metadata) = dictionary.get_word_metadata(tail) else {
+        return true;
+    };
+
+    if metadata.noun.is_some()
+        || metadata.adjective.is_some()
+        || metadata.adverb.is_some()
+        || metadata.pronoun.is_some()
+        || metadata.conjunction.is_some()
+        || metadata.determiner.is_some()
+        || metadata.affix.is_some()
+        || metadata.preposition
+    {
+        return true;
+    }
+
+    // German nominalizes every infinitive (`Wohlbefinden`, `Leseverstehen`),
+    // and an infinitive ends in `-n`. This also lets through the plural
+    // preterites (`-rieben`), which is the price of not knowing which form is
+    // which: the dictionary records the same lemma for both.
+    if metadata.verb.is_some() && tail.ends_with(&['n']) {
+        return true;
+    }
+
+    let lemma_is_verb = metadata
+        .derived_from
+        .as_ref()
+        .and_then(|id| dictionary.get_word_from_id(id))
+        .and_then(|lemma| dictionary.get_word_metadata(lemma))
+        .is_some_and(|lemma| lemma.verb.is_some());
+
+    metadata.verb.is_none() && !lemma_is_verb
+}
+
+/// May `element` stand in front of a compound boundary?
+///
+/// Not when it is an inflected `-t` form of a verb and nothing else. German
+/// builds on the bare stem (`Funk|gerät`, `Mess|kabel`), never on the third
+/// person: `funkt` + `Ioniern` is how `funktioniern` used to pass. A form with
+/// any other reading keeps its place, so `Macht`, `Fahrt` and `Last` still open
+/// compounds although `mach`, `fahr` and `las` are verb stems.
+pub(crate) fn may_open_a_compound(
+    dictionary: &impl Dictionary,
+    stems: &HashSet<CharString>,
+    element: &[char],
+) -> bool {
+    let Some(stem) = element.strip_suffix(&['t']) else {
+        return true;
+    };
+
+    let infinitive: Vec<char> = [stem, &['e', 'n']].concat();
+    let is_verb_stem = stems.contains(stem)
+        || dictionary
+            .get_word_metadata(&infinitive)
+            .is_some_and(|metadata| metadata.verb.is_some());
+    if !is_verb_stem {
+        return true;
+    }
+
+    dictionary
+        .get_word_metadata(element)
+        .is_some_and(|metadata| {
+            metadata.noun.is_some()
+                || metadata.adjective.is_some()
+                || metadata.adverb.is_some()
+                || metadata.pronoun.is_some()
+                || metadata.conjunction.is_some()
+                || metadata.determiner.is_some()
+                || metadata.preposition
+        })
+}
+
+/// May `segment` take part in a compound at all, in any position?
+///
+/// Not when its spelling is marked `!` in the word list, and not when it is an
+/// abbreviation. Both are words in isolation and junk inside a compound:
+/// `Jahrhundet` used to pass as `Jahr` + `hund` + `et`, `Arbeitsspeichr` as
+/// `Arbeit` + `ssp` + `ei` + `chr`.
+///
+/// The mark covers the spelling only, not the forms built from the entry. A
+/// form often has a second, legitimate source, and the dictionary records only
+/// one lemma for it: `Religion` names the mined `religio` as its lemma, and
+/// barring through the lemma took `Zivilreligion` with it.
+pub(crate) fn may_be_compound_element(
+    dictionary: &impl Dictionary,
+    barred: &HashSet<CharString>,
+    segment: &[char],
+) -> bool {
+    !barred.contains(segment)
+        && dictionary
+            .get_word_metadata(segment)
+            .is_none_or(|metadata| metadata.abbreviation != Some(true))
+}
+
+/// The forms igerman98 lets stand in front of a compound boundary, lower case.
+///
+/// See `scripts/extract_german_compound_begin_forms.py`, which writes the file.
+static COMPOUND_BEGIN_FORMS: LazyLock<HashSet<String>> = LazyLock::new(|| {
+    include_str!("../compound_begin_forms.txt")
+        .lines()
+        .filter(|line| !line.is_empty() && !line.starts_with('#'))
+        .map(str::to_owned)
+        .collect()
+});
+
+/// The linking elements a listed begin form may end in, the empty one first.
+/// `e` and `ns` are not among Harper's interfixes but are igerman98's
+/// (`Halte|stelle`, `Glaubens|frage`), and knowing them tells that an element
+/// has a recorded link.
+const KNOWN_LINKS: [&str; 8] = ["", "s", "n", "en", "er", "es", "e", "ns"];
+
+/// Does `element` + `interfix` link the way igerman98 says `element` links?
+///
+/// igerman98 lists the form each element takes in front of a compound boundary,
+/// linking element included: `Arbeits`, `Versions`, `Festplatten`, `Halte`.
+/// Where it lists any such form for `element`, the interfix has to produce one
+/// of them, which is what rejects `Arbeit|speicher`, `Version|hinweis`,
+/// `Festplatte|speicher` and `Bus|halt|stelle`. Where it lists none — `Kasus`,
+/// `Lipid`, most of the vocabulary — the interfix stays free, so the many
+/// compounds igerman98 does not know (`Kasuszuweisung`) keep working.
+pub(crate) fn interfix_matches_known_begin(element: &[char], interfix: &[char]) -> bool {
+    let mut form: String = element.iter().flat_map(|c| c.to_lowercase()).collect();
+    let stem_len = form.len();
+    let mut listed = |link: &str| {
+        form.truncate(stem_len);
+        form.push_str(link);
+        COMPOUND_BEGIN_FORMS.contains(&form)
+    };
+
+    if !KNOWN_LINKS.iter().any(|link| listed(link)) {
+        return true;
+    }
+    let interfix: String = interfix.iter().collect();
+    listed(&interfix)
+}
+
+/// May `element` be followed by a linking element at all?
+///
+/// Linking elements join nouns. A preposition or an adverb takes none — German
+/// writes `Abschnitt`, `Vorspeise`, `Aufstieg`, `Hintergrund`, never with an
+/// `-s-` or an `-er-` in the seam — so a seam after one is a doubled or stray
+/// letter: `Ab|s|schnitte`, `Vor|s|speise`, `Auf|s|stieg`, `Hin|er|grund`. A
+/// word that is also a noun keeps its interfixes (`Lauf` is no particle).
+pub(crate) fn may_take_an_interfix(dictionary: &impl Dictionary, element: &[char]) -> bool {
+    dictionary
+        .get_word_metadata(element)
+        .is_none_or(|metadata| {
+            metadata.noun.is_some() || !(metadata.preposition || metadata.adverb.is_some())
+        })
+}
+
+/// May a word shorter than [`MIN_COMPOUND_PART_LEN`] stand in front of a
+/// compound boundary? See [`CompoundChecker::opening_element_usable`].
+///
+/// Only letters are judged: an abbreviation such as `d.h.` is assembled from
+/// pieces like `d.` and is no compound of words.
+pub(crate) fn may_open_when_short(dictionary: &impl Dictionary, segment: &[char]) -> bool {
+    segment.len() >= MIN_COMPOUND_PART_LEN
+        || !segment.iter().all(|c| c.is_alphabetic())
+        || dictionary
+            .get_word_metadata(segment)
+            .is_some_and(|metadata| metadata.preposition)
+        || COMPOUND_BEGIN_FORMS.contains(
+            &segment
+                .iter()
+                .flat_map(|c| c.to_lowercase())
+                .collect::<String>(),
+        )
+}
+
 /// Does the dictionary also read this string as a noun?
 ///
 /// A string can be a function word *and* an inflected noun at the same time.
@@ -329,6 +516,9 @@ pub struct CompoundChecker {
     /// The derived feminine nouns, which open a compound only with `-s-`.
     /// See [`suffixed_element_set`].
     suffixed_elements: HashSet<CharString>,
+    /// The words that never take part in a compound. See
+    /// [`may_be_compound_element`].
+    barred_elements: HashSet<CharString>,
     /// The base dictionary to resolve element membership against, when set.
     ///
     /// When present, membership queries use this dictionary (whose lookup is
@@ -350,6 +540,7 @@ impl std::fmt::Debug for CompoundChecker {
             .field("stems", &self.stems.len())
             .field("function_words", &self.function_words.len())
             .field("suffixed_elements", &self.suffixed_elements.len())
+            .field("barred_elements", &self.barred_elements.len())
             .field("has_base_dict", &self.base_dict.is_some())
             .field("compound_flags", &self.compound_flags)
             .field("max_check_time", &self.max_check_time)
@@ -365,6 +556,7 @@ impl Clone for CompoundChecker {
             stems: self.stems.clone(),
             function_words: self.function_words.clone(),
             suffixed_elements: self.suffixed_elements.clone(),
+            barred_elements: self.barred_elements.clone(),
             base_dict: self.base_dict.clone(),
             compound_flags: self.compound_flags.clone(),
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
@@ -409,6 +601,18 @@ pub(crate) fn stem_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
         }
     }
     stems
+}
+
+/// The entries of a word list that are marked `!`: words that never take part
+/// in a compound. See [`may_be_compound_element`].
+pub(crate) fn barred_element_set(word_list: &[AnnotatedWord]) -> HashSet<CharString> {
+    let mut barred = HashSet::new();
+    for word in word_list {
+        if word.annotations.contains(&NO_COMPOUND_FLAG) {
+            insert_member_casings(&mut barred, &word.letters);
+        }
+    }
+    barred
 }
 
 /// The function words of a word list: articles, pronouns and conjunctions.
@@ -495,6 +699,7 @@ impl CompoundChecker {
         let stems = stem_set(word_list);
         let function_words = function_word_set(word_list);
         let suffixed_elements = suffixed_element_set(word_list);
+        let barred_elements = barred_element_set(word_list);
 
         for word in word_list {
             let flags: HashSet<char> = word
@@ -531,6 +736,7 @@ impl CompoundChecker {
             stems,
             function_words,
             suffixed_elements,
+            barred_elements,
             base_dict: None,
             compound_flags: ['h', 'i', 'k', 'l', 'm', 'o', 'q']
                 .iter()
@@ -571,6 +777,13 @@ impl CompoundChecker {
         }
     }
 
+    /// See the free function of the same name.
+    fn can_head_a_capitalized_compound(&self, tail: &[char]) -> bool {
+        self.base_dict
+            .as_ref()
+            .is_none_or(|base| can_head_a_capitalized_compound(base.as_ref(), tail))
+    }
+
     /// Whether `word` carries compound-formation flags in the word list.
     fn has_compound_flags(&self, word: &[char]) -> bool {
         self.get_compound_flags(word).is_some()
@@ -580,10 +793,17 @@ impl CompoundChecker {
     ///
     /// A segment is usable iff it is a dictionary word AND it is either at
     /// least [`MIN_COMPOUND_PART_LEN`] characters long or one of the handful of
-    /// two-letter words German really does build on.
+    /// two-letter words German really does build on, AND it is not barred from
+    /// compounds altogether (see [`may_be_compound_element`]).
     fn element_usable(&self, segment: &[char]) -> bool {
         self.member_of(segment)
             && (segment.len() >= MIN_COMPOUND_PART_LEN || self.short_element_usable(segment))
+            && match self.base_dict.as_ref() {
+                Some(base) => {
+                    may_be_compound_element(base.as_ref(), &self.barred_elements, segment)
+                }
+                None => !self.barred_elements.contains(segment),
+            }
     }
 
     /// May a word shorter than [`MIN_COMPOUND_PART_LEN`] be a compound element?
@@ -621,9 +841,19 @@ impl CompoundChecker {
     /// `Schreibtisch` and `Absperrband` all open on one. They are excluded from
     /// the head position, where the word class of the whole compound is
     /// decided, because a stem has none.
+    ///
+    /// A two-letter noun opens a compound only when igerman98 lists it as a
+    /// begin form: `Öl|wanne` does, `Au|stellung` does not, and `Ei` links only
+    /// as `Eier` (the compounds on a bare `Ei`, `Eigelb` and `Eiweiß`, are
+    /// entries of their own). It may still end one (`Dach|au`, `Roh|öl`).
+    /// Prepositions are not affected (`Ab|bau`, `Um|bau`).
     fn opening_element_usable(&self, segment: &[char]) -> bool {
-        self.element_usable(segment)
-            || (segment.len() >= MIN_COMPOUND_PART_LEN && self.stems.contains(segment))
+        (self.element_usable(segment)
+            || (segment.len() >= MIN_COMPOUND_PART_LEN && self.stems.contains(segment)))
+            && self.base_dict.as_ref().is_none_or(|base| {
+                may_open_a_compound(base.as_ref(), &self.stems, segment)
+                    && may_open_when_short(base.as_ref(), segment)
+            })
     }
 
     /// Whether a segment can stand *at the end of* a compound.
@@ -731,7 +961,7 @@ impl CompoundChecker {
         if depth > 0 && self.closing_element_usable(segment) {
             return match lowercase_whole {
                 Some(whole) => self.can_head_a_lowercase_compound(whole, segment),
-                None => true,
+                None => self.can_head_a_capitalized_compound(segment),
             };
         }
 
@@ -753,6 +983,12 @@ impl CompoundChecker {
                 continue;
             }
 
+            // A function word may open a compound (`Ausbildung`, `Nachteil`)
+            // but not stand inside one: `Spe|ich|her`, `freu|und|lich`.
+            if depth > 0 && self.is_function_word_only(first) {
+                continue;
+            }
+
             // Try every standard interfix at this boundary.
             let only_s = self.suffixed_elements.contains(first) && !opens_a_derivation(rest);
             for interfix in STANDARD_INTERFIXES {
@@ -760,7 +996,14 @@ impl CompoundChecker {
                     continue;
                 }
                 let interfix_chars: Vec<char> = interfix.chars().collect();
-                if !interfix_fits(first, &interfix_chars) {
+                if !interfix_fits(first, &interfix_chars)
+                    || !interfix_matches_known_begin(first, &interfix_chars)
+                    || (!interfix.is_empty()
+                        && self
+                            .base_dict
+                            .as_ref()
+                            .is_some_and(|base| !may_take_an_interfix(base.as_ref(), first)))
+                {
                     continue;
                 }
                 let Some(after) = rest.strip_prefix(interfix_chars.as_slice()) else {
@@ -1199,18 +1442,20 @@ mod tests {
     fn test_recursive_compounding_deep() {
         // Realistic deep-nesting fixture: every element is a full-length German-
         // looking word (no single-character elements), and a 4-5 level compound
-        // must decompose recursively.
+        // must decompose recursively. The seams follow igerman98, which the
+        // checker enforces: `Schiff` links as `Schiffs-` and `Schifffahrt` is a
+        // word of its own, `Gesellschaft` and `Kapitän` link with `-s-`.
         let words = vec![
+            AnnotatedWord {
+                letters: "donau".chars().collect(),
+                annotations: vec!['N', 'h'],
+            },
             AnnotatedWord {
                 letters: "dampf".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
             AnnotatedWord {
-                letters: "schiff".chars().collect(),
-                annotations: vec!['N', 'h'],
-            },
-            AnnotatedWord {
-                letters: "fahrt".chars().collect(),
+                letters: "schifffahrt".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
             AnnotatedWord {
@@ -1226,21 +1471,33 @@ mod tests {
         let checker = CompoundChecker::new(&words);
 
         // 2-element compound
-        assert!(checker.is_compound_word(&"dampfschiff".chars().collect::<Vec<_>>()));
-
-        // 3-element compound
         assert!(checker.is_compound_word(&"dampfschifffahrt".chars().collect::<Vec<_>>()));
 
-        // 4-element compound with an s-interfix
-        assert!(checker.is_compound_word(&"dampfschifffahrtskapitän".chars().collect::<Vec<_>>()));
-
-        // 5-element compound with an s-interfix
+        // 3-element compound with an s-interfix
         assert!(
             checker.is_compound_word(&"dampfschifffahrtsgesellschaft".chars().collect::<Vec<_>>())
         );
 
+        // 4-element compound
+        assert!(
+            checker.is_compound_word(
+                &"donaudampfschifffahrtsgesellschaft"
+                    .chars()
+                    .collect::<Vec<_>>()
+            )
+        );
+
+        // 5-element compound with two s-interfixes
+        assert!(
+            checker.is_compound_word(
+                &"donaudampfschifffahrtsgesellschaftskapitän"
+                    .chars()
+                    .collect::<Vec<_>>()
+            )
+        );
+
         // Single fixture words are elements, not compounds.
-        for word in ["dampf", "schiff", "fahrt", "kapitän", "gesellschaft"] {
+        for word in ["donau", "dampf", "schifffahrt", "kapitän", "gesellschaft"] {
             assert!(
                 !checker.is_compound_word(&word.chars().collect::<Vec<_>>()),
                 "{word}"
@@ -1417,24 +1674,24 @@ mod tests {
 
     #[test]
     fn test_short_flagged_element() {
-        // Two-character real words (like "ei") remain usable compound elements
+        // Two-character real words (like "öl") remain usable compound elements
         // because they carry compound-formation flags.
         let words = vec![
             AnnotatedWord {
-                letters: "ei".chars().collect(),
+                letters: "öl".chars().collect(),
                 annotations: vec!['N', 'h', 'i'],
             },
             AnnotatedWord {
-                letters: "schnee".chars().collect(),
+                letters: "wanne".chars().collect(),
                 annotations: vec!['N', 'h'],
             },
         ];
 
         let checker = CompoundChecker::new(&words);
 
-        assert!(checker.is_compound_word(&"eischnee".chars().collect::<Vec<_>>()));
-        assert!(!checker.is_compound_word(&"ei".chars().collect::<Vec<_>>()));
-        assert!(!checker.is_compound_word(&"schnee".chars().collect::<Vec<_>>()));
+        assert!(checker.is_compound_word(&"ölwanne".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"öl".chars().collect::<Vec<_>>()));
+        assert!(!checker.is_compound_word(&"wanne".chars().collect::<Vec<_>>()));
     }
 
     #[test]
@@ -1516,14 +1773,15 @@ mod tests {
     ///
     /// `zeuge` used to be on this list and is not any more:
     /// `fix_german_noun_forms.py` gave `Zeug` its plural, so `zeuge` is now a
-    /// noun and `Werkzeuge` no longer needs the gate to stay open. The ones
-    /// left are the umlaut plurals, which no affix class can build — there is
-    /// no rule in `annotations.json` that turns `Raum` into `Räume` — and the
-    /// verb forms.
+    /// noun and `Werkzeuge` no longer needs the gate to stay open. `räume` and
+    /// `garten` followed: `add_german_noun_homograph_readings.py` gives the
+    /// noun forms hunspell knows a noun entry of their own, which is what let
+    /// [`can_head_a_capitalized_compound`] reject verb-form heads (`Bett|rieb`)
+    /// without taking `Zeiträume` along. The ones left are the verb forms.
     ///
     /// When the affix expansion starts assigning a part of speech to those
     /// too, this test fails, and that is the moment to try the typed element
-    /// gate again.
+    /// gate in the remaining positions.
     #[test]
     fn expanded_forms_carry_no_part_of_speech_to_type_elements_with() {
         use crate::language::german::spell::base_german_dictionary_fst;
@@ -1551,8 +1809,6 @@ mod tests {
             ("eicht", "third person singular of 'eichen'"),
             ("malt", "third person singular of 'malen'"),
             ("agiert", "third person singular of 'agieren'"),
-            ("räume", "umlaut plural of 'Raum'"),
-            ("garten", "lower-case 'Garten'"),
         ] {
             assert!(
                 !word_class_of(word),

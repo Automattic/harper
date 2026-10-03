@@ -69,7 +69,7 @@ Lehre/~~FhE # teaching, doctrine
 Lehrgebäude/~~NYE # plural of Lehrgebäude
 Lehrgebäude/~~NhYE # teaching building, doctrine
 Macht/~~FhYG # power
-Mana/~~NhYE # mana (Polynesian concept)
+Mana/~~NhYE! # mana (Polynesian concept)
 Maßnahme/~~FhYE # measure, action
 Maßnahmen/~~F # plural of Maßnahme
 Medizin/~~FhA # medicine
@@ -1376,7 +1376,7 @@ bautzener/~~NFEKLH
 bauwerker/~~NEH
 bauwüste/~~NE
 bavaria/~~NH
-bawü/~~NA
+bawü/~~NA!
 bayenthal/~~JOQRSTq # retag: adjective (was ~~N)
 bayenturm/~~NHA
 bazi/~~NH
@@ -6457,7 +6457,7 @@ adaptivem/~~Nh #noun
 adaptiven/~~Vfj # verb
 adaptiver/~~Nh #noun
 adaptives/~~Nh #noun
-adde/~~NhYE #noun
+adde/~~NhYE! #noun
 adden/~~Vj # verb
 addet/~~NXh #noun
 addeten/~~Vj # verb
@@ -14492,7 +14492,6 @@ fick/~NhpuvwYH #frequency: 7
 fieber/~NhpuvwEH #frequency: 7
 film/~NhpuvwY0HXxzMZ #frequency: 7
 filter/~NhpuvwEH78x #frequency: 7
-find/~NhpuvwYE78x #frequency: 7
 finster/~~JOQRSTUWqh #frequency: 7
 fischreich/~~JOQRSTUWqh #frequency: 7
 fix/~~JOQRSTqh #frequency: 7
@@ -16094,7 +16093,7 @@ cholerisch/~JqOQRSTUW #adjective root, frequency: 6
 cholesterinfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 cholesterinreich/~NhYEOQRST #frequency: 6
 cholinerg/~NhYE #frequency: 6
-chr/~~NhYE
+chr/~~NhYE!
 christenfreundlich/~JqOQRSTUW #adjective root, frequency: 6
 christlich/~JqOQRSTUW9 #adjective root, frequency: 6
 christsozial/~~JOQRSTqh #frequency: 6
@@ -17012,7 +17011,6 @@ fremdwortfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 frequenzschwach/~NhYE #frequency: 6
 frequenzselektiv/~~JOQRSTqh #frequency: 6
 frequenzstabil/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-freu/~NhYE #frequency: 6
 freudenreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 freudevoll/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 freudig/~JqOQRSTUW #adjective root, frequency: 6
@@ -17095,7 +17093,6 @@ fädel/~h #frequency: 6
 fähig/~~OQRSTUWq9J # retag: adjective, was noun (igerman98 SFX A)
 fäkal/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 fäll/*~NhYE78 #frequency: 6
-fäng/~NhYE #frequency: 6
 färb/*~NhYE78x #frequency: 6
 föderal/~~JOQRSTqh #frequency: 6
 föderativ/~~JOQRSTqh #frequency: 6
@@ -17485,7 +17482,6 @@ haarscharf/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 haarsträubend/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 habgierig/~JqOQRSTUW #adjective root, frequency: 6
 habituell/~~JOQRSTqh #frequency: 6
-hack/~NhY #frequency: 6
 hader/~NhEH #frequency: 6
 hafennah/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hager/~NhYOQRSTUW #frequency: 6
@@ -17715,7 +17711,6 @@ hoffnungsfroh/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hoffnungsreich/~NhYE #frequency: 6
 hoffremd/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hofnah/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-hoh/~NhYOQRSTE #frequency: 6
 hoheitsfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hohlraumreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hol/~h #frequency: 6
@@ -18065,7 +18060,6 @@ jammervoll/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 jazz/~NhMZA #frequency: 6
 jeansblau/~NhYEOQRST #frequency: 6
 jeck/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
-jen/~VfjOQRST # verb root, frequency: 6
 jodreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 jogg/~h #frequency: 6
 jovial/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -18155,7 +18149,6 @@ keimfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 kein/~h4OQRST #frequency: 6
 kellner/~NhEKLH #frequency: 6
 kelpwaldreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-kenn/~NhY #frequency: 6
 kerbfrei/~NhYE #frequency: 6
 kernfaul/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 kernfrei/~NhYEOQRST #frequency: 6
@@ -18603,7 +18596,6 @@ lautgetreu/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lautgleich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lavendelblau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lax/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
-leb/~NhYE #frequency: 6
 lebendig/~JqOQRSTUW9 #adjective root, frequency: 6
 lebensfeindlich/~JqOQRSTUW #adjective root, frequency: 6
 lebensfremd/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -18753,7 +18745,6 @@ lymphoproliferativ/~~JOQRSTqh #frequency: 6
 lysosomal/~~JOQRSTqh #frequency: 6
 lächel/~h #frequency: 6
 ländlich/~JqOQRSTUW #adjective root, frequency: 6
-läng/~NhYE #frequency: 6
 längengleich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 längentreu/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 länglich/~JqOQRSTUW #adjective root, frequency: 6
@@ -18763,7 +18754,6 @@ lärmintensiv/~~JOQRSTqh #frequency: 6
 lärmvoll/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 lässig/~JqOQRSTUW #adjective root, frequency: 6
 lästig/~JqOQRSTUW #adjective root, frequency: 6
-läuf/~NhYE #frequency: 6
 läuter/~h78 #frequency: 6
 löcher/~NhE #frequency: 6
 lösbar/~JqOQRSTUW9 #adjective root, frequency: 6
@@ -19867,7 +19857,6 @@ anwerbe/~~h # not a noun: no capitalized form
 anwerbt/~~h # not a noun: no capitalized form
 anwerfe/~~h # not a noun: no capitalized form
 anwerft/~~h # not a noun: no capitalized form
-anwes/*~~Vcj # REPLACES anwesen
 anwidre/~~h # not a noun: no capitalized form
 anwies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 anwiese/~~h # not a noun: no capitalized form
@@ -20809,7 +20798,7 @@ beamter/~~Mh
 beamtet/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 beamtin/~~Nh
 beastet/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-beat/~~NhHX
+beat/~~NhHX!
 beatm/*~~Vcj78 # REPLACES beatmen
 beatmet/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 beatnik/~~NhHA
@@ -21344,7 +21333,6 @@ besaßt/~~hV # retag: finite verb form, was noun (corpus-mined)
 beseelt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 besegle/~~h # not a noun: no capitalized form
 beseh/*~~Vcj # REPLACES besehen
-bes/*~~Vej # REPLACES besen
 besens/~~Nh
 besetzt/~~NXhVOQRSTG # +verb reading (was noun-only)
 besiegt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -21775,7 +21763,7 @@ blendet/~~hG # not a noun: no capitalized form
 blesse/~~NhE
 blessen/~~Nh # auto-added
 blessur/~~NhY
-bleu/~~NhYE
+bleu/~~NhYE!
 blichst/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 blicht/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 blick/~~VcejX0 # REPLACES blicken
@@ -22155,7 +22143,6 @@ brechen/~~XZ78cH #  auto-added
 brecher/~~MhEKLH
 brecht/~~NhHA
 bregenz/~~NhA
-brei/~~Vej # REPLACES breien
 breiig/~~RJOQRSTqh
 breis/~~Nh
 breit/~~JOQRSTUWqx #adjective and noun
@@ -22472,7 +22459,7 @@ bäckst/~~h # not a noun: no capitalized form
 bäckt/~~hG # not a noun: no capitalized form
 bäder/~~MhE
 bädern/~~Nh
-bäh/~~NhYE
+bäh/~~NhYE!
 bäketal/~~JOQRSTqh0 # retag: adjective (was ~~Nh)
 bälde/~~NhA
 bälge/~~NhE
@@ -22497,7 +22484,6 @@ bänkern/~~Nh
 bänkers/~~Nh
 bär/~~NhYKLz
 bärchen/~~XZ #  auto-added
-bär/~~VejKL # REPLACES bären
 bärin/~~Nh
 bärlapp/~~NXhHY
 bärte/~~NhE
@@ -22521,7 +22507,6 @@ böcke/~~NhE
 böcken/~~Nh # auto-added
 böden/~~Nh # auto-added
 böe/~~NhE
-bö/~~Vej # REPLACES böen
 böge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 bögen/~~Nh # auto-added
 böget/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -24383,7 +24368,6 @@ einsaß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einsaßt/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 einsehe/~~h # not a noun: no capitalized form
 einseht/~~h # not a noun: no capitalized form
-eins/~~Vcj # REPLACES einsen
 einser/~~MhEH
 einsern/~~Nh
 einsers/~~Nh
@@ -24553,7 +24537,6 @@ elf/~~h1 # not a noun: no capitalized form
 elfchen/~~XZH #  auto-added
 elfeck/~~NhHA
 elfecks/~~Nh
-elf/~~Vej # REPLACES elfen
 elfer/~~MhEH
 elfern/~~Nh
 elfers/~~Nh
@@ -25616,7 +25599,6 @@ fedora/~~Nh
 fedre/~~h # not a noun: no capitalized form
 fedrig/~~RJOQRSTqh
 feeling/~~MhHA
-fe/*~~Vej # REPLACES feen
 feg/*~~Vcej # REPLACES fegen
 fegende/~~NhEJ # +adjective reading (was noun-only)
 feger/~~MhEH
@@ -25882,7 +25864,7 @@ finales/~~Nh
 finanz/~~NhY
 finanzinnovation/~~FhYE
 finanzinnovationen/~~F
-find/~~Vcj78x # REPLACES finden
+find/~~*Vcj78x # REPLACES finden
 findens/~~Nh
 finder/~~MhEKLH
 findern/~~Nh
@@ -25999,7 +25981,6 @@ flaues/~~Nh
 flaum/~~ZhHA # preposition um #  auto-added
 flaumig/~~RJOQRSTqh
 flaums/~~Nh
-flaus/*~~Vej # REPLACES flausen
 flauste/~~h # not a noun: no capitalized form
 flaut/~~hG # not a noun: no capitalized form
 flautet/~~hG # not a noun: no capitalized form
@@ -26027,7 +26008,7 @@ fleißes/~~Nh
 flenn/*~~Vcej # REPLACES flennen
 flennt/~~hG # not a noun: no capitalized form
 fleucht/~~h # not a noun: no capitalized form
-flex/~~Vcej # REPLACES flexen
+flex/~~*Vcej # REPLACES flexen
 flexion/~~NhY
 flext/~~NXh
 flicht/~~h # not a noun: no capitalized form
@@ -26374,7 +26355,7 @@ fresst/~~h # not a noun: no capitalized form
 freud/~~NXhHY
 freuden/~~Vfj # auto-added
 freuds/~~Nh
-freu/~~Vcej # REPLACES freuen
+freu/~~*Vcej # REPLACES freuen
 freund/~~MhY0KLHX
 freunde/~~NhE
 freunds/~~Nh
@@ -26533,7 +26514,6 @@ funkers/~~Nh
 funkes/~~Nh
 funkle/~~h # not a noun: no capitalized form
 funks/~~Nh
-funkt/~~hG # not a noun: no capitalized form
 funktet/~~hG # not a noun: no capitalized form
 funzel/~~NhEH
 funzeln/~~Nh # auto-added
@@ -26613,7 +26593,6 @@ fädiges/~~Nh
 fädle/~~h # not a noun: no capitalized form
 fähigst/~~NhYOQRST
 fähr/*~~NXh
-fähr/*~~Vej # REPLACES fähren
 fährst/~~hV
 fährt/~~hVG # retag: verb form, was noun (corpus-mined)
 fäkale/~~NhE
@@ -26785,7 +26764,7 @@ gaff/*~~Vcej # REPLACES gaffen
 gafft/~~hG # not a noun: no capitalized form
 gafftet/~~hG # not a noun: no capitalized form
 gag/~~NXhHY
-gaga/~~NhYE
+gaga/~~NhYE!
 gagen/~~Nh # auto-added
 gags/~~Nh
 gala/~~NhE
@@ -27123,7 +27102,6 @@ gefäßen/~~Nh # auto-added
 gefäßes/~~Nh
 geföhnt/~~JOQRSTVgfj
 gefüge/~~NhEH
-gefüg/*~~Vej # REPLACES gefügen
 gefüges/~~Nh
 gefügt/~~JOQRSTVgfj
 gefühle/~~NhE
@@ -27171,7 +27149,6 @@ gehasht/~~JOQRSTVgj
 gehasst/~~JOQRSTVgfj
 gehauen/~~VjOQRSTG # auto-added
 gehaust/~~JOQRSTVgj
-geheg/*~~Vej # REPLACES gehegen
 geheges/~~Nh
 gehegt/~~JOQRSTVgfj
 geheilt/~~JOQRSTVgfj9
@@ -27386,7 +27363,6 @@ geleimt/~~JOQRSTVgfj9
 geleis/~~NXh0Y
 geleit/~~JOQRSTVgfj
 geleits/~~Nh
-gel/~~Vej # REPLACES gelen
 gelenks/~~Nh
 gelenkt/~~JOQRSTVgfj9
 gelernt/~~JOQRSTVgfj9
@@ -27485,7 +27461,6 @@ gemüt/~~JOQRSTVgfj0a
 gemüter/~~MhE
 gemütes/~~Nh
 gemüts/~~NhMZA
-gen/~~VijG # auto-added
 genagt/~~JOQRSTVgj
 genannt/~~JOQRSTVgfj9
 genant/~~JOQRSTVgfj
@@ -27884,7 +27859,6 @@ gewann/~~hVs
 gewannt/~~JOQRSTVgjG
 gewarnt/~~JOQRSTVgfj
 gewatet/~~JOQRSTVgfj
-geweb/*~~Vej # REPLACES geweben
 gewebes/~~NhMZ
 gewebt/~~JOQRSTVgfj
 geweckt/~~JOQRSTVgfj
@@ -28483,7 +28457,6 @@ grölst/~~hV
 grölt/~~hG # not a noun: no capitalized form
 gröltet/~~hG # not a noun: no capitalized form
 größe/~~NhEF
-größ/*~~Vej # REPLACES größen
 größer/~~MhYOQRST
 größere/~~NhEJ # +adjective reading (was noun-only)
 größte/~~NhEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
@@ -28699,10 +28672,10 @@ habgier/~~Mh
 habicht/~~NXhHY
 habilis/~~NhYE
 habitus/~~NhA
-hach/~~NhYE
+hach/~~NhYE!
 hachse/~~NhE
 hachsen/~~Nh # auto-added
-hack/~~Vcej # REPLACES hacken
+hack/~~*Vcej # REPLACES hacken
 hacker/~~MhEKLH
 hackern/~~Nh
 hackers/~~Nh
@@ -28715,7 +28688,6 @@ haders/~~Nh
 hadert/~~hG # not a noun: no capitalized form
 hades/~~NhA
 hadre/~~h # not a noun: no capitalized form
-haf/*~~Vej # REPLACES hafen
 hafens/~~NhMZ
 hafer/~~MhH
 hafers/~~Nh
@@ -28916,7 +28888,6 @@ haschen/~~ZdfijecG #  auto-added
 haschst/~~h # not a noun: no capitalized form
 hascht/~~hG # not a noun: no capitalized form
 hasel/~~NhEH
-has/*~~Vej # REPLACES hasen
 haskell/~~NhA
 hass/~~NXh0
 hass/~~Vcej0 # REPLACES hassen
@@ -29015,7 +28986,6 @@ heers/~~Nh
 heerweg/~~NXh0HY
 heerzug/~~Nh0HA
 hefeart/~~NhY # auto-added
-hef/*~~Vej # REPLACES hefen
 hefte/~~NhE
 heftend/~~NhYOQRST
 heftens/~~Nh
@@ -29306,7 +29276,7 @@ hexers/~~Nh
 hext/~~h # not a noun: no capitalized form
 hextest/~~h # not a noun: no capitalized form
 hextet/~~hG # not a noun: no capitalized form
-hey/~~NhYE
+hey/~~NhYE!
 hie/~~h # not a noun: no capitalized form
 hiebe/~~NhE
 hieben/~~Nh # auto-added
@@ -29338,7 +29308,7 @@ hieß/~~hVs
 hießen/~~Vifj # auto-added
 hießest/~~hV
 hießt/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
-high/~~NhYE
+high/~~NhYE!
 highway/~~NhHA
 hihi/~~h # not a noun: no capitalized form
 hijackt/~~NXh
@@ -29465,7 +29435,7 @@ hiss/*~~Vcej78 # REPLACES hissen
 hisst/~~h # not a noun: no capitalized form
 hisste/~~h # not a noun: no capitalized form
 hisstet/~~hG # not a noun: no capitalized form
-Historia/~~NYE
+Historia/~~NYE!
 histon/~~NhYHX
 histone/~~NhE
 histons/~~Nh
@@ -29628,7 +29598,6 @@ hortet/~~hG # not a noun: no capitalized form
 horts/~~Nh # auto-added
 hortung/~~FhY
 hosanna/~~h # not a noun: no capitalized form
-hos/*~~Vej # REPLACES hosen
 hospiz/~~NXh0Y
 host/~~NhHA
 hoste/~~NhYE
@@ -29978,7 +29947,6 @@ hütet/~~hG # not a noun: no capitalized form
 hüteten/~~VifjG # auto-added
 hütetet/~~hG # not a noun: no capitalized form
 hütte/~~NhEz
-hüt/*~~Vce78 # REPLACES hütten
 hütung/~~FhY
 iberer/~~MhEKLH
 iberern/~~Nh
@@ -30620,7 +30588,7 @@ kabuls/~~Nh
 kachel/~~NhE
 kacheln/~~Vj # auto-added
 kack/~~NXh
-kack/~~Vcej # REPLACES kacken
+kack/~~*Vcej # REPLACES kacken
 kackt/~~hG # not a noun: no capitalized form
 kacktet/~~hG # not a noun: no capitalized form
 kadaver/~~MhEH
@@ -30741,7 +30709,6 @@ kandis/~~NhA
 kaneel/~~NXhHY
 kaneels/~~Nh
 kann/~~Vtfj # 3rd person singular of können
-kann/~~Vej # REPLACES kannen
 kannte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 kanntet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 kanon/~~NhYHXMZ
@@ -30949,7 +30916,7 @@ kaviar/~~NhHA
 kaviars/~~Nh
 kavität/~~NhYF
 kavitös/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-kcal/~~NhYE
+kcal/~~NhYE!
 kebab/~~NhHA
 kebabs/~~Nh
 kecke/~~NhE
@@ -31037,7 +31004,7 @@ keltre/~~h # not a noun: no capitalized form
 kelvin/~~NhA
 kempten/~~NhH # auto-added
 kenia/~~NbhH
-kenn/~~Vcj # REPLACES kennen
+kenn/~~*Vcj # REPLACES kennen
 kennens/~~Nh
 kenner/~~MhEKLH
 kennern/~~Nh
@@ -31840,7 +31807,6 @@ korsage/~~NhE
 korsak/~~NXhY
 korsar/~~NhYKLHX
 korsars/~~Nh
-kors/*~~Vej # REPLACES korsen
 korsett/~~NXhHY
 korsika/~~NbhH
 korso/~~NbhH
@@ -31875,7 +31841,6 @@ kotetet/~~hG # not a noun: no capitalized form
 kotfund/~~NhY0HX
 kots/~~Nh
 kotte/~~NhE
-kot/~~VceG # REPLACES kotten
 kotz/*~~Vcej # REPLACES kotzen
 kotzig/~~RJOQRSTqh
 kotzt/~~hG # not a noun: no capitalized form
@@ -32774,7 +32739,7 @@ leasing/~~NhHA
 least/~~h # not a noun: no capitalized form
 leaste/~~h # not a noun: no capitalized form
 leastet/~~hG # not a noun: no capitalized form
-leb/~~Vcej # REPLACES leben
+leb/~~*Vcej # REPLACES leben
 lebende/~~NhEJ # +adjective reading (was noun-only)
 lebens/~~NhMZA
 leber/~~FhE # die Leber; Genus korrigiert
@@ -32962,8 +32927,7 @@ leptine/~~NhE
 leptins/~~Nh
 lerche/~~NhE
 lerchen/~~XZ #  auto-added
-lern/~~NhY
-lern/~~Vcej # REPLACES lernen
+lern/~~*Vcej # REPLACES lernen
 lernens/~~NhMZ
 lerner/~~MhEKLH
 lernern/~~Nh
@@ -33070,7 +33034,7 @@ liefert/~~hVG # +verb reading (was noun-only)
 liefre/~~h # not a noun: no capitalized form
 lieft/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 lieg/~~NXh
-lieg/~~Vcj # REPLACES liegen
+lieg/~~*Vcj # REPLACES liegen
 lieh/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 liehen/~~VijG # auto-added
 lieht/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -33156,7 +33120,6 @@ linnen/~~Nh # auto-added
 linodur/~~NhHA
 linoxin/~~NhYHX
 linsang/~~NhHA
-lins/*~~Vcej # REPLACES linsen
 linste/~~NhYE
 linux/~~NhA
 linz/~~NhA
@@ -34072,8 +34035,7 @@ meintet/~~hG # not a noun: no capitalized form
 meinung/~~FhY
 meiose/~~NhE
 meiosen/~~Nh # auto-added
-meis/*~~Vej # REPLACES meisen
-meist/~~hr
+meist/~~hrOQRST # declines: die meisten, des meisten
 meiste/~~h # not a noun: no capitalized form
 meistre/~~h # not a noun: no capitalized form
 meißele/~~h # not a noun: no capitalized form
@@ -34088,7 +34050,7 @@ melange/~~NhA
 melanin/~~NhHA
 melanom/~~NXhHY
 meld/~~NXh78
-meld/~~Vcj78 # REPLACES melden
+meld/~~*Vcj78 # REPLACES melden
 meldens/~~Nh
 melder/~~MhEKLH
 meldern/~~Nh
@@ -34318,7 +34280,6 @@ minsker/~~MhEKLH
 minsks/~~Nh
 minus/~~h # not a noun: no capitalized form
 minute/~~NhEF
-minu/*~~Vce # REPLACES minuten
 minze/~~NhA
 minzig/~~NXh
 minzöl/~~NhHA
@@ -35083,7 +35044,6 @@ nachts/~~h # not a noun: no capitalized form
 nachtue/~~h # not a noun: no capitalized form
 nachwog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 nachzug/~~Nh0HA
-nack/*~~Vcej # REPLACES nacken
 nackens/~~Nh
 nackert/~~NXhOQRST
 nackig/~~RJOQRSTqh
@@ -35726,7 +35686,7 @@ odium/~~ZhA # preposition um #  auto-added
 odyssee/~~NhA
 ofen/~~Vij # auto-added
 ofens/~~Nh
-off/~~NhYE
+off/~~NhYE!
 offen/~~NJOQRSTUWq #adjective and noun
 offenst/~~hVOQRST
 offerte/~~NhE
@@ -36587,7 +36547,7 @@ pimpt/~~NXh
 pin/~~NhHA
 pinakol/~~NXhHY
 pinasse/~~NhE
-ping/~~Vej # REPLACES pingen
+ping/~~*Vej # REPLACES pingen
 pingte/~~NhYE
 pinguin/~~NhYHX
 pinie/~~NhEF
@@ -37691,7 +37651,6 @@ ratsam/~~h9OQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 ratsche/~~NhE
 ratscht/~~hG # not a noun: no capitalized form
 ratte/~~NhEF
-rat/~~Vce0G # REPLACES ratten
 ratter/~~Mh # not a noun: no capitalized form
 rattere/~~h # not a noun: no capitalized form
 rattern/~~NhdfijeGHcA
@@ -37767,7 +37726,7 @@ razemat/~~NXh0HY
 razzia/~~Nh
 razzien/~~Nh # auto-added
 rbb/~~Nh
-rbbs/~~NhYE
+rbbs/~~NhYE!
 reader/~~MhEH
 readern/~~Nh
 readers/~~Nh
@@ -37838,7 +37797,7 @@ reelles/~~Nh
 reet/~~NhHA
 reets/~~Nh
 referat/~~NXh0HY
-reff/~~Vej # REPLACES reffen
+reff/~~*Vej # REPLACES reffen
 refft/~~hG # not a noun: no capitalized form
 refftet/~~hG # not a noun: no capitalized form
 reflex/~~NXh0Y
@@ -38032,8 +37991,7 @@ rendre/~~h # not a noun: no capitalized form
 renk/*~~Vej # REPLACES renken
 renkt/~~hG # not a noun: no capitalized form
 renktet/~~hG # not a noun: no capitalized form
-renn/~~NhY
-renn/~~Vcj # REPLACES rennen
+renn/~~*Vcj # REPLACES rennen
 rennens/~~NhMZ
 renner/~~MhEH
 rennern/~~Nh
@@ -38369,7 +38327,6 @@ rondell/~~NXhHY
 ronden/~~Nh # auto-added
 rondo/~~NhA
 rosa/~~NJOQRSTq #adjective and noun
-ros/*~~Vej # REPLACES rosen
 rosetal/~~JOQRSTqh0 # retag: adjective (was ~~Nh)
 rosette/~~NhE
 rosig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -38880,7 +38837,6 @@ salü/~~h # not a noun: no capitalized form
 samba/~~NbhHMZ
 sambesi/~~NbhH
 sambia/~~NbhH
-sam/~~Vej # REPLACES samen
 samens/~~NhMZ
 sammel/~~NXh
 sammeln/~~Vdifj78eGc # auto-added
@@ -38903,7 +38859,6 @@ samurai/~~Nh
 san/~~NhE
 sand/~~NhY0HX
 sandale/~~NhE
-sand/~~Vej0 # REPLACES sanden
 sandes/~~Nh
 sandig/~~RJOQRSTqh
 sands/~~Nh
@@ -39037,7 +38992,6 @@ schad/~~Nh # kein Plural: »schade« ist das Adjektiv und die 1. Person von »sc
 schaden/~~VdifjecG # auto-added
 schadet/~~hG # not a noun: no capitalized form
 schaf/~~NXh0HY
-schaf/~~Veji0 # REPLACES schafen
 schafes/~~Nh
 schaff/~~h78x # not a noun: no capitalized form
 schafft/~~hVG # +verb reading (was noun-only)
@@ -39360,7 +39314,6 @@ selben/~~VfjG # auto-added
 selber/~~MhEKLH
 selbes/~~Nh
 selbig/~~RJOQRSTqh
-sel/*~~Vej # REPLACES selen
 selens/~~Nh
 selfie/~~NhHFA
 selig/~~h9OQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -39710,7 +39663,7 @@ spaß/~~Vcej0 # REPLACES spaßen
 spaßes/~~Nh
 spaßig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 spaßt/~~h # not a noun: no capitalized form
-spe/~~h # not a noun: no capitalized form
+spe/~~h! # not a noun: no capitalized form
 specht/~~NXh0HY
 speck/~~NhA
 speer/~~MhY0HX
@@ -39870,7 +39823,6 @@ staple/~~h # not a noun: no capitalized form
 star/~~NXhHY
 starb/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 starbt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-star/~~Vej # REPLACES staren
 stark/~~JOQRSTq
 starrt/~~hVG # +verb reading (was noun-only)
 stars/~~Nh
@@ -40363,7 +40315,7 @@ tanz/~~Vcej0x # REPLACES tanzen
 tanzes/~~Nh
 tanzt/~~hG # not a noun: no capitalized form
 tapas/~~NhA
-tape/~~NhYE
+tape/~~NhYE!
 tapen/~~VjG # auto-added
 tapet/~~NXhY
 tapfer/~~MhYOQRSTUW
@@ -40667,7 +40619,6 @@ topp/~~NXh
 topp/~~Vcej # REPLACES toppen
 toppt/~~hG # not a noun: no capitalized form
 tor/~~NXh0HYZ
-tor/~~Vej0 # REPLACES toren
 torero/~~NbhH
 tores/~~NhMZ
 torf/~~NXh0HY
@@ -41345,7 +41296,6 @@ verona/~~NbhH
 vers/~~NXh0Y
 versa/~~h # not a noun: no capitalized form
 versah/~~hYV # +verb reading (was noun-only)
-vers/~~Vcj0 # REPLACES versen
 verses/~~Nh
 verstehen/~~VifjcGx # auto-added
 versus/~~h3 # not a noun: no capitalized form
@@ -41381,7 +41331,6 @@ vielem/~~Nh
 vielen/~~4 # auto-added
 vieler/~~Jhqr # many (adjective genitive plural)
 vieles/~~Nh
-vier/~~Vej1 # REPLACES vieren
 vierer/~~Mh # not a noun: no capitalized form
 viert/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 viermächtestatus/~~MhYE
@@ -41418,7 +41367,7 @@ visums/~~Nh
 vitale/~~NhE
 viten/~~Nh # auto-added
 vitro/~~h # not a noun: no capitalized form
-viva/~~NhYE
+viva/~~NhYE!
 vivace/~~NhYE
 vivo/~~h # not a noun: no capitalized form
 vize/~~NhA
@@ -41541,7 +41490,6 @@ wald/~~MXh0H
 waldes/~~Nh
 waldig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 walds/~~Nh
-wal/~~Vej0 # REPLACES walen
 wales/~~Nh
 walhai/~~NbXh0HY
 walk/~~h # not a noun: no capitalized form
@@ -41610,7 +41558,6 @@ wassre/~~h # not a noun: no capitalized form
 waten/~~VdifjecG # auto-added
 watet/~~hG # not a noun: no capitalized form
 watt/~~NXhH
-wat/*~~Vce # REPLACES watten
 wattig/~~NXhOQRST
 watts/~~Nh
 web/~~NXh
@@ -41747,7 +41694,6 @@ wertes/~~NhMZ
 wertet/~~hG # not a noun: no capitalized form
 wertig/~~NXhOQRST
 werts/~~Nh
-wes/~~Vej # REPLACES wesen
 wesens/~~NhMZA
 weser/~~Fh # die Weser; Genus korrigiert
 wesir/~~NXhHY
@@ -41933,7 +41879,7 @@ worum/~~ZhA # preposition um #  auto-added
 wotan/~~NhA
 wovon/~~hr # +adverb reading (was noun-only)
 wovor/~~h # not a noun: no capitalized form
-wow/~~NhYE
+wow/~~NhYE!
 wozu/~~h # not a noun: no capitalized form
 wrack/~~NhHZA
 wracks/~~NhMZ
@@ -41947,7 +41893,7 @@ wuchre/~~h # not a noun: no capitalized form
 wuchs/~~hV0s
 wuchst/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 wucht/~~NXhGY
-wuff/~~NhYE
+wuff/~~NhYE!
 wulst/~~NhY0
 wummre/~~h # not a noun: no capitalized form
 wunde/~~NhE
@@ -42121,7 +42067,6 @@ zapp/*~~Vej # REPLACES zappen
 zapple/~~h # not a noun: no capitalized form
 zappt/~~hG # not a noun: no capitalized form
 zar/~~NhYKL
-zar/~~VejKL # REPLACES zaren
 zarin/~~Nh
 zart/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zartem/~~Nh
@@ -42451,7 +42396,6 @@ zwar/~~hr
 zweck/~~NXh0HYMZ
 zwecks/~~NhrA # +adverb reading (was noun-only)
 zwei/~~hJOQRSTq1
-zwei/~~Vej # REPLACES zweien
 zweier/~~Mh
 zweig/~~NXh0HYM
 zweigs/~~Nh
@@ -43689,7 +43633,6 @@ analogons/~~Nh
 analphabet/~~NhYKL
 analysabel/~~JOQRSTqh9 # retag: adjective (was ~~Nh, corpus-mined as noun)
 analysator/~~NhYH
-analys/*~~Vej # REPLACES analysen
 analysiere/~~h # not a noun: no capitalized form
 analysiert/~~NhYOQRSTG
 analysis/~~NhA
@@ -55441,7 +55384,6 @@ bestechend/~~NhYOQRST
 bestechens/~~Nh
 bestecht/~~h # not a noun: no capitalized form
 bestechung/~~FhY
-besteck/~~Vej0 # REPLACES bestecken
 besteckes/~~Nh
 bestecks/~~Nh
 besteckt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -70110,7 +70052,7 @@ estraden/~~Nh # auto-added
 estragon/~~NhHA
 estragons/~~Nh
 estrichs/~~Nh
-et/~~hP
+et/~~hP!
 etabliere/~~h # not a noun: no capitalized form
 etablieren/~~Vdifj78ecGn # auto-added
 etablierst/~~hV
@@ -75968,7 +75910,6 @@ gedacktes/~~Nh
 gedaddelt/~~JOQRSTVgj
 gedampft/~~JOQRSTVgj
 gedanced/~~NhYE
-gedank/*~~Vej # REPLACES gedanken
 gedankens/~~NhMZ
 gedanktem/~~Nh
 gedankter/~~Mh
@@ -75981,7 +75922,6 @@ gedauerten/~~Vfj # auto-added
 gedauerter/~~Mh
 gedauertes/~~Nh
 gedeckelt/~~JOQRSTVgfj
-gedeck/~~Vej0 # REPLACES gedecken
 gedeckes/~~Nh
 gedecktem/~~Nh
 gedeckter/~~Mh
@@ -76070,7 +76010,6 @@ gedrängel/~~NhEH
 gedrängeln/~~Nh # auto-added
 gedrängels/~~Nh
 gedrängelt/~~JOQRSTVgfj
-gedräng/*~~Vej # REPLACES gedrängen
 gedränges/~~Nh
 gedrängt/~~JOQRSTVgfj
 gedrängtem/~~Nh
@@ -76594,7 +76533,6 @@ gefährdete/~~NhE
 gefährdung/~~FhY
 gefährten/~~Nh # auto-added
 gefährtin/~~Nh
-gefäll/*~~Vej # REPLACES gefällen
 gefälles/~~Nh
 gefällige/~~NhE
 gefälligem/~~Nh
@@ -76629,7 +76567,6 @@ gefügigst/~~JOQRSTVgfj
 gefügigste/~~NhE
 gefügtem/~~Nh
 gefügtes/~~Nh
-gefühl/~~Vej0 # REPLACES gefühlen
 gefühles/~~Nh
 gefühlsarm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 gefühltem/~~Nh
@@ -77039,7 +76976,6 @@ gehäkeltes/~~Nh
 gehältern/~~Nh # auto-added
 gehämmert/~~JOQRSTVgfj
 gehändelt/~~JOQRSTVgj
-gehäng/*~~Vej # REPLACES gehängen
 gehänges/~~Nh
 gehängtem/~~Nh
 gehängter/~~Mh
@@ -77836,7 +77772,6 @@ geleiteten/~~VifjG # auto-added
 geleiteter/~~Mh
 geleitetes/~~Nh
 geleitetet/~~JOQRSTVgjG
-gelenk/~~Vej0 # REPLACES gelenken
 gelenkes/~~Nh
 gelenkfern/~~VjOQRST # auto-added
 gelenkige/~~NhE
@@ -78136,7 +78071,6 @@ gemeldetem/~~Nh
 gemeldeten/~~Vfj # auto-added
 gemeldeter/~~Mh
 gemeldetes/~~Nh
-gemeng/*~~Vej # REPLACES gemengen
 gemengtem/~~Nh
 gemengter/~~Mh
 gemengtes/~~Nh
@@ -79122,7 +79056,6 @@ gerinnsels/~~Nh
 gerinnst/~~JOQRSTVgj
 gerinnung/~~FhY
 gerinnungs/~~NhA
-geripp/*~~Vej # REPLACES gerippen
 gerippes/~~Nh
 geripptem/~~Nh
 gerippter/~~Mh
@@ -79658,7 +79591,6 @@ gesessenes/~~Nh
 gesettled/~~NhYE
 gesettlet/~~JOQRSTVgj
 gesetzbuch/~~Nh0HA
-gesetz/~~Vej0 # REPLACES gesetzen
 gesetzes/~~NhMZA
 gesetztem/~~Nh
 gesetzter/~~MhYJr
@@ -79690,7 +79622,6 @@ gesiedelt/~~JOQRSTVgj
 gesiedet/~~JOQRSTVgj
 gesiegelt/~~JOQRSTVgfj
 gesimsband/~~Nh0HA
-gesims/~~Vej0 # REPLACES gesimsen
 gesimses/~~Nh
 gesimsfeld/~~Nh0aH
 gesimste/~~NhE
@@ -79754,7 +79685,6 @@ gespalten/~~VdijeOQRST # auto-added
 gespaltene/~~NhE
 gespaltet/~~JOQRSTVgfj
 gespammt/~~JOQRSTVgj
-gespann/~~Vej0 # REPLACES gespannen
 gespannes/~~Nh
 gespanns/~~Nh
 gespannt/~~JOQRSTUWVgfj9
@@ -79944,7 +79874,6 @@ gesteinen/~~Nh # auto-added
 gesteines/~~Nh
 gesteinigt/~~JOQRSTVgfj
 gesteins/~~NhA
-gestell/~~Vej0 # REPLACES gestellen
 gestelles/~~Nh
 gestells/~~Nh
 gestellt/~~JOQRSTVgfj
@@ -79993,7 +79922,6 @@ gestimmten/~~Vfj # auto-added
 gestimmter/~~Mh
 gestimmtes/~~Nh
 gestippt/~~JOQRSTVgj
-gestirn/~~Vej # REPLACES gestirnen
 gestirns/~~Nh
 gestirnt/~~JOQRSTVgfj
 gestirntem/~~Nh
@@ -80488,7 +80416,6 @@ getrunken/~~VjOQRST # auto-added
 getrunkene/~~NhE
 geträllert/~~JOQRSTVgfj
 getränke/~~NhE
-getränk/~~Vej0 # REPLACES getränken
 getränkes/~~Nh
 getränks/~~NhMZ
 getränkt/~~JOQRSTVgfj
@@ -80712,7 +80639,6 @@ geweideter/~~Mh
 geweidetes/~~Nh
 geweigert/~~JOQRSTVgj
 geweihbaum/~~ZhHA # preposition um #  auto-added
-geweih/~~Vej0 # REPLACES geweihen
 geweihes/~~Nh
 geweihfarn/~~NhA
 geweihtem/~~Nh
@@ -81006,7 +80932,6 @@ gewöhntest/~~JOQRSTVgj
 gewöhntet/~~JOQRSTVgjG
 gewöhnung/~~FhY
 gewölbebau/~~NhHA
-gewölb/*~~Vej # REPLACES gewölben
 gewölbes/~~Nh
 gewölbetyp/~~NhY # auto-added
 gewölbtem/~~Nh
@@ -81031,7 +80956,6 @@ gewürgtem/~~Nh
 gewürgten/~~Vfj # auto-added
 gewürgter/~~Mh
 gewürgtes/~~Nh
-gewürz/~~Vej0 # REPLACES gewürzen
 gewürzes/~~Nh
 gewürztem/~~Nh
 gewürzter/~~MhYJr
@@ -84983,7 +84907,7 @@ hexendem/~~h # not a noun: no capitalized form
 hexender/~~Mh # not a noun: no capitalized form
 hexendes/~~h # not a noun: no capitalized form
 hexereien/~~Nh # auto-added
-hi/~~NhE
+hi/~~NhE!
 hibiskus/~~NhA
 hiebfest/~~h # not a noun: no capitalized form
 hiebwaffe/~~NhE
@@ -86278,7 +86202,7 @@ hysterese/~~NhE
 hysterie/~~NhEF
 hysterien/~~Nh # auto-added
 hyänenart/~~NhY # auto-added
-hä/~~NhYE
+hä/~~NhYE!
 häckseln/~~Vj # auto-added
 häcksler/~~MhEH
 häckslern/~~Nh # auto-added
@@ -97680,7 +97604,6 @@ pflastern/~~Vdifj78eGc # auto-added
 pflasters/~~Nh
 pflastert/~~hG # not a noun: no capitalized form
 pflastre/~~h # not a noun: no capitalized form
-pflaum/*~~Vej # REPLACES pflaumen
 pflaumte/~~NhYE
 pflegearm/~~NhYE
 pflegenah/~~NhYE
@@ -103587,7 +103510,6 @@ seattle/~~NhHA
 seattles/~~Nh
 sechseck/~~NXh0HY
 sechsecks/~~Nh
-sechs/~~Vej # REPLACES sechsen
 sechsfach/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 sechskant/~~JOQRSTqh0 # retag: adjective (was ~~Nh)
 sechsling/~~MhYHX
@@ -105625,7 +105547,6 @@ stattgebe/~~h # not a noun: no capitalized form
 stattgebt/~~h # not a noun: no capitalized form
 stattgibt/~~hG # not a noun: no capitalized form
 stattgäbe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-statu/*~~Vej # REPLACES statuen
 statuette/~~NhE
 statuiere/~~h # not a noun: no capitalized form
 statuiert/~~NhYOQRSTG
@@ -111978,7 +111899,7 @@ verdickt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 verdiene/~~NhEJ # +adjective reading (was noun-only)
 verdienen/~~VdifjecGn # auto-added
 verdiener/~~MhEKLH
-verdienst/~~hV0
+verdienst/~~NhYHX0 # der/das Verdienst, die Verdienste: was tagged a verb, so the plural did not exist
 verdient/~~NXhOQRSTG
 verdinge/~~h # not a noun: no capitalized form
 verdingen/~~VdifjecGn # auto-added
@@ -147385,7 +147306,7 @@ zuschneiden/~~NhcGfiH
 zuschneider/~~NhEKLH
 zuschrauben/~~NhdfijecGH
 zuschreiben/~~Nh78cGfiH
-zuschreiten/~~hG # not a noun: no capitalized form
+zuschreiten/~~hcGfi # conjugated like einschreiten
 zuschustern/~~NhdfijeGHA
 zuschweißen/~~hdfijecG # not a noun: no capitalized form
 zuschwellen/~~NhcfiH
@@ -206618,7 +206539,7 @@ knie/~~NEH
 lade/~~NE
 lamé/~~NYEH
 lese/~~V
-like/~~NYEH
+like/~~NYEH!
 main/~~N0H
 mais/~~N0A
 mime/~~NE
@@ -208128,10 +208049,10 @@ eierschalenfarben/~~JOQRSTq
 eigengewichtübung/~~FY
 eileiterabbindung/~~FA
 einbrennlackieren/~~VdifjecGn
-einhundertunddrei/~~NYE
-einhundertundfünf/~~NYE
-einhundertundneun/~~NYE
-einhundertundzwei/~~NYE
+einhundertunddrei/~~NYE!
+einhundertundfünf/~~NYE!
+einhundertundneun/~~NYE!
+einhundertundzwei/~~NYE!
 einkünfteerzielen/~~N78H
 einreichungsdatum/~~NHZA
 einshampoonierend/~~JOQRSTq
@@ -211551,7 +211472,7 @@ hauptidentifizierungscharakteristikum/~~NHA
 hauptrefinanzierungsgeschäftszinssatz/~~N0A
 pose/~~NE
 post/~~NYH
-pule/~~NYE
+pule/~~NYE!
 pute/~~NE
 rede/~~NEF
 reue/~~NE
@@ -211565,7 +211486,7 @@ same/~~NE
 samt/~~N0HA
 skin/~~NHA
 säen/~~VdifjecG
-tose/~~NYE
+tose/~~NYE!
 tote/~~NEa
 ulme/~~NE
 unke/~~NE
@@ -211741,7 +211662,7 @@ trüben/~~NVdfij78ecGH # +verb reading (was noun-only)
 trügen/~~VifjcG
 tupfen/~~VdifjecG
 turnen/~~NVdfijecGH # +verb reading (was noun-only)
-unfroh/~~NYE
+unfroh/~~NYE!
 ungarn/~~NHA
 verein/~~NY0HXMZ
 verhau/~~NY0H
@@ -212209,7 +212130,7 @@ verachten/~~N78defijcGH
 verbluten/~~VdifjecG
 verderben/~~Vdifjec
 verduften/~~NdefijcGH
-verdübeln/~~NYE
+verdübeln/~~NYE!
 verewigen/~~Ndfij78ecGHn
 verfetten/~~N78defijcGH
 verflogen/~~JOQRSTqG
@@ -212245,7 +212166,7 @@ vernarben/~~Vdifj78ecGn
 vernebeln/~~Ndfij78eGHcnA
 vernetzen/~~Ndfij78ecGHnx
 vernieten/~~Vdifj78ecG
-verpixeln/~~NYE
+verpixeln/~~NYE!
 verpuppen/~~Ndfij78ecGHn
 verrieben/~~JOQRSTq
 verrissen/~~JOQRSTqG
@@ -212296,7 +212217,7 @@ urslawisch/~~JOQRSTq
 ursächlich/~~JOQRSTq
 verabreden/~~N78defijcGH
 veranlagen/~~Ndfij78ecGHn
-verbasteln/~~NYE
+verbasteln/~~NYE!
 verblichen/~~JOQRSTqG
 verbuddeln/~~NHA
 verbummeln/~~NdfijeGHcnA
@@ -215074,7 +214995,7 @@ wirtschaftlichkeitsgutachten/~~NH
 prämonstratenserniederlassung/~~FY
 rasterelektronenmikroskopisch/~~JOQRSTq
 rehabilitierungsvoraussetzung/~~FY
-sechshundertundzwanzigtausend/~~NYE
+sechshundertundzwanzigtausend/~~NYE!
 sekundarschullehrerausbildung/~~FA
 selbstverpflichtungserklärung/~~FY
 systematisierungsbestrebungen/~~Vj
@@ -215235,32 +215156,32 @@ magst/~~V
 riete/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 rätst/~~V
 wägte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-büxte/~~NYE
+büxte/~~NYE!
 ehest/~~JOQRSTq
 feist/~~JOQRSTq
-gipse/~~NYE
+gipse/~~NYE!
 grade/~~NE
 linke/~~JqrQRST
 musst/~~V
 neuer/~~NYJr
-pimpe/~~NYE
+pimpe/~~NYE!
 safte/~~N
-tagge/~~NYE
+tagge/~~NYE!
 forte/~~NA
 gurte/~~NE
 heute/~~rh  # adverb today
-joine/~~NYE
+joine/~~NYE!
 likst/~~V
-likte/~~NYE
+likte/~~NYE!
 norme/~~NE
 pikse/~~NE
 pikst/~~V
 prost/~~NY
 pulst/~~V
 pulte/~~NE
-rucke/~~NYE
+rucke/~~NYE!
 solle/~~NEJ # +adjective reading (was noun-only)
-viere/~~NYE
+viere/~~NYE!
 verrat/~~NY0HX
 glaser/~~FEKLH
 statut/~~NY0H
@@ -215329,34 +215250,34 @@ giltst/~~V
 heißte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 hältst/~~V # retag: verb form, was noun (corpus-mined)
 stieße/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-blaffe/~~NYE
-cachte/~~NYE
+blaffe/~~NYE!
+cachte/~~NYE!
 greise/~~JqrQRST
 kackte/~~NE
 kannst/~~Vj
-kiekse/~~NYE
+kiekse/~~NYE!
 luchse/~~NE
 längst/~~JOQRSTq
-mampfe/~~NYE
+mampfe/~~NYE!
 nullte/~~JqrQRST
-pimpte/~~NYE
-ploppe/~~NYE
-shoppe/~~NYE
-spawne/~~NYE
+pimpte/~~NYE!
+ploppe/~~NYE!
+shoppe/~~NYE!
+spawne/~~NYE!
 valide/~~JqrQRST
 willst/~~V
 addest/~~V
-addete/~~NYE
+addete/~~NYE!
 cachst/~~V
 joinst/~~V
-jointe/~~NYE
+jointe/~~NYE!
 kackst/~~V
 kämest/~~V
 lägest/~~V
-patche/~~NYE
+patche/~~NYE!
 pimpst/~~V
 ruckst/~~V
-ruckte/~~NYE
+ruckte/~~NYE!
 tütest/~~V
 unweit/~~RJOQRSTqh
 verweis/~~NY780XMZ
@@ -215398,36 +215319,36 @@ vergabe/~~NE
 fichtst/~~V
 präzise/~~JUWq9rQRST
 trittst/~~V
-abkalbe/~~NYE
-bespare/~~NYE
-blaffte/~~NYE
-chillte/~~NYE
+abkalbe/~~NYE!
+bespare/~~NYE!
+blaffte/~~NYE!
+chillte/~~NYE!
 errätst/~~NA
-erzeige/~~NYE
+erzeige/~~NYE!
 gerätst/~~JOQRSTVgj
-hijacke/~~NYE
-kokelte/~~NYE
+hijacke/~~NYE!
+kokelte/~~NYE!
 kältest/~~JOQRSTq
-mampfte/~~NYE
-patchte/~~NYE
-pflocke/~~NYE
-ploppte/~~NYE
-schrote/~~NYE
-taserte/~~NYE
+mampfte/~~NYE!
+patchte/~~NYE!
+pflocke/~~NYE!
+ploppte/~~NYE!
+schrote/~~NYE!
+taserte/~~NYE!
 wenigst/~~JOQRSTq
 zurätst/~~NA
-anfunke/~~NYE
+anfunke/~~NYE!
 blaffst/~~V
 chillst/~~V
 flankte/~~NA
 geniest/~~JOQRSTVgj
 mampfst/~~V
-patchst/~~NYE
+patchst/~~NYE!
 ploppst/~~V
 spawnst/~~V
-switche/~~NYE
-uploade/~~NYE
-verpiss/~~NYE
+switche/~~NYE!
+uploade/~~NYE!
+verpiss/~~NYE!
 verquer/~~NYOQRST
 wuschst/~~NA
 würfest/~~V
@@ -215452,61 +215373,61 @@ kontrast/~~NY0HXM
 schmiede/~~NE
 schweige/~~NE
 flichtst/~~NA
-abkalbte/~~NYE
-abluchse/~~NYE
-ablängte/~~NYE
-abrückte/~~NYE
-aufpoppe/~~NYE
-beflocke/~~NYE
-daddelte/~~NYE
-doubelte/~~NYE
-dreschte/~~NYE
-einlange/~~NYE
-entbanne/~~NYE
+abkalbte/~~NYE!
+abluchse/~~NYE!
+ablängte/~~NYE!
+abrückte/~~NYE!
+aufpoppe/~~NYE!
+beflocke/~~NYE!
+daddelte/~~NYE!
+doubelte/~~NYE!
+dreschte/~~NYE!
+einlange/~~NYE!
+entbanne/~~NYE!
 enträtst/~~NA
 erhältst/~~NA
 erkannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 ernannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-erzeigte/~~NYE
-evidiere/~~NYE
+erzeigte/~~NYE!
+evidiere/~~NYE!
 falscher/~~JqrOQRST
-feintune/~~NYE
+feintune/~~NYE!
 gedachte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-guthieße/~~NYE
-launchte/~~NYE
-malochte/~~NYE
-matschte/~~NYE
+guthieße/~~NYE!
+launchte/~~NYE!
+malochte/~~NYE!
+matschte/~~NYE!
 mitmagst/~~NA
 mittatst/~~NA
-müffelte/~~NYE
-pflockte/~~NYE
+müffelte/~~NYE!
+pflockte/~~NYE!
 schiltst/~~NA
-schrotte/~~NYE
+schrotte/~~NYE!
 zuhältst/~~NA
-zumüllte/~~NYE
-anbrumme/~~NYE
+zumüllte/~~NYE!
+anbrumme/~~NYE!
 anfunkst/~~V
-anfunkte/~~NYE
-anheulte/~~NYE
-auftusse/~~NYE
-auskrame/~~NYE
-clinchst/~~NYE
-clinchte/~~NYE
+anfunkte/~~NYE!
+anheulte/~~NYE!
+auftusse/~~NYE!
+auskrame/~~NYE!
+clinchst/~~NYE!
+clinchte/~~NYE!
 einkamst/~~V
 erzeigst/~~V
 hijackst/~~V
-hijackte/~~NYE
+hijackte/~~NYE!
 kontakte/~~NE
-krauchte/~~NYE
-matschst/~~NYE
+krauchte/~~NYE!
+matschst/~~NYE!
 pflockst/~~V
-schriebe/~~NYE
-supporte/~~NYE
-switchst/~~NYE
-switchte/~~NYE
-tinderte/~~NYE
+schriebe/~~NYE!
+supporte/~~NYE!
+switchst/~~NYE!
+switchte/~~NYE!
+tinderte/~~NYE!
 windelst/~~V
-windelte/~~NYE
+windelte/~~NYE!
 fleischer/~~FEKLH
 schweiger/~~FEKLH
 sechziger/~~FEKLH
@@ -215529,93 +215450,93 @@ prostatae/~~NA
 teilnahme/~~NE
 zusprache/~~NE
 übernahme/~~NE
-abschinde/~~NYE
-ankokelte/~~NYE
-aufpoppte/~~NYE
-boulderte/~~NYE
+abschinde/~~NYE!
+ankokelte/~~NYE!
+aufpoppte/~~NYE!
+boulderte/~~NYE!
 einhältst/~~NA
-einkühlte/~~NYE
-einlangte/~~NYE
+einkühlte/~~NYE!
+einlangte/~~NYE!
 enthältst/~~NA
 entsandte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 ethischer/~~JqrOQRST
-evidierte/~~NYE
+evidierte/~~NYE!
 herhältst/~~NA
 hinhältst/~~NA
 hinwillst/~~NA
 integerst/~~JOQRSTq
-lukrierte/~~NYE
+lukrierte/~~NYE!
 maßhältst/~~NA
 missrätst/~~NA
 mitdarfst/~~V
 mithältst/~~NA
 mitkannst/~~V
-mitsuchte/~~NYE
+mitsuchte/~~NYE!
 mitwillst/~~NA
-nachlebte/~~NYE
-performte/~~NYE
-ranführte/~~NYE
-reinfahre/~~NYE
-reinhörte/~~NYE
-schrappte/~~NYE
+nachlebte/~~NYE!
+performte/~~NYE!
+ranführte/~~NYE!
+reinfahre/~~NYE!
+reinhörte/~~NYE!
+schrappte/~~NYE!
 schwächst/~~JOQRSTq
 umbrachte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 umtrittst/~~NA
-vollsaute/~~NYE
+vollsaute/~~NYE!
 vorhältst/~~NA
 weghältst/~~NA
-wuschelte/~~NYE
+wuschelte/~~NYE!
 anbrummst/~~V
-anbrummte/~~NYE
+anbrummte/~~NYE!
 anlüftest/~~V
-anlüftete/~~NYE
-anschubse/~~NYE
-anschubst/~~NYE
+anlüftete/~~NYE!
+anschubse/~~NYE!
+anschubst/~~NYE!
 aufbeugst/~~V
 aufpoppst/~~V
-aufstörte/~~NYE
+aufstörte/~~NYE!
 ausfandst/~~V
 auskramst/~~V
 beflockst/~~V
-bretterte/~~NYE
+bretterte/~~NYE!
 entbannst/~~V
 evidierst/~~V
 feintunst/~~V
 friemelst/~~V
-friemelte/~~NYE
-lautierte/~~NYE
-longierte/~~NYE
+friemelte/~~NYE!
+lautierte/~~NYE!
+longierte/~~NYE!
 rannahmst/~~V
 rauskamst/~~V
 reingabst/~~V
-rumeierte/~~NYE
+rumeierte/~~NYE!
 rumflogst/~~V
-rumhackte/~~NYE
-rumheulte/~~NYE
-rumtanzte/~~NYE
-sautierte/~~NYE
+rumhackte/~~NYE!
+rumheulte/~~NYE!
+rumtanzte/~~NYE!
+sautierte/~~NYE!
 umheftest/~~V
-umheftete/~~NYE
-vertätest/~~NYE
-vorzählte/~~NYE
-wegzählte/~~NYE
+umheftete/~~NYE!
+vertätest/~~NYE!
+vorzählte/~~NYE!
+wegzählte/~~NYE!
 oberzeller/~~FEKLH
 moçambique/~~NYEH
 dépendance/~~NYE
 résistance/~~NYE
 dranhältst/~~NA
-ablästerte/~~NYE
-abschramme/~~NYE
+ablästerte/~~NYE!
+abschramme/~~NYE!
 abszediere/~~NE
-anfunkelte/~~NYE
-aufkratzte/~~NYE
-auftakelte/~~NYE
-auscheckte/~~NYE
-auszischte/~~NYE
+anfunkelte/~~NYE!
+aufkratzte/~~NYE!
+auftakelte/~~NYE!
+auscheckte/~~NYE!
+auszischte/~~NYE!
 dabehältst/~~NA
 dazukannst/~~V
-dazuzählte/~~NYE
-einradelte/~~NYE
+dazuzählte/~~NYE!
+einradelte/~~NYE!
 eintrittst/~~V
 entbrannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 fernhältst/~~NA
@@ -215637,34 +215558,34 @@ wegtrittst/~~NA
 widerrätst/~~NA
 zertrittst/~~NA
 übelwillst/~~NA
-abrubbelte/~~NYE
-absiedelte/~~NYE
-ampèresche/~~NYE
-anbelferte/~~NYE
-andonnerte/~~NYE
-anmarkerte/~~NYE
-antatschte/~~NYE
+abrubbelte/~~NYE!
+absiedelte/~~NYE!
+ampèresche/~~NYE!
+anbelferte/~~NYE!
+andonnerte/~~NYE!
+anmarkerte/~~NYE!
+antatschte/~~NYE!
 antoastest/~~V
-antoastete/~~NYE
-auflevelte/~~NYE
+antoastete/~~NYE!
+auflevelte/~~NYE!
 ausfindest/~~V
-auskittete/~~NYE
-ausknockte/~~NYE
+auskittete/~~NYE!
+ausknockte/~~NYE!
 aussegnest/~~V
 draufkamst/~~V
 enthaftest/~~V
 erzüchtest/~~V
 erzüchtete/~~V # retag: finite verb form, was noun (corpus-mined)
 genugtatst/~~V
-hoppnahmst/~~NYE
-nachhältst/~~NYE
+hoppnahmst/~~NYE!
+nachhältst/~~NYE!
 rauskämest/~~V
-rausnahmst/~~NYE
-reinfuhrst/~~NYE
-reinnahmst/~~NYE
-reinwarfst/~~NYE
+rausnahmst/~~NYE!
+reinfuhrst/~~NYE!
+reinnahmst/~~NYE!
+reinwarfst/~~NYE!
 trichterst/~~V
-verkantest/~~NYE
+verkantest/~~NYE!
 pustertaler/~~FEKLH
 schleswiger/~~FEKLH
 wuppertaler/~~FEKLH
@@ -215690,51 +215611,51 @@ umhinkannst/~~V
 universaler/~~JqrOQRST
 unterhältst/~~NA
 abschrammst/~~V
-abschrammte/~~NYE
+abschrammte/~~NYE!
 achthättest/~~V
-ampèreschem/~~NYE
-ampèrescher/~~NYE
-ampèresches/~~NYE
+ampèreschem/~~NYE!
+ampèrescher/~~NYE!
+ampèresches/~~NYE!
 herabkannst/~~V
 herandarfst/~~V
 herankannst/~~V
 heranwillst/~~NA
-losmüsstest/~~NYE
+losmüsstest/~~NYE!
 näherkämest/~~V # retag: preterite stem, was noun (hunspell SFX Z)
-rausfindest/~~NYE
-rausfändest/~~NYE
-rauswindest/~~NYE
-reinfindest/~~NYE
-reingerätst/~~NYE
+rausfindest/~~NYE!
+rausfändest/~~NYE!
+rauswindest/~~NYE!
+reinfindest/~~NYE!
+reingerätst/~~NYE!
 verwurstest/~~V
 durchtrittst/~~NA
 untertänigst/~~JOQRSTq
 verbittertst/~~JOQRSTq
 dazudichtest/~~N
-entfreundest/~~NYE
+entfreundest/~~NYE!
 heraufwillst/~~NA
-herausrochst/~~NYE
+herausrochst/~~NYE!
 hineindarfst/~~V
-insinuierest/~~NYE
-kaputtgingst/~~NYE
-losschnittst/~~NYE
+insinuierest/~~NYE!
+kaputtgingst/~~NYE!
+losschnittst/~~NYE!
 querdachtest/~~NYE
-reingerietst/~~NYE
-umschneidest/~~NYE
+reingerietst/~~NYE!
+umschneidest/~~NYE!
 yukatánspecht/~~NYE0HX
-abschlabberte/~~NYE
+abschlabberte/~~NYE!
 gleichnishaft/~~JOQRSTq
-hervorstiegst/~~NYE
+hervorstiegst/~~NYE!
 herüberkannst/~~V
-losschneidest/~~NYE
-nachbelastest/~~NYE
-vorbeihastest/~~NYE
-nachschärftest/~~NYE
-nachsprengtest/~~NYE
-rausschneidest/~~NYE
+losschneidest/~~NYE!
+nachbelastest/~~NYE!
+vorbeihastest/~~NYE!
+nachschärftest/~~NYE!
+nachsprengtest/~~NYE!
+rausschneidest/~~NYE!
 jalapeñofrüchte/~~NYE
-beisammensäßest/~~NYE
-umkennzeichnest/~~NYE
+beisammensäßest/~~NYE!
+umkennzeichnest/~~NYE!
 gegenübertrittst/~~NA
 arbeitsortkonzept/~~NY0HX
 auftankstützpunkt/~~NY0HX
@@ -216532,7 +216453,7 @@ viersektorenstadt/~~NA
 völkerbundspalais/~~NA
 wangenschleimhaut/~~NA
 ähnlichkeitssuche/~~NA
-drittfriedlichste/~~NYE
+drittfriedlichste/~~NYE!
 genauunterrichtet/~~JOQRSTq
 halbsynthetisiert/~~JOQRSTq
 nichtbundeseigene/~~JOQRSTq
@@ -216540,9 +216461,9 @@ projektorientiert/~~JOQRSTUWq
 schülerorientiert/~~JOQRSTUWq
 selbstkonstruiert/~~JOQRSTq
 selbstverschuldet/~~JOQRSTq
-viertfriedlichste/~~NYE
+viertfriedlichste/~~NYE!
 vollautomatisiert/~~JOQRSTq
-zweitfriedlichste/~~NYE
+zweitfriedlichste/~~NYE!
 auseinanderhältst/~~NA
 ausgekundschaftet/~~JOQRSTq
 bauhausinspiriert/~~JOQRSTq
@@ -216563,7 +216484,7 @@ drittpunktlichste/~~JOQRSTq
 drittschlechteste/~~JOQRSTq
 druckluftbetätigt/~~JOQRSTq
 durchgeknallteste/~~JOQRSTq
-durchtelefonierte/~~NYE
+durchtelefonierte/~~NYE!
 echtzeitgesteuert/~~JOQRSTq
 einsynchronisiert/~~JOQRSTq
 einzelfallbasiert/~~JOQRSTq
@@ -216578,10 +216499,10 @@ gruppenorientiert/~~JOQRSTq
 halbleiterbasiert/~~JOQRSTq
 handelsorientiert/~~JOQRSTq
 handhabungssicher/~~JOQRSTq
-heruntertrocknete/~~NYE
-hineinschnüffelte/~~NYE
-hinterherdackelte/~~NYE
-hinunterschraubte/~~NYE
+heruntertrocknete/~~NYE!
+hineinschnüffelte/~~NYE!
+hinterherdackelte/~~NYE!
+hinunterschraubte/~~NYE!
 hochspannungsfest/~~JOQRSTq
 hygieneorientiert/~~JOQRSTq
 höchstentwickelte/~~JOQRSTq
@@ -216645,36 +216566,36 @@ zweitschlechteste/~~JOQRSTq
 überdimensioniert/~~JOQRSTq
 überrepräsentiert/~~JOQRSTq
 überspannungsfest/~~JOQRSTq
-atemberaubendstem/~~NYE
-auseinanderführte/~~NYE
+atemberaubendstem/~~NYE!
+auseinanderführte/~~NYE!
 behördlicherseits/~~NA
-durchtelefonierst/~~NYE
-einhundertundacht/~~NYE
-einhundertundvier/~~NYE
-entlangschlendere/~~NYE
-entlangschlendert/~~NYE
-fehlerhafterweise/~~NYE
-festfleischigstem/~~NYE
-hartfleischigstem/~~NYE
-hartfleischigster/~~NYE
-hartfleischigstes/~~NYE
-herausforderndste/~~NYE
+durchtelefonierst/~~NYE!
+einhundertundacht/~~NYE!
+einhundertundvier/~~NYE!
+entlangschlendere/~~NYE!
+entlangschlendert/~~NYE!
+fehlerhafterweise/~~NYE!
+festfleischigstem/~~NYE!
+hartfleischigstem/~~NYE!
+hartfleischigster/~~NYE!
+hartfleischigstes/~~NYE!
+herausforderndste/~~NYE!
 herumgeschnipselt/~~NA
-hineinschnüffelst/~~NYE
-hinterherdackelst/~~NYE
+hineinschnüffelst/~~NYE!
+hinterherdackelst/~~NYE!
 montagnachmittags/~~NA
 mütterlicherseits/~~r # +adverb reading (was noun-only)
-nachzuschärfendem/~~NYE
-nachzuschärfender/~~NYE
-nachzuschärfendes/~~NYE
+nachzuschärfendem/~~NYE!
+nachzuschärfender/~~NYE!
+nachzuschärfendes/~~NYE!
 nichtsdestominder/~~N
-pseudonymisiertet/~~NYE
-rauszuschneidende/~~NYE
-rüberzukopierende/~~NYE
+pseudonymisiertet/~~NYE!
+rauszuschneidende/~~NYE!
+rüberzukopierende/~~NYE!
 unstrittigerweise/~~NA
-verneunzehnfachst/~~NYE
-weichfleischigste/~~NYE
-wertbeständigstem/~~NYE
+verneunzehnfachst/~~NYE!
+weichfleischigste/~~NYE!
+wertbeständigstem/~~NYE!
 zuallerallerletzt/~~NA
 zwangsassimiliert/~~NA
 abschattungseffekt/~~NY0HX
@@ -217356,11 +217277,11 @@ wohlfühlatmosphäre/~~NA
 zinsabschlagsteuer/~~N
 zivilisationsferne/~~NA
 überlieferungslage/~~NA
-allerkatholischste/~~NYE
+allerkatholischste/~~NYE!
 geheimnisumwittert/~~JOQRSTUWq
 hochsubventioniert/~~JOQRSTq
 nichtphosphoyliert/~~JOQRSTq
-schmeichelhafteste/~~NYE
+schmeichelhafteste/~~NYE!
 selbstverantwortet/~~JOQRSTq
 vollsynchronisiert/~~JOQRSTq
 zielgruppengerecht/~~JOQRSTUWq
@@ -217399,7 +217320,7 @@ flügelstabilisiert/~~JOQRSTq
 freizeitorientiert/~~JOQRSTq
 geburtenschwächste/~~JOQRSTq
 grundschulgeeignet/~~JOQRSTq
-herniederprasselte/~~NYE
+herniederprasselte/~~NYE!
 hineingeschliddert/~~JOQRSTq
 jenseitsorientiert/~~JOQRSTq
 karriereorientiert/~~JOQRSTq
@@ -217450,7 +217371,7 @@ verkürzungsbedingt/~~JOQRSTq
 vollzugsorientiert/~~JOQRSTq
 voraussetzungshaft/~~JOQRSTq
 vorkaufsberechtigt/~~JOQRSTq
-vorkonfektionierte/~~NYE
+vorkonfektionierte/~~NYE!
 vorurteilsbehaftet/~~JOQRSTq
 vorzeichenbehaftet/~~JOQRSTq
 waschmaschinenfest/~~JOQRSTq
@@ -217463,40 +217384,40 @@ zusammengestoppelt/~~JOQRSTq
 zustandsorientiert/~~JOQRSTq
 zwangskonfrontiert/~~JOQRSTq
 zwangsverpflichtet/~~JOQRSTq
-allerglücklichstem/~~NYE
-allerglücklichster/~~NYE
-auseinanderstellst/~~NYE
-auseinanderstellte/~~NYE
+allerglücklichstem/~~NYE!
+allerglücklichster/~~NYE!
+auseinanderstellst/~~NYE!
+auseinanderstellte/~~NYE!
 aussagekräftigstem/~~N
-auszunivellierende/~~NYE
-drittfriedlichstem/~~NYE
-drittfriedlichster/~~NYE
-einhundertundsechs/~~NYE
-entlangschlenderst/~~NYE
-entlangschlenderte/~~NYE
+auszunivellierende/~~NYE!
+drittfriedlichstem/~~NYE!
+drittfriedlichster/~~NYE!
+einhundertundsechs/~~NYE!
+entlangschlenderst/~~NYE!
+entlangschlenderte/~~NYE!
 freitagnachmittags/~~NA
-gewinnbringendstem/~~NYE
-herausforderndstem/~~NYE
-herausforderndster/~~NYE
-herausforderndstes/~~NYE
-hineinschnüffeltet/~~NYE
-hinunterschraubtet/~~NYE
-kontinuierlichstem/~~NYE
-neunundneunzigstem/~~NYE
+gewinnbringendstem/~~NYE!
+herausforderndstem/~~NYE!
+herausforderndster/~~NYE!
+herausforderndstes/~~NYE!
+hineinschnüffeltet/~~NYE!
+hinunterschraubtet/~~NYE!
+kontinuierlichstem/~~NYE!
+neunundneunzigstem/~~NYE!
 nichtsdestoweniger/~~N
 samstagnachmittags/~~NA
-selbstbestimmterem/~~NYE
-selbstbestimmteste/~~NYE
+selbstbestimmterem/~~NYE!
+selbstbestimmteste/~~NYE!
 sonntagnachmittags/~~NA
-umzukennzeichnende/~~NYE
+umzukennzeichnende/~~NYE!
 unverschämterweise/~~NA
-viertfriedlichstem/~~NYE
-viertfriedlichster/~~NYE
-weichfleischigstem/~~NYE
-weichfleischigster/~~NYE
-weichfleischigstes/~~NYE
-zweitfriedlichstem/~~NYE
-zweitfriedlichster/~~NYE
+viertfriedlichstem/~~NYE!
+viertfriedlichster/~~NYE!
+weichfleischigstem/~~NYE!
+weichfleischigster/~~NYE!
+weichfleischigstes/~~NYE!
+zweitfriedlichstem/~~NYE!
+zweitfriedlichster/~~NYE!
 achtzehnbittengebet/~~NY0HX
 aufforstungsprojekt/~~NY0HX
 ausstrahlungsgebiet/~~NY0HX
@@ -218100,18 +218021,18 @@ zweitumfangreichste/~~JOQRSTq
 überlastungsbedingt/~~JOQRSTq
 überspannungssicher/~~JOQRSTq
 überzeugungsstärker/~~JOQRSTq
-allerkatholischstem/~~NYE
-allerkatholischster/~~NYE
-allerschrecklichste/~~NYE
+allerkatholischstem/~~NYE!
+allerkatholischster/~~NYE!
+allerschrecklichste/~~NYE!
 dienstagnachmittags/~~NA
-kundenzentrierteste/~~NYE
-magenfreundlichstem/~~NYE
+kundenzentrierteste/~~NYE!
+magenfreundlichstem/~~NYE!
 mittwochnachmittags/~~NA
-schmeichelhaftestem/~~NYE
-selbstbestimmtestem/~~NYE
-selbstbestimmtestes/~~NYE
-umweltbelastendstem/~~NYE
-unerklärlicherweise/~~NYE
+schmeichelhaftestem/~~NYE!
+selbstbestimmtestem/~~NYE!
+selbstbestimmtestes/~~NYE!
+umweltbelastendstem/~~NYE!
+unerklärlicherweise/~~NYE!
 ungewöhnlicherweise/~~NA
 unzutreffenderweise/~~NA
 aussendegottesdienst/~~NY0HX
@@ -218538,7 +218459,7 @@ vollmachtsstimmrecht/~~NA
 vulkanisierwerkstatt/~~NA
 waldschlößchenbrücke/~~NA
 zeitschriftenbranche/~~NA
-allerinteressanteste/~~NYE
+allerinteressanteste/~~NYE!
 richtlinienüberwacht/~~JOQRSTq
 selbsterwirtschaftet/~~JOQRSTq
 abbauratenkorrigiert/~~JOQRSTq
@@ -218592,17 +218513,17 @@ wasserdampfbehandelt/~~JOQRSTq
 wasserdampfgesättigt/~~JOQRSTq
 zwangsbewirtschaftet/~~JOQRSTqG
 überflutungstolerant/~~JOQRSTq
-allerschrecklichstem/~~NYE
-allerschrecklichster/~~NYE
-allerschrecklichstes/~~NYE
-auswirkungsreichstem/~~NYE
-durchzudeklinierende/~~NYE
+allerschrecklichstem/~~NYE!
+allerschrecklichster/~~NYE!
+allerschrecklichstes/~~NYE!
+auswirkungsreichstem/~~NYE!
+durchzudeklinierende/~~NYE!
 entlangschlendertest/~~V
-kundenzentriertestem/~~NYE
-kundenzentriertestes/~~NYE
-wiederzuvermarktende/~~NYE
-zurückzuübernehmende/~~NYE
-überzeugungsstärkste/~~NYE
+kundenzentriertestem/~~NYE!
+kundenzentriertestes/~~NYE!
+wiederzuvermarktende/~~NYE!
+zurückzuübernehmende/~~NYE!
+überzeugungsstärkste/~~NYE!
 evakuierungstransport/~~NY0HX
 fettsäurefolgeprodukt/~~NY0HX
 fleischerfachgeschäft/~~NY0HX
@@ -218994,25 +218915,25 @@ wettbewerbsorientiert/~~JOQRSTq
 wirtschaftsorientiert/~~JOQRSTq
 wirtschaftsschwächste/~~JOQRSTq
 zielgruppenorientiert/~~JOQRSTq
-allerinteressantestem/~~NYE
-allerinteressantester/~~NYE
+allerinteressantestem/~~NYE!
+allerinteressantester/~~NYE!
 donnerstagnachmittags/~~NA
-durchzudeklinierendem/~~NYE
-durchzudeklinierender/~~NYE
-durchzudeklinierendes/~~NYE
-familienfreundlichste/~~NYE
-sachverständigenseits/~~NYE
+durchzudeklinierendem/~~NYE!
+durchzudeklinierender/~~NYE!
+durchzudeklinierendes/~~NYE!
+familienfreundlichste/~~NYE!
+sachverständigenseits/~~NYE!
 strahlwassergeschützt/~~NA
 vorausschauenderweise/~~NA
-wiederzuvermarktendem/~~NYE
-wiederzuvermarktender/~~NYE
-wiederzuvermarktendes/~~NYE
-zurückzuübernehmendem/~~NYE
-zurückzuübernehmender/~~NYE
-zurückzuübernehmendes/~~NYE
-überzeugungsstärkstem/~~NYE
-überzeugungsstärkster/~~NYE
-überzeugungsstärkstes/~~NYE
+wiederzuvermarktendem/~~NYE!
+wiederzuvermarktender/~~NYE!
+wiederzuvermarktendes/~~NYE!
+zurückzuübernehmendem/~~NYE!
+zurückzuübernehmender/~~NYE!
+zurückzuübernehmendes/~~NYE!
+überzeugungsstärkstem/~~NYE!
+überzeugungsstärkster/~~NYE!
+überzeugungsstärkstes/~~NYE!
 benachteiligungsverbot/~~NY0HX
 braunborstengürteltier/~~NY0HX
 glattstellungsgeschäft/~~NY0HX
@@ -219248,10 +219169,10 @@ verwitterungsresistent/~~JOQRSTq
 waschmaschinengeeignet/~~JOQRSTq
 wirbelsäulengeschädigt/~~JOQRSTq
 überspannungsgeschützt/~~JOQRSTq
-familienfreundlichstem/~~NYE
-familienfreundlichster/~~NYE
-familienfreundlichstes/~~NYE
-vertrauenerweckendstem/~~NYE
+familienfreundlichstem/~~NYE!
+familienfreundlichster/~~NYE!
+familienfreundlichstes/~~NYE!
+vertrauenerweckendstem/~~NYE!
 benachrichtigungsdienst/~~NY0HX
 bewirtschaftungskonzept/~~NY0HX
 braunkohleschwelprodukt/~~NY0HX
@@ -219394,8 +219315,8 @@ unterbrechungsgesteuert/~~JOQRSTq
 unterschriftsberechtigt/~~JOQRSTq
 verschmutzungsgefährdet/~~JOQRSTq
 wissenschaftsorientiert/~~JOQRSTq
-auseinanderzustellendem/~~NYE
-auseinanderzustellender/~~NYE
+auseinanderzustellendem/~~NYE!
+auseinanderzustellender/~~NYE!
 auseinanderzustellendes/~~NYE
 billigkeitsgesichtspunkt/~~NY0HX
 elektrifizierungsprojekt/~~NY0HX
@@ -219511,10 +219432,10 @@ schreibprozessorientiert/~~JOQRSTq
 vergangenheitsorientiert/~~JOQRSTq
 verständigungsorientiert/~~JOQRSTq
 überschwemmungsgefährdet/~~JOQRSTq
-mitarbeiterfreundlichste/~~NYE
-unternehmungsfreudigstem/~~NYE
-unternehmungsfreudigster/~~NYE
-unternehmungsfreudigstes/~~NYE
+mitarbeiterfreundlichste/~~NYE!
+unternehmungsfreudigstem/~~NYE!
+unternehmungsfreudigster/~~NYE!
+unternehmungsfreudigstes/~~NYE!
 aussageverweigerungsrecht/~~NY0HX
 einfachheitsgesichtspunkt/~~NY0HX
 hauptüberwinterungsgebiet/~~NY0HX
@@ -219588,9 +219509,9 @@ modernisierungsorientiert/~~JOQRSTq
 persönlichkeitsorientiert/~~JOQRSTq
 vorsteuerabzugsberechtigt/~~JOQRSTq
 zustellungsbevollmächtigt/~~JOQRSTq
-mitarbeiterfreundlichstem/~~NYE
-mitarbeiterfreundlichster/~~NYE
-mitarbeiterfreundlichstes/~~NYE
+mitarbeiterfreundlichstem/~~NYE!
+mitarbeiterfreundlichster/~~NYE!
+mitarbeiterfreundlichstes/~~NYE!
 antiislamisierungskongress/~~NY0X
 desoxynukleosidtriphosphat/~~NYHX
 desoxynukleotidtriphosphat/~~NYHX
@@ -219725,156 +219646,156 @@ restriktionsfragmentlängenpolymorphismus/~~NMA
 neue/~~NErZ # +adverb reading (was noun-only)
 geht/~~VtjG
 nato/~~NA
-blob/~~NYE
+blob/~~NYE!
 from/~~NYrE # +adverb reading (was noun-only)
 alte/~~NE
 oecd/~~N
-psml/~~NYE
-wrap/~~NYEH
-date/~~NYEH
+psml/~~NYE!
+wrap/~~NYEH!
+date/~~NYEH!
 rote/~~NE
 with/~~NYrE # +adverb reading (was noun-only)
-wikt/~~NYE
-undp/~~NYE
-true/~~NYE
+wikt/~~NYE!
+undp/~~NYE!
+true/~~NYE!
 wäre/~~Vt
 lich/~~JOQRSTq
-life/~~NYE
+life/~~NYE!
 gute/~~NEZ
-wiwo/~~NYE
-dosb/~~NYE
+wiwo/~~NYE!
+dosb/~~NYE!
 arme/~~NYE
-mori/~~NYE
-food/~~NYE
-bmbf/~~NYE
-home/~~NYE
-apud/~~NYE
-bsha/~~NYE
-mopo/~~NYE
-adfc/~~NYE
-bvbw/~~NYE
-book/~~NYEZ
-baer/~~NYE
-core/~~NYE
-eius/~~NYE
+mori/~~NYE!
+food/~~NYE!
+bmbf/~~NYE!
+home/~~NYE!
+apud/~~NYE!
+bsha/~~NYE!
+mopo/~~NYE!
+adfc/~~NYE!
+bvbw/~~NYE!
+book/~~NYEZ!
+baer/~~NYE!
+core/~~NYE!
+eius/~~NYE!
 that/~~NYrE # +adverb reading (was noun-only)
 eugh/~~NA
-bmwi/~~NYE
-aspx/~~NYE
-dmoz/~~NYE
-size/~~NYE
-gawc/~~NYE
-giss/~~NYE
+bmwi/~~NYE!
+aspx/~~NYE!
+dmoz/~~NYE!
+size/~~NYE!
+gawc/~~NYE!
+giss/~~NYE!
 nasa/~~N
-donb/~~NYE
-lead/~~NYE
-creg/~~NYE
+donb/~~NYE!
+lead/~~NYE!
+creg/~~NYE!
 gmbh/~~NA
-town/~~NYE
-zeno/~~NYE
-oeko/~~NYE
-gnds/~~NYE
-ertl/~~NYE
-tbls/~~NYE
-ndss/~~NYE
-kyiv/~~NYE
-bksm/~~NYE
-hwwi/~~NYE
-dguv/~~NYE
-toes/~~NYE
-mdpi/~~NYE
+town/~~NYE!
+zeno/~~NYE!
+oeko/~~NYE!
+gnds/~~NYE!
+ertl/~~NYE!
+tbls/~~NYE!
+ndss/~~NYE!
+kyiv/~~NYE!
+bksm/~~NYE!
+hwwi/~~NYE!
+dguv/~~NYE!
+toes/~~NYE!
+mdpi/~~NYE!
 lose/~~NE
-csis/~~NYE
-lant/~~NYE
-aevi/~~NYE
-nzjh/~~NYE
-bmwk/~~NYE
-bmuv/~~NYE
-izpb/~~NYE
-race/~~NYE
-bamf/~~NYE
-site/~~NYE
-pnas/~~NYE
+csis/~~NYE!
+lant/~~NYE!
+aevi/~~NYE!
+nzjh/~~NYE!
+bmwk/~~NYE!
+bmuv/~~NYE!
+izpb/~~NYE!
+race/~~NYE!
+bamf/~~NYE!
+site/~~NYE!
+pnas/~~NYE!
 homo/~~NMZA
 ruft/~~VG # +verb reading (was noun-only)
 mrna/~~N
 olaf/~~NHA
-past/~~NYE
-desc/~~NYE
-bwde/~~NYE
-tire/~~NYE
-zlvr/~~NYE
-dram/~~NYE
+past/~~NYE!
+desc/~~NYE!
+bwde/~~NYE!
+tire/~~NYE!
+zlvr/~~NYE!
+dram/~~NYE!
 carl/~~NHA
-syid/~~NYE
-eyid/~~NYE
-unit/~~NYE
-heat/~~NYE
-rser/~~NYE
+syid/~~NYE!
+eyid/~~NYE!
+unit/~~NYE!
+heat/~~NYE!
+rser/~~NYE!
 wege/~~NEMZ
-move/~~NYE
-aero/~~NYE
-poll/~~NYE
-bibb/~~NYE
-wipo/~~NYE
-rule/~~NYE
-rise/~~NYE
-prol/~~NYE
-plat/~~NYE
-immo/~~NYE
-birl/~~NYE
-berl/~~NYE
-proh/~~NYE
-kobv/~~NYE
-webm/~~NYE
-adis/~~NYE
-aamt/~~NYE
+move/~~NYE!
+aero/~~NYE!
+poll/~~NYE!
+bibb/~~NYE!
+wipo/~~NYE!
+rule/~~NYE!
+rise/~~NYE!
+prol/~~NYE!
+plat/~~NYE!
+immo/~~NYE!
+birl/~~NYE!
+berl/~~NYE!
+proh/~~NYE!
+kobv/~~NYE!
+webm/~~NYE!
+adis/~~NYE!
+aamt/~~NYE!
 mdax/~~NA
-sdax/~~NYE
-says/~~NYE
-huge/~~NYE
-trpg/~~NYE
-dfpa/~~NYE
-docs/~~NYE
-hlrn/~~NYE
-prod/~~NYE
-bsbe/~~NYE
-arts/~~NYEMZ
-bolt/~~NYE
-fine/~~NYE
-ˈmɪŋ/~~NYE
+sdax/~~NYE!
+says/~~NYE!
+huge/~~NYE!
+trpg/~~NYE!
+dfpa/~~NYE!
+docs/~~NYE!
+hlrn/~~NYE!
+prod/~~NYE!
+bsbe/~~NYE!
+arts/~~NYEMZ!
+bolt/~~NYE!
+fine/~~NYE!
+ˈmɪŋ/~~NYE!
 orte/~~NE
-attr/~~NYE
-card/~~NYE
-stat/~~NYE
-holy/~~NYE
-shit/~~NYE
-lemo/~~NYE
-tmfm/~~NYE
-bdcb/~~NYE
+attr/~~NYE!
+card/~~NYE!
+stat/~~NYE!
+holy/~~NYE!
+shit/~~NYE!
+lemo/~~NYE!
+tmfm/~~NYE!
+bdcb/~~NYE!
 pdfs/~~N
 rege/~~NE
-dult/~~NYE
+dult/~~NYE!
 riem/~~NYHz
-ride/~~NYE
-func/~~NYE
-caps/~~NYE
-zvbl/~~NYE
-luth/~~NYE
-bsfb/~~NYE
-edit/~~NYEH
-aten/~~Vj
-make/~~NYE
-flag/~~NYE
-quam/~~NYE
-heff/~~NYE
-rays/~~NYE
-dtvw/~~NYE
-bwvi/~~NYE
-affi/~~NYE
-work/~~NYE
-xfel/~~NYE
-vdek/~~NYE
+ride/~~NYE!
+func/~~NYE!
+caps/~~NYE!
+zvbl/~~NYE!
+luth/~~NYE!
+bsfb/~~NYE!
+edit/~~NYEH!
+aten/~~Vj!
+make/~~NYE!
+flag/~~NYE!
+quam/~~NYE!
+heff/~~NYE!
+rays/~~NYE!
+dtvw/~~NYE!
+bwvi/~~NYE!
+affi/~~NYE!
+work/~~NYE!
+xfel/~~NYE!
+vdek/~~NYE!
 liegt/~~VjG
 große/~~NEJ # +adjective reading (was noun-only)
 viele/~~4Jqr # many (adjective)
@@ -219883,247 +219804,247 @@ neuen/~~VfjG
 siehe/~~Vh  # imperative of sehen
 lange/~~NEJ # +adjective reading (was noun-only)
 kommt/~~VjG
-floor/~~NYE
+floor/~~NYE!
 neues/~~N
 infos/~~N
-world/~~NYE
+world/~~NYE!
 roten/~~Vfj
-width/~~NYE
+width/~~NYE!
 zieht/~~VjG
-sites/~~NYE
+sites/~~NYE!
 nennt/~~VjG
 darin/~~r
 gross/~~JOQRSTUWq # retag: adjective, was noun/verb (corpus-mined)
 gruen/~~Vj
 werke/~~NE
-regob/~~NYE
+regob/~~NYE!
 rotem/~~N
 werde/~~Vtij # 1st person singular of werden
 etwas/~~I
 focus/~~NA
-fowid/~~NYE
-remid/~~NYE
+fowid/~~NYE!
+remid/~~NYE!
 legte/~~NE
 sahen/~~VijG
-unodc/~~NYE
-topic/~~NYE
+unodc/~~NYE!
+topic/~~NYE!
 kurze/~~NE
-hmjan/~~NYE
-hmfeb/~~NYE
-hmmär/~~NYE
-hmapr/~~NYE
-hmmai/~~NYE
-hmjun/~~NYE
-hmjul/~~NYE
-hmaug/~~NYE
-hmsep/~~NYE
-hmokt/~~NYE
-hmnov/~~NYE
-hmdez/~~NYE
-lmjan/~~NYE
-lmfeb/~~NYE
-lmmär/~~NYE
-lmapr/~~NYE
-lmmai/~~NYE
-lmjun/~~NYE
-lmjul/~~NYE
-lmaug/~~NYE
-lmsep/~~NYE
-lmokt/~~NYE
-lmnov/~~NYE
-lmdez/~~NYE
-nbjan/~~NYE
-nbfeb/~~NYE
-nbmär/~~NYE
-nbapr/~~NYE
-nbmai/~~NYE
-nbjun/~~NYE
-nbjul/~~NYE
-nbaug/~~NYE
-nbsep/~~NYE
-nbokt/~~NYE
-nbnov/~~NYE
-nbdez/~~NYE
-rdjan/~~NYE
-rdfeb/~~NYE
-rdmär/~~NYE
-rdapr/~~NYE
-rdmai/~~NYE
-rdjun/~~NYE
-rdjul/~~NYE
-rdaug/~~NYE
-rdsep/~~NYE
-rdokt/~~NYE
-rdnov/~~NYE
-rddez/~~NYE
-guide/~~NYEH
+hmjan/~~NYE!
+hmfeb/~~NYE!
+hmmär/~~NYE!
+hmapr/~~NYE!
+hmmai/~~NYE!
+hmjun/~~NYE!
+hmjul/~~NYE!
+hmaug/~~NYE!
+hmsep/~~NYE!
+hmokt/~~NYE!
+hmnov/~~NYE!
+hmdez/~~NYE!
+lmjan/~~NYE!
+lmfeb/~~NYE!
+lmmär/~~NYE!
+lmapr/~~NYE!
+lmmai/~~NYE!
+lmjun/~~NYE!
+lmjul/~~NYE!
+lmaug/~~NYE!
+lmsep/~~NYE!
+lmokt/~~NYE!
+lmnov/~~NYE!
+lmdez/~~NYE!
+nbjan/~~NYE!
+nbfeb/~~NYE!
+nbmär/~~NYE!
+nbapr/~~NYE!
+nbmai/~~NYE!
+nbjun/~~NYE!
+nbjul/~~NYE!
+nbaug/~~NYE!
+nbsep/~~NYE!
+nbokt/~~NYE!
+nbnov/~~NYE!
+nbdez/~~NYE!
+rdjan/~~NYE!
+rdfeb/~~NYE!
+rdmär/~~NYE!
+rdapr/~~NYE!
+rdmai/~~NYE!
+rdjun/~~NYE!
+rdjul/~~NYE!
+rdaug/~~NYE!
+rdsep/~~NYE!
+rdokt/~~NYE!
+rdnov/~~NYE!
+rddez/~~NYE!
+guide/~~NYEH!
 echte/~~NE
 einst/~~r
 guten/~~Vfj
-unibe/~~NYE
+unibe/~~NYE!
 pilze/~~NE
 lebte/~~NE
-cuius/~~NYE
+cuius/~~NYE!
 liche/~~NYE
 baute/~~NE
-tungs/~~NYE
+tungs/~~NYE!
 freie/~~NF
 volle/~~NE
 trump/~~NHA
-goods/~~NYE
-lboro/~~NYE
-rbevb/~~NYE
+goods/~~NYE!
+lboro/~~NYE!
+rbevb/~~NYE!
 sinkt/~~VG # +verb reading (was noun-only)
-roads/~~NYE
+roads/~~NYE!
 helle/~~NE
-query/~~NYE
-xhtml/~~NYE
+query/~~NYE!
+xhtml/~~NYE!
 duden/~~Vj
-shjan/~~NYE
-shfeb/~~NYE
-shmär/~~NYE
-shapr/~~NYE
-shmai/~~NYE
-shjun/~~NYE
-shjul/~~NYE
-shaug/~~NYE
-shsep/~~NYE
-shokt/~~NYE
-shnov/~~NYE
-shdez/~~NYE
-lfjan/~~NYE
-lffeb/~~NYE
-lfmär/~~NYE
-lfapr/~~NYE
-lfmai/~~NYE
-lfjun/~~NYE
-lfjul/~~NYE
-lfaug/~~NYE
-lfsep/~~NYE
-lfokt/~~NYE
-lfnov/~~NYE
-lfdez/~~NYE
-minga/~~NYE
-orbis/~~NYE
-house/~~NYE
-river/~~NYE
-itvhh/~~NYE
+shjan/~~NYE!
+shfeb/~~NYE!
+shmär/~~NYE!
+shapr/~~NYE!
+shmai/~~NYE!
+shjun/~~NYE!
+shjul/~~NYE!
+shaug/~~NYE!
+shsep/~~NYE!
+shokt/~~NYE!
+shnov/~~NYE!
+shdez/~~NYE!
+lfjan/~~NYE!
+lffeb/~~NYE!
+lfmär/~~NYE!
+lfapr/~~NYE!
+lfmai/~~NYE!
+lfjun/~~NYE!
+lfjul/~~NYE!
+lfaug/~~NYE!
+lfsep/~~NYE!
+lfokt/~~NYE!
+lfnov/~~NYE!
+lfdez/~~NYE!
+minga/~~NYE!
+orbis/~~NYE!
+house/~~NYE!
+river/~~NYE!
+itvhh/~~NYE!
 anmen/~~Vj
-heise/~~NYEH
-along/~~NYE
-hevet/~~NYE
+heise/~~NYEH!
+along/~~NYE!
+hevet/~~NYE!
 sinen/~~Vj
-medii/~~NYE
+medii/~~NYE!
 sagte/~~NE
-nzüge/~~NYE
-white/~~NYE
-eagle/~~NYE
-mittz/~~NYE
+nzüge/~~NYE!
+white/~~NYE!
+eagle/~~NYE!
+mittz/~~NYE!
 tagte/~~NE
 regte/~~NE
 übten/~~VifjG
 gelbe/~~NE
-drive/~~NYE
-peace/~~NYE
-draft/~~NYE
-study/~~NYE
-enste/~~NYE
+drive/~~NYE!
+peace/~~NYE!
+draft/~~NYE!
+study/~~NYE!
+enste/~~NYE!
 kennt/~~VjG
-globe/~~NYE
+globe/~~NYE!
 guter/~~N
-shift/~~NYE
-unwto/~~NYE
-share/~~NYE
-being/~~NYE
-those/~~NYE
-hoehe/~~NYE
+shift/~~NYE!
+unwto/~~NYE!
+share/~~NYE!
+being/~~NYE!
+those/~~NYE!
+hoehe/~~NYE!
 texte/~~NE
 büßte/~~NE
 sitzt/~~VjG
-watch/~~NYE
+watch/~~NYE!
 holte/~~NE
-today/~~NYE
+today/~~NYE!
 hause/~~Zh # neuter noun das Haus (dative)
-citat/~~NYE
+citat/~~NYE!
 ische/~~NYE
-kieze/~~NYE
-color/~~NYE
+kieze/~~NYE!
+color/~~NYE!
 wehte/~~NE
 inter/~~NYE
 sozio/~~r
-abisz/~~NYE
-dipbt/~~NYE
-shtml/~~NYE
-docid/~~NYE
+abisz/~~NYE!
+dipbt/~~NYE!
+shtml/~~NYE!
+docid/~~NYE!
 roter/~~N
 halle/~~NE
-grand/~~NYEHX
-mcfit/~~NYE
+grand/~~NYEHX!
+mcfit/~~NYE!
 rennt/~~GV # not a noun: no capitalized form
-maakt/~~NYE
-εὐρύς/~~NYE
+maakt/~~NYE!
+εὐρύς/~~NYE!
 eurýs/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 ʕarab/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 ʕerob/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 münch/~~NYE
-foehn/~~NYE
+foehn/~~NYE!
 warme/~~NE
-avjan/~~NYE
-avfeb/~~NYE
-avmär/~~NYE
-avapr/~~NYE
-avmai/~~NYE
-avjun/~~NYE
-avjul/~~NYE
-avaug/~~NYE
-avsep/~~NYE
-avokt/~~NYE
-avnov/~~NYE
-avdez/~~NYE
-haelt/~~NYE
+avjan/~~NYE!
+avfeb/~~NYE!
+avmär/~~NYE!
+avapr/~~NYE!
+avmai/~~NYE!
+avjun/~~NYE!
+avjul/~~NYE!
+avaug/~~NYE!
+avsep/~~NYE!
+avokt/~~NYE!
+avnov/~~NYE!
+avdez/~~NYE!
+haelt/~~NYE!
 rotes/~~N
-black/~~NYE
-award/~~NYEH
+black/~~NYE!
+award/~~NYEH!
 peter/~~NHz
-south/~~NYE
-night/~~NYE
-finta/~~NYE
-rated/~~NYE
-money/~~NYE
-egofm/~~NYE
+south/~~NYE!
+night/~~NYE!
+finta/~~NYE!
+rated/~~NYE!
+money/~~NYE!
+egofm/~~NYE!
 seien/~~VdijeG
-zuege/~~NYE
+zuege/~~NYE!
 autos/~~NMZ
-fuenf/~~NYE
-musin/~~NYE
+fuenf/~~NYE!
+musin/~~NYE!
 david/~~NHA
-games/~~NYE
-τέχνη/~~NYE
-λόγος/~~NYE
+games/~~NYE!
+τέχνη/~~NYE!
+λόγος/~~NYE!
 lógos/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
-vgrdl/~~NYE
-earth/~~NYE
-szeit/~~NYE
-necla/~~NYE
-kelek/~~NYE
-kdoer/~~NYE
+vgrdl/~~NYE!
+earth/~~NYE!
+szeit/~~NYE!
+necla/~~NYE!
+kelek/~~NYE!
+kdoer/~~NYE!
 neuem/~~N
-hspln/~~NYE
-busan/~~NYE
-hamme/~~NYE
-digne/~~NYE
+hspln/~~NYE!
+busan/~~NYE!
+hamme/~~NYE!
+digne/~~NYE!
 meine/~~4
-lücht/~~NYE
-kbrue/~~NYE
+lücht/~~NYE!
+kbrue/~~NYE!
 verdi/~~NH
-nnetz/~~NYE
-about/~~NYE
+nnetz/~~NYE!
+about/~~NYE!
 großen/~~Vfj
 führte/~~NE
 später/~~NYJr
 zweite/~~NE
 kleine/~~NE
-cities/~~NYE
+cities/~~NYE!
 welche/~~4
 unesco/~~N
 lokale/~~NE
@@ -220131,341 +220052,341 @@ folgte/~~NE
 großes/~~N
 großer/~~N
 machte/~~NE
-nowrap/~~NYE
+nowrap/~~NYE!
 dritte/~~NEZ
 lehnte/~~NE
 starke/~~NEJ # +adjective reading (was noun-only)
-nowiki/~~NYE
+nowiki/~~NYE!
 bleibt/~~VG # retag: verb form, was noun (corpus-mined)
 sollte/~~Vt
-munich/~~NYE
+munich/~~NYE!
 könnte/~~NE
-packed/~~NYE
+packed/~~NYE!
 lichen/~~Vdije
 sorgte/~~NE
-europe/~~NYE
-mercer/~~NYE
-salaam/~~NYE
-ohnetz/~~NYE
+europe/~~NYE!
+mercer/~~NYE!
+salaam/~~NYE!
+ohnetz/~~NYE!
 teilte/~~NE
-boerse/~~NYE
+boerse/~~NYE!
 vierte/~~NE
-static/~~NYE
+static/~~NYE!
 zivile/~~NE
-energy/~~NYE
-travel/~~NYE
+energy/~~NYE!
+travel/~~NYE!
 kehrte/~~NE
 großem/~~N
-retail/~~NYE
-acxiom/~~NYE
-origin/~~NYE
+retail/~~NYE!
+acxiom/~~NYE!
+origin/~~NYE!
 langem/~~N
-servat/~~NYE
+servat/~~NYE!
 erhebt/~~VjG
 
 plante/~~NE
 scholz/~~NA
-dejure/~~NYE
-capita/~~NYE
-grosse/~~NYE
+dejure/~~NYE!
+capita/~~NYE!
+grosse/~~NYE!
 future/~~N
-living/~~NYE
+living/~~NYE!
 survey/~~NYrE # +adverb reading (was noun-only)
-oldrbd/~~NYE
-fuehrt/~~NYE
-kununu/~~NYE
-senwaf/~~NYE
-storck/~~NYE
-anzwer/~~NYE
-places/~~NYE
+oldrbd/~~NYE!
+fuehrt/~~NYE!
+kununu/~~NYE!
+senwaf/~~NYE!
+storck/~~NYE!
+anzwer/~~NYE!
+places/~~NYE!
 prägte/~~NE
-stattb/~~NYE
+stattb/~~NYE!
 ferner/~~NYJr
 planck/~~NHA
-tomtom/~~NYE
+tomtom/~~NYE!
 echtem/~~N
 formte/~~NE
-tailed/~~NYE
-flight/~~NYE
-aerial/~~NYE
-dating/~~NYE
+tailed/~~NYE!
+flight/~~NYE!
+aerial/~~NYE!
+dating/~~NYE!
 zielte/~~NE
 blühte/~~NE
 lenkte/~~NE
-srecht/~~NYE
-traegt/~~NYE
+srecht/~~NYE!
+traegt/~~NYE!
 fragte/~~NE
-zoelle/~~NYE
-tcqkok/~~NYE
-scores/~~NYE
-sindex/~~NYE
-victim/~~NYE
-annual/~~NYE
-digest/~~NYE
-credit/~~NYE
-suisse/~~NYE
-render/~~NYE
-fileid/~~NYE
-secret/~~NYE
-loehne/~~NYE
-margin/~~NYE
-cfapps/~~NYE
-sector/~~NYE
-people/~~NYEMZ
-rising/~~NYE
-laeuft/~~NYE
+zoelle/~~NYE!
+tcqkok/~~NYE!
+scores/~~NYE!
+sindex/~~NYE!
+victim/~~NYE!
+annual/~~NYE!
+digest/~~NYE!
+credit/~~NYE!
+suisse/~~NYE!
+render/~~NYE!
+fileid/~~NYE!
+secret/~~NYE!
+loehne/~~NYE!
+margin/~~NYE!
+cfapps/~~NYE!
+sector/~~NYE!
+people/~~NYEMZ!
+rising/~~NYE!
+laeuft/~~NYE!
 goethe/~~NHA
-school/~~NYE
+school/~~NYE!
 angeht/~~GV # not a noun: no capitalized form
 greift/~~VG # +verb reading (was noun-only)
-laesst/~~NYE
-baeume/~~NYE
+laesst/~~NYE!
+baeume/~~NYE!
 tigris/~~NA
 kalten/~~Vfj
-geomap/~~NYE
-seninn/~~NYE
-result/~~NYE
+geomap/~~NYE!
+seninn/~~NYE!
+result/~~NYE!
 junger/~~N
 ischen/~~Vj
-diwali/~~NYE
-pardok/~~NYE
-before/~~NYE
-sunset/~~NYE
-latest/~~NYE
-hqcity/~~NYE
-longer/~~NYE
+diwali/~~NYE!
+pardok/~~NYE!
+before/~~NYE!
+sunset/~~NYE!
+latest/~~NYE!
+hqcity/~~NYE!
+longer/~~NYE!
 langes/~~N
-costar/~~NYE
-koepfe/~~NYE
+costar/~~NYE!
+koepfe/~~NYE!
 moritz/~~NA
-upside/~~NYE
+upside/~~NYE!
 preise/~~NE
-helaba/~~NYE
+helaba/~~NYE!
 untote/~~NE
-drehts/~~NYE
-worlds/~~NYE
-funfte/~~NYE
+drehts/~~NYE!
+worlds/~~NYE!
+funfte/~~NYE!
 braune/~~NE
-haengt/~~NYE
+haengt/~~NYE!
 flache/~~NE
-comedy/~~NYE
-dining/~~NYE
+comedy/~~NYE!
+dining/~~NYE!
 ʕerebu/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
-ˈmʏnçn/~~NYE
-münich/~~NYE
-münech/~~NYE
-nhügel/~~NYE
+ˈmʏnçn/~~NYE!
+münich/~~NYE!
+münech/~~NYE!
+nhügel/~~NYE!
 tiefer/~~NYJr
-gacher/~~NYE
-maeuse/~~NYE
-newsml/~~NYE
-search/~~NYE
+gacher/~~NYE!
+maeuse/~~NYE!
+newsml/~~NYE!
+search/~~NYE!
 tötete/~~NE
-hanser/~~NYE
-yellow/~~NYE
+hanser/~~NYE!
+yellow/~~NYE!
 dehnte/~~NE
 reiche/~~NEJ # +adjective reading (was noun-only)
-aerger/~~NYE
+aerger/~~NYE!
 drehte/~~NE
 discos/~~N
-member/~~NYE
-gdpbay/~~NYE
-prison/~~NYE
-rueckt/~~NYE
+member/~~NYE!
+gdpbay/~~NYE!
+prison/~~NYE!
+rueckt/~~NYE!
 langer/~~N
 bringt/~~VjG
 téchnē/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
-vufind/~~NYE
+vufind/~~NYE!
 module/~~NE
-cityid/~~NYE
-jewish/~~NYE
+cityid/~~NYE!
+jewish/~~NYE!
 ischer/~~NYE
 beruft/~~VG # retag: finite verb form, was noun (corpus-mined)
-german/~~NYE
-tschüß/~~NYE
-steiht/~~NYE
-lander/~~NYE
-invest/~~NYE
+german/~~NYE!
+tschüß/~~NYE!
+steiht/~~NYE!
+lander/~~NYE!
+invest/~~NYE!
 nassen/~~VfjG
 einzige/~~NEJ # +adjective reading (was noun-only)
 soziale/~~NEJ # +adjective reading (was noun-only)
 belegte/~~V # retag: finite verb form, was noun (corpus-mined)
 kleinen/~~VfjG
 jportal/~~JOQRSTq # retag: adjective (was ~~N)
-staedte/~~NYE
+staedte/~~NYE!
 siemens/~~NA
 gesamte/~~NE
 imperia/~~N
-default/~~NYE
+default/~~NYE!
 caption/~~FYE
 gesetze/~~NE
 stellte/~~NE
-country/~~NYE
-rowspan/~~NYE
-rbmskzl/~~NYE
-prognos/~~NYE
+country/~~NYE!
+rowspan/~~NYE!
+rbmskzl/~~NYE!
+prognos/~~NYE!
 globale/~~NE
-colored/~~NYE
-waechst/~~NYE
-commons/~~NYE
-climate/~~NYE
+colored/~~NYE!
+waechst/~~NYE!
+commons/~~NYE!
+climate/~~NYE!
 erbaute/~~EV # retag: finite verb form, was noun (corpus-mined)
-acatech/~~NYE
+acatech/~~NYE!
 bemühte/~~V # retag: finite verb form, was noun (corpus-mined)
 regelte/~~NE
-cropped/~~NYE
-council/~~NYEMZ
-english/~~NYE
+cropped/~~NYE!
+council/~~NYEMZ!
+english/~~NYE!
 daimler/~~NH
 äußeren/~~VdifjeG
-nytimes/~~NYE
+nytimes/~~NYE!
 kleiner/~~NYJr
-religio/~~NYE
+religio/~~NYE!
 stärkte/~~NE
 feierte/~~NE
 direkte/~~NE
 zivilen/~~Vfj
 änderte/~~NE
-finance/~~NYE
-iwkoeln/~~NYE
-germany/~~NYE
+finance/~~NYE!
+iwkoeln/~~NYE!
+germany/~~NYE!
 erholte/~~V # retag: finite verb form, was noun (corpus-mined)
-padding/~~NYE
-explain/~~NYE
-gistemp/~~NYE
-fbinter/~~NYE
-history/~~NYE
+padding/~~NYE!
+explain/~~NYE!
+gistemp/~~NYE!
+fbinter/~~NYE!
+history/~~NYE!
 erregte/~~V # retag: finite verb form, was noun (corpus-mined)
-project/~~NYE
-monocle/~~NYE
-affairs/~~NYE
+project/~~NYE!
+monocle/~~NYE!
+affairs/~~NYE!
 lokaler/~~N
 lokalen/~~Vfj
 schmale/~~NE
 reichte/~~NE
 lokales/~~N
-fazemag/~~NYE
+fazemag/~~NYE!
 gehörte/~~NE
-airport/~~NYEH
-aendert/~~NYE
+airport/~~NYEH!
+aendert/~~NYE!
 bequeme/~~NE
-düdesch/~~NYE
-þeudisk/~~NYE
-koennte/~~NYE
-laender/~~NYE
+düdesch/~~NYE!
+þeudisk/~~NYE!
+koennte/~~NYE!
+laender/~~NYE!
 verhält/~~Vj
 strikte/~~NE
-stanzon/~~NYE
+stanzon/~~NYE!
 hoehlen/~~Vj
-imperii/~~NYE
+imperii/~~NYE!
 diverse/~~NEJ # +adjective reading (was noun-only)
 stützte/~~NE
 erfolge/~~NE
 strebte/~~NE
 stoppte/~~NE
 einigte/~~NE
-factors/~~NYE
+factors/~~NYE!
 dominik/~~NHA
-economy/~~NYE
-weforum/~~NYE
-success/~~NYE
+economy/~~NYE!
+weforum/~~NYE!
+success/~~NYE!
 leichte/~~NE
-verivox/~~NYE
-busiest/~~NYE
+verivox/~~NYE!
+busiest/~~NYE!
 popular/~~JOQRSTq # retag: adjective (was ~~N)
-product/~~NYE
+product/~~NYE!
 saubere/~~NE
-colonia/~~NYE
+colonia/~~NYE!
 verließ/~~V # retag: verb form, was noun (corpus-mined)
-zaschka/~~NYE
+zaschka/~~NYE!
 youtube/~~NHA
-receive/~~NYE
+receive/~~NYE!
 pflegte/~~NE
 inhalte/~~NE
 förmige/~~NE
-grunder/~~NYE
-biotech/~~NYE
+grunder/~~NYE!
+biotech/~~NYE!
 verlage/~~NE
-largest/~~NYE
-stadler/~~NYE
-sarotti/~~NYE
+largest/~~NYE!
+stadler/~~NYE!
+sarotti/~~NYE!
 naehten/~~Vj
-erhoeht/~~NYE
-servlet/~~NYE
-heights/~~NYE
+erhoeht/~~NYE!
+servlet/~~NYE!
+heights/~~NYE!
 treptow/~~NHA
 radwege/~~NYE
-sharing/~~NYE
-mapping/~~NYE
-charite/~~NYE
+sharing/~~NYE!
+mapping/~~NYE!
+charite/~~NYE!
 schools/~~NYrE # +adverb reading (was noun-only)
-artists/~~NYE
-gemüsed/~~NYE
+artists/~~NYE!
+gemüsed/~~NYE!
 belebte/~~V # retag: finite verb form, was noun (corpus-mined)
 gaerten/~~Vj
 vereine/~~NE
 heirate/~~NE
 opnamen/~~Vj
 grenzte/~~NE
-ˈmʏnçən/~~NYE
-visited/~~NYE
-smuster/~~NYE
-stinker/~~NYEH
-reduced/~~NYE
+ˈmʏnçən/~~NYE!
+visited/~~NYE!
+smuster/~~NYE!
+stinker/~~NYEH!
+reduced/~~NYE!
 muslime/~~NE
-spreise/~~NYE
+spreise/~~NYE!
 ungenau/~~NYOQRST
 welchen/~~4u
 dauerte/~~NE
 scharte/~~NE
 kleines/~~N
-striped/~~NYE
-lozengy/~~NYE
+striped/~~NYE!
+lozengy/~~NYE!
 stammte/~~NE
 bebaute/~~V # retag: finite verb form, was noun (corpus-mined)
 orpheus/~~NAMZ
-praxair/~~NYE
-laenger/~~NYE
-aendern/~~NYE
-gruener/~~NYE
-fabiola/~~NYE
-springs/~~NYE
-wpadmin/~~NYE
-statamt/~~NYE
-ˈhambʊɪ/~~NYE
-flooded/~~NYE
-without/~~NYE
+praxair/~~NYE!
+laenger/~~NYE!
+aendern/~~NYE!
+gruener/~~NYE!
+fabiola/~~NYE!
+springs/~~NYE!
+wpadmin/~~NYE!
+statamt/~~NYE!
+ˈhambʊɪ/~~NYE!
+flooded/~~NYE!
+without/~~NYE!
 harburg/~~NHA
-fabcity/~~NYE
-studeat/~~NYE
-servare/~~NYE
+fabcity/~~NYE!
+studeat/~~NYE!
+servare/~~NYE!
 tauchte/~~NE
-welcome/~~NYE
+welcome/~~NYE!
 lokalem/~~N
 offenen/~~VfjG
-compare/~~NYE
+compare/~~NYE!
 muenchen/~~Vj
 deutsche/~~NEJZ # +adjective reading (was noun-only)
-padright/~~NYE
+padright/~~NYE!
 erfolgte/~~V # retag: finite verb form, was noun (corpus-mined)
 sozialen/~~VfjG
-sortable/~~NYE
+sortable/~~NYE!
 jüdische/~~NE
 absolute/~~NEZ
-bshaprod/~~NYE
+bshaprod/~~NYE!
 soziales/~~N
 globalen/~~Vfj
-resource/~~NYE
+resource/~~NYE!
 niedrige/~~NE
 sozialer/~~NYJr
 erklärte/~~V # retag: finite verb form, was noun (corpus-mined)
 erlangte/~~EV # retag: finite verb form, was noun (corpus-mined)
-newsroom/~~NYEH
+newsroom/~~NYEH!
 gotische/~~NE
 document/~~JOQRSTq # retag: adjective (was ~~N)
 besetzte/~~V # retag: finite verb form, was noun (corpus-mined)
 forderte/~~NE
-gruender/~~NYE
+gruender/~~NYE!
 verfügte/~~EV # retag: finite verb form, was noun (corpus-mined)
 amtliche/~~NE
 genutzte/~~NE
@@ -220473,16 +220394,16 @@ beendete/~~V # retag: finite verb form, was noun (corpus-mined)
 vertritt/~~V # +verb reading (was noun-only)
 gelangte/~~NE
 populäre/~~NEJ # +adjective reading (was noun-only)
-boroughs/~~NYE
+boroughs/~~NYE!
 geprägte/~~NE
-building/~~NYE
-bmwgroup/~~NYE
-sciences/~~NYEMZ
+building/~~NYE!
+bmwgroup/~~NYE!
+sciences/~~NYEMZ!
 munichen/~~Vj
-behoerde/~~NYE
-insights/~~NYE
+behoerde/~~NYE!
+insights/~~NYE!
 gipfelte/~~NE
-economic/~~NYE
+economic/~~NYE!
 kündigte/~~NE
 römische/~~NE
 vereinte/~~EV # retag: finite verb form, was noun (corpus-mined)
@@ -220490,11 +220411,11 @@ gewählte/~~NE
 sicherte/~~NE
 geführte/~~NE
 sprachen/~~VifjG
-webready/~~NYE
-homicide/~~NYE
-airports/~~NYE
+webready/~~NYE!
+homicide/~~NYE!
+airports/~~NYE!
 leistete/~~NE
-hoechste/~~NYE
+hoechste/~~NYE!
 östliche/~~NE
 unklarer/~~NYJr
 maritime/~~NE
@@ -220502,42 +220423,42 @@ besuchte/~~EV # retag: finite verb form, was noun (corpus-mined)
 ständige/~~NE
 produkte/~~NE
 nukleare/~~NE
-research/~~NYE
+research/~~NYE!
 mercedes/~~NA
 tägliche/~~NE
 typische/~~NE
 südliche/~~NEJ # +adjective reading (was noun-only)
-terrarum/~~NYE
+terrarum/~~NYE!
 verweist/~~V # +verb reading (was noun-only)
 einstige/~~NE
 staedten/~~Vj
 language/~~NYJE # +adjective reading (was noun-only)
-traveler/~~NYE
+traveler/~~NYE!
 schwache/~~NE
-français/~~NYE
-hosttown/~~NYE
-eurovelo/~~NYE
+français/~~NYE!
+hosttown/~~NYE!
+eurovelo/~~NYE!
 modische/~~NE
 scientia/~~NY3E # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 obsolete/~~NE
-thiutisk/~~NYE
-xaveropp/~~NYE
-elibrary/~~NYE
+thiutisk/~~NYE!
+xaveropp/~~NYE!
+elibrary/~~NYE!
 mächtige/~~NE
-crossref/~~NYE
+crossref/~~NYE!
 bewohnte/~~V # retag: finite verb form, was noun (corpus-mined)
 trockene/~~NE
-vitulina/~~NYE
+vitulina/~~NYE!
 bedrohte/~~V # retag: finite verb form, was noun (corpus-mined)
 separate/~~NE
-sprinzip/~~NYE
+sprinzip/~~NYE!
 hoheiten/~~Vj
 vertical/~~JOQRSTq # retag: adjective (was ~~N)
 jenische/~~NE
-husemann/~~NYE
+husemann/~~NYE!
 gesellte/~~NE
 wandelte/~~NE
-portrait/~~NYE
+portrait/~~NYE!
 gelenkte/~~NE
 handelte/~~NE
 schnelle/~~NE
@@ -220545,108 +220466,108 @@ schmähte/~~NE
 vertraue/~~NE
 lockerte/~~NE
 zdfheute/~~rh  # adverb today
-timeline/~~NYE
+timeline/~~NYE!
 schweren/~~VdifjG
-kuendigt/~~NYE
-property/~~NYE
-carriers/~~NYE
-ecolecon/~~NYE
-products/~~NYE
+kuendigt/~~NYE!
+property/~~NYE!
+carriers/~~NYE!
+ecolecon/~~NYE!
+products/~~NYE!
 taeglich/~~JOQRSTq
 beklagte/~~V # retag: finite verb form, was noun (corpus-mined)
 mellitus/~~NYrE # +adverb reading (was noun-only)
-ilibrary/~~NYE
+ilibrary/~~NYE!
 gezielte/~~NE
 dominate/~~NE
 cultural/~~JOQRSTq # retag: adjective (was ~~N)
-corbetti/~~NYE
+corbetti/~~NYE!
 badische/~~NE
-tueftler/~~NYE
+tueftler/~~NYE!
 gewollte/~~NE
-servlets/~~NYE
+servlets/~~NYE!
 strahlte/~~NE
 gewaehlt/~~JOQRSTVgj
 steuerte/~~NE
 gruenden/~~Vj
-foerdern/~~NYE
+foerdern/~~NYE!
 örtliche/~~NE
 nominale/~~NE
-uberholt/~~NYE
-filtered/~~NYE
-groesste/~~NYE
-webforms/~~NYE
+uberholt/~~NYE!
+filtered/~~NYE!
+groesste/~~NYE!
+webforms/~~NYE!
 kuenftig/~~JOQRSTq
 erzielte/~~V # retag: finite verb form, was noun (corpus-mined)
-crossing/~~NYE
+crossing/~~NYE!
 viadukte/~~NE
-hydrogeo/~~NYE
+hydrogeo/~~NYE!
 humboldt/~~NHA
-alliance/~~NYE
-strategy/~~NYE
+alliance/~~NYE!
+strategy/~~NYE!
 genannte/~~NE
-gemuesed/~~NYE
+gemuesed/~~NYE!
 optreden/~~Vj
 gerichte/~~NE
 münichen/~~Vj
 erlaubte/~~V # retag: finite verb form, was noun (corpus-mined)
-ewzstadt/~~NYE
-erklaert/~~NYE
+ewzstadt/~~NYE!
+erklaert/~~NYE!
 geweihte/~~NE
 zitterte/~~NE
 logierte/~~NE
-daylight/~~NYE
+daylight/~~NYE!
 gezeigte/~~NE
 fertigte/~~NE
 laudatio/~~NA
 elegante/~~NE
 gespurte/~~NE
 beliebte/~~V # retag: finite verb form, was noun (corpus-mined)
-gruenste/~~NYE
-varchive/~~NYE
-historic/~~NYE
-karussel/~~NYE
+gruenste/~~NYE!
+varchive/~~NYE!
+historic/~~NYE!
+karussel/~~NYE!
 künftige/~~NE
 erwärmte/~~V # retag: finite verb form, was noun (corpus-mined)
-sbetrieb/~~NYE
-muenster/~~NYE
-schlaegt/~~NYE
+sbetrieb/~~NYE!
+muenster/~~NYE!
+schlaegt/~~NYE!
 konkrete/~~NE
 urteilte/~~NE
 optimale/~~NE
 berichte/~~NEn
-esmunich/~~NYE
-gianotti/~~NYE
-litterae/~~NYE
+esmunich/~~NYE!
+gianotti/~~NYE!
+litterae/~~NYE!
 terminis/~~NY3EZ # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
-ˈhambʊʁk/~~NYE
-ˈhambɔʁχ/~~NYE
-infoline/~~NYE
-worldcat/~~NYE
+ˈhambʊʁk/~~NYE!
+ˈhambɔʁχ/~~NYE!
+infoline/~~NYE!
+worldcat/~~NYE!
 verlegte/~~EV # retag: finite verb form, was noun (corpus-mined)
 ähnliche/~~NEJ # +adjective reading (was noun-only)
 bewährte/~~V # retag: finite verb form, was noun (corpus-mined)
 erfüllte/~~V # retag: finite verb form, was noun (corpus-mined)
-peperere/~~NYE
-cinefest/~~NYE
-altonale/~~NYE
-barwidth/~~NYE
+peperere/~~NYE!
+cinefest/~~NYE!
+altonale/~~NYE!
+barwidth/~~NYE!
 strassen/~~Vj
-prinovis/~~NYE
-electron/~~NYE
+prinovis/~~NYE!
+electron/~~NYE!
 deutschen/~~Vfj
 eröffnete/~~V # retag: finite verb form, was noun (corpus-mined)
 jüdischen/~~Vfj
 erreichte/~~EV # retag: finite verb form, was noun (corpus-mined)
 östlichen/~~VfjG
-muenchner/~~NYE
+muenchner/~~NYE!
 dokumente/~~NE
 deutsches/~~N
 ehemalige/~~NEJ # +adjective reading (was noun-only)
 regionale/~~NE
-documents/~~NYE
+documents/~~NYE!
 römischen/~~Vfj
 westliche/~~NE
-indicator/~~NYE
+indicator/~~NYE!
 südlichen/~~VfjG
 bekannten/~~VifjG
 behoerden/~~Vj
@@ -220654,11 +220575,11 @@ schwarzer/~~N
 jährliche/~~NE
 heimische/~~NE
 örtlichen/~~Vfj
-districts/~~NYE
+districts/~~NYE!
 religiöse/~~NE
 orthodoxe/~~NEJ # +adjective reading (was noun-only)
 nördliche/~~NE
-worldbank/~~NYE
+worldbank/~~NYE!
 niedriger/~~NYJr
 amtlichen/~~Vfj
 deutschem/~~N
@@ -220667,14 +220588,14 @@ niedrigen/~~VfjG
 bestimmte/~~V # retag: finite verb form, was noun (corpus-mined)
 verfolgte/~~V # retag: finite verb form, was noun (corpus-mined)
 versuchte/~~EV # retag: finite verb form, was noun (corpus-mined)
-locations/~~NYE
+locations/~~NYE!
 räumliche/~~NE
-panoramio/~~NYE
+panoramio/~~NYE!
 zerstörte/~~V # retag: finite verb form, was noun (corpus-mined)
 entfernte/~~V # retag: finite verb form, was noun (corpus-mined)
 unbebaute/~~NE
 gestellte/~~NE
-þeudiskaz/~~NYE
+þeudiskaz/~~NYE!
 jeweilige/~~NE
 römischer/~~N
 slawische/~~NE
@@ -220685,50 +220606,50 @@ vertiefte/~~V # retag: finite verb form, was noun (corpus-mined)
 einsetzte/~~NE
 ständigen/~~Vfj
 markierte/~~NE
-pistorius/~~NYE
+pistorius/~~NYE!
 ständiger/~~N
-consilium/~~NYE
-countries/~~NYE
+consilium/~~NYE!
+countries/~~NYE!
 vermoegen/~~Vj
-confirmed/~~NYE
+confirmed/~~NYE!
 täglichen/~~Vfj
 education/~~FYE
-collapsed/~~NYE
+collapsed/~~NYE!
 östlicher/~~NYJr
 maritimen/~~Vfj
 typischen/~~Vfj
 verlegten/~~VifjG
 tuerkisch/~~JOQRSTq
-statistic/~~NYE
-erikpeter/~~NYE
+statistic/~~NYE!
+erikpeter/~~NYE!
 hoechsten/~~Vj
 langsamer/~~NYJr
-eroeffnet/~~NYE
-nightlife/~~NYE
+eroeffnet/~~NYE!
+nightlife/~~NYE!
 arabische/~~NE
-southeast/~~NYE
+southeast/~~NYE!
 täglicher/~~N
-shortnews/~~NYE
-nuernberg/~~NYE
+shortnews/~~NYE!
+nuernberg/~~NYE!
 dorischen/~~Vfj
 prächtige/~~NE
 erlangten/~~VifjG
-publisher/~~NYE
+publisher/~~NYE!
 sämtliche/~~4
-airliners/~~NYE
+airliners/~~NYE!
 unbekannt/~~NYOQRST
 möglichen/~~VfjG
-juedische/~~NYE
+juedische/~~NYE!
 gefaltete/~~NE
-maximized/~~NYE
-svorgänge/~~NYE
-albicilla/~~NYE
+maximized/~~NYE!
+svorgänge/~~NYE!
+albicilla/~~NYE!
 artenarme/~~NE
 kleinsten/~~Vfj
-sgarantie/~~NYEF
+sgarantie/~~NYEF!
 wirkliche/~~NEZ
-languages/~~NYE
-superillu/~~NYE
+languages/~~NYE!
+superillu/~~NYE!
 originäre/~~NE
 weltliche/~~NE
 salisches/~~N
@@ -220742,24 +220663,24 @@ verließen/~~Vifj
 russische/~~NE
 friedrich/~~NHA
 belgische/~~NE
-elections/~~NYE
-campaigns/~~NYE
-democracy/~~NYE
-measuring/~~NYE
+elections/~~NYE!
+campaigns/~~NYE!
+democracy/~~NYE!
+measuring/~~NYE!
 gliederte/~~NE
 bedeutete/~~V # retag: finite verb form, was noun (corpus-mined)
 rumaenien/~~Vj
-departing/~~NYE
+departing/~~NYE!
 hoechster/~~NEKLH
 abhaengig/~~JOQRSTq
-renewable/~~NYE
+renewable/~~NYE!
 erstellte/~~V # retag: verb form, was noun (corpus-mined)
-datatable/~~NYE
+datatable/~~NYE!
 verfielen/~~VifjG
-docupedia/~~NYE
+docupedia/~~NYE!
 schwachen/~~Vfj
 rangierte/~~NE
-pressroom/~~NYE
+pressroom/~~NYE!
 entdeckte/~~V # retag: finite verb form, was noun (corpus-mined)
 chemische/~~NE
 elevation/~~FYE
@@ -220769,30 +220690,30 @@ amtlicher/~~N
 märkische/~~NE
 halbierte/~~NE
 verpaßten/~~Vj
-explained/~~NYE
-isdonline/~~NYE
-neukoelln/~~NYE
+explained/~~NYE!
+isdonline/~~NYE!
+neukoelln/~~NYE!
 unwirksam/~~JOQRSTUWq
 wohnhafte/~~NE
 gezungten/~~Vj
 schwarzen/~~Vfj
 ständiges/~~N
 mediathek/~~NY
-ecosystem/~~NYE
+ecosystem/~~NYE!
 stöckigen/~~Vj
-ceuticals/~~NYE
+ceuticals/~~NYE!
 standorte/~~NYE
-tradegate/~~NYE
-blueprint/~~NYE
+tradegate/~~NYE!
+blueprint/~~NYE!
 südlicher/~~NYJr
-ngebietes/~~NYE
-knowledge/~~NYE
-eliteunis/~~NYEZ
+ngebietes/~~NYE!
+knowledge/~~NYE!
+eliteunis/~~NYEZ!
 jüdischer/~~N
 schlechte/~~NE
-microfoon/~~NYE
+microfoon/~~NYE!
 entführte/~~V # retag: finite verb form, was noun (corpus-mined)
-geography/~~NYE
+geography/~~NYE!
 trockener/~~NYJr
 bairische/~~NE
 mitteilte/~~NE
@@ -220801,7 +220722,7 @@ römisches/~~N
 planvolle/~~NE
 festlegte/~~NE
 alliierte/~~NE
-landraete/~~NYE
+landraete/~~NYE!
 rautierte/~~NE
 bosnische/~~NE
 serbische/~~NE
@@ -220813,33 +220734,33 @@ ionischen/~~Vfj
 luxuriöse/~~NE
 geöffnete/~~NE
 schwabing/~~NHA
-verrueckt/~~NYE
+verrueckt/~~NYE!
 verrückte/~~V # retag: finite verb form, was noun (corpus-mined)
 bekannter/~~NYJr
-geschaeft/~~NYE
-magazines/~~NYE
+geschaeft/~~NYE!
+magazines/~~NYE!
 schnelles/~~N
 verkehrte/~~V # retag: finite verb form, was noun (corpus-mined)
 laengsten/~~Vj
 zulässige/~~NE
-southwest/~~NYE
+southwest/~~NYE!
 ereignete/~~V # retag: finite verb form, was noun (corpus-mined)
 klinische/~~NE
 angehörte/~~NE
 fahrzeuge/~~NE
 technicis/~~NY3E # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 kampflose/~~NE
-templates/~~NYE
+templates/~~NYE!
 mündliche/~~NE
-authority/~~NYE
-challenge/~~NYE
+authority/~~NYE!
+challenge/~~NYE!
 variierte/~~NE
 bildliche/~~NE
 gastierte/~~NE
 entfachte/~~EV # retag: finite verb form, was noun (corpus-mined)
 gespielte/~~NE
 örtlicher/~~N
-praeambel/~~NYE
+praeambel/~~NYE!
 einzahlte/~~NE
 jeweiligen/~~Vfj
 staatliche/~~NE
@@ -220855,25 +220776,25 @@ nationalen/~~Vfj
 kreisfreie/~~NF
 rechtliche/~~NE
 verwendete/~~EV # retag: finite verb form, was noun (corpus-mined)
-ueberblick/~~NYE
+ueberblick/~~NYE!
 errichtete/~~V # retag: finite verb form, was noun (corpus-mined)
-references/~~NYE
+references/~~NYE!
 offizielle/~~NE
 bayerische/~~NE
 preußische/~~NE
 orthodoxen/~~Vfj
 regionalen/~~Vfj
 russischen/~~Vfj
-sortbottom/~~NYE
+sortbottom/~~NYE!
 ansässigen/~~Vfj
-mstatistik/~~NYE
+mstatistik/~~NYE!
 anerkannte/~~NE
 begründete/~~Vh  # founded (past tense)
 erweiterte/~~NE
 unabhängig/~~JOQRSTUWqh
 berufliche/~~NE
-commonscat/~~NYE
-responsive/~~NYE
+commonscat/~~NYE!
+responsive/~~NYE!
 scheiterte/~~NE
 kommunaler/~~N
 klassische/~~NE
@@ -220914,9 +220835,9 @@ zeitlichen/~~Vfj
 kritisiert/~~VfjOQRSTG
 innovative/~~NE
 existierte/~~NE
-arkenberge/~~NYE
+arkenberge/~~NYE!
 verfassung/~~FY
-auslaender/~~NYE
+auslaender/~~NYE!
 schwersten/~~Vfj
 ostbahnhof/~~NYE
 avancierte/~~NE
@@ -220925,8 +220846,8 @@ integriert/~~NYOQRSTG
 prominente/~~NE
 tropischen/~~Vfj
 auswärtige/~~NE
-uebersicht/~~NYE
-theclubmap/~~NYE
+uebersicht/~~NYE!
+theclubmap/~~NYE!
 mastercard/~~NHA
 vermarktet/~~NYOQRSTG
 eroeffnung/~~FYE
@@ -220935,11 +220856,11 @@ modernsten/~~Vfj
 normativen/~~Vfj
 gesicherte/~~NE
 rationalen/~~VfjG
-components/~~NYE
-datamapper/~~NYE
+components/~~NYE!
+datamapper/~~NYE!
 etablierte/~~NE
 untersagte/~~EV # retag: finite verb form, was noun (corpus-mined)
-alpidische/~~NYE
+alpidische/~~NYE!
 vorzeitige/~~NE
 bestätigte/~~V # retag: finite verb form, was noun (corpus-mined)
 aufgebaute/~~NE
@@ -220948,7 +220869,7 @@ polabische/~~NE
 bairischen/~~Vfj
 slavischen/~~Vj
 jiddischen/~~Vfj
-noerdliche/~~NYE
+noerdliche/~~NYE!
 sesshaften/~~VfjG
 geistliche/~~NE
 staufische/~~NE
@@ -220964,11 +220885,11 @@ schwierige/~~NE
 erschwerte/~~V # retag: finite verb form, was noun (corpus-mined)
 russischem/~~N
 verankerte/~~NE
-presidency/~~NYE
+presidency/~~NYE!
 initiierte/~~NE
 polizisten/~~Vj
 reformiert/~~NYOQRSTG
-bookmarkid/~~NYE
+bookmarkid/~~NYE!
 sekundären/~~Vfj
 employment/~~JOQRSTq # retag: adjective (was ~~N)
 verzichtet/~~NYOQRSTG
@@ -220976,68 +220897,68 @@ operativen/~~Vfj
 dominierte/~~NE
 kombiniert/~~VfjOQRSTG
 geförderte/~~NE
-mobilitaet/~~NYE
-wikisource/~~NYE
-materialem/~~NYE
-bemaengelt/~~NYE
+mobilitaet/~~NYE!
+wikisource/~~NYE!
+materialem/~~NYE!
+bemaengelt/~~NYE!
 virtuellen/~~Vfj
 schulische/~~NE
 sverfahren/~~Vj
 studierten/~~VifjG
 chemisches/~~N
 ueberragen/~~Vj
-pagewanted/~~NYE
+pagewanted/~~NYE!
 schmalsten/~~Vfj
-abteilungi/~~NYE
+abteilungi/~~NYE!
 unbebautes/~~N
 ersessenen/~~Vj
 wohnhaften/~~Vfj
-frmresults/~~NYE
+frmresults/~~NYE!
 verdrängte/~~EV # retag: finite verb form, was noun (corpus-mined)
-auswdienst/~~NYE
-commentary/~~NYE
-empfaenger/~~NYE
-liveticker/~~NYEH
+auswdienst/~~NYE!
+commentary/~~NYE!
+empfaenger/~~NYE!
+liveticker/~~NYEH!
 nominellen/~~Vfj
-thenextweb/~~NYE
+thenextweb/~~NYE!
 länglichen/~~VfjG
 relevanter/~~NYJr
-publishers/~~NYE
+publishers/~~NYE!
 chemischen/~~Vfj
-spreeradio/~~NYE
-attractive/~~NYE
+spreeradio/~~NYE!
+attractive/~~NYE!
 nummeriert/~~NYOQRSTG
 nördliches/~~N
 exponierte/~~NE
-weissensee/~~NYE
-université/~~NYE
-university/~~NYE
-excellence/~~NYE
+weissensee/~~NYE!
+université/~~NYE!
+university/~~NYE!
+excellence/~~NYE!
 satirische/~~NE
 kinemathek/~~NY
 oxidiertem/~~N
-schloesser/~~NYE
+schloesser/~~NYE!
 slawischer/~~N
 semitische/~~NE
 mündlicher/~~N
 bevölkerte/~~NE
 leistungen/~~Vj
-microsites/~~NYE
-monographs/~~NYE
-monacensis/~~NYE
+microsites/~~NYE!
+monographs/~~NYE!
+monacensis/~~NYE!
 zugehörige/~~NE
 sonnigsten/~~Vfj
 tauglicher/~~NYJr
 obdachlose/~~NE
 orthodoxem/~~N
 zelebriert/~~NYOQRSTG
-baierische/~~NYE
+baierische/~~NYE!
 residierte/~~NE
 gefertigte/~~NE
 geflügelte/~~NE
 automotive/~~NYE
-stadtraete/~~NYE
-kreisraete/~~NYE
+stadtraete/~~NYE!
+kreisraete/~~NYE!
 kommunales/~~N
 auftauchte/~~NE
 vernichtet/~~NYOQRSTG
@@ -221046,23 +220967,23 @@ konzipiert/~~NYOQRSTG
 ansässiger/~~N
 vorstellte/~~NE
 neuntägige/~~NE
-vergnuegte/~~NYE
+vergnuegte/~~NYE!
 schwulsten/~~Vfj
 nominelles/~~N
 investiven/~~Vj
-anmietbare/~~NYE
+anmietbare/~~NYE!
 arabischen/~~Vfj
 zukünftige/~~NE
 verbessert/~~NYOQRSTG
 massnahmen/~~Vj
 trassierte/~~NE
-harlaching/~~NYE
+harlaching/~~NYE!
 gefaehrdet/~~JOQRSTVgj
 chronische/~~NE
 zuständige/~~NE
-riverbreak/~~NYE
+riverbreak/~~NYE!
 vermittelt/~~VfjOQRSTG
-τεχνολογία/~~NYE
+τεχνολογία/~~NYE!
 vergleiche/~~NEJ # +adjective reading (was noun-only)
 abgedeicht/~~NYVE # +verb reading (was noun-only)
 gebändigte/~~NE
@@ -221070,14 +220991,14 @@ slawischen/~~Vfj
 verdienten/~~VifjG
 männlichen/~~VfjG
 nordkirche/~~NYE
-juedischer/~~NYE
+juedischer/~~NYE!
 schrumpfte/~~NE
 verpassten/~~VifjG
 wehrhaften/~~Vfj
 unterlegte/~~EV # retag: finite verb form, was noun (corpus-mined)
-posteritas/~~NYE
+posteritas/~~NYE!
 souveräner/~~N
-uebernimmt/~~NYE
+uebernimmt/~~NYE!
 verkürzend/~~NYJOQRST # +adjective reading (was noun-only)
 temporären/~~Vfj
 weltbesten/~~Vfj
@@ -221091,7 +221012,7 @@ vattenfall/~~NHA
 stadtwerke/~~NYE
 sportliche/~~NE
 verdoppelt/~~NYOQRSTG
-technology/~~NYE
+technology/~~NYE!
 wichtigsten/~~Vfj
 öffentliche/~~NE
 überwiegend/~~JOQRSTq
@@ -221099,12 +221020,12 @@ entwickelte/~~NE
 preußischen/~~Vfj
 staatlichen/~~Vfj
 historische/~~NE
-contentblob/~~NYE
+contentblob/~~NYE!
 katholische/~~NEJ # +adjective reading (was noun-only)
 bayerischen/~~Vfj
 europäische/~~NE
 beschäftigt/~~VfjOQRSTG
-showdoccase/~~NYE
+showdoccase/~~NYE!
 zahlreicher/~~NYJr
 verzeichnet/~~NYOQRSTG
 städtischen/~~Vfj
@@ -221127,10 +221048,10 @@ bürgerliche/~~NE
 ungeliebtes/~~N
 juristische/~~NE
 staatlicher/~~N
-collapsible/~~NYE
+collapsible/~~NYE!
 präsentiert/~~NYOQRSTG
 befindliche/~~NE
-mjunikdisco/~~NYE
+mjunikdisco/~~NYE!
 preußischer/~~N
 nachhaltige/~~NE
 angewandten/~~Vfj
@@ -221153,7 +221074,7 @@ verbreitete/~~EV # retag: finite verb form, was noun (corpus-mined)
 gestalteten/~~VifjG
 technischen/~~Vfj
 städtisches/~~N
-longfinance/~~NYE
+longfinance/~~NYE!
 kirchlicher/~~N
 technisches/~~N
 produzierte/~~NE
@@ -221187,8 +221108,8 @@ kultureller/~~NYJr
 umliegenden/~~Vfj
 lutherische/~~NE
 bereinigten/~~VifjG
-millionaere/~~NYE
-knightfrank/~~NYE
+millionaere/~~NYE!
+knightfrank/~~NYE!
 statistiken/~~Vj
 wesentliche/~~NEZ
 printarchiv/~~JOQRSTq # retag: adjective (was ~~N, corpus-mined as noun)
@@ -221198,9 +221119,9 @@ kaiserliche/~~NE
 lateinische/~~NEZ
 benachbarte/~~NE
 asphaltiert/~~NYOQRSTG
-passthrough/~~NYE
+passthrough/~~NYE!
 beheimatete/~~V # retag: finite verb form, was noun (corpus-mined)
-vorlaufuger/~~NYE
+vorlaufuger/~~NYE!
 kanalisiert/~~NYOQRSTG
 interaktive/~~NE
 dauerhaften/~~VfjG
@@ -221225,7 +221146,7 @@ verdrängten/~~VifjG
 bäuerlichen/~~Vfj
 assimiliert/~~NYOQRSTG
 hegemoniale/~~NE
-konsensuale/~~NYE
+konsensuale/~~NYE!
 auswärtigen/~~Vfj
 permanenten/~~VfjG
 dominierten/~~VifjG
@@ -221255,7 +221176,7 @@ verlegbares/~~N
 personeller/~~N
 entscheidet/~~GV # not a noun: no capitalized form
 freiwillige/~~NE
-scholarship/~~NYE
+scholarship/~~NYE!
 angezeigten/~~Vfj
 retuschiert/~~NYOQRSTG
 beansprucht/~~NYVOQRSTG # +verb reading (was noun-only)
@@ -221264,10 +221185,10 @@ erwerbslose/~~NE
 verfügbares/~~N
 spezifische/~~NE
 innovativen/~~VfjG
-ipdbproject/~~NYE
-electricity/~~NYE
+ipdbproject/~~NYE!
+electricity/~~NYE!
 eingeführte/~~NE
-gefoerderte/~~NYE
+gefoerderte/~~NYE!
 ausrichtete/~~NE
 genehmigter/~~N
 durchlebten/~~VifjG
@@ -221279,7 +221200,7 @@ akademische/~~NE
 empirischer/~~N
 untersuchte/~~V # retag: finite verb form, was noun (corpus-mined)
 vielfältige/~~NE
-beschliesst/~~NYE
+beschliesst/~~NYE!
 zoologische/~~NE
 entsprachen/~~VijG
 angeblichen/~~Vfj
@@ -221294,14 +221215,14 @@ dreitürmige/~~NE
 innovativem/~~N
 investments/~~N
 oesterreich/~~JOQRSTq
-marienfelde/~~NYE
-stadlerrail/~~NYE
+marienfelde/~~NYE!
+stadlerrail/~~NYE!
 ueberzeugen/~~Vj
 zartbittere/~~NE
 stationären/~~Vfj
 rechtliches/~~N
 nummerierte/~~NE
-bikesharing/~~NYE
+bikesharing/~~NYE!
 verhandelte/~~NE
 installiert/~~NYOQRSTG
 angesehenen/~~VfjG
@@ -221319,11 +221240,11 @@ akkadischen/~~Vfj
 semitischen/~~Vfj
 griechische/~~NEJ # +adjective reading (was noun-only)
 vorhandenen/~~Vfj
-dudenonline/~~NYE
+dudenonline/~~NYE!
 angenommene/~~NE
 umliegender/~~N
 gewachsenen/~~Vfj
-spaetestens/~~NYE
+spaetestens/~~NYE!
 mandäischen/~~Vfj
 extremisten/~~Vj
 islamisches/~~N
@@ -221339,7 +221260,7 @@ gezeichnete/~~NE
 inspirierte/~~NE
 wichtigeren/~~Vfj
 ausgedehnte/~~NE
-giardiniera/~~NYE
+giardiniera/~~NYE!
 prominenten/~~VfjG
 komponierte/~~NE
 berühmteste/~~NE
@@ -221355,7 +221276,7 @@ erheblichem/~~N
 städtischer/~~N
 technología/~~NYE # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 regiolektal/~~JOQRSTq # retag: adjective (was ~~N)
-gebaendigte/~~NYE
+gebaendigte/~~NYE!
 gemittelten/~~Vfj
 heidnischen/~~Vfj
 initiierten/~~VifjG
@@ -221366,7 +221287,7 @@ ungenannten/~~VfjG
 gefährliche/~~NE
 eingezäunte/~~NE
 beteiligung/~~FY
-usconsulate/~~NYE
+usconsulate/~~NYE!
 dreiwöchige/~~NE
 japanischen/~~Vfj
 unabhängige/~~NE
@@ -221379,19 +221300,19 @@ verständigt/~~NYVOQRSTG # +verb reading (was noun-only)
 unzerstörte/~~NE
 kombinierte/~~NE
 bevorzugten/~~VifjG
-abreadcrumb/~~NYE
+abreadcrumb/~~NYE!
 zulassungen/~~Vj
 weiträumige/~~NE
 betroffenen/~~VfjG
-nabschnitte/~~NYE
+nabschnitte/~~NYE!
 attraktiver/~~NYJr
 überführten/~~VifjG
-rueckwaerts/~~NYE
+rueckwaerts/~~NYE!
 schnellsten/~~Vfj
 attraktiven/~~VfjG
 vermittlern/~~N
 ausgelegten/~~Vfj
-sciencecity/~~NYE
+sciencecity/~~NYE!
 populärsten/~~Vfj
 glücklicher/~~NYJr
 öffentlichen/~~VfjG
@@ -221406,7 +221327,7 @@ französische/~~NEZ
 menschlichen/~~VfjG
 entsprechend/~~JOQRSTq
 wesentlichen/~~VfjG
-toptextcells/~~NYE
+toptextcells/~~NYE!
 entstandenen/~~Vfj
 benachbarten/~~Vfj
 verpflichtet/~~NYOQRSTG
@@ -221418,7 +221339,7 @@ vollständige/~~NE
 europäischer/~~NYJr
 bürgerlichen/~~Vfj
 ausländische/~~NE
-publications/~~NYE
+publications/~~NYE!
 produzierten/~~VifjG
 detaillierte/~~NE
 überörtliche/~~NE
@@ -221435,13 +221356,13 @@ medizinische/~~NE
 siemensstadt/~~NA
 veranschlagt/~~NYVOQRSTG # +verb reading (was noun-only)
 verschuldung/~~FY
-muenchenwiki/~~NYE
+muenchenwiki/~~NYE!
 menschlicher/~~NYJr
 methodischen/~~Vfj
 ungewöhnlich/~~JOQRSTUWq
 territoriale/~~NE
 gesetzlicher/~~N
-grossstaedte/~~NYE
+grossstaedte/~~NYE!
 griechischen/~~Vfj
 einheitliche/~~NE
 eigentlichen/~~VfjG
@@ -221453,13 +221374,13 @@ sowjetischen/~~Vfj
 nachhaltigen/~~VfjG
 unterstützte/~~EV # retag: finite verb form, was noun (corpus-mined)
 ukrainischer/~~N
-presidencies/~~NYE
+presidencies/~~NYE!
 langfristige/~~NE
 unabhängiger/~~NYJr
 historisches/~~N
 gewerblichen/~~Vfj
 wesentlicher/~~NYJr
-oeffentliche/~~NYE
+oeffentliche/~~NYE!
 statistische/~~NE
 privatisiert/~~NYOQRSTG
 nordöstliche/~~NE
@@ -221467,8 +221388,8 @@ kleinkriegte/~~NE
 registrierte/~~NE
 schriftliche/~~NE
 lutherischen/~~Vfj
-linkableblob/~~NYE
-destinations/~~NYE
+linkableblob/~~NYE!
+destinations/~~NYE!
 renommierten/~~VifjG
 veranstaltet/~~NYOQRSTG
 inoffizielle/~~NE
@@ -221478,7 +221399,7 @@ interessante/~~NE
 umgestaltete/~~NE
 reichhaltige/~~NE
 musikalische/~~NE
-ardmediathek/~~NYE
+ardmediathek/~~NYE!
 delegationen/~~Vj
 apostolische/~~NE
 verstorbenen/~~Vfj
@@ -221492,20 +221413,20 @@ ostdeutschen/~~Vfj
 palenzgreven/~~Vj
 unbestimmten/~~Vfj
 dazugehörten/~~VifjG
-kaledonische/~~NYE
+kaledonische/~~NYE!
 tektonischen/~~Vfj
 geologischen/~~Vfj
 ungefalteten/~~Vfj
 mesozoischen/~~Vfj
 konsequenter/~~NYJr
 landschaften/~~Vj
-bodenflaeche/~~NYE
+bodenflaeche/~~NYE!
 fotografiert/~~NYOQRSTG
 alpenvorland/~~NYE
 ausgerottete/~~NE
 angestrebten/~~Vfj
 europäisches/~~N
-plautdietsch/~~NYE
+plautdietsch/~~NYE!
 zersplittert/~~NYOQRSTG
 fakultatives/~~N
 ordentliches/~~N
@@ -221513,7 +221434,7 @@ christlicher/~~NYJr
 zugewanderte/~~NE
 verschwanden/~~VijG
 eiszeitkunst/~~NYE
-wuerttemberg/~~NYE
+wuerttemberg/~~NYE!
 dynastischen/~~Vfj
 kaiserlichen/~~Vfj
 restaurierte/~~NE
@@ -221535,22 +221456,22 @@ inhaltlichen/~~Vfj
 westfälische/~~NE
 bestmögliche/~~NE
 betriebliche/~~NE
-freedomhouse/~~NYE
-transparency/~~NYE
+freedomhouse/~~NYE!
+transparency/~~NYE!
 fiskalischen/~~Vfj
 unbotmäßigen/~~Vfj
 germanischer/~~N
 pervertierte/~~NE
-wettbewerbsf/~~NYE
+wettbewerbsf/~~NYE!
 verdeutlicht/~~NYVOQRSTG # +verb reading (was noun-only)
 veraenderung/~~FYE
 thematisiert/~~NYOQRSTG
 angestammten/~~Vfj
 contribution/~~FYE
-technologies/~~NYE
+technologies/~~NYE!
 gepflasterte/~~NE
 zweitgrößten/~~Vfj
-konsumgueter/~~NYE
+konsumgueter/~~NYE!
 ukrainischen/~~Vfj
 viertgrößten/~~Vfj
 gegliedertes/~~N
@@ -221563,40 +221484,40 @@ zoologischer/~~N
 diebstaehlen/~~Vj
 durchmischte/~~V # retag: finite verb form, was noun (corpus-mined)
 berechtigten/~~VifjG
-archaeologie/~~NYEF
+archaeologie/~~NYEF!
 revoltierten/~~VifjG
-stichworteag/~~NYE
+stichworteag/~~NYE!
 griechischer/~~N
 gestaffelten/~~Vfj
 erschütterte/~~NE
 verwirklicht/~~NYVOQRSTG # +verb reading (was noun-only)
 unbeschädigt/~~NYOQRST
 umstrittenen/~~VfjG
-captionalign/~~NYE
+captionalign/~~NYE!
 sprachlichen/~~Vfj
-fluechtlinge/~~NYE
+fluechtlinge/~~NYE!
 alevitischen/~~Vfj
-auswaertiges/~~NYE
+auswaertiges/~~NYE!
 angeordneten/~~Vfj
 geringfügige/~~NEJ # +adjective reading (was noun-only)
-europaeische/~~NYE
-abwehrplaene/~~NYE
-wealthreport/~~NYE
+europaeische/~~NYE!
+abwehrplaene/~~NYE!
+wealthreport/~~NYE!
 wesentliches/~~N
 investierten/~~VifjG
 zweistellige/~~NE
 verbindungen/~~Vj
-universitaet/~~NYE
+universitaet/~~NYE!
 sechsjährige/~~NE
-schuelerzahl/~~NYE
+schuelerzahl/~~NYE!
 produzierter/~~N
-danstoernooi/~~NYE
+danstoernooi/~~NYE!
 übernommenen/~~Vfj
 lateinischen/~~Vfj
 menschliches/~~N
 atlantischen/~~Vfj
 einheimische/~~NE
-schliessfach/~~NYE
+schliessfach/~~NYE!
 schwedischer/~~N
 exklusivsten/~~Vfj
 mörderischen/~~Vfj
@@ -221611,42 +221532,42 @@ gruenanlagen/~~Vj
 zugänglichen/~~VfjG
 persönliches/~~N
 geschlossene/~~NE
-ghostarchive/~~NYE
+ghostarchive/~~NYE!
 gaststaetten/~~Vj
 zusätzlichen/~~Vfj
 kritisierten/~~VifjG
 versicherung/~~FY
 reibungslose/~~NE
 verdreifacht/~~NYOQRSTG
-radlautobahn/~~NYE
+radlautobahn/~~NYE!
 verzoegerung/~~FYE
-gleisplanweb/~~NYE
-poccistrasse/~~NYE
+gleisplanweb/~~NYE!
+poccistrasse/~~NYE!
 degenerative/~~NE
 evangelische/~~NE
-laenderebene/~~NYE
-showallyears/~~NYE
+laenderebene/~~NYE!
+showallyears/~~NYE!
 nördlichsten/~~Vfj
 geografische/~~NE
 geologischer/~~N
-worldweather/~~NYE
+worldweather/~~NYE!
 verbindliche/~~NE
 befindlichen/~~Vfj
-solidaritaet/~~NYE
+solidaritaet/~~NYE!
 verwendbares/~~N
 symbolisiert/~~NYOQRSTG
 verwendbaren/~~Vfj
-ehrenbuerger/~~NYE
+ehrenbuerger/~~NYE!
 zweiwöchiges/~~N
 sommerlichen/~~Vfj
 unumstritten/~~VjOQRST
 australische/~~NE
 ermöglichten/~~VifjG
-weitberumbte/~~NYE
+weitberumbte/~~NYE!
 historischer/~~N
 eingeweihten/~~Vfj
 tatsächliche/~~NE
-sechtsgrößte/~~NYE
+sechtsgrößte/~~NYE!
 chinesischer/~~N
 motorisierte/~~NE
 öffentlichem/~~N
@@ -221654,11 +221575,11 @@ großräumigen/~~Vfj
 schlechteste/~~NE
 renommierter/~~NYJr
 beschäftigte/~~EV # retag: finite verb form, was noun (corpus-mined)
-aerztekammer/~~NYE
+aerztekammer/~~NYE!
 verschiedenen/~~VfjG
 bedeutendsten/~~Vfj
 evangelischen/~~Vfj
-bundeslaender/~~NYE
+bundeslaender/~~NYE!
 französischen/~~Vfj
 demokratische/~~NEJ # +adjective reading (was noun-only)
 eigenständige/~~NEJ # +adjective reading (was noun-only)
@@ -221680,7 +221601,7 @@ schutzgebiete/~~NYE
 repräsentiert/~~NYOQRSTG
 grossstaedten/~~Vj
 mitvergnuegen/~~Vj
-previnputtree/~~NYE
+previnputtree/~~NYE!
 hamburgischen/~~Vfj
 norddeutschen/~~Vfj
 theoretischen/~~Vfj
@@ -221700,36 +221621,36 @@ regenerativer/~~N
 demografische/~~NE
 geschlossenem/~~N
 nordöstlichen/~~VfjG
-schiessbefehl/~~NYE
+schiessbefehl/~~NYE!
 unmittelbaren/~~Vfj
 statistischen/~~Vfj
-doingbusiness/~~NYE
+doingbusiness/~~NYE!
 gegenwärtigen/~~Vfj
-siemenscampus/~~NYE
+siemenscampus/~~NYE!
 erfolgreiches/~~N
 unterirdische/~~NE
 rekonstruiert/~~NYOQRSTG
 überarbeitete/~~EV # retag: finite verb form, was noun (corpus-mined)
 habsburgische/~~NE
-chabadhamburg/~~NYE
+chabadhamburg/~~NYE!
 plattdeutsche/~~NE
 erfolgreicher/~~NYJr
 konstruierten/~~VifjG
 handwerkliche/~~NE
 wizzentschaft/~~JOQRSTq
 herkömmlichem/~~N
-exportlaender/~~NYE
+exportlaender/~~NYE!
 unvollendeten/~~Vfj
 vereinfachend/~~NYJOQRST # +adjective reading (was noun-only)
 eiszeitlichen/~~Vfj
-dwdwwwdesktop/~~NYE
+dwdwwwdesktop/~~NYE!
 communication/~~FYE
 modifizierten/~~VifjG
 nährstoffarme/~~NE
 waldreichsten/~~Vfj
 zugewanderter/~~N
 überörtlichen/~~Vfj
-auslaendische/~~NYE
+auslaendische/~~NYE!
 lexikalischen/~~Vfj
 oberdeutschen/~~Vfj
 alemannischen/~~Vfj
@@ -221748,7 +221669,7 @@ dynamischsten/~~Vfj
 widerwilligen/~~VfjG
 ideologischen/~~Vfj
 provisorische/~~NE
-sowjetisierte/~~NYE
+sowjetisierte/~~NYE!
 leninistische/~~NE
 konservativer/~~NYJr
 unterstützten/~~VifjG
@@ -221756,8 +221677,8 @@ verpflichtete/~~EV # retag: finite verb form, was noun (corpus-mined)
 mobilisierten/~~VifjG
 unvereinbaren/~~Vfj
 freiheitliche/~~NE
-ausgewaehlter/~~NYE
-parliamentary/~~NYE
+ausgewaehlter/~~NYE!
+parliamentary/~~NYE!
 unbestechlich/~~JOQRSTUWq
 wirkungsvolle/~~NE
 sorganisation/~~FYE
@@ -221770,7 +221691,7 @@ tatsächlicher/~~N
 zweistelligen/~~Vfj
 energetischen/~~Vfj
 regenerativen/~~Vfj
-comprehensive/~~NYE
+comprehensive/~~NYE!
 durchgeführte/~~NE
 ausgerichtete/~~NE
 mitversichert/~~GV # not a noun: no capitalized form
@@ -221780,10 +221701,10 @@ universitären/~~Vfj
 individueller/~~NYJr
 medizinischen/~~Vfj
 europaeischen/~~Vj
-crossmediales/~~NYE
+crossmediales/~~NYE!
 südwestlichen/~~VfjG
 unveränderten/~~Vfj
-altpolabische/~~NYE
+altpolabische/~~NYE!
 vorstädtische/~~NE
 verabschiedet/~~NYOQRSTG
 vielbeachtete/~~NE
@@ -221794,9 +221715,9 @@ anglikanische/~~NE
 fünfblättrige/~~NE
 geringfügigen/~~Vfj
 investitionen/~~Vj
-gruenderszene/~~NYE
+gruenderszene/~~NYE!
 umsatzgrößten/~~Vj
-medienstaedte/~~NYE
+medienstaedte/~~NYE!
 suessigkeiten/~~Vj
 dreistelliger/~~N
 verlaengerung/~~FYE
@@ -221810,11 +221731,11 @@ städtischeren/~~Vj
 urbanisierten/~~VifjG
 einheimischen/~~Vfj
 nachträgliche/~~NE
-verhaeltnisse/~~NYE
+verhaeltnisse/~~NYE!
 topografische/~~NE
 evangelischer/~~N
-raeterepublik/~~NYE
-gemeinderaete/~~NYE
+raeterepublik/~~NYE!
+gemeinderaete/~~NYE!
 spätgotischer/~~N
 einheimischer/~~N
 korinthischen/~~Vfj
@@ -221830,13 +221751,13 @@ umfangreiches/~~N
 einheitlichen/~~VfjG
 umfangreicher/~~NYJr
 unattraktiver/~~NYOQRST
-kriminalitaet/~~NYE
+kriminalitaet/~~NYE!
 künstlerische/~~NE
 minderjährige/~~NE
-wissenschaftl/~~NYE
-openstreetmap/~~NYE
+wissenschaftl/~~NYE!
+openstreetmap/~~NYE!
 nordelbischen/~~Vfj
-innenbehoerde/~~NYE
+innenbehoerde/~~NYE!
 einbuergerung/~~FYE
 apostolischen/~~Vfj
 verschwiegene/~~NE
@@ -221844,7 +221765,7 @@ tschechischen/~~Vfj
 partnerhaefen/~~Vj
 kurzfristigen/~~Vfj
 inoffiziellen/~~Vfj
-süßsäuerliche/~~NYE
+süßsäuerliche/~~NYE!
 angefertigten/~~Vfj
 buecherhallen/~~Vj
 umgeschlagene/~~NE
@@ -221853,17 +221774,17 @@ dreiflügelige/~~NE
 langfristiges/~~N
 hamburgischem/~~N
 schlechtesten/~~Vfj
-logistikinfos/~~NYE
+logistikinfos/~~NYE!
 endmontierten/~~VifjG
 heizkraftwerk/~~NYE
-tourismustaxe/~~NYE
+tourismustaxe/~~NYE!
 internationale/~~NE
 überregionalen/~~Vfj
 administrative/~~NE
 niederdeutsche/~~NEJ # +adjective reading (was noun-only)
 bundeshaushalt/~~NYE
-bundeslaendern/~~NYE
-radlhauptstadt/~~NYE
+bundeslaendern/~~NYE!
+radlhauptstadt/~~NYE!
 archäologische/~~NE
 byzantinischen/~~Vfj
 verabschiedete/~~EV # retag: finite verb form, was noun (corpus-mined)
@@ -221880,11 +221801,11 @@ technologische/~~NE
 erwirtschaftet/~~NYOQRSTG
 eigenständiger/~~N
 teilsouveräner/~~N
-buergermeister/~~NYE
+buergermeister/~~NYE!
 städtebauliche/~~NE
 eigenständigen/~~Vfj
 revolutionären/~~VfjG
-staedteranking/~~NYE
+staedteranking/~~NYE!
 repräsentative/~~NE
 spezialisierte/~~NE
 zurückgelegten/~~Vfj
@@ -221920,21 +221841,21 @@ radikalisierte/~~NE
 stabilisierten/~~VifjG
 provisorischen/~~Vfj
 luxemburgische/~~NE
-steuerähnliche/~~NYE
+steuerähnliche/~~NYE!
 zerschlissenen/~~Vfj
 ehrenamtlicher/~~N
-arbeitsplaetze/~~NYE
+arbeitsplaetze/~~NYE!
 inflationsrate/~~NYE
-energietragern/~~NYE
+energietragern/~~NYE!
 audiovisueller/~~N
 gemeinnütziger/~~N
 erwerbsfähigen/~~Vfj
-auslaendischer/~~NYE
+auslaendischer/~~NYE!
 mehrsprachiges/~~N
 gesamtdeutsche/~~NE
-globalisations/~~NYE
+globalisations/~~NYE!
 aufgeschüttete/~~NE
-strassenbaeume/~~NYE
+strassenbaeume/~~NYE!
 artenreichsten/~~Vfj
 wiedervereinte/~~NE
 geschichtliche/~~NE
@@ -221943,7 +221864,7 @@ vorgeschlagene/~~NE
 kleindeutschen/~~Vfj
 altlutherische/~~NE
 altkatholische/~~NE
-erwerbstaetige/~~NYE
+erwerbstaetige/~~NYE!
 verwirklichten/~~VifjG
 elektrifiziert/~~NYOQRSTG
 sommerflugplan/~~NYE
@@ -221953,26 +221874,26 @@ lebenundlernen/~~Vj
 zweigliedriges/~~N
 prominentesten/~~Vfj
 fitnessstudios/~~NYE
-berlintypische/~~NYE
+berlintypische/~~NYE!
 anerkanntesten/~~Vj
 biographisches/~~N
 altgriechische/~~NE
 gebräuchlichen/~~VfjG
 referenziertem/~~N
 eingemeindeter/~~N
-partnerstaedte/~~NYE
+partnerstaedte/~~NYE!
 monumentalsten/~~Vfj
 säkularisierte/~~NE
 namensgebenden/~~Vfj
 naturkundliche/~~NE
 unterirdischen/~~Vfj
-stachusbauwerk/~~NYE
-stauhauptstadt/~~NYE
+stachusbauwerk/~~NYE!
+stauhauptstadt/~~NYE!
 grundsätzliche/~~NE
 wolfratshausen/~~Vj
 foerderschulen/~~Vj
 foerderzentren/~~Vj
-toytowngermany/~~NYE
+toytowngermany/~~NYE!
 vernachlässigt/~~VfjOQRSTG
 unterzeichnete/~~V # retag: finite verb form, was noun (corpus-mined)
 buddhistischen/~~Vfj
@@ -221985,21 +221906,21 @@ plattdeutscher/~~N
 betriebsfähige/~~NE
 aufgebrochenen/~~Vfj
 ausgestalteten/~~VifjG
-zweitgroesster/~~NYE
+zweitgroesster/~~NYE!
 vordringlicher/~~NYJr
 ausgegliederte/~~NE
 beherbergungen/~~Vj
 synchronisiert/~~NYOQRSTG
 versicherungen/~~Vj
 hochintensiven/~~Vj
-krankenhaeuser/~~NYE
+krankenhaeuser/~~NYE!
 selbstmordrate/~~NYE
 geheimnisvolle/~~NE
 internationalen/~~Vfj
 wirtschaftliche/~~NE
 internationaler/~~N
 internationales/~~N
-publicationfile/~~NYE
+publicationfile/~~NYE!
 repräsentativen/~~VfjG
 deutschlandfunk/~~NYE
 umweltbundesamt/~~NYE
@@ -222007,7 +221928,7 @@ erfolgreichsten/~~Vfj
 klassizistische/~~NE
 dreigeschossige/~~NE
 städtebaulichen/~~Vfj
-hochmittelalter/~~NYEMZ
+hochmittelalter/~~NYEMZ!
 säkularisierten/~~VifjG
 ausschließliche/~~NE
 skandinavischen/~~Vfj
@@ -222017,7 +221938,7 @@ bundesdeutschen/~~Vfj
 kunsthochschule/~~NYE
 fertiggestellte/~~NE
 veranstaltungen/~~Vj
-behoerdenfinder/~~NYE
+behoerdenfinder/~~NYE!
 norddeutschland/~~NYE
 berufsbildenden/~~Vfj
 vorschreibenden/~~Vfj
@@ -222048,7 +221969,7 @@ supranationalen/~~Vfj
 einträchtigsten/~~Vfj
 strafrechtliche/~~NE
 unabänderlichen/~~Vfj
-statisticstimes/~~NYE
+statisticstimes/~~NYE!
 spezialisierten/~~VifjG
 eingeschränktem/~~N
 technologischer/~~N
@@ -222059,22 +221980,22 @@ renommiertesten/~~Vfj
 dreizehnjährige/~~NE
 leistungsfähige/~~NEJ # +adjective reading (was noun-only)
 technologischen/~~Vfj
-handwoerterbuch/~~NYE
+handwoerterbuch/~~NYE!
 innerstädtische/~~NE
 großstädtischen/~~Vfj
 nichtreligiöser/~~N
-stgeorgesberlin/~~NYE
+stgeorgesberlin/~~NYE!
 interreligiösen/~~Vfj
-theglobeandmail/~~NYE
+theglobeandmail/~~NYE!
 lautmalerischen/~~Vfj
 pharmazeutische/~~NE
 administrativen/~~Vfj
 neugeschaffenen/~~Vfj
-auftragsbuecher/~~NYE
-umsatzstaerkste/~~NYE
-boersenaufsicht/~~NYE
+auftragsbuecher/~~NYE!
+umsatzstaerkste/~~NYE!
+boersenaufsicht/~~NYE!
 wasserkreislauf/~~NYE
-energietraegern/~~NYE
+energietraegern/~~NYE!
 zweigeschossige/~~NE
 zurückgesetzten/~~Vfj
 veranschaulicht/~~NYOQRSTG
@@ -222082,8 +222003,8 @@ landessportbund/~~NYE
 allgegenwärtige/~~NE
 selbstständiger/~~NYJr
 osteuropäischer/~~N
-moerderzentrale/~~NYE
-goldumränderter/~~NYE
+moerderzentrale/~~NYE!
+goldumränderter/~~NYE!
 rekonstruierter/~~N
 zusammenstellte/~~NE
 gutbürgerlichen/~~Vfj
@@ -222096,17 +222017,17 @@ osteuropäischen/~~Vfj
 veröffentlichte/~~EV # retag: finite verb form, was noun (corpus-mined)
 niederdeutscher/~~N
 niederdeutschen/~~Vfj
-mitnahmeverbote/~~NYE
+mitnahmeverbote/~~NYE!
 historistischen/~~Vfj
 eingeschränkten/~~VfjG
 verabschiedeten/~~VifjG
 wandlungsfähige/~~NE
-elbphilharmonie/~~NYEF
-dichtbesiedelte/~~NYE
+elbphilharmonie/~~NYEF!
+dichtbesiedelte/~~NYE!
 paneuropäischen/~~Vfj
 börsenähnlichen/~~Vj
 publikumsstarke/~~NE
-aerztestatistik/~~NYE
+aerztestatistik/~~NYE!
 stadtentwicklung/~~FYE
 deutschsprachige/~~NE
 unterschiedliche/~~NE
@@ -222117,7 +222038,7 @@ staatsrechtliche/~~NE
 mittelalterliche/~~NEJ # +adjective reading (was noun-only)
 hintergrundfarbe/~~NYE
 pressemitteilung/~~FYE
-joneslanglasalle/~~NYE
+joneslanglasalle/~~NYE!
 niederländischen/~~Vfj
 feuerwehrverband/~~NYE
 dreigeschossigen/~~Vfj
@@ -222127,17 +222048,17 @@ deutschstämmigen/~~Vfj
 flughafendetails/~~NYE
 unterscheidbaren/~~Vfj
 anthropologische/~~NE
-überpersönlicher/~~NYE
+überpersönlicher/~~NYE!
 makroökonomische/~~NE
 westgermanischen/~~Vfj
 gegenüberstellte/~~NE
 antifranzösische/~~NE
-sozioökologische/~~NYE
+sozioökologische/~~NYE!
 selbstverwaltung/~~FYE
 darüberliegenden/~~Vj
 weltanschauliche/~~NE
 ethnographischen/~~Vfj
-staatszentrierte/~~NYE
+staatszentrierte/~~NYE!
 halbhegemonialer/~~N
 innerparteiliche/~~NE
 wiedervereinigte/~~V # retag: finite verb form, was noun (corpus-mined)
@@ -222145,22 +222066,22 @@ uneingeschränkte/~~NE
 islamfeindlicher/~~NYJr
 württembergische/~~NE
 veröffentlichten/~~VifjG
-visionofhumanity/~~NYE
+visionofhumanity/~~NYE!
 bundeswehrreform/~~NYE
-teilungsbedingte/~~NYE
+teilungsbedingte/~~NYE!
 leistungsstarken/~~Vfj
 quasipolitischen/~~Vj
-staedtenetzwerke/~~NYE
+staedtenetzwerke/~~NYE!
 konfessionsfreie/~~NF
 patentgeschützte/~~NE
 erwirtschafteten/~~VifjG
 mittelständische/~~NE
-publishersweekly/~~NYE
+publishersweekly/~~NYE!
 meistrezipierten/~~Vfj
 aussenwirtschaft/~~JOQRSTq
-studentenstaedte/~~NYE
+studentenstaedte/~~NYE!
 wiederaufgebaute/~~NE
-buchendominierte/~~NYE
+buchendominierte/~~NYE!
 multikulturellen/~~Vfj
 mundartforschung/~~FYE
 landeshauptstadt/~~NYE
@@ -222168,11 +222089,11 @@ verschlechternde/~~NE
 palästinensische/~~NE
 institutioneller/~~N
 metropolregionen/~~Vj
-mobilityexchange/~~NYE
+mobilityexchange/~~NYE!
 österreichischen/~~Vfj
 dieselfahrverbot/~~NYE
 philatelistische/~~NE
-auslaenderanteil/~~NYE
+auslaenderanteil/~~NYE!
 steuerpflichtige/~~NE
 festgeschriebene/~~NE
 kulturfoerderung/~~FYE
@@ -222194,7 +222115,7 @@ brandenburgischen/~~Vfj
 denkmalgeschützte/~~NE
 landkreismuenchen/~~Vj
 nachvollziehbaren/~~Vfj
-bruchtektonischer/~~NYE
+bruchtektonischer/~~NYE!
 polnischstämmigen/~~Vfj
 konstitutioneller/~~N
 festgeschriebenen/~~Vfj
@@ -222212,10 +222133,10 @@ handelspolitische/~~NE
 verkehrsberuhigte/~~NE
 interkontinentale/~~NE
 krankenversichert/~~NYOQRSTG
-bildungsschwachem/~~NYE
+bildungsschwachem/~~NYE!
 geschwindigkeiten/~~Vj
 gesamtstädtischen/~~Vfj
-ortsnamenbildende/~~NYE
+ortsnamenbildende/~~NYE!
 slawischstämmigen/~~Vfj
 friderizianischen/~~Vfj
 türkischstämmigen/~~Vfj
@@ -222228,36 +222149,36 @@ mitteleuropäische/~~NE
 gewitterreichsten/~~Vj
 kriegsbeschädigte/~~NE
 kunsthistorischen/~~Vfj
-fraunhoferstrasse/~~NYE
+fraunhoferstrasse/~~NYE!
 polizeipraesident/~~JOQRSTq # retag: adjective (was ~~N)
-herkunftslaendern/~~NYE
-millionaersdichte/~~NYE
+herkunftslaendern/~~NYE!
+millionaersdichte/~~NYE!
 einkommensstarken/~~Vfj
 dialektologischen/~~Vj
-gehorsamsgeprüfte/~~NYE
-durchgreifenderem/~~NYE
+gehorsamsgeprüfte/~~NYE!
+durchgreifenderem/~~NYE!
 regionaltypischen/~~Vfj
 mobilitaetszahlen/~~Vj
 niedersächsischen/~~Vfj
 verkehrsrundschau/~~NYE
-industrieabwaerme/~~NYE
+industrieabwaerme/~~NYE!
 teilungsbedingten/~~Vj
 kurzinformationen/~~Vj
 mittelständischen/~~Vfj
 multifunktionalen/~~Vfj
 pressemitteilungen/~~Vj
-nationalgeographic/~~NYE
-bevoelkerungsstand/~~NYE
+nationalgeographic/~~NYE!
+bevoelkerungsstand/~~NYE!
 allgemeinbildenden/~~Vfj
 außeruniversitären/~~Vfj
 senatsverwaltungen/~~Vj
-berlinerstadtwerke/~~NYE
+berlinerstadtwerke/~~NYE!
 einzelauswertungen/~~Vj
 milliardenschaeden/~~Vj
 jungpaläolithische/~~NE
 verfassunggebenden/~~Vfj
-fragilestatesindex/~~NYE
-selbstverstaendnis/~~NYEZ
+fragilestatesindex/~~NYE!
+selbstverstaendnis/~~NYEZ!
 arbeitsrechtlichen/~~Vfj
 sonderbeauftragter/~~NYE
 energiestatistiken/~~Vj
@@ -222265,14 +222186,14 @@ armenischstämmigen/~~Vj
 unwahrscheinlicher/~~NYOQRST
 herantransportiert/~~NYOQRSTG
 nichtrechtsfähigen/~~Vj
-fachkraeftemangels/~~NYE
-wettbewerbsfaehige/~~NYE
+fachkraeftemangels/~~NYE!
+wettbewerbsfaehige/~~NYE!
 englischsprachigen/~~Vfj
-strassenbauprojekt/~~NYE
-mitgliederreichste/~~NYE
+strassenbauprojekt/~~NYE!
+mitgliederreichste/~~NYE!
 meistbesungendsten/~~Vj
 denkmalgeschützten/~~Vfj
-thesavvybackpacker/~~NYE
+thesavvybackpacker/~~NYE!
 glockenbachviertel/~~NYE
 veranstaltungsorte/~~NYE
 sonderpädagogische/~~NE
@@ -222283,30 +222204,30 @@ zentralratderjuden/~~Vj
 reichsunmittelbare/~~NE
 zweitschlechtesten/~~Vfj
 luftfahrtindustrie/~~NYEF
-beschaeftigtenzahl/~~NYE
+beschaeftigtenzahl/~~NYE!
 presseinformationen/~~Vj
 veroeffentlichungen/~~Vj
 länderübergreifende/~~NE
-hauptstadtvertraege/~~NYE
+hauptstadtvertraege/~~NYE!
 regionalstatistiken/~~Vj
 einkommensschwachen/~~Vfj
-templatequerystring/~~NYE
+templatequerystring/~~NYE!
 bundesunmittelbaren/~~Vfj
 nachwuchsfördernden/~~Vj
 verselbstständigten/~~VifjG
-worldmarathonmajors/~~NYE
+worldmarathonmajors/~~NYE!
 elektromagnetischen/~~Vfj
 verkehrsgünstigsten/~~Vfj
-schmuckgärtnerische/~~NYE
-forschungsstaerkste/~~NYE
+schmuckgärtnerische/~~NYE!
+forschungsstaerkste/~~NYE!
 leistungssportliche/~~NE
 mittelhochdeutschen/~~Vfj
 gemeinderechtlichen/~~Vj
 zwergdeckelschnecke/~~NYE
 sehenswuerdigkeiten/~~Vj
-gruenflaechengesamt/~~NYE
+gruenflaechengesamt/~~NYE!
 kunstgeschichtliche/~~NE
-schulartunabhängige/~~NYE
+schulartunabhängige/~~NYE!
 landwirtschaftliche/~~NEJ # +adjective reading (was noun-only)
 semiprofessionellen/~~Vfj
 genossenschaftliche/~~NE
@@ -222314,7 +222235,7 @@ hochschullandschaft/~~JOQRSTq
 staatsangehoerigkeit/~~FYE
 bruttoinlandsprodukt/~~NYE
 regierungserklaerung/~~FYE
-diegeschichteberlins/~~NYE
+diegeschichteberlins/~~NYE!
 frühklassizistischen/~~Vfj
 kulturvergleichenden/~~Vj
 volkswirtschaftliche/~~NE
@@ -222323,17 +222244,17 @@ familienfreundlichen/~~Vfj
 liberalkonservativen/~~Vfj
 rettungsdienstlichen/~~Vfj
 bruttostromerzeugung/~~FYE
-batterieelektrischer/~~NYE
+batterieelektrischer/~~NYE!
 länderübergreifenden/~~Vfj
 sozialdemokratischen/~~Vfj
 finanzkraftausgleich/~~NYE
-basiszeitreihegrafik/~~NYE
+basiszeitreihegrafik/~~NYE!
 landwirtschaftlichen/~~Vfj
-gruenanlagenstatista/~~NYE
+gruenanlagenstatista/~~NYE!
 kulturgeschichtliche/~~NE
 bruttowertschoepfung/~~FYE
 buergerschaftswahlen/~~Vj
-einbuergerungsbilanz/~~NYE
+einbuergerungsbilanz/~~NYE!
 tschechoslowakischen/~~Vfj
 tourismusstatistiken/~~Vj
 migrationshintergrund/~~NYE
@@ -222343,54 +222264,54 @@ außerparlamentarische/~~NE
 privatwirtschaftliche/~~NE
 mitgliederentwicklung/~~FYE
 überdurchschnittliche/~~NE
-bevoelkerungsprognose/~~NYE
+bevoelkerungsprognose/~~NYE!
 haushaltsueberwachung/~~FYE
-hochausdifferenzierte/~~NYE
-mittelstandsbarometer/~~NYE
+hochausdifferenzierte/~~NYE!
+mittelstandsbarometer/~~NYE!
 brancheninformationen/~~Vj
 gesundheitsschädliche/~~NE
-eineinhalbmillionster/~~NYE
+eineinhalbmillionster/~~NYE!
 verwaltungundfinanzen/~~Vj
 forstwirtschaftlichen/~~Vfj
 verwaltungsrechtliche/~~NE
 spätmittelalterlichen/~~Vfj
-sammlungsübergreifend/~~NYE
+sammlungsübergreifend/~~NYE!
 dienstleistungsfinder/~~NYE
 kriminalpolizeilichen/~~Vfj
-wissenschaftsbasierte/~~NYE
+wissenschaftsbasierte/~~NYE!
 anwendungstechnischer/~~N
 sprachgeschichtlichem/~~N
-einkommensmillionaere/~~NYE
-businesslocationcenter/~~NYE
-lichtenbergmarzahnplus/~~NYE
+einkommensmillionaere/~~NYE!
+businesslocationcenter/~~NYE!
+lichtenbergmarzahnplus/~~NYE!
 monatszahlenmonitoring/~~NYE
 nationalsozialistische/~~NE
-bundeslaendervergleich/~~NYE
+bundeslaendervergleich/~~NYE!
 wissenschaftsethischen/~~Vj
-identitätsbestimmendes/~~NYE
-flüchtlingsfeindlicher/~~NYE
+identitätsbestimmendes/~~NYE!
+flüchtlingsfeindlicher/~~NYE!
 gleichgeschlechtlicher/~~N
 sicherheitspolitisches/~~N
 sicherheitspolitischen/~~Vfj
-primarenergieverbrauch/~~NYE
+primarenergieverbrauch/~~NYE!
 anwendungsorientierten/~~Vfj
-laenderfinanzausgleich/~~NYE
+laenderfinanzausgleich/~~NYE!
 staedtepartnerschaften/~~Vj
 überdurchschnittliches/~~N
 versicherungsstandorte/~~NYE
-hochausdifferenziertes/~~NYE
+hochausdifferenziertes/~~NYE!
 bundesligamannschaften/~~Vj
 naturwissenschaftlich/~~JOQRSTqh # adjective with compound flag
 gesundheitsgefährdende/~~NE
-sozialwissenschafterin/~~NYE
+sozialwissenschafterin/~~NYE!
 privatwirtschaftlicher/~~N
-technischerumweltschutz/~~NYE
+technischerumweltschutz/~~NYE!
 nationalsozialistischer/~~N
-kriminalitaetsstatistik/~~NYE
+kriminalitaetsstatistik/~~NYE!
 bundesfinanzministerium/~~NYE
 nationalsozialistischen/~~Vfj
 verbraucherpreisindexes/~~NYE
-primaerenergieverbrauch/~~NYE
+primaerenergieverbrauch/~~NYE!
 arbeitskraeftepotenzial/~~JOQRSTq # retag: adjective (was ~~N)
 kunstwissenschaftlichen/~~Vfj
 bundesverfassungsgericht/~~NYEZ
@@ -222399,7 +222320,7 @@ grenzwertueberschreitung/~~FYE
 religionszugehoerigkeiten/~~Vj
 bundesergaenzungszuweisungen/~~Vj
 sozialversicherungspflichtigen/~~Vfj
-programmeforinternationalstudentassessmentpisa/~~NYE
+programmeforinternationalstudentassessmentpisa/~~NYE!
 basketballmannschaft/~~NhYEF # compound: Basketball + Mannschaft
 produktionsstätten/~~F # plural
 schuhentwicklung/~~FhYE # compound: Schuh + Entwicklung
@@ -222729,7 +222650,7 @@ UNESCO/~~NhA
 OSZE/~~NhA
 DIN/~~NhA
 ISO/~~NhA
-NS/~~NhA
+NS/~~NhA!
 
 # --- high-frequency common nouns (with -en plural) ---
 Beobachtung/~~FhY
@@ -223829,7 +223750,7 @@ Cromwell/~~NHA # igerman98 headword
 Crozetinsel/~~NE # igerman98 headword
 Crusoe/~~NHA # igerman98 headword
 Cruyff/~~NHA # igerman98 headword
-Cs/~~N # igerman98 headword
+Cs/~~N! # igerman98 headword
 Csardas/~~NA # igerman98 headword
 Cumarin/~~NA # igerman98 headword
 Cumberland/~~NHA # igerman98 headword
@@ -234968,3 +234889,727 @@ Züssow/~~NHA # igerman98 headword
 Überlinger/~~NKLHE # igerman98 headword
 Überrollbarkeit/~~NFA # igerman98 headword
 árdás/~~N # igerman98 headword
+reichtum/~~MhHA # der Reichtum: was reachable only as reicht + um
+weistum/~~ZhHA
+weistümer/~~NhE
+sucht/~~NFh # die Sucht: only the verb form was listed
+erkenntlich/~~JOQRSTq
+vier/~~hJOQRSTq1 # numeral; was reachable only through a verb "vieren"
+selten/~~JqOQRSTUWr # was reachable only through a verb "selen"
+gelten/~~Vj # strong: gilt, galt, gegolten are listed separately; was reachable only through a verb "gelen"
+offensichtlich/~~JqOQRSTUWr # was reachable only as off + en + sicht + lich
+etc./~~2r # abbreviation: et cetera; was reachable only as et + c.
+translation/~~NhYF
+solipsismus/~~MhA
+ursprache/~~FhE
+geweb/~~* # compound stem only: Gewebsflüssigkeit, Gewebsprobe; came from a bogus verb "geweben"
+plusquamperfekt/~~NhYHX
+aalkasten/~~N # noun reading: a form of Aalkasten (hunspell)
+aalkästchen/~~N # noun reading: a form of Aalkästchen (hunspell)
+aalkästen/~~N # noun reading: a form of Aalkästen (hunspell)
+aalstechen/~~N # noun reading: a form of Aalstechen (hunspell)
+aalsüppchen/~~N # noun reading: a form of Aalsüppchen (hunspell)
+aaltierchen/~~N # noun reading: a form of Aaltierchen (hunspell)
+abakusrechnen/~~N # noun reading: a form of Abakusrechnen (hunspell)
+abbiegestreifen/~~N # noun reading: a form of Abbiegestreifen (hunspell)
+abchasien/~~N # noun reading: a form of Abchasien (hunspell)
+abendläuten/~~N # noun reading: a form of Abendläuten (hunspell)
+abermilliarden/~~N # noun reading: a form of Abermilliarden (hunspell)
+abermillionen/~~N # noun reading: a form of Abermillionen (hunspell)
+abessinien/~~N # noun reading: a form of Abessinien (hunspell)
+abforsten/~~N # noun reading: a form of Abforsten (hunspell)
+ablüften/~~N # noun reading: a form of Ablüften (hunspell)
+abmahnkosten/~~N # noun reading: a form of Abmahnkosten (hunspell)
+abmahnschreiben/~~N # noun reading: a form of Abmahnschreiben (hunspell)
+abneigen/~~N # noun reading: a form of Abneigen (hunspell)
+abrasionsspuren/~~N # noun reading: a form of Abrasionsspuren (hunspell)
+abraumvorkommen/~~N # noun reading: a form of Abraumvorkommen (hunspell)
+abrutsche/~~N # noun reading: a form of Abrutsch (hunspell)
+abruzzen/~~N # noun reading: a form of Abruzzen (hunspell)
+absenderkonten/~~N # noun reading: a form of Absenderkonten (hunspell)
+absorbenzien/~~N # noun reading: a form of Absorbenzien (hunspell)
+abspeichermechanismen/~~N # noun reading: a form of Abspeichermechanismen (hunspell)
+abstützbalken/~~N # noun reading: a form of Abstützbalken (hunspell)
+abteigarten/~~N # noun reading: a form of Abteigarten (hunspell)
+abteigärten/~~N # noun reading: a form of Abteigärten (hunspell)
+abteiwappen/~~N # noun reading: a form of Abteiwappen (hunspell)
+abteufarbeiten/~~N # noun reading: a form of Abteufarbeiten (hunspell)
+abwahlverfahren/~~N # noun reading: a form of Abwahlverfahren (hunspell)
+abzehren/~~N # noun reading: a form of Abzehren (hunspell)
+abzeichen/~~N # noun reading: a form of Abzeichen (hunspell)
+achtelthemen/~~N # noun reading: a form of Achtelthemen (hunspell)
+adenoviren/~~N # noun reading: a form of Adenoviren (hunspell)
+algerien/~~N # noun reading: a form of Algerien (hunspell)
+almosen/~~N # noun reading: a form of Almosen (hunspell)
+analystenerwartungen/~~N # noun reading: a form of Analystenerwartungen (hunspell)
+andenken/~~N # noun reading: a form of Andenken (hunspell)
+anfertigungskosten/~~N # noun reading: a form of Anfertigungskosten (hunspell)
+annexionsbestrebungen/~~N # noun reading: a form of Annexionsbestrebungen (hunspell)
+annullierungskosten/~~N # noun reading: a form of Annullierungskosten (hunspell)
+anspiel/~~N # noun reading: a form of Anspiel (hunspell)
+anspiele/~~N # noun reading: a form of Anspiel (hunspell)
+anthrazitfeinkohlen/~~N # noun reading: a form of Anthrazitfeinkohlen (hunspell)
+anwandeln/~~N # noun reading: a form of Anwandeln (hunspell)
+anwerbebestrebungen/~~N # noun reading: a form of Anwerbebestrebungen (hunspell)
+aquarellmalkästen/~~N # noun reading: a form of Aquarellmalkästen (hunspell)
+arbeitslosigkeitsrisiken/~~N # noun reading: a form of Arbeitslosigkeitsrisiken (hunspell)
+aufarbeitungskosten/~~N # noun reading: a form of Aufarbeitungskosten (hunspell)
+aufdröseln/~~N # noun reading: a form of Aufdröseln (hunspell)
+aufholbedarf/~~N # noun reading: a form of Aufholbedarf (hunspell)
+aufräumungsarbeiten/~~N # noun reading: a form of Aufräumungsarbeiten (hunspell)
+aufziehmechanismen/~~N # noun reading: a form of Aufziehmechanismen (hunspell)
+ausbaggerungsarbeiten/~~N # noun reading: a form of Ausbaggerungsarbeiten (hunspell)
+ausfertigungsdaten/~~N # noun reading: a form of Ausfertigungsdaten (hunspell)
+aushagern/~~N # noun reading: a form of Aushagern (hunspell)
+auslenken/~~N # noun reading: a form of Auslenken (hunspell)
+ausschachtungsarbeiten/~~N # noun reading: a form of Ausschachtungsarbeiten (hunspell)
+ausschüttungsrisiken/~~N # noun reading: a form of Ausschüttungsrisiken (hunspell)
+ausstrahlungsrhythmen/~~N # noun reading: a form of Ausstrahlungsrhythmen (hunspell)
+backen/~~N # noun reading: a form of Backen (hunspell)
+bahngleisausrichtungsmechanismen/~~N # noun reading: a form of Bahngleisausrichtungsmechanismen (hunspell)
+bahnhofsausbauten/~~N # noun reading: a form of Bahnhofsausbauten (hunspell)
+balken/~~N # noun reading: a form of Balken (hunspell)
+bedenken/~~N # noun reading: a form of Bedenken (hunspell)
+bedüsen/~~N # noun reading: a form of Bedüsen (hunspell)
+begehr/~~N # noun reading: a form of Begehr (hunspell)
+beriemen/~~N # noun reading: a form of Beriemen (hunspell)
+bewirtschaftungskosten/~~N # noun reading: a form of Bewirtschaftungskosten (hunspell)
+blutspendezentren/~~N # noun reading: a form of Blutspendezentren (hunspell)
+bogen/~~N # noun reading: a form of Bogen (hunspell)
+brunnen/~~N # noun reading: a form of Brunnen (hunspell)
+carboxidobakterien/~~N # noun reading: a form of Carboxidobakterien (hunspell)
+cheilomakrozystiden/~~N # noun reading: a form of Cheilomakrozystiden (hunspell)
+chiralitätszentren/~~N # noun reading: a form of Chiralitätszentren (hunspell)
+darre/~~N # noun reading: a form of Darre (hunspell)
+daumen/~~N # noun reading: a form of Daumen (hunspell)
+depositen/~~N # noun reading: a form of Depositen (hunspell)
+dienst/~~N # noun reading: a form of Dienst (hunspell)
+dimmer/~~N # noun reading: a form of Dimmer (hunspell)
+dramenkonventionen/~~N # noun reading: a form of Dramenkonventionen (hunspell)
+drucksachengebühren/~~N # noun reading: a form of Drucksachengebühren (hunspell)
+duden/~~N # noun reading: a form of Duden (hunspell)
+durchfeuchtungsschäden/~~N # noun reading: a form of Durchfeuchtungsschäden (hunspell)
+durchgabe/~~N # noun reading: a form of Durchgabe (hunspell)
+durchgären/~~N # noun reading: a form of Durchgären (hunspell)
+düngemittelausschwemmungen/~~N # noun reading: a form of Düngemittelausschwemmungen (hunspell)
+einbuchten/~~N # noun reading: a form of Einbuchten (hunspell)
+eingewöhnungsschwierigkeiten/~~N # noun reading: a form of Eingewöhnungsschwierigkeiten (hunspell)
+einpoldern/~~N # noun reading: a form of Einpoldern (hunspell)
+einschiffungshäfen/~~N # noun reading: a form of Einschiffungshäfen (hunspell)
+einswerden/~~N # noun reading: a form of Einswerden (hunspell)
+elektrifizierungsarbeiten/~~N # noun reading: a form of Elektrifizierungsarbeiten (hunspell)
+elektroplattieren/~~N # noun reading: a form of Elektroplattieren (hunspell)
+ellbogen/~~N # noun reading: a form of Ellbogen (hunspell)
+embryonen/~~N # noun reading: a form of Embryonen (hunspell)
+erbittern/~~N # noun reading: a form of Erbittern (hunspell)
+erbschaftsstreitigkeiten/~~N # noun reading: a form of Erbschaftsstreitigkeiten (hunspell)
+erdölindustriellen/~~N # noun reading: a form of Erdölindustriellen (hunspell)
+ernennungsmodalitäten/~~N # noun reading: a form of Ernennungsmodalitäten (hunspell)
+erschließungsarbeiten/~~N # noun reading: a form of Erschließungsarbeiten (hunspell)
+erschließungskosten/~~N # noun reading: a form of Erschließungskosten (hunspell)
+erstausstrahlungsdaten/~~N # noun reading: a form of Erstausstrahlungsdaten (hunspell)
+ertauben/~~N # noun reading: a form of Ertauben (hunspell)
+erzählkonventionen/~~N # noun reading: a form of Erzählkonventionen (hunspell)
+essigsäurebakterien/~~N # noun reading: a form of Essigsäurebakterien (hunspell)
+ethylieren/~~N # noun reading: a form of Ethylieren (hunspell)
+evakuierungshäfen/~~N # noun reading: a form of Evakuierungshäfen (hunspell)
+evakuierungszentren/~~N # noun reading: a form of Evakuierungszentren (hunspell)
+exemtionsprivilegien/~~N # noun reading: a form of Exemtionsprivilegien (hunspell)
+exhumierungsarbeiten/~~N # noun reading: a form of Exhumierungsarbeiten (hunspell)
+explorationsfirmen/~~N # noun reading: a form of Explorationsfirmen (hunspell)
+farbenschmelzöfen/~~N # noun reading: a form of Farbenschmelzöfen (hunspell)
+felsgrottenmadonnen/~~N # noun reading: a form of Felsgrottenmadonnen (hunspell)
+ferien/~~N # noun reading: a form of Ferien (hunspell)
+festigkeitseigenschaften/~~N # noun reading: a form of Festigkeitseigenschaften (hunspell)
+festlandsbesitzungen/~~N # noun reading: a form of Festlandsbesitzungen (hunspell)
+firmen/~~N # noun reading: a form of Firmen (hunspell)
+flaschnerarbeiten/~~N # noun reading: a form of Flaschnerarbeiten (hunspell)
+flausen/~~N # noun reading: a form of Flausen (hunspell)
+flick/~~N # noun reading: a form of Flick (hunspell)
+floristenbedarf/~~N # noun reading: a form of Floristenbedarf (hunspell)
+foren/~~N # noun reading: a form of Foren (hunspell)
+furnier/~~N # noun reading: a form of Furnier (hunspell)
+furniere/~~N # noun reading: a form of Furnier (hunspell)
+furnieren/~~N # noun reading: a form of Furnier (hunspell)
+galgen/~~N # noun reading: a form of Galgen (hunspell)
+gambist/~~N # noun reading: a form of Gambist (hunspell)
+garten/~~N # noun reading: a form of Garten (hunspell)
+gaumen/~~N # noun reading: a form of Gaumen (hunspell)
+gefangenschaftsbedingungen/~~N # noun reading: a form of Gefangenschaftsbedingungen (hunspell)
+gegeneinanderwirken/~~N # noun reading: a form of Gegeneinanderwirken (hunspell)
+gehre/~~N # noun reading: a form of Gehre (hunspell)
+gelege/~~N # noun reading: a form of Gelege (hunspell)
+gemischtwarenläden/~~N # noun reading: a form of Gemischtwarenläden (hunspell)
+gen/~~N # noun reading: a form of Gen (hunspell)
+generationenbeziehungen/~~N # noun reading: a form of Generationenbeziehungen (hunspell)
+gent/~~N # noun reading: a form of Gent (hunspell)
+gerufe/~~N # noun reading: a form of Gerufe (hunspell)
+gewinnerzielungsgründen/~~N # noun reading: a form of Gewinnerzielungsgründen (hunspell)
+gewoge/~~N # noun reading: a form of Gewoge (hunspell)
+gewächshausbedingungen/~~N # noun reading: a form of Gewächshausbedingungen (hunspell)
+gier/~~N # noun reading: a form of Gier (hunspell)
+glaube/~~N # noun reading: a form of Glaube (hunspell)
+glimmer/~~N # noun reading: a form of Glimmer (hunspell)
+glukosebedarf/~~N # noun reading: a form of Glukosebedarf (hunspell)
+granitintrusionen/~~N # noun reading: a form of Granitintrusionen (hunspell)
+graus/~~N # noun reading: a form of Graus (hunspell)
+grüße/~~N # noun reading: a form of Gruß (hunspell)
+grüßen/~~N # noun reading: a form of Gruß (hunspell)
+gärten/~~N # noun reading: a form of Gärten (hunspell)
+güterverteilzentren/~~N # noun reading: a form of Güterverteilzentren (hunspell)
+haken/~~N # noun reading: a form of Haken (hunspell)
+halogen/~~N # noun reading: a form of Halogen (hunspell)
+harnwegsbeschwerden/~~N # noun reading: a form of Harnwegsbeschwerden (hunspell)
+hegemonialbestrebungen/~~N # noun reading: a form of Hegemonialbestrebungen (hunspell)
+herbert/~~N # noun reading: a form of Herbert (hunspell)
+hergabe/~~N # noun reading: a form of Hergabe (hunspell)
+herrschaftsinsignien/~~N # noun reading: a form of Herrschaftsinsignien (hunspell)
+heterodontosauriden/~~N # noun reading: a form of Heterodontosauriden (hunspell)
+hingabe/~~N # noun reading: a form of Hingabe (hunspell)
+hinte/~~N # noun reading: a form of Hinte (hunspell)
+hinterlegungskosten/~~N # noun reading: a form of Hinterlegungskosten (hunspell)
+hinterleibsextremitäten/~~N # noun reading: a form of Hinterleibsextremitäten (hunspell)
+hinterleibsganglien/~~N # noun reading: a form of Hinterleibsganglien (hunspell)
+hinterleibskiemen/~~N # noun reading: a form of Hinterleibskiemen (hunspell)
+hinzugaben/~~N # noun reading: a form of Hinzugabe (hunspell)
+holdinggesellschaften/~~N # noun reading: a form of Holdinggesellschaften (hunspell)
+hordenkontaktöfen/~~N # noun reading: a form of Hordenkontaktöfen (hunspell)
+humboldtstipendien/~~N # noun reading: a form of Humboldtstipendien (hunspell)
+husten/~~N # noun reading: a form of Husten (hunspell)
+hybridisierungsöfen/~~N # noun reading: a form of Hybridisierungsöfen (hunspell)
+hyperinsulinismen/~~N # noun reading: a form of Hyperinsulinismen (hunspell)
+hz/~~N # noun reading: a form of Hz (hunspell)
+identifizierungskriterien/~~N # noun reading: a form of Identifizierungskriterien (hunspell)
+inlandgesellschaften/~~N # noun reading: a form of Inlandgesellschaften (hunspell)
+inspektionsmaßnahmen/~~N # noun reading: a form of Inspektionsmaßnahmen (hunspell)
+instandhaltungsarbeiten/~~N # noun reading: a form of Instandhaltungsarbeiten (hunspell)
+instandhaltungskosten/~~N # noun reading: a form of Instandhaltungskosten (hunspell)
+instandsetzungskosten/~~N # noun reading: a form of Instandsetzungskosten (hunspell)
+interviewleitfäden/~~N # noun reading: a form of Interviewleitfäden (hunspell)
+jahrhundertwendevillen/~~N # noun reading: a form of Jahrhundertwendevillen (hunspell)
+justierschwierigkeiten/~~N # noun reading: a form of Justierschwierigkeiten (hunspell)
+justierungsarbeiten/~~N # noun reading: a form of Justierungsarbeiten (hunspell)
+jüngern/~~N # noun reading: a form of Jünger (hunspell)
+kadrieren/~~N # noun reading: a form of Kadrieren (hunspell)
+kalksteinverwitterungsböden/~~N # noun reading: a form of Kalksteinverwitterungsböden (hunspell)
+kaskadenbombenwürfen/~~N # noun reading: a form of Kaskadenbombenwürfen (hunspell)
+kastellinnenbauten/~~N # noun reading: a form of Kastellinnenbauten (hunspell)
+katalogschubkästen/~~N # noun reading: a form of Katalogschubkästen (hunspell)
+kathedralenneubauten/~~N # noun reading: a form of Kathedralenneubauten (hunspell)
+kirchenpatrozinien/~~N # noun reading: a form of Kirchenpatrozinien (hunspell)
+kissen/~~N # noun reading: a form of Kissen (hunspell)
+klammern/~~N # noun reading: a form of Klammer (hunspell)
+kloppe/~~N # noun reading: a form of Kloppe (hunspell)
+klosterskriptorien/~~N # noun reading: a form of Klosterskriptorien (hunspell)
+klump/~~N # noun reading: a form of Klump (hunspell)
+klärungsbedarf/~~N # noun reading: a form of Klärungsbedarf (hunspell)
+knoten/~~N # noun reading: a form of Knoten (hunspell)
+kolben/~~N # noun reading: a form of Kolben (hunspell)
+kolonialisierungsbestrebungen/~~N # noun reading: a form of Kolonialisierungsbestrebungen (hunspell)
+kolonisierungsbemühungen/~~N # noun reading: a form of Kolonisierungsbemühungen (hunspell)
+komprehensionsprinzipien/~~N # noun reading: a form of Komprehensionsprinzipien (hunspell)
+komprimierungsalgorithmen/~~N # noun reading: a form of Komprimierungsalgorithmen (hunspell)
+konditorbackwaren/~~N # noun reading: a form of Konditorbackwaren (hunspell)
+konsensbedarf/~~N # noun reading: a form of Konsensbedarf (hunspell)
+konten/~~N # noun reading: a form of Konten (hunspell)
+kontinuitätsanforderungen/~~N # noun reading: a form of Kontinuitätsanforderungen (hunspell)
+kotabsatzbeschwerden/~~N # noun reading: a form of Kotabsatzbeschwerden (hunspell)
+kreuzzugsvorbereitungen/~~N # noun reading: a form of Kreuzzugsvorbereitungen (hunspell)
+kriegsheimkehrerdramen/~~N # noun reading: a form of Kriegsheimkehrerdramen (hunspell)
+kristallisieranlagen/~~N # noun reading: a form of Kristallisieranlagen (hunspell)
+kryptoalgorithmen/~~N # noun reading: a form of Kryptoalgorithmen (hunspell)
+krönungsinsignien/~~N # noun reading: a form of Krönungsinsignien (hunspell)
+krümmungseigenschaften/~~N # noun reading: a form of Krümmungseigenschaften (hunspell)
+kundgabe/~~N # noun reading: a form of Kundgabe (hunspell)
+kurier/~~N # noun reading: a form of Kurier (hunspell)
+kuriere/~~N # noun reading: a form of Kurier (hunspell)
+kurieren/~~N # noun reading: a form of Kurier (hunspell)
+kämme/~~N # noun reading: a form of Kämme (hunspell)
+kämpferqualitäten/~~N # noun reading: a form of Kämpferqualitäten (hunspell)
+käppchenträgern/~~N # noun reading: a form of Käppchenträgern (hunspell)
+kästen/~~N # noun reading: a form of Kästen (hunspell)
+königspatrozinien/~~N # noun reading: a form of Königspatrozinien (hunspell)
+küsse/~~N # noun reading: a form of Kuss (hunspell)
+lackierungskosten/~~N # noun reading: a form of Lackierungskosten (hunspell)
+lagerungsbedingungen/~~N # noun reading: a form of Lagerungsbedingungen (hunspell)
+langtagbedingungen/~~N # noun reading: a form of Langtagbedingungen (hunspell)
+last/~~N # noun reading: a form of Last (hunspell)
+lasten/~~N # noun reading: a form of Last (hunspell)
+lautgeben/~~N # noun reading: a form of Lautgeben (hunspell)
+leas/~~N # noun reading: a form of Lea (hunspell)
+lebenszyklusrisiken/~~N # noun reading: a form of Lebenszyklusrisiken (hunspell)
+legalitätsbeteuerungen/~~N # noun reading: a form of Legalitätsbeteuerungen (hunspell)
+legern/~~N # noun reading: a form of Leger (hunspell)
+legierungseigenschaften/~~N # noun reading: a form of Legierungseigenschaften (hunspell)
+leistungsfähigkeitsprinzipien/~~N # noun reading: a form of Leistungsfähigkeitsprinzipien (hunspell)
+liese/~~N # noun reading: a form of Liese (hunspell)
+lobsangst/~~N # noun reading: a form of Lobsang (hunspell)
+lohnsetzungsmechanismen/~~N # noun reading: a form of Lohnsetzungsmechanismen (hunspell)
+lombardverbindlichkeiten/~~N # noun reading: a form of Lombardverbindlichkeiten (hunspell)
+löslichkeitseigenschaften/~~N # noun reading: a form of Löslichkeitseigenschaften (hunspell)
+mafiaverstrickungen/~~N # noun reading: a form of Mafiaverstrickungen (hunspell)
+magen/~~N # noun reading: a form of Magen (hunspell)
+magnesiumbedarf/~~N # noun reading: a form of Magnesiumbedarf (hunspell)
+malerbedarfe/~~N # noun reading: a form of Malerbedarf (hunspell)
+malerbedarfen/~~N # noun reading: a form of Malerbedarf (hunspell)
+manganbedarf/~~N # noun reading: a form of Manganbedarf (hunspell)
+mannbarkeitsriten/~~N # noun reading: a form of Mannbarkeitsriten (hunspell)
+manövrierschwierigkeiten/~~N # noun reading: a form of Manövrierschwierigkeiten (hunspell)
+markierungsmaterialien/~~N # noun reading: a form of Markierungsmaterialien (hunspell)
+markthallenanbauten/~~N # noun reading: a form of Markthallenanbauten (hunspell)
+meliorationsgräben/~~N # noun reading: a form of Meliorationsgräben (hunspell)
+metastasierungsrisiken/~~N # noun reading: a form of Metastasierungsrisiken (hunspell)
+mietkautionskonten/~~N # noun reading: a form of Mietkautionskonten (hunspell)
+miktionsbeschwerden/~~N # noun reading: a form of Miktionsbeschwerden (hunspell)
+minimierungsalgorithmen/~~N # noun reading: a form of Minimierungsalgorithmen (hunspell)
+minustemperaturen/~~N # noun reading: a form of Minustemperaturen (hunspell)
+missionierungsbestrebungen/~~N # noun reading: a form of Missionierungsbestrebungen (hunspell)
+missionsanstrengungen/~~N # noun reading: a form of Missionsanstrengungen (hunspell)
+monumentalgrabbauten/~~N # noun reading: a form of Monumentalgrabbauten (hunspell)
+mucks/~~N # noun reading: a form of Mucks (hunspell)
+muh/~~N # noun reading: a form of Muh (hunspell)
+multifunktionsarenen/~~N # noun reading: a form of Multifunktionsarenen (hunspell)
+multifunktionsstadien/~~N # noun reading: a form of Multifunktionsstadien (hunspell)
+murr/~~N # noun reading: a form of Murr (hunspell)
+musterungsunterlagen/~~N # noun reading: a form of Musterungsunterlagen (hunspell)
+mäzen/~~N # noun reading: a form of Mäzen (hunspell)
+möchtegern/~~N # noun reading: a form of Möchtegern (hunspell)
+nachbarschaftsläden/~~N # noun reading: a form of Nachbarschaftsläden (hunspell)
+nachbarschaftsstreitigkeiten/~~N # noun reading: a form of Nachbarschaftsstreitigkeiten (hunspell)
+nachbarschaftszentren/~~N # noun reading: a form of Nachbarschaftszentren (hunspell)
+nachfrageauswirkungen/~~N # noun reading: a form of Nachfrageauswirkungen (hunspell)
+nachfragebedarfe/~~N # noun reading: a form of Nachfragebedarf (hunspell)
+nachfragebedarfen/~~N # noun reading: a form of Nachfragebedarf (hunspell)
+nachholbedarf/~~N # noun reading: a form of Nachholbedarf (hunspell)
+nachlöscharbeiten/~~N # noun reading: a form of Nachlöscharbeiten (hunspell)
+naherholungszentren/~~N # noun reading: a form of Naherholungszentren (hunspell)
+nahverkehrsleistungen/~~N # noun reading: a form of Nahverkehrsleistungen (hunspell)
+nahversorgungszentren/~~N # noun reading: a form of Nahversorgungszentren (hunspell)
+neuordnen/~~N # noun reading: a form of Neuordnen (hunspell)
+nick/~~N # noun reading: a form of Nick (hunspell)
+niedrigsalzbedingungen/~~N # noun reading: a form of Niedrigsalzbedingungen (hunspell)
+nominierungskriterien/~~N # noun reading: a form of Nominierungskriterien (hunspell)
+normierungsgremien/~~N # noun reading: a form of Normierungsgremien (hunspell)
+ofen/~~N # noun reading: a form of Ofen (hunspell)
+omnipotenzfunktionen/~~N # noun reading: a form of Omnipotenzfunktionen (hunspell)
+paare/~~N # noun reading: a form of Paar (hunspell)
+panier/~~N # noun reading: a form of Panier (hunspell)
+parse/~~N # noun reading: a form of Parse (hunspell)
+personenstandsunterlagen/~~N # noun reading: a form of Personenstandsunterlagen (hunspell)
+pfadfinderlagern/~~N # noun reading: a form of Pfadfinderlager (hunspell)
+pfadfinderzentren/~~N # noun reading: a form of Pfadfinderzentren (hunspell)
+pferdeenzephalomyelitiden/~~N # noun reading: a form of Pferdeenzephalomyelitiden (hunspell)
+phagenvermehrungszyklen/~~N # noun reading: a form of Phagenvermehrungszyklen (hunspell)
+phasieren/~~N # noun reading: a form of Phasieren (hunspell)
+pick/~~N # noun reading: a form of Pick (hunspell)
+pistenbedingungen/~~N # noun reading: a form of Pistenbedingungen (hunspell)
+planfeststellungsunterlagen/~~N # noun reading: a form of Planfeststellungsunterlagen (hunspell)
+plantagengesellschaften/~~N # noun reading: a form of Plantagengesellschaften (hunspell)
+polier/~~N # noun reading: a form of Polier (hunspell)
+pontifikalrequien/~~N # noun reading: a form of Pontifikalrequien (hunspell)
+postverteilzentren/~~N # noun reading: a form of Postverteilzentren (hunspell)
+preisgaben/~~N # noun reading: a form of Preisgabe (hunspell)
+prekaritätsrisiken/~~N # noun reading: a form of Prekaritätsrisiken (hunspell)
+prioritätsstreitigkeiten/~~N # noun reading: a form of Prioritätsstreitigkeiten (hunspell)
+prospektunterlagen/~~N # noun reading: a form of Prospektunterlagen (hunspell)
+protze/~~N # noun reading: a form of Protz (hunspell)
+provinzialschulkollegien/~~N # noun reading: a form of Provinzialschulkollegien (hunspell)
+puck/~~N # noun reading: a form of Puck (hunspell)
+pups/~~N # noun reading: a form of Pup (hunspell)
+quantifizierungsalgorithmen/~~N # noun reading: a form of Quantifizierungsalgorithmen (hunspell)
+quartierbedarf/~~N # noun reading: a form of Quartierbedarf (hunspell)
+quartierbedarfe/~~N # noun reading: a form of Quartierbedarf (hunspell)
+quartierbedarfen/~~N # noun reading: a form of Quartierbedarf (hunspell)
+querschiffbasiliken/~~N # noun reading: a form of Querschiffbasiliken (hunspell)
+rasen/~~N # noun reading: a form of Rasen (hunspell)
+rationalitätsanforderungen/~~N # noun reading: a form of Rationalitätsanforderungen (hunspell)
+reduktionsbestrebungen/~~N # noun reading: a form of Reduktionsbestrebungen (hunspell)
+refinanzierungskosten/~~N # noun reading: a form of Refinanzierungskosten (hunspell)
+refinanzierungsrisiken/~~N # noun reading: a form of Refinanzierungsrisiken (hunspell)
+reglereigenschaften/~~N # noun reading: a form of Reglereigenschaften (hunspell)
+renaissancegärten/~~N # noun reading: a form of Renaissancegärten (hunspell)
+renderalgorithmen/~~N # noun reading: a form of Renderalgorithmen (hunspell)
+renke/~~N # noun reading: a form of Renke (hunspell)
+renovierungsarbeiten/~~N # noun reading: a form of Renovierungsarbeiten (hunspell)
+renovierungsausgaben/~~N # noun reading: a form of Renovierungsausgaben (hunspell)
+renovierungskosten/~~N # noun reading: a form of Renovierungskosten (hunspell)
+restaurierungsbemühungen/~~N # noun reading: a form of Restaurierungsbemühungen (hunspell)
+restaurierungskosten/~~N # noun reading: a form of Restaurierungskosten (hunspell)
+restaurierungszentren/~~N # noun reading: a form of Restaurierungszentren (hunspell)
+restriktionsfragmentlängenpolymorphismen/~~N # noun reading: a form of Restriktionsfragmentlängenpolymorphismen (hunspell)
+revisionsbedarf/~~N # noun reading: a form of Revisionsbedarf (hunspell)
+rezeptionsbedingungen/~~N # noun reading: a form of Rezeptionsbedingungen (hunspell)
+rezeptionsgewohnheiten/~~N # noun reading: a form of Rezeptionsgewohnheiten (hunspell)
+risikoselektionsmechanismen/~~N # noun reading: a form of Risikoselektionsmechanismen (hunspell)
+rodungstätigkeiten/~~N # noun reading: a form of Rodungstätigkeiten (hunspell)
+rumänisierungsbestrebungen/~~N # noun reading: a form of Rumänisierungsbestrebungen (hunspell)
+russifizierungsbemühungen/~~N # noun reading: a form of Russifizierungsbemühungen (hunspell)
+russifizierungsbestrebungen/~~N # noun reading: a form of Russifizierungsbestrebungen (hunspell)
+räume/~~N # noun reading: a form of Raum (hunspell)
+röntgen/~~N # noun reading: a form of Röntgen (hunspell)
+rücken/~~N # noun reading: a form of Rücken (hunspell)
+sage/~~N # noun reading: a form of Sage (hunspell)
+sample/~~N # noun reading: a form of Sample (hunspell)
+schaden/~~N # noun reading: a form of Schaden (hunspell)
+schaltreglernetzteilen/~~N # noun reading: a form of Schaltreglernetzteilen (hunspell)
+schatten/~~N # noun reading: a form of Schatten (hunspell)
+schichten/~~N # noun reading: a form of Schichten (hunspell)
+schiene/~~N # noun reading: a form of Schiene (hunspell)
+schienen/~~N # noun reading: a form of Schienen (hunspell)
+schiffsausrüsterfirmen/~~N # noun reading: a form of Schiffsausrüsterfirmen (hunspell)
+schimmer/~~N # noun reading: a form of Schimmer (hunspell)
+schinken/~~N # noun reading: a form of Schinken (hunspell)
+schippe/~~N # noun reading: a form of Schippe (hunspell)
+schlaganfallrisiken/~~N # noun reading: a form of Schlaganfallrisiken (hunspell)
+schleifungsarbeiten/~~N # noun reading: a form of Schleifungsarbeiten (hunspell)
+schlitten/~~N # noun reading: a form of Schlitten (hunspell)
+schmäh/~~N # noun reading: a form of Schmäh (hunspell)
+schwimmer/~~N # noun reading: a form of Schwimmer (hunspell)
+screen/~~N # noun reading: a form of Screen (hunspell)
+sehnen/~~N # noun reading: a form of Sehnen (hunspell)
+sekundärfederungsmechanismen/~~N # noun reading: a form of Sekundärfederungsmechanismen (hunspell)
+sentimentindikatoren/~~N # noun reading: a form of Sentimentindikatoren (hunspell)
+signaltransduktionsmechanismen/~~N # noun reading: a form of Signaltransduktionsmechanismen (hunspell)
+situieren/~~N # noun reading: a form of Situieren (hunspell)
+skype/~~N # noun reading: a form of Skype (hunspell)
+sonnenfleckzyklen/~~N # noun reading: a form of Sonnenfleckzyklen (hunspell)
+speis/~~N # noun reading: a form of Speis (hunspell)
+spesen/~~N # noun reading: a form of Spesen (hunspell)
+stabfedermechanismen/~~N # noun reading: a form of Stabfedermechanismen (hunspell)
+stande/~~N # noun reading: a form of Stande (hunspell)
+starkwindbedingungen/~~N # noun reading: a form of Starkwindbedingungen (hunspell)
+stellungsuchenden/~~N # noun reading: a form of Stellungsuchenden (hunspell)
+stier/~~N # noun reading: a form of Stier (hunspell)
+stiere/~~N # noun reading: a form of Stier (hunspell)
+stilllegungsdaten/~~N # noun reading: a form of Stilllegungsdaten (hunspell)
+stimmer/~~N # noun reading: a form of Stimmer (hunspell)
+stream/~~N # noun reading: a form of Stream (hunspell)
+streckenausbauten/~~N # noun reading: a form of Streckenausbauten (hunspell)
+stresstest/~~N # noun reading: a form of Stresstest (hunspell)
+stromeinspeisungsstellen/~~N # noun reading: a form of Stromeinspeisungsstellen (hunspell)
+studiomöglichkeiten/~~N # noun reading: a form of Studiomöglichkeiten (hunspell)
+suche/~~N # noun reading: a form of Suche (hunspell)
+suhl/~~N # noun reading: a form of Suhl (hunspell)
+suhle/~~N # noun reading: a form of Suhl (hunspell)
+sukzessionsstadien/~~N # noun reading: a form of Sukzessionsstadien (hunspell)
+sulz/~~N # noun reading: a form of Sulz (hunspell)
+systematisierungsbestrebungen/~~N # noun reading: a form of Systematisierungsbestrebungen (hunspell)
+sülz/~~N # noun reading: a form of Sülz (hunspell)
+talfestfeierlichkeiten/~~N # noun reading: a form of Talfestfeierlichkeiten (hunspell)
+tat/~~N # noun reading: a form of Tat (hunspell)
+taxationsarbeiten/~~N # noun reading: a form of Taxationsarbeiten (hunspell)
+terrarienbedingungen/~~N # noun reading: a form of Terrarienbedingungen (hunspell)
+terrassierungsarbeiten/~~N # noun reading: a form of Terrassierungsarbeiten (hunspell)
+teststoppabkommen/~~N # noun reading: a form of Teststoppabkommen (hunspell)
+themen/~~N # noun reading: a form of Themen (hunspell)
+thronbesteigungsdaten/~~N # noun reading: a form of Thronbesteigungsdaten (hunspell)
+tiegelschmelzöfen/~~N # noun reading: a form of Tiegelschmelzöfen (hunspell)
+tim/~~N # noun reading: a form of Tim (hunspell)
+track/~~N # noun reading: a form of Track (hunspell)
+transformatorenkästen/~~N # noun reading: a form of Transformatorenkästen (hunspell)
+transitionskosten/~~N # noun reading: a form of Transitionskosten (hunspell)
+treibertransistoren/~~N # noun reading: a form of Treibertransistoren (hunspell)
+treppenhausanbauten/~~N # noun reading: a form of Treppenhausanbauten (hunspell)
+treppentracheiden/~~N # noun reading: a form of Treppentracheiden (hunspell)
+tretmühlenmechanismen/~~N # noun reading: a form of Tretmühlenmechanismen (hunspell)
+tricarbonsäurezyklen/~~N # noun reading: a form of Tricarbonsäurezyklen (hunspell)
+trockenzeitrefugien/~~N # noun reading: a form of Trockenzeitrefugien (hunspell)
+tropen/~~N # noun reading: a form of Tropen (hunspell)
+trudeleigenschaften/~~N # noun reading: a form of Trudeleigenschaften (hunspell)
+tränen/~~N # noun reading: a form of Tränen (hunspell)
+träume/~~N # noun reading: a form of Traum (hunspell)
+träumen/~~N # noun reading: a form of Traum (hunspell)
+türkisierungsbestrebungen/~~N # noun reading: a form of Türkisierungsbestrebungen (hunspell)
+ultraviolettabsorptionsspektren/~~N # noun reading: a form of Ultraviolettabsorptionsspektren (hunspell)
+umgestaltungsarbeiten/~~N # noun reading: a form of Umgestaltungsarbeiten (hunspell)
+umsiedlungsvorbereitungen/~~N # noun reading: a form of Umsiedlungsvorbereitungen (hunspell)
+umstrukturierungskosten/~~N # noun reading: a form of Umstrukturierungskosten (hunspell)
+umsturzbestrebungen/~~N # noun reading: a form of Umsturzbestrebungen (hunspell)
+umverteilungsmechanismen/~~N # noun reading: a form of Umverteilungsmechanismen (hunspell)
+unkosten/~~N # noun reading: a form of Unkosten (hunspell)
+unterbringungsbedingungen/~~N # noun reading: a form of Unterbringungsbedingungen (hunspell)
+unterbringungskosten/~~N # noun reading: a form of Unterbringungskosten (hunspell)
+unterdrückungspraktiken/~~N # noun reading: a form of Unterdrückungspraktiken (hunspell)
+untergangsszenarien/~~N # noun reading: a form of Untergangsszenarien (hunspell)
+unterschiede/~~N # noun reading: a form of Unterschied (hunspell)
+unterzeichnerstaaten/~~N # noun reading: a form of Unterzeichnerstaaten (hunspell)
+veranden/~~N # noun reading: a form of Veranden (hunspell)
+verdrahtungskasten/~~N # noun reading: a form of Verdrahtungskasten (hunspell)
+verdrängungsmechanismen/~~N # noun reading: a form of Verdrängungsmechanismen (hunspell)
+verdrängungspraktiken/~~N # noun reading: a form of Verdrängungspraktiken (hunspell)
+vereinheitlichungsbestrebungen/~~N # noun reading: a form of Vereinheitlichungsbestrebungen (hunspell)
+vererden/~~N # noun reading: a form of Vererden (hunspell)
+verflüssigungserscheinungen/~~N # noun reading: a form of Verflüssigungserscheinungen (hunspell)
+verfügbarkeitsanforderungen/~~N # noun reading: a form of Verfügbarkeitsanforderungen (hunspell)
+vergebens/~~N # noun reading: a form of Vergeben (hunspell)
+vergoldungsarbeiten/~~N # noun reading: a form of Vergoldungsarbeiten (hunspell)
+verhältnismäßigkeitserwägungen/~~N # noun reading: a form of Verhältnismäßigkeitserwägungen (hunspell)
+verlandungsstadien/~~N # noun reading: a form of Verlandungsstadien (hunspell)
+verließe/~~N # noun reading: a form of Verließ (hunspell)
+verließen/~~N # noun reading: a form of Verließ (hunspell)
+vermaßen/~~N # noun reading: a form of Vermaßen (hunspell)
+vermeidungsmechanismen/~~N # noun reading: a form of Vermeidungsmechanismen (hunspell)
+vernutzen/~~N # noun reading: a form of Vernutzen (hunspell)
+verpflegungskosten/~~N # noun reading: a form of Verpflegungskosten (hunspell)
+versalben/~~N # noun reading: a form of Versalben (hunspell)
+verschuldungsrisiken/~~N # noun reading: a form of Verschuldungsrisiken (hunspell)
+vertragsanbahnungskosten/~~N # noun reading: a form of Vertragsanbahnungskosten (hunspell)
+vertragsspielerbedingungen/~~N # noun reading: a form of Vertragsspielerbedingungen (hunspell)
+vertragsvereinbarungskosten/~~N # noun reading: a form of Vertragsvereinbarungskosten (hunspell)
+verurteilungszahlen/~~N # noun reading: a form of Verurteilungszahlen (hunspell)
+verwechslungsrisiken/~~N # noun reading: a form of Verwechslungsrisiken (hunspell)
+verwitterungsböden/~~N # noun reading: a form of Verwitterungsböden (hunspell)
+verwitterungsschäden/~~N # noun reading: a form of Verwitterungsschäden (hunspell)
+verzehrgewohnheiten/~~N # noun reading: a form of Verzehrgewohnheiten (hunspell)
+ville/~~N # noun reading: a form of Ville (hunspell)
+villen/~~N # noun reading: a form of Villen (hunspell)
+viren/~~N # noun reading: a form of Viren (hunspell)
+visier/~~N # noun reading: a form of Visier (hunspell)
+visiere/~~N # noun reading: a form of Visier (hunspell)
+volkszählungsbögen/~~N # noun reading: a form of Volkszählungsbögen (hunspell)
+volkszählungsdaten/~~N # noun reading: a form of Volkszählungsdaten (hunspell)
+volumen/~~N # noun reading: a form of Volumen (hunspell)
+vorbeugungskosten/~~N # noun reading: a form of Vorbeugungskosten (hunspell)
+vorlesungsmaterialien/~~N # noun reading: a form of Vorlesungsmaterialien (hunspell)
+vulkanisierwerkstätten/~~N # noun reading: a form of Vulkanisierwerkstätten (hunspell)
+waggonmaßest/~~N # noun reading: a form of Waggonmaß (hunspell)
+waggonmaßt/~~N # noun reading: a form of Waggonmaß (hunspell)
+walderlebniszentren/~~N # noun reading: a form of Walderlebniszentren (hunspell)
+warden/~~N # noun reading: a form of Warden (hunspell)
+wasserrutschbahnen/~~N # noun reading: a form of Wasserrutschbahnen (hunspell)
+wasserstandsschwankungen/~~N # noun reading: a form of Wasserstandsschwankungen (hunspell)
+weizen/~~N # noun reading: a form of Weizen (hunspell)
+welterschaffungsmythen/~~N # noun reading: a form of Welterschaffungsmythen (hunspell)
+werst/~~N # noun reading: a form of Werst (hunspell)
+wettermodifizierungszentren/~~N # noun reading: a form of Wettermodifizierungszentren (hunspell)
+wiegen/~~N # noun reading: a form of Wiegen (hunspell)
+wimmer/~~N # noun reading: a form of Wimmer (hunspell)
+windschutzanbauten/~~N # noun reading: a form of Windschutzanbauten (hunspell)
+wohlstandseinbußen/~~N # noun reading: a form of Wohlstandseinbußen (hunspell)
+wolfratshausen/~~N # noun reading: a form of Wolfratshausen (hunspell)
+wortfügungslehren/~~N # noun reading: a form of Wortfügungslehren (hunspell)
+zahnungsbeschwerden/~~N # noun reading: a form of Zahnungsbeschwerden (hunspell)
+zech/~~N # noun reading: a form of Zech (hunspell)
+zeitschriftenläden/~~N # noun reading: a form of Zeitschriftenläden (hunspell)
+zeremonialzentren/~~N # noun reading: a form of Zeremonialzentren (hunspell)
+zertifizierungskriterien/~~N # noun reading: a form of Zertifizierungskriterien (hunspell)
+zier/~~N # noun reading: a form of Zier (hunspell)
+zirkumhorizontalbögen/~~N # noun reading: a form of Zirkumhorizontalbögen (hunspell)
+zirkumzenitalbögen/~~N # noun reading: a form of Zirkumzenitalbögen (hunspell)
+zusammensetzungsprinzipien/~~N # noun reading: a form of Zusammensetzungsprinzipien (hunspell)
+zustimmungsquoren/~~N # noun reading: a form of Zustimmungsquoren (hunspell)
+zuverlässigkeitsforderungen/~~N # noun reading: a form of Zuverlässigkeitsforderungen (hunspell)
+überholungskosten/~~N # noun reading: a form of Überholungskosten (hunspell)
+überlast/~~N # noun reading: a form of Überlast (hunspell)
+überlastungsschäden/~~N # noun reading: a form of Überlastungsschäden (hunspell)
+übermüden/~~N # noun reading: a form of Übermüden (hunspell)
+überwinterungsstadien/~~N # noun reading: a form of Überwinterungsstadien (hunspell)
+balladenkomponist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+calciumantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+caravaggist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+cartoonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+chartist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+dadaist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+darwinist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+defätist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+determinist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+dialethist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+donatist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+dopaminantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+dschihadist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+elamist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+emotivist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+empirist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+enzyklopädist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+equilibrist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+etatist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+eudämonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+evolutionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+exkommunist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+expansionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+fagottist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+falangist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+falsifikationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+fauvist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+fideist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+finnougrist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+folklorist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+folsäureantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+futurist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+galerist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+gambist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+gauligist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+girondist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+gräzist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+gymnosophist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hacktivist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+harfenist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hebraist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hedonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hellenist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hispanist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+histaminantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hitlerist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+hornist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+illusionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+indianist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+indogermanist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+indoiranist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+interventionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+intuitionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+iranist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+irredentist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kalziumantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kantonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+karikaturist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+katechist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+klassizist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kollektivist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+koloratursopranist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kommunitarist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+komparatist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+konformist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kongregationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+konstruktivist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kontorist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kreationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+kubist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+laizist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+lakonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+latifundist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+latinist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+lazarist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+logizist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+mahdist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+maoist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+masochist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+mediävist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+modernist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+monetarist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+monist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+monopsonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+montanist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+morphinantagonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+nachimpressionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+nativist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+naturist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+nonkonformist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+okkultist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+oratorienkomponist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+pantheist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+papist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+parodist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+passionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+phillumenist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+pietist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+polytheist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+posaunist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+positivist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+pragmatist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+prohibitionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+protist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+psychologist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+redemptorist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+reformist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+renaissancehumanist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+rezeptionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+romanist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+rotarmist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+rotgardist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+sadomasochist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+salafist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+segregationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+sextourist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+sezessionist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+simonist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+situationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+skandinavist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+slawist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+solipsist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+souveränist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+spartakist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+squadrist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+stalinist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+synthetist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+thomist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+titoist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+tocharist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+topligist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+trappist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+trinitarist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+trotzkist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+urchrist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+verifikationist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+visagist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+ästhetizist/~~NhYKL # -ist noun with its plural (hunspell); the plural used to pass only as <stem> + a verb form 'isten'
+föderalist/~~NhYKL # -ist noun with its plural
+loyalist/~~NhYKL # -ist noun with its plural
+funktionalist/~~NhYKL # -ist noun with its plural
+holist/~~NhYKL # -ist noun with its plural
+vokalist/~~NhYKL # -ist noun with its plural
+wolfgang/~~NhHA
+siegbert/~~NhHA
+gottlieb/~~NhHA
+gotthold/~~NhHA
+friedemann/~~NhHA
+engelbert/~~NhHA
+siegwart/~~NhHA
+lessing/~~NhHA
+liebknecht/~~NhHA
+gottschalk/~~NhHA
+kohlberg/~~NhHA
+westermann/~~NhHA
+schweinsteiger/~~NhHA
+röntgen/~~NhHA
+warburg/~~NhHA
+wartburg/~~NhHA
+ruhpolding/~~NhHA
+morsbach/~~NhHA
+wolfenbüttel/~~NhHA
+ruhland/~~NhHA
+sonneberg/~~NhHA
+perleberg/~~NhHA
+markneukirchen/~~NhHA
+hallstatt/~~NhHA
+eitorf/~~NhHA
+karthaus/~~NhHA
+spandauer/~~NhHA
+dornfelder/~~NhH
+marketender/~~NhH
+ratschläge/~~NhE # plural of ratschlag
+augäpfel/~~Nh # plural of augapfel
+mietshäuser/~~NhE # plural of mietshaus
+tagtraum/~~NhH0
+typsystem/~~NhH0X
+typangabe/~~FhE
+typgenehmigung/~~FhY
+typbezeichnung/~~FhY
+typschiff/~~NhH0X
+rechtwinklig/~~JqOQRST
+rechtgläubig/~~JqOQRSTUW
+zwanghaft/~~JqOQRSTUW
+massereich/~~JqOQRSTUW
+gutgläubigkeit/~~Fh
+gottebenbildlichkeit/~~Fh
+gottverlassenheit/~~Fh
+freisinnigkeit/~~Fh
+ehrverletzung/~~FhY
+gewebsflüssigkeit/~~FhY
+eiklar/~~NhH
+pumpernickel/~~NhH
+vorführmodell/~~NhH0X
+saumagen/~~NhH
+gutsein/~~NhH
+heerkönigtum/~~NhH
+reifens/~~Nh # genitive of der Reifen
+schiefgeht/~~V # er/sie/es geht schief
+gewissenlosigkeit/~~Fh
+polaben/~~NhA
+phlogiston/~~NhH
+eischnee/~~MhH # Ei links only as Eier- in igerman98; the bare-Ei compounds are entries
+interpolation/~~NhYF
+unitarier/~~NhE
+soziogenese/~~FhE
+mundschenk/~~NhH0X
+ernsthaft/~~JqOQRSTUW
+verschaltet/~~V # er/sie/es verschaltet

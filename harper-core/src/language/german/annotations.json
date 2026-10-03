@@ -2922,6 +2922,10 @@
 			"stem_only": true,
 			"metadata": {}
 		},
+		"!": {
+			"#": "No-compound marker. The entry is a word, but its spelling is never an element of a compound (the forms built from it still may be, since they often have a second source). For strings that are real in isolation but are only ever seen inside a compound as the remains of a typo: the Latin `et` (`Jahrhundet` = `Jahr` + `hund` + `et`), the symbols `NS` and `Cs`, the interjection `hi`, and quoted English mined from the prose corpus (`Datebank` = `date` + `bank`). Abbreviations need no mark: they are excluded by their metadata. Read by `CompoundChecker` and `GermanSpellCheck`.",
+			"metadata": {}
+		},
 		"h": {
 			"#": "Compound-capability marker. Generates nothing — it is bookkeeping, appended to nearly every vetted noun entry, and `CompoundChecker` reads it to decide whether a short word may act as a compound element. The '-st' affix that used to live here moved to 'G'.",
 			"metadata": {}

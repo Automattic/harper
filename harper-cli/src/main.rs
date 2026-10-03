@@ -123,10 +123,14 @@ enum Args {
     },
     /// Get the metadata associated with one or more words.
     Metadata {
+        /// The words to look up. Read one per line from stdin when none are given.
         words: Vec<String>,
         /// Only show the part-of-speech flags and emojis, not the full JSON
         #[arg(short, long)]
         brief: bool,
+        /// Specify the dialect whose dictionary to consult.
+        #[arg(short, long, default_value = "American")]
+        dialect: String,
     },
     /// Get all the forms of a word using the affixes.
     Forms {
@@ -411,7 +415,11 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
-        Args::Metadata { words, brief } => {
+        Args::Metadata {
+            words,
+            brief,
+            dialect,
+        } => {
             type PosPredicate = fn(&DictWordMetadata) -> bool;
 
             const POS: &[(&str, PosPredicate)] = &[
@@ -426,7 +434,14 @@ fn main() -> anyhow::Result<()> {
                 ("I👤", DictWordMetadata::is_pronoun),
             ];
 
-            let dictionary = curated_dictionary();
+            let dialect = parse_dialect(&dialect)
+                .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect, e))?;
+            let dictionary = harper_core::language::registry::dictionary(dialect);
+            let words = if words.is_empty() {
+                std::io::stdin().lines().collect::<Result<Vec<_>, _>>()?
+            } else {
+                words
+            };
             for word in words {
                 let meta = dictionary.get_word_metadata_str(&word);
                 let (flags, emojis) = meta.as_ref().map_or_else(

@@ -77,6 +77,13 @@ pub static GERMAN_FUNCTION_WORDS: LazyLock<hashbrown::HashSet<crate::CharString>
 pub static GERMAN_SUFFIXED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
     LazyLock::new(|| super::compound_checker::suffixed_element_set(&GERMAN_WORD_LIST));
 
+/// The words of the German word list that never take part in a compound.
+///
+/// See `may_be_compound_element` in [`super::compound_checker`]. Read by
+/// `GermanSpellCheck`, so both decompositions agree on what may be an element.
+pub static GERMAN_BARRED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| super::compound_checker::barred_element_set(&GERMAN_WORD_LIST));
+
 static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
     LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
 

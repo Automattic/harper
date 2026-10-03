@@ -2,11 +2,12 @@ use hashbrown::HashMap;
 
 use crate::language::german::linting::german_foreign_stretch;
 use crate::language::german::spell::compound_checker::{
-    MIN_COMPOUND_PART_LEN, can_head_a_lowercase_compound, has_content_reading, interfix_fits,
-    is_derivational_suffix, lowercase,
+    MIN_COMPOUND_PART_LEN, can_head_a_capitalized_compound, can_head_a_lowercase_compound,
+    has_content_reading, interfix_fits, interfix_matches_known_begin, is_derivational_suffix,
+    lowercase, may_be_compound_element, may_open_a_compound, may_take_an_interfix,
 };
 use crate::language::german::spell::german_dict::{
-    GERMAN_FUNCTION_WORDS, GERMAN_STEMS, GERMAN_SUFFIXED_ELEMENTS,
+    GERMAN_BARRED_ELEMENTS, GERMAN_FUNCTION_WORDS, GERMAN_STEMS, GERMAN_SUFFIXED_ELEMENTS,
 };
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
@@ -341,7 +342,10 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         remainder: &'a [char],
         interfix: &[char],
     ) -> Option<&'a [char]> {
-        if !interfix_fits(element, interfix) {
+        if !interfix_fits(element, interfix)
+            || !interfix_matches_known_begin(element, interfix)
+            || (!interfix.is_empty() && !may_take_an_interfix(&self.dictionary, element))
+        {
             return None;
         }
         // A derived feminine noun takes `-s-` and nothing else; see
@@ -359,7 +363,15 @@ impl<T: Dictionary> GermanSpellCheck<T> {
 
     /// May this element end a compound? See `function_word_set`.
     fn may_close_a_compound(&self, element: &[char]) -> bool {
-        !GERMAN_FUNCTION_WORDS.contains(element) || has_content_reading(&self.dictionary, element)
+        self.is_element(element)
+            && (!GERMAN_FUNCTION_WORDS.contains(element)
+                || has_content_reading(&self.dictionary, element))
+    }
+
+    /// May this element take part in a compound at all? See
+    /// `may_be_compound_element`.
+    fn is_element(&self, element: &[char]) -> bool {
+        may_be_compound_element(&self.dictionary, &GERMAN_BARRED_ELEMENTS, element)
     }
 
     fn is_valid_compound_segment(
@@ -383,7 +395,7 @@ impl<T: Dictionary> GermanSpellCheck<T> {
         if depth > 0 && self.dictionary.contains_word(word) && self.may_close_a_compound(word) {
             return match lowercase_whole {
                 Some(whole) => can_head_a_lowercase_compound(&self.dictionary, whole, word),
-                None => true,
+                None => can_head_a_capitalized_compound(&self.dictionary, word),
             };
         }
 
@@ -401,6 +413,15 @@ impl<T: Dictionary> GermanSpellCheck<T> {
             // German. It may not *end* one, which is why this is the only
             // place the stems are consulted.
             if !self.dictionary.contains_word(first_part) && !GERMAN_STEMS.contains(first_part) {
+                continue;
+            }
+
+            // A function word may open a compound but not stand inside one;
+            // see `may_close_a_compound`.
+            if !self.is_element(first_part)
+                || !may_open_a_compound(&self.dictionary, &GERMAN_STEMS, first_part)
+                || (depth > 0 && !self.may_close_a_compound(first_part))
+            {
                 continue;
             }
 
@@ -426,9 +447,12 @@ impl<T: Dictionary> GermanSpellCheck<T> {
                 let ends_here = |part: &[char]| {
                     self.dictionary.contains_word(part)
                         && self.may_close_a_compound(part)
-                        && lowercase_whole.is_none_or(|whole| {
-                            can_head_a_lowercase_compound(&self.dictionary, whole, part)
-                        })
+                        && match lowercase_whole {
+                            Some(whole) => {
+                                can_head_a_lowercase_compound(&self.dictionary, whole, part)
+                            }
+                            None => can_head_a_capitalized_compound(&self.dictionary, part),
+                        }
                 };
 
                 if ends_here(next_part)
@@ -659,7 +683,20 @@ mod tests {
 
     #[test]
     fn does_not_accept_misspelled_compounds() {
-        for word in ["Festplattenspeicer", "Arbeitsplaz", "Straßenrant"] {
+        for word in [
+            "Festplattenspeicer",
+            "Arbeitsplaz",
+            "Straßenrant",
+            // A capitalized compound does not end in a finite verb form.
+            "Bettrieb",
+            // igerman98 records the linking element: Arbeits-, Versions-.
+            "Arbeitspeicher",
+            "Versionhinweis",
+            // A particle takes no linking element.
+            "Absschnitte",
+            // `et` is a word, but never a compound element.
+            "Jahrhundet",
+        ] {
             assert!(
                 !recognizes_compound(word),
                 "{word} should not be treated as a valid compound"
@@ -669,7 +706,16 @@ mod tests {
 
     #[test]
     fn recognizes_simple_compounds() {
-        for word in ["Gartenhaus", "Arbeitsstelle", "Straßenrand"] {
+        for word in [
+            "Gartenhaus",
+            "Arbeitsstelle",
+            "Straßenrand",
+            "Zeiträume",
+            "Arbeitsspeicher",
+            "Haltestelle",
+            "Lymphknoten",
+            "Wohlbefinden",
+        ] {
             assert!(
                 recognizes_compound(word),
                 "{word} should be treated as a valid compound"
