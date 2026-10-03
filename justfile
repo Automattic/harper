@@ -183,6 +183,15 @@ dev-desktop-highlighter:
   cd "{{justfile_directory()}}/harper-desktop/src-tauri"
   cargo run -- highlighter
 
+# Run Harper Desktop's Rust tests. The platform brokers are cfg-gated, so this
+# only exercises platform-specific code when run on that platform.
+test-desktop:
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop/src-tauri"
+  cargo test
+
 # Check Harper Desktop frontend and Rust targets.
 check-desktop: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash
