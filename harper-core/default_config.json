@@ -5867,6 +5867,13 @@
 						},
 						{
 							"Bool": {
+								"name": "TheHighlightOf",
+								"state": true,
+								"label": "The Highlight of"
+							}
+						},
+						{
+							"Bool": {
 								"name": "TheLastDays",
 								"state": true,
 								"label": "The Last Days"
