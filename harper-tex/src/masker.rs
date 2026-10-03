@@ -30,9 +30,9 @@ impl harper_core::Masker for Masker {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
             } else if let Some(s) = inline_math_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
-            } else if let Some(s) = paren_math_at_cursor(cursor, source) {
+            } else if let Some(s) = escaped_delim_math(cursor, source, '(', ')') {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
-            } else if let Some(s) = bracket_math_at_cursor(cursor, source) {
+            } else if let Some(s) = escaped_delim_math(cursor, source, '[', ']') {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
             } else if let Some(s) = equation_at_cursor(cursor, source) {
                 actions.push_back(CursorAction::PushMaskAndIncBy(s));
@@ -146,43 +146,23 @@ fn inline_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
     Some(source.len() - cursor)
 }
 
-/// Inline math `\( ... \)`. Unclosed runs mask to EOF.
-fn paren_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
-    if source.get(cursor) != Some(&'\\') || source.get(cursor + 1) != Some(&'(') {
+/// Math with an escaped delimiter pair: `\( ... \)` inline or `\[ ... \]`
+/// display. Unclosed runs mask to EOF.
+fn escaped_delim_math(cursor: usize, source: &[char], open: char, close: char) -> Option<usize> {
+    if source.get(cursor) != Some(&'\\') || source.get(cursor + 1) != Some(&open) {
         return None;
     }
 
     let mut i = cursor + 2;
     while i + 1 < source.len() {
-        if source[i] == '\\' && source[i + 1] == ')' {
-            return Some(i + 2 - cursor);
-        }
         if source[i] == '\\' {
+            if source[i + 1] == close {
+                return Some(i + 2 - cursor);
+            }
             i += 2;
-            continue;
+        } else {
+            i += 1;
         }
-        i += 1;
-    }
-
-    Some(source.len() - cursor)
-}
-
-/// Display math `\[ ... \]`. Unclosed runs mask to EOF.
-fn bracket_math_at_cursor(cursor: usize, source: &[char]) -> Option<usize> {
-    if source.get(cursor) != Some(&'\\') || source.get(cursor + 1) != Some(&'[') {
-        return None;
-    }
-
-    let mut i = cursor + 2;
-    while i + 1 < source.len() {
-        if source[i] == '\\' && source[i + 1] == ']' {
-            return Some(i + 2 - cursor);
-        }
-        if source[i] == '\\' {
-            i += 2;
-            continue;
-        }
-        i += 1;
     }
 
     Some(source.len() - cursor)
@@ -325,13 +305,16 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
     source.get(cursor)?;
     // In (La)TeX, `\` + non-letter is a single-char command (e.g. `\(`, `\$`).
     // It must NOT swallow following letters into the name.
+    // TeX control-word letters are ASCII, so a non-ASCII char also ends the name.
     let first = source[cursor];
-    if !first.is_alphabetic() {
+    if !first.is_ascii_alphabetic() {
         let name = source.get(cursor..cursor + 1)?;
         cursor += 1;
 
-        // The optional square braces
-        let square_content = if source.get(cursor) == Some(&'[') {
+        // Single-char commands take no arguments, except `\\` which takes an
+        // optional `[..]` length (e.g. `\\[2pt]`). Do not swallow `[..]`/`{..}`
+        // after e.g. `\,`, `\&`.
+        let square_content = if first == '\\' && source.get(cursor) == Some(&'[') {
             cursor += 1;
 
             let brace_len = source.iter().skip(cursor).position(|t| *t == ']')?;
@@ -343,27 +326,16 @@ fn deconstruct_command<'a>(source: &'a [char]) -> Option<CommandComponents<'a>> 
             None
         };
 
-        // The optional curly braces
-        let curly_content = if source.get(cursor) == Some(&'{') {
-            cursor += 1;
-
-            let brace_len = source.iter().skip(cursor).position(|t| *t == '}')?;
-            let content = source.get(cursor..cursor + brace_len)?;
-            Some(content)
-        } else {
-            None
-        };
-
         return Some(CommandComponents {
             name,
             square_content,
-            curly_content,
+            curly_content: None,
         });
     }
     let name_len = source
         .iter()
         .skip(cursor + 1)
-        .take_while(|t| t.is_alphabetic())
+        .take_while(|t| t.is_ascii_alphabetic())
         .count();
     let name_end = cursor + 1 + name_len;
     let name = source.get(cursor..name_end)?;
@@ -504,65 +476,56 @@ mod tests {
         masks_math_env("align");
     }
 
+    fn allowed_text(src: &str) -> String {
+        let source: Vec<_> = src.chars().collect();
+        let mask = Masker::default().create_mask(&source);
+        mask.iter_allowed(&source)
+            .flat_map(|(_, chars)| chars.iter().copied())
+            .collect()
+    }
+
     #[test]
     fn masks_display_double_dollar_math() {
-        // Goal 1: `$$ ... $$` should be ignored.
+        // Goal 1: `$$ ... $$` should be ignored, surrounding prose kept.
         // Use a distinctive marker so surrounding "text" (which contains 'x')
         // cannot cause false passes.
-        let source: Vec<_> = "Hello world. $$QQQZZZ$$ Goodbye world.".chars().collect();
-        let mask = Masker::default().create_mask(&source);
-        let allowed: Vec<String> = mask
-            .iter_allowed(&source)
-            .map(|(_, chars)| chars.iter().collect::<String>())
-            .collect();
-        for chunk in &allowed {
-            assert!(
-                !chunk.contains("QQQZZZ"),
-                "Display math content leaked through: {chunk:?} (all={allowed:?})"
-            );
-        }
+        let out = allowed_text("Hello world. $$QQQZZZ$$ Goodbye world.");
+        assert!(
+            !out.contains("QQQZZZ"),
+            "Display math content leaked through: {out:?}"
+        );
+        assert!(
+            out.contains("Hello world.") && out.contains("Goodbye world."),
+            "Display math hid surrounding prose: {out:?}"
+        );
     }
 
     #[test]
     fn masks_paren_inline_math() {
-        // Goal 1: `\( ... \)` should be ignored.
-        // NOTE: leading space avoids `deconstruct_command()` swallowing
-        // the first word into the command name (separate bug, also fixed in PR1).
-        let source: Vec<_> = "Hello world. \\( QQQZZZ \\) Goodbye world."
-            .chars()
-            .collect();
-        let mask = Masker::default().create_mask(&source);
-        let allowed: Vec<String> = mask
-            .iter_allowed(&source)
-            .map(|(_, chars)| chars.iter().collect::<String>())
-            .collect();
-        for chunk in &allowed {
-            assert!(
-                !chunk.contains("QQQZZZ"),
-                "Paren math content leaked through: {chunk:?} (all={allowed:?})"
-            );
-        }
+        // Goal 1: `\( ... \)` should be ignored, surrounding prose kept.
+        let out = allowed_text("Hello world. \\( QQQZZZ \\) Goodbye world.");
+        assert!(
+            !out.contains("QQQZZZ"),
+            "Paren math content leaked through: {out:?}"
+        );
+        assert!(
+            out.contains("Hello world.") && out.contains("Goodbye world."),
+            "Paren math hid surrounding prose: {out:?}"
+        );
     }
 
     #[test]
     fn masks_bracket_display_math() {
-        // Goal 1: `\[ ... \]` should be ignored.
-        // NOTE: leading space avoids `deconstruct_command()` swallowing
-        // the first word into the command name (separate bug, also fixed in PR1).
-        let source: Vec<_> = "Hello world. \\[ QQQZZZ \\] Goodbye world."
-            .chars()
-            .collect();
-        let mask = Masker::default().create_mask(&source);
-        let allowed: Vec<String> = mask
-            .iter_allowed(&source)
-            .map(|(_, chars)| chars.iter().collect::<String>())
-            .collect();
-        for chunk in &allowed {
-            assert!(
-                !chunk.contains("QQQZZZ"),
-                "Bracket math content leaked through: {chunk:?} (all={allowed:?})"
-            );
-        }
+        // Goal 1: `\[ ... \]` should be ignored, surrounding prose kept.
+        let out = allowed_text("Hello world. \\[ QQQZZZ \\] Goodbye world.");
+        assert!(
+            !out.contains("QQQZZZ"),
+            "Bracket math content leaked through: {out:?}"
+        );
+        assert!(
+            out.contains("Hello world.") && out.contains("Goodbye world."),
+            "Bracket math hid surrounding prose: {out:?}"
+        );
     }
 
     #[test]
@@ -588,16 +551,48 @@ mod tests {
     #[test]
     fn escaped_dollar_does_not_start_math() {
         // `\$` is a command, not math: content must stay visible.
-        let source: Vec<_> = "Price \\$QQQZZZ\\$ end".chars().collect();
-        let mask = Masker::default().create_mask(&source);
-        let allowed: String = mask
-            .iter_allowed(&source)
-            .flat_map(|(_, chars)| chars.iter().copied())
-            .collect();
+        let out = allowed_text("Price \\$QQQZZZ\\$ end");
         assert!(
-            allowed.contains("QQQZZZ"),
-            "Escaped dollars hid content: {allowed:?}"
+            out.contains("QQQZZZ"),
+            "Escaped dollars hid content: {out:?}"
         );
+    }
+
+    #[test]
+    fn inline_dollar_masks() {
+        assert_eq!(allowed_text("A $x$ B"), "A  B");
+    }
+
+    #[test]
+    fn single_dollar_in_display() {
+        assert_eq!(allowed_text("A $$ a $ b $$ B"), "A  B");
+    }
+
+    #[test]
+    fn dollar_closes_dollar_run() {
+        assert_eq!(allowed_text("A $x$$y$ B"), "A  B");
+    }
+
+    #[test]
+    fn unclosed_display_to_eof() {
+        assert_eq!(allowed_text("A $$ b c"), "A ");
+    }
+
+    #[test]
+    fn unclosed_paren_to_eof() {
+        assert_eq!(allowed_text("A \\( b c"), "A ");
+    }
+
+    #[test]
+    fn paren_no_space() {
+        // No leading space: single-char `deconstruct_command` fix (fixed in
+        // this PR) must not swallow the content into the command name.
+        assert_eq!(allowed_text("A \\(x\\) B"), "A  B");
+    }
+
+    #[test]
+    fn escaped_dollar_inside_math() {
+        assert_eq!(allowed_text("A $a\\$b$ B"), "A  B");
     }
 
     #[test]
