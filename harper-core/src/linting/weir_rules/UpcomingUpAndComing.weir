@@ -1,0 +1,47 @@
+# People and their trades. `upcoming` cannot mean "due to happen soon" in front of any of these.
+expr risingNouns [artist, artists, actor, actors, actress, actresses, singer, singers, songwriter, songwriters, musician, musicians, rapper, rappers, dancer, dancers, comedian, comedians, filmmaker, filmmakers, novelist, novelists, poet, poets, painter, painters, photographer, photographers, designer, designers, chef, chefs, athlete, athletes, player, players, star, stars, coder, coders, programmer, programmers]
+
+# Event nouns the POS tagger reads as verbs here, so the NOUN and PROPN guards below miss them.
+expr eventNouns [showcase, showcases, audition, auditions, signing, signings]
+
+expr main <(upcoming @risingNouns![( NOUN), ( PROPN), ( @eventNouns)]), upcoming>
+
+let message "Did you mean `up-and-coming`?"
+let description "`Upcoming` means due to happen soon, so it does not describe a person. Use `up-and-coming` for someone who is gaining prominence."
+let kind "WordChoice"
+let becomes "up-and-coming"
+let strategy "MatchCase"
+
+test "Have you ever met an upcoming actor who you knew would go far in their career?" "Have you ever met an up-and-coming actor who you knew would go far in their career?"
+test "This app allows upcoming artists to post songs." "This app allows up-and-coming artists to post songs."
+test "Crescendo is a music discovery platform that promotes upcoming artists." "Crescendo is a music discovery platform that promotes up-and-coming artists."
+test "The PICO is an UPCOMING STAR in my opinion." "The PICO is an UP-AND-COMING STAR in my opinion."
+test "That night, a world lost one of the greatest upcoming stars." "That night, a world lost one of the greatest up-and-coming stars."
+test "Her boyfriend is an upcoming actor in the entertainment industry." "Her boyfriend is an up-and-coming actor in the entertainment industry."
+test "I am an upcoming rapper and I would love you to check out my channel." "I am an up-and-coming rapper and I would love you to check out my channel."
+test "He falls in love with Roma, also an upcoming singer and dancer." "He falls in love with Roma, also an up-and-coming singer and dancer."
+test "His music continues to inspire upcoming artists in the genre." "His music continues to inspire up-and-coming artists in the genre."
+test "Lee Jungwoo is an upcoming star in high school baseball." "Lee Jungwoo is an up-and-coming star in high school baseball."
+test "We brought Rahul Subramanian, an upcoming comedian, to our campus." "We brought Rahul Subramanian, an up-and-coming comedian, to our campus."
+test "Watch an upcoming comedian trying to figure out how to make all of this." "Watch an up-and-coming comedian trying to figure out how to make all of this."
+test "Our club trains young and upcoming athletes a few times a week." "Our club trains young and up-and-coming athletes a few times a week."
+test "The festival gives upcoming filmmakers a room of their own." "The festival gives up-and-coming filmmakers a room of their own."
+test "Upcoming artists deserve a bigger stage." "Up-and-coming artists deserve a bigger stage."
+
+allows "The upcoming release is scheduled for March."
+allows "We discussed the upcoming election at length."
+allows "Tickets for the upcoming tour go on sale Friday."
+allows "He is an up-and-coming actor with two credits."
+
+# The word after the trade is the head noun, so `upcoming` really is describing the event.
+
+allows "First rendered frame of an upcoming Star Wars vid!"
+allows "Sign up for the upcoming artist showcase."
+allows "The upcoming singer auditions close on Friday."
+allows "The upcoming artist signing at the record store sold out."
+allows "Check the upcoming player draft results."
+
+# Accepted gaps: an adjective between `upcoming` and the noun is not matched yet.
+
+allows "The upcoming young players led him to seek pastures new."
+allows "You are strengthening upcoming young curious minds."
