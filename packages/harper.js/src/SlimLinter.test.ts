@@ -10,3 +10,9 @@ test('Requesting a Typst parser with the slim binary should panic.', async () =>
 
 	await expect(linter.lint('', { language: 'typst' })).rejects.toThrowError();
 });
+
+test('Requesting a LaTeX parser with the slim binary should panic.', async () => {
+	const linter = new LocalLinter({ binary: slimBinary });
+
+	await expect(linter.lint('', { language: 'latex' })).rejects.toThrowError();
+});
