@@ -49,6 +49,7 @@ let canOpenShortcutSettings = typeof commandsApi?.openShortcutSettings === 'func
 let capturingCycleShortcut = $state(false);
 let cycleShortcutError = $state('');
 let isolateEnglish = $state(false);
+let rememberLanguage = $state(true);
 let delay = $state(0);
 let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
@@ -102,6 +103,10 @@ ProtocolClient.getLanguageCycle().then((cycle) => {
 });
 
 refreshCycleShortcut();
+
+chrome.storage.local.get({ rememberLanguage: true }).then((value) => {
+	rememberLanguage = value.rememberLanguage !== false;
+});
 
 ProtocolClient.getIsolateEnglish().then((value) => {
 	isolateEnglish = value;
@@ -241,6 +246,16 @@ $effect(() => {
 
 function updateLintConfig(nextConfig: LintConfig) {
 	lintConfig = nextConfig;
+}
+
+function setRememberLanguageFromCheckbox(event: Event): void {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		return;
+	}
+
+	rememberLanguage = input.checked;
+	chrome.storage.local.set({ rememberLanguage });
 }
 
 function setIsolateEnglishFromCheckbox(event: Event): void {
@@ -589,6 +604,25 @@ async function removeWeirpack(id: string) {
               <Button size="sm" color="light" on:click={openBrowserShortcuts}>Change</Button>
             {/if}
           </div>
+        </div>
+      </div>
+
+      <div class="space-y-5">
+        <div class="flex items-center justify-between">
+          <div class="flex flex-col">
+            <h3 class="text-sm">Remember the Last Language</h3>
+            <p class="text-xs text-gray-600 dark:text-gray-400">
+              Keep the language you switched to last after the browser restarts. When off, Harper
+              starts with the first language in the list.
+            </p>
+          </div>
+          <input
+            type="checkbox"
+            checked={rememberLanguage}
+            onchange={setRememberLanguageFromCheckbox}
+            class="h-5 w-5"
+            data-testid="remember-language"
+          />
         </div>
       </div>
 

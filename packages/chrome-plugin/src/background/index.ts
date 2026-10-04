@@ -187,6 +187,10 @@ let linterReady = getDialect()
 	.catch((err) => console.error('Failed to initialize linter:', err));
 getDialect().then(showLanguageOnIcon);
 
+restoreFirstLanguageOnStartup().catch((err) =>
+	console.error('Failed to restore the first language:', err),
+);
+
 chrome.commands?.onCommand.addListener((command) => {
 	if (command === CYCLE_LANGUAGE_COMMAND) {
 		cycleLanguage().catch((err) => console.error('Failed to switch language:', err));
@@ -810,6 +814,34 @@ async function cycleLanguage(): Promise<void> {
 		await chrome.storage.local.set({ languageSwitchedAt: Date.now() });
 	} else {
 		await storeDialect(next, { languageSwitchedAt: Date.now() });
+	}
+}
+
+/**
+ * On a browser start, go back to the first language in the list unless the user wants the last
+ * one used to stay active (`rememberLanguage`, on by default). The background script also starts
+ * again while the browser runs (an idle service worker is stopped), so a flag in session storage,
+ * which lives until the browser closes, tells the first start from the later ones.
+ */
+async function restoreFirstLanguageOnStartup(): Promise<void> {
+	if (chrome.storage.session == null) {
+		return;
+	}
+
+	const { languageStartChecked } = await chrome.storage.session.get('languageStartChecked');
+	if (languageStartChecked === true) {
+		return;
+	}
+	await chrome.storage.session.set({ languageStartChecked: true });
+
+	const { rememberLanguage } = await chrome.storage.local.get({ rememberLanguage: true });
+	if (rememberLanguage !== false) {
+		return;
+	}
+
+	const first = (await getLanguageCycle())[0];
+	if (first !== (await getDialect())) {
+		await storeDialect(first);
 	}
 }
 
