@@ -59,6 +59,7 @@ mod claim_to_fame;
 mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
+mod comfortable_with;
 mod comma_fixes;
 mod complain_as_noun;
 mod compound_nouns;

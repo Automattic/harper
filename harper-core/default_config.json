@@ -553,6 +553,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lifetime",
+								"state": true,
+								"label": "Lifetime"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Meanwhile",
 								"state": true,
 								"label": "Meanwhile"
@@ -780,6 +787,13 @@
 								"name": "Thereupon",
 								"state": true,
 								"label": "Thereupon"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Tradeoff",
+								"state": true,
+								"label": "Tradeoff"
 							}
 						},
 						{
@@ -1406,6 +1420,13 @@
 								"name": "SeamToSeem",
 								"state": true,
 								"label": "Seam To Seem"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SeizeControlOf",
+								"state": true,
+								"label": "Seize Control of"
 							}
 						},
 						{
@@ -2614,6 +2635,13 @@
 								"name": "GoingTo",
 								"state": true,
 								"label": "Going To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hallucination",
+								"state": true,
+								"label": "Hallucination"
 							}
 						},
 						{
@@ -4610,6 +4638,13 @@
 								"name": "Combinate",
 								"state": true,
 								"label": "Combinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ComfortableWith",
+								"state": true,
+								"label": "Comfortable With"
 							}
 						},
 						{

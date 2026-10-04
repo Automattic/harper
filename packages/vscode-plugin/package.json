@@ -2,7 +2,7 @@
 	"name": "harper",
 	"displayName": "Harper - Grammar / Spell Checking",
 	"description": "The grammar checker for developers",
-	"version": "2.11.0",
+	"version": "2.12.0",
 	"private": true,
 	"author": "Elijah Potter",
 	"publisher": "elijah-potter",
@@ -1167,6 +1167,12 @@
 					"default": true,
 					"description": "Suggests replacing the nonstandard verb `combinate` with the standard `combine`."
 				},
+				"harper.linters.ComfortableWith": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+				},
 				"harper.linters.CommaFixes": {
 					"scope": "resource",
 					"type": "boolean",
@@ -1214,6 +1220,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Suggests replacing the obsolete or archaic verb `compulse` with the standard `compel`."
+				},
+				"harper.linters.CondensateVerb": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Suggests replacing the nonstandard verb `condensate` with the standard `condense`."
 				},
 				"harper.linters.CondenseAllThe": {
 					"scope": "resource",
@@ -2265,6 +2277,12 @@
 					"default": true,
 					"description": "Fixes the eggcorn `half an our` to the accepted `half an hour`."
 				},
+				"harper.linters.Hallucination": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects the misspelling `hallucinization`/`hallucinisation`."
+				},
 				"harper.linters.Handful": {
 					"scope": "resource",
 					"type": "boolean",
@@ -3307,7 +3325,7 @@
 					"scope": "resource",
 					"type": "boolean",
 					"default": false,
-					"description": "Looks for comparative adjective constructions with `more` than could use inflected forms."
+					"description": "Looks for comparative adjective constructions with `more` that could use inflected forms."
 				},
 				"harper.linters.MoreBetter": {
 					"scope": "resource",
@@ -3662,6 +3680,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Detects the idiom `oldest X in the books`, which should use singular `book`."
+				},
+				"harper.linters.OnADailyBasis": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "A collection of linters that can be run as one."
 				},
 				"harper.linters.OnFirstGlance": {
 					"scope": "resource",
@@ -4197,6 +4221,12 @@
 					"default": true,
 					"description": "Detects redundant additive adverbs."
 				},
+				"harper.linters.RedundantAlmostNearly": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Detects `almost` and `nearly` redundantly used together."
+				},
 				"harper.linters.RedundantFirsts": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4383,6 +4413,12 @@
 					"default": true,
 					"description": "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`."
 				},
+				"harper.linters.SeizeControlOf": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `seize control over` to `seize control of`."
+				},
 				"harper.linters.SendAnEmailTo": {
 					"scope": "resource",
 					"type": "boolean",
@@ -4394,6 +4430,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "The opening word of a sentence should almost always be capitalized."
+				},
+				"harper.linters.SetABadExample": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Corrects `set up a bad example` to `set a bad example`."
 				},
 				"harper.linters.ShootOneselfInTheFoot": {
 					"scope": "resource",
@@ -5342,6 +5384,12 @@
 					"type": "boolean",
 					"default": true,
 					"description": "Flags `highly-kept` and recommends `well-kept` as an alternative."
+				},
+				"harper.linters.WentAheadAndAgreement": {
+					"scope": "resource",
+					"type": "boolean",
+					"default": true,
+					"description": "Checks for `went ahead and` followed by a present tense verb, which should be past tense."
 				},
 				"harper.linters.WereWhere": {
 					"scope": "resource",

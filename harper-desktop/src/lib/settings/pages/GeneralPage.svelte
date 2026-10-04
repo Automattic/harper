@@ -3,7 +3,6 @@ import { Button, Checkbox, CheckIcon, Input, Select, SettingRow } from 'componen
 import type { Dialect } from 'harper.js';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
-import { DesktopUpdater } from '$lib/DesktopUpdater';
 import { DIALECT_OPTIONS } from '../settings-data';
 
 const DialectValue = {
@@ -167,8 +166,8 @@ async function setAutoUpdate(enabled: boolean) {
 async function loadUpdateVersions() {
 	try {
 		const [current, latest] = await Promise.all([
-			DesktopUpdater.getCurrentVersion(),
-			DesktopUpdater.getLatestVersion(),
+			Client.getCurrentVersion(),
+			Client.getLatestVersion(),
 		]);
 		currentVersion = current;
 		latestVersion = latest;
@@ -183,15 +182,14 @@ async function checkForUpdates() {
 	updateStatus = 'Checking for updates...';
 
 	try {
-		await Client.setLastUpdateCheck(Date.now());
-		const result = await DesktopUpdater.updateToLatest();
+		const result = await Client.updateToLatest();
 		updateStatus = result.message;
 
 		if (result.latestVersion != null) {
 			latestVersion = result.latestVersion;
 		}
 
-		currentVersion = result.currentVersion ?? (await DesktopUpdater.getCurrentVersion());
+		currentVersion = result.currentVersion ?? (await Client.getCurrentVersion());
 	} catch (error) {
 		autoUpdateError = `Unable to check for updates: ${error}`;
 		updateStatus = '';
