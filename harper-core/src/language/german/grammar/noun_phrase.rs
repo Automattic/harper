@@ -472,8 +472,11 @@ pub(crate) fn continues_noun_phrase(token: &Token, document: &Document) -> bool 
         return false;
     }
 
+    // A lower-case non-noun with an adjective reading is still an attribute:
+    // *verschiedene **andere** Sprachen*. Only the head is ruled out, and that
+    // is the capitalization rule's business, not the chunker's.
     let lower = lowercase_of(token, document);
-    if is_lowercase_non_noun(&lower) {
+    if is_lowercase_non_noun(&lower) && !token.kind.is_adjective() {
         return false;
     }
 
