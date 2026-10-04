@@ -58,7 +58,7 @@
 			"rename_ok": true
 		},
 		"G": {
-			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'. Person and number: second person singular, the one unambiguous present ending German has.",
+			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'. Person and number: second person singular, the one unambiguous present ending German has. The last replacement serves the bare-stem entries (denk -> denkst); a stem in d, t or a sibilant takes -est or -t and is left out.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -136,6 +136,11 @@
 					"remove": "t",
 					"add": "est",
 					"condition": "zt"
+				},
+				{
+					"remove": "",
+					"add": "st",
+					"condition": "[^dnstxzß]"
 				}
 			],
 			"target": [

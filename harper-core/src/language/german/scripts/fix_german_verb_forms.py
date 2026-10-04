@@ -45,6 +45,7 @@ from german_dictionary_oracle import (
     belongs_to,
     check_umlauts_survive,
     entries,
+    entry_filter,
     flagset,
     forms,
 )
@@ -86,8 +87,26 @@ ZU_INFINITIVE = re.compile(r".+zu[a-zäöüß]+en$")
 
 
 
+# A bare-stem entry names the infinitive it stands for: `denk/~~Vcfj # REPLACES
+# denken`. Thousands of verbs are stored this way, and none of them could form
+# *er denkt* or *du denkst*.
+REPLACES = re.compile(r"REPLACES ([a-zäöüß]+)")
+
+
+def lemma_of(word, comment):
+    """The infinitive an entry belongs to: itself, or the one a stem replaces."""
+    if word.endswith(INFINITIVE):
+        return word
+    found = REPLACES.search(comment)
+    return found.group(1) if found and found.group(1).startswith(word) else None
+
+
 def candidates(flag, rules, wanted=lambda word: True):
-    """Entries that should carry `flag` and do not, with the forms it adds."""
+    """Entries that should carry `flag` and do not, with the forms it adds.
+
+    Each is `(index, word, flags, comment, generated, lemma)`; the oracle checks
+    the generated forms against `lemma`.
+    """
     out = []
     for index, word, flags, comment in entries():
         if not wanted(word):
@@ -99,11 +118,12 @@ def candidates(flag, rules, wanted=lambda word: True):
             or flags_present & NOMINAL_FLAGS
         ):
             continue
-        if not word.endswith(INFINITIVE) or ZU_INFINITIVE.search(word):
+        lemma = lemma_of(word, comment)
+        if lemma is None or ZU_INFINITIVE.search(lemma):
             continue
         generated = forms(rules, word)
         if generated:
-            out.append((index, word, flags, comment, generated))
+            out.append((index, word, flags, comment, generated, lemma))
     return out
 
 
@@ -123,19 +143,19 @@ def main():
         rules = affix_rules(flag)
         found = candidates(flag, rules, entry_filter(args.matching))
         stems = analyse(
-            (f for _, _, _, _, gen in found for f in gen), args.hunspell_dict
+            (f for _, _, _, _, gen, _ in found for f in gen), args.hunspell_dict
         )
 
         # Every form the ending builds must be a form of *this* entry. A class
         # that generates two forms and gets one wrong would add the wrong one
         # too, and a form that is some other word entirely is not evidence.
-        accepted = [c for c in found if all(belongs_to(c[1], f, stems) for f in c[4])]
-        for index, _, _, _, _ in accepted:
+        accepted = [c for c in found if all(belongs_to(c[5], f, stems) for f in c[4])]
+        for index, *_ in accepted:
             additions[index].add(flag)
 
         report.append((flag, CONJUGATION[flag], len(found), len(accepted)))
         if accepted:
-            sample = ", ".join(f"{w} -> {g[0]}" for _, w, _, _, g in accepted[:4])
+            sample = ", ".join(f"{w} -> {g[0]}" for _, w, _, _, g, _ in accepted[:4])
             print(f"  {flag} ({CONJUGATION[flag]}): {len(accepted)}/{len(found)}  e.g. {sample}")
 
     print(f"\n{'ending':22} {'missing':>9} {'confirmed':>10}")
