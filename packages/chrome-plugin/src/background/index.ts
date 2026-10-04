@@ -1,6 +1,7 @@
 import {
 	createBinaryModuleFromUrl,
 	type Dialect,
+	type DialectInfo,
 	type LintConfig,
 	LocalLinter,
 	unpackWeirpackBytes,
@@ -18,6 +19,7 @@ import {
 	type GetDefaultStatusResponse,
 	type GetDelayRequest,
 	type GetDelayResponse,
+	type GetDialectCatalogResponse,
 	type GetDialectRequest,
 	type GetDialectResponse,
 	type GetDomainStatusRequest,
@@ -106,6 +108,8 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo) => {
 });
 
 let linter: LocalLinter;
+const binary = createBinaryModuleFromUrl(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm'));
+let dialectCatalog: Promise<DialectInfo[]> | null = null;
 const WEIRPACKS_KEY = 'weirpacks';
 const linterStorageKeys = [
 	'dialect',
@@ -235,6 +239,8 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getDialectCatalog':
+			return handleGetDialectCatalog();
 		case 'getIsolateEnglish':
 			return handleGetIsolateEnglish();
 		case 'setIsolateEnglish':
@@ -400,6 +406,16 @@ async function handleSetDialect(req: SetDialectRequest): Promise<UnitResponse> {
 
 async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResponse> {
 	return { kind: 'getDialect', dialect: await getDialect() };
+}
+
+async function handleGetDialectCatalog(): Promise<GetDialectCatalogResponse> {
+	return { kind: 'getDialectCatalog', catalog: await getDialectCatalog() };
+}
+
+/** The dialects compiled into the WebAssembly binary, with names to show. */
+function getDialectCatalog(): Promise<DialectInfo[]> {
+	dialectCatalog ??= binary.getDialectCatalog();
+	return dialectCatalog;
 }
 
 async function handleGetIsolateEnglish(): Promise<GetIsolateEnglishResponse> {
@@ -764,7 +780,7 @@ async function initializeLinter(dialect: Dialect) {
 	}
 
 	linter = new LocalLinter({
-		binary: createBinaryModuleFromUrl(chrome.runtime.getURL('./wasm/harper_wasm_bg.wasm')),
+		binary,
 		dialect,
 	});
 

@@ -1,4 +1,10 @@
-import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
+import type {
+	Dialect,
+	DialectInfo,
+	LintConfig,
+	LintOptions,
+	StructuredLintConfig,
+} from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 
 export type Request =
@@ -9,6 +15,7 @@ export type Request =
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetDialectCatalogRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
 	| GetDelayRequest
@@ -43,6 +50,7 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetDialectCatalogResponse
 	| GetIsolateEnglishResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
@@ -126,6 +134,16 @@ export type GetDialectRequest = {
 export type GetDialectResponse = {
 	kind: 'getDialect';
 	dialect: Dialect;
+};
+
+export type GetDialectCatalogRequest = {
+	kind: 'getDialectCatalog';
+};
+
+/** The dialects compiled into the extension's Harper, with names to show. */
+export type GetDialectCatalogResponse = {
+	kind: 'getDialectCatalog';
+	catalog: DialectInfo[];
 };
 
 export type GetIsolateEnglishRequest = {
