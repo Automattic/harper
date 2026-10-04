@@ -8,7 +8,14 @@
 # perfectly good imperative.
 expr zeitangabe [gestern, vorgestern, damals, langem, kurzem, jeher, neuestem, geraumer, jahren, monaten, wochen, tagen, jahrzehnten, jahrhunderten, generationen, menschengedenken, urzeiten]
 
-expr main <(seid @zeitangabe), seid>
+# A duration usually carries a number or a quantifier in front of the noun:
+# "seid drei Jahren", "seid vielen Wochen", "seid einem Jahr". The verb "seid"
+# cannot stand there either.
+expr menge [zwei, drei, vier, fünf, sechs, sieben, acht, neun, zehn, elf, zwölf, zwanzig, dreißig, hundert, vielen, einigen, mehreren, wenigen, etlichen, zahlreichen, (ein paar), über, fast, knapp, gut]
+
+expr einzahl [jahr, monat, tag, jahrzehnt, jahrhundert, woche, stunde]
+
+expr main <[(seid @zeitangabe), (seid @menge @zeitangabe), (seid [einem, einer] @einzahl)], seid>
 
 let message "»seid« ist die Verbform (»ihr seid«). Vor einer Zeitangabe steht die Präposition »seit«."
 let description "Ersetzt das Verb »seid« vor einer Zeitangabe durch die Präposition »seit«."
@@ -20,8 +27,16 @@ test "Er wohnt seid gestern hier." "Er wohnt seit gestern hier."
 test "Das Haus steht seid Jahren leer." "Das Haus steht seit Jahren leer."
 test "Wir kennen uns seid Jahrzehnten." "Wir kennen uns seit Jahrzehnten."
 test "Sie arbeitet dort seid langem." "Sie arbeitet dort seit langem."
+test "Er trägt die Stiefel seid drei Jahren." "Er trägt die Stiefel seit drei Jahren."
+test "Wir warten seid vielen Wochen." "Wir warten seit vielen Wochen."
+test "Sie ist seid einem Jahr in der Schule." "Sie ist seit einem Jahr in der Schule."
+test "Das Geschäft gibt es seid ein paar Monaten." "Das Geschäft gibt es seit ein paar Monaten."
 
 allows "Ihr seid pünktlich gekommen."
 allows "Seid heute bitte pünktlich."
 allows "Das Haus steht seit Jahren leer."
 allows "Seid ihr schon da?"
+allows "Ihr seid drei Freunde."
+allows "Ihr seid einer Meinung."
+allows "Ihr seid vielen Menschen begegnet."
+allows "Er trägt die Stiefel seit drei Jahren."

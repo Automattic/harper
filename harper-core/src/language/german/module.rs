@@ -45,9 +45,11 @@ impl LanguageModule for GermanModule {
             german_common_typos::GermanCommonTypos, german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
             german_genitive_after_nominative_article::GermanGenitiveAfterNominativeArticle,
+            german_nominalized_infinitive::GermanNominalizedInfinitive,
             german_noun_capitalization::GermanNounCapitalization,
             german_preposition_case::GermanPrepositionCase,
             german_recommended_fusion::GermanRecommendedFusion,
+            german_repeated_words::GermanRepeatedWords,
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
@@ -88,9 +90,11 @@ impl LanguageModule for GermanModule {
             GermanRecommendedFusion::default(),
         );
         group.add("GermanWiderWieder", GermanWiderWieder);
+        group.add("GermanRepeatedWords", GermanRepeatedWords);
         group.add("GermanCommonTypos", GermanCommonTypos);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
+        group.add("GermanNominalizedInfinitive", GermanNominalizedInfinitive);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
         group.add("GermanYearPreposition", GermanYearPreposition);
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());

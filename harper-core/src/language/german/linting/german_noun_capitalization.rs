@@ -219,14 +219,20 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
     /// tokenizer hands them over as bare words. Requires the hyphen to be
     /// directly adjacent so that a dash used as punctuation — set off by spaces
     /// — does not suppress a real noun.
+    ///
+    /// A bracketed infix does the same: *"Holz(über)schuh"*,
+    /// *"Deck(brand)sohle"* write two compounds at once, and the head after the
+    /// closing bracket is as lower case as the fragment after a hyphen.
     fn is_hyphen_compound_fragment(
         token: &Token,
         prev: Option<&Token>,
         next: Option<&Token>,
     ) -> bool {
         let hyphen = |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::Hyphen));
+        let infix_close =
+            |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::CloseRound));
 
-        prev.is_some_and(|p| hyphen(p) && p.span.end == token.span.start)
+        prev.is_some_and(|p| (hyphen(p) || infix_close(p)) && p.span.end == token.span.start)
             || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
     }
 
@@ -731,6 +737,25 @@ mod tests {
         assert!(
             !flagged.iter().any(|w| w == "km" || w == "drei"),
             "units and number words should not be flagged, got {flagged:?}"
+        );
+    }
+
+    #[test]
+    fn test_bracketed_compound_heads_are_not_flagged() {
+        let mut linter = test_linter();
+        for text in [
+            "Die Trippe kann als Holz(über)schuh angesprochen werden.",
+            "Die Innensohle ist durch eine Deck(brand)sohle abgedeckt.",
+        ] {
+            let doc = create_document(text);
+            assert!(linter.lint(&doc).is_empty(), "should not fire on {text:?}");
+        }
+
+        let doc = create_document("Er trägt (neue) schuhe.");
+        assert_eq!(
+            linter.lint(&doc).len(),
+            1,
+            "a spaced bracket ends no compound"
         );
     }
 

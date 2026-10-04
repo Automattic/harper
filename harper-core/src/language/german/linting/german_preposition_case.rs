@@ -338,6 +338,14 @@ impl Linter for GermanPrepositionCase {
                     continue;
                 }
 
+                // *mit ein paar Schuhen*, *mit ein bisschen Glück*: the
+                // quantifier is indeclinable, and *ein* is part of it.
+                if determiner_text.eq_ignore_ascii_case("ein")
+                    && ["paar", "bisschen", "wenig"].contains(&next_word.as_str())
+                {
+                    continue;
+                }
+
                 if FIXED_PHRASE_DETERMINERS.contains(&determiner_text.as_str()) {
                     continue;
                 }
@@ -629,7 +637,13 @@ mod tests {
 
     #[test]
     fn leaves_fixed_expressions_alone() {
-        assert_clean(&["Trotz allem blieb sie freundlich.", "Von wegen dem Chef!"]);
+        assert_clean(&[
+            "Trotz allem blieb sie freundlich.",
+            "Von wegen dem Chef!",
+            "Sie reicht von zwei Räumen mit ein paar Schuhen bis hin zu Sälen.",
+            "Mit ein bisschen Glück passt der Schuh.",
+            "Nach ein wenig Übung gelingt es.",
+        ]);
     }
 
     /// A capitalized determiner belongs to a name.
