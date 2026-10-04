@@ -24,7 +24,7 @@ import {
 	isGoogleDocsSourceSyncing,
 } from './googleDocsAdapter';
 import { type LintKind, lintKindColor } from './lintKindColor';
-import RenderBox, { FIXED_FRAME_MARKER_ID, type FixedFrame } from './RenderBox';
+import RenderBox from './RenderBox';
 import type SourceElement from './SourceElement';
 import type { UnpackedLint } from './unpackLint';
 
@@ -156,21 +156,7 @@ export default class Highlights {
 				googleDocsRenderOffset ?? (isGoogleDocs || cpa == null ? null : { x: cpa.x, y: cpa.y });
 			const boxPosition: 'absolute' | 'fixed' = isGoogleDocs ? 'absolute' : 'fixed';
 
-			// Lint boxes are measured in viewport pixels, but the render box lives inside the
-			// source's subtree, where ancestors with `zoom`, `transform` or `scale` can move and
-			// scale fixed-position content. Map the boxes through the frame we actually get.
-			if (isGoogleDocs) {
-				renderBox.render(this.renderTree(boxes, offset, boxPosition));
-			} else {
-				// The frame is measured from a marker in the previous render, so render once more
-				// when it was missing or has moved since.
-				const before = renderBox.measureFixedFrame();
-				renderBox.render(this.renderTree(boxes, before, boxPosition));
-				const after = renderBox.measureFixedFrame();
-				if (after != null && !framesEqual(before, after)) {
-					renderBox.render(this.renderTree(boxes, after, boxPosition));
-				}
-			}
+			renderBox.render(this.renderTree(boxes, offset, boxPosition));
 			updated.add(source);
 		}
 
@@ -198,38 +184,16 @@ export default class Highlights {
 
 	private renderTree(
 		boxes: LintBox[],
-		frame: { x: number; y: number; scaleX?: number; scaleY?: number } | null,
+		offset: { x: number; y: number } | null,
 		boxPosition: 'absolute' | 'fixed',
 	): VNode {
 		const elements = [];
-		const offsetX = frame?.x ?? 0;
-		const offsetY = frame?.y ?? 0;
-		const scale = { x: frame?.scaleX ?? 1, y: frame?.scaleY ?? 1 };
-
-		if (boxPosition === 'fixed') {
-			elements.push(
-				h(
-					'div',
-					{
-						id: FIXED_FRAME_MARKER_ID,
-						style: {
-							position: 'fixed',
-							left: '0px',
-							top: '0px',
-							width: '100px',
-							height: '100px',
-							visibility: 'hidden',
-							pointerEvents: 'none',
-						},
-					},
-					[],
-				),
-			);
-		}
+		const offsetX = offset?.x ?? 0;
+		const offsetY = offset?.y ?? 0;
 
 		for (const box of boxes) {
-			const x = (box.x - offsetX) / scale.x;
-			const y = (box.y - offsetY) / scale.y;
+			const x = box.x - offsetX;
+			const y = box.y - offsetY;
 			const positionStyle =
 				boxPosition === 'fixed'
 					? {
@@ -249,8 +213,8 @@ export default class Highlights {
 				{
 					style: {
 						...positionStyle,
-						width: `${box.width / scale.x}px`,
-						height: `${box.height / scale.y}px`,
+						width: `${box.width}px`,
+						height: `${box.height}px`,
 						pointerEvents: 'none',
 						borderBottom: `2px solid ${lintKindColor(box.lint.lint_kind)}`,
 						backgroundColor: `${lintKindColor(box.lint.lint_kind)}22`,
@@ -303,16 +267,6 @@ export default class Highlights {
 
 		return el.parentElement!;
 	}
-}
-
-function framesEqual(a: FixedFrame | null, b: FixedFrame): boolean {
-	return (
-		a != null &&
-		Math.abs(a.x - b.x) < 0.5 &&
-		Math.abs(a.y - b.y) < 0.5 &&
-		Math.abs(a.scaleX - b.scaleX) < 0.001 &&
-		Math.abs(a.scaleY - b.scaleY) < 0.001
-	);
 }
 
 function getInitialContainingRect(el: HTMLElement): DOMRect | null {

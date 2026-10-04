@@ -129,23 +129,11 @@ export default class TextFieldRange {
 		const fieldRect = field.getBoundingClientRect();
 		const scrollTop = window.scrollY || document.documentElement.scrollTop;
 		const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-
-		// The copied styles are in the field's own CSS pixels, while its bounding rect is on
-		// screen. When an ancestor zooms or scales the field (CSS `zoom`, `transform`, `scale`),
-		// lay the mirror out at the field's own size and scale it to match what is on screen.
-		const width = field.offsetWidth || fieldRect.width;
-		const height = field.offsetHeight || fieldRect.height;
-		const scaleX = width > 0 ? fieldRect.width / width : 1;
-		const scaleY = height > 0 ? fieldRect.height / height : 1;
-		const scaled = Math.abs(scaleX - 1) > 0.001 || Math.abs(scaleY - 1) > 0.001;
-
 		Object.assign(mirror.style, {
 			top: `${fieldRect.top + scrollTop}px`,
 			left: `${fieldRect.left + scrollLeft}px`,
-			width: `${scaled ? width : fieldRect.width}px`,
-			height: `${scaled ? height : fieldRect.height}px`,
-			transform: scaled ? `scale(${scaleX}, ${scaleY})` : '',
-			transformOrigin: scaled ? '0 0' : '',
+			width: `${fieldRect.width}px`,
+			height: `${fieldRect.height}px`,
 		});
 	}
 
