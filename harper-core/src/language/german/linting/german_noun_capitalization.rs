@@ -187,7 +187,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
 
     fn is_non_noun(word_lower: &[char]) -> bool {
         let s: String = word_lower.iter().collect();
-        noun_phrase::GERMAN_NON_NOUNS.contains(&s.as_str())
+        noun_phrase::is_lowercase_non_noun(&s)
     }
 
     /// Does `prev` end a clause subject, making this token the finite verb?
@@ -262,7 +262,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 || token.kind.is_preposition()
                 || token.kind.is_pronoun()
                 || token.kind.is_conjunction()
-                || noun_phrase::GERMAN_NON_NOUNS.contains(&lower.as_str())
+                || noun_phrase::is_lowercase_non_noun(&lower)
             {
                 return false;
             }

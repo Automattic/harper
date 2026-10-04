@@ -1785,13 +1785,22 @@ just language-meta-text german "das war ein versehen"
 ### Lexical classes
 
 `GermanNounCapitalization` must not "correct" words that are legitimately lower
-case. Three such classes are **dictionary data**, carried by property flags:
+case. Four such classes are **dictionary data**, carried by property flags:
 
 | Flag | Class | Example entry |
 |------|-------|---------------|
 | `1` | Spelled-out cardinal numeral | `zwei/~~hJOQRSTUWq1` |
 | `2` | Unit abbreviation | `kwh/~~2` |
 | `3` | Lower-case Latin/Greek term | `facto/~~NhY3` |
+| `^` | Not a noun lower case, though the capitalized word is | `ist/~~Vtj^` |
+
+`^` exists because lookups ignore case: `ist` arrives carrying the noun
+reading of `das Ist`, and the merged metadata cannot say which spelling it came
+from. Use it only for a genuine homograph whose capitalized noun hunspell knows
+or the dictionary needs (`gut`/`Gut`, `paar`/`Paar`, the modal infinitives and
+`das Können`). A lower-case entry with a noun reading hunspell does not
+confirm is a data error — remove the reading instead (`kurz`, `groß`, `neu`
+carried `N` and `A` for no noun at all).
 
 To stop a word being flagged as a miscapitalized noun, add the appropriate flag
 to its dictionary entry. `spell/lexical_classes.rs` reads these back into sets
@@ -1808,14 +1817,22 @@ grep -rn 'const [A-Z_]*: &\[&str\]' linting/ spell/ | wc -l
 ```
 
 `GERMAN_NON_NOUNS` was 265 words, justified on the grounds that "the dictionary
-actively mistags them". That stopped being true when
-`harper-core/src/language/german/scripts/strip_german_noun_readings.py` took the noun reading off every
-lower-case entry igerman98 has no capitalized form for: 230 of those 265 words
-stopped reading as nouns, and deleting them from the list changed no lint on
-either corpus. It is 35 words now, and they are the part a dictionary cannot
-settle — each really *is* a noun capitalized (`die Frage`, `die Waren`, `das
-Gut`), so the entry is right and only the lower-case occurrence needs letting
-through.
+actively mistags them". `strip_german_noun_readings.py` took it to 35, and the
+last 35 went into the dictionary. Emptying the list showed what each word was
+covering for:
+
+- **Missing verb readings.** The conjugation affixes `f`, `j`, `d`, `e` built
+  `frage`, `zeige`, `stehe` with person and number but no part of speech, so
+  the only reading left was a stray noun one. They now carry `verb`.
+- **Junk stems.** `hab/~~NXhY`, `wär/~~NXh` and `seh/*~~NXh` turned `habe`,
+  `wäre` and `sehe` into plural nouns.
+- **Wrong word classes.** `wegen` and `trotz` had no preposition reading;
+  adjectives like `kurz` carried `N`; thousands of declined adjectives and noun
+  plurals were filed as verbs (`fix_german_auto_added_verbs.py`).
+- **Real homographs**, now marked `^` (see "Lexical classes").
+
+The first-person and subjunctive verb forms (`ich zeige`, `er stehe`) stopped
+being reported as nouns, and `die frage` is reported now.
 
 The rest stay, for three different reasons:
 

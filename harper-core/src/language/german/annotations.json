@@ -1793,6 +1793,7 @@
 			"target": [
 				{
 					"metadata": {
+						"verb": { "verb_form": "PAST" },
 						"morphology": {
 							"verb": {
 								"person": ["First", "Third"],
@@ -1873,6 +1874,7 @@
 			"target": [
 				{
 					"metadata": {
+						"verb": { "verb_form": "PAST" },
 						"morphology": {
 							"verb": {
 								"person": ["First", "Third"],
@@ -1933,6 +1935,7 @@
 			"target": [
 				{
 					"metadata": {
+						"verb": {},
 						"morphology": {
 							"verb": {
 								"person": ["First", "Third"],
@@ -2067,6 +2070,7 @@
 			"target": [
 				{
 					"metadata": {
+						"verb": {},
 						"morphology": {
 							"verb": {
 								"person": ["First", "Third"],
@@ -2920,6 +2924,10 @@
 		"*": {
 			"#": "Stem-only marker. The entry is not a word: it exists so the conjugation affixes have something to attach to (`absperr/~~*Vcej` builds `absperrt`, `absperrte`, `absperren`). Without it the bare stem lands in the word list, is accepted as a spelling, and — because every list member may be a compound element — turns up inside misspellings such as `Absiecht` = `ab` + `siecht`. Hunspell calls this `NEEDAFFIX`.",
 			"stem_only": true,
+			"metadata": {}
+		},
+		"^": {
+			"#": "Lower-case non-noun marker. The entry is not a noun, but a capitalized noun of the same letters is: `ist` and das `Ist`, `gut` and das `Gut`. Harper looks words up regardless of case, so the lower-case spelling picks up the noun reading of the capitalized one; this flag says which spelling it belongs to. Read by the noun-phrase chunker and `GermanNounCapitalization`, which never take the lower-case spelling for a noun.",
 			"metadata": {}
 		},
 		"!": {

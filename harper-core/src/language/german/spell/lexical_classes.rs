@@ -30,6 +30,9 @@ pub const NUMERAL_FLAG: char = '1';
 pub const ABBREVIATION_FLAG: char = '2';
 /// Property flag marking a lower-case Latin/Greek term (`facto`, `sapiens`).
 pub const FOREIGN_TERM_FLAG: char = '3';
+/// Property flag marking a lower-case word whose noun homograph is capitalized
+/// (`ist` and das `Ist`).
+pub const LOWERCASE_NON_NOUN_FLAG: char = '^';
 
 fn collect_flagged(words: &[AnnotatedWord], flag: char) -> HashSet<String> {
     words
@@ -55,6 +58,19 @@ pub static UNIT_ABBREVIATIONS: LazyLock<HashSet<String>> =
 /// miscapitalized German nouns.
 pub static FOREIGN_TERMS: LazyLock<HashSet<String>> =
     LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), FOREIGN_TERM_FLAG));
+
+/// Words whose lower-case spelling is not a noun, although a capitalized noun of
+/// the same letters is: `ist` and das `Ist`, `gut` and das `Gut`.
+///
+/// Lookups ignore case, so `ist` arrives carrying the noun reading of `Ist` and
+/// the merged metadata cannot say which spelling it came from. The `^` flag on
+/// the lower-case entry can.
+pub static LOWERCASE_NON_NOUNS: LazyLock<HashSet<String>> = LazyLock::new(|| {
+    collect_flagged(
+        super::german_dict::german_word_list(),
+        LOWERCASE_NON_NOUN_FLAG,
+    )
+});
 
 #[cfg(test)]
 mod tests {

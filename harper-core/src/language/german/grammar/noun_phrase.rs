@@ -95,30 +95,15 @@ pub fn roles(tokens: &[&Token], document: &Document) -> Vec<Role> {
     roles
 }
 
-/// Words whose lower-case reading is not the noun one.
+/// Is `lower` a word whose lower-case spelling is not a noun, although a
+/// capitalized noun of the same letters is — `ist` and das `Ist`?
 ///
-/// This used to be 265 words, and the reason given was that "the dictionary
-/// actively mistags them". That is no longer true:
-/// `harper-core/src/language/german/scripts/strip_german_noun_readings.py` took the noun reading off every
-/// lower-case entry igerman98 has no capitalized form for, and 230 of these
-/// words stopped reading as nouns with it.
-///
-/// What is left is the part a dictionary cannot settle. Each of these really is
-/// a noun when it is capitalized -- `die Frage`, `die Waren`, `das Gut`, `die
-/// Wegen` -- so the entry is right to carry the reading, and the lower-case
-/// occurrence still has to be let through. A handful are not entries at all.
-///
-/// Check the list against the dictionary before adding to it:
-///
-/// ```bash
-/// just language-meta-text german "wegen trotz ist waren"
-/// ```
-pub(crate) const GERMAN_NON_NOUNS: &[&str] = &[
-    "alt", "arbeite", "darin", "denke", "dgl", "dürfen", "ebd", "etc", "frage", "gebe", "gibe",
-    "groß", "gut", "habe", "heute", "hin", "ist", "klein", "kurz", "können", "lang", "langsam",
-    "neu", "sehe", "sollen", "sondern", "teils", "trotz", "versuche", "viel", "waren", "wegen",
-    "wollen", "worden", "wäre",
-];
+/// Lookups ignore case, so the token carries the noun reading either way. The
+/// dictionary marks the lower-case entry `^`; see
+/// [`LOWERCASE_NON_NOUNS`](crate::language::german::spell::lexical_classes::LOWERCASE_NON_NOUNS).
+pub(crate) fn is_lowercase_non_noun(lower: &str) -> bool {
+    crate::language::german::spell::lexical_classes::LOWERCASE_NON_NOUNS.contains(lower)
+}
 
 /// Words that, standing immediately to the left of a candidate, mark it as the
 /// head or a modifier of a noun phrase: articles, other determiners,
@@ -449,6 +434,15 @@ pub(crate) fn continues_noun_phrase(token: &Token, document: &Document) -> bool 
         return false;
     }
 
+    let capitalized = chars.first().is_some_and(|c| c.is_uppercase());
+
+    // A capitalized word with a noun reading is the head even when the same
+    // spelling is also a closed-class word: "das menschliche **Gen**" ends
+    // in the noun, not in the preposition "gen".
+    if capitalized && token.kind.is_noun() {
+        return true;
+    }
+
     // Closed-class words close the phrase: "die Zeit **im** Büro" is two
     // noun phrases, not one.
     if token.kind.is_determiner()
@@ -464,10 +458,9 @@ pub(crate) fn continues_noun_phrase(token: &Token, document: &Document) -> bool 
     // hands out spurious adverb and verb readings freely — "Band" is tagged
     // an adverb — and rejecting the token on one of those truncates the
     // phrase and promotes the attributive adjective before it to head.
-    // `GERMAN_NON_NOUNS` suppresses lints on *lowercase* verb forms, several
-    // of which are perfectly good nouns when written with a capital — "die
-    // Frage", "die Sage", "die Suche".
-    if chars.first().is_some_and(|c| c.is_uppercase()) {
+    // `is_lowercase_non_noun` is about the *lowercase* spelling only: "das
+    // Ist" and "das Gut" are nouns.
+    if capitalized {
         return true;
     }
 
@@ -480,7 +473,7 @@ pub(crate) fn continues_noun_phrase(token: &Token, document: &Document) -> bool 
     }
 
     let lower = lowercase_of(token, document);
-    if GERMAN_NON_NOUNS.contains(&lower.as_str()) {
+    if is_lowercase_non_noun(&lower) {
         return false;
     }
 
@@ -816,8 +809,18 @@ fn chunk(tokens: &[&Token], document: &Document) -> Vec<Phrase> {
                 .get_span_content(&tokens[end].span)
                 .first()
                 .is_some_and(|c| c.is_uppercase());
+            // Only adjectives stand between the determiner and the head, so a
+            // noun/verb homograph that cannot be an adjective is the head even
+            // written lower case: "der **marke** Arri Alexa", "der **presse**
+            // beigetragen". A noun reading alone is not enough: declined
+            // adjectives the dictionary lacks arrive as nouns
+            // ("die nationalsozialistische Wirtschaft"). Nor at the start of a
+            // sentence, where the opener is the subject pronoun and the
+            // homograph its verb: "Dies **macht** Systeme robuster".
+            let kind = &tokens[end].kind;
+            let homograph_head = i > 0 && kind.is_noun() && kind.is_verb() && !kind.is_adjective();
             end += 1;
-            if capitalized {
+            if capitalized || homograph_head {
                 break;
             }
         }
