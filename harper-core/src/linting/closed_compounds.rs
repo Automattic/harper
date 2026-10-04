@@ -45,6 +45,7 @@ pub fn lint_group() -> LintGroup {
         "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
         "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
+        "Lifetime"        => (&["life time"][..], "lifetime"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
         "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
@@ -77,6 +78,7 @@ pub fn lint_group() -> LintGroup {
         "There"           => (&["the re"][..], "there"),
         "Therefore"       => (&["there fore"][..], "therefore"),
         "Thereupon"       => (&["there upon"][..], "thereupon"),
+        "Tradeoff"        => (&["trade off"][..], "tradeoff"),
         "Underclock"      => (&["under clock"][..], "underclock"),
         "Upset"           => (&["up set"][..], "upset"),
         "Upward"          => (&["up ward"][..], "upward"),
@@ -377,5 +379,23 @@ mod tests {
             lint_group(),
             "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
         )
+    }
+
+    #[test]
+    fn lifetime() {
+        assert_suggestion_result(
+            "In a life time it's gone up by more than 10 fold.",
+            lint_group(),
+            "In a lifetime it's gone up by more than 10 fold.",
+        );
+    }
+
+    #[test]
+    fn tradeoff() {
+        assert_suggestion_result(
+            "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+            lint_group(),
+            "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+        );
     }
 }

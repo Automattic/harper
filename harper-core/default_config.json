@@ -553,6 +553,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lifetime",
+								"state": true,
+								"label": "Lifetime"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Meanwhile",
 								"state": true,
 								"label": "Meanwhile"
@@ -780,6 +787,13 @@
 								"name": "Thereupon",
 								"state": true,
 								"label": "Thereupon"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Tradeoff",
+								"state": true,
+								"label": "Tradeoff"
 							}
 						},
 						{
