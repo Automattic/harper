@@ -1,45 +1,43 @@
 #![doc = include_str!("../README.md")]
 
-use harper_core::spell::{Dictionary, FstDictionary, MutableDictionary, WordId};
-use hashbrown::HashMap;
-use std::collections::BTreeMap;
-use std::fs::File;
-use std::io::{self, BufReader};
-use std::path::PathBuf;
-// use std::sync::Arc;
-use std::{fs, process};
+use std::{
+    collections::BTreeMap,
+    fs::{self, File},
+    io::{self, BufReader},
+    path::PathBuf,
+    process,
+};
 
 use anyhow::anyhow;
 use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
-use harper_core::linting::LintGroup;
-use harper_core::parsers::{IsolateEnglish, MarkdownOptions};
-use harper_core::weir::WeirLinter;
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
+    linting::LintGroup,
+    parsers::{IsolateEnglish, MarkdownOptions},
+    spell::{Dictionary, FstDictionary, MutableDictionary, WordId},
+    weir::WeirLinter,
 };
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
-
 use harper_stats::Stats;
+use hashbrown::HashMap;
 use serde::Serialize;
 use serde_json::Value;
 
+mod annotate;
 mod input;
+mod lint;
+
+use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
-
-mod annotate;
-use annotate::AnnotationType;
-
-mod lint;
 mod repl;
-use crate::lint::{OutputFormat, lint};
-use lint::LintOptions;
+use lint::{LintOptions, OutputFormat, lint};
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
@@ -102,6 +100,9 @@ enum Args {
         /// Suppress informational status messages and only output actual lint errors.
         #[arg(long)]
         quiet: bool,
+        /// Suppress parallel processing of files (for issue #4513).
+        #[arg(long)]
+        no_parallel: bool,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -273,6 +274,7 @@ fn main() -> anyhow::Result<()> {
             weirpacks,
             format,
             quiet,
+            no_parallel,
         } => {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
@@ -291,6 +293,7 @@ fn main() -> anyhow::Result<()> {
                     color,
                     format,
                     quiet,
+                    no_parallel,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?
