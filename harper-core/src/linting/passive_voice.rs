@@ -864,6 +864,7 @@ fn has_state_complement(
     match (lower.as_str(), next.as_deref()) {
         ("meant" | "supposed" | "expected" | "designed", Some("to")) => true,
         ("made", Some("possible")) => true,
+        ("composed", Some("of")) => true,
         ("damned", Some("if")) => true,
         // Postnominal availability idioms: "no time to be lost" and
         // "not a single pro to be found". Keep ordinary passive infinitives.
@@ -1109,6 +1110,7 @@ fn should_suppress_adjectival(
             | "paralyzed"
             | "delighted"
             | "astounded"
+            | "appreciated"
     ) {
         return true;
     }
@@ -1540,6 +1542,18 @@ fn technical_state_participle(lower: &str) -> bool {
             | "displayed"
             | "found"
             | "built"
+            | "connected"
+            | "ignored"
+            | "sandboxed"
+            | "labelled"
+            | "labeled"
+            | "modelled"
+            | "modeled"
+            | "priced"
+            | "given"
+            | "pressed"
+            | "weighted"
+            | "summed"
     )
 }
 
@@ -2088,12 +2102,25 @@ mod tests {
             "The feature can be disabled by setting a flag.",
             "Docker must be installed.",
             "The feature is enabled by default.",
+            "The applications given here are examples.",
+            "The resistors are connected up.",
+            "Unsupported options are ignored.",
+            "The process is sandboxed.",
+            "The jar was labelled.",
+            "The networks are modeled.",
+            "The boxes were competitively priced.",
+            "Both retrieval paths are weighted and summed.",
+            "You're not supposed to say that.",
+            "The alloy is composed of copper and tin.",
+            "Your donation is always appreciated.",
         ] {
             active(text);
         }
         // An agent or a dated event brings the same verbs back into scope.
         passive("The feature was enabled by the administrator.");
         passive("The document was generated yesterday.");
+        passive("The award was given by the committee.");
+        passive("The label was pressed by the machine.");
     }
 
     #[test]

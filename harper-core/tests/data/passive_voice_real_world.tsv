@@ -2,7 +2,7 @@
 # alice: Lewis Carroll, Alice’s Adventures in Wonderland (public domain), tests/text.
 # readme: Automattic/harper README.md (repository license).
 # Zero-based paragraph index after splitting on two newlines; expected lint spans.
-alice	9	was labelled
+alice	9	-
 alice	14	to be seen|was lit
 alice	37	I’ve been changed|could have been changed
 alice	38	must have been changed
@@ -13,10 +13,10 @@ alice	73	were placed
 alice	101	-
 alice	109	being broken
 alice	112	being ordered
-alice	117	was pressed
+alice	117	-
 alice	149	must have been changed
 alice	175	have got altered
-alice	192	was pressed
+alice	192	-
 alice	216	was opened
 alice	284	haven’t been invited
 alice	295	were shaped
