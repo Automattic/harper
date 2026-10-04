@@ -72,6 +72,7 @@ impl Linter for PassiveVoice {
                         by_agent,
                         passive_source,
                         has_event_evidence(sentence, &word_indices, word_pos, source),
+                        has_technical_subject(sentence, &word_indices, word_pos, source),
                     ) && !has_clear_done_passive(sentence, &word_indices, word_pos, source))
                 {
                     continue;
@@ -282,6 +283,20 @@ fn preceding_passive_aux(
 
         if is_become_form(&lower) {
             return Some((PassiveSource::Become, idx));
+        }
+
+        if lower == "deal"
+            && pos >= 2
+            && normalized_word(&sentence[word_indices[pos - 2]], source) == "a"
+            && matches!(
+                normalized_word(&sentence[word_indices[pos - 1]], source).as_str(),
+                "good" | "great"
+            )
+            && !has_hard_boundary(&sentence[word_indices[pos - 2] + 1..idx])
+        {
+            pos -= 2;
+            skipped += 3;
+            continue;
         }
 
         if is_gap_modifier(token, &lower)
@@ -713,6 +728,7 @@ fn coordinated_tail(
                 has_agentive_by(sentence, word_indices, pos, source),
                 PassiveSource::Be,
                 has_event_evidence(sentence, word_indices, pos, source),
+                has_technical_subject(sentence, word_indices, pos, source),
             )
         {
             break;
@@ -865,6 +881,27 @@ fn has_state_complement(
         ("meant" | "supposed" | "expected" | "designed", Some("to")) => true,
         ("made", Some("possible")) => true,
         ("composed", Some("of")) => true,
+        ("built", Some("into")) => true,
+        ("required", Some("to")) => true,
+        ("used", Some("up")) => true,
+        ("printed", Some("the")) => indices.get(pos + 2).is_some_and(|&idx| {
+            matches!(
+                normalized_word(&sentence[idx], source).as_str(),
+                "word" | "words" | "name" | "title"
+            )
+        }),
+        ("seen", Some("in")) => {
+            let tail: Vec<_> = indices
+                .iter()
+                .skip(pos + 2)
+                .take(3)
+                .take_while(|&&idx| !has_hard_boundary(&sentence[indices[pos] + 1..idx]))
+                .map(|&idx| normalized_word(&sentence[idx], source))
+                .collect();
+            matches!(tail.as_slice(), [article, adjective, noun]
+                if article == "a" && matches!(adjective.as_str(), "positive" | "negative" | "good" | "bad" | "favorable" | "favourable") && noun == "light")
+        }
+        ("pressed", Some("against" | "hard" | "closely" | "so")) => true,
         ("damned", Some("if")) => true,
         // Postnominal availability idioms: "no time to be lost" and
         // "not a single pro to be found". Keep ordinary passive infinitives.
@@ -988,7 +1025,14 @@ fn has_event_evidence(sentence: &[Token], indices: &[usize], pos: usize, source:
         let lower = normalized_word(token, source);
         if matches!(
             lower.as_str(),
-            "yesterday" | "recently" | "earlier" | "every"
+            "yesterday"
+                | "today"
+                | "tomorrow"
+                | "tonight"
+                | "overnight"
+                | "recently"
+                | "earlier"
+                | "every"
         ) || (previous == "on" && lower == "election")
             || (matches!(previous.as_str(), "in" | "on" | "at" | "last") && is_time_word(&lower))
         {
@@ -1071,6 +1115,7 @@ fn should_suppress_adjectival(
     by_agent: bool,
     passive_source: PassiveSource,
     event_evidence: bool,
+    technical_subject: bool,
 ) -> bool {
     if by_agent {
         return false;
@@ -1144,7 +1189,7 @@ fn should_suppress_adjectival(
     // states with agentless passives ("the feature is enabled", "files can be
     // found"). These read as result states rather than dynamic events, so keep
     // them out of the style warning unless an event or agent is present.
-    if technical_state_participle(&lower) && !event_evidence {
+    if technical_state_participle(&lower) && technical_subject && !event_evidence {
         return true;
     }
 
@@ -1504,9 +1549,150 @@ fn lexicalized_nonpassive_state(lower: &str) -> bool {
     matches!(lower, "gone" | "done" | "drunk" | "fainted")
 }
 
+/// Restrict documentation exceptions to a local technical subject, rather than
+/// treating common action verbs as states everywhere ("he was given a medal").
+/// Subjectless excerpts cannot supply that context and retain the conservative
+/// reading used by the review corpus. Clause boundaries and lexical verbs stop
+/// the scan, so a technical noun in a containing clause cannot hide a warning.
+fn has_technical_subject(
+    sentence: &[Token],
+    indices: &[usize],
+    pos: usize,
+    source: &[char],
+) -> bool {
+    let candidate = indices[pos];
+    for &idx in indices[..pos].iter().rev().take(12) {
+        if has_hard_boundary(&sentence[idx + 1..candidate]) {
+            break;
+        }
+        let token = &sentence[idx];
+        let lower = normalized_word(token, source);
+        if is_be_form(&lower)
+            || is_get_form(&lower)
+            || is_become_form(&lower)
+            || is_unambiguous_be_contraction(&lower)
+            || is_gap_modifier(token, &lower)
+            || matches!(
+                lower.as_str(),
+                "have"
+                    | "has"
+                    | "had"
+                    | "can"
+                    | "could"
+                    | "will"
+                    | "would"
+                    | "should"
+                    | "must"
+                    | "may"
+                    | "might"
+            )
+        {
+            continue;
+        }
+        if matches!(lower.as_str(), "that" | "which") {
+            continue;
+        }
+        if token.kind.is_pronoun() {
+            return false;
+        }
+        if is_contextual_noun(token) || token.kind.is_upos(UPOS::VERB) {
+            return matches!(
+                lower.as_str(),
+                "feature"
+                    | "features"
+                    | "option"
+                    | "options"
+                    | "theme"
+                    | "themes"
+                    | "setting"
+                    | "settings"
+                    | "configuration"
+                    | "configurations"
+                    | "config"
+                    | "configs"
+                    | "tool"
+                    | "tools"
+                    | "interpreter"
+                    | "interpreters"
+                    | "software"
+                    | "application"
+                    | "applications"
+                    | "app"
+                    | "apps"
+                    | "program"
+                    | "programs"
+                    | "script"
+                    | "scripts"
+                    | "process"
+                    | "processes"
+                    | "module"
+                    | "modules"
+                    | "package"
+                    | "packages"
+                    | "dependency"
+                    | "dependencies"
+                    | "docker"
+                    | "file"
+                    | "files"
+                    | "directory"
+                    | "directories"
+                    | "document"
+                    | "documents"
+                    | "data"
+                    | "database"
+                    | "databases"
+                    | "record"
+                    | "records"
+                    | "key"
+                    | "keys"
+                    | "release"
+                    | "releases"
+                    | "binary"
+                    | "binaries"
+                    | "build"
+                    | "builds"
+                    | "repository"
+                    | "repositories"
+                    | "repo"
+                    | "repos"
+                    | "project"
+                    | "projects"
+                    | "example"
+                    | "examples"
+                    | "task"
+                    | "tasks"
+                    | "list"
+                    | "lists"
+                    | "pattern"
+                    | "patterns"
+                    | "network"
+                    | "networks"
+                    | "resistor"
+                    | "resistors"
+                    | "path"
+                    | "paths"
+                    | "exception"
+                    | "exceptions"
+                    | "crash"
+                    | "crashes"
+                    | "shell"
+                    | "protocol"
+                    | "protocols"
+                    | "makefile"
+                    | "interface"
+                    | "interfaces"
+                    | "ui"
+                    | "code"
+                    | "api"
+            );
+        }
+    }
+    true
+}
+
 /// Participles that overwhelmingly describe technical configuration, capability,
-/// or documentation states in ordinary prose. Agentive or eventive uses stay in
-/// scope because this list is only consulted without either.
+/// or documentation states with technical subjects. Agentive or eventive uses
+/// stay in scope, as do action readings outside documentation.
 fn technical_state_participle(lower: &str) -> bool {
     matches!(
         lower,
@@ -1600,6 +1786,9 @@ fn likely_participial_adjective(lower: &str) -> bool {
             | "thatched"
             | "stained"
             | "marked"
+            | "labelled"
+            | "labeled"
+            | "priced"
             | "forgotten"
             | "ornamented"
             | "haunted"
@@ -1900,7 +2089,7 @@ mod tests {
             ("He got written permission from his manager.", 0),
             ("Was the written report useful?", 0),
             ("Was the report that Alice wrote published?", 1),
-            ("The file was deleted and the report was printed.", 1),
+            ("The file was deleted and the report was printed.", 2),
             ("The file was reviewed, approved, and published.", 1),
             ("The file was reviewed but later rejected.", 1),
             ("The candidate was interviewed but rejected the offer.", 1),
@@ -2119,8 +2308,41 @@ mod tests {
         // An agent or a dated event brings the same verbs back into scope.
         passive("The feature was enabled by the administrator.");
         passive("The document was generated yesterday.");
+        passive("The document was generated overnight.");
+        passive("The document was generated today.");
+        passive("The document will be generated tomorrow.");
+        passive("The document will be generated tonight.");
         passive("The award was given by the committee.");
         passive("The label was pressed by the machine.");
+    }
+
+    #[test]
+    fn retains_action_passives_outside_technical_descriptions() {
+        for text in [
+            "He was given a medal.",
+            "The patient was given a dose of insulin.",
+            "The victim was found under the bridge.",
+            "The victim was found in the house.",
+            "The prisoner was allowed a visitor.",
+            "The child was ignored.",
+            "The meal was provided.",
+            "The car was stopped.",
+            "The toy was shared.",
+            "The letter was printed.",
+            "The project says the victim was found under the bridge.",
+            "The document says he was given a medal.",
+            "She was a good deal frightened by this very sudden change.",
+            "She was a great deal surprised by the news.",
+        ] {
+            passive(text);
+        }
+        active("Blizzard was still seen in a positive light.");
+        active("The proposal was seen in a negative light.");
+        passive("The suspect was seen in a positive light by witnesses.");
+        passive("The suspect was seen in a brightly lit room.");
+        // Ordinary nominal complements must not be treated as degree phrases.
+        active("She was a good deal broker.");
+        active("She was happy; a good deal frightened nobody.");
     }
 
     #[test]

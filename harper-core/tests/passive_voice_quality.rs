@@ -95,7 +95,7 @@ fn review_reported_excerpts() {
             }
         }
     }
-    assert_eq!(total, 87);
+    assert_eq!(total, 101);
     assert!(failures.is_empty(), "{}", failures.join("\n"));
 }
 

@@ -91,3 +91,77 @@ fn passive_voice_does_not_cross_inline_code() {
     group.config.set_rule_enabled("PassiveVoice", true);
     assert!(group.lint(&doc).is_empty());
 }
+
+#[test]
+fn review_reported_markdown_spans_remain_in_source_coordinates() {
+    let mut group = LintGroup::new_curated(FstDictionary::curated(), Dialect::American);
+    group.config.clear();
+    group.config.set_rule_enabled("PassiveVoice", true);
+    for (text, expected) in [
+        (
+            "> **Note:** `npm run check` requires `npm run build` to be run first.",
+            vec!["to be run"],
+        ),
+        (
+            "Neovim >= **0.11.2** (needs to be built with **LuaJIT**)",
+            vec!["to be built"],
+        ),
+        (
+            "Neovim >= **0.11.2** (the binary was built yesterday with **LuaJIT**)",
+            vec!["was built"],
+        ),
+        (
+            "| Component | Status |\n| --- | --- |\n| GPU | The report was reviewed by Alice. |",
+            vec!["was reviewed"],
+        ),
+        (
+            "For an agent-driven workflow, the report was reviewed by Alice.",
+            vec!["was reviewed"],
+        ),
+        (
+            "😊 (#12) The report was reviewed by Alice near /wiki/GPU.",
+            vec!["was reviewed"],
+        ),
+        ("There is an error flagged at 'huge'.", vec![]),
+        ("When there are too many news loaded (~10000)...", vec![]),
+        ("There is no moment to be lost.", vec![]),
+        ("Support components are inherited.", vec!["are inherited"]),
+        (
+            "Upon Earth was planted an irrevocable poison.",
+            vec!["was planted"],
+        ),
+        (
+            "| Preferences | Source |\n| --- | --- |\n| preferences mentioned by user | chat |",
+            vec![],
+        ),
+        (
+            "An operative system for the Hack machine written in the Jack language.",
+            vec![],
+        ),
+        ("Run by wasmer. Run by wapm.", vec![]),
+        (
+            "Transactions are often celebrated and desirable.",
+            vec!["are often celebrated"],
+        ),
+        (
+            "```text\nThe report was reviewed by Alice.\n```\n\nThe letter was signed.",
+            vec!["was signed"],
+        ),
+        (
+            "She was a good deal frightened by this very sudden change.",
+            vec!["was a good deal frightened"],
+        ),
+    ] {
+        let doc = Document::new_markdown_default_curated(text);
+        let lints = group.lint(&doc);
+        let actual: Vec<_> = lints
+            .iter()
+            .map(|lint| lint.span.get_content_string(doc.get_source()))
+            .collect();
+        assert_eq!(actual, expected, "{text}");
+        for lint in lints {
+            assert!(lint.span.end <= text.chars().count());
+            assert!(lint.suggestions.is_empty());
+        }
+    }
+}

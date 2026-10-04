@@ -1,7 +1,8 @@
 # Passive voice regression corpora
 
-`passive_voice_review.tsv` contains 87 verbatim excerpts from the real-world
+`passive_voice_review.tsv` contains 101 verbatim excerpts from the real-world
 report in [PR #4502](https://github.com/Automattic/harper/pull/4502#issuecomment-5923253696).
+Fourteen additional excerpts come from the [follow-up review](https://github.com/Automattic/harper/pull/4502#issuecomment-5978988921).
 The source filenames and line numbers come from the reviewer. Only the outer
 editorial ellipses were removed. Combined quotations and fragments missing the
 context needed for a reliable expectation were omitted. The test checks each
@@ -27,6 +28,9 @@ stylistically. The rule is optional, offers no rewrites, and asks whether a
 change would help. Those examples retain warnings. Reduced relatives and
 standalone participial labels are outside its scope. Local exceptions suppress
 conventional license declarations and common state, intention, availability,
-and agentless technical-configuration readings. Suppression is local: an explicit
+and agentless technical-configuration readings with a local technical subject.
+Ordinary narrative actions such as “he was given a medal” remain eligible.
+Subjectless technical excerpts retain the conservative state reading because
+they cannot provide a subject to disambiguate. Suppression is local: an explicit
 agent or a dated event brings the same participles back into scope, and other
 diagnostics in the same document remain eligible.
