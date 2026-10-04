@@ -51,7 +51,7 @@ impl LanguageModule for GermanModule {
             german_recommended_fusion::GermanRecommendedFusion,
             german_repeated_words::GermanRepeatedWords,
             german_sentence_capitalization::GermanSentenceCapitalization,
-            german_spell_check::GermanSpellCheck,
+            german_spell_check::GermanSpellCheck, german_split_particle::GermanSplitParticle,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
             german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
@@ -91,6 +91,7 @@ impl LanguageModule for GermanModule {
         );
         group.add("GermanWiderWieder", GermanWiderWieder);
         group.add("GermanRepeatedWords", GermanRepeatedWords);
+        group.add("GermanSplitParticle", GermanSplitParticle);
         group.add("GermanCommonTypos", GermanCommonTypos);
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
