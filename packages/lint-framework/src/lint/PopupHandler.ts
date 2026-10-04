@@ -1,6 +1,5 @@
 import h from 'virtual-dom/h';
 import { closestBox, type IgnorableLintBox, isPointInBox } from './Box';
-import { nonEditableAncestor } from './domUtils';
 import { getCaretPosition } from './editorUtils';
 import type { UnpackedLint } from './unpackLint';
 
@@ -57,7 +56,7 @@ export default class PopupHandler {
 		this.currentLintBoxes = [];
 		this.currentHint = undefined;
 		this.currentHintFor = undefined;
-		this.renderBox = new RenderBox(() => nonEditableAncestor(document.body));
+		this.renderBox = new RenderBox(() => document.body);
 		this.renderBox.getShadowHost().popover = 'manual';
 		this.renderBox.getShadowHost().style.pointerEvents = 'none';
 		this.renderBox.getShadowHost().style.border = 'none';
