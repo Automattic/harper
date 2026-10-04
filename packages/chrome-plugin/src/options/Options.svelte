@@ -38,8 +38,14 @@ let cycleShortcutLoaded = $state(false);
 /** `commands.update` exists in Firefox and Thunderbird; Chrome changes shortcuts on its own page. */
 const commandsApi = chrome.commands as typeof chrome.commands & {
 	update?: (detail: { name: string; shortcut: string }) => Promise<void>;
+	openShortcutSettings?: () => Promise<void>;
 };
 let cycleShortcutEditable = typeof commandsApi?.update === 'function';
+/**
+ * Firefox 137+ opens its own shortcut page, which marks shortcuts used more than once. An
+ * extension cannot see other extensions' shortcuts, so this is the only way to show a conflict.
+ */
+let canOpenShortcutSettings = typeof commandsApi?.openShortcutSettings === 'function';
 let capturingCycleShortcut = $state(false);
 let cycleShortcutError = $state('');
 let isolateEnglish = $state(false);
@@ -555,6 +561,9 @@ async function removeWeirpack(id: string) {
             <p class="text-xs text-gray-600 dark:text-gray-400">
               Switches to the next language in the list above. If it does nothing, another
               extension probably uses the same shortcut.
+              {#if canOpenShortcutSettings}
+                Manage shortcuts shows the ones used more than once.
+              {/if}
             </p>
             {#if cycleShortcutLoaded && !cycleShortcut && !capturingCycleShortcut}
               <p class="text-xs text-red-600" data-testid="cycle-shortcut-missing">
@@ -573,6 +582,9 @@ async function removeWeirpack(id: string) {
             {#if cycleShortcutEditable}
               <Button size="sm" color="light" disabled={capturingCycleShortcut} on:click={startCycleShortcutCapture}>Change</Button>
               <Button size="sm" color="light" disabled={capturingCycleShortcut} on:click={resetCycleShortcut}>Default</Button>
+              {#if canOpenShortcutSettings}
+                <Button size="sm" color="light" disabled={capturingCycleShortcut} on:click={() => commandsApi.openShortcutSettings?.()}>Manage shortcuts</Button>
+              {/if}
             {:else}
               <Button size="sm" color="light" on:click={openBrowserShortcuts}>Change</Button>
             {/if}
