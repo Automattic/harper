@@ -155,6 +155,7 @@ fn has_non_noun_ending(s: &str) -> bool {
         || (s.ends_with("nahe") && n >= 6)  // zeitnahe, praxisnahe
         || (s.ends_with("uelle") && n >= 6) // rituelle, aktuelle, individuelle
         || (s.ends_with("öse") && n >= 6)   // amouröse, nervöse, grandiose
+        || (s.ends_with("frei") && n >= 7)  // latexfrei, barrierefrei, schadstofffrei
         // High-precision finite-verb / participle endings. Corpus mining added
         // many of these to the dictionary as bare "~~Nh" nouns.
         || (s.ends_with("iert") && n >= 6)  // funktioniert, existiert, studiert
@@ -222,7 +223,8 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
     ///
     /// A bracketed infix does the same: *"Holz(über)schuh"*,
     /// *"Deck(brand)sohle"* write two compounds at once, and the head after the
-    /// closing bracket is as lower case as the fragment after a hyphen.
+    /// closing bracket is as lower case as the fragment after a hyphen. So is
+    /// the rest of a word behind a gender star: *"Leser*innenkommentar"*.
     fn is_hyphen_compound_fragment(
         token: &Token,
         prev: Option<&Token>,
@@ -231,9 +233,11 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         let hyphen = |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::Hyphen));
         let infix_close =
             |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::CloseRound));
+        let gender_star = |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::Star));
 
-        prev.is_some_and(|p| (hyphen(p) || infix_close(p)) && p.span.end == token.span.start)
-            || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
+        prev.is_some_and(|p| {
+            (hyphen(p) || infix_close(p) || gender_star(p)) && p.span.end == token.span.start
+        }) || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
     }
 
     /// Is this token inside a foreign-language gloss?
@@ -750,6 +754,9 @@ mod tests {
             let doc = create_document(text);
             assert!(linter.lint(&doc).is_empty(), "should not fire on {text:?}");
         }
+
+        let doc = create_document("Bitte als Leser*innenkommentar hinterlassen.");
+        assert!(linter.lint(&doc).is_empty(), "a gender star joins one word");
 
         let doc = create_document("Er trägt (neue) schuhe.");
         assert_eq!(

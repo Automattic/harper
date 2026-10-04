@@ -805,6 +805,14 @@ fn readings_of_ending(word: &str) -> Vec<Features> {
         // wir/sie lernen, wir/sie lernten — and the infinitive, which has no
         // person at all and is why only the front field is checked.
         vec![first_plural, third_plural]
+    } else if ["zt", "ßt", "xt"]
+        .iter()
+        .any(|ending| word.ends_with(ending))
+    {
+        // The mirror image of the `-st` case: a stem in `z`, `ß` or `x` takes
+        // a bare `-t` for the second person too — *du nutzt*, *du heißt*, *du
+        // boxt*.
+        vec![second_singular, third_singular, second_plural]
     } else if word.ends_with('t') {
         // er lernt, ihr lernt
         vec![third_singular, second_plural]
@@ -1130,6 +1138,9 @@ mod tests {
             "Sie misst die Strecke.",
             "Er liest ein Buch.",
             "Du liest ein Buch.",
+            "Du nutzt das Portal.",
+            "Du heißt Anna.",
+            "Wie du das Portal nutzt, ist egal.",
         ] {
             assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
         }

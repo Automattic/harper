@@ -4,9 +4,10 @@ use crate::{Token, TokenStringExt, document::Document};
 /// Fixed phrases whose adjective is nominalized, and therefore capitalized.
 ///
 /// Each entry is (the words that must precede it, the lower-case spelling, the
-/// correct one). The preceding words are matched case-insensitively — the phrase
-/// may open a sentence — but the nominalized word is matched *exactly*, so a
-/// correctly written phrase is never touched.
+/// correct one, the words that must follow it). The surrounding words are
+/// matched case-insensitively — the phrase may open a sentence — but the
+/// nominalized word is matched *exactly*, so a correctly written phrase is never
+/// touched.
 ///
 /// This is why the family cannot be Weir rules: Weir matches words
 /// case-insensitively, so a rule for `im übrigen` would also match the correct
@@ -32,22 +33,27 @@ use crate::{Token, TokenStringExt, document::Document};
 ///
 /// A phrase LanguageTool leaves alone in *both* spellings permits both and does
 /// not belong in this table.
-const FIXED_NOMINALIZATIONS: &[(&[&str], &str, &str)] = &[
-    (&["im"], "übrigen", "Übrigen"),
-    (&["im"], "allgemeinen", "Allgemeinen"),
-    (&["im"], "wesentlichen", "Wesentlichen"),
-    (&["im"], "besonderen", "Besonderen"),
-    (&["im"], "einzelnen", "Einzelnen"),
-    (&["im"], "folgenden", "Folgenden"),
-    (&["im"], "klaren", "Klaren"),
-    (&["im"], "nachhinein", "Nachhinein"),
-    (&["im"], "geringsten", "Geringsten"),
-    (&["im"], "gegenteil", "Gegenteil"),
-    (&["des"], "öfteren", "Öfteren"),
-    (&["des"], "weiteren", "Weiteren"),
-    (&["fürs"], "erste", "Erste"),
-    (&["auf", "dem"], "laufenden", "Laufenden"),
-    (&["seit", "geraumer"], "zeit", "Zeit"),
+const FIXED_NOMINALIZATIONS: &[(&[&str], &str, &str, &[&str])] = &[
+    (&["im"], "übrigen", "Übrigen", &[]),
+    (&["im"], "allgemeinen", "Allgemeinen", &[]),
+    (&["im"], "wesentlichen", "Wesentlichen", &[]),
+    (&["im"], "besonderen", "Besonderen", &[]),
+    (&["im"], "einzelnen", "Einzelnen", &[]),
+    (&["im"], "folgenden", "Folgenden", &[]),
+    (&["im"], "klaren", "Klaren", &[]),
+    (&["im"], "nachhinein", "Nachhinein", &[]),
+    (&["im"], "geringsten", "Geringsten", &[]),
+    (&["im"], "gegenteil", "Gegenteil", &[]),
+    (&["des"], "öfteren", "Öfteren", &[]),
+    (&["des"], "weiteren", "Weiteren", &[]),
+    (&["fürs"], "erste", "Erste", &[]),
+    (&["auf", "dem"], "laufenden", "Laufenden", &[]),
+    (&["seit", "geraumer"], "zeit", "Zeit", &[]),
+    // A pair: both halves are capitalized, and each half is only the
+    // nominalization when the other is there. *im großen Saal* and *im ganzen
+    // Land* are ordinary adjectives.
+    (&["im"], "großen", "Großen", &["und", "ganzen"]),
+    (&["im", "großen", "und"], "ganzen", "Ganzen", &[]),
 ];
 
 /// Catches the lower-cased half of a fixed nominalization: *"im übrigen"*,
@@ -68,8 +74,22 @@ impl GermanFixedNominalization {
             .iter()
             .collect();
 
-        for (prefix, lowercase, corrected) in FIXED_NOMINALIZATIONS {
+        for (prefix, lowercase, corrected, suffix) in FIXED_NOMINALIZATIONS {
             if word != *lowercase {
+                continue;
+            }
+
+            let followed = suffix.iter().enumerate().all(|(offset, expected)| {
+                tokens.get(index + 1 + offset).is_some_and(|token| {
+                    let actual: String = document
+                        .get_span_content(&token.span)
+                        .iter()
+                        .flat_map(|c| c.to_lowercase())
+                        .collect();
+                    actual == *expected
+                })
+            });
+            if !followed {
                 continue;
             }
 
@@ -242,6 +262,26 @@ mod tests {
             ("Fürs erste reicht das.", "erste"),
         ] {
             assert_eq!(flagged(text), vec![word.to_string()], "in {text:?}");
+        }
+    }
+
+    #[test]
+    fn flags_both_halves_of_im_grossen_und_ganzen() {
+        assert_eq!(
+            flagged("Im großen und ganzen bin ich zufrieden."),
+            vec!["großen".to_string(), "ganzen".to_string()]
+        );
+        assert_eq!(
+            flagged("Im Großen und ganzen bin ich zufrieden."),
+            vec!["ganzen".to_string()]
+        );
+        for text in [
+            "Im Großen und Ganzen bin ich zufrieden.",
+            "Im großen Saal stehen Schuhe.",
+            "Im großen und kleinen Saal stehen Schuhe.",
+            "Im ganzen Land gibt es Schuhmacher.",
+        ] {
+            assert!(flagged(text).is_empty(), "should not fire on {text:?}");
         }
     }
 

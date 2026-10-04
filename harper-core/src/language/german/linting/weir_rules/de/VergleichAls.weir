@@ -10,7 +10,9 @@ expr komparativ [größer, grösser, kleiner, besser, schlechter, schöner, scho
 # So it is matched separately, and only where nothing negates it.
 expr verneinung [nicht, nichts, kein, keine, keiner, keinen, keinem, kaum, nie, niemals, nirgends]
 
-expr main <[(@komparativ wie), (!@verneinung mehr wie)], wie>
+# "wie neu" is a fixed simile, not the second half of a comparison: "lässt sie
+# länger wie neu aussehen" is "keeps them looking like new for longer".
+expr main <[(@komparativ wie !neu), (!@verneinung mehr wie !neu)], wie>
 
 let message "Nach einem Komparativ steht »als«, nicht »wie«."
 let description "Ersetzt »wie« nach einem Komparativ durch »als« (»größer als«, nicht »größer wie«)."
@@ -31,6 +33,7 @@ allows "Wie geht es dir?"
 allows "Die Epidemiologie befasst sich nicht mehr wie früher nur mit Epidemien."
 allows "Wahrheit wird nicht mehr wie bei der Korrespondenztheorie bestimmt."
 allows "Es gibt kaum mehr wie damals Gelegenheit dazu."
+allows "Die Creme lässt die Schuhe länger wie neu aussehen."
 
 # Known false positive: "die Gestaltung kleiner wie großer Textmengen". Many
 # comparatives are spelled like the strong-declension positive — "kleiner Mann"

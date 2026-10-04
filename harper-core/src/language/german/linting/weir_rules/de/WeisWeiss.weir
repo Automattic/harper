@@ -1,0 +1,24 @@
+# "weis" for "weiß", the first and third person of "wissen". "weis" is no form
+# of "wissen", and of "weisen" only the archaic imperative, which never follows
+# a subject pronoun.
+expr main <[(ich weis), (er weis), (sie weis), (es weis), (man weis), (weis ich), (weis er), (weis man)], weis>
+
+let message "Die Form von »wissen« schreibt man mit ß: »weiß«."
+let description "Ersetzt »weis« durch »weiß« nach einem Subjektpronomen."
+let kind "Spelling"
+let becomes "weiß"
+let strategy "MatchCase"
+
+test "Ich weis nicht, welche Schuhe ich nehmen soll." "Ich weiß nicht, welche Schuhe ich nehmen soll."
+test "Er weis, wo der Schuhmacher ist." "Er weiß, wo der Schuhmacher ist."
+test "Das weis ich nicht." "Das weiß ich nicht."
+test "Sie weis es genau." "Sie weiß es genau."
+test "Man weis nie." "Man weiß nie."
+test "Woher weis er das?" "Woher weiß er das?"
+test "Weis man, wann der Laden öffnet?" "Weiß man, wann der Laden öffnet?"
+
+allows "Ich weiß nicht."
+allows "Er weist darauf hin."
+allows "Sie weisen den Weg."
+allows "Das weiß ich nicht."
+allows "Der Weise schweigt."

@@ -32,9 +32,11 @@
 # the singular finite ones — are safe, and the price is that "ich habe gehört,
 # dass …" and "wir hoffen, dass …" go unreported.
 
-# Verbs that open a content clause. Finite forms and participles; separable
+# Verbs that open a content clause. Third person singular forms are listed only
+# where they differ from the participle: "sagt", but not "erklärt", because "er
+# hat das Prinzip erklärt, das die Sohle …" is a relative clause. Separable
 # verbs ("nehme an", "stelle fest") are left out, their particle sits elsewhere.
-expr verb [hoffe, hoffst, hoffte, hofftest, glaube, glaubst, glaubte, denke, denkst, dachte, meinst, meinte, sage, sagst, sagte, sagtest, weiß, weißt, wusste, wusstest, finde, findest, sehe, siehst, höre, hörst, hörte, vermute, vermutest, vermutete, fürchte, fürchtest, befürchte, bezweifle, bezweifelst, behaupte, behauptest, behauptete, erwarte, erwartest, verspreche, versprichst, versprach, verstehe, wünsche, ahne, bemerke, bemerkte, betone, betonte, berichte, berichtete, erkläre, erklärte, gestehe, gestand, erwiderte, antwortete, ergänzte, entgegnete]
+expr verb [hofft, glaubt, denkt, meint, sagt, findet, fürchtet, hoffe, hoffst, hoffte, hofftest, glaube, glaubst, glaubte, denke, denkst, dachte, meinst, meinte, sage, sagst, sagte, sagtest, weiß, weißt, wusste, wusstest, finde, findest, sehe, siehst, höre, hörst, hörte, vermute, vermutest, vermutete, fürchte, fürchtest, befürchte, bezweifle, bezweifelst, behaupte, behauptest, behauptete, erwarte, erwartest, verspreche, versprichst, versprach, verstehe, wünsche, ahne, bemerke, bemerkte, betone, betonte, berichte, berichtete, erkläre, erklärte, gestehe, gestand, erwiderte, antwortete, ergänzte, entgegnete]
 
 # Predicate adjectives that take a content clause: "es ist schade, dass …".
 expr adjektiv [schade, klar, wichtig, möglich, unmöglich, wahrscheinlich, unwahrscheinlich, denkbar, offensichtlich, verständlich, unverständlich, bedauerlich, erstaunlich, überraschend, selbstverständlich, peinlich, ärgerlich, bezeichnend, ratsam, sinnvoll, unnötig, notwendig, nötig]
@@ -78,6 +80,8 @@ test "Die Tatsache, das er kam, überraschte alle." "Die Tatsache, dass er kam, 
 test "Es ist klar, das wir gewinnen." "Es ist klar, dass wir gewinnen."
 test "Es war offensichtlich, das er fehlte." "Es war offensichtlich, dass er fehlte."
 test "Ich weiß, das der Schuh zu klein ist." "Ich weiß, dass der Schuh zu klein ist."
+test "Mein Vater sagt immer, das man Schuhe pflegen muss." "Mein Vater sagt immer, dass man Schuhe pflegen muss."
+test "Sie glaubt, das die Sohle hält." "Sie glaubt, dass die Sohle hält."
 test "Ich hoffe, das die Stiefel passen." "Ich hoffe, dass die Stiefel passen."
 test "Sie sagte, das ein Absatz abgebrochen ist." "Sie sagte, dass ein Absatz abgebrochen ist."
 test "Ich glaube nicht, das meine Schuhe bequem sind." "Ich glaube nicht, dass meine Schuhe bequem sind."
@@ -99,6 +103,8 @@ allows "Keines ist ohne das andere denkbar."
 allows "Wissen, das sie zuvor aufgenommen haben, bleibt erhalten."
 allows "Er nahm alles mit, außer das Zelt."
 allows "Das ist alles, was ich weiß."
+allows "Was er sagt, das stimmt."
+allows "Was sie meint, das wissen wir nicht."
 allows "Das Paar, das der Schuhmacher genäht hat, ist teuer."
 allows "Sie kaufte das Buch, das die Lehrerin empfohlen hat."
 allows "Ein Gesetz war notwendig, das dem Angehörigen den Besitz erlaubte."
