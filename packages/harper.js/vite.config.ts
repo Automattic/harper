@@ -1,7 +1,7 @@
-/// <reference types="vitest" />
 import { playwright } from '@vitest/browser-playwright';
-import { defineConfig, type Plugin } from 'vite';
+import type { Plugin } from 'vite';
 import dts from 'vite-plugin-dts';
+import { defineConfig } from 'vitest/config';
 import apiExtractorConfig from './api-extractor.json';
 
 function removeAssetsPlugin(options: { test: RegExp }): Plugin {
@@ -48,6 +48,7 @@ export default defineConfig({
 			...apiExtractorConfig,
 			rollupTypes: true,
 			tsconfigPath: './tsconfig.json',
+			include: ['src'],
 		}),
 	],
 	worker: {
