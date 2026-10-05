@@ -47,8 +47,11 @@ impl StructuredConfig {
             match setting {
                 Setting::Bool { name, state } => config.set_rule_enabled(name, *state),
                 Setting::OneOfMany { names, choice, .. } => {
-                    for (i, name) in names.iter().enumerate() {
-                        config.set_rule_enabled(name, choice.is_some_and(|choice| choice == i));
+                    for name in names {
+                        config.set_rule_enabled(name, false);
+                    }
+                    if let Some(choice) = choice {
+                        config.set_rule_enabled(&names[*choice], true);
                     }
                 }
                 Setting::Group { child, .. } => {
@@ -253,9 +256,46 @@ mod tests {
 
         let config = settings.to_flat_config().unwrap();
 
+        assert!(config.has_rule("A"));
+        assert!(config.has_rule("B"));
+        assert!(config.has_rule("C"));
         assert!(!config.is_rule_enabled("A"));
         assert!(!config.is_rule_enabled("B"));
         assert!(config.is_rule_enabled("C"));
+    }
+
+    #[test]
+    fn converts_one_of_many_without_choice() {
+        let settings = StructuredConfig {
+            settings: vec![Setting::OneOfMany {
+                names: vec!["A".to_owned(), "B".to_owned()],
+                labels: vec!["A".to_owned(), "B".to_owned()],
+                choice: None,
+            }],
+        };
+
+        let config = settings.to_flat_config().unwrap();
+
+        assert!(config.has_rule("A"));
+        assert!(config.has_rule("B"));
+        assert!(!config.is_rule_enabled("A"));
+        assert!(!config.is_rule_enabled("B"));
+    }
+
+    #[test]
+    fn keeps_selected_duplicate_name_enabled() {
+        let settings = StructuredConfig {
+            settings: vec![Setting::OneOfMany {
+                names: vec!["A".to_owned(), "A".to_owned()],
+                labels: vec!["A".to_owned(), "A".to_owned()],
+                choice: Some(0),
+            }],
+        };
+
+        let config = settings.to_flat_config().unwrap();
+
+        assert!(config.has_rule("A"));
+        assert!(config.is_rule_enabled("A"));
     }
 
     #[test]
