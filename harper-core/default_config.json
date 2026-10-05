@@ -6042,6 +6042,13 @@
 						},
 						{
 							"Bool": {
+								"name": "WorstComesToWorst",
+								"state": true,
+								"label": "Worst Comes To Worst"
+							}
+						},
+						{
+							"Bool": {
 								"name": "WorthToDo",
 								"state": true,
 								"label": "Worth To Do"
