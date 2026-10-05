@@ -5,7 +5,7 @@ use harper_core::{Dialect, Document};
 
 #[test]
 fn challenge_corpus() {
-    check_cases(include_str!("data/passive_voice_quality.tsv"), 99);
+    check_cases(include_str!("data/passive_voice_quality.tsv"), 103);
 }
 
 #[test]

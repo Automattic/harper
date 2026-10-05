@@ -1,9 +1,12 @@
 // SPDX-License-Identifier: Apache-2.0
 // Original project: JaredTweed/PassiveVoiceDetector.
 
+use std::borrow::Cow;
+
 use harper_brill::UPOS;
 
 use super::{Lint, LintKind, Linter};
+use crate::char_string::CharStringExt;
 use crate::{Document, Span, Token, TokenStringExt};
 
 /// Detects likely passive-voice constructions.
@@ -116,34 +119,23 @@ impl Linter for PassiveVoice {
 /// ("left-handed"). Do not turn either half into an independent passive.
 fn is_descriptive_compound(sentence: &[Token], idx: usize, source: &[char]) -> bool {
     let descriptive_suffix = |token: &Token| {
-        matches!(
-            normalized_word(token, source).as_str(),
-            "handed"
-                | "haired"
-                | "hearted"
-                | "minded"
-                | "legged"
-                | "eyed"
-                | "skinned"
-                | "faced"
-                | "headed"
-                | "tempered"
-        )
+        normalized_word(token, source).eq_any_ignore_ascii_case_str(&[
+            "eyed", "faced", "haired", "handed", "headed", "hearted", "legged", "minded",
+            "skinned", "tempered",
+        ])
     };
     (idx > 0 && sentence[idx - 1].kind.is_hyphen() && descriptive_suffix(&sentence[idx]))
         || (sentence.get(idx + 1).is_some_and(|t| t.kind.is_hyphen())
             && sentence.get(idx + 2).is_some_and(descriptive_suffix))
 }
 
-fn normalized_word(token: &Token, source: &[char]) -> String {
-    token
-        .get_ch(source)
-        .iter()
-        .map(|c| match c {
-            '’' => '\'',
-            _ => c.to_ascii_lowercase(),
-        })
-        .collect()
+/// Normalize a token's characters (curly quotes and dashes to ASCII). Callers
+/// compare the result through [`CharStringExt`], which is case-insensitive and
+/// avoids allocating a lowercased copy of every scanned word.
+// Borrow ordinary words; allocate only when Unicode punctuation needs normalization.
+// Comparisons below handle case without allocating lowercase strings.
+fn normalized_word<'a>(token: &Token, source: &'a [char]) -> Cow<'a, [char]> {
+    token.get_ch(source).normalized()
 }
 
 /// A by-phrase alone does not make a finite active verb passive.
@@ -192,12 +184,10 @@ fn preceding_coordinated_passive(
             .find(|t| !t.kind.is_whitespace());
         if !tail
             .first()
-            .is_some_and(|&i| normalized_word(&sentence[i], source) == "by")
+            .is_some_and(|&i| normalized_word(&sentence[i], source).eq_str("by"))
             || !(tail.last().is_some_and(|&i| {
-                matches!(
-                    normalized_word(&sentence[i], source).as_str(),
-                    "and" | "or" | "but" | "yet"
-                )
+                normalized_word(&sentence[i], source)
+                    .eq_any_ignore_ascii_case_str(&["and", "but", "or", "yet"])
             }) || separator.is_some_and(|t| t.kind.is_comma()))
             || tail.iter().any(|&i| {
                 let token = &sentence[i];
@@ -267,7 +257,7 @@ fn preceding_passive_aux(
         if (is_contextual_noun(token)
             || (idx > 0 && sentence[idx - 1].kind.is_hyphen())
             || sentence.get(idx + 1).is_some_and(|t| t.kind.is_hyphen()))
-            && !lower.ends_with("n't")
+            && !lower.ends_with_ignore_ascii_case_str("n't")
             && (is_be_form(&lower) || is_get_form(&lower) || is_become_form(&lower))
         {
             break;
@@ -285,13 +275,11 @@ fn preceding_passive_aux(
             return Some((PassiveSource::Become, idx));
         }
 
-        if lower == "deal"
+        if lower.eq_str("deal")
             && pos >= 2
-            && normalized_word(&sentence[word_indices[pos - 2]], source) == "a"
-            && matches!(
-                normalized_word(&sentence[word_indices[pos - 1]], source).as_str(),
-                "good" | "great"
-            )
+            && normalized_word(&sentence[word_indices[pos - 2]], source).eq_str("a")
+            && normalized_word(&sentence[word_indices[pos - 1]], source)
+                .eq_any_ignore_ascii_case_str(&["good", "great"])
             && !has_hard_boundary(&sentence[word_indices[pos - 2] + 1..idx])
         {
             pos -= 2;
@@ -310,7 +298,7 @@ fn preceding_passive_aux(
 
         // Coordinate adverbial modifiers without mistaking coordinated verbs for
         // an auxiliary chain: "was recently and deliberately removed".
-        if skipped > 0 && matches!(lower.as_str(), "and" | "or") && pos > 0 {
+        if skipped > 0 && lower.eq_any_ignore_ascii_case_str(&["and", "or"]) && pos > 0 {
             let before = &sentence[word_indices[pos - 1]];
             let before_lower = normalized_word(before, source);
             if is_gap_modifier(before, &before_lower) {
@@ -352,22 +340,10 @@ fn preceding_inverted_passive_aux(
         let auxiliary_allowed =
             !is_contextual_noun(token) && !(idx > 0 && sentence[idx - 1].kind.is_hyphen());
 
-        if matches!(
-            lower.as_str(),
-            "when"
-                | "while"
-                | "because"
-                | "although"
-                | "unless"
-                | "since"
-                | "as"
-                | "where"
-                | "after"
-                | "before"
-                | "if"
-                | "whether"
-                | "to"
-        ) || (token.kind.is_upos(UPOS::DET) && !saw_subject)
+        if lower.eq_any_ignore_ascii_case_str(&[
+            "after", "although", "as", "because", "before", "if", "since", "to", "unless", "when",
+            "where", "whether", "while",
+        ]) || (token.kind.is_upos(UPOS::DET) && !saw_subject)
         {
             return None;
         }
@@ -394,7 +370,7 @@ fn preceding_inverted_passive_aux(
         // possessives) is expected between an inverted auxiliary and participle.
         // A different predicate must belong to a relative clause within the
         // subject before we can accept the earlier inverted auxiliary.
-        if matches!(lower.as_str(), "that" | "which" | "who" | "whom") {
+        if lower.eq_any_ignore_ascii_case_str(&["that", "which", "who", "whom"]) {
             in_relative = false;
         } else if token.kind.is_upos(UPOS::VERB) || token.kind.is_upos(UPOS::AUX) {
             in_relative = true;
@@ -422,10 +398,9 @@ fn is_question_aux_position(
         return true;
     }
     indices[..pos].iter().take(6).any(|&idx| {
-        matches!(
-            normalized_word(&sentence[idx], source).as_str(),
-            "why" | "when" | "where" | "how" | "what" | "which" | "who" | "whom" | "whose"
-        )
+        normalized_word(&sentence[idx], source).eq_any_ignore_ascii_case_str(&[
+            "how", "what", "when", "where", "which", "who", "whom", "whose", "why",
+        ])
     })
 }
 
@@ -435,13 +410,22 @@ fn sentence_is_question(sentence: &[Token], source: &[char]) -> bool {
             continue;
         }
 
-        let content = token.get_str(source);
-        let text = content.trim();
-        if matches!(text, "\"" | "'" | "”" | "’") {
+        let chars = token.get_ch(source);
+        let start = chars
+            .iter()
+            .position(|c| !c.is_whitespace())
+            .unwrap_or(chars.len());
+        let end = chars
+            .iter()
+            .rposition(|c| !c.is_whitespace())
+            .map_or(start, |end| end + 1);
+        let text = &chars[start..end];
+        if text.eq_ch(&['"']) || text.eq_ch(&['\'']) || text.eq_ch(&['”']) || text.eq_ch(&['’'])
+        {
             continue;
         }
 
-        return text == "?";
+        return text.eq_ch(&['?']);
     }
 
     false
@@ -461,19 +445,10 @@ fn inverted_question_chain_start(
     // earlier auxiliary can accidentally swallow a containing question, as in
     // "Is that the reason the cups are put away?".
     let start_word = normalized_word(&sentence[start_idx], source);
-    if !matches!(
-        start_word.as_str(),
-        "to" | "be"
-            | "been"
-            | "being"
-            | "have"
-            | "get"
-            | "got"
-            | "gotten"
-            | "getting"
-            | "become"
-            | "becoming"
-    ) {
+    if !start_word.eq_any_ignore_ascii_case_str(&[
+        "be", "become", "becoming", "been", "being", "get", "getting", "got", "gotten", "have",
+        "to",
+    ]) {
         return None;
     }
     let start_pos = indices.partition_point(|&idx| idx < start_idx);
@@ -487,83 +462,72 @@ fn inverted_question_chain_start(
         }
         let token = &sentence[idx];
         let lower = normalized_word(token, source);
-        if matches!(
-            lower.as_str(),
-            "when"
-                | "while"
-                | "because"
-                | "although"
-                | "unless"
-                | "since"
-                | "after"
-                | "before"
-                | "if"
-                | "whether"
-        ) {
+        if lower.eq_any_ignore_ascii_case_str(&[
+            "after", "although", "because", "before", "if", "since", "unless", "when", "whether",
+            "while",
+        ]) {
             return None;
         }
         let auxiliary = is_be_form(&lower)
             || is_get_form(&lower)
             || is_become_form(&lower)
-            || matches!(
-                lower.as_str(),
-                "have"
-                    | "has"
-                    | "had"
-                    | "haven't"
-                    | "hasn't"
-                    | "hadn't"
-                    | "can"
-                    | "could"
-                    | "may"
-                    | "might"
-                    | "must"
-                    | "shall"
-                    | "should"
-                    | "will"
-                    | "would"
-                    | "can't"
-                    | "cannot"
-                    | "couldn't"
-                    | "shouldn't"
-                    | "won't"
-                    | "wouldn't"
-                    | "mustn't"
-                    | "do"
-                    | "does"
-                    | "did"
-            );
-        let modal_or_do = matches!(
-            lower.as_str(),
-            "can"
-                | "could"
-                | "may"
-                | "might"
-                | "must"
-                | "shall"
-                | "should"
-                | "will"
-                | "would"
-                | "can't"
-                | "cannot"
-                | "couldn't"
-                | "shouldn't"
-                | "won't"
-                | "wouldn't"
-                | "mustn't"
-                | "do"
-                | "does"
-                | "did"
-        );
+            || lower.eq_any_ignore_ascii_case_str(&[
+                "can",
+                "can't",
+                "cannot",
+                "could",
+                "couldn't",
+                "did",
+                "do",
+                "does",
+                "had",
+                "hadn't",
+                "has",
+                "hasn't",
+                "have",
+                "haven't",
+                "may",
+                "might",
+                "must",
+                "mustn't",
+                "shall",
+                "should",
+                "shouldn't",
+                "will",
+                "won't",
+                "would",
+                "wouldn't",
+            ]);
+        let modal_or_do = lower.eq_any_ignore_ascii_case_str(&[
+            "can",
+            "can't",
+            "cannot",
+            "could",
+            "couldn't",
+            "did",
+            "do",
+            "does",
+            "may",
+            "might",
+            "must",
+            "mustn't",
+            "shall",
+            "should",
+            "shouldn't",
+            "will",
+            "won't",
+            "would",
+            "wouldn't",
+        ]);
         if auxiliary
-            && (!matches!(start_word.as_str(), "have" | "get") || modal_or_do)
+            && (!start_word.eq_any_ignore_ascii_case_str(&["get", "have"]) || modal_or_do)
             && saw_subject
             && !in_relative
             && is_question_aux_position(sentence, indices, pos, source)
         {
             return Some(idx);
         }
-        if matches!(lower.as_str(), "that" | "which" | "who" | "whom") {
+        if lower.eq_any_ignore_ascii_case_str(&["that", "which", "who", "whom"]) {
             in_relative = false;
         } else if (token.kind.is_upos(UPOS::VERB) || token.kind.is_upos(UPOS::AUX)) && !auxiliary {
             in_relative = true;
@@ -596,49 +560,59 @@ fn auxiliary_chain_start(
         let token = &sentence[idx];
         let lower = normalized_word(token, source);
         let next_word_pos = word_indices.partition_point(|&word_idx| word_idx <= idx);
-        let going_to = lower == "going"
+        let going_to = lower.eq_str("going")
             && word_indices
                 .get(next_word_pos)
-                .is_some_and(|&next_idx| normalized_word(&sentence[next_idx], source) == "to");
-        if is_contextual_noun(token) || (idx > 0 && sentence[idx - 1].kind.is_hyphen()) {
+                .is_some_and(|&next_idx| normalized_word(&sentence[next_idx], source).eq_str("to"));
+        // Ambiguous words such as "can" and "will" may be tagged as verbs
+        // even after an article. Keep that nominal subject out of the span.
+        let follows_article = next_word_pos.checked_sub(2).is_some_and(|pos| {
+            let article = word_indices[pos];
+            !has_hard_boundary(&sentence[article + 1..idx])
+                && normalized_word(&sentence[article], source)
+                    .eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+        });
+        if is_contextual_noun(token)
+            || follows_article
+            || (idx > 0 && sentence[idx - 1].kind.is_hyphen())
+        {
             break;
         }
         if is_be_form(&lower)
             || going_to
             || is_unambiguous_be_contraction(&lower)
-            || lower.ends_with("'s")
-            || lower.ends_with("'d")
-            || matches!(
-                lower.as_str(),
-                "have"
-                    | "has"
-                    | "had"
-                    | "having"
-                    | "can"
-                    | "could"
-                    | "may"
-                    | "might"
-                    | "must"
-                    | "shall"
-                    | "should"
-                    | "will"
-                    | "would"
-                    | "to"
-                    | "can't"
-                    | "cannot"
-                    | "couldn't"
-                    | "shouldn't"
-                    | "won't"
-                    | "wouldn't"
-                    | "mustn't"
-                    | "haven't"
-                    | "hasn't"
-                    | "hadn't"
-                    | "i've"
-                    | "you've"
-                    | "we've"
-                    | "they've"
-            )
+            || lower.ends_with_ignore_ascii_case_str("'s")
+            || lower.ends_with_ignore_ascii_case_str("'d")
+            || lower.eq_any_ignore_ascii_case_str(&[
+                "can",
+                "can't",
+                "cannot",
+                "could",
+                "couldn't",
+                "had",
+                "hadn't",
+                "has",
+                "hasn't",
+                "have",
+                "haven't",
+                "having",
+                "i've",
+                "may",
+                "might",
+                "must",
+                "mustn't",
+                "shall",
+                "should",
+                "shouldn't",
+                "they've",
+                "to",
+                "we've",
+                "will",
+                "won't",
+                "would",
+                "wouldn't",
+                "you've",
+            ])
         {
             start = idx;
         } else if !is_gap_modifier(token, &lower) {
@@ -647,9 +621,13 @@ fn auxiliary_chain_start(
     }
     let pos = word_indices.partition_point(|&idx| idx < start);
     if pos >= 2
-        && normalized_word(&sentence[word_indices[pos - 1]], source) == "or"
+        && normalized_word(&sentence[word_indices[pos - 1]], source).eq_str("or")
         && normalized_word(&sentence[word_indices[pos - 2]], source)
-            == normalized_word(&sentence[start], source)
+            .iter()
+            .map(char::to_ascii_lowercase)
+            .eq(normalized_word(&sentence[start], source)
+                .iter()
+                .map(char::to_ascii_lowercase))
         && !has_hard_boundary(&sentence[word_indices[pos - 2] + 1..start])
     {
         start = word_indices[pos - 2];
@@ -678,7 +656,7 @@ fn coordinated_tail(
             break;
         }
         let lower = normalized_word(&sentence[next_idx], source);
-        let conjunction = matches!(lower.as_str(), "and" | "or" | "but" | "yet");
+        let conjunction = lower.eq_any_ignore_ascii_case_str(&["and", "but", "or", "yet"]);
         if conjunction {
             pos += 1;
         } else if !separator.iter().any(|t| t.kind.is_comma()) {
@@ -700,7 +678,7 @@ fn coordinated_tail(
         // subject: "The candidate was interviewed but rejected the offer."
         // A following object is a useful signal that the auxiliary does not
         // carry over to this verb.
-        let contrast_with_object = matches!(lower.as_str(), "but" | "yet")
+        let contrast_with_object = lower.eq_any_ignore_ascii_case_str(&["but", "yet"])
             && !allows_retained_object(&normalized_word(token, source))
             && word_indices.get(pos + 1).is_some_and(|&following_idx| {
                 !has_hard_boundary(&sentence[idx + 1..following_idx])
@@ -764,20 +742,10 @@ fn is_participle_candidate(token: &Token, source: &[char]) -> bool {
     // delivered). Recover regular forms using lexical verb evidence, rather
     // than treating every adjective ending in -ed or -en as a participle.
     // These lemma spellings end in -ed without being inflected participles.
-    if matches!(
-        lower.as_str(),
-        "need"
-            | "feed"
-            | "bleed"
-            | "breed"
-            | "speed"
-            | "heed"
-            | "weed"
-            | "seed"
-            | "proceed"
-            | "exceed"
-            | "succeed"
-    ) {
+    if lower.eq_any_ignore_ascii_case_str(&[
+        "bleed", "breed", "exceed", "feed", "heed", "need", "proceed", "seed", "speed", "succeed",
+        "weed",
+    ]) {
         return false;
     }
     (token.kind.is_verb() || token.kind.is_upos(UPOS::VERB))
@@ -796,30 +764,18 @@ fn has_personal_subject(
         }
         let token = &sentence[idx];
         let lower = normalized_word(token, source);
-        let root = lower.split('\'').next().unwrap_or(&lower);
-        if matches!(root, "i" | "you" | "he" | "she" | "we" | "they") {
+        let root_len = lower.iter().position(|&c| c == '\'').unwrap_or(lower.len());
+        let root = &lower[..root_len];
+        if root.eq_any_ignore_ascii_case_str(&["he", "i", "she", "they", "we", "you"]) {
             return true;
         }
         if !is_be_form(&lower)
             && !is_get_form(&lower)
             && !is_gap_modifier(token, &lower)
-            && !matches!(
-                lower.as_str(),
-                "have"
-                    | "has"
-                    | "had"
-                    | "will"
-                    | "would"
-                    | "can"
-                    | "cannot"
-                    | "can't"
-                    | "could"
-                    | "couldn't"
-                    | "may"
-                    | "might"
-                    | "must"
-                    | "should"
-            )
+            && !lower.eq_any_ignore_ascii_case_str(&[
+                "can", "can't", "cannot", "could", "couldn't", "had", "has", "have", "may",
+                "might", "must", "should", "will", "would",
+            ])
         {
             break;
         }
@@ -837,29 +793,24 @@ fn is_license_notice(sentence: &[Token], indices: &[usize], pos: usize, source: 
         })
     };
     let lower = normalized_word(&sentence[indices[pos]], source);
-    if lower == "licensed" && matches!(word(1).as_deref(), Some("under")) {
+    if lower.eq_str("licensed") && word(1).is_some_and(|w| w.eq_str("under")) {
         return true;
     }
-    let under = match lower.as_str() {
-        "released" | "distributed" => word(1).as_deref() == Some("under"),
-        "made" => word(1).as_deref() == Some("available") && word(2).as_deref() == Some("under"),
-        "governed" => word(1).as_deref() == Some("by"),
-        _ => false,
+    let under = if lower.eq_any_ignore_ascii_case_str(&["distributed", "released"]) {
+        word(1).is_some_and(|w| w.eq_str("under"))
+    } else if lower.eq_str("made") {
+        word(1).is_some_and(|w| w.eq_str("available")) && word(2).is_some_and(|w| w.eq_str("under"))
+    } else if lower.eq_str("governed") {
+        word(1).is_some_and(|w| w.eq_str("by"))
+    } else {
+        false
     };
     under
         && (1..=8).filter_map(word).any(|word| {
-            matches!(
-                word.as_str(),
-                "license"
-                    | "licence"
-                    | "licenses"
-                    | "licences"
-                    | "mit"
-                    | "apache"
-                    | "gpl"
-                    | "bsd"
-                    | "terms"
-            )
+            word.eq_any_ignore_ascii_case_str(&[
+                "apache", "bsd", "gpl", "licence", "licences", "license", "licenses", "mit",
+                "terms",
+            ])
         })
 }
 
@@ -877,97 +828,140 @@ fn has_state_complement(
     let next = indices
         .get(pos + 1)
         .map(|&idx| normalized_word(&sentence[idx], source));
-    match (lower.as_str(), next.as_deref()) {
-        ("meant" | "supposed" | "expected" | "designed", Some("to")) => true,
-        ("made", Some("possible")) => true,
-        ("composed", Some("of")) => true,
-        ("built", Some("into")) => true,
-        ("required", Some("to")) => true,
-        ("used", Some("up")) => true,
-        ("printed", Some("the")) => indices.get(pos + 2).is_some_and(|&idx| {
-            matches!(
-                normalized_word(&sentence[idx], source).as_str(),
-                "word" | "words" | "name" | "title"
-            )
-        }),
-        ("seen", Some("in")) => {
-            let tail: Vec<_> = indices
-                .iter()
-                .skip(pos + 2)
-                .take(3)
-                .take_while(|&&idx| !has_hard_boundary(&sentence[indices[pos] + 1..idx]))
-                .map(|&idx| normalized_word(&sentence[idx], source))
-                .collect();
-            matches!(tail.as_slice(), [article, adjective, noun]
-                if article == "a" && matches!(adjective.as_str(), "positive" | "negative" | "good" | "bad" | "favorable" | "favourable") && noun == "light")
-        }
-        ("pressed", Some("against" | "hard" | "closely" | "so")) => true,
-        ("damned", Some("if")) => true,
-        // Postnominal availability idioms: "no time to be lost" and
-        // "not a single pro to be found". Keep ordinary passive infinitives.
-        ("lost" | "found", _) if pos >= 3 => {
-            let be = indices[pos - 1];
-            let to = indices[pos - 2];
-            let noun = indices[pos - 3];
-            normalized_word(&sentence[be], source) == "be"
-                && normalized_word(&sentence[to], source) == "to"
-                && is_contextual_noun(&sentence[noun])
-                && !has_hard_boundary(&sentence[noun + 1..indices[pos]])
-        }
-        ("intended", Some("for" | "to")) => true,
-        ("left", Some("alone" | "to")) => true,
-        ("located" | "situated", _) => !indices[..pos]
+    let next_is = |w: &str| next.as_ref().is_some_and(|n| n.eq_str(w));
+    let next_any = |ws: &[&str]| {
+        next.as_ref()
+            .is_some_and(|n| n.eq_any_ignore_ascii_case_str(ws))
+    };
+
+    if lower.eq_str("bound") && next_is("to") {
+        return indices
+            .get(pos + 2)
+            .is_some_and(|&idx| sentence[idx].kind.is_upos(UPOS::VERB));
+    }
+    if lower.eq_str("built") && next_is("into") {
+        return true;
+    }
+    if lower.eq_str("composed") && next_is("of") {
+        return true;
+    }
+    if lower.eq_str("damned") && next_is("if") {
+        return true;
+    }
+    if lower.eq_any_ignore_ascii_case_str(&["designed", "expected", "meant", "supposed"])
+        && next_is("to")
+    {
+        return true;
+    }
+    if lower.eq_str("determined") && next_any(&["not", "to"]) {
+        return has_personal_subject(sentence, indices, pos, source);
+    }
+    if lower.eq_any_ignore_ascii_case_str(&["fed", "grown"]) && next_is("up") {
+        return true;
+    }
+    // Postnominal availability idioms: "no time to be lost" and
+    // "not a single pro to be found". Keep ordinary passive infinitives.
+    if lower.eq_any_ignore_ascii_case_str(&["found", "lost"]) && pos >= 3 {
+        let be = indices[pos - 1];
+        let to = indices[pos - 2];
+        let noun = indices[pos - 3];
+        return normalized_word(&sentence[be], source).eq_str("be")
+            && normalized_word(&sentence[to], source).eq_str("to")
+            && is_contextual_noun(&sentence[noun])
+            && !has_hard_boundary(&sentence[noun + 1..indices[pos]]);
+    }
+    if lower.eq_str("headed") && next_any(&["for", "to", "toward", "towards"]) {
+        return true;
+    }
+    if lower.eq_str("intended") && next_any(&["for", "to"]) {
+        return true;
+    }
+    if lower.eq_str("left") && next_any(&["alone", "to"]) {
+        return true;
+    }
+    if lower.eq_any_ignore_ascii_case_str(&["located", "situated"]) {
+        return !indices[..pos]
             .iter()
             .rev()
             .take(3)
-            .any(|&idx| normalized_word(&sentence[idx], source) == "being"),
-        ("grown" | "fed", Some("up")) => true,
-        ("worn", Some("out")) => true,
-        ("relieved", next) => next != Some("of"),
-        ("obliged", next) => next != Some("to"),
-        ("bound", Some("to")) => indices
+            .any(|&idx| normalized_word(&sentence[idx], source).eq_str("being"));
+    }
+    if lower.eq_str("made") && next_is("possible") {
+        return true;
+    }
+    if lower.eq_str("mistaken") {
+        return !next_is("for");
+    }
+    if lower.eq_str("mixed") && next_is("up") {
+        return indices
             .get(pos + 2)
-            .is_some_and(|&idx| sentence[idx].kind.is_upos(UPOS::VERB)),
-        ("determined", Some("to" | "not")) => has_personal_subject(sentence, indices, pos, source),
-        ("mixed", Some("up")) => {
-            indices
-                .get(pos + 2)
-                .is_some_and(|&idx| normalized_word(&sentence[idx], source) == "in")
-                && has_personal_subject(sentence, indices, pos, source)
+            .is_some_and(|&idx| normalized_word(&sentence[idx], source).eq_str("in"))
+            && has_personal_subject(sentence, indices, pos, source);
+    }
+    if lower.eq_str("obliged") {
+        return !next_is("to");
+    }
+    if lower.eq_str("pressed") && next_any(&["against", "closely", "hard", "so"]) {
+        return true;
+    }
+    if lower.eq_str("printed") && next_is("the") {
+        return indices.get(pos + 2).is_some_and(|&idx| {
+            normalized_word(&sentence[idx], source)
+                .eq_any_ignore_ascii_case_str(&["name", "title", "word", "words"])
+        });
+    }
+    if lower.eq_str("relieved") {
+        return !next_is("of");
+    }
+    if lower.eq_str("required") && next_is("to") {
+        return true;
+    }
+    if lower.eq_str("seen") && next_is("in") {
+        let Some(tail) = indices.get(pos + 2..pos + 5) else {
+            return false;
+        };
+        if has_hard_boundary(&sentence[indices[pos] + 1..tail[2]]) {
+            return false;
         }
-        ("tied", Some("up")) => indices.iter().skip(pos + 2).take(6).any(|&idx| {
-            matches!(
-                normalized_word(&sentence[idx], source).as_str(),
-                "business" | "work" | "meeting" | "meetings"
-            )
-        }),
-        ("headed", Some("for" | "toward" | "towards" | "to")) => true,
-        ("mistaken", next) => next != Some("for"),
-        ("used", Some("to")) => indices.get(pos + 2).is_some_and(|&idx| {
+        return normalized_word(&sentence[tail[0]], source).eq_str("a")
+            && normalized_word(&sentence[tail[1]], source).eq_any_ignore_ascii_case_str(&[
+                "bad",
+                "favorable",
+                "favourable",
+                "good",
+                "negative",
+                "positive",
+            ])
+            && normalized_word(&sentence[tail[2]], source).eq_str("light");
+    }
+    if lower.eq_str("tied") && next_is("up") {
+        return indices.iter().skip(pos + 2).take(6).any(|&idx| {
+            normalized_word(&sentence[idx], source)
+                .eq_any_ignore_ascii_case_str(&["business", "meeting", "meetings", "work"])
+        });
+    }
+    if lower.eq_str("used") && next_is("up") {
+        return true;
+    }
+    if lower.eq_str("used") && next_is("to") {
+        return indices.get(pos + 2).is_some_and(|&idx| {
             let token = &sentence[idx];
             !token.kind.is_upos(UPOS::VERB)
                 && !token.kind.is_upos(UPOS::AUX)
                 && !is_be_form(&normalized_word(token, source))
-        }),
-        _ => false,
+        });
     }
+    if lower.eq_str("worn") && next_is("out") {
+        return true;
+    }
+    false
 }
 
-fn allows_retained_object(lower: &str) -> bool {
-    matches!(
-        lower,
-        "given"
-            | "told"
-            | "paid"
-            | "offered"
-            | "awarded"
-            | "taught"
-            | "denied"
-            | "shown"
-            | "asked"
-            | "sent"
-            | "promised"
-    )
+fn allows_retained_object(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&[
+        "asked", "awarded", "denied", "given", "offered", "paid", "promised", "sent", "shown",
+        "taught", "told",
+    ])
 }
 
 fn is_attributive_after_get(
@@ -994,7 +988,7 @@ fn is_attributive_after_get(
     let next_lower = normalized_word(&sentence[next], source);
     is_contextual_noun(&sentence[next])
         && !is_time_word(&next_lower)
-        && !matches!(next_lower.as_str(), "yesterday" | "today" | "tomorrow")
+        && !next_lower.eq_any_ignore_ascii_case_str(&["today", "tomorrow", "yesterday"])
 }
 
 /// Event cues disambiguate common result states such as "are married" from
@@ -1006,42 +1000,49 @@ fn has_event_evidence(sentence: &[Token], indices: &[usize], pos: usize, source:
             break;
         }
         let lower = normalized_word(&sentence[idx], source);
-        if matches!(
-            lower.as_str(),
-            "being" | "getting" | "recently" | "deliberately" | "intentionally" | "newly" | "just"
-        ) {
+        if lower.eq_any_ignore_ascii_case_str(&[
+            "being",
+            "deliberately",
+            "getting",
+            "intentionally",
+            "just",
+            "newly",
+            "recently",
+        ]) {
             return true;
         }
         if !is_gap_modifier(&sentence[idx], &lower) && !is_be_form(&lower) {
             break;
         }
     }
-    let mut previous = String::new();
+    let mut previous: Option<Cow<[char]>> = None;
     for &idx in indices.iter().skip(pos + 1).take(4) {
         if has_hard_boundary(&sentence[candidate + 1..idx]) {
             break;
         }
         let token = &sentence[idx];
         let lower = normalized_word(token, source);
-        if matches!(
-            lower.as_str(),
-            "yesterday"
-                | "today"
-                | "tomorrow"
-                | "tonight"
-                | "overnight"
-                | "recently"
-                | "earlier"
-                | "every"
-        ) || (previous == "on" && lower == "election")
-            || (matches!(previous.as_str(), "in" | "on" | "at" | "last") && is_time_word(&lower))
+        if lower.eq_any_ignore_ascii_case_str(&[
+            "earlier",
+            "every",
+            "overnight",
+            "recently",
+            "today",
+            "tomorrow",
+            "tonight",
+            "yesterday",
+        ]) || (previous.as_ref().is_some_and(|p| p.eq_str("on")) && lower.eq_str("election"))
+            || (previous
+                .as_ref()
+                .is_some_and(|p| p.eq_any_ignore_ascii_case_str(&["at", "in", "last", "on"]))
+                && is_time_word(&lower))
         {
             return true;
         }
         if token.kind.is_upos(UPOS::VERB) || token.kind.is_upos(UPOS::AUX) {
             break;
         }
-        previous = lower;
+        previous = Some(lower);
     }
     false
 }
@@ -1052,7 +1053,7 @@ fn has_clear_done_passive(
     pos: usize,
     source: &[char],
 ) -> bool {
-    if normalized_word(&sentence[indices[pos]], source) != "done" {
+    if !normalized_word(&sentence[indices[pos]], source).eq_str("done") {
         return false;
     }
     let subject = indices[..pos]
@@ -1061,10 +1062,8 @@ fn has_clear_done_passive(
         .take(8)
         .find(|&&idx| is_contextual_noun(&sentence[idx]) || sentence[idx].kind.is_pronoun());
     if subject.is_some_and(|&idx| {
-        matches!(
-            normalized_word(&sentence[idx], source).as_str(),
-            "i" | "you" | "he" | "she" | "we" | "they"
-        )
+        normalized_word(&sentence[idx], source)
+            .eq_any_ignore_ascii_case_str(&["he", "i", "she", "they", "we", "you"])
     }) {
         return false;
     }
@@ -1079,32 +1078,37 @@ fn has_clear_done_passive(
             let word = normalized_word(&sentence[prev_idx], source);
             (!is_gap_modifier(&sentence[prev_idx], &word)).then_some(word)
         });
-        return match lower.as_str() {
-            "being" => true,
-            "been" => before.is_some_and(|word| matches!(word.as_str(), "have" | "has" | "had")),
-            "be" => before.is_some_and(|word| {
-                matches!(
-                    word.as_str(),
-                    "to" | "can"
-                        | "could"
-                        | "may"
-                        | "might"
-                        | "must"
-                        | "shall"
-                        | "should"
-                        | "will"
-                        | "would"
-                        | "can't"
-                        | "cannot"
-                        | "couldn't"
-                        | "shouldn't"
-                        | "won't"
-                        | "wouldn't"
-                        | "mustn't"
-                )
-            }),
-            _ => false,
-        };
+        if lower.eq_str("being") {
+            return true;
+        }
+        if lower.eq_str("been") {
+            return before
+                .is_some_and(|word| word.eq_any_ignore_ascii_case_str(&["had", "has", "have"]));
+        }
+        if lower.eq_str("be") {
+            return before.is_some_and(|word| {
+                word.eq_any_ignore_ascii_case_str(&[
+                    "can",
+                    "can't",
+                    "cannot",
+                    "could",
+                    "couldn't",
+                    "may",
+                    "might",
+                    "must",
+                    "mustn't",
+                    "shall",
+                    "should",
+                    "shouldn't",
+                    "to",
+                    "will",
+                    "won't",
+                    "would",
+                    "wouldn't",
+                ])
+            });
+        }
+        return false;
     }
     false
 }
@@ -1123,40 +1127,39 @@ fn should_suppress_adjectival(
 
     let lower = normalized_word(token, source);
     // "Get started" commonly means "begin", including tutorial headings.
-    if lower == "started" && passive_source == PassiveSource::Get {
+    if lower.eq_str("started") && passive_source == PassiveSource::Get {
         return true;
     }
 
     // Perfect aspect and degree modifiers do not make an emotional state
     // eventive: "I've been tired" and "I'm just worried" remain copular.
-    if matches!(
-        lower.as_str(),
-        "tired"
-            | "bored"
-            | "interested"
-            | "excited"
-            | "worried"
-            | "concerned"
-            | "satisfied"
-            | "disappointed"
-            | "confused"
-            | "annoyed"
-            | "frightened"
-            | "scared"
-            | "terrified"
-            | "accustomed"
-            | "related"
-            | "surprised"
-            | "puzzled"
-            | "offended"
-            | "embarrassed"
-            | "flattered"
-            | "engrossed"
-            | "paralyzed"
-            | "delighted"
-            | "astounded"
-            | "appreciated"
-    ) {
+    if lower.eq_any_ignore_ascii_case_str(&[
+        "accustomed",
+        "annoyed",
+        "appreciated",
+        "astounded",
+        "bored",
+        "concerned",
+        "confused",
+        "delighted",
+        "disappointed",
+        "embarrassed",
+        "engrossed",
+        "excited",
+        "flattered",
+        "frightened",
+        "interested",
+        "offended",
+        "paralyzed",
+        "puzzled",
+        "related",
+        "satisfied",
+        "scared",
+        "surprised",
+        "terrified",
+        "tired",
+        "worried",
+    ]) {
         return true;
     }
 
@@ -1205,83 +1208,72 @@ fn should_suppress_adjectival(
     false
 }
 
-fn is_gap_modifier(token: &Token, lower: &str) -> bool {
+fn is_gap_modifier(token: &Token, lower: &[char]) -> bool {
     token.kind.is_upos(UPOS::ADV)
         || token
             .kind
             .as_word()
             .and_then(|m| m.as_ref())
             .is_some_and(|m| m.pos_tag.is_none() && m.is_adverb())
-        || matches!(
-            lower,
-            "not"
-                | "never"
-                | "just"
-                | "only"
-                | "already"
-                | "still"
-                | "almost"
-                | "also"
-                | "then"
-                | "now"
-                | "recently"
-                | "previously"
-                | "currently"
-                | "carefully"
-                | "deliberately"
-                | "intentionally"
-                | "automatically"
-                | "manually"
-                | "completely"
-                | "fully"
-                | "partially"
-                | "partly"
-                | "successfully"
-                | "originally"
-                | "newly"
-                | "widely"
-                | "commonly"
-                | "generally"
-                | "directly"
-                | "immediately"
-                | "finally"
-                | "eventually"
-                | "reportedly"
-                | "allegedly"
-                | "subsequently"
-                | "slightly"
-                | "highly"
-                | "well"
-        )
+        || lower.eq_any_ignore_ascii_case_str(&[
+            "allegedly",
+            "almost",
+            "already",
+            "also",
+            "automatically",
+            "carefully",
+            "commonly",
+            "completely",
+            "currently",
+            "deliberately",
+            "directly",
+            "eventually",
+            "finally",
+            "fully",
+            "generally",
+            "highly",
+            "immediately",
+            "intentionally",
+            "just",
+            "manually",
+            "never",
+            "newly",
+            "not",
+            "now",
+            "only",
+            "originally",
+            "partially",
+            "partly",
+            "previously",
+            "recently",
+            "reportedly",
+            "slightly",
+            "still",
+            "subsequently",
+            "successfully",
+            "then",
+            "well",
+            "widely",
+        ])
 }
 
-fn is_be_form(lower: &str) -> bool {
-    matches!(
-        lower,
-        "am" | "is"
-            | "are"
-            | "was"
-            | "were"
-            | "be"
-            | "been"
-            | "being"
-            | "isn't"
-            | "aren't"
-            | "wasn't"
-            | "weren't"
-    )
+fn is_be_form(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&[
+        "am", "are", "aren't", "be", "been", "being", "is", "isn't", "was", "wasn't", "were",
+        "weren't",
+    ])
 }
 
-fn is_unambiguous_be_contraction(lower: &str) -> bool {
-    matches!(lower, "i'm" | "you're" | "we're" | "they're")
+fn is_unambiguous_be_contraction(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&["i'm", "they're", "we're", "you're"])
 }
 
-fn is_get_form(lower: &str) -> bool {
-    matches!(lower, "get" | "gets" | "got" | "gotten" | "getting")
+fn is_get_form(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&["get", "gets", "getting", "got", "gotten"])
 }
 
-fn is_become_form(lower: &str) -> bool {
-    matches!(lower, "become" | "becomes" | "became" | "becoming")
+fn is_become_form(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&["became", "become", "becomes", "becoming"])
 }
 
 fn has_agentive_by(
@@ -1300,14 +1292,14 @@ fn has_agentive_by(
 
         let token = &sentence[idx];
         let text = normalized_word(token, source);
-        if text == "by" {
+        if text.eq_str("by") {
             return !by_phrase_is_nonagentive(sentence, idx, source);
         }
         // An adjunct may intervene between the participle and its agent:
         // "guaranteed on any input by a finite state-space". Do not let the
         // search cross a new finite clause. A coordinated participle can
         // share the same agent: "was stunned and exhausted by the speech".
-        if matches!(text.as_str(), "and" | "or" | "but" | "yet") {
+        if text.eq_any_ignore_ascii_case_str(&["and", "but", "or", "yet"]) {
             let mut next_pos = word_pos + offset + 2;
             while let Some(&next_idx) = word_indices.get(next_pos) {
                 let next = &sentence[next_idx];
@@ -1329,10 +1321,7 @@ fn has_agentive_by(
             return false;
         }
         if token.kind.is_upos(UPOS::ADP)
-            || matches!(
-                text.as_str(),
-                "on" | "in" | "at" | "for" | "with" | "to" | "from"
-            )
+            || text.eq_any_ignore_ascii_case_str(&["at", "for", "from", "in", "on", "to", "with"])
         {
             in_prepositional_phrase = true;
             continue;
@@ -1376,43 +1365,41 @@ fn by_phrase_is_nonagentive(sentence: &[Token], by_idx: usize, source: &[char]) 
             .find(|tok| tok.kind.is_word_like())
             .map(|tok| {
                 let lower = normalized_word(tok, source);
-                is_time_word(&lower) || lower == "by"
+                is_time_word(&lower) || lower.eq_str("by")
             })
             .unwrap_or(true);
     }
 
-    let mut lower = next.get_str(source).to_ascii_lowercase();
+    let mut lower = normalized_word(next, source);
     // Bare communication/transport phrases describe means, not actors. Keep
     // determiner-led phrases available as agents (e.g. "hit by a train").
-    if matches!(
-        lower.as_str(),
-        "phone"
-            | "email"
-            | "fax"
-            | "train"
-            | "bus"
-            | "plane"
-            | "air"
-            | "sea"
-            | "candlelight"
-            | "cesarean"
-            | "caesarean"
-    ) {
+    if lower.eq_any_ignore_ascii_case_str(&[
+        "air",
+        "bus",
+        "caesarean",
+        "candlelight",
+        "cesarean",
+        "email",
+        "fax",
+        "phone",
+        "plane",
+        "sea",
+        "train",
+    ]) {
         return true;
     }
     // "by <gerund>" almost always names a means or method rather than an actor:
     // "disabled by setting a flag", "found by searching", "ranked by counting".
     // Proper nouns and a few ordinary nouns that merely end in -ing are excluded.
-    if lower.ends_with("ing")
+    if lower.ends_with_ignore_ascii_case_str("ing")
         && !next.kind.is_proper_noun()
-        && !matches!(
-            lower.as_str(),
-            "king" | "thing" | "string" | "spring" | "ring" | "morning" | "evening"
-        )
+        && !lower.eq_any_ignore_ascii_case_str(&[
+            "evening", "king", "morning", "ring", "spring", "string", "thing",
+        ])
     {
         return true;
     }
-    if matches!(lower.as_str(), "the" | "a" | "an") {
+    if lower.eq_any_ignore_ascii_case_str(&["a", "an", "the"]) {
         let Some(after_determiner) = iter.find(|tok| tok.kind.is_word_like()) else {
             return false;
         };
@@ -1423,130 +1410,133 @@ fn by_phrase_is_nonagentive(sentence: &[Token], by_idx: usize, source: &[char]) 
                 .find(|tok| tok.kind.is_word_like())
                 .map(|tok| {
                     let lower = normalized_word(tok, source);
-                    is_time_word(&lower) || lower == "by"
+                    is_time_word(&lower) || lower.eq_str("by")
                 })
                 .unwrap_or(true);
         }
-        lower = next.get_str(source).to_ascii_lowercase();
+        lower = normalized_word(next, source);
     }
 
-    if matches!(
-        lower.as_str(),
-        "next" | "last" | "following" | "previous" | "same" | "early" | "late"
-    ) {
+    if lower.eq_any_ignore_ascii_case_str(&[
+        "early",
+        "following",
+        "last",
+        "late",
+        "next",
+        "previous",
+        "same",
+    ]) {
         return iter
             .take_while(|tok| !tok.kind.is_chunk_terminator())
             .find(|tok| tok.kind.is_word_like())
             .is_some_and(|tok| is_time_word(&normalized_word(tok, source)));
     }
     is_time_word(&lower)
-        || matches!(
-            lower.as_str(),
-            "hand"
-                | "design"
-                | "default"
-                | "chance"
-                | "accident"
-                | "mistake"
-                | "definition"
-                | "window"
-                | "door"
-                | "river"
-                | "lake"
-                | "island"
-                | "coast"
-                | "shore"
-                | "beach"
-                | "harbor"
-                | "ocean"
-                | "road"
-                | "stairs"
-        )
+        || lower.eq_any_ignore_ascii_case_str(&[
+            "accident",
+            "beach",
+            "chance",
+            "coast",
+            "default",
+            "definition",
+            "design",
+            "door",
+            "hand",
+            "harbor",
+            "island",
+            "lake",
+            "mistake",
+            "ocean",
+            "river",
+            "road",
+            "shore",
+            "stairs",
+            "window",
+        ])
 }
 
-fn is_time_word(lower: &str) -> bool {
-    matches!(
-        lower,
-        "am" | "pm"
-            | "a.m."
-            | "p.m."
-            | "o'clock"
-            | "noon"
-            | "midnight"
-            | "morning"
-            | "afternoon"
-            | "evening"
-            | "night"
-            | "dawn"
-            | "dusk"
-            | "today"
-            | "tomorrow"
-            | "yesterday"
-            | "then"
-            | "now"
-            | "monday"
-            | "tuesday"
-            | "wednesday"
-            | "thursday"
-            | "friday"
-            | "saturday"
-            | "sunday"
-            | "january"
-            | "february"
-            | "march"
-            | "april"
-            | "may"
-            | "june"
-            | "july"
-            | "august"
-            | "september"
-            | "october"
-            | "november"
-            | "december"
-            | "deadline"
-            | "time"
-            | "end"
-            | "start"
-            | "hour"
-            | "hours"
-            | "minute"
-            | "minutes"
-            | "day"
-            | "days"
-            | "week"
-            | "weeks"
-            | "month"
-            | "months"
-            | "year"
-            | "years"
-    )
+fn is_time_word(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&[
+        "a.m.",
+        "afternoon",
+        "am",
+        "april",
+        "august",
+        "dawn",
+        "day",
+        "days",
+        "deadline",
+        "december",
+        "dusk",
+        "end",
+        "evening",
+        "february",
+        "friday",
+        "hour",
+        "hours",
+        "january",
+        "july",
+        "june",
+        "march",
+        "may",
+        "midnight",
+        "minute",
+        "minutes",
+        "monday",
+        "month",
+        "months",
+        "morning",
+        "night",
+        "noon",
+        "november",
+        "now",
+        "o'clock",
+        "october",
+        "p.m.",
+        "pm",
+        "saturday",
+        "september",
+        "start",
+        "sunday",
+        "then",
+        "thursday",
+        "time",
+        "today",
+        "tomorrow",
+        "tuesday",
+        "wednesday",
+        "week",
+        "weeks",
+        "year",
+        "years",
+        "yesterday",
+    ])
 }
 
-fn passivepy_ambiguous_participle(lower: &str) -> bool {
+fn passivepy_ambiguous_participle(lower: &[char]) -> bool {
     // Surface forms corresponding to PassivePy's ambiguity lemmas. PassivePy
     // generally requires explicit "by" evidence for these to avoid adjective
     // readings such as "I was exhausted" and "I am involved".
-    matches!(
-        lower,
-        "associated"
-            | "involved"
-            | "exhausted"
-            | "based"
-            | "led"
-            | "stunned"
-            | "overrated"
-            | "filled"
-            | "born"
-            | "borne"
-            | "complicated"
-            | "reserved"
-            | "heated"
-            | "screwed"
-    )
+    lower.eq_any_ignore_ascii_case_str(&[
+        "associated",
+        "based",
+        "born",
+        "borne",
+        "complicated",
+        "exhausted",
+        "filled",
+        "heated",
+        "involved",
+        "led",
+        "overrated",
+        "reserved",
+        "screwed",
+        "stunned",
+    ])
 }
 
-fn lexicalized_nonpassive_state(lower: &str) -> bool {
-    matches!(lower, "gone" | "done" | "drunk" | "fainted")
+fn lexicalized_nonpassive_state(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&["done", "drunk", "fainted", "gone"])
 }
 
 /// Restrict documentation exceptions to a local technical subject, rather than
@@ -1572,119 +1562,107 @@ fn has_technical_subject(
             || is_become_form(&lower)
             || is_unambiguous_be_contraction(&lower)
             || is_gap_modifier(token, &lower)
-            || matches!(
-                lower.as_str(),
-                "have"
-                    | "has"
-                    | "had"
-                    | "can"
-                    | "could"
-                    | "will"
-                    | "would"
-                    | "should"
-                    | "must"
-                    | "may"
-                    | "might"
-            )
+            || (token.kind.is_auxiliary_verb()
+                && !is_contextual_noun(token)
+                && !token.kind.is_upos(UPOS::VERB))
         {
             continue;
         }
-        if matches!(lower.as_str(), "that" | "which") {
+        if lower.eq_any_ignore_ascii_case_str(&["that", "which"]) {
             continue;
         }
         if token.kind.is_pronoun() {
             return false;
         }
         if is_contextual_noun(token) || token.kind.is_upos(UPOS::VERB) {
-            return matches!(
-                lower.as_str(),
-                "feature"
-                    | "features"
-                    | "option"
-                    | "options"
-                    | "theme"
-                    | "themes"
-                    | "setting"
-                    | "settings"
-                    | "configuration"
-                    | "configurations"
-                    | "config"
-                    | "configs"
-                    | "tool"
-                    | "tools"
-                    | "interpreter"
-                    | "interpreters"
-                    | "software"
-                    | "application"
-                    | "applications"
-                    | "app"
-                    | "apps"
-                    | "program"
-                    | "programs"
-                    | "script"
-                    | "scripts"
-                    | "process"
-                    | "processes"
-                    | "module"
-                    | "modules"
-                    | "package"
-                    | "packages"
-                    | "dependency"
-                    | "dependencies"
-                    | "docker"
-                    | "file"
-                    | "files"
-                    | "directory"
-                    | "directories"
-                    | "document"
-                    | "documents"
-                    | "data"
-                    | "database"
-                    | "databases"
-                    | "record"
-                    | "records"
-                    | "key"
-                    | "keys"
-                    | "release"
-                    | "releases"
-                    | "binary"
-                    | "binaries"
-                    | "build"
-                    | "builds"
-                    | "repository"
-                    | "repositories"
-                    | "repo"
-                    | "repos"
-                    | "project"
-                    | "projects"
-                    | "example"
-                    | "examples"
-                    | "task"
-                    | "tasks"
-                    | "list"
-                    | "lists"
-                    | "pattern"
-                    | "patterns"
-                    | "network"
-                    | "networks"
-                    | "resistor"
-                    | "resistors"
-                    | "path"
-                    | "paths"
-                    | "exception"
-                    | "exceptions"
-                    | "crash"
-                    | "crashes"
-                    | "shell"
-                    | "protocol"
-                    | "protocols"
-                    | "makefile"
-                    | "interface"
-                    | "interfaces"
-                    | "ui"
-                    | "code"
-                    | "api"
-            );
+            return lower.eq_any_ignore_ascii_case_str(&[
+                "api",
+                "app",
+                "application",
+                "applications",
+                "apps",
+                "binaries",
+                "binary",
+                "build",
+                "builds",
+                "code",
+                "config",
+                "configs",
+                "configuration",
+                "configurations",
+                "crash",
+                "crashes",
+                "data",
+                "database",
+                "databases",
+                "dependencies",
+                "dependency",
+                "directories",
+                "directory",
+                "docker",
+                "document",
+                "documents",
+                "example",
+                "examples",
+                "exception",
+                "exceptions",
+                "feature",
+                "features",
+                "file",
+                "files",
+                "interface",
+                "interfaces",
+                "interpreter",
+                "interpreters",
+                "key",
+                "keys",
+                "list",
+                "lists",
+                "makefile",
+                "module",
+                "modules",
+                "network",
+                "networks",
+                "option",
+                "options",
+                "package",
+                "packages",
+                "path",
+                "paths",
+                "pattern",
+                "patterns",
+                "process",
+                "processes",
+                "program",
+                "programs",
+                "project",
+                "projects",
+                "protocol",
+                "protocols",
+                "record",
+                "records",
+                "release",
+                "releases",
+                "repo",
+                "repos",
+                "repositories",
+                "repository",
+                "resistor",
+                "resistors",
+                "script",
+                "scripts",
+                "setting",
+                "settings",
+                "shell",
+                "software",
+                "task",
+                "tasks",
+                "theme",
+                "themes",
+                "tool",
+                "tools",
+                "ui",
+            ]);
         }
     }
     true
@@ -1693,174 +1671,171 @@ fn has_technical_subject(
 /// Participles that overwhelmingly describe technical configuration, capability,
 /// or documentation states with technical subjects. Agentive or eventive uses
 /// stay in scope, as do action readings outside documentation.
-fn technical_state_participle(lower: &str) -> bool {
-    matches!(
-        lower,
-        "enabled"
-            | "disabled"
-            | "configured"
-            | "installed"
-            | "provided"
-            | "included"
-            | "recorded"
-            | "tagged"
-            | "listed"
-            | "supported"
-            | "required"
-            | "generated"
-            | "shared"
-            | "documented"
-            | "stored"
-            | "deprecated"
-            | "noted"
-            | "mentioned"
-            | "derived"
-            | "allowed"
-            | "permitted"
-            | "printed"
-            | "used"
-            | "stopped"
-            | "rotated"
-            | "specified"
-            | "described"
-            | "defined"
-            | "shown"
-            | "displayed"
-            | "found"
-            | "built"
-            | "connected"
-            | "ignored"
-            | "sandboxed"
-            | "labelled"
-            | "labeled"
-            | "modelled"
-            | "modeled"
-            | "priced"
-            | "given"
-            | "pressed"
-            | "weighted"
-            | "summed"
-    )
+fn technical_state_participle(lower: &[char]) -> bool {
+    lower.eq_any_ignore_ascii_case_str(&[
+        "allowed",
+        "built",
+        "configured",
+        "connected",
+        "defined",
+        "deprecated",
+        "derived",
+        "described",
+        "disabled",
+        "displayed",
+        "documented",
+        "enabled",
+        "found",
+        "generated",
+        "given",
+        "ignored",
+        "included",
+        "installed",
+        "labeled",
+        "labelled",
+        "listed",
+        "mentioned",
+        "modeled",
+        "modelled",
+        "noted",
+        "permitted",
+        "pressed",
+        "priced",
+        "printed",
+        "provided",
+        "recorded",
+        "required",
+        "rotated",
+        "sandboxed",
+        "shared",
+        "shown",
+        "specified",
+        "stopped",
+        "stored",
+        "summed",
+        "supported",
+        "tagged",
+        "used",
+        "weighted",
+    ])
 }
 
-fn likely_participial_adjective(lower: &str) -> bool {
+fn likely_participial_adjective(lower: &[char]) -> bool {
     // Additional high-frequency result/state participles. Unlike the PassivePy
     // ambiguity set above, these require additional event or agent evidence.
-    matches!(
-        lower,
-        "tired"
-            | "bored"
-            | "interested"
-            | "excited"
-            | "worried"
-            | "concerned"
-            | "satisfied"
-            | "disappointed"
-            | "confused"
-            | "annoyed"
-            | "frightened"
-            | "scared"
-            | "terrified"
-            | "married"
-            | "divorced"
-            | "engaged"
-            | "retired"
-            | "accustomed"
-            | "related"
-            | "located"
-            | "situated"
-            | "finished"
-            | "prepared"
-            | "closed"
-            | "broken"
-            | "dressed"
-            | "seated"
-            | "settled"
-            | "descended"
-            | "fit"
-            | "ready"
-            | "set"
-            | "left"
-            | "lost"
-            | "shut"
-            | "thatched"
-            | "stained"
-            | "marked"
-            | "labelled"
-            | "labeled"
-            | "priced"
-            | "forgotten"
-            | "ornamented"
-            | "haunted"
-    )
+    lower.eq_any_ignore_ascii_case_str(&[
+        "accustomed",
+        "annoyed",
+        "bored",
+        "broken",
+        "closed",
+        "concerned",
+        "confused",
+        "descended",
+        "disappointed",
+        "divorced",
+        "dressed",
+        "engaged",
+        "excited",
+        "finished",
+        "fit",
+        "forgotten",
+        "frightened",
+        "haunted",
+        "interested",
+        "labeled",
+        "labelled",
+        "left",
+        "located",
+        "lost",
+        "marked",
+        "married",
+        "ornamented",
+        "prepared",
+        "priced",
+        "ready",
+        "related",
+        "retired",
+        "satisfied",
+        "scared",
+        "seated",
+        "set",
+        "settled",
+        "shut",
+        "situated",
+        "stained",
+        "terrified",
+        "thatched",
+        "tired",
+        "worried",
+    ])
 }
 
-fn looks_like_participle_surface(lower: &str) -> bool {
-    lower.ends_with("ed")
-        || matches!(
-            lower,
-            "born"
-                | "beat"
-                | "beaten"
-                | "bitten"
-                | "broken"
-                | "chosen"
-                | "fallen"
-                | "forgotten"
-                | "frozen"
-                | "hidden"
-                | "ridden"
-                | "risen"
-                | "shaken"
-                | "spoken"
-                | "stolen"
-                | "woken"
-                | "woven"
-                | "forgiven"
-                | "forbidden"
-                | "built"
-                | "bought"
-                | "brought"
-                | "caught"
-                | "dealt"
-                | "done"
-                | "drawn"
-                | "drunk"
-                | "driven"
-                | "eaten"
-                | "felt"
-                | "found"
-                | "given"
-                | "gone"
-                | "grown"
-                | "held"
-                | "kept"
-                | "known"
-                | "led"
-                | "left"
-                | "lost"
-                | "made"
-                | "meant"
-                | "paid"
-                | "read"
-                | "run"
-                | "said"
-                | "seen"
-                | "sent"
-                | "shown"
-                | "sold"
-                | "spent"
-                | "stuck"
-                | "taught"
-                | "taken"
-                | "told"
-                | "thought"
-                | "thrown"
-                | "understood"
-                | "won"
-                | "worn"
-                | "written"
-        )
+fn looks_like_participle_surface(lower: &[char]) -> bool {
+    lower.ends_with_ignore_ascii_case_str("ed")
+        || lower.eq_any_ignore_ascii_case_str(&[
+            "beat",
+            "beaten",
+            "bitten",
+            "born",
+            "bought",
+            "broken",
+            "brought",
+            "built",
+            "caught",
+            "chosen",
+            "dealt",
+            "done",
+            "drawn",
+            "driven",
+            "drunk",
+            "eaten",
+            "fallen",
+            "felt",
+            "forbidden",
+            "forgiven",
+            "forgotten",
+            "found",
+            "frozen",
+            "given",
+            "gone",
+            "grown",
+            "held",
+            "hidden",
+            "kept",
+            "known",
+            "led",
+            "left",
+            "lost",
+            "made",
+            "meant",
+            "paid",
+            "read",
+            "ridden",
+            "risen",
+            "run",
+            "said",
+            "seen",
+            "sent",
+            "shaken",
+            "shown",
+            "sold",
+            "spent",
+            "spoken",
+            "stolen",
+            "stuck",
+            "taken",
+            "taught",
+            "thought",
+            "thrown",
+            "told",
+            "understood",
+            "woken",
+            "won",
+            "worn",
+            "woven",
+            "written",
+        ])
 }
 
 fn has_hard_boundary(tokens: &[Token]) -> bool {
@@ -1873,6 +1848,24 @@ fn has_hard_boundary(tokens: &[Token]) -> bool {
 
 #[cfg(test)]
 mod tests {
+    #[test]
+    fn comparisons_preserve_case_and_unicode_contractions() {
+        for text in [
+            "The report WAS or Was WRITTEN by Alice.",
+            "The report Was or WAS WRITTEN by Alice.",
+            "They’re being questioned by police.",
+            "THEY'RE being questioned by police.",
+        ] {
+            passive(text);
+        }
+        for text in [
+            "You’re not supposed to say that.",
+            "The alloy IS COMPOSED OF copper.",
+        ] {
+            active(text);
+        }
+    }
+
     use super::PassiveVoice;
     use crate::linting::tests::{assert_lint_count, assert_no_lints};
 
@@ -1882,6 +1875,13 @@ mod tests {
 
     fn active(text: &str) {
         assert_no_lints(text, PassiveVoice);
+    }
+
+    #[test]
+    fn auxiliary_metadata_does_not_hide_nominal_subjects() {
+        passive("The can was given to Alice.");
+        passive("The will was given to Alice.");
+        active("The feature may have been given a new name.");
     }
 
     #[test]

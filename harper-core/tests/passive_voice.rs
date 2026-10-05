@@ -126,6 +126,7 @@ fn review_reported_markdown_spans_remain_in_source_coordinates() {
         ("When there are too many news loaded (~10000)...", vec![]),
         ("There is no moment to be lost.", vec![]),
         ("Support components are inherited.", vec!["are inherited"]),
+        ("The `report` can be reviewed.", vec!["can be reviewed"]),
         (
             "Upon Earth was planted an irrevocable poison.",
             vec!["was planted"],

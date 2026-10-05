@@ -98,3 +98,7 @@ boundary	The report was reviewed; the letter was mailed.	was reviewed|was mailed
 boundary	The report was reviewed, but Alice mailed it.	was reviewed
 boundary	The report was reviewed. The letter was mailed.	was reviewed|was mailed
 boundary	The report was `already` reviewed.	-
+case-shared-auxiliary	The report WAS or Was WRITTEN by Alice.	WAS or Was WRITTEN
+case-shared-auxiliary	The report Was or WAS WRITTEN by Alice.	Was or WAS WRITTEN
+nominal-auxiliary	The can was given to Alice.	was given
+nominal-auxiliary	The will was given to Alice.	was given
