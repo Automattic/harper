@@ -16,8 +16,6 @@ const REVIEW_URL =
 
 const isFirefox = isFirefoxExtension();
 
-let hoveredFooterIndex = $state<number | null>(null);
-
 if (!isFirefox) {
 	ProtocolClient.getInstalledOn().then((d) => {
 		if (d == null) {
@@ -92,33 +90,33 @@ function daysSince(date: Date): number {
 }
 </script>
 
-<main class="flex h-full flex-col">
+<main class="flex h-full flex-col justify-between">
 	<section
-		class="flex flex-1 flex-col justify-center px-5 py-6 text-center transition-colors"
+		class="flex flex-1 flex-col items-center justify-center px-5 py-6 text-center transition-colors"
 		style={enabled
 			? 'background-image: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 75%)'
 			: ''}
 	>
 		<!-- Vertical Stack Layout -->
-		<div class="flex w-full flex-col items-center gap-5">
+		<div class="flex w-full flex-col items-center gap-4">
 			
-			<!-- 1. Greeting (Full Width, No Truncation) -->
+			<!-- 1. Greeting -->
 			<h2 class="text-2xl font-medium dark:text-white">{generateGreeting()}</h2>
 			
-			<!-- 2. Dedicated Status Bar (Full Width for Long Domains) -->
+			<!-- 2. Status Bar -->
 			<div 
-				class="inline-flex max-w-full items-center gap-1.5 rounded-full border border-gray-200/60 bg-gray-50/50 px-3 py-1 text-xs text-gray-600 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-400" 
+				class="flex max-w-full items-center gap-2 rounded-full border border-gray-200/60 bg-gray-50/50 px-3.5 py-1.5 text-xs text-gray-600 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-400" 
 				title={site}
 			>
 				<span
 					class="h-2 w-2 shrink-0 rounded-full {enabled ? 'bg-emerald-400 shadow-[0_0_6px_1px_rgba(52,211,153,0.4)]' : 'bg-slate-500'}"
 					aria-hidden="true"
 				></span>
-				<span class="text-gray-600 dark:text-gray-400 shrink-0">{enabled ? 'Checking on' : 'Paused on'}</span>
+				<span class="shrink-0">{enabled ? 'Checking on' : 'Paused on'}</span>
 				<span class="truncate font-medium text-gray-900 dark:text-white">{site}</span>
 			</div>
 
-			<!-- 3. Animated On/Off Sliding Toggle -->
+			<!-- 3. Animated Toggle -->
 			<div
 				class="relative flex w-48 shrink-0 rounded-lg border border-gray-200 p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900"
 				role="group"
@@ -159,11 +157,13 @@ function daysSince(date: Date): number {
 			<Button on:click={openReviewPage}>Review</Button>
 		</section>
 	{:else}
-		<!-- Compact Side-by-Side Review Section -->
+		<!-- Review Section pinned at bottom -->
 		<section
 			class="flex shrink-0 flex-row items-center justify-between gap-3 border-t border-gray-100 px-5 py-3 dark:border-slate-800 dark:bg-slate-900/50"
 		>
-			<p class="text-sm font-medium leading-tight dark:text-slate-200">Does Harper work well here?</p>
+			<p class="whitespace-nowrap text-sm font-medium dark:text-slate-200">
+				Does Harper work well here?
+			</p>
 
 			<div class="flex w-24 shrink-0 flex-row rounded-md border border-gray-200 p-0.5 dark:border-slate-700 dark:bg-slate-900">
 				<button
