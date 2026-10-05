@@ -143,7 +143,10 @@ fn match_to_lint<D: Dictionary>(
         first.last(),
     ) {
         (false, _) if second.eq_str("there") => handle_question(toks, src, ctx, dict),
-        (true, Some(&'s')) => handle_theres(toks, src, ctx, dict),
+        // Case-insensitive to match the `starts_with` test above it. An uppercase
+        // `S` used to fall through to `handle_statement`, which expects the
+        // five-token statement shape rather than the three-token `there's` one.
+        (true, Some(c)) if c.eq_ignore_ascii_case(&'s') => handle_theres(toks, src, ctx, dict),
         (true, _) => handle_statement(toks, src, ctx, dict),
         _ => None, // unreachable
     }
@@ -244,7 +247,7 @@ fn handle_statement<D: Dictionary>(
     // NOTE - for a statement we only need to replace two words.
     // NOTE - (there) "are man" -> "there is (a) man"
     //                          -> "there are men"
-    let replacement_template = toks[2..=4].get_ch(src)?;
+    let replacement_template = toks.get(2..=4)?.get_ch(src)?;
 
     // tok 2 is form of "be": is are was were
     // tok 4 is noun that doesn't agree in number with the form of "be"
