@@ -12,6 +12,8 @@ import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
+let loaded = $state(false);
+
 let lintConfig: LintConfig = $state({});
 let structuredLintConfig: StructuredLintConfig = $state({ settings: [] });
 let lintDescriptions: Record<string, string> = $state({});
@@ -25,85 +27,91 @@ let delayLoaded = $state(false);
 let defaultEnabled = $state(false);
 let activationKey: ActivationKey = $state(ActivationKey.Off);
 let userDict = $state('');
-let modifyHotkeyButton: Button;
-let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'e' });
+let hotkey: Hotkey = $state({ modifiers: ['Ctrl'], key: 'E' });
+let buttonText = $state('');
 let anyRulesEnabled = $derived(Object.values(lintConfig ?? {}).some((value) => value !== false));
 let weirpacks: WeirpackMeta[] = $state([]);
 let weirpackBusy = $state(false);
 let weirpackError = $state('');
+let fileInputRef: HTMLInputElement | undefined = $state();
 
 $effect(() => {
+	if (!loaded) return;
 	ProtocolClient.setLintConfig($state.snapshot(lintConfig));
 });
 
 $effect(() => {
+	if (!loaded) return;
 	ProtocolClient.setDialect(dialect);
 });
 
 $effect(() => {
-	if (delayLoaded) {
-		ProtocolClient.setDelay(delay);
-	}
+	if (!loaded || !delayLoaded) return;
+	ProtocolClient.setDelay(delay);
 });
 
 $effect(() => {
+	if (!loaded) return;
 	ProtocolClient.setDefaultEnabled(defaultEnabled);
 });
 
 $effect(() => {
+	if (!loaded) return;
 	ProtocolClient.setActivationKey(activationKey);
 });
 
 $effect(() => {
+	if (!loaded) return;
 	ProtocolClient.setUserDictionary(stringToDict(userDict));
 });
 
+// Load all initial state before displaying settings to prevent flash of defaults
 Promise.all([
 	ProtocolClient.getLintConfig(),
 	ProtocolClient.getStructuredLintConfig(),
 	ProtocolClient.getLintDescriptions(),
-]).then(([nextLintConfig, nextStructuredConfig, nextLintDescriptions]) => {
-	lintConfig = nextLintConfig;
-	structuredLintConfig = nextStructuredConfig;
-	lintDescriptions = nextLintDescriptions;
-});
+	ProtocolClient.getDialect(),
+	ProtocolClient.getIsolateEnglish(),
+	ProtocolClient.getDelay(),
+	ProtocolClient.getDefaultEnabled(),
+	ProtocolClient.getActivationKey(),
+	ProtocolClient.getHotkey(),
+	ProtocolClient.getUserDictionary(),
+	ProtocolClient.getWeirpacks(),
+]).then(
+	([
+		nextLintConfig,
+		nextStructuredConfig,
+		nextLintDescriptions,
+		nextDialect,
+		nextIsolateEnglish,
+		nextDelay,
+		nextDefaultEnabled,
+		nextActivationKey,
+		nextHotkey,
+		nextUserDict,
+		nextWeirpacks,
+	]) => {
+		lintConfig = nextLintConfig;
+		structuredLintConfig = nextStructuredConfig;
+		lintDescriptions = nextLintDescriptions;
+		dialect = nextDialect;
+		isolateEnglish = nextIsolateEnglish;
+		delay = nextDelay;
+		delayLoaded = true;
+		defaultEnabled = nextDefaultEnabled;
+		activationKey = nextActivationKey;
+		hotkey = {
+			modifiers: [...nextHotkey.modifiers],
+			key: nextHotkey.key,
+		};
+		buttonText = `${nextHotkey.modifiers.join('+')} + ${nextHotkey.key.toUpperCase()}`;
+		userDict = dictToString(nextUserDict.toSorted());
+		weirpacks = nextWeirpacks.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
 
-ProtocolClient.getDialect().then((d) => {
-	dialect = d;
-});
-
-ProtocolClient.getIsolateEnglish().then((value) => {
-	isolateEnglish = value;
-});
-
-ProtocolClient.getDelay().then((value) => {
-	delay = value;
-	delayLoaded = true;
-});
-
-ProtocolClient.getDefaultEnabled().then((d) => {
-	defaultEnabled = d;
-});
-
-ProtocolClient.getActivationKey().then((d) => {
-	activationKey = d;
-});
-
-ProtocolClient.getHotkey().then((d) => {
-	hotkey = {
-		modifiers: [...d.modifiers],
-		key: d.key,
-	};
-	buttonText = `Hotkey: ${d.modifiers.join('+')}+${d.key}`;
-});
-
-ProtocolClient.getUserDictionary().then((d) => {
-	userDict = dictToString(d.toSorted());
-});
-
-ProtocolClient.getWeirpacks().then((stored) => {
-	weirpacks = stored.toSorted((a, b) => b.installedAt.localeCompare(a.installedAt));
-});
+		loaded = true;
+	},
+);
 
 /** Converts the content of a text area to viable dictionary values. */
 export function stringToDict(s: string): string[] {
@@ -212,15 +220,9 @@ function updateLintConfig(nextConfig: LintConfig) {
 	lintConfig = nextConfig;
 }
 
-function setIsolateEnglishFromCheckbox(event: Event): void {
-	const input = event.currentTarget;
-	if (!(input instanceof HTMLInputElement)) {
-		console.warn('Could not update isolate English setting: missing checkbox input.');
-		return;
-	}
-
-	isolateEnglish = input.checked;
-	ProtocolClient.setIsolateEnglish(input.checked);
+function toggleIsolateEnglish(): void {
+	isolateEnglish = !isolateEnglish;
+	ProtocolClient.setIsolateEnglish(isolateEnglish);
 }
 
 function toggleGroup(groupKey: string) {
@@ -249,10 +251,11 @@ async function exportEnabledDomainsCSV() {
 	}
 }
 
-let buttonText = $state('Set Hotkey');
-let isBlue = $state(false); // modify color of hotkey button once it is pressed
-function startHotkeyCapture(_modifyHotkeyButton: Button) {
-	buttonText = 'Press desired hotkey combination now.';
+let isCapturingHotkey = $state(false);
+
+function startHotkeyCapture() {
+	isCapturingHotkey = true;
+	buttonText = 'Listening...';
 
 	const handleKeydown = (event: KeyboardEvent) => {
 		event.preventDefault();
@@ -268,27 +271,20 @@ function startHotkeyCapture(_modifyHotkeyButton: Button) {
 			if (modifiers.length === 0) {
 				return;
 			}
-			buttonText = `Hotkey: ${modifiers.join('+')}+${key}`;
-			// Create a plain object to avoid proxy cloning issues
+			const formattedKey = key.length === 1 ? key.toUpperCase() : key;
+			buttonText = `${modifiers.join('+')} + ${formattedKey}`;
 			const newHotkey = {
 				modifiers: [...modifiers],
-				key: key,
+				key: formattedKey,
 			};
 
 			hotkey = newHotkey;
-
-			// Call ProtocolClient directly with the plain object to avoid proxy issues
 			ProtocolClient.setHotkey(newHotkey);
-
-			// Remove listener
 			window.removeEventListener('keydown', handleKeydown);
-
-			// change button color
-			isBlue = !isBlue;
+			isCapturingHotkey = false;
 		}
 	};
 
-	// Add temporary key listener
 	window.addEventListener('keydown', handleKeydown);
 }
 
@@ -317,7 +313,7 @@ async function handleWeirpackUpload(event: Event) {
 		weirpackError = message;
 	} finally {
 		weirpackBusy = false;
-		input.value = '';
+		if (input) input.value = '';
 	}
 }
 
@@ -334,249 +330,303 @@ async function removeWeirpack(id: string) {
 		weirpackBusy = false;
 	}
 }
-
-// Import removed
 </script>
 
-<!-- centered wrapper with side gutters -->
-<div class="min-h-screen px-4 py-10">
-  <div class="mx-auto max-w-screen-lg space-y-4">
-    <Card class="flex items-center gap-3">
-      <div class="flex h-9 w-9 items-center justify-center rounded-xl">
-        <img src={logo} alt="Harper logo" class="h-5 w-auto" />
+<div class="min-h-screen px-4 py-10 font-sans">
+  <div class="mx-auto max-w-screen-lg space-y-6">
+    <!-- Header -->
+    <Card class="flex items-center gap-3.5 p-4">
+      <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-slate-800">
+        <img src={logo} alt="Harper logo" class="h-6 w-auto" />
       </div>
       <div class="flex flex-col">
-        <h1 class="text-base tracking-wide font-serif">Harper</h1>
-        <p class="text-xs">Settings</p>
+        <h1 class="text-base font-semibold tracking-tight">Harper</h1>
+        <p class="text-xs text-gray-500 dark:text-slate-400">Extension Settings</p>
       </div>
     </Card>
 
-    <!-- ── GENERAL ───────────────────────────── -->
-    <Card class="space-y-6">
-      <h2 class="pb-1 text-xs uppercase tracking-wider">General</h2>
+    {#if loaded}
+      <!-- ── GENERAL ───────────────────────────── -->
+      <Card class="space-y-6 p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400">General</h2>
 
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <h3 class="text-sm">English Dialect</h3>
-          <Select size="sm" class="w-44" bind:value={dialect}>
-            <option value={Dialect.American}>🇺🇸 American</option>
-            <option value={Dialect.British}>🇬🇧 British</option>
-            <option value={Dialect.Australian}>🇦🇺 Australian</option>
-            <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
-            <option value={Dialect.Indian}>🇮🇳 Indian</option>
-          </Select>
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Ignore Non-English Text</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Skip text that Harper detects as not English.
-            </p>
-          </div>
-          <input
-            type="checkbox"
-            checked={isolateEnglish}
-            onchange={setIsolateEnglishFromCheckbox}
-            class="h-5 w-5"
-          />
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Enable on New Sites by Default</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Can make some apps behave abnormally.
-            </p>
-          </div>
-          <input
-            type="checkbox"
-            bind:checked={defaultEnabled}
-            class="h-5 w-5"
-          />
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between gap-4">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Delay</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Wait this many milliseconds after typing stops before refreshing
-              highlights.
-            </p>
-          </div>
-          <input
-            type="number"
-            min="0"
-            step="50"
-            bind:value={delay}
-            class="w-44 rounded-lg border border-cream-200 bg-white px-3 py-2.5 text-sm text-gray-900 shadow-sm outline-none transition focus:border-cream-300 focus:ring-2 focus:ring-primary-300 dark:border-cream-700 dark:bg-cream-900 dark:text-white dark:focus:border-cream-600 dark:focus:ring-primary-600"
-          />
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Export Enabled Domains</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Downloads JSON of domains explicitly enabled.
-            </p>
-          </div>
-          <Button size="sm" on:click={exportEnabledDomainsCSV}
-            >Export JSON</Button
-          >
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Activation Key</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              If you're finding that you're accidentally triggering Harper.
-            </p>
-          </div>
-          <Select size="sm" class="w-44" bind:value={activationKey}>
-            <option value={ActivationKey.Shift}>Double Shift</option>
-            <option value={ActivationKey.Control}>Double Control</option>
-            <option value={ActivationKey.Off}>Off</option>
-          </Select>
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">Apply Last Suggestion Hotkey</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Applies suggestion to last highlighted word.
-            </p>
-          </div>
-          <Textarea readonly bind:value={buttonText} />
-          <Button
-            size="sm"
-            color="light"
-            style="background-color: {isBlue ? 'blue' : ''}"
-            bind:this={modifyHotkeyButton}
-            on:click={() => {
-              startHotkeyCapture(modifyHotkeyButton);
-              isBlue = !isBlue;
-            }}>Modify Hotkey</Button
-          >
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
-            <h3 class="text-sm">User Dictionary</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Each word should be on its own line.
-            </p>
-          </div>
-          <Textarea bind:value={userDict}></Textarea>
-        </div>
-      </div>
-    </Card>
-
-    <Card class="space-y-4">
-      <h2 class="pb-1 text-xs uppercase tracking-wider">Weirpacks</h2>
-
-      <div class="space-y-2 flex flex-row w-full justify-between">
-        <p class="text-xs text-gray-600 dark:text-gray-400">
-          Upload one or more <code>.weirpack</code> files to add custom rule
-          packs.
-          <a href="https://writewithharper.com/docs/weir#Weirpacks"
-            >What is a Weirpack?</a
-          >
-        </p>
-        <input
-          type="file"
-          accept=".weirpack,application/zip"
-          multiple
-          disabled={weirpackBusy}
-          onchange={handleWeirpackUpload}
-          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white disabled:opacity-50"
-        />
-      </div>
-
-      {#if weirpackError}
-        <p class="text-xs text-red-700 dark:text-red-400">{weirpackError}</p>
-      {/if}
-
-      {#if weirpacks.length === 0}
-        <p class="text-sm text-gray-600 dark:text-gray-400">
-          No Weirpacks installed.
-        </p>
-      {:else}
-        <div class="space-y-3">
-          {#each weirpacks as weirpack}
-            <div
-              class="flex items-center justify-between gap-3 rounded-md border border-primary-100 p-3"
+        <div class="divide-y divide-gray-100 dark:divide-slate-800/60">
+          <!-- English Dialect -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">English Dialect</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Select target spelling and grammar rules.</p>
+            </div>
+            <Select
+              size="sm"
+              class="h-9 w-48 !outline-none focus:!border-primary focus:!ring-0"
+              bind:value={dialect}
             >
-              <div class="min-w-0">
-                <p class="truncate text-sm">
-                  {weirpack.name}{weirpack.version
-                    ? ` v${weirpack.version}`
-                    : ""}
-                </p>
-                <p class="truncate text-xs text-gray-600 dark:text-gray-400">
-                  {weirpack.filename}
-                </p>
+              <option value={Dialect.American}>American English</option>
+              <option value={Dialect.British}>British English</option>
+              <option value={Dialect.Australian}>Australian English</option>
+              <option value={Dialect.Canadian}>Canadian English</option>
+              <option value={Dialect.Indian}>Indian English</option>
+            </Select>
+          </div>
+
+          <!-- Ignore Non-English Text -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Ignore Non-English Text</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Skip text that Harper detects as not English.</p>
+            </div>
+
+            <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+              <div
+                class="relative flex h-full w-full"
+                role="radiogroup"
+                aria-label="Ignore Non-English Text"
+              >
+                <div
+                  class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out"
+                  class:translate-x-0={isolateEnglish}
+                  class:translate-x-full={!isolateEnglish}
+                ></div>
+
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={isolateEnglish}
+                  class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 {isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
+                  onclick={toggleIsolateEnglish}
+                >
+                  On
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={!isolateEnglish}
+                  class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 {!isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
+                  onclick={toggleIsolateEnglish}
+                >
+                  Off
+                </button>
               </div>
+            </div>
+          </div>
+
+          <!-- Enable on New Sites by Default -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Enable on New Sites by Default</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Automatically run Harper on newly visited websites.</p>
+            </div>
+
+            <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
+              <div
+                class="relative flex h-full w-full"
+                role="radiogroup"
+                aria-label="Enable on New Sites by Default"
+              >
+                <div
+                  class="absolute inset-y-0 left-0 w-1/2 rounded-md bg-primary transition-transform duration-300 ease-out"
+                  class:translate-x-0={defaultEnabled}
+                  class:translate-x-full={!defaultEnabled}
+                ></div>
+
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={defaultEnabled}
+                  class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 {defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
+                  onclick={() => (defaultEnabled = true)}
+                >
+                  On
+                </button>
+                <button
+                  type="button"
+                  role="radio"
+                  aria-checked={!defaultEnabled}
+                  class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 {!defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
+                  onclick={() => (defaultEnabled = false)}
+                >
+                  Off
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Delay -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Delay (ms)</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Wait time after typing stops before refreshing highlights.</p>
+            </div>
+            <Input
+              type="number"
+              min="0"
+              step="50"
+              bind:value={delay}
+              class="h-9 w-48 text-xs !outline-none focus:!border-primary focus:!ring-0"
+            />
+          </div>
+
+          <!-- Export Enabled Domains -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Export Enabled Domains</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Downloads a JSON list of domains explicitly enabled.</p>
+            </div>
+            <Button size="sm" class="h-9 w-48 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+          </div>
+
+          <!-- Activation Key -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Activation Key</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Requires a quick double-press before activating highlights.</p>
+            </div>
+            <Select
+              size="sm"
+              class="h-9 w-48 !outline-none focus:!border-primary focus:!ring-0"
+              bind:value={activationKey}
+            >
+              <option value={ActivationKey.Shift}>Double Shift</option>
+              <option value={ActivationKey.Control}>Double Control</option>
+              <option value={ActivationKey.Off}>Off</option>
+            </Select>
+          </div>
+
+          <!-- Apply Last Suggestion Hotkey -->
+          <div class="flex items-center justify-between py-3.5">
+            <div class="flex flex-col">
+              <h3 class="text-base font-semibold">Apply Last Suggestion Hotkey</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Applies suggestions to the last highlighted word.</p>
+            </div>
+            <div class="flex h-9 w-48 items-center justify-between gap-2">
+              <kbd class="flex h-full flex-1 items-center justify-center whitespace-nowrap rounded-md border border-gray-200 bg-gray-100 px-2 font-mono text-xs font-semibold text-gray-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
+                {buttonText}
+              </kbd>
               <Button
                 size="sm"
-                color="light"
-                disabled={weirpackBusy}
-                on:click={() => removeWeirpack(weirpack.id)}
+                class="h-full shrink-0 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0"
+                on:click={startHotkeyCapture}
               >
-                Remove
+                {isCapturingHotkey ? 'Cancel' : 'Modify'}
               </Button>
             </div>
-          {/each}
+          </div>
+
+          <!-- User Dictionary -->
+          <div class="flex flex-col gap-2 py-3.5">
+            <div>
+              <h3 class="text-base font-semibold">User Dictionary</h3>
+              <p class="text-xs text-gray-600 dark:text-gray-400">Add custom words to ignore (one word per line).</p>
+            </div>
+            <Textarea
+              bind:value={userDict}
+              rows={3}
+              placeholder="customword&#10;anotherterm"
+              class="w-full resize-y text-xs !outline-none focus:!border-primary focus:!ring-0"
+            ></Textarea>
+          </div>
         </div>
-      {/if}
-    </Card>
+      </Card>
 
-    <!-- ── RULES ─────────────────────────────── -->
-    <Card class="space-y-4">
-      <div class="flex items-center justify-between gap-4">
-        <h2 class="text-xs uppercase tracking-wider">Rules</h2>
-        <Input
-          bind:value={searchQuery}
-          placeholder="Search for a rule…"
-          size="sm"
-          class="w-60"
-        />
-      </div>
-      <div class="flex flex-wrap gap-3">
-        <Button size="sm" on:click={resetRulesToDefaults}
-          >Reset to Default Rules</Button
-        >
-        <Button size="sm" on:click={toggleAllRules}>
-          {anyRulesEnabled ? "Disable All Rules" : "Enable All Rules"}
-        </Button>
-      </div>
+      <!-- ── WEIRPACKS ───────────────────────────── -->
+      <Card class="space-y-4 p-6">
+        <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400">Weirpacks</h2>
 
-      <div class="rule-scroll space-y-4 max-h-80 overflow-y-auto pr-1">
-        {#key displayStructuredSettings.length}
-          <StructuredRuleSettings
-            settings={displayStructuredSettings}
-            {lintConfig}
-            {lintDescriptions}
-            {searchQueryLower}
-            {expandedGroups}
-            handleLintConfigChange={updateLintConfig}
-            handleToggleGroup={toggleGroup}
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <p class="text-xs text-gray-600 dark:text-slate-400">
+            Upload custom <code>.weirpack</code> rule packs.
+            <a href="https://writewithharper.com/docs/weir#Weirpacks" target="_blank" rel="noopener" class="text-primary hover:underline">
+              What is a Weirpack?
+            </a>
+          </p>
+
+          <input
+            type="file"
+            accept=".weirpack,application/zip"
+            multiple
+            disabled={weirpackBusy}
+            bind:this={fileInputRef}
+            onchange={handleWeirpackUpload}
+            class="hidden"
           />
-        {/key}
-      </div>
-    </Card>
+
+          <Button
+            size="sm"
+            class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0"
+            disabled={weirpackBusy}
+            on:click={() => fileInputRef?.click()}
+          >
+            {weirpackBusy ? 'Uploading...' : 'Browse Weirpacks'}
+          </Button>
+        </div>
+
+        {#if weirpackError}
+          <p class="text-xs text-red-500 dark:text-red-400">{weirpackError}</p>
+        {/if}
+
+        {#if weirpacks.length === 0}
+          <p class="text-xs text-gray-500 dark:text-slate-400">No custom Weirpacks installed.</p>
+        {:else}
+          <div class="space-y-2.5">
+            {#each weirpacks as weirpack}
+              <div class="flex items-center justify-between gap-3 rounded-lg border border-gray-200 p-3 dark:border-slate-800 dark:bg-slate-800/40">
+                <div class="min-w-0">
+                  <p class="truncate text-xs font-semibold">
+                    {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
+                  </p>
+                  <p class="truncate font-mono text-[11px] text-gray-500 dark:text-slate-400">
+                    {weirpack.filename}
+                  </p>
+                </div>
+                <Button
+                  size="sm"
+                  color="light"
+                  class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0"
+                  disabled={weirpackBusy}
+                  on:click={() => removeWeirpack(weirpack.id)}
+                >
+                  Remove
+                </Button>
+              </div>
+            {/each}
+          </div>
+        {/if}
+      </Card>
+
+      <!-- ── RULES ─────────────────────────────── -->
+      <Card class="space-y-4 p-6">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-slate-400">Rules</h2>
+          <Input
+            bind:value={searchQuery}
+            placeholder="Search rules..."
+            size="sm"
+            class="w-full sm:w-64 !outline-none focus:!border-primary focus:!ring-0"
+          />
+        </div>
+
+        <div class="flex flex-wrap gap-2.5 pt-1">
+          <Button size="sm" class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0" on:click={resetRulesToDefaults}>Reset to Defaults</Button>
+          <Button size="sm" color="light" class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0" on:click={toggleAllRules}>
+            {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
+          </Button>
+        </div>
+
+        <div class="rule-scroll max-h-96 space-y-4 overflow-y-auto pr-1 [scrollbar-width:thin]">
+          {#key displayStructuredSettings.length}
+            <StructuredRuleSettings
+              settings={displayStructuredSettings}
+              {lintConfig}
+              {lintDescriptions}
+              {searchQueryLower}
+              {expandedGroups}
+              handleLintConfigChange={updateLintConfig}
+              handleToggleGroup={toggleGroup}
+            />
+          {/key}
+        </div>
+      </Card>
+    {/if}
   </div>
 </div>

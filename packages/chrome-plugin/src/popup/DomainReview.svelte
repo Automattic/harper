@@ -44,7 +44,7 @@ async function handleSubmit(event: SubmitEvent) {
 }
 
 const segment =
-	'flex-1 rounded-md px-3 py-1.5 text-sm font-medium transition-colors cursor-pointer';
+	'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
 </script>
 
 <div class="flex h-full flex-col justify-between px-5 py-3">
@@ -59,18 +59,18 @@ const segment =
         <!-- Scrollable Inputs Area (Prevents pushing button out of bounds) -->
         <div class="space-y-2.5 overflow-y-auto pr-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div class="space-y-1">
-                <Label class="text-xs">Domain</Label>
+                <Label class="text-xs dark:text-slate-200">Domain</Label>
                 <Input
                     name="domain"
                     bind:value={domain}
                     placeholder="example.com"
-                    class="w-full !outline-none !ring-0 transition-colors focus:border-primary dark:border-slate-700 dark:bg-slate-900"
+                    class="w-full border-gray-200 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
             </div>
 
             <div class="space-y-1">
-                <Label class="text-xs">Does Harper work well here?</Label>
-                <div class="rounded-lg border border-gray-200 p-0.5 dark:border-slate-700 dark:bg-slate-900">
+                <Label class="text-xs dark:text-slate-200">Does Harper work well here?</Label>
+                <div class="rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
                     <div
                         class="relative flex w-full"
                         role="radiogroup"
@@ -106,14 +106,13 @@ const segment =
             </div>
 
             <div class="space-y-1">
-                <Label class="text-xs">{works ? 'Anything else? (optional)' : 'What went wrong?'}</Label>
+                <Label class="text-xs dark:text-slate-200">{works ? 'Anything else? (optional)' : 'What went wrong?'}</Label>
                 <textarea
                     name="feedback"
                     rows="4.5"
                     bind:value={feedback}
                     placeholder={works ? 'Optional notes' : 'e.g. underlines are misplaced, editor loses focus'}
-                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm
-                        placeholder:text-gray-400 outline-none transition-colors focus:border-primary dark:border-slate-700 dark:bg-slate-900 dark:placeholder:text-slate-500"
+                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
                 ></textarea>
             </div>
         </div>
