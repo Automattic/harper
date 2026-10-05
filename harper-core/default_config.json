@@ -4698,6 +4698,13 @@
 						},
 						{
 							"Bool": {
+								"name": "DairyDiary",
+								"state": true,
+								"label": "Dairy / Diary"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Damages",
 								"state": true,
 								"label": "Damages"
