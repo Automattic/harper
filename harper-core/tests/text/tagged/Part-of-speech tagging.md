@@ -193,7 +193,7 @@
 > and  corrected by hand    , and  later users sent   in        errata so          that      by the late  70 s
 # VB/C VP/J      P  NSg/VB+ . VB/C JC    NPl+  NSg/VP NPr/J/R/P NSg    NSg/I/J/R/C I/C/Ddem+ P  D   NSg/J #  ?
 > the tagging was  nearly perfect  ( allowing for   some     cases   on  which even       human
-# D   NSg/Vg  VLPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J/R NSg/VB/J+
+# D   NSg/Vg  VLPt R      NSg/VB/J . Nᴹ/Vg/J  R/C/P I/J/R/Dq NPl/V3+ J/P I/C+  NSg/VB/J/R NSg/J+
 > speakers might    not     agree ) .
 # +        Nᴹ/VXB/J NSg/R/C VB    . .
 >
@@ -303,7 +303,7 @@
 > HMMs underlie the functioning of stochastic taggers and  are used in        various
 # ?    VB       D   Nᴹ/Vg/J+    P  J          NPl     VB/C VLB VP/J NPr/J/R/P J
 > algorithms one     of the most         widely used being        the bi    - directional inference
-# NPl+       NSg/I/J P  D   NSg/I/J/R/Dq R      VP/J N🅪Sg/VLg/J/C D   NSg/J . NSg/J       NSg+
+# NPl+       NSg/I/J P  D   NSg/I/J/R/Dq R      VP/J N🅪Sg/VLg/J/C D   NSg/J . NSg/J       N🅪Sg+
 > algorithm .
 # NSg       .
 >
@@ -378,8 +378,8 @@
 # NSg/J+  NPl/V3+  . NSg/VB/C/P . VB  . V3     NPr/J/R/P J/R  NSg/J+    NPl+ . P    J
 > iteration , similarity classes of words   emerge that      are remarkably similar to
 # N🅪Sg      . NSg        NPl/V3  P  NPl/V3+ NSg/VB I/C/Ddem+ VLB R          NSg/J   P
-> those  human    linguists would expect ; and  the differences themselves sometimes
-# I/Ddem NSg/VB/J NPl+      VXB   VB     . VB/C D   NPl/VB+     IPl+       R
+> those  human linguists would expect ; and  the differences themselves sometimes
+# I/Ddem NSg/J NPl+      VXB   VB     . VB/C D   NPl/VB+     IPl+       R
 > suggest valuable new   insights .
 # VB      NSg/J    NSg/J NPl+     .
 >

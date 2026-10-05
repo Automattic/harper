@@ -25,7 +25,7 @@ pub struct DespiteItIs {
 impl Default for DespiteItIs {
     fn default() -> Self {
         let subj = SequenceExpr::default().then_subject_pronoun();
-        let be = WordSet::new(&["am", "are", "is", "was", "were"]);
+        let be = WordSet::new(["am", "are", "is", "was", "were"]);
 
         let expr = SequenceExpr::aco("despite")
             .t_ws()

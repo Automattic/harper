@@ -75,7 +75,7 @@ pub struct ViceVersa {
 
 impl Default for ViceVersa {
     fn default() -> Self {
-        let expr = SequenceExpr::word_set(&["vice", "vise"])
+        let expr = SequenceExpr::word_set(["vice", "vise"])
             .then(matches_hyphen)
             .then_optional(SequenceExpr::aco("a").then(matches_hyphen))
             .t_aco("versa");

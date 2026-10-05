@@ -20,7 +20,7 @@ impl Default for ModalVerb {
 impl ModalVerb {
     pub fn without_common_errors() -> Self {
         static CACHED_WITHOUT_COMMON_ERRORS: LazyLock<WordSet> = LazyLock::new(|| {
-            let mut words = WordSet::new(&MODALS);
+            let mut words = WordSet::new(MODALS);
             MODALS.iter().for_each(|word| {
                 words.add(&format!("{word}n't"));
             });
@@ -35,7 +35,7 @@ impl ModalVerb {
 
     pub fn with_common_errors() -> Self {
         static CACHED_WITH_COMMON_ERRORS: LazyLock<WordSet> = LazyLock::new(|| {
-            let mut words = WordSet::new(&MODALS);
+            let mut words = WordSet::new(MODALS);
             MODALS.iter().for_each(|word| {
                 words.add(&format!("{word}n't"));
                 words.add(&format!("{word}nt"));

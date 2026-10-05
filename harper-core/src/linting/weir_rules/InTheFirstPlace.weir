@@ -1,0 +1,14 @@
+expr main (at the first place)
+
+let message "For referring back to the root cause or primary argument, use `in the first place`."
+let description "Corrects `at the first place` to `in the first place`."
+let kind "WordChoice"
+let becomes "in the first place"
+
+test "why do you even use Cursor at the first place?" "why do you even use Cursor in the first place?"
+test "So I want to ask; why does this work at the first place?" "So I want to ask; why does this work in the first place?"
+test "Why even rust at the first place?" "Why even rust in the first place?"
+
+# Known false positives
+
+# If the cursor is at the first place of a new line, when one input non-letter symbols, it should not affect the other functions

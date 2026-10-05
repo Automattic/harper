@@ -20,16 +20,16 @@ impl Default for SimplePastToPastParticiple {
                 Box::new(
                     SequenceExpr::any_of([
                         // for perfect tenses
-                        Box::new(WordSet::new(&["have", "had", "has", "having"])) as Box<dyn Expr>,
+                        Box::new(WordSet::new(["have", "had", "has", "having"])) as Box<dyn Expr>,
                         // for passive voice
                         Box::new(InflectionOfBe::default()),
                         // pronoun + have contractions
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "I've", "I'd", "we've", "we'd", "you've", "you'd", "he's", "he'd",
                             "she's", "she'd", "it's", "it'd", "they've", "they'd",
                         ])),
                         // pronoun + have contractions missing apostrophes
-                        Box::new(WordSet::new(&[
+                        Box::new(WordSet::new([
                             "Ive", "Id", "weve", "wed", "youve", "youd", "hes", "hed", "shes",
                             "shed", "its", "itd", "theyve", "theyd",
                         ])),
@@ -47,7 +47,7 @@ impl Default for SimplePastToPastParticiple {
                     Box::new(
                         SequenceExpr::aco("id")
                             .t_any()
-                            .then_word_set(&["came", "did", "went"]),
+                            .then_word_set(["came", "did", "went"]),
                     ),
                 ]))),
             ]),

@@ -18,13 +18,13 @@ impl Default for WayTooAdjective {
             .t_ws()
             .t_aco("to")
             .t_ws()
-            .then(UPOSSet::new(&[UPOS::ADJ]).or(WordSet::new(&["much"])));
+            .then(UPOSSet::new(&[UPOS::ADJ]).or(WordSet::new(["much"])));
 
         let exceptions = SequenceExpr::anything()
             .t_any()
             .t_any()
             .t_any()
-            .then_word_set(&["surface", "return", "aqua"]);
+            .then_word_set(["surface", "return", "aqua"]);
 
         let expr = All::new(vec![
             Box::new(base),

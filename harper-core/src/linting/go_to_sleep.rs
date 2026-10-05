@@ -12,7 +12,7 @@ pub struct GoToSleep {
 impl Default for GoToSleep {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["go", "goes", "going", "gone", "went"])
+            expr: SequenceExpr::word_set(["go", "goes", "going", "gone", "went"])
                 .t_ws()
                 .then_word_seq(&["into", "sleep"])
                 .but_not(
@@ -24,16 +24,16 @@ impl Default for GoToSleep {
                         .then_any_of([
                             Box::new(
                                 SequenceExpr::whitespace().then_any_of([
-                                    Box::new(WordSet::new(&["mode", "state"])) as Box<dyn Expr>,
+                                    Box::new(WordSet::new(["mode", "state"])) as Box<dyn Expr>,
                                     Box::new(
                                         SequenceExpr::default()
                                             .then_adjective()
                                             .t_ws()
-                                            .t_set(&["mode", "state"]),
+                                            .t_set(["mode", "state"]),
                                     ),
                                 ]),
                             ),
-                            Box::new(SequenceExpr::default().then_slash().t_set(&[
+                            Box::new(SequenceExpr::default().then_slash().t_set([
                                 "hibernate",
                                 "hibernation",
                                 "suspend",
