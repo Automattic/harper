@@ -50,7 +50,7 @@
 		"svelte-check": "^4.3.3",
 		"tailwindcss": "^4.1.14",
 		"typescript": "catalog:",
-		"vite": "^7.1.10"
+		"vite": "^7.2.2"
 	},
 	"keywords": [
 		"svelte"
