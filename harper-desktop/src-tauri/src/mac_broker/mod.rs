@@ -29,11 +29,10 @@ use std::time::Duration;
 use std::{
     collections::{BTreeMap, HashMap},
     error::Error as StdError,
-    sync::{Arc, Mutex},
+    sync::Mutex,
     time::Instant,
 };
 
-use crate::config::Integration;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::ActionableLint;
 
@@ -52,6 +51,9 @@ use self::window_stability::{
     settled_window_state, window_frame_changed,
 };
 
+/// Must match `identifier` in `tauri.conf.json`.
+const BUNDLE_ID: &str = "com.elijahpotter.harper-desktop";
+
 /// macOS implementation of the OS data the highlighter needs.
 ///
 /// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
@@ -61,17 +63,19 @@ pub struct MacBroker {
     /// Tauri requires a Send broker; retained AX handles must stay on their capturing thread.
     /// The wrapper enforces that restriction for access and drop. Only the highlighter populates it.
     last_focused: Option<SendWrapper<FocusedTarget>>,
-    integrations: Arc<Mutex<Vec<Integration>>>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
 
 impl MacBroker {
-    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
+    /// Creates a broker with an app policy that may register newly encountered bundle IDs.
+    /// The policy is called before reading the app's text and may change as settings are refreshed.
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
         Self {
             last_focused: None,
-            integrations,
+            is_integration_enabled: Box::new(is_integration_enabled),
             application_icon_cache: Mutex::new(HashMap::new()),
             window_movement: None,
             accessibility_activation: None,
@@ -278,12 +282,6 @@ impl MacBroker {
     }
 }
 
-impl Default for MacBroker {
-    fn default() -> Self {
-        Self::new(Arc::new(Mutex::new(Integration::curated_integrations())))
-    }
-}
-
 impl Drop for MacBroker {
     fn drop(&mut self) {
         self.reset_accessibility_activation();
@@ -293,6 +291,10 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        app_id == BUNDLE_ID
+    }
+
     fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
         let focused_pid = match focused_window_pid::focused_window_pid() {
             Ok(pid) => pid,
@@ -327,17 +329,7 @@ impl OsBroker for MacBroker {
             }
         };
 
-        let integration_enabled = match self.integrations.lock() {
-            Ok(integrations) => {
-                Integration::is_integration_enabled_in(&integrations, &bundle_identifier)
-            }
-            Err(error) => {
-                eprintln!("Unable to read integrations: {error}");
-                return None;
-            }
-        };
-
-        if !integration_enabled {
+        if !(self.is_integration_enabled)(&bundle_identifier) {
             self.window_movement = None;
             self.reset_accessibility_activation();
             return Some(Vec::new());

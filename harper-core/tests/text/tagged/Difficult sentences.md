@@ -542,8 +542,8 @@
 # NPr/ISg+ V3     VLPp/B NSg/VB/J/R P  NSg/J .
 > Finally she  was  relieved of the burden of caring  for   her     sick      husband .
 # R       ISg+ VLPt VP/J     P  D   NSg/VB P  Nᴹ/Vg/J R/C/P ISg/D$+ NSg/VB/J+ NSg/VB+ .
-> He       seemed devoid of human     feelings .
-# NPr/ISg+ VP/J   VB/J   P  NSg/VB/J+ NPl/V3+  .
+> He       seemed devoid of human  feelings .
+# NPr/ISg+ VP/J   VB/J   P  NSg/J+ NPl/V3+  .
 > The word    is  believed to be       of Japanese  origin .
 # D+  NSg/VB+ VL3 VP/J     P  NSg/VLXB P  NPr🅪Sg/J+ NSg+   .
 > Jesus  of Nazareth
@@ -790,8 +790,8 @@
 # NPr/ISg+ VP/J  NPr/ISg+ NSg/I+ P  VXB .
 > I       have    places  to go       and  people  to see    .
 # ISg/#r+ NSg/VXB NPl/V3+ P  NSg/VB/J VB/C NPl/VB+ P  NSg/VB .
-> To err is  human    .
-# P  VB  VL3 NSg/VB/J .
+> To err is  human .
+# P  VB  VL3 NSg/J .
 > Who    am        I       to criticise ? I've done      worse      things myself .
 # NPr/I+ NPr/VLB/J ISg/#r+ P  VB/Au/Br  . K    NSg/VPp/J NSg/VB/JC+ NPl+   ISg+   .
 > Precisely to get    away from you    was  why    I       did  what   I       did  .

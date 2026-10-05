@@ -66,8 +66,8 @@
 # D+  NPr/J+ NSg/VB/J+ NPr🅪Sg/VB+ ISg/#r+ N🅪Sg/VP/J I/C/Ddem ISg/#r+ VP/J   D+  NSg/VB+ P  NSg/VLXB NPr/J/R/P NSg/VB/J VB/C NSg/P D/P
 > sort   of moral     attention forever ; I       wanted no       more         riotous excursions with
 # NSg/VB P  NSg/VB/J+ NSg+      NSg/J   . ISg/#r+ VP/J   NSg/Dq/P NPr/I/J/R/Dq J       NPl/V3     P
-> privileged glimpses into the human    heart    . Only  Gatsby , the man     who    gives  his
-# VP/J       NPl/V3+  P    D   NSg/VB/J N🅪Sg/VB+ . J/R/C NPr    . D   NPr/VB+ NPr/I+ NPl/V3 ISg/D$+
+> privileged glimpses into the human heart    . Only  Gatsby , the man     who    gives  his
+# VP/J       NPl/V3+  P    D   NSg/J N🅪Sg/VB+ . J/R/C NPr    . D   NPr/VB+ NPr/I+ NPl/V3 ISg/D$+
 > name    to this   book    , was  exempt   from my  reaction   — Gatsby , who    represented
 # NSg/VB+ P  I/Ddem NSg/VB+ . VLPt NSg/VB/J P    D$+ N🅪Sg/VB/J+ . NPr    . NPr/I+ VP/J
 > everything for   which I       have    an  unaffected scorn   . If    personality is  an  unbroken
@@ -721,7 +721,7 @@
 >
 #
 > “ You    make   me       feel     uncivilized , Daisy , ” I       confessed on  my  second   glass      of corky
-# . ISgPl+ NSg/VB NPr/ISg+ NSg/I/VB VB/J        . NPr+  . . ISg/#r+ VP/J      J/P D$+ NSg/VB/J NPr🅪Sg/VB+ P  J
+# . ISgPl+ NSg/VB NPr/ISg+ NSg/I/VB VP/J        . NPr+  . . ISg/#r+ VP/J      J/P D$+ NSg/VB/J NPr🅪Sg/VB+ P  J
 > but     rather impressive claret  . “ Can’t you    talk    about crops   or    something ? ”
 # NSg/C/P NPr/R  J          Nᴹ/VB/J . . VXB   ISgPl+ N🅪Sg/VB J/P   NPl/V3+ NPr/C NSg/I/J+  . .
 >
@@ -2160,8 +2160,8 @@
 # I/J/R/Dq NSg/VB/J . NSg/J    N🅪Sg/VB+ I/C+  VP/J   NPr/ISg+ NSg/VB/J . R/C/P NSg/C P    NPl/V3 . P    D$+
 > chair   . Yet      high       over    the city our line   of yellow    windows   must    have    contributed
 # NSg/VB+ . NSg/VB/C NSg/VB/J/R NSg/J/P D+  NSg+ D$+ NSg/VB P  NSg/VB/J+ NPrPl/V3+ NSg/VXB NSg/VXB VP/J
-> their share  of human    secrecy to the casual watcher in        the darkening streets , and
-# D$+   NSg/VB P  NSg/VB/J Nᴹ      P  D   NSg/J  NSg+    NPr/J/R/P D   Nᴹ/Vg/J   NPl/V3+ . VB/C
+> their share  of human secrecy to the casual watcher in        the darkening streets , and
+# D$+   NSg/VB P  NSg/J Nᴹ      P  D   NSg/J  NSg+    NPr/J/R/P D   Nᴹ/Vg/J   NPl/V3+ . VB/C
 > I       saw     him  too , looking up         and  wondering . I       was  within  and  without ,
 # ISg/#r+ NSg/VPt ISg+ R   . Nᴹ/Vg/J NSg/VB/J/P VB/C Nᴹ/Vg/J   . ISg/#r+ VLPt NSg/J/P VB/C C/P     .
 > simultaneously enchanted and  repelled by the inexhaustible variety of life     .
@@ -4416,8 +4416,8 @@
 # NSg/J    NPl/V3 P  NPr🅪Sg/J+ .
 >
 #
-> “ Finest specimens of human    molars , ” he       informed me       .
-# . JS     NPl       P  NSg/VB/J NPl    . . NPr/ISg+ VP/J     NPr/ISg+ .
+> “ Finest specimens of human molars , ” he       informed me       .
+# . JS     NPl       P  NSg/J NPl    . . NPr/ISg+ VP/J     NPr/ISg+ .
 >
 #
 > “ Well       ! ” I       inspected them     . “ That’s a   very interesting idea . ”
@@ -5952,8 +5952,8 @@
 # NSg/I/J/C/Dq+ D+  NPl/V3+ VLPt Nᴹ/Vg/J J/P NPr/J/R/P NPr/VB/J+ N🅪Sg/VB+ NSg/J/R/C . D   NSg/J    NPl/V3 . NPl+ . Nᴹ/Vg/J  .
 > were plunging home      through the rain     from New   York . It       was  the hour of a    profound
 # VLPt Nᴹ/Vg/J  NSg/VB/J+ J/P     D   N🅪Sg/VB+ P    NSg/J NPr+ . NPr/ISg+ VLPt D   NSg  P  D/P+ NSg/VB/J+
-> human     change   , and  excitement was  generating on  the air      .
-# NSg/VB/J+ N🅪Sg/VB+ . VB/C NSg+       VLPt Nᴹ/Vg/J    J/P D+  N🅪Sg/VB+ .
+> human  change   , and  excitement was  generating on  the air      .
+# NSg/J+ N🅪Sg/VB+ . VB/C NSg+       VLPt Nᴹ/Vg/J    J/P D+  N🅪Sg/VB+ .
 >
 #
 > “ One     thing’s sure and  nothing’s surer The rich     get    richer and  the poor
@@ -6522,8 +6522,8 @@
 # VB   D/P N🅪Sg/VB+ R    . .
 >
 #
-> “ Perhaps you    know that      lady    , ” Gatsby indicated a   gorgeous , scarcely human    orchid
-# . NSg/R   ISgPl+ VB   I/C/Ddem+ NPr/VB+ . . NPr    VP/J      D/P J        . R        NSg/VB/J NSg/J
+> “ Perhaps you    know that      lady    , ” Gatsby indicated a   gorgeous , scarcely human orchid
+# . NSg/R   ISgPl+ VB   I/C/Ddem+ NPr/VB+ . . NPr    VP/J      D/P J        . R        NSg/J NSg/J
 > of a   woman   who    sat    in        state    under   a   white       - plum       tree    . Tom    and  Daisy stared , with
 # P  D/P NSg/VB+ NPr/I+ NSg/VP NPr/J/R/P N🅪Sg/VB+ NSg/J/P D/P NPr🅪Sg/VB/J . N🅪Sg/VB/J+ NSg/VB+ . NPr/VB VB/C NPr+  VP/J   . P
 > that      peculiarly unreal feeling   that     accompanies the recognition of a   hitherto
@@ -6781,7 +6781,7 @@
 > When    the melody rose      her     voice   broke     up         sweetly , following   it       , in        a   way
 # NSg/I/C D   NPr🅪Sg NPr/VPt/J ISg/D$+ NSg/VB+ NSg/VPt/J NSg/VB/J/P R       . N🅪Sg/Vg/J/P NPr/ISg+ . NPr/J/R/P D/P NSg/J+
 > contralto voices  have    , and  each change   tipped out          a   little     of her     warm     human
-# NSg       NPl/V3+ NSg/VXB . VB/C Dq   N🅪Sg/VB+ VP     NSg/VB/J/R/P D/P NPr/I/J/Dq P  ISg/D$+ NSg/VB/J NSg/VB/J
+# NSg       NPl/V3+ NSg/VXB . VB/C Dq   N🅪Sg/VB+ VP     NSg/VB/J/R/P D/P NPr/I/J/Dq P  ISg/D$+ NSg/VB/J NSg/J
 > magic      upon the air      .
 # N🅪Sg/VB/J+ P    D   N🅪Sg/VB+ .
 >
@@ -8527,7 +8527,7 @@
 > “ Even       that’s a    lie     , ” said Tom     savagely . “ She  didn’t know you    were alive .
 # . NSg/VB/J/R K      D/P+ NPr/VB+ . . VP/J NPr/VB+ R        . . ISg+ VXPt   VB   ISgPl+ VLPt J     .
 > Why    — there’re things between Daisy and  me       that      you’ll never know , things that
-# NSg/VB . ?        NPl+   NSg/P   NPr+  VB/C NPr/ISg+ I/C/Ddem+ K      R     VB   . NPl+   I/C/Ddem+
+# NSg/VB . K        NPl+   NSg/P   NPr+  VB/C NPr/ISg+ I/C/Ddem+ K      R     VB   . NPl+   I/C/Ddem+
 > neither of us       can     ever forget . ”
 # I/C     P  NPr/IPl+ NPr/VXB J/R  VB     . .
 >
@@ -8756,8 +8756,8 @@
 # NSg/VB+ . NPr/VB+ VP/J   R           . Nᴹ/Vg/J  VB/C Nᴹ/Vg/J  . NSg/C/P ISg/D$+ NSg/VB+ VLPt R/C/P
 > remote   from Jordan and  me       as    the foreign clamor on  the sidewalk or    the tumult of
 # NSg/VB/J P    NPr+   VB/C NPr/ISg+ R/C/P D   NSg/J   NSg/VB J/P D   NSg+     NPr/C D   NSg/VB P
-> the elevated overhead . Human     sympathy has its     limits  , and  we   were content   to let
-# D   VP/J     NSg/J/P+ . NSg/VB/J+ NSg+     V3  ISg/D$+ NPl/V3+ . VB/C IPl+ VLPt N🅪Sg/VB/J P  NSg/VBP
+> the elevated overhead . Human  sympathy has its     limits  , and  we   were content   to let
+# D   VP/J     NSg/J/P+ . NSg/J+ NSg+     V3  ISg/D$+ NPl/V3+ . VB/C IPl+ VLPt N🅪Sg/VB/J P  NSg/VBP
 > all           their tragic arguments fade     with the city lights  behind  . Thirty — the promise
 # NSg/I/J/C/Dq+ D$+   NSg/J+ NPl/V3+   NSg/VB/J P    D+  NSg+ NPl/V3+ NSg/J/P . NSg    . D   NSg/VB
 > of a   decade of loneliness , a   thinning list   of single   men  to know , a   thinning
@@ -8847,7 +8847,7 @@
 > The “ death   car  ” as    the newspapers called it       , didn’t stop   ; it       came      out          of the
 # D   . NPr🅪Sg+ NSg+ . R/C/P D+  NPl/V3+    VP/J   NPr/ISg+ . VXPt   NSg/VB . NPr/ISg+ NSg/VPt/P NSg/VB/J/R/P P  D
 > gathering darkness , wavered tragically for   a   moment , and  then      disappeared around
-# Nᴹ/Vg/J   Nᴹ+      . VP/J    R          R/C/P D/P NSg+   . VB/C NSg/J/R/C VP/J        J/P
+# N🅪Sg/Vg/J Nᴹ+      . VP/J    R          R/C/P D/P NSg+   . VB/C NSg/J/R/C VP/J        J/P
 > the next    bend    . Mavromichaelis wasn’t even       sure of its     color         — he       told the first
 # D   NSg/J/P NPr/VB+ . ?              VPt    NSg/VB/J/R J    P  ISg/D$+ N🅪Sg/VB/J/Am+ . NPr/ISg+ VP   D   NSg/J
 > policeman that      it       was  light      green       . The other     car  , the one      going   toward New    York ,
@@ -9155,7 +9155,7 @@
 > Self        - consciously , with his     authoritative arms    breaking the way    , we   pushed
 # NSg/I/VB/J+ . R           . P    ISg/D$+ J+            NPl/V3+ Nᴹ/Vg/J  D+  NSg/J+ . IPl+ VP/J
 > through the still      gathering crowd   , passing a   hurried doctor , case       in        hand    , who
-# J/P     D   NSg/VB/J/R Nᴹ/Vg/J   NSg/VB+ . Nᴹ/Vg/J D/P VP/J    NSg/VB . NPr🅪Sg/VB+ NPr/J/R/P NSg/VB+ . NPr/I+
+# J/P     D   NSg/VB/J/R N🅪Sg/Vg/J NSg/VB+ . Nᴹ/Vg/J D/P VP/J    NSg/VB . NPr🅪Sg/VB+ NPr/J/R/P NSg/VB+ . NPr/I+
 > had been   sent   for   in        wild     hope      half      an   hour ago .
 # VP  VLPp/B NSg/VP R/C/P NPr/J/R/P NSg/VB/J NPr🅪Sg/VB N🅪Sg/J/P+ D/P+ NSg+ J/P .
 >
@@ -11626,8 +11626,8 @@
 # NPr🅪Sg/VB/J NSg/VB P  D   NSg/J NSg/VB+ . ISg/D$+ VP/J     NPl/V3+ . D+  NPl/V3+ I/C/Ddem+ VP  VP   NSg/J
 > for   Gatsby’s house   , had once  pandered in        whispers to the last     and  greatest of
 # R/C/P NPr$     NPr/VB+ . VP  NSg/C VP/J     NPr/J/R/P NPl/V3   P  D   NSg/VB/J VB/C JS       P
-> all          human    dreams  ; for   a   transitory enchanted moment man     must    have    held his
-# NSg/I/J/C/Dq NSg/VB/J NPl/V3+ . R/C/P D/P J          VP/J      NSg+   NPr/VB+ NSg/VXB NSg/VXB VP   ISg/D$+
+> all          human dreams  ; for   a   transitory enchanted moment man     must    have    held his
+# NSg/I/J/C/Dq NSg/J NPl/V3+ . R/C/P D/P J          VP/J      NSg+   NPr/VB+ NSg/VXB NSg/VXB VP   ISg/D$+
 > breath     in        the presence of this   continent , compelled into an  esthetic
 # N🅪Sg/VB/J+ NPr/J/R/P D   N🅪Sg/VB  P  I/Ddem NPr/J+    . VP/J      P    D/P ?
 > contemplation he       neither understood nor   desired , face    to face   for   the last     time

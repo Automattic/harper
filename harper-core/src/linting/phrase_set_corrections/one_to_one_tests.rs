@@ -288,6 +288,26 @@ fn correct_combinating() {
     );
 }
 
+// CondensateVerb
+
+#[test]
+fn correct_condensated() {
+    assert_suggestion_result(
+        "Having this info condensated in the package list would help to draw conclusions whether some packages need upgrade.",
+        test_linter(),
+        "Having this info condensed in the package list would help to draw conclusions whether some packages need upgrade.",
+    )
+}
+
+#[test]
+fn correct_condensating() {
+    assert_suggestion_result(
+        "Apparently this is needed to minimize the risk of having water condensating.",
+        test_linter(),
+        "Apparently this is needed to minimize the risk of having water condensing.",
+    )
+}
+
 // CompulseToCompel
 
 #[test]
@@ -2161,6 +2181,35 @@ fn fix_everyone_seams_combined_with_now_a_days() {
         test_linter(),
         "everyone seems to use the editor nowadays plus there is a tun of extensions available",
     );
+}
+
+// SetABadExample
+
+#[test]
+fn fix_setting_up_a_bad_example() {
+    assert_suggestion_result(
+        "Are our neighbours setting up a bad example ?",
+        test_linter(),
+        "Are our neighbours setting a bad example ?",
+    )
+}
+
+#[test]
+fn fix_set_up_a_bad_example() {
+    assert_suggestion_result(
+        "It works sometimes but set up a bad example.",
+        test_linter(),
+        "It works sometimes but set a bad example.",
+    )
+}
+
+#[test]
+fn fix_sets_up_a_bad_example() {
+    assert_suggestion_result(
+        "This sets up a bad example that will make it into a trend. As long as AI is not deterministic, you should review the code.",
+        test_linter(),
+        "This sets a bad example that will make it into a trend. As long as AI is not deterministic, you should review the code.",
+    )
 }
 
 // SubjunctiveWasToWere

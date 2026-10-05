@@ -210,7 +210,7 @@ version = "0.71.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5f58bf3d7db68cfbac37cfc485a8d711e87e064c3d0fe0435b92f7a407f9d6b3"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "cexpr",
  "clang-sys",
  "itertools 0.13.0",
@@ -247,9 +247,9 @@ checksum = "bef38d45163c2f1dde094a7dfd33ccf595c92905c8f8f4fdc18d06fb1037718a"
 
 [[package]]
 name = "bitflags"
-version = "2.13.1"
+version = "2.13.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b588b76d00fde79687d7646a9b5bdf3cc0f655e0bbd080335a95d7e96f3587da"
+checksum = "3ded4057c258ba199e2d26386d3af3780957ecaee6c4ef4041c6b4b8b97c0b06"
 dependencies = [
  "serde_core",
 ]
@@ -858,9 +858,9 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "4.6.6"
+version = "4.6.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "473c7e07f409a8d772161724aa8db6a765a2532a70f9667eeb7b49d3d02fbdca"
+checksum = "aa8876b300ab35ba921adea3dfd70157a46249b33f95c9084ae5709785478946"
 dependencies = [
  "clap_builder",
  "clap_derive",
@@ -868,9 +868,9 @@ dependencies = [
 
 [[package]]
 name = "clap_builder"
-version = "4.6.6"
+version = "4.6.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "7b48fea5a88e9ae728a2dcbedbfc0e730f7d60da42e1cb049a83c9fb8b789889"
+checksum = "ec0797fb7aeb1406c84efac526901f7ec3ead2124f946b494e72879d4b54704d"
 dependencies = [
  "anstream",
  "anstyle",
@@ -889,9 +889,9 @@ dependencies = [
 
 [[package]]
 name = "clap_derive"
-version = "4.6.4"
+version = "4.6.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "d012d2b9d65aca7f18f4d9878a045bc17899bba951561ba5ec3c2ba1eed9a061"
+checksum = "f9c751b79415d4e559e3d1fcf128e09e720eb673a06d26cf6f392d37d75b66e0"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -1030,7 +1030,7 @@ version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d44a101f213f6c4cdc1853d4b78aef6db6bdfa3468798cc1d9912f4735013eb"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "core-foundation",
  "libc",
 ]
@@ -1262,7 +1262,7 @@ version = "0.8.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "0ffc10af538ee74535cda260e581f5a177c243803dd30b698934a515f0114b55"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "bytemuck",
  "cubecl-common",
  "cubecl-ir",
@@ -2278,7 +2278,7 @@ dependencies = [
 
 [[package]]
 name = "fuzz"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2524,7 +2524,7 @@ version = "0.6.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "45cf04b2726f02df5508c6de726acdc90cdf97ac771a9a0ffd8ba10a6e696bf9"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "gpu-alloc-types",
 ]
 
@@ -2534,7 +2534,7 @@ version = "0.3.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b2bbed164dd10ed526c2e4fe3e721ca4a71c61730e5aafac6844b417b3227058"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -2555,7 +2555,7 @@ version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b89c83349105e3732062a895becfc71a8f921bb71ecbbdd8ff99263e3b53a0ca"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "gpu-descriptor-types",
  "hashbrown 0.15.5",
 ]
@@ -2566,7 +2566,7 @@ version = "0.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "fdf242682df893b86f33a73828fb09ca4b2d3bb6cc95249707fc684d27484b91"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -2606,7 +2606,7 @@ dependencies = [
 
 [[package]]
 name = "harper-asciidoc"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2617,7 +2617,7 @@ dependencies = [
 
 [[package]]
 name = "harper-brill"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-pos-utils",
  "serde_json",
@@ -2625,7 +2625,7 @@ dependencies = [
 
 [[package]]
 name = "harper-cli"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "anyhow",
  "ariadne",
@@ -2655,7 +2655,7 @@ dependencies = [
 
 [[package]]
 name = "harper-comments"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-html",
@@ -2694,10 +2694,10 @@ dependencies = [
 
 [[package]]
 name = "harper-core"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "ammonia",
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "blanket",
  "boxcar",
  "cached",
@@ -2734,7 +2734,7 @@ dependencies = [
 
 [[package]]
 name = "harper-dictionary-wordlist"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "itertools 0.14.0",
@@ -2743,7 +2743,7 @@ dependencies = [
 
 [[package]]
 name = "harper-git-commit"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2754,7 +2754,7 @@ dependencies = [
 
 [[package]]
 name = "harper-html"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2765,7 +2765,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ink"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2776,7 +2776,7 @@ dependencies = [
 
 [[package]]
 name = "harper-jjdescription"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2787,7 +2787,7 @@ dependencies = [
 
 [[package]]
 name = "harper-literate-haskell"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-comments",
  "harper-core",
@@ -2798,7 +2798,7 @@ dependencies = [
 
 [[package]]
 name = "harper-ls"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "anyhow",
  "clap",
@@ -2830,7 +2830,7 @@ dependencies = [
 
 [[package]]
 name = "harper-pos-utils"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "burn",
  "burn-ndarray",
@@ -2848,7 +2848,7 @@ dependencies = [
 
 [[package]]
 name = "harper-python"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "harper-tree-sitter",
@@ -2859,7 +2859,7 @@ dependencies = [
 
 [[package]]
 name = "harper-stats"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "chrono",
  "harper-core",
@@ -2870,7 +2870,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tex"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "paste",
@@ -2878,7 +2878,7 @@ dependencies = [
 
 [[package]]
 name = "harper-thesaurus"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "hashbrown 0.16.1",
  "indexmap",
@@ -2889,7 +2889,7 @@ dependencies = [
 
 [[package]]
 name = "harper-tree-sitter"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "tree-sitter",
@@ -2908,7 +2908,7 @@ dependencies = [
 
 [[package]]
 name = "harper-typst"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "harper-core",
  "itertools 0.15.0",
@@ -2919,7 +2919,7 @@ dependencies = [
 
 [[package]]
 name = "harper-wasm"
-version = "2.11.0"
+version = "2.12.0"
 dependencies = [
  "console_error_panic_hook",
  "getrandom 0.3.4",
@@ -3274,9 +3274,9 @@ dependencies = [
 
 [[package]]
 name = "is-macro"
-version = "0.3.7"
+version = "0.3.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "1d57a3e447e24c22647738e4607f1df1e0ec6f72e16182c4cd199f647cdfb0e4"
+checksum = "8267aa6001e25494f3015f9663bbd88a18240c74483afa5f0934a1b3e4c388e9"
 dependencies = [
  "heck",
  "proc-macro2",
@@ -3641,7 +3641,7 @@ version = "0.32.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "00c15a6f673ff72ddcc22394663290f870fb224c1bfce55734a75c414150e605"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "block",
  "core-graphics-types",
  "foreign-types",
@@ -3691,7 +3691,7 @@ checksum = "916cbc7cb27db60be930a4e2da243cf4bc39569195f22fd8ee419cd31d5b662c"
 dependencies = [
  "arrayvec",
  "bit-set",
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "cfg-if",
  "cfg_aliases",
  "codespan-reporting",
@@ -3888,7 +3888,7 @@ version = "0.3.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2a180dd8642fa45cdb7dd721cd4c11b1cadd4929ce112ebd8b9f5803cc79d536"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -4171,7 +4171,7 @@ version = "0.13.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "e9f068eba8e7071c5f9511831b44f32c740d5adf574e990f946ddb53db2f314e"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "getopts",
  "memchr",
  "pulldown-cmark-escape",
@@ -4402,7 +4402,7 @@ version = "11.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "498cd0dc59d73224351ee52a95fee0f1a617a2eae0e7d9d720cc622c73a54186"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -4449,7 +4449,7 @@ version = "0.5.18"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ed2bf2547551a7053d6fdfafda3f938979645c44812fbfcda098faae3f1a362d"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -4666,7 +4666,7 @@ version = "1.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "b6fe4565b9518b83ef4f91bb47ce29620ca828bd32cb7e408f0062e9930ba190"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "errno",
  "libc",
  "linux-raw-sys",
@@ -4996,7 +4996,7 @@ version = "0.3.0+sdk-1.3.268.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eda41003dc44290527a59b13432d4a0379379fa074b70174882adfbdfd917844"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
 ]
 
 [[package]]
@@ -5152,7 +5152,7 @@ version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "01198a2debb237c62b6826ec7081082d951f46dbb64b0e8c7649a452230d1dfc"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "byteorder",
  "enum-as-inner",
  "libc",
@@ -5544,7 +5544,7 @@ version = "0.6.11"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "4cfcf7e2740e6fc6d4d688b4ef00650406bb94adf4731e43c096c3a19fe40840"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "bytes",
  "futures-util",
  "http",
@@ -6472,7 +6472,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "70b6ff82bbf6e9206828e1a3178e851f8c20f1c9028e74dd3a8090741ccd5798"
 dependencies = [
  "arrayvec",
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "cfg-if",
  "cfg_aliases",
  "document-features",
@@ -6503,7 +6503,7 @@ dependencies = [
  "arrayvec",
  "bit-set",
  "bit-vec",
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "cfg_aliases",
  "document-features",
  "hashbrown 0.15.5",
@@ -6562,7 +6562,7 @@ dependencies = [
  "arrayvec",
  "ash",
  "bit-set",
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "block",
  "bytemuck",
  "cfg-if",
@@ -6606,7 +6606,7 @@ version = "26.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "eca7a8d8af57c18f57d393601a1fb159ace8b2328f1b6b5f80893f7d672c9ae2"
 dependencies = [
- "bitflags 2.13.1",
+ "bitflags 2.13.2",
  "bytemuck",
  "js-sys",
  "log",

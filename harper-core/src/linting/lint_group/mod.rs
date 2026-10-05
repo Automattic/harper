@@ -61,6 +61,7 @@ use super::chock_full::ChockFull;
 use super::claim_to_fame::ClaimToFame;
 use super::close_tight_knit::CloseTightKnit;
 use super::code_in_write_in::CodeInWriteIn;
+use super::comfortable_with::ComfortableWith;
 use super::comma_fixes::CommaFixes;
 use super::complain_as_noun::ComplainAsNoun;
 use super::compound_nouns::CompoundNouns;
@@ -286,6 +287,7 @@ use super::the_my::TheMy;
 use super::the_point_for::ThePointFor;
 use super::the_proper_noun_possessive::TheProperNounPossessive;
 use super::the_the_to_that_the::TheTheToThatThe;
+use super::themself::Themself;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
 use super::there_own::ThereOwn;
@@ -322,6 +324,7 @@ use super::was_aloud::WasAloud;
 use super::way_too_adjective::WayTooAdjective;
 use super::web_scraping::WebScraping;
 use super::well_educated::WellEducated;
+use super::went_ahead_and_agreement::WentAheadAndAgreement;
 use super::were_where::WereWhere;
 use super::whereas::Whereas;
 use super::whom_subject_of_verb::WhomSubjectOfVerb;
@@ -373,7 +376,7 @@ pub struct LintGroup {
     /// mapping of `Chunk -> Lint` and only rerun the expr linters
     /// when a chunk changes.
     ///
-    /// Since the expr linter results also depend on the config, we hash it and pass it as part
+    /// Since the expr linter results also depend on the configuration, we hash it and pass it as part
     /// of the key.
     chunk_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
     sentence_expr_cache: LruCache<(u64, u64), BTreeMap<String, Vec<Lint>>>,
@@ -682,6 +685,7 @@ impl LintGroup {
         insert_expr_rule!(ClaimToFame);
         insert_expr_rule!(CloseTightKnit);
         insert_expr_rule!(CodeInWriteIn);
+        insert_expr_rule!(ComfortableWith);
         insert_struct_rule!(CommaFixes);
         insert_expr_rule!(ComplainAsNoun);
         insert_struct_rule!(CompoundNouns);
@@ -904,6 +908,7 @@ impl LintGroup {
         insert_expr_rule!(ThePointFor);
         insert_expr_rule!(TheProperNounPossessive);
         insert_expr_rule!(TheTheToThatThe);
+        insert_expr_rule!(Themself);
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
         insert_expr_rule!(Theres);
@@ -940,6 +945,7 @@ impl LintGroup {
         insert_expr_rule!(WasAloud);
         insert_expr_rule!(WayTooAdjective);
         insert_expr_rule!(WellEducated);
+        insert_expr_rule_with_dict!(WentAheadAndAgreement);
         insert_expr_rule!(Whereas);
         insert_expr_rule!(WhomSubjectOfVerb);
         insert_expr_rule!(WidelyAccepted);
@@ -961,7 +967,7 @@ impl LintGroup {
         // Uses Sentence rather than Chunk
         out.add("Damages", Damages::default());
 
-        // Uses Sentence rather than CHunk
+        // Uses Sentence rather than Chunk
         out.add("DissembleDisassemble", DissembleDisassemble::default());
 
         // Uses Sentence rather than Chunk
