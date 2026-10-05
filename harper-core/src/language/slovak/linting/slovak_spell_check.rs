@@ -63,12 +63,12 @@ impl<T: Dictionary> Linter for SlovakSpellCheck<T> {
                             .map(|s| s.iter().collect::<String>())
                             .collect();
                         format!(
-                            "Possible spelling error: \"{}\". Did you mean: {}?",
+                            "Slovo „{}“ môže byť napísané nesprávne. Mysleli ste: {}?",
                             word_str,
                             suggestions_str.join(", ")
                         )
                     } else {
-                        format!("Unknown word: \"{}\".", word_str)
+                        format!("Slovo „{}“ nie je v slovníku.", word_str)
                     };
 
                     lints.push(Lint {
