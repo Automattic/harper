@@ -282,10 +282,10 @@ export class HarperSettingTab extends PluginSettingTab {
 	}
 
 	async renderLintSettingsToId(searchQuery: string, id: string) {
-		const el = document.getElementById(id);
+		const el = this.containerEl.querySelector<HTMLElement>(`#${id}`);
 		if (!el) return;
 		const effective = await this.state?.getEffectiveLintConfig();
-		this.renderLintSettings(searchQuery, el, effective);
+		this.renderLintSettings(searchQuery, el, effective ?? {});
 	}
 
 	private renderLintSettings(
