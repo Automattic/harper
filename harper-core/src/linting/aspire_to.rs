@@ -3,7 +3,7 @@ use crate::{
     expr::{Expr, SequenceExpr},
     linting::{
         ExprLinter, LintKind, Suggestion,
-        expr_linter::{Sentence, at_start_of_sentence, followed_by_word, preceded_by_word},
+        expr_linter::{ContextIterators, Sentence, at_start_of_sentence},
     },
 };
 
@@ -47,22 +47,30 @@ impl ExprLinter for AspireTo {
             return None;
         }
 
-        if preceded_by_word(ctx, |wt| {
-            // .NET is unlintable and we can't use `.get_content()` on unlintable
-            if wt.kind.is_preposition() || wt.kind.is_unlintable() {
-                true
-            } else {
-                let chars = wt.span.get_content(src);
+        let ContextIterators {
+            mut before,
+            mut after,
+        } = ContextIterators::new(ctx)?;
 
-                chars == ['N', 'E', 'T']
-                    || chars.eq_any_ignore_ascii_case_str(&[
+        if before.prev_word().is_some_and(|w| {
+            // .NET is unlintable and we can't use `.get_content()` on unlintable
+            w.kind.is_preposition() || w.kind.is_unlintable() || {
+                let ch = w.get_ch(src);
+                ch == ['N', 'E', 'T']
+                    || ch.eq_any_ignore_ascii_case_str(&[
                         // verbs that indicate Aspire is a tool or product
                         "use", "used", "uses", "using",
                         // other words that precede Aspire when it's not a verb
                         "dotnet",
                     ])
             }
-        }) || followed_by_word(ctx, |wt| wt.span.get_content(src) == ['A', 'W', 'S'])
+        }) {
+            return None;
+        }
+
+        if after
+            .next_word()
+            .is_some_and(|w| w.get_ch(src) == ['A', 'W', 'S'])
         {
             return None;
         }
