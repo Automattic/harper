@@ -1,0 +1,11 @@
+# This file configures the deployment for our staging environment.
+name: staging-deployment
+version: 1.4.2
+replicas: 3
+tags:
+  - production-ready
+  - internal-only
+homepage: https://example.com/docs/staging
+description: >
+  This service handles user authentication and session management
+  for the platform.

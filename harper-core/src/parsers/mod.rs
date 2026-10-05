@@ -2,6 +2,7 @@
 
 mod collapse_identifiers;
 mod isolate_english;
+mod line_wise;
 mod markdown;
 mod mask;
 mod oops_all_headings;
@@ -11,6 +12,7 @@ mod plain_english;
 use blanket::blanket;
 pub use collapse_identifiers::CollapseIdentifiers;
 pub use isolate_english::IsolateEnglish;
+pub use line_wise::LineWise;
 pub use markdown::{Markdown, MarkdownOptions};
 pub use mask::Mask;
 pub use oops_all_headings::OopsAllHeadings;
