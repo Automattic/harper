@@ -1,8 +1,8 @@
 # Passive voice regression corpora
 
 `passive_voice_review.tsv` contains 101 verbatim excerpts from the real-world
-report in [PR #4502](https://github.com/Automattic/harper/pull/4502#issuecomment-5923253696).
-Fourteen additional excerpts come from the [follow-up review](https://github.com/Automattic/harper/pull/4502#issuecomment-5978988921).
+review reports: 87 originate in the first report in [PR #4502](https://github.com/Automattic/harper/pull/4502#issuecomment-5923253696).
+Fourteen further excerpts come from the [follow-up review](https://github.com/Automattic/harper/pull/4502#issuecomment-5978988921).
 The source filenames and line numbers come from the reviewer. Only the outer
 editorial ellipses were removed. Combined quotations and fragments missing the
 context needed for a reliable expectation were omitted. The test checks each
@@ -34,3 +34,7 @@ Subjectless technical excerpts retain the conservative state reading because
 they cannot provide a subject to disambiguate. Suppression is local: an explicit
 agent or a dated event brings the same participles back into scope, and other
 diagnostics in the same document remain eligible.
+
+For broader manual testing, [the README corpus tool](../../../tools/passive_voice_corpus.md)
+collects pinned GitHub READMEs and exports PassiveVoice-only JSON findings.
+Its unlabelled output is separate from these regression expectations.
