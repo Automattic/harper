@@ -41,7 +41,7 @@ impl ExprLinter for JealousOf {
 
         Some(Lint {
             span: from_token.span,
-            lint_kind: LintKind::Usage,
+            lint_kind: LintKind::Preposition,
             suggestions: vec![Suggestion::replace_with_match_case_str(
                 "of",
                 from_token.get_ch(source),
