@@ -111,7 +111,10 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
         {:else}
             <button
                 type="button"
-                class="flex cursor-pointer items-center gap-1 rounded-md bg-primary px-1.5 py-0.5 font-bold text-white transition-colors hover:bg-white hover:text-primary"
+                class="flex cursor-pointer items-center gap-1 rounded-md px-1.5 py-0.5 font-mono text-xs transition-colors
+                    {versionMismatch
+                        ? 'border border-primary text-primary hover:bg-primary hover:text-black'
+                        : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
                 onclick={openUpdateHelpPage}
                 title={versionMismatch
                     ? `Newer version available: ${latestVersion ?? ''}. Click to find out more.`

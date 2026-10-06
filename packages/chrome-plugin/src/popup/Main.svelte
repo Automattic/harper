@@ -138,7 +138,7 @@ function daysSince(date: Date): number {
                     <button
                         type="button"
                         aria-pressed={enabled}
-                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {enabled ? 'text-black' : 'text-gray-500 hover:text-white dark:text-slate-400'}"
+                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {enabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
                         onclick={() => { if (!enabled) toggleDomainEnabled(); }}
                     >
                         On
@@ -146,7 +146,7 @@ function daysSince(date: Date): number {
                     <button
                         type="button"
                         aria-pressed={!enabled}
-                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {!enabled ? 'text-black' : 'text-gray-500 hover:text-white dark:text-slate-400'}"
+                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {!enabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
                         onclick={() => { if (enabled) toggleDomainEnabled(); }}
                     >
                         Off
