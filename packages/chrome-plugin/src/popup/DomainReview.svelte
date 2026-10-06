@@ -3,10 +3,10 @@ import { Button, Input, Label } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let {
-	domain: initialDomain,
-	works: initialWorks,
-	feedback: initialFeedback,
-	onSubmit,
+    domain: initialDomain,
+    works: initialWorks,
+    feedback: initialFeedback,
+    onSubmit,
 }: { domain: string; works: boolean; feedback: string; onSubmit: () => void } = $props();
 
 // Local copies so the form can be edited without mutating props.
@@ -19,38 +19,38 @@ let successful = $state(false);
 let failed = $state(false);
 
 async function handleSubmit(event: SubmitEvent) {
-	event.preventDefault();
+    event.preventDefault();
 
-	submitting = true;
-	failed = false;
+    submitting = true;
+    failed = false;
 
-	const success = await ProtocolClient.postFormData(
-		'https://writewithharper.com/api/domain-reviews',
-		{
-			domain,
-			works: works ? 'yes' : 'no',
-			feedback,
-		},
-	);
+    const success = await ProtocolClient.postFormData(
+        'https://writewithharper.com/api/domain-reviews',
+        {
+            domain,
+            works: works ? 'yes' : 'no',
+            feedback,
+        },
+    );
 
-	submitting = false;
+    submitting = false;
 
-	if (success) {
-		successful = true;
-		setTimeout(onSubmit, 1200);
-	} else {
-		failed = true;
-	}
+    if (success) {
+        successful = true;
+        setTimeout(onSubmit, 1200);
+    } else {
+        failed = true;
+    }
 }
 
 const segment =
-	'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
+    'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
 </script>
 
 <div class="flex h-full flex-col justify-between px-5 py-3">
     <div>
-        <h1 class="text-lg font-semibold dark:text-white">Review this site</h1>
-        <p class="mt-0.5 text-xs text-gray-500 dark:text-slate-400">
+        <h1 class="text-lg font-bold text-gray-900 dark:text-white">Review this site</h1>
+        <p class="mt-0.5 text-xs text-gray-600 dark:text-slate-300">
             Only what you enter below is sent to the Harper maintainer.
         </p>
     </div>
@@ -59,17 +59,17 @@ const segment =
         <!-- Scrollable Inputs Area (Prevents pushing button out of bounds) -->
         <div class="space-y-2.5 overflow-y-auto pr-0.5 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
             <div class="space-y-1">
-                <Label class="text-xs dark:text-slate-200">Domain</Label>
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">Domain</Label>
                 <Input
                     name="domain"
                     bind:value={domain}
                     placeholder="example.com"
-                    class="w-full border-gray-200 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                    class="w-full border-gray-200 text-gray-900 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
             </div>
 
             <div class="space-y-1">
-                <Label class="text-xs dark:text-slate-200">Does Harper work well here?</Label>
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">Does Harper work well here?</Label>
                 <div class="rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
                     <div
                         class="relative flex w-full"
@@ -87,7 +87,7 @@ const segment =
                             type="button"
                             role="radio"
                             aria-checked={works}
-                            class="relative z-10 {segment} {works ? 'text-black' : 'text-gray-500 hover:text-white dark:text-slate-400'}"
+                            class="relative z-10 {segment} {works ? 'text-black' : 'text-gray-600 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white'}"
                             onclick={() => (works = true)}
                         >
                             Yes
@@ -96,7 +96,7 @@ const segment =
                             type="button"
                             role="radio"
                             aria-checked={!works}
-                            class="relative z-10 {segment} {!works ? 'text-black' : 'text-gray-500 hover:text-white dark:text-slate-400'}"
+                            class="relative z-10 {segment} {!works ? 'text-black' : 'text-gray-600 hover:text-gray-900 dark:text-slate-300 dark:hover:text-white'}"
                             onclick={() => (works = false)}
                         >
                             No
@@ -106,19 +106,19 @@ const segment =
             </div>
 
             <div class="space-y-1">
-                <Label class="text-xs dark:text-slate-200">{works ? 'Anything else? (optional)' : 'What went wrong?'}</Label>
+                <Label class="text-xs font-bold text-gray-900 dark:text-white">{works ? 'Anything else? (optional)' : 'What went wrong?'}</Label>
                 <textarea
                     name="feedback"
                     rows="4.5"
                     bind:value={feedback}
                     placeholder={works ? 'Optional notes' : 'e.g. underlines are misplaced, editor loses focus'}
-                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-500"
+                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
                 ></textarea>
             </div>
         </div>
 
         {#if failed}
-            <p class="py-1 text-xs text-red-400" role="alert">Couldn't send your review. Check your connection and try again.</p>
+            <p class="py-1 text-xs text-red-500 dark:text-red-400" role="alert">Couldn't send your review. Check your connection and try again.</p>
         {/if}
 
         <div class="pt-2">

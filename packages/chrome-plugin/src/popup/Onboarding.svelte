@@ -6,18 +6,18 @@ let { onConfirm }: { onConfirm: () => void } = $props();
 let isConfirming = $state(false);
 
 const steps = [
-    'Start typing in any large text box — emails, docs, blog posts, you name it.',
-    'Keep writing — Harper quietly highlights potential hiccups as you go.',
-    'Click a highlight to open focused, context-aware suggestions.',
+	'Start typing in any large text box — emails, docs, blog posts, you name it.',
+	'Keep writing — Harper quietly highlights potential hiccups as you go.',
+	'Click a highlight to open focused, context-aware suggestions.',
 ];
 
 function handleStart() {
-    if (isConfirming) return;
-    isConfirming = true;
-    // Allow button press state/animation to register briefly before transitioning views
-    setTimeout(() => {
-        onConfirm();
-    }, 180);
+	if (isConfirming) return;
+	isConfirming = true;
+	// Allow button press state/animation to register briefly before transitioning views
+	setTimeout(() => {
+		onConfirm();
+	}, 180);
 }
 </script>
 

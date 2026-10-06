@@ -2,8 +2,8 @@
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { Button, Link } from 'components';
 import { onMount } from 'svelte';
-import Fa from 'svelte-fa';
 import { fly } from 'svelte/transition';
+import Fa from 'svelte-fa';
 import logo from '/logo.png';
 import detectBrowserEngine from '../detectBrowserEngine';
 import { main, type PopupState } from '../PopupState';

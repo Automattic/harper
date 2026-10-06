@@ -241,7 +241,7 @@ function buildRenderNodes(
 				name,
 				title: `Choose an option for ${name}.`,
 				options: [
-					{ value: 'default', label: '⚙️ Default' },
+					{ value: 'default', label: 'Default' },
 					...setting.OneOfMany.names.map((value, index) => ({
 						value,
 						label: setting.OneOfMany.labels?.[index] ?? value,
@@ -300,97 +300,156 @@ $: {
 	void lintDescriptions;
 	renderedNodes = nodes ?? buildRenderNodes(settings, groupPath, forceShow, indent).nodes;
 }
+
+function idFor(prefix: string, key: string): string {
+	return `${prefix}-${key.replace(/[^a-zA-Z0-9]+/g, '-')}`;
+}
+
+const selectClass =
+	'h-9 w-36 shrink-0 rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-900 dark:!border-white/15 dark:!bg-white/5 dark:text-white !outline-none transition-colors focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary';
+const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
 </script>
 
-<div class="space-y-4">
-	{#each renderedNodes as node}
-		{#if node.kind === 'group'}
-				<div class="space-y-3">
-					<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
-						<div class="space-y-0.5">
-							<h3 class="text-sm">{node.label}</h3>
-							<p class="text-xs text-gray-600 dark:text-gray-400">{node.description}</p>
-							<p class="text-xs text-gray-600 dark:text-gray-400">{node.ruleCount} rules</p>
-						</div>
-						<div class="flex items-center gap-2">
-							<button
-								type="button"
-								class="cursor-pointer inline-flex items-center gap-2 justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-center text-gray-900 transition-colors hover:bg-gray-100 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:bg-gray-800 dark:text-gray-300 dark:border-gray-600 dark:hover:bg-gray-700 dark:focus:ring-gray-700"
-								title={node.expanded
-									? `Collapse the ${node.label} category`
-									: `Expand the ${node.label} category`}
-								onclick={() => handleToggleGroup(node.groupKey)}
-							>
-								{node.expanded ? 'Collapse' : 'Expand'}
-							</button>
-							<Select
-								size="md"
-								title={`Set all rules in the ${node.label} category to their default, on, or off state.`}
-								value={node.state === 'mixed' ? 'default' : node.state}
-								onchange={(event: Event) => updateGroup(node.ruleNames, (event.target as HTMLSelectElement).value)}
-							>
-								<option value="default">{node.state === 'mixed' ? '⚙️ Default (mixed)' : '⚙️ Default'}</option>
-								<option value="enable">✅ On</option>
-								<option value="disable">🚫 Off</option>
-							</Select>
-						</div>
-					</div>
+<div class="space-y-2">
+    {#if nodes === undefined}
+        <!-- Search result announcements (top-level instance only) -->
+        <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">
+            {#if searchQueryLower !== ''}
+                {renderedNodes.length === 0
+                    ? 'No categories match your search.'
+                    : `${renderedNodes.length} ${renderedNodes.length === 1 ? 'category matches' : 'categories match'} your search.`}
+            {/if}
+        </p>
+        {#if renderedNodes.length === 0}
+            <p class="py-8 text-center text-sm text-gray-600 dark:!text-[#d1d5db]">No rules match your search.</p>
+        {/if}
+    {/if}
 
-					{#if node.expanded}
-						<svelte:self
-							nodes={node.childNodes}
-							settings={[]}
-							{lintConfig}
-							{lintDescriptions}
-							{searchQueryLower}
-							{expandedGroups}
-							groupPath={[]}
-							indent={indent}
-							forceShow={forceShow}
-							{handleLintConfigChange}
-							{handleToggleGroup}
-						/>
-					{/if}
-				</div>
-		{:else if node.kind === 'bool'}
-				<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
-					<div class="space-y-0.5">
-						<h3 class="text-sm">{node.label}</h3>
-						<p class="text-xs">{@html node.description}</p>
-					</div>
-					<Select
-						size="md"
-						title={node.title}
-						value={node.value}
-						onchange={(event: Event) => {
-							const nextConfig: LintConfig = { ...lintConfig };
-							nextConfig[node.name] = configStringToValue(
-								(event.target as HTMLSelectElement).value,
-							);
-							handleLintConfigChange(nextConfig);
-						}}
-					>
-						<option value="default">⚙️ Default</option>
-						<option value="enable">✅ On</option>
-						<option value="disable">🚫 Off</option>
-					</Select>
-				</div>
-		{:else if node.kind === 'oneOfMany'}
-			<div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
-				<div class="space-y-0.5">
-					<h3 class="text-sm">{node.name}</h3>
-				</div>
-				<Select
-					size="md"
-					title={node.title}
-					value={node.value}
-					onchange={(event: Event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
-				>
-					{#each node.options as option}
-						<option value={option.value}>{option.label}</option>
-					{/each}
-				</Select>
-			</div>
-		{/if}
-	{/each}
+    {#each renderedNodes as node}
+        {#if node.kind === 'group'}
+            {@const labelId = idFor('grp-label', node.groupKey)}
+            {@const descId = idFor('grp-desc', node.groupKey)}
+            {@const panelId = idFor('grp-panel', node.groupKey)}
+            <!-- Top-level groups are cards; nested groups are flat rows -->
+            <div
+                class={node.indent === 0
+                    ? 'rounded-lg border border-gray-200 bg-gray-50/60 p-3 transition-colors motion-reduce:transition-none dark:!border-white/10 dark:!bg-white/[0.03] dark:hover:!bg-white/[0.05]'
+                    : dividerClass}
+            >
+                <div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
+                    <!-- Disclosure button: the whole title area toggles the group -->
+                    <button
+                        type="button"
+                        class="group flex min-w-0 flex-1 cursor-pointer items-start gap-2 rounded-md text-left !outline-none focus-visible:!ring-2 focus-visible:!ring-primary"
+                        aria-expanded={node.expanded}
+                        aria-controls={panelId}
+                        aria-labelledby={labelId}
+                        aria-describedby={descId}
+                        onclick={() => handleToggleGroup(node.groupKey)}
+                    >
+                        <svg
+                            class="mt-0.5 h-4 w-4 shrink-0 text-gray-400 transition-transform duration-150 motion-reduce:transition-none group-hover:text-primary dark:!text-[#d1d5db] dark:group-hover:!text-primary {node.expanded ? 'rotate-90' : ''}"
+                            viewBox="0 0 20 20"
+                            fill="currentColor"
+                            aria-hidden="true"
+                            focusable="false"
+                        >
+                            <path
+                                fill-rule="evenodd"
+                                d="M7.21 14.77a.75.75 0 0 1 .02-1.06L11.168 10 7.23 6.29a.75.75 0 1 1 1.04-1.08l4.5 4.25a.75.75 0 0 1 0 1.08l-4.5 4.25a.75.75 0 0 1-1.06-.02Z"
+                                clip-rule="evenodd"
+                            />
+                        </svg>
+                        <span class="min-w-0 space-y-0.5">
+                            <span class="flex items-center gap-2">
+                                <span id={labelId} class="text-sm font-bold text-gray-900 group-hover:text-primary dark:text-white">{node.label}</span>
+                                <span aria-hidden="true" class="rounded-full bg-gray-200 px-2 py-0.5 font-mono text-[11px] font-semibold text-gray-700 dark:!bg-primary/20 dark:!text-primary">{node.ruleCount}</span>
+                            </span>
+                            <span id={descId} class="block text-xs text-gray-600 dark:!text-[#d1d5db]">
+                                {node.description}<span class="sr-only"> ({node.ruleCount} rules)</span>
+                            </span>
+                        </span>
+                    </button>
+
+                    <Select
+                        size="sm"
+                        title={`Set all rules in the ${node.label} category to their default, on, or off state.`}
+                        aria-label={`${node.label}: set all ${node.ruleCount} rules`}
+                        value={node.state === 'mixed' ? 'default' : node.state}
+                        class={selectClass}
+                        onchange={(event: Event) => updateGroup(node.ruleNames, (event.target as HTMLSelectElement).value)}
+                    >
+                        <option value="default">{node.state === 'mixed' ? 'Default (Mixed)' : 'Default'}</option>
+                        <option value="enable">On</option>
+                        <option value="disable">Off</option>
+                    </Select>
+                </div>
+
+                {#if node.expanded}
+                    <div id={panelId} role="group" aria-labelledby={labelId} class="mt-3 space-y-3">
+                        <svelte:self
+                            nodes={node.childNodes}
+                            settings={[]}
+                            {lintConfig}
+                            {lintDescriptions}
+                            {searchQueryLower}
+                            {expandedGroups}
+                            groupPath={[]}
+                            indent={indent}
+                            forceShow={forceShow}
+                            {handleLintConfigChange}
+                            {handleToggleGroup}
+                        />
+                    </div>
+                {/if}
+            </div>
+        {:else if node.kind === 'bool'}
+            {@const labelId = idFor('rule-label', node.name)}
+            {@const descId = idFor('rule-desc', node.name)}
+            <div class="flex items-start justify-between gap-4 {dividerClass}" style={rowStyle(node.indent)}>
+                <div class="min-w-0 space-y-0.5">
+                    <h3 id={labelId} class="text-sm font-bold text-gray-900 dark:text-white">{node.label}</h3>
+                    <p id={descId} class="text-xs text-gray-600 dark:!text-[#d1d5db]">{@html node.description}</p>
+                </div>
+                <Select
+                    size="sm"
+                    title={node.title}
+                    aria-labelledby={labelId}
+                    aria-describedby={descId}
+                    value={node.value}
+                    class={selectClass}
+                    onchange={(event: Event) => {
+                        const nextConfig: LintConfig = { ...lintConfig };
+                        nextConfig[node.name] = configStringToValue(
+                            (event.target as HTMLSelectElement).value,
+                        );
+                        handleLintConfigChange(nextConfig);
+                    }}
+                >
+                    <option value="default">Default</option>
+                    <option value="enable">On</option>
+                    <option value="disable">Off</option>
+                </Select>
+            </div>
+        {:else if node.kind === 'oneOfMany'}
+            {@const labelId = idFor('choice-label', node.name)}
+            <div class="flex items-start justify-between gap-4 {dividerClass}" style={rowStyle(node.indent)}>
+                <div class="min-w-0 space-y-0.5">
+                    <h3 id={labelId} class="text-sm font-bold text-gray-900 dark:text-white">{node.name}</h3>
+                </div>
+                <Select
+                    size="sm"
+                    title={node.title}
+                    aria-labelledby={labelId}
+                    value={node.value}
+                    class={selectClass}
+                    onchange={(event: Event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
+                >
+                    {#each node.options as option}
+                        <option value={option.value}>{option.label}</option>
+                    {/each}
+                </Select>
+            </div>
+        {/if}
+    {/each}
 </div>

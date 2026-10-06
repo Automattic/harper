@@ -13,8 +13,8 @@ test.describe('review banner', () => {
 
 		await page.getByText("Let's start writing").click();
 
-		await expect(page.getByText('Harper is')).toBeVisible();
-		await expect(page.getByText('Would you mind giving us a review?')).toHaveCount(0);
+		await expect(page.getByRole('group', { name: 'Toggle Harper' })).toBeVisible();
+		await expect(page.getByText('Enjoying Harper? A quick review helps a lot.')).toHaveCount(0);
 	});
 
 	test('review request shown after 14 days', async ({ context, page }) => {
@@ -45,9 +45,9 @@ test.describe('review banner', () => {
 
 		await page.getByText("Let's start writing").click();
 
-		await expect(page.getByText('Harper is')).toBeVisible();
+		await expect(page.getByRole('group', { name: 'Toggle Harper' })).toBeVisible();
 		// WASM startup can delay replies; test.slow() does not extend assertion timeouts.
-		await expect(page.getByText('Would you mind giving us a review?')).toHaveCount(1, {
+		await expect(page.getByText('Enjoying Harper? A quick review helps a lot.')).toHaveCount(1, {
 			timeout: 30000,
 		});
 	});
