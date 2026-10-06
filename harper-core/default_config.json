@@ -5811,6 +5811,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SubjectAndObjectPronoun",
+								"state": true,
+								"label": "SubjectAndObjectPronoun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SuchShame",
 								"state": true,
 								"label": "Such Shame"
