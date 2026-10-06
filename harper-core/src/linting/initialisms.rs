@@ -36,6 +36,8 @@ pub fn lint_group() -> LintGroup {
         "LetMeKnow"              => ("lmk", &["let me know"]),
         "NeverMind"              => ("nvm", &["never mind"]),
         "OhMyGod"                => ("omg", &["oh my god"]),
+        "OnTheOtherHand"         => ("otoh", &["on the other hand"]),
+        "OutOfTheBox"            => ("ootb", &["out of the box"]),
         "PleaseTakeALook"        => ("ptal", &["please take a look"]),
         "Really"                 => ("rly", &["really"]),
         "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
@@ -248,6 +250,24 @@ mod tests {
             "AFAICT the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
             lint_group(),
             "As far as i can tell the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+        );
+    }
+
+    #[test]
+    fn corrects_otoh() {
+        assert_suggestion_result(
+            "\"Actual consequences\", OTOH, most directly relates to the camp(s) focused on \"embodiment\"",
+            lint_group(),
+            "\"Actual consequences\", On the other hand, most directly relates to the camp(s) focused on \"embodiment\"",
+        );
+    }
+
+    #[test]
+    fn corrects_ootb() {
+        assert_suggestion_result(
+            "The Oracle Linux OpenBLAS build isnt detected ootb, and it doesn't perform well compared to x86 for some reason.",
+            lint_group(),
+            "The Oracle Linux OpenBLAS build isnt detected ootb, and it doesn't perform well compared to x86 for some reason.",
         );
     }
 }

@@ -71,6 +71,13 @@ export function getDraftEditor(page: Page): Locator {
 
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
+	// Seed form controls in one update so popup tests cannot click lints for partial words.
+	// Rich editors still need their keyboard-driven editing behavior.
+	if (await isFormElement(editorEl)) {
+		await editorEl.fill(text);
+		return;
+	}
+
 	await editorEl.selectText();
 	await editorEl.press('Backspace');
 
@@ -83,6 +90,11 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 			await editorEl.press(breakKey);
 		}
 	}
+}
+
+/** Locate replacement rows (including explicit empty states) inside Harper's suggestion popup. */
+export function getHarperSuggestionRows(page: Page): Locator {
+	return page.locator('.harper-container').getByRole('menuitem');
 }
 
 /** Locate the Harper highlights on a page. */
@@ -244,7 +256,7 @@ export async function testBasicSuggestion(
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Replace with "a"').click();
+		await page.getByTitle('Click to replace "an" with "a"').click();
 
 		await page.waitForTimeout(3000);
 
@@ -287,8 +299,8 @@ export async function testCanIgnoreSuggestion(
 		const testText = 'This is a mistaek.';
 		await replaceEditorContent(editor, testText);
 
-		// Ensure the test text produces only the spelling lint we intend to ignore.
-		await expect(getHarperHighlights(page)).toHaveCount(1);
+		// test.slow() does not extend assertion timeouts during linter startup.
+		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 
 		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
@@ -381,7 +393,7 @@ export async function testMultipleSuggestionsAndUndo(
 		await page.waitForTimeout(4000);
 		await expect(getHarperHighlights(page)).toHaveCount(1);
 		expect(await clickHarperHighlight(page)).toBe(true);
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 		await assertEditorContains(editor, 'test here');
 
@@ -400,7 +412,7 @@ export async function testMultipleSuggestionsAndUndo(
 			await editor.press('ArrowLeft');
 		}
 
-		await page.getByTitle('Replace with "test"').click();
+		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await page.waitForTimeout(5000);
 
 		// Verify only second "tset" was corrected

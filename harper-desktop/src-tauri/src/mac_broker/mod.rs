@@ -4,13 +4,15 @@ mod accessibility_text;
 mod app_catalog;
 mod app_icons;
 mod core_foundation_utilities;
+mod focused_target;
 mod focused_window_pid;
 mod window_stability;
 
 use accessibility::TreeWalker;
 use accessibility::ui_element::AXUIElement;
 use accessibility_sys::{
-    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXTrustedCheckOptionPrompt,
+    AXIsProcessTrusted, AXIsProcessTrustedWithOptions, kAXFocusedUIElementAttribute,
+    kAXTrustedCheckOptionPrompt,
 };
 use accessibility_sys::{error_string, pid_t};
 use core_foundation::base::TCFType;
@@ -21,16 +23,16 @@ use core_graphics::event::CGEvent;
 use core_graphics::event_source::{CGEventSource, CGEventSourceStateID};
 use harper_core::linting::Lint;
 use objc2_app_kit::NSRunningApplication;
+use send_wrapper::SendWrapper;
 use std::process::Command;
 use std::time::Duration;
 use std::{
     collections::{BTreeMap, HashMap},
     error::Error as StdError,
-    sync::{Arc, Mutex},
+    sync::Mutex,
     time::Instant,
 };
 
-use crate::config::Integration;
 use crate::os_broker::{AccessibilityPermissionStatus, AppSearchResult, OsBroker};
 use crate::rect::ActionableLint;
 
@@ -42,57 +44,64 @@ use self::accessibility_activation::{
     set_enhanced_user_interface_preserving_previous, verify_accessibility_activation,
 };
 use self::accessibility_text::RectCollector;
+use self::core_foundation_utilities::ax_element_attribute;
+use self::focused_target::FocusedTarget;
 use self::window_stability::{
     WINDOW_MOVEMENT_SETTLE_DURATION, WindowMovementState, frontmost_window_frame_for_pid,
     settled_window_state, window_frame_changed,
 };
 
+/// Must match `identifier` in `tauri.conf.json`.
+const BUNDLE_ID: &str = "com.elijahpotter.harper-desktop";
+
 /// macOS implementation of the OS data the highlighter needs.
 ///
 /// `MacBroker` owns focus memory because clicking the overlay can make the highlighter process the
-/// focused application. Remembering the last non-highlighter PID lets accessibility reads continue
-/// targeting the app the user was reviewing.
+/// focused application. Remembering the last non-highlighter PID and exact UI element lets
+/// accessibility reads continue targeting the field the user was reviewing.
 pub struct MacBroker {
-    /// The PID of the most recently focused PID, along with the time the measurement was taken.
-    last_focused: Option<(pid_t, Instant)>,
-    integrations: Arc<Mutex<Vec<Integration>>>,
+    /// Tauri requires a Send broker; retained AX handles must stay on their capturing thread.
+    /// The wrapper enforces that restriction for access and drop. Only the highlighter populates it.
+    last_focused: Option<SendWrapper<FocusedTarget>>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
 }
 
 impl MacBroker {
-    pub fn new(integrations: Arc<Mutex<Vec<Integration>>>) -> Self {
+    /// Creates a broker with an app policy that may register newly encountered bundle IDs.
+    /// The policy is called before reading the app's text and may change as settings are refreshed.
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
         Self {
             last_focused: None,
-            integrations,
+            is_integration_enabled: Box::new(is_integration_enabled),
             application_icon_cache: Mutex::new(HashMap::new()),
             window_movement: None,
             accessibility_activation: None,
         }
     }
 
-    /// The process ID of the currently focused window.
-    /// In the interest of performance, the returned value may be slightly stale.
-    fn target_pid(&mut self) -> Result<Option<pid_t>, Box<dyn StdError>> {
-        if let Some((last_focused, measurement_time)) = self.last_focused
-            && Instant::now().duration_since(measurement_time).as_secs() < 3
-        {
-            return Ok(Some(last_focused));
+    /// Refreshes the exact target during external focus and preserves it during overlay focus.
+    ///
+    /// The element lookup runs on every external-focus read, even within the same application.
+    /// A failed lookup clears the remembered element; it must not silently retain a different field.
+    fn resolve_target(
+        &mut self,
+        focused_pid: pid_t,
+        read_element: impl FnOnce(pid_t) -> Option<AXUIElement>,
+    ) -> Option<FocusedTarget> {
+        if focused_pid != std::process::id() as pid_t {
+            self.last_focused = Some(SendWrapper::new(FocusedTarget {
+                pid: focused_pid,
+                element: read_element(focused_pid),
+            }));
         }
 
-        let focused_pid = focused_window_pid::focused_window_pid()?;
-        let current_pid = std::process::id() as pid_t;
-
-        if focused_pid == current_pid {
-            Ok(self.last_focused.map(|v| v.0))
-        } else {
-            self.last_focused = Some((focused_pid, Instant::now()));
-            Ok(Some(focused_pid))
-        }
+        self.last_focused.as_deref().cloned()
     }
 
-    /// Check if the fronmost window for a given process is currently moving.
+    /// Check if the frontmost window for a given process is currently moving.
     fn window_is_moving(&mut self, pid: pid_t) -> bool {
         let Some(frame) = frontmost_window_frame_for_pid(pid) else {
             self.window_movement = None;
@@ -273,12 +282,6 @@ impl MacBroker {
     }
 }
 
-impl Default for MacBroker {
-    fn default() -> Self {
-        Self::new(Arc::new(Mutex::new(Integration::curated_integrations())))
-    }
-}
-
 impl Drop for MacBroker {
     fn drop(&mut self) {
         self.reset_accessibility_activation();
@@ -288,14 +291,13 @@ impl Drop for MacBroker {
 pub(super) type LintCallback<'a> = dyn FnMut(&str) -> BTreeMap<String, Vec<Lint>> + 'a;
 
 impl OsBroker for MacBroker {
+    fn is_harper_desktop(app_id: &str) -> bool {
+        app_id == BUNDLE_ID
+    }
+
     fn get_boxes(&mut self, lint_text: &mut LintCallback) -> Option<Vec<ActionableLint>> {
-        let pid = match self.target_pid() {
-            Ok(Some(pid)) => pid,
-            Ok(None) => {
-                self.window_movement = None;
-                self.reset_accessibility_activation();
-                return Some(Vec::new());
-            }
+        let focused_pid = match focused_window_pid::focused_window_pid() {
+            Ok(pid) => pid,
             Err(err) => {
                 self.window_movement = None;
                 self.reset_accessibility_activation();
@@ -303,6 +305,14 @@ impl OsBroker for MacBroker {
                 return None;
             }
         };
+        let Some(target) = self.resolve_target(focused_pid, |pid| {
+            ax_element_attribute(&AXUIElement::application(pid), kAXFocusedUIElementAttribute).ok()
+        }) else {
+            self.window_movement = None;
+            self.reset_accessibility_activation();
+            return Some(Vec::new());
+        };
+        let pid = target.pid;
 
         let bundle_identifier = match bundle_identifier_for_pid(pid) {
             Ok(Some(bundle_identifier)) => bundle_identifier,
@@ -319,17 +329,7 @@ impl OsBroker for MacBroker {
             }
         };
 
-        let integration_enabled = match self.integrations.lock() {
-            Ok(integrations) => {
-                Integration::is_integration_enabled_in(&integrations, &bundle_identifier)
-            }
-            Err(error) => {
-                eprintln!("Unable to read integrations: {error}");
-                return None;
-            }
-        };
-
-        if !integration_enabled {
+        if !(self.is_integration_enabled)(&bundle_identifier) {
             self.window_movement = None;
             self.reset_accessibility_activation();
             return Some(Vec::new());
@@ -345,10 +345,15 @@ impl OsBroker for MacBroker {
             return None;
         }
 
+        let Some(focused) = target.traversal_root(focused_pid == std::process::id() as pid_t)
+        else {
+            return Some(Vec::new());
+        };
+
         let walker = TreeWalker::new();
         let collector = RectCollector::new(lint_text);
 
-        walker.walk(&el, &collector);
+        walker.walk(&focused, &collector);
 
         collector.unwrap_rects()
     }

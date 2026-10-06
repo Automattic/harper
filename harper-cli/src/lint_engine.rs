@@ -45,6 +45,7 @@ pub fn lint_one_input(
         color: _,
         format: _,
         quiet: _,
+        no_parallel: _,
     } = lint_options;
 
     let mut lint_kinds: HashMap<LintKind, usize> = HashMap::new();

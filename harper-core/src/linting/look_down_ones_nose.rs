@@ -11,11 +11,11 @@ pub struct LookDownOnesNose {
 impl Default for LookDownOnesNose {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["look", "looked", "looking", "looks"])
+            expr: SequenceExpr::word_set(["look", "looked", "looking", "looks"])
                 .t_ws()
                 .then_possessive_determiner()
                 .t_ws()
-                .then_word_set(&["nose", "noses"])
+                .then_word_set(["nose", "noses"])
                 .t_ws()
                 .t_aco("down"),
         }

@@ -134,7 +134,7 @@ pub struct DissembleDisassemble {
 impl Default for DissembleDisassemble {
     fn default() -> Self {
         Self {
-            expr: WordSet::new(&[
+            expr: WordSet::new([
                 "dissemble",
                 "dissembled",
                 "dissembles",

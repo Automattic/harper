@@ -418,4 +418,22 @@ mod tests {
     fn browser_extension_not_flagged() {
         assert_lint_count("browser extension", test_linter(), 0);
     }
+
+    #[test]
+    fn fix_baton_rogue() {
+        assert_suggestion_result(
+            "The programs know you dont care about the bronx or baton rouge, you just want a spot",
+            test_linter(),
+            "The programs know you dont care about the bronx or Baton Rouge, you just want a spot",
+        );
+    }
+
+    #[test]
+    fn fix_khmer_rouge() {
+        assert_suggestion_result(
+            "I read that the khmer rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+            test_linter(),
+            "I read that the Khmer Rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+        );
+    }
 }

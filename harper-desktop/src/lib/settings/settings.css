@@ -1,3 +1,11 @@
+@font-face {
+	font-family: Domine;
+	src: url("/fonts/domine/Domine.ttf") format("truetype");
+	font-style: normal;
+	font-weight: 400 700;
+	font-display: swap;
+}
+
 body.settings-view {
 	background: #fbfaf7;
 }
@@ -24,8 +32,7 @@ body.settings-view {
 	overflow: hidden;
 	background: var(--settings-bg-window);
 	color: var(--settings-ink);
-	font-family:
-		Inter, -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", sans-serif;
+	font-family: Domine, serif;
 	font-size: 13px;
 	-webkit-font-smoothing: antialiased;
 }
@@ -71,6 +78,46 @@ select {
 
 button {
 	cursor: default;
+}
+
+.onboarding-shell {
+	--marketing-amber: #b06a1b;
+	--marketing-amber-soft: #d98b3a;
+	--marketing-ink: #1c1a16;
+	--marketing-ink-2: #4a463e;
+	font-family: Domine, serif;
+	overflow-wrap: anywhere;
+}
+
+.onboarding-shell main {
+	place-items: safe center;
+}
+
+.onboarding-shell main > div {
+	width: 100%;
+}
+
+.onboarding-shell p {
+	white-space: pre-line;
+	color: var(--marketing-ink-2);
+}
+
+.onboarding-actions {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 12px;
+	margin-top: 24px;
+}
+
+.onboarding-actions [role="alert"] {
+	color: #b42318;
+}
+
+.onboarding-app {
+	display: flex;
+	align-items: center;
+	gap: 12px;
 }
 
 .grow {

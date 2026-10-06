@@ -11,11 +11,11 @@ pub struct JumpTheGun {
 impl Default for JumpTheGun {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["jump", "jumped", "jumping", "jumps"])
+            expr: SequenceExpr::word_set(["jump", "jumped", "jumping", "jumps"])
                 .t_ws()
-                .t_set(&["a", "an", "the"])
+                .t_set(["a", "an", "the"])
                 .t_ws()
-                .t_set(&["gun", "guns"])
+                .t_set(["gun", "guns"])
                 .but_not(
                     SequenceExpr::anything()
                         .t_any()

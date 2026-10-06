@@ -26,7 +26,7 @@ impl Default for OxfordComma {
             .then_one_or_more(item_chunk)
             .then(item.clone())
             .then_whitespace()
-            .then_word_set(&["and", "or", "nor"])
+            .then_word_set(["and", "or", "nor"])
             .then_whitespace()
             .then(item.clone());
 
@@ -218,6 +218,24 @@ mod tests {
             "One, two and three. But four, five, and six.",
             OxfordComma::default(),
             "One, two, and three. But four, five, and six.",
+        );
+    }
+
+    #[test]
+    fn allow_eg_conjunction() {
+        assert_lint_count(
+            "Memory is used for different tasks in embedded systems, e.g., storage or communication with sensors and actuators.",
+            OxfordComma::default(),
+            0,
+        );
+    }
+
+    #[test]
+    fn eg_with_three_items_requires_oxford_comma() {
+        assert_suggestion_result(
+            "Tasks in embedded systems, e.g., storage, sensing or communication.",
+            OxfordComma::default(),
+            "Tasks in embedded systems, e.g., storage, sensing, or communication.",
         );
     }
 }

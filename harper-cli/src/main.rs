@@ -35,6 +35,7 @@ mod lint_engine;
 mod lint_reporter;
 
 use crate::lint::{OutputFormat, lint};
+
 use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
@@ -94,6 +95,9 @@ enum Args {
         /// Suppress informational status messages and only output actual lint errors.
         #[arg(long)]
         quiet: bool,
+        /// Suppress parallel processing of files (for issue #4513).
+        #[arg(long)]
+        no_parallel: bool,
     },
     /// Parse a provided document and print the detected symbols.
     Parse {
@@ -260,6 +264,7 @@ fn main() -> anyhow::Result<()> {
             weirpacks,
             format,
             quiet,
+            no_parallel,
         } => {
             let dialect = parse_dialect(&dialect_str)
                 .map_err(|e| anyhow!("Invalid dialect '{}': {}", dialect_str, e))?;
@@ -278,6 +283,7 @@ fn main() -> anyhow::Result<()> {
                     color,
                     format,
                     quiet,
+                    no_parallel,
                 },
                 user_dict_path,
                 // TODO workspace_dict_path?

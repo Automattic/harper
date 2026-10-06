@@ -12,14 +12,14 @@ pub struct LittleKnown {
 impl Default for LittleKnown {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["it's", "its"])
+            expr: SequenceExpr::word_set(["it's", "its"])
                 .t_ws()
                 .then_optional(SequenceExpr::aco("a").t_ws())
                 .t_aco("little")
                 .t_ws_h()
                 .t_aco("known")
                 .t_ws()
-                .t_set(&["fact", "that"]),
+                .t_set(["fact", "that"]),
         }
     }
 }

@@ -14,7 +14,7 @@ pub struct ExpandMemoryShorthands {
 
 impl ExpandMemoryShorthands {
     pub fn new() -> Self {
-        let hotwords = Arc::new(WordSet::new(&[
+        let hotwords = Arc::new(WordSet::new([
             "B", "kB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB", "RB", "QB", "KiB", "MiB", "GiB",
             "TiB", "PiB", "EiB", "ZiB", "YiB", "RiB", "QiB",
         ]));

@@ -94,6 +94,7 @@ pub struct LintOptions {
     pub color: bool,
     pub format: OutputFormat,
     pub quiet: bool,
+    pub no_parallel: bool,
 }
 
 pub enum ReportStyle {
@@ -184,6 +185,7 @@ pub fn lint(
         ref mut only,
         dialect,
         ref weirpack_inputs,
+        no_parallel,
         ..
     } = lint_options;
 
@@ -306,7 +308,7 @@ pub fn lint(
             )
         };
 
-        if input_jobs.len() > 1 {
+        if !no_parallel && input_jobs.len() > 1 {
             input_jobs.into_par_iter().map(run_job).collect::<Vec<_>>()
         } else {
             input_jobs.into_iter().map(run_job).collect::<Vec<_>>()

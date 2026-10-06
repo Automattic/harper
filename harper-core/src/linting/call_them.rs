@@ -16,7 +16,7 @@ impl Default for CallThem {
     fn default() -> Self {
         let mut map = ExprMap::default();
 
-        let post_exception = Lrc::new(SequenceExpr::default().t_ws().then_word_set(&["if", "it"]));
+        let post_exception = Lrc::new(SequenceExpr::default().t_ws().then_word_set(["if", "it"]));
 
         map.insert(
             SequenceExpr::with(DerivedFrom::new_from_str("call"))

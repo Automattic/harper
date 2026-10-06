@@ -29,7 +29,7 @@ pub struct Months {
 impl Default for Months {
     fn default() -> Self {
         // Define ambiguous months (those that are also common words)
-        let ambiguous_months = Lrc::new(WordSet::new(&["march", "may", "august"]));
+        let ambiguous_months = Lrc::new(WordSet::new(["march", "may", "august"]));
 
         // The unambiguous months
         let only_months: Vec<&str> = ALL_MONTHS
@@ -38,9 +38,9 @@ impl Default for Months {
             .copied()
             .collect();
 
-        let only_months = WordSet::new(&only_months);
+        let only_months = WordSet::new(only_months);
 
-        let before_month_sense_only = WordSet::new(&[
+        let before_month_sense_only = WordSet::new([
             // Determiners.
             // These words won't disambiguate months: "each", "this", "that"
             // "each may do as he likes"

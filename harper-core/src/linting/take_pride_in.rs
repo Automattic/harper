@@ -11,7 +11,7 @@ pub struct TakePrideIn {
 impl Default for TakePrideIn {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["take", "taken", "takes", "taking", "took"])
+            expr: SequenceExpr::word_set(["take", "taken", "takes", "taking", "took"])
                 .t_ws()
                 .then_word_seq(&["pride", "of"])
                 .but_not(
