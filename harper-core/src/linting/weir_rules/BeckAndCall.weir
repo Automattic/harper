@@ -1,7 +1,9 @@
-expr main (back and call)
+expr main [(back and call), (beckon call)]
 
 let message "Did you mean `beck and call`?"
-let description "Fixes `back and call` to `beck and call`."
+let description "Fixes eggcorns of `beck and call`."
 let kind "Eggcorn"
 let becomes "beck and call"
 
+test "Then lead them to Strahd and let them kill him with the Dark Powers at their back and call." "Then lead them to Strahd and let them kill him with the Dark Powers at their beck and call."
+test "I'm not saying I'm at your beckon call, but I try to make myself very available." "I'm not saying I'm at your beck and call, but I try to make myself very available."
