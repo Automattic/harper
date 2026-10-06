@@ -3,16 +3,20 @@ import type { LintConfig } from 'harper.js';
 import { merge } from 'lodash-es';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useLinter } from './LinterProvider';
+import type { PreferencesActions, PreferencesSelectors } from './preferencesStoreTypes';
 
 const KEY = 'lintConfig';
 
 export default function useLintConfig(): [LintConfig, (newState: LintConfig) => void] {
 	const defaultConfig = useDefaultLintConfig();
-	const lintConfig = useSelect((select) => select('core/preferences').get('harper-wp', KEY), []);
+	const lintConfig = useSelect(
+		(select) => (select('core/preferences') as PreferencesSelectors).get('harper-wp', KEY),
+		[],
+	);
 
-	const { set } = useDispatch('core/preferences');
+	const { set } = useDispatch('core/preferences') as PreferencesActions;
 
-	const setConfig = useCallback((newValue) => {
+	const setConfig = useCallback((newValue: LintConfig) => {
 		set('harper-wp', KEY, newValue);
 	}, []);
 

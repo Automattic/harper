@@ -1,15 +1,19 @@
 import { useDispatch, useSelect } from '@wordpress/data';
 import { Dialect } from 'harper.js';
 import { useCallback, useMemo } from 'react';
+import type { PreferencesActions, PreferencesSelectors } from './preferencesStoreTypes';
 
 const KEY = 'dialect';
 
 export default function useDialect(): [Dialect, (newState: Dialect) => void] {
-	const dialect = useSelect((select) => select('core/preferences').get('harper-wp', KEY), []);
+	const dialect = useSelect(
+		(select) => (select('core/preferences') as PreferencesSelectors).get('harper-wp', KEY),
+		[],
+	);
 
-	const { set } = useDispatch('core/preferences');
+	const { set } = useDispatch('core/preferences') as PreferencesActions;
 
-	const setConfig = useCallback((newValue) => {
+	const setConfig = useCallback((newValue: Dialect) => {
 		set('harper-wp', KEY, newValue);
 	}, []);
 

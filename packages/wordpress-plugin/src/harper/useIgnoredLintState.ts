@@ -2,16 +2,17 @@ import { useDispatch, useSelect } from '@wordpress/data';
 import type { Lint } from 'harper.js';
 import { useCallback } from 'react';
 import { useLinter } from './LinterProvider';
+import type { PreferencesActions, PreferencesSelectors } from './preferencesStoreTypes';
 
 const KEY = 'ignoredLints';
 
 export default function useIgnoredLintState(): [string | undefined, (newState: string) => void] {
 	const ignoredLintState = useSelect(
-		(select) => select('core/preferences').get('harper-wp', KEY),
+		(select) => (select('core/preferences') as PreferencesSelectors).get('harper-wp', KEY),
 		[],
 	);
 
-	const { set } = useDispatch('core/preferences');
+	const { set } = useDispatch('core/preferences') as PreferencesActions;
 
 	const updateState = useCallback((newValue: string) => set('harper-wp', KEY, newValue), [set]);
 
