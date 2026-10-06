@@ -574,6 +574,35 @@ pub fn forms_for_readings(readings: &[DeterminerReading], wanted: CaseSet) -> Ve
     out
 }
 
+/// The forms of the same paradigm as `readings` that carry `gender` in one of
+/// the cases the original readings had.
+///
+/// This turns a determiner that disagrees with its noun in gender into a
+/// correction: *die Hund* is feminine nominative or accusative, *Hund* is
+/// masculine, so the form is *der* (nominative) or *den* (accusative) — and
+/// only those two, because case and paradigm have to survive the change.
+pub fn forms_with_gender(readings: &[DeterminerReading], gender: Gender) -> Vec<&'static str> {
+    let mut out: Vec<&'static str> = Vec::new();
+    for (candidate, candidate_readings) in FORMS.iter() {
+        if PRONOUN_ONLY.contains(&candidate.as_str()) {
+            continue;
+        }
+        let matches_source = candidate_readings.iter().any(|candidate_reading| {
+            candidate_reading.gender == Some(gender)
+                && readings.iter().any(|reading| {
+                    reading.paradigm == candidate_reading.paradigm
+                        && reading.case == candidate_reading.case
+                })
+        });
+        if matches_source && !out.contains(&candidate.as_str()) {
+            out.push(candidate.as_str());
+        }
+    }
+
+    out.sort_unstable();
+    out
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;

@@ -14158,7 +14158,7 @@ lock/*~NhpuvwY78 #frequency: 8
 los/~~RJOQRSTUWqh780 #frequency: 8
 läster/~hpuvw78 #frequency: 8
 mager/~~JOQRSTUWqh #frequency: 8
-mark/~NhpuvwY0X78 #frequency: 8
+mark/~NhpuvwY0X78FZ #frequency: 8
 massiv/~~NJOQRSTUWq0A #frequency: 8
 mau/~~JOQRSTqh #frequency: 8
 misch/~JqOQRST78x #adjective root, frequency: 8
@@ -14704,7 +14704,7 @@ machtvoll/~~JOQRSTUWqh #frequency: 7
 mahl/~NhpuvwY0H78 #frequency: 7
 makel/~NhpuvwEH #frequency: 7
 mal/~NhpuvwYMZ #frequency: 7
-mangel/~NhpuvwEHM #frequency: 7
+mangel/~NhpuvwEHMF #frequency: 7
 manipulativ/~~JOQRSTUWqh #frequency: 7
 mannigfach/~~JOQRSTUWqh #frequency: 7
 matriarchal/~~JOQRSTqh #frequency: 7
@@ -15654,7 +15654,7 @@ ballaststofffrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 ballnah/~NhYE #frequency: 6
 baltendeutsch/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 bananengelb/~NhYE #frequency: 6
-band/~~NhYr0sHXZ # frequency: 6; +adverb reading (was noun-only)
+band/~~NhYr0sHXZMF # frequency: 6; +adverb reading (was noun-only)
 bankfremd/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 banklebenslang/~NhYE #frequency: 6
 bankrott/~NhYOQRST0 #frequency: 6
@@ -29012,7 +29012,7 @@ hehrem/~~Nh
 hehren/~~J # auto-added
 hehrer/~~Mh
 hehres/~~Nh
-heide/~~NhEKL
+heide/~~NhEKLMF
 heiden/~~Nh # auto-added
 heidin/~~Nh
 heikel/~~hUWJOQRST # retag: adjective, was noun (igerman98 SFX A)
@@ -29715,7 +29715,7 @@ hustend/~~NhYJOQRST # +adjective reading (was noun-only)
 hustet/~~hG # not a noun: no capitalized form
 husum/~~ZahH # preposition um #  auto-added
 husums/~~Nh
-hut/~~Nh0HA
+hut/~~Nh0HAMF
 hutes/~~Nh
 hutlos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 huts/~~Nh
@@ -30446,7 +30446,7 @@ joggers/~~Nh
 jogging/~~NhHA
 joggt/~~hG # not a noun: no capitalized form
 joggtet/~~hG # not a noun: no capitalized form
-joghurt/~~NhHA
+joghurt/~~NhHAMFZ
 jogurt/~~NXhHY
 jogurts/~~Nh
 johl/*~~VcejGdfi # REPLACES johlen
@@ -30979,7 +30979,7 @@ keiner/~~h4
 keines/~~h4
 keinmal/~~JOQRSTqh # retag: adjective (was ~~Nh)
 keins/~~h # not a noun: no capitalized form
-keks/~~NXh0Y
+keks/~~NXh0YMZ
 keksen/~~Nh # auto-added
 kekses/~~Nh
 kelch/~~NXhY0HMZ
@@ -31102,7 +31102,7 @@ kid/~~NhHA
 kids/~~Nh
 kiebig/~~RJOQRSTqh
 kiebitz/~~NXh0Y
-kiefer/~~MhEH
+kiefer/~~MhEHF
 kiefern/~~NhYOQRST
 kiefers/~~Nh
 kieks/*~~Vej # REPLACES kieksen
@@ -32151,7 +32151,7 @@ kumpel/~~NhEH
 kumpeln/~~Nh # auto-added
 kumpels/~~Nh
 kund/~~h # not a noun: no capitalized form
-kunde/~~NhEKL
+kunde/~~NhEKLMF
 kunden/~~Nh # auto-added
 kundgab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 kundig/~~JOQRSTqh9
@@ -32890,7 +32890,7 @@ leit/~~NXh78
 leiten/~~Vdifj78ecG # auto-added
 leitend/~~NhYJOQRST # +adjective reading (was noun-only)
 leitens/~~Nh
-leiter/~~MhEKLH
+leiter/~~MhEKLHF
 leitern/~~Nh
 leiters/~~Nh
 leitest/~~hV
@@ -33147,7 +33147,7 @@ litanei/~~NhY
 litauen/~~NhH # auto-added
 litauer/~~MhEKLH
 litchi/~~Nh
-liter/~~MhEH
+liter/~~MhEHZ
 literal/~~NXhHY
 literat/~~NhYKL
 litern/~~Nh
@@ -34139,7 +34139,7 @@ metall/~~NXhHY
 metalls/~~Nh
 meteor/~~NXhHY
 meteors/~~Nh
-meter/~~MhEH
+meter/~~MhEHZ
 metern/~~Nh
 meters/~~Nh
 methode/~~NhEF
@@ -34526,7 +34526,7 @@ moloch/~~NhHA
 molochs/~~Nh
 mols/~~Nh
 mombasa/~~NbhH
-moment/~~NXh0HY
+moment/~~NXh0HYMZ
 moments/~~Nh
 monaco/~~NbhH
 monarch/~~NhYKL
@@ -37904,7 +37904,7 @@ reintun/~~NhYE
 reintut/~~NhYE
 reinweg/~~h # not a noun: no capitalized form
 reinzog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-reis/~~NXh0Y
+reis/~~NXh0YMZ
 reis/~~Vcej0dfi # REPLACES reisen
 reisens/~~Nh
 reises/~~Nh
@@ -39083,7 +39083,7 @@ schießt/~~h # not a noun: no capitalized form
 schiffs/~~NhMZA
 schifft/~~hG # not a noun: no capitalized form
 schiit/~~NhYKL
-schild/~~NXh0HYz
+schild/~~NXh0HYzMZ
 schilda/~~NbhH
 schilds/~~Nh
 schilf/~~NXh0Y
@@ -39246,7 +39246,7 @@ scoute/~~NhYE
 script/~~NXhHY
 sechs/~~hJOQRSTq1
 sechst/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-see/~~MhEH
+see/~~MhEHF
 seele/~~NhEF
 seelen/~~Nh # auto-added
 seen/~~Nh # auto-added
@@ -39903,7 +39903,7 @@ stiels/~~Nh
 stiert/~~hG # not a noun: no capitalized form
 stieß/~~hVs # +verb reading (was noun-only)
 stießt/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
-stift/~~NXh0H78Y
+stift/~~NXh0H78YMZ
 stifts/~~Nh
 stigma/~~Nh
 stil/~~NXh0HYMZ
@@ -40357,7 +40357,7 @@ tatet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 tattoo/~~NbhH
 tatze/~~NhE
 tatzen/~~Nh # auto-added
-tau/~~NXhHY
+tau/~~NXhHYMZ
 taube/~~NhE
 taubem/~~Nh
 tauben/~~Nh # auto-added
@@ -40616,7 +40616,7 @@ topfs/~~Nh
 topp/~~NXh
 topp/~~VcejGdfi # REPLACES toppen
 toppt/~~hG # not a noun: no capitalized form
-tor/~~NXh0HYZ
+tor/~~NXh0HYZM
 torero/~~NbhH
 tores/~~NhMZ
 torf/~~NXh0HY
@@ -41352,7 +41352,7 @@ viral/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 viren/~~Nh # auto-added
 viril/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 virion/~~NhYH
-virus/~~NhZA
+virus/~~NhZAM
 vis/~~h # not a noun: no capitalized form
 visa/~~Nh
 visage/~~NhE
@@ -111898,7 +111898,7 @@ verdickt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 verdiene/~~NhEJ # +adjective reading (was noun-only)
 verdienen/~~VdifjecGn # auto-added
 verdiener/~~MhEKLH
-verdienst/~~NhYHX0 # der/das Verdienst, die Verdienste: was tagged a verb, so the plural did not exist
+verdienst/~~NhYHX0MZ # der/das Verdienst, die Verdienste: was tagged a verb, so the plural did not exist
 verdient/~~NXhOQRSTG
 verdinge/~~h # not a noun: no capitalized form
 verdingen/~~VdifjecGn # auto-added
@@ -206453,7 +206453,7 @@ Erde/~~FhE # auto-added compound component
 Land/~~NhXY780HZ # auto-added compound component
 Masse/~~FhE # auto-added compound component
 Kontinent/~~MhY0HX # auto-added compound component
-Teil/~~MhY0HXz # auto-added compound component
+Teil/~~MhY0HXzZ # auto-added compound component
 Entwicklung/~~FhY # auto-added compound component
 Sub/~~NhA # auto-added compound component
 Asien/~~NhH # auto-added compound component
@@ -206522,7 +206522,7 @@ ehre/~~NE
 elfe/~~NE
 ende/~~FEH
 enge/~~NEr # +adverb reading (was noun-only)
-erbe/~~EKLHZ
+erbe/~~EKLHZM
 erde/~~NE
 fakt/~~NY0H
 gabe/~~NE

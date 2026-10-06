@@ -2,6 +2,7 @@
 
 pub mod german_absolute_superlative;
 pub mod german_common_typos;
+pub mod german_determiner_gender;
 pub mod german_filler_words;
 pub mod german_fixed_nominalization;
 pub mod german_foreign_stretch;

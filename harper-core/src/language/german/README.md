@@ -1305,6 +1305,49 @@ masculine, 7029 end in `-er` and most of them are correct agent nouns; 49 end in
 *Leber* from *Heiler*, which is why the correction list is hand-checked and
 short.
 
+## An article that fits none of its noun's genders
+
+*die Hund*, *das Schule*, *ein Frau*. `GermanDeterminerGender` reads the
+gender the way `GermanPrepositionCase` already does and asks the question that
+rule leaves alone: `readings_allowed_by` never narrows a determiner to nothing,
+because an empty result is "the article and the noun disagree outright", not a
+case error, and no rule described that. This one does.
+
+Three conditions have to hold together, each of them found by measurement rather
+than assumed:
+
+* **Exactly one recorded gender.** *der/das Teil*, *der/die See*, *der/das
+  Schild* were recorded with one, which turned the second spelling into a
+  report. `scripts/add_german_multi_gender_nouns.py` records all of them. The
+  gender flags are properties and not affixes, so adding one builds no word.
+* **A noun that is surely a singular, where the article has a plural reading.**
+  *die* is also the plural article, so *die Hund* is only wrong because *Hund*
+  cannot be a plural. The entry has to say singular-only **and** the spelling
+  must not allow an identical plural — *Mädchen* and *Kuchen* are recorded
+  singular-only and are not safe. *das*, *dem*, *ein* have no plural reading
+  and need no such guard.
+* **A head the chunker has shown.** The preposition rule's `head_noun_after`
+  asks for a function word behind the head, which is right for a case error and
+  wrong here: *die Hund gesehen* ends on a participle. What this rule rules out
+  instead is a head that is only the first capital of a longer run (*die
+  Deutsche Bahn*) or half of a hyphenated compound.
+
+A determiner opening a relative clause is a pronoun (*Frauen, die Mut haben*),
+and a capitalized one in mid-sentence is part of a name (*Die Zeit*); both stay
+untouched. Only the article is read — an adjective ending that contradicts the
+noun (*ein großer Haus*, *einen neue Tisch*) is **not** checked, and neither is
+a noun whose gender the dictionary does not carry (*Tasche*, *Katze*, *Garten*:
+the 41 % the oracle has not reached).
+
+New battery `tests/batteries/determiner_gender.tsv`, Harper only (no
+LanguageTool available when it was written): **9/10 with 0/25 false alarms.** The
+one miss, *der Zeit vergeht*, is deliberate: *der* is also dative and genitive
+feminine. The existing `grammar.tsv` goes from 30/50 to 36/50 with no new false
+alarm; its other classes are unchanged. No prose corpus was reachable when this
+was measured, so the precision claim rests on 78 correct battery sentences and
+the committed `test_sources`, which is thin — **run `just language-lint-sources
+german` and the prose corpus before trusting it.**
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both
