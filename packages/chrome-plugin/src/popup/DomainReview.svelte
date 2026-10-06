@@ -3,10 +3,10 @@ import { Button, Input, Label } from 'components';
 import ProtocolClient from '../ProtocolClient';
 
 let {
-    domain: initialDomain,
-    works: initialWorks,
-    feedback: initialFeedback,
-    onSubmit,
+	domain: initialDomain,
+	works: initialWorks,
+	feedback: initialFeedback,
+	onSubmit,
 }: { domain: string; works: boolean; feedback: string; onSubmit: () => void } = $props();
 
 // Local copies so the form can be edited without mutating props.
@@ -19,32 +19,32 @@ let successful = $state(false);
 let failed = $state(false);
 
 async function handleSubmit(event: SubmitEvent) {
-    event.preventDefault();
+	event.preventDefault();
 
-    submitting = true;
-    failed = false;
+	submitting = true;
+	failed = false;
 
-    const success = await ProtocolClient.postFormData(
-        'https://writewithharper.com/api/domain-reviews',
-        {
-            domain,
-            works: works ? 'yes' : 'no',
-            feedback,
-        },
-    );
+	const success = await ProtocolClient.postFormData(
+		'https://writewithharper.com/api/domain-reviews',
+		{
+			domain,
+			works: works ? 'yes' : 'no',
+			feedback,
+		},
+	);
 
-    submitting = false;
+	submitting = false;
 
-    if (success) {
-        successful = true;
-        setTimeout(onSubmit, 1200);
-    } else {
-        failed = true;
-    }
+	if (success) {
+		successful = true;
+		setTimeout(onSubmit, 1200);
+	} else {
+		failed = true;
+	}
 }
 
 const segment =
-    'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
+	'flex-1 rounded-md px-3 py-1 text-sm font-semibold transition-colors cursor-pointer text-center';
 </script>
 
 <div class="flex h-full flex-col justify-between px-5 py-3">
