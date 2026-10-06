@@ -212,6 +212,64 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         }
     }
 
+    /// Is the token at `index` the last member of a coordinated subject?
+    ///
+    /// *Mein Bruder und ich spielen* has a plural subject, so the pronoun that
+    /// follows *und* does not open a clause of its own and *ich spielen* is not
+    /// an error. *Sie kam nach Hause und er gehen weg* does open one, and what
+    /// tells them apart is the finite verb in front of the conjunction: a
+    /// coordinated clause has already had its verb, a coordinated subject has
+    /// not. A verb the dictionary cannot place counts as absent, which can only
+    /// cost a detection.
+    fn joins_a_subject(&self, tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const JOINERS: &[&str] = &["und", "oder", "sowie"];
+
+        let Some(coordinator) = index.checked_sub(1) else {
+            return false;
+        };
+        if !JOINERS.contains(&Self::word_at(tokens, coordinator, document).as_str()) {
+            return false;
+        }
+
+        !tokens[..coordinator]
+            .iter()
+            .rev()
+            .take_while(|token| {
+                !matches!(
+                    token.kind,
+                    TokenKind::Punctuation(
+                        Punctuation::Comma | Punctuation::Semicolon | Punctuation::Colon
+                    )
+                )
+            })
+            .filter(|token| matches!(token.kind, TokenKind::Word(_)))
+            .any(|token| self.may_be_a_verb(token, document))
+    }
+
+    /// Could this token be a verb at all, finite or not?
+    ///
+    /// Looser than `verb_features`, which wants the person and number a
+    /// conjugation affix left behind: a preterite such as *kam* has neither, and
+    /// is still the verb that makes *Sie kam nach Hause und er …* a clause. A
+    /// capital marks a noun, so only lower-case words count.
+    fn may_be_a_verb(&self, token: &Token, document: &Document) -> bool {
+        let chars = document.get_span_content(&token.span);
+        let word: String = chars.iter().collect();
+        if !self.verb_features(&word, token).is_empty() {
+            return true;
+        }
+
+        chars.first().is_some_and(|c| c.is_lowercase())
+            && !(token.kind.is_determiner()
+                || token.kind.is_pronoun()
+                || token.kind.is_preposition()
+                || token.kind.is_conjunction())
+            && self
+                .dictionary
+                .get_word_metadata(chars)
+                .is_some_and(|metadata| metadata.is_verb() && !metadata.is_noun())
+    }
+
     /// The word at `index`, lower-cased.
     fn word_at(tokens: &[&Token], index: usize, document: &Document) -> String {
         document
@@ -557,7 +615,9 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
                 .collect();
 
             for index in 0..tokens.len().saturating_sub(1) {
-                if !Self::opens_a_clause(&tokens, index, document) {
+                if !Self::opens_a_clause(&tokens, index, document)
+                    || self.joins_a_subject(&tokens, index, document)
+                {
                     continue;
                 }
 
@@ -1062,6 +1122,32 @@ mod tests {
 
     /// The placeholder *es* is out of the table: the verb agrees with the noun
     /// behind it, not with the pronoun.
+    /// *Mein Bruder und ich spielen* is a plural subject, not a clause that
+    /// starts at *ich*.
+    #[test]
+    fn a_coordinated_subject_takes_the_plural() {
+        for text in [
+            "Mein Bruder und ich spielen gern Fußball.",
+            "Du und ich gehen morgen ins Kino.",
+            "Anna oder er kommen später.",
+            "Gestern waren mein Vater und ich im Zoo.",
+            "Heute fahren Peter und wir nach Berlin.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
+    /// A finite verb in front of the conjunction means the pronoun opens a
+    /// clause of its own, so the check stays on.
+    #[test]
+    fn a_coordinated_clause_is_still_checked_after_a_verb() {
+        assert_eq!(
+            lint_count("Mein Bruder spielt Fußball und ich spielst Tennis."),
+            1
+        );
+        assert_eq!(lint_count("Anna kam spät, aber er gehen früh."), 1);
+    }
+
     #[test]
     fn the_placeholder_es_is_not_a_subject() {
         for text in [
