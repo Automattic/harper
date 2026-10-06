@@ -39,6 +39,7 @@ export default class DataBlock {
 
 	public static getAllDataBlocks(): DataBlock[] {
 		const container = this.getContainer();
+		if (container === null) return [];
 
 		const targetNodes = [...getNodesFromQuerySelector(container, '[data-block]')];
 
@@ -64,11 +65,11 @@ export default class DataBlock {
 		});
 	}
 
-	public static getContainer(): Element {
+	/** Find the current editor container, or return null while it loads or changes layouts. */
+	public static getContainer(): Element | null {
 		const iframe = document.querySelector<HTMLIFrameElement>('iframe[name="editor-canvas"]');
-		const iframeDocument = iframe?.contentDocument || iframe?.contentWindow.document;
-		const container =
-			iframeDocument?.body || document.querySelector('.edit-post-visual-editor > div');
-		return container;
+		return (
+			iframe?.contentDocument?.body || document.querySelector('.edit-post-visual-editor > div')
+		);
 	}
 }

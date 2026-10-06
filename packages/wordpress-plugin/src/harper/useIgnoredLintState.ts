@@ -19,19 +19,19 @@ export default function useIgnoredLintState(): [string | undefined, (newState: s
 	return [ignoredLintState, updateState];
 }
 
-/** Get a callback that adds a lint to the global ignored lint state. */
-export function useIgnoreLint(): (lint: Lint) => Promise<void> {
+/** Ignore a lint using the exact source text that produced its spans and context. */
+export function useIgnoreLint(): (source: string, lint: Lint) => Promise<void> {
 	const linter = useLinter();
 	const [ignoredLintState, setIgnoredLintState] = useIgnoredLintState();
 
-	return async (lint) => {
+	return async (source, lint) => {
 		await linter.clearIgnoredLints();
 
 		if (ignoredLintState) {
 			await linter.importIgnoredLints(ignoredLintState);
 		}
 
-		await linter.ignoreLint(lint);
+		await linter.ignoreLint(source, lint);
 		setIgnoredLintState(await linter.exportIgnoredLints());
 	};
 }
