@@ -36,11 +36,11 @@ function handleStart() {
             {#each steps as line, i}
                 <li class="flex items-start gap-3">
                     <span
-                        class="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-primary/15 text-xs font-bold text-primary ring-1 ring-primary/30 dark:bg-primary/20 dark:text-primary dark:ring-primary/40"
+                        class="mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-md  bg-primary/15 text-xs font-bold text-primary ring-1 ring-primary/30 dark:bg-primary/20 dark:text-primary dark:ring-primary/40"
                     >
                         {i + 1}
                     </span>
-                    <p class="text-xs leading-relaxed text-gray-700 dark:text-slate-300">
+                    <p class="text-sm leading-relaxed text-gray-700 dark:text-slate-300">
                         {line}
                     </p>
                 </li>
