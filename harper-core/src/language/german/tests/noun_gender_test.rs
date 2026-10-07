@@ -106,10 +106,9 @@ mod tests {
     /// *Nutzer* neuter.
     #[test]
     fn weak_evidence_is_recorded_as_weak() {
-        assert_eq!(
-            gender("Schlüssel"),
-            GenderSet::MASCULINE | GenderSet::NEUTER
-        );
+        // *Schlüssel* used to be the example; it is recorded masculine now,
+        // since `scripts/add_german_common_noun_genders.py` knows it is one.
+        assert_eq!(gender("Bund"), GenderSet::MASCULINE | GenderSet::NEUTER);
     }
 
     /// A compound takes the gender of its last element, and the compound
@@ -128,10 +127,7 @@ mod tests {
         };
 
         assert_eq!(head("Stadtmauer"), Gender::Feminine.into());
-        assert_eq!(
-            head("Hausschlüssel"),
-            GenderSet::MASCULINE | GenderSet::NEUTER
-        );
+        assert_eq!(head("Hausschlüssel"), Gender::Masculine.into());
     }
 
     /// The corpus can only judge a word it contains often enough, and the
@@ -140,7 +136,7 @@ mod tests {
     /// `readings_allowed_by` in `grammar/determiners.rs`.
     #[test]
     fn the_axis_is_still_incomplete() {
-        assert!(gender("Zaun").is_empty(), "{:?}", gender("Zaun"));
+        assert!(gender("Kiosk").is_empty(), "{:?}", gender("Kiosk"));
     }
 
     /// The genders that switching the narrowing on exposed.

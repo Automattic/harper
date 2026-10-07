@@ -1492,7 +1492,7 @@ beikircher/~~NH
 beilage/~~MZE
 beilegen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 beimengen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
-bein/~~NY0HXzMZ
+bein/~~NY0HXzZ
 beinling/~~NYHX
 beisetzen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 beitag/~~Nr
@@ -13862,7 +13862,7 @@ abduktions/~~NhA #noun (from coverage analysis)
 abduktoren/~~Vj # verb (from coverage analysis)
 abdunkelungs/~~NhA #noun (from coverage analysis)
 abduzens/~~NhA #noun (from coverage analysis)
-abend/~~NhYHXMZ #noun (from coverage analysis)
+abend/~~NhYHXM #noun (from coverage analysis)
 abendmahl/~~NXh0HYZ #noun (from coverage analysis)
 abendmahls/~~NhA #noun (from coverage analysis)
 abenteuer/~~NhEH #noun (from coverage analysis)
@@ -13961,7 +13961,7 @@ Ober/~~NhYOQRSTUWKLHE #neuter noun upper/top (nominative)
 Gesellschaft/~~FhY #feminine noun company/society (nominative)
 Obergesellschaft/~~FhYE #feminine noun parent company (nominative)
 Fuß/~~MhY0 #masculine noun foot (nominative)
-Bett/~~NhY0HzMZ #neuter noun bed (nominative)
+Bett/~~NhY0HzZ #neuter noun bed (nominative)
 Arbeit/~~FhY #feminine noun work (nominative)
 Platz/~~MhXY0 #masculine noun place (nominative)
 Bild/~~NhY0aHzZ #neuter noun image (nominative)
@@ -13998,7 +13998,7 @@ wunder/~~NJqrEHxMZ #adjective and noun
 bau/~~JOQRSTqh0x #frequency: 10 (adjective)
 besser/~~JOQRSTqh78 #frequency: 10 (adjective)
 ein/~4hOQRST #frequency: 10
-fach/~~JOQRSTqh0 #frequency: 10 (adjective)
+fach/~~JOQRSTqh0Z #frequency: 10 (adjective)
 irr/~~JOQRSTUWqh78 #frequency: 10 (adjective)
 klammer/~~Jqhr78 #frequency: 10 (adjective)
 lieb/~~JOQRSTUWqh9 #frequency: 10 (adjective)
@@ -14019,12 +14019,12 @@ adel/~~JOQRSTpuvw78 #frequency: 9 (adjective)
 anruf/~~JOQRSTpuvw780 #frequency: 9 (adjective)
 ball/~~NhY0H78M #frequency: 9 (nominative)
 bar/~~JOQRSTqh9 #adjective root, frequency: 9
-berg/~~JOQRSTpuvwX078 #frequency: 9 (adjective)
+berg/~~JOQRSTpuvwX078M #frequency: 9 (adjective)
 beruf/~~JOQRSTpuvw780 #frequency: 9 (adjective)
 bleich/~~JOQRSTpuvw78 #frequency: 9 (adjective)
 dampf/~~JOQRSTpuvw0 #frequency: 9 (adjective)
 dick/~~JOQRSTUWpuvw #frequency: 9 (adjective)
-ding/~~JOQRSTpuvw0a #frequency: 9 (adjective)
+ding/~~JOQRSTpuvw0aZ #frequency: 9 (adjective)
 faul/~~JOQRSTUWpuvw78 #frequency: 9 (adjective)
 flach/~~JOQRSTUWqi #adjective and noun
 flau/~~JOQRSTUWpuvw #frequency: 9 (adjective)
@@ -14046,18 +14046,18 @@ loch/~~NhY0aH78MZ #frequency: 9
 mein/~~5JOQRSTqh #frequency: 9
 nah/~~RJOQRSTqh #frequency: 9
 offenbar/~JqOQRST78n #adjective root, frequency: 9
-plan/~~RJOQRSTqh0 #frequency: 9
+plan/~~RJOQRSTqh0M #frequency: 9
 radikal/~~RJOQRSTUWqh #frequency: 9
 rauch/~~NhY0H #frequency: 9
 reg/~~RJOQRSTUWqh78 #frequency: 9
-rock/~~NhY0H #frequency: 9
+rock/~~NhY0HM #frequency: 9
 rund/~~RJOQRSTUWqh978 #frequency: 9
 scheuer/~~Jqhr #frequency: 9
 schrei/~~NhY0EHX #frequency: 9
 schwäch/~~JOQRSTUWqh78 #frequency: 9
 stich/~~NhY0HX #frequency: 9
 still/~~RJOQRSTUWqh78 #frequency: 9
-stock/~~RJOQRSTqh780 #frequency: 9
+stock/~~RJOQRSTqh780M #frequency: 9
 straff/~~RJOQRSTUWqh78 #frequency: 9
 streich/~~NhY0HX78x #frequency: 9
 stumpf/~~RJOQRSTUWqh #frequency: 9
@@ -14117,8 +14117,8 @@ erwerb/~~RJOQRSTqhi78x #frequency: 8
 feig/~JqOQRSTUW #adjective root, frequency: 8
 fertig/~JqOQRSTUW978 #adjective root, frequency: 8
 fest/~~RJOQRSTUWqh0 #frequency: 8
-finger/~NhpuvwEHzMZ #frequency: 8
-fisch/~JqOQRST0 #adjective root, frequency: 8
+finger/~NhpuvwEHzM #frequency: 8
+fisch/~JqOQRST0M #adjective root, frequency: 8
 fluch/~NhpuvwY0HMZ #frequency: 8
 forscher/~~JqhrKLOQRST #frequency: 8
 früh/~~RJOQRSTUWqh #frequency: 8
@@ -14126,7 +14126,7 @@ fummel/~NhpuvwEH #frequency: 8
 funk/~NhpuvwY0HX #frequency: 8
 förder/~NhpuvwE78 #frequency: 8
 füll/~NhpuvwY78x #frequency: 8
-gabel/~NhpuvwE78 #frequency: 8
+gabel/~NhpuvwE78F #frequency: 8
 gar/~~rJOQRSTqh #frequency: 8
 geil/~~RJOQRSTUWqh #frequency: 8
 gelb/~~OQRSTqpuvwJ # retag: adjective, was noun (igerman98 SFX A)
@@ -14149,7 +14149,7 @@ knack/~NhpuvwY #frequency: 8
 konjunktiv/~NhpuvwYHXOQRST #frequency: 8
 krampf/~NhpuvwY0H #frequency: 8
 krank/~~RJOQRSTqh #frequency: 8
-krieg/~NhpuvwY0HX #frequency: 8
+krieg/~NhpuvwY0HXM #frequency: 8
 kringel/~NhpuvwEHz #frequency: 8
 krümel/~NhpuvwEHz #frequency: 8
 leer/~~RJOQRSTUWqh78 #frequency: 8
@@ -14211,7 +14211,7 @@ sinn/~NhpuvwXY0HM #frequency: 8
 sonder/~NhpuvwE #frequency: 8
 span/~NhpuvwY0EH #frequency: 8
 spann/~NhpuvwYHX #frequency: 8
-spiegel/~NhpuvwEH78zMZ #frequency: 8
+spiegel/~NhpuvwEH78zM #frequency: 8
 spiel/~NhpuvwY0HXxzZ #frequency: 8
 spitz/~~JOQRSTUWqh #frequency: 8
 stachel/~NhpuvwEH #frequency: 8
@@ -14320,7 +14320,7 @@ appellativ/~~RJOQRSTqh #frequency: 7
 arbeitsintensiv/~~RJOQRSTUWqh #frequency: 7
 arbeitsscheu/~~RJOQRSTUWqh #frequency: 7
 areal/~~NJOQRSTqZA #frequency: 7
-arm/~~NJOQRSTqpuvw0AMZ #adjective and noun
+arm/~~NJOQRSTqpuvw0AM #adjective and noun
 artenreich/~~RJOQRSTUWqh #frequency: 7
 artifiziell/~~RJOQRSTUWqh #frequency: 7
 asozial/~~RJOQRSTUWqh #frequency: 7
@@ -14348,7 +14348,7 @@ auswander/~NhpuvwYE78 #frequency: 7
 autograf/~~NJOQRSTqA #frequency: 7
 autograph/~~RJOQRSTqh #frequency: 7
 automobil/~~NJOQRSTqA #frequency: 7
-bad/~NhpuvwY0HMZ #frequency: 7
+bad/~NhpuvwY0HZ #frequency: 7
 balg/~NhpuvwY0H #frequency: 7
 ballaststoffreich/~~RJOQRSTUWqh #frequency: 7
 banal/~~RJOQRSTUWqh #frequency: 7
@@ -14356,7 +14356,7 @@ bandbreitenintensiv/~~RJOQRSTUWqh #frequency: 7
 barock/~~RJOQRSTqh #frequency: 7
 basal/~~RJOQRSTqh #frequency: 7
 bausch/~NhpuvwYH #frequency: 7
-becher/~NhpuvwEHz #frequency: 7
+becher/~NhpuvwEHzM #frequency: 7
 bedeutungsvoll/~~RJOQRSTUWqh #frequency: 7
 behandel/~hpuvwnx #frequency: 7
 belager/~hpuvw78n #frequency: 7
@@ -14456,7 +14456,7 @@ erbau/*~NhpuvwYE78n #frequency: 7
 ereignisreich/~~JOQRSTUWqh #frequency: 7
 erfahren/~Vifj789OQRSTcUWx # verb root, frequency: 7
 erfindungsreich/~~JOQRSTUWqh #frequency: 7
-erfolg/~NhpuvwY0HXnMZ #frequency: 7
+erfolg/~NhpuvwY0HXnM #frequency: 7
 erfolgreich/~~JOQRSTUWqh #frequency: 7
 erfolgreichste/~~h # not a noun: no capitalized form
 ergeben/~Vifj78OQRSTc # verb root, frequency: 7
@@ -14565,7 +14565,7 @@ handel/~NhpuvwEHxMZ #frequency: 7
 harsch/~~JOQRSTqh #frequency: 7
 hau/~hpuvw #frequency: 7
 hebel/~NhpuvwEHz #frequency: 7
-heft/~NhpuvwY0aHX78z #frequency: 7
+heft/~NhpuvwY0aHX78zZ #frequency: 7
 heiler/~NhpuvwYJrKLEH #frequency: 7
 heim/~NhpuvwY0HXz #frequency: 7
 heiß/~~NJOQRSTUqA #frequency: 7
@@ -14636,14 +14636,14 @@ klangvoll/~~JOQRSTUWqh #frequency: 7
 klar/~~JOQRSTUWqh9 #frequency: 7
 klaustrophob/~~JOQRSTqh #frequency: 7
 kleb/~NhpuvwY78 #frequency: 7
-kleid/~NhpuvwY780aHz #frequency: 7
+kleid/~NhpuvwY780aHzZ #frequency: 7
 kleister/~NhpuvwEH #frequency: 7
 knapp/~~JOQRSTUWqh #frequency: 7
 knebel/~NhpuvwE78 #frequency: 7
 knitterfrei/~~JOQRSTUWqh #frequency: 7
 knüpf/~hpuvw78 #frequency: 7
 knüppel/~NhpuvwEH #frequency: 7
-koch/~NhpuvwYHx #frequency: 7
+koch/~NhpuvwYHxM #frequency: 7
 kollegial/~~JOQRSTUWqh9 #frequency: 7
 kollektiv/~~NJOQRSTqZA #frequency: 7
 kommerziell/~~JOQRSTUWqh9 #frequency: 7
@@ -14691,14 +14691,14 @@ lehrreich/~~JOQRSTUWqh #frequency: 7
 leib/~Nhpuvw0aHXz #frequency: 7
 lenk/*~NhpuvwY78x #frequency: 7
 liberal/~~RJOQRSTUWqh #frequency: 7
-licht/~~RJOQRSTUWqh0a78 #frequency: 7
+licht/~~RJOQRSTUWqh0a78Z #frequency: 7
 liebediener/~NhpuvwEH #frequency: 7
 liebevoll/~~JOQRSTUWqh #frequency: 7
 lob/~NhpuvwY0HMZ #frequency: 7
 lokal/~~JOQRSTq # fixed from noun to adjective
 lukrativ/~~JOQRSTUWqh #frequency: 7
 lustvoll/~~JOQRSTUWqh #frequency: 7
-löffel/~NhpuvwEHzMZ #frequency: 7
+löffel/~NhpuvwEHzM #frequency: 7
 lösch/~NhpuvwY78x #frequency: 7
 machtvoll/~~JOQRSTUWqh #frequency: 7
 mahl/~NhpuvwY0H78 #frequency: 7
@@ -15051,7 +15051,7 @@ wiederhol/~NhpuvwY78nx #frequency: 7
 wiener/~NhpuvwEKLH #frequency: 7
 wildreich/~~RJOQRSTUWqh #frequency: 7
 willig/~JqOQRSTUW9 #adjective root, frequency: 7
-wind/~NhpuvwY780HX #frequency: 7
+wind/~NhpuvwY780HXM #frequency: 7
 windschief/~~RJOQRSTUWqh #frequency: 7
 wink/~NhpuvwYH #frequency: 7
 winkel/~NhpuvwEHMZ #frequency: 7
@@ -15079,11 +15079,11 @@ zeremoniell/~~RJOQRSTqh #frequency: 7
 zersetz/~hpuvw78n #frequency: 7
 zerstäub/~hpuvw78n #frequency: 7
 zerstückel/~hpuvw78n #frequency: 7
-ziel/~NhpuvwY0HX #frequency: 7
+ziel/~NhpuvwY0HXZ #frequency: 7
 zielgenau/~~RJOQRSTUWqh #frequency: 7
 zirkel/~NhpuvwEHM #frequency: 7
 zuck/~hpuvw78 #frequency: 7
-zucker/~NhpuvwEH #frequency: 7
+zucker/~NhpuvwEHM #frequency: 7
 zukauf/~NhpuvwY0H #frequency: 7
 zukunftsreich/~~RJOQRSTUWqh #frequency: 7
 zuliefer/~NhpuvwE78 #frequency: 7
@@ -16045,7 +16045,7 @@ burgenreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 burlesk/~~JOQRSTqh #frequency: 6
 busenfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 butterblumengelb/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-butter/~NhE #frequency: 6
+butter/~NhEF #frequency: 6
 buttergelb/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 butterweich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 bußgeldfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -17203,7 +17203,7 @@ gelatinefrei/~NhYE #frequency: 6
 gelbgrau/~NhYE #frequency: 6
 gelbgrün/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 gelbweiß/~NhYE #frequency: 6
-geld/~Nh0aHX #frequency: 6
+geld/~Nh0aHXZ #frequency: 6
 geldgeil/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 geldgierig/~JqOQRSTUW #adjective root, frequency: 6
 geldmarktnah/~NhYE #frequency: 6
@@ -17643,7 +17643,7 @@ hierarchiefrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hilbertsch/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hilf/~h #frequency: 6
 hilfreich/~~hqOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-himmel/~NhEHMZ #frequency: 6
+himmel/~NhEHM #frequency: 6
 himmelblau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 himmlisch/~JqOQRSTUW #adjective root, frequency: 6
 hinblick/~NhYH #frequency: 6
@@ -17753,7 +17753,7 @@ humpel/~h #frequency: 6
 humusreich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hundertfach/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hunderttausendfach/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-hunger/~NhEH #frequency: 6
+hunger/~NhEHM #frequency: 6
 hungrig/~JqOQRSTUW #adjective root, frequency: 6
 hurtig/~JqOQRSTUW #adjective root, frequency: 6
 hybrid/~NhYOQRST #frequency: 6
@@ -18748,7 +18748,7 @@ ländlich/~JqOQRSTUW #adjective root, frequency: 6
 längengleich/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 längentreu/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 länglich/~JqOQRSTUW #adjective root, frequency: 6
-lärm/~NhYH #frequency: 6
+lärm/~NhYHM #frequency: 6
 lärmig/~JqOQRSTUW #adjective root, frequency: 6
 lärmintensiv/~~JOQRSTqh #frequency: 6
 lärmvoll/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -19451,7 +19451,7 @@ angora/~~Nh
 angrabe/~~h # not a noun: no capitalized form
 angrabt/~~h # not a noun: no capitalized form
 angräbt/~~hG # not a noun: no capitalized form
-angst/~~NhA
+angst/~~NhAF
 anguckt/~~hG # not a noun: no capitalized form
 angular/~~NXh
 angulär/~~NXh
@@ -19882,7 +19882,7 @@ anzog/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 anzogen/~~VijG # auto-added
 anzogt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anzucht/~~NhY
-anzug/~~Nh0HA
+anzug/~~Nh0HAM
 anzuges/~~Nh
 anzugs/~~Nh
 anzutun/~~h # not a noun: no capitalized form
@@ -19911,7 +19911,7 @@ apathie/~~NhFA
 apatit/~~NXhHY
 apatits/~~Nh
 apertur/~~NhY
-apfel/~~NhH
+apfel/~~NhHM
 apfels/~~Nh
 apikale/~~NhE
 aplomb/~~NhHA
@@ -20499,10 +20499,10 @@ aßest/~~hV
 aßt/~~hV # retag: verb form, was noun (corpus-mined)
 babel/~~Nh
 babesie/~~NhEF
-baby/~~NhrHMZA # +adverb reading (was noun-only)
+baby/~~NhrHAZ # +adverb reading (was noun-only)
 babylon/~~NhHA
 babys/~~NhMZ
-bach/~~NhX0HMZ
+bach/~~NhX0HM
 baches/~~Nh
 bachs/~~NhMZ
 back/~~NXh
@@ -20568,7 +20568,7 @@ balkans/~~Nh
 balkare/~~NhEKL
 balken/~~Nh # auto-added
 balkens/~~Nh
-balkon/~~NhYHX # auto-added
+balkon/~~NhYHXM # auto-added
 balkone/~~NhE
 balkons/~~Nh
 ballade/~~NhE
@@ -20608,7 +20608,7 @@ banalem/~~Nh
 banalen/~~J # auto-added
 banaler/~~MhYJr
 banales/~~Nh
-banane/~~NhE
+banane/~~NhEF
 bananen/~~Nh # auto-added
 banat/~~NhHA
 banater/~~MhEKLH
@@ -20747,7 +20747,7 @@ bator/~~NhA
 batteln/~~Vj # auto-added
 batzen/~~NhH # auto-added
 batzens/~~Nh
-bauch/~~Nh0HA
+bauch/~~Nh0HAM
 bauches/~~Nh
 bauchig/~~OQRSTqhJ # retag: adjective, was noun (igerman98 SFX A)
 bauchs/~~Nh
@@ -21571,7 +21571,7 @@ biegsam/~~JOQRSTqh9
 biegung/~~FhY
 biene/~~NhEzF
 bienen/~~Nh # auto-added
-bier/~~MhY0HXz
+bier/~~hY0HXzZ
 biere/~~NhE
 bieren/~~Nh # auto-added
 bieres/~~Nh
@@ -21665,7 +21665,7 @@ birgt/~~hG # not a noun: no capitalized form
 birke/~~NhE
 birken/~~Nh # auto-added
 birma/~~NbhH
-birne/~~NhEz
+birne/~~NhEzF
 birnen/~~Nh # auto-added
 birst/~~h # not a noun: no capitalized form
 bis/~~h6
@@ -21699,7 +21699,7 @@ bitmaps/~~Nh
 bitport/~~NhHA
 bitrate/~~NhE
 bits/~~Nh
-bitte/~~NhE
+bitte/~~NhEF
 bitten/~~VifjcG # auto-added
 bittend/~~NhYJOQRST # +adjective reading (was noun-only)
 bittet/~~hG # not a noun: no capitalized form
@@ -22185,7 +22185,7 @@ brigade/~~NhEF
 brigg/~~NhHA
 briggs/~~Nh
 brikett/~~NXhHY
-brille/~~NhE
+brille/~~NhEF
 brillen/~~Nh # auto-added
 bring/~~Vcj78Gfi # REPLACES bringen
 bringer/~~MhEKLH
@@ -22219,7 +22219,7 @@ bronze/~~NhE
 bronzen/~~VfjOQRST # auto-added
 brosame/~~NhE
 brosche/~~NhE
-brot/~~NXh0HYMZ
+brot/~~NXh0HYZ
 broten/~~Nh # auto-added
 brotes/~~Nh
 brotlos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -22244,7 +22244,7 @@ bruncht/~~NXh
 brunft/~~NhA
 brunnen/~~Nh # auto-added
 brunst/~~NhA
-brust/~~NhA
+brust/~~NhAF
 brut/~~NhGY
 brutale/~~NhE
 bruten/~~Nh # auto-added
@@ -22482,7 +22482,7 @@ bänke/~~NhEz
 bänken/~~Nh # auto-added
 bänkern/~~Nh
 bänkers/~~Nh
-bär/~~NhYKLz
+bär/~~NhYKLzM
 bärchen/~~XZ #  auto-added
 bärin/~~Nh
 bärlapp/~~NXhHY
@@ -22750,7 +22750,7 @@ chattet/~~hG # not a noun: no capitalized form
 check/~~VcejGdfi # REPLACES checken
 checks/~~Nh
 checkt/~~hG # not a noun: no capitalized form
-chef/~~NhKLHA
+chef/~~NhKLHAM
 chefin/~~Nh
 chefs/~~Nh
 chelat/~~NXhHY
@@ -23561,7 +23561,7 @@ dohlen/~~Nh # auto-added
 doktere/~~h # not a noun: no capitalized form
 doktern/~~hdfijeG # not a noun: no capitalized form
 doktert/~~hG # not a noun: no capitalized form
-doktor/~~NhYKLH
+doktor/~~NhYKLHM
 doktors/~~Nh
 doktre/~~h # not a noun: no capitalized form
 doktrin/~~NhY
@@ -23648,7 +23648,7 @@ dorschs/~~Nh
 dorther/~~Mh # not a noun: no capitalized form
 dorthin/~~hr # +adverb reading (was noun-only)
 dortig/~~RJOQRSTqh
-dose/~~NhE
+dose/~~NhEF
 dosen/~~Nh # auto-added
 dosiert/~~NXhOQRSTG
 dosis/~~NhA
@@ -24661,7 +24661,7 @@ entbarg/~~NhYE
 entbot/~~h # not a noun: no capitalized form
 entböte/~~h # not a noun: no capitalized form
 entchen/~~XZ #  auto-added
-ente/~~NhEz
+ente/~~NhEzF
 entebbe/~~NhHA
 entehrt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 enteilt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -25968,7 +25968,7 @@ flanell/~~NXhHY
 flaneur/~~NXhYH
 flank/*~~Vcej # REPLACES flanken
 flankt/~~NXh
-flasche/~~NhE
+flasche/~~NhEF
 flash/~~Vcej # REPLACES flashen
 flashs/~~Nh
 flasht/~~NXh
@@ -26113,7 +26113,7 @@ fluorit/~~NXhHY
 fluors/~~Nh
 flupp/*~~VejGdfi # REPLACES fluppen
 fluppt/~~hG # not a noun: no capitalized form
-flur/~~NXh0HY
+flur/~~NXh0HYM
 fluren/~~Nh # auto-added
 flures/~~Nh
 flurs/~~Nh
@@ -26335,7 +26335,7 @@ freiheit/~~FhY
 freikam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 freiste/~~h # not a noun: no capitalized form
 freit/~~hG # not a noun: no capitalized form
-freitag/~~NXhY
+freitag/~~NXhYM
 freitet/~~hG # not a noun: no capitalized form
 freitod/~~NXh0HY
 freiweg/~~h # not a noun: no capitalized form
@@ -26367,7 +26367,7 @@ frevels/~~Nh
 frevelt/~~hG # not a noun: no capitalized form
 frevle/~~h # not a noun: no capitalized form
 friede/~~NhE
-frieden/~~NhHMZ # auto-added
+frieden/~~NhHM # auto-added
 frier/*~~VcjGfi # REPLACES frieren
 fries/~~NhY0X
 friese/~~NhEKL
@@ -26463,7 +26463,7 @@ frühes/~~Nh
 frühling/~~MhYHX
 frühste/~~h # not a noun: no capitalized form
 ftp/~~h # not a noun: no capitalized form
-fuchs/~~NXh0
+fuchs/~~NXh0M
 fuchs/~~Vcej0dfi # REPLACES fuchsen
 fuchses/~~Nh
 fuchsie/~~NhEF
@@ -26558,7 +26558,7 @@ futtre/~~h # not a noun: no capitalized form
 futur/~~NXh0H
 futures/~~Nh
 futurs/~~NhMZ
-fuß/~~NXh0YMZ
+fuß/~~NXh0YM
 fuß/~~Vcej0dfi # REPLACES fußen
 fußende/~~NhEJ # +adjective reading (was noun-only)
 fußes/~~Nh
@@ -26820,7 +26820,7 @@ gangsta/~~Nh
 gangway/~~NhHA
 ganove/~~NhE
 ganoven/~~Nh # auto-added
-gans/~~NhA
+gans/~~NhAF
 ganter/~~MhEH
 gantern/~~Nh
 ganters/~~Nh
@@ -26858,7 +26858,7 @@ gasen/~~Nh # auto-added
 gases/~~Nh
 gasse/~~NhE
 gassen/~~Nh # auto-added
-gast/~~Nh0A
+gast/~~Nh0AM
 gastes/~~Nh
 gateway/~~NhHA
 gatte/~~NhEKL
@@ -27454,7 +27454,7 @@ gemäßen/~~J # auto-added
 gemäßer/~~Mh
 gemäßes/~~Nh
 gemünzt/~~JOQRSTVgfj
-gemüse/~~NhEH
+gemüse/~~NhEHZ
 gemüsen/~~Nh # auto-added
 gemüses/~~Nh
 gemüt/~~JOQRSTVgfj0a
@@ -27587,7 +27587,7 @@ gepumpt/~~JOQRSTVgfj
 gepupst/~~JOQRSTVgj
 gepusht/~~JOQRSTVgfj
 geputzt/~~JOQRSTVgfj
-gepäck/~~NhHA
+gepäck/~~NhHAZ
 gepäcks/~~Nh
 gequakt/~~JOQRSTVgj
 gequert/~~JOQRSTVgfj
@@ -27708,7 +27708,7 @@ gesenkt/~~JOQRSTVgfj
 gesetzt/~~JOQRSTUWVgfj
 geshakt/~~JOQRSTVgj
 geshart/~~JOQRSTVgj # auto-added
-gesicht/~~JOQRSTVgj0a
+gesicht/~~JOQRSTVgj0aZ
 gesiebt/~~JOQRSTVgfj
 gesiegt/~~JOQRSTVgj
 gesiezt/~~JOQRSTVgj
@@ -28293,7 +28293,7 @@ graphem/~~NhYHX
 graphen/~~Nh # auto-added
 graphik/~~NhY
 graphit/~~NXhHY
-gras/~~NXh0HY
+gras/~~NXh0HYZ
 gras/~~Vcej0dfi # REPLACES grasen
 grases/~~Nh
 grasig/~~RJOQRSTqh
@@ -28633,7 +28633,7 @@ güldene/~~NhE
 gülle/~~NhA
 gültig/~~RJOQRSTqh9
 gürte/~~h # not a noun: no capitalized form
-gürtel/~~NhEHMZ
+gürtel/~~NhEHM
 gürteln/~~Nh # auto-added
 gürtels/~~Nh
 gürten/~~Vifj # auto-added
@@ -28776,7 +28776,7 @@ halms/~~Nh
 halogen/~~Nh # auto-added
 haloid/~~NXhHY
 haloids/~~Nh
-hals/~~NXh0
+hals/~~NXh0M
 hals/~~Vej0dfi # REPLACES halsen
 halses/~~Nh
 halslos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -28807,7 +28807,7 @@ hampelt/~~hG # not a noun: no capitalized form
 hample/~~h # not a noun: no capitalized form
 hampton/~~NhHA
 hamstre/~~h # not a noun: no capitalized form
-hand/~~NhA
+hand/~~NhAF
 handele/~~hV # +verb reading (was noun-only)
 handeln/~~Vdifj78eGcx # auto-added
 handels/~~NhMZA
@@ -29107,7 +29107,7 @@ helmes/~~Nh
 helms/~~Nh
 helot/~~NhY
 heloten/~~Nh # auto-added
-hemd/~~NhY0Hz
+hemd/~~NhY0HzZ
 hemden/~~Nh # auto-added
 hemdes/~~Nh
 hemds/~~Nh
@@ -29128,7 +29128,7 @@ henker/~~MhEKLH
 henkern/~~Nh
 henkers/~~Nh
 henna/~~NbhH
-henne/~~NhEH
+henne/~~NhEHF
 hennen/~~Nh # auto-added
 heptan/~~NhYH
 heptans/~~Nh
@@ -29150,7 +29150,7 @@ herbes/~~Nh
 herbste/~~h # not a noun: no capitalized form
 herbsts/~~Nh
 herbäte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herd/~~NXh0HY
+herd/~~NXh0HYM
 herden/~~Nh # auto-added
 herdes/~~Nh
 herds/~~Nh
@@ -29311,7 +29311,7 @@ high/~~NhYE!
 highway/~~NhHA
 hihi/~~h # not a noun: no capitalized form
 hijackt/~~NXh
-hilfe/~~NhE
+hilfe/~~NhEF
 hilfen/~~Nh # auto-added
 hilflos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 hilfs/~~NhA
@@ -29472,7 +29472,7 @@ hockt/~~hG # not a noun: no capitalized form
 hocktet/~~hG # not a noun: no capitalized form
 hoden/~~NhH # auto-added
 hodens/~~Nh
-hof/~~NXh0HMZ
+hof/~~NXh0HM
 hofbräu/~~NhA
 hofes/~~NhMZ
 hoffart/~~NhA # auto-added
@@ -29607,7 +29607,7 @@ hostien/~~Nh # auto-added
 hosts/~~Nh
 hotdog/~~NhHA
 hotdogs/~~Nh
-hotel/~~NhHMZ
+hotel/~~NhHZ
 hotels/~~NhMZ
 hotline/~~NhHA
 hotspot/~~NhHA
@@ -29634,7 +29634,7 @@ huf/~~NXh0HY
 hufen/~~Nh # auto-added
 hufes/~~Nh
 hufs/~~Nh
-huhn/~~Nh0HA
+huhn/~~Nh0HAZ
 huhnes/~~Nh
 huhns/~~Nh
 huhu/~~h # not a noun: no capitalized form
@@ -30140,7 +30140,7 @@ input/~~NhHA
 inputs/~~Nh
 ins/~~Pu # contraction of "in das" (dative/accusative)
 insasse/~~NhEKL
-insekt/~~NhY0H
+insekt/~~NhY0HZ
 insekts/~~Nh
 insel/~~NhEzF
 inseln/~~Nh # auto-added
@@ -30287,7 +30287,7 @@ ivorern/~~Nh
 ivorers/~~Nh
 jacht/~~NhY
 jachten/~~Nh # auto-added
-jacke/~~NhE
+jacke/~~NhEF
 jacken/~~Nh # auto-added
 jackett/~~NhHA
 jackpot/~~NhHA
@@ -31044,7 +31044,7 @@ kernige/~~NhE
 kernlos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 kerns/~~NhMZ
 kerosin/~~NhA
-kerze/~~NhEz
+kerze/~~NhEzF
 kerzen/~~Nh # auto-added
 kess/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 kessele/~~h # not a noun: no capitalized form
@@ -31162,7 +31162,7 @@ kinnen/~~Nh # auto-added
 kinnes/~~Nh
 kinnlos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 kinns/~~Nh
-kino/~~NbhH
+kino/~~NbhHZ
 kiosk/~~NXhHY
 kiosken/~~Nh # auto-added
 kiosks/~~Nh
@@ -31189,7 +31189,7 @@ kirmes/~~NhA
 kirre/~~h # not a noun: no capitalized form
 kirs/~~Nh
 kirsch/~~NXhYH
-kissen/~~Nh # auto-added
+kissen/~~NhZ # auto-added
 kissens/~~Nh
 kiste/~~NhEzF
 kisten/~~Nh # auto-added
@@ -31935,7 +31935,7 @@ krebste/~~h # not a noun: no capitalized form
 kredit/~~NXh0HYMZ
 kredits/~~NhMZ
 krefeld/~~NhHA
-kreide/~~NhE
+kreide/~~NhEF
 kreiden/~~VdifjecG # auto-added
 kreidet/~~hG # not a noun: no capitalized form
 kreidig/~~RJOQRSTqh
@@ -32109,7 +32109,7 @@ kubatur/~~NhY
 kuben/~~Nh # auto-added
 kubiert/~~NXhOQRSTG
 kubus/~~NhA
-kuchen/~~XZH #  auto-added
+kuchen/~~XHM #  auto-added
 kuchens/~~NhMZ
 kuckuck/~~NhA
 kufe/~~NhE
@@ -32121,7 +32121,7 @@ kugelnd/~~NhYOQRST
 kugelt/~~hG # not a noun: no capitalized form
 kugle/~~h # not a noun: no capitalized form
 kuglig/~~RJOQRSTqh
-kuh/~~NhE
+kuh/~~NhEF
 kuhhirt/~~NXhY
 kuhle/~~NhE
 kuhlen/~~Nh # auto-added
@@ -32165,7 +32165,7 @@ kungele/~~h # not a noun: no capitalized form
 kungeln/~~VdifjeGc # auto-added
 kungelt/~~hG # not a noun: no capitalized form
 kungle/~~h # not a noun: no capitalized form
-kunst/~~NhA
+kunst/~~NhAF
 kupee/~~NhHA
 kupees/~~Nh
 kupfer/~~MhEH
@@ -32260,7 +32260,7 @@ kähne/~~NhE
 kähnen/~~Nh # auto-added
 kälber/~~MhE
 kälbern/~~Nh
-kälte/~~NhA
+kälte/~~NhAF
 kältere/~~NhE
 käme/~~h # not a noun: no capitalized form
 kämen/~~VifjG # auto-added
@@ -32280,7 +32280,7 @@ kännte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 kännten/~~VifjG # auto-added
 känntet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 kärnten/~~NhH # auto-added
-käse/~~NhEH
+käse/~~NhEHM
 käs/*~~Vcejdfi # REPLACES käsen
 käsende/~~NhEJ # +adjective reading (was noun-only)
 käserei/~~NhY
@@ -32362,7 +32362,7 @@ köters/~~Nh
 kübel/~~NhEHz
 kübeln/~~Nh # auto-added
 kübels/~~Nh
-küche/~~NhE
+küche/~~NhEF
 küchen/~~XZ #  auto-added
 küfer/~~MhEH
 küfern/~~Nh
@@ -32433,7 +32433,7 @@ küssest/~~hV
 küsst/~~h # not a noun: no capitalized form
 küsste/~~h # not a noun: no capitalized form
 küsstet/~~hG # not a noun: no capitalized form
-küste/~~NhE
+küste/~~NhEF
 küsten/~~Nh # auto-added
 küster/~~MhEKLH
 küstern/~~Nh
@@ -32564,7 +32564,7 @@ laminen/~~Nh # auto-added
 lamm/~~Nh0HA
 lammes/~~Nh
 lamms/~~Nh
-lampe/~~NhE
+lampe/~~NhEF
 lampen/~~Nh # auto-added
 lampion/~~NhHA
 landab/~~h # not a noun: no capitalized form
@@ -33126,7 +33126,7 @@ lipide/~~NhE
 lipiden/~~Nh # auto-added
 liposom/~~NXhHY
 lipozyt/~~NhY
-lippe/~~NhEH
+lippe/~~NhEHF
 lippen/~~Nh # auto-added
 lipödem/~~NhYHX
 liquide/~~NhE
@@ -33632,7 +33632,7 @@ mafiös/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 mag/~~hVt
 magazin/~~NhYHXZ
 magd/~~NhA
-magen/~~Nh # auto-added
+magen/~~NhM # auto-added
 magens/~~Nh
 magenta/~~Nh
 magerem/~~Nh
@@ -33817,7 +33817,7 @@ manual/~~NXhHY
 manuals/~~Nh
 manöver/~~MhEH
 maori/~~Nh
-mappe/~~NhE
+mappe/~~NhEF
 mappen/~~Nh # auto-added
 marburg/~~NhHA
 marder/~~MhEH
@@ -33849,7 +33849,7 @@ markise/~~NhE
 marklos/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 markov/~~NhHA
 markovs/~~Nh
-markt/~~Nh0HMZA
+markt/~~Nh0HAM
 marktes/~~NhMZ
 markts/~~Nh
 markung/~~FhY
@@ -33986,7 +33986,7 @@ medien/~~Nh # auto-added
 medina/~~Nh
 medium/~~ZhHA # preposition um #  auto-added
 mediums/~~NhMZ
-medizin/~~NhA
+medizin/~~NhAF
 meer/~~hXY0HZ
 meere/~~NhE
 meereis/~~Nh0MZA
@@ -34086,7 +34086,7 @@ mengtet/~~hG # not a noun: no capitalized form
 mengung/~~FhY
 menno/~~NhYE
 mensa/~~Nh
-mensch/~~NhY
+mensch/~~NhYM
 mensur/~~NhY
 mental/~~hqOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 menthol/~~NhHA
@@ -34122,7 +34122,7 @@ mesomer/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 mess/*~~NXh78x
 mess/*~~Vcj78xfi # REPLACES messen
 messens/~~Nh
-messer/~~MhEHz
+messer/~~hEHzZ
 messern/~~Nh
 messers/~~Nh
 messias/~~NhA
@@ -34224,7 +34224,7 @@ milanen/~~Nh # auto-added
 milans/~~Nh
 milbe/~~NhE
 milben/~~Nh # auto-added
-milch/~~NhA
+milch/~~NhAF
 milchig/~~RJOQRSTqh
 milde/~~NhEJ # +adjective reading (was noun-only)
 mildem/~~Nh
@@ -34387,7 +34387,7 @@ mitsang/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 mittag/~~NhHA
 mittags/~~NhAr^ # adverb; the noun is des Mittags
 mittat/~~h # not a noun: no capitalized form
-mitte/~~NhE
+mitte/~~NhEF
 mittele/~~Nh
 mitteln/~~Vdifj78eGcx # auto-added
 mittels/~~hrNMZA
@@ -34564,7 +34564,7 @@ monoxid/~~NXhHY
 monoxyd/~~NXhHY
 monster/~~MhEH
 mont/~~NXh
-montag/~~NXhY
+montag/~~NXhYM
 montags/~~NhA
 montan/~~NhYOQRST
 montana/~~NbhH
@@ -34717,7 +34717,7 @@ mumien/~~Nh # auto-added
 mumm/~~NhHA
 mumms/~~Nh
 mumps/~~NhA
-mund/~~YZ0HX #  auto-added
+mund/~~Y0HXM #  auto-added
 mund/~~VcjY0 # REPLACES munden
 mundes/~~Nh
 mundet/~~h # not a noun: no capitalized form
@@ -34760,7 +34760,7 @@ musen/~~Nh # auto-added
 museum/~~ZhHA # preposition um #  auto-added
 museums/~~NhMZA
 musical/~~NhH # noun (hunspell); was retagged by shape
-musik/~~NhA
+musik/~~NhAF
 musiker/~~MhEKLH
 musikus/~~NhA
 muskel/~~NhEH
@@ -35020,7 +35020,7 @@ müsste/~~h # not a noun: no capitalized form
 müsstet/~~hG # not a noun: no capitalized form
 mütter/~~MhEz
 müttern/~~Nh
-mütze/~~NhEz
+mütze/~~NhEzF
 mützen/~~Nh # auto-added
 müßig/~~RJOQRSTqh
 müßigem/~~Nh
@@ -35138,7 +35138,7 @@ nasche/~~h # not a noun: no capitalized form
 naschen/~~ZdfijecG #  auto-added
 naschst/~~h # not a noun: no capitalized form
 nascht/~~hG # not a noun: no capitalized form
-nase/~~NhE
+nase/~~NhEF
 nasen/~~Nh # auto-added
 nashorn/~~NhHA
 naslang/~~h # not a noun: no capitalized form
@@ -35157,7 +35157,7 @@ natron/~~NhHA
 natrons/~~Nh
 natter/~~MhEH
 nattern/~~Nh
-natur/~~NhY
+natur/~~NhYF
 naturstoff/~~MhYE
 natura/~~h3 # foreign etymology term (Latin/Greek), handled in GermanNounCapitalization
 natural/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -35751,7 +35751,7 @@ omnibus/~~NhA
 omnivor/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 onanie/~~NhFA
 onanier/~~Mh # not a noun: no capitalized form
-onkel/~~NhEHzMZ
+onkel/~~NhEHzM
 onkeln/~~Nh # auto-added
 onkels/~~NhMZ
 onkogen/~~NhHXY # auto-added
@@ -35762,7 +35762,7 @@ onyxen/~~Nh # auto-added
 onyxes/~~Nh
 oozyte/~~NhE
 oozyten/~~Nh # auto-added
-opa/~~NbhH
+opa/~~NbhHM
 opak/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 opakem/~~Nh
 opaken/~~J # auto-added
@@ -35810,7 +35810,7 @@ oralen/~~J # auto-added
 oraler/~~Mh
 orales/~~Nh
 orang/~~NhYOQRST
-orange/~~NJqrEQRST #adjective and noun
+orange/~~NJqrEQRSTF #adjective and noun
 orangem/~~Nh
 orangen/~~VfjJrOQRST # auto-added
 oranger/~~Mh
@@ -36087,7 +36087,7 @@ pariert/~~NXhOQRSTG
 paris/~~NhA
 pariser/~~MhEKLH
 parität/~~NhYF
-park/~~NXhHY
+park/~~NXhHYM
 parka/~~NbhH
 park/~~VcejGdfi # REPLACES parken
 parkett/~~NhHX
@@ -36331,7 +36331,7 @@ pfalzen/~~Nh # auto-added
 pfand/~~Nh0HA
 pfandes/~~Nh
 pfands/~~Nh
-pfanne/~~NhE
+pfanne/~~NhEF
 pfannen/~~Nh # auto-added
 pfarr/~~NXh
 pfarrei/~~NhY
@@ -37012,7 +37012,7 @@ proband/~~NhYKL
 probat/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 prob/*~~VcejGdfi # REPLACES proben
 probier/~~Mh # not a noun: no capitalized form
-problem/~~NhYHXz
+problem/~~NhYHXzZ
 probt/~~hG # not a noun: no capitalized form
 probtet/~~hG # not a noun: no capitalized form
 produkt/~~ZhY0HX
@@ -37802,7 +37802,7 @@ refftet/~~hG # not a noun: no capitalized form
 reflex/~~NXh0Y
 reform/~~NhYF
 refrain/~~NhHA
-regal/~~NXhHY
+regal/~~NXhHYZ
 regalen/~~Nh # auto-added
 regals/~~Nh
 regatta/~~Nh
@@ -38758,7 +38758,7 @@ safe/~~NhHA
 safes/~~Nh
 safran/~~NhHA
 safrans/~~Nh
-saft/~~NXh0H
+saft/~~NXh0HM
 saften/~~Vfj # auto-added
 saftes/~~Nh
 saftest/~~hV
@@ -38789,7 +38789,7 @@ saiten/~~Nh # auto-added
 sakko/~~NbhH
 sakral/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 salami/~~NhH
-salat/~~NXh0HY
+salat/~~NXh0HYM
 salaten/~~Nh # auto-added
 salates/~~Nh
 salats/~~Nh
@@ -38850,7 +38850,7 @@ sampl/*~~VejGdfi # REPLACES samplen
 sampler/~~MhEH
 samples/~~Nh
 samplt/~~hG # not a noun: no capitalized form
-samstag/~~NXhY
+samstag/~~NXhYM
 samtes/~~Nh
 samtig/~~RJOQRSTqh
 samts/~~Nh
@@ -38990,7 +38990,7 @@ schacht/~~NXh0H
 schad/~~Nh # kein Plural: »schade« ist das Adjektiv und die 1. Person von »schaden«, kein Nomen
 schaden/~~VdifjecG # auto-added
 schadet/~~hG # not a noun: no capitalized form
-schaf/~~NXh0HY
+schaf/~~NXh0HYZ
 schafes/~~Nh
 schaff/~~h78x # not a noun: no capitalized form
 schafft/~~hVG # +verb reading (was noun-only)
@@ -39097,7 +39097,7 @@ schirmt/~~hG # not a noun: no capitalized form
 schirrt/~~hG # not a noun: no capitalized form
 schiss/~~NXh0sY
 schisst/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
-schlaf/~~NXh0HY
+schlaf/~~NXh0HYM
 schlafen/~~Vifjc # auto-added
 schlafs/~~NhMZ
 schlaft/~~h # not a noun: no capitalized form
@@ -39117,7 +39117,7 @@ schlimm/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 schlips/~~NXh0Y
 schliss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 schlitz/~~NXh0Y
-schloss/~~hV0s
+schloss/~~hV0sZ
 schlot/~~NXh0HY
 schlots/~~Nh
 schlug/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -39154,7 +39154,7 @@ schmäht/~~hG # not a noun: no capitalized form
 schnake/~~NhE
 schnapp/~~NXh
 schnaps/~~Nh0A
-schnee/~~NhHA
+schnee/~~NhHAM
 schnees/~~Nh
 schneit/~~hG # not a noun: no capitalized form
 schnitt/~~NXh0sHYz
@@ -39211,7 +39211,7 @@ schub/~~Nh0HA
 schubs/~~NXh
 schuf/~~hVs
 schuft/~~NXhGHY
-schuh/~~NXh0HY
+schuh/~~NXh0HYM
 schuhs/~~Nh
 schuld/~~NXhrY # +adverb reading (was noun-only)
 schult/~~hG # not a noun: no capitalized form
@@ -39542,7 +39542,7 @@ sodann/~~hr # +adverb reading (was noun-only)
 sodass/~~hr # +adverb reading (was noun-only)
 sodom/~~NhA
 soeben/~~Vj # auto-added
-sofa/~~NbhH
+sofa/~~NbhHZ
 sofern/~~hr
 soff/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 soffen/~~VijG # auto-added
@@ -39656,7 +39656,7 @@ spates/~~Nh
 spats/~~Nh
 spatz/~~NhY0
 spawnt/~~NXh
-spaß/~~NXh0Y
+spaß/~~NXh0YM
 spaß/~~Vcej0dfi # REPLACES spaßen
 spaßes/~~Nh
 spaßig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -39917,7 +39917,7 @@ stinkt/~~hG # not a noun: no capitalized form
 stippt/~~hG # not a noun: no capitalized form
 stirb/~~h # not a noun: no capitalized form
 stirbt/~~hVG # +verb reading (was noun-only)
-stirn/~~NhYX
+stirn/~~NhYXF
 stirne/~~NhE
 stob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 stoben/~~VijG # auto-added
@@ -39942,14 +39942,14 @@ stoßt/~~h # not a noun: no capitalized form
 straf/~~NXhx
 straft/~~hG # not a noun: no capitalized form
 stramm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-strand/~~NhXY0H78
+strand/~~NhXY0H78M
 strang/~~Nh0HA
 straps/~~NXh0Y
 strass/~~NhA
 strauß/~~NXh0Y
 straße/~~NhEF
 strebt/~~hVG # +verb reading (was noun-only)
-streit/~~NXh0HYMZ
+streit/~~NXh0HYM
 stress/~~NXh0
 streut/~~hG # not a noun: no capitalized form
 strikt/~~hVOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -39990,7 +39990,7 @@ sturem/~~Nh
 sturen/~~J # auto-added
 sturer/~~MhYJr
 stures/~~Nh
-sturm/~~Nh0HXMZ
+sturm/~~Nh0HXM
 sturms/~~Nh
 sturz/~~Nh0MZA
 stuss/~~Nh0A
@@ -40083,7 +40083,7 @@ sumpfs/~~Nh
 sunnit/~~NhYKL
 super/~~Mh
 superb/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-suppe/~~NhE
+suppe/~~NhEF
 suppen/~~Nh # auto-added
 sure/~~NhE
 suren/~~Nh # auto-added
@@ -40336,13 +40336,13 @@ tarock/~~NhA
 tarot/~~NhHA
 tarots/~~Nh
 tarski/~~Nh
-tasche/~~NhE
+tasche/~~NhEF
 tasere/~~NhYE
 tasern/~~NhYE
 tasert/~~NXh
 task/~~NhHA
 tasks/~~Nh
-tasse/~~NhE
+tasse/~~NhEF
 tassen/~~Nh # auto-added
 taste/~~NhE
 tasten/~~VdifjecGx # auto-added
@@ -40391,7 +40391,7 @@ techno/~~NhA
 teckel/~~NhEH
 teddy/~~NhHA
 teddys/~~Nh
-tee/~~NhEH
+tee/~~NhEHM
 teen/~~NhH # auto-added
 teenie/~~NhHFA
 teens/~~Nh
@@ -40586,7 +40586,7 @@ toller/~~MhYJr
 tolles/~~Nh
 tollt/~~hG # not a noun: no capitalized form
 toluol/~~NXhHY
-tomate/~~NhE
+tomate/~~NhEF
 tombak/~~NhHA
 tonal/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 tonarm/~~NXhOQRST0
@@ -40609,7 +40609,7 @@ tool/~~NhHMZA
 tools/~~Nh
 top/~~NhHAJ^ # adjective (sieht top aus); the noun is das Top
 topas/~~NXh0Y
-topf/~~Nh0HA
+topf/~~Nh0HAM
 topfes/~~Nh
 topfit/~~h # not a noun: no capitalized form
 topfs/~~Nh
@@ -40703,7 +40703,7 @@ traube/~~NhE
 trau/~~Vcej78nGdfi # REPLACES trauen
 trauer/~~MhE
 traufe/~~NhE
-traum/~~Zh0HA # preposition um # auto-added
+traum/~~h0HAM # preposition um # auto-added
 trauma/~~NbhH
 traums/~~Nh
 traun/~~NhGA
@@ -40848,7 +40848,7 @@ tube/~~NhE
 tuben/~~Nh # auto-added
 tubuli/~~NhE
 tubus/~~NhA
-tuch/~~NXhY0HMZ
+tuch/~~NXhY0HZ
 tuches/~~Nh
 tuchs/~~Nh
 tuckre/~~h # not a noun: no capitalized form
@@ -40973,7 +40973,7 @@ tümpel/~~NhEH
 tünche/~~h # not a noun: no capitalized form
 tüncht/~~hG # not a noun: no capitalized form
 tüpfel/~~NhEHz
-tür/~~NXhYz
+tür/~~NXhYzF
 türen/~~Nh # auto-added
 türke/~~NhEKL
 türkei/~~Nh
@@ -40987,10 +40987,10 @@ türme/~~NhEz
 türm/*~~VcejGdfi # REPLACES türmen
 türmst/~~hV
 türmt/~~hG # not a noun: no capitalized form
-tüte/~~NhEz
+tüte/~~NhEzF
 tüten/~~Nh # auto-added
 tütet/~~NhYE
-ufer/~~MhXEH
+ufer/~~hXEHZ
 ufere/~~h # not a noun: no capitalized form
 ufern/~~NhdfijeG
 ufers/~~Nh
@@ -40998,7 +40998,7 @@ ufert/~~hG # not a noun: no capitalized form
 uffgau/~~Nbh0H
 ufre/~~h # not a noun: no capitalized form
 uganda/~~NbhH
-uhr/~~NhY
+uhr/~~NhYF
 uhren/~~Nh # auto-added
 uhu/~~NbhH
 ukas/~~NhA
@@ -41214,7 +41214,7 @@ uriger/~~Mh
 uriges/~~Nh
 urin/~~NhHA
 urins/~~NhMZ
-urlaub/~~NXh0HY
+urlaub/~~NXh0HYM
 urne/~~NhE
 urnen/~~Nh # auto-added
 urteil/~~NXhHYZ
@@ -41372,7 +41372,7 @@ vivo/~~h # not a noun: no capitalized form
 vize/~~NhA
 vlies/~~NhY0X
 vliese/~~NhE
-vogel/~~NhH
+vogel/~~NhHM
 vogels/~~Nh
 vogt/~~Nh0HA
 vogtei/~~NhY
@@ -41516,7 +41516,7 @@ wandet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 wandle/~~h # not a noun: no capitalized form
 wandre/~~h # not a noun: no capitalized form
 wandte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-wange/~~NhE
+wange/~~NhEF
 wangen/~~NhH # auto-added
 wank/~~h # not a noun: no capitalized form
 wank/~~VcejGdfi # REPLACES wanken
@@ -41846,7 +41846,7 @@ wohls/~~Nh
 wohn/~~NhY
 wohn/~~Vcejf # REPLACES wohnen
 wohnt/~~hVG # +verb reading (was noun-only)
-wolf/~~Nh0HA
+wolf/~~Nh0HAM
 wolfes/~~Nh
 wolfs/~~NhA
 wolga/~~Nh
@@ -41900,7 +41900,7 @@ wundem/~~Nh
 wunden/~~Nh # auto-added
 wundes/~~Nh
 wundre/~~h # not a noun: no capitalized form
-wunsch/~~NXh0HMZ
+wunsch/~~NXh0HM
 wurde/~~Vtijs # verb (past tense of werden)
 wurden/~~VtifjG # verb (past tense plural of werden)
 wurdet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -41912,7 +41912,7 @@ wurmes/~~Nh
 wurmig/~~RJOQRSTqh
 wurms/~~Nh
 wurmt/~~hG # not a noun: no capitalized form
-wurst/~~NhY
+wurst/~~NhYF
 wurste/~~NhYE
 wurzel/~~NXhE
 wurzle/~~h # not a noun: no capitalized form
@@ -42050,7 +42050,7 @@ zahmem/~~Nh
 zahmen/~~J # auto-added
 zahmer/~~MhYJr
 zahmes/~~Nh
-zahn/~~NhY0H
+zahn/~~NhY0HM
 zahnes/~~Nh
 zahns/~~Nh
 zander/~~MhEH
@@ -42077,7 +42077,7 @@ zaudre/~~h # not a noun: no capitalized form
 zaum/~~ZX0H # auto-added
 zaumes/~~Nh
 zaums/~~Nh
-zaun/~~Nh0GHA
+zaun/~~Nh0GHAM
 zaunes/~~Nh
 zauns/~~Nh
 zaus/*~~Vcejdfi # REPLACES zausen
@@ -42281,7 +42281,7 @@ zufror/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zufuhr/~~NhYs
 zufüge/~~h # not a noun: no capitalized form
 zufügt/~~hG # not a noun: no capitalized form
-zug/~~hV0
+zug/~~hV0M
 zugab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zugabt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 zugang/~~Nh0HMA
@@ -42331,7 +42331,7 @@ zunahm/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zuname/~~NhE
 zunder/~~MhEH
 zunft/~~NhA
-zunge/~~NhE
+zunge/~~NhEF
 zungen/~~Nh # auto-added
 zunähe/~~h # not a noun: no capitalized form
 zunäht/~~hG # not a noun: no capitalized form
@@ -58381,7 +58381,7 @@ buchendes/~~h # not a noun: no capitalized form
 buchsbaum/~~Zh0HA # preposition um #  auto-added
 buchsbaums/~~Nh
 buchsbäume/~~NhE
-buchstabe/~~NhE
+buchstabe/~~NhEM
 buchstaben/~~Nh # auto-added
 buchtest/~~h # not a noun: no capitalized form
 buchungen/~~Vj # auto-added
@@ -61172,7 +61172,7 @@ dienlichen/~~XZG #  auto-added
 dienlicher/~~MhYJr
 dienliches/~~Nh
 dienlichst/~~NhYOQRST
-dienstag/~~NXh0Y
+dienstag/~~NXh0YM
 dienstagen/~~Nh # auto-added
 dienstages/~~Nh
 dienstags/~~NhA
@@ -61659,7 +61659,7 @@ donnernden/~~Vfj # auto-added
 donnernder/~~Mh
 donnerndes/~~Nh
 donnerns/~~Nh
-donnerstag/~~NhY0HX
+donnerstag/~~NhY0HXM
 donnerten/~~VifjG # auto-added
 donnertest/~~hV
 donnertet/~~hG # not a noun: no capitalized form
@@ -72895,7 +72895,7 @@ flugnahem/~~NhYE
 flugnahen/~~Vj # auto-added
 flugnaher/~~MhYE
 flugnahes/~~NhYE
-flugzeug/~~NhMZA
+flugzeug/~~NhAZ
 fluktuiere/~~h # not a noun: no capitalized form
 fluktuiert/~~hG # not a noun: no capitalized form
 flundern/~~Nh # auto-added
@@ -74038,7 +74038,7 @@ freundes/~~NhMZ
 freundet/~~hG # not a noun: no capitalized form
 freundeten/~~VifjG # auto-added
 freundetet/~~hG # not a noun: no capitalized form
-freundin/~~Nh
+freundin/~~NhF
 freutest/~~h # not a noun: no capitalized form
 frevelnd/~~NhYOQRST
 frevelnde/~~NhE
@@ -79369,7 +79369,7 @@ geschifft/~~JOQRSTVgfj
 geschimpft/~~JOQRSTVgfj
 geschippt/~~JOQRSTVgj
 geschirmt/~~JOQRSTVgfj
-geschirr/~~NXh0HY
+geschirr/~~NXh0HYZ
 geschirren/~~Nh # auto-added
 geschirres/~~Nh
 geschirrs/~~Nh
@@ -88021,7 +88021,7 @@ karthago/~~NbhH
 kartiere/~~h # not a noun: no capitalized form
 kartieren/~~Vdifj78ecGnx # auto-added
 kartiert/~~NXhOQRSTG
-kartoffel/~~NhE
+kartoffel/~~NhEF
 kartograf/~~NhYKL
 kartusche/~~NhE
 karwoche/~~NhA
@@ -91453,7 +91453,7 @@ lehrende/~~NhEJ # +adjective reading (was noun-only)
 lehrendem/~~h # not a noun: no capitalized form
 lehrender/~~Mh # not a noun: no capitalized form
 lehrendes/~~h # not a noun: no capitalized form
-lehrerin/~~Nh
+lehrerin/~~NhF
 lehrgangs/~~NhA
 lehrlinge/~~NhE
 lehrlings/~~Nh
@@ -94387,7 +94387,7 @@ mitturne/~~h # not a noun: no capitalized form
 mitturnen/~~VdifjecG # auto-added
 mitturnst/~~hV
 mitturnt/~~hG # not a noun: no capitalized form
-mittwoch/~~NXh0Y
+mittwoch/~~NXh0YM
 mittwochs/~~NhA
 mittäten/~~VifjG # auto-added
 mittätet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -101062,7 +101062,7 @@ ruckendem/~~NhYE
 ruckender/~~MhYE
 ruckendes/~~NhYE
 ruckfrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-rucksack/~~NhHA
+rucksack/~~NhHAM
 rucksacks/~~Nh
 rucksäcke/~~NhE
 rucktest/~~NhYE
@@ -102477,7 +102477,7 @@ schlampe/~~NhE
 schlampen/~~VdifjecG # auto-added
 schlampst/~~hV
 schlampt/~~hG # not a noun: no capitalized form
-schlange/~~NhE
+schlange/~~NhEF
 schlangen/~~Nh # auto-added
 schlangt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 schlankem/~~Nh
@@ -102651,7 +102651,7 @@ schlürfen/~~VdifjecG # auto-added
 schlürfst/~~hV
 schlürft/~~hG # not a noun: no capitalized form
 schlüsse/~~NhE
-schlüssel/~~NhEHzMZ
+schlüssel/~~NhEHzM
 schlüssen/~~Nh # auto-added
 schlüssle/~~h # not a noun: no capitalized form
 schmachte/~~h # not a noun: no capitalized form
@@ -103155,7 +103155,7 @@ schweifs/~~Nh
 schweift/~~hG # not a noun: no capitalized form
 schweigst/~~h # not a noun: no capitalized form
 schweigt/~~hG # not a noun: no capitalized form
-schwein/~~NhY0HXz # auto-added
+schwein/~~NhY0HXzZ # auto-added
 schweine/~~NhE
 schweinen/~~Nh # auto-added
 schweines/~~Nh
@@ -103471,7 +103471,7 @@ schürzend/~~NhYJOQRST # +adjective reading (was noun-only)
 schürzt/~~hG # not a noun: no capitalized form
 schürztet/~~hG # not a noun: no capitalized form
 schüsse/~~NhE
-schüssel/~~NhEz
+schüssel/~~NhEzF
 schüsseln/~~Nh # auto-added
 schüssen/~~Nh # auto-added
 schütte/~~h # not a noun: no capitalized form
@@ -104631,7 +104631,7 @@ sonniger/~~MhYJr
 sonnigere/~~NhE
 sonniges/~~Nh
 sonnigste/~~h # not a noun: no capitalized form
-sonntag/~~NXh0Y
+sonntag/~~NXh0YM
 sonntagen/~~Nh # auto-added
 sonntages/~~Nh
 sonntags/~~NhrA # +adverb reading (was noun-only)
@@ -106293,7 +106293,7 @@ strudelt/~~hG # not a noun: no capitalized form
 strudle/~~h # not a noun: no capitalized form
 struktur/~~FXhY
 strukturen/~~F # plural of Struktur
-strumpf/~~Nh0HA
+strumpf/~~Nh0HAM
 strumpfes/~~Nh
 strumpfs/~~Nh
 strunkes/~~Nh
@@ -107748,7 +107748,7 @@ tektinen/~~Nh # auto-added
 tektins/~~Nh
 tektonik/~~NhA
 telefax/~~NhA
-telefon/~~NhYHXMZ
+telefon/~~NhYHXZ
 telefonat/~~NhYHX
 telefone/~~NhE
 telefonen/~~Nh # auto-added
@@ -117904,7 +117904,7 @@ zitrates/~~Nh
 zitrats/~~Nh
 zitronat/~~NhHA
 zitronats/~~Nh
-zitrone/~~NhE
+zitrone/~~NhEF
 zitronen/~~Nh # auto-added
 zitrusöl/~~NhHA
 zitrusöls/~~Nh
@@ -119271,7 +119271,7 @@ zwicktest/~~h # not a noun: no capitalized form
 zwicktet/~~hG # not a noun: no capitalized form
 zwieback/~~NhHA
 zwiebacks/~~Nh
-zwiebel/~~NhEz
+zwiebel/~~NhEzF
 zwiebeln/~~Nh # auto-added
 zwiebelt/~~NXh
 zwiefach/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -120530,7 +120530,7 @@ fehlbar/~~JOQRSTq #adjective (auto-converted)
 fetisch/~~Nh0HXY # noun (hunspell); was retagged by shape
 filmbar/~~JOQRSTq #adjective (auto-converted)
 findbar/~~JOQRSTq #adjective (auto-converted)
-fleisch/~~Nh0H # noun (hunspell); was retagged by shape
+fleisch/~~Nh0HZ # noun (hunspell); was retagged by shape
 formbar/~~JOQRSTq #adjective (auto-converted)
 fragbar/~~JOQRSTq #adjective (auto-converted)
 färbbar/~~JOQRSTq #adjective (auto-converted)
@@ -120603,7 +120603,7 @@ mimisch/~~JOQRSTq #adjective (auto-converted)
 modisch/~~JOQRSTUWq9 #adjective (auto-converted)
 musisch/~~JOQRSTq #adjective (auto-converted)
 möglich/~~JOQRSTUWq9 #adjective (auto-converted)
-nachbar/~~NhKLEH # noun (hunspell); was retagged by shape
+nachbar/~~NhKLEHM # noun (hunspell); was retagged by shape
 nahbar/~~JOQRSTq9 #adjective (auto-converted)
 neigbar/~~JOQRSTq #adjective (auto-converted)
 nennbar/~~JOQRSTq #adjective (auto-converted)
@@ -120996,7 +120996,7 @@ beidäugig/~~JOQRSTq #adjective (auto-converted)
 beilegbar/~~JOQRSTq #adjective (auto-converted)
 beilförmig/~~JOQRSTq #adjective (auto-converted)
 beiläufig/~~JOQRSTq #adjective (auto-converted)
-beispiel/~~NhHXY # noun (hunspell); was retagged by shape
+beispiel/~~NhHXYZ # noun (hunspell); was retagged by shape
 beißwütig/~~JOQRSTq #adjective (auto-converted)
 bejagbar/~~JOQRSTq #adjective (auto-converted)
 bekämpfbar/~~JOQRSTq #adjective (auto-converted)
@@ -123919,7 +123919,7 @@ zünftisch/~~JOQRSTq #adjective (auto-converted)
 übertägig/~~JOQRSTq #adjective (auto-converted)
 überzonal/~~JOQRSTq #adjective (auto-converted)
 frau/~~NhYzF
-luft/~~NhA
+luft/~~NhAF
 mann/~~NhY0HXM
 brühe/~~FhE
 büßer/~~NhEKLH
@@ -123931,7 +123931,7 @@ münze/~~FhE
 räder/~~NhE
 römer/~~NhEKLH
 röter/~~h # not a noun: no capitalized form
-stuhl/~~Nh0HXMZ
+stuhl/~~Nh0HXM
 täler/~~NhE
 täter/~~NhEKLH
 wärme/~~FhE
@@ -123939,7 +123939,7 @@ würge/~~FhE
 öfter/~~hOQRST # not a noun: no capitalized form
 bläser/~~NhEKLH
 brüter/~~NhEH
-bäcker/~~NhEKLH
+bäcker/~~NhEKLHM
 bänker/~~NhEH
 dächer/~~NhE
 dörfer/~~NhE
@@ -128785,7 +128785,7 @@ resonieren/~~Nh
 resonierte/~~FhYE
 respektlos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 ressourcen/~~Nh
-restaurant/~~NhHMZA
+restaurant/~~NhHAZ
 restemarkt/~~Nh0HA
 resterampe/~~FhE
 resultativ/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
@@ -130982,7 +130982,7 @@ untermalen/~~Nhdfij78ecGH
 unternimmt/~~hG # not a noun: no capitalized form
 unternähme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterreden/~~Nh78defijcGH
-unterricht/~~NhY0HX78
+unterricht/~~NhY0HX78M
 untersagen/~~Nhdfij78ecGHn # auto-added
 unterschob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterseits/~~h # not a noun: no capitalized form
@@ -141383,7 +141383,7 @@ mitsprechen/~~hcfi # not a noun: no capitalized form
 mitspringen/~~hcGfi # auto-added
 mitsteigern/~~rhdfijeG # adverb gladly
 mitsuchtest/~~NhYE
-mittagessen/~~NhH
+mittagessen/~~NhHZ
 mitteilungs/~~NhA
 mittelasien/~~NhH
 mittelblond/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
@@ -143126,7 +143126,7 @@ radaubrüder/~~NhE
 radebrechen/~~NhcfiHZ
 radebrecher/~~Nh
 radgestützt/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
-radiergummi/~~NhH
+radiergummi/~~NhHM
 radierkunst/~~NhA
 radiernadel/~~Nh
 radikalisch/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
@@ -206517,24 +206517,24 @@ fee/~~NE
 olé/~~NYE
 café/~~NYEH
 ebbe/~~NE
-ecke/~~NEz
+ecke/~~NEzF
 ehre/~~NE
 elfe/~~NE
 ende/~~FEH
 enge/~~NEr # +adverb reading (was noun-only)
 erbe/~~EKLHZM
-erde/~~NE
+erde/~~NEF
 fakt/~~NY0H
 gabe/~~NE
 gäbe/~~Vijs
 habe/~~Vs
-hase/~~NE
+hase/~~NEM
 hefe/~~NE
 hexe/~~NEF
-hose/~~NE
+hose/~~NEF
 hupe/~~NE
 hure/~~NE
-knie/~~NEH
+knie/~~NEHZ
 lade/~~NE
 lamé/~~NYEH
 lese/~~V
@@ -206545,7 +206545,7 @@ mime/~~NE
 mole/~~NE
 muse/~~NYE
 neon/~~NHA
-obst/~~N0HA
+obst/~~N0HAZ
 oman/~~NHA
 aalen/~~VdifjecG
 ahmen/~~VdifjeG
@@ -206572,7 +206572,7 @@ enden/~~NV78defijcGH # +verb reading (was noun-only)
 engen/~~VdifjeG
 erben/~~VdifjecG
 erden/~~NV78defijcGH # +verb reading (was noun-only)
-essen/~~NVcfiHx # +verb reading (was noun-only)
+essen/~~NVcfiHxZ # +verb reading (was noun-only)
 faxen/~~VdifjecG
 fegen/~~VdifjecG
 feien/~~VdifjeG
@@ -211477,7 +211477,7 @@ rede/~~NEF
 reue/~~NE
 rose/~~FhEH # feminine noun die Rose
 rosé/~~NYE
-ruhe/~~NE
+ruhe/~~NEF
 räte/~~NEKL
 rüde/~~NEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
 sage/~~V
@@ -215040,7 +215040,7 @@ quast/~~NY0HX
 karre/~~NE0X
 creme/~~NEH
 kreme/~~NEH
-liebe/~~NEz
+liebe/~~NEzF
 lotse/~~FEKL
 taler/~~NEH
 cache/~~NHA
@@ -215053,9 +215053,9 @@ funke/~~NE
 geige/~~NE
 gosse/~~NE
 grube/~~NE
-gurke/~~NE
+gurke/~~NEF
 hüfte/~~NE
-junge/~~NE
+junge/~~NEM
 kacke/~~NE
 kanne/~~NE
 karte/~~NhE
@@ -215091,14 +215091,14 @@ robbe/~~NE
 rolle/~~NEF
 sache/~~NEF
 seife/~~NE
-seite/~~NE
+seite/~~NEF
 sense/~~NE
 sonne/~~FhEJ # feminine noun die Sonne; +adjective reading (was noun-only)
-sorge/~~NE
+sorge/~~NEF
 spule/~~NE
 stufe/~~NEF
 suche/~~V
-summe/~~NE
+summe/~~NEF
 taufe/~~NEF
 wache/~~NE
 walze/~~NE
@@ -215113,9 +215113,9 @@ zacke/~~NE
 zeche/~~NE
 zelle/~~NE
 zicke/~~NE
-durst/~~NY0H
+durst/~~NY0HM
 eiche/~~NE
-fahrt/~~NY
+fahrt/~~NYF
 falte/~~NE
 folge/~~NEF
 frage/~~FhE # feminine noun die Frage
@@ -215130,7 +215130,7 @@ melde/~~NE
 messe/~~NE
 miete/~~NE
 morse/~~NE
-nacht/~~NX
+nacht/~~NXF
 nahme/~~NE
 probe/~~FhE # feminine noun die Probe
 quere/~~NE
@@ -215196,7 +215196,7 @@ flagge/~~NE
 flamme/~~NE
 flanke/~~NE
 flaute/~~NE
-fliege/~~NE
+fliege/~~NEF
 fliese/~~NE
 flocke/~~NE
 flosse/~~NE
@@ -215307,7 +215307,7 @@ wünsche/~~NE
 zufahrt/~~NY
 zunahme/~~NEF
 einlege/~~NE
-gedanke/~~NE
+gedanke/~~NEM
 pflanze/~~NhEF
 schuppe/~~NE
 schwebe/~~NE
@@ -235031,7 +235031,7 @@ furniere/~~N # noun reading: a form of Furnier (hunspell)
 furnieren/~~N # noun reading: a form of Furnier (hunspell)
 galgen/~~N # noun reading: a form of Galgen (hunspell)
 gambist/~~N # noun reading: a form of Gambist (hunspell)
-garten/~~N # noun reading: a form of Garten (hunspell)
+garten/~~NM # noun reading: a form of Garten (hunspell)
 gaumen/~~N # noun reading: a form of Gaumen (hunspell)
 gefangenschaftsbedingungen/~~N # noun reading: a form of Gefangenschaftsbedingungen (hunspell)
 gegeneinanderwirken/~~N # noun reading: a form of Gegeneinanderwirken (hunspell)
@@ -235096,7 +235096,7 @@ kastellinnenbauten/~~N # noun reading: a form of Kastellinnenbauten (hunspell)
 katalogschubkästen/~~N # noun reading: a form of Katalogschubkästen (hunspell)
 kathedralenneubauten/~~N # noun reading: a form of Kathedralenneubauten (hunspell)
 kirchenpatrozinien/~~N # noun reading: a form of Kirchenpatrozinien (hunspell)
-kissen/~~N # noun reading: a form of Kissen (hunspell)
+kissen/~~NZ # noun reading: a form of Kissen (hunspell)
 klammern/~~N # noun reading: a form of Klammer (hunspell)
 kloppe/~~N # noun reading: a form of Kloppe (hunspell)
 klosterskriptorien/~~N # noun reading: a form of Klosterskriptorien (hunspell)
@@ -235147,7 +235147,7 @@ lohnsetzungsmechanismen/~~N # noun reading: a form of Lohnsetzungsmechanismen (h
 lombardverbindlichkeiten/~~N # noun reading: a form of Lombardverbindlichkeiten (hunspell)
 löslichkeitseigenschaften/~~N # noun reading: a form of Löslichkeitseigenschaften (hunspell)
 mafiaverstrickungen/~~N # noun reading: a form of Mafiaverstrickungen (hunspell)
-magen/~~N # noun reading: a form of Magen (hunspell)
+magen/~~NM # noun reading: a form of Magen (hunspell)
 magnesiumbedarf/~~N # noun reading: a form of Magnesiumbedarf (hunspell)
 malerbedarfe/~~N # noun reading: a form of Malerbedarf (hunspell)
 malerbedarfen/~~N # noun reading: a form of Malerbedarf (hunspell)
@@ -235246,7 +235246,7 @@ russifizierungsbemühungen/~~N # noun reading: a form of Russifizierungsbemühun
 russifizierungsbestrebungen/~~N # noun reading: a form of Russifizierungsbestrebungen (hunspell)
 räume/~~N # noun reading: a form of Raum (hunspell)
 röntgen/~~N # noun reading: a form of Röntgen (hunspell)
-rücken/~~N # noun reading: a form of Rücken (hunspell)
+rücken/~~NM # noun reading: a form of Rücken (hunspell)
 sage/~~N # noun reading: a form of Sage (hunspell)
 sample/~~N # noun reading: a form of Sample (hunspell)
 schaden/~~N # noun reading: a form of Schaden (hunspell)
@@ -240312,3 +240312,11 @@ zylindersymmetrisch/~~hJOQRST # igerman98 SFX A headword
 überwachungspflichtig/~~hJOQRST # igerman98 SFX A headword
 nachmittags/~~hr^ # adverb; the noun is des Nachmittags
 varus/~~3 # Latin: Genu varus
+katze/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+kirche/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+kirsche/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+decke/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+freude/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+note/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+tiefe/~~NhEF # everyday noun, gender from add_german_common_noun_genders.py
+auge/~~NhEZ # everyday noun, gender from add_german_common_noun_genders.py

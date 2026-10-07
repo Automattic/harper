@@ -1334,19 +1334,57 @@ than assumed:
 
 A determiner opening a relative clause is a pronoun (*Frauen, die Mut haben*),
 and a capitalized one in mid-sentence is part of a name (*Die Zeit*); both stay
-untouched. Only the article is read — an adjective ending that contradicts the
-noun (*ein großer Haus*, *einen neue Tisch*) is **not** checked, and neither is
-a noun whose gender the dictionary does not carry (*Tasche*, *Katze*, *Garten*:
-the 41 % the oracle has not reached).
+untouched, as does *ein bisschen / ein paar / ein wenig*, where *ein* is part of
+an indeclinable quantifier.
 
-New battery `tests/batteries/determiner_gender.tsv`, Harper only (no
-LanguageTool available when it was written): **9/10 with 0/25 false alarms.** The
-one miss, *der Zeit vergeht*, is deliberate: *der* is also dative and genitive
-feminine. The existing `grammar.tsv` goes from 30/50 to 36/50 with no new false
-alarm; its other classes are unchanged. No prose corpus was reachable when this
-was measured, so the precision claim rests on 78 correct battery sentences and
-the committed `test_sources`, which is thin — **run `just language-lint-sources
-german` and the prose corpus before trusting it.**
+### The adjective between article and noun
+
+*ein großer Haus*, *einen neue Tisch*. Once the article fits the noun, the
+article's paradigm fixes the ending of the adjectives in between: strong where
+an *ein*-word shows nothing (nominative masculine `-er`, nominative and
+accusative neuter `-es`), weak everywhere else, and weak after *der*, *dieser*,
+*jener*, *jeder*. `adjective_ending_after` in `grammar/determiners.rs` is that
+table. Four restrictions, each a way the first draft would have been wrong:
+
+* **Only certainly singular phrases.** The plural endings differ, and *die*
+  cannot say which it is.
+* ***manch*, *solch*, *welch*, *all* are not in the table.** A strong adjective
+  behind them is correct, and the weak ending the table would demand is not.
+* **The noun's gender must be known**, as for the article.
+* **A suggestion has to be a word.** The corrected form is only offered if the
+  dictionary knows it, which keeps *teuer* from becoming *\*teueres*.
+
+### `das` for `dass` without a comma
+
+`DasDass.weir` required the comma, and school writing leaves it out as often as
+it sets it. The comma-less variants accept only the subject pronouns that cannot
+be objects (*ich, du, er, sie, es, wir, ihr, man, jemand, niemand*); the
+article branch (*ich weiß das der Schuh drückt*) stays comma-only, because
+*ich finde das die Idee gut ist* is not a content clause. A Weir expression
+name may not contain an underscore: `subjekt_ohne_komma` was silently read as
+`subjekt`, and the variants never matched.
+
+### What the audit of the gender data found
+
+`scripts/add_german_common_noun_genders.py` writes the gender of about 400
+everyday nouns, and its first run was an audit of what was already there:
+*Kuchen*, *Mund* and *Traum* recorded neuter, *Bier*, *Messer* and *Ufer*
+masculine — each of those would have made the correct article a report — and
+about thirty words (*Bein*, *Bett*, *Finger*, *Löffel*, *Telefon*) recorded with
+two genders where German has one. The two-gender entries are the oracle's
+"not feminine" evidence and not errors, so they were harmless; the table makes
+them exact. Eight everyday nouns (*Katze*, *Kirche*, *Kirsche*, *Decke*,
+*Freude*, *Note*, *Tiefe*, *Auge*) existed only as the *plural* of a stem
+(`katz` + `-e`, number PLURAL). They got a lemma of their own. A flag on the
+stem is the wrong fix: `tief` is an adjective and `deck` a verb stem.
+
+New batteries `determiner_gender.tsv` (9/10, 0/25 false alarms) and
+`adjective_ending.tsv` (9/10, 0/32). `grammar.tsv`: **30/50 → 40/50**, no new
+false alarm, and the whole-group output on `test_sources` is unchanged. Both
+batteries were written alongside the rule, so they measure it on cases it was
+built for. No prose corpus and no LanguageTool were reachable, so the precision
+claim rests on 140 correct sentences and the committed `test_sources`: **run
+`just language-lint-sources german` and the prose corpus before trusting it.**
 
 ## The fused spellings the reform allows
 
