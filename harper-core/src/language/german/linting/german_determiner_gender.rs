@@ -1,7 +1,5 @@
 //! Checks that a determiner carries the gender of the noun it introduces.
 
-use std::sync::Arc;
-
 use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
@@ -9,17 +7,12 @@ use crate::{
         DeterminerReading, adjective_ending_after, determiner_readings, forms_with_gender,
         stands_alone,
     },
+    language::german::grammar::noun_gender::{NounGender, trusted_head},
     language::german::grammar::noun_phrase::{self, Phrase, opens_relative_clause},
-    language::german::spell::curated_german_dictionary,
-    language::morphology::{Gender, MorphologyExt, NumberSet},
+    language::morphology::Gender,
     linting::{Lint, LintKind, Linter, Suggestion},
-    spell::{Dictionary, FstDictionary},
+    spell::Dictionary,
 };
-
-/// Endings of a noun whose plural may be spelled like its singular (*der
-/// Lehrer*, *die Lehrer*; *das Mädchen*, *die Mädchen*; *der Kuchen*). The
-/// dictionary records some of these as singular only, so the spelling decides.
-const SAME_AS_PLURAL: &[&str] = &["en", "er", "el"];
 
 /// Catches an article that does not fit its noun's gender: *"**die** Hund"*,
 /// *"**das** Schule"*, *"**ein** Frau"*.
@@ -36,7 +29,8 @@ const SAME_AS_PLURAL: &[&str] = &["en", "er", "el"];
 /// * **The noun is surely a singular**, wherever the article has a plural
 ///   reading. *die* is also the plural article, so *die Hund* is only wrong if
 ///   *Hund* cannot be a plural; a base entry marked singular that does not end
-///   like a plural qualifies, *Lehrer* and *Mädchen* do not. Without this every
+///   like a plural qualifies, *Lehrer* and *Mädchen* do not, *Garten* does
+///   because its plural is *Gärten* (see `grammar/noun_gender.rs`). Without this every
 ///   *die Kinder* would be a report. *das* and *ein* have no plural, so for
 ///   them the gender alone decides.
 /// * **The chunker has shown the phrase to end at the noun.** The head comes
@@ -47,12 +41,11 @@ const SAME_AS_PLURAL: &[&str] = &["en", "er", "el"];
 /// haben*) and is left alone, as is a capitalized one in mid-sentence, which is
 /// part of a name (*Die Zeit*).
 ///
-/// Only the determiner is read. An adjective ending that contradicts the noun
-/// (*ein großes Hund*) is not checked.
+/// When the article fits, the adjectives between it and the noun are checked
+/// against the ending the article's paradigm demands (*ein großer Haus*); see
+/// `lint_adjectives`.
 pub struct GermanDeterminerGender {
-    /// The base dictionary, not the compound-aware one, for the reason the
-    /// preposition rule gives: a decomposition invents readings.
-    dictionary: Arc<FstDictionary>,
+    nouns: NounGender,
 }
 
 impl Default for GermanDeterminerGender {
@@ -64,78 +57,8 @@ impl Default for GermanDeterminerGender {
 impl GermanDeterminerGender {
     pub fn new() -> Self {
         Self {
-            dictionary: curated_german_dictionary(),
+            nouns: NounGender::new(),
         }
-    }
-
-    /// The one gender the dictionary records for `head`, and whether the noun
-    /// is surely a singular.
-    ///
-    /// "Surely" means a base entry marked singular whose spelling does not
-    /// allow it to be a plural as well: *Hund* and *Haus* are, *Lehrer* and
-    /// *Mädchen* are not, and *Schule* is not either, since the entry has both
-    /// numbers.
-    fn gender_of(&self, head: &str) -> Option<(Gender, bool)> {
-        let chars: Vec<char> = head.chars().collect();
-        let metadata = self
-            .dictionary
-            .get_word_metadata(&chars)
-            .filter(|metadata| metadata.is_noun())?;
-        let agreement = metadata.noun_agreement();
-
-        // `unique` is `None` for an empty set and for one with several genders.
-        let gender = agreement.gender.unique()?;
-        let lower = head.to_lowercase();
-        // An acronym inflects for nothing: *die AGB*.
-        let acronym = head.chars().all(|c| !c.is_lowercase());
-        let surely_singular = agreement.number == NumberSet::SINGULAR
-            && !acronym
-            && !SAME_AS_PLURAL.iter().any(|ending| lower.ends_with(ending));
-
-        Some((gender, surely_singular))
-    }
-
-    /// The noun that ends `phrase`, when the chunker's choice can be trusted.
-    ///
-    /// The preposition rule asks for a function word or punctuation behind the
-    /// head, which is the right bar for a case error and the wrong one here:
-    /// *die Hund gesehen* ends on a participle and is exactly what this rule is
-    /// for. What has to be ruled out instead is a head that is only the first
-    /// capital of a longer run — *den Berliner Philharmonikern*, *die Deutsche
-    /// Bahn* — so a capitalized word behind it rejects the phrase, as does a
-    /// hyphen, which makes the head half of a compound.
-    fn head_of(document: &Document, words: &[&Token], phrase: &Phrase) -> Option<String> {
-        let token = words[phrase.head];
-        if !matches!(token.kind, TokenKind::Word(_)) {
-            return None;
-        }
-
-        let content = document.get_full_content();
-        let touches_hyphen = content.get(token.span.end) == Some(&'-')
-            || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
-        if touches_hyphen {
-            return None;
-        }
-
-        let capitalized = |token: &Token| {
-            matches!(token.kind, TokenKind::Word(_))
-                && document
-                    .get_span_content(&token.span)
-                    .first()
-                    .is_some_and(|c| c.is_uppercase())
-        };
-        if words
-            .get(phrase.head + 1)
-            .is_some_and(|next| capitalized(next))
-        {
-            return None;
-        }
-
-        let head: String = document.get_span_content(&token.span).iter().collect();
-        head.chars()
-            .next()
-            .is_some_and(char::is_uppercase)
-            .then_some(head)
     }
 
     /// Checks the ending of the adjectives between the determiner and the noun.
@@ -176,7 +99,8 @@ impl GermanDeterminerGender {
             return;
         }
 
-        for token in &words[phrase.open + 1..phrase.head] {
+        let attributes = &words[phrase.open + 1..phrase.head];
+        for (at, token) in attributes.iter().enumerate() {
             let chars = document.get_span_content(&token.span);
             let word: String = chars.iter().collect();
             if !matches!(token.kind, TokenKind::Word(_))
@@ -193,8 +117,22 @@ impl GermanDeterminerGender {
             if allowed.contains(&ending) {
                 continue;
             }
+            // A degree word in front of the adjective it grades is not
+            // declined at all: *in einem **weniger** präzisen Format*, *ein
+            // **mehr** oder minder*. What gives it away is that the next word
+            // carries a correct ending and this one a different one; two
+            // declined attributes in a row share theirs (*ein schöner alter
+            // Baum*).
+            let grades_the_next = attributes.get(at + 1).is_some_and(|next| {
+                let next: String = document.get_span_content(&next.span).iter().collect();
+                allowed.iter().any(|wanted| next.ends_with(wanted))
+            });
+            if grades_the_next {
+                continue;
+            }
             let is_adjective = self
-                .dictionary
+                .nouns
+                .dictionary()
                 .get_word_metadata(chars)
                 .is_some_and(|metadata| metadata.is_adjective());
             if !is_adjective {
@@ -205,7 +143,7 @@ impl GermanDeterminerGender {
             let suggestions: Vec<Suggestion> = allowed
                 .iter()
                 .map(|wanted| format!("{stem}{wanted}"))
-                .filter(|form| self.dictionary.contains_word_str(form))
+                .filter(|form| self.nouns.dictionary().contains_word_str(form))
                 .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
                 .collect();
 
@@ -284,10 +222,10 @@ impl Linter for GermanDeterminerGender {
                     continue;
                 }
 
-                let Some(head) = Self::head_of(document, &words, phrase) else {
+                let Some(head) = trusted_head(document, &words, phrase) else {
                     continue;
                 };
-                let Some((gender, surely_singular)) = self.gender_of(&head) else {
+                let Some((gender, surely_singular)) = self.nouns.gender_of(&head) else {
                     continue;
                 };
 
@@ -489,5 +427,43 @@ mod tests {
     fn a_noun_with_two_genders_is_not_checked() {
         let found = reported("Das Teil und der Teil gehören zusammen.");
         assert!(found.is_empty(), "{found:?}");
+    }
+
+    #[test]
+    fn a_noun_with_an_umlaut_plural_is_a_singular() {
+        assert_eq!(reported("Wir sitzen in die Garten."), ["die"]);
+        assert_eq!(reported("Die Vogel singt."), ["Die"]);
+        assert_eq!(reported("Ich esse die Apfel."), ["die"]);
+    }
+
+    #[test]
+    fn a_plural_spelled_like_its_singular_is_quiet() {
+        for text in [
+            "Die Kuchen stehen auf dem Tisch.",
+            "Die Lehrer sind krank.",
+            "Die Wagen fahren langsam.",
+            "Die Gärten sind schön.",
+        ] {
+            let found = reported(text);
+            assert!(found.is_empty(), "{text}: {found:?}");
+        }
+    }
+
+    #[test]
+    fn a_degree_word_before_an_adjective_is_not_declined() {
+        let found = reported("Die Zeit steht in einem weniger präzisen Format.");
+        assert!(found.is_empty(), "{found:?}");
+    }
+
+    #[test]
+    fn corrected_genders_are_quiet() {
+        for text in [
+            "Das Ende der Geschichte ist traurig.",
+            "Eine Erlaubnis brauchen wir nicht.",
+            "Das Leder ist weich.",
+        ] {
+            let found = reported(text);
+            assert!(found.is_empty(), "{text}: {found:?}");
+        }
     }
 }

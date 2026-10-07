@@ -27,6 +27,10 @@ const SUBORDINATORS: &[&str] = &[
     "zumal",
     "sofern",
     "wohingegen",
+    // `ob` opens the indirect question and nothing else in modern German —
+    // the preposition (*ob seiner Verdienste*) is archaic. The words that fuse
+    // with it, *als ob*, *egal ob*, are in [`OB_MODIFIERS`].
+    "ob",
 ];
 
 /// Words that may stand between the comma and the conjunction, carrying the
@@ -108,6 +112,20 @@ const DASS_MODIFIERS: &[&str] = &[
     "geschweige",
 ];
 
+/// Words that fuse with `ob` into one conjunction, taking the comma in front
+/// of the pair: *», als ob nichts gewesen wäre«*, *», egal ob es regnet«*,
+/// *», je nachdem ob…«*.
+const OB_MODIFIERS: &[&str] = &[
+    "als",
+    "egal",
+    "gleich",
+    "gleichgültig",
+    "einerlei",
+    "unabhängig",
+    "nachdem",
+    "wie",
+];
+
 /// Requires the comma German grammar requires in front of a subordinate clause.
 ///
 /// Comma placement is the most common mistake in written German, and most of it
@@ -160,6 +178,15 @@ impl GermanSubordinateComma {
             }
             if Self::word_in(previous, document, CLAUSE_COORDINATORS) {
                 return true;
+            }
+            // *», zum Beispiel weil…«*: a fixed phrase that modifies the clause,
+            // although `Beispiel` is a noun.
+            if Self::word_in(previous, document, &["beispiel"])
+                && cursor >= 2
+                && Self::word_in(tokens[cursor - 2], document, &["zum"])
+            {
+                cursor -= 2;
+                continue;
             }
             if !Self::modifies_the_clause(previous, document) {
                 return false;
@@ -311,6 +338,9 @@ impl Linter for GermanSubordinateComma {
                 }
 
                 if conjunction == "dass" && Self::word_in(previous, document, DASS_MODIFIERS) {
+                    continue;
+                }
+                if conjunction == "ob" && Self::word_in(previous, document, OB_MODIFIERS) {
                     continue;
                 }
 

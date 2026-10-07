@@ -3,14 +3,15 @@
 use std::sync::Arc;
 
 use crate::language::german::grammar::determiners::{
-    determiner_readings, is_plural_only_quantifier,
+    DeterminerReading, determiner_readings, forms_with_gender, is_plural_only_quantifier,
 };
+use crate::language::german::grammar::noun_gender::{NounGender, trusted_head};
 use crate::language::german::grammar::noun_phrase::{self, Phrase};
 use crate::language::german::grammar::subjects::{
     Features, irregular_finite_verb, subject_pronoun, subordinate_subject_pronoun,
 };
-use crate::language::morphology::{Case, MorphologyExt, Number, NumberSet, PersonSet};
-use crate::linting::{Lint, LintKind, Linter};
+use crate::language::morphology::{Case, GenderSet, MorphologyExt, Number, NumberSet, PersonSet};
+use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 
@@ -47,14 +48,10 @@ use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 /// adjective at once. What is left is the irregular auxiliaries and modals,
 /// which is where the frequency is anyway.
 ///
-/// A **noun-phrase subject** — *die Kinder spielt* — is not checked, and the
-/// attempt is worth recording. Finding the head is easy enough, but the word
-/// behind it is not reliably the verb: *die Gesellschaft bürgerlichen Rechts*
-/// and *die Arten hohler Stängel* put an adjective there, and a relative clause
-/// behind a comma (*…, welches Sittenwidrigkeit impliziert*) passes the
-/// front-field test while being verb-final. That version reported 1229 times on
-/// the same prose. It needs the noun-phrase chunker the capitalization rule
-/// has, not another guard.
+/// A **noun-phrase subject** — *die Kinder spielt* — is checked in the front
+/// field through the chunker; see `lint_noun_phrase_subjects` for what it took,
+/// and `subject_number` for how *die* is read.
+///
 /// Conjunctions that put their clause in verb-final order.
 ///
 /// Only the unambiguous ones, and only those that can be followed directly by
@@ -104,11 +101,15 @@ where
     T: Dictionary,
 {
     dictionary: Arc<T>,
+    nouns: NounGender,
 }
 
 impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
     pub fn new(dictionary: Arc<T>) -> Self {
-        Self { dictionary }
+        Self {
+            dictionary,
+            nouns: NounGender::new(),
+        }
     }
 
     /// The readings of a finite verb form, as *joint* person/number pairs.
@@ -362,6 +363,7 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
     /// `None` means the determiner allows both numbers, or is not in the table
     /// at all. Nothing is checked then — an unknown subject narrows nothing.
     fn subject_number(
+        &self,
         tokens: &[&Token],
         document: &Document,
         phrase: &Phrase,
@@ -374,22 +376,44 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         let readings = determiner_readings(&determiner)?;
 
         let mut number = NumberSet::empty();
+        let mut singular_genders = GenderSet::empty();
         for reading in readings.iter().filter(|r| r.case == Case::Nominative) {
             number |= match reading.number() {
                 Number::Singular => NumberSet::SINGULAR,
                 Number::Plural => NumberSet::PLURAL,
             };
+            if let Some(gender) = reading.gender {
+                singular_genders |= GenderSet::from(gender);
+            }
         }
 
-        // `die` is where this stops, and it is the most common determiner in
-        // the language: in the nominative it is feminine singular *and*
-        // plural. The noun cannot break the tie — `Kinder`, `Bücher` and
-        // `Kirche` all carry `SINGULAR | PLURAL` in the dictionary, because an
-        // entry describes a lemma and the plural affix hangs off the same one.
-        // Narrowing by it was tried and produced seven reports on edited
-        // prose, five of them from a wrong recorded number. So *die* phrases
-        // are not checked.
-        (number == NumberSet::SINGULAR || number == NumberSet::PLURAL).then_some(number)
+        if number == NumberSet::SINGULAR || number == NumberSet::PLURAL {
+            return Some(number);
+        }
+
+        // `die` is the hard case, and the most common determiner in the
+        // language: in the nominative it is feminine singular *and* plural,
+        // and so are `keine`, `meine` and `diese`. The noun's recorded
+        // *number* cannot break the tie — `Kinder` and `Bücher` carry
+        // `SINGULAR | PLURAL`, because an entry describes a lemma and the
+        // plural affix hangs off the same one, and narrowing by it produced
+        // seven reports on edited prose, five from a wrong recorded number.
+        //
+        // The noun's *gender* can. A noun recorded only masculine or neuter
+        // cannot stand behind the feminine singular reading, so the phrase is
+        // a plural: *die Kinder*, *die Hunde*, *diese Bücher*. The plural
+        // entries carry their singular's gender for this, written by
+        // `add_german_plural_genders.py`. A noun that is surely a singular
+        // (*die Hund*) is the article's error, not the verb's, and is left to
+        // `GermanDeterminerGender`.
+        let head = trusted_head(document, tokens, phrase)?;
+        let genders = self.nouns.genders(&head);
+        let surely_singular = self
+            .nouns
+            .gender_of(&head)
+            .is_some_and(|(_, surely_singular)| surely_singular);
+        (!genders.is_empty() && !genders.intersects(singular_genders) && !surely_singular)
+            .then_some(NumberSet::PLURAL)
     }
 
     /// The third position: a noun phrase in the front field.
@@ -427,7 +451,12 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
                 continue;
             }
 
-            let Some(number) = Self::subject_number(tokens, document, &phrase) else {
+            if let Some(lint) = self.lint_subject_in_wrong_case(tokens, document, &phrase) {
+                lints.push(lint);
+                continue;
+            }
+
+            let Some(number) = self.subject_number(tokens, document, &phrase) else {
                 continue;
             };
             let subject = Features::new(PersonSet::THIRD, number);
@@ -465,7 +494,9 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             }
 
             let verb_text: String = document.get_span_content(&verb_token.span).iter().collect();
-            if another_subject_follows(tokens, document, phrase.end) {
+            if another_subject_follows(tokens, document, phrase.end)
+                || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
+            {
                 continue;
             }
 
@@ -502,6 +533,115 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
                 verb_token,
             ));
         }
+    }
+
+    /// *Der Katze schläft*: a phrase in the front field that has to be the
+    /// subject, but whose article is not in the nominative.
+    ///
+    /// *der* fits *Katze* — as dative or genitive feminine — so
+    /// `GermanDeterminerGender` has nothing to say, and *der* is singular, so
+    /// the verb agrees. What is wrong is the case, and only the rest of the
+    /// clause shows it: a fronted dative is correct German (*Der Katze schmeckt
+    /// das Futter*, *Der Frau gelingt alles*) as long as something else is the
+    /// subject. So the phrase is reported only when
+    ///
+    /// * the article fits the noun's one recorded gender, but in no nominative
+    ///   reading;
+    /// * a finite verb follows it directly, and nothing behind that verb could
+    ///   be a subject — a capitalized word, a personal pronoun, or a pronoun
+    ///   such as *alles*, *das* or *man*;
+    /// * the verb is not a copula or a modal and the clause has no *werden*,
+    ///   which is where German leaves the subject out altogether: *Der Frau ist
+    ///   kalt*, *Der Frau wurde geholfen*, *Der Frau muss geholfen werden*.
+    fn lint_subject_in_wrong_case(
+        &self,
+        tokens: &[&Token],
+        document: &Document,
+        phrase: &Phrase,
+    ) -> Option<Lint> {
+        const MODALS: &[&str] = &[
+            "kann", "können", "konnte", "konnten", "muss", "müssen", "musste", "mussten", "soll",
+            "sollen", "sollte", "sollten", "darf", "dürfen", "durfte", "durften", "will", "wollen",
+            "wollte", "wollten", "mag", "mögen", "mochte", "mochten", "möchte", "möchten",
+            "könnte", "könnten", "müsste", "müssten", "dürfte", "dürften",
+        ];
+        const PASSIVE: &[&str] = &["werden", "worden", "geworden", "wird", "wurde", "wurden"];
+
+        let determiner = Self::word_at(tokens, phrase.open, document);
+        let readings = determiner_readings(&determiner)?;
+        let head = trusted_head(document, tokens, phrase)?;
+        let (gender, _) = self.nouns.gender_of(&head)?;
+
+        let fits = |reading: &&DeterminerReading| reading.gender == Some(gender);
+        if !readings.iter().any(|r| fits(&r))
+            || readings
+                .iter()
+                .filter(|r| r.case == Case::Nominative)
+                .any(|r| fits(&r))
+        {
+            return None;
+        }
+
+        let verb_token = tokens.get(phrase.end)?;
+        let verb_text = Self::word_at(tokens, phrase.end, document);
+        if !matches!(verb_token.kind, TokenKind::Word(_))
+            || is_copula(&verb_text)
+            || MODALS.contains(&verb_text.as_str())
+            || !(verb_token.kind.is_verb()
+                || !self.verb_features(&verb_text, verb_token).is_empty())
+            || document
+                .get_span_content(&verb_token.span)
+                .first()
+                .is_none_or(|c| c.is_uppercase())
+        {
+            return None;
+        }
+
+        // The rest of the clause, up to its punctuation.
+        let clause_end = (phrase.end + 1..tokens.len())
+            .find(|&at| matches!(tokens[at].kind, TokenKind::Punctuation(_)))
+            .unwrap_or(tokens.len());
+        let rest: Vec<String> = (phrase.end + 1..clause_end)
+            .map(|at| Self::word_at(tokens, at, document))
+            .collect();
+        if another_subject_follows(tokens, document, phrase.end)
+            || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
+            || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS_AFTER_DATIVE)
+            || rest.iter().any(|word| PASSIVE.contains(&word.as_str()))
+        {
+            return None;
+        }
+
+        let nominative: Vec<DeterminerReading> = readings
+            .iter()
+            .copied()
+            .filter(|r| r.case == Case::Nominative)
+            .collect();
+        let determiner_token = tokens[phrase.open];
+        let suggestions = forms_with_gender(&nominative, gender)
+            .into_iter()
+            .map(|form| {
+                Suggestion::replace_with_match_case(
+                    form.chars().collect(),
+                    document.get_span_content(&determiner_token.span),
+                )
+            })
+            .collect();
+
+        let original: String = document
+            .get_span_content(&determiner_token.span)
+            .iter()
+            .collect();
+        Some(Lint {
+            span: determiner_token.span,
+            lint_kind: LintKind::Agreement,
+            suggestions,
+            priority: 30,
+            message: format!(
+                "»{original} {head}« ist kein Nominativ, und der Satz hat sonst kein Subjekt. \
+                 Als Subjekt braucht »{head}« den Artikel im Nominativ."
+            ),
+        })
     }
 
     fn report(subject_text: &str, subject: &Features, verb_text: &str, verb: &Token) -> Lint {
@@ -679,6 +819,47 @@ fn is_copula(word: &str) -> bool {
         "blieben",
     ];
     COPULAS.contains(&word.to_lowercase().as_str())
+}
+
+/// Pronouns other than the personal ones that are the subject when they stand
+/// behind the verb: *Die Kinder kennt hier **jeder***, *Der Frau gelingt
+/// **alles***. [`another_subject_follows`] only counts capitalized words and
+/// personal pronouns, which was enough while *die* phrases went unchecked.
+///
+/// *das*, *dies* and *es* are left out: behind the verb they are as often the
+/// object, *Mehrere Studien zeigt das*.
+const PRONOUN_SUBJECTS: &[&str] = &[
+    "alles", "nichts", "etwas", "vieles", "manches", "einiges", "beides", "man", "jemand",
+    "niemand", "jeder", "jede", "jedes", "keiner", "keines", "wer",
+];
+
+/// What else can be the subject of a clause that has a fronted dative, where
+/// no object reading competes: *Der Katze geht **es** gut*, *Der Frau gefällt
+/// **das***.
+const PRONOUN_SUBJECTS_AFTER_DATIVE: &[&str] = &[
+    "das", "dies", "dieses", "jenes", "was", "es", "'s", "einer", "eine", "eines", "keine",
+    "welches",
+];
+
+/// Does one of `pronouns` stand between the verb at `verb_at` and the end of
+/// its clause?
+fn pronoun_subject_follows(
+    tokens: &[&Token],
+    document: &Document,
+    verb_at: usize,
+    pronouns: &[&str],
+) -> bool {
+    tokens[verb_at + 1..]
+        .iter()
+        .take_while(|token| !matches!(token.kind, TokenKind::Punctuation(_)))
+        .any(|token| {
+            let word: String = document
+                .get_span_content(&token.span)
+                .iter()
+                .flat_map(|c| c.to_lowercase())
+                .collect();
+            pronouns.contains(&word.as_str())
+        })
 }
 
 /// Prepositions and preposition–article contractions, which mark the phrase
@@ -986,14 +1167,50 @@ mod tests {
         }
     }
 
-    /// `die` is feminine singular and plural in the nominative, and the noun
-    /// cannot break the tie, so those phrases are left alone in both
-    /// directions.
+    /// `die` is feminine singular and plural in the nominative. A feminine
+    /// noun cannot break that tie, so those phrases are left alone.
     #[test]
     fn an_ambiguous_determiner_is_not_checked() {
-        assert_eq!(lint_count("Die Kinder spielt im Garten."), 0);
-        assert_eq!(lint_count("Die Bücher ist teuer."), 0);
         assert_eq!(lint_count("Diese Regeln gilt überall."), 0);
+        assert_eq!(lint_count("Die Frau spielt im Garten."), 0);
+        assert_eq!(lint_count("Die Lehrerin kommt morgen."), 0);
+    }
+
+    /// A noun recorded only masculine or neuter cannot stand behind the
+    /// feminine singular *die*, so the phrase is a plural.
+    #[test]
+    fn die_before_a_masculine_or_neuter_noun_is_a_plural() {
+        assert_eq!(lint_count("Die Kinder spielt im Garten."), 1);
+        assert_eq!(lint_count("Die Bücher ist teuer."), 1);
+        assert_eq!(lint_count("Die Hunde bellt laut."), 1);
+        assert_eq!(lint_count("Meine Brüder wohnt in Berlin."), 1);
+        assert_eq!(lint_count("Die Kinder spielen im Garten."), 0);
+        assert_eq!(lint_count("Die Hunde bellen laut."), 0);
+        // A singular noun behind *die* is the article's mistake, reported by
+        // `GermanDeterminerGender`, not the verb's.
+        assert_eq!(lint_count("Die Hund bellt laut."), 0);
+    }
+
+    /// *Der Katze schläft*: *der* fits *Katze* only as dative or genitive.
+    #[test]
+    fn a_subject_in_the_dative_is_reported() {
+        assert_eq!(lint_count("Der Katze schläft."), 1);
+        assert_eq!(lint_count("Der Katze schläft auf dem Sofa."), 1);
+        assert_eq!(lint_count("Die Katze schläft."), 0);
+    }
+
+    /// A fronted dative is correct German as long as something else is the
+    /// subject, or the clause has none by design.
+    #[test]
+    fn a_fronted_dative_with_its_own_subject_is_quiet() {
+        assert_eq!(lint_count("Der Katze gefällt das Spielzeug."), 0);
+        assert_eq!(lint_count("Der Mutter schmeckt der Kuchen."), 0);
+        assert_eq!(lint_count("Der Frau gelingt alles."), 0);
+        assert_eq!(lint_count("Der Katze geht es gut."), 0);
+        assert_eq!(lint_count("Der Frau ist kalt."), 0);
+        assert_eq!(lint_count("Der Frau wurde geholfen."), 0);
+        assert_eq!(lint_count("Der Frau muss geholfen werden."), 0);
+        assert_eq!(lint_count("Der Lehrerin hilft man gern."), 0);
     }
 
     /// The copula lets the predicate carry the number, but only one way round.
