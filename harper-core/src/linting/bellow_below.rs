@@ -1,10 +1,7 @@
-use harper_brill::UPOS;
-
 use crate::{
     Lint, Token,
     expr::{Expr, SequenceExpr, SpelledNumberExpr},
     linting::{ExprLinter, LintKind, Suggestion, expr_linter::Chunk},
-    patterns::UPOSSet,
 };
 
 pub struct BellowBelow {
@@ -14,17 +11,17 @@ pub struct BellowBelow {
 impl Default for BellowBelow {
     fn default() -> Self {
         Self {
-            // `bellow` (to shout) is intransitive, so a determiner, a pronoun,
-            // or a number right after it almost always means `below` was intended.
-            // (Harper tags possessives like `their` as pronouns, not determiners.)
+            // `bellow` (to shout) is intransitive, so a determiner (including
+            // possessive determiners like `their`, `his`, and `its`) or a number
+            // right after it almost always means `below` was intended.
             // Bare nouns are deliberately not matched: the transitive use
             // ("bellowed orders") is rare but real.
             expr: SequenceExpr::word_set(["bellow", "bellowed", "bellows", "bellowing"])
                 .t_ws()
                 .then_any_of([
-                    Box::new(UPOSSet::new(&[UPOS::DET, UPOS::PRON])) as Box<dyn Expr>,
-                    Box::new(SequenceExpr::number()) as Box<dyn Expr>,
-                    Box::new(SpelledNumberExpr) as Box<dyn Expr>,
+                    Box::new(|tok: &Token, _: &[char]| tok.kind.is_determiner()) as Box<dyn Expr>,
+                    Box::new(SequenceExpr::number()),
+                    Box::new(SpelledNumberExpr),
                 ]),
         }
     }
@@ -95,6 +92,24 @@ mod tests {
             "Profits fell bellow their target this quarter",
             Rule::default(),
             "Profits fell below their target this quarter",
+        );
+    }
+
+    #[test]
+    fn correct_bellow_his_knees() {
+        assert_suggestion_result(
+            "The water only came up to just bellow his knees",
+            Rule::default(),
+            "The water only came up to just below his knees",
+        );
+    }
+
+    #[test]
+    fn correct_bellow_its_rim() {
+        assert_suggestion_result(
+            "Fill the jar to just bellow its rim",
+            Rule::default(),
+            "Fill the jar to just below its rim",
         );
     }
 
