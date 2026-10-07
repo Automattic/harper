@@ -14,15 +14,13 @@ impl Default for BellowBelow {
             // `bellow` (to shout) is intransitive, so a determiner (including
             // possessive determiners like `their`, `his`, and `its`) or a number
             // right after it almost always means `below` was intended.
-            // Bare nouns are deliberately not matched: the transitive use
-            // ("bellowed orders") is rare but real.
-            expr: SequenceExpr::word_set(["bellow", "bellowed", "bellows", "bellowing"])
-                .t_ws()
-                .then_any_of([
-                    Box::new(|tok: &Token, _: &[char]| tok.kind.is_determiner()) as Box<dyn Expr>,
-                    Box::new(SequenceExpr::number()),
-                    Box::new(SpelledNumberExpr),
-                ]),
+            // Only the exact word is matched: `below` is not inflectable, so an
+            // inflected form of `bellow` can never be a misspelling of it.
+            expr: SequenceExpr::aco("bellow").t_ws().then_any_of([
+                Box::new(|tok: &Token, _: &[char]| tok.kind.is_determiner()) as Box<dyn Expr>,
+                Box::new(SequenceExpr::number()),
+                Box::new(SpelledNumberExpr),
+            ]),
         }
     }
 }
@@ -209,6 +207,11 @@ mod tests {
     #[test]
     fn allow_noun_bellows_instrument() {
         assert_no_lints("The blacksmith worked the bellows.", BellowBelow::default());
+    }
+
+    #[test]
+    fn allow_inflected_bellowing() {
+        assert_no_lints("The wind was bellowing all night.", BellowBelow::default());
     }
 
     #[test]
