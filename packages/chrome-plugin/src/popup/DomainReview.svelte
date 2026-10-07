@@ -64,7 +64,7 @@ const segment =
                     name="domain"
                     bind:value={domain}
                     placeholder="example.com"
-                    class="w-full border-gray-200 text-gray-900 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white"
+                    class="w-full border-gray-200 text-gray-900 outline-none! transition-colors focus:border-primary! focus:ring-0! dark:border-slate-700 dark:bg-slate-900 dark:text-white"
                 />
             </div>
 
@@ -112,7 +112,7 @@ const segment =
                     rows="4.5"
                     bind:value={feedback}
                     placeholder={works ? 'Optional notes' : 'e.g. underlines are misplaced, editor loses focus'}
-                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 !outline-none transition-colors focus:!border-primary focus:!ring-0 dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
+                    class="w-full resize-none rounded-md border border-gray-200 bg-transparent px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 outline-none! transition-colors focus:border-primary! focus:ring-0! dark:border-slate-700 dark:bg-slate-900 dark:text-white dark:placeholder:text-slate-400"
                 ></textarea>
             </div>
         </div>

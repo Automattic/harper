@@ -393,7 +393,7 @@ async function removeWeirpack(id: string) {
   <!-- Screen reader announcements -->
   <p class="sr-only" role="status" aria-live="polite" aria-atomic="true">{statusMessage}</p>
 
-  <div class="mx-auto flex min-h-0 w-full max-w-[1600px] flex-1 flex-col gap-6">
+  <div class="mx-auto flex min-h-0 w-full max-w-1600 flex-1 flex-col gap-6">
     <!-- Header -->
     <Card class="flex shrink-0 items-center gap-3.5 p-3">
       <div class="flex h-10 w-10 items-center justify-center rounded-xl bg-gray-100 dark:bg-slate-800">
@@ -401,7 +401,7 @@ async function removeWeirpack(id: string) {
       </div>
       <div class="flex flex-col">
         <h1 class="text-base font-semibold tracking-tight">Harper</h1>
-        <p class="text-xs text-gray-500 dark:!text-[#d1d5db]">Extension Settings</p>
+        <p class="text-xs text-gray-500 dark:text-[#d1d5db]!">Extension Settings</p>
       </div>
     </Card>
 
@@ -411,8 +411,8 @@ async function removeWeirpack(id: string) {
         <!-- ══ LEFT COLUMN: Rules (sticky, fills viewport height) ══ -->
         <Card class="flex min-h-0 min-w-0 max-h-[75vh] flex-col gap-4 p-6 lg:max-h-none">
           <div class="flex shrink-0 items-baseline justify-between gap-3">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:!text-[#d1d5db]">Rules</h2>
-            <p class="font-mono text-xs text-gray-600 dark:!text-[#e5e7eb]">
+            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-[#d1d5db]!">Rules</h2>
+            <p class="font-mono text-xs text-gray-600 dark:text-[#e5e7eb]!">
               {totalRules} total · {customizedRules} customized
             </p>
           </div>
@@ -426,10 +426,10 @@ async function removeWeirpack(id: string) {
               autocomplete="off"
               placeholder="Search rules..."
               size="sm"
-              class="min-w-[12rem] flex-1 !outline-none focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+              class="min-w-12rem flex-1 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
             />
-            <Button size="sm" class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
-            <Button size="sm" color="light" class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary" on:click={toggleAllRules}>
+            <Button size="sm" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
+            <Button size="sm" color="light" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
               {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
             </Button>
           </div>
@@ -440,7 +440,7 @@ async function removeWeirpack(id: string) {
             role="region"
             aria-label="Rules"
             tabindex="0"
-            class="rule-scroll min-h-0 flex-1 space-y-4 overflow-y-auto rounded-md pr-1 [scrollbar-width:thin] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary"
+            class="rule-scroll min-h-0 flex-1 space-y-4 overflow-y-auto rounded-md pr-1 [scrollbar-width:thin] focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-primary"
           >
             {#key displayStructuredSettings.length}
               <StructuredRuleSettings
@@ -457,22 +457,22 @@ async function removeWeirpack(id: string) {
         </Card>
 
         <!-- ══ RIGHT COLUMN: General + Weirpacks ══ -->
-        <div id="settings" tabindex="-1" aria-label="Extension settings" role="region" class="min-h-0 min-w-0 space-y-6 !outline-none lg:overflow-y-auto lg:pr-1 [scrollbar-width:thin]">
+        <div id="settings" tabindex="-1" aria-label="Extension settings" role="region" class="min-h-0 min-w-0 space-y-6 outline-none! lg:overflow-y-auto lg:pr-1 [scrollbar-width:thin]">
 
           <!-- ── GENERAL ───────────────────────────── -->
           <Card class="space-y-6 p-6">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:!text-[#d1d5db]">General</h2>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-[#d1d5db]!">General</h2>
 
             <div class="divide-y divide-gray-100 dark:divide-slate-800/60">
               <!-- English Dialect -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="dialect-label" class="text-base font-semibold">English Dialect</h3>
-                  <p id="dialect-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Select target spelling and grammar rules.</p>
+                  <p id="dialect-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Select target spelling and grammar rules.</p>
                 </div>
                 <Select
                   size="sm"
-                  class="h-9 w-48 shrink-0 !outline-none focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                  class="h-9 w-48 shrink-0 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                   bind:value={dialect}
               aria-labelledby="dialect-label" aria-describedby="dialect-desc"
                 >
@@ -488,7 +488,7 @@ async function removeWeirpack(id: string) {
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="isolate-label" class="text-base font-semibold">Ignore Non-English Text</h3>
-                  <p id="isolate-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Skip text that Harper detects as not English.</p>
+                  <p id="isolate-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Skip text that Harper detects as not English.</p>
                 </div>
 
                 <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
@@ -509,7 +509,7 @@ async function removeWeirpack(id: string) {
                       aria-checked={isolateEnglish}
                       tabindex={isolateEnglish ? 0 : -1}
                       onkeydown={(e) => handleRadioKeydown(e, setIsolateEnglish)}
-                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:!text-[#d1d5db] dark:hover:!text-white'}"
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
                       onclick={() => setIsolateEnglish(true)}
                     >
                       On
@@ -520,7 +520,7 @@ async function removeWeirpack(id: string) {
                       aria-checked={!isolateEnglish}
                       tabindex={!isolateEnglish ? 0 : -1}
                       onkeydown={(e) => handleRadioKeydown(e, setIsolateEnglish)}
-                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:!text-[#d1d5db] dark:hover:!text-white'}"
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!isolateEnglish ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
                       onclick={() => setIsolateEnglish(false)}
                     >
                       Off
@@ -533,7 +533,7 @@ async function removeWeirpack(id: string) {
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="default-enabled-label" class="text-base font-semibold">Enable on New Sites by Default</h3>
-                  <p id="default-enabled-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Automatically run Harper on newly visited websites.</p>
+                  <p id="default-enabled-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Automatically run Harper on newly visited websites.</p>
                 </div>
 
                 <div class="h-9 w-48 shrink-0 rounded-lg border border-gray-200 p-1 dark:border-slate-700 dark:bg-slate-900">
@@ -554,7 +554,7 @@ async function removeWeirpack(id: string) {
                       aria-checked={defaultEnabled}
                       tabindex={defaultEnabled ? 0 : -1}
                       onkeydown={(e) => handleRadioKeydown(e, (v) => (defaultEnabled = v))}
-                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:!text-[#d1d5db] dark:hover:!text-white'}"
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
                       onclick={() => (defaultEnabled = true)}
                     >
                       On
@@ -565,7 +565,7 @@ async function removeWeirpack(id: string) {
                       aria-checked={!defaultEnabled}
                       tabindex={!defaultEnabled ? 0 : -1}
                       onkeydown={(e) => handleRadioKeydown(e, (v) => (defaultEnabled = v))}
-                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:!text-[#d1d5db] dark:hover:!text-white'}"
+                      class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center text-xs font-semibold transition-colors duration-200 motion-reduce:transition-none {!defaultEnabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-[#d1d5db]! dark:hover:text-white!'}"
                       onclick={() => (defaultEnabled = false)}
                     >
                       Off
@@ -578,7 +578,7 @@ async function removeWeirpack(id: string) {
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="delay-label" class="text-base font-semibold">Delay (ms)</h3>
-                  <p id="delay-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Wait time after typing stops before refreshing highlights.</p>
+                  <p id="delay-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Wait time after typing stops before refreshing highlights.</p>
                 </div>
                 <Input
                   type="number"
@@ -586,7 +586,7 @@ async function removeWeirpack(id: string) {
                   step="50"
                   bind:value={delay}
               aria-labelledby="delay-label" aria-describedby="delay-desc"
-                  class="h-9 w-48 shrink-0 text-sm font-semibold dark:!text-white !outline-none focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                  class="h-9 w-48 shrink-0 text-sm font-semibold dark:text-white! outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                 />
               </div>
 
@@ -594,20 +594,20 @@ async function removeWeirpack(id: string) {
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="export-label" class="text-base font-semibold">Export Enabled Domains</h3>
-                  <p id="export-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Downloads a JSON list of domains explicitly enabled.</p>
+                  <p id="export-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Downloads a JSON list of domains explicitly enabled.</p>
                 </div>
-                <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+                <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
               </div>
 
               <!-- Activation Key -->
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="activation-label" class="text-base font-semibold">Activation Key</h3>
-                  <p id="activation-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Requires a quick double-press before activating highlights.</p>
+                  <p id="activation-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Requires a quick double-press before activating highlights.</p>
                 </div>
                 <Select
                   size="sm"
-                  class="h-9 w-48 shrink-0 !outline-none focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                  class="h-9 w-48 shrink-0 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                   bind:value={activationKey}
               aria-labelledby="activation-label" aria-describedby="activation-desc"
                 >
@@ -621,7 +621,7 @@ async function removeWeirpack(id: string) {
               <div class="flex items-center justify-between gap-4 py-3.5">
                 <div class="flex flex-col">
                   <h3 id="hotkey-label" class="text-base font-semibold">Apply Last Suggestion Hotkey</h3>
-                  <p id="hotkey-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Applies suggestions to the last highlighted word.</p>
+                  <p id="hotkey-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Applies suggestions to the last highlighted word.</p>
                 </div>
                 <div class="flex h-9 w-48 shrink-0 items-center justify-between gap-2">
                   <kbd aria-labelledby="hotkey-label" class="flex h-full flex-1 items-center justify-center whitespace-nowrap rounded-md border border-gray-200 bg-gray-100 px-2 font-mono text-xs font-semibold text-gray-800 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100">
@@ -629,7 +629,7 @@ async function removeWeirpack(id: string) {
                   </kbd>
                   <Button
                     size="sm"
-                    class="h-full shrink-0 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                    class="h-full shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                     aria-label={isCapturingHotkey ? 'Cancel changing hotkey' : `Modify hotkey, currently ${buttonText}`}
                     on:click={isCapturingHotkey ? cancelHotkeyCapture : startHotkeyCapture}
                   >
@@ -642,14 +642,14 @@ async function removeWeirpack(id: string) {
               <div class="flex flex-col gap-2 py-3.5">
                 <div>
                   <h3 id="dictionary-label" class="text-base font-semibold">User Dictionary</h3>
-                  <p id="dictionary-desc" class="text-xs text-gray-600 dark:!text-[#d1d5db]">Add custom words to ignore (one word per line).</p>
+                  <p id="dictionary-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Add custom words to ignore (one word per line).</p>
                 </div>
                 <Textarea
                   bind:value={userDict}
               aria-labelledby="dictionary-label" aria-describedby="dictionary-desc"
                   rows={3}
                   placeholder="customword&#10;anotherterm"
-                  class="w-full resize-y text-xs !outline-none focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                  class="w-full resize-y text-xs outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                 ></Textarea>
               </div>
             </div>
@@ -657,10 +657,10 @@ async function removeWeirpack(id: string) {
 
           <!-- ── WEIRPACKS ───────────────────────────── -->
           <Card class="space-y-4 p-6">
-            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:!text-[#d1d5db]">Weirpacks</h2>
+            <h2 class="text-xs font-bold uppercase tracking-wider text-gray-500 dark:text-[#d1d5db]!">Weirpacks</h2>
 
             <div class="flex items-center justify-between gap-4">
-              <p class="text-xs text-gray-600 dark:!text-[#d1d5db]">
+              <p class="text-xs text-gray-600 dark:text-[#d1d5db]!">
                 Upload custom <code>.weirpack</code> rule packs.
                 <a href="https://writewithharper.com/docs/weir#Weirpacks" target="_blank" rel="noopener" class="text-primary hover:underline">
                   What is a Weirpack?
@@ -679,7 +679,7 @@ async function removeWeirpack(id: string) {
 
               <Button
                 size="sm"
-                class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                 disabled={weirpackBusy}
                 on:click={() => fileInputRef?.click()}
               >
@@ -688,11 +688,11 @@ async function removeWeirpack(id: string) {
             </div>
 
             {#if weirpackError}
-              <p role="alert" class="text-xs text-red-600 dark:!text-red-300">{weirpackError}</p>
+              <p role="alert" class="text-xs text-red-600 dark:text-red-300!">{weirpackError}</p>
             {/if}
 
             {#if weirpacks.length === 0}
-              <p class="text-xs text-gray-500 dark:!text-[#d1d5db]">No custom Weirpacks installed.</p>
+              <p class="text-xs text-gray-500 dark:text-[#d1d5db]!">No custom Weirpacks installed.</p>
             {:else}
               <div class="space-y-2.5">
                 {#each weirpacks as weirpack}
@@ -701,14 +701,14 @@ async function removeWeirpack(id: string) {
                       <p class="truncate text-xs font-semibold">
                         {weirpack.name}{weirpack.version ? ` v${weirpack.version}` : ''}
                       </p>
-                      <p class="truncate font-mono text-[11px] text-gray-500 dark:!text-[#d1d5db]">
+                      <p class="truncate font-mono text-[11px] text-gray-500 dark:text-[#d1d5db]!">
                         {weirpack.filename}
                       </p>
                     </div>
                     <Button
                       size="sm"
                       color="light"
-                      class="cursor-pointer !outline-none focus:!outline-none focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary"
+                      class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                       disabled={weirpackBusy}
                       aria-label={`Remove ${weirpack.name}`}
                       on:click={() => removeWeirpack(weirpack.id)}

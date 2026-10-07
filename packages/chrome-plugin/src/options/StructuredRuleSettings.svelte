@@ -306,8 +306,8 @@ function idFor(prefix: string, key: string): string {
 }
 
 const selectClass =
-	'h-9 w-36 shrink-0 rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-900 dark:!border-white/15 dark:!bg-white/5 dark:text-white !outline-none transition-colors focus:!border-primary focus:!ring-0 focus-visible:!ring-2 focus-visible:!ring-primary';
-const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
+	'h-9 w-36 shrink-0 rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-900 dark:border-white/15! dark:bg-white/5! dark:text-white outline-none! transition-colors focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!';
+const dividerClass = 'border-t border-gray-100 pt-3 dark:border-white/10!';
 </script>
 
 <div class="space-y-2">
@@ -321,7 +321,7 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
             {/if}
         </p>
         {#if renderedNodes.length === 0}
-            <p class="py-8 text-center text-sm text-gray-600 dark:!text-[#d1d5db]">No rules match your search.</p>
+            <p class="py-8 text-center text-sm text-gray-600 dark:text-[#d1d5db]!">No rules match your search.</p>
         {/if}
     {/if}
 
@@ -333,14 +333,14 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
             <!-- Top-level groups are cards; nested groups are flat rows -->
             <div
                 class={node.indent === 0
-                    ? 'rounded-lg border border-gray-200 bg-gray-50/60 p-3 transition-colors motion-reduce:transition-none dark:!border-white/10 dark:!bg-white/[0.03] dark:hover:!bg-white/[0.05]'
+                    ? 'rounded-lg border border-gray-200 bg-gray-50/60 p-3 transition-colors motion-reduce:transition-none dark:border-white/10! dark:bg-white/[0.03]! dark:hover:bg-white/[0.05]!'
                     : dividerClass}
             >
                 <div class="flex items-start justify-between gap-4" style={rowStyle(node.indent)}>
                     <!-- Disclosure button: the whole title area toggles the group -->
                     <button
                         type="button"
-                        class="group flex min-w-0 flex-1 cursor-pointer items-start gap-2 rounded-md text-left !outline-none focus-visible:!ring-2 focus-visible:!ring-primary"
+                        class="group flex min-w-0 flex-1 cursor-pointer items-start gap-2 rounded-md text-left outline-none! focus-visible:ring-2! focus-visible:ring-primary!"
                         aria-expanded={node.expanded}
                         aria-controls={panelId}
                         aria-labelledby={labelId}
@@ -348,7 +348,7 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
                         onclick={() => handleToggleGroup(node.groupKey)}
                     >
                         <svg
-                            class="mt-0.5 h-4 w-4 shrink-0 text-gray-400 transition-transform duration-150 motion-reduce:transition-none group-hover:text-primary dark:!text-[#d1d5db] dark:group-hover:!text-primary {node.expanded ? 'rotate-90' : ''}"
+                            class="mt-0.5 h-4 w-4 shrink-0 text-gray-400 transition-transform duration-150 motion-reduce:transition-none group-hover:text-primary dark:text-[#d1d5db]! dark:group-hover:text-primary! {node.expanded ? 'rotate-90' : ''}"
                             viewBox="0 0 20 20"
                             fill="currentColor"
                             aria-hidden="true"
@@ -363,9 +363,9 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
                         <span class="min-w-0 space-y-0.5">
                             <span class="flex items-center gap-2">
                                 <span id={labelId} class="text-sm font-bold text-gray-900 group-hover:text-primary dark:text-white">{node.label}</span>
-                                <span aria-hidden="true" class="rounded-full bg-gray-200 px-2 py-0.5 font-mono text-[11px] font-semibold text-gray-700 dark:!bg-primary/20 dark:!text-primary">{node.ruleCount}</span>
+                                <span aria-hidden="true" class="rounded-full bg-gray-200 px-2 py-0.5 font-mono text-[11px] font-semibold text-gray-700 dark:bg-primary/20! dark:text-primary!">{node.ruleCount}</span>
                             </span>
-                            <span id={descId} class="block text-xs text-gray-600 dark:!text-[#d1d5db]">
+                            <span id={descId} class="block text-xs text-gray-600 dark:text-[#d1d5db]!">
                                 {node.description}<span class="sr-only"> ({node.ruleCount} rules)</span>
                             </span>
                         </span>
@@ -409,7 +409,7 @@ const dividerClass = 'border-t border-gray-100 pt-3 dark:!border-white/10';
             <div class="flex items-start justify-between gap-4 {dividerClass}" style={rowStyle(node.indent)}>
                 <div class="min-w-0 space-y-0.5">
                     <h3 id={labelId} class="text-sm font-bold text-gray-900 dark:text-white">{node.label}</h3>
-                    <p id={descId} class="text-xs text-gray-600 dark:!text-[#d1d5db]">{@html node.description}</p>
+                    <p id={descId} class="text-xs text-gray-600 dark:text-[#d1d5db]!">{@html node.description}</p>
                 </div>
                 <Select
                     size="sm"

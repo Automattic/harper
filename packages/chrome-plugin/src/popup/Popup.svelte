@@ -186,7 +186,7 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
                 href="https://github.com/Automattic/harper" 
                 target="_blank" 
                 rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium !no-underline transition-colors duration-200 {footerLink} {hoveredFooterIndex === 0 ? '!text-black font-semibold' : ''}"
+                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 0 ? 'text-black! font-semibold' : ''}"
                 style="text-decoration: none;"
                 onmouseenter={() => handleMouseEnter(0)}
             >
@@ -197,7 +197,7 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
                 href="https://discord.com/invite/JBqcAaKrzQ" 
                 target="_blank" 
                 rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium !no-underline transition-colors duration-200 {footerLink} {hoveredFooterIndex === 1 ? '!text-black font-semibold' : ''}"
+                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 1 ? 'text-black! font-semibold' : ''}"
                 style="text-decoration: none;"
                 onmouseenter={() => handleMouseEnter(1)}
             >
@@ -208,7 +208,7 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
                 href="https://writewithharper.com" 
                 target="_blank" 
                 rel="noopener" 
-                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium !no-underline transition-colors duration-200 {footerLink} {hoveredFooterIndex === 2 ? '!text-black font-semibold' : ''}"
+                class="relative z-10 flex-1 rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 2 ? 'text-black! font-semibold' : ''}"
                 style="text-decoration: none;"
                 onmouseenter={() => handleMouseEnter(2)}
             >
@@ -217,7 +217,7 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
             
             <Link 
                 on:click={openSettings} 
-                class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center font-medium !no-underline transition-colors duration-200 {footerLink} {hoveredFooterIndex === 3 ? '!text-black font-semibold' : ''}"
+                class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 3 ? 'text-black! font-semibold' : ''}"
                 style="text-decoration: none;"
                 onmouseenter={() => handleMouseEnter(3)}
             >
