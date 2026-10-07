@@ -40,6 +40,7 @@ use super::bare_bones::BareBones;
 use super::barely_un::BarelyUn;
 use super::be_allowed::BeAllowed;
 use super::behind_the_scenes::BehindTheScenes;
+use super::bellow_below::BellowBelow;
 use super::best_of_all_time::BestOfAllTime;
 use super::better_off_served::BetterOffServed;
 use super::boring_words::BoringWords;
@@ -664,6 +665,7 @@ impl LintGroup {
         insert_expr_rule_with_dict!(BarelyUn);
         insert_expr_rule!(BeAllowed);
         insert_expr_rule!(BehindTheScenes);
+        insert_expr_rule!(BellowBelow);
         insert_struct_rule!(BestOfAllTime);
         insert_expr_rule!(BetterOffServed);
         insert_expr_rule!(BoringWords);
