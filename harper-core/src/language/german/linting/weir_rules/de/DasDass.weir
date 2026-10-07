@@ -62,7 +62,14 @@ expr subjekt [ich, du, er, sie, es, wir, ihr, man, jemand, niemand, mir, mich, d
 # and the article cannot tell them apart. "eine" is left out for "das Eine".
 expr artikel [der, die, den, dem, ein, einen, einem, einer, mein, meine, dein, deine, sein, seine, unser, unsere, euer, eure]
 
-expr main <[(@ausloeser(,) das @subjekt), (@ausloeser @einschub(,) das @subjekt), (@verb(,) das @artikel), (@verb @einschub(,) das @artikel)], das>
+# Without the comma — school writing leaves it out as often as it sets it — only
+# the pronouns that cannot be an object count. "mir", "dir", "uns" … stay out:
+# "er sagt das mir" has no reading as a clause, but the list is the one place
+# this rule can afford to be narrow. The article branch stays comma-only,
+# because "ich finde das die Idee gut" is not a content clause.
+expr subjektohnekomma [ich, du, er, sie, es, wir, ihr, man, jemand, niemand]
+
+expr main <[(@ausloeser(,) das @subjekt), (@ausloeser @einschub(,) das @subjekt), (@verb(,) das @artikel), (@verb @einschub(,) das @artikel), (@ausloeser das @subjektohnekomma), (@ausloeser @einschub das @subjektohnekomma)], das>
 
 let message "Hier steht die Konjunktion »dass«. Das Pronomen »das« schreibt man mit einem »s«, die Konjunktion mit zwei."
 let description "Ersetzt das Pronomen »das« durch die Konjunktion »dass«, wenn ein Nebensatz folgt."
@@ -86,6 +93,19 @@ test "Ich hoffe, das die Stiefel passen." "Ich hoffe, dass die Stiefel passen."
 test "Sie sagte, das ein Absatz abgebrochen ist." "Sie sagte, dass ein Absatz abgebrochen ist."
 test "Ich glaube nicht, das meine Schuhe bequem sind." "Ich glaube nicht, dass meine Schuhe bequem sind."
 
+test "Der Lehrer sagte das wir kommen sollen." "Der Lehrer sagte dass wir kommen sollen."
+test "Ich hoffe das du bald kommst." "Ich hoffe dass du bald kommst."
+test "Er sagt das er müde ist." "Er sagt dass er müde ist."
+test "Ich glaube nicht das er kommt." "Ich glaube nicht dass er kommt."
+test "Es ist schade das niemand kam." "Es ist schade dass niemand kam."
+test "Ich weiß das du recht hast." "Ich weiß dass du recht hast."
+
+allows "Ich hoffe dass du bald kommst."
+allows "Ich glaube das ist richtig."
+allows "Ich sehe das Haus."
+allows "Ich weiß das nicht."
+allows "Ich finde das die Idee gut ist."
+allows "Er sagt das Gleiche wie du."
 allows "Ich hoffe, dass du bald kommst."
 allows "Es ist schade, dass niemand gekommen ist."
 allows "Das Buch, das ich gelesen habe, war gut."
