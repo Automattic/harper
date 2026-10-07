@@ -214,6 +214,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsIUnderstandIt",
+								"state": true,
+								"label": "As I Understand it"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsSoonAsPossible",
 								"state": true,
 								"label": "As Soon As Possible"
