@@ -1378,6 +1378,32 @@ them exact. Eight everyday nouns (*Katze*, *Kirche*, *Kirsche*, *Decke*,
 (`katz` + `-e`, number PLURAL). They got a lemma of their own. A flag on the
 stem is the wrong fix: `tief` is an adjective and `deck` a verb stem.
 
+### *die Garten*: when `-en`, `-er`, `-el` are a singular after all
+
+*der Lehrer* and *die Lehrer* are spelled alike, so the article rule leaves
+nouns in `-en`, `-er` and `-el` alone. Not all of them: *Garten*, *Vogel*,
+*Apfel*, *Vater* form their plural with an umlaut, and then the plain spelling
+is a singular and *die Garten* is the error. Two pieces of evidence have to
+agree (`grammar/noun_gender.rs`): the entry carries the singular property `A`,
+which `add_german_common_noun_genders.py` now writes for about twenty such
+nouns, and the umlauted form is a noun the dictionary knows with no other
+gender. The second half is what keeps *die Kuchen* quiet: *Küchen* exists, but
+as the plural of *Küche*. *Wagen*, *Kasten* and *Bogen* are left out, since both
+plurals are in use.
+
+### The second round of the audit
+
+The common-noun table grew by about 200 nouns of general prose, and the run
+corrected what it found: ***Ende* was recorded feminine**, so every *das Ende*
+was a report (found by a correct test sentence, not by the audit); *Leder* and
+*Silber* masculine; *Erlaubnis*, *Kenntnis*, *Besorgnis* and ten more `-nis`
+nouns neuter where they are feminine; *Beilage*, *Auslage*, *Aster*, *Auster*,
+*Anapher* masculine or neuter. Twenty-six table nouns had no noun entry at all —
+compounds the base dictionary only reaches by decomposition (*Bahnhof*,
+*Kühlschrank*) and nouns that survived only as another word class (*Morgen*
+the adverb, *Regen* the verb, *Mühe* dropped as "never capitalized") — and
+got lemma lines. *Liter* is *der* or *das* and stays in the multi-gender script.
+
 New batteries `determiner_gender.tsv` (9/10, 0/25 false alarms) and
 `adjective_ending.tsv` (9/10, 0/32). `grammar.tsv`: **30/50 → 40/50**, no new
 false alarm, and the whole-group output on `test_sources` is unchanged. Both
@@ -1385,6 +1411,39 @@ batteries were written alongside the rule, so they measure it on cases it was
 built for. No prose corpus and no LanguageTool were reachable, so the precision
 claim rests on 140 correct sentences and the committed `test_sources`: **run
 `just language-lint-sources german` and the prose corpus before trusting it.**
+
+### Commas before `ob` and around a relative clause
+
+`ob` joined the conjunction list of `GermanSubordinateComma`. It opens the
+indirect question and nothing else in modern German; *als ob*, *egal ob*, *je
+nachdem ob* take the comma in front of the pair. *zum Beispiel weil* now carries
+the comma left like the particles do — the one corpus false positive of that
+rule, found on the xz translation below.
+
+`GermanRelativeClauseComma` is new. A relative pronoun is spelled like the
+article, so *Ich habe dem Kind das Buch gegeben* has a noun, a *das* and no
+relative clause. The pronoun is only read as one when it is followed by
+something an article never is — a subject pronoun (*das ich lese*), or, for
+*der* behind a masculine noun, an adverb or a verb (*der dort steht*) — when it
+agrees with the noun's recorded gender (which rejects *der Mutter das er kommt*,
+a *dass* clause), and when the clause ends on a verb within ten words. *das* and
+*die* followed by an adverb are left alone: both are demonstratives that stand
+alone as objects (*Ich habe dem Kind das gestern erklärt*). When a run of verbs
+is followed by more of the sentence (*das ich lese ist spannend*), the run's last
+verb is the main clause's and the closing comma is reported too. A preposition
+may stand in front of the pronoun (*das Haus in dem ich wohne*). `relative_and_ob_comma.tsv`:
+10/10, no false alarm on 19 correct sentences.
+
+### A precision corpus that is on the machine
+
+No prose corpus was reachable for this round, but one German text is: the
+translations of the xz utilities (`po/de.po` and the man pages in `po4a/de.po`)
+inside the `liblzma-sys` crate in `~/.cargo/registry`. Edited, technical, about
+500 messages of six words or more. It is small and narrow, but it is real
+prose nobody wrote for this rule, and it found two false positives (the degree
+word *weniger* in *in einem weniger präzisen Format* read as a declined
+adjective, and *zum Beispiel weil*). Both are fixed; the changes in this section
+add no report to it.
 
 ## The fused spellings the reform allows
 
@@ -1587,11 +1646,57 @@ LanguageTool's 1/10, both with no false alarm. The four misses are the
 fronted-object guard refusing a sentence whose object is itself ambiguous, which
 is the price of not knowing case.
 
-### What it still cannot see
+### *die* before a noun that cannot be feminine
 
-A subject under *die*, in either direction, for the reason above. And *die
-Kinder spielt* specifically — the most natural example of the error this rule is
-named for — is exactly the case the data cannot reach.
+The noun's recorded *number* cannot break the *die* tie; its *gender* can. A
+noun recorded only masculine or neuter cannot stand behind the feminine singular
+reading, so *die Kinder*, *die Hunde*, *meine Brüder* are plural, and *die
+Kinder spielt* is reported. A feminine noun keeps the tie (*diese Regeln gilt*
+stays unchecked), and a noun that is surely a singular (*die Hund*) is the
+article's mistake, left to `GermanDeterminerGender`.
+
+That needs the **plural** entries to carry a gender, and most did not:
+`hunde/~~NhE` had none, and `kinder/~~MhE` carried a stray `M` from the import
+that wrote `M` on thousands of `-er` words. `scripts/add_german_plural_genders.py`
+gives a plural entry its singular's gender only where the dictionary itself
+builds the form — the singular's own plural flag (`X`, `b`, `a`, `Y`), or the
+umlauted stem plus `-er`/`-e` — and the plural entry is a noun and nothing else.
+The `-er` plurals of neuter nouns get `Z` *beside* the stray `M`: two genders
+narrow nothing for the article rule, which is right for a plural, and neither is
+feminine, which is all this rule asks. Reading the candidate list found the
+traps a suffix rule walks into: *Güte*, *Muse*, *Premiere* and *Schläfe* are
+feminine singulars that only look like the plural of *gut*, *Mus*, *Premier* and
+*Schlaf*; *der Taler* and *der Fächer* are nouns of their own. They are listed in
+the script.
+
+Two more things had to change for it:
+
+* **A pronoun behind the verb can be the subject.** *Die Kinder kennt hier
+  jeder* fronts the object. `another_subject_follows` only counted capitalized
+  words and personal pronouns, which was enough while *die* phrases went
+  unchecked; *jeder*, *alles*, *man*, *niemand* and the like now count too.
+  *das* and *es* do not — behind the verb they are as often the object
+  (*Mehrere Studien zeigt das*).
+* **The test that pinned the old behaviour** (`an_ambiguous_determiner_is_not_checked`
+  asserted *Die Kinder spielt* stays quiet) now asserts it for a feminine noun.
+
+### A subject in the dative
+
+*Der Katze schläft*. *der* fits *Katze* — as dative or genitive feminine — so
+neither the article rule nor the number check has anything to say. What is wrong
+is the case, and only the rest of the clause shows it: a fronted dative is
+correct German as long as something else is the subject (*Der Katze schmeckt das
+Futter*, *Der Frau gelingt alles*, *Der Katze geht es gut*). So the phrase is
+reported only when the article fits the noun's one gender in no nominative
+reading, a finite verb follows, nothing behind it could be a subject, and the
+clause is not one where German leaves the subject out: no copula (*Der Frau ist
+kalt*), no modal and no *werden* (*Der Frau wurde geholfen*, *Der Frau muss
+geholfen werden*). The suggestion is the nominative article of the same
+paradigm.
+
+On `subject_case_number.tsv` the three classes of this section and the next
+score 15/15 with no false alarm on 28 correct sentences, several of them built
+to trip it (*Die Bücher hat mir meine Tante geschenkt*, *Der Katze Fell glänzt*).
 
 ## das / dass, and why only one direction of it
 
