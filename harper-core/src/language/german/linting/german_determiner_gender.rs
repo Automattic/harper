@@ -6,7 +6,8 @@ use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::grammar::determiners::{
-        DeterminerReading, determiner_readings, forms_with_gender, stands_alone,
+        DeterminerReading, adjective_ending_after, determiner_readings, forms_with_gender,
+        stands_alone,
     },
     language::german::grammar::noun_phrase::{self, Phrase, opens_relative_clause},
     language::german::spell::curated_german_dictionary,
@@ -137,6 +138,90 @@ impl GermanDeterminerGender {
             .then_some(head)
     }
 
+    /// Checks the ending of the adjectives between the determiner and the noun.
+    ///
+    /// The determiner and the noun's gender fix the case and gender of the
+    /// phrase, and the determiner's paradigm fixes the ending: *ein großer
+    /// Haus* wants *großes*, *einen neue Tisch* wants *neuen*. Only a phrase
+    /// that is certainly singular is read, since the plural endings differ, and
+    /// an ending the determiner leaves open (*der* is also dative feminine) is
+    /// accepted when any of its readings allows it.
+    fn lint_adjectives(
+        &self,
+        document: &Document,
+        words: &[&Token],
+        phrase: &Phrase,
+        readings: &[DeterminerReading],
+        gender: Gender,
+        surely_singular: bool,
+        lints: &mut Vec<Lint>,
+    ) {
+        let singular_only = readings.iter().all(|reading| reading.gender.is_some());
+        if !(surely_singular || singular_only) {
+            return;
+        }
+
+        let allowed: Vec<&str> = readings
+            .iter()
+            .filter(|reading| reading.gender == Some(gender))
+            .filter_map(adjective_ending_after)
+            .collect();
+        // A reading outside the table means a paradigm this does not cover.
+        if allowed.is_empty()
+            || readings
+                .iter()
+                .filter(|reading| reading.gender == Some(gender))
+                .any(|reading| adjective_ending_after(reading).is_none())
+        {
+            return;
+        }
+
+        for token in &words[phrase.open + 1..phrase.head] {
+            let chars = document.get_span_content(&token.span);
+            let word: String = chars.iter().collect();
+            if !matches!(token.kind, TokenKind::Word(_))
+                || chars.first().is_none_or(|c| !c.is_lowercase())
+            {
+                continue;
+            }
+            let Some(ending) = ["em", "en", "er", "es", "e"]
+                .into_iter()
+                .find(|ending| word.ends_with(ending))
+            else {
+                continue;
+            };
+            if allowed.contains(&ending) {
+                continue;
+            }
+            let is_adjective = self
+                .dictionary
+                .get_word_metadata(chars)
+                .is_some_and(|metadata| metadata.is_adjective());
+            if !is_adjective {
+                continue;
+            }
+
+            let stem = &word[..word.len() - ending.len()];
+            let suggestions: Vec<Suggestion> = allowed
+                .iter()
+                .map(|wanted| format!("{stem}{wanted}"))
+                .filter(|form| self.dictionary.contains_word_str(form))
+                .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
+                .collect();
+
+            lints.push(Lint {
+                span: token.span,
+                lint_kind: LintKind::Agreement,
+                suggestions,
+                message: format!(
+                    "»{word}« hat hier die falsche Endung. Nach diesem Artikel wird »-{}« erwartet.",
+                    allowed.join("« oder »-")
+                ),
+                priority: 31,
+            });
+        }
+    }
+
     /// German name of a gender, for the message.
     fn label(gender: Gender) -> &'static str {
         match gender {
@@ -188,6 +273,17 @@ impl Linter for GermanDeterminerGender {
                     continue;
                 }
 
+                // *ein bisschen Zeit*, *ein paar Tage*, *ein wenig Mut*: the
+                // quantifier is indeclinable, and *ein* belongs to it.
+                if text.eq_ignore_ascii_case("ein")
+                    && words.get(phrase.open + 1).is_some_and(|next| {
+                        let next: String = document.get_span_content(&next.span).iter().collect();
+                        ["bisschen", "paar", "wenig", "bissel"].contains(&next.as_str())
+                    })
+                {
+                    continue;
+                }
+
                 let Some(head) = Self::head_of(document, &words, phrase) else {
                     continue;
                 };
@@ -203,6 +299,15 @@ impl Linter for GermanDeterminerGender {
                     .filter(|reading| reading.gender.is_some() || !surely_singular)
                     .collect();
                 if fits(&candidates, gender) {
+                    self.lint_adjectives(
+                        document,
+                        &words,
+                        phrase,
+                        readings,
+                        gender,
+                        surely_singular,
+                        &mut lints,
+                    );
                     continue;
                 }
                 if candidates.iter().any(|reading| reading.gender.is_none()) {
@@ -333,6 +438,53 @@ mod tests {
     }
 
     /// An entry with two genders narrows nothing.
+    #[test]
+    fn an_indeclinable_quantifier_is_not_an_article() {
+        for text in [
+            "Ich habe ein bisschen Zeit.",
+            "Sie hat ein paar Freunde.",
+            "Er hat ein wenig Mut.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    #[test]
+    fn a_wrong_adjective_ending_is_reported() {
+        assert_eq!(
+            reported("Ein großer Haus steht am Ende der Straße."),
+            ["großer"]
+        );
+        assert_eq!(reported("Sie kaufte einen neue Tisch."), ["neue"]);
+        assert_eq!(reported("Er hat ein schöne Auto."), ["schöne"]);
+    }
+
+    #[test]
+    fn the_adjective_correction_is_a_real_form() {
+        let found = lints("Ein großer Haus steht dort.");
+        assert!(found[0].1.iter().any(|s| s.contains("großes")), "{found:?}");
+    }
+
+    #[test]
+    fn a_correct_adjective_ending_is_quiet() {
+        for text in [
+            "Ein großes Haus steht am Ende der Straße.",
+            "Sie kaufte einen neuen Tisch.",
+            "Der kleine Hund spielt mit dem alten Ball.",
+            "Ich sehe den großen Hund.",
+            "Er hat ein schönes Auto.",
+            "Ein großer Hund bellt.",
+            "Die große Zeitung liegt dort.",
+            "Meine neue Tasche ist rot.",
+            "Er trägt einen sehr teuren Hut.",
+            "Ich habe ein super Haus.",
+            "Die großen Hunde bellen.",
+            "Mit dem schönen Mann ging sie spazieren.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
     #[test]
     fn a_noun_with_two_genders_is_not_checked() {
         let found = reported("Das Teil und der Teil gehören zusammen.");

@@ -574,6 +574,37 @@ pub fn forms_for_readings(readings: &[DeterminerReading], wanted: CaseSet) -> Ve
     out
 }
 
+/// The ending an attributive adjective takes behind this reading of a
+/// determiner, in the singular.
+///
+/// After a *der*-word the adjective is weak (*der große Hund*, *den großen
+/// Hund*); after an *ein*-word it is strong exactly where the article shows
+/// nothing (*ein großer Hund*, *ein großes Haus*) and weak elsewhere. The
+/// quantifiers that can take a strong adjective (*manch*, *solch*, *welch*,
+/// *all*) are not in the table, because a strong adjective behind them is
+/// correct and the weak ending this would demand is not.
+///
+/// `None` for a plural reading and for a paradigm not covered.
+pub fn adjective_ending_after(reading: &DeterminerReading) -> Option<&'static str> {
+    const MIXED_STEMS: &[&str] = &["ein", "kein", "mein", "dein", "sein", "ihr", "unser", "eur"];
+    const WEAK_STEMS: &[&str] = &["der", "dies", "jen", "jed"];
+
+    let gender = reading.gender?;
+    let stem = reading.paradigm.stem();
+    let mixed = MIXED_STEMS.contains(&stem);
+    if !mixed && !WEAK_STEMS.contains(&stem) {
+        return None;
+    }
+
+    Some(match (reading.case, gender) {
+        (Case::Nominative, Gender::Masculine) if mixed => "er",
+        (Case::Nominative | Case::Accusative, Gender::Neuter) if mixed => "es",
+        (Case::Nominative, _) => "e",
+        (Case::Accusative, Gender::Feminine | Gender::Neuter) => "e",
+        _ => "en",
+    })
+}
+
 /// The forms of the same paradigm as `readings` that carry `gender` in one of
 /// the cases the original readings had.
 ///
