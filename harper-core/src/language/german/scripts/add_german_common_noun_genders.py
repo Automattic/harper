@@ -22,6 +22,14 @@ Behaviour, per entry in the table:
 * it has no noun entry of its own -> reported as missing, or, for the few in
   `NEW_LEMMAS`, appended as a lemma.
 
+A second round added about 200 nouns of general prose; it found *Ende*
+recorded feminine (every *das Ende* was a report), *Leder* and *Silber*
+masculine, and thirteen feminine `-nis` nouns recorded neuter.
+
+`UMLAUT_PLURAL_SINGULARS` gets the singular property `A`: the `-en`/`-er`/`-el`
+nouns whose plural carries an umlaut, so that *die Garten* can be reported (see
+`grammar/noun_gender.rs`).
+
 Gender flags are plain properties (`M`, `F`, `Z`), not affixes, so adding one
 builds no surface form. Idempotent.
 
@@ -59,6 +67,28 @@ Jacke Hose Brille Mütze Uhr Kette Lampe Flasche Tasse Gabel Kerze Tüte Dose Sc
 Nase Hand Schulter Brust Zunge Lippe Stirn Wange Gesundheit Krankheit Medizin
 Woche Minute Sekunde Stunde Nacht Zeit Mitte Reise Fahrt Arbeit Mühe Hilfe Bitte Idee Meinung Liebe Freude Angst Sorge Ruhe Kälte Wärme Farbe Zahl Summe Seite Zeile Reihe Ecke Linie Größe Länge Breite Höhe Tiefe Kunst Musik Wahrheit Freiheit""")
 add(Z, """Haus Buch Heft Blatt Papier Auto Fahrrad Motorrad Flugzeug Schiff Boot Kind Baby Mädchen Tier Pferd Schwein Schaf Huhn Kaninchen Meerschweinchen Insekt Zimmer Bad Fenster Dach Bett Sofa Regal Licht Feuer Wasser Eis Brot Ei Fleisch Obst Gemüse Bier Glas Messer Geschirr Frühstück Mittagessen Abendessen Essen Getränk Spiel Spielzeug Lied Bild Foto Telefon Handy Radio Fernsehen Wetter Jahr Wochenende Datum Ergebnis Beispiel Wort Wörterbuch Thema Fach Zeugnis Klassenzimmer Gesicht Auge Ohr Herz Bein Knie Gehirn Blut Leben Geld Geschäft Dorf Land Meer Ufer Gras Gebäude Museum Theater Kino Hotel Restaurant Krankenhaus Rathaus Schloss Ziel Stück Ding Problem Gefühl Wissen Kleid Hemd Tuch Handtuch Kissen Gepäck""")
+# Frequent nouns of general prose, the second round of the audit. *Ende* was
+# recorded feminine, which made every *das Ende* a report.
+add(M, """Anfang Fall Grund Kopf Staat Krieg Zweck Ort Raum Begriff Satz Artikel Bericht Ordner Rechner Wert Markt
+Betrieb Beruf Kollege Vertrag Kredit Verein Feind Nachbar Herr Großvater Enkel Tod Körper Daumen Wunsch Ton Film
+Sieg Erfolg Punkt Rekord Termin Flug Pass Ausweis Schein Stock Schrank Sessel Teppich Vorhang Drucker
+Professor Student Einfluss Sinn Inhalt Grad Stern Nebel Blitz Donner Stein Sand Ast Pfeffer Essig Wein""")
+add(F, """Frage Art Stelle Seite Hand Geschichte Kultur Wirtschaft Politik Regierung Partei Gesellschaft Region Grenze
+Lösung Idee Nachricht Information Datei Version Zahl Firma Rechnung Bank Sache Gruppe Person Bevölkerung Dame
+Ehe Hochzeit Geburt Ärztin Haut Stimme Hoffnung Bühne Ausstellung Mannschaft Niederlage Uhr Frist Bahn Straße
+Kreuzung Ampel Haltestelle Fahrkarte Münze Wohnung Miete Tastatur Universität Hochschule Studentin Wissenschaft
+Forschung Studie Theorie Methode Analyse Regel Ausnahme Folge Ursache Wirkung Rolle Bedeutung Form Menge Anzahl
+Hälfte Wolke Wurzel Frucht Traube Erdbeere Nuss Soße Nudel Toilette Etage""")
+add(Z, """Ende Leben Mal Recht Gesetz Volk System Programm Projekt Ziel Mittel Gebiet Feld Wort Netz Unternehmen Konto
+Ding Stück Team Mitglied Baby Krankenhaus Medikament Herz Blut Haar Knie Gesicht Gefühl Glück Pech Lied Bild Kino
+Museum Spiel Ergebnis Datum Ticket Schloss Möbel Telefon Papier Heft Studium Beispiel Gewicht Drittel Viertel
+Prozent Kilo Gewitter Eis Feuer Holz Metall Eisen Gold Silber Plastik Leder Obst Salz Öl Getränk""")
+
+# Feminine nouns the dictionary records as masculine or neuter only. Each one
+# turns a correct *eine Erlaubnis* into a report, and, read the other way, a
+# correct *die Erlaubnis gilt* into a plural subject with a singular verb.
+add(F, """Erlaubnis Kenntnis Besorgnis Betrübnis Bewandtnis Ersparnis Fäulnis Wirrnis Bitternis Bedrängnis Befugnis
+Finsternis Wildnis Beilage Auslage Aster Auster Anapher""")
 # fmt: on
 
 # Lemma -> flags. `N` noun, `h` compound-capable, `E` plural -n, plus the gender.
@@ -71,7 +101,57 @@ NEW_LEMMAS = {
     "note": "NhEF",
     "tiefe": "NhEF",
     "auge": "NhEZ",
+    # The rest of the table had no noun entry at all: compounds the base
+    # dictionary only reaches by decomposition (*Bahnhof*, *Kühlschrank*), and
+    # nouns that only survived as another word class (*Morgen* the adverb,
+    # *Regen* the verb, *Mühe* dropped as "never capitalized"). `A` marks a
+    # singular whose umlaut plural the affixes cannot build; `X`, `Y`, `E`
+    # and `b` are the plural affixes and mark the base singular themselves.
+    "abendessen": "NhZ",
+    "bahnhof": "NhMA",
+    "bahnsteig": "NhMX",
+    "bildschirm": "NhMX",
+    "bleistift": "NhMX",
+    "fernsehen": "NhZ",
+    "flughafen": "NhMA",
+    "frühstück": "NhZX",
+    "handtuch": "NhZA",
+    "hausaufgabe": "NhFE",
+    "herbst": "NhMX",
+    "klassenzimmer": "NhZ",
+    "krankenhaus": "NhZA",
+    "kugelschreiber": "NhM",
+    "kühlschrank": "NhMA",
+    "morgen": "NhM",
+    "motorrad": "NhZA",
+    "mühe": "NhFE",
+    "ranzen": "NhM",
+    "regen": "NhM",
+    "regenschirm": "NhMX",
+    "schal": "NhMb",
+    "spielzeug": "NhZX",
+    "wochenende": "NhZE",
+    "wörterbuch": "NhZA",
+    "zeitschrift": "NhFY",
+    "region": "NhFY",
+    "nachricht": "NhFY",
+    "hochzeit": "NhFY",
+    "kollege": "NhME",
+    "vorhang": "NhMA",
+    "großvater": "NhMA",
+    "hochschule": "NhFE",
+    "fahrkarte": "NhFE",
+    "erdbeere": "NhFE",
 }
+
+# Nouns in `-en`, `-er` and `-el` whose plural is spelled with an umlaut
+# (*Garten*/*Gärten*, *Vogel*/*Vögel*). The spelling of most such nouns says
+# nothing about their number, *der Lehrer*/*die Lehrer*, so
+# `GermanDeterminerGender` leaves them alone; these get the singular property
+# `A` so that *die Garten* can be read as the error it is. *Wagen*, *Kasten*
+# and *Bogen* are left out: both plurals are in use.
+UMLAUT_PLURAL_SINGULARS = """Garten Vogel Apfel Bruder Mantel Vater Boden Ofen Hafen Faden Schaden Hammer
+Sattel Nagel Schnabel Acker Schwager Kloster Laden Graben Mutter Tochter""".split()
 
 LINE = re.compile(r"^(?P<word>[^/\s]+)/(?P<head>~*)(?P<flags>\S*)(?P<rest>.*)$")
 LETTER = {"M": "masculine", "F": "feminine", "Z": "neuter"}
@@ -108,13 +188,25 @@ def main() -> int:
             lines[i] = f"{m['word']}/{m['head']}{rest_flags}{wanted}{m['rest']}"
             conflicts.append((key, wanted, "".join(sorted(recorded))))
 
+    singular_marked = 0
+    for i, line in enumerate(lines):
+        m = LINE.match(line)
+        if not m or m["word"].capitalize() not in UMLAUT_PLURAL_SINGULARS:
+            continue
+        flags = m["flags"]
+        is_noun = "N" in flags or set("MFZ") & set(flags)
+        if is_noun and "REPLACES" not in m["rest"] and "A" not in flags:
+            lines[i] = f"{m['word']}/{m['head']}{flags}A{m['rest']}"
+            singular_marked += 1
+
     # Nouns the dictionary only knows as the plural of a stem (`katz` + -e
     # reads as *Katze*, number PLURAL) get a lemma of their own. A flag on the
     # stem is wrong: `tief` is an adjective and `deck` a verb stem.
-    present = {m["word"] for line in lines if (m := LINE.match(line))}
+    # A line for the same word that is not a noun (`morgen/~~r`, `mühe/~~h`)
+    # does not count: the dictionary merges two lines of one word.
     appended = []
     for lemma, flags in NEW_LEMMAS.items():
-        if lemma not in present:
+        if lemma.capitalize() not in seen:
             appended.append(f"{lemma}/~~{flags} # everyday noun, gender from add_german_common_noun_genders.py")
             seen.add(lemma.capitalize())
             added += 1
@@ -124,7 +216,7 @@ def main() -> int:
         lines += appended + [""]
     DICT.write_text("\n".join(lines), encoding="utf-8")
 
-    print(f"added {added}, already right {same}", file=sys.stderr)
+    print(f"added {added}, already right {same}, marked singular {singular_marked}", file=sys.stderr)
     for word, wanted, got in conflicts:
         print(f"CORRECTED {word}: dictionary {got} -> {wanted}", file=sys.stderr)
     missing = sorted(set(TABLE) - seen)
