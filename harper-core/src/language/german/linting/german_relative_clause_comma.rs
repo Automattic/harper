@@ -1,12 +1,14 @@
 //! The comma around a relative clause.
 
 use crate::{
-    Token, TokenKind, TokenStringExt,
+    Punctuation, Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::grammar::determiners::determiner_readings,
     language::german::grammar::noun_gender::NounGender,
+    language::german::spell::curated_german_dictionary,
     language::morphology::{Gender, GenderSet},
     linting::{Lint, LintKind, Linter, Suggestion},
+    spell::Dictionary,
 };
 
 /// Subject pronouns that can open a relative clause right behind its pronoun:
@@ -105,18 +107,73 @@ impl GermanRelativeClauseComma {
         }
     }
 
-    /// A lower-case word with a verb reading and no adjective, determiner or
-    /// pronoun reading. A noun reading does not count against it: written
+    /// A lower-case word with a verb reading and no determiner, pronoun,
+    /// preposition or conjunction reading. A noun reading does not count against it: written
     /// lower case, `ist` and `lese` are not *das Ist* and *die Lese*.
+    ///
+    /// Many finite forms reach the document with no part of speech at all —
+    /// *parkt*, *regnet*, *kocht* are accepted by the morphology but carry no
+    /// entry of their own. A word with no part of speech whose infinitive is a
+    /// verb counts as one: *parkt* → *parken*, *regnet* → *regnen*.
     fn is_verb(token: &Token, document: &Document) -> bool {
-        let TokenKind::Word(Some(metadata)) = &token.kind else {
+        if Self::is_capitalized(token, document) {
+            return false;
+        }
+        let TokenKind::Word(metadata) = &token.kind else {
             return false;
         };
-        !Self::is_capitalized(token, document)
-            && metadata.is_verb()
-            && !metadata.is_adjective()
+        let has_part_of_speech = metadata.as_ref().is_some_and(|m| {
+            m.is_verb()
+                || m.is_noun()
+                || m.is_adjective()
+                || m.is_adverb()
+                || m.is_determiner()
+                || m.is_pronoun()
+                || m.preposition
+                || m.is_conjunction()
+        });
+        if !has_part_of_speech {
+            return Self::infinitive_is_a_verb(&Self::text(token, document));
+        }
+        let Some(metadata) = metadata else {
+            return false;
+        };
+        // An adjective reading does not count against it: past participles
+        // carry one (*das vor der Tür steht **gehört** meinem Vater*). In a
+        // run of verbs only the last member and the one before it decide
+        // anything, so an adjective with a stray verb reading at the head of
+        // the run does no harm.
+        metadata.is_verb()
             && !metadata.is_determiner()
             && !metadata.is_pronoun()
+            && !metadata.preposition
+            && !metadata.is_conjunction()
+    }
+
+    /// [`Self::is_verb`] for callers outside this rule.
+    pub(crate) fn is_verb_token(token: &Token, document: &Document) -> bool {
+        Self::is_verb(token, document)
+    }
+
+    /// Is the infinitive this present-tense form points to a verb?
+    pub(crate) fn infinitive_is_a_verb(word: &str) -> bool {
+        let lower = word.to_lowercase();
+        let stems = [
+            lower.strip_suffix("et"),
+            lower.strip_suffix("st"),
+            lower.strip_suffix('t'),
+        ];
+        let dictionary = curated_german_dictionary();
+        stems.into_iter().flatten().any(|stem| {
+            [format!("{stem}en"), format!("{stem}n")]
+                .iter()
+                .any(|infinitive| {
+                    let chars: Vec<char> = infinitive.chars().collect();
+                    dictionary
+                        .get_word_metadata(&chars)
+                        .is_some_and(|metadata| metadata.is_verb())
+                })
+        })
     }
 
     fn is_adverb(token: &Token, document: &Document) -> bool {
@@ -138,7 +195,7 @@ impl GermanRelativeClauseComma {
     /// sentence: the run's last verb belongs to the main clause, so the
     /// relative clause ends one before it. `Some((last, false))` when the run
     /// is the end of the sentence or of the clause.
-    fn clause_end(
+    pub(crate) fn clause_end(
         words: &[&Token],
         pronoun_at: usize,
         document: &Document,
@@ -166,6 +223,14 @@ impl GermanRelativeClauseComma {
                     .is_some_and(|next| matches!(next.kind, TokenKind::Word(_)));
                 if !sentence_goes_on {
                     return Some((last, false));
+                }
+                // A coordinator or a conjunction behind the verbs continues the
+                // subordinate clause: *Wenn die Datei nicht angegeben wurde
+                // oder …*. The main clause has not started.
+                if words.get(last + 1).is_some_and(|next| {
+                    CLAUSE_BREAKERS.contains(&Self::text(next, document).to_lowercase().as_str())
+                }) {
+                    return None;
                 }
                 // A single verb followed by more words leaves open where the
                 // relative clause stops; two or more put the main verb last.
@@ -200,11 +265,21 @@ impl Linter for GermanRelativeClauseComma {
                 let behind_preposition = at
                     .checked_sub(1)
                     .is_some_and(|i| words[i].kind.is_preposition());
-                let noun_at = if behind_preposition {
-                    at.checked_sub(2)
-                } else {
+                let pronoun_phrase_at = if behind_preposition {
                     at.checked_sub(1)
+                } else {
+                    Some(at)
                 };
+                // The opening comma may already be there and only the closing
+                // one missing: *Das Auto, das am Straßenrand steht parkt im
+                // Halteverbot*.
+                let behind_comma = pronoun_phrase_at
+                    .and_then(|i| i.checked_sub(1))
+                    .is_some_and(|i| {
+                        matches!(words[i].kind, TokenKind::Punctuation(Punctuation::Comma))
+                    });
+                let noun_at =
+                    pronoun_phrase_at.and_then(|i| i.checked_sub(if behind_comma { 2 } else { 1 }));
                 let Some(noun_token) = noun_at.map(|i| words[i]) else {
                     continue;
                 };
@@ -239,7 +314,14 @@ impl Linter for GermanRelativeClauseComma {
                     && pronoun == "der"
                     && noun_genders == GenderSet::from(Gender::Masculine)
                     && (Self::is_adverb(next, document) || Self::is_verb(next, document));
-                if !(opens_with_subject || masculine_subject) {
+                // Behind a comma the pronoun reading is settled unless an
+                // adjective or a noun follows, which would make it an article
+                // opening a clause of its own (*…, die neuen Kinder schliefen*).
+                let after_comma_reading = behind_comma
+                    && matches!(next.kind, TokenKind::Word(_))
+                    && !Self::is_capitalized(next, document)
+                    && !next.kind.is_adjective();
+                if !(opens_with_subject || masculine_subject || after_comma_reading) {
                     continue;
                 }
 
@@ -253,15 +335,17 @@ impl Linter for GermanRelativeClauseComma {
                 } else {
                     ""
                 };
-                lints.push(Lint {
-                    span: noun_token.span,
-                    lint_kind: LintKind::Punctuation,
-                    suggestions: vec![Suggestion::InsertAfter(vec![','])],
-                    priority: 28,
-                    message: format!(
-                        "»{pronoun}« leitet hier einen Relativsatz ein. Davor steht ein Komma.{dass_hint}"
-                    ),
-                });
+                if !behind_comma {
+                    lints.push(Lint {
+                        span: noun_token.span,
+                        lint_kind: LintKind::Punctuation,
+                        suggestions: vec![Suggestion::InsertAfter(vec![','])],
+                        priority: 28,
+                        message: format!(
+                            "»{pronoun}« leitet hier einen Relativsatz ein. Davor steht ein Komma.{dass_hint}"
+                        ),
+                    });
+                }
                 if main_clause_continues {
                     lints.push(Lint {
                         span: words[last].span,
@@ -315,6 +399,20 @@ mod tests {
         assert_eq!(lint_count("Das ist das Haus in dem ich wohne."), 1);
         assert_eq!(lint_count("Das ist das Haus, in dem ich wohne."), 0);
         assert_eq!(lint_count("Wir wohnen im Haus mit dem Garten."), 0);
+    }
+
+    #[test]
+    fn a_missing_closing_comma_is_reported() {
+        assert_eq!(
+            lint_count("Das Auto, das am Straßenrand steht parkt im Halteverbot."),
+            1
+        );
+        assert_eq!(lint_count("Der Mann, der dort steht ist mein Vater."), 1);
+        assert_eq!(lint_count("Das Haus, in dem ich wohne ist alt."), 1);
+        assert_eq!(
+            lint_count("Er kam nach Hause, die neuen Kinder schliefen schon."),
+            0
+        );
     }
 
     #[test]

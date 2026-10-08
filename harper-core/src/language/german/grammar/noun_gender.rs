@@ -55,6 +55,19 @@ impl NounGender {
             .unwrap_or(GenderSet::empty())
     }
 
+    /// Is `head` recorded as a plural and nothing else, with no gender — a
+    /// plurale tantum like *Eltern*, *Leute*, *Ferien*?
+    pub fn is_plural_only(&self, head: &str) -> bool {
+        let chars: Vec<char> = head.chars().collect();
+        self.dictionary
+            .get_word_metadata(&chars)
+            .filter(|metadata| metadata.is_noun())
+            .is_some_and(|metadata| {
+                let agreement = metadata.noun_agreement();
+                agreement.number == NumberSet::PLURAL && agreement.gender.is_empty()
+            })
+    }
+
     /// The one gender the dictionary records for `head`, and whether the noun
     /// is surely a singular.
     ///

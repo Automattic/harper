@@ -88,6 +88,40 @@ const SEPARABLE_VERB_PREFIXES: &[&str] = &[
 /// far rarer than a first-person sentence.
 const SUBJECT_PRONOUNS: &[&str] = &["ich", "du", "er", "sie", "es", "wir"];
 
+/// Nouns that German writes lower case when they are the predicate of a
+/// copula or of *tun*: *es tut mir **leid***, *mir ist **angst** und
+/// **bange***, *er ist **schuld***, *die Firma ist **pleite***, *jemandem
+/// **feind** sein*. Duden lists them as nouns in adjectival use, and the rule
+/// is a closed class — which is why it is a list rather than a flag.
+///
+/// Each is paired with the verbs that license it. *Ich habe keine Angst* has
+/// none of them and stays reportable, as does *seine angst ist groß*, where a
+/// determiner shows the word is the noun.
+const PREDICATIVE_NOUNS: &[(&str, &[&str])] = &[
+    ("leid", TUN),
+    ("angst", COPULAS),
+    ("bange", COPULAS),
+    ("schuld", COPULAS),
+    ("pleite", COPULAS),
+    ("feind", COPULAS),
+    ("freund", COPULAS),
+    ("gram", COPULAS),
+];
+
+/// A coordinator in front of a clause leaves its verb-second order intact:
+/// *Und das **tat** verdammt gut*.
+const CLAUSE_COORDINATORS: &[&str] = &["und", "oder", "aber", "denn", "sondern", "doch"];
+
+const TUN: &[&str] = &[
+    "tun", "tut", "tue", "tust", "tat", "taten", "tätest", "täte", "getan",
+];
+
+const COPULAS: &[&str] = &[
+    "ist", "sind", "bin", "bist", "seid", "war", "waren", "warst", "wart", "sei", "wäre", "wären",
+    "sein", "gewesen", "wird", "werden", "wirst", "werdet", "wurde", "wurden", "ward", "würde",
+    "geworden", "bleibt", "bleiben", "blieb", "blieben",
+];
+
 const LANGUAGE_GLOSS_MARKERS: &[&str] = &[
     "deutsch",
     "althochdeutsch",
@@ -200,6 +234,106 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             matches!(p.kind, TokenKind::Word(_))
                 && SUBJECT_PRONOUNS.contains(&noun_phrase::lowercase_of(p, document).as_str())
         })
+    }
+
+    /// The token range of the clause around `index`, up to the punctuation on
+    /// either side.
+    fn clause_bounds(tokens: &[&Token], index: usize) -> (usize, usize) {
+        let is_boundary = |token: &&Token| matches!(token.kind, TokenKind::Punctuation(_));
+        let start = tokens[..index]
+            .iter()
+            .rposition(is_boundary)
+            .map_or(0, |at| at + 1);
+        let end = tokens[index + 1..]
+            .iter()
+            .position(is_boundary)
+            .map_or(tokens.len(), |at| index + 1 + at);
+        (start, end)
+    }
+
+    /// The words of the clause around `index`, up to the punctuation on
+    /// either side, lower-cased, without the word at `index` itself.
+    fn clause_around(tokens: &[&Token], index: usize, document: &Document) -> Vec<String> {
+        let (start, end) = Self::clause_bounds(tokens, index);
+        (start..end)
+            .filter(|&at| at != index && matches!(tokens[at].kind, TokenKind::Word(_)))
+            .map(|at| noun_phrase::lowercase_of(tokens[at], document))
+            .collect()
+    }
+
+    /// Is this noun/verb homograph the finite verb of a verb-second clause?
+    ///
+    /// German puts the finite verb second, so in *Das **bedarf** noch der
+    /// Klärung*, *Der **bestand** aus Stahl*, *Keiner **macht** hier
+    /// Hausaufgaben* the word behind a clause-initial pronoun is the verb. The
+    /// chunker reads *das bedarf* as a determiner and its head, and nothing on
+    /// the two words says otherwise; the rest of the clause does. When no
+    /// other word in it can be a verb, this one is.
+    ///
+    /// Two conditions keep it from swallowing real errors. The word in front
+    /// has to be one that can be a **subject pronoun** — *Vielen dank* opens
+    /// with a dative and stays reportable. And it has to **open the clause**:
+    /// *aus der reihe*, *pro stunde* are not in that position, which matters
+    /// because many finite forms (*kostet*, *tanzt*) carry no verb reading in
+    /// the dictionary, so "no other verb" alone is weak evidence.
+    fn is_verb_second(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const PRONOUN_OPENERS: &[&str] = &[
+            "der", "die", "das", "dies", "diese", "dieser", "dieses", "jener", "jene", "jenes",
+            "keiner", "keine", "keines", "jeder", "jede", "jedes", "einer", "eine", "eines",
+            "alle", "alles", "beide", "viele", "manche", "einige", "welche", "wer", "was",
+        ];
+        let (start, end) = Self::clause_bounds(tokens, index);
+        let opener_at = if start < index
+            && CLAUSE_COORDINATORS
+                .contains(&noun_phrase::lowercase_of(tokens[start], document).as_str())
+        {
+            start + 1
+        } else {
+            start
+        };
+        if index != opener_at + 1
+            || !PRONOUN_OPENERS
+                .contains(&noun_phrase::lowercase_of(tokens[opener_at], document).as_str())
+        {
+            return false;
+        }
+        // The pronoun is third person, so its verb ends in *-t* (*macht*,
+        // *bedarf* aside, *tat*) or is a strong preterite in *-d* (*bestand*).
+        // *Die türme von Hanoi* and *Keine sorge* end in *-e*, a first person
+        // at best. And a verb-second clause goes on behind its verb: *Das
+        // gerät, mit dem ich arbeite* stops at the comma.
+        let word = noun_phrase::lowercase_of(tokens[index], document);
+        let third_person = word.ends_with('t') || word.ends_with('d') || word.ends_with("arf");
+        let clause_goes_on = index + 1 < end;
+        if !third_person || !clause_goes_on {
+            return false;
+        }
+        !(start..end).filter(|&at| at != index).any(|at| {
+            let token = tokens[at];
+            token.kind.is_verb()
+                && document
+                    .get_span_content(&token.span)
+                    .first()
+                    .is_some_and(|c| c.is_lowercase())
+        })
+    }
+
+    /// Is this one of [`PREDICATIVE_NOUNS`] in the position German writes it
+    /// lower case: no determiner in front, a licensing verb in the clause?
+    fn is_predicative_noun(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        let word = noun_phrase::lowercase_of(tokens[index], document);
+        let Some((_, verbs)) = PREDICATIVE_NOUNS.iter().find(|(noun, _)| *noun == word) else {
+            return false;
+        };
+        // *mein bester freund* is the noun: a determiner or an attributive
+        // adjective in front shows it.
+        let after_attribute = index.checked_sub(1).is_some_and(|at| {
+            noun_phrase::supplies_determiner(tokens[at], document) || tokens[at].kind.is_adjective()
+        });
+        !after_attribute
+            && Self::clause_around(tokens, index, document)
+                .iter()
+                .any(|other| verbs.contains(&other.as_str()))
     }
 
     /// Is this token inside a stretch of a foreign language?
@@ -346,6 +480,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         word_chars: &[char],
         prev: Option<&Token>,
         np_role: noun_phrase::Role,
+        verb_second: bool,
     ) -> bool {
         let lower: Vec<char> = word_chars
             .iter()
@@ -515,8 +650,10 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // Ambiguous noun / verb (or noun / adjective) homograph: a noun here
         // only if it is the *head* of a noun phrase. As a modifier it is the
         // attributive adjective ("die wesentliche Frage"), and outside a noun
-        // phrase it is the verb ("..., fang an").
-        matches!(np_role, noun_phrase::Role::Head)
+        // phrase it is the verb ("..., fang an"). And a head that can be a
+        // verb, behind a clause-initial pronoun, is the clause's verb — see
+        // `is_verb_second`.
+        matches!(np_role, noun_phrase::Role::Head) && !(has_verb && verb_second)
     }
 }
 
@@ -546,6 +683,7 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         || Self::follows_language_gloss(&tokens, i, document)
                         || Self::in_foreign_stretch(&tokens, i, document)
                         || Self::follows_subject_pronoun(prev, document)
+                        || Self::is_predicative_noun(&tokens, i, document)
                     {
                         continue;
                     }
@@ -562,7 +700,12 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                     if !already_capitalized
                         && all_alphabetic
                         && !is_sentence_initial
-                        && self.check_if_word_is_noun(word_chars, prev, np_roles[i])
+                        && self.check_if_word_is_noun(
+                            word_chars,
+                            prev,
+                            np_roles[i],
+                            Self::is_verb_second(&tokens, i, document),
+                        )
                     {
                         let mut replacement: Vec<char> = word_chars.to_vec();
                         if let Some(first_char) = replacement.first_mut() {

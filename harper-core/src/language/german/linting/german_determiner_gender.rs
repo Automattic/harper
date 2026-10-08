@@ -130,16 +130,23 @@ impl GermanDeterminerGender {
             if grades_the_next {
                 continue;
             }
-            let is_adjective = self
-                .nouns
-                .dictionary()
-                .get_word_metadata(chars)
-                .is_some_and(|metadata| metadata.is_adjective());
-            if !is_adjective {
+            // A declined adjective is its stem plus the ending, and the stem is
+            // an adjective of its own: *groß-er*, *neu-e*. A word that only
+            // looks declined is not — *sicher* (*hat das sicher Potenzial*) is
+            // not *sich* plus *-er*, and archaic *eigen* (*dein eigen Fleisch*)
+            // is not *eig* plus *-en*.
+            let stem = &word[..word.len() - ending.len()];
+            let is_adjective = |form: &str| {
+                let form: Vec<char> = form.chars().collect();
+                self.nouns
+                    .dictionary()
+                    .get_word_metadata(&form)
+                    .is_some_and(|metadata| metadata.is_adjective())
+            };
+            if !is_adjective(&word) || !is_adjective(stem) {
                 continue;
             }
 
-            let stem = &word[..word.len() - ending.len()];
             let suggestions: Vec<Suggestion> = allowed
                 .iter()
                 .map(|wanted| format!("{stem}{wanted}"))
@@ -158,6 +165,47 @@ impl GermanDeterminerGender {
                 priority: 31,
             });
         }
+    }
+
+    /// Is the determiner-shaped word at `at` something else in this position?
+    ///
+    /// Three readings, each found on the correct example sentences of
+    /// LanguageTool's German rules:
+    ///
+    /// * **the numeral *ein***, behind another determiner: *das **eine** Mal*,
+    ///   *der **eine** Server*, *vom **einen** Ende*, *Ich kenne **eine**, die*.
+    ///   An article never follows an article.
+    /// * **the verb *meinen***, behind its subject: *Ich **meine** Spaß*, *Sie
+    ///   **meinen** sicher Ironie*.
+    /// * **the pronoun *das***, behind a sentence-initial copula: *Ist **das**
+    ///   Kunst?*, *Ist das reines Gold?* There the noun is the predicate and
+    ///   has no article.
+    fn is_not_an_article(words: &[&Token], at: usize, text: &str, document: &Document) -> bool {
+        const COPULAS: &[&str] = &[
+            "ist", "sind", "war", "waren", "wäre", "wären", "sei", "seien", "wird", "werden",
+            "wurde", "wurden", "bleibt", "blieb",
+        ];
+        let lower = text.to_lowercase();
+        let Some(previous) = at.checked_sub(1).map(|i| words[i]) else {
+            return false;
+        };
+        if !matches!(previous.kind, TokenKind::Word(_)) {
+            return false;
+        }
+        let previous_word = noun_phrase::lowercase_of(previous, document);
+
+        // The verb and the copula readings need their subject or verb to open
+        // the sentence: *wenn ich **meine** Mann sehe* is verb-final, so
+        // *meine* is the possessive there, and *Für uns ist das heiliges
+        // Gebiet* is read as the error it most likely is.
+        let previous_opens = at == 1;
+        (lower.starts_with("ein") && noun_phrase::supplies_determiner(previous, document))
+            || (lower.starts_with("mein")
+                && previous_opens
+                && ["ich", "wir", "sie"].contains(&previous_word.as_str()))
+            || (["das", "dies"].contains(&lower.as_str())
+                && previous_opens
+                && COPULAS.contains(&previous_word.as_str()))
     }
 
     /// German name of a gender, for the message.
@@ -208,6 +256,9 @@ impl Linter for GermanDeterminerGender {
                     continue;
                 };
                 if stands_alone(&text) || opens_relative_clause(&words, phrase.open, document) {
+                    continue;
+                }
+                if Self::is_not_an_article(&words, phrase.open, &text, document) {
                     continue;
                 }
 

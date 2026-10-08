@@ -1,7 +1,9 @@
 //! German linting rules and checkers.
 
 pub mod german_absolute_superlative;
+pub mod german_adjective_form;
 pub mod german_common_typos;
+pub mod german_country_article;
 pub mod german_determiner_gender;
 pub mod german_filler_words;
 pub mod german_fixed_nominalization;
@@ -9,6 +11,7 @@ pub mod german_foreign_stretch;
 pub mod german_genitive_after_nominative_article;
 pub mod german_nominalized_infinitive;
 pub mod german_noun_capitalization;
+pub mod german_perfect_auxiliary;
 pub mod german_preposition_case;
 pub mod german_recommended_fusion;
 pub mod german_relative_clause_comma;

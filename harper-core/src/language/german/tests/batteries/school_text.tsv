@@ -1,0 +1,116 @@
+# class	err|ok	sentence — 60 sentences a teacher would mark, each beside its correction; see "A school text" in README.md
+Groß/klein	err	Am wochenende war ich mit meiner Familie im Zoo.
+Groß/klein	ok	Am Wochenende war ich mit meiner Familie im Zoo.
+Groß/klein	err	Wir haben viele tiere gesehen.
+Groß/klein	ok	Wir haben viele Tiere gesehen.
+Groß/klein	err	Ich habe keine angst vor Hunden.
+Groß/klein	ok	Ich habe keine Angst vor Hunden.
+Groß/klein	err	Das essen in der Kantine war lecker.
+Groß/klein	ok	Das Essen in der Kantine war lecker.
+Groß/klein	err	Beim lesen vergesse ich die Zeit.
+Groß/klein	ok	Beim Lesen vergesse ich die Zeit.
+Rechtschreibung	err	Ich habe gestern einen Brif geschrieben.
+Rechtschreibung	ok	Ich habe gestern einen Brief geschrieben.
+Rechtschreibung	err	Das war wirklich intressant.
+Rechtschreibung	ok	Das war wirklich interessant.
+Rechtschreibung	err	Wir hatten viel Spass.
+Rechtschreibung	ok	Wir hatten viel Spaß.
+Rechtschreibung	err	Ich weis es nicht.
+Rechtschreibung	ok	Ich weiß es nicht.
+Rechtschreibung	err	Er hat es nähmlich vergessen.
+Rechtschreibung	ok	Er hat es nämlich vergessen.
+Rechtschreibung	err	Das ist eine gute Vorraussetzung.
+Rechtschreibung	ok	Das ist eine gute Voraussetzung.
+Rechtschreibung	err	Wir fahren warscheinlich nach Italien.
+Rechtschreibung	ok	Wir fahren wahrscheinlich nach Italien.
+Rechtschreibung	err	Das ist Standart bei uns.
+Rechtschreibung	ok	Das ist Standard bei uns.
+das/dass	err	Ich glaube, das er recht hat.
+das/dass	ok	Ich glaube, dass er recht hat.
+das/dass	err	Ich hoffe das du kommst.
+das/dass	ok	Ich hoffe, dass du kommst.
+das/dass	err	Das Buch, dass ich lese, ist spannend.
+das/dass	ok	Das Buch, das ich lese, ist spannend.
+Komma	err	Ich weiß nicht ob er kommt.
+Komma	ok	Ich weiß nicht, ob er kommt.
+Komma	err	Er kam nicht weil er krank war.
+Komma	ok	Er kam nicht, weil er krank war.
+Komma	err	Wenn es regnet bleiben wir zu Hause.
+Komma	ok	Wenn es regnet, bleiben wir zu Hause.
+Komma	err	Der Junge der dort steht ist mein Bruder.
+Komma	ok	Der Junge, der dort steht, ist mein Bruder.
+Komma	err	Das Auto, das vor der Tür steht gehört meinem Vater.
+Komma	ok	Das Auto, das vor der Tür steht, gehört meinem Vater.
+Artikel	err	Ich habe die Hund gefüttert.
+Artikel	ok	Ich habe den Hund gefüttert.
+Artikel	err	Das Schule fängt um acht an.
+Artikel	ok	Die Schule fängt um acht an.
+Artikel	err	Wir sitzen in die Garten.
+Artikel	ok	Wir sitzen in dem Garten.
+Artikel	err	Er wohnt in Schweiz.
+Artikel	ok	Er wohnt in der Schweiz.
+Artikel	err	Wir fliegen nach Türkei.
+Artikel	ok	Wir fliegen in die Türkei.
+Kasus	err	Ich gehe mit meine Freundin ins Kino.
+Kasus	ok	Ich gehe mit meiner Freundin ins Kino.
+Kasus	err	Wegen dem Regen blieben wir drinnen.
+Kasus	ok	Wegen des Regens blieben wir drinnen.
+Kasus	err	Er spielt mit den Ball.
+Kasus	ok	Er spielt mit dem Ball.
+Kasus	err	Das Geschenk ist für meinem Bruder.
+Kasus	ok	Das Geschenk ist für meinen Bruder.
+Adjektiv	err	Ich habe ein neues Fahrrad und einen neue Helm.
+Adjektiv	ok	Ich habe ein neues Fahrrad und einen neuen Helm.
+Adjektiv	err	Das ist ein großer Haus.
+Adjektiv	ok	Das ist ein großes Haus.
+Adjektiv	err	Wir hatten eine lang Reise.
+Adjektiv	ok	Wir hatten eine lange Reise.
+Adjektiv	err	Der neu Lehrer ist nett.
+Adjektiv	ok	Der neue Lehrer ist nett.
+Kongruenz	err	Die Kinder spielt im Hof.
+Kongruenz	ok	Die Kinder spielen im Hof.
+Kongruenz	err	Er gehen jeden Tag zur Schule.
+Kongruenz	ok	Er geht jeden Tag zur Schule.
+Kongruenz	err	Ich hat keine Zeit.
+Kongruenz	ok	Ich habe keine Zeit.
+Kongruenz	err	Wir ist müde.
+Kongruenz	ok	Wir sind müde.
+Kongruenz	err	Meine Eltern arbeitet viel.
+Kongruenz	ok	Meine Eltern arbeiten viel.
+Perfekt	err	Gestern hat ich nach Hause gegangen.
+Perfekt	ok	Gestern bin ich nach Hause gegangen.
+Perfekt	err	Wir haben spät angekommen.
+Perfekt	ok	Wir sind spät angekommen.
+Perfekt	err	Was hat passiert?
+Perfekt	ok	Was ist passiert?
+seit/seid	err	Ihr seit so nett.
+seit/seid	ok	Ihr seid so nett.
+seit/seid	err	Ich warte seid zwei Stunden.
+seit/seid	ok	Ich warte seit zwei Stunden.
+wieder/wider	err	Ich komme morgen wider.
+wieder/wider	ok	Ich komme morgen wieder.
+E-Mail	err	Ich schreibe dir eine Email.
+E-Mail	ok	Ich schreibe dir eine E-Mail.
+Doppelung	err	Ich habe habe das nicht gesagt.
+Doppelung	ok	Ich habe das nicht gesagt.
+Doppelung	err	Wir gehen in in den Park.
+Doppelung	ok	Wir gehen in den Park.
+Verwechslung	err	Er ist größer wie ich.
+Verwechslung	ok	Er ist größer als ich.
+Verwechslung	err	Das ist das gleiche Auto wie gestern, nur in rot.
+Verwechslung	ok	Das ist das gleiche Auto wie gestern, nur in Rot.
+Verwechslung	err	Ich bin am lesen.
+Verwechslung	ok	Ich bin am Lesen.
+Verwechslung	err	Wie viel Uhr ist es? Ich weiß nicht wieviel.
+Verwechslung	ok	Wie viel Uhr ist es? Ich weiß nicht, wie viel.
+Satzanfang	err	heute ist ein schöner Tag.
+Satzanfang	ok	Heute ist ein schöner Tag.
+Namen	ok	Lisa und Ben spielen Fußball mit Finn.
+Namen	ok	Ich schreibe Emma bei WhatsApp.
+Fester Ausdruck	ok	Es tut mir leid, dass ich zu spät bin.
+Fester Ausdruck	err	Vielen dank für deine Hilfe.
+Fester Ausdruck	ok	Vielen Dank für deine Hilfe.
+Fester Ausdruck	ok	Ich habe recht, und du hast unrecht.
+Dativ-Subjekt	err	Der Katze schläft auf dem Sofa.
+Dativ-Subjekt	ok	Die Katze schläft auf dem Sofa.
+Vergleich	ok	Mein Bruder ist älter als ich.

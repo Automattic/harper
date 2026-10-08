@@ -12,7 +12,7 @@ use crate::{
     language::german::grammar::noun_phrase::{self, Phrase},
     language::german::grammar::prepositions::preposition_government,
     language::german::spell::curated_german_dictionary,
-    language::morphology::{Agreement, CaseSet, MorphologyExt},
+    language::morphology::{Agreement, Case, CaseSet, MorphologyExt},
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::{Dictionary, FstDictionary},
 };
@@ -32,7 +32,30 @@ const FIXED_PHRASE_DETERMINERS: &[&str] = &["allem", "alledem", "alles"];
 /// govern nothing: *ist nach wie **vor** der Arzt* is a predicate nominative,
 /// not a dative after *vor*. Each entry is the preposition and the words that
 /// have to stand in front of it, nearest first.
-const FIXED_ADVERBIALS: &[(&str, &[&str])] = &[("vor", &["wie", "nach"])];
+const FIXED_ADVERBIALS: &[(&str, &[&str])] = &[
+    ("vor", &["wie", "nach"]),
+    // *Sie sah ab und zu einen Mann*: *zu* closes the adverbial.
+    ("zu", &["und", "ab"]),
+    // *Was ist das für ein Lärm?*, *In was für einem Land*: the phrase belongs
+    // to the interrogative, and its case to the clause.
+    ("für", &["was"]),
+];
+
+/// Genitive prepositions that are adverbs as well: *1811 wurde **außerhalb**
+/// eine Schienenbahn verlegt*, *dem Belvedere wurde **seitlich** ein Burghaus
+/// angegliedert*. Followed by a determiner with no genitive and no dative
+/// reading, they govern nothing.
+const ADVERBIAL_PREPOSITIONS: &[&str] = &[
+    "außerhalb",
+    "innerhalb",
+    "oberhalb",
+    "unterhalb",
+    "seitlich",
+    "abseits",
+    "unweit",
+    "jenseits",
+    "diesseits",
+];
 
 /// Catches a determiner in the wrong case after a preposition: *"**wegen dem**
 /// Wetter"* needs the genitive, *"**für dem** Kind"* the accusative.
@@ -298,6 +321,35 @@ impl Linter for GermanPrepositionCase {
                 let Some(all_readings) = determiner_readings(&determiner_text) else {
                     continue;
                 };
+
+                if ADVERBIAL_PREPOSITIONS.contains(&preposition_text.to_lowercase().as_str())
+                    && !all_readings
+                        .iter()
+                        .any(|r| matches!(r.case, Case::Genitive | Case::Dative))
+                {
+                    continue;
+                }
+
+                // *Das ist **mit das** Schönste*, *mit die beste Musik*, *mit
+                // meine Lieblingskneipe*: before a superlative, *mit* means
+                // "among" and governs nothing. Written lower case or
+                // nominalized, the superlative shows it.
+                if preposition_text.eq_ignore_ascii_case("mit")
+                    && word_at(index + 4).is_some_and(|next| {
+                        let lower = next.to_lowercase();
+                        let superlative_ending = ["ste", "sten", "ster", "stes"]
+                            .iter()
+                            .any(|ending| lower.ends_with(ending));
+                        // Capitalized, only the nominalized *das Schönste*:
+                        // *mit seine Schwester* ends in *-ster* too.
+                        lower.starts_with("lieblings")
+                            || (superlative_ending && !is_capitalized(&next))
+                            || (lower.ends_with("ste")
+                                && determiner_text.eq_ignore_ascii_case("das"))
+                    })
+                {
+                    continue;
+                }
 
                 // The noun rules out the readings it cannot stand beside. Its
                 // spelling does most of the work — a German dative plural ends

@@ -1,3 +1,4 @@
+use crate::language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 
@@ -124,6 +125,15 @@ const OB_MODIFIERS: &[&str] = &[
     "unabhängig",
     "nachdem",
     "wie",
+];
+
+/// Conjunctions that open a subordinate clause at the start of a sentence,
+/// whose end then needs a comma before the main clause's verb: *Wenn du
+/// kommst, bringe Brot mit*. *Da* (also an adverb) and *während* (also a
+/// preposition) are left out.
+const SENTENCE_INITIAL_SUBORDINATORS: &[&str] = &[
+    "wenn", "weil", "als", "obwohl", "dass", "nachdem", "bevor", "falls", "ob", "sobald",
+    "solange", "seitdem", "indem", "sofern",
 ];
 
 /// Requires the comma German grammar requires in front of a subordinate clause.
@@ -259,6 +269,54 @@ impl GermanSubordinateComma {
         next_is_a_joiner || previous_is_a_conjunction
     }
 
+    /// *Wenn du kommst bringe Brot mit*: a sentence that opens with a
+    /// subordinate clause puts the main clause's verb right behind the
+    /// subordinate clause's, and the comma goes between them.
+    ///
+    /// Two adjacent verbs are the evidence, the same one
+    /// `GermanRelativeClauseComma` reads: the subordinate clause is verb-final,
+    /// the main clause verb-first, so where a run of verbs is followed by more
+    /// of the sentence, its last verb is the main clause's.
+    fn missing_comma_after_initial_clause(tokens: &[&Token], document: &Document) -> Option<Lint> {
+        let first = tokens.first()?;
+        if !matches!(first.kind, TokenKind::Word(_))
+            || !Self::word_in(first, document, SENTENCE_INITIAL_SUBORDINATORS)
+        {
+            return None;
+        }
+        let (last, main_clause_continues) =
+            GermanRelativeClauseComma::clause_end(tokens, 0, document)?;
+        if !main_clause_continues {
+            return None;
+        }
+        // The clause needs a subject in front of its verbs: *Dass essen gehen
+        // ein Luxus ist* has an infinitive phrase where the verbs would be.
+        // And a conjunction behind the verbs continues the subordinate clause
+        // rather than starting the main one: *Wenn du Schluss machen willst
+        // bevor es angefangen hat*.
+        let first_verb = (1..=last + 1)
+            .find(|&at| GermanRelativeClauseComma::is_verb_token(tokens[at], document))?;
+        if first_verb < 2 {
+            return None;
+        }
+        if tokens
+            .get(last + 2)
+            .is_some_and(|after| Self::word_in(after, document, SUBORDINATORS))
+        {
+            return None;
+        }
+        let conjunction: String = document.get_span_content(&first.span).iter().collect();
+        Some(Lint {
+            span: tokens[last].span,
+            lint_kind: LintKind::Punctuation,
+            suggestions: vec![Suggestion::InsertAfter(vec![','])],
+            priority: 28,
+            message: format!(
+                "Der mit »{conjunction}« eingeleitete Nebensatz endet hier. Danach steht ein Komma."
+            ),
+        })
+    }
+
     fn word_in(token: &Token, document: &Document, set: &[&str]) -> bool {
         let word: String = document
             .get_span_content(&token.span)
@@ -278,6 +336,10 @@ impl Linter for GermanSubordinateComma {
                 .iter()
                 .filter(|t| !t.kind.is_whitespace())
                 .collect();
+
+            if let Some(lint) = Self::missing_comma_after_initial_clause(&tokens, document) {
+                lints.push(lint);
+            }
 
             for (index, token) in tokens.iter().enumerate() {
                 if !matches!(token.kind, TokenKind::Word(_))
@@ -376,6 +438,26 @@ mod tests {
         let dict = combined_german_dictionary();
         let document = Document::new(text, &PlainGerman, &dict);
         GermanSubordinateComma.lint(&document).len()
+    }
+
+    #[test]
+    fn a_sentence_initial_clause_needs_its_closing_comma() {
+        assert_eq!(lint_count("Wenn du kommst bringe Brot mit."), 1);
+        assert_eq!(lint_count("Als ich nach Hause kam war niemand da."), 1);
+        assert_eq!(lint_count("Weil es regnet bleiben wir zu Hause."), 1);
+        assert_eq!(lint_count("Dass er kommt freut mich."), 1);
+        assert_eq!(lint_count("Wenn du kommst, bringe Brot mit."), 0);
+        assert_eq!(lint_count("Wenn du kommen willst, bringe Brot mit."), 0);
+        assert_eq!(lint_count("Als Kind spielte ich oft draußen."), 0);
+        assert_eq!(lint_count("Ob er kommt."), 0);
+        assert_eq!(
+            lint_count("Dass essen gehen ein Luxus sein soll, bezweifle ich."),
+            0
+        );
+        assert_eq!(
+            lint_count("Wenn du Schluss machen willst bevor es angefangen hat, dann leg los."),
+            1
+        );
     }
 
     #[test]

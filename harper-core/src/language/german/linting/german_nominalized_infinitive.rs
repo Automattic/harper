@@ -75,7 +75,16 @@ impl GermanNominalizedInfinitive {
         let Some(prev) = index.checked_sub(1).map(|i| tokens[i]) else {
             return false;
         };
-        if !FUSED_PREPOSITIONS.contains(&Self::lowercase(prev, document).as_str()) {
+        let preposition = Self::lowercase(prev, document);
+        // *Ich bin am lesen*: the progressive with *am* ends its clause, which
+        // the superlative (*am schnellsten*, an adjective anyway) does not
+        // need to, so *am* is read only there.
+        let progressive = preposition == "am"
+            && !word.ends_with("sten")
+            && tokens
+                .get(index + 1)
+                .is_none_or(|next| matches!(next.kind, TokenKind::Punctuation(_)));
+        if !FUSED_PREPOSITIONS.contains(&preposition.as_str()) && !progressive {
             return false;
         }
 
@@ -163,6 +172,8 @@ mod tests {
             "Beim schnüren der Schuhe hilft er mir.",
             "Das Leder ist zum reparieren zu alt.",
             "Wir trafen uns beim einkaufen.",
+            "Ich bin gerade am lesen.",
+            "Wir waren am essen, als er kam.",
         ] {
             assert_eq!(lint_count(text), 1, "should fire on {text:?}");
         }
@@ -171,6 +182,9 @@ mod tests {
     #[test]
     fn leaves_correct_text_alone() {
         for text in [
+            "Er läuft am schnellsten.",
+            "Das gefällt mir am besten.",
+            "Am laufenden Band.",
             "Beim Laufen tun mir die Füße weh.",
             "Die Schuhe sind zum Wandern gedacht.",
             "Beim schnellen Laufen schwitzt man.",

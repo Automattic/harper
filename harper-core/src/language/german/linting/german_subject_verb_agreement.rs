@@ -390,6 +390,10 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         if number == NumberSet::SINGULAR || number == NumberSet::PLURAL {
             return Some(number);
         }
+        // No nominative reading at all (*meinen*, *dem*): not a subject.
+        if number.is_empty() {
+            return None;
+        }
 
         // `die` is the hard case, and the most common determiner in the
         // language: in the nominative it is feminine singular *and* plural,
@@ -407,6 +411,10 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // (*die Hund*) is the article's error, not the verb's, and is left to
         // `GermanDeterminerGender`.
         let head = trusted_head(document, tokens, phrase)?;
+        // A plurale tantum settles it on its own: *meine Eltern*, *die Leute*.
+        if self.nouns.is_plural_only(&head) {
+            return Some(NumberSet::PLURAL);
+        }
         let genders = self.nouns.genders(&head);
         let surely_singular = self
             .nouns
@@ -965,6 +973,11 @@ fn another_subject_follows(tokens: &[&Token], document: &Document, verb_at: usiz
                     // Büro* chunks as two phrases.
                     at += 1;
                     while at < tokens.len() && matches!(tokens[at].kind, TokenKind::Word(_)) {
+                        // A subject pronoun is never inside the governed
+                        // phrase: *bewahrst am besten **du** auf*.
+                        if subject_pronoun(&word_at(at)).is_some() {
+                            return true;
+                        }
                         let head = capitalized(at);
                         at += 1;
                         if head {
@@ -1184,6 +1197,13 @@ mod tests {
         assert_eq!(lint_count("Die Bücher ist teuer."), 1);
         assert_eq!(lint_count("Die Hunde bellt laut."), 1);
         assert_eq!(lint_count("Meine Brüder wohnt in Berlin."), 1);
+        assert_eq!(lint_count("Meine Eltern arbeitet viel."), 1);
+        assert_eq!(lint_count("Meine Eltern arbeiten viel."), 0);
+        assert_eq!(
+            lint_count("Meinen Eltern wird endlich klar, dass ich weg bin."),
+            0
+        );
+        assert_eq!(lint_count("Die Einnahmen bewahrst am besten du auf."), 0);
         assert_eq!(lint_count("Die Kinder spielen im Garten."), 0);
         assert_eq!(lint_count("Die Hunde bellen laut."), 0);
         // A singular noun behind *die* is the article's mistake, reported by

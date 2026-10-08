@@ -42,13 +42,15 @@ impl LanguageModule for GermanModule {
     fn rust_lint_group(dictionary: Arc<impl Dictionary + 'static>) -> LintGroup {
         use crate::language::german::linting::{
             german_absolute_superlative::GermanAbsoluteSuperlative,
-            german_common_typos::GermanCommonTypos,
+            german_adjective_form::GermanAdjectiveForm, german_common_typos::GermanCommonTypos,
+            german_country_article::GermanCountryArticle,
             german_determiner_gender::GermanDeterminerGender,
             german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
             german_genitive_after_nominative_article::GermanGenitiveAfterNominativeArticle,
             german_nominalized_infinitive::GermanNominalizedInfinitive,
             german_noun_capitalization::GermanNounCapitalization,
+            german_perfect_auxiliary::GermanPerfectAuxiliary,
             german_preposition_case::GermanPrepositionCase,
             german_recommended_fusion::GermanRecommendedFusion,
             german_relative_clause_comma::GermanRelativeClauseComma,
@@ -105,6 +107,9 @@ impl LanguageModule for GermanModule {
             GermanRelativeClauseComma::new(),
         );
         group.add("GermanYearPreposition", GermanYearPreposition);
+        group.add("GermanPerfectAuxiliary", GermanPerfectAuxiliary);
+        group.add("GermanCountryArticle", GermanCountryArticle);
+        group.add("GermanAdjectiveForm", GermanAdjectiveForm::new());
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());
         group.add("GermanDeterminerGender", GermanDeterminerGender::new());
         group.add(

@@ -1,0 +1,40 @@
+# "ihr seid" is the verb, "seit" the preposition of time. SeidSeit.weir covers
+# "seid" before a time; this is the other direction, kept narrow: "ihr seit" is
+# only reported when the next word cannot open a time expression, because "ihr
+# seit Jahren bestehender Betrieb" is correct.
+expr praedikat [zufrieden, da, dort, hier, bereit, fertig, müde, krank, wach, gesund, glücklich, traurig, willkommen, eingeladen, gemeint, gefragt, dran, sicher, verrückt, toll, super, klasse, großartig, wirklich, echt, so, sehr, ganz, alle, beide, nicht, doch, ja, wohl, auch, schon, noch, immer, herzlich, gut, schlecht, spät, zu, mir, uns]
+
+# A question word puts the verb in front of its subject: "Wo seit ihr?"
+expr frage [wo, wie, wer, was, wann, warum, wieso, weshalb, woher, wohin, alt, Wo, Wie, Wer, Was, Wann, Warum, Wieso, Weshalb, Woher, Wohin]
+
+expr main <[(ihr seit @praedikat), (Ihr seit @praedikat), (@frage seit ihr)], seit>
+
+let message "»seit« ist die Präposition der Zeit. Das Verb heißt »ihr seid«."
+let description "Ersetzt »seit« durch das Verb »seid« nach »ihr«."
+let kind "Grammar"
+let becomes "seid"
+let strategy "MatchCase"
+
+test "Ihr seit zufrieden?" "Ihr seid zufrieden?"
+test "Ihr seit herzlich eingeladen." "Ihr seid herzlich eingeladen."
+test "Wenn ihr seit fertig, gehen wir." "Wenn ihr seid fertig, gehen wir."
+test "Ihr seit wirklich toll." "Ihr seid wirklich toll."
+test "Ihr seit alle willkommen." "Ihr seid alle willkommen."
+test "Ihr seit nicht allein." "Ihr seid nicht allein."
+test "Ihr seit sehr nett." "Ihr seid sehr nett."
+test "Ihr seit so lieb." "Ihr seid so lieb."
+test "Ihr seit doch verrückt." "Ihr seid doch verrückt."
+test "Ihr seit schon da." "Ihr seid schon da."
+test "Wo seit ihr?" "Wo seid ihr?"
+test "Wie alt seit ihr?" "Wie alt seid ihr?"
+test "Ihr seit mir willkommen." "Ihr seid mir willkommen."
+test "Ihr seit gut vorbereitet." "Ihr seid gut vorbereitet."
+test "Ihr seit hier richtig." "Ihr seid hier richtig."
+
+allows "Ihr seid zufrieden?"
+allows "Ihr seit Jahren bestehender Betrieb."
+allows "Seit ihr hier seid, regnet es."
+allows "Ihr seit langem geplantes Fest."
+allows "Ihr seit der Gründung erfolgreicher Betrieb."
+allows "Ihr seit einem Jahr leerstehendes Haus."
+allows "Wo seid ihr?"
