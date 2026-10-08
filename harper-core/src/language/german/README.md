@@ -1445,6 +1445,111 @@ word *weniger* in *in einem weniger präzisen Format* read as a declined
 adjective, and *zum Beispiel weil*). Both are fixed; the changes in this section
 add no report to it.
 
+## Measuring against LanguageTool's own examples
+
+No LanguageTool server and no prose corpus were reachable for this round, but
+GitHub was, and LanguageTool's German rule files carry their own test data:
+every rule in `grammar.xml` has `<example correction="…">` sentences with the
+error marked and `<example>` sentences that must stay quiet. Extracted, that is
+**6 966 marked errors and 4 546 correct sentences**, each tagged with the LT
+rule and category that wrote it.
+
+```bash
+curl -sO https://raw.githubusercontent.com/languagetool-org/languagetool/master/languagetool-language-modules/de/src/main/resources/org/languagetool/rules/de/grammar.xml
+```
+
+Score it like a battery: a marked error counts as found when a Harper lint
+overlaps (or touches) the marker, and any lint on a correct sentence is a false
+alarm. Two cautions. The "correct" sentences are correct only with respect to
+the rule they illustrate — *Ich wünsche dir ein tollen Tag* is listed as a
+correct example of some other rule — so read a false alarm before counting it.
+And a "lost" detection is often a lint that happened to overlap a marker for
+the wrong reason; *Tom* reported as a misspelling counted as finding the case
+error next to it.
+
+| | errors found | correct sentences with a false alarm |
+|---|---|---|
+| before this round | 1 653 / 6 966 | 910 / 4 546 |
+| after | 1 753 / 6 966 | 788 / 4 546 |
+
+Grouping the missed errors by LT rule id is what chose the new rules below; the
+false alarms grouped by Harper rule chose the guards.
+
+### Names
+
+Proper names were the largest class of spelling false alarms on correct
+sentences, and the most common children's names in Germany were among them:
+*Emma*, *Mia*, *Ben*, *Finn*, *Leon*, *Max*, *Tom*, *Lisa*, *Lena*. The corpus
+never reached them because Wikipedia names historical figures.
+`scripts/add_german_given_names.py` adds about 170 given names, places and
+brands (*WhatsApp*, *Instagram*). They are written **capitalized**, so the
+lower-case spelling stays unknown: `ben` as an entry would hide *Ich ben müde*.
+Adding *Max* made lower-case *max* (maximal) a capitalization report; the
+script writes it as an abbreviation.
+
+### Fewer false alarms in the capitalization, gender and preposition rules
+
+* **The verb in second position.** `GermanNounCapitalization` asked for *Das
+  Bedarf*, *Der Bestand*, *Keiner Macht*: the chunker reads a clause-initial
+  pronoun as a determiner and the verb behind it as its head. A noun/verb
+  homograph in that slot is now the verb when the word in front can be a
+  subject pronoun, the homograph looks like a third person (*-t*, *-d*), the
+  clause goes on, and nothing else in it is a verb. The first draft only asked
+  for "no other verb" and lost *pro stunde*, *in ruhe*, *Vielen dank*: many
+  finite forms (*kostet*, *tanzt*) carry no verb reading, so "no other verb"
+  alone is weak evidence.
+* **Nouns in adjectival use.** *Es tut mir leid*, *mir ist angst und bange*,
+  *er ist schuld*: a closed class, lower case beside its licensing verb when
+  no determiner or adjective stands in front.
+* **The article rule.** *das **eine** Mal* (the numeral behind an article),
+  *Ich **meine** Spaß* (the verb behind a clause-initial subject), *Ist das
+  Kunst?* (the pronoun behind a sentence-initial copula), and adjectives that
+  only look declined: *sicher* is not *sich* + *-er*, so the stem has to be an
+  adjective too. A degree word before an adjective was already handled.
+* **The preposition rule.** *mit das Schönste* and *mit meine
+  Lieblingskneipe* (*mit* before a superlative means "among"), *ab und zu*,
+  *was für ein*, and genitive prepositions used as adverbs (*außerhalb eine
+  Schienenbahn verlegt*).
+
+### New rules
+
+| rule | catches | guards |
+|---|---|---|
+| `GermanAdjectiveForm` | *der neu Vertrag*, *eine lang Reise*, *der Abgeordneter* | only behind a determiner; not before a nominalized adjective, an extended attribute or an indeclinable word; a nominalized head needs a participle or derived stem (*Junge*, *Dichter* are nouns) |
+| `GermanPerfectAuxiliary` | *Sie hat gegangen*, *weil wir angekommen haben* | only participles that never take *haben*; *passiert* only without an object; clauses with a *sein* form, a modal or a reflexive are left alone |
+| `GermanCountryArticle` | *aus Türkei*, *nach Schweiz*, *in USA* | directly behind a preposition, not in a hyphenated compound |
+| comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
+| closing comma of a relative clause | *Das Auto, das am Straßenrand steht parkt …* | the same verb-run test |
+| `EMail.weir`, `IhrSeid.weir`, `WiderAlsWieder.weir` | *eine Email*, *Ihr seit zufrieden*, *Ich komme morgen wider* | feminine article or *per*; a non-temporal word after *seit*; not before a noun phrase *wider* governs |
+| `am` + infinitive (`GermanNominalizedInfinitive`) | *Ich bin am lesen* | only at the end of the clause, never *-sten* |
+
+On LT's examples `GermanAdjectiveForm` alone adds 68 detections for two false
+alarms; the class (`MEIN_KLEIN_HAUS`) had none before.
+
+A verb test was the weak point of three of these. Finite forms such as
+*parkt*, *regnet*, *streikt* reach the document with no part of speech, so
+`GermanRelativeClauseComma::is_verb` falls back to the infinitive: a word with
+no part of speech whose stem plus *-en* is a verb counts as one. And *am*
+carries a stray verb reading, *bin*, *wart* and *habt* carried none; the data
+is fixed and listed in `german_pos_fixes.tsv`.
+
+### Data
+
+* **Pluralia tantum** get the new property `+` (number plural, no gender):
+  *Eltern*, *Leute*, *Ferien*, *Kosten*. *Meine Eltern arbeitet* is then a
+  plural subject. A punctuation flag because every letter and digit is taken.
+* A bug this exposed: a determiner with no nominative reading at all
+  (*unserer*, *meinen*) fell through to the plural check and produced *»Unserer
+  Test« verlangt die 3. Person Plural*. It returns `None` now.
+
+### A school text
+
+`tests/batteries/school_text.tsv` — 60 sentences a teacher would mark, each beside its
+correction — went from 36/55 errors found with 2 false alarms to 51/55 with
+none. The four left: *Das essen in der Kantine* (ambiguous with *wir wollen
+das essen*), *das Buch, dass ich lese* (the reverse das/dass direction), *einen
+neue Helm* (*Helm* has no recorded gender) and *in rot*.
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both
