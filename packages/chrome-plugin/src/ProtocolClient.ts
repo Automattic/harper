@@ -78,6 +78,15 @@ export default class ProtocolClient {
 		await chrome.runtime.sendMessage({ kind: 'setIsolateEnglish', isolateEnglish });
 	}
 
+	public static async getRegexMask(): Promise<string> {
+		return (await chrome.runtime.sendMessage({ kind: 'getRegexMask' })).regexMask;
+	}
+
+	public static async setRegexMask(regexMask: string): Promise<void> {
+		this.lintCache.clear();
+		await chrome.runtime.sendMessage({ kind: 'setRegexMask', regexMask });
+	}
+
 	public static async getDelay(): Promise<number> {
 		return (await chrome.runtime.sendMessage({ kind: 'getDelay' })).delay;
 	}
