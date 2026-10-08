@@ -63,7 +63,7 @@ pub struct MacBroker {
     /// Tauri requires a Send broker; retained AX handles must stay on their capturing thread.
     /// The wrapper enforces that restriction for access and drop. Only the highlighter populates it.
     last_focused: Option<SendWrapper<FocusedTarget>>,
-    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
     application_icon_cache: Mutex<HashMap<String, Vec<u8>>>,
     window_movement: Option<WindowMovementState>,
     accessibility_activation: Option<AccessibilityActivationState>,
@@ -72,7 +72,7 @@ pub struct MacBroker {
 impl MacBroker {
     /// Creates a broker with an app policy that may register newly encountered bundle IDs.
     /// The policy is called before reading the app's text and may change as settings are refreshed.
-    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + Sync + 'static) -> Self {
         Self {
             last_focused: None,
             is_integration_enabled: Box::new(is_integration_enabled),

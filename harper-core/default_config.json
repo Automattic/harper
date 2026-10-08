@@ -214,6 +214,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsIUnderstandIt",
+								"state": true,
+								"label": "As I Understand it"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsSoonAsPossible",
 								"state": true,
 								"label": "As Soon As Possible"
@@ -6219,6 +6226,13 @@
 								"name": "BehindTheScenes",
 								"state": true,
 								"label": "Behind The Scenes"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BellowBelow",
+								"state": true,
+								"label": "Bellow Below"
 							}
 						},
 						{
