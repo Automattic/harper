@@ -5,10 +5,11 @@ use smallvec::ToSmallVec;
 
 use super::{Lint, LintKind, Linter};
 use super::{Suggestion, informal_laughter::is_informal_laughter};
+use crate::dialect::Dialect;
 use crate::document::Document;
 use crate::expr::{Filter, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
+use crate::{CharString, CharStringExt, TokenStringExt, remove_lints_overlapping_expr};
 
 pub struct SpellCheck<T>
 where
@@ -166,16 +167,16 @@ mod tests {
     use strum::IntoEnumIterator;
 
     use super::SpellCheck;
-    use crate::dict_word_metadata::DialectFlags;
+    use crate::dialect::DialectFlags;
     use crate::linting::Linter;
     use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+    use crate::{DictWordMetadata, Document};
     use crate::{
-        Dialect,
+        dialect::Dialect,
         linting::tests::{assert_lint_count, assert_suggestion_result},
     };
-    use crate::{DictWordMetadata, Document};
     use std::sync::Arc;
 
     create_test_pool!(

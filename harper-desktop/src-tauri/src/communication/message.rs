@@ -1,5 +1,5 @@
 use crate::config::Integration;
-use harper_core::{Dialect, IgnoredLints, linting::FlatConfig};
+use harper_core::{IgnoredLints, dialect::Dialect, linting::FlatConfig};
 use serde::{Deserialize, Serialize};
 
 /// Canonical client-to-server protocol message sent by the highlighter process.

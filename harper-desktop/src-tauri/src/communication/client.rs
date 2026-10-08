@@ -1,5 +1,5 @@
 use harper_core::{
-    Dialect, DictWordMetadata, IgnoredLints, linting::FlatConfig, spell::MutableDictionary,
+    DictWordMetadata, IgnoredLints, dialect::Dialect, linting::FlatConfig, spell::MutableDictionary,
 };
 use std::time::Duration;
 use tokio::{

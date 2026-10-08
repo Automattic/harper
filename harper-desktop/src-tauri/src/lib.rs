@@ -9,7 +9,8 @@ use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
 use clap::{Parser, Subcommand};
 use harper_core::{
-    Dialect, DictWordMetadata, Document, IgnoredLints,
+    DictWordMetadata, Document, IgnoredLints,
+    dialect::Dialect,
     linting::{Lint, LintGroup},
     spell::MutableDictionary,
 };

@@ -118,7 +118,7 @@ impl Setting {
 mod tests {
     use std::collections::BTreeSet;
 
-    use crate::Dialect;
+    use crate::dialect::Dialect;
     use crate::linting::FlatConfig;
     use crate::linting::LintGroup;
     use crate::spell::MutableDictionary;

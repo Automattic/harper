@@ -1,6 +1,7 @@
 use crate::linting::expr_linter::Chunk;
 use crate::{
-    Dialect, Token,
+    Token,
+    dialect::Dialect,
     expr::{Expr, SequenceExpr},
     linting::{ExprLinter, Lint, LintKind, Suggestion},
 };
@@ -86,7 +87,7 @@ impl ExprLinter for HaveTakeALook {
 #[cfg(test)]
 mod tests {
     use super::HaveTakeALook;
-    use crate::{Dialect, linting::tests::assert_suggestion_result};
+    use crate::{dialect::Dialect, linting::tests::assert_suggestion_result};
 
     #[test]
     fn correct_taking_a_look() {

@@ -19,7 +19,8 @@ Here's what a full end-to-end linting pipeline could look like using `harper-cor
 use harper_core::linting::{LintGroup, Linter};
 use harper_core::parsers::PlainEnglish;
 use harper_core::spell::FstDictionary;
-use harper_core::{Dialect, Document};
+use harper_core::dialect::Dialect;
+use harper_core::Document;
 
 let text = "This is an test.";
 let parser = PlainEnglish;

@@ -4,7 +4,7 @@
 
 use crate::{
     CharStringExt, Token, TokenStringExt,
-    dict_word_metadata::Person,
+    dict_word_metadata::nominal::Person,
     expr::{Expr, SequenceExpr},
     linting::{
         ExprLinter, Lint, LintKind, Suggestion,
