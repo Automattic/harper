@@ -444,10 +444,16 @@ importers:
         version: 1.60.0
       '@rollup/plugin-node-resolve':
         specifier: ^16.0.0
-        version: 16.0.1(rollup@4.53.3)
+        version: 16.0.1(rollup@4.35.0)
       '@types/lodash-es':
         specifier: ^4.17.12
         version: 4.17.12
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.13.10
+      '@types/rollup-plugin-peer-deps-external':
+        specifier: ^2.2.6
+        version: 2.2.6(rollup@4.35.0)
       '@vitest/browser':
         specifier: ^4.0.16
         version: 4.0.16(msw@2.7.3(@types/node@22.13.10)(typescript@5.9.3))(vite@6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0))(vitest@4.0.16)
@@ -457,12 +463,18 @@ importers:
       obsidian:
         specifier: ^1.7.2
         version: 1.8.7(@codemirror/state@6.5.2)(@codemirror/view@6.36.4)
+      rollup:
+        specifier: 4.35.0
+        version: 4.35.0
       rollup-plugin-peer-deps-external:
         specifier: ^2.2.4
-        version: 2.2.4(rollup@4.53.3)
+        version: 2.2.4(rollup@4.35.0)
       rollup-plugin-svg-import:
         specifier: ^3.0.0
-        version: 3.0.0(rollup@4.53.3)
+        version: 3.0.0(rollup@4.35.0)
+      typescript:
+        specifier: 'catalog:'
+        version: 5.9.3
       vite:
         specifier: ^6.3.5
         version: 6.3.5(@types/node@22.13.10)(jiti@2.6.1)(lightningcss@1.32.0)(sass@1.85.1)(terser@5.39.0)(tsx@4.20.6)(yaml@2.7.0)
@@ -630,6 +642,9 @@ importers:
       '@wordpress/editor':
         specifier: ^14.20.0
         version: 14.20.0(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
+      '@wordpress/plugins':
+        specifier: ^7.20.0
+        version: 7.20.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@wordpress/preferences-persistence':
         specifier: ^2.17.0
         version: 2.20.0
@@ -646,6 +661,18 @@ importers:
         specifier: ^18.0.0
         version: 18.3.1(react@18.3.1)
     devDependencies:
+      '@types/lodash-es':
+        specifier: ^4.17.12
+        version: 4.17.12
+      '@types/react':
+        specifier: ^18.3.0
+        version: 18.3.18
+      '@types/react-dom':
+        specifier: ^18.3.0
+        version: 18.3.5(@types/react@18.3.18)
+      '@types/wordpress__edit-post':
+        specifier: ^8.4.2
+        version: 8.4.2(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
       '@wordpress/scripts':
         specifier: ^30.9.0
         version: 30.13.0(@playwright/test@1.60.0)(@types/eslint@9.6.1)(@types/node@22.13.10)(@types/webpack@4.41.40)(babel-plugin-macros@3.1.0)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(type-fest@4.37.0)(typescript@5.9.3)
@@ -4320,6 +4347,11 @@ packages:
   '@types/reveal.js@5.0.5':
     resolution: {integrity: sha512-+8OFb1RlB69dZT1laNDq+xDSGrPY/VYARSSTxSC/rMl8s9X+W4dr7gHmoKRR9yu20JU8gvp18g9SVxvouk7SiQ==}
 
+  '@types/rollup-plugin-peer-deps-external@2.2.6':
+    resolution: {integrity: sha512-rR0p2+VZ5+RTyTA+MemzE7RQs3vkGNsYsEZIl+RahwrJOtEDEg+a5RCnigSwPkBtu4H7dyVHXyUZfiZU2dwjdw==}
+    peerDependencies:
+      rollup: '*'
+
   '@types/semver@7.5.8':
     resolution: {integrity: sha512-I8EUhyrgfLrcTkzV3TSsGyl1tSuPrEDzr0yd5m90UgNxQkyDXULk3b6MlQqTCpZpNtWe1K0hzclnZkTcLBe2UQ==}
 
@@ -4382,6 +4414,9 @@ packages:
 
   '@types/webpack@4.41.40':
     resolution: {integrity: sha512-u6kMFSBM9HcoTpUXnL6mt2HSzftqb3JgYV6oxIgL2dl6sX6aCa5k6SOkzv5DuZjBTPUE/dJltKtwwuqrkZHpfw==}
+
+  '@types/wordpress__edit-post@8.4.2':
+    resolution: {integrity: sha512-rH+ut+I4eedDTvwXnJOrH9jEyi+PhJZQ+KZ31k3BYb8Cmd1qdRK2hJ+kdZu0QJp4XP3HA0/Q6troqYfpkF8B+A==}
 
   '@types/ws@8.18.0':
     resolution: {integrity: sha512-8svvI3hMyvN0kKCJMvTJP/x6Y/EoQbepff882wL+Sn5QsXb3etnamgrJq4isrBxSJj5L2AuXcI0+bgkoAXGUJw==}
@@ -4858,6 +4893,13 @@ packages:
 
   '@wordpress/commands@1.20.0':
     resolution: {integrity: sha512-SCB1Vo+pgAlbOgd4XtgG9yxRJA0cHPkvtPgnHsJ2gBDUefVonmIYFla4y6VmPDcA5AwuUeaGU8DZFW6c8LQNbg==}
+    engines: {node: '>=18.12.0', npm: '>=8.19.2'}
+    peerDependencies:
+      react: ^18.0.0
+      react-dom: ^18.0.0
+
+  '@wordpress/components@28.13.0':
+    resolution: {integrity: sha512-JaGcXYtFCvHqa62dtxMAMhu6afvefFOuwfUTNiLYg60CA4UDITt6gf+qhpvKNOzVg4qQRw10o/nryrOMoMAEEg==}
     engines: {node: '>=18.12.0', npm: '>=8.19.2'}
     peerDependencies:
       react: ^18.0.0
@@ -15972,16 +16014,6 @@ snapshots:
     optionalDependencies:
       rollup: 4.35.0
 
-  '@rollup/plugin-node-resolve@16.0.1(rollup@4.53.3)':
-    dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.53.3)
-      '@types/resolve': 1.20.2
-      deepmerge: 4.3.1
-      is-module: 1.0.0
-      resolve: 1.22.10
-    optionalDependencies:
-      rollup: 4.53.3
-
   '@rollup/plugin-replace@2.4.2(rollup@2.79.2)':
     dependencies:
       '@rollup/pluginutils': 3.1.0(rollup@2.79.2)
@@ -17145,6 +17177,10 @@ snapshots:
 
   '@types/reveal.js@5.0.5': {}
 
+  '@types/rollup-plugin-peer-deps-external@2.2.6(rollup@4.35.0)':
+    dependencies:
+      rollup: 4.35.0
+
   '@types/semver@7.5.8': {}
 
   '@types/send@0.17.4':
@@ -17218,6 +17254,25 @@ snapshots:
       '@types/webpack-sources': 3.2.3
       anymatch: 3.1.3
       source-map: 0.6.1
+
+  '@types/wordpress__edit-post@8.4.2(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)':
+    dependencies:
+      '@types/react': 18.3.18
+      '@wordpress/components': 28.13.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@wordpress/data': 10.20.0(react@18.3.1)
+      '@wordpress/editor': 14.20.0(@babel/core@7.25.7)(@emotion/is-prop-valid@1.3.1)(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(webpack@5.98.0)
+      '@wordpress/element': 6.20.0
+    transitivePeerDependencies:
+      - '@babel/core'
+      - '@emotion/is-prop-valid'
+      - '@types/react-dom'
+      - bufferutil
+      - react
+      - react-dom
+      - supports-color
+      - utf-8-validate
+      - webpack
+      - webpack-virtual-modules
 
   '@types/ws@8.18.0':
     dependencies:
@@ -18063,6 +18118,60 @@ snapshots:
       - '@emotion/is-prop-valid'
       - '@types/react'
       - '@types/react-dom'
+      - supports-color
+
+  '@wordpress/components@28.13.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+    dependencies:
+      '@ariakit/react': 0.4.15(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@babel/runtime': 7.25.7
+      '@emotion/cache': 11.14.0
+      '@emotion/css': 11.13.5
+      '@emotion/react': 11.14.0(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/serialize': 1.3.3
+      '@emotion/styled': 11.14.0(@emotion/react@11.14.0(@types/react@18.3.18)(react@18.3.1))(@types/react@18.3.18)(react@18.3.1)
+      '@emotion/utils': 1.4.2
+      '@floating-ui/react-dom': 2.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@types/gradient-parser': 0.1.3
+      '@types/highlight-words-core': 1.2.1
+      '@use-gesture/react': 10.3.1(react@18.3.1)
+      '@wordpress/a11y': 4.20.0
+      '@wordpress/compose': 7.20.0(react@18.3.1)
+      '@wordpress/date': 5.20.0
+      '@wordpress/deprecated': 4.20.0
+      '@wordpress/dom': 4.20.0
+      '@wordpress/element': 6.20.0
+      '@wordpress/escape-html': 3.20.0
+      '@wordpress/hooks': 4.20.0
+      '@wordpress/html-entities': 4.20.0
+      '@wordpress/i18n': 5.20.0
+      '@wordpress/icons': 10.20.0(react@18.3.1)
+      '@wordpress/is-shallow-equal': 5.20.0
+      '@wordpress/keycodes': 4.20.0
+      '@wordpress/primitives': 4.20.0(react@18.3.1)
+      '@wordpress/private-apis': 1.20.0
+      '@wordpress/rich-text': 7.20.0(react@18.3.1)
+      '@wordpress/warning': 3.20.0
+      change-case: 4.1.2
+      clsx: 2.1.1
+      colord: 2.9.3
+      date-fns: 3.6.0
+      deepmerge: 4.3.1
+      fast-deep-equal: 3.1.3
+      framer-motion: 11.18.2(@emotion/is-prop-valid@1.3.1)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      gradient-parser: 0.1.5
+      highlight-words-core: 1.2.3
+      is-plain-object: 5.0.0
+      memize: 2.1.0
+      path-to-regexp: 6.3.0
+      re-resizable: 6.11.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react: 18.3.1
+      react-colorful: 5.6.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      react-dom: 18.3.1(react@18.3.1)
+      remove-accents: 0.5.0
+      uuid: 9.0.1
+    transitivePeerDependencies:
+      - '@emotion/is-prop-valid'
+      - '@types/react'
       - supports-color
 
   '@wordpress/components@29.6.0(@emotion/is-prop-valid@1.3.1)(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
@@ -25374,14 +25483,14 @@ snapshots:
       globby: 10.0.1
       is-plain-object: 3.0.1
 
-  rollup-plugin-peer-deps-external@2.2.4(rollup@4.53.3):
+  rollup-plugin-peer-deps-external@2.2.4(rollup@4.35.0):
     dependencies:
-      rollup: 4.53.3
+      rollup: 4.35.0
 
-  rollup-plugin-svg-import@3.0.0(rollup@4.53.3):
+  rollup-plugin-svg-import@3.0.0(rollup@4.35.0):
     dependencies:
-      '@rollup/pluginutils': 5.1.4(rollup@4.53.3)
-      rollup: 4.53.3
+      '@rollup/pluginutils': 5.1.4(rollup@4.35.0)
+      rollup: 4.35.0
 
   rollup@2.79.2:
     optionalDependencies:

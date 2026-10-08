@@ -6,15 +6,43 @@ import SidebarTabContainer from './SidebarTabContainer';
 import useLintBoxes from './useLintBoxes';
 
 export default function SidebarControl() {
-	const documentContainer = useMemo<Element>(() => DataBlock.getContainer(), []);
+	const [documentContainer, setDocumentContainer] = useState<Element | null>(() =>
+		DataBlock.getContainer(),
+	);
 
-	const [blocks, setBlocks] = useState<DataBlock[]>(DataBlock.getTerminalDataBlocks());
+	const [blocks, setBlocks] = useState<DataBlock[]>(() => DataBlock.getTerminalDataBlocks());
 
 	const updateBlocks = useCallback(() => setBlocks(DataBlock.getTerminalDataBlocks()), []);
 
-	useEffect(updateBlocks, [updateBlocks]);
+	useEffect(() => {
+		/**
+		 * Rediscover loaded or replaced editor containers. Iframe document mutations do not
+		 * reach the parent observer, so iframe navigation also needs a captured load event.
+		 */
+		function syncContainer() {
+			setDocumentContainer(DataBlock.getContainer());
+		}
+
+		const observer = new MutationObserver(syncContainer);
+		observer.observe(document.documentElement, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ['class', 'name'],
+		});
+		document.addEventListener('load', syncContainer, true);
+		syncContainer();
+
+		return () => {
+			observer.disconnect();
+			document.removeEventListener('load', syncContainer, true);
+		};
+	}, []);
 
 	useEffect(() => {
+		updateBlocks();
+		if (documentContainer === null) return;
+
 		const observer = new MutationObserver(updateBlocks);
 
 		observer.observe(documentContainer, {

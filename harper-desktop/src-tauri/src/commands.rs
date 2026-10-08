@@ -12,7 +12,7 @@ use harper_core::{
     linting::FlatConfig,
     spell::{Dictionary, MutableDictionary},
 };
-use std::sync::{Arc, Mutex as StdMutex};
+use std::sync::{Arc, RwLock};
 use tauri::ipc::Invoke;
 use tauri::{Manager, Runtime, State};
 use tokio::sync::Mutex;
@@ -256,11 +256,11 @@ async fn add_to_dictionary(
 #[tauri::command]
 async fn get_integrations(
     config: State<'_, Arc<Mutex<Config>>>,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> Result<Vec<IntegrationView>, String> {
     let integrations = config.lock().await.integrations.clone();
     let broker = broker
-        .lock()
+        .read()
         .map_err(|error| format!("Failed to read platform broker: {error}"))?;
 
     Ok(integrations
@@ -345,9 +345,9 @@ async fn get_application_icon_data_url<R: Runtime>(
     app_handle: tauri::AppHandle<R>,
 ) -> Result<String, String> {
     tauri::async_runtime::spawn_blocking(move || {
-        let broker = app_handle.state::<StdMutex<PlatformBroker>>();
+        let broker = app_handle.state::<RwLock<PlatformBroker>>();
         let icon_png = broker
-            .lock()
+            .read()
             .map_err(|error| format!("Failed to read platform broker: {error}"))?
             .application_icon_png(&bundle_id)?;
         let encoded = general_purpose::STANDARD.encode(icon_png);
@@ -360,9 +360,9 @@ async fn get_application_icon_data_url<R: Runtime>(
 
 #[tauri::command]
 fn get_accessibility_permission_status(
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> AccessibilityPermissionStatus {
-    match broker.lock() {
+    match broker.read() {
         Ok(broker) => broker.accessibility_permission_status(),
         Err(error) => {
             eprintln!("Failed to read platform broker: {error}");
@@ -373,9 +373,9 @@ fn get_accessibility_permission_status(
 
 #[tauri::command]
 fn request_accessibility_permission(
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> AccessibilityPermissionStatus {
-    match broker.lock() {
+    match broker.read() {
         Ok(broker) => broker.request_accessibility_permission(),
         Err(error) => {
             eprintln!("Failed to read platform broker: {error}");
@@ -423,12 +423,9 @@ pub(crate) async fn stop_highlighter_service(
 }
 
 #[tauri::command]
-fn launch_app(
-    bundle_id: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
-) -> Result<(), String> {
+fn launch_app(bundle_id: String, broker: State<'_, RwLock<PlatformBroker>>) -> Result<(), String> {
     broker
-        .lock()
+        .read()
         .map_err(|error| format!("Failed to read platform broker: {error}"))?
         .launch_app_bundle(&bundle_id)
 }
@@ -436,10 +433,10 @@ fn launch_app(
 #[tauri::command]
 fn search_apps(
     query: String,
-    broker: State<'_, StdMutex<PlatformBroker>>,
+    broker: State<'_, RwLock<PlatformBroker>>,
 ) -> Result<Vec<AppSearchResult>, String> {
     broker
-        .lock()
+        .read()
         .map_err(|error| format!("Failed to read platform broker: {error}"))?
         .search_apps(&query)
 }

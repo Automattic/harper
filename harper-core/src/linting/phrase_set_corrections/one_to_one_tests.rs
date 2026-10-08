@@ -2212,6 +2212,45 @@ fn fix_sets_up_a_bad_example() {
     )
 }
 
+// SubjectAndObjectPronoun
+
+#[test]
+fn fix_subjective_pronoun() {
+    assert_suggestion_result(
+        "Gets the subjective pronoun with \"are\"/\"is\" contraction.",
+        test_linter(),
+        "Gets the subject pronoun with \"are\"/\"is\" contraction.",
+    );
+}
+
+#[test]
+fn fix_objective_pronoun() {
+    assert_suggestion_result(
+        "If my subjective pronoun is he , then this might be macro expanded as he entered the room",
+        test_linter(),
+        "If my subject pronoun is he , then this might be macro expanded as he entered the room",
+    );
+}
+
+#[test]
+#[ignore = "Fails due to #3741"]
+fn fix_objective_pronoun_title_case() {
+    assert_suggestion_result(
+        "Objective Pronouns Examples of Subjects and Objects in a Sentence",
+        test_linter(),
+        "Object Pronouns Examples of Subjects and Objects in a Sentence",
+    );
+}
+
+#[test]
+fn fix_subjective_and_objective_pronouns() {
+    assert_suggestion_result(
+        "To address these questions, we analyze subjective pronouns (he, she) and objective pronouns (him, her).",
+        test_linter(),
+        "To address these questions, we analyze subject pronouns (he, she) and object pronouns (him, her).",
+    );
+}
+
 // SubjunctiveWasToWere
 
 // -if only there was-
