@@ -2695,6 +2695,15 @@
 				"conjunction": {}
 			}
 		},
+		"+": {
+			"#": "Plurale tantum (German): a noun that exists only in the plural, Eltern, Leute, Ferien, Kosten. Gives it the plural number and nothing else, so that 'meine Eltern arbeitet' is read as a plural subject with a singular verb; see add_german_plural_genders.py. A punctuation flag because every letter and digit is taken.",
+			"metadata": {
+				"noun": {},
+				"morphology": {
+					"noun": { "number": "Plural" }
+				}
+			}
+		},
 		"A": {
 			"#": "Singular noun (German). For a noun whose plural this dictionary cannot generate -- Bruder/Brueder, Vater/Vaeter and the rest of the umlaut plurals -- so that it carries no plural flag and would otherwise have no number at all. Without it 'mit den Bruder' is invisible, because the dative plural reading of 'den' survives unchallenged. Not given to a noun whose singular and plural are spelled alike ('-er', '-el', '-en'), nor to a plurale tantum. 'A' previously held an unused alias of the adjective property 'J'; the flag namespace is full, so a new flag has to come from a retired one.",
 			"metadata": {

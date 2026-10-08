@@ -19172,7 +19172,7 @@ almen/~~Nh # auto-added
 almosen/~~Nh # auto-added
 aloha/~~NhYE
 alp/~~NhY
-alpen/~~Nh # auto-added
+alpen/~~Nh+ # auto-added
 alpha/~~Nhr # +adverb reading (was noun-only)
 alpin/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 alpine/~~NhE
@@ -19631,7 +19631,7 @@ annagle/~~h # not a noun: no capitalized form
 annagt/~~hG # not a noun: no capitalized form
 annahm/~~hVs
 annahmt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-annalen/~~Nh # auto-added
+annalen/~~Nh+ # auto-added
 annam/~~NhHA
 annams/~~Nh
 annehme/~~h # not a noun: no capitalized form
@@ -21619,7 +21619,7 @@ bimmele/~~h # not a noun: no capitalized form
 bimmeln/~~VdifjeGc # auto-added
 bimmelt/~~hG # not a noun: no capitalized form
 bimmle/~~h # not a noun: no capitalized form
-bin/~~hr # +adverb reading (was noun-only)
+bin/~~hrV # +adverb reading (was noun-only); +verb reading: ich bin
 binary/~~NhA
 bind/~~Vcj78f # REPLACES binden
 bindens/~~Nh
@@ -24561,7 +24561,7 @@ elsass/~~Nh0AMZ
 elster/~~MhE
 elstern/~~Nh
 eltens/~~Nh
-eltern/~~Nh
+eltern/~~Nh+
 eluiert/~~NXhOQRSTG
 elution/~~NhYF
 emaille/~~NhA
@@ -25689,7 +25689,7 @@ feminin/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 femto/~~NhYE
 fenchel/~~NhH
 fenster/~~hEHzZ
-ferien/~~Nh # auto-added
+ferien/~~Nh+ # auto-added
 ferkele/~~h # not a noun: no capitalized form
 ferkeln/~~VdifjeG # auto-added
 ferkels/~~Nh
@@ -32966,7 +32966,7 @@ leugner/~~MhEKLH
 leugnet/~~hG # not a noun: no capitalized form
 leukose/~~NhE
 leumund/~~Nh0A
-leute/~~NhE
+leute/~~NhE+
 leuten/~~Nh # auto-added
 leuzin/~~NhYHX
 leuzine/~~NhE
@@ -33881,7 +33881,7 @@ maränen/~~Nh # auto-added
 masche/~~NhE
 maschen/~~XZ #  auto-added
 maserig/~~RJOQRSTqh
-masern/~~Nh78H
+masern/~~Nh78H+
 maserns/~~Nh
 maske/~~NhE
 masken/~~Nh # auto-added
@@ -36729,7 +36729,7 @@ pochen/~~ZVdfijecG # auto-added; +verb reading (was noun-only)
 pocht/~~hG # not a noun: no capitalized form
 poch/*~~Vce # REPLACES pochten
 pochtet/~~hG # not a noun: no capitalized form
-pocken/~~Nh # auto-added
+pocken/~~Nh+ # auto-added
 pockig/~~RJOQRSTqh
 podcast/~~NhHA
 podest/~~NhY0HXMZ
@@ -38638,7 +38638,7 @@ röstet/~~hG # not a noun: no capitalized form
 röstgut/~~Nh0HA
 röstung/~~FhY
 röte/~~NhE
-röteln/~~Nh # auto-added
+röteln/~~Nh+ # auto-added
 röten/~~VdifjecG # auto-added
 rötend/~~NhYJOQRST # +adjective reading (was noun-only)
 rötende/~~NhEJ # +adjective reading (was noun-only)
@@ -39673,7 +39673,7 @@ spende/~~NhEF
 sperma/~~NbhH
 sperr/~~NXh78x
 sperrt/~~hG # not a noun: no capitalized form
-spesen/~~Nh # auto-added
+spesen/~~Nh+ # auto-added
 spezi/~~Nh0
 sphinx/~~NXhY
 sphäre/~~NhE
@@ -41541,7 +41541,7 @@ warm/~~NJOQRSTqA #adjective and noun
 warn/~~NhY
 warn/~~Vcejf # REPLACES warnen
 warnt/~~hG # not a noun: no capitalized form
-wart/~~NXh0GKLHY78x
+wart/~~NXh0GKLHY78xV # +verb reading: ihr wart
 wartes/~~Nh
 wartet/~~hG # not a noun: no capitalized form
 wartin/~~Nh
@@ -64345,7 +64345,7 @@ einkühlend/~~NhYJEOQRST # +adjective reading (was noun-only)
 einkühlst/~~hV
 einkühlt/~~NXh
 einkühltet/~~NhYE
-einkünfte/~~NhE
+einkünfte/~~NhE+
 einkünften/~~Nh # auto-added
 einkürze/~~h # not a noun: no capitalized form
 einkürz/*~~Vejdfi # REPLACES einkürzen
@@ -72192,7 +72192,7 @@ finaltagen/~~Nh # auto-added
 finaltags/~~Nh
 financier/~~MhH
 financiers/~~Nh
-finanzen/~~Nh # auto-added
+finanzen/~~Nh+ # auto-added
 finanziere/~~h # not a noun: no capitalized form
 finanziers/~~Nh
 finanziert/~~NhYOQRSTG
@@ -75744,7 +75744,7 @@ gebräunter/~~Mh
 gebräuntes/~~Nh
 gebröckelt/~~JOQRSTVgfj
 gebröselt/~~JOQRSTVgfj
-gebrüder/~~MhE
+gebrüder/~~MhE+
 gebrüdern/~~Nh # auto-added
 gebrühtem/~~Nh
 gebrühten/~~J # auto-added
@@ -81562,7 +81562,7 @@ gliedertet/~~hG # not a noun: no capitalized form
 gliederung/~~FhY
 gliederzug/~~Nh0HA
 gliedmaße/~~NhE
-gliedmaßen/~~Nh # auto-added
+gliedmaßen/~~Nh+ # auto-added
 gliedsatz/~~Nh0A
 gliedstaat/~~NhY0H
 gliedsätze/~~NhE
@@ -93562,7 +93562,7 @@ melodrama/~~NhH
 melodrams/~~Nh
 membranen/~~Nh # auto-added
 memelland/~~Nh0HA
-memoiren/~~Nh # auto-added
+memoiren/~~Nh+ # auto-added
 memorabel/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 memorable/~~NhYE
 memoriere/~~h # not a noun: no capitalized form
@@ -107954,7 +107954,7 @@ textilen/~~J # auto-added
 textiler/~~Mh
 textiles/~~Nh
 textilie/~~NhEF
-textilien/~~Nh # auto-added
+textilien/~~Nh+ # auto-added
 textils/~~Nh
 textnah/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 textnahem/~~NhYE
@@ -109229,7 +109229,7 @@ trügende/~~NhEJ # +adjective reading (was noun-only)
 trügendem/~~h # not a noun: no capitalized form
 trügender/~~Mh # not a noun: no capitalized form
 trügendes/~~h # not a noun: no capitalized form
-trümmer/~~MhEH
+trümmer/~~MhEH+
 trümmern/~~Nh # auto-added
 trümmers/~~Nh
 trümpfe/~~NhE
@@ -111166,7 +111166,7 @@ unklaren/~~Nh # auto-added
 unklares/~~Nh
 unkonkret/~~NhYOQRST
 unkorrekt/~~NhYOQRST
-unkosten/~~Nh # auto-added
+unkosten/~~Nh+ # auto-added
 unkraut/~~Nh0HA
 unkrautes/~~Nh
 unkrauts/~~Nh
@@ -131063,7 +131063,7 @@ urwaldrest/~~NhY0HX
 urzustände/~~FhE
 usbekistan/~~NhHA
 usurpieren/~~hdfijecGn # not a noun: no capitalized form
-utensilien/~~Nh
+utensilien/~~Nh+
 utilisiere/~~FhYE
 utilisiert/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 uxorilokal/~~JOQRSTqh # retag: adjective (was ~~Nh)
@@ -144766,7 +144766,7 @@ stickrahmen/~~NhH
 stiefbruder/~~NhH
 stiefbrüder/~~NhE
 stiefelette/~~FhE
-stiefeltern/~~NhA
+stiefeltern/~~NhA+
 stiefkinder/~~NhE
 stiefmutter/~~Nh
 stiefmütter/~~Nhz
@@ -165148,7 +165148,7 @@ flintenpulver/~~NhH
 flintenschuss/~~Nh0A
 flipperkasten/~~NhH
 flipperkästen/~~Nh
-flitterwochen/~~NhZ
+flitterwochen/~~NhZ+
 flobertgewehr/~~NhY0HX
 flockenförmig/~~RJOQRSTqh
 flockungstest/~~NhHA
@@ -181176,7 +181176,7 @@ kinderschminke/~~FhA
 kinderärztlich/~~JOQRSTqh
 kinematografie/~~FhA
 kinesiologisch/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
-kinkerlitzchen/~~NhZ
+kinkerlitzchen/~~NhZ+
 kioskbetreiber/~~NhEKLH
 kipfenschlucht/~~NhA
 kirchenamtlich/~~JOQRSTqh
@@ -195455,7 +195455,7 @@ schwerkriminell/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 schwerspatgrube/~~FhE
 schwertschrecke/~~FhE
 schwerverwundet/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-schwiegereltern/~~NhA
+schwiegereltern/~~NhA+
 schwiegermutter/~~Nh
 schwiegermütter/~~NhE
 schwimmenlernen/~~NhH
@@ -223237,7 +223237,7 @@ wiederverheiraten/~~VdefijcG
 wiegen/~~VdefijcG
 willigen/~~VdefijG
 wirken/~~Vdefij78cG
-wirren/~~Vdefij78cG
+wirren/~~Vdefij78cG+
 zehren/~~Vdefij78cG
 zeitigen/~~VdefijG
 zoomen/~~VdefijcG
@@ -235017,7 +235017,7 @@ exhumierungsarbeiten/~~N # noun reading: a form of Exhumierungsarbeiten (hunspel
 explorationsfirmen/~~N # noun reading: a form of Explorationsfirmen (hunspell)
 farbenschmelzöfen/~~N # noun reading: a form of Farbenschmelzöfen (hunspell)
 felsgrottenmadonnen/~~N # noun reading: a form of Felsgrottenmadonnen (hunspell)
-ferien/~~N # noun reading: a form of Ferien (hunspell)
+ferien/~~N+ # noun reading: a form of Ferien (hunspell)
 festigkeitseigenschaften/~~N # noun reading: a form of Festigkeitseigenschaften (hunspell)
 festlandsbesitzungen/~~N # noun reading: a form of Festlandsbesitzungen (hunspell)
 firmen/~~N # noun reading: a form of Firmen (hunspell)
@@ -235273,7 +235273,7 @@ situieren/~~N # noun reading: a form of Situieren (hunspell)
 skype/~~N # noun reading: a form of Skype (hunspell)
 sonnenfleckzyklen/~~N # noun reading: a form of Sonnenfleckzyklen (hunspell)
 speis/~~N # noun reading: a form of Speis (hunspell)
-spesen/~~N # noun reading: a form of Spesen (hunspell)
+spesen/~~N+ # noun reading: a form of Spesen (hunspell)
 stabfedermechanismen/~~N # noun reading: a form of Stabfedermechanismen (hunspell)
 stande/~~N # noun reading: a form of Stande (hunspell)
 starkwindbedingungen/~~N # noun reading: a form of Starkwindbedingungen (hunspell)
@@ -235325,7 +235325,7 @@ umsiedlungsvorbereitungen/~~N # noun reading: a form of Umsiedlungsvorbereitunge
 umstrukturierungskosten/~~N # noun reading: a form of Umstrukturierungskosten (hunspell)
 umsturzbestrebungen/~~N # noun reading: a form of Umsturzbestrebungen (hunspell)
 umverteilungsmechanismen/~~N # noun reading: a form of Umverteilungsmechanismen (hunspell)
-unkosten/~~N # noun reading: a form of Unkosten (hunspell)
+unkosten/~~N+ # noun reading: a form of Unkosten (hunspell)
 unterbringungsbedingungen/~~N # noun reading: a form of Unterbringungsbedingungen (hunspell)
 unterbringungskosten/~~N # noun reading: a form of Unterbringungskosten (hunspell)
 unterdrückungspraktiken/~~N # noun reading: a form of Unterdrückungspraktiken (hunspell)
@@ -240355,3 +240355,177 @@ großvater/~~NhMA # everyday noun, gender from add_german_common_noun_genders.py
 hochschule/~~NhFE # everyday noun, gender from add_german_common_noun_genders.py
 fahrkarte/~~NhFE # everyday noun, gender from add_german_common_noun_genders.py
 erdbeere/~~NhFE # everyday noun, gender from add_german_common_noun_genders.py
+Lena/~~NHA # given name, add_german_given_names.py
+Lea/~~NHA # given name, add_german_given_names.py
+Lisa/~~NHA # given name, add_german_given_names.py
+Sara/~~NHA # given name, add_german_given_names.py
+Hannah/~~NHA # given name, add_german_given_names.py
+Hanna/~~NHA # given name, add_german_given_names.py
+Emma/~~NHA # given name, add_german_given_names.py
+Mia/~~NHA # given name, add_german_given_names.py
+Lara/~~NHA # given name, add_german_given_names.py
+Lina/~~NHA # given name, add_german_given_names.py
+Jana/~~NHA # given name, add_german_given_names.py
+Nina/~~NHA # given name, add_german_given_names.py
+Michelle/~~NHA # given name, add_german_given_names.py
+Jasmin/~~NHA # given name, add_german_given_names.py
+Nele/~~NHA # given name, add_german_given_names.py
+Ida/~~NHA # given name, add_german_given_names.py
+Mila/~~NHA # given name, add_german_given_names.py
+Ella/~~NHA # given name, add_german_given_names.py
+Luisa/~~NHA # given name, add_german_given_names.py
+Amelie/~~NHA # given name, add_german_given_names.py
+Isabell/~~NHA # given name, add_german_given_names.py
+Jule/~~NHA # given name, add_german_given_names.py
+Pia/~~NHA # given name, add_german_given_names.py
+Christina/~~NHA # given name, add_german_given_names.py
+Simone/~~NHA # given name, add_german_given_names.py
+Elke/~~NHA # given name, add_german_given_names.py
+Ute/~~NHA # given name, add_german_given_names.py
+Emily/~~NHA # given name, add_german_given_names.py
+Lilly/~~NHA # given name, add_german_given_names.py
+Lilli/~~NHA # given name, add_german_given_names.py
+Lily/~~NHA # given name, add_german_given_names.py
+Lotta/~~NHA # given name, add_german_given_names.py
+Matilda/~~NHA # given name, add_german_given_names.py
+Mathilda/~~NHA # given name, add_german_given_names.py
+Romy/~~NHA # given name, add_german_given_names.py
+Zoe/~~NHA # given name, add_german_given_names.py
+Leni/~~NHA # given name, add_german_given_names.py
+Celina/~~NHA # given name, add_german_given_names.py
+Fiona/~~NHA # given name, add_german_given_names.py
+Finja/~~NHA # given name, add_german_given_names.py
+Lia/~~NHA # given name, add_german_given_names.py
+Liv/~~NHA # given name, add_german_given_names.py
+Malia/~~NHA # given name, add_german_given_names.py
+Maja/~~NHA # given name, add_german_given_names.py
+Merle/~~NHA # given name, add_german_given_names.py
+Nora/~~NHA # given name, add_german_given_names.py
+Selina/~~NHA # given name, add_german_given_names.py
+Thea/~~NHA # given name, add_german_given_names.py
+Tilda/~~NHA # given name, add_german_given_names.py
+Elif/~~NHA # given name, add_german_given_names.py
+Zeynep/~~NHA # given name, add_german_given_names.py
+Ayşe/~~NHA # given name, add_german_given_names.py
+Fatma/~~NHA # given name, add_german_given_names.py
+Merve/~~NHA # given name, add_german_given_names.py
+Esra/~~NHA # given name, add_german_given_names.py
+Aylin/~~NHA # given name, add_german_given_names.py
+Leyla/~~NHA # given name, add_german_given_names.py
+Layla/~~NHA # given name, add_german_given_names.py
+Amira/~~NHA # given name, add_german_given_names.py
+Sofie/~~NHA # given name, add_german_given_names.py
+Tom/~~NHA # given name, add_german_given_names.py
+Max/~~NA # given name, add_german_given_names.py
+Leon/~~NHA # given name, add_german_given_names.py
+Lucas/~~NA # given name, add_german_given_names.py
+Luca/~~NHA # given name, add_german_given_names.py
+Luka/~~NHA # given name, add_german_given_names.py
+Jonas/~~NA # given name, add_german_given_names.py
+Finn/~~NHA # given name, add_german_given_names.py
+Fynn/~~NHA # given name, add_german_given_names.py
+Ben/~~NHA # given name, add_german_given_names.py
+Noah/~~NHA # given name, add_german_given_names.py
+Luis/~~NA # given name, add_german_given_names.py
+Emil/~~NHA # given name, add_german_given_names.py
+Theo/~~NHA # given name, add_german_given_names.py
+Nicklas/~~NA # given name, add_german_given_names.py
+Timo/~~NHA # given name, add_german_given_names.py
+Jan/~~NHA # given name, add_german_given_names.py
+Andreas/~~NA # given name, add_german_given_names.py
+Uwe/~~NHA # given name, add_german_given_names.py
+Leonard/~~NHA # given name, add_german_given_names.py
+Ole/~~NHA # given name, add_german_given_names.py
+Mats/~~NA # given name, add_german_given_names.py
+Lars/~~NA # given name, add_german_given_names.py
+Erik/~~NHA # given name, add_german_given_names.py
+Eric/~~NHA # given name, add_german_given_names.py
+Hannes/~~NA # given name, add_german_given_names.py
+Till/~~NHA # given name, add_german_given_names.py
+Malte/~~NHA # given name, add_german_given_names.py
+Henrik/~~NHA # given name, add_german_given_names.py
+Sven/~~NHA # given name, add_german_given_names.py
+Dirk/~~NHA # given name, add_german_given_names.py
+Jens/~~NA # given name, add_german_given_names.py
+Ralf/~~NHA # given name, add_german_given_names.py
+Rolf/~~NHA # given name, add_german_given_names.py
+Lutz/~~NA # given name, add_german_given_names.py
+Hermann/~~NHA # given name, add_german_given_names.py
+Muhammad/~~NHA # given name, add_german_given_names.py
+Mohamed/~~NHA # given name, add_german_given_names.py
+Ali/~~NHA # given name, add_german_given_names.py
+Ahmed/~~NHA # given name, add_german_given_names.py
+Ahmet/~~NHA # given name, add_german_given_names.py
+Mustafa/~~NHA # given name, add_german_given_names.py
+Mehmet/~~NHA # given name, add_german_given_names.py
+Yusuf/~~NHA # given name, add_german_given_names.py
+Emre/~~NHA # given name, add_german_given_names.py
+Can/~~NHA # given name, add_german_given_names.py
+Deniz/~~NA # given name, add_german_given_names.py
+Ömer/~~NHA # given name, add_german_given_names.py
+Hamza/~~NHA # given name, add_german_given_names.py
+Omar/~~NHA # given name, add_german_given_names.py
+Hassan/~~NHA # given name, add_german_given_names.py
+Karim/~~NHA # given name, add_german_given_names.py
+Samir/~~NHA # given name, add_german_given_names.py
+Matteo/~~NHA # given name, add_german_given_names.py
+Mattis/~~NA # given name, add_german_given_names.py
+Mathis/~~NA # given name, add_german_given_names.py
+Levi/~~NHA # given name, add_german_given_names.py
+Liam/~~NHA # given name, add_german_given_names.py
+Leo/~~NHA # given name, add_german_given_names.py
+Lio/~~NHA # given name, add_german_given_names.py
+Janis/~~NA # given name, add_german_given_names.py
+Jannis/~~NA # given name, add_german_given_names.py
+Joel/~~NHA # given name, add_german_given_names.py
+Jonah/~~NHA # given name, add_german_given_names.py
+Lennard/~~NHA # given name, add_german_given_names.py
+Lennart/~~NHA # given name, add_german_given_names.py
+Lenny/~~NHA # given name, add_german_given_names.py
+Lasse/~~NHA # given name, add_german_given_names.py
+Mika/~~NHA # given name, add_german_given_names.py
+Milo/~~NHA # given name, add_german_given_names.py
+Nico/~~NHA # given name, add_german_given_names.py
+Niko/~~NHA # given name, add_german_given_names.py
+Noel/~~NHA # given name, add_german_given_names.py
+Silas/~~NA # given name, add_german_given_names.py
+Sandro/~~NHA # given name, add_german_given_names.py
+John/~~NHA # given name, add_german_given_names.py
+Mike/~~NHA # given name, add_german_given_names.py
+Mary/~~NHA # given name, add_german_given_names.py
+Tony/~~NHA # given name, add_german_given_names.py
+Jack/~~NHA # given name, add_german_given_names.py
+Olivia/~~NHA # given name, add_german_given_names.py
+Kate/~~NHA # given name, add_german_given_names.py
+Susan/~~NHA # given name, add_german_given_names.py
+Tokyo/~~NHA # place, add_german_given_names.py
+Neuseeland/~~NHA # place, add_german_given_names.py
+WhatsApp/~~NHA # brand, add_german_given_names.py
+Instagram/~~NHA # brand, add_german_given_names.py
+Netflix/~~NA # brand, add_german_given_names.py
+Spotify/~~NHA # brand, add_german_given_names.py
+TikTok/~~NHA # brand, add_german_given_names.py
+Snapchat/~~NHA # brand, add_german_given_names.py
+iPhone/~~NHA # brand, add_german_given_names.py
+iPad/~~NHA # brand, add_german_given_names.py
+PlayStation/~~NHA # brand, add_german_given_names.py
+Playstation/~~NHA # brand, add_german_given_names.py
+Xbox/~~NA # brand, add_german_given_names.py
+Lego/~~NHA # brand, add_german_given_names.py
+Lidl/~~NHA # brand, add_german_given_names.py
+Rewe/~~NHA # brand, add_german_given_names.py
+Ikea/~~NHA # brand, add_german_given_names.py
+Nike/~~NHA # brand, add_german_given_names.py
+Zalando/~~NHA # brand, add_german_given_names.py
+Ebay/~~NHA # brand, add_german_given_names.py
+eBay/~~NHA # brand, add_german_given_names.py
+Discord/~~NHA # brand, add_german_given_names.py
+Twitch/~~NHA # brand, add_german_given_names.py
+Covid/~~NHA # brand, add_german_given_names.py
+max/~~2r # abbreviation: maximal
+großeltern/~~Nh+ # plurale tantum, add_german_plural_genders.py
+pflegeeltern/~~Nh+ # plurale tantum, add_german_plural_genders.py
+kosten/~~Nh+ # plurale tantum, add_german_plural_genders.py
+personalien/~~Nh+ # plurale tantum, add_german_plural_genders.py
+machenschaften/~~Nh+ # plurale tantum, add_german_plural_genders.py
+habt/~~V # verb: ihr habt (had no part of speech)

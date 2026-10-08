@@ -59,6 +59,15 @@ kinder kleider lieder nester rathäuser schwerter umfelder ämter bücher häuse
 länder bäder gemüter""".split()
 
 
+# Nouns that exist only in the plural. They get the `+` property (number
+# Plural, no gender): *meine Eltern arbeitet* is then a plural subject with a
+# singular verb. *Geschwister* and *Möbel* are left out — both have a singular
+# in use.
+PLURALIA_TANTUM = """Eltern Großeltern Schwiegereltern Stiefeltern Pflegeeltern Leute Ferien Kosten Unkosten
+Trümmer Masern Röteln Pocken Alpen Einkünfte Finanzen Gebrüder Personalien Flitterwochen Wirren
+Machenschaften Utensilien Annalen Memoiren Textilien Spesen Gliedmaßen Kinkerlitzchen""".split()
+
+
 def umlauted(stem):
     for i in range(len(stem) - 1, -1, -1):
         if stem[i] in UMLAUT:
@@ -117,8 +126,26 @@ def main() -> int:
         done.add(m["word"])
         changed += 1
 
+    tantum_marked = 0
+    tantum_seen = set()
+    for i, line in enumerate(lines):
+        m = LINE.match(line)
+        if not m or m["word"].capitalize() not in PLURALIA_TANTUM or "REPLACES" in m["rest"]:
+            continue
+        tantum_seen.add(m["word"].capitalize())
+        if "+" not in m["flags"]:
+            lines[i] = f"{m['word']}/{m['head']}{m['flags']}+{m['rest']}"
+            tantum_marked += 1
+    missing = [word for word in PLURALIA_TANTUM if word not in tantum_seen]
+    if missing:
+        while lines and lines[-1] == "":
+            lines.pop()
+        lines += [f"{word.lower()}/~~Nh+ # plurale tantum, add_german_plural_genders.py" for word in missing]
+        lines.append("")
+        tantum_marked += len(missing)
+
     DICT.write_text("\n".join(lines), encoding="utf-8")
-    print(f"gave {changed} plural entries a gender", file=sys.stderr)
+    print(f"gave {changed} plural entries a gender, marked {tantum_marked} pluralia tantum", file=sys.stderr)
     return 0
 
 
