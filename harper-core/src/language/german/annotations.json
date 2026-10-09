@@ -2944,6 +2944,10 @@
 			"#": "Lower-case non-noun marker. The entry is not a noun, but a capitalized noun of the same letters is: `ist` and das `Ist`, `gut` and das `Gut`. Harper looks words up regardless of case, so the lower-case spelling picks up the noun reading of the capitalized one; this flag says which spelling it belongs to. Read by the noun-phrase chunker and `GermanNounCapitalization`, which never take the lower-case spelling for a noun.",
 			"metadata": {}
 		},
+		"%": {
+			"#": "Strong present marker. The entry is the second or third person singular or the imperative of a strong verb with a changed stem: `gibt`, `nimmst`, `lies`, `tritt`, `fährt`, `hält`. Written by `add_german_strong_imperatives.py` from hunspell's morphology and read back by `spell::lexical_classes`, so that `GermanStrongImperative` and `GermanSubjectVerbAgreement` only take a form for a strong one that hunspell confirmed — `hieb` and `hiebt` look like `heben` raised, but are `hauen`'s preterite.",
+			"metadata": {}
+		},
 		"!": {
 			"#": "No-compound marker. The entry is a word, but its spelling is never an element of a compound (the forms built from it still may be, since they often have a second source). For strings that are real in isolation but are only ever seen inside a compound as the remains of a typo: the Latin `et` (`Jahrhundet` = `Jahr` + `hund` + `et`), the symbols `NS` and `Cs`, the interjection `hi`, and quoted English mined from the prose corpus (`Datebank` = `date` + `bank`). Abbreviations need no mark: they are excluded by their metadata. Read by `CompoundChecker` and `GermanSpellCheck`.",
 			"metadata": {}

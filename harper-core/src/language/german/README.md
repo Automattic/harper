@@ -1520,7 +1520,7 @@ script writes it as an abbreviation.
 | `GermanCountryArticle` | *aus Türkei*, *nach Schweiz*, *in USA* | directly behind a preposition, not in a hyphenated compound |
 | `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
 | `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
-| `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised stem must be a verb and the raised infinitive not |
+| `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das*, *Trete ein!* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised form must carry `%`, the verb no weak preterite |
 | `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
 | comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
 | closing comma of a relative clause | *Das Auto, das am Straßenrand steht parkt …* | the same verb-run test |
@@ -1725,28 +1725,54 @@ rules, not from LanguageTool's patterns.
   in `grammar/subjects.rs` are grouped by infinitive, so a rule can ask
   whether *kann* belongs to *können*.
 
-* `GermanStrongImperative` — *Gebe mir das!* → *Gib*, *Nehme Platz!* →
-  *Nimm*, *Lese das bitte* → *Lies*, *Vergesse es nicht!* → *Vergiss*. No list
-  of strong verbs: a sentence-initial *-e* form (or one after *bitte*) is the
-  imperative of an *e/i* verb when the dictionary knows the raised stem
-  (*gib*) and the third person on it (*gibt*) as verbs, the infinitive on the
-  plain stem (*geben*) too, and **no** infinitive on the raised one — *lebe*
-  would give *lieb*, and *lieben* is a verb of its own. `raised_stems` in
-  `grammar/verbs.rs` spells the candidates (*geb* → *gib*/*gieb*, *nehm* →
-  *nimm*). The same form is the first person with the pronoun dropped (*Lese
-  gerade ein Buch*, *Nehme an, dass …*) and the subjunctive (*Gebe Gott*), so
-  only a request is read — the sentence ends in *!* or contains *bitte* — and
-  not before a subject pronoun (*Gebe ich dir das?*). Stems in *-t* (*Trete
-  ein!* → *Tritt*) are not covered.
-* The data under it: `strip_german_noun_readings.py` had left the *e/i* forms
-  with no part of speech at all (`gib/~~h`, `nimm/~~h`, `nimmt/~~hG`).
-  `add_german_strong_imperatives.py` asks hunspell for them — the third person
-  must be an entry of its own (*gibt*, not *liebt* from *lieben*), the
-  imperative an entry or the third person with the imperative flag `W`, and
-  the first person *-e* must exist (*besen* is no verb) — and gives 78 entries
-  the verb reading and adds 43 second-person forms (*nimmst*, *hilfst*).
+* **Strong verbs.** `GermanStrongImperative` reports *Gebe mir das!* → *Gib*,
+  *Nehme Platz!* → *Nimm*, *Lese das bitte* → *Lies*, *Trete ein!* →
+  *Tritt*; `GermanSubjectVerbAgreement` now reports the present on the plain
+  stem, *er gebt* → *gibt*, *sie lest* → *liest*, *das Kind esst* → *isst*,
+  *du nehmst* → *nimmst*, *er fahrt* → *fährt*, *der Zug haltet* → *hält*,
+  *es lauft* → *läuft*. *gebt*, *esst*, *fahrt* are real words — *ihr gebt* —
+  but the second person plural only, so the rule reads them as nothing else
+  (`plain_stem_present` in `grammar/verbs.rs`), suggests the changed form,
+  and does not let a noun phrase behind the verb pass for the subject: only
+  *ihr* can be (*Das Buch gebt ihr mir*). The placeholder *es* is checked
+  with these forms too, since no noun takes the second person.
+
+  No verb list. A form is read as a strong verb's when the third person on
+  the changed stem (*gibt*, *tritt*, *fährt*, *hält*) carries the marker `%`
+  and the plain stem has no weak preterite: *backte*, *fragte*, *melkte* and
+  *erschreckte* exist, so *er backt*, *er fragt*, *er erschreckt ihn* stay
+  correct beside the rarer *bäckt*, *frägt*, *erschrickt*. `raised_stems` and
+  `umlauted_stems` spell the candidates (*geb* → *gib*/*gieb*, *nehm* →
+  *nimm*, *tret* → *tritt*, *fahr* → *fähr*, *lauf* → *läuf*). The imperative
+  only uses the *e/i* class; *fahr!* and *lauf!* keep their vowel.
+
+  The imperative is the same *-e* form as the first person with the pronoun
+  dropped (*Lese gerade ein Buch*, *Nehme an, dass …*) and the subjunctive
+  (*Gebe Gott*), so only a request is read — the sentence ends in *!* or
+  contains *bitte* — and not before a subject pronoun (*Gebe ich dir das?*).
+* **The marker and the data.** `add_german_strong_imperatives.py` asks
+  hunspell's morphology which forms are a strong verb's: the third person must
+  be an entry of its own (*gibt*, not *liebt* from *lieben*; *tritt* and
+  *gilt*, which hunspell files under *trittst*, *giltst*), the imperative an
+  entry or the third person with the imperative flag `W`, the first person
+  *-e* must exist (*besen* is no verb), there must be no weak preterite, and
+  the changed stem must have no infinitive of its own (*richt*, *ritt*,
+  *fällt* of *fällen*; *trägen* is only *träge* declined). It marks those
+  forms `%` and gives them the verb reading the noun-stripping pass had taken
+  (`gib/~~h`, `nimmt/~~hG`), adds missing second persons (*nimmst*,
+  *hältst*), and adds the plain second person plural where the affixes missed
+  it (*ihr lauft*) — but not to an entry that is also a noun written small
+  (*fahrt*), which would hide *nahm fahrt auf* from the capitalization rule.
+  A runtime check without the marker took *heb* → *hieb* for a strong verb,
+  because *hieb*, *hiebt* and *hiebst* are *hauen*'s preterite and *hieben*
+  is missing from the dictionary: *Der EGB hebt hervor* was reported.
   `lies` and `liest` carried conjugation affixes as if they were stems and
   built *liesen*; they are plain entries now.
+* `GermanNounCapitalization` reads such a form right behind a noun as the
+  verb, not as *Werft* in *Das Kind werft den Ball*.
+* Not covered: *fallen* (*fällt* is also *fällen*'s), *wachsen* (*wachste*,
+  "to wax"), and a noun-phrase subject the chunker cannot number (*Die
+  Lehrerin sprecht*).
 
 Measured against the end of the third round: LanguageTool errors found 1736 →
 1790, false-alarm sentences 738 → 739 (the one new report is *etwas
@@ -2290,6 +2316,7 @@ case. Four such classes are **dictionary data**, carried by property flags:
 | `2` | Unit abbreviation | `kwh/~~2` |
 | `3` | Lower-case Latin/Greek term | `facto/~~NhY3` |
 | `^` | Not a noun lower case, though the capitalized word is | `ist/~~Vtj^` |
+| `%` | A strong verb's present or imperative on the changed stem | `gibt/~~hVG%` |
 
 `^` exists because lookups ignore case: `ist` arrives carrying the noun
 reading of `das Ist`, and the merged metadata cannot say which spelling it came

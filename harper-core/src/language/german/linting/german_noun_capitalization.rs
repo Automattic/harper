@@ -1,4 +1,5 @@
 use crate::language::german::grammar::noun_phrase;
+use crate::language::german::grammar::verbs::plain_stem_present;
 use crate::{
     Punctuation, Token, TokenKind, TokenStringExt,
     document::Document,
@@ -430,6 +431,18 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                 .first()
                 .is_some_and(|c| c.is_uppercase());
         if INDECLINABLE_ADJECTIVES.contains(&word.as_str()) && next_capitalized {
+            return true;
+        }
+        // *Das Kind werft den Ball*: a strong verb spelled on the plain stem
+        // right behind the noun is the (wrong) verb, not the noun *Werft*.
+        // `GermanSubjectVerbAgreement` reports it with *wirft*.
+        if index >= 2
+            && plain_stem_present(&word).is_some()
+            && document
+                .get_span_content(&tokens[index - 1].span)
+                .first()
+                .is_some_and(|c| c.is_uppercase())
+        {
             return true;
         }
         if NOUN_PREPOSITIONS.contains(&word.as_str()) {
@@ -1142,6 +1155,7 @@ mod tests {
             "Das neue, in Planung befindliche Baugebiet wächst.",
             "Die abwartende, bald offen feindselige Haltung blieb.",
             "Das liege jedoch nicht nur an der Bildung.",
+            "Das Kind werft den Ball.",
             "Dies zeige, dass der Vorwurf ungerechtfertigt sei.",
             "Das ist der Preis samt aller Informationen.",
             "Sie beugt der Hautalterung vor dank Tahiti-Vanille.",

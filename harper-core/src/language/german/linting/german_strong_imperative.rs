@@ -4,12 +4,10 @@
 use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
-    language::german::{
-        grammar::{noun_phrase::lowercase_of, subjects::subject_pronoun, verbs::raised_stems},
-        spell::curated_german_dictionary,
+    language::german::grammar::{
+        noun_phrase::lowercase_of, subjects::subject_pronoun, verbs::raised_stem,
     },
     linting::{Lint, LintKind, Linter, Suggestion},
-    spell::Dictionary,
 };
 
 /// Reports the imperative of an *e/i* verb built like a regular one: *Gebe
@@ -31,24 +29,9 @@ use crate::{
 pub struct GermanStrongImperative;
 
 impl GermanStrongImperative {
-    fn is_verb(word: &str) -> bool {
-        let chars: Vec<char> = word.chars().collect();
-        curated_german_dictionary()
-            .get_word_metadata(&chars)
-            .is_some_and(|metadata| metadata.is_verb())
-    }
-
     /// The imperative of the strong verb whose regular-looking form `word` is.
     fn strong_imperative(word: &str) -> Option<String> {
-        let stem = word.strip_suffix('e')?;
-        if stem.chars().count() < 2 || !Self::is_verb(&format!("{stem}en")) {
-            return None;
-        }
-        raised_stems(stem).into_iter().find(|raised| {
-            Self::is_verb(raised)
-                && Self::is_verb(&format!("{raised}t"))
-                && !Self::is_verb(&format!("{raised}en"))
-        })
+        raised_stem(word.strip_suffix('e')?)
     }
 
     fn is_request(sentence: &[&Token], document: &Document) -> bool {
@@ -170,6 +153,7 @@ mod tests {
             ("Bitte gebe mir Bescheid.", "gib"),
             ("Bitte, empfehle mich weiter.", "empfiehl"),
             ("Werfe den Ball!", "Wirf"),
+            ("Trete bitte ein.", "Tritt"),
         ] {
             assert_eq!(fixes(text), [format!("Replace with: “{fixed}”")], "{text}");
         }

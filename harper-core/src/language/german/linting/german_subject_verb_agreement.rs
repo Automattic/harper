@@ -10,6 +10,9 @@ use crate::language::german::grammar::noun_phrase::{self, Phrase};
 use crate::language::german::grammar::subjects::{
     Features, irregular_finite_verb, subject_pronoun, subordinate_subject_pronoun,
 };
+use crate::language::german::grammar::verbs::{
+    plain_stem_present, second_person_of_raised, third_person_of_raised,
+};
 use crate::language::morphology::{Case, GenderSet, MorphologyExt, Number, NumberSet, PersonSet};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
@@ -161,6 +164,19 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             return Vec::new();
         }
 
+        // *gebt*, *lest*, *esst*: a strong verb spelled on the plain stem is
+        // only the second person plural — the singular raises the vowel, *er
+        // gibt*, *du liest*. So *er gebt* and *das Kind esst* disagree. Asked
+        // before the affix metadata, because *lest* and *esst* get theirs from
+        // the `-st` reading as well, and before the lookup, because *schlafst*
+        // is in no dictionary.
+        //
+        // *schlafst*, *nehmst* are no form at all; reading them as the plural
+        // too lets *du schlafst* be reported with *schläfst*.
+        if plain_stem_present(word).is_some() {
+            return vec![Features::new(PersonSet::SECOND, NumberSet::PLURAL)];
+        }
+
         let chars: Vec<char> = word.chars().collect();
         let Some(metadata) = self.dictionary.get_word_metadata(&chars) else {
             return Vec::new();
@@ -181,6 +197,22 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         }
 
         readings_of_ending(word)
+    }
+
+    /// The form a strong verb on the plain stem should have had for this
+    /// subject: *er gebt* → *gibt*, *du esst* → *isst*.
+    fn strong_correction(subject: &Features, verb_text: &str) -> Option<String> {
+        let (raised, _) = plain_stem_present(verb_text)?;
+        if !subject.number.contains(NumberSet::SINGULAR) {
+            return None;
+        }
+        if subject.person.contains(PersonSet::THIRD) {
+            Some(third_person_of_raised(&raised))
+        } else if subject.person.contains(PersonSet::SECOND) {
+            Some(second_person_of_raised(&raised))
+        } else {
+            None
+        }
     }
 
     /// Does the token at `index` stand in the front field of its clause?
@@ -502,13 +534,24 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             }
 
             let verb_text: String = document.get_span_content(&verb_token.span).iter().collect();
-            if another_subject_follows(tokens, document, phrase.end)
+            let readings = self.verb_features(&verb_text, verb_token);
+
+            // A noun phrase or an indefinite pronoun behind the verb may be the
+            // real subject, with the phrase in front an object. Not when the
+            // verb is second person only (*gebt*, *esst*): then nothing but
+            // *ihr* can be its subject — *Das Buch gebt ihr mir*.
+            let second_person_only =
+                !readings.is_empty() && readings.iter().all(|r| r.person == PersonSet::SECOND);
+            if second_person_only {
+                if pronoun_subject_follows(tokens, document, phrase.end, &["ihr"]) {
+                    continue;
+                }
+            } else if another_subject_follows(tokens, document, phrase.end)
                 || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
             {
                 continue;
             }
 
-            let readings = self.verb_features(&verb_text, verb_token);
             if readings.is_empty() || readings.iter().any(|r| subject.agrees_with(r)) {
                 continue;
             }
@@ -653,10 +696,19 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
     }
 
     fn report(subject_text: &str, subject: &Features, verb_text: &str, verb: &Token) -> Lint {
+        let suggestions = Self::strong_correction(subject, verb_text)
+            .map(|fixed| {
+                let original: Vec<char> = verb_text.chars().collect();
+                vec![Suggestion::replace_with_match_case(
+                    fixed.chars().collect(),
+                    &original,
+                )]
+            })
+            .unwrap_or_default();
         Lint {
             span: verb.span,
             lint_kind: LintKind::Agreement,
-            suggestions: Vec::new(),
+            suggestions,
             priority: 30,
             message: format!(
                 "»{subject_text}« verlangt {}. »{verb_text}« steht in einer anderen Form.",
@@ -780,12 +832,20 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
                     .get_span_content(&subject_token.span)
                     .iter()
                     .collect();
-                let Some(subject) = subject_pronoun(&subject_text) else {
+                let verb_text: String =
+                    document.get_span_content(&verb_token.span).iter().collect();
+                // The placeholder *es* hands agreement to the noun behind the
+                // verb, but no noun takes the second person: *Es lauft gut* has
+                // *es* as its subject whatever follows.
+                let placeholder_cannot_apply = subject_text.eq_ignore_ascii_case("es")
+                    && plain_stem_present(&verb_text).is_some();
+                let Some(subject) = subject_pronoun(&subject_text).or_else(|| {
+                    placeholder_cannot_apply
+                        .then(|| Features::new(PersonSet::THIRD, NumberSet::SINGULAR))
+                }) else {
                     continue;
                 };
 
-                let verb_text: String =
-                    document.get_span_content(&verb_token.span).iter().collect();
                 let verb = self.verb_features(&verb_text, verb_token);
                 if verb.is_empty() || verb.iter().any(|reading| subject.agrees_with(reading)) {
                     continue;
@@ -1472,6 +1532,50 @@ mod tests {
             1,
             "the number still separates them"
         );
+    }
+
+    /// A strong verb on the plain stem is the second person plural only:
+    /// *ihr gebt*, but *er gibt*.
+    #[test]
+    fn a_strong_verb_raises_its_vowel_in_the_singular() {
+        for text in [
+            "Er gebt mir das Buch.",
+            "Sie lest jeden Tag.",
+            "Er esst gern Pizza.",
+            "Man seht das sofort.",
+            "Er nehmt sich Zeit.",
+            "Er tretet zurück.",
+            "Der Mann gebt mir das Buch.",
+            "Das Kind esst nichts.",
+            "Der Mann lest ein Buch.",
+            "Der Zug haltet hier nicht.",
+            "Er fahrt nach Berlin.",
+            "Sie lauft jeden Morgen.",
+            "Du schlafst zu lange.",
+            "Es lauft richtig gut.",
+            "Du vergesst immer alles.",
+        ] {
+            assert_eq!(lint_count(text), 1, "should fire on {text:?}");
+        }
+        for text in [
+            "Er gibt mir das Buch.",
+            "Sie liest jeden Tag.",
+            "Ihr gebt mir das Buch.",
+            "Ihr esst gern Pizza.",
+            "Er tritt zurück.",
+            "Du vergisst immer alles.",
+            "Er lebt in Berlin.",
+            "Sie betet jeden Tag.",
+            "Das Buch gebt ihr mir morgen.",
+            "Er rettet das Kind.",
+            "Ihr fahrt nach Berlin.",
+            "Er fragt nach dem Weg.",
+            "Sie backt einen Kuchen.",
+            "Er erschreckt das Kind.",
+            "Er zahlt die Rechnung.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should stay quiet on {text:?}");
+        }
     }
 
     /// A word that is not in either table produces nothing at all.

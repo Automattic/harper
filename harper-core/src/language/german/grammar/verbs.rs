@@ -1,5 +1,9 @@
 //! Verb forms the dictionary cannot describe one word at a time.
 
+use crate::language::german::spell::curated_german_dictionary;
+use crate::language::german::spell::lexical_classes::STRONG_PRESENT_FORMS;
+use crate::spell::Dictionary;
+
 /// The conjunctions that open an infinitive group of their own: *um … zu*,
 /// *ohne … zu*, *(an)statt … zu*. The *zu* in the group belongs to them, not to
 /// a verb in front.
@@ -61,31 +65,216 @@ pub fn looks_like_participle(word: &str) -> bool {
 
 /// The stems a strong verb's *e* is raised to in the second and third person
 /// singular and the imperative: *geb* → *gib*, *les* → *lies*, *nehm* →
-/// *nimm*. Spelling only — which of them is a real form is the dictionary's
-/// to say, and for most verbs none is (*leb* → *lieb* is another verb).
-///
-/// A stem in *-t* is left out: its imperative does not have this shape
-/// (*tritt*, *gilt*).
+/// *nimm*, *tret* → *tritt*, *gelt* → *gilt*. Spelling only — which of them is
+/// a real form is the dictionary's to say, and for most verbs none is (*leb*
+/// → *lieb* is another verb). See [`raised_stem`].
 pub fn raised_stems(stem: &str) -> Vec<String> {
     let Some(at) = stem.rfind('e') else {
         return Vec::new();
     };
     let (head, tail) = (&stem[..at], &stem[at + 1..]);
-    if stem.ends_with('t') || tail.chars().any(|c| "aeiouäöü".contains(c)) {
+    if tail.chars().any(|c| "aeiouäöü".contains(c)) {
         return Vec::new();
     }
     let mut stems = vec![format!("{head}i{tail}"), format!("{head}ie{tail}")];
-    // *nehm* → *nimm*: the length mark goes and the consonant doubles.
     let mut rest = tail.chars();
-    if let (Some('h'), Some(consonant), None) = (rest.next(), rest.next(), rest.next()) {
-        stems.push(format!("{head}i{consonant}{consonant}"));
+    match (rest.next(), rest.next(), rest.next()) {
+        // *nehm* → *nimm*: the length mark goes and the consonant doubles.
+        (Some('h'), Some(consonant), None) => {
+            stems.push(format!("{head}i{consonant}{consonant}"));
+        }
+        // *tret* → *tritt*: the short vowel doubles the *t*.
+        (Some('t'), None, None) => stems.push(format!("{head}itt")),
+        _ => {}
     }
     stems
 }
 
+/// The third person singular on a raised or umlauted stem: *gib* → *gibt*,
+/// *fähr* → *fährt*, and a stem in *-t* is its own third person, *tritt*,
+/// *gilt*, *hält*.
+pub fn third_person_of_raised(raised: &str) -> String {
+    if raised.ends_with('t') {
+        raised.to_string()
+    } else {
+        format!("{raised}t")
+    }
+}
+
+/// The second person singular on a raised stem: *gib* → *gibst*, *lies* →
+/// *liest*, *iss* → *isst*, *tritt* → *trittst*. A stem in a sibilant takes
+/// a bare *-t*.
+pub fn second_person_of_raised(raised: &str) -> String {
+    if raised.ends_with(['s', 'ß', 'z', 'x']) {
+        format!("{raised}t")
+    } else {
+        format!("{raised}st")
+    }
+}
+
+/// The present-tense form of a strong verb spelled on the plain stem, and the
+/// changed stem it should have had: *gebt* → (*gib*, `t`), *lest* → (*lies*,
+/// `t`), *tretet* → (*tritt*, `t`), *nehmst* → (*nimm*, `st`), *fahrt* →
+/// (*fähr*, `t`), *haltet* → (*hält*, `t`).
+///
+/// *gebt*, *lest* and *tretet* are real words — the second person plural, *ihr
+/// gebt* — but nothing else; *er gebt* is wrong. *nehmst* is not a word at
+/// all. The ending tells the caller which: `"t"` for the plural form, `"st"`
+/// for the made-up second person singular.
+pub fn plain_stem_present(word: &str) -> Option<(String, &'static str)> {
+    let lower = word.to_lowercase();
+    let changed = |stem: &str| raised_stem(stem).or_else(|| umlauted_stem(stem));
+    // *gebt*, *lest*, *esst*, *fahrt*: the stem and a *-t*. *tretet*,
+    // *haltet*, *ladet*: a stem in *-t* or *-d* takes *-et*.
+    if let Some(stem) = lower
+        .strip_suffix("et")
+        .filter(|stem| stem.ends_with(['t', 'd']))
+        && let Some(raised) = changed(stem)
+    {
+        return Some((raised, "t"));
+    }
+    if let Some(stem) = lower.strip_suffix('t')
+        && let Some(raised) = changed(stem)
+    {
+        return Some((raised, "t"));
+    }
+    let stem = lower
+        .strip_suffix("est")
+        .filter(|stem| stem.ends_with(['t', 'd']))
+        .or_else(|| lower.strip_suffix("st"))?;
+    changed(stem).map(|raised| (raised, "st"))
+}
+
+fn is_verb(word: &str) -> bool {
+    let chars: Vec<char> = word.chars().collect();
+    curated_german_dictionary()
+        .get_word_metadata(&chars)
+        .is_some_and(|metadata| metadata.is_verb())
+}
+
+/// Is `stem` the stem of a verb with a strong past, so that a changed vowel
+/// in the present is to be expected? The infinitive has to be a verb, and the
+/// weak preterite must not be: *backte*, *fragte*, *erschreckte* and
+/// *melkte* exist, so *er backt*, *er fragt*, *er erschreckt ihn* and *er
+/// melkt* are correct beside the rarer *bäckt*, *frägt*, *erschrickt*,
+/// *milkt*.
+fn is_strong_infinitive_stem(stem: &str) -> bool {
+    stem.chars().count() >= 2
+        && is_verb(&format!("{stem}en"))
+        && !is_verb(&format!("{stem}te"))
+        // *-ete* only where the stem ends in *t* or *d* (*rettete*): *gebete*
+        // is the plural of *Gebet*.
+        && !(stem.ends_with(['t', 'd']) && is_verb(&format!("{stem}ete")))
+}
+
+/// The stems a strong verb's *a*, *au* or *o* is umlauted to in the second
+/// and third person singular: *fahr* → *fähr*, *lauf* → *läuf*, *halt* →
+/// *hält*, *stoß* → *stöß*. Unlike the *e/i* verbs, the imperative keeps the
+/// plain vowel (*fahr!*, *lauf!*).
+pub fn umlauted_stems(stem: &str) -> Vec<String> {
+    let Some(at) = stem.rfind(['a', 'o']) else {
+        return Vec::new();
+    };
+    let (head, tail) = (&stem[..at], &stem[at + 1..]);
+    if tail.chars().any(|c| "aeiouäöü".contains(c) && c != 'u') {
+        return Vec::new();
+    }
+    let umlaut = if stem[at..].starts_with('a') {
+        "ä"
+    } else {
+        "ö"
+    };
+    vec![format!("{head}{umlaut}{tail}")]
+}
+
+/// The umlauted stem of the strong verb on `stem`, if it is one: *fahr* →
+/// *fähr*, *halt* → *hält*; *zahl* → `None`, because *zählt* is *zählen*'s.
+/// The same marker as for [`raised_stem`] decides.
+pub fn umlauted_stem(stem: &str) -> Option<String> {
+    if !is_strong_infinitive_stem(stem) {
+        return None;
+    }
+    umlauted_stems(stem)
+        .into_iter()
+        .find(|umlauted| STRONG_PRESENT_FORMS.contains(&third_person_of_raised(umlauted)))
+}
+
+/// The raised stem of the strong verb on `stem`, if it is one: *geb* →
+/// *gib*, *les* → *lies*, *tret* → *tritt*; *leb* → `None`.
+///
+/// The dictionary decides: the third person on the raised stem has to carry
+/// the strong-present marker `%`, which `add_german_strong_imperatives.py`
+/// writes from hunspell's morphology. *liebt* is a verb but *lieben*'s, and
+/// *hiebt* one but *hauen*'s preterite, so *leb* and *heb* are not raised.
+/// The infinitive on the plain stem has to be a verb with no weak preterite.
+pub fn raised_stem(stem: &str) -> Option<String> {
+    if !is_strong_infinitive_stem(stem) {
+        return None;
+    }
+    raised_stems(stem)
+        .into_iter()
+        .find(|raised| STRONG_PRESENT_FORMS.contains(&third_person_of_raised(raised)))
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{has_zu_infix, looks_like_participle, raised_stems, without_zu_infix};
+    use super::{
+        has_zu_infix, looks_like_participle, plain_stem_present, raised_stem, raised_stems,
+        second_person_of_raised, without_zu_infix,
+    };
+
+    #[test]
+    fn the_dictionary_decides_which_verbs_are_strong() {
+        for (stem, raised) in [
+            ("geb", "gib"),
+            ("nehm", "nimm"),
+            ("les", "lies"),
+            ("ess", "iss"),
+            ("vergess", "vergiss"),
+            ("helf", "hilf"),
+            ("sprech", "sprich"),
+            ("tret", "tritt"),
+        ] {
+            assert_eq!(raised_stem(stem).as_deref(), Some(raised), "{stem}");
+        }
+        for stem in [
+            "leb", "bet", "rett", "mach", "geh", "steh", "werd", "stell", "fehl",
+        ] {
+            assert_eq!(raised_stem(stem), None, "{stem}");
+        }
+    }
+
+    #[test]
+    fn a_present_form_on_the_plain_stem_is_found() {
+        for (word, raised, ending) in [
+            ("gebt", "gib", "t"),
+            ("lest", "lies", "t"),
+            ("esst", "iss", "t"),
+            ("vergesst", "vergiss", "t"),
+            ("tretet", "tritt", "t"),
+            ("nehmst", "nimm", "st"),
+            ("sprechst", "sprich", "st"),
+            ("fahrt", "fähr", "t"),
+            ("lauft", "läuf", "t"),
+            ("haltet", "hält", "t"),
+            ("schlaft", "schläf", "t"),
+            ("tragt", "träg", "t"),
+        ] {
+            assert_eq!(
+                plain_stem_present(word),
+                Some((raised.to_string(), ending)),
+                "{word}"
+            );
+        }
+        for word in [
+            "gibt", "liest", "isst", "tritt", "macht", "lebt", "betet", "rettet",
+        ] {
+            assert_eq!(plain_stem_present(word), None, "{word}");
+        }
+        assert_eq!(second_person_of_raised("gib"), "gibst");
+        assert_eq!(second_person_of_raised("lies"), "liest");
+        assert_eq!(second_person_of_raised("tritt"), "trittst");
+    }
 
     #[test]
     fn the_e_is_raised_to_i_or_ie() {
@@ -93,7 +282,8 @@ mod tests {
         assert_eq!(raised_stems("les"), ["lis", "lies"]);
         assert!(raised_stems("nehm").contains(&"nimm".to_string()));
         assert!(raised_stems("vergess").contains(&"vergiss".to_string()));
-        assert!(raised_stems("tret").is_empty());
+        assert!(raised_stems("tret").contains(&"tritt".to_string()));
+        assert!(raised_stems("gelt").contains(&"gilt".to_string()));
         assert!(raised_stems("mach").is_empty());
     }
 

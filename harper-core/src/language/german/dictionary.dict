@@ -398,7 +398,7 @@ brutalo/~~NHA
 brutus/~~NA
 bryan/~~NHA
 bräter/~~NEH
-brätst/~~Vj
+brätst/~~Vj%
 bräunen/~~NMZVfij78cGH # +verb reading (was noun-only)
 bräunlingen/~~NH
 bröckeligkeit/~~NFA
@@ -649,7 +649,7 @@ bereifen/~~NMZVdfij78eGHn # +verb reading (was noun-only)
 bereisung/~~NFA
 bereiten/~~NMZ78defijcGH
 bereiter/~~NMFZEKLH
-bereithältst/~~V
+bereithältst/~~V%
 berengar/~~NH # noun (hunspell); was retagged by shape
 berensberg/~~NHA
 berensberger/~~NFEKLH
@@ -717,7 +717,7 @@ berumerfehner/~~N
 berzdorf/~~NHA
 berzdorfer/~~NFEKLH
 berßel/~~NH
-berätst/~~V
+berätst/~~V%
 berühren/~~NMZVdfij78ecGHnx # +verb reading (was noun-only)
 bes./~~2
 beschatter/~~NH
@@ -796,7 +796,7 @@ betrauen/~~NMZVdfij78eGHn # +verb reading (was noun-only)
 betraum/~~NT0A
 betretenheit/~~NFA
 betreuen/~~NMZVdfij78ecGHn # +verb reading (was noun-only)
-betrittst/~~V
+betrittst/~~V%
 betrkv/~~NA
 betrübtheit/~~NFA
 betsaal/~~NT0A
@@ -1475,11 +1475,11 @@ beheben/~~NMZVfij78cGHx # +verb reading (was noun-only)
 beheizen/~~NMZVdfij78ecGHnx # +verb reading (was noun-only)
 behr/~~NHA
 behältnis/~~N0XYZ
-behältst/~~V
+behältst/~~V%
 behängen/~~NVfjH # +verb reading (was noun-only)
 behüter/~~NFEKLH
 behütetheit/~~NFA
-beibehältst/~~V
+beibehältst/~~V%
 beidhänder/~~NFEKLH
 beienheim/~~NHA
 beiersdorf/~~NA
@@ -1496,7 +1496,7 @@ beinling/~~NYHX
 beisetzen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 beitag/~~Nr
 beitel/~~NEH
-beitrittst/~~V
+beitrittst/~~V%
 beißer/~~N
 beißerchen/~~NZ
 bejagen/~~NMZVdfij78ecGHn # +verb reading (was noun-only)
@@ -1588,7 +1588,7 @@ antoniter/~~NEH
 antonius/~~NA
 antonow/~~NA
 antransport/~~NYHX
-antrittst/~~V
+antrittst/~~V%
 antwerpener/~~NFEKLH
 anubis/~~NA
 anuli/~~N
@@ -1942,7 +1942,7 @@ aufstocker/~~NFEKLH
 aufsässigkeit/~~NFA
 auftauen/~~NMZVdfijecGH # +verb reading (was noun-only)
 aufteilen/~~NMZVdfij78ecGHx # +verb reading (was noun-only)
-auftrittst/~~V
+auftrittst/~~V%
 aufwallen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 aufwasch/~~NY
 aufweg/~~NTY0
@@ -2413,7 +2413,7 @@ anhaltiner/~~NFEKLH
 anhausen/~~NH
 anhausener/~~NFEKLH
 anheben/~~NMZVfij78cGH # +verb reading (was noun-only)
-anhältst/~~V
+anhältst/~~V%
 anhäufen/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 anhören/~~NMZVdfij78ecGH # +verb reading (was noun-only)
 anika/~~NH
@@ -3366,7 +3366,7 @@ abstoßendsten/~~Vfj # verb
 abstoßendster/~~Nh #noun
 abstoßendstes/~~Nh #noun
 abstoßes/~~Nh #noun
-abstoßt/~~h #noun
+abstoßt/~~hV #noun
 abstoßung/~~FhY #feminine noun
 abstoßungen/~~Vj # verb
 abstoßungs/~~NhA #noun
@@ -3530,7 +3530,7 @@ abständen/~~VifjG # verb
 abständet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 abstöße/~~FhE #feminine noun
 abstößen/~~Vifj # verb
-abstößt/~~h #noun
+abstößt/~~hV% #noun
 abstünde/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 abstünden/~~VifjG # verb
 abstündet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -7704,7 +7704,7 @@ ablängtet/~~NhYE #noun
 abläse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 abläsen/~~VfjG # verb
 abläset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-ablässt/~~hV #noun
+ablässt/~~hV% #noun
 ablästere/~~FhYE #feminine noun
 ablästern/~~NhYE #noun
 ablästernd/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
@@ -7720,8 +7720,8 @@ ablästertest/~~hV #noun
 ablästertet/~~NhYE #noun
 abläufe/~~FhE #feminine noun
 abläufen/~~VifjG # verb
-abläufst/~~hV #noun
-abläuft/~~hVG # noun; +verb reading (was noun-only)
+abläufst/~~hV% #noun
+abläuft/~~hVG% # noun; +verb reading (was noun-only)
 ablösche/~~Fh #feminine noun
 ablösch/*~~VcejGdfi # REPLACES ablöschen
 ablöschende/~~FhEJ # feminine noun; +adjective reading (was noun-only)
@@ -9075,8 +9075,8 @@ abschlusssicher/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 abschlussstarke/~~FhYE #feminine noun
 abschläge/~~FhE #feminine noun
 abschlägen/~~VifjG # verb
-abschlägst/~~hV #noun
-abschlägt/~~hG #noun
+abschlägst/~~hV% #noun
+abschlägt/~~hGV% #noun
 abschlösse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 abschlössen/~~VfjG # verb
 abschlösset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -11253,8 +11253,8 @@ abfälligstem/~~Nh #noun
 abfälligsten/~~Vfj # verb
 abfälligster/~~Nh #noun
 abfälligstes/~~Nh #noun
-abfällst/~~hV #noun
-abfällt/~~hVG # noun; +verb reading (was noun-only)
+abfällst/~~hV% #noun
+abfällt/~~hVG% # noun; +verb reading (was noun-only)
 abfälsche/~~Fh #feminine noun
 abfälsch/*~~VcejGdfi # REPLACES abfälschen
 abfälschende/~~FhEJ # feminine noun; +adjective reading (was noun-only)
@@ -11268,8 +11268,8 @@ abfälschtet/~~hG #noun
 abfände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 abfänden/~~VifjG # verb
 abfändet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-abfängst/~~h #noun
-abfängt/~~hG #noun
+abfängst/~~hV% #noun
+abfängt/~~hGV% #noun
 abfärbe/~~Fh #feminine noun
 abfärb/*~~VcejGdfi # REPLACES abfärben
 abfärbende/~~FhEJ # feminine noun; +adjective reading (was noun-only)
@@ -14048,7 +14048,7 @@ rund/~~RJOQRSTUWqh978 #frequency: 9
 scheuer/~~Jqhr #frequency: 9
 schrei/~~NhY0EHX #frequency: 9
 schwäch/~~JOQRSTUWqh78 #frequency: 9
-stich/~~NhY0HXV #frequency: 9
+stich/~~NhY0HXV% #frequency: 9
 still/~~RJOQRSTUWqh78 #frequency: 9
 stock/~~RJOQRSTqh780M #frequency: 9
 straff/~~RJOQRSTUWqh78 #frequency: 9
@@ -17634,7 +17634,7 @@ hexagonal/~~JOQRSTqh #frequency: 6
 hieb/~NhY0sX #frequency: 6
 hierarchiefrei/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 hilbertsch/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-hilf/~hV #frequency: 6
+hilf/~hV% #frequency: 6
 hilfreich/~~hqOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 himmel/~NhEHM #frequency: 6
 himmelblau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -19355,10 +19355,10 @@ anfacht/~~hG # not a noun: no capitalized form
 anfahr/*~~NXh
 anfalle/~~h # not a noun: no capitalized form
 anfalls/~~Nh
-anfallt/~~h # not a noun: no capitalized form
+anfallt/~~hV # not a noun: no capitalized form
 anfange/~~h # not a noun: no capitalized form
 anfangs/~~NhrA # +adverb reading (was noun-only)
-anfangt/~~h # not a noun: no capitalized form
+anfangt/~~hV # not a noun: no capitalized form
 anfasst/~~h # not a noun: no capitalized form
 anfault/~~hG # not a noun: no capitalized form
 anfeilt/~~hG # not a noun: no capitalized form
@@ -19391,9 +19391,9 @@ anfuhrt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anfunkt/~~NXh
 anfährt/~~hG # not a noun: no capitalized form
 anfälle/~~NhE
-anfällt/~~hG # not a noun: no capitalized form
+anfällt/~~hGV% # not a noun: no capitalized form
 anfänge/~~NhEM
-anfängt/~~hG # not a noun: no capitalized form
+anfängt/~~hGV% # not a noun: no capitalized form
 anfärbe/~~h # not a noun: no capitalized form
 anfärbt/~~hG # not a noun: no capitalized form
 anfüge/~~h # not a noun: no capitalized form
@@ -19484,7 +19484,7 @@ anhobt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anhup/*~~VejGdfi # REPLACES anhupen
 anhupt/~~hG # not a noun: no capitalized form
 anhuste/~~h # not a noun: no capitalized form
-anhält/~~h # not a noun: no capitalized form
+anhält/~~hV% # not a noun: no capitalized form
 anhänge/~~h # not a noun: no capitalized form
 anhängt/~~hG # not a noun: no capitalized form
 anhätte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -19552,7 +19552,7 @@ anlast/~~hVx # retag: preterite stem, was noun (hunspell SFX Z)
 anlaste/~~h # not a noun: no capitalized form
 anlaufe/~~h # not a noun: no capitalized form
 anlaufs/~~Nh
-anlauft/~~h # not a noun: no capitalized form
+anlauft/~~hV # not a noun: no capitalized form
 anlaut/~~NXh0HY
 anlauts/~~Nh
 anleckt/~~hG # not a noun: no capitalized form
@@ -19588,7 +19588,7 @@ anläset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anlässe/~~NhE
 anlässt/~~hV
 anläufe/~~NhE
-anläuft/~~hG # not a noun: no capitalized form
+anläuft/~~hGV% # not a noun: no capitalized form
 anlöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 anlögen/~~Vfj # auto-added
 anlöget/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -19756,10 +19756,10 @@ anstehe/~~h # not a noun: no capitalized form
 ansteht/~~hG # not a noun: no capitalized form
 anstieß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 anstoß/~~NXh0Y
-anstoßt/~~h # not a noun: no capitalized form
+anstoßt/~~hV # not a noun: no capitalized form
 ansturm/~~Nh0HA
 anstöße/~~NhE
-anstößt/~~h # not a noun: no capitalized form
+anstößt/~~hV% # not a noun: no capitalized form
 ansuche/~~h # not a noun: no capitalized form
 ansucht/~~hG # not a noun: no capitalized form
 ansäe/~~h # not a noun: no capitalized form
@@ -19815,7 +19815,7 @@ antragt/~~h # not a noun: no capitalized form
 antrank/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 antrat/~~hVs # +verb reading (was noun-only)
 antrete/~~h # not a noun: no capitalized form
-antritt/~~NXhV0HY # +verb reading (was noun-only)
+antritt/~~NXhV0HY% # +verb reading (was noun-only)
 antrug/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 antrugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anträfe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -20871,7 +20871,7 @@ befehlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 befette/~~NhYE
 befeuer/~~h78n # not a noun: no capitalized form
 befeure/~~h # not a noun: no capitalized form
-befiehl/~~hV # not a noun: no capitalized form
+befiehl/~~hV% # not a noun: no capitalized form
 befiel/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 befinde/~~h # not a noun: no capitalized form
 beflog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -20890,7 +20890,7 @@ befuhrt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 befund/~~NhY0HX
 befunde/~~NhE
 befunds/~~Nh
-befährt/~~hG # not a noun: no capitalized form
+befährt/~~hGV% # not a noun: no capitalized form
 befällt/~~hG # not a noun: no capitalized form
 befände/~~NhEJs # +adjective reading (was noun-only)
 befühle/~~h # not a noun: no capitalized form
@@ -20914,8 +20914,8 @@ begeb/*~~Vcjfi # REPLACES begeben
 begegne/~~h # not a noun: no capitalized form
 begeh/*~~Vcj78Gfi # REPLACES begehen
 begehrt/~~hJOQRSTUWqG
-begib/~~hV # not a noun: no capitalized form
-begibt/~~hGV # not a noun: no capitalized form
+begib/~~hV% # not a noun: no capitalized form
+begibt/~~hGV% # not a noun: no capitalized form
 begier/~~Mh
 begieße/~~h # not a noun: no capitalized form
 begießt/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -20938,7 +20938,7 @@ begrabe/~~h # not a noun: no capitalized form
 begrabt/~~hV # retag: finite verb form, was noun (corpus-mined)
 begrub/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 begrubt/~~hVG # retag: finite verb form, was noun (corpus-mined)
-begräbt/~~hG # not a noun: no capitalized form
+begräbt/~~hGV% # not a noun: no capitalized form
 begrübe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 begrüne/~~h # not a noun: no capitalized form
 begrünt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -20972,9 +20972,9 @@ beherzt/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 behex/*~~Vcej78ndfi # REPLACES behexen
 behext/~~hVOQRST # retag: finite verb form, was noun (corpus-mined)
 behielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-behilf/~~hV # not a noun: no capitalized form
+behilf/~~hV% # not a noun: no capitalized form
 behilfs/~~NhA
-behilft/~~hGV # not a noun: no capitalized form
+behilft/~~hGV% # not a noun: no capitalized form
 behob/~~h # not a noun: no capitalized form
 behoben/~~VijOQRSTG # auto-added
 behobt/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -20985,7 +20985,7 @@ behufes/~~Nh
 behufs/~~NhA
 behuft/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 behäbig/~~OQRSTqhJ # retag: adjective, was noun (igerman98 SFX A)
-behält/~~hV # retag: verb form, was noun (corpus-mined)
+behält/~~hV% # retag: verb form, was noun (corpus-mined)
 behänd/~~NhYOQRSTE
 behände/~~NhEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
 behänge/~~NhE
@@ -21156,12 +21156,12 @@ belohnt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 belud/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 beluden/~~VijG # auto-added
 beludet/~~hVG # retag: finite verb form, was noun (corpus-mined)
-belädst/~~h # not a noun: no capitalized form
-belädt/~~hG # not a noun: no capitalized form
+belädst/~~hV% # not a noun: no capitalized form
+belädt/~~hGV% # not a noun: no capitalized form
 beläge/~~NhE
 belägen/~~Nh # auto-added
-belässt/~~hV # +verb reading (was noun-only)
-beläuft/~~hVG # retag: verb form, was noun (corpus-mined)
+belässt/~~hV% # +verb reading (was noun-only)
+beläuft/~~hVG% # retag: verb form, was noun (corpus-mined)
 belüde/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 belüden/~~VifjG # auto-added
 belüdet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -21215,8 +21215,8 @@ bengel/~~NhEH
 bengeln/~~Nh # auto-added
 bengels/~~Nh
 benigne/~~NhEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
-benimm/~~hV # not a noun: no capitalized form
-benimmt/~~hGV # not a noun: no capitalized form
+benimm/~~hV% # not a noun: no capitalized form
+benimmt/~~hGV% # not a noun: no capitalized form
 benote/~~hn # not a noun: no capitalized form
 benoten/~~Vdifj78ecG # auto-added
 benotet/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -21299,7 +21299,7 @@ beruhig/~~JOQRSTqh78n
 beruht/~~hVG
 berußt/~~NhYE
 beryll/~~NhA
-berät/~~h # not a noun: no capitalized form
+berät/~~hV% # not a noun: no capitalized form
 beräume/~~h # not a noun: no capitalized form
 beräumt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 berühmt/~~hVOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -21362,7 +21362,7 @@ bestem/~~Nh
 bestens/~~h # not a noun: no capitalized form
 bester/~~Mh
 bestes/~~Nh
-bestich/~~hV # not a noun: no capitalized form
+bestich/~~hV% # not a noun: no capitalized form
 bestie/~~NhEF
 bestieg/~~hV # +verb reading (was noun-only)
 bestien/~~Nh # auto-added
@@ -21375,7 +21375,7 @@ besähen/~~Vfj # auto-added
 besähet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 besänne/~~NhYE
 besätze/~~NhE
-besäuft/~~hG # not a noun: no capitalized form
+besäuft/~~hGV% # not a noun: no capitalized form
 besäume/~~NhYE
 besäumt/~~NhYE
 besäße/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -21411,14 +21411,14 @@ betraut/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 betreff/~~NXh
 betrete/~~h # not a noun: no capitalized form
 betreut/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-betritt/~~h # not a noun: no capitalized form
+betritt/~~hV% # not a noun: no capitalized form
 betrog/~~h # not a noun: no capitalized form
 betrogt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 betrugs/~~NhMZA
 betrugt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beträfe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 beträge/~~NhE
-beträgt/~~hVG
+beträgt/~~hVG%
 beträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 betröge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 betrübe/~~h # not a noun: no capitalized form
@@ -21495,10 +21495,10 @@ bewerte/~~hn # not a noun: no capitalized form
 bewies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 bewiese/~~h # not a noun: no capitalized form
 bewiest/~~hV # retag: finite verb form, was noun (corpus-mined)
-bewirb/~~hV # not a noun: no capitalized form
-bewirbt/~~hGV # not a noun: no capitalized form
-bewirf/~~hV # not a noun: no capitalized form
-bewirft/~~hGV # not a noun: no capitalized form
+bewirb/~~hV% # not a noun: no capitalized form
+bewirbt/~~hGV% # not a noun: no capitalized form
+bewirf/~~hV% # not a noun: no capitalized form
+bewirft/~~hGV% # not a noun: no capitalized form
 bewirkt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 bewirte/~~hn # not a noun: no capitalized form
 bewog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -21653,8 +21653,8 @@ bipedes/~~Nh
 biplot/~~NhHA
 biplots/~~Nh
 bipolar/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-birg/~~hV # not a noun: no capitalized form
-birgt/~~hGV # not a noun: no capitalized form
+birg/~~hV% # not a noun: no capitalized form
+birgt/~~hGV% # not a noun: no capitalized form
 birke/~~NhE
 birken/~~Nh # auto-added
 birma/~~NbhH
@@ -21723,7 +21723,7 @@ blass/~~VejOQRSTUW # REPLACES blassen
 blasser/~~MhYJr
 blasses/~~Nh
 blasste/~~h # not a noun: no capitalized form
-blast/~~h # not a noun: no capitalized form
+blast/~~hV # not a noun: no capitalized form
 blatt/~~Nh0HZA
 blattes/~~NhMZ
 blatts/~~Nh
@@ -21843,7 +21843,7 @@ blähung/~~FhY
 bläsern/~~Nh
 bläsers/~~Nh
 blässe/~~NhA
-bläst/~~h # not a noun: no capitalized form
+bläst/~~hV% # not a noun: no capitalized form
 blättre/~~h # not a noun: no capitalized form
 bläue/~~h # not a noun: no capitalized form
 bläu/*~~VcejGdfi # REPLACES bläuen
@@ -22106,7 +22106,7 @@ brat/~~NXh
 braten/~~Vifjc # auto-added
 bratend/~~NhYJOQRST # +adjective reading (was noun-only)
 bratens/~~Nh
-bratet/~~h # not a noun: no capitalized form
+bratet/~~hV # not a noun: no capitalized form
 brauche/~~hV
 brauchs/~~Nh
 braucht/~~hG # not a noun: no capitalized form
@@ -22164,8 +22164,8 @@ bretts/~~Nh
 brevier/~~MhYHX
 brezel/~~NhE
 brezeln/~~Nh # auto-added
-brich/~~hV # not a noun: no capitalized form
-bricht/~~hVG # +verb reading (was noun-only)
+brich/~~hV% # not a noun: no capitalized form
+bricht/~~hVG% # +verb reading (was noun-only)
 bridge/~~NhA
 briefe/~~NhEM
 briefen/~~Vfj # auto-added
@@ -22250,7 +22250,7 @@ brächte/~~h # not a noun: no capitalized form
 brände/~~NhE
 bränden/~~Nh # auto-added
 bräsig/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
-brät/~~h # not a noun: no capitalized form
+brät/~~hV% # not a noun: no capitalized form
 bräuche/~~NhE
 bräune/~~NhE
 bräun/~~Vcjf # REPLACES bräunen
@@ -24300,7 +24300,7 @@ einhob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einhobt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einholt/~~hG # not a noun: no capitalized form
 einhorn/~~Nh0HA
-einhält/~~hV # +verb reading (was noun-only)
+einhält/~~hV% # +verb reading (was noun-only)
 einhöbe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einhöre/~~h # not a noun: no capitalized form
 einhört/~~hG # not a noun: no capitalized form
@@ -24329,7 +24329,7 @@ einlest/~~h # not a noun: no capitalized form
 einlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einlud/~~hVs # +verb reading (was noun-only)
-einlädt/~~hG # not a noun: no capitalized form
+einlädt/~~hGV% # not a noun: no capitalized form
 einläse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einlöse/~~h # not a noun: no capitalized form
 einlöst/~~h # not a noun: no capitalized form
@@ -24680,7 +24680,7 @@ enthebe/~~h # not a noun: no capitalized form
 enthebt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 enthob/~~h # not a noun: no capitalized form
 enthobt/~~hVG # retag: finite verb form, was noun (corpus-mined)
-enthält/~~hV # retag: verb form, was noun (corpus-mined)
+enthält/~~hV% # retag: verb form, was noun (corpus-mined)
 enthöbe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entjude/~~hn # not a noun: no capitalized form
 entkam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -24694,12 +24694,12 @@ entlieh/~~h # not a noun: no capitalized form
 entließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entlobt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 entlud/~~hVs # +verb reading (was noun-only)
-entlädt/~~hG # not a noun: no capitalized form
+entlädt/~~hGV% # not a noun: no capitalized form
 entlöte/~~NhYE
 entlüde/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entmint/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 entnahm/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-entnimm/~~hV # not a noun: no capitalized form
+entnimm/~~hV% # not a noun: no capitalized form
 entrang/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entrann/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entrate/~~h # not a noun: no capitalized form
@@ -24718,7 +24718,7 @@ entschuldigung/~~FhY
 entwand/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entwarf/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 entwich/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-entwirf/~~hV # not a noun: no capitalized form
+entwirf/~~hV% # not a noun: no capitalized form
 entwurf/~~Nh0HMA
 entzog/~~hr # +adverb reading (was noun-only)
 entzogt/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -24808,7 +24808,7 @@ erbot/~~hG # not a noun: no capitalized form
 erboten/~~VijOQRSTG # auto-added
 erbotet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erbrach/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-erbrich/~~hV # not a noun: no capitalized form
+erbrich/~~hV% # not a noun: no capitalized form
 erbrüte/~~hn # not a noun: no capitalized form
 erbse/~~NhE
 erbsen/~~Nh # auto-added
@@ -24870,7 +24870,7 @@ erfuhr/~~hVs # retag: verb form, was noun (corpus-mined)
 erfuhrt/~~hVG # retag: verb form, was noun (corpus-mined)
 erfurt/~~NhHA
 erfurts/~~Nh
-erfährt/~~hVG # +verb reading (was noun-only)
+erfährt/~~hVG% # +verb reading (was noun-only)
 erfände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erfühle/~~h # not a noun: no capitalized form
 erfühlt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -24884,8 +24884,8 @@ ergebe/~~h # not a noun: no capitalized form
 ergebnis/~~Nh0XYZ
 ergebt/~~hV # retag: finite verb form, was noun (corpus-mined)
 ergeh/*~~VcjGfi # REPLACES ergehen
-ergib/~~hV # not a noun: no capitalized form
-ergibt/~~hVG
+ergib/~~hV% # not a noun: no capitalized form
+ergibt/~~hVG%
 ergieße/~~h # not a noun: no capitalized form
 ergießt/~~hV # retag: finite verb form, was noun (corpus-mined)
 erging/~~hVs # +verb reading (was noun-only)
@@ -24929,7 +24929,7 @@ erhobt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erhofft/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 erhol/*~~Vcej78nGdfi # REPLACES erholen
 erholt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-erhält/~~hV # retag: verb form, was noun (corpus-mined)
+erhält/~~hV% # retag: verb form, was noun (corpus-mined)
 erhänge/~~h # not a noun: no capitalized form
 erhängt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 erhärte/~~hn # not a noun: no capitalized form
@@ -25007,7 +25007,7 @@ erlosch/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 erläge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erlägen/~~Vfj # auto-added
 erläget/~~hVG # retag: finite verb form, was noun (corpus-mined)
-erlässt/~~h # not a noun: no capitalized form
+erlässt/~~hV% # not a noun: no capitalized form
 erläuft/~~hG # not a noun: no capitalized form
 erlöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erlögen/~~Vfj # auto-added
@@ -25081,7 +25081,7 @@ erriet/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erringe/~~h # not a noun: no capitalized form
 erringt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erränge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-errät/~~h # not a noun: no capitalized form
+errät/~~hV% # not a noun: no capitalized form
 erröte/~~hn # not a noun: no capitalized form
 erröten/~~VdifjecG # auto-added
 errötet/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -25119,13 +25119,13 @@ erstens/~~hJOQRSTq
 erster/~~JhqrOQRST # first (adjective)
 erstere/~~NhEJ # +adjective reading (was noun-only)
 erstes/~~Nh
-erstich/~~hV # not a noun: no capitalized form
+erstich/~~hV% # not a noun: no capitalized form
 erstieg/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erstmal/~~JOQRSTqh # retag: adjective (was ~~Nh)
 ersuche/~~h # not a noun: no capitalized form
 ersucht/~~NXhOQRSTG
 ersänne/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-ersäuft/~~hVG # retag: finite verb form, was noun (corpus-mined)
+ersäuft/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 ersöffe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 ertanzt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 ertappt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -25139,7 +25139,7 @@ ertrank/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 ertrug/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 ertrugt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erträge/~~NhE
-erträgt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+erträgt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 ertrüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erturnt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 ertöne/~~h # not a noun: no capitalized form
@@ -25163,8 +25163,8 @@ erwidre/~~h # not a noun: no capitalized form
 erwies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erwiese/~~h # not a noun: no capitalized form
 erwiest/~~hV # retag: finite verb form, was noun (corpus-mined)
-erwirb/~~hV # not a noun: no capitalized form
-erwirbt/~~hVG # +verb reading (was noun-only)
+erwirb/~~hV% # not a noun: no capitalized form
+erwirbt/~~hVG% # +verb reading (was noun-only)
 erwirkt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 erwog/~~h # not a noun: no capitalized form
 erwogen/~~VijOQRSTG # auto-added
@@ -25235,7 +25235,7 @@ essers/~~Nh
 essex/~~NhA
 essig/~~NhHAM
 essigs/~~Nh
-esst/~~h # not a noun: no capitalized form
+esst/~~hV # not a noun: no capitalized form
 ester/~~MhEH
 estern/~~Nh
 esters/~~Nh
@@ -25583,7 +25583,7 @@ februar/~~NhH # noun (hunspell); was retagged by shape
 fecht/~~NXh
 fechten/~~VifjcG # auto-added
 fechter/~~MhEKLH
-fechtet/~~hG # not a noun: no capitalized form
+fechtet/~~hGV # not a noun: no capitalized form
 federe/~~h # not a noun: no capitalized form
 federn/~~NhdfijeGHc
 federnd/~~NhYOQRST
@@ -25775,7 +25775,7 @@ fibrine/~~NhE
 fibrins/~~Nh
 fibrose/~~NhE
 fibrös/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-ficht/~~h # not a noun: no capitalized form
+ficht/~~hV% # not a noun: no capitalized form
 fichten/~~Nh # auto-added
 fick/~~VcejGdfi # REPLACES ficken
 ficker/~~MhEKLH
@@ -26004,7 +26004,7 @@ fleucht/~~h # not a noun: no capitalized form
 flex/~~*Vcej # REPLACES flexen
 flexion/~~NhY
 flext/~~NXh
-flicht/~~h # not a noun: no capitalized form
+flicht/~~hV% # not a noun: no capitalized form
 flick/~~VcejGdfi # REPLACES flicken
 flicker/~~MhEKLH
 flickt/~~hG # not a noun: no capitalized form
@@ -26344,7 +26344,7 @@ fresko/~~NbhH
 fress/*~~NXh
 fress/*~~Vcjfi # REPLACES fressen
 fresser/~~MhEKLH
-fresst/~~h # not a noun: no capitalized form
+fresst/~~hV # not a noun: no capitalized form
 freud/~~NXhHY
 freuden/~~Nh # auto-added
 freuds/~~Nh
@@ -26372,8 +26372,8 @@ frisbee/~~NhHA
 frische/~~NhE
 frischt/~~hG # not a noun: no capitalized form
 friseur/~~NXhYKLH
-friss/~~hV # not a noun: no capitalized form
-frisst/~~hV # not a noun: no capitalized form
+friss/~~hV% # not a noun: no capitalized form
+frisst/~~hV% # not a noun: no capitalized form
 frist/~~NhYF
 friste/~~h # not a noun: no capitalized form
 fristen/~~VdifjecG # auto-added
@@ -26586,8 +26586,8 @@ fädiges/~~Nh
 fädle/~~h # not a noun: no capitalized form
 fähigst/~~NhYOQRST
 fähr/*~~NXh
-fährst/~~hV
-fährt/~~hVG # retag: verb form, was noun (corpus-mined)
+fährst/~~hV%
+fährt/~~hVG% # retag: verb form, was noun (corpus-mined)
 fäkale/~~NhE
 fäkalem/~~Nh
 fäkalen/~~J # auto-added
@@ -26613,7 +26613,7 @@ fänger/~~MhEKLH
 fängern/~~rh # adverb gladly
 fängers/~~Nh
 fängig/~~NXh
-fängt/~~hVG # +verb reading (was noun-only)
+fängt/~~hVG% # +verb reading (was noun-only)
 färbe/~~h # not a noun: no capitalized form
 färb/*~~Vcej78xGdfi # REPLACES färben
 färbens/~~Nh
@@ -27088,7 +27088,7 @@ gefunkt/~~JOQRSTVgfj
 gefurzt/~~JOQRSTVgj
 gefährt/~~JOQRSTVgfjKL
 gefälle/~~NhEH
-gefällt/~~JOQRSTVgfjG
+gefällt/~~JOQRSTVgfjG%
 gefärbt/~~JOQRSTVgfj9
 gefäß/~~NXh0Y
 gefäßen/~~Nh # auto-added
@@ -27981,8 +27981,8 @@ ghetto/~~NbhHMZ
 ghoste/~~NhYE
 ghosten/~~Vj # auto-added
 ghostet/~~NXh
-gib/~~hV # not a noun: no capitalized form
-gibt/~~hVG
+gib/~~hV% # not a noun: no capitalized form
+gibt/~~hVG%
 gicht/~~NhA
 gichtig/~~RJOQRSTqh
 giebel/~~NhEH
@@ -28021,7 +28021,7 @@ gilbt/~~hG # not a noun: no capitalized form
 gilbtet/~~hG # not a noun: no capitalized form
 gilde/~~NhE
 gilden/~~Nh # auto-added
-gilt/~~hV
+gilt/~~hV%
 gimpel/~~NhEH
 gimpeln/~~Nh # auto-added
 gimpels/~~Nh
@@ -28426,8 +28426,8 @@ gräben/~~Nh # auto-added
 gräber/~~MhEKLH
 gräbern/~~Nh
 gräbers/~~Nh
-gräbst/~~hV
-gräbt/~~hVG # retag: verb form, was noun (corpus-mined)
+gräbst/~~hV%
+gräbt/~~hVG% # retag: verb form, was noun (corpus-mined)
 gräfin/~~NhKLA
 gräme/~~h # not a noun: no capitalized form
 gräm/*~~VcejGdfi # REPLACES grämen
@@ -28784,7 +28784,7 @@ halter/~~MhEKLH
 haltern/~~Nh
 halters/~~Nh # auto-added
 haltes/~~Nh
-haltet/~~h # not a noun: no capitalized form
+haltet/~~hV # not a noun: no capitalized form
 haltlos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 halts/~~Nh
 haltung/~~FhY
@@ -29308,7 +29308,7 @@ hilfe/~~NhEF
 hilfen/~~Nh # auto-added
 hilflos/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 hilfs/~~NhA
-hilft/~~hVG # +verb reading (was noun-only)
+hilft/~~hVG% # +verb reading (was noun-only)
 himbeer/~~MhY
 himmele/~~h # not a noun: no capitalized form
 himmeln/~~VdifjeG # auto-added
@@ -29750,7 +29750,7 @@ hälfte/~~NhEF
 hälftig/~~RJOQRSTqh
 hälse/~~NhEz
 hälsen/~~Nh # auto-added
-hält/~~hV # retag: verb form, was noun (corpus-mined)
+hält/~~hV% # retag: verb form, was noun (corpus-mined)
 häm/~~NhHX
 hämatit/~~NXhHY
 hämatom/~~NXhHY
@@ -29850,8 +29850,8 @@ höheres/~~Nh
 höhle/~~NhEF
 höhl/~~Vej78Gdfi # REPLACES höhlen
 höhlens/~~Nh
-höhlst/~~hV
-höhlt/~~hG # not a noun: no capitalized form
+höhlst/~~hV%
+höhlt/~~hGV% # not a noun: no capitalized form
 höhltet/~~hG # not a noun: no capitalized form
 höhlung/~~FhY
 höhne/~~h # not a noun: no capitalized form
@@ -30266,8 +30266,8 @@ isozyms/~~Nh
 israel/~~NhH
 israeli/~~NbhHE
 israels/~~Nh
-iss/~~hrV # +adverb reading (was noun-only)
-isst/~~Vtj # verb (3rd person singular of essen)
+iss/~~hrV% # +adverb reading (was noun-only)
+isst/~~Vtj% # verb (3rd person singular of essen)
 ist/~~Vtj^ # verb (3rd person singular of sein); the noun das Ist is its own entry
 Ist/~~NhA # noun meaning "current" or "existing"
 italic/~~h # not a noun: no capitalized form
@@ -32936,7 +32936,7 @@ leser/~~MhEKLH
 leserin/~~Nh
 lesern/~~Nh
 lesers/~~NhMZ
-lest/~~h # not a noun: no capitalized form
+lest/~~hV # not a noun: no capitalized form
 lesung/~~FhY
 letale/~~NhE
 letalem/~~Nh
@@ -33031,8 +33031,8 @@ lieh/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 liehen/~~VijG # auto-added
 lieht/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 liektau/~~NbXhHY
-lies/~~V # imperative of lesen; the affixes built "liesen" and "lieste" from it
-liest/~~V # 2nd and 3rd person singular of lesen
+lies/~~V% # imperative of lesen; the affixes built "liesen" and "lieste" from it
+liest/~~V% # 2nd and 3rd person singular of lesen
 ließ/~~Vtifjs # verb (past tense of lesen)
 ließen/~~Vifj # auto-added
 ließest/~~hV
@@ -33478,7 +33478,7 @@ läufer/~~MhEKLH
 läufern/~~Nh
 läufers/~~Nh
 läufig/~~RJOQRSTqh
-läuft/~~hVG
+läuft/~~hVG%
 läuse/~~NhE
 läusen/~~Nh # auto-added
 läute/~~h # not a noun: no capitalized form
@@ -35356,9 +35356,9 @@ niltal/~~NhHA
 niltals/~~Nh
 nilufer/~~MhEH
 nimbus/~~NhA
-nimm/~~hV # not a noun: no capitalized form
+nimm/~~hV% # not a noun: no capitalized form
 nimmer/~~rh  # adverb always
-nimmt/~~hGV # not a noun: no capitalized form
+nimmt/~~hGV% # not a noun: no capitalized form
 niob/~~NhHA
 niobs/~~Nh
 nippel/~~NhHE
@@ -37353,7 +37353,7 @@ quecken/~~Nh # auto-added
 queen/~~Nh # auto-added
 quell/~~NXh78
 quellen/~~Vifj78c # auto-added
-quellt/~~h # not a noun: no capitalized form
+quellt/~~hV # not a noun: no capitalized form
 quengle/~~h # not a noun: no capitalized form
 querab/~~h # not a noun: no capitalized form
 querele/~~NhE
@@ -37369,8 +37369,8 @@ quickes/~~NhYE
 quickie/~~NhHFA
 quiek/*~~VejGdfi # REPLACES quieken
 quiekt/~~hG # not a noun: no capitalized form
-quill/~~hV # not a noun: no capitalized form
-quillt/~~hGV # not a noun: no capitalized form
+quill/~~hV% # not a noun: no capitalized form
+quillt/~~hGV% # not a noun: no capitalized form
 quint/~~NXhY
 quinten/~~Nh # auto-added
 quirl/~~Vej0Gdfi # REPLACES quirlen
@@ -37632,7 +37632,7 @@ rat/~~NXh0GHYMZ
 raten/~~Vifjc # auto-added
 ratende/~~NhEJ # +adjective reading (was noun-only)
 rates/~~NhMZ
-ratet/~~h # not a noun: no capitalized form
+ratet/~~hV # not a noun: no capitalized form
 rathaus/~~Nh0AZ
 rating/~~NhYH
 ratings/~~Nh
@@ -38566,7 +38566,7 @@ ränne/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 rännen/~~Vfj # auto-added
 rännet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 räson/~~NhA
-rät/~~hV # retag: verb form, was noun (corpus-mined)
+rät/~~hV% # retag: verb form, was noun (corpus-mined)
 räten/~~Nh # auto-added
 rätien/~~NhH # auto-added
 rätiens/~~Nh
@@ -39081,7 +39081,7 @@ schilda/~~NbhH
 schilds/~~Nh
 schilf/~~NXh0Y
 schilpt/~~hG # not a noun: no capitalized form
-schilt/~~h # not a noun: no capitalized form
+schilt/~~hV% # not a noun: no capitalized form
 schimpf/~~NXhY
 schinde/~~h # not a noun: no capitalized form
 schippt/~~hG # not a noun: no capitalized form
@@ -39093,10 +39093,10 @@ schisst/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 schlaf/~~NXh0HYM
 schlafen/~~Vifjc # auto-added
 schlafs/~~NhMZ
-schlaft/~~h # not a noun: no capitalized form
+schlaft/~~hV # not a noun: no capitalized form
 schlage/~~h # not a noun: no capitalized form
 schlags/~~Nh
-schlagt/~~h # not a noun: no capitalized form
+schlagt/~~hV # not a noun: no capitalized form
 schlamm/~~Nh0HA
 schlang/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 schlank/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
@@ -39119,9 +39119,9 @@ schlund/~~Nh0A
 schlupf/~~NhHXMZ
 schluss/~~Nh0MZA
 schläfe/~~NhE
-schläft/~~VjG # verb (3rd person singular of schlafen)
+schläft/~~VjG% # verb (3rd person singular of schlafen)
 schläge/~~NhEM
-schlägt/~~hVG # retag: verb form, was noun (corpus-mined)
+schlägt/~~hVG% # retag: verb form, was noun (corpus-mined)
 schläue/~~NhA
 schlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 schmach/~~NhA
@@ -39135,7 +39135,7 @@ schmerz/~~NXh0Y
 schmied/~~NXh0KLHYx
 schmieg/~~h # not a noun: no capitalized form
 schmier/~~MhY78
-schmilz/~~hV # not a noun: no capitalized form
+schmilz/~~hV% # not a noun: no capitalized form
 schmiss/~~NXhs
 schmoll/~~NXh
 schmolz/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -39412,8 +39412,8 @@ sieges/~~NhA
 siegle/~~h # not a noun: no capitalized form
 siegs/~~Nh
 siegt/~~hG # not a noun: no capitalized form
-sieh/~~Vh # retag: imperative of sehen (was NXh, generated "siehe" as a plural noun)
-sieht/~~hVG
+sieh/~~Vh% # retag: imperative of sehen (was NXh, generated "siehe" as a plural noun)
+sieht/~~hVG%
 siel/~~NXh0HY
 sielen/~~Nh # auto-added
 sieles/~~Nh
@@ -39722,7 +39722,7 @@ sprech/~~NXh
 sprechen/~~Vifjc # auto-added
 spreiz/~~NXh78x
 spreu/~~NhA
-sprich/~~hV
+sprich/~~hV%
 spring/~~NhY
 sprint/~~NXhHY
 sprit/~~NhHA
@@ -39837,7 +39837,7 @@ staut/~~hG # not a noun: no capitalized form
 steak/~~NhHA
 steaks/~~Nh
 stech/~~NXhY
-stecht/~~h # not a noun: no capitalized form
+stecht/~~hV # not a noun: no capitalized form
 steckt/~~hG # not a noun: no capitalized form
 steg/~~NXh0HY
 stegen/~~Nh # auto-added
@@ -39847,7 +39847,7 @@ steh/~~NXh
 steh/~~VcjGfi # REPLACES stehen
 steher/~~MhEKLH
 stehle/~~h # not a noun: no capitalized form
-stehlt/~~h # not a noun: no capitalized form
+stehlt/~~hV # not a noun: no capitalized form
 steift/~~hG # not a noun: no capitalized form
 steige/~~NhE
 steigs/~~Nh
@@ -39868,7 +39868,7 @@ stent/~~NhHA
 stents/~~Nh
 steppt/~~hG # not a noun: no capitalized form
 sterbe/~~NhE
-sterbt/~~h # not a noun: no capitalized form
+sterbt/~~hV # not a noun: no capitalized form
 stereo/~~NhA
 stern/~~MhY0HXz
 sterne/~~NhEM
@@ -39884,13 +39884,13 @@ stets/~~hr
 steure/~~h # not a noun: no capitalized form
 stiche/~~NhE
 stichs/~~Nh
-sticht/~~hGV # not a noun: no capitalized form
+sticht/~~hGV% # not a noun: no capitalized form
 sticks/~~Nh
 stickt/~~hG # not a noun: no capitalized form
 stiebt/~~hG # not a noun: no capitalized form
 stieg/~~hVs
 stiegt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-stiehl/~~hV # not a noun: no capitalized form
+stiehl/~~hV% # not a noun: no capitalized form
 stiel/~~NXh0HY
 stiels/~~Nh
 stiert/~~hG # not a noun: no capitalized form
@@ -39908,8 +39908,8 @@ stimmt/~~hVG
 stink/~~NXh
 stinkt/~~hG # not a noun: no capitalized form
 stippt/~~hG # not a noun: no capitalized form
-stirb/~~hV # not a noun: no capitalized form
-stirbt/~~hVG # +verb reading (was noun-only)
+stirb/~~hV% # not a noun: no capitalized form
+stirbt/~~hVG% # +verb reading (was noun-only)
 stirn/~~NhYXF
 stirne/~~NhE
 stob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -39931,7 +39931,7 @@ storys/~~Nh
 stoß/~~NXh0Y
 stoß/~~Vcj0fi # REPLACES stoßen
 stoßes/~~Nh
-stoßt/~~h # not a noun: no capitalized form
+stoßt/~~hV # not a noun: no capitalized form
 straf/~~NXhx
 straft/~~hG # not a noun: no capitalized form
 stramm/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -40024,7 +40024,7 @@ stört/~~hG # not a noun: no capitalized form
 stöße/~~NhE
 stößel/~~NhE
 stößen/~~Nh # auto-added
-stößt/~~h # not a noun: no capitalized form
+stößt/~~hV% # not a noun: no capitalized form
 stück/~~NXh0HYzZ
 stücks/~~NhMZ
 stühle/~~NhEzM
@@ -40706,7 +40706,7 @@ trecks/~~Nh
 treckt/~~hG # not a noun: no capitalized form
 treffe/~~h # not a noun: no capitalized form
 treffs/~~Nh
-trefft/~~h # not a noun: no capitalized form
+trefft/~~hV # not a noun: no capitalized form
 treibe/~~h # not a noun: no capitalized form
 treibt/~~hVG # +verb reading (was noun-only)
 trekkt/~~hG # not a noun: no capitalized form
@@ -40722,7 +40722,7 @@ tresor/~~NXhHY
 tret/~~NXh78
 treten/~~Vifj78c # auto-added
 treter/~~MhEKLH
-tretet/~~h # not a noun: no capitalized form
+tretet/~~hV # not a noun: no capitalized form
 treue/~~NhE
 treuem/~~Nh
 treuen/~~J # auto-added
@@ -40741,8 +40741,8 @@ trier/~~MhH
 triers/~~Nh
 triest/~~NhA
 triezt/~~NhYE
-triff/~~hV # not a noun: no capitalized form
-trifft/~~hVG
+triff/~~hV% # not a noun: no capitalized form
+trifft/~~hVG%
 trikot/~~NhHA
 trimmt/~~hG # not a noun: no capitalized form
 trink/~~NXhx
@@ -40756,7 +40756,7 @@ triple/~~NhHA
 trips/~~Nh
 trist/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 triste/~~NhE
-tritt/~~NXhV0HY # +verb reading (was noun-only)
+tritt/~~NXhV0HY% # +verb reading (was noun-only)
 tritts/~~Nh
 troff/~~NhYE
 trog/~~NhY0sH
@@ -40801,7 +40801,7 @@ träge/~~NhE
 trägem/~~Nh
 trägen/~~J # auto-added
 träges/~~Nh
-trägt/~~hVG
+trägt/~~hVG%
 träne/~~h # not a noun: no capitalized form
 trän/*~~Vcejf # REPLACES tränen
 tränke/~~h # not a noun: no capitalized form
@@ -41026,11 +41026,11 @@ umgab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 umgabt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 umgang/~~MhY0H
 umgebe/~~h # not a noun: no capitalized form
-umgebt/~~h # not a noun: no capitalized form
+umgebt/~~hV # not a noun: no capitalized form
 umgehe/~~h # not a noun: no capitalized form
 umgeht/~~hG # not a noun: no capitalized form
-umgib/~~hV # not a noun: no capitalized form
-umgibt/~~hGV # not a noun: no capitalized form
+umgib/~~hV% # not a noun: no capitalized form
+umgibt/~~hGV% # not a noun: no capitalized form
 umging/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 umgoss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 umgrub/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -41088,7 +41088,7 @@ umweg/~~NXh0HYMZ
 umwegs/~~Nh
 umweht/~~NXhOQRSTG
 umwelt/~~NhYF
-umwirb/~~hV # not a noun: no capitalized form
+umwirb/~~hV% # not a noun: no capitalized form
 umwob/~~NhYE
 umwogt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 umzog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -41545,7 +41545,7 @@ warzen/~~Nh # auto-added
 warzig/~~RJOQRSTqh
 was/~~h5
 wasch/~~NXhY78x
-wascht/~~h # not a noun: no capitalized form
+wascht/~~hV # not a noun: no capitalized form
 wassre/~~h # not a noun: no capitalized form
 waten/~~VdifjecG # auto-added
 watet/~~hG # not a noun: no capitalized form
@@ -41773,12 +41773,12 @@ wipfel/~~NhEH
 wipp/~~h # not a noun: no capitalized form
 wipp/~~VcejGdfi # REPLACES wippen
 wippt/~~hG # not a noun: no capitalized form
-wirb/~~hV # not a noun: no capitalized form
+wirb/~~hV% # not a noun: no capitalized form
 wirble/~~h # not a noun: no capitalized form
-wirbt/~~hVG # +verb reading (was noun-only)
+wirbt/~~hVG% # +verb reading (was noun-only)
 wird/~~Vtj # 3rd person singular of werden
-wirf/~~hV # not a noun: no capitalized form
-wirft/~~hVG # +verb reading (was noun-only)
+wirf/~~hV% # not a noun: no capitalized form
+wirft/~~hVG% # +verb reading (was noun-only)
 wirk/*~~Vcej78Gdfi # REPLACES wirken
 wirker/~~MhEKLH
 wirkt/~~hVG # +verb reading (was noun-only)
@@ -41957,7 +41957,7 @@ wärmst/~~hVOQRST
 wärmt/~~hG # not a noun: no capitalized form
 wärt/~~hG # not a noun: no capitalized form
 wäsche/~~NhE
-wäscht/~~hG # not a noun: no capitalized form
+wäscht/~~hGV% # not a noun: no capitalized form
 wässre/~~h # not a noun: no capitalized form
 wöbe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 wöben/~~Vfj # auto-added
@@ -44202,7 +44202,7 @@ anfälligen/~~J # auto-added
 anfälliger/~~MhYJr
 anfälliges/~~Nh
 anfälligst/~~hVOQRST
-anfällst/~~hV
+anfällst/~~hV%
 anfängen/~~Nh # auto-added
 anfänger/~~MhEKLH
 anfängerin/~~Nh
@@ -44767,7 +44767,7 @@ anhalter/~~MhEKLH
 anhalterin/~~Nh
 anhaltern/~~Nh # auto-added
 anhalters/~~Nh # auto-added
-anhaltet/~~h # not a noun: no capitalized form
+anhaltet/~~hV # not a noun: no capitalized form
 anhalteweg/~~NhY0HX
 anhanges/~~Nh
 anhatten/~~VifjG # auto-added
@@ -45252,7 +45252,7 @@ anlächelt/~~hG # not a noun: no capitalized form
 anlächle/~~h # not a noun: no capitalized form
 anlässen/~~Nh # auto-added
 anläufen/~~Nh # auto-added
-anläufst/~~hV
+anläufst/~~hV%
 anläuten/~~Vj # auto-added
 anläutest/~~hV
 anläutet/~~NhYE
@@ -45852,7 +45852,7 @@ anschlage/~~h # not a noun: no capitalized form
 anschlagen/~~Vifjc # auto-added
 anschlages/~~Nh
 anschlags/~~NhA
-anschlagt/~~h # not a noun: no capitalized form
+anschlagt/~~hV # not a noun: no capitalized form
 anschleife/~~h # not a noun: no capitalized form
 anschleift/~~hG # not a noun: no capitalized form
 anschleppe/~~h # not a noun: no capitalized form
@@ -45871,8 +45871,8 @@ anschlugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 anschluss/~~Nh0AMZ
 anschläge/~~NhE
 anschlägen/~~Nh # auto-added
-anschlägst/~~hV
-anschlägt/~~hG # not a noun: no capitalized form
+anschlägst/~~hV%
+anschlägt/~~hGV% # not a noun: no capitalized form
 anschlösse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 anschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 anschlügen/~~Vfj # auto-added
@@ -46447,7 +46447,7 @@ antreibt/~~hG # not a noun: no capitalized form
 antreten/~~Vifjc # auto-added
 antretend/~~NhYJOQRST # +adjective reading (was noun-only)
 antretende/~~NhEJ # +adjective reading (was noun-only)
-antretet/~~h # not a noun: no capitalized form
+antretet/~~hV # not a noun: no capitalized form
 antriebe/~~NhE
 antrieben/~~Nh # auto-added
 antriebes/~~Nh
@@ -47840,7 +47840,7 @@ auffandet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 auffange/~~h # not a noun: no capitalized form
 auffangen/~~Vifjcx # auto-added
 auffangend/~~NhYJOQRST # +adjective reading (was noun-only)
-auffangt/~~h # not a noun: no capitalized form
+auffangt/~~hV # not a noun: no capitalized form
 auffass/*~~Vej78xdfi # REPLACES auffassen
 auffassens/~~Nh
 auffasst/~~h # not a noun: no capitalized form
@@ -47919,8 +47919,8 @@ auffährt/~~hG # not a noun: no capitalized form
 auffällige/~~NhE
 auffällst/~~h # not a noun: no capitalized form
 auffällt/~~hG # not a noun: no capitalized form
-auffängst/~~h # not a noun: no capitalized form
-auffängt/~~hG # not a noun: no capitalized form
+auffängst/~~hV% # not a noun: no capitalized form
+auffängt/~~hGV% # not a noun: no capitalized form
 aufführe/~~h # not a noun: no capitalized form
 aufführ/*~~Vej78xGdfi # REPLACES aufführen
 aufführend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -48436,7 +48436,7 @@ auflauert/~~hG # not a noun: no capitalized form
 auflaufen/~~Vifjc # auto-added
 auflaufend/~~NhYJOQRST # +adjective reading (was noun-only)
 auflaufs/~~Nh
-auflauft/~~h # not a noun: no capitalized form
+auflauft/~~hV # not a noun: no capitalized form
 auflaure/~~h # not a noun: no capitalized form
 aufleb/*~~VejGdfi # REPLACES aufleben
 auflebende/~~NhEJ # +adjective reading (was noun-only)
@@ -48510,8 +48510,8 @@ aufläset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 auflässt/~~hV
 aufläufe/~~NhE
 aufläufen/~~Nh # auto-added
-aufläufst/~~hV
-aufläuft/~~hG # not a noun: no capitalized form
+aufläufst/~~hV%
+aufläuft/~~hGV% # not a noun: no capitalized form
 auflös/*~~Vej78xdfi # REPLACES auflösen
 auflösend/~~NhYJOQRST # +adjective reading (was noun-only)
 auflösende/~~NhEJ # +adjective reading (was noun-only)
@@ -48867,13 +48867,13 @@ aufschieße/~~h # not a noun: no capitalized form
 aufschießt/~~h # not a noun: no capitalized form
 aufschlage/~~h # not a noun: no capitalized form
 aufschlags/~~Nh
-aufschlagt/~~h # not a noun: no capitalized form
+aufschlagt/~~hV # not a noun: no capitalized form
 aufschloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 aufschlug/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 aufschlugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 aufschluss/~~Nh0A
 aufschläge/~~NhE
-aufschlägt/~~hG # not a noun: no capitalized form
+aufschlägt/~~hGV% # not a noun: no capitalized form
 aufschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 aufschmolz/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 aufschnitt/~~NhY0sX
@@ -49164,7 +49164,7 @@ auftragen/~~Vifjc # auto-added
 auftragend/~~NhYJOQRST # +adjective reading (was noun-only)
 auftrages/~~Nh
 auftrags/~~NhA # auto-added
-auftragt/~~h # not a noun: no capitalized form
+auftragt/~~hV # not a noun: no capitalized form
 auftragung/~~FhY
 auftraten/~~VijG # auto-added
 auftratest/~~hV
@@ -49184,7 +49184,7 @@ auftrete/~~h # not a noun: no capitalized form
 auftreten/~~Vifjc # auto-added
 auftretend/~~NhYJOQRST # +adjective reading (was noun-only)
 auftretens/~~NhMZA
-auftretet/~~h # not a noun: no capitalized form
+auftretet/~~hV # not a noun: no capitalized form
 auftriebe/~~NhE
 auftrieben/~~Nh # auto-added
 auftriebes/~~Nh
@@ -49192,7 +49192,7 @@ auftriebs/~~NhA
 auftriebt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 auftriffst/~~h # not a noun: no capitalized form
 auftrifft/~~hG # not a noun: no capitalized form
-auftritt/~~NXhV0HYMZ # +verb reading (was noun-only)
+auftritt/~~NXhV0HYMZ% # +verb reading (was noun-only)
 auftritten/~~Nh # auto-added
 auftrittes/~~Nh
 auftritts/~~NhA
@@ -49205,8 +49205,8 @@ aufträfen/~~Vfj # auto-added
 aufträfet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 aufträge/~~NhE
 aufträgen/~~Nh # auto-added
-aufträgst/~~hV
-aufträgt/~~hG # not a noun: no capitalized form
+aufträgst/~~hV%
+aufträgt/~~hGV% # not a noun: no capitalized form
 aufträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 aufträten/~~VifjG # auto-added
 aufträtet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -49744,7 +49744,7 @@ ausfallen/~~Vifjc # auto-added
 ausfallend/~~NhYJOQRST # +adjective reading (was noun-only)
 ausfalles/~~Nh
 ausfalls/~~Nh
-ausfallt/~~h # not a noun: no capitalized form
+ausfallt/~~hV # not a noun: no capitalized form
 ausfanden/~~Vj # auto-added
 ausfandet/~~NhYE
 ausfechte/~~h # not a noun: no capitalized form
@@ -49868,8 +49868,8 @@ ausfälle/~~NhE
 ausfäll/*~~Vej78Gdfi # REPLACES ausfällen
 ausfällend/~~NhYJOQRST # +adjective reading (was noun-only)
 ausfällige/~~NhE
-ausfällst/~~hV
-ausfällt/~~hG # not a noun: no capitalized form
+ausfällst/~~hV%
+ausfällt/~~hGV% # not a noun: no capitalized form
 ausfälltet/~~hG # not a noun: no capitalized form
 ausfärbe/~~h # not a noun: no capitalized form
 ausfärb/*~~Vej78Gdfi # REPLACES ausfärben
@@ -50458,7 +50458,7 @@ auslaufen/~~Vifjc # auto-added
 auslaufend/~~NhYJOQRST # +adjective reading (was noun-only)
 auslaufes/~~Nh
 auslaufs/~~Nh
-auslauft/~~h # not a noun: no capitalized form
+auslauft/~~hV # not a noun: no capitalized form
 auslaug/*~~Vej78xGdfi # REPLACES auslaugen
 auslaugt/~~hG # not a noun: no capitalized form
 auslaugtet/~~hG # not a noun: no capitalized form
@@ -50570,14 +50570,14 @@ ausländern/~~Nh # auto-added
 ausländers/~~Nh
 ausläsen/~~VfjG # auto-added
 ausläset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-auslässt/~~hV
+auslässt/~~hV%
 ausläufe/~~NhE
 ausläufen/~~Nh # auto-added
 ausläufer/~~MhEH
 ausläufern/~~Nh # auto-added
 ausläufers/~~Nh
-ausläufst/~~hV
-ausläuft/~~hG # not a noun: no capitalized form
+ausläufst/~~hV%
+ausläuft/~~hGV% # not a noun: no capitalized form
 auslöffele/~~h # not a noun: no capitalized form
 auslöffeln/~~VdifjeGc # auto-added
 auslöffelt/~~hG # not a noun: no capitalized form
@@ -50968,7 +50968,7 @@ ausschlafe/~~h # not a noun: no capitalized form
 ausschlaft/~~h # not a noun: no capitalized form
 ausschlag/~~NXhH
 ausschlags/~~Nh
-ausschlagt/~~h # not a noun: no capitalized form
+ausschlagt/~~hV # not a noun: no capitalized form
 ausschlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 ausschliff/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 ausschloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -50977,7 +50977,7 @@ ausschlugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 ausschluss/~~Nh0A
 ausschläft/~~hG # not a noun: no capitalized form
 ausschläge/~~NhE
-ausschlägt/~~hG # not a noun: no capitalized form
+ausschlägt/~~hGV% # not a noun: no capitalized form
 ausschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 ausschnitt/~~NhY0sHXM
 ausschrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -51171,7 +51171,7 @@ ausstoße/~~h # not a noun: no capitalized form
 ausstoßen/~~Vifjc # auto-added
 ausstoßend/~~NhYJOQRST # +adjective reading (was noun-only)
 ausstoßes/~~Nh
-ausstoßt/~~h # not a noun: no capitalized form
+ausstoßt/~~hV # not a noun: no capitalized form
 ausstoßung/~~FhY
 ausstrahle/~~h # not a noun: no capitalized form
 ausstrahlt/~~hG # not a noun: no capitalized form
@@ -51197,7 +51197,7 @@ ausständen/~~Nh # auto-added
 ausständet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 ausstöße/~~NhE
 ausstößen/~~Nh # auto-added
-ausstößt/~~h # not a noun: no capitalized form
+ausstößt/~~hV% # not a noun: no capitalized form
 ausstülpe/~~h # not a noun: no capitalized form
 ausstülpen/~~Vdifj78ecGx # auto-added
 ausstülpst/~~hV
@@ -51294,7 +51294,7 @@ austreibt/~~hG # not a noun: no capitalized form
 austrete/~~h # not a noun: no capitalized form
 austreten/~~Vifjc # auto-added
 austretend/~~NhYJOQRST # +adjective reading (was noun-only)
-austretet/~~h # not a noun: no capitalized form
+austretet/~~hV # not a noun: no capitalized form
 austrickse/~~h # not a noun: no capitalized form
 austrickst/~~h # not a noun: no capitalized form
 austrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -51305,7 +51305,7 @@ austrinken/~~VifjcG # auto-added
 austrinkst/~~hV
 austrinkt/~~hG # not a noun: no capitalized form
 austritst/~~h # not a noun: no capitalized form
-austritt/~~NXh0GHY
+austritt/~~NXh0GHYV%
 austritten/~~Nh # auto-added
 austrittes/~~Nh
 austritts/~~NhA
@@ -52701,7 +52701,7 @@ befeuerter/~~Mh
 befeuertes/~~Nh
 befeuertet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 befiedert/~~h9OQRSTJ # retag: adjective, was noun (igerman98 SFX A)
-befiehlt/~~hGV # not a noun: no capitalized form
+befiehlt/~~hGV% # not a noun: no capitalized form
 befiel/~~Vejs # REPLACES befielen
 befieltest/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 befieltet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -52890,7 +52890,7 @@ befähigter/~~Mh
 befähigtes/~~Nh
 befähigtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 befähigung/~~FhY
-befährst/~~h # not a noun: no capitalized form
+befährst/~~hV% # not a noun: no capitalized form
 befällst/~~h # not a noun: no capitalized form
 befänden/~~VifjG # auto-added
 befändet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -53110,7 +53110,7 @@ begriffsauffassung/~~FYXhE # compound: begriff + auffassung
 begrifft/~~hVG # retag: finite verb form, was noun (corpus-mined)
 begruben/~~VijG # auto-added
 begräbnis/~~Nh0XYZ
-begräbst/~~h # not a noun: no capitalized form
+begräbst/~~hV% # not a noun: no capitalized form
 begrüben/~~Vfj # auto-added
 begrübet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 begründe/~~hn # not a noun: no capitalized form
@@ -53380,7 +53380,7 @@ behütetest/~~hV
 behütetet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beibehalte/~~h # not a noun: no capitalized form
 beibehielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-beibehält/~~h # not a noun: no capitalized form
+beibehält/~~hV% # not a noun: no capitalized form
 beiblatt/~~NhHA
 beiblatts/~~Nh
 beibrachte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -53609,7 +53609,7 @@ beitretet/~~hV # retag: finite verb form, was noun (corpus-mined)
 beitrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 beitrieben/~~VifjG # auto-added
 beitriebt/~~hVG # retag: finite verb form, was noun (corpus-mined)
-beitritt/~~NXh0HY
+beitritt/~~NXh0HYV%
 beitritten/~~Nh # auto-added
 beitrittes/~~Nh
 beitritts/~~NhA
@@ -53617,8 +53617,8 @@ beitrugen/~~VijG # auto-added
 beitrugt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beiträge/~~NhEM
 beiträgen/~~Nh # auto-added
-beiträgst/~~hV
-beiträgt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+beiträgst/~~hV%
+beiträgt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 beiträte/~~h # not a noun: no capitalized form
 beiträten/~~VifjG # auto-added
 beiträtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -54164,7 +54164,7 @@ belästige/~~h # not a noun: no capitalized form
 belästigen/~~Vdifj78ecGn # auto-added
 belästigst/~~hV
 belästigt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-beläufst/~~h # not a noun: no capitalized form
+beläufst/~~hV% # not a noun: no capitalized form
 belüften/~~Vdifj78ecGx # auto-added
 belüftend/~~NhYJOQRST # +adjective reading (was noun-only)
 belüftende/~~NhEJ # +adjective reading (was noun-only)
@@ -54649,7 +54649,7 @@ bereithabe/~~h # not a noun: no capitalized form
 bereithabt/~~h # not a noun: no capitalized form
 bereithast/~~h # not a noun: no capitalized form
 bereithat/~~hG # not a noun: no capitalized form
-bereithält/~~h # not a noun: no capitalized form
+bereithält/~~hV% # not a noun: no capitalized form
 bereitlag/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 bereitlagt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 bereitlege/~~h # not a noun: no capitalized form
@@ -54982,8 +54982,8 @@ beschlugt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beschluss/~~Nh0MZA
 beschläge/~~NhE
 beschlägen/~~Nh # auto-added
-beschlägst/~~hV
-beschlägt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+beschlägst/~~hV%
+beschlägt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 beschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 beschlügen/~~Vfj # auto-added
 beschlüget/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -55285,14 +55285,14 @@ besprangen/~~VijG # auto-added
 besprangt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 bespreche/~~h # not a noun: no capitalized form
 besprechen/~~XZ78cHx #  auto-added
-besprecht/~~h # not a noun: no capitalized form
+besprecht/~~hV # not a noun: no capitalized form
 besprenge/~~h # not a noun: no capitalized form
 besprengen/~~VdifjecGn # auto-added
 besprengst/~~hV
 besprengt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 besprenkle/~~h # not a noun: no capitalized form
-besprich/~~hV # not a noun: no capitalized form
-bespricht/~~hGV # not a noun: no capitalized form
+besprich/~~hV% # not a noun: no capitalized form
+bespricht/~~hGV% # not a noun: no capitalized form
 bespringe/~~h # not a noun: no capitalized form
 bespringen/~~VifjG # auto-added
 bespringst/~~hV
@@ -55374,7 +55374,7 @@ besteche/~~h # not a noun: no capitalized form
 bestechen/~~XZ78cH #  auto-added
 bestechend/~~NhYOQRST
 bestechens/~~Nh
-bestecht/~~h # not a noun: no capitalized form
+bestecht/~~hV # not a noun: no capitalized form
 bestechung/~~FhY
 besteckes/~~Nh
 bestecks/~~Nh
@@ -55416,7 +55416,7 @@ besteuerns/~~Nh
 besteuert/~~NXhOQRSTG
 besteure/~~h # not a noun: no capitalized form
 bestform/~~NhA
-besticht/~~hGV # not a noun: no capitalized form
+besticht/~~hGV% # not a noun: no capitalized form
 bestick/*~~VejnGdfi # REPLACES besticken
 bestickt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 besticktem/~~Nh
@@ -55426,8 +55426,8 @@ besticktet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 bestiegen/~~VijOQRSTG # auto-added
 bestiegene/~~NhE
 bestiegt/~~hVG # retag: finite verb form, was noun (corpus-mined)
-bestiehl/~~hV # not a noun: no capitalized form
-bestiehlt/~~hGV # not a noun: no capitalized form
+bestiehl/~~hV% # not a noun: no capitalized form
+bestiehlt/~~hGV% # not a noun: no capitalized form
 bestimm/*~~Vej78nxGdfi # REPLACES bestimmen
 bestimmens/~~Nh
 bestimmt/~~JhOQRSTq9G
@@ -55623,7 +55623,7 @@ besänftigt/~~NhYOQRSTG
 besännen/~~Vj # auto-added
 besätzen/~~Nh # auto-added
 besäufnis/~~Nh0XYZ
-besäufst/~~h # not a noun: no capitalized form
+besäufst/~~hV% # not a noun: no capitalized form
 besäum/*~~Vej # REPLACES besäumen
 besäumend/~~NhYJE # +adjective reading (was noun-only)
 besäumende/~~NhYJE # +adjective reading (was noun-only)
@@ -55826,7 +55826,7 @@ betrunkene/~~NhE
 beträfen/~~Vfj # auto-added
 beträfet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 beträgen/~~Nh # auto-added
-beträgst/~~hV
+beträgst/~~hV%
 betränke/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 betränken/~~Vfj # auto-added
 betränket/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -62599,9 +62599,9 @@ durchläse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 durchläsen/~~VfjG # auto-added
 durchläset/~~hVG # retag: finite verb form, was noun (corpus-mined)
 durchlässe/~~NhE
-durchlässt/~~hV
+durchlässt/~~hV%
 durchläufe/~~NhE
-durchläuft/~~hG # not a noun: no capitalized form
+durchläuft/~~hGV% # not a noun: no capitalized form
 durchlüfte/~~hn # not a noun: no capitalized form
 durchmache/~~h # not a noun: no capitalized form
 durchmacht/~~GV # retag: finite verb form, was noun (corpus-mined)
@@ -63443,7 +63443,7 @@ einbautest/~~h # not a noun: no capitalized form
 einbautet/~~hG # not a noun: no capitalized form
 einbehalte/~~h # not a noun: no capitalized form
 einbehielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-einbehält/~~h # not a noun: no capitalized form
+einbehält/~~hV% # not a noun: no capitalized form
 einberaume/~~h # not a noun: no capitalized form
 einberaumt/~~NhYOQRSTG
 einberief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -63672,14 +63672,14 @@ einfahr/*~~Vejxfi # REPLACES einfahren
 einfallen/~~Vifjc # auto-added
 einfallend/~~NhYJOQRST # +adjective reading (was noun-only)
 einfalls/~~NhA
-einfallt/~~h # not a noun: no capitalized form
+einfallt/~~hV # not a noun: no capitalized form
 einfanden/~~VijG # auto-added
 einfandest/~~hV
 einfandet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einfange/~~h # not a noun: no capitalized form
 einfangen/~~Vifjcx # auto-added
 einfangend/~~NhYJOQRST # +adjective reading (was noun-only)
-einfangt/~~h # not a noun: no capitalized form
+einfangt/~~hV # not a noun: no capitalized form
 einfass/*~~Vej78dfi # REPLACES einfassen
 einfassens/~~Nh
 einfasst/~~h # not a noun: no capitalized form
@@ -63775,18 +63775,18 @@ einfädelnd/~~NhYOQRST
 einfädelst/~~hV
 einfädelt/~~hG # not a noun: no capitalized form
 einfädle/~~h # not a noun: no capitalized form
-einfährst/~~h # not a noun: no capitalized form
-einfährt/~~hG # not a noun: no capitalized form
+einfährst/~~hV% # not a noun: no capitalized form
+einfährt/~~hGV% # not a noun: no capitalized form
 einfälle/~~NhE
 einfällen/~~Nh # auto-added
-einfällst/~~hV
-einfällt/~~hG # not a noun: no capitalized form
+einfällst/~~hV%
+einfällt/~~hGV% # not a noun: no capitalized form
 einfältige/~~NhE
 einfände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einfänden/~~VifjG # auto-added
 einfändet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-einfängst/~~h # not a noun: no capitalized form
-einfängt/~~hG # not a noun: no capitalized form
+einfängst/~~hV% # not a noun: no capitalized form
+einfängt/~~hGV% # not a noun: no capitalized form
 einfärbe/~~h # not a noun: no capitalized form
 einfärb/*~~Vej78Gdfi # REPLACES einfärben
 einfärbend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -64024,7 +64024,7 @@ eingosst/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 eingrabe/~~h # not a noun: no capitalized form
 eingraben/~~Vifjc # auto-added
 eingrabend/~~NhYJOQRST # +adjective reading (was noun-only)
-eingrabt/~~h # not a noun: no capitalized form
+eingrabt/~~hV # not a noun: no capitalized form
 eingreife/~~h # not a noun: no capitalized form
 eingreifen/~~VifjcG # auto-added
 eingreifst/~~hV
@@ -64042,8 +64042,8 @@ eingrooven/~~Vj # auto-added
 eingroovst/~~hV
 eingruben/~~VijG # auto-added
 eingrubt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-eingräbst/~~h # not a noun: no capitalized form
-eingräbt/~~hG # not a noun: no capitalized form
+eingräbst/~~hV% # not a noun: no capitalized form
+eingräbt/~~hGV% # not a noun: no capitalized form
 eingrübe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 eingrüben/~~Vfj # auto-added
 eingrübet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -64065,7 +64065,7 @@ einhaktet/~~hG # not a noun: no capitalized form
 einhalten/~~Vifjcx # auto-added
 einhaltend/~~NhYJOQRST # +adjective reading (was noun-only)
 einhaltes/~~Nh
-einhaltet/~~h # not a noun: no capitalized form
+einhaltet/~~hV # not a noun: no capitalized form
 einhalts/~~Nh
 einhaltung/~~FhY
 einhandele/~~h # not a noun: no capitalized form
@@ -64348,7 +64348,7 @@ einladen/~~Vifj78c # auto-added
 einladend/~~NhYJOQRST # +adjective reading (was noun-only)
 einladende/~~NhEJ # +adjective reading (was noun-only)
 einladens/~~Nh
-einladet/~~h # not a noun: no capitalized form
+einladet/~~hV # not a noun: no capitalized form
 einladung/~~FhY
 einlagen/~~Nh # auto-added
 einlagere/~~h # not a noun: no capitalized form
@@ -64429,12 +64429,12 @@ einludet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einlull/*~~Vej78Gdfi # REPLACES einlullen
 einlullt/~~hG # not a noun: no capitalized form
 einlulltet/~~hG # not a noun: no capitalized form
-einlädst/~~h # not a noun: no capitalized form
+einlädst/~~hV% # not a noun: no capitalized form
 einläsen/~~VfjG # auto-added
 einläset/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einlässe/~~NhE
 einlässen/~~Nh # auto-added
-einlässt/~~hV
+einlässt/~~hV%
 einläufe/~~NhE
 einläufen/~~Nh # auto-added
 einläufst/~~hV
@@ -64850,7 +64850,7 @@ einschlafe/~~h # not a noun: no capitalized form
 einschlaft/~~h # not a noun: no capitalized form
 einschlage/~~h # not a noun: no capitalized form
 einschlags/~~NhMZ
-einschlagt/~~h # not a noun: no capitalized form
+einschlagt/~~hV # not a noun: no capitalized form
 einschlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einschliff/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einschloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -64859,7 +64859,7 @@ einschlugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einschluss/~~Nh0A
 einschläft/~~hG # not a noun: no capitalized form
 einschläge/~~NhE
-einschlägt/~~hG # not a noun: no capitalized form
+einschlägt/~~hGV% # not a noun: no capitalized form
 einschlüge/~~h # not a noun: no capitalized form
 einschlügt/~~hG # not a noun: no capitalized form
 einschmiss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -65168,7 +65168,7 @@ eintragen/~~Vifjcx # auto-added
 eintragend/~~NhYJOQRST # +adjective reading (was noun-only)
 eintrages/~~Nh
 eintrags/~~Nh
-eintragt/~~h # not a noun: no capitalized form
+eintragt/~~hV # not a noun: no capitalized form
 eintragung/~~FhY
 eintraten/~~VijG # auto-added
 eintratest/~~hV
@@ -65183,13 +65183,13 @@ eintreibt/~~hG # not a noun: no capitalized form
 eintrete/~~h # not a noun: no capitalized form
 eintreten/~~Vifjc # auto-added
 eintretend/~~NhYJOQRST # +adjective reading (was noun-only)
-eintretet/~~h # not a noun: no capitalized form
+eintretet/~~hV # not a noun: no capitalized form
 eintrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 eintrieben/~~VifjG # auto-added
 eintriebt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 eintriffst/~~h # not a noun: no capitalized form
 eintrifft/~~hVG # +verb reading (was noun-only)
-eintritt/~~NXh0HYMZ
+eintritt/~~NXh0HYMZV%
 eintritten/~~Nh # auto-added
 eintrittes/~~Nh
 eintritts/~~NhA
@@ -65205,8 +65205,8 @@ einträfen/~~Vfj # auto-added
 einträfet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 einträge/~~NhE
 einträgen/~~Nh # auto-added
-einträgst/~~hV
-einträgt/~~hG # not a noun: no capitalized form
+einträgst/~~hV%
+einträgt/~~hGV% # not a noun: no capitalized form
 einträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 einträten/~~VifjG # auto-added
 einträtet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -65938,8 +65938,8 @@ empfehlend/~~NhYJOQRST # +adjective reading (was noun-only)
 empfehlens/~~Nh
 empfehlt/~~hV # retag: finite verb form, was noun (corpus-mined)
 empfehlung/~~FY
-empfiehl/~~hV # not a noun: no capitalized form
-empfiehlt/~~hVG # +verb reading (was noun-only)
+empfiehl/~~hV% # not a noun: no capitalized form
+empfiehlt/~~hVG% # +verb reading (was noun-only)
 empfinde/~~h # not a noun: no capitalized form
 empfinden/~~Vifj78cG # auto-added
 empfindend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -65964,7 +65964,7 @@ empfängen/~~Nh # auto-added
 empfänger/~~MhEKLH
 empfängern/~~Nh # auto-added
 empfängers/~~NhMZ
-empfängt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+empfängt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 empföhle/~~h # not a noun: no capitalized form
 emphysem/~~NhYHX
 emphyseme/~~NhE
@@ -66508,8 +66508,8 @@ entfährst/~~h # not a noun: no capitalized form
 entfährt/~~hG # not a noun: no capitalized form
 entfälle/~~NhE
 entfällen/~~Nh # auto-added
-entfällst/~~hV
-entfällt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+entfällst/~~hV%
+entfällt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 entfärbe/~~h # not a noun: no capitalized form
 entfärb/*~~Vej78nGdfi # REPLACES entfärben
 entfärbend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -66877,10 +66877,10 @@ entlohnung/~~FhY
 entluden/~~VijG # auto-added
 entludest/~~hV
 entludet/~~hVG # retag: finite verb form, was noun (corpus-mined)
-entlädst/~~h # not a noun: no capitalized form
-entlässt/~~h # not a noun: no capitalized form
-entläufst/~~h # not a noun: no capitalized form
-entläuft/~~hG # not a noun: no capitalized form
+entlädst/~~hV% # not a noun: no capitalized form
+entlässt/~~hV% # not a noun: no capitalized form
+entläufst/~~hV% # not a noun: no capitalized form
+entläuft/~~hGV% # not a noun: no capitalized form
 entlöten/~~Vj # auto-added
 entlötend/~~NhYJE # +adjective reading (was noun-only)
 entlötende/~~NhYJE # +adjective reading (was noun-only)
@@ -66951,7 +66951,7 @@ entnervter/~~Mh
 entnervtes/~~Nh
 entnervtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 entnervung/~~FhY
-entnimmt/~~hGV # not a noun: no capitalized form
+entnimmt/~~hGV% # not a noun: no capitalized form
 entnommen/~~VjOQRST # auto-added
 entnommene/~~NhEJ # +adjective reading (was noun-only)
 entnähme/~~h # not a noun: no capitalized form
@@ -67130,11 +67130,11 @@ entscheide/~~NhE
 entscheids/~~Nh
 entschied/~~hVs
 entschlafe/~~h # not a noun: no capitalized form
-entschlaft/~~h # not a noun: no capitalized form
+entschlaft/~~hV # not a noun: no capitalized form
 entschlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 entschloss/~~hVs # +verb reading (was noun-only)
 entschluss/~~Nh0A
-entschläft/~~hG # not a noun: no capitalized form
+entschläft/~~hGV% # not a noun: no capitalized form
 entschulde/~~hn # not a noun: no capitalized form
 entschuppe/~~h # not a noun: no capitalized form
 entschuppt/~~NhYOQRSTG
@@ -67384,7 +67384,7 @@ entwinde/~~h # not a noun: no capitalized form
 entwinden/~~VifjcG # auto-added
 entwindend/~~NhYJOQRST # +adjective reading (was noun-only)
 entwindet/~~hVG # retag: finite verb form, was noun (corpus-mined)
-entwirft/~~hGV # not a noun: no capitalized form
+entwirft/~~hGV% # not a noun: no capitalized form
 entwirr/*~~Vej78nGdfi # REPLACES entwirren
 entwirrt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 entwirrtem/~~Nh
@@ -67756,8 +67756,8 @@ erbrachtes/~~Nh
 erbreche/~~h # not a noun: no capitalized form
 erbrechen/~~Zcfi #  auto-added
 erbrechend/~~NhYOQRST
-erbrecht/~~h # not a noun: no capitalized form
-erbricht/~~hGV # not a noun: no capitalized form
+erbrecht/~~hV # not a noun: no capitalized form
+erbricht/~~hGV% # not a noun: no capitalized form
 erbringe/~~h # not a noun: no capitalized form
 erbringen/~~Vifj78cG # auto-added
 erbringend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -68070,7 +68070,7 @@ erfurter/~~MhEKLH
 erfurterin/~~Nh
 erfurtern/~~Nh # auto-added
 erfurters/~~Nh
-erfährst/~~h # not a noun: no capitalized form
+erfährst/~~hV% # not a noun: no capitalized form
 erfänden/~~VifjG # auto-added
 erfändet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erföchte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -69200,8 +69200,8 @@ erschlosst/~~h # not a noun: no capitalized form
 erschlug/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 erschlugen/~~VijG # auto-added
 erschlugt/~~hVG # retag: finite verb form, was noun (corpus-mined)
-erschlägst/~~h # not a noun: no capitalized form
-erschlägt/~~hG # not a noun: no capitalized form
+erschlägst/~~hV% # not a noun: no capitalized form
+erschlägt/~~hGV% # not a noun: no capitalized form
 erschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erschlügen/~~Vfj # auto-added
 erschlüget/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -69220,8 +69220,8 @@ erschraken/~~VijG # auto-added
 erschrakt/~~hVG # retag: finite verb form, was noun (corpus-mined)
 erschrecke/~~h # not a noun: no capitalized form
 erschreckt/~~NhYOQRSTG
-erschrick/~~hV # not a noun: no capitalized form
-erschrickt/~~hGV # not a noun: no capitalized form
+erschrick/~~hV% # not a noun: no capitalized form
+erschrickt/~~hGV% # not a noun: no capitalized form
 erschräke/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 erschräken/~~Vfj # auto-added
 erschräket/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -69375,7 +69375,7 @@ erstbestes/~~h # not a noun: no capitalized form
 ersteche/~~h # not a noun: no capitalized form
 erstechen/~~Zcfi #  auto-added
 erstechend/~~NhYOQRST
-erstecht/~~h # not a noun: no capitalized form
+erstecht/~~hV # not a noun: no capitalized form
 erstehen/~~VifjcG # auto-added
 erstehend/~~NhYJOQRST # +adjective reading (was noun-only)
 erstehende/~~NhEJ # +adjective reading (was noun-only)
@@ -69408,7 +69408,7 @@ ersterem/~~Nh
 ersteren/~~J # auto-added
 ersterer/~~Mh
 ersteres/~~Nh
-ersticht/~~hGV # not a noun: no capitalized form
+ersticht/~~hGV% # not a noun: no capitalized form
 erstick/*~~Vej78nGdfi # REPLACES ersticken
 erstickens/~~Nh
 erstickt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
@@ -69491,7 +69491,7 @@ ersuchtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 ersännen/~~Vfj # auto-added
 ersännet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 ersäufen/~~VijG # auto-added
-ersäufst/~~hV
+ersäufst/~~hV%
 ersöffen/~~Vfj # auto-added
 ersöffet/~~hVG # retag: finite verb form, was noun (corpus-mined)
 ertanz/*~~Vejndfi # REPLACES ertanzen
@@ -69558,7 +69558,7 @@ ertrugen/~~VijG # auto-added
 ertrunken/~~VjOQRST # auto-added
 ertrunkene/~~NhE
 erträgen/~~Nh # auto-added
-erträgst/~~hV
+erträgst/~~hV%
 ertränke/~~h # not a noun: no capitalized form
 ertränk/*~~VejnGdfi # REPLACES ertränken
 ertränkend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -69747,7 +69747,7 @@ erworbenes/~~Nh
 erwuchsen/~~VijG # auto-added
 erwuchsest/~~hV
 erwuchst/~~hV # retag: finite verb form, was noun (corpus-mined)
-erwächst/~~h # not a noun: no capitalized form
+erwächst/~~hV% # not a noun: no capitalized form
 erwägende/~~NhEJ # +adjective reading (was noun-only)
 erwägendem/~~h # not a noun: no capitalized form
 erwägender/~~h # not a noun: no capitalized form
@@ -71472,9 +71472,9 @@ ferneres/~~Nh
 fernerhin/~~h # not a noun: no capitalized form
 fernhalte/~~h # not a noun: no capitalized form
 fernhalten/~~Vifjc # auto-added
-fernhaltet/~~h # not a noun: no capitalized form
+fernhaltet/~~hV # not a noun: no capitalized form
 fernhielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-fernhält/~~h # not a noun: no capitalized form
+fernhält/~~hV% # not a noun: no capitalized form
 fernlade/~~h # not a noun: no capitalized form
 fernladen/~~Vifjc # auto-added
 fernladend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -71661,7 +71661,7 @@ festhakt/~~hG # not a noun: no capitalized form
 festhaktet/~~hG # not a noun: no capitalized form
 festhalte/~~h # not a noun: no capitalized form
 festhalten/~~Vifjc # auto-added
-festhaltet/~~h # not a noun: no capitalized form
+festhaltet/~~hV # not a noun: no capitalized form
 festhefte/~~h # not a noun: no capitalized form
 festheften/~~VdifjecG # auto-added
 festheftet/~~hG # not a noun: no capitalized form
@@ -71670,7 +71670,7 @@ festhing/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 festhinge/~~h # not a noun: no capitalized form
 festhingen/~~VifjG # auto-added
 festhingt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-festhält/~~h # not a noun: no capitalized form
+festhält/~~hV% # not a noun: no capitalized form
 festhänge/~~h # not a noun: no capitalized form
 festhängen/~~VifjcG # auto-added
 festhängst/~~hV
@@ -72556,7 +72556,7 @@ flechten/~~Vifj78cGx # auto-added
 flechtend/~~NhYJOQRST # +adjective reading (was noun-only)
 flechtende/~~NhEJ # +adjective reading (was noun-only)
 flechtens/~~Nh
-flechtet/~~hG # not a noun: no capitalized form
+flechtet/~~hGV # not a noun: no capitalized form
 flechtung/~~FhY
 flechtware/~~NhE
 flechtwerk/~~NhY0HX
@@ -73399,11 +73399,11 @@ fortgejagt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 fortgelebt/~~h # not a noun: no capitalized form
 fortgelte/~~h # not a noun: no capitalized form
 fortgelten/~~Vifj78c # auto-added
-fortgeltet/~~h # not a noun: no capitalized form
+fortgeltet/~~hV # not a noun: no capitalized form
 fortgerast/~~h # not a noun: no capitalized form
 fortgeweht/~~h # not a noun: no capitalized form
 fortgießen/~~Vj # auto-added
-fortgilt/~~h # not a noun: no capitalized form
+fortgilt/~~hV% # not a noun: no capitalized form
 fortging/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 fortginge/~~h # not a noun: no capitalized form
 fortgingen/~~VifjG # auto-added
@@ -76532,7 +76532,7 @@ gefälligen/~~J # auto-added
 gefälliger/~~MhYJr
 gefälliges/~~Nh
 gefälligst/~~JOQRSTVgfj
-gefällst/~~JOQRSTVgj
+gefällst/~~JOQRSTVgj%
 gefälltem/~~Nh
 gefälltes/~~Nh
 gefälscht/~~JOQRSTVgfj
@@ -86827,7 +86827,7 @@ innehalte/~~h # not a noun: no capitalized form
 innehast/~~h # not a noun: no capitalized form
 innehatte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 innehielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-innehält/~~h # not a noun: no capitalized form
+innehält/~~hV% # not a noun: no capitalized form
 innehätte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 innereien/~~Nh # auto-added
 innerhalb/~~hrP
@@ -92317,8 +92317,8 @@ lostraten/~~VijG # auto-added
 lostratet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 lostrete/~~h # not a noun: no capitalized form
 lostreten/~~Vifjc # auto-added
-lostretet/~~h # not a noun: no capitalized form
-lostritt/~~h # not a noun: no capitalized form
+lostretet/~~hV # not a noun: no capitalized form
+lostritt/~~hV% # not a noun: no capitalized form
 losträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 losträten/~~VifjG # auto-added
 losträtet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -95356,7 +95356,7 @@ nachlader/~~MhEH
 nachlasen/~~VijG # auto-added
 nachlass/~~NXh0YMZ
 nachlauf/~~NXhHY
-nachlauft/~~h # not a noun: no capitalized form
+nachlauft/~~hV # not a noun: no capitalized form
 nachlebe/~~NhYE
 nachleben/~~NhH # auto-added
 nachlebst/~~hV
@@ -100105,7 +100105,7 @@ reinfahr/~~NXh
 reinfahrt/~~NhYE
 reinfall/~~NXhHY # auto-added
 reinfalls/~~Nh
-reinfallt/~~h # not a noun: no capitalized form
+reinfallt/~~hV # not a noun: no capitalized form
 reinfand/~~NhYE
 reinfeire/~~h # not a noun: no capitalized form
 reinfielt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -100117,7 +100117,7 @@ reinfuhr/~~NhYE
 reinfuhrt/~~NhYE
 reinfährt/~~hG # not a noun: no capitalized form
 reinfälle/~~NhE
-reinfällt/~~hG # not a noun: no capitalized form
+reinfällt/~~hGV% # not a noun: no capitalized form
 reingaben/~~Vj # auto-added
 reingabt/~~NhYE
 reingebe/~~NhYE
@@ -100170,7 +100170,7 @@ reinkäme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 reinkämen/~~VfjG # auto-added
 reinkämet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 reinlasse/~~h # not a noun: no capitalized form
-reinlasst/~~h # not a noun: no capitalized form
+reinlasst/~~hV # not a noun: no capitalized form
 reinlege/~~h # not a noun: no capitalized form
 reinlegen/~~VdifjeG # auto-added
 reinlegst/~~hV
@@ -100179,7 +100179,7 @@ reinließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 reinließt/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
 reinlinke/~~NhYE
 reinlinkt/~~NhYE
-reinlässt/~~h # not a noun: no capitalized form
+reinlässt/~~hV% # not a noun: no capitalized form
 reinmache/~~h # not a noun: no capitalized form
 reinmacht/~~hG # not a noun: no capitalized form
 reinnahm/~~NhYE
@@ -102259,7 +102259,7 @@ schelmen/~~Nh # auto-added
 schelmes/~~Nh
 schelten/~~Vifjc # auto-added
 scheltend/~~NhYJOQRST # +adjective reading (was noun-only)
-scheltet/~~h # not a noun: no capitalized form
+scheltet/~~hV # not a noun: no capitalized form
 schemata/~~Nh
 schematik/~~NhY
 schemeln/~~Nh # auto-added
@@ -102611,12 +102611,12 @@ schläfern/~~VdifjeG # auto-added
 schläfers/~~Nh
 schläfert/~~hG # not a noun: no capitalized form
 schläfre/~~h # not a noun: no capitalized form
-schläfst/~~hV
+schläfst/~~hV%
 schlägen/~~Nh # auto-added
 schläger/~~MhEH
 schlägern/~~Nh # auto-added
 schlägers/~~Nh
-schlägst/~~hV
+schlägst/~~hV%
 schlämme/~~NhE
 schlämmen/~~Nh # auto-added
 schlänge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -102671,7 +102671,7 @@ schmeißen/~~VifjcG # auto-added
 schmeißt/~~h # not a noun: no capitalized form
 schmelzen/~~Vdifj78ecGx # auto-added
 schmelzes/~~Nh
-schmelzt/~~hG # not a noun: no capitalized form
+schmelzt/~~hGV # not a noun: no capitalized form
 schmerzen/~~VdifjecG # auto-added
 schmerzes/~~Nh
 schmerzt/~~hG # not a noun: no capitalized form
@@ -102687,7 +102687,7 @@ schmiegt/~~hG # not a noun: no capitalized form
 schmiere/~~NhE
 schmieren/~~Vdifj78ecG # auto-added
 schmiert/~~hG # not a noun: no capitalized form
-schmilzt/~~hV # not a noun: no capitalized form
+schmilzt/~~hV% # not a noun: no capitalized form
 schminke/~~h # not a noun: no capitalized form
 schminken/~~VdifjecG # auto-added
 schminkst/~~hV
@@ -105095,7 +105095,7 @@ sprechens/~~NhMZ
 sprecher/~~MhEKLH
 sprechern/~~Nh # auto-added
 sprechers/~~NhMZ
-sprecht/~~h # not a noun: no capitalized form
+sprecht/~~hV # not a noun: no capitalized form
 spreearm/~~NXhHY
 spreearms/~~Nh
 spreeraum/~~ZhHA # preposition um #  auto-added
@@ -105122,7 +105122,7 @@ sprenkele/~~h # not a noun: no capitalized form
 sprenkeln/~~VdifjeGc # auto-added
 sprenkelt/~~hG # not a noun: no capitalized form
 sprenkle/~~h # not a noun: no capitalized form
-spricht/~~hVG
+spricht/~~hVG%
 sprieße/~~h # not a noun: no capitalized form
 sprieß/*~~Vejdfi # REPLACES sprießen
 sprießend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -105853,7 +105853,7 @@ stiefkind/~~Nh0aH
 stiefle/~~h # not a noun: no capitalized form
 stiefsohn/~~Nh0HA
 stiegen/~~Nh # auto-added
-stiehlt/~~hGV # not a noun: no capitalized form
+stiehlt/~~hGV% # not a noun: no capitalized form
 stielen/~~Nh # auto-added
 stielende/~~NhEJH # +adjective reading (was noun-only)
 stieles/~~Nh
@@ -109879,7 +109879,7 @@ umfangend/~~NhYJOQRST # +adjective reading (was noun-only)
 umfangene/~~NhE
 umfanges/~~Nh
 umfangs/~~NhMZ
-umfangt/~~h # not a noun: no capitalized form
+umfangt/~~hV # not a noun: no capitalized form
 umfass/*~~Vej78ndfi # REPLACES umfassen
 umfassens/~~Nh
 umfasst/~~hVOQRST
@@ -109948,8 +109948,8 @@ umfällst/~~h # not a noun: no capitalized form
 umfällt/~~hG # not a noun: no capitalized form
 umfänge/~~NhE
 umfängen/~~Nh # auto-added
-umfängst/~~hV
-umfängt/~~hG # not a noun: no capitalized form
+umfängst/~~hV%
+umfängt/~~hGV% # not a noun: no capitalized form
 umfärbe/~~h # not a noun: no capitalized form
 umfärb/*~~VejGdfi # REPLACES umfärben
 umfärbst/~~hV
@@ -110233,7 +110233,7 @@ umlaufen/~~VifjOQRSTc # auto-added
 umlaufend/~~NhYJOQRST # +adjective reading (was noun-only)
 umlaufene/~~NhE
 umlaufs/~~Nh
-umlauft/~~h # not a noun: no capitalized form
+umlauft/~~hV # not a noun: no capitalized form
 umlauten/~~VdifjecG # auto-added
 umlautend/~~NhYJOQRST # +adjective reading (was noun-only)
 umlautest/~~hV
@@ -110270,8 +110270,8 @@ umludet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 umlädst/~~h # not a noun: no capitalized form
 umläufe/~~NhE
 umläufen/~~Nh # auto-added
-umläufst/~~hV
-umläuft/~~hG # not a noun: no capitalized form
+umläufst/~~hV%
+umläuft/~~hGV% # not a noun: no capitalized form
 umlüden/~~VifjG # auto-added
 umlüdet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 ummantele/~~h # not a noun: no capitalized form
@@ -110712,7 +110712,7 @@ umwendet/~~hG # not a noun: no capitalized form
 umwerbe/~~h # not a noun: no capitalized form
 umwerben/~~Vifjc # auto-added
 umwerbend/~~NhYJOQRST # +adjective reading (was noun-only)
-umwerbt/~~h # not a noun: no capitalized form
+umwerbt/~~hV # not a noun: no capitalized form
 umwerfe/~~h # not a noun: no capitalized form
 umwerfen/~~Vifjc # auto-added
 umwerfend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -110734,7 +110734,7 @@ umwinde/~~h # not a noun: no capitalized form
 umwinden/~~VifjcG # auto-added
 umwindend/~~NhYJOQRST # +adjective reading (was noun-only)
 umwindet/~~hG # not a noun: no capitalized form
-umwirbt/~~hGV # not a noun: no capitalized form
+umwirbt/~~hGV% # not a noun: no capitalized form
 umwirfst/~~h # not a noun: no capitalized form
 umwirft/~~hG # not a noun: no capitalized form
 umwittert/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
@@ -111273,7 +111273,7 @@ unterhebe/~~h # not a noun: no capitalized form
 unterhebt/~~hG # not a noun: no capitalized form
 unterhob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterhobt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-unterhält/~~hV # +verb reading (was noun-only)
+unterhält/~~hV% # +verb reading (was noun-only)
 unterhöbe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterkam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterkamt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -111291,7 +111291,7 @@ unterlägt/~~GV # retag: finite verb form, was noun (corpus-mined)
 untermale/~~h # not a noun: no capitalized form
 untermalt/~~GV # retag: finite verb form, was noun (corpus-mined)
 unternahm/~~hVs # +verb reading (was noun-only)
-unternimm/~~hV # not a noun: no capitalized form
+unternimm/~~hV% # not a noun: no capitalized form
 unterperm/~~NhHA
 unterrede/~~h # not a noun: no capitalized form
 untersage/~~h # not a noun: no capitalized form
@@ -111764,7 +111764,7 @@ verbliebt/~~hG # not a noun: no capitalized form
 verbloggt/~~NhYE
 verblute/~~hn # not a noun: no capitalized form
 verblutet/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-verbläst/~~h # not a noun: no capitalized form
+verbläst/~~hV% # not a noun: no capitalized form
 verbläue/~~h # not a noun: no capitalized form
 verbläuen/~~VdifjeGn # auto-added
 verbläust/~~hV
@@ -111897,8 +111897,8 @@ verdinge/~~h # not a noun: no capitalized form
 verdingen/~~VdifjecGn # auto-added
 verdingst/~~hV
 verdingt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-verdirb/~~hV # not a noun: no capitalized form
-verdirbt/~~hGV # not a noun: no capitalized form
+verdirb/~~hV% # not a noun: no capitalized form
+verdirbt/~~hGV% # not a noun: no capitalized form
 verdonner/~~hn # not a noun: no capitalized form
 verdonnre/~~h # not a noun: no capitalized form
 verdopple/~~h # not a noun: no capitalized form
@@ -112144,8 +112144,8 @@ verfuhr/~~h # not a noun: no capitalized form
 verfährt/~~hG # not a noun: no capitalized form
 verfälle/~~NhE
 verfällen/~~Nh # auto-added
-verfällst/~~hV
-verfällt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+verfällst/~~hV%
+verfällt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 verfängt/~~hG # not a noun: no capitalized form
 verfärben/~~Vdifj78eGc # auto-added
 verfärbt/~~hVOQRSTUWG # retag: finite verb form, was noun (corpus-mined)
@@ -112226,8 +112226,8 @@ vergilbt/~~hVOQRSTUWG # retag: finite verb form, was noun (corpus-mined)
 vergiltst/~~h # not a noun: no capitalized form
 verging/~~hV # not a noun: no capitalized form
 vergipsen/~~Vj # auto-added
-vergiss/~~hV # not a noun: no capitalized form
-vergisst/~~hV # not a noun: no capitalized form
+vergiss/~~hV% # not a noun: no capitalized form
+vergisst/~~hV% # not a noun: no capitalized form
 vergittre/~~h # not a noun: no capitalized form
 verglase/~~h # not a noun: no capitalized form
 verglasen/~~Vdifj78ecGn # auto-added
@@ -114485,7 +114485,7 @@ vortippt/~~hG # not a noun: no capitalized form
 vortragen/~~Vifjc # auto-added
 vortrages/~~Nh
 vortrags/~~NhMZA
-vortragt/~~h # not a noun: no capitalized form
+vortragt/~~hV # not a noun: no capitalized form
 vortrat/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vortratet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 vortreibe/~~hE # not a noun: no capitalized form
@@ -114499,8 +114499,8 @@ vortritt/~~h # not a noun: no capitalized form
 vortrug/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vortrugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 vorträge/~~NhE
-vorträgst/~~h # not a noun: no capitalized form
-vorträgt/~~hG # not a noun: no capitalized form
+vorträgst/~~hV% # not a noun: no capitalized form
+vorträgt/~~hGV% # not a noun: no capitalized form
 vorträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vorträtet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 vortrüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -115140,7 +115140,7 @@ wegbinden/~~VifjG # auto-added
 wegbindet/~~hG # not a noun: no capitalized form
 wegblase/~~h # not a noun: no capitalized form
 wegblasen/~~VifjcG # auto-added
-wegblast/~~h # not a noun: no capitalized form
+wegblast/~~hV # not a noun: no capitalized form
 wegbleibe/~~h # not a noun: no capitalized form
 wegbleibt/~~hG # not a noun: no capitalized form
 wegblicke/~~h # not a noun: no capitalized form
@@ -115150,7 +115150,7 @@ wegbliebt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 wegblies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 wegbliese/~~h # not a noun: no capitalized form
 wegbliest/~~hV # retag: preterite stem, was noun (hunspell SFX Z)
-wegbläst/~~h # not a noun: no capitalized form
+wegbläst/~~hV% # not a noun: no capitalized form
 wegbogen/~~VijG # auto-added
 wegbogt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 wegbrach/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -115205,7 +115205,7 @@ wegezolls/~~Nh
 wegezölle/~~NhE
 wegfahre/~~h # not a noun: no capitalized form
 wegfahren/~~Vifjc # auto-added
-wegfahrt/~~h # not a noun: no capitalized form
+wegfahrt/~~hV # not a noun: no capitalized form
 wegfalle/~~h # not a noun: no capitalized form
 wegfallen/~~Vifjc # auto-added
 wegfallt/~~h # not a noun: no capitalized form
@@ -115244,8 +115244,8 @@ wegfräßet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 wegfuhr/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 wegfuhren/~~VijG # auto-added
 wegfuhrt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-wegfährst/~~h # not a noun: no capitalized form
-wegfährt/~~hG # not a noun: no capitalized form
+wegfährst/~~hV% # not a noun: no capitalized form
+wegfährt/~~hGV% # not a noun: no capitalized form
 wegfällst/~~h # not a noun: no capitalized form
 wegfällt/~~hG # not a noun: no capitalized form
 wegfängst/~~h # not a noun: no capitalized form
@@ -115307,7 +115307,7 @@ weghalfen/~~VijG # auto-added
 weghalft/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 weghalte/~~h # not a noun: no capitalized form
 weghalten/~~Vifjc # auto-added
-weghaltet/~~h # not a noun: no capitalized form
+weghaltet/~~hV # not a noun: no capitalized form
 weghaue/~~NhYE
 weghauen/~~Vj # auto-added
 weghaust/~~hV
@@ -115325,7 +115325,7 @@ weghumpel/~~NhYE
 weghälfe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 weghälfen/~~Vfj # auto-added
 weghälfet/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-weghält/~~h # not a noun: no capitalized form
+weghält/~~hV% # not a noun: no capitalized form
 weghöre/~~h # not a noun: no capitalized form
 weghör/*~~VejGdfi # REPLACES weghören
 weghörend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -116160,7 +116160,7 @@ widerriet/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 widerrufe/~~NhEM
 widerrufs/~~Nh
 widerruft/~~hG # not a noun: no capitalized form
-widerrät/~~h # not a noun: no capitalized form
+widerrät/~~hV% # not a noun: no capitalized form
 widersage/~~NhYE
 widersagt/~~NhYE
 widersetz/~~h # not a noun: no capitalized form
@@ -116871,7 +116871,7 @@ wäscherei/~~NhY
 wäscherin/~~Nh
 wäschern/~~Nh # auto-added
 wäschers/~~Nh
-wäschst/~~h # not a noun: no capitalized form
+wäschst/~~hV% # not a noun: no capitalized form
 wässere/~~h # not a noun: no capitalized form
 wässern/~~Vdifj78eGc # auto-added
 wässernd/~~NhYOQRST
@@ -117352,7 +117352,7 @@ zerbeule/~~h # not a noun: no capitalized form
 zerbeulen/~~VdifjeGn # auto-added
 zerbeulst/~~hV
 zerbeult/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
-zerbirst/~~h # not a noun: no capitalized form
+zerbirst/~~hV% # not a noun: no capitalized form
 zerbiss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerbissen/~~VifjOQRSTG # auto-added
 zerbisst/~~hV # retag: finite verb form, was noun (corpus-mined)
@@ -117362,9 +117362,9 @@ zerbombt/~~hVOQRSTG # retag: finite verb form, was noun (corpus-mined)
 zerbrach/~~hrsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerbracht/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 zerbreche/~~h # not a noun: no capitalized form
-zerbrecht/~~h # not a noun: no capitalized form
-zerbrich/~~hV # not a noun: no capitalized form
-zerbricht/~~hVG
+zerbrecht/~~hV # not a noun: no capitalized form
+zerbrich/~~hV% # not a noun: no capitalized form
+zerbricht/~~hVG%
 zerbräche/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerbrösle/~~h # not a noun: no capitalized form
 zerbärste/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -117406,9 +117406,9 @@ zerfraß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerfraßen/~~Vij # auto-added
 zerfraßt/~~hV # retag: finite verb form, was noun (corpus-mined)
 zerfresse/~~h # not a noun: no capitalized form
-zerfresst/~~h # not a noun: no capitalized form
-zerfriss/~~hV # not a noun: no capitalized form
-zerfrisst/~~hV # not a noun: no capitalized form
+zerfresst/~~hV # not a noun: no capitalized form
+zerfriss/~~hV% # not a noun: no capitalized form
+zerfrisst/~~hV% # not a noun: no capitalized form
 zerfräße/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerfräßen/~~Vfj # auto-added
 zerfräßet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -117416,8 +117416,8 @@ zerfurche/~~h # not a noun: no capitalized form
 zerfurcht/~~NhYOQRSTG
 zerfälle/~~NhE
 zerfällen/~~Nh # auto-added
-zerfällst/~~hV
-zerfällt/~~hVG # retag: finite verb form, was noun (corpus-mined)
+zerfällst/~~hV%
+zerfällt/~~hVG% # retag: finite verb form, was noun (corpus-mined)
 zergangen/~~VjOQRST # auto-added
 zergehen/~~VifjcG # auto-added
 zergehend/~~NhYJOQRST # +adjective reading (was noun-only)
@@ -117476,7 +117476,7 @@ zerließen/~~Vij # auto-added
 zerließt/~~hV # retag: finite verb form, was noun (corpus-mined)
 zerlumpen/~~Vdije # auto-added
 zerlumpt/~~hVOQRSTUW # retag: finite verb form, was noun (corpus-mined)
-zerlässt/~~h # not a noun: no capitalized form
+zerlässt/~~hV% # not a noun: no capitalized form
 zerläufst/~~h # not a noun: no capitalized form
 zerläuft/~~hG # not a noun: no capitalized form
 zerlöchre/~~h # not a noun: no capitalized form
@@ -117578,9 +117578,9 @@ zerstach/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerstacht/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 zerstampf/~~hn # not a noun: no capitalized form
 zersteche/~~h # not a noun: no capitalized form
-zerstecht/~~h # not a noun: no capitalized form
-zerstich/~~hV # not a noun: no capitalized form
-zersticht/~~hGV # not a noun: no capitalized form
+zerstecht/~~hV # not a noun: no capitalized form
+zerstich/~~hV% # not a noun: no capitalized form
+zersticht/~~hGV% # not a noun: no capitalized form
 zerstieb/~~fh # not a noun: no capitalized form
 zerstiebt/~~hG # not a noun: no capitalized form
 zerstieß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -117604,7 +117604,7 @@ zerstör/~~h78 # not a noun: no capitalized form
 zerstören/~~Vdifj78ecG # auto-added
 zerstörer/~~MhEKLH
 zerstört/~~hV9OQRSTG # retag: finite verb form, was noun (corpus-mined)
-zerstößt/~~h # not a noun: no capitalized form
+zerstößt/~~hV% # not a noun: no capitalized form
 zersäbele/~~h # not a noun: no capitalized form
 zersäbeln/~~VdifjeGn # auto-added
 zersäbelt/~~NhYOQRSTG
@@ -117633,7 +117633,7 @@ zertrennt/~~NhYOQRSTG
 zertrete/~~h # not a noun: no capitalized form
 zertreten/~~Vifj78OQRSTc # auto-added
 zertretet/~~hV # retag: finite verb form, was noun (corpus-mined)
-zertritt/~~h # not a noun: no capitalized form
+zertritt/~~hV% # not a noun: no capitalized form
 zerträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerträten/~~VifjG # auto-added
 zerträtet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -118149,7 +118149,7 @@ zufallen/~~Vifjc # auto-added
 zufallend/~~NhYJOQRST # +adjective reading (was noun-only)
 zufalles/~~Nh
 zufalls/~~NhMZA
-zufallt/~~h # not a noun: no capitalized form
+zufallt/~~hV # not a noun: no capitalized form
 zufass/*~~Vejdfi # REPLACES zufassen
 zufasst/~~h # not a noun: no capitalized form
 zufasste/~~h # not a noun: no capitalized form
@@ -118208,8 +118208,8 @@ zufährst/~~h # not a noun: no capitalized form
 zufährt/~~hG # not a noun: no capitalized form
 zufälle/~~NhE
 zufällen/~~Nh # auto-added
-zufällst/~~hV
-zufällt/~~hG # not a noun: no capitalized form
+zufällst/~~hV%
+zufällt/~~hGV% # not a noun: no capitalized form
 zufüg/*~~Vej78Gdfi # REPLACES zufügen
 zufügend/~~NhYJOQRST # +adjective reading (was noun-only)
 zufügende/~~NhEJ # +adjective reading (was noun-only)
@@ -118817,12 +118817,12 @@ zuschieße/~~h # not a noun: no capitalized form
 zuschießt/~~h # not a noun: no capitalized form
 zuschlag/~~NXh0HY
 zuschlags/~~NhA
-zuschlagt/~~h # not a noun: no capitalized form
+zuschlagt/~~hV # not a noun: no capitalized form
 zuschloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zuschlug/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zuschlugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 zuschläge/~~NhE
-zuschlägt/~~hG # not a noun: no capitalized form
+zuschlägt/~~hGV% # not a noun: no capitalized form
 zuschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zuschmiss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zuschneie/~~h # not a noun: no capitalized form
@@ -119878,9 +119878,9 @@ zürntet/~~hG # not a noun: no capitalized form
 überessen/~~VifjOQRSTc # auto-added
 überesst/~~hV # retag: finite verb form, was noun (corpus-mined)
 überfahre/~~h # not a noun: no capitalized form
-überfahrt/~~h # not a noun: no capitalized form
+überfahrt/~~hV # not a noun: no capitalized form
 überfall/~~NXhMZ # auto-added
-überfallt/~~h # not a noun: no capitalized form
+überfallt/~~hV # not a noun: no capitalized form
 überfielt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 überflog/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überflogt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -119892,8 +119892,8 @@ zürntet/~~hG # not a noun: no capitalized form
 überfragt/~~GV # retag: finite verb form, was noun (corpus-mined)
 überfuhr/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überfuhrt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
-überfährt/~~hG # not a noun: no capitalized form
-überfällt/~~hG # not a noun: no capitalized form
+überfährt/~~hGV% # not a noun: no capitalized form
+überfällt/~~hGV% # not a noun: no capitalized form
 überführe/~~h # not a noun: no capitalized form
 überführt/~~hVOQRSTG # retag: verb form, was noun (corpus-mined)
 überfülle/~~h # not a noun: no capitalized form
@@ -119911,8 +119911,8 @@ zürntet/~~hG # not a noun: no capitalized form
 übergeht/~~hVG # retag: finite verb form, was noun (corpus-mined)
 übergenau/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 übergenug/~~h # not a noun: no capitalized form
-übergib/~~hV # not a noun: no capitalized form
-übergibt/~~hGV # not a noun: no capitalized form
+übergib/~~hV% # not a noun: no capitalized form
+übergibt/~~hGV% # not a noun: no capitalized form
 übergieße/~~h # not a noun: no capitalized form
 übergießt/~~h # not a noun: no capitalized form
 überging/~~hVs # +verb reading (was noun-only)
@@ -120003,7 +120003,7 @@ zürntet/~~hG # not a noun: no capitalized form
 überlast/~~hV78 # retag: finite verb form, was noun (corpus-mined)
 überlaste/~~hVn # retag: finite verb form, was noun (corpus-mined)
 überlaufe/~~h # not a noun: no capitalized form
-überlauft/~~h # not a noun: no capitalized form
+überlauft/~~hV # not a noun: no capitalized form
 überlaut/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 überlebe/~~h # not a noun: no capitalized form
 überleben/~~VdifjecGnx # auto-added
@@ -120025,13 +120025,13 @@ zürntet/~~hG # not a noun: no capitalized form
 überlud/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überluden/~~VijG # auto-added
 überludet/~~hVG # retag: finite verb form, was noun (corpus-mined)
-überlädst/~~h # not a noun: no capitalized form
-überlädt/~~hG # not a noun: no capitalized form
+überlädst/~~hV% # not a noun: no capitalized form
+überlädt/~~hGV% # not a noun: no capitalized form
 überläse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überläsen/~~VfjG # auto-added
 überläset/~~hVG # retag: finite verb form, was noun (corpus-mined)
-überlässt/~~hV
-überläuft/~~hG # not a noun: no capitalized form
+überlässt/~~hV%
+überläuft/~~hGV% # not a noun: no capitalized form
 überlüde/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überlüden/~~VifjG # auto-added
 überlüdet/~~hVG # retag: finite verb form, was noun (corpus-mined)
@@ -120049,9 +120049,9 @@ zürntet/~~hG # not a noun: no capitalized form
 übernahm/~~hVs
 übernahmt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 übernehme/~~h # not a noun: no capitalized form
-übernehmt/~~h # not a noun: no capitalized form
-übernimm/~~hV # not a noun: no capitalized form
-übernimmt/~~hGV # not a noun: no capitalized form
+übernehmt/~~hV # not a noun: no capitalized form
+übernimm/~~hV% # not a noun: no capitalized form
+übernimmt/~~hGV% # not a noun: no capitalized form
 übernutze/~~h # not a noun: no capitalized form
 übernutzt/~~GV # retag: finite verb form, was noun (corpus-mined)
 übernähme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -120098,8 +120098,8 @@ zürntet/~~hG # not a noun: no capitalized form
 übersende/~~h # not a noun: no capitalized form
 übersetze/~~h # not a noun: no capitalized form
 übersetzt/~~NhYVOQRSTG # +verb reading (was noun-only)
-übersieh/~~hV # not a noun: no capitalized form
-übersieht/~~hGV # not a noun: no capitalized form
+übersieh/~~hV% # not a noun: no capitalized form
+übersieht/~~hGV% # not a noun: no capitalized form
 überspitz/~~h78n # not a noun: no capitalized form
 überspüle/~~h # not a noun: no capitalized form
 überspült/~~NhYOQRSTG
@@ -120130,18 +120130,18 @@ zürntet/~~hG # not a noun: no capitalized form
 übertraft/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 übertrage/~~h # not a noun: no capitalized form
 übertrags/~~Nh
-übertragt/~~h # not a noun: no capitalized form
+übertragt/~~hV # not a noun: no capitalized form
 übertrat/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 übertreib/~~h # not a noun: no capitalized form
 übertrete/~~h # not a noun: no capitalized form
 übertrieb/~~h # not a noun: no capitalized form
-übertriff/~~hV # not a noun: no capitalized form
-übertritt/~~h # not a noun: no capitalized form
+übertriff/~~hV% # not a noun: no capitalized form
+übertritt/~~hV% # not a noun: no capitalized form
 übertrug/~~hVs # +verb reading (was noun-only)
 übertrugt/~~hGV # retag: preterite stem, was noun (hunspell SFX Z)
 überträfe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überträge/~~NhE
-überträgt/~~hVG # +verb reading (was noun-only)
+überträgt/~~hVG% # +verb reading (was noun-only)
 überträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 übertrüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 übertöne/~~h # not a noun: no capitalized form
@@ -124236,7 +124236,7 @@ herabglitt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herabhilft/~~hG # not a noun: no capitalized form
 herabholen/~~hdfijecG # not a noun: no capitalized form
 herabkroch/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herablässt/~~h # not a noun: no capitalized form
+herablässt/~~hV% # not a noun: no capitalized form
 herabläuft/~~hG # not a noun: no capitalized form
 herabnimmt/~~hG # not a noun: no capitalized form
 herabrasen/~~hdfijeG # not a noun: no capitalized form
@@ -124401,7 +124401,7 @@ hertreiben/~~NhcGfiH
 hertrotten/~~hdefijcG # not a noun: no capitalized form
 herumbekam/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herumflöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herumfährt/~~hG # not a noun: no capitalized form
+herumfährt/~~hGV% # not a noun: no capitalized form
 herumführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herumgeben/~~h # not a noun: no capitalized form
 herumgehen/~~hcGfi # not a noun: no capitalized form
@@ -124411,7 +124411,7 @@ herumhuren/~~hdfijeG # not a noun: no capitalized form
 herumirren/~~hdfijecG # not a noun: no capitalized form
 herumkauen/~~hdfijecG # not a noun: no capitalized form
 herumkroch/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herumläuft/~~hG # not a noun: no capitalized form
+herumläuft/~~hGV% # not a noun: no capitalized form
 herummalen/~~hdfijeGn # not a noun: no capitalized form
 herumraten/~~h # not a noun: no capitalized form
 herumreden/~~hdefijcG # not a noun: no capitalized form
@@ -127710,7 +127710,7 @@ offenblieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 offenflöte/~~FhE
 offenhielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 offenlegen/~~Nhdfij78eGH # auto-added
-offenlässt/~~h # not a noun: no capitalized form
+offenlässt/~~hV% # not a noun: no capitalized form
 offenporig/~~RJOQRSTqh
 offenstand/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 offerieren/~~NhdfijecGHn
@@ -130950,15 +130950,15 @@ unteraktiv/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
 unterblieb/~~hVs # +verb reading (was noun-only)
 unterboten/~~hOQRSTGJ # retag: adjective base, was noun (igerman98 SFX A)
 unterbrach/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-unterbrich/~~hV # not a noun: no capitalized form
+unterbrich/~~hV% # not a noun: no capitalized form
 unterbände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterflöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterfährt/~~hG # not a noun: no capitalized form
-unterfängt/~~hG # not a noun: no capitalized form
+unterfängt/~~hGV% # not a noun: no capitalized form
 unterführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 untergeben/~~hOQRSTUWJ # retag: adjective base, was noun (igerman98 SFX A)
 untergehen/~~hcGfi # not a noun: no capitalized form
-untergräbt/~~hG # not a noun: no capitalized form
+untergräbt/~~hGV% # not a noun: no capitalized form
 untergrübe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 untergärig/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 unterhaken/~~Nh
@@ -130969,10 +130969,10 @@ unterhielt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterkunft/~~NhAF
 unterlegen/~~Nhdfij78eOQRSTcGn # auto-added
 unterlägen/~~hGVfi # retag: preterite stem, was noun (hunspell SFX Z)
-unterlässt/~~h # not a noun: no capitalized form
-unterläuft/~~hG # not a noun: no capitalized form
+unterlässt/~~hV% # not a noun: no capitalized form
+unterläuft/~~hGV% # not a noun: no capitalized form
 untermalen/~~Nhdfij78ecGH
-unternimmt/~~hGV # not a noun: no capitalized form
+unternimmt/~~hGV% # not a noun: no capitalized form
 unternähme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterreden/~~Nh78defijcGH
 unterricht/~~NhY0HX78M
@@ -132232,7 +132232,7 @@ zermürbend/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 zerografie/~~FhE
 zerplatzen/~~NhdfijecGHn
 zerrkräfte/~~FhE
-zerschlägt/~~hG # not a noun: no capitalized form
+zerschlägt/~~hGV% # not a noun: no capitalized form
 zerschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerschmiss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zerschmolz/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -132799,7 +132799,7 @@ zürichberg/~~Nh0HA
 übertragen/~~Nh78OQRSTcxZ # auto-added
 übertragung/~~FY
 übertreten/~~hOQRSTcJ # retag: adjective base, was noun (igerman98 SFX A)
-übertrifft/~~hGV # not a noun: no capitalized form
+übertrifft/~~hGV% # not a noun: no capitalized form
 überwachen/~~hVdfij78ecGn # retag: verb form, was noun (corpus-mined)
 überwacher/~~NhEKLH
 überwallen/~~hdfijecGn # not a noun: no capitalized form
@@ -133143,7 +133143,7 @@ anglizismus/~~NhMA
 angolanisch/~~RJOQRSTqh
 angstlösend/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 anhaltswert/~~NhY0HX
-anheimfällt/~~hG # not a noun: no capitalized form
+anheimfällt/~~hGV% # not a noun: no capitalized form
 anheimgeben/~~hcfi # not a noun: no capitalized form
 anherrschen/~~hdfijeG # not a noun: no capitalized form
 anhängelast/~~NhY
@@ -135439,7 +135439,7 @@ druckfeucht/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 druckfrisch/~~RJOQRSTqh
 druckletter/~~NhE
 drususstein/~~Nh0HA
-drüberfährt/~~hG # not a noun: no capitalized form
+drüberfährt/~~hGV% # not a noun: no capitalized form
 drübergehst/~~NhYE
 drüsenartig/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 dualistisch/~~RJOQRSTqh
@@ -136559,7 +136559,7 @@ fehlgebären/~~h # not a noun: no capitalized form
 fehlgelenkt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 fehlgreifen/~~NhH
 fehlingsche/~~FhEJQRST # +adjective (igerman98 SFX A) reading (was noun-only)
-fehlschlägt/~~hG # not a noun: no capitalized form
+fehlschlägt/~~hGV% # not a noun: no capitalized form
 fehlschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 fehlsichtig/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 fehmarnbelt/~~Nh0HA
@@ -138105,7 +138105,7 @@ heranwehend/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 heranwehten/~~Nh
 heranwinken/~~hdfijeG # not a noun: no capitalized form
 heranwollen/~~hdfije # not a noun: no capitalized form
-heranwächst/~~h # not a noun: no capitalized form
+heranwächst/~~hV% # not a noun: no capitalized form
 heranwüchse/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 heranziehen/~~Nh78cGfiH
 heranzoomen/~~hdfijecG # not a noun: no capitalized form
@@ -138119,7 +138119,7 @@ heraufhilft/~~hG # not a noun: no capitalized form
 heraufholen/~~hdfijecG # not a noun: no capitalized form
 heraufladen/~~h # not a noun: no capitalized form
 herauflässt/~~h # not a noun: no capitalized form
-heraufläuft/~~hG # not a noun: no capitalized form
+heraufläuft/~~hGV% # not a noun: no capitalized form
 heraufrasen/~~hdfijeG # not a noun: no capitalized form
 heraufrufen/~~hG # not a noun: no capitalized form
 heraufschob/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -138136,7 +138136,7 @@ herausbrach/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herausdrang/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herausfloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herausfährt/~~hG # not a noun: no capitalized form
-herausfällt/~~hG # not a noun: no capitalized form
+herausfällt/~~hGV% # not a noun: no capitalized form
 herausfände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herausgeben/~~NhcfiH
 herausgeber/~~NhEKLH
@@ -138226,7 +138226,7 @@ hereinhilft/~~hG # not a noun: no capitalized form
 hereinholen/~~hdfijecG # not a noun: no capitalized form
 hereinkroch/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hereinlegen/~~hdfijecG # auto-added
-hereinlässt/~~h # not a noun: no capitalized form
+hereinlässt/~~hV% # not a noun: no capitalized form
 hereinläuft/~~hG # not a noun: no capitalized form
 hereinmusst/~~h # not a noun: no capitalized form
 hereinnahme/~~FhE
@@ -138658,7 +138658,7 @@ hineinstieg/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hineinstieß/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hineinstößt/~~h # not a noun: no capitalized form
 hineintrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-hineinträgt/~~hG # not a noun: no capitalized form
+hineinträgt/~~hGV% # not a noun: no capitalized form
 hineinträte/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hineintrüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hineinwagen/~~hdfijeG # auto-added
@@ -138728,7 +138728,7 @@ hinterbacke/~~FhE
 hinterdrein/~~h # not a noun: no capitalized form
 hintergehen/~~Nh78cGfiH
 hinterlegen/~~Nhdfij78ecGHn # auto-added
-hinterlässt/~~hV # +verb reading (was noun-only)
+hinterlässt/~~hV% # +verb reading (was noun-only)
 hinterrücks/~~h # not a noun: no capitalized form
 hintersasse/~~FhE
 hintertrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -144707,7 +144707,7 @@ steckenließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 steckerplan/~~NhA
 steckerteil/~~NhA
 stehenblieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-stehenlässt/~~h # not a noun: no capitalized form
+stehenlässt/~~hV% # not a noun: no capitalized form
 steifbeinig/~~RJOQRSTqh
 steifhaarig/~~RJOQRSTqh
 steifhalten/~~hcfi # not a noun: no capitalized form
@@ -145767,7 +145767,7 @@ unsretwegen/~~h # auto-added
 untadelhaft/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 unterbieten/~~Nh78cGfiH
 unterbinden/~~hcGfi # not a noun: no capitalized form
-unterbricht/~~hGV # not a noun: no capitalized form
+unterbricht/~~hGV% # not a noun: no capitalized form
 unterbräche/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterbunden/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 unterdessen/~~h # not a noun: no capitalized form
@@ -146251,7 +146251,7 @@ vorbedruckt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 vorbeieilen/~~hdfijecG # not a noun: no capitalized form
 vorbeifloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vorbeiflöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-vorbeifährt/~~hG # not a noun: no capitalized form
+vorbeifährt/~~hGV% # not a noun: no capitalized form
 vorbeigehen/~~hcGfi # not a noun: no capitalized form
 vorbeiglitt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vorbeihaste/~~FhYE
@@ -146664,7 +146664,7 @@ weitereilen/~~hdfijecG # not a noun: no capitalized form
 weiterfloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 weiterflöge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 weiterfräße/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-weiterfährt/~~hG # not a noun: no capitalized form
+weiterfährt/~~hGV% # not a noun: no capitalized form
 weitergeben/~~hcfi # not a noun: no capitalized form
 weitergehen/~~hcGfi # not a noun: no capitalized form
 weitergräbt/~~hG # not a noun: no capitalized form
@@ -147559,8 +147559,8 @@ zürichkrieg/~~Nh0HA
 überschlags/~~NhA
 überschlank/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 überschlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-überschläft/~~hG # not a noun: no capitalized form
-überschlägt/~~hG # not a noun: no capitalized form
+überschläft/~~hGV% # not a noun: no capitalized form
+überschlägt/~~hGV% # not a noun: no capitalized form
 überschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 überschwang/~~Nh0HA
 überseeisch/~~JOQRSTqh # retag: adjective (was ~~Nh, corpus-mined as noun)
@@ -152453,7 +152453,7 @@ heranströmen/~~hdfijecG # not a noun: no capitalized form
 heranstürmen/~~hdfijecG # not a noun: no capitalized form
 heranstürzen/~~hdfijecG # not a noun: no capitalized form
 herantreiben/~~hcGfi # not a noun: no capitalized form
-herantrittst/~~h # not a noun: no capitalized form
+herantrittst/~~hV% # not a noun: no capitalized form
 heranwachsen/~~NhcfiH
 heranzueilen/~~h # not a noun: no capitalized form
 heranzugehen/~~h # not a noun: no capitalized form
@@ -152868,7 +152868,7 @@ herunterhing/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterkäme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterlief/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterließ/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herunterlädt/~~hG # not a noun: no capitalized form
+herunterlädt/~~hGV% # not a noun: no capitalized form
 herunterlüde/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunternahm/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterrann/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -152959,7 +152959,7 @@ herzuwandern/~~h # not a noun: no capitalized form
 herzuzaubern/~~h # not a noun: no capitalized form
 herzuzockeln/~~h # not a noun: no capitalized form
 herüberblies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
-herüberbläst/~~h # not a noun: no capitalized form
+herüberbläst/~~hV% # not a noun: no capitalized form
 herüberdrang/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herübereilen/~~hdfijeG # not a noun: no capitalized form
 herüberfährt/~~hG # not a noun: no capitalized form
@@ -153388,7 +153388,7 @@ hinzusteuern/~~h # not a noun: no capitalized form
 hinzustreben/~~h # not a noun: no capitalized form
 hinzustreuen/~~h # not a noun: no capitalized form
 hinzustürzen/~~h # not a noun: no capitalized form
-hinzutrittst/~~h # not a noun: no capitalized form
+hinzutrittst/~~hV% # not a noun: no capitalized form
 hinzutropfen/~~hdfijecG # not a noun: no capitalized form
 hinzuzufügen/~~hc # auto-added
 hinzuzugeben/~~hc # not a noun: no capitalized form
@@ -160481,7 +160481,7 @@ unternehmens/~~NhMZA
 unterpflügen/~~hdfijeG # auto-added
 unterreitnau/~~NhHA
 unterrichten/~~Nh78defijcGHM
-unterschlägt/~~hG # not a noun: no capitalized form
+unterschlägt/~~hGV% # not a noun: no capitalized form
 unterschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterschnitt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 unterseeisch/~~RJOQRSTqh
@@ -160929,7 +160929,7 @@ vorderseitig/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 vordringlich/~~JOQRSTUWqh
 voreifelbahn/~~NhA # auto-added
 voreiligkeit/~~FhA
-vorenthältst/~~h # not a noun: no capitalized form
+vorenthältst/~~hV% # not a noun: no capitalized form
 vorentlastet/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
 vorentschied/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 vorfrankiert/~~hOQRSTJ # retag: adjective base, was noun (igerman98 SFX A)
@@ -161367,7 +161367,7 @@ widderköpfig/~~RJOQRSTqh
 widerborstig/~~hOQRSTUWJ # retag: adjective, was noun (igerman98 SFX A)
 widergehallt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 widerruflich/~~JOQRSTqh9
-widerspricht/~~hVG # +verb reading (was noun-only)
+widerspricht/~~hVG% # +verb reading (was noun-only)
 widerspruchs/~~NhMZA
 widerspräche/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 widersprüche/~~FhE
@@ -161755,7 +161755,7 @@ zugeständnis/~~Nh0XYZ
 zugestöpselt/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
 zugezwinkert/~~h # not a noun: no capitalized form
 zugutehalten/~~hcfi # not a noun: no capitalized form
-zugutehältst/~~h # not a noun: no capitalized form
+zugutehältst/~~hV% # not a noun: no capitalized form
 zugutekommen/~~hcGfi # not a noun: no capitalized form
 zuhilfenahme/~~FhA
 zuhälterisch/~~RJOQRSTqh
@@ -166545,7 +166545,7 @@ herausstürmen/~~hdfijecG # not a noun: no capitalized form
 herausstürzen/~~hdfijecG # not a noun: no capitalized form
 heraustreiben/~~hG # not a noun: no capitalized form
 heraustrennen/~~hdfijecG # not a noun: no capitalized form
-heraustrittst/~~h # not a noun: no capitalized form
+heraustrittst/~~hV% # not a noun: no capitalized form
 heraustropfen/~~hdeijcG # not a noun: no capitalized form
 herauswachsen/~~hcfi # not a noun: no capitalized form
 herauswaschen/~~h # not a noun: no capitalized form
@@ -166823,7 +166823,7 @@ heruntereilen/~~hdfijeG # not a noun: no capitalized form
 herunterfloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterfräße/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterfährt/~~hG # not a noun: no capitalized form
-herunterfällt/~~hG # not a noun: no capitalized form
+herunterfällt/~~hGV% # not a noun: no capitalized form
 herunterführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 heruntergeben/~~h # not a noun: no capitalized form
 heruntergehen/~~hcGfi # not a noun: no capitalized form
@@ -166836,7 +166836,7 @@ herunterhüpft/~~hG # not a noun: no capitalized form
 herunterkroch/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 herunterladen/~~NhH
 herunterlässt/~~h # not a noun: no capitalized form
-herunterläuft/~~hG # not a noun: no capitalized form
+herunterläuft/~~hGV% # not a noun: no capitalized form
 heruntermusst/~~h # not a noun: no capitalized form
 herunternimmt/~~hG # not a noun: no capitalized form
 herunternähme/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -166885,7 +166885,7 @@ hervorsteigst/~~NhYE
 hervorstürzen/~~NhdfijeGH
 hervortauchen/~~hdfijecG # not a noun: no capitalized form
 hervortreiben/~~hcGfi # not a noun: no capitalized form
-hervortrittst/~~h # not a noun: no capitalized form
+hervortrittst/~~hV% # not a noun: no capitalized form
 hervorwachsen/~~hcfi # not a noun: no capitalized form
 hervorzaubern/~~NhdfijeGHcA
 hervorzugehen/~~h # not a noun: no capitalized form
@@ -167347,7 +167347,7 @@ hinunterbegab/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hinuntereilen/~~hdfijeG # not a noun: no capitalized form
 hinunterfloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hinunterfährt/~~hG # not a noun: no capitalized form
-hinunterfällt/~~hG # not a noun: no capitalized form
+hinunterfällt/~~hGV% # not a noun: no capitalized form
 hinunterführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hinuntergehen/~~hcGfi # not a noun: no capitalized form
 hinunterglitt/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
@@ -170378,7 +170378,7 @@ niederlößnitz/~~NhA
 niedermetzeln/~~hdfijeGc # not a noun: no capitalized form
 niedersachsen/~~NhH
 niederschlags/~~NhA
-niederschlägt/~~hG # not a noun: no capitalized form
+niederschlägt/~~hGV% # not a noun: no capitalized form
 niederschlüge/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 niederschrieb/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 niederschrift/~~NhA
@@ -175437,7 +175437,7 @@ zurückstürzen/~~hdfijeG # not a noun: no capitalized form
 zurücktaumeln/~~NhdfijeGHA
 zurücktorkeln/~~hdfijeG # not a noun: no capitalized form
 zurücktreiben/~~NhcGfiH
-zurücktrittst/~~h # not a noun: no capitalized form
+zurücktrittst/~~hV% # not a noun: no capitalized form
 zurücktropfen/~~hdfijeG # not a noun: no capitalized form
 zurückverwies/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zurückwandele/~~FhYE
@@ -175467,7 +175467,7 @@ zusammenfegen/~~hdfijecG # auto-added
 zusammenfloss/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zusammenfröre/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zusammenfährt/~~hG # not a noun: no capitalized form
-zusammenfällt/~~hG # not a noun: no capitalized form
+zusammenfällt/~~hGV% # not a noun: no capitalized form
 zusammenfände/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 zusammenfügen/~~hdfijecG # auto-added
 zusammengehen/~~NhcGfiH
@@ -178569,7 +178569,7 @@ geestausläufer/~~NhEH
 geestkerninsel/~~NhE
 gefahrübergang/~~Nh0HA
 gefangenhalten/~~Nh78cfiH
-gefangenhältst/~~JOQRSTVgj
+gefangenhältst/~~JOQRSTVgj%
 gefangennehmen/~~NhcfiH
 gefangenschaft/~~FhY
 gefangensetzen/~~NhH
@@ -180216,7 +180216,7 @@ hinterherfährt/~~hG # not a noun: no capitalized form
 hinterherführe/~~hsV # retag: preterite stem, was noun (hunspell SFX Z)
 hinterhergehen/~~hG # not a noun: no capitalized form
 hinterherjagen/~~hdfijecG # auto-added
-hinterherläuft/~~hG # not a noun: no capitalized form
+hinterherläuft/~~hGV% # not a noun: no capitalized form
 hinterherrufen/~~hcGfi # not a noun: no capitalized form
 hinterhersehen/~~hcfi # not a noun: no capitalized form
 hinterhersieht/~~hG # not a noun: no capitalized form
@@ -187449,7 +187449,7 @@ zurechtzimmern/~~NhdfijeGHA
 zurechtzulegen/~~hc # auto-added
 zurückbefohlen/~~h # not a noun: no capitalized form
 zurückbehalten/~~Nh78OQRSTc
-zurückbehältst/~~h # not a noun: no capitalized form
+zurückbehältst/~~hV% # not a noun: no capitalized form
 zurückbekommen/~~NhOQRSTcG
 zurückbeordern/~~NhYdeiE
 zurückbeordert/~~hOQRSTJ # retag: adjective, was noun (igerman98 SFX A)
@@ -187460,7 +187460,7 @@ zurückblättern/~~hdfijeGc # not a noun: no capitalized form
 zurückdatieren/~~Nhdfij78ecGHn
 zurückerbitten/~~Nh78cGfiH
 zurückerhalten/~~NhcfiH
-zurückerhältst/~~h # not a noun: no capitalized form
+zurückerhältst/~~hV% # not a noun: no capitalized form
 zurückerinnern/~~NhdfijeGHA
 zurückerlangen/~~NhdfijecGHn # auto-added
 zurückerwarten/~~NhdefijGH
@@ -187653,7 +187653,7 @@ zusammengießen/~~h # not a noun: no capitalized form
 zusammenhalten/~~hcfi # not a noun: no capitalized form
 zusammenheften/~~hdefijcG # not a noun: no capitalized form
 zusammenheilen/~~hdfijecG # not a noun: no capitalized form
-zusammenhältst/~~h # not a noun: no capitalized form
+zusammenhältst/~~hV% # not a noun: no capitalized form
 zusammenhängen/~~hcGfi # auto-added
 zusammenhäufen/~~hdfijecG # not a noun: no capitalized form
 zusammenkauern/~~hdfijeGc # not a noun: no capitalized form
@@ -198362,7 +198362,7 @@ aufmunitionieren/~~hdfijeG # not a noun: no capitalized form
 aufnahmeobjektiv/~~NhHXY # noun (hunspell); was retagged by shape
 aufputzsteckdose/~~FhE
 aufrechenbarkeit/~~FhY
-aufrechterhältst/~~h # not a noun: no capitalized form
+aufrechterhältst/~~hV% # not a noun: no capitalized form
 aufrisszeichnung/~~FhY
 aufrollverfahren/~~NhH
 aufsaugfähigkeit/~~FhA
@@ -215146,7 +215146,7 @@ zeige/~~NE
 leise/~~JUWqrQRST
 magst/~~V
 riete/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-rätst/~~V
+rätst/~~V%
 wägte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 büxte/~~NYE!
 ehest/~~JOQRSTq
@@ -215238,9 +215238,9 @@ stille/~~NE
 weiter/~~JUWqr # retag: adjective, was noun/verb (corpus-mined)
 dreist/~~JOQRSTUWq
 dubios/~~JOQRSTUWq
-giltst/~~V
+giltst/~~V%
 heißte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-hältst/~~V # retag: verb form, was noun (corpus-mined)
+hältst/~~V% # retag: verb form, was noun (corpus-mined)
 stieße/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 blaffe/~~NYE!
 cachte/~~NYE!
@@ -215308,14 +215308,14 @@ schwere/~~NE
 unwerte/~~NE
 vereins/~~NMZA
 vergabe/~~NE
-fichtst/~~V
+fichtst/~~V%
 präzise/~~JUWq9rQRST
-trittst/~~V
+trittst/~~V%
 abkalbe/~~NYE!
 bespare/~~NYE!
 blaffte/~~NYE!
 chillte/~~NYE!
-errätst/~~NA
+errätst/~~V%
 erzeige/~~NYE!
 gerätst/~~JOQRSTVgj
 hijacke/~~NYE!
@@ -215364,7 +215364,7 @@ gefährte/~~NEH
 kontrast/~~NY0HXM
 schmiede/~~NE
 schweige/~~NE
-flichtst/~~NA
+flichtst/~~V%
 abkalbte/~~NYE!
 abluchse/~~NYE!
 ablängte/~~NYE!
@@ -215377,7 +215377,7 @@ dreschte/~~NYE!
 einlange/~~NYE!
 entbanne/~~NYE!
 enträtst/~~NA
-erhältst/~~hV # 2sg of erhalten, was noun
+erhältst/~~hV% # 2sg of erhalten, was noun
 erkannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 ernannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 erzeigte/~~NYE!
@@ -215393,7 +215393,7 @@ mitmagst/~~NA
 mittatst/~~NA
 müffelte/~~NYE!
 pflockte/~~NYE!
-schiltst/~~NA
+schiltst/~~V%
 schrotte/~~NYE!
 zuhältst/~~NA
 zumüllte/~~NYE!
@@ -215446,10 +215446,10 @@ abschinde/~~NYE!
 ankokelte/~~NYE!
 aufpoppte/~~NYE!
 boulderte/~~NYE!
-einhältst/~~NA
+einhältst/~~V%
 einkühlte/~~NYE!
 einlangte/~~NYE!
-enthältst/~~NA
+enthältst/~~V%
 entsandte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 ethischer/~~JqrOQRST
 evidierte/~~NYE!
@@ -215476,7 +215476,7 @@ umbrachte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
 umtrittst/~~NA
 vollsaute/~~NYE!
 vorhältst/~~NA
-weghältst/~~NA
+weghältst/~~V%
 wuschelte/~~NYE!
 anbrummst/~~V
 anbrummte/~~NYE!
@@ -215529,17 +215529,17 @@ dabehältst/~~NA
 dazukannst/~~V
 dazuzählte/~~NYE!
 einradelte/~~NYE!
-eintrittst/~~V
+eintrittst/~~V%
 entbrannte/~~sV # retag: preterite stem, was noun (hunspell SFX Z)
-fernhältst/~~NA
-festhältst/~~NA
+fernhältst/~~V%
+festhältst/~~V%
 freihältst/~~NA
 hingerätst/~~NA
 hintrittst/~~NA
 hochhältst/~~NA
-innehältst/~~NA
+innehältst/~~V%
 kurzhältst/~~NA
-lostrittst/~~NA
+lostrittst/~~V%
 regionaler/~~JqrOQRST
 sachlicher/~~JqrOQRST
 tottrittst/~~NA
@@ -215547,8 +215547,8 @@ vortrittst/~~NA
 wachhältst/~~NA
 warmhältst/~~NA
 wegtrittst/~~NA
-widerrätst/~~NA
-zertrittst/~~NA
+widerrätst/~~V%
+zertrittst/~~V%
 übelwillst/~~NA
 abrubbelte/~~NYE!
 absiedelte/~~NYE!
@@ -215581,7 +215581,7 @@ verkantest/~~NYE!
 pustertaler/~~FEKLH
 schleswiger/~~FEKLH
 wuppertaler/~~FEKLH
-übertrittst/~~NA
+übertrittst/~~V%
 dafürhältst/~~NA
 dichthältst/~~NA
 durchhältst/~~NA
@@ -215601,7 +215601,7 @@ steifhältst/~~NA
 stillhältst/~~NA
 umhinkannst/~~V
 universaler/~~JqrOQRST
-unterhältst/~~NA
+unterhältst/~~V%
 abschrammst/~~V
 abschrammte/~~NYE!
 achthättest/~~V
@@ -242081,7 +242081,7 @@ widerratet/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_form
 widerriefe/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
 widersetztest/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
 widersetztet/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
-widersprich/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
+widersprich/~~V% # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
 widerstrebtest/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
 zerdeppertest/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
 zermahltest/~~V # prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)
@@ -242277,46 +242277,177 @@ Abk./~~2 # abbreviation with its full stop: Abkürzung
 Gr./~~2 # abbreviation with its full stop: Größe, griechisch
 Kl./~~2 # abbreviation with its full stop: Klasse, klein
 zuviel/~~R^ # pre-reform spelling of zu viel (ZuViel.weir); the noun is das Zuviel
-befiehlst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-begibst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-behilfst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-benimmst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-besprichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-bestichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-bestiehlst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-bewirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-bewirfst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-birgst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-brichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-empfiehlst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-entnimmst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-entwirfst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-erbrichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-ergibst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-erschrickst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-erstichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-erwirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-gibst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-hilfst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-nimmst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-quillst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-siehst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-sprichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-stichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-stiehlst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-stirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-triffst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-umgibst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-umwirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-unterbrichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-unternimmst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-verdirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-widersprichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-wirbst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-wirfst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-zerbrichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-zerstichst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-übergibst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-übernimmst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-übersiehst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
-übertriffst/~~V # strong e/i form, hunspell-attested (add_german_strong_imperatives.py)
+befiehlst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+begibst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+behilfst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+benimmst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+besprichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bestichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bestiehlst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bewirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bewirfst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+birgst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+brichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+empfiehlst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+entnimmst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+entwirfst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+erbrichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+ergibst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+erschrickst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+erstichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+erwirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gibst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hilfst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nimmst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+quillst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+siehst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+sprichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+stichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+stiehlst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+stirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+triffst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+umgibst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+umwirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterbrichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unternimmst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+verdirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+widersprichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+wirbst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+wirfst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zerbrichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zerstichst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+übergibst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+übernimmst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+übersiehst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+übertriffst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+abfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+abfangt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+ablasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+ablauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+abschlagt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+anfängst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+anheimfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+anheimfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+aufrechterhaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+aufrechterhält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+aufschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+auslasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+ausschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+begebt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+beibehaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bereithaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+bergt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+drüberfahrt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+drüberfährst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+durchlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+durchläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+einbehaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+einbehältst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+einlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+einschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+empfängst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+entschläfst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+erwachst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+fangt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+fehlschlagt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+fehlschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+fängst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gebt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gefangenhaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gefangenhält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gegenübertretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+gegenübertritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+grabt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+helft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herablasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herantretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herantritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+heranwachst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herauflauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+heraufläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herausfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herausfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+heraustretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+heraustritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hereinlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herumfahrt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herumfährst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herumlauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herumläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterladet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterlauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterlädst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herunterläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hervortretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hervortritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+herüberblast/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hineintragt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hineinträgst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinterherlauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinterherläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinterlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinunterfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinunterfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinzutretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+hinzutritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+innehaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+lauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+läufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nachlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nachlässt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nachläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nachläuft/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+nehmt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+niederschlagt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+niederschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+offenlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+reinfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+seht/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+stehenlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+tragt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+trägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterbrecht/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterfangt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterfängst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+untergrabt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+untergräbst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterhaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterlasst/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterlauft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unternehmt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterschlagt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+unterschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+verblast/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+vorbeifahrt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+vorbeifährst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+vorenthaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+vorenthält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+weiterfahrt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+weiterfährst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+werbt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+widersprecht/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zerberstet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zerschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zugutehaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zugutehält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurückbehaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurückbehält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurückerhaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurückerhält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurücktretet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zurücktritt/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zusammenfallt/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zusammenfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zusammenhaltet/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zusammenhält/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+zuschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überfährst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überfällst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überläufst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überschläfst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überschlägst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+übertrefft/~~V # strong verb form, hunspell-attested (add_german_strong_imperatives.py)
+überträgst/~~V% # strong verb form, hunspell-attested (add_german_strong_imperatives.py)

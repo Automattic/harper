@@ -33,6 +33,9 @@ pub const FOREIGN_TERM_FLAG: char = '3';
 /// Property flag marking a lower-case word whose noun homograph is capitalized
 /// (`ist` and das `Ist`).
 pub const LOWERCASE_NON_NOUN_FLAG: char = '^';
+/// Property flag marking a strong verb's present form or imperative on the
+/// changed stem (`gibt`, `lies`, `fährt`).
+pub const STRONG_PRESENT_FLAG: char = '%';
 
 fn collect_flagged(words: &[AnnotatedWord], flag: char) -> HashSet<String> {
     words
@@ -71,6 +74,12 @@ pub static LOWERCASE_NON_NOUNS: LazyLock<HashSet<String>> = LazyLock::new(|| {
         LOWERCASE_NON_NOUN_FLAG,
     )
 });
+
+/// The present forms and imperatives of strong verbs on the changed stem:
+/// `gib`, `gibt`, `gibst`, `tritt`, `fährt`, `hältst`. Hunspell confirmed each
+/// one; see `add_german_strong_imperatives.py`.
+pub static STRONG_PRESENT_FORMS: LazyLock<HashSet<String>> =
+    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), STRONG_PRESENT_FLAG));
 
 #[cfg(test)]
 mod tests {
