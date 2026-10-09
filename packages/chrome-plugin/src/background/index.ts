@@ -1,6 +1,6 @@
 import {
 	createBinaryModuleFromUrl,
-	type Dialect,
+	Dialect,
 	type LintConfig,
 	LocalLinter,
 	unpackWeirpackBytes,
@@ -12,6 +12,7 @@ import {
 	type AddToUserDictionaryRequest,
 	type AddWeirpackRequest,
 	createUnitResponse,
+	type ExportSettingsResponse,
 	type GetActivationKeyResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
@@ -36,6 +37,8 @@ import {
 	type GetWeirpacksResponse,
 	type Hotkey,
 	type IgnoreLintRequest,
+	type ImportSettingsRequest,
+	type ImportSettingsResponse,
 	type LintRequest,
 	type LintResponse,
 	type OpenReportErrorRequest,
@@ -57,6 +60,19 @@ import {
 	type UnitResponse,
 	type WeirpackMeta,
 } from '../protocol';
+import {
+	buildExport,
+	type CurrentSettings,
+	DOMAIN_STATUS_PREFIX,
+	type ImportPlan,
+	planImport,
+} from '../settings/apply';
+import {
+	type ActivationKeyName,
+	isDialectName,
+	parseSettings,
+	type SettingsFile,
+} from '../settings/schema';
 import { detectBrowserDialect } from './detectDialect';
 
 console.log('background is running');
@@ -284,6 +300,10 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleAddWeirpack(message);
 		case 'removeWeirpack':
 			return handleRemoveWeirpack(message);
+		case 'exportSettings':
+			return handleExportSettings();
+		case 'importSettings':
+			return handleImportSettings(message);
 	}
 }
 
@@ -643,6 +663,84 @@ async function handleRemoveWeirpack(req: RemoveWeirpackRequest): Promise<UnitRes
 
 	initializeLinter(await linter.getDialect());
 	return createUnitResponse();
+}
+
+async function handleExportSettings(): Promise<ExportSettingsResponse> {
+	return { kind: 'exportSettings', settings: await exportSettings() };
+}
+
+async function handleImportSettings(req: ImportSettingsRequest): Promise<ImportSettingsResponse> {
+	try {
+		const incoming = parseSettings(req.json);
+		await ensureLinterReady();
+		const plan = planImport(await readCurrentSettings(), incoming, {
+			mode: req.mode,
+			includeExtension: req.includeExtension,
+		});
+		await applyImportPlan(plan);
+
+		return { kind: 'importSettings', ok: true };
+	} catch (error) {
+		console.error('Failed to import settings', error);
+		return {
+			kind: 'importSettings',
+			ok: false,
+			error: error instanceof Error ? error.message : 'Failed to import settings.',
+		};
+	}
+}
+
+async function exportSettings(): Promise<SettingsFile> {
+	await ensureLinterReady();
+	return buildExport(await readCurrentSettings(), {
+		sourceApp: chrome.runtime.getURL('').startsWith('moz-extension:')
+			? 'harper-firefox'
+			: 'harper-chrome',
+		harperVersion: chrome.runtime.getManifest().version,
+	});
+}
+
+/** Read this profile's settings in the portable file shape. */
+async function readCurrentSettings(): Promise<CurrentSettings> {
+	const dialectName = Dialect[await getDialect()];
+	const all = await chrome.storage.local.get(null);
+	const domainStatus = Object.fromEntries(
+		Object.entries(all)
+			.filter(([k, v]) => k.startsWith(DOMAIN_STATUS_PREFIX) && typeof v === 'boolean')
+			.map(([k, v]) => [k.substring(DOMAIN_STATUS_PREFIX.length), v as boolean]),
+	);
+	const hotkey = await getHotkey();
+
+	return {
+		core: {
+			dialect: isDialectName(dialectName) ? dialectName : 'American',
+			lint_config: await getLintConfig(),
+			user_dictionary: await getUserDictionary(),
+			ignored_lints: await getIgnoredLints(),
+		},
+		extension: {
+			domain_status: domainStatus,
+			default_enabled: await enabledByDefault(),
+			delay: await getDelay(),
+			activation_key: (await getActivationKey()) as ActivationKeyName,
+			hotkey: { modifiers: [...hotkey.modifiers], key: hotkey.key },
+			isolate_english: await getIsolateEnglish(),
+		},
+	};
+}
+
+/** Write an import in a single storage update, then rebuild the linter once. */
+async function applyImportPlan(plan: ImportPlan): Promise<void> {
+	const dialect = Dialect[plan.dialect];
+
+	linterHasPersistedState = true;
+	await chrome.storage.local.set({ ...plan.set, dialect });
+	if (plan.remove.length > 0) {
+		await chrome.storage.local.remove(plan.remove);
+	}
+
+	linterReady = linterReady.then(() => initializeLinter(dialect));
+	await linterReady;
 }
 
 /** Set the lint configuration inside the global `linter` and in permanent storage. */

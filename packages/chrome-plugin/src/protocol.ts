@@ -1,5 +1,7 @@
 import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
+import type { ImportMode } from './settings/apply';
+import type { SettingsFile } from './settings/schema';
 
 export type Request =
 	| LintRequest
@@ -34,7 +36,9 @@ export type Request =
 	| PostFormDataRequest
 	| GetWeirpacksRequest
 	| AddWeirpackRequest
-	| RemoveWeirpackRequest;
+	| RemoveWeirpackRequest
+	| ExportSettingsRequest
+	| ImportSettingsRequest;
 
 export type Response =
 	| LintResponse
@@ -54,7 +58,9 @@ export type Response =
 	| GetInstalledOnResponse
 	| GetReviewedResponse
 	| PostFormDataResponse
-	| GetWeirpacksResponse;
+	| GetWeirpacksResponse
+	| ExportSettingsResponse
+	| ImportSettingsResponse;
 
 export type LintRequest = {
 	kind: 'lint';
@@ -328,4 +334,27 @@ export type AddWeirpackRequest = {
 export type RemoveWeirpackRequest = {
 	kind: 'removeWeirpack';
 	id: string;
+};
+
+export type ExportSettingsRequest = {
+	kind: 'exportSettings';
+};
+
+export type ExportSettingsResponse = {
+	kind: 'exportSettings';
+	settings: SettingsFile;
+};
+
+export type ImportSettingsRequest = {
+	kind: 'importSettings';
+	/** The raw contents of a `harper-settings.json` file. */
+	json: string;
+	mode: ImportMode;
+	includeExtension: boolean;
+};
+
+export type ImportSettingsResponse = {
+	kind: 'importSettings';
+	ok: boolean;
+	error?: string;
 };

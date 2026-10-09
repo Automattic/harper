@@ -2,6 +2,8 @@ import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'har
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
+import type { ImportMode } from './settings/apply';
+import type { SettingsFile } from './settings/schema';
 
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
@@ -214,5 +216,27 @@ export default class ProtocolClient {
 	public static async removeWeirpack(id: string): Promise<void> {
 		this.lintCache.clear();
 		await chrome.runtime.sendMessage({ kind: 'removeWeirpack', id });
+	}
+
+	public static async exportSettings(): Promise<SettingsFile> {
+		return (await chrome.runtime.sendMessage({ kind: 'exportSettings' })).settings;
+	}
+
+	/** Import a `harper-settings.json` file. Throws with a readable message if it was rejected. */
+	public static async importSettings(
+		json: string,
+		mode: ImportMode,
+		includeExtension: boolean,
+	): Promise<void> {
+		this.lintCache.clear();
+		const resp = await chrome.runtime.sendMessage({
+			kind: 'importSettings',
+			json,
+			mode,
+			includeExtension,
+		});
+		if (!resp?.ok) {
+			throw new Error(resp?.error ?? 'Failed to import settings.');
+		}
 	}
 }
