@@ -38,6 +38,9 @@
 //! `CompoundAwareDictionary`'s global mutex and attempt a compound
 //! decomposition on every miss.
 
+use crate::language::german::grammar::determiners::determiner_readings;
+use crate::language::german::grammar::prepositions::preposition_government;
+use crate::language::german::grammar::verbs::looks_like_participle;
 use crate::language::german::spell::lexical_classes::{NUMERALS, UNIT_ABBREVIATIONS};
 use crate::{Document, Punctuation, Token, TokenKind};
 
@@ -820,8 +823,25 @@ fn chunk(tokens: &[&Token], document: &Document) -> Vec<Phrase> {
             // ("die nationalsozialistische Wirtschaft"). Nor at the start of a
             // sentence, where the opener is the subject pronoun and the
             // homograph its verb: "Dies **macht** Systeme robuster".
+            //
+            // At the start the homograph is still the head when a verb
+            // follows it, since one clause has one finite verb up front:
+            // "Seine **flucht** belastet ihn", "Unsere **abfahrt** verzögert
+            // sich".
             let kind = &tokens[end].kind;
-            let homograph_head = i > 0 && kind.is_noun() && kind.is_verb() && !kind.is_adjective();
+            // The finite verb in `-t` looks like its participle, so an
+            // adjective reading beside the verb one does not count against it,
+            // and a lower-case word's noun reading is borrowed from a
+            // capitalized one (*verzögert*).
+            let verb_follows = tokens.get(end + 1).is_some_and(|next| {
+                next.kind.is_verb()
+                    && !document
+                        .get_span_content(&next.span)
+                        .first()
+                        .is_some_and(|c| c.is_uppercase())
+            });
+            let homograph_head =
+                (i > 0 || verb_follows) && kind.is_noun() && kind.is_verb() && !kind.is_adjective();
             end += 1;
             if capitalized || homograph_head {
                 break;
@@ -878,6 +898,113 @@ fn chunk(tokens: &[&Token], document: &Document) -> Vec<Phrase> {
     }
 
     found
+}
+
+/// Contractions of a preposition and an article, which the tokenizer keeps
+/// whole and which therefore never reach the preposition table.
+pub(crate) const CONTRACTIONS: &[&str] = &[
+    "im", "am", "zum", "zur", "beim", "vom", "ins", "ans", "aufs", "durchs", "fürs", "ums",
+    "übers", "unters", "hinters", "vors",
+];
+
+/// Whether `word` ends the noun phrase in front of it rather than continuing
+/// it. A determiner opens a new one, a preposition or a conjunction closes the
+/// old one, and an adjective does neither.
+pub(crate) fn closes_the_phrase(word: &str) -> bool {
+    const CONJUNCTIONS: &[&str] = &["und", "oder", "sowie", "aber", "denn", "sondern", "als"];
+
+    determiner_readings(word).is_some()
+        || preposition_government(word).is_some()
+        || CONTRACTIONS.contains(&word)
+        || CONJUNCTIONS.contains(&word)
+}
+
+fn is_capitalized(word: &str) -> bool {
+    word.chars().next().is_some_and(char::is_uppercase)
+}
+
+/// The index of the head of the noun phrase the token at `determiner_at`
+/// opens, if it can be identified with confidence. Shared by
+/// `GermanPrepositionCase` and `GermanDativePlural`.
+///
+/// The chunker in `grammar/noun_phrase.rs` answers this, and the reason it
+/// is worth the indirection is what the local version used to get wrong:
+/// scanning forward for the first capitalized word crossed a clause
+/// boundary, so *bei der* in *bei der Antrag auf Zulassung gestellt wird*
+/// was paired with *Antrag* from the clause behind it. That was half of
+/// the thirty-seven false reports the last attempt at gender narrowing
+/// produced, and no guard local to this rule could see it.
+///
+/// One check stays here, because it is about the *word* rather than the
+/// phrase: a head that touches a hyphen is half of a compound. In *aus den
+/// Natur- und Geisteswissenschaften* and *zu den Absinth-Trinkern* the
+/// chunker's head carries none of the phrase's features.
+pub(crate) fn closed_head_after(
+    document: &Document,
+    words: &[&Token],
+    phrases: &[Phrase],
+    determiner_at: usize,
+    before_a_verb: bool,
+) -> Option<usize> {
+    let phrase = phrase_opened_by(phrases, determiner_at)?;
+    let token = words[phrase.head];
+
+    let content = document.get_full_content();
+    let touches_hyphen = content.get(token.span.end) == Some(&'-')
+        || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
+    if touches_hyphen {
+        return None;
+    }
+
+    // The chunker names a head; this rule only accepts one when the
+    // phrase can be *shown* to have ended, which is a stricter bar and the
+    // one the local scan used to apply. Two things can make the chunker's
+    // stop artificial here:
+    //
+    // * **A capitalized word behind it.** *den **Berliner**
+    //   Philharmonikern* is modifier plus head and *den **Wortarten**
+    //   Adjektiv* is head plus apposition, and both are two capitals in a
+    //   row with nothing on the surface to tell them apart.
+    // * **Anything else that is not a phrase boundary.** *bei den lange
+    //   **Zeit** allein bekannten symmetrischen Verfahren* stops on the
+    //   first capital in the middle of an adverbial insert; the head is
+    //   five words further on. Only a determiner, preposition or
+    //   conjunction behind the head proves there is no more phrase.
+    //
+    // Getting this wrong is cheap in one direction and expensive in the
+    // other: an unidentified head narrows nothing and the check still runs
+    // on the determiner alone, while a wrong head invents a case error.
+    let next = words.get(phrase.head + 1);
+    let ends_here = match next {
+        None => true,
+        Some(next) if !matches!(next.kind, TokenKind::Word(_)) => true,
+        Some(next) => {
+            let word: String = document.get_span_content(&next.span).iter().collect();
+            let lower = word.to_lowercase();
+            !is_capitalized(&word)
+                && (closes_the_phrase(&lower)
+                    // *mit den Kinder spielen*: a verb ends the phrase
+                    // too, for a caller that can afford to believe it.
+                    || (before_a_verb
+                            && next.kind.is_verb()
+                            && (!next.kind.is_adjective()
+                                || looks_like_participle(&lower)
+                                // *den Kinder versprochen.*: a participle
+                                // without *ge-* that ends the clause.
+                                || words
+                                    .get(phrase.head + 2)
+                                    .is_none_or(|t| !matches!(t.kind, TokenKind::Word(_))))))
+        }
+    };
+    if !ends_here {
+        return None;
+    }
+
+    let capitalized = document
+        .get_span_content(&token.span)
+        .first()
+        .is_some_and(|c| c.is_uppercase());
+    capitalized.then_some(phrase.head)
 }
 
 #[cfg(test)]

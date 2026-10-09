@@ -43,7 +43,7 @@ impl LanguageModule for GermanModule {
         use crate::language::german::linting::{
             german_absolute_superlative::GermanAbsoluteSuperlative,
             german_adjective_form::GermanAdjectiveForm, german_common_typos::GermanCommonTypos,
-            german_country_article::GermanCountryArticle,
+            german_country_article::GermanCountryArticle, german_dative_plural::GermanDativePlural,
             german_determiner_gender::GermanDeterminerGender,
             german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
@@ -119,6 +119,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanCountryArticle", GermanCountryArticle);
         group.add("GermanAdjectiveForm", GermanAdjectiveForm::new());
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());
+        group.add("GermanDativePlural", GermanDativePlural::new());
         group.add("GermanDeterminerGender", GermanDeterminerGender::new());
         group.add(
             "GermanGenitiveAfterNominativeArticle",

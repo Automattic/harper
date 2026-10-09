@@ -9,7 +9,8 @@ use crate::{
         DeterminerReading, could_be_a_dative_plural, determiner_readings, forms_for_readings,
         readings_allowed_by, readings_allowed_by_spelling, stands_alone,
     },
-    language::german::grammar::noun_phrase::{self, Phrase},
+    language::german::grammar::noun_gender::NounGender,
+    language::german::grammar::noun_phrase,
     language::german::grammar::prepositions::preposition_government,
     language::german::spell::curated_german_dictionary,
     language::morphology::{Agreement, Case, CaseSet, MorphologyExt},
@@ -93,6 +94,7 @@ pub struct GermanPrepositionCase {
     /// would rule out a reading the determiner really has and turn a correct
     /// phrase into a lint.
     dictionary: Arc<FstDictionary>,
+    nouns: NounGender,
 }
 
 impl Default for GermanPrepositionCase {
@@ -105,6 +107,7 @@ impl GermanPrepositionCase {
     pub fn new() -> Self {
         Self {
             dictionary: curated_german_dictionary(),
+            nouns: NounGender::new(),
         }
     }
 
@@ -133,73 +136,6 @@ impl GermanPrepositionCase {
 }
 
 impl GermanPrepositionCase {
-    /// The head of the noun phrase this determiner introduces, if it can be
-    /// identified with confidence.
-    ///
-    /// The chunker in `grammar/noun_phrase.rs` answers this, and the reason it
-    /// is worth the indirection is what the local version used to get wrong:
-    /// scanning forward for the first capitalized word crossed a clause
-    /// boundary, so *bei der* in *bei der Antrag auf Zulassung gestellt wird*
-    /// was paired with *Antrag* from the clause behind it. That was half of
-    /// the thirty-seven false reports the last attempt at gender narrowing
-    /// produced, and no guard local to this rule could see it.
-    ///
-    /// One check stays here, because it is about the *word* rather than the
-    /// phrase: a head that touches a hyphen is half of a compound. In *aus den
-    /// Natur- und Geisteswissenschaften* and *zu den Absinth-Trinkern* the
-    /// chunker's head carries none of the phrase's features.
-    fn head_noun_after(
-        &self,
-        document: &Document,
-        words: &[&Token],
-        phrases: &[Phrase],
-        determiner_at: usize,
-    ) -> Option<String> {
-        let phrase = noun_phrase::phrase_opened_by(phrases, determiner_at)?;
-        let token = words[phrase.head];
-
-        let content = document.get_full_content();
-        let touches_hyphen = content.get(token.span.end) == Some(&'-')
-            || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
-        if touches_hyphen {
-            return None;
-        }
-
-        // The chunker names a head; this rule only accepts one when the
-        // phrase can be *shown* to have ended, which is a stricter bar and the
-        // one the local scan used to apply. Two things can make the chunker's
-        // stop artificial here:
-        //
-        // * **A capitalized word behind it.** *den **Berliner**
-        //   Philharmonikern* is modifier plus head and *den **Wortarten**
-        //   Adjektiv* is head plus apposition, and both are two capitals in a
-        //   row with nothing on the surface to tell them apart.
-        // * **Anything else that is not a phrase boundary.** *bei den lange
-        //   **Zeit** allein bekannten symmetrischen Verfahren* stops on the
-        //   first capital in the middle of an adverbial insert; the head is
-        //   five words further on. Only a determiner, preposition or
-        //   conjunction behind the head proves there is no more phrase.
-        //
-        // Getting this wrong is cheap in one direction and expensive in the
-        // other: an unidentified head narrows nothing and the check still runs
-        // on the determiner alone, while a wrong head invents a case error.
-        let next = words.get(phrase.head + 1);
-        let ends_here = match next {
-            None => true,
-            Some(next) if !matches!(next.kind, TokenKind::Word(_)) => true,
-            Some(next) => {
-                let word: String = document.get_span_content(&next.span).iter().collect();
-                !is_capitalized(&word) && closes_the_phrase(&word)
-            }
-        };
-        if !ends_here {
-            return None;
-        }
-
-        let head: String = document.get_span_content(&token.span).iter().collect();
-        is_capitalized(&head).then_some(head)
-    }
-
     /// What the dictionary says about `head`, when that is worth reading.
     ///
     /// A form ending in `-n` or `-s` is held back. Every German dative plural
@@ -221,25 +157,6 @@ impl GermanPrepositionCase {
             .map(|metadata| metadata.noun_agreement())
             .unwrap_or_default()
     }
-}
-
-/// Contractions of a preposition and an article, which the tokenizer keeps
-/// whole and which therefore never reach the preposition table.
-const CONTRACTIONS: &[&str] = &[
-    "im", "am", "zum", "zur", "beim", "vom", "ins", "ans", "aufs", "durchs", "fürs", "ums",
-    "übers", "unters", "hinters", "vors",
-];
-
-/// Whether `word` ends the noun phrase in front of it rather than continuing
-/// it. A determiner opens a new one, a preposition or a conjunction closes the
-/// old one, and an adjective does neither.
-fn closes_the_phrase(word: &str) -> bool {
-    const CONJUNCTIONS: &[&str] = &["und", "oder", "sowie", "aber", "denn", "sondern", "als"];
-
-    determiner_readings(word).is_some()
-        || preposition_government(word).is_some()
-        || CONTRACTIONS.contains(&word)
-        || CONJUNCTIONS.contains(&word)
 }
 
 impl Linter for GermanPrepositionCase {
@@ -359,8 +276,28 @@ impl Linter for GermanPrepositionCase {
                 // still runs on the determiner alone, which is what it did
                 // before the noun was read at all.
                 let head = filtered_of[index + 2]
-                    .and_then(|at| self.head_noun_after(document, &words, &phrases, at))
+                    .and_then(|at| {
+                        noun_phrase::closed_head_after(document, &words, &phrases, at, false)
+                    })
+                    .map(|at| document.get_span_content_str(&words[at].span))
                     .filter(|_| !stands_alone(&determiner_text));
+                // *mit meinen Freunde*: the determiner is a fine dative plural
+                // and the noun has lost its *-n*. Not *bei meine Häuser*,
+                // where the determiner is no dative at all. `GermanDativePlural` reports
+                // the noun; reporting *meinen* as an accusative would send the
+                // writer to the wrong word.
+                let dative_plural_determiner = all_readings.iter().any(|reading| {
+                    reading.case == Case::Dative
+                        && reading.number() == crate::language::morphology::Number::Plural
+                });
+                if government.cases.contains(CaseSet::from(Case::Dative))
+                    && dative_plural_determiner
+                    && head
+                        .as_deref()
+                        .is_some_and(|head| self.nouns.lacks_dative_plural_n(head))
+                {
+                    continue;
+                }
                 let readings: Vec<DeterminerReading> = match &head {
                     None => all_readings.to_vec(),
                     Some(head) => readings_allowed_by(
@@ -793,6 +730,15 @@ mod tests {
         assert_eq!(fixes("Er kam mit seinen Bruder zum Essen."), ["seinem"]);
         assert_eq!(fixes("Wir fahren mit den Zug nach Berlin."), ["dem"]);
         assert_eq!(fixes("Er arbeitet bei den Bäcker."), ["dem"]);
+    }
+
+    /// A plural noun without its *-n* behind a determiner that is a fine
+    /// dative plural is the noun's mistake, and `GermanDativePlural` reports
+    /// it. Behind a determiner that is no dative it stays this rule's.
+    #[test]
+    fn a_plural_without_its_n_is_left_to_the_dative_plural_rule() {
+        assert_clean(&["Ich gehe mit meinen Freunde ins Kino."]);
+        assert!(!lint("Bei meine Häuser.").is_empty());
     }
 
     /// And a noun that really could be a dative plural keeps the reading.

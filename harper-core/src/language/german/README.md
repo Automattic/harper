@@ -1520,6 +1520,7 @@ script writes it as an abbreviation.
 | `GermanCountryArticle` | *aus Türkei*, *nach Schweiz*, *in USA* | directly behind a preposition, not in a hyphenated compound |
 | `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
 | `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
+| `GermanDativePlural` | *mit den Kinder*, *seit drei Jahre*, *in vielen Länder* | the noun carries `&`; not behind a preposition without the dative; without a determiner only behind *mit/seit/bei/von* with a number or quantifier |
 | `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das*, *Trete ein!* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised form must carry `%`, the verb no weak preterite |
 | `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
 | comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
@@ -1781,6 +1782,76 @@ corrected sentences with a lint 427 → 427; treebank lints 16056 → 16078, eve
 added report checked — the old spelling of HDT (*heute morgen*, *zuviel*), and
 *kann … nachzuschauen*. School text 53/55 without false alarm, the archived
 corpus unchanged.
+
+### Fifth round: the dative plural, and the `-t` form as a verb
+
+**Where it came from.** The learner corpus, sorted by the corrections it
+contains rather than by error type: *Leute → Leuten*, *Jahre ↔ Jahren*,
+*Freunde → Freunden* were among the commonest, and none was reported. *mit
+meinen Freunde* was worse than unreported — `GermanPrepositionCase` blamed
+*meinen* as an accusative.
+
+**`GermanDativePlural`** reports the noun: *mit den Kinder* → *Kindern*, *seit
+drei Jahre* → *Jahren*, *den Kinder gegeben*, *in vielen Länder*, *mit meinen
+Freunde*. Three places force the dative plural:
+
+* a determiner whose every plural reading is dative (*den*, *meinen*,
+  *diesen*, *allen*), in front of a noun known to be a plural — whatever
+  governs it, except a preposition that does not take the dative (*für den
+  Kinder* stays `GermanPrepositionCase`'s, which corrects *den*);
+* *mit*, *seit*, *bei*, *von* with a spelled-out number or a quantifier in
+  front of the noun (*seit drei Jahre*, *mit vielen Leute*). *zu* is left out
+  (*viel zu komplexen*, *bis zu sieben*, *zu Tage*), and so are *nach* and *aus*
+  (*meiner Meinung nach*, *von dort aus*); digits are years (*seit 1998
+  Feldversuche*); *seit* is also a conjunction, so a verb behind the noun does
+  not end the phrase (*seit drei Jahre vergangen sind*);
+* a plural quantifier in *-n* right behind a preposition (*in vielen Länder*);
+  behind an article it is weak (*die beiden Länder*).
+
+The noun must be a plural for sure, and the dictionary's number cannot say so:
+*Kinder* merges a singular and a plural reading, and *Lehrer*, *Räuber*,
+*Reise* are singulars of the same shape. `mark_german_plural_forms.py` asks
+hunspell: a form built by the plural affixes `E`, `R` or `p` from a singular
+(*Freunde*, *Kinder*, *Bäume*), or an umlaut entry of its own whose plain
+base, ending taken off, is a masculine or neuter singular that builds no
+plural by affix (*Bücher* ← *Buch*; not *Totschläger* ← *Totschlag*, whose
+plural is *Totschläge*; not *Kanüle* ← *Kanu*). The 2716 forms carry the
+marker `&`; the pluralia tantum (`+`, *Leute*) count too, and a compound by
+its last part behind a word (*Ameisenbäume*). Feminine umlaut plurals
+(*Hände*, *Städte*) are missed: hunspell gives their base no genitive flag.
+
+The head of the phrase is found the way `GermanPrepositionCase` found it, and
+that code moved to `grammar/noun_phrase.rs` (`closed_head_after`) so both use
+it. The new rule may also end a phrase at a verb (*den Kinder gegeben*).
+
+Measured: no report on the treebank, the archived corpus or `korrekt2`.
+
+**The `-t` form is a verb again.** 712 frequent third persons in the treebank
+had no verb reading — *bietet*, *findet*, *kostet*, *braucht*, *funktioniert*,
+*verdient* — because the conjugation affix `i` carried none. It had been taken
+off when `i` doubled as a bookkeeping marker on noun entries (6f0ea43f6); that
+use is gone, 16 of 16756 entries carrying it are not verbs, and their `-t`
+forms are verb forms too except *zwangt*, whose `i` went. The compound checker
+relied on these forms having no class at all to reject *vieleicht* (*viel* +
+*eicht*): a present in `-t` with nothing but a verb reading now goes through
+the same infinitive test (*vieleichen* is no word, *stattfinden* is). Its
+tripwire test says the same.
+
+The new readings changed the chunker's view of a sentence-initial homograph:
+*Seine flucht belastet ihn* read *flucht* as the verb. A homograph at the
+start is the head when a verb follows it (*Unsere abfahrt verzögert sich*);
+*Dies macht Systeme robuster* still has *macht* as the verb.
+
+Lost: *nahm fahrt auf*, *haut und Knochen* — *fahrt* and *haut* are verb forms
+now, and nothing in front of them makes them nouns. Gained: *Sein altes gerät*,
+*Sein ruf*, *Das verdient …* no longer reads *verdient* as a noun.
+
+Measured against the end of the fourth round: LanguageTool errors found 1790 →
+1798, false-alarm sentences 739 → 740 (*den jungen Leute bieten*, an error
+the test set calls correct); Falko-MERLIN edits found 3013 → 3028, corrected
+sentences with a lint 427 → 429 (*über den Berufe*, *mit den Kinder* — both
+left uncorrected by the annotators); treebank lints 16079 → 16072,
+capitalization 354 → 342. School text and archived corpus unchanged.
 
 ## The fused spellings the reform allows
 
@@ -2317,6 +2388,7 @@ case. Four such classes are **dictionary data**, carried by property flags:
 | `3` | Lower-case Latin/Greek term | `facto/~~NhY3` |
 | `^` | Not a noun lower case, though the capitalized word is | `ist/~~Vtj^` |
 | `%` | A strong verb's present or imperative on the changed stem | `gibt/~~hVG%` |
+| `&` | A noun plural whose dative adds `-n` | `Bücher/~~&` |
 
 `^` exists because lookups ignore case: `ist` arrives carrying the noun
 reading of `das Ist`, and the merged metadata cannot say which spelling it came

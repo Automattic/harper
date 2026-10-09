@@ -36,6 +36,10 @@ pub const LOWERCASE_NON_NOUN_FLAG: char = '^';
 /// Property flag marking a strong verb's present form or imperative on the
 /// changed stem (`gibt`, `lies`, `fährt`).
 pub const STRONG_PRESENT_FLAG: char = '%';
+/// Property flag marking a noun plural whose dative adds `-n` (`Kinder`).
+pub const PLURAL_FORM_FLAG: char = '&';
+/// Property flag marking a plurale tantum (`Leute`, `Eltern`).
+pub const PLURALE_TANTUM_FLAG: char = '+';
 
 fn collect_flagged(words: &[AnnotatedWord], flag: char) -> HashSet<String> {
     words
@@ -80,6 +84,18 @@ pub static LOWERCASE_NON_NOUNS: LazyLock<HashSet<String>> = LazyLock::new(|| {
 /// one; see `add_german_strong_imperatives.py`.
 pub static STRONG_PRESENT_FORMS: LazyLock<HashSet<String>> =
     LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), STRONG_PRESENT_FLAG));
+
+/// Noun plurals that do not end in `-n` or `-s` and so take `-n` in the
+/// dative: `Kinder`, `Freunde`, `Bücher`. Kept in their capitalized spelling;
+/// see `mark_german_plural_forms.py`.
+pub static PLURAL_FORMS: LazyLock<HashSet<String>> =
+    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), PLURAL_FORM_FLAG));
+
+/// Nouns that only exist in the plural: `Leute`, `Eltern`, `Ferien`. Read
+/// from the flag rather than the merged number, which an `E` beside the `+`
+/// widens to both numbers (`leute/~~NhE+`).
+pub static PLURALIA_TANTUM: LazyLock<HashSet<String>> =
+    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), PLURALE_TANTUM_FLAG));
 
 #[cfg(test)]
 mod tests {

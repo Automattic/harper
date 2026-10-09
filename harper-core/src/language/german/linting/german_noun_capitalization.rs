@@ -1092,6 +1092,18 @@ mod tests {
         );
         assert_eq!(document_word(&doc, &lints[0]), "fang");
 
+        // At the start of the sentence too, when a verb follows the
+        // homograph: the possessive opens the subject.
+        for text in [
+            "Seine flucht belastet ihn zusätzlich.",
+            "Unsere abfahrt verzögert sich leider etwas.",
+        ] {
+            let doc = create_document(text);
+            assert_eq!(linter.lint(&doc).len(), 1, "{text}");
+        }
+        let doc = create_document("Dies macht Systeme robuster.");
+        assert!(linter.lint(&doc).is_empty());
+
         // Not licensed (imperative after a comma) -> verb -> no flag.
         let doc = create_document("ich sage dir, fang an");
         let lints = linter.lint(&doc);

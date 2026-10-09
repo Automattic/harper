@@ -230,11 +230,19 @@ pub(crate) fn can_head_a_lowercase_compound(
 
     // Any word class of its own is enough: an adjective or adverb head needs
     // no further argument, and a form the dictionary calls a verb was reached
-    // through a verb's own paradigm.
+    // through a verb's own paradigm. Except the present in `-t`, whose verb
+    // reading the `i` affix hands to every stem it sits on: `eicht` and
+    // `findet` are both verbs, and only the infinitive below tells
+    // `vieleicht` from `stattfindet`.
+    let bare_present = tail.ends_with(&['t'])
+        && metadata.verb.is_some()
+        && metadata.noun.is_none()
+        && metadata.adjective.is_none()
+        && metadata.adverb.is_none();
     if metadata.noun.is_some()
         || metadata.adjective.is_some()
         || metadata.adverb.is_some()
-        || metadata.verb.is_some()
+        || (metadata.verb.is_some() && !bare_present)
         || metadata.pronoun.is_some()
         || metadata.conjunction.is_some()
         || metadata.determiner.is_some()
@@ -1761,15 +1769,15 @@ mod tests {
         assert!(checker.is_compound_word(&"schuhhersteller".chars().collect::<Vec<_>>()));
     }
 
-    /// The element gate cannot be typed from the word list, and this is the
-    /// measurement that says so — see [`MIN_COMPOUND_PART_LEN`].
+    /// The element gate is not typed from the word list, and this is the
+    /// measurement that says why — see [`MIN_COMPOUND_PART_LEN`].
     ///
     /// `eicht` is a finite verb form and has no business inside a compound;
     /// `räume` is a noun plural and belongs in every second one. The
-    /// dictionary describes both identically: present, three or more
-    /// characters, and carrying no part of speech at all. As long as that
-    /// holds, `vieleicht` cannot be rejected by decomposition without taking
-    /// `Zeiträume` with it.
+    /// dictionary used to describe both identically: present, three or more
+    /// characters, and carrying no part of speech at all, so `vieleicht`
+    /// could not be rejected by decomposition without taking `Zeiträume` with
+    /// it.
     ///
     /// `zeuge` used to be on this list and is not any more:
     /// `fix_german_noun_forms.py` gave `Zeug` its plural, so `zeuge` is now a
@@ -1779,40 +1787,39 @@ mod tests {
     /// [`can_head_a_capitalized_compound`] reject verb-form heads (`Bett|rieb`)
     /// without taking `Zeiträume` along. The ones left are the verb forms.
     ///
-    /// When the affix expansion starts assigning a part of speech to those
-    /// too, this test fails, and that is the moment to try the typed element
-    /// gate in the remaining positions.
+    /// The affix expansion now gives these a verb reading — the `i` affix
+    /// carries one, because without it *bietet*, *findet* and *kostet* were no
+    /// verbs — and nothing else. `can_head_a_lowercase_compound` treats a
+    /// present in `-t` with only that reading as it treated one with none, so
+    /// `vieleicht` is still rejected. If one of these ever gains another
+    /// class, that is the moment to try the typed element gate.
     #[test]
-    fn expanded_forms_carry_no_part_of_speech_to_type_elements_with() {
+    fn expanded_present_forms_are_verbs_and_nothing_else() {
         use crate::language::german::spell::base_german_dictionary_fst;
 
         let dictionary = base_german_dictionary_fst();
-
-        let word_class_of = |word: &str| {
-            let letters: Vec<char> = word.chars().collect();
-            let metadata = dictionary
-                .get_word_metadata(&letters)
-                .unwrap_or_else(|| panic!("{word} should be in the dictionary"));
-
-            metadata.noun.is_some()
-                || metadata.adjective.is_some()
-                || metadata.adverb.is_some()
-                || metadata.verb.is_some()
-                || metadata.pronoun.is_some()
-                || metadata.conjunction.is_some()
-                || metadata.determiner.is_some()
-                || metadata.affix.is_some()
-                || metadata.preposition
-        };
 
         for (word, what) in [
             ("eicht", "third person singular of 'eichen'"),
             ("malt", "third person singular of 'malen'"),
             ("agiert", "third person singular of 'agieren'"),
         ] {
+            let letters: Vec<char> = word.chars().collect();
+            let metadata = dictionary
+                .get_word_metadata(&letters)
+                .unwrap_or_else(|| panic!("{word} should be in the dictionary"));
+            let other_class = metadata.noun.is_some()
+                || metadata.adjective.is_some()
+                || metadata.adverb.is_some()
+                || metadata.pronoun.is_some()
+                || metadata.conjunction.is_some()
+                || metadata.determiner.is_some()
+                || metadata.affix.is_some()
+                || metadata.preposition;
+            assert!(metadata.verb.is_some(), "{word} ({what}) should be a verb");
             assert!(
-                !word_class_of(word),
-                "{word} ({what}) now carries a part of speech; \
+                !other_class,
+                "{word} ({what}) now carries another part of speech; \
                  re-read MIN_COMPOUND_PART_LEN and try typing the element gate"
             );
         }

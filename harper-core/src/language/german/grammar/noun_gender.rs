@@ -11,8 +11,10 @@ use std::sync::Arc;
 use crate::{
     Token, TokenKind,
     document::Document,
+    language::german::grammar::determiners::could_be_a_dative_plural,
     language::german::grammar::noun_phrase::Phrase,
     language::german::spell::curated_german_dictionary,
+    language::german::spell::lexical_classes::{PLURAL_FORMS, PLURALIA_TANTUM},
     language::morphology::{Gender, GenderSet, MorphologyExt, NumberSet},
     spell::{Dictionary, FstDictionary},
 };
@@ -66,6 +68,33 @@ impl NounGender {
                 let agreement = metadata.noun_agreement();
                 agreement.number == NumberSet::PLURAL && agreement.gender.is_empty()
             })
+    }
+
+    /// Is `head` a noun plural that lacks the `-n` of the dative plural —
+    /// *Kinder*, *Freunde*, *Jahre*, *Bücher*, *Leute*?
+    ///
+    /// Read from the marker `&`, which `mark_german_plural_forms.py` writes
+    /// from hunspell's plural affixes, because the dictionary's number cannot
+    /// tell *Kinder* from *Lehrer*. A compound counts by its last part of four
+    /// letters or more behind a word of its own: *Ameisenbäume*, *Spieltage*
+    /// — but not *Etage*. And the pluralia tantum, *Leute*, *Geschwister*.
+    pub fn lacks_dative_plural_n(&self, head: &str) -> bool {
+        if !head.chars().next().is_some_and(char::is_uppercase)
+            || head.chars().all(|c| !c.is_lowercase())
+            || could_be_a_dative_plural(head)
+        {
+            return false;
+        }
+        let lower = head.to_lowercase();
+        if PLURAL_FORMS.contains(&lower) || PLURALIA_TANTUM.contains(&lower) {
+            return true;
+        }
+        let chars: Vec<char> = lower.chars().collect();
+        (3..chars.len().saturating_sub(3)).any(|split| {
+            let tail: String = chars[split..].iter().collect();
+            let head_part: Vec<char> = chars[..split].to_vec();
+            PLURAL_FORMS.contains(&tail) && self.dictionary.contains_word(&head_part)
+        })
     }
 
     /// The one gender the dictionary records for `head`, and whether the noun

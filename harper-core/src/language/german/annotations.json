@@ -1956,7 +1956,7 @@
 			"rename_ok": true
 		},
 		"i": {
-			"#": "Verb present -t (lern-t). NOTE: like 'h', 'i' is also used as a bookkeeping marker on noun entries, so it must not inject a part of speech. It only generates the -t surface form; the verb reading comes from 'V'/'j'/'f'/'d'/'e'. Person and number: third person singular and second person plural (er lernt, ihr lernt). The axes are independent, so the pair also admits 'second person singular' and 'du lernt' goes unreported -- a miss, not a false positive.",
+			"#": "Verb present -t (lern-t). Carries the verb reading like the other conjugation affixes. It used to inject none, because 'i' doubled as a bookkeeping marker on noun entries; that use is gone (16 of 16 756 entries carrying it are not verbs, and their -t forms are verb forms too), and without the reading 712 frequent forms in the treebank — bietet, findet, kostet, verdient — were no verbs at all. Person and number: third person singular and second person plural (er lernt, ihr lernt). The axes are independent, so the pair also admits 'second person singular' and 'du lernt' goes unreported -- a miss, not a false positive.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2019,6 +2019,7 @@
 			"target": [
 				{
 					"metadata": {
+						"verb": {},
 						"morphology": {
 							"verb": {
 								"person": ["Second", "Third"],
@@ -2942,6 +2943,10 @@
 		},
 		"^": {
 			"#": "Lower-case non-noun marker. The entry is not a noun, but a capitalized noun of the same letters is: `ist` and das `Ist`, `gut` and das `Gut`. Harper looks words up regardless of case, so the lower-case spelling picks up the noun reading of the capitalized one; this flag says which spelling it belongs to. Read by the noun-phrase chunker and `GermanNounCapitalization`, which never take the lower-case spelling for a noun.",
+			"metadata": {}
+		},
+		"&": {
+			"#": "Plural marker. The entry is a noun plural that does not end in -n or -s, so its dative plural adds an -n: `Kinder`, `Freunde`, `Jahre`, `Bücher`, `Väter`. Written by `mark_german_plural_forms.py` from hunspell's plural affixes and umlaut-plural entries, and read back by `spell::lexical_classes` for `GermanDativePlural`. The dictionary's own number cannot say this: `Kinder` merges a singular and a plural reading, and `Lehrer`, `Räuber`, `Reise` are singulars of the same shape.",
 			"metadata": {}
 		},
 		"%": {
