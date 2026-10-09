@@ -365,11 +365,20 @@ mod tests {
 
     #[test]
     fn doesnt_handle_wrong_kb_cases() {
-        assert_lint_count("48kb and 64 KB were common in the 8-bit era.", ExpandMemoryShorthands::new(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "48kb and 64 KB were common in the 8-bit era.",
+            ExpandMemoryShorthands::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_is_a_b_plus_3715() {
-        assert_no_lints("Is a B+ a 3.3 GPA?", ExpandMemoryShorthands::new(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Is a B+ a 3.3 GPA?",
+            ExpandMemoryShorthands::new(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

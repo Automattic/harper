@@ -114,41 +114,76 @@ mod tests {
 
     #[test]
     fn dont_flag_let_chance() {
-        assert_lint_count("Let chance decide", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let chance decide",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_let_time() {
-        assert_lint_count("Let time granularity be parametrized", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let time granularity be parametrized",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_lets_staff() {
-        assert_lint_count("A plugin that backs up player's inventories and lets staff restore them or export it as a shulker.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "A plugin that backs up player's inventories and lets staff restore them or export it as a shulker.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_lets_time() {
-        assert_lint_count("This is very different than demo recording, which just simulates a network level connection and lets time move at its own rate.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This is very different than demo recording, which just simulates a network level connection and lets time move at its own rate.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_lets_play() {
-        assert_lint_count("Sometimes the umpire lets play continue", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Sometimes the umpire lets play continue",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positives where verb is a gerund/past participle
 
     #[test]
     fn dont_flag_let_sleeping() {
-        assert_lint_count("Let sleeping logs lie.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let sleeping logs lie.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positives where verb is also an adjective
 
     #[test]
     fn dont_flag_let_processed() {
-        assert_lint_count("Let processed response be a new structure analogous to server auction response.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let processed response be a new structure analogous to server auction response.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Correct disambiguated noun/verb by following determiner
@@ -179,18 +214,33 @@ mod tests {
 
     #[test]
     fn dont_flag_let_us() {
-        assert_lint_count("Let us do this.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Let us do this.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_let_go_1202() {
-        assert_lint_count("... until you hit your opponent, then let go and quickly retap", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "... until you hit your opponent, then let go and quickly retap",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positive wrongly flagged by previous version of this linter
 
     #[test]
     fn dont_flag_let_in_and() {
-        assert_lint_count("Japanese is good enough to be let in and.", NoContractionWithVerb::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Japanese is good enough to be let in and.",
+            NoContractionWithVerb::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -206,6 +206,7 @@ pub fn remove_overlaps_map<K: Ord>(lint_map: &mut BTreeMap<K, Vec<Lint>>) {
 
 #[cfg(test)]
 mod tests {
+    use crate::expr::{AnchorStart, SequenceExpr};
     use crate::languages::Language;
     use std::hash::DefaultHasher;
     use std::hash::{Hash, Hasher};
@@ -213,12 +214,9 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
-    use crate::remove_overlaps_map;
     use crate::spell::FstDictionary;
-    use crate::{
-        Document, EnglishDialect, Span, linting::SequenceExpr, linting::english::AnchorStart,
-        remove_lints_overlapping_expr, remove_overlaps,
-    };
+    use crate::{Document, EnglishDialect, Span, remove_lints_overlapping_expr, remove_overlaps};
+    use crate::{Lint, LintGroup, Linter as _, remove_overlaps_map};
 
     #[test]
     fn keeps_space_lint() {

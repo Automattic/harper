@@ -68,6 +68,7 @@ mod tests {
             "You can't call it quit now, you need to see it through !!",
             CallItQuits::default(),
             "You can't call it quits now, you need to see it through !!",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -77,6 +78,7 @@ mod tests {
             "do some maintenance and logistics before you call it quit for the evening",
             CallItQuits::default(),
             "do some maintenance and logistics before you call it quits for the evening",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -86,6 +88,7 @@ mod tests {
             "you may like to put a large number for TIMEOUT, so that before calling it quit, xstress will wait to see",
             CallItQuits::default(),
             "you may like to put a large number for TIMEOUT, so that before calling it quits, xstress will wait to see",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -95,6 +98,7 @@ mod tests {
             "But I feel like I might need to call it quit and calibrate/find parameters myself and ignore the data provided/used inside OpenVR.",
             CallItQuits::default(),
             "But I feel like I might need to call it quits and calibrate/find parameters myself and ignore the data provided/used inside OpenVR.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -104,6 +108,7 @@ mod tests {
             "I was about to call it quit but I tried a second time this way and it finally worked",
             CallItQuits::default(),
             "I was about to call it quits but I tried a second time this way and it finally worked",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -113,6 +118,7 @@ mod tests {
             "everyone got tired, we called it quit and the CTF ended",
             CallItQuits::default(),
             "everyone got tired, we called it quits and the CTF ended",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -121,6 +127,7 @@ mod tests {
         assert_no_lints(
             "Some call it Quit, some Exit and some Close, There's no issue to fix.",
             CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -129,6 +136,7 @@ mod tests {
         assert_no_lints(
             "and i need a new UiMode variant let's call it Quit.",
             CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -137,12 +145,17 @@ mod tests {
         assert_no_lints(
             "I try it, but I can't find function of dispose called. it quit immediately.",
             CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn avoid_flagging_all_caps_possible_false_positives() {
-        assert_no_lints("Just call it QUIT and you're done.", CallItQuits::default());
+        assert_no_lints(
+            "Just call it QUIT and you're done.",
+            CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -150,6 +163,7 @@ mod tests {
         assert_no_lints(
             "call it soloSplit() , call it quit() or whatever else would be nice",
             CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -158,6 +172,7 @@ mod tests {
         assert_no_lints(
             "The Stop button (or maybe call it Quit) should stop just like the Pause button does",
             CallItQuits::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

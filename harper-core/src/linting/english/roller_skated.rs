@@ -186,16 +186,31 @@ mod tests {
 
     #[test]
     fn allows_hyphenated_form() {
-        assert_lint_count("They roller-skated yesterday.", RollerSkated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They roller-skated yesterday.",
+            RollerSkated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_subject_named_roller() {
-        assert_lint_count("The roller skated across the stage.", RollerSkated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The roller skated across the stage.",
+            RollerSkated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_other_compounds() {
-        assert_lint_count("Their roller skating routine impressed everyone.", RollerSkated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Their roller skating routine impressed everyone.",
+            RollerSkated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

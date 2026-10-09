@@ -2,6 +2,7 @@ use std::path::Path;
 
 use harper_core::spell::{Dictionary, MutableDictionary};
 use harper_core::{DialectFlags, DialectFlagsEnum, DialectsEnum, DictWordMetadata};
+use itertools::Itertools;
 use tokio::fs::{self, File};
 use tokio::io::{AsyncRead, AsyncReadExt, AsyncWrite, AsyncWriteExt, BufReader, BufWriter, Result};
 

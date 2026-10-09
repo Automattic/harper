@@ -149,22 +149,42 @@ mod tests {
 
     #[test]
     fn lower_space_chocked() {
-        assert_suggestion_result("The computer was chocked full with 64KB general use RAM (expandable up to 256KB)", ChockFull::default(), "The computer was chock-full with 64KB general use RAM (expandable up to 256KB)", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The computer was chocked full with 64KB general use RAM (expandable up to 256KB)",
+            ChockFull::default(),
+            "The computer was chock-full with 64KB general use RAM (expandable up to 256KB)",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lower_space_chucked() {
-        assert_suggestion_result("The Mandalorian is chucked full of references and callbacks, mostly to previous Star Wars content.", ChockFull::default(), "The Mandalorian is chock-full of references and callbacks, mostly to previous Star Wars content.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "The Mandalorian is chucked full of references and callbacks, mostly to previous Star Wars content.",
+            ChockFull::default(),
+            "The Mandalorian is chock-full of references and callbacks, mostly to previous Star Wars content.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn lower_space_choked() {
-        assert_suggestion_result("I was making decent money, single and choked full of self-importance.", ChockFull::default(), "I was making decent money, single and chock-full of self-importance.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I was making decent money, single and choked full of self-importance.",
+            ChockFull::default(),
+            "I was making decent money, single and chock-full of self-importance.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "replace_with_match_case quirks generated 'CHOCK-Full' instead of 'CHOCK-full'"]
     fn upper_space_choked() {
-        assert_suggestion_result("Also being a family computer it’s CHOKED full, lots of unnecessary documents no one will sort", ChockFull::default(), "Also being a family computer it’s CHOCK-full, lots of unnecessary documents no one will sort", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Also being a family computer it’s CHOKED full, lots of unnecessary documents no one will sort",
+            ChockFull::default(),
+            "Also being a family computer it’s CHOCK-full, lots of unnecessary documents no one will sort",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

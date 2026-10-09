@@ -108,6 +108,7 @@ mod tests {
         assert_no_lints(
             "Once the opt-in is complete, the obtained lock() and unlock() utilities enable hiding __experimental APIs from the naked eye:",
             NakedEye::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +117,7 @@ mod tests {
         assert_no_lints(
             "But there is something we forgot about, something that allows one to easily hide things from the naked eye ... macros!",
             NakedEye::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -124,6 +126,7 @@ mod tests {
         assert_no_lints(
             "We successfully tampered with the release, well hidden from the naked eye.",
             NakedEye::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -133,6 +136,7 @@ mod tests {
             "As you can see from the pic the pedestrian is being detected but from the naked eye it can't be seen due to the slope.",
             NakedEye::default(),
             "As you can see from the pic the pedestrian is being detected but to the naked eye it can't be seen due to the slope.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -142,6 +146,7 @@ mod tests {
             "the Photoshop one when even from the naked eye you can tell that if you were to zoom into",
             NakedEye::default(),
             "the Photoshop one when even with the naked eye you can tell that if you were to zoom into",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -151,6 +156,7 @@ mod tests {
             "In fact, it looks like legit 1080p from the naked eye I guess... 😭",
             NakedEye::default(),
             "In fact, it looks like legit 1080p to the naked eye I guess... 😭",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -160,6 +166,7 @@ mod tests {
             "... when observed from the naked eye for the bone micro-architecture of the osteoporotic and healthy cases ...",
             NakedEye::default(),
             "... when observed with the naked eye for the bone micro-architecture of the osteoporotic and healthy cases ...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -168,6 +175,7 @@ mod tests {
         assert_no_lints(
             "... which makes the entire concept of it being private hidden from the naked eye.",
             NakedEye::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -176,6 +184,7 @@ mod tests {
         assert_no_lints(
             "... but how can I keep this key from the naked eyes?",
             NakedEye::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -185,6 +194,7 @@ mod tests {
             "What I want is, just from the naked eye, I think there are only 5 colors on this picture",
             NakedEye::default(),
             "What I want is, just with the naked eye, I think there are only 5 colors on this picture",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -194,6 +204,7 @@ mod tests {
             "Considering the real security implications of true invisibility from the naked eye",
             NakedEye::default(),
             "Considering the real security implications of true invisibility to the naked eye",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

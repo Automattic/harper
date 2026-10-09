@@ -196,6 +196,7 @@ mod tests {
             "i'm 5'7\", 140 pounds and the small was a perfect fit for me.",
             FootInchMinuteSecondSymbols::default(),
             "i'm 5′7″, 140 pounds and the small was a perfect fit for me.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -205,6 +206,7 @@ mod tests {
             "i'm a tall gal, 5' 11\" with broad shoulders and i weigh about 165",
             FootInchMinuteSecondSymbols::default(),
             "i'm a tall gal, 5′ 11″ with broad shoulders and i weigh about 165",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -214,6 +216,7 @@ mod tests {
             "I'm about 6 ' 1 \" tall.",
             FootInchMinuteSecondSymbols::default(),
             "I'm about 6 ′ 1 ″ tall.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -223,6 +226,7 @@ mod tests {
             "LeBron James at approximately 6‘7\"",
             FootInchMinuteSecondSymbols::default(),
             "LeBron James at approximately 6′7″",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -232,6 +236,7 @@ mod tests {
             "Michael Jordan: 6’6\"",
             FootInchMinuteSecondSymbols::default(),
             "Michael Jordan: 6′6″",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -241,6 +246,7 @@ mod tests {
             "Shaquille O'Neal: 7' 1“",
             FootInchMinuteSecondSymbols::default(),
             "Shaquille O'Neal: 7′ 1″",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -250,6 +256,7 @@ mod tests {
             "Magic Johnson: 6' 9”",
             FootInchMinuteSecondSymbols::default(),
             "Magic Johnson: 6′ 9″",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -259,6 +266,7 @@ mod tests {
             "Eiffel Tower: 48°51'N, 2°17'E",
             FootInchMinuteSecondSymbols::default(),
             "Eiffel Tower: 48°51′N, 2°17′E",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -268,27 +276,48 @@ mod tests {
             "Statue of Liberty: 40° 41’ N, 74° 02’ W",
             FootInchMinuteSecondSymbols::default(),
             "Statue of Liberty: 40° 41′ N, 74° 02′ W",
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn fix_prime_feet_ascii_quote() {
-        assert_suggestion_result("6′7\"", FootInchMinuteSecondSymbols::default(), "6′7″");
+        assert_suggestion_result(
+            "6′7\"",
+            FootInchMinuteSecondSymbols::default(),
+            "6′7″",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_ascii_feet_prime_seconds() {
-        assert_suggestion_result("6'7″", FootInchMinuteSecondSymbols::default(), "6′7″");
+        assert_suggestion_result(
+            "6'7″",
+            FootInchMinuteSecondSymbols::default(),
+            "6′7″",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_prime_minute_ascii_quote() {
-        assert_suggestion_result("30′15\"", FootInchMinuteSecondSymbols::default(), "30′15″");
+        assert_suggestion_result(
+            "30′15\"",
+            FootInchMinuteSecondSymbols::default(),
+            "30′15″",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fix_ascii_minute_prime_second() {
-        assert_suggestion_result("30'15″", FootInchMinuteSecondSymbols::default(), "30′15″");
+        assert_suggestion_result(
+            "30'15″",
+            FootInchMinuteSecondSymbols::default(),
+            "30′15″",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -297,6 +326,7 @@ mod tests {
             "Sydney Opera House: 33°51'25\"S, 151° 12' 55\" East",
             FootInchMinuteSecondSymbols::default(),
             "Sydney Opera House: 33°51′25″S, 151° 12′ 55″ East",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -306,6 +336,7 @@ mod tests {
             "The Taj Mahal: 27°10′30\"N & 78° 02’ 32” E",
             FootInchMinuteSecondSymbols::default(),
             "The Taj Mahal: 27°10′30″N & 78° 02′ 32″ E",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -315,6 +346,7 @@ mod tests {
             "Colosseum: 41°53'25″North; 12°29'32″East",
             FootInchMinuteSecondSymbols::default(),
             "Colosseum: 41°53′25″North; 12°29′32″East",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -323,6 +355,7 @@ mod tests {
         assert_no_lints(
             "There are pyramids at 29°58′45″ north and 31°08′03″ east",
             FootInchMinuteSecondSymbols::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

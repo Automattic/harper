@@ -75,6 +75,7 @@ mod tests {
             "However, there wasn't, causing Gurman to fall 40 feet below.",
             FallBelow::default(),
             "However, there wasn't, causing Gurman to fall 40 feet.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -84,6 +85,7 @@ mod tests {
             "Woman who died in Brazil Bungee jump tragedy was alive after falling 130 feet below",
             FallBelow::default(),
             "Woman who died in Brazil Bungee jump tragedy was alive after falling 130 feet",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -93,6 +95,7 @@ mod tests {
             "The young trekker was stuck in Bramhagiri Rocks in Nandi Hills after slipping and falling 300 feet below, said PRO Defence.",
             FallBelow::default(),
             "The young trekker was stuck in Bramhagiri Rocks in Nandi Hills after slipping and falling 300 feet, said PRO Defence.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -102,6 +105,7 @@ mod tests {
             "But while jumping, unfortunately, the rope broke and he fell 20 feet below.",
             FallBelow::default(),
             "But while jumping, unfortunately, the rope broke and he fell 20 feet.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -111,6 +115,7 @@ mod tests {
             "“Mike and Annie call for the lift to stop, but the chair did not stop. Instead it carried her up, and Annie fell 30 feet below, landing on her skis,” Miller’s attorney, Bruce Braley, said.",
             FallBelow::default(),
             "“Mike and Annie call for the lift to stop, but the chair did not stop. Instead it carried her up, and Annie fell 30 feet, landing on her skis,” Miller’s attorney, Bruce Braley, said.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -120,6 +125,7 @@ mod tests {
             "SUV crashes through bridge guardrail, falls 50 feet below.",
             FallBelow::default(),
             "SUV crashes through bridge guardrail, falls 50 feet.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -129,6 +135,7 @@ mod tests {
             "Motorcyclist crashes off edge of Ballard Bridge, falls 20 feet below",
             FallBelow::default(),
             "Motorcyclist crashes off edge of Ballard Bridge, falls 20 feet",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -138,6 +145,7 @@ mod tests {
             "On the 18th, a man fell 20 meters below and died in Songnisan National Park.",
             FallBelow::default(),
             "On the 18th, a man fell 20 meters and died in Songnisan National Park.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -150,6 +158,7 @@ mod tests {
             "A large billboard on Krystal Point building fell several metres below damaging several vehicles.",
             FallBelow::default(),
             "A large billboard on Krystal Point building fell several metres damaging several vehicles.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -160,6 +169,7 @@ mod tests {
             "Speeding Bike Collides with Railing, 3 Riders Fall 40 Feet Below in Visakhapatnam.",
             FallBelow::default(),
             "Speeding Bike Collides with Railing, 3 Riders Fall 40 Feet in Visakhapatnam.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

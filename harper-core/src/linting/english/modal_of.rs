@@ -167,39 +167,74 @@ mod tests {
 
     #[test]
     fn test_false_positive_of_course() {
-        assert_lint_count("should of course", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "should of course",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_false_positive_the_might_of() {
-        assert_lint_count("the might of", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "the might of",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_false_positive_great_might_of() {
-        assert_lint_count("great might of", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "great might of",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_false_positive_capital_negative() {
-        assert_lint_count("Wouldn't of course", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Wouldn't of course",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // real-world tests
 
     #[test]
     fn test_buggy_implementation() {
-        assert_lint_count("... could of just been a buggy implementation", ModalOf::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "... could of just been a buggy implementation",
+            ModalOf::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_missed_one() {
-        assert_lint_count("We already have a function ... that nedb can understand so we might of missed one.", ModalOf::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We already have a function ... that nedb can understand so we might of missed one.",
+            ModalOf::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_user_option() {
-        assert_lint_count("im more likely to believe you might of left in the 'user' option", ModalOf::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "im more likely to believe you might of left in the 'user' option",
+            ModalOf::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -214,7 +249,12 @@ mod tests {
 
     #[test]
     fn catches_should_of() {
-        assert_lint_count("Yeah I should of just mentioned it should of been a for of.", ModalOf::default(), 2, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Yeah I should of just mentioned it should of been a for of.",
+            ModalOf::default(),
+            2,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -229,81 +269,159 @@ mod tests {
 
     #[test]
     fn doesnt_catch_you_could_of_course() {
-        assert_lint_count("You could of course explicit the else with each possibility", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You could of course explicit the else with each possibility",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_compiler_could_of_course() {
-        assert_lint_count("The compiler could of course detect this too", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The compiler could of course detect this too",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_might_of_course_be() {
-        assert_lint_count("There might of course be other places where not implementing the IMemberSource might break ...", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "There might of course be other places where not implementing the IMemberSource might break ...",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_not_a_must_of_course() {
-        assert_lint_count("Not a must of course if the convention should be .ts", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Not a must of course if the convention should be .ts",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_must_of_course_also() {
-        assert_lint_count("the schedular must of course also have run through", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "the schedular must of course also have run through",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_should_of_course_not() {
-        assert_lint_count("not being local should of course not be supported", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "not being local should of course not be supported",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_would_of_course_just() {
-        assert_lint_count("I would of course just test this by compiling with MATX_MULTI_GPU=ON", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I would of course just test this by compiling with MATX_MULTI_GPU=ON",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_to_take_on_the_full_might_of_nato() {
-        assert_lint_count("To take on the full might of NATO.", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "To take on the full might of NATO.",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_mixed_case_of_course() {
-        assert_lint_count("... for now you could of Course put ...", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "... for now you could of Course put ...",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_mixed_case_could_of_put() {
-        assert_lint_count("... for now you could of Put ...", ModalOf::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "... for now you could of Put ...",
+            ModalOf::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_noun_will_of() {
-        assert_lint_count("the will of the many", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "the will of the many",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_catch_noun_will_of_edgecase() {
-        assert_lint_count("he sent us a will of his", ModalOf::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "he sent us a will of his",
+            ModalOf::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catch_modal_will_of() {
-        assert_lint_count("that will of an impact", ModalOf::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "that will of an impact",
+            ModalOf::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catch_may_of() {
-        assert_suggestion_result("I may of made a mistake", ModalOf::default(), "I may have made a mistake", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I may of made a mistake",
+            ModalOf::default(),
+            "I may have made a mistake",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_in_may_of_last_year_bug_2786() {
-        assert_no_lints("This happened in May of last year.", ModalOf::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "This happened in May of last year.",
+            ModalOf::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_can_of_red_bull_2807() {
-        assert_no_lints("I drank a can of Red Bull.", ModalOf::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I drank a can of Red Bull.",
+            ModalOf::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

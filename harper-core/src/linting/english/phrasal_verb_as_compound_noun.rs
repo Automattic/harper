@@ -347,7 +347,12 @@ mod tests {
 
     #[test]
     fn correct_breakup_and_workout() {
-        assert_suggestion_result("I will never breakup with Gym. We just seem to workout.", PhrasalVerbAsCompoundNoun::default(), "I will never break up with Gym. We just seem to work out.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I will never breakup with Gym. We just seem to workout.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I will never break up with Gym. We just seem to work out.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Issue #3239. Both of these are compound nouns whose dictionary entries once
@@ -357,17 +362,31 @@ mod tests {
     // easy to reintroduce.
     #[test]
     fn flag_rollback_used_as_a_verb_issue_3239() {
-        assert_suggestion_result("I already did a rollback. I'm not going to rollback again.", PhrasalVerbAsCompoundNoun::default(), "I already did a rollback. I'm not going to roll back again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I already did a rollback. I'm not going to rollback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a rollback. I'm not going to roll back again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_comeback_used_as_a_verb_issue_3239() {
-        assert_suggestion_result("I already did a comeback. I'm not going to comeback again.", PhrasalVerbAsCompoundNoun::default(), "I already did a comeback. I'm not going to come back again.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I already did a comeback. I'm not going to comeback again.",
+            PhrasalVerbAsCompoundNoun::default(),
+            "I already did a comeback. I'm not going to come back again.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_rollback_or_comeback_as_nouns_issue_3239() {
-        assert_no_lints("I already did a rollback. It was quite a comeback.", PhrasalVerbAsCompoundNoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I already did a rollback. It was quite a comeback.",
+            PhrasalVerbAsCompoundNoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -611,7 +630,12 @@ mod tests {
 
     #[test]
     fn flag_all_caps() {
-        assert_lint_count("I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.", PhrasalVerbAsCompoundNoun::default(), 2, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I WILL NEVER BREAKUP WITH GYM. WE JUST SEEM TO WORKOUT.",
+            PhrasalVerbAsCompoundNoun::default(),
+            2,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -933,11 +957,20 @@ mod tests {
 
     #[test]
     fn issue_2505_correct_setup_but_dont_flag_backup_link() {
-        assert_suggestion_result("How to properly setup a backup link (and have it act like a backup again after stop/start of master link)", PhrasalVerbAsCompoundNoun::default(), "How to properly set up a backup link (and have it act like a backup again after stop/start of master link)", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "How to properly setup a backup link (and have it act like a backup again after stop/start of master link)",
+            PhrasalVerbAsCompoundNoun::default(),
+            "How to properly set up a backup link (and have it act like a backup again after stop/start of master link)",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_meltdown_3591() {
-        assert_no_lints("Unfortunately, Meltdown ended up being problematic.", PhrasalVerbAsCompoundNoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Unfortunately, Meltdown ended up being problematic.",
+            PhrasalVerbAsCompoundNoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

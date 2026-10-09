@@ -48,6 +48,8 @@ pub trait Dialect:
     /// ```
     #[must_use]
     fn try_from_abbr(abbr: &str) -> Option<Self>;
+
+    fn try_from_bcp47(bcp47: &str) -> Option<Self>;
 }
 
 pub trait DialectFlags<ParentDialect>: Default

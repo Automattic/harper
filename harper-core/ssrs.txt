@@ -3,4 +3,6 @@ assert_suggestion_result($text, $linter, $needle,) ==>> assert_suggestion_result
 assert_no_lints($text, $linter,) ==>> assert_no_lints($text, $linter, crate::languages::LanguageFamily::English)
 assert_lint_count($text, $linter, $count,) ==>> assert_lint_count($text, $linter, $count, crate::languages::LanguageFamily::English)
 
+assert_suggestion_count($text, $linter, $count,) ==>> assert_suggestion_count($text, $linter, $count, crate::languages::LanguageFamily::English)
+
 FstDictionary::curated() ==>> FstDictionary::curated(crate::languages::LanguageFamily::English)

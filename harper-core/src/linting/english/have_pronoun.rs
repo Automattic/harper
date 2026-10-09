@@ -100,11 +100,21 @@ mod tests {
 
     #[test]
     fn allows_has_he() {
-        assert_lint_count("Has he arrived yet?", HavePronoun::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Has he arrived yet?",
+            HavePronoun::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_non_initial_usage() {
-        assert_lint_count("The system has we confused for a moment.", HavePronoun::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The system has we confused for a moment.",
+            HavePronoun::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -73,6 +73,7 @@ mod tests {
             "Got a complain abount 'direct reference to field' even using the method",
             ComplainAsNoun::default(),
             "Got a complaint abount 'direct reference to field' even using the method",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -82,6 +83,7 @@ mod tests {
             "To solve most of these things, requires the one to lodge a complain as well as follow up on his complain to ensure it has been resolved.",
             ComplainAsNoun::default(),
             "To solve most of these things, requires the one to lodge a complaint as well as follow up on his complaint to ensure it has been resolved.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -91,6 +93,7 @@ mod tests {
             "This platform provides a all in one solution for the complaining and solving of the complains through public forums.",
             ComplainAsNoun::default(),
             "This platform provides a all in one solution for the complaining and solving of the complaints through public forums.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -100,6 +103,7 @@ mod tests {
             "My complain about: esp-idf/examples/peripherals/lcd/i2c_oled",
             ComplainAsNoun::default(),
             "My complaint about: esp-idf/examples/peripherals/lcd/i2c_oled",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -109,6 +113,7 @@ mod tests {
             "In a customer, you just have to submit your complain.",
             ComplainAsNoun::default(),
             "In a customer, you just have to submit your complaint.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -118,6 +123,7 @@ mod tests {
             "I raise a complain about the documentation.",
             ComplainAsNoun::default(),
             "I raise a complaint about the documentation.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -127,6 +133,7 @@ mod tests {
             "Many complains were raised about the documentation.",
             ComplainAsNoun::default(),
             "Many complaints were raised about the documentation.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -137,6 +144,7 @@ mod tests {
         assert_no_lints(
             "The idea is to only have the complain flag defined in the manifest",
             ComplainAsNoun::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

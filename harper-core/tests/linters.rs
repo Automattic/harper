@@ -197,13 +197,14 @@ fn test_most_lints() {
         let dict = FstDictionary::curated(LanguageFamily::English);
         let document = Document::new_markdown_default(source, &dict);
 
-        let dialect_override = if let Some(DialectsEnum::English(dialect)) = dialect_override {
+        let dialect = if let Some(DialectsEnum::English(dialect)) = dialect_override {
             dialect
         } else {
-            EnglishDialect::American
+            <EnglishDialect as harper_core::Dialect>::try_guess_from_document(&document)
+                .unwrap_or(EnglishDialect::American)
         };
 
-        let mut linter = LintGroup::new_curated(dict, Language::English(dialect_override));
+        let mut linter = LintGroup::new_curated(dict, Language::English(dialect));
 
         let mut lints = linter.lint(&document);
         lints.sort_by(|a, b| {

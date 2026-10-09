@@ -83,12 +83,22 @@ mod tests {
 
     #[test]
     fn allow_intro_page() {
-        assert_lint_count("You can try out an editor that uses Harper under-the-hood here.", PossessiveYour::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You can try out an editor that uses Harper under-the-hood here.",
+            PossessiveYour::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allow_you_guys() {
-        assert_lint_count("I mean I'm pretty sure you guys can't do anything with this stuff.", PossessiveYour::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I mean I'm pretty sure you guys can't do anything with this stuff.",
+            PossessiveYour::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -124,21 +134,40 @@ mod tests {
 
     #[test]
     fn dont_flag_just_showing_you() {
-        assert_lint_count("I'm just showing you what's available and how to use it.", PossessiveYour::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I'm just showing you what's available and how to use it.",
+            PossessiveYour::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_issue_1583() {
-        assert_no_lints("Note that in a world with modules everywhere, you almost never need an IIFE", PossessiveYour::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Note that in a world with modules everywhere, you almost never need an IIFE",
+            PossessiveYour::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_1919_brought_you() {
-        assert_lint_count("team who also brought you [BloodHound Enterprise](http://specterops.io/bloodhound-verview/).", PossessiveYour::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "team who also brought you [BloodHound Enterprise](http://specterops.io/bloodhound-verview/).",
+            PossessiveYour::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_1919_teaches_you() {
-        assert_lint_count("Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.", PossessiveYour::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Teaches you PyTorch and many machine learning concepts in a hands-on, code-first way.",
+            PossessiveYour::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -847,9 +847,9 @@
 			"#": "American property",
 			"propagate": true,
 			"metadata": {
-				"dialects":{
-          "English": "AMERICAN"
-        }
+				"dialects": {
+					"English": "AMERICAN"
+				}
 			},
 			"rename_ok": true
 		},
@@ -858,8 +858,8 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": {
-          "English": "BRITISH"
-        }
+					"English": "BRITISH"
+				}
 			},
 			"rename_ok": true
 		},
@@ -869,8 +869,8 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": {
-          "English": "CANADIAN"
-        }
+					"English": "CANADIAN"
+				}
 			}
 		},
 		"_": {
@@ -879,8 +879,8 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": {
-          "English": "AUSTRALIAN"
-        }
+					"English": "AUSTRALIAN"
+				}
 			}
 		},
 		"₹": {
@@ -889,8 +889,8 @@
 			"propagate": true,
 			"metadata": {
 				"dialects": {
-          "English": "INDIAN"
-        }
+					"English": "INDIAN"
+				}
 			}
 		},
 		"F": {

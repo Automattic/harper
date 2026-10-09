@@ -71,6 +71,10 @@ impl Dialect for PortugueseDialect {
             _ => None,
         }
     }
+
+    fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        bcp47.strip_prefix("pt-").and_then(Self::try_from_abbr)
+    }
 }
 impl TryFrom<PortugueseDialectFlags> for PortugueseDialect {
     type Error = ();

@@ -136,52 +136,87 @@ mod tests {
 
     #[test]
     fn dont_flag_to_check_both_verb_and_noun() {
-        assert_lint_count("to check", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to check",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_to_checks_both_verb_and_noun() {
-        assert_lint_count("to checks", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to checks",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_to_cheques_not_a_verb() {
-        assert_lint_count("to cheques", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to cheques",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "-ing forms can act as nouns, current heuristics cannot distinguish"]
     fn flag_to_checking() {
-        assert_lint_count("to checking", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to checking",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English);
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_check_ed() {
-        assert_lint_count("to checked", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to checked",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_noun_belief_s() {
-        assert_lint_count("to beliefs", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to beliefs",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_noun_meat_s() {
-        assert_lint_count("to meats", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "to meats",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -199,9 +234,14 @@ mod tests {
 
     #[test]
     fn dont_flag_embarrass_not_in_dictionary() {
-        assert_lint_count("Second I'm going to embarrass you for a.", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "Second I'm going to embarrass you for a.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -243,9 +283,14 @@ mod tests {
 
     #[test]
     fn flags_expire_d() {
-        assert_lint_count("I didn't know it was going to expired.", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "I didn't know it was going to expired.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 1, crate::languages::LanguageFamily::English);
+            )),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -275,9 +320,14 @@ mod tests {
 
     #[test]
     fn cant_flag_express_ed_also_noun() {
-        assert_lint_count("I failed to clearly expressed my point.", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "I failed to clearly expressed my point.",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -296,8 +346,13 @@ mod tests {
     #[test]
     fn issue_241() {
         // Hypothesis: when before "to" is not an adj, assume "to" is a preposition
-        assert_lint_count("Comparison to Expected Results", InflectedVerbAfterTo::new(FstDictionary::curated(
+        assert_lint_count(
+            "Comparison to Expected Results",
+            InflectedVerbAfterTo::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
-            )), 0, crate::languages::LanguageFamily::English);
+            )),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

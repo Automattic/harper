@@ -78,6 +78,7 @@ mod tests {
             "[BUG] Advise as how to debug error messages.",
             AsHow::default(),
             "[BUG] Advise as to how to debug error messages.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -87,6 +88,7 @@ mod tests {
             "Since I'm using OpenAPI to describe my API I'm puzzled as how to describe this response.",
             AsHow::default(),
             "Since I'm using OpenAPI to describe my API I'm puzzled as to how to describe this response.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -96,6 +98,7 @@ mod tests {
             "A sample/example as how to use Summaries",
             AsHow::default(),
             "A sample/example as to how to use Summaries",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -105,6 +108,7 @@ mod tests {
             "searched the issues/questions but I'm still clueless as how to set the body of the HTTP request",
             AsHow::default(),
             "searched the issues/questions but I'm still clueless as to how to set the body of the HTTP request",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -114,6 +118,7 @@ mod tests {
             "We would need a more concrete specification together with examples as how this would be supposed to work.",
             AsHow::default(),
             "We would need a more concrete specification together with examples as to how this would be supposed to work.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -123,6 +128,7 @@ mod tests {
             "Hi! I'm confused as how to save the brain bytes model",
             AsHow::default(),
             "Hi! I'm confused as to how to save the brain bytes model",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -132,6 +138,7 @@ mod tests {
             "it's more of a design document/me laying my thoughts out as how to tackle this problem",
             AsHow::default(),
             "it's more of a design document/me laying my thoughts out as to how to tackle this problem",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -139,7 +146,11 @@ mod tests {
 
     #[test]
     fn avoid_as_well_as_how() {
-        assert_no_lints("When to do Git things (as well as how)", AsHow::default());
+        assert_no_lints(
+            "When to do Git things (as well as how)",
+            AsHow::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -147,6 +158,7 @@ mod tests {
         assert_no_lints(
             "Some questions on configuring capsules, as well as how they are (or are not) weighted.",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -155,6 +167,7 @@ mod tests {
         assert_no_lints(
             "how to contribute a feature to PolyScope as well as how to modify and remove it",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -163,6 +176,7 @@ mod tests {
         assert_no_lints(
             "It recognizes that how code looks matters just as much as how it works.",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -171,6 +185,7 @@ mod tests {
         assert_no_lints(
             "Although the renderer will be opinionated as far as how it will structure the submission data out-of-the-box",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -179,6 +194,7 @@ mod tests {
         assert_no_lints(
             "FILE_ALL_ACCESS is not defined the same as how Windows defines it",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -190,6 +206,7 @@ mod tests {
         assert_no_lints(
             "As how many requests is a request with a list of coordinates counted?",
             AsHow::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

@@ -62,7 +62,11 @@ mod tests {
 
     #[test]
     fn dont_flag_jump_the_gun() {
-        assert_no_lints("jump the gun", JumpTheGun::default());
+        assert_no_lints(
+            "jump the gun",
+            JumpTheGun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Real-world tests
@@ -73,6 +77,7 @@ mod tests {
             "But in Race Max Pro, it's possible to get a happy finger case and jump a gun.",
             JumpTheGun::default(),
             "But in Race Max Pro, it's possible to get a happy finger case and jump the gun.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -82,6 +87,7 @@ mod tests {
             "Well, I may have jumped a gun here creating this issue.",
             JumpTheGun::default(),
             "Well, I may have jumped the gun here creating this issue.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -91,6 +97,7 @@ mod tests {
             "Lexxy being a js library I jumped the guns and felt removing the button completely on initialization was safer.",
             JumpTheGun::default(),
             "Lexxy being a js library I jumped the gun and felt removing the button completely on initialization was safer.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -100,6 +107,7 @@ mod tests {
             "To make sure I'm not jumping the guns, @hkuadithya how did you change the JDK version exactly?",
             JumpTheGun::default(),
             "To make sure I'm not jumping the gun, @hkuadithya how did you change the JDK version exactly?",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

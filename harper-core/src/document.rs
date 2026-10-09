@@ -7,7 +7,7 @@ use itertools::Itertools;
 
 use crate::expr::{Expr, ExprExt, FirstMatchOf, Repeating, SequenceExpr};
 use crate::languages::LanguageFamily;
-use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish};
+use crate::parsers::{Markdown, MarkdownOptions, Parser, PlainEnglish, PlainPortuguese};
 use crate::punctuation::Punctuation;
 use crate::spell::{Dictionary, FstDictionary};
 use crate::vec_ext::VecExt;
@@ -107,6 +107,35 @@ impl Document {
             &PlainEnglish,
             &FstDictionary::curated(crate::languages::LanguageFamily::English),
         )
+    }
+
+    /// Create a new document from character data using the built-in [`PlainPortuguese`]
+    /// parser and the curated Portuguese dictionary. This avoids string-to-char conversions.
+    pub fn new_plain_portuguese_curated_chars(source: &[char]) -> Self {
+        Self::new_from_chars(
+            Lrc::from(source),
+            &PlainPortuguese,
+            &FstDictionary::curated(LanguageFamily::Portuguese),
+        )
+    }
+
+    /// Parse text to produce a document using the built-in [`PlainPortuguese`]
+    /// parser and the curated Portuguese dictionary.
+    pub fn new_plain_portuguese_curated(text: &str) -> Self {
+        Self::new(
+            text,
+            &PlainPortuguese,
+            &FstDictionary::curated(LanguageFamily::Portuguese),
+        )
+    }
+
+    /// Parse plain text in the given language, using that language's parser and curated
+    /// dictionary.
+    pub fn new_plain_curated(text: &str, language: LanguageFamily) -> Self {
+        match language {
+            LanguageFamily::English => Self::new_plain_english_curated(text),
+            LanguageFamily::Portuguese => Self::new_plain_portuguese_curated(text),
+        }
     }
 
     /// Create a new document simply by tokenizing the provided input and applying fix-ups. The

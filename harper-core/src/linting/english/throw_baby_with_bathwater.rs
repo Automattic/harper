@@ -159,6 +159,7 @@ mod tests {
             "Instead of gradually improving security, you are basically throwing away the baby with the bathwater.",
             ThrowBabyWithBathwater::default(),
             "Instead of gradually improving security, you are basically throwing out the baby with the bathwater.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -168,6 +169,7 @@ mod tests {
             "then you don't have to throw away the baby with the bath water: you can apply the simple pattern optimization",
             ThrowBabyWithBathwater::default(),
             "then you don't have to throw out the baby with the bath water: you can apply the simple pattern optimization",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -190,6 +192,7 @@ mod tests {
             "Changes are that you throw away the baby with the bathwater.",
             ThrowBabyWithBathwater::default(),
             "Changes are that you throw out the baby with the bathwater.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -304,6 +307,7 @@ mod tests {
         assert_no_lints(
             "Give it a try before tossing the baby with the bath water.",
             ThrowBabyWithBathwater::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -312,6 +316,7 @@ mod tests {
         assert_no_lints(
             "Jumping from there straight to vintage equipment amounts to dumping the baby with the bathwater, but modern digital cameras can be quite pricey",
             ThrowBabyWithBathwater::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -320,6 +325,7 @@ mod tests {
         assert_no_lints(
             "so I was wondering if I'm throwing parts of the baby with the bath water",
             ThrowBabyWithBathwater::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -332,6 +338,7 @@ mod tests {
             "That's riding hype machine and throwing baby with bath water.",
             ThrowBabyWithBathwater::default(),
             "That's riding hype machine and throwing out the baby with bath water.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -342,6 +349,7 @@ mod tests {
             "My concern is that they have thrown the baby with the water.",
             ThrowBabyWithBathwater::default(),
             "My concern is that they have thrown out the baby with the water.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

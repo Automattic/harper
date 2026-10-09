@@ -122,17 +122,32 @@ mod tests {
 
     #[test]
     fn allows_english_comma_atomic() {
-        assert_lint_count(",", CommaFixes, 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            ",",
+            CommaFixes,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_fullwidth_comma_atomic() {
-        assert_lint_count("，", CommaFixes, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "，",
+            CommaFixes,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_ideographic_comma_atomic() {
-        assert_lint_count("、", CommaFixes, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "、",
+            CommaFixes,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -157,22 +172,42 @@ mod tests {
 
     #[test]
     fn doesnt_flag_comma_space_between_words() {
-        assert_lint_count("foo, bar", CommaFixes, 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "foo, bar",
+            CommaFixes,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_fullwidth_comma_space_between_words() {
-        assert_lint_count("foo， bar", CommaFixes, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "foo， bar",
+            CommaFixes,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flags_ideographic_comma_space_between_words() {
-        assert_lint_count("foo、 bar", CommaFixes, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "foo、 bar",
+            CommaFixes,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn doesnt_flag_semicolon_space_between_words() {
-        assert_lint_count("foo; bar", CommaFixes, 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "foo; bar",
+            CommaFixes,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -237,11 +272,20 @@ mod tests {
 
     #[test]
     fn doesnt_correct_comma_between_non_english_tokens() {
-        assert_lint_count("严禁采摘花、 果、叶，挖掘树根、草药!", CommaFixes, 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "严禁采摘花、 果、叶，挖掘树根、草药!",
+            CommaFixes,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn issue_2233() {
-        assert_no_lints("In foobar, apple is a fruit, and \"beer\" is not a fruit.", CommaFixes, crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "In foobar, apple is a fruit, and \"beer\" is not a fruit.",
+            CommaFixes,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

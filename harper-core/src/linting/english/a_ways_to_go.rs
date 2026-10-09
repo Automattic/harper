@@ -78,6 +78,7 @@ mod tests {
             "This project is currently under dev and has ways to go.",
             AWaysToGo::default(),
             "This project is currently under dev and has a ways to go.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -87,6 +88,7 @@ mod tests {
             "It's an ongoing effort and has ways to go, but please take a look and consider contributing as well.",
             AWaysToGo::default(),
             "It's an ongoing effort and has a ways to go, but please take a look and consider contributing as well.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -96,6 +98,7 @@ mod tests {
             "We have ways to go in order to reach even close.",
             AWaysToGo::default(),
             "We have a ways to go in order to reach even close.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -105,6 +108,7 @@ mod tests {
             "and our darray implementation still has ways to go.",
             AWaysToGo::default(),
             "and our darray implementation still has a ways to go.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -114,6 +118,7 @@ mod tests {
             "that thing still has ways to go before it's actually usable",
             AWaysToGo::default(),
             "that thing still has a ways to go before it's actually usable",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -123,6 +128,7 @@ mod tests {
             "Currently react-native-keys still has ways to go to be free of vulnerabilities.",
             AWaysToGo::default(),
             "Currently react-native-keys still has a ways to go to be free of vulnerabilities.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -132,6 +138,7 @@ mod tests {
             "the fact that we still have ways to go with updating the documentation",
             AWaysToGo::default(),
             "the fact that we still have a ways to go with updating the documentation",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -141,6 +148,7 @@ mod tests {
             "I still have ways to go though so it's a challenge for sure.",
             AWaysToGo::default(),
             "I still have a ways to go though so it's a challenge for sure.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -150,6 +158,7 @@ mod tests {
             "but it seems I'll still have ways to go before getting a fully descriptive usable schema",
             AWaysToGo::default(),
             "but it seems I'll still have a ways to go before getting a fully descriptive usable schema",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -159,6 +168,7 @@ mod tests {
             "Now to work on the email part still have ways to go but I'm actually liking the new logic.",
             AWaysToGo::default(),
             "Now to work on the email part still have a ways to go but I'm actually liking the new logic.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -169,6 +179,7 @@ mod tests {
         assert_no_lints(
             "All IDEs (and even Vim/evil) have ways to go back to the last place''",
             AWaysToGo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -177,6 +188,7 @@ mod tests {
         assert_no_lints(
             "In every map there were ways to go from A to B by going through intermediate factories in <= time.",
             AWaysToGo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -185,6 +197,7 @@ mod tests {
         assert_no_lints(
             "Also I now have ways to go about rendering audio along with the frames",
             AWaysToGo::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

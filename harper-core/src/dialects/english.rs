@@ -56,8 +56,7 @@ impl Dialect for EnglishDialect {
     /// # Examples
     ///
     /// ```
-    /// use harper_core::EnglishDialect;
-    /// use harper_core::Dialect;
+    /// use harper_core::{Dialect, EnglishDialect};
     ///
     /// let abbrs = ["US", "CA", "AU", "GB", "IN"];
     /// let mut dialects = abbrs.iter().map(|abbr| EnglishDialect::try_from_abbr(abbr));
@@ -66,7 +65,7 @@ impl Dialect for EnglishDialect {
     /// assert_eq!(Some(EnglishDialect::Canadian), dialects.next().unwrap()); // CA
     /// assert_eq!(Some(EnglishDialect::Australian), dialects.next().unwrap()); // AU
     /// assert_eq!(Some(EnglishDialect::British), dialects.next().unwrap()); // GB
-    /// assert_eq!(Some(Dialect::Indian), dialects.next().unwrap()); // IN
+    /// assert_eq!(Some(EnglishDialect::Indian), dialects.next().unwrap()); // IN
     /// ```
     #[allow(refining_impl_trait_internal)]
     fn try_from_abbr(abbr: &str) -> Option<Self> {
@@ -78,6 +77,10 @@ impl Dialect for EnglishDialect {
             "IN" => Some(Self::Indian),
             _ => None,
         }
+    }
+    // BCP-47 https://www.rfc-editor.org/rfc/rfc5646
+    fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        bcp47.strip_prefix("en-").and_then(Self::try_from_abbr)
     }
 }
 impl TryFrom<EnglishDialectFlags> for EnglishDialect {

@@ -75,10 +75,20 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
         for word in document.iter_words() {
             let word_chars = document.get_span_content(&word.span);
 
-            if let Some(metadata) = word.kind.as_word().unwrap()
+            // Look the word up in our own dictionary rather than trusting the token's metadata,
+            // which may have been produced by a dictionary of a different language.
+            let lower = word_chars.to_lower();
+            let known_form = if self.dictionary.contains_exact_word(word_chars) {
+                Some(word_chars)
+            } else if self.dictionary.contains_exact_word(&lower) {
+                Some(lower.as_ref())
+            } else {
+                None
+            };
+
+            if let Some(form) = known_form
+                && let Some(metadata) = self.dictionary.get_word_metadata(form)
                 && metadata.dialects.is_dialect_enabled(self.dialect)
-                && (self.dictionary.contains_exact_word(word_chars)
-                    || self.dictionary.contains_exact_word(&word_chars.to_lower()))
             {
                 continue;
             };
@@ -148,7 +158,6 @@ mod tests_portuguese {
     // Capitalization tests
 
     #[test]
-    #[ignore]
     fn brasil_capitalized() {
         assert_suggestion_result(
             "A palavra brasil deveria ser capitalizada.",
@@ -156,13 +165,12 @@ mod tests_portuguese {
                 FstDictionary::curated_select_language(LanguageFamily::Portuguese),
                 PortugueseDialect::Brazilian,
             ),
-            "A palavra Brasil deveria ser capitalizada",
+            "A palavra Brasil deveria ser capitalizada.",
             LanguageFamily::Portuguese,
         );
     }
 
     #[test]
-    #[ignore]
     fn harper_automattic_capitalized() {
         assert_lint_count(
             "Tal qual harper e automattic.",

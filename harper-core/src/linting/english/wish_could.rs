@@ -75,51 +75,101 @@ mod tests {
 
     #[test]
     fn flag_wish_we_can() {
-        assert_suggestion_result("i wish we can spend more time together", WishCould::default(), "i wish we could spend more time together", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "i wish we can spend more time together",
+            WishCould::default(),
+            "i wish we could spend more time together",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wish_i_can() {
-        assert_suggestion_result("I wish I can finally forgive myself for all the things I am not.", WishCould::default(), "I wish I could finally forgive myself for all the things I am not.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I wish I can finally forgive myself for all the things I am not.",
+            WishCould::default(),
+            "I wish I could finally forgive myself for all the things I am not.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wish_you_can() {
-        assert_suggestion_result("I wish you can find your true love.", WishCould::default(), "I wish you could find your true love.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I wish you can find your true love.",
+            WishCould::default(),
+            "I wish you could find your true love.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wishes_they_can() {
-        assert_suggestion_result("What your Therapist wishes they can tell you.", WishCould::default(), "What your Therapist wishes they could tell you.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "What your Therapist wishes they can tell you.",
+            WishCould::default(),
+            "What your Therapist wishes they could tell you.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wishing_someone_can() {
-        assert_suggestion_result("Forever wishing someone can point me in the right direction", WishCould::default(), "Forever wishing someone could point me in the right direction", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Forever wishing someone can point me in the right direction",
+            WishCould::default(),
+            "Forever wishing someone could point me in the right direction",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wish_they_can() {
-        assert_suggestion_result("I wish they can plant more trees on this road.", WishCould::default(), "I wish they could plant more trees on this road.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I wish they can plant more trees on this road.",
+            WishCould::default(),
+            "I wish they could plant more trees on this road.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn flag_wished_he_can() {
-        assert_suggestion_result("I just wished he can talk and tell me how he feels", WishCould::default(), "I just wished he could talk and tell me how he feels", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I just wished he can talk and tell me how he feels",
+            WishCould::default(),
+            "I just wished he could talk and tell me how he feels",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn wish_this_can() {
-        assert_suggestion_result("but I wish this can be fixed by Electron team", WishCould::default(), "but I wish this could be fixed by Electron team", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "but I wish this can be fixed by Electron team",
+            WishCould::default(),
+            "but I wish this could be fixed by Electron team",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn wish_it_can() {
-        assert_suggestion_result("Wish it can be supported.", WishCould::default(), "Wish it could be supported.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "Wish it can be supported.",
+            WishCould::default(),
+            "Wish it could be supported.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn wish_somebody_can() {
-        assert_suggestion_result("I wish somebody can fix this issue.", WishCould::default(), "I wish somebody could fix this issue.", crate::languages::LanguageFamily::English)
+        assert_suggestion_result(
+            "I wish somebody can fix this issue.",
+            WishCould::default(),
+            "I wish somebody could fix this issue.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

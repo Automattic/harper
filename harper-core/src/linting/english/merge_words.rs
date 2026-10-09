@@ -99,17 +99,32 @@ mod tests {
 
     #[test]
     fn clean() {
-        assert_lint_count("When referring to the political party, make sure to treat them as a proper noun.", MergeWords::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "When referring to the political party, make sure to treat them as a proper noun.",
+            MergeWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn heretofore() {
-        assert_lint_count("This is a her etofore unseen problem.", MergeWords::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "This is a her etofore unseen problem.",
+            MergeWords::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn therefore() {
-        assert_lint_count("The refore", MergeWords::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The refore",
+            MergeWords::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -124,12 +139,27 @@ mod tests {
 
     #[test]
     fn allows_issue_722() {
-        assert_lint_count("Leaving S and K alone.", MergeWords::default(), 0, crate::languages::LanguageFamily::English);
-        assert_lint_count("Similarly an S with a line.", MergeWords::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Leaving S and K alone.",
+            MergeWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Similarly an S with a line.",
+            MergeWords::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn checks_weirdly() {
-        assert_suggestion_result("This is wrapped around the line weirdl y.", MergeWords::default(), "This is wrapped around the line weirdly.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "This is wrapped around the line weirdl y.",
+            MergeWords::default(),
+            "This is wrapped around the line weirdly.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

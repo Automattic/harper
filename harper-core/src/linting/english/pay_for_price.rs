@@ -68,6 +68,7 @@ mod tests {
             "Accounts having BNB accounts use this to pay for fees",
             PayForPrice::default(),
             "Accounts having BNB accounts use this to pay fees",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -77,6 +78,7 @@ mod tests {
             "being instructed to either pay for a bill, an expense, or a gift",
             PayForPrice::default(),
             "being instructed to either pay a bill, an expense, or a gift",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -86,6 +88,7 @@ mod tests {
             "Having to pay for a check is 'paying for what you use'.",
             PayForPrice::default(),
             "Having to pay a check is 'paying for what you use'.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -95,6 +98,7 @@ mod tests {
             "then the account needs to pay for a fee of X",
             PayForPrice::default(),
             "then the account needs to pay a fee of X",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -104,6 +108,7 @@ mod tests {
             "Cannot pay for the bill and cannot delete the bill",
             PayForPrice::default(),
             "Cannot pay the bill and cannot delete the bill",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -113,6 +118,7 @@ mod tests {
             "should be able to ascertain if he will pay for the check or not",
             PayForPrice::default(),
             "should be able to ascertain if he will pay the check or not",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -122,6 +128,7 @@ mod tests {
             "Maybe some people in his family weren't paying for the bill out of their own account",
             PayForPrice::default(),
             "Maybe some people in his family weren't paying the bill out of their own account",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -131,6 +138,7 @@ mod tests {
             "how does everyone deal with paying for the check or the bill of any activity",
             PayForPrice::default(),
             "how does everyone deal with paying the check or the bill of any activity",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -140,6 +148,7 @@ mod tests {
             "I now understand that when a man pays for the bill, he has clear intentions",
             PayForPrice::default(),
             "I now understand that when a man pays the bill, he has clear intentions",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -151,6 +160,7 @@ mod tests {
         assert_no_lints(
             "it will specify how much you need and how much you're paying for fees",
             PayForPrice::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -160,6 +170,7 @@ mod tests {
         assert_no_lints(
             "Can we pay for a rate limit increase?",
             PayForPrice::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -168,6 +179,7 @@ mod tests {
         assert_no_lints(
             "Most normally, tenants pay for a check-in and landlords pay for the check-out.",
             PayForPrice::default(),
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -176,6 +188,7 @@ mod tests {
         assert_no_lints(
             "Unless you want to pay for the price increase and have no issue with the owner, then go for signing up for a sourcehut account.",
             PayForPrice::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -184,6 +197,7 @@ mod tests {
         assert_no_lints(
             "If everyone used all of the tokens they thought they were paying for, prices would explode.",
             PayForPrice::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

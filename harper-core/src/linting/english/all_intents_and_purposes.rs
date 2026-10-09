@@ -194,7 +194,11 @@ mod tests {
 
     #[test]
     fn dont_flag_for_intents_and() {
-        assert_no_lints("with the previous previous setting still present and for all intents and purposes seems enabled", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "with the previous previous setting still present and for all intents and purposes seems enabled",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -249,7 +253,11 @@ mod tests {
 
     #[test]
     fn dont_flag_to_intents_and() {
-        assert_no_lints("and they were trying to find out how that would also affect the the personnel to all intents and purposes.", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "and they were trying to find out how that would also affect the the personnel to all intents and purposes.",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -308,17 +316,29 @@ mod tests {
 
     #[test]
     fn dont_flag_for_basically_all_intents_and_purposes() {
-        assert_no_lints("For basically all intents and purposes, this works fine.", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "For basically all intents and purposes, this works fine.",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_for_nearly_all_intents_and_purposes() {
-        assert_no_lints("but for nearly all intents and purposes this should be negligable", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "but for nearly all intents and purposes this should be negligable",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_for_pretty_much_all_intents_and_purposes() {
-        assert_no_lints("or for pretty much all intents and purposes, between Android devices", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "or for pretty much all intents and purposes, between Android devices",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Strange false positives
@@ -326,19 +346,31 @@ mod tests {
     #[test]
     #[ignore = "Rare and unusual false positive"]
     fn false_positive_for_99_percent_of_all_intents_and_purposes() {
-        assert_no_lints("But for 99% of all intents and purposes they can be treated as lists.", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "But for 99% of all intents and purposes they can be treated as lists.",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // US Constitution false positive
 
     #[test]
     fn false_positive_for_us_constitution_space() {
-        assert_no_lints("Amendments, which, in either Case, shall be valid to all Intents and Purposes, as Part of this Constitution", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Amendments, which, in either Case, shall be valid to all Intents and Purposes, as Part of this Constitution",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     #[ignore = "The linefeed should be treated as a space!"]
     fn false_positive_for_us_constitution_line_break() {
-        assert_no_lints("Amendments, which, in either Case, shall be valid to all Intents and\nPurposes, as Part of this Constitution", AllIntentsAndPurposes::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Amendments, which, in either Case, shall be valid to all Intents and\nPurposes, as Part of this Constitution",
+            AllIntentsAndPurposes::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

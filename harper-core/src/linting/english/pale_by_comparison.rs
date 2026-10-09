@@ -84,6 +84,7 @@ mod tests {
             "Admittedly, my R skills are pale in comparison to many of you guys, but this is a project I could undertake.",
             PaleByComparison::default(),
             "Admittedly, my R skills pale in comparison to many of you guys, but this is a project I could undertake.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -93,6 +94,7 @@ mod tests {
             "their production would be pale in comparison to what we currently produce.",
             PaleByComparison::default(),
             "their production would pale in comparison to what we currently produce.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -102,6 +104,7 @@ mod tests {
             "The computed dollar value is pale by comparison.",
             PaleByComparison::default(),
             "The computed dollar value pales by comparison.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -111,6 +114,7 @@ mod tests {
             "Humans have problem to grokk exponential growth which is pale in comparison to Ackermann function.",
             PaleByComparison::default(),
             "Humans have problem to grokk exponential growth which pales in comparison to Ackermann function.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -120,6 +124,7 @@ mod tests {
             "if you took the same actions to remove the violence and sexual fantasy out of Shakespeare, which was pale in comparison",
             PaleByComparison::default(),
             "if you took the same actions to remove the violence and sexual fantasy out of Shakespeare, which paled in comparison",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -129,6 +134,7 @@ mod tests {
             "What Microsoft did in the 90s was pale by comparison—they just bundled some extra software.",
             PaleByComparison::default(),
             "What Microsoft did in the 90s paled by comparison—they just bundled some extra software.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -138,6 +144,7 @@ mod tests {
             "It's not just that other experiences were pale in comparison to what she'd been doing, it's likely she was chemically incapable of feeling",
             PaleByComparison::default(),
             "It's not just that other experiences paled in comparison to what she'd been doing, it's likely she was chemically incapable of feeling",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

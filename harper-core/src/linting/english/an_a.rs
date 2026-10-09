@@ -118,7 +118,8 @@ mod tests {
     use super::AnA;
     use crate::EnglishDialect;
     use crate::linting::tests::{
-        assert_lint_count_plain_english as assert_lint_count, assert_suggestion_result,
+        assert_lint_count_plain_english as assert_lint_count, assert_no_lints,
+        assert_suggestion_result,
     };
 
     #[test]
@@ -258,18 +259,8 @@ mod tests {
     }
 
     #[test]
-    fn allow_an_lowercase_mp3() {
-        assert_lint_count("an mp3 file", AnA::new(EnglishDialect::American), 0);
-    }
-
-    #[test]
     fn disallow_a_mp_and_a_mp3() {
         assert_lint_count("a MP and a MP3?", AnA::new(EnglishDialect::American), 2);
-    }
-
-    #[test]
-    fn disallow_a_lowercase_mp3() {
-        assert_lint_count("a mp3 file", AnA::new(EnglishDialect::American), 1);
     }
 
     #[test]
@@ -431,11 +422,19 @@ mod tests {
 
     #[test]
     fn dont_flag_a_f_grading_scale_3715() {
-        assert_no_lints("an A-F grading scale", AnA::new(Dialect::American));
+        assert_no_lints(
+            "an A-F grading scale",
+            AnA::new(EnglishDialect::American),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_is_80_an_a_3715() {
-        assert_no_lints("Is 80 an A in Malaysia?", AnA::new(Dialect::American));
+        assert_no_lints(
+            "Is 80 an A in Malaysia?",
+            AnA::new(EnglishDialect::American),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -76,6 +76,7 @@ mod tests {
             "But there's one bus in Australia that actually tries to be that little bit train and is neither fish nor bird doing so.",
             FishNorFowl::default(),
             "But there's one bus in Australia that actually tries to be that little bit train and is neither fish nor fowl doing so.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -85,6 +86,7 @@ mod tests {
             "But I do doubt chromebooks will be big hit, they're neither fish nor foul, since tablets stole netbooks' market.",
             FishNorFowl::default(),
             "But I do doubt chromebooks will be big hit, they're neither fish nor fowl, since tablets stole netbooks' market.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

@@ -6,6 +6,12 @@ pub mod lint_kind;
 pub mod portuguese;
 pub mod suggestion;
 
+use crate::{
+    Document, LSend,
+    linting::english::{initialism_linter, map_phrase_linter, map_phrase_set_linter},
+    render_markdown::render_markdown,
+};
+
 pub use expr_linter::{Chunk, ExprLinter, Sentence};
 pub use initialism_linter::InitialismLinter;
 pub use lint::Lint;
@@ -17,7 +23,7 @@ pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
-use crate::{Document, LSend, render_markdown::render_markdown};
+pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
 
 /// A __stateless__ rule that searches documents for grammatical errors.
 ///
@@ -134,10 +140,7 @@ pub mod tests {
         count: usize,
         language: LanguageFamily,
     ) {
-        let test = match language {
-            LanguageFamily::English => Document::new_plain_english_curated(text),
-            _ => unimplemented!(),
-        };
+        let test = Document::new_plain_curated(text, language);
         let lints = linter.lint(&test);
         // dbg!(&lints);
         if lints.len() != count {
@@ -241,10 +244,7 @@ pub mod tests {
 
     #[track_caller]
     pub fn assert_no_lints(text: &str, linter: impl Linter, language: LanguageFamily) {
-        match language {
-            LanguageFamily::English => assert_lint_count_plain_english(text, linter, 0),
-            _ => {}
-        }
+        assert_lint_count(text, linter, 0, language)
     }
 
     /// Asserts that the lint's message matches the expected message.
@@ -268,13 +268,15 @@ pub mod tests {
     #[derive(Debug, Clone, Copy)]
     pub enum DocumentType {
         PlainEnglish,
+        PlainPortuguese,
         Markdown,
     }
 
     /// Creates a document of the specified type from character data
-    fn create_english_document(chars: &[char], doc_type: DocumentType) -> Document {
+    fn create_document(chars: &[char], doc_type: DocumentType) -> Document {
         match doc_type {
             DocumentType::PlainEnglish => Document::new_plain_english_curated_chars(chars),
+            DocumentType::PlainPortuguese => Document::new_plain_portuguese_curated_chars(chars),
             DocumentType::Markdown => Document::new_markdown_default_curated_chars(chars),
         }
     }
@@ -288,30 +290,25 @@ pub mod tests {
         count: usize,
         language: LanguageFamily,
     ) {
-        match language {
-            LanguageFamily::English => {
-                let test = Document::new_plain_english_curated(text);
-                let lints = linter.lint(&test);
-                eprintln!(
-                    "{}",
-                    lints
-                        .iter()
-                        .map(|l| l
-                            .suggestions
-                            .iter()
-                            .map(|s| s.to_string())
-                            .collect::<Vec<_>>()
-                            .join(", "))
-                        .collect::<Vec<_>>()
-                        .join("\n")
-                );
-                assert_eq!(
-                    lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
-                    count
-                );
-            }
-            _ => {}
-        }
+        let test = Document::new_plain_curated(text, language);
+        let lints = linter.lint(&test);
+        eprintln!(
+            "{}",
+            lints
+                .iter()
+                .map(|l| l
+                    .suggestions
+                    .iter()
+                    .map(|s| s.to_string())
+                    .collect::<Vec<_>>()
+                    .join(", "))
+                .collect::<Vec<_>>()
+                .join("\n")
+        );
+        assert_eq!(
+            lints.iter().map(|l| l.suggestions.len()).sum::<usize>(),
+            count
+        );
     }
 
     /// Applies suggestions iteratively until any combination produces the expected result.
@@ -332,7 +329,7 @@ pub mod tests {
     ) {
         let doctype = match language {
             LanguageFamily::English => DocumentType::PlainEnglish,
-            LanguageFamily::Portuguese => unimplemented!(),
+            LanguageFamily::Portuguese => DocumentType::PlainPortuguese,
         };
         if search_for_suggestion(doctype, text, &mut linter, needle, 0) {
             return;
@@ -362,8 +359,11 @@ pub mod tests {
         depth: usize,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
-        if depth > 100 {
-            eprintln!("⚠️  Reached depth limit (100)");
+        if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
+            eprintln!(
+                "⚠️  Reached depth limit ({})",
+                super::MAX_SUGGESTION_TRANSFORMATION_DEPTH
+            );
             return false;
         }
 
@@ -374,8 +374,9 @@ pub mod tests {
 
         // Lint current text and try each suggestion branch
         let chars: Vec<char> = text.chars().collect();
-        let document = create_english_document(&chars, doc_type);
-        let lints = linter.lint(&document);
+        let document = create_document(&chars, doc_type);
+        let mut lints = linter.lint(&document);
+        lints.sort_by_key(|l| l.priority);
 
         if let Some(lint) = lints.first() {
             for sug in lint.suggestions.iter() {

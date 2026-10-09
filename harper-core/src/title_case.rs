@@ -643,7 +643,7 @@ mod tests {
             make_title_case_str(
                 "meeting at 9:05am",
                 &PlainEnglish,
-                &FstDictionary::curated()
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
             ),
             "Meeting at 9:05am"
         );
@@ -655,7 +655,7 @@ mod tests {
             make_title_case_str(
                 "meeting at 9:05AM",
                 &PlainEnglish,
-                &FstDictionary::curated()
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
             ),
             "Meeting at 9:05AM"
         );
@@ -664,7 +664,11 @@ mod tests {
     #[test]
     fn leaves_lowercase_pm_after_time() {
         assert_eq!(
-            make_title_case_str("dinner at 7pm", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "dinner at 7pm",
+                &PlainEnglish,
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
+            ),
             "Dinner at 7pm"
         );
     }
@@ -672,7 +676,11 @@ mod tests {
     #[test]
     fn leaves_uppercase_pm_after_time() {
         assert_eq!(
-            make_title_case_str("dinner at 7PM", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "dinner at 7PM",
+                &PlainEnglish,
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
+            ),
             "Dinner at 7PM"
         );
     }
@@ -681,7 +689,11 @@ mod tests {
     fn capitalizes_am_when_not_after_number() {
         // "am" as a verb should still be capitalized in title case
         assert_eq!(
-            make_title_case_str("i am here", &PlainEnglish, &FstDictionary::curated()),
+            make_title_case_str(
+                "i am here",
+                &PlainEnglish,
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
+            ),
             "I Am Here"
         );
     }
@@ -692,7 +704,7 @@ mod tests {
             make_title_case_str(
                 "# meeting at 9:05am",
                 &Markdown::default(),
-                &FstDictionary::curated()
+                &FstDictionary::curated(crate::languages::LanguageFamily::English)
             ),
             "# Meeting at 9:05am"
         );

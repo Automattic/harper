@@ -78,17 +78,32 @@ mod tests {
 
     #[test]
     fn dont_flag_more_that() {
-        assert_lint_count("so it's probably more that Croatian had an easier test", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "so it's probably more that Croatian had an easier test",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_easier_that_way() {
-        assert_lint_count("Given svelte now has signals, it might actually be easier that way.", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Given svelte now has signals, it might actually be easier that way.",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_better_that() {
-        assert_lint_count("So I am wondering if its better that I run SCENIC+ once on the integrated dataset or 3 times on the individual datasets", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "So I am wondering if its better that I run SCENIC+ once on the integrated dataset or 3 times on the individual datasets",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -167,40 +182,75 @@ mod tests {
     #[test]
 
     fn dont_fix_faster_that_way() {
-        assert_lint_count("You will get an answer quicker that way!", ThatThan::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "You will get an answer quicker that way!",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_fix_lighter_that() {
-        assert_lint_count("This is the code for Seed-Studio-based timer and desk lighter that I built as a gift for a good friend.", ThatThan::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "This is the code for Seed-Studio-based timer and desk lighter that I built as a gift for a good friend.",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     // more/less adj that
 
     #[test]
     fn dont_flag_more_explicit_that() {
-        assert_lint_count("make it more explicit that those files are auto ...", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "make it more explicit that those files are auto ...",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_more_clear_that() {
-        assert_lint_count("Make it more clear that users need to download the VS tooling installer for .NET Core in VS.", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Make it more clear that users need to download the VS tooling installer for .NET Core in VS.",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // False positives from The Great Gatsby
 
     #[test]
     fn dont_flag_i_gathered_later_that() {
-        assert_lint_count("and I gathered later that he was a photographer", ThatThan::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "and I gathered later that he was a photographer",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_its_better_that() {
-        assert_lint_count("It’s better that the shock should all come at once.", ThatThan::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "It’s better that the shock should all come at once.",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_number_that_1663() {
-        assert_lint_count(" 455 │ `MAJOR.MINOR.PATCH` version number that increments with:", ThatThan::default(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            " 455 │ `MAJOR.MINOR.PATCH` version number that increments with:",
+            ThatThan::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

@@ -186,16 +186,31 @@ mod tests {
 
     #[test]
     fn allows_correct_spelling() {
-        assert_lint_count("We swapped the arguments vice versa this time.", ViceVersa::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "We swapped the arguments vice versa this time.",
+            ViceVersa::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_sentence_case() {
-        assert_lint_count("Vice versa, the movie, was interesting.", ViceVersa::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Vice versa, the movie, was interesting.",
+            ViceVersa::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_unrelated_words() {
-        assert_lint_count("Their service-versa mapping was custom.", ViceVersa::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Their service-versa mapping was custom.",
+            ViceVersa::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

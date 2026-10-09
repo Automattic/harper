@@ -102,61 +102,121 @@ mod tests {
 
     #[test]
     fn can_detect_two_pronouns() {
-        assert_lint_count("...little bit about my I want to do.", MultipleSequentialPronouns::new(), 1, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...little bit about my I want to do.",
+            MultipleSequentialPronouns::new(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn can_detect_three_pronouns() {
-        assert_lint_count("...little bit about my I you want to do.", MultipleSequentialPronouns::new(), 1, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...little bit about my I you want to do.",
+            MultipleSequentialPronouns::new(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn allows_single_pronouns() {
-        assert_lint_count("...little bit about I want to do.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...little bit about I want to do.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn detects_multiple_pronouns_at_end() {
-        assert_lint_count("...I need to explain this to you them.", MultipleSequentialPronouns::new(), 1, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "...I need to explain this to you them.",
+            MultipleSequentialPronouns::new(),
+            1,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn comma_separated() {
-        assert_lint_count("To prove it, we...", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "To prove it, we...",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_578() {
-        assert_lint_count("I can lend you my car.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "I can lend you my car.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_724() {
-        assert_lint_count("One told me they were able to begin reading.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "One told me they were able to begin reading.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_us() {
-        assert_lint_count("Take the plunge and pull plug from their US tech.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "Take the plunge and pull plug from their US tech.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_my_us_your_us() {
-        assert_lint_count("My US passport looks different from your US passport.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "My US passport looks different from your US passport.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_subject_after_usa() {
-        assert_lint_count("And if it’s manufactured in the US it may have more automation.", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "And if it’s manufactured in the US it may have more automation.",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_case_insensitive_cost_him_his_life() {
-        assert_lint_count("to the point where it very well likely cost Him his life", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "to the point where it very well likely cost Him his life",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
     fn dont_flag_2870() {
-        assert_lint_count("their sales derp was just having none of it when our IT director told him, point blank, that we're not moving anything into the cloud", MultipleSequentialPronouns::new(), 0, crate::languages::LanguageFamily::English)
+        assert_lint_count(
+            "their sales derp was just having none of it when our IT director told him, point blank, that we're not moving anything into the cloud",
+            MultipleSequentialPronouns::new(),
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

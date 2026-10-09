@@ -124,7 +124,9 @@ impl Config {
         user_dictionary: MutableDictionary,
     ) -> Arc<MergedDictionary> {
         let mut dictionary = MergedDictionary::new();
-        dictionary.add_dictionary(FstDictionary::curated());
+        dictionary.add_dictionary(FstDictionary::curated(
+            harper_core::languages::LanguageFamily::English,
+        ));
         dictionary.add_dictionary(Arc::new(user_dictionary));
 
         Arc::new(dictionary)

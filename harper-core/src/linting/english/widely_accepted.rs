@@ -75,12 +75,22 @@ mod tests {
 
     #[test]
     fn widely_already_correct() {
-        assert_lint_count("It is widely accepted that sunlight is beneficial in moderation.", WidelyAccepted::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is widely accepted that sunlight is beneficial in moderation.",
+            WidelyAccepted::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn no_false_positive() {
-        assert_lint_count("The house had wide open windows during the renovation.", WidelyAccepted::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The house had wide open windows during the renovation.",
+            WidelyAccepted::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

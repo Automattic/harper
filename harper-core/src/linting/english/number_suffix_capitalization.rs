@@ -48,16 +48,31 @@ mod tests {
 
     #[test]
     fn detects_uppercase_suffix() {
-        assert_lint_count("2ND", NumberSuffixCapitalization, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "2ND",
+            NumberSuffixCapitalization,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_inconsistent_suffix() {
-        assert_lint_count("2nD", NumberSuffixCapitalization, 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "2nD",
+            NumberSuffixCapitalization,
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn passes_correct_case() {
-        assert_lint_count("2nd", NumberSuffixCapitalization, 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "2nd",
+            NumberSuffixCapitalization,
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

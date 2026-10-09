@@ -69,6 +69,7 @@ mod tests {
             "So, i'm in a bit of a cache 22 situation.",
             Catch22::default(),
             "So, i'm in a bit of a catch 22 situation.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -78,6 +79,7 @@ mod tests {
             "This leads to a cache-22 situation.",
             Catch22::default(),
             "This leads to a catch-22 situation.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -87,6 +89,7 @@ mod tests {
             "It's literally a cash 22 it's selectivity but also specific criteria",
             Catch22::default(),
             "It's literally a catch 22 it's selectivity but also specific criteria",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -96,6 +99,7 @@ mod tests {
             "It’s a bit of a cash twenty two situation. You see?",
             Catch22::default(),
             "It’s a bit of a catch twenty two situation. You see?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -105,6 +109,7 @@ mod tests {
             "So, they're they're in a cash twenty-two but in the middle of all of that, we gotta deal with the presenting problem.",
             Catch22::default(),
             "So, they're they're in a catch twenty-two but in the middle of all of that, we gotta deal with the presenting problem.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -114,6 +119,7 @@ mod tests {
             "The club is in such a cache twenty-two situation given it past experiences with previous managers.",
             Catch22::default(),
             "The club is in such a catch twenty-two situation given it past experiences with previous managers.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

@@ -107,6 +107,7 @@ mod tests {
             "Slopsquatting, as researchers are calling it, is a term first coined by Seth Larson, a security developer-in-residence at Python Software Foundation (PSF), for its resemblance to the typosquatting technique.",
             RedundantFirsts::default(),
             "Slopsquatting, as researchers are calling it, is a term coined by Seth Larson, a security developer-in-residence at Python Software Foundation (PSF), for its resemblance to the typosquatting technique.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +117,7 @@ mod tests {
             "Ben Kamens has a great writeup about a version of the solution, first invented by Bruce Tognazzini in the late 80's.",
             RedundantFirsts::default(),
             "Ben Kamens has a great writeup about a version of the solution, invented by Bruce Tognazzini in the late 80's.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +127,7 @@ mod tests {
             "I first discovered this bug when installing dependencies for navigator and import it on my App.js.",
             RedundantFirsts::default(),
             "I discovered this bug when installing dependencies for navigator and import it on my App.js.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +137,7 @@ mod tests {
             "The Transformer architecture is a neural network architecture that was first introduced in 2016.",
             RedundantFirsts::default(),
             "The Transformer architecture is a neural network architecture that was introduced in 2016.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -143,6 +147,7 @@ mod tests {
             "This was supposed to revitalize the Tony Hawk franchise. It was first released in 2009.",
             RedundantFirsts::default(),
             "This was supposed to revitalize the Tony Hawk franchise. It was released in 2009.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -152,6 +157,7 @@ mod tests {
             "C was first invented back in 1972 at Bell Labs.",
             RedundantFirsts::default(),
             "C was invented back in 1972 at Bell Labs.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -161,6 +167,7 @@ mod tests {
             "The Japanese Foreign Ministry, where the rumors first originated, said it still needed to check the reports but were not able to verify them.",
             RedundantFirsts::default(),
             "The Japanese Foreign Ministry, where the rumors originated, said it still needed to check the reports but were not able to verify them.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -170,6 +177,7 @@ mod tests {
             "I've just discovered Harper for the first time, but already struck a number of issues, which I have raised in GitHub",
             RedundantFirsts::default(),
             "I've just discovered Harper, but already struck a number of issues, which I have raised in GitHub",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

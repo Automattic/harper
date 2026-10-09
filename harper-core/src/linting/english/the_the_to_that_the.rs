@@ -65,7 +65,11 @@ mod tests {
 
     #[test]
     fn dont_flag_simple_the_the() {
-        assert_no_lints("this is the the simple case", TheTheToThatThe::default());
+        assert_no_lints(
+            "this is the the simple case",
+            TheTheToThatThe::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -74,6 +78,7 @@ mod tests {
             "this is so the the other case is tested",
             TheTheToThatThe::default(),
             "this is so that the other case is tested",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -85,6 +90,7 @@ mod tests {
             "This PR fixes the fact the the / page and some of the other new pages are reverting to the browser font",
             TheTheToThatThe::default(),
             "This PR fixes the fact that the / page and some of the other new pages are reverting to the browser font",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -94,6 +100,7 @@ mod tests {
             "and I've never found the the dashboard feed materially useful",
             TheTheToThatThe::default(),
             "and I've never found the dashboard feed materially useful",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -116,6 +123,7 @@ mod tests {
             "I was directed to the MongoDB website and found the the newer versions require you to have the mongosh shell",
             TheTheToThatThe::default(),
             "I was directed to the MongoDB website and found that the newer versions require you to have the mongosh shell",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +133,7 @@ mod tests {
             "So, I'm going to say the the shown output is a bug in using Avro",
             TheTheToThatThe::default(),
             "So, I'm going to say that the shown output is a bug in using Avro",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +143,7 @@ mod tests {
             "It would be better to show the the first logical line (i.e. the first paragraph).",
             TheTheToThatThe::default(),
             "It would be better to show the first logical line (i.e. the first paragraph).",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -157,6 +167,7 @@ mod tests {
             "So the the choice is really between pursuing a compromise ...",
             TheTheToThatThe::default(),
             "So the choice is really between pursuing a compromise ...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -166,6 +177,7 @@ mod tests {
             "I don't think the the additional flask route was the issue because I got your example to work.",
             TheTheToThatThe::default(),
             "I don't think that the additional flask route was the issue because I got your example to work.",
+            crate::languages::LanguageFamily::English,
         );
     }
 

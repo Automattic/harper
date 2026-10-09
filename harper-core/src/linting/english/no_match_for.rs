@@ -153,6 +153,11 @@ pub mod tests {
 
     #[test]
     fn dont_fix_for() {
-        assert_lint_count("Type to search appears even there is no match for search term when autoFocus is true.", NoMatchFor::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Type to search appears even there is no match for search term when autoFocus is true.",
+            NoMatchFor::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

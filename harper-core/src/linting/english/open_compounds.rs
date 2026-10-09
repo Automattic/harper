@@ -177,12 +177,22 @@ mod tests {
 
     #[test]
     fn ignores_pascalcase() {
-        assert_lint_count("InFront Labs, LLC has 16 repositories available. Follow their code on GitHub.", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "InFront Labs, LLC has 16 repositories available. Follow their code on GitHub.",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_camelcase() {
-        assert_lint_count("Click the \"toggle\" button to see how wrapping changes when an inFront is added to a letter in a word.", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Click the \"toggle\" button to see how wrapping changes when an inFront is added to a letter in a word.",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -197,22 +207,42 @@ mod tests {
 
     #[test]
     fn ignore_hyphen_before() {
-        assert_lint_count("-infront", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "-infront",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_hyphen_after() {
-        assert_lint_count("infront-", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "infront-",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_with_hyphen_before() {
-        assert_lint_count("Instantly share code, notes, and snippets. @yossi-infront", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Instantly share code, notes, and snippets. @yossi-infront",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_with_hyphen_after() {
-        assert_lint_count("infront-cycle.ipe · infront-cycle.ipe · infront-cycle.svg · infront-cycle.svg · infront-s1s2.ipe · infront-s1s2.ipe · infront-s1s2.svg · infront-s1s2.svg.", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "infront-cycle.ipe · infront-cycle.ipe · infront-cycle.svg · infront-cycle.svg · infront-s1s2.ipe · infront-s1s2.ipe · infront-s1s2.svg · infront-s1s2.svg.",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -293,14 +323,24 @@ mod tests {
 
     #[test]
     fn correct_aswell() {
-        assert_suggestion_result("'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.", OpenCompounds::default(), "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+            OpenCompounds::default(),
+            "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // At all
 
     #[test]
     fn correct_atall() {
-        assert_suggestion_result("claude code with vs code extension not working atall", OpenCompounds::default(), "claude code with vs code extension not working at all", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "claude code with vs code extension not working atall",
+            OpenCompounds::default(),
+            "claude code with vs code extension not working at all",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // At least
@@ -317,12 +357,22 @@ mod tests {
 
     #[test]
     fn ignore_atleast_pascalcase() {
-        assert_lint_count("I want to understand if we are using AtLeast correctly.", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I want to understand if we are using AtLeast correctly.",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_atleast_camelcase() {
-        assert_lint_count("verfiy with atLeast = 0 should pass even if the mocked function is never called.", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "verfiy with atLeast = 0 should pass even if the mocked function is never called.",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -381,7 +431,12 @@ mod tests {
 
     #[test]
     fn ignore_incase_pascalcase() {
-        assert_lint_count("InCase save your secrets for a friend, so they can use in case it in case you went \"missing\".", OpenCompounds::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "InCase save your secrets for a friend, so they can use in case it in case you went \"missing\".",
+            OpenCompounds::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // In fact

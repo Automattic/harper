@@ -177,6 +177,7 @@ mod tests {
             "To embody this original goal, I wanted to make the project a namesake of an author known for their literary devices and prose. I also had three other (practical) criterion:",
             PluralCriterionPhenomenon,
             "To embody this original goal, I wanted to make the project a namesake of an author known for their literary devices and prose. I also had three other (practical) criteria:",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -186,6 +187,7 @@ mod tests {
             "I also had three other (practical) criterion.",
             PluralCriterionPhenomenon,
             "I also had three other (practical) criteria.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -195,6 +197,7 @@ mod tests {
             "We used 3 criterion.",
             PluralCriterionPhenomenon,
             "We used 3 criteria.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -204,6 +207,7 @@ mod tests {
             "These criterion matter.",
             PluralCriterionPhenomenon,
             "These criteria matter.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -213,6 +217,7 @@ mod tests {
             "Those criterion failed.",
             PluralCriterionPhenomenon,
             "Those criteria failed.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -222,6 +227,7 @@ mod tests {
             "Several strange phenomenon appeared.",
             PluralCriterionPhenomenon,
             "Several strange phenomena appeared.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -231,6 +237,7 @@ mod tests {
             "Two other practical review criterion failed.",
             PluralCriterionPhenomenon,
             "Two other practical review criteria failed.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -240,6 +247,7 @@ mod tests {
             "Many other (rare) phenomenon appeared.",
             PluralCriterionPhenomenon,
             "Many other (rare) phenomena appeared.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -249,6 +257,7 @@ mod tests {
             "Both long-term criterion changed.",
             PluralCriterionPhenomenon,
             "Both long-term criteria changed.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -258,6 +267,7 @@ mod tests {
             "Three other practical criteria were considered.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -267,12 +277,18 @@ mod tests {
             "Many rare phenomena were on display.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
     #[test]
     fn allows_correct_singular_criterion() {
-        assert_lint_count("That criterion is important.", PluralCriterionPhenomenon, 0)
+        assert_lint_count(
+            "That criterion is important.",
+            PluralCriterionPhenomenon,
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -281,6 +297,7 @@ mod tests {
             "One strange phenomenon appeared.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
@@ -290,12 +307,18 @@ mod tests {
             "The other criterion was practical.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
     #[test]
     fn allows_singular_number_with_singular_criterion() {
-        assert_lint_count("1 criterion was enough.", PluralCriterionPhenomenon, 0)
+        assert_lint_count(
+            "1 criterion was enough.",
+            PluralCriterionPhenomenon,
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -304,12 +327,18 @@ mod tests {
             "To the wingless a more interesting phenomenon is their dissimilarity.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 
     #[test]
     fn allows_ambiguous_quantifier_with_singular_criterion() {
-        assert_lint_count("No criterion was enough.", PluralCriterionPhenomenon, 0)
+        assert_lint_count(
+            "No criterion was enough.",
+            PluralCriterionPhenomenon,
+            0,
+            crate::languages::LanguageFamily::English,
+        )
     }
 
     #[test]
@@ -318,6 +347,7 @@ mod tests {
             "Three teams reviewed the policy before the criterion changed.",
             PluralCriterionPhenomenon,
             0,
+            crate::languages::LanguageFamily::English,
         )
     }
 }

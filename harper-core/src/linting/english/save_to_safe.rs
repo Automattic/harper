@@ -77,6 +77,11 @@ mod tests {
 
     #[test]
     fn ignore_correct() {
-        assert_lint_count("It is safe to assume nothing.", SaveToSafe::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is safe to assume nothing.",
+            SaveToSafe::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

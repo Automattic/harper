@@ -97,6 +97,7 @@ mod tests {
             "but recently I ran into a trouble that the release button is not shown",
             RunIntoProblemsOrTrouble::default(),
             "but recently I ran into trouble that the release button is not shown",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -119,6 +120,7 @@ mod tests {
             "I ran into troubles when executing contrib/utilities/update_all_files.sh",
             RunIntoProblemsOrTrouble::default(),
             "I ran into trouble when executing contrib/utilities/update_all_files.sh",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -128,6 +130,7 @@ mod tests {
             "I'm have run into a trouble when writing a lexer with below tokens",
             RunIntoProblemsOrTrouble::default(),
             "I'm have run into trouble when writing a lexer with below tokens",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -150,6 +153,7 @@ mod tests {
             "[post here if you run into troubles]",
             RunIntoProblemsOrTrouble::default(),
             "[post here if you run into trouble]",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -159,6 +163,7 @@ mod tests {
             "We are spawning built app without this argument, thus running into a trouble in v3.5.0",
             RunIntoProblemsOrTrouble::default(),
             "We are spawning built app without this argument, thus running into trouble in v3.5.0",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -181,6 +186,7 @@ mod tests {
             "Running into troubles with 0.6.2",
             RunIntoProblemsOrTrouble::default(),
             "Running into trouble with 0.6.2",
+            crate::languages::LanguageFamily::English,
         );
     }
 

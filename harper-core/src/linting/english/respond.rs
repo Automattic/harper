@@ -88,56 +88,108 @@ mod tests {
 
     #[test]
     fn fixes_will_response() {
-        assert_suggestion_result("He will response soon.", Respond::default(), "He will respond soon.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "He will response soon.",
+            Respond::default(),
+            "He will respond soon.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_can_response() {
-        assert_suggestion_result("They can response to the survey.", Respond::default(), "They can respond to the survey.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They can response to the survey.",
+            Respond::default(),
+            "They can respond to the survey.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_did_not_response() {
-        assert_suggestion_result("I did not response yesterday.", Respond::default(), "I did not respond yesterday.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I did not response yesterday.",
+            Respond::default(),
+            "I did not respond yesterday.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_might_quickly_response() {
-        assert_suggestion_result("She might quickly response to feedback.", Respond::default(), "She might quickly respond to feedback.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "She might quickly response to feedback.",
+            Respond::default(),
+            "She might quickly respond to feedback.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_wont_response() {
-        assert_suggestion_result("They won't response in time.", Respond::default(), "They won't respond in time.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "They won't response in time.",
+            Respond::default(),
+            "They won't respond in time.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_would_response() {
-        assert_suggestion_result("We would response if we could.", Respond::default(), "We would respond if we could.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "We would response if we could.",
+            Respond::default(),
+            "We would respond if we could.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn fixes_should_response() {
-        assert_suggestion_result("You should response politely.", Respond::default(), "You should respond politely.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "You should response politely.",
+            Respond::default(),
+            "You should respond politely.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_correct_respond() {
-        assert_no_lints("Please respond when you can.", Respond::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "Please respond when you can.",
+            Respond::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_noun_use() {
-        assert_no_lints("The response time was great.", Respond::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The response time was great.",
+            Respond::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_question_subject() {
-        assert_lint_count("Should response times be logged?", Respond::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Should response times be logged?",
+            Respond::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn does_not_flag_response_as_object() {
-        assert_no_lints("I have no response for that.", Respond::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I have no response for that.",
+            Respond::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

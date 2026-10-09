@@ -1,9 +1,9 @@
 use super::super::Suggestion;
-use super::super::expr_linter::ExprLinter;
 use crate::expr::Expr;
 use crate::expr::SequenceExpr;
 use crate::linting::LintKind;
 use crate::linting::expr_linter::Chunk;
+use crate::linting::expr_linter::ExprLinter;
 use crate::patterns::WordSet;
 use crate::{Lint, Lrc, Token};
 

@@ -133,16 +133,31 @@ mod tests {
 
     #[test]
     fn allows_well_educated() {
-        assert_lint_count("She is well-educated.", WellEducated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "She is well-educated.",
+            WellEducated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_good_education_phrase() {
-        assert_lint_count("They received a good education.", WellEducated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They received a good education.",
+            WellEducated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_good_to_be_educated() {
-        assert_lint_count("It is good to be educated about local history.", WellEducated::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "It is good to be educated about local history.",
+            WellEducated::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

@@ -10,6 +10,7 @@ use super::ExprLinter;
 use super::Lint;
 use super::english::a_part::APart;
 use super::english::a_some_time::ASomeTime;
+use super::english::a_ways_to_go::AWaysToGo;
 use super::english::a_while::AWhile;
 use super::english::addicting::Addicting;
 use super::english::adjective_double_degree::AdjectiveDoubleDegree;
@@ -21,16 +22,20 @@ use super::english::allow_to::AllowTo;
 use super::english::am_in_the_morning::AmInTheMorning;
 use super::english::amounts_for::AmountsFor;
 use super::english::an_a::AnA;
+use super::english::analog_acoustic_bike::AnalogAcousticBike;
 use super::english::and_the_like::AndTheLike;
 use super::english::another_thing_coming::AnotherThingComing;
 use super::english::another_think_coming::AnotherThinkComing;
 use super::english::apart_from::ApartFrom;
 use super::english::arrive_to::ArriveTo;
+use super::english::as_how::AsHow;
+use super::english::as_to_interrogative::AsToInterrogative;
 use super::english::ask_no_preposition::AskNoPreposition;
 use super::english::aspire_to::AspireTo;
 use super::english::avoid_contractions::AvoidContractions;
 use super::english::avoid_curses::AvoidCurses;
 use super::english::back_in_the_day::BackInTheDay;
+use super::english::barely_un::BarelyUn;
 use super::english::be_allowed::BeAllowed;
 use super::english::behind_the_scenes::BehindTheScenes;
 use super::english::best_of_all_time::BestOfAllTime;
@@ -38,18 +43,24 @@ use super::english::boring_words::BoringWords;
 use super::english::bought::Bought;
 use super::english::brand_brandish::BrandBrandish;
 use super::english::by_accident::ByAccident;
+use super::english::by_ones_own::ByOnesOwn;
+use super::english::by_the_book::ByTheBook;
+use super::english::call_it_quits::CallItQuits;
 use super::english::call_them::CallThem;
 use super::english::cant::Cant;
 use super::english::capitalize_personal_pronouns::CapitalizePersonalPronouns;
+use super::english::catch_22::Catch22;
 use super::english::cautionary_tale::CautionaryTale;
 use super::english::change_tack::ChangeTack;
 use super::english::chock_full::ChockFull;
 use super::english::close_tight_knit::CloseTightKnit;
 use super::english::code_in_write_in::CodeInWriteIn;
 use super::english::comma_fixes::CommaFixes;
+use super::english::complain_as_noun::ComplainAsNoun;
 use super::english::compound_nouns::CompoundNouns;
 use super::english::compound_subject_i::CompoundSubjectI;
 use super::english::confident::Confident;
+use super::english::convenient_store::ConvenientStore;
 use super::english::correct_number_suffix::CorrectNumberSuffix;
 use super::english::crave_for::CraveFor;
 use super::english::criteria_phenomena::CriteriaPhenomena;
@@ -76,35 +87,47 @@ use super::english::except_of::ExceptOf;
 use super::english::expand_memory_shorthands::ExpandMemoryShorthands;
 use super::english::expand_people::ExpandPeople;
 use super::english::expand_time_shorthands::ExpandTimeShorthands;
+use super::english::fall_below::FallBelow;
 use super::english::far_be_it::FarBeIt;
 use super::english::fascinated_by::FascinatedBy;
 use super::english::fed_up_with::FedUpWith;
 use super::english::feel_fell::FeelFell;
+use super::english::fellow_co_redundancy::FellowCoRedundancy;
 use super::english::few_units_of_time_ago::FewUnitsOfTimeAgo;
 use super::english::filler_words::FillerWords;
 use super::english::find_fine::FindFine;
 use super::english::first_aid_kit::FirstAidKit;
+use super::english::fish_nor_fowl::FishNorFowl;
 use super::english::flesh_out_vs_full_fledged::FleshOutVsFullFledged;
+use super::english::foot_inch_minute_second_symbols::FootInchMinuteSecondSymbols;
 use super::english::for_free_of_charge::ForFreeOfCharge;
 use super::english::for_noun::ForNoun;
+use super::english::for_the_nth_time::ForTheNthTime;
 use super::english::free_predicate::FreePredicate;
 use super::english::friend_of_me::FriendOfMe;
+use super::english::full_to_the_brim::FullToTheBrim;
 use super::english::go_so_far_as_to::GoSoFarAsTo;
 use super::english::go_to_war::GoToWar;
 use super::english::good_at::GoodAt;
 use super::english::handful::Handful;
+use super::english::handful_of_more::HandfulOfMore;
+use super::english::have_a_hard_time::HaveAHardTime;
 use super::english::have_pronoun::HavePronoun;
 use super::english::have_take_a_look::HaveTakeALook;
 use super::english::hedging::Hedging;
 use super::english::hello_greeting::HelloGreeting;
+use super::english::helped_past::HelpedPast;
 use super::english::hereby::Hereby;
 use super::english::hop_hope::HopHope;
+use super::english::how_does_compared::HowDoesCompared;
 use super::english::how_to::HowTo;
 use super::english::hyphenate_number_day::HyphenateNumberDay;
 use super::english::i_am_agreement::IAmAgreement;
 use super::english::if_wouldve::IfWouldve;
+use super::english::in_demand_in_depth::InDemandInDepth;
 use super::english::in_favour_of_doing::InFavourOfDoing;
 use super::english::in_on_the_cards::InOnTheCards;
+use super::english::in_stock::InStock;
 use super::english::in_time_from_now::InTimeFromNow;
 use super::english::inflected_verb_after_to::InflectedVerbAfterTo;
 use super::english::interested_in::InterestedIn;
@@ -113,7 +136,9 @@ use super::english::its_contraction::ItsContraction;
 use super::english::its_possessive::ItsPossessive;
 use super::english::jealous_of::JealousOf;
 use super::english::johns_hopkins::JohnsHopkins;
+use super::english::jump_the_gun::JumpTheGun;
 use super::english::lead_rise_to::LeadRiseTo;
+use super::english::leaving_in_droves::LeavingInDroves;
 use super::english::left_right_hand::LeftRightHand;
 use super::english::less_worse::LessWorse;
 use super::english::let_to_do::LetToDo;
@@ -141,9 +166,12 @@ use super::english::most_of_the_times::MostOfTheTimes;
 use super::english::multiple_frequency_adverbs::MultipleFrequencyAdverbs;
 use super::english::multiple_sequential_pronouns::MultipleSequentialPronouns;
 use super::english::nail_on_the_head::NailOnTheHead;
+use super::english::naked_eye::NakedEye;
 use super::english::need_to_noun::NeedToNoun;
 use super::english::no_french_spaces::NoFrenchSpaces;
+use super::english::no_harm_no_foul::NoHarmNoFoul;
 use super::english::no_longer::NoLonger;
+use super::english::no_longer_pronoun::NoLongerPronoun;
 use super::english::no_match_for::NoMatchFor;
 use super::english::no_oxford_comma::NoOxfordComma;
 use super::english::nobody::Nobody;
@@ -160,13 +188,19 @@ use super::english::on_floor::OnFloor;
 use super::english::once_or_twice::OnceOrTwice;
 use super::english::one_and_the_same::OneAndTheSame;
 use super::english::one_of_the_singular::OneOfTheSingular;
+use super::english::ones_own_accord::OnesOwnAccord;
 use super::english::open_compounds::OpenCompounds;
 use super::english::open_the_light::OpenTheLight;
 use super::english::orthographic_consistency::OrthographicConsistency;
 use super::english::ought_to_be::OughtToBe;
 use super::english::out_of_date::OutOfDate;
+use super::english::out_of_the_window::OutOfTheWindow;
+use super::english::over_plus::OverPlus;
 use super::english::oxford_comma::OxfordComma;
 use super::english::oxymorons::Oxymorons;
+use super::english::pale_by_comparison::PaleByComparison;
+use super::english::passionate_about::PassionateAbout;
+use super::english::pay_for_price::PayForPrice;
 use super::english::phrasal_verb_as_compound_noun::PhrasalVerbAsCompoundNoun;
 use super::english::pique_interest::PiqueInterest;
 use super::english::plural_decades::PluralDecades;
@@ -187,7 +221,9 @@ use super::english::quote_spacing::QuoteSpacing;
 use super::english::reason_for_doing::ReasonForDoing;
 use super::english::redundant_acronyms::RedundantAcronyms;
 use super::english::redundant_additive_adverbs::RedundantAdditiveAdverbs;
+use super::english::redundant_firsts::RedundantFirsts;
 use super::english::redundant_progressive_comparative::RedundantProgressiveComparative;
+use super::english::redundant_self::RedundantSelf;
 use super::english::regionalisms::Regionalisms;
 use super::english::regular_irregulars::RegularIrregulars;
 use super::english::repeated_words::RepeatedWords;
@@ -195,6 +231,7 @@ use super::english::respond::Respond;
 use super::english::right_click::RightClick;
 use super::english::rise_the_ranks::RiseTheRanks;
 use super::english::roller_skated::RollerSkated;
+use super::english::run_into_problems_or_trouble::RunIntoProblemsOrTrouble;
 use super::english::safe_to_save::SafeToSave;
 use super::english::save_to_safe::SaveToSafe;
 use super::english::sentence_capitalization::SentenceCapitalization;
@@ -218,9 +255,11 @@ use super::english::take_medicine::TakeMedicine;
 use super::english::that_than::ThatThan;
 use super::english::that_which::ThatWhich;
 use super::english::the_how_why::TheHowWhy;
+use super::english::the_last_days::TheLastDays;
 use super::english::the_my::TheMy;
 use super::english::the_point_for::ThePointFor;
 use super::english::the_proper_noun_possessive::TheProperNounPossessive;
+use super::english::the_the_to_that_the::TheTheToThatThe;
 use super::english::then_than::ThenThan;
 use super::english::there_is_agreement::ThereIsAgreement;
 use super::english::there_own::ThereOwn;
@@ -232,7 +271,9 @@ use super::english::this_type_of_thing::ThisTypeOfThing;
 use super::english::though_thought::ThoughThought;
 use super::english::thrive_on::ThriveOn;
 use super::english::throw_away::ThrowAway;
+use super::english::throw_baby_with_bathwater::ThrowBabyWithBathwater;
 use super::english::throw_rubbish::ThrowRubbish;
+use super::english::till_date::TillDate;
 use super::english::to_adverb::ToAdverb;
 use super::english::to_two_too::ToTwoToo;
 use super::english::touristic::Touristic;
@@ -266,12 +307,11 @@ use super::english::would_never_have::WouldNeverHave;
 use super::english::wrong_apostrophe::WrongApostrophe;
 
 // Modules that create multiple linters each
-use super::be_adjective_confusions;
-use super::closed_compounds;
-use super::initialisms;
-use super::phrase_set_corrections;
-use super::proper_noun_capitalization_linters;
-use super::weir_rules;
+use crate::linting::english::be_adjective_confusions;
+use crate::linting::english::closed_compounds;
+use crate::linting::english::initialisms;
+use crate::linting::english::phrase_set_corrections;
+use crate::linting::english::weir_rules;
 
 use super::expr_linter::run_on_chunk;
 use super::{HtmlDescriptionLinter, Linter};
@@ -281,16 +321,6 @@ use crate::languages::Language;
 use crate::linting::expr_linter::{Chunk, Sentence};
 use crate::spell::Dictionary;
 use crate::{Document, Lrc, TokenStringExt};
-
-use crate::{
-    linting::{
-        dashes::Dashes,
-        expr_linter::{Chunk, Sentence, run_on_chunk},
-        {ExprLinter, HtmlDescriptionLinter, Lint, Linter},
-    },
-    spell::Dictionary,
-    {Dialect, Document, Lrc, TokenStringExt},
-};
 
 pub use flat_config::FlatConfig;
 pub use structured_config::{
@@ -900,9 +930,14 @@ impl LintGroup {
 
         // Uses Sentence rather than Chunk
         out.add("WebScraping", WebScraping::default());
-        out.config.set_rule_enabled("WebScraping", true);
 
-        out
+        // Uses Sentence rather than Chunk
+        out.add("WereWhere", WereWhere::default());
+
+        // Uses Sentence rather than Chunk
+        out.add("WrongApostrophe", WrongApostrophe::default());
+
+        out.with_lint_config(StructuredConfig::curated().to_flat_config().unwrap())
     }
     fn new_curated_portuguese(
         #[allow(unused_variables)] dictionary: Arc<impl Dictionary + 'static>,

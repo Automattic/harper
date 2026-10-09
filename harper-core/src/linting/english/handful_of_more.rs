@@ -58,6 +58,7 @@ mod tests {
             "(and possibly a handful of more times as needed to resolve any issues)",
             HandfulOfMore::default(),
             "(and possibly a handful more times as needed to resolve any issues)",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -67,6 +68,7 @@ mod tests {
             "(maybe as soon as tomorrow, but trying to get a handful of more PRs merged...)",
             HandfulOfMore::default(),
             "(maybe as soon as tomorrow, but trying to get a handful more PRs merged...)",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -75,6 +77,7 @@ mod tests {
         assert_no_lints(
             "After writing a handful of more advanced recipes I often found myself running into situations where the context wasn't recognized",
             HandfulOfMore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

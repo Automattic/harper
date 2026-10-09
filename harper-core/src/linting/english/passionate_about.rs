@@ -140,6 +140,7 @@ mod tests {
             "if a human being is writing about something you enjoy or are passionate of, you firstly have a community and are able to talk with a actual person ...",
             PassionateAbout::default(),
             "if a human being is writing about something you enjoy or are passionate about, you firstly have a community and are able to talk with a actual person ...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -149,6 +150,7 @@ mod tests {
             "... and become a thing of which we are passionate and which, through misapplication ...",
             PassionateAbout::default(),
             "... and become a thing about which we are passionate and which, through misapplication ...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -158,6 +160,7 @@ mod tests {
             "Passionate of Embodied AI from Poland.",
             PassionateAbout::default(),
             "Passionate about Embodied AI from Poland.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -167,6 +170,7 @@ mod tests {
             "... part of organizations and causes on campus, of which they are passionate.",
             PassionateAbout::default(),
             "... part of organizations and causes on campus, about which they are passionate.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -176,6 +180,7 @@ mod tests {
             "Computer scientist, passionate of tech, AI, math finance.",
             PassionateAbout::default(),
             "Computer scientist, passionate about tech, AI, math finance.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -185,6 +190,7 @@ mod tests {
             "A geographer turned software engineer, passionate of web mapping, data engineering, analytics, and visualization.",
             PassionateAbout::default(),
             "A geographer turned software engineer, passionate about web mapping, data engineering, analytics, and visualization.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -194,6 +200,7 @@ mod tests {
             "I am passionate of automation because: I like to make my life easier; I like to make my work easier. Examples of projects in IT field, of automations I ...Read more",
             PassionateAbout::default(),
             "I am passionate about automation because: I like to make my life easier; I like to make my work easier. Examples of projects in IT field, of automations I ...Read more",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -204,6 +211,7 @@ mod tests {
         assert_no_lints(
             "... give up his research on glioma and being a neurosurgeon both of which he was passionate about to go into the black hole that was researching a disease ...",
             PassionateAbout::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -229,6 +237,7 @@ mod tests {
         assert_no_lints(
             "he could be found spending time on the pontoon boat at Little Sebago Lake, all of which he was passionate about.",
             PassionateAbout::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -238,6 +247,7 @@ mod tests {
             "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something of which I was passionate.",
             PassionateAbout::default(),
             "If I was going to go out and compete with my brothers, I wanted to make sure I was doing something about which I was passionate.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -247,6 +257,7 @@ mod tests {
             "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields of which I am passionate.",
             PassionateAbout::default(),
             "I choose EEP because I wanted to learn how to better advocate for and make changes in the marine and environmental fields about which I am passionate.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

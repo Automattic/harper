@@ -92,12 +92,20 @@ mod tests {
 
     #[test]
     fn dont_flag_standard_without_comma() {
-        assert_no_lints("no harm no foul", NoHarmNoFoul::default());
+        assert_no_lints(
+            "no harm no foul",
+            NoHarmNoFoul::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_standard_with_comma() {
-        assert_no_lints("no harm, no foul", NoHarmNoFoul::default());
+        assert_no_lints(
+            "no harm, no foul",
+            NoHarmNoFoul::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Ensure all error variants are flagged.
@@ -109,6 +117,7 @@ mod tests {
             "no harm no fowl",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -117,6 +126,7 @@ mod tests {
             "no harm, no fowl",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -127,6 +137,7 @@ mod tests {
             "no harm nor foul",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -135,6 +146,7 @@ mod tests {
             "no harm, nor foul",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -145,6 +157,7 @@ mod tests {
             "no harm nor fowl",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -153,6 +166,7 @@ mod tests {
             "no harm, nor fowl",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -163,6 +177,7 @@ mod tests {
             "nor harm no foul",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -171,6 +186,7 @@ mod tests {
             "nor harm, no foul",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -181,6 +197,7 @@ mod tests {
             "nor harm no fowl",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -189,6 +206,7 @@ mod tests {
             "nor harm, no fowl",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -199,6 +217,7 @@ mod tests {
             "nor harm nor foul",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -207,6 +226,7 @@ mod tests {
             "nor harm, nor foul",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -217,6 +237,7 @@ mod tests {
             "nor harm nor fowl",
             NoHarmNoFoul::default(),
             "no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
     #[test]
@@ -225,6 +246,7 @@ mod tests {
             "nor harm, nor fowl",
             NoHarmNoFoul::default(),
             "no harm, no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -236,6 +258,7 @@ mod tests {
             "But no harm no fowl either way I now have proof that the experience of new users is not worth including a single word in a dependency list.",
             NoHarmNoFoul::default(),
             "But no harm no foul either way I now have proof that the experience of new users is not worth including a single word in a dependency list.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -245,6 +268,7 @@ mod tests {
             "I expect there will be no implementations that do otherwise, so no harm, no fowl, ugly corner cases go away....",
             NoHarmNoFoul::default(),
             "I expect there will be no implementations that do otherwise, so no harm, no foul, ugly corner cases go away....",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -254,6 +278,7 @@ mod tests {
             "and, yes, open source is a labor of love primarily so no harm nor foul when the goals take forever",
             NoHarmNoFoul::default(),
             "and, yes, open source is a labor of love primarily so no harm no foul when the goals take forever",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -263,6 +288,7 @@ mod tests {
             "Thankfully my car bounced off and landed wheels down so no harm nor fowl",
             NoHarmNoFoul::default(),
             "Thankfully my car bounced off and landed wheels down so no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -272,6 +298,7 @@ mod tests {
             "This happened today sorry not sorry to those that were scared \"scaleless\" it was too funny nor harm no foul",
             NoHarmNoFoul::default(),
             "This happened today sorry not sorry to those that were scared \"scaleless\" it was too funny no harm no foul",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -281,6 +308,7 @@ mod tests {
             "She was mad. But I say nor harm, no fowl.",
             NoHarmNoFoul::default(),
             "She was mad. But I say no harm, no foul.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -290,6 +318,7 @@ mod tests {
             "As long as the item was unharmed nor harm nor foul.",
             NoHarmNoFoul::default(),
             "As long as the item was unharmed no harm no foul.",
+            crate::languages::LanguageFamily::English,
         );
     }
 

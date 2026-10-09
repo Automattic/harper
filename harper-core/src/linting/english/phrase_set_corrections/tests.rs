@@ -50,12 +50,22 @@ fn corrects_theres_an_argument_to_be_said() {
 
 #[test]
 fn corrects_there_is_an_argument_to_be_said() {
-    assert_suggestion_result("Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate", lint_group(), "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Same argument for smooth_image_crate, although there is an argument to be said this is more-generally useful than scale_image_crate",
+        lint_group(),
+        "Same argument for smooth_image_crate, although there is an argument to be made this is more-generally useful than scale_image_crate",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_theres_theres_arguments_to_be_said() {
-    assert_suggestion_result("there's there's arguments to be said for all of it.", lint_group(), "there's there's arguments to be made for all of it.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "there's there's arguments to be said for all of it.",
+        lint_group(),
+        "there's there's arguments to be made for all of it.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // Bollocks
@@ -814,19 +824,34 @@ fn expand_deref() {
 
 #[test]
 fn corrects_derefs() {
-    assert_suggestion_result("A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.", lint_group(), "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "A contiguous-in-memory double-ended queue that derefs into a slice - gnzlbg/slice_deque.",
+        lint_group(),
+        "A contiguous-in-memory double-ended queue that dereferences into a slice - gnzlbg/slice_deque.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // ExpandDirectory
 
 #[test]
 fn expands_dir() {
-    assert_suggestion_result("Error: library dir does not exist: /Users/u/trr/node_modules/opencv", lint_group(), "Error: library directory does not exist: /Users/u/trr/node_modules/opencv", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Error: library dir does not exist: /Users/u/trr/node_modules/opencv",
+        lint_group(),
+        "Error: library directory does not exist: /Users/u/trr/node_modules/opencv",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn expands_dirs() {
-    assert_suggestion_result("Dirs/files are missing when scanning on windows after 1.27.12", lint_group(), "Directories/files are missing when scanning on windows after 1.27.12", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Dirs/files are missing when scanning on windows after 1.27.12",
+        lint_group(),
+        "Directories/files are missing when scanning on windows after 1.27.12",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // ExpandNotification
@@ -1432,31 +1457,56 @@ fn in_more_detail_atomic() {
 
 #[test]
 fn in_more_detail_real_world() {
-    assert_suggestion_result("Document the interface in more details · Issue #3 · owlbarn ...", lint_group(), "Document the interface in more detail · Issue #3 · owlbarn ...", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Document the interface in more details · Issue #3 · owlbarn ...",
+        lint_group(),
+        "Document the interface in more detail · Issue #3 · owlbarn ...",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // InThisThatRegard
 
 #[test]
 fn fix_in_this_regards() {
-    assert_suggestion_result("I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regards.", lint_group(), "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regard.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regards.",
+        lint_group(),
+        "I am testing many apps for our custom TROMjaro Linux, so I can be helpful in this regard.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_in_that_regards() {
-    assert_suggestion_result("Looks like that are all settings I can make in the Buderus in that regards.", lint_group(), "Looks like that are all settings I can make in the Buderus in that regard.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Looks like that are all settings I can make in the Buderus in that regards.",
+        lint_group(),
+        "Looks like that are all settings I can make in the Buderus in that regard.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // InflectionPoint
 
 #[test]
 fn corrects_infliction_point() {
-    assert_suggestion_result("You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.", lint_group(), "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "You can also position the infliction point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        lint_group(),
+        "You can also position the inflection point of the curve. By default it's exactly at the center in between the two connecting nodes.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_infliction_points() {
-    assert_suggestion_result("... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".", lint_group(), "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"infliction points\".",
+        lint_group(),
+        "... find where it touches the other side, and measure the distance. Potentially, I'd only have to do it for \"inflection points\".",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // InvestIn
@@ -2148,12 +2198,22 @@ fn fix_everybody_seams() {
 //-everyone seams-
 #[test]
 fn fix_everyone_seams() {
-    assert_suggestion_result("everyone seams to use the editor now a days plus there is a tun of extensions available", single_lint("SeamToSeem"), "everyone seems to use the editor now a days plus there is a tun of extensions available", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "everyone seams to use the editor now a days plus there is a tun of extensions available",
+        single_lint("SeamToSeem"),
+        "everyone seems to use the editor now a days plus there is a tun of extensions available",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_everyone_seams_combined_with_now_a_days() {
-    assert_suggestion_result("everyone seams to use the editor now a days plus there is a tun of extensions available", lint_group(), "everyone seems to use the editor nowadays plus there is a tun of extensions available", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "everyone seams to use the editor now a days plus there is a tun of extensions available",
+        lint_group(),
+        "everyone seems to use the editor nowadays plus there is a tun of extensions available",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // SubjunctiveWasToWere
@@ -2952,38 +3012,73 @@ fn correct_how_it_looks_like_with_apostrophe() {
 
 #[test]
 fn corrects_in_retaliation_to_to_for() {
-    assert_suggestion_result("Damage caused in retaliation to another attack by the Thorns enchantment.", lint_group(), "Damage caused in retaliation for another attack by the Thorns enchantment.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Damage caused in retaliation to another attack by the Thorns enchantment.",
+        lint_group(),
+        "Damage caused in retaliation for another attack by the Thorns enchantment.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_in_retaliation_to_to_in_response_to() {
-    assert_suggestion_result("In retaliation to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database", lint_group(), "In response to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "In retaliation to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+        lint_group(),
+        "In response to disagreeing with legal naming issues, a crucial (albeit rather small) section of code was removed from the NPM database",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // LevelOfDetails
 
 #[test]
 fn corrects_level_of_details_singular_contrived() {
-    assert_suggestion_result("The model has a high level of details.", lint_group(), "The model has a high level of detail.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "The model has a high level of details.",
+        lint_group(),
+        "The model has a high level of detail.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 fn corrects_levels_of_details_plural_contrived() {
-    assert_suggestion_result("The game uses several level of details to save memory.", lint_group(), "The game uses several levels of detail to save memory.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "The game uses several level of details to save memory.",
+        lint_group(),
+        "The game uses several levels of detail to save memory.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_level_of_details_singular_real_world() {
-    assert_suggestion_result("How to implement a level of details visualizer for 3D meshes?", lint_group(), "How to implement a level of detail visualizer for 3D meshes?", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "How to implement a level of details visualizer for 3D meshes?",
+        lint_group(),
+        "How to implement a level of detail visualizer for 3D meshes?",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_level_of_details_plural_real_world() {
-    assert_suggestion_result("LOD's (Level of details) are a set of lower models used for the purpose of optimisation", lint_group(), "LOD's (Levels of detail) are a set of lower models used for the purpose of optimisation", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "LOD's (Level of details) are a set of lower models used for the purpose of optimisation",
+        lint_group(),
+        "LOD's (Levels of detail) are a set of lower models used for the purpose of optimisation",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn corrects_levels_of_details_real_world() {
-    assert_suggestion_result("The file completion uses two levels of details to optimize performance.", lint_group(), "The file completion uses two levels of detail to optimize performance.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "The file completion uses two levels of details to optimize performance.",
+        lint_group(),
+        "The file completion uses two levels of detail to optimize performance.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // MakeItSeem
@@ -3161,64 +3256,124 @@ fn fix_no_only_was() {
 // -not only were-
 #[test]
 fn fix_no_only_were() {
-    assert_suggestion_result("No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API", lint_group(), "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "No only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+        lint_group(),
+        "Not only were there UI inconsistencies, but Safari lags behind chrome with things like the Popover API",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // Nowadays
 
 #[test]
 fn fix_now_a_days_spaces() {
-    assert_suggestion_result("Now a days, movie recommendation systems are well developed and are user focused.", lint_group(), "Nowadays, movie recommendation systems are well developed and are user focused.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Now a days, movie recommendation systems are well developed and are user focused.",
+        lint_group(),
+        "Nowadays, movie recommendation systems are well developed and are user focused.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_a_days_apostrophe() {
-    assert_suggestion_result("Now a day's recognizing the activity from the surveillance video is a challenging task.", lint_group(), "Nowadays recognizing the activity from the surveillance video is a challenging task.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Now a day's recognizing the activity from the surveillance video is a challenging task.",
+        lint_group(),
+        "Nowadays recognizing the activity from the surveillance video is a challenging task.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_a_days_hyphen() {
-    assert_suggestion_result("Recommendation engines are now a one of the most common Machine Learning project that can be seen now-a-days.", lint_group(), "Recommendation engines are now a one of the most common Machine Learning project that can be seen nowadays.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen now-a-days.",
+        lint_group(),
+        "Recommendation engines are now a one of the most common Machine Learning project that can be seen nowadays.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_a_day() {
-    assert_suggestion_result("Now a day a calendar is a daily essential things.", lint_group(), "Nowadays a calendar is a daily essential things.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Now a day a calendar is a daily essential things.",
+        lint_group(),
+        "Nowadays a calendar is a daily essential things.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_a_day_hyphen() {
-    assert_suggestion_result("Now-a-day, lots of people prefer ordering food online to save their time and effort.", lint_group(), "Nowadays, lots of people prefer ordering food online to save their time and effort.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Now-a-day, lots of people prefer ordering food online to save their time and effort.",
+        lint_group(),
+        "Nowadays, lots of people prefer ordering food online to save their time and effort.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_adays_hyphen() {
-    assert_suggestion_result("@andyp1per knows most about those Python scripts now-adays.", lint_group(), "@andyp1per knows most about those Python scripts nowadays.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "@andyp1per knows most about those Python scripts now-adays.",
+        lint_group(),
+        "@andyp1per knows most about those Python scripts nowadays.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_adays_space() {
-    assert_suggestion_result("Coding is one of my fav thing to do now adays.!", lint_group(), "Coding is one of my fav thing to do nowadays.!", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "Coding is one of my fav thing to do now adays.!",
+        lint_group(),
+        "Coding is one of my fav thing to do nowadays.!",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_nowaday() {
-    assert_suggestion_result("nowaday, I have to capitalize the first letter of the name gets from @babel/types.", lint_group(), "nowadays, I have to capitalize the first letter of the name gets from @babel/types.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "nowaday, I have to capitalize the first letter of the name gets from @babel/types.",
+        lint_group(),
+        "nowadays, I have to capitalize the first letter of the name gets from @babel/types.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_adays_apostrophe() {
-    assert_suggestion_result("I believe CSS clamp has great browser support now aday's as well.", lint_group(), "I believe CSS clamp has great browser support nowadays as well.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "I believe CSS clamp has great browser support now aday's as well.",
+        lint_group(),
+        "I believe CSS clamp has great browser support nowadays as well.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_nowa_days() {
-    assert_suggestion_result("But discord would be great cause discord is universally used for all games and companies and schools nowa days.", lint_group(), "But discord would be great cause discord is universally used for all games and companies and schools nowadays.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "But discord would be great cause discord is universally used for all games and companies and schools nowa days.",
+        lint_group(),
+        "But discord would be great cause discord is universally used for all games and companies and schools nowadays.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 #[test]
 fn fix_now_aday() {
-    assert_suggestion_result("OF all Occupations that now aday is used,I would not be a butcher", lint_group(), "OF all Occupations that nowadays is used,I would not be a butcher", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "OF all Occupations that now aday is used,I would not be a butcher",
+        lint_group(),
+        "OF all Occupations that nowadays is used,I would not be a butcher",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // RaiseTheQuestion
@@ -4095,17 +4250,32 @@ fn dont_flag_makes_them_worst_case() {
 // -making them worst-
 #[test]
 fn detect_making_them_worst_atomic() {
-    assert_suggestion_result("As for the last part about Apple deliberately making them worst in order for us to buy the 3s", lint_group(), "As for the last part about Apple deliberately making them worse in order for us to buy the 3s", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "As for the last part about Apple deliberately making them worst in order for us to buy the 3s",
+        lint_group(),
+        "As for the last part about Apple deliberately making them worse in order for us to buy the 3s",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // -to to-
 #[test]
 fn corrects_to_to() {
-    assert_suggestion_result("I need to add that to my to to list first.", lint_group(), "I need to add that to my to do list first.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "I need to add that to my to to list first.",
+        lint_group(),
+        "I need to add that to my to do list first.",
+        crate::languages::LanguageFamily::English,
+    );
 }
 
 // -to-to-
 #[test]
 fn corrects_to_to_with_hyphen() {
-    assert_suggestion_result("I need to add that to my to-to list first.", lint_group(), "I need to add that to my to-do list first.", crate::languages::LanguageFamily::English);
+    assert_suggestion_result(
+        "I need to add that to my to-to list first.",
+        lint_group(),
+        "I need to add that to my to-do list first.",
+        crate::languages::LanguageFamily::English,
+    );
 }

@@ -224,11 +224,19 @@ mod tests {
 
     #[test]
     fn ignore_neither_they_nor_i_could() {
-        assert_no_lints("One of my users was unable to install tools via mise, but neither they nor I could initially figure out why.", NorModalPronoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "One of my users was unable to install tools via mise, but neither they nor I could initially figure out why.",
+            NorModalPronoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_neither_my_tool_nor_i_shall() {
-        assert_no_lints("but neither my tool nor I shall feel disrespected", NorModalPronoun::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "but neither my tool nor I shall feel disrespected",
+            NorModalPronoun::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

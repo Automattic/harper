@@ -59,6 +59,7 @@ mod tests {
             "Jobs are leaving in drones out of the country.",
             LeavingInDroves::default(),
             "Jobs are leaving in droves out of the country.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -68,6 +69,7 @@ mod tests {
             "Yet they are amongst some of the loudest promoters of the notion that the wealthy will leave in drones.",
             LeavingInDroves::default(),
             "Yet they are amongst some of the loudest promoters of the notion that the wealthy will leave in droves.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -77,6 +79,7 @@ mod tests {
             "consider the damage that will be caused when employees start leaving in drones as if we didn't have enough people leave already in the past 2 years.",
             LeavingInDroves::default(),
             "consider the damage that will be caused when employees start leaving in droves as if we didn't have enough people leave already in the past 2 years.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -86,6 +89,7 @@ mod tests {
             "Why Are Nigerian Pastors Leaving In Drones?",
             LeavingInDroves::default(),
             "Why Are Nigerian Pastors Leaving In Droves?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -95,6 +99,7 @@ mod tests {
             "I have remained at the place while my coworkers have left in drones.",
             LeavingInDroves::default(),
             "I have remained at the place while my coworkers have left in droves.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

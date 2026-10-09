@@ -56,22 +56,42 @@ mod tests {
 
     #[test]
     fn detects_might_could() {
-        assert_lint_count("They might could finish the project by Friday.", DoubleModal::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "They might could finish the project by Friday.",
+            DoubleModal::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_should_ought() {
-        assert_lint_count("You should ought to apologize.", DoubleModal::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "You should ought to apologize.",
+            DoubleModal::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn allows_single_modal() {
-        assert_lint_count("She must leave early.", DoubleModal::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "She must leave early.",
+            DoubleModal::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn detects_two_double_modals() {
-        assert_lint_count("He may can join us, and you might could too.", DoubleModal::default(), 2, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "He may can join us, and you might could too.",
+            DoubleModal::default(),
+            2,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -106,6 +126,10 @@ mod tests {
 
     #[test]
     fn allows_will_need() {
-        assert_no_lints("You will need administrator or editor level access", DoubleModal::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "You will need administrator or editor level access",
+            DoubleModal::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

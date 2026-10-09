@@ -93,22 +93,40 @@ mod tests {
 
     #[test]
     fn catches_spelled() {
-        assert_lint_count("I have been waiting since two hours.", SinceDuration::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I have been waiting since two hours.",
+            SinceDuration::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn permits_spelled_with_ago() {
-        assert_no_lints("I have been waiting since two hours ago.", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I have been waiting since two hours ago.",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn catches_numerals() {
-        assert_lint_count("I have been waiting since 2 hours.", SinceDuration::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I have been waiting since 2 hours.",
+            SinceDuration::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn permits_numerals_with_ago() {
-        assert_no_lints("I have been waiting since 2 hours ago.", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I have been waiting since 2 hours ago.",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -275,32 +293,65 @@ mod tests {
 
     #[test]
     fn not_yet_handled_3() {
-        assert_suggestion_result("I use a Wacom Cintiq 27QHDT since several years on Linux", SinceDuration::default(), "I use a Wacom Cintiq 27QHDT for several years on Linux", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I use a Wacom Cintiq 27QHDT since several years on Linux",
+            SinceDuration::default(),
+            "I use a Wacom Cintiq 27QHDT for several years on Linux",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignore_since_years_old() {
-        assert_no_lints("I've been coding since 11 years old and I'm now 57", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "I've been coding since 11 years old and I'm now 57",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     fn correct_since_a_few_months() {
-        assert_suggestion_result("I am struggling since a few months with the rebuild of an old FORTRAN program.", SinceDuration::default(), "I am struggling for a few months with the rebuild of an old FORTRAN program.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I am struggling since a few months with the rebuild of an old FORTRAN program.",
+            SinceDuration::default(),
+            "I am struggling for a few months with the rebuild of an old FORTRAN program.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     // Note: Expects "few" to be corrected to "a few" by a different linter
     fn correct_since_few_days() {
-        assert_suggestion_result("I've been struggling since few days with the rebuild of an old FORTRAN program.", SinceDuration::default(), "I've been struggling for few days with the rebuild of an old FORTRAN program.", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "I've been struggling since few days with the rebuild of an old FORTRAN program.",
+            SinceDuration::default(),
+            "I've been struggling for few days with the rebuild of an old FORTRAN program.",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     fn dont_flag_since_a_couple_hours_ago() {
-        assert_no_lints("[BUG] since a couple hours ago, the claude code agent often gets stuck while working.", SinceDuration::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "[BUG] since a couple hours ago, the claude code agent often gets stuck while working.",
+            SinceDuration::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     fn fix_since_a_couple_of_days() {
-        assert_suggestion_result("Since a couple of days, I got this error", SinceDuration::default(), "For a couple of days, I got this error", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Since a couple of days, I got this error",
+            SinceDuration::default(),
+            "For a couple of days, I got this error",
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     fn fix_since_a_couple_days() {
-        assert_suggestion_result("Values at 0 all the time since a couple days · Issue #91551", SinceDuration::default(), "Values at 0 all the time since a couple days ago · Issue #91551", crate::languages::LanguageFamily::English);
+        assert_suggestion_result(
+            "Values at 0 all the time since a couple days · Issue #91551",
+            SinceDuration::default(),
+            "Values at 0 all the time since a couple days ago · Issue #91551",
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

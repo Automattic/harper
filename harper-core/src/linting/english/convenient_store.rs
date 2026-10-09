@@ -178,6 +178,7 @@ mod tests {
             "7-11 convenient stores is 20 steps away!",
             ConvenientStore::default(),
             "7-11 convenience stores is 20 steps away!",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -187,6 +188,7 @@ mod tests {
             "hi, is there any convenient stores nearby?",
             ConvenientStore::default(),
             "hi, is there any convenience stores nearby?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -196,6 +198,7 @@ mod tests {
             "Yes they do have convenient stores around.",
             ConvenientStore::default(),
             "Yes they do have convenience stores around.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -205,6 +208,7 @@ mod tests {
             "There is also a convenient store just downstairs which is 24/7.",
             ConvenientStore::default(),
             "There is also a convenience store just downstairs which is 24/7.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -214,6 +218,7 @@ mod tests {
             "Mobile Application for small Convenient stores to keep track of the coupons by scanning the coupon barcode.",
             ConvenientStore::default(),
             "Mobile Application for small Convenience stores to keep track of the coupons by scanning the coupon barcode.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -223,6 +228,7 @@ mod tests {
             "Find deals on Kanak Kanak Convenient Store products online with Lazada Malaysia",
             ConvenientStore::default(),
             "Find deals on Kanak Kanak Convenience Store products online with Lazada Malaysia",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -232,6 +238,7 @@ mod tests {
             "Buy Sweet Bean Convenient Store in Singapore,Singapore.",
             ConvenientStore::default(),
             "Buy Sweet Bean Convenience Store in Singapore,Singapore.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -241,6 +248,7 @@ mod tests {
             "Ok, so I was at a convenient store and I noticed this young woman reading through magazines while I was shopping for some snacks.",
             ConvenientStore::default(),
             "Ok, so I was at a convenience store and I noticed this young woman reading through magazines while I was shopping for some snacks.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -250,6 +258,7 @@ mod tests {
             "Connected to Mercury Ville shopping mall comprising of restaurants, convenient stores, clinics and banks",
             ConvenientStore::default(),
             "Connected to Mercury Ville shopping mall comprising of restaurants, convenience stores, clinics and banks",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -259,6 +268,7 @@ mod tests {
             "There are many convenient store, 7-11 minimart,Tesco Lotus supermarket,Century Mall, Big C Supermarket,Fresh market . ",
             ConvenientStore::default(),
             "There are many convenience store, 7-11 minimart,Tesco Lotus supermarket,Century Mall, Big C Supermarket,Fresh market . ",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -269,6 +279,7 @@ mod tests {
         assert_no_lints(
             "Convenient \"Store\" API (deprecates ObjectBox and Builder API)",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -277,6 +288,7 @@ mod tests {
         assert_no_lints(
             "It can be used for a small convenient store after certain modifications to the GUI.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -285,6 +297,7 @@ mod tests {
         assert_no_lints(
             "Add convenient store methods; Improve the docs; Improve some internals.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -293,6 +306,7 @@ mod tests {
         assert_no_lints(
             "So, managing and transferring states becomes easier as all the states are stored in the same convenient store.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -301,6 +315,7 @@ mod tests {
         assert_no_lints(
             "A safe and convenient store for one value of each type.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -309,6 +324,7 @@ mod tests {
         assert_no_lints(
             "A Redis server, running on the local client device can serve as a convenient store for messages.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -317,6 +333,7 @@ mod tests {
         assert_no_lints(
             "Two reasons: it's a more convenient store than yaml, especially for binary data, and it's easier to re-encrypt when gpg-keys change.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -325,6 +342,7 @@ mod tests {
         assert_no_lints(
             "Mini glass bottle collection of convenient store.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -335,6 +353,7 @@ mod tests {
         assert_no_lints(
             "GE frame dump at convenient store.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -343,6 +362,7 @@ mod tests {
         assert_no_lints(
             "It is a great feature as customers can choose a convenient store for their order delivery and they know when it can be picked up.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -351,6 +371,7 @@ mod tests {
         assert_no_lints(
             "It also allows you to create a convenient store that includes any additional structure and the actions and selectors to be used to manage the entities.",
             ConvenientStore::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

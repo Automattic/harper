@@ -1,19 +1,16 @@
-use super::{Lint, LintKind, Linter, Suggestion};
-use crate::document::Document;
-use crate::linting::english::informal_laughter::is_informal_laughter;
-use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{
-    CharString, CharStringExt, DialectFlags, DialectsEnum, EnglishDialect, TokenStringExt,
-};
-use lru::LruCache;
-use smallvec::ToSmallVec;
+use std::num::NonZero;
 
-use super::{Lint, LintKind, Linter};
-use super::{Suggestion, informal_laughter::is_informal_laughter};
+use super::informal_laughter::is_informal_laughter;
+use super::{Lint, LintKind, Linter, Suggestion};
 use crate::document::Document;
 use crate::expr::{Filter, SequenceExpr};
 use crate::spell::{Dictionary, suggest_correct_spelling};
-use crate::{CharString, CharStringExt, Dialect, TokenStringExt, remove_lints_overlapping_expr};
+use crate::{
+    CharString, CharStringExt, DialectFlags, DialectsEnum, EnglishDialect, TokenStringExt,
+    remove_lints_overlapping_expr,
+};
+use lru::LruCache;
+use smallvec::ToSmallVec;
 
 pub struct SpellCheck<T>
 where
@@ -713,7 +710,10 @@ mod tests {
     fn allows_parenthetical_plural_s() {
         assert_no_lints(
             "Please ask each person(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             LanguageFamily::English,
         );
     }
@@ -722,7 +722,10 @@ mod tests {
     fn allows_multiple_parenthetical_plural_s_markers() {
         assert_no_lints(
             "Review the person(s) and document(s).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             LanguageFamily::English,
         );
     }
@@ -731,7 +734,10 @@ mod tests {
     fn allows_uppercase_parenthetical_plural_s() {
         assert_no_lints(
             "CONTACT THE PERSON(S).",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             LanguageFamily::English,
         );
     }
@@ -740,7 +746,10 @@ mod tests {
     fn still_flags_misspelled_word_before_parenthetical_plural_s() {
         assert_lint_count(
             "Please ask each persson(s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             1,
             LanguageFamily::English,
         );
@@ -750,7 +759,10 @@ mod tests {
     fn still_flags_parenthetical_s_without_preceding_word() {
         assert_lint_count(
             "Please mark (s) on the form.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             1,
             LanguageFamily::English,
         );
@@ -760,7 +772,10 @@ mod tests {
     fn still_flags_spaced_parenthetical_s() {
         assert_lint_count(
             "Please ask each person (s) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             1,
             LanguageFamily::English,
         );
@@ -770,7 +785,10 @@ mod tests {
     fn still_flags_longer_parenthetical_marker() {
         assert_lint_count(
             "Please ask each person(ss) to sign.",
-            SpellCheck::new(FstDictionary::curated(), Dialect::American),
+            SpellCheck::new(
+                FstDictionary::curated(LanguageFamily::English),
+                EnglishDialect::American,
+            ),
             1,
             LanguageFamily::English,
         );

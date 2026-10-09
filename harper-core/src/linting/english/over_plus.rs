@@ -165,12 +165,17 @@ mod tests {
         assert_no_lints(
             "Currently, there are over one million Plus-linked ATMs in 170 countries worldwide",
             OverPlus::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
     #[test]
     fn dont_flag_plus_size() {
-        assert_no_lints("Over 50 plus size outfits", OverPlus::default());
+        assert_no_lints(
+            "Over 50 plus size outfits",
+            OverPlus::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -178,6 +183,7 @@ mod tests {
         assert_no_lints(
             "like the Cardinals, who went hitless over five-plus innings",
             OverPlus::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -186,6 +192,7 @@ mod tests {
         assert_no_lints(
             "OnePlus 9 Series Wifi keep disconnecting over one plus 9 Every time",
             OverPlus::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -220,6 +227,7 @@ mod tests {
         assert_no_lints(
             "Jacob Latz K's four over six-plus scoreless innings",
             OverPlus::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -228,6 +236,7 @@ mod tests {
         assert_no_lints(
             "over 5,000 PLUS personnel will be on duty to assist highway users",
             OverPlus::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 

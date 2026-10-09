@@ -75,6 +75,7 @@ mod tests {
             "Oo how does it compared to matrix chatGPT bot",
             HowDoesCompared::default(),
             "Oo how does it compare to matrix chatGPT bot",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -84,6 +85,7 @@ mod tests {
             "How does it compares to openspec or other spec driven frameworks?",
             HowDoesCompared::default(),
             "How does it compare to openspec or other spec driven frameworks?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -93,6 +95,7 @@ mod tests {
             "Also I wonder if your touchscreen works with VoodooRMI, or how does that compared to VoodooI2CHID?",
             HowDoesCompared::default(),
             "Also I wonder if your touchscreen works with VoodooRMI, or how does that compare to VoodooI2CHID?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -102,6 +105,7 @@ mod tests {
             "lets take a look at where we are as per the latest SBP payment system report and how does that compares with the historical trend for these figures",
             HowDoesCompared::default(),
             "lets take a look at where we are as per the latest SBP payment system report and how does that compare with the historical trend for these figures",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -111,6 +115,7 @@ mod tests {
             "How does this compared to other softwares like 3d-agent , threedle or SAM 3d from meta?",
             HowDoesCompared::default(),
             "How does this compare to other softwares like 3d-agent , threedle or SAM 3d from meta?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -120,6 +125,7 @@ mod tests {
             "How does this compares to the RetinaFace?",
             HowDoesCompared::default(),
             "How does this compare to the RetinaFace?",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

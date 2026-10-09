@@ -344,6 +344,7 @@ mod tests {
             "This is a reference of me self-teaching myself the Barvinok algorithm.",
             RedundantSelf::default(),
             "This is a reference of me teaching myself the Barvinok algorithm.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -353,6 +354,7 @@ mod tests {
             "Since I wasn't blessed to learn security related topic back when I was undergrad, I self taught myself using udemy, and CTF Challenge online.",
             RedundantSelf::default(),
             "Since I wasn't blessed to learn security related topic back when I was undergrad, I taught myself using udemy, and CTF Challenge online.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -362,6 +364,7 @@ mod tests {
             "I decided to self-teach myself python so I could get more involved in wider aspects of research, specifically data science.",
             RedundantSelf::default(),
             "I decided to teach myself python so I could get more involved in wider aspects of research, specifically data science.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -372,6 +375,7 @@ mod tests {
             "The point of OSSU is to make things easier for people self-teaching themselves CS.",
             RedundantSelf::default(),
             "The point of OSSU is to make things easier for people teaching themselves CS.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -728,6 +732,7 @@ mod tests {
         assert_no_lints(
             "I understand that self harm itself isn't something that you would have to report.",
             RedundantSelf::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -736,6 +741,7 @@ mod tests {
         assert_no_lints(
             "I prefer to self-host my applications",
             RedundantSelf::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -744,6 +750,7 @@ mod tests {
         assert_no_lints(
             "They decided to host it themselves",
             RedundantSelf::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -789,6 +796,7 @@ mod tests {
             "I'm on dudes side, the person that self defended himself",
             RedundantSelf::default(),
             "I'm on dudes side, the person that defended himself",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

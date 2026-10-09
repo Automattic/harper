@@ -126,6 +126,7 @@ mod tests {
         assert_no_lints(
             "The silence of this deep section of the Spire was profound, broken only by her own ragged breathing.",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -160,6 +161,7 @@ mod tests {
         assert_no_lints(
             "My point is if someone needs jemalloc he gets it by his own efforts clearly realising why/when and so on.",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -191,7 +193,11 @@ mod tests {
 
     #[test]
     fn dont_flag_by_its_own_changes() {
-        assert_no_lints("Remix is spooked by its own changes", ByOnesOwn::default());
+        assert_no_lints(
+            "Remix is spooked by its own changes",
+            ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -212,6 +218,7 @@ mod tests {
         assert_no_lints(
             "My colledge' ID is totally messed up by my own HR",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -230,7 +237,11 @@ mod tests {
 
     #[test]
     fn dont_flag_by_our_own_standards() {
-        assert_no_lints("Better by our own standards.", ByOnesOwn::default());
+        assert_no_lints(
+            "Better by our own standards.",
+            ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -251,6 +262,7 @@ mod tests {
         assert_no_lints(
             "GitHub needs a way to report issues and comments, even by their own bots.",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -272,6 +284,7 @@ mod tests {
         assert_no_lints(
             "Design with JSX, powered by your own component library.",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -283,6 +296,7 @@ mod tests {
         assert_no_lints(
             "same infininte running and when i stop this node forcefully it show s the currect output dont know why it dont stop by its own i think its a bug",
             ByOnesOwn::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 

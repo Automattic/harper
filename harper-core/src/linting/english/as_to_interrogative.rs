@@ -74,6 +74,7 @@ mod tests {
             "I would be curious to how you dealt with the issues I mentioned above",
             AsToInterrogative::default(),
             "I would be curious as to how you dealt with the issues I mentioned above",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -83,6 +84,7 @@ mod tests {
             "I'm curious to what @Katzmann1983 thinks on this topic.",
             AsToInterrogative::default(),
             "I'm curious as to what @Katzmann1983 thinks on this topic.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -91,6 +93,7 @@ mod tests {
         assert_no_lints(
             "I really just want to ask these questions / am curious to what extent anything like this is in place or will be put in place.",
             AsToInterrogative::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -100,6 +103,7 @@ mod tests {
             "So I am curious to when you should return an array to destructure",
             AsToInterrogative::default(),
             "So I am curious as to when you should return an array to destructure",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -109,6 +113,7 @@ mod tests {
             "Curious to where you ended up.",
             AsToInterrogative::default(),
             "Curious as to where you ended up.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -118,6 +123,7 @@ mod tests {
             "I have never used them so was curious to whether I could improve my workflow even more",
             AsToInterrogative::default(),
             "I have never used them so was curious as to whether I could improve my workflow even more",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -127,6 +133,7 @@ mod tests {
             "I'm curious to which country you're assigning these noble ideals.",
             AsToInterrogative::default(),
             "I'm curious as to which country you're assigning these noble ideals.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -136,6 +143,7 @@ mod tests {
             "New to climbing, curious to who create the problems/leads in the Olympics and how/by who are they tested?",
             AsToInterrogative::default(),
             "New to climbing, curious as to who create the problems/leads in the Olympics and how/by who are they tested?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -145,6 +153,7 @@ mod tests {
             "I am curious to why the below weird_query does not yield a query with the parent relationship loaded",
             AsToInterrogative::default(),
             "I am curious as to why the below weird_query does not yield a query with the parent relationship loaded",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -154,6 +163,7 @@ mod tests {
             "If you are unsure to what BurpSuite is, or how to set it up please complete our BurpSuite room first.",
             AsToInterrogative::default(),
             "If you are unsure as to what BurpSuite is, or how to set it up please complete our BurpSuite room first.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -162,6 +172,7 @@ mod tests {
         assert_no_lints(
             "and I'm unsure to what degree these have already been done",
             AsToInterrogative::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -171,6 +182,7 @@ mod tests {
         assert_no_lints(
             "Two classical music performances on the same day, unsure to which I should go.",
             AsToInterrogative::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -180,6 +192,7 @@ mod tests {
             "I am unsure to why this code is wrong.",
             AsToInterrogative::default(),
             "I am unsure as to why this code is wrong.",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

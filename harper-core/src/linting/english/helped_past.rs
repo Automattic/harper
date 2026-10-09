@@ -123,8 +123,11 @@ mod tests {
     fn that_i_helped_built() {
         assert_suggestion_result(
             "... as I have moved from CraftCMS into a startup that I helped built",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "... as I have moved from CraftCMS into a startup that I helped build",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -132,8 +135,11 @@ mod tests {
     fn i_helped_built_some() {
         assert_suggestion_result(
             "Strangely, thru some form of \"magic\" I helped built some hundreds of commercial T2 targets",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Strangely, thru some form of \"magic\" I helped build some hundreds of commercial T2 targets",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -141,8 +147,11 @@ mod tests {
     fn has_helped_built() {
         assert_suggestion_result(
             "Dify is an LLM application development platform that has helped built over 100,000 applications.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Dify is an LLM application development platform that has helped build over 100,000 applications.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -150,8 +159,11 @@ mod tests {
     fn who_helped_made() {
         assert_suggestion_result(
             "our many amazing contributors who helped made this possible",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "our many amazing contributors who helped make this possible",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -159,8 +171,11 @@ mod tests {
     fn has_helped_made() {
         assert_suggestion_result(
             "everyone who says that something I've worked on has helped made their lives easier",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "everyone who says that something I've worked on has helped make their lives easier",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -168,8 +183,11 @@ mod tests {
     fn i_helped_made() {
         assert_suggestion_result(
             "This is a a video game I helped made for a national competition in high school.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "This is a a video game I helped make for a national competition in high school.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -177,8 +195,11 @@ mod tests {
     fn helped_made_at_start() {
         assert_suggestion_result(
             "Spinner Tutorial - Helped made the roulette wheel come to life.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Spinner Tutorial - Helped make the roulette wheel come to life.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -188,8 +209,11 @@ mod tests {
     fn helped_chose() {
         assert_suggestion_result(
             "The 2018 analysis helped chose tires (as well as validated prior choices)",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "The 2018 analysis helped choose tires (as well as validated prior choices)",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -197,8 +221,11 @@ mod tests {
     fn helped_created() {
         assert_suggestion_result(
             "React helped created a light weight dynamic webpage that can be implmented in various different applications.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "React helped create a light weight dynamic webpage that can be implmented in various different applications.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -206,8 +233,11 @@ mod tests {
     fn helped_debugged() {
         assert_suggestion_result(
             "Someone helped debugged this issue.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Someone helped debug this issue.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -215,8 +245,11 @@ mod tests {
     fn helped_designed() {
         assert_suggestion_result(
             "when speaking with Ka Ming who has helped designed many of the UX/UI elements for the Security Plugin",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "when speaking with Ka Ming who has helped design many of the UX/UI elements for the Security Plugin",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -224,8 +257,11 @@ mod tests {
     fn helped_implemented() {
         assert_suggestion_result(
             "The way to do that, that I have helped implemented in some other addons already",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "The way to do that, that I have helped implement in some other addons already",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -233,8 +269,11 @@ mod tests {
     fn also_helped_improved() {
         assert_suggestion_result(
             "Also helped improved and scale billing infrastructure as customer growth accelerated especially in the enterprise space.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Also helped improve and scale billing infrastructure as customer growth accelerated especially in the enterprise space.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -242,8 +281,11 @@ mod tests {
     fn has_helped_improved() {
         assert_suggestion_result(
             "Thanks for making Psalm, it's a fantastic tool and has helped improved our code quality massively.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Thanks for making Psalm, it's a fantastic tool and has helped improve our code quality massively.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -251,8 +293,11 @@ mod tests {
     fn helped_picked() {
         assert_suggestion_result(
             "you helped picked the default",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "you helped pick the default",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -260,8 +305,11 @@ mod tests {
     fn helped_wrote() {
         assert_suggestion_result(
             "Disclosure: I didn't find the bugs. I helped wrote the blog post.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
             "Disclosure: I didn't find the bugs. I helped write the blog post.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -271,7 +319,10 @@ mod tests {
     fn dont_flag_shouldve_helped_given_that() {
         assert_no_lints(
             "However, it seems like 1 minute timeout should've helped given that default idle timeout is 10 minutes.",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -279,7 +330,10 @@ mod tests {
     fn dont_flag_be_helped_given_the() {
         assert_no_lints(
             "Major API breakages can't be helped given the nature of code generation",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -287,7 +341,10 @@ mod tests {
     fn dont_flag_helped_got() {
         assert_no_lints(
             "but along the way everyone who helped got +1 from me",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -295,7 +352,10 @@ mod tests {
     fn dont_flag_helped_did() {
         assert_no_lints(
             "So, that helped did it?",
-            HelpedPast::new(FstDictionary::curated()),
+            HelpedPast::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            crate::languages::LanguageFamily::English,
         );
     }
 }

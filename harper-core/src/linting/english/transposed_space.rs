@@ -121,10 +121,9 @@ impl<D: Dictionary + 'static> ExprLinter for TransposedSpace<D> {
 mod tests {
     use super::TransposedSpace;
     use crate::{
-        
-        languages::LanguageFamily, linting::tests::{assert_suggestion_count, assert_suggestion_result},
+        languages::LanguageFamily,
+        linting::tests::{assert_suggestion_count, assert_suggestion_result},
         spell::FstDictionary,
-    ,
     };
 
     #[test]
@@ -161,7 +160,7 @@ mod tests {
     fn test_late() {
         assert_suggestion_result(
             "Ands ometimes the space is a character late.",
-            TransposedSpace::new(FstDictionary::curated()),
+            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
             "And sometimes the space is a character late.",
             crate::languages::LanguageFamily::English,
         );
@@ -169,15 +168,21 @@ mod tests {
 
     #[test]
     fn test_3355_result() {
-        assert_suggestion_result("cham peng", TransposedSpace::new(FstDictionary::curated()), "champ eng", LanguageFamily::English);
+        assert_suggestion_result(
+            "cham peng",
+            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
+            "champ eng",
+            LanguageFamily::English,
+        );
     }
 
     #[test]
     fn test_3355_count() {
         assert_suggestion_count(
             "cham peng",
-            TransposedSpace::new(FstDictionary::curated()),
+            TransposedSpace::new(FstDictionary::curated(LanguageFamily::English)),
             1,
+            LanguageFamily::English,
         );
     }
 }

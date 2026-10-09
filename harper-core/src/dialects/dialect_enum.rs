@@ -55,6 +55,19 @@ impl Dialect for DialectsEnum {
 
         None
     }
+
+    fn try_from_bcp47(bcp47: &str) -> Option<Self> {
+        match &bcp47[0..3] {
+            "en-" => Some(DialectsEnum::English(EnglishDialect::try_from_bcp47(
+                bcp47,
+            )?)),
+            "pt-" => Some(DialectsEnum::Portuguese(PortugueseDialect::try_from_bcp47(
+                bcp47,
+            )?)),
+
+            &_ => None,
+        }
+    }
 }
 
 impl Default for DialectsEnum {

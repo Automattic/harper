@@ -80,6 +80,7 @@ mod tests {
             "As a result, we can conclude that organizations do \"play it by the books\" but individually define what is inside their playbooks ...",
             ByTheBook::default(),
             "As a result, we can conclude that organizations do \"play it by the book\" but individually define what is inside their playbooks ...",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -89,6 +90,7 @@ mod tests {
             "The finalizer used in Replace AsyncProcess exit handler by weakref.finalize #4184 is doing everything by the books.",
             ByTheBook::default(),
             "The finalizer used in Replace AsyncProcess exit handler by weakref.finalize #4184 is doing everything by the book.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -97,6 +99,7 @@ mod tests {
         assert_no_lints(
             "The order of books within the breadcrumb dropdowns (i.e. when you click the arrow) is done by the books' id, rather than by name",
             ByTheBook::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -106,6 +109,7 @@ mod tests {
             "We essentially play by the books and let the actual Pod with identity make the requests.",
             ByTheBook::default(),
             "We essentially play by the book and let the actual Pod with identity make the requests.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -115,6 +119,7 @@ mod tests {
             "If we're playing by the books, we should also implement something that tells a user when they're trying to make a table.",
             ByTheBook::default(),
             "If we're playing by the book, we should also implement something that tells a user when they're trying to make a table.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -125,6 +130,7 @@ mod tests {
             "If you wanted to go by the books, I would agree that removing such consistently unmethylated positions is a good option.",
             ByTheBook::default(),
             "If you wanted to go by the book, I would agree that removing such consistently unmethylated positions is a good option.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -134,6 +140,7 @@ mod tests {
             "a new media folder was created under config/addons_config/paperless_ng even though I configured it by the books",
             ByTheBook::default(),
             "a new media folder was created under config/addons_config/paperless_ng even though I configured it by the book",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -143,6 +150,7 @@ mod tests {
             "we did all by the books and we did not need the options at the end",
             ByTheBook::default(),
             "we did all by the book and we did not need the options at the end",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

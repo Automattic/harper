@@ -68,7 +68,12 @@ mod tests {
 
     #[test]
     fn allows_for_clean() {
-        assert_lint_count("I got a text for Sarah.", ForNoun::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "I got a text for Sarah.",
+            ForNoun::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

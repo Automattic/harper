@@ -139,17 +139,32 @@ mod tests {
 
     #[test]
     fn dont_flag_also_too() {
-        assert_lint_count("The version update is also too slow.", RedundantAdditiveAdverbs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The version update is also too slow.",
+            RedundantAdditiveAdverbs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn dont_flag_also_as_well_as() {
-        assert_lint_count("Believe there are stable packages in the readme also as well as a link to an old version of forge in the ...", RedundantAdditiveAdverbs::default(), 0, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "Believe there are stable packages in the readme also as well as a link to an old version of forge in the ...",
+            RedundantAdditiveAdverbs::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn do_flag_too_also_as_well_as() {
-        assert_lint_count("What would happen with a sentence that included too also as well as?", RedundantAdditiveAdverbs::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "What would happen with a sentence that included too also as well as?",
+            RedundantAdditiveAdverbs::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]

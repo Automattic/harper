@@ -123,54 +123,102 @@ mod tests {
 
     #[test]
     fn ignores_progressively_more() {
-        assert_no_lints("These failures are progressively more severe in production.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "These failures are progressively more severe in production.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_steadily_more() {
-        assert_no_lints("The interface is steadily more accessible each release.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The interface is steadily more accessible each release.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_progressively_less() {
-        assert_no_lints("The warnings became progressively less noticeable over time.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The warnings became progressively less noticeable over time.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_steadily_less() {
-        assert_no_lints("The logs are steadily less noisy in recent builds.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The logs are steadily less noisy in recent builds.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_more_than() {
-        assert_no_lints("The issue is increasingly more than a minor annoyance.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is increasingly more than a minor annoyance.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_less_than() {
-        assert_no_lints("The issue is increasingly less than a minor annoyance.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is increasingly less than a minor annoyance.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_noun_after_more() {
-        assert_no_lints("The issue is increasingly more people reporting crashes.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is increasingly more people reporting crashes.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_noun_after_less() {
-        assert_no_lints("The issue is increasingly less people reporting crashes.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is increasingly less people reporting crashes.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_without_comparator() {
-        assert_no_lints("The issue is increasingly prevalent in this subsystem.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is increasingly prevalent in this subsystem.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
     fn ignores_other_adverbial_comparatives() {
-        assert_no_lints("The issue is much more prevalent in this subsystem.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
-        assert_no_lints("The issue is significantly less prevalent in this subsystem.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
-        assert_no_lints("The issue is ever more prevalent in this subsystem.", RedundantProgressiveComparative::default(), crate::languages::LanguageFamily::English);
+        assert_no_lints(
+            "The issue is much more prevalent in this subsystem.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
+        assert_no_lints(
+            "The issue is significantly less prevalent in this subsystem.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
+        assert_no_lints(
+            "The issue is ever more prevalent in this subsystem.",
+            RedundantProgressiveComparative::default(),
+            crate::languages::LanguageFamily::English,
+        );
     }
 
     #[test]
@@ -186,6 +234,11 @@ mod tests {
 
     #[test]
     fn emits_expected_lint_count() {
-        assert_lint_count("The trend is increasingly more likely in larger teams.", RedundantProgressiveComparative::default(), 1, crate::languages::LanguageFamily::English);
+        assert_lint_count(
+            "The trend is increasingly more likely in larger teams.",
+            RedundantProgressiveComparative::default(),
+            1,
+            crate::languages::LanguageFamily::English,
+        );
     }
 }

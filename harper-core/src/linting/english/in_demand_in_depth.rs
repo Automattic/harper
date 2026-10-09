@@ -72,6 +72,7 @@ mod tests {
             "One hour video call consisting of in depth technical discussion with lead developers",
             InDemandInDepth::default(),
             "One hour video call consisting of in-depth technical discussion with lead developers",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -81,6 +82,7 @@ mod tests {
             "I have added a more in depth documentation for each concept",
             InDemandInDepth::default(),
             "I have added a more in-depth documentation for each concept",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -90,6 +92,7 @@ mod tests {
             "Jupyter notebook for scraping and analysis of most in demand job technologies skills for data scientists",
             InDemandInDepth::default(),
             "Jupyter notebook for scraping and analysis of most in-demand job technologies skills for data scientists",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -99,6 +102,7 @@ mod tests {
             "invited one of their engineers to the next meeting to explain this more in depth",
             InDemandInDepth::default(),
             "invited one of their engineers to the next meeting to explain this more in-depth",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -108,6 +112,7 @@ mod tests {
             "This is a very in depth explination of naive bayes w.r.t implementation in python",
             InDemandInDepth::default(),
             "This is a very in-depth explination of naive bayes w.r.t implementation in python",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -117,6 +122,7 @@ mod tests {
             "there should be a pretty in depth comparison of all of the options in the wiki",
             InDemandInDepth::default(),
             "there should be a pretty in-depth comparison of all of the options in the wiki",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -126,6 +132,7 @@ mod tests {
             "There was already a quite in depth analysis for Tasmota here",
             InDemandInDepth::default(),
             "There was already a quite in-depth analysis for Tasmota here",
+            crate::languages::LanguageFamily::English,
         );
     }
 }

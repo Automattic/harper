@@ -83,6 +83,7 @@ mod tests {
             "don't want to redirect to product page if not enough products are on stock",
             InStock::default(),
             "don't want to redirect to product page if not enough products are in stock",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -92,6 +93,7 @@ mod tests {
             "Python script to check if a product is back on stock at flipkart.com - shyamjos/flipkart_checker.",
             InStock::default(),
             "Python script to check if a product is back in stock at flipkart.com - shyamjos/flipkart_checker.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -101,6 +103,7 @@ mod tests {
             "notify customer when an article is back on stock",
             InStock::default(),
             "notify customer when an article is back in stock",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -110,6 +113,7 @@ mod tests {
             "Could there be some complete stock goods listing regardless how many products should be on stock?",
             InStock::default(),
             "Could there be some complete stock goods listing regardless how many products should be in stock?",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -119,6 +123,7 @@ mod tests {
             "I think it would be best if the BOM and CPL files could be updated with a component that JLCPBC has on stock.",
             InStock::default(),
             "I think it would be best if the BOM and CPL files could be updated with a component that JLCPBC has in stock.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -128,6 +133,7 @@ mod tests {
             "Can't Notify customer if product has inventory on stock but not on particular source",
             InStock::default(),
             "Can't Notify customer if product has inventory in stock but not on particular source",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -137,6 +143,7 @@ mod tests {
             "classic product that we don't have on stock or we may still have few",
             InStock::default(),
             "classic product that we don't have in stock or we may still have few",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -146,6 +153,7 @@ mod tests {
             "but we also may have them on stock for x reasons",
             InStock::default(),
             "but we also may have them in stock for x reasons",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -155,6 +163,7 @@ mod tests {
             "why not immidiatly show the 2000 as that is what is on stock.",
             InStock::default(),
             "why not immidiatly show the 2000 as that is what is in stock.",
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -165,6 +174,7 @@ mod tests {
         assert_no_lints(
             "So i am pretty sure issue is on stock samsung roms",
             InStock::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -173,6 +183,7 @@ mod tests {
         assert_no_lints(
             "Samba lens is missing on Stock Lenses page",
             InStock::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -181,6 +192,7 @@ mod tests {
         assert_no_lints(
             "I'm actually not sure if that prop is really doing anything even on stock OS.",
             InStock::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 
@@ -189,6 +201,7 @@ mod tests {
         assert_no_lints(
             "Storage Manager link is invisible on stock Pixel OS too.",
             InStock::default(),
+            crate::languages::LanguageFamily::English,
         );
     }
 }
