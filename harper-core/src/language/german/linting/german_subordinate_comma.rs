@@ -1,4 +1,5 @@
 use crate::language::german::grammar::determiners::determiner_readings;
+use crate::language::german::grammar::verbs::{INFINITIVE_GROUP_OPENERS, has_zu_infix};
 use crate::language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
@@ -331,14 +332,9 @@ impl GermanSubordinateComma {
         index: usize,
         document: &Document,
     ) -> Option<Lint> {
-        const OPENERS: &[&str] = &["um", "ohne", "statt", "anstatt"];
         const NOT_AFTER: &[&str] = &[
             "und", "oder", "aber", "sondern", "sowie", "nicht", "nur", "auch", "gerade", "vor",
             "allem",
-        ];
-        const SEPARABLE_PREFIXES: &[&str] = &[
-            "an", "auf", "aus", "ab", "ein", "mit", "vor", "nach", "her", "hin", "weg", "zurück",
-            "fest", "los", "vorbei", "teil", "dar", "bei", "zusammen", "fern", "frei", "heim",
         ];
         // *um* the preposition, governed by what stands before it: *es geht
         // um*, *sich kümmern um*, *der Kampf um*, *rund um*.
@@ -438,7 +434,7 @@ impl GermanSubordinateComma {
             "waren", "scheint", "scheinen", "schien", "pflegt", "pflegen",
         ];
         let token = tokens[index];
-        if !Self::word_in(token, document, OPENERS) {
+        if !Self::word_in(token, document, INFINITIVE_GROUP_OPENERS) {
             return None;
         }
         let previous = tokens.get(index.checked_sub(1)?)?;
@@ -502,14 +498,9 @@ impl GermanSubordinateComma {
         let has_group = after
             .windows(2)
             .any(|pair| lower(pair[0]) == "zu" && is_infinitive(pair[1]))
-            || after.iter().any(|t| {
-                let word = lower(t);
-                SEPARABLE_PREFIXES.iter().any(|prefix| {
-                    word.strip_prefix(prefix)
-                        .and_then(|rest| rest.strip_prefix("zu"))
-                        .is_some_and(|rest| rest.chars().count() >= 3)
-                }) && is_infinitive(t)
-            });
+            || after
+                .iter()
+                .any(|t| has_zu_infix(&lower(t)) && is_infinitive(t));
         if !has_group || (is_um && after.iter().any(|t| Self::word_in(t, document, MEASURES))) {
             return None;
         }
@@ -543,11 +534,7 @@ impl GermanSubordinateComma {
                             .is_some_and(|c| c.is_uppercase())
                     }))
                 && !(at > 0 && lower(before[at - 1]) == "zu")
-                && !SEPARABLE_PREFIXES.iter().any(|prefix| {
-                    lower(t)
-                        .strip_prefix(prefix)
-                        .is_some_and(|rest| rest.starts_with("zu"))
-                })
+                && !has_zu_infix(&lower(t))
             })
             .map(|(_, t)| *t)
             .collect();

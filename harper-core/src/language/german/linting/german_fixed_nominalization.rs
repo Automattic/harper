@@ -1,3 +1,5 @@
+use crate::language::german::grammar::determiners::is_plural_only_quantifier;
+use crate::language::german::spell::lexical_classes::NUMERALS;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Token, TokenStringExt, document::Document};
 
@@ -54,6 +56,20 @@ const FIXED_NOMINALIZATIONS: &[(&[&str], &str, &str, &[&str])] = &[
     // Land* are ordinary adjectives.
     (&["im"], "großen", "Großen", &["und", "ganzen"]),
     (&["im", "großen", "und"], "ganzen", "Ganzen", &[]),
+];
+
+/// The adverbs that name a day, and the times of day after them. Since the
+/// reform the time of day is a noun there: *heute Abend*, *gestern Morgen*,
+/// *morgen Mittag* (Duden, Amtliche Regelung § 55 (6)). *morgen morgen* is
+/// left alone; it is *morgen früh*.
+const DAY_ADVERBS: &[&str] = &["vorgestern", "gestern", "heute", "morgen", "übermorgen"];
+const TIMES_OF_DAY: &[&str] = &[
+    "morgen",
+    "vormittag",
+    "mittag",
+    "nachmittag",
+    "abend",
+    "nacht",
 ];
 
 /// Catches the lower-cased half of a fixed nominalization: *"im übrigen"*,
@@ -113,6 +129,88 @@ impl GermanFixedNominalization {
         }
 
         None
+    }
+
+    /// Are the two words written with nothing but space between them? The
+    /// sentence's words come without their punctuation, and *heute, morgen*
+    /// is two days.
+    fn adjacent(first: &Token, second: &Token, document: &Document) -> bool {
+        let gap = crate::Span::new(first.span.end, second.span.start);
+        document
+            .get_span_content(&gap)
+            .iter()
+            .all(|c| c.is_whitespace())
+    }
+
+    /// A time of day after the adverb naming the day, or the noun *Mal* after
+    /// its attribute: *heute abend* → *heute Abend*, *zum ersten mal* → *zum
+    /// ersten Mal*.
+    ///
+    /// *mal* the adverb stays: *noch mal*, *komm mal*, *erst mal*, *gerne mal*.
+    /// The noun is recognized by what stands in front of it — a determiner
+    /// (*jedes Mal*, *dieses Mal*), an ordinal behind a determiner or *zum*
+    /// and *beim* (*das nächste Mal*, *zum ersten Mal*, *beim letzten Mal*), or
+    /// an ordinal with the strong ending *-es* (*nächstes Mal*, *letztes
+    /// Mal*). A cardinal is the multiplication: *sieben mal sieben*.
+    fn noun_after(words: &[&Token], index: usize, document: &Document) -> Option<String> {
+        let word: String = document
+            .get_span_content(&words[index].span)
+            .iter()
+            .collect();
+        let previous = words.get(index.checked_sub(1)?)?;
+        if !Self::adjacent(previous, words[index], document) {
+            return None;
+        }
+        let lower = |token: &Token| -> String {
+            document
+                .get_span_content(&token.span)
+                .iter()
+                .flat_map(|c| c.to_lowercase())
+                .collect()
+        };
+        let before = lower(previous);
+        let capitalized = || {
+            let mut chars = word.chars();
+            chars
+                .next()
+                .map(|first| first.to_uppercase().chain(chars).collect::<String>())
+        };
+
+        if TIMES_OF_DAY.contains(&word.as_str()) {
+            return (DAY_ADVERBS.contains(&before.as_str()) && before != word)
+                .then(capitalized)
+                .flatten();
+        }
+        if word != "mal"
+            || NUMERALS.contains(&before)
+            || is_plural_only_quantifier(&before)
+            || !["e", "es", "en", "em"].iter().any(|e| before.ends_with(e))
+        {
+            return None;
+        }
+        // An ordinal or *nächst-*, *letzt-*: *-te*, *-ten*, *-tes*; and
+        // *ander-*, *einzig-*. Not *gerne*, which has the shape of an inflected
+        // adjective and is the adverb in *das gerne mal*.
+        let ordinal = ["te", "ten", "tes"].iter().any(|e| before.ends_with(e))
+            || before.starts_with("ander")
+            || before.starts_with("einzig");
+        // A capitalized word in front is a noun — *die Länge mal der Breite*
+        // multiplies — and of the determiners only those in *-es* with more
+        // than the stem: *jedes*, *dieses*, *manches*. *dies mal* is *diesmal*,
+        // and *Das passiert einem mal* has the pronoun.
+        if index > 1 && previous_capitalized(previous, document) {
+            return None;
+        }
+        let attribute =
+            (previous.kind.is_determiner() && before.ends_with("es") && before.chars().count() > 4)
+                || (previous.kind.is_adjective()
+                    && ordinal
+                    && (before.ends_with("es")
+                        || index.checked_sub(2).is_some_and(|at| {
+                            words[at].kind.is_determiner()
+                                || matches!(lower(words[at]).as_str(), "zum" | "beim" | "vom")
+                        })));
+        attribute.then(capitalized).flatten()
     }
 
     /// Is the candidate an attributive adjective after all, because a noun
@@ -196,6 +294,13 @@ impl GermanFixedNominalization {
     }
 }
 
+fn previous_capitalized(token: &Token, document: &Document) -> bool {
+    document
+        .get_span_content(&token.span)
+        .first()
+        .is_some_and(|c| c.is_uppercase())
+}
+
 impl Linter for GermanFixedNominalization {
     fn lint(&mut self, document: &Document) -> Vec<Lint> {
         let mut lints = Vec::new();
@@ -204,7 +309,10 @@ impl Linter for GermanFixedNominalization {
             let words: Vec<&Token> = sentence.iter_words().collect();
 
             for index in 0..words.len() {
-                let Some(corrected) = Self::correction(&words, index, document) else {
+                let Some(corrected) = Self::correction(&words, index, document)
+                    .map(str::to_string)
+                    .or_else(|| Self::noun_after(&words, index, document))
+                else {
                     continue;
                 };
 
@@ -355,6 +463,40 @@ mod tests {
             flagged("Im übrigen ist das Haus verkauft."),
             vec!["übrigen".to_string()]
         );
+    }
+
+    #[test]
+    fn a_time_of_day_and_mal_are_nouns_after_their_attribute() {
+        for (text, word) in [
+            ("Ich habe heute morgen gearbeitet.", "morgen"),
+            ("Wir sehen uns morgen abend.", "abend"),
+            ("Gestern nachmittag war es kalt.", "nachmittag"),
+            ("Zum ersten mal war ich dort.", "mal"),
+            ("Das nächste mal komme ich früher.", "mal"),
+            ("Jedes mal regnet es.", "mal"),
+            ("Beim letzten mal ging alles gut.", "mal"),
+            ("Nächstes mal bringe ich Kuchen mit.", "mal"),
+        ] {
+            assert_eq!(flagged(text), vec![word.to_string()], "in {text:?}");
+        }
+        for text in [
+            "Ich habe heute Morgen gearbeitet.",
+            "Wir sehen uns morgen Abend.",
+            "Heute, morgen und übermorgen ist geschlossen.",
+            "Wir treffen uns morgen früh.",
+            "Komm doch noch mal vorbei.",
+            "Ich mache das gerne mal.",
+            "Sag mir bitte mal Bescheid.",
+            "Sieben mal sieben ist neunundvierzig.",
+            "Zum ersten Mal war ich dort.",
+            "Das ist erst mal genug.",
+            "Wir haben es einige Male versucht.",
+            "Nimm die Länge mal der Breite mal der Tiefe.",
+            "Wie wichtig dies mal werden könnte.",
+            "Das passiert einem mal.",
+        ] {
+            assert!(flagged(text).is_empty(), "should not fire on {text:?}");
+        }
     }
 
     #[test]

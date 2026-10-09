@@ -1,0 +1,28 @@
+# "zu lange" is the degree word and the adverb: "Es ist zu lange her". Written
+# together, "zulange" is a form of the verb "zulangen" (to help oneself), and
+# that form ends its clause: "wenn ich da nicht zulange". So only a "zulange"
+# with a word behind it is the adverb.
+expr main <(zulange *), zulange>
+
+let message "»zu lange« (zeitlich) schreibt man getrennt. »zulange« ist eine Form von »zulangen« (zugreifen)."
+let description "Trennt »zulange« in »zu lange«, wenn ein Wort folgt."
+let kind "Spelling"
+let becomes "zu lange"
+let strategy "MatchCase"
+
+test "Es ist zulange her." "Es ist zu lange her."
+test "Zulange ist es her, dass wir gesprochen haben." "Zu lange ist es her, dass wir gesprochen haben."
+test "Das hat zum Glück nicht zulange gedauert." "Das hat zum Glück nicht zu lange gedauert."
+test "Wir haben zulange nicht mehr telefoniert." "Wir haben zu lange nicht mehr telefoniert."
+test "Wir sollten uns nicht zulange damit aufhalten." "Wir sollten uns nicht zu lange damit aufhalten."
+test "Wer zulange Muße hat, der wird träge." "Wer zu lange Muße hat, der wird träge."
+test "Er sollte besser nicht zulange wegbleiben." "Er sollte besser nicht zu lange wegbleiben."
+test "Ich habe zulange gewartet." "Ich habe zu lange gewartet."
+test "Das dauert viel zulange für mich." "Das dauert viel zu lange für mich."
+test "Bleib nicht zulange weg!" "Bleib nicht zu lange weg!"
+
+allows "Es ist zu lange her."
+allows "Wenn ich da nicht zulange, wär ich doch blöd!"
+allows "Ich weiß nicht, ob ich zulange."
+allows "Greif zu, solange es warm ist."
+allows "Er wartete lange."

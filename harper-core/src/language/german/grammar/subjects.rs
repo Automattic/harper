@@ -100,101 +100,157 @@ const PRONOUNS: &[(&str, Features)] = &[
 /// Preterite forms are here too, and the subjunctive where it is spelled
 /// differently from the indicative (*wäre*, *hätte*, *könnte*), because those
 /// are the forms reported speech uses.
-const FINITE_VERBS: &[(&str, Features)] = &[
-    // sein
-    ("bin", Features::new(P1, SG)),
-    ("bist", Features::new(P2, SG)),
-    ("ist", Features::new(P3, SG)),
-    ("sind", Features::new(P1.union(P3), PL)),
-    ("seid", Features::new(P2, PL)),
-    ("war", Features::new(P1.union(P3), SG)),
-    ("warst", Features::new(P2, SG)),
-    ("waren", Features::new(P1.union(P3), PL)),
-    ("wart", Features::new(P2, PL)),
-    ("wäre", Features::new(P1.union(P3), SG)),
-    ("wärst", Features::new(P2, SG)),
-    ("wären", Features::new(P1.union(P3), PL)),
-    // haben
-    ("habe", Features::new(P1.union(P3), SG)),
-    ("hast", Features::new(P2, SG)),
-    ("hat", Features::new(P3, SG)),
-    ("haben", Features::new(P1.union(P3), PL)),
-    ("habt", Features::new(P2, PL)),
-    ("hatte", Features::new(P1.union(P3), SG)),
-    ("hattest", Features::new(P2, SG)),
-    ("hatten", Features::new(P1.union(P3), PL)),
-    ("hattet", Features::new(P2, PL)),
-    ("hätte", Features::new(P1.union(P3), SG)),
-    ("hätten", Features::new(P1.union(P3), PL)),
-    // werden
-    ("werde", Features::new(P1.union(P3), SG)),
-    ("wirst", Features::new(P2, SG)),
-    ("wird", Features::new(P3, SG)),
-    ("werden", Features::new(P1.union(P3), PL)),
-    ("werdet", Features::new(P2, PL)),
-    ("wurde", Features::new(P1.union(P3), SG)),
-    ("wurdest", Features::new(P2, SG)),
-    ("wurden", Features::new(P1.union(P3), PL)),
-    ("würde", Features::new(P1.union(P3), SG)),
-    ("würden", Features::new(P1.union(P3), PL)),
-    // können
-    ("kann", Features::new(P1.union(P3), SG)),
-    ("kannst", Features::new(P2, SG)),
-    ("können", Features::new(P1.union(P3), PL)),
-    ("könnt", Features::new(P2, PL)),
-    ("konnte", Features::new(P1.union(P3), SG)),
-    ("konnten", Features::new(P1.union(P3), PL)),
-    ("könnte", Features::new(P1.union(P3), SG)),
-    ("könnten", Features::new(P1.union(P3), PL)),
-    // müssen
-    ("muss", Features::new(P1.union(P3), SG)),
-    ("musst", Features::new(P2, SG)),
-    ("müssen", Features::new(P1.union(P3), PL)),
-    ("müsst", Features::new(P2, PL)),
-    ("musste", Features::new(P1.union(P3), SG)),
-    ("mussten", Features::new(P1.union(P3), PL)),
-    // wollen
-    ("will", Features::new(P1.union(P3), SG)),
-    ("willst", Features::new(P2, SG)),
-    ("wollen", Features::new(P1.union(P3), PL)),
-    ("wollt", Features::new(P2, PL)),
-    ("wollte", Features::new(P1.union(P3), SG)),
-    ("wollten", Features::new(P1.union(P3), PL)),
-    // sollen
-    ("soll", Features::new(P1.union(P3), SG)),
-    ("sollst", Features::new(P2, SG)),
-    ("sollen", Features::new(P1.union(P3), PL)),
-    ("sollt", Features::new(P2, PL)),
-    ("sollte", Features::new(P1.union(P3), SG)),
-    ("sollten", Features::new(P1.union(P3), PL)),
-    // dürfen
-    ("darf", Features::new(P1.union(P3), SG)),
-    ("darfst", Features::new(P2, SG)),
-    ("dürfen", Features::new(P1.union(P3), PL)),
-    ("dürft", Features::new(P2, PL)),
-    ("durfte", Features::new(P1.union(P3), SG)),
-    ("durften", Features::new(P1.union(P3), PL)),
-    // mögen
-    ("mag", Features::new(P1.union(P3), SG)),
-    ("magst", Features::new(P2, SG)),
-    ("mögen", Features::new(P1.union(P3), PL)),
-    ("mögt", Features::new(P2, PL)),
-    ("möchte", Features::new(P1.union(P3), SG)),
-    ("möchten", Features::new(P1.union(P3), PL)),
-    // wissen
-    ("weiß", Features::new(P1.union(P3), SG)),
-    ("weißt", Features::new(P2, SG)),
-    ("wissen", Features::new(P1.union(P3), PL)),
-    ("wisst", Features::new(P2, PL)),
-    ("wusste", Features::new(P1.union(P3), SG)),
-    ("wussten", Features::new(P1.union(P3), PL)),
+///
+/// Grouped by infinitive, so that a rule can ask which verb a form belongs to:
+/// the modals govern a bare infinitive, *wissen* one with *zu*.
+const FINITE_VERBS: &[(&str, &[(&str, Features)])] = &[
+    (
+        "sein",
+        &[
+            ("bin", Features::new(P1, SG)),
+            ("bist", Features::new(P2, SG)),
+            ("ist", Features::new(P3, SG)),
+            ("sind", Features::new(P1.union(P3), PL)),
+            ("seid", Features::new(P2, PL)),
+            ("war", Features::new(P1.union(P3), SG)),
+            ("warst", Features::new(P2, SG)),
+            ("waren", Features::new(P1.union(P3), PL)),
+            ("wart", Features::new(P2, PL)),
+            ("wäre", Features::new(P1.union(P3), SG)),
+            ("wärst", Features::new(P2, SG)),
+            ("wären", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "haben",
+        &[
+            ("habe", Features::new(P1.union(P3), SG)),
+            ("hast", Features::new(P2, SG)),
+            ("hat", Features::new(P3, SG)),
+            ("haben", Features::new(P1.union(P3), PL)),
+            ("habt", Features::new(P2, PL)),
+            ("hatte", Features::new(P1.union(P3), SG)),
+            ("hattest", Features::new(P2, SG)),
+            ("hatten", Features::new(P1.union(P3), PL)),
+            ("hattet", Features::new(P2, PL)),
+            ("hätte", Features::new(P1.union(P3), SG)),
+            ("hätten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "werden",
+        &[
+            ("werde", Features::new(P1.union(P3), SG)),
+            ("wirst", Features::new(P2, SG)),
+            ("wird", Features::new(P3, SG)),
+            ("werden", Features::new(P1.union(P3), PL)),
+            ("werdet", Features::new(P2, PL)),
+            ("wurde", Features::new(P1.union(P3), SG)),
+            ("wurdest", Features::new(P2, SG)),
+            ("wurden", Features::new(P1.union(P3), PL)),
+            ("würde", Features::new(P1.union(P3), SG)),
+            ("würden", Features::new(P1.union(P3), PL)),
+            ("würdest", Features::new(P2, SG)),
+            ("würdet", Features::new(P2, PL)),
+        ],
+    ),
+    (
+        "können",
+        &[
+            ("kann", Features::new(P1.union(P3), SG)),
+            ("kannst", Features::new(P2, SG)),
+            ("können", Features::new(P1.union(P3), PL)),
+            ("könnt", Features::new(P2, PL)),
+            ("konnte", Features::new(P1.union(P3), SG)),
+            ("konnten", Features::new(P1.union(P3), PL)),
+            ("könnte", Features::new(P1.union(P3), SG)),
+            ("könnten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "müssen",
+        &[
+            ("muss", Features::new(P1.union(P3), SG)),
+            ("musst", Features::new(P2, SG)),
+            ("müssen", Features::new(P1.union(P3), PL)),
+            ("müsst", Features::new(P2, PL)),
+            ("musste", Features::new(P1.union(P3), SG)),
+            ("mussten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "wollen",
+        &[
+            ("will", Features::new(P1.union(P3), SG)),
+            ("willst", Features::new(P2, SG)),
+            ("wollen", Features::new(P1.union(P3), PL)),
+            ("wollt", Features::new(P2, PL)),
+            ("wollte", Features::new(P1.union(P3), SG)),
+            ("wollten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "sollen",
+        &[
+            ("soll", Features::new(P1.union(P3), SG)),
+            ("sollst", Features::new(P2, SG)),
+            ("sollen", Features::new(P1.union(P3), PL)),
+            ("sollt", Features::new(P2, PL)),
+            ("sollte", Features::new(P1.union(P3), SG)),
+            ("sollten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "dürfen",
+        &[
+            ("darf", Features::new(P1.union(P3), SG)),
+            ("darfst", Features::new(P2, SG)),
+            ("dürfen", Features::new(P1.union(P3), PL)),
+            ("dürft", Features::new(P2, PL)),
+            ("durfte", Features::new(P1.union(P3), SG)),
+            ("durften", Features::new(P1.union(P3), PL)),
+        ],
+    ),
+    (
+        "mögen",
+        &[
+            ("mag", Features::new(P1.union(P3), SG)),
+            ("magst", Features::new(P2, SG)),
+            ("mögen", Features::new(P1.union(P3), PL)),
+            ("mögt", Features::new(P2, PL)),
+            ("möchte", Features::new(P1.union(P3), SG)),
+            ("möchten", Features::new(P1.union(P3), PL)),
+            ("möchtest", Features::new(P2, SG)),
+            ("möchtet", Features::new(P2, PL)),
+        ],
+    ),
+    (
+        "wissen",
+        &[
+            ("weiß", Features::new(P1.union(P3), SG)),
+            ("weißt", Features::new(P2, SG)),
+            ("wissen", Features::new(P1.union(P3), PL)),
+            ("wisst", Features::new(P2, PL)),
+            ("wusste", Features::new(P1.union(P3), SG)),
+            ("wussten", Features::new(P1.union(P3), PL)),
+        ],
+    ),
 ];
 
 static PRONOUN_MAP: LazyLock<HashMap<&'static str, Features>> =
     LazyLock::new(|| PRONOUNS.iter().copied().collect());
 
-static FINITE_VERB_MAP: LazyLock<HashMap<&'static str, Features>> =
-    LazyLock::new(|| FINITE_VERBS.iter().copied().collect());
+static FINITE_VERB_MAP: LazyLock<HashMap<&'static str, (&'static str, Features)>> =
+    LazyLock::new(|| {
+        FINITE_VERBS
+            .iter()
+            .flat_map(|&(lemma, forms)| {
+                forms
+                    .iter()
+                    .map(move |&(form, features)| (form, (lemma, features)))
+            })
+            .collect()
+    });
 
 /// The features of `word` read as a subject pronoun, if it is one.
 pub fn subject_pronoun(word: &str) -> Option<Features> {
@@ -224,7 +280,17 @@ pub fn subordinate_subject_pronoun(word: &str) -> Option<Features> {
 
 /// The features of `word` read as a finite verb the affixes do not build.
 pub fn irregular_finite_verb(word: &str) -> Option<Features> {
-    FINITE_VERB_MAP.get(word.to_lowercase().as_str()).copied()
+    FINITE_VERB_MAP
+        .get(word.to_lowercase().as_str())
+        .map(|&(_, features)| features)
+}
+
+/// The infinitive of `word` read as a finite verb the affixes do not build:
+/// *kann* → *können*, *würde* → *werden*.
+pub fn irregular_finite_verb_lemma(word: &str) -> Option<&'static str> {
+    FINITE_VERB_MAP
+        .get(word.to_lowercase().as_str())
+        .map(|&(lemma, _)| lemma)
 }
 
 #[cfg(test)]
@@ -261,13 +327,14 @@ mod tests {
 
     #[test]
     fn every_entry_is_lower_case_and_unique() {
-        for (word, _) in PRONOUNS.iter().chain(FINITE_VERBS) {
+        let forms = FINITE_VERBS.iter().flat_map(|(_, forms)| forms.iter());
+        for (word, _) in PRONOUNS.iter().chain(forms.clone()) {
             assert_eq!(*word, word.to_lowercase(), "{word} must be lower case");
         }
         assert_eq!(PRONOUN_MAP.len(), PRONOUNS.len(), "a pronoun is repeated");
         assert_eq!(
             FINITE_VERB_MAP.len(),
-            FINITE_VERBS.len(),
+            forms.count(),
             "a verb form is repeated"
         );
     }

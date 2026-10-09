@@ -14148,7 +14148,7 @@ krümel/~NhpuvwEHz #frequency: 8
 leer/~~RJOQRSTUWqh78 #frequency: 8
 leid/~NhpuvwY0HMZ #frequency: 8
 lock/*~NhpuvwY78 #frequency: 8
-los/~~RJOQRSTUWqh780 #frequency: 8
+los/~~RJOQRSTUWqh780^ #frequency: 8; the noun is das Los
 läster/~hpuvw78 #frequency: 8
 mager/~~JOQRSTUWqh #frequency: 8
 mark/~NhpuvwY0X78FZ #frequency: 8
@@ -123836,7 +123836,7 @@ zumutbar/~~JOQRSTq9 #adjective (auto-converted)
 zungenlos/~~JOQRSTq #adjective (auto-converted)
 zuständig/~~JOQRSTq9 #adjective (auto-converted)
 zuweisbar/~~JOQRSTq #adjective (auto-converted)
-zuwenig/~~Nh # noun (hunspell); was retagged by shape
+zuwenig/~~Nh^ # the noun is das Zuwenig; lower case it is the pre-reform zu wenig (ZuWenig.weir)
 zuzüglich/~~JOQRSTq #adjective (auto-converted)
 zwanglos/~~JOQRSTUWq #adjective (auto-converted)
 zwanzig/~~JOQRSTq1a #adjective (auto-converted)
@@ -242276,3 +242276,4 @@ Anz./~~2 # abbreviation with its full stop: Anzahl
 Abk./~~2 # abbreviation with its full stop: Abkürzung
 Gr./~~2 # abbreviation with its full stop: Größe, griechisch
 Kl./~~2 # abbreviation with its full stop: Klasse, klein
+zuviel/~~R^ # pre-reform spelling of zu viel (ZuViel.weir); the noun is das Zuviel

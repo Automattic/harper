@@ -48,6 +48,8 @@ impl LanguageModule for GermanModule {
             german_filler_words::GermanFillerWords,
             german_fixed_nominalization::GermanFixedNominalization,
             german_genitive_after_nominative_article::GermanGenitiveAfterNominativeArticle,
+            german_modal_zu_infinitive::GermanModalZuInfinitive,
+            german_nominalized_adjective::GermanNominalizedAdjective,
             german_nominalized_infinitive::GermanNominalizedInfinitive,
             german_noun_capitalization::GermanNounCapitalization,
             german_perfect_auxiliary::GermanPerfectAuxiliary,
@@ -59,7 +61,8 @@ impl LanguageModule for GermanModule {
             german_spell_check::GermanSpellCheck, german_split_particle::GermanSplitParticle,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
-            german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
+            german_suspended_hyphen::GermanSuspendedHyphen, german_wider_wieder::GermanWiderWieder,
+            german_year_preposition::GermanYearPreposition,
         };
 
         let mut group = LintGroup::empty();
@@ -101,13 +104,16 @@ impl LanguageModule for GermanModule {
         group.add("GermanAbsoluteSuperlative", GermanAbsoluteSuperlative);
         group.add("GermanFixedNominalization", GermanFixedNominalization);
         group.add("GermanNominalizedInfinitive", GermanNominalizedInfinitive);
+        group.add("GermanNominalizedAdjective", GermanNominalizedAdjective);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
+        group.add("GermanSuspendedHyphen", GermanSuspendedHyphen);
         group.add(
             "GermanRelativeClauseComma",
             GermanRelativeClauseComma::new(),
         );
         group.add("GermanYearPreposition", GermanYearPreposition);
         group.add("GermanPerfectAuxiliary", GermanPerfectAuxiliary);
+        group.add("GermanModalZuInfinitive", GermanModalZuInfinitive);
         group.add("GermanCountryArticle", GermanCountryArticle);
         group.add("GermanAdjectiveForm", GermanAdjectiveForm::new());
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());

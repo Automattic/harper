@@ -1,0 +1,36 @@
+# "denn" with two n is the conjunction and the particle; "den" is the article
+# and the pronoun. Two places only take "denn", and nothing else can stand
+# there:
+#
+# * the comparison "mehr denn je", "besser denn je" — an article cannot follow
+#   a comparative and precede "je";
+# * the particle in "Was ist denn los?" — "den los" after a form of "sein" or
+#   "gehen" has no noun for the article. "Ich bin den los" (rid of him) has
+#   "den" as a pronoun, so the verb in front is required.
+expr komparativ [mehr, weniger, besser, schlechter, größer, kleiner, schöner, wichtiger, stärker, schwächer, höher, später, früher, länger, lieber, eher, öfter, schneller, langsamer, profitabler, beliebter, gefragter, nötiger, aktueller]
+
+expr main <[(@komparativ den je), ([ist, war, wäre, geht, ging] den los)], den>
+
+let message "Hier ist die Konjunktion bzw. Partikel »denn« gemeint, nicht der Artikel »den«."
+let description "Ersetzt »den« durch »denn« in »mehr denn je« und »Was ist denn los?«."
+let kind "Typo"
+let becomes "denn"
+let strategy "MatchCase"
+
+test "Das Unternehmen ist profitabler den je." "Das Unternehmen ist profitabler denn je."
+test "Wir brauchen das mehr den je." "Wir brauchen das mehr denn je."
+test "Sie spielt besser den je." "Sie spielt besser denn je."
+test "Er ist heute wichtiger den je, glaube ich." "Er ist heute wichtiger denn je, glaube ich."
+test "Was ist den los?" "Was ist denn los?"
+test "Was war den los mit dir?" "Was war denn los mit dir?"
+test "Wann geht den los?" "Wann geht denn los?"
+test "Was wäre den los, wenn er käme?" "Was wäre denn los, wenn er käme?"
+test "Das ist schöner den je!" "Das ist schöner denn je!"
+test "Die Stadt ist größer den je." "Die Stadt ist größer denn je."
+
+allows "Das Unternehmen ist profitabler denn je."
+allows "Was ist denn los?"
+allows "Ich bin den endlich los."
+allows "Sie gab den je zwei Kindern ein Buch."
+allows "Er wählt den je nach Lage besten Weg."
+allows "Wer kann den Unterschied erklären?"

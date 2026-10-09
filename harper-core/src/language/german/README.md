@@ -1518,6 +1518,9 @@ script writes it as an abbreviation.
 | `GermanAdjectiveForm` | *der neu Vertrag*, *eine lang Reise*, *der Abgeordneter* | only behind a determiner; not before a nominalized adjective, an extended attribute or an indeclinable word; a nominalized head needs a participle or derived stem (*Junge*, *Dichter* are nouns) |
 | `GermanPerfectAuxiliary` | *Sie hat gegangen*, *weil wir angekommen haben* | only participles that never take *haben*; *passiert* only without an object; clauses with a *sein* form, a modal or a reflexive are left alone |
 | `GermanCountryArticle` | *aus Türkei*, *nach Schweiz*, *in USA* | directly behind a preposition, not in a hyphenated compound |
+| `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
+| `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
+| `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
 | comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
 | closing comma of a relative clause | *Das Auto, das am Straßenrand steht parkt …* | the same verb-run test |
 | `EMail.weir`, `IhrSeid.weir`, `WiderAlsWieder.weir` | *eine Email*, *Ihr seit zufrieden*, *Ich komme morgen wider* | feminine article or *per*; a non-temporal word after *seit*; not before a noun phrase *wider* governs |
@@ -1668,6 +1671,66 @@ abbreviations (*7. Feb. 2025*), *gibt's*, *Vera* — and 15 were gained. The
 treebank: 16234 → 16056 lints, capitalization 435 → 349. School text 53/55
 with no false alarm, the batteries and the archived corpus unchanged but for
 two abbreviation reports fewer.
+
+### Fourth round: grammar rules from the Duden and LanguageTool's map
+
+The categories came from the LanguageTool example sentences Harper missed
+entirely (grouped by *their* rule id, see "Comparing against LanguageTool"),
+and from the learner essays. Each rule is written from the Duden's official
+rules, not from LanguageTool's patterns.
+
+* `GermanModalZuInfinitive` — *Ich möchte dich zu besuchen*, *weil ich dich zu
+  sehen möchte*, *Ich möchte Leute kennenzulernen*. A modal governs the bare
+  infinitive. The modal and the infinitive must share a clause, and no other
+  verb may stand between them: *Ich muss versuchen zu schlafen*, *bereit sein
+  zu helfen*, *aufgefordert zu kommen* (a participle the dictionary files as an
+  adjective). *etwas/nichts zu essen* is the full verb "want". *werden* is read
+  only with a personal subject next to it, because the copula takes a *zu*
+  with its predicate (*Danach wird es leichter, eine Wohnung zu finden*).
+  When *zu* + infinitive is a verb of its own (*einen Zahn zu legen*), joining
+  is offered beside removing. *hinzukommen* is *hinzu* + *kommen*: a prefix
+  whose *zu* makes a dictionary word is no infix.
+* `GermanNominalizedAdjective` — *etwas neues*, *nichts gutes*, *viel
+  interessantes*, *alles gute* (§ 57). Not when a noun or another adjective
+  follows (*etwas schmackhaftes Brot*), not for the pronominal *ander-*,
+  *ein-*, *viel-*, *wenig-* (§ 58), not for adverbs (*alles zwangsweise*).
+* `GermanSuspendedHyphen` — *Vor und Nachteile*, *Ein und Ausgang*, *ein und
+  auszuloggen*, *in und auswendig* (§ 98). The second word splits into a head
+  and a tail, the tail is a word of four letters or more, and the first word
+  with that tail is a dictionary **entry** (*Vorteile*). Compounds the checker
+  builds do not count; with them *Papier und Bleistift* would pass as
+  *Papierstift*. A suffix is no shared tail (*Partei und Regierung* →
+  *Parteiung*), a noun with its own determiner is a phrase of its own (*das
+  Haus und Gartengeräte*), and a lower-case second word only counts behind a
+  preposition. Recall is limited by the dictionary: *Sommer und Winterreifen*
+  is missed because *Sommerreifen* is no entry.
+* `GermanFixedNominalization` also reads the time of day after the adverb
+  naming the day (*heute abend*, *gestern morgen*, § 55 (6); *morgen morgen*
+  is *morgen früh*) and *Mal* after an ordinal or *jedes/dieses* (*zum ersten
+  mal*, *das nächste mal*, *jedes mal*). The adverb *mal* stays: *noch mal*,
+  *gerne mal*, *dies mal* (→ *diesmal*), *einem mal*, and the multiplication
+  *sieben mal sieben*, *die Länge mal der Breite*.
+* Weir: `ZuViel`, `ZuWenig` (pre-reform *zuviel*, *zuwenig*; not after an
+  article, *ein Zuviel an*), `ZuLange` (*zulange* with a word behind it — at
+  the clause end it is the verb *zulangen*), `DennDen` (*mehr den je*, *Was
+  ist den los?*). Weir has no anchor for a chunk start, so a clause-initial
+  *Zuviel* is left alone.
+* Data: `los`, lower-case `zuwenig` and a new `zuviel` entry carry `^`, so
+  `GermanNounCapitalization` no longer suggests *Los* in *Was ist den los* or
+  *Zuviel* for *zuviel*.
+* `grammar/verbs.rs` holds the separable prefixes that take an infix *zu* and
+  the infinitive-group openers (*um*, *ohne*, *statt*), which
+  `GermanSubordinateComma` used to keep privately. The irregular finite verbs
+  in `grammar/subjects.rs` are grouped by infinitive, so a rule can ask
+  whether *kann* belongs to *können*.
+
+Measured against the end of the third round: LanguageTool errors found 1736 →
+1790, false-alarm sentences 738 → 739 (the one new report is *etwas
+außergewöhnliches*, wrong by § 57); Falko-MERLIN edits found 2979 → 3013,
+corrected sentences with a lint 427 → 427; treebank lints 16056 → 16078, every
+added report checked — the old spelling of HDT (*heute morgen*, *zuviel*), and
+*kann … nachzuschauen*. School text 53/55 without false alarm, the archived
+corpus unchanged.
 
 ## The fused spellings the reform allows
 
