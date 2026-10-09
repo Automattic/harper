@@ -174,6 +174,7 @@ mod tests {
     use crate::dict_word_metadata::EnglishDialectFlags;
     use crate::languages::LanguageFamily;
     use crate::linting::Linter;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_good_and_bad_suggestions, assert_no_lints};
     use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
     use crate::{DialectFlags, DictWordMetadata, Document};
@@ -181,6 +182,16 @@ mod tests {
         EnglishDialect,
         linting::tests::{assert_lint_count, assert_suggestion_result},
     };
+    use std::sync::Arc;
+
+    create_test_pool!(
+        SpellCheck,
+        SpellCheck<Arc<FstDictionary>>,
+        SpellCheck::new(
+            FstDictionary::curated(LanguageFamily::English),
+            EnglishDialect::American
+        )
+    );
 
     // Capitalization tests
 
@@ -188,10 +199,7 @@ mod tests {
     fn america_capitalized() {
         assert_suggestion_result(
             "The word america should be capitalized.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "The word America should be capitalized.",
             LanguageFamily::English,
         );
@@ -203,10 +211,7 @@ mod tests {
     fn harper_automattic_capitalized() {
         assert_lint_count(
             "So should harper and automattic.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             2,
             LanguageFamily::English,
         );
@@ -255,10 +260,7 @@ mod tests {
     fn mum_and_mummy_not_just_commonwealth() {
         assert_lint_count(
             "Mum's the word about that Egyptian mummy.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             0,
             LanguageFamily::English,
         );
@@ -281,10 +283,7 @@ mod tests {
     fn australian_verandah_in_american_dialect() {
         assert_lint_count(
             "Our house has a verandah.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -346,10 +345,7 @@ mod tests {
     fn australian_and_canadian_spellings_that_are_not_american() {
         assert_lint_count(
             "In summer we sit on the verandah and eat yogourt.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             2,
             LanguageFamily::English,
         );
@@ -385,10 +381,7 @@ mod tests {
     fn australian_words_flagged_for_american_english() {
         assert_lint_count(
             "There's an esky full of beers in the back of the ute.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             2,
             LanguageFamily::English,
         );
@@ -427,10 +420,7 @@ mod tests {
         // assert_suggestion_result(
         assert_suggestion_result(
             "Abandonedware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "Abandonware is abandoned. Do not bother submitting issues about the empty page bug. Author moved to greener pastures",
             LanguageFamily::English,
         );
@@ -438,28 +428,12 @@ mod tests {
 
     #[test]
     fn afterwards_not_us() {
-        assert_lint_count(
-            "afterwards",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            1,
-            LanguageFamily::English,
-        );
+        assert_lint_count("afterwards", test_linter(), 1, LanguageFamily::English);
     }
 
     #[test]
     fn afterward_is_us() {
-        assert_lint_count(
-            "afterward",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            0,
-            LanguageFamily::English,
-        );
+        assert_lint_count("afterward", test_linter(), 0, LanguageFamily::English);
     }
 
     #[test]
@@ -660,10 +634,7 @@ mod tests {
     fn flag_prepone_in_non_indian_english() {
         assert_lint_count(
             "We had to prepone the meeting",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -683,37 +654,19 @@ mod tests {
 
     #[test]
     fn dont_flag_pr() {
-        assert_no_lints(
-            "PR",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            LanguageFamily::English,
-        );
+        assert_no_lints("PR", test_linter(), LanguageFamily::English);
     }
 
     #[test]
     fn no_improper_suggestion_for_macos() {
-        assert_good_and_bad_suggestions(
-            "MacOS",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            &["macOS"],
-            &["MacOS"],
-        );
+        assert_good_and_bad_suggestions("MacOS", test_linter(), &["macOS"], &["MacOS"]);
     }
 
     #[test]
     fn allows_parenthetical_plural_s() {
         assert_no_lints(
             "Please ask each person(s) to sign.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             LanguageFamily::English,
         );
     }
@@ -722,10 +675,7 @@ mod tests {
     fn allows_multiple_parenthetical_plural_s_markers() {
         assert_no_lints(
             "Review the person(s) and document(s).",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             LanguageFamily::English,
         );
     }
@@ -734,10 +684,7 @@ mod tests {
     fn allows_uppercase_parenthetical_plural_s() {
         assert_no_lints(
             "CONTACT THE PERSON(S).",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             LanguageFamily::English,
         );
     }
@@ -746,10 +693,7 @@ mod tests {
     fn still_flags_misspelled_word_before_parenthetical_plural_s() {
         assert_lint_count(
             "Please ask each persson(s) to sign.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -759,10 +703,7 @@ mod tests {
     fn still_flags_parenthetical_s_without_preceding_word() {
         assert_lint_count(
             "Please mark (s) on the form.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -772,10 +713,7 @@ mod tests {
     fn still_flags_spaced_parenthetical_s() {
         assert_lint_count(
             "Please ask each person (s) to sign.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -785,10 +723,7 @@ mod tests {
     fn still_flags_longer_parenthetical_marker() {
         assert_lint_count(
             "Please ask each person(ss) to sign.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             1,
             LanguageFamily::English,
         );
@@ -801,15 +736,7 @@ mod tests {
     // is_ou_misspelling
     #[test]
     fn suggest_color_for_colour_lowercase() {
-        assert_suggestion_result(
-            "colour",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "color",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("colour", test_linter(), "color", LanguageFamily::English);
     }
 
     #[test]
@@ -828,15 +755,7 @@ mod tests {
     // titlecase
     #[test]
     fn suggest_color_for_colour_titlecase() {
-        assert_suggestion_result(
-            "Colour",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "Color",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("Colour", test_linter(), "Color", LanguageFamily::English);
     }
 
     #[test]
@@ -857,15 +776,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_color_for_colour_all_caps() {
-        assert_suggestion_result(
-            "COLOUR",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "COLOR",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("COLOUR", test_linter(), "COLOR", LanguageFamily::English);
     }
 
     #[test]
@@ -901,15 +812,7 @@ mod tests {
 
     #[test]
     fn suggest_realize_for_realise() {
-        assert_suggestion_result(
-            "realise",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "realize",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("realise", test_linter(), "realize", LanguageFamily::English);
     }
 
     #[test]
@@ -929,15 +832,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_titlecase() {
-        assert_suggestion_result(
-            "Realise",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "Realize",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("Realise", test_linter(), "Realize", LanguageFamily::English);
     }
 
     #[test]
@@ -957,15 +852,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_realize_for_realise_all_caps() {
-        assert_suggestion_result(
-            "REALISE",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "REALIZE",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("REALISE", test_linter(), "REALIZE", LanguageFamily::English);
     }
 
     // s/c as in defense/defence
@@ -984,15 +871,7 @@ mod tests {
 
     #[test]
     fn suggest_defense_for_defence() {
-        assert_suggestion_result(
-            "defence",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "defense",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("defence", test_linter(), "defense", LanguageFamily::English);
     }
 
     #[test]
@@ -1010,15 +889,7 @@ mod tests {
 
     #[test]
     fn suggest_defence_for_defense_titlecase() {
-        assert_suggestion_result(
-            "Defence",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "Defense",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("Defence", test_linter(), "Defense", LanguageFamily::English);
     }
 
     #[test]
@@ -1038,15 +909,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_defence_for_defense_all_caps() {
-        assert_suggestion_result(
-            "DEFENCE",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "DEFENSE",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("DEFENCE", test_linter(), "DEFENSE", LanguageFamily::English);
     }
 
     // k/c as in skeptic/sceptic
@@ -1065,15 +928,7 @@ mod tests {
 
     #[test]
     fn suggest_skeptic_for_sceptic() {
-        assert_suggestion_result(
-            "sceptic",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "skeptic",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("sceptic", test_linter(), "skeptic", LanguageFamily::English);
     }
 
     #[test]
@@ -1092,15 +947,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_skeptic_for_sceptic_titlecase() {
-        assert_suggestion_result(
-            "Sceptic",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "Skeptic",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("Sceptic", test_linter(), "Skeptic", LanguageFamily::English);
     }
 
     #[test]
@@ -1120,15 +967,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_sceptic_for_skeptic_all_caps() {
-        assert_suggestion_result(
-            "SCEPTIC",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "SKEPTIC",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("SCEPTIC", test_linter(), "SKEPTIC", LanguageFamily::English);
     }
 
     // is_er_misspelling
@@ -1137,10 +976,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre() {
         assert_suggestion_result(
             "centimetre",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "centimeter",
             LanguageFamily::English,
         );
@@ -1163,10 +999,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre_titlecase() {
         assert_suggestion_result(
             "Centimetre",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "Centimeter",
             LanguageFamily::English,
         );
@@ -1191,10 +1024,7 @@ mod tests {
     fn suggest_centimeter_for_centimetre_all_caps() {
         assert_suggestion_result(
             "CENTIMETRE",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "CENTIMETER",
             LanguageFamily::English,
         );
@@ -1220,10 +1050,7 @@ mod tests {
     fn suggest_traveler_for_traveller() {
         assert_suggestion_result(
             "traveller",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "traveler",
             LanguageFamily::English,
         );
@@ -1246,10 +1073,7 @@ mod tests {
     fn suggest_traveler_for_traveller_titlecase() {
         assert_suggestion_result(
             "Traveller",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "Traveler",
             LanguageFamily::English,
         );
@@ -1274,10 +1098,7 @@ mod tests {
     fn suggest_traveler_for_traveller_all_caps() {
         assert_suggestion_result(
             "TRAVELLER",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "TRAVELER",
             LanguageFamily::English,
         );
@@ -1317,10 +1138,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american() {
         assert_suggestion_result(
             "It's a greyscale photo.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "It's a grayscale photo.",
             LanguageFamily::English,
         );
@@ -1344,10 +1162,7 @@ mod tests {
     fn suggest_gray_for_grey_in_american_titlecase() {
         assert_suggestion_result(
             "It's a Greyscale Photo.",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
+            test_linter(),
             "It's a Grayscale Photo.",
             LanguageFamily::English,
         );
@@ -1370,15 +1185,7 @@ mod tests {
     #[test]
     #[ignore = "known failure due to bug"]
     fn suggest_gray_for_grey_in_american_all_caps() {
-        assert_suggestion_result(
-            "GREY",
-            SpellCheck::new(
-                FstDictionary::curated(LanguageFamily::English),
-                EnglishDialect::American,
-            ),
-            "GRAY",
-            LanguageFamily::English,
-        );
+        assert_suggestion_result("GREY", test_linter(), "GRAY", LanguageFamily::English);
     }
 
     // Tests for non-dialectal misspelling patterns
@@ -1467,14 +1274,7 @@ mod tests {
     #[test]
     fn allows_informal_laughter() {
         for source in ["hahah", "hahaha", "hahahah", "Hahahah", "HAHAHA"] {
-            assert_no_lints(
-                source,
-                SpellCheck::new(
-                    FstDictionary::curated(crate::languages::LanguageFamily::English),
-                    EnglishDialect::American,
-                ),
-                crate::languages::LanguageFamily::English,
-            );
+            assert_no_lints(source, test_linter(), LanguageFamily::English);
         }
     }
 }

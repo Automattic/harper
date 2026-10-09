@@ -1,0 +1,10 @@
+expr main [(responsible about)]
+
+let message "Use `responsible for` instead of `responsible about`."
+let description "Corrects `responsible about` to `responsible for`."
+let kind "Grammar"
+let becomes "responsible for"
+
+test "you sell a product -> you are responsible about the product" "you sell a product -> you are responsible for the product"
+test "browsing without JS will be increasingly more difficult, and this project is of course not even slightly responsible about that" "browsing without JS will be increasingly more difficult, and this project is of course not even slightly responsible for that"
+test "If people and companies don't start being responsible about its use, there will be consequences." "If people and companies don't start being responsible for its use, there will be consequences."

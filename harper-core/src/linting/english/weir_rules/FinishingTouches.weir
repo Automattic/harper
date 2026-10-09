@@ -1,0 +1,11 @@
+expr main (finish touches)
+
+let message "Use `finishing touches` instead of `finish touches`."
+let description "Corrects `finish touches` to `finishing touches`."
+let kind "Usage"
+let becomes "finishing touches"
+
+# The singular 'finishing touch' is less common and the instances of 'finish touch' are harder to classify as errors or not.
+
+test "I do not really care for user input or any other \"finish touches,\" just want to make the code more efficient" "I do not really care for user input or any other \"finishing touches,\" just want to make the code more efficient"
+test "In the meantime, the customer got talked into using Oracle as we were getting the finish touches for delivery." "In the meantime, the customer got talked into using Oracle as we were getting the finishing touches for delivery."

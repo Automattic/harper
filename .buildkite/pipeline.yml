@@ -15,9 +15,9 @@ steps:
     artifact_paths:
       # Branch/PR builds produce `aarch64-apple-darwin` artifacts; master and
       # tag builds produce `universal-apple-darwin`. Glob both.
-      - target/*-apple-darwin/release/bundle/dmg/*.dmg
-      - target/*-apple-darwin/release/bundle/macos/*.app.tar.gz
-      - target/*-apple-darwin/release/bundle/macos/*.app.tar.gz.sig
+      - harper-desktop/src-tauri/target/*-apple-darwin/release/bundle/dmg/*.dmg
+      - harper-desktop/src-tauri/target/*-apple-darwin/release/bundle/macos/*.app.tar.gz
+      - harper-desktop/src-tauri/target/*-apple-darwin/release/bundle/macos/*.app.tar.gz.sig
     notify:
       - github_commit_status:
           context: "Build, sign, notarize harper-desktop"

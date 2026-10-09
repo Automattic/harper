@@ -27,6 +27,8 @@ pub fn lint_group() -> LintGroup {
         "Backplane"       => (&["back plane"][..], "backplane"),
         "Bypass"          => (&["by pass"][..], "bypass"),
         "Chalkboard"      => (&["chalk board"][..], "chalkboard"),
+        "Codebase"        => (&["code base"][..], "codebase"),
+        "Codebases"       => (&["code bases"][..], "codebases"),
         "Deadlift"        => (&["dead lift"][..], "deadlift"),
         "Desktop"         => (&["desk top"][..], "desktop"),
         "Devops"          => (&["dev ops"][..], "devops"),
@@ -43,6 +45,7 @@ pub fn lint_group() -> LintGroup {
         "Keystroke"       => (&["key stoke", "key stroke"][..], "keystroke"),
         "Keystrokes"      => (&["key stokes", "key strokes"][..], "keystrokes"),
         "Laptop"          => (&["lap top"][..], "laptop"),
+        "Lifetime"        => (&["life time"][..], "lifetime"),
         "Middleware"      => (&["middle ware"][..], "middleware"),
         "Meanwhile"       => (&["mean while"][..], "meanwhile"),
         "Misunderstand"   => (&["miss understand"][..], "misunderstand"),
@@ -70,9 +73,12 @@ pub fn lint_group() -> LintGroup {
         "Somehow"         => (&["some how"][..], "somehow"),
         "Someone"         => (&["some one"][..], "someone"),
         "Somewhere"       => (&["some where"][..], "somewhere"),
+        "Straightforward" => (&["straight forward"][..], "straightforward"),
+        "Tenfold"         => (&["ten fold"][..], "tenfold"),
         "There"           => (&["the re"][..], "there"),
         "Therefore"       => (&["there fore"][..], "therefore"),
         "Thereupon"       => (&["there upon"][..], "thereupon"),
+        "Tradeoff"        => (&["trade off"][..], "tradeoff"),
         "Underclock"      => (&["under clock"][..], "underclock"),
         "Upset"           => (&["up set"][..], "upset"),
         "Upward"          => (&["up ward"][..], "upward"),
@@ -509,6 +515,66 @@ mod tests {
             test_sentence,
             lint_group(),
             expected,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn tenfold() {
+        assert_suggestion_result(
+            "If Andrew Kelly has done something wrong hasn’t Theo done that ten fold",
+            lint_group(),
+            "If Andrew Kelly has done something wrong hasn’t Theo done that tenfold",
+            crate::languages::LanguageFamily::English,
+        )
+    }
+
+    #[test]
+    fn codebase() {
+        assert_suggestion_result(
+            "Having trouble communicating the problems in your code base?",
+            lint_group(),
+            "Having trouble communicating the problems in your codebase?",
+            crate::languages::LanguageFamily::English,
+        )
+    }
+
+    #[test]
+    fn codebases() {
+        assert_suggestion_result(
+            "Tools to visualize large code bases in different ways.",
+            lint_group(),
+            "Tools to visualize large codebases in different ways.",
+            crate::languages::LanguageFamily::English,
+        )
+    }
+
+    #[test]
+    fn straightforward() {
+        assert_suggestion_result(
+            "This new vulnerability has a somewhat straight forward path to exploitation and prints funds out of thin air.",
+            lint_group(),
+            "This new vulnerability has a somewhat straightforward path to exploitation and prints funds out of thin air.",
+            crate::languages::LanguageFamily::English,
+        )
+    }
+
+    #[test]
+    fn lifetime() {
+        assert_suggestion_result(
+            "In a life time it's gone up by more than 10 fold.",
+            lint_group(),
+            "In a lifetime it's gone up by more than 10 fold.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn tradeoff() {
+        assert_suggestion_result(
+            "But the trade off was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
+            lint_group(),
+            "But the tradeoff was that specific details about the invention, how it worked and how it's made were entered openly for anyone to look up.",
             crate::languages::LanguageFamily::English,
         );
     }

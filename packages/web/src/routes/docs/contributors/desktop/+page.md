@@ -60,3 +60,9 @@ Finally, the communication with the user happens via a `winit` window, to which 
 The exact structure of the relevant modules for this is likely subject to change and may vary by platform, so I will forgo including additional information here to avoid misleading you.
 
 I want to emphasize this point: the highlighter process does not store any canonical state. Any updates to its state must be synchronized to the main process as soon as possible.
+
+## In the Monorepo
+
+Harper Desktop resides in the Harper monorepo, but is not included in the `cargo` workspace. Why? It is because the Desktop app includes (through Tauri) far too many dependencies.
+Small changes in unrelated crates would often cause large rebuilds and rechecks.
+To solve it, we simply removed it from the dependency graph.

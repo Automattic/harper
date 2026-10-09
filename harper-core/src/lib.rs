@@ -214,18 +214,25 @@ mod tests {
     use itertools::Itertools;
     use quickcheck_macros::quickcheck;
 
+    use crate::linting::create_test_pool;
     use crate::spell::FstDictionary;
     use crate::{Document, EnglishDialect, Span, remove_lints_overlapping_expr, remove_overlaps};
     use crate::{Lint, LintGroup, Linter as _, remove_overlaps_map};
+
+    create_test_pool!(
+        LintGroup,
+        LintGroup,
+        LintGroup::new_curated(
+            FstDictionary::curated(crate::languages::LanguageFamily::English),
+            Language::English(EnglishDialect::American)
+        )
+    );
 
     #[test]
     fn keeps_space_lint() {
         let doc = Document::new_plain_english_curated("Ths  tet");
 
-        let mut linter = LintGroup::new_curated(
-            FstDictionary::curated(crate::languages::LanguageFamily::English),
-            Language::English(EnglishDialect::American),
-        );
+        let mut linter = test_linter();
 
         let mut lints = linter.lint(&doc);
 
@@ -278,12 +285,9 @@ mod tests {
     #[quickcheck]
     fn overlap_removals_have_equivalent_behavior(s: String) {
         let doc = Document::new_plain_english_curated(&s);
-        let mut linter = LintGroup::new_curated_english(
-            FstDictionary::curated(crate::languages::LanguageFamily::English),
-            EnglishDialect::American,
-        );
+        let linter = test_linter();
 
-        let mut lint_map = linter.organized_lints(&doc);
+        let mut lint_map = linter.run_with_inner(|l| l.organized_lints(&doc));
         let mut lint_flat: Vec<_> = lint_map.values().flatten().cloned().collect();
 
         remove_overlaps_map(&mut lint_map);

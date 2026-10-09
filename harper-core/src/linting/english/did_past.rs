@@ -17,7 +17,7 @@ impl<D: Dictionary> DidPast<D> {
     pub fn new(dict: D) -> Self {
         Self {
             expr: SequenceExpr::longest_of([
-                Box::new(WordSet::new(&["did", "didn't", "didnt"])) as Box<dyn Expr>,
+                Box::new(WordSet::new(["did", "didn't", "didnt"])) as Box<dyn Expr>,
                 Box::new(FixedPhrase::from_phrase("did not")),
             ])
             .then_optional(SequenceExpr::default().t_ws().then_subject_pronoun())
@@ -329,6 +329,35 @@ mod tests {
             "Did You Read the Instructions?",
             DidPast::new(FstDictionary::curated(LanguageFamily::English)),
             crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn issue_3916_didnt_understood() {
+        assert_suggestion_result(
+            "I didn't understood the problem.",
+            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            "I didn't understand the problem.",
+            LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn issue_3916_did_understood() {
+        assert_suggestion_result(
+            "I did understood the problem.",
+            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            "I did understand the problem.",
+            LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn issue_3916_correct_usage() {
+        assert_no_lints(
+            "I didn't understand the problem.",
+            DidPast::new(FstDictionary::curated(LanguageFamily::English)),
+            LanguageFamily::English,
         );
     }
 }

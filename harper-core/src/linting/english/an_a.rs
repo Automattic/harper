@@ -437,4 +437,23 @@ mod tests {
             crate::languages::LanguageFamily::English,
         );
     }
+
+    #[test]
+    fn dont_flag_an_npm_4139() {
+        assert_no_lints(
+            "Why lib/ or light-base/ alone forces an npm bump",
+            AnA::new(EnglishDialect::American),
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn correct_a_npm_4139() {
+        assert_suggestion_result(
+            "Why lib/ or light-base/ alone forces a npm bump",
+            AnA::new(EnglishDialect::American),
+            "Why lib/ or light-base/ alone forces an npm bump",
+            crate::languages::LanguageFamily::English,
+        );
+    }
 }

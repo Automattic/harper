@@ -20,7 +20,7 @@ onMount(() => {
 let names = ['Grammar Guru', 'Grammar Checker', 'Grammar Savior'];
 let displayName = names[Math.floor(Math.random() * names.length)];
 
-$: isMarketingRoute = ['/', '/get', '/desktop'].includes(
+$: isMarketingRoute = ['/', '/get', '/desktop', '/install-browser-extension'].includes(
 	$page.url.pathname.replace(/\/$/, '') || '/',
 );
 </script>

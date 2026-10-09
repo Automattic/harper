@@ -14,7 +14,10 @@ pub(crate) fn is_content_word(tok: &Token, src: &[char]) -> bool {
     tok.span.len() > 1
         && (meta.is_noun() || meta.is_adjective() || meta.is_verb() || meta.is_adverb())
         && !(meta.is_determiner() || meta.is_conjunction())
-        && (!meta.preposition || tok.get_ch(src).eq_str("bar"))
+        && (!meta.preposition
+            || tok
+                .get_ch(src)
+                .eq_any_ignore_ascii_case_str(&["bar", "through"]))
 }
 
 pub(crate) fn predicate(
@@ -32,6 +35,9 @@ merge_linters!(CompoundNouns => CompoundNounAfterDetAdj, CompoundNounBeforeAuxVe
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(CompoundNouns, CompoundNouns, CompoundNouns::default());
     use super::CompoundNouns;
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
@@ -41,7 +47,7 @@ mod tests {
         let expected = "The webcam captured a stunning image.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -53,7 +59,7 @@ mod tests {
         let expected = "She always carries a notebook to jot down ideas.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -65,7 +71,7 @@ mod tests {
         let expected = "After the upgrade, the motherboard was replaced.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -77,7 +83,7 @@ mod tests {
         let expected = "He bought a new smartphone last week.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -89,7 +95,7 @@ mod tests {
         let expected = "The device's firmware was updated overnight.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -101,7 +107,7 @@ mod tests {
         let expected = "A reliable backplane is essential for high-speed data transfer.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -113,7 +119,7 @@ mod tests {
         let expected = "The accountant reviewed the spreadsheet carefully.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -125,7 +131,7 @@ mod tests {
         let expected = "The website's sidebar offers quick navigation links.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -137,7 +143,7 @@ mod tests {
         let expected = "I packed my books in my backpack before leaving.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -149,7 +155,7 @@ mod tests {
         let expected = "She stored the dishes in the old cupboard.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -161,7 +167,7 @@ mod tests {
         let expected = "My keyboard stopped working during the meeting.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -173,7 +179,7 @@ mod tests {
         let expected = "The device features a responsive touchscreen.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -185,7 +191,7 @@ mod tests {
         let expected = "He bought a new headset for his workouts.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -197,7 +203,7 @@ mod tests {
         let expected = "The framework of the app was built with care.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -209,7 +215,7 @@ mod tests {
         let expected = "The touchpad on my laptop is very sensitive.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -221,7 +227,7 @@ mod tests {
         let expected = "This microprocessor is among the fastest available.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -233,7 +239,7 @@ mod tests {
         let expected = "I lost my headphone at the gym.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -245,7 +251,7 @@ mod tests {
         let expected = "Our architecture now relies on microservices.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -257,7 +263,7 @@ mod tests {
         let expected = "The dashboard shows real-time analytics.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -269,7 +275,7 @@ mod tests {
         let expected = "A sitemap is provided at the footer of the website.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -281,7 +287,7 @@ mod tests {
         let expected = "A robust firewall is essential for network security.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -293,7 +299,7 @@ mod tests {
         let expected = "The bitstream was interrupted during transmission.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -305,7 +311,7 @@ mod tests {
         let expected = "The blockchain is revolutionizing the financial sector.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -317,7 +323,7 @@ mod tests {
         let expected = "I saved the image as a thumbnail.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -329,7 +335,7 @@ mod tests {
         let expected = "They remodeled the bathroom entirely.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -342,7 +348,7 @@ mod tests {
         let expected = "Everyone should have access to quality education.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -354,7 +360,7 @@ mod tests {
         let expected = "The kids spent the afternoon at the playground.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -366,7 +372,7 @@ mod tests {
         let expected = "The airplane taxied along the runway.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -378,7 +384,7 @@ mod tests {
         let expected = "Hackers roam the cyberspace freely.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -390,7 +396,7 @@ mod tests {
         let expected = "The network was hit by a cyberattack.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -402,7 +408,7 @@ mod tests {
         let expected = "Real-time updates are sent via a websocket.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -414,7 +420,7 @@ mod tests {
         let expected = "The detective collected a fingerprint as evidence.";
         assert_suggestion_result(
             test_sentence,
-            CompoundNouns::default(),
+            test_linter(),
             expected,
             crate::languages::LanguageFamily::English,
         );
@@ -424,7 +430,7 @@ mod tests {
     fn got_is_not_possessive() {
         assert_lint_count(
             "I got here by car...",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -434,7 +440,7 @@ mod tests {
     fn allow_issue_662() {
         assert_lint_count(
             "They are as old as *modern* computers ",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -444,7 +450,7 @@ mod tests {
     fn allow_issue_661() {
         assert_lint_count(
             "I may be wrong.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -454,7 +460,7 @@ mod tests {
     fn allow_issue_704() {
         assert_lint_count(
             "Here are some ways to do that:",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -464,7 +470,7 @@ mod tests {
     fn allows_issue_721() {
         assert_lint_count(
             "So if you adjust any one of these adjusters that can have a negative or a positive effect.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -474,7 +480,7 @@ mod tests {
     fn allows_678() {
         assert_lint_count(
             "they can't catch all the bugs.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -484,7 +490,7 @@ mod tests {
     fn ina_not_suggested() {
         assert_lint_count(
             "past mistakes or a character in a looping reality facing personal challenges.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -494,7 +500,7 @@ mod tests {
     fn allow_suppress_or() {
         assert_lint_count(
             "He must decide whether to suppress or coexist with his doppelgänger.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -504,7 +510,7 @@ mod tests {
     fn allow_an_arm_and_a_leg() {
         assert_lint_count(
             "I have to pay an arm and a leg get a worker to come and be my assistant baker.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -514,7 +520,7 @@ mod tests {
     fn allow_well_and_723() {
         assert_lint_count(
             "I understood very well and decided to go.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -524,7 +530,7 @@ mod tests {
     fn allow_can_not() {
         assert_lint_count(
             "Size can not be determined.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -534,7 +540,7 @@ mod tests {
     fn dont_flag_lot_to() {
         assert_lint_count(
             "but you'd have to raise taxes a lot to do it.",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -544,7 +550,7 @@ mod tests {
     fn dont_flag_to_me() {
         assert_lint_count(
             "There's no massive damage to the rockers or anything that to me would indicate that like the whole front of the car was off",
-            CompoundNouns::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -554,7 +560,7 @@ mod tests {
     fn allow_issue_1553() {
         assert_no_lints(
             "I'm not sure if there's anyone else that may be interested in more fine-grained control, but as it stands, having the domain level toggle is sufficient for me.",
-            CompoundNouns::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -563,7 +569,7 @@ mod tests {
     fn allow_issue_1496() {
         assert_no_lints(
             "I am not able to respond to messages.",
-            CompoundNouns::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -572,7 +578,7 @@ mod tests {
     fn allow_issue_1298() {
         assert_no_lints(
             "A series of tests that cover all possible cases.",
-            CompoundNouns::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -581,8 +587,18 @@ mod tests {
     fn dont_flag_project_or() {
         assert_no_lints(
             "You can star or watch this project or follow author to get release notifications in time.",
-            CompoundNouns::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
+    }
+
+    #[test]
+    fn fix_big_break_through() {
+        assert_suggestion_result(
+            "I think a big break through is needed for AGI so I haven’t been worried about it.",
+            test_linter(),
+            "I think a big breakthrough is needed for AGI so I haven’t been worried about it.",
+            crate::languages::LanguageFamily::English,
+        )
     }
 }

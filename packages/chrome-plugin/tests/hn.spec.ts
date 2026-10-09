@@ -39,6 +39,11 @@ test('Hacker News wraps correctly', async ({ page }) => {
 			{ x: 354.26666259765625, y: 115, width: 64.13333129882812, height: 19 },
 			{ x: 594.7666625976562, y: 98, width: 24.04998779296875, height: 19 },
 		],
+		// Current browser-default monospace metrics in the saved page.
+		[
+			{ x: 315.25, y: 115, width: 53.328125, height: 21 },
+			{ x: 515.171875, y: 96, width: 20.015625, height: 21 },
+		],
 	]);
 });
 
@@ -60,5 +65,6 @@ test('Hacker News scrolls correctly', async ({ page }) => {
 	await assertHarperHighlightBoxes(page, [
 		[{ x: 216.9375, y: 203, width: 56.171875, height: 17 }],
 		[{ x: 217.98333740234375, y: 221, width: 56.116668701171875, height: 19 }],
+		[{ x: 201.96875, y: 231, width: 46.65625, height: 21 }],
 	]);
 });

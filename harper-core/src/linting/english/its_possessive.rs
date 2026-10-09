@@ -152,6 +152,9 @@ impl ExprLinter for ItsPossessive {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(ItsPossessive, ItsPossessive, ItsPossessive::default());
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::ItsPossessive;
@@ -160,7 +163,7 @@ mod tests {
     fn corrects_its_various() {
         assert_suggestion_result(
             "I like it's various colors.",
-            ItsPossessive::default(),
+            test_linter(),
             "I like its various colors.",
             crate::languages::LanguageFamily::English,
         );
@@ -170,7 +173,7 @@ mod tests {
     fn fixes_inspiration() {
         assert_suggestion_result(
             "I would just put `Orthography` and it's various function implementations in their own `orthography.rs` file.",
-            ItsPossessive::default(),
+            test_linter(),
             "I would just put `Orthography` and its various function implementations in their own `orthography.rs` file.",
             crate::languages::LanguageFamily::English,
         );
@@ -180,7 +183,7 @@ mod tests {
     fn engine_lost_its_compression() {
         assert_lint_count(
             "The engine lost it's compression.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -190,7 +193,7 @@ mod tests {
     fn admired_sculpture_for_its_intricacy() {
         assert_suggestion_result(
             "I admired the sculpture for it's intricacy.",
-            ItsPossessive::default(),
+            test_linter(),
             "I admired the sculpture for its intricacy.",
             crate::languages::LanguageFamily::English,
         );
@@ -200,7 +203,7 @@ mod tests {
     fn paris_is_known_for_its_architecture() {
         assert_lint_count(
             "Paris is known for it's architecture.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -210,7 +213,7 @@ mod tests {
     fn plain_sentence_with_apostrophe_s() {
         assert_suggestion_result(
             "It's benefits are numerous.",
-            ItsPossessive::default(),
+            test_linter(),
             "Its benefits are numerous.",
             crate::languages::LanguageFamily::English,
         );
@@ -220,7 +223,7 @@ mod tests {
     fn fixes_its_ancestor() {
         assert_suggestion_result(
             "It's ancestor is still around.",
-            ItsPossessive::default(),
+            test_linter(),
             "Its ancestor is still around.",
             crate::languages::LanguageFamily::English,
         );
@@ -230,7 +233,7 @@ mod tests {
     fn device_reached_its_100th_cycle() {
         assert_lint_count(
             "The device reached it's 100th cycle.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -240,7 +243,7 @@ mod tests {
     fn oddly_its_wheels_misaligned() {
         assert_lint_count(
             "Oddly, it's wheels were misaligned.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -250,7 +253,7 @@ mod tests {
     fn leaking_oil_constant_issue() {
         assert_lint_count(
             "It's leaking oil constantly.",
-            ItsPossessive::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -260,7 +263,7 @@ mod tests {
     fn fiftyth_anniversary() {
         assert_lint_count(
             "The company celebrated it's 50th anniversary.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -270,7 +273,7 @@ mod tests {
     fn second_attempt() {
         assert_lint_count(
             "He failed it's 2nd attempt.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -280,7 +283,7 @@ mod tests {
     fn third_iteration() {
         assert_lint_count(
             "The program finished it's 3rd iteration.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -290,7 +293,7 @@ mod tests {
     fn tenth_milestone() {
         assert_lint_count(
             "They reached it's 10th milestone.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -300,7 +303,7 @@ mod tests {
     fn seventh_chapter() {
         assert_lint_count(
             "The novel lost it's 7th chapter.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -310,7 +313,7 @@ mod tests {
     fn fifth_version() {
         assert_lint_count(
             "Software updated to it's 5th version.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -320,7 +323,7 @@ mod tests {
     fn eighth_floor() {
         assert_lint_count(
             "Elevator stopped at it's 8th floor.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -330,7 +333,7 @@ mod tests {
     fn twelfth_episode() {
         assert_lint_count(
             "Series ended it's 12th episode.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -340,7 +343,7 @@ mod tests {
     fn fourth_draft() {
         assert_lint_count(
             "He completed it's 4th draft.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -350,7 +353,7 @@ mod tests {
     fn ninth_revision() {
         assert_lint_count(
             "The report saved it's 9th revision.",
-            ItsPossessive::default(),
+            test_linter(),
             1,
             crate::languages::LanguageFamily::English,
         );
@@ -360,7 +363,7 @@ mod tests {
     fn allows_hard_to_tell() {
         assert_no_lints(
             "It's hard to tell from here.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -369,7 +372,7 @@ mod tests {
     fn allows_illegible() {
         assert_no_lints(
             "When you write in cursive, its illegible",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -378,7 +381,7 @@ mod tests {
     fn allows_good_practice() {
         assert_no_lints(
             "it's good practice to review the general settings",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -387,7 +390,7 @@ mod tests {
     fn allows_understandable() {
         assert_no_lints(
             "It's understandable that you'd feel the weight of responsibility.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -396,7 +399,7 @@ mod tests {
     fn allows_insincere() {
         assert_no_lints(
             "But feel free to omit it if you feel it's insincere.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -405,7 +408,7 @@ mod tests {
     fn allows_its_possible() {
         assert_no_lints(
             "It's possible that a record was improperly handled. ",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -414,7 +417,7 @@ mod tests {
     fn allows_many_times_harder() {
         assert_no_lints(
             "It's many times harder to do this than that.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -423,7 +426,7 @@ mod tests {
     fn allow_issue_1658() {
         assert_no_lints(
             "It's kind of a nuisance, but it will work.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -432,7 +435,7 @@ mod tests {
     fn allow_issue_2001() {
         assert_no_lints(
             "It's worth highlighting that while using a fork instead of a spoon is easy, it sometimes isn't.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -441,7 +444,7 @@ mod tests {
     fn dont_flag_issue_1722_its_whats_accessible() {
         assert_no_lints(
             "The base execution context is the global execution context: it's what's accessible everywhere in your code.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -450,7 +453,7 @@ mod tests {
     fn dont_flag_issue_1722_its_early_and() {
         assert_no_lints(
             "it's early and there's plenty of room for novel and potentially",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -459,7 +462,7 @@ mod tests {
     fn dont_flag_issue_1722_its_big_enough() {
         assert_no_lints(
             "It's big enough.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -468,7 +471,7 @@ mod tests {
     fn allows_its_awesome() {
         assert_no_lints(
             "It's awesome.",
-            ItsPossessive::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -477,7 +480,7 @@ mod tests {
     fn flags_all_its_possessive_in_list() {
         assert_lint_count(
             "Understand it's code, it's values, and it's purpose.",
-            ItsPossessive::default(),
+            test_linter(),
             3,
             crate::languages::LanguageFamily::English,
         );
@@ -487,7 +490,7 @@ mod tests {
     fn fixes_all_its_possessive_in_list() {
         assert_suggestion_result(
             "Understand it's code, it's values, and it's purpose.",
-            ItsPossessive::default(),
+            test_linter(),
             "Understand its code, its values, and its purpose.",
             crate::languages::LanguageFamily::English,
         );

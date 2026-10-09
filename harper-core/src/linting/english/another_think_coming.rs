@@ -13,7 +13,7 @@ pub struct AnotherThinkComing {
 impl Default for AnotherThinkComing {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["had", "has", "have", "got"])
+            expr: SequenceExpr::word_set(["had", "has", "have", "got"])
                 .then_fixed_phrase(" another thing coming"),
         }
     }

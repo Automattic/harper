@@ -11,7 +11,7 @@ pub struct SomethingIs {
 
 impl Default for SomethingIs {
     fn default() -> Self {
-        let forms = WordSet::new(&["somethings", "anythings", "everythings", "nothings"]);
+        let forms = WordSet::new(["somethings", "anythings", "everythings", "nothings"]);
 
         let expr = SequenceExpr::with(forms)
             .t_ws()

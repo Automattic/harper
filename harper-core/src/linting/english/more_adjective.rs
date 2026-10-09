@@ -16,7 +16,7 @@ pub struct MoreAdjective<D> {
 impl<D: Dictionary> MoreAdjective<D> {
     pub fn new(dict: D) -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["more", "most"])
+            expr: SequenceExpr::word_set(["more", "most"])
                 .t_ws()
                 .then_positive_adjective()
                 // Include a following "than adjective" which we'll use to identify a false positive #2925
@@ -176,7 +176,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
     }
 
     fn description(&self) -> &str {
-        "Looks for comparative adjective constructions with `more` than could use inflected forms."
+        "Looks for comparative adjective constructions with `more` that could use inflected forms."
     }
 }
 

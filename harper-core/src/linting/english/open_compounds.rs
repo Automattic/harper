@@ -151,7 +151,10 @@ fn get_compound_idx(toks: &[Token], src: &[char], compound: &str) -> Option<usiz
 #[cfg(test)]
 mod tests {
     use super::OpenCompounds;
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    create_test_pool!(OpenCompounds, OpenCompounds, OpenCompounds::default());
 
     // In front
 
@@ -159,7 +162,7 @@ mod tests {
     fn corrects_lone_infront() {
         assert_suggestion_result(
             "Button always overlaps (infront) of other views.",
-            OpenCompounds::default(),
+            test_linter(),
             "Button always overlaps (in front) of other views.",
             crate::languages::LanguageFamily::English,
         );
@@ -169,7 +172,7 @@ mod tests {
     fn corrects_infront() {
         assert_suggestion_result(
             "So if i have no variable or a running process id/name which indicates that liveley is infront/fullscreen i can't do anything further via batch and must wait ...",
-            OpenCompounds::default(),
+            test_linter(),
             "So if i have no variable or a running process id/name which indicates that liveley is in front/fullscreen i can't do anything further via batch and must wait ...",
             crate::languages::LanguageFamily::English,
         );
@@ -179,7 +182,7 @@ mod tests {
     fn ignores_pascalcase() {
         assert_lint_count(
             "InFront Labs, LLC has 16 repositories available. Follow their code on GitHub.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -189,7 +192,7 @@ mod tests {
     fn ignores_camelcase() {
         assert_lint_count(
             "Click the \"toggle\" button to see how wrapping changes when an inFront is added to a letter in a word.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -199,7 +202,7 @@ mod tests {
     fn correct_with_period_after() {
         assert_suggestion_result(
             "Car with a reversed ramp infront.",
-            OpenCompounds::default(),
+            test_linter(),
             "Car with a reversed ramp in front.",
             crate::languages::LanguageFamily::English,
         );
@@ -209,7 +212,7 @@ mod tests {
     fn ignore_hyphen_before() {
         assert_lint_count(
             "-infront",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -219,7 +222,7 @@ mod tests {
     fn ignore_hyphen_after() {
         assert_lint_count(
             "infront-",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -229,7 +232,7 @@ mod tests {
     fn ignores_with_hyphen_before() {
         assert_lint_count(
             "Instantly share code, notes, and snippets. @yossi-infront",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -239,7 +242,7 @@ mod tests {
     fn ignores_with_hyphen_after() {
         assert_lint_count(
             "infront-cycle.ipe · infront-cycle.ipe · infront-cycle.svg · infront-cycle.svg · infront-s1s2.ipe · infront-s1s2.ipe · infront-s1s2.svg · infront-s1s2.svg.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -249,7 +252,7 @@ mod tests {
     fn even_repeated_infront_works() {
         assert_suggestion_result(
             "infront infront",
-            OpenCompounds::default(),
+            test_linter(),
             "in front in front",
             crate::languages::LanguageFamily::English,
         );
@@ -261,7 +264,7 @@ mod tests {
     fn correct_afew_atomic() {
         assert_suggestion_result(
             "ITK code to generate anisotropic metrics, mostly Riemannian metrics and afew particular cases of Finslerian metrics.",
-            OpenCompounds::default(),
+            test_linter(),
             "ITK code to generate anisotropic metrics, mostly Riemannian metrics and a few particular cases of Finslerian metrics.",
             crate::languages::LanguageFamily::English,
         );
@@ -273,7 +276,7 @@ mod tests {
     fn correct_alot_atomic() {
         assert_suggestion_result(
             "Alot",
-            OpenCompounds::default(),
+            test_linter(),
             "A lot",
             crate::languages::LanguageFamily::English,
         );
@@ -285,7 +288,7 @@ mod tests {
     fn correct_aswell_atomic() {
         assert_suggestion_result(
             "Aswell",
-            OpenCompounds::default(),
+            test_linter(),
             "As well",
             crate::languages::LanguageFamily::English,
         );
@@ -295,7 +298,7 @@ mod tests {
     fn corrects_as_keyboards_aswell() {
         assert_suggestion_result(
             "Tool to read physical joystick devices, keyboards aswell, and create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
+            test_linter(),
             "Tool to read physical joystick devices, keyboards as well, and create virtual joystick devices and output keyboard presses on a Linux system.",
             crate::languages::LanguageFamily::English,
         );
@@ -305,7 +308,7 @@ mod tests {
     fn corrects_aswell_as() {
         assert_suggestion_result(
             "When UseAcrylic is true in Focused aswell as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
-            OpenCompounds::default(),
+            test_linter(),
             "When UseAcrylic is true in Focused as well as Unfocused Apearance , changing enableUnfocusedAcrylic at runtime doesn't work",
             crate::languages::LanguageFamily::English,
         );
@@ -315,7 +318,7 @@ mod tests {
     fn corrects_toml_aswell() {
         assert_suggestion_result(
             "format Cargo.toml aswell #5893 - rust-lang/rustfmt",
-            OpenCompounds::default(),
+            test_linter(),
             "format Cargo.toml as well #5893 - rust-lang/rustfmt",
             crate::languages::LanguageFamily::English,
         );
@@ -325,7 +328,7 @@ mod tests {
     fn correct_aswell() {
         assert_suggestion_result(
             "'wejoy' is a tool to read physical joystick devices, aswell as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
-            OpenCompounds::default(),
+            test_linter(),
             "'wejoy' is a tool to read physical joystick devices, as well as keyboards, create virtual joystick devices and output keyboard presses on a Linux system.",
             crate::languages::LanguageFamily::English,
         );
@@ -337,7 +340,7 @@ mod tests {
     fn correct_atall() {
         assert_suggestion_result(
             "claude code with vs code extension not working atall",
-            OpenCompounds::default(),
+            test_linter(),
             "claude code with vs code extension not working at all",
             crate::languages::LanguageFamily::English,
         );
@@ -349,7 +352,7 @@ mod tests {
     fn correct_atleast_atomic() {
         assert_suggestion_result(
             "Atleast",
-            OpenCompounds::default(),
+            test_linter(),
             "At least",
             crate::languages::LanguageFamily::English,
         );
@@ -359,7 +362,7 @@ mod tests {
     fn ignore_atleast_pascalcase() {
         assert_lint_count(
             "I want to understand if we are using AtLeast correctly.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -369,7 +372,7 @@ mod tests {
     fn ignore_atleast_camelcase() {
         assert_lint_count(
             "verfiy with atLeast = 0 should pass even if the mocked function is never called.",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -379,7 +382,7 @@ mod tests {
     fn correct_atleast() {
         assert_suggestion_result(
             "Mar 22, 2562 BE — constructor - expected atleast one input #250.",
-            OpenCompounds::default(),
+            test_linter(),
             "Mar 22, 2562 BE — constructor - expected at least one input #250.",
             crate::languages::LanguageFamily::English,
         );
@@ -391,7 +394,7 @@ mod tests {
     fn correct_eachother_atomic() {
         assert_suggestion_result(
             "Eachother",
-            OpenCompounds::default(),
+            test_linter(),
             "Each other",
             crate::languages::LanguageFamily::English,
         );
@@ -401,7 +404,7 @@ mod tests {
     fn correct_eachother() {
         assert_suggestion_result(
             "Script parsing fails when two scenes reference eachother",
-            OpenCompounds::default(),
+            test_linter(),
             "Script parsing fails when two scenes reference each other",
             crate::languages::LanguageFamily::English,
         );
@@ -413,7 +416,7 @@ mod tests {
     fn correct_incase_atomic() {
         assert_suggestion_result(
             "Incase",
-            OpenCompounds::default(),
+            test_linter(),
             "In case",
             crate::languages::LanguageFamily::English,
         );
@@ -423,7 +426,7 @@ mod tests {
     fn correct_in_case() {
         assert_suggestion_result(
             "Support for enum variable incase of reusable enum class",
-            OpenCompounds::default(),
+            test_linter(),
             "Support for enum variable in case of reusable enum class",
             crate::languages::LanguageFamily::English,
         );
@@ -433,7 +436,7 @@ mod tests {
     fn ignore_incase_pascalcase() {
         assert_lint_count(
             "InCase save your secrets for a friend, so they can use in case it in case you went \"missing\".",
-            OpenCompounds::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -445,7 +448,7 @@ mod tests {
     fn correct_infact_atomic() {
         assert_suggestion_result(
             "Yes I do infact exist :O",
-            OpenCompounds::default(),
+            test_linter(),
             "Yes I do in fact exist :O",
             crate::languages::LanguageFamily::English,
         );
@@ -457,7 +460,7 @@ mod tests {
     fn correct_upto() {
         assert_suggestion_result(
             "Free for upto 10k subscribers, unlimited push notifications, in-browser messaging",
-            OpenCompounds::default(),
+            test_linter(),
             "Free for up to 10k subscribers, unlimited push notifications, in-browser messaging",
             crate::languages::LanguageFamily::English,
         );

@@ -14,7 +14,7 @@ impl Default for ByAccident {
             expr: SequenceExpr::aco("on")
                 .t_ws()
                 .then_optional(
-                    SequenceExpr::word_set(&[
+                    SequenceExpr::word_set([
                         "complete", "happy", "literal", "mere", "pure", "sheer", "total",
                     ])
                     .t_ws(),

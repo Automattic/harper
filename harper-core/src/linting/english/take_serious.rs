@@ -22,7 +22,7 @@ impl Default for TakeSerious {
     /// - Followed by a nominal phrase
     /// - Ending with "serious"
     fn default() -> Self {
-        let pattern = SequenceExpr::word_set(&["take", "taken", "takes", "taking", "took"])
+        let pattern = SequenceExpr::word_set(["take", "taken", "takes", "taking", "took"])
             .t_ws()
             .then(NominalPhrase)
             .t_ws()

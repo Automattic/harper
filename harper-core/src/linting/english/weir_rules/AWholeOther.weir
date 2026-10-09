@@ -1,0 +1,13 @@
+expr main [(a whole another), (a whole nother), (a whole 'nother)]
+
+let message "Did you mean the standard `a whole other`?"
+let description "Corrects `a whole another`/`a whole 'nother` to `a whole other`."
+let kind "Usage"
+let becomes "a whole other"
+
+test "Andrew was toxic in his article but had some arguments, Theo is in a whole another level of toxicity" "Andrew was toxic in his article but had some arguments, Theo is in a whole other level of toxicity"
+test "Why it's there is a whole nother problem." "Why it's there is a whole other problem."
+test "but it adds a whole 'nother layer onto what is already 2 (or 3, I forget) layers of complexity" "but it adds a whole other layer onto what is already 2 (or 3, I forget) layers of complexity"
+test "smart apostrophes are a whole ’nother thing" "smart apostrophes are a whole other thing"
+
+allows "one workflow may need to be singular across the host as a whole, another maybe singular across that tenant, and yet another may be ..."

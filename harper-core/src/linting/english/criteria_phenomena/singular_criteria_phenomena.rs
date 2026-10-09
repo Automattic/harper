@@ -16,9 +16,9 @@ pub struct SingularCriteriaPhenomena {
 
 impl SingularCriteriaPhenomena {
     fn new() -> Self {
-        let plural_words = Lrc::new(WordSet::new(&["criteria", "phenomena"]));
+        let plural_words = Lrc::new(WordSet::new(["criteria", "phenomena"]));
 
-        let singular_modifiers = Lrc::new(WordSet::new(&["this", "that", "a", "one"]));
+        let singular_modifiers = Lrc::new(WordSet::new(["this", "that", "a", "one"]));
 
         Self {
             expr: SequenceExpr::with(singular_modifiers.clone())

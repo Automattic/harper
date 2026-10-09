@@ -16,7 +16,9 @@ pub struct LetUsRedundancy {
 
 impl Default for LetUsRedundancy {
     fn default() -> Self {
-        let pattern = SequenceExpr::aco("let's").then_whitespace().then_pronoun();
+        let pattern = SequenceExpr::aco("let's")
+            .then_whitespace()
+            .then_object_pronoun();
 
         Self {
             expr: Box::new(pattern),

@@ -18,7 +18,7 @@ impl Default for TheLastDays {
                 .t_ws()
                 .t_aco("last")
                 .t_ws()
-                .then_word_set(&[
+                .then_word_set([
                     "seconds", "minutes", "hours", "days", "weeks", "months", "years", "decades",
                 ])
                 .but_not(

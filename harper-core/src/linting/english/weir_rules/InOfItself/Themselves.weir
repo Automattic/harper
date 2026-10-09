@@ -1,0 +1,10 @@
+expr main (in of themselves)
+
+let message "Use `in themselves` (more common) or `in and of themselves` (more formal) to mean 'intrinsically'."
+let description "Corrects nonstandard `in of themselves` to standard `in themselves` or `in and of themselves`."
+let kind "Usage"
+let becomes ["in themselves", "in and of themselves"]
+
+test "in of themselves" "in and of themselves"
+test "Sure neural networks in of themselves are conceptually simple" "Sure neural networks in themselves are conceptually simple"
+test "Sure neural networks in of themselves are conceptually simple" "Sure neural networks in and of themselves are conceptually simple"

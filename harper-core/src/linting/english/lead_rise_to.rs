@@ -11,7 +11,7 @@ pub struct LeadRiseTo {
 impl Default for LeadRiseTo {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["lead", "led", "leads", "leading"])
+            expr: SequenceExpr::word_set(["lead", "led", "leads", "leading"])
                 .t_ws()
                 .t_aco("rise")
                 .t_ws()

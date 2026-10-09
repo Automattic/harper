@@ -17,7 +17,9 @@ pub fn lint_group() -> LintGroup {
     }
 
     add_initialism_mappings!(group, {
+        "AsFarAsICanTell"        => ("afaict", &["as far as I can tell"]),
         "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
+        "AsIUnderstandIt"        => ("aiui", &["as I understand it"]),
         "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
         "BeRightBack"            => ("brb", &["be right back"]),
         "ByTheWay"               => ("btw", &["by the way"]),
@@ -35,6 +37,8 @@ pub fn lint_group() -> LintGroup {
         "LetMeKnow"              => ("lmk", &["let me know"]),
         "NeverMind"              => ("nvm", &["never mind"]),
         "OhMyGod"                => ("omg", &["oh my god"]),
+        "OnTheOtherHand"         => ("otoh", &["on the other hand"]),
+        "OutOfTheBox"            => ("ootb", &["out of the box"]),
         "PleaseTakeALook"        => ("ptal", &["please take a look"]),
         "Really"                 => ("rly", &["really"]),
         "TalkToYouLater"         => ("ttyl", &["talk to you later"]),
@@ -261,6 +265,46 @@ mod tests {
             "Lmk if you need any debug logs.",
             lint_group(),
             "Let me know if you need any debug logs.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn corrects_afaict() {
+        assert_suggestion_result(
+            "AFAICT the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+            lint_group(),
+            "As far as i can tell the other drivers of recent progress in LLMs have been: ploughing in lots and lots of specialised training data",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn corrects_otoh() {
+        assert_suggestion_result(
+            "\"Actual consequences\", OTOH, most directly relates to the camp(s) focused on \"embodiment\"",
+            lint_group(),
+            "\"Actual consequences\", On the other hand, most directly relates to the camp(s) focused on \"embodiment\"",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn corrects_ootb() {
+        assert_suggestion_result(
+            "The Oracle Linux OpenBLAS build isnt detected ootb, and it doesn't perform well compared to x86 for some reason.",
+            lint_group(),
+            "The Oracle Linux OpenBLAS build isnt detected ootb, and it doesn't perform well compared to x86 for some reason.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn corrects_aaui() {
+        assert_suggestion_result(
+            "AIUI, in the US something that's entirely machine-generated is not eligible for copyright protection.",
+            lint_group(),
+            "As i understand it, in the US something that's entirely machine-generated is not eligible for copyright protection.",
             crate::languages::LanguageFamily::English,
         );
     }

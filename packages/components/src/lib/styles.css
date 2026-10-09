@@ -8,6 +8,8 @@
 @source "./node_modules/flowbite-svelte/**/*.{svelte,ts,js}";
 
 @theme {
+	--font-serif: Domine, serif;
+
 	--color-primary-50: #fef4e7; /* honey bronze */
 	--color-primary-100: #fce9cf;
 	--color-primary-200: #f9d49f;

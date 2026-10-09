@@ -17,6 +17,7 @@
 <!-- It helps us review PRs when we know about AI assistance. -->
 - [ ] I am a human and didn't use any AI.
 - [ ] I used LLM features of my editor, but not an agent.
+- [ ] I consulted one or more coding AIs, but didn't use an agent.
 - [ ] I used an AI agent interactively.
 - [ ] I am an agent or I got an agent to do the work autonomously.
 
@@ -29,7 +30,6 @@
 
 # Checklist
 <!-- Go over all the following points, and put an `x` in all the boxes that apply -->
-
 - [ ] I have performed a self-review of my own code
 - [ ] I have added tests to cover my changes
 - [ ] I have considered splitting this into smaller pull requests.

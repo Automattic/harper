@@ -67,7 +67,7 @@ function configValueToString(value: boolean | undefined | null): string {
 	}
 }
 
-function configStringToValue(str: string): boolean | undefined | null {
+function configStringToValue(str: string): boolean | null {
 	switch (str) {
 		case 'enable':
 			return true;
@@ -327,7 +327,7 @@ $: {
 								size="md"
 								title={`Set all rules in the ${node.label} category to their default, on, or off state.`}
 								value={node.state === 'mixed' ? 'default' : node.state}
-								onchange={(event) => updateGroup(node.ruleNames, (event.target as HTMLSelectElement).value)}
+								onchange={(event: Event) => updateGroup(node.ruleNames, (event.target as HTMLSelectElement).value)}
 							>
 								<option value="default">{node.state === 'mixed' ? '⚙️ Default (mixed)' : '⚙️ Default'}</option>
 								<option value="enable">✅ On</option>
@@ -362,7 +362,7 @@ $: {
 						size="md"
 						title={node.title}
 						value={node.value}
-						onchange={(event) => {
+						onchange={(event: Event) => {
 							const nextConfig: LintConfig = { ...lintConfig };
 							nextConfig[node.name] = configStringToValue(
 								(event.target as HTMLSelectElement).value,
@@ -384,7 +384,7 @@ $: {
 					size="md"
 					title={node.title}
 					value={node.value}
-					onchange={(event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
+					onchange={(event: Event) => updateOneOfMany(node.setting, (event.target as HTMLSelectElement).value)}
 				>
 					{#each node.options as option}
 						<option value={option.value}>{option.label}</option>

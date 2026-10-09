@@ -264,6 +264,16 @@ mod tests {
     }
 
     #[test]
+    fn allows_dickens_1656() {
+        assert_lint_count(
+            "Charles Dickens wrote many novels.",
+            AvoidCurses::default(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
     fn fix_shit() {
         assert_suggestion_result(
             "shit",

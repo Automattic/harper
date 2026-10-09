@@ -11,26 +11,23 @@ pub struct FeelFell {
 
 impl Default for FeelFell {
     fn default() -> Self {
-        let with_word_before = SequenceExpr::word_set(&["didn't", "doesn't"])
+        let with_word_before = SequenceExpr::word_set(["didn't", "doesn't"])
             .t_ws()
             .t_aco("fell");
 
-        let with_word_after = SequenceExpr::default()
-            .t_aco("fell")
-            .t_ws()
-            .then_word_set(&[
-                "comfortable",
-                "free",
-                "good",
-                "I",
-                "I'm",
-                "it",
-                "it's",
-                "like",
-                "that",
-                "we",
-                "you",
-            ]);
+        let with_word_after = SequenceExpr::aco("fell").t_ws().t_set([
+            "comfortable",
+            "free",
+            "good",
+            "I",
+            "I'm",
+            "it",
+            "it's",
+            "like",
+            "that",
+            "we",
+            "you",
+        ]);
 
         Self {
             expr: SequenceExpr::any_of(vec![Box::new(with_word_before), Box::new(with_word_after)]),

@@ -15,7 +15,7 @@ pub struct ByTheBook {
 impl Default for ByTheBook {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&[
+            expr: SequenceExpr::word_set([
                 "all",
                 "done",
                 "everything",

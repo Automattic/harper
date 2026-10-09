@@ -6,7 +6,8 @@ import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
 export default class ProtocolClient {
 	private static readonly lintCache = new LRUCache<string, Promise<UnpackedLintGroups>>({
 		max: 5000,
-		ttl: 5_000,
+		ttl: 60_000,
+		ttlAutopurge: true,
 	});
 
 	private static cacheKey(text: string, domain: string, options?: LintOptions): string {

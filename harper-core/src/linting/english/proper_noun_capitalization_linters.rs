@@ -116,19 +116,23 @@ pub fn lint_group() -> LintGroup {
 #[cfg(test)]
 mod tests {
     use super::lint_group;
+    use crate::linting::LintGroup;
+    use crate::linting::create_test_pool;
     use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+
+    create_test_pool!(LintGroup, LintGroup, lint_group());
 
     #[test]
     fn americas_lowercase() {
         assert_suggestion_result(
             "south america",
-            lint_group(),
+            test_linter(),
             "South America",
             crate::languages::LanguageFamily::English,
         );
         assert_suggestion_result(
             "north america",
-            lint_group(),
+            test_linter(),
             "North America",
             crate::languages::LanguageFamily::English,
         );
@@ -138,13 +142,13 @@ mod tests {
     fn americas_uppercase() {
         assert_suggestion_result(
             "SOUTH AMERICA",
-            lint_group(),
+            test_linter(),
             "South America",
             crate::languages::LanguageFamily::English,
         );
         assert_suggestion_result(
             "NORTH AMERICA",
-            lint_group(),
+            test_linter(),
             "North America",
             crate::languages::LanguageFamily::English,
         );
@@ -154,13 +158,13 @@ mod tests {
     fn americas_allow_correct() {
         assert_lint_count(
             "South America",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
         assert_lint_count(
             "North America",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -170,7 +174,7 @@ mod tests {
     fn issue_798() {
         assert_suggestion_result(
             "The United states is a big country.",
-            lint_group(),
+            test_linter(),
             "The United States is a big country.",
             crate::languages::LanguageFamily::English,
         );
@@ -180,7 +184,7 @@ mod tests {
     fn united_nations_uppercase() {
         assert_suggestion_result(
             "UNITED NATIONS",
-            lint_group(),
+            test_linter(),
             "United Nations",
             crate::languages::LanguageFamily::English,
         );
@@ -190,7 +194,7 @@ mod tests {
     fn united_arab_emirates_lowercase() {
         assert_suggestion_result(
             "UNITED ARAB EMIRATES",
-            lint_group(),
+            test_linter(),
             "United Arab Emirates",
             crate::languages::LanguageFamily::English,
         );
@@ -200,7 +204,7 @@ mod tests {
     fn united_nations_allow_correct() {
         assert_lint_count(
             "United Nations",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -210,7 +214,7 @@ mod tests {
     fn meta_allow_correct() {
         assert_lint_count(
             "Meta Quest",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -220,7 +224,7 @@ mod tests {
     fn microsoft_lowercase() {
         assert_suggestion_result(
             "microsoft visual studio",
-            lint_group(),
+            test_linter(),
             "Microsoft Visual Studio",
             crate::languages::LanguageFamily::English,
         );
@@ -230,8 +234,124 @@ mod tests {
     fn microsoft_first_word_is_correct() {
         assert_suggestion_result(
             "Microsoft visual studio",
-            lint_group(),
+            test_linter(),
             "Microsoft Visual Studio",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_ipod_lowercase() {
+        assert_suggestion_result(
+            "apple ipod",
+            lint_group(),
+            "Apple iPod",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_ipod_allow_correct() {
+        assert_lint_count(
+            "Apple iPod",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_macbook_family_lowercase() {
+        assert_suggestion_result(
+            "macbook pro",
+            lint_group(),
+            "MacBook Pro",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "macbook air",
+            lint_group(),
+            "MacBook Air",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_macbook_family_allow_correct() {
+        assert_lint_count(
+            "MacBook Pro",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "MacBook Air",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_mac_family_lowercase() {
+        assert_suggestion_result(
+            "mac pro",
+            lint_group(),
+            "Mac Pro",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "mac mini",
+            lint_group(),
+            "Mac Mini",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_mac_family_allow_correct() {
+        assert_lint_count(
+            "Mac Pro",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "Mac Mini",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_airpods_family_lowercase() {
+        assert_suggestion_result(
+            "airpods pro",
+            lint_group(),
+            "AirPods Pro",
+            crate::languages::LanguageFamily::English,
+        );
+        assert_suggestion_result(
+            "airpods max",
+            lint_group(),
+            "AirPods Max",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn apple_airpods_family_allow_correct() {
+        assert_lint_count(
+            "AirPods Pro",
+            lint_group(),
+            0,
+            crate::languages::LanguageFamily::English,
+        );
+        assert_lint_count(
+            "AirPods Max",
+            lint_group(),
+            0,
             crate::languages::LanguageFamily::English,
         );
     }
@@ -240,7 +360,7 @@ mod tests {
     fn test_atlantic_ocean_lowercase() {
         assert_suggestion_result(
             "atlantic ocean",
-            lint_group(),
+            test_linter(),
             "Atlantic Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -250,7 +370,7 @@ mod tests {
     fn test_pacific_ocean_lowercase() {
         assert_suggestion_result(
             "pacific ocean",
-            lint_group(),
+            test_linter(),
             "Pacific Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -260,7 +380,7 @@ mod tests {
     fn test_indian_ocean_lowercase() {
         assert_suggestion_result(
             "indian ocean",
-            lint_group(),
+            test_linter(),
             "Indian Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -270,7 +390,7 @@ mod tests {
     fn test_southern_ocean_lowercase() {
         assert_suggestion_result(
             "southern ocean",
-            lint_group(),
+            test_linter(),
             "Southern Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -280,7 +400,7 @@ mod tests {
     fn test_arctic_ocean_lowercase() {
         assert_suggestion_result(
             "arctic ocean",
-            lint_group(),
+            test_linter(),
             "Arctic Ocean",
             crate::languages::LanguageFamily::English,
         );
@@ -290,7 +410,7 @@ mod tests {
     fn test_mediterranean_sea_lowercase() {
         assert_suggestion_result(
             "mediterranean sea",
-            lint_group(),
+            test_linter(),
             "Mediterranean Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -300,7 +420,7 @@ mod tests {
     fn test_caribbean_sea_lowercase() {
         assert_suggestion_result(
             "caribbean sea",
-            lint_group(),
+            test_linter(),
             "Caribbean Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -310,7 +430,7 @@ mod tests {
     fn test_south_china_sea_lowercase() {
         assert_suggestion_result(
             "south china sea",
-            lint_group(),
+            test_linter(),
             "South China Sea",
             crate::languages::LanguageFamily::English,
         );
@@ -320,7 +440,7 @@ mod tests {
     fn test_atlantic_ocean_correct() {
         assert_lint_count(
             "Atlantic Ocean",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -330,7 +450,7 @@ mod tests {
     fn test_pacific_ocean_correct() {
         assert_lint_count(
             "Pacific Ocean",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -340,7 +460,7 @@ mod tests {
     fn test_indian_ocean_correct() {
         assert_lint_count(
             "Indian Ocean",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -350,7 +470,7 @@ mod tests {
     fn test_mediterranean_sea_correct() {
         assert_lint_count(
             "Mediterranean Sea",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -360,7 +480,7 @@ mod tests {
     fn test_south_china_sea_correct() {
         assert_lint_count(
             "South China Sea",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -370,7 +490,7 @@ mod tests {
     fn day_one_in_sentence() {
         assert_suggestion_result(
             "I love day one. It is the best journaling app.",
-            lint_group(),
+            test_linter(),
             "I love Day One. It is the best journaling app.",
             crate::languages::LanguageFamily::English,
         );
@@ -380,7 +500,7 @@ mod tests {
     fn gilded_age_in_sentence() {
         assert_suggestion_result(
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the gilded age.",
-            lint_group(),
+            test_linter(),
             "Mani-Chess Destiny is a JavaScript based computer game built off of chess, but in the style of the Gilded Age.",
             crate::languages::LanguageFamily::English,
         );
@@ -390,7 +510,7 @@ mod tests {
     fn chrome_extension_lowercase() {
         assert_suggestion_result(
             "chrome extension",
-            lint_group(),
+            test_linter(),
             "Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -400,7 +520,7 @@ mod tests {
     fn chrome_extension_uppercase() {
         assert_suggestion_result(
             "CHROME EXTENSION",
-            lint_group(),
+            test_linter(),
             "Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -410,7 +530,7 @@ mod tests {
     fn chrome_extension_mixed_case() {
         assert_suggestion_result(
             "cHrOmE eXtEnSiOn",
-            lint_group(),
+            test_linter(),
             "Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -420,7 +540,7 @@ mod tests {
     fn chrome_extension_second_word_lowercase() {
         assert_suggestion_result(
             "Chrome extension",
-            lint_group(),
+            test_linter(),
             "Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -430,7 +550,7 @@ mod tests {
     fn chrome_extension_first_word_lowercase() {
         assert_suggestion_result(
             "chrome Extension",
-            lint_group(),
+            test_linter(),
             "Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -440,7 +560,7 @@ mod tests {
     fn chrome_extension_in_sentence() {
         assert_suggestion_result(
             "Install the chrome extension from the store.",
-            lint_group(),
+            test_linter(),
             "Install the Chrome Extension from the store.",
             crate::languages::LanguageFamily::English,
         );
@@ -450,7 +570,7 @@ mod tests {
     fn chrome_extension_with_leading_article() {
         assert_suggestion_result(
             "The chrome extension is ready.",
-            lint_group(),
+            test_linter(),
             "The Chrome Extension is ready.",
             crate::languages::LanguageFamily::English,
         );
@@ -460,7 +580,7 @@ mod tests {
     fn chrome_extension_with_trailing_period() {
         assert_suggestion_result(
             "We shipped the chrome extension.",
-            lint_group(),
+            test_linter(),
             "We shipped the Chrome Extension.",
             crate::languages::LanguageFamily::English,
         );
@@ -470,7 +590,7 @@ mod tests {
     fn chrome_extension_with_trailing_comma() {
         assert_suggestion_result(
             "The chrome extension, not the app, needs review.",
-            lint_group(),
+            test_linter(),
             "The Chrome Extension, not the app, needs review.",
             crate::languages::LanguageFamily::English,
         );
@@ -480,7 +600,7 @@ mod tests {
     fn chrome_extension_with_trailing_colon() {
         assert_suggestion_result(
             "Preferred install target: chrome extension",
-            lint_group(),
+            test_linter(),
             "Preferred install target: Chrome Extension",
             crate::languages::LanguageFamily::English,
         );
@@ -490,7 +610,7 @@ mod tests {
     fn chrome_extension_inside_quotes() {
         assert_suggestion_result(
             "They called it the \"chrome extension\" build.",
-            lint_group(),
+            test_linter(),
             "They called it the \"Chrome Extension\" build.",
             crate::languages::LanguageFamily::English,
         );
@@ -500,7 +620,7 @@ mod tests {
     fn chrome_extension_across_sentence_boundary_not_present() {
         assert_lint_count(
             "Chrome. Extension",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -510,7 +630,7 @@ mod tests {
     fn chrome_extension_allows_correct_case() {
         assert_lint_count(
             "Chrome Extension",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -520,7 +640,7 @@ mod tests {
     fn chrome_extension_allows_correct_case_in_sentence() {
         assert_lint_count(
             "The Chrome Extension is ready.",
-            lint_group(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -530,8 +650,28 @@ mod tests {
     fn browser_extension_not_flagged() {
         assert_lint_count(
             "browser extension",
-            lint_group(),
+            test_linter(),
             0,
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fix_baton_rogue() {
+        assert_suggestion_result(
+            "The programs know you dont care about the bronx or baton rouge, you just want a spot",
+            test_linter(),
+            "The programs know you dont care about the bronx or Baton Rouge, you just want a spot",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fix_khmer_rouge() {
+        assert_suggestion_result(
+            "I read that the khmer rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
+            test_linter(),
+            "I read that the Khmer Rouge still existed as a group after vietnam invaded cambodia and they still had a seat in the UN until 1993.",
             crate::languages::LanguageFamily::English,
         );
     }

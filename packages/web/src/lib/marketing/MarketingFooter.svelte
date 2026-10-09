@@ -1,6 +1,8 @@
 <script lang="ts">
 import { marketingLinks } from './data';
 import HarperMark from './HarperMark.svelte';
+
+const currentYear = new Date().getFullYear();
 </script>
 
 <footer class="border-t border-black/10 bg-cream text-black/50 dark:border-white/10 dark:bg-black dark:text-white/50">
@@ -53,10 +55,9 @@ import HarperMark from './HarperMark.svelte';
 	</div>
 
 	<div class="mx-auto flex max-w-[77.5rem] items-center justify-between gap-4 border-t border-black/10 px-10 py-4 text-[0.78rem] dark:border-white/10 max-[820px]:flex-col max-[820px]:items-start max-[820px]:px-4">
-		<span>An <a class="!text-black/70 hover:!text-black dark:!text-white/70 dark:hover:!text-white" href="https://automattic.com/">Automattic</a> open-source project.</span>
+		<span>© {currentYear} Automattic Inc.</span>
 		<div class="flex gap-4">
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="/docs/about">Privacy</a>
-			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href={marketingLinks.github}>License</a>
+			<a class="!text-black/70 no-underline hover:!text-black hover:no-underline dark:!text-white/70 dark:hover:!text-white" href="https://github.com/Automattic/harper/blob/master/LICENSE">License</a>
 		</div>
 	</div>
 </footer>

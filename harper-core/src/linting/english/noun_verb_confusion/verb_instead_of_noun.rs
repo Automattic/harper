@@ -16,7 +16,7 @@ pub struct VerbInsteadOfNoun {
 impl Default for VerbInsteadOfNoun {
     fn default() -> Self {
         let verbs = Lrc::new(WordSet::new(
-            &NOUN_VERB_PAIRS
+            NOUN_VERB_PAIRS
                 .iter()
                 .map(|&(_, verb)| verb)
                 .collect::<Vec<_>>(),

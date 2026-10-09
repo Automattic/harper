@@ -169,6 +169,13 @@ impl ExprLinter for PronounInflectionBe {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(
+        PronounInflectionBe,
+        PronounInflectionBe,
+        PronounInflectionBe::default()
+    );
     use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
 
     use super::PronounInflectionBe;
@@ -177,7 +184,7 @@ mod tests {
     fn corrects_he_are() {
         assert_suggestion_result(
             "He are my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "He is my best friend.",
             crate::languages::LanguageFamily::English,
         );
@@ -187,7 +194,7 @@ mod tests {
     fn corrects_she_are() {
         assert_suggestion_result(
             "She are my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "She is my best friend.",
             crate::languages::LanguageFamily::English,
         );
@@ -197,7 +204,7 @@ mod tests {
     fn corrects_they_is() {
         assert_suggestion_result(
             "They is my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They are my best friend.",
             crate::languages::LanguageFamily::English,
         );
@@ -207,7 +214,7 @@ mod tests {
     fn allows_they_are() {
         assert_lint_count(
             "They are my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -217,7 +224,7 @@ mod tests {
     fn corrects_it_are() {
         assert_suggestion_result(
             "It are on the table.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "It is on the table.",
             crate::languages::LanguageFamily::English,
         );
@@ -227,7 +234,7 @@ mod tests {
     fn corrects_he_are_negation() {
         assert_suggestion_result(
             "He are not amused.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "He is not amused.",
             crate::languages::LanguageFamily::English,
         );
@@ -237,7 +244,7 @@ mod tests {
     fn corrects_she_are_progressive() {
         assert_suggestion_result(
             "She are going to win.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "She is going to win.",
             crate::languages::LanguageFamily::English,
         );
@@ -247,7 +254,7 @@ mod tests {
     fn corrects_they_is_negation() {
         assert_suggestion_result(
             "They is not ready.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They are not ready.",
             crate::languages::LanguageFamily::English,
         );
@@ -257,7 +264,7 @@ mod tests {
     fn corrects_they_is_progressive() {
         assert_suggestion_result(
             "They is planning a trip.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They are planning a trip.",
             crate::languages::LanguageFamily::English,
         );
@@ -267,7 +274,7 @@ mod tests {
     fn allows_he_is() {
         assert_lint_count(
             "He is my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -277,7 +284,7 @@ mod tests {
     fn allows_she_is_lowercase() {
         assert_lint_count(
             "she is excited to go.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -287,7 +294,7 @@ mod tests {
     fn allows_it_is() {
         assert_lint_count(
             "It is what it is.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -297,7 +304,7 @@ mod tests {
     fn allows_they_are_negation() {
         assert_lint_count(
             "They are not interested.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -307,7 +314,7 @@ mod tests {
     fn allows_they_were() {
         assert_lint_count(
             "They were already here.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -317,7 +324,7 @@ mod tests {
     fn allows_asdf_is() {
         assert_lint_count(
             "asdf is not a word",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -327,7 +334,7 @@ mod tests {
     fn no_subject() {
         assert_lint_count(
             "is set",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -337,7 +344,7 @@ mod tests {
     fn corrects_i_were() {
         assert_suggestion_result(
             "I were the best player on the field.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "I was the best player on the field.",
             crate::languages::LanguageFamily::English,
         );
@@ -347,7 +354,7 @@ mod tests {
     fn corrects_we_was() {
         assert_suggestion_result(
             "We was the best players on the field.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "We were the best players on the field.",
             crate::languages::LanguageFamily::English,
         );
@@ -357,7 +364,7 @@ mod tests {
     fn corrects_you_was() {
         assert_suggestion_result(
             "You was my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "You were my best friend.",
             crate::languages::LanguageFamily::English,
         );
@@ -367,7 +374,7 @@ mod tests {
     fn allows_you_were() {
         assert_lint_count(
             "You were my best friend.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -377,7 +384,7 @@ mod tests {
     fn corrects_he_were() {
         assert_suggestion_result(
             "He were late.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "He was late.",
             crate::languages::LanguageFamily::English,
         );
@@ -387,7 +394,7 @@ mod tests {
     fn corrects_they_was() {
         assert_suggestion_result(
             "They was on time.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They were on time.",
             crate::languages::LanguageFamily::English,
         );
@@ -397,7 +404,7 @@ mod tests {
     fn allows_he_was() {
         assert_lint_count(
             "He was here.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -407,7 +414,7 @@ mod tests {
     fn allows_we_were() {
         assert_lint_count(
             "We were excited.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -417,7 +424,7 @@ mod tests {
     fn corrects_he_arent() {
         assert_suggestion_result(
             "He aren't ready.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "He isn't ready.",
             crate::languages::LanguageFamily::English,
         );
@@ -427,7 +434,7 @@ mod tests {
     fn corrects_they_isnt() {
         assert_suggestion_result(
             "They isn't coming.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They aren't coming.",
             crate::languages::LanguageFamily::English,
         );
@@ -437,7 +444,7 @@ mod tests {
     fn allows_he_isnt() {
         assert_lint_count(
             "He isn't ready.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -447,7 +454,7 @@ mod tests {
     fn allows_they_arent() {
         assert_lint_count(
             "They aren't coming.",
-            PronounInflectionBe::default(),
+            test_linter(),
             0,
             crate::languages::LanguageFamily::English,
         );
@@ -457,7 +464,7 @@ mod tests {
     fn corrects_she_really_are() {
         assert_suggestion_result(
             "She really are talented.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "She really is talented.",
             crate::languages::LanguageFamily::English,
         );
@@ -467,7 +474,7 @@ mod tests {
     fn corrects_they_often_is() {
         assert_suggestion_result(
             "They often is late.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "They often are late.",
             crate::languages::LanguageFamily::English,
         );
@@ -477,7 +484,7 @@ mod tests {
     fn corrects_because_he_are() {
         assert_suggestion_result(
             "because he are tired.",
-            PronounInflectionBe::default(),
+            test_linter(),
             "because he is tired.",
             crate::languages::LanguageFamily::English,
         );
@@ -487,7 +494,7 @@ mod tests {
     fn allow_behind_him() {
         assert_no_lints(
             "Behind him are new shadows.",
-            PronounInflectionBe::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }
@@ -496,7 +503,7 @@ mod tests {
     fn issue_1682() {
         assert_no_lints(
             "Understanding them is significant",
-            PronounInflectionBe::default(),
+            test_linter(),
             crate::languages::LanguageFamily::English,
         );
     }

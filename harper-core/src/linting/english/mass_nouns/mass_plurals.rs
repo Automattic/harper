@@ -132,7 +132,8 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
             lint_kind: LintKind::Grammar,
             suggestions,
             message,
-            ..Default::default()
+            // higher priority (lower number) than split words
+            priority: 30,
         })
     }
 
@@ -144,20 +145,37 @@ impl<D: Dictionary> ExprLinter for MassPlurals<D> {
 #[cfg(test)]
 mod tests {
     use crate::{
-        linting::tests::{assert_lint_count, assert_suggestion_result},
+        EnglishDialect,
+        linting::{
+            LintGroup,
+            tests::{assert_lint_count, assert_suggestion_result},
+        },
         spell::FstDictionary,
     };
 
     use super::MassPlurals;
 
     #[test]
-    fn flag_advicess() {
-        assert_lint_count(
+    fn fix_bad_advices() {
+        assert_suggestion_result(
             "You gave me bad advices.",
             MassPlurals::new(FstDictionary::curated(
                 crate::languages::LanguageFamily::English,
             )),
-            1,
+            "You gave me bad advice.",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fix_kind_of_advices() {
+        assert_suggestion_result(
+            "IMO these kind of advices never matters.",
+            LintGroup::new_curated(
+                FstDictionary::curated(crate::languages::LanguageFamily::English),
+                crate::languages::Language::English(EnglishDialect::American),
+            ),
+            "IMO these kind of advice never matters.",
             crate::languages::LanguageFamily::English,
         );
     }
@@ -218,6 +236,18 @@ mod tests {
                 crate::languages::LanguageFamily::English,
             )),
             "Transit costs were high in terms of time, finances, and vehicle wear and tear, which posed significant obstacles to international commerce",
+            crate::languages::LanguageFamily::English,
+        );
+    }
+
+    #[test]
+    fn fix_horsepowers() {
+        assert_suggestion_result(
+            "It's around about 60 horsepowers. So, you can't go in and say, \"Well, we got more horsepowers than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
+            MassPlurals::new(FstDictionary::curated(
+                crate::languages::LanguageFamily::English,
+            )),
+            "It's around about 60 horsepower. So, you can't go in and say, \"Well, we got more horsepower than our rivals.\" because it's got the same and through that restriction they've created an absolute banger. I'm so excited about this car.",
             crate::languages::LanguageFamily::English,
         );
     }

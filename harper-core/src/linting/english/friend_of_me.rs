@@ -12,7 +12,7 @@ pub struct FriendOfMe {
 impl Default for FriendOfMe {
     fn default() -> Self {
         Self {
-            expr: SequenceExpr::word_set(&["friend", "friends", "enemy", "enemies"])
+            expr: SequenceExpr::word_set(["friend", "friends", "enemy", "enemies"])
                 .then_whitespace()
                 .t_aco("of")
                 .t_ws()

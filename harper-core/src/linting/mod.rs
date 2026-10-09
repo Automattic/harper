@@ -3,6 +3,7 @@ pub mod expr_linter;
 pub mod lint;
 pub mod lint_group;
 pub mod lint_kind;
+mod pooled_linter;
 pub mod portuguese;
 pub mod suggestion;
 
@@ -21,6 +22,10 @@ pub use lint_group::{
 pub use lint_kind::LintKind;
 pub use map_phrase_linter::MapPhraseLinter;
 pub use map_phrase_set_linter::MapPhraseSetLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::PooledLinter;
+#[cfg(test)]
+pub(crate) use pooled_linter::for_tests::create_test_pool;
 pub use suggestion::{Suggestion, SuggestionCollectionExt};
 
 pub const MAX_SUGGESTION_TRANSFORMATION_DEPTH: usize = 100;
@@ -254,13 +259,15 @@ pub mod tests {
         let lints = linter.lint(&test);
 
         // Just check the first lint for now - TODO
-        if let Some(lint) = lints.first()
-            && lint.message != expected_message
-        {
-            panic!(
-                "Expected lint message \"{expected_message}\", but got \"{}\"",
-                lint.message
-            );
+        match lints.first() {
+            Some(lint) => {
+                assert_eq!(
+                    lint.message, expected_message,
+                    "Expected lint message \"{expected_message}\", but got \"{}\"",
+                    lint.message
+                );
+            }
+            None => panic!("Expected lint message \"{expected_message}\", but no lints were found"),
         }
     }
 
@@ -270,6 +277,14 @@ pub mod tests {
         PlainEnglish,
         PlainPortuguese,
         Markdown,
+    }
+
+    /// The plain-text document type used to parse the given language.
+    fn plain_document_type(language: LanguageFamily) -> DocumentType {
+        match language {
+            LanguageFamily::English => DocumentType::PlainEnglish,
+            LanguageFamily::Portuguese => DocumentType::PlainPortuguese,
+        }
     }
 
     /// Creates a document of the specified type from character data
@@ -327,11 +342,14 @@ pub mod tests {
         needle: &str,
         language: LanguageFamily,
     ) {
-        let doctype = match language {
-            LanguageFamily::English => DocumentType::PlainEnglish,
-            LanguageFamily::Portuguese => DocumentType::PlainPortuguese,
-        };
-        if search_for_suggestion(doctype, text, &mut linter, needle, 0) {
+        if search_for_suggestion(
+            plain_document_type(language),
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::AllSuggestions,
+        ) {
             return;
         }
 
@@ -341,12 +359,53 @@ pub mod tests {
         );
     }
 
+    /// Use this when you want to verify that the first suggestion is the most likely correct fix.
+    /// Handy for linters which offer multiple suggestions but prioritize their best guess.
+    #[track_caller]
+    pub fn assert_first_suggestion_result(
+        text: &str,
+        mut linter: impl Linter,
+        needle: &str,
+        language: LanguageFamily,
+    ) {
+        if search_for_suggestion(
+            plain_document_type(language),
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::FirstSuggestionOnly,
+        ) {
+            return;
+        }
+
+        panic!(
+            "The primary suggestion sequence failed to produce the expected result.\n\
+            Expected: \"{needle}\""
+        );
+    }
+
     /// DFS implementation using markdown instead of plain English
     #[track_caller]
     pub fn assert_markdown_suggestion_result(text: &str, mut linter: impl Linter, needle: &str) {
-        if !search_for_suggestion(DocumentType::Markdown, text, &mut linter, needle, 0) {
+        if !search_for_suggestion(
+            DocumentType::Markdown,
+            text,
+            &mut linter,
+            needle,
+            0,
+            SearchStrategy::AllSuggestions,
+        ) {
             panic!("No suggestion sequence produced the expected result.\nExpected: {needle}");
         }
+    }
+
+    #[derive(Copy, Clone, PartialEq, Eq)]
+    pub enum SearchStrategy {
+        /// Explores all suggestion sequences (the current default behavioral standard).
+        AllSuggestions,
+        /// Only explores the very first suggestion path (for validating primary/best fixes).
+        FirstSuggestionOnly,
     }
 
     /// Recursively searches all suggestion combinations using depth-first search.
@@ -357,6 +416,7 @@ pub mod tests {
         linter: &mut impl Linter,
         needle: &str,
         depth: usize,
+        strategy: SearchStrategy,
     ) -> bool {
         // Prevent infinite recursion (e.g. cycles in suggestions)
         if depth > super::MAX_SUGGESTION_TRANSFORMATION_DEPTH {
@@ -369,7 +429,14 @@ pub mod tests {
 
         // Check if we've reached the expected result
         if text == needle {
+            // When tests are made via cut & paste it's easy to miss editing some of the corrections
+            // and the test will silently pass
+            if depth == 0 {
+                eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
+            }
             return true;
+        } else if cfg!(debug_assertions) {
+            eprintln!(" 🔎 Checking... \"{text}\"");
         }
 
         // Lint current text and try each suggestion branch
@@ -385,8 +452,13 @@ pub mod tests {
                 let next: String = chars_copy.iter().collect();
 
                 // Recursively search this branch
-                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1) {
+                if search_for_suggestion(doc_type, &next, linter, needle, depth + 1, strategy) {
                     return true;
+                }
+
+                // If we're only checking the first suggestion, stop after the first one
+                if strategy == SearchStrategy::FirstSuggestionOnly {
+                    break;
                 }
             }
         }

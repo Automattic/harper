@@ -13,7 +13,7 @@ impl Default for OnesOwnAccord {
         Self {
             expr: SequenceExpr::aco("on")
                 .t_ws()
-                .t_set(&[
+                .t_set([
                     // Correct possessive determiners
                     "my", "our", "your", "his", "her", "its", "their", "one's",
                     // Common mistakes
@@ -22,7 +22,7 @@ impl Default for OnesOwnAccord {
                 .t_ws()
                 .t_aco("own")
                 .t_ws()
-                .t_set(&["accord", "accords"]),
+                .t_set(["accord", "accords"]),
         }
     }
 }

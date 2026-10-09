@@ -14,7 +14,7 @@ impl Default for WebScraping {
         let scrap_verbs = &["scrap", "scrapped", "scraps", "scrapping"][..];
         let scrap_nouns = &["scrapper", "scrappers"][..];
 
-        let mut closed_compounds = WordSet::new(&[]);
+        let mut closed_compounds = WordSet::default();
         let mut open_and_hyphenated_compounds = vec![];
 
         scrap_verbs.iter().chain(scrap_nouns).for_each(|scrap| {
@@ -180,6 +180,9 @@ impl ExprLinter for WebScraping {
 
 #[cfg(test)]
 mod tests {
+    use crate::linting::pooled_linter::for_tests::create_test_pool;
+
+    create_test_pool!(WebScraping, WebScraping, WebScraping::default());
     use crate::linting::tests::assert_suggestion_result;
 
     use super::WebScraping;
@@ -190,7 +193,7 @@ mod tests {
     fn scrap() {
         assert_suggestion_result(
             "webscrap",
-            WebScraping::default(),
+            test_linter(),
             "webscrape",
             crate::languages::LanguageFamily::English,
         );
@@ -200,7 +203,7 @@ mod tests {
     fn scraps() {
         assert_suggestion_result(
             "webscraps",
-            WebScraping::default(),
+            test_linter(),
             "webscrapes",
             crate::languages::LanguageFamily::English,
         );
@@ -210,7 +213,7 @@ mod tests {
     fn scrapped() {
         assert_suggestion_result(
             "webscrapped",
-            WebScraping::default(),
+            test_linter(),
             "webscraped",
             crate::languages::LanguageFamily::English,
         );
@@ -220,7 +223,7 @@ mod tests {
     fn scrapper() {
         assert_suggestion_result(
             "webscrapper",
-            WebScraping::default(),
+            test_linter(),
             "webscraper",
             crate::languages::LanguageFamily::English,
         );
@@ -230,7 +233,7 @@ mod tests {
     fn scrappers() {
         assert_suggestion_result(
             "webscrappers",
-            WebScraping::default(),
+            test_linter(),
             "webscrapers",
             crate::languages::LanguageFamily::English,
         );
@@ -240,7 +243,7 @@ mod tests {
     fn scrapping() {
         assert_suggestion_result(
             "webscrapping",
-            WebScraping::default(),
+            test_linter(),
             "webscraping",
             crate::languages::LanguageFamily::English,
         );
@@ -252,7 +255,7 @@ mod tests {
     fn scrap_open() {
         assert_suggestion_result(
             "web scrap",
-            WebScraping::default(),
+            test_linter(),
             "web scrape",
             crate::languages::LanguageFamily::English,
         );
@@ -262,7 +265,7 @@ mod tests {
     fn scraps_open() {
         assert_suggestion_result(
             "web scraps",
-            WebScraping::default(),
+            test_linter(),
             "web scrapes",
             crate::languages::LanguageFamily::English,
         );
@@ -272,7 +275,7 @@ mod tests {
     fn scrapped_open() {
         assert_suggestion_result(
             "web scrapped",
-            WebScraping::default(),
+            test_linter(),
             "web scraped",
             crate::languages::LanguageFamily::English,
         );
@@ -282,7 +285,7 @@ mod tests {
     fn scrapper_open() {
         assert_suggestion_result(
             "web scrapper",
-            WebScraping::default(),
+            test_linter(),
             "web scraper",
             crate::languages::LanguageFamily::English,
         );
@@ -292,7 +295,7 @@ mod tests {
     fn scrappers_open() {
         assert_suggestion_result(
             "web scrappers",
-            WebScraping::default(),
+            test_linter(),
             "web scrapers",
             crate::languages::LanguageFamily::English,
         );
@@ -302,7 +305,7 @@ mod tests {
     fn scrapping_open() {
         assert_suggestion_result(
             "web scrapping",
-            WebScraping::default(),
+            test_linter(),
             "web scraping",
             crate::languages::LanguageFamily::English,
         );
@@ -314,7 +317,7 @@ mod tests {
     fn scrap_hyphenated() {
         assert_suggestion_result(
             "web-scrap",
-            WebScraping::default(),
+            test_linter(),
             "web-scrape",
             crate::languages::LanguageFamily::English,
         );
@@ -324,7 +327,7 @@ mod tests {
     fn scraps_hyphenated() {
         assert_suggestion_result(
             "web-scraps",
-            WebScraping::default(),
+            test_linter(),
             "web-scrapes",
             crate::languages::LanguageFamily::English,
         );
@@ -334,7 +337,7 @@ mod tests {
     fn scrapped_hyphenated() {
         assert_suggestion_result(
             "web-scrapped",
-            WebScraping::default(),
+            test_linter(),
             "web-scraped",
             crate::languages::LanguageFamily::English,
         );
@@ -344,7 +347,7 @@ mod tests {
     fn scrapper_hyphenated() {
         assert_suggestion_result(
             "web-scrapper",
-            WebScraping::default(),
+            test_linter(),
             "web-scraper",
             crate::languages::LanguageFamily::English,
         );
@@ -354,7 +357,7 @@ mod tests {
     fn scrappers_hyphenated() {
         assert_suggestion_result(
             "web-scrappers",
-            WebScraping::default(),
+            test_linter(),
             "web-scrapers",
             crate::languages::LanguageFamily::English,
         );
@@ -364,7 +367,7 @@ mod tests {
     fn scrapping_hyphenated() {
         assert_suggestion_result(
             "web-scrapping",
-            WebScraping::default(),
+            test_linter(),
             "web-scraping",
             crate::languages::LanguageFamily::English,
         );
@@ -376,7 +379,7 @@ mod tests {
     fn scrap_page() {
         assert_suggestion_result(
             "scrap page",
-            WebScraping::default(),
+            test_linter(),
             "scrape page",
             crate::languages::LanguageFamily::English,
         );
@@ -386,7 +389,7 @@ mod tests {
     fn scrapped_pages() {
         assert_suggestion_result(
             "scrapped pages",
-            WebScraping::default(),
+            test_linter(),
             "scraped pages",
             crate::languages::LanguageFamily::English,
         );
@@ -396,7 +399,7 @@ mod tests {
     fn scraps_html() {
         assert_suggestion_result(
             "scraps html",
-            WebScraping::default(),
+            test_linter(),
             "scrapes html",
             crate::languages::LanguageFamily::English,
         );
@@ -406,7 +409,7 @@ mod tests {
     fn scrapping_web() {
         assert_suggestion_result(
             "scrapping web",
-            WebScraping::default(),
+            test_linter(),
             "scraping web",
             crate::languages::LanguageFamily::English,
         );
@@ -416,7 +419,7 @@ mod tests {
     fn scrapping_web_all_caps() {
         assert_suggestion_result(
             "SCRAPPING WEB",
-            WebScraping::default(),
+            test_linter(),
             "SCRAPING WEB",
             crate::languages::LanguageFamily::English,
         );
@@ -426,7 +429,7 @@ mod tests {
     fn scrapping_web_mixed_case() {
         assert_suggestion_result(
             "Scrapping Web",
-            WebScraping::default(),
+            test_linter(),
             "Scraping Web",
             crate::languages::LanguageFamily::English,
         );
@@ -438,7 +441,7 @@ mod tests {
     fn web_scrap_lowercase() {
         assert_suggestion_result(
             "The goal of the project is to web scrap data from all pages of the website with capability of handling exceptions.",
-            WebScraping::default(),
+            test_linter(),
             "The goal of the project is to web scrape data from all pages of the website with capability of handling exceptions.",
             crate::languages::LanguageFamily::English,
         );
@@ -448,7 +451,7 @@ mod tests {
     fn web_scrap_open_both_words_titlecase() {
         assert_suggestion_result(
             "Web Scrap on Jabama website to generate and analyze a dataset",
-            WebScraping::default(),
+            test_linter(),
             "Web Scrape on Jabama website to generate and analyze a dataset",
             crate::languages::LanguageFamily::English,
         );
@@ -458,7 +461,7 @@ mod tests {
     fn web_scrapped_open_first_word_titlecase() {
         assert_suggestion_result(
             "Web scrapped an amazon page , automated the scraping, stored the data in csv file and created an email alert when the drop prices",
-            WebScraping::default(),
+            test_linter(),
             "Web scraped an amazon page , automated the scraping, stored the data in csv file and created an email alert when the drop prices",
             crate::languages::LanguageFamily::English,
         );
@@ -468,7 +471,7 @@ mod tests {
     fn web_scrapped_open_both_words_titlecase() {
         assert_suggestion_result(
             "This project uses the data collected (Web Scrapped) from a website that list the houses for sale in Rwanda",
-            WebScraping::default(),
+            test_linter(),
             "This project uses the data collected (Web Scraped) from a website that list the houses for sale in Rwanda",
             crate::languages::LanguageFamily::English,
         );
@@ -478,7 +481,7 @@ mod tests {
     fn web_scrapped_hyphenated_both_words_titlecase() {
         assert_suggestion_result(
             "Web-Scrapped Datasets",
-            WebScraping::default(),
+            test_linter(),
             "Web-Scraped Datasets",
             crate::languages::LanguageFamily::English,
         );
@@ -488,7 +491,7 @@ mod tests {
     fn web_scrapper_open_both_words_titlecase() {
         assert_suggestion_result(
             "Web Scrapper Built Using Golang.",
-            WebScraping::default(),
+            test_linter(),
             "Web Scraper Built Using Golang.",
             crate::languages::LanguageFamily::English,
         );
@@ -498,7 +501,7 @@ mod tests {
     fn web_scrappers_lowercase() {
         assert_suggestion_result(
             "Internet bots and web scrappers that will save a lot of your time!",
-            WebScraping::default(),
+            test_linter(),
             "Internet bots and web scrapers that will save a lot of your time!",
             crate::languages::LanguageFamily::English,
         );
@@ -508,7 +511,7 @@ mod tests {
     fn web_scrappers_hyphenated() {
         assert_suggestion_result(
             "A Collection of web-scrappers with GUI written in Pyside6/PyQt6.",
-            WebScraping::default(),
+            test_linter(),
             "A Collection of web-scrapers with GUI written in Pyside6/PyQt6.",
             crate::languages::LanguageFamily::English,
         );
@@ -518,7 +521,7 @@ mod tests {
     fn web_scrapping_lowercase() {
         assert_suggestion_result(
             "ScrapPaper is a web scrapping method to extract journal information from PubMed and Google Scholar using Python script.",
-            WebScraping::default(),
+            test_linter(),
             "ScrapPaper is a web scraping method to extract journal information from PubMed and Google Scholar using Python script.",
             crate::languages::LanguageFamily::English,
         );
@@ -528,7 +531,7 @@ mod tests {
     fn web_scrapping_titlecase() {
         assert_suggestion_result(
             "Web Scrapping Examples using Beautiful Soup in Python.",
-            WebScraping::default(),
+            test_linter(),
             "Web Scraping Examples using Beautiful Soup in Python.",
             crate::languages::LanguageFamily::English,
         );
@@ -538,7 +541,7 @@ mod tests {
     fn web_scrapping_hyphenated() {
         assert_suggestion_result(
             "some websites allow web-scrapping some don't.",
-            WebScraping::default(),
+            test_linter(),
             "some websites allow web-scraping some don't.",
             crate::languages::LanguageFamily::English,
         );
@@ -548,7 +551,7 @@ mod tests {
     fn webscrapped() {
         assert_suggestion_result(
             "Example of webscrapped document : click here.",
-            WebScraping::default(),
+            test_linter(),
             "Example of webscraped document : click here.",
             crate::languages::LanguageFamily::English,
         );
@@ -558,7 +561,7 @@ mod tests {
     fn webscrapper() {
         assert_suggestion_result(
             "A webscrapper to scrape all the words and their meanings from urban dictionary.",
-            WebScraping::default(),
+            test_linter(),
             "A webscraper to scrape all the words and their meanings from urban dictionary.",
             crate::languages::LanguageFamily::English,
         );
@@ -568,7 +571,7 @@ mod tests {
     fn webscrappers_capitalized() {
         assert_suggestion_result(
             "A collection of Webscrappers I built using Scrapy while learning it hands on - SIdR4g/Scrapy_practice.",
-            WebScraping::default(),
+            test_linter(),
             "A collection of Webscrapers I built using Scrapy while learning it hands on - SIdR4g/Scrapy_practice.",
             crate::languages::LanguageFamily::English,
         );
@@ -578,7 +581,7 @@ mod tests {
     fn webscrappers_camelcase() {
         assert_suggestion_result(
             "Awesome-WebScrappers. Collection of powerful and efficient web scrapers built using Python and BeautifulSoup.",
-            WebScraping::default(),
+            test_linter(),
             "Awesome-WebScrapers. Collection of powerful and efficient web scrapers built using Python and BeautifulSoup.",
             crate::languages::LanguageFamily::English,
         );
@@ -588,7 +591,7 @@ mod tests {
     fn webscrapping() {
         assert_suggestion_result(
             "Webscrapping to identify and download latest pdf documents.",
-            WebScraping::default(),
+            test_linter(),
             "Webscraping to identify and download latest pdf documents.",
             crate::languages::LanguageFamily::English,
         );
@@ -598,7 +601,7 @@ mod tests {
     fn webscraps_lowercase() {
         assert_suggestion_result(
             "gostapafor is a tool that webscraps and forwards html pages to other consumers",
-            WebScraping::default(),
+            test_linter(),
             "gostapafor is a tool that webscrapes and forwards html pages to other consumers",
             crate::languages::LanguageFamily::English,
         );
@@ -608,7 +611,7 @@ mod tests {
     fn webscraps_camelcase() {
         assert_suggestion_result(
             "WebScraps the University of California, Santa Cruz's menu and texts it to the user for Breakfast, Lunch, Dinner, and Late Night.",
-            WebScraping::default(),
+            test_linter(),
             "WebScrapes the University of California, Santa Cruz's menu and texts it to the user for Breakfast, Lunch, Dinner, and Late Night.",
             crate::languages::LanguageFamily::English,
         );
@@ -618,7 +621,7 @@ mod tests {
     fn scrap_html() {
         assert_suggestion_result(
             "Scrap a website's HTML, CSS and JS using this API.",
-            WebScraping::default(),
+            test_linter(),
             "Scrape a website's HTML, CSS and JS using this API.",
             crate::languages::LanguageFamily::English,
         );
@@ -628,7 +631,7 @@ mod tests {
     fn scrapped_news_articles() {
         assert_suggestion_result(
             "Scrapped various news article including all the details using scrapy framework.",
-            WebScraping::default(),
+            test_linter(),
             "Scrapped various news article including all the details using scrapy framework.",
             crate::languages::LanguageFamily::English,
         );
@@ -638,7 +641,7 @@ mod tests {
     fn scrapping_different_websites() {
         assert_suggestion_result(
             "This repository contains Python scripts based on Scrapping different websites.",
-            WebScraping::default(),
+            test_linter(),
             "This repository contains Python scripts based on Scraping different websites.",
             crate::languages::LanguageFamily::English,
         );
@@ -648,7 +651,7 @@ mod tests {
     fn scrapping_web_content() {
         assert_suggestion_result(
             "Scrapping web content using PHP and Python.",
-            WebScraping::default(),
+            test_linter(),
             "Scraping web content using PHP and Python.",
             crate::languages::LanguageFamily::English,
         );
@@ -658,7 +661,7 @@ mod tests {
     fn scraps_from_pages() {
         assert_suggestion_result(
             "It requests the website and scraps news from different pages.",
-            WebScraping::default(),
+            test_linter(),
             "It requests the website and scrapes news from different pages.",
             crate::languages::LanguageFamily::English,
         );

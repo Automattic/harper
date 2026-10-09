@@ -430,6 +430,11 @@ mod tests {
     }
 
     #[test]
+    fn contains_inexperienced() {
+        assert!(MutableDictionary::curated().contains_word_str("inexperienced"))
+    }
+
+    #[test]
     fn has_is_not_a_nominal() {
         let dict = MutableDictionary::curated();
 
@@ -487,6 +492,14 @@ mod tests {
 
         assert!(is.is_some());
         assert!(is.unwrap().is_verb_lemma());
+    }
+
+    #[test]
+    fn trilemma_in_curated_dictionary() {
+        let dict = MutableDictionary::curated();
+
+        assert!(dict.contains_word_str("trilemma"));
+        assert!(dict.contains_word_str("trilemmas"));
     }
 
     #[test]

@@ -47,6 +47,7 @@ WORKDIR /usr/build/packages/harper-editor
 RUN pnpm build
 
 WORKDIR /usr/build/packages/web
+ENV ENABLE_ADMIN_ROUTES=false
 RUN pnpm install --engine-strict=false --shamefully-hoist
 RUN pnpm build
 

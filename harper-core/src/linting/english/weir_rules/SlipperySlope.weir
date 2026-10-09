@@ -1,0 +1,9 @@
+expr main (slippy slope)
+
+let message "The correct idiom is `slippery slope`."
+let description "Corrects `slippy slope` to `slippery slope`."
+let kind "Usage"
+let becomes "slippery slope"
+
+test "Using the same trio loop with different tests is a very slippy slope" "Using the same trio loop with different tests is a very slippery slope"
+test "Without the ability to verify it, except with even more AI maybe, you're starting on a slippy slope to slop." "Without the ability to verify it, except with even more AI maybe, you're starting on a slippery slope to slop."
