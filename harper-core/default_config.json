@@ -3926,6 +3926,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ResponsibleFor",
+								"state": true,
+								"label": "Responsible For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReverseEngineer",
 								"state": true
 							}
