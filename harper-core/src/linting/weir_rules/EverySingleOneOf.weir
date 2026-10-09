@@ -2,7 +2,7 @@ expr main (every single of)
 
 let message "This phrase is missing the word `one`."
 let description "Detects missing `one` in the phrase 'every single one of'."
-let kind "Usage"
+let kind "MissingWord"
 let becomes "every single one of"
 
 test "There is at least 1 example coded in Java for every single of their 23 design patterns for Object-oriented programming." "There is at least 1 example coded in Java for every single one of their 23 design patterns for Object-oriented programming."
