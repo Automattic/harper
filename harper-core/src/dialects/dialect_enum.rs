@@ -265,9 +265,85 @@ impl_from_x_for_dialect_enum!(PortugueseDialect, PortugueseDialectFlags, Portugu
 
 #[cfg(test)]
 mod tests {
+    use crate::languages::Language;
     use crate::{
-        DialectFlags, DialectFlagsEnum, DialectsEnum, EnglishDialect, EnglishDialectFlags,
+        Dialect, DialectFlags, DialectFlagsEnum, DialectsEnum, EnglishDialect, EnglishDialectFlags,
+        PortugueseDialect, PortugueseDialectFlags,
     };
+
+    #[test]
+    fn portuguese_abbr_resolves_to_portuguese() {
+        assert_eq!(
+            DialectsEnum::try_from_abbr("PT"),
+            Some(DialectsEnum::Portuguese(PortugueseDialect::European))
+        );
+        assert_eq!(
+            DialectsEnum::try_from_abbr("BR"),
+            Some(DialectsEnum::Portuguese(PortugueseDialect::Brazilian))
+        );
+    }
+
+    #[test]
+    fn portuguese_bcp47_resolves_to_portuguese() {
+        assert_eq!(
+            DialectsEnum::try_from_bcp47("pt-BR"),
+            Some(DialectsEnum::Portuguese(PortugueseDialect::Brazilian))
+        );
+        assert_eq!(
+            DialectsEnum::try_from_bcp47("pt-PT"),
+            Some(DialectsEnum::Portuguese(PortugueseDialect::European))
+        );
+        assert_eq!(DialectsEnum::try_from_bcp47("pt-US"), None);
+    }
+
+    #[test]
+    fn portuguese_language_converts_to_dialect() {
+        assert_eq!(
+            DialectsEnum::from(Language::Portuguese(PortugueseDialect::African)),
+            DialectsEnum::Portuguese(PortugueseDialect::African)
+        );
+    }
+
+    #[test]
+    fn portuguese_flags_round_trip() {
+        let dialect = DialectsEnum::Portuguese(PortugueseDialect::Brazilian);
+        let flags = DialectFlagsEnum::from_dialect(dialect);
+
+        assert!(flags.is_dialect_enabled_strict(dialect));
+        assert!(
+            !flags.is_dialect_enabled_strict(DialectsEnum::Portuguese(PortugueseDialect::European))
+        );
+        assert_eq!(DialectsEnum::try_from(flags), Ok(dialect));
+    }
+
+    #[test]
+    fn bit_or_portuguese_dialect_flags() {
+        let mut flags = DialectFlagsEnum::Portuguese(PortugueseDialectFlags::from_dialect(
+            PortugueseDialect::European,
+        ));
+        flags |= DialectFlagsEnum::Portuguese(PortugueseDialectFlags::from_dialect(
+            PortugueseDialect::African,
+        ));
+
+        assert!(
+            flags.is_dialect_enabled_strict(DialectsEnum::Portuguese(PortugueseDialect::European))
+        );
+        assert!(
+            flags.is_dialect_enabled_strict(DialectsEnum::Portuguese(PortugueseDialect::African))
+        );
+        assert!(
+            !flags
+                .is_dialect_enabled_strict(DialectsEnum::Portuguese(PortugueseDialect::Brazilian))
+        );
+        assert_eq!(DialectsEnum::try_from(flags), Err(()));
+    }
+
+    #[test]
+    #[should_panic]
+    fn mixing_language_flags_and_dialects_panics() {
+        let _ = DialectFlagsEnum::English(EnglishDialectFlags::empty())
+            .is_dialect_enabled(DialectsEnum::Portuguese(PortugueseDialect::Brazilian));
+    }
 
     #[test]
     fn test_bit_or_assign_dialect_flags() {

@@ -149,11 +149,13 @@ impl<T: Dictionary> Linter for SpellCheck<T> {
 
 #[cfg(test)]
 mod tests_portuguese {
-    use super::SpellCheck;
-    use crate::PortugueseDialect;
+    use std::sync::Arc;
+
+    use super::{LintKind, Linter, SpellCheck};
     use crate::languages::LanguageFamily;
-    use crate::linting::tests::{assert_lint_count, assert_suggestion_result};
+    use crate::linting::tests::{assert_lint_count, assert_no_lints, assert_suggestion_result};
     use crate::spell::FstDictionary;
+    use crate::{Document, PortugueseDialect};
 
     // Capitalization tests
 
@@ -179,7 +181,173 @@ mod tests_portuguese {
                 PortugueseDialect::Brazilian,
             ),
             2,
-            LanguageFamily::English,
+            LanguageFamily::Portuguese,
         );
+    }
+
+    fn brazilian() -> SpellCheck<Arc<FstDictionary>> {
+        SpellCheck::new(
+            FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+            PortugueseDialect::Brazilian,
+        )
+    }
+
+    // Correctly spelled text
+
+    #[test]
+    fn simple_sentence_is_clean() {
+        assert_no_lints(
+            "Eu sou feliz com a minha vida.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn accented_words_are_clean() {
+        assert_no_lints(
+            "Tu estás triste. Eles são o meu mundo.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        )
+    }
+
+    #[test]
+    fn sentence_initial_capital_is_clean() {
+        assert_no_lints("Ela era feliz.", brazilian(), LanguageFamily::Portuguese);
+    }
+
+    #[test]
+    fn all_caps_word_is_clean() {
+        assert_no_lints("MUNDO", brazilian(), LanguageFamily::Portuguese);
+    }
+
+    #[test]
+    fn regular_plurals_are_clean() {
+        assert_no_lints(
+            "Os dias e as noites.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn plurals_ending_in_r_are_clean() {
+        assert_no_lints(
+            "Os amores e os deveres.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn plurals_ending_in_l_are_clean() {
+        assert_no_lints("Tais e quais.", brazilian(), LanguageFamily::Portuguese);
+    }
+
+    #[test]
+    fn numbers_are_not_flagged() {
+        assert_no_lints(
+            "Eu fui de 1990 a 2000.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn urls_are_not_flagged() {
+        assert_no_lints(
+            "Eu fui em https://writewithharper.com.",
+            brazilian(),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn european_dialect_accepts_shared_words() {
+        assert_no_lints(
+            "Eu sou feliz com a minha vida.",
+            SpellCheck::new(
+                FstDictionary::curated_select_language(LanguageFamily::Portuguese),
+                PortugueseDialect::European,
+            ),
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    // Misspelled text
+
+    #[test]
+    fn corrects_doubled_letter() {
+        assert_suggestion_result(
+            "Eu sou feliz com a minha vidda.",
+            brazilian(),
+            "Eu sou feliz com a minha vida.",
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn corrects_wrong_letter() {
+        assert_suggestion_result(
+            "Eu sou felis.",
+            brazilian(),
+            "Eu sou feliz.",
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn restores_missing_acute_accent() {
+        assert_suggestion_result(
+            "Tu estas triste.",
+            brazilian(),
+            "Tu estás triste.",
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn restores_missing_tilde() {
+        assert_suggestion_result(
+            "Eles sao o meu mundo.",
+            brazilian(),
+            "Eles são o meu mundo.",
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn keeps_capitalization_of_misspelled_word() {
+        assert_suggestion_result("Mundu", brazilian(), "Mundo", LanguageFamily::Portuguese);
+    }
+
+    #[test]
+    fn flags_each_misspelled_word() {
+        assert_lint_count(
+            "Eu sou felis com a minha vidda.",
+            brazilian(),
+            2,
+            LanguageFamily::Portuguese,
+        );
+    }
+
+    #[test]
+    fn flags_english_words() {
+        assert_lint_count("The world", brazilian(), 2, LanguageFamily::Portuguese);
+    }
+
+    #[test]
+    fn single_suggestion_message_names_the_word() {
+        let document = Document::new_plain_portuguese_curated("Eu sou felis.");
+        let lints = brazilian().lint(&document);
+
+        assert_eq!(lints.len(), 1);
+        assert_eq!(lints[0].lint_kind, LintKind::Spelling);
+        if lints[0].suggestions.len() == 1 {
+            assert_eq!(lints[0].message, "Did you mean `feliz`?");
+        } else {
+            assert_eq!(lints[0].message, "Did you mean to spell `felis` this way?");
+        }
     }
 }

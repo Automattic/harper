@@ -201,3 +201,97 @@ impl Default for PortugueseDialectFlags {
         Self::empty()
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::{PortugueseDialect, PortugueseDialectFlags};
+    use crate::{Dialect, DialectFlags, Document};
+
+    #[test]
+    fn default_dialect_is_brazilian() {
+        assert_eq!(PortugueseDialect::default(), PortugueseDialect::Brazilian);
+    }
+
+    #[test]
+    fn unknown_abbr_is_none() {
+        assert_eq!(PortugueseDialect::try_from_abbr("US"), None);
+        assert_eq!(PortugueseDialect::try_from_abbr("br"), None);
+        assert_eq!(PortugueseDialect::try_from_abbr(""), None);
+    }
+
+    #[test]
+    fn parses_bcp47() {
+        assert_eq!(
+            PortugueseDialect::try_from_bcp47("pt-BR"),
+            Some(PortugueseDialect::Brazilian)
+        );
+        assert_eq!(
+            PortugueseDialect::try_from_bcp47("pt-PT"),
+            Some(PortugueseDialect::European)
+        );
+    }
+
+    #[test]
+    fn rejects_non_portuguese_bcp47() {
+        assert_eq!(PortugueseDialect::try_from_bcp47("en-US"), None);
+        assert_eq!(PortugueseDialect::try_from_bcp47("pt"), None);
+        assert_eq!(PortugueseDialect::try_from_bcp47("pt-XX"), None);
+    }
+
+    #[test]
+    fn empty_flags_enable_every_dialect() {
+        let flags = PortugueseDialectFlags::default();
+
+        for dialect in [
+            PortugueseDialect::European,
+            PortugueseDialect::Brazilian,
+            PortugueseDialect::African,
+        ] {
+            assert!(flags.is_dialect_enabled(dialect));
+            assert!(!flags.is_dialect_enabled_strict(dialect));
+        }
+    }
+
+    #[test]
+    fn single_flag_only_enables_its_dialect() {
+        let flags = PortugueseDialectFlags::from_dialect(PortugueseDialect::European);
+
+        assert!(flags.is_dialect_enabled_strict(PortugueseDialect::European));
+        assert!(!flags.is_dialect_enabled(PortugueseDialect::Brazilian));
+        assert!(!flags.is_dialect_enabled(PortugueseDialect::African));
+    }
+
+    #[test]
+    fn single_flag_converts_back_to_dialect() {
+        for dialect in [
+            PortugueseDialect::European,
+            PortugueseDialect::Brazilian,
+            PortugueseDialect::African,
+        ] {
+            assert_eq!(
+                PortugueseDialect::try_from(PortugueseDialectFlags::from_dialect(dialect)),
+                Ok(dialect)
+            );
+        }
+    }
+
+    #[test]
+    fn multiple_or_no_flags_do_not_convert() {
+        assert_eq!(
+            PortugueseDialect::try_from(
+                PortugueseDialectFlags::EUROPEAN | PortugueseDialectFlags::BRAZILIAN
+            ),
+            Err(())
+        );
+        assert_eq!(
+            PortugueseDialect::try_from(PortugueseDialectFlags::empty()),
+            Err(())
+        );
+    }
+
+    #[test]
+    fn cannot_guess_dialect_from_dialect_neutral_text() {
+        let document = Document::new_plain_portuguese_curated("Eu sou feliz com a minha vida.");
+        assert_eq!(PortugueseDialect::try_guess_from_document(&document), None);
+    }
+}

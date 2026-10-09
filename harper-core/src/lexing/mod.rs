@@ -987,4 +987,92 @@ mod tests {
         let tok = lex_number(&source).unwrap();
         assert_eq!(tok.next_index, 3);
     }
+
+    fn lex_portuguese(text: &str) -> Vec<(TokenKind, String)> {
+        let source: Vec<char> = text.chars().collect();
+        super::lex_with(&source, super::lex_portuguese_token)
+            .into_iter()
+            .map(|tok| (tok.kind, tok.span.get_content_string(&source)))
+            .collect()
+    }
+
+    fn portuguese_words(text: &str) -> Vec<String> {
+        lex_portuguese(text)
+            .into_iter()
+            .filter(|(kind, _)| kind.is_word())
+            .map(|(_, content)| content)
+            .collect()
+    }
+
+    #[test]
+    fn portuguese_accented_words_are_single_tokens() {
+        assert_eq!(
+            portuguese_words("Nós estávamos lá, não é?"),
+            ["Nós", "estávamos", "lá", "não", "é"]
+        );
+    }
+
+    #[test]
+    fn portuguese_cedilla_and_tilde_are_single_tokens() {
+        assert_eq!(
+            portuguese_words("O coração da ação."),
+            ["O", "coração", "da", "ação"]
+        );
+    }
+
+    #[test]
+    fn portuguese_circumflex_is_single_token() {
+        assert_eq!(
+            portuguese_words("Você pôde ver o avô."),
+            ["Você", "pôde", "ver", "o", "avô"]
+        );
+    }
+
+    #[test]
+    fn portuguese_apostrophe_contraction_is_single_token() {
+        assert_eq!(portuguese_words("Copo d'água"), ["Copo", "d'água"]);
+    }
+
+    #[test]
+    fn portuguese_hyphenated_compound_is_split() {
+        let tokens = lex_portuguese("guarda-chuva");
+
+        assert_eq!(tokens.len(), 3);
+        assert!(tokens[0].0.is_word());
+        assert!(tokens[1].0.is_hyphen());
+        assert!(tokens[2].0.is_word());
+    }
+
+    #[test]
+    fn portuguese_numbers_are_not_words() {
+        let tokens = lex_portuguese("1990");
+
+        assert_eq!(tokens.len(), 1);
+        assert!(tokens[0].0.is_number());
+    }
+
+    #[test]
+    fn portuguese_does_not_lex_english_decades() {
+        let english = lex_english_token(&char_string!("1990s"));
+        let portuguese = super::lex_portuguese_token(&char_string!("1990s"));
+
+        assert_eq!(english.next_index, 5);
+        assert_ne!(portuguese.next_index, 5);
+    }
+
+    #[test]
+    fn portuguese_lexes_urls() {
+        let tokens = lex_portuguese("https://writewithharper.com");
+
+        assert_eq!(tokens.len(), 1);
+        assert!(tokens[0].0.is_url());
+    }
+
+    #[test]
+    fn portuguese_lexes_email_addresses() {
+        let tokens = lex_portuguese("contato@exemplo.com.br");
+
+        assert_eq!(tokens.len(), 1);
+        assert!(tokens[0].0.is_email_address());
+    }
 }

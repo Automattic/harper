@@ -532,4 +532,89 @@ mod tests {
         assert!(with_prefix.contains(&Cow::Owned(char_string!("pre").into_vec())));
         assert!(with_prefix.contains(&Cow::Owned(char_string!("prep").into_vec())));
     }
+
+    fn portuguese() -> std::sync::Arc<MutableDictionary> {
+        MutableDictionary::curated_select_language(LanguageFamily::Portuguese)
+    }
+
+    #[test]
+    fn portuguese_curated_contains_no_duplicates() {
+        assert!(portuguese().words_iter().all_unique());
+    }
+
+    #[test]
+    fn portuguese_curated_contains_accented_words() {
+        let dict = portuguese();
+
+        for word in ["nós", "vós", "são", "estás"] {
+            assert!(dict.contains_word_str(word), "missing {word}");
+        }
+    }
+
+    #[test]
+    fn portuguese_plural_after_vowel_adds_s() {
+        let dict = portuguese();
+
+        assert!(dict.contains_word_str("vidas"));
+        assert!(dict.contains_word_str("pessoas"));
+        assert!(dict.contains_word_str("palavras"));
+    }
+
+    #[test]
+    fn portuguese_plural_after_r_adds_es() {
+        let dict = portuguese();
+
+        assert!(dict.contains_word_str("amores"));
+        assert!(dict.contains_word_str("deveres"));
+        assert!(!dict.contains_word_str("amors"));
+    }
+
+    #[test]
+    fn portuguese_plural_after_l_becomes_is() {
+        let dict = portuguese();
+
+        assert!(dict.contains_word_str("tais"));
+        assert!(dict.contains_word_str("quais"));
+        assert!(!dict.contains_word_str("tals"));
+    }
+
+    #[test]
+    fn portuguese_plural_nouns_are_marked_plural() {
+        let dict = portuguese();
+
+        assert!(
+            dict.get_word_metadata_str("amores")
+                .unwrap()
+                .is_plural_noun()
+        );
+    }
+
+    #[test]
+    fn portuguese_proper_nouns_keep_capitalization() {
+        let dict = portuguese();
+
+        assert!(dict.contains_exact_word_str("Brasil"));
+        assert!(!dict.contains_exact_word_str("brasil"));
+        assert!(
+            dict.get_word_metadata_str("Brasil")
+                .unwrap()
+                .is_proper_noun()
+        );
+    }
+
+    #[test]
+    fn portuguese_curated_does_not_contain_english() {
+        let dict = portuguese();
+
+        assert!(!dict.contains_word_str("the"));
+        assert!(!dict.contains_word_str("world"));
+    }
+
+    #[test]
+    fn english_curated_does_not_contain_portuguese() {
+        let dict = MutableDictionary::curated();
+
+        assert!(!dict.contains_word_str("estás"));
+        assert!(!dict.contains_word_str("deveres"));
+    }
 }
