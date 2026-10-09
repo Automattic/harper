@@ -13,6 +13,69 @@ const FUSED_PREPOSITIONS: &[&str] = &["beim", "zum", "vom"];
 /// *zum einen …, zum anderen …*.
 const FIXED_LOWERCASE: &[&str] = &["einen", "anderen"];
 
+/// Sentence-initial determiners that make a following infinitive the subject:
+/// *Das essen war lecker*, *Mein lesen ist langsam*.
+const OPENING_DETERMINERS: &[&str] = &[
+    "das", "mein", "dein", "sein", "ihr", "unser", "euer", "dieses", "jedes",
+];
+
+/// Finite verbs in the third person singular. With one of these later in the
+/// same clause, the infinitive after a sentence-initial *Das* cannot itself be
+/// the finite verb — *Das essen wir* has no second one — so it is the subject.
+const SINGULAR_FINITE: &[&str] = &[
+    "ist",
+    "war",
+    "wäre",
+    "sei",
+    "hat",
+    "hatte",
+    "hätte",
+    "wird",
+    "wurde",
+    "würde",
+    "kann",
+    "konnte",
+    "könnte",
+    "muss",
+    "musste",
+    "müsste",
+    "soll",
+    "sollte",
+    "darf",
+    "durfte",
+    "mag",
+    "macht",
+    "machte",
+    "tut",
+    "tat",
+    "kostet",
+    "kostete",
+    "dauert",
+    "dauerte",
+    "gefällt",
+    "gefiel",
+    "fällt",
+    "fiel",
+    "schmeckt",
+    "schmeckte",
+    "bleibt",
+    "blieb",
+    "scheint",
+    "schien",
+    "gilt",
+    "galt",
+    "bringt",
+    "brachte",
+    "klappt",
+    "klappte",
+    "hilft",
+    "half",
+    "beginnt",
+    "begann",
+    "endet",
+    "endete",
+];
+
 /// Capitalizes the infinitive after *beim*, *zum* and *vom*: *beim laufen* ->
 /// *beim Laufen*, *zum essen* -> *zum Essen*.
 ///
@@ -97,6 +160,35 @@ impl GermanNominalizedInfinitive {
         });
         !next_is_capitalized
     }
+
+    /// *Das essen in der Kantine war lecker*: an infinitive right behind a
+    /// sentence-initial determiner, with a singular finite verb later in the
+    /// same clause.
+    fn is_subject_infinitive(tokens: &[&Token], document: &Document) -> bool {
+        let Some(TokenKind::Word(Some(meta))) = tokens.get(1).map(|t| &t.kind) else {
+            return false;
+        };
+        let chars = document.get_span_content(&tokens[1].span);
+        let word: String = chars.iter().collect();
+        if !OPENING_DETERMINERS.contains(&Self::lowercase(tokens[0], document).as_str())
+            || !chars.first().is_some_and(|c| c.is_lowercase())
+            || !chars.iter().all(|c| c.is_alphabetic())
+            || word.chars().count() < 5
+            || !["en", "ern", "eln"].iter().any(|e| word.ends_with(e))
+            || !meta.is_verb()
+            || meta.is_adjective()
+            || meta.is_adverb()
+            || meta.preposition
+        {
+            return false;
+        }
+        tokens[2..]
+            .iter()
+            .take_while(|token| !matches!(token.kind, TokenKind::Punctuation(_)))
+            .map(|token| Self::lowercase(token, document))
+            .take_while(|word| !matches!(word.as_str(), "und" | "oder" | "aber" | "denn"))
+            .any(|word| SINGULAR_FINITE.contains(&word.as_str()))
+    }
 }
 
 impl Linter for GermanNominalizedInfinitive {
@@ -110,7 +202,9 @@ impl Linter for GermanNominalizedInfinitive {
                 .collect();
 
             for index in 0..tokens.len() {
-                if !Self::is_candidate(&tokens, index, document) {
+                if !Self::is_candidate(&tokens, index, document)
+                    && !(index == 1 && Self::is_subject_infinitive(&tokens, document))
+                {
                     continue;
                 }
 
@@ -144,7 +238,7 @@ impl Linter for GermanNominalizedInfinitive {
     }
 
     fn description(&self) -> &str {
-        "Schreibt den Infinitiv nach »beim«, »zum« und »vom« groß (»beim Laufen«)."
+        "Schreibt den Infinitiv nach »beim«, »zum«, »vom« und als Subjekt nach »Das« groß (»beim Laufen«, »Das Essen war gut«)."
     }
 }
 
@@ -174,6 +268,9 @@ mod tests {
             "Wir trafen uns beim einkaufen.",
             "Ich bin gerade am lesen.",
             "Wir waren am essen, als er kam.",
+            "Das essen in der Kantine war lecker.",
+            "Das schwimmen im See ist verboten.",
+            "Mein zeichnen wird immer besser.",
         ] {
             assert_eq!(lint_count(text), 1, "should fire on {text:?}");
         }
@@ -197,6 +294,12 @@ mod tests {
             "Dabei kommt es zum oben erwähnten Wandel.",
             "Sie erzählte vom gegen ihn gerichteten Verdacht.",
             "Das gilt beim bekommen-Passiv.",
+            "Das essen wir morgen.",
+            "Das wissen alle, die da war.",
+            "Das essen wir, wenn es fertig ist.",
+            "Das Essen in der Kantine war lecker.",
+            "Das wollen wir und das ist gut.",
+            "Das neue Haus ist schön.",
         ] {
             assert_eq!(lint_count(text), 0, "should not fire on {text:?}");
         }

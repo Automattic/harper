@@ -2,7 +2,9 @@ use crate::language::german::grammar::noun_phrase;
 use crate::{
     Punctuation, Token, TokenKind, TokenStringExt,
     document::Document,
-    language::german::linting::german_foreign_stretch,
+    language::german::linting::{
+        german_foreign_stretch, german_relative_clause_comma::GermanRelativeClauseComma,
+    },
     language::german::spell::lexical_classes::{FOREIGN_TERMS, NUMERALS, UNIT_ABBREVIATIONS},
     language::morphology::{MorphologyExt, NumberSet},
     linting::{Lint, LintKind, Linter, Suggestion},
@@ -291,9 +293,11 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         } else {
             start
         };
-        if index != opener_at + 1
-            || !PRONOUN_OPENERS
-                .contains(&noun_phrase::lowercase_of(tokens[opener_at], document).as_str())
+        if index != opener_at + 1 {
+            return false;
+        }
+        if !PRONOUN_OPENERS
+            .contains(&noun_phrase::lowercase_of(tokens[opener_at], document).as_str())
         {
             return false;
         }
@@ -303,10 +307,19 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         // at best. And a verb-second clause goes on behind its verb: *Das
         // gerät, mit dem ich arbeite* stops at the comma.
         let word = noun_phrase::lowercase_of(tokens[index], document);
-        let third_person = word.ends_with('t') || word.ends_with('d') || word.ends_with("arf");
+        let third_person =
+            word.ends_with('t') || word.ends_with('d') || word.ends_with("arf") || word == "würde";
         let clause_goes_on = index + 1 < end;
         if !third_person || !clause_goes_on {
             return false;
+        }
+        // *Das würde mir helfen*: the noun *Würde* is feminine, so behind a
+        // pronoun that cannot be its article this is the auxiliary, and the
+        // infinitive later in the clause belongs to it.
+        let opener = noun_phrase::lowercase_of(tokens[opener_at], document);
+        if word == "würde" && !matches!(opener.as_str(), "die" | "der" | "eine" | "einer" | "keine")
+        {
+            return true;
         }
         !(start..end).filter(|&at| at != index).any(|at| {
             let token = tokens[at];
@@ -316,6 +329,90 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
                     .first()
                     .is_some_and(|c| c.is_lowercase())
         })
+    }
+
+    /// *Ihr wart es*, *ihr fahrt schwimmen*: behind a clause-opening *ihr*, a
+    /// word in *-t* is the second person plural, whatever else the clause
+    /// holds and whether or not the dictionary knows the form as a verb.
+    fn follows_clause_initial_ihr(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        let (start, _) = Self::clause_bounds(tokens, index);
+        let opener_at = if start < index
+            && CLAUSE_COORDINATORS
+                .contains(&noun_phrase::lowercase_of(tokens[start], document).as_str())
+        {
+            start + 1
+        } else {
+            start
+        };
+        index == opener_at + 1
+            && noun_phrase::lowercase_of(tokens[opener_at], document) == "ihr"
+            && noun_phrase::lowercase_of(tokens[index], document).ends_with('t')
+    }
+
+    /// *Das **ruf** ich ihr zu*, *Für die **mühe** ich mich nicht ab*: a
+    /// fronted object, then the verb, then the subject pronoun. Only pronouns
+    /// that are never an article or an object form of one (*sie* and *es* are
+    /// left out).
+    fn precedes_subject_pronoun(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const SUBJECTS: &[&str] = &["ich", "du", "er", "wir", "ihr"];
+        tokens.get(index + 1).is_some_and(|next| {
+            matches!(next.kind, TokenKind::Word(_))
+                && SUBJECTS.contains(&noun_phrase::lowercase_of(next, document).as_str())
+        })
+    }
+
+    /// *Iss und **trink** so viel du willst*, *…, **schreib** gern*: an
+    /// imperative opening a clause behind a comma or *und*, with a particle
+    /// after it. The dictionary rarely knows the bare imperative as a verb,
+    /// so the infinitive it points to is asked instead.
+    fn is_clause_initial_imperative(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const PARTICLES: &[&str] = &[
+            "mal", "doch", "bitte", "gern", "gerne", "einfach", "ruhig", "endlich", "sofort",
+            "schnell", "so", "nur", "auch", "mir", "mich", "uns", "dich", "dir", "euch",
+        ];
+        let clause_opening = index.checked_sub(1).is_some_and(|at| {
+            matches!(tokens[at].kind, TokenKind::Punctuation(Punctuation::Comma))
+                || matches!(
+                    noun_phrase::lowercase_of(tokens[at], document).as_str(),
+                    "und" | "oder"
+                )
+        });
+        clause_opening
+            && tokens.get(index + 1).is_some_and(|next| {
+                PARTICLES.contains(&noun_phrase::lowercase_of(next, document).as_str())
+            })
+            && GermanRelativeClauseComma::infinitive_is_a_verb(&format!(
+                "{}t",
+                noun_phrase::lowercase_of(tokens[index], document)
+            ))
+    }
+
+    /// *Das neue, in Planung befindliche Baugebiet*: the first of two
+    /// coordinated attributes, with a comma between them. A relative pronoun
+    /// behind the comma makes it a nominalization (*das Neue, das …*), which
+    /// stays reportable.
+    fn is_coordinated_attribute(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const RELATIVES: &[&str] = &[
+            "der", "die", "das", "dem", "den", "des", "dessen", "deren", "denen", "welche",
+            "welcher", "welches", "was", "wo",
+        ];
+        let word = noun_phrase::lowercase_of(tokens[index], document);
+        tokens[index].kind.is_adjective()
+            && ["e", "en", "er", "es", "em"]
+                .iter()
+                .any(|ending| word.ends_with(ending))
+            && tokens
+                .get(index + 1)
+                .is_some_and(|t| matches!(t.kind, TokenKind::Punctuation(Punctuation::Comma)))
+            && tokens.get(index + 2).is_some_and(|after| {
+                (after.kind.is_adjective() || after.kind.is_adverb() || after.kind.is_preposition())
+                    && !after.kind.is_pronoun()
+                    && document
+                        .get_span_content(&after.span)
+                        .first()
+                        .is_some_and(|c| c.is_lowercase())
+                    && !RELATIVES.contains(&noun_phrase::lowercase_of(after, document).as_str())
+            })
     }
 
     /// Is this one of [`PREDICATIVE_NOUNS`] in the position German writes it
@@ -592,12 +689,12 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
         let has_verb = any(&|m| m.verb.is_some());
         let has_adjective = any(&|m| m.adjective.is_some());
         let has_adverb = any(&|m| m.adverb.is_some());
-        let has_closed_class = any(&|m| {
-            m.pronoun.is_some()
-                || m.determiner.is_some()
-                || m.conjunction.is_some()
-                || m.preposition
-        });
+        let has_closed_class =
+            any(&|m| m.pronoun.is_some() || m.determiner.is_some() || m.conjunction.is_some());
+        // *laut*, *samt*, *trotz*: a preposition that is also a noun is told
+        // apart like any other homograph, by its place in the phrase — *laut
+        // Polizei*, but *keinen Laut*.
+        let has_preposition = any(&|m| m.preposition);
 
         // A recognized derivational noun suffix (-ung, -heit, -keit, -schaft,
         // -tät, -ion, -nis, -tum, -ling) is a near-certain noun. This is meant
@@ -639,7 +736,7 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             }
         }
 
-        let ambiguous = has_verb || has_adjective || has_adverb;
+        let ambiguous = has_verb || has_adjective || has_adverb || has_preposition;
 
         if !ambiguous {
             // Clean, unambiguous noun reading (noun, but no verb / adjective /
@@ -684,6 +781,9 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         || Self::in_foreign_stretch(&tokens, i, document)
                         || Self::follows_subject_pronoun(prev, document)
                         || Self::is_predicative_noun(&tokens, i, document)
+                        || Self::is_coordinated_attribute(&tokens, i, document)
+                        || Self::follows_clause_initial_ihr(&tokens, i, document)
+                        || Self::is_clause_initial_imperative(&tokens, i, document)
                     {
                         continue;
                     }
@@ -704,7 +804,8 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                             word_chars,
                             prev,
                             np_roles[i],
-                            Self::is_verb_second(&tokens, i, document),
+                            Self::is_verb_second(&tokens, i, document)
+                                || Self::precedes_subject_pronoun(&tokens, i, document),
                         )
                     {
                         let mut replacement: Vec<char> = word_chars.to_vec();
@@ -907,6 +1008,45 @@ mod tests {
             1,
             "a spaced bracket ends no compound"
         );
+    }
+
+    #[test]
+    fn test_verb_readings_by_context_are_not_flagged() {
+        let mut linter = test_linter();
+        for text in [
+            "Ihr wart es, die ihn entführt haben.",
+            "Ihr wart nicht mehr gesehen worden.",
+            "Ihr fahrt schwimmen?",
+            "Das ruf ich ihr zu!",
+            "Für die mühe ich mich doch nicht ab!",
+            "Iss und trink so viel du willst!",
+            "Solltest du eine Frage haben, schreib gern eine E-Mail.",
+            "Das würde mir sicherlich weiter helfen.",
+            "Das neue, in Planung befindliche Baugebiet wächst.",
+            "Die abwartende, bald offen feindselige Haltung blieb.",
+        ] {
+            let doc = create_document(text);
+            let flagged: Vec<String> = linter
+                .lint(&doc)
+                .iter()
+                .map(|l| document_word(&doc, l))
+                .collect();
+            assert!(flagged.is_empty(), "{text:?}: {flagged:?}");
+        }
+        for (text, word) in [
+            ("Das gerät, mit dem ich arbeite, ist alt.", "gerät"),
+            ("Und du streust Salz in die wunde, du Trampel!", "wunde"),
+            ("Vielen dank für deine Hilfe.", "dank"),
+            ("Sie gab keinen laut von sich.", "laut"),
+        ] {
+            let doc = create_document(text);
+            let flagged: Vec<String> = linter
+                .lint(&doc)
+                .iter()
+                .map(|l| document_word(&doc, l))
+                .collect();
+            assert_eq!(flagged, [word], "{text:?}");
+        }
     }
 
     fn document_word(document: &Document, lint: &Lint) -> String {

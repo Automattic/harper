@@ -45,6 +45,14 @@ const INDECLINABLE: &[&str] = &[
     "eigen",
 ];
 
+/// Adverbs shaped like a declined adjective: *dem gerne Folge leisten*, *den
+/// lange gehegten Wunsch*. The dictionary's adverb reading is no help, since
+/// it carries over to every form of *neu* and *schnell*.
+const ADVERBS_IN_E: &[&str] = &["gerne", "lange", "alleine", "ferne", "nahe", "balde"];
+
+/// Adjective endings, longest first so *-en* is not read as *-e*.
+const ENDINGS: &[&str] = &["en", "er", "es", "em", "e"];
+
 /// Degree words that may stand between the determiner and the adjective: *ein
 /// sehr schön Haus* is the same mistake as *ein schön Haus*.
 const INTENSIFIERS: &[&str] = &[
@@ -152,10 +160,14 @@ impl GermanAdjectiveForm {
     ) -> Option<Lint> {
         let determiner = lowercase_of(words[at], document);
         let readings = determiner_readings(&determiner)?;
-        if PRONOUNS_FIRST.contains(&determiner.as_str()) {
+        let previous = at.checked_sub(1).map(|i| words[i]);
+        // Behind a preposition, *einem* and *keiner* are the article: *in
+        // einem großen Haus*.
+        let after_preposition = previous.is_some_and(|p| p.kind.is_preposition())
+            && (determiner.starts_with("ein") || determiner.starts_with("kein"));
+        if PRONOUNS_FIRST.contains(&determiner.as_str()) && !after_preposition {
             return None;
         }
-        let previous = at.checked_sub(1).map(|i| words[i]);
         // A relative pronoun behind its comma, or behind a preposition behind
         // one: *…, der allgemein Anklang fand*, *…, in dem ständig Soldaten …*.
         let behind_comma = |i: usize| {
@@ -178,9 +190,9 @@ impl GermanAdjectiveForm {
 
         // A pronoun reading behind a verb: *hat das sicher Potenzial*.
         if PRONOMINAL.contains(&determiner.as_str())
-            && at
-                .checked_sub(1)
-                .is_some_and(|i| words[i].kind.is_verb() && !Self::capitalized(words[i], document))
+            && at.checked_sub(1).is_some_and(|i| {
+                words[i].kind.is_verb() && (i == 0 || !Self::capitalized(words[i], document))
+            })
         {
             return None;
         }
@@ -210,11 +222,13 @@ impl GermanAdjectiveForm {
         }
 
         let word = lowercase_of(adjective, document);
+        // A declined adjective: its ending is checked against the determiner
+        // below, an undeclined one gets an ending suggested.
+        let declined = ENDINGS
+            .iter()
+            .find_map(|ending| word.strip_suffix(ending).map(|stem| (stem, *ending)));
         if INDECLINABLE.contains(&word.as_str())
-            || ["e", "en", "er", "es", "em"]
-                .iter()
-                .any(|ending| word.ends_with(ending))
-            || word.ends_with(['a', 'i', 'o', 'y'])
+            || (declined.is_none() && word.ends_with(['a', 'i', 'o', 'y']))
         {
             return None;
         }
@@ -226,6 +240,15 @@ impl GermanAdjectiveForm {
         }
         let metadata = self.metadata(&word)?;
         if !metadata.is_adjective() || metadata.preposition {
+            return None;
+        }
+        // *dem gerne Folge leisten*: an adverb in *-e* is not a declined
+        // adjective, and its stem has to be an adjective of its own.
+        if let Some((stem, _)) = declined
+            && (ADVERBS_IN_E.contains(&word.as_str())
+                || ADJECTIVE_PREPOSITIONS.contains(&stem)
+                || !self.is_adjective(stem))
+        {
             return None;
         }
         // *Das erfordert Können*, *keiner weiß Rat*: a pronoun subject and its
@@ -265,6 +288,23 @@ impl GermanAdjectiveForm {
             return None;
         }
 
+        if let Some((stem, ending)) = declined {
+            // *wie die europäischer Städte*: *der*, *die*, *das* as a pronoun
+            // before a genitive plural. Only a noun known to be singular rules
+            // that reading out.
+            let noun_text: String = document.get_span_content(&noun.span).iter().collect();
+            if ending == "er"
+                && matches!(determiner.as_str(), "der" | "die" | "das")
+                && !self
+                    .nouns
+                    .gender_of(&noun_text)
+                    .is_some_and(|(_, singular)| singular)
+            {
+                return None;
+            }
+            return self.wrong_ending(adjective, stem, ending, &determiner, readings);
+        }
+
         let noun_text: String = document.get_span_content(&noun.span).iter().collect();
         let suggestions = match self.nouns.gender_of(&noun_text) {
             Some((gender, _)) => {
@@ -286,6 +326,65 @@ impl GermanAdjectiveForm {
                 .collect(),
             priority: 31,
             message: format!("»{word}« steht zwischen Artikel und Nomen und braucht eine Endung."),
+        })
+    }
+
+    /// *einen neue Helm*, *dem alter Mann*: a declined adjective whose ending
+    /// no reading of the determiner allows.
+    ///
+    /// Only determiners whose every reading has a fixed ending: a plural
+    /// reading behind a weak or mixed determiner (*die*, *keine*, *meine*)
+    /// takes *-en*, and a determiner outside those paradigms (*viele*,
+    /// *manche*) takes either declension and is left alone.
+    fn wrong_ending(
+        &self,
+        adjective: &Token,
+        stem: &str,
+        ending: &str,
+        determiner: &str,
+        readings: &[DeterminerReading],
+    ) -> Option<Lint> {
+        let mut allowed: Vec<&str> = Vec::new();
+        for reading in readings {
+            let wanted = match adjective_ending_after(reading) {
+                Some(wanted) => wanted,
+                // The plural of a covered paradigm: *die neuen*, *keine neuen*.
+                None if reading.gender.is_none() => {
+                    let singular = DeterminerReading {
+                        gender: Some(crate::language::morphology::Gender::Masculine),
+                        ..*reading
+                    };
+                    adjective_ending_after(&singular)?;
+                    "en"
+                }
+                None => return None,
+            };
+            if !allowed.contains(&wanted) {
+                allowed.push(wanted);
+            }
+        }
+        if allowed.contains(&ending) {
+            return None;
+        }
+
+        let suggestions: Vec<String> = allowed
+            .iter()
+            .map(|wanted| format!("{stem}{wanted}"))
+            .filter(|form| self.nouns.dictionary().contains_word_str(form))
+            .collect();
+        let word = format!("{stem}{ending}");
+        Some(Lint {
+            span: adjective.span,
+            lint_kind: LintKind::Agreement,
+            suggestions: suggestions
+                .into_iter()
+                .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
+                .collect(),
+            priority: 31,
+            message: format!(
+                "Nach »{determiner}« endet das Adjektiv auf »-{}«, nicht »{word}«.",
+                allowed.join("« oder »-")
+            ),
         })
     }
 
@@ -465,6 +564,45 @@ mod tests {
             ["schön"]
         );
         assert_eq!(reported("Das ist keine gut Überprüfung."), ["gut"]);
+    }
+
+    #[test]
+    fn an_ending_the_determiner_rules_out_is_reported() {
+        assert_eq!(
+            reported("Ich habe ein neues Fahrrad und einen neue Helm."),
+            ["neue"]
+        );
+        assert_eq!(reported("Sie hilft dem alte Mann."), ["alte"]);
+        assert_eq!(reported("Wir wohnen in einem große Haus."), ["große"]);
+        assert_eq!(reported("Ein neue Auto steht vor der Tür."), ["neue"]);
+        assert_eq!(reported("Die Farbe des neue Autos gefällt mir."), ["neue"]);
+        assert_eq!(reported("Er spielt mit seinen kleine Brüdern."), ["kleine"]);
+        assert_eq!(reported("Das neuer Haus ist schön."), ["neuer"]);
+    }
+
+    #[test]
+    fn an_ending_the_determiner_allows_is_quiet() {
+        for text in [
+            "Ich habe einen neuen Helm.",
+            "Sie hilft dem alten Mann.",
+            "Ein neues Auto steht vor der Tür.",
+            "Ein neuer Tag beginnt.",
+            "Die neue Wohnung ist groß.",
+            "Die neuen Schuhe passen.",
+            "Er spielt mit seinen kleinen Brüdern.",
+            "Viele neue Ideen kamen.",
+            "Bringt das gute Ergebnisse?",
+            "Hat das großes Potenzial?",
+            "Ich habe dem gerne Folge geleistet.",
+            "Er gab den gute Noten schreibenden Schülern ein Lob.",
+            "Der Mann, den alle Welt kennt, kam.",
+            "Wir meinen große Dinge.",
+            "Das eine große Problem bleibt.",
+            "Damit ähnelt die Altersstruktur der europäischer Städte.",
+            "Es ist weniger farbenprächtig als das anderer Papageien.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
     }
 
     #[test]

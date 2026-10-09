@@ -1550,6 +1550,53 @@ none. The four left: *Das essen in der Kantine* (ambiguous with *wir wollen
 das essen*), *das Buch, dass ich lese* (the reverse das/dass direction), *einen
 neue Helm* (*Helm* has no recorded gender) and *in rot*.
 
+### Second round: word frequencies as a dictionary probe
+
+The LanguageTool sentences say little about the dictionary, so the next probe
+was the `wordfreq` package's German list (PyPI): every word of the 400 000
+most frequent ones, lower case and capitalized, one per paragraph, through
+`--only GermanSpellCheck`. A word both spellings of which are rejected, but
+which igerman98 accepts, is a dictionary gap. Of the top 60 000 that left 49
+lower-case words, and nearly all were forms of **prefixed verbs**: *verschwindet*,
+*verspricht*, *verbietet*, *verschwand*, *verrät*. `verbieten`, `versprechen`
+and `verschwinden` were entries with the noun property only (*das Verbieten*),
+and neither the compound checker nor the conjugation affixes reach the strong
+forms. `scripts/add_german_prefixed_verb_forms.py` adds them: every word of
+Harper's own list with *ver-*, *zer-*, *ent-*, *be-* … in front, kept when
+Hunspell accepts it and Harper rejects it — 1395 forms, entered as they stand
+with the verb property (or the adjective property for *verschwindend*,
+*vertraulich*). Note the libhunspell `.aff` from wooorm/dictionaries is UTF-8;
+the Debian one declares ISO-8859-1.
+
+Three rule changes came out of the same pass:
+
+* `GermanAdjectiveForm` checks the **ending** of a declined adjective against
+  the determiner, not just its presence: *einen neue Helm*, *dem alte Mann*,
+  *in einem große Haus*, *des neue Autos*. Every reading of the determiner has
+  to fix the ending (a plural reading of *die*, *keine*, *meine* means *-en*),
+  so *viele neue Ideen* is left alone. *der europäischer Städte* — *der* as a
+  pronoun before a genitive plural — is only reported when the noun is known
+  to be singular.
+* `GermanNominalizedInfinitive` reads *Das essen in der Kantine war lecker*:
+  an infinitive behind a sentence-initial *das*/*mein*/…, with a singular
+  finite verb (*ist*, *war*, *macht*, …) later in the same clause. *Das essen
+  wir* has no second finite verb and stays quiet.
+* `GermanNounCapitalization` learned four verb contexts: a subject pronoun
+  right behind the homograph (*Das ruf ich ihr zu*), *ihr* + *-t* (*Ihr wart
+  es*, *ihr fahrt*), a clause-initial imperative before a particle (*Iss und
+  trink so viel …*), and *Das würde …*. And the first of two coordinated
+  attributes (*Das neue, in Planung befindliche Baugebiet*) is not a
+  nominalization.
+
+Tried and taken out again: *dank*, *laut*, *samt* as prepositions and
+*montags* as an adverb. Each removed one or two false alarms and lost as many
+real reports (*Vielen dank*, *keinen laut*, *des montags*).
+
+Result on the LanguageTool sentences: false-alarm sentences 788 → 771, errors
+found 1753 → 1754 — the 25 spelling hits that went away were all on the
+now-known verb forms, which were never the error LanguageTool marked. The
+school text is at 53/55 with no false alarm.
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both
