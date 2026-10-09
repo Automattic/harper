@@ -10,6 +10,8 @@ import logo from '/logo.png';
 import ProtocolClient from '../ProtocolClient';
 import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
+import { type ImportMode, type ImportSummary, summarizeImport } from '../settings/apply';
+import { parseSettings } from '../settings/schema';
 import StructuredRuleSettings from './StructuredRuleSettings.svelte';
 
 let lintConfig: LintConfig = $state({});
@@ -230,22 +232,159 @@ function toggleGroup(groupKey: string) {
 	};
 }
 
-async function exportEnabledDomainsCSV() {
+let importFileInput: HTMLInputElement;
+let importMode: ImportMode = $state('merge');
+let includeExtension = $state(true);
+let importBusy = $state(false);
+let importError = $state('');
+let exportBusy = $state(false);
+let exportError = $state('');
+let pendingImportText: string | null = $state(null);
+let pendingImportName = $state('');
+let importPreview: ImportSummary | null = $state(null);
+let showImportSuccess = $state(false);
+
+try {
+	if (sessionStorage.getItem('harper-settings-imported') === '1') {
+		sessionStorage.removeItem('harper-settings-imported');
+		showImportSuccess = true;
+	}
+} catch {
+	// Storage may be unavailable; the success notice is best-effort.
+}
+
+async function handleExportSettings() {
+	exportError = '';
+	exportBusy = true;
 	try {
-		const enabledDomains = await ProtocolClient.getEnabledDomains();
-		const json = JSON.stringify(enabledDomains, null, 2);
+		const settings = await ProtocolClient.exportSettings();
+		const json = JSON.stringify(settings, null, 2);
 
 		const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
 		const url = URL.createObjectURL(blob);
 		const a = document.createElement('a');
 		a.href = url;
-		a.download = 'enabled-domains.json';
+		a.download = `harper-settings-${new Date().toISOString().slice(0, 10)}.json`;
 		document.body.appendChild(a);
 		a.click();
 		a.remove();
 		URL.revokeObjectURL(url);
 	} catch (e) {
-		console.error('Failed to export enabled domains JSON:', e);
+		console.error('Failed to export settings:', e);
+		exportError = 'Could not export settings. Please try again.';
+	} finally {
+		exportBusy = false;
+	}
+}
+
+async function handleImportFileSelect(event: Event) {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		return;
+	}
+
+	const file = input.files?.[0];
+	importError = '';
+	importPreview = null;
+	pendingImportText = null;
+	pendingImportName = '';
+
+	if (!file) {
+		return;
+	}
+
+	importBusy = true;
+	try {
+		const text = await file.text();
+		const incoming = parseSettings(text);
+		const current = await ProtocolClient.exportSettings();
+		if (current.extension === undefined) {
+			throw new Error('Could not read the current settings.');
+		}
+		importPreview = summarizeImport(
+			{ core: current.core, extension: current.extension },
+			incoming,
+			{ mode: importMode, includeExtension },
+		);
+		pendingImportText = text;
+		pendingImportName = file.name;
+	} catch (error) {
+		importError = error instanceof Error ? error.message : 'Could not read that settings file.';
+		input.value = '';
+	} finally {
+		importBusy = false;
+	}
+}
+
+async function refreshImportPreview() {
+	if (pendingImportText == null) {
+		return;
+	}
+
+	try {
+		const incoming = parseSettings(pendingImportText);
+		const current = await ProtocolClient.exportSettings();
+		if (current.extension === undefined) {
+			return;
+		}
+		importPreview = summarizeImport(
+			{ core: current.core, extension: current.extension },
+			incoming,
+			{ mode: importMode, includeExtension },
+		);
+	} catch {
+		// Preview is best-effort; confirmation re-validates through the background worker.
+	}
+}
+
+function setImportModeFromRadio(event: Event) {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		return;
+	}
+
+	importMode = input.value === 'replace' ? 'replace' : 'merge';
+	void refreshImportPreview();
+}
+
+function setIncludeExtensionFromCheckbox(event: Event) {
+	const input = event.currentTarget;
+	if (!(input instanceof HTMLInputElement)) {
+		return;
+	}
+
+	includeExtension = input.checked;
+	void refreshImportPreview();
+}
+
+async function confirmImport() {
+	if (pendingImportText == null) {
+		return;
+	}
+
+	importError = '';
+	importBusy = true;
+	try {
+		await ProtocolClient.importSettings(pendingImportText, importMode, includeExtension);
+		try {
+			sessionStorage.setItem('harper-settings-imported', '1');
+		} catch {
+			// Best-effort; the reload below still applies the import.
+		}
+		window.location.reload();
+	} catch (error) {
+		importError = error instanceof Error ? error.message : 'Could not import settings.';
+		importBusy = false;
+	}
+}
+
+function cancelImport() {
+	pendingImportText = null;
+	pendingImportName = '';
+	importPreview = null;
+	importError = '';
+	if (importFileInput) {
+		importFileInput.value = '';
 	}
 }
 
@@ -334,8 +473,6 @@ async function removeWeirpack(id: string) {
 		weirpackBusy = false;
 	}
 }
-
-// Import removed
 </script>
 
 <!-- centered wrapper with side gutters -->
@@ -423,20 +560,6 @@ async function removeWeirpack(id: string) {
       <div class="space-y-5">
         <div class="flex items-center justify-between">
           <div class="flex flex-col">
-            <h3 class="text-sm">Export Enabled Domains</h3>
-            <p class="text-xs text-gray-600 dark:text-gray-400">
-              Downloads JSON of domains explicitly enabled.
-            </p>
-          </div>
-          <Button size="sm" on:click={exportEnabledDomainsCSV}
-            >Export JSON</Button
-          >
-        </div>
-      </div>
-
-      <div class="space-y-5">
-        <div class="flex items-center justify-between">
-          <div class="flex flex-col">
             <h3 class="text-sm">Activation Key</h3>
             <p class="text-xs text-gray-600 dark:text-gray-400">
               If you're finding that you're accidentally triggering Harper.
@@ -483,6 +606,119 @@ async function removeWeirpack(id: string) {
           <Textarea bind:value={userDict}></Textarea>
         </div>
       </div>
+    </Card>
+
+    <Card class="space-y-4">
+      <h2 class="pb-1 text-xs uppercase tracking-wider">Backup & Restore</h2>
+
+      {#if showImportSuccess}
+        <p class="text-sm text-green-700 dark:text-green-400">
+          Settings imported. This page reloaded to show the new values.
+        </p>
+      {/if}
+
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col">
+          <h3 class="text-sm">Export settings</h3>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            Downloads a harper-settings.json file with your dialect, rules,
+            dictionary, ignored suggestions, and extension settings.
+          </p>
+        </div>
+        <Button size="sm" disabled={exportBusy} on:click={handleExportSettings}
+          >{exportBusy ? 'Exporting…' : 'Export'}</Button
+        >
+      </div>
+
+      {#if exportError}
+        <p class="text-xs text-red-700 dark:text-red-400">{exportError}</p>
+      {/if}
+
+      <div class="flex items-center justify-between gap-4">
+        <div class="flex flex-col">
+          <h3 class="text-sm">Import settings</h3>
+          <p class="text-xs text-gray-600 dark:text-gray-400">
+            Restores settings from a harper-settings.json file. Nothing changes
+            until you confirm below.
+          </p>
+        </div>
+        <input
+          type="file"
+          accept=".json,application/json"
+          bind:this={importFileInput}
+          onchange={handleImportFileSelect}
+          class="block w-1/4 text-sm file:rounded-md file:border-0 file:bg-primary file:text-white"
+        />
+      </div>
+
+      {#if pendingImportText != null}
+        <div class="flex flex-wrap items-center gap-x-6 gap-y-2 text-sm">
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="import-mode"
+              value="merge"
+              checked={importMode === 'merge'}
+              onchange={setImportModeFromRadio}
+              class="h-4 w-4"
+            />
+            Merge
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="radio"
+              name="import-mode"
+              value="replace"
+              checked={importMode === 'replace'}
+              onchange={setImportModeFromRadio}
+              class="h-4 w-4"
+            />
+            Replace
+          </label>
+          <label class="flex items-center gap-2">
+            <input
+              type="checkbox"
+              checked={includeExtension}
+              onchange={setIncludeExtensionFromCheckbox}
+              class="h-4 w-4"
+            />
+            Include extension settings
+          </label>
+        </div>
+
+        {#if importPreview != null}
+          <ul class="list-disc space-y-1 pl-5 text-sm text-gray-600 dark:text-gray-400">
+            <li>
+              {importPreview.dialectChanged
+                ? 'Dialect will change.'
+                : 'Dialect stays the same.'}
+              {pendingImportName ? ` File: ${pendingImportName}.` : ''}
+            </li>
+            <li>
+              {importPreview.wordsAdded} word(s) added, {importPreview.wordsRemoved} removed.
+            </li>
+            <li>{importPreview.ruleChanges} rule setting(s) will change.</li>
+            <li>{importPreview.ignoredLintsAdded} ignored suggestion(s) added.</li>
+            {#if importPreview.extensionIncluded}
+              <li>{importPreview.domainChanges} domain setting(s) will change.</li>
+            {:else}
+              <li>Extension settings will be left alone.</li>
+            {/if}
+          </ul>
+          <div class="flex gap-3">
+            <Button size="sm" disabled={importBusy} on:click={confirmImport}>
+              {importBusy ? 'Importing…' : 'Confirm import'}
+            </Button>
+            <Button size="sm" color="light" disabled={importBusy} on:click={cancelImport}>
+              Cancel
+            </Button>
+          </div>
+        {/if}
+      {/if}
+
+      {#if importError}
+        <p class="text-xs text-red-700 dark:text-red-400">{importError}</p>
+      {/if}
     </Card>
 
     <Card class="space-y-4">
