@@ -428,7 +428,7 @@ async function removeWeirpack(id: string) {
               size="sm"
               class="min-w-12rem flex-1 outline-none! focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
             />
-            <Button size="sm" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
+            <Button size="sm" class="cursor-pointer bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={() => { resetRulesToDefaults(); statusMessage = 'All rules reset to defaults.'; }}>Reset to Defaults</Button>
             <Button size="sm" color="light" class="cursor-pointer outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" on:click={toggleAllRules}>
               {anyRulesEnabled ? 'Disable All Rules' : 'Enable All Rules'}
             </Button>
@@ -596,7 +596,7 @@ async function removeWeirpack(id: string) {
                   <h3 id="export-label" class="text-base font-semibold">Export Enabled Domains</h3>
                   <p id="export-desc" class="text-xs text-gray-600 dark:text-[#d1d5db]!">Downloads a JSON list of domains explicitly enabled.</p>
                 </div>
-                <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
+                <Button size="sm" class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!" aria-describedby="export-desc" on:click={exportEnabledDomainsCSV}>Export JSON</Button>
               </div>
 
               <!-- Activation Key -->
@@ -629,7 +629,7 @@ async function removeWeirpack(id: string) {
                   </kbd>
                   <Button
                     size="sm"
-                    class="h-full shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
+                    class="h-full shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                     aria-label={isCapturingHotkey ? 'Cancel changing hotkey' : `Modify hotkey, currently ${buttonText}`}
                     on:click={isCapturingHotkey ? cancelHotkeyCapture : startHotkeyCapture}
                   >
@@ -679,7 +679,7 @@ async function removeWeirpack(id: string) {
 
               <Button
                 size="sm"
-                class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
+                class="h-9 w-48 shrink-0 cursor-pointer text-xs font-semibold bg-primary! text-black! hover:bg-primary/85! outline-none! focus:outline-none! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!"
                 disabled={weirpackBusy}
                 on:click={() => fileInputRef?.click()}
               >

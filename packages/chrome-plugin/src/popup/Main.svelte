@@ -1,5 +1,7 @@
 <script lang="ts">
+import { faThumbsDown, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { Button } from 'components';
+import Fa from 'svelte-fa';
 import generateGreeting from '../generateGreeting';
 import ProtocolClient from '../ProtocolClient';
 
@@ -7,7 +9,6 @@ let { onReviewDomain }: { onReviewDomain: (works: boolean, domain: string) => vo
 
 // UI State Flags
 let loaded = $state(false);
-let readyToAnimate = $state(false);
 
 let enabled = $state(true);
 let domain = $state('');
@@ -38,10 +39,6 @@ Promise.all([
 		: Promise.resolve(),
 ]).then(() => {
 	loaded = true;
-	// Allow DOM to paint initial state before enabling CSS transitions
-	setTimeout(() => {
-		readyToAnimate = true;
-	}, 50);
 });
 
 /**
@@ -97,60 +94,65 @@ function daysSince(date: Date): number {
 <main class="flex h-full flex-col justify-between">
     {#if loaded}
         <section
-            class="flex flex-1 flex-col items-center justify-center px-5 py-6 text-center transition-colors"
+            class="flex flex-1 flex-col items-center justify-center px-5 py-6 transition-colors"
             style={enabled
-                ? 'background-image: radial-gradient(circle at 50% 45%, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 75%)'
+                ? 'background-image: radial-gradient(circle at 25% 50%, color-mix(in srgb, var(--color-primary) 12%, transparent), transparent 75%)'
                 : ''}
         >
-            <!-- Vertical Stack Layout -->
-            <div class="flex w-full flex-col items-center gap-4">
+            <!-- Row Layout: power button left, greeting + status right -->
+            <div class="flex w-full flex-row items-center gap-5">
+
+                <!-- 1. Power Button -->
+                <Button
+                    size="lg"
+                    class="rounded-full! aspect-square h-24 w-24 shrink-0 p-0 shadow-lg transition-colors flex! flex-row items-center justify-center"
+                    color={enabled ? 'var(--color-primary)' : 'var(--color-cream-50)'}
+                    on:click={toggleDomainEnabled}
+                    aria-pressed={enabled}
+                    aria-label={enabled ? `Turn Harper off on ${site}` : `Turn Harper on for ${site}`}
+                    title={enabled ? 'Click to pause Harper here' : 'Click to enable Harper here'}
+                >
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="h-9 w-9"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        style="color: {enabled ? 'var(--color-cream-50)' : 'var(--color-primary)'}"
+                        aria-hidden="true"
+                    >
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            d="M12 5v7m5.657-4.657a8 8 0 11-11.314 0"
+                        />
+                    </svg>
+                </Button>
+
+                <!-- 2. Greeting + status -->
+                <div class="flex min-w-0 flex-1 flex-col items-start gap-2 text-left">
                 
                 <!-- 1. Greeting -->
                 <h2 class="text-2xl font-medium dark:text-white">{generateGreeting()}</h2>
                 
                 <!-- 2. Status Bar -->
                 <div 
-                    class="flex max-w-full items-center gap-2 rounded-full border border-gray-200/60 bg-gray-50/50 px-3.5 py-1.5 text-xs text-gray-600 dark:border-slate-700/60 dark:bg-slate-800/40 dark:text-slate-400" 
+                    class="flex max-w-full items-start gap-2 text-sm text-gray-600 dark:text-gray-200" 
                     title={site}
                 >
                     <span
-                        class="h-2 w-2 shrink-0 rounded-full {enabled ? 'bg-emerald-400 shadow-[0_0_6px_1px_rgba(52,211,153,0.4)]' : 'bg-slate-500'}"
+                        class="mt-1.5 h-2 w-2 shrink-0 rounded-full {enabled ? 'bg-emerald-400 shadow-[0_0_6px_1px_rgba(52,211,153,0.4)]' : 'bg-slate-500'}"
                         aria-hidden="true"
                     ></span>
-                    <span class="shrink-0">{enabled ? 'Checking on' : 'Paused on'}</span>
-                    <span class="truncate font-medium text-gray-900 dark:text-white">{site}</span>
+                    <span class="min-w-0">
+                        <span class="font-medium text-gray-500 dark:text-white/80">
+                            {enabled ? 'Harper is enabled on' : 'Harper is paused on'}
+                        </span>
+                        <span class="block font-semibold text-gray-900 [overflow-wrap:anywhere] dark:text-white">{site}</span>
+                    </span>
                 </div>
 
-                <!-- 3. Animated Toggle -->
-                <div
-                    class="relative flex w-48 shrink-0 rounded-lg border border-gray-200 p-1 shadow-sm dark:border-slate-700 dark:bg-slate-900"
-                    role="group"
-                    aria-label="Toggle Harper"
-                >
-                    <div
-                        class="absolute inset-y-1 left-1 w-[calc(50%-0.25rem)] rounded-md bg-primary ease-out"
-                        class:transition-transform={readyToAnimate}
-                        class:duration-300={readyToAnimate}
-                        class:translate-x-0={enabled}
-                        class:translate-x-full={!enabled}
-                    ></div>
-
-                    <button
-                        type="button"
-                        aria-pressed={enabled}
-                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {enabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
-                        onclick={() => { if (!enabled) toggleDomainEnabled(); }}
-                    >
-                        On
-                    </button>
-                    <button
-                        type="button"
-                        aria-pressed={!enabled}
-                        class="relative z-10 flex-1 cursor-pointer rounded-md py-1.5 text-sm font-medium transition-colors duration-300 {!enabled ? 'text-black' : 'text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-white'}"
-                        onclick={() => { if (enabled) toggleDomainEnabled(); }}
-                    >
-                        Off
-                    </button>
                 </div>
 
             </div>
@@ -176,18 +178,20 @@ function daysSince(date: Date): number {
                     <button
                         type="button"
                         aria-label="Harper works well on this site"
-                        class="flex-1 cursor-pointer rounded-sm py-1 text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-black dark:text-slate-400 dark:hover:text-black"
+                        title="Works well"
+                        class="flex flex-1 cursor-pointer items-center justify-center rounded-sm py-1.5 text-sm text-gray-600 transition-colors hover:bg-primary hover:text-black dark:text-gray-300 dark:hover:text-black"
                         onclick={() => reviewDomain(true)}
                     >
-                        Yes
+                        <Fa icon={faThumbsUp} />
                     </button>
                     <button
                         type="button"
                         aria-label="Harper has problems on this site"
-                        class="flex-1 cursor-pointer rounded-sm py-1 text-xs font-medium text-gray-600 transition-colors hover:bg-primary hover:text-black dark:text-slate-400 dark:hover:text-black"
+                        title="Has problems"
+                        class="flex flex-1 cursor-pointer items-center justify-center rounded-sm py-1.5 text-sm text-gray-600 transition-colors hover:bg-primary hover:text-black dark:text-gray-300 dark:hover:text-black"
                         onclick={() => reviewDomain(false)}
                     >
-                        No
+                        <Fa icon={faThumbsDown} />
                     </button>
                 </div>
             </section>

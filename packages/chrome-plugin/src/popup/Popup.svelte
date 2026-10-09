@@ -102,6 +102,7 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
 
         {#if popupState.page != 'main'}
             <Button
+                class="bg-primary! text-black! hover:bg-primary/85!"
                 on:click={() => {
                     popupState = main();
                 }}
@@ -215,14 +216,14 @@ const footerLink = 'text-xs text-gray-500 dark:text-slate-400 no-underline!';
                 Discover
             </Link>
             
-            <Link 
-                on:click={openSettings} 
-                class="relative z-10 flex-1 cursor-pointer rounded-md py-1 text-center font-medium no-underline! transition-colors duration-200 {footerLink} {hoveredFooterIndex === 3 ? 'text-black! font-semibold' : ''}"
-                style="text-decoration: none;"
+            <button
+                type="button"
+                onclick={openSettings}
+                class="relative z-10 flex-1 cursor-pointer rounded-md bg-transparent py-1 text-center font-medium transition-colors duration-200 text-xs no-underline! {hoveredFooterIndex === 3 ? 'text-black! font-semibold' : 'text-primary dark:text-white'}"
                 onmouseenter={() => handleMouseEnter(3)}
             >
                 Settings
-            </Link>
+            </button>
         </div>
     </footer>
 </div>

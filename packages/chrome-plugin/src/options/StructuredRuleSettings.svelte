@@ -306,7 +306,7 @@ function idFor(prefix: string, key: string): string {
 }
 
 const selectClass =
-	'h-9 w-36 shrink-0 rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-900 dark:border-white/15! dark:bg-white/5! dark:text-white outline-none! transition-colors focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!';
+	'h-9 w-36 shrink-0 rounded-md border border-gray-200 bg-white px-3 text-xs font-semibold text-gray-900 dark:border-white/15! dark:bg-white/5! dark:text-white dark:[color-scheme:dark] dark:[&_option]:bg-[#1c1c1c] dark:[&_option]:text-white outline-none! transition-colors focus:border-primary! focus:ring-0! focus-visible:ring-2! focus-visible:ring-primary!';
 const dividerClass = 'border-t border-gray-100 pt-3 dark:border-white/10!';
 </script>
 

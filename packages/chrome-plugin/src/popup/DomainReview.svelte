@@ -123,7 +123,7 @@ const segment =
 
         <div class="pt-2">
             <Button
-                class="w-full shrink-0"
+                class="w-full shrink-0 {successful ? '' : 'bg-primary! text-black! hover:bg-primary/85!'} ring-0! focus:ring-0! focus-visible:ring-0! focus:shadow-none! focus-visible:shadow-none! focus-visible:outline! focus-visible:outline-1! focus-visible:outline-offset-2! focus-visible:outline-primary!"
                 state={successful ? 'success' : submitting ? 'loading' : 'idle'}
                 type="submit"
                 disabled={submitting || successful}
