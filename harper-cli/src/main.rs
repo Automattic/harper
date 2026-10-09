@@ -13,6 +13,10 @@ use ariadne::{Color, Label, Report, ReportKind, Source};
 use clap::{CommandFactory, Parser, ValueHint};
 use clap_complete::{Shell, generate};
 use dirs::{config_dir, data_local_dir};
+use hashbrown::HashMap;
+use serde::Serialize;
+use serde_json::Value;
+
 use harper_core::{
     CharStringExt, Dialect, DictWordMetadata, OrthFlags, Span, TokenKind, TokenStringExt,
     linting::LintGroup,
@@ -23,20 +27,21 @@ use harper_core::{
 #[cfg(feature = "training")]
 use harper_pos_utils::{BrillChunker, BrillTagger, BurnChunkerCpu};
 use harper_stats::Stats;
-use hashbrown::HashMap;
-use serde::Serialize;
-use serde_json::Value;
 
 mod annotate;
 mod input;
 mod lint;
+mod lint_engine;
+mod lint_reporter;
+
+use crate::lint::{OutputFormat, lint};
 
 use annotate::AnnotationType;
 use input::{
     AnyInput, InputTrait,
     single_input::{SingleInput, SingleInputOptionExt, SingleInputTrait},
 };
-use lint::{LintOptions, OutputFormat, lint};
+use lint::LintOptions;
 
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
