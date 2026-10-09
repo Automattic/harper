@@ -6,7 +6,7 @@ use crate::{
         german_foreign_stretch, german_relative_clause_comma::GermanRelativeClauseComma,
     },
     language::german::spell::lexical_classes::{FOREIGN_TERMS, NUMERALS, UNIT_ABBREVIATIONS},
-    language::morphology::{MorphologyExt, NumberSet},
+    language::morphology::{GenderSet, MorphologyExt, NumberSet},
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::Dictionary,
 };
@@ -387,6 +387,68 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             ))
     }
 
+    /// Is this word, by the words around it, not a noun even though the
+    /// dictionary has a noun reading for it?
+    ///
+    /// * a capital inside the word makes it a brand or a product name: *eBay*,
+    ///   *eVITA*, *iPhone*;
+    /// * a number with a hyphen right after it makes it the attribute of a
+    ///   compound that starts with the number (*im schnitt 200 Euro* is
+    ///   still the noun): *eine neue 600-MHz-Version*, *viele kleine
+    ///   4-KByte-Pages*;
+    /// * *extra*, *klasse*, *spitze* in front of a capitalized word are the
+    ///   indeclinable adjectives: *extra Urlaub*, *ein klasse Film*;
+    /// * a preposition that is also a noun, in front of an article, a
+    ///   capitalized word or a number and with no article or attribute of its
+    ///   own: *samt Zubehör*, *dank seiner Hilfe*, *mangels Beweisen*, while
+    ///   *Vielen dank*, *zum dank*, *keinen laut* and *in samt und Seide* stay
+    ///   nouns.
+    fn is_not_a_noun_here(tokens: &[&Token], index: usize, document: &Document) -> bool {
+        const INDECLINABLE_ADJECTIVES: &[&str] = &["extra", "klasse", "spitze", "super"];
+        const NOUN_PREPOSITIONS: &[&str] = &[
+            "samt", "dank", "laut", "mangels", "kraft", "zwecks", "seitens", "mittels", "namens",
+            "trotz", "statt",
+        ];
+        let chars = document.get_span_content(&tokens[index].span);
+        if chars.iter().skip(1).any(|c| c.is_uppercase()) {
+            return true;
+        }
+        let Some(next) = tokens.get(index + 1) else {
+            return false;
+        };
+        if matches!(next.kind, TokenKind::Number(_))
+            && tokens
+                .get(index + 2)
+                .is_some_and(|after| after.kind.is_hyphen() && after.span.start == next.span.end)
+        {
+            return true;
+        }
+        let word = noun_phrase::lowercase_of(tokens[index], document);
+        let next_capitalized = matches!(next.kind, TokenKind::Word(_))
+            && document
+                .get_span_content(&next.span)
+                .first()
+                .is_some_and(|c| c.is_uppercase());
+        if INDECLINABLE_ADJECTIVES.contains(&word.as_str()) && next_capitalized {
+            return true;
+        }
+        if NOUN_PREPOSITIONS.contains(&word.as_str()) {
+            let attributed = index.checked_sub(1).is_some_and(|at| {
+                noun_phrase::supplies_determiner(tokens[at], document)
+                    || tokens[at].kind.is_adjective()
+                    || matches!(
+                        noun_phrase::lowercase_of(tokens[at], document).as_str(),
+                        "zum" | "zur" | "im" | "am" | "vom" | "beim" | "ins" | "in" | "zu"
+                    )
+            });
+            let governs = next_capitalized
+                || next.kind.is_determiner()
+                || noun_phrase::supplies_determiner(next, document);
+            return governs && !attributed;
+        }
+        false
+    }
+
     /// *Das neue, in Planung befindliche Baugebiet*: the first of two
     /// coordinated attributes, with a comma between them. A relative pronoun
     /// behind the comma makes it a nominalization (*das Neue, das …*), which
@@ -572,6 +634,59 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
 
     /// Decide whether a lowercase, alphabetic, non-sentence-initial word should
     /// be flagged as a miscapitalized noun.
+    /// *Das liege jedoch nicht an der Bildung*, *Dies zeige, dass …*: the
+    /// subjunctive of reported speech behind a clause-opening *das*, *dies*.
+    /// Its *-e* ending keeps it out of [`Self::is_verb_second`], but a noun
+    /// there would need a neuter singular, and *Liege*, *Zeige* have none —
+    /// while *Das ende* (*das Ende*) stays a noun.
+    fn is_subjunctive_after_pronoun(
+        &self,
+        tokens: &[&Token],
+        index: usize,
+        document: &Document,
+    ) -> bool {
+        let (start, _) = Self::clause_bounds(tokens, index);
+        let word = noun_phrase::lowercase_of(tokens[index], document);
+        if index != start + 1
+            || !word.ends_with('e')
+            || !matches!(
+                noun_phrase::lowercase_of(tokens[start], document).as_str(),
+                "das" | "dies" | "dieses" | "jenes"
+            )
+            || !GermanRelativeClauseComma::infinitive_is_a_verb(&format!("{word}t"))
+        {
+            return false;
+        }
+        let capitalized: Vec<char> = word
+            .chars()
+            .enumerate()
+            .flat_map(|(at, c)| {
+                if at == 0 {
+                    c.to_uppercase().collect::<Vec<_>>()
+                } else {
+                    vec![c]
+                }
+            })
+            .collect();
+        let lower: Vec<char> = word.chars().collect();
+        [capitalized, lower].iter().all(|chars| {
+            self.dictionary
+                .get_word_metadata(chars)
+                .filter(|m| m.is_noun())
+                .is_none_or(|m| {
+                    // With no recorded gender, a noun in *-e* is feminine
+                    // unless it is one of the neuter *Ge-…-e* collectives
+                    // (*Gebäude*, *Gemüse*, *Gelände*).
+                    let gender = m.noun_agreement().gender;
+                    if gender.is_empty() {
+                        !word.starts_with("ge")
+                    } else {
+                        !gender.contains(GenderSet::NEUTER)
+                    }
+                })
+        })
+    }
+
     fn check_if_word_is_noun(
         &self,
         word_chars: &[char],
@@ -784,6 +899,8 @@ impl<T: Dictionary> Linter for GermanNounCapitalization<T> {
                         || Self::is_coordinated_attribute(&tokens, i, document)
                         || Self::follows_clause_initial_ihr(&tokens, i, document)
                         || Self::is_clause_initial_imperative(&tokens, i, document)
+                        || Self::is_not_a_noun_here(&tokens, i, document)
+                        || self.is_subjunctive_after_pronoun(&tokens, i, document)
                     {
                         continue;
                     }
@@ -1024,6 +1141,14 @@ mod tests {
             "Das würde mir sicherlich weiter helfen.",
             "Das neue, in Planung befindliche Baugebiet wächst.",
             "Die abwartende, bald offen feindselige Haltung blieb.",
+            "Das liege jedoch nicht nur an der Bildung.",
+            "Dies zeige, dass der Vorwurf ungerechtfertigt sei.",
+            "Das ist der Preis samt aller Informationen.",
+            "Sie beugt der Hautalterung vor dank Tahiti-Vanille.",
+            "Ich habe mir extra Urlaub genommen.",
+            "Eine neue 600-MHz-Version kommt.",
+            "Er kaufte es bei eBay.",
+            "Die hierzulande übliche Technik ist alt.",
         ] {
             let doc = create_document(text);
             let flagged: Vec<String> = linter
@@ -1038,6 +1163,10 @@ mod tests {
             ("Und du streust Salz in die wunde, du Trampel!", "wunde"),
             ("Vielen dank für deine Hilfe.", "dank"),
             ("Sie gab keinen laut von sich.", "laut"),
+            ("Wir sind ihr zu dank verpflichtet.", "dank"),
+            ("Sie kamen in samt und Seide.", "samt"),
+            ("Das ende des Films war traurig.", "ende"),
+            ("Er verdient im schnitt 200 Euro.", "schnitt"),
         ] {
             let doc = create_document(text);
             let flagged: Vec<String> = linter

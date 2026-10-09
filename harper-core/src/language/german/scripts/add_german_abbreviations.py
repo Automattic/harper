@@ -98,6 +98,79 @@ ABBREVIATIONS = [
 ]
 
 
+# Abbreviations that are only words with their full stop: `Nr. 5`, `Dr. Meier`,
+# `29. Okt. 2011`. They are entered *with* the stop, and `GermanSpellCheck`
+# accepts the letters only when the stop follows directly. That keeps the bare
+# letters a misspelling (`Tel` is not a word, `Tel.` is) and keeps them out of
+# compounds, which is what the table above has to guard against by hand: an
+# entry with a stop in it can never be a compound element. So nouns (`Art.`,
+# `Bd.`) and the starts and ends of words (`Abb.`, `Kap.`) are safe here. The
+# abbreviation of a noun is capitalized, like the noun.
+PERIOD_ABBREVIATIONS = [
+    # addresses, titles, letters
+    ("Dr.", "Doktor"), ("Prof.", "Professor"), ("Hr.", "Herr"), ("Fr.", "Frau, Freitag"),
+    ("Fa.", "Firma"), ("Str.", "Straße"), ("Nr.", "Nummer"), ("Tel.", "Telefon"),
+    ("Mob.", "Mobil"), ("Hbf.", "Hauptbahnhof"), ("Bhf.", "Bahnhof"), ("Pl.", "Platz"),
+    ("Abs.", "Absender, Absatz"), ("Abt.", "Abteilung"), ("Zi.", "Zimmer"),
+    ("Whg.", "Wohnung"), ("St.", "Sankt, Stück"), ("geb.", "geboren"), ("gest.", "gestorben"),
+    ("verh.", "verheiratet"), ("led.", "ledig"), ("verw.", "verwitwet"), ("gesch.", "geschieden"),
+    ("sen.", "senior"), ("jun.", "junior"), ("gegr.", "gegründet"), ("ehem.", "ehemalig"),
+    # months and weekdays
+    ("Jan.", "Januar"), ("Feb.", "Februar"), ("Febr.", "Februar"), ("Apr.", "April"),
+    ("Aug.", "August"), ("Sept.", "September"), ("Sep.", "September"), ("Okt.", "Oktober"),
+    ("Nov.", "November"), ("Dez.", "Dezember"), ("Mo.", "Montag"), ("Di.", "Dienstag"),
+    ("Mi.", "Mittwoch"), ("Do.", "Donnerstag"), ("Sa.", "Samstag"), ("So.", "Sonntag"),
+    # quantities and units
+    ("Std.", "Stunde"), ("Sek.", "Sekunde"), ("Tsd.", "Tausend"), ("Mio.", "Million"),
+    ("Mrd.", "Milliarde"), ("Pkt.", "Punkt"), ("Ztr.", "Zentner"), ("Pfd.", "Pfund"),
+    ("Stk.", "Stück"), ("Jhdt.", "Jahrhundert"), ("rd.", "rund"),
+    # references
+    ("Abb.", "Abbildung"), ("Anm.", "Anmerkung"), ("Aufl.", "Auflage"), ("Ausg.", "Ausgabe"),
+    ("Kap.", "Kapitel"), ("Tab.", "Tabelle"), ("Verf.", "Verfasser"), ("Inh.", "Inhaber"),
+    ("Mitgl.", "Mitglied"), ("pers.", "persönlich"), ("Ziff.", "Ziffer"), ("Abschn.", "Abschnitt"),
+    ("Sp.", "Spalte"), ("Bsp.", "Beispiel"), ("bspw.", "beispielsweise"), ("bzgl.", "bezüglich"),
+    ("bzw.", "beziehungsweise"), ("bes.", "besonders"), ("betr.", "betreffend"),
+    ("bez.", "bezüglich, bezahlt"), ("Anz.", "Anzahl"), ("allg.", "allgemein"),
+    ("Abk.", "Abkürzung"), ("abzgl.", "abzüglich"), ("ggü.", "gegenüber"), ("ugs.", "umgangssprachlich"),
+    ("gem.", "gemäß"), ("lt.", "laut"), ("usf.", "und so fort"), ("mind.", "mindestens"),
+    ("urspr.", "ursprünglich"), ("eigtl.", "eigentlich"), ("wg.", "wegen"), ("Gr.", "Größe, griechisch"),
+    ("Kl.", "Klasse, klein"), ("dt.", "deutsch"), ("frz.", "französisch"), ("ital.", "italienisch"),
+    ("span.", "spanisch"), ("russ.", "russisch"), ("österr.", "österreichisch"),
+    ("schweiz.", "schweizerisch"), ("europ.", "europäisch"),
+]
+
+# The flags the first import gave entries with a stop (`bes./~~NYE`): a noun
+# reading and two plural affixes, none of which an abbreviation has.
+STALE_PERIOD_FLAGS = "~~NYE"
+
+
+def add_period_abbreviations(lines: list[str], apply: bool) -> list[str]:
+    """Normalize the stale entries with a stop, then add the missing ones.
+
+    An abbreviation of a noun is written with a capital (*Prof.*, *Std.*), and a
+    capitalized entry is matched case-sensitively, so *Herr prof. Müller* stays
+    a misspelling. A lower-case entry of the same abbreviation would let it
+    through, so it is dropped in favour of the capitalized one.
+    """
+    capitalized = {w.lower() for w, _ in PERIOD_ABBREVIATIONS if w[0].isupper()}
+    out = []
+    fixed = 0
+    for line in lines:
+        word, sep, rest = line.partition("/")
+        if sep and word.endswith(".") and word in capitalized:
+            fixed += 1
+            continue
+        if sep and word.endswith(".") and rest.split(" ", 1)[0].strip() == STALE_PERIOD_FLAGS:
+            line = f"{word}/~~2\n"
+            fixed += 1
+        out.append(line)
+    known = {line.split("/", 1)[0].strip() for line in out if "/" in line}
+    missing = [(w, e) for w, e in PERIOD_ABBREVIATIONS if w not in known]
+    print(f"{fixed} stale entries with a stop normalized, {len(missing)} to add")
+    out += [f"{w}/~~2 # abbreviation with its full stop: {e}\n" for w, e in missing]
+    return out
+
+
 def main() -> int:
     if not DICT.exists():
         print(f"{DICT} not found -- run from the repo root", file=sys.stderr)
@@ -111,14 +184,12 @@ def main() -> int:
     for word, flags, expansion in missing[:10]:
         print(f"    {word}/{flags}  # {expansion}")
 
-    if not missing:
-        return 0
+    lines += [f"{word}/{flags} # abbreviation: {expansion}\n" for word, flags, expansion in missing]
+    lines = add_period_abbreviations(lines, "--apply" in sys.argv)
 
     if "--apply" in sys.argv:
-        with DICT.open("a", encoding="utf-8") as handle:
-            for word, flags, expansion in missing:
-                handle.write(f"{word}/{flags} # abbreviation: {expansion}\n")
-        print(f"appended {len(missing)} entries to {DICT}")
+        DICT.write_text("".join(lines), encoding="utf-8")
+        print(f"wrote {DICT}")
     else:
         print("dry run; pass --apply to write")
     return 0

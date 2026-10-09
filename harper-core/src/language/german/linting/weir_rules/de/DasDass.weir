@@ -69,7 +69,13 @@ expr artikel [der, die, den, dem, ein, einen, einem, einer, mein, meine, dein, d
 # because "ich finde das die Idee gut" is not a content clause.
 expr subjektohnekomma [ich, du, er, sie, es, wir, ihr, man, jemand, niemand]
 
-expr main <[(@ausloeser(,) das @subjekt), (@ausloeser @einschub(,) das @subjekt), (@verb(,) das @artikel), (@verb @einschub(,) das @artikel), (@ausloeser das @subjektohnekomma), (@ausloeser @einschub das @subjektohnekomma)], das>
+# Participles of saying and perceiving, without the comma only. With it they
+# are left out for the relative clauses above; without it, and with a subject
+# pronoun behind "das", there is no noun for a relative pronoun to refer to:
+# "er hat mir gesagt das er kommt".
+expr partizip [gesagt, gedacht, geglaubt, gehofft, gewusst, gehört, gesehen, gemerkt, bemerkt, erfahren, gelesen, geschrieben, erzählt, versprochen, behauptet, vermutet, befürchtet, mitgeteilt, festgestellt, erwähnt]
+
+expr main <[(@partizip das @subjektohnekomma), (@ausloeser(,) das @subjekt), (@ausloeser @einschub(,) das @subjekt), (@verb(,) das @artikel), (@verb @einschub(,) das @artikel), (@ausloeser das @subjektohnekomma), (@ausloeser @einschub das @subjektohnekomma)], das>
 
 let message "Hier steht die Konjunktion »dass«. Das Pronomen »das« schreibt man mit einem »s«, die Konjunktion mit zwei."
 let description "Ersetzt das Pronomen »das« durch die Konjunktion »dass«, wenn ein Nebensatz folgt."
@@ -78,6 +84,9 @@ let becomes "dass"
 let strategy "MatchCase"
 let scope "Sentence"
 
+test "Er hat mir gesagt das er morgen kommt." "Er hat mir gesagt dass er morgen kommt."
+test "Ich habe gehört das du umziehst." "Ich habe gehört dass du umziehst."
+test "Wir haben nicht gewusst das ihr kommt." "Wir haben nicht gewusst dass ihr kommt."
 test "Ich hoffe, das du bald kommst." "Ich hoffe, dass du bald kommst."
 test "Sie sagte, das sie müde sei." "Sie sagte, dass sie müde sei."
 test "Er weiß, das es wichtig ist." "Er weiß, dass es wichtig ist."
@@ -100,6 +109,9 @@ test "Ich glaube nicht das er kommt." "Ich glaube nicht dass er kommt."
 test "Es ist schade das niemand kam." "Es ist schade dass niemand kam."
 test "Ich weiß das du recht hast." "Ich weiß dass du recht hast."
 
+allows "Er hat das gesagt, das Buch aber nicht gelesen."
+allows "Wir haben das Heil gesehen, das du bereitet hast."
+allows "Sie hat mir das erzählt."
 allows "Ich hoffe dass du bald kommst."
 allows "Ich glaube das ist richtig."
 allows "Ich sehe das Haus."

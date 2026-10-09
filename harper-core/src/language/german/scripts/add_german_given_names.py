@@ -49,6 +49,8 @@ Milan Matteo Mattis Mathis Linus Levi Liam Leo Lio Jannik Yannick Janis Jannis J
 Konstantin Lennard Lennart Lenny Lasse Marlon Mika Milo Nick Nico Niko Noel Ole Pascal Rafael Raphael Samuel
 Silas Valentin Vincent Benedikt Dominik Jason Justin Robin Sascha Sandro Marco Mario Enrico Giovanni Pietro
 John Mike Mary James Robert Tony Jack Harry George William Charles Emily Olivia Jessica Kate Susan Steve Bob
+Eva Dana Olga Vera Tina Dora Erna Ilse Inge Ruth Marta Mira Leah Ana Ewa Zofia Agnieszka Katarzyna Ayse Emine
+Ivan Dmitri Pavel Marek Tomasz Hasan Murat
 """
 
 PLACES = """

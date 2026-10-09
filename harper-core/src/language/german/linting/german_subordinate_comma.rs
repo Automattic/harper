@@ -1,3 +1,4 @@
+use crate::language::german::grammar::determiners::determiner_readings;
 use crate::language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma;
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
@@ -317,6 +318,258 @@ impl GermanSubordinateComma {
         })
     }
 
+    /// *Ich gehe in die Stadt um Schuhe zu kaufen*: an infinitive group
+    /// opened by *um*, *ohne*, *statt* or *anstatt* always takes a comma.
+    ///
+    /// The preposition *um* is far more frequent than the conjunction, so the
+    /// group has to show itself: a *zu* in the same clause with a verb behind
+    /// it (*zu kaufen*), or a verb with *zu* inside (*anzurufen*). And a verb
+    /// has to stand in front of the group, or the group may be the sentence's
+    /// subject: *Kaffee ohne Zucker zu trinken ist gesund*.
+    fn missing_comma_before_infinitive_group(
+        tokens: &[&Token],
+        index: usize,
+        document: &Document,
+    ) -> Option<Lint> {
+        const OPENERS: &[&str] = &["um", "ohne", "statt", "anstatt"];
+        const NOT_AFTER: &[&str] = &[
+            "und", "oder", "aber", "sondern", "sowie", "nicht", "nur", "auch", "gerade", "vor",
+            "allem",
+        ];
+        const SEPARABLE_PREFIXES: &[&str] = &[
+            "an", "auf", "aus", "ab", "ein", "mit", "vor", "nach", "her", "hin", "weg", "zurück",
+            "fest", "los", "vorbei", "teil", "dar", "bei", "zusammen", "fern", "frei", "heim",
+        ];
+        // *um* the preposition, governed by what stands before it: *es geht
+        // um*, *sich kümmern um*, *der Kampf um*, *rund um*.
+        const GOVERN_UM: &[&str] = &[
+            "geht",
+            "ging",
+            "gehen",
+            "handelt",
+            "handelte",
+            "dreht",
+            "drehte",
+            "steht",
+            "stand",
+            "kümmert",
+            "kümmern",
+            "kümmerte",
+            "bemüht",
+            "bemühen",
+            "bittet",
+            "bat",
+            "bitten",
+            "kämpft",
+            "kämpfen",
+            "wirbt",
+            "werben",
+            "ringt",
+            "ringen",
+            "sorgt",
+            "sorgen",
+            "streiten",
+            "streitet",
+            "beneiden",
+            "beneidet",
+            "schlecht",
+            "gut",
+            "rund",
+            "sich",
+            "kampf",
+            "streit",
+            "sorge",
+            "angst",
+            "bitte",
+            "frage",
+            "wettbewerb",
+            "rennen",
+            "wettlauf",
+            "konkurrenz",
+            "bemühungen",
+            "debatte",
+            "diskussion",
+            "gedanken",
+            "verhandlungen",
+            "ringen",
+        ];
+        // *um bis zu 38 Prozent*, *um so mehr*, *um etwa die Hälfte*: a degree.
+        const DEGREE: &[&str] = &[
+            "so", "bis", "etwa", "ca", "knapp", "fast", "rund", "mehr", "weniger", "einiges",
+            "vieles", "einige", "wenige", "mehrere", "viele", "halb", "viertel", "ein", "eine",
+            "einen", "das", "die", "den",
+        ];
+        // *um halb acht Uhr*, *um einige Tage verzögern*, *um Wochen*: a time
+        // or a measure in the group makes *um* the preposition.
+        const MEASURES: &[&str] = &[
+            "uhr",
+            "tag",
+            "tage",
+            "tagen",
+            "woche",
+            "wochen",
+            "monat",
+            "monate",
+            "monaten",
+            "jahr",
+            "jahre",
+            "jahren",
+            "stunde",
+            "stunden",
+            "minute",
+            "minuten",
+            "sekunde",
+            "sekunden",
+            "prozent",
+            "punkt",
+            "punkte",
+            "euro",
+            "dollar",
+            "meter",
+            "kilometer",
+            "grad",
+            "stück",
+        ];
+        // *Jeder hat ohne Beschränkung … das Recht zu wählen*: when the only
+        // verbs in front take a *zu*-infinitive themselves, the infinitive is
+        // theirs and *ohne*, *um* are prepositions.
+        const ZU_GOVERNORS: &[&str] = &[
+            "hat", "haben", "habe", "hast", "habt", "hatte", "hatten", "ist", "sind", "war",
+            "waren", "scheint", "scheinen", "schien", "pflegt", "pflegen",
+        ];
+        let token = tokens[index];
+        if !Self::word_in(token, document, OPENERS) {
+            return None;
+        }
+        let previous = tokens.get(index.checked_sub(1)?)?;
+        let next = tokens.get(index + 1)?;
+        let is_um = Self::word_in(token, document, &["um"]);
+        // *Stufe um Stufe*, *Schritt um Schritt*.
+        let repeated = next.kind.is_word()
+            && document.get_span_content(&next.span) == document.get_span_content(&previous.span);
+        if repeated
+            || (is_um
+                && (matches!(next.kind, TokenKind::Number(_))
+                    || (Self::word_in(next, document, DEGREE)
+                        && !Self::word_in(
+                            next,
+                            document,
+                            &["das", "die", "den", "ein", "eine", "einen"],
+                        ))))
+        {
+            return None;
+        }
+        // *an statt zu laufen* is *anstatt* written apart, which is the
+        // mistake there; a comma after *an* would not fix it.
+        if Self::word_in(token, document, &["statt"]) && Self::word_in(previous, document, &["an"])
+        {
+            return None;
+        }
+        if !matches!(previous.kind, TokenKind::Word(_))
+            || Self::word_in(previous, document, NOT_AFTER)
+            || document
+                .get_span_content(&previous.span)
+                .last()
+                .is_some_and(|c| *c == '.')
+        {
+            return None;
+        }
+        let in_clause = |range: std::ops::Range<usize>| {
+            tokens[range]
+                .iter()
+                .take_while(|t| !matches!(t.kind, TokenKind::Punctuation(_)))
+                .copied()
+                .collect::<Vec<&Token>>()
+        };
+        let lower = |t: &Token| -> String {
+            document
+                .get_span_content(&t.span)
+                .iter()
+                .flat_map(|c| c.to_lowercase())
+                .collect()
+        };
+        let is_infinitive = |t: &Token| {
+            let word = lower(t);
+            ["en", "ern", "eln"].iter().any(|e| word.ends_with(e))
+                && document
+                    .get_span_content(&t.span)
+                    .first()
+                    .is_some_and(|c| c.is_lowercase())
+                && (GermanRelativeClauseComma::is_verb_token(t, document)
+                    || GermanRelativeClauseComma::infinitive_is_a_verb(&word))
+        };
+        let after = in_clause(index + 1..tokens.len());
+        let has_group = after
+            .windows(2)
+            .any(|pair| lower(pair[0]) == "zu" && is_infinitive(pair[1]))
+            || after.iter().any(|t| {
+                let word = lower(t);
+                SEPARABLE_PREFIXES.iter().any(|prefix| {
+                    word.strip_prefix(prefix)
+                        .and_then(|rest| rest.strip_prefix("zu"))
+                        .is_some_and(|rest| rest.chars().count() >= 3)
+                }) && is_infinitive(t)
+            });
+        if !has_group || (is_um && after.iter().any(|t| Self::word_in(t, document, MEASURES))) {
+            return None;
+        }
+        // A finite verb in front of the group, within the same clause — not a
+        // determiner with a verb reading (*sein Geld*), and not an infinitive
+        // with its *zu* (*die Firma zu betreten oder … ohne*), which would make
+        // the whole clause an infinitive group the preposition sits inside.
+        let clause_start = tokens[..index]
+            .iter()
+            .rposition(|t| matches!(t.kind, TokenKind::Punctuation(_)))
+            .map_or(0, |at| at + 1);
+        let before = &tokens[clause_start..index];
+        if is_um && before.iter().any(|t| Self::word_in(t, document, GOVERN_UM)) {
+            return None;
+        }
+        let verbs: Vec<&Token> = before
+            .iter()
+            .enumerate()
+            .filter(|&(at, t)| {
+                GermanRelativeClauseComma::is_verb_token(t, document)
+                && !t.kind.is_determiner()
+                && !t.kind.is_pronoun()
+                && determiner_readings(&lower(t)).is_none()
+                // *sein Geld*, *ihr Auto*: the possessive, which the table
+                // leaves out because the verb is as common.
+                && !(matches!(lower(t).as_str(), "sein" | "ihr")
+                    && before.get(at + 1).is_some_and(|n| {
+                        document
+                            .get_span_content(&n.span)
+                            .first()
+                            .is_some_and(|c| c.is_uppercase())
+                    }))
+                && !(at > 0 && lower(before[at - 1]) == "zu")
+                && !SEPARABLE_PREFIXES.iter().any(|prefix| {
+                    lower(t)
+                        .strip_prefix(prefix)
+                        .is_some_and(|rest| rest.starts_with("zu"))
+                })
+            })
+            .map(|(_, t)| *t)
+            .collect();
+        if verbs.is_empty()
+            || verbs
+                .iter()
+                .all(|t| Self::word_in(t, document, ZU_GOVERNORS))
+        {
+            return None;
+        }
+        let opener: String = document.get_span_content(&token.span).iter().collect();
+        Some(Lint {
+            span: previous.span,
+            lint_kind: LintKind::Punctuation,
+            suggestions: vec![Suggestion::InsertAfter(vec![','])],
+            priority: 28,
+            message: format!(
+                "»{opener} … zu« leitet eine Infinitivgruppe ein. Davor steht ein Komma."
+            ),
+        })
+    }
+
     fn word_in(token: &Token, document: &Document, set: &[&str]) -> bool {
         let word: String = document
             .get_span_content(&token.span)
@@ -342,6 +595,12 @@ impl Linter for GermanSubordinateComma {
             }
 
             for (index, token) in tokens.iter().enumerate() {
+                if let Some(lint) =
+                    Self::missing_comma_before_infinitive_group(&tokens, index, document)
+                {
+                    lints.push(lint);
+                    continue;
+                }
                 if !matches!(token.kind, TokenKind::Word(_))
                     || !Self::is_subordinator(token, document)
                 {
@@ -422,7 +681,7 @@ impl Linter for GermanSubordinateComma {
     }
 
     fn description(&self) -> &str {
-        "Setzt das Komma vor einer unterordnenden Konjunktion (»weil«, »obwohl«, »falls«)."
+        "Setzt das Komma vor einer unterordnenden Konjunktion (»weil«, »obwohl«, »falls«) und vor »um … zu«."
     }
 }
 
@@ -609,6 +868,52 @@ mod tests {
             "Sie ging nach Hause weil es regnete.",
         ] {
             assert_eq!(lint_count(text), 1, "should fire on {text:?}");
+        }
+    }
+
+    #[test]
+    fn an_infinitive_group_with_um_takes_a_comma() {
+        for text in [
+            "Ich gehe morgen in die Stadt um Schuhe zu kaufen.",
+            "Er kam um uns zu helfen.",
+            "Sie ging ohne sich zu verabschieden.",
+            "Er spielte statt zu lernen.",
+            "Ich rufe dich an um dich einzuladen.",
+            "Wir fahren nach Berlin um unsere Oma zu besuchen.",
+            "Sie hat lange gearbeitet um Geld zu verdienen.",
+        ] {
+            assert_eq!(lint_count(text), 1, "should fire on {text:?}");
+        }
+    }
+
+    #[test]
+    fn um_as_a_preposition_or_with_its_comma_is_quiet() {
+        for text in [
+            "Ich gehe morgen in die Stadt, um Schuhe zu kaufen.",
+            "Wir treffen uns um 12 Uhr.",
+            "Er fuhr um die Ecke zu schnell.",
+            "Kaffee ohne Zucker zu trinken ist gesund.",
+            "Um zu gewinnen, muss man trainieren.",
+            "Er bat um Hilfe.",
+            "Es geht um zu viel Geld.",
+            "Er fuhr mit dem Rad an statt zu laufen.",
+            "Er kam nicht um zu helfen, sondern um zu stören.",
+            "Er kam und um zu helfen blieb er.",
+            "Sie ging ohne Schirm zu ihrer Freundin.",
+            "Es scheint schlecht um das gute alte Vinyl zu stehen.",
+            "Wer sich zutraut, sein Geld ohne Beratung anzulegen, kann sparen.",
+            "Er lernt, Codesequenzen Stufe um Stufe zu optimieren.",
+            "Die Chips sind nun um bis zu 38 Prozent günstiger zu haben.",
+            "Anwender brauchen sich um die Kompression keine Gedanken zu machen.",
+            "Es ist möglich, Arbeitsplätze rund um das Web zu schaffen.",
+            "Doch ist diese Beschränktheit um so weniger zu tadeln.",
+            "Es ist verboten, die Firma ohne Genehmigung zu betreten oder Geräte ohne Genehmigung zu benutzen.",
+            "Jeden Tag gehe ich um halb acht aus dem Haus und fange um zehn Uhr zu arbeiten an.",
+            "Jeder hat ohne Beschränkung auf Rasse oder Geschlecht das Recht zu wählen.",
+            "Der Schritt drohe die Auslieferung um einige Tage zu verzögern.",
+            "Er drohte die Auslieferung um Wochen zu verzögern.",
+        ] {
+            assert_eq!(lint_count(text), 0, "should not fire on {text:?}");
         }
     }
 }

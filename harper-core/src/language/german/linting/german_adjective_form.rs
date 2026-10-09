@@ -11,6 +11,7 @@ use crate::{
     language::german::grammar::noun_phrase::lowercase_of,
     language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma,
     language::german::spell::lexical_classes::NUMERALS,
+    language::morphology::{MorphologyExt, NumberSet},
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::Dictionary,
 };
@@ -85,7 +86,30 @@ const PRONOUNS_FIRST: &[&str] = &[
 
 /// Prepositions spelled like an adjective: *eine **laut** Bericht schlecht
 /// getarnte Gruppe*.
-const ADJECTIVE_PREPOSITIONS: &[&str] = &["laut", "gemäß", "entsprechend", "nahe", "unweit"];
+const ADJECTIVE_PREPOSITIONS: &[&str] = &[
+    "laut",
+    "gemäß",
+    "entsprechend",
+    "nahe",
+    "unweit",
+    "bezüglich",
+    "hinsichtlich",
+    "einschließlich",
+    "ausschließlich",
+    "zuzüglich",
+    "abzüglich",
+    "anlässlich",
+    "vorbehaltlich",
+];
+
+/// Adverbs with an adjective reading that stand before a bare noun far more
+/// often than they are an undeclined attribute, when the determiner can be a
+/// pronoun: *weil dieser bloß Maler war*, *das ist rein Geschmackssache*.
+/// Behind *ein* and *kein* they are the mistake: *eine genau Vorstellung*.
+const ADVERBS_FIRST: &[&str] = &[
+    "bloß", "rein", "gerade", "eben", "genau", "gleich", "einfach", "direkt", "schlicht", "allein",
+    "selbst", "wohl", "schon", "kaum", "fast",
+];
 
 /// Subject pronouns, behind which *meine*, *meinen* are the verb: *wir meinen
 /// natürlich Nymphe*.
@@ -227,7 +251,12 @@ impl GermanAdjectiveForm {
         let declined = ENDINGS
             .iter()
             .find_map(|ending| word.strip_suffix(ending).map(|stem| (stem, *ending)));
+        // *seit den siebziger Jahren*: decade adjectives are indeclinable.
         if INDECLINABLE.contains(&word.as_str())
+            || (ADVERBS_FIRST.contains(&word.as_str())
+                && !determiner.starts_with("ein")
+                && !determiner.starts_with("kein"))
+            || word.ends_with("ziger")
             || (declined.is_none() && word.ends_with(['a', 'i', 'o', 'y']))
         {
             return None;
@@ -442,6 +471,24 @@ impl GermanAdjectiveForm {
         if !is_derived_adjective_stem(stem) || !self.is_adjective(stem) {
             return None;
         }
+        // *des Gerichtes*, *des Gerätes*: the stem is a noun of its own, and
+        // this is its genitive. *der Gläubiger*: a lexical noun whose plural
+        // is spelled like its singular, not a nominalized *gläubig*.
+        let capitalized_stem: String = head_text
+            .chars()
+            .take(head_text.chars().count() - ending.chars().count())
+            .collect();
+        if self
+            .metadata(&capitalized_stem)
+            .is_some_and(|m| m.is_noun())
+            || (ending == "er"
+                && self.metadata(&head_text).is_some_and(|m| {
+                    m.is_noun()
+                        && m.noun_agreement().number == NumberSet::SINGULAR | NumberSet::PLURAL
+                }))
+        {
+            return None;
+        }
         // *das Schweigen*: a nominalized infinitive, not an adjective.
         if ending == "en" && self.metadata(&lower).is_some_and(|m| m.is_verb()) {
             return None;
@@ -564,6 +611,10 @@ mod tests {
             ["schön"]
         );
         assert_eq!(reported("Das ist keine gut Überprüfung."), ["gut"]);
+        assert_eq!(
+            reported("Wir haben eine genau Vorstellung davon."),
+            ["genau"]
+        );
     }
 
     #[test]
@@ -600,6 +651,9 @@ mod tests {
             "Das eine große Problem bleibt.",
             "Damit ähnelt die Altersstruktur der europäischer Städte.",
             "Es ist weniger farbenprächtig als das anderer Papageien.",
+            "Die Inflation ist so niedrig wie seit den siebziger Jahren nicht.",
+            "Vor allem bezüglich Verlustleistung sind die Herausforderungen groß.",
+            "Er wäre nicht weniger Maler, weil dieser bloß Maler war.",
         ] {
             assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
         }
@@ -656,6 +710,9 @@ mod tests {
             "Der Lehrer kommt.",
             "Das Schweigen von gestern rechtfertigt nichts.",
             "Ein Verrückte zu unüberlegten Reaktionen provozierendes Verhalten.",
+            "Die Kommission werde der Entscheidung des Gerichtes entsprechen.",
+            "Man kann die Gespräche in der Umgebung des Gerätes abhören.",
+            "Das Unternehmen wird vor dem Zugriff der Gläubiger geschützt.",
         ] {
             assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
         }

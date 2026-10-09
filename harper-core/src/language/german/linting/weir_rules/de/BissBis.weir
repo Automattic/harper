@@ -1,0 +1,37 @@
+# "biss" is the preterite of "beißen" (der Hund biss zu) and so passes the
+# spell checker; before a point in time or a destination it can only be the
+# preposition "bis".
+expr danach [morgen, bald, nachher, zum, zur, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag, Sonntag, Mitternacht, Ende, Anfang, nächste, nächsten, nächstes, spätestens, übermorgen, demnächst]
+
+expr main <(biss @danach), biss>
+
+let message "Gemeint ist die Präposition »bis«. »biss« ist eine Form von »beißen«."
+let description "Ersetzt »biss« durch »bis« vor einer Zeit- oder Zielangabe."
+let kind "Spelling"
+let becomes "bis"
+
+test "Ich erledige das biss morgen." "Ich erledige das bis morgen."
+test "Tschüss, biss bald!" "Tschüss, bis bald!"
+test "Das dauert biss zum Abend." "Das dauert bis zum Abend."
+test "Er bleibt biss zur Pause." "Er bleibt bis zur Pause."
+test "Ich arbeite biss Freitag." "Ich arbeite bis Freitag."
+test "Das muss biss Ende der Woche fertig sein." "Das muss bis Ende der Woche fertig sein."
+test "Sie bleibt biss nächste Woche." "Sie bleibt bis nächste Woche."
+test "Wir feiern biss Mitternacht." "Wir feiern bis Mitternacht."
+test "Gib mir das biss spätestens Montag." "Gib mir das bis spätestens Montag."
+test "Das gilt biss Anfang Mai." "Das gilt bis Anfang Mai."
+test "Wir sehen uns biss nachher." "Wir sehen uns bis nachher."
+test "Biss übermorgen!" "Bis übermorgen!"
+test "Das hat Zeit biss demnächst." "Das hat Zeit bis demnächst."
+test "Ich bleibe biss Sonntag." "Ich bleibe bis Sonntag."
+test "Biss zum nächsten Mal!" "Bis zum nächsten Mal!"
+
+allows "Der Hund biss zu."
+allows "Er biss in den Apfel."
+allows "Die Schlange biss ihn gestern."
+allows "Bis morgen!"
+allows "Der Hund biss gestern den Briefträger."
+allows "Er biss dann doch zu."
+allows "Sie biss heute in eine Zitrone."
+allows "Das Pferd biss gleich zu."
+allows "Sie biss sich auf die Lippe."

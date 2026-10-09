@@ -1597,6 +1597,78 @@ found 1753 → 1754 — the 25 spelling hits that went away were all on the
 now-known verb forms, which were never the error LanguageTool marked. The
 school text is at 53/55 with no false alarm.
 
+### Third round: learner essays and treebank prose
+
+Two more sources, both on GitHub and both used for measuring only:
+
+* **Falko-MERLIN GEC** (Boyd 2018, `adrianeboyd/boyd-wnut2018`, CC BY /
+  CC BY-SA): 4840 sentences from learner essays with their minimal correction
+  and an ERRANT-style `.m2` annotation of every edit and its type (`R:SPELL`,
+  `R:DET:FORM`, `M:PUNCT` …). An edit counts as found when a lint touches its
+  span; any lint on the corrected sentence is a candidate false alarm. Read
+  those before counting: a minimal correction leaves other errors in place, and
+  the corpus splits sentences, so every lower-case sentence start is an
+  artefact. The tokenized text has to be detokenized first.
+* **Universal Dependencies** German GSD, HDT, PUD and LIT test sets: 22931
+  sentences of edited prose. HDT is heise news from 1996–2001 in the old
+  spelling (*daß*, *muß*) and full of product names, LIT is Schlegel (1798);
+  both are judged with that in mind. GSD and HDT contain real errors too —
+  *eines entzündetem Auge*, *zu einem fairem Preis* were correct reports.
+
+What they turned up, and what changed:
+
+* **Abbreviations with a full stop** were misspellings: *Nr.*, *Tel.*, *Dr.*,
+  *Prof.*, *Okt.*, *Abb.*, *Bahnhofstr.*. The tokenizer hands over the letters
+  and the stop separately, so the 61 entries the first import had written with
+  a stop (`bes./~~NYE`) never matched. `GermanSpellCheck` now accepts the
+  letters when a stop follows directly and the dictionary has them *with* the
+  stop, also at the end of a compound (*Bahnhofstr.*). The bare letters stay a
+  misspelling (*Nr 13*). Since entries with a stop can never be compound
+  elements, `abb.` and `kap.` — kept out of the abbreviation table because
+  `abb` and `kap` would split real words — are safe this way.
+  `add_german_abbreviations.py` holds the list and normalizes the old entries.
+* **`'s` for *es***: *geht's*, *gibt's*, *war's*, *wenn's* are accepted when the
+  host is a verb or one of a few conjunctions. Without the apostrophe (*gibts*)
+  they are not: the Duden allows it, but the same shape is how *stets* is
+  misspelled (*stehts*) and how the second person is (*du machts*), and both
+  were LanguageTool errors this caught by accident.
+* **1431 entries marked `# not a noun`** still carried a gender (`M`, `F`, `Z`),
+  which is a noun reading of its own: *daher*, *bisher*, *eher*, *hierzulande*.
+  `strip_german_noun_readings.py` had removed `N` and the plural affixes only.
+  `fix_german_not_a_noun_genders.py` removes the gender, and turns the 29
+  strong preterites that kept the plural affix `Y` (*versprach*, *verhielt*)
+  into verbs.
+* `GermanNounCapitalization`: a capital inside the word (*eBay*), the
+  subjunctive of reported speech behind *das*/*dies* when the noun could not
+  be neuter (*Das liege*, *Dies zeige*), *extra*/*klasse* before a noun, and
+  *samt*, *dank*, *laut*, *mangels* as prepositions before an article or a
+  capitalized word when nothing in front makes them a noun (*Vielen dank*,
+  *zum dank*, *keinen laut* stay reports).
+* `GermanSubordinateComma` checks the comma before *um/ohne/statt … zu*. *um*
+  is a preposition far more often, so the group has to show a *zu* with a verb,
+  a finite verb has to stand in front (*Kaffee ohne Zucker zu trinken ist*), and
+  governed *um* (*es geht um*, *der Kampf um*, *sich … um*), times and measures
+  (*um halb acht*, *um einige Tage*), *Stufe um Stufe* and *haben … zu* are
+  left alone. On the treebank it fires twice, both real; on the learner essays
+  34 times.
+* `DasDass` reads *gesagt das er* — a participle of saying without the comma,
+  with a subject pronoun behind *das*, where a relative clause has no noun to
+  refer to. The comma branch still leaves participles out.
+* `BissBis` (*biss morgen*, *biss zum*), the given names learners write (*Eva*,
+  *Dana*, *Olga*), *tue*, *tut* as a verb, *im Zuge*.
+
+Abbreviations of nouns are entered capitalized (*Prof.*, *Std.*) and matched
+in their own case, so *Herr prof. Müller* is still a report.
+
+Measured against the start of the round: Falko-MERLIN edits found 2968 →
+2979, corrected sentences with a lint 497 → 427; LanguageTool false-alarm
+sentences 771 → 738, errors found 1754 → 1736. All 36 sentences lost there
+were hits on a correct word in a sentence whose error was elsewhere —
+abbreviations (*7. Feb. 2025*), *gibt's*, *Vera* — and 15 were gained. The
+treebank: 16234 → 16056 lints, capitalization 435 → 349. School text 53/55
+with no false alarm, the batteries and the archived corpus unchanged but for
+two abbreviation reports fewer.
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both

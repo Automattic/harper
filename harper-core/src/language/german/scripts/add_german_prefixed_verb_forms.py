@@ -17,6 +17,7 @@ reimplemented:
     candidate = prefix + word        ver + spricht  -> verspricht
     hunspell accepts it              yes
     harper-cli reports it            yes            -> add it
+    (or knows it only as a noun)
 
 Each form is written as an entry of its own, with the verb property, or the
 adjective property for a present participle (*verschwindend*) or an
@@ -47,7 +48,7 @@ CLI = pathlib.Path("target/release/harper-cli")
 PREFIXES = ["ver", "zer", "ent", "emp", "er", "be", "miss", "über", "unter", "hinter", "wider"]
 
 # A present participle and its declined forms, or an adjective in -lich/-bar.
-ADJECTIVE = re.compile(r"(end|lich|bar)(e|em|en|er|es)?$|lich(er|st)(e|em|en|er|es)?$")
+ADJECTIVE = re.compile(r"(end|lich|bar|wert)(e|em|en|er|es)?$|lich(er|st)(e|em|en|er|es)?$")
 
 COMMENT = "# prefixed form, hunspell-attested (add_german_prefixed_verb_forms.py)"
 
@@ -87,6 +88,19 @@ def rejected_by_harper(words: list[str]) -> set[str]:
     return {lint["matched_text"] for lint in json.loads(out)[0]["lints"]}
 
 
+def harper_pos(words: list[str]) -> dict[str, str]:
+    """The part-of-speech letters `harper-cli metadata --brief` prints per word."""
+    out = subprocess.run(
+        [str(CLI), "metadata", "--dialect", "de", "--brief"],
+        input="\n".join(words), capture_output=True, text=True,
+    ).stdout
+    pos = {}
+    for line in out.splitlines():
+        word, _, rest = line.partition(":")
+        pos[word.strip()] = rest.split()[0] if rest.split() else ""
+    return pos
+
+
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--dic", type=pathlib.Path, default=pathlib.Path("/usr/share/hunspell/de_DE.dic"))
@@ -110,7 +124,14 @@ def main():
             if hunspell.accepts(form):
                 candidates.add(form)
 
-    missing = sorted(rejected_by_harper(sorted(candidates)) & candidates)
+    rejected = rejected_by_harper(sorted(candidates)) & candidates
+    # Accepted, but only as a noun: *versprach* passes as a compound of
+    # *Vers* and *prach*, and then wants a capital letter.
+    noun_only = {
+        word for word, pos in harper_pos(sorted(candidates - rejected)).items()
+        if "N" in pos and "V" not in pos and "J" not in pos
+    }
+    missing = sorted(rejected | noun_only)
     existing = DICT.read_text(encoding="utf-8")
     present = {line.partition("/")[0] for line in existing.splitlines()}
     lines = [

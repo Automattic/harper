@@ -1,6 +1,7 @@
 use hashbrown::HashMap;
 
 use crate::language::german::linting::german_foreign_stretch;
+use crate::language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma;
 use crate::language::german::spell::compound_checker::{
     MIN_COMPOUND_PART_LEN, can_head_a_capitalized_compound, can_head_a_lowercase_compound,
     has_content_reading, interfix_fits, interfix_matches_known_begin, is_derivational_suffix,
@@ -11,7 +12,7 @@ use crate::language::german::spell::german_dict::{
 };
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
-use crate::{CharStringExt, Token, TokenKind, TokenStringExt, document::Document};
+use crate::{CharStringExt, Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 
 // `MIN_COMPOUND_PART_LEN` is imported rather than redeclared: this decomposition
 // and the dictionary's own must not disagree about what counts as an element.
@@ -328,6 +329,85 @@ where
 }
 
 impl<T: Dictionary> GermanSpellCheck<T> {
+    /// Is `word`, with a full stop after it, an abbreviation — on its own
+    /// (*Nr.*, *Okt.*) or at the end of a compound (*Bahnhofstr.*,
+    /// *Bestellnr.*)?
+    fn is_abbreviation_with_stop(&self, word: &[char]) -> bool {
+        // Matched in the entry's own case: the abbreviation of a noun is
+        // capitalized (*Prof.*, not *prof.*). A lower-case entry may still
+        // open a sentence (*Bzw.*).
+        let with_stop = |part: &[char]| {
+            let mut chars = part.to_vec();
+            chars.push('.');
+            if self.dictionary.contains_exact_word(&chars) {
+                return true;
+            }
+            let mut lowered = chars.clone();
+            match lowered.first_mut() {
+                Some(first) if first.is_uppercase() => {
+                    *first = first.to_lowercase().next().unwrap_or(*first);
+                    self.dictionary.contains_exact_word(&lowered)
+                }
+                _ => false,
+            }
+        };
+        with_stop(word)
+            || (2..=4).any(|len| {
+                word.len() >= len + 3 && {
+                    let (head, tail) = word.split_at(word.len() - len);
+                    let lower: Vec<char> = tail.iter().flat_map(|c| c.to_lowercase()).collect();
+                    // The abbreviation of a noun is entered capitalized
+                    // (`Str.`), and the compound writes it lower case.
+                    let capitalized: Vec<char> = lower
+                        .iter()
+                        .enumerate()
+                        .flat_map(|(at, c)| {
+                            if at == 0 {
+                                c.to_uppercase().collect::<Vec<_>>()
+                            } else {
+                                vec![*c]
+                            }
+                        })
+                        .collect();
+                    (with_stop(&lower) || with_stop(&capitalized))
+                        && (self.dictionary.contains_word(head)
+                            || self.try_compound_word_check(head))
+                }
+            })
+    }
+
+    /// Is `word` a verb or a conjunction with `'s` (*es*) attached: *geht's*,
+    /// *war's*, *sag's*, *wenn's*? Only these hosts take the clitic; an
+    /// English-style genitive (*Peter's*) is not accepted.
+    fn is_cliticized_es(&self, word: &[char]) -> bool {
+        const HOSTS: &[&str] = &[
+            "wie", "wenn", "ob", "so", "da", "was", "als", "weil", "dass",
+        ];
+        let [host @ .., apostrophe, 's'] = word else {
+            return false;
+        };
+        // Without the apostrophe the Duden allows it too (*gibts*), but the
+        // same shape is the most common misspelling of a second person
+        // (*du machts*, *läufts du*) and of *stets* (*stehts*), so only the
+        // apostrophe is accepted.
+        if !matches!(apostrophe, '\'' | '’') {
+            return false;
+        }
+        if host.is_empty() {
+            return false;
+        }
+        let lower: String = host.iter().flat_map(|c| c.to_lowercase()).collect();
+        HOSTS.contains(&lower.as_str())
+            || self
+                .dictionary
+                .get_word_metadata(host)
+                .is_some_and(|metadata| metadata.is_verb())
+            // The finite form (*geht*) or the imperative (*sag*) of a verb
+            // whose form the dictionary carries no reading for.
+            || GermanRelativeClauseComma::infinitive_is_a_verb(&lower)
+            || GermanRelativeClauseComma::infinitive_is_a_verb(&format!("{lower}t"))
+    }
+
     pub fn new(dictionary: T) -> Self {
         Self { dictionary }
     }
@@ -573,6 +653,26 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
 
                     // Skip words in dictionary
                     if self.dictionary.contains_word(word_chars) {
+                        continue;
+                    }
+
+                    // An abbreviation German writes with a full stop: `Nr.`,
+                    // `Dr.`, `Okt.`. The tokenizer hands over the letters and
+                    // the stop separately, and the dictionary lists the
+                    // abbreviation with its stop, so the bare letters stay a
+                    // misspelling and never act as a compound element.
+                    if tokens.get(index + 1).is_some_and(|next| {
+                        matches!(next.kind, TokenKind::Punctuation(Punctuation::Period))
+                            && next.span.start == word.span.end
+                    }) && self.is_abbreviation_with_stop(word_chars)
+                    {
+                        continue;
+                    }
+
+                    // *geht's*, *gibt's*, *wie's*: the pronoun *es* cliticized
+                    // onto a verb or a conjunction. The tokenizer keeps it on
+                    // the word, so the host is what has to be a word.
+                    if self.is_cliticized_es(word_chars) {
                         continue;
                     }
 
@@ -850,6 +950,64 @@ mod tests {
             suggestions.first().map(String::as_str),
             Some("Wort"),
             "got {suggestions:?}"
+        );
+    }
+
+    fn spelling_reports(text: &str) -> Vec<String> {
+        let dict = combined_german_dictionary();
+        let document = Document::new(text, &PlainGerman, &dict);
+        GermanSpellCheck::new(dict)
+            .lint(&document)
+            .into_iter()
+            .map(|lint| document.get_span_content_str(&lint.span))
+            .collect()
+    }
+
+    #[test]
+    fn an_abbreviation_needs_its_full_stop() {
+        for text in [
+            "Das Haus Nr. 13 steht leer.",
+            "Ruf an unter Tel. 0611 123456.",
+            "Berlin, den 29. Okt. 2011",
+            "Dr. Meier und Prof. Schulz kommen.",
+            "Er wohnt in der Bahnhofstr. 5.",
+            "Siehe Abb. 3 und Kap. 2.",
+            "Das gilt bes. für Kinder.",
+        ] {
+            assert!(
+                spelling_reports(text).is_empty(),
+                "{text}: {:?}",
+                spelling_reports(text)
+            );
+        }
+        // Without the stop the letters are no word, and they make no compound.
+        assert_eq!(spelling_reports("Das Haus Nr 13 steht leer."), ["Nr"]);
+        assert_eq!(spelling_reports("Ruf mich an, Tel 0611."), ["Tel"]);
+        // The abbreviation of a noun is capitalized, like the noun.
+        assert_eq!(spelling_reports("Lieber Herr prof. Müller"), ["prof"]);
+    }
+
+    #[test]
+    fn a_cliticized_es_is_accepted_on_a_verb() {
+        for text in [
+            "Wie geht's dir?",
+            "Gibt's das?",
+            "Das war's.",
+            "Sag's ihm!",
+            "Wenn's regnet, bleiben wir.",
+            "Das tue ich nicht.",
+        ] {
+            assert!(
+                spelling_reports(text).is_empty(),
+                "{text}: {:?}",
+                spelling_reports(text)
+            );
+        }
+        assert_eq!(spelling_reports("Das ist Peter's Auto."), ["Peter's"]);
+        assert_eq!(spelling_reports("Er war stehts bemüht."), ["stehts"]);
+        assert_eq!(
+            spelling_reports("Du machts es mir nicht leicht."),
+            ["machts"]
         );
     }
 
