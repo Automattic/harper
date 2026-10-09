@@ -43,6 +43,8 @@ use input::{
 };
 use lint::LintOptions;
 
+mod check_linters;
+
 /// A debugging tool for the Harper grammar checker.
 #[derive(Parser)]
 #[command(version, about)]
@@ -225,6 +227,12 @@ enum Args {
     NominalPhrases {
         /// The text or file to analyze. If not provided, it will be read from standard input.
         input: Option<SingleInput>,
+    },
+    /// Check the linters
+    CheckLinters {
+        /// Show detailed output
+        #[arg(short, long)]
+        verbose: bool,
     },
     /// Run the tests contained within a Weir file.
     Test {
@@ -996,6 +1004,7 @@ fn main() -> anyhow::Result<()> {
 
             Ok(())
         }
+        Args::CheckLinters { verbose } => check_linters::check_linters(verbose),
         Args::Test { input } => {
             let weir_file = fs::read_to_string(input)?;
             let mut linter = WeirLinter::new(&weir_file)?;
