@@ -55,7 +55,7 @@ impl ExprLinter for LittleKnown {
     }
 
     fn description(&self) -> &str {
-        "Fixes the indefinite article around `little known` in `it's (a) little known fact/that`."
+        "Fixes nonstandard uses of little known."
     }
 }
 

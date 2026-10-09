@@ -74,7 +74,7 @@ impl ExprLinter for OnTheFence {
     }
 
     fn description(&self) -> &str {
-        "Corrects `on a fence` to `on the fence` for the idiom meaning undecided."
+        "Corrects `on a fence` to `on the fence` for the idiom meaning 'undecided'."
     }
 }
 

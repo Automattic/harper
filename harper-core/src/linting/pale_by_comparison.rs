@@ -68,7 +68,7 @@ impl ExprLinter for PaleByComparison {
     }
 
     fn description(&self) -> &str {
-        "Corrects `be` + adjective `pale` in `pale by/in comparison` to the verb form of the idiom."
+        "Corrects variants of the idiom \"pale by/in comparison\" where pale is incorrectly used as an adjective instead of a verb."
     }
 }
 

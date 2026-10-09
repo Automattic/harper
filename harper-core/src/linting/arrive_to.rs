@@ -51,7 +51,7 @@ impl ExprLinter for ArriveTo {
     }
 
     fn description(&self) -> &str {
-        "Corrects `arrive to` to `arrive at` or `arrive in` when referring to a destination."
+        "Corrects `arrive to` to `arrive at` or `arrive in`."
     }
 }
 

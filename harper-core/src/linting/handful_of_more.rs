@@ -42,7 +42,7 @@ impl ExprLinter for HandfulOfMore {
     }
 
     fn description(&self) -> &str {
-        "Removes the nonstandard `of` from `handful of more` followed by a noun."
+        "Removes the nonstandard `of` from `handful of more`."
     }
 }
 
