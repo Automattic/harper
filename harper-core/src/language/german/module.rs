@@ -59,6 +59,7 @@ impl LanguageModule for GermanModule {
             german_repeated_words::GermanRepeatedWords,
             german_sentence_capitalization::GermanSentenceCapitalization,
             german_spell_check::GermanSpellCheck, german_split_particle::GermanSplitParticle,
+            german_strong_imperative::GermanStrongImperative,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
             german_suspended_hyphen::GermanSuspendedHyphen, german_wider_wieder::GermanWiderWieder,
@@ -114,6 +115,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanYearPreposition", GermanYearPreposition);
         group.add("GermanPerfectAuxiliary", GermanPerfectAuxiliary);
         group.add("GermanModalZuInfinitive", GermanModalZuInfinitive);
+        group.add("GermanStrongImperative", GermanStrongImperative);
         group.add("GermanCountryArticle", GermanCountryArticle);
         group.add("GermanAdjectiveForm", GermanAdjectiveForm::new());
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());

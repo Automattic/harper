@@ -59,9 +59,43 @@ pub fn looks_like_participle(word: &str) -> bool {
         && (after_prefix.ends_with('t') || after_prefix.ends_with("en"))
 }
 
+/// The stems a strong verb's *e* is raised to in the second and third person
+/// singular and the imperative: *geb* → *gib*, *les* → *lies*, *nehm* →
+/// *nimm*. Spelling only — which of them is a real form is the dictionary's
+/// to say, and for most verbs none is (*leb* → *lieb* is another verb).
+///
+/// A stem in *-t* is left out: its imperative does not have this shape
+/// (*tritt*, *gilt*).
+pub fn raised_stems(stem: &str) -> Vec<String> {
+    let Some(at) = stem.rfind('e') else {
+        return Vec::new();
+    };
+    let (head, tail) = (&stem[..at], &stem[at + 1..]);
+    if stem.ends_with('t') || tail.chars().any(|c| "aeiouäöü".contains(c)) {
+        return Vec::new();
+    }
+    let mut stems = vec![format!("{head}i{tail}"), format!("{head}ie{tail}")];
+    // *nehm* → *nimm*: the length mark goes and the consonant doubles.
+    let mut rest = tail.chars();
+    if let (Some('h'), Some(consonant), None) = (rest.next(), rest.next(), rest.next()) {
+        stems.push(format!("{head}i{consonant}{consonant}"));
+    }
+    stems
+}
+
 #[cfg(test)]
 mod tests {
-    use super::{has_zu_infix, looks_like_participle, without_zu_infix};
+    use super::{has_zu_infix, looks_like_participle, raised_stems, without_zu_infix};
+
+    #[test]
+    fn the_e_is_raised_to_i_or_ie() {
+        assert_eq!(raised_stems("geb"), ["gib", "gieb"]);
+        assert_eq!(raised_stems("les"), ["lis", "lies"]);
+        assert!(raised_stems("nehm").contains(&"nimm".to_string()));
+        assert!(raised_stems("vergess").contains(&"vergiss".to_string()));
+        assert!(raised_stems("tret").is_empty());
+        assert!(raised_stems("mach").is_empty());
+    }
 
     #[test]
     fn the_zu_inside_a_separable_verb_is_found() {

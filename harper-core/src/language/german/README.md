@@ -1520,6 +1520,7 @@ script writes it as an abbreviation.
 | `GermanCountryArticle` | *aus Türkei*, *nach Schweiz*, *in USA* | directly behind a preposition, not in a hyphenated compound |
 | `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
 | `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
+| `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised stem must be a verb and the raised infinitive not |
 | `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
 | comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
 | closing comma of a relative clause | *Das Auto, das am Straßenrand steht parkt …* | the same verb-run test |
@@ -1723,6 +1724,29 @@ rules, not from LanguageTool's patterns.
   `GermanSubordinateComma` used to keep privately. The irregular finite verbs
   in `grammar/subjects.rs` are grouped by infinitive, so a rule can ask
   whether *kann* belongs to *können*.
+
+* `GermanStrongImperative` — *Gebe mir das!* → *Gib*, *Nehme Platz!* →
+  *Nimm*, *Lese das bitte* → *Lies*, *Vergesse es nicht!* → *Vergiss*. No list
+  of strong verbs: a sentence-initial *-e* form (or one after *bitte*) is the
+  imperative of an *e/i* verb when the dictionary knows the raised stem
+  (*gib*) and the third person on it (*gibt*) as verbs, the infinitive on the
+  plain stem (*geben*) too, and **no** infinitive on the raised one — *lebe*
+  would give *lieb*, and *lieben* is a verb of its own. `raised_stems` in
+  `grammar/verbs.rs` spells the candidates (*geb* → *gib*/*gieb*, *nehm* →
+  *nimm*). The same form is the first person with the pronoun dropped (*Lese
+  gerade ein Buch*, *Nehme an, dass …*) and the subjunctive (*Gebe Gott*), so
+  only a request is read — the sentence ends in *!* or contains *bitte* — and
+  not before a subject pronoun (*Gebe ich dir das?*). Stems in *-t* (*Trete
+  ein!* → *Tritt*) are not covered.
+* The data under it: `strip_german_noun_readings.py` had left the *e/i* forms
+  with no part of speech at all (`gib/~~h`, `nimm/~~h`, `nimmt/~~hG`).
+  `add_german_strong_imperatives.py` asks hunspell for them — the third person
+  must be an entry of its own (*gibt*, not *liebt* from *lieben*), the
+  imperative an entry or the third person with the imperative flag `W`, and
+  the first person *-e* must exist (*besen* is no verb) — and gives 78 entries
+  the verb reading and adds 43 second-person forms (*nimmst*, *hilfst*).
+  `lies` and `liest` carried conjugation affixes as if they were stems and
+  built *liesen*; they are plain entries now.
 
 Measured against the end of the third round: LanguageTool errors found 1736 →
 1790, false-alarm sentences 738 → 739 (the one new report is *etwas

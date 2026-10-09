@@ -21,6 +21,7 @@ pub mod german_repeated_words;
 pub mod german_sentence_capitalization;
 pub mod german_spell_check;
 pub mod german_split_particle;
+pub mod german_strong_imperative;
 pub mod german_subject_verb_agreement;
 pub mod german_subordinate_comma;
 pub mod german_suspended_hyphen;
