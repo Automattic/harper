@@ -55,7 +55,7 @@ impl ExprLinter for LittleKnown {
     }
 
     fn description(&self) -> &str {
-        "Fixes nonstandard uses of little known."
+        "Fixes nonstandard uses of `little known`."
     }
 }
 
