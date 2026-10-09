@@ -68,7 +68,7 @@ impl ExprLinter for PaleByComparison {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `be` + adjective `pale` in `pale by/in comparison` to the verb form of the idiom."
     }
 }
 

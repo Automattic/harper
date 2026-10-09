@@ -56,7 +56,7 @@ impl ExprLinter for ComfortableWith {
     }
 
     fn description(&self) -> &str {
-        "A linter skeleton for contributors to copy into `harper_core/src/linting/` and rename."
+        "Corrects `comfortable of` to `comfortable with`."
     }
 }
 
