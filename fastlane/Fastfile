@@ -5,6 +5,7 @@ UI.user_error!('Please run fastlane via `bundle exec`') unless FastlaneCore::Hel
 APPLE_TEAM_ID = 'PZYM8XX95Q'
 
 GITHUB_REPO = 'Automattic/harper'
+PROJECT_ROOT = File.expand_path('..', __dir__)
 
 CODE_SIGNING_STORAGE_OPTIONS = {
   storage_mode: 's3',
@@ -24,8 +25,8 @@ ASC_API_KEY_ENV_VARS = %w[
   APP_STORE_CONNECT_API_KEY_KEY
 ].freeze
 
-require 'tempfile'
 require 'fastlane/plugin/wpmreleasetoolkit'
+require_relative 'lib/desktop_release'
 
 # Convenience alias — wpmreleasetoolkit 14.4+ namespaces this under
 # Fastlane::Wpmreleasetoolkit but exposes no top-level shortcut.
@@ -69,25 +70,23 @@ lane :notarize_macos do |package:|
   )
 end
 
-desc 'Create a draft GitHub release for harper-desktop with the signed/notarized macOS artifacts attached'
+desc 'Create or reuse a draft GitHub release and attach the signed/notarized macOS artifacts'
 lane :create_desktop_github_release do |tag:, dmg:, app_tarball:, app_signature:|
-  EnvManager.get_required_env!('GITHUB_TOKEN')
+  upload_desktop_release_assets(tag: tag, assets: [dmg, app_tarball, app_signature])
+end
 
-  # `create_github_release` is create-only — a re-run on an existing tag
-  # requires deleting the partial draft on GitHub before retrying.
+desc 'Attach the signed Windows installer to the draft GitHub release'
+lane :upload_windows_github_release do |tag:, installer:|
+  upload_desktop_release_assets(tag: tag, assets: [installer])
+end
 
-  # `create_github_release` crashes with a FrozenError when no notes path is
-  # given (wpmreleasetoolkit 14.6.0 calls `gsub!` on a frozen empty literal).
-  # Pass an empty tempfile to get the action's intended "no notes" behavior.
-  Tempfile.create(['release-notes', '.md']) do |empty_notes|
-    empty_notes.close
-
-    create_github_release(
-      repository: GITHUB_REPO,
-      version: tag,
-      release_assets: [dmg, app_tarball, app_signature],
-      release_notes_file_path: empty_notes.path,
-      is_draft: true
-    )
-  end
+private_lane :upload_desktop_release_assets do |tag:, assets:|
+  client = Octokit::Client.new(
+    access_token: EnvManager.get_required_env!('GITHUB_TOKEN'),
+    auto_paginate: true
+  )
+  # Lane Ruby runs inside fastlane/, unlike actions which run at the repo root.
+  asset_paths = assets.map { |path| File.expand_path(path, PROJECT_ROOT) }
+  url = DesktopRelease.upload(client: client, repository: GITHUB_REPO, tag: tag, assets: asset_paths)
+  UI.success("Uploaded desktop assets to #{url}")
 end

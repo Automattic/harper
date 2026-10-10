@@ -78,6 +78,9 @@ echo "--- :npm: Install pnpm"
 npm install -g pnpm@10.10.0
 hash -r
 
+echo "--- :test_tube: Test desktop signing and release scripts"
+just test-desktop-release
+
 echo "--- :key: Fetch Developer ID certificate"
 bundle exec fastlane set_up_signing
 
