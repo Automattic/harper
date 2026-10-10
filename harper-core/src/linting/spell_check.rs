@@ -979,4 +979,21 @@ mod tests {
             assert_no_lints(source, test_linter());
         }
     }
+
+    #[test]
+    fn allows_surveilled_and_surveilling() {
+        assert_no_lints(
+            "The suspect was closely surveilled by the agents.",
+            test_linter(),
+        );
+        assert_no_lints("They were surveilling the premises.", test_linter());
+        assert_no_lints(
+            "The suspect was closely surveilled by the agents.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
+        assert_no_lints(
+            "They were surveilling the premises.",
+            SpellCheck::new(FstDictionary::curated(), Dialect::British),
+        );
+    }
 }
