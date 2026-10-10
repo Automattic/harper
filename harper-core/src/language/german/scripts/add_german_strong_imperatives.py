@@ -27,7 +27,9 @@ flag `W`. The second person is added when hunspell accepts it.
 Each form gets the verb property `V`, and the forms on the changed stem the
 marker `%` as well, which the rules read: appended to an existing entry, or
 written as a new one. The second person plural on the plain stem (*ihr
-lauft*) is added as a plain verb where the affixes missed it. A noun reading on a form whose capitalized spelling
+lauft*) is added as a plain verb where the affixes missed it, and so are the
+forms behind a particle the dictionary lists without a part of speech
+(*abfährt*, *teilnimmt*). A noun reading on a form whose capitalized spelling
 hunspell does not know (*flichtst/~~NA*) is the bulk import's and goes.
 
     harper-core/src/language/german/scripts/add_german_strong_imperatives.py \\
@@ -181,6 +183,33 @@ def plural_on_plain_stem(hunspell: Hunspell, stem: str) -> list[str]:
     return [plural] if hunspell.accepts(plural) else []
 
 
+def prefixed_forms(index: dict[str, str], strong: set[str]) -> set[str]:
+    """The same forms behind a particle, as the dictionary already lists them
+    without a part of speech: *abfährt*, *teilnimmt*, *vorliest*,
+    *zusammenbricht*. The particle has to be a word of its own (*ab*,
+    *zurück*, *daran*), and an entry with a noun reading is left alone — it is
+    the noun written small: *eintritt* is *Eintritt*. hunspell is not asked:
+    it lacks *anfährt*, *herabläuft*, *mitberät*, which the dictionary has.
+
+    Only the finite forms in *-t*/*-st*: the imperative behind a particle is
+    a noun far more often (*Anstich*, *Durchbruch*)."""
+    finite = sorted((f for f in strong if f.endswith("t")), key=len, reverse=True)
+    found = set()
+    for word, flags in index.items():
+        if "V" in flags or any(c in flags for c in "NMFZA+"):
+            continue
+        for form in finite:
+            particle = word[: -len(form)]
+            if (
+                word.endswith(form)
+                and len(particle) >= 2
+                and particle in index
+            ):
+                found.add(word)
+                break
+    return found
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--dic", type=pathlib.Path, required=True)
@@ -195,7 +224,8 @@ def main() -> None:
     nouns = {line.split("/")[0] for line in entries if line[:1].isupper()}
     for line in entries:
         word = line.split("/")[0]
-        if re.fullmatch(r"[a-zäöüß]{2,}en", word) and "e" in word[:-2]:
+        # Not only stems with an *e*: *laden* → *lädt* is listed whole too.
+        if re.fullmatch(r"[a-zäöüß]{2,}en", word):
             infinitives.add(word)
         elif re.fullmatch(r"[a-zäöüß]{2,}", word):
             # Verb stems carry the infinitive through an affix: *geb/…*.
@@ -210,7 +240,6 @@ def main() -> None:
             strong |= set(changed)
             plural |= set(plural_on_plain_stem(hunspell, inf[:-2]))
     plural -= strong
-    forms = sorted(strong | plural)
 
     lines = DICT.read_text(encoding="utf-8").splitlines(keepends=True)
     index = {}
@@ -218,6 +247,11 @@ def main() -> None:
         match = LINE.match(line.rstrip("\n"))
         if match:
             index.setdefault(match["word"], at)
+    flags_of = {word: LINE.match(lines[at].rstrip("\n"))["flags"] for word, at in index.items()}
+    prefixed = prefixed_forms(flags_of, strong)
+    print(f"{len(prefixed)} forms behind a particle")
+    plural |= prefixed
+    forms = sorted(strong | plural)
     changed, added = 0, []
     for form in forms:
         at = index.get(form)
@@ -232,7 +266,8 @@ def main() -> None:
         # *fahrt* is also the noun *Fahrt* written small; a verb reading would
         # hide *nahm fahrt auf* from the capitalization rule, and *ihr fahrt*
         # is recognized by its *ihr* anyway.
-        if form not in strong and "N" in flags:
+        # The same for *auffahrt* (`M`) and *abfahrt* (`F`).
+        if form not in strong and any(c in flags for c in NOUN_ONLY_PROPERTIES):
             continue
         # A noun reading on a form hunspell has no noun for is the bulk
         # import's: *flichtst/~~NA*. *Eintritt* is a noun, *eintritt* keeps it.

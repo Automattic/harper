@@ -17,6 +17,22 @@ const SEPARABLE_PREFIXES: &[&str] = &[
     "los", "vorbei", "teil", "dar", "bei", "zusammen", "fern", "frei", "heim", "kennen",
 ];
 
+/// The separable verb a particle at the end of a clause and a finite verb
+/// earlier in it make together: *aus* + *zahlt* → *auszahlt*, *zu* + *hört* →
+/// *zuhört*, *kennen* + *lerne* → *kennenlerne*. The dictionary has to know
+/// the joined form as a verb.
+///
+/// *zu* and *weiter* cannot be prefixes with a *zu* inside (*zuzuhören* is
+/// written, but `zu_infix_parts` would read *zu* + *zuhören*), so they are only
+/// admitted here.
+pub fn joined_separable_verb(particle: &str, verb: &str) -> Option<String> {
+    if !SEPARABLE_PREFIXES.contains(&particle) && !matches!(particle, "zu" | "weiter") {
+        return None;
+    }
+    let joined = format!("{particle}{verb}");
+    is_verb(&joined).then_some(joined)
+}
+
 /// Whether `word` is spelled like an infinitive with its *zu* inside, as a
 /// separable verb writes it: *anzurufen*, *mitzunehmen*, *kennenzulernen*.
 ///

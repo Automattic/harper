@@ -1521,6 +1521,7 @@ script writes it as an abbreviation.
 | `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
 | `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
 | `GermanDativePlural` | *mit den Kinder*, *seit drei Jahre*, *in vielen Länder* | the noun carries `&`; not behind a preposition without the dative; without a determiner only behind *mit/seit/bei/von* with a number or quantifier |
+| `GermanSubordinateWordOrder` | *dass es zahlt sich nicht aus*, *dass ich habe Zeit*, *bevor er ist gestorben* | a particle the verb joins, or an agreeing auxiliary right behind a pronoun; not *weil*; not before two infinitives |
 | `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das*, *Trete ein!* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised form must carry `%`, the verb no weak preterite |
 | `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
 | comma after an initial clause (`GermanSubordinateComma`) | *Wenn du kommst bringe Brot mit* | a subject before the verbs; a conjunction behind them continues the clause |
@@ -1852,6 +1853,53 @@ the test set calls correct); Falko-MERLIN edits found 3013 → 3028, corrected
 sentences with a lint 427 → 429 (*über den Berufe*, *mit den Kinder* — both
 left uncorrected by the annotators); treebank lints 16079 → 16072,
 capitalization 354 → 342. School text and archived corpus unchanged.
+
+### Sixth round: the verb at the end of a subordinate clause
+
+**Where it came from.** The learner corpus again, this time the edits that
+move a word rather than change it: *dass Kriminalität zahlt sich nicht aus →
+sich nicht auszahlt*, *dass ich habe eine neue Arbeit gefunden → … gefunden
+habe*, *Bevor er ist gestorben*. The order of the clause had no rule at all.
+
+**`GermanSubordinateWordOrder`** finds the finite verb by two shapes instead
+of a parse:
+
+* a **separable verb split in two** — a particle closing the clause and a
+  verb earlier in it that the dictionary knows joined to it (*aus* + *zahlt* →
+  *auszahlt*, `verbs::joined_separable_verb`). Exactly one word may combine
+  with the particle: a missing comma runs the clause into the main clause
+  (*Wenn er kommt gehen wir aus*);
+* an **auxiliary or modal right behind a pronoun subject**, agreeing with it,
+  in a clause closed by punctuation. Two infinitives at the end are the
+  *Ersatzinfinitiv* and correct (*dass er hat kommen können*); a form that is
+  also the infinitive (*haben*, *können*) counts only when no verb ends the
+  clause (*dass sie haben will* is correct).
+
+The suggestion moves the verb to the end. The conjunctions are
+`GermanSubordinateComma`'s list, now shared, plus *wenn* and *daß*. *weil* is
+left out: with the verb second it is spoken German, and the learner corpus's
+own corrected sentences keep *weil es ist eine große Stadt* three times.
+
+**The particle verbs had no verb reading.** *abfährt*, *teilnimmt*,
+*zusammenbricht*, *einlädt* were dictionary words without a part of speech —
+the bulk import's noun reading had been stripped and nothing put back, so
+the joined form could not be checked. `add_german_strong_imperatives.py` now
+also gives `V` to every entry that is a particle plus one of its strong forms
+in *-t*/*-st*, unless it has a noun reading (*eintritt* is *Eintritt*):
+676 forms. hunspell is not consulted for these, because it lacks *anfährt*
+and *mitberät*, which the dictionary has. The script also missed umlaut verbs
+whose infinitive hunspell lists whole (*laden* → *lädt*, *lässt*, the
+prefixed *aufhalten* → *aufhält*); and it gave the plain plural (*ihr fahrt*)
+a verb reading only when the entry had no `N`, so *abfahrt* (`F`) and
+*auffahrt* (`M`) would have become verbs — it now checks every noun flag.
+
+Measured against the fifth round: Falko-MERLIN edits found 3028 → 3048,
+corrected sentences with a lint unchanged at 429; LanguageTool errors found
+1798 → 1801, false-alarm sentences unchanged at 740; no report on the
+treebank, the archived corpus, the school text or `korrekt2`. A manual set of
+34 sentences scores 33: *dass ihr seid zu spät* is missed, because *ihr* is
+not in the subject-pronoun table at all (it is also the dative and the
+possessive).
 
 ## The fused spellings the reform allows
 

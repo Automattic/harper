@@ -62,6 +62,7 @@ impl LanguageModule for GermanModule {
             german_strong_imperative::GermanStrongImperative,
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
+            german_subordinate_word_order::GermanSubordinateWordOrder,
             german_suspended_hyphen::GermanSuspendedHyphen, german_wider_wieder::GermanWiderWieder,
             german_year_preposition::GermanYearPreposition,
         };
@@ -107,6 +108,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanNominalizedInfinitive", GermanNominalizedInfinitive);
         group.add("GermanNominalizedAdjective", GermanNominalizedAdjective);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
+        group.add("GermanSubordinateWordOrder", GermanSubordinateWordOrder);
         group.add("GermanSuspendedHyphen", GermanSuspendedHyphen);
         group.add(
             "GermanRelativeClauseComma",

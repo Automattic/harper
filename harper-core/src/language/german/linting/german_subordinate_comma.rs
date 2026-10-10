@@ -11,7 +11,7 @@ use crate::{Punctuation, Token, TokenKind, TokenStringExt, document::Document};
 /// because each is also something else — a preposition, part of `wenn auch`, a
 /// comparison, a pronominal adverb — and telling them apart needs more than the
 /// word itself.
-const SUBORDINATORS: &[&str] = &[
+pub(crate) const SUBORDINATORS: &[&str] = &[
     // `dass` is the least ambiguous of them all: unlike `das` it is never a
     // pronoun and never an article, so it opens a subordinate clause every
     // time it appears. Comma before `dass` is also the most common comma
