@@ -21,3 +21,25 @@ steps:
     notify:
       - github_commit_status:
           context: "Build, sign, notarize harper-desktop"
+
+  - label: ":windows: Build and sign harper-desktop"
+    key: build-desktop-windows
+    agents:
+      queue: windows
+    command: powershell -NoProfile -File .buildkite/commands/build-desktop-windows.ps1
+    plugins: [$CI_TOOLKIT_PLUGIN, $NVM_PLUGIN]
+    artifact_paths:
+      - harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*-setup.exe
+    notify:
+      - github_commit_status:
+          context: "Build and sign harper-desktop for Windows"
+
+  - label: ":github: Upload Windows desktop release"
+    key: release-desktop-windows
+    if: build.tag =~ /^v[0-9]+/
+    depends_on:
+      - build-desktop-windows
+      # The macOS job creates or reuses the draft first.
+      - build-desktop
+    command: bash .buildkite/commands/release-desktop-windows.sh
+    plugins: [$CI_TOOLKIT_PLUGIN]
