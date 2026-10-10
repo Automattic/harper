@@ -241,12 +241,12 @@ Without `--forms` it skips the preterite pass rather than guessing.
 
 #### What the dictionary costs, and what shrinking it buys
 
-`harper-core/tests/bench_german_dict.rs` reports it. Run that one test alone —
+`german/tests/bench_german_dict.rs` reports it. Run that one test alone —
 another test in the same binary warms the `LazyLock` and it then reports zero:
 
 ```bash
 cargo test -p harper-core --features multilingual \
-    --test bench_german_dict report_german_dict_memory -- --nocapture
+    --lib report_german_dict_memory -- --nocapture
 ```
 
 Measured before and after this branch removed 173793 generated forms, one build

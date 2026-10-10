@@ -1,14 +1,14 @@
-#[cfg(feature = "de")]
+#[cfg(test)]
 mod tests {
     // Comprehensive German compound word edge case tests
     // Tests Fugen-s, Fugen-n, and complex compound word decomposition
 
-    use harper_core::Document;
-    use harper_core::language::german::dialects::GermanDialect;
-    use harper_core::language::german::linting::new_curated_german;
-    use harper_core::language::german::parsers::PlainGerman;
-    use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::linting::{LintGroup, Linter};
+    use crate::Document;
+    use crate::language::german::dialects::GermanDialect;
+    use crate::language::german::linting::new_curated_german;
+    use crate::language::german::parsers::PlainGerman;
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::linting::{LintGroup, Linter};
 
     fn create_german_lint_group() -> LintGroup {
         new_curated_german(GermanDialect::Standard, curated_german_dictionary())

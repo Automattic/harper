@@ -1,7 +1,7 @@
-#[cfg(feature = "de")]
+#[cfg(test)]
 mod tests {
-    use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::spell::Dictionary;
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::spell::Dictionary;
 
     #[test]
     fn bench_german_dict() {
@@ -46,7 +46,7 @@ mod tests {
     ///
     /// ```bash
     /// cargo test -p harper-core --features multilingual \
-    ///     --test bench_german_dict report_german_dict_memory -- --nocapture
+    ///     --lib report_german_dict_memory -- --nocapture
     /// ```
     #[test]
     fn report_german_dict_memory() {
@@ -90,7 +90,7 @@ mod tests {
 
     #[test]
     fn bench_annotated_german_dict() {
-        use harper_core::language::german::spell::german_dict::annotated_german_dictionary;
+        use crate::language::german::spell::german_dict::annotated_german_dictionary;
 
         let start = std::time::Instant::now();
         let dict = annotated_german_dictionary();
@@ -108,8 +108,8 @@ mod tests {
 
     #[test]
     fn test_detection_for_german_file() {
-        use harper_core::Document;
-        use harper_core::spell::FstDictionary;
+        use crate::Document;
+        use crate::spell::FstDictionary;
 
         let text =
             std::fs::read_to_string("src/language/german/test_sources/german_basic.md").unwrap();
@@ -120,7 +120,7 @@ mod tests {
         let mut german_char_count = 0usize;
 
         for tok in doc.get_tokens() {
-            if matches!(tok.kind, harper_core::TokenKind::Word(_)) {
+            if matches!(tok.kind, crate::TokenKind::Word(_)) {
                 total_words += 1;
                 let word: String = tok.get_ch(doc.get_source()).iter().collect();
                 if word.contains('ä')

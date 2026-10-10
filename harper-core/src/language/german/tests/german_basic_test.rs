@@ -1,10 +1,10 @@
-#[cfg(feature = "de")]
+#[cfg(test)]
 mod tests {
     // Basic test for German language support
     // This demonstrates that the German parser works
 
-    use harper_core::language::german::parsers::PlainGerman;
-    use harper_core::parsers::Parser;
+    use crate::language::german::parsers::PlainGerman;
+    use crate::parsers::Parser;
 
     #[test]
     fn test_german_parser() {

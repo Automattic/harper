@@ -1,15 +1,13 @@
-#![cfg(feature = "de")]
-
 // Tests for the morphology metadata the German dictionary carries.
 
 mod tests {
-    use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::language::morphology::{Gender, MorphologyExt, Number};
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::language::morphology::{Gender, MorphologyExt, Number};
 
     /// Metadata access for case information
     #[test]
     fn test_metadata_case_access() {
-        use harper_core::spell::Dictionary;
+        use crate::spell::Dictionary;
 
         let dict = curated_german_dictionary();
 
@@ -43,7 +41,7 @@ mod tests {
     /// Metadata access for articles
     #[test]
     fn test_metadata_article_case_access() {
-        use harper_core::spell::Dictionary;
+        use crate::spell::Dictionary;
 
         let dict = curated_german_dictionary();
 
@@ -84,7 +82,7 @@ mod tests {
     /// Metadata access for pronouns
     #[test]
     fn test_metadata_pronoun_case_access() {
-        use harper_core::spell::Dictionary;
+        use crate::spell::Dictionary;
 
         let dict = curated_german_dictionary();
 

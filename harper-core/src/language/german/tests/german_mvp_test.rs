@@ -1,17 +1,15 @@
-#![cfg(feature = "de")]
-
 // Comprehensive German MVP Test
 // Tests the minimum viable product for German language support in Harper
 // Uses the public LintGroup API with German dialect.
 
 mod tests {
-    use harper_core::Document;
-    use harper_core::language::german::dialects::GermanDialect;
-    use harper_core::language::german::linting::new_curated_german;
-    use harper_core::language::german::parsers::PlainGerman;
-    use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::linting::{LintKind, Linter};
-    use harper_core::parsers::Parser;
+    use crate::Document;
+    use crate::language::german::dialects::GermanDialect;
+    use crate::language::german::linting::new_curated_german;
+    use crate::language::german::parsers::PlainGerman;
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::linting::{LintKind, Linter};
+    use crate::parsers::Parser;
 
     /// Test 1: German parser functionality
     #[test]

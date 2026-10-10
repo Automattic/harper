@@ -1,15 +1,15 @@
-#[cfg(feature = "de")]
+#[cfg(test)]
 mod tests {
     // Working German test — exercises the PlainGerman parser and basic linting
     // via the public LintGroup API.
 
-    use harper_core::Document;
-    use harper_core::language::german::dialects::GermanDialect;
-    use harper_core::language::german::linting::new_curated_german;
-    use harper_core::language::german::parsers::PlainGerman;
-    use harper_core::language::german::spell::curated_german_dictionary;
-    use harper_core::linting::Linter;
-    use harper_core::parsers::{Markdown, MarkdownOptions, Parser};
+    use crate::Document;
+    use crate::language::german::dialects::GermanDialect;
+    use crate::language::german::linting::new_curated_german;
+    use crate::language::german::parsers::PlainGerman;
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::linting::Linter;
+    use crate::parsers::{Markdown, MarkdownOptions, Parser};
 
     /// German parser handles special characters (umlauts and ß)
     #[test]
