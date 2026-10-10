@@ -222,6 +222,20 @@ build-desktop-windows: build-harperjs build-lint-framework build-components buil
   pnpm install
   pnpm tauri build --runner cargo-xwin --target x86_64-pc-windows-msvc -b nsis --config '{"bundle":{"createUpdaterArtifacts":false}}'
 
+# Build native Windows bundles using a CI-generated Azure signing config.
+build-desktop-windows-signed signing_config: build-harperjs build-lint-framework build-components build-harper-editor
+  #!/usr/bin/env bash
+  set -eo pipefail
+
+  cd "{{justfile_directory()}}/harper-desktop"
+  pnpm install
+  pnpm tauri build --target x86_64-pc-windows-msvc -b nsis --config {{quote(signing_config)}}
+
+# Test desktop signing and release scripts without CI credentials.
+test-desktop-release:
+  node --test .buildkite/commands/*.test.cjs
+  bundle exec ruby fastlane/tests/desktop_release_test.rb
+
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor
   #!/usr/bin/env bash

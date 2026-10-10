@@ -16,7 +16,7 @@ jobs:
     name: just build-desktop-windows
     runs-on: ubuntu-latest
     permissions:
-      contents: write
+      contents: read
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
@@ -64,10 +64,4 @@ jobs:
           name: harper-desktop-windows-x64
           path: harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*
           if-no-files-found: error
-      - name: Release artifacts
-        if: startsWith(github.ref, 'refs/tags/v')
-        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
-        with:
-          artifacts: harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/*
-          allowUpdates: true
-          draft: true
+      # Signed Windows release assets are built and uploaded by Buildkite.
