@@ -1,0 +1,43 @@
+# "wieder" means "again"; "wider" is the preposition "against" (wider Willen,
+# wider die Natur). After an adverb of time or frequency, or a verb of coming,
+# only "again" makes sense. "ist wider die Natur" is correct, so the copula is
+# not in the list. Before "!" the rule is silent: Weir reads "!" as its
+# exception operator, so the punctuation mark cannot be spelled out.
+expr davor [immer, nie, niemals, schon, gleich, bald, morgen, heute, später, nochmal, jetzt, dann, komme, kommt, kommen, komm, kam, kamen, gehe, geht, tut, mache, macht, sehe, sehen, sieht]
+
+# "wider" as the preposition governs a noun phrase: "kam wider Erwarten",
+# "stellst dich immer wider mein Volk".
+expr gegen [Erwarten, Willen, besseres, besseren, die, den, das, dem, der, des, mein, meinen, meine, dein, deinen, deine, sein, seinen, seine, ihr, ihren, ihre, unser, unseren, unsere, euer, eure, jede, jeden, jedes, alle, alles, diese, diesen, dieses, Recht, Natur, Vernunft, Gott]
+
+expr main <[(@davor wider !@gegen), (@davor wider(.)), (@davor wider(?)), (@davor wider(,))], wider>
+
+let message "»wider« bedeutet »gegen«. Gemeint ist hier »wieder« (noch einmal)."
+let description "Ersetzt »wider« durch »wieder«, wo »noch einmal« gemeint ist."
+let kind "Spelling"
+let becomes "wieder"
+let strategy "MatchCase"
+
+test "Ich komme morgen wider." "Ich komme morgen wieder."
+test "Das passiert immer wider." "Das passiert immer wieder."
+test "Das mache ich nie wider." "Das mache ich nie wieder."
+test "Er ist schon wider da." "Er ist schon wieder da."
+test "Wir sehen uns bald wider." "Wir sehen uns bald wieder."
+test "Komm gleich wider." "Komm gleich wieder."
+test "Sie kommt wider zu spät." "Sie kommt wieder zu spät."
+test "Es geht schon wider los." "Es geht schon wieder los."
+test "Heute wider nicht." "Heute wieder nicht."
+test "Er kam niemals wider." "Er kam niemals wieder."
+test "Jetzt wider?" "Jetzt wieder?"
+test "Später wider." "Später wieder."
+test "Wir sehen wider nichts." "Wir sehen wieder nichts."
+test "Er tut es nochmal wider." "Er tut es nochmal wieder."
+test "Ich mache das immer wider so." "Ich mache das immer wieder so."
+
+allows "Das ist wider die Natur."
+allows "Er handelte wider besseres Wissen."
+allows "Ich komme morgen wieder."
+allows "Sie hat es wider Willen getan."
+allows "Das spricht wider jede Vernunft."
+allows "Er tat es wider Willen."
+allows "Er kam wider Erwarten sehr früh."
+allows "Du stellst dich noch immer wider mein Volk."

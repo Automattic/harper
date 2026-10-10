@@ -1,0 +1,12 @@
+# "nämlich" belongs to "Name", not to "nehmen" – there is no h.
+expr main [nähmlich, naehmlich]
+
+let message "»nämlich« wird ohne h geschrieben."
+let description "Korrigiert »nähmlich« zu »nämlich«."
+let kind "Spelling"
+let becomes "nämlich"
+let strategy "MatchCase"
+
+test "Er kommt nähmlich später." "Er kommt nämlich später."
+
+allows "Er kommt nämlich später."

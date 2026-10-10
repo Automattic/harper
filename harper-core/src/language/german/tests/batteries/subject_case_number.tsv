@@ -1,0 +1,44 @@
+# class	err|ok	sentence — die + masculine/neuter noun as a plural subject, a dative in subject position, die before an umlaut-plural singular
+die-Plural	err	Die Kinder spielt im Garten hinter dem Haus.
+die-Plural	err	Die Hunde bellt jeden Abend.
+die-Plural	err	Die Bücher liegt auf dem Tisch.
+die-Plural	err	Meine Brüder wohnt in Hamburg.
+die-Plural	err	Diese Häuser steht seit Jahren leer.
+die-Plural	ok	Die Kinder spielen im Garten hinter dem Haus.
+die-Plural	ok	Die Hunde bellen jeden Abend.
+die-Plural	ok	Die Lehrerin erklärt die Aufgabe.
+die-Plural	ok	Die Schule beginnt um acht Uhr.
+die-Plural	ok	Meine Brüder wohnen in Hamburg.
+die-Plural	ok	Die Bücher hat mir meine Tante geschenkt.
+die-Plural	ok	Die Kinder kennt hier jeder.
+die-Plural	ok	Die Häuser sieht man schon von weitem.
+die-Plural	ok	Diese Regel gilt überall.
+die-Plural	ok	Die Zeit vergeht schnell.
+Dativ-Subjekt	err	Der Katze schläft auf dem Sofa.
+Dativ-Subjekt	err	Der Mutter kocht heute.
+Dativ-Subjekt	err	Einer Frau wartet draußen.
+Dativ-Subjekt	err	Der Lehrerin kommt gleich.
+Dativ-Subjekt	err	Der Katze miaut laut.
+Dativ-Subjekt	ok	Der Katze schmeckt das Futter.
+Dativ-Subjekt	ok	Der Mutter hilft er gern.
+Dativ-Subjekt	ok	Der Frau gelingt alles.
+Dativ-Subjekt	ok	Der Lehrerin geht es heute besser.
+Dativ-Subjekt	ok	Der Frau ist kalt.
+Dativ-Subjekt	ok	Der Frau wurde sofort geholfen.
+Dativ-Subjekt	ok	Der Katze kann man nichts vormachen.
+Dativ-Subjekt	ok	Der Mann schläft auf dem Sofa.
+Dativ-Subjekt	ok	Der Katze Fell glänzt in der Sonne.
+Dativ-Subjekt	ok	Die Katze schläft auf dem Sofa.
+Umlaut-Singular	err	Wir sitzen in die Garten.
+Umlaut-Singular	err	Die Vogel singt im Baum.
+Umlaut-Singular	err	Ich esse die Apfel.
+Umlaut-Singular	err	Die Mantel hängt an der Tür.
+Umlaut-Singular	err	Die Vater holt uns ab.
+Umlaut-Singular	ok	Wir sitzen in dem Garten.
+Umlaut-Singular	ok	Die Lehrer sind heute krank.
+Umlaut-Singular	ok	Die Kuchen stehen auf dem Tisch.
+Umlaut-Singular	ok	Die Wagen fahren langsam.
+Umlaut-Singular	ok	Die Koffer sind schwer.
+Umlaut-Singular	ok	Der Vogel singt im Baum.
+Umlaut-Singular	ok	Die Mädchen lachen.
+Umlaut-Singular	ok	Die Messer liegen in der Schublade.

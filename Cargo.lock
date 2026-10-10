@@ -2702,6 +2702,7 @@ dependencies = [
  "boxcar",
  "cached",
  "criterion",
+ "flate2",
  "foldhash 0.2.0",
  "fst",
  "harper-brill",
@@ -2725,6 +2726,7 @@ dependencies = [
  "strum 0.28.0",
  "strum_macros 0.28.0",
  "thiserror 2.0.20",
+ "toml 1.1.6+spec-1.1.0",
  "trie-rs",
  "unicode-blocks",
  "unicode-script",
@@ -2818,10 +2820,12 @@ dependencies = [
  "harper-stats",
  "harper-tex",
  "harper-typst",
+ "itertools 0.15.0",
  "open",
  "resolve-path",
  "serde",
  "serde_json",
+ "tempfile",
  "tokio",
  "tower-lsp-server",
  "tracing",
@@ -2931,6 +2935,7 @@ dependencies = [
  "serde-wasm-bindgen",
  "serde_json",
  "sysinfo 0.39.6",
+ "toml 1.1.6+spec-1.1.0",
  "tracing",
  "tracing-wasm",
  "wasm-bindgen",
@@ -5454,6 +5459,21 @@ dependencies = [
  "toml_parser",
  "toml_writer",
  "winnow 0.7.15",
+]
+
+[[package]]
+name = "toml"
+version = "1.1.6+spec-1.1.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "920602543f0911ab71da12c50d59701da54c196d1a2bf5cb4b75667f137a406a"
+dependencies = [
+ "indexmap",
+ "serde_core",
+ "serde_spanned 1.1.1",
+ "toml_datetime 1.1.1+spec-1.1.0",
+ "toml_parser",
+ "toml_writer",
+ "winnow 1.0.4",
 ]
 
 [[package]]

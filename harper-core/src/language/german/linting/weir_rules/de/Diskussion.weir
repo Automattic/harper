@@ -1,0 +1,14 @@
+# "Diskussion" has a double s. Written with one, it decomposes into "Diskus" +
+# "Ion" — two real words — so the spell checker accepts it.
+expr main diskusion
+
+let message "»Diskussion« wird mit doppeltem »s« geschrieben."
+let description "Korrigiert die häufige Fehlschreibung »Diskusion«."
+let kind "Spelling"
+let becomes "Diskussion"
+let strategy "Exact"
+
+test "Die Diskusion war lang." "Die Diskussion war lang."
+
+allows "Die Diskussion war lang."
+allows "Die Diskussionen dauerten an."

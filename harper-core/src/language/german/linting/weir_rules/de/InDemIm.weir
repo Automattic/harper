@@ -1,0 +1,41 @@
+# The doubled contraction: the writer typed the long form and the short form of
+# the same phrase — "Er ist in dem im Büro."
+#
+# `in dem` is also the relative pronoun, and then a following `im` opens a
+# perfectly good second phrase: "ein Bezugssystem, in dem im Widerspruch zum
+# Relativitätsprinzip die Gesetze eine andere Form annehmen". Replacing those
+# three words with `im` destroys the sentence.
+#
+# The relative clause always has a comma in front of it, and a comma ends a
+# chunk, so the guard is simply to require a word before the phrase. That costs
+# nothing: the doubled contraction is a slip in the middle of a clause, never at
+# the start of one.
+expr main <(* in dem im), (in dem im)>
+
+let message "»in dem« und »im« stehen doppelt – behalten Sie nur eines."
+let description "Removes the doubled contraction in `in dem im`."
+let kind "Miscellaneous"
+let becomes "im"
+let strategy "MatchCase"
+
+test "Er ist in dem im Büro." "Er ist im Büro."
+test "Sie wohnt in dem im Haus." "Sie wohnt im Haus."
+test "Das Buch liegt in dem im Regal." "Das Buch liegt im Regal."
+test "Wir arbeiten in dem im Garten." "Wir arbeiten im Garten."
+test "Das geschah in dem im Sommer." "Das geschah im Sommer."
+test "Es war in dem im Winter." "Es war im Winter."
+test "Sie saßen in dem im Freien." "Sie saßen im Freien."
+test "Das liegt in dem im Norden." "Das liegt im Norden."
+test "Er wohnt in dem im Süden." "Er wohnt im Süden."
+test "Wir waren in dem im Osten." "Wir waren im Osten."
+test "Sie kommt in dem im Westen." "Sie kommt im Westen."
+test "Das steht in dem im Zentrum." "Das steht im Zentrum."
+test "Es blieb in dem im Hintergrund." "Es blieb im Hintergrund."
+test "Es stand in dem im Vordergrund." "Es stand im Vordergrund."
+
+allows "in dem Moment"
+allows "in dem gleichen"
+allows "in dem folgenden"
+allows "in dem letzten"
+allows "Er definiert ein Bezugssystem, in dem im Widerspruch zum Prinzip die Gesetze gelten."
+allows "Das ist ein Zeitraum, in dem im Durchschnitt wenig passiert."

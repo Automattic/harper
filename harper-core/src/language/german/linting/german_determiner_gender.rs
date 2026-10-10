@@ -1,0 +1,520 @@
+//! Checks that a determiner carries the gender of the noun it introduces.
+
+use crate::{
+    Token, TokenKind, TokenStringExt,
+    document::Document,
+    language::german::grammar::determiners::{
+        DeterminerReading, adjective_ending_after, determiner_readings, forms_with_gender,
+        stands_alone,
+    },
+    language::german::grammar::noun_gender::{NounGender, trusted_head},
+    language::german::grammar::noun_phrase::{self, Phrase, opens_relative_clause},
+    language::morphology::Gender,
+    linting::{Lint, LintKind, Linter, Suggestion},
+    spell::Dictionary,
+};
+
+/// Catches an article that does not fit its noun's gender: *"**die** Hund"*,
+/// *"**das** Schule"*, *"**ein** Frau"*.
+///
+/// This is the mistake `readings_allowed_by` in `grammar/determiners.rs`
+/// deliberately does not describe: when the noun rules out every reading of the
+/// determiner, the preposition rule has no case error to name, and nothing else
+/// looks. It is the most taught gap in German writing and, by the same token,
+/// the one where a wrong dictionary entry turns a correct phrase into a report,
+/// so three conditions have to hold together.
+///
+/// * **The gender is recorded as exactly one.** An entry with two (*der/das
+///   Teil*) narrows nothing, and a noun without one is skipped.
+/// * **The noun is surely a singular**, wherever the article has a plural
+///   reading. *die* is also the plural article, so *die Hund* is only wrong if
+///   *Hund* cannot be a plural; a base entry marked singular that does not end
+///   like a plural qualifies, *Lehrer* and *Mädchen* do not, *Garten* does
+///   because its plural is *Gärten* (see `grammar/noun_gender.rs`). Without this every
+///   *die Kinder* would be a report. *das* and *ein* have no plural, so for
+///   them the gender alone decides.
+/// * **The chunker has shown the phrase to end at the noun.** The head comes
+///   from the same place the preposition rule reads it, for the same reason:
+///   scanning forward for the first capital crosses clause boundaries.
+///
+/// A determiner opening a relative clause is a pronoun (*Frauen, die Mut
+/// haben*) and is left alone, as is a capitalized one in mid-sentence, which is
+/// part of a name (*Die Zeit*).
+///
+/// When the article fits, the adjectives between it and the noun are checked
+/// against the ending the article's paradigm demands (*ein großer Haus*); see
+/// `lint_adjectives`.
+pub struct GermanDeterminerGender {
+    nouns: NounGender,
+}
+
+impl Default for GermanDeterminerGender {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl GermanDeterminerGender {
+    pub fn new() -> Self {
+        Self {
+            nouns: NounGender::new(),
+        }
+    }
+
+    /// Checks the ending of the adjectives between the determiner and the noun.
+    ///
+    /// The determiner and the noun's gender fix the case and gender of the
+    /// phrase, and the determiner's paradigm fixes the ending: *ein großer
+    /// Haus* wants *großes*, *einen neue Tisch* wants *neuen*. Only a phrase
+    /// that is certainly singular is read, since the plural endings differ, and
+    /// an ending the determiner leaves open (*der* is also dative feminine) is
+    /// accepted when any of its readings allows it.
+    fn lint_adjectives(
+        &self,
+        document: &Document,
+        words: &[&Token],
+        phrase: &Phrase,
+        readings: &[DeterminerReading],
+        gender: Gender,
+        surely_singular: bool,
+        lints: &mut Vec<Lint>,
+    ) {
+        let singular_only = readings.iter().all(|reading| reading.gender.is_some());
+        if !(surely_singular || singular_only) {
+            return;
+        }
+
+        let allowed: Vec<&str> = readings
+            .iter()
+            .filter(|reading| reading.gender == Some(gender))
+            .filter_map(adjective_ending_after)
+            .collect();
+        // A reading outside the table means a paradigm this does not cover.
+        if allowed.is_empty()
+            || readings
+                .iter()
+                .filter(|reading| reading.gender == Some(gender))
+                .any(|reading| adjective_ending_after(reading).is_none())
+        {
+            return;
+        }
+
+        let attributes = &words[phrase.open + 1..phrase.head];
+        for (at, token) in attributes.iter().enumerate() {
+            let chars = document.get_span_content(&token.span);
+            let word: String = chars.iter().collect();
+            if !matches!(token.kind, TokenKind::Word(_))
+                || chars.first().is_none_or(|c| !c.is_lowercase())
+            {
+                continue;
+            }
+            let Some(ending) = ["em", "en", "er", "es", "e"]
+                .into_iter()
+                .find(|ending| word.ends_with(ending))
+            else {
+                continue;
+            };
+            if allowed.contains(&ending) {
+                continue;
+            }
+            // A degree word in front of the adjective it grades is not
+            // declined at all: *in einem **weniger** präzisen Format*, *ein
+            // **mehr** oder minder*. What gives it away is that the next word
+            // carries a correct ending and this one a different one; two
+            // declined attributes in a row share theirs (*ein schöner alter
+            // Baum*).
+            let grades_the_next = attributes.get(at + 1).is_some_and(|next| {
+                let next: String = document.get_span_content(&next.span).iter().collect();
+                allowed.iter().any(|wanted| next.ends_with(wanted))
+            });
+            if grades_the_next {
+                continue;
+            }
+            // A declined adjective is its stem plus the ending, and the stem is
+            // an adjective of its own: *groß-er*, *neu-e*. A word that only
+            // looks declined is not — *sicher* (*hat das sicher Potenzial*) is
+            // not *sich* plus *-er*, and archaic *eigen* (*dein eigen Fleisch*)
+            // is not *eig* plus *-en*.
+            let stem = &word[..word.len() - ending.len()];
+            let is_adjective = |form: &str| {
+                let form: Vec<char> = form.chars().collect();
+                self.nouns
+                    .dictionary()
+                    .get_word_metadata(&form)
+                    .is_some_and(|metadata| metadata.is_adjective())
+            };
+            if !is_adjective(&word) || !is_adjective(stem) {
+                continue;
+            }
+
+            let suggestions: Vec<Suggestion> = allowed
+                .iter()
+                .map(|wanted| format!("{stem}{wanted}"))
+                .filter(|form| self.nouns.dictionary().contains_word_str(form))
+                .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
+                .collect();
+
+            lints.push(Lint {
+                span: token.span,
+                lint_kind: LintKind::Agreement,
+                suggestions,
+                message: format!(
+                    "»{word}« hat hier die falsche Endung. Nach diesem Artikel wird »-{}« erwartet.",
+                    allowed.join("« oder »-")
+                ),
+                priority: 31,
+            });
+        }
+    }
+
+    /// Is the determiner-shaped word at `at` something else in this position?
+    ///
+    /// Three readings, each found on the correct example sentences of
+    /// LanguageTool's German rules:
+    ///
+    /// * **the numeral *ein***, behind another determiner: *das **eine** Mal*,
+    ///   *der **eine** Server*, *vom **einen** Ende*, *Ich kenne **eine**, die*.
+    ///   An article never follows an article.
+    /// * **the verb *meinen***, behind its subject: *Ich **meine** Spaß*, *Sie
+    ///   **meinen** sicher Ironie*.
+    /// * **the pronoun *das***, behind a sentence-initial copula: *Ist **das**
+    ///   Kunst?*, *Ist das reines Gold?* There the noun is the predicate and
+    ///   has no article.
+    fn is_not_an_article(words: &[&Token], at: usize, text: &str, document: &Document) -> bool {
+        const COPULAS: &[&str] = &[
+            "ist", "sind", "war", "waren", "wäre", "wären", "sei", "seien", "wird", "werden",
+            "wurde", "wurden", "bleibt", "blieb",
+        ];
+        let lower = text.to_lowercase();
+        let Some(previous) = at.checked_sub(1).map(|i| words[i]) else {
+            return false;
+        };
+        if !matches!(previous.kind, TokenKind::Word(_)) {
+            return false;
+        }
+        let previous_word = noun_phrase::lowercase_of(previous, document);
+
+        // The verb and the copula readings need their subject or verb to open
+        // the sentence: *wenn ich **meine** Mann sehe* is verb-final, so
+        // *meine* is the possessive there, and *Für uns ist das heiliges
+        // Gebiet* is read as the error it most likely is.
+        let previous_opens = at == 1;
+        (lower.starts_with("ein") && noun_phrase::supplies_determiner(previous, document))
+            || (lower.starts_with("mein")
+                && previous_opens
+                && ["ich", "wir", "sie"].contains(&previous_word.as_str()))
+            || (["das", "dies"].contains(&lower.as_str())
+                && previous_opens
+                && COPULAS.contains(&previous_word.as_str()))
+    }
+
+    /// German name of a gender, for the message.
+    fn label(gender: Gender) -> &'static str {
+        match gender {
+            Gender::Masculine => "maskulin",
+            Gender::Feminine => "feminin",
+            Gender::Neuter => "neutral",
+        }
+    }
+}
+
+/// Whether any singular reading of the determiner carries `gender`.
+fn fits(readings: &[DeterminerReading], gender: Gender) -> bool {
+    readings
+        .iter()
+        .any(|reading| reading.gender == Some(gender))
+}
+
+impl Linter for GermanDeterminerGender {
+    fn lint(&mut self, document: &Document) -> Vec<Lint> {
+        let mut lints = Vec::new();
+
+        for sentence in document.iter_sentences() {
+            let words: Vec<&Token> = sentence
+                .iter()
+                .filter(|token| !token.kind.is_whitespace())
+                .collect();
+            let phrases = noun_phrase::phrases(&words, document);
+            let first_word = words
+                .iter()
+                .position(|token| matches!(token.kind, TokenKind::Word(_)));
+
+            for phrase in &phrases {
+                let determiner = words[phrase.open];
+                if !matches!(determiner.kind, TokenKind::Word(_)) {
+                    continue;
+                }
+                let text: String = document.get_span_content(&determiner.span).iter().collect();
+
+                // *Die Zeit*, *Der Spiegel*: a capital in mid-sentence is a name.
+                if text.chars().next().is_some_and(char::is_uppercase)
+                    && first_word != Some(phrase.open)
+                {
+                    continue;
+                }
+                let Some(readings) = determiner_readings(&text) else {
+                    continue;
+                };
+                if stands_alone(&text) || opens_relative_clause(&words, phrase.open, document) {
+                    continue;
+                }
+                if Self::is_not_an_article(&words, phrase.open, &text, document) {
+                    continue;
+                }
+
+                // *ein bisschen Zeit*, *ein paar Tage*, *ein wenig Mut*: the
+                // quantifier is indeclinable, and *ein* belongs to it.
+                if text.eq_ignore_ascii_case("ein")
+                    && words.get(phrase.open + 1).is_some_and(|next| {
+                        let next: String = document.get_span_content(&next.span).iter().collect();
+                        ["bisschen", "paar", "wenig", "bissel"].contains(&next.as_str())
+                    })
+                {
+                    continue;
+                }
+
+                let Some(head) = trusted_head(document, &words, phrase) else {
+                    continue;
+                };
+                let Some((gender, surely_singular)) = self.nouns.gender_of(&head) else {
+                    continue;
+                };
+
+                // *die* and *der* are plural readings too. They only rule the
+                // noun out when it cannot be one; *das* and *ein* never could.
+                let candidates: Vec<DeterminerReading> = readings
+                    .iter()
+                    .copied()
+                    .filter(|reading| reading.gender.is_some() || !surely_singular)
+                    .collect();
+                if fits(&candidates, gender) {
+                    self.lint_adjectives(
+                        document,
+                        &words,
+                        phrase,
+                        readings,
+                        gender,
+                        surely_singular,
+                        &mut lints,
+                    );
+                    continue;
+                }
+                if candidates.iter().any(|reading| reading.gender.is_none()) {
+                    continue;
+                }
+
+                let suggestions: Vec<Suggestion> = forms_with_gender(&candidates, gender)
+                    .into_iter()
+                    .map(|form| {
+                        Suggestion::replace_with_match_case(
+                            form.chars().collect(),
+                            document.get_span_content(&determiner.span),
+                        )
+                    })
+                    .collect();
+                if suggestions.is_empty() {
+                    continue;
+                }
+
+                lints.push(Lint {
+                    span: determiner.span,
+                    lint_kind: LintKind::Agreement,
+                    suggestions,
+                    message: format!(
+                        "»{text}« passt nicht zu »{head}«. Das Nomen ist {}.",
+                        Self::label(gender)
+                    ),
+                    priority: 31,
+                });
+            }
+        }
+
+        lints
+    }
+
+    fn description(&self) -> &str {
+        "Prüft, ob der Artikel zum Geschlecht des Nomens passt."
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::GermanDeterminerGender;
+    use crate::Document;
+    use crate::language::german::parsers::PlainGerman;
+    use crate::language::german::spell::curated_german_dictionary;
+    use crate::linting::Linter;
+
+    fn lints(text: &str) -> Vec<(String, Vec<String>)> {
+        let dict = curated_german_dictionary();
+        let document = Document::new(text, &PlainGerman, &dict);
+        GermanDeterminerGender::new()
+            .lint(&document)
+            .into_iter()
+            .map(|lint| {
+                (
+                    document.get_span_content_str(&lint.span),
+                    lint.suggestions
+                        .iter()
+                        .map(|suggestion| suggestion.to_string())
+                        .collect(),
+                )
+            })
+            .collect()
+    }
+
+    fn reported(text: &str) -> Vec<String> {
+        lints(text).into_iter().map(|(word, _)| word).collect()
+    }
+
+    #[test]
+    fn a_wrong_article_is_reported() {
+        assert_eq!(reported("Ich habe die Hund gesehen."), ["die"]);
+        assert_eq!(reported("Das Schule ist groß."), ["Das"]);
+        assert_eq!(reported("Er liest der Buch."), ["der"]);
+        assert_eq!(reported("Ich sehe das Mann."), ["das"]);
+        assert_eq!(reported("Die Hund bellt laut."), ["Die"]);
+    }
+
+    #[test]
+    fn the_correction_keeps_the_case_and_the_paradigm() {
+        let found = lints("Ich habe die Hund gesehen.");
+        assert!(found[0].1.iter().any(|s| s.contains("den")), "{found:?}");
+    }
+
+    #[test]
+    fn a_correct_article_is_quiet() {
+        for text in [
+            "Der Hund bellt laut.",
+            "Ich sehe den Hund.",
+            "Das Buch liegt auf dem Tisch.",
+            "Die Schule beginnt um acht.",
+            "Ich habe einen Hund und eine Katze.",
+            "Er gibt dem Kind das Buch.",
+            "Der Mann liest die Zeitung.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    /// *die* is also the plural article, so it fits any noun that can be one.
+    #[test]
+    fn a_plural_article_is_not_a_gender_error() {
+        for text in [
+            "Die Kinder spielen im Garten.",
+            "Die Lehrer kommen später.",
+            "Die Mädchen lachen.",
+            "Ich sehe die Hunde.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    /// *Frauen, die Mut haben*: the article is a relative pronoun.
+    #[test]
+    fn a_relative_pronoun_is_not_an_article() {
+        for text in [
+            "Es gibt Frauen, die Mut haben.",
+            "Das ist ein Mann, den Hund und Katze lieben.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    #[test]
+    fn a_capitalized_article_inside_a_name_is_left_alone() {
+        assert!(reported("Ich lese Die Zeit jeden Tag.").is_empty());
+    }
+
+    /// An entry with two genders narrows nothing.
+    #[test]
+    fn an_indeclinable_quantifier_is_not_an_article() {
+        for text in [
+            "Ich habe ein bisschen Zeit.",
+            "Sie hat ein paar Freunde.",
+            "Er hat ein wenig Mut.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    #[test]
+    fn a_wrong_adjective_ending_is_reported() {
+        assert_eq!(
+            reported("Ein großer Haus steht am Ende der Straße."),
+            ["großer"]
+        );
+        assert_eq!(reported("Sie kaufte einen neue Tisch."), ["neue"]);
+        assert_eq!(reported("Er hat ein schöne Auto."), ["schöne"]);
+    }
+
+    #[test]
+    fn the_adjective_correction_is_a_real_form() {
+        let found = lints("Ein großer Haus steht dort.");
+        assert!(found[0].1.iter().any(|s| s.contains("großes")), "{found:?}");
+    }
+
+    #[test]
+    fn a_correct_adjective_ending_is_quiet() {
+        for text in [
+            "Ein großes Haus steht am Ende der Straße.",
+            "Sie kaufte einen neuen Tisch.",
+            "Der kleine Hund spielt mit dem alten Ball.",
+            "Ich sehe den großen Hund.",
+            "Er hat ein schönes Auto.",
+            "Ein großer Hund bellt.",
+            "Die große Zeitung liegt dort.",
+            "Meine neue Tasche ist rot.",
+            "Er trägt einen sehr teuren Hut.",
+            "Ich habe ein super Haus.",
+            "Die großen Hunde bellen.",
+            "Mit dem schönen Mann ging sie spazieren.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+    }
+
+    #[test]
+    fn a_noun_with_two_genders_is_not_checked() {
+        let found = reported("Das Teil und der Teil gehören zusammen.");
+        assert!(found.is_empty(), "{found:?}");
+    }
+
+    #[test]
+    fn a_noun_with_an_umlaut_plural_is_a_singular() {
+        assert_eq!(reported("Wir sitzen in die Garten."), ["die"]);
+        assert_eq!(reported("Die Vogel singt."), ["Die"]);
+        assert_eq!(reported("Ich esse die Apfel."), ["die"]);
+    }
+
+    #[test]
+    fn a_plural_spelled_like_its_singular_is_quiet() {
+        for text in [
+            "Die Kuchen stehen auf dem Tisch.",
+            "Die Lehrer sind krank.",
+            "Die Wagen fahren langsam.",
+            "Die Gärten sind schön.",
+        ] {
+            let found = reported(text);
+            assert!(found.is_empty(), "{text}: {found:?}");
+        }
+    }
+
+    #[test]
+    fn a_degree_word_before_an_adjective_is_not_declined() {
+        let found = reported("Die Zeit steht in einem weniger präzisen Format.");
+        assert!(found.is_empty(), "{found:?}");
+    }
+
+    #[test]
+    fn corrected_genders_are_quiet() {
+        for text in [
+            "Das Ende der Geschichte ist traurig.",
+            "Eine Erlaubnis brauchen wir nicht.",
+            "Das Leder ist weich.",
+        ] {
+            let found = reported(text);
+            assert!(found.is_empty(), "{text}: {found:?}");
+        }
+    }
+}

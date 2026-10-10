@@ -1,0 +1,30 @@
+# class	err|ok	sentence — the comma before ob and around a relative clause
+ob-Komma	err	Ich weiß nicht ob er kommt.
+ob-Komma	err	Er fragte ob wir Zeit haben.
+ob-Komma	err	Ich frage mich ob das stimmt.
+ob-Komma	err	Sie wollte wissen ob der Zug pünktlich ist.
+ob-Komma	err	Es ist unklar ob die Prüfung verschoben wird.
+ob-Komma	ok	Ich weiß nicht, ob er kommt.
+ob-Komma	ok	Er tut so, als ob nichts wäre.
+ob-Komma	ok	Wir fahren, egal ob es regnet.
+ob-Komma	ok	Ob er kommt, weiß ich nicht.
+ob-Komma	ok	Ich weiß nicht, ob er kommt oder ob er zu Hause bleibt.
+ob-Komma	ok	Je nachdem ob es regnet, bleiben wir zu Hause.
+ob-Komma	ok	Sie fragte, ob und wann er kommt.
+Relativsatz-Komma	err	Das Buch das ich lese ist spannend.
+Relativsatz-Komma	err	Der Mann der dort steht ist mein Vater.
+Relativsatz-Komma	err	Ich kenne den Mann der dort wohnt.
+Relativsatz-Komma	err	Die Frau die ich kenne wohnt hier.
+Relativsatz-Komma	err	Das ist das Haus in dem ich wohne.
+Relativsatz-Komma	ok	Das Buch, das ich lese, ist spannend.
+Relativsatz-Komma	ok	Ich kenne den Mann, der dort wohnt.
+Relativsatz-Komma	ok	Ich habe dem Kind das Buch gegeben.
+Relativsatz-Komma	ok	Ich habe dem Kind das gestern erklärt.
+Relativsatz-Komma	ok	Er zeigt der Frau die Stadt.
+Relativsatz-Komma	ok	Der Hund der Nachbarin bellt.
+Relativsatz-Komma	ok	Wir geben den Kindern die neuen Bücher.
+Relativsatz-Komma	ok	Am Tag der Arbeit haben alle frei.
+Relativsatz-Komma	ok	Das ist das Haus, in dem ich wohne.
+Relativsatz-Komma	ok	Sie hat der Lehrerin die Hausaufgabe gezeigt.
+Relativsatz-Komma	ok	Der Preis der Bücher ist gestiegen.
+Relativsatz-Komma	ok	Er hat dem Mann den Weg erklärt.

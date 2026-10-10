@@ -1,0 +1,26 @@
+expr main [(Babyphone Babyfon)]
+
+let message "Die deutsche Schreibweise für dieses Gerät ist: ein »Babyfon«."
+let description "Removes redundant English loanword `Babyphone` from the German device name `Babyfon`."
+let kind "Spelling"
+let becomes "Babyfon"
+let strategy "MatchCase"
+
+test "Wir haben ein Babyphone Babyfon gekauft." "Wir haben ein Babyfon gekauft."
+test "Das Babyphone Babyfon ist kaputt." "Das Babyfon ist kaputt."
+test "Ein neues Babyphone Babyfon." "Ein neues Babyfon."
+test "Das Babyphone Babyfon hat gut funktioniert." "Das Babyfon hat gut funktioniert."
+test "Ein teures Babyphone Babyfon." "Ein teures Babyfon."
+test "Das Babyphone Babyfon ist sehr laut." "Das Babyfon ist sehr laut."
+test "Ein Babyphone Babyfon für Eltern." "Ein Babyfon für Eltern."
+test "Das Babyphone Babyfon funktioniert nicht." "Das Babyfon funktioniert nicht."
+test "Ein gutes Babyphone Babyfon." "Ein gutes Babyfon."
+test "Das Babyphone Babyfon ist sehr nützlich." "Das Babyfon ist sehr nützlich."
+test "Ein Babyphone Babyfon mit Kamera." "Ein Babyfon mit Kamera."
+test "Das Babyphone Babyfon ist empfindlich." "Das Babyfon ist empfindlich."
+test "Ein Babyphone Babyfon mit Monitor." "Ein Babyfon mit Monitor."
+test "Das Babyphone Babyfon ist angeschaltet." "Das Babyfon ist angeschaltet."
+test "Ein Babyphone Babyfon im Kinderzimmer." "Ein Babyfon im Kinderzimmer."
+
+allows "Babyfon"
+allows "Babyphone"

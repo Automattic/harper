@@ -1,7 +1,7 @@
 use std::path::Path;
 
 use harper_core::{
-    Dialect, DialectFlags, DictWordMetadata,
+    DialectFlags, DictWordMetadata,
     spell::{Dictionary, MutableDictionary},
 };
 use itertools::Itertools;
@@ -40,11 +40,14 @@ async fn write_word_list(dict: impl Dictionary, mut w: impl AsyncWrite + Unpin) 
 }
 
 /// Load a dictionary from a file on disk.
-pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<MutableDictionary> {
+pub async fn load_dict(
+    path: impl AsRef<Path>,
+    dialects: DialectFlags,
+) -> Result<MutableDictionary> {
     let file = File::open(path.as_ref()).await?;
     let read = BufReader::new(file);
 
-    dict_from_word_list(read, dialect).await
+    dict_from_word_list(read, dialects).await
 }
 
 /// Load a dictionary from a list of words.
@@ -52,7 +55,7 @@ pub async fn load_dict(path: impl AsRef<Path>, dialect: Dialect) -> Result<Mutab
 /// Right now it isn't an issue.
 async fn dict_from_word_list(
     mut r: impl AsyncRead + Unpin,
-    dialect: Dialect,
+    dialects: DialectFlags,
 ) -> Result<MutableDictionary> {
     let mut str = String::new();
 
@@ -63,7 +66,7 @@ async fn dict_from_word_list(
         (
             l.chars().collect::<Vec<char>>(),
             DictWordMetadata {
-                dialects: DialectFlags::from_dialect(dialect),
+                dialects,
                 ..Default::default()
             },
         )
@@ -110,6 +113,30 @@ mod tests {
             TEST_UNSORTED_WORDS.map(|w| (w.chars().collect::<Vec<_>>(), Default::default())),
         );
         test_unsorted_dict
+    }
+
+    #[tokio::test]
+    async fn loaded_words_carry_the_requested_dialect_flags() {
+        let flags = DialectFlags::from_dialect(harper_core::Dialect::British);
+        let dict = dict_from_word_list(Cursor::new(b"colour\nlorry\n".to_vec()), flags)
+            .await
+            .unwrap();
+
+        let metadata = dict.get_word_metadata_str("colour").unwrap();
+        assert_eq!(metadata.dialects, flags);
+    }
+
+    #[tokio::test]
+    async fn loaded_words_with_empty_flags_are_valid_in_every_dialect() {
+        let dict = dict_from_word_list(
+            Cursor::new("Löwenzahn\n".as_bytes().to_vec()),
+            DialectFlags::empty(),
+        )
+        .await
+        .unwrap();
+
+        let metadata = dict.get_word_metadata_str("Löwenzahn").unwrap();
+        assert!(metadata.dialects.is_empty());
     }
 
     #[tokio::test]

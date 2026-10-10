@@ -1,0 +1,49 @@
+# "wahren" for "waren", the preterite of "sein". "wahren" is a verb of its own
+# ("die Ruhe wahren", "den Schein wahren"), so the spell checker accepts both.
+# The two are told apart by what follows: "wahren" takes an object, "waren" a
+# predicate. Only predicates that cannot start an object are listed -- degree
+# words, predicative adjectives and time adverbs. An article, a noun or a
+# pronoun after "wahren" is the object of the real verb and is left alone.
+expr subjekt [wir, sie, ihr]
+
+expr praedikat [sehr, zu, so, ganz, schon, noch, gestern, damals, früher, froh, müde, glücklich, traurig, zufrieden, krank, teuer, billig, neu, alt, kaputt, nass, schmutzig, sauber, bequem, unbequem, eng, weit, groß, klein, zusammen, dort, hier, da, nicht]
+
+# At the end of a subordinate clause the predicate comes first: "weil sie zu
+# teuer wahren." Here "zu", "so" and "nicht" cannot count -- "um die Würde zu
+# wahren", "die Interessen nicht wahren" -- so only adjectives and adverbs of
+# time and place qualify, and the clause has to end right after the verb.
+expr vorangestellt [teuer, billig, neu, alt, kaputt, nass, schmutzig, sauber, bequem, unbequem, eng, weit, groß, klein, froh, müde, glücklich, traurig, zufrieden, krank, gestern, damals, früher, dort, hier]
+
+expr main <[(@subjekt wahren @praedikat), (wahren @subjekt @praedikat), (@vorangestellt wahren(.)), (@vorangestellt wahren(,))], wahren>
+
+let message "Hier ist die Vergangenheit von »sein« gemeint: »waren«. »wahren« heißt »bewahren«."
+let description "Ersetzt »wahren« durch »waren«, wenn ein Prädikat folgt."
+let kind "Spelling"
+let becomes "waren"
+let strategy "MatchCase"
+
+test "Er hat die Schuhe gekauft, obwohl sie zu teuer wahren." "Er hat die Schuhe gekauft, obwohl sie zu teuer waren."
+test "Die Stiefel wahren nass, also wahren wir froh über die Heizung." "Die Stiefel wahren nass, also waren wir froh über die Heizung."
+test "Gestern wahren wir dort im Schuhladen." "Gestern waren wir dort im Schuhladen."
+test "Sie wahren sehr bequem." "Sie waren sehr bequem."
+test "Wir wahren gestern beim Schuhmacher." "Wir waren gestern beim Schuhmacher."
+test "Ihr wahren schon dort." "Ihr waren schon dort."
+test "Die Sandalen gefielen mir, weil sie so billig wahren." "Die Sandalen gefielen mir, weil sie so billig waren."
+test "Sie wahren kaputt." "Sie waren kaputt."
+test "Wir wahren damals noch klein." "Wir waren damals noch klein."
+test "Sie wahren nicht zufrieden." "Sie waren nicht zufrieden."
+test "Wir wahren zusammen einkaufen." "Wir waren zusammen einkaufen."
+test "Sie wahren ganz neu." "Sie waren ganz neu."
+test "Wir wahren müde vom Laufen." "Wir waren müde vom Laufen."
+test "Sie wahren eng und unbequem." "Sie waren eng und unbequem."
+test "Wir wahren froh." "Wir waren froh."
+
+allows "Wir wahren die Tradition des Schuhmacherhandwerks."
+allows "Sie wahren den Schein."
+allows "Wir waren sehr froh."
+allows "Sie wahren ihre Rechte."
+allows "Wir wahren Ruhe."
+allows "Sie wollen ihre Unabhängigkeit wahren."
+allows "Es gilt, die Würde zu wahren."
+allows "Sie konnten die Interessen nicht wahren."
+allows "Gestern wahren wir im Schuhladen."

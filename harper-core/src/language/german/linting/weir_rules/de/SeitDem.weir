@@ -1,0 +1,30 @@
+# "seit dem" written apart where the conjunction "seitdem" belongs: "Seit dem
+# ich Barfußschuhe trage, …". As a preposition plus article, "seit dem" needs
+# a noun ("seit dem Sommer"); a subject pronoun behind it can only start the
+# clause the conjunction opens.
+#
+# Only nominative pronouns are listed. "seit dem ihr Vater starb" has the
+# possessive "ihr" and is a different construction, so "ihr" is left out.
+expr subjekt [ich, du, er, sie, es, wir, man]
+
+expr main <(seit dem @subjekt), (seit dem)>
+
+let message "Als Konjunktion schreibt man »seitdem« zusammen."
+let description "Schreibt die Konjunktion »seitdem« zusammen, wenn ein Subjekt folgt."
+let kind "Spelling"
+let becomes "seitdem"
+let strategy "MatchCase"
+
+test "Seit dem ich Barfußschuhe trage, habe ich keine Schmerzen." "Seitdem ich Barfußschuhe trage, habe ich keine Schmerzen."
+test "Er läuft besser, seit dem er Einlagen hat." "Er läuft besser, seitdem er Einlagen hat."
+test "Seit dem wir umgezogen sind, kaufen wir online." "Seitdem wir umgezogen sind, kaufen wir online."
+test "Seit dem sie Stiefel trägt, friert sie nicht." "Seitdem sie Stiefel trägt, friert sie nicht."
+test "Seit dem man Gummi kennt, gibt es Gummistiefel." "Seitdem man Gummi kennt, gibt es Gummistiefel."
+test "Es regnet, seit dem du gegangen bist." "Es regnet, seitdem du gegangen bist."
+test "Seit dem es kalt ist, trage ich Stiefel." "Seitdem es kalt ist, trage ich Stiefel."
+
+allows "Seit dem Sommer trage ich Sandalen."
+allows "Seitdem ich Barfußschuhe trage, geht es mir gut."
+allows "Seit dem Unfall humpelt er."
+allows "Seit dem ihr Vater gestorben ist, trägt sie Schwarz."
+allows "Seit dem Jahr 2000 gibt es den Laden."

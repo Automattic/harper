@@ -1,0 +1,15 @@
+# Since the 1996 reform the "irgend-" compounds are written closed up. Split,
+# they read as two real words, so the spell checker has nothing to object to.
+expr main (irgend wo)
+
+let message "»irgendwo« wird zusammengeschrieben."
+let description "Zieht das getrennt geschriebene »irgend wo« zu »irgendwo« zusammen."
+let kind "Spelling"
+let becomes "irgendwo"
+let strategy "MatchCase"
+
+test "Irgend wo muss es liegen." "Irgendwo muss es liegen."
+test "Da ist irgend wo passiert." "Da ist irgendwo passiert."
+
+allows "Irgendwo muss es liegen."
+allows "Da ist irgendwo passiert."

@@ -66,6 +66,23 @@ impl MutableDictionary {
         (*DICT).clone()
     }
 
+    /// Iterate over all entries in the dictionary.
+    pub fn iter(&self) -> impl Iterator<Item = (&CharString, &DictWordMetadata)> {
+        self.word_map
+            .iter()
+            .map(|entry| (&entry.canonical_spelling, &entry.metadata))
+    }
+
+    /// Get the total number of words in the dictionary.
+    pub fn len(&self) -> usize {
+        self.word_map.len()
+    }
+
+    /// Check if the dictionary is empty.
+    pub fn is_empty(&self) -> bool {
+        self.word_map.len() == 0
+    }
+
     /// Appends words to the dictionary.
     /// It is significantly faster to append many words with one call than many
     /// distinct calls to this function.
@@ -435,9 +452,9 @@ mod tests {
     fn are_merged_attrs_same_as_spread_attrs() {
         let curated_attr_list = include_str!("../../annotations.json");
 
-        let merged = MutableDictionary::from_rune_files("1\nblork/DGS", curated_attr_list).unwrap();
+        let merged = MutableDictionary::from_rune_files("blork/DGS", curated_attr_list).unwrap();
         let spread =
-            MutableDictionary::from_rune_files("2\nblork/DG\nblork/S", curated_attr_list).unwrap();
+            MutableDictionary::from_rune_files("blork/DG\nblork/S", curated_attr_list).unwrap();
 
         assert_eq!(
             merged.word_map.into_iter().collect::<HashSet<_>>(),

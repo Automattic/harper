@@ -1,0 +1,15 @@
+# Since the 1996 reform the "irgend-" compounds are written closed up. Split,
+# they read as two real words, so the spell checker has nothing to object to.
+expr main (irgend wann)
+
+let message "»irgendwann« wird zusammengeschrieben."
+let description "Zieht das getrennt geschriebene »irgend wann« zu »irgendwann« zusammen."
+let kind "Spelling"
+let becomes "irgendwann"
+let strategy "MatchCase"
+
+test "Irgend wann kommt er zurück." "Irgendwann kommt er zurück."
+test "Da ist irgend wann passiert." "Da ist irgendwann passiert."
+
+allows "Irgendwann kommt er zurück."
+allows "Da ist irgendwann passiert."
