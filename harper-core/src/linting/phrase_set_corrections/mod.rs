@@ -689,6 +689,17 @@ pub fn lint_group() -> LintGroup {
             "Corrects `set up a bad example` to `set a bad example`.",
             LintKind::Usage
         ),
+        "SubjectAndObjectPronoun" => (
+            &[
+                ("subjective pronoun", "subject pronoun"),
+                ("subjective pronouns", "subject pronouns"),
+                ("objective pronoun", "object pronoun"),
+                ("objective pronouns", "object pronouns"),
+            ],
+            "`Subject -` and `object pronoun` are much more common than `subjective -` and `objective -`.",
+            "Standardizes `subjective pronoun` and `objective pronoun` to the more common `subject -` and `object -`.",
+            LintKind::Usage
+        ),
         "SubjunctiveWasToWere" => (
             &[
                 ("if only there was", "if only there were"),

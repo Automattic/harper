@@ -18,7 +18,7 @@ use std::io::stderr;
 use std::{
     cell::RefCell,
     rc::Rc,
-    sync::{Arc, Mutex as StdMutex},
+    sync::{Arc, Mutex as StdMutex, RwLock},
 };
 use tauri::Manager as _;
 use tracing::{Level, error};
@@ -84,7 +84,7 @@ pub(crate) type PlatformBroker = os_broker::NoopBroker;
 /// The Tauri process stores its single broker as managed state, while the highlighter subprocess
 /// creates its own broker because it is a separate process.
 fn platform_broker(
-    is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static,
+    is_integration_enabled: impl FnMut(&str) -> bool + Send + Sync + 'static,
 ) -> PlatformBroker {
     #[cfg(any(target_os = "macos", target_os = "windows"))]
     {
@@ -100,9 +100,9 @@ fn platform_broker(
 
 fn warm_app_search_cache(app: tauri::AppHandle) {
     tauri::async_runtime::spawn_blocking(move || {
-        let broker = app.state::<StdMutex<PlatformBroker>>();
+        let broker = app.state::<RwLock<PlatformBroker>>();
         let result = broker
-            .lock()
+            .read()
             .map_err(|error| format!("failed to read platform broker: {error}"))
             .and_then(|broker| broker.search_apps("").map(|_| ()));
 
@@ -182,7 +182,7 @@ pub fn run_tauri() {
         .manage(config)
         .manage(desktop_updater::DesktopUpdater::default())
         .manage(highlighter_service)
-        .manage(StdMutex::new(broker))
+        .manage(RwLock::new(broker))
         .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
             tauri_plugin_autostart::MacosLauncher::LaunchAgent,
@@ -456,8 +456,8 @@ struct IntegrationState {
 /// Standalone callers can approve registration locally without IPC.
 fn integration_callback(
     state: Arc<StdMutex<IntegrationState>>,
-    mut resolve: impl FnMut(&str) -> bool + Send + 'static,
-) -> impl FnMut(&str) -> bool + Send + 'static {
+    mut resolve: impl FnMut(&str) -> bool + Send + Sync + 'static,
+) -> impl FnMut(&str) -> bool + Send + Sync + 'static {
     move |bundle_id| {
         let bundle_id = bundle_id.trim();
         if bundle_id.is_empty() {

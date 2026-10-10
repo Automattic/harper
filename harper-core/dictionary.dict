@@ -12627,6 +12627,7 @@ anionic/JN
 anise/Nmg
 aniseed/Nmg
 anisette/Ng
+anisotropy/Nmg
 ankh/~N0g
 ankhs/N9
 ankle/~NgSV
@@ -18953,6 +18954,7 @@ conform/~VZB
 conformable/JU
 conformal/~J
 conformance/~Nmg
+conformant/J
 conformism/Nmg
 conformist/~NSgJ
 conformity/~Nmg
@@ -19401,6 +19403,7 @@ copperplate/NgV
 coppery/J
 copping/V6
 copra/Ng
+coprocessor/NgS
 copse/NSgV
 copter/NSgV
 copula/NSg
@@ -40398,6 +40401,8 @@ preamplifier/NSg
 prearrange/VGdSL
 prearrangement/Ng
 preassigned/J
+prebind/VSg
+prebound/tT
 prebuild/VGS
 prebuilt/J
 precalculate/VGdS
@@ -42573,7 +42578,8 @@ relish/NgSVGd
 relist/VSGd
 relive/VdSGB!_₹
 reloader/NgS
-relocate/~VB
+relocate/~VdSGB
+relocation/NgS
 reluctance/~Ng
 reluctant/~JY
 rely/~VGdS
@@ -44043,6 +44049,7 @@ scandalize/VdSG
 scandalmonger/NSg
 scandalous/~JY
 scandium/Nmg
+scannability/Nmg
 scannable/J
 scanned/~JVtT
 scanner/~NSg

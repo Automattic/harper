@@ -31,13 +31,13 @@ mod automation_service;
 
 pub struct WindowsBroker {
     service: Arc<Mutex<AutomationService>>,
-    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send>,
+    is_integration_enabled: Box<dyn FnMut(&str) -> bool + Send + Sync>,
 }
 
 impl WindowsBroker {
     /// Creates a broker with an app policy that may register newly encountered executable paths.
     /// The policy is called before reading the app's text and may change as settings are refreshed.
-    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + 'static) -> Self {
+    pub fn new(is_integration_enabled: impl FnMut(&str) -> bool + Send + Sync + 'static) -> Self {
         Self {
             service: Arc::new(Mutex::new(AutomationService::create_and_start())),
             is_integration_enabled: Box::new(is_integration_enabled),

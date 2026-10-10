@@ -1,6 +1,6 @@
 <script lang="ts">
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { Button } from 'components';
+import { Button, Logo } from 'components';
 import { onMount } from 'svelte';
 import { Client } from '$lib/client';
 
@@ -23,7 +23,7 @@ async function loadCurrentVersion() {
 </script>
 
 <section class="about">
-        <div class="about-mark">H</div>
+        <div class="about-mark" aria-hidden="true"><Logo /></div>
         <h1>Harper for Mac</h1>
         <p class="muted">Version {currentVersion || 'unknown'}</p>
         <p>
