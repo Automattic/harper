@@ -1521,6 +1521,7 @@ script writes it as an abbreviation.
 | `GermanModalZuInfinitive` | *Ich möchte dich zu besuchen*, *dass ich dich anzurufen muss* | no verb between modal and *zu*; not after *um/ohne/statt/als* or *etwas/nichts*; *werden* only with a personal subject |
 | `GermanNominalizedAdjective` | *etwas neues*, *nichts gutes*, *alles gute* | no noun or adjective behind it; not *ander-*, *ein-*, *viel-*, *wenig-* |
 | `GermanDativePlural` | *mit den Kinder*, *seit drei Jahre*, *in vielen Länder* | the noun carries `&`; not behind a preposition without the dative; without a determiner only behind *mit/seit/bei/von* with a number or quantifier |
+| `GermanVerbCluster` | *kann das nicht erhöht*, *hat den Termin verschieben* | main clause; no *werden*/*sein*, no *Ersatzinfinitiv*, no *zu*; not a clause closed by a conjunction; no suggestion |
 | `GermanSubordinateWordOrder` | *dass es zahlt sich nicht aus*, *dass ich habe Zeit*, *bevor er ist gestorben* | a particle the verb joins, or an agreeing auxiliary right behind a pronoun; not *weil*; not before two infinitives |
 | `GermanStrongImperative` | *Gebe mir das!*, *Bitte lese das*, *Trete ein!* | only in a request (*!* or *bitte*), sentence-initial or after *bitte*, not before a subject pronoun; the raised form must carry `%`, the verb no weak preterite |
 | `GermanSuspendedHyphen` | *Vor und Nachteile*, *ein und auszuloggen* | the first word plus the shared tail must be a dictionary entry; not a noun with its own determiner |
@@ -1900,6 +1901,74 @@ treebank, the archived corpus, the school text or `korrekt2`. A manual set of
 34 sentences scores 33: *dass ihr seid zu spät* is missed, because *ihr* is
 not in the subject-pronoun table at all (it is also the dative and the
 possessive).
+
+### Seventh round: errors injected from the treebank's gold annotations
+
+**A new way to find gaps.** The earlier rounds mined learner texts and
+LanguageTool's examples; both show what someone already noticed.
+`scripts/german_treebank_injection.py` uses the Universal Dependencies
+treebanks instead, whose tokens carry lemma, case, number, person and head.
+It swaps one token for another attested form of the same lemma that differs
+in exactly one feature — *die Geräte sollen* → *soll*, *hat verschoben* →
+*verschieben*, *mit dem* → *den* — so every variant is a real word in the
+wrong place, and reports recall per class and per context. Two classes stood
+out near zero:
+
+| class | before | after |
+|---|---|---|
+| finite verb in the wrong number, noun subject (`verb_number`) | 0.6 % | 1.8 % (adjacent: 1.6 → 5.8 %) |
+| infinitive and participle swapped (`inf_part`) | 0.9 % | 19.5 % (behind *haben* 48 %, behind a modal 33–42 %) |
+
+**`GermanVerbCluster`** (new) checks the last verb of a clause against the
+finite verb in front: a participle behind *können*, *müssen*, *dürfen*,
+*sollen*, *wollen* (*kann die Größe nicht erhöht*) and an infinitive behind
+*haben* (*hat den Termin verschieben*). `verbs::is_past_participle` tells the
+two apart without a lemma link: a strong participle needs its *ge*, a
+declined form (*gegebene*) and no first person on the stem (*geschehe*); a
+weak one in *-t* without *ge* needs an inseparable prefix or *-iert* and its
+infinitive as a verb (*erhöht* ← *erhöhen*). *bekommen*, *vergessen* are
+both forms (`participle_spelled_like_infinitive`: *gekommen*, *gegessen*).
+Left alone: *werden*/*sein* in the clause, the *Ersatzinfinitiv* and verbs of
+position (*hat Geld liegen*), *gut reden haben*, *zu*, a clause closed by a
+conjunction (*können exportiert und genutzt werden*), and a small word that
+is a noun (*Ich habe ganz andere sorgen* is the capitalization rule's). No
+replacement is offered — *gelegen* is *liegen*'s. On the treebank it reports
+two sentences, both real errors in the news text (*wollte Burgess keine
+Prognosen abgegeben*, *hatte Anfang Dezember entscheiden*).
+
+**`GermanSubjectVerbAgreement`** reached few noun subjects for four reasons,
+each found by reading the misses:
+
+* `another_subject_follows` took any capitalized word behind the verb for a
+  possible subject (*Die Geräte soll ab **Spätsommer** …*). *ab* and *bis*
+  are governors now, and behind a verb that cannot be third person plural a
+  noun that is surely plural is the object (*Die Musiker beherrscht ihre
+  Instrumente*).
+* Participles in *-t* (*verkauft*, *beherrscht*) are adjectives and so
+  adverbs, and the adverb guard meant for *selbst* hid the third person they
+  spell.
+* The number of a phrase without a determiner was never read. Now a head
+  that is surely plural decides it, at the start of the sentence only:
+  `NounGender::is_surely_plural` reads `&`, the pluralia tantum, feminine
+  plurals in *-(e)n* (*Forderungen* ← *Forderung*) and weak masculines
+  (*Analysten*), and refuses nominalized adjectives (*die Arme*) and
+  feminine *-e* nouns that `mark_german_plural_forms.py` took for plurals
+  (*Freude* from *Freud*, *Spanne* from *Spann*; hunspell's affixes cannot
+  tell them apart, and Harper's gender is no help either — plurals like
+  *köpfe* carry a stray `F` too).
+* A singular subject before an *-en* verb was skipped wholesale for fear of
+  the infinitive. It is checked now at the start of the sentence when the
+  form does not end the clause, no finite verb and no *zu* follows: *Das
+  Angebot richten sich an …*, *Der Konzern haben sich …*; *Ein Haus bauen
+  kostet viel* stays quiet.
+
+The modal subjunctives *dürfte*, *müsste*, *könntest* were missing from the
+table of irregular finite verbs.
+
+Measured against the sixth round: LanguageTool errors found 1801 → 1810,
+false-alarm sentences 740 → 740; Falko-MERLIN edits found 3048 → 3056,
+corrected sentences with a lint 429 → 429; treebank: two new reports, both
+real errors. School text, archived corpus and the manual sets unchanged.
 
 ## The fused spellings the reform allows
 

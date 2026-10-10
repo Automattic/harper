@@ -97,6 +97,84 @@ impl NounGender {
         })
     }
 
+    /// Is `head` surely a noun plural, so that a verb behind it has to be
+    /// plural too? *Kinder*, *Geräte*, *Leute*, and the feminine plurals in
+    /// *-(e)n*: *Forderungen* ← *Forderung*, *Karten* ← *Karte*,
+    /// *Lehrerinnen* ← *Lehrerin*.
+    ///
+    /// The *-n* plurals are not marked in the dictionary, so the singular is
+    /// taken off: it has to be a feminine noun that is surely singular. A
+    /// masculine or neuter base would not do — *Posten* is no plural of
+    /// *Post*, *Laden* none of *Lade* — but a feminine noun has no singular in
+    /// *-n*, so its *-n* form is the plural.
+    pub fn is_surely_plural(&self, head: &str) -> bool {
+        // A noun the dictionary knows as a singular is one, whatever a
+        // compound tail says. And a form in *-e* recorded feminine and nothing
+        // else is the feminine singular the plural affixes also build:
+        // *Freude* is no plural of *Freud*, *Säule* none of *Saul*,
+        // *Zeitspanne* none of *Spann*. Some plurals carry the same stray
+        // gender (*Köpfe*) and are lost with them.
+        // Nor a nominalized adjective: *die Arme* is the poor woman before it
+        // is *Arm*'s plural, *die Alte* the old one.
+        let lower_chars: Vec<char> = head.to_lowercase().chars().collect();
+        if self
+            .dictionary
+            .get_word_metadata(&lower_chars)
+            .is_some_and(|metadata| metadata.is_adjective())
+        {
+            return false;
+        }
+        if self
+            .gender_of(head)
+            .is_some_and(|(_, surely_singular)| surely_singular)
+            || (head.ends_with('e') && self.genders(head) == GenderSet::from(Gender::Feminine))
+        {
+            return false;
+        }
+        // `lacks_dative_plural_n` covers the pluralia tantum without *-n*
+        // (*Leute*); the dictionary's plural-only number does not do here,
+        // because it is on dative plurals as well (*Bildern*).
+        let lower = head.to_lowercase();
+        if PLURALIA_TANTUM.contains(&lower) {
+            return true;
+        }
+        // Not a compound by its last part, as `lacks_dative_plural_n` reads
+        // it: behind a determiner that is already plural that is safe, here it
+        // is not — *Zeitspanne* is no plural of *Spann*.
+        if PLURAL_FORMS.contains(&lower) && !could_be_a_dative_plural(head) {
+            return true;
+        }
+        if lower.chars().count() < 5 || !head.chars().next().is_some_and(char::is_uppercase) {
+            return false;
+        }
+        // The masculine weak nouns put *-(e)n* on every form but the
+        // nominative singular, so in the subject's place *Analysten*,
+        // *Kollegen* are plurals — as long as the dictionary does not record
+        // the form itself as a singular: *der Glauben*, *der Frieden*, *der
+        // Namen* are nominatives of their own.
+        let chars: Vec<char> = head.chars().collect();
+        let own_singular = self
+            .dictionary
+            .get_word_metadata(&chars)
+            .filter(|metadata| metadata.is_noun())
+            .is_some_and(|metadata| {
+                metadata
+                    .noun_agreement()
+                    .number
+                    .contains(NumberSet::SINGULAR)
+            });
+        ["nen", "en", "n"].iter().any(|ending| {
+            head.strip_suffix(ending).is_some_and(|singular| {
+                singular.chars().count() >= 3
+                    && match self.gender_of(singular) {
+                        Some((Gender::Feminine, true)) => true,
+                        Some((Gender::Masculine, true)) => !own_singular,
+                        _ => false,
+                    }
+            })
+        })
+    }
+
     /// The one gender the dictionary records for `head`, and whether the noun
     /// is surely a singular.
     ///

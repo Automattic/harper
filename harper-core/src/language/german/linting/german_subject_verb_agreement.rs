@@ -187,7 +187,12 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // verbs, so `selbst` and `möglichst` arrive here carrying a second
         // person singular; sixteen of the seventeen reports left on the prose
         // corpus were that one ending.
-        if metadata.is_adverb() {
+        //
+        // Not a participle in *-t*, though: as an adjective it is an adverb as
+        // well (*gut verkauft*), and that reading would hide the third person
+        // it spells — *die Kinder verkauft*, *die Musiker beherrscht*.
+        let participle = metadata.is_adjective() && word.ends_with('t') && !word.ends_with("st");
+        if metadata.is_adverb() && !participle {
             return Vec::new();
         }
 
@@ -405,7 +410,26 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             return Some(NumberSet::PLURAL);
         }
 
-        let readings = determiner_readings(&determiner)?;
+        let Some(readings) = determiner_readings(&determiner) else {
+            // No determiner: *Verschiedene Firmen hat*, *Analysten geht*.
+            // Only a noun that is a plural for sure says the number then.
+            // *Nach Bildern wird …*: a preposition is no determiner. And only
+            // at the start of the sentence: behind a comma a bare phrase is as
+            // often the middle of a subordinate clause (*wenn er zwei, drei
+            // verlässliche Leute findet*) or of a list.
+            if tokens[phrase.open].kind.is_preposition()
+                || tokens[..phrase.open]
+                    .iter()
+                    .any(|t| matches!(t.kind, TokenKind::Punctuation(_)))
+            {
+                return None;
+            }
+            let head = trusted_head(document, tokens, phrase)?;
+            return self
+                .nouns
+                .is_surely_plural(&head)
+                .then_some(NumberSet::PLURAL);
+        };
 
         let mut number = NumberSet::empty();
         let mut singular_genders = GenderSet::empty();
@@ -444,7 +468,7 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         // `GermanDeterminerGender`.
         let head = trusted_head(document, tokens, phrase)?;
         // A plurale tantum settles it on its own: *meine Eltern*, *die Leute*.
-        if self.nouns.is_plural_only(&head) {
+        if self.nouns.is_plural_only(&head) || self.nouns.is_surely_plural(&head) {
             return Some(NumberSet::PLURAL);
         }
         let genders = self.nouns.genders(&head);
@@ -512,7 +536,13 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             // place: *der Brennwert **reinen** Fettes beträgt*, *die Arten
             // **hohler** Stängel*. The chunker ends the phrase at the
             // capitalized head, so the attribute behind it lands here.
-            if verb_token.kind.is_adjective() {
+            // That attribute is declined; a form in *-t* with a verb reading
+            // is not, and is the finite verb that happens to spell the
+            // participle as well: *die Kinder beherrscht*, *die Firmen
+            // verkauft*.
+            let undeclined_verb = verb_token.kind.is_verb()
+                && Self::word_at(tokens, phrase.end, document).ends_with('t');
+            if verb_token.kind.is_adjective() && !undeclined_verb {
                 continue;
             }
 
@@ -529,7 +559,10 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             // which of them it is. The cost is the *singular subject, plural
             // verb* direction — *das Kind spielen* goes unreported — and what
             // is kept is *die Kinder spielt*.
-            if Self::word_at(tokens, phrase.end, document).ends_with("en") {
+            if Self::word_at(tokens, phrase.end, document).ends_with("en")
+                && !(number == NumberSet::SINGULAR
+                    && Self::is_finite_plural(tokens, phrase.end, document))
+            {
                 continue;
             }
 
@@ -546,8 +579,15 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
                 if pronoun_subject_follows(tokens, document, phrase.end, &["ihr"]) {
                     continue;
                 }
-            } else if another_subject_follows(tokens, document, phrase.end)
-                || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
+            } else if another_subject_follows(tokens, document, phrase.end, &|noun| {
+                // Behind a verb that can only be singular, a plural noun is
+                // no subject.
+                !readings.is_empty()
+                    && !readings
+                        .iter()
+                        .any(|r| r.agrees_with(&Features::new(PersonSet::THIRD, NumberSet::PLURAL)))
+                    && self.nouns.is_surely_plural(noun)
+            }) || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
             {
                 continue;
             }
@@ -584,6 +624,58 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
                 verb_token,
             ));
         }
+    }
+
+    /// Is the `-en` form at `verb_at`, behind a singular subject in the front
+    /// field, the finite plural rather than an infinitive? *Das Angebot
+    /// richten sich an …*, *Der Konzern haben sich …*.
+    ///
+    /// An infinitive there has the phrase as its object, and the clause then
+    /// has its finite verb further on (*Ein Haus bauen kostet viel*, *Das Auto
+    /// waschen musste ich*) or none at all (*Ein Glas trinken.*). So the form
+    /// must not end the clause, nothing behind it may be finite — a form of
+    /// *sein*, *haben*, *werden* or a modal, or a verb in *-t*, which takes in
+    /// the participles as well and so errs towards silence — and no *zu* may
+    /// follow it.
+    fn is_finite_plural(tokens: &[&Token], verb_at: usize, document: &Document) -> bool {
+        let verb = tokens[verb_at];
+        // Only for a phrase that opens the sentence. Behind a comma it may be
+        // one of a list of infinitive groups (*…, ein Werk bilden usw.*), and
+        // an adverb with a stray verb reading turns up there too (*…, ein
+        // friedlicher Machtwechsel hingegen nicht*).
+        if tokens[..verb_at]
+            .iter()
+            .any(|t| matches!(t.kind, TokenKind::Punctuation(_)))
+            || verb.kind.is_adverb()
+        {
+            return false;
+        }
+        let lowercase = document
+            .get_span_content(&verb.span)
+            .first()
+            .is_some_and(|c| c.is_lowercase());
+        if !lowercase || !verb.kind.is_verb() {
+            return false;
+        }
+        let rest: Vec<usize> = (verb_at + 1..tokens.len())
+            .take_while(|&at| {
+                !matches!(tokens[at].kind, TokenKind::Punctuation(p) if p != Punctuation::Hyphen)
+                    && !matches!(
+                        tokens[at].kind,
+                        TokenKind::Newline(_) | TokenKind::ParagraphBreak
+                    )
+                    && !COORDINATORS.contains(&Self::word_at(tokens, at, document).as_str())
+            })
+            .filter(|&at| matches!(tokens[at].kind, TokenKind::Word(_) | TokenKind::Number(_)))
+            .collect();
+        if rest.is_empty() || Self::word_at(tokens, rest[0], document) == "zu" {
+            return false;
+        }
+        !rest.iter().any(|&at| {
+            let word = Self::word_at(tokens, at, document);
+            irregular_finite_verb(&word).is_some()
+                || (tokens[at].kind.is_verb() && word.ends_with('t'))
+        })
     }
 
     /// *Der Katze schläft*: a phrase in the front field that has to be the
@@ -655,7 +747,7 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         let rest: Vec<String> = (phrase.end + 1..clause_end)
             .map(|at| Self::word_at(tokens, at, document))
             .collect();
-        if another_subject_follows(tokens, document, phrase.end)
+        if another_subject_follows(tokens, document, phrase.end, &|_| false)
             || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
             || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS_AFTER_DATIVE)
             || rest.iter().any(|word| PASSIVE.contains(&word.as_str()))
@@ -933,6 +1025,8 @@ fn pronoun_subject_follows(
 /// Prepositions and preposition–article contractions, which mark the phrase
 /// behind them as governed and therefore never the subject.
 const GOVERNORS: &[&str] = &[
+    "ab",
+    "bis",
     "in",
     "an",
     "auf",
@@ -995,7 +1089,15 @@ const GOVERNORS: &[&str] = &[
 ///
 /// A phrase behind a preposition does not count, which is what keeps *die
 /// Kinder spielt im Garten* reportable: *Garten* is capitalized but governed.
-fn another_subject_follows(tokens: &[&Token], document: &Document, verb_at: usize) -> bool {
+/// Nor does a noun that `cannot_agree` rules out: behind a singular verb, a
+/// noun that is surely plural is the object — *Die Musiker beherrscht ihre
+/// Instrumente*.
+fn another_subject_follows(
+    tokens: &[&Token],
+    document: &Document,
+    verb_at: usize,
+    cannot_agree: &dyn Fn(&str) -> bool,
+) -> bool {
     let word_at = |at: usize| -> String {
         document
             .get_span_content(&tokens[at].span)
@@ -1065,8 +1167,14 @@ fn another_subject_follows(tokens: &[&Token], document: &Document, verb_at: usiz
                     continue;
                 }
 
-                if subject_pronoun(&word_at(at)).is_some() || capitalized(at) {
+                if subject_pronoun(&word_at(at)).is_some() {
                     return true;
+                }
+                if capitalized(at) {
+                    let text: String = document.get_span_content(&tokens[at].span).iter().collect();
+                    if !cannot_agree(&text) {
+                        return true;
+                    }
                 }
             }
             _ => {}

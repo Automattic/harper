@@ -33,6 +33,85 @@ pub fn joined_separable_verb(particle: &str, verb: &str) -> Option<String> {
     is_verb(&joined).then_some(joined)
 }
 
+/// The prefixes that never separate and take no *ge* in the participle:
+/// *verkauft*, *erhöht*, *bekommen*.
+const INSEPARABLE_PREFIXES: &[&str] = &["be", "ver", "er", "ent", "zer", "ge", "emp", "miss"];
+
+/// Is `word` a past participle, and not the infinitive? A strong one in
+/// *-en* needs its *ge* and a declined form (*gegebene*), and the verb no
+/// first person on the same stem (*geschehe*).
+/// A weak one in *-t* is read by its *ge*, or without one behind an
+/// inseparable prefix or in *-iert*, when the dictionary knows the infinitive
+/// as a verb: *erhöht* ← *erhöhen*, *verkauft* ← *verkaufen*, *investiert* ←
+/// *investieren*. The *-t* spells the third person too, so the caller has to
+/// know that the position takes no finite verb. *bekommen*, which is both, is
+/// not one here — see [`participle_spelled_like_infinitive`].
+pub fn is_past_participle(word: &str) -> bool {
+    let lower = word.to_lowercase();
+    if let Some(stem) = lower.strip_suffix("en") {
+        let dictionary = curated_german_dictionary();
+        let lookup = |word: String| {
+            let chars: Vec<char> = word.chars().collect();
+            dictionary.get_word_metadata(&chars).map(|m| m.into_owned())
+        };
+        // The dictionary declines participles as adjectives, so the *-e* form
+        // tells *gegebene*, *gelegene* from *gewinnen*, *genießen*. An
+        // intransitive participle has none (*geholfen*) and is missed.
+        let declines = lookup(format!("{lower}e")).is_some_and(|m| m.is_adjective());
+        // *geschehen*, *geraten* are infinitives as well: the verb has a
+        // first person on the same stem (*geschehe*, *gerate*), which
+        // *gegeben* and *gelegen* do not. *Gelege* is the noun.
+        let finite = lookup(format!("{stem}e")).is_some_and(|m| m.is_verb() && !m.is_noun());
+        // *abgemahnten*, *gewordenen*: a participle declined.
+        let declined = is_past_participle(stem);
+        return looks_like_participle(&lower) && declines && !finite && !declined;
+    }
+    let Some(stem) = lower.strip_suffix('t') else {
+        return false;
+    };
+    if looks_like_participle(&lower) {
+        return true;
+    }
+    let prefixed = INSEPARABLE_PREFIXES.iter().any(|prefix| {
+        stem.strip_prefix(prefix)
+            .is_some_and(|rest| rest.len() >= 3)
+    });
+    (prefixed || stem.ends_with("ier")) && is_verb(&format!("{stem}en"))
+}
+
+/// Is the *-en* form `word` also a strong participle, as *bekommen*,
+/// *vergessen*, *gelegen* are? The dictionary declines participles as
+/// adjectives, so the declined *-e* form tells: *vergessene*, *bekommene*.
+/// *verschieben* has none — its participle is *verschoben*.
+pub fn participle_spelled_like_infinitive(word: &str) -> bool {
+    let lower = word.to_lowercase();
+    if !lower.ends_with("en") {
+        return false;
+    }
+    let dictionary = curated_german_dictionary();
+    let is_participle = |word: String| {
+        let chars: Vec<char> = word.chars().collect();
+        dictionary
+            .get_word_metadata(&chars)
+            .is_some_and(|metadata| metadata.is_verb() && metadata.is_adjective())
+    };
+    let declined: Vec<char> = format!("{lower}e").chars().collect();
+    if dictionary
+        .get_word_metadata(&declined)
+        .is_some_and(|metadata| metadata.is_adjective())
+    {
+        return true;
+    }
+    // Behind an inseparable prefix, the plain verb's participle with its *ge*
+    // shows the vowel: *bekommen* — *gekommen*, *erfahren* — *gefahren*; but
+    // *verschieben* — *geschoben*, not *geschieben*.
+    INSEPARABLE_PREFIXES.iter().any(|prefix| {
+        lower
+            .strip_prefix(prefix)
+            .is_some_and(|rest| rest.len() >= 4 && is_participle(format!("ge{rest}")))
+    })
+}
+
 /// Whether `word` is spelled like an infinitive with its *zu* inside, as a
 /// separable verb writes it: *anzurufen*, *mitzunehmen*, *kennenzulernen*.
 ///

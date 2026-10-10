@@ -165,6 +165,8 @@ const FINITE_VERBS: &[(&str, &[(&str, Features)])] = &[
             ("konnten", Features::new(P1.union(P3), PL)),
             ("könnte", Features::new(P1.union(P3), SG)),
             ("könnten", Features::new(P1.union(P3), PL)),
+            ("könntest", Features::new(P2, SG)),
+            ("könntet", Features::new(P2, PL)),
         ],
     ),
     (
@@ -176,6 +178,10 @@ const FINITE_VERBS: &[(&str, &[(&str, Features)])] = &[
             ("müsst", Features::new(P2, PL)),
             ("musste", Features::new(P1.union(P3), SG)),
             ("mussten", Features::new(P1.union(P3), PL)),
+            ("müsste", Features::new(P1.union(P3), SG)),
+            ("müsstest", Features::new(P2, SG)),
+            ("müssten", Features::new(P1.union(P3), PL)),
+            ("müsstet", Features::new(P2, PL)),
         ],
     ),
     (
@@ -209,6 +215,10 @@ const FINITE_VERBS: &[(&str, &[(&str, Features)])] = &[
             ("dürft", Features::new(P2, PL)),
             ("durfte", Features::new(P1.union(P3), SG)),
             ("durften", Features::new(P1.union(P3), PL)),
+            ("dürfte", Features::new(P1.union(P3), SG)),
+            ("dürftest", Features::new(P2, SG)),
+            ("dürften", Features::new(P1.union(P3), PL)),
+            ("dürftet", Features::new(P2, PL)),
         ],
     ),
     (

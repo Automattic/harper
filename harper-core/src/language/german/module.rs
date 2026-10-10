@@ -63,8 +63,8 @@ impl LanguageModule for GermanModule {
             german_subject_verb_agreement::GermanSubjectVerbAgreement,
             german_subordinate_comma::GermanSubordinateComma,
             german_subordinate_word_order::GermanSubordinateWordOrder,
-            german_suspended_hyphen::GermanSuspendedHyphen, german_wider_wieder::GermanWiderWieder,
-            german_year_preposition::GermanYearPreposition,
+            german_suspended_hyphen::GermanSuspendedHyphen, german_verb_cluster::GermanVerbCluster,
+            german_wider_wieder::GermanWiderWieder, german_year_preposition::GermanYearPreposition,
         };
 
         let mut group = LintGroup::empty();
@@ -109,6 +109,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanNominalizedAdjective", GermanNominalizedAdjective);
         group.add("GermanSubordinateComma", GermanSubordinateComma);
         group.add("GermanSubordinateWordOrder", GermanSubordinateWordOrder);
+        group.add("GermanVerbCluster", GermanVerbCluster::new());
         group.add("GermanSuspendedHyphen", GermanSuspendedHyphen);
         group.add(
             "GermanRelativeClauseComma",

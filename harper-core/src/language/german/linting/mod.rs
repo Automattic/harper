@@ -27,6 +27,7 @@ pub mod german_subject_verb_agreement;
 pub mod german_subordinate_comma;
 pub mod german_subordinate_word_order;
 pub mod german_suspended_hyphen;
+pub mod german_verb_cluster;
 pub mod german_wider_wieder;
 pub mod german_year_preposition;
 pub mod weir_rules;
