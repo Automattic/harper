@@ -24,7 +24,7 @@ impl Suggestion {
     pub fn replace_with_match_case_str(
         value: &str,
         template: impl IntoIterator<Item = impl Borrow<char>>,
-    ) -> Self {
+    ) -> Vec<Self> {
         Self::replace_with_match_case(value.chars().collect(), template)
     }
 
@@ -36,8 +36,10 @@ impl Suggestion {
     pub fn replace_with_match_case(
         value: Vec<char>,
         template: impl IntoIterator<Item = impl Borrow<char>>,
-    ) -> Self {
-        Self::ReplaceWith(case::copy_casing(template, value).to_vec())
+    ) -> Vec<Self> {
+        vec![Self::ReplaceWith(
+            case::copy_casing(template, value).to_vec(),
+        )]
     }
 
     /// Apply a suggestion to a given text.
@@ -111,7 +113,7 @@ where
         self,
         case_template: impl IntoIterator<Item = impl Borrow<char>> + Clone,
     ) -> impl Iterator<Item = Suggestion> {
-        self.into_iter().map(move |s| {
+        self.into_iter().flat_map(move |s| {
             Suggestion::replace_with_match_case_str(s.as_ref(), case_template.clone())
         })
     }
@@ -142,7 +144,7 @@ mod tests {
 
         assert_eq!(
             Suggestion::replace_with_match_case(value, &template),
-            Suggestion::ReplaceWith(correct)
+            vec![Suggestion::ReplaceWith(correct)]
         )
     }
 
@@ -155,7 +157,7 @@ mod tests {
 
         assert_eq!(
             Suggestion::replace_with_match_case(value, &template),
-            Suggestion::ReplaceWith(correct)
+            vec![Suggestion::ReplaceWith(correct)]
         )
     }
 }

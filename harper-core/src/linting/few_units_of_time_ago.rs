@@ -51,10 +51,10 @@ impl ExprLinter for FewUnitsOfTimeAgo {
             span: span.unwrap(),
             message: "In this construction you need to use `a few` instead of just `few`."
                 .to_owned(),
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "a few",
                 span.unwrap().get_content(src),
-            )],
+            ),
             ..Default::default()
         })
     }

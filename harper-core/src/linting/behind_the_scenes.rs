@@ -47,11 +47,7 @@ impl ExprLinter for BehindTheScenes {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: [Suggestion::replace_with_match_case_str(
-                "scenes",
-                span.get_content(src),
-            )]
-            .to_vec(),
+            suggestions: Suggestion::replace_with_match_case_str("scenes", span.get_content(src)),
             message: "This idiom uses the plural `scenes`.".to_owned(),
             ..Default::default()
         })

@@ -80,7 +80,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             .wrong_forms_to_correct_forms
             .iter()
             .filter(|(wrong_form, _)| matched_text.eq_str(wrong_form))
-            .map(|(_, correct_form)| {
+            .flat_map(|(_, correct_form)| {
                 Suggestion::replace_with_match_case(correct_form.chars().collect(), matched_text)
             })
             .collect();
@@ -103,7 +103,7 @@ impl<'a> ExprLinter for MapPhraseSetLinter<'a> {
             })
             .collect();
 
-        suggestions.extend(many_to_many_suggestions);
+        suggestions.extend(many_to_many_suggestions.into_iter().flatten());
 
         if suggestions.is_empty() {
             return None;

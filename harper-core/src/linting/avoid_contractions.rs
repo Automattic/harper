@@ -140,10 +140,7 @@ impl ExprLinter for AvoidContractions {
         Some(Lint {
             span: tok.span,
             lint_kind: LintKind::Style,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                expansion,
-                tok.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str(expansion, tok.get_ch(src)),
             message: "Consider expanding this contraction.".to_owned(),
             priority: 63,
         })

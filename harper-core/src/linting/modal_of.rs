@@ -114,10 +114,10 @@ impl ExprLinter for ModalOf {
         Some(Lint {
             span: span_modal_of,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 modal_have,
                 span_modal_of.get_content(source_chars),
-            )],
+            ),
             message: "Use `have` rather than `of` here.".to_owned(),
             priority: 126,
         })

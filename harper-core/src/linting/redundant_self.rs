@@ -130,7 +130,7 @@ impl ExprLinter for RedundantSelf {
         }
         .iter()
         .map(|range| range.clone().collect::<Vec<_>>())
-        .map(|indices| {
+        .flat_map(|indices| {
             Suggestion::replace_with_match_case(
                 indices
                     .into_iter()

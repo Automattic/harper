@@ -35,10 +35,7 @@ impl ExprLinter for FedUpWith {
         Some(Lint {
             span: ofspan,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "with",
-                ofspan.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("with", ofspan.get_content(src)),
             message: "`Fed up of` is not accepted outside of British English.".to_owned(),
             ..Default::default()
         })

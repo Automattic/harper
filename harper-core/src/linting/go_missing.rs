@@ -46,7 +46,7 @@ impl ExprLinter for GoMissing {
 
         let suggestions = corrections
             .iter()
-            .map(|c| Suggestion::replace_with_match_case_str(c, ch))
+            .flat_map(|c| Suggestion::replace_with_match_case_str(c, ch))
             .collect::<Vec<_>>();
 
         Some(Lint {

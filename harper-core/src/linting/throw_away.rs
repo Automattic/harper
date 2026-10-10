@@ -37,7 +37,10 @@ impl ExprLinter for ThrowAway {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("throw", original),
                 Suggestion::replace_with_match_case_str("threw", original),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Use `throw away` or `threw away`, depending on the tense you need."
                 .to_owned(),
             priority: 60,

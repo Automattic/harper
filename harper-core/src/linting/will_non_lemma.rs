@@ -94,8 +94,9 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                 .get_word_metadata_str(lemma)
                 .is_some_and(|m| m.is_verb_lemma())
         {
-            suggestions.push(suggest(&format!("will {}", lemma)));
-            suggestions.push(suggest(&verb_str));
+            // CHANGED: Use .extend() because suggest() returns a Vec
+            suggestions.extend(suggest(&format!("will {}", lemma)));
+            suggestions.extend(suggest(&verb_str));
         }
         if verb_tok.kind.is_verb_third_person_singular_present_form() {
             let candidate = &verb_str[..verb_str.len() - 1];
@@ -104,12 +105,14 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                 .get_word_metadata_str(candidate)
                 .is_some_and(|m| m.is_verb_lemma())
             {
-                suggestions.push(suggest(&format!("will {}", candidate)));
-                suggestions.push(suggest(&verb_str));
+                // CHANGED: Use .extend() because suggest() returns a Vec
+                suggestions.extend(suggest(&format!("will {}", candidate)));
+                suggestions.extend(suggest(&verb_str));
 
                 // Add suggestion for plural nouns
                 if maybe_prev_word_tok.is_some_and(|tok| tok.kind.is_plural_nominal()) {
-                    suggestions.push(suggest(candidate));
+                    // CHANGED: Use .extend() because suggest() returns a Vec
+                    suggestions.extend(suggest(candidate));
                 }
             }
         }
@@ -121,7 +124,7 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                     .get_word_metadata_str(stem)
                     .is_some_and(|m| m.is_verb_lemma())
                 {
-                    suggestions.push(Suggestion::replace_with_match_case(
+                    suggestions.extend(Suggestion::replace_with_match_case(
                         format!("will {}", stem).chars().collect(),
                         matched_chars,
                     ));
@@ -134,31 +137,30 @@ impl<D: Dictionary> ExprLinter for WillNonLemma<D> {
                     .get_word_metadata_str(&stem_with_e)
                     .is_some_and(|m| m.is_verb_lemma())
                 {
-                    suggestions.push(Suggestion::replace_with_match_case(
+                    suggestions.extend(Suggestion::replace_with_match_case(
                         format!("will {}", stem_with_e).chars().collect(),
                         matched_chars,
                     ));
                 }
             }
 
-            let v_ing = Suggestion::replace_with_match_case(
+            suggestions.extend(Suggestion::replace_with_match_case(
                 verb_tok.span.get_content(src).to_vec(),
                 toks.span()?.get_content(src),
-            );
-            suggestions.push(v_ing);
-            let will_be_v_ing = Suggestion::replace_with_match_case(
+            ));
+
+            suggestions.extend(Suggestion::replace_with_match_case(
                 format!("will be {}", verb_str)
                     .chars()
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
-            );
-            suggestions.push(will_be_v_ing);
+            ));
         }
 
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::Grammar,
-            suggestions,
+            suggestions, // CHANGED: Cleaned up because the vector is already flat!
             message: "`Will` and `shall` should be followed by a verb in its base form.".to_owned(),
             ..Default::default()
         })

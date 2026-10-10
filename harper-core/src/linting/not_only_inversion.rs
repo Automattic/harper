@@ -40,10 +40,10 @@ impl ExprLinter for NotOnlyInversion {
             span: pronbetoks.span()?,
             lint_kind: LintKind::Grammar,
             message: "After `not only` the subject and verb should be inverted.".to_owned(),
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 inverted,
                 pronbetoks.span()?.get_content(src),
-            )],
+            ),
             ..Default::default()
         })
     }

@@ -75,7 +75,7 @@ impl ExprLinter for DoubleClick {
         Some(Lint {
             span,
             lint_kind: LintKind::Punctuation,
-            suggestions: vec![Suggestion::replace_with_match_case(replacement, template)],
+            suggestions: Suggestion::replace_with_match_case(replacement, template),
             message: "Add a hyphen to this command.".to_owned(),
             priority: 40,
         })

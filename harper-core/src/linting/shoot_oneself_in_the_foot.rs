@@ -59,13 +59,11 @@ impl ExprLinter for ShootOneselfInTheFoot {
 
         let in_the_foot = Span::new(toks.get(4)?.span.start, toks.get(8)?.span.end);
 
-        let mut suggestions = vec![Suggestion::replace_with_match_case_str(
-            "in the foot",
-            in_the_foot.get_content(src),
-        )];
+        let mut suggestions =
+            Suggestion::replace_with_match_case_str("in the foot", in_the_foot.get_content(src));
 
         if plural_pron {
-            suggestions.push(Suggestion::replace_with_match_case_str(
+            suggestions.extend(Suggestion::replace_with_match_case_str(
                 "in the feet",
                 in_the_foot.get_content(src),
             ));

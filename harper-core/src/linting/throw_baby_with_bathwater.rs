@@ -53,10 +53,10 @@ impl ExprLinter for ThrowBabyWithBathwater {
                 Some(Lint {
                     span: away_tok.span,
                     lint_kind: LintKind::Nonstandard,
-                    suggestions: vec![Suggestion::replace_with_match_case_str(
+                    suggestions: Suggestion::replace_with_match_case_str(
                         "out",
                         away_tok.get_ch(src),
-                    )],
+                    ),
                     message: "This idiom uses `throw out` rather than `throw away`.".to_owned(),
                     ..Default::default()
                 })
@@ -83,7 +83,10 @@ impl ExprLinter for ThrowBabyWithBathwater {
                 let suggestions = vec![
                     Suggestion::replace_with_match_case(the_baby_out, template),
                     Suggestion::replace_with_match_case(out_the_baby, template),
-                ];
+                ]
+                .into_iter()
+                .flatten()
+                .collect();
 
                 Some(Lint {
                     span,

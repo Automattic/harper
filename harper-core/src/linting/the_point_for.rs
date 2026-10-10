@@ -56,10 +56,7 @@ impl ExprLinter for ThePointFor {
         Some(Lint {
             span: forspan,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "of",
-                forspan.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("of", forspan.get_content(src)),
             message: "Did you mean `the point of`?".to_owned(),
             ..Default::default()
         })

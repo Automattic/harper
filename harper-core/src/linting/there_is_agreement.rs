@@ -305,7 +305,7 @@ fn handle_statement<D: Dictionary>(
 
     let noun_suggestions: Vec<Suggestion> = article_noun_pairs
         .iter()
-        .map(|sug_repl_value| {
+        .flat_map(|sug_repl_value| {
             Suggestion::replace_with_match_case(sug_repl_value.to_vec(), replacement_template)
         })
         .collect();
@@ -313,7 +313,7 @@ fn handle_statement<D: Dictionary>(
     Some(Lint {
         span: toks[2..=4].span()?,
         message: "There is disagreement in number between the verb and the noun.".to_owned(),
-        suggestions: [vec![be_suggestion], noun_suggestions].concat(),
+        suggestions: [be_suggestion, noun_suggestions].concat(),
         lint_kind: LintKind::Agreement,
         ..Default::default()
     })
@@ -373,7 +373,7 @@ fn handle_theres<D: Dictionary>(
 
     let noun_suggestions: Vec<Suggestion> = article_noun_pairs
         .iter()
-        .map(|sug_repl_value| {
+        .flat_map(|sug_repl_value| {
             Suggestion::replace_with_match_case(sug_repl_value.to_vec(), replacement_template)
         })
         .collect();
@@ -381,7 +381,7 @@ fn handle_theres<D: Dictionary>(
     Some(Lint {
         span: toks[0..=2].span()?,
         lint_kind: LintKind::Agreement,
-        suggestions: [vec![there_be_suggestion], noun_suggestions].concat(),
+        suggestions: [there_be_suggestion, noun_suggestions].concat(),
         message: "`There's` means `there is`, which requires a singular noun.".to_owned(),
         ..Default::default()
     })
@@ -470,7 +470,7 @@ fn handle_question<D: Dictionary>(
 
     let noun_suggestions = article_noun_pairs
         .iter()
-        .map(|replacement_value| {
+        .flat_map(|replacement_value| {
             Suggestion::replace_with_match_case(replacement_value.to_vec(), replacement_template)
         })
         .collect::<Vec<_>>();
@@ -478,7 +478,7 @@ fn handle_question<D: Dictionary>(
     Some(Lint {
         span: toks[0..=4].span()?,
         lint_kind: LintKind::Agreement,
-        suggestions: [vec![be_suggestion], noun_suggestions].concat(),
+        suggestions: [be_suggestion, noun_suggestions].concat(),
         message: "There is disagreement in number between the verb and the noun.".to_owned(),
         ..Default::default()
     })

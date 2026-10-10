@@ -36,7 +36,7 @@ impl ExprLinter for DespiteOf {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("despite", matched),
                 Suggestion::replace_with_match_case_str("in spite of", matched)
-            ],
+            ].into_iter().flatten().collect(),
             message: "The phrase “despite of” is incorrect. Please use either “despite” or “in spite of” instead.".to_owned(),
             priority: 126,
         })

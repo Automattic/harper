@@ -160,13 +160,13 @@ impl ExprLinter for NounCountability {
                 ReplaceNounWith(w) => &[&dq, *w],
                 _ => return None,
             };
-            suggestions.push(Suggestion::replace_with_match_case(
+            suggestions.extend(Suggestion::replace_with_match_case(
                 parts.join(" ").chars().collect(),
                 toks_chars,
             ));
         }
 
-        suggestions.extend(basic_corrections.iter().map(|correction| {
+        suggestions.extend(basic_corrections.iter().flat_map(|correction| {
             let parts: &[&str] = match correction {
                 DropDQ => &[&noun],
                 ReplaceDQWith(w) => &[w, &noun],

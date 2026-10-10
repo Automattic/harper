@@ -46,10 +46,7 @@ impl ExprLinter for FishNorFowl {
         Some(Lint {
             span,
             lint_kind,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "fowl",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("fowl", span.get_content(src)),
             message: message.to_owned(),
             ..Default::default()
         })

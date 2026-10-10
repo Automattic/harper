@@ -43,19 +43,13 @@ impl ExprLinter for AdjectiveDoubleDegree {
                 LintKind::Redundancy,
                 "Using `more` and the comparative form of the adjective together is redundant."
                     .to_owned(),
-                vec![Suggestion::replace_with_match_case(
-                    adj_chars.to_vec(),
-                    phrase_chars,
-                )],
+                Suggestion::replace_with_match_case(adj_chars.to_vec(), phrase_chars),
             ),
             (['m', 'o', 's', 't'], false, true) => (
                 LintKind::Redundancy,
                 "Using `most` and the superlative form of the adjective together is redundant."
                     .to_owned(),
-                vec![Suggestion::replace_with_match_case(
-                    adj_chars.to_vec(),
-                    phrase_chars,
-                )],
+                Suggestion::replace_with_match_case(adj_chars.to_vec(), phrase_chars),
             ),
             _ => {
                 let other_adj_degree = match adj_chars {
@@ -88,7 +82,10 @@ impl ExprLinter for AdjectiveDoubleDegree {
                     vec![
                         Suggestion::replace_with_match_case(adj_chars.to_vec(), phrase_chars),
                         Suggestion::replace_with_match_case(other_adj_degree, phrase_chars),
-                    ],
+                    ]
+                    .into_iter()
+                    .flatten()
+                    .collect(),
                 )
             }
         };

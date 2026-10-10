@@ -49,10 +49,10 @@ impl ExprLinter for Misspell {
             _ => return None,
         };
 
-        let suggestions = vec![Suggestion::replace_with_match_case(
+        let suggestions = Suggestion::replace_with_match_case(
             replacement.chars().collect(),
             span.get_content(source),
-        )];
+        );
 
         Some(Lint {
             span,

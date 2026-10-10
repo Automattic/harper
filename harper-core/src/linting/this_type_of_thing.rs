@@ -113,7 +113,7 @@ impl ExprLinter for ThisTypeOfThing {
         Some(Lint {
             span: bad_tok.span,
             lint_kind: LintKind::Agreement,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 if bad_tok == det_tok {
                     match (det_num, deixis) {
                         (Num::Sg, Deixis::Proximal) => "these",
@@ -141,7 +141,7 @@ impl ExprLinter for ThisTypeOfThing {
                 .chars()
                 .collect(),
                 bad_tok.get_ch(src),
-            )],
+            ),
             message: "The grammatical number of the determiner and the two nouns must agree."
                 .to_owned(),
             ..Default::default()

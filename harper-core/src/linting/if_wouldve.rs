@@ -82,10 +82,10 @@ impl ExprLinter for IfWouldve {
             Some(Lint {
                 span,
                 lint_kind: LintKind::Nonstandard,
-                suggestions: vec![Suggestion::replace_with_match_case(
+                suggestions: Suggestion::replace_with_match_case(
                     vec!['h', 'a', 'd'],
                     span.get_content(src),
-                )],
+                ),
                 message: "If this is counterfactual or hypothetical, use `had` after `if` rather than `would have` or `had have`.".to_owned(),
                 ..Default::default()
             })

@@ -48,7 +48,7 @@ impl ExprLinter for GoSoFarAsTo {
         let go_so_far_toks = &toks[0..=4];
         let to_tok = &toks[6];
 
-        let sugg = Suggestion::replace_with_match_case(
+        let suggestions = Suggestion::replace_with_match_case(
             format!(
                 "{} as {}",
                 go_so_far_toks.span()?.get_content_string(src),
@@ -62,7 +62,7 @@ impl ExprLinter for GoSoFarAsTo {
         Some(Lint {
             span: go_so_far_to_span,
             lint_kind: LintKind::Nonstandard,
-            suggestions: vec![sugg],
+            suggestions,
             message: "If this is intended to express going beyond what's expected, the standard idiom is `go so far as to`".to_owned(),
             ..Default::default()
         })

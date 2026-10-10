@@ -39,7 +39,7 @@ impl ExprLinter for BellowBelow {
         Some(Lint {
             span: verb_span,
             lint_kind: LintKind::Malapropism,
-            suggestions: vec![Suggestion::replace_with_match_case_str("below", verb_chars)],
+            suggestions: Suggestion::replace_with_match_case_str("below", verb_chars),
             message: "`Bellow` means to shout. You probably mean `below`.".to_owned(),
             ..Default::default()
         })

@@ -42,10 +42,7 @@ impl ExprLinter for ThoughThought {
         Some(Lint {
             span: tok.span,
             lint_kind: LintKind::Typo,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "thought",
-                tok.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("thought", tok.get_ch(src)),
             message: "Is this a typo for `thought`?".to_owned(),
             ..Default::default()
         })

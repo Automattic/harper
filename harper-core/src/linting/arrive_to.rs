@@ -34,7 +34,7 @@ impl ExprLinter for ArriveTo {
 
         let suggestions = ["at", "in"]
             .iter()
-            .map(|&s| Suggestion::replace_with_match_case_str(s, span.get_content(src)))
+            .flat_map(|&s| Suggestion::replace_with_match_case_str(s, span.get_content(src)))
             .collect();
 
         Some(Lint {

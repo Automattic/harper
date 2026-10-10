@@ -32,7 +32,7 @@ impl ExprLinter for ThesesThese {
 
         let content = theses_token.get_ch(source);
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str("these", content)];
+        let suggestions = Suggestion::replace_with_match_case_str("these", content);
 
         Some(Lint {
             span: theses_token.span,

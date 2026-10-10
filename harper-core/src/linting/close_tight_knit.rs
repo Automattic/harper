@@ -24,10 +24,7 @@ impl ExprLinter for CloseTightKnit {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let (sep_tok, nit_tok) = (&toks[1], &toks[2]);
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "knit",
-            nit_tok.get_ch(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str("knit", nit_tok.get_ch(src));
         let message = format!(
             "A `nit` is a louse egg. The correct idiom is `tight{}knit`.",
             if sep_tok.kind.is_hyphen() { '-' } else { ' ' }

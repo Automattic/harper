@@ -121,7 +121,7 @@ impl ExprLinter for MapPhraseLinter {
             suggestions: self
                 .correct_forms
                 .iter()
-                .map(|correct_form| {
+                .flat_map(|correct_form| {
                     Suggestion::replace_with_match_case(
                         correct_form.chars().collect(),
                         matched_text,

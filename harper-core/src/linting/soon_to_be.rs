@@ -115,10 +115,7 @@ impl ExprLinter for SoonToBe {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "soon-to-be",
-                template,
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("soon-to-be", template),
             message: "Use hyphens when `soon to be` modifies a noun.".to_owned(),
             priority: 31,
         })

@@ -37,10 +37,7 @@ impl ExprLinter for ByAccident {
 
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let span = toks.first()?.span;
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "by",
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str("by", span.get_content(src));
 
         Some(Lint {
             span,

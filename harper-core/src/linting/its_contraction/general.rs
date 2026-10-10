@@ -178,7 +178,10 @@ impl General {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("it's", offender_chars),
                 Suggestion::replace_with_match_case_str("it has", offender_chars),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Use `it's` (short for `it has` or `it is`) here, not the possessive `its`."
                 .to_owned(),
             priority: 54,

@@ -79,8 +79,8 @@ impl ExprLinter for NorModalPronoun {
         .collect();
 
         // Avoid capitalizing the modals verbs just because the pronoun was "I"
-        let suggestion = if pron_span.get_content(src) == ['I'] {
-            Suggestion::ReplaceWith(value)
+        let suggestions = if pron_span.get_content(src) == ['I'] {
+            vec![Suggestion::ReplaceWith(value)]
         } else {
             Suggestion::replace_with_match_case(value, pron_modal_span.get_content(src))
         };
@@ -88,7 +88,7 @@ impl ExprLinter for NorModalPronoun {
         Some(Lint {
             span: pron_modal_span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![suggestion],
+            suggestions,
             message: "After `nor`, the modal verb should come before the pronoun.".to_owned(),
             ..Default::default()
         })

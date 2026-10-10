@@ -34,10 +34,10 @@ impl ExprLinter for Whereas {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 vec!['w', 'h', 'e', 'r', 'e', 'a', 's'],
                 orig_chars,
-            )],
+            ),
             message: "`Whereas` is commonly mistaken for `where as`.".to_owned(),
             ..Default::default()
         })

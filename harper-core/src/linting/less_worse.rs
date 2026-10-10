@@ -86,7 +86,7 @@ impl ExprLinter for LessWorse {
             lint_kind: LintKind::WordChoice,
             suggestions: suggestions
                 .iter()
-                .map(|s| Suggestion::replace_with_match_case(s.to_vec(), template))
+                .flat_map(|s| Suggestion::replace_with_match_case(s.to_vec(), template))
                 .collect::<Vec<_>>(),
             message: message.to_owned(),
             priority: 126,

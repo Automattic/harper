@@ -69,10 +69,10 @@ impl ExprLinter for VerbInsteadOfNoun {
         Some(Lint {
             span: verb_tok.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 noun.chars().collect(),
                 verb_tok.get_ch(src),
-            )],
+            ),
             message: format!("`{verb_text}` is a verb, the noun should be `{noun}`."),
             priority: 63,
         })

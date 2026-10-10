@@ -117,10 +117,10 @@ impl ExprLinter for ChickenAndEgg {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 &format!("chicken{sep}{conj}{sep}egg"),
                 span.get_content(src),
-            )],
+            ),
             message: "If you're referring to “which coame first”, use the standard idiom."
                 .to_owned(),
             ..Default::default()

@@ -43,10 +43,10 @@ impl ExprLinter for ComplainAsNoun {
         Some(Lint {
             span: matched_tokens[idx].span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 noun.to_vec(),
                 matched_tokens[idx].get_ch(source),
-            )],
+            ),
             message: "The noun form is `complaint`.".to_owned(),
             ..Default::default()
         })

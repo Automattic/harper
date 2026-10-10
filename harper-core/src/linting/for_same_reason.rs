@@ -55,7 +55,7 @@ impl ExprLinter for ForSameReason {
             .find(|(m, _)| mod_str.eq_str(m))
             .map(|(_, r)| r)?;
 
-        let (span, sugg, msg) = match remedy {
+        let (span, suggestions, msg) = match remedy {
             InsertDefiniteArticle => (
                 fspan,
                 Suggestion::replace_with_match_case_str("for the", ftok.get_ch(src)),
@@ -71,7 +71,7 @@ impl ExprLinter for ForSameReason {
         Some(Lint {
             span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![sugg],
+            suggestions,
             message: format!("In this context, {msg}.").to_owned(),
             ..Default::default()
         })

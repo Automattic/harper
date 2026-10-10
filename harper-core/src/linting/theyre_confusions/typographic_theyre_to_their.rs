@@ -36,7 +36,7 @@ impl ExprLinter for TypographicTheyreToTheir {
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str("their", template)],
+            suggestions: Suggestion::replace_with_match_case_str("their", template),
             message: "Did you mean `their`?".to_owned(),
             priority: 31,
         })

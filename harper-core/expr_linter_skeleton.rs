@@ -28,10 +28,10 @@ impl ExprLinter for ExprLinterSkeleton {
         eprintln!("🚨 {}", format_lint_match(matched_tokens, context, source));
         let span = matched_tokens.span()?;
         let lint_kind = LintKind::Miscellaneous;
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
+        let suggestions = Suggestion::replace_with_match_case_str(
             "correction",
             span.get_content(source),
-        )];
+        );
         let message = "Fix this erorr".to_owned();
         Some(Lint {
             span,

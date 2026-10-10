@@ -50,10 +50,7 @@ impl ExprLinter for WayTooAdjective {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "too".chars().collect(),
-                original,
-            )],
+            suggestions: Suggestion::replace_with_match_case("too".chars().collect(), original),
             message: "Did you mean “too”?".into(),
             priority: 25,
         })

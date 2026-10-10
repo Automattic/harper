@@ -102,7 +102,7 @@ impl ExprLinter for DespiteItIs {
 
         // Special case for "it" which can also be omitted
         if subj_chars.eq_any_ignore_ascii_case_str(&["it", "they"]) {
-            suggestions.push(Suggestion::replace_with_match_case_str("being", be_chars));
+            suggestions.extend(Suggestion::replace_with_match_case_str("being", be_chars));
         }
 
         let [obj_vec, poss_vec] = [obj, poss].map(|pron| {
@@ -113,8 +113,8 @@ impl ExprLinter for DespiteItIs {
             }
         });
 
-        suggestions.push(Suggestion::replace_with_match_case(obj_vec, be_chars));
-        suggestions.push(Suggestion::replace_with_match_case(poss_vec, be_chars));
+        suggestions.extend(Suggestion::replace_with_match_case(obj_vec, be_chars));
+        suggestions.extend(Suggestion::replace_with_match_case(poss_vec, be_chars));
 
         if suggestions.is_empty() {
             return None;

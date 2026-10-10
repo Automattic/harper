@@ -53,7 +53,7 @@ fn replacement_for(
     past: &str,
     past_participle: &str,
     progressive: &str,
-) -> Suggestion {
+) -> Vec<Suggestion> {
     let replacement = if verb.kind.is_verb_progressive_form() {
         progressive
     } else if verb.kind.is_verb_third_person_singular_present_form() {
@@ -91,7 +91,10 @@ impl ExprLinter for TakeMedicine {
                 "swallowed",
                 "swallowing",
             ),
-        ];
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
 
         Some(Lint {
             span,

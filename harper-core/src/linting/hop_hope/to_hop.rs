@@ -53,10 +53,7 @@ impl ExprLinter for ToHop {
         Some(Lint {
             span: offending_word.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                correct.to_vec(),
-                word_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case(correct.to_vec(), word_chars),
             message: format!(
                 "Did you mean to use {word} instead of {} in this context?",
                 correct.to_string()

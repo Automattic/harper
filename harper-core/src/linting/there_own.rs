@@ -50,7 +50,7 @@ impl ExprLinter for ThereOwn {
         Some(Lint {
             span: offender.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str("their", template)],
+            suggestions: Suggestion::replace_with_match_case_str("their", template),
             message: "Did you mean the possessive `their`?".to_owned(),
             priority: 31,
         })

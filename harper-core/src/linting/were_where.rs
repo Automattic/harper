@@ -95,10 +95,10 @@ impl ExprLinter for WereWhere {
             Some(Lint {
                 span: tok.span,
                 lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case_str(
+                suggestions: Suggestion::replace_with_match_case_str(
                     "were",
                     tok.span.get_content(src),
-                )],
+                ),
                 message: "It looks like this is a typo, did you mean `were`?".to_owned(),
                 ..Default::default()
             })
@@ -106,10 +106,10 @@ impl ExprLinter for WereWhere {
             were_tok.map(|tok| Lint {
                 span: tok.span,
                 lint_kind: LintKind::Typo,
-                suggestions: vec![Suggestion::replace_with_match_case_str(
+                suggestions: Suggestion::replace_with_match_case_str(
                     "where",
                     tok.span.get_content(src),
-                )],
+                ),
                 message: "It looks like this is a typo, did you mean `where`?".to_owned(),
                 ..Default::default()
             })

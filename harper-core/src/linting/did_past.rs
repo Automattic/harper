@@ -98,7 +98,7 @@ impl<D: Dictionary> ExprLinter for DidPast<D> {
                 lint_kind: LintKind::Grammar,
                 suggestions: suggs
                     .into_iter()
-                    .map(|s| Suggestion::replace_with_match_case(s, vchars))
+                    .flat_map(|s| Suggestion::replace_with_match_case(s, vchars))
                     .collect(),
                 message: "Use the base form of the verb with \"did\".".to_owned(),
                 ..Default::default()

@@ -109,12 +109,12 @@ impl ExprLinter for PluralWrongWordOfPhrase {
         Some(Lint {
             lint_kind: LintKind::Usage,
             span: toks.span()?,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 format!("{}{}{}{}{}", main_noun_pl, sep, mid, sep, last_noun[0])
                     .chars()
                     .collect::<Vec<char>>(),
                 toks.span()?.get_content(src),
-            )],
+            ),
             message: "This phrase is pluralized on the main noun, not on the last noun.".to_owned(),
             ..Default::default()
         })

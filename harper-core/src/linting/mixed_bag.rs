@@ -43,10 +43,7 @@ impl ExprLinter for MixedBag {
         Some(Lint {
             span: bad_span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "bag",
-                bad_span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("bag", bad_span.get_content(src)),
             message: "Corrects the eggcorn `mixed bad` to `mixed bag`.".to_owned(),
             ..Default::default()
         })

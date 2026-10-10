@@ -39,10 +39,7 @@ impl ExprLinter for HelloGreeting {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "hello".chars().collect(),
-                original,
-            )],
+            suggestions: Suggestion::replace_with_match_case("hello".chars().collect(), original),
             message: "Prefer `hello` as a greeting; `halo` refers to the optical effect."
                 .to_owned(),
             priority: 31,

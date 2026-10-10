@@ -47,10 +47,7 @@ impl ExprLinter for NoLonger {
         Some(Lint {
             span: toks[0].span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "no",
-                toks[0].get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("no", toks[0].get_ch(src)),
             message: "The correct expression is `no longer`.".to_owned(),
             ..Default::default()
         })

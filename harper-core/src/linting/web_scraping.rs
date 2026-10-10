@@ -114,10 +114,10 @@ fn match_web_then_scrap(toks: &[Token], src: &[char]) -> Option<Lint> {
     Some(Lint {
         span: toks.span()?,
         lint_kind: LintKind::Eggcorn,
-        suggestions: vec![Suggestion::replace_with_match_case(
+        suggestions: Suggestion::replace_with_match_case(
             replacement_value,
             toks.span()?.get_content(src),
-        )],
+        ),
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
                 .to_owned(),
@@ -148,10 +148,10 @@ fn match_scrap_then_web(toks: &[Token], src: &[char]) -> Option<Lint> {
     Some(Lint {
         span: toks[0].span,
         lint_kind: LintKind::Eggcorn,
-        suggestions: vec![Suggestion::replace_with_match_case(
+        suggestions: Suggestion::replace_with_match_case(
             replacement_value,
             toks[0].span.get_content(src),
-        )],
+        ),
         message:
             "`Scrap` means `discard`. The word for gathering information from websites is `scrape`."
                 .to_owned(),

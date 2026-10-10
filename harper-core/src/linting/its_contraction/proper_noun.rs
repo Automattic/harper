@@ -99,10 +99,7 @@ impl ProperNoun {
         Some(Lint {
             span: offending.span,
             lint_kind: LintKind::Punctuation,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "it's",
-                offender_text,
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("it's", offender_text),
             message: "Use `it's` (short for \"it is\") before a proper noun in this construction."
                 .to_owned(),
             priority: 31,

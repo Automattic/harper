@@ -126,12 +126,12 @@ impl ExprLinter for FleshOutVsFullFledged {
                 Some(Lint {
                     span: toks.span()?,
                     lint_kind: LintKind::Usage,
-                    suggestions: vec![Suggestion::replace_with_match_case(
+                    suggestions: Suggestion::replace_with_match_case(
                         format!("{}fledged", verb_and_sep_span.get_content_string(src))
                             .chars()
                             .collect(),
                         verb_and_sep_span.get_content(src),
-                    )],
+                    ),
                     message: "This idiom uses the word `fledged`.".to_owned(),
                     ..Default::default()
                 })
@@ -140,7 +140,7 @@ impl ExprLinter for FleshOutVsFullFledged {
             (false, Verb::Fledge | Verb::Pledge, _, true) => Some(Lint {
                 span: vtok.span,
                 lint_kind: LintKind::Usage,
-                suggestions: vec![Suggestion::replace_with_match_case_str(
+                suggestions: Suggestion::replace_with_match_case_str(
                     match &form {
                         Form::Lemma => "flesh",
                         Form::Past => "fleshed",
@@ -148,7 +148,7 @@ impl ExprLinter for FleshOutVsFullFledged {
                         Form::ThirdPersonSingular => "fleshes",
                     },
                     vtok_chars,
-                )],
+                ),
                 message: "This idiom uses the word `flesh`.".to_owned(),
                 ..Default::default()
             }),
@@ -167,7 +167,10 @@ impl ExprLinter for FleshOutVsFullFledged {
                             .collect(),
                         vtok_chars,
                     ),
-                ],
+                ]
+                .into_iter()
+                .flatten()
+                .collect(),
                 message: "Perhaps you're confusing `fully fledged` and `fleshed out`?".to_owned(),
                 ..Default::default()
             }),

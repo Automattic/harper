@@ -33,10 +33,7 @@ impl ExprLinter for AvoidContraction {
         Some(Lint {
             span: matched_tokens[0].span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                vec!['y', 'o', 'u', 'r'],
-                word,
-            )],
+            suggestions: Suggestion::replace_with_match_case(vec!['y', 'o', 'u', 'r'], word),
             message: "It appears you intended to use the possessive version of this word"
                 .to_owned(),
             priority: 63,

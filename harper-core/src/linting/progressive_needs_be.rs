@@ -73,13 +73,16 @@ impl ExprLinter for ProgressiveNeedsBe {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![
+            suggestions: [
                 Suggestion::replace_with_match_case(
                     progressive_replacement.chars().collect(),
                     span.get_content(src),
                 ),
-                Suggestion::InsertAfter(" been".chars().collect()),
-            ],
+                vec![Suggestion::InsertAfter(" been".chars().collect())],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Use present progressive (`…'re/…'m …`) or present perfect progressive (`… have been …`/`…'ve been …`) instead of `… have …ing` or `…'ve …ing`.".to_owned(),
             priority: 31,
         })

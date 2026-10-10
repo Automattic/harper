@@ -55,7 +55,7 @@ impl ExprLinter for LeadRiseTo {
 
         let suggestions: Vec<Suggestion> = gchars
             .iter()
-            .map(|l| Suggestion::replace_with_match_case(l.to_vec(), lspan.get_content(src)))
+            .flat_map(|l| Suggestion::replace_with_match_case(l.to_vec(), lspan.get_content(src)))
             .collect();
 
         Some(Lint {

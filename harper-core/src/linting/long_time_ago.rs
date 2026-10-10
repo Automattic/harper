@@ -37,10 +37,10 @@ impl ExprLinter for LongTimeAgo {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "a long time ago",
                 span.get_content(source),
-            )],
+            ),
             message: "The correct phrase is `a long time ago`.".to_owned(),
             ..Default::default()
         })

@@ -71,10 +71,7 @@ impl ExprLinter for OldestInTheBook {
         Some(Lint {
             span: toks.last()?.span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "book",
-                toks.last()?.get_ch(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("book", toks.last()?.get_ch(src)),
             message,
             ..Default::default()
         })

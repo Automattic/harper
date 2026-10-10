@@ -67,10 +67,10 @@ impl ExprLinter for OfCourse {
         Some(Lint {
             span: phrase_span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "of course",
                 phrase_span.get_content(source),
-            )],
+            ),
             message: "Did you mean `of course`?".to_owned(),
             priority: 31,
         })

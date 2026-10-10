@@ -42,7 +42,7 @@ impl ExprLinter for MoreBetter {
         let degree_str = toks.first()?.get_str(src);
         let adj_span = toks.last()?.span;
 
-        let suggestion = Suggestion::replace_with_match_case(
+        let suggestions = Suggestion::replace_with_match_case(
             adj_span.get_content(src).to_vec(),
             phrase_span.get_content(src),
         );
@@ -61,7 +61,7 @@ impl ExprLinter for MoreBetter {
         Some(Lint {
             span: phrase_span,
             lint_kind: LintKind::Redundancy,
-            suggestions: vec![suggestion],
+            suggestions,
             message,
             ..Default::default()
         })

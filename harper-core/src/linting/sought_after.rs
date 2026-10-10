@@ -46,10 +46,7 @@ impl ExprLinter for SoughtAfter {
         Some(Lint {
             span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "sought",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("sought", span.get_content(src)),
             message: "The correct word in this context is `sought`.".to_owned(),
             priority: 63,
         })

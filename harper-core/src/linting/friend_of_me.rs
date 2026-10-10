@@ -47,10 +47,10 @@ impl ExprLinter for FriendOfMe {
         Some(Lint {
             span: obj_pron_tok.span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 poss_pron_str,
                 obj_pron_tok.get_ch(src),
-            )],
+            ),
             message: format!("Use `{poss_pron_str}` instead of `{obj_pron_str}`."),
             priority: 31,
         })

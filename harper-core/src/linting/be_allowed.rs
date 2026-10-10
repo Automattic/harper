@@ -59,10 +59,10 @@ impl ExprLinter for BeAllowed {
         Some(Lint {
             span,
             lint_kind: LintKind::Grammar,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "be allowed".chars().collect(),
                 template,
-            )],
+            ),
             message: "Add `be` so this reads `be allowed`.".to_owned(),
             priority: 31,
         })

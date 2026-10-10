@@ -75,7 +75,7 @@ impl ExprLinter for NakedEye {
 
         let suggestions = ["to", "with", "by"]
             .into_iter()
-            .map(|p| Suggestion::replace_with_match_case_str(p, prep.get_content(src)))
+            .flat_map(|p| Suggestion::replace_with_match_case_str(p, prep.get_content(src)))
             .collect();
 
         Some(Lint {

@@ -52,10 +52,10 @@ impl ExprLinter for ExceptOf {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 replacement,
                 span.get_content(src),
-            )],
+            ),
             message: msg.to_owned(),
             ..Default::default()
         })

@@ -31,10 +31,10 @@ impl ExprLinter for ChockFull {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "chock-full",
                 span.get_content(source),
-            )],
+            ),
             message: format!(
                 "The standard term is \"chock-full\"{}.",
                 if matched_toks[1].kind.is_whitespace() {

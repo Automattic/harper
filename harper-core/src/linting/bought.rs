@@ -34,10 +34,10 @@ impl ExprLinter for Bought {
         Some(Lint {
             span: typo.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "bought".chars().collect(),
                 typo.get_ch(source),
-            )],
+            ),
             message: "Prefer the past-tense form `bought` here.".to_owned(),
             priority: 31,
         })

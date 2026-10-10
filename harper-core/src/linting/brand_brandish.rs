@@ -49,7 +49,7 @@ impl ExprLinter for BrandBrandish {
         Some(Lint {
             span: verb_span,
             lint_kind: LintKind::Malapropism,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 match infl {
                     Form::Base => "brand",
                     Form::Past => "branded",
@@ -57,7 +57,7 @@ impl ExprLinter for BrandBrandish {
                     Form::Ing => "branding",
                 },
                 verb_chars,
-            )],
+            ),
             message: "`Brandish` means to wield a weapon. You probably mean `brand`.".to_owned(),
             ..Default::default()
         })

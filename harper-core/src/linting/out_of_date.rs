@@ -36,10 +36,10 @@ impl ExprLinter for OutOfDate {
         Some(Lint {
             span,
             lint_kind: LintKind::Miscellaneous,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "out-of-date".chars().collect(),
                 problem_text,
-            )],
+            ),
             message: "Did you mean the compound adjective?".to_owned(),
             priority: 31,
         })

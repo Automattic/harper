@@ -116,7 +116,10 @@ impl ExprLinter for OpenTheLight {
             suggestions: vec![
                 Suggestion::replace_with_match_case(turn.to_vec(), toks.span()?.get_content(src)),
                 Suggestion::replace_with_match_case(switch.to_vec(), toks.span()?.get_content(src)),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Are you accessing the device's internals or `turning` it `on`?".to_owned(),
             priority: 63,
         })

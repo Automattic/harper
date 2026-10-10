@@ -90,7 +90,10 @@ impl ExprLinter for ToTo {
         let suggestions = vec![
             Suggestion::replace_with_match_case_str("to", to_to_span.get_content(src)),
             Suggestion::replace_with_match_case(to_do, to_to_span.get_content(src)),
-        ];
+        ]
+        .into_iter()
+        .flatten()
+        .collect();
 
         Some(Lint {
             span: to_to_span,

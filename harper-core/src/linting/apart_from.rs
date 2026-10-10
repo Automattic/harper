@@ -29,10 +29,7 @@ impl ExprLinter for ApartFrom {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "from",
-                span.get_content(source),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("from", span.get_content(source)),
             message: "Use `from` to spell `apart from`.".to_owned(),
             priority: 50,
         })

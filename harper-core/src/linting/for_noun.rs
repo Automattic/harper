@@ -37,10 +37,7 @@ impl ExprLinter for ForNoun {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "for",
-                problem_chars,
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("for", problem_chars),
             message: "`For` is more common in this context.".to_owned(),
             priority: 31,
         })

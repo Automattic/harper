@@ -517,7 +517,7 @@ pub mod tests {
                     // Create suggestions for all possible fixes
                     let suggestions: Vec<Suggestion> = cstr
                         .iter()
-                        .map(|&suggestion_str| {
+                        .flat_map(|&suggestion_str| {
                             Suggestion::replace_with_match_case(
                                 suggestion_str.chars().collect(),
                                 wch.to_owned(),

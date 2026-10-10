@@ -72,7 +72,7 @@ impl ExprLinter for RunIntoProblemsOrTrouble {
 
         let suggestions = replacements
             .iter()
-            .map(|&replacement| {
+            .flat_map(|&replacement| {
                 let correction_vec_of_char = replacement.chars().collect::<Vec<char>>();
                 Suggestion::replace_with_match_case(correction_vec_of_char, npspan.get_content(src))
             })

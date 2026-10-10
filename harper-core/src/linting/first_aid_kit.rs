@@ -35,10 +35,7 @@ impl ExprLinter for FirstAidKit {
         Some(Lint {
             span: typo_span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "kit".chars().collect(),
-                typo_text,
-            )],
+            suggestions: Suggestion::replace_with_match_case("kit".chars().collect(), typo_text),
             message: "Did you mean `kit` (a set of items) instead of “kid”?".to_owned(),
             priority: 31,
         })

@@ -82,10 +82,10 @@ impl ExprLinter for GoodAt {
         Some(Lint {
             span: prep_span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "at".chars().collect(),
                 prep_span.get_content(src),
-            )],
+            ),
             message: "Use 'good at' to describe proficiency with a skill.".to_owned(),
             ..Default::default()
         })

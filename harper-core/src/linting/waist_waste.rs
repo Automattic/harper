@@ -74,10 +74,7 @@ impl ExprLinter for WaistWaste {
         let span =
             find_the_only_token_matching(toks, src, |t, s| t.get_ch(s).eq_str("waist"))?.span;
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "waste",
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str("waste", span.get_content(src));
 
         Some(Lint {
             span,

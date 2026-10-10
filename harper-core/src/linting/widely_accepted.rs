@@ -38,7 +38,7 @@ impl ExprLinter for WidelyAccepted {
             lint_kind: LintKind::Miscellaneous,
             message: "Use the adverb `widely` in this context. For example, `widely accepted` or `widely used` is standard usage."
                 .to_owned(),
-            suggestions: vec![Suggestion::replace_with_match_case_str("widely", wide_chars)],
+            suggestions: Suggestion::replace_with_match_case_str("widely", wide_chars),
             priority: 31,
         })
     }

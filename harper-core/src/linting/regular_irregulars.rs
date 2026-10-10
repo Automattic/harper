@@ -62,7 +62,9 @@ impl<D: Dictionary> ExprLinter for RegularIrregulars<D> {
 
         let suggestions: Vec<_> = suggs
             .iter()
-            .map(|good_str| Suggestion::replace_with_match_case(good_str.chars().collect(), chars))
+            .flat_map(|good_str| {
+                Suggestion::replace_with_match_case(good_str.chars().collect(), chars)
+            })
             .collect();
 
         if suggestions.is_empty() {

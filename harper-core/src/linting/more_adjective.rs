@@ -157,7 +157,7 @@ impl<D: Dictionary> ExprLinter for MoreAdjective<D> {
 
         let suggestions = candidates
             .iter()
-            .map(|c| {
+            .flat_map(|c| {
                 Suggestion::replace_with_match_case(
                     c.chars().collect_vec(),
                     phrase.get_content(src),

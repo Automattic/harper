@@ -54,10 +54,10 @@ impl ExprLinter for AndTheLike {
         Some(Lint {
             span: toks.span()?,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 corrected.chars().collect(),
                 toks.span()?.get_content(src),
-            )],
+            ),
             message: "If you intended the idiom meaning `similar things`, the correct form is with `the like`.".to_owned(),
             ..Default::default()
         })

@@ -64,10 +64,7 @@ impl ExprLinter for NoHarmNoFoul {
         Some(Lint {
             span,
             lint_kind: LintKind::Nonstandard,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                correction,
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case(correction, span.get_content(src)),
             message,
             ..Default::default()
         })

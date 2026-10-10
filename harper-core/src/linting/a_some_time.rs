@@ -28,10 +28,8 @@ impl ExprLinter for ASomeTime {
         let a_some_span = a_some_toks.span()?;
 
         // We use `ReplaceWith` rather than `Remove` because the latter has no case-matching.
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "some",
-            a_some_span.get_content(source),
-        )];
+        let suggestions =
+            Suggestion::replace_with_match_case_str("some", a_some_span.get_content(source));
 
         Some(Lint {
             span: a_some_span,

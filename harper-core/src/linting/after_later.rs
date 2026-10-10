@@ -59,7 +59,10 @@ impl ExprLinter for AfterLater {
             suggestions: vec![
                 Suggestion::replace_with_match_case(without_after, template_chars),
                 Suggestion::replace_with_match_case(without_later, template_chars),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             ..Default::default()
         })
     }

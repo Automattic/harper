@@ -72,10 +72,7 @@ impl ExprLinter for PronounKnew {
         Some(Lint {
             span: typo_span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
-                "knew".chars().collect(),
-                typo_text,
-            )],
+            suggestions: Suggestion::replace_with_match_case("knew".chars().collect(), typo_text),
             message: "Did you mean “knew” (the past tense of “know”)?".to_owned(),
             priority: 31,
         })

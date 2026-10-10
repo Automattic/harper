@@ -50,10 +50,10 @@ impl ExprLinter for MeansALotTo {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 sug.chars().collect(),
                 span.get_content(src),
-            )],
+            ),
             message: msg.to_owned(),
             ..Default::default()
         })

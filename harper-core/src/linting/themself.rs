@@ -40,14 +40,14 @@ impl ExprLinter for Themself {
 
         let span = toks.span()?;
 
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
+        let suggestions = Suggestion::replace_with_match_case_str(
             if refl.len() == 4 {
                 "themself"
             } else {
                 "themselves"
             },
             span.get_content(src),
-        )];
+        );
 
         Some(Lint {
             span,

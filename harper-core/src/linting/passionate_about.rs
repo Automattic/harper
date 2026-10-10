@@ -70,10 +70,10 @@ impl ExprLinter for PassionateAbout {
                 Some(Lint {
                     span,
                     lint_kind: LintKind::Usage,
-                    suggestions: vec![Suggestion::replace_with_match_case_str(
+                    suggestions: Suggestion::replace_with_match_case_str(
                         "about",
                         span.get_content(src),
-                    )],
+                    ),
                     message: "Use `about` instead of `of` with `passionate`".to_owned(),
                     ..Default::default()
                 })
@@ -107,7 +107,10 @@ impl ExprLinter for PassionateAbout {
                             prep_last?.iter().copied().chain("about".chars()).collect(),
                             content,
                         ),
-                    ],
+                    ]
+                    .into_iter()
+                    .flatten()
+                    .collect(),
                     message: "Use `about` instead of `of` with `passionate`".to_owned(),
                     ..Default::default()
                 })

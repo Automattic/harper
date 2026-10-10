@@ -75,10 +75,10 @@ impl ExprLinter for RollerSkated {
         Some(Lint {
             span,
             lint_kind: LintKind::Punctuation,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 "roller-skated".chars().collect(),
                 original,
-            )],
+            ),
             message: "Hyphenate this verb as `roller-skated`.".to_owned(),
             priority: 40,
         })

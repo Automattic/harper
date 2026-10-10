@@ -61,7 +61,7 @@ impl<D: Dictionary + 'static> ExprLinter for WrongNegative<D> {
 
         let suggestions: Vec<Suggestion> = new_negs
             .into_iter()
-            .map(|value| Suggestion::replace_with_match_case(value, span.get_content(src)))
+            .flat_map(|value| Suggestion::replace_with_match_case(value, span.get_content(src)))
             .collect();
 
         if suggestions.is_empty() {

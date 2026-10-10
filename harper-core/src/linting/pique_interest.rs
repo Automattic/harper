@@ -55,10 +55,10 @@ impl ExprLinter for PiqueInterest {
         Some(Lint {
             span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 correct.to_vec(),
                 matched_tokens[0].get_ch(source),
-            )],
+            ),
             message: format!(
                 "Did you mean `{}` instead of `{}`?",
                 correct.to_string(),

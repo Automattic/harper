@@ -70,10 +70,7 @@ impl ExprLinter for AspireTo {
         Some(Lint {
             span: prep_s,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "to",
-                prep_s.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("to", prep_s.get_content(src)),
             message: "Use `aspire to` instead of `aspire for`.".to_owned(),
             ..Default::default()
         })

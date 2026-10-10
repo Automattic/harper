@@ -42,7 +42,10 @@ impl ExprLinter for ForFreeOfCharge {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("for free", span.get_content(source)),
                 Suggestion::replace_with_match_case_str("free of charge", span.get_content(source)),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Use only either `for free` or `free of charge`".to_owned(),
             ..Default::default()
         })

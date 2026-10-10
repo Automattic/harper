@@ -34,7 +34,10 @@ impl ExprLinter for RedundantAlmostNearly {
             suggestions: vec![
                 Suggestion::replace_with_match_case_str("almost", span.get_content(src)),
                 Suggestion::replace_with_match_case_str("nearly", span.get_content(src)),
-            ],
+            ]
+            .into_iter()
+            .flatten()
+            .collect(),
             message: "Use just one of `almost` or `nearly`.".to_string(),
             priority: 31,
         })

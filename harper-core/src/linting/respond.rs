@@ -67,10 +67,10 @@ impl ExprLinter for Respond {
         Some(Lint {
             span: response_token.span,
             lint_kind: LintKind::WordChoice,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
+            suggestions: Suggestion::replace_with_match_case_str(
                 "respond",
                 response_token.get_ch(source),
-            )],
+            ),
             message: "Use the verb `respond` here.".to_owned(),
             priority: 40,
         })

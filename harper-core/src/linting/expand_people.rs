@@ -23,10 +23,7 @@ impl ExprLinter for ExpandPeople {
     fn match_to_lint(&self, toks: &[Token], src: &[char]) -> Option<Lint> {
         let span = toks.span()?;
         let lint_kind = LintKind::Style;
-        let suggestions = vec![Suggestion::replace_with_match_case_str(
-            "people",
-            span.get_content(src),
-        )];
+        let suggestions = Suggestion::replace_with_match_case_str("people", span.get_content(src));
         let message = "Use `people` instead of `ppl`.".to_owned();
         Some(Lint {
             span,

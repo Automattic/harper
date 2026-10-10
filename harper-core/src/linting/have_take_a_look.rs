@@ -53,7 +53,7 @@ impl ExprLinter for HaveTakeALook {
 
         let suggestions = translated_light_verb
             .iter()
-            .map(|s| {
+            .flat_map(|s| {
                 Suggestion::replace_with_match_case(s.chars().collect(), light_verb_tok.get_ch(src))
             })
             .collect();

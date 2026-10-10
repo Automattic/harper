@@ -27,10 +27,7 @@ impl ExprLinter for TakeCareOf {
         Some(Lint {
             span,
             lint_kind: LintKind::Usage,
-            suggestions: vec![Suggestion::replace_with_match_case_str(
-                "of",
-                span.get_content(src),
-            )],
+            suggestions: Suggestion::replace_with_match_case_str("of", span.get_content(src)),
             message: "Are you confusing `care about` with `take care of`?".to_owned(),
             ..Default::default()
         })

@@ -53,10 +53,10 @@ impl ExprLinter for PaleByComparison {
         Some(Lint {
             span,
             lint_kind: LintKind::Eggcorn,
-            suggestions: vec![Suggestion::replace_with_match_case(
+            suggestions: Suggestion::replace_with_match_case(
                 verb_form.chars().collect(),
                 span.get_content(src),
-            )],
+            ),
             message: "In this idiom, the word `pale` is correctly a verb, not an adjective."
                 .to_owned(),
             ..Default::default()
