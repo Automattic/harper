@@ -65,6 +65,16 @@ impl Default for MergedDictionary {
     }
 }
 
+impl MergedDictionary {
+    /// Crea un diccionario combinado (Español + Inglés técnico) para análisis multi-idioma
+    pub fn curated_spanish_multilingual() -> Self {
+        let mut merged = Self::new();
+        merged.add_dictionary(FstDictionary::curated_spanish());
+        merged.add_dictionary(FstDictionary::curated());
+        merged
+    }
+}
+
 impl Dictionary for MergedDictionary {
     fn get_correct_capitalization_of(&self, word: &[char]) -> Option<&'_ [char]> {
         for child in &self.children {
