@@ -16650,6 +16650,7 @@ caption/~NSgVdG
 captious/JYp
 captiousness/Ng
 captivate/VdSGJn
+captivatingly/R
 captivation/Ng
 captivator/NSg
 captive/~NSgJV
@@ -22067,6 +22068,7 @@ documented/~VU
 dodder/VdGSNg
 doddery/J
 doddle/NV
+dodecahedron/NgS
 dodge/~Vd>GSNgJZ
 dodgem/NS
 dodger/~Ng
@@ -25624,6 +25626,8 @@ follow/~Vd>GSNZz
 follower/~NgS
 following/~JPNwgSV
 followup/NgS
+follow-up/JNgS
+follow up/V/
 folly/~NSgV
 foment/VGdSN
 fomentation/Nmg
@@ -29549,6 +29553,7 @@ iconoclasm/Ng
 iconoclast/~NSg
 iconoclastic/J
 iconography/~Nwg
+icosahedron/NgS
 ictus/Ng
 icy/~J^>p
 id/~NSgIY
@@ -34955,6 +34960,7 @@ moi/~I
 moiety/NSg
 moil/VdGSNg
 moire/NSg
+moissanite/Nmg
 moist/~J^Y>pNVXn
 moisten/Vd>GZ
 moistener/NgS
@@ -36990,6 +36996,7 @@ ochre/NwgSJV!@_₹
 ocker/NSVJ
 octagon/~NgS
 octagonal/~J
+octahedron/NgS
 octal/NJ
 octane/~NwgS
 octave/~NgSVJ
@@ -40026,8 +40033,9 @@ polygon/~NSg
 polygonal/~J
 polygraph/N0gVGd
 polygraphs/N9V
+polyhedra/N9
 polyhedral/~J
-polyhedron/~NSg
+polyhedron/~N0Sg
 polymath/~N0g
 polymaths/N9
 polymer/~NwSg
@@ -40037,9 +40045,11 @@ polymerisation/Nmg!_₹
 polymerise/VGdS!_₹
 polymerization/~Nmg
 polymerize/VGdS
+polymorph/N0g
 polymorphic/J
 polymorphism/NmgS
 polymorphous/J
+polymorphs/N9
 polynomial/~NgSJ
 polyp/NgS
 polyphonic/~J
@@ -53918,7 +53928,8 @@ zipper/~NgSVdG
 zipping/V6U
 zippy/J^>
 zircon/NgS
-zirconium/~Ng
+zirconia/Nmg
+zirconium/~Nmg
 zit/NSg
 zither/NgSV
 zloty/NSg
