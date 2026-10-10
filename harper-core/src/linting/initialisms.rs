@@ -20,7 +20,6 @@ pub fn lint_group() -> LintGroup {
         "AsFarAsICanTell"        => ("afaict", &["as far as I can tell"]),
         "AsFarAsIKnow"           => ("afaik", &["as far as I know"]),
         "AsIUnderstandIt"        => ("aiui", &["as I understand it"]),
-        "AsSoonAsPossible"       => ("asap", &["as soon as possible"]),
         "BeRightBack"            => ("brb", &["be right back"]),
         "ByTheWay"               => ("btw", &["by the way"]),
         "ExplainLikeImFive"      => ("eli5", &["explain like i'm five"]),
@@ -80,15 +79,6 @@ mod tests {
             "Fyi, the meeting is at 3.",
             lint_group(),
             "For your information, the meeting is at 3.",
-        );
-    }
-
-    #[test]
-    fn corrects_asap() {
-        assert_suggestion_result(
-            "Please respond asap.",
-            lint_group(),
-            "Please respond as soon as possible.",
         );
     }
 
