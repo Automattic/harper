@@ -300,7 +300,7 @@ export type LintSource = (
 const lintPlugin = ViewPlugin.fromClass(
 	class {
 		lintTime: number;
-		timeout = -1;
+		timeout: ReturnType<typeof setTimeout>;
 		set = true;
 
 		constructor(readonly view: EditorView) {
@@ -474,7 +474,7 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 					'div',
 					{
 						class: 'cm-diagnosticIgnore',
-						onclick: (e) => {
+						onclick: (e: MouseEvent) => {
 							e.preventDefault();
 							if (diagnostic.ignore) {
 								diagnostic.ignore();
@@ -488,7 +488,7 @@ function renderDiagnostic(view: EditorView, diagnostic: Diagnostic, inPanel: boo
 					'div',
 					{
 						class: 'cm-diagnosticDisable',
-						onclick: (e) => {
+						onclick: (e: MouseEvent) => {
 							e.preventDefault();
 							if (diagnostic.disable) {
 								diagnostic.disable();

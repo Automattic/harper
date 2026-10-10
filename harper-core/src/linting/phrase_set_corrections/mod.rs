@@ -679,6 +679,27 @@ pub fn lint_group() -> LintGroup {
             "Corrects `seam` to `seem` when used as a verb meaning `to appear` or `to give the impression`.",
             LintKind::Spelling
         ),
+        "SetABadExample" => (
+            &[
+                ("set up a bad example", "set a bad example"),
+                ("sets up a bad example", "sets a bad example"),
+                ("setting up a bad example", "setting a bad example"),
+            ],
+            "Are you confusing `set up` and `set a bad example`? The latter does not use the word `up`.",
+            "Corrects `set up a bad example` to `set a bad example`.",
+            LintKind::Usage
+        ),
+        "SubjectAndObjectPronoun" => (
+            &[
+                ("subjective pronoun", "subject pronoun"),
+                ("subjective pronouns", "subject pronouns"),
+                ("objective pronoun", "object pronoun"),
+                ("objective pronouns", "object pronouns"),
+            ],
+            "`Subject -` and `object pronoun` are much more common than `subjective -` and `objective -`.",
+            "Standardizes `subjective pronoun` and `objective pronoun` to the more common `subject -` and `object -`.",
+            LintKind::Usage
+        ),
         "SubjunctiveWasToWere" => (
             &[
                 ("if only there was", "if only there were"),
@@ -925,6 +946,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects common misspellings of the idiom `get rid of`.",
             LintKind::Typo
         ),
+        "Hallucination" => (
+            &[
+                (&["hallucinisation", "hallucinization"], &["hallucination"]),
+                (&["hallucinisations", "hallucinizations"], &["hallucinations"]),
+            ],
+            "The correct spelling is `hallucination`.",
+            "Corrects the misspelling `hallucinization`/`hallucinisation`.",
+            LintKind::Spelling
+        ),
         "Hijack" => (
             &[
                 // "hi jack" would result in false positives
@@ -1097,6 +1127,17 @@ pub fn lint_group() -> LintGroup {
             "Use `raise` instead of `rise` when referring to the act of asking a question.",
             "Corrects `rise the question` to `raise the question`.",
             LintKind::Grammar
+        ),
+        "SeizeControlOf" => (
+            &[
+                (&["seize control over", "sieze control over"], &["seize control of"]),
+                (&["seized control over", "siezed control over"], &["seized control of"]),
+                (&["seizes control over", "siezes control over"], &["seizes control of"]),
+                (&["seizing control over", "siezing control over"], &["seizing control of"]),
+            ],
+            "The standard preposition with the verb `seize` is `of`.",
+            "Corrects `seize control over` to `seize control of`.",
+            LintKind::Usage
         ),
         "SideTangent" => (
             &[

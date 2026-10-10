@@ -37,6 +37,7 @@ mod barely_un;
 mod be_adjective_confusions;
 mod be_allowed;
 mod behind_the_scenes;
+mod bellow_below;
 mod best_of_all_time;
 mod better_off_served;
 mod boring_words;
@@ -59,6 +60,7 @@ mod claim_to_fame;
 mod close_tight_knit;
 mod closed_compounds;
 mod code_in_write_in;
+mod comfortable_with;
 pub(crate) mod comma_fixes;
 mod complain_as_noun;
 mod compound_nouns;
@@ -305,6 +307,7 @@ mod the_my;
 mod the_point_for;
 mod the_proper_noun_possessive;
 mod the_the_to_that_the;
+mod themself;
 mod then_than;
 mod there_is_agreement;
 mod there_own;
@@ -765,6 +768,8 @@ pub mod tests {
                 eprintln!("⚠️  Input and expected are both '{needle}' - is the test correct?");
             }
             return true;
+        } else if cfg!(debug_assertions) {
+            eprintln!(" 🔎 Checking... \"{text}\"");
         }
 
         // Lint current text and try each suggestion branch

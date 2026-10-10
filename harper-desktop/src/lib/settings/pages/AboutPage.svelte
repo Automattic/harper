@@ -1,8 +1,8 @@
 <script lang="ts">
 import { openUrl } from '@tauri-apps/plugin-opener';
-import { Button } from 'components';
+import { Button, Logo } from 'components';
 import { onMount } from 'svelte';
-import { DesktopUpdater } from '$lib/DesktopUpdater';
+import { Client } from '$lib/client';
 
 const SOURCE_URL = 'https://github.com/Automattic/harper';
 const ISSUE_URL = 'https://github.com/Automattic/harper/issues/new/choose';
@@ -15,7 +15,7 @@ onMount(() => {
 
 async function loadCurrentVersion() {
 	try {
-		currentVersion = await DesktopUpdater.getCurrentVersion();
+		currentVersion = await Client.getCurrentVersion();
 	} catch (error) {
 		console.error('Unable to load Harper Desktop version.', error);
 	}
@@ -23,7 +23,7 @@ async function loadCurrentVersion() {
 </script>
 
 <section class="about">
-        <div class="about-mark">H</div>
+        <div class="about-mark" aria-hidden="true"><Logo /></div>
         <h1>Harper for Mac</h1>
         <p class="muted">Version {currentVersion || 'unknown'}</p>
         <p>

@@ -25,7 +25,10 @@ pub struct Config {
     pub auto_enable_new_apps: bool,
     pub onboarding_completed: bool,
     pub debounce_ms: u64,
+    /// Whether the main process may check for and install updates automatically.
     pub auto_update: bool,
+    /// Unix milliseconds at the start of the last manual or automatic update attempt.
+    /// Failed attempts also count toward the automatic 24-hour interval.
     pub last_update_check: Option<u64>,
     pub highlighter_service_enabled: bool,
 }

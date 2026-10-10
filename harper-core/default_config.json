@@ -214,6 +214,13 @@
 						},
 						{
 							"Bool": {
+								"name": "AsIUnderstandIt",
+								"state": true,
+								"label": "As I Understand it"
+							}
+						},
+						{
+							"Bool": {
 								"name": "AsSoonAsPossible",
 								"state": true,
 								"label": "As Soon As Possible"
@@ -553,6 +560,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Lifetime",
+								"state": true,
+								"label": "Lifetime"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Meanwhile",
 								"state": true,
 								"label": "Meanwhile"
@@ -780,6 +794,13 @@
 								"name": "Thereupon",
 								"state": true,
 								"label": "Thereupon"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Tradeoff",
+								"state": true,
+								"label": "Tradeoff"
 							}
 						},
 						{
@@ -1406,6 +1427,13 @@
 								"name": "SeamToSeem",
 								"state": true,
 								"label": "Seam To Seem"
+							}
+						},
+						{
+							"Bool": {
+								"name": "SeizeControlOf",
+								"state": true,
+								"label": "Seize Control of"
 							}
 						},
 						{
@@ -2614,6 +2642,13 @@
 								"name": "GoingTo",
 								"state": true,
 								"label": "Going To"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Hallucination",
+								"state": true,
+								"label": "Hallucination"
 							}
 						},
 						{
@@ -3891,6 +3926,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ResponsibleFor",
+								"state": true,
+								"label": "Responsible For"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ReverseEngineer",
 								"state": true
 							}
@@ -4603,6 +4645,13 @@
 								"name": "Combinate",
 								"state": true,
 								"label": "Combinate"
+							}
+						},
+						{
+							"Bool": {
+								"name": "ComfortableWith",
+								"state": true,
+								"label": "Comfortable With"
 							}
 						},
 						{
@@ -5447,6 +5496,13 @@
 						},
 						{
 							"Bool": {
+								"name": "OnADailyBasis",
+								"state": true,
+								"label": "On a Daily Basis"
+							}
+						},
+						{
+							"Bool": {
 								"name": "OnceInAWhile",
 								"state": true,
 								"label": "Once In A While"
@@ -5685,6 +5741,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SetABadExample",
+								"state": true,
+								"label": "Set a Bad Example"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SimilarLike",
 								"state": true,
 								"label": "Similar Like"
@@ -5762,6 +5825,13 @@
 						},
 						{
 							"Bool": {
+								"name": "SubjectAndObjectPronoun",
+								"state": true,
+								"label": "SubjectAndObjectPronoun"
+							}
+						},
+						{
+							"Bool": {
 								"name": "SuchShame",
 								"state": true,
 								"label": "Such Shame"
@@ -5835,6 +5905,13 @@
 								"name": "TheLastDays",
 								"state": true,
 								"label": "The Last Days"
+							}
+						},
+						{
+							"Bool": {
+								"name": "Themself",
+								"state": true,
+								"label": "Themself"
 							}
 						},
 						{
@@ -6156,6 +6233,13 @@
 								"name": "BehindTheScenes",
 								"state": true,
 								"label": "Behind The Scenes"
+							}
+						},
+						{
+							"Bool": {
+								"name": "BellowBelow",
+								"state": true,
+								"label": "Bellow Below"
 							}
 						},
 						{

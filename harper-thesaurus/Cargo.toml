@@ -1,6 +1,6 @@
 [package]
 name = "harper-thesaurus"
-version = "2.11.0"
+version = "2.12.0"
 edition = "2024"
 description = "The language checker for developers."
 license = "Apache-2.0"
@@ -13,4 +13,4 @@ itertools = "0.15.0"
 ruzstd = "0.9.0"
 
 [build-dependencies]
-zstd = { version = "0.13.3", default-features = false }
+zstd = { version = "0.14.0", default-features = false }

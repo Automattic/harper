@@ -3,8 +3,8 @@ import type { Lint, LintConfig, Linter, StructuredLintConfig, Suggestion } from 
 import { type Dialect, LocalLinter, SuggestionKind, WorkerLinter } from 'harper.js';
 import { slimBinaryInlined } from 'harper.js/slimBinaryInlined';
 import { minimatch } from 'minimatch';
-import type { MarkdownFileInfo, Workspace } from 'obsidian';
-import { linter } from './lint';
+import type { MarkdownFileInfo } from 'obsidian';
+import { type Action, linter } from './lint';
 import { lintKindClass } from './lintKindColor';
 
 export type Settings = {
@@ -28,7 +28,6 @@ export default class State {
 	private harper: Linter;
 	private saveData: (data: any) => Promise<void>;
 	private delay: number;
-	private workspace: Workspace;
 	private onExtensionChange: () => void;
 	private ignoredGlobs?: string[];
 	private editorInfoField?: StateField<MarkdownFileInfo>;
@@ -147,7 +146,7 @@ export default class State {
 					lints.map((lint) => {
 						const span = lint.span();
 
-						const actions = lint.suggestions().map((sug) => {
+						const actions: Action[] = lint.suggestions().map((sug): Action => {
 							return {
 								kind: 'suggestion' as const,
 								name:
@@ -222,6 +221,7 @@ export default class State {
 							severity: 'error',
 							markClass: `${lintKindClass(lint.lint_kind())} ${this.useWebStyleLints ? 'harper-web-style' : 'harper-squiggly-style'}`,
 							title: lint.lint_kind_pretty(),
+							message: lint.message(),
 							renderMessage: (_view) => {
 								const node = document.createElement('template');
 								node.innerHTML = lint.message_html();
@@ -408,12 +408,13 @@ export default class State {
 	}
 }
 
-function suggestionToLabel(sug: Suggestion) {
-	if (sug.kind() === SuggestionKind.Remove) {
-		return 'Remove';
-	} else if (sug.kind() === SuggestionKind.Replace) {
-		return `Replace with “${sug.get_replacement_text()}”`;
-	} else if (sug.kind() === SuggestionKind.InsertAfter) {
-		return `Insert “${sug.get_replacement_text()}” after this.`;
+function suggestionToLabel(sug: Suggestion): string {
+	switch (sug.kind()) {
+		case SuggestionKind.Remove:
+			return 'Remove';
+		case SuggestionKind.Replace:
+			return `Replace with “${sug.get_replacement_text()}”`;
+		case SuggestionKind.InsertAfter:
+			return `Insert “${sug.get_replacement_text()}” after this.`;
 	}
 }

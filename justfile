@@ -500,6 +500,12 @@ check-js: build-harperjs build-lint-framework build-components build-harper-edit
   cd "{{justfile_directory()}}/packages/chrome-plugin"
   pnpm check
 
+  cd "{{justfile_directory()}}/packages/obsidian-plugin"
+  pnpm check
+
+  cd "{{justfile_directory()}}/packages/wordpress-plugin"
+  pnpm check
+
   cd "{{justfile_directory()}}/packages/components"
   pnpm check
 
