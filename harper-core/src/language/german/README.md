@@ -2129,10 +2129,11 @@ that are names (*Iridium haben*). The battery for this round's two classes is
 | gender from the treebank | 8/10 | 9/10 | 0/10 / 0/10 |
 | subject with a rival | 3/5 | 0/5 | 0/5 / 0/5 |
 
-Harper's misses: *Ihren Adresse*, where a possessive is not checked for gender,
-and *der Orchester* behind a comma in mid-sentence. In the subject class,
-*der Lehrer* could be a genitive plural, and *dieser Vertrag regeln* is the
-`-en` form the rule refuses behind a demonstrative.
+Harper's misses are all the plural reading: *der Orchester* and *der Lehrer*
+could be genitive plurals, since a noun in *-er* is not surely singular, and
+*Ihren Adresse* a dative plural, since the `E` entry carries both numbers.
+*Dieser Vertrag regeln* is the `-en` form behind a singular subject, which the
+rule only takes when nothing finite follows.
 
 ## The fused spellings the reform allows
 
