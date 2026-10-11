@@ -47,6 +47,7 @@ use super::boring_words::BoringWords;
 use super::bought::Bought;
 use super::brand_brandish::BrandBrandish;
 use super::by_accident::ByAccident;
+use super::by_extension::ByExtension;
 use super::by_ones_own::ByOnesOwn;
 use super::by_the_book::ByTheBook;
 use super::call_it_quits::CallItQuits;
@@ -674,6 +675,7 @@ impl LintGroup {
         insert_expr_rule!(Bought);
         insert_expr_rule!(BrandBrandish);
         insert_expr_rule!(ByAccident);
+        insert_expr_rule!(ByExtension);
         insert_expr_rule!(ByOnesOwn);
         insert_expr_rule!(ByTheBook);
         insert_expr_rule!(CallItQuits);

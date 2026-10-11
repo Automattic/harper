@@ -4586,6 +4586,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByExtension",
+								"state": true,
+								"label": "By Extension"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"

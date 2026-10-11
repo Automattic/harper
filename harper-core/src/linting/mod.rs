@@ -44,6 +44,7 @@ mod boring_words;
 mod bought;
 mod brand_brandish;
 mod by_accident;
+mod by_extension;
 mod by_ones_own;
 mod by_the_book;
 mod call_it_quits;
