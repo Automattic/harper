@@ -2132,8 +2132,8 @@ that are names (*Iridium haben*). The battery for this round's two classes is
 Harper's misses are all the plural reading: *der Orchester* and *der Lehrer*
 could be genitive plurals, since a noun in *-er* is not surely singular, and
 *Ihren Adresse* a dative plural, since the `E` entry carries both numbers.
-*Dieser Vertrag regeln* is the `-en` form behind a singular subject, which the
-rule only takes when nothing finite follows.
+*Dieser Vertrag regeln* goes unreported because *regeln* is the plural of
+*Regel* as well, and the rule does not take a noun homograph for the verb.
 
 ## The fused spellings the reform allows
 
