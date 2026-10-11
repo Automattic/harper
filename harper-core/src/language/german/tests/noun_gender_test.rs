@@ -131,12 +131,39 @@ mod tests {
     }
 
     /// The corpus can only judge a word it contains often enough, and the
-    /// reliable suffixes reach only so far. Half the frequent nouns still have
-    /// no gender, which is why the linter does not read this axis yet — see
-    /// `readings_allowed_by` in `grammar/determiners.rs`.
+    /// reliable suffixes reach only so far. With the treebank genders of
+    /// `scripts/add_german_treebank_genders.py`, 86 % of the noun occurrences
+    /// in the UD test splits have one; *Vorhaben* is among the rest.
+    /// (*Kiosk* used to be the example and is masculine now.)
     #[test]
     fn the_axis_is_still_incomplete() {
-        assert!(gender("Kiosk").is_empty(), "{:?}", gender("Kiosk"));
+        assert!(gender("Vorhaben").is_empty(), "{:?}", gender("Vorhaben"));
+        assert_eq!(gender("Kiosk"), GenderSet::MASCULINE);
+    }
+
+    /// The UD treebanks name the one gender where the article cues of the
+    /// prose corpus could only say *not feminine*, and they caught a run of
+    /// `-er` nouns read as agent nouns again.
+    #[test]
+    fn the_treebank_names_the_gender() {
+        assert_eq!(gender("Bereich"), GenderSet::MASCULINE);
+        assert_eq!(gender("Umsatz"), GenderSet::MASCULINE);
+        assert_eq!(gender("Paket"), GenderSet::NEUTER);
+        assert_eq!(gender("Quartal"), GenderSet::NEUTER);
+        assert_eq!(gender("Zukunft"), GenderSet::FEMININE);
+        assert_eq!(gender("Gitter"), GenderSet::NEUTER);
+        assert_eq!(gender("Orchester"), GenderSet::NEUTER);
+        assert_eq!(gender("Sprung"), GenderSet::MASCULINE);
+        assert_eq!(gender("Adresse"), GenderSet::FEMININE);
+        assert_eq!(gender("Inland"), GenderSet::NEUTER);
+        // Two genders stay two.
+        assert_eq!(gender("Golf"), GenderSet::MASCULINE | GenderSet::NEUTER);
+        assert_eq!(
+            gender("Angehörige"),
+            GenderSet::MASCULINE | GenderSet::FEMININE
+        );
+        // A noun beside a verb line: *der Vorstand*, not only *vorstand*.
+        assert_eq!(gender("Vorstand"), GenderSet::MASCULINE);
     }
 
     /// The genders that switching the narrowing on exposed.

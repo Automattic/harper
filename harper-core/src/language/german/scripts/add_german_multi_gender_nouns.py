@@ -45,6 +45,20 @@ GENDERS = {
     "meter": "MZ",  # der Meter / das Meter
     "liter": "MZ",  # der Liter / das Liter
     "keks": "MZ",  # der Keks / das Keks
+    "silvester": "MZ",  # der Silvester / das Silvester
+    "wehr": "FZ",  # die Wehr / das Wehr
+    "bund": "MZ",  # der Bund / das Bund
+    "golf": "MZ",  # der Golf / das Golf
+    "modul": "MZ",  # das Modul / der Modul
+    "angehörige": "MF",  # der Angehörige / die Angehörige
+    "post": "MF",  # die Post / der Post (in a forum)
+    "patch": "MZ",  # der Patch / das Patch
+    "glauben": "MZ",  # den Glauben (der Glaube) / das Glauben
+    "single": "MFZ",  # der Single / die Single / das Single
+    "pin": "MF",  # der Pin / die PIN (the lookup ignores case)
+    "update": "MZ",  # das Update / der Update
+    "kuddelmuddel": "MZ",  # der / das Kuddelmuddel
+    "wirrwarr": "MZ",  # der / das Wirrwarr
 }
 
 LINE = re.compile(r"^(?P<word>[^/\s]+)/(?P<head>~*)(?P<flags>\S*)(?P<rest>.*)$")
@@ -61,9 +75,12 @@ def main() -> int:
         # Only the noun entry: a verb or adjective homograph keeps its flags.
         if "N" not in flags and not set("MFZ") & set(flags):
             continue
-        missing = "".join(g for g in GENDERS[m["word"]] if g not in flags)
-        if missing:
-            lines[i] = f"{m['word']}/{m['head']}{flags}{missing}{m['rest']}"
+        # The list holds every gender the word has, so a recorded one it
+        # lacks is wrong: *Angehörige* was neuter as well.
+        kept = "".join(c for c in flags if c not in "MFZ" or c in GENDERS[m["word"]])
+        missing = "".join(g for g in GENDERS[m["word"]] if g not in kept)
+        if kept + missing != flags:
+            lines[i] = f"{m['word']}/{m['head']}{kept}{missing}{m['rest']}"
             changed += 1
     DICT.write_text("\n".join(lines), encoding="utf-8")
     print(f"updated {changed} entries", file=sys.stderr)

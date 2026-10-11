@@ -491,6 +491,34 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
             .then_some(NumberSet::PLURAL)
     }
 
+    /// Can the phrase only be a nominative, so that it is the subject whatever
+    /// stands behind the verb? *Der Abruf fehlen ebenso wie die Möglichkeit*:
+    /// *der* fits the masculine *Abruf* in the nominative alone, so *die
+    /// Möglichkeit* is no rival subject but the second half of a comparison.
+    ///
+    /// The noun has to be surely singular as well, or *der* could be the
+    /// genitive plural. *das*, *die* and *eine* never qualify, since each is
+    /// an accusative too and a fronted object is ordinary German: *Das Buch
+    /// lesen die Kinder*. What is left is the masculine phrase behind *der*,
+    /// *ein*, *dieser*, *kein* and the possessives.
+    fn surely_nominative(&self, tokens: &[&Token], document: &Document, phrase: &Phrase) -> bool {
+        let determiner = Self::word_at(tokens, phrase.open, document);
+        let Some(readings) = determiner_readings(&determiner) else {
+            return false;
+        };
+        let Some(head) = trusted_head(document, tokens, phrase) else {
+            return false;
+        };
+        let Some((gender, true)) = self.nouns.gender_of(&head) else {
+            return false;
+        };
+        let mut fitting = readings
+            .iter()
+            .filter(|r| r.gender == Some(gender))
+            .peekable();
+        fitting.peek().is_some() && fitting.all(|r| r.case == Case::Nominative)
+    }
+
     /// The third position: a noun phrase in the front field.
     ///
     /// *Die Kinder spielt im Garten*. German is verb-second, so the finite verb
@@ -590,15 +618,17 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
                 if pronoun_subject_follows(tokens, document, phrase.end, &["ihr"]) {
                     continue;
                 }
-            } else if another_subject_follows(tokens, document, phrase.end, &|noun| {
-                // Behind a verb that can only be singular, a plural noun is
-                // no subject.
-                !readings.is_empty()
-                    && !readings
-                        .iter()
-                        .any(|r| r.agrees_with(&Features::new(PersonSet::THIRD, NumberSet::PLURAL)))
-                    && self.nouns.is_surely_plural(noun)
-            }) || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
+            } else if !self.surely_nominative(tokens, document, &phrase)
+                && another_subject_follows(tokens, document, phrase.end, &|noun| {
+                    // Behind a verb that can only be singular, a plural noun is
+                    // no subject.
+                    !readings.is_empty()
+                        && !readings.iter().any(|r| {
+                            r.agrees_with(&Features::new(PersonSet::THIRD, NumberSet::PLURAL))
+                        })
+                        && self.nouns.is_surely_plural(noun)
+                })
+                || pronoun_subject_follows(tokens, document, phrase.end, PRONOUN_SUBJECTS)
             {
                 continue;
             }
@@ -1958,5 +1988,30 @@ mod tests {
         assert_eq!(lint_count("Weil du das machst, geht es."), 0);
         assert_eq!(lint_count("Obwohl wir müde sind, bleibt er wach."), 0);
         assert_eq!(lint_count("Wenn er kommt, sind wir bereit."), 0);
+    }
+
+    /// A phrase that can only be a nominative is the subject, so a noun phrase
+    /// behind the verb is no rival one: *der Abruf* is masculine, and *der*
+    /// fits it in the nominative alone.
+    #[test]
+    fn a_surely_nominative_subject_has_no_rival() {
+        for text in [
+            "Der Abruf fehlen ebenso wie die Möglichkeit.",
+            "Der Hund fehlen ebenso wie die Katze.",
+            "Ein Hund fehlen ebenso wie die Katze.",
+        ] {
+            assert_eq!(lint_count(text), 1, "{text}");
+        }
+        for text in [
+            // *die*, *das* and *eine* are accusatives too.
+            "Das Buch lesen die Kinder gern.",
+            "Die Suppe essen die Gäste zuerst.",
+            "Eine Lösung finden die Experten sicher.",
+            // The copula lets the predicate carry the number.
+            "Der Grund sind die hohen Kosten.",
+            "Der Abruf fehlt ebenso wie die Möglichkeit.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
     }
 }

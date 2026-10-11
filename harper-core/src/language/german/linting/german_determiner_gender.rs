@@ -99,8 +99,23 @@ impl GermanDeterminerGender {
             return;
         }
 
+        // An extended attribute carries a phrase of its own: *das letzte in
+        // einem Zoo gehaltene Exemplar*. Only what follows its last
+        // preposition, article or noun is declined for the outer article.
         let attributes = &words[phrase.open + 1..phrase.head];
-        for (at, token) in attributes.iter().enumerate() {
+        let own_phrase_end = attributes
+            .iter()
+            .rposition(|token| {
+                let word = noun_phrase::lowercase_of(token, document);
+                token.kind.is_preposition()
+                    || determiner_readings(&word).is_some()
+                    || document
+                        .get_span_content(&token.span)
+                        .first()
+                        .is_some_and(|c| c.is_uppercase())
+            })
+            .map_or(0, |at| at + 1);
+        for (at, token) in attributes.iter().enumerate().skip(own_phrase_end) {
             let chars = document.get_span_content(&token.span);
             let word: String = chars.iter().collect();
             if !matches!(token.kind, TokenKind::Word(_))
@@ -181,10 +196,6 @@ impl GermanDeterminerGender {
     ///   Kunst?*, *Ist das reines Gold?* There the noun is the predicate and
     ///   has no article.
     fn is_not_an_article(words: &[&Token], at: usize, text: &str, document: &Document) -> bool {
-        const COPULAS: &[&str] = &[
-            "ist", "sind", "war", "waren", "wäre", "wären", "sei", "seien", "wird", "werden",
-            "wurde", "wurden", "bleibt", "blieb",
-        ];
         let lower = text.to_lowercase();
         let Some(previous) = at.checked_sub(1).map(|i| words[i]) else {
             return false;
@@ -216,6 +227,52 @@ impl GermanDeterminerGender {
             Gender::Neuter => "neutral",
         }
     }
+}
+
+const COPULAS: &[&str] = &[
+    "ist", "sind", "war", "waren", "wäre", "wären", "sei", "seien", "wird", "werden", "wurde",
+    "wurden", "bleibt", "blieb",
+];
+
+/// Is *das* the subject pronoun of a verb-final copula clause, with the noun
+/// behind it the predicate? *dass das Zufall ist*, *ob das Absicht war*. The
+/// copula closes the clause right behind the noun, which an article's noun
+/// never allows: *dass das Haus alt ist* puts the predicate between them.
+fn is_pronoun_before_predicate(
+    words: &[&Token],
+    phrase: &noun_phrase::Phrase,
+    text: &str,
+    document: &Document,
+) -> bool {
+    ["das", "dies"].contains(&text.to_lowercase().as_str())
+        && phrase.head == phrase.open + 1
+        && words.get(phrase.end).is_some_and(|verb| {
+            COPULAS.contains(&noun_phrase::lowercase_of(verb, document).as_str())
+        })
+        && words
+            .get(phrase.end + 1)
+            .is_none_or(|next| matches!(next.kind, TokenKind::Punctuation(_)))
+}
+
+/// *der/die Prozessor(en)*: a determiner right behind a slash is one half of
+/// an alternative, and the noun is spelled for the other half too.
+fn is_alternative(determiner: &Token, document: &Document) -> bool {
+    determiner.span.start > 0
+        && document.get_full_content().get(determiner.span.start - 1) == Some(&'/')
+}
+
+/// Is a word inside the phrase a verb that cannot be an attribute? *keiner
+/// weiß Rat*: *weiß* is the adjective *white* too, but an attributive
+/// adjective always carries an ending, so an undeclined one between the article
+/// and the noun is the clause's verb, and *keiner* its subject.
+fn has_undeclined_verb(words: &[&Token], phrase: &Phrase, document: &Document) -> bool {
+    words[phrase.open + 1..phrase.head].iter().any(|token| {
+        let word = noun_phrase::lowercase_of(token, document);
+        token.kind.is_verb()
+            && !["e", "en", "em", "er", "es"]
+                .iter()
+                .any(|ending| word.ends_with(ending))
+    })
 }
 
 /// Whether any singular reading of the determiner carries `gender`.
@@ -258,7 +315,11 @@ impl Linter for GermanDeterminerGender {
                 if stands_alone(&text) || opens_relative_clause(&words, phrase.open, document) {
                     continue;
                 }
-                if Self::is_not_an_article(&words, phrase.open, &text, document) {
+                if Self::is_not_an_article(&words, phrase.open, &text, document)
+                    || is_pronoun_before_predicate(&words, phrase, &text, document)
+                    || is_alternative(determiner, document)
+                    || has_undeclined_verb(&words, phrase, document)
+                {
                     continue;
                 }
 
@@ -279,6 +340,14 @@ impl Linter for GermanDeterminerGender {
                 let Some((gender, surely_singular)) = self.nouns.gender_of(&head) else {
                     continue;
                 };
+                // *Wir verlieren alle Respekt*, *Alle kamen erst im zweiten
+                // Anlauf*: *alle* and *alles* float away from the noun they
+                // quantify, and a singular noun behind them is never theirs.
+                // A plural one is, and keeps its adjective check: *alle neue
+                // Bücher*.
+                if surely_singular && ["alle", "alles"].contains(&text.to_lowercase().as_str()) {
+                    continue;
+                }
 
                 // *die* and *der* are plural readings too. They only rule the
                 // noun out when it cannot be one; *das* and *ein* never could.
@@ -516,5 +585,43 @@ mod tests {
             let found = reported(text);
             assert!(found.is_empty(), "{text}: {found:?}");
         }
+    }
+
+    /// *das* in front of a predicate noun is the subject pronoun, and a head
+    /// cut short by a hyphen, a dash or a gender sign is no head at all.
+    #[test]
+    fn a_pronoun_or_a_cut_head_is_not_checked() {
+        for text in [
+            "Ich glaube nicht, dass das Zufall ist.",
+            "Dass das Quatsch ist, hat jetzt auch das Ministerium eingesehen.",
+            "Ich möchte meine Verkauf - und IT-Kenntnisse verbessern.",
+            "Die Jurist:innenausbildung findet an der Uni statt.",
+            "Die Lehrer*innenkonferenz beginnt um acht.",
+            "Wir verlieren alle Respekt füreinander.",
+            "Alle jammern, aber keiner weiß Rat.",
+            "Es nutzt so viele Threads, wie der/die Prozessor(en) unterstützen.",
+            "1938 starb das letzte in einem Zoo gehaltene Exemplar.",
+            "Sie wählen eine PIN/TAN-Kombination.",
+            "Es gibt eine Standalone- sowie eine Client/Server-Version.",
+            "Alle kamen erst im zweiten Anlauf durch.",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
+        for text in [
+            "Ich glaube, dass das Zufall uns hilft.",
+            "Ich sehe das Mann.",
+        ] {
+            assert_eq!(reported(text), vec!["das"], "{text}");
+        }
+    }
+
+    /// Genders from the UD treebanks: the article cues could only say *not
+    /// feminine* for these.
+    #[test]
+    fn treebank_genders_are_checked() {
+        assert_eq!(reported("Das Bereich ist groß."), vec!["Das"]);
+        assert_eq!(reported("Ich kenne die Umsatz nicht."), vec!["die"]);
+        assert!(reported("Der Bereich ist groß.").is_empty());
+        assert!(reported("Das Gitter ist neu.").is_empty());
     }
 }

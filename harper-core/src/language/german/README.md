@@ -2033,6 +2033,97 @@ Measured against the seventh round: LanguageTool errors found 1810 → 1830,
 false-alarm sentences 740 → 740; Falko-MERLIN edits found 3056 → 3088,
 corrected sentences with a lint 429 → 429.
 
+### Ninth round: genders from the treebank's gold morphology
+
+`verb_number` stood at 1.4 %, and reading the misses showed why: *Der Abruf
+fehlen ebenso wie die Möglichkeit* went unreported because *Abruf* had no gender,
+so nothing said that *der Abruf* can only be a nominative. Counting showed it
+was not one noun. Against the gold genders of the UD test splits, Harper had a
+gender for **68.5 %** of singular noun occurrences, and **89.2 %** of those
+named exactly the right one. Most of the rest were the article oracle's *not
+feminine* (`MZ`): *Bereich*, *Umsatz*, *Hersteller*, *Verkauf*.
+
+**The treebank is the oracle.** `scripts/add_german_treebank_genders.py` reads
+the gold `Gender` of every singular noun token in UD German HDT and GSD and
+records a gender once three tokens agree at 90 %. It runs on the **train**
+splits, because the test splits are what the injection measures against. On the
+test splits it agreed with the single genders already recorded 99.2 % of the
+time, and of the eleven disagreements nine were dictionary errors. The
+treebank's annotation is CC BY-SA 4.0, so only the gender flags go into the
+dictionary, as facts about words. The list is not stored, and the script reads
+the treebank from wherever it is.
+
+It fills a missing gender (1659 entries), narrows `MZ` to the one the treebank
+names (254), and gives a noun line to a noun the dictionary only knew as a verb
+(*Vorstand*, *Rahmen*, *Kragen*: 13). It never overrides a single recorded
+gender. It reports those instead, and the 41 it reported were all checked by
+hand and went into `add_german_common_noun_genders.py`. Again it is the `-er`
+read as an agent noun (*Gitter*, *Orchester*, *Semester*, *Kupfer*) and
+*-sprung*, *-schwung* read as feminine. Four guards came out of reading the
+results:
+
+* A **nominalized adjective** takes the gender of whoever it names (*der*/*die
+  Vorsitzende*), and an **ordinal** all three. Both are skipped.
+* A **neuter beside a verb** is the nominalized infinitive. A noun reading on
+  every infinitive would reach *fragen*, *zahlen*, *regeln*, which are noun
+  plurals too, and *sein*, which is a possessive.
+* **Two genders stay two:** *Bund*, *Golf*, *Modul*, *Post*, *Patch*, *Update*,
+  *Single*, *Wehr*, *Silvester*, *Glauben*, *PIN*/*Pin*, now in
+  `add_german_multi_gender_nouns.py`. That list now sets the genders exactly,
+  which took the stray neuter off *Angehörige*.
+* The treebank is wrong about *Inland* (masculine) and *Navigator* (neuter,
+  read as the browser).
+
+On the test splits that gives **86.1 %** coverage and **99.1 %** exact.
+
+**What a gender exposed.** Each newly gendered noun is checked by rules that had
+nothing to say before, and the new reports on correct text came in four shapes,
+each fixed at the rule rather than by taking the gender back:
+
+* *dass das Zufall ist*: *das* is the subject pronoun when the copula closes
+  the clause right behind the noun (`GermanDeterminerGender`).
+* *Was ist das für ein Fleck?*: in *was … für ein* the *für* governs nothing
+  (`GermanPrepositionCase`).
+* A head that is half a compound, now also with a spaced hyphen (*meine
+  Verkauf - und IT-Kenntnisse*), a gender sign (*Jurist:innenausbildung*) or a
+  glued sign (*PIN/TAN-Kombination*, *Web.de-Servern*). This is in
+  `trusted_head`, so every rule that reads a head benefits.
+* *alle*/*alles* before a singular noun (*Wir verlieren alle Respekt*), an
+  undeclined verb inside the phrase (*keiner weiß Rat*), a determiner behind a
+  slash (*der/die Prozessor(en)*), and an extended attribute (*das letzte in
+  einem Zoo gehaltene Exemplar*), whose own phrase the adjective check now
+  skips.
+
+`zuhause` and `single` got the adverb and adjective readings they lacked. With
+a gender, `GermanNounCapitalization` had started to read them as sure nouns.
+
+**A subject that can only be a nominative has no rival.** The noun-phrase
+subject check skips a clause when a noun phrase behind the verb could be the
+real subject, since a fronted object is ordinary German (*Das Buch lesen die
+Kinder*). `surely_nominative` lifts that when the determiner fits the head's
+one gender in the nominative alone and the noun is surely singular. That is
+the masculine phrase behind *der*, *ein*, *dieser*, *kein*.
+
+Measured against the eighth round:
+
+| | before | after |
+|---|---|---|
+| injection `det_gender` | 21.6 % | 30.0 % |
+| injection `adj_ending` | 29.9 % | 32.8 % |
+| injection `det_case` | 17.7 % | 18.1 % |
+| injection `noun_lower` | 50.4 % | 51.3 % |
+| injection `verb_number` | 1.4 % | 1.7 % |
+| LanguageTool errors found | 1830 | 1837 |
+| LanguageTool false-alarm sentences | 740 | 733 |
+| Falko-MERLIN edits found | 3088 | 3130 |
+| Falko-MERLIN corrected sentences with a lint | 429 | 424 |
+
+The prose corpus, the school text and the older batteries are unchanged.
+`verb_number` barely moved: most of its misses are the `-en` form behind a
+singular subject, which the rule refuses for reasons of its own, and subjects
+that are names (*Iridium haben*). The battery for this round's two classes is
+`treebank_gender.tsv`.
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both

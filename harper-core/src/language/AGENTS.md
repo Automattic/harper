@@ -301,6 +301,25 @@ errors in the treebank's own news text.
 When a class found this way gets a rule, it gets a battery file of its own as
 well, per the paragraph above.
 
+**The same annotations are a data oracle**, and for a language whose
+dictionary lacks a feature, often the best one available. German noun gender
+went from 68.5 % to 86.1 % of noun occurrences this way (see
+`german/scripts/add_german_treebank_genders.py`). Three rules keep it honest:
+
+* **Fill from the train splits, measure on the test splits.** Taking the
+  data from the sentences the injection is scored on grades the work with
+  its own answers.
+* **Fill gaps; report contradictions.** Measure the oracle's agreement with
+  what the dictionary already records first, then read every disagreement:
+  the treebank is sometimes the wrong one (German *Inland*), and a word with
+  two genders makes both look wrong.
+* **Store the facts, not the treebank.** UD annotation is usually CC BY-SA, so
+  the script reads it from wherever it is and writes only the flags.
+
+Then re-run the precision side and read every new report. A feature that was
+missing switches on checks that had nothing to say before, and the new reports
+are the rules' blind spots rather than data errors.
+
 ## Before handing back
 
 ```bash

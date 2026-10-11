@@ -89,6 +89,19 @@ Prozent Kilo Gewitter Eis Feuer Holz Metall Eisen Gold Silber Plastik Leder Obst
 # correct *die Erlaubnis gilt* into a plural subject with a singular verb.
 add(F, """Erlaubnis Kenntnis Besorgnis Betrübnis Bewandtnis Ersparnis Fäulnis Wirrnis Bitternis Bedrängnis Befugnis
 Finsternis Wildnis Beilage Auslage Aster Auster Anapher""")
+# The treebank round (`add_german_treebank_genders.py`) reports where the gold
+# morphology of the UD treebanks contradicts a single recorded gender. Every
+# one was checked: the treebank was right each time but for *Silvester*, which
+# has two genders. Most are the `-er` read as an agent noun again (*Gitter*,
+# *Orchester*, *Semester*), and *-sprung*, *-schwung* read as `-ung`.
+add(M, """Abschwung Albtraum Konsum Konsument Psychologe Schwung Sourcecode Sprung Umschwung""")
+add(F, """Absprache Adresse Anfahrt Ansprache Blase Bremse Buchse Faxnummer Manier Order Trauer Unkenntnis Viper""")
+add(Z, """Banner Center Desaster Foyer Gatter Gitter Kaliber Kupfer Manöver Monster Orchester Plädoyer
+Portemonnaie Quartier Semester Turnier Ungeheuer Unwetter Viertelfinale""")
+# And the ones the treebank itself has wrong: it annotates *Inland* masculine
+# and *Navigator*, mostly the browser, neuter.
+add(Z, """Inland""")
+add(M, """Navigator""")
 # fmt: on
 
 # Lemma -> flags. `N` noun, `h` compound-capable, `E` plural -n, plus the gender.

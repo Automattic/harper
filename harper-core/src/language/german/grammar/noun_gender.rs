@@ -9,7 +9,7 @@
 use std::sync::Arc;
 
 use crate::{
-    Token, TokenKind,
+    Punctuation, Token, TokenKind,
     document::Document,
     language::german::grammar::determiners::could_be_a_dative_plural,
     language::german::grammar::noun_phrase::Phrase,
@@ -288,6 +288,11 @@ fn umlaut_last_vowel(word: &str) -> Option<String> {
 /// capital of a longer run — *den Berliner Philharmonikern*, *die Deutsche
 /// Bahn* — so a capitalized word behind it rejects the phrase, as does a
 /// hyphen, which makes the head half of a compound.
+///
+/// The hyphen counts with a space before it as well: *meine Verkauf - und
+/// IT-Kenntnisse* is a suspended compound typed loosely, and *ihrer Melatonin
+/// -- Rhythmik* a compound split by a dash. And so does a gender sign: in *Die
+/// Jurist:innenausbildung* the head is *Ausbildung*, not *Jurist*.
 pub fn trusted_head(document: &Document, words: &[&Token], phrase: &Phrase) -> Option<String> {
     let token = words[phrase.head];
     if !matches!(token.kind, TokenKind::Word(_)) {
@@ -297,7 +302,22 @@ pub fn trusted_head(document: &Document, words: &[&Token], phrase: &Phrase) -> O
     let content = document.get_full_content();
     let touches_hyphen = content.get(token.span.end) == Some(&'-')
         || (token.span.start > 0 && content.get(token.span.start - 1) == Some(&'-'));
-    if touches_hyphen {
+    let dash_follows = words.get(phrase.head + 1).is_some_and(|next| {
+        matches!(
+            next.kind,
+            TokenKind::Punctuation(Punctuation::Hyphen | Punctuation::EnDash | Punctuation::EmDash)
+        )
+    });
+    let gender_sign = matches!(content.get(token.span.end), Some(':' | '*' | '_' | '/'))
+        && content.get(token.span.end + 1..token.span.end + 3) == Some(&['i', 'n'][..]);
+    // *eine PIN/TAN-Kombination*, *das Client/Server-System*, *die
+    // Cut&Copy-Funktionen*, *den Web.de-Servern*: a sign glued to a letter on
+    // both sides joins the head to the rest of a compound.
+    let glued = matches!(content.get(token.span.end), Some('/' | '&' | '+' | '.'))
+        && content
+            .get(token.span.end + 1)
+            .is_some_and(|c| c.is_alphanumeric());
+    if touches_hyphen || dash_follows || gender_sign || glued {
         return None;
     }
 

@@ -235,6 +235,25 @@ impl Linter for GermanPrepositionCase {
                     continue;
                 }
 
+                // *Was ist das für ein Fleck?*, *Was für ein Glück*: in *was
+                // für* the *für* governs nothing, and the phrase takes the case
+                // of its role in the clause — here the nominative.
+                if preposition_text.eq_ignore_ascii_case("für")
+                    && determiner_text.to_lowercase().starts_with("ein")
+                    && tokens[..index]
+                        .iter()
+                        .rev()
+                        .take_while(|token| !matches!(token.kind, TokenKind::Punctuation(_)))
+                        .any(|token| {
+                            matches!(token.kind, TokenKind::Word(_))
+                                && document
+                                    .get_span_content_str(&token.span)
+                                    .eq_ignore_ascii_case("was")
+                        })
+                {
+                    continue;
+                }
+
                 let Some(all_readings) = determiner_readings(&determiner_text) else {
                     continue;
                 };
@@ -781,5 +800,19 @@ mod tests {
     #[test]
     fn ignores_a_preposition_at_the_end_of_a_sentence() {
         assert_clean(&["Damit rechnet er nicht mit"]);
+    }
+
+    #[test]
+    fn ignores_was_fuer_ein() {
+        assert_clean(&[
+            "Was ist das für ein Fleck auf deiner Hose?",
+            "Was für ein Gott ist das?",
+            "Was hast du für ein Auto?",
+        ]);
+    }
+
+    #[test]
+    fn still_checks_fuer_without_was() {
+        assert!(!lint("Das ist für ein Mann.").is_empty());
     }
 }
