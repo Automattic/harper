@@ -292,6 +292,7 @@ use super::themself::Themself;
 use super::then_than::ThenThan;
 use super::there_is_agreement::ThereIsAgreement;
 use super::there_own::ThereOwn;
+use super::therein::Therein;
 use super::theres::Theres;
 use super::theses_these::ThesesThese;
 use super::theyre_confusions::TheyreConfusions;
@@ -914,6 +915,7 @@ impl LintGroup {
         insert_expr_rule!(ThenThan);
         insert_expr_rule!(ThereOwn);
         insert_expr_rule!(Theres);
+        insert_expr_rule!(Therein);
         insert_expr_rule!(ThesesThese);
         insert_struct_rule!(TheyreConfusions);
         insert_expr_rule!(ThingThink);
