@@ -57,6 +57,10 @@ harness = false
 name = "spellcheck"
 harness = false
 
+[[example]]
+name = "de_startup_profile"
+required-features = ["de"]
+
 [features]
 default = ["thesaurus", "concurrent"]
 concurrent = ["dep:boxcar"]
