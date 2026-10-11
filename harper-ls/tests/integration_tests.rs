@@ -63,7 +63,7 @@ fn test_very_short_text_workflow() {
 mod german_tests {
     use super::*;
     use harper_core::language::languages::LanguageFamily;
-    use harper_core::language::registry::{dictionary, parser_for_prose};
+    use harper_core::language::registry::{dictionary, dictionary_for_language, parser_for_prose};
     use harper_core::parsers::MarkdownOptions;
 
     /// Test full workflow: open German file → auto-detect → lint → suggest corrections
@@ -270,6 +270,12 @@ mod german_tests {
     #[test]
     fn test_full_workflow_performance() {
         let dict = FstDictionary::curated(); // English dictionary for detection
+
+        // The German dictionary is built once per process, on first use. That is
+        // a startup cost (several seconds, and it grows with the dictionary), not
+        // the per-document cost this test is about, so pay it before the clock
+        // starts. Timing it here made the test fail on any slow runner.
+        let _ = dictionary_for_language(LanguageFamily::German);
 
         // Realistic German paragraph with some errors
         let text = "Der Hund spielt im Garten mit dem Ball. \
