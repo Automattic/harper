@@ -497,6 +497,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Guesswork",
+								"state": true,
+								"label": "Guesswork"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Henceforth",
 								"state": true,
 								"label": "Henceforth"
