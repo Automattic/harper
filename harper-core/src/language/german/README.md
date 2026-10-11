@@ -2012,6 +2012,23 @@ The injection's other classes, read context by context:
 The injection script skips *'s* for *das* and requires mood and tense on a
 swapped verb, which had produced correct subjunctives (*wir kämen*).
 
+**Batteries for the new classes.** Each class the treebank turned up got a
+file of its own in `tests/batteries/`, written fresh rather than copied from
+the unit tests, and was scored against LanguageTool 6.6 (built from Maven
+Central, since the docker image was not at hand):
+
+| battery | Harper | LanguageTool | false alarms (H / LT) |
+|---|---|---|---|
+| `subordinate_word_order.tsv` | 8/10 | 0/10 | 0/10 / 0/10 |
+| `verb_cluster.tsv` | 10/10 | 0/10 | 0/10 / 0/10 |
+| `inverted_subject.tsv` | 6/8 | 4/8 | 0/8 / 0/8 |
+| `strong_adjective.tsv` | 5/7 | 2/7 | 0/7 / 0/7 |
+
+The misses are the documented limits: *bis* is not in the conjunction list,
+*ihr* is no sure subject, *gehe* is the subjunctive's third person too, and
+*lange* counts as an adverb. The older batteries score as they did before the
+seventh round, except `noun_phrase_subject.tsv`, 6/10 → 7/10.
+
 Measured against the seventh round: LanguageTool errors found 1810 → 1830,
 false-alarm sentences 740 → 740; Falko-MERLIN edits found 3056 → 3088,
 corrected sentences with a lint 429 → 429.

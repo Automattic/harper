@@ -269,6 +269,38 @@ way `verb_final_agreement.tsv` sits next to `grammar.tsv`. A change that scores
 the same on the old battery has not necessarily done nothing; it may have
 improved something the old battery never contained.
 
+### Errors from a treebank's gold annotations
+
+The injection set and the batteries both contain what someone already thought
+of. To find the classes nobody has, use a Universal Dependencies treebank as
+the oracle: every token carries its lemma, case, number, person and head, so
+one token can be swapped for **another attested form of the same lemma that
+differs in exactly one feature** — *die Geräte sollen* → *soll*, *hat
+verschoben* → *verschieben*, *mit dem* → *den*. Every variant is a real word
+in the wrong place, and recall comes out per error class *and* per context
+(which auxiliary, which preposition, subject before or after the verb), which
+is where the gaps show.
+
+```bash
+python3 harper-core/src/language/german/scripts/german_treebank_injection.py \
+    target/release/harper-cli out.json de_hdt-ud-test.conllu de_gsd-ud-test.conllu
+python3 harper-core/src/language/german/scripts/german_treebank_injection.py \
+    --score out.json verb_number      # recall per context for one class
+```
+
+Two cautions. **Read a sample of the variants before trusting a class**: a
+swap can land on a correct form — a subjunctive when mood is not in the
+features (*wir kämen*), either case behind a two-way preposition (*in die* /
+*in der*) — and the class then looks worse than it is. And it measures recall
+only: the same treebank's untouched sentences are the precision side, so lint
+them before and after every change and read each new report. On German the
+first run found two classes near zero (verb number with a noun subject, 0.6 %;
+infinitive and participle swapped, 0.9 %), and the fixes for them found real
+errors in the treebank's own news text.
+
+When a class found this way gets a rule, it gets a battery file of its own as
+well, per the paragraph above.
+
 ## Before handing back
 
 ```bash
