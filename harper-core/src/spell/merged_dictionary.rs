@@ -16,7 +16,6 @@ use crate::{CharString, DictWordMetadata};
 #[derive(Clone)]
 pub struct MergedDictionary {
     children: Vec<Arc<dyn Dictionary>>,
-    hasher_builder: FixedState,
     child_hashes: Vec<u64>,
 }
 
@@ -24,7 +23,6 @@ impl MergedDictionary {
     pub fn new() -> Self {
         Self {
             children: Vec::new(),
-            hasher_builder: FixedState::default(),
             child_hashes: Vec::new(),
         }
     }
@@ -36,21 +34,29 @@ impl MergedDictionary {
 
     fn hash_dictionary(&self, dictionary: &Arc<dyn Dictionary>) -> u64 {
         // Hashing the curated dictionary isn't super helpful and takes a long time.
-        if Arc::ptr_eq(
-            dictionary,
-            &(FstDictionary::curated() as Arc<dyn Dictionary>),
-        ) {
+        // Asking whether it is loaded first keeps a German-only session from
+        // building the English dictionary just to find out this is not it.
+        if FstDictionary::curated_if_loaded().is_some_and(|curated| {
+            std::ptr::addr_eq(Arc::as_ptr(dictionary), Arc::as_ptr(&curated))
+        }) {
             return 1;
         }
 
-        let mut hasher = self.hasher_builder.build_hasher();
-
         dictionary
-            .words_iter()
-            .for_each(|w| w.iter().for_each(|c| hasher.write_u32(*c as u32)));
-
-        hasher.finish()
+            .cached_word_hash()
+            .unwrap_or_else(|| word_hash(dictionary.as_ref()))
     }
+}
+
+/// Hash every word of a dictionary, in iteration order.
+pub(crate) fn word_hash(dictionary: &(impl Dictionary + ?Sized)) -> u64 {
+    let mut hasher = FixedState::default().build_hasher();
+
+    dictionary
+        .words_iter()
+        .for_each(|w| w.iter().for_each(|c| hasher.write_u32(*c as u32)));
+
+    hasher.finish()
 }
 
 impl PartialEq for MergedDictionary {

@@ -8,6 +8,7 @@ use crate::{CharString, CharStringExt, DictWordMetadata};
 pub use self::dictionary::Dictionary;
 pub use self::fst_dictionary::FstDictionary;
 pub use self::merged_dictionary::MergedDictionary;
+pub(crate) use self::merged_dictionary::word_hash;
 pub use self::mutable_dictionary::MutableDictionary;
 pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;

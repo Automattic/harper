@@ -39,6 +39,27 @@ fn build_german_base_dict(
     )
 }
 
+/// How many threads the dictionary build may use. WebAssembly has none.
+fn parallelism() -> usize {
+    if cfg!(target_arch = "wasm32") {
+        1
+    } else {
+        std::thread::available_parallelism().map_or(1, usize::from)
+    }
+}
+
+/// Run two independent computations, side by side where threads exist.
+fn join<A: Send, B: Send>(a: impl FnOnce() -> A + Send, b: impl FnOnce() -> B + Send) -> (A, B) {
+    if parallelism() < 2 {
+        return (a(), b());
+    }
+    std::thread::scope(|scope| {
+        let handle = scope.spawn(b);
+        let a = a();
+        (a, handle.join().expect("German dictionary build panicked"))
+    })
+}
+
 // Word list for lazy compound checking (shared between all German dictionary components)
 // This is initialized first to avoid duplicate parsing
 static GERMAN_WORD_LIST: LazyLock<Vec<crate::spell::rune::word_list::AnnotatedWord>> =
@@ -89,9 +110,12 @@ static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
 
 // Compound-aware dictionary using lazy compound checking
 static GERMAN_COMPOUND_AWARE_DICT: LazyLock<Arc<CompoundAwareDictionary>> = LazyLock::new(|| {
-    let base_dict = Arc::clone(&*GERMAN_BASE_DICT);
     let word_list = &*GERMAN_WORD_LIST;
-    let compound_checker = CompoundChecker::new(word_list);
+    // The two do not depend on each other; the checker is the smaller of them.
+    let (base_dict, compound_checker) = join(
+        || Arc::clone(&*GERMAN_BASE_DICT),
+        || CompoundChecker::new(word_list),
+    );
 
     Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
 });
