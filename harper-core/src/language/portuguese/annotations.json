@@ -329,6 +329,22 @@
 				}
 			}
 		},
+		"2": {
+			"#": "second-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "Second"
+				}
+			}
+		},
+		"3": {
+			"#": "third-person property",
+			"metadata": {
+				"pronoun": {
+					"person": "Third"
+				}
+			}
+		},
 		"s": {
 			"#": "subject case property",
 			"metadata": {
@@ -343,6 +359,15 @@
 			"metadata": {
 				"pronoun": {
 					"is_singular": true
+				}
+			}
+		},
+		":": {
+			"#": "plural pronoun property",
+			"//": "mnemonic: multiple dots",
+			"metadata": {
+				"pronoun": {
+					"is_plural": true
 				}
 			}
 		},
@@ -433,6 +458,12 @@
 				"noun": {
 					"gender": "Masculine"
 				}
+			}
+		},
+		"R": {
+			"#": "adverb property",
+			"metadata": {
+				"adverb": {}
 			}
 		}
 	}

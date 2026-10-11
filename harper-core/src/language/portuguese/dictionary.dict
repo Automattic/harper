@@ -10,10 +10,10 @@ vida/~NgV>ZS
 tu/Ia2s. # you~pronoun a~personal 2~person .~singular s~subject
 ele/Ia3s. # he~pronoun a~personal 3~person .~singular s~subject
 ela/Ia3s. # she~pronoun a~personal 3~person .~singular s~subject
-nós/Ia1p. # we~pronoun a~personal 1~person p~plural s~subject
-vós/Ia2p. # you (plural)~pronoun a~personal 2~person p~plural s~subject
-eles/Ia3p. # they (masc.)~pronoun a~personal 3~person p~plural s~subject
-elas/Ia3p. # they (fem.)~pronoun a~personal 3~person p~plural s~subject
+nós/Ia1s: # we~pronoun a~personal 1~person :~plural s~subject
+vós/Ia2s: # you (plural)~pronoun a~personal 2~person :~plural s~subject
+eles/Ia3s: # they (masc.)~pronoun a~personal 3~person :~plural s~subject
+elas/Ia3s: # they (fem.)~pronoun a~personal 3~person :~plural s~subject
 
 estou/~V
 era/~V

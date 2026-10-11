@@ -13,15 +13,15 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-# Regex patterns for validation
-# Support both simple format: word/FLAG and Harper internal format: word/~~FLAGS # comment
-WORD_FLAG_PATTERN = re.compile(r'^[a-zA-ZäöüßąćęłńóśźżáéíóúýàèìòùâêîôûãñõÄÖÜßÅÆÇØåæçø]+(/~~[A-Za-z0-9_]+)+(\s*#.*)?$')
-SIMPLE_WORD_FLAG_PATTERN = re.compile(r'^([^/#]+)/([^/#]+)(\s*#.*)?$')
-HARPER_INTERNAL_PATTERN = re.compile(r'^([^/#]+)/(~~[A-Za-z0-9_]+)(\s*#.*)?$')
+# Mirrors `parse_word_list` in harper-core/src/spell/rune/word_list.rs: a line
+# is `word` or `word/FLAGS`, optionally followed by a `#` comment. A bare word
+# carries no flags and is valid. Every character after the `/` is one flag.
+ENTRY_PATTERN = re.compile(r'^([^/#]+)(/([^#]*))?(\s*#.*)?$')
 COMMENT_PATTERN = re.compile(r'^\s*#')
 EMPTY_LINE_PATTERN = re.compile(r'^\s*$')
-# Pattern to extract flags from both formats: word/FLAG or word/~~FLAGS
-FLAG_EXTRACTION_PATTERN = re.compile(r'^/[^/]+/(.+)$')
+# `~` marks Harper-curated flag strings (`word/~~ABC`). The parser keeps it as
+# a flag, but it is a no-op unless a language's annotations define it.
+MARKER_FLAGS = {'~'}
 
 
 def get_language_paths(language):
@@ -142,18 +142,8 @@ def validate_dictionary_format(dict_path):
                 comment_lines += 1
                 continue
             
-            # Check for word/flags pattern (both simple and Harper internal formats)
-            # Remove trailing comments for validation
-            line_without_comment = stripped_line.split('#')[0].strip() if '#' in stripped_line else stripped_line
-            
-            # Should be a word/flags line or metadata line (like line count)
-            if SIMPLE_WORD_FLAG_PATTERN.match(stripped_line):
-                valid_lines += 1
-            elif HARPER_INTERNAL_PATTERN.match(stripped_line):
-                valid_lines += 1
-            elif WORD_FLAG_PATTERN.match(line_without_comment):
-                valid_lines += 1
-            elif stripped_line.isdigit():  # Allow numeric metadata lines
+            match = ENTRY_PATTERN.match(stripped_line)
+            if match and match.group(1).strip():
                 valid_lines += 1
             else:
                 errors.append(f"❌ Invalid format at line {line_num}: '{stripped_line}'")
@@ -211,90 +201,67 @@ def validate_no_duplicates(dict_path):
 
 
 def validate_flag_consistency(dict_path, annotations_path):
-    """Check that all flags used in dictionary exist in annotations.properties."""
+    """Check that every flag used in the dictionary is defined in the annotations.
+
+    Harper reads each character after the `/` as one flag and looks it up in
+    both `properties` and `affixes`; an undefined flag is silently ignored,
+    which is exactly the bug this check exists to catch.
+    """
     errors = []
     warnings = []
-    
-    # Load annotations
+
     try:
         with open(annotations_path, 'r', encoding='utf-8') as f:
             annotations = json.load(f)
     except Exception as e:
         errors.append(f"❌ Could not load annotations for flag validation: {e}")
         return errors, warnings
-    
-    properties = annotations.get('properties', {})
-    valid_flags = set(properties.keys())
-    
+
+    valid_flags = set(annotations.get('properties', {})) | set(annotations.get('affixes', {}))
+
     if not valid_flags:
-        warnings.append("⚠️  No properties found in annotations - cannot validate flags")
+        warnings.append("⚠️  No properties or affixes found in annotations - cannot validate flags")
         return errors, warnings
-    
-    # Extract all flags from dictionary
-    dict_flags = set()
+
     flag_usage = defaultdict(list)  # flag -> list of words using it
-    
+
     try:
         with open(dict_path, 'r', encoding='utf-8') as f:
             lines = f.readlines()
-        
+
         for line_num, line in enumerate(lines, 1):
             line = line.rstrip('\n\r').strip()
-            
-            # Skip comments and empty lines
+
             if COMMENT_PATTERN.match(line) or EMPTY_LINE_PATTERN.match(line):
                 continue
-            
-            # Extract flags from word/flags format
-            if '/' in line:
-                parts = line.split('/')
-                word = parts[0].strip()
-                # Handle comments on same line
-                word = word.split('#')[0].strip() if '#' in word else word
-                if word and not word.isdigit():  # Skip numeric metadata lines
-                    flags_part = '/'.join(parts[1:])  # Handle multiple / separators
-                    # Remove any trailing comments from flags part
-                    flags_part = flags_part.split('#')[0].strip() if '#' in flags_part else flags_part
-                    flags = flags_part.split('/')
-                    
-                    for flag in flags:
-                        flag = flag.strip()
-                        if flag:
-                            # Remove ~~ prefix for Harper internal flags
-                            clean_flag = flag[2:] if flag.startswith('~~') else flag
-                            dict_flags.add(clean_flag)
-                            flag_usage[clean_flag].append(f"{word} (line {line_num})")
-        
-        # Check for flags not in annotations
-        unknown_flags = dict_flags - valid_flags
-        if unknown_flags:
-            # Separate simple flags (single character) from compound flags
-            simple_flags = {f for f in unknown_flags if len(f) == 1}
-            compound_flags = {f for f in unknown_flags if len(f) > 1}
-            
-            if simple_flags:
-                for flag in sorted(simple_flags):
-                    usage_examples = flag_usage[flag][:3]  # Show first 3 examples
-                    examples_str = ", ".join(usage_examples)
-                    errors.append(f"❌ Flag '{flag}' used but not defined in annotations.properties. Examples: {examples_str}")
-            
-            if compound_flags:
-                warnings.append(f"⚠️  Compound flags found (may be valid combinations): {', '.join(sorted(compound_flags)[:10])}" + 
-                               ("..." if len(compound_flags) > 10 else ""))
-            
-            if not simple_flags and compound_flags:
-                print(f"✅ All simple flags are defined in annotations (compound flags found)")
-        else:
-            print(f"✅ All flags are defined in annotations")
-        
-        # Check for unused flags in annotations
+
+            match = ENTRY_PATTERN.match(line)
+            if not match or match.group(3) is None:
+                continue
+
+            word = match.group(1).strip()
+            for flag in match.group(3).strip():
+                flag_usage[flag].append(f"{word} (line {line_num})")
+
+        dict_flags = set(flag_usage)
+
+        for flag in sorted(dict_flags - valid_flags - MARKER_FLAGS):
+            examples_str = ", ".join(flag_usage[flag][:3])
+            errors.append(
+                f"❌ Flag '{flag}' used but defined in neither annotations.properties "
+                f"nor annotations.affixes. Examples: {examples_str}"
+            )
+
+        if not dict_flags - valid_flags - MARKER_FLAGS:
+            print("✅ All flags are defined in annotations")
+
         unused_flags = valid_flags - dict_flags
         if unused_flags:
             warnings.append(f"⚠️  Flags in annotations but not used in dictionary: {', '.join(sorted(unused_flags)[:10])}" +
                            ("..." if len(unused_flags) > 10 else ""))
-        
+
         return errors, warnings
-        
+
     except Exception as e:
         errors.append(f"❌ Error validating flag consistency: {e}")
         return errors, warnings
