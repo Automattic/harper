@@ -132,7 +132,9 @@ def gen(s):
         f = t['feats']
         ctx = ''
         # 1. Verb agreement, by the gold subject.
-        if t['upos'] in ('VERB', 'AUX') and f.get('VerbForm') == 'Fin' and 'Person' in f and f.get('Number') in ('Sing','Plur'):
+        if t['upos'] in ('VERB', 'AUX') and f.get('VerbForm') == 'Fin' and 'Person' in f and f.get('Number') in ('Sing','Plur') and 'Mood' in f and 'Tense' in f:
+            # Without mood and tense a swap can land on a correct subjunctive
+            # or preterite: *wir kämen*, *ich könnte*.
             head = t if t['rel'] not in ('aux', 'cop', 'aux:pass') else next((x for x in toks if x['id'] == t['head']), t)
             subj = [c for c in children(s, head) if c['rel'].startswith('nsubj')]
             if len(subj) == 1:

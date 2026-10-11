@@ -11,8 +11,9 @@ use crate::language::german::grammar::subjects::{
     Features, irregular_finite_verb, subject_pronoun, subordinate_subject_pronoun,
 };
 use crate::language::german::grammar::verbs::{
-    plain_stem_present, second_person_of_raised, third_person_of_raised,
+    looks_like_participle, plain_stem_present, second_person_of_raised, third_person_of_raised,
 };
+use crate::language::german::spell::lexical_classes::STRONG_PRESENT_FORMS;
 use crate::language::morphology::{Case, GenderSet, MorphologyExt, Number, NumberSet, PersonSet};
 use crate::linting::{Lint, LintKind, Linter, Suggestion};
 use crate::spell::Dictionary;
@@ -197,7 +198,11 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         }
 
         let agreement = metadata.verb_agreement();
-        if agreement.person.is_empty() || agreement.number.is_empty() {
+        // The strong forms on the changed stem are entries of their own with
+        // no affix to give them a person (*hält*, *gibt*, *fährst*); the
+        // marker `%` says they are finite, and the ending says which person.
+        let strong = STRONG_PRESENT_FORMS.contains(&word.to_lowercase());
+        if (agreement.person.is_empty() || agreement.number.is_empty()) && !strong {
             return Vec::new();
         }
 
@@ -881,6 +886,96 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         }
     }
 
+    /// The pronoun behind the verb: *Dann hat ich sofort …*, *Irgendwann
+    /// besteht ich darauf*, *Hat du Zeit?*.
+    ///
+    /// A main clause with something else in the front field puts the subject
+    /// right behind the finite verb. Only the pronouns that are always the
+    /// subject are read there — *ich*, *du*, *er*, *wir*, *man*; *sie*, *es*
+    /// and *ihr* are objects or possessives as often. And the verb must not
+    /// end in *-en* or look like a participle: *um das zu erreichen ich …*
+    /// and *ehrlich gesagt ich …* put a non-finite verb there when a comma is
+    /// missing.
+    fn lint_inverted_subjects(
+        &self,
+        tokens: &[&Token],
+        document: &Document,
+        lints: &mut Vec<Lint>,
+    ) {
+        for index in 0..tokens.len().saturating_sub(1) {
+            let (verb_token, subject_token) = (tokens[index], tokens[index + 1]);
+            if !matches!(verb_token.kind, TokenKind::Word(_))
+                || !matches!(subject_token.kind, TokenKind::Word(_))
+            {
+                continue;
+            }
+            let subject_text = Self::word_at(tokens, index + 1, document);
+            if !matches!(subject_text.as_str(), "ich" | "du" | "er" | "wir" | "man") {
+                continue;
+            }
+            let Some(subject) = subject_pronoun(&subject_text) else {
+                continue;
+            };
+            // *Seid du und Maria Schwestern?*: a coordinated subject.
+            let next = tokens
+                .get(index + 2)
+                .filter(|t| matches!(t.kind, TokenKind::Word(_)))
+                .map(|_| Self::word_at(tokens, index + 2, document));
+            if next
+                .as_deref()
+                .is_some_and(|w| matches!(w, "und" | "oder" | "sowie"))
+            {
+                continue;
+            }
+            // *Ich weiß du magst …*: the pronoun opens the next clause, its own
+            // verb right behind it.
+            if let Some(next_at) = next.as_ref().map(|_| index + 2) {
+                let next_text: String = document
+                    .get_span_content(&tokens[next_at].span)
+                    .iter()
+                    .collect();
+                if self
+                    .verb_features(&next_text, tokens[next_at])
+                    .iter()
+                    .any(|reading| subject.agrees_with(reading))
+                {
+                    continue;
+                }
+            }
+            let verb_lower = Self::word_at(tokens, index, document);
+            // *wie enttäuscht du warst*, *so lange wir*: a participle or an
+            // adjective that also spells a verb form.
+            let not_only_a_verb = (verb_token.kind.is_adjective() || verb_token.kind.is_adverb())
+                && irregular_finite_verb(&verb_lower).is_none()
+                && !STRONG_PRESENT_FORMS.contains(&verb_lower);
+            if verb_lower.ends_with("en")
+                || not_only_a_verb
+                || looks_like_participle(&verb_lower)
+                || index
+                    .checked_sub(1)
+                    .is_some_and(|before| Self::word_at(tokens, before, document) == "zu")
+            {
+                continue;
+            }
+            // A verb is lower case unless it opens the sentence (*Hat du
+            // Zeit?*); `verb_features` refuses capitals for that reason.
+            let verb_text: String = if index == 0 {
+                verb_lower.clone()
+            } else {
+                document.get_span_content(&verb_token.span).iter().collect()
+            };
+            let verb = self.verb_features(&verb_text, verb_token);
+            if verb.is_empty() || verb.iter().any(|reading| subject.agrees_with(reading)) {
+                continue;
+            }
+            let shown: String = document
+                .get_span_content(&subject_token.span)
+                .iter()
+                .collect();
+            lints.push(Self::report(&shown, &subject, &verb_text, verb_token));
+        }
+    }
+
     /// Which form the subject wants, spelled out for the message.
     fn wanted(features: &Features) -> &'static str {
         use crate::language::morphology::{NumberSet, PersonSet};
@@ -929,11 +1024,14 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
                 // The placeholder *es* hands agreement to the noun behind the
                 // verb, but no noun takes the second person: *Es lauft gut* has
                 // *es* as its subject whatever follows.
-                let placeholder_cannot_apply = subject_text.eq_ignore_ascii_case("es")
-                    && plain_stem_present(&verb_text).is_some();
+                // And no noun takes the first person either: *Es bin immer
+                // wieder gut*. So *es* is the third person of either number,
+                // which leaves *Es sind Kinder* alone.
+                let placeholder = subject_text.eq_ignore_ascii_case("es");
                 let Some(subject) = subject_pronoun(&subject_text).or_else(|| {
-                    placeholder_cannot_apply
-                        .then(|| Features::new(PersonSet::THIRD, NumberSet::SINGULAR))
+                    placeholder.then(|| {
+                        Features::new(PersonSet::THIRD, NumberSet::SINGULAR | NumberSet::PLURAL)
+                    })
                 }) else {
                     continue;
                 };
@@ -951,6 +1049,7 @@ impl<T: Dictionary> Linter for GermanSubjectVerbAgreement<T> {
                 ));
             }
 
+            self.lint_inverted_subjects(&tokens, document, &mut lints);
             self.lint_subordinate_clauses(&tokens, document, &mut lints);
             self.lint_noun_phrase_subjects(&tokens, document, &mut lints);
         }
@@ -1254,6 +1353,37 @@ mod tests {
     use crate::language::german::spell::combined_german_dictionary;
     use crate::linting::Linter;
 
+    #[test]
+    fn a_pronoun_behind_the_verb_is_checked() {
+        for text in [
+            "Dann hat ich sofort die Rechnung bezahlt.",
+            "Irgendwann besteht ich darauf.",
+            "Den Preis hält ich für überzogen.",
+            "Hat du heute Zeit?",
+            "Es bin immer wieder gut.",
+        ] {
+            assert_eq!(lint_count(text), 1, "{text}");
+        }
+        for text in [
+            "Dann habe ich sofort die Rechnung bezahlt.",
+            "Hast du heute Zeit?",
+            "Morgen kommt er wieder.",
+            "Es ist immer wieder gut.",
+            "Es sind viele Kinder gekommen.",
+            "Um das zu erreichen ich weiß nicht wie.",
+            "Ehrlich gesagt ich habe keine Ahnung.",
+            "Gestern sahen wir einen Film.",
+            "Das weiß man nie.",
+            "Ich bin es.",
+            "Ich habe nicht begriffen, wie enttäuscht du warst.",
+            "Seid du und Maria Schwestern?",
+            "Ich weiß du magst keine Rockmusik.",
+            "Das dauert so lange wir warten.",
+        ] {
+            assert_eq!(lint_count(text), 0, "{text}");
+        }
+    }
+
     fn lint_count(text: &str) -> usize {
         let dictionary = combined_german_dictionary();
         let document = Document::new(text, &PlainGerman, &dictionary);
@@ -1352,7 +1482,8 @@ mod tests {
     /// noun cannot break that tie, so those phrases are left alone.
     #[test]
     fn an_ambiguous_determiner_is_not_checked() {
-        assert_eq!(lint_count("Diese Regeln gilt überall."), 0);
+        // *Regeln* settles it, though: a feminine noun in *-n* is a plural.
+        assert_eq!(lint_count("Diese Regeln gilt überall."), 1);
         assert_eq!(lint_count("Die Frau spielt im Garten."), 0);
         assert_eq!(lint_count("Die Lehrerin kommt morgen."), 0);
     }
