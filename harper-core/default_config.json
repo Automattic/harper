@@ -5027,6 +5027,13 @@
 						},
 						{
 							"Bool": {
+								"name": "HighLowStandards",
+								"state": true,
+								"label": "High/Low Standards"
+							}
+						},
+						{
+							"Bool": {
 								"name": "HopHope",
 								"state": true,
 								"label": "Hop Hope"
