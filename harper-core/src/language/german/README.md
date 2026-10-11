@@ -2122,7 +2122,17 @@ The prose corpus, the school text and the older batteries are unchanged.
 `verb_number` barely moved: most of its misses are the `-en` form behind a
 singular subject, which the rule refuses for reasons of its own, and subjects
 that are names (*Iridium haben*). The battery for this round's two classes is
-`treebank_gender.tsv`.
+`treebank_gender.tsv`:
+
+| class | Harper | LanguageTool | false alarms (H / LT) |
+|---|---|---|---|
+| gender from the treebank | 8/10 | 9/10 | 0/10 / 0/10 |
+| subject with a rival | 3/5 | 0/5 | 0/5 / 0/5 |
+
+Harper's misses: *Ihren Adresse*, where a possessive is not checked for gender,
+and *der Orchester* behind a comma in mid-sentence. In the subject class,
+*der Lehrer* could be a genitive plural, and *dieser Vertrag regeln* is the
+`-en` form the rule refuses behind a demonstrative.
 
 ## The fused spellings the reform allows
 
