@@ -106,6 +106,9 @@ def swap(t, change, keep):
     cands = collections.Counter()
     for (form, feats), n in inv[(t['lemma'].lower(), t['upos'])].items():
         f = dict(feats)
+        # *'s* for *das* is colloquial, not a case error.
+        if form.startswith("'"):
+            continue
         if all(f.get(k) == want.get(k) for k in list(change) + keep) and form.lower() != t['form'].lower():
             own = tuple(sorted(t['feats'].items()))
             # the new spelling must not also be a right form here

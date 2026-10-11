@@ -501,9 +501,17 @@ pub fn could_be_a_dative_plural(noun: &str) -> bool {
         return true;
     }
 
-    // `-n` is the ending itself; `-s` is the `-s` plural, which takes none; and
-    // `-a` and `-i` are the Latin and Greek plurals, which take none either.
-    lower.ends_with(['n', 's', 'a', 'i'])
+    // `-n` is the ending itself, and it always follows an `e`, or the `r` or
+    // `l` of `-er` and `-el`: *Tischen*, *Kindern*, *Onkeln*. *Mann*, *Sohn*,
+    // *Plan* end in `-n` and are no dative plural (*Männern*, *Söhnen*,
+    // *Plänen*). `-s` is the `-s` plural, which takes none — but not after
+    // another `s`: *Prozess*, *Fluss*. And `-a` and `-i` are the Latin and
+    // Greek plurals, which take none either.
+    ["en", "ern", "eln"]
+        .iter()
+        .any(|ending| lower.ends_with(ending))
+        || (lower.ends_with('s') && !lower.ends_with("ss"))
+        || lower.ends_with(['a', 'i'])
 }
 
 /// Determiner forms that stand on their own as freely as they introduce a noun.

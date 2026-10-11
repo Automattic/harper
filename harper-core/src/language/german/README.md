@@ -1970,6 +1970,52 @@ false-alarm sentences 740 → 740; Falko-MERLIN edits found 3048 → 3056,
 corrected sentences with a lint 429 → 429; treebank: two new reports, both
 real errors. School text, archived corpus and the manual sets unchanged.
 
+### Eighth round: more gaps from the treebank injection
+
+The injection's other classes, read context by context:
+
+* **The pronoun behind the verb** (`verb_person`, *pron:V1*: 0.7 %). The
+  agreement rule only looked from the subject to the verb. It now checks
+  *ich*, *du*, *er*, *wir*, *man* right behind a finite verb — *Dann hat ich
+  sofort …*, *Den Preis hält ich für überzogen* — but not behind an *-en*
+  form, a participle or an adjective (*wie enttäuscht du warst*), not before
+  *und* (*Seid du und Maria …*), and not when the pronoun's own verb follows
+  (*Ich weiß du magst …*). *es* in the front field is the third person of
+  either number, so *Es bin gut* is reported and *Es sind Kinder* is not. The
+  strong forms marked `%` (*hält*, *gilt*) get their person from the ending,
+  which also brings in *Diese Regeln gilt*. 0.7 % → 22 %; `verb_person` 12 % →
+  24 %.
+* **The strong declension after a preposition** (`adj_ending`, no
+  determiner: 0–2 %). `GermanAdjectiveForm` now checks an adjective between a
+  dative or accusative preposition and its noun: *mit gleiche Münze*, *nach
+  eigene Angaben*, *bei guten Preis*, *für spezieller Kunden*. The endings
+  come from the case and, when the dictionary is sure, the noun's gender and
+  number; *-e* behind a dative and *-er*, *-em* behind an accusative are
+  wrong whatever the noun. Left out: two-way prepositions, *zu* (*zu große
+  Bedeutung*), *per*, *pro*, *ab* (*per einstweiliger Verfügung*), *ohne*,
+  *um*, *statt*, *weniger*, a suspended compound and the form of address
+  (*aus, liebe Daniela*). Dative 0.5 % → 33 %, accusative 2 % → 17 %. On the
+  treebank it finds five real errors (*bei guten Preis-Leistungs-Verhältnis*,
+  *mit direkten Blick*, *nach datenschutzrelevante Aspekten*); the two false
+  ones are *nach vollbrachtem Tagewerke* (an archaic dative *-e*) and *mit
+  purer Power*, whose entry was masculine and is feminine now.
+* **A noun in `-n` is not always a possible dative plural.**
+  `could_be_a_dative_plural` read every *-n* that way, so *mit der Mann* and
+  *mit den Sohn* kept a dative reading and went unreported. A dative plural
+  ends in *-en*, *-ern* or *-eln*; and an `-s` plural never in *-ss*
+  (*Prozess*).
+* `NounGender::is_dative_plural`: *Kindern*, *Büchern* (an `&` plural plus
+  *-n*; a base in *-e* only with a known non-feminine gender, since *Akten*
+  is *Akte*'s plural). It makes a plural for the adjective endings and keeps
+  *Vielen wahren Büchern geht es …* from being read as a plural subject.
+
+The injection script skips *'s* for *das* and requires mood and tense on a
+swapped verb, which had produced correct subjunctives (*wir kämen*).
+
+Measured against the seventh round: LanguageTool errors found 1810 → 1830,
+false-alarm sentences 740 → 740; Falko-MERLIN edits found 3056 → 3088,
+corrected sentences with a lint 429 → 429.
+
 ## The fused spellings the reform allows
 
 *in Frage* / *infrage*, *mit Hilfe* / *mithilfe*, *auf Grund* / *aufgrund*. Both

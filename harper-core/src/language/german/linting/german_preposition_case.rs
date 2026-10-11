@@ -730,6 +730,11 @@ mod tests {
         assert_eq!(fixes("Er kam mit seinen Bruder zum Essen."), ["seinem"]);
         assert_eq!(fixes("Wir fahren mit den Zug nach Berlin."), ["dem"]);
         assert_eq!(fixes("Er arbeitet bei den Bäcker."), ["dem"]);
+        // A noun in `-n` is no dative plural unless it ends in *-en*, *-ern*
+        // or *-eln*: *Männern*, not *Mann*.
+        assert_eq!(fixes("Wir sprechen mit der Mann."), ["dem"]);
+        assert_eq!(fixes("Er kam mit den Sohn."), ["dem"]);
+        assert_eq!(fixes("Wir beginnen mit der Prozess."), ["dem"]);
     }
 
     /// A plural noun without its *-n* behind a determiner that is a fine

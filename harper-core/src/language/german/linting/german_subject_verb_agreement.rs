@@ -411,6 +411,12 @@ impl<T: Dictionary> GermanSubjectVerbAgreement<T> {
         phrase: &Phrase,
     ) -> Option<NumberSet> {
         let determiner = Self::word_at(tokens, phrase.open, document);
+        // *Vielen wahren Büchern geht es …*: a dative plural is no subject.
+        if trusted_head(document, tokens, phrase)
+            .is_some_and(|head| self.nouns.is_dative_plural(&head))
+        {
+            return None;
+        }
         if is_plural_only_quantifier(&determiner) {
             return Some(NumberSet::PLURAL);
         }

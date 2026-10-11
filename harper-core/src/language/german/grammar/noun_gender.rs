@@ -144,6 +144,9 @@ impl NounGender {
         if PLURAL_FORMS.contains(&lower) && !could_be_a_dative_plural(head) {
             return true;
         }
+        if self.is_dative_plural(head) {
+            return true;
+        }
         if lower.chars().count() < 5 || !head.chars().next().is_some_and(char::is_uppercase) {
             return false;
         }
@@ -172,6 +175,27 @@ impl NounGender {
                         _ => false,
                     }
             })
+        })
+    }
+
+    /// Is `head` the dative plural of a plural marked `&`? *Kindern* ←
+    /// *Kinder*, *Jahren* ← *Jahre*. A phrase headed by one is no subject.
+    ///
+    /// A base in *-er* or *-el* settles it (*Kindern*, *Büchern*). One in *-e*
+    /// spells the plural of a feminine noun as well — *Akten* is *Akte*'s,
+    /// not the dative of *Akt*'s plural — so its gender has to be known and
+    /// not feminine (*Freunden*, *Jahren*).
+    pub fn is_dative_plural(&self, head: &str) -> bool {
+        head.strip_suffix('n').is_some_and(|plural| {
+            let lower = plural.to_lowercase();
+            if !PLURAL_FORMS.contains(&lower) {
+                return false;
+            }
+            if lower.ends_with("er") || lower.ends_with("el") {
+                return true;
+            }
+            let genders = self.genders(plural);
+            !genders.is_empty() && !genders.contains(GenderSet::from(Gender::Feminine))
         })
     }
 

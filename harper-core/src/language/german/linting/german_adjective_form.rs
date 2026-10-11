@@ -9,9 +9,10 @@ use crate::{
     },
     language::german::grammar::noun_gender::NounGender,
     language::german::grammar::noun_phrase::lowercase_of,
+    language::german::grammar::prepositions::preposition_government,
     language::german::linting::german_relative_clause_comma::GermanRelativeClauseComma,
     language::german::spell::lexical_classes::NUMERALS,
-    language::morphology::{MorphologyExt, NumberSet},
+    language::morphology::{CaseSet, Gender, MorphologyExt, NumberSet},
     linting::{Lint, LintKind, Linter, Suggestion},
     spell::Dictionary,
 };
@@ -417,6 +418,171 @@ impl GermanAdjectiveForm {
         })
     }
 
+    /// The strong endings a case allows a noun of this gender and number:
+    /// with no determiner the adjective carries the case itself. An axis the
+    /// dictionary does not settle allows every ending it could have.
+    fn strong_endings(&self, case: CaseSet, noun: &str) -> Vec<&'static str> {
+        let known = self.nouns.gender_of(noun);
+        let plural = self.nouns.is_surely_plural(noun);
+        let singular = known.is_some_and(|(_, surely_singular)| surely_singular);
+        let gender = known.map(|(gender, _)| gender);
+        let mut endings = Vec::new();
+        let mut add = |ending: &'static str| {
+            if !endings.contains(&ending) {
+                endings.push(ending);
+            }
+        };
+        if !plural {
+            let genders: &[Gender] = match gender {
+                Some(Gender::Masculine) => &[Gender::Masculine],
+                Some(Gender::Feminine) => &[Gender::Feminine],
+                Some(Gender::Neuter) => &[Gender::Neuter],
+                None => &[Gender::Masculine, Gender::Feminine, Gender::Neuter],
+            };
+            for gender in genders {
+                add(match (case == CaseSet::DATIVE, gender) {
+                    (true, Gender::Feminine) => "er",
+                    (true, _) => "em",
+                    (false, Gender::Masculine) => "en",
+                    (false, Gender::Feminine) => "e",
+                    (false, Gender::Neuter) => "es",
+                });
+            }
+        }
+        if !singular {
+            add(if case == CaseSet::DATIVE { "en" } else { "e" });
+        }
+        endings
+    }
+
+    /// *mit gleiche Münze*, *ohne spezieller Support*, *nach eigene Angaben*:
+    /// an adjective with no determiner behind a preposition, where it has to
+    /// show the case itself, in the strong declension.
+    ///
+    /// Only prepositions that govern the dative or the accusative alone; a
+    /// two-way one (*in alte Muster*, *in alten Mustern*) allows both. Not
+    /// *ohne*, *um*, *statt*, whose phrase may belong to an infinitive behind
+    /// it, nor a postposition behind a noun (*meiner Meinung nach*). The
+    /// adjective must be followed by its noun and the noun must end the
+    /// phrase, as in the determiner rule above. The gender and number of the
+    /// noun narrow the endings when the dictionary is sure of them, and *-e*
+    /// behind a dative or *-em* and *-er* behind an accusative are wrong
+    /// whatever the noun.
+    fn strong_ending_after_preposition(
+        &self,
+        words: &[&Token],
+        at: usize,
+        document: &Document,
+    ) -> Option<Lint> {
+        let preposition = lowercase_of(words[at], document);
+        // *zu* before an adjective is the degree word (*zu große Bedeutung*,
+        // *nicht zu unterschätzendes Problem*), and *per*, *pro* and *ab* take
+        // the dative as readily as their accusative (*per einstweiliger
+        // Verfügung*, *ab nächstem Monat*).
+        if matches!(preposition.as_str(), "zu" | "per" | "pro" | "ab") {
+            return None;
+        }
+        let government = preposition_government(&preposition)?;
+        let case = government.cases;
+        if (case != CaseSet::DATIVE && case != CaseSet::ACCUSATIVE)
+            || government.also_an_infinitive_clause
+            || government.also_a_conjunction
+        {
+            return None;
+        }
+        if government.also_a_postposition
+            && at
+                .checked_sub(1)
+                .is_some_and(|i| i > 0 && Self::capitalized(words[i], document))
+        {
+            return None;
+        }
+        let adjective = words.get(at + 1)?;
+        let noun_token = words.get(at + 2)?;
+        if !matches!(adjective.kind, TokenKind::Word(_))
+            || !matches!(noun_token.kind, TokenKind::Word(_))
+            || Self::capitalized(adjective, document)
+            || !Self::capitalized(noun_token, document)
+        {
+            return None;
+        }
+        let word = lowercase_of(adjective, document);
+        if determiner_readings(&word).is_some()
+            || INDECLINABLE.contains(&word.as_str())
+            || ADVERBS_IN_E.contains(&word.as_str())
+            || NUMERALS.contains(&word)
+            // The comparative of *wenig* and *viel* is not declined.
+            || matches!(word.as_str(), "weniger" | "mehr")
+            || !self.is_adjective(&word)
+            || self
+                .metadata(&word)
+                .is_some_and(|m| m.preposition || m.is_determiner())
+        {
+            return None;
+        }
+        let ending = ENDINGS.iter().find(|ending| word.ends_with(*ending))?;
+        let stem = &word[..word.len() - ending.len()];
+        // A declinable adjective: *hoh-* is *hoch*'s stem, so the *-en* form
+        // is asked rather than the stem.
+        if stem.chars().count() < 3 || !self.is_adjective(&format!("{stem}en")) {
+            return None;
+        }
+
+        // The head: the last part of a hyphenated compound, and nothing
+        // capitalized or hyphenated behind it.
+        let mut head_at = at + 2;
+        while words.get(head_at + 1).is_some_and(|t| t.kind.is_hyphen())
+            && words
+                .get(head_at + 2)
+                .is_some_and(|t| matches!(t.kind, TokenKind::Word(_)))
+        {
+            head_at += 2;
+        }
+        if words.get(head_at + 1).is_some_and(|next| {
+            matches!(next.kind, TokenKind::Word(_)) && Self::capitalized(next, document)
+        }) {
+            return None;
+        }
+        // *für private Konsum-, Info- und …*: a suspended compound, whose
+        // head comes later.
+        if words.get(head_at + 1).is_some_and(|t| t.kind.is_hyphen()) {
+            return None;
+        }
+        let noun = document.get_span_content_str(&words[head_at].span);
+        // The noun has to be one: not a name the dictionary lacks, and not
+        // the one behind the form of address that follows a verb's particle —
+        // *Wie siehst du denn aus liebe Daniela?*.
+        if !self.metadata(&noun).is_some_and(|m| m.is_noun()) || stem == "lieb" {
+            return None;
+        }
+        let allowed = self.strong_endings(case, &noun);
+        if allowed.contains(ending) {
+            return None;
+        }
+
+        let suggestions: Vec<Suggestion> = allowed
+            .iter()
+            .map(|wanted| format!("{stem}{wanted}"))
+            .filter(|form| self.nouns.dictionary().contains_word_str(form))
+            .map(|form| Suggestion::ReplaceWith(form.chars().collect()))
+            .collect();
+        Some(Lint {
+            span: adjective.span,
+            lint_kind: LintKind::Agreement,
+            suggestions,
+            priority: 31,
+            message: format!(
+                "Ohne Artikel trägt das Adjektiv nach »{preposition}« den {}: »-{}«, nicht »{word}«.",
+                if case == CaseSet::DATIVE {
+                    "Dativ"
+                } else {
+                    "Akkusativ"
+                },
+                allowed.join("« oder »-")
+            ),
+        })
+    }
+
     /// *Der Abgeordneter*, *Ein Angestellte*: a nominalized adjective whose
     /// ending the determiner rules out.
     ///
@@ -569,6 +735,10 @@ impl Linter for GermanAdjectiveForm {
                 }
                 if let Some(lint) = self.undeclined_adjective(&words, at, document) {
                     lints.push(lint);
+                } else if let Some(lint) =
+                    self.strong_ending_after_preposition(&words, at, document)
+                {
+                    lints.push(lint);
                 } else if let Some(lint) = self.nominalized_adjective(&words, at, document) {
                     lints.push(lint);
                 }
@@ -696,6 +866,43 @@ mod tests {
         );
         assert_eq!(reported("Der Angestellter streikt."), ["Angestellter"]);
         assert_eq!(reported("Ein Angestellte streikt."), ["Angestellte"]);
+    }
+
+    #[test]
+    fn a_strong_ending_after_a_preposition_is_checked() {
+        for (text, word) in [
+            ("Er zahlt mit gleiche Münze zurück.", "gleiche"),
+            ("Nach eigene Angaben sind alle zufrieden.", "eigene"),
+            ("Er arbeitet für spezieller Kunden.", "spezieller"),
+            ("Er spielt mit kleiner Kindern.", "kleiner"),
+            ("Das ist für gutes Wein gedacht.", "gutes"),
+            ("Er kam aus kleine Verhältnisse.", "kleine"),
+            ("Sie kämpfen gegen hohem Druck.", "hohem"),
+        ] {
+            assert_eq!(reported(text), [word], "{text}");
+        }
+        for text in [
+            "Nach eigenen Angaben sind alle zufrieden.",
+            "Er zahlt mit gleicher Münze zurück.",
+            "Mit freundlichen Grüßen",
+            "Das ist von großer Bedeutung.",
+            "Bei gutem Wetter gehen wir.",
+            "Das geschah durch eigene Schuld.",
+            "Er kämpft gegen hohen Druck.",
+            "Sie wohnt in alte Häuser.",
+            "Wir fahren mit vielen Freunden.",
+            "Grüße aus aller Welt.",
+            "Meiner Meinung nach kleine Fehler sind egal.",
+            "Ohne große Probleme zu haben, kam er an.",
+            "Seit langem warten wir.",
+            "Mit dem neuen Auto fahren wir.",
+            "Das gilt für alle Fälle.",
+            "Er spricht mit Deutsche Bank.",
+            "Er kommt mit weniger Platz aus.",
+            "Wie siehst du denn aus liebe Daniela?",
+        ] {
+            assert!(reported(text).is_empty(), "{text}: {:?}", reported(text));
+        }
     }
 
     #[test]
