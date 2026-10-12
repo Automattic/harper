@@ -101,21 +101,19 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         use std::sync::Arc;
         use harper_core::spell::rune::parse_word_list;
         use harper_core::language::german::spell::compound_aware_dict::CompoundAwareDictionary;
-        use harper_core::language::german::spell::compound_checker::CompoundChecker;
-        
-        // Parse the word list for the compound checker
+        use harper_core::language::german::spell::compact_dict::expand_in_blocks;
+        use harper_core::spell::rune::AttributeList;
+
+        // Parse the word list once: it feeds both the dictionary and the compound checker.
         let word_list = parse_word_list(&dict_content)
             .map_err(|e| format!("❌ Failed to parse word list: {}", e))?;
-        let compound_checker = CompoundChecker::new(&word_list);
+        let attr_list = AttributeList::parse(&annotations_content)
+            .map_err(|e| format!("❌ Failed to parse annotations: {}", e))?;
 
-        // Create the base dictionary with affix expansion
-        let base_dict: Arc<harper_core::spell::FstDictionary> = Arc::new(
-            MutableDictionary::from_rune_files(&dict_content, &annotations_content)
-                .map_err(|e| format!("❌ Failed to create base dictionary: {}", e))?
-                .into(),
-        );
+        // The same compact dictionary the German module builds at runtime.
+        let base_dict = Arc::new(expand_in_blocks(&attr_list, &word_list));
 
-        Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
+        Arc::new(CompoundAwareDictionary::from_word_list(base_dict, &word_list))
     } else {
         // For other languages, use simple dictionary loading
         // The from_rune_files function still applies affix expansion, which is sufficient for testing.
