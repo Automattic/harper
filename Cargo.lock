@@ -2731,6 +2731,7 @@ dependencies = [
  "unicode-blocks",
  "unicode-script",
  "unicode-width",
+ "web-time",
  "zip 8.6.0",
 ]
 

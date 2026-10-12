@@ -38,6 +38,7 @@ zip = { version = "8.6.0", default-features = false, features = ["deflate"] }
 regex = "1.13.1"
 boxcar = { version = "0.2.14", optional = true }
 flate2 = "1.1.9"
+web-time = "1.1.0"
 
 [build-dependencies]
 toml = "1.1"
