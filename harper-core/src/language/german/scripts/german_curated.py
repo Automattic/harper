@@ -312,6 +312,21 @@ z. d. u. a. o. ä. v. m. vgl. usw. etc. ca. evtl. ggf. sog. ebd. ders. dies. ff.
 # Strong and irregular verbs: infinitive, preterite, past participle and, where the vowel changes,
 # the third person singular present. Used for verbs whose paradigm Wikidata does not list.
 STRONG_VERBS = """
+quellen quoll gequollen quillt
+schmelzen schmolz geschmolzen schmilzt
+schwellen schwoll geschwollen schwillt
+scheren schor geschoren
+weichen wich gewichen
+gären gor gegoren
+belaufen belief belaufen beläuft
+verschlingen verschlang verschlungen
+überlassen überließ überlassen überlässt
+erlöschen erlosch erloschen erlischt
+erstehen erstand erstanden
+befahren befuhr befahren befährt
+verschlagen verschlug verschlagen verschlägt
+vergären vergor vergoren
+verwachsen verwuchs verwachsen verwächst
 backen backte gebacken bäckt
 befehlen befahl befohlen befiehlt
 beginnen begann begonnen
@@ -492,11 +507,50 @@ Indices Matrizen Zyklen Genera Species Opera Tempora Modi Casus Foci Radii Nucle
 
 # Common adjectives Wikidata has no lexeme for.
 EXTRA_ADJECTIVES = """
-modern komplex rein grob schlimm ober inner äußer hinter vorder mittler
+modern komplex rein grob schlimm ober inner äußer hinter vorder mittler nördlich südlich östlich westlich
+""".split()
+
+
+# Adjectives of countries, regions, peoples and cities, which Wikidata has few lexemes for. Declined like
+# any adjective, never graded.
+GEOGRAPHIC_ADJECTIVES = """
+afghanisch ägyptisch albanisch algerisch amerikanisch andalusisch angolanisch anhaltisch arabisch argentinisch
+armenisch asiatisch assyrisch äthiopisch australisch aserbaidschanisch bahrainisch bayerisch belgisch bengalisch
+bolivianisch bosnisch brandenburgisch brasilianisch britannisch britisch bulgarisch burgenländisch burgundisch
+burmesisch chilenisch chinesisch costa-ricanisch dänisch dominikanisch ecuadorianisch elsässisch englisch
+eritreisch estnisch europäisch fränkisch französisch friesisch georgisch ghanaisch griechisch guatemaltekisch
+hannoversch hannoveranisch hawaiianisch hebräisch hessisch hispanisch holländisch indisch indianisch indonesisch
+irakisch iranisch irisch isländisch israelisch italienisch jamaikanisch japanisch jemenitisch jordanisch
+jugoslawisch jüdisch kalabrisch kalifornisch kambodschanisch kamerunisch kanadisch kanaanäisch karibisch kärntnerisch
+kastilisch katalanisch kenianisch kolumbianisch kongolesisch koreanisch korsisch kroatisch kubanisch kurdisch
+kuwaitisch laotisch lateinamerikanisch lettisch libanesisch libysch litauisch luxemburgisch madagassisch
+malaysisch malaiisch maltesisch marokkanisch mauretanisch mauritisch mazedonisch mecklenburgisch mexikanisch
+moldauisch monegassisch mongolisch montenegrinisch mosambikanisch mährisch nepalesisch neuseeländisch
+nicaraguanisch niederländisch nigerianisch nordafrikanisch nordamerikanisch nordirisch norwegisch oberschlesisch
+osmanisch österreichisch ostfriesisch ostpreußisch pakistanisch palästinensisch panamaisch paraguayisch persisch
+peruanisch pfälzisch philippinisch piemontesisch polnisch polynesisch pommersch portugiesisch preußisch
+puerto-ricanisch rheinisch rheinländisch rumänisch russisch sächsisch salvadorianisch sardisch saudisch
+schlesisch schottisch schwäbisch schwedisch schweizerisch senegalesisch serbisch sibirisch sizilianisch
+skandinavisch slowakisch slowenisch somalisch spanisch sudanesisch südafrikanisch südamerikanisch südkoreanisch
+syrisch tadschikisch taiwanisch tamilisch tansanisch thailändisch thüringisch tibetisch timoresisch tirolisch
+tschechisch tschetschenisch tunesisch türkisch turkmenisch ukrainisch ungarisch uruguayisch usbekisch
+venezolanisch vietnamesisch walisisch wallonisch weißrussisch westfälisch westindisch zypriotisch
+bergisch bosnisch-herzegowinisch herzegowinisch toskanisch lombardisch venezianisch neapolitanisch
+sizilisch istrisch dalmatinisch galizisch kaschubisch masurisch ruthenisch walachisch siebenbürgisch
+pannonisch thrakisch makedonisch phönizisch punisch etruskisch keltisch germanisch slawisch baltisch
+mesopotamisch babylonisch persisch ottomanisch byzantinisch römisch griechisch attisch ionisch dorisch
+mongolisch tatarisch usbekisch kasachisch kirgisisch jesidisch alevitisch maronitisch koptisch
+nordrhein-westfälisch niedersächsisch schleswig-holsteinisch rheinland-pfälzisch sachsen-anhaltisch
+hamburgisch bremisch berlinerisch münchnerisch kölnisch düsseldorferisch frankfurterisch
 """.split()
 
 # Words whose lower-case spelling is the verb and never the noun that shares the letters (ist / Ist).
-LOWERCASE_ONLY = ["ist", "dürfen", "können", "sollen", "wollen", "müssen", "mögen"]
+LOWERCASE_ONLY = [
+    "ist", "dürfen", "können", "sollen", "wollen", "müssen", "mögen",
+    # adverbs, adjectives and numerals that share their letters with a noun: des Abends, das Gut, das Los, das Paar
+    "abends", "mittags", "morgens", "nachts", "montags", "dienstags", "mittwochs", "donnerstags", "freitags",
+    "samstags", "sonntags", "brutto", "netto", "gut", "los", "mal", "paar", "rum", "top", "zuwenig",
+]
 
 # Noun lexemes whose letters are a verb form first (*Schrieb* is colloquial; *schrieb* is the preterite).
 NOT_NOUNS = {"Schrieb"}
@@ -544,7 +598,12 @@ Jansen Schütz Steiner Lenz Kramer Fischer Huber Wimmer Gruber Bachmann Mueller
 """.split()
 
 # Regular verbs Wikidata has no lexeme for.
-EXTRA_VERBS = ["eichen"]
+EXTRA_VERBS = [
+    "eichen", "pflanzen", "platzen", "schrecken", "schulen", "sprengen", "säumen", "zeugen", "picken", "rahmen",
+    "puffen", "wallen", "walzen", "tauen", "keilen", "filzen", "drillen", "dichten", "hitzen", "kränzen", "lichten",
+    "petzen", "pflichten", "planken", "beschweren", "prangern", "reihen", "reichern", "einreihen", "umdrohen",
+    "hydrolysieren", "schweißen", "rahmen", "puffen",
+]
 
 # Forms Wikidata does not list under the verb they belong to.
 EXTRA_VERB_FORMS = ["worden"]
@@ -578,4 +637,4 @@ Steiermark Burgenland Bukowina Siebenbürgen Böhmen Mähren Schlesien Pommern O
 
 # Verbs with a weak and a strong paradigm (*erschreckt* transitive, *erschrickt* intransitive): the weak one is
 # the one Harper checks against.
-WEAK_AND_STRONG = {"erschrecken"}
+WEAK_AND_STRONG = {"erschrecken", "senden", "schaffen", "bewegen", "hängen", "löschen", "wiegen", "saugen", "melken", "weben", "gären", "schleifen"}
