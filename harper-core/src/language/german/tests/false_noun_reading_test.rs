@@ -1,5 +1,5 @@
 //! German capitalizes its nouns, so a lower-case entry whose **capitalized**
-//! form igerman98 does not list is not a noun — whatever corpus mining tagged
+//! form the Wikidata lexemes do not attest is not a noun — whatever corpus mining tagged
 //! it. `allenfalls`, `gleichwohl`, `wenngleich`, `mithin`, `desto`, `derart`,
 //! `hierdurch`, `diejenige` and tens of thousands of finite verb forms all
 //! carried `~~NhY` or `~~NXh`, and `GermanNounCapitalization` flags anything
@@ -8,7 +8,7 @@
 //! The archived Wikipedia corpus barely shows this: it is biographies and
 //! places, where such words hardly occur. On a corpus of abstract German prose —
 //! grammar, law, philosophy, mathematics — taking the reading off the entries
-//! igerman98 can vouch for removed 1001 of 1574 capitalization lints. `harper-core/src/language/german/scripts/fetch_german_corpus.py` is what fetches that text.
+//! the lexeme data can vouch for removed 1001 of 1574 capitalization lints.
 //!
 //! Removing `N` is not enough: the noun-plural affixes `X`, `Y`, `a`, `b` and
 //! `0` each carry a plural-noun reading of their own.
@@ -87,7 +87,7 @@ mod tests {
     /// Words that really are nouns keep their reading, however they are stored.
     /// A slice of `dictionary.dict` holds capitalized nouns in lower case.
     ///
-    /// The oracle is igerman98, so its gaps are inherited: it has no `Mithilfe`,
+    /// The oracle is the lexeme data, so its gaps are inherited: it has no `Mithilfe`,
     /// and `mithilfe` therefore lost a noun reading it is entitled to. That is
     /// the price of having an oracle at all, and it is the right way round --
     /// the word is still spelled correctly, it just no longer demands a capital

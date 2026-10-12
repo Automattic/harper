@@ -5,11 +5,11 @@
 //! `Professorin` were all reported as misspellings while their masculine forms
 //! were in the dictionary.
 //!
-//! The rule is hunspell de_DE's `SFX F`, split across two Harper flags the way
+//! The rule is split across two Harper flags the way
 //! `-ung`/`-ungen` are split across `7` and `8`: `K` builds the singular and `L`
 //! the plural, so the plural forms carry a plural reading rather than borrowing
-//! the singular's. `harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from F --to KL` puts them
-//! on the entries igerman98 marks, verifying every generated form first.
+//! the singular's. `build_german_dictionary.py` puts them on the entries whose
+//! generated forms Wikidata attests.
 //!
 //! `K` and `L` were previously an uppercase compound `-n` and `-en` interfix.
 //! No entry carried either, and the compound checker never read them — it reads
@@ -110,8 +110,8 @@ mod tests {
         }
     }
 
-    /// German also writes the derivation with an interior capital. igerman98
-    /// lists those spellings, so Harper accepts them too.
+    /// German also writes the derivation with an interior capital.
+    /// Harper accepts those spellings too.
     #[test]
     fn interior_capital_spelling_is_accepted() {
         let dict = curated_german_dictionary();
@@ -119,7 +119,7 @@ mod tests {
         for word in ["LehrerIn", "LehrerInnen", "MinisterIn"] {
             assert!(
                 dict.get_word_metadata_str(word).is_some(),
-                "'{word}' is the interior-capital spelling and igerman98 lists it"
+                "'{word}' is the interior-capital spelling and must be accepted"
             );
         }
     }

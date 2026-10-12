@@ -58,7 +58,7 @@
 			"rename_ok": true
 		},
 		"G": {
-			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Mirrors hunspell de_DE SFX X. Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'. Person and number: second person singular, the one unambiguous present ending German has. The last replacement serves the bare-stem entries (denk -> denkst); a stem in d, t or a sibilant takes -est or -t and is left out.",
+			"#": "Verb present 2nd person -st (du lernst, du arbeitest). Moved off 'h', which is the compound-capability marker sitting on nearly every noun: with the affix there, every one of them also generated 'arzneist'. Person and number: second person singular, the one unambiguous present ending German has. The last replacement serves the bare-stem entries (denk -> denkst); a stem in d, t or a sibilant takes -est or -t and is left out.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -160,7 +160,7 @@
 			"rename_ok": true
 		},
 		"H": {
-			"#": "Bare '-s' on a noun that is not thereby a plural: the genitive of a proper name (Oesterreichs Hauptstadt, Goethes Werke, Peters Buch) and the '-s' of names that simply end in one. Mirrors hunspell de_DE SFX S. Deliberately not 'b', which is the same surface rule but declares the result a plural noun and the base one too -- true for 'Autos', wrong for 'Oesterreichs'. 'H' previously held an uppercase compound marker with no interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'h' -- see the collision table in README.md.",
+			"#": "Bare '-s' on a noun that is not thereby a plural: the genitive of a proper name (Oesterreichs Hauptstadt, Goethes Werke, Peters Buch) and the '-s' of names that simply end in one. Deliberately not 'b', which is the same surface rule but declares the result a plural noun and the base one too -- true for 'Autos', wrong for 'Oesterreichs'. 'H' previously held an uppercase compound marker with no interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'h' -- see the collision table in README.md.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -204,7 +204,7 @@
 			"rename_ok": true
 		},
 		"K": {
-			"#": "Feminine derivation '-in' (Movierung): Lehrer -> Lehrerin, Biologe -> Biologin, Arzt -> Aerztin is irregular and stays a separate entry. Mirrors the singular half of hunspell de_DE SFX F, including the interior-capital spelling German writes as LehrerIn. The plural is on 'L'. 'K' previously held an uppercase compound '-n' interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'k' -- see the collision table in README.md.",
+			"#": "Feminine derivation '-in' (Movierung): Lehrer -> Lehrerin, Biologe -> Biologin, Arzt -> Aerztin is irregular and stays a separate entry. Covers the interior-capital spelling German writes as LehrerIn. The plural is on 'L'. 'K' previously held an uppercase compound '-n' interfix that no entry carried and that the compound checker never read -- it reads the lowercase 'k' -- see the collision table in README.md.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -308,7 +308,7 @@
 			"rename_ok": true
 		},
 		"L": {
-			"#": "Feminine plural '-innen', the plural of the 'K' derivation (Lehrerinnen, Biologinnen, and LehrerInnen). Mirrors the plural half of hunspell de_DE SFX F. Split from 'K' for the same reason '8' is split from '7': the plural forms need a plural reading of their own. 'L' previously held an uppercase compound '-en' interfix that no entry carried.",
+			"#": "Feminine plural '-innen', the plural of the 'K' derivation (Lehrerinnen, Biologinnen, and LehrerInnen). Split from 'K' for the same reason '8' is split from '7': the plural forms need a plural reading of their own. 'L' previously held an uppercase compound '-en' interfix that no entry carried.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -440,7 +440,7 @@
 			"rename_ok": true
 		},
 		"s": {
-			"#": "Strong preterite personal endings on a preterite stem (zog -> zogst, zogt, zogen; hielt -> hieltest, hieltet). Mirrors hunspell de_DE SFX Z. Strong verbs ablaut, so the preterite stem cannot be derived from the infinitive: igerman98 lists 'zog' and 'schrieb' as headwords of their own and this flag inflects them. 's' was the last character free in both namespaces -- see the collision table in README.md.",
+			"#": "Strong preterite personal endings on a preterite stem (zog -> zogst, zogt, zogen; hielt -> hieltest, hieltet). Strong verbs ablaut, so the preterite stem cannot be derived from the infinitive: 'zog' and 'schrieb' are headwords of their own and this flag inflects them. 's' was the last character free in both namespaces -- see the collision table in README.md.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -529,7 +529,7 @@
 			"rename_ok": true
 		},
 		"O": {
-			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
+			"#": "Adjective declension -e (feminine/neuter nominative/accusative singular) The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -577,7 +577,7 @@
 			"rename_ok": true
 		},
 		"Q": {
-			"#": "Adjective declension -em (masculine/neuter dative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
+			"#": "Adjective declension -em (masculine/neuter dative singular) The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -630,7 +630,7 @@
 			"rename_ok": true
 		},
 		"R": {
-			"#": "Adjective declension -en (plural and masculine/neuter genitive singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
+			"#": "Adjective declension -en (plural and masculine/neuter genitive singular) The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -683,7 +683,7 @@
 			"rename_ok": true
 		},
 		"S": {
-			"#": "Adjective declension -er (masculine nominative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
+			"#": "Adjective declension -er (masculine nominative singular) The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -736,7 +736,7 @@
 			"rename_ok": true
 		},
 		"T": {
-			"#": "Adjective declension -es (neuter nominative/accusative singular) Mirrors hunspell de_DE SFX A, syncope and all: an adjective in `-el` drops the `e` (akzeptabel -> akzeptable, dunkel -> dunkler), `-uer` contracts (teuer -> teure), and a base form already ending in `e` takes the short ending (böse -> böses). The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
+			"#": "Adjective declension -es (neuter nominative/accusative singular) The single `.` rule this replaces built `akzeptabele` and `dunkele` and never built the forms German actually uses.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -789,7 +789,7 @@
 			"rename_ok": true
 		},
 		"U": {
-			"#": "Adjective comparative, declined (groß -> größere, teuer -> teurere). Mirrors hunspell de_DE SFX C.",
+			"#": "Adjective comparative, declined (groß -> größere, teuer -> teurere).",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -1012,7 +1012,7 @@
 			"rename_ok": true
 		},
 		"W": {
-			"#": "Adjective superlative, declined (groß -> größte, komplex -> komplexesten). Mirrors hunspell de_DE SFX C.",
+			"#": "Adjective superlative, declined (groß -> größte, komplex -> komplexesten).",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -1431,7 +1431,7 @@
 			"rename_ok": true
 		},
 		"a": {
-			"#": "Noun plural -er, with the dative -ern (die Bilder, den Bildern). Mirrors hunspell de_DE SFX R. The umlauted stems are separate entries; the rule itself does not umlaut, which is why the old one-line version generated 'manner' for 'Mann'.",
+			"#": "Noun plural -er, with the dative -ern (die Bilder, den Bildern). The umlauted stems are separate entries; the rule itself does not umlaut, which is why the old one-line version generated 'manner' for 'Mann'.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1507,7 +1507,7 @@
 			"rename_ok": true
 		},
 		"c": {
-			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Mirrors hunspell de_DE SFX D, which simply hangs `d`, `de`, `dem`, `den`, `der`, `des` on any word ending in `n`. Here it attaches to the stem like the other conjugation flags, so `-en` comes off first. Verbs in `-ern` and `-eln` are the exception and keep their `n`: the participle of `entwickeln` is `entwickelnd`, not `entwickelend`, and of `speichern` `speichernd`, not `speicherend`. Getting that wrong put the non-words in the dictionary and left the real forms out of it.",
+			"#": "Verb present participle, declined (lern-end, lern-ende, lern-enden). Here it attaches to the stem like the other conjugation flags, so `-en` comes off first. Verbs in `-ern` and `-eln` are the exception and keep their `n`: the participle of `entwickeln` is `entwickelnd`, not `entwickelend`, and of `speichern` `speichernd`, not `speicherend`. Getting that wrong put the non-words in the dictionary and left the real forms out of it.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2154,7 +2154,7 @@
 			"rename_ok": true
 		},
 		"n": {
-			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what build_german_dictionary.py checks per entry against the nouns and adjectives of the lexeme data. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
+			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what build_german_dictionary.py checks per entry against the nouns and adjectives of the lexeme data. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2294,7 +2294,7 @@
 			"rename_ok": true
 		},
 		"z": {
-			"#": "'-chen' diminutive (das Körperchen, das Röhrchen, des Röhrchens). Mirrors hunspell de_DE SFX M, including the three stems that umlaut before the doubled s (Fass -> Fässchen, Schloss -> Schlösschen, Kuss -> Küsschen). A diminutive is always neuter, whatever the base noun is, which is why the class sets the gender. `z` previously held a neuter-noun property that duplicated `Z` and that no entry carried.",
+			"#": "'-chen' diminutive (das Körperchen, das Röhrchen, des Röhrchens). A diminutive is always neuter, whatever the base noun is, which is why the class sets the gender. `z` previously held a neuter-noun property that duplicated `Z` and that no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2365,7 +2365,7 @@
 			"rename_ok": true
 		},
 		"x": {
-			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry, see harper-core/src/language/german/scripts/build_german_dictionary.py. `x` previously held an imperative-mood property that no entry carried.",
+			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry, see harper-core/src/language/german/scripts/build_german_dictionary.py. `x` previously held an imperative-mood property that no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2501,7 +2501,7 @@
 			"rename_ok": true
 		},
 		"7": {
-			"#": "'-ung' nominalization of a verb. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). Pair with '8' for the plural.",
+			"#": "'-ung' nominalization of a verb. The suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). Pair with '8' for the plural.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -2552,7 +2552,7 @@
 			"rename_ok": true
 		},
 		"8": {
-			"#": "'-ungen', the plural of the '7' nominalization. Mirrors hunspell de_DE SFX J: the suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). A separate flag because `target` metadata is per flag, not per replacement, and the plural has to be marked as one.",
+			"#": "'-ungen', the plural of the '7' nominalization. The suffix attaches to the verb stem, so the infinitive ending is stripped first (entscheiden -> Entscheidung, sammeln -> Sammlung, ändern -> Änderung). A separate flag because `target` metadata is per flag, not per replacement, and the plural has to be marked as one.",
 			"kind": "suffix",
 			"cross_product": false,
 			"replacements": [
@@ -2604,7 +2604,7 @@
 			"rename_ok": true
 		},
 		"9": {
-			"#": "'un-' negating prefix (unangenehm, unbekannt). Mirrors hunspell de_DE PFX U. Cross-product so the prefixed form still takes the base's declension suffixes: un + bekannt -> unbekannt -> unbekannte. A digit because affixes and properties share one namespace and 'U' is already the adjective comparative.",
+			"#": "'un-' negating prefix (unangenehm, unbekannt). Cross-product so the prefixed form still takes the base's declension suffixes: un + bekannt -> unbekannt -> unbekannte. A digit because affixes and properties share one namespace and 'U' is already the adjective comparative.",
 			"kind": "prefix",
 			"cross_product": true,
 			"replacements": [
@@ -2619,7 +2619,7 @@
 			"rename_ok": true
 		},
 		"0": {
-			"#": "Noun genitive -es (des Hauses). Mirrors hunspell de_DE SFX T. Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them. A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnisses`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
+			"#": "Noun genitive -es (des Hauses). Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them. A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnisses`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2937,7 +2937,7 @@
 			}
 		},
 		"*": {
-			"#": "Stem-only marker. The entry is not a word: it exists so the conjugation affixes have something to attach to (`absperr/~~*Vcej` builds `absperrt`, `absperrte`, `absperren`). Without it the bare stem lands in the word list, is accepted as a spelling, and — because every list member may be a compound element — turns up inside misspellings such as `Absiecht` = `ab` + `siecht`. Hunspell calls this `NEEDAFFIX`.",
+			"#": "Stem-only marker. The entry is not a word: it exists so the conjugation affixes have something to attach to (`absperr/~~*Vcej` builds `absperrt`, `absperrte`, `absperren`). Without it the bare stem lands in the word list, is accepted as a spelling, and — because every list member may be a compound element — turns up inside misspellings such as `Absiecht` = `ab` + `siecht`.",
 			"stem_only": true,
 			"metadata": {}
 		},
@@ -2950,7 +2950,7 @@
 			"metadata": {}
 		},
 		"%": {
-			"#": "Strong present marker. The entry is the second or third person singular or the imperative of a strong verb with a changed stem: `gibt`, `nimmst`, `lies`, `tritt`, `fährt`, `hält`. Written by `build_german_dictionary.py` from the forms of the Wikidata lexemes and read back by `spell::lexical_classes`, so that `GermanStrongImperative` and `GermanSubjectVerbAgreement` only take a form for a strong one that hunspell confirmed — `hieb` and `hiebt` look like `heben` raised, but are `hauen`'s preterite.",
+			"#": "Strong present marker. The entry is the second or third person singular or the imperative of a strong verb with a changed stem: `gibt`, `nimmst`, `lies`, `tritt`, `fährt`, `hält`. Written by `build_german_dictionary.py` from the forms of the Wikidata lexemes and read back by `spell::lexical_classes`, so that `GermanStrongImperative` and `GermanSubjectVerbAgreement` only take a form for a strong verb confirmed by the lexeme data — `hieb` and `hiebt` look like `heben` raised, but are `hauen`'s preterite.",
 			"metadata": {}
 		},
 		"!": {

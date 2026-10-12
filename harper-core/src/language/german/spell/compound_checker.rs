@@ -1520,7 +1520,7 @@ mod tests {
     fn test_recursive_compounding_deep() {
         // Realistic deep-nesting fixture: every element is a full-length German-
         // looking word (no single-character elements), and a 4-5 level compound
-        // must decompose recursively. The seams follow igerman98, which the
+        // must decompose recursively. The seams are the ones the
         // checker enforces: `Schiff` links as `Schiffs-` and `Schifffahrt` is a
         // word of its own, `Gesellschaft` and `Kapitän` link with `-s-`.
         let words = vec![

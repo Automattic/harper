@@ -6,13 +6,10 @@
 //! plural umlauts (`Arzt` → `Ärzte`), doubles an `s` (`Ergebnis` →
 //! `Ergebnisse`) or does not exist (`Chemie`).
 //!
-//! Of the 100842 entries igerman98 can judge: 29065 take only `-n`, 23196 only
+//! When the split was made, of 100842 judged entries 29065 take only `-n`, 23196 only
 //! `-en`, 31 both, 48550 neither. So `-n` moved to `E` and `Y` narrowed to
-//! `-en`, and `harper-core/src/language/german/scripts/split_german_plural_n.py` gave each entry whichever
-//! igerman98 says it takes — about 148000 generated non-words fewer.
-//!
-//! An entry igerman98 does not list at all keeps both, so the compounds it
-//! composes rather than lists are untouched.
+//! `-en`, and each entry gets whichever the builder finds attested — about
+//! 148000 generated non-words fewer.
 
 #[cfg(test)]
 mod tests {

@@ -2,10 +2,8 @@
 //!
 //! `ggf.`, `engl.`, `hg.`, `op.`, `var.` are ordinary German and were reported
 //! as misspellings: the tokenizer hands the linter the letters without the stop,
-//! and `dictionary.dict` had no entry for them. igerman98 does not list them
-//! either, so they come from the curated table in
-//! `harper-core/src/language/german/scripts/add_german_abbreviations.py`, which carries the reasoning about
-//! which ones are safe to add.
+//! and `dictionary.dict` had no entry for them. They come from the
+//! curated table in `scripts/german_curated.py`.
 //!
 //! Flag `2` is the abbreviation property, and `GermanNounCapitalization` rejects
 //! anything carrying it — `hg` must not be "corrected" to `Hg`.
