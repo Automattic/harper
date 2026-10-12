@@ -38,8 +38,7 @@ $setupScript = (Get-Command setup_azure_trusted_signing.ps1 -ErrorAction Stop).S
 & $setupScript
 if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
-# NSIS can invoke the signing hook from a different working directory.
-# Absolute paths also avoid parsing a shell command containing spaces.
+# Absolute paths and separate arguments handle NSIS's working directory and spaces.
 $signingConfig = Join-Path $env:TEMP "harper-windows-signing-$([guid]::NewGuid()).json"
 $overlay = @{
     bundle = @{

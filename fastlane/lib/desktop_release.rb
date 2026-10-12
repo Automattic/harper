@@ -2,7 +2,13 @@
 
 require 'octokit'
 
+# Coordinates macOS and Windows assets in a shared draft GitHub release.
 module DesktopRelease
+  # Create or reuse the tag's draft, replacing only assets with matching filenames.
+  # @param tag [String] Existing Git tag.
+  # @param assets [Array<String>] Files to upload, with unique basenames.
+  # @return [String] Release URL.
+  # @raise [RuntimeError] If assets are invalid or the release is already published.
   def self.upload(client:, repository:, tag:, assets:)
     raise 'At least one release asset is required' if assets.empty?
     raise 'Release assets must be existing files' unless assets.all? { |path| File.file?(path) }
@@ -34,9 +40,10 @@ module DesktopRelease
     release[:html_url]
   end
 
+  # Find the newest draft for the exact tag.
+  # @return [Sawyer::Resource, nil] Matching draft, if one exists.
+  # @raise [RuntimeError] If any matching release is already published.
   def self.find_draft(client, repository, tag)
-    # The list endpoint includes drafts. Prefer the newest matching draft when
-    # earlier retries left duplicates, but never ignore a published release.
     matches = client.releases(repository).select { |release| release[:tag_name] == tag }
     if matches.any? { |release| release[:draft] != true }
       raise 'Refusing to upload desktop assets to a published release'

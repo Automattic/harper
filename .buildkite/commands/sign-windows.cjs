@@ -32,9 +32,7 @@ function signWindows(file, env = process.env, run = execFileSync) {
 		],
 		{ stdio: 'inherit' },
 	);
-	// Verify before Tauri embeds this file in another executable. The bundler
-	// restores the original app binary after packaging, so checking it later
-	// would not check the executable that users actually install.
+	// Verify before packaging: Tauri later restores the original unsigned app binary.
 	run(env.SIGNTOOL_PATH, ['verify', '/pa', '/all', '/v', '/tw', file], { stdio: 'inherit' });
 }
 

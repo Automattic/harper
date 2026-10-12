@@ -28,21 +28,18 @@ ASC_API_KEY_ENV_VARS = %w[
 require 'fastlane/plugin/wpmreleasetoolkit'
 require_relative 'lib/desktop_release'
 
-# Convenience alias — wpmreleasetoolkit 14.4+ namespaces this under
-# Fastlane::Wpmreleasetoolkit but exposes no top-level shortcut.
 EnvManager = Fastlane::Wpmreleasetoolkit::EnvManager
 
 before_all do
-  # Ensures match works correctly in CI by setting up a temporary keychain.
-  # No-op locally, so safe to run unconditionally.
+  # Use a temporary signing keychain in CI.
   setup_ci
 
-  # No `.env` file in this repo today — env vars come from the Buildkite agent.
-  # `set_up` still needed so EnvManager has a configured instance.
+  # Initialize EnvManager with values supplied by the Buildkite agent.
   EnvManager.set_up(env_file_name: 'harper-desktop.env')
 end
 
-desc 'Fetch the Developer ID Application certificate into the keychain'
+# Fetch the Developer ID Application certificate into the keychain.
+# @param readonly [Boolean] Use existing certificates without creating new ones.
 lane :set_up_signing do |readonly: true|
   CODE_SIGNING_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
   ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) } unless readonly
@@ -59,7 +56,8 @@ lane :set_up_signing do |readonly: true|
   )
 end
 
-desc 'Submit a signed .app or .dmg to Apple for notarization and staple the ticket'
+# Notarize a signed macOS package and staple its ticket.
+# @param package [String] Path to the signed .app or .dmg.
 lane :notarize_macos do |package:|
   ASC_API_KEY_ENV_VARS.each { |k| EnvManager.get_required_env!(k) }
 
@@ -70,16 +68,20 @@ lane :notarize_macos do |package:|
   )
 end
 
-desc 'Create or reuse a draft GitHub release and attach the signed/notarized macOS artifacts'
+# Attach signed macOS artifacts to the tag's draft release.
+# @see DesktopRelease.upload
 lane :create_desktop_github_release do |tag:, dmg:, app_tarball:, app_signature:|
   upload_desktop_release_assets(tag: tag, assets: [dmg, app_tarball, app_signature])
 end
 
-desc 'Attach the signed Windows installer to the draft GitHub release'
+# Attach the signed Windows installer to the tag's draft release.
+# @see DesktopRelease.upload
 lane :upload_windows_github_release do |tag:, installer:|
   upload_desktop_release_assets(tag: tag, assets: [installer])
 end
 
+# Upload draft assets using the CI GitHub credentials.
+# @param assets [Array<String>] Paths relative to the repository root, or absolute paths.
 private_lane :upload_desktop_release_assets do |tag:, assets:|
   client = Octokit::Client.new(
     access_token: EnvManager.get_required_env!('GITHUB_TOKEN'),
