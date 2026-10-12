@@ -180,6 +180,16 @@ class Builder:
             if gen and gen <= attested and gen & sg_gen:
                 flags.add(g)
                 covered |= gen
+        if not proper and lex.weight >= 5 and set(lex.genders) <= {"M", "Z"} and lex.genders:
+            # Wikidata lists one genitive (*Amts*) where German has two (*Amts*, *Amtes*), and the dative in -e
+            # (*im Grunde*, *dem Hofe*) hardly ever
+            for g in "0H":
+                if g not in flags and ((flags & set("0H")) or not sg_gen) and self.generated(lemma, g) and self.takes_genitive(lemma, g):
+                    flags.add(g)
+                    covered |= self.generated(lemma, g)
+            if self.is_monosyllable(lemma) and lemma[-1] not in "aeiouäöüyh" and self.generated(lemma, "7"):
+                flags.add("7")
+                covered |= self.generated(lemma, "7")
         plural_flagged = False
         plural_forms = set()
         for p in PLURAL_FLAGS:
@@ -234,6 +244,24 @@ class Builder:
             self.add(lemma, {"A"})
         elif not pl_any and not plural_flagged and len(lex.forms) >= 3:
             self.add(lemma, {"A"})
+
+    STRESSED_PREFIXES = re.compile(r"^(be|ge|ver|er|ent|zer|ab|an|auf|aus|ein|vor|nach|bei|mit|zu|um|unter|über|durch)(.+)$")
+
+    @staticmethod
+    def is_monosyllable(word):
+        return len(re.findall(r"[aeiouäöüy]+", word.lower())) == 1
+
+    def takes_genitive(self, lemma, flag):
+        """May a masculine or neuter noun take the genitive `flag` besides the one Wikidata lists?"""
+        low = lemma.lower()
+        if flag == "H":
+            return not low.endswith(("s", "ß", "x", "z"))  # *Hauss*: those take -es
+        if low.endswith(("er", "el", "en", "e", "chen", "lein", "ling", "us", "ist", "ant", "or", "ar", "eur", "ik")):
+            return False  # -s only
+        if self.is_monosyllable(low) or low.endswith(("ment", "tum")):
+            return True
+        m = self.STRESSED_PREFIXES.match(low)
+        return bool(m) and self.is_monosyllable(m.group(2)) and not low.endswith(("ung", "heit", "keit"))
 
     # -- verbs ---------------------------------------------------------------
     SEPARABLE = ("ab an auf aus bei dar ein empor entgegen fort frei heim her hin hinzu los mit nach nieder statt "
@@ -412,6 +440,16 @@ class Builder:
             if len(finite) >= 8:
                 info = self.verb_rich(lex)
                 info["rich"] = True
+                # Wikidata lists a paradigm without its participle (steigen) more often than not: the
+                # hand-written table of strong verbs fills in what is missing, a weak verb gets its regular one
+                listed = table.get(lemma)
+                if listed:
+                    info["pp"] = info["pp"] | listed["pp"]
+                    present = {f for f, _ in info["irregular"]}
+                    info["irregular"] = info["irregular"] + [x for x in listed["irregular"] if x[0] not in present]
+                weak = any(PRETERITE in ft and f.endswith(("te", "ten")) for f, ft in lex.forms)
+                if lemma in curated.WEAK_AND_STRONG or (not info["pp"] and weak):
+                    info["pp"] = info["pp"] | {self.pp_regular(lemma)}
                 known.setdefault(lemma, info)
                 self.emit_verb(lemma, info, lex)
             else:
@@ -509,9 +547,9 @@ class Builder:
             for s in sups:
                 if sane(s) and s.endswith("en"):
                     self.add(s[:-2], {"J", "O", "Q", "R", "S", "T"})
-        if lex.weight >= 10 and "U" not in flags:
+        if lex.weight >= 6 and "U" not in flags:
             flags |= {"U"}  # the adjectives every dictionary lists are gradable: *bekanntesten*, *häufigsten*
-        if lex.weight >= 10 and not sup_ok:
+        if lex.weight >= 6 and not sup_ok:
             flags |= {"W"}
         self.add(lemma, flags)
         for form, ft in lex.forms:
@@ -724,6 +762,12 @@ class Builder:
             self.add(word, {"N", ";"} | ({"&"} if not word.endswith(("n", "s")) else set()))
         for word in curated.EXTRA_ADJECTIVES:
             self.add(word, {"J", "q", "r", "O", "Q", "R", "S", "T", "U", "W"})
+        for word in self.SEPARABLE:  # *Sie stellt die Frage dar*: the prefix stands alone at the end of the clause
+            if word not in self.entries and word.capitalize() not in self.entries:
+                self.add(word, {"r"})
+        for word in curated.GEOGRAPHIC_ADJECTIVES:
+            if word not in self.entries:
+                self.add(word, {"J", "q", "r", "O", "Q", "R", "S", "T"})
 
     def build(self, keep=frozenset()):
         self.richest = collections.defaultdict(int)
@@ -781,10 +825,6 @@ class Builder:
             else:
                 self.stats[f"unused-category:{c}"] += 1
         for word, flags in closed.entries().items():
-            if word[0].islower() and word[0].upper() + word[1:] in curated.NOUN_AND_FUNCTION_WORD_SET:
-                flags = set(flags) - set("P")  # *dank*, *zeit*: the noun reading is the one that matters
-                if not flags:
-                    continue
             self.add(word, flags)
         self.compound_index = collections.defaultdict(list)
         for l in self.lex.values():
@@ -805,15 +845,26 @@ class Builder:
         path = HERE.parent / "wikidata_names.tsv"
         if not path.exists():
             return
-        known = {w.lower() for w in self.entries}
+        known = {w.lower() for w, f in self.entries.items() if f != {"*"}}
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line or line.startswith("#"):
                 continue
             name, _, kind = line.partition("\t")
+            if self.entries.get(name.lower()) == {"*"}:
+                del self.entries[name.lower()]  # a stem that is a name is a word: the stem marker would take it out
             if name in self.entries or name.lower() in known:
                 self.stats["name-skipped"] += 1  # already a word: the name adds nothing but a flag to it
                 continue
             flags = {"N", "H", "!"}  # never an element of a compound: *Annfang* is not *Ann* + *fang*
+            if kind == "demonym":  # *Mannheimer*, *Mannheimerin*, *Franzose*: a person from a place
+                if name.endswith("in"):
+                    flags = {"N", "F", "L", "!"}
+                elif name.endswith("er"):
+                    flags = {"N", "M", "E", "H", "K", "L", "!"}
+                elif name.endswith("e"):
+                    flags = {"N", "M", "E", "!"}
+                else:
+                    flags = {"N", "M", "H", "!"}
             self.add(name, flags)
             self.stats["name"] += 1
 

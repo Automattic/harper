@@ -2157,6 +2157,29 @@
 			"base_metadata": {},
 			"rename_ok": true
 		},
+		"7": {
+			"#": "Noun dative -e (dem Hofe, im Grunde, zu Hause). Only monosyllabic masculine and neuter nouns take it, so the builder sets it per entry.",
+			"kind": "suffix",
+			"cross_product": false,
+			"replacements": [
+				{
+					"remove": "",
+					"add": "e",
+					"condition": "[^aeiouäöüyh]"
+				}
+			],
+			"target": [
+				{
+					"metadata": {
+						"noun": {}
+					}
+				}
+			],
+			"base_metadata": {
+				"noun": {}
+			},
+			"rename_ok": true
+		},
 		"0": {
 			"#": "Noun genitive -es (des Hauses). Lives on a digit because the letter 'N' is also the *noun* property: with the affix there it reached every entry tagged a noun and generated 'ergebnises' and 'altertumes' for the great majority of them. A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnisses`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
