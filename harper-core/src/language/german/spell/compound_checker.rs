@@ -423,7 +423,7 @@ pub(crate) fn may_be_compound_element(
             .is_none_or(|metadata| metadata.abbreviation != Some(true))
 }
 
-/// The forms igerman98 lets stand in front of a compound boundary, lower case.
+/// The forms that stand in front of a compound boundary, lower case, as the Wikidata noun lemmas show them.
 ///
 /// See `scripts/extract_german_compound_begin_forms.py`, which writes the file.
 static COMPOUND_BEGIN_FORMS: LazyLock<HashSet<String>> = LazyLock::new(|| {
@@ -435,20 +435,20 @@ static COMPOUND_BEGIN_FORMS: LazyLock<HashSet<String>> = LazyLock::new(|| {
 });
 
 /// The linking elements a listed begin form may end in, the empty one first.
-/// `e` and `ns` are not among Harper's interfixes but are igerman98's
+/// `e` and `ns` are not among Harper's interfixes but occur in the data
 /// (`Halte|stelle`, `Glaubens|frage`), and knowing them tells that an element
 /// has a recorded link.
 const KNOWN_LINKS: [&str; 8] = ["", "s", "n", "en", "er", "es", "e", "ns"];
 
-/// Does `element` + `interfix` link the way igerman98 says `element` links?
+/// Does `element` + `interfix` link the way the compound nouns of the lexeme data show `element` linking?
 ///
-/// igerman98 lists the form each element takes in front of a compound boundary,
+/// The list holds the form each element takes in front of a compound boundary,
 /// linking element included: `Arbeits`, `Versions`, `Festplatten`, `Halte`.
 /// Where it lists any such form for `element`, the interfix has to produce one
 /// of them, which is what rejects `Arbeit|speicher`, `Version|hinweis`,
 /// `Festplatte|speicher` and `Bus|halt|stelle`. Where it lists none — `Kasus`,
 /// `Lipid`, most of the vocabulary — the interfix stays free, so the many
-/// compounds igerman98 does not know (`Kasuszuweisung`) keep working.
+/// compounds the data does not show (`Kasuszuweisung`) keep working.
 pub(crate) fn interfix_matches_known_begin(element: &[char], interfix: &[char]) -> bool {
     let mut form: String = element.iter().flat_map(|c| c.to_lowercase()).collect();
     let stem_len = form.len();
@@ -553,16 +553,16 @@ pub struct CompoundChecker {
     /// stem may not be is the *head* — the head says what the whole word is,
     /// and no word is an `absperr`. Membership here is therefore consulted only
     /// in front of a boundary; see [`CompoundChecker::opening_element_usable`].
-    stems: HashSet<CharString>,
+    stems: Arc<HashSet<CharString>>,
     /// The articles, pronouns and conjunctions, which may open a compound but
     /// never end one. See [`function_word_set`].
-    function_words: HashSet<CharString>,
+    function_words: Arc<HashSet<CharString>>,
     /// The derived feminine nouns, which open a compound only with `-s-`.
     /// See [`suffixed_element_set`].
-    suffixed_elements: HashSet<CharString>,
+    suffixed_elements: Arc<HashSet<CharString>>,
     /// The words that never take part in a compound. See
     /// [`may_be_compound_element`].
-    barred_elements: HashSet<CharString>,
+    barred_elements: Arc<HashSet<CharString>>,
     /// The base dictionary to resolve element membership against, when set.
     ///
     /// When present, membership queries use this dictionary (whose lookup is
@@ -754,10 +754,10 @@ impl CompoundChecker {
         // Build compound words map from words that have compound flags
         let mut compound_words = HashMap::new();
         let mut members = HashSet::new();
-        let stems = stem_set(word_list);
-        let function_words = function_word_set(word_list);
-        let suffixed_elements = suffixed_element_set(word_list);
-        let barred_elements = barred_element_set(word_list);
+        let stems = Arc::new(stem_set(word_list));
+        let function_words = Arc::new(function_word_set(word_list));
+        let suffixed_elements = Arc::new(suffixed_element_set(word_list));
+        let barred_elements = Arc::new(barred_element_set(word_list));
 
         for word in word_list {
             let mut flags = CompoundFlags::default();
@@ -772,7 +772,15 @@ impl CompoundChecker {
                 insert_member_casings(&mut members, &word.letters);
             }
 
-            if !flags.is_empty() {
+            // With a base dictionary behind it the checker asks the flags one question only: does the
+            // word open an adjective compound (`q`)? Keeping the flags of every noun (`h` sits on
+            // nearly all of them) cost 70 MB for an answer nobody reads.
+            let wanted = if with_members {
+                !flags.is_empty()
+            } else {
+                flags.contains(&COMPOUND_ADJ_FLAG)
+            };
+            if wanted {
                 // Insert the original word
                 compound_words.insert(word.letters.clone(), flags);
 
@@ -803,6 +811,16 @@ impl CompoundChecker {
             cache: Mutex::new(LruCache::new(NonZeroUsize::new(10000).unwrap())),
             max_check_time: Duration::from_millis(5000), // 5 second timeout
         }
+    }
+
+    /// The four sets built from the word list, shared with whoever else reads them.
+    pub(crate) fn shared_sets(&self) -> [Arc<HashSet<CharString>>; 4] {
+        [
+            Arc::clone(&self.stems),
+            Arc::clone(&self.function_words),
+            Arc::clone(&self.suffixed_elements),
+            Arc::clone(&self.barred_elements),
+        ]
     }
 
     /// Inject the base dictionary whose word membership drives compound
@@ -901,7 +919,7 @@ impl CompoundChecker {
     /// the head position, where the word class of the whole compound is
     /// decided, because a stem has none.
     ///
-    /// A two-letter noun opens a compound only when igerman98 lists it as a
+    /// A two-letter noun opens a compound only when the data lists it as a
     /// begin form: `Öl|wanne` does, `Au|stellung` does not, and `Ei` links only
     /// as `Eier` (the compounds on a bare `Ei`, `Eigelb` and `Eiweiß`, are
     /// entries of their own). It may still end one (`Dach|au`, `Roh|öl`).

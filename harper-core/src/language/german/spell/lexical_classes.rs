@@ -49,22 +49,47 @@ fn collect_flagged(words: &[AnnotatedWord], flag: char) -> HashSet<String> {
         .collect()
 }
 
+/// The sets of words that carry one of the class flags, collected in one pass over the word list.
+pub struct LexicalClasses {
+    numerals: HashSet<String>,
+    unit_abbreviations: HashSet<String>,
+    foreign_terms: HashSet<String>,
+    lowercase_non_nouns: HashSet<String>,
+    strong_present_forms: HashSet<String>,
+    plural_forms: HashSet<String>,
+    pluralia_tantum: HashSet<String>,
+}
+
+impl LexicalClasses {
+    pub(super) fn from_word_list(words: &[AnnotatedWord]) -> Self {
+        Self {
+            numerals: collect_flagged(words, NUMERAL_FLAG),
+            unit_abbreviations: collect_flagged(words, ABBREVIATION_FLAG),
+            foreign_terms: collect_flagged(words, FOREIGN_TERM_FLAG),
+            lowercase_non_nouns: collect_flagged(words, LOWERCASE_NON_NOUN_FLAG),
+            strong_present_forms: collect_flagged(words, STRONG_PRESENT_FLAG),
+            plural_forms: collect_flagged(words, PLURAL_FORM_FLAG),
+            pluralia_tantum: collect_flagged(words, PLURALE_TANTUM_FLAG),
+        }
+    }
+}
+
 /// Spelled-out German cardinal numbers. In running text these are lower case,
 /// so they are never flagged; used attributively they *license* a following noun
 /// (*"die drei Streifen"*).
-pub static NUMERALS: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), NUMERAL_FLAG));
+pub static NUMERALS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().numerals);
 
 /// Unit abbreviations that are written lower case and must not be "corrected".
-pub static UNIT_ABBREVIATIONS: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), ABBREVIATION_FLAG));
+pub static UNIT_ABBREVIATIONS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().unit_abbreviations);
 
 /// Latin / Greek etymology words that appear lower case in German prose
 /// ("von lateinisch *scientia*", "de facto", "Homo *sapiens*"). They are in the
 /// dictionary so the spell checker accepts them, but they are not
 /// miscapitalized German nouns.
-pub static FOREIGN_TERMS: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), FOREIGN_TERM_FLAG));
+pub static FOREIGN_TERMS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().foreign_terms);
 
 /// Words whose lower-case spelling is not a noun, although a capitalized noun of
 /// the same letters is: `ist` and das `Ist`, `gut` and das `Gut`.
@@ -72,30 +97,26 @@ pub static FOREIGN_TERMS: LazyLock<HashSet<String>> =
 /// Lookups ignore case, so `ist` arrives carrying the noun reading of `Ist` and
 /// the merged metadata cannot say which spelling it came from. The `^` flag on
 /// the lower-case entry can.
-pub static LOWERCASE_NON_NOUNS: LazyLock<HashSet<String>> = LazyLock::new(|| {
-    collect_flagged(
-        super::german_dict::german_word_list(),
-        LOWERCASE_NON_NOUN_FLAG,
-    )
-});
+pub static LOWERCASE_NON_NOUNS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().lowercase_non_nouns);
 
 /// The present forms and imperatives of strong verbs on the changed stem:
-/// `gib`, `gibt`, `gibst`, `tritt`, `fährt`, `hältst`. Hunspell confirmed each
-/// one; see `add_german_strong_imperatives.py`.
-pub static STRONG_PRESENT_FORMS: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), STRONG_PRESENT_FLAG));
+/// `gib`, `gibt`, `gibst`, `tritt`, `fährt`, `hältst`. The word list marks each
+/// one; see `build_german_dictionary.py`.
+pub static STRONG_PRESENT_FORMS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().strong_present_forms);
 
 /// Noun plurals that do not end in `-n` or `-s` and so take `-n` in the
 /// dative: `Kinder`, `Freunde`, `Bücher`. Kept in their capitalized spelling;
-/// see `mark_german_plural_forms.py`.
-pub static PLURAL_FORMS: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), PLURAL_FORM_FLAG));
+/// the word list marks them `&`.
+pub static PLURAL_FORMS: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().plural_forms);
 
 /// Nouns that only exist in the plural: `Leute`, `Eltern`, `Ferien`. Read
 /// from the flag rather than the merged number, which an `E` beside the `+`
 /// widens to both numbers (`leute/~~NhE+`).
-pub static PLURALIA_TANTUM: LazyLock<HashSet<String>> =
-    LazyLock::new(|| collect_flagged(super::german_dict::german_word_list(), PLURALE_TANTUM_FLAG));
+pub static PLURALIA_TANTUM: LazyLock<&'static HashSet<String>> =
+    LazyLock::new(|| &super::german_dict::german_lexical_classes().pluralia_tantum);
 
 #[cfg(test)]
 mod tests {

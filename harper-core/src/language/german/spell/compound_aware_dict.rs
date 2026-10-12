@@ -47,6 +47,14 @@ impl CompoundAwareDictionary {
     }
 
     /// Get a reference to the base dictionary
+    /// How the compound checker takes `word` apart, if it accepts it as a compound.
+    pub fn decomposition(&self, word: &[char]) -> Option<Vec<String>> {
+        self.compound_checker
+            .lock()
+            .unwrap()
+            .get_decomposition(word)
+    }
+
     pub fn base_dict(&self) -> &Arc<CompactDictionary> {
         &self.base_dict
     }

@@ -478,7 +478,7 @@ mod tests {
     fn one_shot_expansion() -> WordMap {
         let attr_list = AttributeList::parse(include_str!("../annotations.json")).unwrap();
         let mut map = WordMap::default();
-        attr_list.expand_annotated_words(german_word_list().iter().cloned(), &mut map);
+        attr_list.expand_annotated_words(german_word_list().into_iter(), &mut map);
         map
     }
 

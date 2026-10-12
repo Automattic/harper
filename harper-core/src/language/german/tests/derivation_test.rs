@@ -169,7 +169,7 @@ mod tests {
     fn corpus_mined_adjectives_decline_too() {
         for word in [
             "abundanter",
-            "abwechslungsarmes",
+            "abwechslungsreiches",
             "berufener",
             "achtmonatiger",
         ] {

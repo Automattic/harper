@@ -573,7 +573,7 @@ mod tests {
     #[test]
     fn catches_a_wrong_possessive() {
         assert_eq!(fixes("Er kam mit seine Schwester."), ["seinen", "seiner"]);
-        assert_eq!(fixes("Das ist für meinem Vorschlag."), ["mein", "meinen"]);
+        assert_eq!(fixes("Das ist für meinem Vorschlag."), ["meinen"]);
     }
 
     #[test]

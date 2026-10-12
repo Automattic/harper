@@ -65,7 +65,7 @@ mod tests {
     fn test_german_spell_check() {
         let mut linter = new_curated_german(GermanDialect::Standard, curated_german_dictionary());
 
-        let text = "Der Hunte ist im Gartens.";
+        let text = "Der Hundd ist im Garrten.";
         let dict = curated_german_dictionary();
         let document = Document::new(text, &PlainGerman, &dict);
         let lints = linter.lint(&document);

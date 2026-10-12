@@ -141,10 +141,10 @@ mod tests {
     /// around it and stays reported.
     #[test]
     fn a_lone_foreign_word_in_german_is_still_reported() {
-        let reported = misspelled("Durch die Gabe von Reserpin kommt es zu einer Verminderung.");
+        let reported = misspelled("Durch die Gabe von Reserpinax kommt es zu einer Verminderung.");
 
         assert!(
-            reported.iter().any(|w| w == "Reserpin"),
+            reported.iter().any(|w| w == "Reserpinax"),
             "one unknown word is not a foreign stretch; reported: {reported:?}"
         );
     }

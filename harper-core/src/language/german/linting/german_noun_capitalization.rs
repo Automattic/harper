@@ -541,9 +541,21 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::CloseRound));
         let gender_star = |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::Star));
 
-        prev.is_some_and(|p| {
-            (hyphen(p) || infix_close(p) || gender_star(p)) && p.span.end == token.span.start
-        }) || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
+        let infix_open =
+            |t: &Token| matches!(t.kind, TokenKind::Punctuation(Punctuation::OpenRound));
+        // the infix itself, *brand* in *Deck(brand)sohle*, is a fragment as well
+        let bracketed_infix = prev.zip(next).is_some_and(|(p, n)| {
+            infix_open(p)
+                && infix_close(n)
+                && p.span.end == token.span.start
+                && n.span.start == token.span.end
+        });
+
+        bracketed_infix
+            || prev.is_some_and(|p| {
+                (hyphen(p) || infix_close(p) || gender_star(p)) && p.span.end == token.span.start
+            })
+            || next.is_some_and(|n| hyphen(n) && token.span.end == n.span.start)
     }
 
     /// Is this token inside a foreign-language gloss?

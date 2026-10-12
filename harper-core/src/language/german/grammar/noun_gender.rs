@@ -313,12 +313,14 @@ pub fn trusted_head(document: &Document, words: &[&Token], phrase: &Phrase) -> O
     let gender_sign = matches!(content.get(token.span.end), Some(':' | '*' | '_' | '/'))
         && content.get(token.span.end + 1..token.span.end + 3) == Some(&['i', 'n'][..]);
     // *eine PIN/TAN-Kombination*, *das Client/Server-System*, *die
-    // Cut&Copy-Funktionen*, *den Web.de-Servern*: a sign glued to a letter on
-    // both sides joins the head to the rest of a compound.
-    let glued = matches!(content.get(token.span.end), Some('/' | '&' | '+' | '.'))
-        && content
-            .get(token.span.end + 1)
-            .is_some_and(|c| c.is_alphanumeric());
+    // Cut&Copy-Funktionen*, *den Web.de-Servern*, *eine Deck(brand)sohle*: a sign glued to a
+    // letter on both sides joins the head to the rest of a compound.
+    let glued = matches!(
+        content.get(token.span.end),
+        Some('/' | '&' | '+' | '.' | '(')
+    ) && content
+        .get(token.span.end + 1)
+        .is_some_and(|c| c.is_alphanumeric());
     if touches_hyphen || dash_follows || gender_sign || glued {
         return None;
     }

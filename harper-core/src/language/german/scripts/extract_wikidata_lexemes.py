@@ -9,7 +9,11 @@ keep the downloaded dump itself (about 650 MB) outside the repository.
 The dump is one JSON entity per line (inside a `[` ... `]` wrapper). Only
 language Q188 (German) is kept. Tables:
 
-    lexeme(id, lemma, category, gender)   category is the Q-id's short name
+    lexeme(id, lemma, category, gender, claims, senses)
+                                          category is the Q-id's short name;
+                                          gender: m, f, n, comma-joined when a lexeme has several;
+                                          claims, senses: how many statements and senses the lexeme has,
+                                          which tells a word in every dictionary from a one-off entry
     form(form, lexeme_id, features)       features: '|'-joined Q-ids
 """
 
@@ -43,7 +47,7 @@ def main(src, dst):
     db.executescript(
         """
         drop table if exists lexeme; drop table if exists form;
-        create table lexeme(id text primary key, lemma text, category text, gender text);
+        create table lexeme(id text primary key, lemma text, category text, gender text, claims integer, senses integer);
         create table form(form text, lexeme_id text, features text);
         """
     )
@@ -64,13 +68,19 @@ def main(src, dst):
             if not lemma:
                 continue
             cat = CATEGORY.get(e.get("lexicalCategory"), e.get("lexicalCategory"))
-            gender = None
+            genders = set()
             for c in (e.get("claims") or {}).get("P5185", []):
                 try:
-                    gender = GENDER.get(c["mainsnak"]["datavalue"]["value"]["id"], gender)
+                    g = GENDER.get(c["mainsnak"]["datavalue"]["value"]["id"])
                 except KeyError:
-                    pass
-            db.execute("insert or replace into lexeme values (?,?,?,?)", (e["id"], lemma, cat, gender))
+                    continue
+                if g:
+                    genders.add(g)
+            gender = ",".join(sorted(genders)) or None
+            db.execute(
+                "insert or replace into lexeme values (?,?,?,?,?,?)",
+                (e["id"], lemma, cat, gender, len(e.get("claims") or {}), len(e.get("senses") or [])),
+            )
             for f in e.get("forms", []):
                 rep = (f.get("representations") or {}).get("de", {}).get("value")
                 if rep:

@@ -48,7 +48,7 @@ mod tests {
         ];
 
         for word in test_cases {
-            let text = format!("Das {} ist wichtig.", word);
+            let text = format!("{} ist wichtig.", word);
             let document = Document::new(&text, &PlainGerman, &curated_german_dictionary());
             let lints = linter.lint(&document);
 

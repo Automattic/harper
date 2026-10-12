@@ -27,7 +27,7 @@
 			"rename_ok": true
 		},
 		"E": {
-			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Alone among the five plural affixes it does **not** mark its base singular, but singular *or* plural. It is carried by two kinds of entry: a singular that forms its plural in '-n' (Diagnose -> Diagnosen), and a form that is already plural and only adds the dative '-n' (die Lehrer -> den Lehrern, die Befunde -> den Befunden). Against the igerman98 hunspell dictionary as an oracle, 995 of the 10295 recognized entries carrying it are of the second kind -- and for the '-er' and '-el' nouns the base form is genuinely both numbers at once (die Lehrer, der Lehrer), so no single answer is right. A set holding both says exactly that: an inflecting noun whose number this flag does not decide. It constrains nothing in an agreement check, which is the honest outcome, and it still tells the capitalization linter that a bare '-e' word is a real noun rather than a verb form. Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/split_german_plural_n.py against the unmunched igerman98 list. 'E' previously held the 'ver-' prefix, which no entry carried.",
+			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Alone among the five plural affixes it does **not** mark its base singular, but singular *or* plural. It is carried by two kinds of entry: a singular that forms its plural in '-n' (Diagnose -> Diagnosen), and a form that is already plural and only adds the dative '-n' (die Lehrer -> den Lehrern, die Befunde -> den Befunden). Of the entries carrying it, some are of the second kind -- and for the '-er' and '-el' nouns the base form is genuinely both numbers at once (die Lehrer, der Lehrer), so no single answer is right. A set holding both says exactly that: an inflecting noun whose number this flag does not decide. It constrains nothing in an agreement check, which is the honest outcome, and it still tells the capitalization linter that a bare '-e' word is a real noun rather than a verb form. Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/build_german_dictionary.py, which keeps the flag only when the forms it builds are forms Wikidata lists for that noun. 'E' previously held the 'ver-' prefix, which no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -1383,7 +1383,7 @@
 			"rename_ok": true
 		},
 		"Y": {
-			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See harper-core/src/language/german/scripts/split_german_plural_n.py A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnissen`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
+			"#": "Noun plural '-en' (Student -> Studenten, Aufklärung -> Aufklärungen). The '-n' half moved to 'E': carrying both put a non-word into the dictionary for nearly every noun, since a German noun takes one or the other. See harper-core/src/language/german/scripts/build_german_dictionary.py A noun in `-nis` doubles the `s`: `Ergebnis` -> `Ergebnissen`. See the note on `X` for why the complement of `nis` is spelled out in three conditions.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2154,7 +2154,7 @@
 			"rename_ok": true
 		},
 		"n": {
-			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what the oracle in harper-core/src/language/german/scripts/add_german_verb_derivations.py confirms per entry. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
+			"#": "Declined past participle (das automatisierte Verfahren, ein beobachteter Vorgang). Mirrors hunspell de_DE SFX O, and attaches to the verb stem like the other conjugation flags. Only the participles formed without `ge-` belong here -- the `-ieren` verbs and the inseparable prefixes -- which is what build_german_dictionary.py checks per entry against the nouns and adjectives of the lexeme data. `n` previously held a participle class whose one rule listed the separable prefixes as `(ab|an|auf|...)`; the affix matcher has no alternation, so that condition could never match, and no entry carried the flag.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2365,7 +2365,7 @@
 			"rename_ok": true
 		},
 		"x": {
-			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry by an oracle, see harper-core/src/language/german/scripts/add_german_verb_derivations.py. `x` previously held an imperative-mood property that no entry carried.",
+			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Mirrors hunspell de_DE SFX B and attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry, see harper-core/src/language/german/scripts/build_german_dictionary.py. `x` previously held an imperative-mood property that no entry carried.",
 			"kind": "suffix",
 			"cross_product": true,
 			"replacements": [
@@ -2697,7 +2697,7 @@
 			}
 		},
 		"+": {
-			"#": "Plurale tantum (German): a noun that exists only in the plural, Eltern, Leute, Ferien, Kosten. Gives it the plural number and nothing else, so that 'meine Eltern arbeitet' is read as a plural subject with a singular verb; see add_german_plural_genders.py. A punctuation flag because every letter and digit is taken.",
+			"#": "Plurale tantum (German): a noun that exists only in the plural, Eltern, Leute, Ferien, Kosten. Gives it the plural number and nothing else, so that 'meine Eltern arbeitet' is read as a plural subject with a singular verb; see build_german_dictionary.py. A punctuation flag because every letter and digit is taken.",
 			"metadata": {
 				"noun": {},
 				"morphology": {
@@ -2829,7 +2829,7 @@
 			}
 		},
 		"E": {
-			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see harper-core/src/language/german/scripts/split_german_plural_n.py. This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
+			"#": "noun plural -n (German) - the '-n' half of the old 'Y', see harper-core/src/language/german/scripts/build_german_dictionary.py. This letter is an affix as well as a property and both fire, so the number is set by the affix on the form it builds and never here -- see 'A plural flag said the opposite of what it meant' in README.md.",
 			"metadata": {
 				"noun": {}
 			}
@@ -2946,11 +2946,11 @@
 			"metadata": {}
 		},
 		"&": {
-			"#": "Plural marker. The entry is a noun plural that does not end in -n or -s, so its dative plural adds an -n: `Kinder`, `Freunde`, `Jahre`, `Bücher`, `Väter`. Written by `mark_german_plural_forms.py` from hunspell's plural affixes and umlaut-plural entries, and read back by `spell::lexical_classes` for `GermanDativePlural`. The dictionary's own number cannot say this: `Kinder` merges a singular and a plural reading, and `Lehrer`, `Räuber`, `Reise` are singulars of the same shape.",
+			"#": "Plural marker. The entry is a noun plural that does not end in -n or -s, so its dative plural adds an -n: `Kinder`, `Freunde`, `Jahre`, `Bücher`, `Väter`. Written by `build_german_dictionary.py` from the plural forms of the Wikidata lexemes, and read back by `spell::lexical_classes` for `GermanDativePlural`. The dictionary's own number cannot say this: `Kinder` merges a singular and a plural reading, and `Lehrer`, `Räuber`, `Reise` are singulars of the same shape.",
 			"metadata": {}
 		},
 		"%": {
-			"#": "Strong present marker. The entry is the second or third person singular or the imperative of a strong verb with a changed stem: `gibt`, `nimmst`, `lies`, `tritt`, `fährt`, `hält`. Written by `add_german_strong_imperatives.py` from hunspell's morphology and read back by `spell::lexical_classes`, so that `GermanStrongImperative` and `GermanSubjectVerbAgreement` only take a form for a strong one that hunspell confirmed — `hieb` and `hiebt` look like `heben` raised, but are `hauen`'s preterite.",
+			"#": "Strong present marker. The entry is the second or third person singular or the imperative of a strong verb with a changed stem: `gibt`, `nimmst`, `lies`, `tritt`, `fährt`, `hält`. Written by `build_german_dictionary.py` from the forms of the Wikidata lexemes and read back by `spell::lexical_classes`, so that `GermanStrongImperative` and `GermanSubjectVerbAgreement` only take a form for a strong one that hunspell confirmed — `hieb` and `hiebt` look like `heben` raised, but are `hauen`'s preterite.",
 			"metadata": {}
 		},
 		"!": {

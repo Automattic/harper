@@ -146,9 +146,9 @@ mod tests {
     /// names something foreign.
     #[test]
     fn a_german_article_keeps_the_noun_german() {
-        let lints = flagged("Er wirkte an der university of Virginia.");
+        let lints = flagged("Er wirkte an der universität of Virginia.");
         assert!(
-            lints.iter().any(|l| l == "university"),
+            lints.iter().any(|l| l == "universität"),
             "an article makes this a German noun phrase; flagged: {lints:?}"
         );
     }

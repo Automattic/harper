@@ -1,10 +1,12 @@
-//! German dictionary based on the LanguageTool/igerman98 Hunspell word lists.
+//! The German dictionary.
 //!
-//! The word list is derived from the igerman98 dictionary (GPLv2/GPLv3),
-//! using annotated dictionary format for comprehensive coverage.
+//! The word list, `dictionary.dict`, is written by `scripts/build_german_dictionary.py` from the
+//! German lexemes and proper names of Wikidata (CC0) and from word tables written for this
+//! repository; see `DATA_SOURCES.md`. Earlier versions of the file were derived from the
+//! igerman98 dictionary (GPL); this one is not.
 use crate::spell::rune::{AttributeList, parse_word_list};
 use crate::spell::{Dictionary, MergedDictionary};
-use std::sync::{Arc, LazyLock};
+use std::sync::{Arc, LazyLock, Mutex};
 
 use super::compact_dict::{CompactDictionary, expand_in_blocks};
 use super::compound_aware_dict::CompoundAwareDictionary;
@@ -52,61 +54,95 @@ fn join<A: Send, B: Send>(a: impl FnOnce() -> A + Send, b: impl FnOnce() -> B + 
     })
 }
 
-// Word list for lazy compound checking (shared between all German dictionary components)
-// This is initialized first to avoid duplicate parsing
-static GERMAN_WORD_LIST: LazyLock<Vec<crate::spell::rune::word_list::AnnotatedWord>> =
-    LazyLock::new(load_german_word_list);
-
-/// The parsed base word list, with its property flags still attached.
+/// Everything the word list is read for, built in one pass.
 ///
-/// Used by [`super::lexical_classes`] to derive the closed lexical classes the
-/// capitalization linter needs, without paying for affix expansion or a
-/// dictionary lookup.
-pub(super) fn german_word_list() -> &'static [crate::spell::rune::word_list::AnnotatedWord] {
-    &GERMAN_WORD_LIST
+/// The parsed word list is a third of the heap while the dictionary is being built
+/// (a `CharString` and a flag vector per entry), and nothing needs it afterwards:
+/// the expanded dictionary, the compound checker and the small sets below are all
+/// derived from it once. So it is parsed here, used, and dropped.
+struct GermanCore {
+    base: Arc<CompactDictionary>,
+    /// Taken by the compound-aware dictionary when it is first built.
+    checker: Mutex<Option<CompoundChecker>>,
+    stems: Arc<hashbrown::HashSet<crate::CharString>>,
+    function_words: Arc<hashbrown::HashSet<crate::CharString>>,
+    suffixed_elements: Arc<hashbrown::HashSet<crate::CharString>>,
+    barred_elements: Arc<hashbrown::HashSet<crate::CharString>>,
+    classes: super::lexical_classes::LexicalClasses,
 }
 
-// Base dictionary without pre-generated compounds (FST for fast lookups).
+static GERMAN_CORE: LazyLock<GermanCore> = LazyLock::new(|| {
+    let word_list = load_german_word_list();
+    let classes = super::lexical_classes::LexicalClasses::from_word_list(&word_list);
+    // One after the other: built side by side, the two peaks add up, and the
+    // dictionary build is already spread over the cores.
+    let base = Arc::new(build_german_base_dict(&word_list));
+    let checker = CompoundChecker::for_dictionary(&word_list);
+    let [stems, function_words, suffixed_elements, barred_elements] = checker.shared_sets();
+    GermanCore {
+        base,
+        checker: Mutex::new(Some(checker)),
+        stems,
+        function_words,
+        suffixed_elements,
+        barred_elements,
+        classes,
+    }
+});
+
+/// A freshly parsed copy of the word list, for the tests that compare it with the dictionary.
+#[cfg(test)]
+pub(super) fn german_word_list() -> Vec<crate::spell::rune::word_list::AnnotatedWord> {
+    load_german_word_list()
+}
+
+/// The closed lexical classes read from the word list; see [`super::lexical_classes`].
+pub(super) fn german_lexical_classes() -> &'static super::lexical_classes::LexicalClasses {
+    &GERMAN_CORE.classes
+}
+
 /// The bare stems of the German word list: elements that are not words.
 ///
 /// See the `stem_only` property in `annotations.json`. `GermanSpellCheck`
 /// reads this when it decomposes a compound, so that `Messkabel` still works
 /// although `mess` is not a word.
-pub static GERMAN_STEMS: LazyLock<hashbrown::HashSet<crate::CharString>> =
-    LazyLock::new(|| super::compound_checker::stem_set(&GERMAN_WORD_LIST));
+pub static GERMAN_STEMS: LazyLock<&'static hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| &*GERMAN_CORE.stems);
 
 /// The articles, pronouns and conjunctions of the German word list.
 ///
 /// See the `function_word_set` documentation in
 /// [`super::compound_checker`]. `GermanSpellCheck` decomposes compounds too and
 /// reads the set from here, so both decompositions agree on what may end one.
-pub static GERMAN_FUNCTION_WORDS: LazyLock<hashbrown::HashSet<crate::CharString>> =
-    LazyLock::new(|| super::compound_checker::function_word_set(&GERMAN_WORD_LIST));
+pub static GERMAN_FUNCTION_WORDS: LazyLock<&'static hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| &*GERMAN_CORE.function_words);
 
 /// The derived feminine nouns of the German word list, which open a compound
 /// only with the `-s-` interfix.
 ///
 /// See the `suffixed_element_set` documentation in [`super::compound_checker`].
-pub static GERMAN_SUFFIXED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
-    LazyLock::new(|| super::compound_checker::suffixed_element_set(&GERMAN_WORD_LIST));
+pub static GERMAN_SUFFIXED_ELEMENTS: LazyLock<&'static hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| &*GERMAN_CORE.suffixed_elements);
 
 /// The words of the German word list that never take part in a compound.
 ///
 /// See `may_be_compound_element` in [`super::compound_checker`]. Read by
 /// `GermanSpellCheck`, so both decompositions agree on what may be an element.
-pub static GERMAN_BARRED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
-    LazyLock::new(|| super::compound_checker::barred_element_set(&GERMAN_WORD_LIST));
+pub static GERMAN_BARRED_ELEMENTS: LazyLock<&'static hashbrown::HashSet<crate::CharString>> =
+    LazyLock::new(|| &*GERMAN_CORE.barred_elements);
 
 static GERMAN_BASE_DICT: LazyLock<Arc<CompactDictionary>> =
-    LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
+    LazyLock::new(|| Arc::clone(&GERMAN_CORE.base));
 
 // Compound-aware dictionary using lazy compound checking
 static GERMAN_COMPOUND_AWARE_DICT: LazyLock<Arc<CompoundAwareDictionary>> = LazyLock::new(|| {
-    let word_list = &*GERMAN_WORD_LIST;
-    // One after the other: built side by side, the two peaks add up, and the
-    // dictionary build is already spread over the cores.
     let base_dict = Arc::clone(&*GERMAN_BASE_DICT);
-    let compound_checker = CompoundChecker::for_dictionary(word_list);
+    let compound_checker = GERMAN_CORE
+        .checker
+        .lock()
+        .unwrap()
+        .take()
+        .expect("the compound checker is taken once");
 
     Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
 });

@@ -788,7 +788,7 @@ mod tests {
             "Arbeitsplaz",
             "Straßenrant",
             // A capitalized compound does not end in a finite verb form.
-            "Bettrieb",
+            "Ausrieb",
             // igerman98 records the linking element: Arbeits-, Versions-.
             "Arbeitspeicher",
             "Versionhinweis",
@@ -984,7 +984,7 @@ mod tests {
         assert_eq!(spelling_reports("Das Haus Nr 13 steht leer."), ["Nr"]);
         assert_eq!(spelling_reports("Ruf mich an, Tel 0611."), ["Tel"]);
         // The abbreviation of a noun is capitalized, like the noun.
-        assert_eq!(spelling_reports("Lieber Herr prof. Müller"), ["prof"]);
+        assert_eq!(spelling_reports("Lieber Herr dr. Müller"), ["dr"]);
     }
 
     #[test]

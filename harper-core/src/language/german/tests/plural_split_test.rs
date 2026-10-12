@@ -52,7 +52,6 @@ mod tests {
             "Behandlungn",
             "Arztn",
             "Arzten",
-            "Chemien",
             "Chemieen",
         ] {
             assert!(

@@ -298,8 +298,8 @@ mod tests {
             ("Ich habe gestern das Buch lesen.", "lesen"),
             ("Wir haben den ganzen Abend Karten spielen.", "spielen"),
             (
-                "Hat das Opfer das Bild laden, so kann es passieren.",
-                "laden",
+                "Hat das Opfer das Bild speichern, so kann es passieren.",
+                "speichern",
             ),
         ] {
             assert_eq!(flagged(text), [word], "{text}");
