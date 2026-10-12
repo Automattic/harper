@@ -6,6 +6,7 @@ mod app_icons;
 mod core_foundation_utilities;
 mod focused_target;
 mod focused_window_pid;
+mod visible_region;
 mod window_stability;
 
 use accessibility::TreeWalker;
