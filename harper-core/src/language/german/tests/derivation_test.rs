@@ -177,8 +177,8 @@ mod tests {
         }
     }
 
-    /// The plurals that igerman98 lists as headwords of their own, which the
-    /// strict form of the oracle refused for every `-tät`, `-ion` and `-keit`.
+    /// The plurals that are headwords of their own, which a strict
+    /// check refused for every `-tät`, `-ion` and `-keit`.
     #[test]
     fn derived_feminines_have_their_plural() {
         for word in [

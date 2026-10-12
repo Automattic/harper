@@ -233,7 +233,7 @@ Two things the recipe help cannot say:
   some recipes do not apply to it.
 - **Coverage needs a reference dictionary**: `just language-coverage <lang>`
   compares against `<lang>_dictionary.dict.gz` in the language directory if one
-  exists. German no longer ships one (it was igerman98-derived); skipped then.
+  exists; languages without one are skipped.
 
 ## Improving a dictionary
 

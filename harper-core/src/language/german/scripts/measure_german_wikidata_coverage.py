@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """How much of dictionary.dict does a permissively licensed source support?
 
-Part of replacing the igerman98-derived word list (GPL) with CC0 data.
-
     measure_german_wikidata_coverage.py DICT LEXICON.db OUTDIR TREEBANK.conllu...
 
 LEXICON.db is the SQLite extract of Wikidata Lexemes (CC0) from

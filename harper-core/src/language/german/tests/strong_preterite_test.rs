@@ -3,9 +3,9 @@
 //! on the infinitive therefore skip them entirely, and `stattfanden`,
 //! `ausschieden`, `überließen` and `vorhielten` were reported as misspellings.
 //!
-//! igerman98 solves this by listing the preterite stem as a headword of its own
-//! and inflecting it with `SFX Z`. Harper's `s` flag mirrors that rule, and
-//! `harper-core/src/language/german/scripts/mirror_hunspell_flag.py --from Z --to s` puts it on the same entries.
+//! The dictionary solves this by listing the preterite stem as a headword of its own
+//! and inflecting it with the `s` flag, which `build_german_dictionary.py` sets
+//! from the forms Wikidata attests.
 //!
 //! The stems were also mined as nouns (`zog/~~NhYr`), which made the personal
 //! forms "appear to be a noun" mid-sentence. Stripping the noun property is not

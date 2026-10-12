@@ -32,13 +32,12 @@ const GERMAN_COMPOUND_INTERFIXES: &[&[char]] = &[
     ES_INTERFIX,
 ];
 
-/// Common German orthographic alternations, taken from the `REP`/`MAP`
-/// replacement tables of the igerman98/de_DE hunspell dictionary.
+/// Common German orthographic alternations.
 ///
 /// These capture regular spelling correspondences that a plain edit distance
 /// counts as one or two arbitrary edits but that a writer treats as a single,
 /// very plausible swap: `ae`/`ä`, `ss`/`ß`, `i`/`ie`, silent `h` after vowels,
-/// `ee`/`e`, and `f`/`ph`. Consonant-devoicing pairs from hunspell such as
+/// `ee`/`e`, and `f`/`ph`. Consonant-devoicing pairs such as
 /// `d`/`t` and `ch`/`k` are deliberately omitted: they overmatch at arbitrary
 /// positions (a doubled-letter typo like `Hundd` must fix to `Hund`, not to a
 /// rare `d`→`t` variant such as `Hundt`).
@@ -61,8 +60,8 @@ const GERMAN_ALTERNATIONS: &[(&[char], &[char])] = &[
 /// suggestion.
 ///
 /// Harper's shared suggestion scorer is tuned for English. German suggestions
-/// are ranked the way hunspell ranks them: by the *kind* of mistake the writer
-/// most likely made, in hunspell's own heuristic order. Orthographic
+/// are ranked by the *kind* of mistake the writer
+/// most likely made. Orthographic
 /// alternations (`geschriben` → `geschrieben`, `Baeume` → `Bäume`), doubled
 /// letters (`Worrt` → `Wort`) and transpositions (`flasch` → `falsch`,
 /// `Wrot` → `Wort`) are far more plausible than a wholesale letter
@@ -789,7 +788,7 @@ mod tests {
             "Straßenrant",
             // A capitalized compound does not end in a finite verb form.
             "Ausrieb",
-            // igerman98 records the linking element: Arbeits-, Versions-.
+            // The linking element is part of the compound: Arbeits-, Versions-.
             "Arbeitspeicher",
             "Versionhinweis",
             // A particle takes no linking element.

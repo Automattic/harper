@@ -58,7 +58,7 @@ Options:
 ## Coverage
 
 `--coverage` compares Harper's expanded dictionary against an external reference
-list (`<lang>_dictionary.dict.gz`). No language currently ships one (German's was igerman98-derived and removed).
+list (`<lang>_dictionary.dict.gz`). No language currently ships one.
 
 By default **every** word in the reference list is checked — 258k words for
 German, about two seconds. That is both representative and reproducible, so a

@@ -5,8 +5,7 @@
 #   * German proper names from Wikidata items (CC0), wikidata_names.tsv;
 #   * word tables written for this repository (Apache-2.0), scripts/german_curated.py and
 #     scripts/german_closed_classes.py.
-# Flags are those of annotations.json. Earlier versions of this file were derived from
-# igerman98 (GPL); this one is not.
+# Flags are those of annotations.json.
 'nauf/~~r
 'naus/~~r
 'nein/~~r

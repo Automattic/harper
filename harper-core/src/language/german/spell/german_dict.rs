@@ -2,8 +2,7 @@
 //!
 //! The word list, `dictionary.dict`, is written by `scripts/build_german_dictionary.py` from the
 //! German lexemes and proper names of Wikidata (CC0) and from word tables written for this
-//! repository. Earlier versions of the file were derived from the
-//! igerman98 dictionary (GPL); this one is not.
+//! repository.
 use crate::spell::rune::{AttributeList, parse_word_list};
 use crate::spell::{Dictionary, MergedDictionary};
 use std::sync::{Arc, LazyLock, Mutex};
