@@ -1,31 +1,5 @@
 {
 	"affixes": {
-		"B": {
-			"#": "'-heit' feminine noun suffix (safe)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "heit",
-					"condition": "[^h]"
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {},
-						"morphology": {
-							"noun": {
-								"gender": "Feminine"
-							}
-						}
-					}
-				}
-			],
-			"base_metadata": {},
-			"rename_ok": true
-		},
 		"E": {
 			"#": "Noun plural '-n' (Diagnose -> Diagnosen, Frage -> Fragen). Alone among the five plural affixes it does **not** mark its base singular, but singular *or* plural. It is carried by two kinds of entry: a singular that forms its plural in '-n' (Diagnose -> Diagnosen), and a form that is already plural and only adds the dative '-n' (die Lehrer -> den Lehrern, die Befunde -> den Befunden). Of the entries carrying it, some are of the second kind -- and for the '-er' and '-el' nouns the base form is genuinely both numbers at once (die Lehrer, der Lehrer), so no single answer is right. A set holding both says exactly that: an inflecting noun whose number this flag does not decide. It constrains nothing in an agreement check, which is the honest outcome, and it still tells the capitalization linter that a bare '-e' word is a real noun rather than a verb form. Split out of 'Y', which generated '-n' and '-en' for every entry that carried it and so put one non-word into the dictionary for nearly every noun it touched. Which of the two an entry takes is decided per entry by harper-core/src/language/german/scripts/build_german_dictionary.py, which keeps the flag only when the forms it builds are forms Wikidata lists for that noun. 'E' previously held the 'ver-' prefix, which no entry carried.",
 			"kind": "suffix",
@@ -180,27 +154,6 @@
 			"base_metadata": {
 				"noun": {}
 			},
-			"rename_ok": true
-		},
-		"I": {
-			"#": "Compound word formation - noun + noun with 's' interfix",
-			"kind": "suffix",
-			"cross_product": true,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "s",
-					"condition": "."
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {}
-					}
-				}
-			],
-			"base_metadata": {},
 			"rename_ok": true
 		},
 		"K": {
@@ -414,29 +367,6 @@
 				}
 			],
 			"base_metadata": {},
-			"rename_ok": true
-		},
-		"o": {
-			"#": "Compound word formation - noun + noun with 'es' interfix (lowercase alias)",
-			"kind": "suffix",
-			"cross_product": true,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "es",
-					"condition": "."
-				}
-			],
-			"target": [
-				{
-					"metadata": {
-						"noun": {}
-					}
-				}
-			],
-			"base_metadata": {
-				"noun": {}
-			},
 			"rename_ok": true
 		},
 		"s": {
@@ -2091,68 +2021,6 @@
 			},
 			"rename_ok": true
 		},
-		"k": {
-			"#": "Verb past participle -t (regular verbs: ge-macht, ge-lernt)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "t",
-					"condition": "ge[^t]"
-				}
-			],
-			"target": [],
-			"base_metadata": {
-				"verb": {
-					"verb_form": "PAST_PARTICIPLE"
-				}
-			},
-			"rename_ok": true
-		},
-		"l": {
-			"#": "Verb past participle -en (strong verbs: ge-schrieben, ge-laufen)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "en",
-					"condition": "ge[^n]"
-				}
-			],
-			"target": [],
-			"base_metadata": {
-				"verb": {
-					"verb_form": "PAST_PARTICIPLE"
-				}
-			},
-			"rename_ok": true
-		},
-		"m": {
-			"#": "Verb past participle without ge- prefix (insep. prefixes: be-, er-, ver-, zer-, ent-, emp-)",
-			"kind": "suffix",
-			"cross_product": false,
-			"replacements": [
-				{
-					"remove": "",
-					"add": "t",
-					"condition": "(be|er|ver|zer|ent|emp|miss)[^t]"
-				},
-				{
-					"remove": "",
-					"add": "en",
-					"condition": "(be|er|ver|zer|ent|emp|miss)[^n]"
-				}
-			],
-			"target": [],
-			"base_metadata": {
-				"verb": {
-					"verb_form": "PAST_PARTICIPLE"
-				}
-			},
-			"rename_ok": true
-		},
 		"x": {
 			"#": "'-bar' derivation: the adjective that says the verb can be done to something (lesbar, beeinflussbar, bearbeitbare). Attaches to the verb stem, so the infinitive ending comes off first. Not every transitive verb takes it -- there is no *gebbar* -- so the flag is set per entry, see harper-core/src/language/german/scripts/build_german_dictionary.py. `x` previously held an imperative-mood property that no entry carried.",
 			"kind": "suffix",
@@ -2387,18 +2255,6 @@
 				}
 			}
 		},
-		"C": {
-			"#": "conjunction property (German)",
-			"metadata": {
-				"conjunction": {}
-			}
-		},
-		"D": {
-			"#": "determiner property (German - articles)",
-			"metadata": {
-				"determiner": {}
-			}
-		},
 		"F": {
 			"#": "feminine noun property (German)",
 			"metadata": {
@@ -2408,12 +2264,6 @@
 						"gender": "Feminine"
 					}
 				}
-			}
-		},
-		"I": {
-			"#": "pronoun property (German)",
-			"metadata": {
-				"pronoun": {}
 			}
 		},
 		"J": {
@@ -2562,10 +2412,6 @@
 				"verb": {}
 			}
 		},
-		"p": {
-			"#": "Nominative case flag (German)",
-			"metadata": {}
-		},
 		"q": {
 			"#": "Compound adjective flag - words with this flag can participate in adjective compound formation",
 			"metadata": {
@@ -2583,27 +2429,6 @@
 			"metadata": {
 				"verb": {
 					"verb_form": "PAST"
-				}
-			}
-		},
-		"u": {
-			"#": "Accusative case flag (German)",
-			"metadata": {}
-		},
-		"v": {
-			"#": "Dative case flag (German)",
-			"metadata": {}
-		},
-		"w": {
-			"#": "Genitive case flag (German)",
-			"metadata": {}
-		},
-		"y": {
-			"#": "Subjunctive I mood flag (German - Konjunktiv I)",
-			"metadata": {
-				"verb": {},
-				"morphology": {
-					"mood": "SubjunctiveI"
 				}
 			}
 		},
