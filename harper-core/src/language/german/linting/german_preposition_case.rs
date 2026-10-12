@@ -2,6 +2,8 @@
 
 use std::sync::Arc;
 
+use crate::language::german::spell::compact_dict::CompactDictionary;
+
 use crate::{
     Token, TokenKind, TokenStringExt,
     document::Document,
@@ -15,7 +17,7 @@ use crate::{
     language::german::spell::curated_german_dictionary,
     language::morphology::{Agreement, Case, CaseSet, MorphologyExt},
     linting::{Lint, LintKind, Linter, Suggestion},
-    spell::{Dictionary, FstDictionary},
+    spell::Dictionary,
 };
 
 /// How many words may stand between the determiner and its noun.
@@ -93,7 +95,7 @@ pub struct GermanPrepositionCase {
     /// compound decomposition invents readings, and a wrong gender on the noun
     /// would rule out a reading the determiner really has and turn a correct
     /// phrase into a lint.
-    dictionary: Arc<FstDictionary>,
+    dictionary: Arc<CompactDictionary>,
     nouns: NounGender,
 }
 

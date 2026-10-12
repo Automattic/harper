@@ -7,9 +7,10 @@
 use std::borrow::Cow;
 use std::sync::{Arc, Mutex, OnceLock};
 
+use super::compact_dict::CompactDictionary;
 use crate::DictWordMetadata;
+use crate::spell::Dictionary;
 use crate::spell::word_hash;
-use crate::spell::{Dictionary, FstDictionary};
 
 use super::compound_checker::CompoundChecker;
 
@@ -21,7 +22,7 @@ use super::compound_checker::CompoundChecker;
 /// compound parts.
 pub struct CompoundAwareDictionary {
     /// The base dictionary to check first (FST for fast lookups)
-    base_dict: Arc<FstDictionary>,
+    base_dict: Arc<CompactDictionary>,
     /// The compound checker for lazy compound decomposition
     compound_checker: Arc<Mutex<CompoundChecker>>,
     /// Fingerprint of the base words, computed on first request.
@@ -33,7 +34,7 @@ pub struct CompoundAwareDictionary {
 
 impl CompoundAwareDictionary {
     /// Create a new CompoundAwareDictionary from a base dictionary and word list
-    pub fn new(base_dict: Arc<FstDictionary>, mut compound_checker: CompoundChecker) -> Self {
+    pub fn new(base_dict: Arc<CompactDictionary>, mut compound_checker: CompoundChecker) -> Self {
         // Element membership during compound decomposition is resolved against
         // the base dictionary (case-insensitive), matching what GermanSpellCheck's
         // fallback sees at runtime.
@@ -46,16 +47,16 @@ impl CompoundAwareDictionary {
     }
 
     /// Get a reference to the base dictionary
-    pub fn base_dict(&self) -> &Arc<FstDictionary> {
+    pub fn base_dict(&self) -> &Arc<CompactDictionary> {
         &self.base_dict
     }
 
     /// Create a new CompoundAwareDictionary from a base dictionary and word list
     pub fn from_word_list(
-        base_dict: Arc<FstDictionary>,
+        base_dict: Arc<CompactDictionary>,
         word_list: &[crate::spell::rune::word_list::AnnotatedWord],
     ) -> Self {
-        let compound_checker = CompoundChecker::new(word_list);
+        let compound_checker = CompoundChecker::for_dictionary(word_list);
         Self::new(base_dict, compound_checker)
     }
 
@@ -217,7 +218,7 @@ mod tests {
         }
     }
 
-    fn create_test_base_dict() -> Arc<FstDictionary> {
+    fn create_test_base_dict() -> Arc<CompactDictionary> {
         let mut dict = MutableDictionary::new();
 
         for word in ["schuh", "hersteller", "arbeit", "geber"] {

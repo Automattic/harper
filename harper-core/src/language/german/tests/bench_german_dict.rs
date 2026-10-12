@@ -19,25 +19,10 @@ mod tests {
     /// What the German dictionary costs to keep in memory, and how much of that
     /// follows from how many words it holds.
     ///
-    /// Measured on the same machine, one build per process so the `LazyLock` is
-    /// cold, before and after this branch removed 173793 generated forms:
-    ///
-    /// | words | build | resident | peak |
-    /// |---|---|---|---|
-    /// | 790823 | 1.50 s | +277 MB | 473 MB |
-    /// | 617030 | 1.24 s | +249 MB | 422 MB |
-    ///
-    /// A 22% smaller word list buys 10% less memory, so the footprint is
-    /// **sub-linear in the vocabulary**: roughly 180 MB of it does not depend on
-    /// the word count at all. That is the shape issue #3725 describes — the FST
-    /// is small and the cost is what `FstDictionary` materializes alongside it
-    /// for fuzzy matching. Shrinking the word list is worth doing and is not the
-    /// lever; a language more inflected than German will not escape this by
-    /// having fewer entries.
-    ///
-    /// The other number to keep in view is the gap between peak and resident:
-    /// 422 MB against 249 MB. An always-on language server pays the peak at
-    /// startup, not the steady state.
+    /// The German dictionary is a `CompactDictionary`, not an `FstDictionary`:
+    /// see `spell/compact_dict.rs` and "Dictionary memory" in `../AGENTS.md`.
+    /// The whole-process figure (`harper-cli lint --dialect de`) went from
+    /// 637 MB to about 190-220 MB.
     ///
     /// Printed rather than asserted: these are machine-dependent, and a
     /// threshold here would fail on somebody else's laptop for no reason. Run
@@ -62,6 +47,12 @@ mod tests {
                 })
         }
 
+        println!(
+            "size_of: DictWordMetadata {} B, CharString {} B, WordMapEntry {} B",
+            std::mem::size_of::<crate::DictWordMetadata>(),
+            std::mem::size_of::<crate::CharString>(),
+            std::mem::size_of::<crate::spell::word_map::WordMapEntry>(),
+        );
         let before = resident_kb("VmRSS:");
         let start = std::time::Instant::now();
         let dict = curated_german_dictionary();

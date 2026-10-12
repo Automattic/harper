@@ -15,6 +15,10 @@ pub use self::trie_dictionary::TrieDictionary;
 pub use self::word_id::WordId;
 
 mod dictionary;
+// Reachable from the language modules, which reuse its fuzzy-search helpers.
+#[cfg(feature = "language-module")]
+pub(crate) mod fst_dictionary;
+#[cfg(not(feature = "language-module"))]
 mod fst_dictionary;
 mod merged_dictionary;
 mod mutable_dictionary;

@@ -30,11 +30,12 @@ use std::num::NonZeroUsize;
 use std::sync::{Arc, LazyLock, Mutex};
 use std::time::{Duration, Instant};
 
+use super::compact_dict::CompactDictionary;
 use crate::CharString;
 use crate::dict_word_metadata::{AdjectiveData, DictWordMetadata, NounData};
 use crate::language::morphology::{Agreement, Morphology, MorphologyExt};
+use crate::spell::Dictionary;
 use crate::spell::rune::word_list::AnnotatedWord;
-use crate::spell::{Dictionary, FstDictionary};
 
 /// Compound word formation flags for German
 const COMPOUND_FLAG_NO_INTERFIX: char = 'h';
@@ -44,6 +45,41 @@ const COMPOUND_FLAG_EN_INTERFIX: char = 'l';
 const COMPOUND_FLAG_ER_INTERFIX: char = 'm';
 const COMPOUND_FLAG_ES_INTERFIX: char = 'o';
 const COMPOUND_ADJ_FLAG: char = 'q';
+
+/// The compound-formation flags of one word, as a bit set.
+///
+/// A word list entry carries at most the seven flags above, and the checker
+/// keeps one of these for every flagged word in two casings. A `HashSet<char>`
+/// per word cost a heap allocation each, which came to tens of megabytes.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq)]
+struct CompoundFlags(u8);
+
+impl CompoundFlags {
+    const fn bit(flag: char) -> u8 {
+        match flag {
+            COMPOUND_FLAG_NO_INTERFIX => 1,
+            COMPOUND_FLAG_S_INTERFIX => 1 << 1,
+            COMPOUND_FLAG_N_INTERFIX => 1 << 2,
+            COMPOUND_FLAG_EN_INTERFIX => 1 << 3,
+            COMPOUND_FLAG_ER_INTERFIX => 1 << 4,
+            COMPOUND_FLAG_ES_INTERFIX => 1 << 5,
+            COMPOUND_ADJ_FLAG => 1 << 6,
+            _ => 0,
+        }
+    }
+
+    fn insert(&mut self, flag: char) {
+        self.0 |= Self::bit(flag);
+    }
+
+    fn contains(&self, flag: &char) -> bool {
+        self.0 & Self::bit(*flag) != 0
+    }
+
+    fn is_empty(&self) -> bool {
+        self.0 == 0
+    }
+}
 
 /// Marks an entry that is a bare stem rather than a word (see the `stem_only`
 /// property in `annotations.json`). The affix expansion keeps such an entry out
@@ -504,7 +540,7 @@ pub struct CompoundChecker {
     /// This only contains words that carry compound-formation flags; it drives
     /// the metadata distinction (adjective-vs-noun via the `q` flag) and the
     /// short-part allowance.
-    compound_words: HashMap<CharString, HashSet<char>>,
+    compound_words: HashMap<CharString, CompoundFlags>,
     /// Every word from the word list in the casings needed for case-insensitive
     /// membership lookups when no base dictionary has been injected.
     members: HashSet<CharString>,
@@ -531,7 +567,7 @@ pub struct CompoundChecker {
     ///
     /// When present, membership queries use this dictionary (whose lookup is
     /// case-insensitive) instead of the `members` set.
-    base_dict: Option<Arc<FstDictionary>>,
+    base_dict: Option<Arc<CompactDictionary>>,
     /// All compound flags for quick lookup
     compound_flags: HashSet<char>,
     /// Cache for compound check results to avoid repeated decomposition
@@ -701,6 +737,20 @@ pub(crate) fn suffixed_element_set(word_list: &[AnnotatedWord]) -> HashSet<CharS
 impl CompoundChecker {
     /// Create a new CompoundChecker from a list of annotated words
     pub fn new(word_list: &[AnnotatedWord]) -> Self {
+        Self::build(word_list, true)
+    }
+
+    /// Like [`CompoundChecker::new`], for a checker that will be given a base
+    /// dictionary with [`CompoundChecker::set_base_dictionary`].
+    ///
+    /// Element membership then comes from that dictionary, so the word set `new`
+    /// keeps for the dictionary-less case (three casings of every word, tens of
+    /// megabytes) is never built.
+    pub fn for_dictionary(word_list: &[AnnotatedWord]) -> Self {
+        Self::build(word_list, false)
+    }
+
+    fn build(word_list: &[AnnotatedWord], with_members: bool) -> Self {
         // Build compound words map from words that have compound flags
         let mut compound_words = HashMap::new();
         let mut members = HashSet::new();
@@ -710,21 +760,21 @@ impl CompoundChecker {
         let barred_elements = barred_element_set(word_list);
 
         for word in word_list {
-            let flags: HashSet<char> = word
-                .annotations
-                .iter()
-                .filter(|&&c| is_compound_flag(c))
-                .map(|&c| c.to_ascii_lowercase())
-                .collect();
+            let mut flags = CompoundFlags::default();
+            for &c in word.annotations.iter().filter(|&&c| is_compound_flag(c)) {
+                flags.insert(c.to_ascii_lowercase());
+            }
 
             // Every dictionary word may act as a compound element, regardless of
             // whether it carries compound-formation flags. Record the casings
             // needed for case-insensitive membership lookups.
-            insert_member_casings(&mut members, &word.letters);
+            if with_members {
+                insert_member_casings(&mut members, &word.letters);
+            }
 
             if !flags.is_empty() {
                 // Insert the original word
-                compound_words.insert(word.letters.clone(), flags.clone());
+                compound_words.insert(word.letters.clone(), flags);
 
                 // Also insert a version with the first letter lowercased for case-insensitive lookup
                 if !word.letters.is_empty() {
@@ -759,11 +809,12 @@ impl CompoundChecker {
     /// decomposition. When set, element membership is resolved through
     /// `base.contains_word` (a case-insensitive lookup) instead of the word
     /// list collected by [`CompoundChecker::new`].
-    pub fn set_base_dictionary(&mut self, base: Arc<FstDictionary>) {
+    pub fn set_base_dictionary(&mut self, base: Arc<CompactDictionary>) {
         self.base_dict = Some(base);
         // Membership queries now go through the base dictionary, so the
         // casing-tolerant word-list set is no longer needed.
-        self.members.clear();
+        // `clear` would keep the allocation, which is most of this struct's size.
+        self.members = HashSet::new();
         // Membership semantics changed, so cached decomposition results are stale.
         self.cache.lock().unwrap().clear();
     }
@@ -886,10 +937,10 @@ impl CompoundChecker {
     }
 
     /// Helper to get compound flags for a word, trying lowercase first if not found
-    fn get_compound_flags(&self, word: &[char]) -> Option<&HashSet<char>> {
+    fn get_compound_flags(&self, word: &[char]) -> Option<CompoundFlags> {
         // First try exact match
         if let Some(flags) = self.compound_words.get(word) {
-            return Some(flags);
+            return Some(*flags);
         }
 
         // For German, try with first letter lowercased (nouns are capitalized in text but stored lowercase in dict)
@@ -899,7 +950,7 @@ impl CompoundChecker {
                 // Use proper Unicode lowercasing for German characters like Ä, Ö, Ü
                 *first_char = first_char.to_lowercase().next().unwrap_or(*first_char);
             }
-            self.compound_words.get(&lowercased)
+            self.compound_words.get(&lowercased).copied()
         } else {
             None
         }

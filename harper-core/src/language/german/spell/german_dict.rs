@@ -3,10 +3,10 @@
 //! The word list is derived from the igerman98 dictionary (GPLv2/GPLv3),
 //! using annotated dictionary format for comprehensive coverage.
 use crate::spell::rune::{AttributeList, parse_word_list};
-use crate::spell::word_map::WordMap;
-use crate::spell::{Dictionary, FstDictionary, MergedDictionary, MutableDictionary};
+use crate::spell::{Dictionary, MergedDictionary};
 use std::sync::{Arc, LazyLock};
 
+use super::compact_dict::{CompactDictionary, expand_in_blocks};
 use super::compound_aware_dict::CompoundAwareDictionary;
 use super::compound_checker::CompoundChecker;
 
@@ -18,25 +18,17 @@ fn load_german_word_list() -> Vec<crate::spell::rune::word_list::AnnotatedWord> 
 
 /// Build the base German dictionary, without pre-generated compounds.
 ///
-/// Expanding the affixes yields a little over a million entries, so this goes
-/// straight from the expanded [`WordMap`] into [`FstDictionary`]. Routing it
-/// through a [`MutableDictionary`] first would hold a second full copy of the
-/// dictionary at the same time, and `FstDictionary` keeps one internally anyway.
+/// Expanding the affixes yields a little over 700 000 entries. Expanded into a
+/// single [`WordMap`] they take 190 MB while building, and even as an
+/// [`FstDictionary`](crate::spell::FstDictionary) 240 MB afterwards, so they go
+/// straight into a [`CompactDictionary`] as the expansion finishes with them.
 fn build_german_base_dict(
     word_list: &[crate::spell::rune::word_list::AnnotatedWord],
-) -> FstDictionary {
+) -> CompactDictionary {
     let attr_list = AttributeList::parse(include_str!("../annotations.json"))
         .expect("Failed to parse German dictionary attribute list");
 
-    let mut word_map = WordMap::default();
-    attr_list.expand_annotated_words(word_list.iter().cloned(), &mut word_map);
-
-    FstDictionary::new(
-        word_map
-            .into_iter()
-            .map(|entry| (entry.canonical_spelling, entry.metadata))
-            .collect(),
-    )
+    expand_in_blocks(&attr_list, word_list)
 }
 
 /// How many threads the dictionary build may use. WebAssembly has none.
@@ -105,17 +97,16 @@ pub static GERMAN_SUFFIXED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharStri
 pub static GERMAN_BARRED_ELEMENTS: LazyLock<hashbrown::HashSet<crate::CharString>> =
     LazyLock::new(|| super::compound_checker::barred_element_set(&GERMAN_WORD_LIST));
 
-static GERMAN_BASE_DICT: LazyLock<Arc<FstDictionary>> =
+static GERMAN_BASE_DICT: LazyLock<Arc<CompactDictionary>> =
     LazyLock::new(|| Arc::new(build_german_base_dict(&GERMAN_WORD_LIST)));
 
 // Compound-aware dictionary using lazy compound checking
 static GERMAN_COMPOUND_AWARE_DICT: LazyLock<Arc<CompoundAwareDictionary>> = LazyLock::new(|| {
     let word_list = &*GERMAN_WORD_LIST;
-    // The two do not depend on each other; the checker is the smaller of them.
-    let (base_dict, compound_checker) = join(
-        || Arc::clone(&*GERMAN_BASE_DICT),
-        || CompoundChecker::new(word_list),
-    );
+    // One after the other: built side by side, the two peaks add up, and the
+    // dictionary build is already spread over the cores.
+    let base_dict = Arc::clone(&*GERMAN_BASE_DICT);
+    let compound_checker = CompoundChecker::for_dictionary(word_list);
 
     Arc::new(CompoundAwareDictionary::new(base_dict, compound_checker))
 });
@@ -147,47 +138,47 @@ static GERMAN_COMBINED_DICT: LazyLock<Arc<MergedDictionary>> = LazyLock::new(|| 
 ///
 /// Compound words are not in here. Use [`combined_german_dictionary`] when
 /// compounds have to be recognised.
-pub fn base_german_dictionary_fst() -> Arc<FstDictionary> {
+pub fn base_german_dictionary_fst() -> Arc<CompactDictionary> {
     (*GERMAN_BASE_DICT).clone()
 }
 
 /// Alias for [`base_german_dictionary_fst`].
-pub fn german_dictionary() -> Arc<FstDictionary> {
+pub fn german_dictionary() -> Arc<CompactDictionary> {
     base_german_dictionary_fst()
 }
 
 /// Alias for [`base_german_dictionary_fst`].
-pub fn german_dictionary_fst() -> Arc<FstDictionary> {
+pub fn german_dictionary_fst() -> Arc<CompactDictionary> {
     base_german_dictionary_fst()
 }
 
 /// Alias for [`base_german_dictionary_fst`].
-pub fn curated_german_dictionary() -> Arc<FstDictionary> {
+pub fn curated_german_dictionary() -> Arc<CompactDictionary> {
     base_german_dictionary_fst()
 }
 
 /// Alias for [`base_german_dictionary_fst`]. The morphological annotations live
 /// on the entries themselves, so there is no separate annotated dictionary.
-pub fn annotated_german_dictionary() -> Arc<FstDictionary> {
+pub fn annotated_german_dictionary() -> Arc<CompactDictionary> {
     base_german_dictionary_fst()
 }
 
 /// Alias for [`base_german_dictionary_fst`].
-pub fn compound_aware_german_fst_dictionary() -> Arc<FstDictionary> {
+pub fn compound_aware_german_fst_dictionary() -> Arc<CompactDictionary> {
     base_german_dictionary_fst()
 }
 
 /// The base German dictionary in mutable form, for bulk reads of the entries and
 /// their metadata.
 ///
-/// [`FstDictionary`] already keeps a [`MutableDictionary`] next to its FST, so
+/// [`CompactDictionary`] already keeps a [`MutableDictionary`] next to its FST, so
 /// this shares that one. Converting instead would copy all million-odd entries.
-pub fn base_german_dictionary() -> Arc<MutableDictionary> {
-    base_german_dictionary_fst().as_mutable()
+pub fn base_german_dictionary() -> Arc<CompactDictionary> {
+    base_german_dictionary_fst()
 }
 
 /// Alias for [`base_german_dictionary`].
-pub fn mutable_german_dictionary() -> Arc<MutableDictionary> {
+pub fn mutable_german_dictionary() -> Arc<CompactDictionary> {
     base_german_dictionary()
 }
 

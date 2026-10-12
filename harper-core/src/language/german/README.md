@@ -249,23 +249,21 @@ cargo test -p harper-core --features multilingual \
     --lib report_german_dict_memory -- --nocapture
 ```
 
-Measured before and after this branch removed 173793 generated forms, one build
-per process:
+Measured with `harper-cli lint --dialect de` on a tiny input (release build,
+peak resident set of the whole process):
 
-| words | build | resident | peak |
-|---|---|---|---|
-| 790823 | 1.50 s | +277 MB | 473 MB |
-| 617030 | 1.24 s | +249 MB | 422 MB |
+| | German | English |
+|---|---|---|
+| before the compact dictionary | 637 MB | 172 MB |
+| now | 190-220 MB | 172 MB |
 
-A 22% smaller word list buys 10% less memory. The footprint is **sub-linear in
-the vocabulary** — roughly 180 MB of it does not depend on the word count at
-all, which is the shape issue #3725 describes: the FST is small and the cost is
-what `FstDictionary` materializes alongside it for fuzzy matching. Shrinking the
-word list is worth doing and is not the lever. A language more inflected than
-German will not escape this by having fewer entries.
-
-Watch the gap between peak and resident too, 422 MB against 249 MB: a language
-server pays the peak at startup, not the steady state.
+The dictionary used to be one 168-byte entry per generated form in a hash table,
+beside an FST, which made 22% fewer forms buy only 10% less memory. It is now
+`spell/compact_dict.rs`: spellings in one array, each distinct metadata value
+stored once, the FST kept for fuzzy matching. See "Dictionary memory" in
+`../AGENTS.md` for how it is built and for the two causes that had nothing to do
+with the dictionary itself (a `HashSet::clear` that kept 100 MB, and the English
+dictionary being loaded to lint German).
 
 For speed the picture is the other way round. On the same 3.3 MB of prose,
 `harper-cli lint` takes **26.9 s in German against 52.0 s in English** — German

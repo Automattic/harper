@@ -7,6 +7,7 @@ pub use self::german_dict::{
     mutable_german_dictionary,
 };
 
+pub mod compact_dict;
 pub mod compound;
 pub mod compound_aware_dict;
 pub mod compound_checker;

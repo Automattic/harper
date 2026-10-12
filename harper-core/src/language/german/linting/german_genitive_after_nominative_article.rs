@@ -1,11 +1,13 @@
 use std::sync::Arc;
 
+use crate::language::german::spell::compact_dict::CompactDictionary;
+
 use crate::{
     Span, Token, TokenKind, TokenStringExt,
     document::Document,
     language::german::spell::curated_german_dictionary,
     linting::{Lint, LintKind, Linter, Suggestion},
-    spell::{Dictionary, FstDictionary},
+    spell::Dictionary,
 };
 
 /// Articles that never introduce a genitive, paired with the genitive article
@@ -40,7 +42,7 @@ const MIN_STEM_LENGTH: usize = 4;
 /// * *"das **Ass**"* — the stem `As` is too short to be the noun.
 /// * *"das **Volks-**wagen"* — a hyphen means the word is a compound element.
 pub struct GermanGenitiveAfterNominativeArticle {
-    dictionary: Arc<FstDictionary>,
+    dictionary: Arc<CompactDictionary>,
 }
 
 impl Default for GermanGenitiveAfterNominativeArticle {

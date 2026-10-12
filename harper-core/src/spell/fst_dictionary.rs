@@ -114,7 +114,7 @@ impl FstDictionary {
     }
 }
 
-fn build_dfa(max_distance: u8, query: &str) -> DFA {
+pub(crate) fn build_dfa(max_distance: u8, query: &str) -> DFA {
     // Insert if it does not exist
     AUTOMATON_BUILDERS.with_borrow_mut(|v| {
         if !v.iter().any(|t| t.0 == max_distance) {
@@ -135,7 +135,10 @@ fn build_dfa(max_distance: u8, query: &str) -> DFA {
 }
 
 /// Consumes a DFA stream and emits the WordID-edit distance pairs it produces.
-fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u64, u8)> {
+pub(crate) fn stream_distances_vec(
+    stream: &mut StreamWithState<&DFA>,
+    dfa: &DFA,
+) -> Vec<(u64, u8)> {
     let mut word_id_pairs = Vec::new();
     while let Some((_, v, s)) = stream.next() {
         word_id_pairs.push((v, dfa.distance(s).to_u8()));
@@ -145,7 +148,7 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 }
 
 /// Merges WordID-distance pairs, keeping the smallest distance for each word.
-fn merge_best_distances(
+pub(crate) fn merge_best_distances(
     best_distances: &mut HashMap<u64, u8>,
     distances: impl IntoIterator<Item = (u64, u8)>,
 ) {

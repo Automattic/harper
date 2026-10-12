@@ -341,30 +341,51 @@ language, and fails if any shared test disagrees.
 
 A language's `dictionary.dict` is not what ends up in memory. Each line is a
 headword plus affix flags (`Arzt/~~Mh0A`). At load time every flag is expanded
-through the rules in `annotations.json`, and **every generated form becomes its
-own dictionary entry**. German goes from about 245,000 lines to about 617,000
-word forms; English has about 55,000 lines.
+through the rules in `annotations.json`, and **every generated form is its own
+dictionary entry**. German goes from about 245,000 lines to about 700,000 word
+forms; English has about 55,000 lines.
 
-Each form is stored as a full `WordMapEntry` in a `HashMap` (`spell/word_map.rs`):
-a `CharString` (a `Vec<char>`, 4 bytes per letter) plus a `DictWordMetadata`
-struct with one optional slot per part of speech. `FstDictionary` then builds a
-second structure, an FST, for fuzzy matching on top of that.
+The shared representation is expensive per form: a `WordMapEntry` is 168 bytes
+(an 80-byte `CharString` and an 88-byte `DictWordMetadata`) in a hash table that
+rounds up to a power of two, and `FstDictionary` keeps that beside an FST. That
+was 193 MB while expanding and about 240 MB afterwards for German.
 
-Measured with `harper-cli lint` on a tiny input (release build, whole process):
-English 171 MB peak, German 637 MB peak. The README in `german/` gives the
-dictionary alone as +249 MB resident and 422 MB peak, of which roughly 180 MB
-does not scale with the word count. That last figure comes from the README, not
-from a profile; the split between the map, the FST and the metadata has not been
-measured.
+German therefore does not use it. `german/spell/compact_dict.rs` stores every
+spelling in one `char` array, each *distinct* metadata value once (a few
+thousand; `derived_from` is kept apart because it differs for every word), an
+open-addressed table for lookups and an FST for fuzzy matching. It implements
+`Dictionary` and answers like `FstDictionary`; a test compares every word and
+its metadata with a one-shot expansion. The expansion is run in blocks, and a
+form is handed over as soon as no later block can produce it, which gives the
+same result as one map (a plain per-block merge does not: which headword wins
+`derived_from` depends on the code path). The expansion itself is not
+deterministic about the capitalisation of forms two headwords spell differently
+(`-in` / `-In`), so that is the one thing the test lets differ.
+
+Measured with `harper-cli lint --dialect de` on a tiny input (release build,
+whole process, peak resident set): **637 MB before, about 190-220 MB now**;
+English is 172 MB. Two further causes were not in the dictionary at all:
+
+- `CompoundChecker::set_base_dictionary` called `HashSet::clear()` on a set of
+  three casings of every word. `clear` keeps the allocation. It is now never
+  built for the dictionary path (`CompoundChecker::for_dictionary`).
+- `harper-cli lint` built the English curated config for any language, which
+  loads the English dictionary (about 130 MB). Other languages now start from an
+  empty config.
 
 Consequences for you:
 
-- Adding an affix flag that fans out into many forms costs memory for each form.
-  Check the count before and after (`report_german_dict_memory` in
-  `german/tests/bench_german_dict.rs`).
-- Removing 22% of the forms saved only 10% of the memory. Trimming the word list
-  is not the main lever. A cheaper per-word representation would be.
-- The peak happens at startup, while the headwords, the expanded map and the FST
-  coexist. A language server pays the peak, not the steady state.
-- Run that test alone. Another test in the same binary warms the `LazyLock` and
-  it then reports zero.
+- Adding an affix flag that fans out into many forms still costs memory per form,
+  but about a fifth of what it did. Check the count before and after
+  (`report_german_dict_memory` in `german/tests/bench_german_dict.rs`).
+- Measure the whole process, not just the dictionary: `ru_maxrss` of a child
+  process, or `valgrind --tool=massif` to see who owns the peak. Two of the three
+  causes above were found that way and not by reading the dictionary code.
+- A language server loads the English dictionary for language detection as well,
+  so its German footprint is the sum, not the figure above.
+- Run `report_german_dict_memory` alone. Another test in the same binary warms the
+  `LazyLock` and it then reports zero.
+- The build is two passes (a parallel one that only finds the last block that
+  produces each form, then the real one), so loading takes about a second longer
+  than before and the checker is built after the dictionary, not beside it. Both
+  are deliberate trades for the peak.

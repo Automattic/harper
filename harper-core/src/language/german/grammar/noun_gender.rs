@@ -8,6 +8,8 @@
 
 use std::sync::Arc;
 
+use crate::language::german::spell::compact_dict::CompactDictionary;
+
 use crate::{
     Punctuation, Token, TokenKind,
     document::Document,
@@ -16,7 +18,7 @@ use crate::{
     language::german::spell::curated_german_dictionary,
     language::german::spell::lexical_classes::{PLURAL_FORMS, PLURALIA_TANTUM},
     language::morphology::{Gender, GenderSet, MorphologyExt, NumberSet},
-    spell::{Dictionary, FstDictionary},
+    spell::Dictionary,
 };
 
 /// Endings of a noun whose plural may be spelled like its singular (*der
@@ -26,7 +28,7 @@ use crate::{
 const SAME_AS_PLURAL: &[&str] = &["en", "er", "el"];
 
 pub struct NounGender {
-    dictionary: Arc<FstDictionary>,
+    dictionary: Arc<CompactDictionary>,
 }
 
 impl Default for NounGender {
@@ -42,7 +44,7 @@ impl NounGender {
         }
     }
 
-    pub fn dictionary(&self) -> &FstDictionary {
+    pub fn dictionary(&self) -> &CompactDictionary {
         &self.dictionary
     }
 
