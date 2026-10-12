@@ -233,7 +233,6 @@ class Builder:
                 continue  # a form that is another noun's lemma: that noun's entry says what it is
             extra = {"N"}
             if PL in ft:
-                extra.add(";")
                 if not form.endswith(("n", "s")):
                     extra.add("&")
             else:
@@ -757,7 +756,7 @@ class Builder:
         for word in curated.EXTRA_VERB_FORMS:
             self.add(word, {"V", "g"})
         for word in curated.LATIN_PLURALS:
-            self.add(word, {"N", ";"} | ({"&"} if not word.endswith(("n", "s")) else set()))
+            self.add(word, {"N"} | ({"&"} if not word.endswith(("n", "s")) else set()))
         for word in curated.EXTRA_ADJECTIVES:
             self.add(word, {"J", "q", "r", "O", "Q", "R", "S", "T", "U", "W"})
         for word in self.SEPARABLE:  # *Sie stellt die Frage dar*: the prefix stands alone at the end of the clause
@@ -781,7 +780,7 @@ class Builder:
                         break
                 else:
                     flags.add("A")
-                    self.add(plural, {"N", ";"} | ({"&"} if not plural.endswith(("n", "s")) else set()))
+                    self.add(plural, {"N"} | ({"&"} if not plural.endswith(("n", "s")) else set()))
             self.add(lemma, flags)
             if gender == "M" and lemma.endswith("er") and lemma != "Puffer":
                 self.entries[lemma] |= {"K", "L"}
