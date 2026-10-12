@@ -449,12 +449,9 @@ class Builder:
             self.stems.add(lemma[:-2] if lemma.endswith("en") and not lemma.endswith(("ern", "eln")) else lemma[:-1])
         if self.generated(lemma, "c"):
             flags.add("c")
-        for f, probe in (("7", self.noun_lemmas), ("x", self.adj_lemmas)):
-            gen = self.generated(lemma, f)
-            if gen and (any(g in probe for g in gen) or (f == "x" and lemma.endswith("ieren"))):
-                flags.add(f)
-                if f == "7":
-                    flags.add("8")
+        gen = self.generated(lemma, "x")
+        if gen and (any(g in self.adj_lemmas for g in gen) or lemma.endswith("ieren")):
+            flags.add("x")
         self.add(lemma, flags)
         self.verb_lemma_set.add(lemma)
         for prefix in self.SEPARABLE:
