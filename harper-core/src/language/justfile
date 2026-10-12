@@ -373,3 +373,14 @@ language-recall language dir="":
 	src_dir="{{dir}}"
 	[ -n "${src_dir}" ] || src_dir=".archive/german-language/corpus"
 	python3 harper-core/src/language/german/scripts/german_recall_check.py "${src_dir}" --limit 300
+
+# Time and peak memory of a language against English: startup (dictionary
+# build), lint time on a ~200 KB sample, peak resident set of the whole process.
+# See "Performance" in harper-core/src/language/AGENTS.md.
+# Usage: just language-perf german
+#        just language-perf german --sample path/to/clean-prose.md
+language-perf language *args:
+	#!/usr/bin/env bash
+	set -eo pipefail
+	cargo build --release -q -p harper-cli
+	python3 "{{justfile_directory()}}/scripts/language_perf.py" "{{language}}" {{args}}

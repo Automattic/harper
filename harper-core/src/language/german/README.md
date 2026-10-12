@@ -30,8 +30,8 @@ that has German compiled in pays nothing — same wall time, same peak RSS, with
 without `de`.
 
 The German side is not cheap. Affix expansion yields close to an order of
-magnitude more entries than English, and building them takes a couple of seconds
-and several hundred megabytes on first use. That cost is paid once per process.
+magnitude more entries than English. That cost is paid once per process, on
+first use.
 
 Two consequences worth keeping in mind when touching `german_dict.rs`:
 
@@ -42,20 +42,15 @@ Two consequences worth keeping in mind when touching `german_dict.rs`:
 - `harper-cli` must not force `FstDictionary::curated()` before dispatching, or a
   German lint loads the English dictionary it never consults.
 
-Linting German is *faster per byte* than English, because the Brill tagger and
-the neural chunker are skipped (see "Resolving part-of-speech ambiguity" below).
+The Brill tagger and the neural chunker are skipped for German (see "Resolving
+part-of-speech ambiguity" below).
 
 To measure any of this rather than trust a number written down here:
 
 ```bash
+just language-perf german         # startup, lint time and peak memory vs English
 just language-coverage german     # entry count, coverage, affix efficiency
-/usr/bin/time -f '%e s  %M KB peak' \
-    target/release/harper-cli lint --dialect de --quiet <file>
 ```
-
-`/usr/bin/time -f %M` reports *peak* RSS. For the steady-state figure read
-`VmRSS` from `/proc/self/status`; the two differ by a wide margin here, so always
-say which one a number is.
 
 ### Noun Capitalization
 
