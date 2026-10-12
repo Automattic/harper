@@ -181,12 +181,12 @@ impl CompactBuilder {
         let mut order: Vec<u32> = (0..n as u32).collect();
         order.sort_unstable_by(|&a, &b| spelling(a as usize).cmp(spelling(b as usize)));
         let mut fst_builder = fst::MapBuilder::memory();
+        let mut key = String::new();
         for &index in &order {
+            key.clear();
+            key.extend(spelling(index as usize));
             fst_builder
-                .insert(
-                    spelling(index as usize).iter().collect::<String>(),
-                    index as u64,
-                )
+                .insert(key.as_bytes(), index as u64)
                 .expect("German words are inserted in sorted order, without repeats");
         }
         drop(order);
@@ -219,6 +219,9 @@ impl CompactBuilder {
 
 /// How many headwords are expanded between two hand-overs to the builder.
 const BLOCK: usize = 8192;
+
+/// How many guesses [`expand_in_blocks`] makes at where a form sits in its sorted list.
+const INTERPOLATION_STEPS: usize = 8;
 
 /// Expand `word_list` through `attr_list` and build the dictionary, with the
 /// same result as expanding it into one [`WordMap`] and a fraction of the memory.
@@ -300,8 +303,27 @@ pub fn expand_in_blocks(
         }
     });
     seen.shrink_to_fit();
+    // Ids are hashes, so they are spread evenly over the `u64` range, and a
+    // guess at the position by interpolation lands within a few entries of the
+    // answer. A plain binary search over a million entries misses the cache at
+    // every step, and this runs once per form.
     let last_block = |id: u64| {
-        let at = seen.partition_point(|&(other, _)| other < id);
+        let (mut low, mut high) = (0, seen.len() - 1);
+        for _ in 0..INTERPOLATION_STEPS {
+            let (first, last) = (seen[low].0, seen[high].0);
+            if first == last {
+                break;
+            }
+            let guess = low
+                + ((id - first) as u128 * (high - low) as u128 / (last - first) as u128) as usize;
+            match seen[guess].0.cmp(&id) {
+                std::cmp::Ordering::Equal => return seen[guess].1 as usize,
+                std::cmp::Ordering::Less => low = guess + 1,
+                std::cmp::Ordering::Greater => high = guess - 1,
+            }
+        }
+        // Ids that are not spread evenly fall back to the search that always works.
+        let at = low + seen[low..=high].partition_point(|&(other, _)| other < id);
         seen[at].1 as usize
     };
 
