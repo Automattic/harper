@@ -6,7 +6,7 @@ Three numbers per language, because they have different causes:
   lint   a ~200 KB sample minus start: the rules and spell suggestions
   peak   peak resident set of the whole process (ru_maxrss of the child)
 
-Usage: language_perf.py <language> [--sample FILE] [--runs N]
+Usage: language_perf.py <language> [--sample FILE] [--runs N] [--cli harper-cli]
 """
 import argparse
 import resource
@@ -18,7 +18,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-CLI = ROOT / "target/release/harper-cli"
+CLI = ROOT / "target/release/harper-cli"  # --cli overrides, to compare two builds
 TARGET_BYTES = 200_000
 TINY = {"english": "Hello world.\n"}
 
@@ -65,7 +65,10 @@ def main() -> None:
     ap.add_argument("language")
     ap.add_argument("--sample", type=Path)
     ap.add_argument("--runs", type=int, default=3)
+    ap.add_argument("--cli", type=Path, help="harper-cli binary to measure (default: target/release)")
     a = ap.parse_args()
+    global CLI
+    CLI = a.cli or CLI
     if not CLI.exists():
         sys.exit(f"{CLI} missing; run `cargo build --release -p harper-cli`")
     sample_text = a.sample.read_text(encoding="utf8") if a.sample else None

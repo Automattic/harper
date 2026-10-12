@@ -64,6 +64,13 @@ struct Args {
     /// Intended for CI; without it coverage is only reported.
     #[arg(long)]
     min_coverage: Option<f64>,
+
+    /// Write one `word<TAB>metadata` line per word of this file (one word per line) to stdout.
+    /// Two dictionaries are compared by diffing the output; `derived_from` is left out because
+    /// it names the lemma and a word read as a compound has none, and `orth_info` because it
+    /// records how the spelling is cased, which a compound is not asked.
+    #[arg(long)]
+    dump_metadata: Option<PathBuf>,
 }
 
 fn main() -> Result<(), Box<dyn std::error::Error>> {
@@ -129,6 +136,10 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         run_language_tests(&*dict, &args.language);
     }
     
+    if let Some(path) = &args.dump_metadata {
+        dump_metadata(&*dict, path)?;
+    }
+
     if args.metadata {
         show_metadata(&*dict, &args.word.clone().unwrap_or_default(), &args.text.clone().unwrap_or_default());
     }
@@ -452,6 +463,23 @@ fn check_word_metadata(dict: &dyn Dictionary, word: &str) {
     } else {
         println!("   ❌ Word not found in dictionary");
     }
+}
+
+/// One line per word: the exact-case metadata the dictionary gives it, or `-`.
+fn dump_metadata(dict: &dyn Dictionary, path: &std::path::Path) -> Result<(), Box<dyn std::error::Error>> {
+    for word in fs::read_to_string(path)?.lines().filter(|w| !w.is_empty()) {
+        let chars: Vec<char> = word.chars().collect();
+        match dict.get_word_metadata(&chars) {
+            Some(metadata) => {
+                let mut metadata = metadata.into_owned();
+                metadata.derived_from = None;
+                metadata.orth_info = Default::default();
+                println!("{word}\t{metadata:?}");
+            }
+            None => println!("{word}\t-"),
+        }
+    }
+    Ok(())
 }
 
 fn show_metadata(dict: &dyn Dictionary, single_word: &str, text: &str) {

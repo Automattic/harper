@@ -408,3 +408,22 @@ Consequences for you:
   produces each form, then the real one), so loading takes about a second longer
   than before and the checker is built after the dictionary, not beside it. Both
   are deliberate trades for the peak.
+
+## Compounds in the word list
+
+About a third of the capitalized headwords split into two other headwords, and it is
+tempting to drop them: the compound checker accepts them anyway. Do not without measuring.
+`german/scripts/prune_german_compounds.py --framework <harper-lang-test>` asks the checker
+about each candidate (`harper-lang-test --dump-metadata`) and keeps whatever it reads
+differently. Without `--apply` it only counts.
+
+On the current dictionary 9,583 of 33,979 candidates (28%) read identically. The rest lose
+their number (the checker drops it on purpose, see `head_noun_agreement`), their noun
+reading or, now and then, their gender (`Kastration`). Removing the 9,583 kept the lint
+output on the German samples identical and every test green, and took about 1% off the word
+forms: no measurable change in startup or peak memory. Lower-case compounds, mostly prefix
+verbs, fare worse (`--lowercase`: 1,830 of 55,019).
+
+`dictionary.dict` is generated, so a prune is undone by the next regeneration unless the
+builder runs it. To remove more, make the checker derive the missing properties; do not
+loosen the comparison.
