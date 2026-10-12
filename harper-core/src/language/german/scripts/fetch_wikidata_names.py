@@ -87,9 +87,18 @@ def main():
     here = pathlib.Path(__file__).resolve().parent
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--out", default=str(here.parent / "wikidata_names.tsv"))
+    ap.add_argument("--only", nargs="*", help="ask for these kinds only; the rest of an existing file is kept")
     args = ap.parse_args()
-    rows = {}  # label -> (kind, sitelinks)
+    rows = {}  # label -> kind
+    old = pathlib.Path(args.out)
+    if args.only and old.exists():
+        for line in old.read_text(encoding="utf-8").splitlines():
+            name, _, kind = line.partition("\t")
+            if kind and not line.startswith("#") and kind not in args.only:
+                rows[name] = kind
     for kind, query in QUERIES.items():
+        if args.only and kind not in args.only:
+            continue
         best = {}
         try:
             got = run(query)
