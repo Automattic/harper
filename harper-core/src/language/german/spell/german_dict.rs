@@ -32,6 +32,55 @@ fn build_german_base_dict(
     expand_in_blocks(&attr_list, word_list)
 }
 
+/// What a dictionary pack must have been built from to be used: this crate version, the word list and the annotations.
+///
+/// FNV-1a: this only has to tell one build from another, and the pack is a file the
+/// user put there, so it is not a defence against someone who writes both.
+fn pack_stamp() -> u64 {
+    let parts = [
+        env!("CARGO_PKG_VERSION"),
+        include_str!("../dictionary.dict"),
+        include_str!("../annotations.json"),
+    ];
+    parts
+        .iter()
+        .flat_map(|part| part.bytes().chain(std::iter::once(0)))
+        .fold(0xcbf2_9ce4_8422_2325_u64, |hash, byte| {
+            (hash ^ u64::from(byte)).wrapping_mul(0x0100_0000_01b3)
+        })
+}
+
+/// The expanded dictionary written by [`bake_german_pack`], if one is there and matches this build.
+///
+/// Looked for in `HARPER_GERMAN_PACK`, then next to the executable as
+/// `harper-german.pack`. A missing or mismatching pack is not an error: the word
+/// list is expanded instead, which gives the same dictionary more slowly.
+#[cfg(not(target_arch = "wasm32"))]
+fn load_german_pack() -> Option<CompactDictionary> {
+    let path = std::env::var_os("HARPER_GERMAN_PACK")
+        .map(std::path::PathBuf::from)
+        .or_else(|| {
+            Some(
+                std::env::current_exe()
+                    .ok()?
+                    .with_file_name("harper-german.pack"),
+            )
+        })?;
+    let bytes = std::fs::read(path).ok()?;
+    CompactDictionary::from_pack(&bytes, pack_stamp()).ok()
+}
+
+/// There is no file system to look in.
+#[cfg(target_arch = "wasm32")]
+fn load_german_pack() -> Option<CompactDictionary> {
+    None
+}
+
+/// The German dictionary expanded from the word list and written as a pack, for [`load_german_pack`].
+pub fn bake_german_pack() -> Vec<u8> {
+    build_german_base_dict(&load_german_word_list()).to_pack(pack_stamp())
+}
+
 /// How many threads the dictionary build may use. WebAssembly has none.
 fn parallelism() -> usize {
     if cfg!(target_arch = "wasm32") {
@@ -75,7 +124,7 @@ static GERMAN_CORE: LazyLock<GermanCore> = LazyLock::new(|| {
     let classes = super::lexical_classes::LexicalClasses::from_word_list(&word_list);
     // One after the other: built side by side, the two peaks add up, and the
     // dictionary build is already spread over the cores.
-    let base = Arc::new(build_german_base_dict(&word_list));
+    let base = Arc::new(load_german_pack().unwrap_or_else(|| build_german_base_dict(&word_list)));
     let checker = CompoundChecker::for_dictionary(&word_list);
     let [stems, function_words, suffixed_elements, barred_elements] = checker.shared_sets();
     GermanCore {

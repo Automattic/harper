@@ -164,8 +164,15 @@ macro_rules! feature_set {
                 }
 
                 fn visit_str<E: serde::de::Error>(self, v: &str) -> Result<$set, E> {
-                    let unit = <$unit>::deserialize(serde::de::value::StrDeserializer::new(v))?;
-                    Ok(<$set>::from(unit))
+                    match <$unit>::deserialize(serde::de::value::StrDeserializer::<E>::new(v)) {
+                        Ok(unit) => Ok(<$set>::from(unit)),
+                        // What `Serialize` writes for a set: the flag names joined
+                        // by `|`. Reading it back is what lets a dictionary be
+                        // stored and loaded again.
+                        Err(unit_error) => {
+                            bitflags::parser::from_str::<$set>(v).map_err(|_| unit_error)
+                        }
+                    }
                 }
 
                 fn visit_seq<A: SeqAccess<'de>>(self, mut seq: A) -> Result<$set, A::Error> {
@@ -580,6 +587,23 @@ mod tests {
     }
 
     /// The annotation shape stays as it was, and a list is now accepted too.
+    #[test]
+    fn a_set_reads_back_from_what_serialize_writes() {
+        let both = NumberSet::SINGULAR | NumberSet::PLURAL;
+        let json = serde_json::to_string(&both).unwrap();
+        // The set deserializer is the one `Agreement` uses; go through it.
+        let agreement = Agreement {
+            number: both,
+            ..Agreement::default()
+        };
+        let text = serde_json::to_string(&agreement).unwrap();
+        assert_eq!(
+            serde_json::from_str::<Agreement>(&text).unwrap(),
+            agreement,
+            "{json}"
+        );
+    }
+
     #[test]
     fn deserializes_a_single_feature_and_a_list() {
         let one: Agreement = serde_json::from_str(r#"{"gender":"Masculine"}"#).unwrap();

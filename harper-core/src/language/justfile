@@ -383,3 +383,16 @@ language-perf language *args:
 	set -eo pipefail
 	cargo build --release -q -p harper-cli
 	python3 "{{justfile_directory()}}/scripts/language_perf.py" "{{language}}" {{args}}
+
+# Write a language's expanded dictionary to a pack file. Start-up reads it instead of expanding the word list.
+# The program finds it as `HARPER_GERMAN_PACK` or as `harper-german.pack` next to the executable; without it,
+# or when it was built from another word list or version, the word list is expanded as before.
+# Usage: just language-bake german [out]
+language-bake language out="target/release/harper-german.pack":
+	#!/usr/bin/env bash
+	set -eo pipefail
+	if [ "{{language}}" != "german" ]; then
+		echo "only german has a pack so far" >&2
+		exit 1
+	fi
+	cargo run --release -p harper-core --features de --example bake_german -- "{{out}}"

@@ -31,6 +31,21 @@ use crate::{CharString, CharStringExt, DictWordMetadata};
 
 const EMPTY: u32 = u32::MAX;
 
+/// The open-addressed table of word indices, probed by id. Half full at most, so probes stay short.
+fn build_slots(ids: &[u64]) -> Vec<u32> {
+    let mut slots = vec![EMPTY; (2 * ids.len()).next_power_of_two().max(2)];
+    let mask = slots.len() - 1;
+    for (index, &id) in ids.iter().enumerate() {
+        let mut slot = id as usize & mask;
+        while slots[slot] != EMPTY {
+            debug_assert_ne!(ids[slots[slot] as usize], id, "a word was added twice");
+            slot = (slot + 1) & mask;
+        }
+        slots[slot] = index as u32;
+    }
+    slots
+}
+
 /// See the [module documentation](self).
 pub struct CompactDictionary {
     /// All spellings, concatenated.
@@ -191,17 +206,7 @@ impl CompactBuilder {
         }
         drop(order);
 
-        // Half full at most, so probes stay short.
-        let mut slots = vec![EMPTY; (2 * n).next_power_of_two().max(2)];
-        let mask = slots.len() - 1;
-        for (index, &id) in ids.iter().enumerate() {
-            let mut slot = id as usize & mask;
-            while slots[slot] != EMPTY {
-                debug_assert_ne!(ids[slots[slot] as usize], id, "a word was added twice");
-                slot = (slot + 1) & mask;
-            }
-            slots[slot] = index as u32;
-        }
+        let slots = build_slots(&ids);
 
         CompactDictionary {
             chars,
@@ -214,6 +219,171 @@ impl CompactBuilder {
             fst: FstMap::new(fst_builder.into_inner().expect("in-memory FST build"))
                 .expect("Unable to build FST map."),
         }
+    }
+}
+
+/// Why a pack could not be read. Any of these means "expand the word list instead".
+#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+pub struct PackError(pub &'static str);
+
+impl std::fmt::Display for PackError {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        write!(f, "unusable dictionary pack: {}", self.0)
+    }
+}
+
+impl std::error::Error for PackError {}
+
+const PACK_MAGIC: &[u8; 4] = b"HDPK";
+const PACK_FORMAT: u32 = 1;
+/// `derived_from` of a word that has none. A real id is a hash and never this.
+const NO_BASE: u64 = u64::MAX;
+
+/// Cuts a byte slice into the pieces a pack is made of, without ever reading past its end.
+struct PackReader<'a>(&'a [u8]);
+
+impl<'a> PackReader<'a> {
+    fn take(&mut self, len: usize) -> Result<&'a [u8], PackError> {
+        if len > self.0.len() {
+            return Err(PackError("the file is shorter than its header says"));
+        }
+        let (head, tail) = self.0.split_at(len);
+        self.0 = tail;
+        Ok(head)
+    }
+
+    fn take_array<const N: usize>(&mut self) -> Result<[u8; N], PackError> {
+        Ok(self.take(N)?.try_into().expect("take returns N bytes"))
+    }
+
+    fn length(&mut self) -> Result<usize, PackError> {
+        usize::try_from(u64::from_le_bytes(self.take_array()?))
+            .map_err(|_| PackError("a length does not fit in memory"))
+    }
+
+    fn records(
+        &mut self,
+        count: usize,
+        size: usize,
+    ) -> Result<std::slice::ChunksExact<'a, u8>, PackError> {
+        let len = count
+            .checked_mul(size)
+            .ok_or(PackError("a length overflows"))?;
+        Ok(self.take(len)?.chunks_exact(size))
+    }
+}
+
+impl CompactDictionary {
+    /// The dictionary as bytes that [`Self::from_pack`] reads back without expanding anything.
+    ///
+    /// `stamp` identifies what the dictionary was built from. A pack is only
+    /// read back by a caller that presents the same stamp, so a pack that no
+    /// longer matches the word list or the code is never used.
+    pub fn to_pack(&self, stamp: u64) -> Vec<u8> {
+        let metas = serde_json::to_vec(&self.metas).expect("metadata serializes");
+        let text: String = self.chars.iter().collect();
+        let fst = self.fst.as_fst().as_bytes();
+        let mut out = Vec::with_capacity(text.len() + fst.len() + self.len() * 14 + metas.len());
+        out.extend(PACK_MAGIC);
+        out.extend(PACK_FORMAT.to_le_bytes());
+        out.extend(stamp.to_le_bytes());
+        for len in [
+            self.len(),
+            self.chars.len(),
+            text.len(),
+            fst.len(),
+            metas.len(),
+        ] {
+            out.extend((len as u64).to_le_bytes());
+        }
+        out.extend(&metas);
+        out.extend(fst);
+        out.extend(self.offsets.iter().flat_map(|o| o.to_le_bytes()));
+        for &meta in &self.meta_of {
+            let meta = u16::try_from(meta).expect("fewer than 65 536 distinct metadata values");
+            out.extend(meta.to_le_bytes());
+        }
+        for base in &self.derived_from {
+            assert_ne!(
+                *base,
+                Some(NO_BASE),
+                "an id collides with the 'no base' marker"
+            );
+            out.extend(base.unwrap_or(NO_BASE).to_le_bytes());
+        }
+        out.extend(text.as_bytes());
+        out
+    }
+
+    /// Read what [`Self::to_pack`] wrote. The ids and the lookup table are
+    /// rebuilt rather than stored; that takes about a tenth of a second.
+    pub fn from_pack(bytes: &[u8], stamp: u64) -> Result<Self, PackError> {
+        let mut reader = PackReader(bytes);
+        if &reader.take_array::<4>()? != PACK_MAGIC {
+            return Err(PackError("not a dictionary pack"));
+        }
+        if u32::from_le_bytes(reader.take_array()?) != PACK_FORMAT {
+            return Err(PackError("written in another format"));
+        }
+        if u64::from_le_bytes(reader.take_array()?) != stamp {
+            return Err(PackError("built from another word list or another version"));
+        }
+        let n = reader.length()?;
+        let char_count = reader.length()?;
+        let text_len = reader.length()?;
+        let fst_len = reader.length()?;
+        let metas_len = reader.length()?;
+
+        let metas: Vec<DictWordMetadata> = serde_json::from_slice(reader.take(metas_len)?)
+            .map_err(|_| PackError("the metadata does not parse"))?;
+        let fst = FstMap::new(reader.take(fst_len)?.to_vec())
+            .map_err(|_| PackError("the FST is damaged"))?;
+        if fst.len() != n {
+            return Err(PackError("the FST and the word count disagree"));
+        }
+        let offsets: Vec<u32> = reader
+            .records(n + 1, 4)?
+            .map(|b| u32::from_le_bytes(b.try_into().expect("4 bytes")))
+            .collect();
+        let in_order = offsets.windows(2).all(|w| w[0] <= w[1]);
+        if offsets.first() != Some(&0) || offsets.last() != Some(&(char_count as u32)) || !in_order
+        {
+            return Err(PackError("the offsets are inconsistent"));
+        }
+        let meta_of: Vec<u32> = reader
+            .records(n, 2)?
+            .map(|b| u32::from(u16::from_le_bytes(b.try_into().expect("2 bytes"))))
+            .collect();
+        if meta_of.iter().any(|&m| m as usize >= metas.len()) {
+            return Err(PackError("a word points at metadata that is not there"));
+        }
+        let derived_from: Vec<Option<u64>> = reader
+            .records(n, 8)?
+            .map(|b| u64::from_le_bytes(b.try_into().expect("8 bytes")))
+            .map(|base| (base != NO_BASE).then_some(base))
+            .collect();
+        let text = std::str::from_utf8(reader.take(text_len)?)
+            .map_err(|_| PackError("the spellings are not UTF-8"))?;
+        let chars: Vec<char> = text.chars().collect();
+        if chars.len() != char_count {
+            return Err(PackError("the spellings and the character count disagree"));
+        }
+
+        let ids: Vec<u64> = offsets
+            .windows(2)
+            .map(|w| WordId::from_word_chars(&chars[w[0] as usize..w[1] as usize]).into())
+            .collect();
+        let slots = build_slots(&ids);
+        Ok(Self {
+            chars,
+            offsets,
+            ids,
+            slots,
+            meta_of,
+            metas,
+            derived_from,
+            fst,
+        })
     }
 }
 
@@ -601,6 +771,55 @@ mod tests {
             );
         }
         assert_eq!(compact.word_count(), expected.word_count());
+    }
+
+    #[test]
+    fn a_pack_reads_back_as_the_dictionary_it_was_written_from() {
+        let dict = mutable_german_dictionary();
+        let pack = dict.to_pack(7);
+        let back = CompactDictionary::from_pack(&pack, 7).ok().unwrap();
+
+        assert_eq!(back.len(), dict.len());
+        for index in 0..dict.len() {
+            assert_eq!(back.spelling(index), dict.spelling(index));
+            assert_eq!(back.ids[index], dict.ids[index]);
+            assert_eq!(back.metadata(index), dict.metadata(index));
+        }
+        for word in [
+            "Haus",
+            "Häuser",
+            "lernen",
+            "gelernt",
+            "Mitteleuropa",
+            "xyzzy",
+        ] {
+            assert_eq!(back.contains_word_str(word), dict.contains_word_str(word));
+            assert_eq!(
+                back.get_word_metadata_str(word),
+                dict.get_word_metadata_str(word)
+            );
+        }
+        let (a, b) = (
+            back.fuzzy_match_str("Hauss", 2, 20),
+            dict.fuzzy_match_str("Hauss", 2, 20),
+        );
+        assert_eq!(a.len(), b.len());
+    }
+
+    #[test]
+    fn a_pack_that_does_not_fit_is_refused_and_never_read_past_its_end() {
+        let pack = mutable_german_dictionary().to_pack(7);
+        let refused = |bytes: &[u8], stamp| CompactDictionary::from_pack(bytes, stamp).is_err();
+
+        assert!(refused(&pack, 8), "another stamp");
+        assert!(refused(b"", 7));
+        assert!(refused(b"not a pack at all", 7));
+        let mut other_format = pack.clone();
+        other_format[4] ^= 1;
+        assert!(refused(&other_format, 7));
+        for cut in [3, 20, 60, 5_000, pack.len() / 2, pack.len() - 1] {
+            assert!(refused(&pack[..cut], 7), "cut at {cut}");
+        }
     }
 
     #[test]

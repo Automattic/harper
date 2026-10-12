@@ -52,6 +52,24 @@ just language-perf german     # startup, lint time and peak memory, against Engl
 - To find who owns the memory, use `valgrind --tool=massif`, not guesswork (see
   "Dictionary memory" below).
 
+### The German dictionary pack
+
+Most of German's startup is expanding the word list into forms. `just
+language-bake german` writes the expanded dictionary to a pack file; a program
+that finds it (`HARPER_GERMAN_PACK`, or `harper-german.pack` next to the
+executable) reads it instead. Without a pack, or with one built from another
+word list or version, it expands as before and gets the same dictionary.
+
+- The pack is an accelerator, never a requirement. Keep the expansion path working.
+- Do not commit a pack: it is a build artifact, 30 MB, and the release job makes it
+  from the same commit as the binary. The stamp in its header refuses any other.
+- The stamp holds the crate version, the word list and the annotations, not the
+  expansion code. After you change the code that expands forms, bake again or
+  delete the pack, or you measure and test against the old forms.
+- To compare, run `just language-perf german` with and without the pack beside the
+  executable; the test `a_pack_reads_back_as_the_dictionary_it_was_written_from`
+  checks every word and its metadata.
+
 ## Morphology
 
 Inflectional features live in `morphology.rs`, not in `dict_word_metadata.rs`.
