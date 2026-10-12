@@ -69,6 +69,7 @@ impl GermanDeterminerGender {
     /// that is certainly singular is read, since the plural endings differ, and
     /// an ending the determiner leaves open (*der* is also dative feminine) is
     /// accepted when any of its readings allows it.
+    #[allow(clippy::too_many_arguments)]
     fn lint_adjectives(
         &self,
         document: &Document,

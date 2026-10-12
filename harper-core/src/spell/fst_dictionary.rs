@@ -52,6 +52,14 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
+    /// The curated dictionary, if something has already built it.
+    ///
+    /// For callers that only want to know whether a dictionary *is* the curated
+    /// one, which is not worth building it for.
+    pub(crate) fn curated_if_loaded() -> Option<Arc<Self>> {
+        LazyLock::get(&DICT).cloned()
+    }
+
     /// The dictionary's entries in mutable form.
     ///
     /// An [`FstDictionary`] already keeps a [`MutableDictionary`] beside its FST
@@ -68,18 +76,35 @@ impl FstDictionary {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
         words.dedup_by(|(a, _), (b, _)| a == b);
 
-        let mut builder = fst::MapBuilder::memory();
-        for (word_chars, _) in words.iter() {
-            let word = word_chars.iter().collect::<String>();
-            builder
-                .insert(word, WordId::from_word_chars(word_chars).into())
-                .expect("Insertion not in lexicographical order!");
-        }
+        // The FST and the mutable dictionary are two views of the same sorted
+        // words and neither needs the other, so they are built side by side.
+        // For a dictionary the size of German's that is a third of the time
+        // this function takes.
+        let build_fst = || {
+            let mut builder = fst::MapBuilder::memory();
+            for (word_chars, _) in words.iter() {
+                let word = word_chars.iter().collect::<String>();
+                builder
+                    .insert(word, WordId::from_word_chars(word_chars).into())
+                    .expect("Insertion not in lexicographical order!");
+            }
+            builder.into_inner().unwrap()
+        };
+        let build_mutable = || {
+            let mut mutable_dict = MutableDictionary::new();
+            mutable_dict.extend_words(words.iter().cloned());
+            mutable_dict
+        };
 
-        let mut mutable_dict = MutableDictionary::new();
-        mutable_dict.extend_words(words.iter().cloned());
+        #[cfg(not(target_arch = "wasm32"))]
+        let (fst_bytes, mutable_dict) = std::thread::scope(|scope| {
+            let fst = scope.spawn(build_fst);
+            let mutable_dict = build_mutable();
+            (fst.join().expect("FST construction panicked"), mutable_dict)
+        });
+        #[cfg(target_arch = "wasm32")]
+        let (fst_bytes, mutable_dict) = (build_fst(), build_mutable());
 
-        let fst_bytes = builder.into_inner().unwrap();
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {

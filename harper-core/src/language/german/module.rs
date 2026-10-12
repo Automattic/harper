@@ -95,10 +95,7 @@ impl LanguageModule for GermanModule {
             GermanSubjectVerbAgreement::new(dictionary.clone()),
         );
         group.add("GermanFillerWords", GermanFillerWords::default());
-        group.add(
-            "GermanRecommendedFusion",
-            GermanRecommendedFusion::default(),
-        );
+        group.add("GermanRecommendedFusion", GermanRecommendedFusion);
         group.add("GermanWiderWieder", GermanWiderWieder);
         group.add("GermanRepeatedWords", GermanRepeatedWords);
         group.add("GermanSplitParticle", GermanSplitParticle);

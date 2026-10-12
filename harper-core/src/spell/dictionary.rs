@@ -54,4 +54,16 @@ pub trait Dictionary: Send + Sync {
 
     /// Look for words that share a prefix with the provided word
     fn find_words_with_common_prefix(&self, word: &[char]) -> Vec<Cow<'_, [char]>>;
+
+    /// A hash of the words in the dictionary, if the dictionary can hand one out
+    /// without recomputing it.
+    ///
+    /// [`MergedDictionary`](super::MergedDictionary) fingerprints every child it
+    /// is given, and that walks every word. A dictionary that never changes and
+    /// is large enough for the walk to matter can remember the answer here.
+    /// Returning `Some` is a promise that the words will not change, and that the
+    /// value is what `merged_dictionary::word_hash` gives for them.
+    fn cached_word_hash(&self) -> Option<u64> {
+        None
+    }
 }

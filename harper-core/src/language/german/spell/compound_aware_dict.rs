@@ -5,9 +5,10 @@
 //! all possible compound combinations.
 
 use std::borrow::Cow;
-use std::sync::{Arc, Mutex};
+use std::sync::{Arc, Mutex, OnceLock};
 
 use crate::DictWordMetadata;
+use crate::spell::word_hash;
 use crate::spell::{Dictionary, FstDictionary};
 
 use super::compound_checker::CompoundChecker;
@@ -23,6 +24,11 @@ pub struct CompoundAwareDictionary {
     base_dict: Arc<FstDictionary>,
     /// The compound checker for lazy compound decomposition
     compound_checker: Arc<Mutex<CompoundChecker>>,
+    /// Fingerprint of the base words, computed on first request.
+    ///
+    /// `harper-ls` builds a `MergedDictionary` around this dictionary on every
+    /// edit, and fingerprinting walks all 700 000 words each time.
+    word_hash: Arc<OnceLock<u64>>,
 }
 
 impl CompoundAwareDictionary {
@@ -35,6 +41,7 @@ impl CompoundAwareDictionary {
         Self {
             base_dict,
             compound_checker: Arc::new(Mutex::new(compound_checker)),
+            word_hash: Arc::default(),
         }
     }
 
@@ -158,6 +165,14 @@ impl Dictionary for CompoundAwareDictionary {
         // For iteration, we can only return the base dictionary words
         // Compound words are not stored explicitly
         self.base_dict.words_iter()
+    }
+
+    fn cached_word_hash(&self) -> Option<u64> {
+        Some(
+            *self
+                .word_hash
+                .get_or_init(|| word_hash(self.base_dict.as_ref())),
+        )
     }
 
     /// The number of words in the dictionary.
