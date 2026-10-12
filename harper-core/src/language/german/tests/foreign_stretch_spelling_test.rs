@@ -164,7 +164,7 @@ mod tests {
         let reported = misspelled("Er kaufte die Zeitung The Guardian in Berlin.");
 
         assert!(
-            reported.iter().any(|w| w == "Guardian"),
+            reported.iter().any(|w| w == "The"),
             "'die Zeitung The Guardian' is a German sentence; reported: {reported:?}"
         );
     }

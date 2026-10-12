@@ -445,8 +445,6 @@ class Builder:
                 listed = table.get(lemma)
                 if listed:
                     info["pp"] = info["pp"] | listed["pp"]
-                    present = {f for f, _ in info["irregular"]}
-                    info["irregular"] = info["irregular"] + [x for x in listed["irregular"] if x[0] not in present]
                 weak = any(PRETERITE in ft and f.endswith(("te", "ten")) for f, ft in lex.forms)
                 if lemma in curated.WEAK_AND_STRONG or (not info["pp"] and weak):
                     info["pp"] = info["pp"] | {self.pp_regular(lemma)}
@@ -825,6 +823,10 @@ class Builder:
             else:
                 self.stats[f"unused-category:{c}"] += 1
         for word, flags in closed.entries().items():
+            if word[0].islower() and word[0].upper() + word[1:] in curated.NOUN_AND_FUNCTION_WORD_SET and word not in ("trotz", "gen"):
+                flags = set(flags) - set("P")  # *dank*, *zeit*: the noun reading is the one that matters
+                if not flags:
+                    continue
             self.add(word, flags)
         self.compound_index = collections.defaultdict(list)
         for l in self.lex.values():
@@ -846,25 +848,33 @@ class Builder:
         if not path.exists():
             return
         known = {w.lower() for w, f in self.entries.items() if f != {"*"}}
+        for lex in self.lex.values():  # *Besserer*, *Rote*: a form of a word, whatever else it may name
+            known.add(lex.lemma.lower())
+            known.update(f.lower() for f, _ in lex.forms)
+        adjectives = {l.lemma.lower() for l in self.lex.values() if l.cat in ("adj", "adv") and l.lemma.isalpha()}
+        endings = ("e", "em", "en", "er", "es", "ere", "erem", "eren", "erer", "eres", "ste", "stem", "sten", "ster", "stes")
         for line in path.read_text(encoding="utf-8").splitlines():
             if not line or line.startswith("#"):
                 continue
             name, _, kind = line.partition("\t")
-            if self.entries.get(name.lower()) == {"*"}:
-                del self.entries[name.lower()]  # a stem that is a name is a word: the stem marker would take it out
-            if name in self.entries or name.lower() in known:
+            low = name.lower()
+            if any(low.endswith(e) and low[: -len(e)] in adjectives for e in endings):
+                continue  # *Besserer*: the form of an adjective, whoever else bears it
+            if name.lower().endswith("zu") and name.lower()[:-2] in self.SEPARABLE:
+                continue  # *Anzu*: the rule for *anzurufen* asks whether prefix and *zu* make a word of their own
+            if name in self.entries or name.lower() in self.entries or name.lower() in known:  # a stem stays a stem
                 self.stats["name-skipped"] += 1  # already a word: the name adds nothing but a flag to it
                 continue
-            flags = {"N", "H", "!"}  # never an element of a compound: *Annfang* is not *Ann* + *fang*
+            flags = {"8", "H", "!"}  # never an element of a compound: *Annfang* is not *Ann* + *fang*
             if kind == "demonym":  # *Mannheimer*, *Mannheimerin*, *Franzose*: a person from a place
                 if name.endswith("in"):
-                    flags = {"N", "F", "L", "!"}
+                    flags = {"8", "F", "L", "!"}
                 elif name.endswith("er"):
-                    flags = {"N", "M", "E", "H", "K", "L", "!"}
+                    flags = {"8", "M", "E", "H", "K", "L", "!"}
                 elif name.endswith("e"):
-                    flags = {"N", "M", "E", "!"}
+                    flags = {"8", "M", "E", "!"}
                 else:
-                    flags = {"N", "M", "H", "!"}
+                    flags = {"8", "M", "H", "!"}
             self.add(name, flags)
             self.stats["name"] += 1
 

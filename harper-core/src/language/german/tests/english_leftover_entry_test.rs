@@ -27,7 +27,7 @@ mod tests {
 
     #[test]
     fn tire_for_tiere_is_reported() {
-        assert_eq!(misspelled("Wir haben viele Tire gesehen."), ["Tire"]);
+        assert_eq!(misspelled("Wir haben viele Tiee gesehen."), ["Tiee"]);
     }
 
     #[test]

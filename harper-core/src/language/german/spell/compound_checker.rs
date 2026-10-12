@@ -2014,7 +2014,7 @@ mod tests {
         for word in [
             "Badden",      // bad + den
             "Bildder",     // bild + der
-            "Lassalle",    // lass + alle
+            "Hundalle",    // hund + alle
             "anzuwendden", // an + zu + wend + den
             "Herder",      // herd + er
         ] {

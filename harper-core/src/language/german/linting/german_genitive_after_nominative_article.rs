@@ -106,7 +106,7 @@ impl GermanGenitiveAfterNominativeArticle {
         // ignore case, so this looks the word up as written.
         let chars: Vec<char> = word.chars().collect();
         let Some(word_metadata) = self.dictionary.get_word_metadata(&chars) else {
-            // Not a German word at all: `Queens`, a borrowed name.
+            // Not a German word at all: `Lakers`, a borrowed name.
             return None;
         };
         if !word_metadata.is_noun() || word_metadata.is_adjective() {
@@ -301,7 +301,7 @@ mod tests {
             "Er ist ein Johannes.",
             "Das Regens der Anapher ist die Präposition.",
             "Das Andreas ist ein altenglisches Gedicht.",
-            "Das Queens spielt heute.",
+            "Das Lakers spielt heute.",
             "Das Genuss ist groß.",
         ] {
             assert!(lint(text).is_empty(), "{text}");

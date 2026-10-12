@@ -38,7 +38,6 @@ QUERIES = {
              '?x wdt:P31 ?c ; rdfs:label ?l . FILTER(LANG(?l)="de") }',
     "family": 'SELECT DISTINCT ?l WHERE { ?x wdt:P31 wd:Q101352 ; wikibase:sitelinks ?s ; rdfs:label ?l . '
               'FILTER(LANG(?l)="de") FILTER(?s>=2) }',
-    "place": 'SELECT DISTINCT ?l WHERE { ?x wdt:P1082 ?p ; rdfs:label ?l . FILTER(?p>=1000) FILTER(LANG(?l)="de") }',
     "place_dach": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q515 wd:Q3957 wd:Q134626 wd:Q1548525 wd:Q1187811 wd:Q253019 wd:Q486972 wd:Q532 wd:Q1549591 wd:Q5119 wd:Q15284 wd:Q262166 wd:Q484170 wd:Q747074 wd:Q42744322 wd:Q123705 wd:Q1115575 wd:Q2514025 wd:Q3184121 wd:Q1093829 wd:Q15642541 wd:Q22865 wd:Q2039348 wd:Q1202578 wd:Q70208 wd:Q1707056 wd:Q2989398 wd:Q15617994 wd:Q56061 wd:Q200547 } VALUES ?k { wd:Q183 wd:Q40 wd:Q39 wd:Q347 } '
                   '?x wdt:P31 ?c ; wdt:P17 ?k ; rdfs:label ?l . FILTER(LANG(?l)="de") }',
     "place_world": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q515 wd:Q3957 wd:Q134626 wd:Q1548525 wd:Q1187811 wd:Q253019 wd:Q486972 wd:Q532 wd:Q1549591 wd:Q5119 wd:Q15284 wd:Q262166 wd:Q484170 wd:Q747074 wd:Q42744322 wd:Q123705 wd:Q1115575 wd:Q2514025 wd:Q3184121 wd:Q1093829 wd:Q15642541 wd:Q22865 wd:Q2039348 wd:Q1202578 wd:Q70208 wd:Q1707056 wd:Q2989398 wd:Q15617994 wd:Q56061 wd:Q200547 } ?x wdt:P31 ?c ; wikibase:sitelinks ?s ; '
@@ -50,6 +49,13 @@ QUERIES = {
     "org": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q4830453 wd:Q783794 wd:Q43229 wd:Q891723 wd:Q327333 wd:Q7278 '
            'wd:Q484652 } ?x wdt:P31 ?c ; wikibase:sitelinks ?s ; rdfs:label ?l . FILTER(?s>=10) FILTER(LANG(?l)="de") }',
 }
+
+# The service cuts a long answer short without saying so, so places are asked for one initial at a time.
+for _c in "ABCDEFGHIJKLMNOPQRSTUVWXYZÄÖÜ":
+    QUERIES["place_" + _c] = (
+        'SELECT DISTINCT ?l WHERE { ?x wdt:P1082 ?p ; rdfs:label ?l . FILTER(?p>=1000) FILTER(LANG(?l)="de") '
+        f'FILTER(STRSTARTS(?l,"{_c}")) }}'
+    )
 
 
 def run(query):

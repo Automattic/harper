@@ -825,7 +825,8 @@ impl<T: Dictionary> GermanNounCapitalization<T> {
             false
         };
 
-        let has_noun = any(&|m| m.noun.is_some());
+        // A name is a noun in its capitalized spelling only: *della* in a foreign phrase is not one.
+        let has_noun = any(&|m| m.noun.as_ref().is_some_and(|n| n.is_proper != Some(true)));
         let has_verb = any(&|m| m.verb.is_some());
         let has_adjective = any(&|m| m.adjective.is_some());
         let has_adverb = any(&|m| m.adverb.is_some());

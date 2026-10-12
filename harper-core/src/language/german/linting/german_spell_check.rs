@@ -586,8 +586,14 @@ impl<T: Dictionary> GermanSpellCheck<T> {
             .fuzzy_match(word, 2, 100)
             .into_iter()
             .map(|result| {
+                // A name is the likelier guess only when nothing else is close: *Wrot* is *Wort*, not *Wroth*.
+                let name = self
+                    .dictionary
+                    .get_word_metadata(result.word)
+                    .is_some_and(|m| m.noun.as_ref().is_some_and(|n| n.is_proper == Some(true)));
                 (
-                    score_german_candidate(word, result.word, result.edit_distance),
+                    score_german_candidate(word, result.word, result.edit_distance)
+                        + if name { 1500 } else { 0 },
                     result.word,
                 )
             })
