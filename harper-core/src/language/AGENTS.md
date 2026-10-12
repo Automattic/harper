@@ -33,6 +33,25 @@ git diff master --stat -- harper-core/src/ ':(exclude)harper-core/src/language'
 
 Anything you add there is a future merge conflict. Justify it or move it.
 
+## Performance
+
+**A language must not cost the others anything, and should cost itself as little
+as it can.** Check it, do not assume it:
+
+```bash
+just language-perf german     # startup, lint time and peak memory, against English
+```
+
+- Run it before and after any change to a dictionary, an affix, `annotations.json`
+  or the spell path. A change that raises startup or peak memory needs a reason.
+- Startup is the dictionary build, paid once per process; lint time is the rules
+  and the spell suggestions. They have different causes, so read them apart.
+- Fault-dense text inflates lint time (each unknown word starts a suggestion
+  search). Compare like with like, or pass `--sample` a clean text.
+- Do not write measured figures into READMEs. They go stale; the recipe does not.
+- To find who owns the memory, use `valgrind --tool=massif`, not guesswork (see
+  "Dictionary memory" below).
+
 ## Morphology
 
 Inflectional features live in `morphology.rs`, not in `dict_word_metadata.rs`.
