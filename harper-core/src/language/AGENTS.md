@@ -336,3 +336,35 @@ language, and fails if any shared test disagrees.
 
 `just language-*` recipes cover dictionary iteration without recompiling; run
 `just --list | grep language-` for the current set.
+
+## Dictionary memory: what is "inflated", and why
+
+A language's `dictionary.dict` is not what ends up in memory. Each line is a
+headword plus affix flags (`Arzt/~~Mh0A`). At load time every flag is expanded
+through the rules in `annotations.json`, and **every generated form becomes its
+own dictionary entry**. German goes from about 245,000 lines to about 617,000
+word forms; English has about 55,000 lines.
+
+Each form is stored as a full `WordMapEntry` in a `HashMap` (`spell/word_map.rs`):
+a `CharString` (a `Vec<char>`, 4 bytes per letter) plus a `DictWordMetadata`
+struct with one optional slot per part of speech. `FstDictionary` then builds a
+second structure, an FST, for fuzzy matching on top of that.
+
+Measured with `harper-cli lint` on a tiny input (release build, whole process):
+English 171 MB peak, German 637 MB peak. The README in `german/` gives the
+dictionary alone as +249 MB resident and 422 MB peak, of which roughly 180 MB
+does not scale with the word count. That last figure comes from the README, not
+from a profile; the split between the map, the FST and the metadata has not been
+measured.
+
+Consequences for you:
+
+- Adding an affix flag that fans out into many forms costs memory for each form.
+  Check the count before and after (`report_german_dict_memory` in
+  `german/tests/bench_german_dict.rs`).
+- Removing 22% of the forms saved only 10% of the memory. Trimming the word list
+  is not the main lever. A cheaper per-word representation would be.
+- The peak happens at startup, while the headwords, the expanded map and the FST
+  coexist. A language server pays the peak, not the steady state.
+- Run that test alone. Another test in the same binary warms the `LazyLock` and
+  it then reports zero.
