@@ -8,10 +8,10 @@ The queries run against the public Wikidata Query Service and ask for the German
 label of
 
 * given names (male, female, unisex),
-* family names with at least two sitelinks,
+* family names with at least four sitelinks,
 * places with at least 1 000 inhabitants,
 * countries, subdivisions, rivers, mountains, islands, seas and the like with at
-  least three sitelinks,
+  least six sitelinks,
 * organisations, companies and clubs with at least ten,
 * the demonyms of places (`Mannheimer`, `Irakerin`).
 
@@ -37,14 +37,14 @@ QUERIES = {
     "given": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q12308941 wd:Q11879590 wd:Q3409032 } '
              '?x wdt:P31 ?c ; rdfs:label ?l . FILTER(LANG(?l)="de") }',
     "family": 'SELECT DISTINCT ?l WHERE { ?x wdt:P31 wd:Q101352 ; wikibase:sitelinks ?s ; rdfs:label ?l . '
-              'FILTER(LANG(?l)="de") FILTER(?s>=2) }',
+              'FILTER(LANG(?l)="de") FILTER(?s>=4) }',
     "place_dach": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q515 wd:Q3957 wd:Q134626 wd:Q1548525 wd:Q1187811 wd:Q253019 wd:Q486972 wd:Q532 wd:Q1549591 wd:Q5119 wd:Q15284 wd:Q262166 wd:Q484170 wd:Q747074 wd:Q42744322 wd:Q123705 wd:Q1115575 wd:Q2514025 wd:Q3184121 wd:Q1093829 wd:Q15642541 wd:Q22865 wd:Q2039348 wd:Q1202578 wd:Q70208 wd:Q1707056 wd:Q2989398 wd:Q15617994 wd:Q56061 wd:Q200547 } VALUES ?k { wd:Q183 wd:Q40 wd:Q39 wd:Q347 } '
                   '?x wdt:P31 ?c ; wdt:P17 ?k ; rdfs:label ?l . FILTER(LANG(?l)="de") }',
     "place_world": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q515 wd:Q3957 wd:Q134626 wd:Q1548525 wd:Q1187811 wd:Q253019 wd:Q486972 wd:Q532 wd:Q1549591 wd:Q5119 wd:Q15284 wd:Q262166 wd:Q484170 wd:Q747074 wd:Q42744322 wd:Q123705 wd:Q1115575 wd:Q2514025 wd:Q3184121 wd:Q1093829 wd:Q15642541 wd:Q22865 wd:Q2039348 wd:Q1202578 wd:Q70208 wd:Q1707056 wd:Q2989398 wd:Q15617994 wd:Q56061 wd:Q200547 } ?x wdt:P31 ?c ; wikibase:sitelinks ?s ; '
                    'rdfs:label ?l . FILTER(?s>=5) FILTER(LANG(?l)="de") }',
     "geo": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q6256 wd:Q3624078 wd:Q10864048 wd:Q1221156 wd:Q35657 wd:Q5107 '
            'wd:Q46831 wd:Q4022 wd:Q8502 wd:Q23442 wd:Q165 wd:Q23397 wd:Q82794 wd:Q15324 wd:Q39816 wd:Q1620908 } '
-           '?x wdt:P31 ?c ; wikibase:sitelinks ?s ; rdfs:label ?l . FILTER(?s>=3) FILTER(LANG(?l)="de") }',
+           '?x wdt:P31 ?c ; wikibase:sitelinks ?s ; rdfs:label ?l . FILTER(?s>=6) FILTER(LANG(?l)="de") }',
     "demonym": 'SELECT DISTINCT ?l WHERE { ?x wdt:P1549 ?l . FILTER(LANG(?l)="de") }',
     "org": 'SELECT DISTINCT ?l WHERE { VALUES ?c { wd:Q4830453 wd:Q783794 wd:Q43229 wd:Q891723 wd:Q327333 wd:Q7278 '
            'wd:Q484652 } ?x wdt:P31 ?c ; wikibase:sitelinks ?s ; rdfs:label ?l . FILTER(?s>=10) FILTER(LANG(?l)="de") }',
