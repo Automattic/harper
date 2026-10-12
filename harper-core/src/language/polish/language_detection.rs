@@ -4,6 +4,9 @@ use crate::language::polish::dialects::PolishDialect;
 use crate::spell::Dictionary;
 use crate::{Token, TokenKind};
 
+/// Letters that occur in Slovak and Czech but not in Polish.
+const NON_POLISH_LETTERS: &str = "čšžľĺŕôäáéíúýďťňěřů";
+
 /// Polish language detector.
 #[derive(Debug)]
 pub struct PolishDetector;
@@ -16,6 +19,7 @@ impl LanguageDetector for PolishDetector {
     fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
         let mut total_words = 0;
         let mut polish_char_count = 0;
+        let mut non_polish_char_count = 0;
         let mut common_polish_words = 0;
         let mut english_matches = 0;
 
@@ -49,6 +53,15 @@ impl LanguageDetector for PolishDetector {
                         polish_char_count += 1;
                     }
 
+                    // Letters used by Slovak and Czech but not by Polish
+                    if word_content
+                        .to_lowercase()
+                        .chars()
+                        .any(|c| NON_POLISH_LETTERS.contains(c))
+                    {
+                        non_polish_char_count += 1;
+                    }
+
                     // Check for common Polish words
                     let lower_word = word_content.to_lowercase();
                     if polish_indicators.contains(&lower_word.as_str()) {
@@ -67,6 +80,12 @@ impl LanguageDetector for PolishDetector {
 
         // Need minimum words for reliable detection
         if total_words < 5 {
+            return None;
+        }
+
+        // Step aside for Slovak and Czech text, which shares common words and `ó`
+        // with Polish: words with letters Polish lacks outnumber words with Polish letters.
+        if non_polish_char_count > polish_char_count {
             return None;
         }
 
@@ -104,5 +123,48 @@ impl LanguageDetector for PolishDetector {
 
     fn confidence(&self) -> f64 {
         0.90
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::Document;
+    use crate::spell::FstDictionary;
+
+    fn detects_polish(text: &str) -> bool {
+        let dict = FstDictionary::curated();
+        let doc = Document::new_plain_english_curated(text);
+        PolishDetector
+            .detect(doc.get_tokens(), doc.get_source(), &dict)
+            .is_some()
+    }
+
+    #[test]
+    fn rejects_slovak_prose() {
+        assert!(!detects_polish(
+            "Toto je vetaa po slovensky. Bratislava je hlavné mesto Slovenska a leží na Dunaji. Dnes je pekný deň a ideme sa prechádzať do parku."
+        ));
+    }
+
+    #[test]
+    fn rejects_slovak_with_shared_o_acute() {
+        assert!(!detects_polish(
+            "Dnes ráno sme išli na trh, kde sme kúpili chlieb, mlieko a ovocie pre celú rodinu."
+        ));
+    }
+
+    #[test]
+    fn detects_polish_prose() {
+        assert!(detects_polish(
+            "To jest zdanie po polsku. Warszawa jest stolicą Polski i leży nad Wisłą."
+        ));
+    }
+
+    #[test]
+    fn detects_polish_mentioning_czech_name() {
+        assert!(detects_polish(
+            "Wczoraj pojechaliśmy do Brna, gdzie spotkaliśmy się z Dvořákem na kawie w mieście."
+        ));
     }
 }
