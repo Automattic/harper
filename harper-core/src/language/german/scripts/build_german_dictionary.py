@@ -763,6 +763,32 @@ class Builder:
         for word in self.SEPARABLE:  # *Sie stellt die Frage dar*: the prefix stands alone at the end of the clause
             if word not in self.entries and word.capitalize() not in self.entries:
                 self.add(word, {"r"})
+        for row in curated.CORE_NOUNS:
+            lemma, gender, plural = row.split()
+            flags = {"N", "h", gender}
+            if gender != "F":
+                flags.add("H")
+                if self.takes_genitive(lemma, "0"):
+                    flags.add("0")
+            if plural == "-":
+                flags.add("A")
+            elif plural == "=":
+                flags.add("E")
+            else:
+                for flag, suffix in (("X", "e"), ("Y", "en"), ("E", "n"), ("a", "er"), ("b", "s")):
+                    if plural == lemma + suffix:
+                        flags.add(flag)
+                        break
+                else:
+                    flags.add("A")
+                    self.add(plural, {"N", ";"} | ({"&"} if not plural.endswith(("n", "s")) else set()))
+            self.add(lemma, flags)
+            if gender == "M" and lemma.endswith("er") and lemma != "Puffer":
+                self.entries[lemma] |= {"K", "L"}
+        for word in curated.CORE_ADVERBS:
+            self.add(word, {"r"})
+        for word in curated.CORE_ADJECTIVES:
+            self.add(word, {"J", "q", "r", "O", "Q", "R", "S", "T", "U", "W"})
         for word in curated.GEOGRAPHIC_ADJECTIVES:
             if word not in self.entries:
                 self.add(word, {"J", "q", "r", "O", "Q", "R", "S", "T"})

@@ -281,6 +281,7 @@ Twitch WhatsApp Wikipedia Windows Xbox YouTube Zalando Zoom eBay iPad iPhone
 """.split()
 
 PLURALIA_TANTUM = """
+Gunsten Tapas
 Alpen Annalen Einkünfte Eltern Ferien Finanzen Flitterwochen Gebrüder Gliedmaßen Großeltern Kinkerlitzchen
 Kosten Leute Machenschaften Masern Memoiren Personalien Pflegeeltern Pocken Röteln Schwiegereltern Spesen
 Stiefeltern Textilien Trümmer Unkosten Utensilien Wirren
@@ -325,6 +326,7 @@ erlöschen erlosch erloschen erlischt
 erstehen erstand erstanden
 befahren befuhr befahren befährt
 verschlagen verschlug verschlagen verschlägt
+verschlafen verschlief verschlafen verschläft
 vergären vergor vergoren
 verwachsen verwuchs verwachsen verwächst
 backen backte gebacken bäckt
@@ -500,7 +502,7 @@ Selbst Samt Trotz Zeit Zuhause Hintern Gemach Pomade Spat Zack Bien Item
 
 # Latin and Greek plurals Wikidata lists under no lexeme of their own.
 LATIN_PLURALS = """
-Korpora Charakteristika Pronomina Termini Visa Themata Schemata Dogmata Stigmata Lexika Praktika Prinzipien
+Jungs Mädels Korpora Charakteristika Pronomina Termini Visa Themata Schemata Dogmata Stigmata Lexika Praktika Prinzipien
 Medien Studien Zentren Museen Kommata Aromata Stadien Individuen Materialien Ministerien Kriterien Indizes
 Indices Matrizen Zyklen Genera Species Opera Tempora Modi Casus Foci Radii Nuclei Alumni Rezepte
 """.split()
@@ -542,6 +544,45 @@ mesopotamisch babylonisch persisch ottomanisch byzantinisch römisch griechisch 
 mongolisch tatarisch usbekisch kasachisch kirgisisch jesidisch alevitisch maronitisch koptisch
 nordrhein-westfälisch niedersächsisch schleswig-holsteinisch rheinland-pfälzisch sachsen-anhaltisch
 hamburgisch bremisch berlinerisch münchnerisch kölnisch düsseldorferisch frankfurterisch
+""".split()
+
+# Common words Wikidata has no lexeme for: `Lemma G Plural`, with `=` for a plural that spells like the singular
+# and `-` for a noun without one.
+CORE_NOUNS = """
+Ellbogen M =
+Fleck M Flecke
+Helm M Helme
+Gefälle N =
+Spektakel N =
+Verdienst M Verdienste
+Pol M Pole
+Terz F Terzen
+Kabarett N Kabaretts
+Scholle F Schollen
+Puffer M =
+Swing M -
+Tournee F Tourneen
+Larve F Larven
+Ligand M Liganden
+Appartement N Appartements
+Römer M =
+Sale N -
+Pancake M Pancakes
+Bankett N Bankette
+Bummel M =
+Farce F Farcen
+Fessel F Fesseln
+Laster N =
+Schock M Schocks
+Geiz M -
+""".strip().splitlines()
+
+CORE_ADVERBS = """
+schweizweit vonstatten anderthalb eineinhalb deutschlandweit europaweit bundesweit österreichweit landesweit
+""".split()
+
+CORE_ADJECTIVES = """
+gierig
 """.split()
 
 # Words whose lower-case spelling is the verb and never the noun that shares the letters (ist / Ist).

@@ -466,6 +466,17 @@ pub(crate) fn interfix_matches_known_begin(element: &[char], interfix: &[char]) 
     listed(&interfix)
 }
 
+/// Is `word` a form the compound nouns show in front of a boundary — *Beleuchtungs*, *Planungs*? Written
+/// with a hyphen behind it (*Planungs- und Bauphase*) it stands for the whole compound.
+pub(crate) fn is_listed_begin_form(word: &[char]) -> bool {
+    COMPOUND_BEGIN_FORMS.contains(
+        &word
+            .iter()
+            .flat_map(|c| c.to_lowercase())
+            .collect::<String>(),
+    )
+}
+
 /// May `element` be followed by a linking element at all?
 ///
 /// Linking elements join nouns. A preposition or an adverb takes none — German

@@ -681,6 +681,15 @@ impl<T: Dictionary> Linter for GermanSpellCheck<T> {
                         continue;
                     }
 
+                    // *Planungs- und Bauphase*: the first half of a suspended compound is a begin form.
+                    if document.get_full_content().get(word.span.end) == Some(&'-')
+                        && crate::language::german::spell::compound_checker::is_listed_begin_form(
+                            word_chars,
+                        )
+                    {
+                        continue;
+                    }
+
                     // Try compound word splitting
                     if self.try_compound_word_check(word_chars) {
                         continue;
