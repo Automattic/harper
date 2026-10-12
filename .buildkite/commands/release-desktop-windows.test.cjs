@@ -12,13 +12,21 @@ const { tmpdir } = require('node:os');
 const { join } = require('node:path');
 const { test } = require('node:test');
 
-for (const scenario of ['success', 'wrong-tag', 'download-failure', 'missing-artifact']) {
+for (const scenario of [
+	'windows-path',
+	'posix-path',
+	'wrong-tag',
+	'download-failure',
+	'missing-artifact',
+]) {
 	test(`Windows release upload: ${scenario}`, () => {
 		const root = mkdtempSync(join(tmpdir(), 'Harper release '));
 		try {
 			const commands = join(root, '.buildkite/commands');
 			const bin = join(root, 'bin');
 			const trace = join(root, 'calls.jsonl');
+			const installer =
+				'harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/Harper_9.0.0_x64-setup.exe';
 			mkdirSync(commands, { recursive: true });
 			mkdirSync(bin);
 			mkdirSync(join(root, 'harper-desktop/src-tauri'), { recursive: true });
@@ -35,9 +43,14 @@ const name = path.basename(process.argv[1]);
 fs.appendFileSync(process.env.HARPER_TEST_TRACE, JSON.stringify([name, ...args]) + '\\n');
 if (name === 'buildkite-agent') {
   if (process.env.HARPER_TEST_SCENARIO === 'download-failure') process.exit(1);
+  const storedPath = process.env.HARPER_TEST_ARTIFACT_PATH;
+  const query = args[2];
+  // Buildkite matches the stored path before normalizing Windows separators.
+  if (query !== storedPath && !(query.startsWith('*') && storedPath.endsWith(query.slice(1)))) process.exit(1);
   if (process.env.HARPER_TEST_SCENARIO !== 'missing-artifact') {
-    fs.mkdirSync(path.dirname(args[2]), { recursive: true });
-    fs.writeFileSync(args[2], 'mock installer');
+    const destination = storedPath.replaceAll(String.fromCharCode(92), '/');
+    fs.mkdirSync(path.dirname(destination), { recursive: true });
+    fs.writeFileSync(destination, 'mock installer');
   }
 }
 `,
@@ -52,6 +65,8 @@ if (name === 'buildkite-agent') {
 					BUILDKITE_TAG: scenario === 'wrong-tag' ? 'v1.0.0' : 'v9.0.0',
 					HARPER_TEST_SCENARIO: scenario,
 					HARPER_TEST_TRACE: trace,
+					HARPER_TEST_ARTIFACT_PATH:
+						scenario === 'posix-path' ? installer : installer.replaceAll('/', '\\'),
 				},
 			});
 			if (scenario === 'wrong-tag') {
@@ -60,18 +75,16 @@ if (name === 'buildkite-agent') {
 				return;
 			}
 			const calls = readFileSync(trace, 'utf8').trim().split('\n').map(JSON.parse);
-			const installer =
-				'harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/Harper_9.0.0_x64-setup.exe';
 			assert.deepEqual(calls[0], [
 				'buildkite-agent',
 				'artifact',
 				'download',
-				installer,
+				'*Harper_9.0.0_x64-setup.exe',
 				'.',
 				'--step',
 				'build-desktop-windows',
 			]);
-			if (scenario === 'success') {
+			if (scenario === 'windows-path' || scenario === 'posix-path') {
 				assert.equal(result.status, 0, result.stderr);
 				assert.deepEqual(calls[2], [
 					'bundle',

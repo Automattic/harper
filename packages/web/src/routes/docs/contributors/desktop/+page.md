@@ -96,9 +96,10 @@ SmartScreen may still show reputation warnings.
 ### Releases and Verification
 
 For `v<version>` tags matching `tauri.conf.json`, the upload waits for the Windows and macOS jobs, then retrieves `Harper_<version>_x64-setup.exe` from the current Windows build step.
-It reuses the matching draft, preserving notes and unrelated assets and replacing matching filenames on retries.
-Uploads to published releases fail.
+Windows must succeed; macOS failure does not block the upload.
+Buildkite reuses a single matching draft, preserving notes and unrelated assets and replacing matching filenames on retries.
+Published releases or multiple matching drafts stop the upload; reconcile duplicate drafts before retrying.
 
-Run `bundle install` and `just test-desktop-release` for the signing and release tests; these also run in macOS CI.
+Run `bundle install` and `just test-desktop-release` for the signing and release tests; these run independently in GitHub Actions.
 Before the first signed release, run the Windows Buildkite job and install, launch, and uninstall its artifact on Windows.
 Confirm valid Automattic signatures on the installer, installed app, and uninstaller.

@@ -7,7 +7,7 @@ require_relative '../lib/desktop_release'
 
 class DesktopReleaseTest < Minitest::Test
   class FakeGithub
-    attr_accessor :release_list, :asset_list, :created_release, :create_error, :after_conflict,
+    attr_accessor :release_list, :asset_list, :created_release, :create_error,
                   :list_error, :upload_error, :ref_error
     attr_reader :calls
 
@@ -31,10 +31,7 @@ class DesktopReleaseTest < Minitest::Test
 
     def create_release(repository, tag, **options)
       @calls << [:create, repository, tag, options]
-      if create_error
-        @release_list = after_conflict if after_conflict
-        raise create_error
-      end
+      raise create_error if create_error
       created_release
     end
 
@@ -108,11 +105,12 @@ class DesktopReleaseTest < Minitest::Test
     assert_equal [:delete, 'old-windows'], writes.first
   end
 
-  def test_reuses_the_newest_draft_for_the_exact_tag
+  def test_rejects_duplicate_drafts_and_lists_their_ids
     newer = release(id: 124)
     @client.release_list = [release(id: 500, tag: 'v2.13.0'), @draft, newer]
-    upload
-    assert_equal newer[:url], writes.first[1]
+    error = assert_raises(RuntimeError) { upload }
+    assert_equal 'Multiple draft releases for v2.12.0: 123, 124. Reconcile them before retrying.', error.message
+    assert_empty writes
   end
 
   def test_never_uses_a_release_for_another_tag
@@ -128,23 +126,9 @@ class DesktopReleaseTest < Minitest::Test
     assert_empty writes
   end
 
-  def test_retries_lookup_after_a_creation_conflict
-    @client.create_error = Octokit::UnprocessableEntity.new
-    @client.after_conflict = [@draft]
-    assert_equal @draft[:html_url], upload
-    assert_equal %i[create upload], writes.map(&:first)
-  end
-
-  def test_does_not_hide_an_unrelated_creation_error
+  def test_propagates_creation_errors
     @client.create_error = Octokit::UnprocessableEntity.new
     assert_raises(Octokit::UnprocessableEntity) { upload }
-    assert_equal [:create], writes.map(&:first)
-  end
-
-  def test_rejects_a_release_that_was_published_during_creation
-    @client.create_error = Octokit::UnprocessableEntity.new
-    @client.after_conflict = [release(id: 123, draft: false)]
-    assert_raises(RuntimeError) { upload }
     assert_equal [:create], writes.map(&:first)
   end
 

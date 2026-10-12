@@ -8,7 +8,7 @@ module DesktopRelease
   # @param tag [String] Existing Git tag.
   # @param assets [Array<String>] Files to upload, with unique basenames.
   # @return [String] Release URL.
-  # @raise [RuntimeError] If assets are invalid or the release is already published.
+  # @raise [RuntimeError] If assets are invalid, drafts are ambiguous, or the release is published.
   def self.upload(client:, repository:, tag:, assets:)
     raise 'At least one release asset is required' if assets.empty?
     raise 'Release assets must be existing files' unless assets.all? { |path| File.file?(path) }
@@ -20,13 +20,7 @@ module DesktopRelease
     unless release
       # Never create a tag implicitly from the repository's default branch.
       client.ref(repository, "tags/#{tag}")
-      begin
-        release = client.create_release(repository, tag, name: tag, body: '', draft: true)
-      rescue Octokit::UnprocessableEntity
-        # Another release job may have created the draft since our lookup.
-        release = find_draft(client, repository, tag)
-        raise unless release
-      end
+      release = client.create_release(repository, tag, name: tag, body: '', draft: true)
     end
     raise 'Refusing to upload desktop assets to a published release' unless release[:draft] == true
 
@@ -40,15 +34,19 @@ module DesktopRelease
     release[:html_url]
   end
 
-  # Find the newest draft for the exact tag.
+  # Find the sole draft for the exact tag.
   # @return [Sawyer::Resource, nil] Matching draft, if one exists.
-  # @raise [RuntimeError] If any matching release is already published.
+  # @raise [RuntimeError] If multiple drafts or a published release match.
   def self.find_draft(client, repository, tag)
     matches = client.releases(repository).select { |release| release[:tag_name] == tag }
     if matches.any? { |release| release[:draft] != true }
       raise 'Refusing to upload desktop assets to a published release'
     end
-    matches.max_by { |release| release[:id] }
+    if matches.length > 1
+      ids = matches.map { |release| release[:id] }.sort.join(', ')
+      raise "Multiple draft releases for #{tag}: #{ids}. Reconcile them before retrying."
+    end
+    matches.first
   end
   private_class_method :find_draft
 end

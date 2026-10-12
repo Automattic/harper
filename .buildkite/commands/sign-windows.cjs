@@ -18,6 +18,8 @@ function signWindows(file, env = process.env, run = execFileSync) {
 		[
 			'sign',
 			'/v',
+			'/d',
+			'Harper',
 			'/fd',
 			'SHA256',
 			'/tr',

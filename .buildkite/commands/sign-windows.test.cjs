@@ -18,6 +18,8 @@ test('signs and verifies the same file using separate arguments, including space
 			[
 				'sign',
 				'/v',
+				'/d',
+				'Harper',
 				'/fd',
 				'SHA256',
 				'/tr',

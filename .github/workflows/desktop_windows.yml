@@ -12,6 +12,25 @@ env:
   CARGO_TERM_COLOR: always
 
 jobs:
+  desktop-release-tests:
+    name: just test-desktop-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      FASTLANE_SKIP_UPDATE_CHECK: "1"
+      FASTLANE_OPT_OUT_USAGE: "1"
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - uses: extractions/setup-just@53165ef7e734c5c07cb06b3c8e7b647c5aa16db3 # v4.0.0
+      - uses: actions/setup-node@v7
+        with:
+          node-version-file: ".node-version"
+      - uses: ruby/setup-ruby@651ff0d62c5c79bed6d53ec518387aae20e72c1a # v1
+        with:
+          bundler-cache: true
+      - run: just test-desktop-release
+
   desktop-windows:
     name: just build-desktop-windows
     runs-on: ubuntu-latest
