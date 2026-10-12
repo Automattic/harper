@@ -62,7 +62,7 @@ def run(query):
             if err.code not in (429, 500, 502, 503, 504) or attempt == 5:
                 raise
             print(f"HTTP {err.code}, waiting", file=sys.stderr)
-            time.sleep(70)
+            time.sleep(90)
     out = []
     for line in text.splitlines()[1:]:
         label, _, links = line.partition("\t")
@@ -91,7 +91,12 @@ def main():
     rows = {}  # label -> (kind, sitelinks)
     for kind, query in QUERIES.items():
         best = {}
-        for label, links in run(query):
+        try:
+            got = run(query)
+        except urllib.error.URLError as err:  # the service refuses now and then: keep what the other kinds found
+            print(f"{kind}: skipped ({err})", file=sys.stderr)
+            continue
+        for label, links in got:
             if keep(label):
                 best[label] = max(links, best.get(label, 0))
         ranked = sorted(best, key=lambda w: (-best[w], w))[: BUDGET[kind]]
