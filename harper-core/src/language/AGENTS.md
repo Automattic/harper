@@ -63,9 +63,10 @@ word list or version, it expands as before and gets the same dictionary.
 - The pack is an accelerator, never a requirement. Keep the expansion path working.
 - Do not commit a pack: it is a build artifact, 30 MB, and the release job makes it
   from the same commit as the binary. The stamp in its header refuses any other.
-- The stamp holds the crate version, the word list and the annotations, not the
-  expansion code. After you change the code that expands forms, bake again or
-  delete the pack, or you measure and test against the old forms.
+- The stamp holds the crate version, the word list, the annotations and the source
+  of the files that expand them (`pack_stamp` in `german_dict.rs`). Change any of
+  them and an old pack is refused, so it can not serve stale forms. If the expansion
+  starts to read another file, add it to that list.
 - To compare, run `just language-perf german` with and without the pack beside the
   executable; the test `a_pack_reads_back_as_the_dictionary_it_was_written_from`
   checks every word and its metadata.

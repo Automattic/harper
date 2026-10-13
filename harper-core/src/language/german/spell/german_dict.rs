@@ -32,15 +32,27 @@ fn build_german_base_dict(
     expand_in_blocks(&attr_list, word_list)
 }
 
-/// What a dictionary pack must have been built from to be used: this crate version, the word list and the annotations.
+/// What a dictionary pack must have been built from to be used: this crate version, the word list, the
+/// annotations, and the source of the code that expands them and writes the pack.
 ///
-/// FNV-1a: this only has to tell one build from another, and the pack is a file the
-/// user put there, so it is not a defence against someone who writes both.
+/// The code is in the stamp so that changing how forms are expanded cannot leave a pack behind that is
+/// still accepted. It is every file the expansion reads; add a file here when the expansion starts to
+/// depend on one. FNV-1a: this only has to tell one build from another, and the pack is a file the user
+/// put there, so it is not a defence against someone who writes both.
 fn pack_stamp() -> u64 {
     let parts = [
         env!("CARGO_PKG_VERSION"),
         include_str!("../dictionary.dict"),
         include_str!("../annotations.json"),
+        include_str!("compact_dict.rs"),
+        include_str!("../../../spell/rune/affix_replacement.rs"),
+        include_str!("../../../spell/rune/attribute_list.rs"),
+        include_str!("../../../spell/rune/expansion.rs"),
+        include_str!("../../../spell/rune/matcher.rs"),
+        include_str!("../../../spell/rune/word_list.rs"),
+        include_str!("../../../spell/word_map.rs"),
+        include_str!("../../../dict_word_metadata.rs"),
+        include_str!("../../morphology.rs"),
     ];
     parts
         .iter()

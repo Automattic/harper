@@ -8,8 +8,32 @@ on:
   workflow_dispatch:
 
 jobs:
+  # The expanded German dictionary. Start-up reads it instead of expanding the word list
+  # (see the performance section of harper-core/src/language/AGENTS.md). It does not depend on
+  # the platform, so it is baked once, from the same commit as the binaries, and every archive
+  # carries a copy next to the executable. Without it German still works, only slower to start.
+  german-pack:
+    name: German dictionary pack
+    if: github.event.pull_request.draft == false
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7.0.1
+      - name: Rust Cache
+        uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
+        with:
+          cache-bin: "true"
+      - name: Bake the pack
+        run: cargo run --locked --release -p harper-core --features de --example bake_german -- harper-german.pack
+      - name: Upload the pack
+        uses: actions/upload-artifact@v7
+        with:
+          name: harper-german-pack
+          path: harper-german.pack
+
   binaries:
     name: ${{ matrix.platform.project }} - ${{ matrix.platform.release_for }}
+    needs: german-pack
     if: github.event.pull_request.draft == false
     strategy:
       matrix:
@@ -130,14 +154,19 @@ jobs:
           args: "--locked --release --bin ${{ matrix.platform.project }}"
           force-use-cross: ${{ matrix.platform.os == 'ubuntu-latest' }}
           strip: true
+      - name: Download the German pack
+        uses: actions/download-artifact@v7
+        with:
+          name: harper-german-pack
+          path: target/${{ matrix.platform.target }}/release
       - name: Package as archive
         shell: bash
         run: |
           cd target/${{ matrix.platform.target }}/release
           if [[ "${{ matrix.platform.os }}" == "windows-latest" ]]; then
-            7z a ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+            7z a ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }} harper-german.pack
           else
-            tar czvf ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }}
+            tar czvf ../../../${{ matrix.platform.name }} ${{ matrix.platform.bin }} harper-german.pack
           fi
           cd -
       - name: Upload Artifacts

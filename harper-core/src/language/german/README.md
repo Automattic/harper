@@ -45,6 +45,16 @@ Two consequences worth keeping in mind when touching `german_dict.rs`:
 The Brill tagger and the neural chunker are skipped for German (see "Resolving
 part-of-speech ambiguity" below).
 
+Most of the start-up is expanding the word list into forms. A **dictionary pack**
+skips that: `harper-german.pack`, next to the executable (or wherever
+`HARPER_GERMAN_PACK` points), holds the finished dictionary. The release archives
+carry one. A missing pack, or one built from another version or word list, is not
+an error; the word list is expanded instead, with the same result. To make one:
+
+```bash
+just language-bake german         # writes target/release/harper-german.pack
+```
+
 To measure any of this rather than trust a number written down here:
 
 ```bash
