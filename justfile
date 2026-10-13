@@ -1121,4 +1121,10 @@ install-from-ci bin="harper-ls" branch="feature/german-language-support" prefix=
 
   mkdir -p "{{prefix}}"
   install -m 755 "$tmp/{{bin}}" "{{prefix}}/{{bin}}"
+  # The prebuilt German dictionary must sit next to the executable (much faster start-up)
+  if [ -f "$tmp/harper-german.pack" ]; then
+    install -m 644 "$tmp/harper-german.pack" "{{prefix}}/harper-german.pack"
+  else
+    rm -f "{{prefix}}/harper-german.pack"
+  fi
   echo "Installed {{prefix}}/{{bin}} ($target, run $run_id)"
