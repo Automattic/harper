@@ -380,6 +380,7 @@ fn generate_dialect_catalog(code: &mut String, languages: &[LanguageConfig], lan
     );
     code.push_str("/// in its own language. Generated from each language's config.toml.\n");
     code.push_str("#[wasm_bindgen]\n");
+    code.push_str("#[allow(clippy::vec_init_then_push)]\n");
     code.push_str("pub fn get_dialect_catalog() -> JsValue {\n");
     code.push_str("    #[allow(unused_mut)]\n");
     code.push_str("    let mut catalog: Vec<DialectInfo> = Vec::new();\n");
