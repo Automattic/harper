@@ -15,6 +15,9 @@ export type Request =
 	| GetLintDescriptionsRequest
 	| SetDialectRequest
 	| GetDialectRequest
+	| GetLanguageCycleRequest
+	| SetLanguageCycleRequest
+	| GetActiveLanguageRequest
 	| GetDialectCatalogRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
@@ -50,6 +53,8 @@ export type Response =
 	| UnitResponse
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
+	| GetLanguageCycleResponse
+	| GetActiveLanguageResponse
 	| GetDialectCatalogResponse
 	| GetIsolateEnglishResponse
 	| GetDelayResponse
@@ -136,6 +141,25 @@ export type GetDialectResponse = {
 	dialect: Dialect;
 };
 
+export type GetLanguageCycleRequest = {
+	kind: 'getLanguageCycle';
+};
+
+export type GetLanguageCycleResponse = {
+	kind: 'getLanguageCycle';
+	cycle: Dialect[];
+};
+
+/** Replace the languages the keyboard shortcut cycles through. The first one is the default. */
+export type SetLanguageCycleRequest = {
+	kind: 'setLanguageCycle';
+	cycle: Dialect[];
+};
+
+export type GetActiveLanguageRequest = {
+	kind: 'getActiveLanguage';
+};
+
 export type GetDialectCatalogRequest = {
 	kind: 'getDialectCatalog';
 };
@@ -144,6 +168,12 @@ export type GetDialectCatalogRequest = {
 export type GetDialectCatalogResponse = {
 	kind: 'getDialectCatalog';
 	catalog: DialectInfo[];
+};
+
+export type GetActiveLanguageResponse = {
+	kind: 'getActiveLanguage';
+	dialect: Dialect;
+	label: string;
 };
 
 export type GetIsolateEnglishRequest = {

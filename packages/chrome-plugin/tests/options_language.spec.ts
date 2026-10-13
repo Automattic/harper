@@ -8,24 +8,25 @@ test.describe('language setting', () => {
 		'Firefox MV3 background context is not exposed reliably in playwright-webextext.',
 	);
 
-	test('lists the compiled languages and stores the chosen one', async ({ context, page }) => {
+	test('offers the compiled languages and stores the chosen ones', async ({ context, page }) => {
 		await openExtensionPage(context, page, 'options.html');
 
-		const select = page.getByTestId('language-select');
-		await expect(select).toBeVisible({ timeout: 15000 });
-		await expect(select.locator('optgroup[label="English"] option')).toHaveCount(5);
-		await expect(select.locator('optgroup[label="Slovenčina"] option')).toHaveCount(1);
+		const cycle = page.getByTestId('language-cycle');
+		const add = page.getByTestId('language-add');
+		await expect(cycle.locator('li')).toHaveCount(1, { timeout: 15000 });
+		await expect(add.locator('optgroup[label="Slovenčina"] option')).toHaveCount(1);
 
-		const slovak = await select
-			.locator('optgroup[label="Slovenčina"] option')
-			.getAttribute('value');
-		await select.selectOption(slovak!);
+		const slovak = await add.locator('optgroup[label="Slovenčina"] option').getAttribute('value');
+		await add.selectOption(slovak!);
+		await expect(cycle.locator('li')).toHaveCount(2);
 
 		const background = await getBackground(context);
 		await expect
 			.poll(() =>
-				background.evaluate(async () => (await chrome.storage.local.get('dialect')).dialect),
+				background.evaluate(
+					async () => (await chrome.storage.local.get('languageCycle')).languageCycle,
+				),
 			)
-			.toBe(Number(slovak));
+			.toContain(Number(slovak));
 	});
 });

@@ -44,6 +44,11 @@ export default class ProtocolClient {
 		return p;
 	}
 
+	/** Forget cached lint results, e.g. because the language changed and the text did not. */
+	public static clearLintCache(): void {
+		this.lintCache.clear();
+	}
+
 	public static async getLintConfig(): Promise<LintConfig> {
 		return (await chrome.runtime.sendMessage({ kind: 'getConfig' })).config;
 	}
@@ -71,12 +76,25 @@ export default class ProtocolClient {
 		return (await chrome.runtime.sendMessage({ kind: 'getDialect' })).dialect;
 	}
 
+	public static async setDialect(dialect: Dialect): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
+	}
+
+	public static async getLanguageCycle(): Promise<Dialect[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getLanguageCycle' })).cycle;
+	}
+
+	public static async setLanguageCycle(cycle: Dialect[]): Promise<void> {
+		await chrome.runtime.sendMessage({ kind: 'setLanguageCycle', cycle: [...cycle] });
+	}
+
 	public static async getDialectCatalog(): Promise<DialectInfo[]> {
 		return (await chrome.runtime.sendMessage({ kind: 'getDialectCatalog' })).catalog;
 	}
 
-	public static async setDialect(dialect: Dialect): Promise<void> {
-		await chrome.runtime.sendMessage({ kind: 'setDialect', dialect });
+	public static async getActiveLanguage(): Promise<{ dialect: Dialect; label: string }> {
+		const { dialect, label } = await chrome.runtime.sendMessage({ kind: 'getActiveLanguage' });
+		return { dialect, label };
 	}
 
 	public static async getIsolateEnglish(): Promise<boolean> {

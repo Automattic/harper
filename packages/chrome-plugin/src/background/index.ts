@@ -7,6 +7,8 @@ import {
 	unpackWeirpackBytes,
 } from 'harper.js';
 import { type UnpackedLintGroups, unpackLint } from 'lint-framework';
+import { CYCLE_LANGUAGE_COMMAND } from '../commands';
+import { dialectInfo, languageLabel, nextLanguage, normalizeLanguageCycle } from '../languages';
 import type { PopupState } from '../PopupState';
 import {
 	ActivationKey,
@@ -14,6 +16,7 @@ import {
 	type AddWeirpackRequest,
 	createUnitResponse,
 	type GetActivationKeyResponse,
+	type GetActiveLanguageResponse,
 	type GetConfigRequest,
 	type GetConfigResponse,
 	type GetDefaultStatusResponse,
@@ -29,6 +32,7 @@ import {
 	type GetInstalledOnRequest,
 	type GetInstalledOnResponse,
 	type GetIsolateEnglishResponse,
+	type GetLanguageCycleResponse,
 	type GetLintDescriptionsRequest,
 	type GetLintDescriptionsResponse,
 	type GetReviewedRequest,
@@ -54,6 +58,7 @@ import {
 	type SetDomainStatusRequest,
 	type SetHotkeyRequest,
 	type SetIsolateEnglishRequest,
+	type SetLanguageCycleRequest,
 	type SetReviewedRequest,
 	type SetUserDictionaryRequest,
 	type UnitResponse,
@@ -180,6 +185,17 @@ const defaultEnabledDomainSet = new Set<string>(defaultEnabledDomains);
 let linterReady = getDialect()
 	.then(setDialect)
 	.catch((err) => console.error('Failed to initialize linter:', err));
+getDialect().then(showLanguageOnIcon);
+
+restoreFirstLanguageOnStartup().catch((err) =>
+	console.error('Failed to restore the first language:', err),
+);
+
+chrome.commands?.onCommand.addListener((command) => {
+	if (command === CYCLE_LANGUAGE_COMMAND) {
+		cycleLanguage().catch((err) => console.error('Failed to switch language:', err));
+	}
+});
 setInstalledOnIfMissing();
 
 chrome.storage.onChanged.addListener((changes, areaName) => {
@@ -196,10 +212,20 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
 	const dialectChanged =
 		changes.dialect != null && changes.dialect.oldValue !== changes.dialect.newValue;
 
+	if (dialectChanged) {
+		getDialect().then(showLanguageOnIcon);
+	}
+
 	if (resetLinter || dialectChanged) {
 		linterReady = linterReady
 			.then(async () => {
-				await initializeLinter(await getDialect());
+				const dialect = await getDialect();
+				// `storeDialect` has already switched the linter before writing the new dialect.
+				if (!resetLinter && linter != null && (await linter.getDialect()) === dialect) {
+					return;
+				}
+
+				await initializeLinter(dialect);
 				linterHasPersistedState = false;
 			})
 			.catch((err) => console.error('Failed to reset linter:', err));
@@ -239,6 +265,12 @@ function handleRequest(message: Request, sender?: chrome.runtime.MessageSender):
 			return handleSetDialect(message);
 		case 'getDialect':
 			return handleGetDialect(message);
+		case 'getLanguageCycle':
+			return handleGetLanguageCycle();
+		case 'setLanguageCycle':
+			return handleSetLanguageCycle(message);
+		case 'getActiveLanguage':
+			return handleGetActiveLanguage();
 		case 'getDialectCatalog':
 			return handleGetDialectCatalog();
 		case 'getIsolateEnglish':
@@ -408,14 +440,24 @@ async function handleGetDialect(_req: GetDialectRequest): Promise<GetDialectResp
 	return { kind: 'getDialect', dialect: await getDialect() };
 }
 
-async function handleGetDialectCatalog(): Promise<GetDialectCatalogResponse> {
-	return { kind: 'getDialectCatalog', catalog: await getDialectCatalog() };
+async function handleGetLanguageCycle(): Promise<GetLanguageCycleResponse> {
+	return { kind: 'getLanguageCycle', cycle: await getLanguageCycle() };
 }
 
-/** The dialects compiled into the WebAssembly binary, with names to show. */
-function getDialectCatalog(): Promise<DialectInfo[]> {
-	dialectCatalog ??= binary.getDialectCatalog();
-	return dialectCatalog;
+async function handleSetLanguageCycle(req: SetLanguageCycleRequest): Promise<UnitResponse> {
+	await setLanguageCycle(req.cycle);
+
+	return createUnitResponse();
+}
+
+async function handleGetActiveLanguage(): Promise<GetActiveLanguageResponse> {
+	const dialect = await getDialect();
+	const info = dialectInfo(await getDialectCatalog(), dialect);
+	return { kind: 'getActiveLanguage', dialect, label: languageLabel(info) };
+}
+
+async function handleGetDialectCatalog(): Promise<GetDialectCatalogResponse> {
+	return { kind: 'getDialectCatalog', catalog: await getDialectCatalog() };
 }
 
 async function handleGetIsolateEnglish(): Promise<GetIsolateEnglishResponse> {
@@ -741,6 +783,97 @@ async function getDialect(): Promise<Dialect> {
 	}
 
 	return resp.dialect;
+}
+
+/** The languages the keyboard shortcut cycles through. Before the user sets any, the active one. */
+async function getLanguageCycle(): Promise<Dialect[]> {
+	const resp = await chrome.storage.local.get('languageCycle');
+	return normalizeLanguageCycle(resp.languageCycle, await getDialect(), await getDialectCatalog());
+}
+
+/** Store a new cycle. When the active language is no longer in it, switch to the cycle's first. */
+async function setLanguageCycle(cycle: Dialect[]): Promise<void> {
+	const normalized = normalizeLanguageCycle(cycle, await getDialect(), await getDialectCatalog());
+
+	if (normalized.includes(await getDialect())) {
+		await chrome.storage.local.set({ languageCycle: normalized });
+	} else {
+		await storeDialect(normalized[0], { languageCycle: normalized });
+	}
+}
+
+/**
+ * Switch to the next language in the cycle. `languageSwitchedAt` changes even when the cycle has
+ * a single language, so the content script always shows which language is active.
+ */
+async function cycleLanguage(): Promise<void> {
+	const current = await getDialect();
+	const next = nextLanguage(await getLanguageCycle(), current);
+
+	if (next === current) {
+		await chrome.storage.local.set({ languageSwitchedAt: Date.now() });
+	} else {
+		await storeDialect(next, { languageSwitchedAt: Date.now() });
+	}
+}
+
+/**
+ * On a browser start, go back to the first language in the list unless the user wants the last
+ * one used to stay active (`rememberLanguage`, on by default). The background script also starts
+ * again while the browser runs (an idle service worker is stopped), so a flag in session storage,
+ * which lives until the browser closes, tells the first start from the later ones.
+ */
+async function restoreFirstLanguageOnStartup(): Promise<void> {
+	if (chrome.storage.session == null) {
+		return;
+	}
+
+	const { languageStartChecked } = await chrome.storage.session.get('languageStartChecked');
+	if (languageStartChecked === true) {
+		return;
+	}
+	await chrome.storage.session.set({ languageStartChecked: true });
+
+	const { rememberLanguage } = await chrome.storage.local.get({ rememberLanguage: true });
+	if (rememberLanguage !== false) {
+		return;
+	}
+
+	const first = (await getLanguageCycle())[0];
+	if (first !== (await getDialect())) {
+		await storeDialect(first);
+	}
+}
+
+/**
+ * Switch the linter first and store the dialect afterwards, so content scripts that react to the
+ * stored change already get lints in the new language.
+ */
+async function storeDialect(dialect: Dialect, extra: Record<string, unknown> = {}): Promise<void> {
+	const switched = linterReady.then(() => initializeLinter(dialect));
+	linterReady = switched.catch((err) => console.error('Failed to switch the linter:', err));
+	await switched;
+
+	linterHasPersistedState = true;
+	await chrome.storage.local.set({ dialect, ...extra });
+}
+
+/** Show the active language as a short code on the toolbar icon. */
+async function showLanguageOnIcon(dialect: Dialect): Promise<void> {
+	if (chrome.action?.setBadgeText == null) {
+		return;
+	}
+
+	const info = dialectInfo(await getDialectCatalog(), dialect);
+	await chrome.action.setBadgeText({ text: info?.code ?? '' });
+	await chrome.action.setBadgeBackgroundColor({ color: '#4b5563' });
+	await chrome.action.setTitle({ title: `Harper: ${languageLabel(info)}` });
+}
+
+/** The dialects compiled into the WebAssembly binary, with names to show. */
+function getDialectCatalog(): Promise<DialectInfo[]> {
+	dialectCatalog ??= binary.getDialectCatalog();
+	return dialectCatalog;
 }
 
 async function getIsolateEnglish(): Promise<boolean> {
