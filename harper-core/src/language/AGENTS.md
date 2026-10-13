@@ -63,6 +63,8 @@ word list or version, it expands as before and gets the same dictionary.
 - The pack is an accelerator, never a requirement. Keep the expansion path working.
 - Do not commit a pack: it is a build artifact, 30 MB, and the release job makes it
   from the same commit as the binary. The stamp in its header refuses any other.
+  `*.pack` is in `.gitignore`, and `just check-large-files` (part of `check-rust`, so
+  of CI) fails on a tracked pack and on any tracked file over 8 MiB.
 - The stamp holds the crate version, the word list, the annotations and the source
   of the files that expand them (`pack_stamp` in `german_dict.rs`). Change any of
   them and an old pack is refused, so it can not serve stale forms. If the expansion

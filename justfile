@@ -459,6 +459,12 @@ update-vscode-linters:
   mv "$output_file" package.json
   just format
 
+# Fail if a large file or a generated binary (the German dictionary pack) is tracked by git.
+check-large-files:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  python3 "{{justfile_directory()}}/scripts/check_large_files.py"
+
 # Validate language feature consistency across Cargo.toml files
 check-language-features:
   #!/usr/bin/env bash
@@ -466,7 +472,7 @@ check-language-features:
   python3 "{{justfile_directory()}}/scripts/check_language_features.py"
 
 # Run Rust formatting and linting.
-check-rust: audit-dictionary
+check-rust: audit-dictionary check-large-files
   #!/usr/bin/env bash
   set -eo pipefail
 
