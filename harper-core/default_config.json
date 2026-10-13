@@ -497,6 +497,13 @@
 						},
 						{
 							"Bool": {
+								"name": "Guesswork",
+								"state": true,
+								"label": "Guesswork"
+							}
+						},
+						{
+							"Bool": {
 								"name": "Henceforth",
 								"state": true,
 								"label": "Henceforth"
@@ -4579,6 +4586,13 @@
 						},
 						{
 							"Bool": {
+								"name": "ByExtension",
+								"state": true,
+								"label": "By Extension"
+							}
+						},
+						{
+							"Bool": {
 								"name": "ByOnesOwn",
 								"state": true,
 								"label": "By One's Own"
@@ -5023,6 +5037,13 @@
 								"name": "HiddenIn",
 								"state": true,
 								"label": "Hidden In"
+							}
+						},
+						{
+							"Bool": {
+								"name": "HighLowStandards",
+								"state": true,
+								"label": "High/Low Standards"
 							}
 						},
 						{
