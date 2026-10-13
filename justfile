@@ -1086,3 +1086,39 @@ sort-config-settings:
 
   fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
   console.log('Sorted default_config.json child settings by name.');
+
+# Build a branch with the "Binaries" GitHub workflow and install it locally. Usage: just install-from-ci [bin] [branch] [prefix]
+install-from-ci bin="harper-ls" branch="feature/german-language-support" prefix=(env("HOME") + "/.local/bin"):
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  # Use origin (the fork), not the upstream parent that `gh repo view` resolves to
+  repo=$(git remote get-url origin | sed -E 's#^(https://github.com/|git@github.com:)##; s#\.git$##')
+  target=$(rustc -vV 2>/dev/null | sed -n 's/^host: //p' || true)
+  target=${target:-$(uname -m)-unknown-linux-gnu}
+
+  echo "Dispatching Binaries workflow on $repo@{{branch}}"
+  started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+  gh workflow run binaries.yml --repo "$repo" --ref "{{branch}}"
+
+  # The run takes a moment to show up
+  run_id=""
+  for _ in $(seq 1 30); do
+    run_id=$(gh run list --repo "$repo" --workflow binaries.yml --branch "{{branch}}" --event workflow_dispatch \
+      --json databaseId,createdAt --jq "map(select(.createdAt >= \"$started\")) | first | .databaseId // empty")
+    [ -n "$run_id" ] && break
+    sleep 2
+  done
+  [ -n "$run_id" ] || { echo "Could not find the dispatched run" >&2; exit 1; }
+
+  echo "Waiting for run $run_id (usually ~11 min): https://github.com/$repo/actions/runs/$run_id"
+  gh run watch "$run_id" --repo "$repo" --exit-status >/dev/null
+
+  tmp=$(mktemp -d)
+  trap 'rm -rf "$tmp"' EXIT
+  gh run download "$run_id" --repo "$repo" --name "{{bin}}-$target" --dir "$tmp"
+  tar xzf "$tmp"/{{bin}}-$target.tar.gz -C "$tmp"
+
+  mkdir -p "{{prefix}}"
+  install -m 755 "$tmp/{{bin}}" "{{prefix}}/{{bin}}"
+  echo "Installed {{prefix}}/{{bin}} ($target, run $run_id)"
