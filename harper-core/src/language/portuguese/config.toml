@@ -1,5 +1,6 @@
 [language]
 name = "Portuguese"
+native_name = "Português"
 feature = "pt"
 
 [metadata]
@@ -7,12 +8,18 @@ confidence = 0.85
 
 [[dialects]]
 name = "PT"
+native_name = "Portugal"
+code = "PT"
 aliases = ["pt", "pt-pt", "pt_pt", "portuguese", "português"]
 
 [[dialects]]
 name = "BR"
+native_name = "Brasil"
+code = "BR"
 aliases = ["br", "brazil", "portuguese-brazilian", "portuguese_brazilian", "pt-br", "pt_br"]
 
 [[dialects]]
 name = "AO"
+native_name = "Angola"
+code = "AO"
 aliases = ["ao"]

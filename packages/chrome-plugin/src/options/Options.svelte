@@ -2,11 +2,13 @@
 import { Button, Card, Input, Select, Textarea } from 'components';
 import {
 	Dialect,
+	type DialectInfo,
 	type LintConfig,
 	type StructuredLintConfig,
 	type StructuredLintSetting,
 } from 'harper.js';
 import logo from '/logo.png';
+import { codeFlag, groupByLanguage } from '../languages';
 import ProtocolClient from '../ProtocolClient';
 import type { Hotkey, Modifier, WeirpackMeta } from '../protocol';
 import { ActivationKey } from '../protocol';
@@ -19,6 +21,7 @@ let searchQuery = $state('');
 let searchQueryLower = $derived(searchQuery.toLowerCase());
 let expandedGroups: Record<string, boolean> = $state({});
 let dialect = $state(Dialect.American);
+let dialectCatalog: DialectInfo[] = $state([]);
 let isolateEnglish = $state(false);
 let delay = $state(0);
 let delayLoaded = $state(false);
@@ -70,6 +73,10 @@ Promise.all([
 
 ProtocolClient.getDialect().then((d) => {
 	dialect = d;
+});
+
+ProtocolClient.getDialectCatalog().then((catalog) => {
+	dialectCatalog = catalog;
 });
 
 ProtocolClient.getIsolateEnglish().then((value) => {
@@ -357,14 +364,19 @@ async function removeWeirpack(id: string) {
 
       <div class="space-y-5">
         <div class="flex items-center justify-between">
-          <h3 class="text-sm">English Dialect</h3>
-          <Select size="sm" class="w-44" bind:value={dialect}>
-            <option value={Dialect.American}>🇺🇸 American</option>
-            <option value={Dialect.British}>🇬🇧 British</option>
-            <option value={Dialect.Australian}>🇦🇺 Australian</option>
-            <option value={Dialect.Canadian}>🇨🇦 Canadian</option>
-            <option value={Dialect.Indian}>🇮🇳 Indian</option>
-          </Select>
+          <h3 class="text-sm">Language</h3>
+          {#if dialectCatalog.length > 0}
+            <!-- Rendered once the catalog is in, so the select never sees a value without options. -->
+            <Select size="sm" class="w-44" bind:value={dialect} data-testid="language-select">
+              {#each groupByLanguage(dialectCatalog) as [language, dialects] (language)}
+                <optgroup label={language}>
+                  {#each dialects as info (info.dialect)}
+                    <option value={info.dialect}>{codeFlag(info.code)} {info.region}</option>
+                  {/each}
+                </optgroup>
+              {/each}
+            </Select>
+          {/if}
         </div>
       </div>
 

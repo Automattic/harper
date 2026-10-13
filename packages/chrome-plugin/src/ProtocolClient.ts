@@ -1,4 +1,10 @@
-import type { Dialect, LintConfig, LintOptions, StructuredLintConfig } from 'harper.js';
+import type {
+	Dialect,
+	DialectInfo,
+	LintConfig,
+	LintOptions,
+	StructuredLintConfig,
+} from 'harper.js';
 import type { UnpackedLintGroups } from 'lint-framework';
 import { LRUCache } from 'lru-cache';
 import type { ActivationKey, Hotkey, WeirpackMeta } from './protocol';
@@ -63,6 +69,10 @@ export default class ProtocolClient {
 
 	public static async getDialect(): Promise<Dialect> {
 		return (await chrome.runtime.sendMessage({ kind: 'getDialect' })).dialect;
+	}
+
+	public static async getDialectCatalog(): Promise<DialectInfo[]> {
+		return (await chrome.runtime.sendMessage({ kind: 'getDialectCatalog' })).catalog;
 	}
 
 	public static async setDialect(dialect: Dialect): Promise<void> {

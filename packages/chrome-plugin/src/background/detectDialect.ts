@@ -1,6 +1,6 @@
 import { Dialect } from 'harper.js';
 
-/** Detect English dialect from browser language settings */
+/** Detect the language and dialect from browser language settings */
 export function detectBrowserDialect(): Dialect {
 	// Try chrome.i18n API first
 	if (chrome.i18n?.getUILanguage) {
@@ -35,6 +35,20 @@ function localeToDialect(locale: string): Dialect {
 		return Dialect.American;
 	}
 
-	// Non-English languages → American (fallback)
+	// Other supported languages
+	if (lower.startsWith('de')) {
+		if (lower.includes('de-at') || lower.includes('de_at')) return Dialect.GermanAustrian;
+		if (lower.includes('de-ch') || lower.includes('de_ch')) return Dialect.GermanSwiss;
+		return Dialect.GermanStandard;
+	}
+	if (lower.startsWith('pt')) {
+		if (lower.includes('pt-br') || lower.includes('pt_br')) return Dialect.PortugueseBR;
+		if (lower.includes('pt-ao') || lower.includes('pt_ao')) return Dialect.PortugueseAO;
+		return Dialect.PortuguesePT;
+	}
+	if (lower.startsWith('pl')) return Dialect.PolishStandard;
+	if (lower.startsWith('sk')) return Dialect.SlovakStandard;
+
+	// Unsupported languages → American (fallback)
 	return Dialect.American;
 }
