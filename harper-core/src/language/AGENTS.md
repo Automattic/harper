@@ -155,6 +155,14 @@ flag can generate unintended surface forms — adding the determiner flag `D` to
 `mein` would also produce `meinung`. Only digits and punctuation are free. Use
 digits for new property flags; English already does this (`4` = abbreviation).
 
+**Order the replacements of an affix by the spelling you want kept.** Two forms
+that differ only in case (`Lehrerinnen`, `LehrerInnen`) are one dictionary entry,
+and the one an affix produces first is its spelling; the other is accepted but
+never offered as a correction. Both are produced by the same flag (`K`, `L`), so
+list the plain spelling's rules before the interior-capital ones. Expansion walks a
+flag's replacements in that order (`new_word_order` in `spell/rune/attribute_list.rs`);
+it used to walk a hash map, which made the choice differ from run to run.
+
 Prefer dictionary data over Rust constants. A word list in a `const &[&str]` is
 almost always misplaced — see `german/README.md` for the three that legitimately
 stay in code and why.

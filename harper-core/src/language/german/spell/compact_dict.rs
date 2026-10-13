@@ -688,11 +688,10 @@ mod tests {
                 continue;
             };
             let metadata = compact.get_word_metadata(spelling).unwrap();
-            // The expansion itself is not deterministic about the capitalisation
-            // of a form that two headwords spell differently (`-in` against
-            // `-In`): two runs of it differ in about 4000 of them. Anything but
-            // the case has to agree.
-            if spelling.to_lower() != entry.canonical_spelling.to_lower() {
+            // Two expansions, in two runs of a randomly ordered hash map, have to
+            // agree on the spelling too: `Lehrerinnen` and `LehrerInnen` are one
+            // entry, and which of them it is called must not depend on the run.
+            if *spelling != *entry.canonical_spelling {
                 differing.push(format!(
                     "SPELL {:?}/{:?}",
                     spelling.iter().collect::<String>(),
