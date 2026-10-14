@@ -26,7 +26,6 @@ const CONFIG_POLL_INTERVAL: Duration = Duration::from_secs(1);
 /// dispatch out of the public highlighter API.
 pub struct WindowManager {
     event_loop: EventLoop<()>,
-    context: egui::Context,
     rects: Vec<ActionableLint>,
     os_broker: Box<dyn OsBroker>,
     lint_text: LintText,
@@ -48,7 +47,6 @@ impl WindowManager {
     /// Creates the event loop before windows exist because winit requires window creation to happen
     /// from inside that loop's lifecycle callbacks.
     pub fn new(
-        context: egui::Context,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
     ) -> Result<Self, Error> {
@@ -61,7 +59,6 @@ impl WindowManager {
 
         Ok(Self {
             event_loop: event_loop_builder.build()?,
-            context,
             rects: Vec::new(),
             os_broker,
             lint_text: callbacks.lint_text,
@@ -81,7 +78,6 @@ impl WindowManager {
     /// event loop until the overlay exits.
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
         let mut app = WindowManagerApp::new(
-            self.context,
             self.rects,
             self.os_broker,
             WindowManagerCallbacks {
@@ -106,7 +102,6 @@ impl WindowManager {
 }
 
 struct WindowManagerApp {
-    context: egui::Context,
     windows: Vec<Window>,
     render_state: RenderState,
     os_broker: Box<dyn OsBroker>,
@@ -122,13 +117,11 @@ impl WindowManagerApp {
     /// Builds the mutable application state consumed by winit callbacks after `WindowManager` gives
     /// up direct control of the event loop.
     fn new(
-        context: egui::Context,
         rects: Vec<ActionableLint>,
         os_broker: Box<dyn OsBroker>,
         callbacks: WindowManagerCallbacks,
     ) -> Self {
         Self {
-            context,
             windows: Vec::new(),
             render_state: RenderState::new(
                 rects,
@@ -235,7 +228,7 @@ impl ApplicationHandler for WindowManagerApp {
         let monitors = event_loop.available_monitors().collect::<Vec<_>>();
 
         for monitor in monitors {
-            match pollster::block_on(Window::new(event_loop, monitor, self.context.clone())) {
+            match pollster::block_on(Window::new(event_loop, monitor)) {
                 Ok(window) => self.windows.push(window),
                 Err(error) => {
                     self.error = Some(error);

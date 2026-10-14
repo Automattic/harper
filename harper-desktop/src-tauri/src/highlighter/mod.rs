@@ -20,11 +20,10 @@ type RefreshConfig = Box<dyn FnMut()>;
 
 /// Public entry point for the screen highlighter system.
 ///
-/// `Highlighter` owns the shared egui context and delegates native window/event-loop work to the
-/// window manager. Keeping this as the top-level type gives future callers one place to configure
-/// or update highlighter state without depending on the windowing implementation.
+/// `Highlighter` delegates native window/event-loop work to the window manager. Keeping this as the
+/// top-level type gives future callers one place to configure or update highlighter state without
+/// depending on the windowing implementation.
 pub struct Highlighter {
-    context: egui::Context,
     window_manager: WindowManager,
 }
 
@@ -37,7 +36,6 @@ impl Highlighter {
         disable_rule: impl FnMut(&str) + 'static,
         refresh_config: impl FnMut() + 'static,
     ) -> Result<Self, Error> {
-        let context = egui::Context::default();
         let lint_text: LintText = Box::new(lint_text);
         let ignore_lint: IgnoreLint = Box::new(ignore_lint);
         let add_to_dictionary: AddToDictionary = Box::new(add_to_dictionary);
@@ -46,7 +44,6 @@ impl Highlighter {
 
         Ok(Self {
             window_manager: WindowManager::new(
-                context.clone(),
                 Box::new(os_broker),
                 WindowManagerCallbacks {
                     lint_text,
@@ -56,19 +53,11 @@ impl Highlighter {
                     refresh_config,
                 },
             )?,
-            context,
         })
     }
 
     pub fn run_window_for_each_monitor(self) -> Result<(), Error> {
-        let Self {
-            context,
-            window_manager,
-        } = self;
-
-        drop(context);
-
-        window_manager.run_window_for_each_monitor()
+        self.window_manager.run_window_for_each_monitor()
     }
 
     pub fn set_rects(&mut self, rects: Vec<ActionableLint>) {

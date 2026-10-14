@@ -10,11 +10,32 @@ use crate::{
     rect::{ActionableLint, Rect},
 };
 
-const CARD_WIDTH: f32 = 440.0;
-const CARD_HEIGHT: f32 = 178.0;
-const CARD_OFFSET_Y: f32 = 8.0;
-const HEADER_HEIGHT: f32 = 46.0;
-const FOOTER_HEIGHT: f32 = 43.0;
+const LIST_WIDTH: f32 = 210.0;
+const FLYOUT_WIDTH: f32 = 190.0;
+const DIVIDER_WIDTH: f32 = 1.0;
+const BORDER_WIDTH: f32 = 1.0;
+const CARD_WIDTH: f32 = LIST_WIDTH + DIVIDER_WIDTH + FLYOUT_WIDTH + 2.0 * BORDER_WIDTH;
+const CARD_HEIGHT: f32 = 400.0;
+const CARD_OFFSET_Y: f32 = 3.0;
+const CARD_CORNER_RADIUS: u8 = 8;
+const ROW_HEIGHT: f32 = 30.0;
+const LIST_PADDING_Y: f32 = 4.0;
+const FOOTER_ROW_HEIGHT: f32 = 28.0;
+const KIND_HEADER_HEIGHT: f32 = 34.0;
+const DISABLE_ROW_HEIGHT: f32 = 33.0;
+const BUTTON_MIN_HEIGHT: f32 = 24.0;
+
+const POPUP_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xff, 0xff, 0xff);
+const POPUP_BORDER: egui::Color32 = egui::Color32::from_rgb(0xd0, 0xd7, 0xde);
+const POPUP_SHADOW: egui::Color32 = egui::Color32::from_rgba_unmultiplied_const(140, 149, 159, 77);
+const DIVIDER_COLOR: egui::Color32 = egui::Color32::from_rgb(0xea, 0xee, 0xf2);
+const HOVER_BACKGROUND: egui::Color32 = egui::Color32::from_black_alpha(11);
+const TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x1f, 0x23, 0x28);
+const MUTED_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x57, 0x60, 0x6a);
+const SUBTLE_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x8b, 0x94, 0x9e);
+const DISMISS_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xe5, 0xe5, 0xe5);
+const BUTTON_BACKGROUND: egui::Color32 = egui::Color32::from_rgb(0xef, 0xef, 0xef);
+const BUTTON_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x00, 0x00, 0x00);
 
 #[derive(Debug, Clone, Copy, PartialEq, Eq)]
 pub enum HitTarget {
@@ -32,18 +53,16 @@ enum LintCardAction {
 }
 
 #[derive(Debug, Clone, Copy)]
-struct PopupStyle {
-    color: egui::Color32,
-    background: egui::Color32,
-    foreground: egui::Color32,
+enum Glyph {
+    Sliders,
+    BookDown,
 }
 
+/// The visible content of a [`flyout_button`].
 #[derive(Debug, Clone, Copy)]
-enum Glyph {
-    Close,
-    Settings,
-    Disable,
-    Plus,
+enum ButtonContent<'a> {
+    Text(&'a str),
+    Glyph(Glyph),
 }
 
 /// Stores highlighter-specific drawing state and renders it into an egui frame.
@@ -242,7 +261,12 @@ fn draw_highlight(ui: &mut egui::Ui, rect: &Rect, lint: &Lint) {
     );
 }
 
-/// Renders the suggestion popup and returns whether the explicit close control was clicked.
+/// Renders the suggestion popup and returns the action the user picked, if any.
+///
+/// The layout copies the Chrome extension's suggestion popup, but puts its two panels into one
+/// pane: the suggestion list on the left and the lint explanation on the right. The columns never
+/// move relative to each other, and the pane never grows past the fixed bounds from
+/// [`popup_rect_for_lint`], so hit-testing and drawing agree without measuring the popup.
 fn render_lint_card(
     ui: &mut egui::Ui,
     rect: &Rect,
@@ -251,6 +275,7 @@ fn render_lint_card(
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
     let popup_rect = popup_rect_for_lint(rect);
+    let problem_text = problem_text(lint, source_text);
 
     egui::Area::new(egui::Id::new("harper-lint-card"))
         .order(egui::Order::Foreground)
@@ -259,279 +284,460 @@ fn render_lint_card(
             let mut action = None;
 
             egui::Frame::new()
-                .fill(hex(0xff, 0xfd, 0xfa))
-                .stroke(egui::Stroke::new(
-                    1.0_f32,
-                    egui::Color32::from_rgba_unmultiplied(0, 0, 0, 20),
-                ))
-                .corner_radius(egui::CornerRadius::same(12))
+                .fill(POPUP_BACKGROUND)
+                .stroke(egui::Stroke::new(BORDER_WIDTH, POPUP_BORDER))
+                .corner_radius(egui::CornerRadius::same(CARD_CORNER_RADIUS))
                 .inner_margin(egui::Margin::same(0))
                 .shadow(egui::Shadow {
-                    offset: [0, 14],
-                    blur: 32,
+                    offset: [0, 4],
+                    blur: 12,
                     spread: 0,
-                    color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 56),
+                    color: POPUP_SHADOW,
                 })
                 .show(ui, |ui| {
-                    ui.set_width(CARD_WIDTH);
-                    ui.set_min_height(CARD_HEIGHT);
-                    ui.set_max_height(CARD_HEIGHT);
+                    ui.spacing_mut().item_spacing = egui::Vec2::ZERO;
 
-                    render_popover_header(ui, lint, &mut action);
-                    render_popover_body(ui, lint, markdown_cache, &mut action);
-                    render_popover_footer(ui, lint, source_text, &mut action);
+                    // Each column gets an explicit rectangle with the full maximum height. A
+                    // horizontal layout would only offer its children one row of height, which
+                    // makes the scroll areas clip content that should fit.
+                    let origin = ui.cursor().min;
+                    let column_rect = |left: f32, width: f32| {
+                        egui::Rect::from_min_size(
+                            egui::pos2(origin.x + left, origin.y),
+                            egui::vec2(width, CARD_HEIGHT - 2.0 * BORDER_WIDTH),
+                        )
+                    };
+
+                    let list = ui.scope_builder(
+                        egui::UiBuilder::new().max_rect(column_rect(0.0, LIST_WIDTH)),
+                        |ui| {
+                            egui::ScrollArea::vertical()
+                                .id_salt(("harper-lint-card-list", lint.span.start, lint.span.end))
+                                .show(ui, |ui| {
+                                    ui.set_width(LIST_WIDTH);
+                                    render_suggestion_list(ui, lint, &problem_text, &mut action);
+                                });
+                        },
+                    );
+
+                    let flyout = ui.scope_builder(
+                        egui::UiBuilder::new()
+                            .max_rect(column_rect(LIST_WIDTH + DIVIDER_WIDTH, FLYOUT_WIDTH)),
+                        |ui| {
+                            egui::ScrollArea::vertical()
+                                .id_salt((
+                                    "harper-lint-card-flyout",
+                                    lint.span.start,
+                                    lint.span.end,
+                                ))
+                                .show(ui, |ui| {
+                                    ui.set_width(FLYOUT_WIDTH);
+                                    render_flyout(ui, lint, markdown_cache, &mut action);
+                                });
+                        },
+                    );
+
+                    let columns_height = list
+                        .response
+                        .rect
+                        .height()
+                        .max(flyout.response.rect.height());
+                    ui.painter().vline(
+                        origin.x + LIST_WIDTH + DIVIDER_WIDTH / 2.0,
+                        origin.y..=origin.y + columns_height,
+                        egui::Stroke::new(DIVIDER_WIDTH, DIVIDER_COLOR),
+                    );
                 });
+
             action
         })
         .inner
 }
 
-/// Renders the top bar from the prototype, including no-op utility icons and the real close action.
-fn render_popover_header(ui: &mut egui::Ui, lint: &Lint, action: &mut Option<LintCardAction>) {
-    let style = popup_style_for_lint_kind(lint.lint_kind);
+/// Renders the left column: one row for each suggestion, then the footer.
+///
+/// Clicking a row applies its suggestion. When the lint has no suggestions, one "No replacements"
+/// row takes their place, as in the Chrome extension. Clicking that row does nothing.
+fn render_suggestion_list(
+    ui: &mut egui::Ui,
+    lint: &Lint,
+    problem_text: &str,
+    action: &mut Option<LintCardAction>,
+) {
+    ui.add_space(LIST_PADDING_Y);
 
-    egui::Frame::new()
-        .fill(blend(style.background, hex(0xff, 0xfd, 0xfa), 0.42))
-        .stroke(egui::Stroke::new(
-            1.0_f32,
-            egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15),
-        ))
-        .corner_radius(egui::CornerRadius {
-            nw: 12,
-            ne: 12,
-            sw: 0,
-            se: 0,
-        })
-        .inner_margin(egui::Margin::symmetric(10, 10))
-        .show(ui, |ui| {
-            ui.set_width(CARD_WIDTH - 20.0);
-            ui.set_height(HEADER_HEIGHT - 20.0);
-            ui.horizontal(|ui| {
-                lint_kind_badge(ui, lint, style);
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if icon_button(ui, Glyph::Close, "Close this suggestion popup.").clicked() {
-                        *action = Some(LintCardAction::Close);
-                    }
-                    icon_button(ui, Glyph::Settings, "Open Harper settings.");
-                    if icon_button(ui, Glyph::Disable, "Disable this rule.").clicked() {
-                        *action = Some(LintCardAction::DisableRule);
-                    }
-                });
-            });
-        });
+    if lint.suggestions.is_empty() {
+        suggestion_row(
+            ui,
+            lint.lint_kind,
+            "No replacements",
+            format!("No replacements for \"{problem_text}\""),
+        );
+    }
+
+    for suggestion in &lint.suggestions {
+        if suggestion_row(
+            ui,
+            lint.lint_kind,
+            &suggestion_text(suggestion),
+            suggestion_hover_text(suggestion, problem_text),
+        )
+        .clicked()
+        {
+            *action = Some(LintCardAction::ApplySuggestion(suggestion.clone()));
+        }
+    }
+
+    render_list_footer(ui, action);
+    ui.add_space(LIST_PADDING_Y);
 }
 
-/// Renders the markdown explanation and horizontal suggestion chip row from the prototype body.
-fn render_popover_body(
+/// Renders one suggestion row: a swatch in the lint color, the label, and a chevron.
+///
+/// The row's rectangle is allocated before anything is painted, so the hover background can come
+/// from this frame's response. This keeps hover styling free of stored selection state.
+fn suggestion_row(
+    ui: &mut egui::Ui,
+    lint_kind: LintKind,
+    label: &str,
+    hover: impl Into<String>,
+) -> egui::Response {
+    let (rect, response) =
+        ui.allocate_exact_size(egui::vec2(LIST_WIDTH, ROW_HEIGHT), egui::Sense::click());
+    let painter = ui.painter();
+
+    if response.hovered() {
+        painter.rect_filled(rect, 0.0, HOVER_BACKGROUND);
+    }
+
+    let swatch = egui::Rect::from_min_size(
+        egui::pos2(rect.left() + 10.0, rect.center().y - 8.0),
+        egui::vec2(3.0, 16.0),
+    );
+    painter.rect_filled(swatch, 2.0, lint_kind_color32(lint_kind));
+
+    let chevron = single_line_galley(ui, "›", 12.0, f32::INFINITY);
+    let chevron_left = rect.right() - 8.0 - chevron.size().x;
+    let label_left = swatch.right() + 8.0;
+    let label = single_line_galley(ui, label, 13.0, chevron_left - 8.0 - label_left);
+
+    paint_text(painter, label_left, rect.center().y, label, TEXT_COLOR);
+    paint_text(
+        painter,
+        chevron_left,
+        rect.center().y,
+        chevron,
+        SUBTLE_TEXT_COLOR,
+    );
+
+    hover_text(
+        response.on_hover_cursor(egui::CursorIcon::PointingHand),
+        hover,
+    )
+}
+
+/// Renders the list footer: a "Go to Harper settings" row and the close button.
+///
+/// The settings row does nothing yet. The close button sits over the footer's right edge, where
+/// the footer leaves 26 points of padding for it.
+fn render_list_footer(ui: &mut egui::Ui, action: &mut Option<LintCardAction>) {
+    ui.add_space(4.0);
+
+    let (rect, _) = ui.allocate_exact_size(
+        egui::vec2(LIST_WIDTH, DIVIDER_WIDTH + 4.0 + FOOTER_ROW_HEIGHT),
+        egui::Sense::hover(),
+    );
+    ui.painter().hline(
+        rect.x_range(),
+        rect.top() + DIVIDER_WIDTH / 2.0,
+        egui::Stroke::new(DIVIDER_WIDTH, DIVIDER_COLOR),
+    );
+
+    let settings_rect = egui::Rect::from_min_max(
+        egui::pos2(rect.left(), rect.bottom() - FOOTER_ROW_HEIGHT),
+        egui::pos2(rect.right() - 26.0, rect.bottom()),
+    );
+    let settings = ui.interact(
+        settings_rect,
+        ui.id().with("harper-lint-card-settings"),
+        egui::Sense::click(),
+    );
+
+    if settings.hovered() {
+        ui.painter()
+            .rect_filled(settings_rect, 0.0, HOVER_BACKGROUND);
+    }
+
+    let icon_rect = egui::Rect::from_min_size(
+        egui::pos2(settings_rect.left() + 10.0, settings_rect.center().y - 7.0),
+        egui::vec2(14.0, 14.0),
+    );
+    draw_glyph(ui, icon_rect, Glyph::Sliders, MUTED_TEXT_COLOR);
+
+    let label_left = icon_rect.right() + 6.0;
+    let label = single_line_galley(
+        ui,
+        "Go to Harper settings",
+        12.0,
+        settings_rect.right() - 10.0 - label_left,
+    );
+    paint_text(
+        ui.painter(),
+        label_left,
+        settings_rect.center().y,
+        label,
+        MUTED_TEXT_COLOR,
+    );
+
+    // The highlighter cannot open the settings window yet, so this row has no action.
+    hover_text(
+        settings.on_hover_cursor(egui::CursorIcon::PointingHand),
+        "Click to go to Harper settings",
+    );
+
+    let close_label = single_line_galley(ui, "×", 20.0, f32::INFINITY);
+    let close_size = egui::vec2(close_label.size().x + 8.0, 20.0);
+    let close_rect = egui::Rect::from_min_size(
+        egui::pos2(
+            rect.right() - 4.0 - close_size.x,
+            rect.top() + DIVIDER_WIDTH + 6.0,
+        ),
+        close_size,
+    );
+    let close = ui.interact(
+        close_rect,
+        ui.id().with("harper-lint-card-close"),
+        egui::Sense::click(),
+    );
+    let close_color = if close.hovered() {
+        TEXT_COLOR
+    } else {
+        MUTED_TEXT_COLOR
+    };
+    paint_text(
+        ui.painter(),
+        close_rect.center().x - close_label.size().x / 2.0,
+        close_rect.center().y,
+        close_label,
+        close_color,
+    );
+
+    if hover_text(
+        close.on_hover_cursor(egui::CursorIcon::PointingHand),
+        "Close",
+    )
+    .clicked()
+    {
+        *action = Some(LintCardAction::Close);
+    }
+}
+
+/// Renders the right column: the lint kind, the explanation, and the actions for the whole lint.
+///
+/// Nothing here depends on which suggestion row is hovered, so the column stays the same while the
+/// pointer moves through the list.
+fn render_flyout(
     ui: &mut egui::Ui,
     lint: &Lint,
     markdown_cache: &mut CommonMarkCache,
     action: &mut Option<LintCardAction>,
 ) {
+    render_kind_header(ui, lint.lint_kind);
+
     egui::Frame::new()
-        .fill(hex(0xff, 0xfd, 0xfa))
-        .inner_margin(egui::Margin::symmetric(16, 12))
-        .show(ui, |ui| {
-            ui.set_width(CARD_WIDTH - 32.0);
-            ui.set_min_height(CARD_HEIGHT - HEADER_HEIGHT - FOOTER_HEIGHT - 24.0);
-            ui.spacing_mut().item_spacing = egui::vec2(8.0, 8.0);
-
-            render_lint_message(ui, markdown_cache, &lint.message);
-
-            if !lint.suggestions.is_empty() {
-                ui.add_space(6.0);
-                ui.horizontal_wrapped(|ui| {
-                    ui.spacing_mut().item_spacing = egui::vec2(8.0, 8.0);
-
-                    for (index, suggestion) in lint.suggestions.iter().enumerate() {
-                        if suggestion_option(ui, lint.lint_kind, suggestion, index == 0).clicked() {
-                            *action = Some(LintCardAction::ApplySuggestion(suggestion.clone()));
-                        }
-                    }
-                });
-            }
-        });
-}
-
-/// Renders the footer controls as visual stubs so the popup matches the target component before those
-/// actions have real behavior.
-fn render_popover_footer(
-    ui: &mut egui::Ui,
-    lint: &Lint,
-    source_text: &str,
-    action: &mut Option<LintCardAction>,
-) {
-    egui::Frame::new()
-        .fill(egui::Color32::from_rgba_unmultiplied(0, 0, 0, 5))
-        .stroke(egui::Stroke::new(
-            1.0_f32,
-            egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15),
-        ))
         .inner_margin(egui::Margin::symmetric(10, 8))
         .show(ui, |ui| {
-            ui.set_width(CARD_WIDTH - 20.0);
-            ui.set_height(FOOTER_HEIGHT - 16.0);
-            ui.horizontal(|ui| {
-                if is_spelling_kind(lint.lint_kind) {
-                    let source_chars = source_text.chars().collect::<Vec<_>>();
-                    let word = lint.get_str(&source_chars);
-                    if ghost_button(
+            ui.set_width(FLYOUT_WIDTH - 20.0);
+            render_lint_message(ui, markdown_cache, &lint.message, lint.lint_kind);
+        });
+
+    egui::Frame::new()
+        .inner_margin(egui::Margin {
+            left: 10,
+            right: 10,
+            top: 0,
+            bottom: 8,
+        })
+        .show(ui, |ui| {
+            ui.set_width(FLYOUT_WIDTH - 20.0);
+            ui.horizontal_wrapped(|ui| {
+                ui.spacing_mut().item_spacing = egui::vec2(6.0, 6.0);
+
+                if flyout_button(
+                    ui,
+                    ButtonContent::Text("Dismiss"),
+                    DISMISS_BACKGROUND,
+                    "Ignore this lint",
+                )
+                .clicked()
+                {
+                    *action = Some(LintCardAction::IgnoreLint);
+                }
+
+                if is_spelling_kind(lint.lint_kind)
+                    && flyout_button(
                         ui,
-                        Some(Glyph::Plus),
-                        "Add to dictionary",
-                        format!("Add \"{word}\" to your personal dictionary."),
+                        ButtonContent::Glyph(Glyph::BookDown),
+                        BUTTON_BACKGROUND,
+                        "Add word to user dictionary",
                     )
                     .clicked()
-                    {
-                        *action = Some(LintCardAction::AddToDictionary);
-                    }
+                {
+                    *action = Some(LintCardAction::AddToDictionary);
                 }
-                ui.with_layout(egui::Layout::right_to_left(egui::Align::Center), |ui| {
-                    if ghost_button(ui, None, "Dismiss", "Ignore this suggestion").clicked() {
-                        *action = Some(LintCardAction::IgnoreLint);
-                    }
-                });
             });
         });
+
+    if disable_rule_row(ui).clicked() {
+        *action = Some(LintCardAction::DisableRule);
+    }
+}
+
+/// Renders the lint kind above the explanation, underlined in the lint color.
+fn render_kind_header(ui: &mut egui::Ui, lint_kind: LintKind) {
+    const BORDER_HEIGHT: f32 = 2.0;
+
+    let (rect, _) = ui.allocate_exact_size(
+        egui::vec2(FLYOUT_WIDTH, KIND_HEADER_HEIGHT),
+        egui::Sense::hover(),
+    );
+    let border_top = rect.bottom() - BORDER_HEIGHT;
+    let label = single_line_galley(ui, &lint_kind.to_string(), 12.0, FLYOUT_WIDTH - 20.0);
+
+    paint_text(
+        ui.painter(),
+        rect.left() + 10.0,
+        (rect.top() + border_top) / 2.0,
+        label,
+        TEXT_COLOR,
+    );
+    ui.painter().rect_filled(
+        egui::Rect::from_min_max(egui::pos2(rect.left(), border_top), rect.right_bottom()),
+        0.0,
+        lint_kind_color32(lint_kind),
+    );
+}
+
+/// Renders the full-width row that disables the rule that produced the lint.
+fn disable_rule_row(ui: &mut egui::Ui) -> egui::Response {
+    let (rect, response) = ui.allocate_exact_size(
+        egui::vec2(FLYOUT_WIDTH, DISABLE_ROW_HEIGHT),
+        egui::Sense::click(),
+    );
+
+    if response.hovered() {
+        // This row can touch the pane's bottom-right corner, so keep the hover inside the curve.
+        let corner_radius = egui::CornerRadius {
+            se: CARD_CORNER_RADIUS - 1,
+            ..Default::default()
+        };
+        ui.painter()
+            .rect_filled(rect, corner_radius, HOVER_BACKGROUND);
+    }
+
+    ui.painter().hline(
+        rect.x_range(),
+        rect.top() + DIVIDER_WIDTH / 2.0,
+        egui::Stroke::new(DIVIDER_WIDTH, DIVIDER_COLOR),
+    );
+
+    let color = if response.hovered() {
+        MUTED_TEXT_COLOR
+    } else {
+        SUBTLE_TEXT_COLOR
+    };
+    let label = single_line_galley(ui, "Disable this rule", 11.0, FLYOUT_WIDTH - 20.0);
+    paint_text(
+        ui.painter(),
+        rect.left() + 10.0,
+        (rect.top() + DIVIDER_WIDTH + rect.bottom()) / 2.0,
+        label,
+        color,
+    );
+
+    hover_text(
+        response.on_hover_cursor(egui::CursorIcon::PointingHand),
+        "Disable the rule that produced this lint",
+    )
+}
+
+/// Renders a compact button in the style of the Chrome extension's `.harper-btn`.
+///
+/// The fill darkens on hover, like the CSS `brightness(0.92)` filter.
+fn flyout_button(
+    ui: &mut egui::Ui,
+    content: ButtonContent,
+    fill: egui::Color32,
+    hover: impl Into<String>,
+) -> egui::Response {
+    const GLYPH_SIZE: f32 = 18.0;
+
+    let galley = match content {
+        ButtonContent::Text(text) => Some(single_line_galley(ui, text, 12.0, f32::INFINITY)),
+        ButtonContent::Glyph(_) => None,
+    };
+    let content_size = galley
+        .as_ref()
+        .map_or(egui::vec2(GLYPH_SIZE, GLYPH_SIZE), |galley| galley.size());
+    let size = egui::vec2(
+        content_size.x + 16.0,
+        (content_size.y + 6.0).max(BUTTON_MIN_HEIGHT),
+    );
+
+    let (rect, response) = ui.allocate_exact_size(size, egui::Sense::click());
+    let fill = if response.hovered() {
+        brightness(fill, 0.92)
+    } else {
+        fill
+    };
+    ui.painter().rect_filled(rect, 6.0, fill);
+
+    let content_rect = egui::Rect::from_center_size(rect.center(), content_size);
+    match (content, galley) {
+        (ButtonContent::Glyph(glyph), _) => {
+            draw_glyph(ui, content_rect, glyph, BUTTON_TEXT_COLOR);
+        }
+        (ButtonContent::Text(_), Some(galley)) => {
+            ui.painter()
+                .galley(content_rect.min, galley, BUTTON_TEXT_COLOR);
+        }
+        (ButtonContent::Text(_), None) => {}
+    }
+
+    hover_text(
+        response.on_hover_cursor(egui::CursorIcon::PointingHand),
+        hover,
+    )
 }
 
 /// Renders Harper's markdown-formatted lint message in the popup instead of showing raw markdown
 /// markers to the user.
-fn render_lint_message(ui: &mut egui::Ui, cache: &mut CommonMarkCache, message: &str) {
+///
+/// Inline code gets a background tinted with the lint color. The Chrome extension underlines it
+/// instead, but `egui_commonmark` cannot underline inline code.
+fn render_lint_message(
+    ui: &mut egui::Ui,
+    cache: &mut CommonMarkCache,
+    message: &str,
+    lint_kind: LintKind,
+) {
     ui.scope(|ui| {
-        ui.visuals_mut().code_bg_color = hex(0xf3, 0xf4, 0xf6);
-        ui.visuals_mut().extreme_bg_color = hex(0xf8, 0xfa, 0xfc);
-        ui.visuals_mut().override_text_color = Some(hex(0x37, 0x41, 0x51));
-        ui.visuals_mut().text_edit_bg_color = Some(hex(0xf8, 0xfa, 0xfc));
+        let [r, g, b, _] = lint_kind_color32(lint_kind).to_array();
+        let style = ui.style_mut();
+        style
+            .text_styles
+            .insert(egui::TextStyle::Body, egui::FontId::proportional(12.0));
+        style
+            .text_styles
+            .insert(egui::TextStyle::Monospace, egui::FontId::monospace(12.0));
+        style.spacing.item_spacing = egui::vec2(0.0, 3.0);
+        style.visuals.override_text_color = Some(MUTED_TEXT_COLOR);
+        style.visuals.code_bg_color = egui::Color32::from_rgba_unmultiplied(r, g, b, 40);
+
         CommonMarkViewer::new()
             .default_width(Some(ui.available_width() as usize))
             .show(ui, cache, message);
     });
-}
-
-/// Keeps the lint type visually attached to the popup without duplicating lint-kind formatting in
-/// the window manager.
-fn lint_kind_badge(ui: &mut egui::Ui, lint: &Lint, style: PopupStyle) {
-    egui::Frame::new()
-        .fill(style.background)
-        .corner_radius(egui::CornerRadius::same(20))
-        .inner_margin(egui::Margin::symmetric(8, 3))
-        .show(ui, |ui| {
-            ui.horizontal(|ui| {
-                ui.spacing_mut().item_spacing = egui::vec2(6.0, 0.0);
-                let (dot_rect, _) =
-                    ui.allocate_exact_size(egui::vec2(6.0, 6.0), egui::Sense::hover());
-                ui.painter()
-                    .circle_filled(dot_rect.center(), 3.0, style.color);
-                ui.label(
-                    egui::RichText::new(lint.lint_kind.to_string().to_uppercase())
-                        .strong()
-                        .size(11.0_f32)
-                        .color(style.foreground),
-                );
-            });
-        });
-}
-
-/// Renders a suggestion as a compact button so later replacement behavior can attach to one place.
-fn suggestion_option(
-    ui: &mut egui::Ui,
-    lint_kind: LintKind,
-    suggestion: &Suggestion,
-    primary: bool,
-) -> egui::Response {
-    let lint_color = lint_kind_color32(lint_kind);
-    let fill = if primary {
-        lint_color
-    } else {
-        blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.88)
-    };
-    let text_color = if primary {
-        hex(0xff, 0xfd, 0xfa)
-    } else {
-        hex(0x0a, 0x0a, 0x0a)
-    };
-    let stroke = if primary {
-        egui::Stroke::NONE
-    } else {
-        egui::Stroke::new(1.0_f32, blend(lint_color, hex(0xff, 0xfd, 0xfa), 0.64))
-    };
-
-    ui.scope(|ui| {
-        ui.spacing_mut().button_padding = egui::vec2(16.0, 10.0);
-        let stroke_width = stroke.width;
-        ui.visuals_mut().widgets.inactive.expansion = 0.0;
-        ui.visuals_mut().widgets.hovered.expansion = 0.0;
-        ui.visuals_mut().widgets.active.expansion = 0.0;
-        ui.visuals_mut().widgets.inactive.bg_stroke.width = stroke_width;
-        ui.visuals_mut().widgets.hovered.bg_stroke.width = stroke_width;
-        ui.visuals_mut().widgets.active.bg_stroke.width = stroke_width;
-
-        let button = egui::Button::new(
-            egui::RichText::new(suggestion_text(suggestion))
-                .size(13.5)
-                .color(text_color),
-        )
-        .fill(fill)
-        .stroke(stroke)
-        .corner_radius(egui::CornerRadius::same(8))
-        .min_size(egui::vec2(0.0, 38.0));
-
-        hover_text(ui.add(button), suggestion_hover_text(suggestion))
-    })
-    .inner
-}
-
-/// Renders the prototype's square icon-only controls without coupling their visual treatment to any
-/// behavior beyond the response returned to the caller.
-fn icon_button(ui: &mut egui::Ui, glyph: Glyph, text: &str) -> egui::Response {
-    let (rect, response) = ui.allocate_exact_size(egui::vec2(26.0, 26.0), egui::Sense::click());
-    let background = if response.hovered() {
-        egui::Color32::from_rgba_unmultiplied(0, 0, 0, 15)
-    } else {
-        egui::Color32::TRANSPARENT
-    };
-    let color = if response.hovered() {
-        hex(0x00, 0x00, 0x00)
-    } else {
-        hex(0x6b, 0x72, 0x80)
-    };
-
-    ui.painter().rect_filled(rect, 6.0, background);
-    draw_glyph(ui, rect.shrink(6.0), glyph, color);
-
-    hover_text(response, text)
-}
-
-/// Renders footer controls as no-op buttons so future actions can be wired without changing layout.
-fn ghost_button(
-    ui: &mut egui::Ui,
-    glyph: Option<Glyph>,
-    label: &str,
-    text: impl Into<String>,
-) -> egui::Response {
-    let label = if glyph.is_some() {
-        format!("+ {label}")
-    } else {
-        label.to_string()
-    };
-
-    ui.scope(|ui| {
-        ui.spacing_mut().button_padding = egui::vec2(8.0, 6.0);
-        let response = ui.add(
-            egui::Button::new(
-                egui::RichText::new(label)
-                    .size(12.0)
-                    .color(hex(0x4b, 0x55, 0x63)),
-            )
-            .fill(egui::Color32::TRANSPARENT)
-            .stroke(egui::Stroke::NONE)
-            .corner_radius(egui::CornerRadius::same(6)),
-        );
-
-        hover_text(response, text)
-    })
-    .inner
 }
 
 /// Applies tooltip styling that visually belongs with the suggestion popup instead of egui defaults.
@@ -541,18 +747,15 @@ fn hover_text(response: egui::Response, hover_text: impl Into<String>) -> egui::
     let mut tooltip = egui::Tooltip::for_enabled(&response);
     tooltip.popup = tooltip.popup.frame(
         egui::Frame::new()
-            .fill(hex(0xff, 0xfd, 0xfa))
-            .stroke(egui::Stroke::new(
-                1.0_f32,
-                egui::Color32::from_rgba_unmultiplied(0, 0, 0, 20),
-            ))
-            .corner_radius(egui::CornerRadius::same(8))
+            .fill(POPUP_BACKGROUND)
+            .stroke(egui::Stroke::new(BORDER_WIDTH, POPUP_BORDER))
+            .corner_radius(egui::CornerRadius::same(CARD_CORNER_RADIUS))
             .inner_margin(egui::Margin::symmetric(8, 6))
             .shadow(egui::Shadow {
-                offset: [0, 8],
-                blur: 18,
+                offset: [0, 4],
+                blur: 12,
                 spread: 0,
-                color: egui::Color32::from_rgba_unmultiplied(20, 12, 2, 42),
+                color: POPUP_SHADOW,
             }),
     );
     tooltip.show(|ui| {
@@ -560,81 +763,102 @@ fn hover_text(response: egui::Response, hover_text: impl Into<String>) -> egui::
         ui.label(
             egui::RichText::new(hover_text)
                 .size(12.0)
-                .color(hex(0x4b, 0x55, 0x63)),
+                .color(MUTED_TEXT_COLOR),
         );
     });
 
     response
 }
 
-/// Draws the small SVG-inspired line icons from the prototype using egui painter primitives.
+/// Lays out one line of text, cut off with an ellipsis when it is wider than `max_width`.
+///
+/// The galley uses a placeholder color, so [`paint_text`] can choose the color when it paints.
+fn single_line_galley(
+    ui: &egui::Ui,
+    text: &str,
+    size: f32,
+    max_width: f32,
+) -> std::sync::Arc<egui::Galley> {
+    let mut job = egui::text::LayoutJob::single_section(
+        text.to_owned(),
+        egui::TextFormat::simple(egui::FontId::proportional(size), egui::Color32::PLACEHOLDER),
+    );
+    job.wrap = egui::text::TextWrapping::truncate_at_width(max_width.max(0.0));
+
+    ui.painter().layout_job(job)
+}
+
+/// Paints a galley with its left edge at `left`, centered vertically on `center_y`.
+fn paint_text(
+    painter: &egui::Painter,
+    left: f32,
+    center_y: f32,
+    galley: std::sync::Arc<egui::Galley>,
+    color: egui::Color32,
+) {
+    let pos = egui::pos2(left, center_y - galley.size().y / 2.0);
+    painter.galley(pos, galley, color);
+}
+
+/// Draws the small SVG-inspired line icons from the Chrome extension using egui painter primitives.
 fn draw_glyph(ui: &egui::Ui, rect: egui::Rect, glyph: Glyph, color: egui::Color32) {
     match glyph {
-        Glyph::Close => draw_close_icon(ui, rect, color),
-        Glyph::Settings => draw_settings_icon(ui, rect, color),
-        Glyph::Disable => draw_disable_icon(ui, rect, color),
-        Glyph::Plus => draw_plus_icon(ui, rect, color),
+        Glyph::Sliders => draw_sliders_icon(ui, rect, color),
+        Glyph::BookDown => draw_book_down_icon(ui, rect, color),
     }
 }
 
-/// Draws the close glyph separately from button behavior so icon styling can change without touching
-/// the popup's interaction contract.
-fn draw_close_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.6_f32, color);
-
-    ui.painter()
-        .line_segment([rect.left_top(), rect.right_bottom()], stroke);
-    ui.painter()
-        .line_segment([rect.right_top(), rect.left_bottom()], stroke);
-}
-
-fn draw_settings_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
+/// Draws Font Awesome's `faSliders`: three horizontal tracks, each with a knob.
+fn draw_sliders_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
     let stroke = egui::Stroke::new(1.5_f32, color);
-    let center = rect.center();
-    let radius = rect.width().min(rect.height()) * 0.32;
+    let knob_radius = rect.height() * 0.15;
 
-    ui.painter().circle_stroke(center, radius, stroke);
-    ui.painter().circle_stroke(center, radius * 0.38, stroke);
-
-    for angle in [0.0_f32, 60.0, 120.0, 180.0, 240.0, 300.0] {
-        let radians = angle.to_radians();
-        let dir = egui::vec2(radians.cos(), radians.sin());
-        ui.painter().line_segment(
-            [center + dir * radius, center + dir * (radius + 2.8)],
-            stroke,
+    for (track_y, knob_x) in [(0.19, 0.375), (0.5, 0.625), (0.81, 0.3125)] {
+        let y = rect.top() + rect.height() * track_y;
+        ui.painter().hline(rect.x_range(), y, stroke);
+        ui.painter().circle_filled(
+            egui::pos2(rect.left() + rect.width() * knob_x, y),
+            knob_radius,
+            color,
         );
     }
 }
 
-fn draw_disable_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.5_f32, color);
+/// Draws Lucide's `book-down` icon from its 24×24 SVG path.
+fn draw_book_down_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
+    const ARC_STEPS: usize = 8;
 
-    ui.painter().circle_stroke(
-        rect.center(),
-        rect.width().min(rect.height()) * 0.45,
-        stroke,
-    );
+    let scale = rect.width().min(rect.height()) / 24.0;
+    let origin = rect.center() - egui::vec2(12.0, 12.0) * scale;
+    let point = |x: f32, y: f32| origin + egui::vec2(x, y) * scale;
+    let arc = |center_x: f32, center_y: f32, radius: f32, from_degrees: f32, to_degrees: f32| {
+        (0..=ARC_STEPS)
+            .map(|step| {
+                let t = step as f32 / ARC_STEPS as f32;
+                let angle = (from_degrees + (to_degrees - from_degrees) * t).to_radians();
+                point(
+                    center_x + radius * angle.cos(),
+                    center_y + radius * angle.sin(),
+                )
+            })
+            .collect::<Vec<_>>()
+    };
+    let stroke = egui::Stroke::new(scale.max(1.0), color);
+
+    let mut outline = vec![point(4.0, 19.5)];
+    outline.extend(arc(6.5, 4.5, 2.5, 180.0, 270.0));
+    outline.extend(arc(19.0, 3.0, 1.0, 270.0, 360.0));
+    outline.extend(arc(19.0, 21.0, 1.0, 0.0, 90.0));
+    outline.extend(arc(6.5, 19.5, 2.5, 90.0, 270.0));
+    outline.push(point(20.0, 17.0));
+
+    ui.painter().add(egui::Shape::line(outline, stroke));
     ui.painter()
-        .line_segment([rect.left_bottom(), rect.right_top()], stroke);
-}
-
-fn draw_plus_icon(ui: &egui::Ui, rect: egui::Rect, color: egui::Color32) {
-    let stroke = egui::Stroke::new(1.6_f32, color);
-
-    ui.painter().line_segment(
-        [
-            egui::pos2(rect.center().x, rect.top()),
-            egui::pos2(rect.center().x, rect.bottom()),
-        ],
+        .line_segment([point(12.0, 13.0), point(12.0, 7.0)], stroke);
+    ui.painter().add(egui::Shape::line(
+        vec![point(9.0, 10.0), point(12.0, 13.0), point(15.0, 10.0)],
         stroke,
-    );
-    ui.painter().line_segment(
-        [
-            egui::pos2(rect.left(), rect.center().y),
-            egui::pos2(rect.right(), rect.center().y),
-        ],
-        stroke,
-    );
+    ));
 }
 
 fn is_spelling_kind(lint_kind: LintKind) -> bool {
@@ -660,66 +884,38 @@ fn is_spelling_kind(lint_kind: LintKind) -> bool {
     }
 }
 
-fn popup_style_for_lint_kind(lint_kind: LintKind) -> PopupStyle {
-    let color = lint_kind_color32(lint_kind);
-
-    match lint_kind {
-        LintKind::Eggcorn | LintKind::Malapropism | LintKind::Spelling | LintKind::Typo => {
-            PopupStyle {
-                color,
-                background: hex(0xff, 0xee, 0xf2),
-                foreground: hex(0xbe, 0x12, 0x3c),
-            }
-        }
-        LintKind::Agreement
-        | LintKind::BoundaryError
-        | LintKind::Grammar
-        | LintKind::Repetition => PopupStyle {
-            color,
-            background: hex(0xff, 0xf7, 0xed),
-            foreground: hex(0xc2, 0x41, 0x0c),
-        },
-        LintKind::Capitalization => PopupStyle {
-            color,
-            background: hex(0xf3, 0xee, 0xff),
-            foreground: hex(0x5b, 0x21, 0xb6),
-        },
-        LintKind::Formatting | LintKind::Punctuation | LintKind::Readability => PopupStyle {
-            color,
-            background: hex(0xef, 0xf6, 0xff),
-            foreground: hex(0x1d, 0x4e, 0xd8),
-        },
-        LintKind::Enhancement
-        | LintKind::Miscellaneous
-        | LintKind::Nonstandard
-        | LintKind::Redundancy
-        | LintKind::Regionalism
-        | LintKind::Style
-        | LintKind::Usage
-        | LintKind::WordChoice
-        | LintKind::WordOrder => PopupStyle {
-            color,
-            background: hex(0xf3, 0xf4, 0xf6),
-            foreground: hex(0x37, 0x41, 0x51),
-        },
-    }
-}
-
-/// Converts Harper suggestion variants into button text.
+/// Converts Harper suggestion variants into row labels. Like the Chrome extension, it falls back to
+/// the kind of edit when the replacement text is empty.
 fn suggestion_text(suggestion: &Suggestion) -> String {
     match suggestion {
-        Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => chars.iter().collect(),
+        Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) if !chars.is_empty() => {
+            chars.iter().collect()
+        }
+        Suggestion::ReplaceWith(_) => "Replace".to_owned(),
+        Suggestion::InsertAfter(_) => "Insert After".to_owned(),
         Suggestion::Remove => "Remove".to_owned(),
     }
 }
 
-fn suggestion_hover_text(suggestion: &Suggestion) -> String {
+/// Describes the edit that a suggestion row makes, with the same wording as the Chrome extension.
+fn suggestion_hover_text(suggestion: &Suggestion, problem_text: &str) -> String {
     match suggestion {
-        Suggestion::Remove => "Remove".to_owned(),
-        Suggestion::ReplaceWith(chars) | Suggestion::InsertAfter(chars) => {
-            format!("Replace with \"{}\"", chars.iter().collect::<String>())
-        }
+        Suggestion::ReplaceWith(chars) => format!(
+            "Click to replace \"{problem_text}\" with \"{}\"",
+            chars.iter().collect::<String>()
+        ),
+        Suggestion::InsertAfter(chars) => format!(
+            "Click to insert \"{}\" after \"{problem_text}\"",
+            chars.iter().collect::<String>()
+        ),
+        Suggestion::Remove => format!("Click to remove \"{problem_text}\""),
     }
+}
+
+/// Gets the text that the lint flags, for use in popup labels and tooltips.
+fn problem_text(lint: &Lint, source_text: &str) -> String {
+    let source_chars = source_text.chars().collect::<Vec<_>>();
+    lint.get_str(&source_chars)
 }
 
 /// Converts accessibility rectangles into egui rectangles so rendering and hit-testing use the same
@@ -733,6 +929,9 @@ fn rect_bounds(rect: &Rect) -> egui::Rect {
 
 /// Defines popup geometry ahead of rendering so the transparent overlay can enable or disable native
 /// hit-testing based on our intended layout, not a previous frame's measured egui output.
+///
+/// The bounds always have the popup's maximum size. A popup with less content is drawn smaller,
+/// and the overlay catches clicks on the transparent space below it instead of the editor.
 fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
     egui::Rect::from_min_size(
         egui::pos2(
@@ -755,18 +954,81 @@ fn lint_kind_color32(lint_kind: LintKind) -> egui::Color32 {
     egui::Color32::from_rgb(color.r, color.g, color.b)
 }
 
-fn hex(r: u8, g: u8, b: u8) -> egui::Color32 {
-    egui::Color32::from_rgb(r, g, b)
+/// Scales a color's channels, like the CSS `brightness()` filter.
+fn brightness(color: egui::Color32, factor: f32) -> egui::Color32 {
+    let [r, g, b, a] = color.to_array();
+    let scale = |channel: u8| (f32::from(channel) * factor).round().clamp(0.0, 255.0) as u8;
+
+    egui::Color32::from_rgba_premultiplied(scale(r), scale(g), scale(b), a)
 }
 
-fn blend(from: egui::Color32, to: egui::Color32, to_weight: f32) -> egui::Color32 {
-    let from_weight = 1.0_f32 - to_weight;
-    let [fr, fg, fb, _] = from.to_array();
-    let [tr, tg, tb, _] = to.to_array();
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-    egui::Color32::from_rgb(
-        ((f32::from(fr) * from_weight) + (f32::from(tr) * to_weight)) as u8,
-        ((f32::from(fg) * from_weight) + (f32::from(tg) * to_weight)) as u8,
-        ((f32::from(fb) * from_weight) + (f32::from(tb) * to_weight)) as u8,
-    )
+    #[test]
+    fn popup_rect_sits_below_anchor_at_max_size() {
+        let anchor = Rect::new(10.0, 20.0, 30.0, 12.0);
+        let popup = popup_rect_for_lint(&anchor);
+
+        assert_eq!(popup.min, egui::pos2(10.0, 20.0 + 12.0 + CARD_OFFSET_Y));
+        assert_eq!(popup.size(), egui::vec2(CARD_WIDTH, CARD_HEIGHT));
+    }
+
+    #[test]
+    fn card_width_fits_both_columns() {
+        assert_eq!(
+            CARD_WIDTH,
+            LIST_WIDTH + DIVIDER_WIDTH + FLYOUT_WIDTH + 2.0 * BORDER_WIDTH
+        );
+    }
+
+    #[test]
+    fn suggestion_text_uses_replacement() {
+        assert_eq!(
+            suggestion_text(&Suggestion::ReplaceWith("their".chars().collect())),
+            "their"
+        );
+        assert_eq!(
+            suggestion_text(&Suggestion::InsertAfter(",".chars().collect())),
+            ","
+        );
+    }
+
+    #[test]
+    fn suggestion_text_falls_back_to_edit_kind() {
+        assert_eq!(
+            suggestion_text(&Suggestion::ReplaceWith(Vec::new())),
+            "Replace"
+        );
+        assert_eq!(
+            suggestion_text(&Suggestion::InsertAfter(Vec::new())),
+            "Insert After"
+        );
+        assert_eq!(suggestion_text(&Suggestion::Remove), "Remove");
+    }
+
+    #[test]
+    fn suggestion_hover_text_describes_edit() {
+        assert_eq!(
+            suggestion_hover_text(&Suggestion::ReplaceWith("their".chars().collect()), "there"),
+            "Click to replace \"there\" with \"their\""
+        );
+        assert_eq!(
+            suggestion_hover_text(&Suggestion::InsertAfter(",".chars().collect()), "However"),
+            "Click to insert \",\" after \"However\""
+        );
+        assert_eq!(
+            suggestion_hover_text(&Suggestion::Remove, "the"),
+            "Click to remove \"the\""
+        );
+    }
+
+    #[test]
+    fn brightness_darkens_opaque_colors() {
+        assert_eq!(
+            brightness(egui::Color32::from_rgb(100, 200, 0), 0.5),
+            egui::Color32::from_rgb(50, 100, 0)
+        );
+    }
 }
