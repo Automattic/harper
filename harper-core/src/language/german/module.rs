@@ -54,6 +54,7 @@ impl LanguageModule for GermanModule {
             german_noun_capitalization::GermanNounCapitalization,
             german_perfect_auxiliary::GermanPerfectAuxiliary,
             german_preposition_case::GermanPrepositionCase,
+            german_question_mark::GermanQuestionMark,
             german_recommended_fusion::GermanRecommendedFusion,
             german_relative_clause_comma::GermanRelativeClauseComma,
             german_repeated_words::GermanRepeatedWords,
@@ -116,6 +117,7 @@ impl LanguageModule for GermanModule {
         group.add("GermanPerfectAuxiliary", GermanPerfectAuxiliary);
         group.add("GermanModalZuInfinitive", GermanModalZuInfinitive);
         group.add("GermanStrongImperative", GermanStrongImperative);
+        group.add("GermanQuestionMark", GermanQuestionMark);
         group.add("GermanCountryArticle", GermanCountryArticle);
         group.add("GermanAdjectiveForm", GermanAdjectiveForm::new());
         group.add("GermanPrepositionCase", GermanPrepositionCase::new());

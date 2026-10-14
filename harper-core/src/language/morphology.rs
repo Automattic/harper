@@ -8,7 +8,9 @@
 //!
 //! These features are deliberately not German-specific. Case and gender are
 //! needed just as much by the Slavic language modules, so this is shared
-//! multilingual infrastructure rather than something under `german/`.
+//! multilingual infrastructure rather than something under `german/`. A
+//! language uses the axes and cases it has and leaves the rest empty: German
+//! never sets the Slavic cases or animacy, and an empty axis constrains nothing.
 
 use is_macro::Is;
 use serde::{Deserialize, Serialize};
@@ -16,12 +18,18 @@ use serde::{Deserialize, Serialize};
 use crate::dict_word_metadata::DictWordMetadata;
 
 /// Grammatical case.
+///
+/// The first four are the German ones. Slovak adds the locative and the
+/// instrumental, and Polish the vocative as well.
 #[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
 pub enum Case {
     Nominative,
     Accusative,
     Dative,
     Genitive,
+    Locative,
+    Instrumental,
+    Vocative,
 }
 
 /// Grammatical number.
@@ -37,6 +45,21 @@ pub enum Gender {
     Masculine,
     Feminine,
     Neuter,
+}
+
+/// Animacy of a masculine noun.
+///
+/// A separate axis rather than more [`Gender`] variants, because it cuts
+/// across gender only in the masculine and only some forms show it. Slovak
+/// marks it in the masculine plural (*pekní chlapi* for people, *pekné duby*
+/// for things); Polish distinguishes all three.
+#[derive(Debug, Copy, Clone, PartialEq, Eq, Serialize, Deserialize, PartialOrd, Is, Hash)]
+pub enum Animacy {
+    /// People (Polish *męskoosobowy*, Slovak *životné* in the plural).
+    Personal,
+    /// Animals.
+    Animate,
+    Inanimate,
 }
 
 /// Grammatical person, for the agreement between a subject and its verb.
@@ -65,10 +88,13 @@ bitflags::bitflags! {
     /// accusative, dative and genitive at once.
     #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, PartialOrd, Serialize, Deserialize, Default)]
     pub struct CaseSet: u8 {
-        const NOMINATIVE = 1 << 0;
-        const ACCUSATIVE = 1 << 1;
-        const DATIVE     = 1 << 2;
-        const GENITIVE   = 1 << 3;
+        const NOMINATIVE   = 1 << 0;
+        const ACCUSATIVE   = 1 << 1;
+        const DATIVE       = 1 << 2;
+        const GENITIVE     = 1 << 3;
+        const LOCATIVE     = 1 << 4;
+        const INSTRUMENTAL = 1 << 5;
+        const VOCATIVE     = 1 << 6;
     }
 
     /// The genders a form can be read as. See [`CaseSet`].
@@ -77,6 +103,14 @@ bitflags::bitflags! {
         const MASCULINE = 1 << 0;
         const FEMININE  = 1 << 1;
         const NEUTER    = 1 << 2;
+    }
+
+    /// The animacies a form can be read as. See [`CaseSet`] and [`Animacy`].
+    #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq, PartialOrd, Serialize, Deserialize, Default)]
+    pub struct AnimacySet: u8 {
+        const PERSONAL  = 1 << 0;
+        const ANIMATE   = 1 << 1;
+        const INANIMATE = 1 << 2;
     }
 
     /// The numbers a form can be read as. See [`CaseSet`].
@@ -194,11 +228,19 @@ feature_set!(CaseSet, Case, de_case_set,
     Accusative => ACCUSATIVE,
     Dative => DATIVE,
     Genitive => GENITIVE,
+    Locative => LOCATIVE,
+    Instrumental => INSTRUMENTAL,
+    Vocative => VOCATIVE,
 );
 feature_set!(GenderSet, Gender, de_gender_set,
     Masculine => MASCULINE,
     Feminine => FEMININE,
     Neuter => NEUTER,
+);
+feature_set!(AnimacySet, Animacy, de_animacy_set,
+    Personal => PERSONAL,
+    Animate => ANIMATE,
+    Inanimate => INANIMATE,
 );
 feature_set!(NumberSet, Number, de_number_set,
     Singular => SINGULAR,
@@ -234,6 +276,13 @@ pub struct Agreement {
         skip_serializing_if = "GenderSet::is_empty"
     )]
     pub gender: GenderSet,
+    /// Only the Slavic modules set this, and only on masculine forms.
+    #[serde(
+        default,
+        deserialize_with = "de_animacy_set",
+        skip_serializing_if = "AnimacySet::is_empty"
+    )]
+    pub animacy: AnimacySet,
     #[serde(
         default,
         deserialize_with = "de_number_set",
@@ -262,6 +311,7 @@ impl Agreement {
         Self {
             case: self.case | other.case,
             gender: self.gender | other.gender,
+            animacy: self.animacy | other.animacy,
             number: self.number | other.number,
             person: self.person | other.person,
         }
@@ -271,6 +321,7 @@ impl Agreement {
     pub fn agrees_with(&self, other: &Self) -> bool {
         self.case.agrees_with(other.case)
             && self.gender.agrees_with(other.gender)
+            && self.animacy.agrees_with(other.animacy)
             && self.number.agrees_with(other.number)
             && self.person.agrees_with(other.person)
     }
@@ -285,6 +336,7 @@ impl Agreement {
         Self {
             case: self.case & other.case,
             gender: self.gender & other.gender,
+            animacy: self.animacy & other.animacy,
             number: self.number & other.number,
             person: self.person & other.person,
         }
@@ -294,6 +346,7 @@ impl Agreement {
     pub fn is_unknown(&self) -> bool {
         self.case.is_empty()
             && self.gender.is_empty()
+            && self.animacy.is_empty()
             && self.number.is_empty()
             && self.person.is_empty()
     }
@@ -314,6 +367,12 @@ pub struct Morphology {
     pub pronoun: Option<Agreement>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub determiner: Option<Agreement>,
+    /// An adjective's case, gender, animacy and number. German has no use for
+    /// it, since agreement shows on the article there; Slovak and Polish have
+    /// no articles, so it shows on the adjective (*pekný dom*, *pekná žena*,
+    /// *pekní chlapi*).
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub adjective: Option<Agreement>,
     /// A finite verb's person and number. The conjugation affixes each build
     /// exactly one combination, so this comes off the affix rather than the
     /// entry — see `german/annotations.json`.
@@ -347,6 +406,7 @@ impl Morphology {
             noun: or_agreement(self.noun, other.noun),
             pronoun: or_agreement(self.pronoun, other.pronoun),
             determiner: or_agreement(self.determiner, other.determiner),
+            adjective: or_agreement(self.adjective, other.adjective),
             verb: or_agreement(self.verb, other.verb),
             mood: self.mood.or(other.mood),
             is_foreign: self.is_foreign.or(other.is_foreign),
@@ -387,6 +447,13 @@ pub trait MorphologyExt {
             .unwrap_or_default()
     }
 
+    /// The adjective's agreement features, empty when the entry has none.
+    fn adjective_agreement(&self) -> Agreement {
+        self.morphology()
+            .and_then(|m| m.adjective)
+            .unwrap_or_default()
+    }
+
     /// The finite verb's person and number, empty when the entry has none.
     fn verb_agreement(&self) -> Agreement {
         self.morphology().and_then(|m| m.verb).unwrap_or_default()
@@ -409,6 +476,10 @@ pub trait MorphologyExt {
         self.noun_agreement().number.unique()
     }
 
+    fn get_noun_animacy(&self) -> Option<Animacy> {
+        self.noun_agreement().animacy.unique()
+    }
+
     fn get_pronoun_case(&self) -> Option<Case> {
         self.pronoun_agreement().case.unique()
     }
@@ -427,6 +498,14 @@ pub trait MorphologyExt {
 
     fn get_determiner_gender(&self) -> Option<Gender> {
         self.determiner_agreement().gender.unique()
+    }
+
+    fn get_adjective_case(&self) -> Option<Case> {
+        self.adjective_agreement().case.unique()
+    }
+
+    fn get_adjective_gender(&self) -> Option<Gender> {
+        self.adjective_agreement().gender.unique()
     }
 
     fn get_verb_mood(&self) -> Option<Mood> {
@@ -472,6 +551,7 @@ mod tests {
         assert!(m.noun.is_none());
         assert!(m.pronoun.is_none());
         assert!(m.determiner.is_none());
+        assert!(m.adjective.is_none());
         assert!(m.mood.is_none());
         assert!(m.is_foreign.is_none());
     }
@@ -781,5 +861,137 @@ mod tests {
         };
 
         assert_eq!(both.intersect(&third).person, PersonSet::THIRD);
+    }
+
+    /// Slovak and Polish cases share the set with the German ones, and the
+    /// annotation names are the variant names.
+    #[test]
+    fn slavic_cases_deserialize_into_the_same_set() {
+        let a: Agreement =
+            serde_json::from_str(r#"{"case":["Locative","Instrumental","Vocative"]}"#).unwrap();
+        assert_eq!(
+            a.case,
+            CaseSet::LOCATIVE | CaseSet::INSTRUMENTAL | CaseSet::VOCATIVE
+        );
+        assert_eq!(CaseSet::from(Case::Instrumental), CaseSet::INSTRUMENTAL);
+        assert_eq!(CaseSet::INSTRUMENTAL.unique(), Some(Case::Instrumental));
+    }
+
+    /// *s domom* (instrumental) cannot be read as *z domu* (genitive).
+    #[test]
+    fn slavic_cases_take_part_in_agreement() {
+        let instrumental = Agreement {
+            case: Case::Instrumental.into(),
+            ..Default::default()
+        };
+        let genitive = Agreement {
+            case: Case::Genitive.into(),
+            ..Default::default()
+        };
+        let either = Agreement {
+            case: CaseSet::GENITIVE | CaseSet::LOCATIVE,
+            ..Default::default()
+        };
+
+        assert!(!instrumental.agrees_with(&genitive));
+        assert!(genitive.agrees_with(&either));
+        assert_eq!(either.intersect(&genitive).case, CaseSet::GENITIVE);
+    }
+
+    /// *pekní chlapi* against *pekné duby*: the plural adjective has to share
+    /// an animacy with the noun.
+    #[test]
+    fn animacy_is_its_own_agreement_axis() {
+        let chlapi = Agreement {
+            gender: Gender::Masculine.into(),
+            animacy: Animacy::Personal.into(),
+            number: Number::Plural.into(),
+            ..Default::default()
+        };
+        let duby = Agreement {
+            gender: Gender::Masculine.into(),
+            animacy: Animacy::Inanimate.into(),
+            number: Number::Plural.into(),
+            ..Default::default()
+        };
+        let pekni = Agreement {
+            animacy: Animacy::Personal.into(),
+            number: Number::Plural.into(),
+            ..Default::default()
+        };
+
+        assert!(pekni.agrees_with(&chlapi));
+        assert!(!pekni.agrees_with(&duby));
+        assert_eq!(chlapi.animacy.unique(), Some(Animacy::Personal));
+    }
+
+    /// German leaves animacy empty, so it must keep agreeing with everything
+    /// and must not be written out.
+    #[test]
+    fn an_unknown_animacy_constrains_nothing() {
+        let german = Agreement {
+            gender: Gender::Masculine.into(),
+            ..Default::default()
+        };
+        let personal = Agreement {
+            animacy: Animacy::Personal.into(),
+            ..Default::default()
+        };
+
+        assert!(german.agrees_with(&personal));
+        assert!(personal.agrees_with(&german));
+        assert!(!personal.is_unknown());
+        let json = serde_json::to_string(&german).unwrap();
+        assert!(!json.contains("animacy"), "{json}");
+    }
+
+    #[test]
+    fn animacy_deserializes_a_single_value_and_a_list() {
+        let one: Agreement = serde_json::from_str(r#"{"animacy":"Inanimate"}"#).unwrap();
+        assert_eq!(one.animacy, AnimacySet::INANIMATE);
+
+        let many: Agreement =
+            serde_json::from_str(r#"{"animacy":["Personal","Animate"]}"#).unwrap();
+        assert_eq!(many.animacy, AnimacySet::PERSONAL | AnimacySet::ANIMATE);
+    }
+
+    /// The adjective slot is read from annotations and kept apart from the
+    /// noun, the same way the determiner is.
+    #[test]
+    fn adjective_agreement_is_its_own_slot() {
+        let meta: DictWordMetadata = serde_json::from_str(
+            r#"{"adjective":{},"morphology":{"adjective":{"case":"Locative","gender":"Feminine"}}}"#,
+        )
+        .unwrap();
+
+        assert_eq!(meta.get_adjective_case(), Some(Case::Locative));
+        assert_eq!(meta.get_adjective_gender(), Some(Gender::Feminine));
+        assert_eq!(meta.get_noun_gender(), None);
+        assert!(meta.noun_agreement().is_unknown());
+    }
+
+    #[test]
+    fn merge_unions_adjective_readings() {
+        let feminine = Morphology {
+            adjective: Some(Agreement {
+                gender: Gender::Feminine.into(),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+        let neuter = Morphology {
+            adjective: Some(Agreement {
+                gender: Gender::Neuter.into(),
+                ..Default::default()
+            }),
+            ..Default::default()
+        };
+
+        let merged = feminine.or(&neuter).adjective.unwrap();
+        assert_eq!(merged.gender, GenderSet::FEMININE | GenderSet::NEUTER);
+        assert_eq!(
+            Morphology::default().or(&neuter).adjective,
+            neuter.adjective
+        );
     }
 }

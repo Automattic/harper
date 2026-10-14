@@ -16,6 +16,7 @@ pub mod german_nominalized_infinitive;
 pub mod german_noun_capitalization;
 pub mod german_perfect_auxiliary;
 pub mod german_preposition_case;
+pub mod german_question_mark;
 pub mod german_recommended_fusion;
 pub mod german_relative_clause_comma;
 pub mod german_repeated_words;

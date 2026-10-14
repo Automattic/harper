@@ -104,7 +104,21 @@ export interface BinaryModule {
 
 	toTitleCase(text: string): Promise<string>;
 
+	/** Every dialect compiled into this binary, with names to show to users. */
+	getDialectCatalog(): Promise<DialectInfo[]>;
+
 	setup(): Promise<void>;
+}
+
+/** A dialect compiled into the binary, as it should be shown to users. */
+export interface DialectInfo {
+	dialect: Dialect;
+	/** The language's name in that language, e.g. `Deutsch`. */
+	language: string;
+	/** The dialect's name in that language, e.g. `Österreich`. Equal to `language` when the language has a single dialect. */
+	region: string;
+	/** A short code, usually the ISO 3166 country code, e.g. `AT`. */
+	code: string;
 }
 
 export function createBinaryModuleFromUrl(url: string, glueFlavor?: WasmGlueFlavor): BinaryModule {
@@ -143,6 +157,11 @@ export class BinaryModuleImpl {
 	public async toTitleCase(text: string): Promise<string> {
 		const exported = await this.inner!;
 		return exported.to_title_case(text);
+	}
+
+	public async getDialectCatalog(): Promise<DialectInfo[]> {
+		const exported = await this.inner!;
+		return exported.get_dialect_catalog();
 	}
 
 	public async setup(): Promise<void> {

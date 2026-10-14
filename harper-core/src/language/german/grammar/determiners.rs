@@ -56,6 +56,7 @@ impl DeterminerReading {
             // is third person, and the verb rule reads that from the phrase
             // rather than from here.
             person: PersonSet::empty(),
+            ..Agreement::default()
         }
     }
 }
