@@ -95,11 +95,26 @@ SmartScreen may still show reputation warnings.
 
 ### Releases and Verification
 
-For `v<version>` tags matching `tauri.conf.json`, the upload waits for the Windows and macOS jobs, then retrieves `Harper_<version>_x64-setup.exe` from the current Windows build step.
-Windows must succeed; macOS failure does not block the upload.
-Buildkite reuses a single matching draft, preserving notes and unrelated assets and replacing matching filenames on retries.
-Published releases or multiple matching drafts stop the upload; reconcile duplicate drafts before retrying.
+For `v<version>` tags, the Windows build fails early unless the tag matches `tauri.conf.json`.
+The upload step waits for the Windows build to succeed and for the macOS step to finish, then downloads `Harper_<version>_x64-setup.exe` from the Windows build and attaches it to the tag's draft release.
+Retrying the upload replaces the installer in the draft and leaves notes and other assets alone; it does not rebuild or re-sign.
 
-Run `bundle install` and `just test-desktop-release` for the signing and release tests; these run independently in GitHub Actions.
-Before the first signed release, run the Windows Buildkite job and install, launch, and uninstall its artifact on Windows.
-Confirm valid Automattic signatures on the installer, installed app, and uninstaller.
+The uploader never creates a release and never modifies a published one.
+When several drafts exist for the tag, it uses the one holding the macOS `.dmg`, which the macOS step creates earlier in the same build.
+If it fails because no draft exists yet, retry it once the macOS or GitHub Actions jobs have created one.
+If it fails because no single draft holds the `.dmg`, reconcile the drafts on GitHub and retry.
+
+Before publishing, wait for the GitHub Actions workflows and the Buildkite pipeline to finish, and confirm that the draft holds the Windows installer with the same SHA256 as the Buildkite artifact.
+
+Run `just test-desktop-release` for the signing and upload tests; GitHub Actions runs them on every pull request.
+
+### Windows Smoke Test
+
+Download the signed installer from the chosen commit's Buildkite build. On Windows:
+
+1. Check the installer's signature with `Get-AuthenticodeSignature .\Harper_<version>_x64-setup.exe`. Expect `Status: Valid` and an Automattic signer.
+2. Install Harper, launch it, and check that settings open and the highlighter starts.
+3. In the installation directory, check `harper-desktop.exe` and `uninstall.exe` with `Get-AuthenticodeSignature`. Both must have valid Automattic signatures.
+4. Quit Harper from its tray menu, uninstall it, and confirm that its installation directory is removed.
+
+Record the build number and smoke-test result with the release's testing evidence, or in the PR when validating a signing change. Build-time signature verification does not replace this installed-app check.
