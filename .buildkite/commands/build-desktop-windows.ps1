@@ -8,11 +8,16 @@ function Invoke-Checked([scriptblock] $Command) {
 $repoRoot = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
 Set-Location $repoRoot
 $config = Get-Content 'harper-desktop/src-tauri/tauri.conf.json' -Raw | ConvertFrom-Json
+if ($env:BUILDKITE_TAG -and $env:BUILDKITE_TAG -ne "v$($config.version)") {
+    throw "Release tag must match v$($config.version)"
+}
 
 Write-Host '--- :rust: Prepare Rust and build tools'
 $cargoBin = if ($env:CARGO_HOME) { Join-Path $env:CARGO_HOME 'bin' } else { Join-Path $env:USERPROFILE '.cargo/bin' }
 $env:PATH = "$cargoBin;$env:PATH"
 if (-not (Get-Command rustup -ErrorAction SilentlyContinue)) {
+    # The agent image has a Chocolatey Rust on PATH; rustup can coexist with it.
+    $env:RUSTUP_INIT_SKIP_PATH_CHECK = 'yes'
     # rustup selects installer mode from its executable name.
     $rustupInstaller = Join-Path $env:TEMP 'rustup-init.exe'
     Invoke-WebRequest 'https://win.rustup.rs/x86_64' -OutFile $rustupInstaller

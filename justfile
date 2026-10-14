@@ -234,7 +234,6 @@ build-desktop-windows-signed signing_config: build-harperjs build-lint-framework
 # Test desktop signing and release scripts without CI credentials.
 test-desktop-release:
   node --test .buildkite/commands/*.test.cjs
-  bundle exec ruby fastlane/tests/desktop_release_test.rb
 
 # Build Harper Desktop for Apple Silicon only — faster than the universal recipe below.
 build-desktop-macos-arm64: build-harperjs build-lint-framework build-components build-harper-editor

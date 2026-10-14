@@ -2,17 +2,14 @@
 set -euo pipefail
 
 cd "$(dirname "$0")/../.."
-VERSION=$(jq -r '.version' harper-desktop/src-tauri/tauri.conf.json)
-[[ "${BUILDKITE_TAG:-}" = "v$VERSION" ]] || { echo "Release tag must match v$VERSION" >&2; exit 1; }
+VERSION=$(node -p "require('./harper-desktop/src-tauri/tauri.conf.json').version")
 INSTALLER="harper-desktop/src-tauri/target/x86_64-pc-windows-msvc/release/bundle/nsis/Harper_${VERSION}_x64-setup.exe"
 
 echo "--- :package: Download verified Windows installer"
-# Match both Windows and POSIX artifact paths in this build.
+# The Windows agent stores the artifact path with backslashes. Download patterns
+# match the whole path, and the agent converts the separators when downloading.
 buildkite-agent artifact download "*Harper_${VERSION}_x64-setup.exe" . --step build-desktop-windows
 [[ -f "$INSTALLER" ]] || { echo "No Windows installer downloaded" >&2; exit 1; }
 
-echo "--- :rubygems: Install gems"
-install_gems
-
 echo "--- :rocket: Upload Windows installer to the draft release"
-bundle exec fastlane upload_windows_github_release tag:"$BUILDKITE_TAG" installer:"$INSTALLER"
+node .buildkite/commands/upload-release.cjs "$BUILDKITE_TAG" "$INSTALLER"
