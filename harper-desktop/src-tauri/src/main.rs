@@ -1,9 +1,11 @@
 // Prevents additional console window on Windows in release, DO NOT REMOVE!!
 #![cfg_attr(not(debug_assertions), windows_subsystem = "windows")]
 
+mod debug_broker;
 mod tray;
 mod windows;
 
+use self::debug_broker::DebugBroker;
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use self::tray::set_up_tray_menu;
@@ -18,6 +20,7 @@ use harper_core::{
     spell::MutableDictionary,
 };
 use serde::Serialize;
+use std::collections::BTreeMap;
 use std::io::stderr;
 use std::{
     cell::RefCell,
@@ -117,6 +120,7 @@ pub fn main() {
 
     match args.command {
         Some(Command::Highlighter { no_parent }) => run_highlighter(!no_parent),
+        Some(Command::PopupDebug) => popup_debug(),
         None => run_tauri(),
     }
 }
@@ -220,6 +224,19 @@ pub fn run_tauri() {
                 api.prevent_exit();
             }
         });
+}
+
+pub fn popup_debug() {
+    let highlighter = Highlighter::new(
+        DebugBroker,
+        |_| BTreeMap::new(),
+        |_, _| {},
+        |_| {},
+        |_| {},
+        || {},
+    )
+    .unwrap();
+    highlighter.run_window_for_each_monitor();
 }
 
 /// Run as a highlighter process.

@@ -12,4 +12,7 @@ pub enum Command {
         #[arg(long)]
         no_parent: bool,
     },
+    // Runs the application only showing the popup window for an example suggestion. Useful for
+    // making visual modifications to the popup window.
+    PopupDebug,
 }
