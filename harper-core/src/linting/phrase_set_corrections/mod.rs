@@ -689,6 +689,15 @@ pub fn lint_group() -> LintGroup {
             "Corrects `set up a bad example` to `set a bad example`.",
             LintKind::Usage
         ),
+        "Skyrocket" => (
+            &[
+                ("sky rocketed", "skyrocketed"),
+                ("sky rocketing", "skyrocketing"),
+            ],
+            "Did you mean the closed compound `skyrocket`?",
+            "Looks for incorrect spacing inside the closed compound `skyrocket`.",
+            LintKind::Miscellaneous
+        ),
         "SubjectAndObjectPronoun" => (
             &[
                 ("subjective pronoun", "subject pronoun"),

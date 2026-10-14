@@ -2212,6 +2212,26 @@ fn fix_sets_up_a_bad_example() {
     )
 }
 
+// Skyrocket
+
+#[test]
+fn sky_rockeeted() {
+    assert_suggestion_result(
+        "i can hear the audio but the firefox disk usage sky rocketed after that",
+        test_linter(),
+        "i can hear the audio but the firefox disk usage skyrocketed after that",
+    );
+}
+
+#[test]
+fn sky_rocketing() {
+    assert_suggestion_result(
+        "With the rising abilities of agents, expectations are sky rocketing in terms of productivity.",
+        test_linter(),
+        "With the rising abilities of agents, expectations are skyrocketing in terms of productivity.",
+    );
+}
+
 // SubjectAndObjectPronoun
 
 #[test]
