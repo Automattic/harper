@@ -1,22 +1,33 @@
 //! Renders the lint card and defines its shared drawing and hit-test geometry.
 
+use std::hash::Hash;
+
 use egui_commonmark::{CommonMarkCache, CommonMarkViewer};
 use harper_core::linting::{Lint, LintKind, Suggestion};
 
 use super::lint_kind_color32;
+use super::popup_layout::{PopupLayout, UNBOUNDED_VIEWPORT, popup_layout};
 use crate::rect::Rect;
 
 const LIST_WIDTH: f32 = 210.0;
 const FLYOUT_WIDTH: f32 = 190.0;
 const DIVIDER_WIDTH: f32 = 1.0;
 const BORDER_WIDTH: f32 = 1.0;
-const CARD_WIDTH: f32 = LIST_WIDTH + DIVIDER_WIDTH + FLYOUT_WIDTH + 2.0 * BORDER_WIDTH;
+const LIST_CARD_WIDTH: f32 = LIST_WIDTH + 2.0 * BORDER_WIDTH;
+const FLYOUT_CARD_WIDTH: f32 = FLYOUT_WIDTH + 2.0 * BORDER_WIDTH;
+/// The maximum height of either card. Content that does not fit scrolls.
 const CARD_HEIGHT: f32 = 400.0;
-const CARD_OFFSET_Y: f32 = 3.0;
 const CARD_CORNER_RADIUS: u8 = 8;
 const ROW_HEIGHT: f32 = 30.0;
 const LIST_PADDING_Y: f32 = 4.0;
 const FOOTER_ROW_HEIGHT: f32 = 28.0;
+/// The space above the footer, the footer divider, the space below it, and the footer row.
+const LIST_FOOTER_HEIGHT: f32 = 4.0 + DIVIDER_WIDTH + 4.0 + FOOTER_ROW_HEIGHT;
+/// The distance from the list card's top to the first suggestion row's top.
+///
+/// This is also the sidebar's starting position, so a new popup opens with the sidebar aligned to
+/// the first row and does not slide.
+pub const FIRST_ROW_OFFSET: f32 = BORDER_WIDTH + LIST_PADDING_Y;
 const KIND_HEADER_HEIGHT: f32 = 34.0;
 const DISABLE_ROW_HEIGHT: f32 = 33.0;
 const BUTTON_MIN_HEIGHT: f32 = 24.0;
@@ -38,6 +49,10 @@ const BUTTON_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x00, 0x00, 0x0
 /// The renderer reports intent without updating application state or invoking callbacks.
 pub enum LintCardAction {
     Close,
+    /// The pointer is on the suggestion row at this index. The flyout card aligns with that row.
+    ///
+    /// When the lint has no suggestions, index `0` is the "No replacements" row.
+    HoverSuggestion(usize),
     ApplySuggestion(Suggestion),
     IgnoreLint,
     AddToDictionary,
@@ -59,128 +74,143 @@ enum ButtonContent<'a> {
 
 /// Renders the suggestion popup and returns the action the user picked, if any.
 ///
-/// The layout copies the Chrome extension's suggestion popup, but puts its two panels into one
-/// pane: the suggestion list on the left and the lint explanation on the right. The columns never
-/// move relative to each other, and the pane never grows past the fixed bounds from
-/// [`popup_rect_for_lint`], so hit-testing and drawing agree without measuring the popup.
+/// The layout copies the Chrome extension's suggestion popup: the suggestion list and the lint
+/// explanation are two separate floating cards. [`popup_layout_for_lint`] places them, so
+/// hit-testing and drawing agree without measuring the popup.
+///
+/// `sidebar_position` is the flyout card's current offset from the list card's top. The caller
+/// animates it toward [`sidebar_target`]. `shown_suggestion` only selects the highlighted row.
 pub fn render_lint_card(
     ui: &mut egui::Ui,
     rect: &Rect,
     lint: &Lint,
     source_text: &str,
+    shown_suggestion: Option<usize>,
+    sidebar_position: f32,
     markdown_cache: &mut CommonMarkCache,
 ) -> Option<LintCardAction> {
-    let popup_rect = popup_rect_for_lint(rect);
+    let layout = popup_layout_for_lint(rect, lint, sidebar_position);
     let problem_text = problem_text(lint, source_text);
+    let span = (lint.span.start, lint.span.end);
 
-    egui::Area::new(egui::Id::new("harper-lint-card"))
-        .order(egui::Order::Foreground)
-        .fixed_pos(popup_rect.min)
-        .show(ui.ctx(), |ui| {
+    let list_action = show_card(ui.ctx(), "harper-lint-card-list", span, layout.list, |ui| {
+        let mut action = None;
+        render_suggestion_list(
+            ui,
+            lint,
+            &problem_text,
+            shown_suggestion.unwrap_or(0),
+            &mut action,
+        );
+        action
+    });
+
+    let flyout_action = show_card(
+        ui.ctx(),
+        "harper-lint-card-flyout",
+        span,
+        layout.flyout,
+        |ui| {
             let mut action = None;
+            render_flyout(ui, lint, markdown_cache, &mut action);
+            action
+        },
+    );
 
-            egui::Frame::new()
-                .fill(POPUP_BACKGROUND)
-                .stroke(egui::Stroke::new(BORDER_WIDTH, POPUP_BORDER))
-                .corner_radius(egui::CornerRadius::same(CARD_CORNER_RADIUS))
-                .inner_margin(egui::Margin::same(0))
-                .shadow(egui::Shadow {
-                    offset: [0, 4],
-                    blur: 12,
-                    spread: 0,
-                    color: POPUP_SHADOW,
-                })
+    list_action.or(flyout_action)
+}
+
+/// Renders one floating card at `rect.min`, with content that scrolls when it is taller than
+/// `rect`.
+///
+/// `rect` is the card's maximum bounds. The card shrinks to fit shorter content.
+fn show_card<R>(
+    ctx: &egui::Context,
+    name: &'static str,
+    id_salt: impl Hash,
+    rect: egui::Rect,
+    add_contents: impl FnOnce(&mut egui::Ui) -> R,
+) -> R {
+    egui::Area::new(egui::Id::new(name))
+        .order(egui::Order::Foreground)
+        .fixed_pos(rect.min)
+        .show(ctx, |ui| {
+            card_frame()
                 .show(ui, |ui| {
                     ui.spacing_mut().item_spacing = egui::Vec2::ZERO;
 
-                    // Each column gets an explicit rectangle with the full maximum height. A
-                    // horizontal layout would only offer its children one row of height, which
-                    // makes the scroll areas clip content that should fit.
-                    let origin = ui.cursor().min;
-                    let column_rect = |left: f32, width: f32| {
-                        egui::Rect::from_min_size(
-                            egui::pos2(origin.x + left, origin.y),
-                            egui::vec2(width, CARD_HEIGHT - 2.0 * BORDER_WIDTH),
-                        )
-                    };
-
-                    let list = ui.scope_builder(
-                        egui::UiBuilder::new().max_rect(column_rect(0.0, LIST_WIDTH)),
-                        |ui| {
-                            egui::ScrollArea::vertical()
-                                .id_salt(("harper-lint-card-list", lint.span.start, lint.span.end))
-                                .show(ui, |ui| {
-                                    ui.set_width(LIST_WIDTH);
-                                    render_suggestion_list(ui, lint, &problem_text, &mut action);
-                                });
-                        },
-                    );
-
-                    let flyout = ui.scope_builder(
-                        egui::UiBuilder::new()
-                            .max_rect(column_rect(LIST_WIDTH + DIVIDER_WIDTH, FLYOUT_WIDTH)),
-                        |ui| {
-                            egui::ScrollArea::vertical()
-                                .id_salt((
-                                    "harper-lint-card-flyout",
-                                    lint.span.start,
-                                    lint.span.end,
-                                ))
-                                .show(ui, |ui| {
-                                    ui.set_width(FLYOUT_WIDTH);
-                                    render_flyout(ui, lint, markdown_cache, &mut action);
-                                });
-                        },
-                    );
-
-                    let columns_height = list
-                        .response
-                        .rect
-                        .height()
-                        .max(flyout.response.rect.height());
-                    ui.painter().vline(
-                        origin.x + LIST_WIDTH + DIVIDER_WIDTH / 2.0,
-                        origin.y..=origin.y + columns_height,
-                        egui::Stroke::new(DIVIDER_WIDTH, DIVIDER_COLOR),
-                    );
-                });
-
-            action
+                    egui::ScrollArea::vertical()
+                        .id_salt((name, id_salt))
+                        .max_height(rect.height() - 2.0 * BORDER_WIDTH)
+                        .show(ui, |ui| {
+                            ui.set_width(rect.width() - 2.0 * BORDER_WIDTH);
+                            add_contents(ui)
+                        })
+                        .inner
+                })
+                .inner
         })
         .inner
 }
 
-/// Renders the left column: one row for each suggestion, then the footer.
+/// The background, border, rounded corners, and shadow shared by both popup cards and tooltips,
+/// like the Chrome extension's `.harper-container` and `.harper-flyout`.
+fn card_frame() -> egui::Frame {
+    egui::Frame::new()
+        .fill(POPUP_BACKGROUND)
+        .stroke(egui::Stroke::new(BORDER_WIDTH, POPUP_BORDER))
+        .corner_radius(egui::CornerRadius::same(CARD_CORNER_RADIUS))
+        .shadow(egui::Shadow {
+            offset: [0, 4],
+            blur: 12,
+            spread: 0,
+            color: POPUP_SHADOW,
+        })
+}
+
+/// Renders the list card: one row for each suggestion, then the footer.
 ///
-/// Clicking a row applies its suggestion. When the lint has no suggestions, one "No replacements"
-/// row takes their place, as in the Chrome extension. Clicking that row does nothing.
+/// Clicking a row applies its suggestion. Hovering a row reports its index, so the flyout card can
+/// align with it. When the lint has no suggestions, one "No replacements" row takes their place,
+/// as in the Chrome extension. Clicking that row does nothing.
+///
+/// The row at `selected` keeps the hover background, like the Chrome extension's
+/// `.harper-selected` row.
 fn render_suggestion_list(
     ui: &mut egui::Ui,
     lint: &Lint,
     problem_text: &str,
+    selected: usize,
     action: &mut Option<LintCardAction>,
 ) {
     ui.add_space(LIST_PADDING_Y);
 
-    if lint.suggestions.is_empty() {
-        suggestion_row(
+    if lint.suggestions.is_empty()
+        && suggestion_row(
             ui,
             lint.lint_kind,
             "No replacements",
             format!("No replacements for \"{problem_text}\""),
-        );
+            selected == 0,
+        )
+        .hovered()
+    {
+        *action = Some(LintCardAction::HoverSuggestion(0));
     }
 
-    for suggestion in &lint.suggestions {
-        if suggestion_row(
+    for (index, suggestion) in lint.suggestions.iter().enumerate() {
+        let row = suggestion_row(
             ui,
             lint.lint_kind,
             &suggestion_text(suggestion),
             suggestion_hover_text(suggestion, problem_text),
-        )
-        .clicked()
-        {
+            selected == index,
+        );
+
+        if row.clicked() {
             *action = Some(LintCardAction::ApplySuggestion(suggestion.clone()));
+        } else if row.hovered() {
+            *action = Some(LintCardAction::HoverSuggestion(index));
         }
     }
 
@@ -191,18 +221,19 @@ fn render_suggestion_list(
 /// Renders one suggestion row: a swatch in the lint color, the label, and a chevron.
 ///
 /// The row's rectangle is allocated before anything is painted, so the hover background can come
-/// from this frame's response. This keeps hover styling free of stored selection state.
+/// from this frame's response. A `selected` row gets the same background without the hover.
 fn suggestion_row(
     ui: &mut egui::Ui,
     lint_kind: LintKind,
     label: &str,
     hover: impl Into<String>,
+    selected: bool,
 ) -> egui::Response {
     let (rect, response) =
         ui.allocate_exact_size(egui::vec2(LIST_WIDTH, ROW_HEIGHT), egui::Sense::click());
     let painter = ui.painter();
 
-    if response.hovered() {
+    if selected || response.hovered() {
         painter.rect_filled(rect, 0.0, HOVER_BACKGROUND);
     }
 
@@ -328,10 +359,10 @@ fn render_list_footer(ui: &mut egui::Ui, action: &mut Option<LintCardAction>) {
     }
 }
 
-/// Renders the right column: the lint kind, the explanation, and the actions for the whole lint.
+/// Renders the flyout card: the lint kind, the explanation, and the actions for the whole lint.
 ///
-/// Nothing here depends on which suggestion row is hovered, so the column stays the same while the
-/// pointer moves through the list.
+/// The content does not depend on which suggestion row is hovered. Only the card's position does,
+/// and [`popup_layout_for_lint`] controls that.
 fn render_flyout(
     ui: &mut egui::Ui,
     lint: &Lint,
@@ -422,8 +453,9 @@ fn disable_rule_row(ui: &mut egui::Ui) -> egui::Response {
     );
 
     if response.hovered() {
-        // This row can touch the pane's bottom-right corner, so keep the hover inside the curve.
+        // This row can touch the card's bottom corners, so keep the hover inside the curves.
         let corner_radius = egui::CornerRadius {
+            sw: CARD_CORNER_RADIUS - 1,
             se: CARD_CORNER_RADIUS - 1,
             ..Default::default()
         };
@@ -541,19 +573,9 @@ fn hover_text(response: egui::Response, hover_text: impl Into<String>) -> egui::
     let hover_text = hover_text.into();
 
     let mut tooltip = egui::Tooltip::for_enabled(&response);
-    tooltip.popup = tooltip.popup.frame(
-        egui::Frame::new()
-            .fill(POPUP_BACKGROUND)
-            .stroke(egui::Stroke::new(BORDER_WIDTH, POPUP_BORDER))
-            .corner_radius(egui::CornerRadius::same(CARD_CORNER_RADIUS))
-            .inner_margin(egui::Margin::symmetric(8, 6))
-            .shadow(egui::Shadow {
-                offset: [0, 4],
-                blur: 12,
-                spread: 0,
-                color: POPUP_SHADOW,
-            }),
-    );
+    tooltip.popup = tooltip
+        .popup
+        .frame(card_frame().inner_margin(egui::Margin::symmetric(8, 6)));
     tooltip.show(|ui| {
         ui.set_max_width(260.0);
         ui.label(
@@ -717,16 +739,49 @@ fn problem_text(lint: &Lint, source_text: &str) -> String {
 /// Defines popup geometry ahead of rendering so the transparent overlay can enable or disable native
 /// hit-testing based on our intended layout, not a previous frame's measured egui output.
 ///
-/// The bounds always have the popup's maximum size. A popup with less content is drawn smaller,
-/// and the overlay catches clicks on the transparent space below it instead of the editor.
-pub fn popup_rect_for_lint(rect: &Rect) -> egui::Rect {
-    egui::Rect::from_min_size(
-        egui::pos2(
-            rect.x as f32,
-            rect.y as f32 + rect.height as f32 + CARD_OFFSET_Y,
-        ),
-        egui::vec2(CARD_WIDTH, CARD_HEIGHT),
+/// The list card's size comes from its fixed row geometry. The flyout card's content is markdown,
+/// so its bounds always have the maximum size. A flyout with less content is drawn smaller, and the
+/// overlay catches clicks on the transparent space below it instead of the editor.
+///
+/// `sidebar_position` is the flyout card's current offset from the list card's top, not its target,
+/// so hit-testing follows the card while it moves.
+pub fn popup_layout_for_lint(rect: &Rect, lint: &Lint, sidebar_position: f32) -> PopupLayout {
+    popup_layout(
+        rect,
+        UNBOUNDED_VIEWPORT,
+        egui::vec2(LIST_CARD_WIDTH, list_card_height(row_count(lint))),
+        egui::vec2(FLYOUT_CARD_WIDTH, CARD_HEIGHT),
+        sidebar_position,
     )
+}
+
+/// Computes the sidebar position that aligns the flyout card with the row at `shown_suggestion`.
+///
+/// The sidebar moves toward this value on each frame, but does not jump to it.
+pub fn sidebar_target(lint: &Lint, shown_suggestion: Option<usize>) -> f32 {
+    row_offset(shown_suggestion, list_card_height(row_count(lint)))
+}
+
+/// Counts the list card's suggestion rows, including the "No replacements" row.
+pub fn row_count(lint: &Lint) -> usize {
+    lint.suggestions.len().max(1)
+}
+
+/// Computes the list card's height from its fixed row and footer heights.
+fn list_card_height(row_count: usize) -> f32 {
+    let content = 2.0 * LIST_PADDING_Y + row_count as f32 * ROW_HEIGHT + LIST_FOOTER_HEIGHT;
+
+    (2.0 * BORDER_WIDTH + content).min(CARD_HEIGHT)
+}
+
+/// Computes the distance from the list card's top to the top of the row at `shown_suggestion`.
+///
+/// `None` gives the first row. Like the Chrome extension, this ignores the list's scroll position,
+/// but the result never goes past the last row position that fits in the card.
+fn row_offset(shown_suggestion: Option<usize>, list_height: f32) -> f32 {
+    let offset = FIRST_ROW_OFFSET + shown_suggestion.unwrap_or(0) as f32 * ROW_HEIGHT;
+
+    offset.min(list_height - BORDER_WIDTH - ROW_HEIGHT).max(0.0)
 }
 
 /// Scales a color's channels, like the CSS `brightness()` filter.
@@ -742,19 +797,44 @@ mod tests {
     use super::*;
 
     #[test]
-    fn popup_rect_sits_below_anchor_at_max_size() {
-        let anchor = Rect::new(10.0, 20.0, 30.0, 12.0);
-        let popup = popup_rect_for_lint(&anchor);
-
-        assert_eq!(popup.min, egui::pos2(10.0, 20.0 + 12.0 + CARD_OFFSET_Y));
-        assert_eq!(popup.size(), egui::vec2(CARD_WIDTH, CARD_HEIGHT));
+    fn list_card_height_counts_rows_and_footer() {
+        assert_eq!(list_card_height(1), 2.0 + 8.0 + 30.0 + 37.0);
+        assert_eq!(list_card_height(3), 2.0 + 8.0 + 90.0 + 37.0);
     }
 
     #[test]
-    fn card_width_fits_both_columns() {
+    fn list_card_height_caps_at_max() {
+        assert_eq!(list_card_height(100), CARD_HEIGHT);
+    }
+
+    #[test]
+    fn row_offset_starts_at_first_row() {
+        let list_height = list_card_height(3);
+
+        assert_eq!(row_offset(None, list_height), FIRST_ROW_OFFSET);
         assert_eq!(
-            CARD_WIDTH,
-            LIST_WIDTH + DIVIDER_WIDTH + FLYOUT_WIDTH + 2.0 * BORDER_WIDTH
+            row_offset(Some(0), list_height),
+            row_offset(None, list_height)
+        );
+    }
+
+    #[test]
+    fn row_offset_steps_by_row_height() {
+        let list_height = list_card_height(3);
+
+        assert_eq!(
+            row_offset(Some(2), list_height),
+            FIRST_ROW_OFFSET + 2.0 * ROW_HEIGHT
+        );
+    }
+
+    #[test]
+    fn row_offset_stays_inside_scrolled_list() {
+        let list_height = list_card_height(100);
+
+        assert_eq!(
+            row_offset(Some(99), list_height),
+            CARD_HEIGHT - BORDER_WIDTH - ROW_HEIGHT
         );
     }
 

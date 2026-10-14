@@ -1,12 +1,19 @@
 mod draw_highlight;
+mod popup_layout;
 mod render_lint_card;
+
+use std::time::Instant;
 
 use egui_commonmark::CommonMarkCache;
 use harper_core::{Document, linting::LintKind};
 
 use self::{
     draw_highlight::draw_highlight,
-    render_lint_card::{LintCardAction, popup_rect_for_lint, render_lint_card},
+    popup_layout::{PopupLayout, approach},
+    render_lint_card::{
+        FIRST_ROW_OFFSET, LintCardAction, popup_layout_for_lint, render_lint_card, row_count,
+        sidebar_target,
+    },
 };
 use super::{AddToDictionary, DisableRule, IgnoreLint};
 use crate::{
@@ -32,9 +39,16 @@ pub struct RenderState {
     last_lints: Option<Vec<ActionableLint>>,
 
     /// Index of the lint whose suggestion popup is currently visible.
-    ///
-    /// `None` means no popup should be rendered.
     highlighted_lint: Option<usize>,
+
+    /// Index of the suggestion row that the user hovered last in the visible popup.
+    shown_suggestion: Option<usize>,
+
+    /// The flyout card's drawn offset from the list card's top, in points.
+    current_sidebar_position: f32,
+
+    /// When `render` last ran, used to move the sidebar at a speed that follows real time.
+    last_render: Option<Instant>,
 
     /// Cache for markdown-rendered lint messages so popup redraws do not repeatedly rebuild markdown
     /// resources from scratch.
@@ -62,6 +76,9 @@ impl RenderState {
         let mut state = Self {
             last_lints: None,
             highlighted_lint: None,
+            shown_suggestion: None,
+            current_sidebar_position: FIRST_ROW_OFFSET,
+            last_render: None,
             markdown_cache: CommonMarkCache::default(),
             ignore_lint,
             add_to_dictionary,
@@ -72,6 +89,9 @@ impl RenderState {
     }
 
     /// Saves successful accessibility reads while retaining the previous lints after a failed read.
+    ///
+    /// Closes the popup when its lint disappeared, and forgets the shown suggestion when the
+    /// refreshed lint has fewer rows.
     pub fn set_lints(&mut self, lints: Vec<ActionableLint>) {
         self.last_lints = Some(lints);
 
@@ -79,8 +99,16 @@ impl RenderState {
             .highlighted_lint
             .is_some_and(|index| index >= self.lints().len())
         {
-            self.highlighted_lint = None;
+            self.close_popup();
         }
+
+        let row_count = self
+            .highlighted_lint
+            .and_then(|index| self.lints().get(index))
+            .map(|positioned_lint| row_count(&positioned_lint.lint));
+        self.shown_suggestion = self
+            .shown_suggestion
+            .filter(|index| row_count.is_some_and(|row_count| *index < row_count));
     }
 
     fn lints(&self) -> &[ActionableLint] {
@@ -92,18 +120,27 @@ impl RenderState {
     /// Window/input code decides what the user interacted with, while `RenderState` owns the popup
     /// selection. Filtering invalid indexes here keeps stale cursor state from selecting a lint that
     /// disappeared after the latest accessibility read.
+    ///
+    /// Like the Chrome extension, each new selection starts again from the first suggestion row.
     pub fn set_highlighted_lint(&mut self, highlighted_lint: Option<usize>) {
         self.highlighted_lint = highlighted_lint.filter(|index| *index < self.lints().len());
+        self.shown_suggestion = None;
+        self.current_sidebar_position = FIRST_ROW_OFFSET;
     }
 
     /// Centralizes the close behavior so the popup close button only has to clear the selected lint.
     pub fn close_popup(&mut self) {
         self.highlighted_lint = None;
+        self.shown_suggestion = None;
+        self.current_sidebar_position = FIRST_ROW_OFFSET;
     }
 
     /// Checks if a given position touches a hit target.
     pub fn hit_target_at_pos(&self, pos: egui::Pos2) -> HitTarget {
-        if self.popup_rect().is_some_and(|rect| rect.contains(pos)) {
+        if self
+            .popup_layout()
+            .is_some_and(|layout| layout.contains(pos))
+        {
             return HitTarget::Popup;
         }
 
@@ -117,15 +154,41 @@ impl RenderState {
 
     /// Computes popup hit-test bounds from our layout contract instead of waiting for egui to report
     /// rendered bounds, which keeps hit-testing available before the next render pass completes.
-    pub fn popup_rect(&self) -> Option<egui::Rect> {
+    pub fn popup_layout(&self) -> Option<PopupLayout> {
         self.highlighted_lint
             .and_then(|index| self.lints().get(index))
-            .map(|positioned_lint| popup_rect_for_lint(&positioned_lint.rect))
+            .map(|positioned_lint| {
+                popup_layout_for_lint(
+                    &positioned_lint.rect,
+                    &positioned_lint.lint,
+                    self.current_sidebar_position,
+                )
+            })
     }
 
     /// Draws highlights and the active popup from the same state used by hit-testing so visible
     /// regions and clickable regions do not drift apart.
+    ///
+    /// Each call also moves the sidebar toward its target by the time since the previous call.
     pub fn render(&mut self, ui: &mut egui::Ui) {
+        let now = Instant::now();
+        let time_since_last_render = self
+            .last_render
+            .map_or(0.0, |last_render| (now - last_render).as_secs_f32());
+        self.last_render = Some(now);
+
+        if let Some(positioned_lint) = self
+            .highlighted_lint
+            .and_then(|index| self.lints().get(index))
+        {
+            let target = sidebar_target(&positioned_lint.lint, self.shown_suggestion);
+            self.current_sidebar_position = approach(
+                self.current_sidebar_position,
+                target,
+                time_since_last_render,
+            );
+        }
+
         for positioned_lint in self.lints() {
             draw_highlight(ui, &positioned_lint.rect, &positioned_lint.lint);
         }
@@ -137,8 +200,19 @@ impl RenderState {
             let lint = positioned_lint.lint.clone();
             let source_text = positioned_lint.source_text.clone();
 
-            match render_lint_card(ui, &rect, &lint, &source_text, &mut self.markdown_cache) {
+            match render_lint_card(
+                ui,
+                &rect,
+                &lint,
+                &source_text,
+                self.shown_suggestion,
+                self.current_sidebar_position,
+                &mut self.markdown_cache,
+            ) {
                 Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::HoverSuggestion(suggestion)) => {
+                    self.shown_suggestion = Some(suggestion);
+                }
                 Some(LintCardAction::ApplySuggestion(suggestion)) => {
                     if let Some(actionable_lint) = self
                         .last_lints
