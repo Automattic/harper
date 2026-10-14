@@ -226,8 +226,7 @@ async function assertEditorText(editor: Locator, text: string) {
 /** Substring assertion: `inputValue` for form elements, `toContainText` for contenteditable. */
 async function assertEditorContains(editor: Locator, text: string) {
 	if (await isFormElement(editor)) {
-		const value = await editor.inputValue();
-		expect(value).toContain(text);
+		await expect.poll(() => editor.inputValue()).toContain(text);
 	} else {
 		await expect(editor).toContainText(text);
 	}
@@ -258,19 +257,13 @@ export async function testBasicSuggestion(
 		expect(opened).toBe(true);
 		await page.getByTitle('Click to replace "an" with "a"').click();
 
-		await page.waitForTimeout(3000);
-
 		await assertEditorText(editor, 'This is a test');
-
-		await page.waitForTimeout(3000);
+		await expect(editor).toBeFocused();
 
 		// Cursor should be right after "a" (pos 9). ArrowRight×3 + Backspace deletes 'e'.
 		await page.keyboard.press('ArrowRight');
-		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
-		await page.waitForTimeout(200);
 		await page.keyboard.press('ArrowRight');
-		await page.waitForTimeout(200);
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
@@ -340,17 +333,13 @@ export async function testCanBlockRuleSuggestion(
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
 
-		await page.waitForTimeout(1000);
-
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
 
 		await page.getByTitle('Disable the ModalOf rule').click();
 
-		await page.waitForTimeout(1000);
-
 		await assertHarperHighlightBoxes(page, []);
-		await assertLocatorIsFocused(page, editor);
+		await expect(editor).toBeFocused();
 	});
 }
 
@@ -390,16 +379,13 @@ export async function testMultipleSuggestionsAndUndo(
 
 		// Soft breaks: no false positives from concatenation + correct span alignment.
 		await replaceEditorContent(editor, 'Valid words\ntset here.', true);
-		await page.waitForTimeout(4000);
-		await expect(getHarperHighlights(page)).toHaveCount(1);
+		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
 		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Click to replace "tset" with "test"').click();
-		await page.waitForTimeout(5000);
 		await assertEditorContains(editor, 'test here');
 
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
-		await page.waitForTimeout(12000);
-		await expect(getHarperHighlights(page)).toHaveCount(3);
+		await expect(getHarperHighlights(page)).toHaveCount(3, { timeout: 30000 });
 
 		// Get highlights sorted by visual position and click on the middle one
 		const sortedBoxes = await getSortedHighlightBoxes(page);
@@ -413,16 +399,17 @@ export async function testMultipleSuggestionsAndUndo(
 		}
 
 		await page.getByTitle('Click to replace "tset" with "test"').click();
-		await page.waitForTimeout(5000);
+
+		// Wait for the edit before checking the unchanged lines.
+		await assertEditorContains(editor, 'second test');
 
 		// Verify only second "tset" was corrected
 		await assertEditorContains(editor, 'first tset');
-		await assertEditorContains(editor, 'second test');
 		await assertEditorContains(editor, 'third tset');
 
 		// Undo
+		await expect(editor).toBeFocused();
 		await editor.press('Control+z');
-		await page.waitForTimeout(3000);
 		await assertEditorContains(editor, 'The second tset');
 	});
 }
@@ -483,7 +470,11 @@ export async function testPageHasNHighlights(testPageUrl: TestPageUrlProvider, n
 		const url = await resolveTestPage(testPageUrl, page);
 		await page.goto(url);
 
-		await page.waitForTimeout(6000);
+		// Zero highlights can be observed before linting starts, so retain the
+		// observation window for negative checks.
+		if (n === 0) {
+			await page.waitForTimeout(6000);
+		}
 
 		await assertPageHasNHighlights(page, n);
 	});
