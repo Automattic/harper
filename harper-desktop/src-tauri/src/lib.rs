@@ -4,10 +4,11 @@ mod windows;
 use self::highlighter::Highlighter;
 use self::highlighter_service::HighlighterService;
 use self::tray::set_up_tray_menu;
+use crate::args::{Args, Command};
 use crate::communication::{Client, ProtocolError};
 use crate::config::{Config, Integration};
 use crate::debounce::{DebounceState, DebounceStatus};
-use clap::{Parser, Subcommand};
+use clap::Parser;
 use harper_core::{
     Dialect, DictWordMetadata, Document, IgnoredLints,
     linting::{Lint, LintGroup},
@@ -31,6 +32,7 @@ use tokio::{
     sync::Mutex,
 };
 
+mod args;
 pub mod color;
 mod commands;
 pub mod communication;
@@ -48,20 +50,6 @@ mod mac_broker;
 
 #[cfg(target_os = "windows")]
 mod windows_broker;
-
-#[derive(Parser)]
-struct Args {
-    #[command(subcommand)]
-    command: Option<Command>,
-}
-
-#[derive(Subcommand)]
-enum Command {
-    Highlighter {
-        #[arg(long)]
-        no_parent: bool,
-    },
-}
 
 #[derive(Debug, Clone, Serialize)]
 struct IntegrationView {
