@@ -5195,6 +5195,13 @@
 						},
 						{
 							"Bool": {
+								"name": "InOnesDefense",
+								"state": true,
+								"label": "In Ones Defense"
+							}
+						},
+						{
+							"Bool": {
 								"name": "InStock",
 								"state": true,
 								"label": "In Stock"
