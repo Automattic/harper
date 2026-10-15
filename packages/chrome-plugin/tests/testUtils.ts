@@ -71,13 +71,6 @@ export function getDraftEditor(page: Page): Locator {
 
 /** Replace the content of a text editor. */
 export async function replaceEditorContent(editorEl: Locator, text: string, softBreaks = false) {
-	// Seed form controls in one update so popup tests cannot click lints for partial words.
-	// Rich editors still need their keyboard-driven editing behavior.
-	if (await isFormElement(editorEl)) {
-		await editorEl.fill(text);
-		return;
-	}
-
 	// Let the editor update its own selection state through its keyboard handler.
 	await editorEl.focus();
 	await editorEl.press('ControlOrMeta+a');
@@ -102,6 +95,44 @@ export function getHarperSuggestionRows(page: Page): Locator {
 /** Locate the Harper highlights on a page. */
 export function getHarperHighlights(page: Page): Locator {
 	return page.locator('#harper-highlight');
+}
+
+export async function waitForHighlightsToSettle(
+	page: Page,
+	quietMs = 250,
+	timeoutMs = 30000,
+): Promise<void> {
+	let previous: string | undefined;
+	let changedAt = performance.now();
+
+	await expect
+		.poll(
+			async () => {
+				const snapshot = await getHarperHighlights(page).evaluateAll((highlights) =>
+					JSON.stringify(
+						highlights.flatMap((highlight) => {
+							const { x, y, width, height } = highlight.getBoundingClientRect();
+							const style = getComputedStyle(highlight);
+							if (width <= 0 || height <= 0 || style.visibility !== 'visible') return [];
+							return [[x, y, width, height, style.borderBottomColor, style.backgroundColor]];
+						}),
+					),
+				);
+				const now = performance.now();
+				if (snapshot === '[]' || snapshot !== previous) {
+					previous = snapshot;
+					changedAt = now;
+					return false;
+				}
+				return now - changedAt >= quietMs;
+			},
+			{
+				message: `Visible highlight boxes should stay unchanged for ${quietMs} ms`,
+				intervals: [10],
+				timeout: timeoutMs,
+			},
+		)
+		.toBe(true);
 }
 
 /**
@@ -254,10 +285,14 @@ export async function testBasicSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'This is an test');
+		await assertEditorText(editor, 'This is an test');
+		await waitForHighlightsToSettle(page);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
-		await page.getByTitle('Click to replace "an" with "a"').click();
+		const suggestion = page.getByTitle('Click to replace "an" with "a"');
+		await expect(suggestion).toBeVisible();
+		await suggestion.click();
 
 		await assertEditorText(editor, 'This is a test');
 		await expect(editor).toBeFocused();
@@ -300,6 +335,7 @@ export async function testCanIgnoreSuggestion(
 
 		// test.slow() does not extend assertion timeouts during linter startup.
 		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
+		await waitForHighlightsToSettle(page);
 
 		// Open the popup for the highlight and click Ignore.
 		const opened = await clickHarperHighlight(page);
@@ -338,6 +374,7 @@ export async function testCanBlockRuleSuggestion(
 			await setup(page, editor);
 		}
 		await replaceEditorContent(editor, 'I could of gone.');
+		await waitForHighlightsToSettle(page);
 
 		const opened = await clickHarperHighlight(page);
 		expect(opened).toBe(true);
@@ -386,12 +423,14 @@ export async function testMultipleSuggestionsAndUndo(
 		// Soft breaks: no false positives from concatenation + correct span alignment.
 		await replaceEditorContent(editor, 'Valid words\ntset here.', true);
 		await expect(getHarperHighlights(page)).toHaveCount(1, { timeout: 30000 });
+		await waitForHighlightsToSettle(page);
 		expect(await clickHarperHighlight(page)).toBe(true);
 		await page.getByTitle('Click to replace "tset" with "test"').click();
 		await assertEditorContains(editor, 'test here');
 
 		await replaceEditorContent(editor, 'The first tset.\nThe second tset.\nThe third tset.');
 		await expect(getHarperHighlights(page)).toHaveCount(3, { timeout: 30000 });
+		await waitForHighlightsToSettle(page);
 
 		// Get highlights sorted by visual position and click on the middle one
 		const sortedBoxes = await getSortedHighlightBoxes(page);
