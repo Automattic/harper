@@ -1,0 +1,13 @@
+{
+	"affixes": {},
+	"properties": {
+		"C": { "metadata": { "conjunction": {} } },
+		"I": { "metadata": { "preposition": true } },
+		"R": { "metadata": { "adverb": {} } },
+		"Z": { "metadata": { "verb": { "verb_form": "THIRD_PERSON_SINGULAR" } } },
+		"N": { "metadata": { "noun": { "is_singular": true, "is_countable": true } } },
+		"V": { "metadata": { "verb": { "verb_form": "LEMMA" } } },
+		"J": { "metadata": { "adjective": {} } },
+		"P": { "metadata": { "pronoun": { "is_personal": true } } }
+	}
+}

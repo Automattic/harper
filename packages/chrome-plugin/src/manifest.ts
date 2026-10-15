@@ -1,5 +1,6 @@
 import { defineManifest } from '@crxjs/vite-plugin';
 import packageData from '../package.json';
+import { CYCLE_LANGUAGE_COMMAND, DEFAULT_CYCLE_SHORTCUT } from './commands';
 
 const isDev = process.env.NODE_ENV == 'development';
 
@@ -46,6 +47,12 @@ export default defineManifest({
 		default_popup: 'popup.html',
 	},
 	options_page: 'options.html',
+	commands: {
+		[CYCLE_LANGUAGE_COMMAND]: {
+			suggested_key: { default: DEFAULT_CYCLE_SHORTCUT },
+			description: 'Switch to the next language',
+		},
+	},
 	browser_specific_settings: {
 		gecko: {
 			id: 'harper@writewithharper.com',

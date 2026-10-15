@@ -52,24 +52,59 @@ impl FstDictionary {
         (*DICT).clone()
     }
 
+    /// The curated dictionary, if something has already built it.
+    ///
+    /// For callers that only want to know whether a dictionary *is* the curated
+    /// one, which is not worth building it for.
+    pub(crate) fn curated_if_loaded() -> Option<Arc<Self>> {
+        LazyLock::get(&DICT).cloned()
+    }
+
+    /// The dictionary's entries in mutable form.
+    ///
+    /// An [`FstDictionary`] already keeps a [`MutableDictionary`] beside its FST
+    /// for everything but fuzzy finding, so this shares that one rather than
+    /// building a second. Callers that want to read every entry and its metadata
+    /// should use this; a large dictionary is expensive to copy.
+    pub fn as_mutable(&self) -> Arc<MutableDictionary> {
+        Arc::clone(&self.mutable_dict)
+    }
+
     /// Construct a new [`FstDictionary`] using a wordlist as a source.
     /// This can be expensive, so only use this if fast fuzzy searches are worth it.
     pub fn new(mut words: Vec<(CharString, DictWordMetadata)>) -> Self {
         words.sort_unstable_by(|(a, _), (b, _)| a.cmp(b));
         words.dedup_by(|(a, _), (b, _)| a == b);
 
-        let mut builder = fst::MapBuilder::memory();
-        for (word_chars, _) in words.iter() {
-            let word = word_chars.iter().collect::<String>();
-            builder
-                .insert(word, WordId::from_word_chars(word_chars).into())
-                .expect("Insertion not in lexicographical order!");
-        }
+        // The FST and the mutable dictionary are two views of the same sorted
+        // words and neither needs the other, so they are built side by side.
+        // For a dictionary the size of German's that is a third of the time
+        // this function takes.
+        let build_fst = || {
+            let mut builder = fst::MapBuilder::memory();
+            for (word_chars, _) in words.iter() {
+                let word = word_chars.iter().collect::<String>();
+                builder
+                    .insert(word, WordId::from_word_chars(word_chars).into())
+                    .expect("Insertion not in lexicographical order!");
+            }
+            builder.into_inner().unwrap()
+        };
+        let build_mutable = || {
+            let mut mutable_dict = MutableDictionary::new();
+            mutable_dict.extend_words(words.iter().cloned());
+            mutable_dict
+        };
 
-        let mut mutable_dict = MutableDictionary::new();
-        mutable_dict.extend_words(words.iter().cloned());
+        #[cfg(not(target_arch = "wasm32"))]
+        let (fst_bytes, mutable_dict) = std::thread::scope(|scope| {
+            let fst = scope.spawn(build_fst);
+            let mutable_dict = build_mutable();
+            (fst.join().expect("FST construction panicked"), mutable_dict)
+        });
+        #[cfg(target_arch = "wasm32")]
+        let (fst_bytes, mutable_dict) = (build_fst(), build_mutable());
 
-        let fst_bytes = builder.into_inner().unwrap();
         let word_map = FstMap::new(fst_bytes).expect("Unable to build FST map.");
 
         FstDictionary {
@@ -79,7 +114,7 @@ impl FstDictionary {
     }
 }
 
-fn build_dfa(max_distance: u8, query: &str) -> DFA {
+pub(crate) fn build_dfa(max_distance: u8, query: &str) -> DFA {
     // Insert if it does not exist
     AUTOMATON_BUILDERS.with_borrow_mut(|v| {
         if !v.iter().any(|t| t.0 == max_distance) {
@@ -100,7 +135,10 @@ fn build_dfa(max_distance: u8, query: &str) -> DFA {
 }
 
 /// Consumes a DFA stream and emits the WordID-edit distance pairs it produces.
-fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u64, u8)> {
+pub(crate) fn stream_distances_vec(
+    stream: &mut StreamWithState<&DFA>,
+    dfa: &DFA,
+) -> Vec<(u64, u8)> {
     let mut word_id_pairs = Vec::new();
     while let Some((_, v, s)) = stream.next() {
         word_id_pairs.push((v, dfa.distance(s).to_u8()));
@@ -110,7 +148,7 @@ fn stream_distances_vec(stream: &mut StreamWithState<&DFA>, dfa: &DFA) -> Vec<(u
 }
 
 /// Merges WordID-distance pairs, keeping the smallest distance for each word.
-fn merge_best_distances(
+pub(crate) fn merge_best_distances(
     best_distances: &mut HashMap<u64, u8>,
     distances: impl IntoIterator<Item = (u64, u8)>,
 ) {

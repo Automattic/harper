@@ -1,0 +1,15 @@
+# "derselbe" is one word. Split, both halves are real words, so the spell checker
+# has nothing to object to. (The contracted forms — "im selben Moment" — are
+# correct written apart and are deliberately not matched.)
+expr main (der selbe)
+
+let message "»derselbe« wird zusammengeschrieben."
+let description "Zieht »der selbe« zu »derselbe« zusammen."
+let kind "Spelling"
+let becomes "derselbe"
+let strategy "MatchCase"
+
+test "Das ist der selbe Problem wie letztes Jahr." "Das ist derselbe Problem wie letztes Jahr."
+
+allows "Das ist derselbe Problem wie letztes Jahr."
+allows "Wir trafen uns im selben Moment am Bahnhof."

@@ -1,0 +1,15 @@
+# "Standard" ends in -d. "Standart" survives the spell checker because the
+# compound splitter reads it as Stand + Art.
+expr main standart
+
+let message "»Standard« schreibt sich mit d am Ende."
+let description "Korrigiert »Standart« zu »Standard«."
+let kind "Spelling"
+let becomes "Standard"
+let strategy "MatchCase"
+
+test "Das ist der Standart." "Das ist der Standard."
+test "Ein hoher Standart." "Ein hoher Standard."
+
+allows "Das ist der Standard."
+allows "Die Standarte der Reiterei."

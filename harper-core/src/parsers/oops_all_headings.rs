@@ -14,6 +14,11 @@ impl<P: Parser + 'static> OopsAllHeadings<P> {
 }
 
 impl<P: Parser + 'static> Parser for OopsAllHeadings<P> {
+    /// Re-marking everything as a heading does not change the language.
+    fn is_english(&self) -> bool {
+        self.inner.is_english()
+    }
+
     fn parse(&self, source: &[char]) -> Vec<Token> {
         let inner = self.inner.parse(source);
         let mut output = Vec::with_capacity(inner.capacity());

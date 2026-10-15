@@ -1,0 +1,15 @@
+# Since the 1996 reform the "irgend-" compounds are written closed up. Split,
+# they read as two real words, so the spell checker has nothing to object to.
+expr main (irgend jemand)
+
+let message "»irgendjemand« wird zusammengeschrieben."
+let description "Zieht das getrennt geschriebene »irgend jemand« zu »irgendjemand« zusammen."
+let kind "Spelling"
+let becomes "irgendjemand"
+let strategy "MatchCase"
+
+test "Irgend jemand hat angerufen." "Irgendjemand hat angerufen."
+test "Da ist irgend jemand passiert." "Da ist irgendjemand passiert."
+
+allows "Irgendjemand hat angerufen."
+allows "Da ist irgendjemand passiert."

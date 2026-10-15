@@ -1,0 +1,143 @@
+# "das" written where the conjunction "dass" belongs — the most common mistake
+# in German school writing, and the one Harper had nothing for.
+#
+# Only one direction is decidable without a parser. "das" is an article, a
+# demonstrative and a relative pronoun all at once, so the question is never
+# "which word is this" but "what does the clause do". Two things settle it
+# together:
+#
+#   * what stands in front of the comma. A verb of saying or thinking, a
+#     predicate adjective, or an abstract noun opens a content clause, which
+#     takes "dass". A concrete noun opens a relative clause, which takes "das" —
+#     "das Buch, das er gelesen hat" must stay as it is, and does, because
+#     "Buch" is in none of the lists below.
+#   * what follows. "dass" is a conjunction, so a subject follows it and the
+#     finite verb goes to the end. A pronoun in that slot means the clause is a
+#     content clause. A finite verb there ("ich glaube, das ist richtig") or a
+#     capitalized noun ("ich glaube, das Buch ist gut") means "das" is the
+#     demonstrative or the article, and both stay untouched.
+#
+# The other direction — "dass" written for the relative pronoun, as in "das
+# Buch, dass ich gelesen habe" — needs the antecedent's gender, because only a
+# neuter noun takes "das". German gender is the one thing this dictionary does
+# not reliably have, so that half is deliberately absent.
+#
+# **Infinitives, participles and plural finite forms are not triggers**, and
+# that is what the first draft got wrong. A German subordinate clause puts its
+# verb last, so "um das Erscheinungsbild zu verstehen, das sich …", "haben das
+# Heil gesehen, das du …" and "auf ein Brötchen zeigt, das er kaufen möchte"
+# put a verb of perceiving directly in front of the comma with a relative
+# clause behind it. Over 19 MB of edited prose that draft reported twelve
+# times and was wrong every time. Only forms that stand in second position —
+# the singular finite ones — are safe, and the price is that "ich habe gehört,
+# dass …" and "wir hoffen, dass …" go unreported.
+
+# Verbs that open a content clause. Third person singular forms are listed only
+# where they differ from the participle: "sagt", but not "erklärt", because "er
+# hat das Prinzip erklärt, das die Sohle …" is a relative clause. Separable
+# verbs ("nehme an", "stelle fest") are left out, their particle sits elsewhere.
+expr verb [hofft, glaubt, denkt, meint, sagt, findet, fürchtet, hoffe, hoffst, hoffte, hofftest, glaube, glaubst, glaubte, denke, denkst, dachte, meinst, meinte, sage, sagst, sagte, sagtest, weiß, weißt, wusste, wusstest, finde, findest, sehe, siehst, höre, hörst, hörte, vermute, vermutest, vermutete, fürchte, fürchtest, befürchte, bezweifle, bezweifelst, behaupte, behauptest, behauptete, erwarte, erwartest, verspreche, versprichst, versprach, verstehe, wünsche, ahne, bemerke, bemerkte, betone, betonte, berichte, berichtete, erkläre, erklärte, gestehe, gestand, erwiderte, antwortete, ergänzte, entgegnete]
+
+# Predicate adjectives that take a content clause: "es ist schade, dass …".
+expr adjektiv [schade, klar, wichtig, möglich, unmöglich, wahrscheinlich, unwahrscheinlich, denkbar, offensichtlich, verständlich, unverständlich, bedauerlich, erstaunlich, überraschend, selbstverständlich, peinlich, ärgerlich, bezeichnend, ratsam, sinnvoll, unnötig, notwendig, nötig]
+
+# Abstract nouns that take a content clause rather than a relative clause.
+expr nomen [tatsache, annahme, vermutung, befürchtung, gewissheit, behauptung]
+
+# Adverbs that may stand between the trigger and the comma: "ich glaube nicht,
+# dass …", "sie sagte gestern, dass …".
+expr einschub [sehr, fest, dringend, erneut, zunächst, bereits, nicht, auch, schon, immer, sicher, wirklich, eigentlich, natürlich, leider, hoffentlich, wohl, doch, ja, kaum, daher, deshalb, damals, gestern, heute, ferner, ebenfalls, allerdings]
+
+expr ausloeser [@verb, @adjektiv, @nomen]
+
+# A subject may follow the conjunction; a finite verb or a capitalized noun may
+# not, and neither is in this list. "das" itself is left out on purpose: in
+# "dass das stimmt" it is not clear which of the two the rule would be pointing
+# at.
+expr subjekt [ich, du, er, sie, es, wir, ihr, man, jemand, niemand, mir, mich, dir, dich, uns, euch]
+
+# An article opening the clause's subject counts too, but only behind a verb:
+# "ich weiß, das der Schuh drückt". A predicate adjective follows its own noun
+# phrase, so "ein Gesetz notwendig, das dem Angehörigen …" is a relative clause,
+# and the article cannot tell them apart. "eine" is left out for "das Eine".
+expr artikel [der, die, den, dem, ein, einen, einem, einer, mein, meine, dein, deine, sein, seine, unser, unsere, euer, eure]
+
+# Without the comma — school writing leaves it out as often as it sets it — only
+# the pronouns that cannot be an object count. "mir", "dir", "uns" … stay out:
+# "er sagt das mir" has no reading as a clause, but the list is the one place
+# this rule can afford to be narrow. The article branch stays comma-only,
+# because "ich finde das die Idee gut" is not a content clause.
+expr subjektohnekomma [ich, du, er, sie, es, wir, ihr, man, jemand, niemand]
+
+# Participles of saying and perceiving, without the comma only. With it they
+# are left out for the relative clauses above; without it, and with a subject
+# pronoun behind "das", there is no noun for a relative pronoun to refer to:
+# "er hat mir gesagt das er kommt".
+expr partizip [gesagt, gedacht, geglaubt, gehofft, gewusst, gehört, gesehen, gemerkt, bemerkt, erfahren, gelesen, geschrieben, erzählt, versprochen, behauptet, vermutet, befürchtet, mitgeteilt, festgestellt, erwähnt]
+
+expr main <[(@partizip das @subjektohnekomma), (@ausloeser(,) das @subjekt), (@ausloeser @einschub(,) das @subjekt), (@verb(,) das @artikel), (@verb @einschub(,) das @artikel), (@ausloeser das @subjektohnekomma), (@ausloeser @einschub das @subjektohnekomma)], das>
+
+let message "Hier steht die Konjunktion »dass«. Das Pronomen »das« schreibt man mit einem »s«, die Konjunktion mit zwei."
+let description "Ersetzt das Pronomen »das« durch die Konjunktion »dass«, wenn ein Nebensatz folgt."
+let kind "Grammar"
+let becomes "dass"
+let strategy "MatchCase"
+let scope "Sentence"
+
+test "Er hat mir gesagt das er morgen kommt." "Er hat mir gesagt dass er morgen kommt."
+test "Ich habe gehört das du umziehst." "Ich habe gehört dass du umziehst."
+test "Wir haben nicht gewusst das ihr kommt." "Wir haben nicht gewusst dass ihr kommt."
+test "Ich hoffe, das du bald kommst." "Ich hoffe, dass du bald kommst."
+test "Sie sagte, das sie müde sei." "Sie sagte, dass sie müde sei."
+test "Er weiß, das es wichtig ist." "Er weiß, dass es wichtig ist."
+test "Es ist schade, das niemand gekommen ist." "Es ist schade, dass niemand gekommen ist."
+test "Ich glaube nicht, das er kommt." "Ich glaube nicht, dass er kommt."
+test "Die Tatsache, das er kam, überraschte alle." "Die Tatsache, dass er kam, überraschte alle."
+test "Es ist klar, das wir gewinnen." "Es ist klar, dass wir gewinnen."
+test "Es war offensichtlich, das er fehlte." "Es war offensichtlich, dass er fehlte."
+test "Ich weiß, das der Schuh zu klein ist." "Ich weiß, dass der Schuh zu klein ist."
+test "Mein Vater sagt immer, das man Schuhe pflegen muss." "Mein Vater sagt immer, dass man Schuhe pflegen muss."
+test "Sie glaubt, das die Sohle hält." "Sie glaubt, dass die Sohle hält."
+test "Ich hoffe, das die Stiefel passen." "Ich hoffe, dass die Stiefel passen."
+test "Sie sagte, das ein Absatz abgebrochen ist." "Sie sagte, dass ein Absatz abgebrochen ist."
+test "Ich glaube nicht, das meine Schuhe bequem sind." "Ich glaube nicht, dass meine Schuhe bequem sind."
+
+test "Der Lehrer sagte das wir kommen sollen." "Der Lehrer sagte dass wir kommen sollen."
+test "Ich hoffe das du bald kommst." "Ich hoffe dass du bald kommst."
+test "Er sagt das er müde ist." "Er sagt dass er müde ist."
+test "Ich glaube nicht das er kommt." "Ich glaube nicht dass er kommt."
+test "Es ist schade das niemand kam." "Es ist schade dass niemand kam."
+test "Ich weiß das du recht hast." "Ich weiß dass du recht hast."
+
+allows "Er hat das gesagt, das Buch aber nicht gelesen."
+allows "Wir haben das Heil gesehen, das du bereitet hast."
+allows "Sie hat mir das erzählt."
+allows "Ich hoffe dass du bald kommst."
+allows "Ich glaube das ist richtig."
+allows "Ich sehe das Haus."
+allows "Ich weiß das nicht."
+allows "Ich finde das die Idee gut ist."
+allows "Er sagt das Gleiche wie du."
+allows "Ich hoffe, dass du bald kommst."
+allows "Es ist schade, dass niemand gekommen ist."
+allows "Das Buch, das ich gelesen habe, war gut."
+allows "Ich glaube, das ist richtig."
+allows "Ich glaube, das Buch ist gut."
+allows "Sie sagte, das sei falsch."
+allows "Er weiß, das Wetter wird besser."
+allows "Das Auto, das dort steht, ist neu."
+allows "Ich sehe das Haus, das er gebaut hat."
+allows "Ohne das Buch geht es nicht."
+allows "Meine Augen haben das Heil gesehen, das du bereitet hast."
+allows "Der Käufer zeigt auf ein Brötchen, das er kaufen möchte."
+allows "Es ist ein Gefühl, das alle Wesen verbindet."
+allows "Keines ist ohne das andere denkbar."
+allows "Wissen, das sie zuvor aufgenommen haben, bleibt erhalten."
+allows "Er nahm alles mit, außer das Zelt."
+allows "Das ist alles, was ich weiß."
+allows "Was er sagt, das stimmt."
+allows "Was sie meint, das wissen wir nicht."
+allows "Das Paar, das der Schuhmacher genäht hat, ist teuer."
+allows "Sie kaufte das Buch, das die Lehrerin empfohlen hat."
+allows "Ein Gesetz war notwendig, das dem Angehörigen den Besitz erlaubte."
+allows "Es ist unmöglich, das Eine vom Anderen zu trennen."

@@ -1,0 +1,43 @@
+# "ihn" after a verb that governs the dative: "Er hilft ihn" for "Er hilft
+# ihm". A frequent mistake in school writing, and invisible to the spell
+# checker because both pronouns are words.
+#
+# Only verbs that take *no* accusative object at all are listed, so the
+# pronoun directly behind them cannot be one. "glauben" is left out on
+# purpose: "ich glaube ihn zu kennen" is correct, the accusative belonging to
+# the infinitive. "passen" is left out because of the separable "abpassen": "er
+# passt ihn an der Tür ab".
+expr verb [helfen, hilft, helfe, hilfst, helft, half, halfen, geholfen, dankt, danke, dankst, gratuliert, gratuliere, gratulierte, gehören, gehört, gehöre, gehörte, gefällt, gefiel, vertraut, vertraue, vertraute, antwortet, antworte, antwortete, begegnet, begegne, begegnete, schadet, schadete, widerspricht, widersprach, folgt, folge, folgst, ähnelt, ähnelte, schmeckt, schmeckte]
+
+expr main <(@verb ihn), ihn>
+
+let message "Dieses Verb verlangt den Dativ: »ihm« statt »ihn«."
+let description "Ersetzt »ihn« durch »ihm« nach Verben, die den Dativ verlangen (helfen, danken, gefallen …)."
+let kind "Grammar"
+let becomes "ihm"
+let strategy "MatchCase"
+
+test "Er hilft ihn beim Schnüren der Schuhe." "Er hilft ihm beim Schnüren der Schuhe."
+test "Ich danke ihn für die Stiefel." "Ich danke ihm für die Stiefel."
+test "Der Schuh gefällt ihn nicht." "Der Schuh gefällt ihm nicht."
+test "Die Sandalen gehören ihn." "Die Sandalen gehören ihm."
+test "Sie antwortete ihn sofort." "Sie antwortete ihm sofort."
+test "Wir helfen ihn gern." "Wir helfen ihm gern."
+test "Ich vertraue ihn." "Ich vertraue ihm."
+test "Der Kuchen schmeckt ihn nicht." "Der Kuchen schmeckt ihm nicht."
+test "Sie begegnete ihn im Schuhladen." "Sie begegnete ihm im Schuhladen."
+test "Das schadet ihn." "Das schadet ihm."
+test "Wir gratulieren ihm, ich gratuliere ihn auch." "Wir gratulieren ihm, ich gratuliere ihm auch."
+test "Er widerspricht ihn." "Er widerspricht ihm."
+test "Der Schuh gehört ihn und nicht mir." "Der Schuh gehört ihm und nicht mir."
+test "Sie hilft ihn." "Sie hilft ihm."
+test "Das Kind ähnelt ihn sehr." "Das Kind ähnelt ihm sehr."
+
+allows "Er hilft ihm beim Schnüren der Schuhe."
+allows "Ich glaube ihn zu kennen."
+allows "Ich sehe ihn im Schuhladen."
+allows "Der Schuh gefällt ihm nicht."
+allows "Sie hat ihn gefragt."
+allows "Wir kaufen ihn morgen."
+allows "Er hilft ihnen."
+allows "Sie passt ihn an der Tür ab."

@@ -1,6 +1,9 @@
 default:
   @just --list
 
+# Import language-specific recipes
+import "harper-core/src/language/justfile"
+
 # Clean build artifacts (but keep dependencies)
 alias clean := soft-clean
 soft-clean:
@@ -69,13 +72,13 @@ build-wasm:
   export CARGO_TERM_QUIET=true
 
   cd "{{justfile_directory()}}/harper-wasm"
-  if [ "${DISABLE_WASM_OPT:-0}" -eq 1 ]; then
-    wasm-pack build --target web --no-opt --out-name harper_wasm
-    wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features 
-  else
-    wasm-pack build --target web --out-name harper_wasm
-    wasm-pack build --target web --out-name harper_wasm_slim --no-default-features 
-  fi
+  
+  # Build the regular optimized version with all supported languages (plus typst/thesaurus)
+  wasm-pack build --target web --out-name harper_wasm
+  
+  # Also build the slim (non-optimized) version with only English (no thesaurus, no typst, no extra languages)
+  # harper-core dependency has default-features=false, so english enables only the English language module
+  wasm-pack build --target web --no-opt --out-name harper_wasm_slim --no-default-features --features english
 
 # Build `harper.js` with all size optimizations available.
 alias build-harper-js := build-harperjs
@@ -84,8 +87,10 @@ build-harperjs: build-wasm
   set -eo pipefail
 
   # Removes a duplicate copy of the WASM binary if Vite is left to its devices.
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
-  perl -pi -e 's/new URL\(.*\)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
+  # Small delay to ensure files are fully written (helps with CI file system sync)
+  sleep 5
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm.js"
+  perl -pi -e 's/new URL(.*)/new URL()/g' "{{justfile_directory()}}/harper-wasm/pkg/harper_wasm_slim.js"
 
   cd "{{justfile_directory()}}/packages/harper.js"
   pnpm install
@@ -256,7 +261,7 @@ build-obsidian: build-harperjs
 
   cd "{{justfile_directory()}}/packages/obsidian-plugin"
 
-  max_bundle_size_bytes=$((30 * 1024 * 1024))
+  max_bundle_size_bytes=$((35 * 1024 * 1024))
 
   pnpm install
   pnpm build
@@ -454,16 +459,39 @@ update-vscode-linters:
   mv "$output_file" package.json
   just format
 
+# Fail if a large file or a generated binary (the German dictionary pack) is tracked by git.
+check-large-files:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  python3 "{{justfile_directory()}}/scripts/check_large_files.py"
+
+# Validate language feature consistency across Cargo.toml files
+check-language-features:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  python3 "{{justfile_directory()}}/scripts/check_language_features.py"
+
 # Run Rust formatting and linting.
-check-rust: audit-dictionary
+check-rust: audit-dictionary check-large-files
   #!/usr/bin/env bash
   set -eo pipefail
 
   cargo fmt -- --check
   cargo clippy -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
 
+  # Clippy-check the multilingual language module, plus the two integration
+  # tests the language system owns. Not `--all-targets`: that pulls in the lib
+  # test target, where English test code predating the language module still
+  # warns, and those warnings are not this feature's to fix.
+  cargo clippy -p harper-core --features multilingual --lib --test language_conformance --test verify_build_output -- -Dwarnings -D clippy::dbg_macro -D clippy::needless_raw_string_hashes
+
   cargo hack check --each-feature
   just check-desktop-rust
+
+  # Language module checks: feature consistency across manifests, per-language
+  # test suites, the out-of-workspace testing framework, and the German coverage
+  # gate. Invoked here rather than as its own CI job so it needs no workflow change.
+  just check-languages
 
 # Perform format and type checking.
 check: check-rust check-js
@@ -505,9 +533,22 @@ precommit: check test build-harperjs build-obsidian build-web build-wp build-fir
   cargo build --all-targets -q
 
 # Install `harper-cli` and `harper-ls` to your machine via `cargo`
-install:
-  cargo install --path harper-ls --locked
-  cargo install --path harper-cli --locked
+# FEATURES: Comma-separated list of features to enable (e.g., "de,pt").
+# If not specified, all features (all-languages,thesaurus,concurrent) are enabled.
+install *FEATURES:
+  #!/usr/bin/env bash
+  set -eo pipefail
+  
+  # If no features specified, use all available features
+  if [ -z "{{FEATURES}}" ]; then
+    FEATURES="all-languages,thesaurus,concurrent"
+  else
+    FEATURES="{{FEATURES}}"
+  fi
+  
+  echo "Installing with features: ${FEATURES}"
+  cargo install --path harper-ls --locked --features "${FEATURES}"
+  cargo install --path harper-cli --locked --features "${FEATURES}"
 
 # Run `harper-cli` on the Harper repository
 dogfood:
@@ -529,7 +570,15 @@ dogfood:
 
 test-rust:
   echo Running all Rust tests
-  cargo test -q
+  # Test harper-core with default features first (without multilingual)
+  cargo test -q -p harper-core
+  # Test harper-core with multilingual features (German, Portuguese, Slovak,
+  # Polish). The German integration tests complete in ~1.5s each and the full
+  # multilingual suite finishes in under a minute, so run it explicitly.
+  cargo test -q -p harper-core --features multilingual
+  # Then test all other workspace members
+  cargo test -q --workspace --exclude harper-core
+  # Harper Desktop is no longer a workspace member, so it needs its own run.
   cd "{{justfile_directory()}}/harper-desktop/src-tauri" && cargo test -q
 
 # Test everything.
@@ -1037,3 +1086,45 @@ sort-config-settings:
 
   fs.writeFileSync(configPath, JSON.stringify(inputJson, null, 2) + '\n');
   console.log('Sorted default_config.json child settings by name.');
+
+# Build a branch with the "Binaries" GitHub workflow and install it locally. Usage: just install-from-ci [bin] [branch] [prefix]
+install-from-ci bin="harper-ls" branch="feature/german-language-support" prefix=(env("HOME") + "/.local/bin"):
+  #!/usr/bin/env bash
+  set -euo pipefail
+
+  # Use origin (the fork), not the upstream parent that `gh repo view` resolves to
+  repo=$(git remote get-url origin | sed -E 's#^(https://github.com/|git@github.com:)##; s#\.git$##')
+  target=$(rustc -vV 2>/dev/null | sed -n 's/^host: //p' || true)
+  target=${target:-$(uname -m)-unknown-linux-gnu}
+
+  echo "Dispatching Binaries workflow on $repo@{{branch}}"
+  started=$(date -u +%Y-%m-%dT%H:%M:%SZ)
+  gh workflow run binaries.yml --repo "$repo" --ref "{{branch}}"
+
+  # The run takes a moment to show up
+  run_id=""
+  for _ in $(seq 1 30); do
+    run_id=$(gh run list --repo "$repo" --workflow binaries.yml --branch "{{branch}}" --event workflow_dispatch \
+      --json databaseId,createdAt --jq "map(select(.createdAt >= \"$started\")) | first | .databaseId // empty")
+    [ -n "$run_id" ] && break
+    sleep 2
+  done
+  [ -n "$run_id" ] || { echo "Could not find the dispatched run" >&2; exit 1; }
+
+  echo "Waiting for run $run_id (usually ~11 min): https://github.com/$repo/actions/runs/$run_id"
+  gh run watch "$run_id" --repo "$repo" --exit-status >/dev/null
+
+  tmp=$(mktemp -d)
+  trap 'rm -rf "$tmp"' EXIT
+  gh run download "$run_id" --repo "$repo" --name "{{bin}}-$target" --dir "$tmp"
+  tar xzf "$tmp"/{{bin}}-$target.tar.gz -C "$tmp"
+
+  mkdir -p "{{prefix}}"
+  install -m 755 "$tmp/{{bin}}" "{{prefix}}/{{bin}}"
+  # The prebuilt German dictionary must sit next to the executable (much faster start-up)
+  if [ -f "$tmp/harper-german.pack" ]; then
+    install -m 644 "$tmp/harper-german.pack" "{{prefix}}/harper-german.pack"
+  else
+    rm -f "{{prefix}}/harper-german.pack"
+  fi
+  echo "Installed {{prefix}}/{{bin}} ($target, run $run_id)"

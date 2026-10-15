@@ -1,0 +1,42 @@
+# "dass" written for the pronoun "das": "…, dass wird toll" for "das wird
+# toll". The conjunction opens a subordinate clause, so a subject follows it
+# and the finite verb goes to the end. A finite verb directly behind it is
+# therefore impossible, and the word can only be the demonstrative.
+#
+# The list is the verbs that most often follow a demonstrative "das": the
+# auxiliaries, the modals and the handful of verbs a short comment uses ("das
+# stimmt", "das passt"). Infinitives and plural forms are left out, because
+# they are also the clause-final verb of an elliptical clause.
+expr verb [ist, war, wäre, wird, würde, hat, hatte, hätte, kann, konnte, könnte, muss, musste, müsste, soll, sollte, darf, durfte, will, wollte, mag, geht, ging, gibt, gab, klingt, stimmt, reicht, passt, macht, heißt, bedeutet, zeigt, liegt, bringt, kostet]
+
+expr main <(dass @verb), dass>
+
+let message "Nach »dass« folgt ein Subjekt, kein Verb. Hier ist das Pronomen »das« gemeint."
+let description "Ersetzt »dass« durch »das«, wenn direkt ein finites Verb folgt."
+let kind "Grammar"
+let becomes "das"
+let strategy "MatchCase"
+
+test "Am Wochenende gehen wir Schuhe kaufen, dass wird toll." "Am Wochenende gehen wir Schuhe kaufen, das wird toll."
+test "Dass ist mein Schuh." "Das ist mein Schuh."
+test "Ich habe neue Stiefel, dass war teuer." "Ich habe neue Stiefel, das war teuer."
+test "Er sagt, dass kann nicht sein." "Er sagt, das kann nicht sein."
+test "Die Sohle ist kaputt, dass muss repariert werden." "Die Sohle ist kaputt, das muss repariert werden."
+test "Dass stimmt nicht." "Das stimmt nicht."
+test "Dass hat mir gefallen." "Das hat mir gefallen."
+test "Die Schuhe drücken, dass geht so nicht." "Die Schuhe drücken, das geht so nicht."
+test "Dass klingt gut." "Das klingt gut."
+test "Dass passt mir gut." "Das passt mir gut."
+test "Dass wäre schön." "Das wäre schön."
+test "Dass kostet zu viel." "Das kostet zu viel."
+test "Dass sollte reichen." "Das sollte reichen."
+test "Ich finde, dass reicht." "Ich finde, das reicht."
+test "Dass gibt es nicht." "Das gibt es nicht."
+
+allows "Ich weiß, dass er kommt."
+allows "Es ist schön, dass du da bist."
+allows "Das wird toll."
+allows "Ich hoffe, dass es passt."
+allows "Er sagt, dass das stimmt."
+allows "Dass er kommt, ist klar."
+allows "So dass alle zufrieden sind."

@@ -1,0 +1,31 @@
+# "zuwenig" is the spelling from before the 1996 reform. Since then it is "zu
+# wenig" (Duden, "wenig"). Only the noun is one word, and it comes with an
+# article: "ein Zuwenig an Bewegung".
+expr artikel [ein, eines, einem, das, des, dem, kein, keines, keinem, jedes, dieses, diesem]
+
+# Weir has no anchor for the start of a chunk, and the exception needs a token
+# to look at, so a "Zuwenig" that opens a clause is not reported.
+expr main <(!@artikel zuwenig), zuwenig>
+
+let message "Seit der Rechtschreibreform schreibt man »zu wenig« getrennt. Zusammen nur als Nomen mit Artikel: »ein Zuwenig«."
+let description "Trennt »zuwenig« in »zu wenig«, außer beim Nomen »das Zuwenig«."
+let kind "Spelling"
+let becomes "zu wenig"
+let strategy "MatchCase"
+
+test "Das ist zuwenig." "Das ist zu wenig."
+test "Du schläfst zuwenig." "Du schläfst zu wenig."
+test "Wir haben viel zuwenig Zeit." "Wir haben viel zu wenig Zeit."
+test "Es gab zuwenig Plätze, also standen wir." "Es gab zu wenig Plätze, also standen wir."
+test "Ist das nicht zuwenig?" "Ist das nicht zu wenig?"
+test "Er hat zuwenig gelernt!" "Er hat zu wenig gelernt!"
+test "Man trinkt im Sommer oft zuwenig Wasser." "Man trinkt im Sommer oft zu wenig Wasser."
+test "Sie verdienen zuwenig." "Sie verdienen zu wenig."
+
+allows "Das ist zu wenig."
+allows "Ein Zuwenig an Bewegung schadet."
+allows "Das Zuwenig an Personal fällt auf."
+allows "Es gibt kein Zuwenig an Geduld."
+allows "Er hat so wenig gegessen."
+test "Wir hatten zuwenig Geld." "Wir hatten zu wenig Geld."
+test "Das war eindeutig zuwenig, fand sie." "Das war eindeutig zu wenig, fand sie."

@@ -1,0 +1,12 @@
+# "wiederum" has a single r; "wiederrum" is a frequent doubling error.
+expr main wiederrum
+
+let message "»wiederum« schreibt sich mit einem r."
+let description "Korrigiert »wiederrum« zu »wiederum«."
+let kind "Spelling"
+let becomes "wiederum"
+let strategy "MatchCase"
+
+test "Das ist wiederrum ein Problem." "Das ist wiederum ein Problem."
+
+allows "Das ist wiederum ein Problem."

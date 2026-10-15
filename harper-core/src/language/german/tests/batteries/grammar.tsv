@@ -1,0 +1,100 @@
+Präpositionalkasus	err	Er geht mit den Hund spazieren.
+Präpositionalkasus	err	Wegen dem Regen blieb sie zu Hause.
+Präpositionalkasus	err	Trotz dem Wetter fuhren sie los.
+Präpositionalkasus	err	Sie kam ohne ihrem Bruder zur Feier.
+Präpositionalkasus	err	Nach eine Stunde war alles vorbei.
+Präpositionalkasus	ok	Er geht mit dem Hund spazieren.
+Präpositionalkasus	ok	Wegen des Regens blieb sie zu Hause.
+Präpositionalkasus	ok	Trotz des Wetters fuhren sie los.
+Präpositionalkasus	ok	Sie kam ohne ihren Bruder zur Feier.
+Präpositionalkasus	ok	Nach einer Stunde war alles vorbei.
+Artikel-Nomen	err	Der Kind spielt im Garten.
+Artikel-Nomen	err	Das Straße ist seit gestern gesperrt.
+Artikel-Nomen	err	Ein Frau steht an der Tür.
+Artikel-Nomen	err	Die Haus gehört meinem Onkel.
+Artikel-Nomen	err	Sie hat ein neue Tasche gekauft.
+Artikel-Nomen	ok	Das Kind spielt im Garten.
+Artikel-Nomen	ok	Die Straße ist seit gestern gesperrt.
+Artikel-Nomen	ok	Eine Frau steht an der Tür.
+Artikel-Nomen	ok	Das Haus gehört meinem Onkel.
+Artikel-Nomen	ok	Sie hat eine neue Tasche gekauft.
+das-dass	err	Ich hoffe, das du bald kommst.
+das-dass	err	Es ist schade, das niemand gekommen ist.
+das-dass	err	Sie sagte, das sie müde sei.
+das-dass	err	Das Buch, dass ich gelesen habe, war gut.
+das-dass	err	Er weiß, das es wichtig ist.
+das-dass	ok	Ich hoffe, dass du bald kommst.
+das-dass	ok	Es ist schade, dass niemand gekommen ist.
+das-dass	ok	Sie sagte, dass sie müde sei.
+das-dass	ok	Das Buch, das ich gelesen habe, war gut.
+das-dass	ok	Er weiß, dass es wichtig ist.
+Großschreibung	err	Die mondlandung war ein großer Erfolg.
+Großschreibung	err	Er hat das buch gestern gelesen.
+Großschreibung	err	Der hund bellt sehr laut.
+Großschreibung	err	Sie studiert an der universität in Berlin.
+Großschreibung	err	Das wetter war gestern richtig schön.
+Großschreibung	ok	Die Mondlandung war ein großer Erfolg.
+Großschreibung	ok	Er hat das Buch gestern gelesen.
+Großschreibung	ok	Der Hund bellt sehr laut.
+Großschreibung	ok	Sie studiert an der Universität in Berlin.
+Großschreibung	ok	Das Wetter war gestern richtig schön.
+Kommasetzung	err	Ich weiß dass du recht hast.
+Kommasetzung	err	Wir hoffen dass alles gut geht.
+Kommasetzung	err	Das Auto das dort steht ist neu.
+Kommasetzung	err	Sie ging nach Hause weil es regnete.
+Kommasetzung	err	Er glaubt dass er alles versteht.
+Kommasetzung	ok	Ich weiß, dass du recht hast.
+Kommasetzung	ok	Wir hoffen, dass alles gut geht.
+Kommasetzung	ok	Das Auto, das dort steht, ist neu.
+Kommasetzung	ok	Sie ging nach Hause, weil es regnete.
+Kommasetzung	ok	Er glaubt, dass er alles versteht.
+Subjekt-Verb	err	Die Kinder spielt im Garten.
+Subjekt-Verb	err	Er gehen jeden Tag nach Hause.
+Subjekt-Verb	err	Du hat das Buch schon gelesen.
+Subjekt-Verb	err	Wir ist heute sehr müde.
+Subjekt-Verb	err	Die Frau haben gestern angerufen.
+Subjekt-Verb	ok	Die Kinder spielen im Garten.
+Subjekt-Verb	ok	Er geht jeden Tag nach Hause.
+Subjekt-Verb	ok	Du hast das Buch schon gelesen.
+Subjekt-Verb	ok	Wir sind heute sehr müde.
+Subjekt-Verb	ok	Die Frau hat gestern angerufen.
+Verwechslungen	err	Es regnet hier seid gestern Abend.
+Verwechslungen	err	Ihr seit wirklich sehr freundlich.
+Verwechslungen	err	Er kam wieder Erwarten sehr früh.
+Verwechslungen	err	Sie ist größer wie ihr Bruder.
+Verwechslungen	err	Das ist immer noch besser wie nichts.
+Verwechslungen	ok	Es regnet hier seit gestern Abend.
+Verwechslungen	ok	Ihr seid wirklich sehr freundlich.
+Verwechslungen	ok	Er kam wider Erwarten sehr früh.
+Verwechslungen	ok	Sie ist größer als ihr Bruder.
+Verwechslungen	ok	Das ist immer noch besser als nichts.
+Getrennt-Zusammen	err	Das ist garnicht wahr gewesen.
+Getrennt-Zusammen	err	Sie weiß nicht wieviel es kostet.
+Getrennt-Zusammen	err	Er kommt aufjedenfall noch vorbei.
+Getrennt-Zusammen	err	Wir treffen uns am Wochen Ende.
+Getrennt-Zusammen	err	Er fuhr mit dem Rad an statt zu laufen.
+Getrennt-Zusammen	ok	Das ist gar nicht wahr gewesen.
+Getrennt-Zusammen	ok	Sie weiß nicht, wie viel es kostet.
+Getrennt-Zusammen	ok	Er kommt auf jeden Fall noch vorbei.
+Getrennt-Zusammen	ok	Wir treffen uns am Wochenende.
+Getrennt-Zusammen	ok	Er fuhr mit dem Rad, anstatt zu laufen.
+Rechtschreibung	err	Er hat einen Breif geschrieben.
+Rechtschreibung	err	Das ist ein Standart in der Branche.
+Rechtschreibung	err	Die Diskusion dauerte sehr lange.
+Rechtschreibung	err	Eine wichtige Vorraussetzung fehlt noch.
+Rechtschreibung	err	Sie hat den Termien leider vergessen.
+Rechtschreibung	ok	Er hat einen Brief geschrieben.
+Rechtschreibung	ok	Das ist ein Standard in der Branche.
+Rechtschreibung	ok	Die Diskussion dauerte sehr lange.
+Rechtschreibung	ok	Eine wichtige Voraussetzung fehlt noch.
+Rechtschreibung	ok	Sie hat den Termin leider vergessen.
+Adjektivdeklination	err	Ein großer Haus steht am Ende der Straße.
+Adjektivdeklination	err	Der kleine Kind weint schon wieder.
+Adjektivdeklination	err	Mit dem schönen Frau ging er spazieren.
+Adjektivdeklination	err	Sie kaufte gestern einen neue Tisch.
+Adjektivdeklination	err	Das alte Mann sitzt auf der Bank.
+Adjektivdeklination	ok	Ein großes Haus steht am Ende der Straße.
+Adjektivdeklination	ok	Das kleine Kind weint schon wieder.
+Adjektivdeklination	ok	Mit der schönen Frau ging er spazieren.
+Adjektivdeklination	ok	Sie kaufte gestern einen neuen Tisch.
+Adjektivdeklination	ok	Der alte Mann sitzt auf der Bank.

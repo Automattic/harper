@@ -210,10 +210,13 @@ fn should_capitalize_token(tok: &Token, source: &[char]) -> bool {
                 return true;
             }
 
-            !is_short_preposition
-                && !chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
-                && !chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
-                && !(chars.len() == 1 && chars[0] == 'x')
+            // Written as one negated disjunction rather than four negated
+            // conjuncts: clippy's `nonminimal_bool` rejects the latter, and this
+            // repo builds with `-Dwarnings`.
+            !(is_short_preposition
+                || chars.eq_any_ignore_ascii_case_str(&["and", "but", "for", "or", "nor", "as"])
+                || chars.eq_any_ignore_ascii_case_str(&["a", "an", "the"])
+                || (chars.len() == 1 && chars[0] == 'x'))
         }
         _ => true,
     }

@@ -1,0 +1,31 @@
+# "zuviel" is the spelling from before the 1996 reform. Since then the degree
+# word and the quantifier are written apart: "zu viel" (Duden, "viel"). Only
+# the noun is one word, and it comes with an article: "ein Zuviel an Arbeit".
+expr artikel [ein, eines, einem, das, des, dem, kein, keines, keinem, jedes, dieses, diesem]
+
+# Weir has no anchor for the start of a chunk, and the exception needs a token
+# to look at, so a "Zuviel" that opens a clause is not reported.
+expr main <(!@artikel zuviel), zuviel>
+
+let message "Seit der Rechtschreibreform schreibt man »zu viel« getrennt. Zusammen nur als Nomen mit Artikel: »ein Zuviel«."
+let description "Trennt »zuviel« in »zu viel«, außer beim Nomen »das Zuviel«."
+let kind "Spelling"
+let becomes "zu viel"
+let strategy "MatchCase"
+
+test "Das ist zuviel." "Das ist zu viel."
+test "Du hast zuviel gegessen." "Du hast zu viel gegessen."
+test "Er redet immer zuviel." "Er redet immer zu viel."
+test "Es war viel zuviel Arbeit." "Es war viel zu viel Arbeit."
+test "Wir haben zuviel bezahlt, nämlich drei Euro." "Wir haben zu viel bezahlt, nämlich drei Euro."
+test "Ich habe mir zuviel vorgenommen!" "Ich habe mir zu viel vorgenommen!"
+test "Ist das nicht etwas zuviel?" "Ist das nicht etwas zu viel?"
+test "Man kann nie zuviel lesen." "Man kann nie zu viel lesen."
+
+allows "Das ist zu viel."
+allows "Ein Zuviel an Regeln schadet."
+allows "Das Zuviel an Werbung nervt."
+allows "Es gibt kein Zuviel an Liebe."
+allows "Wegen eines Zuviel an Arbeit blieb er zu Hause."
+allows "Er hat so viel gegessen."
+test "Es war einfach zuviel, deshalb ging ich." "Es war einfach zu viel, deshalb ging ich."

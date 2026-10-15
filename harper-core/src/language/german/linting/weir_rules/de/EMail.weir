@@ -1,0 +1,34 @@
+# "das Email" is enamel; the electronic message is "die E-Mail". Behind a
+# feminine article, a feminine possessive or "per"/"via", "Email" can only mean
+# the message, because enamel is neuter.
+expr vorfeld [eine, einer, die, meine, meiner, deine, deiner, seine, seiner, ihre, ihrer, unsere, unserer, eure, eurer, keine, keiner, diese, dieser, jede, jeder, neue, neuen, letzte, letzten, erste, ersten, kurze, kurzen, per, via, Ihre, Ihrer]
+
+expr main <(@vorfeld Email), Email>
+
+let message "Die elektronische Nachricht schreibt sich »E-Mail«. »Email« ist Schmelzglasur."
+let description "Ersetzt »Email« durch »E-Mail«, wo die Nachricht gemeint ist."
+let kind "Spelling"
+let becomes "E-Mail"
+let strategy "Exact"
+
+test "Er schickt mir eine Email." "Er schickt mir eine E-Mail."
+test "Ich habe deine Email bekommen." "Ich habe deine E-Mail bekommen."
+test "Bitte antworte per Email." "Bitte antworte per E-Mail."
+test "Die Email kam gestern an." "Die E-Mail kam gestern an."
+test "Danke für Ihre Email." "Danke für Ihre E-Mail."
+test "Wir haben keine Email erhalten." "Wir haben keine E-Mail erhalten."
+test "In seiner Email stand nichts davon." "In seiner E-Mail stand nichts davon."
+test "Sie schrieb eine kurze Email." "Sie schrieb eine kurze E-Mail."
+test "Ich lese jede Email sorgfältig." "Ich lese jede E-Mail sorgfältig."
+test "Die erste Email war freundlich." "Die erste E-Mail war freundlich."
+test "Er bekam die Email via Email." "Er bekam die E-Mail via E-Mail."
+test "Meine Email ist voll." "Meine E-Mail ist voll."
+test "Unsere Email-Adresse" "Unsere E-Mail-Adresse"
+test "Schick mir diese Email noch einmal." "Schick mir diese E-Mail noch einmal."
+test "Mit einer Email geht es schneller." "Mit einer E-Mail geht es schneller."
+
+allows "Er schickt mir eine E-Mail."
+allows "Das Email der Badewanne ist abgeplatzt."
+allows "Die Töpfe sind mit Email überzogen."
+allows "Ein Schild aus Email hängt an der Wand."
+allows "Ich habe deine E-Mail bekommen."

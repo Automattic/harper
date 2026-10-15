@@ -1,0 +1,15 @@
+# Since the 1996 reform the "irgend-" compounds are written closed up. Split,
+# they read as two real words, so the spell checker has nothing to object to.
+expr main (irgend etwas)
+
+let message "»irgendetwas« wird zusammengeschrieben."
+let description "Zieht das getrennt geschriebene »irgend etwas« zu »irgendetwas« zusammen."
+let kind "Spelling"
+let becomes "irgendetwas"
+let strategy "MatchCase"
+
+test "Irgend etwas ist passiert." "Irgendetwas ist passiert."
+test "Da ist irgend etwas passiert." "Da ist irgendetwas passiert."
+
+allows "Irgendetwas ist passiert."
+allows "Da ist irgendetwas passiert."

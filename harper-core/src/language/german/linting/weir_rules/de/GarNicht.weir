@@ -1,0 +1,16 @@
+# "gar" is a free-standing particle. Writing "garnicht" closed up is one of the
+# most common German spelling slips.
+expr main garnicht
+
+let message "»gar nicht« wird getrennt geschrieben."
+let description "Trennt das fälschlich zusammengeschriebene »garnicht« zu »gar nicht«."
+let kind "Spelling"
+let becomes "gar nicht"
+let strategy "MatchCase"
+
+test "Das ist garnicht schlecht." "Das ist gar nicht schlecht."
+test "Ich habe garnicht daran gedacht." "Ich habe gar nicht daran gedacht."
+test "Garnicht so einfach." "Gar nicht so einfach."
+
+allows "Das ist gar nicht schlecht."
+allows "Er hat gar kein Geld."

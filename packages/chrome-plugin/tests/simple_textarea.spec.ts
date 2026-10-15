@@ -174,9 +174,7 @@ test('Can dismiss with escape key', async ({ page }) => {
 
 	await page.waitForTimeout(1000);
 
-	await clickHarperHighlight(page);
-
-	await page.locator('.harper-container').waitFor({ state: 'visible' });
+	expect(await clickHarperHighlight(page)).toBe(true);
 
 	await page.keyboard.press('Escape');
 

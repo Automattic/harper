@@ -1,0 +1,26 @@
+# "verlasen" is a real word, the preterite plural of "verlesen" (sie verlasen
+# das Urteil), so the spell checker accepts it. Behind "zu" it can only be an
+# infinitive, and the infinitive meant is almost always "verlassen".
+expr main <(zu verlasen), verlasen>
+
+let message "Hinter »zu« steht der Infinitiv: »verlassen« (oder »verlesen«). »verlasen« ist eine Präteritumform von »verlesen«."
+let description "Ersetzt »zu verlasen« durch »zu verlassen«."
+let kind "Spelling"
+let becomes "verlassen"
+
+test "Er plante, seine Frau zu verlasen." "Er plante, seine Frau zu verlassen."
+test "Ich habe keine Lust, das Haus zu verlasen." "Ich habe keine Lust, das Haus zu verlassen."
+test "Sie hatte vor, die Stadt zu verlasen." "Sie hatte vor, die Stadt zu verlassen."
+test "Um das Gebäude zu verlasen, nimm die Treppe." "Um das Gebäude zu verlassen, nimm die Treppe."
+test "Es ist verboten, den Raum zu verlasen." "Es ist verboten, den Raum zu verlassen."
+test "Ohne zu verlasen ging er weiter." "Ohne zu verlassen ging er weiter."
+test "Er beschloss, die Partei zu verlasen." "Er beschloss, die Partei zu verlassen."
+test "Wir mussten versuchen, das Land zu verlasen." "Wir mussten versuchen, das Land zu verlassen."
+test "Sie bat ihn, das Zimmer zu verlasen." "Sie bat ihn, das Zimmer zu verlassen."
+test "Er wagte nicht, sein Versteck zu verlasen." "Er wagte nicht, sein Versteck zu verlassen."
+
+allows "Die Richter verlasen das Urteil."
+allows "Sie verlasen die Namen der Gewinner."
+allows "Er plante, seine Frau zu verlassen."
+allows "Nachdem sie die Liste verlasen, gingen alle."
+allows "Es ist Zeit, das Urteil zu verlesen."

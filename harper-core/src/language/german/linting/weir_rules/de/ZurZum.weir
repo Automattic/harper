@@ -1,0 +1,28 @@
+expr main [(zur zum), (zum zum)]
+
+let message "Die Präposition wird doppelt – behalten Sie nur eine."
+let description "Corrects the conflicting preposition combination `zur zum` to the proper form."
+let kind "Grammar"
+let becomes "zur"
+let strategy "MatchCase"
+
+test "Wir gehen zur zum Arzt." "Wir gehen zur Arzt."
+test "Sie fährt zur zum Arbeit." "Sie fährt zur Arbeit."
+test "Er kommt zur zum Schule." "Er kommt zur Schule."
+test "Das führt zur zum Lösung." "Das führt zur Lösung."
+test "zur zum Polizei" "zur Polizei"
+test "zur zum Post" "zur Post"
+test "zur zum Bank" "zur Bank"
+test "zur zum Kirche" "zur Kirche"
+test "zur zum Bahnhof" "zur Bahnhof"
+test "zur zum Flughafen" "zur Flughafen"
+test "zur zum Stadt" "zur Stadt"
+test "zur zum Land" "zur Land"
+test "Wir gehen zur zum Geschäft." "Wir gehen zur Geschäft."
+test "Sie fährt zur zum Bäcker." "Sie fährt zur Bäcker."
+test "Das gehört zur zum Sache." "Das gehört zur Sache."
+
+allows "zum Arzt"
+allows "zum Bäcker"
+allows "zum Metzger"
+allows "zum Friseur"

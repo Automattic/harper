@@ -1,0 +1,170 @@
+use crate::language::LanguageDetector;
+use crate::language::languages::Language;
+use crate::language::polish::dialects::PolishDialect;
+use crate::spell::Dictionary;
+use crate::{Token, TokenKind};
+
+/// Letters that occur in Slovak and Czech but not in Polish.
+const NON_POLISH_LETTERS: &str = "čšžľĺŕôäáéíúýďťňěřů";
+
+/// Polish language detector.
+#[derive(Debug)]
+pub struct PolishDetector;
+
+impl LanguageDetector for PolishDetector {
+    fn name(&self) -> &str {
+        "polish"
+    }
+
+    fn detect(&self, toks: &[Token], source: &[char], dict: &dyn Dictionary) -> Option<Language> {
+        let mut total_words = 0;
+        let mut polish_char_count = 0;
+        let mut non_polish_char_count = 0;
+        let mut common_polish_words = 0;
+        let mut english_matches = 0;
+
+        // Polish indicators - common words and articles
+        let polish_indicators = [
+            // Common words
+            "i", "w", "na", "z", "do", "że", "jest", "nie", "się", "tak",
+            // Articles/pronouns
+            "to", "ten", "ta", "to", "ci", "ci", "te", "te", // Verbs
+            "być", "mieć", "robić", "iść", "mówić", "pisać", "czytać", // Prepositions
+            "po", "przed", "pod", "nad", "między", "bez", "dla",
+        ];
+
+        for token in toks {
+            match token.kind {
+                TokenKind::Word(_) => {
+                    total_words += 1;
+                    let word_content: String = token.get_ch(source).iter().collect();
+
+                    // Check for Polish special characters (high confidence)
+                    if word_content.contains('ą')
+                        || word_content.contains('ć')
+                        || word_content.contains('ę')
+                        || word_content.contains('ł')
+                        || word_content.contains('ń')
+                        || word_content.contains('ó')
+                        || word_content.contains('ś')
+                        || word_content.contains('ź')
+                        || word_content.contains('ż')
+                    {
+                        polish_char_count += 1;
+                    }
+
+                    // Letters used by Slovak and Czech but not by Polish
+                    if word_content
+                        .to_lowercase()
+                        .chars()
+                        .any(|c| NON_POLISH_LETTERS.contains(c))
+                    {
+                        non_polish_char_count += 1;
+                    }
+
+                    // Check for common Polish words
+                    let lower_word = word_content.to_lowercase();
+                    if polish_indicators.contains(&lower_word.as_str()) {
+                        common_polish_words += 1;
+                    }
+
+                    // Check if in English dictionary
+                    if dict.contains_word(token.get_ch(source)) {
+                        english_matches += 1;
+                    }
+                }
+                TokenKind::Unlintable => {}
+                _ => {}
+            }
+        }
+
+        // Need minimum words for reliable detection
+        if total_words < 5 {
+            return None;
+        }
+
+        // Step aside for Slovak and Czech text, which shares common words and `ó`
+        // with Polish: words with letters Polish lacks outnumber words with Polish letters.
+        if non_polish_char_count > polish_char_count {
+            return None;
+        }
+
+        // Calculate detection scores
+        let polish_char_ratio = polish_char_count as f64 / total_words as f64;
+        let polish_word_ratio = common_polish_words as f64 / total_words as f64;
+        let english_match_ratio = if total_words > 0 {
+            english_matches as f64 / total_words as f64
+        } else {
+            0.0
+        };
+
+        // High confidence: Polish special characters present
+        if polish_char_ratio >= 0.01 {
+            return Some(Language::Polish(PolishDialect::Standard));
+        }
+
+        // Check if English is clearly dominant (more than 65% English words)
+        if english_match_ratio >= 0.65 {
+            return None; // English is clearly dominant
+        }
+
+        // Strong indicator: Many common Polish words
+        if polish_word_ratio >= 0.20 {
+            return Some(Language::Polish(PolishDialect::Standard));
+        }
+
+        // Medium confidence: Low English match but some Polish words
+        if english_match_ratio < 0.4 && polish_word_ratio >= 0.08 {
+            return Some(Language::Polish(PolishDialect::Standard));
+        }
+
+        None
+    }
+
+    fn confidence(&self) -> f64 {
+        0.90
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::Document;
+    use crate::spell::FstDictionary;
+
+    fn detects_polish(text: &str) -> bool {
+        let dict = FstDictionary::curated();
+        let doc = Document::new_plain_english_curated(text);
+        PolishDetector
+            .detect(doc.get_tokens(), doc.get_source(), &dict)
+            .is_some()
+    }
+
+    #[test]
+    fn rejects_slovak_prose() {
+        assert!(!detects_polish(
+            "Toto je vetaa po slovensky. Bratislava je hlavné mesto Slovenska a leží na Dunaji. Dnes je pekný deň a ideme sa prechádzať do parku."
+        ));
+    }
+
+    #[test]
+    fn rejects_slovak_with_shared_o_acute() {
+        assert!(!detects_polish(
+            "Dnes ráno sme išli na trh, kde sme kúpili chlieb, mlieko a ovocie pre celú rodinu."
+        ));
+    }
+
+    #[test]
+    fn detects_polish_prose() {
+        assert!(detects_polish(
+            "To jest zdanie po polsku. Warszawa jest stolicą Polski i leży nad Wisłą."
+        ));
+    }
+
+    #[test]
+    fn detects_polish_mentioning_czech_name() {
+        assert!(detects_polish(
+            "Wczoraj pojechaliśmy do Brna, gdzie spotkaliśmy się z Dvořákem na kawie w mieście."
+        ));
+    }
+}

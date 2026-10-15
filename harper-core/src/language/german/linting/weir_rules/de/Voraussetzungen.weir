@@ -1,0 +1,13 @@
+# The plural of the misspelling handled in `Voraussetzung.weir`. It needs its own
+# file because `becomes` is per rule, not per pattern.
+expr main [vorraussetzungen, vorrausetzungen]
+
+let message "»Voraussetzungen« wird mit einem »r« geschrieben."
+let description "Korrigiert die häufige Fehlschreibung »Vorraussetzungen«."
+let kind "Spelling"
+let becomes "Voraussetzungen"
+let strategy "Exact"
+
+test "Die Vorraussetzungen fehlen." "Die Voraussetzungen fehlen."
+
+allows "Die Voraussetzungen sind erfüllt."

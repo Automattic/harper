@@ -5,12 +5,12 @@ use crate::{Document, Token, TokenKind};
 
 /// Check if the contents of the document are likely intended to represent
 /// English.
-pub fn is_doc_likely_english(doc: &Document, dict: &impl Dictionary) -> bool {
+pub fn is_doc_likely_english(doc: &Document, dict: &dyn Dictionary) -> bool {
     is_likely_english(doc.get_tokens(), doc.get_source(), dict)
 }
 
 /// Check if given tokens are likely intended to represent English.
-pub fn is_likely_english(toks: &[Token], source: &[char], dict: &impl Dictionary) -> bool {
+pub fn is_likely_english(toks: &[Token], source: &[char], dict: &dyn Dictionary) -> bool {
     let mut total_words = 0;
     let mut valid_words = 0;
     let mut punctuation = 0;

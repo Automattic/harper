@@ -61,7 +61,8 @@ pub fn lint_one_input(
         // If processing a file, try to load its per-file dictionary
         if let Some(file) = single_input.try_as_file_ref() {
             let dict_path = file_dict_path.join(file_dict_name(file.path()));
-            if let Ok(file_dictionary) = load_dict(&dict_path) {
+            let dictionary_dialects = dialect.dictionary_dialect_flags();
+            if let Ok(file_dictionary) = load_dict(&dict_path, dictionary_dialects) {
                 merged_dictionary.add_dictionary(Arc::new(file_dictionary));
                 eprintln!(
                     "{}: Note: Using per-file dictionary: {}",
@@ -84,8 +85,11 @@ pub fn lint_one_input(
                 }
             }
             Ok((doc, source)) => {
-                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified dialect
-                let mut lint_group = LintGroup::new_curated(merged_dictionary.into(), *dialect);
+                // Create the Lint Group from which we will lint this input, using the combined dictionary and the specified language
+                let mut lint_group = harper_core::language::new_curated_for_language(
+                    merged_dictionary.into(),
+                    *dialect,
+                );
 
                 for pack in weirpacks {
                     let pack_group = pack.to_lint_group()?;
