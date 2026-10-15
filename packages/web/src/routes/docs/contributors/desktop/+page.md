@@ -98,13 +98,15 @@ SmartScreen may still show reputation warnings.
 For `v<version>` tags, the Windows build fails early unless the tag matches `tauri.conf.json`.
 The upload step waits for the Windows build to succeed and for the macOS step to finish, then downloads `Harper_<version>_x64-setup.exe` from the Windows build and attaches it to the tag's draft release.
 Retrying the upload replaces the installer in the draft and leaves notes and other assets alone; it does not rebuild or re-sign.
+Retry the upload step rather than rebuilding the tag: a rebuild runs the macOS step again, which creates another draft, and the upload then refuses to choose between two drafts holding a `.dmg`.
 
 The uploader never creates a release and never modifies a published one.
 When several drafts exist for the tag, it uses the one holding the macOS `.dmg`, which the macOS step creates earlier in the same build.
 If it fails because no draft exists yet, retry it once the macOS or GitHub Actions jobs have created one.
 If it fails because no single draft holds the `.dmg`, reconcile the drafts on GitHub and retry.
 
-Before publishing, wait for the GitHub Actions workflows and the Buildkite pipeline to finish, and confirm that the draft holds the Windows installer with the same SHA256 as the Buildkite artifact.
+The GitHub Actions workflows can leave further drafts for the tag even when the Windows upload succeeds.
+Before publishing, wait for the GitHub Actions workflows and the Buildkite pipeline to finish, move the assets of any other draft for the tag into the one you publish, delete the emptied drafts, and confirm that the draft holds the Windows installer with the same SHA256 as the Buildkite artifact.
 
 Run `just test-desktop-release` for the signing and upload tests; GitHub Actions runs them on every pull request.
 
