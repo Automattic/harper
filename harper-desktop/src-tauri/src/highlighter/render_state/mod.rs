@@ -15,7 +15,7 @@ use self::{
         sidebar_target,
     },
 };
-use super::{AddToDictionary, DisableRule, IgnoreLint};
+use super::{AddToDictionary, DisableRule, IgnoreLint, OpenSettings};
 use crate::{
     lint_kind_color::lint_kind_color,
     rect::{ActionableLint, Rect},
@@ -62,6 +62,8 @@ pub struct RenderState {
 
     /// Called when the user disables the rule that produced the selected lint.
     disable_rule: DisableRule,
+
+    open_settings: OpenSettings,
 }
 
 impl RenderState {
@@ -72,6 +74,7 @@ impl RenderState {
         ignore_lint: IgnoreLint,
         add_to_dictionary: AddToDictionary,
         disable_rule: DisableRule,
+        open_settings: OpenSettings,
     ) -> Self {
         let mut state = Self {
             last_lints: None,
@@ -83,6 +86,7 @@ impl RenderState {
             ignore_lint,
             add_to_dictionary,
             disable_rule,
+            open_settings,
         };
         state.set_lints(rects);
         state
@@ -210,6 +214,10 @@ impl RenderState {
                 &mut self.markdown_cache,
             ) {
                 Some(LintCardAction::Close) => self.close_popup(),
+                Some(LintCardAction::OpenSettings) => {
+                    (self.open_settings)();
+                    self.close_popup();
+                }
                 Some(LintCardAction::HoverSuggestion(suggestion)) => {
                     self.shown_suggestion = Some(suggestion);
                 }

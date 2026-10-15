@@ -49,6 +49,7 @@ const BUTTON_TEXT_COLOR: egui::Color32 = egui::Color32::from_rgb(0x00, 0x00, 0x0
 /// The renderer reports intent without updating application state or invoking callbacks.
 pub enum LintCardAction {
     Close,
+    OpenSettings,
     /// The pointer is on the suggestion row at this index. The flyout card aligns with that row.
     ///
     /// When the lint has no suggestions, index `0` is the "No replacements" row.
@@ -267,7 +268,7 @@ fn suggestion_row(
 
 /// Renders the list footer: a "Go to Harper settings" row and the close button.
 ///
-/// The settings row does nothing yet. The close button sits over the footer's right edge, where
+/// The close button sits over the footer's right edge, where
 /// the footer leaves 26 points of padding for it.
 fn render_list_footer(ui: &mut egui::Ui, action: &mut Option<LintCardAction>) {
     ui.add_space(4.0);
@@ -318,11 +319,14 @@ fn render_list_footer(ui: &mut egui::Ui, action: &mut Option<LintCardAction>) {
         MUTED_TEXT_COLOR,
     );
 
-    // The highlighter cannot open the settings window yet, so this row has no action.
-    hover_text(
+    if hover_text(
         settings.on_hover_cursor(egui::CursorIcon::PointingHand),
         "Click to go to Harper settings",
-    );
+    )
+    .clicked()
+    {
+        *action = Some(LintCardAction::OpenSettings);
+    }
 
     let close_label = single_line_galley(ui, "×", 20.0, f32::INFINITY);
     let close_size = egui::vec2(close_label.size().x + 8.0, 20.0);

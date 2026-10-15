@@ -11,6 +11,7 @@ use super::AddToDictionary;
 use super::DisableRule;
 use super::Error;
 use super::IgnoreLint;
+use super::OpenSettings;
 use super::RefreshConfig;
 use super::render_state::{HitTarget, RenderState};
 use super::window::Window;
@@ -33,6 +34,7 @@ pub struct WindowManager {
     add_to_dictionary: AddToDictionary,
     disable_rule: DisableRule,
     refresh_config: RefreshConfig,
+    open_settings: OpenSettings,
 }
 
 pub struct WindowManagerCallbacks {
@@ -41,6 +43,7 @@ pub struct WindowManagerCallbacks {
     pub add_to_dictionary: AddToDictionary,
     pub disable_rule: DisableRule,
     pub refresh_config: RefreshConfig,
+    pub open_settings: OpenSettings,
 }
 
 impl WindowManager {
@@ -66,6 +69,7 @@ impl WindowManager {
             add_to_dictionary: callbacks.add_to_dictionary,
             disable_rule: callbacks.disable_rule,
             refresh_config: callbacks.refresh_config,
+            open_settings: callbacks.open_settings,
         })
     }
 
@@ -86,6 +90,7 @@ impl WindowManager {
                 add_to_dictionary: self.add_to_dictionary,
                 disable_rule: self.disable_rule,
                 refresh_config: self.refresh_config,
+                open_settings: self.open_settings,
             },
         );
 
@@ -128,6 +133,7 @@ impl WindowManagerApp {
                 callbacks.ignore_lint,
                 callbacks.add_to_dictionary,
                 callbacks.disable_rule,
+                callbacks.open_settings,
             ),
             os_broker,
             lint_text: callbacks.lint_text,

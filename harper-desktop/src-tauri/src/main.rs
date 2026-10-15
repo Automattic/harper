@@ -160,22 +160,13 @@ pub fn run_tauri() {
 
     let broker = platform_broker(|_| false);
 
-    let highlighter_service_enabled = config.highlighter_service_enabled;
+    let should_start_highlighter = config.highlighter_service_enabled
+        && broker.accessibility_permission_status() == AccessibilityPermissionStatus::Granted;
     let config = Arc::new(Mutex::new(config));
 
-    let highlighter_service = HighlighterService::new(config.clone());
-    if broker.accessibility_permission_status() == AccessibilityPermissionStatus::Granted
-        && highlighter_service_enabled
-    {
-        let _ = highlighter_service
-            .start()
-            .inspect_err(|err| error!("Unable to start highlighter: {err}"));
-    }
-
     tauri::Builder::default()
-        .manage(config)
+        .manage(config.clone())
         .manage(desktop_updater::DesktopUpdater::default())
-        .manage(highlighter_service)
         .manage(RwLock::new(broker))
         .manage(async_runtime)
         .plugin(tauri_plugin_autostart::init(
@@ -188,6 +179,14 @@ pub fn run_tauri() {
         .setup(move |app| {
             app.handle()
                 .plugin(tauri_plugin_updater::Builder::new().build())?;
+
+            let highlighter_service = HighlighterService::new(config, app.handle().clone());
+            if should_start_highlighter {
+                let _ = highlighter_service
+                    .start()
+                    .inspect_err(|err| error!("Unable to start highlighter: {err}"));
+            }
+            app.manage(highlighter_service);
 
             set_up_tray_menu(app.handle())?;
             warm_app_search_cache(app.handle().clone());
@@ -233,6 +232,7 @@ pub fn popup_debug() {
         |_, _| {},
         |_| {},
         |_| {},
+        || {},
         || {},
     )
     .unwrap();
@@ -319,6 +319,9 @@ pub fn run_highlighter(has_parent: bool) {
     let disable_client = client.clone();
     let disable_runtime = sync_runtime.clone();
     let disable_linter = linter.clone();
+
+    let settings_client = client.clone();
+    let settings_runtime = sync_runtime.clone();
 
     let refresh_client = client.clone();
     let refresh_runtime = sync_runtime.clone();
@@ -411,6 +414,22 @@ pub fn run_highlighter(has_parent: bool) {
         Err(error) => eprintln!("failed to disable rule {rule_name}: {error}"),
     };
 
+    let open_settings = move || {
+        if !has_parent {
+            eprintln!("cannot open settings without a parent app");
+            return;
+        }
+
+        if let Err(error) = settings_runtime.block_on(
+            settings_client
+                .lock()
+                .expect("IPC client lock poisoned")
+                .open_settings(),
+        ) {
+            eprintln!("failed to request settings window: {error}");
+        }
+    };
+
     let refresh_config = move || {
         if !has_parent {
             return;
@@ -443,6 +462,7 @@ pub fn run_highlighter(has_parent: bool) {
         add_to_dictionary,
         disable_rule,
         refresh_config,
+        open_settings,
     )
     .and_then(Highlighter::run_window_for_each_monitor)
     {
