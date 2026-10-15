@@ -69,20 +69,25 @@ To solve it, we simply removed it from the dependency graph.
 
 ## Windows Builds and Signing
 
-Buildkite builds the Windows x64 installer on a Windows agent and signs it with Automattic's certificate through the CI Toolkit's Azure Trusted Signing setup.
-The Tauri `signCommand` hook in `.buildkite/commands/sign-windows.cjs` signs and verifies the app, the NSIS plugins, the uninstaller, and the installer, so a broken signing setup fails the build.
-GitHub Actions still runs the unsigned cross-build (`just build-desktop-windows`) as a check, including for fork pull requests, which Buildkite does not build.
-Windows updater artifacts remain disabled, and SmartScreen may still warn until the certificate has built up reputation.
+Buildkite produces the signed Windows x64 installer using Automattic's certificate; signing or signature-verification failures fail the build.
+GitHub Actions also checks an unsigned Windows build, including for fork pull requests.
+Windows updater artifacts remain disabled.
 
 ### Release Upload
 
-On `v<version>` tags, the Windows build fails unless the tag matches the version in `tauri.conf.json`.
-Once the Windows build and the macOS step finish, an upload step attaches the installer to the tag's draft release.
-It never creates or publishes a release, and when several drafts exist for the tag it picks the one holding the macOS `.dmg`.
-Retrying the step replaces the installer and leaves notes and other assets alone; do not rebuild the tag, since the macOS step would create another draft.
-Before publishing, merge any other drafts for the tag into the one you publish and confirm that the installer's SHA256 matches the Buildkite artifact.
+Release tags must match the version in `harper-desktop/src-tauri/tauri.conf.json`.
+Buildkite attaches the signed installer to an existing draft release; publishing remains manual.
+When several drafts exist for the tag, it uses the one holding the macOS `.dmg`.
 
-`just test-desktop-release` runs the signing and upload tests.
+If the upload fails, retry only the Windows upload step after resolving the error.
+Retrying replaces the Windows installer without changing release notes or other assets.
+Avoid rebuilding the whole tag, which can create another draft.
+
+Before publishing, ensure the chosen draft holds the signed Windows installer, the macOS build, and the other expected assets.
+If several drafts exist, move their assets and notes into the one you publish and delete the rest.
+Verify that the Windows installer's SHA256 matches the Buildkite artifact.
+
+Run `just test-desktop-release` to check the signing and upload scripts.
 
 ### Windows Smoke Test
 
