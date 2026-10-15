@@ -11,6 +11,8 @@ export type Request =
 	| GetDialectRequest
 	| GetIsolateEnglishRequest
 	| SetIsolateEnglishRequest
+	| GetRegexMaskRequest
+	| SetRegexMaskRequest
 	| GetDelayRequest
 	| SetDelayRequest
 	| SetDomainStatusRequest
@@ -44,6 +46,7 @@ export type Response =
 	| GetLintDescriptionsResponse
 	| GetDialectResponse
 	| GetIsolateEnglishResponse
+	| GetRegexMaskResponse
 	| GetDelayResponse
 	| GetDomainStatusResponse
 	| GetDefaultStatusResponse
@@ -140,6 +143,20 @@ export type GetIsolateEnglishResponse = {
 export type SetIsolateEnglishRequest = {
 	kind: 'setIsolateEnglish';
 	isolateEnglish: boolean;
+};
+
+export type GetRegexMaskRequest = {
+	kind: 'getRegexMask';
+};
+
+export type GetRegexMaskResponse = {
+	kind: 'getRegexMask';
+	regexMask: string;
+};
+
+export type SetRegexMaskRequest = {
+	kind: 'setRegexMask';
+	regexMask: string;
 };
 
 export type GetDomainStatusRequest = {

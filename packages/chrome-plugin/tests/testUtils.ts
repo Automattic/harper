@@ -49,6 +49,14 @@ export async function getStoredDelay(context: BrowserContext): Promise<number> {
 	});
 }
 
+export async function getStoredRegexMask(context: BrowserContext): Promise<string> {
+	const background = await getBackground(context);
+	return await background.evaluate(async () => {
+		const value = await chrome.storage.local.get({ regexMask: '' });
+		return typeof value.regexMask === 'string' ? value.regexMask : '';
+	});
+}
+
 /** Locate the [`Slate`](https://www.slatejs.org/examples/richtext) editor on the page.  */
 export function getSlateEditor(page: Page): Locator {
 	return page.locator('[data-slate-editor="true"]');
