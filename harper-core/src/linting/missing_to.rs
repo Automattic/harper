@@ -384,6 +384,12 @@ impl ExprLinter for MissingTo {
         let controller_text = controller.get_str(source).to_lowercase();
         let controller_text = controller_text.as_str();
 
+        if controller.kind.is_noun()
+            && preceded_by_word(context, |tok| tok.kind.is_possessive_nominal())
+        {
+            return None;
+        }
+
         if controller.kind.is_verb()
             && controller.kind.is_adjective()
             && preceded_by_word(context, |tok| tok.kind.is_nominal())
@@ -653,6 +659,14 @@ mod tests {
             "She resolved solve the case.",
             test_linter(),
             "She resolved to solve the case.",
+        );
+    }
+
+    #[test]
+    fn issue_3951_possessive_noun() {
+        assert_no_lints(
+            "This Article's aims are both theoretical and historical.",
+            test_linter(),
         );
     }
 
