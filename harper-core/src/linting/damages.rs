@@ -67,8 +67,10 @@ impl ExprLinter for Damages {
         }
 
         // The word before "damages" may help us narrow down whether it's a noun or verb.
-        let prev_word_tok = match (pretoks.get(pretoks.len() - 2), pretoks.last()) {
-            (Some(w), Some(sp)) if sp.kind.is_whitespace() && w.kind.is_word() => Some(w),
+        let prev_word_tok = match pretoks {
+            [.., word, whitespace] if whitespace.kind.is_whitespace() && word.kind.is_word() => {
+                Some(word)
+            }
             _ => None,
         };
 
@@ -166,6 +168,44 @@ impl ExprLinter for Damages {
 mod tests {
     use super::Damages;
     use crate::linting::tests::{assert_no_lints, assert_suggestion_result};
+
+    #[test]
+    fn empty_preceding_context() {
+        assert_suggestion_result("damages", Damages::default(), "damage");
+    }
+
+    #[test]
+    fn single_token_preceding_context() {
+        use crate::{Span, Token, TokenKind, linting::ExprLinter};
+
+        let source: Vec<char> = " damages".chars().collect();
+        let whitespace = Token::new(Span::new(0, 1), TokenKind::Space(1));
+        let damages = Token::new(Span::new(1, 8), TokenKind::Word(None));
+        let lint = Damages::default().match_to_lint_with_context(
+            &[damages],
+            &source,
+            Some((&[whitespace], &[])),
+        );
+        assert!(lint.is_some());
+    }
+
+    #[test]
+    fn valid_preceding_word_and_whitespace() {
+        assert_suggestion_result("against damages", Damages::default(), "against damage");
+        assert_no_lints("it damages the environment", Damages::default());
+        assert_no_lints("a claim for damages", Damages::default());
+    }
+
+    #[test]
+    fn sentence_beginning_with_damages() {
+        assert_suggestion_result(
+            "Damages are extensive.",
+            Damages::default(),
+            "Damage are extensive.",
+        );
+        assert_no_lints("Damages in the court case were paid.", Damages::default());
+        assert_no_lints("Damages them.", Damages::default());
+    }
 
     // Examples of the error from GitHub:
 
