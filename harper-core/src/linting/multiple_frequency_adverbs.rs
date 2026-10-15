@@ -41,7 +41,10 @@ impl ExprLinter for MultipleFrequencyAdverbs {
         let (adv1span, adv2span) = (adv1tok.span, adv2tok.span);
         let (adv1ch, adv2ch) = (adv1span.get_content(src), adv2span.get_content(src));
 
-        if !adv1ch.eq_ch(adv2ch) {
+        // `eq_ch` only lowercases its receiver, so the argument has to arrive
+        // lowercase. Both sides come from the document here, and passing raw text
+        // made two spellings of the same adverb compare unequal.
+        if !adv1ch.eq_ch(&adv2ch.to_lower()) {
             Some(Lint {
                 span: toks.span()?,
                 lint_kind: LintKind::Usage,
