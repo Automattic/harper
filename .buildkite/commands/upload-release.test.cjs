@@ -270,6 +270,48 @@ test('retries an upload after a network failure', async (t) => {
 	);
 });
 
+test('retries the release lookup after a transient failure', async (t) => {
+	const { draft, options } = await fixture(t);
+	let failed = false;
+	const request = async (url, init) => {
+		if (init.method === 'GET' && url.includes('/releases?') && !failed) {
+			failed = true;
+			return Response.json({ message: 'Unavailable' }, { status: 503 });
+		}
+		return options.request(url, init);
+	};
+	assert.equal(await uploadRelease({ ...options, request }), draft.html_url);
+	assert.deepEqual(
+		options.wait.mock.calls.map((call) => call.arguments),
+		[[1000]],
+	);
+});
+
+test('retries an upload whose response body cannot be read', async (t) => {
+	const { file, state, options } = await fixture(t);
+	let failed = false;
+	const request = async (url, init) => {
+		const result = await options.request(url, init);
+		if (init.method === 'POST' && !failed) {
+			failed = true;
+			const broken = new ReadableStream({
+				start(controller) {
+					controller.error(new Error('read ECONNRESET'));
+				},
+			});
+			return new Response(broken, { status: 201, headers: { 'Content-Type': 'application/json' } });
+		}
+		return result;
+	};
+	await uploadRelease({ ...options, request });
+	assert.equal(state.calls.filter((call) => call.method === 'POST').length, 2);
+	assert.equal(state.assets.filter((asset) => asset.name === basename(file)).length, 1);
+	assert.deepEqual(
+		options.wait.mock.calls.map((call) => call.arguments),
+		[[1000]],
+	);
+});
+
 test('stops after three attempts when the upload keeps returning 5xx', async (t) => {
 	const { state, options } = await fixture(t);
 	const request = async (url, init) => {

@@ -45,6 +45,14 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 	}
 
 	const api = `https://api.github.com/repos/${repository}`;
+	function transientError(method, url, error) {
+		const wrapped = new Error(
+			`GitHub ${method} ${url} failed: ${error.message}${error.cause ? `: ${error.cause.message}` : ''}`,
+			{ cause: error },
+		);
+		wrapped.transient = true;
+		return wrapped;
+	}
 	async function json(url, { method = 'GET', body } = {}) {
 		const response = await request(url, {
 			method,
@@ -57,12 +65,7 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 			body,
 			signal: AbortSignal.timeout(10 * 60 * 1000),
 		}).catch((error) => {
-			const wrapped = new Error(
-				`GitHub ${method} ${url} failed: ${error.message}${error.cause ? `: ${error.cause.message}` : ''}`,
-				{ cause: error },
-			);
-			wrapped.transient = true;
-			throw wrapped;
+			throw transientError(method, url, error);
 		});
 		if (!response.ok) {
 			const details = await response.json().catch(() => ({}));
@@ -74,7 +77,11 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 			error.transient = response.status >= 500 && response.status < 600;
 			throw error;
 		}
-		return response.status === 204 ? null : response.json();
+		if (response.status === 204) return null;
+		// The connection can still drop while the body is read.
+		return response.json().catch((error) => {
+			throw transientError(method, url, error);
+		});
 	}
 	async function list(path) {
 		const items = [];
@@ -85,33 +92,38 @@ async function uploadRelease({ repository, tag, assets, token, request = fetch, 
 		}
 	}
 
-	const release = selectDraft(await list('releases'), tag);
-	for (const path of assets) {
-		const name = basename(path);
-		const body = await readFile(path);
+	// Network failures and 5xx responses are retried; refusals and 4xx are not.
+	async function retry(label, action) {
 		for (let attempt = 1; ; attempt++) {
 			try {
-				const current = await json(`${api}/releases/${release.id}`);
-				if (current.draft !== true) {
-					throw new Error(`Refusing to upload assets to published release ${tag}.`);
-				}
-				// A failed upload can leave a partial asset. Re-list on each attempt.
-				const existing = await list(`releases/${release.id}/assets`);
-				for (const asset of existing.filter((asset) => asset.name === name)) {
-					await json(`${api}/releases/assets/${asset.id}`, { method: 'DELETE' });
-				}
-				await json(
-					`https://uploads.github.com/repos/${repository}/releases/${release.id}/assets?name=${encodeURIComponent(name)}`,
-					{ method: 'POST', body },
-				);
-				break;
+				return await action();
 			} catch (error) {
-				// Network failures and 5xx responses are retried; refusals and 4xx are not.
 				if (!error.transient || attempt === 3) throw error;
-				console.warn(`${error.message}. Retrying ${name} (${attempt + 1}/3).`);
+				console.warn(`${error.message}. Retrying ${label} (${attempt + 1}/3).`);
 				await wait(attempt * 1000);
 			}
 		}
+	}
+
+	const release = selectDraft(await retry('release lookup', () => list('releases')), tag);
+	for (const path of assets) {
+		const name = basename(path);
+		const body = await readFile(path);
+		await retry(name, async () => {
+			const current = await json(`${api}/releases/${release.id}`);
+			if (current.draft !== true) {
+				throw new Error(`Refusing to upload assets to published release ${tag}.`);
+			}
+			// A failed upload can leave a partial asset. Re-list on each attempt.
+			const existing = await list(`releases/${release.id}/assets`);
+			for (const asset of existing.filter((asset) => asset.name === name)) {
+				await json(`${api}/releases/assets/${asset.id}`, { method: 'DELETE' });
+			}
+			await json(
+				`https://uploads.github.com/repos/${repository}/releases/${release.id}/assets?name=${encodeURIComponent(name)}`,
+				{ method: 'POST', body },
+			);
+		});
 	}
 	return release.html_url;
 }
