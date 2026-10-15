@@ -78,7 +78,9 @@ export async function replaceEditorContent(editorEl: Locator, text: string, soft
 		return;
 	}
 
-	await editorEl.selectText();
+	// Let the editor update its own selection state through its keyboard handler.
+	await editorEl.focus();
+	await editorEl.press('ControlOrMeta+a');
 	await editorEl.press('Backspace');
 
 	const lines = text.split('\n');
@@ -264,6 +266,10 @@ export async function testBasicSuggestion(
 		await page.keyboard.press('ArrowRight');
 		await page.keyboard.press('ArrowRight');
 		await page.keyboard.press('ArrowRight');
+		// Let rich editors process the queued selectionchange before deleting.
+		await page.evaluate(
+			() => new Promise<void>((resolve) => requestAnimationFrame(() => resolve())),
+		);
 		await page.keyboard.press('Backspace');
 		await assertEditorText(editor, 'This is a tst');
 
