@@ -123,7 +123,8 @@ pub fn render_lint_card(
 /// Renders one floating card at `rect.min`, with content that scrolls when it is taller than
 /// `rect`.
 ///
-/// `rect` is the card's maximum bounds. The card shrinks to fit shorter content.
+/// `rect` is the card's maximum bounds. The card shrinks to fit shorter content, but its available
+/// space is reset each frame so a previous short card cannot constrain a longer message.
 fn show_card<R>(
     ctx: &egui::Context,
     name: &'static str,
@@ -135,6 +136,7 @@ fn show_card<R>(
         .order(egui::Order::Foreground)
         .fixed_pos(rect.min)
         .show(ctx, |ui| {
+            ui.set_max_size(rect.size());
             card_frame()
                 .show(ui, |ui| {
                     ui.spacing_mut().item_spacing = egui::Vec2::ZERO;
